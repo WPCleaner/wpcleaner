@@ -59,6 +59,16 @@ public enum WPCConfigurationString {
   HELP_URL("help_url", "http://en.wikipedia.org/wiki/Wikipedia:WPCleaner", false, true, false),
   // Comment used to indicate an ISBN with an error
   ISBN_HELP_NEEDED_COMMENT("general_isbn_help_needed_comment", null, false, true, true),
+  // Comment for warning about ISBN errors in a page
+  ISBN_WARNING_COMMENT("isbn_warning_comment", null, false, true, true),
+  // Comment for warning about one ISBN error in a page
+  ISBN_WARNING_COMMENT_1("isbn_warning_comment_1", null, false, true, true),
+  // Comment for telling that ISBN errors have been fixed
+  ISBN_WARNING_COMMENT_DONE("isbn_warning_comment_done", null, false, true, true),
+  // Template for warning about ISBN errors in a page
+  ISBN_WARNING_TEMPLATE("isbn_warning_template", null, false, true, false),
+  // Comment for warning template about ISBN errors in a page
+  ISBN_WARNING_TEMPLATE_COMMENT("isbn_warning_template_comment", null, false, true, false),
   // Template used to mark a text as being in a foreign language
   LANG_TEMPLATE("lang_template", null, false, true, false),
   // Template used to group all messages on a user talk page

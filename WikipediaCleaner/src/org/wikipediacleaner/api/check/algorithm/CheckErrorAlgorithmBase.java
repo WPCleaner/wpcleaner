@@ -176,7 +176,7 @@ public abstract class CheckErrorAlgorithmBase implements CheckErrorAlgorithm {
       }
     }
     return new CheckErrorResult(
-        getShortDescription(),
+        this,
         startPosition, endPosition,
         errorLevel);
   }
