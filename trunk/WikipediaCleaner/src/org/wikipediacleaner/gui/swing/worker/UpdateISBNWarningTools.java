@@ -14,6 +14,8 @@ import java.util.List;
 
 import org.wikipediacleaner.api.APIException;
 import org.wikipediacleaner.api.MediaWiki;
+import org.wikipediacleaner.api.check.CheckError;
+import org.wikipediacleaner.api.check.CheckErrorPage;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithm;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmISBN;
@@ -23,7 +25,6 @@ import org.wikipediacleaner.api.constants.WPCConfigurationBoolean;
 import org.wikipediacleaner.api.constants.WPCConfigurationString;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageAnalysis;
-import org.wikipediacleaner.api.data.PageAnalysis.Result;
 import org.wikipediacleaner.api.data.PageElementISBN;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
 import org.wikipediacleaner.gui.swing.basic.BasicWorker;
@@ -114,9 +115,10 @@ public class UpdateISBNWarningTools extends UpdateWarningTools {
     for (CheckErrorAlgorithm algorithm : algorithms) {
       int errorNumber = algorithm.getErrorNumber();
       if (CheckErrorAlgorithms.isAlgorithmActive(wiki, errorNumber)) {
-        Result result = analysis.getCheckWikiErrors(errorNumber);
-        if (result != null) {
-          result.getErrors(errorResults);
+        CheckErrorPage errorPage = CheckError.analyzeError(algorithm, analysis);
+        List<CheckErrorResult> results = errorPage.getResults();
+        if (results != null) {
+          errorResults.addAll(results);
         }
       }
     }
@@ -202,7 +204,15 @@ public class UpdateISBNWarningTools extends UpdateWarningTools {
    */
   @Override
   protected String getWarningComment(Collection<String> elements) {
-    return configuration.getISBNWarningComment(elements);
+    Collection<String> isbns = new ArrayList<String>();
+    int i = 0;
+    for (String element : elements) {
+      if (i % 2 == 0) {
+        isbns.add(element);
+      }
+      i++;
+    }
+    return configuration.getISBNWarningComment(isbns);
   }
 
   /**
