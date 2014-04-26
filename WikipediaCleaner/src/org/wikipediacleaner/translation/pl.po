@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2014-04-26 10:20+0200\n"
+"POT-Creation-Date: 2014-04-26 16:35+0200\n"
 "PO-Revision-Date: 2013-11-01 03:31+0000\n"
 "Last-Translator: pp/bs <Unknown>\n"
 "Language-Team: Polish <pl@li.org>\n"
@@ -268,7 +268,7 @@ msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm017.java:36
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm045.java:35
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm059.java:32
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm059.java:33
 msgid "Delete all"
 msgstr "Skasuj wszystkie"
 
@@ -3257,18 +3257,12 @@ msgstr "Odświeżanie zawartości strony"
 msgid "Retrieving interwiki for {0}"
 msgstr "Pobieranie interwiki dla {0}"
 
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:271
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:286
-#, java-format
-msgid "Retrieving page contents - {0}"
-msgstr "Pobieranie zawartości strony – {0}"
-
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:1146
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:430
 #, java-format
 msgid "Removing disambiguation warning - {0}"
 msgstr "Usuwanie komunikatu o disambigach – {0}"
 
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:1155
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:439
 #, java-format
 msgid "Updating disambiguation warning - {0}"
 msgstr "Aktualizowanie komunikatu o disambigach – {0}"
@@ -3345,6 +3339,12 @@ msgid_plural "It took {0} seconds"
 msgstr[0] "Zajęło to {0} sekundę"
 msgstr[1] "Zajęło to {0} sekundy"
 msgstr[2] "Zajęło to {0} sekund"
+
+#: org/wikipediacleaner/gui/swing/worker/UpdateWarningTools.java:129
+#: org/wikipediacleaner/gui/swing/worker/UpdateWarningTools.java:144
+#, java-format
+msgid "Retrieving page contents - {0}"
+msgstr "Pobieranie zawartości strony – {0}"
 
 #: org/wikipediacleaner/utils/Configuration.java:278
 msgid ""
