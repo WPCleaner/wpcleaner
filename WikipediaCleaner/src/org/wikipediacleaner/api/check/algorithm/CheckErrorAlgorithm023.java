@@ -7,56 +7,32 @@
 
 package org.wikipediacleaner.api.check.algorithm;
 
-import java.util.Collection;
+import java.util.ArrayList;
 import java.util.List;
 
-import org.wikipediacleaner.api.check.CheckErrorResult;
-import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementTag;
-import org.wikipediacleaner.i18n.GT;
 
 
 /**
  * Algorithm for analyzing error 23 of check wikipedia project.
  * Error 23: Nowiki not correct end
  */
-public class CheckErrorAlgorithm023 extends CheckErrorAlgorithmBase {
+public class CheckErrorAlgorithm023 extends CheckErrorAlgorithmUnclosedTags {
+
+  /** List of tags managed by this error. */
+  private final List<String> tags;
 
   public CheckErrorAlgorithm023() {
     super("Nowiki not correct end");
+    tags = new ArrayList<String>();
+    tags.add(PageElementTag.TAG_WIKI_NOWIKI);
   }
 
   /**
-   * Analyze a page to check if errors are present.
-   * 
-   * @param analysis Page analysis.
-   * @param errors Errors found in the page.
-   * @param onlyAutomatic True if analysis could be restricted to errors automatically fixed.
-   * @return Flag indicating if the error was found.
+   * @return List of tags managed by this error.
    */
-  public boolean analyze(
-      PageAnalysis analysis,
-      Collection<CheckErrorResult> errors, boolean onlyAutomatic) {
-    if (analysis == null) {
-      return false;
-    }
-
-    // Check every <nowiki> tag
-    List<PageElementTag> nowikiTags = analysis.getTags(PageElementTag.TAG_WIKI_NOWIKI);
-    boolean result = false;
-    for (PageElementTag nowikiTag : nowikiTags) {
-      if (!nowikiTag.isFullTag() && !nowikiTag.isComplete()) {
-        if (errors == null) {
-          return true;
-        }
-        result = true;
-        CheckErrorResult errorResult = createCheckErrorResult(
-            analysis,
-            nowikiTag.getBeginIndex(), nowikiTag.getEndIndex());
-        errorResult.addReplacement("", GT._("Delete"));
-        errors.add(errorResult);
-      }
-    }
-    return result;
+  @Override
+  protected List<String> getTags() {
+    return tags;
   }
 }

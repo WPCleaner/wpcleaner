@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2014-04-25 23:46+0200\n"
+"POT-Creation-Date: 2014-04-26 10:20+0200\n"
 "PO-Revision-Date: 2013-06-14 19:23+0000\n"
 "Last-Translator: Xuacu Saturio <xuacusk8@gmail.com>\n"
 "Language-Team: Asturian <ast@li.org>\n"
@@ -149,12 +149,7 @@ msgstr "Reemplace por {0}"
 
 #: org/wikipediacleaner/api/check/CheckErrorResult.java:127
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm010.java:160
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm013.java:59
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm014.java:59
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm015.java:59
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm017.java:164
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm023.java:56
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm024.java:59
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm026.java:87
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm026.java:93
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm038.java:87
@@ -166,7 +161,6 @@ msgstr "Reemplace por {0}"
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm047.java:123
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm048.java:86
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm085.java:92
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm098.java:59
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm515.java:89
 #: org/wikipediacleaner/gui/swing/options/SortingOptionsPanel.java:115
 msgid "Delete"
