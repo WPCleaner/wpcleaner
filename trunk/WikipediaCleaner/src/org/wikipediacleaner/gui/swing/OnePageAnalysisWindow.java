@@ -100,6 +100,7 @@ import org.wikipediacleaner.gui.swing.menu.BasicMenuCreator;
 import org.wikipediacleaner.gui.swing.worker.FullAnalysisWorker;
 import org.wikipediacleaner.gui.swing.worker.TranslateWorker;
 import org.wikipediacleaner.gui.swing.worker.UpdateDabWarningWorker;
+import org.wikipediacleaner.gui.swing.worker.UpdateISBNWarningWorker;
 import org.wikipediacleaner.i18n.GT;
 import org.wikipediacleaner.images.EnumImageSize;
 import org.wikipediacleaner.utils.Configuration;
@@ -140,7 +141,8 @@ public class OnePageAnalysisWindow extends OnePageWindow {
   JCheckBoxMenuItem menuItemCountRedirect;
   private JButton buttonRemoveLinks;
   private JButton buttonWatchLink;
-  private JButton buttonDisambiguationWarning;
+  private JButton buttonWarning;
+  private JPopupMenu menuWarning;
   private JButton buttonRedirectElements;
   private JButton buttonOtherLanguage;
   private JButton buttonTranslation;
@@ -251,7 +253,7 @@ public class OnePageAnalysisWindow extends OnePageWindow {
     boolean article = (isPageLoaded()) && (getPage() != null) && (getPage().isArticle());
     boolean redirect = article && getPage().isRedirect();
     setEnabledStatus(buttonDelete, isPageLoaded());
-    setEnabledStatus(buttonDisambiguationWarning, article);
+    setEnabledStatus(buttonWarning, article);
     setEnabledStatus(buttonFirst, isPageLoaded());
     setEnabledStatus(buttonLast, isPageLoaded());
     setEnabledStatus(buttonNext, isPageLoaded());
@@ -411,14 +413,29 @@ public class OnePageAnalysisWindow extends OnePageWindow {
       toolbarButtons.add(buttonDelete);
     }
     addButtonRedirect(toolbarButtons);
-    buttonDisambiguationWarning = Utilities.createJButton(
-        "gnome-dialog-warning.png", EnumImageSize.NORMAL,
-        GT._("Add a warning on the talk page about the links to disambiguation pages"),
-        false, null); 
-    buttonDisambiguationWarning.addActionListener(EventHandler.create(
+
+    menuWarning = new JPopupMenu();
+    JMenuItem menuItem = Utilities.createJMenuItem(
+        GT._("Add a warning about links to disambiguation pages"),
+        true);
+    menuItem.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionDisambiguationWarning"));
-    toolbarButtons.add(buttonDisambiguationWarning);
+    menuWarning.add(menuItem);
+    menuItem = Utilities.createJMenuItem(
+        GT._("Add a warning about ISBN errors"),
+        true);
+    menuItem.addActionListener(EventHandler.create(
+        ActionListener.class, this, "actionISBNWarning"));
+    menuWarning.add(menuItem);
+    buttonWarning = Utilities.createJButton(
+        "gnome-dialog-warning.png", EnumImageSize.NORMAL,
+        GT._("Add warnings on talk page"),
+        false, null); 
+    buttonWarning.addActionListener(EventHandler.create(
+        ActionListener.class, this, "actionWarning"));
+    toolbarButtons.add(buttonWarning);
     toolbarButtons.addSeparator();
+
     addButtonReload(toolbarButtons, true);
     buttonView = ActionExternalViewer.addButton(
         toolbarButtons, getWikipedia(), getPageName(), false, true, false);
@@ -447,8 +464,10 @@ public class OnePageAnalysisWindow extends OnePageWindow {
         ActionListener.class, this, "actionTranslate"));
     toolbarButtons.add(buttonTranslation);
     toolbarButtons.addSeparator();
+
     addLblLastModified(toolbarButtons);
     toolbarButtons.addSeparator();
+
     addLblEditProtectionLevel(toolbarButtons);
     constraints.fill = GridBagConstraints.HORIZONTAL;
     constraints.gridx = 0;
@@ -1040,6 +1059,13 @@ public class OnePageAnalysisWindow extends OnePageWindow {
   }
 
   /**
+   * Action called when Warning button is pressed.  
+   */
+  public void actionWarning() {
+    menuWarning.show(buttonWarning, 0, buttonWarning.getHeight());
+  }
+
+  /**
    * Action called when Disambiguation warning button is pressed.  
    */
   public void actionDisambiguationWarning() {
@@ -1062,6 +1088,32 @@ public class OnePageAnalysisWindow extends OnePageWindow {
         getWikipedia(), this,
         Collections.singletonList(getPage()),
         true, true, true, false);
+    worker.start();
+  }
+
+  /**
+   * Action called when ISBN warning button is pressed.  
+   */
+  public void actionISBNWarning() {
+    // Check configuration
+    String template = getConfiguration().getString(WPCConfigurationString.ISBN_WARNING_TEMPLATE);
+    if ((template == null) || (template.trim().length() == 0)) {
+      Utilities.displayMessageForMissingConfiguration(
+          getParentComponent(),
+          WPCConfigurationString.ISBN_WARNING_TEMPLATE.getAttributeName());
+      return;
+    }
+
+    int answer = Utilities.displayYesNoWarning(
+        getParentComponent(),
+        GT._("Do you want to update the ISBN warning in talk page ?"));
+    if (answer != JOptionPane.YES_OPTION) {
+      return;
+    }
+    UpdateISBNWarningWorker worker = new UpdateISBNWarningWorker(
+        getWikipedia(), this,
+        Collections.singletonList(getPage()),
+        true, false);
     worker.start();
   }
 

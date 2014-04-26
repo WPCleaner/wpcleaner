@@ -43,9 +43,6 @@ public class CheckErrorAlgorithm071 extends CheckErrorAlgorithmISBN {
       return false;
     }
 
-    // Configuration
-    String reasonTemplate = getSpecificProperty("reason", true, true, false);
-
     // Analyze each ISBN
     boolean result = false;
     List<PageElementISBN> isbns = analysis.getISBNs();
@@ -67,10 +64,7 @@ public class CheckErrorAlgorithm071 extends CheckErrorAlgorithmISBN {
           }
           result = true;
           CheckErrorResult errorResult = createCheckErrorResult(analysis, isbn, true);
-          String reason = null;
-          if (reasonTemplate != null) {
-            reason = GT._(reasonTemplate);
-          }
+          String reason = getReason(isbn);
           addHelpNeededTemplates(analysis, errorResult, isbn, reason);
           addHelpNeededComment(analysis, errorResult, isbn, reason);
           if (isbn.isTemplateParameter()) {
@@ -83,6 +77,22 @@ public class CheckErrorAlgorithm071 extends CheckErrorAlgorithmISBN {
     }
 
     return result;
+  }
+
+  /**
+   * @param isbn ISBN number.
+   * @return Reason for the error.
+   */
+  @Override
+  public String getReason(PageElementISBN isbn) {
+    if (isbn == null) {
+      return null;
+    }
+    String reasonTemplate = getSpecificProperty("reason", true, true, false);
+    if (reasonTemplate == null) {
+      return null;
+    }
+    return reasonTemplate;
   }
 
   /**

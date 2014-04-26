@@ -7,6 +7,7 @@
 
 package org.wikipediacleaner.api.check.algorithm;
 
+import java.text.MessageFormat;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -44,9 +45,6 @@ public class CheckErrorAlgorithm072 extends CheckErrorAlgorithmISBN {
       return false;
     }
 
-    // Configuration
-    String reasonTemplate = getSpecificProperty("reason", true, true, false);
-
     // Analyze each ISBN
     boolean result = false;
     List<PageElementISBN> isbns = analysis.getISBNs();
@@ -67,10 +65,7 @@ public class CheckErrorAlgorithm072 extends CheckErrorAlgorithmISBN {
                   "The checksum is {0} instead of {1}",
                   new Object[] { check, computedCheck } ),
               new NullActionProvider());
-          String reason = null;
-          if (reasonTemplate != null) {
-            reason = GT._(reasonTemplate, new Object[] { computedCheck, check });
-          }
+          String reason = getReason(isbn);
           addHelpNeededTemplates(analysis, errorResult, isbn, reason);
           addHelpNeededComment(analysis, errorResult, isbn, reason);
           String value = isbn.getISBN();
@@ -89,6 +84,28 @@ public class CheckErrorAlgorithm072 extends CheckErrorAlgorithmISBN {
     }
 
     return result;
+  }
+
+  /**
+   * @param isbn ISBN number.
+   * @return Reason for the error.
+   */
+  @Override
+  public String getReason(PageElementISBN isbn) {
+    if (isbn == null) {
+      return null;
+    }
+    String reasonTemplate = getSpecificProperty("reason", true, true, false);
+    if (reasonTemplate == null) {
+      return null;
+    }
+    String number = isbn.getISBN();
+    if (number == null) {
+      return null;
+    }
+    char check = Character.toUpperCase(number.charAt(9));
+    char computedCheck = Character.toUpperCase(isbn.getCheck());
+    return MessageFormat.format(reasonTemplate, computedCheck, check);
   }
 
   /**

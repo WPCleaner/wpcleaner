@@ -7,6 +7,7 @@
 
 package org.wikipediacleaner.api.check.algorithm;
 
+import java.text.MessageFormat;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -86,6 +87,28 @@ public class CheckErrorAlgorithm073 extends CheckErrorAlgorithmISBN {
     }
 
     return result;
+  }
+
+  /**
+   * @param isbn ISBN number.
+   * @return Reason for the error.
+   */
+  @Override
+  public String getReason(PageElementISBN isbn) {
+    if (isbn == null) {
+      return null;
+    }
+    String reasonTemplate = getSpecificProperty("reason", true, true, false);
+    if (reasonTemplate == null) {
+      return null;
+    }
+    String number = isbn.getISBN();
+    if (number == null) {
+      return null;
+    }
+    char check = Character.toUpperCase(number.charAt(12));
+    char computedCheck = Character.toUpperCase(isbn.getCheck());
+    return MessageFormat.format(reasonTemplate, computedCheck, check);
   }
 
   /**
