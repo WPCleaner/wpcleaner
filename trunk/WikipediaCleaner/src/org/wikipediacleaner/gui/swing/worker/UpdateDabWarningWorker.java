@@ -179,6 +179,9 @@ public class UpdateDabWarningWorker extends BasicWorker {
 
       // Working with sublists
       UpdateDabWarningTools tools = new UpdateDabWarningTools(wikipedia, this, true, automaticEdit);
+      tools.setContentsAvailable(contentsAvailable);
+      tools.setLinksAvailable(linksAvailable);
+      tools.setDabInformationAvailable(dabInformationAvailable);
       if (!useList) {
         setText(GT._("Retrieving disambiguation pages"));
         tools.preloadDabPages();
@@ -205,8 +208,7 @@ public class UpdateDabWarningWorker extends BasicWorker {
           finish = true;
           try {
             tools.updateDabWarning(
-                sublist, contentsAvailable, linksAvailable, dabInformationAvailable,
-                null, null, stats);
+                sublist, null, null, stats);
             lastTitle = sublist.get(sublist.size() - 1).getTitle();
           } catch (APIException e) {
             if (getWindow() != null) {

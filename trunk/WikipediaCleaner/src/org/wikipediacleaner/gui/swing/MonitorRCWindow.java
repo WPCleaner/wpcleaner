@@ -220,8 +220,7 @@ public class MonitorRCWindow extends BasicWindow implements RecentChangesListene
         Page page = DataManager.getPage(getWikipedia(), rc.getTitle(), null, null, null);
         try {
           updateDabWarning.updateDabWarning(
-              Collections.singletonList(page), false, false, false,
-              null, null, null);
+              Collections.singletonList(page), null, null, null);
         } catch (APIException e) {
           // Nothing to do
         }
@@ -308,8 +307,7 @@ public class MonitorRCWindow extends BasicWindow implements RecentChangesListene
       try {
         Stats stats = new Stats();
         createDabWarning.updateDabWarning(
-            pages, false, false, false,
-            creators, modifiers, stats);
+            pages, creators, modifiers, stats);
         List<Page> updatedPages = stats.getUpdatedPages();
         if (updatedPages != null) {
           for (Page page : updatedPages) {
