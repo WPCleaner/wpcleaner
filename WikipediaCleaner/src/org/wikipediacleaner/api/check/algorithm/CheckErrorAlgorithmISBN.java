@@ -244,4 +244,10 @@ public abstract class CheckErrorAlgorithmISBN extends CheckErrorAlgorithmBase {
           GT._("Search using {0}", paramName), actions));
     }
   }
+
+  /**
+   * @param isbn ISBN number.
+   * @return Reason for the error.
+   */
+  public abstract String getReason(PageElementISBN isbn);
 }

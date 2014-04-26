@@ -16,6 +16,7 @@ import org.wikipediacleaner.api.APIException;
 import org.wikipediacleaner.api.MediaWiki;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithm;
+import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmISBN;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithms;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.constants.WPCConfigurationBoolean;
@@ -23,6 +24,7 @@ import org.wikipediacleaner.api.constants.WPCConfigurationString;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageAnalysis.Result;
+import org.wikipediacleaner.api.data.PageElementISBN;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
 import org.wikipediacleaner.gui.swing.basic.BasicWorker;
 import org.wikipediacleaner.i18n.GT;
@@ -138,8 +140,12 @@ public class UpdateISBNWarningTools extends UpdateWarningTools {
       while (pos < next) {
         errorResult = errorResults.get(pos);
         CheckErrorAlgorithm algorithm = errorResult.getAlgorithm();
-        if (algorithm != null) {
-          String reason = algorithm.getSpecificProperty("reason", true, true, false);
+        PageElementISBN isbn = analysis.isInISBN(beginIndex);
+        if ((algorithm != null) &&
+            (algorithm instanceof CheckErrorAlgorithmISBN) &&
+            (isbn != null)) {
+          CheckErrorAlgorithmISBN isbnAlgo = (CheckErrorAlgorithmISBN) algorithm;
+          String reason = isbnAlgo.getReason(isbn);
           if ((reason != null) && (reason.length() > 0)) {
             if (comment.length() > 0) {
               comment.append(" - ");
@@ -147,6 +153,7 @@ public class UpdateISBNWarningTools extends UpdateWarningTools {
             comment.append(reason);
           }
         }
+        pos++;
       }
       elements.add(comment.toString());
     }

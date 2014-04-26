@@ -82,4 +82,13 @@ public class CheckErrorAlgorithm069 extends CheckErrorAlgorithmISBN {
 
     return result;
   }
+
+  /**
+   * @param isbn ISBN number.
+   * @return Reason for the error.
+   */
+  @Override
+  public String getReason(PageElementISBN isbn) {
+    return null;
+  }
 }
