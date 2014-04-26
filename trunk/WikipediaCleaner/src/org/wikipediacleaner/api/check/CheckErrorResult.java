@@ -10,6 +10,7 @@ package org.wikipediacleaner.api.check;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithm;
 import org.wikipediacleaner.gui.swing.component.MWPaneEditTocAction;
 import org.wikipediacleaner.i18n.GT;
 
@@ -19,7 +20,7 @@ import org.wikipediacleaner.i18n.GT;
  */
 public class CheckErrorResult implements Comparable<CheckErrorResult> {
 
-  private final String errorType;
+  private final CheckErrorAlgorithm algorithm;
   private final int startPosition;
   private final int endPosition;
   private final ErrorLevel errorLevel;
@@ -39,16 +40,16 @@ public class CheckErrorResult implements Comparable<CheckErrorResult> {
   /**
    * Constructor.
    * 
-   * @param errorType Type of error.
+   * @param algorithm Type of error.
    * @param startPosition Start of the error.
    * @param endPosition End of the error.
    * @param errorLevel Error level.
    */
   public CheckErrorResult(
-      String errorType,
+      CheckErrorAlgorithm algorithm,
       int startPosition, int endPosition,
       ErrorLevel errorLevel) {
-    this.errorType = errorType;
+    this.algorithm = algorithm;
     this.startPosition = startPosition;
     this.endPosition = endPosition;
     this.errorLevel = errorLevel;
@@ -59,21 +60,31 @@ public class CheckErrorResult implements Comparable<CheckErrorResult> {
   /**
    * Constructor.
    * 
-   * @param errorType Type of error.
+   * @param algorithm Type of error.
    * @param startPosition Start of the error.
    * @param endPosition End of the error.
    */
   public CheckErrorResult(
-      String errorType,
+      CheckErrorAlgorithm algorithm,
       int startPosition, int endPosition) {
-    this(errorType, startPosition, endPosition, ErrorLevel.ERROR);
+    this(algorithm, startPosition, endPosition, ErrorLevel.ERROR);
+  }
+
+  /**
+   * @return Type of error.
+   */
+  public CheckErrorAlgorithm getAlgorithm() {
+    return this.algorithm;
   }
 
   /**
    * @return Type of error.
    */
   public String getErrorType() {
-    return errorType;
+    if (algorithm == null) {
+      return null;
+    }
+    return algorithm.getShortDescription();
   }
 
   /**
