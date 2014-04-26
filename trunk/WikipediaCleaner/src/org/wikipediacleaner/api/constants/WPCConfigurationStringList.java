@@ -22,8 +22,6 @@ public enum WPCConfigurationStringList {
   COMMON_LANGUAGES("common_languages", true, true, true),
   // Pages containing the current list of disambiguation pages.
   CURRENT_DAB_LIST("dab_list", false, true, false),
-  // List of templates that should be before the disambiguation warning.
-  DAB_WARNING_AFTER_TEMPLATES("dab_warning_after_templates", false, true, false),
   // List of templates for displaying a warning when editing.
   EDIT_WARNING_TEMPLATES("general_edit_warning_templates", true, true, true),
   // Templates to ask for help about ISBN.
@@ -72,7 +70,9 @@ public enum WPCConfigurationStringList {
   // Templates creating links to "to do" lists.
   TODO_LINK_TEMPLATES("general_todo_link_templates", false, true, false),
   // Templates creating "to do" lists.
-  TODO_TEMPLATES("general_todo_templates", false, true, false);
+  TODO_TEMPLATES("general_todo_templates", false, true, false),
+  // List of templates that should be before the warning.
+  WARNING_AFTER_TEMPLATES("warning_after_templates", false, true, false);
 
   /**
    * Attribute name.

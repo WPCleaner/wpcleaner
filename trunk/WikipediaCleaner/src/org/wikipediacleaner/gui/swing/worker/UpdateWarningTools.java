@@ -29,6 +29,7 @@ import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.QueryResult;
 import org.wikipediacleaner.api.data.Section;
+import org.wikipediacleaner.api.data.User;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
 import org.wikipediacleaner.gui.swing.basic.BasicWorker;
 import org.wikipediacleaner.utils.Configuration;
@@ -36,7 +37,7 @@ import org.wikipediacleaner.utils.ConfigurationValueString;
 
 
 /**
- * Tools for updating disambiguation warnings.
+ * Tools for updating warnings.
  */
 public abstract class UpdateWarningTools {
 
@@ -87,24 +88,573 @@ public abstract class UpdateWarningTools {
     this.api = APIFactory.getAPI();
   }
 
+  // ==========================================================================
+  // Warning management
+  // ==========================================================================
+
   /**
-   * @param talkPage Talk page
-   * @param contents Talk page contents.
-   * @return Template containing a list to the todo subpage.
+   * Create/update warning on the "To do" sub-page.
+   * 
+   * @param pageRevId Page revision id.
+   * @param todoSubpage "To do" sub-page.
+   * @param elements Elements for the warning.
+   * @param creator User who has created the page.
+   * @param modifiers Users who have modified the page.
+   * @return True if the warning has been updated.
+   * @throws APIException
    */
-  protected PageElementTemplate getExistingTemplateTodoLink(Page talkPage, String contents) {
-    PageElementTemplate templateTodoLink = null;
-    List<String> todoLinkTemplates = configuration.getStringList(WPCConfigurationStringList.TODO_LINK_TEMPLATES);
-    if (todoLinkTemplates != null) {
-      PageAnalysis analysis = talkPage.getAnalysis(contents, true);
-      for (String todoLink : todoLinkTemplates) {
-        List<PageElementTemplate> templates = analysis.getTemplates(todoLink);
-        if ((templates != null) && (templates.size() > 0)) {
-          templateTodoLink = templates.get(0);
+  // TODO: private?
+  protected boolean updateWarningOnTodoSubpage(
+      Integer pageRevId, Page todoSubpage, Collection<String> elements,
+      String creator, List<String> modifiers) throws APIException {
+    if ((todoSubpage == null) || (elements == null)) {
+      return false;
+    }
+
+    // Search warning in the "To do" sub-page
+    String contents = todoSubpage.getContents();
+    if (contents == null) {
+      contents = "";
+    }
+    PageAnalysis analysis = todoSubpage.getAnalysis(contents, true);
+    PageElementTemplate templateWarning = getFirstWarningTemplate(analysis);
+
+    // If warning is missing, add it
+    if (templateWarning == null) {
+      if (!createWarning) {
+        return false;
+      }
+      setText(getMessageUpdateWarning(todoSubpage.getTitle()));
+      StringBuilder tmp = new StringBuilder(contents);
+      if ((tmp.length() > 0) && (tmp.charAt(tmp.length() - 1) != '\n')) {
+        tmp.append('\n');
+      }
+      tmp.append("* ");
+      addWarning(tmp, pageRevId, elements);
+      tmp.append('\n');
+      updatePage(
+          todoSubpage, tmp.toString(),
+          wiki.formatComment(
+              getWarningComment(elements),
+              automaticEdit),
+          false);
+
+      // Inform creator and modifiers of the page
+      informContributors(analysis, elements, creator, modifiers);
+
+      return true;
+    }
+
+    // Check if modifications are needed
+    if (isModified(elements, templateWarning)) {
+      StringBuilder tmp = new StringBuilder();
+      int index = templateWarning.getBeginIndex();
+      while ((index > 0) && (contents.charAt(index) != '\n')) {
+        index--;
+      }
+      if (index > 0) {
+        tmp.append(contents.substring(0, index));
+        tmp.append('\n');
+      }
+      tmp.append("* ");
+      addWarning(tmp, pageRevId, elements);
+      tmp.append('\n');
+      index = templateWarning.getEndIndex();
+      while ((index < contents.length()) && (contents.charAt(index) != '\n')) {
+        index++;
+      }
+      index++;
+      if (index < contents.length()) {
+        tmp.append(contents.substring(index));
+      }
+      api.updatePage(
+          wiki, todoSubpage, tmp.toString(),
+          wiki.formatComment(
+              getWarningComment(elements),
+              automaticEdit),
+          false);
+
+      return true;
+    }
+
+    return false;
+  }
+
+  /**
+   * Create/update warning on the talk page.
+   * 
+   * @param analysis Page analysis.
+   * @param pageRevId Page revision id.
+   * @param talkPage Talk page.
+   * @param elements Elements for the warning.
+   * @param creator User who has created the page.
+   * @param modifiers Users who have modified the page.
+   * @return True if the warning has been updated.
+   * @throws APIException
+   */
+  // TODO: private ?
+  protected boolean updateWarningOnTalkPage(
+      PageAnalysis analysis, Integer pageRevId,
+      Page talkPage, Collection<String> elements,
+      String creator, List<String> modifiers) throws APIException {
+    if ((talkPage == null) || (elements == null)) {
+      return false;
+    }
+
+    // Search "To do" template in the talk page
+    String contents = talkPage.getContents();
+    if (contents == null) {
+      contents = "";
+    }
+    PageAnalysis talkAnalysis = talkPage.getAnalysis(contents, true);
+    PageElementTemplate templateTodo = null;
+    List<String> todoTemplates = configuration.getStringList(WPCConfigurationStringList.TODO_TEMPLATES);
+    if ((todoTemplates == null) ||
+        (todoTemplates.isEmpty())) {
+      return false;
+    }
+    for (String todoTemplate : todoTemplates) {
+      List<PageElementTemplate> templates = talkAnalysis.getTemplates(todoTemplate);
+      PageElementTemplate templateTmp = (templates != null) && (templates.size() > 0) ?
+          templates.get(0) : null;
+      if (templateTmp != null) {
+        if ((templateTodo == null) || (templateTmp.getBeginIndex() < templateTodo.getBeginIndex())) {
+          templateTodo = templateTmp;
         }
       }
     }
-    return templateTodoLink;
+
+    // If "To do" template is missing, add it
+    if (templateTodo == null) {
+      if (!createWarning) {
+        return false;
+      }
+
+      // Search where to add "To do" template
+      PageElementTemplate templatePrevious = null;
+      List<String> warningAfterTemplates = configuration.getStringList(
+          WPCConfigurationStringList.WARNING_AFTER_TEMPLATES);
+      if (warningAfterTemplates != null) {
+        for (String previousTemplate : warningAfterTemplates) {
+          Collection<PageElementTemplate> templates = talkAnalysis.getTemplates(previousTemplate);
+          for (PageElementTemplate templateTmp : templates) {
+            if ((templatePrevious == null) ||
+                (templateTmp.getEndIndex() > templatePrevious.getEndIndex())) {
+              templatePrevious = templateTmp;
+            }
+          }
+        }
+      }
+      int indexStart = (templatePrevious != null) ? templatePrevious.getEndIndex() : 0;
+      if ((indexStart == 0) && (talkPage.isRedirect())) {
+        indexStart = contents.length();
+      }
+
+      // Add warning
+      setText(getMessageUpdateWarning(talkPage.getTitle()));
+      StringBuilder tmp = new StringBuilder();
+      if (indexStart > 0) {
+        tmp.append(contents.substring(0, indexStart));
+        if (tmp.charAt(tmp.length() - 1) != '\n') {
+          tmp.append("\n");
+        }
+      }
+      tmp.append("{{");
+      tmp.append(todoTemplates.get(0));
+      tmp.append("|* ");
+      addWarning(tmp, pageRevId, elements);
+      tmp.append("}}");
+      if (indexStart < contents.length()) {
+        if (contents.charAt(indexStart) != '\n') {
+          tmp.append("\n");
+        }
+        tmp.append(contents.substring(indexStart));
+      }
+      String comment = wiki.formatComment(
+          getWarningComment(elements),
+          automaticEdit);
+      updateTalkPage(talkPage, tmp.toString(), comment);
+
+      // Inform creator and modifiers of the page
+      informContributors(analysis, elements, creator, modifiers);
+
+      return true;
+    }
+
+    // Search warning in the "To do" parameter
+    String parameter = templateTodo.getParameterValue("1");
+    PageAnalysis parameterAnalysis = talkPage.getAnalysis(parameter, false);
+    PageElementTemplate templateWarning = getFirstWarningTemplate(parameterAnalysis);
+    if (templateWarning == null) {
+      StringBuilder tmp = new StringBuilder();
+      int indexStart = templateTodo.getBeginIndex();
+      if (indexStart > 0) {
+        tmp.append(contents.substring(0, indexStart));
+        if (tmp.charAt(tmp.length() - 1) != '\n') {
+          tmp.append("\n");
+        }
+      }
+      StringBuilder tmpParameter = new StringBuilder((parameter != null) ? parameter : "");
+      if ((tmpParameter.length() == 0) ||
+          (tmpParameter.charAt(tmpParameter.length() - 1) != '\n')) {
+        tmpParameter.append("\n");
+      }
+      tmpParameter.append("* ");
+      addWarning(tmpParameter, pageRevId, elements);
+      tmpParameter.append("\n");
+      tmp.append(templateTodo.getParameterReplacement("1", tmpParameter.toString(), null));
+      int indexEnd = templateTodo.getEndIndex();
+      if (indexEnd < contents.length()) {
+        if ((tmp.charAt(tmp.length() - 1) != '\n') &&
+            (contents.charAt(indexEnd) != '\n')) {
+          tmp.append("\n");
+        }
+        tmp.append(contents.substring(indexEnd));
+      }
+      String comment = wiki.formatComment(
+          getWarningComment(elements),
+          automaticEdit);
+      updateTalkPage(talkPage, tmp.toString(), comment);
+      return true;
+    }
+
+    // Update warning if necessary
+    if (isModified(elements, templateWarning)) {
+      StringBuilder tmp = new StringBuilder();
+      tmp.append(contents.substring(0, templateTodo.getBeginIndex()));
+      StringBuilder tmpParameter = new StringBuilder();
+      if (templateWarning.getBeginIndex() > 0) {
+        tmpParameter.append(parameter.substring(0, templateWarning.getBeginIndex()));
+      }
+      addWarning(tmpParameter, pageRevId, elements);
+      int endIndex = parameter.indexOf('\n', templateWarning.getEndIndex());
+      if ((endIndex >= 0) && (endIndex < parameter.length())) {
+        tmpParameter.append(parameter.substring(endIndex));
+      }
+      tmp.append(templateTodo.getParameterReplacement("1", tmpParameter.toString(), null));
+      if (templateTodo.getEndIndex() < contents.length()) {
+        tmp.append(contents.substring(templateTodo.getEndIndex()));
+      }
+      String comment = wiki.formatComment(
+          getWarningComment(elements),
+          automaticEdit);
+      updateTalkPage(talkPage, tmp.toString(), comment);
+      return true;
+    }
+
+    return false;
+  }
+
+  /**
+   * Remove warning on the "To do" sub-page.
+   * 
+   * @param todoSubpage "To do" sub-page.
+   * @return True if the warning has been updated.
+   * @throws APIException
+   */
+  // TODO: private ?
+  protected boolean removeWarningOnTodoSubpage(Page todoSubpage) throws APIException {
+    // Check if page is already empty
+    if ((todoSubpage == null) || (Boolean.FALSE.equals(todoSubpage.isExisting()))) {
+      return false;
+    }
+    String contents = todoSubpage.getContents();
+    if ((contents == null) || (contents.trim().equals(""))) {
+      return false;
+    }
+    PageAnalysis analysis = todoSubpage.getAnalysis(contents, true);
+
+    // Search warning in the "To do" sub-page
+    PageElementTemplate template = getFirstWarningTemplate(analysis);
+    if (template == null) {
+      return false;
+    }
+
+    // Analyze text to remove the warning
+    setText(getMessageRemoveWarning(todoSubpage.getTitle()));
+    StringBuilder tmp = new StringBuilder();
+    int index = template.getBeginIndex();
+    while ((index > 0) && (contents.charAt(index) != '\n')) {
+      index--;
+    }
+    if (index > 0) {
+      tmp.append(contents.substring(0, index));
+    }
+    index = template.getEndIndex();
+    while ((index < contents.length()) && (contents.charAt(index) != '\n')) {
+      index++;
+    }
+    if (index < contents.length()) {
+      if (tmp.length() > 0) {
+        tmp.append('\n');
+      }
+      tmp.append(contents.substring(index));
+    }
+
+    // Remove the warning
+    String newContents = tmp.toString();
+    String reason = wiki.formatComment(getWarningCommentDone(), automaticEdit);
+    if ((newContents.trim().length() == 0) &&
+        (wiki.getConnection().getUser() != null) &&
+        (wiki.getConnection().getUser().hasRight(User.RIGHT_DELETE))) {
+      api.deletePage(wiki, todoSubpage, reason);
+    } else {
+      if (newContents.trim().length() == 0) {
+        String delete = configuration.getString(WPCConfigurationString.TODO_SUBPAGE_DELETE);
+        if ((delete != null) && (delete.trim().length() > 0)) {
+          newContents = delete;
+        }
+      }
+      updatePage(todoSubpage, newContents, reason, false);
+    }
+
+    return true;
+  }
+
+  /**
+   * Remove warning on the talk page.
+   * 
+   * @param talkPage Talk page.
+   * @param elements Elements for the warning.
+   * @return True if the warning has been updated.
+   * @throws APIException
+   */
+  // TOOD: private?
+  protected boolean cleanWarningOnTalkPage(
+      Page talkPage, Collection<String> elements) throws APIException {
+    // Check if page exists
+    if (talkPage == null) {
+      return false;
+    }
+    List<String> todoTemplates = configuration.getStringList(WPCConfigurationStringList.TODO_TEMPLATES);
+    if ((todoTemplates == null) || (todoTemplates.isEmpty())) {
+      return false;
+    }
+    if (Boolean.FALSE.equals(talkPage.isExisting())) {
+      String comment = wiki.formatComment(
+          getWarningComment(elements),
+          automaticEdit);
+      String newContents = "{{" + todoTemplates.get(0) + "}}";
+      updateTalkPage(talkPage, newContents, comment);
+      return true;
+    }
+
+    String contents = talkPage.getContents();
+    if (contents == null) {
+      return false;
+    }
+    PageAnalysis analysis = talkPage.getAnalysis(contents, true);
+
+    // Search "To do" in the talk page
+    PageElementTemplate templateTodo = null;
+    for (String templateName : todoTemplates) {
+      List<PageElementTemplate> templates = analysis.getTemplates(templateName);
+      if ((templates != null) && (templates.size() > 0)) {
+        templateTodo = templates.get(0);
+      }
+    }
+
+    // If template is missing, verify that a link to the "To do" sub-page exists
+    if (templateTodo == null) {
+
+      // If link exists, nothing more to do
+      PageElementTemplate templateTodoLink = getExistingTemplateTodoLink(talkPage, contents);
+      if (templateTodoLink != null) {
+        return false;
+      }
+
+      // Search where to add "To do" template
+      PageElementTemplate templatePrevious = null;
+      List<String> warningAfterTemplates = configuration.getStringList(
+          WPCConfigurationStringList.WARNING_AFTER_TEMPLATES);
+      if (warningAfterTemplates != null) {
+        for (String previousTemplate : warningAfterTemplates) {
+          Collection<PageElementTemplate> templates = analysis.getTemplates(previousTemplate);
+          for (PageElementTemplate templateTmp : templates) {
+            if ((templatePrevious == null) ||
+                (templateTmp.getEndIndex() > templatePrevious.getEndIndex())) {
+              templatePrevious = templateTmp;
+            }
+          }
+        }
+      }
+
+      // Add warning
+      setText(getMessageUpdateWarning(talkPage.getTitle()));
+      StringBuilder tmp = new StringBuilder();
+      int indexStart = (templatePrevious != null) ? templatePrevious.getEndIndex() : 0;
+      if (indexStart > 0) {
+        tmp.append(contents.substring(0, indexStart));
+        if (tmp.charAt(tmp.length() - 1) != '\n') {
+          tmp.append("\n");
+        }
+      }
+      tmp.append("{{");
+      tmp.append(todoTemplates.get(0));
+      tmp.append("}}");
+      if (indexStart < contents.length()) {
+        if (contents.charAt(indexStart) != '\n') {
+          tmp.append("\n");
+        }
+        tmp.append(contents.substring(indexStart));
+      }
+      String comment = wiki.formatComment(
+          getWarningComment(elements),
+          automaticEdit);
+      updateTalkPage(talkPage, tmp.toString(), comment);
+      return true;
+    }
+    if (templateTodo.getParameterValue("1") == null) {
+      return false;
+    }
+
+    // Search warning in the "To do" parameter
+    String parameter = templateTodo.getParameterValue("1");
+    PageAnalysis parameterAnalysis = talkPage.getAnalysis(parameter, false);
+    PageElementTemplate templateWarning = getFirstWarningTemplate(parameterAnalysis);
+    if (templateWarning != null) {
+      setText(getMessageRemoveWarning(talkPage.getTitle()));
+      StringBuilder tmp = new StringBuilder();
+      if (templateTodo.getBeginIndex() > 0) {
+        tmp.append(contents.substring(0, templateTodo.getBeginIndex()));
+      }
+      String tmpParameter = "";
+      int index = templateWarning.getBeginIndex();
+      while ((index > 0) && (parameter.charAt(index) != '\n')) {
+        index--;
+      }
+      if (index > 0) {
+        tmpParameter += parameter.substring(0, index);
+      }
+      index = templateWarning.getEndIndex();
+      while ((index < parameter.length()) && (parameter.charAt(index) != '\n')) {
+        index++;
+      }
+      if (index < parameter.length()) {
+        if (tmpParameter.length() > 0) {
+          tmpParameter += "\n";
+        }
+        tmpParameter += parameter.substring(index);
+      }
+      if (tmpParameter.length() > 0) {
+        if ((tmp.length() > 0) && (tmp.charAt(tmp.length() - 1) != '\n')) {
+          tmp.append('\n');
+        }
+        tmp.append(templateTodo.getParameterReplacement("1", tmpParameter, null));
+      } else {
+        // Search "To do" link
+        PageElementTemplate templateTodoLink = null;
+        List<String> todoLinkTemplates = configuration.getStringList(WPCConfigurationStringList.TODO_LINK_TEMPLATES);
+        if (todoLinkTemplates != null) {
+          for (String templateName : todoLinkTemplates) {
+            List<PageElementTemplate> tmpTemplates = analysis.getTemplates(templateName);
+            if ((tmpTemplates != null) && (tmpTemplates.size() > 0)) {
+              templateTodoLink = tmpTemplates.get(0);
+            }
+          }
+        }
+        if (templateTodoLink == null) {
+          if ((tmp.length() > 0) && (tmp.charAt(tmp.length() - 1) != '\n')) {
+            tmp.append('\n');
+          }
+          tmp.append(templateTodo.getParameterReplacement("1", null, null));
+        }
+      }
+      if (templateTodo.getEndIndex() < contents.length()) {
+        if ((tmp.length() > 0) && (tmp.charAt(tmp.length() - 1) != '\n')) {
+          if (contents.charAt(templateTodo.getEndIndex()) != '\n') {
+            tmp.append('\n');
+          }
+        }
+        tmp.append(contents.substring(templateTodo.getEndIndex()));
+      }
+      String comment = wiki.formatComment(
+          getWarningComment(elements),
+          automaticEdit);
+      updateTalkPage(talkPage, tmp.toString(), comment);
+      return true;
+    }
+
+    return false;
+  }
+
+  /**
+   * Remove warning on the talk page.
+   * 
+   * @param talkPage Talk page.
+   * @return True if the warning has been updated.
+   * @throws APIException
+   */
+  // TODO: private ?
+  protected boolean removeWarningOnTalkPage(
+      Page talkPage) throws APIException {
+    // Check if page is already empty
+    if ((talkPage == null) || (Boolean.FALSE.equals(talkPage.isExisting()))) {
+      return false;
+    }
+    String contents = talkPage.getContents();
+    if (contents == null) {
+      return false;
+    }
+    PageAnalysis analysis = talkPage.getAnalysis(contents, true);
+
+    // Search "To do" in the talk page
+    PageElementTemplate templateTodo = null;
+    List<String> todoTemplates = configuration.getStringList(WPCConfigurationStringList.TODO_TEMPLATES);
+    if (todoTemplates != null) {
+      for (String templateName : todoTemplates) {
+        List<PageElementTemplate> templates = analysis.getTemplates(templateName);
+        if ((templates != null) && (templates.size() > 0)) {
+          templateTodo = templates.get(0);
+        }
+      }
+    }
+    if ((templateTodo != null) && (templateTodo.getParameterValue("1") != null)) {
+
+      // Search warning in the "To do" parameter
+      int parameterIndex = templateTodo.getParameterIndex("1");
+      String parameter = templateTodo.getParameterValue(parameterIndex);
+      int parameterStartIndex = templateTodo.getParameterValueStartIndex(parameterIndex);
+      PageElementTemplate templateWarning = getFirstWarningTemplate(analysis);
+      if (templateWarning != null) {
+        setText(getMessageRemoveWarning(talkPage.getTitle()));
+        StringBuilder tmp = new StringBuilder();
+        if (templateTodo.getBeginIndex() > 0) {
+          tmp.append(contents.substring(0, templateTodo.getBeginIndex()));
+        }
+        String tmpParameter = "";
+        int index = templateWarning.getBeginIndex() - parameterStartIndex;
+        while ((index > 0) && (parameter.charAt(index) != '\n')) {
+          index--;
+        }
+        if (index > 0) {
+          tmpParameter += parameter.substring(0, index);
+        }
+        index = templateWarning.getEndIndex() - parameterStartIndex;
+        while ((index < parameter.length()) && (parameter.charAt(index) != '\n')) {
+          index++;
+        }
+        if (index < parameter.length()) {
+          if (tmpParameter.length() > 0) {
+            tmpParameter += "\n";
+          }
+          tmpParameter += parameter.substring(index);
+        }
+        if (tmpParameter.length() > 0) {
+          tmp.append(templateTodo.getParameterReplacement("1", tmpParameter, null));
+        } else {
+          //
+        }
+        if (templateTodo.getEndIndex() < contents.length()) {
+          tmp.append(contents.substring(templateTodo.getEndIndex()));
+        }
+        String comment = wiki.formatComment(getWarningCommentDone(), automaticEdit);
+        updateTalkPage(talkPage, tmp.toString(), comment);
+        return true;
+      }
+    }
+
+    return false;
   }
 
   /**
@@ -114,7 +664,7 @@ public abstract class UpdateWarningTools {
    * @param template Template.
    * @return True if the template should be modified.
    */
-  protected boolean isModified(Collection<String> params, PageElementTemplate template) {
+  private boolean isModified(Collection<String> params, PageElementTemplate template) {
     // Check that parameters in template are still useful
     int paramNum = 1;
     while (template.getParameterValue(Integer.toString(paramNum)) != null) {
@@ -150,7 +700,7 @@ public abstract class UpdateWarningTools {
    * @param pageRevId Page revision id.
    * @param params List of parameters for the warning template.
    */
-  protected void addWarning(
+  private void addWarning(
       StringBuilder talkText,
       Integer pageRevId, Collection<String> params) {
     talkText.append("{{ ");
@@ -177,10 +727,31 @@ public abstract class UpdateWarningTools {
   // ==========================================================================
 
   /**
+   * @param talkPage Talk page
+   * @param contents Talk page contents.
+   * @return Template containing a list to the todo subpage.
+   */
+  // TODO: private ?
+  protected PageElementTemplate getExistingTemplateTodoLink(Page talkPage, String contents) {
+    PageElementTemplate templateTodoLink = null;
+    List<String> todoLinkTemplates = configuration.getStringList(WPCConfigurationStringList.TODO_LINK_TEMPLATES);
+    if (todoLinkTemplates != null) {
+      PageAnalysis analysis = talkPage.getAnalysis(contents, true);
+      for (String todoLink : todoLinkTemplates) {
+        List<PageElementTemplate> templates = analysis.getTemplates(todoLink);
+        if ((templates != null) && (templates.size() > 0)) {
+          templateTodoLink = templates.get(0);
+        }
+      }
+    }
+    return templateTodoLink;
+  }
+
+  /**
    * @param analysis Page analysis.
    * @return First warning template in the page.
    */
-  protected final PageElementTemplate getFirstWarningTemplate(PageAnalysis analysis) {
+  private final PageElementTemplate getFirstWarningTemplate(PageAnalysis analysis) {
     PageElementTemplate template = null;
     if (analysis != null) {
       List<PageElementTemplate> templates = analysis.getTemplates(
@@ -288,8 +859,7 @@ public abstract class UpdateWarningTools {
    * @param creator User who has created the page.
    * @param modifiers Other contributors to the page.
    */
-  // TODO: private ?
-  protected void informContributors(
+  private void informContributors(
       PageAnalysis analysis,
       Collection<String> msgElements,
       String creator,
@@ -575,12 +1145,12 @@ public abstract class UpdateWarningTools {
     private List<Page> updatedPages;
 
     /**
-     * Count of disambiguation warning that have been removed.
+     * Count of warnings that have been removed.
      */
     private int removedWarningsCount;
 
     /**
-     * Count of links to disambiguation pages.
+     * Count of links.
      */
     private int linksCount;
 
