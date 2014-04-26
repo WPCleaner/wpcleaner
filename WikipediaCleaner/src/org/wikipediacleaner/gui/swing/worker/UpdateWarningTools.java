@@ -12,13 +12,16 @@ import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.wikipediacleaner.api.API;
 import org.wikipediacleaner.api.APIException;
 import org.wikipediacleaner.api.APIFactory;
+import org.wikipediacleaner.api.MediaWiki;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.constants.WPCConfiguration;
 import org.wikipediacleaner.api.constants.WPCConfigurationBoolean;
@@ -94,6 +97,70 @@ public abstract class UpdateWarningTools {
   // ==========================================================================
   // Warning management
   // ==========================================================================
+
+  /**
+   * Update warning for a list of pages.
+   * 
+   * @param pages List of pages.
+   * @param creators For each page title, user who has created the page.
+   * @param modifiers For each page title, users who have modified the page.
+   * @param stats Statistics.
+   * @throws APIException
+   */
+  public void updateWarning(
+      List<Page> pages,
+      Map<String, String> creators,
+      Map<String, List<String>> modifiers,
+      Stats stats) throws APIException {
+    if ((pages == null) || (pages.isEmpty())) {
+      return;
+    }
+
+    // Retrieve information in the pages
+    retrievePageInformation(pages);
+
+    // Load talk pages and "To do" sub pages
+    Map<Page, Page> mapTalkPages = new HashMap<Page, Page>();
+    Map<Page, Page> mapTodoSubpages = new HashMap<Page, Page>();
+    for (Page page : pages) {
+      Page talkPage = page.getTalkPage();
+      mapTalkPages.put(page, talkPage);
+      String todoSubpageAttr = configuration.getString(WPCConfigurationString.TODO_SUBPAGE);
+      if (todoSubpageAttr != null) {
+        Page todoSubpage = talkPage.getSubPage(todoSubpageAttr);
+        mapTodoSubpages.put(page, todoSubpage);
+      }
+    }
+    MediaWiki mw = MediaWiki.getMediaWikiAccess(worker);
+    if (section0) {
+      mw.retrieveSectionContents(wiki, mapTalkPages.values(), 0, false);
+    } else {
+      mw.retrieveContents(wiki, mapTalkPages.values(), false, false, false, false);
+    }
+    mw.retrieveContents(wiki, mapTodoSubpages.values(), true, false, false, false);
+    if (mw.shouldStop()) {
+      return;
+    }
+
+    // Update warning
+    for (Page page : pages) {
+      PageAnalysis pageAnalysis = page.getAnalysis(page.getContents(), true);
+      boolean updated = updateWarning(
+          pageAnalysis, page.getRevisionId(),
+          mapTalkPages.get(page),
+          mapTodoSubpages.get(page),
+          (creators != null) ? creators.get(page.getTitle()) : null,
+          (modifiers != null) ? modifiers.get(page.getTitle()) : null,
+          stats);
+      if (stats != null) {
+        stats.addAnalyzedPage(page);
+        if (updated) {
+          stats.addUpdatedPage(page);
+        }
+      }
+    }
+    return;
+  }
 
   /**
    * Update warning for a page.
@@ -892,6 +959,15 @@ public abstract class UpdateWarningTools {
   // ==========================================================================
   // Page analysis
   // ==========================================================================
+
+  /**
+   * Retrieve information in the pages to construct the warning.
+   * 
+   * @param pages List of pages.
+   * @throws APIException
+   */
+  protected abstract void retrievePageInformation(
+      List<Page> pages) throws APIException;
 
   /**
    * Construct elements for the warning.
