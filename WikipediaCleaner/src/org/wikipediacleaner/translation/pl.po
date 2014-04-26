@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2014-04-26 21:54+0200\n"
+"POT-Creation-Date: 2014-04-26 23:21+0200\n"
 "PO-Revision-Date: 2013-11-01 03:31+0000\n"
 "Last-Translator: pp/bs <Unknown>\n"
 "Language-Team: Polish <pl@li.org>\n"
@@ -1770,6 +1770,7 @@ msgstr "Liczba stron musi się zawierać w przedziale między {0} a {1}"
 #: org/wikipediacleaner/gui/swing/worker/RandomPageWorker.java:46
 #: org/wikipediacleaner/gui/swing/worker/SendWorker.java:76
 #: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:110
+#: org/wikipediacleaner/gui/swing/worker/UpdateISBNWarningWorker.java:101
 msgid "Retrieving MediaWiki API"
 msgstr "Pobieranie API MediaWiki"
 
@@ -3268,12 +3269,15 @@ msgid "Updating disambiguation warning - {0}"
 msgstr "Aktualizowanie komunikatu o disambigach – {0}"
 
 #: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:120
+#: org/wikipediacleaner/gui/swing/worker/UpdateISBNWarningWorker.java:111
 #, java-format
 msgid "Retrieving talk pages including {0}"
 msgstr "Pobieranie stron dyskusji zawierających {0}"
 
 #: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:133
-msgid "Constructing list of articles with disambiguation warning"
+#: org/wikipediacleaner/gui/swing/worker/UpdateISBNWarningWorker.java:124
+#, fuzzy
+msgid "Constructing list of articles with warning"
 msgstr "Budowanie listy haseł z komunikatem o disambigach"
 
 #: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:163
@@ -3290,6 +3294,7 @@ msgid "Retrieving disambiguation pages"
 msgstr "Pobieranie stron ujednoznaczniających"
 
 #: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:215
+#: org/wikipediacleaner/gui/swing/worker/UpdateISBNWarningWorker.java:200
 #, java-format
 msgid ""
 "An error occured when updating disambiguation warnings. Do you want to "
@@ -3301,6 +3306,7 @@ msgstr ""
 "Błąd: {0}"
 
 #: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:266
+#: org/wikipediacleaner/gui/swing/worker/UpdateISBNWarningWorker.java:251
 #, java-format
 msgid "{0} page has been analyzed."
 msgid_plural "{0} pages have been analyzed."
@@ -3309,30 +3315,34 @@ msgstr[1] "Przeanalizowano {0} strony"
 msgstr[2] "Przeanalizowano {0} stron"
 
 #: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:271
-#, java-format
-msgid "Disambiguation warning has been updated in {0} page."
-msgid_plural "Disambiguation warnings have been updated in {0} pages."
+#: org/wikipediacleaner/gui/swing/worker/UpdateISBNWarningWorker.java:256
+#, fuzzy, java-format
+msgid "Warning has been updated in {0} page."
+msgid_plural "Warnings have been updated in {0} pages."
 msgstr[0] "Zaktualizowano komunikaty o disambigach na {0} stronie."
 msgstr[1] "Zaktualizowano komunikaty o disambigach na {0} stronach."
 msgstr[2] "Zaktualizowano komunikaty o disambigach na {0} stronach."
 
 #: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:276
-#, java-format
-msgid "Disambiguation warning has been removed in {0} page."
-msgid_plural "Disambiguation wanings have been removed in {0} pages."
+#: org/wikipediacleaner/gui/swing/worker/UpdateISBNWarningWorker.java:261
+#, fuzzy, java-format
+msgid "Warning has been removed in {0} page."
+msgid_plural "Warnings have been removed in {0} pages."
 msgstr[0] "Usunięto komunikaty o disambigach z {0} strony."
 msgstr[1] "Usunięto komunikaty o disambigach z {0} stron."
 msgstr[2] "Usunięto komunikaty o disambigach z {0} stron."
 
 #: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:281
-#, java-format
-msgid "{0} link still needs to be fixed."
-msgid_plural "{0} links still need to be fixed."
+#: org/wikipediacleaner/gui/swing/worker/UpdateISBNWarningWorker.java:266
+#, fuzzy, java-format
+msgid "{0} still needs to be fixed."
+msgid_plural "{0} still need to be fixed."
 msgstr[0] "Na poprawę czeka jeszcze {0} link."
 msgstr[1] "Na poprawę czekają jeszcze {0} linki."
 msgstr[2] "Na poprawę czeka jeszcze {0} linków."
 
 #: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:287
+#: org/wikipediacleaner/gui/swing/worker/UpdateISBNWarningWorker.java:272
 #, java-format
 msgid "It took {0} second"
 msgid_plural "It took {0} seconds"
@@ -3349,6 +3359,15 @@ msgstr "Usuwanie komunikatu o disambigach – {0}"
 #, fuzzy, java-format
 msgid "Updating ISBN warning - {0}"
 msgstr "Aktualizowanie komunikatu o disambigach – {0}"
+
+#: org/wikipediacleaner/gui/swing/worker/UpdateISBNWarningWorker.java:154
+#, fuzzy, java-format
+msgid ""
+"Analysis found {0} articles to check for ISBN errors.\n"
+"Do you want to update the warnings ?"
+msgstr ""
+"Znaleziono {0} artykułów z komunikatami o disambigach {1}.\n"
+"Chcesz aktualizować komunikaty o disambigach?"
 
 #: org/wikipediacleaner/gui/swing/worker/UpdateWarningTools.java:212
 #: org/wikipediacleaner/gui/swing/worker/UpdateWarningTools.java:227

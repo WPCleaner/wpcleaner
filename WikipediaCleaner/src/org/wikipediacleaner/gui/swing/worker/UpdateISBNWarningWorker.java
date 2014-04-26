@@ -35,16 +35,14 @@ import org.wikipediacleaner.utils.ConfigurationValueString;
 
 
 /**
- * SwingWorker for updating disambiguation warning.
+ * SwingWorker for updating ISBN warning.
  */
-public class UpdateDabWarningWorker extends BasicWorker {
+public class UpdateISBNWarningWorker extends BasicWorker {
 
   private final String start;
   private final List<Page> warningPages;
   private final boolean useList;
   private final boolean contentsAvailable;
-  private final boolean linksAvailable;
-  private final boolean dabInformationAvailable;
   private final boolean automaticEdit;
 
   /**
@@ -52,14 +50,12 @@ public class UpdateDabWarningWorker extends BasicWorker {
    * @param window Window.
    * @param start Start at this page.
    */
-  public UpdateDabWarningWorker(EnumWikipedia wikipedia, BasicWindow window, String start) {
+  public UpdateISBNWarningWorker(EnumWikipedia wikipedia, BasicWindow window, String start) {
     super(wikipedia, window);
     this.start = (start != null) ? start.trim() : "";
     this.warningPages = new ArrayList<Page>();
     this.useList = false;
     this.contentsAvailable = false;
-    this.linksAvailable = false;
-    this.dabInformationAvailable = false;
     this.automaticEdit = true;
   }
 
@@ -69,10 +65,10 @@ public class UpdateDabWarningWorker extends BasicWorker {
    * @param pages Pages to analyze.
    * @param automaticEdit True if the edit should be considered automatic.
    */
-  public UpdateDabWarningWorker(
+  public UpdateISBNWarningWorker(
       EnumWikipedia wikipedia, BasicWindow window,
       List<Page> pages, boolean automaticEdit) {
-    this(wikipedia, window, pages, false, false, false, automaticEdit);
+    this(wikipedia, window, pages, false, automaticEdit);
   }
 
   /**
@@ -80,21 +76,16 @@ public class UpdateDabWarningWorker extends BasicWorker {
    * @param window Window.
    * @param pages Pages to analyze.
    * @param contentsAvailable True if contents is already available in pages.
-   * @param linksAvailable True if links are already available in pages.
-   * @param dabInformationAvailable True if disambiguation information is already available in pages.
    * @param automaticEdit True if the edit should be considered automatic.
    */
-  public UpdateDabWarningWorker(
+  public UpdateISBNWarningWorker(
       EnumWikipedia wikipedia, BasicWindow window, List<Page> pages,
-      boolean contentsAvailable, boolean linksAvailable,
-      boolean dabInformationAvailable, boolean automaticEdit) {
+      boolean contentsAvailable, boolean automaticEdit) {
     super(wikipedia, window);
     this.start = "";
     this.warningPages = new ArrayList<Page>(pages);
     this.useList = true;
     this.contentsAvailable = contentsAvailable;
-    this.linksAvailable = linksAvailable;
-    this.dabInformationAvailable = dabInformationAvailable;
     this.automaticEdit = automaticEdit;
   }
 
@@ -116,7 +107,7 @@ public class UpdateDabWarningWorker extends BasicWorker {
     try {
       if (!useList) {
         // Retrieve talk pages including a warning
-        String warningTemplateName = configuration.getString(WPCConfigurationString.DAB_WARNING_TEMPLATE);
+        String warningTemplateName = configuration.getString(WPCConfigurationString.ISBN_WARNING_TEMPLATE);
         setText(GT._("Retrieving talk pages including {0}", "{{" + warningTemplateName + "}}"));
         String templateTitle = wikiConfiguration.getPageTitle(
             Namespace.TEMPLATE,
@@ -160,9 +151,9 @@ public class UpdateDabWarningWorker extends BasicWorker {
         }
         if (getWindow() != null) {
           int answer = getWindow().displayYesNoWarning(GT._(
-              "Analysis found {0} articles with disambiguation warning {1}.\n" +
-              "Do you want to update the disambiguation warnings ?",
-              new Object[] { Integer.valueOf(tmpWarningPages.size()), "{{" + warningTemplateName + "}}" }));
+              "Analysis found {0} articles to check for ISBN errors.\n" +
+              "Do you want to update the warnings ?",
+              Integer.valueOf(tmpWarningPages.size()).toString() ));
           if (answer != JOptionPane.YES_OPTION) {
             return Integer.valueOf(0);
           }
@@ -178,14 +169,8 @@ public class UpdateDabWarningWorker extends BasicWorker {
       }
 
       // Working with sublists
-      UpdateDabWarningTools tools = new UpdateDabWarningTools(wikipedia, this, true, automaticEdit);
+      UpdateISBNWarningTools tools = new UpdateISBNWarningTools(wikipedia, this, true, automaticEdit);
       tools.setContentsAvailable(contentsAvailable);
-      tools.setLinksAvailable(linksAvailable);
-      tools.setDabInformationAvailable(dabInformationAvailable);
-      if (!useList) {
-        setText(GT._("Retrieving disambiguation pages"));
-        tools.preloadDabPages();
-      }
       String lastTitle = null;
       while (!warningPages.isEmpty()) {
         // Creating sublist
@@ -222,7 +207,7 @@ public class UpdateDabWarningWorker extends BasicWorker {
           }
           if (shouldStop()) {
             Configuration config = Configuration.getConfiguration();
-            config.setString(null, ConfigurationValueString.LAST_DAB_WARNING, lastTitle);
+            config.setString(null, ConfigurationValueString.LAST_ISBN_WARNING, lastTitle);
             displayResult(stats, startTime);
             return Integer.valueOf(stats.getUpdatedPagesCount());
           }
@@ -230,7 +215,7 @@ public class UpdateDabWarningWorker extends BasicWorker {
 
         if (stats.getUpdatedPagesCount() > lastCount) {
           lastCount = stats.getUpdatedPagesCount();
-          /*if (getWindow() != null) {
+          if (getWindow() != null) {
             int answer = getWindow().displayYesNoWarning(
                 "This feature is currently under development, please check the modification.\n" +
                 "Do you want to continue ?");
@@ -239,12 +224,12 @@ public class UpdateDabWarningWorker extends BasicWorker {
             }
           } else {
             return Integer.valueOf(lastCount);
-          }*/
+          }
         }
       }
       if (warningPages.isEmpty()) {
         Configuration config = Configuration.getConfiguration();
-        config.setString(null, ConfigurationValueString.LAST_DAB_WARNING, (String) null);
+        config.setString(null, ConfigurationValueString.LAST_ISBN_WARNING, (String) null);
       }
     } catch (APIException e) {
       return e;
