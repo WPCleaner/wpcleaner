@@ -149,7 +149,7 @@ public class PageElementISBN extends PageElement {
               analyzeTemplateParams(
                   analysis, isbns, template,
                   (isbnTemplate.length > 1) ? isbnTemplate[1] : "1",
-                  false, false, false);
+                  false, false, false, false);
             }
           }
         }
@@ -167,7 +167,7 @@ public class PageElementISBN extends PageElement {
               analyzeTemplateParams(
                   analysis, isbns, template,
                   ((isbnTemplate.length > 1) && (isbnTemplate[1].length() > 0)) ? isbnTemplate[1] : "1",
-                  false, false, true);
+                  false, false, false, true);
             }
           }
         }
@@ -177,7 +177,7 @@ public class PageElementISBN extends PageElement {
     // Search for ISBN in template parameters
     List<PageElementTemplate> templates = analysis.getTemplates();
     for (PageElementTemplate template : templates) {
-      analyzeTemplateParams(analysis, isbns, template, "ISBN", true, true, false);
+      analyzeTemplateParams(analysis, isbns, template, "ISBN", true, true, true, false);
     }
 
     return isbns;
@@ -192,14 +192,15 @@ public class PageElementISBN extends PageElement {
    * @param argumentName Template parameter name.
    * @param ignoreCase True if parameter name should compared ignoring case.
    * @param acceptNumbers True if numbers are accepted after parameter name.
-   * @param helpRequested True if help has been requested for this ISBN. 
+   * @param acceptAllValues True if all values are accepted, even if not compatible with ISBN. 
+   * @param helpRequested True if help has been requested for this ISBN.
    */
   private static void analyzeTemplateParams(
       PageAnalysis analysis, List<PageElementISBN> isbns,
       PageElementTemplate template,
       String argumentName,
       boolean ignoreCase, boolean acceptNumbers,
-      boolean helpRequested) {
+      boolean acceptAllValues, boolean helpRequested) {
     int paramDefaultName = 1;
     for (int paramNum = 0; paramNum < template.getParameterCount(); paramNum++) {
 
@@ -291,6 +292,13 @@ public class PageElementISBN extends PageElement {
           if (paramValue.length() > 0) {
             isbns.add(new PageElementISBN(
                 beginIndex, endIndex, value, true, correct, helpRequested, true));
+          }
+        } else if (acceptAllValues) {
+          if (paramValue.length() > 0) {
+            isbns.add(new PageElementISBN(
+                template.getParameterValueStartIndex(paramNum),
+                template.getParameterValueStartIndex(paramNum) + paramValue.length(),
+                paramValue, true, false, false, true));
           }
         }
       }

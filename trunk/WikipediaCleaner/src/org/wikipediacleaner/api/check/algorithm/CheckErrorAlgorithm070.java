@@ -52,7 +52,7 @@ public class CheckErrorAlgorithm070 extends CheckErrorAlgorithmISBN {
       String isbnNumber = isbn.getISBN();
       if (isbnNumber != null) {
         int length = isbnNumber.length();
-        if ((length != 10) && (length != 13)) {
+        if ((length != 10) && (length != 13) && (length != 0)) {
           if (errors == null) {
             return true;
           }
