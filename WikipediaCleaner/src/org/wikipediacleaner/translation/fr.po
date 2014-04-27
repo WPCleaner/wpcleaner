@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2014-04-27 00:52+0200\n"
-"PO-Revision-Date: 2014-04-27 01:23+0100\n"
+"POT-Creation-Date: 2014-04-27 10:30+0200\n"
+"PO-Revision-Date: 2014-04-27 10:35+0100\n"
 "Last-Translator: Nicolas Vervelle <nvervelle@gmail.com>\n"
 "Language-Team: French <fr@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -2586,20 +2586,25 @@ msgstr "Marquer les erreur déjà corrigées"
 msgid "Check whitelists"
 msgstr "Vérifier les listes blanches"
 
-#: org/wikipediacleaner/gui/swing/bot/GeneralToolsPanel.java:89
+#: org/wikipediacleaner/gui/swing/bot/GeneralToolsPanel.java:95
 msgid "Semi-automatic disambiguation fixing"
 msgstr "Correction d’homonymie semi-automatique"
 
-#: org/wikipediacleaner/gui/swing/bot/GeneralToolsPanel.java:98
+#: org/wikipediacleaner/gui/swing/bot/GeneralToolsPanel.java:104
 msgid "Update existing disambiguation warning messages"
 msgstr "Mettre à jour le message d’avertissement existant"
 
-#: org/wikipediacleaner/gui/swing/bot/GeneralToolsPanel.java:107
+#: org/wikipediacleaner/gui/swing/bot/GeneralToolsPanel.java:113
+msgid "Update ISBN warning messages"
+msgstr "Mise à jour des avertissements ISBN"
+
+#: org/wikipediacleaner/gui/swing/bot/GeneralToolsPanel.java:122
 msgid "Monitor recent changes"
 msgstr "Surveiller les modifications récentes"
 
-#: org/wikipediacleaner/gui/swing/bot/GeneralToolsPanel.java:152
-msgid "At what page do you wish to start updating the disambiguation warning ?"
+#: org/wikipediacleaner/gui/swing/bot/GeneralToolsPanel.java:167
+#: org/wikipediacleaner/gui/swing/bot/GeneralToolsPanel.java:192
+msgid "At what page do you wish to start updating the warnings ?"
 msgstr ""
 "A quelle page voulez-vous débuter la mise à jour du message d’avertissement ?"
 
@@ -3386,12 +3391,12 @@ msgid_plural "It took {0} seconds"
 msgstr[0] "Ceci a été réalisé en {0} seconde."
 msgstr[1] "Ceci a été réalisé en {0} secondes."
 
-#: org/wikipediacleaner/gui/swing/worker/UpdateISBNWarningTools.java:214
+#: org/wikipediacleaner/gui/swing/worker/UpdateISBNWarningTools.java:224
 #, java-format
 msgid "Removing ISBN warning - {0}"
 msgstr "Suppression de l’avertissement ISBN - {0}"
 
-#: org/wikipediacleaner/gui/swing/worker/UpdateISBNWarningTools.java:223
+#: org/wikipediacleaner/gui/swing/worker/UpdateISBNWarningTools.java:233
 #, java-format
 msgid "Updating ISBN warning - {0}"
 msgstr "Mise à jour de l’avertissement ISBN - {0}"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2014-04-27 00:52+0200\n"
+"POT-Creation-Date: 2014-04-27 10:30+0200\n"
 "PO-Revision-Date: 2013-07-06 19:07+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Brazilian Portuguese <pt_BR@li.org>\n"
@@ -2487,20 +2487,26 @@ msgstr ""
 msgid "Check whitelists"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/bot/GeneralToolsPanel.java:89
+#: org/wikipediacleaner/gui/swing/bot/GeneralToolsPanel.java:95
 msgid "Semi-automatic disambiguation fixing"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/bot/GeneralToolsPanel.java:98
+#: org/wikipediacleaner/gui/swing/bot/GeneralToolsPanel.java:104
 msgid "Update existing disambiguation warning messages"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/bot/GeneralToolsPanel.java:107
+#: org/wikipediacleaner/gui/swing/bot/GeneralToolsPanel.java:113
+#, fuzzy
+msgid "Update ISBN warning messages"
+msgstr "Atualizando página {0}"
+
+#: org/wikipediacleaner/gui/swing/bot/GeneralToolsPanel.java:122
 msgid "Monitor recent changes"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/bot/GeneralToolsPanel.java:152
-msgid "At what page do you wish to start updating the disambiguation warning ?"
+#: org/wikipediacleaner/gui/swing/bot/GeneralToolsPanel.java:167
+#: org/wikipediacleaner/gui/swing/bot/GeneralToolsPanel.java:192
+msgid "At what page do you wish to start updating the warnings ?"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/component/CheckErrorPageListPopupListener.java:99
@@ -3273,12 +3279,12 @@ msgid_plural "It took {0} seconds"
 msgstr[0] ""
 msgstr[1] ""
 
-#: org/wikipediacleaner/gui/swing/worker/UpdateISBNWarningTools.java:214
+#: org/wikipediacleaner/gui/swing/worker/UpdateISBNWarningTools.java:224
 #, java-format
 msgid "Removing ISBN warning - {0}"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/worker/UpdateISBNWarningTools.java:223
+#: org/wikipediacleaner/gui/swing/worker/UpdateISBNWarningTools.java:233
 #, fuzzy, java-format
 msgid "Updating ISBN warning - {0}"
 msgstr "Atualizando página {0}"

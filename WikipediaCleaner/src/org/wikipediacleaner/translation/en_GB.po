@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2014-04-27 00:52+0200\n"
+"POT-Creation-Date: 2014-04-27 10:30+0200\n"
 "PO-Revision-Date: 2014-04-24 22:51+0000\n"
 "Last-Translator: Anthony Harrington <untaintableangel@ubuntu.com>\n"
 "Language-Team: English (United Kingdom) <en_GB@li.org>\n"
@@ -2535,20 +2535,27 @@ msgstr "Mark errors already fixed"
 msgid "Check whitelists"
 msgstr "Check whitelists"
 
-#: org/wikipediacleaner/gui/swing/bot/GeneralToolsPanel.java:89
+#: org/wikipediacleaner/gui/swing/bot/GeneralToolsPanel.java:95
 msgid "Semi-automatic disambiguation fixing"
 msgstr "Semi-automatic disambiguation fixing"
 
-#: org/wikipediacleaner/gui/swing/bot/GeneralToolsPanel.java:98
+#: org/wikipediacleaner/gui/swing/bot/GeneralToolsPanel.java:104
 msgid "Update existing disambiguation warning messages"
 msgstr "Update existing disambiguation warning messages"
 
-#: org/wikipediacleaner/gui/swing/bot/GeneralToolsPanel.java:107
+#: org/wikipediacleaner/gui/swing/bot/GeneralToolsPanel.java:113
+#, fuzzy
+msgid "Update ISBN warning messages"
+msgstr "Updating disambiguation warning - {0}"
+
+#: org/wikipediacleaner/gui/swing/bot/GeneralToolsPanel.java:122
 msgid "Monitor recent changes"
 msgstr "Monitor recent changes"
 
-#: org/wikipediacleaner/gui/swing/bot/GeneralToolsPanel.java:152
-msgid "At what page do you wish to start updating the disambiguation warning ?"
+#: org/wikipediacleaner/gui/swing/bot/GeneralToolsPanel.java:167
+#: org/wikipediacleaner/gui/swing/bot/GeneralToolsPanel.java:192
+#, fuzzy
+msgid "At what page do you wish to start updating the warnings ?"
 msgstr ""
 "At what page do you wish to start updating the disambiguation warning ?"
 
@@ -3326,12 +3333,12 @@ msgid_plural "It took {0} seconds"
 msgstr[0] "It took {0} second"
 msgstr[1] "It took {0} seconds"
 
-#: org/wikipediacleaner/gui/swing/worker/UpdateISBNWarningTools.java:214
+#: org/wikipediacleaner/gui/swing/worker/UpdateISBNWarningTools.java:224
 #, fuzzy, java-format
 msgid "Removing ISBN warning - {0}"
 msgstr "Removing disambiguation warning - {0}"
 
-#: org/wikipediacleaner/gui/swing/worker/UpdateISBNWarningTools.java:223
+#: org/wikipediacleaner/gui/swing/worker/UpdateISBNWarningTools.java:233
 #, fuzzy, java-format
 msgid "Updating ISBN warning - {0}"
 msgstr "Updating disambiguation warning - {0}"

@@ -24,6 +24,7 @@ import org.wikipediacleaner.gui.swing.Controller;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
 import org.wikipediacleaner.gui.swing.basic.Utilities;
 import org.wikipediacleaner.gui.swing.worker.UpdateDabWarningWorker;
+import org.wikipediacleaner.gui.swing.worker.UpdateISBNWarningWorker;
 import org.wikipediacleaner.i18n.GT;
 import org.wikipediacleaner.images.EnumImageSize;
 import org.wikipediacleaner.utils.Configuration;
@@ -54,6 +55,11 @@ public class GeneralToolsPanel extends BotToolsPanel {
    * Button for updating disambiguation warnings on all wiki.
    */
   private JButton buttonUpdateDabWarning;
+
+  /**
+   * Button for updating ISBN warnings on all wiki.
+   */
+  private JButton buttonUpdateISBNWarning;
 
   /**
    * Construct a general bot tools panel.
@@ -99,6 +105,15 @@ public class GeneralToolsPanel extends BotToolsPanel {
     buttonUpdateDabWarning.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionUpdateDabWarning"));
     add(buttonUpdateDabWarning, constraints);
+    constraints.gridy++;
+
+    // Update ISBN warning
+    buttonUpdateISBNWarning = Utilities.createJButton(
+        "commons-nuvola-web-broom.png", EnumImageSize.NORMAL,
+        GT._("Update ISBN warning messages"), true, null);
+    buttonUpdateISBNWarning.addActionListener(EventHandler.create(
+        ActionListener.class, this, "actionUpdateISBNWarning"));
+    add(buttonUpdateISBNWarning, constraints);
     constraints.gridy++;
 
     // Monitor recent changes
@@ -149,12 +164,37 @@ public class GeneralToolsPanel extends BotToolsPanel {
       return;
     }
     String start = window.askForValue(
-        GT._("At what page do you wish to start updating the disambiguation warning ?"),
+        GT._("At what page do you wish to start updating the warnings ?"),
         config.getString(null, ConfigurationValueString.LAST_DAB_WARNING), null);
     if (start == null) {
       return;
     }
     UpdateDabWarningWorker worker = new UpdateDabWarningWorker(
+        wiki, window, start);
+    worker.start();
+  }
+
+  /**
+   * Action called when Update ISBN Warning button is pressed.
+   */
+  public void actionUpdateISBNWarning() {
+    EnumWikipedia wiki = window.getWikipedia();
+    Configuration config = Configuration.getConfiguration();
+    WPCConfiguration wpcConfig = wiki.getConfiguration();
+    String template = wpcConfig.getString(WPCConfigurationString.ISBN_WARNING_TEMPLATE);
+    if ((template == null) || (template.trim().length() == 0)) {
+      Utilities.displayMessageForMissingConfiguration(
+          window.getParentComponent(),
+          WPCConfigurationString.ISBN_WARNING_TEMPLATE.getAttributeName());
+      return;
+    }
+    String start = window.askForValue(
+        GT._("At what page do you wish to start updating the warnings ?"),
+        config.getString(null, ConfigurationValueString.LAST_ISBN_WARNING), null);
+    if (start == null) {
+      return;
+    }
+    UpdateISBNWarningWorker worker = new UpdateISBNWarningWorker(
         wiki, window, start);
     worker.start();
   }
