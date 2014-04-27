@@ -17,6 +17,10 @@ import javax.swing.JOptionPane;
 import org.wikipediacleaner.api.API;
 import org.wikipediacleaner.api.APIException;
 import org.wikipediacleaner.api.APIFactory;
+import org.wikipediacleaner.api.CheckWiki;
+import org.wikipediacleaner.api.check.CheckError;
+import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithm;
+import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithms;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.constants.WPCConfiguration;
 import org.wikipediacleaner.api.constants.WPCConfigurationString;
@@ -137,6 +141,13 @@ public class UpdateISBNWarningWorker extends BasicWorker {
             }
           }
         }
+
+        // Retrieve articles listed for ISBN errors in Check Wiki
+        retrieveCheckWikiPages(70, warningPages); // Incorrect length
+        retrieveCheckWikiPages(71, warningPages); // Incorrect X
+        retrieveCheckWikiPages(72, warningPages); // Incorrect ISBN-10
+        retrieveCheckWikiPages(73, warningPages); // Incorrect ISBN-13
+
         // Construct list of articles with warning
         setText(GT._("Constructing list of articles with warning"));
         HashSet<Page> tmpWarningPages = new HashSet<Page>();
@@ -264,6 +275,29 @@ public class UpdateISBNWarningWorker extends BasicWorker {
 
     displayResult(stats, startTime);
     return Integer.valueOf(stats.getUpdatedPagesCount());
+  }
+
+  /**
+   * Retrieve pages for a given error number.
+   * 
+   * @param errorNumber Error number.
+   * @param pages List of pages to complete.
+   */
+  private void retrieveCheckWikiPages(int errorNumber, List<Page> pages) {
+    CheckWiki cw = APIFactory.getCheckWiki();
+    EnumWikipedia wiki = getWikipedia();
+    CheckErrorAlgorithm algorithm = CheckErrorAlgorithms.getAlgorithm(wiki, errorNumber);
+    List<CheckError> errors = new ArrayList<CheckError>();
+    try {
+      cw.retrievePages(algorithm, 10000, wiki, errors);
+      for (CheckError error: errors) {
+        for (int pageNum = 0; pageNum < error.getPageCount(); pageNum++) {
+          pages.add(error.getPage(pageNum));
+        }
+      }
+    } catch (APIException e) {
+      // Nothing
+    }
   }
 
   /**
