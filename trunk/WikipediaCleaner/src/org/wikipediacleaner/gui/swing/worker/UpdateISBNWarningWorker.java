@@ -253,7 +253,7 @@ public class UpdateISBNWarningWorker extends BasicWorker {
 
         if (stats.getUpdatedPagesCount() > lastCount) {
           lastCount = stats.getUpdatedPagesCount();
-          if (getWindow() != null) {
+          /*if (getWindow() != null) {
             int answer = getWindow().displayYesNoWarning(
                 "This feature is currently under development, please check the modification.\n" +
                 "Do you want to continue ?");
@@ -262,7 +262,7 @@ public class UpdateISBNWarningWorker extends BasicWorker {
             }
           } else {
             return Integer.valueOf(lastCount);
-          }
+          }*/
         }
       }
       if (warningPages.isEmpty()) {
