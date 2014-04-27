@@ -298,7 +298,7 @@ public abstract class UpdateWarningTools {
     if ((elements == null) || (elements.isEmpty())) {
       result |= removeWarningOnTodoSubpage(todoSubpage);
       result |= removeWarningOnTalkPage(talkPage);
-      if (stats != null) {
+      if (result && (stats != null)) {
         stats.addRemovedWarning(pageAnalysis.getPage());
       }
     } else {
@@ -334,7 +334,7 @@ public abstract class UpdateWarningTools {
     boolean result = false;
     if ((elements == null) || (elements.isEmpty())) {
       result = removeWarningOnTalkPage(talkPage);
-      if (stats != null) {
+      if (result && (stats != null)) {
         stats.addRemovedWarning(pageAnalysis.getPage());
       }
     } else {

@@ -106,6 +106,8 @@ public class UpdateISBNWarningWorker extends BasicWorker {
     Stats stats = new Stats();
     try {
       if (!useList) {
+        warningPages.clear();
+
         // Retrieve talk pages including a warning
         String warningTemplateName = configuration.getString(WPCConfigurationString.ISBN_WARNING_TEMPLATE);
         setText(GT._("Retrieving talk pages including {0}", "{{" + warningTemplateName + "}}"));
@@ -118,37 +120,46 @@ public class UpdateISBNWarningWorker extends BasicWorker {
             wikipedia, warningTemplate,
             configuration.getEncyclopedicTalkNamespaces(),
             false);
-        List<Page> warningTalkPages = warningTemplate.getRelatedPages(Page.RelatedPages.EMBEDDED_IN);
+        warningPages.addAll(warningTemplate.getRelatedPages(Page.RelatedPages.EMBEDDED_IN));
   
         // Construct list of articles with warning
         setText(GT._("Constructing list of articles with warning"));
         HashSet<Page> tmpWarningPages = new HashSet<Page>();
-        for (Page warningPage : warningTalkPages) {
+        List<Integer> encyclopedicNamespaces = configuration.getEncyclopedicNamespaces();
+        for (Page warningPage : warningPages) {
+
+          // Get article page for talks pages and to do sub-pages
           String title = warningPage.getTitle();
-          String todoSubpage = configuration.getString(WPCConfigurationString.TODO_SUBPAGE);
-          if (title.endsWith("/" + todoSubpage)) {
-            title = title.substring(0, title.length() - 1 - todoSubpage.length());
-          }
-          int colonIndex = title.indexOf(':');
-          if (colonIndex >= 0) {
-            for (Integer namespace : configuration.getEncyclopedicTalkNamespaces()) {
-              Namespace namespaceTalk = wikiConfiguration.getNamespace(namespace);
-              if ((namespaceTalk != null) &&
-                  (namespaceTalk.isPossibleName(title.substring(0, colonIndex)))) {
-                String tmpTitle = title.substring(colonIndex + 1);
-                if (namespace != Namespace.MAIN_TALK) {
-                  tmpTitle = wikiConfiguration.getPageTitle(namespace - 1, tmpTitle);
+          if (!warningPage.isArticle()) {
+            String todoSubpage = configuration.getString(WPCConfigurationString.TODO_SUBPAGE);
+            if (title.endsWith("/" + todoSubpage)) {
+              title = title.substring(0, title.length() - 1 - todoSubpage.length());
+            }
+            Integer namespace = warningPage.getNamespace();
+            if (namespace != null) {
+              Namespace namespaceTalk = wikiConfiguration.getNamespace(namespace.intValue());
+              if (namespaceTalk != null) {
+                int colonIndex = title.indexOf(':');
+                if (colonIndex >= 0) {
+                  title = title.substring(colonIndex + 1);
                 }
-                if ((start.length() == 0) || (start.compareTo(tmpTitle) < 0)) {
-                  Page page = DataManager.getPage(wikipedia, tmpTitle, null, null, null);
-                  if (!tmpWarningPages.contains(page)) {
-                    tmpWarningPages.add(page);
-                  }
+                if (namespace != Namespace.MAIN_TALK) {
+                  title = wikiConfiguration.getPageTitle(namespace - 1, title);
                 }
               }
             }
           }
+
+          // Add article to the list
+          if ((start.length() == 0) || (start.compareTo(title) < 0)) {
+            Page page = DataManager.getPage(wikipedia, title, null, null, null);
+            if (encyclopedicNamespaces.contains(page.getNamespace()) &&
+                !tmpWarningPages.contains(page)) {
+              tmpWarningPages.add(page);
+            }
+          }
         }
+
         if (getWindow() != null) {
           int answer = getWindow().displayYesNoWarning(GT._(
               "Analysis found {0} articles to check for ISBN errors.\n" +
@@ -160,6 +171,7 @@ public class UpdateISBNWarningWorker extends BasicWorker {
         }
 
         // Sort the list of articles
+        warningPages.clear();
         warningPages.addAll(tmpWarningPages);
         tmpWarningPages.clear();
         Collections.sort(warningPages, PageComparator.getTitleFirstComparator());
