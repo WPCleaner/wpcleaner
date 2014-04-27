@@ -20,6 +20,7 @@ import org.wikipediacleaner.api.APIFactory;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.constants.WPCConfiguration;
 import org.wikipediacleaner.api.constants.WPCConfigurationString;
+import org.wikipediacleaner.api.constants.WPCConfigurationStringList;
 import org.wikipediacleaner.api.constants.WikiConfiguration;
 import org.wikipediacleaner.api.data.DataManager;
 import org.wikipediacleaner.api.data.Namespace;
@@ -95,13 +96,13 @@ public class UpdateISBNWarningWorker extends BasicWorker {
   @Override
   public Object construct() {
     long startTime = System.currentTimeMillis();
-    EnumWikipedia wikipedia = getWikipedia();
-    WPCConfiguration configuration = wikipedia.getConfiguration();
+    EnumWikipedia wiki = getWikipedia();
+    WPCConfiguration configuration = wiki.getConfiguration();
 
     setText(GT._("Retrieving MediaWiki API"));
     API api = APIFactory.getAPI();
     int lastCount = 0;
-    WikiConfiguration wikiConfiguration = wikipedia.getWikiConfiguration();
+    WikiConfiguration wikiConfiguration = wiki.getWikiConfiguration();
 
     Stats stats = new Stats();
     try {
@@ -115,13 +116,27 @@ public class UpdateISBNWarningWorker extends BasicWorker {
             Namespace.TEMPLATE,
             warningTemplateName);
         Page warningTemplate = DataManager.getPage(
-            wikipedia, templateTitle, null, null, null);
+            wiki, templateTitle, null, null, null);
         api.retrieveEmbeddedIn(
-            wikipedia, warningTemplate,
+            wiki, warningTemplate,
             configuration.getEncyclopedicTalkNamespaces(),
             false);
         warningPages.addAll(warningTemplate.getRelatedPages(Page.RelatedPages.EMBEDDED_IN));
-  
+
+        // Retrieve articles in categories for ISBN errors
+        List<String> categories = configuration.getStringList(WPCConfigurationStringList.ISBN_ERRORS_CATEGORIES);
+        if (categories != null) {
+          for (String category : categories) {
+            String categoryTitle = wikiConfiguration.getPageTitle(Namespace.CATEGORY, category);
+            Page categoryPage = DataManager.getPage(wiki, categoryTitle, null, null, null);
+            api.retrieveCategoryMembers(wiki, categoryPage, 0, false);
+            List<Page> categoryMembers = categoryPage.getRelatedPages(
+                Page.RelatedPages.CATEGORY_MEMBERS);
+            if (categoryMembers != null) {
+              warningPages.addAll(categoryMembers);
+            }
+          }
+        }
         // Construct list of articles with warning
         setText(GT._("Constructing list of articles with warning"));
         HashSet<Page> tmpWarningPages = new HashSet<Page>();
@@ -152,7 +167,7 @@ public class UpdateISBNWarningWorker extends BasicWorker {
 
           // Add article to the list
           if ((start.length() == 0) || (start.compareTo(title) < 0)) {
-            Page page = DataManager.getPage(wikipedia, title, null, null, null);
+            Page page = DataManager.getPage(wiki, title, null, null, null);
             if (encyclopedicNamespaces.contains(page.getNamespace()) &&
                 !tmpWarningPages.contains(page)) {
               tmpWarningPages.add(page);
@@ -181,7 +196,7 @@ public class UpdateISBNWarningWorker extends BasicWorker {
       }
 
       // Working with sublists
-      UpdateISBNWarningTools tools = new UpdateISBNWarningTools(wikipedia, this, true, automaticEdit);
+      UpdateISBNWarningTools tools = new UpdateISBNWarningTools(wiki, this, true, automaticEdit);
       tools.setContentsAvailable(contentsAvailable);
       String lastTitle = null;
       while (!warningPages.isEmpty()) {
