@@ -132,7 +132,7 @@ class CWCheckWhiteListsWorker extends BasicWorker {
     super.finished();
     if (getWindow() != null) {
       InformationWindow.createInformationWindow(
-          GT._("White lists"), get().toString(), getWikipedia());
+          GT._("White lists"), get().toString(), true, getWikipedia());
     }
   }
 

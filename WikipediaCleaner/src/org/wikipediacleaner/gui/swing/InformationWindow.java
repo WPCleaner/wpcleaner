@@ -19,6 +19,9 @@ import java.io.StringReader;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextPane;
+import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingConstants;
 import javax.swing.WindowConstants;
 
@@ -46,7 +49,9 @@ public class InformationWindow
 
   String title;
   String information;
+  boolean html;
   JLabel lblTitle;
+  JTextPane textPane;
   HtmlPanel textInformation;
   UserAgentContext ucontextInformation;
   HtmlRendererContext rcontextInformation;
@@ -57,11 +62,13 @@ public class InformationWindow
    * 
    * @param title Title.
    * @param information Information.
+   * @param html True if information is in HTML format.
    * @param wikipedia Wikipedia.
    */
   public static void createInformationWindow(
       final String title,
       final String information,
+      final boolean html,
       final EnumWikipedia wikipedia) {
     createWindow(
         "InformationWindow",
@@ -75,6 +82,7 @@ public class InformationWindow
               InformationWindow info = (InformationWindow) window;
               info.title = title;
               info.information = information;
+              info.html = html;
             }
           }
           @Override
@@ -94,11 +102,15 @@ public class InformationWindow
   void updateInformation() {
     try {
       lblTitle.setText(title);
-      DocumentBuilderImpl dbi = new DocumentBuilderImpl(
-          ucontextInformation, rcontextInformation);
-      InputSource is = new InputSource(new StringReader(information));
-      is.setSystemId("http://localhost");
-      textInformation.setDocument(dbi.parse(is), rcontextInformation);
+      if (html) {
+        DocumentBuilderImpl dbi = new DocumentBuilderImpl(
+            ucontextInformation, rcontextInformation);
+        InputSource is = new InputSource(new StringReader(information));
+        is.setSystemId("http://localhost");
+        textInformation.setDocument(dbi.parse(is), rcontextInformation);
+      } else {
+        textPane.setText(information);
+      }
     } catch (SAXException e) {
       // Nothing
     } catch (IOException e) {
@@ -143,17 +155,27 @@ public class InformationWindow
     constraints.gridy++;
 
     // Information
-    textInformation = new HtmlPanel();
-    ucontextInformation = new SimpleUserAgentContext();
-    rcontextInformation = new MWHtmlRendererContext(textInformation, ucontextInformation);
-    textInformation.setPreferredSize(new Dimension(500, 500));
-    textInformation.setMinimumSize(new Dimension(100, 100));
-    lblTitle.setLabelFor(textInformation);
+    Component component = null;
+    if (html) {
+      textInformation = new HtmlPanel();
+      ucontextInformation = new SimpleUserAgentContext();
+      rcontextInformation = new MWHtmlRendererContext(textInformation, ucontextInformation);
+      component = textInformation;
+    } else {
+      textPane = new JTextPane();
+      JScrollPane scrollPane = new JScrollPane(textPane);
+      scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+      scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+      component = scrollPane;
+    }
+    component.setPreferredSize(new Dimension(500, 500));
+    component.setMinimumSize(new Dimension(100, 100));
+    lblTitle.setLabelFor(component);
     constraints.fill = GridBagConstraints.BOTH;
     constraints.gridx = 0;
     constraints.weighty = 1;
     constraints.weightx = 1;
-    panel.add(textInformation, constraints);
+    panel.add(component, constraints);
     constraints.gridy++;
 
     // Buttons

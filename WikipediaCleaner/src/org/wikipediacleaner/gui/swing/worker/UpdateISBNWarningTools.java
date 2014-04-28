@@ -137,7 +137,9 @@ public class UpdateISBNWarningTools extends UpdateWarningTools {
              (endIndex == errorResults.get(next).getEndPosition())) {
         next++;
       }
-      elements.add(analysis.getContents().substring(beginIndex, endIndex));
+      String error = analysis.getContents().substring(beginIndex, endIndex);
+      elements.add(error);
+      memorizeError(error, analysis.getPage().getTitle());
       StringBuilder comment = new StringBuilder();
       while (pos < next) {
         errorResult = errorResults.get(pos);

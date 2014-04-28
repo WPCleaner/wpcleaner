@@ -62,6 +62,11 @@ public class GeneralToolsPanel extends BotToolsPanel {
   private JButton buttonUpdateISBNWarning;
 
   /**
+   * Button for listing ISBN warnings on all wiki.
+   */
+  private JButton buttonListISBNError;
+
+  /**
    * Construct a general bot tools panel.
    * 
    * @param window Parent window.
@@ -114,6 +119,15 @@ public class GeneralToolsPanel extends BotToolsPanel {
     buttonUpdateISBNWarning.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionUpdateISBNWarning"));
     add(buttonUpdateISBNWarning, constraints);
+    constraints.gridy++;
+
+    // List ISBN errors
+    buttonListISBNError = Utilities.createJButton(
+        "commons-nuvola-web-broom.png", EnumImageSize.NORMAL,
+        GT._("List ISBN errors"), true, null);
+    buttonListISBNError.addActionListener(EventHandler.create(
+        ActionListener.class, this, "actionListISBNErrors"));
+    add(buttonListISBNError, constraints);
     constraints.gridy++;
 
     // Monitor recent changes
@@ -178,6 +192,22 @@ public class GeneralToolsPanel extends BotToolsPanel {
    * Action called when Update ISBN Warning button is pressed.
    */
   public void actionUpdateISBNWarning() {
+    actionISBNWarning(false);
+  }
+
+  /**
+   * Action called when List ISBN Errors button is pressed.
+   */
+  public void actionListISBNErrors() {
+    actionISBNWarning(true);
+  }
+
+  /**
+   * Analyze ISBN errors.
+   * 
+   * @param simulation True if this is a simulation.
+   */
+  private void actionISBNWarning(boolean simulation) {
     EnumWikipedia wiki = window.getWikipedia();
     Configuration config = Configuration.getConfiguration();
     WPCConfiguration wpcConfig = wiki.getConfiguration();
@@ -195,7 +225,7 @@ public class GeneralToolsPanel extends BotToolsPanel {
       return;
     }
     UpdateISBNWarningWorker worker = new UpdateISBNWarningWorker(
-        wiki, window, start);
+        wiki, window, start, simulation);
     worker.start();
   }
 

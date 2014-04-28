@@ -229,7 +229,9 @@ public class UpdateDabWarningTools extends UpdateWarningTools {
             if ((linkCount.getInternalLinkCount() > 0) ||
                 (linkCount.getIncorrectTemplateCount() > 0) ||
                 (linkCount.getHelpNeededCount() > 0)) {
-              dabLinks.add(link.getTitle());
+              String error = link.getTitle();
+              dabLinks.add(error);
+              memorizeError(error, analysis.getPage().getTitle());
             }
           }
         }

@@ -105,7 +105,7 @@ public class AutomaticFixingWorker extends BasicWorker {
                 "The following modifications have been done ({0} page):",
                 "The following modifications have been done ({0} pages):",
                 count, count.toString()),
-            description.toString(), getWikipedia());
+            description.toString(), true, getWikipedia());
       }
       return count;
     } catch (APIException e) {
