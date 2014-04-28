@@ -327,9 +327,9 @@ public class UpdateISBNWarningWorker extends BasicWorker {
             buffer.append(values.size());
             buffer.append(" x ");
           }
-          buffer.append("{{ISBN|");
+          buffer.append("ISBN ");
           buffer.append(key);
-          buffer.append("}} : ");
+          buffer.append(" : ");
           if (values != null) {
             Collections.sort(values);
             boolean first = true;
