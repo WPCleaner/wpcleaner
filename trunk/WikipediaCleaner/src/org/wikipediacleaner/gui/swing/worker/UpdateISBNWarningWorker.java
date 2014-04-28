@@ -112,17 +112,19 @@ public class UpdateISBNWarningWorker extends BasicWorker {
 
         // Retrieve talk pages including a warning
         String warningTemplateName = configuration.getString(WPCConfigurationString.ISBN_WARNING_TEMPLATE);
-        setText(GT._("Retrieving talk pages including {0}", "{{" + warningTemplateName + "}}"));
-        String templateTitle = wikiConfiguration.getPageTitle(
-            Namespace.TEMPLATE,
-            warningTemplateName);
-        Page warningTemplate = DataManager.getPage(
-            wiki, templateTitle, null, null, null);
-        api.retrieveEmbeddedIn(
-            wiki, warningTemplate,
-            configuration.getEncyclopedicTalkNamespaces(),
-            false);
-        warningPages.addAll(warningTemplate.getRelatedPages(Page.RelatedPages.EMBEDDED_IN));
+        if (warningTemplateName != null) {
+          setText(GT._("Retrieving talk pages including {0}", "{{" + warningTemplateName + "}}"));
+          String templateTitle = wikiConfiguration.getPageTitle(
+              Namespace.TEMPLATE,
+              warningTemplateName);
+          Page warningTemplate = DataManager.getPage(
+              wiki, templateTitle, null, null, null);
+          api.retrieveEmbeddedIn(
+              wiki, warningTemplate,
+              configuration.getEncyclopedicTalkNamespaces(),
+              false);
+          warningPages.addAll(warningTemplate.getRelatedPages(Page.RelatedPages.EMBEDDED_IN));
+        }
 
         // Retrieve articles in categories for ISBN errors
         List<String> categories = configuration.getStringList(WPCConfigurationStringList.ISBN_ERRORS_CATEGORIES);
