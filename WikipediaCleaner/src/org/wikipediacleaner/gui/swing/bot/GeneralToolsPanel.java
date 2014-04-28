@@ -210,13 +210,15 @@ public class GeneralToolsPanel extends BotToolsPanel {
   private void actionISBNWarning(boolean simulation) {
     EnumWikipedia wiki = window.getWikipedia();
     Configuration config = Configuration.getConfiguration();
-    WPCConfiguration wpcConfig = wiki.getConfiguration();
-    String template = wpcConfig.getString(WPCConfigurationString.ISBN_WARNING_TEMPLATE);
-    if ((template == null) || (template.trim().length() == 0)) {
-      Utilities.displayMessageForMissingConfiguration(
-          window.getParentComponent(),
-          WPCConfigurationString.ISBN_WARNING_TEMPLATE.getAttributeName());
-      return;
+    if (!simulation) {
+      WPCConfiguration wpcConfig = wiki.getConfiguration();
+      String template = wpcConfig.getString(WPCConfigurationString.ISBN_WARNING_TEMPLATE);
+      if ((template == null) || (template.trim().length() == 0)) {
+        Utilities.displayMessageForMissingConfiguration(
+            window.getParentComponent(),
+            WPCConfigurationString.ISBN_WARNING_TEMPLATE.getAttributeName());
+        return;
+      }
     }
     String start = window.askForValue(
         GT._("At what page do you wish to start updating the warnings ?"),
