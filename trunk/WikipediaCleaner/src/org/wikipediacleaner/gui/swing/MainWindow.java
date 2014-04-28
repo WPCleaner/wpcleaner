@@ -1243,7 +1243,7 @@ public class MainWindow
     if ((wikipedia != null) && (wikipedia.getContributions() != null)) {
       InformationWindow.createInformationWindow(
           GT._("Your contributions"),
-          wikipedia.getContributions().getDescription(),
+          wikipedia.getContributions().getDescription(), true,
           wikipedia);
     }
   }

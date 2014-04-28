@@ -76,6 +76,12 @@ public abstract class UpdateWarningTools {
   /** True if contents is already available in pages. */
   private boolean contentsAvailable;
 
+  /** True if this is a simulation. */
+  private boolean simulation;
+
+  /** Map for errors. */
+  private Map<String, List<String>> errorsMap;
+
   /**
    * @param wiki Wiki.
    * @param worker Worker.
@@ -110,6 +116,28 @@ public abstract class UpdateWarningTools {
   public boolean getContentsAvailable() {
     return contentsAvailable;
   }
+
+  /**
+   * @param simulation True if this is a simulation.
+   */
+  public void setSimulation(boolean simulation) {
+    this.simulation = simulation;
+  }
+
+  /**
+   * Initialize the errors map.
+   */
+  public void prepareErrorsMap() {
+    this.errorsMap = new HashMap<String, List<String>>();
+  }
+
+  /**
+   * @return Errors map.
+   */
+  public Map<String, List<String>> getErrorsMap() {
+    return errorsMap;
+  }
+
   // ==========================================================================
   // Warning management
   // ==========================================================================
@@ -296,16 +324,20 @@ public abstract class UpdateWarningTools {
     Collection<String> elements = constructWarningElements(pageAnalysis, talkPage, todoSubpage);
     boolean result = false;
     if ((elements == null) || (elements.isEmpty())) {
-      result |= removeWarningOnTodoSubpage(todoSubpage);
-      result |= removeWarningOnTalkPage(talkPage);
-      if (result && (stats != null)) {
-        stats.addRemovedWarning(pageAnalysis.getPage());
+      if (!simulation) {
+        result |= removeWarningOnTodoSubpage(todoSubpage);
+        result |= removeWarningOnTalkPage(talkPage);
+        if (result && (stats != null)) {
+          stats.addRemovedWarning(pageAnalysis.getPage());
+        }
       }
     } else {
-      result |= updateWarningOnTodoSubpage(
-          pageRevId, todoSubpage, elements, creator, modifiers);
-      if (createWarning) {
-        result |= cleanWarningOnTalkPage(talkPage, elements);
+      if (!simulation) {
+        result |= updateWarningOnTodoSubpage(
+            pageRevId, todoSubpage, elements, creator, modifiers);
+        if (createWarning) {
+          result |= cleanWarningOnTalkPage(talkPage, elements);
+        }
       }
       if (stats != null) {
         stats.addLinks(pageAnalysis.getPage(), elements.size());
@@ -333,13 +365,17 @@ public abstract class UpdateWarningTools {
     Collection<String> elements = constructWarningElements(pageAnalysis, talkPage, null);
     boolean result = false;
     if ((elements == null) || (elements.isEmpty())) {
-      result = removeWarningOnTalkPage(talkPage);
-      if (result && (stats != null)) {
-        stats.addRemovedWarning(pageAnalysis.getPage());
+      if (!simulation) {
+        result = removeWarningOnTalkPage(talkPage);
+        if (result && (stats != null)) {
+          stats.addRemovedWarning(pageAnalysis.getPage());
+        }
       }
     } else {
-      result |= updateWarningOnTalkPage(
-          pageAnalysis, pageRevId, talkPage, elements, creator, modifiers);
+      if (!simulation) {
+        result |= updateWarningOnTalkPage(
+            pageAnalysis, pageRevId, talkPage, elements, creator, modifiers);
+      }
       if (stats != null) {
         stats.addLinks(pageAnalysis.getPage(), elements.size());
       }
@@ -995,6 +1031,26 @@ public abstract class UpdateWarningTools {
    */
   protected abstract Collection<String> constructWarningElements(
       PageAnalysis analysis, Page talkPage, Page todoSubpage);
+
+  /**
+   * Memorize an error.
+   * 
+   * @param error Error to memorize. 
+   * @param title Page title in which the error is present.
+   */
+  protected void memorizeError(String error, String title) {
+    if ((errorsMap == null) || (error == null) || (title == null)) {
+      return;
+    }
+    List<String> titles = errorsMap.get(error);
+    if (titles == null) {
+      titles = new ArrayList<String>();
+      errorsMap.put(error, titles);
+    }
+    if (!titles.contains(title)) {
+      titles.add(title);
+    }
+  }
 
   /**
    * @param talkPage Talk page

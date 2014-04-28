@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 
 import javax.swing.JOptionPane;
 
@@ -30,6 +31,7 @@ import org.wikipediacleaner.api.data.DataManager;
 import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageComparator;
+import org.wikipediacleaner.gui.swing.InformationWindow;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
 import org.wikipediacleaner.gui.swing.basic.BasicWorker;
 import org.wikipediacleaner.gui.swing.basic.Utilities;
@@ -48,49 +50,43 @@ public class UpdateISBNWarningWorker extends BasicWorker {
   private final List<Page> warningPages;
   private final boolean useList;
   private final boolean contentsAvailable;
+  private final boolean simulation;
   private final boolean automaticEdit;
 
   /**
-   * @param wikipedia Wikipedia.
+   * @param wiki Wiki.
    * @param window Window.
    * @param start Start at this page.
+   * @param True if this is a simulation.
    */
-  public UpdateISBNWarningWorker(EnumWikipedia wikipedia, BasicWindow window, String start) {
-    super(wikipedia, window);
+  public UpdateISBNWarningWorker(
+      EnumWikipedia wiki, BasicWindow window,
+      String start, boolean simulation) {
+    super(wiki, window);
     this.start = (start != null) ? start.trim() : "";
     this.warningPages = new ArrayList<Page>();
     this.useList = false;
     this.contentsAvailable = false;
+    this.simulation = simulation;
     this.automaticEdit = true;
   }
 
   /**
-   * @param wikipedia Wikipedia.
-   * @param window Window.
-   * @param pages Pages to analyze.
-   * @param automaticEdit True if the edit should be considered automatic.
-   */
-  public UpdateISBNWarningWorker(
-      EnumWikipedia wikipedia, BasicWindow window,
-      List<Page> pages, boolean automaticEdit) {
-    this(wikipedia, window, pages, false, automaticEdit);
-  }
-
-  /**
-   * @param wikipedia Wikipedia.
+   * @param wiki Wiki.
    * @param window Window.
    * @param pages Pages to analyze.
    * @param contentsAvailable True if contents is already available in pages.
    * @param automaticEdit True if the edit should be considered automatic.
    */
   public UpdateISBNWarningWorker(
-      EnumWikipedia wikipedia, BasicWindow window, List<Page> pages,
+      EnumWikipedia wiki, BasicWindow window, List<Page> pages,
       boolean contentsAvailable, boolean automaticEdit) {
-    super(wikipedia, window);
+    super(wiki, window);
     this.start = "";
     this.warningPages = new ArrayList<Page>(pages);
     this.useList = true;
     this.contentsAvailable = contentsAvailable;
+    this.simulation = false;
     this.automaticEdit = automaticEdit;
   }
 
@@ -109,6 +105,7 @@ public class UpdateISBNWarningWorker extends BasicWorker {
     WikiConfiguration wikiConfiguration = wiki.getWikiConfiguration();
 
     Stats stats = new Stats();
+    Map<String, List<String>> errors = null;
     try {
       if (!useList) {
         warningPages.clear();
@@ -209,6 +206,10 @@ public class UpdateISBNWarningWorker extends BasicWorker {
       // Working with sublists
       UpdateISBNWarningTools tools = new UpdateISBNWarningTools(wiki, this, true, automaticEdit);
       tools.setContentsAvailable(contentsAvailable);
+      if (simulation) {
+        tools.setSimulation(true);
+        tools.prepareErrorsMap();
+      }
       String lastTitle = null;
       while (!warningPages.isEmpty()) {
         // Creating sublist
@@ -221,7 +222,8 @@ public class UpdateISBNWarningWorker extends BasicWorker {
           }
         }
         if (sublist.isEmpty()) {
-          displayResult(stats, startTime);
+          errors = tools.getErrorsMap();
+          displayResult(stats, startTime, errors);
           return Integer.valueOf(stats.getUpdatedPagesCount());
         }
 
@@ -246,7 +248,7 @@ public class UpdateISBNWarningWorker extends BasicWorker {
           if (shouldStop()) {
             Configuration config = Configuration.getConfiguration();
             config.setString(null, ConfigurationValueString.LAST_ISBN_WARNING, lastTitle);
-            displayResult(stats, startTime);
+            displayResult(stats, startTime, null);
             return Integer.valueOf(stats.getUpdatedPagesCount());
           }
         }
@@ -265,6 +267,7 @@ public class UpdateISBNWarningWorker extends BasicWorker {
           }*/
         }
       }
+      errors = tools.getErrorsMap();
       if (warningPages.isEmpty()) {
         Configuration config = Configuration.getConfiguration();
         config.setString(null, ConfigurationValueString.LAST_ISBN_WARNING, (String) null);
@@ -273,7 +276,7 @@ public class UpdateISBNWarningWorker extends BasicWorker {
       return e;
     }
 
-    displayResult(stats, startTime);
+    displayResult(stats, startTime, errors);
     return Integer.valueOf(stats.getUpdatedPagesCount());
   }
 
@@ -303,9 +306,48 @@ public class UpdateISBNWarningWorker extends BasicWorker {
   /**
    * @param stats Statistics.
    * @param startTime Start time.
+   * @param errors Errors found.
    */
-  private void displayResult(Stats stats, long startTime) {
+  private void displayResult(
+      Stats stats, long startTime,
+      Map<String, List<String>> errors) {
     if ((!useList) && (getWindow() != null)) {
+
+      // Errors
+      if (errors != null) {
+        StringBuilder buffer = new StringBuilder();
+        List<String> keys = new ArrayList<String>(errors.keySet());
+        Collections.sort(keys);
+        for (String key : keys) {
+          List<String> values = errors.get(key);
+          buffer.append("* ");
+          if (values != null) {
+            buffer.append(values.size());
+            buffer.append(" x ");
+          }
+          buffer.append("{{ISBN|");
+          buffer.append(key);
+          buffer.append("}} : ");
+          if (values != null) {
+            Collections.sort(values);
+            boolean first = true;
+            for (String value : values) {
+              if (!first) {
+                buffer.append(", ");
+              }
+              first = false;
+              buffer.append("[[");
+              buffer.append(value);
+              buffer.append("]]");
+            }
+          }
+          buffer.append("\n");
+        }
+        InformationWindow.createInformationWindow(
+            "ISBN", buffer.toString(), false, getWikipedia());
+      }
+
+      // Statistics
       long endTime = System.currentTimeMillis();
       StringBuilder message = new StringBuilder();
       message.append(GT.__(
