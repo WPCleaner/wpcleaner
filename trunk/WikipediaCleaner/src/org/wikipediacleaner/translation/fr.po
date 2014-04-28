@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2014-04-28 21:41+0200\n"
-"PO-Revision-Date: 2014-04-27 10:35+0100\n"
+"PO-Revision-Date: 2014-04-29 00:07+0100\n"
 "Last-Translator: Nicolas Vervelle <nvervelle@gmail.com>\n"
 "Language-Team: French <fr@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -2600,7 +2600,7 @@ msgstr "Mise à jour des avertissements ISBN"
 
 #: org/wikipediacleaner/gui/swing/bot/GeneralToolsPanel.java:127
 msgid "List ISBN errors"
-msgstr ""
+msgstr "Lister les erreurs d’ISBN"
 
 #: org/wikipediacleaner/gui/swing/bot/GeneralToolsPanel.java:136
 msgid "Monitor recent changes"
