@@ -208,9 +208,9 @@ public class UpdateISBNWarningWorker extends BasicWorker {
       // Working with sublists
       UpdateISBNWarningTools tools = new UpdateISBNWarningTools(wiki, this, true, automaticEdit);
       tools.setContentsAvailable(contentsAvailable);
+      tools.prepareErrorsMap();
       if (simulation) {
         tools.setSimulation(true);
-        tools.prepareErrorsMap();
       }
       String lastTitle = null;
       while (!warningPages.isEmpty()) {
@@ -332,12 +332,21 @@ public class UpdateISBNWarningWorker extends BasicWorker {
           buffer.append(" : ");
           if (values != null) {
             Collections.sort(values);
-            boolean first = true;
-            for (String value : values) {
-              if (!first) {
+            int valueNum = 0;
+            while (valueNum < values.size()) {
+              if (valueNum > 0) {
                 buffer.append(", ");
               }
-              first = false;
+              String value = values.get(valueNum);
+              int begin = valueNum;
+              while ((valueNum < values.size()) &&
+                     (values.get(valueNum).equals(value))) {
+                valueNum++;
+              }
+              if (valueNum > begin + 1) {
+                buffer.append(valueNum - begin);
+                buffer.append(" x ");
+              }
               buffer.append("[[");
               buffer.append(value);
               buffer.append("]]");
