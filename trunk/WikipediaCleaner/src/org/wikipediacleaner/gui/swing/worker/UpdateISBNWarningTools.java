@@ -138,6 +138,8 @@ public class UpdateISBNWarningTools extends UpdateWarningTools {
         next++;
       }
       String error = analysis.getContents().substring(beginIndex, endIndex);
+      error = error.replaceAll("\\=", "&#x3D;"); // Replace "=" by its HTML value
+      error = error.replaceAll("\\n", "\u21b5"); // Replacer \n by a visual character
       elements.add(error);
       memorizeError(error, analysis.getPage().getTitle());
       StringBuilder comment = new StringBuilder();
