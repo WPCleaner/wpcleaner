@@ -163,6 +163,7 @@ public class InformationWindow
       component = textInformation;
     } else {
       textPane = new JTextPane();
+      textPane.setEditable(false);
       JScrollPane scrollPane = new JScrollPane(textPane);
       scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
       scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
