@@ -1047,9 +1047,7 @@ public abstract class UpdateWarningTools {
       titles = new ArrayList<String>();
       errorsMap.put(error, titles);
     }
-    if (!titles.contains(title)) {
-      titles.add(title);
-    }
+    titles.add(title);
   }
 
   /**
