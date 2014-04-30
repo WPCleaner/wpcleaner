@@ -220,9 +220,13 @@ public class GeneralToolsPanel extends BotToolsPanel {
         return;
       }
     }
-    String start = window.askForValue(
-        GT._("At what page do you wish to start updating the warnings ?"),
-        config.getString(null, ConfigurationValueString.LAST_ISBN_WARNING), null);
+    String start = "";
+    if (!simulation) {
+      start = window.askForValue(
+          GT._("At what page do you wish to start updating the warnings ?"),
+          config.getString(null, ConfigurationValueString.LAST_ISBN_WARNING),
+          null);
+    }
     if (start == null) {
       return;
     }
