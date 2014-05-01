@@ -45,9 +45,6 @@ public class CheckErrorAlgorithm073 extends CheckErrorAlgorithmISBN {
       return false;
     }
 
-    // Configuration
-    String reasonTemplate = getSpecificProperty("reason", true, true, false);
-
     // Analyze each ISBN
     boolean result = false;
     List<PageElementISBN> isbns = analysis.getISBNs();
@@ -67,12 +64,8 @@ public class CheckErrorAlgorithm073 extends CheckErrorAlgorithmISBN {
                   "The checksum is {0} instead of {1}",
                   new Object[] { check, computedCheck } ),
               new NullActionProvider());
-          String reason = null;
-          if (reasonTemplate != null) {
-            reason = GT._(reasonTemplate, new Object[] { computedCheck, check });
-          }
-          addHelpNeededTemplates(analysis, errorResult, isbn, reason);
-          addHelpNeededComment(analysis, errorResult, isbn, reason);
+          addHelpNeededTemplates(analysis, errorResult, isbn);
+          addHelpNeededComment(analysis, errorResult, isbn);
           String value = isbn.getISBN();
           addSearchEngines(analysis, errorResult, value);
           value = value.substring(0, value.length() - 1) + computedCheck;

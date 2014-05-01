@@ -65,9 +65,8 @@ public class CheckErrorAlgorithm072 extends CheckErrorAlgorithmISBN {
                   "The checksum is {0} instead of {1}",
                   new Object[] { check, computedCheck } ),
               new NullActionProvider());
-          String reason = getReason(isbn);
-          addHelpNeededTemplates(analysis, errorResult, isbn, reason);
-          addHelpNeededComment(analysis, errorResult, isbn, reason);
+          addHelpNeededTemplates(analysis, errorResult, isbn);
+          addHelpNeededComment(analysis, errorResult, isbn);
           String value = isbn.getISBN();
           addSearchEngines(analysis, errorResult, value);
           value = value.substring(0, value.length() - 1) + computedCheck;

@@ -63,9 +63,9 @@ public class CheckErrorAlgorithm070 extends CheckErrorAlgorithmISBN {
                   "The ISBN''s length is {0} instead of 10 or 13",
                   Integer.toString(length) ),
               new NullActionProvider());
-          String reason = getReason(isbn);
-          addHelpNeededTemplates(analysis, errorResult, isbn, reason);
-          addHelpNeededComment(analysis, errorResult, isbn, reason);
+          addSuggestions(analysis, errorResult, isbn);
+          addHelpNeededTemplates(analysis, errorResult, isbn);
+          addHelpNeededComment(analysis, errorResult, isbn);
           String value = isbn.getISBN();
           addSearchEngines(analysis, errorResult, value);
           if (isbn.isTemplateParameter()) {
