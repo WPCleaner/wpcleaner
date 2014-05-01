@@ -546,6 +546,27 @@ public class PageElementTemplate extends PageElement {
   }
 
   /**
+   * Retrieve parameter.
+   * 
+   * @param index Text index in the page.
+   * @return Parameter.
+   */
+  public Parameter getParameterAtIndex(int index) {
+    if ((index < getBeginIndex()) || (index >= getEndIndex())) {
+      return null;
+    }
+    for (int paramNum = 0; paramNum < parameters.size() - 1; paramNum++) {
+      if (parameters.get(paramNum + 1).getPipeIndex() >= index) {
+        return parameters.get(paramNum);
+      }
+    }
+    if (!parameters.isEmpty()) {
+      return parameters.get(parameters.size() - 1);
+    }
+    return null;
+  }
+
+  /**
    * Retrieve pipe index.
    * 
    * @param index Parameter index.

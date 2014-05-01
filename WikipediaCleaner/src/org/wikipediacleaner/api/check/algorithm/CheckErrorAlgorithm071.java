@@ -64,9 +64,8 @@ public class CheckErrorAlgorithm071 extends CheckErrorAlgorithmISBN {
           }
           result = true;
           CheckErrorResult errorResult = createCheckErrorResult(analysis, isbn, true);
-          String reason = getReason(isbn);
-          addHelpNeededTemplates(analysis, errorResult, isbn, reason);
-          addHelpNeededComment(analysis, errorResult, isbn, reason);
+          addHelpNeededTemplates(analysis, errorResult, isbn);
+          addHelpNeededComment(analysis, errorResult, isbn);
           if (isbn.isTemplateParameter()) {
             PageElementTemplate template = analysis.isInTemplate(isbn.getBeginIndex());
             addSearchEngines(analysis, errorResult, template);

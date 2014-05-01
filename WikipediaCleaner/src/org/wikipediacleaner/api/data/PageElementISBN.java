@@ -621,7 +621,7 @@ public class PageElementISBN extends PageElement {
    * @param isbn ISBN number.
    * @return Cleaned up ISBN number.
    */
-  private static String cleanISBN(String isbn) {
+  public static String cleanISBN(String isbn) {
     if (isbn == null) {
       return null;
     }
