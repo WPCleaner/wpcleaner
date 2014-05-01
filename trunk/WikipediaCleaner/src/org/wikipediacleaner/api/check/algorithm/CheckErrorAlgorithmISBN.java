@@ -117,8 +117,10 @@ public abstract class CheckErrorAlgorithmISBN extends CheckErrorAlgorithmBase {
       }
 
       // Remove ISBN prefix
-      if (isbnValue.toUpperCase().startsWith("ISBN")) {
-        isbnValue = isbnValue.substring(4);
+      if (isbn.isTemplateParameter()) {
+        if (isbnValue.toUpperCase().startsWith("ISBN")) {
+          isbnValue = isbnValue.substring(4);
+        }
       }
 
       // Remove extra characters at the beginning
@@ -133,13 +135,19 @@ public abstract class CheckErrorAlgorithmISBN extends CheckErrorAlgorithmBase {
           ((cleanISBN.length() == 15) && (cleanISBN.startsWith("13")))) {
         int digitCount = 0;
         int index = 0;
+        boolean ok = true;
         while ((index < isbnValue.length()) && (digitCount < 2)) {
-          if (Character.isDigit(isbnValue.charAt(index))) {
+          char current = isbnValue.charAt(index);
+          if (Character.isDigit(current)) {
             digitCount++;
+          } else if (Character.isLetter(current)) {
+            ok = false;
           }
           index++;
         }
-        isbnValue = isbnValue.substring(index);
+        if (ok) {
+          isbnValue = isbnValue.substring(index);
+        }
       }
 
       // Remove extra characters at both extremities
