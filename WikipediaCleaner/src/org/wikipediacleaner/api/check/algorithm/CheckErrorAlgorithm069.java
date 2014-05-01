@@ -52,6 +52,14 @@ public class CheckErrorAlgorithm069 extends CheckErrorAlgorithmISBN {
         CheckErrorResult errorResult = createCheckErrorResult(analysis, isbn, false);
         addSuggestions(analysis, errorResult, isbn);
         errors.add(errorResult);
+        List<String> replacements = isbn.getCorrectISBN();
+        if (replacements != null) {
+          for (String replacement : replacements) {
+            if (!replacement.equals(analysis.getContents().substring(isbn.getBeginIndex(), isbn.getEndIndex()))) {
+              errorResult.addReplacement(replacement);
+            }
+          }
+        }
       }
     }
 
