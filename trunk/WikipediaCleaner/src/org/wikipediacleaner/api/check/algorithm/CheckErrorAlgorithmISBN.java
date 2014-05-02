@@ -192,13 +192,17 @@ public abstract class CheckErrorAlgorithmISBN extends CheckErrorAlgorithmBase {
     }
 
     // Check if all potential ISBN are valid
-    boolean valid = true;
+    boolean correctLength = true;
     for (String isbnValue : isbnValues) {
-      // TODO
+      String cleanISBN = PageElementISBN.cleanISBN(isbnValue);
+      int length = cleanISBN.length();
+      if ((length != 10) && (length != 13)) {
+        correctLength = false;
+      }
     }
 
     // Suggestions
-    if (valid) {
+    if (correctLength) {
       if (isbnValues.size() == 1) {
         String value = isbnValues.get(0);
         if (!value.equals(isbn.getISBNNotTrimmed())) {
