@@ -74,6 +74,11 @@ public abstract class CheckErrorAlgorithmISBN extends CheckErrorAlgorithmBase {
     return result;
   }
 
+  private final String[] possibleSplit = {
+      "[,/]",
+      "[,/ ]"
+  };
+
   /**
    * @param analysis Page analysis.
    * @param errorResult Error result.
@@ -89,13 +94,28 @@ public abstract class CheckErrorAlgorithmISBN extends CheckErrorAlgorithmBase {
     // Split ISBN in several potential ISBN
     List<String> isbnValues = new ArrayList<String>();
     if (isbn.isTemplateParameter()) {
-      for (String value : isbn.getISBNNotTrimmed().trim().split("[,/]")) {
-        isbnValues.add(value);
+      for (String split : possibleSplit) {
+        isbnValues.clear();
+        for (String value : isbn.getISBNNotTrimmed().trim().split(split)) {
+          isbnValues.add(value);
+        }
+        addSuggestions(analysis, errorResult, isbn, isbnValues);
       }
     } else {
       isbnValues.add(isbn.getISBNNotTrimmed());
+      addSuggestions(analysis, errorResult, isbn, isbnValues);
     }
+  }
 
+  /**
+   * @param analysis Page analysis.
+   * @param errorResult Error result.
+   * @param isbn ISBN.
+   * @param isbnValues Broken down ISBN values.
+   */
+  private void addSuggestions(
+      PageAnalysis analysis, CheckErrorResult errorResult,
+      PageElementISBN isbn, List<String> isbnValues) {
     // Remove empty ISBN
     Iterator<String> itValues = isbnValues.iterator();
     while (itValues.hasNext()) {
