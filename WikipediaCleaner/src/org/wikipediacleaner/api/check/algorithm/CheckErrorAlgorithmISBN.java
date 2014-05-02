@@ -156,14 +156,16 @@ public abstract class CheckErrorAlgorithmISBN extends CheckErrorAlgorithmBase {
         int digitCount = 0;
         int index = 0;
         boolean ok = true;
-        while ((index < isbnValue.length()) && (digitCount < 2)) {
+        while ((index < isbnValue.length()) && (digitCount < 3)) {
           char current = isbnValue.charAt(index);
           if (Character.isDigit(current)) {
             digitCount++;
           } else if (Character.isLetter(current)) {
             ok = false;
           }
-          index++;
+          if (digitCount < 3) {
+            index++;
+          }
         }
         if (ok) {
           isbnValue = isbnValue.substring(index);
