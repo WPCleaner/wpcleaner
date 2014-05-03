@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2014-04-28 21:41+0200\n"
+"POT-Creation-Date: 2014-05-04 01:20+0200\n"
 "PO-Revision-Date: 2014-04-28 16:51+0000\n"
 "Last-Translator: Matěj S. <matejsuchanek97@gmail.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
@@ -453,14 +453,14 @@ msgid "The ISBN''s length is {0} instead of 10 or 13"
 msgstr "Délka ISBN je {0} místo 10 nebo 13"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm070.java:116
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm071.java:107
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm072.java:120
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm073.java:123
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm071.java:106
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm072.java:119
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm073.java:116
 msgid "An explanation of the problem"
 msgstr "Vysvětlení problému"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm072.java:65
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm073.java:67
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm073.java:64
 #, java-format
 msgid "The checksum is {0} instead of {1}"
 msgstr "Kontrolní součet je {0} místo {1}"
@@ -610,26 +610,26 @@ msgid "Page containing the list of false positives for this type of error"
 msgstr ""
 "Stránka obsahující seznam falešně pozitivních výsledků pro tento typ chyby"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISBN.java:94
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISBN.java:303
 #, java-format
 msgid "Ask for help using {0}"
 msgstr "Požádejte o pomoc pomocí {0}"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISBN.java:119
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISBN.java:328
 msgid "Add a comment"
 msgstr "Přidat komentář"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISBN.java:150
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISBN.java:359
 #, java-format
 msgid "Search ISBN {0}"
 msgstr "Hledat ISBN {0}"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISBN.java:180
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISBN.java:389
 #, java-format
 msgid "Search ISSN {0}"
 msgstr "Hledat ISSN {0}"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISBN.java:244
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISBN.java:453
 #, java-format
 msgid "Search using {0}"
 msgstr "Hledat pomocí {0}"
@@ -1270,11 +1270,11 @@ msgstr ""
 msgid "A comment is required for sending the page."
 msgstr "Pro odeslání této stránky je vyžadován ruční komentář."
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1449
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1463
 msgid "Pages with several errors"
 msgstr "Stránky s několika chybami"
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1607
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1621
 #, java-format
 msgid ""
 "The error n°{0} can be configured with the following parameters in the <a "
@@ -1283,7 +1283,7 @@ msgstr ""
 "Chyba číslo {0} může být <a href=\"{1}\">konfigurována</a> následujícími "
 "parametry:"
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1807
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1821
 #, java-format
 msgid ""
 "There''s no page defined for this error type.\n"
@@ -1296,7 +1296,7 @@ msgstr ""
 "  {0} = <název stránky> END\n"
 "na stránku s překladem ({1}) na „{2}“."
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1852
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1866
 #, java-format
 msgid ""
 "There''s no white list defined for this error type.\n"
@@ -1754,9 +1754,9 @@ msgstr "Počet stránek musí být {0} až {1}"
 #: org/wikipediacleaner/gui/swing/action/ReloadLinksAction.java:59
 #: org/wikipediacleaner/gui/swing/worker/NewSectionWorker.java:62
 #: org/wikipediacleaner/gui/swing/worker/RandomPageWorker.java:46
-#: org/wikipediacleaner/gui/swing/worker/SendWorker.java:76
+#: org/wikipediacleaner/gui/swing/worker/SendWorker.java:83
 #: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:110
-#: org/wikipediacleaner/gui/swing/worker/UpdateISBNWarningWorker.java:102
+#: org/wikipediacleaner/gui/swing/worker/UpdateISBNWarningWorker.java:103
 msgid "Retrieving MediaWiki API"
 msgstr "Získávám MediaWiki API"
 
@@ -2068,7 +2068,7 @@ msgstr "Rozšířit šablony"
 msgid "Expand templates &and Preview"
 msgstr "Rozšířit š&ablony a náhled"
 
-#: org/wikipediacleaner/gui/swing/OnePageWindow.java:1020
+#: org/wikipediacleaner/gui/swing/OnePageWindow.java:1035
 #, java-format
 msgid "Sending {0}"
 msgstr "Posílám {0}"
@@ -2562,7 +2562,7 @@ msgid "Monitor recent changes"
 msgstr "Sledovat poslední změny"
 
 #: org/wikipediacleaner/gui/swing/bot/GeneralToolsPanel.java:181
-#: org/wikipediacleaner/gui/swing/bot/GeneralToolsPanel.java:222
+#: org/wikipediacleaner/gui/swing/bot/GeneralToolsPanel.java:226
 msgid "At what page do you wish to start updating the warnings ?"
 msgstr "Na které stránce chcete začít aktualizovat varování?"
 
@@ -3254,7 +3254,7 @@ msgstr "Ověřuji, zda na zamčené názvy něco odkazuje"
 msgid "Getting random page"
 msgstr "Získávám náhodou stránku"
 
-#: org/wikipediacleaner/gui/swing/worker/SendWorker.java:82
+#: org/wikipediacleaner/gui/swing/worker/SendWorker.java:89
 msgid "Updating page contents"
 msgstr "Aktualizuji obsah stránky"
 
@@ -3276,13 +3276,13 @@ msgid "Updating disambiguation warning - {0}"
 msgstr "Aktualizuji rozcestníkové varování - {0}"
 
 #: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:120
-#: org/wikipediacleaner/gui/swing/worker/UpdateISBNWarningWorker.java:115
+#: org/wikipediacleaner/gui/swing/worker/UpdateISBNWarningWorker.java:117
 #, java-format
 msgid "Retrieving talk pages including {0}"
 msgstr "Nahrávám diskuzní stránky obsahující {0}"
 
 #: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:133
-#: org/wikipediacleaner/gui/swing/worker/UpdateISBNWarningWorker.java:149
+#: org/wikipediacleaner/gui/swing/worker/UpdateISBNWarningWorker.java:152
 msgid "Constructing list of articles with warning"
 msgstr "Sestavuji seznam článků s varováním"
 
@@ -3300,7 +3300,7 @@ msgid "Retrieving disambiguation pages"
 msgstr "Získávám rozcestníkové stránky"
 
 #: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:215
-#: org/wikipediacleaner/gui/swing/worker/UpdateISBNWarningWorker.java:240
+#: org/wikipediacleaner/gui/swing/worker/UpdateISBNWarningWorker.java:243
 #, java-format
 msgid ""
 "An error occured when updating disambiguation warnings. Do you want to "
@@ -3313,7 +3313,7 @@ msgstr ""
 "Chyba: {0}"
 
 #: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:266
-#: org/wikipediacleaner/gui/swing/worker/UpdateISBNWarningWorker.java:354
+#: org/wikipediacleaner/gui/swing/worker/UpdateISBNWarningWorker.java:424
 #, java-format
 msgid "{0} page has been analyzed."
 msgid_plural "{0} pages have been analyzed."
@@ -3322,7 +3322,7 @@ msgstr[1] "Byly analyzovány {0} stránky."
 msgstr[2] "Bylo analyzováno {0} stránek."
 
 #: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:271
-#: org/wikipediacleaner/gui/swing/worker/UpdateISBNWarningWorker.java:359
+#: org/wikipediacleaner/gui/swing/worker/UpdateISBNWarningWorker.java:429
 #, java-format
 msgid "Warning has been updated in {0} page."
 msgid_plural "Warnings have been updated in {0} pages."
@@ -3331,7 +3331,7 @@ msgstr[1] "Varování byla aktualizována na {0} stránkách."
 msgstr[2] "Varování byla aktualizována na {0} stránkách."
 
 #: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:276
-#: org/wikipediacleaner/gui/swing/worker/UpdateISBNWarningWorker.java:364
+#: org/wikipediacleaner/gui/swing/worker/UpdateISBNWarningWorker.java:434
 #, java-format
 msgid "Warning has been removed in {0} page."
 msgid_plural "Warnings have been removed in {0} pages."
@@ -3340,7 +3340,7 @@ msgstr[1] "Varování byla odstraněna z(e) {0} stránek."
 msgstr[2] "Varování byla odstraněna z(e) {0} stránek."
 
 #: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:281
-#: org/wikipediacleaner/gui/swing/worker/UpdateISBNWarningWorker.java:369
+#: org/wikipediacleaner/gui/swing/worker/UpdateISBNWarningWorker.java:439
 #, java-format
 msgid "{0} still needs to be fixed."
 msgid_plural "{0} still need to be fixed."
@@ -3349,7 +3349,7 @@ msgstr[1] "{0} stále čekají na opravu."
 msgstr[2] "{0} stále čeká na opravu."
 
 #: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:287
-#: org/wikipediacleaner/gui/swing/worker/UpdateISBNWarningWorker.java:375
+#: org/wikipediacleaner/gui/swing/worker/UpdateISBNWarningWorker.java:445
 #, java-format
 msgid "It took {0} second"
 msgid_plural "It took {0} seconds"
@@ -3357,17 +3357,17 @@ msgstr[0] "Trvalo to {0} sekundu."
 msgstr[1] "Trvalo to {0} sekundy."
 msgstr[2] "Trvalo to {0} sekund."
 
-#: org/wikipediacleaner/gui/swing/worker/UpdateISBNWarningTools.java:226
+#: org/wikipediacleaner/gui/swing/worker/UpdateISBNWarningTools.java:228
 #, java-format
 msgid "Removing ISBN warning - {0}"
 msgstr "Odstraňuji ISBN varování - {0}"
 
-#: org/wikipediacleaner/gui/swing/worker/UpdateISBNWarningTools.java:235
+#: org/wikipediacleaner/gui/swing/worker/UpdateISBNWarningTools.java:237
 #, java-format
 msgid "Updating ISBN warning - {0}"
 msgstr "Aktualizuji ISBN varování - {0}"
 
-#: org/wikipediacleaner/gui/swing/worker/UpdateISBNWarningWorker.java:188
+#: org/wikipediacleaner/gui/swing/worker/UpdateISBNWarningWorker.java:191
 #, java-format
 msgid ""
 "Analysis found {0} articles to check for ISBN errors.\n"
@@ -3376,8 +3376,13 @@ msgstr ""
 "Analýza nalezla {0} článků ke kontrole chyb v ISBN.\n"
 "Chcete aktualizovat varování?"
 
-#: org/wikipediacleaner/gui/swing/worker/UpdateWarningTools.java:240
-#: org/wikipediacleaner/gui/swing/worker/UpdateWarningTools.java:255
+#: org/wikipediacleaner/gui/swing/worker/UpdateISBNWarningWorker.java:374
+#, fuzzy, java-format
+msgid "Do you want to update {0}?"
+msgstr "Chcete pokračovat?"
+
+#: org/wikipediacleaner/gui/swing/worker/UpdateWarningTools.java:246
+#: org/wikipediacleaner/gui/swing/worker/UpdateWarningTools.java:261
 #, java-format
 msgid "Retrieving page contents - {0}"
 msgstr "Načítám obsah stránky - {0}"
@@ -3609,9 +3614,6 @@ msgstr "Tato hodnota nemůže obsahovat žádné ze znaků: {0}"
 
 #~ msgid "Reverse to [[{0}|{1}]]"
 #~ msgstr "Prohodit na [[{0}|{1}]]"
-
-#~ msgid "Do you want to continue ?"
-#~ msgstr "Chcete pokračovat?"
 
 #~ msgid "&Password :"
 #~ msgstr "Heslo:"
