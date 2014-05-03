@@ -94,6 +94,8 @@ public abstract class CheckErrorAlgorithmISBN extends CheckErrorAlgorithmBase {
     // Split ISBN in several potential ISBN
     List<String> isbnValues = new ArrayList<String>();
     if (isbn.isTemplateParameter()) {
+
+      // Basic splits
       for (String split : possibleSplit) {
         isbnValues.clear();
         for (String value : isbn.getISBNNotTrimmed().trim().split(split)) {
@@ -101,6 +103,34 @@ public abstract class CheckErrorAlgorithmISBN extends CheckErrorAlgorithmBase {
         }
         addSuggestions(analysis, errorResult, isbn, isbnValues);
       }
+
+      // Evolved split
+      String isbnValue = isbn.getISBNNotTrimmed().trim();
+      isbnValues.clear();
+      while (isbnValue.length() > 0) {
+        // Remove extra characters
+        int index = 0;
+        while ((index < isbnValue.length()) &&
+               (!Character.isDigit(isbnValue.charAt(index)))) {
+          index++;
+        }
+
+        // Find characters
+        if (index > 0) {
+          isbnValue=  isbnValue.substring(index);
+        }
+        index = 0;
+        while ((index < isbnValue.length()) &&
+               (!Character.isLetter(isbnValue.charAt(index))) &
+               (Character.toUpperCase(isbnValue.charAt(index)) != 'X')) {
+          index++;
+        }
+        if (index > 0) {
+          isbnValues.add(isbnValue.substring(0, index));
+          isbnValue = isbnValue.substring(index);
+        }
+      }
+      addSuggestions(analysis, errorResult, isbn, isbnValues);
     } else {
       isbnValues.add(isbn.getISBNNotTrimmed());
       addSuggestions(analysis, errorResult, isbn, isbnValues);
