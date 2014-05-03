@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2014-04-28 21:41+0200\n"
+"POT-Creation-Date: 2014-05-04 01:20+0200\n"
 "PO-Revision-Date: 2014-04-24 22:51+0000\n"
 "Last-Translator: Anthony Harrington <untaintableangel@ubuntu.com>\n"
 "Language-Team: English (United Kingdom) <en_GB@li.org>\n"
@@ -455,14 +455,14 @@ msgid "The ISBN''s length is {0} instead of 10 or 13"
 msgstr "Length of ISBN is {0} instead of 10 or 13"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm070.java:116
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm071.java:107
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm072.java:120
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm073.java:123
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm071.java:106
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm072.java:119
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm073.java:116
 msgid "An explanation of the problem"
 msgstr "An explanation of the problem"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm072.java:65
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm073.java:67
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm073.java:64
 #, java-format
 msgid "The checksum is {0} instead of {1}"
 msgstr "The checksum is {0} instead of {1}"
@@ -612,26 +612,26 @@ msgstr "List of false positives for this type of error"
 msgid "Page containing the list of false positives for this type of error"
 msgstr "Page containing the list of false positives for this type of error"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISBN.java:94
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISBN.java:303
 #, java-format
 msgid "Ask for help using {0}"
 msgstr "Ask for help using {0}"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISBN.java:119
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISBN.java:328
 msgid "Add a comment"
 msgstr "Add a comment"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISBN.java:150
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISBN.java:359
 #, java-format
 msgid "Search ISBN {0}"
 msgstr "Search ISBN {0}"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISBN.java:180
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISBN.java:389
 #, java-format
 msgid "Search ISSN {0}"
 msgstr "Search ISSN {0}"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISBN.java:244
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISBN.java:453
 #, java-format
 msgid "Search using {0}"
 msgstr "Search using {0}"
@@ -1269,11 +1269,11 @@ msgstr ""
 msgid "A comment is required for sending the page."
 msgstr "A comment is required for sending the page."
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1449
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1463
 msgid "Pages with several errors"
 msgstr "Pages with several errors"
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1607
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1621
 #, java-format
 msgid ""
 "The error n°{0} can be configured with the following parameters in the <a "
@@ -1282,7 +1282,7 @@ msgstr ""
 "The error n°{0} can be configured with the following parameters in the <a "
 "href=\"{1}\">translation file</a> :"
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1807
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1821
 #, java-format
 msgid ""
 "There''s no page defined for this error type.\n"
@@ -1295,7 +1295,7 @@ msgstr ""
 "  {0} = <page name> END\n"
 "to the translation page ({1}) on \"{2}\""
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1852
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1866
 #, java-format
 msgid ""
 "There''s no white list defined for this error type.\n"
@@ -1751,9 +1751,9 @@ msgstr "The number of pages must be between {0} and {1}"
 #: org/wikipediacleaner/gui/swing/action/ReloadLinksAction.java:59
 #: org/wikipediacleaner/gui/swing/worker/NewSectionWorker.java:62
 #: org/wikipediacleaner/gui/swing/worker/RandomPageWorker.java:46
-#: org/wikipediacleaner/gui/swing/worker/SendWorker.java:76
+#: org/wikipediacleaner/gui/swing/worker/SendWorker.java:83
 #: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:110
-#: org/wikipediacleaner/gui/swing/worker/UpdateISBNWarningWorker.java:102
+#: org/wikipediacleaner/gui/swing/worker/UpdateISBNWarningWorker.java:103
 msgid "Retrieving MediaWiki API"
 msgstr "Retrieving MediaWiki API"
 
@@ -2068,7 +2068,7 @@ msgstr "&Expand templates"
 msgid "Expand templates &and Preview"
 msgstr "Expand templates &and Preview"
 
-#: org/wikipediacleaner/gui/swing/OnePageWindow.java:1020
+#: org/wikipediacleaner/gui/swing/OnePageWindow.java:1035
 #, java-format
 msgid "Sending {0}"
 msgstr "Sending {0}"
@@ -2557,7 +2557,7 @@ msgid "Monitor recent changes"
 msgstr "Monitor recent changes"
 
 #: org/wikipediacleaner/gui/swing/bot/GeneralToolsPanel.java:181
-#: org/wikipediacleaner/gui/swing/bot/GeneralToolsPanel.java:222
+#: org/wikipediacleaner/gui/swing/bot/GeneralToolsPanel.java:226
 #, fuzzy
 msgid "At what page do you wish to start updating the warnings ?"
 msgstr ""
@@ -3237,7 +3237,7 @@ msgstr "Checking that protected titles have backlinks"
 msgid "Getting random page"
 msgstr "Getting random page"
 
-#: org/wikipediacleaner/gui/swing/worker/SendWorker.java:82
+#: org/wikipediacleaner/gui/swing/worker/SendWorker.java:89
 msgid "Updating page contents"
 msgstr "Updating page contents"
 
@@ -3259,13 +3259,13 @@ msgid "Updating disambiguation warning - {0}"
 msgstr "Updating disambiguation warning - {0}"
 
 #: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:120
-#: org/wikipediacleaner/gui/swing/worker/UpdateISBNWarningWorker.java:115
+#: org/wikipediacleaner/gui/swing/worker/UpdateISBNWarningWorker.java:117
 #, java-format
 msgid "Retrieving talk pages including {0}"
 msgstr "Retrieving talk pages including {0}"
 
 #: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:133
-#: org/wikipediacleaner/gui/swing/worker/UpdateISBNWarningWorker.java:149
+#: org/wikipediacleaner/gui/swing/worker/UpdateISBNWarningWorker.java:152
 #, fuzzy
 msgid "Constructing list of articles with warning"
 msgstr "Constructing list of articles with disambiguation warning"
@@ -3284,7 +3284,7 @@ msgid "Retrieving disambiguation pages"
 msgstr "Retrieving disambiguation pages"
 
 #: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:215
-#: org/wikipediacleaner/gui/swing/worker/UpdateISBNWarningWorker.java:240
+#: org/wikipediacleaner/gui/swing/worker/UpdateISBNWarningWorker.java:243
 #, java-format
 msgid ""
 "An error occured when updating disambiguation warnings. Do you want to "
@@ -3298,7 +3298,7 @@ msgstr ""
 "Error: {0}"
 
 #: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:266
-#: org/wikipediacleaner/gui/swing/worker/UpdateISBNWarningWorker.java:354
+#: org/wikipediacleaner/gui/swing/worker/UpdateISBNWarningWorker.java:424
 #, java-format
 msgid "{0} page has been analyzed."
 msgid_plural "{0} pages have been analyzed."
@@ -3306,7 +3306,7 @@ msgstr[0] "{0} page has been analysed."
 msgstr[1] "{0} pages have been analysed."
 
 #: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:271
-#: org/wikipediacleaner/gui/swing/worker/UpdateISBNWarningWorker.java:359
+#: org/wikipediacleaner/gui/swing/worker/UpdateISBNWarningWorker.java:429
 #, fuzzy, java-format
 msgid "Warning has been updated in {0} page."
 msgid_plural "Warnings have been updated in {0} pages."
@@ -3314,7 +3314,7 @@ msgstr[0] "Disambiguation warning has been updated in {0} page."
 msgstr[1] "Disambiguation warnings have been updated in {0} pages."
 
 #: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:276
-#: org/wikipediacleaner/gui/swing/worker/UpdateISBNWarningWorker.java:364
+#: org/wikipediacleaner/gui/swing/worker/UpdateISBNWarningWorker.java:434
 #, fuzzy, java-format
 msgid "Warning has been removed in {0} page."
 msgid_plural "Warnings have been removed in {0} pages."
@@ -3322,7 +3322,7 @@ msgstr[0] "Disambiguation warning has been removed in {0} page."
 msgstr[1] "Disambiguation warnings have been removed in {0} pages."
 
 #: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:281
-#: org/wikipediacleaner/gui/swing/worker/UpdateISBNWarningWorker.java:369
+#: org/wikipediacleaner/gui/swing/worker/UpdateISBNWarningWorker.java:439
 #, fuzzy, java-format
 msgid "{0} still needs to be fixed."
 msgid_plural "{0} still need to be fixed."
@@ -3330,24 +3330,24 @@ msgstr[0] "{0} link still needs to be fixed."
 msgstr[1] "{0} links still need to be fixed."
 
 #: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:287
-#: org/wikipediacleaner/gui/swing/worker/UpdateISBNWarningWorker.java:375
+#: org/wikipediacleaner/gui/swing/worker/UpdateISBNWarningWorker.java:445
 #, java-format
 msgid "It took {0} second"
 msgid_plural "It took {0} seconds"
 msgstr[0] "It took {0} second"
 msgstr[1] "It took {0} seconds"
 
-#: org/wikipediacleaner/gui/swing/worker/UpdateISBNWarningTools.java:226
+#: org/wikipediacleaner/gui/swing/worker/UpdateISBNWarningTools.java:228
 #, fuzzy, java-format
 msgid "Removing ISBN warning - {0}"
 msgstr "Removing disambiguation warning - {0}"
 
-#: org/wikipediacleaner/gui/swing/worker/UpdateISBNWarningTools.java:235
+#: org/wikipediacleaner/gui/swing/worker/UpdateISBNWarningTools.java:237
 #, fuzzy, java-format
 msgid "Updating ISBN warning - {0}"
 msgstr "Updating disambiguation warning - {0}"
 
-#: org/wikipediacleaner/gui/swing/worker/UpdateISBNWarningWorker.java:188
+#: org/wikipediacleaner/gui/swing/worker/UpdateISBNWarningWorker.java:191
 #, fuzzy, java-format
 msgid ""
 "Analysis found {0} articles to check for ISBN errors.\n"
@@ -3356,8 +3356,13 @@ msgstr ""
 "Analysis found {0} articles with disambiguation warning {1}.\n"
 "Do you want to update the disambiguation warnings ?"
 
-#: org/wikipediacleaner/gui/swing/worker/UpdateWarningTools.java:240
-#: org/wikipediacleaner/gui/swing/worker/UpdateWarningTools.java:255
+#: org/wikipediacleaner/gui/swing/worker/UpdateISBNWarningWorker.java:374
+#, fuzzy, java-format
+msgid "Do you want to update {0}?"
+msgstr "Do you want to replace this <ref> tag by \"{0}\" ?"
+
+#: org/wikipediacleaner/gui/swing/worker/UpdateWarningTools.java:246
+#: org/wikipediacleaner/gui/swing/worker/UpdateWarningTools.java:261
 #, java-format
 msgid "Retrieving page contents - {0}"
 msgstr "Retrieving page contents - {0}"

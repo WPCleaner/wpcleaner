@@ -31,6 +31,7 @@ import org.wikipediacleaner.api.data.DataManager;
 import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageComparator;
+import org.wikipediacleaner.api.data.PageElementComment;
 import org.wikipediacleaner.gui.swing.InformationWindow;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
 import org.wikipediacleaner.gui.swing.basic.BasicWorker;
@@ -317,6 +318,8 @@ public class UpdateISBNWarningWorker extends BasicWorker {
 
       // Errors
       if (errors != null) {
+
+        // Compute synthesis
         StringBuilder buffer = new StringBuilder();
         List<String> keys = new ArrayList<String>(errors.keySet());
         Collections.sort(keys);
@@ -354,8 +357,64 @@ public class UpdateISBNWarningWorker extends BasicWorker {
           }
           buffer.append("\n");
         }
+
+        // Display synthesis
         InformationWindow.createInformationWindow(
             "ISBN", buffer.toString(), false, getWikipedia());
+
+        // Update synthesis on dedicated page
+        EnumWikipedia wiki = getWikipedia();
+        WPCConfiguration config = wiki.getConfiguration();
+        String pageName = config.getString(WPCConfigurationString.ISBN_ERRORS_PAGE);
+        if ((pageName != null) && (pageName.trim().length() > 0)) {
+          boolean updatePage = false;
+          if (simulation) {
+            int answer = Utilities.displayYesNoWarning(
+                getWindow().getParentComponent(),
+                GT._("Do you want to update {0}?", pageName));
+            if (answer == JOptionPane.YES_OPTION) {
+              updatePage = true;
+            }
+          } else {
+            updatePage = true;
+          }
+
+          if (updatePage) {
+            try {
+              Page page = DataManager.getPage(wiki, pageName, null, null, null);
+              API api = APIFactory.getAPI();
+              api.retrieveContents(wiki, Collections.singletonList(page), false, false);
+              String contents = page.getContents();
+              if (contents != null) {
+                int begin = -1;
+                int end = -1;
+                for (PageElementComment comment : page.getAnalysis(contents, true).getComments()) {
+                  String value = comment.getComment().trim();
+                  if ("BOT BEGIN".equals(value)) {
+                    if (begin < 0) {
+                      begin = comment.getEndIndex();
+                    }
+                  } else if ("BOT END".equals(value)) {
+                    end = comment.getBeginIndex();
+                  }
+                }
+                if ((begin >= 0) && (end > begin)) {
+                  StringBuilder newText = new StringBuilder();
+                  newText.append(contents.substring(0, begin));
+                  newText.append("\n");
+                  newText.append(buffer.toString());
+                  newText.append(contents.substring(end));
+                  api.updatePage(
+                      wiki, page, newText.toString(),
+                      config.getString(WPCConfigurationString.ISBN_ERRORS_PAGE_COMMENT),
+                      false);
+                }
+              }
+            } catch (APIException e) {
+              // Nothing
+            }
+          }
+        }
       }
 
       // Statistics
