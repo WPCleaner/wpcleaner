@@ -232,6 +232,10 @@ public abstract class UpdateWarningTools {
         (todoTemplates.isEmpty())) {
       return false;
     }
+    String warningTemplate = configuration.getString(getWarningTemplate());
+    if ((warningTemplate == null) || (warningTemplate.trim().length() == 0)) {
+      return false;
+    }
     Page page = pageAnalysis.getPage();
 
     // Retrieving talk page contents

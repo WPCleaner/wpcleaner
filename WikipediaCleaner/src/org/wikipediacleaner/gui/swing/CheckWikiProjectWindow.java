@@ -1278,6 +1278,20 @@ public class CheckWikiProjectWindow extends OnePageWindow {
         contributions.increaseCheckWikiError(algorithm.getErrorNumber(), 1);
       }
 
+      // Check for errors fixed about ISBN
+      boolean updateISBNWarning = false;
+      boolean createISBNWarning = false;
+      for (CheckErrorAlgorithm errorFixed : errorsFixed) {
+        int errorNumber = errorFixed.getErrorNumber();
+        if ((errorNumber == 69) ||
+            (errorNumber == 70) ||
+            (errorNumber == 71) ||
+            (errorNumber == 72) ||
+            (errorNumber == 73)) {
+          updateISBNWarning = true;
+        }
+      }
+
       // Send page
       final Configuration configuration = Configuration.getConfiguration();
       SendWorker sendWorker = new SendWorker(
@@ -1286,7 +1300,7 @@ public class CheckWikiProjectWindow extends OnePageWindow {
           configuration.getBoolean(
               null,
               ConfigurationValueBoolean.FORCE_WATCH),
-          false, false,
+          false, false, updateISBNWarning, createISBNWarning,
           contributions, errorsFixed);
       sendWorker.setListener(new DefaultBasicWorkerListener() {
         @Override
