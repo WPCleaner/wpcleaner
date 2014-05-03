@@ -33,8 +33,10 @@ public class SendWorker extends BasicWorker {
   private final String text;
   private final String comment;
   private final boolean forceWatch;
-  private final boolean updateWarning;
-  private final boolean createWarning;
+  private final boolean updateDabWarning;
+  private final boolean createDabWarning;
+  private final boolean updateISBNWarning;
+  private final boolean createISBNWarning;
   private final Contributions contributions;
   private final Collection<CheckErrorAlgorithm> errorsFixed;
 
@@ -45,8 +47,10 @@ public class SendWorker extends BasicWorker {
    * @param text Page contents.
    * @param comment Comment.
    * @param forceWatch Force watching the page.
-   * @param updateWarning Update warning on talk page.
-   * @param createWarning Create warning on talk page.
+   * @param updateDabWarning Update disambiguation warning on talk page.
+   * @param createDabWarning Create disambiguation warning on talk page.
+   * @param updateISBNWarning Update ISBN warning on talk page.
+   * @param createISBNWarning Create ISBN warning on talk page.
    * @param contributions Contributions.
    * @param errorsFixed Errors fixed by this update.
    */
@@ -54,7 +58,8 @@ public class SendWorker extends BasicWorker {
       EnumWikipedia wikipedia, BasicWindow window,
       Page page, String text, String comment,
       boolean forceWatch,
-      boolean updateWarning, boolean createWarning,
+      boolean updateDabWarning, boolean createDabWarning,
+      boolean updateISBNWarning, boolean createISBNWarning,
       Contributions contributions,
       Collection<CheckErrorAlgorithm> errorsFixed) {
     super(wikipedia, window);
@@ -62,8 +67,10 @@ public class SendWorker extends BasicWorker {
     this.text = text;
     this.comment = comment;
     this.forceWatch = forceWatch;
-    this.updateWarning = updateWarning;
-    this.createWarning = createWarning;
+    this.updateDabWarning = updateDabWarning;
+    this.createDabWarning = createDabWarning;
+    this.updateISBNWarning = updateISBNWarning;
+    this.createISBNWarning = createISBNWarning;
     this.contributions = contributions;
     this.errorsFixed = errorsFixed;
   }
@@ -95,12 +102,26 @@ public class SendWorker extends BasicWorker {
     }
 
     // Updating disambiguation warning
-    if (updateWarning) {
+    if (updateDabWarning) {
       try {
         UpdateDabWarningTools dabWarningTools = new UpdateDabWarningTools(
-            getWikipedia(), this, createWarning, false);
+            getWikipedia(), this, createDabWarning, false);
         PageAnalysis pageAnalysis = page.getAnalysis(text, true);
         dabWarningTools.updateWarning(
+            pageAnalysis, queryResult.getPageNewRevId(),
+            null, null, null, null, null);
+      } catch (APIException e) {
+        return e;
+      }
+    }
+
+    // Updating ISBN warning
+    if (updateISBNWarning) {
+      try {
+        UpdateISBNWarningTools isbnWarningTools = new UpdateISBNWarningTools(
+            getWikipedia(), this, createISBNWarning, false);
+        PageAnalysis pageAnalysis = page.getAnalysis(text, true);
+        isbnWarningTools.updateWarning(
             pageAnalysis, queryResult.getPageNewRevId(),
             null, null, null, null, null);
       } catch (APIException e) {

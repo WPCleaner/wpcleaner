@@ -1014,6 +1014,21 @@ public abstract class OnePageWindow
     final int oldState = getParentComponent().getExtendedState();
     final boolean updateDabWarning = (chkUpdateDabWarning != null) && (chkUpdateDabWarning.isSelected());
     final boolean createDabWarning = (chkCreateDabWarning != null) && (chkCreateDabWarning.isSelected());
+    final boolean createISBNWarning = false;
+    boolean updateISBNWarning = false;
+    List<CheckErrorAlgorithm> errorsFixed = computeErrorsFixed();
+    if (errorsFixed != null) {
+      for (CheckErrorAlgorithm errorFixed : errorsFixed) {
+        int errorNumber = errorFixed.getErrorNumber();
+        if ((errorNumber == 69) ||
+            (errorNumber == 70) ||
+            (errorNumber == 71) ||
+            (errorNumber == 72) ||
+            (errorNumber == 73)) {
+          updateISBNWarning = true;
+        }
+      }
+    }
     if (hideWindow) {
       getParentComponent().setExtendedState(Frame.ICONIFIED);
     }
@@ -1023,8 +1038,10 @@ public abstract class OnePageWindow
         (textComment != null) ?
             textComment.getText() :
             getWikipedia().getConfiguration().getUpdatePageMessage(),
-        forceWatch, updateDabWarning, createDabWarning,
-        getContributions(), computeErrorsFixed());
+        forceWatch,
+        updateDabWarning, createDabWarning,
+        updateISBNWarning, createISBNWarning,
+        getContributions(), errorsFixed);
     sendWorker.setListener(new DefaultBasicWorkerListener() {
       @Override
       public void afterFinished(
