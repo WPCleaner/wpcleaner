@@ -234,7 +234,9 @@ public abstract class UpdateWarningTools {
     }
     String warningTemplate = configuration.getString(getWarningTemplate());
     if ((warningTemplate == null) || (warningTemplate.trim().length() == 0)) {
-      return false;
+      if (!simulation) {
+        return false;
+      }
     }
     Page page = pageAnalysis.getPage();
 
