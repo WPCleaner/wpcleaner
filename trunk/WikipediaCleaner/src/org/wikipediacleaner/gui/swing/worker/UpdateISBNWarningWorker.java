@@ -58,7 +58,7 @@ public class UpdateISBNWarningWorker extends BasicWorker {
    * @param wiki Wiki.
    * @param window Window.
    * @param start Start at this page.
-   * @param True if this is a simulation.
+   * @param simulation True if this is a simulation.
    */
   public UpdateISBNWarningWorker(
       EnumWikipedia wiki, BasicWindow window,
