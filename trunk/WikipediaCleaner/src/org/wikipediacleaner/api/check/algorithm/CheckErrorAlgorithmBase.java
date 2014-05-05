@@ -581,21 +581,12 @@ public abstract class CheckErrorAlgorithmBase implements CheckErrorAlgorithm {
     // Manage capitals and small letters
     title = currentTitle.toString();
     currentTitle.setLength(0);
-    boolean previousLetter = false;
     boolean previousSpace = true;
     for (int i = 0; i < title.length(); i++) {
       char character = title.charAt(i);
       if (previousSpace) {
-        if (Character.isLowerCase(character) &&
-            ((i == 0) || (CheckErrorAlgorithms.isAlgorithmActive(wiki, 90)))) {
+        if (Character.isLowerCase(character) && (i == 0)) {
           currentTitle.append(Character.toUpperCase(character));
-        } else {
-          currentTitle.append(character);
-        }
-      } else if (previousLetter) {
-        if (Character.isUpperCase(character) &&
-            CheckErrorAlgorithms.isAlgorithmActive(wiki, 89)) {
-          currentTitle.append(Character.toLowerCase(character));
         } else {
           currentTitle.append(character);
         }
@@ -603,7 +594,6 @@ public abstract class CheckErrorAlgorithmBase implements CheckErrorAlgorithm {
         currentTitle.append(character);
       }
 
-      previousLetter = Character.isLetter(character);
       previousSpace = (character == ' ');
     }
 
