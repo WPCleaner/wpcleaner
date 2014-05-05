@@ -358,14 +358,11 @@ public class UpdateISBNWarningWorker extends BasicWorker {
           buffer.append("\n");
         }
 
-        // Display synthesis
-        InformationWindow.createInformationWindow(
-            "ISBN", buffer.toString(), false, getWikipedia());
-
         // Update synthesis on dedicated page
         EnumWikipedia wiki = getWikipedia();
         WPCConfiguration config = wiki.getConfiguration();
         String pageName = config.getString(WPCConfigurationString.ISBN_ERRORS_PAGE);
+        boolean saved = false;
         if ((pageName != null) && (pageName.trim().length() > 0)) {
           boolean updatePage = false;
           if (simulation) {
@@ -408,12 +405,19 @@ public class UpdateISBNWarningWorker extends BasicWorker {
                       wiki, page, newText.toString(),
                       config.getString(WPCConfigurationString.ISBN_ERRORS_PAGE_COMMENT),
                       false);
+                  saved = true;
                 }
               }
             } catch (APIException e) {
               // Nothing
             }
           }
+        }
+
+        // Display synthesis
+        if (!saved) {
+          InformationWindow.createInformationWindow(
+              "ISBN", buffer.toString(), false, getWikipedia());
         }
       }
 
