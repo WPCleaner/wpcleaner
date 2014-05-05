@@ -100,6 +100,7 @@ public class PageElementInternalLink extends PageElement {
 
     // Retrieve link text
     if (endIndex < 0) {
+      int level1Brackets = 0;
       int level2CurlyBrackets = 0;
       level3CurlyBrackets = 0;
       while ((tmpIndex < contents.length()) && (endIndex < 0)) {
@@ -108,11 +109,21 @@ public class PageElementInternalLink extends PageElement {
           if (contents.startsWith("[[", tmpIndex)) {
             return null;
           }
+          level1Brackets++;
           break;
         case ']':
-          if (contents.startsWith("]]", tmpIndex)) {
+          if (contents.startsWith("]]]", tmpIndex)) {
+            if (level1Brackets > 0) {
+              level1Brackets--;
+            } else {
+              endIndex = tmpIndex;
+              tmpIndex++;
+            }
+          } else if (contents.startsWith("]]", tmpIndex)) {
             endIndex = tmpIndex;
             tmpIndex++;
+          } else if (level1Brackets > 0) {
+            level1Brackets--;
           }
           break;
         case '{':
