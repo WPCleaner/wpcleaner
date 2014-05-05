@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.wikipediacleaner.api.check.HtmlCharacters;
+import org.wikipediacleaner.api.data.PageAnalysis;
 
 
 /**
@@ -46,5 +47,16 @@ public class CheckErrorAlgorithm087 extends CheckErrorAlgorithmHtmlNamedEntities
   @Override
   protected boolean useSemiColon() {
     return false;
+  }
+
+  /**
+   * Bot fixing of all the errors in the page.
+   * 
+   * @param analysis Page analysis.
+   * @return Page contents after fix.
+   */
+  @Override
+  protected String internalBotFix(PageAnalysis analysis) {
+    return analysis.getContents();
   }
 }
