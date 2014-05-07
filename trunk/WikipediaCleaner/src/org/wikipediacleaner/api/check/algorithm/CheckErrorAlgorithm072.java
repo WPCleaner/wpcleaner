@@ -52,7 +52,8 @@ public class CheckErrorAlgorithm072 extends CheckErrorAlgorithmISBN {
       String number = isbn.getISBN();
       if ((number != null) && (number.length() == 10)) {
         char check = Character.toUpperCase(number.charAt(9));
-        char computedCheck = Character.toUpperCase(isbn.getCheck());
+        char computedCheck = Character.toUpperCase(
+            PageElementISBN.computeChecksum(number));
         if ((check != computedCheck) &&
             (Character.isDigit(computedCheck) || (computedCheck == 'X'))) {
           if (errors == null) {
@@ -72,7 +73,9 @@ public class CheckErrorAlgorithm072 extends CheckErrorAlgorithmISBN {
           value = value.substring(0, value.length() - 1) + computedCheck;
           addSearchEngines(analysis, errorResult, value);
           value = "978" + isbn.getISBN();
-          addSearchEngines(analysis, errorResult, value);
+          if (PageElementISBN.isValid(value)) {
+            addSearchEngines(analysis, errorResult, value);
+          }
           if (isbn.isTemplateParameter()) {
             PageElementTemplate template = analysis.isInTemplate(isbn.getBeginIndex());
             addSearchEngines(analysis, errorResult, template);
@@ -103,7 +106,7 @@ public class CheckErrorAlgorithm072 extends CheckErrorAlgorithmISBN {
       return null;
     }
     char check = Character.toUpperCase(number.charAt(9));
-    char computedCheck = Character.toUpperCase(isbn.getCheck());
+    char computedCheck = Character.toUpperCase(PageElementISBN.computeChecksum(number));
     return MessageFormat.format(reasonTemplate, computedCheck, check);
   }
 

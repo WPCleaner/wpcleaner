@@ -52,7 +52,8 @@ public class CheckErrorAlgorithm073 extends CheckErrorAlgorithmISBN {
       String number = isbn.getISBN();
       if ((number != null) && (number.length() == 13)) {
         char check = Character.toUpperCase(number.charAt(12));
-        char computedCheck = Character.toUpperCase(isbn.getCheck());
+        char computedCheck = Character.toUpperCase(
+            PageElementISBN.computeChecksum(number));
         if ((check != computedCheck) && Character.isDigit(computedCheck)) {
           if (errors == null) {
             return true;
@@ -66,10 +67,35 @@ public class CheckErrorAlgorithm073 extends CheckErrorAlgorithmISBN {
               new NullActionProvider());
           addHelpNeededTemplates(analysis, errorResult, isbn);
           addHelpNeededComment(analysis, errorResult, isbn);
-          String value = isbn.getISBN();
+
+          // Use search engines
+          String value = number;
           addSearchEngines(analysis, errorResult, value);
-          value = value.substring(0, value.length() - 1) + computedCheck;
+          value = number.substring(0, number.length() - 1) + computedCheck;
           addSearchEngines(analysis, errorResult, value);
+          if (!number.startsWith("978") && !number.startsWith("979")) {
+            int count = 0;
+            count += (number.charAt(0) == '9') ? 1 : 0;
+            count += (number.charAt(1) == '7') ? 1 : 0;
+            count += (number.charAt(2) == '8') ? 1 : 0;
+            count += (number.charAt(2) == '9') ? 1 : 0;
+            if (count == 2) {
+              if (number.charAt(2) == '9') {
+                value = "979" + number.substring(3);
+              } else {
+                value = "978" + number.substring(3);
+              }
+              if (PageElementISBN.isValid(value)) {
+                addSearchEngines(analysis, errorResult, value);
+              }
+            }
+          }
+          if (number.startsWith("987")) {
+            value = "978" + number.substring(3);
+            if (PageElementISBN.isValid(value)) {
+              addSearchEngines(analysis, errorResult, value);
+            }
+          }
           if (isbn.isTemplateParameter()) {
             PageElementTemplate template = analysis.isInTemplate(isbn.getBeginIndex());
             addSearchEngines(analysis, errorResult, template);
@@ -100,7 +126,7 @@ public class CheckErrorAlgorithm073 extends CheckErrorAlgorithmISBN {
       return null;
     }
     char check = Character.toUpperCase(number.charAt(12));
-    char computedCheck = Character.toUpperCase(isbn.getCheck());
+    char computedCheck = Character.toUpperCase(PageElementISBN.computeChecksum(number));
     return MessageFormat.format(reasonTemplate, computedCheck, check);
   }
 

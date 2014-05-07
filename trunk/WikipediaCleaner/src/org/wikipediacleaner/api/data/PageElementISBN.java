@@ -373,53 +373,6 @@ public class PageElementISBN extends PageElement {
   }
 
   /**
-   * @return Check.
-   */
-  public char getCheck() {
-    if (isbn == null) {
-      return 0;
-    }
-
-    // Check for ISBN-10
-    if (isbn.length() == 10) {
-      int check = 0;
-      for (int i = 0; i < 9; i++) {
-        char currentChar = isbn.charAt(i);
-        if (Character.isDigit(currentChar)) {
-          check += (10 - i) * (currentChar - '0');
-        } else {
-          return 0;
-        }
-      }
-      check = check % 11; // Modulus 11
-      check = 11 - check; // Invert
-      check = check % 11; // 11 -> 0
-      char computedCheck = (check < 10) ? (char) ('0' + check): 'X';
-      return computedCheck;
-    }
-
-    // Check for ISBN-13
-    if (isbn.length() == 13) {
-      int check = 0;
-      for (int i = 0; i < 12; i++) {
-        char currentChar = isbn.charAt(i);
-        if (Character.isDigit(currentChar)) {
-          check += ((i % 2 == 0) ? 1 : 3) * (currentChar - '0');
-        } else {
-          return 0;
-        }
-      }
-      check = check % 10; // Modulus 10
-      check = 10 - check; // Invert
-      check = check % 10; // 10 -> 0
-      char computedCheck = (char) ('0' + check);
-      return computedCheck;
-    }
-
-    return 0;
-  }
-
-  /**
    * @return True if ISBN is in a valid location.
    */
   public boolean isValid() {
@@ -448,7 +401,7 @@ public class PageElementISBN extends PageElement {
   }
 
   /**
-   * @return Fixed ISBN.
+   * @return List of possible ISBN.
    */
   public List<String> getCorrectISBN() {
     List<String> result = new ArrayList<String>();
@@ -632,10 +585,77 @@ public class PageElementISBN extends PageElement {
     StringBuilder result = new StringBuilder();
     for (int i = 0; i < isbn.length(); i++) {
       char current = Character.toUpperCase(isbn.charAt(i));
-      if (((current >= '0') && (current <= '9')) || (current == 'X')) {
+      if (POSSIBLE_CHARACTERS.indexOf(current) >= 0) {
         result.append(current);
       }
     }
     return result.toString();
+  }
+
+  /**
+   * @param isbnValue ISBN value.
+   * @return Computed checksum.
+   */
+  public static char computeChecksum(String isbnValue) {
+    if (isbnValue == null) {
+      return 0;
+    }
+    isbnValue = cleanISBN(isbnValue);
+
+    // Check for ISBN-10
+    if (isbnValue.length() == 10) {
+      int check = 0;
+      for (int i = 0; i < 9; i++) {
+        char currentChar = isbnValue.charAt(i);
+        if (Character.isDigit(currentChar)) {
+          check += (10 - i) * (currentChar - '0');
+        } else {
+          return 0;
+        }
+      }
+      check = check % 11; // Modulus 11
+      check = 11 - check; // Invert
+      check = check % 11; // 11 -> 0
+      char checksum = (check < 10) ? (char) ('0' + check): 'X';
+      return checksum;
+    }
+
+    // Check for ISBN-13
+    if (isbnValue.length() == 13) {
+      int check = 0;
+      for (int i = 0; i < 12; i++) {
+        char currentChar = isbnValue.charAt(i);
+        if (Character.isDigit(currentChar)) {
+          check += ((i % 2 == 0) ? 1 : 3) * (currentChar - '0');
+        } else {
+          return 0;
+        }
+      }
+      check = check % 10; // Modulus 10
+      check = 10 - check; // Invert
+      check = check % 10; // 10 -> 0
+      char checksum = (char) ('0' + check);
+      return checksum;
+    }
+
+    return 0;
+  }
+
+  /**
+   * @param isbnValue ISBN value.
+   * @return True if ISBN value is valid.
+   */
+  public static boolean isValid(String isbnValue) {
+    if (isbnValue == null) {
+      return false;
+    }
+    isbnValue = cleanISBN(isbnValue);
+    if ((isbnValue.length() != 10) && (isbnValue.length() != 13)) {
+      return false;
+    }
+    if (isbnValue.charAt(isbnValue.length() - 1) != computeChecksum(isbnValue)) {
+      return false;
+    }
+    return true;
   }
 }
