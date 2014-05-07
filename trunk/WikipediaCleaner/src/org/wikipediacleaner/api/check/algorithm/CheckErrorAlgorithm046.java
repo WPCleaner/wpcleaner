@@ -55,7 +55,9 @@ public class CheckErrorAlgorithm046 extends CheckErrorAlgorithmBase {
       boolean shouldCount = true;
       if (shouldCount) {
         PageElementInternalLink link = analysis.isInInternalLink(currentIndex);
-        if ((link != null) && (link.getEndIndex() == currentIndex + 2)) {
+        if ((link != null) &&
+            ((link.getEndIndex() == currentIndex + 2) ||
+             (link.getEndIndex() == currentIndex + 3))) {
           shouldCount = false;
         }
       }
