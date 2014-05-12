@@ -209,7 +209,6 @@ public class GeneralToolsPanel extends BotToolsPanel {
    */
   private void actionISBNWarning(boolean simulation) {
     EnumWikipedia wiki = window.getWikipedia();
-    Configuration config = Configuration.getConfiguration();
     if (!simulation) {
       WPCConfiguration wpcConfig = wiki.getConfiguration();
       String template = wpcConfig.getString(WPCConfigurationString.ISBN_WARNING_TEMPLATE);
@@ -220,18 +219,8 @@ public class GeneralToolsPanel extends BotToolsPanel {
         return;
       }
     }
-    String start = "";
-    if (!simulation) {
-      start = window.askForValue(
-          GT._("At what page do you wish to start updating the warnings ?"),
-          config.getString(null, ConfigurationValueString.LAST_ISBN_WARNING),
-          null);
-    }
-    if (start == null) {
-      return;
-    }
     UpdateISBNWarningWorker worker = new UpdateISBNWarningWorker(
-        wiki, window, start, simulation);
+        wiki, window, simulation);
     worker.start();
   }
 

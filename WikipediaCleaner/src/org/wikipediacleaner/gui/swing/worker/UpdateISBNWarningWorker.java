@@ -47,7 +47,6 @@ import org.wikipediacleaner.utils.ConfigurationValueString;
  */
 public class UpdateISBNWarningWorker extends BasicWorker {
 
-  private final String start;
   private final List<Page> warningPages;
   private final boolean useList;
   private final boolean contentsAvailable;
@@ -57,14 +56,12 @@ public class UpdateISBNWarningWorker extends BasicWorker {
   /**
    * @param wiki Wiki.
    * @param window Window.
-   * @param start Start at this page.
    * @param simulation True if this is a simulation.
    */
   public UpdateISBNWarningWorker(
       EnumWikipedia wiki, BasicWindow window,
-      String start, boolean simulation) {
+      boolean simulation) {
     super(wiki, window);
-    this.start = (start != null) ? start.trim() : "";
     this.warningPages = new ArrayList<Page>();
     this.useList = false;
     this.contentsAvailable = false;
@@ -83,7 +80,6 @@ public class UpdateISBNWarningWorker extends BasicWorker {
       EnumWikipedia wiki, BasicWindow window, List<Page> pages,
       boolean contentsAvailable, boolean automaticEdit) {
     super(wiki, window);
-    this.start = "";
     this.warningPages = new ArrayList<Page>(pages);
     this.useList = true;
     this.contentsAvailable = contentsAvailable;
@@ -177,12 +173,10 @@ public class UpdateISBNWarningWorker extends BasicWorker {
           }
 
           // Add article to the list
-          if ((start.length() == 0) || (start.compareTo(title) < 0)) {
-            Page page = DataManager.getPage(wiki, title, null, null, null);
-            if (encyclopedicNamespaces.contains(page.getNamespace()) &&
-                !tmpWarningPages.contains(page)) {
-              tmpWarningPages.add(page);
-            }
+          Page page = DataManager.getPage(wiki, title, null, null, null);
+          if (encyclopedicNamespaces.contains(page.getNamespace()) &&
+              !tmpWarningPages.contains(page)) {
+            tmpWarningPages.add(page);
           }
         }
 
@@ -220,9 +214,7 @@ public class UpdateISBNWarningWorker extends BasicWorker {
         List<Page> sublist = new ArrayList<Page>(size);
         while ((sublist.size() < size) && (warningPages.size() > 0)) {
           Page page = warningPages.remove(0);
-          if ((start.length() == 0) || (start.compareTo(page.getTitle()) < 0)) {
-            sublist.add(page);
-          }
+          sublist.add(page);
         }
         if (sublist.isEmpty()) {
           errors = tools.getErrorsMap();
