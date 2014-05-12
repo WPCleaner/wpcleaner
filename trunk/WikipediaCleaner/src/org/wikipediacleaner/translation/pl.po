@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2014-05-04 01:20+0200\n"
+"POT-Creation-Date: 2014-05-12 14:41+0200\n"
 "PO-Revision-Date: 2013-11-01 03:31+0000\n"
 "Last-Translator: pp/bs <Unknown>\n"
 "Language-Team: Polish <pl@li.org>\n"
@@ -163,7 +163,7 @@ msgstr "Zastąp przez {0}"
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm042_Old.java:61
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm043.java:136
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm045.java:129
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm046.java:172
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm046.java:174
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm047.java:123
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm048.java:86
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm085.java:92
@@ -457,13 +457,13 @@ msgstr "ISBN ma długość {0} znaków zamiast 10 albo 13"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm070.java:116
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm071.java:106
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm072.java:119
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm073.java:116
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm072.java:122
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm073.java:142
 msgid "An explanation of the problem"
 msgstr "Dodaj obajśnienie problemu"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm072.java:65
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm073.java:64
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm072.java:66
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm073.java:65
 #, java-format
 msgid "The checksum is {0} instead of {1}"
 msgstr "Suma kontrolna wynosi {0} zamiast {1}"
@@ -2585,7 +2585,6 @@ msgid "Monitor recent changes"
 msgstr "Patrolowanie Ozetów"
 
 #: org/wikipediacleaner/gui/swing/bot/GeneralToolsPanel.java:181
-#: org/wikipediacleaner/gui/swing/bot/GeneralToolsPanel.java:226
 #, fuzzy
 msgid "At what page do you wish to start updating the warnings ?"
 msgstr ""
@@ -3332,7 +3331,7 @@ msgstr ""
 "Błąd: {0}"
 
 #: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:266
-#: org/wikipediacleaner/gui/swing/worker/UpdateISBNWarningWorker.java:424
+#: org/wikipediacleaner/gui/swing/worker/UpdateISBNWarningWorker.java:428
 #, java-format
 msgid "{0} page has been analyzed."
 msgid_plural "{0} pages have been analyzed."
@@ -3341,7 +3340,7 @@ msgstr[1] "Przeanalizowano {0} strony"
 msgstr[2] "Przeanalizowano {0} stron"
 
 #: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:271
-#: org/wikipediacleaner/gui/swing/worker/UpdateISBNWarningWorker.java:429
+#: org/wikipediacleaner/gui/swing/worker/UpdateISBNWarningWorker.java:433
 #, fuzzy, java-format
 msgid "Warning has been updated in {0} page."
 msgid_plural "Warnings have been updated in {0} pages."
@@ -3350,7 +3349,7 @@ msgstr[1] "Zaktualizowano komunikaty o disambigach na {0} stronach."
 msgstr[2] "Zaktualizowano komunikaty o disambigach na {0} stronach."
 
 #: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:276
-#: org/wikipediacleaner/gui/swing/worker/UpdateISBNWarningWorker.java:434
+#: org/wikipediacleaner/gui/swing/worker/UpdateISBNWarningWorker.java:438
 #, fuzzy, java-format
 msgid "Warning has been removed in {0} page."
 msgid_plural "Warnings have been removed in {0} pages."
@@ -3359,7 +3358,7 @@ msgstr[1] "Usunięto komunikaty o disambigach z {0} stron."
 msgstr[2] "Usunięto komunikaty o disambigach z {0} stron."
 
 #: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:281
-#: org/wikipediacleaner/gui/swing/worker/UpdateISBNWarningWorker.java:439
+#: org/wikipediacleaner/gui/swing/worker/UpdateISBNWarningWorker.java:443
 #, fuzzy, java-format
 msgid "{0} still needs to be fixed."
 msgid_plural "{0} still need to be fixed."
@@ -3368,7 +3367,7 @@ msgstr[1] "Na poprawę czekają jeszcze {0} linki."
 msgstr[2] "Na poprawę czeka jeszcze {0} linków."
 
 #: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:287
-#: org/wikipediacleaner/gui/swing/worker/UpdateISBNWarningWorker.java:445
+#: org/wikipediacleaner/gui/swing/worker/UpdateISBNWarningWorker.java:449
 #, java-format
 msgid "It took {0} second"
 msgid_plural "It took {0} seconds"
@@ -3395,7 +3394,7 @@ msgstr ""
 "Znaleziono {0} artykułów z komunikatami o disambigach {1}.\n"
 "Chcesz aktualizować komunikaty o disambigach?"
 
-#: org/wikipediacleaner/gui/swing/worker/UpdateISBNWarningWorker.java:374
+#: org/wikipediacleaner/gui/swing/worker/UpdateISBNWarningWorker.java:371
 #, fuzzy, java-format
 msgid "Do you want to update {0}?"
 msgstr "Kontynuować?"
