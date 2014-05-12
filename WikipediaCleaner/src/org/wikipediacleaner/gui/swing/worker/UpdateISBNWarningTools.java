@@ -140,27 +140,32 @@ public class UpdateISBNWarningTools extends UpdateWarningTools {
       String error = analysis.getContents().substring(beginIndex, endIndex);
       error = error.replaceAll("\\=", "&#x3D;"); // Replace "=" by its HTML value
       error = error.replaceAll("\\n", "\u21b5"); // Replacer \n by a visual character
-      elements.add(error);
       memorizeError(error, analysis.getPage().getTitle());
       StringBuilder comment = new StringBuilder();
       while (pos < next) {
         errorResult = errorResults.get(pos);
         CheckErrorAlgorithm algorithm = errorResult.getAlgorithm();
         PageElementISBN isbn = analysis.isInISBN(beginIndex);
-        if ((algorithm != null) &&
-            (algorithm instanceof CheckErrorAlgorithmISBN) &&
-            (isbn != null)) {
-          CheckErrorAlgorithmISBN isbnAlgo = (CheckErrorAlgorithmISBN) algorithm;
-          String reason = isbnAlgo.getReason(isbn);
-          if ((reason != null) && (reason.length() > 0)) {
-            if (comment.length() > 0) {
-              comment.append(" - ");
+        if (isbn != null) {
+          if ((algorithm != null) &&
+              (algorithm instanceof CheckErrorAlgorithmISBN)) {
+            CheckErrorAlgorithmISBN isbnAlgo = (CheckErrorAlgorithmISBN) algorithm;
+            String reason = isbnAlgo.getReason(isbn);
+            if ((reason != null) && (reason.length() > 0)) {
+              if (comment.length() > 0) {
+                comment.append(" - ");
+              }
+              comment.append(reason);
             }
-            comment.append(reason);
+          }
+          if (!isbn.isTemplateParameter() &&
+              error.toUpperCase().startsWith("ISBN")) {
+            error = error.substring(4).trim();
           }
         }
         pos++;
       }
+      elements.add(error);
       elements.add(comment.toString());
     }
     return elements;
