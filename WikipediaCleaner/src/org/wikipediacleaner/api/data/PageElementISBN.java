@@ -582,12 +582,25 @@ public class PageElementISBN extends PageElement {
     if (isbn.length() == 0) {
       return isbn;
     }
+    PageAnalysis analysis = new PageAnalysis(null, isbn);
     StringBuilder result = new StringBuilder();
-    for (int i = 0; i < isbn.length(); i++) {
+    int i = 0;
+    while (i < isbn.length()) {
       char current = Character.toUpperCase(isbn.charAt(i));
-      if (POSSIBLE_CHARACTERS.indexOf(current) >= 0) {
+      if (current == '<') {
+        PageElementComment comment = analysis.isInComment(i);
+        if ((comment != null) && (comment.getBeginIndex() == i)) {
+          i = comment.getEndIndex() - 1;
+        } else {
+          PageElementTag refTag = analysis.isInTag(i, PageElementTag.TAG_WIKI_REF);
+          if ((refTag != null) && (refTag.getBeginIndex() == i)) {
+            i = refTag.getCompleteEndIndex() - 1;
+          }
+        }
+      } else if (POSSIBLE_CHARACTERS.indexOf(current) >= 0) {
         result.append(current);
       }
+      i++;
     }
     return result.toString();
   }
