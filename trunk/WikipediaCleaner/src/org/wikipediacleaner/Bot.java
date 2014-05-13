@@ -40,7 +40,7 @@ public class Bot {
    * @param args
    */
   public static void main(String[] args) {
-    System.out.println("Running as bot");
+    log.info("Running as bot");
 
     // Log levels
     Logger.getLogger("org.lobobrowser").setLevel(Level.WARNING);
@@ -49,7 +49,6 @@ public class Bot {
     Configuration config = Configuration.getConfiguration();
     EnumLanguage language = config.getLanguage();
     Locale.setDefault(language.getLocale());
-    System.out.println("Language: " + language);
 
     // Debugging
     if (config.getBoolean(null, ConfigurationValueBoolean.DEBUG_DETAILS)) {
@@ -64,11 +63,9 @@ public class Bot {
         // Nothing to do
       }
     }
-    System.out.println("Debugging configured");
 
     // Language
     GT.setCurrentLanguage(config.getLanguage());
-    System.out.println("Language configured");
 
     new Bot(args);
   }
@@ -92,7 +89,6 @@ public class Bot {
         return;
       }
     }
-    log.info("Wiki: " + wiki);
     currentArg++;
 
     // Retrieve user name
