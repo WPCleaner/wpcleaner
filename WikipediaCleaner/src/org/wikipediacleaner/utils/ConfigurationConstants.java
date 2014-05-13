@@ -22,4 +22,5 @@ public final class ConfigurationConstants {
   public  final static int VALUE_SAVE_USER_BOTH      = 2;
   public  final static int VALUE_SAVE_USER_NAME      = 1;
   public  final static int VALUE_SAVE_USER_NONE      = 0;
+  public  final static int VALUE_SAVE_USER_NO_CHANGE = -1;
 }

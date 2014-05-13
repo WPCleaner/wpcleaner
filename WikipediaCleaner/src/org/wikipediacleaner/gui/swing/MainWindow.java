@@ -61,19 +61,19 @@ import org.wikipediacleaner.api.constants.WPCConfigurationString;
 import org.wikipediacleaner.api.constants.WPCConfigurationStringList;
 import org.wikipediacleaner.api.data.AbuseFilter;
 import org.wikipediacleaner.api.data.DataManager;
-import org.wikipediacleaner.api.data.LoginResult;
 import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.Suggestion;
-import org.wikipediacleaner.api.data.User;
 import org.wikipediacleaner.gui.swing.action.ActionDisambiguationAnalysis;
 import org.wikipediacleaner.gui.swing.action.ActionFullAnalysis;
 import org.wikipediacleaner.gui.swing.action.ActionUtilities;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
 import org.wikipediacleaner.gui.swing.basic.BasicWindowListener;
 import org.wikipediacleaner.gui.swing.basic.BasicWorker;
+import org.wikipediacleaner.gui.swing.basic.BasicWorkerListener;
 import org.wikipediacleaner.gui.swing.basic.Utilities;
 import org.wikipediacleaner.gui.swing.component.MWHtmlRendererContext;
+import org.wikipediacleaner.gui.swing.worker.LoginWorker;
 import org.wikipediacleaner.gui.swing.worker.PageListWorker;
 import org.wikipediacleaner.gui.swing.worker.RandomPageWorker;
 import org.wikipediacleaner.gui.swing.worker.UpdateDabWarningWorker;
@@ -129,7 +129,7 @@ public class MainWindow
   private JButton buttonWatchlistLocal;
   private JButton buttonWatchlist;
 
-  JComboBox comboPagename;
+  private JComboBox comboPagename;
   private JButton buttonFullAnalysis;
   private JButton buttonDisambiguation;
   private JButton buttonSearchTitles;
@@ -958,7 +958,7 @@ public class MainWindow
    * 
    * @param login Flag indicating if login is required.
    */
-  private void actionLoginDemo(boolean login) {
+  private void actionLoginDemo(final boolean login) {
 
     // Check that correct values are entered in Wikipedia combo
     if ((comboWikipedia == null) || (comboWikipedia.getSelectedIndex() == -1)) {
@@ -1018,8 +1018,8 @@ public class MainWindow
         getParentComponent(), getWikipedia(), comboPagename));
 
     // Login
-    new LoginWorker(
-        getWikipedia(), this,
+    LoginWorker loginWorker = new LoginWorker(
+        getWikipedia(), this, comboPagename,
         (EnumLanguage) comboLanguage.getSelectedItem(),
         comboUser.getSelectedItem().toString(),
         textPassword.getPassword(),
@@ -1028,7 +1028,52 @@ public class MainWindow
             radSaveUsername.isSelected() ?
                 ConfigurationConstants.VALUE_SAVE_USER_NAME :
                 ConfigurationConstants.VALUE_SAVE_USER_NONE,
-        login, false).start();
+        login, false);
+    loginWorker.setListener(new BasicWorkerListener() {
+
+      /**
+       * Called just at the beginning of the start() method in BasicWorker.
+       * 
+       * @param worker Current worker.
+       */
+      public void beforeStart(BasicWorker worker) {
+        // Nothing to do
+      }
+
+      /**
+       * Called just at the end of the start() method in BasicWorker.
+       * 
+       * @param worker Current worker.
+       */
+      public void afterStart(BasicWorker worker) {
+        // Nothing to do
+      }
+
+      /**
+       * Called just at the beginning of the finished() method in BasicWorker.
+       * 
+       * @param worker Current worker.
+       */
+      public void beforeFinished(BasicWorker worker) {
+        if (worker instanceof LoginWorker) {
+          logged = ((LoginWorker) worker).isLogged();
+          if (logged) {
+            userLogged = login;
+          }
+        }
+      }
+
+      /**
+       * Called just at the end of the finished() method in BasicWorker.
+       * 
+       * @param worker Current worker.
+       * @param ok Flag indicating if the worker finished OK.
+       */
+      public void afterFinished(BasicWorker worker, boolean ok) {
+        // Nothing to do
+      }
+    });
+    loginWorker.start();
   }
 
   /**
@@ -1070,7 +1115,7 @@ public class MainWindow
    */
   public void actionReloadOptions() {
     new LoginWorker(
-        getWikipedia(), this,
+        getWikipedia(), this, comboPagename,
         (EnumLanguage) comboLanguage.getSelectedItem(),
         comboUser.getSelectedItem().toString(),
         textPassword.getPassword(),
@@ -1823,121 +1868,6 @@ public class MainWindow
     } catch (APIException e) {
       displayError(e);
       return;
-    }
-  }
-
-  /**
-   * SwingWorker for login. 
-   */
-  class LoginWorker extends BasicWorker {
-
-    private final EnumLanguage language;
-    private String username;
-    private final char[] password;
-    private final int saveUser;
-    private final boolean login;
-    private final boolean reloadOnly;
-
-    public LoginWorker(
-        EnumWikipedia wikipedia,
-        BasicWindow window,
-        EnumLanguage language,
-        String username,
-        char[] password,
-        int saveUser,
-        boolean login,
-        boolean reloadOnly) {
-      super(wikipedia, window);
-      this.language = language;
-      this.username = username.trim();
-      this.password = password;
-      this.saveUser = saveUser;
-      this.login = login;
-      this.reloadOnly = reloadOnly;
-    }
-
-    /* (non-Javadoc)
-     * @see org.wikipediacleaner.gui.swing.utils.SwingWorker#finished()
-     */
-    @Override
-    public void finished() {
-      super.finished();
-      if (password != null) {
-        for (int i = 0; i < password.length; i++) {
-          password[i] = '\0';
-        }
-      }
-      comboPagename.requestFocusInWindow();
-    }
-
-    /* (non-Javadoc)
-     * @see org.wikipediacleaner.gui.swing.utils.SwingWorker#construct()
-     */
-    @Override
-    public Object construct() {
-      try {
-        setText(GT._("Retrieving MediaWiki API"));
-        API api = APIFactory.getAPI();
-
-        // Login
-        if (!reloadOnly) {
-          setText(GT._("Login"));
-          LoginResult result = api.login(getWikipedia(), username, new String(password), login);
-          if (login) {
-            if ((result == null) || (!result.isLoginSuccessful())) {
-              throw new APIException("Login unsuccessful: " + ((result != null) ? result.toString() : ""));
-            }
-          }
-          User user = api.retrieveUser(getWikipedia(), username);
-          username = user.getName();
-          getWikipedia().getConnection().setUser(user);
-          api.retrieveTokens(getWikipedia());
-          logged = true;
-          userLogged = login;
-        }
-
-        // Load configuration
-        setText(GT._("Loading configuration"));
-        api.loadConfiguration(getWikipedia(), username);
-
-        // Saving settings
-        Configuration configuration = Configuration.getConfiguration();
-        configuration.setWikipedia(getWikipedia());
-        configuration.setLanguage(language);
-        if (login && !reloadOnly) {
-          Properties props = configuration.getProperties(getWikipedia(), Configuration.PROPERTIES_USERS);
-          if (saveUser == ConfigurationConstants.VALUE_SAVE_USER_NONE) {
-            props.remove(username);
-            configuration.setString(getWikipedia(), ConfigurationValueString.LAST_USER, (String) null);
-          } else {
-            props.setProperty(
-                username,
-                (saveUser == ConfigurationConstants.VALUE_SAVE_USER_BOTH) ? new String(password) : "");
-            configuration.setString(getWikipedia(), ConfigurationValueString.LAST_USER, username);
-          }
-          configuration.setProperties(getWikipedia(), Configuration.PROPERTIES_USERS, props);
-          configuration.setInt(
-              null,
-              ConfigurationValueInteger.SAVE_USER,
-              saveUser);
-        }
-        Configuration.getConfiguration().save();
-
-        // Retrieving disambiguation templates
-        setText(GT._("Retrieving disambiguation templates"));
-        getWikipedia().initDisambiguationTemplates(api);
-
-        // Retrieving suggestions for text replacements
-        setText(GT._("Retrieving suggestions for text replacements"));
-        getConfiguration().initSuggestions(api, reloadOnly);
-
-        // Retrieving Check Wiki configuration
-        setText(GT._("Retrieving Check Wiki configuration"));
-        APIFactory.getCheckWiki().retrieveConfiguration(getWikipedia(), this);
-      } catch (APIException e) {
-        return e;
-      }
-      return null;
     }
   }
 
