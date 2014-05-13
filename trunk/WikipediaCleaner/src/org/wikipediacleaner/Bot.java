@@ -15,6 +15,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.wikipediacleaner.api.constants.EnumLanguage;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.gui.swing.basic.BasicWorker;
@@ -32,18 +34,22 @@ import org.wikipediacleaner.utils.ConfigurationValueBoolean;
  */
 public class Bot {
 
+  private final static Log log = LogFactory.getLog(Bot.class);
+
   /**
    * @param args
    */
   public static void main(String[] args) {
+    System.out.println("Running as bot");
 
     // Log levels
     Logger.getLogger("org.lobobrowser").setLevel(Level.WARNING);
     Logger.getLogger("").setLevel(Level.WARNING);
 
     Configuration config = Configuration.getConfiguration();
-    EnumLanguage language = EnumLanguage.getDefaultLanguage();
+    EnumLanguage language = config.getLanguage();
     Locale.setDefault(language.getLocale());
+    System.out.println("Language: " + language);
 
     // Debugging
     if (config.getBoolean(null, ConfigurationValueBoolean.DEBUG_DETAILS)) {
@@ -58,9 +64,13 @@ public class Bot {
         // Nothing to do
       }
     }
+    System.out.println("Debugging configured");
 
     // Language
     GT.setCurrentLanguage(config.getLanguage());
+    System.out.println("Language configured");
+
+    new Bot(args);
   }
 
   private EnumWikipedia wiki;
@@ -69,13 +79,20 @@ public class Bot {
    * @param args Command line arguments
    */
   private Bot(String[] args) {
+
     // Analyze command line arguments
     int currentArg = 0;
 
     // Retrieve wiki
     if (args.length > currentArg) {
-      wiki = EnumWikipedia.getWikipedia(args[currentArg]);
+      String wikiCode = args[currentArg];
+      wiki = EnumWikipedia.getWikipedia(wikiCode);
+      if ((wiki == null) || !wikiCode.equals(wiki.getSettings().getCode())) {
+        log.warn("Unable to find wiki " + wikiCode);
+        return;
+      }
     }
+    log.info("Wiki: " + wiki);
     currentArg++;
 
     // Retrieve user name
