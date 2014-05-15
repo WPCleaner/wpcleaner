@@ -271,6 +271,9 @@ public class PageElementISBN extends PageElement {
           beginIndex = 0;
         }
         beginIndex += delta;
+        if (endIndex < 0) {
+          endIndex = 0;
+        }
         endIndex += delta;
         if (beginIndex < 0) {
           ok = false;
