@@ -7,6 +7,7 @@
 
 package org.wikipediacleaner.gui.swing.worker;
 
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
@@ -32,6 +33,7 @@ import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageComparator;
 import org.wikipediacleaner.api.data.PageElementComment;
+import org.wikipediacleaner.api.data.PageElementISBN;
 import org.wikipediacleaner.gui.swing.InformationWindow;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
 import org.wikipediacleaner.gui.swing.basic.BasicWorker;
@@ -311,6 +313,19 @@ public class UpdateISBNWarningWorker extends BasicWorker {
       // Errors
       if (errors != null) {
 
+        // Configuration
+        EnumWikipedia wiki = getWikipedia();
+        List<String[]> issnSearchEngines = wiki.getConfiguration().getStringArrayList(
+            WPCConfigurationStringList.ISSN_SEARCH_ENGINES);
+        String issnUrl = null;
+        if ((issnSearchEngines != null) &&
+            !issnSearchEngines.isEmpty()) {
+          String[] issnSearchEngine0 = issnSearchEngines.get(0);
+          if ((issnSearchEngine0 != null) && (issnSearchEngine0.length > 1)) {
+            issnUrl = issnSearchEngine0[1];
+          }
+        }
+
         // Compute synthesis
         StringBuilder buffer = new StringBuilder();
         List<String> keys = new ArrayList<String>(errors.keySet());
@@ -324,6 +339,14 @@ public class UpdateISBNWarningWorker extends BasicWorker {
           }
           buffer.append("ISBN ");
           buffer.append(key);
+          if (issnUrl != null) {
+            String clean = PageElementISBN.cleanISBN(key);
+            if (clean.length() == 8) {
+              buffer.append(" ([");
+              buffer.append(MessageFormat.format(issnUrl, clean));
+              buffer.append(" ISSN?])");
+            }
+          }
           buffer.append(" : ");
           if (values != null) {
             Collections.sort(values);
@@ -351,7 +374,6 @@ public class UpdateISBNWarningWorker extends BasicWorker {
         }
 
         // Update synthesis on dedicated page
-        EnumWikipedia wiki = getWikipedia();
         WPCConfiguration config = wiki.getConfiguration();
         String pageName = config.getString(WPCConfigurationString.ISBN_ERRORS_PAGE);
         boolean saved = false;
