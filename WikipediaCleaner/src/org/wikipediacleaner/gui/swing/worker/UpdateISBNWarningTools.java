@@ -25,6 +25,7 @@ import org.wikipediacleaner.api.constants.WPCConfigurationBoolean;
 import org.wikipediacleaner.api.constants.WPCConfigurationString;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageAnalysis;
+import org.wikipediacleaner.api.data.PageElementExternalLink;
 import org.wikipediacleaner.api.data.PageElementISBN;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
 import org.wikipediacleaner.gui.swing.basic.BasicWorker;
@@ -140,6 +141,7 @@ public class UpdateISBNWarningTools extends UpdateWarningTools {
       String error = analysis.getContents().substring(beginIndex, endIndex);
       error = error.replaceAll("\\=", "&#x3D;"); // Replace "=" by its HTML value
       error = error.replaceAll("\\n", "\u21b5"); // Replacer \n by a visual character
+      boolean keep = true;
       StringBuilder comment = new StringBuilder();
       while (pos < next) {
         errorResult = errorResults.get(pos);
@@ -157,16 +159,29 @@ public class UpdateISBNWarningTools extends UpdateWarningTools {
               comment.append(reason);
             }
           }
-          if (!isbn.isTemplateParameter() &&
-              error.toUpperCase().startsWith("ISBN")) {
-            error = error.substring(4).trim();
+          if (!isbn.isTemplateParameter()) {
+            if (error.toUpperCase().startsWith("ISBN")) {
+              error = error.substring(4).trim();
+            }
+            PageElementExternalLink link = analysis.isInExternalLink(beginIndex);
+            if (link != null) {
+              if (!link.hasSquare() ||
+                  (link.getText() == null) ||
+                  link.getText().isEmpty()) {
+                keep = false;
+              } else if (beginIndex < link.getBeginIndex() + link.getLink().length()) {
+                keep = false;
+              }
+            }
           }
         }
         pos++;
       }
-      elements.add(error);
-      elements.add(comment.toString());
-      memorizeError(error, analysis.getPage().getTitle());
+      if (keep) {
+        elements.add(error);
+        elements.add(comment.toString());
+        memorizeError(error, analysis.getPage().getTitle());
+      }
     }
     return elements;
   }
