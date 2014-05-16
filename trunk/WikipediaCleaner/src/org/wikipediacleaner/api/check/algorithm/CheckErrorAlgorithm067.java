@@ -86,23 +86,40 @@ public class CheckErrorAlgorithm067 extends CheckErrorAlgorithmBase {
       }
 
       // Check if previous character is a punctuation
-      boolean punctuationFound = false;
+      boolean punctuationFoundBefore = false;
+      boolean punctuationFoundBetween = false;
       char punctuation = ' ';
-      if (tmpIndex >= 0) {
-        punctuation = contents.charAt(tmpIndex);
-        if (SpecialCharacters.isPunctuation(punctuation)) {
-          punctuationFound = true;
-          if (punctuation == ';') {
-            int testIndex = tmpIndex - 1;
-            while ((testIndex >= 0) && (Character.isLetterOrDigit(contents.charAt(testIndex)))) {
+      for (int currentTagIndex = firstTagIndex; currentTagIndex <= lastTagIndex; currentTagIndex++) {
+        PageElementTag currentTag = tags.get(currentTagIndex);
+        int testIndex = currentTag.getBeginIndex() - 1;
+        while ((testIndex >= 0) && (Character.isWhitespace(contents.charAt(testIndex)))) {
+          testIndex--;
+        }
+        if (testIndex >= 0) {
+          char currentPunctuation = contents.charAt(testIndex);
+          if (SpecialCharacters.isPunctuation(currentPunctuation)) {
+            boolean punctuationFound = true;
+            if (punctuation == ';') {
+              int punctuationIndex = testIndex;
               testIndex--;
-            }
-            if ((testIndex >= 0) && (contents.charAt(testIndex) == '&')) {
-              String name = contents.substring(testIndex + 1, tmpIndex);
-              for (HtmlCharacters htmlCharacter: HtmlCharacters.values()) {
-                if (name.equals(htmlCharacter.getName())) {
-                  punctuationFound = false;
+              while((testIndex >= 0) && (Character.isLetterOrDigit(contents.charAt(testIndex)))) {
+                testIndex--;
+              }
+              if ((testIndex >= 0) && (contents.charAt(testIndex) == '&')) {
+                String name = contents.substring(testIndex + 1, punctuationIndex);
+                for (HtmlCharacters htmlCharacter : HtmlCharacters.values()) {
+                  if (name.equals(htmlCharacter.getName())) {
+                    punctuationFound = false;
+                  }
                 }
+              }
+            }
+            if (punctuationFound) {
+              if (currentTagIndex == firstTagIndex) {
+                punctuationFoundBefore = true;
+                punctuation = currentPunctuation;
+              } else {
+                punctuationFoundBetween = true;
               }
             }
           }
@@ -112,7 +129,7 @@ public class CheckErrorAlgorithm067 extends CheckErrorAlgorithmBase {
 
       // Check for possible abbreviations before punctuation
       boolean abbreviationFound = false;
-      if ((punctuationFound && (abbreviationsList != null))) {
+      if ((punctuationFoundBefore && (abbreviationsList != null))) {
         for (String abbreviation : abbreviationsList) {
           if (abbreviation != null) {
             if (contents.startsWith(abbreviation, tmpIndex - abbreviation.length() + 1)) {
@@ -123,20 +140,11 @@ public class CheckErrorAlgorithm067 extends CheckErrorAlgorithmBase {
       }
 
       // Punctuation found
-      if (punctuationFound && !abbreviationFound) {
+      if ((punctuationFoundBefore && !abbreviationFound) || punctuationFoundBetween) {
         if (errors == null) {
           return true;
         }
         result = true;
-
-        // Check if the punctuation before is multiple
-        int lastPunctuationIndex = tmpIndex;
-        while ((tmpIndex >= 0) && (contents.charAt(tmpIndex) == punctuation)) {
-          tmpIndex--;
-        }
-        tmpIndex++;
-        beginIndex = tmpIndex;
-        String allPunctuations = contents.substring(tmpIndex, lastPunctuationIndex + 1);
 
         // Construct list of tags
         String replace = PageElementTag.createListOfTags(
@@ -144,50 +152,69 @@ public class CheckErrorAlgorithm067 extends CheckErrorAlgorithmBase {
         String textReplace = PageElementTag.createReducedListOfTags(
             tags, firstTagIndex, lastTagIndex, separator);
 
-        // Check for possible punctuation after tags
-        tmpIndex = lastTag.getEndIndex();
-        int endIndex = tmpIndex;
-        while ((tmpIndex < contents.length()) &&
-               (contents.charAt(tmpIndex) == ' ')) {
+        if (punctuationFoundBefore && !abbreviationFound) {
+          // Check if the punctuation before is multiple
+          int lastPunctuationIndex = tmpIndex;
+          while ((tmpIndex >= 0) && (contents.charAt(tmpIndex) == punctuation)) {
+            tmpIndex--;
+          }
           tmpIndex++;
-        }
-        boolean punctuationFoundAfter = false;
-        int punctuationAfterIndex = tmpIndex;
-        while ((tmpIndex < contents.length()) &&
-               SpecialCharacters.isPunctuation(contents.charAt(tmpIndex))) {
-          punctuationFoundAfter = true;
-          tmpIndex++;
-        }
-        String punctuationAfter = contents.substring(punctuationAfterIndex, tmpIndex);
-        if (punctuationFoundAfter) {
-          endIndex = tmpIndex;
-        }
-
-        // Create error
-        CheckErrorResult errorResult = createCheckErrorResult(
-            analysis, beginIndex, endIndex);
-        boolean automatic = false;
-        if (allPunctuations.equals(".") &&
-            (!punctuationFoundAfter || punctuationAfter.equals("."))) {
-          tmpIndex = endIndex;
-          while ((tmpIndex < contents.length()) && (contents.charAt(tmpIndex) == ' ')) {
+          beginIndex = tmpIndex;
+          String allPunctuations = contents.substring(tmpIndex, lastPunctuationIndex + 1);
+  
+          // Check for possible punctuation after tags
+          tmpIndex = lastTag.getEndIndex();
+          int endIndex = tmpIndex;
+          while ((tmpIndex < contents.length()) &&
+                 (contents.charAt(tmpIndex) == ' ')) {
             tmpIndex++;
           }
-          if (contents.startsWith("\n\n", tmpIndex) ||
-              contents.startsWith("\n*", tmpIndex)) {
-            automatic = true;
+          boolean punctuationFoundAfter = false;
+          int punctuationAfterIndex = tmpIndex;
+          while ((tmpIndex < contents.length()) &&
+                 SpecialCharacters.isPunctuation(contents.charAt(tmpIndex))) {
+            punctuationFoundAfter = true;
+            tmpIndex++;
           }
-        }
-        errorResult.addReplacement(
-            replace + allPunctuations,
-            textReplace + allPunctuations, automatic);
-        if (punctuationFoundAfter &&
-            !allPunctuations.equals(punctuationAfter)) {
+          String punctuationAfter = contents.substring(punctuationAfterIndex, tmpIndex);
+          if (punctuationFoundAfter) {
+            endIndex = tmpIndex;
+          }
+  
+          // Create error
+          CheckErrorResult errorResult = createCheckErrorResult(
+              analysis, beginIndex, endIndex);
+          boolean automatic = false;
+          if (allPunctuations.equals(".") &&
+              (!punctuationFoundAfter || punctuationAfter.equals("."))) {
+            tmpIndex = endIndex;
+            while ((tmpIndex < contents.length()) && (contents.charAt(tmpIndex) == ' ')) {
+              tmpIndex++;
+            }
+            if (contents.startsWith("\n\n", tmpIndex) ||
+                contents.startsWith("\n*", tmpIndex)) {
+              automatic = true;
+            }
+          }
           errorResult.addReplacement(
-              replace + punctuationAfter,
-              textReplace + punctuationAfter);
+              replace + allPunctuations,
+              textReplace + allPunctuations, automatic);
+          if (punctuationFoundAfter &&
+              !allPunctuations.equals(punctuationAfter)) {
+            errorResult.addReplacement(
+                replace + punctuationAfter,
+                textReplace + punctuationAfter);
+          }
+          errors.add(errorResult);
+
+        } else {
+
+          // Create error
+          CheckErrorResult errorResult = createCheckErrorResult(
+              analysis, firstTag.getBeginIndex(), lastTag.getEndIndex());
+          errorResult.addReplacement(replace, textReplace);
+          errors.add(errorResult);
         }
-        errors.add(errorResult);
       }
     }
     return result;
