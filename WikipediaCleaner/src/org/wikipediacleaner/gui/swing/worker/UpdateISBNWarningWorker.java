@@ -340,7 +340,8 @@ public class UpdateISBNWarningWorker extends BasicWorker {
           buffer.append("ISBN ");
           buffer.append(key);
           if (issnUrl != null) {
-            String clean = PageElementISBN.cleanISBN(key);
+            String clean = key.replaceAll("\\&\\#x3D\\;", "=");
+            clean = PageElementISBN.cleanISBN(clean);
             if (clean.length() == 8) {
               buffer.append(" ([");
               buffer.append(MessageFormat.format(issnUrl, clean));
