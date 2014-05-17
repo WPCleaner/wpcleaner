@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.StringReader;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -261,7 +262,9 @@ public class CheckWiki {
   public void retrieveConfiguration(
       EnumWikipedia wiki,
       MediaWikiListener listener) throws APIException {
+
     // Retrieve general configuration
+    final API api = APIFactory.getAPI();
     final WPCConfiguration wpcConfiguration = wiki.getConfiguration();
     boolean useLabs = wiki.getConfiguration().getBoolean(WPCConfigurationBoolean.CW_USE_LABS);
     final CWConfiguration cwConfiguration = wiki.getCWConfiguration();
@@ -289,11 +292,10 @@ public class CheckWiki {
     try {
       String translationPage = wpcConfiguration.getString(WPCConfigurationString.CW_TRANSLATION_PAGE);
       if (translationPage != null) {
-        MediaWiki mw = MediaWiki.getMediaWikiAccess(listener);
         Page page = DataManager.getPage(
             wiki, translationPage,
             null, null, null);
-        mw.retrieveContents(wiki, page, true, false, false, false, false);
+        api.retrieveContents(wiki, Collections.singleton(page), false, false);
         if (Boolean.TRUE.equals(page.isExisting())) {
           cwConfiguration.setWikiConfiguration(new StringReader(page.getContents()));
         }
@@ -313,7 +315,7 @@ public class CheckWiki {
       }
     }
     if (whiteListPages.size() > 0) {
-      APIFactory.getAPI().retrieveLinks(wiki, whiteListPages.values());
+      api.retrieveLinks(wiki, whiteListPages.values());
       for (int i = 0; i < CWConfiguration.MAX_ERROR_NUMBER; i++) {
         CWConfigurationError error = cwConfiguration.getErrorConfiguration(i);
         if ((error != null) && (error.getWhiteListPageName() != null)) {
