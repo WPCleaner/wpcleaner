@@ -32,7 +32,7 @@ import org.wikipediacleaner.utils.ConfigurationValueBoolean;
 /**
  * Wikipedia Cleaner running as a bot.
  */
-public class Bot {
+public class Bot implements BasicWorkerListener {
 
   private final static Log log = LogFactory.getLog(Bot.class);
 
@@ -70,7 +70,14 @@ public class Bot {
     new Bot(args);
   }
 
+  /** Wiki */
   private EnumWikipedia wiki;
+
+  /** True if login is done */
+  private boolean loginDone;
+
+  /** Actions to be executed */
+  private String[] actions;
 
   /**
    * @param args Command line arguments
@@ -106,7 +113,7 @@ public class Bot {
     currentArg++;
 
     // Retrieve action
-    final String[] actions = (args.length > currentArg) ?
+    actions = (args.length > currentArg) ?
         Arrays.copyOfRange(args, currentArg, args.length) : null;
     currentArg++;
 
@@ -120,51 +127,12 @@ public class Bot {
     }
 
     // Login
+    loginDone = false;
     LoginWorker loginWorker = new LoginWorker(
         wiki, null, null, EnumLanguage.getDefaultLanguage(),
         userName, password.toCharArray(),
         ConfigurationConstants.VALUE_SAVE_USER_NO_CHANGE, true, false);
-    loginWorker.setListener(new BasicWorkerListener() {
-
-      /**
-       * Called just at the beginning of the start() method in BasicWorker.
-       * 
-       * @param worker Current worker.
-       */
-      public void beforeStart(BasicWorker worker) {
-        // Nothing to do
-      }
-
-      /**
-       * Called just at the end of the start() method in BasicWorker.
-       * 
-       * @param worker Current worker.
-       */
-      public void afterStart(BasicWorker worker) {
-        // Nothing to do
-      }
-
-      /**
-       * Called just at the beginning of the finished() method in BasicWorker.
-       * 
-       * @param worker Current worker.
-       */
-      public void beforeFinished(BasicWorker worker) {
-        // Nothing to do
-      }
-
-      /**
-       * Called just at the end of the finished() method in BasicWorker.
-       * 
-       * @param worker Current worker.
-       * @param ok Flag indicating if the worker finished OK.
-       */
-      public void afterFinished(BasicWorker worker, boolean ok) {
-        if (ok) {
-          executeAction(actions);
-        }
-      }
-    });
+    loginWorker.setListener(this);
     loginWorker.start();
   }
 
@@ -186,7 +154,48 @@ public class Bot {
     // Execute action depending on the parameters
     if ("UpdateISBNWarnings".equalsIgnoreCase(action)) {
       UpdateISBNWarningWorker worker = new UpdateISBNWarningWorker(wiki, null, false);
+      worker.setListener(this);
       worker.start();
     }
+  }
+
+  /**
+   * @param worker
+   * @see org.wikipediacleaner.gui.swing.basic.BasicWorkerListener#beforeStart(org.wikipediacleaner.gui.swing.basic.BasicWorker)
+   */
+  public void beforeStart(BasicWorker worker) {
+    // Do nothing
+  }
+
+  /**
+   * @param worker
+   * @see org.wikipediacleaner.gui.swing.basic.BasicWorkerListener#afterStart(org.wikipediacleaner.gui.swing.basic.BasicWorker)
+   */
+  public void afterStart(BasicWorker worker) {
+    // Do nothing
+  }
+
+  /**
+   * @param worker
+   * @see org.wikipediacleaner.gui.swing.basic.BasicWorkerListener#beforeFinished(org.wikipediacleaner.gui.swing.basic.BasicWorker)
+   */
+  public void beforeFinished(BasicWorker worker) {
+    // Do nothing
+  }
+
+  /**
+   * @param worker
+   * @param ok
+   * @see org.wikipediacleaner.gui.swing.basic.BasicWorkerListener#afterFinished(org.wikipediacleaner.gui.swing.basic.BasicWorker, boolean)
+   */
+  public void afterFinished(BasicWorker worker, boolean ok) {
+    if (!ok) {
+      System.exit(1);
+    }
+    if (loginDone) {
+      System.exit(0);
+    }
+    loginDone = true;
+    executeAction(actions);
   }
 }
