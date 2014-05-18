@@ -59,9 +59,11 @@ public class BasicWorker extends SwingWorker implements MediaWikiListener {
    * @return Flag indicating if the Swing Worker should continue.
    */
   public boolean shouldContinue() {
-    if ((window == null) ||
-        (window.getParentComponent() == null) ||
-        (window.getParentComponent().isDisplayable() == false)) {
+    if (window == null) {
+      return true;
+    }
+    if ((window.getParentComponent() == null) ||
+        !window.getParentComponent().isDisplayable()) {
       return false;
     }
     return true;
