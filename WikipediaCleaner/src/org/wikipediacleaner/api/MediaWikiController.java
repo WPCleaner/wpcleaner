@@ -72,8 +72,8 @@ public abstract class MediaWikiController implements MediaWikiListener {
    * @param task The task itself.
    */
   protected void addTask(Callable<?> task) {
-    Future<?> result = executor.submit(task);
     synchronized (results) {
+      Future<?> result = executor.submit(task);
       if (!shouldStop()) {
         results.add(result);
       }
