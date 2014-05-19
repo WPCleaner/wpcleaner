@@ -56,7 +56,7 @@ public class Bot implements BasicWorkerListener {
     }
     if (config.getBoolean(null, ConfigurationValueBoolean.DEBUG_FILE)) {
       try {
-        Handler fh = new FileHandler("%t/WPCleaner.log");
+        Handler fh = new FileHandler("WPCleanerBot.log");
         fh.setFormatter(new SimpleFormatter());
         Logger.getLogger("").addHandler(fh);
       } catch (Exception e) {
@@ -154,6 +154,10 @@ public class Bot implements BasicWorkerListener {
     // Execute action depending on the parameters
     if ("UpdateISBNWarnings".equalsIgnoreCase(action)) {
       UpdateISBNWarningWorker worker = new UpdateISBNWarningWorker(wiki, null, false);
+      worker.setListener(this);
+      worker.start();
+    } else if ("ListISBNWarnings".equalsIgnoreCase(action)) {
+      UpdateISBNWarningWorker worker = new UpdateISBNWarningWorker(wiki, null, true);
       worker.setListener(this);
       worker.start();
     }
