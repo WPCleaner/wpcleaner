@@ -7,7 +7,9 @@
 
 package org.wikipediacleaner;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Locale;
 import java.util.logging.FileHandler;
 import java.util.logging.Handler;
@@ -17,10 +19,13 @@ import java.util.logging.SimpleFormatter;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithm;
+import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithms;
 import org.wikipediacleaner.api.constants.EnumLanguage;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.gui.swing.basic.BasicWorker;
 import org.wikipediacleaner.gui.swing.basic.BasicWorkerListener;
+import org.wikipediacleaner.gui.swing.bot.AutomaticCWWorker;
 import org.wikipediacleaner.gui.swing.worker.LoginWorker;
 import org.wikipediacleaner.gui.swing.worker.UpdateISBNWarningWorker;
 import org.wikipediacleaner.i18n.GT;
@@ -158,6 +163,18 @@ public class Bot implements BasicWorkerListener {
       worker.start();
     } else if ("ListISBNWarnings".equalsIgnoreCase(action)) {
       UpdateISBNWarningWorker worker = new UpdateISBNWarningWorker(wiki, null, true);
+      worker.setListener(this);
+      worker.start();
+    } else if ("FixCheckWiki".equalsIgnoreCase(action)) {
+      List<CheckErrorAlgorithm> algorithms = new ArrayList<CheckErrorAlgorithm>();
+      for (int i = 1; i < args.length; i++) {
+        CheckErrorAlgorithm algorithm = CheckErrorAlgorithms.getAlgorithm(wiki, Integer.parseInt(args[i]));
+        if (algorithm != null) {
+          algorithms.add(algorithm);
+        }
+      }
+      AutomaticCWWorker worker = new AutomaticCWWorker(
+          wiki, null, algorithms, 10000, algorithms, null, true, false);
       worker.setListener(this);
       worker.start();
     }

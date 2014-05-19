@@ -35,7 +35,7 @@ import org.wikipediacleaner.i18n.GT;
 /**
  * SwingWorker for automatic Check Wiki fixing.
  */
-class AutomaticCWWorker extends BasicWorker {
+public class AutomaticCWWorker extends BasicWorker {
 
   /**
    * Algorithms for which to fix pages.
