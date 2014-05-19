@@ -308,135 +308,138 @@ public class UpdateISBNWarningWorker extends BasicWorker {
   private void displayResult(
       Stats stats, long startTime,
       Map<String, List<String>> errors) {
-    if ((!useList) && (getWindow() != null)) {
+    if (useList) {
+      return;
+    }
 
-      // Errors
-      if (errors != null) {
+    // Errors
+    if (errors != null) {
 
-        // Configuration
-        EnumWikipedia wiki = getWikipedia();
-        List<String[]> issnSearchEngines = wiki.getConfiguration().getStringArrayList(
-            WPCConfigurationStringList.ISSN_SEARCH_ENGINES);
-        String issnUrl = null;
-        if ((issnSearchEngines != null) &&
-            !issnSearchEngines.isEmpty()) {
-          String[] issnSearchEngine0 = issnSearchEngines.get(0);
-          if ((issnSearchEngine0 != null) && (issnSearchEngine0.length > 1)) {
-            issnUrl = issnSearchEngine0[1];
-          }
-        }
-
-        // Compute synthesis
-        StringBuilder buffer = new StringBuilder();
-        List<String> keys = new ArrayList<String>(errors.keySet());
-        Collections.sort(keys);
-        for (String key : keys) {
-          List<String> values = errors.get(key);
-          buffer.append("* ");
-          if (values != null) {
-            buffer.append(values.size());
-            buffer.append(" x ");
-          }
-          buffer.append("ISBN ");
-          buffer.append(key);
-          if (issnUrl != null) {
-            String clean = key.replaceAll("\\&\\#x3D\\;", "=");
-            clean = PageElementISBN.cleanISBN(clean);
-            if (clean.length() == 8) {
-              buffer.append(" ([");
-              buffer.append(MessageFormat.format(issnUrl, clean));
-              buffer.append(" ISSN?])");
-            }
-          }
-          buffer.append(" : ");
-          if (values != null) {
-            Collections.sort(values);
-            int valueNum = 0;
-            while (valueNum < values.size()) {
-              if (valueNum > 0) {
-                buffer.append(", ");
-              }
-              String value = values.get(valueNum);
-              int begin = valueNum;
-              while ((valueNum < values.size()) &&
-                     (values.get(valueNum).equals(value))) {
-                valueNum++;
-              }
-              if (valueNum > begin + 1) {
-                buffer.append(valueNum - begin);
-                buffer.append(" x ");
-              }
-              buffer.append("[[");
-              buffer.append(value);
-              buffer.append("]]");
-            }
-          }
-          buffer.append("\n");
-        }
-
-        // Update synthesis on dedicated page
-        WPCConfiguration config = wiki.getConfiguration();
-        String pageName = config.getString(WPCConfigurationString.ISBN_ERRORS_PAGE);
-        boolean saved = false;
-        if ((pageName != null) && (pageName.trim().length() > 0)) {
-          boolean updatePage = false;
-          if (simulation) {
-            int answer = Utilities.displayYesNoWarning(
-                getWindow().getParentComponent(),
-                GT._("Do you want to update {0}?", pageName));
-            if (answer == JOptionPane.YES_OPTION) {
-              updatePage = true;
-            }
-          } else {
-            updatePage = true;
-          }
-
-          if (updatePage) {
-            try {
-              Page page = DataManager.getPage(wiki, pageName, null, null, null);
-              API api = APIFactory.getAPI();
-              api.retrieveContents(wiki, Collections.singletonList(page), false, false);
-              String contents = page.getContents();
-              if (contents != null) {
-                int begin = -1;
-                int end = -1;
-                for (PageElementComment comment : page.getAnalysis(contents, true).getComments()) {
-                  String value = comment.getComment().trim();
-                  if ("BOT BEGIN".equals(value)) {
-                    if (begin < 0) {
-                      begin = comment.getEndIndex();
-                    }
-                  } else if ("BOT END".equals(value)) {
-                    end = comment.getBeginIndex();
-                  }
-                }
-                if ((begin >= 0) && (end > begin)) {
-                  StringBuilder newText = new StringBuilder();
-                  newText.append(contents.substring(0, begin));
-                  newText.append("\n");
-                  newText.append(buffer.toString());
-                  newText.append(contents.substring(end));
-                  api.updatePage(
-                      wiki, page, newText.toString(),
-                      config.getString(WPCConfigurationString.ISBN_ERRORS_PAGE_COMMENT),
-                      false);
-                  saved = true;
-                }
-              }
-            } catch (APIException e) {
-              // Nothing
-            }
-          }
-        }
-
-        // Display synthesis
-        if (!saved) {
-          InformationWindow.createInformationWindow(
-              "ISBN", buffer.toString(), false, getWikipedia());
+      // Configuration
+      EnumWikipedia wiki = getWikipedia();
+      List<String[]> issnSearchEngines = wiki.getConfiguration().getStringArrayList(
+          WPCConfigurationStringList.ISSN_SEARCH_ENGINES);
+      String issnUrl = null;
+      if ((issnSearchEngines != null) &&
+          !issnSearchEngines.isEmpty()) {
+        String[] issnSearchEngine0 = issnSearchEngines.get(0);
+        if ((issnSearchEngine0 != null) && (issnSearchEngine0.length > 1)) {
+          issnUrl = issnSearchEngine0[1];
         }
       }
 
-      // Statistics
+      // Compute synthesis
+      StringBuilder buffer = new StringBuilder();
+      List<String> keys = new ArrayList<String>(errors.keySet());
+      Collections.sort(keys);
+      for (String key : keys) {
+        List<String> values = errors.get(key);
+        buffer.append("* ");
+        if (values != null) {
+          buffer.append(values.size());
+          buffer.append(" x ");
+        }
+        buffer.append("ISBN ");
+        buffer.append(key);
+        if (issnUrl != null) {
+          String clean = key.replaceAll("\\&\\#x3D\\;", "=");
+          clean = PageElementISBN.cleanISBN(clean);
+          if (clean.length() == 8) {
+            buffer.append(" ([");
+            buffer.append(MessageFormat.format(issnUrl, clean));
+            buffer.append(" ISSN?])");
+          }
+        }
+        buffer.append(" : ");
+        if (values != null) {
+          Collections.sort(values);
+          int valueNum = 0;
+          while (valueNum < values.size()) {
+            if (valueNum > 0) {
+              buffer.append(", ");
+            }
+            String value = values.get(valueNum);
+            int begin = valueNum;
+            while ((valueNum < values.size()) &&
+                   (values.get(valueNum).equals(value))) {
+              valueNum++;
+            }
+            if (valueNum > begin + 1) {
+              buffer.append(valueNum - begin);
+              buffer.append(" x ");
+            }
+            buffer.append("[[");
+            buffer.append(value);
+            buffer.append("]]");
+          }
+        }
+        buffer.append("\n");
+      }
+
+      // Update synthesis on dedicated page
+      WPCConfiguration config = wiki.getConfiguration();
+      String pageName = config.getString(WPCConfigurationString.ISBN_ERRORS_PAGE);
+      boolean saved = false;
+      if ((pageName != null) && (pageName.trim().length() > 0)) {
+        boolean updatePage = false;
+        if (simulation && (getWindow() != null)) {
+          int answer = Utilities.displayYesNoWarning(
+              getWindow().getParentComponent(),
+              GT._("Do you want to update {0}?", pageName));
+          if (answer == JOptionPane.YES_OPTION) {
+            updatePage = true;
+          }
+        } else {
+          updatePage = true;
+        }
+
+        if (updatePage) {
+          try {
+            Page page = DataManager.getPage(wiki, pageName, null, null, null);
+            API api = APIFactory.getAPI();
+            api.retrieveContents(wiki, Collections.singletonList(page), false, false);
+            String contents = page.getContents();
+            if (contents != null) {
+              int begin = -1;
+              int end = -1;
+              for (PageElementComment comment : page.getAnalysis(contents, true).getComments()) {
+                String value = comment.getComment().trim();
+                if ("BOT BEGIN".equals(value)) {
+                  if (begin < 0) {
+                    begin = comment.getEndIndex();
+                  }
+                } else if ("BOT END".equals(value)) {
+                  end = comment.getBeginIndex();
+                }
+              }
+              if ((begin >= 0) && (end > begin)) {
+                StringBuilder newText = new StringBuilder();
+                newText.append(contents.substring(0, begin));
+                newText.append("\n");
+                newText.append(buffer.toString());
+                newText.append(contents.substring(end));
+                api.updatePage(
+                    wiki, page, newText.toString(),
+                    config.getString(WPCConfigurationString.ISBN_ERRORS_PAGE_COMMENT),
+                    false);
+                saved = true;
+              }
+            }
+          } catch (APIException e) {
+            // Nothing
+          }
+        }
+      }
+
+      // Display synthesis
+      if (!saved && (getWindow() != null)) {
+        InformationWindow.createInformationWindow(
+            "ISBN", buffer.toString(), false, getWikipedia());
+      }
+    }
+
+    // Statistics
+    if (getWindow() != null) {
       long endTime = System.currentTimeMillis();
       StringBuilder message = new StringBuilder();
       message.append(GT.__(
