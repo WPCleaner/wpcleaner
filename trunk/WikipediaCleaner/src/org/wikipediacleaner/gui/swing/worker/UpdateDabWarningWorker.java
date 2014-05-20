@@ -187,6 +187,7 @@ public class UpdateDabWarningWorker extends BasicWorker {
         tools.preloadDabPages();
       }
       String lastTitle = null;
+      int countUnsaved = 0;
       while (!warningPages.isEmpty()) {
         // Creating sublist
         int size = Math.min(10, warningPages.size());
@@ -201,6 +202,7 @@ public class UpdateDabWarningWorker extends BasicWorker {
           displayResult(stats, startTime);
           return Integer.valueOf(stats.getUpdatedPagesCount());
         }
+        countUnsaved += sublist.size();
 
         // Update warning
         boolean finish = false;
@@ -220,9 +222,12 @@ public class UpdateDabWarningWorker extends BasicWorker {
               finish = false;
             }
           }
-          if (shouldStop()) {
+          if (shouldStop() || (countUnsaved > 1000)) {
             Configuration config = Configuration.getConfiguration();
             config.setString(null, ConfigurationValueString.LAST_DAB_WARNING, lastTitle);
+            countUnsaved = 0;
+          }
+          if (shouldStop()) {
             displayResult(stats, startTime);
             return Integer.valueOf(stats.getUpdatedPagesCount());
           }
