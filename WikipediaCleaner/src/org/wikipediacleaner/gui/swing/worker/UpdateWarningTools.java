@@ -161,7 +161,9 @@ public abstract class UpdateWarningTools {
     }
 
     // Retrieve information in the pages
-    retrievePageInformation(pages);
+    if (!retrievePageInformation(pages)) {
+      return;
+    }
 
     // Load talk pages and "To do" sub pages
     Map<Page, Page> mapTalkPages = new HashMap<Page, Page>();
@@ -1022,9 +1024,10 @@ public abstract class UpdateWarningTools {
    * Retrieve information in the pages to construct the warning.
    * 
    * @param pages List of pages.
+   * @return True if information was retrieved.
    * @throws APIException
    */
-  protected abstract void retrievePageInformation(
+  protected abstract boolean retrievePageInformation(
       List<Page> pages) throws APIException;
 
   /**
@@ -1437,8 +1440,10 @@ public abstract class UpdateWarningTools {
    * @return True if the analyze should stop.
    */
   protected boolean shouldStop() {
-    if ((window == null) ||
-        (window.getParentComponent() == null) ||
+    if (window == null) {
+      return false;
+    }
+    if ((window.getParentComponent() == null) ||
         (window.getParentComponent().isDisplayable() == false)) {
       return true;
     }

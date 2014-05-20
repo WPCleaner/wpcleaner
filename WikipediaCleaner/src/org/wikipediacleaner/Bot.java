@@ -27,11 +27,13 @@ import org.wikipediacleaner.gui.swing.basic.BasicWorker;
 import org.wikipediacleaner.gui.swing.basic.BasicWorkerListener;
 import org.wikipediacleaner.gui.swing.bot.AutomaticCWWorker;
 import org.wikipediacleaner.gui.swing.worker.LoginWorker;
+import org.wikipediacleaner.gui.swing.worker.UpdateDabWarningWorker;
 import org.wikipediacleaner.gui.swing.worker.UpdateISBNWarningWorker;
 import org.wikipediacleaner.i18n.GT;
 import org.wikipediacleaner.utils.Configuration;
 import org.wikipediacleaner.utils.ConfigurationConstants;
 import org.wikipediacleaner.utils.ConfigurationValueBoolean;
+import org.wikipediacleaner.utils.ConfigurationValueString;
 
 
 /**
@@ -157,7 +159,13 @@ public class Bot implements BasicWorkerListener {
     currentArg++;
 
     // Execute action depending on the parameters
-    if ("UpdateISBNWarnings".equalsIgnoreCase(action)) {
+    if ("UpdateDabWarnings".equalsIgnoreCase(action)) {
+      Configuration config = Configuration.getConfiguration();
+      String start = config.getString(null, ConfigurationValueString.LAST_DAB_WARNING);
+      UpdateDabWarningWorker worker = new UpdateDabWarningWorker(wiki, null, start);
+      worker.setListener(this);
+      worker.start();
+    } else if ("UpdateISBNWarnings".equalsIgnoreCase(action)) {
       UpdateISBNWarningWorker worker = new UpdateISBNWarningWorker(wiki, null, false);
       worker.setListener(this);
       worker.start();

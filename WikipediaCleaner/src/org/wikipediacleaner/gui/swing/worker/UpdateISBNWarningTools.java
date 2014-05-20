@@ -76,10 +76,11 @@ public class UpdateISBNWarningTools extends UpdateWarningTools {
    * Retrieve information in the pages to construct the warning.
    * 
    * @param pages List of pages.
+   * @return True if information was retrieved.
    * @throws APIException
    */
   @Override
-  protected void retrievePageInformation(
+  protected boolean retrievePageInformation(
       List<Page> pages) throws APIException {
 
     // Retrieving page contents
@@ -87,6 +88,8 @@ public class UpdateISBNWarningTools extends UpdateWarningTools {
       MediaWiki mw = MediaWiki.getMediaWikiAccess(worker);
       mw.retrieveContents(wiki, pages, true, false, false, true);
     }
+
+    return true;
   }
 
   /**

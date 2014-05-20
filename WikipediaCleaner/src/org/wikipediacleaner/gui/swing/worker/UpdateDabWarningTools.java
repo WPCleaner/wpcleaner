@@ -116,10 +116,11 @@ public class UpdateDabWarningTools extends UpdateWarningTools {
    * Retrieve information in the pages to construct the warning.
    * 
    * @param pages List of pages.
+   * @return True if information was retrieved.
    * @throws APIException
    */
   @Override
-  protected void retrievePageInformation(
+  protected boolean retrievePageInformation(
       List<Page> pages) throws APIException {
     MediaWiki mw = MediaWiki.getMediaWikiAccess(worker);
 
@@ -130,7 +131,7 @@ public class UpdateDabWarningTools extends UpdateWarningTools {
       }
       mw.block(true);
       if (shouldStop()) {
-        return;
+        return false;
       }
     }
 
@@ -178,7 +179,7 @@ public class UpdateDabWarningTools extends UpdateWarningTools {
         }
       }
       if (shouldStop()) {
-        return;
+        return false;
       }
     }
 
@@ -200,6 +201,8 @@ public class UpdateDabWarningTools extends UpdateWarningTools {
         mw.retrieveContents(wiki, tmpPages, true, false, false, false);
       }
     }
+
+    return true;
   }
 
   /**
