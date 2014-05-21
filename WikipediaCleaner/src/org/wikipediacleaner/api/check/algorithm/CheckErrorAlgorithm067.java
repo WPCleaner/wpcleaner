@@ -157,6 +157,7 @@ public class CheckErrorAlgorithm067 extends CheckErrorAlgorithmBase {
             tags, firstTagIndex, lastTagIndex, separator);
 
         if (punctuationFoundBefore && !abbreviationFound) {
+
           // Check if the punctuation before is multiple
           int lastPunctuationIndex = tmpIndex;
           while ((tmpIndex >= 0) && (contents.charAt(tmpIndex) == punctuation)) {
@@ -165,6 +166,11 @@ public class CheckErrorAlgorithm067 extends CheckErrorAlgorithmBase {
           tmpIndex++;
           beginIndex = tmpIndex;
           String allPunctuations = contents.substring(tmpIndex, lastPunctuationIndex + 1);
+          while ((tmpIndex > 0) && (contents.charAt(tmpIndex - 1) == ' ')) {
+            tmpIndex--;
+          }
+          String prefix = contents.substring(tmpIndex, beginIndex);
+          beginIndex = tmpIndex;
   
           // Check for possible punctuation after tags
           tmpIndex = lastTag.getEndIndex();
@@ -189,8 +195,7 @@ public class CheckErrorAlgorithm067 extends CheckErrorAlgorithmBase {
           CheckErrorResult errorResult = createCheckErrorResult(
               analysis, beginIndex, endIndex);
           boolean automatic = false;
-          if (allPunctuations.equals(".") &&
-              (!punctuationFoundAfter || punctuationAfter.equals("."))) {
+          if (allPunctuations.equals(".") && !punctuationFoundAfter) {
             tmpIndex = endIndex;
             while ((tmpIndex < contents.length()) && (contents.charAt(tmpIndex) == ' ')) {
               tmpIndex++;
@@ -201,13 +206,13 @@ public class CheckErrorAlgorithm067 extends CheckErrorAlgorithmBase {
             }
           }
           errorResult.addReplacement(
-              replace + allPunctuations,
-              textReplace + allPunctuations, automatic);
+              replace + prefix + allPunctuations,
+              textReplace + prefix + allPunctuations, automatic);
           if (punctuationFoundAfter &&
               !allPunctuations.equals(punctuationAfter)) {
             errorResult.addReplacement(
-                replace + punctuationAfter,
-                textReplace + punctuationAfter);
+                replace + prefix + punctuationAfter,
+                textReplace + prefix + punctuationAfter);
           }
           errors.add(errorResult);
 
