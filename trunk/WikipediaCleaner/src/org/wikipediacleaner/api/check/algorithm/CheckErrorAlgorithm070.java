@@ -74,6 +74,18 @@ public class CheckErrorAlgorithm070 extends CheckErrorAlgorithmISBN {
           }
           if (length == 8) {
             addSearchEnginesISSN(analysis, errorResult, isbn.getISBN());
+          } else if (length == 9) {
+            char computedCheck = PageElementISBN.computeChecksum(value + '0');
+            if (computedCheck > 0) {
+              addSearchEngines(analysis, errorResult, value + computedCheck);
+            }
+          } else if (length == 12) {
+            if (value.startsWith("978") || value.startsWith("979")) {
+              char computedCheck = PageElementISBN.computeChecksum(value + '0');
+              if (computedCheck > 0) {
+                addSearchEngines(analysis, errorResult, value + computedCheck);
+              }
+            }
           }
           errors.add(errorResult);
         }
