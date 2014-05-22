@@ -86,6 +86,9 @@ public class CheckErrorAlgorithm070 extends CheckErrorAlgorithmISBN {
                 addSearchEngines(analysis, errorResult, value + computedCheck);
               }
             }
+            if (value.startsWith("78") && PageElementISBN.isValid("9" + value)) {
+              addSearchEngines(analysis, errorResult, "9" + value);
+            }
           }
           errors.add(errorResult);
         }
