@@ -522,16 +522,18 @@ public class CheckWikiProjectWindow extends OnePageWindow {
     menuUseSelection.removeAll();
     menuDeleteSelection.removeAll();
     Configuration config = Configuration.getConfiguration();
-    List<String> selections = config.getStringList(null, Configuration.ARRAY_CHECK_SELECTION);
+    Properties properties = config.getProperties(null, Configuration.ARRAY_CHECK_SELECTION);
     JMenuItem menuItem = null;
-    for (String selection : selections) {
-      menuItem = new JMenuItem(selection);
+    for (Object property : properties.keySet()) {
+      String name = property.toString();
+      String selection = properties.getProperty(name);
+      menuItem = new JMenuItem(name + ": " + selection);
       menuItem.setActionCommand(ACTION_SELECT_ERRORS + selection);
       menuItem.addActionListener(this);
       menuUseSelection.add(menuItem);
 
-      menuItem = new JMenuItem(selection);
-      menuItem.setActionCommand(ACTION_SELECT_ERRORS + "D" + selection);
+      menuItem = new JMenuItem(name + ": " + selection);
+      menuItem.setActionCommand(ACTION_SELECT_ERRORS + "D" + name);
       menuItem.addActionListener(this);
       menuDeleteSelection.add(menuItem);
     }
@@ -1694,6 +1696,12 @@ public class CheckWikiProjectWindow extends OnePageWindow {
 
     // Save current selection
     } else if (command.equals("S")) {
+      // Retrieve configuration name
+      String name = askForValue(GT._("What is the name of the selection?"), null, null);
+      if ((name == null) || (name.isEmpty())) {
+        return;
+      }
+
       // Creates a string representing the current selection
       StringBuilder selection = new StringBuilder();
       for (CheckErrorAlgorithm algorithm : selectedAlgorithms) {
@@ -1706,24 +1714,14 @@ public class CheckWikiProjectWindow extends OnePageWindow {
 
       // Save configuration
       Configuration config = Configuration.getConfiguration();
-      List<String> selections = config.getStringList(null, Configuration.ARRAY_CHECK_SELECTION);
-      if (!selections.contains(strSelection)) {
-        selections.add(strSelection);
-        Collections.sort(selections);
-        config.setStringList(null, Configuration.ARRAY_CHECK_SELECTION, selections);
-      }
+      config.setSubString(null, Configuration.ARRAY_CHECK_SELECTION, name, strSelection);
       updateSavedSelections();
 
     // Delete a saved selection
     } else if (command.startsWith("D")) {
-      String selection = command.substring(1);
+      String name = command.substring(1);
       Configuration config = Configuration.getConfiguration();
-      List<String> selections = config.getStringList(null, Configuration.ARRAY_CHECK_SELECTION);
-      if (selections.contains(selection)) {
-        selections.remove(selection);
-        Collections.sort(selections);
-        config.setStringList(null, Configuration.ARRAY_CHECK_SELECTION, selections);
-      }
+      config.setSubString(null, Configuration.ARRAY_CHECK_SELECTION, name, null);
       updateSavedSelections();
       
     } else {
