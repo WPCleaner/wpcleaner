@@ -96,6 +96,12 @@ public class CheckErrorAlgorithm073 extends CheckErrorAlgorithmISBN {
               addSearchEngines(analysis, errorResult, value);
             }
           }
+          if (number.startsWith("978")) {
+            value = number.substring(3);
+            if (PageElementISBN.isValid(value)) {
+              addSearchEngines(analysis, errorResult, value);
+            }
+          }
           if (isbn.isTemplateParameter()) {
             PageElementTemplate template = analysis.isInTemplate(isbn.getBeginIndex());
             addSearchEngines(analysis, errorResult, template);
