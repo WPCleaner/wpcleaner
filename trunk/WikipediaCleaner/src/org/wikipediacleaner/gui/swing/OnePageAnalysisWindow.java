@@ -890,28 +890,32 @@ public class OnePageAnalysisWindow extends OnePageWindow {
       // Configuration depending on the type of page
       boolean isArticle = (getPage() != null) && (getPage().isArticle());
       if (isArticle) {
+        WPCConfiguration wpcConfig = getConfiguration();
+        boolean isbnErrors = Page.areSameTitle(
+            getPage().getTitle(),
+            wpcConfig.getString(WPCConfigurationString.ISBN_ERRORS_PAGE));
+        Integer namespace = getPage().getNamespace();
         Configuration config = Configuration.getConfiguration();
         if (getPage().isInMainNamespace()) {
           chkUpdateDabWarning.setSelected(config.getBoolean(
               null,
               ConfigurationValueBoolean.UPDATE_DAB_WARNING));
-          chkCreateDabWarning.setSelected(config.getBoolean(
+          chkCreateDabWarning.setSelected(!isbnErrors && config.getBoolean(
               null,
               ConfigurationValueBoolean.CREATE_DAB_WARNING));
-        } else if ((getPage().getNamespace() != null) &&
-                   (getWikipedia().getConfiguration().isEncyclopedicNamespace(
-                       getPage().getNamespace()))) {
+        } else if ((namespace != null) &&
+                   (wpcConfig.isEncyclopedicNamespace(namespace))) {
           chkUpdateDabWarning.setSelected(config.getBoolean(
               null,
               ConfigurationValueBoolean.UPDATE_DAB_WARNING_ENCY));
-          chkCreateDabWarning.setSelected(config.getBoolean(
+          chkCreateDabWarning.setSelected(!isbnErrors && config.getBoolean(
               null,
               ConfigurationValueBoolean.CREATE_DAB_WARNING_ENCY));
         } else {
           chkUpdateDabWarning.setSelected(config.getBoolean(
               null,
               ConfigurationValueBoolean.UPDATE_DAB_WARNING_ALL));
-          chkCreateDabWarning.setSelected(config.getBoolean(
+          chkCreateDabWarning.setSelected(!isbnErrors && config.getBoolean(
               null,
               ConfigurationValueBoolean.CREATE_DAB_WARNING_ALL));
         }
