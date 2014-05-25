@@ -19,6 +19,7 @@ import org.jdom.Element;
 import org.jdom.JDOMException;
 import org.jdom.input.SAXBuilder;
 import org.jdom.xpath.XPath;
+import org.wikipediacleaner.i18n.GT;
 
 
 /**
@@ -46,6 +47,72 @@ public class ISBNRange {
    */
   public static void initialize() {
     loadRanges();
+  }
+
+  /**
+   * @param isbn ISBN.
+   * @return Information about ISBN.
+   */
+  public static List<String> getInformation(String isbn) {
+    if (isbn == null) {
+      return null;
+    }
+    isbn = PageElementISBN.cleanISBN(isbn);
+    if (isbn.length() == 10) {
+      isbn = "978" + isbn;
+    }
+    List<String> results = new ArrayList<String>();
+    addInformation(isbn, results, eanPrefixes);
+    Range range = addInformation(isbn, results, registrationGroups);
+
+    // Suggest a formatted ISBN
+    String prefix = (range != null) ? range.getPrefix() : "";
+    String cleanPrefix = (range != null) ? range.getCleanPrefix() : "";
+    String suffix = isbn.substring(cleanPrefix.length());
+    Rule rule = (range != null) ? range.getRule(suffix) : null;
+    int nextLength = (rule != null) ? rule.getLength() : 0;
+
+    if (nextLength > 0) {
+      if (suffix.length() > nextLength + 1) {
+        results.add(
+            prefix + "-" +
+            suffix.substring(0, nextLength) + "-" +
+            suffix.substring(nextLength, suffix.length() - 1) + "-" +
+            suffix.substring(suffix.length() - 1));
+      } else {
+        results.add(GT._("ISBN length incoherent with range found"));
+      }
+    } else if (rule != null) {
+      results.add(GT._(
+          "ISBN is in a reserved range {0}",
+          prefix + "-(" + rule.getFrom() + "-" + rule.getTo() + ")"));
+    } else {
+      results.add(GT._("No range found for ISBN"));
+    }
+
+    return results;
+  }
+
+  /**
+   * @param isbn ISBN.
+   * @param results Information about ISBN to be completed.
+   * @param ranges List of ranges.
+   * @return Range according to the ISBN.
+   */
+  private static Range addInformation(
+      String isbn, List<String> results,
+      List<Range> ranges) {
+    if (ranges == null) {
+      return null;
+    }
+    for (Range range : ranges) {
+      String cleanPrefix = range.getCleanPrefix();
+      if ((cleanPrefix != null) && (isbn.startsWith(cleanPrefix))) {
+        results.add(range.getPrefix() + " - " + range.getAgency());
+        return range;
+      }
+    }
+    return null;
   }
 
   /**
@@ -171,6 +238,9 @@ public class ISBNRange {
     /** ISBN prefix */
     private final String prefix;
 
+    /** ISBN prefix */
+    private final String cleanPrefix;
+
     /** Agency */
     private final String agency;
 
@@ -183,6 +253,7 @@ public class ISBNRange {
      */
     Range(String prefix, String agency) {
       this.prefix = prefix;
+      this.cleanPrefix = (prefix != null) ? prefix.replaceAll("\\-", "") : null;
       this.agency = agency;
       this.rules = new ArrayList<ISBNRange.Rule>();
     }
@@ -192,6 +263,13 @@ public class ISBNRange {
      */
     public String getPrefix() {
       return prefix;
+    }
+
+    /**
+     * @return ISBN clean prefix.
+     */
+    public String getCleanPrefix() {
+      return cleanPrefix;
     }
 
     /**
@@ -208,6 +286,20 @@ public class ISBNRange {
      */
     void addRule(Rule rule) {
       rules.add(rule);
+    }
+
+    /**
+     * @param suffix Suffix.
+     * @return Rule for the next element according to the suffix.
+     */
+    Rule getRule(String suffix) {
+      for (Rule rule : rules) {
+        if ((suffix.compareTo(rule.getFrom()) >= 0) &&
+            (suffix.compareTo(rule.getTo()) <= 0)) {
+          return rule;
+        }
+      }
+      return null;
     }
 
     /**
