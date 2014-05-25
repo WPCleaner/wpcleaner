@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2014-05-25 17:46+0200\n"
+"POT-Creation-Date: 2014-05-25 21:22+0200\n"
 "PO-Revision-Date: 2013-11-01 03:31+0000\n"
 "Last-Translator: pp/bs <Unknown>\n"
 "Language-Team: Polish <pl@li.org>\n"
@@ -848,16 +848,16 @@ msgstr "Nie można ustawić atrybutu {0} w konfiguracji użytkownika"
 msgid "Attribute {0} should be integer value"
 msgstr "Atrybut {0} powinien być liczbą całkowitą"
 
-#: org/wikipediacleaner/api/data/ISBNRange.java:83
+#: org/wikipediacleaner/api/data/ISBNRange.java:88
 msgid "ISBN length incoherent with range found"
 msgstr ""
 
-#: org/wikipediacleaner/api/data/ISBNRange.java:87
+#: org/wikipediacleaner/api/data/ISBNRange.java:92
 #, java-format
 msgid "ISBN is in a reserved range {0}"
 msgstr ""
 
-#: org/wikipediacleaner/api/data/ISBNRange.java:90
+#: org/wikipediacleaner/api/data/ISBNRange.java:95
 msgid "No range found for ISBN"
 msgstr ""
 
@@ -2601,46 +2601,51 @@ msgstr "Błąd nr {0}"
 msgid "Close this tab"
 msgstr "Zamknij tę kartę"
 
-#: org/wikipediacleaner/gui/swing/component/MWPanePopupListener.java:228
-#: org/wikipediacleaner/gui/swing/component/MWPanePopupListener.java:259
+#: org/wikipediacleaner/gui/swing/component/MWPanePopupListener.java:237
+#: org/wikipediacleaner/gui/swing/component/MWPanePopupListener.java:268
 #, java-format
 msgid "Page: {0}"
 msgstr "Strona: {0}"
 
-#: org/wikipediacleaner/gui/swing/component/MWPanePopupListener.java:294
+#: org/wikipediacleaner/gui/swing/component/MWPanePopupListener.java:303
 #, java-format
 msgid "Interwiki: {0}"
 msgstr "Interwiki: {0}"
 
-#: org/wikipediacleaner/gui/swing/component/MWPanePopupListener.java:365
+#: org/wikipediacleaner/gui/swing/component/MWPanePopupListener.java:374
 #, java-format
 msgid "Image: {0}"
 msgstr "Grafika: {0}"
 
-#: org/wikipediacleaner/gui/swing/component/MWPanePopupListener.java:401
+#: org/wikipediacleaner/gui/swing/component/MWPanePopupListener.java:410
 #, java-format
 msgid "Category: {0}"
 msgstr "Kategoria: {0}"
 
-#: org/wikipediacleaner/gui/swing/component/MWPanePopupListener.java:429
+#: org/wikipediacleaner/gui/swing/component/MWPanePopupListener.java:438
 #, java-format
 msgid "External link: {0}"
 msgstr "Link zewnętrzny: {0}"
 
-#: org/wikipediacleaner/gui/swing/component/MWPanePopupListener.java:462
+#: org/wikipediacleaner/gui/swing/component/MWPanePopupListener.java:471
 #, java-format
 msgid "Template: {0}"
 msgstr "Szablon: {0}"
 
-#: org/wikipediacleaner/gui/swing/component/MWPanePopupListener.java:490
+#: org/wikipediacleaner/gui/swing/component/MWPanePopupListener.java:499
 #, java-format
 msgid "Parameter: {0}"
 msgstr "Parametr: {0}"
 
-#: org/wikipediacleaner/gui/swing/component/MWPanePopupListener.java:515
+#: org/wikipediacleaner/gui/swing/component/MWPanePopupListener.java:524
 #, java-format
 msgid "Function: {0}"
 msgstr "Funkcja: {0}"
+
+#: org/wikipediacleaner/gui/swing/component/MWPanePopupListener.java:549
+#, fuzzy, java-format
+msgid "ISBN: {0}"
+msgstr "Znajdź ISBN {0}"
 
 #: org/wikipediacleaner/gui/swing/component/MWPaneTitleTreeManager.java:88
 msgid "Decrement title level"
