@@ -6,7 +6,7 @@
  */
 
 
-package org.wikipediacleaner.api.check;
+package org.wikipediacleaner.api.data;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -60,7 +60,7 @@ public class ISBNRange {
         return;
       }
       InputStream is = ISBNRange.class.getClassLoader().getResourceAsStream(
-          "org/wikipediacleaner/api/check/RangeMessage.xml");
+          "org/wikipediacleaner/api/data/RangeMessage.xml");
       if (is != null) {
         analyzeRangeMessage(is);
       }
