@@ -21,6 +21,7 @@ import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
 import javax.swing.UnsupportedLookAndFeelException;
 
+import org.wikipediacleaner.api.check.ISBNRange;
 import org.wikipediacleaner.api.constants.EnumLanguage;
 import org.wikipediacleaner.gui.swing.MainWindow;
 import org.wikipediacleaner.gui.swing.component.CheckThreadViolationRepaintManager;
@@ -115,6 +116,9 @@ public class WikipediaCleaner {
 
     // Language
     GT.setCurrentLanguage(config.getLanguage());
+
+    // Various initializations
+    ISBNRange.initialize();
 
     // Running
     MainWindow.createMainWindow();
