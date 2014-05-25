@@ -58,15 +58,20 @@ public class ISBNRange {
       return null;
     }
     isbn = PageElementISBN.cleanISBN(isbn);
-    if (isbn.length() == 10) {
-      isbn = "978" + isbn;
-    }
     List<String> results = new ArrayList<String>();
     addInformation(isbn, results, eanPrefixes);
+    boolean isbn10 = false;
+    if (isbn.length() == 10) {
+      isbn = "978" + isbn;
+      isbn10 = true;
+    }
     Range range = addInformation(isbn, results, registrationGroups);
 
     // Suggest a formatted ISBN
     String prefix = (range != null) ? range.getPrefix() : "";
+    if (isbn10 && (prefix != null) && (prefix.length() >= 4)) {
+      prefix = prefix.substring(4);
+    }
     String cleanPrefix = (range != null) ? range.getCleanPrefix() : "";
     String suffix = isbn.substring(cleanPrefix.length());
     Rule rule = (range != null) ? range.getRule(suffix) : null;
