@@ -17,12 +17,14 @@ import java.util.List;
 
 import org.wikipediacleaner.api.check.Actionnable;
 import org.wikipediacleaner.api.check.CheckErrorResult;
+import org.wikipediacleaner.api.check.NullActionProvider;
 import org.wikipediacleaner.api.check.CheckErrorResult.ErrorLevel;
 import org.wikipediacleaner.api.check.CompositeAction;
 import org.wikipediacleaner.api.check.SimpleAction;
 import org.wikipediacleaner.api.constants.WPCConfiguration;
 import org.wikipediacleaner.api.constants.WPCConfigurationString;
 import org.wikipediacleaner.api.constants.WPCConfigurationStringList;
+import org.wikipediacleaner.api.data.ISBNRange;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementComment;
@@ -71,6 +73,12 @@ public abstract class CheckErrorAlgorithmISBN extends CheckErrorAlgorithmBase {
     }
     CheckErrorResult result = createCheckErrorResult(
         analysis, isbn.getBeginIndex(), isbn.getEndIndex(), level);
+    List<String> infos = ISBNRange.getInformation(isbn.getISBN());
+    if (infos != null) {
+      for (String info : infos) {
+        result.addPossibleAction(info, new NullActionProvider());
+      }
+    }
     return result;
   }
 
