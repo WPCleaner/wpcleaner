@@ -161,6 +161,7 @@
       <fileset dir="${WPCleaner.src.dir}">
         <include name="**/*.png"/>
         <include name="**/*.txt.gz"/>
+        <include name="**/*.xml"/>
       </fileset>
     </copy>
 
