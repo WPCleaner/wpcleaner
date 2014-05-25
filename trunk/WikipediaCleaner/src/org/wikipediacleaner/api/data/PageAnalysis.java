@@ -296,6 +296,13 @@ public class PageAnalysis {
       element = function;
     }
 
+    // Check if in ISBN
+    PageElementISBN isbn = isInISBN(currentIndex);
+    if ((isbn != null) &&
+        ((element == null) || (element.getBeginIndex() < isbn.getBeginIndex()))) {
+      element = isbn;
+    }
+
     return element;
   }
 

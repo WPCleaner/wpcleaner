@@ -10,12 +10,14 @@ package org.wikipediacleaner.gui.swing.component;
 import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
+import java.util.List;
 
 import javax.swing.JPopupMenu;
 import javax.swing.text.BadLocationException;
 
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.DataManager;
+import org.wikipediacleaner.api.data.ISBNRange;
 import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageAnalysis;
@@ -24,6 +26,7 @@ import org.wikipediacleaner.api.data.PageElementCategory;
 import org.wikipediacleaner.api.data.PageElementComment;
 import org.wikipediacleaner.api.data.PageElementExternalLink;
 import org.wikipediacleaner.api.data.PageElementFunction;
+import org.wikipediacleaner.api.data.PageElementISBN;
 import org.wikipediacleaner.api.data.PageElementImage;
 import org.wikipediacleaner.api.data.PageElementInternalLink;
 import org.wikipediacleaner.api.data.PageElementInterwikiLink;
@@ -220,6 +223,12 @@ public abstract class MWPanePopupListener extends AbstractPopupListener {
     if (element instanceof PageElementFunction) {
       PageElementFunction function = (PageElementFunction) element;
       return createDefaultPopupFunction(pageAnalysis, position, function);
+    }
+
+    // Menu for ISBN
+    if (element instanceof PageElementISBN) {
+      PageElementISBN isbn = (PageElementISBN) element;
+      return createDefaultPopupISBN(pageAnalysis, position, isbn);
     }
 
     // Default menu
@@ -514,6 +523,37 @@ public abstract class MWPanePopupListener extends AbstractPopupListener {
     JPopupMenu popup = menu.createPopupMenu(GT._(
         "Function: {0}",
         limitTextLength(function.getFunctionName(), 50)));
+    menu.addCurrentChapter(popup, position, pageAnalysis);
+
+    return popup;
+  }
+
+  /**
+   * Create a default popup menu for an ISBN.
+   * 
+   * @param pageAnalysis Page analysis.
+   * @param position Position in the text.
+   * @param isbn ISBN.
+   * @return Popup menu.
+   */
+  protected JPopupMenu createDefaultPopupISBN(
+      PageAnalysis pageAnalysis, int position,
+      PageElementISBN isbn) {
+    if (isbn == null) {
+      return null;
+    }
+
+    // Menu creation
+    BasicMenuCreator menu = new BasicMenuCreator();
+    JPopupMenu popup = menu.createPopupMenu(GT._(
+        "ISBN: {0}",
+        limitTextLength(isbn.getISBN(), 50)));
+    List<String> infos = ISBNRange.getInformation(isbn.getISBN());
+    if (infos != null) {
+      for (String info : infos) {
+        menu.addDisabledText(popup, info);
+      }
+    }
     menu.addCurrentChapter(popup, position, pageAnalysis);
 
     return popup;
