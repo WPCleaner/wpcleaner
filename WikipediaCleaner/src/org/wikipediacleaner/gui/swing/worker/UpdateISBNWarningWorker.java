@@ -420,7 +420,9 @@ public class UpdateISBNWarningWorker extends BasicWorker {
                 newText.append(contents.substring(end));
                 api.updatePage(
                     wiki, page, newText.toString(),
-                    config.getString(WPCConfigurationString.ISBN_ERRORS_PAGE_COMMENT),
+                    wiki.formatComment(
+                        config.getString(WPCConfigurationString.ISBN_ERRORS_PAGE_COMMENT),
+                        true),
                     false);
                 saved = true;
               }
