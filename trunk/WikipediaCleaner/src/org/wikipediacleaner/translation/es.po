@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2014-05-25 21:22+0200\n"
+"POT-Creation-Date: 2014-05-27 23:24+0200\n"
 "PO-Revision-Date: 2013-11-20 10:51+0000\n"
 "Last-Translator: Adolfo Jayme Barrientos <fitoschido@gmail.com>\n"
 "Language-Team: Spanish\n"
@@ -2012,7 +2012,7 @@ msgid "Create disambiguation warning on talk page"
 msgstr "Crear advertencia de desambiguación en la página de discusión"
 
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:613
-#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:188
+#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:197
 msgid "Check spelling and typography"
 msgstr ""
 
@@ -3039,60 +3039,65 @@ msgid "Close disambiguation window after sending"
 msgstr "Cerrar ventana de desambiguación tras el envío"
 
 #: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:107
+#, fuzzy
+msgid "Add a note on talk page when requesting help"
+msgstr "&Añadir una nota a la página de discusión"
+
+#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:116
 msgid "Ignore disambiguation links from User namespace"
 msgstr "Ignorar enlaces de desambiguación en espacio de nombre Usuario"
 
-#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:116
+#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:125
 msgid "Restore window position"
 msgstr "Restaurar la posición de la ventana"
 
-#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:125
+#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:134
 msgid "Save window position"
 msgstr "Guardar posición de la ventana"
 
-#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:134
+#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:143
 msgid "Use short notation [[Xxxxx (yyy)|]]"
 msgstr "Usar la notación corta [[Xxxxx (yyy)|]]"
 
-#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:143
+#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:152
 msgid "Use advanced features (experimental)"
 msgstr "Usar características avanzadas (experimental)"
 
-#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:152
+#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:161
 #, java-format
 msgid "Display {0} link in update comments"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:161
+#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:170
 msgid "Show errors with no detection found"
 msgstr "Mostrar errores no encontrados"
 
-#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:170
+#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:179
 msgid "Add link to error description in comments"
 msgstr "Añadir un enlace de descripción del error en el resumen de edición"
 
-#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:179
+#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:188
 msgid "Watch all edited pages"
 msgstr "Vigilar todas las páginas editadas"
 
-#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:197
+#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:206
 msgid "Signature :"
 msgstr "Firma :"
 
-#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:213
+#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:222
 msgid "Look & Feel"
 msgstr "Aspecto y comportamiento"
 
-#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:217
+#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:226
 #, java-format
 msgid "Let {0} choose the Look && Feel"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:222
+#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:231
 msgid "Use System Look && Feel"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:227
+#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:236
 msgid "Choose Look && Feel"
 msgstr ""
 
@@ -3345,7 +3350,7 @@ msgstr ""
 "Error: {0}"
 
 #: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:271
-#: org/wikipediacleaner/gui/swing/worker/UpdateISBNWarningWorker.java:446
+#: org/wikipediacleaner/gui/swing/worker/UpdateISBNWarningWorker.java:448
 #, java-format
 msgid "{0} page has been analyzed."
 msgid_plural "{0} pages have been analyzed."
@@ -3353,7 +3358,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:276
-#: org/wikipediacleaner/gui/swing/worker/UpdateISBNWarningWorker.java:451
+#: org/wikipediacleaner/gui/swing/worker/UpdateISBNWarningWorker.java:453
 #, fuzzy, java-format
 msgid "Warning has been updated in {0} page."
 msgid_plural "Warnings have been updated in {0} pages."
@@ -3361,7 +3366,7 @@ msgstr[0] "Ha editado {0} página."
 msgstr[1] "Ha editado {0} páginas."
 
 #: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:281
-#: org/wikipediacleaner/gui/swing/worker/UpdateISBNWarningWorker.java:456
+#: org/wikipediacleaner/gui/swing/worker/UpdateISBNWarningWorker.java:458
 #, java-format
 msgid "Warning has been removed in {0} page."
 msgid_plural "Warnings have been removed in {0} pages."
@@ -3369,7 +3374,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:286
-#: org/wikipediacleaner/gui/swing/worker/UpdateISBNWarningWorker.java:461
+#: org/wikipediacleaner/gui/swing/worker/UpdateISBNWarningWorker.java:463
 #, java-format
 msgid "{0} still needs to be fixed."
 msgid_plural "{0} still need to be fixed."
@@ -3377,7 +3382,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:292
-#: org/wikipediacleaner/gui/swing/worker/UpdateISBNWarningWorker.java:467
+#: org/wikipediacleaner/gui/swing/worker/UpdateISBNWarningWorker.java:469
 #, java-format
 msgid "It took {0} second"
 msgid_plural "It took {0} seconds"
