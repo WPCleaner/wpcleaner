@@ -21,6 +21,8 @@ import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.TemplateMatcher;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
 import org.wikipediacleaner.gui.swing.menu.MWPaneDisambiguationMenuCreator;
+import org.wikipediacleaner.utils.Configuration;
+import org.wikipediacleaner.utils.ConfigurationValueBoolean;
 
 
 /**
@@ -106,21 +108,15 @@ public class MWPaneDisambiguationPopupListener extends MWPanePopupListener {
     JPopupMenu popup = menu.createPopupMenu(null);
 
     // Create sub menus
-    AbstractButton chk = null;
-    AbstractButton createDab = textPane.getCheckBoxCreateDabWarning();
-    AbstractButton updateDab = textPane.getCheckBoxUpdateDabWarning();
-    AbstractButton addNote = textPane.getCheckBoxAddNote();
-    if ((createDab != null) && (createDab.isEnabled())) {
-      chk = createDab;
-    } else if ((updateDab != null) && (updateDab.isEnabled())) {
-      chk = updateDab;
-    } else if ((addNote != null) && (addNote.isEnabled())) {
-      chk = addNote;
+    Configuration config = Configuration.getConfiguration();
+    AbstractButton addNote = null;
+    if (config.getBoolean(null, ConfigurationValueBoolean.ADD_NOTE_FOR_HELP)) {
+      addNote = textPane.getCheckBoxAddNote();
     }
     menu.addReplaceLink(getWikipedia(), popup, page, text, element, textPane);
     menu.addItemRemoveLink(popup, text, textPane, startOffset, endOffset);
     menu.addMarkAsNormal(getWikipedia(), popup, page, text, element, textPane);
-    menu.addMarkAsNeedingHelp(getWikipedia(), popup, page, text, element, textPane, chk);
+    menu.addMarkAsNeedingHelp(getWikipedia(), popup, page, text, element, textPane, addNote);
     menu.addLinkText(getWikipedia(), popup, page, text, element, textPane);
     menu.addSeparator(popup);
     if (page != null) {

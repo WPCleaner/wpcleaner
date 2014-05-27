@@ -102,6 +102,15 @@ public class GeneralOptionsPanel extends OptionsPanel {
     add(chk, constraints);
     constraints.gridy++;
 
+    // Add a note on talk page when requesting help
+    chk = createJCheckBox(
+        GT._("Add a note on talk page when requesting help"),
+        ConfigurationValueBoolean.ADD_NOTE_FOR_HELP);
+    constraints.gridx = 0;
+    constraints.weightx = 0;
+    add(chk, constraints);
+    constraints.gridy++;
+
     // Ignore disambiguation links from User NS
     chk = createJCheckBox(
         GT._("Ignore disambiguation links from User namespace"),

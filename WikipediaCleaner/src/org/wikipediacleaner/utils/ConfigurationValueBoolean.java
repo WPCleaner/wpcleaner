@@ -15,6 +15,7 @@ import java.util.prefs.Preferences;
  */
 public enum ConfigurationValueBoolean {
 
+  ADD_NOTE_FOR_HELP("AddNoteForHelp", false),
   ADVANCED_FEATURES("AdvancedFeatures", false),
   ANALYSIS_COUNT_DISAMBIG("AnalysisCountDisambiguation", true),
   ANALYSIS_COUNT_MISSING("AnalysisCountMissing", false),
