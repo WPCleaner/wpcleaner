@@ -9,6 +9,7 @@ package org.wikipediacleaner.api.check.algorithm;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -56,6 +57,21 @@ public class CheckErrorAlgorithm101 extends CheckErrorAlgorithmBase {
     listSuffixes.add("rd");
     listSuffixes.add("st");
     listSuffixes.add("th");
+    Map<String, String> replacements = null;
+    String tmpReplacements = getSpecificProperty("replacements", true, true, false);
+    if (tmpReplacements != null) {
+      List<String> tmpList = WPCConfiguration.convertPropertyToStringList(tmpReplacements);
+      if (tmpList != null) {
+        replacements = new HashMap<String, String>();
+        for (String tmp : tmpList) {
+          int equalIndex = tmp.indexOf('=');
+          if ((equalIndex > 0) && (equalIndex < tmp.length() - 1)) {
+            replacements.put(tmp.substring(0, equalIndex), tmp.substring(equalIndex + 1));
+          }
+        }
+      }
+    }
+    
 
     // Check every <sup> tag
     List<PageElementTag> supTags = analysis.getCompleteTags(PageElementTag.TAG_HTML_SUP);
@@ -67,9 +83,10 @@ public class CheckErrorAlgorithm101 extends CheckErrorAlgorithmBase {
         // Check if digit is before supTag
         boolean digitBefore = false;
         int beginIndex = supTag.getBeginIndex();
-        if ((beginIndex > 0) &&
-            Character.isDigit(contents.charAt(beginIndex - 1))) {
+        while ((beginIndex > 0) &&
+               Character.isDigit(contents.charAt(beginIndex - 1))) {
           digitBefore = true;
+          beginIndex--;
         }
 
         // Check if tag content is ordinal
@@ -90,10 +107,17 @@ public class CheckErrorAlgorithm101 extends CheckErrorAlgorithmBase {
             return true;
           }
           result = true;
+          String digits = contents.substring(beginIndex, supTag.getBeginIndex());
           CheckErrorResult errorResult = createCheckErrorResult(
               analysis,
               beginIndex, supTag.getCompleteEndIndex());
-          errorResult.addReplacement(value);
+          if (replacements != null) {
+            String replacement = replacements.get(digits + value);
+            if (replacement != null) {
+              errorResult.addReplacement(replacement);
+            }
+          }
+          errorResult.addReplacement(digits + value);
           errors.add(errorResult);
         }
       }
@@ -109,6 +133,7 @@ public class CheckErrorAlgorithm101 extends CheckErrorAlgorithmBase {
   public Map<String, String> getParameters() {
     Map<String, String> parameters = super.getParameters();
     parameters.put("templates", GT._("List of ordinal suffixes"));
+    parameters.put("replacements", GT._("List of possible replacements"));
     return parameters;
   }
 }
