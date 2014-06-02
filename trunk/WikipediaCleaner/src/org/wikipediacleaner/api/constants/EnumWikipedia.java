@@ -19,6 +19,7 @@ import org.wikipediacleaner.Version;
 import org.wikipediacleaner.api.API;
 import org.wikipediacleaner.api.APIException;
 import org.wikipediacleaner.api.constants.wiki.AbstractWikiSettings;
+import org.wikipediacleaner.api.constants.wiki.Waze;
 import org.wikipediacleaner.api.constants.wiki.WikipediaAf;
 import org.wikipediacleaner.api.constants.wiki.WikipediaAls;
 import org.wikipediacleaner.api.constants.wiki.WikipediaAr;
@@ -147,7 +148,9 @@ public enum EnumWikipedia {
 
   WIKISOURCE_FR(new WikisourceFr()),
 
-  WIKIVERSITY_FR(new WikiversityFr());
+  WIKIVERSITY_FR(new WikiversityFr()),
+  
+  WAZE(new Waze());
 
   private final AbstractWikiSettings settings;
 

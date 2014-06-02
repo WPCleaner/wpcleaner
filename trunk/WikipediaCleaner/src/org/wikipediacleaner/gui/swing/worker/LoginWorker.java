@@ -96,7 +96,7 @@ public class LoginWorker extends BasicWorker {
           }
         }
         User user = api.retrieveUser(wiki, username);
-        username = user.getName();
+        username = (user != null) ? user.getName() : null;
         wiki.getConnection().setUser(user);
         api.retrieveTokens(wiki);
         logged = true;
