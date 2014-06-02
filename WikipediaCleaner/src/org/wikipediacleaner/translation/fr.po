@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2014-05-27 23:24+0200\n"
+"POT-Creation-Date: 2014-06-02 19:23+0200\n"
 "PO-Revision-Date: 2014-05-25 21:30+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: French <fr@li.org>\n"
@@ -572,9 +572,14 @@ msgstr "Pour détecter uniquement les liens vers une autre langue"
 msgid "To report only links to local wikis"
 msgstr "Pour détecter uniquement les liens vers les wikis locaux"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm101.java:111
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm101.java:135
 msgid "List of ordinal suffixes"
 msgstr "Liste d’abréviations ordinales"
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm101.java:136
+#, fuzzy
+msgid "List of possible replacements"
+msgstr "Tester les remplacements automatiques"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm501.java:172
 msgid "Restore original text"
