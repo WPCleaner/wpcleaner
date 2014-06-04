@@ -77,6 +77,9 @@ public class Bot implements BasicWorkerListener {
     new Bot(args);
   }
 
+  /** Time limit for bot execution. */
+  private Integer timeLimit;
+
   /** Wiki */
   private EnumWikipedia wiki;
 
@@ -93,6 +96,21 @@ public class Bot implements BasicWorkerListener {
 
     // Analyze command line arguments
     int currentArg = 0;
+
+    // Process general command line arguments
+    boolean done = false;
+    timeLimit = null;
+    while (!done) {
+      if (args.length > currentArg) {
+        String arg = args[currentArg];
+        if ("-timelimit".equals(arg)) {
+          timeLimit = Integer.valueOf(args[currentArg + 1]);
+          currentArg += 2;
+        } else {
+          done = true;
+        }
+      }
+    }
 
     // Retrieve wiki
     if (args.length > currentArg) {
@@ -159,20 +177,15 @@ public class Bot implements BasicWorkerListener {
     currentArg++;
 
     // Execute action depending on the parameters
+    BasicWorker worker = null;
     if ("UpdateDabWarnings".equalsIgnoreCase(action)) {
       Configuration config = Configuration.getConfiguration();
       String start = config.getString(null, ConfigurationValueString.LAST_DAB_WARNING);
-      UpdateDabWarningWorker worker = new UpdateDabWarningWorker(wiki, null, start);
-      worker.setListener(this);
-      worker.start();
+      worker = new UpdateDabWarningWorker(wiki, null, start);
     } else if ("UpdateISBNWarnings".equalsIgnoreCase(action)) {
-      UpdateISBNWarningWorker worker = new UpdateISBNWarningWorker(wiki, null, false);
-      worker.setListener(this);
-      worker.start();
+      worker = new UpdateISBNWarningWorker(wiki, null, false);
     } else if ("ListISBNWarnings".equalsIgnoreCase(action)) {
-      UpdateISBNWarningWorker worker = new UpdateISBNWarningWorker(wiki, null, true);
-      worker.setListener(this);
-      worker.start();
+      worker = new UpdateISBNWarningWorker(wiki, null, true);
     } else if ("FixCheckWiki".equalsIgnoreCase(action)) {
       List<CheckErrorAlgorithm> algorithms = new ArrayList<CheckErrorAlgorithm>();
       for (int i = 1; i < args.length; i++) {
@@ -181,9 +194,12 @@ public class Bot implements BasicWorkerListener {
           algorithms.add(algorithm);
         }
       }
-      AutomaticCWWorker worker = new AutomaticCWWorker(
+      worker = new AutomaticCWWorker(
           wiki, null, algorithms, 10000, algorithms, null, true, false);
+    }
+    if (worker != null) {
       worker.setListener(this);
+      worker.setTimeLimit(timeLimit);
       worker.start();
     }
   }
