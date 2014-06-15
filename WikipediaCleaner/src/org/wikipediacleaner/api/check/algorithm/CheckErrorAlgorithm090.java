@@ -10,6 +10,7 @@ package org.wikipediacleaner.api.check.algorithm;
 import java.util.Collection;
 import java.util.List;
 
+import org.wikipediacleaner.api.check.AddTextActionProvider;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.constants.WikiConfiguration;
@@ -21,6 +22,8 @@ import org.wikipediacleaner.api.data.PageElementExternalLink;
 import org.wikipediacleaner.api.data.PageElementInternalLink;
 import org.wikipediacleaner.gui.swing.component.MWPane;
 import org.wikipediacleaner.i18n.GT;
+import org.wikipediacleaner.utils.StringChecker;
+import org.wikipediacleaner.utils.StringCheckerUnauthorizedCharacters;
 
 
 /**
@@ -28,6 +31,11 @@ import org.wikipediacleaner.i18n.GT;
  * Error 090: Internal link written as external link
  */
 public class CheckErrorAlgorithm090 extends CheckErrorAlgorithmBase {
+
+  /**
+   * String checker for text inputed by user.
+   */
+  private final StringChecker checker;
 
   /**
    * Possible global fixes.
@@ -38,6 +46,7 @@ public class CheckErrorAlgorithm090 extends CheckErrorAlgorithmBase {
 
   public CheckErrorAlgorithm090() {
     super("Internal link written as external link");
+    checker = new StringCheckerUnauthorizedCharacters("[]\"");
   }
 
   /**
@@ -98,10 +107,20 @@ public class CheckErrorAlgorithm090 extends CheckErrorAlgorithmBase {
                 }
               }
             }
-            errorResult.addReplacement(
-                PageElementInternalLink.createInternalLink(
-                    (needColon ? ":" : "") + article, link.getText()),
-                link.getText() != null);
+            if (link.getText() != null) {
+              errorResult.addReplacement(
+                  PageElementInternalLink.createInternalLink(
+                      (needColon ? ":" : "") + article, link.getText()),
+                  true);
+            } else {
+              String question = GT._("What text should be displayed by the link?");
+              AddTextActionProvider action = new AddTextActionProvider(
+                  "[[" + (needColon ? ":" : "") + article + "|", "]]", null,
+                  question, article, checker);
+              errorResult.addPossibleAction(
+                  GT._("Convert into an internal link"),
+                  action);
+            }
           }
           errors.add(errorResult);
         }
