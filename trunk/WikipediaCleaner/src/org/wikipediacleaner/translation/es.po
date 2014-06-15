@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2014-06-02 19:23+0200\n"
+"POT-Creation-Date: 2014-06-15 09:37+0200\n"
 "PO-Revision-Date: 2013-11-20 10:51+0000\n"
 "Last-Translator: Adolfo Jayme Barrientos <fitoschido@gmail.com>\n"
 "Language-Team: Spanish\n"
@@ -541,9 +541,18 @@ msgstr "Una lista de textos que se pueden añadir a las secciones sin contenido"
 msgid "Delete all tags without content"
 msgstr "Eliminar todas las etiquetas sin contenido"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm090.java:36
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm090.java:44
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm091.java:44
 msgid "Convert them to internal links"
+msgstr "Convertirlos a enlaces internos"
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm090.java:116
+msgid "What text should be displayed by the link?"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm090.java:121
+#, fuzzy
+msgid "Convert into an internal link"
 msgstr "Convertirlos a enlaces internos"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm091.java:235

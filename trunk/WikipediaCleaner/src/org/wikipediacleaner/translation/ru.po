@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2014-06-02 19:23+0200\n"
+"POT-Creation-Date: 2014-06-15 09:37+0200\n"
 "PO-Revision-Date: 2013-06-14 11:28+0000\n"
 "Last-Translator: Oleg Koptev <koptev.oleg@gmail.com>\n"
 "Language-Team: Russian <ru@li.org>\n"
@@ -527,10 +527,19 @@ msgstr ""
 msgid "Delete all tags without content"
 msgstr "Удалить все тэги без содержимого"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm090.java:36
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm090.java:44
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm091.java:44
 msgid "Convert them to internal links"
 msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm090.java:116
+msgid "What text should be displayed by the link?"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm090.java:121
+#, fuzzy
+msgid "Convert into an internal link"
+msgstr "Изменить все внутренние ссылки"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm091.java:235
 #, fuzzy
