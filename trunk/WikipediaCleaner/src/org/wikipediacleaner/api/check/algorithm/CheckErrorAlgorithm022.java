@@ -84,7 +84,7 @@ public class CheckErrorAlgorithm022 extends CheckErrorAlgorithmBase {
       }
       String sortFull = category.getSortNotTrimmed();
       String sortSimple = sortFull;
-      if (sortFull != null) {
+      /*if (sortFull != null) {
         for (int i = 0; i < sortFull.length(); i++) {
           if (!Character.isWhitespace(sortFull.charAt(i))) {
             sortSimple = sortFull.trim();
@@ -93,7 +93,7 @@ public class CheckErrorAlgorithm022 extends CheckErrorAlgorithmBase {
         if (sortFull.length() > sortSimple.length()) {
           spaceFound = true;
         }
-      }
+      }*/
 
       // Register error
       if (spaceFound) {
