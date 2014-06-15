@@ -15,7 +15,7 @@ public class Waze
   extends AbstractWikiSettings {
 
   /**
-   * @param language Wikipedia language.
+   * Default constructor.
    */
   public Waze() {
     //
