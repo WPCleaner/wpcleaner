@@ -50,7 +50,7 @@ public class CheckErrorAlgorithm070 extends CheckErrorAlgorithmISBN {
     List<PageElementISBN> isbns = analysis.getISBNs();
     for (PageElementISBN isbn : isbns) {
       String isbnNumber = isbn.getISBN();
-      if (isbnNumber != null) {
+      if ((isbnNumber != null) && (isbn.isValid())) {
         int length = isbnNumber.length();
         if ((length != 10) && (length != 13) && (length != 0)) {
           if (errors == null) {
