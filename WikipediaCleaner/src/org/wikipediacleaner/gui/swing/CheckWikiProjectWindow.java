@@ -749,7 +749,7 @@ public class CheckWikiProjectWindow extends OnePageWindow {
     toolbarButtons.setFloatable(false);
     JButton buttonLoad = Utilities.createJButton(GT._("&Load pages"), null);
     buttonLoad.addActionListener(EventHandler.create(
-        ActionListener.class, this, "actionSelectPage"));
+        ActionListener.class, this, "actionLoadPages"));
     toolbarButtons.add(buttonLoad);
     ActionFullAnalysis.addButton(
         getParentComponent(), toolbarButtons, getWikipedia(), listPages, null, true, true);
@@ -776,7 +776,7 @@ public class CheckWikiProjectWindow extends OnePageWindow {
         if (e.getClickCount() != 2) {
           return;
         }
-        actionSelectPage();
+        actionLoadPages();
       }
     });
     JScrollPane scrollPages = new JScrollPane(listPages);
@@ -1505,7 +1505,8 @@ public class CheckWikiProjectWindow extends OnePageWindow {
         }
       }
       setPageLoaded(false);
-      actionSelectPage();
+      actionSelectPages();
+      updateComponentState();
     } else {
       buttonReloadError.setEnabled(false);
       buttonErrorDetail.setEnabled(false);
@@ -1538,7 +1539,8 @@ public class CheckWikiProjectWindow extends OnePageWindow {
       }
 
       setPageLoaded(false);
-      actionSelectPage();
+      actionSelectPages();
+      updateComponentState();
     }
   }
 
@@ -1874,9 +1876,25 @@ public class CheckWikiProjectWindow extends OnePageWindow {
   }
 
   /**
-   * Action called when a page is selected.
+   * Action called for selecting pages.
    */
-  public void actionSelectPage() {
+  public void actionSelectPages() {
+    Configuration config = Configuration.getConfiguration();
+    int max = config.getInt(null, ConfigurationValueInteger.ANALYSIS_NB_PAGES);
+    if (max > modelPages.getSize()) {
+      max = modelPages.getSize();
+    }
+    if (max <= 0) {
+      listPages.clearSelection();
+      return;
+    }
+    listPages.getSelectionModel().setSelectionInterval(0, max -1);
+  }
+
+  /**
+   * Action called when requesting to load selected pages.
+   */
+  public void actionLoadPages() {
     Object[] selection = listPages.getSelectedValues();
     final List<Page> pages = new ArrayList<Page>();
     if (selection != null) {
