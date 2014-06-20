@@ -1103,7 +1103,7 @@ public class WPCConfiguration {
         //
       }
     }
-    if (links != null) {
+    if ((comment != null) && (comment.length() > 0) && (links != null)) {
       StringBuilder sb = new StringBuilder();
       for (String link : links) {
         sb.append(sb.length() > 0 ? ", " : " - ");
