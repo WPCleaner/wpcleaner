@@ -1880,7 +1880,7 @@ public class CheckWikiProjectWindow extends OnePageWindow {
    */
   public void actionSelectPages() {
     Configuration config = Configuration.getConfiguration();
-    int max = config.getInt(null, ConfigurationValueInteger.ANALYSIS_NB_PAGES);
+    int max = config.getInt(null, ConfigurationValueInteger.MAXIMUM_PAGES);
     if (max > modelPages.getSize()) {
       max = modelPages.getSize();
     }
