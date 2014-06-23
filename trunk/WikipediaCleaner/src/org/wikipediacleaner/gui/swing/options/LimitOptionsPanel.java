@@ -29,7 +29,7 @@ import org.wikipediacleaner.utils.ConfigurationValueInteger;
 public class LimitOptionsPanel extends OptionsPanel {
 
   /**
-   * Serialisation.
+   * Serialization.
    */
   private static final long serialVersionUID = -7125394212316622303L;
 
@@ -125,6 +125,23 @@ public class LimitOptionsPanel extends OptionsPanel {
     constraints.gridx = 0;
     constraints.weightx = 0;
     add(labelTime, constraints);
+    constraints.gridwidth = 1;
+    constraints.gridx = 2;
+    constraints.weightx = 1;
+    add(spin, constraints);
+    constraints.gridy++;
+
+    // Number of edits per minute
+    spin = createJSpinner(
+        ConfigurationValueInteger.MAX_EDITS_PER_MINUTE,
+        0, 60, 1);
+    JLabel labelEdits = Utilities.createJLabel(GT._("Maximum number of edits per minute :"));
+    labelEdits.setLabelFor(spin);
+    labelEdits.setHorizontalAlignment(SwingConstants.TRAILING);
+    constraints.gridwidth = 2;
+    constraints.gridx = 0;
+    constraints.weightx = 0;
+    add(labelEdits, constraints);
     constraints.gridwidth = 1;
     constraints.gridx = 2;
     constraints.weightx = 1;

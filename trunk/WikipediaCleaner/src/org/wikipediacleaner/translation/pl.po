@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2014-06-15 09:37+0200\n"
+"POT-Creation-Date: 2014-06-23 23:30+0200\n"
 "PO-Revision-Date: 2013-11-01 03:31+0000\n"
 "Last-Translator: pp/bs <Unknown>\n"
 "Language-Team: Polish <pl@li.org>\n"
@@ -947,7 +947,7 @@ msgstr "Przetwarzanie tekstu"
 msgid "Retrieving templates"
 msgstr "Pobieranie szablonów"
 
-#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:1629
+#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:1657
 msgid ""
 "This action is protected by a CAPTCHA.\n"
 "What is the answer to the following question ?"
@@ -955,7 +955,7 @@ msgstr ""
 "To działanie posiada zabezpieczenie w postaci CAPTCHA.\n"
 "Jaka jest odpowiedź na następujące pytanie?"
 
-#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:1636
+#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:1664
 msgid ""
 "This action is protected by a CAPTCHA.\n"
 "What is the answer to the question displayed in your browser ?"
@@ -1248,17 +1248,17 @@ msgstr "Strony"
 msgid "&Load pages"
 msgstr "Wczytaj stronę"
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:908
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:910
 msgid "Mark as Fixed"
 msgstr "Oznacz jako naprawiony"
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1009
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1011
 #: org/wikipediacleaner/gui/swing/bot/CWCheckWhiteListsWorker.java:79
 #, java-format
 msgid "The page {0} doesn''t exist on Wikipedia"
 msgstr "Strona {0} nie istnieje w Wikipedii"
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1053
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1055
 #, java-format
 msgid ""
 "The error n°{0} hasn''t been found in the page {1}.\n"
@@ -1267,12 +1267,12 @@ msgstr ""
 "Błąd nr {0} nie został znaleziony w treści strony {1}.\n"
 "Czy chcesz go oznaczyć jako naprawiony?"
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1168
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1170
 #, java-format
 msgid "Do you want to mark {0} as fixed for error n°{1}"
 msgstr "Chcesz oznaczyć błąd nr {1} na stronie {0} jako naprawiony?"
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1181
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1183
 #, java-format
 msgid "The error n°{0} is still found {1} time in the page."
 msgid_plural "The error n°{0} is still found {1} times in the page."
@@ -1280,11 +1280,11 @@ msgstr[0] "Nadal wykryto błąd nr {0}, {1} raz na stronie."
 msgstr[1] "Nadal wykryto błąd nr {0}, {1} razy na stronie."
 msgstr[2] "Nadal wykryto błąd nr {0}, {1} razy na stronie."
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1186
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1188
 msgid "Are you really sure that you want to mark it as fixed ?"
 msgstr "Na pewno oznaczyć jako naprawione?"
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1192
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1194
 #, java-format
 msgid ""
 "The error n°{0} is still found in the page.\n"
@@ -1293,7 +1293,7 @@ msgstr ""
 "Błąd nr {0} dalej występuje w treści tej strony.\n"
 "Czy na pewno chcesz go oznaczyć jako naprawiony?"
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1204
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1206
 msgid ""
 "You have already fixed this error by modifying the page.\n"
 "You should send your modifications, the page will be marked as fixed."
@@ -1301,16 +1301,16 @@ msgstr ""
 "Ten błąd został już przez Ciebie naprawiony.\n"
 "Musisz teraz wysłać zmiany, wtedy strona zostanie oznaczona jako naprawiona."
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1272
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1274
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:995
 msgid "A comment is required for sending the page."
 msgstr "Do wysłania tej strony wymaga się ręcznego wpisania komentarza."
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1465
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1467
 msgid "Pages with several errors"
 msgstr "Strony z kilkoma błędami"
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1623
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1627
 #, java-format
 msgid ""
 "The error n°{0} can be configured with the following parameters in the <a "
@@ -1319,12 +1319,12 @@ msgstr ""
 "Błąd nr {0} można <a href=\"{1}\">skonfigurować</a> z użyciem następujących "
 "parametrów:"
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1700
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1704
 #, fuzzy
 msgid "What is the name of the selection?"
 msgstr "Jaka jest nazwa strony na tej wiki?"
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1819
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1823
 #, java-format
 msgid ""
 "There''s no page defined for this error type.\n"
@@ -1337,7 +1337,7 @@ msgstr ""
 "  {0} = <nazwa strony> END\n"
 "w odpowiednim miejscu na stronie z tłumaczeniem ({1}) na \"{2}\""
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1864
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1868
 #, java-format
 msgid ""
 "There''s no white list defined for this error type.\n"
@@ -3143,26 +3143,31 @@ msgid "Minimum time between consecutive edits :"
 msgstr "Minimalny czas pomiędzy edycjami po sobie"
 
 #: org/wikipediacleaner/gui/swing/options/LimitOptionsPanel.java:138
+#, fuzzy
+msgid "Maximum number of edits per minute :"
+msgstr "Maksymalna liczba elementów w menu"
+
+#: org/wikipediacleaner/gui/swing/options/LimitOptionsPanel.java:155
 msgid "Maximum number of interrogation threads :"
 msgstr "Maksymalna liczba wątków badających"
 
-#: org/wikipediacleaner/gui/swing/options/LimitOptionsPanel.java:155
+#: org/wikipediacleaner/gui/swing/options/LimitOptionsPanel.java:172
 msgid "Size limit for syntax highlighting"
 msgstr "Ograniczenie rozmiaru dla kolorowania kodu"
 
-#: org/wikipediacleaner/gui/swing/options/LimitOptionsPanel.java:172
+#: org/wikipediacleaner/gui/swing/options/LimitOptionsPanel.java:189
 msgid "Threshold for slow regular expressions (ms)"
 msgstr "Próg dla powolnych wyrażeń regularnych (milisekund)"
 
-#: org/wikipediacleaner/gui/swing/options/LimitOptionsPanel.java:189
+#: org/wikipediacleaner/gui/swing/options/LimitOptionsPanel.java:206
 msgid "Maximum number of category members :"
 msgstr "Maksymalna liczba stron w kategorii"
 
-#: org/wikipediacleaner/gui/swing/options/LimitOptionsPanel.java:206
+#: org/wikipediacleaner/gui/swing/options/LimitOptionsPanel.java:223
 msgid "Maximum number of embedding pages :"
 msgstr "Maksymalna liczba stron osadzonych"
 
-#: org/wikipediacleaner/gui/swing/options/LimitOptionsPanel.java:223
+#: org/wikipediacleaner/gui/swing/options/LimitOptionsPanel.java:240
 msgid "Maximum number of search results :"
 msgstr "Maksymalna liczba wyników przeszukiwania"
 

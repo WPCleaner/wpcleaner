@@ -24,6 +24,7 @@ public enum ConfigurationValueInteger {
   INTERROG_THREAD("InterrogationThreads", 30),
   MAXIMUM_PAGES("MaximumPages", 20),
   MAX_CATEGORY_MEMBERS("MaxCategoryMembers", 1000),
+  MAX_EDITS_PER_MINUTE("MaxEditsPerMinute", 0),
   MAX_EMBEDDED_IN("MaxEmbeddedIn", 1000),
   MAX_PAGES_WITH_PROP("MaxPagesWithProp", 1000),
   MAX_PROTECTED_TITLES("MaxProtectedTitles", 1000),
