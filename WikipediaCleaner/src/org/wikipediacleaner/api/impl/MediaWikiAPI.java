@@ -17,6 +17,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.zip.GZIPInputStream;
@@ -164,7 +165,7 @@ public class MediaWikiAPI implements API {
   /**
    * Time of last edit.
    */
-  private long lastEditTime = 0;
+  private LinkedList<Long> lastEditTimes = new LinkedList<Long>();
   private final Object editLock = new Object();
 
   /**
@@ -366,7 +367,7 @@ public class MediaWikiAPI implements API {
         properties.put("token", wikipedia.getConnection().getEditToken());
       }
       properties.put("watchlist", forceWatch ? "watch" : "nochange");
-      checkTimeForEdit();
+      checkTimeForEdit(wikipedia.getConnection().getUser(), page.getNamespace());
       try {
         boolean hasCaptcha = false;
         do {
@@ -500,7 +501,7 @@ public class MediaWikiAPI implements API {
       properties.put("title", page.getTitle());
       properties.put("token", wikipedia.getConnection().getEditToken());
       properties.put("watchlist", forceWatch ? "watch" : "nochange");
-      checkTimeForEdit();
+      checkTimeForEdit(wikipedia.getConnection().getUser(), page.getNamespace());
       try {
         boolean hasCaptcha = false;
         do {
@@ -1505,24 +1506,51 @@ public class MediaWikiAPI implements API {
 
   /**
    * Check current time to see if edit is authorized (wait if needed).
+   * 
+   * @param user Current user.
+   * @param namespace Name space for the edit.
    */
-  private void checkTimeForEdit() {
+  private void checkTimeForEdit(User user, Integer namespace) {
     Configuration config = Configuration.getConfiguration();
     int minimumTime = config.getInt(null, ConfigurationValueInteger.TIME_BETWEEN_EDIT);
-    if (minimumTime <= 0) {
+    int maxEdits = 0;
+    if ((namespace == null) || (namespace.intValue() % 2 == 0)) {
+      config.getInt(null, ConfigurationValueInteger.MAX_EDITS_PER_MINUTE);
+      if ((maxEdits > 3) || (maxEdits <= 0)) {
+        if (!user.isMemberOf("admin") && !user.isMemberOf("bot")) {
+          maxEdits = 3;
+        }
+      }
+    }
+    if ((minimumTime <= 0) && (maxEdits <= 0)) {
       return;
     }
     synchronized (editLock) {
       long currentTime = System.currentTimeMillis();
-      if (currentTime < lastEditTime + minimumTime * 1000) {
+      if ((minimumTime > 0) && (!lastEditTimes.isEmpty())) {
+        long lastEditTime = lastEditTimes.getLast();
+        if (currentTime < lastEditTime + minimumTime * 1000) {
+          try {
+            Thread.sleep(lastEditTime + minimumTime * 1000 - currentTime);
+          } catch (InterruptedException e) {
+            // Nothing to do
+          }
+          currentTime = System.currentTimeMillis();
+        }
+      }
+      while ((!lastEditTimes.isEmpty()) &&
+             (lastEditTimes.getFirst() + 60 * 1000 <= currentTime)) {
+        lastEditTimes.removeFirst();
+      }
+      if ((maxEdits > 0) && (lastEditTimes.size() >= maxEdits)) {
         try {
-          Thread.sleep(lastEditTime + minimumTime * 1000 - currentTime);
+          Thread.sleep(lastEditTimes.getFirst() + 60 * 1000 - currentTime);
         } catch (InterruptedException e) {
           // Nothing to do
         }
         currentTime = System.currentTimeMillis();
       }
-      lastEditTime = currentTime;
+      lastEditTimes.add(currentTime);
     }
   }
 
