@@ -37,6 +37,8 @@ public enum ConfigurationValueInteger {
   SYNTAX_HIGHLIGHTING_LIMIT("SyntaxHighlightingLimit", 40000),
   TIME_BETWEEN_EDIT("TimeBetweenEdit", 0);
 
+  public static final int MAX_EDITS_PER_MINUTE_NORMAL = 4;
+
   /**
    * Attribute name.
    */

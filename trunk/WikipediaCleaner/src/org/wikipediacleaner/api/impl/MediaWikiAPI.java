@@ -1516,9 +1516,11 @@ public class MediaWikiAPI implements API {
     int maxEdits = 0;
     if ((namespace == null) || (namespace.intValue() % 2 == 0)) {
       config.getInt(null, ConfigurationValueInteger.MAX_EDITS_PER_MINUTE);
-      if ((maxEdits > 3) || (maxEdits <= 0)) {
-        if (!user.isMemberOf("admin") && !user.isMemberOf("bot")) {
-          maxEdits = 3;
+      if ((maxEdits > ConfigurationValueInteger.MAX_EDITS_PER_MINUTE_NORMAL) ||
+          (maxEdits <= 0)) {
+        if (!user.isMemberOf("admin") &&
+            !user.isMemberOf("bot")) {
+          maxEdits = ConfigurationValueInteger.MAX_EDITS_PER_MINUTE_NORMAL;
         }
       }
     }
