@@ -65,7 +65,7 @@ public class SpecialCharacters {
     replacements.put((char) 0xFEFF, "");
     replacements.put((char) 0x200E, "");
     replacements.put((char) 0x200B, "");
-    addReplacements("ʻ’′", "'");
+    addReplacements("ʻ’“”„‟′", "'");
 
     addReplacements("ÀÁÂÃÄÅĀĂĄǍǞǠǺȀȂȦȺАḀẠẢẤẦẨẪẬẮẰẲẴẶ", "A");
     addReplacements("àáâãäåāăąǎǟǡǻȁȃȧаḁẚạảấầẩẫậắằẳẵặⱥ", "a");
