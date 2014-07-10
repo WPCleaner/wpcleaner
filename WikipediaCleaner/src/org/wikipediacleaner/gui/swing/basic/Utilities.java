@@ -91,17 +91,17 @@ public class Utilities {
     if (exception != null) {
       if (exception instanceof APIException) {
         displayMessage(
-            parent, GT._("An error occured: {0}", exception.getMessage()),
+            parent, GT._("An error occurred: {0}", exception.getMessage()),
             null, JOptionPane.ERROR_MESSAGE);
       } else {
         displayMessage(
             parent,
-            GT._("An error occured: {0}", exception.getMessage() + " - " + exception.getClass().getName()),
+            GT._("An error occurred: {0}", exception.getMessage() + " - " + exception.getClass().getName()),
             null, JOptionPane.ERROR_MESSAGE);
       }
     } else {
       displayMessage(
-          parent, GT._("An unknown error occured"),
+          parent, GT._("An unknown error occurred"),
           null, JOptionPane.ERROR_MESSAGE);
     }
   }

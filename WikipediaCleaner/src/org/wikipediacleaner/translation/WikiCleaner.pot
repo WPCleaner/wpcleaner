@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2014-06-23 23:30+0200\n"
+"POT-Creation-Date: 2014-07-10 21:50+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -911,13 +911,13 @@ msgstr ""
 msgid "Retrieving templates"
 msgstr ""
 
-#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:1657
+#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:1659
 msgid ""
 "This action is protected by a CAPTCHA.\n"
 "What is the answer to the following question ?"
 msgstr ""
 
-#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:1664
+#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:1666
 msgid ""
 "This action is protected by a CAPTCHA.\n"
 "What is the answer to the question displayed in your browser ?"
@@ -2325,11 +2325,11 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/basic/Utilities.java:94
 #: org/wikipediacleaner/gui/swing/basic/Utilities.java:99
 #, java-format
-msgid "An error occured: {0}"
+msgid "An error occurred: {0}"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/basic/Utilities.java:104
-msgid "An unknown error occured"
+msgid "An unknown error occurred"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/basic/Utilities.java:164
@@ -3240,7 +3240,7 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/worker/UpdateISBNWarningWorker.java:237
 #, java-format
 msgid ""
-"An error occured when updating disambiguation warnings. Do you want to "
+"An error occurred when updating disambiguation warnings. Do you want to "
 "continue ?\n"
 "\n"
 "Error: {0}"
