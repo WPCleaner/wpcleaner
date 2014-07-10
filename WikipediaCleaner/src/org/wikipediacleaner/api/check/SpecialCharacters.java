@@ -106,6 +106,7 @@ public class SpecialCharacters {
     addReplacements("ĹĻĽĿŁȽḶḸḺⱠⱢ", "L");
     addReplacements("ĺļľŀłƚȴлᶅḷḹḻⱡ", "l");
     addReplacements("ǈ", "Lj");
+    addReplacements("ǉ", "lj");
 
     addReplacements("МḾṀṂ", "M");
     addReplacements("ɱмᶆḿṁṃ", "m");
