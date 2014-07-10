@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2014-07-10 21:50+0200\n"
+"POT-Creation-Date: 2014-07-10 22:01+0200\n"
 "PO-Revision-Date: 2013-11-01 03:31+0000\n"
 "Last-Translator: pp/bs <Unknown>\n"
 "Language-Team: Polish <pl@li.org>\n"
@@ -1249,8 +1249,9 @@ msgid "&Load pages"
 msgstr "Wczytaj stronę"
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:910
-msgid "Mark as Fixed"
-msgstr "Oznacz jako naprawiony"
+#, fuzzy
+msgid "Mark as already fixed"
+msgstr "Oznakuj właśnie naprawione błędy"
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1011
 #: org/wikipediacleaner/gui/swing/bot/CWCheckWhiteListsWorker.java:79
@@ -3482,6 +3483,9 @@ msgstr "Nazwa przypisu nie może zawierać żadnego z tych znaków: {0}"
 #, java-format
 msgid "The value can''t contain any of these characters: {0}"
 msgstr "Wartość nie może zawierać tych znaków: {0}"
+
+#~ msgid "Mark as Fixed"
+#~ msgstr "Oznacz jako naprawiony"
 
 #~ msgid "List on toolserver"
 #~ msgstr "Lista na toolserverze"

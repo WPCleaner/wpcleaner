@@ -907,7 +907,7 @@ public class CheckWikiProjectWindow extends OnePageWindow {
       toolbarButtons.add(buttonSend);
       buttonMarkAsFixed = Utilities.createJButton(
           "gnome-dialog-apply.png", EnumImageSize.NORMAL,
-          GT._("Mark as Fixed"), false, null); // Mark as fixed
+          GT._("Mark as already fixed"), false, null); // Mark as fixed
       buttonMarkAsFixed.setEnabled(true);
       buttonMarkAsFixed.setActionCommand(ACTION_MARK_AS_FIXED);
       buttonMarkAsFixed.addActionListener(this);

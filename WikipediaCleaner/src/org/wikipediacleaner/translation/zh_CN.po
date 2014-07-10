@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2014-07-10 21:50+0200\n"
+"POT-Creation-Date: 2014-07-10 22:01+0200\n"
 "PO-Revision-Date: 2014-04-11 15:37+0000\n"
 "Last-Translator: Zhijie Fan <fanzhijie1998@qq.com>\n"
 "Language-Team: Chinese (Simplified) <zh_CN@li.org>\n"
@@ -1209,7 +1209,8 @@ msgid "&Load pages"
 msgstr "&加载页面"
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:910
-msgid "Mark as Fixed"
+#, fuzzy
+msgid "Mark as already fixed"
 msgstr "标记为已修复"
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1011
