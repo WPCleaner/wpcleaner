@@ -84,8 +84,8 @@ public class Waze
   @Override
   public String getIndexURL(boolean secured) {
     if (secured) {
-      return "https://wiki.waze.com/w/index.php";
+      return "https://wiki.waze.com/wiki/index.php";
     }
-    return "http://wiki.waze.com/w/index.php";
+    return "http://wiki.waze.com/wiki/index.php";
   }
 }
