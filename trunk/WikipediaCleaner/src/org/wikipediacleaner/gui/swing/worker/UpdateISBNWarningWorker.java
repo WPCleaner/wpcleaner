@@ -234,7 +234,7 @@ public class UpdateISBNWarningWorker extends BasicWorker {
           } catch (APIException e) {
             if (getWindow() != null) {
               int answer = getWindow().displayYesNoWarning(GT._(
-                  "An error occured when updating disambiguation warnings. Do you want to continue ?\n\n" +
+                  "An error occurred when updating disambiguation warnings. Do you want to continue ?\n\n" +
                   "Error: {0}", e.getMessage()));
               if (answer != JOptionPane.YES_OPTION) {
                 return e;
