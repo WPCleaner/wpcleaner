@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2014-07-10 21:50+0200\n"
+"POT-Creation-Date: 2014-07-10 22:01+0200\n"
 "PO-Revision-Date: 2012-10-21 17:40+0000\n"
 "Last-Translator: Nicolas Vervelle <nvervelle@gmail.com>\n"
 "Language-Team: Danish <da@li.org>\n"
@@ -1211,7 +1211,8 @@ msgid "&Load pages"
 msgstr "&Læs sider"
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:910
-msgid "Mark as Fixed"
+#, fuzzy
+msgid "Mark as already fixed"
 msgstr "Mærkeret som rettet"
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1011

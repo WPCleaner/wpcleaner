@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2014-07-10 21:50+0200\n"
+"POT-Creation-Date: 2014-07-10 22:01+0200\n"
 "PO-Revision-Date: 2014-06-03 20:08+0000\n"
 "Last-Translator: Matěj S. <matejsuchanek97@gmail.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
@@ -1239,8 +1239,9 @@ msgid "&Load pages"
 msgstr "Načíst stránky"
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:910
-msgid "Mark as Fixed"
-msgstr "Označit jako opravené"
+#, fuzzy
+msgid "Mark as already fixed"
+msgstr "Označit již opravené chyby"
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1011
 #: org/wikipediacleaner/gui/swing/bot/CWCheckWhiteListsWorker.java:79
@@ -3459,6 +3460,9 @@ msgstr "Název reference nemůže obsahovat tyto znaky: {0}"
 #, java-format
 msgid "The value can''t contain any of these characters: {0}"
 msgstr "Tato hodnota nemůže obsahovat žádné ze znaků: {0}"
+
+#~ msgid "Mark as Fixed"
+#~ msgstr "Označit jako opravené"
 
 #~ msgid "The page {0} doesn't exist on Wikipedia"
 #~ msgstr "Stránka {0} na Wikipedii neexistuje"

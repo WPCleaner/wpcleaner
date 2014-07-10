@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2014-07-10 21:50+0200\n"
+"POT-Creation-Date: 2014-07-10 22:01+0200\n"
 "PO-Revision-Date: 2014-06-25 03:28+0000\n"
 "Last-Translator: Anthony Harrington <untaintableangel@ubuntu.com>\n"
 "Language-Team: English (United Kingdom) <en_GB@li.org>\n"
@@ -1238,8 +1238,9 @@ msgid "&Load pages"
 msgstr "&Load pages"
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:910
-msgid "Mark as Fixed"
-msgstr "Mark as Fixed"
+#, fuzzy
+msgid "Mark as already fixed"
+msgstr "Mark errors already fixed"
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1011
 #: org/wikipediacleaner/gui/swing/bot/CWCheckWhiteListsWorker.java:79
@@ -3431,6 +3432,9 @@ msgstr "A reference name cannot contain any of these characters: {0}"
 #, java-format
 msgid "The value can''t contain any of these characters: {0}"
 msgstr "The value cannot contain any of these characters: {0}"
+
+#~ msgid "Mark as Fixed"
+#~ msgstr "Mark as Fixed"
 
 #~ msgid "Error {0} detected: Waiting and retrying"
 #~ msgstr "Error {0} detected: Waiting and retrying"

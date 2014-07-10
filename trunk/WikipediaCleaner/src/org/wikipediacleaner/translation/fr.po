@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2014-07-10 21:50+0200\n"
-"PO-Revision-Date: 2014-07-10 21:56+0100\n"
+"POT-Creation-Date: 2014-07-10 22:01+0200\n"
+"PO-Revision-Date: 2014-07-10 22:04+0100\n"
 "Last-Translator: Nicolas Vervelle <nvervelle@gmail.com>\n"
 "Language-Team: French <fr@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
 "X-Launchpad-Export-Date: 2014-06-25 05:01+0000\n"
-"X-Generator: Poedit 1.6.5\n"
+"X-Generator: Poedit 1.6.6\n"
 "Language: fr\n"
 
 #: org/wikipediacleaner/Version.java:31
@@ -1265,8 +1265,8 @@ msgid "&Load pages"
 msgstr "Charger les pages sélectionnées"
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:910
-msgid "Mark as Fixed"
-msgstr "Marquer comme corrigé"
+msgid "Mark as already fixed"
+msgstr "Marquer les erreurs comme déjà corrigées"
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1011
 #: org/wikipediacleaner/gui/swing/bot/CWCheckWhiteListsWorker.java:79
@@ -3495,6 +3495,9 @@ msgstr "Un nom de référence ne peut pas contenir les caractères suivants : {0
 #, java-format
 msgid "The value can''t contain any of these characters: {0}"
 msgstr "La valeur ne doit contenir aucun de ces caractères : {0}"
+
+#~ msgid "Mark as Fixed"
+#~ msgstr "Marquer comme corrigé"
 
 #~ msgid "&Close"
 #~ msgstr "&Fermer"
