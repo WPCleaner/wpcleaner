@@ -115,6 +115,12 @@ public abstract class ApiXmlResult extends BasicApiResult {
             stream = new GZIPInputStream(stream);
           }
         }
+        // for (Header header : method.getRequestHeaders()) {
+        //   System.out.println("Request header:" + header);
+        // }
+        // for (Header header : method.getResponseHeaders()) {
+        //   System.out.println("Response header:" + header);
+        // }
 
         // Read the response
         if (statusCode == HttpStatus.SC_OK){
