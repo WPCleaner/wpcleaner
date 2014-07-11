@@ -114,6 +114,7 @@ public class SpecialCharacters {
     addReplacements("ÑŃŅŇƝǸȠṄṆṈ", "N");
     addReplacements("ñńņňŊŋƞǹȵɲᶇṅṇṉ", "n");
     addReplacements("ǋ", "Nj");
+    addReplacements("ǌ", "nj");
 
     addReplacements("ÒÓÔÕÖØŌŎŐƟƠǑǪǬǾȌȎȪȬȮȰОỌỎỐỒỔỖỘỚỜỞỠỢ", "O");
     addReplacements("òóôõöøōŏőơǒǫǭǿȍȏȫȭȯȱɵоọỏốồổỗộớờởỡợ", "o");
