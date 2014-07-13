@@ -36,6 +36,7 @@ import org.wikipediacleaner.api.constants.wiki.WikipediaEl;
 import org.wikipediacleaner.api.constants.wiki.WikipediaEn;
 import org.wikipediacleaner.api.constants.wiki.WikipediaEo;
 import org.wikipediacleaner.api.constants.wiki.WikipediaEs;
+import org.wikipediacleaner.api.constants.wiki.WikipediaFa;
 import org.wikipediacleaner.api.constants.wiki.WikipediaFi;
 import org.wikipediacleaner.api.constants.wiki.WikipediaFr;
 import org.wikipediacleaner.api.constants.wiki.WikipediaFy;
@@ -107,6 +108,7 @@ public enum EnumWikipedia {
   EN(new WikipediaEn()),
   EO(new WikipediaEo()),
   ES(new WikipediaEs()),
+  FA(new WikipediaFa()),
   FI(new WikipediaFi()),
   FR(new WikipediaFr()),
   FY(new WikipediaFy()),
