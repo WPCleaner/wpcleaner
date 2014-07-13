@@ -187,7 +187,7 @@ public class SpecialCharacters {
 
     // Specific configuration for ES
     addReplacements(EnumWikipedia.ES, "Ñ", "Nzz");
-    addReplacements(EnumWikipedia.ES, "ñ", "Nzz");
+    addReplacements(EnumWikipedia.ES, "ñ", "nzz");
 
     // Specific configuration for FI
     localAuthorizedCharacters.put(EnumWikipedia.FI, "ÅÄÖåäö");
