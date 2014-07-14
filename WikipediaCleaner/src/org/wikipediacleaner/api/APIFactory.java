@@ -35,6 +35,7 @@ public class APIFactory {
     // Initialize MediaWiki API
     HttpConnectionManager connectionManger = new MultiThreadedHttpConnectionManager();
     HttpClient httpClient = createHttpClient(connectionManger);
+    httpClient.getParams().setParameter("http.protocol.single-cookie-header", Boolean.TRUE);
     api = new MediaWikiAPI(httpClient);
 
     // Initialize ToolServer access
