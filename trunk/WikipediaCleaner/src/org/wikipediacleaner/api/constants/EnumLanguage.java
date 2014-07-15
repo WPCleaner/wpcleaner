@@ -31,6 +31,7 @@ public enum EnumLanguage {
   EN_GB(new Locale("en_GB")   , "English (United Kingdom)"),
   EO   (new Locale("eo")      , "Esperanto"),
   ES   (new Locale("es")      , "Spanish"),
+  FA   (new Locale("fa")      , "Persian"),
   FR   (Locale.FRENCH         , "Français"),
   HE   (new Locale("he")      , "Hebrew"),
   HU   (new Locale("hu")      , "Hungarian"),

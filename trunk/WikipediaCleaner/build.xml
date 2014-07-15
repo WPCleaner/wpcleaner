@@ -53,7 +53,7 @@
   <property name="WPCleaner.libs.various.jars"   value="${WPCleaner.libs.codec.jar} ${WPCleaner.libs.httpclient.jar} ${WPCleaner.libs.logging.jar} ${WPCleaner.libs.gettext.jar}" />
   <property name="WPCleaner.libs.jars"           value="${WPCleaner.libs.cobra.jars} ${WPCleaner.libs.various.jars} ${WPCleaner.libs.jdom.jars}" />
 
-  <property name="all.languages" value="ast,az,bn,cs,da,de,el,en_GB,eo,es,fr,he,hu,id,is,it,ja,ko,ms,nb,nl,oc,pl,pt_BR,ru,sv,tr,uk,zh_CN" />
+  <property name="all.languages" value="ast,az,bn,cs,da,de,el,en_GB,eo,es,fa,fr,he,hu,id,is,it,ja,ko,ms,nb,nl,oc,pl,pt_BR,ru,sv,tr,uk,zh_CN" />
 
   <!-- NOTE:
        gettext.path can be used if gettext tools are not in the path
