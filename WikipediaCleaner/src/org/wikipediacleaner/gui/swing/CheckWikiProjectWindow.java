@@ -78,6 +78,7 @@ import org.wikipediacleaner.api.CheckWiki;
 import org.wikipediacleaner.api.check.CheckError;
 import org.wikipediacleaner.api.check.CheckErrorPage;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithm;
+import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmComparator;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithms;
 import org.wikipediacleaner.api.constants.CWConfigurationError;
 import org.wikipediacleaner.api.constants.Contributions;
@@ -1708,6 +1709,7 @@ public class CheckWikiProjectWindow extends OnePageWindow {
 
       // Creates a string representing the current selection
       StringBuilder selection = new StringBuilder();
+      Collections.sort(selectedAlgorithms, new CheckErrorAlgorithmComparator());
       for (CheckErrorAlgorithm algorithm : selectedAlgorithms) {
         if (selection.length() > 0) {
           selection.append(",");
