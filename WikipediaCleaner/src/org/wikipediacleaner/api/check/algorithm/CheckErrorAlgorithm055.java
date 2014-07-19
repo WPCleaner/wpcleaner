@@ -154,6 +154,10 @@ public class CheckErrorAlgorithm055 extends CheckErrorAlgorithmBase {
                   contents.substring(tag.getEndIndex(), tag.getMatchingTag().getBeginIndex()),
                   GT._("Remove <small> tags"));
             }
+            if (!tag.isComplete() && !tag.isFullTag() && !tag.isEndTag()) {
+              errorResult.addReplacement(
+                  PageElementTag.createTag(PageElementTag.TAG_HTML_SMALL, true, false));
+            }
             errors.add(errorResult);
             if (tag.isComplete()) {
               tagIndex = PageElementTag.getMatchingTagIndex(tags, tagIndex);
@@ -229,6 +233,9 @@ public class CheckErrorAlgorithm055 extends CheckErrorAlgorithmBase {
     }
     if ((contents.charAt(tmpIndex) != '\n') &&
         (!contents.startsWith("||", tmpIndex))) {
+      return -1;
+    }
+    if (tmpIndex <= tag.getEndIndex()) {
       return -1;
     }
 
