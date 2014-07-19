@@ -65,9 +65,9 @@ public class CheckErrorAlgorithm067 extends CheckErrorAlgorithmBase {
           int pipeIndex2 = tmp.indexOf('|', pipeIndex1 + 1);
           if (pipeIndex2 > 0) {
             String[] abbreviation = new String[3];
-            abbreviation[0] = tmp.substring(0, pipeIndex1);
-            abbreviation[1] = tmp.substring(pipeIndex1 + 1, pipeIndex2);
-            abbreviation[2] = tmp.substring(pipeIndex2 + 1);
+            abbreviation[0] = tmp.substring(0, pipeIndex1).trim();
+            abbreviation[1] = tmp.substring(pipeIndex1 + 1, pipeIndex2).trim();
+            abbreviation[2] = tmp.substring(pipeIndex2 + 1).trim();
             generalAbbreviations.add(abbreviation);
           }
         }
@@ -252,9 +252,13 @@ public class CheckErrorAlgorithm067 extends CheckErrorAlgorithmBase {
           for (String[] generalAbbreviation : generalAbbreviationFound) {
             if ((generalAbbreviation.length > 2)) {
               String abbreviation = generalAbbreviation[2];
+              String meaning = "";
+              if (generalAbbreviation[1].length() > 0) {
+                meaning = " (" + generalAbbreviation[1] + ")";
+              }
               errorResult.addReplacement(
                   abbreviation + replace + punctuationAfter,
-                  abbreviation + textReplace + punctuationAfter);
+                  abbreviation + textReplace + punctuationAfter + meaning);
             }
           }
           errorResult.addReplacement(
