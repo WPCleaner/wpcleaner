@@ -16,6 +16,8 @@ import java.util.List;
  */
 public enum WPCConfigurationStringList {
 
+  // Possible replacements for abbreviations
+  ABBREVIATIONS("general_abbreviations", true, true, true),
   // Comment used for a normal link to a disambiguation page.
   COMMENTS_FOR_DAB_LINK("dab_link_comments", false, true, true),
   // Common languages.

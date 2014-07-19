@@ -7,6 +7,7 @@
 
 package org.wikipediacleaner.api.check.algorithm;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -15,6 +16,7 @@ import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.HtmlCharacters;
 import org.wikipediacleaner.api.check.SpecialCharacters;
 import org.wikipediacleaner.api.constants.WPCConfiguration;
+import org.wikipediacleaner.api.constants.WPCConfigurationStringList;
 import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.i18n.GT;
@@ -51,6 +53,25 @@ public class CheckErrorAlgorithm067 extends CheckErrorAlgorithmBase {
     List<String> abbreviationsList = null;
     if (abbreviations != null) {
       abbreviationsList = WPCConfiguration.convertPropertyToStringList(abbreviations);
+    }
+    WPCConfiguration config = analysis.getWPCConfiguration();
+    List<String[]> generalAbbreviations = null;
+    List<String> tmpGeneralAbbreviations = config.getStringList(WPCConfigurationStringList.ABBREVIATIONS);
+    if ((tmpGeneralAbbreviations != null) && (tmpGeneralAbbreviations.size() > 0)) {
+      generalAbbreviations = new ArrayList<String[]>();
+      for (String tmp : tmpGeneralAbbreviations) {
+        int pipeIndex1 = tmp.indexOf('|');
+        if (pipeIndex1 > 0) {
+          int pipeIndex2 = tmp.indexOf('|', pipeIndex1 + 1);
+          if (pipeIndex2 > 0) {
+            String[] abbreviation = new String[3];
+            abbreviation[0] = tmp.substring(0, pipeIndex1);
+            abbreviation[1] = tmp.substring(pipeIndex1 + 1, pipeIndex2);
+            abbreviation[2] = tmp.substring(pipeIndex2 + 1);
+            generalAbbreviations.add(abbreviation);
+          }
+        }
+      }
     }
 
     // Retrieve separator between several <ref> tags
@@ -158,6 +179,25 @@ public class CheckErrorAlgorithm067 extends CheckErrorAlgorithmBase {
 
         if (punctuationFoundBefore && !abbreviationFound) {
 
+          // Search for general abbreviations
+          int beginRefIndex = firstTag.getBeginIndex();
+          int firstAbbreviationIndex = beginRefIndex;
+          List<String[]> generalAbbreviationFound = new ArrayList<String[]>();
+          if ((punctuationFoundBefore && (generalAbbreviations != null))) {
+            for (String[] abbreviation : generalAbbreviations) {
+              if ((abbreviation != null) &&
+                  (abbreviation.length > 2) &&
+                  (abbreviation[0] != null)) {
+                String abbreviationText = abbreviation[0];
+                int abbreviationStart = tmpIndex - abbreviationText.length() + 1;
+                if (contents.startsWith(abbreviationText, abbreviationStart)) {
+                  generalAbbreviationFound.add(abbreviation);
+                  firstAbbreviationIndex = Math.min(firstAbbreviationIndex, abbreviationStart);
+                }
+              }
+            }
+          }
+
           // Check if the punctuation before is multiple
           int lastPunctuationIndex = tmpIndex;
           while ((tmpIndex >= 0) && (contents.charAt(tmpIndex) == punctuation)) {
@@ -169,8 +209,12 @@ public class CheckErrorAlgorithm067 extends CheckErrorAlgorithmBase {
           while ((tmpIndex > 0) && (contents.charAt(tmpIndex - 1) == ' ')) {
             tmpIndex--;
           }
-          String prefix = contents.substring(tmpIndex, beginIndex);
-          beginIndex = tmpIndex;
+          String moveablePrefix = contents.substring(tmpIndex, beginIndex);
+          String prefix = "";
+          if (firstAbbreviationIndex < tmpIndex) {
+            prefix = contents.substring(firstAbbreviationIndex, tmpIndex);
+          }
+          beginIndex = Math.min(tmpIndex, firstAbbreviationIndex);
   
           // Check for possible punctuation after tags
           tmpIndex = lastTag.getEndIndex();
@@ -205,14 +249,22 @@ public class CheckErrorAlgorithm067 extends CheckErrorAlgorithmBase {
               automatic = true;
             }
           }
+          for (String[] generalAbbreviation : generalAbbreviationFound) {
+            if ((generalAbbreviation.length > 2)) {
+              String abbreviation = generalAbbreviation[2];
+              errorResult.addReplacement(
+                  abbreviation + replace + punctuationAfter,
+                  abbreviation + textReplace + punctuationAfter);
+            }
+          }
           errorResult.addReplacement(
-              replace + prefix + allPunctuations,
-              textReplace + prefix + allPunctuations, automatic);
+              prefix + replace + moveablePrefix + allPunctuations,
+              prefix + textReplace + moveablePrefix + allPunctuations, automatic);
           if (punctuationFoundAfter &&
               !allPunctuations.equals(punctuationAfter)) {
             errorResult.addReplacement(
-                replace + prefix + punctuationAfter,
-                textReplace + prefix + punctuationAfter);
+                prefix + replace + moveablePrefix + punctuationAfter,
+                prefix + textReplace + moveablePrefix + punctuationAfter);
           }
           errors.add(errorResult);
 
