@@ -18,9 +18,10 @@ public class CheckErrorAlgorithmComparator implements
     Comparator<CheckErrorAlgorithm> {
 
   /**
-   * @param o1
-   * @param o2
-   * @return
+   * @param o1 the first algorithm to be compared.
+   * @param o2 the second algorithm to be compared.
+   * @return a negative integer, zero, or a positive integer as the first
+   *           argument is less than, equal to, or greater than the second
    * @see java.util.Comparator#compare(java.lang.Object, java.lang.Object)
    */
   public int compare(CheckErrorAlgorithm o1, CheckErrorAlgorithm o2) {
