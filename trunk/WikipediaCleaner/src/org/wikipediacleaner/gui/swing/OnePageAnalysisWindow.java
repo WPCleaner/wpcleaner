@@ -47,6 +47,7 @@ import javax.swing.SwingConstants;
 import javax.swing.WindowConstants;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.text.BadLocationException;
 
 import org.wikipediacleaner.Version;
 import org.wikipediacleaner.api.API;
@@ -143,7 +144,7 @@ public class OnePageAnalysisWindow extends OnePageWindow {
   private JButton buttonWatchLink;
   private JButton buttonWarning;
   private JPopupMenu menuWarning;
-  private JButton buttonRedirectElements;
+  private JButton buttonInsertText;
   private JButton buttonOtherLanguage;
   private JButton buttonTranslation;
 
@@ -251,7 +252,6 @@ public class OnePageAnalysisWindow extends OnePageWindow {
   @Override
   protected void updateComponentState() {
     boolean article = (isPageLoaded()) && (getPage() != null) && (getPage().isArticle());
-    boolean redirect = article && getPage().isRedirect();
     setEnabledStatus(buttonDelete, isPageLoaded());
     setEnabledStatus(buttonWarning, article);
     setEnabledStatus(buttonFirst, isPageLoaded());
@@ -259,8 +259,8 @@ public class OnePageAnalysisWindow extends OnePageWindow {
     setEnabledStatus(buttonNext, isPageLoaded());
     setEnabledStatus(buttonOtherLanguage, isPageLoaded());
     setEnabledStatus(buttonPrevious, isPageLoaded());
-    setEnabledStatus(buttonRedirectElements, redirect);
-    setVisibleStatus(buttonRedirectElements, redirect);
+    setEnabledStatus(buttonInsertText, isPageLoaded());
+    setVisibleStatus(buttonInsertText, isPageLoaded());
     setEnabledStatus(buttonToc, isPageLoaded());
     setEnabledStatus(buttonTranslation, isPageLoaded());
     setEnabledStatus(buttonValidate, isPageLoaded());
@@ -394,12 +394,12 @@ public class OnePageAnalysisWindow extends OnePageWindow {
     buttonToc = createButtonToc(this, true);
     toolbarButtons.add(buttonToc);
     addChkSpelling(toolbarButtons, true);
-    buttonRedirectElements = Utilities.createJButton(
-        "commons-nuvola-apps-kpager.png", EnumImageSize.NORMAL,
-        GT._("Add categories or templates"), false, null);
-    buttonRedirectElements.addActionListener(EventHandler.create(
-        ActionListener.class, this, "actionRedirectElements"));
-    toolbarButtons.add(buttonRedirectElements);
+    buttonInsertText = Utilities.createJButton(
+        "gnome-insert-text.png", EnumImageSize.NORMAL,
+        GT._("Insert text"), false, null);
+    buttonInsertText.addActionListener(EventHandler.create(
+        ActionListener.class, this, "actionInsertText"));
+    toolbarButtons.add(buttonInsertText);
     buttonValidate = createButtonValidate(this, true);
     toolbarButtons.add(buttonValidate);
     addButtonSend(toolbarButtons, true);
@@ -1122,20 +1122,34 @@ public class OnePageAnalysisWindow extends OnePageWindow {
   }
 
   /**
-   * Action called when when Add redirect categories or templates button is pressed.
+   * Action called when when Insert text button is pressed.
    */
-  public void actionRedirectElements() {
+  public void actionInsertText() {
+
+    // Check current page
+    boolean article = (isPageLoaded()) && (getPage() != null) && (getPage().isArticle());
+    boolean redirect = article && getPage().isRedirect();
 
     // Check configuration
-    List<String> redirectCategories = getConfiguration().getStringList(
-        WPCConfigurationStringList.REDIRECT_CATEGORIES);
-    List<String> redirectTemplates = getConfiguration().getStringList(
-        WPCConfigurationStringList.REDIRECT_TEMPLATES);
-    if (((redirectCategories == null) || (redirectCategories.isEmpty())) &&
+    List<String> texts = getConfiguration().getStringList(
+        WPCConfigurationStringList.INSERT_TEXTS);
+    List<String> redirectCategories = null;
+    List<String> redirectTemplates = null;
+    if (redirect) {
+      redirectCategories = getConfiguration().getStringList(
+          WPCConfigurationStringList.REDIRECT_CATEGORIES);
+      redirectTemplates = getConfiguration().getStringList(
+          WPCConfigurationStringList.REDIRECT_TEMPLATES);
+    }
+    if (((texts == null) || (texts.isEmpty())) &&
+        ((redirectCategories == null) || (redirectCategories.isEmpty())) &&
         ((redirectTemplates == null) || (redirectTemplates.isEmpty()))) {
       List<String> params = new ArrayList<String>();
-      params.add(WPCConfigurationStringList.REDIRECT_CATEGORIES.getAttributeName());
-      params.add(WPCConfigurationStringList.REDIRECT_TEMPLATES.getAttributeName());
+      params.add(WPCConfigurationStringList.INSERT_TEXTS.getAttributeName());
+      if (redirect) {
+        params.add(WPCConfigurationStringList.REDIRECT_CATEGORIES.getAttributeName());
+        params.add(WPCConfigurationStringList.REDIRECT_TEMPLATES.getAttributeName());
+      }
       Utilities.displayMessageForMissingConfiguration(
           getParentComponent(), params);
       return;
@@ -1146,6 +1160,37 @@ public class OnePageAnalysisWindow extends OnePageWindow {
 
     // Create menu
     List<JMenuItem> items = new ArrayList<JMenuItem>();
+    if (texts != null) {
+      for (String text : texts) {
+        int pipeIndex = text.indexOf('|');
+        JMenu themeMenu = null;
+        if (pipeIndex > 0) {
+          String theme = text.substring(0, pipeIndex);
+          text = text.substring(pipeIndex + 1);
+          themeMenu = themeMenus.get(theme);
+          if (themeMenu == null) {
+            themeMenu = new JMenu(theme);
+            themeMenus.put(theme, themeMenu);
+            items.add(themeMenu);
+          }
+        }
+        pipeIndex = text.indexOf('|');
+        String label = null;
+        if (pipeIndex > 0) {
+          label = text.substring(0, pipeIndex);
+          text = text.substring(pipeIndex + 1);
+        }
+        JMenuItem item = new JMenuItem((label != null) ? label : text);
+        item.setActionCommand(text.replaceAll("\\\\n", "\n"));
+        item.addActionListener(EventHandler.create(
+            ActionListener.class, this, "actionAddText", "actionCommand"));
+        if (themeMenu == null) {
+          items.add(item);
+        } else {
+          themeMenu.add(item);
+        }
+      }
+    }
     if (redirectCategories != null) {
       for (String category : redirectCategories) {
         int colonIndex = category.indexOf(':');
@@ -1199,7 +1244,24 @@ public class OnePageAnalysisWindow extends OnePageWindow {
     BasicMenuCreator menu = new BasicMenuCreator();
     JPopupMenu popup = menu.createPopupMenu(null);
     menu.addSubmenus(popup, items);
-    popup.show(buttonRedirectElements, 0, buttonRedirectElements.getHeight());
+    popup.show(buttonInsertText, 0, buttonInsertText.getHeight());
+  }
+
+  /**
+   * Action called when a text is selected to be added.
+   * 
+   * @param text Text.
+   */
+  public void actionAddText(String text) {
+    if ((text == null) || (getPage() == null)) {
+      return;
+    }
+    try {
+      getTextContents().getDocument().insertString(
+          getTextContents().getCaretPosition(), text, null);
+    } catch (BadLocationException e) {
+      // Nothing to do
+    }
   }
 
   /**

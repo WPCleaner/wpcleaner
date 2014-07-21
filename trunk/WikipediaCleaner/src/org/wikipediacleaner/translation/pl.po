@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2014-07-19 23:29+0200\n"
+"POT-Creation-Date: 2014-07-21 18:50+0200\n"
 "PO-Revision-Date: 2013-11-01 03:31+0000\n"
 "Last-Translator: pp/bs <Unknown>\n"
 "Language-Team: Polish <pl@li.org>\n"
@@ -1391,7 +1391,7 @@ msgid "Mark backlink as needing help"
 msgstr "Oznakuj link jako potrzebujący pomocy"
 
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:330
-#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:242
+#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:243
 msgid "Link count"
 msgstr "Linków"
 
@@ -1834,14 +1834,15 @@ msgstr "Zapisz"
 msgid "&Cancel"
 msgstr "Anuluj"
 
-#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:229
+#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:230
 #, java-format
 msgid "Analysis - {0}"
 msgstr "Analiza - {0}"
 
 #: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:399
-msgid "Add categories or templates"
-msgstr "Dodaj kategorie lub szablony"
+#, fuzzy
+msgid "Insert text"
+msgstr "Tekst linka"
 
 #: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:410
 msgid "Delete page"
@@ -1941,24 +1942,24 @@ msgstr "Czy chcesz zastosować automatyczne modyfikacje?"
 msgid "Do you want to update the ISBN warning in talk page ?"
 msgstr "Czy chcesz aktualizować komunikat o disambigach w dyskusji?"
 
-#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:1357
+#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:1419
 msgid "You must select the text that is written in a foreign language"
 msgstr "Musisz wybrać tekst obcojęzyczny"
 
-#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:1366
+#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:1428
 msgid "Foreign language"
 msgstr "Obcy język"
 
-#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:1410
+#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:1472
 msgid "From which Wikipedia is this text coming ?"
 msgstr "Z której Wikipedii pochodzi oryginalny tekst?"
 
-#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:1509
+#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:1571
 #: org/wikipediacleaner/gui/swing/options/OptionsWindow.java:109
 msgid "Translation"
 msgstr "Tłumaczenie"
 
-#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:1790
+#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:1852
 msgid ""
 "Do you want to delete this page on Wikipedia ?\n"
 "Please, enter the reason for deleting the page"
@@ -3484,6 +3485,9 @@ msgstr "Nazwa przypisu nie może zawierać żadnego z tych znaków: {0}"
 #, java-format
 msgid "The value can''t contain any of these characters: {0}"
 msgstr "Wartość nie może zawierać tych znaków: {0}"
+
+#~ msgid "Add categories or templates"
+#~ msgstr "Dodaj kategorie lub szablony"
 
 #~ msgid "Mark as Fixed"
 #~ msgstr "Oznacz jako naprawiony"

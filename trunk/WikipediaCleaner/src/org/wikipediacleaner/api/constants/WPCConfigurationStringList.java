@@ -26,6 +26,8 @@ public enum WPCConfigurationStringList {
   CURRENT_DAB_LIST("dab_list", false, true, false),
   // List of templates for displaying a warning when editing.
   EDIT_WARNING_TEMPLATES("general_edit_warning_templates", true, true, true),
+  // Texts that can be inserted
+  INSERT_TEXTS("general_insert_texts", true, true, true),
   // Categories for ISBN errors.
   ISBN_ERRORS_CATEGORIES("isbn_errors_categories", true, true, true),
   // Templates to ask for help about ISBN.
