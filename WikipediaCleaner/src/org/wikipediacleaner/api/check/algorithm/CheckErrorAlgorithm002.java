@@ -71,13 +71,10 @@ public class CheckErrorAlgorithm002 extends CheckErrorAlgorithmBase {
 
       // Check if this is a br tag
       if ((shouldCheck) && (contents.charAt(currentIndex) == '<')) {
-        int tmpIndex = currentIndex + 1;
-        while ((tmpIndex < maxSize) && (contents.charAt(tmpIndex) == ' ')) {
-          tmpIndex++;
-        }
+        int tmpIndex = getFirstIndexAfterSpace(contents, currentIndex + 1);
         boolean incorrectChar = false;
         while ((tmpIndex < maxSize) &&
-               (" \\.:?/\n".indexOf(contents.charAt(tmpIndex)) >= 0)) {
+               (" \\.,:?/\n".indexOf(contents.charAt(tmpIndex)) >= 0)) {
           tmpIndex++;
           incorrectChar = true;
         }
@@ -90,14 +87,13 @@ public class CheckErrorAlgorithm002 extends CheckErrorAlgorithmBase {
           tmpIndex++;
         }
         if ((tmpIndex < maxSize) && (brTag)) {
-          while ((tmpIndex < maxSize) && (contents.charAt(tmpIndex) == ' ')) {
-            tmpIndex++;
-          }
+          tmpIndex = getFirstIndexAfterSpace(contents, tmpIndex);
           if ((tmpIndex < maxSize) && (contents.charAt(tmpIndex) == '/')) {
             tmpIndex++;
           }
+          tmpIndex = getFirstIndexAfterSpace(contents, tmpIndex);
           while ((tmpIndex < maxSize) &&
-                 (" \\.:?/\n".indexOf(contents.charAt(tmpIndex)) >= 0)) {
+                 (" \\.,:?/\n".indexOf(contents.charAt(tmpIndex)) >= 0)) {
             tmpIndex++;
             incorrectChar = true;
           }

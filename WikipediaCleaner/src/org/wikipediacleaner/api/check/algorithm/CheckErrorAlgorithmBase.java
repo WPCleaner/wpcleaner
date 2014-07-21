@@ -384,6 +384,22 @@ public abstract class CheckErrorAlgorithmBase implements CheckErrorAlgorithm {
   }
 
   /**
+   * @param contents Contents.
+   * @param startIndex Index for starting the search.
+   * @return First index after the start index that is not a space character.
+   */
+  protected int getFirstIndexAfterSpace(String contents, int startIndex) {
+    if (contents == null) {
+      return startIndex;
+    }
+    int maxLength = contents.length();
+    while ((startIndex < maxLength) && (contents.charAt(startIndex) == ' ')) {
+      startIndex++;
+    }
+    return startIndex;
+  }
+
+  /**
    * Search for simple text in page.
    * 
    * @param pageAnalysis Page analysis.
