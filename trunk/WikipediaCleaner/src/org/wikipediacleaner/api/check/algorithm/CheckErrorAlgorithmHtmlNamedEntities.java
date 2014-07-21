@@ -12,6 +12,7 @@ import java.util.List;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.HtmlCharacters;
+import org.wikipediacleaner.api.check.CheckErrorResult.ErrorLevel;
 import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementExternalLink;
 import org.wikipediacleaner.api.data.PageElementTag;
@@ -88,6 +89,7 @@ public abstract class CheckErrorAlgorithmHtmlNamedEntities extends CheckErrorAlg
           if ((name != null) &&
               contents.startsWith(name, ampersandIndex + 1) &&
               htmlCharacter.shouldReplaceName()) {
+            ErrorLevel errorLevel = ErrorLevel.ERROR;
 
             // Analyze semicolon after the name
             int colonIndex = ampersandIndex + name.length() + 1;
@@ -98,8 +100,10 @@ public abstract class CheckErrorAlgorithmHtmlNamedEntities extends CheckErrorAlg
               }
             } else {
               if ((colonIndex >= maxLength) ||
-                  ((!Character.isLetterOrDigit(contents.charAt(colonIndex))) &&
-                   (contents.charAt(colonIndex) != ';'))) {
+                  (contents.charAt(colonIndex) != ';')) {
+                if (Character.isLetterOrDigit(contents.charAt(colonIndex))) {
+                  errorLevel = ErrorLevel.WARNING;
+                }
                 found = true;
                 colonIndex--;
               }
@@ -125,12 +129,17 @@ public abstract class CheckErrorAlgorithmHtmlNamedEntities extends CheckErrorAlg
               }
 
               CheckErrorResult errorResult = createCheckErrorResult(
-                  analysis, ampersandIndex, endIndex);
+                  analysis, ampersandIndex, endIndex,
+                  errorLevel);
               errorResult.addReplacement("" + htmlCharacter.getValue());
               if (endIndex > colonIndex + 1) {
                 errorResult.addReplacement(
                     "" + htmlCharacter.getValue() +
                     contents.substring(colonIndex + 1, endIndex));
+              }
+              if (!useSemiColon()) {
+                errorResult.addReplacement(
+                    "&amp;" + contents.substring(ampersandIndex + 1, endIndex));
               }
               errors.add(errorResult);
             }
