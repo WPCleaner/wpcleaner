@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2014-07-21 18:50+0200\n"
+"POT-Creation-Date: 2014-07-22 23:44+0200\n"
 "PO-Revision-Date: 2013-07-06 19:08+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Indonesian <id@li.org>\n"
@@ -128,14 +128,15 @@ msgstr "Halaman {0}:"
 msgid "Updating page {0}"
 msgstr "Pembaharuan halaman {0}"
 
-#: org/wikipediacleaner/api/check/CheckError.java:336
+#: org/wikipediacleaner/api/check/CheckError.java:337
+#, fuzzy
+msgid "No available description"
+msgstr "Tambahkan deskripsi alternatif"
+
+#: org/wikipediacleaner/api/check/CheckError.java:342
 #, java-format
 msgid "Error n°{0} ({1} - {2}) - {3}"
 msgstr "Galat n°{0} ({1} - {2}) - {3}"
-
-#: org/wikipediacleaner/api/check/CheckError.java:343
-msgid "Error unkown from WikiCleaner"
-msgstr "Galat tidak diketahui dari WikiCleaner"
 
 #: org/wikipediacleaner/api/check/CheckErrorResult.java:137
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm026.java:82
@@ -281,7 +282,7 @@ msgid "Comment category out"
 msgstr "Komentar kategori"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm027.java:30
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmHtmlNamedEntities.java:31
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmHtmlNamedEntities.java:32
 msgid "Replace all"
 msgstr "Ganti semua"
 
@@ -3403,6 +3404,9 @@ msgstr ""
 #, java-format
 msgid "The value can''t contain any of these characters: {0}"
 msgstr ""
+
+#~ msgid "Error unkown from WikiCleaner"
+#~ msgstr "Galat tidak diketahui dari WikiCleaner"
 
 #~ msgid "List on toolserver"
 #~ msgstr "Daftar pada toolserver"
