@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2014-07-21 18:50+0200\n"
+"POT-Creation-Date: 2014-07-22 23:44+0200\n"
 "PO-Revision-Date: 2013-11-01 03:31+0000\n"
 "Last-Translator: pp/bs <Unknown>\n"
 "Language-Team: Polish <pl@li.org>\n"
@@ -136,14 +136,15 @@ msgstr "Strona {0}:"
 msgid "Updating page {0}"
 msgstr "Aktualizowanie strony {0}"
 
-#: org/wikipediacleaner/api/check/CheckError.java:336
+#: org/wikipediacleaner/api/check/CheckError.java:337
+#, fuzzy
+msgid "No available description"
+msgstr "Dodaj opis alternatywny..."
+
+#: org/wikipediacleaner/api/check/CheckError.java:342
 #, java-format
 msgid "Error n°{0} ({1} - {2}) - {3}"
 msgstr "Błąd nr {0} ({1} - {2}) - {3}"
-
-#: org/wikipediacleaner/api/check/CheckError.java:343
-msgid "Error unkown from WikiCleaner"
-msgstr "Nieznany błąd z WikiCleanera"
 
 #: org/wikipediacleaner/api/check/CheckErrorResult.java:137
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm026.java:82
@@ -287,7 +288,7 @@ msgid "Comment category out"
 msgstr "Zakomentuj kategorię"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm027.java:30
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmHtmlNamedEntities.java:31
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmHtmlNamedEntities.java:32
 msgid "Replace all"
 msgstr "Zamień wszystkie"
 
@@ -3485,6 +3486,9 @@ msgstr "Nazwa przypisu nie może zawierać żadnego z tych znaków: {0}"
 #, java-format
 msgid "The value can''t contain any of these characters: {0}"
 msgstr "Wartość nie może zawierać tych znaków: {0}"
+
+#~ msgid "Error unkown from WikiCleaner"
+#~ msgstr "Nieznany błąd z WikiCleanera"
 
 #~ msgid "Add categories or templates"
 #~ msgstr "Dodaj kategorie lub szablony"

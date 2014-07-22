@@ -333,14 +333,17 @@ public class CheckError {
   @Override
   public String toString() {
     String count = Integer.toString(errors.size());
+    int priority = CWConfigurationError.PRIORITY_UNKOWN;
+    String description = GT._("No available description");
+    if (algorithm != null) {
+      priority = algorithm.getPriority();
+      description = algorithm.getShortDescriptionReplaced();
+    }
     return GT._("Error n°{0} ({1} - {2}) - {3}", new Object[] {
         Integer.valueOf(errorNumber),
         count,
-        CWConfigurationError.getPriorityString(
-            (algorithm != null) ? algorithm.getPriority() : CWConfigurationError.PRIORITY_UNKOWN),
-        (algorithm != null) ?
-            algorithm.getShortDescriptionReplaced() :
-            GT._("Error unkown from WikiCleaner") });
+        CWConfigurationError.getPriorityString(priority),
+        description });
   }
 
   /**
