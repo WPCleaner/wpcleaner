@@ -188,14 +188,24 @@ public class Bot implements BasicWorkerListener {
       worker = new UpdateISBNWarningWorker(wiki, null, true);
     } else if ("FixCheckWiki".equalsIgnoreCase(action)) {
       List<CheckErrorAlgorithm> algorithms = new ArrayList<CheckErrorAlgorithm>();
+      List<CheckErrorAlgorithm> allAlgorithms = new ArrayList<CheckErrorAlgorithm>();
       for (int i = 1; i < args.length; i++) {
-        CheckErrorAlgorithm algorithm = CheckErrorAlgorithms.getAlgorithm(wiki, Integer.parseInt(args[i]));
+        boolean addition = false;
+        String algorithmNumber = args[i];
+        if (algorithmNumber.startsWith("+")) {
+          addition = true;
+          algorithmNumber = algorithmNumber.substring(1);
+        }
+        CheckErrorAlgorithm algorithm = CheckErrorAlgorithms.getAlgorithm(wiki, Integer.parseInt(algorithmNumber));
         if (algorithm != null) {
-          algorithms.add(algorithm);
+          if (!addition) {
+            algorithms.add(algorithm);
+          }
+          allAlgorithms.add(algorithm);
         }
       }
       worker = new AutomaticCWWorker(
-          wiki, null, algorithms, 10000, algorithms, null, true, false);
+          wiki, null, algorithms, 10000, allAlgorithms, null, true, false);
     }
     if (worker != null) {
       worker.setListener(this);
