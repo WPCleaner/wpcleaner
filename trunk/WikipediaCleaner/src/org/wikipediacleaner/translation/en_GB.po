@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2014-07-22 23:44+0200\n"
-"PO-Revision-Date: 2014-07-19 23:37+0100\n"
+"POT-Creation-Date: 2014-07-25 19:17+0200\n"
+"PO-Revision-Date: 2014-07-25 19:24+0100\n"
 "Last-Translator: Nicolas Vervelle <nvervelle@gmail.com>\n"
 "Language-Team: English (United Kingdom) <en_GB@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Launchpad-Export-Date: 2014-07-15 05:36+0000\n"
-"X-Generator: Poedit 1.6.6\n"
+"X-Generator: Poedit 1.6.7\n"
 "Language: en_GB\n"
 
 #: org/wikipediacleaner/Version.java:31
@@ -42,11 +42,11 @@ msgstr ""
 #: org/wikipediacleaner/Version.java:35
 #, java-format
 msgid ""
-"I try to keep {0} up to date with Check Wiki, but if you find any discrepancy"
-"(ies) in the detections, please let me know."
+"I try to keep {0} up to date with Check Wiki, but if you find any "
+"discrepancy(ies) in the detections, please let me know."
 msgstr ""
-"I try to keep {0} up to date with Check Wiki, but if you find any discrepancy"
-"(ies) in the detections, please let me know."
+"I try to keep {0} up to date with Check Wiki, but if you find any "
+"discrepancy(ies) in the detections, please let me know."
 
 #: org/wikipediacleaner/Version.java:37
 #, java-format
@@ -304,7 +304,7 @@ msgid "Add a description..."
 msgstr "Add a description..."
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm030.java:96
-msgid "What description would like to use for the image ?"
+msgid "What description would you like to use for the image ?"
 msgstr "What description would you like to use for the image ?"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm030.java:99
@@ -312,7 +312,7 @@ msgid "Add an alternate description..."
 msgstr "Add an alternate description..."
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm030.java:103
-msgid "What alternate description would like to use for the image ?"
+msgid "What alternate description would you like to use for the image ?"
 msgstr "What alternate description would you like to use for the image ?"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm030.java:108
