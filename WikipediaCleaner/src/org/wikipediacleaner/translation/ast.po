@@ -7,16 +7,17 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2014-07-22 23:44+0200\n"
-"PO-Revision-Date: 2013-06-14 19:23+0000\n"
-"Last-Translator: Xuacu Saturio <xuacusk8@gmail.com>\n"
+"POT-Creation-Date: 2014-07-25 19:17+0200\n"
+"PO-Revision-Date: 2014-07-25 19:21+0100\n"
+"Last-Translator: Nicolas Vervelle <nvervelle@gmail.com>\n"
 "Language-Team: Asturian <ast@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Launchpad-Export-Date: 2013-07-07 10:01+0000\n"
-"X-Generator: Launchpad (build 16696)\n"
+"X-Generator: Poedit 1.6.7\n"
+"Language: ast\n"
 
 #: org/wikipediacleaner/Version.java:31
 msgid "The Check Wiki project has evolved a lot recently."
@@ -37,8 +38,8 @@ msgstr ""
 #: org/wikipediacleaner/Version.java:35
 #, java-format
 msgid ""
-"I try to keep {0} up to date with Check Wiki, but if you find any discrepancy"
-"(ies) in the detections, please let me know."
+"I try to keep {0} up to date with Check Wiki, but if you find any "
+"discrepancy(ies) in the detections, please let me know."
 msgstr ""
 
 #: org/wikipediacleaner/Version.java:37
@@ -295,7 +296,7 @@ msgid "Add a description..."
 msgstr "Añadir una descripción..."
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm030.java:96
-msgid "What description would like to use for the image ?"
+msgid "What description would you like to use for the image ?"
 msgstr "¿Qué descripción quier usar pa la imaxe?"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm030.java:99
@@ -303,7 +304,7 @@ msgid "Add an alternate description..."
 msgstr "Añadir una descripción alternativa..."
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm030.java:103
-msgid "What alternate description would like to use for the image ?"
+msgid "What alternate description would you like to use for the image ?"
 msgstr "¿Qué descripción alternativa quier usar para la imaxe?"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm030.java:108

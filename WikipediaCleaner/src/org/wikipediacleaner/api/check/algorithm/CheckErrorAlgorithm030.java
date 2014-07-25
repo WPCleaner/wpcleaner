@@ -93,14 +93,14 @@ public class CheckErrorAlgorithm030 extends CheckErrorAlgorithmBase {
               new AddTextActionProvider(
                   prefixFull.toString(), "]]",
                   new TextProviderImageDescription(image),
-                  GT._("What description would like to use for the image ?"),
+                  GT._("What description would you like to use for the image ?"),
                   descriptionChecker));
           errorResult.addPossibleAction(
               GT._("Add an alternate description..."),
               new AddTextActionProvider(
                   prefixShort.toString(), "]]",
                   new TextProviderImageDescription(image),
-                  GT._("What alternate description would like to use for the image ?"),
+                  GT._("What alternate description would you like to use for the image ?"),
                   descriptionChecker));
 
           // Action: view image

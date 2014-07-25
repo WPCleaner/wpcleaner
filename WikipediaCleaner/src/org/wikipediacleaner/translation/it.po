@@ -7,16 +7,17 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2014-07-22 23:44+0200\n"
-"PO-Revision-Date: 2013-09-30 23:13+0000\n"
-"Last-Translator: Nicolas Vervelle <Unknown>\n"
+"POT-Creation-Date: 2014-07-25 19:17+0200\n"
+"PO-Revision-Date: 2014-07-25 19:29+0100\n"
+"Last-Translator: Nicolas Vervelle <nvervelle@gmail.com>\n"
 "Language-Team: Italian <it@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Launchpad-Export-Date: 2013-10-01 21:41+0000\n"
-"X-Generator: Launchpad (build 16774)\n"
+"X-Generator: Poedit 1.6.7\n"
+"Language: it\n"
 
 #: org/wikipediacleaner/Version.java:31
 msgid "The Check Wiki project has evolved a lot recently."
@@ -37,8 +38,8 @@ msgstr ""
 #: org/wikipediacleaner/Version.java:35
 #, java-format
 msgid ""
-"I try to keep {0} up to date with Check Wiki, but if you find any discrepancy"
-"(ies) in the detections, please let me know."
+"I try to keep {0} up to date with Check Wiki, but if you find any "
+"discrepancy(ies) in the detections, please let me know."
 msgstr ""
 
 #: org/wikipediacleaner/Version.java:37
@@ -294,7 +295,7 @@ msgid "Add a description..."
 msgstr "Aggiungi una descrizione..."
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm030.java:96
-msgid "What description would like to use for the image ?"
+msgid "What description would you like to use for the image ?"
 msgstr "Che descrizione vuoi usare per l'immagine?"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm030.java:99
@@ -302,7 +303,7 @@ msgid "Add an alternate description..."
 msgstr "Aggiungi una descrizione alternativa..."
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm030.java:103
-msgid "What alternate description would like to use for the image ?"
+msgid "What alternate description would you like to use for the image ?"
 msgstr "Che descrizione alternativa vuoi usare per l'immagine?"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm030.java:108
@@ -1256,8 +1257,8 @@ msgstr ""
 #, java-format
 msgid "The error n°{0} is still found {1} time in the page."
 msgid_plural "The error n°{0} is still found {1} times in the page."
-msgstr[0] "L'errore n°{0} è stato trovato ancora {1} volte nella pagina."
-msgstr[1] "L'errore n°{0} è stato trovato ancora {1} volte nelle pagine."
+msgstr[0] "L''errore n°{0} è stato trovato ancora {1} volte nella pagina."
+msgstr[1] "L''errore n°{0} è stato trovato ancora {1} volte nelle pagine."
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1189
 msgid "Are you really sure that you want to mark it as fixed ?"
