@@ -260,7 +260,7 @@ public class CheckErrorAlgorithm068 extends CheckErrorAlgorithmBase {
               // Ask user what replacement to use
               String message = GT._(
                   "The page \"{0}\" in \"{1}\" has a language link to \"{2}\": {3}.\n" +
-                  "By what text do you want to replace the link ?",
+                  "With what text do you want to replace the link ?",
                   new Object[] { pageTitle, fromWiki, toWiki, toTitle } );
               int answer = Utilities.displayQuestion(
                   textPane.getParent(), message,
