@@ -266,12 +266,12 @@ public class PageElementTag extends PageElement {
       equalIndex++;
     }
     if (equalIndex >= maxLength) {
-      Parameter param = new Parameter(name, null, null);
+      Parameter param = new Parameter(name);
       parameters.add(param);
       return true;
     }
     if (paramString.charAt(equalIndex) != '=') {
-      Parameter param = new Parameter(name, null, null);
+      Parameter param = new Parameter(name);
       parameters.add(param);
       return analyzeParameters(paramString.substring(equalIndex), parameters);
     }
@@ -288,26 +288,35 @@ public class PageElementTag extends PageElement {
 
     // Find parameter value
     String value = null;
-    String marker = null;
     int endValueIndex = startValueIndex;
     char startValueChar = paramString.charAt(startValueIndex);
-    if ("'\"«".indexOf(startValueChar) >= 0) {
-      String possibleEndChar = "'\"»";
-      if (startValueChar == '\'') {
-        possibleEndChar = "'»";
-      } else if (startValueChar == '\"') {
-        possibleEndChar = "\"»";
-      }
-      marker = paramString.substring(startValueIndex, startValueIndex + 1);
-      endValueIndex = startValueIndex + 1;
+    String beforeMarker = null;
+    String preferredAfterMarker = null;
+    if (startValueChar == '\"') {
+      beforeMarker = "\"";
+      preferredAfterMarker = beforeMarker;
+    } else if (startValueChar == '\'') {
+      beforeMarker = "\'";
+      preferredAfterMarker = beforeMarker;
+    } else if (startValueChar == '«') {
+      beforeMarker = "«";
+      preferredAfterMarker = "»";
+    }
+    String afterMarker = null;
+    if (beforeMarker != null) {
+      endValueIndex = startValueIndex + beforeMarker.length();
       while ((endValueIndex < paramString.length()) &&
-             (possibleEndChar.indexOf(paramString.charAt(endValueIndex)) < 0)) {
-        endValueIndex++;
+             (afterMarker == null)) {
+        if (paramString.startsWith(preferredAfterMarker, endValueIndex)) {
+          afterMarker = preferredAfterMarker;
+        } else {
+          endValueIndex++;
+        }
       }
       startValueIndex++;
       value = paramString.substring(startValueIndex, endValueIndex);
-      if (endValueIndex < paramString.length()) {
-        endValueIndex++;
+      if (afterMarker != null) {
+        endValueIndex += afterMarker.length();
       }
     } else {
       while ((endValueIndex < maxLength) &&
@@ -316,7 +325,7 @@ public class PageElementTag extends PageElement {
       }
       value = paramString.substring(startValueIndex, endValueIndex);
     }
-    Parameter param = new Parameter(name, value, marker);
+    Parameter param = new Parameter(name, value, beforeMarker, afterMarker);
     parameters.add(param);
 
     // Deal with next parameter
@@ -827,12 +836,29 @@ public class PageElementTag extends PageElement {
     /**
      * Marker.
      */
-    private final String marker;
+    private final String beforeMarker;
+    private final String afterMarker;
 
-    Parameter(String name, String value, String marker) {
+    /**
+     * @param name Parameter name.
+     */
+    Parameter(String name) {
+      this(name, null, null, null);
+    }
+
+    /**
+     * @param name Parameter name.
+     * @param value Parameter value.
+     * @param beforeMarker Marker (like quote) before the parameter value.
+     * @param afterMarker Marker (like quote) after the parameter value.
+     */
+    Parameter(
+        String name, String value,
+        String beforeMarker, String afterMarker) {
       this.name = name;
       this.value = value;
-      this.marker = marker;
+      this.beforeMarker = beforeMarker;
+      this.afterMarker = afterMarker;
     }
 
     /**
@@ -868,12 +894,12 @@ public class PageElementTag extends PageElement {
       StringBuilder builder = new StringBuilder();
       builder.append(name);
       builder.append('=');
-      if (marker != null) {
-        builder.append(marker);
+      if (beforeMarker != null) {
+        builder.append(beforeMarker);
       }
       builder.append(value);
-      if (marker != null) {
-        builder.append(marker);
+      if (afterMarker != null) {
+        builder.append(afterMarker);
       }
       return builder.toString();
     }
