@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2014-07-27 15:24+0200\n"
-"PO-Revision-Date: 2014-07-26 12:42+0100\n"
+"POT-Creation-Date: 2014-07-27 23:34+0200\n"
+"PO-Revision-Date: 2014-07-27 23:37+0100\n"
 "Last-Translator: Nicolas Vervelle <nvervelle@gmail.com>\n"
 "Language-Team: English (United Kingdom) <en_GB@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -42,11 +42,11 @@ msgstr ""
 #: org/wikipediacleaner/Version.java:35
 #, java-format
 msgid ""
-"I try to keep {0} up to date with Check Wiki, but if you find any discrepancy"
-"(ies) in the detections, please let me know."
+"I try to keep {0} up to date with Check Wiki, but if you find any "
+"discrepancy(ies) in the detections, please let me know."
 msgstr ""
-"I try to keep {0} up to date with Check Wiki, but if you find any discrepancy"
-"(ies) in the detections, please let me know."
+"I try to keep {0} up to date with Check Wiki, but if you find any "
+"discrepancy(ies) in the detections, please let me know."
 
 #: org/wikipediacleaner/Version.java:37
 #, java-format
@@ -157,7 +157,7 @@ msgid "Replace with {0}"
 msgstr "Replace with {0}"
 
 #: org/wikipediacleaner/api/check/CheckErrorResult.java:138
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm010.java:160
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm010.java:175
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm017.java:164
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm026.java:87
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm026.java:93
@@ -224,54 +224,54 @@ msgstr "Fix DEFAULTSORT"
 msgid "Unable to replace the characters [{0}]"
 msgstr "Unable to replace the characters [{0}]"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:34
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:171
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:33
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:184
 msgid "Remove all control characters"
 msgstr "Remove all control characters"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:239
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:254
 msgid "To report control characters only in templates"
 msgstr "To report control characters only in templates"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:247
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:262
 msgid "Zero-width space"
 msgstr "Zero-width space"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:248
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:263
 msgid "Left-to-righ mark"
 msgstr "Left-to-right mark"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:249
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:264
 msgid "Line separator"
 msgstr "Line separator"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:250
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:265
 msgid "Left-to-right embedding"
 msgstr "Left-to-right embedding"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:251
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:266
 msgid "Pop directional formatting"
 msgstr "Pop directional formatting"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:252
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:267
 msgid "Byte order mark"
 msgstr "Byte order mark"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:253
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:268
 msgid "Private use area"
 msgstr "Private use area"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:254
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:269
 msgid "Private use area A"
 msgstr "Private use area A"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:255
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:270
 msgid "Private use area B"
 msgstr "Private use area B"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm017.java:36
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm045.java:35
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm059.java:33
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm059.java:34
 msgid "Delete all"
 msgstr "Delete all"
 
@@ -451,7 +451,7 @@ msgid "You can replace the link using template {0}."
 msgstr "You can replace the link using template {0}."
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm070.java:63
-#, fuzzy, java-format
+#, java-format
 msgid "Length of ISBN is {0} instead of 10 or 13"
 msgstr "Length of ISBN is {0} instead of 10 or 13"
 
@@ -482,7 +482,6 @@ msgid "Remove {0} tags"
 msgstr "Remove {0} tags"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm079.java:106
-#, fuzzy
 msgid "What description would you like to use for the external link ?"
 msgstr "What description would you like to use for the external link ?"
 
@@ -511,8 +510,8 @@ msgid "Give a name to the <ref> tag"
 msgstr "Give a name to the <ref> tag"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm081.java:259
-msgid "What name would like to use for the <ref> tag ?"
-msgstr "What name would like to use for the <ref> tag ?"
+msgid "What name would you like to use for the <ref> tag ?"
+msgstr "What name would you like to use for the <ref> tag ?"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm081.java:355
 #, java-format

@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2014-07-27 15:24+0200\n"
-"PO-Revision-Date: 2014-07-27 15:28+0100\n"
+"POT-Creation-Date: 2014-07-27 23:34+0200\n"
+"PO-Revision-Date: 2014-07-27 23:38+0100\n"
 "Last-Translator: Nicolas Vervelle <nvervelle@gmail.com>\n"
 "Language-Team: French <fr@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -166,7 +166,7 @@ msgid "Replace with {0}"
 msgstr "Remplacer par {0}"
 
 #: org/wikipediacleaner/api/check/CheckErrorResult.java:138
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm010.java:160
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm010.java:175
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm017.java:164
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm026.java:87
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm026.java:93
@@ -233,54 +233,54 @@ msgstr "Corriger la clé de tri"
 msgid "Unable to replace the characters [{0}]"
 msgstr "Impossible de remplacer le caractère [{0}]"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:34
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:171
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:33
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:184
 msgid "Remove all control characters"
 msgstr "Supprimer tous les caractères de contrôle"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:239
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:254
 msgid "To report control characters only in templates"
 msgstr "Pour détecter les caractères de contrôle uniquement dans les modèles"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:247
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:262
 msgid "Zero-width space"
 msgstr "Espace sans chasse"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:248
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:263
 msgid "Left-to-righ mark"
 msgstr "Marque gauche-à-droite"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:249
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:264
 msgid "Line separator"
 msgstr "Séparateur de ligne"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:250
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:265
 msgid "Left-to-right embedding"
 msgstr "Enchâssement gauche-à-droite"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:251
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:266
 msgid "Pop directional formatting"
 msgstr "Dépilement de formatage directionnel"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:252
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:267
 msgid "Byte order mark"
 msgstr "Indicateur d'ordre des octets"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:253
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:268
 msgid "Private use area"
 msgstr "Zone d’usage privé"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:254
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:269
 msgid "Private use area A"
 msgstr "Zone d’usage privé A"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:255
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:270
 msgid "Private use area B"
 msgstr "Zone d’usage privé B"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm017.java:36
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm045.java:35
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm059.java:33
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm059.java:34
 msgid "Delete all"
 msgstr "Tout supprimer"
 
@@ -521,7 +521,7 @@ msgid "Give a name to the <ref> tag"
 msgstr "Donner un nom à la balise <ref>"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm081.java:259
-msgid "What name would like to use for the <ref> tag ?"
+msgid "What name would you like to use for the <ref> tag ?"
 msgstr "Quel nom souhaitez-vous utiliser pour la balise <ref> ?"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm081.java:355

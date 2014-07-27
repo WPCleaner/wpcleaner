@@ -256,7 +256,7 @@ public class CheckErrorAlgorithm081 extends CheckErrorAlgorithmBase {
                       prefix + " name=\"",
                       "\"" + suffix,
                       provider,
-                      GT._("What name would like to use for the <ref> tag ?"),
+                      GT._("What name would you like to use for the <ref> tag ?"),
                       nameChecker));
 
               // Add actions for external links
