@@ -32,6 +32,8 @@ public class CheckErrorAlgorithm010 extends CheckErrorAlgorithmBase {
     super("Square brackets not correct end");
   }
 
+  private final static String REJECTED_CHARS = "\n[{";
+
   /**
    * Analyze a page to check if errors are present.
    * 
@@ -119,21 +121,34 @@ public class CheckErrorAlgorithm010 extends CheckErrorAlgorithmBase {
         boolean finished = false;
         while (!finished && (tmpIndex < maxLength)) {
           char tmpChar = contents.charAt(tmpIndex);
-          if ((tmpChar == '\n') ||
-              (tmpChar == '[') ||
-              (tmpChar == '{')) {
+          if (REJECTED_CHARS.indexOf(tmpChar) >= 0) {
             finished = true;
           } else if (tmpChar == ']') {
+            int tmpIndex2 = tmpIndex + 1;
+            while ((tmpIndex2 < maxLength) &&
+                   (contents.charAt(tmpIndex2) != ']') &&
+                   (REJECTED_CHARS.indexOf(contents.charAt(tmpIndex2)) < 0)) {
+              tmpIndex2++;
+            }
+            String suffix = "";
+            if ((tmpIndex2 < maxLength) && (contents.charAt(tmpIndex2) == ']')) {
+              suffix = contents.substring(tmpIndex + 1, tmpIndex2 + 1);
+            } else {
+              tmpIndex2 = tmpIndex;
+            }
             CheckErrorResult errorResult = createCheckErrorResult(
-                analysis, currentIndex, tmpIndex + 1);
+                analysis, currentIndex, tmpIndex2 + 1);
 
             // Check if the situation is something like [[http://....] (replacement: [http://....])
             boolean protocolFound = PageElementExternalLink.isPossibleProtocol(contents, currentIndex + 2);
             if (protocolFound) {
-              errorResult.addReplacement(contents.substring(currentIndex + 1, tmpIndex + 1));
+              errorResult.addReplacement(contents.substring(currentIndex + 1, tmpIndex2 + 1));
             }
 
-            errorResult.addReplacement(contents.substring(currentIndex, tmpIndex + 1) + "]");
+            errorResult.addReplacement(contents.substring(currentIndex, tmpIndex + 1) + "]" + suffix);
+            if (suffix.length() > 0) {
+              errorResult.addReplacement(contents.substring(currentIndex, tmpIndex) + suffix + "]");
+            }
             errors.add(errorResult);
             errorReported = true;
             finished = true;
