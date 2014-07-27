@@ -13,6 +13,7 @@ import java.util.List;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.CheckErrorResult.ErrorLevel;
 import org.wikipediacleaner.api.data.PageAnalysis;
+import org.wikipediacleaner.api.data.PageElementComment;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.PageElementTemplate.Parameter;
@@ -73,12 +74,10 @@ public class CheckErrorAlgorithm059 extends CheckErrorAlgorithmBase {
         int beginError = -1;
         int endError = -1;
         boolean shouldStop = false;
+        String replacement = "";
         while (!shouldStop) {
           shouldStop = true;
-          while ((currentValuePos > 0) &&
-                 (Character.isWhitespace(paramValue.charAt(currentValuePos)))) {
-            currentValuePos--;
-          }
+          currentValuePos = getLastIndexBeforeWhiteSpace(paramValue, currentValuePos);
           if ((currentValuePos > 0) &&
               (paramValue.charAt(currentValuePos) == '>')) {
             PageElementTag tag = analysis.isInTag(
@@ -103,6 +102,13 @@ public class CheckErrorAlgorithm059 extends CheckErrorAlgorithmBase {
                   currentValuePos -= tag.getEndIndex() - tag.getCompleteBeginIndex();
                 }
               }
+            } else {
+              PageElementComment comment = analysis.isInComment(paramValueStartIndex + currentValuePos);
+              if (comment != null) {
+                replacement += analysis.getContents().substring(comment.getBeginIndex(), comment.getEndIndex());
+                shouldStop = false;
+                currentValuePos -= comment.getEndIndex() - comment.getBeginIndex();
+              }
             }
           }
         }
@@ -117,7 +123,7 @@ public class CheckErrorAlgorithm059 extends CheckErrorAlgorithmBase {
               analysis, beginError, endError,
               (tagAfter ? ErrorLevel.WARNING : ErrorLevel.ERROR));
           if (!tagAfter) {
-            errorResult.addReplacement("");
+            errorResult.addReplacement(replacement);
           }
           errors.add(errorResult);
         }
