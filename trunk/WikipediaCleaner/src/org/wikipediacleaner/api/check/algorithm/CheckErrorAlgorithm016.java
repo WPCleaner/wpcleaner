@@ -13,7 +13,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
-import org.wikipediacleaner.api.check.HtmlCharacters;
 import org.wikipediacleaner.api.check.NullActionProvider;
 import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementTemplate;
@@ -140,25 +139,39 @@ public class CheckErrorAlgorithm016 extends CheckErrorAlgorithmBase {
           }
         }
         StringBuilder replacementB = new StringBuilder();
-        StringBuilder replacementB2 = new StringBuilder();
+        List<String> otherReplacements = new ArrayList<String>();
         boolean unsafeCharacter = false;
         boolean checkUnsafe = false;
         int i = begin;
         while (i < end) {
           codePoint = contents.codePointAt(i);
           control = ControlCharacter.getControlCharacter(codePoint);
-          if ((control == null) || !control.removable){
+          if (control == null) {
             replacementB.appendCodePoint(codePoint);
-            replacementB2.appendCodePoint(codePoint);
-            unsafeCharacter |= (control != null) || (automaticChars.indexOf(codePoint) < 0);
-            checkUnsafe |= (control != null);
           } else {
-            if (codePoint == HtmlCharacters.LEFT_TO_RIGHT_MARK.getValue()) {
-              replacementB2.append("&");
-              replacementB2.append(HtmlCharacters.LEFT_TO_RIGHT_MARK.getName());
-              replacementB2.append(";");
+            if (!control.removable) {
+              replacementB.appendCodePoint(codePoint);
             }
-            checkUnsafe |= !control.safe;
+            unsafeCharacter = (automaticChars.indexOf(codePoint) < 0);
+            checkUnsafe = !control.removable || !control.safe;
+            List<String> replacements = ControlCharacter.getReplacements(codePoint);
+            if (replacements != null) {
+              for (String replacement : replacements) {
+                StringBuilder otherReplacement = new StringBuilder();
+                int j = begin;
+                while (j < end) {
+                  if (i != j) {
+                    otherReplacement.appendCodePoint(contents.codePointAt(j));
+                  } else {
+                    otherReplacement.append(replacement);
+                  }
+                  j += Character.charCount(codePoint);
+                }
+                if (!otherReplacements.contains(otherReplacement.toString())) {
+                  otherReplacements.add(otherReplacement.toString());
+                }
+              }
+            }
           }
           i += Character.charCount(codePoint);
         }
@@ -171,10 +184,12 @@ public class CheckErrorAlgorithm016 extends CheckErrorAlgorithmBase {
               GT._("Remove all control characters"),
               automatic);
         }
-        String replacement2 = replacementB2.toString();
-        if (!automatic && !replacement2.equals(original) && !replacement2.equals(replacement)) {
-          // TODO: Test replacing left to right mark with HTML character
-          //errorResult.addReplacement(replacement2);
+        for (String otherReplacement : otherReplacements) {
+          if (!automatic &&
+              !otherReplacement.equals(original) &&
+              !otherReplacement.equals(replacement)) {
+            errorResult.addReplacement(otherReplacement);
+          }
         }
         errors.add(errorResult);
         index = end;
@@ -287,6 +302,24 @@ public class CheckErrorAlgorithm016 extends CheckErrorAlgorithmBase {
         if ((codePoint >= control.begin) && (codePoint <= control.end)) {
           return control;
         }
+      }
+      return null;
+    }
+
+    /**
+     * @param codePoint Code point.
+     * @return Potential replacement.
+     */
+    public static List<String> getReplacements(int codePoint) {
+      // TODO: Test replacing left to right mark with HTML character
+      /*if (codePoint == HtmlCharacters.LEFT_TO_RIGHT_MARK.getValue()) {
+        return Collections.singletonList("&" + HtmlCharacters.LEFT_TO_RIGHT_MARK.getName() + ";");
+      }*/
+      if (codePoint == 0xF0FC) {
+        List<String> replacements = new ArrayList<String>();
+        replacements.add("*");
+        replacements.add("✓");
+        return replacements;
       }
       return null;
     }
