@@ -33,6 +33,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+import java.util.Set;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -524,9 +525,14 @@ public class CheckWikiProjectWindow extends OnePageWindow {
     menuDeleteSelection.removeAll();
     Configuration config = Configuration.getConfiguration();
     Properties properties = config.getProperties(null, Configuration.ARRAY_CHECK_SELECTION);
+    Set<Object> keySet = properties.keySet();
+    List<String> keyList = new ArrayList<String>();
+    for (Object key : keySet) {
+      keyList.add(key.toString());
+    }
+    Collections.sort(keyList);
     JMenuItem menuItem = null;
-    for (Object property : properties.keySet()) {
-      String name = property.toString();
+    for (String name : keyList) {
       String selection = properties.getProperty(name);
       menuItem = new JMenuItem(name + ": " + selection);
       menuItem.setActionCommand(ACTION_SELECT_ERRORS + selection);
