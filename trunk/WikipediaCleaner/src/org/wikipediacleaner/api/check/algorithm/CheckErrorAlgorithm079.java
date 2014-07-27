@@ -103,7 +103,7 @@ public class CheckErrorAlgorithm079 extends CheckErrorAlgorithmBase {
               new AddTextActionProvider(
                   "[" + url + " ", "]" + suffix,
                   new TextProviderUrlTitle(url),
-                  GT._("What description would like to use for the external link ?"),
+                  GT._("What description would you like to use for the external link ?"),
                   descriptionChecker));
           if (refTag == null) {
             errorResult.addReplacement(

@@ -60,7 +60,7 @@ public class CheckErrorAlgorithm070 extends CheckErrorAlgorithmISBN {
           CheckErrorResult errorResult = createCheckErrorResult(analysis, isbn, true);
           errorResult.addPossibleAction(
               GT._(
-                  "The ISBN''s length is {0} instead of 10 or 13",
+                  "Length of ISBN is {0} instead of 10 or 13",
                   Integer.toString(length) ),
               new NullActionProvider());
           addSuggestions(analysis, errorResult, isbn);
