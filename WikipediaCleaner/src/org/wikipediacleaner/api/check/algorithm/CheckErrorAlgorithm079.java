@@ -114,7 +114,7 @@ public class CheckErrorAlgorithm079 extends CheckErrorAlgorithmBase {
                 new AddTextActionProvider(
                     "<ref>[" + url + " ", "]</ref>",
                     new TextProviderUrlTitle(url),
-                    GT._("What description would like to use for the external link ?"),
+                    GT._("What description would you like to use for the external link ?"),
                     descriptionChecker));
           } else {
             if (suffix.length() > 0) {
