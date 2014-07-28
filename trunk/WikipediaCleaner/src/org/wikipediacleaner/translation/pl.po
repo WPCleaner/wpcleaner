@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2014-07-27 23:34+0200\n"
+"POT-Creation-Date: 2014-07-28 23:02+0200\n"
 "PO-Revision-Date: 2014-07-27 23:41+0100\n"
 "Last-Translator: Nicolas Vervelle <nvervelle@gmail.com>\n"
 "Language-Team: Polish <pl@li.org>\n"
@@ -39,8 +39,8 @@ msgstr ""
 #: org/wikipediacleaner/Version.java:35
 #, java-format
 msgid ""
-"I try to keep {0} up to date with Check Wiki, but if you find any "
-"discrepancy(ies) in the detections, please let me know."
+"I try to keep {0} up to date with Check Wiki, but if you find any discrepancy"
+"(ies) in the detections, please let me know."
 msgstr ""
 
 #: org/wikipediacleaner/Version.java:37
@@ -54,8 +54,8 @@ msgid ""
 "WPCleaner configuration is available online, check the {0}System "
 "configuration{1}."
 msgstr ""
-"Konfiguracja WPCleanera jest dostępna online, zobacz {0}Konfiguracja "
-"systemu{1}."
+"Konfiguracja WPCleanera jest dostępna online, zobacz {0}Konfiguracja systemu"
+"{1}."
 
 #: org/wikipediacleaner/Version.java:43
 msgid "Please, report any other problem you find to me."
@@ -485,6 +485,7 @@ msgid "Remove {0} tags"
 msgstr "Skasuj znaczniki {0}"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm079.java:106
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm079.java:117
 msgid "What description would you like to use for the external link ?"
 msgstr "Jak chcesz opisać link zewnętrzny?"
 
@@ -495,10 +496,6 @@ msgstr "Zamień na przypis"
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm079.java:113
 msgid "Add a description and convert into <ref> tag"
 msgstr "Wstaw opis do linku i zamień na przypis"
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm079.java:117
-msgid "What description would like to use for the external link ?"
-msgstr "Jak chcesz opisać link zewnętrzny?"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm079.java:132
 msgid "External viewer"
@@ -3490,6 +3487,9 @@ msgstr "Nazwa przypisu nie może zawierać żadnego z tych znaków: {0}"
 #, java-format
 msgid "The value can''t contain any of these characters: {0}"
 msgstr "Wartość nie może zawierać tych znaków: {0}"
+
+#~ msgid "What description would like to use for the external link ?"
+#~ msgstr "Jak chcesz opisać link zewnętrzny?"
 
 #~ msgid "Error unkown from WikiCleaner"
 #~ msgstr "Nieznany błąd z WikiCleanera"

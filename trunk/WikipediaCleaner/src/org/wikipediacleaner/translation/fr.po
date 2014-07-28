@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2014-07-27 23:34+0200\n"
+"POT-Creation-Date: 2014-07-28 23:02+0200\n"
 "PO-Revision-Date: 2014-07-27 23:38+0100\n"
 "Last-Translator: Nicolas Vervelle <nvervelle@gmail.com>\n"
 "Language-Team: French <fr@li.org>\n"
@@ -42,8 +42,8 @@ msgstr ""
 #: org/wikipediacleaner/Version.java:35
 #, java-format
 msgid ""
-"I try to keep {0} up to date with Check Wiki, but if you find any "
-"discrepancy(ies) in the detections, please let me know."
+"I try to keep {0} up to date with Check Wiki, but if you find any discrepancy"
+"(ies) in the detections, please let me know."
 msgstr ""
 "J’essaye de mettre à jour {0} avec Check Wiki, mais n'hésitez pas à "
 "m'informer si vous découvrez des incohérences."
@@ -493,6 +493,7 @@ msgid "Remove {0} tags"
 msgstr "Supprimer les balises {0}"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm079.java:106
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm079.java:117
 msgid "What description would you like to use for the external link ?"
 msgstr "Quelle description voulez-vous utiliser pour le lien externe ?"
 
@@ -503,10 +504,6 @@ msgstr "Convertir en référence"
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm079.java:113
 msgid "Add a description and convert into <ref> tag"
 msgstr "Ajouter une description et mettre entre balise <ref>"
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm079.java:117
-msgid "What description would like to use for the external link ?"
-msgstr "Quelle description voulez-vous utiliser pour le lien externe ?"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm079.java:132
 msgid "External viewer"
@@ -3498,6 +3495,9 @@ msgstr "Un nom de référence ne peut pas contenir les caractères suivants : {0
 #, java-format
 msgid "The value can''t contain any of these characters: {0}"
 msgstr "La valeur ne doit contenir aucun de ces caractères : {0}"
+
+#~ msgid "What description would like to use for the external link ?"
+#~ msgstr "Quelle description voulez-vous utiliser pour le lien externe ?"
 
 #~ msgid "Error unkown from WikiCleaner"
 #~ msgstr "Erreur inconnue de WikiCleaner"

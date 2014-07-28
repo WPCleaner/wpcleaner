@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2014-07-27 23:34+0200\n"
+"POT-Creation-Date: 2014-07-28 23:02+0200\n"
 "PO-Revision-Date: 2014-07-25 19:27+0100\n"
 "Last-Translator: Nicolas Vervelle <nvervelle@gmail.com>\n"
 "Language-Team: Indonesian <id@li.org>\n"
@@ -469,6 +469,7 @@ msgid "Remove {0} tags"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm079.java:106
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm079.java:117
 #, fuzzy
 msgid "What description would you like to use for the external link ?"
 msgstr "Deskripsi apa yang akan digunakan untuk berkas ?"
@@ -479,10 +480,6 @@ msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm079.java:113
 msgid "Add a description and convert into <ref> tag"
-msgstr ""
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm079.java:117
-msgid "What description would like to use for the external link ?"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm079.java:132
