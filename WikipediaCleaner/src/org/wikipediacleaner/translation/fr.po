@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2014-07-28 23:02+0200\n"
-"PO-Revision-Date: 2014-07-27 23:38+0100\n"
+"POT-Creation-Date: 2014-07-29 19:53+0200\n"
+"PO-Revision-Date: 2014-07-29 19:57+0100\n"
 "Last-Translator: Nicolas Vervelle <nvervelle@gmail.com>\n"
 "Language-Team: French <fr@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -42,8 +42,8 @@ msgstr ""
 #: org/wikipediacleaner/Version.java:35
 #, java-format
 msgid ""
-"I try to keep {0} up to date with Check Wiki, but if you find any discrepancy"
-"(ies) in the detections, please let me know."
+"I try to keep {0} up to date with Check Wiki, but if you find any "
+"discrepancy(ies) in the detections, please let me know."
 msgstr ""
 "J’essaye de mettre à jour {0} avec Check Wiki, mais n'hésitez pas à "
 "m'informer si vous découvrez des incohérences."
@@ -573,8 +573,8 @@ msgid "Convert into an internal link"
 msgstr "Convertir en lien interne"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm091.java:235
-msgid "To report only links to an other language"
-msgstr "Pour détecter uniquement les liens vers une autre langue"
+msgid "To report only links to other languages"
+msgstr "Pour détecter uniquement les liens vers d’autres langues"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm091.java:236
 msgid "To report only links to local wikis"
