@@ -232,7 +232,7 @@ public class CheckErrorAlgorithm091 extends CheckErrorAlgorithmBase {
   @Override
   public Map<String, String> getParameters() {
     Map<String, String> parameters = super.getParameters();
-    parameters.put("only_language", GT._("To report only links to an other language"));
+    parameters.put("only_language", GT._("To report only links to other languages"));
     parameters.put("only_local", GT._("To report only links to local wikis"));
     return parameters;
   }
