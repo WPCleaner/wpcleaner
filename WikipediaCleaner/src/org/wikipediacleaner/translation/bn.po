@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2014-07-29 19:53+0200\n"
+"POT-Creation-Date: 2014-08-08 10:29+0200\n"
 "PO-Revision-Date: 2013-11-27 14:42+0000\n"
 "Last-Translator: Aftabuzzaman <Leemon432@gmail.com>\n"
 "Language-Team: Bengali <bn@li.org>\n"
@@ -207,48 +207,52 @@ msgstr ""
 msgid "Unable to replace the characters [{0}]"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:33
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:184
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:34
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:185
 msgid "Remove all control characters"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:254
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:255
 msgid "To report control characters only in templates"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:262
-msgid "Zero-width space"
-msgstr ""
-
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:263
-msgid "Left-to-righ mark"
+msgid "Non-breaking space"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:264
-msgid "Line separator"
+msgid "Zero-width space"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:265
-msgid "Left-to-right embedding"
+msgid "Left-to-righ mark"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:266
-msgid "Pop directional formatting"
+msgid "Line separator"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:267
-msgid "Byte order mark"
+msgid "Left-to-right embedding"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:268
-msgid "Private use area"
+msgid "Pop directional formatting"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:269
-msgid "Private use area A"
+msgid "Byte order mark"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:270
+msgid "Private use area"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:271
+msgid "Private use area A"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:272
 msgid "Private use area B"
 msgstr ""
 
