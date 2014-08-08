@@ -143,6 +143,11 @@ public class CheckErrorAlgorithm037 extends CheckErrorAlgorithmBase {
         }
       }
     }
+    if (automatic) {
+      if (!CheckErrorAlgorithms.isAlgorithmActive(wiki, 6)) {
+        automatic = false;
+      }
+    }
 
     CheckErrorResult errorResult = createCheckErrorResult(
         analysis, beginIndex, endIndex);
