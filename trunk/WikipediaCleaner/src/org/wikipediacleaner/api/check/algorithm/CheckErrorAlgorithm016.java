@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
+import org.wikipediacleaner.api.check.HtmlCharacters;
 import org.wikipediacleaner.api.check.NullActionProvider;
 import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementTemplate;
@@ -160,7 +161,7 @@ public class CheckErrorAlgorithm016 extends CheckErrorAlgorithmBase {
                 StringBuilder otherReplacement = new StringBuilder();
                 int j = begin;
                 while (j < end) {
-                  if (i != j) {
+                  if ((i != j) && (contents.codePointAt(i) != contents.codePointAt(j))) {
                     otherReplacement.appendCodePoint(contents.codePointAt(j));
                   } else {
                     otherReplacement.append(replacement);
@@ -259,6 +260,7 @@ public class CheckErrorAlgorithm016 extends CheckErrorAlgorithmBase {
    * Control characters characteristics.
    */
   private enum ControlCharacter {
+    NON_BREAKING_SPACE(0x00A0, 0x00A0, false, false, GT._No("Non-breaking space")),
     ZERO_WIDTH_SPACE(0x200B, 0x200B, true, false, GT._No("Zero-width space")),
     LEFT_TO_RIGHT_MARK(0x200E, 0x200E, true, false, GT._No("Left-to-righ mark")),
     LINE_SEPARATOR(0x2028, 0x2028, true, false, GT._No("Line separator")),
@@ -311,17 +313,22 @@ public class CheckErrorAlgorithm016 extends CheckErrorAlgorithmBase {
      * @return Potential replacement.
      */
     public static List<String> getReplacements(int codePoint) {
+      List<String> replacements = null;
       // TODO: Test replacing left to right mark with HTML character
       /*if (codePoint == HtmlCharacters.LEFT_TO_RIGHT_MARK.getValue()) {
-        return Collections.singletonList("&" + HtmlCharacters.LEFT_TO_RIGHT_MARK.getName() + ";");
+        replacements = Collections.singletonList(HtmlCharacters.LEFT_TO_RIGHT_MARK.getFullEntity());
       }*/
+      if (codePoint == HtmlCharacters.SYMBOL_NON_BREAKING_SPACE.getValue()) {
+        replacements = new ArrayList<String>();
+        replacements.add(" ");
+        replacements.add(HtmlCharacters.SYMBOL_NON_BREAKING_SPACE.getFullEntity());
+      }
       if (codePoint == 0xF0FC) {
-        List<String> replacements = new ArrayList<String>();
+        replacements = new ArrayList<String>();
         replacements.add("*");
         replacements.add("✓");
-        return replacements;
       }
-      return null;
+      return replacements;
     }
   }
 }

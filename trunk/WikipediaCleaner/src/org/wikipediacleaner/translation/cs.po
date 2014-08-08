@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2014-07-29 19:53+0200\n"
+"POT-Creation-Date: 2014-08-08 10:29+0200\n"
 "PO-Revision-Date: 2014-07-29 19:55+0100\n"
 "Last-Translator: Nicolas Vervelle <nvervelle@gmail.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
@@ -42,8 +42,8 @@ msgstr ""
 #: org/wikipediacleaner/Version.java:35
 #, java-format
 msgid ""
-"I try to keep {0} up to date with Check Wiki, but if you find any "
-"discrepancy(ies) in the detections, please let me know."
+"I try to keep {0} up to date with Check Wiki, but if you find any discrepancy"
+"(ies) in the detections, please let me know."
 msgstr ""
 "Pokusím se, aby {0} s Check Wiki držel krok, ale pokud v detekcích objevíte "
 "nesoulad, dejte mi, prosím, vědět."
@@ -221,48 +221,52 @@ msgstr "Opravit DEFAULTSORT"
 msgid "Unable to replace the characters [{0}]"
 msgstr "Nelze nahradit znaky [{0}]"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:33
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:184
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:34
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:185
 msgid "Remove all control characters"
 msgstr "Odstranit všechny řídící znaky"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:254
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:255
 msgid "To report control characters only in templates"
 msgstr "Hlásit řídicí znaky pouze v šablonách"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:262
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:263
+msgid "Non-breaking space"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:264
 msgid "Zero-width space"
 msgstr "Nulová mezera"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:263
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:265
 msgid "Left-to-righ mark"
 msgstr "Řídicí znak zprava doleva"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:264
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:266
 msgid "Line separator"
 msgstr "Oddělovač řádku"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:265
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:267
 msgid "Left-to-right embedding"
 msgstr "Ukotvení řídícího znaku zprava doleva"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:266
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:268
 msgid "Pop directional formatting"
 msgstr "Vyrušení obousměrného textu"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:267
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:269
 msgid "Byte order mark"
 msgstr "Označení pořadí bajtů"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:268
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:270
 msgid "Private use area"
 msgstr "Rozsah soukromě užívaných znaků"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:269
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:271
 msgid "Private use area A"
 msgstr "Rozsah soukromě užívaných znaků A"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:270
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:272
 msgid "Private use area B"
 msgstr "Rozsah soukromě užívaných znaků B"
 

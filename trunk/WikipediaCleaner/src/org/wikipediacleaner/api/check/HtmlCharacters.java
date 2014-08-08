@@ -472,6 +472,16 @@ public enum HtmlCharacters {
   }
 
   /**
+   * @return Full entity in HTML format.
+   */
+  public String getFullEntity() {
+    if (name != null) {
+      return "&" + name + ";";
+    }
+    return null;
+  }
+
+  /**
    * @return Entity value;
    */
   public char getValue() {
