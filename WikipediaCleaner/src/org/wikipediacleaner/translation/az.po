@@ -15,8 +15,8 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2013-07-07 10:01+0000\n"
-"X-Generator: Launchpad (build 16696)\n"
+"X-Launchpad-Export-Date: 2014-08-09 12:03+0000\n"
+"X-Generator: Launchpad (build 17156)\n"
 
 #: org/wikipediacleaner/Version.java:31
 msgid "The Check Wiki project has evolved a lot recently."
@@ -37,8 +37,8 @@ msgstr ""
 #: org/wikipediacleaner/Version.java:35
 #, java-format
 msgid ""
-"I try to keep {0} up to date with Check Wiki, but if you find any discrepancy"
-"(ies) in the detections, please let me know."
+"I try to keep {0} up to date with Check Wiki, but if you find any "
+"discrepancy(ies) in the detections, please let me know."
 msgstr ""
 
 #: org/wikipediacleaner/Version.java:37
@@ -122,9 +122,8 @@ msgid "Updating page {0}"
 msgstr "{0} səhifə yenilənir"
 
 #: org/wikipediacleaner/api/check/CheckError.java:337
-#, fuzzy
 msgid "No available description"
-msgstr "Alternativ açıqlama əlavə et..."
+msgstr ""
 
 #: org/wikipediacleaner/api/check/CheckError.java:342
 #, java-format
@@ -365,9 +364,8 @@ msgid ""
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:50
-#, fuzzy
 msgid "Check all links to other language"
-msgstr "Başlığlara olan bütün linkləri sil"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:121
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm091.java:141
@@ -400,9 +398,9 @@ msgstr ""
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:175
 msgid ""
 "A template that can be used instead of the link to an other language. It "
-"must be specified as: <template name>|<param name for local page name>|"
-"<param name for code of other language>|<param name for page name in other "
-"language>|<param name for displayed text>"
+"must be specified as: <template name>|<param name for local page "
+"name>|<param name for code of other language>|<param name for page name in "
+"other language>|<param name for displayed text>"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:257
@@ -542,9 +540,8 @@ msgid "Convert into an internal link"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm091.java:235
-#, fuzzy
 msgid "To report only links to other languages"
-msgstr "Başlığlara olan bütün linkləri sil"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm091.java:236
 msgid "To report only links to local wikis"
@@ -963,7 +960,8 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:205
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:611
 #: org/wikipediacleaner/gui/swing/bot/BotToolsWindow.java:89
-msgid "On some Wikipedia projects, you may need the bot status for doing this."
+msgid ""
+"On some Wikipedia projects, you may need the bot status for doing this."
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:206
@@ -1482,9 +1480,8 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:652
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:205
-#, fuzzy
 msgid "Remove from list"
-msgstr "Siyahıdı sınmaları ləğv et"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:678
 msgid "Search in titles"
@@ -1672,7 +1669,8 @@ msgid "Links to {0}"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1430
-msgid "You must input a page name for retrieving the list of category members"
+msgid ""
+"You must input a page name for retrieving the list of category members"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1448
@@ -2204,9 +2202,8 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/action/ActionDispose.java:37
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:120
-#, fuzzy
 msgid "Close"
-msgstr "Teqi bağla"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/action/ActionFullAnalysis.java:262
 msgid "You must input a page name for running a full analysis"
@@ -2387,9 +2384,9 @@ msgid "Checking for errors n°{0}"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/bot/AutomaticCWWorker.java:170
-#, fuzzy, java-format
+#, java-format
 msgid "Analyzing page {0}"
-msgstr "{0} səhifə yenilənir"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/bot/AutomaticCWWorker.java:226
 #, java-format
@@ -2406,7 +2403,8 @@ msgstr[1] ""
 #: org/wikipediacleaner/gui/swing/bot/AutomaticCWWorker.java:269
 #, java-format
 msgid "{0} page has been marked as fixed for the selected algorithms"
-msgid_plural "{0} pages have been marked as fixed for the selected algorithms"
+msgid_plural ""
+"{0} pages have been marked as fixed for the selected algorithms"
 msgstr[0] ""
 msgstr[1] ""
 
@@ -2490,9 +2488,8 @@ msgid "Update existing disambiguation warning messages"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/bot/GeneralToolsPanel.java:118
-#, fuzzy
 msgid "Update ISBN warning messages"
-msgstr "{0} səhifə yenilənir"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/bot/GeneralToolsPanel.java:127
 msgid "List ISBN errors"
@@ -2735,7 +2732,8 @@ msgid "Create disambiguation warning on talk page (in main namespace)"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/AnalysisOptionsPanel.java:86
-msgid "Create disambiguation warning on talk page (in encyclopedic namespaces)"
+msgid ""
+"Create disambiguation warning on talk page (in encyclopedic namespaces)"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/AnalysisOptionsPanel.java:93
@@ -2747,7 +2745,8 @@ msgid "Update disambiguation warning on talk page (in main namespace)"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/AnalysisOptionsPanel.java:107
-msgid "Update disambiguation warning on talk page (in encyclopedic namespaces)"
+msgid ""
+"Update disambiguation warning on talk page (in encyclopedic namespaces)"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/AnalysisOptionsPanel.java:114
@@ -3303,9 +3302,9 @@ msgid "Removing ISBN warning - {0}"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/worker/UpdateISBNWarningTools.java:260
-#, fuzzy, java-format
+#, java-format
 msgid "Updating ISBN warning - {0}"
-msgstr "{0} səhifə yenilənir"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/worker/UpdateISBNWarningWorker.java:187
 #, java-format
@@ -3349,11 +3348,12 @@ msgstr ""
 msgid "The value can''t contain any of these characters: {0}"
 msgstr ""
 
-#~ msgid "Error unkown from WikiCleaner"
-#~ msgstr "WikiCleaner-in bilmədiyi Xəta"
-
+#, java-format
 #~ msgid "Error {0} detected: Waiting and retrying"
 #~ msgstr "Xəta{0} aşkarlanmışdır: Gözlədikdən sonra yenidən sınanacaq"
+
+#~ msgid "Error unkown from WikiCleaner"
+#~ msgstr "WikiCleaner-in bilmədiyi Xəta"
 
 #~ msgid "Fix all <br/> tags"
 #~ msgstr "Bütün <br/> teqlərini düzəlt"

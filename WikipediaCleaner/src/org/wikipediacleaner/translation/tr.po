@@ -15,8 +15,8 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2013-07-07 10:01+0000\n"
-"X-Generator: Launchpad (build 16696)\n"
+"X-Launchpad-Export-Date: 2014-08-09 12:03+0000\n"
+"X-Generator: Launchpad (build 17156)\n"
 
 #: org/wikipediacleaner/Version.java:31
 msgid "The Check Wiki project has evolved a lot recently."
@@ -37,8 +37,8 @@ msgstr ""
 #: org/wikipediacleaner/Version.java:35
 #, java-format
 msgid ""
-"I try to keep {0} up to date with Check Wiki, but if you find any discrepancy"
-"(ies) in the detections, please let me know."
+"I try to keep {0} up to date with Check Wiki, but if you find any "
+"discrepancy(ies) in the detections, please let me know."
 msgstr ""
 
 #: org/wikipediacleaner/Version.java:37
@@ -187,15 +187,13 @@ msgid "Properly end the comment"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm005.java:96
-#, fuzzy
 msgid "Merge comments"
-msgstr "Açıklamalar"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm005.java:99
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm005.java:103
-#, fuzzy
 msgid "Uncomment"
-msgstr "Açıklama"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm006.java:32
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm088.java:30
@@ -400,9 +398,9 @@ msgstr ""
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:175
 msgid ""
 "A template that can be used instead of the link to an other language. It "
-"must be specified as: <template name>|<param name for local page name>|"
-"<param name for code of other language>|<param name for page name in other "
-"language>|<param name for displayed text>"
+"must be specified as: <template name>|<param name for local page "
+"name>|<param name for code of other language>|<param name for page name in "
+"other language>|<param name for displayed text>"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:257
@@ -612,9 +610,8 @@ msgid "Ask for help using {0}"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISBN.java:336
-#, fuzzy
 msgid "Add a comment"
-msgstr "Açıklama"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISBN.java:367
 #, java-format
@@ -963,7 +960,8 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:205
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:611
 #: org/wikipediacleaner/gui/swing/bot/BotToolsWindow.java:89
-msgid "On some Wikipedia projects, you may need the bot status for doing this."
+msgid ""
+"On some Wikipedia projects, you may need the bot status for doing this."
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:206
@@ -1339,9 +1337,8 @@ msgid "Link count"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:378
-#, fuzzy
 msgid "Filter namespaces"
-msgstr "İsim alanı"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:446
 #: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:496
@@ -1404,28 +1401,24 @@ msgid "Other Language"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:419
-#, fuzzy
 msgid "User name :"
-msgstr "&Kullanıcı adı :"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:434
-#, fuzzy
 msgid "Password :"
-msgstr "&Şifre :"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:456
-#, fuzzy
 msgid "Demo"
-msgstr "Kaldır"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:462
 msgid "Wiki logout"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:469
-#, fuzzy
 msgid "WPC logout"
-msgstr "&Çıkış"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:486
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:145
@@ -1442,9 +1435,8 @@ msgstr "Seçenekler"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:500
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:185
-#, fuzzy
 msgid "System options"
-msgstr "Genel seçenekler"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:507
 msgid "Reload system options"
@@ -1540,9 +1532,8 @@ msgid "With many disambiguation links"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:803
-#, fuzzy
 msgid "Project Check Wikipedia"
-msgstr "Diğer Wikipedia"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:812
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1551
@@ -1678,7 +1669,8 @@ msgid "Links to {0}"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1430
-msgid "You must input a page name for retrieving the list of category members"
+msgid ""
+"You must input a page name for retrieving the list of category members"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1448
@@ -1775,9 +1767,8 @@ msgid "Analysis - {0}"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:399
-#, fuzzy
 msgid "Insert text"
-msgstr "Metin bul"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:410
 msgid "Delete page"
@@ -1926,9 +1917,8 @@ msgstr "&Tekrar Yükle"
 
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:433
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:180
-#, fuzzy
 msgid "Send"
-msgstr "&Gönder"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:450
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:452
@@ -1948,9 +1938,8 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:501
 #: org/wikipediacleaner/gui/swing/options/OptionsWindow.java:132
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:190
-#, fuzzy
 msgid "Validate"
-msgstr "&Doğrula"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:548
 msgid "Automatic comment"
@@ -2110,14 +2099,12 @@ msgid "Save list"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/PageListWindow.java:311
-#, fuzzy
 msgid "Remove page"
-msgstr "Kaldır"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/PageListWindow.java:318
-#, fuzzy
 msgid "Add page"
-msgstr "Sayfa analizi"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/PageListWindow.java:391
 msgid "Articles with links to disambiguation pages"
@@ -2215,9 +2202,8 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/action/ActionDispose.java:37
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:120
-#, fuzzy
 msgid "Close"
-msgstr "&Kapat"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/action/ActionFullAnalysis.java:262
 msgid "You must input a page name for running a full analysis"
@@ -2398,9 +2384,9 @@ msgid "Checking for errors n°{0}"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/bot/AutomaticCWWorker.java:170
-#, fuzzy, java-format
+#, java-format
 msgid "Analyzing page {0}"
-msgstr "Sayfa analizi"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/bot/AutomaticCWWorker.java:226
 #, java-format
@@ -2417,7 +2403,8 @@ msgstr[1] ""
 #: org/wikipediacleaner/gui/swing/bot/AutomaticCWWorker.java:269
 #, java-format
 msgid "{0} page has been marked as fixed for the selected algorithms"
-msgid_plural "{0} pages have been marked as fixed for the selected algorithms"
+msgid_plural ""
+"{0} pages have been marked as fixed for the selected algorithms"
 msgstr[0] ""
 msgstr[1] ""
 
@@ -2481,9 +2468,8 @@ msgid "Number of pages:"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:168
-#, fuzzy
 msgid "Comment:"
-msgstr "Açıklama"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:194
 msgid "Mark errors already fixed"
@@ -2746,7 +2732,8 @@ msgid "Create disambiguation warning on talk page (in main namespace)"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/AnalysisOptionsPanel.java:86
-msgid "Create disambiguation warning on talk page (in encyclopedic namespaces)"
+msgid ""
+"Create disambiguation warning on talk page (in encyclopedic namespaces)"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/AnalysisOptionsPanel.java:93
@@ -2758,7 +2745,8 @@ msgid "Update disambiguation warning on talk page (in main namespace)"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/AnalysisOptionsPanel.java:107
-msgid "Update disambiguation warning on talk page (in encyclopedic namespaces)"
+msgid ""
+"Update disambiguation warning on talk page (in encyclopedic namespaces)"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/AnalysisOptionsPanel.java:114
@@ -2770,19 +2758,16 @@ msgid "Show disambiguation pages"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/AnalysisOptionsPanel.java:128
-#, fuzzy
 msgid "Show missing pages"
-msgstr "Göster& Diğer sayfalar"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/AnalysisOptionsPanel.java:135
-#, fuzzy
 msgid "Show redirect pages"
-msgstr "Göster& Diğer sayfalar"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/AnalysisOptionsPanel.java:142
-#, fuzzy
 msgid "Show other pages"
-msgstr "Göster& Diğer sayfalar"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/AnalysisOptionsPanel.java:177
 msgid "Hide window when sending"
@@ -3083,9 +3068,8 @@ msgid "Formatting"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/OptionsWindow.java:103
-#, fuzzy
 msgid "Shortcuts"
-msgstr "Sırala"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/OptionsWindow.java:106
 msgid "Debug"
@@ -3093,9 +3077,8 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/OptionsWindow.java:124
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:110
-#, fuzzy
 msgid "Apply"
-msgstr "&Uygula"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/OptionsWindow.java:144
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:175
@@ -3107,9 +3090,8 @@ msgid "Shortcut options (restart needed)"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:160
-#, fuzzy
 msgid "Logout"
-msgstr "&Çıkış"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:229
 msgid "Press key for shortcut or ESC to cancel"
@@ -3366,9 +3348,17 @@ msgstr ""
 msgid "The value can''t contain any of these characters: {0}"
 msgstr ""
 
-#, fuzzy
-#~ msgid "System Options"
-#~ msgstr "Seçenekler"
+#~ msgid "&Close"
+#~ msgstr "&Kapat"
+
+#~ msgid "&Login"
+#~ msgstr "&Giriş"
+
+#~ msgid "&Password :"
+#~ msgstr "&Şifre :"
+
+#~ msgid "&User name :"
+#~ msgstr "&Kullanıcı adı :"
 
 #~ msgid "&Wikipedia"
 #~ msgstr "&Wikipedia"
@@ -3376,8 +3366,14 @@ msgstr ""
 #~ msgid "Lan&guage"
 #~ msgstr "&Lisan"
 
-#~ msgid "&Login"
-#~ msgstr "&Giriş"
+#~ msgid "L&ogout"
+#~ msgstr "&Çıkış"
+
+#~ msgid "&Apply"
+#~ msgstr "&Uygula"
+
+#~ msgid "&Send"
+#~ msgstr "&Gönder"
 
 #~ msgid "Search"
 #~ msgstr "Arama"
