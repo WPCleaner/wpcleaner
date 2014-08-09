@@ -149,11 +149,11 @@ public class CheckErrorAlgorithm016 extends CheckErrorAlgorithmBase {
           control = ControlCharacter.getControlCharacter(codePoint);
           if (control == null) {
             replacementB.appendCodePoint(codePoint);
+            unsafeCharacter = (automaticChars.indexOf(codePoint) < 0);
           } else {
             if (!control.removable) {
               replacementB.appendCodePoint(codePoint);
             }
-            unsafeCharacter = (automaticChars.indexOf(codePoint) < 0);
             checkUnsafe = !control.removable || !control.safe;
             List<String> replacements = ControlCharacter.getReplacements(codePoint);
             if (replacements != null) {
