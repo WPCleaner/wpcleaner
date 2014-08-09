@@ -186,7 +186,7 @@ public class CheckErrorAlgorithm016 extends CheckErrorAlgorithmBase {
               automatic);
         }
         for (String otherReplacement : otherReplacements) {
-          if (!automatic &&
+          if ((!automatic || replacement.equals(original)) &&
               !otherReplacement.equals(original) &&
               !otherReplacement.equals(replacement)) {
             errorResult.addReplacement(otherReplacement);
