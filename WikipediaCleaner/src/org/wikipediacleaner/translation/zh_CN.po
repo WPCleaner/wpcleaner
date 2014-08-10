@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2014-08-10 12:57+0200\n"
+"POT-Creation-Date: 2014-08-10 19:58+0200\n"
 "PO-Revision-Date: 2014-07-29 00:55+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Chinese (Simplified) <zh_CN@li.org>\n"
@@ -346,6 +346,17 @@ msgstr ""
 msgid "Templates that can be used to replace {0} tags"
 msgstr "可以用来代替{0}标签的模板"
 
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm062.java:151
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm084.java:105
+#, java-format
+msgid "Add {0}"
+msgstr "添加{0}"
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm062.java:152
+#, fuzzy, java-format
+msgid "Remove {0}"
+msgstr "移除{0}标签"
+
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm064.java:30
 msgid "Modify all internal links"
 msgstr "修改所有的内部链接"
@@ -509,11 +520,6 @@ msgstr "几个<ref>标签共享相同的内容，但没有被赋予一个名称�
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm081.java:367
 msgid "What name do you want to use for this <ref> tag ?"
 msgstr ""
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm084.java:105
-#, java-format
-msgid "Add {0}"
-msgstr "添加{0}"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm084.java:108
 msgid "Delete section"
@@ -1526,7 +1532,7 @@ msgid "Preload disambiguations pages"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:784
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1498
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1526
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:125
 msgid "Current disambiguation list"
 msgstr ""
@@ -1540,7 +1546,7 @@ msgid "Project Check Wikipedia"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:812
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1551
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1579
 msgid "Help requested on..."
 msgstr ""
 
@@ -1562,13 +1568,13 @@ msgid "Local Watch list"
 msgstr "本地监视列表"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:858
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1794
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1822
 msgid "Watch list"
 msgstr "监视列表"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:867
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1802
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1867
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1830
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1895
 msgid "Random pages"
 msgstr "随机页面"
 
@@ -1645,82 +1651,82 @@ msgstr ""
 msgid "Do you want to update the disambiguation warning in talk page ?"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1369
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1397
 msgid "You must input a page name for retrieving the list of internal links"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1383
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1411
 #, java-format
 msgid "Internal links in {0}"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1390
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1418
 msgid "You must input a page name"
 msgstr "您必须输入一个页面名称"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1398
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1426
 #, java-format
 msgid "Search results for {0}"
 msgstr "{0}的搜索结果"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1406
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1434
 msgid "You must input a page name for retrieving the list of backlinks"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1422
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1450
 #, java-format
 msgid "Links to {0}"
 msgstr "链接到{0}"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1430
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1458
 msgid "You must input a page name for retrieving the list of category members"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1448
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1476
 #, java-format
 msgid "Category members of {0}"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1456
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1484
 msgid ""
 "You must input a page name for retrieving the list of page it is embedded in"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1474
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1502
 #, java-format
 msgid "Template {0} embedded in"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1523
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1551
 msgid "Pages with many disambiguation links"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1564
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1592
 msgid "What abuse filter are you interested in?"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1578
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1606
 #, java-format
 msgid "Hits for filter {0}"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1638
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1666
 msgid "All disambiguations pages"
 msgstr "所有的消歧义页"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1780
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1808
 msgid "Local watch list"
 msgstr "本地监视列表"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1806
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1834
 msgid "Random redirect pages"
 msgstr "随机重定向页"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1838
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1866
 msgid "How many pages do you want?"
 msgstr "您想要多少页面？"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1850
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1878
 #, java-format
 msgid "The number of pages must be between {0} and {1}"
 msgstr "必须为介于{0}与{1}之间的数字"
@@ -3167,34 +3173,42 @@ msgstr ""
 msgid "Adding comment"
 msgstr ""
 
+#: org/wikipediacleaner/gui/swing/worker/PageListWorker.java:82
+msgid "Articles in main namespace"
+msgstr ""
+
 #: org/wikipediacleaner/gui/swing/worker/PageListWorker.java:83
-msgid "Pages with missing templates"
+msgid "Articles associated to talk pages"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/worker/PageListWorker.java:84
+msgid "Pages with missing templates"
+msgstr ""
+
+#: org/wikipediacleaner/gui/swing/worker/PageListWorker.java:85
 msgid "Protected titles with links from articles"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/worker/PageListWorker.java:161
+#: org/wikipediacleaner/gui/swing/worker/PageListWorker.java:162
 msgid ""
 "You have loaded the list of all disambiguation pages to speed up page "
 "analysis.\n"
 "Do you want to display the list of all disambiguation pages ?"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/worker/PageListWorker.java:461
+#: org/wikipediacleaner/gui/swing/worker/PageListWorker.java:474
 msgid "Retrieving list of missing templates"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/worker/PageListWorker.java:466
+#: org/wikipediacleaner/gui/swing/worker/PageListWorker.java:479
 msgid "Checking that the templates are still missing"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/worker/PageListWorker.java:492
+#: org/wikipediacleaner/gui/swing/worker/PageListWorker.java:505
 msgid "Retrieving list of protected titles"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/worker/PageListWorker.java:498
+#: org/wikipediacleaner/gui/swing/worker/PageListWorker.java:511
 msgid "Checking that protected titles have backlinks"
 msgstr ""
 

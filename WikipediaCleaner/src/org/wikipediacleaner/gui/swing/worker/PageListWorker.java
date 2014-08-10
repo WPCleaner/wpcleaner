@@ -79,7 +79,8 @@ public class PageListWorker extends BasicWorker {
     DAB_WATCH,
     DIRECT,
     EMBEDDED_IN,
-    INTERNAL_LINKS,
+    INTERNAL_LINKS_MAIN(GT._("Articles in main namespace")),
+    INTERNAL_LINKS_TALKPAGES_CONVERTED(GT._("Articles associated to talk pages")),
     MISSING_TEMPLATES(GT._("Pages with missing templates")),
     PROTECTED_TITLES(GT._("Protected titles with links from articles")),
     QUERY_PAGE,
@@ -211,8 +212,13 @@ public class PageListWorker extends BasicWorker {
         break;
 
       // List internal links in a page
-      case INTERNAL_LINKS:
-        constructInternalLinks(pages);
+      case INTERNAL_LINKS_MAIN:
+        constructInternalLinks(pages, false);
+        break;
+
+      // List internal links in a page
+      case INTERNAL_LINKS_TALKPAGES_CONVERTED:
+        constructInternalLinks(pages, true);
         break;
 
       // Retrieve list of pages with missing templates
@@ -430,9 +436,12 @@ public class PageListWorker extends BasicWorker {
    * Construct list of internal links contained in the pages.
    * 
    * @param pages List of internal links in the pages.
+   * @param convertTalkPages True if talk pages should be converted to their respective articles.
    * @throws APIException
    */
-  private void constructInternalLinks(List<Page> pages) throws APIException {
+  private void constructInternalLinks(
+      List<Page> pages,
+      boolean convertTalkPages) throws APIException {
     for (String dabList : elementNames) {
       Page page = DataManager.getPage(getWikipedia(), dabList, null, null, null);
       MediaWiki mw = MediaWiki.getMediaWikiAccess(this);
@@ -440,10 +449,14 @@ public class PageListWorker extends BasicWorker {
       Iterator<Page> iter = page.getLinks().iterator();
       while (iter.hasNext()) {
         Page link = iter.next();
-        if ((link != null) &&
-            (link.isInMainNamespace()) &&
-            (!pages.contains(link))) {
-          pages.add(link);
+        if (link != null) {
+          if (convertTalkPages && !link.isArticle()) {
+            link = link.getArticlePage();
+          }
+          if ((link.isInMainNamespace()) &&
+              (!pages.contains(link))) {
+            pages.add(link);
+          }
         }
       }
     }

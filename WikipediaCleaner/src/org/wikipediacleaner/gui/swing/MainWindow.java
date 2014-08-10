@@ -1362,12 +1362,40 @@ public class MainWindow
   }
 
   /**
-   * Action called when Internal Links button is pressed.
+   * Action called when Internal links button is pressed.
    */
   public void actionInternalLinks() {
+    // Create menu for internal links
+    JPopupMenu menu = new JPopupMenu();
+    addItemInInternalLinks(menu, PageListWorker.Mode.INTERNAL_LINKS_MAIN);
+    addItemInInternalLinks(menu, PageListWorker.Mode.INTERNAL_LINKS_TALKPAGES_CONVERTED);
+    menu.show(
+        buttonInternalLinks,
+        0,
+        buttonInternalLinks.getHeight());
+  }
+
+  /**
+   * Add an item to the generate lists menu.
+   * 
+   * @param menu Menu.
+   * @param mode List to be generated.
+   */
+  private void addItemInInternalLinks(JPopupMenu menu, PageListWorker.Mode mode) {
+    JMenuItem item = Utilities.createJMenuItem(mode.getTitle(), true);
+    item.setActionCommand(mode.name());
+    item.addActionListener(EventHandler.create(
+        ActionListener.class, this, "actionInternalLinks", "actionCommand"));
+    menu.add(item);
+  }
+
+  /**
+   * Action called when Internal Links button is pressed.
+   */
+  public void actionInternalLinks(String mode) {
     String pageName = checkPagename(GT._(
         "You must input a page name for retrieving the list of internal links"));
-    if (pageName == null) {
+    if ((pageName == null) || (mode == null)) {
       return;
     }
     Configuration config = Configuration.getConfiguration();
@@ -1379,7 +1407,7 @@ public class MainWindow
     new PageListWorker(
         getWikipedia(), this, null,
         Collections.singletonList(pageName),
-        PageListWorker.Mode.INTERNAL_LINKS, false,
+        PageListWorker.Mode.valueOf(mode), false,
         GT._("Internal links in {0}", pageName)).start();
   }
 
@@ -1494,7 +1522,7 @@ public class MainWindow
     new PageListWorker(
         wikipedia, this, null,
         currentDabList,
-        PageListWorker.Mode.INTERNAL_LINKS, false,
+        PageListWorker.Mode.INTERNAL_LINKS_MAIN, false,
         GT._("Current disambiguation list")).start();
   }
 
