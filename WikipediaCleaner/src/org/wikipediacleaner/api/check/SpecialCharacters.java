@@ -35,7 +35,7 @@ public class SpecialCharacters {
   private final static String authorizedCharacters =
     "abcdefghijklmnopqrstuvwxyz" +
     "ABCDEFGHIJKLMNOPQRSTUVWXYZ" +
-    " 0123456789-:,.!?'&#/()*";
+    " 0123456789-:,.!?'#/()*";
 
   /**
    * Characters authorized for specific Wiki. 
@@ -184,6 +184,9 @@ public class SpecialCharacters {
     addReplacements(EnumWikipedia.EL, "Ό", "Ο");
     addReplacements(EnumWikipedia.EL, "Ύ", "Υ");
     addReplacements(EnumWikipedia.EL, "Ώ", "Ω");
+
+    // Specific configuration for EN
+    addReplacements(EnumWikipedia.EN, "&", "And");
 
     // Specific configuration for ES
     addReplacements(EnumWikipedia.ES, "Ñ", "Nzz");
