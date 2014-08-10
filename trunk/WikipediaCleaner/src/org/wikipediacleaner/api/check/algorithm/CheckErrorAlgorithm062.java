@@ -16,6 +16,7 @@ import org.wikipediacleaner.api.data.PageElementComment;
 import org.wikipediacleaner.api.data.PageElementExternalLink;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.PageElementTemplate;
+import org.wikipediacleaner.i18n.GT;
 
 
 /**
@@ -145,6 +146,10 @@ public class CheckErrorAlgorithm062 extends CheckErrorAlgorithmBase {
             CheckErrorResult errorResult = createCheckErrorResult(
                 analysis,
                 currentIndex, currentIndex + prefix.length());
+            errorResult.addReplacement(
+                "http://" + analysis.getContents().substring(currentIndex, currentIndex + prefix.length()),
+                GT._("Add {0}", "http://"));
+            errorResult.addReplacement("", GT._("Remove {0}", prefix));
             errors.add(errorResult);
           }
         }
