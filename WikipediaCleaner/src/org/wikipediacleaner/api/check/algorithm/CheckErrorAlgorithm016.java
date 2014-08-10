@@ -152,21 +152,41 @@ public class CheckErrorAlgorithm016 extends CheckErrorAlgorithmBase {
             unsafeCharacter = (automaticChars.indexOf(codePoint) < 0);
           } else {
             if (!control.removable) {
-              replacementB.appendCodePoint(codePoint);
+              int replaceBy = 0;
+              if (control == ControlCharacter.NON_BREAKING_SPACE) {
+                if ((i > 0) && (contents.codePointBefore(i) == '«')) {
+                  replaceBy = ' ';
+                }
+                int next = i + Character.charCount(codePoint);
+                if (next < end) {
+                  int codePointAfter = contents.codePointAt(next);
+                  if ((codePointAfter == '»') || (codePointAfter == ':')) {
+                    replaceBy = ' ';
+                  }
+                }
+              }
+
+              if (replaceBy == 0) {
+                replacementB.appendCodePoint(codePoint);
+                checkUnsafe = true;
+              } else {
+                replacementB.appendCodePoint(replaceBy);
+              }
             }
-            checkUnsafe = !control.removable || !control.safe;
+            checkUnsafe |= !control.safe;
             List<String> replacements = ControlCharacter.getReplacements(codePoint);
             if (replacements != null) {
               for (String replacement : replacements) {
                 StringBuilder otherReplacement = new StringBuilder();
                 int j = begin;
                 while (j < end) {
-                  if ((i != j) && (contents.codePointAt(i) != contents.codePointAt(j))) {
-                    otherReplacement.appendCodePoint(contents.codePointAt(j));
+                  int codePointJ = contents.codePointAt(j);
+                  if ((i != j) && (codePoint != codePointJ)) {
+                    otherReplacement.appendCodePoint(codePointJ);
                   } else {
                     otherReplacement.append(replacement);
                   }
-                  j += Character.charCount(codePoint);
+                  j += Character.charCount(codePointJ);
                 }
                 if (!otherReplacements.contains(otherReplacement.toString())) {
                   otherReplacements.add(otherReplacement.toString());
@@ -260,7 +280,7 @@ public class CheckErrorAlgorithm016 extends CheckErrorAlgorithmBase {
    * Control characters characteristics.
    */
   private enum ControlCharacter {
-    NON_BREAKING_SPACE(0x00A0, 0x00A0, false, false, GT._No("Non-breaking space")),
+    NON_BREAKING_SPACE(0x00A0, 0x00A0, false, true, GT._No("Non-breaking space")),
     ZERO_WIDTH_SPACE(0x200B, 0x200B, true, false, GT._No("Zero-width space")),
     LEFT_TO_RIGHT_MARK(0x200E, 0x200E, true, false, GT._No("Left-to-righ mark")),
     LINE_SEPARATOR(0x2028, 0x2028, true, false, GT._No("Line separator")),
