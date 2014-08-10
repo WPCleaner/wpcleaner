@@ -506,7 +506,7 @@ public class AutomaticFixingWindow extends OnePageWindow {
     constraints.gridx = 0;
 
     // Replacement text
-    JLabel labelReplacement = Utilities.createJLabel(GT._("Text that should be used as replacement"));
+    JLabel labelReplacement = Utilities.createJLabel(GT._("Text to be used as a replacement"));
     constraints.weightx = 0;
     panel.add(labelReplacement, constraints);
     constraints.gridx++;
