@@ -11,6 +11,7 @@ import java.util.Collection;
 import java.util.List;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
+import org.wikipediacleaner.api.check.CheckErrorResult.ErrorLevel;
 import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementTag;
 
@@ -46,6 +47,7 @@ public class CheckErrorAlgorithm094 extends CheckErrorAlgorithmBase {
     if (refTags == null) {
       return result;
     }
+    String contents = analysis.getContents();
     for (PageElementTag tag : refTags) {
       if (!tag.isFullTag() && !tag.isComplete()) {
         if (errors == null) {
@@ -57,6 +59,21 @@ public class CheckErrorAlgorithm094 extends CheckErrorAlgorithmBase {
         CheckErrorResult errorResult = createCheckErrorResult(
             analysis, beginIndex, endIndex);
         errors.add(errorResult);
+      } else if (tag.isEndTag()) {
+        int beginIndex = tag.getBeginIndex();
+        int endIndex = tag.getEndIndex();
+        if ((contents.charAt(endIndex - 1) == '>') && (contents.charAt(endIndex - 2) == ' ')) {
+          if (errors == null) {
+            return true;
+          }
+          result = true;
+          CheckErrorResult errorResult = createCheckErrorResult(
+              analysis, beginIndex, endIndex, ErrorLevel.WARNING);
+          errorResult.addReplacement(
+              PageElementTag.createTag(PageElementTag.TAG_WIKI_REF, true, false),
+              true);
+          errors.add(errorResult);
+        }
       }
     }
 
