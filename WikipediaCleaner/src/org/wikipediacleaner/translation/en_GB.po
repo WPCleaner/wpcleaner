@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2014-08-10 19:58+0200\n"
-"PO-Revision-Date: 2014-08-10 13:00+0100\n"
+"POT-Creation-Date: 2014-08-11 00:16+0200\n"
+"PO-Revision-Date: 2014-08-11 00:30+0100\n"
 "Last-Translator: Nicolas Vervelle <nvervelle@gmail.com>\n"
 "Language-Team: English (United Kingdom) <en_GB@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -42,11 +42,11 @@ msgstr ""
 #: org/wikipediacleaner/Version.java:35
 #, java-format
 msgid ""
-"I try to keep {0} up to date with Check Wiki, but if you find any discrepancy"
-"(ies) in the detections, please let me know."
+"I try to keep {0} up to date with Check Wiki, but if you find any "
+"discrepancy(ies) in the detections, please let me know."
 msgstr ""
-"I try to keep {0} up to date with Check Wiki, but if you find any discrepancy"
-"(ies) in the detections, please let me know."
+"I try to keep {0} up to date with Check Wiki, but if you find any "
+"discrepancy(ies) in the detections, please let me know."
 
 #: org/wikipediacleaner/Version.java:37
 #, java-format
@@ -1073,7 +1073,7 @@ msgid "!!! WARNING !!!"
 msgstr "!!! WARNING !!!"
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:609
-msgid "This function will do all the replacements in all selected pages."
+msgid "This function will carry out all replacements on all selected pages."
 msgstr "This function will carry out all replacements on all selected pages."
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:610

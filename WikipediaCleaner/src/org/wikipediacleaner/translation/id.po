@@ -7,16 +7,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2014-08-10 19:58+0200\n"
-"PO-Revision-Date: 2014-07-27 00:49+0000\n"
-"Last-Translator: Nicolas Vervelle <Unknown>\n"
+"POT-Creation-Date: 2014-08-11 00:16+0200\n"
+"PO-Revision-Date: 2014-08-11 00:36+0100\n"
+"Last-Translator: Nicolas Vervelle <nvervelle@gmail.com>\n"
 "Language-Team: Indonesian <id@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 "X-Launchpad-Export-Date: 2014-08-09 12:03+0000\n"
-"X-Generator: Launchpad (build 17156)\n"
+"X-Generator: Poedit 1.6.7\n"
 "Language: id\n"
 
 #: org/wikipediacleaner/Version.java:31
@@ -38,8 +38,8 @@ msgstr ""
 #: org/wikipediacleaner/Version.java:35
 #, java-format
 msgid ""
-"I try to keep {0} up to date with Check Wiki, but if you find any discrepancy"
-"(ies) in the detections, please let me know."
+"I try to keep {0} up to date with Check Wiki, but if you find any "
+"discrepancy(ies) in the detections, please let me know."
 msgstr ""
 
 #: org/wikipediacleaner/Version.java:37
@@ -53,8 +53,8 @@ msgid ""
 "WPCleaner configuration is available online, check the {0}System "
 "configuration{1}."
 msgstr ""
-"Konfigurasi WPCleaner tersedia secara online, periksa {0}Sistem konfigurasi"
-"{1}."
+"Konfigurasi WPCleaner tersedia secara online, periksa {0}Sistem "
+"konfigurasi{1}."
 
 #: org/wikipediacleaner/Version.java:43
 msgid "Please, report any other problem you find to me."
@@ -1051,7 +1051,7 @@ msgid "!!! WARNING !!!"
 msgstr "!!! PERINGATAN !!!"
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:609
-msgid "This function will do all the replacements in all selected pages."
+msgid "This function will carry out all replacements on all selected pages."
 msgstr ""
 "Fungsi ini akan melakukan pergantian pada keseluruhan halaman yang dipilih."
 
