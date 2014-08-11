@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2014-08-10 19:58+0200\n"
+"POT-Creation-Date: 2014-08-11 00:16+0200\n"
 "PO-Revision-Date: 2012-10-21 17:40+0000\n"
 "Last-Translator: Nicolas Vervelle <nvervelle@gmail.com>\n"
 "Language-Team: Danish <da@li.org>\n"
@@ -1043,7 +1043,7 @@ msgid "!!! WARNING !!!"
 msgstr "!!! ADVARSEL !!!!"
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:609
-msgid "This function will do all the replacements in all selected pages."
+msgid "This function will carry out all replacements on all selected pages."
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:610

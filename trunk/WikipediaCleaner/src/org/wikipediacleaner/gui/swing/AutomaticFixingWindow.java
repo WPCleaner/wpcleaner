@@ -606,7 +606,7 @@ public class AutomaticFixingWindow extends OnePageWindow {
       int answer = Utilities.displayYesNoWarning(
           getParentComponent(),
           GT._("!!! WARNING !!!") + "\n" +
-          GT._("This function will do all the replacements in all selected pages.") + "\n" +
+          GT._("This function will carry out all replacements on all selected pages.") + "\n" +
           GT._("It may modify a lot of pages in a short period of time.") + "\n" +
           GT._("On some Wikipedia projects, you may need the bot status for doing this.") + "\n" +
           GT._("Please, check if you need the bot status by reading the rules of Wikipedia.") + "\n" +

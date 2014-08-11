@@ -7,16 +7,17 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2014-08-10 19:58+0200\n"
-"PO-Revision-Date: 2013-07-06 19:09+0000\n"
-"Last-Translator: Nicolas Vervelle <Unknown>\n"
+"POT-Creation-Date: 2014-08-11 00:16+0200\n"
+"PO-Revision-Date: 2014-08-11 00:35+0100\n"
+"Last-Translator: Nicolas Vervelle <nvervelle@gmail.com>\n"
 "Language-Team: Hungarian <hu@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Launchpad-Export-Date: 2014-08-09 12:03+0000\n"
-"X-Generator: Launchpad (build 17156)\n"
+"X-Generator: Poedit 1.6.7\n"
+"Language: hu\n"
 
 #: org/wikipediacleaner/Version.java:31
 msgid "The Check Wiki project has evolved a lot recently."
@@ -37,8 +38,8 @@ msgstr ""
 #: org/wikipediacleaner/Version.java:35
 #, java-format
 msgid ""
-"I try to keep {0} up to date with Check Wiki, but if you find any discrepancy"
-"(ies) in the detections, please let me know."
+"I try to keep {0} up to date with Check Wiki, but if you find any "
+"discrepancy(ies) in the detections, please let me know."
 msgstr ""
 
 #: org/wikipediacleaner/Version.java:37
@@ -1042,7 +1043,7 @@ msgid "!!! WARNING !!!"
 msgstr "!!! FIGYELEM !!!"
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:609
-msgid "This function will do all the replacements in all selected pages."
+msgid "This function will carry out all replacements on all selected pages."
 msgstr "Ez a funkció mindet lecseréli az összes kiválasztott oldalon."
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:610

@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2014-08-10 19:58+0200\n"
-"PO-Revision-Date: 2014-08-10 12:59+0100\n"
+"POT-Creation-Date: 2014-08-11 00:16+0200\n"
+"PO-Revision-Date: 2014-08-11 00:24+0100\n"
 "Last-Translator: Nicolas Vervelle <nvervelle@gmail.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -42,8 +42,8 @@ msgstr ""
 #: org/wikipediacleaner/Version.java:35
 #, java-format
 msgid ""
-"I try to keep {0} up to date with Check Wiki, but if you find any discrepancy"
-"(ies) in the detections, please let me know."
+"I try to keep {0} up to date with Check Wiki, but if you find any "
+"discrepancy(ies) in the detections, please let me know."
 msgstr ""
 "Pokusím se, aby {0} s Check Wiki držel krok, ale pokud v detekcích objevíte "
 "nesoulad, dejte mi, prosím, vědět."
@@ -1073,7 +1073,7 @@ msgid "!!! WARNING !!!"
 msgstr "!!! VAROVÁNÍ !!!"
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:609
-msgid "This function will do all the replacements in all selected pages."
+msgid "This function will carry out all replacements on all selected pages."
 msgstr "Tato funkce provede všechna nahrazení na vybraných stranách."
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:610
