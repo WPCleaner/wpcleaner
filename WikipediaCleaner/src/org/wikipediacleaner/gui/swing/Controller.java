@@ -15,6 +15,7 @@ import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.gui.swing.basic.Utilities;
 import org.wikipediacleaner.gui.swing.bot.BotToolsWindow;
+import org.wikipediacleaner.gui.swing.checkwiki.CheckWikiWindow;
 import org.wikipediacleaner.gui.swing.options.OptionsWindow;
 import org.wikipediacleaner.i18n.GT;
 import org.wikipediacleaner.utils.Configuration;
@@ -146,7 +147,7 @@ public class Controller {
    * @param wikipedia Wikipedia
    */
   public static void runCheckWikiProject(EnumWikipedia wikipedia) {
-    CheckWikiProjectWindow.createCheckWikiProjectWindow(wikipedia);
+    CheckWikiWindow.createCheckWikiProjectWindow(wikipedia);
   }
 
   /**

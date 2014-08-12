@@ -5,7 +5,7 @@
  *  See README.txt file for licensing information.
  */
 
-package org.wikipediacleaner.gui.swing;
+package org.wikipediacleaner.gui.swing.checkwiki;
 
 import java.awt.Component;
 import java.awt.Dimension;
@@ -15,19 +15,14 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.font.TextAttribute;
 import java.beans.EventHandler;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.io.IOException;
 import java.io.StringReader;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -40,23 +35,19 @@ import javax.swing.Box;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
-import javax.swing.JCheckBox;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JComboBox;
-import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
 import javax.swing.JSplitPane;
 import javax.swing.JTabbedPane;
-import javax.swing.JTextField;
 import javax.swing.JToolBar;
 import javax.swing.ListSelectionModel;
 import javax.swing.ScrollPaneConstants;
@@ -65,8 +56,6 @@ import javax.swing.SwingConstants;
 import javax.swing.WindowConstants;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 
 import org.lobobrowser.html.HtmlRendererContext;
 import org.lobobrowser.html.UserAgentContext;
@@ -82,31 +71,20 @@ import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithm;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmComparator;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithms;
 import org.wikipediacleaner.api.constants.CWConfigurationError;
-import org.wikipediacleaner.api.constants.Contributions;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.constants.WPCConfigurationString;
-import org.wikipediacleaner.api.data.AutomaticFormatter;
 import org.wikipediacleaner.api.data.DataManager;
 import org.wikipediacleaner.api.data.Page;
-import org.wikipediacleaner.api.data.PageAnalysis;
-import org.wikipediacleaner.gui.swing.action.ActionExternalViewer;
+import org.wikipediacleaner.gui.swing.OnePageWindow;
 import org.wikipediacleaner.gui.swing.action.ActionFullAnalysis;
-import org.wikipediacleaner.gui.swing.action.ActionOccurrence;
 import org.wikipediacleaner.gui.swing.basic.BasicWorker;
 import org.wikipediacleaner.gui.swing.basic.DefaultBasicWorkerListener;
 import org.wikipediacleaner.gui.swing.basic.Utilities;
 import org.wikipediacleaner.gui.swing.component.CheckErrorPageListCellRenderer;
-import org.wikipediacleaner.gui.swing.component.CheckErrorPageListPopupListener;
 import org.wikipediacleaner.gui.swing.component.JCloseableTabbedPane;
 import org.wikipediacleaner.gui.swing.component.MWHtmlRendererContext;
-import org.wikipediacleaner.gui.swing.component.MWPane;
-import org.wikipediacleaner.gui.swing.component.MWPaneBasicFormatter;
-import org.wikipediacleaner.gui.swing.component.MWPaneCheckWikiFormatter;
-import org.wikipediacleaner.gui.swing.component.MWPaneCheckWikiPopupListener;
-import org.wikipediacleaner.gui.swing.component.MWPaneFormatter;
 import org.wikipediacleaner.gui.swing.worker.CheckWikiProjectWorker;
 import org.wikipediacleaner.gui.swing.worker.RetrieveContentWorker;
-import org.wikipediacleaner.gui.swing.worker.SendWorker;
 import org.wikipediacleaner.i18n.GT;
 import org.wikipediacleaner.images.EnumImageSize;
 import org.wikipediacleaner.utils.Configuration;
@@ -118,7 +96,7 @@ import org.xml.sax.SAXException;
 /**
  * Check Wiki Project window.
  */
-public class CheckWikiProjectWindow extends OnePageWindow {
+public class CheckWikiWindow extends OnePageWindow {
 
   List<CheckErrorAlgorithm> allAlgorithms;
   private List<CheckErrorAlgorithm> selectedAlgorithms;
@@ -166,7 +144,7 @@ public class CheckWikiProjectWindow extends OnePageWindow {
         "CheckWikiWindow",
         wikipedia,
         WindowConstants.DISPOSE_ON_CLOSE,
-        CheckWikiProjectWindow.class,
+        CheckWikiWindow.class,
         null);
   }
 
@@ -805,636 +783,11 @@ public class CheckWikiProjectWindow extends OnePageWindow {
    * @return Contents components.
    */
   public CheckWikiContentPanel createContentsComponents(JTabbedPane pane, Page page, CheckError error) {
-    CheckWikiContentPanel panel = new CheckWikiContentPanel(pane, page, error);
+    CheckWikiContentPanel panel = new CheckWikiContentPanel(this, pane, page, error);
     panel.initialize();
     return panel;
   }
   
-  /**
-   * Component for working on a page in the CheckWiki project.
-   */
-  private class CheckWikiContentPanel
-    extends JPanel
-    implements ActionListener, ItemListener {
-
-    private static final long serialVersionUID = 1L;
-
-    public final static String ACTION_MARK_AS_FIXED = "MARK_AS_FIXED";
-
-    JTabbedPane pane;
-    final Page page;
-    final CheckError error;
-
-    private JList listErrors;
-    private DefaultListModel modelErrors;
-    private List<CheckErrorPage> initialErrors;
-    private JTextField textComment;
-    private JCheckBox chkAutomaticComment;
-    private JButton buttonSend;
-    private JButton buttonMarkAsFixed;
-    private MWPane textPage;
-
-    /**
-     * @param page Page.
-     */
-    CheckWikiContentPanel(JTabbedPane pane, Page page, CheckError error) {
-      super(new GridBagLayout());
-      this.pane = pane;
-      this.page = page;
-      this.error = error;
-      setName(page.getTitle());
-    }
-
-    /**
-     * Initialize window.
-     */
-    void initialize() {
-
-      // Initialize constraints
-      GridBagConstraints constraints = new GridBagConstraints();
-      constraints.fill = GridBagConstraints.HORIZONTAL;
-      constraints.gridheight = 1;
-      constraints.gridwidth = 1;
-      constraints.gridx = 0;
-      constraints.gridy = 0;
-      constraints.insets = new Insets(0, 0, 0, 0);
-      constraints.ipadx = 0;
-      constraints.ipady = 0;
-      constraints.weightx = 1;
-      constraints.weighty = 0;
-
-      textPage = new MWPane(getWikipedia(), page, CheckWikiProjectWindow.this);
-
-      // Comment
-      JPanel panelComment = new JPanel(new GridBagLayout());
-      GridBagConstraints constraints2 = new GridBagConstraints();
-      constraints2.fill = GridBagConstraints.HORIZONTAL;
-      constraints2.gridheight = 1;
-      constraints2.gridwidth = 1;
-      constraints2.gridx = 0;
-      constraints2.gridy = 0;
-      constraints2.insets = new Insets(0, 0, 0, 0);
-      constraints2.ipadx = 0;
-      constraints2.ipady = 0;
-      constraints2.weightx = 0;
-      constraints2.weighty = 0;
-      chkAutomaticComment = createChkAutomaticComment(true, this);
-      panelComment.add(chkAutomaticComment, constraints2);
-      constraints2.gridx++;
-      textComment = new JTextField(getComment(null));
-      textComment.setEditable(false);
-      constraints2.weightx = 1;
-      panelComment.add(textComment, constraints2);
-      constraints2.gridx++;
-      constraints.fill = GridBagConstraints.HORIZONTAL;
-      constraints.gridwidth = 2;
-      constraints.weightx = 1;
-      constraints.weighty = 0;
-      add(panelComment, constraints);
-      constraints.gridy++;
-
-      // Buttons
-      JToolBar toolbarButtons = new JToolBar(SwingConstants.HORIZONTAL);
-      toolbarButtons.setFloatable(false);
-      ActionOccurrence.addButton(
-          toolbarButtons, textPage, ActionOccurrence.Occurrence.FIRST, true, true);
-      ActionOccurrence.addButton(
-          toolbarButtons, textPage, ActionOccurrence.Occurrence.PREVIOUS, true, true);
-      ActionOccurrence.addButton(
-          toolbarButtons, textPage, ActionOccurrence.Occurrence.NEXT, true, true);
-      ActionOccurrence.addButton(
-          toolbarButtons, textPage, ActionOccurrence.Occurrence.LAST, true, true);
-      toolbarButtons.addSeparator();
-      JButton buttonToc = createButtonToc(this, true);
-      toolbarButtons.add(buttonToc);
-      JButton buttonValidate = createButtonValidate(this, true);
-      toolbarButtons.add(buttonValidate);
-      buttonSend = createButtonSend(this, true);
-      buttonSend.setEnabled(false);
-      toolbarButtons.add(buttonSend);
-      buttonMarkAsFixed = Utilities.createJButton(
-          "gnome-dialog-apply.png", EnumImageSize.NORMAL,
-          GT._("Mark as already fixed"), false, null); // Mark as fixed
-      buttonMarkAsFixed.setEnabled(true);
-      buttonMarkAsFixed.setActionCommand(ACTION_MARK_AS_FIXED);
-      buttonMarkAsFixed.addActionListener(this);
-      toolbarButtons.add(buttonMarkAsFixed);
-      toolbarButtons.addSeparator();
-      if (Utilities.isDesktopSupported()) { // External Viewer
-        ActionExternalViewer.addButton(
-            toolbarButtons, getWikipedia(), page.getTitle(), false, true, true);
-        ActionExternalViewer.addButton(
-            toolbarButtons, getWikipedia(), page.getTitle(), ActionExternalViewer.ACTION_HISTORY, true, true);
-        toolbarButtons.addSeparator();
-      }
-      ActionFullAnalysis.addButton(
-          toolbarButtons, getWikipedia(), page.getTitle(), true, false, false);
-      constraints.fill = GridBagConstraints.HORIZONTAL;
-      constraints.gridwidth = 2;
-      constraints.weightx = 1;
-      constraints.weighty = 0;
-      add(toolbarButtons, constraints);
-      constraints.gridy++;
-
-      // Errors list
-      modelErrors = new DefaultListModel();
-      listErrors = new JList(modelErrors);
-      CheckErrorPageListCellRenderer cellRenderer = new CheckErrorPageListCellRenderer(false);
-      cellRenderer.showCountOccurence(true);
-      listErrors.setCellRenderer(cellRenderer);
-      listErrors.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-      listErrors.addListSelectionListener(new ListSelectionListener() {
-
-        public void valueChanged(ListSelectionEvent e) {
-          if (e.getValueIsAdjusting()) {
-            return;
-          }
-          actionSelectError();
-        }
-        
-      });
-      JScrollPane scrollErrors = new JScrollPane(listErrors);
-      scrollErrors.setMinimumSize(new Dimension(200, 200));
-      scrollErrors.setPreferredSize(new Dimension(200, 300));
-      scrollErrors.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-      constraints.fill = GridBagConstraints.BOTH;
-      constraints.gridwidth = 1;
-      constraints.gridx = 0;
-      constraints.weightx = 0;
-      constraints.weighty = 1;
-      add(scrollErrors, constraints);
-      constraints.gridx++;
-
-      // Page contents
-      listErrors.addMouseListener(
-          new CheckErrorPageListPopupListener(getWikipedia(), textPage, buttonValidate));
-      textPage.setEditable(true);
-      textPage.addPropertyChangeListener(
-          MWPane.PROPERTY_MODIFIED,
-          new PropertyChangeListener() {
-  
-            /* (non-Javadoc)
-             * @see java.beans.PropertyChangeListener#propertyChange(java.beans.PropertyChangeEvent)
-             */
-            public void propertyChange(@SuppressWarnings("unused") PropertyChangeEvent evt) {
-              updateComponentState();
-            }
-            
-          });
-      textPage.setPopupListener(new MWPaneCheckWikiPopupListener(
-          getWikipedia(), CheckWikiProjectWindow.this));
-      JComponent scrollContents = MWPane.createComplexPane(textPage);
-      scrollContents.setMinimumSize(new Dimension(100, 100));
-      constraints.fill = GridBagConstraints.BOTH;
-      constraints.weightx = 1;
-      constraints.weighty = 1;
-      //panel.add(scrollPage, constraints);
-      add(scrollContents, constraints);
-      constraints.gridy++;
-    }
-
-    /**
-     * Update component state.
-     */
-    public void updateComponentState() {
-      if (buttonSend != null) {
-        buttonSend.setEnabled((textPage != null) && (textPage.isModified()));
-      }
-      if (buttonMarkAsFixed != null) {
-        buttonMarkAsFixed.setEnabled(error != null);
-      }
-    }
-
-    /**
-     * Action called when a page is selected (after page is loaded).
-     */
-    @SuppressWarnings("fallthrough")
-    void actionPageSelected() {
-      if (page == null) {
-        pane.remove(this);
-        return;
-      }
-      if (Boolean.FALSE.equals(page.isExisting())) {
-        displayWarning(GT._("The page {0} doesn''t exist on Wikipedia", page.getTitle()));
-        if (error != null) {
-          error.remove(page);
-        }
-        pane.remove(this);
-        if (error != null) {
-          markPageAsFixed(error, error.getAlgorithm().getErrorNumberString(), page);
-        }
-        actionSelectErrorType();
-        return;
-      }
-      textPage.setText(page.getContents());
-      textPage.setModified(false);
-      PageAnalysis pageAnalysis = page.getAnalysis(textPage.getText(), true);
-      List<CheckErrorPage> errorsFound = CheckError.analyzeErrors(
-          allAlgorithms, pageAnalysis, false);
-      modelErrors.clear();
-      initialErrors = new ArrayList<CheckErrorPage>();
-      boolean errorFound = false;
-      int errorCount = 0;
-      if (errorsFound != null) {
-        for (CheckErrorPage tmpError : errorsFound) {
-          modelErrors.addElement(tmpError);
-          initialErrors.add(tmpError);
-          errorCount++;
-          if ((error != null) &&
-              (error.getAlgorithm() != null) &&
-              (error.getAlgorithm().getErrorNumber()== tmpError.getAlgorithm().getErrorNumber())) {
-            errorFound = true;
-          }
-        }
-      }
-      if ((error != null) && (errorFound == false) && (error.getAlgorithm().isFullDetection())) {
-        Configuration config = Configuration.getConfiguration();
-        int answer = JOptionPane.YES_OPTION;
-        if (yesAll) {
-          answer = Utilities.YES_ALL_OPTION;
-        } else if (noAll) {
-          answer = Utilities.NO_ALL_OPTION;
-        } else {
-          if (!config.getBoolean(
-              null,
-              ConfigurationValueBoolean.CHECK_MARK_AS_FIXED)) {
-            answer = displayYesNoAllWarning(GT._(
-                "The error n°{0} hasn''t been found in the page {1}.\n" +
-                "Do you want to mark it as fixed ?",
-                new Object[] { error.getAlgorithm().getErrorNumberString(), page.getTitle() }));
-          }
-        }
-        switch (answer) {
-        case Utilities.YES_ALL_OPTION:
-          yesAll = true;
-          // Go through
-        case JOptionPane.YES_OPTION:
-          if (errorCount == 0) {
-            pane.remove(this);
-          }
-          error.remove(page);
-          markPageAsFixed(error, error.getAlgorithm().getErrorNumberString(), page);
-          actionSelectErrorType();
-          if (errorCount == 0) {
-            return;
-          }
-        case Utilities.NO_ALL_OPTION:
-          noAll = true;
-          break;
-        }
-      }
-      int index = modelErrors.indexOf(listAllErrors.getSelectedItem());
-      if (index >= 0) {
-        listErrors.setSelectedIndex(index);
-      } else if (modelErrors.getSize() > 0) {
-        listErrors.setSelectedIndex(0);
-      }
-
-      // Automatic fix of some errors
-      if ((initialErrors != null) && (textPage != null)) {
-        String initialContents = textPage.getText();
-        Collection<CheckErrorAlgorithm> algorithms = new ArrayList<CheckErrorAlgorithm>();
-        for (CheckErrorPage initialError : initialErrors) {
-          algorithms.add(initialError.getAlgorithm());
-        }
-        String contents = AutomaticFormatter.tidyArticle(
-            page, initialContents, algorithms, false, null);
-        if (!contents.equals(initialContents)) {
-          textPage.changeText(contents);
-          actionValidate();
-        }
-      }
-    }
-
-    /**
-     * @return Current selected error.
-     */
-    public CheckErrorPage getSelectedError() {
-      Object selection = listErrors.getSelectedValue();
-      if (selection instanceof CheckErrorPage) {
-        return (CheckErrorPage) selection;
-      }
-      return null;
-    }
-
-    /**
-     * Action called when an error is selected. 
-     */
-    void actionSelectError() {
-      CheckErrorPage errorSelected = getSelectedError();
-      if (errorSelected == null) {
-        textPage.setFormatter(new MWPaneBasicFormatter());
-      } else {
-        CheckErrorAlgorithm algorithm = errorSelected.getAlgorithm();
-        MWPaneFormatter formatter = textPage.getFormatter();
-        if (formatter instanceof MWPaneCheckWikiFormatter) {
-          MWPaneCheckWikiFormatter cwFormatter =
-            (MWPaneCheckWikiFormatter) formatter;
-          if (!cwFormatter.isSameAlgorithm(algorithm)) {
-            formatter = new MWPaneCheckWikiFormatter(algorithm);
-            textPage.setFormatter(formatter);
-          } else {
-            textPage.resetAttributes();
-          }
-        } else {
-          formatter = new MWPaneCheckWikiFormatter(algorithm);
-          textPage.setFormatter(formatter);
-        }
-      }
-      listErrors.repaint();
-      updateComponentState();
-      displayErrorDescription();
-    }
-
-    /* (non-Javadoc)
-     * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
-     */
-    public void actionPerformed(ActionEvent e) {
-      if (e == null) {
-        return;
-      }
-
-      if (ACTION_FULL_ANALYSIS_PAGE.equals(e.getActionCommand())) {
-        Controller.runFullAnalysis(page.getTitle(), null, getWikipedia());
-      } else if (ACTION_MARK_AS_FIXED.equals(e.getActionCommand())) {
-        actionMarkAsFixed();
-      } else if (ACTION_SEND.equals(e.getActionCommand())) {
-        actionSend();
-      } else if (ACTION_TOC.equals(e.getActionCommand())) {
-        actionToc();
-      } else if (ACTION_VALIDATE.equals(e.getActionCommand())) {
-        actionValidate();
-      }
-    }
-
-    /**
-     * Mark a page as fixed. 
-     */
-    private void actionMarkAsFixed() {
-
-      // Ask for confirmation
-      if (displayYesNoWarning(GT._(
-          "Do you want to mark {0} as fixed for error n°{1}",
-          new Object[] { page.getTitle(), Integer.toString(error.getErrorNumber())})) != JOptionPane.YES_OPTION) {
-        return;
-      }
-
-      // Check if error is still present
-      PageAnalysis pageAnalysis = page.getAnalysis(textPage.getText(), true);
-      CheckErrorPage errorPage = CheckError.analyzeError(
-          error.getAlgorithm(), pageAnalysis);
-      if ((errorPage.getResults() != null) &&
-          (!errorPage.getResults().isEmpty())) {
-        String message =
-            GT.__(
-                "The error n°{0} is still found {1} time in the page.",
-                "The error n°{0} is still found {1} times in the page.",
-                errorPage.getResults().size(),
-                new Object[] { Integer.toString(error.getErrorNumber()), errorPage.getResults().size() }) +
-            "\n" +
-            GT._("Are you really sure that you want to mark it as fixed ?");
-        if (displayYesNoWarning(message) != JOptionPane.YES_OPTION) {
-          return;
-        }
-      } else if (errorPage.getErrorFound()) {
-        if (displayYesNoWarning(GT._(
-            "The error n°{0} is still found in the page.\n" +
-            "Are you really sure that you want to mark it as fixed ?",
-            Integer.toString(error.getErrorNumber()))) != JOptionPane.YES_OPTION) {
-          return;
-        }
-      } else {
-        // Check if error was initially present
-        for (int i = 0; i < modelErrors.size(); i++) {
-          if (modelErrors.elementAt(i) instanceof CheckErrorPage) {
-            CheckErrorPage tmp = (CheckErrorPage) modelErrors.elementAt(i);
-            if (tmp.getAlgorithm() == error.getAlgorithm()) {
-              displayWarning(GT._(
-                  "You have already fixed this error by modifying the page.\n" +
-                  "You should send your modifications, the page will be marked as fixed."));
-              return;
-            }
-          }
-        }
-      }
-
-      // Mark as fixed
-      error.remove(page);
-      if (!textPage.isModified()) {
-        pane.remove(CheckWikiContentPanel.this);
-      }
-      if (error.getPageCount() == 0) {
-        Configuration configuration = Configuration.getConfiguration();
-        if (!configuration.getBoolean(
-            null,
-            ConfigurationValueBoolean.CHECK_SHOW_0_ERRORS)) {
-          listAllErrors.removeItem(error);
-        }
-      }
-      actionSelectErrorType();
-      markPageAsFixed(error, error.getAlgorithm().getErrorNumberString(), page);
-    }
-
-    /**
-     * Compute comment.
-     * 
-     * @param errorsFixed Errors fixed
-     * @return Comment.
-     */
-    private String getComment(List<CheckErrorAlgorithm> errorsFixed) {
-      return getWikipedia().getCWConfiguration().getComment(errorsFixed);
-    }
-
-    /**
-     * @return Errors fixed.
-     */
-    private List<CheckErrorAlgorithm> computeErrorsFixed() {
-      final List<CheckErrorAlgorithm> errorsFixed = new ArrayList<CheckErrorAlgorithm>();
-      PageAnalysis pageAnalysis = null;
-      if (initialErrors != null) {
-        for (CheckErrorPage initialError : initialErrors) {
-          if (pageAnalysis == null) {
-            pageAnalysis = initialError.getPage().getAnalysis(textPage.getText(), true);
-          }
-          CheckErrorPage errorPage = CheckError.analyzeError(
-              initialError.getAlgorithm(), pageAnalysis);
-          if ((errorPage.getErrorFound() == false) ||
-              (errorPage.getActiveResultsCount() < initialError.getActiveResultsCount())) {
-            errorsFixed.add(initialError.getAlgorithm());
-          }
-        }
-      }
-      return errorsFixed;
-    }
-
-    /**
-     * Send page.
-     */
-    private void actionSend() {
-      // Check page text to see what errors are still present
-      final List<CheckErrorAlgorithm> errorsFixed = computeErrorsFixed();
-      updateComment(errorsFixed);
-
-      // Check that a comment is available
-      if (textComment.getText().trim().length() == 0) {
-        Utilities.displayWarning(getParent(), GT._(
-            "A comment is required for sending the page."));
-        return;
-      }
-
-      // Count contributions
-      Contributions contributions = new Contributions(getWikipedia());
-      contributions.increasePages(1);
-      for (CheckErrorAlgorithm algorithm : errorsFixed) {
-        contributions.increaseCheckWikiError(algorithm.getErrorNumber(), 1);
-      }
-
-      // Check for errors fixed about ISBN
-      boolean updateISBNWarning = false;
-      boolean createISBNWarning = false;
-      for (CheckErrorAlgorithm errorFixed : errorsFixed) {
-        int errorNumber = errorFixed.getErrorNumber();
-        if ((errorNumber == 69) ||
-            (errorNumber == 70) ||
-            (errorNumber == 71) ||
-            (errorNumber == 72) ||
-            (errorNumber == 73)) {
-          updateISBNWarning = true;
-        }
-      }
-
-      // Send page
-      final Configuration configuration = Configuration.getConfiguration();
-      SendWorker sendWorker = new SendWorker(
-          getWikipedia(), CheckWikiProjectWindow.this,
-          page, textPage.getText(), textComment.getText(),
-          configuration.getBoolean(
-              null,
-              ConfigurationValueBoolean.FORCE_WATCH),
-          false, false, updateISBNWarning, createISBNWarning,
-          contributions, errorsFixed);
-      sendWorker.setListener(new DefaultBasicWorkerListener() {
-        @Override
-        public void afterFinished(
-            @SuppressWarnings("unused") BasicWorker worker,
-            boolean ok) {
-          if (ok) {
-            // Close pane
-            pane.remove(CheckWikiContentPanel.this);
-
-            // Remove errors fixed
-            List<CheckError> errorsToBeRemoved = new ArrayList<CheckError>();
-            for (CheckErrorAlgorithm algoFixed : errorsFixed) {
-              for (int posError = 0; posError < modelAllErrors.getSize(); posError++) {
-                Object element = modelAllErrors.getElementAt(posError);
-                if (element instanceof CheckError) {
-                  final CheckError tmpError = (CheckError) element;
-                  if (tmpError.getAlgorithm().getErrorNumberString().equals(algoFixed.getErrorNumberString())) {
-                    tmpError.remove(page);
-                    if (tmpError.getPageCount() == 0) {
-                      errorsToBeRemoved.add(tmpError);
-                    }
-                  }
-                }
-              }
-            }
-            if (!configuration.getBoolean(
-                null,
-                ConfigurationValueBoolean.CHECK_SHOW_0_ERRORS)) {
-              for (CheckError tmpError : errorsToBeRemoved) {
-                listAllErrors.removeItem(tmpError);
-              }
-            }
-            actionSelectErrorType();
-          }
-        }
-      });
-      sendWorker.start();
-    }
-
-    /**
-     * Display table of contents.
-     */
-    private void actionToc() {
-      textPage.toggleToc();
-    }
-
-    /**
-     * Validate current text and recompute errors.
-     */
-    private void actionValidate() {
-      // Check for new errors
-      PageAnalysis pageAnalysis = page.getAnalysis(textPage.getText(), true);
-      List<CheckErrorPage> errorsFound = CheckError.analyzeErrors(
-          allAlgorithms, pageAnalysis, false);
-      if (errorsFound != null) {
-        for (CheckErrorPage tmpError : errorsFound) {
-          boolean errorFound = false;
-          for (int index = 0; index < modelErrors.getSize(); index++) {
-            CheckErrorPage errorModel = (CheckErrorPage) modelErrors.get(index);
-            if ((errorModel != null) &&
-                (errorModel.getAlgorithm() != null) &&
-                (errorModel.getAlgorithm().equals(tmpError.getAlgorithm()))) {
-              errorFound = true;
-              modelErrors.set(index, tmpError);
-            }
-          }
-          if (!errorFound) {
-            modelErrors.addElement(tmpError);
-          }
-        }
-      }
-      for (int index = 0; index < modelErrors.getSize(); index++) {
-        CheckErrorPage errorModel = (CheckErrorPage) modelErrors.get(index);
-        if ((errorsFound == null) || (!errorsFound.contains(errorModel))) {
-          CheckErrorPage newError = new CheckErrorPage(page, errorModel.getAlgorithm());
-          modelErrors.set(index, newError);
-        }
-      }
-
-      actionSelectError();
-      updateComment(null);
-      Object selected = listErrors.getSelectedValue();
-      if (selected instanceof CheckErrorPage) {
-        CheckErrorPage errorPage = (CheckErrorPage) selected;
-        if (!errorPage.getErrorFound()) {
-          int index = listErrors.getSelectedIndex();
-          if (index < modelErrors.getSize() - 1) {
-            listErrors.setSelectedIndex(index + 1);
-          }
-        }
-      }
-    }
-
-    /**
-     * Update automatic comment.
-     * 
-     * @param errorsFixed Errors.
-     */
-    private void updateComment(List<CheckErrorAlgorithm> errorsFixed) {
-      if ((chkAutomaticComment != null) &&
-          (textComment != null)) {
-        textComment.setEditable(!chkAutomaticComment.isSelected());
-        if (chkAutomaticComment.isSelected()) {
-          textComment.setText(getComment((errorsFixed != null) ? errorsFixed : computeErrorsFixed()));
-        }
-      }
-    }
-
-    /* (non-Javadoc)
-     * @see java.awt.event.ItemListener#itemStateChanged(java.awt.event.ItemEvent)
-     */
-    public void itemStateChanged(ItemEvent e) {
-      if ((e == null) || (e.getSource() == null)) {
-        return;
-      }
-      Object source = e.getSource();
-      if ((source == chkAutomaticComment)) {
-        updateComment(null);
-      }
-    }
-  }
-
   /* (non-Javadoc)
    * @see org.wikipediacleaner.gui.swing.PageWindow#afterFinishedReloadWorker()
    */
