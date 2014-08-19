@@ -91,7 +91,7 @@ public class SpecialCharacters {
     addReplacements("ĜĞĠĢƓǤǦǴḠ", "G");
     addReplacements("ĝğġģǥǧǵɠᶃḡ", "g");
 
-    addReplacements("ĤĦȞḢḤḦḨḪⱧ", "H");
+    addReplacements("ĤĦȞḢḤḦḨḪⱧΗ", "H");
     addReplacements("ĥħȟɦḣḥḧḩḫẖⱨ", "h");
 
     addReplacements("ÌÍÎÏĨĪĬĮİƗǏȈȊІỊ", "I");
