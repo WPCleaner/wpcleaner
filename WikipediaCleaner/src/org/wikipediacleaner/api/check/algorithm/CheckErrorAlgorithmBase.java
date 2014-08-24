@@ -561,14 +561,25 @@ public abstract class CheckErrorAlgorithmBase implements CheckErrorAlgorithm {
     Collection<PageElementTag> tags = analysis.getTags(tagName);
     if (tags != null) {
       for (PageElementTag tag : tags) {
-        if (errors == null) {
-          return true;
+        boolean shouldCount = true;
+        if (shouldCount &&
+            !PageElementTag.TAG_WIKI_NOWIKI.equalsIgnoreCase(tagName)) {
+          if (analysis.getSurroundingTag(
+              PageElementTag.TAG_WIKI_NOWIKI,
+              tag.getBeginIndex()) != null) {
+            shouldCount = false;
+          }
         }
-        result = true;
-        CheckErrorResult errorResult = createCheckErrorResult(
-            analysis,
-            tag.getBeginIndex(), tag.getEndIndex());
-        errors.add(errorResult);
+        if (shouldCount) {
+          if (errors == null) {
+            return true;
+          }
+          result = true;
+          CheckErrorResult errorResult = createCheckErrorResult(
+              analysis,
+              tag.getBeginIndex(), tag.getEndIndex());
+          errors.add(errorResult);
+        }
       }
     }
     return result;
