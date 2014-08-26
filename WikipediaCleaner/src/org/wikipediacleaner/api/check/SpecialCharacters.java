@@ -186,7 +186,8 @@ public class SpecialCharacters {
     addReplacements(EnumWikipedia.EL, "Ώ", "Ω");
 
     // Specific configuration for EN
-    addReplacements(EnumWikipedia.EN, "&", "And");
+    // TODO: Correctly handle HTML entity...
+    // addReplacements(EnumWikipedia.EN, "&", "And");
 
     // Specific configuration for ES
     addReplacements(EnumWikipedia.ES, "Ñ", "Nzz");
