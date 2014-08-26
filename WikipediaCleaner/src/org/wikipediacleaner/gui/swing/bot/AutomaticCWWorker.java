@@ -174,19 +174,21 @@ public class AutomaticCWWorker extends BasicWorker {
     api.retrieveContents(getWikipedia(), Collections.singletonList(page), true, false);
     PageAnalysis analysis = page.getAnalysis(page.getContents(), true);
 
-    // Check that robots are authorized to change this page 
-    WPCConfiguration config = getWikipedia().getConfiguration();
-    List<String[]> nobotTemplates = config.getStringArrayList(
-        WPCConfigurationStringList.NOBOT_TEMPLATES);
-    if ((nobotTemplates != null) && (!nobotTemplates.isEmpty())) {
-      for (String[] nobotTemplate : nobotTemplates) {
-        String templateName = nobotTemplate[0];
-        List<PageElementTemplate> templates = analysis.getTemplates(templateName);
-        if ((templates != null) && (!templates.isEmpty())) {
-          if (analyzeNonFixed) {
-            Controller.runFullAnalysis(page.getTitle(), null, getWikipedia());
+    // Check that robots are authorized to change this page
+    if (saveModifications) {
+      WPCConfiguration config = getWikipedia().getConfiguration();
+      List<String[]> nobotTemplates = config.getStringArrayList(
+          WPCConfigurationStringList.NOBOT_TEMPLATES);
+      if ((nobotTemplates != null) && (!nobotTemplates.isEmpty())) {
+        for (String[] nobotTemplate : nobotTemplates) {
+          String templateName = nobotTemplate[0];
+          List<PageElementTemplate> templates = analysis.getTemplates(templateName);
+          if ((templates != null) && (!templates.isEmpty())) {
+            if (analyzeNonFixed) {
+              Controller.runFullAnalysis(page.getTitle(), null, getWikipedia());
+            }
+            return;
           }
-          return;
         }
       }
     }
