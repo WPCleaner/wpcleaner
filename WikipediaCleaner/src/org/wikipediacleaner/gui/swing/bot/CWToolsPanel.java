@@ -258,7 +258,9 @@ public class CWToolsPanel extends BotToolsPanel {
     }
     List<CheckErrorAlgorithm> selectedAlgorithms = new ArrayList<CheckErrorAlgorithm>();
     for (int i = 0; i < selection.length; i++) {
-      selectedAlgorithms.add(modelCWAutomaticFixing.getAlgorithm(selection[i]));
+      CheckErrorAlgorithm algorithm = modelCWAutomaticFixing.getAlgorithm(
+          tableCWAutomaticFixing.convertRowIndexToModel(selection[i]));
+      selectedAlgorithms.add(algorithm);
     }
     int answer = window.displayYesNoWarning(BasicWindow.experimentalMessage);
     if (answer != JOptionPane.YES_OPTION) {
