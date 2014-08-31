@@ -57,12 +57,23 @@ public class CheckErrorAlgorithm042 extends CheckErrorAlgorithmBase {
       CheckErrorResult errorResult = createCheckErrorResult(
           analysis, tag.getBeginIndex(), tag.getEndIndex());
       errorResult.addReplacement(PageElementTag.createTag(
-          PageElementTag.TAG_HTML_DEL, tag.isEndTag(), tag.isFullTag()));
+          PageElementTag.TAG_HTML_DEL, tag.isEndTag(), false));
       errorResult.addReplacement(PageElementTag.createTag(
           PageElementTag.TAG_HTML_S, tag.isEndTag(), tag.isFullTag()));
       errors.add(errorResult);
     }
 
     return true;
+  }
+
+  /**
+   * Bot fixing of all the errors in the page.
+   * 
+   * @param analysis Page analysis.
+   * @return Page contents after fix.
+   */
+  @Override
+  protected String internalBotFix(PageAnalysis analysis) {
+    return fixUsingAutomaticReplacement(analysis);
   }
 }
