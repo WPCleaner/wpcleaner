@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2014-08-24 13:34+0200\n"
+"POT-Creation-Date: 2014-08-30 19:01+0200\n"
 "PO-Revision-Date: 2014-08-11 00:30+0100\n"
 "Last-Translator: Nicolas Vervelle <nvervelle@gmail.com>\n"
 "Language-Team: English (United Kingdom) <en_GB@li.org>\n"
@@ -275,7 +275,7 @@ msgstr "Private use area B"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm017.java:36
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm045.java:35
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm059.java:34
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm059.java:37
 msgid "Delete all"
 msgstr "Delete all"
 
@@ -350,6 +350,11 @@ msgstr "Remove <small> tags"
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm057.java:30
 msgid "Fix all titles"
 msgstr "Fix all titles"
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm059.java:170
+#, fuzzy
+msgid "A list of that should be ignored"
+msgstr "Text that should be replaced"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm061.java:234
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm067.java:301
@@ -2230,26 +2235,26 @@ msgstr "Checking for errors n°{0}"
 msgid "Analyzing page {0}"
 msgstr "Analysing page {0}"
 
-#: org/wikipediacleaner/gui/swing/bot/AutomaticCWWorker.java:226
+#: org/wikipediacleaner/gui/swing/bot/AutomaticCWWorker.java:228
 #, java-format
 msgid "Fixing page {0}"
 msgstr "Fixing page {0}"
 
-#: org/wikipediacleaner/gui/swing/bot/AutomaticCWWorker.java:264
+#: org/wikipediacleaner/gui/swing/bot/AutomaticCWWorker.java:266
 #, java-format
 msgid "{0} page has been modified"
 msgid_plural "{0} pages have been modified"
 msgstr[0] "{0} page has been modified"
 msgstr[1] "{0} pages have been modified"
 
-#: org/wikipediacleaner/gui/swing/bot/AutomaticCWWorker.java:269
+#: org/wikipediacleaner/gui/swing/bot/AutomaticCWWorker.java:271
 #, java-format
 msgid "{0} page has been marked as fixed for the selected algorithms"
 msgid_plural "{0} pages have been marked as fixed for the selected algorithms"
 msgstr[0] "{0} page has been marked as fixed for the selected algorithms"
 msgstr[1] "{0} pages have been marked as fixed for the selected algorithms"
 
-#: org/wikipediacleaner/gui/swing/bot/AutomaticCWWorker.java:274
+#: org/wikipediacleaner/gui/swing/bot/AutomaticCWWorker.java:276
 #, java-format
 msgid "{0} page has been marked as fixed for other algorithms"
 msgid_plural "{0} pages have been marked as fixed for other algorithms"

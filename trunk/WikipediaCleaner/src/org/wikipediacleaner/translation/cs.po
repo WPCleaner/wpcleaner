@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2014-08-24 13:34+0200\n"
+"POT-Creation-Date: 2014-08-30 19:01+0200\n"
 "PO-Revision-Date: 2014-08-11 00:24+0100\n"
 "Last-Translator: Nicolas Vervelle <nvervelle@gmail.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
@@ -271,7 +271,7 @@ msgstr "Rozsah soukromě užívaných znaků B"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm017.java:36
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm045.java:35
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm059.java:34
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm059.java:37
 msgid "Delete all"
 msgstr "Smazat vše"
 
@@ -346,6 +346,11 @@ msgstr "Odstranit všechny tagy <small>"
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm057.java:30
 msgid "Fix all titles"
 msgstr "Opravit všechny názvy"
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm059.java:170
+#, fuzzy
+msgid "A list of that should be ignored"
+msgstr "Text, který by měl být nahrazen"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm061.java:234
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm067.java:301
@@ -2235,12 +2240,12 @@ msgstr "Ověřuji chybu číslo {0}"
 msgid "Analyzing page {0}"
 msgstr "Analyzuji stránku {0}"
 
-#: org/wikipediacleaner/gui/swing/bot/AutomaticCWWorker.java:226
+#: org/wikipediacleaner/gui/swing/bot/AutomaticCWWorker.java:228
 #, java-format
 msgid "Fixing page {0}"
 msgstr "Opravuji stránku „{0}“"
 
-#: org/wikipediacleaner/gui/swing/bot/AutomaticCWWorker.java:264
+#: org/wikipediacleaner/gui/swing/bot/AutomaticCWWorker.java:266
 #, java-format
 msgid "{0} page has been modified"
 msgid_plural "{0} pages have been modified"
@@ -2248,7 +2253,7 @@ msgstr[0] "{0} stránka byla editována"
 msgstr[1] "{0} stránky byly editovány"
 msgstr[2] "{0} stránek bylo editováno"
 
-#: org/wikipediacleaner/gui/swing/bot/AutomaticCWWorker.java:269
+#: org/wikipediacleaner/gui/swing/bot/AutomaticCWWorker.java:271
 #, java-format
 msgid "{0} page has been marked as fixed for the selected algorithms"
 msgid_plural "{0} pages have been marked as fixed for the selected algorithms"
@@ -2256,7 +2261,7 @@ msgstr[0] "{0} stránka byla pro daný algoritmus označena jako opravená"
 msgstr[1] "{0} stránky byly pro daný algoritmus označeny jako opravené"
 msgstr[2] "{0} stránek bylo pro daný algoritmus označeno jako opravené"
 
-#: org/wikipediacleaner/gui/swing/bot/AutomaticCWWorker.java:274
+#: org/wikipediacleaner/gui/swing/bot/AutomaticCWWorker.java:276
 #, java-format
 msgid "{0} page has been marked as fixed for other algorithms"
 msgid_plural "{0} pages have been marked as fixed for other algorithms"
