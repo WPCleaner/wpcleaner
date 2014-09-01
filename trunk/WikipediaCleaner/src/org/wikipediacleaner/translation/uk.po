@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2014-09-01 08:44+0200\n"
+"POT-Creation-Date: 2014-09-01 23:44+0200\n"
 "PO-Revision-Date: 2014-08-11 00:40+0100\n"
 "Last-Translator: Nicolas Vervelle <nvervelle@gmail.com>\n"
 "Language-Team: Ukrainian <uk@li.org>\n"
@@ -227,7 +227,7 @@ msgid "Zero-width space"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:285
-msgid "Left-to-righ mark"
+msgid "Left-to-right mark"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:286
@@ -1042,8 +1042,9 @@ msgid "You must select the pages on which running automatic fixing."
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:591
-msgid "A comment is required for automatix fixing."
-msgstr ""
+#, fuzzy
+msgid "A comment is required for automatic fixing."
+msgstr "Для надсилання сторінки потрібний коментар."
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:600
 msgid "You must input the initial and destination texts."
@@ -1063,8 +1064,9 @@ msgid "It may modify a lot of pages in a short period of time."
 msgstr "Вона може змінити багато сторінок протягом короткого проміжку часу."
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:613
+#, fuzzy
 msgid ""
-"Also, verify again the texts you have inputed before running this function."
+"Also, verify again the texts you have inputted before running this function."
 msgstr "Також ще раз перевірте вибрані тексти перед виконанням цієї дії."
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:614

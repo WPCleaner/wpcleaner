@@ -588,7 +588,7 @@ public class AutomaticFixingWindow extends OnePageWindow {
         (comment.trim().length() == 0)) {
       if (save) {
         Utilities.displayWarning(getParentComponent(), GT._(
-            "A comment is required for automatix fixing."));
+            "A comment is required for automatic fixing."));
         return;
       }
       comment = "Test";
@@ -610,7 +610,7 @@ public class AutomaticFixingWindow extends OnePageWindow {
           GT._("It may modify a lot of pages in a short period of time.") + "\n" +
           GT._("On some Wikipedia projects, you may need the bot status for doing this.") + "\n" +
           GT._("Please, check if you need the bot status by reading the rules of Wikipedia.") + "\n" +
-          GT._("Also, verify again the texts you have inputed before running this function.") + "\n" +
+          GT._("Also, verify again the texts you have inputted before running this function.") + "\n" +
           GT._("You can also test the modifications before actually doing them.") + "\n" +
           GT._("Do you want to proceed with the modifications ?"));
       if (answer != JOptionPane.YES_OPTION) {

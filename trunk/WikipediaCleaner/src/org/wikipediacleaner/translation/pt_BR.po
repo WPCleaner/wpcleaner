@@ -7,16 +7,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2014-09-01 08:44+0200\n"
-"PO-Revision-Date: 2014-08-31 04:13+0000\n"
-"Last-Translator: Felipe L. <felipe.idj@hotmail.com>\n"
+"POT-Creation-Date: 2014-09-01 23:44+0200\n"
+"PO-Revision-Date: 2014-09-01 23:51+0100\n"
+"Last-Translator: Nicolas Vervelle <nvervelle@gmail.com>\n"
 "Language-Team: Brazilian Portuguese <pt_BR@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
 "X-Launchpad-Export-Date: 2014-08-31 18:41+0000\n"
-"X-Generator: Launchpad (build 17176)\n"
+"X-Generator: Poedit 1.6.9\n"
 "Language: pt_BR\n"
 
 #: org/wikipediacleaner/Version.java:31
@@ -42,8 +42,8 @@ msgstr ""
 #: org/wikipediacleaner/Version.java:35
 #, java-format
 msgid ""
-"I try to keep {0} up to date with Check Wiki, but if you find any discrepancy"
-"(ies) in the detections, please let me know."
+"I try to keep {0} up to date with Check Wiki, but if you find any "
+"discrepancy(ies) in the detections, please let me know."
 msgstr ""
 "Eu tento manter {0} atualizado com o Check Wiki, mas se você encontrar "
 "qualquer discrepância nas detecções, por favor me avise."
@@ -246,7 +246,7 @@ msgid "Zero-width space"
 msgstr "Largura zero"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:285
-msgid "Left-to-righ mark"
+msgid "Left-to-right mark"
 msgstr "Marca da esquerda para a direita"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:286
@@ -1078,7 +1078,7 @@ msgstr ""
 "Você deve selecionar as páginas na qual executará a correção automática."
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:591
-msgid "A comment is required for automatix fixing."
+msgid "A comment is required for automatic fixing."
 msgstr "Um comentário é necessário para correções automáticas."
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:600
@@ -1102,7 +1102,7 @@ msgstr "Irá modificar muitas páginas num curto período de tempo."
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:613
 msgid ""
-"Also, verify again the texts you have inputed before running this function."
+"Also, verify again the texts you have inputted before running this function."
 msgstr ""
 "Além disso, verifique novamente os textos que você colocou antes de executar "
 "esta função."

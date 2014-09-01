@@ -282,7 +282,7 @@ public class CheckErrorAlgorithm016 extends CheckErrorAlgorithmBase {
   private enum ControlCharacter {
     NON_BREAKING_SPACE(0x00A0, 0x00A0, false, true, GT._No("Non-breaking space")),
     ZERO_WIDTH_SPACE(0x200B, 0x200B, true, false, GT._No("Zero-width space")),
-    LEFT_TO_RIGHT_MARK(0x200E, 0x200E, true, false, GT._No("Left-to-righ mark")),
+    LEFT_TO_RIGHT_MARK(0x200E, 0x200E, true, false, GT._No("Left-to-right mark")),
     LINE_SEPARATOR(0x2028, 0x2028, true, false, GT._No("Line separator")),
     LEFT_TO_RIGHT_EMBEDDING(0x202A, 0x202A, true, false, GT._No("Left-to-right embedding")),
     POP_DIRECTIONAL_FORMATTING(0x202C, 0x202C, true, false, GT._No("Pop directional formatting")),
