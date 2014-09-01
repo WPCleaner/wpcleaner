@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2014-08-30 19:01+0200\n"
+"POT-Creation-Date: 2014-09-01 08:44+0200\n"
 "PO-Revision-Date: 2013-11-27 14:42+0000\n"
 "Last-Translator: Aftabuzzaman <Leemon432@gmail.com>\n"
 "Language-Team: Bengali <bn@li.org>\n"
@@ -335,7 +335,7 @@ msgid "Fix all titles"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm059.java:170
-msgid "A list of that should be ignored"
+msgid "A list of templates that should be ignored"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm061.java:234
