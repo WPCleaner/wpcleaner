@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2014-09-01 08:44+0200\n"
-"PO-Revision-Date: 2014-08-11 00:36+0100\n"
+"POT-Creation-Date: 2014-09-01 23:44+0200\n"
+"PO-Revision-Date: 2014-09-01 23:50+0100\n"
 "Last-Translator: Nicolas Vervelle <nvervelle@gmail.com>\n"
 "Language-Team: Italian <it@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Launchpad-Export-Date: 2014-08-09 12:03+0000\n"
-"X-Generator: Poedit 1.6.7\n"
+"X-Generator: Poedit 1.6.9\n"
 "Language: it\n"
 
 #: org/wikipediacleaner/Version.java:31
@@ -38,8 +38,8 @@ msgstr ""
 #: org/wikipediacleaner/Version.java:35
 #, java-format
 msgid ""
-"I try to keep {0} up to date with Check Wiki, but if you find any discrepancy"
-"(ies) in the detections, please let me know."
+"I try to keep {0} up to date with Check Wiki, but if you find any "
+"discrepancy(ies) in the detections, please let me know."
 msgstr ""
 
 #: org/wikipediacleaner/Version.java:37
@@ -232,7 +232,7 @@ msgid "Zero-width space"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:285
-msgid "Left-to-righ mark"
+msgid "Left-to-right mark"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:286
@@ -1054,7 +1054,7 @@ msgid "You must select the pages on which running automatic fixing."
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:591
-msgid "A comment is required for automatix fixing."
+msgid "A comment is required for automatic fixing."
 msgstr "È richiesto un commento per la correzione automatica."
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:600
@@ -1077,8 +1077,9 @@ msgstr "Potrebbe modificare numerose pagine in breve tempo."
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:613
 msgid ""
-"Also, verify again the texts you have inputed before running this function."
+"Also, verify again the texts you have inputted before running this function."
 msgstr ""
+"Verifica ancora il testo che hai inserito prima di attivare questa funzione."
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:614
 msgid "You can also test the modifications before actually doing them."

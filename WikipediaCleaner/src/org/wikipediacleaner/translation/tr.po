@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2014-09-01 08:44+0200\n"
+"POT-Creation-Date: 2014-09-01 23:44+0200\n"
 "PO-Revision-Date: 2013-07-06 19:07+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Turkish <tr@li.org>\n"
@@ -225,7 +225,7 @@ msgid "Zero-width space"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:285
-msgid "Left-to-righ mark"
+msgid "Left-to-right mark"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:286
@@ -1033,7 +1033,7 @@ msgid "You must select the pages on which running automatic fixing."
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:591
-msgid "A comment is required for automatix fixing."
+msgid "A comment is required for automatic fixing."
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:600
@@ -1055,7 +1055,7 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:613
 msgid ""
-"Also, verify again the texts you have inputed before running this function."
+"Also, verify again the texts you have inputted before running this function."
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:614
