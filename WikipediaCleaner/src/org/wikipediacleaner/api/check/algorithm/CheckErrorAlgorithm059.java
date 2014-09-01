@@ -167,7 +167,7 @@ public class CheckErrorAlgorithm059 extends CheckErrorAlgorithmBase {
     Map<String, String> parameters = super.getParameters();
     parameters.put(
         "templates",
-        GT._("A list of that should be ignored"));
+        GT._("A list of templates that should be ignored"));
     return parameters;
   }
 
