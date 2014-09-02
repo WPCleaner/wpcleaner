@@ -104,7 +104,7 @@ public class CheckErrorAlgorithm016 extends CheckErrorAlgorithmBase {
     int index = beginArea;
     while (index < endArea) {
       int codePoint = contents.codePointAt(index);
-      ControlCharacter control = ControlCharacter.getControlCharacter(codePoint);
+      ControlCharacter control = getControlCharacter(codePoint);
       if (control != null) {
         if (errors == null) {
           return true;
@@ -120,8 +120,8 @@ public class CheckErrorAlgorithm016 extends CheckErrorAlgorithmBase {
         controls.add(Integer.valueOf(codePoint));
         int end = index + Character.charCount(codePoint);
         while ((end < endArea) &&
-               ((ControlCharacter.getControlCharacter(contents.codePointBefore(end)) != null) ||
-                (ControlCharacter.getControlCharacter(contents.codePointAt(end)) != null))) {
+               ((getControlCharacter(contents.codePointBefore(end)) != null) ||
+                (getControlCharacter(contents.codePointAt(end)) != null))) {
           Integer controlNum = Integer.valueOf(contents.codePointAt(end));
           if ((controlNum != null) && (!controls.contains(controlNum))) {
             controls.add(controlNum);
@@ -132,7 +132,7 @@ public class CheckErrorAlgorithm016 extends CheckErrorAlgorithmBase {
         // Report error
         CheckErrorResult errorResult = createCheckErrorResult(analysis, begin, end);
         for (Integer controlFound : controls) {
-          ControlCharacter found = ControlCharacter.getControlCharacter(controlFound.intValue());
+          ControlCharacter found = getControlCharacter(controlFound.intValue());
           if (found != null) {
             errorResult.addPossibleAction(
                 Integer.toHexString(controlFound.intValue()) + " - " + GT._(found.description),
@@ -146,7 +146,7 @@ public class CheckErrorAlgorithm016 extends CheckErrorAlgorithmBase {
         int i = begin;
         while (i < end) {
           codePoint = contents.codePointAt(i);
-          control = ControlCharacter.getControlCharacter(codePoint);
+          control = getControlCharacter(codePoint);
           if (control == null) {
             replacementB.appendCodePoint(codePoint);
             unsafeCharacter = (automaticChars.indexOf(codePoint) < 0);
@@ -232,6 +232,22 @@ public class CheckErrorAlgorithm016 extends CheckErrorAlgorithmBase {
       "ćč" + "ńň" + "š" + "ź" +
       "0123456789" +
       " []|(){}<>,.!?;:--–=+*#/%'\"«»\n\t";
+
+  /**
+   * @param codePoint Code point.
+   * @return Control character related to the code point.
+   */
+  private ControlCharacter getControlCharacter(int codePoint) {
+    ControlCharacter control = ControlCharacter.getControlCharacter(codePoint);
+    if (control != null) {
+      String propertyName = "use_" + Integer.toHexString(codePoint).toUpperCase();
+      String filter = getSpecificProperty(propertyName, true, true, false);
+      if ((filter != null) && (Boolean.FALSE.equals(Boolean.valueOf(filter)))) {
+        control = null;
+      }
+    }
+    return control;
+  }
 
   /**
    * Automatic fixing of all the errors in the page.
