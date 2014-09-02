@@ -8,15 +8,15 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2014-09-01 23:44+0200\n"
-"PO-Revision-Date: 2014-08-11 00:35+0100\n"
-"Last-Translator: Nicolas Vervelle <nvervelle@gmail.com>\n"
+"PO-Revision-Date: 2014-08-11 22:13+0000\n"
+"Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Hungarian <hu@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2014-08-09 12:03+0000\n"
-"X-Generator: Poedit 1.6.7\n"
+"X-Launchpad-Export-Date: 2014-09-02 06:08+0000\n"
+"X-Generator: Launchpad (build 17192)\n"
 "Language: hu\n"
 
 #: org/wikipediacleaner/Version.java:31
@@ -38,8 +38,8 @@ msgstr ""
 #: org/wikipediacleaner/Version.java:35
 #, java-format
 msgid ""
-"I try to keep {0} up to date with Check Wiki, but if you find any discrepancy"
-"(ies) in the detections, please let me know."
+"I try to keep {0} up to date with Check Wiki, but if you find any "
+"discrepancy(ies) in the detections, please let me know."
 msgstr ""
 
 #: org/wikipediacleaner/Version.java:37
@@ -357,9 +357,9 @@ msgid "Add {0}"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm062.java:152
-#, fuzzy, java-format
+#, java-format
 msgid "Remove {0}"
-msgstr "Eltávolítás"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm064.java:30
 msgid "Modify all internal links"
@@ -414,9 +414,9 @@ msgstr "Külső néző"
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:175
 msgid ""
 "A template that can be used instead of the link to an other language. It "
-"must be specified as: <template name>|<param name for local page name>|"
-"<param name for code of other language>|<param name for page name in other "
-"language>|<param name for displayed text>"
+"must be specified as: <template name>|<param name for local page "
+"name>|<param name for code of other language>|<param name for page name in "
+"other language>|<param name for displayed text>"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:257
@@ -971,7 +971,8 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:205
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:611
 #: org/wikipediacleaner/gui/swing/bot/BotToolsWindow.java:89
-msgid "On some Wikipedia projects, you may need the bot status for doing this."
+msgid ""
+"On some Wikipedia projects, you may need the bot status for doing this."
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:206
@@ -1458,7 +1459,8 @@ msgid "Links to {0}"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1458
-msgid "You must input a page name for retrieving the list of category members"
+msgid ""
+"You must input a page name for retrieving the list of category members"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1476
@@ -2204,7 +2206,8 @@ msgstr[1] ""
 #: org/wikipediacleaner/gui/swing/bot/AutomaticCWWorker.java:271
 #, java-format
 msgid "{0} page has been marked as fixed for the selected algorithms"
-msgid_plural "{0} pages have been marked as fixed for the selected algorithms"
+msgid_plural ""
+"{0} pages have been marked as fixed for the selected algorithms"
 msgstr[0] ""
 msgstr[1] ""
 
@@ -2752,7 +2755,8 @@ msgid "Create disambiguation warning on talk page (in main namespace)"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/AnalysisOptionsPanel.java:86
-msgid "Create disambiguation warning on talk page (in encyclopedic namespaces)"
+msgid ""
+"Create disambiguation warning on talk page (in encyclopedic namespaces)"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/AnalysisOptionsPanel.java:93
@@ -2764,7 +2768,8 @@ msgid "Update disambiguation warning on talk page (in main namespace)"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/AnalysisOptionsPanel.java:107
-msgid "Update disambiguation warning on talk page (in encyclopedic namespaces)"
+msgid ""
+"Update disambiguation warning on talk page (in encyclopedic namespaces)"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/AnalysisOptionsPanel.java:114
@@ -3191,9 +3196,8 @@ msgid "Articles in main namespace"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/worker/PageListWorker.java:83
-#, fuzzy
 msgid "Articles associated to talk pages"
-msgstr "&Megjegyzés hozzáadása a vitalapra"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/worker/PageListWorker.java:84
 msgid "Pages with missing templates"
@@ -3441,12 +3445,14 @@ msgstr ""
 #~ msgid "&Hide window when sending"
 #~ msgstr "&Ablak elrejtése a küldés után"
 
+#, java-format
 #~ msgid "Red links Analysis - {0}"
 #~ msgstr "Piros linkek elemzése - {0}"
 
 #~ msgid "Red links analysis"
 #~ msgstr "Piros linkek elemzése"
 
+#, java-format
 #~ msgid "An error occured: {0}"
 #~ msgstr "Egy hiba történt: {0}"
 
@@ -3477,8 +3483,12 @@ msgstr ""
 #~ msgid "&Search for possible pages"
 #~ msgstr "&Lehetséges lapok kersése"
 
+#, java-format
 #~ msgid "&Apply only to {0}"
 #~ msgstr "&Alkalmazás csak erre: {0}"
+
+#~ msgid "This function will do all the replacements in all selected pages."
+#~ msgstr "Ez a funkció mindet lecseréli az összes kiválasztott oldalon."
 
 #~ msgid "Pages concerned"
 #~ msgstr "Érintett lapok"
@@ -3486,6 +3496,7 @@ msgstr ""
 #~ msgid "&Reload page list"
 #~ msgstr "&Oldal lista újratöltése"
 
+#, java-format
 #~ msgid "The page {0} doesn't exist on Wikipedia"
 #~ msgstr "Az oldal {0} nem létezik a Wikipédián."
 
