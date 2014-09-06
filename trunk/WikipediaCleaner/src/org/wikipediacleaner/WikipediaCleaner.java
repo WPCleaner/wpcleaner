@@ -38,7 +38,7 @@ import org.wikipediacleaner.utils.ConfigurationValueString;
  */
 public class WikipediaCleaner {
 
-  private final static boolean CHECK_EDT = false;
+  private final static boolean CHECK_EDT = true;
   private final static boolean SYSTEM_LF = true;
 
   /**

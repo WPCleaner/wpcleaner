@@ -54,6 +54,7 @@ import javax.swing.ListSelectionModel;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.SwingConstants;
+import javax.swing.SwingUtilities;
 import javax.swing.WindowConstants;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -1356,20 +1357,55 @@ public class CheckWikiWindow extends OnePageWindow implements CheckWikiListener 
     if ((errors == null) || (errors.isEmpty())) {
       return;
     }
-    boolean removed = false;
     Iterator<CheckError> itError = errors.iterator();
     while (itError.hasNext()) {
       CheckError error = itError.next();
       if (error.getErrorNumber() == errorNumber) {
-        removed |= error.remove(page);
+        error.remove(page);
       }
+    }
+    requestUpdate();
+  }
+
+  private boolean updateNeeded = false;
+
+  /**
+   * Request for an update of the display.
+   */
+  private void requestUpdate() {
+    updateNeeded = true;
+    if (SwingUtilities.isEventDispatchThread()) {
+      doUpdate();
+    } else {
+      SwingUtilities.invokeLater(new Runnable() {
+        
+        public void run() {
+          doUpdate();
+        }
+      });
+    }
+  }
+
+  /**
+   * Update the display. Needs to be run on the event dispatcher thread.
+   */
+  void doUpdate() {
+    if (!updateNeeded) {
+      return;
+    }
+    updateNeeded = false;
+
+    // Remove errors with no pages
+    Iterator<CheckError> itError = errors.iterator();
+    while (itError.hasNext()) {
+      CheckError error = itError.next();
       if (error.getPageCount() == 0) {
         itError.remove();
         modelAllErrors.removeElement(error);
       }
     }
-    if (removed) {
-      actionSelectErrorType();
-    }
+
+    // Update display
+    actionSelectErrorType();
   }
 }
