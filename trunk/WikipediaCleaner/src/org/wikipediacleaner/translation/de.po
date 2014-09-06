@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2014-09-06 23:51+0200\n"
+"POT-Creation-Date: 2014-09-07 00:05+0200\n"
 "PO-Revision-Date: 2014-09-06 23:55+0100\n"
 "Last-Translator: Nicolas Vervelle <nvervelle@gmail.com>\n"
 "Language-Team: German <de@li.org>\n"
@@ -38,8 +38,8 @@ msgstr ""
 #: org/wikipediacleaner/Version.java:35
 #, java-format
 msgid ""
-"I try to keep {0} up to date with Check Wiki, but if you find any "
-"discrepancy(ies) in the detections, please let me know."
+"I try to keep {0} up to date with Check Wiki, but if you find any discrepancy"
+"(ies) in the detections, please let me know."
 msgstr ""
 
 #: org/wikipediacleaner/Version.java:37
@@ -1401,8 +1401,11 @@ msgid "You must input your password before login"
 msgstr "Sie müssen erst Ihr Passwort eingeben um sich anmelden zu können"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1108
-msgid "You can learn how to configure WikiCleaner at the following URL:"
+#, fuzzy, java-format
+msgid "You can learn how to configure {0} at the following URL:"
 msgstr ""
+"Sie können unter der folgenden Adresse herausfinden wie Sie andere Sprachen "
+"hinzufügen können:"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1157
 msgid "Activate all"

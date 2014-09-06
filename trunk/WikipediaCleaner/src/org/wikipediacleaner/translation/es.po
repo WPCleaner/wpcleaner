@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2014-09-06 23:51+0200\n"
-"PO-Revision-Date: 2014-09-06 23:55+0100\n"
+"POT-Creation-Date: 2014-09-07 00:05+0200\n"
+"PO-Revision-Date: 2014-09-07 00:11+0100\n"
 "Last-Translator: Nicolas Vervelle <nvervelle@gmail.com>\n"
 "Language-Team: Spanish\n"
 "MIME-Version: 1.0\n"
@@ -1443,8 +1443,9 @@ msgid "You must input your password before login"
 msgstr "Debe introducir su contraseña antes de iniciar la sesión"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1108
-msgid "You can learn how to configure WikiCleaner at the following URL:"
-msgstr "Puede aprender a configurar WikiCleaner en la siguiente URL:"
+#, java-format
+msgid "You can learn how to configure {0} at the following URL:"
+msgstr "Puede aprender a configurar {0} en la siguiente URL:"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1157
 msgid "Activate all"
