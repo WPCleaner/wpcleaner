@@ -7,16 +7,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2014-09-06 19:41+0200\n"
-"PO-Revision-Date: 2014-07-27 00:47+0000\n"
-"Last-Translator: Nicolas Vervelle <Unknown>\n"
+"POT-Creation-Date: 2014-09-06 23:30+0200\n"
+"PO-Revision-Date: 2014-09-06 23:41+0100\n"
+"Last-Translator: Nicolas Vervelle <nvervelle@gmail.com>\n"
 "Language-Team: German <de@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Launchpad-Export-Date: 2014-09-02 06:08+0000\n"
-"X-Generator: Launchpad (build 17192)\n"
+"X-Generator: Poedit 1.6.9\n"
 "Language: de\n"
 
 #: org/wikipediacleaner/Version.java:31
@@ -38,8 +38,8 @@ msgstr ""
 #: org/wikipediacleaner/Version.java:35
 #, java-format
 msgid ""
-"I try to keep {0} up to date with Check Wiki, but if you find any discrepancy"
-"(ies) in the detections, please let me know."
+"I try to keep {0} up to date with Check Wiki, but if you find any "
+"discrepancy(ies) in the detections, please let me know."
 msgstr ""
 
 #: org/wikipediacleaner/Version.java:37
@@ -1364,11 +1364,11 @@ msgstr "Bot-Werkzeuge"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:920
 msgid ""
-"Demo mode is only available for testing WikiCleaner.\n"
+"Demo mode is only available for testing WPCleaner.\n"
 "You won't be able to modify pages on Wikipedia in Demo mode.\n"
 "Do you want to continue ?"
 msgstr ""
-"Der Demomodus ist nur für das Testen von WikiCleaner verfügbar.\n"
+"Der Demomodus ist nur für das Testen von WPCleaner verfügbar.\n"
 "Sie werden keine Artikel in Demomodus bei Wikipedia bearbeiten können.\n"
 "Wollen Sie trotzdem fortfahren ?"
 
