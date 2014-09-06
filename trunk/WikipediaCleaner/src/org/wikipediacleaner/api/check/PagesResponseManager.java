@@ -44,6 +44,9 @@ class PagesResponseManager implements ResponseManager {
 
   /**
    * @param classic True if classic interface should be used.
+   * @param algorithm Algorithm.
+   * @param wiki Wiki.
+   * @param errors List of errors to be filled by the response manager.
    */
   public PagesResponseManager(
       boolean classic,
