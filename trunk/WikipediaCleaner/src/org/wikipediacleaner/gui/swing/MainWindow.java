@@ -845,7 +845,7 @@ public class MainWindow
     // Local watch list button
     buttonWatchlistLocal = Utilities.createJButton(
         "gnome-logviewer.png", EnumImageSize.NORMAL,
-        GT._("Local Watch list"), true,
+        GT._("Local Watchlist"), true,
         ConfigurationValueShortcut.WATCH_LIST);
     buttonWatchlistLocal.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionWatchlistLocal"));
@@ -855,7 +855,7 @@ public class MainWindow
     // Watch list button
     buttonWatchlist = Utilities.createJButton(
         "gnome-logviewer.png", EnumImageSize.NORMAL,
-        GT._("Watch list"), true, null);
+        GT._("Watchlist"), true, null);
     buttonWatchlist.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionWatchlist"));
     panel.add(buttonWatchlist, constraints);

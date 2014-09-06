@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2014-09-06 19:18+0200\n"
-"PO-Revision-Date: 2014-09-06 19:28+0100\n"
+"POT-Creation-Date: 2014-09-06 19:41+0200\n"
+"PO-Revision-Date: 2014-09-06 19:52+0100\n"
 "Last-Translator: Nicolas Vervelle <nvervelle@gmail.com>\n"
 "Language-Team: Brazilian Portuguese <pt_BR@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -1386,12 +1386,11 @@ msgstr "Gerar listas"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:848
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:195
-msgid "Local Watch list"
+msgid "Local Watchlist"
 msgstr "Lista de páginas vigiadas local"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:858
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1822
-msgid "Watch list"
+msgid "Watchlist"
 msgstr "Lista de páginas vigiadas"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:867
@@ -1557,6 +1556,10 @@ msgstr "Todas as páginas de desambiguação"
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1808
 msgid "Local watch list"
 msgstr "Lista local de páginas vigiadas"
+
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1822
+msgid "Watch list"
+msgstr "Lista de páginas vigiadas"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1834
 msgid "Random redirect pages"
@@ -2103,7 +2106,6 @@ msgid "Previous occurrence"
 msgstr "Ocorrência anterior"
 
 #: org/wikipediacleaner/gui/swing/action/ActionWatchPage.java:45
-#: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:105
 msgid "Add to Watch list"
 msgstr "Adicionar a lista de páginas vigiadas"
 
@@ -3220,6 +3222,10 @@ msgstr "Carregar padrões"
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:73
 msgid "Shortcut options (restart needed)"
 msgstr "Opções de atalhos (necessário reiniciar)"
+
+#: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:105
+msgid "Add to Watchlist"
+msgstr "Adicionar a lista de páginas vigiadas"
 
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:160
 msgid "Logout"

@@ -7,15 +7,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2014-09-06 19:18+0200\n"
+"POT-Creation-Date: 2014-09-06 19:41+0200\n"
 "PO-Revision-Date: 2014-09-06 19:29+0100\n"
 "Last-Translator: Nicolas Vervelle <nvervelle@gmail.com>\n"
 "Language-Team: Russian <ru@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
-"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%"
+"10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 "X-Launchpad-Export-Date: 2014-09-02 06:08+0000\n"
 "X-Generator: Poedit 1.6.9\n"
 "Language: ru\n"
@@ -39,8 +39,8 @@ msgstr ""
 #: org/wikipediacleaner/Version.java:35
 #, java-format
 msgid ""
-"I try to keep {0} up to date with Check Wiki, but if you find any "
-"discrepancy(ies) in the detections, please let me know."
+"I try to keep {0} up to date with Check Wiki, but if you find any discrepancy"
+"(ies) in the detections, please let me know."
 msgstr ""
 
 #: org/wikipediacleaner/Version.java:37
@@ -1344,13 +1344,14 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:848
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:195
-msgid "Local Watch list"
-msgstr ""
+#, fuzzy
+msgid "Local Watchlist"
+msgstr "Локальный список &наблюдения"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:858
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1822
-msgid "Watch list"
-msgstr ""
+#, fuzzy
+msgid "Watchlist"
+msgstr "Локальный список &наблюдения"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:867
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1830
@@ -1502,6 +1503,10 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1808
 msgid "Local watch list"
+msgstr ""
+
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1822
+msgid "Watch list"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1834
@@ -2042,7 +2047,6 @@ msgid "Previous occurrence"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/action/ActionWatchPage.java:45
-#: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:105
 msgid "Add to Watch list"
 msgstr ""
 
@@ -2526,8 +2530,8 @@ msgid ""
 "The error n°{0} can be configured with the following parameters in the <a "
 "href=\"{1}\">translation file</a> :"
 msgstr ""
-"Ошибка №{0} может быть настроена со следующими параметрами в <a href="
-"\"{1}\">файле переводов</a> :"
+"Ошибка №{0} может быть настроена со следующими параметрами в <a href=\"{1}"
+"\">файле переводов</a> :"
 
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiWindow.java:1069
 msgid "What is the name of the selection?"
@@ -3143,6 +3147,11 @@ msgstr ""
 msgid "Shortcut options (restart needed)"
 msgstr ""
 
+#: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:105
+#, fuzzy
+msgid "Add to Watchlist"
+msgstr "Добавить в список &наблюдения"
+
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:160
 msgid "Logout"
 msgstr ""
@@ -3416,9 +3425,6 @@ msgstr ""
 #~ msgid "&Close"
 #~ msgstr "Закр&ыть"
 
-#~ msgid "Add to &Watch list"
-#~ msgstr "Добавить в список &наблюдения"
-
 #~ msgid "&Full analysis"
 #~ msgstr "Полный &анализ"
 
@@ -3471,9 +3477,6 @@ msgstr ""
 
 #~ msgid "L&ogout"
 #~ msgstr "В&ыйти"
-
-#~ msgid "Local &Watch list"
-#~ msgstr "Локальный список &наблюдения"
 
 #~ msgid "&Idea ? Bug ?"
 #~ msgstr "&Идея ? Ошибка ?"
