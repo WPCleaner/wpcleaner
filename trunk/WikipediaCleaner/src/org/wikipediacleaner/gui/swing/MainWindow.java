@@ -548,7 +548,7 @@ public class MainWindow
     panel.add(radSavePassword, constraints);
     constraints.gridy++;
     radSaveUsername = Utilities.createJRadioButton(
-        GT._("Save user name only"),
+        GT._("Save username only"),
         (saveUser == ConfigurationConstants.VALUE_SAVE_USER_NAME));
     groupSaveUsernamePassword.add(radSaveUsername);
     constraints.fill = GridBagConstraints.NONE;

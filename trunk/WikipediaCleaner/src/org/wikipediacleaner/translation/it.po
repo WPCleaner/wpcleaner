@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2014-09-06 19:04+0200\n"
-"PO-Revision-Date: 2014-09-06 19:10+0100\n"
+"POT-Creation-Date: 2014-09-06 19:18+0200\n"
+"PO-Revision-Date: 2014-09-06 19:27+0100\n"
 "Last-Translator: Nicolas Vervelle <nvervelle@gmail.com>\n"
 "Language-Team: Italian <it@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -1259,7 +1259,7 @@ msgid "Save username and password"
 msgstr "Salva nome utente e password"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:551
-msgid "Save user name only"
+msgid "Save username only"
 msgstr "Salva solo nome utente"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:561
@@ -2354,9 +2354,9 @@ msgid "Mark as already fixed"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiContentPanel.java:329
-#, fuzzy, java-format
+#, java-format
 msgid "The error n°{0} has already been fixed in the page {1}."
-msgstr "L''errore n°{0} è stato trovato ancora {1} volte nella pagina."
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiContentPanel.java:345
 #, java-format
