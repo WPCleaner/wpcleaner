@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2014-09-07 00:19+0200\n"
+"POT-Creation-Date: 2014-09-07 00:49+0200\n"
 "PO-Revision-Date: 2014-09-07 00:24+0100\n"
 "Last-Translator: Nicolas Vervelle <nvervelle@gmail.com>\n"
 "Language-Team: Spanish\n"
@@ -42,8 +42,8 @@ msgstr ""
 #: org/wikipediacleaner/Version.java:35
 #, java-format
 msgid ""
-"I try to keep {0} up to date with Check Wiki, but if you find any "
-"discrepancy(ies) in the detections, please let me know."
+"I try to keep {0} up to date with Check Wiki, but if you find any discrepancy"
+"(ies) in the detections, please let me know."
 msgstr ""
 "Intento mantener {0} actualizado con Check Wikipedia pero, si encuentra "
 "alguna discrepancia en las detecciones, por favor hágamelo saber."
@@ -1530,9 +1530,13 @@ msgid "Category members of {0}"
 msgstr "Miembros de la categoría {0}"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1484
+#, fuzzy
 msgid ""
-"You must input a page name for retrieving the list of page it is embedded in"
+"You must input a page name for retrieving the list of page in which it is "
+"embedded"
 msgstr ""
+"Debe indicar un nombre de página para obtener la lista de miembros de "
+"categoría"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1502
 #, java-format

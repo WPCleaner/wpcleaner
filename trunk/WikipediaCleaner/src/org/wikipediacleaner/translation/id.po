@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2014-09-07 00:19+0200\n"
+"POT-Creation-Date: 2014-09-07 00:49+0200\n"
 "PO-Revision-Date: 2014-09-07 00:27+0100\n"
 "Last-Translator: Nicolas Vervelle <nvervelle@gmail.com>\n"
 "Language-Team: Indonesian <id@li.org>\n"
@@ -38,8 +38,8 @@ msgstr ""
 #: org/wikipediacleaner/Version.java:35
 #, java-format
 msgid ""
-"I try to keep {0} up to date with Check Wiki, but if you find any "
-"discrepancy(ies) in the detections, please let me know."
+"I try to keep {0} up to date with Check Wiki, but if you find any discrepancy"
+"(ies) in the detections, please let me know."
 msgstr ""
 
 #: org/wikipediacleaner/Version.java:37
@@ -53,8 +53,8 @@ msgid ""
 "WPCleaner configuration is available online, check the {0}System "
 "configuration{1}."
 msgstr ""
-"Konfigurasi WPCleaner tersedia secara online, periksa {0}Sistem "
-"konfigurasi{1}."
+"Konfigurasi WPCleaner tersedia secara online, periksa {0}Sistem konfigurasi"
+"{1}."
 
 #: org/wikipediacleaner/Version.java:43
 msgid "Please, report any other problem you find to me."
@@ -1479,9 +1479,11 @@ msgid "Category members of {0}"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1484
+#, fuzzy
 msgid ""
-"You must input a page name for retrieving the list of page it is embedded in"
-msgstr ""
+"You must input a page name for retrieving the list of page in which it is "
+"embedded"
+msgstr "Ketik judul artikel untuk melakukan analisa lengkap"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1502
 #, java-format

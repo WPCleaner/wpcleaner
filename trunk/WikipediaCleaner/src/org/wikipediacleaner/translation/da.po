@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2014-09-07 00:19+0200\n"
+"POT-Creation-Date: 2014-09-07 00:49+0200\n"
 "PO-Revision-Date: 2012-10-21 17:40+0000\n"
 "Last-Translator: Nicolas Vervelle <nvervelle@gmail.com>\n"
 "Language-Team: Danish <da@li.org>\n"
@@ -1464,7 +1464,8 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1484
 msgid ""
-"You must input a page name for retrieving the list of page it is embedded in"
+"You must input a page name for retrieving the list of page in which it is "
+"embedded"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1502
