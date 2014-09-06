@@ -14,7 +14,6 @@ import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementCategory;
 import org.wikipediacleaner.api.data.PageElementLanguageLink;
-import org.wikipediacleaner.api.data.PageElementTitle;
 
 
 /**
@@ -42,14 +41,12 @@ public class CheckErrorAlgorithm053 extends CheckErrorAlgorithmBase {
       return false;
     }
 
-    // Retrieving last category and headline
+    // Retrieving last category
     List<PageElementCategory> categories = analysis.getCategories();
     if (categories.size() == 0) {
       return false;
     }
     int lastCategory = categories.get(categories.size() - 1).getEndIndex();
-    List<PageElementTitle> titles = analysis.getTitles();
-    int lastTitle = (titles.size() > 0) ? (titles.get(titles.size() - 1).getEndIndex()) : 0;
 
     // Check every language link
     List<PageElementLanguageLink> languages = analysis.getLanguageLinks();
@@ -60,17 +57,15 @@ public class CheckErrorAlgorithm053 extends CheckErrorAlgorithmBase {
       if (begin >= lastCategory) {
         return result;
       }
-      if (begin > lastTitle) {
-        if (errors == null) {
-          return true;
-        }
-        result = true;
-        int end = language.getEndIndex();
-        CheckErrorResult errorResult = createCheckErrorResult(
-            analysis, begin, end);
-        errorResult.addReplacement("[[:" + contents.substring(begin + 2, end));
-        errors.add(errorResult);
+      if (errors == null) {
+        return true;
       }
+      result = true;
+      int end = language.getEndIndex();
+      CheckErrorResult errorResult = createCheckErrorResult(
+          analysis, begin, end);
+      errorResult.addReplacement("[[:" + contents.substring(begin + 2, end));
+      errors.add(errorResult);
     }
 
     return result;
