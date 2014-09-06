@@ -917,7 +917,7 @@ public class MainWindow
    */
   public void actionDemo() {
     int answer = displayYesNoWarning(GT._(
-        "Demo mode is only available for testing WikiCleaner.\n" +
+        "Demo mode is only available for testing WPCleaner.\n" +
         "You won't be able to modify pages on Wikipedia in Demo mode.\n" +
         "Do you want to continue ?"));
     if (answer == JOptionPane.YES_OPTION) {
