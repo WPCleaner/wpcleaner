@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2014-09-06 19:18+0200\n"
-"PO-Revision-Date: 2014-09-06 19:29+0100\n"
+"POT-Creation-Date: 2014-09-06 19:41+0200\n"
+"PO-Revision-Date: 2014-09-06 19:53+0100\n"
 "Last-Translator: Nicolas Vervelle <nvervelle@gmail.com>\n"
 "Language-Team: Chinese (Simplified) <zh_CN@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -1338,12 +1338,11 @@ msgstr "生成列表"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:848
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:195
-msgid "Local Watch list"
+msgid "Local Watchlist"
 msgstr "本地监视列表"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:858
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1822
-msgid "Watch list"
+msgid "Watchlist"
 msgstr "监视列表"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:867
@@ -1491,6 +1490,10 @@ msgstr "所有的消歧义页"
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1808
 msgid "Local watch list"
 msgstr "本地监视列表"
+
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1822
+msgid "Watch list"
+msgstr "监视列表"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1834
 msgid "Random redirect pages"
@@ -2023,7 +2026,6 @@ msgid "Previous occurrence"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/action/ActionWatchPage.java:45
-#: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:105
 msgid "Add to Watch list"
 msgstr "加入监视列表"
 
@@ -3102,6 +3104,10 @@ msgstr "还原默认设置"
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:73
 msgid "Shortcut options (restart needed)"
 msgstr ""
+
+#: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:105
+msgid "Add to Watchlist"
+msgstr "加入监视列表"
 
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:160
 msgid "Logout"
