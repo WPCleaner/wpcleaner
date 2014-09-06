@@ -6,18 +6,26 @@
  */
 
 
-package org.wikipediacleaner.api;
+package org.wikipediacleaner.api.check;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.StringReader;
+import java.lang.ref.WeakReference;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import org.wikipediacleaner.api.check.CheckError;
+import org.wikipediacleaner.api.API;
+import org.wikipediacleaner.api.APIException;
+import org.wikipediacleaner.api.APIFactory;
+import org.wikipediacleaner.api.HttpServer;
+import org.wikipediacleaner.api.MediaWikiListener;
+import org.wikipediacleaner.api.ResponseManager;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithm;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithms;
 import org.wikipediacleaner.api.constants.CWConfiguration;
@@ -51,11 +59,17 @@ public class CheckWiki {
   private final HttpServer labs;
 
   /**
+   * List of listeners for Check Wiki events.
+   */
+  private final List<WeakReference<CheckWikiListener>> listeners;
+
+  /**
    * @param toolServer Tool Server
    */
-  CheckWiki(HttpServer toolServer, HttpServer labs) {
+  public CheckWiki(HttpServer toolServer, HttpServer labs) {
     this.toolServer = toolServer;
     this.labs = labs;
+    this.listeners = new ArrayList<WeakReference<CheckWikiListener>>();
   }
 
   /**
@@ -105,102 +119,6 @@ public class CheckWiki {
   }
 
   /**
-   * @param wiki Wiki.
-   * @param algorithm Algorithm.
-   * @return URL for algorithm description.
-   */
-  public String getUrlDescription(
-      final EnumWikipedia wiki,
-      final CheckErrorAlgorithm algorithm) {
-    boolean useLabs = wiki.getConfiguration().getBoolean(WPCConfigurationBoolean.CW_USE_LABS);
-    String path = useLabs ?
-        "checkwiki/cgi-bin/checkwiki.cgi" :
-        "~sk/cgi-bin/checkwiki/checkwiki.cgi";
-    HttpServer server = useLabs ? labs : toolServer;
-    String url =
-        server.getBaseUrl() + path +
-        "?id=" + algorithm.getErrorNumberString() +
-        "&project=" + wiki.getSettings().getCodeCheckWiki() +
-        "&view=only";
-    return url;
-  }
-
-  /**
-   * @param wiki Wiki.
-   * @return Server name.
-   */
-  public static String getServerName(EnumWikipedia wiki) {
-    boolean useLabs = wiki.getConfiguration().getBoolean(WPCConfigurationBoolean.CW_USE_LABS);
-    return useLabs ? "WMFLabs" : "Toolserver";
-  }
-
-  /**
-   * Response manager for the list of pages.
-   */
-  private static class PagesResponseManager implements ResponseManager {
-
-    /**
-     * True if classic interface should be used.
-     */
-    private final boolean classic;
-
-    /**
-     * Algorithm.
-     */
-    private final Integer errorNumber;
-
-    /**
-     * Wiki.
-     */
-    private final EnumWikipedia wiki;
-
-    /**
-     * List of errors.
-     */
-    private final List<CheckError> errors;
-
-    /**
-     * @param classic True if classic interface should be used.
-     */
-    public PagesResponseManager(
-        boolean classic,
-        CheckErrorAlgorithm algorithm,
-        EnumWikipedia wiki,
-        List<CheckError> errors) {
-      this.classic = classic;
-      Integer tmp = null;
-      try {
-        tmp = Integer.valueOf(algorithm.getErrorNumberString());
-      } catch (NumberFormatException e) {
-        //
-      }
-      this.errorNumber = tmp;
-      this.wiki = wiki;
-      this.errors = errors;
-    }
-
-    /**
-     * @param stream
-     * @throws IOException
-     * @throws APIException
-     * @see org.wikipediacleaner.api.ResponseManager#manageResponse(java.io.InputStream)
-     */
-    public void manageResponse(InputStream stream) throws IOException,
-        APIException {
-      if (classic) {
-        CheckError.addCheckErrorClassic(
-            errors, wiki,
-            errorNumber, stream);
-      } else {
-        CheckError.addCheckErrorBots(
-            errors, wiki,
-            errorNumber, stream);
-      }
-    }
-    
-  }
-
-  /**
    * Mark a page as fixed.
    * 
    * @param page Page.
@@ -210,6 +128,7 @@ public class CheckWiki {
   public boolean markAsFixed(Page page, String errorNumber) {
     try {
       int error = Integer.parseInt(errorNumber);
+      notifyPageFixed(page, error);
       if (error > CheckErrorAlgorithm.MAX_ERROR_NUMBER_WITH_LIST) {
         return true;
       }
@@ -250,6 +169,83 @@ public class CheckWiki {
       return false;
     }
     return true;
+  }
+
+  /**
+   * @param listener Listener to be added to the list of registered listeners.
+   */
+  public void addListener(CheckWikiListener listener) {
+    listeners.add(new WeakReference<CheckWikiListener>(listener));
+  }
+
+  /**
+   * @param listener Listener to be removed from the list of registered listeners.
+   */
+  public void removeListener(CheckWikiListener listener) {
+    if (listener == null) {
+      return;
+    }
+    synchronized (listeners) {
+      Iterator<WeakReference<CheckWikiListener>> itListener = listeners.iterator();
+      while (itListener.hasNext()) {
+        WeakReference<CheckWikiListener> listenerRef = itListener.next();
+        CheckWikiListener currentListener = listenerRef.get();
+        if ((currentListener == null) || (currentListener == listener)) {
+          itListener.remove();
+        }
+      }
+    }
+  }
+
+  /**
+   * Internal notification when a page is fixed.
+   * 
+   * @param page Page fixed.
+   * @param errorNumber Error for which the page is fixed.
+   */
+  private void notifyPageFixed(Page page, int errorNumber) {
+    synchronized (listeners) {
+      Iterator<WeakReference<CheckWikiListener>> itListener = listeners.iterator();
+      while (itListener.hasNext()) {
+        WeakReference<CheckWikiListener> listenerRef = itListener.next();
+        CheckWikiListener listener = listenerRef.get();
+        if (listener == null) {
+          itListener.remove();
+        } else {
+          listener.pageFixed(page, errorNumber);
+        }
+      }
+    }
+  }
+
+  /**
+   * @param wiki Wiki.
+   * @param algorithm Algorithm.
+   * @return URL for algorithm description.
+   */
+  public String getUrlDescription(
+      final EnumWikipedia wiki,
+      final CheckErrorAlgorithm algorithm) {
+    boolean useLabs = wiki.getConfiguration().getBoolean(WPCConfigurationBoolean.CW_USE_LABS);
+    String path = useLabs ?
+        "checkwiki/cgi-bin/checkwiki.cgi" :
+        "~sk/cgi-bin/checkwiki/checkwiki.cgi";
+    HttpServer server = useLabs ? labs : toolServer;
+    String url =
+        server.getBaseUrl() + path +
+        "?id=" + algorithm.getErrorNumberString() +
+        "&project=" + wiki.getSettings().getCodeCheckWiki() +
+        "&view=only";
+    return url;
+  }
+
+  /**
+   * @param wiki Wiki.
+   * @return Server name.
+   */
+  public static String getServerName(EnumWikipedia wiki) {
+    boolean useLabs = wiki.getConfiguration().getBoolean(WPCConfigurationBoolean.CW_USE_LABS);
+    return useLabs ? "WMFLabs" : "Toolserver";
   }
 
   /**

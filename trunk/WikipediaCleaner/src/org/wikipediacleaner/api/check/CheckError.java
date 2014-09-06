@@ -17,7 +17,6 @@ import java.util.Collection;
 import java.util.List;
 import java.util.regex.Pattern;
 
-import org.wikipediacleaner.api.APIFactory;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithm;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithms;
 import org.wikipediacleaner.api.constants.CWConfigurationError;
@@ -350,37 +349,21 @@ public class CheckError {
    * Remove a page from the list of errors.
    * 
    * @param page Page.
+   * @return True if a page has been removed from the list.
    */
-  public void remove(Page page) {
+  public boolean remove(Page page) {
     if (page == null) {
-      return;
+      return false;
     }
-    for (int i = errors.size(); i > 0; i--) {
-      if (Page.areSameTitle(page.getTitle(), errors.get(i - 1).getTitle())) {
-        errors.remove(i - 1);
+    boolean removed = false;
+    synchronized (errors) {
+      for (int i = errors.size(); i > 0; i--) {
+        if (Page.areSameTitle(page.getTitle(), errors.get(i - 1).getTitle())) {
+          errors.remove(i - 1);
+          removed = true;
+        }
       }
     }
-  }
-
-  /**
-   * Fix an error for the page.
-   * 
-   * @param page Page.
-   * @param errorNumber Error number.
-   * @return Flag indicating if fix was done.
-   */
-  public static boolean fix(Page page, String errorNumber) {
-    return APIFactory.getCheckWiki().markAsFixed(page, errorNumber);
-  }
-
-  /**
-   * Fix an error for the page.
-   * 
-   * @param page Page.
-   * @return Flag indicating if fix was done.
-   */
-  public boolean fix(Page page) {
-    errors.remove(page);
-    return fix(page, Integer.toString(errorNumber));
+    return removed;
   }
 }

@@ -25,6 +25,7 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
@@ -64,9 +65,10 @@ import org.lobobrowser.html.parser.DocumentBuilderImpl;
 import org.lobobrowser.html.test.SimpleUserAgentContext;
 import org.w3c.dom.Document;
 import org.wikipediacleaner.api.APIFactory;
-import org.wikipediacleaner.api.CheckWiki;
 import org.wikipediacleaner.api.check.CheckError;
 import org.wikipediacleaner.api.check.CheckErrorPage;
+import org.wikipediacleaner.api.check.CheckWiki;
+import org.wikipediacleaner.api.check.CheckWikiListener;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithm;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmComparator;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithms;
@@ -96,7 +98,7 @@ import org.xml.sax.SAXException;
 /**
  * Check Wiki Project window.
  */
-public class CheckWikiWindow extends OnePageWindow {
+public class CheckWikiWindow extends OnePageWindow implements CheckWikiListener {
 
   List<CheckErrorAlgorithm> allAlgorithms;
   private List<CheckErrorAlgorithm> selectedAlgorithms;
@@ -794,6 +796,8 @@ public class CheckWikiWindow extends OnePageWindow {
   @Override
   protected void afterFinishedReloadWorker() {
     super.afterFinishedReloadWorker();
+    CheckWiki checkWiki = APIFactory.getCheckWiki();
+    checkWiki.addListener(this);
     analyzeCheckWiki();
   }
 
@@ -859,7 +863,7 @@ public class CheckWikiWindow extends OnePageWindow {
         Page page = error.getPage(numPage);
         CheckErrorPage errorPage = new CheckErrorPage(page, error.getAlgorithm());
         if ((errorPage.isInWhiteList()) && (page.getPageId() != null)) {
-          markPageAsFixed(error, error.getAlgorithm().getErrorNumberString(), page);
+          markPageAsFixed(error.getAlgorithm().getErrorNumberString(), page);
         } else {
           modelPages.addElement(errorPage);
         }
@@ -1340,6 +1344,32 @@ public class CheckWikiWindow extends OnePageWindow {
           true, modelMaxErrors.getNumber().intValue());
       setupReloadWorker(reloadWorker);
       reloadWorker.start();
+    }
+  }
+
+  /**
+   * @param page
+   * @param errorNumber
+   * @see org.wikipediacleaner.api.check.CheckWikiListener#pageFixed(org.wikipediacleaner.api.data.Page, int)
+   */
+  public void pageFixed(Page page, int errorNumber) {
+    if ((errors == null) || (errors.isEmpty())) {
+      return;
+    }
+    boolean removed = false;
+    Iterator<CheckError> itError = errors.iterator();
+    while (itError.hasNext()) {
+      CheckError error = itError.next();
+      if (error.getErrorNumber() == errorNumber) {
+        removed |= error.remove(page);
+      }
+      if (error.getPageCount() == 0) {
+        itError.remove();
+        modelAllErrors.removeElement(error);
+      }
+    }
+    if (removed) {
+      actionSelectErrorType();
     }
   }
 }

@@ -284,7 +284,7 @@ public class CheckWikiContentPanel
       }
       pane.remove(this);
       if (error != null) {
-        OnePageWindow.markPageAsFixed(error, error.getAlgorithm().getErrorNumberString(), page);
+        OnePageWindow.markPageAsFixed(error.getAlgorithm().getErrorNumberString(), page);
       }
       window.actionSelectErrorType();
       return;
@@ -336,7 +336,7 @@ public class CheckWikiContentPanel
           pane.remove(this);
         }
         error.remove(page);
-        OnePageWindow.markPageAsFixed(error, error.getAlgorithm().getErrorNumberString(), page);
+        OnePageWindow.markPageAsFixed(error.getAlgorithm().getErrorNumberString(), page);
         window.actionSelectErrorType();
         if (errorCount == 0) {
           return;
@@ -495,7 +495,7 @@ public class CheckWikiContentPanel
       }
     }
     window.actionSelectErrorType();
-    OnePageWindow.markPageAsFixed(error, error.getAlgorithm().getErrorNumberString(), page);
+    OnePageWindow.markPageAsFixed(error.getAlgorithm().getErrorNumberString(), page);
   }
 
   /**
