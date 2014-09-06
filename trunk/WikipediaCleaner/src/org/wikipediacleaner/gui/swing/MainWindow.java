@@ -1261,7 +1261,7 @@ public class MainWindow
       Utilities.browseURL(url);
     } else {
       displayUrlMessage(
-          GT._("You can read the help on Wikipedia Cleaner at the following URL:"),
+          GT._("You can read the help on {0} at the following URL:", Version.PROGRAM),
           url);
     }
   }

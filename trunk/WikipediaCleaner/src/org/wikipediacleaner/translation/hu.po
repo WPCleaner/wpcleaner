@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2014-09-07 00:05+0200\n"
-"PO-Revision-Date: 2014-09-06 23:57+0100\n"
+"POT-Creation-Date: 2014-09-07 00:19+0200\n"
+"PO-Revision-Date: 2014-09-07 00:26+0100\n"
 "Last-Translator: Nicolas Vervelle <nvervelle@gmail.com>\n"
 "Language-Team: Hungarian <hu@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -38,8 +38,8 @@ msgstr ""
 #: org/wikipediacleaner/Version.java:35
 #, java-format
 msgid ""
-"I try to keep {0} up to date with Check Wiki, but if you find any discrepancy"
-"(ies) in the detections, please let me know."
+"I try to keep {0} up to date with Check Wiki, but if you find any "
+"discrepancy(ies) in the detections, please let me know."
 msgstr ""
 
 #: org/wikipediacleaner/Version.java:37
@@ -1404,8 +1404,9 @@ msgid "Deactivate all"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1264
-msgid "You can read the help on Wikipedia Cleaner at the following URL:"
-msgstr "Ezt a hivatkozást követve elérheted a Wikipedia Cleaner súgóját:"
+#, java-format
+msgid "You can read the help on {0} at the following URL:"
+msgstr "Ezt a hivatkozást követve elérheted a {0} súgóját:"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1278
 msgid "You can submit bug reports or feature requests at the following URL:"
