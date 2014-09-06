@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2014-09-07 00:49+0200\n"
+"POT-Creation-Date: 2014-09-07 01:07+0200\n"
 "PO-Revision-Date: 2014-09-07 00:55+0100\n"
 "Last-Translator: Nicolas Vervelle <nvervelle@gmail.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
@@ -42,8 +42,8 @@ msgstr ""
 #: org/wikipediacleaner/Version.java:35
 #, java-format
 msgid ""
-"I try to keep {0} up to date with Check Wiki, but if you find any "
-"discrepancy(ies) in the detections, please let me know."
+"I try to keep {0} up to date with Check Wiki, but if you find any discrepancy"
+"(ies) in the detections, please let me know."
 msgstr ""
 "Pokusím se, aby {0} s Check Wiki držel krok, ale pokud v detekcích objevíte "
 "nesoulad, dejte mi, prosím, vědět."
@@ -1367,6 +1367,7 @@ msgid "Generate lists"
 msgstr "Generovat seznamy"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:848
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1808
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:195
 msgid "Local Watchlist"
 msgstr "Místní sledované stránky"
@@ -1529,10 +1530,6 @@ msgstr "Zásahy filtru {0}"
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1666
 msgid "All disambiguations pages"
 msgstr "Všechny rozcestníkové stránky"
-
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1808
-msgid "Local watch list"
-msgstr "Místní sledované stránky"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1822
 msgid "Watch list"
@@ -3495,6 +3492,9 @@ msgstr "Název reference nemůže obsahovat tyto znaky: {0}"
 #, java-format
 msgid "The value can''t contain any of these characters: {0}"
 msgstr "Tato hodnota nemůže obsahovat žádné ze znaků: {0}"
+
+#~ msgid "Local watch list"
+#~ msgstr "Místní sledované stránky"
 
 #~ msgid "Error unkown from WikiCleaner"
 #~ msgstr "Neznámá chyba z WikiCleaneru"

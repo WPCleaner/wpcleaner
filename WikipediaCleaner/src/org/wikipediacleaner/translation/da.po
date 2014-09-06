@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2014-09-07 00:49+0200\n"
+"POT-Creation-Date: 2014-09-07 01:07+0200\n"
 "PO-Revision-Date: 2012-10-21 17:40+0000\n"
 "Last-Translator: Nicolas Vervelle <nvervelle@gmail.com>\n"
 "Language-Team: Danish <da@li.org>\n"
@@ -1335,6 +1335,7 @@ msgid "Generate lists"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:848
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1808
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:195
 #, fuzzy
 msgid "Local Watchlist"
@@ -1488,10 +1489,6 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1666
 msgid "All disambiguations pages"
-msgstr ""
-
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1808
-msgid "Local watch list"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1822

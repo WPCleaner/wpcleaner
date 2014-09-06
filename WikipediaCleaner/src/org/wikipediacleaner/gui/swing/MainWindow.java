@@ -1805,7 +1805,7 @@ public class MainWindow
     new PageListWorker(
         wikipedia, this, null,
         pageNames, PageListWorker.Mode.DIRECT, true,
-        GT._("Local watch list")).start();
+        GT._("Local Watchlist")).start();
   }
 
   /**
