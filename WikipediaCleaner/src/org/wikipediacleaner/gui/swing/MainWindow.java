@@ -1481,7 +1481,7 @@ public class MainWindow
    */
   public void actionEmbeddedIn() {
     String pageName = checkPagename(GT._(
-        "You must input a page name for retrieving the list of page it is embedded in"));
+        "You must input a page name for retrieving the list of page in which it is embedded"));
     if (pageName == null) {
       return;
     }
