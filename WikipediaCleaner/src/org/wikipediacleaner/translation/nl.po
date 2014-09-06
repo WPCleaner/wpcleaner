@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2014-09-07 00:05+0200\n"
+"POT-Creation-Date: 2014-09-07 00:19+0200\n"
 "PO-Revision-Date: 2014-07-29 00:32+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Dutch <nl@li.org>\n"
@@ -1406,7 +1406,8 @@ msgid "Deactivate all"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1264
-msgid "You can read the help on Wikipedia Cleaner at the following URL:"
+#, java-format
+msgid "You can read the help on {0} at the following URL:"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1278
