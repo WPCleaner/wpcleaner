@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2014-09-06 19:04+0200\n"
-"PO-Revision-Date: 2014-09-06 19:08+0100\n"
+"POT-Creation-Date: 2014-09-06 19:18+0200\n"
+"PO-Revision-Date: 2014-09-06 19:25+0100\n"
 "Last-Translator: Nicolas Vervelle <nvervelle@gmail.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -1270,7 +1270,7 @@ msgid "Save username and password"
 msgstr "Uložit jméno i heslo"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:551
-msgid "Save user name only"
+msgid "Save username only"
 msgstr "Uložit jen jméno"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:561
@@ -2368,9 +2368,9 @@ msgid "Mark as already fixed"
 msgstr "Označit jako již opravené"
 
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiContentPanel.java:329
-#, fuzzy, java-format
+#, java-format
 msgid "The error n°{0} has already been fixed in the page {1}."
-msgstr "Chyba číslo {0} je na stránce ještě jednou."
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiContentPanel.java:345
 #, java-format
