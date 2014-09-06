@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2014-09-06 23:30+0200\n"
+"POT-Creation-Date: 2014-09-06 23:51+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1375,7 +1375,7 @@ msgid "You must select a language before login"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:988
-msgid "You must input your user name before login"
+msgid "You must input your username before login"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1000

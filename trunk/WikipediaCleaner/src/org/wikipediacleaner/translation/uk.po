@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2014-09-06 23:30+0200\n"
-"PO-Revision-Date: 2014-09-06 23:47+0100\n"
+"POT-Creation-Date: 2014-09-06 23:51+0200\n"
+"PO-Revision-Date: 2014-09-07 00:00+0100\n"
 "Last-Translator: Nicolas Vervelle <nvervelle@gmail.com>\n"
 "Language-Team: Ukrainian <uk@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -1390,7 +1390,7 @@ msgid "You must select a language before login"
 msgstr "Перш ніж увійти, потрібно вибрати мову"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:988
-msgid "You must input your user name before login"
+msgid "You must input your username before login"
 msgstr "Перш ніж увійти, потрібно ввести ім’я користувача"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1000

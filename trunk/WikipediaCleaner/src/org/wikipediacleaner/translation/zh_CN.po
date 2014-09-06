@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2014-09-06 23:30+0200\n"
-"PO-Revision-Date: 2014-09-06 19:53+0100\n"
+"POT-Creation-Date: 2014-09-06 23:51+0200\n"
+"PO-Revision-Date: 2014-09-07 00:01+0100\n"
 "Last-Translator: Nicolas Vervelle <nvervelle@gmail.com>\n"
 "Language-Team: Chinese (Simplified) <zh_CN@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -38,8 +38,8 @@ msgstr ""
 #: org/wikipediacleaner/Version.java:35
 #, java-format
 msgid ""
-"I try to keep {0} up to date with Check Wiki, but if you find any discrepancy"
-"(ies) in the detections, please let me know."
+"I try to keep {0} up to date with Check Wiki, but if you find any "
+"discrepancy(ies) in the detections, please let me know."
 msgstr ""
 
 #: org/wikipediacleaner/Version.java:37
@@ -1380,7 +1380,7 @@ msgid "You must select a language before login"
 msgstr "在您登录前必须选择一种语言"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:988
-msgid "You must input your user name before login"
+msgid "You must input your username before login"
 msgstr "在您登录前必须输入用户名"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1000
