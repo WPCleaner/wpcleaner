@@ -39,8 +39,11 @@ import javax.swing.SwingConstants;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
+import org.wikipediacleaner.api.APIFactory;
 import org.wikipediacleaner.api.check.CheckError;
 import org.wikipediacleaner.api.check.CheckErrorPage;
+import org.wikipediacleaner.api.check.CheckWiki;
+import org.wikipediacleaner.api.check.CheckWikiDetection;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithm;
 import org.wikipediacleaner.api.constants.Contributions;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
@@ -310,23 +313,42 @@ public class CheckWikiContentPanel
         }
       }
     }
-    if ((error != null) && (errorFound == false) && (error.getAlgorithm().isFullDetection())) {
-      Configuration config = Configuration.getConfiguration();
-      int answer = JOptionPane.YES_OPTION;
-      if (window.yesAll) {
-        answer = Utilities.YES_ALL_OPTION;
-      } else if (window.noAll) {
-        answer = Utilities.NO_ALL_OPTION;
-      } else {
-        if (!config.getBoolean(
-            null,
-            ConfigurationValueBoolean.CHECK_MARK_AS_FIXED)) {
-          answer = window.displayYesNoAllWarning(GT._(
-              "The error n°{0} hasn''t been found in the page {1}.\n" +
-              "Do you want to mark it as fixed ?",
+    if ((error != null) && (errorFound == false)) {
+      CheckWiki checkWiki = APIFactory.getCheckWiki();
+      Collection<CheckWikiDetection> detections = checkWiki.check(page);
+      int answer = JOptionPane.NO_OPTION;
+      if (detections != null) {
+        boolean errorDetected = false;
+        for (CheckWikiDetection detection : detections) {
+          if (detection.getErrorNumber() == error.getAlgorithm().getErrorNumber()) {
+            errorDetected = true;
+          }
+        }
+        if (!errorDetected) {
+          window.displayWarning(GT._(
+              "The error n°{0} has already been fixed in the page {1}.",
               new Object[] { error.getAlgorithm().getErrorNumberString(), page.getTitle() }));
+          answer = JOptionPane.YES_OPTION;
+        }
+      } else if (error.getAlgorithm().isFullDetection()) {
+        Configuration config = Configuration.getConfiguration();
+        answer = JOptionPane.YES_OPTION;
+        if (window.yesAll) {
+          answer = Utilities.YES_ALL_OPTION;
+        } else if (window.noAll) {
+          answer = Utilities.NO_ALL_OPTION;
+        } else {
+          if (!config.getBoolean(
+              null,
+              ConfigurationValueBoolean.CHECK_MARK_AS_FIXED)) {
+            answer = window.displayYesNoAllWarning(GT._(
+                "The error n°{0} hasn''t been found in the page {1}.\n" +
+                "Do you want to mark it as fixed ?",
+                new Object[] { error.getAlgorithm().getErrorNumberString(), page.getTitle() }));
+          }
         }
       }
+
       switch (answer) {
       case Utilities.YES_ALL_OPTION:
         window.yesAll = true;
@@ -341,6 +363,8 @@ public class CheckWikiContentPanel
         if (errorCount == 0) {
           return;
         }
+        break;
+
       case Utilities.NO_ALL_OPTION:
         window.noAll = true;
         break;
