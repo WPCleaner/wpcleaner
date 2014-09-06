@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2014-09-06 17:22+0200\n"
-"PO-Revision-Date: 2014-09-06 17:18+0100\n"
+"POT-Creation-Date: 2014-09-06 19:04+0200\n"
+"PO-Revision-Date: 2014-09-06 19:08+0100\n"
 "Last-Translator: Nicolas Vervelle <nvervelle@gmail.com>\n"
 "Language-Team: Spanish\n"
 "MIME-Version: 1.0\n"
@@ -42,8 +42,8 @@ msgstr ""
 #: org/wikipediacleaner/Version.java:35
 #, java-format
 msgid ""
-"I try to keep {0} up to date with Check Wiki, but if you find any discrepancy"
-"(ies) in the detections, please let me know."
+"I try to keep {0} up to date with Check Wiki, but if you find any "
+"discrepancy(ies) in the detections, please let me know."
 msgstr ""
 "Intento mantener {0} actualizado con Check Wikipedia pero, si encuentra "
 "alguna discrepancia en las detecciones, por favor hágamelo saber."
@@ -1286,7 +1286,7 @@ msgid "Idea? Bug?"
 msgstr "¿Alguna idea o error?"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:539
-msgid "Save user name and password"
+msgid "Save username and password"
 msgstr "Guardar el nombre de usuario y contraseña"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:551

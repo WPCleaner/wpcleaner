@@ -536,7 +536,7 @@ public class MainWindow
         null, ConfigurationValueInteger.SAVE_USER);
     groupSaveUsernamePassword = new ButtonGroup();
     radSavePassword = Utilities.createJRadioButton(
-        GT._("Save user name and password"),
+        GT._("Save username and password"),
         (saveUser == ConfigurationConstants.VALUE_SAVE_USER_BOTH));
     radSavePassword.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionSavePassword"));

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2014-09-06 17:22+0200\n"
+"POT-Creation-Date: 2014-09-06 19:04+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1231,7 +1231,7 @@ msgid "Idea? Bug?"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:539
-msgid "Save user name and password"
+msgid "Save username and password"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:551
