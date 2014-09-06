@@ -1105,7 +1105,7 @@ public class MainWindow
       Utilities.browseURL(wikipedia, wikipedia.getConfigurationPage(), true);
     } else {
       displayUrlMessage(
-          GT._("You can learn how to configure WikiCleaner at the following URL:"),
+          GT._("You can learn how to configure {0} at the following URL:", Version.PROGRAM),
           URL_OTHER_WIKIPEDIA);
     }
   }

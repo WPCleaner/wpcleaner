@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2014-09-06 23:51+0200\n"
+"POT-Creation-Date: 2014-09-07 00:05+0200\n"
 "PO-Revision-Date: 2014-09-06 23:57+0100\n"
 "Last-Translator: Nicolas Vervelle <nvervelle@gmail.com>\n"
 "Language-Team: Indonesian <id@li.org>\n"
@@ -38,8 +38,8 @@ msgstr ""
 #: org/wikipediacleaner/Version.java:35
 #, java-format
 msgid ""
-"I try to keep {0} up to date with Check Wiki, but if you find any "
-"discrepancy(ies) in the detections, please let me know."
+"I try to keep {0} up to date with Check Wiki, but if you find any discrepancy"
+"(ies) in the detections, please let me know."
 msgstr ""
 
 #: org/wikipediacleaner/Version.java:37
@@ -53,8 +53,8 @@ msgid ""
 "WPCleaner configuration is available online, check the {0}System "
 "configuration{1}."
 msgstr ""
-"Konfigurasi WPCleaner tersedia secara online, periksa {0}Sistem "
-"konfigurasi{1}."
+"Konfigurasi WPCleaner tersedia secara online, periksa {0}Sistem konfigurasi"
+"{1}."
 
 #: org/wikipediacleaner/Version.java:43
 msgid "Please, report any other problem you find to me."
@@ -1400,8 +1400,9 @@ msgid "You must input your password before login"
 msgstr "Ketik kata sandi sebelum masuk log"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1108
-msgid "You can learn how to configure WikiCleaner at the following URL:"
-msgstr ""
+#, fuzzy, java-format
+msgid "You can learn how to configure {0} at the following URL:"
+msgstr "Pelajari cara menambahkan bahasa lain pada pranala berikut ini :"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1157
 msgid "Activate all"
