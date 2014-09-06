@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2014-09-07 00:49+0200\n"
+"POT-Creation-Date: 2014-09-07 01:07+0200\n"
 "PO-Revision-Date: 2014-09-07 00:24+0100\n"
 "Last-Translator: Nicolas Vervelle <nvervelle@gmail.com>\n"
 "Language-Team: Spanish\n"
@@ -1387,6 +1387,7 @@ msgid "Generate lists"
 msgstr "Generar listas"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:848
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1808
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:195
 msgid "Local Watchlist"
 msgstr "Lista de seguimiento local"
@@ -1559,10 +1560,6 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1666
 msgid "All disambiguations pages"
 msgstr "Todas las páginas de desambiguación"
-
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1808
-msgid "Local watch list"
-msgstr "Lista de seguimiento local"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1822
 msgid "Watch list"
@@ -3520,6 +3517,9 @@ msgstr ""
 #, java-format
 msgid "The value can''t contain any of these characters: {0}"
 msgstr ""
+
+#~ msgid "Local watch list"
+#~ msgstr "Lista de seguimiento local"
 
 #, fuzzy
 #~ msgid "A list of templates that can be used to replace <u> tags"
