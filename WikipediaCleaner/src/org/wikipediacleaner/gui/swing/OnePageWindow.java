@@ -36,9 +36,11 @@ import javax.swing.JToggleButton;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 
+import org.wikipediacleaner.api.APIFactory;
 import org.wikipediacleaner.api.MediaWikiController;
 import org.wikipediacleaner.api.check.CheckError;
 import org.wikipediacleaner.api.check.CheckErrorPage;
+import org.wikipediacleaner.api.check.CheckWiki;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithm;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.constants.WPCConfigurationString;
@@ -1139,21 +1141,19 @@ public abstract class OnePageWindow
   /**
    * Mark a page as fixed for an error.
    * 
-   * @param error Error.
    * @param errorNumber Error number.
    * @param pageFixed Page.
    */
   static public void markPageAsFixed(
-      final CheckError error, final String errorNumber, final Page pageFixed) {
+      final String errorNumber, final Page pageFixed) {
     if (pageFixed != null) {
       MediaWikiController.addSimpleTask(new Callable<Page>() {
   
         public Page call() throws Exception
         {
-          if (error != null) {
-            error.fix(pageFixed);
-          } else {
-            CheckError.fix(pageFixed, errorNumber);
+          CheckWiki checkWiki = APIFactory.getCheckWiki();
+          if (checkWiki != null) {
+            checkWiki.markAsFixed(pageFixed, errorNumber);
           }
           return pageFixed;
         }});

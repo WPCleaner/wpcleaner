@@ -133,7 +133,7 @@ public class SendWorker extends BasicWorker {
     if (errorsFixed != null) {
       for (CheckErrorAlgorithm error: errorsFixed) {
         if (error.getPriority() != CWConfigurationError.PRIORITY_BOT_ONLY) {
-          OnePageWindow.markPageAsFixed(null, error.getErrorNumberString(), page);
+          OnePageWindow.markPageAsFixed(error.getErrorNumberString(), page);
         }
       }
     }

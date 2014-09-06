@@ -17,8 +17,8 @@ import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 
 import org.wikipediacleaner.api.APIFactory;
-import org.wikipediacleaner.api.CheckWiki;
 import org.wikipediacleaner.api.check.CheckErrorPage;
+import org.wikipediacleaner.api.check.CheckWiki;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithm;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.gui.swing.action.CheckErrorGlobalFixAction;

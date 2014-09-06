@@ -11,6 +11,7 @@ import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpConnectionManager;
 import org.apache.commons.httpclient.MultiThreadedHttpConnectionManager;
 import org.apache.commons.httpclient.params.HttpMethodParams;
+import org.wikipediacleaner.api.check.CheckWiki;
 import org.wikipediacleaner.api.impl.MediaWikiAPI;
 
 

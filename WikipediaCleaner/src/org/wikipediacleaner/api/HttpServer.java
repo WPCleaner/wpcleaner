@@ -65,7 +65,7 @@ public class HttpServer {
    * @param manager Response manager.
    * @throws APIException
    */
-  void sendPost(
+  public void sendPost(
       String              path,
       Map<String, String> properties,
       ResponseManager     manager) throws APIException {
