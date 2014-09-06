@@ -985,7 +985,7 @@ public class MainWindow
           (comboUser.getSelectedItem() == null) ||
           ("".equals(comboUser.getSelectedItem().toString().trim()))) {
         displayWarning(
-            GT._("You must input your user name before login"),
+            GT._("You must input your username before login"),
             comboUser);
         return;
       }
