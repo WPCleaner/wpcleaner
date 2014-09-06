@@ -1396,12 +1396,18 @@ public class CheckWikiWindow extends OnePageWindow implements CheckWikiListener 
     updateNeeded = false;
 
     // Remove errors with no pages
-    Iterator<CheckError> itError = errors.iterator();
-    while (itError.hasNext()) {
-      CheckError error = itError.next();
-      if (error.getPageCount() == 0) {
-        itError.remove();
-        modelAllErrors.removeElement(error);
+    Configuration config = Configuration.getConfiguration();
+    boolean showAllErrors = config.getBoolean(
+        null,
+        ConfigurationValueBoolean.CHECK_SHOW_0_ERRORS);
+    if (!showAllErrors) {
+      Iterator<CheckError> itError = errors.iterator();
+      while (itError.hasNext()) {
+        CheckError error = itError.next();
+        if (error.getPageCount() == 0) {
+          itError.remove();
+          modelAllErrors.removeElement(error);
+        }
       }
     }
 
