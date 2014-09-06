@@ -14,6 +14,7 @@ import java.io.InputStreamReader;
 import java.io.StringReader;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -169,6 +170,28 @@ public class CheckWiki {
       return false;
     }
     return true;
+  }
+
+  public Collection<CheckWikiDetection> check(Page page) {
+    try {
+      Collection<CheckWikiDetection> detections = null;
+      EnumWikipedia wiki = page.getWikipedia();
+      boolean useLabs = wiki.getConfiguration().getBoolean(WPCConfigurationBoolean.CW_USE_LABS);
+      boolean markBoth = wiki.getConfiguration().getBoolean(WPCConfigurationBoolean.CW_MARK_BOTH);
+      String code = wiki.getSettings().getCodeCheckWiki().replace("-", "_");
+      Map<String, String> properties = new HashMap<String, String>();
+      properties.put("project", code);
+      properties.put("article", page.getTitle());
+      if (useLabs || markBoth) {
+        detections = new ArrayList<CheckWikiDetection>();
+        labs.sendPost(
+            "checkwiki/cgi-bin/checkarticle.cgi", properties,
+            new CheckResponseManager(detections));
+      }
+      return detections;
+    } catch (APIException e) {
+      return null;
+    }
   }
 
   /**
