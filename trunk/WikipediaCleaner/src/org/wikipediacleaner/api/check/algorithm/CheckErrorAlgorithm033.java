@@ -111,7 +111,7 @@ public class CheckErrorAlgorithm033 extends CheckErrorAlgorithmBase {
     Map<String, String> parameters = super.getParameters();
     parameters.put(
         "templates",
-        GT._("A list of templates that can be used to replace <u> tags"));
+        GT._("Templates that can be used to replace {0} tags", "&lt;u&gt;"));
     return parameters;
   }
 }

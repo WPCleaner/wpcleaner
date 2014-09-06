@@ -416,7 +416,7 @@ public class MainWindow
     comboUser.setEditable(true);
     comboUser.addItemListener(EventHandler.create(
         ItemListener.class, this, "actionChangeUser"));
-    JLabel labelUsername = Utilities.createJLabel(GT._("User name :"));
+    JLabel labelUsername = Utilities.createJLabel(GT._("Username:"));
     labelUsername.setLabelFor(comboUser);
     labelUsername.setHorizontalAlignment(SwingConstants.TRAILING);
     constraints.gridx = 0;
