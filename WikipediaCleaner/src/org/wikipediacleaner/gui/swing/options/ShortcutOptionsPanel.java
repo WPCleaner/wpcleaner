@@ -102,7 +102,7 @@ public class ShortcutOptionsPanel extends OptionsPanel {
 
     // Add line for add to watch list
     addLine(
-        panel, constraints, GT._("Add to Watchlist"),
+        panel, constraints, GT._("Add to local watchlist"),
         ConfigurationValueShortcut.ADD_TO_WATCH_LIST);
 
     // Add line for apply

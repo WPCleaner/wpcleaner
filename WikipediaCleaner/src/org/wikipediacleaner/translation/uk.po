@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2014-09-07 11:48+0200\n"
-"PO-Revision-Date: 2014-09-07 12:15+0100\n"
+"POT-Creation-Date: 2014-09-07 12:52+0200\n"
+"PO-Revision-Date: 2014-09-07 13:08+0100\n"
 "Last-Translator: Nicolas Vervelle <nvervelle@gmail.com>\n"
 "Language-Team: Ukrainian <uk@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -2047,16 +2047,19 @@ msgid "Previous occurrence"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/action/ActionWatchPage.java:45
-msgid "Add to Watch list"
-msgstr ""
+#: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:105
+#, fuzzy
+msgid "Add to local watchlist"
+msgstr "Додати до &списку спостереження"
 
-#: org/wikipediacleaner/gui/swing/action/ActionWatchPage.java:166
-msgid "Would you like to add this page on your local Watch list ?"
-msgstr "Хочете додати цю сторінку до локального списку спостереження ?"
-
-#: org/wikipediacleaner/gui/swing/action/ActionWatchPage.java:186
-msgid "Would you like to add these pages on your local Watch list ?"
-msgstr "Хочете додати ці сторінки до вашого локального списку спостереження ?"
+#: org/wikipediacleaner/gui/swing/action/ActionWatchPage.java:180
+msgid "Would you like to add this page on your local watchlist?"
+msgid_plural "Would you like to add these pages on your local watchlist?"
+msgstr[0] "Хочете додати цю сторінку до локального списку спостереження ?"
+msgstr[1] ""
+"Хочете додати ці сторінки до вашого локального списку спостереження ?"
+msgstr[2] ""
+"Хочете додати ці сторінки до вашого локального списку спостереження ?"
 
 #: org/wikipediacleaner/gui/swing/action/CheckCategoryLinkAction.java:88
 #, java-format
@@ -3147,11 +3150,6 @@ msgstr ""
 msgid "Shortcut options (restart needed)"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:105
-#, fuzzy
-msgid "Add to Watchlist"
-msgstr "Додати до &списку спостереження"
-
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:160
 msgid "Logout"
 msgstr ""
@@ -3418,6 +3416,14 @@ msgstr ""
 #, java-format
 msgid "The value can''t contain any of these characters: {0}"
 msgstr ""
+
+#, fuzzy
+#~ msgid "Add to Watchlist"
+#~ msgstr "Додати до &списку спостереження"
+
+#~ msgid "Would you like to add these pages on your local Watch list ?"
+#~ msgstr ""
+#~ "Хочете додати ці сторінки до вашого локального списку спостереження ?"
 
 #~ msgid ""
 #~ "You need to define the 'dab_warning_template' property in WikiCleaner "

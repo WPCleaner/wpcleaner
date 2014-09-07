@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2014-09-07 11:48+0200\n"
-"PO-Revision-Date: 2014-09-07 12:10+0100\n"
+"POT-Creation-Date: 2014-09-07 12:52+0200\n"
+"PO-Revision-Date: 2014-09-07 13:02+0100\n"
 "Last-Translator: Nicolas Vervelle <nvervelle@gmail.com>\n"
 "Language-Team: Italian <it@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -2065,16 +2065,15 @@ msgid "Previous occurrence"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/action/ActionWatchPage.java:45
-msgid "Add to Watch list"
-msgstr ""
+#: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:105
+msgid "Add to local watchlist"
+msgstr "Aggiungi alla Watch list"
 
-#: org/wikipediacleaner/gui/swing/action/ActionWatchPage.java:166
-msgid "Would you like to add this page on your local Watch list ?"
-msgstr "Vuoi aggiungere questa pagina ai tuoi osservati speciali?"
-
-#: org/wikipediacleaner/gui/swing/action/ActionWatchPage.java:186
-msgid "Would you like to add these pages on your local Watch list ?"
-msgstr "Vuoi aggiungere queste pagine negli osservati speciali?"
+#: org/wikipediacleaner/gui/swing/action/ActionWatchPage.java:180
+msgid "Would you like to add this page on your local watchlist?"
+msgid_plural "Would you like to add these pages on your local watchlist?"
+msgstr[0] "Vuoi aggiungere questa pagina ai tuoi osservati speciali?"
+msgstr[1] "Vuoi aggiungere queste pagine negli osservati speciali?"
 
 #: org/wikipediacleaner/gui/swing/action/CheckCategoryLinkAction.java:88
 #, java-format
@@ -3161,10 +3160,6 @@ msgstr ""
 msgid "Shortcut options (restart needed)"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:105
-msgid "Add to Watchlist"
-msgstr "Aggiungi alla Watch list"
-
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:160
 msgid "Logout"
 msgstr ""
@@ -3440,6 +3435,12 @@ msgstr "Il nome di una nota non può contenere nessuno di questi caratteri: {0}"
 #, java-format
 msgid "The value can''t contain any of these characters: {0}"
 msgstr ""
+
+#~ msgid "Add to Watchlist"
+#~ msgstr "Aggiungi alla Watch list"
+
+#~ msgid "Would you like to add these pages on your local Watch list ?"
+#~ msgstr "Vuoi aggiungere queste pagine negli osservati speciali?"
 
 #, fuzzy
 #~ msgid "A list of templates that can be used to replace <u> tags"

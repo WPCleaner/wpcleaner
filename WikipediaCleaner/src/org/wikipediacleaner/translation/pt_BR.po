@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2014-09-07 11:48+0200\n"
-"PO-Revision-Date: 2014-09-07 12:13+0100\n"
+"POT-Creation-Date: 2014-09-07 12:52+0200\n"
+"PO-Revision-Date: 2014-09-07 13:06+0100\n"
 "Last-Translator: Nicolas Vervelle <nvervelle@gmail.com>\n"
 "Language-Team: Brazilian Portuguese <pt_BR@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -2100,17 +2100,17 @@ msgid "Previous occurrence"
 msgstr "Ocorrência anterior"
 
 #: org/wikipediacleaner/gui/swing/action/ActionWatchPage.java:45
-msgid "Add to Watch list"
+#: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:105
+msgid "Add to local watchlist"
 msgstr "Adicionar a lista de páginas vigiadas"
 
-#: org/wikipediacleaner/gui/swing/action/ActionWatchPage.java:166
-msgid "Would you like to add this page on your local Watch list ?"
-msgstr ""
+#: org/wikipediacleaner/gui/swing/action/ActionWatchPage.java:180
+#, fuzzy
+msgid "Would you like to add this page on your local watchlist?"
+msgid_plural "Would you like to add these pages on your local watchlist?"
+msgstr[0] ""
 "Você gostaria de adicionar esta página em sua lista de páginas vigiadas?"
-
-#: org/wikipediacleaner/gui/swing/action/ActionWatchPage.java:186
-msgid "Would you like to add these pages on your local Watch list ?"
-msgstr ""
+msgstr[1] ""
 "Você gostaria de adicionar esta página em sua lista de páginas vigiadas?"
 
 #: org/wikipediacleaner/gui/swing/action/CheckCategoryLinkAction.java:88
@@ -3217,10 +3217,6 @@ msgstr "Carregar padrões"
 msgid "Shortcut options (restart needed)"
 msgstr "Opções de atalhos (necessário reiniciar)"
 
-#: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:105
-msgid "Add to Watchlist"
-msgstr "Adicionar a lista de páginas vigiadas"
-
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:160
 msgid "Logout"
 msgstr "Logout"
@@ -3505,6 +3501,16 @@ msgstr ""
 #, java-format
 msgid "The value can''t contain any of these characters: {0}"
 msgstr "O valor não pode conter nenhum dos seguintes caracteres: {0}"
+
+#~ msgid "Add to Watchlist"
+#~ msgstr "Adicionar a lista de páginas vigiadas"
+
+#~ msgid "Add to Watch list"
+#~ msgstr "Adicionar a lista de páginas vigiadas"
+
+#~ msgid "Would you like to add these pages on your local Watch list ?"
+#~ msgstr ""
+#~ "Você gostaria de adicionar esta página em sua lista de páginas vigiadas?"
 
 #~ msgid ""
 #~ "You need to define the 'dab_warning_template' property in WikiCleaner "

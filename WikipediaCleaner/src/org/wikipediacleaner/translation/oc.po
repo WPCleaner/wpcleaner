@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2014-09-07 11:48+0200\n"
-"PO-Revision-Date: 2014-09-07 12:13+0100\n"
+"POT-Creation-Date: 2014-09-07 12:52+0200\n"
+"PO-Revision-Date: 2014-09-07 13:04+0100\n"
 "Last-Translator: Nicolas Vervelle <nvervelle@gmail.com>\n"
 "Language-Team: Occitan (post 1500) <oc@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -2030,16 +2030,16 @@ msgid "Previous occurrence"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/action/ActionWatchPage.java:45
-msgid "Add to Watch list"
-msgstr ""
+#: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:105
+#, fuzzy
+msgid "Add to local watchlist"
+msgstr "Apondre a la lista de &Seguit"
 
-#: org/wikipediacleaner/gui/swing/action/ActionWatchPage.java:166
-msgid "Would you like to add this page on your local Watch list ?"
-msgstr "Volètz apondre aquesta pagina a vòstra lista de seguit locala ?"
-
-#: org/wikipediacleaner/gui/swing/action/ActionWatchPage.java:186
-msgid "Would you like to add these pages on your local Watch list ?"
-msgstr "Volètz apondre aquestas paginas a vòstra lista de seguit locala ?"
+#: org/wikipediacleaner/gui/swing/action/ActionWatchPage.java:180
+msgid "Would you like to add this page on your local watchlist?"
+msgid_plural "Would you like to add these pages on your local watchlist?"
+msgstr[0] "Volètz apondre aquesta pagina a vòstra lista de seguit locala ?"
+msgstr[1] "Volètz apondre aquestas paginas a vòstra lista de seguit locala ?"
 
 #: org/wikipediacleaner/gui/swing/action/CheckCategoryLinkAction.java:88
 #, java-format
@@ -3109,11 +3109,6 @@ msgstr ""
 msgid "Shortcut options (restart needed)"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:105
-#, fuzzy
-msgid "Add to Watchlist"
-msgstr "Apondre a la lista de &Seguit"
-
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:160
 msgid "Logout"
 msgstr ""
@@ -3380,6 +3375,13 @@ msgstr ""
 #, java-format
 msgid "The value can''t contain any of these characters: {0}"
 msgstr ""
+
+#, fuzzy
+#~ msgid "Add to Watchlist"
+#~ msgstr "Apondre a la lista de &Seguit"
+
+#~ msgid "Would you like to add these pages on your local Watch list ?"
+#~ msgstr "Volètz apondre aquestas paginas a vòstra lista de seguit locala ?"
 
 #~ msgid "&Close"
 #~ msgstr "&Tampar"

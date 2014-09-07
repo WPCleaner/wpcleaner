@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2014-09-07 11:48+0200\n"
+"POT-Creation-Date: 2014-09-07 12:52+0200\n"
 "PO-Revision-Date: 2014-09-07 12:09+0100\n"
 "Last-Translator: Nicolas Vervelle <nvervelle@gmail.com>\n"
 "Language-Team: Hungarian <hu@li.org>\n"
@@ -38,8 +38,8 @@ msgstr ""
 #: org/wikipediacleaner/Version.java:35
 #, java-format
 msgid ""
-"I try to keep {0} up to date with Check Wiki, but if you find any "
-"discrepancy(ies) in the detections, please let me know."
+"I try to keep {0} up to date with Check Wiki, but if you find any discrepancy"
+"(ies) in the detections, please let me know."
 msgstr ""
 
 #: org/wikipediacleaner/Version.java:37
@@ -2034,16 +2034,17 @@ msgid "Previous occurrence"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/action/ActionWatchPage.java:45
-msgid "Add to Watch list"
-msgstr ""
+#: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:105
+#, fuzzy
+msgid "Add to local watchlist"
+msgstr "Lap figyelése"
 
-#: org/wikipediacleaner/gui/swing/action/ActionWatchPage.java:166
-msgid "Would you like to add this page on your local Watch list ?"
-msgstr "Hozzá akarod adni ezt az oldalt a Figyelőlistádhoz ?"
-
-#: org/wikipediacleaner/gui/swing/action/ActionWatchPage.java:186
-msgid "Would you like to add these pages on your local Watch list ?"
-msgstr "Hozzá akarod adni ezeket az oldalakat a helyi Figyelsőlistádhoz?"
+#: org/wikipediacleaner/gui/swing/action/ActionWatchPage.java:180
+#, fuzzy
+msgid "Would you like to add this page on your local watchlist?"
+msgid_plural "Would you like to add these pages on your local watchlist?"
+msgstr[0] "Hozzá akarod adni ezt az oldalt a Figyelőlistádhoz ?"
+msgstr[1] "Hozzá akarod adni ezt az oldalt a Figyelőlistádhoz ?"
 
 #: org/wikipediacleaner/gui/swing/action/CheckCategoryLinkAction.java:88
 #, java-format
@@ -3113,11 +3114,6 @@ msgstr ""
 msgid "Shortcut options (restart needed)"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:105
-#, fuzzy
-msgid "Add to Watchlist"
-msgstr "Lap figyelése"
-
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:160
 msgid "Logout"
 msgstr ""
@@ -3384,6 +3380,13 @@ msgstr ""
 #, java-format
 msgid "The value can''t contain any of these characters: {0}"
 msgstr ""
+
+#, fuzzy
+#~ msgid "Add to Watchlist"
+#~ msgstr "Lap figyelése"
+
+#~ msgid "Would you like to add these pages on your local Watch list ?"
+#~ msgstr "Hozzá akarod adni ezeket az oldalakat a helyi Figyelsőlistádhoz?"
 
 #~ msgid "Error unkown from WikiCleaner"
 #~ msgstr "A WikiCleaner számára ismeretlen hiba"

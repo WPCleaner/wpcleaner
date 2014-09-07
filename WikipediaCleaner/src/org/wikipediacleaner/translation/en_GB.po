@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2014-09-07 11:48+0200\n"
-"PO-Revision-Date: 2014-09-07 12:07+0100\n"
+"POT-Creation-Date: 2014-09-07 12:52+0200\n"
+"PO-Revision-Date: 2014-09-07 12:57+0100\n"
 "Last-Translator: Nicolas Vervelle <nvervelle@gmail.com>\n"
 "Language-Team: English (United Kingdom) <en_GB@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -2066,16 +2066,15 @@ msgid "Previous occurrence"
 msgstr "Previous occurrence"
 
 #: org/wikipediacleaner/gui/swing/action/ActionWatchPage.java:45
-msgid "Add to Watch list"
-msgstr "Add to Watchlist"
+#: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:105
+msgid "Add to local watchlist"
+msgstr "Add to local watchlist"
 
-#: org/wikipediacleaner/gui/swing/action/ActionWatchPage.java:166
-msgid "Would you like to add this page on your local Watch list ?"
-msgstr "Would you like to add this page on your local Watchlist ?"
-
-#: org/wikipediacleaner/gui/swing/action/ActionWatchPage.java:186
-msgid "Would you like to add these pages on your local Watch list ?"
-msgstr "Would you like to add these pages on your local Watchlist ?"
+#: org/wikipediacleaner/gui/swing/action/ActionWatchPage.java:180
+msgid "Would you like to add this page on your local watchlist?"
+msgid_plural "Would you like to add these pages on your local watchlist?"
+msgstr[0] "Would you like to add this page on your local Watchlist ?"
+msgstr[1] "Would you like to add these pages on your local Watchlist ?"
 
 #: org/wikipediacleaner/gui/swing/action/CheckCategoryLinkAction.java:88
 #, java-format
@@ -3171,10 +3170,6 @@ msgstr "Restore defaults"
 msgid "Shortcut options (restart needed)"
 msgstr "Shortcut options (restart needed)"
 
-#: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:105
-msgid "Add to Watchlist"
-msgstr "Add to Watchlist"
-
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:160
 msgid "Logout"
 msgstr "Logout"
@@ -3458,6 +3453,15 @@ msgstr "A reference name cannot contain any of these characters: {0}"
 #, java-format
 msgid "The value can''t contain any of these characters: {0}"
 msgstr "The value cannot contain any of these characters: {0}"
+
+#~ msgid "Add to Watchlist"
+#~ msgstr "Add to Watchlist"
+
+#~ msgid "Add to Watch list"
+#~ msgstr "Add to Watchlist"
+
+#~ msgid "Would you like to add these pages on your local Watch list ?"
+#~ msgstr "Would you like to add these pages on your local Watchlist ?"
 
 #~ msgid ""
 #~ "You need to define the 'dab_warning_template' property in WikiCleaner "
