@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2014-09-07 01:07+0200\n"
+"POT-Creation-Date: 2014-09-07 09:06+0200\n"
 "PO-Revision-Date: 2014-07-29 00:35+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Japanese <ja@li.org>\n"
@@ -1654,7 +1654,7 @@ msgid "Do you want to apply the automatic modifications?"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:1113
-msgid "Do you want to update the ISBN warning in talk page ?"
+msgid "Do you want to update the ISBN warning on talk page?"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:1419
