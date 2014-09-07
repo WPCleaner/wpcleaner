@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2014-09-07 01:07+0200\n"
-"PO-Revision-Date: 2014-09-07 00:55+0100\n"
+"POT-Creation-Date: 2014-09-07 09:06+0200\n"
+"PO-Revision-Date: 2014-09-07 09:10+0100\n"
 "Last-Translator: Nicolas Vervelle <nvervelle@gmail.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -42,8 +42,8 @@ msgstr ""
 #: org/wikipediacleaner/Version.java:35
 #, java-format
 msgid ""
-"I try to keep {0} up to date with Check Wiki, but if you find any discrepancy"
-"(ies) in the detections, please let me know."
+"I try to keep {0} up to date with Check Wiki, but if you find any "
+"discrepancy(ies) in the detections, please let me know."
 msgstr ""
 "Pokusím se, aby {0} s Check Wiki držel krok, ale pokud v detekcích objevíte "
 "nesoulad, dejte mi, prosím, vědět."
@@ -1694,7 +1694,7 @@ msgid "Do you want to apply the automatic modifications?"
 msgstr "Chcete aplikovat automatická nahrazení?"
 
 #: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:1113
-msgid "Do you want to update the ISBN warning in talk page ?"
+msgid "Do you want to update the ISBN warning on talk page?"
 msgstr "Chcete na diskusní stránce aktualizovat varování ohledně chyb v ISBN?"
 
 #: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:1419

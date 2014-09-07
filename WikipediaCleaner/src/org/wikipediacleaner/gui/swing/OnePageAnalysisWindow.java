@@ -1110,7 +1110,7 @@ public class OnePageAnalysisWindow extends OnePageWindow {
 
     int answer = Utilities.displayYesNoWarning(
         getParentComponent(),
-        GT._("Do you want to update the ISBN warning in talk page ?"));
+        GT._("Do you want to update the ISBN warning on talk page?"));
     if (answer != JOptionPane.YES_OPTION) {
       return;
     }
