@@ -404,13 +404,13 @@ public class PageListWindow extends BasicWindow {
     }
     String template = getConfiguration().getString(WPCConfigurationString.DAB_WARNING_TEMPLATE);
     if ((template == null) || (template.trim().length() == 0)) {
-      Utilities.displayWarning(
+      Utilities.displayMessageForMissingConfiguration(
           getParentComponent(),
-          GT._("You need to define the 'dab_warning_template' property in WikiCleaner configuration."));
+          WPCConfigurationString.DAB_WARNING_TEMPLATE.getAttributeName());
     }
     int answer = Utilities.displayYesNoWarning(
         getParentComponent(),
-        GT._("Do you want to update the disambiguation warning in talk page ?"));
+        GT._("Do you want to update the disambiguation warning on talk page?"));
     if (answer != JOptionPane.YES_OPTION) {
       return;
     }

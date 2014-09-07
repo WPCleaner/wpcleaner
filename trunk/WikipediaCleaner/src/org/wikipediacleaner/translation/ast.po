@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2014-09-07 09:06+0200\n"
+"POT-Creation-Date: 2014-09-07 09:26+0200\n"
 "PO-Revision-Date: 2014-07-29 00:22+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Asturian <ast@li.org>\n"
@@ -1432,7 +1432,7 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1351
 #: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:1087
 #: org/wikipediacleaner/gui/swing/PageListWindow.java:413
-msgid "Do you want to update the disambiguation warning in talk page ?"
+msgid "Do you want to update the disambiguation warning on talk page?"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1397
@@ -1912,12 +1912,6 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/PageListWindow.java:391
 msgid "Articles with links to disambiguation pages"
-msgstr ""
-
-#: org/wikipediacleaner/gui/swing/PageListWindow.java:409
-msgid ""
-"You need to define the 'dab_warning_template' property in WikiCleaner "
-"configuration."
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/PageListWindow.java:426

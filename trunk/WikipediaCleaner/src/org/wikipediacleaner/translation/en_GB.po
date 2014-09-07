@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2014-09-07 09:06+0200\n"
-"PO-Revision-Date: 2014-09-07 09:11+0100\n"
+"POT-Creation-Date: 2014-09-07 09:26+0200\n"
+"PO-Revision-Date: 2014-09-07 09:35+0100\n"
 "Last-Translator: Nicolas Vervelle <nvervelle@gmail.com>\n"
 "Language-Team: English (United Kingdom) <en_GB@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -1460,8 +1460,8 @@ msgstr "You must input a page name for updating the disambiguation warning"
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1351
 #: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:1087
 #: org/wikipediacleaner/gui/swing/PageListWindow.java:413
-msgid "Do you want to update the disambiguation warning in talk page ?"
-msgstr "Do you want to update the disambiguation warning in talk page ?"
+msgid "Do you want to update the disambiguation warning on talk page?"
+msgstr "Do you want to update the disambiguation warning on talk page?"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1397
 msgid "You must input a page name for retrieving the list of internal links"
@@ -1947,14 +1947,6 @@ msgstr "Add page"
 #: org/wikipediacleaner/gui/swing/PageListWindow.java:391
 msgid "Articles with links to disambiguation pages"
 msgstr "Articles with links to disambiguation pages"
-
-#: org/wikipediacleaner/gui/swing/PageListWindow.java:409
-msgid ""
-"You need to define the 'dab_warning_template' property in WikiCleaner "
-"configuration."
-msgstr ""
-"You need to define the 'dab_warning_template' property in WikiCleaner "
-"configuration."
 
 #: org/wikipediacleaner/gui/swing/PageListWindow.java:426
 msgid ""
@@ -3465,6 +3457,13 @@ msgstr "A reference name cannot contain any of these characters: {0}"
 #, java-format
 msgid "The value can''t contain any of these characters: {0}"
 msgstr "The value cannot contain any of these characters: {0}"
+
+#~ msgid ""
+#~ "You need to define the 'dab_warning_template' property in WikiCleaner "
+#~ "configuration."
+#~ msgstr ""
+#~ "You need to define the 'dab_warning_template' property in WikiCleaner "
+#~ "configuration."
 
 #~ msgid "Local watch list"
 #~ msgstr "Local watchlist"
