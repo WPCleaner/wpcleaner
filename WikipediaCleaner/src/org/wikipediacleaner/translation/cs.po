@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2014-09-07 12:52+0200\n"
-"PO-Revision-Date: 2014-09-07 12:50+0100\n"
+"POT-Creation-Date: 2014-09-07 13:41+0200\n"
+"PO-Revision-Date: 2014-09-07 13:44+0100\n"
 "Last-Translator: Nicolas Vervelle <nvervelle@gmail.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -42,8 +42,8 @@ msgstr ""
 #: org/wikipediacleaner/Version.java:35
 #, java-format
 msgid ""
-"I try to keep {0} up to date with Check Wiki, but if you find any discrepancy"
-"(ies) in the detections, please let me know."
+"I try to keep {0} up to date with Check Wiki, but if you find any "
+"discrepancy(ies) in the detections, please let me know."
 msgstr ""
 "Pokusím se, aby {0} s Check Wiki držel krok, ale pokud v detekcích objevíte "
 "nesoulad, dejte mi, prosím, vědět."
@@ -2295,7 +2295,7 @@ msgstr "Check Wiki"
 
 #: org/wikipediacleaner/gui/swing/bot/CWCheckWhiteListsWorker.java:63
 #, java-format
-msgid "Checking white list for error {0}"
+msgid "Checking whitelist for error {0}"
 msgstr "Kontroluji whitelist chyby {0}"
 
 #: org/wikipediacleaner/gui/swing/bot/CWCheckWhiteListsWorker.java:79
@@ -2311,11 +2311,11 @@ msgstr "Chyba nebyla na stránce {0} nalezena"
 
 #: org/wikipediacleaner/gui/swing/bot/CWCheckWhiteListsWorker.java:109
 #, java-format
-msgid "The following problems were detected on the white list for error {0}:"
+msgid "The following problems were detected on the whitelist for error {0}:"
 msgstr "Ve whitelistu chyby {0} byly nalezeny následující problémy:"
 
 #: org/wikipediacleaner/gui/swing/bot/CWCheckWhiteListsWorker.java:135
-msgid "White lists"
+msgid "Whitelists"
 msgstr "Whitelisty"
 
 #: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:145

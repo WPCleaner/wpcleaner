@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2014-09-07 12:52+0200\n"
+"POT-Creation-Date: 2014-09-07 13:41+0200\n"
 "PO-Revision-Date: 2014-09-07 00:23+0100\n"
 "Last-Translator: Nicolas Vervelle <nvervelle@gmail.com>\n"
 "Language-Team: German <de@li.org>\n"
@@ -2257,7 +2257,7 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/bot/CWCheckWhiteListsWorker.java:63
 #, java-format
-msgid "Checking white list for error {0}"
+msgid "Checking whitelist for error {0}"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/bot/CWCheckWhiteListsWorker.java:79
@@ -2273,12 +2273,13 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/bot/CWCheckWhiteListsWorker.java:109
 #, java-format
-msgid "The following problems were detected on the white list for error {0}:"
+msgid "The following problems were detected on the whitelist for error {0}:"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/bot/CWCheckWhiteListsWorker.java:135
-msgid "White lists"
-msgstr ""
+#, fuzzy
+msgid "Whitelists"
+msgstr "Auf die &Beobachtungsliste setzen"
 
 #: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:145
 msgid "Analyze pages that couldn't be fixed by bot"
