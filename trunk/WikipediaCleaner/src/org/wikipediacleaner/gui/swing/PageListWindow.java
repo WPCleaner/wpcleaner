@@ -423,8 +423,8 @@ public class PageListWindow extends BasicWindow {
    */
   public void actionRemove() {
     if (displayYesNoWarning(GT._(
-        "You are about to remove the pages from your local Watch list.\n" +
-        "Are you sure ?")) != JOptionPane.YES_OPTION) {
+        "You are about to remove the pages from your local watchlist.\n" +
+        "Are you sure?")) != JOptionPane.YES_OPTION) {
       return;
     }
     Page[] selectedPages = getSelectedPages();
@@ -443,7 +443,7 @@ public class PageListWindow extends BasicWindow {
    */
   public void actionAdd() {
     String value = askForValue(
-        GT._("Enter the page title you want to add to your local watch list"),
+        GT._("Enter the page title you want to add to your local watchlist"),
         "", null);
     if (value != null) {
       Configuration config = Configuration.getConfiguration();
