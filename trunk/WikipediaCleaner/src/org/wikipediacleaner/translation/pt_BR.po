@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2014-09-07 12:52+0200\n"
-"PO-Revision-Date: 2014-09-07 13:06+0100\n"
+"POT-Creation-Date: 2014-09-07 13:41+0200\n"
+"PO-Revision-Date: 2014-09-07 13:46+0100\n"
 "Last-Translator: Nicolas Vervelle <nvervelle@gmail.com>\n"
 "Language-Team: Brazilian Portuguese <pt_BR@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -2105,7 +2105,6 @@ msgid "Add to local watchlist"
 msgstr "Adicionar a lista de páginas vigiadas"
 
 #: org/wikipediacleaner/gui/swing/action/ActionWatchPage.java:180
-#, fuzzy
 msgid "Would you like to add this page on your local watchlist?"
 msgid_plural "Would you like to add these pages on your local watchlist?"
 msgstr[0] ""
@@ -2322,7 +2321,7 @@ msgstr "Check Wiki"
 
 #: org/wikipediacleaner/gui/swing/bot/CWCheckWhiteListsWorker.java:63
 #, java-format
-msgid "Checking white list for error {0}"
+msgid "Checking whitelist for error {0}"
 msgstr "Verificando lista branca por erro {0}"
 
 #: org/wikipediacleaner/gui/swing/bot/CWCheckWhiteListsWorker.java:79
@@ -2338,11 +2337,11 @@ msgstr "O erro não foi detectado na página {0}"
 
 #: org/wikipediacleaner/gui/swing/bot/CWCheckWhiteListsWorker.java:109
 #, java-format
-msgid "The following problems were detected on the white list for error {0}:"
+msgid "The following problems were detected on the whitelist for error {0}:"
 msgstr "Os seguintes problemas foram detectados na lista branca de erro {0}:"
 
 #: org/wikipediacleaner/gui/swing/bot/CWCheckWhiteListsWorker.java:135
-msgid "White lists"
+msgid "Whitelists"
 msgstr "Lista branca"
 
 #: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:145

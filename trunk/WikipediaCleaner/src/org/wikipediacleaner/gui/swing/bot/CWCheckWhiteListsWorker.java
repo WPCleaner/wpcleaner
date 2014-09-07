@@ -60,7 +60,7 @@ class CWCheckWhiteListsWorker extends BasicWorker {
         int errorNumber = algorithm.getErrorNumber();
         if (algorithm.isAvailable() &&
             CheckErrorAlgorithms.isAlgorithmActive(wiki, errorNumber)) {
-          setText(GT._("Checking white list for error {0}", String.valueOf(errorNumber)));
+          setText(GT._("Checking whitelist for error {0}", String.valueOf(errorNumber)));
           CWConfigurationError cwConfig = wiki.getCWConfiguration().getErrorConfiguration(errorNumber);
           Set<String> whiteList = cwConfig.getWhiteList();
           if (whiteList != null) {
@@ -106,7 +106,7 @@ class CWCheckWhiteListsWorker extends BasicWorker {
                     "</a>";
               }
               result.append(GT._(
-                  "The following problems were detected on the white list for error {0}:",
+                  "The following problems were detected on the whitelist for error {0}:",
                   pageLink));
               result.append("<ul>");
               result.append(details.toString());
@@ -132,7 +132,7 @@ class CWCheckWhiteListsWorker extends BasicWorker {
     super.finished();
     if (getWindow() != null) {
       InformationWindow.createInformationWindow(
-          GT._("White lists"), get().toString(), true, getWikipedia());
+          GT._("Whitelists"), get().toString(), true, getWikipedia());
     }
   }
 
