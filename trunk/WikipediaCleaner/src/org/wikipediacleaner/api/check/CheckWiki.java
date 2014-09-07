@@ -172,6 +172,12 @@ public class CheckWiki {
     return true;
   }
 
+  /**
+   * Checks a page for errors.
+   * 
+   * @param page Page to be checked.
+   * @return List of detected errors.
+   */
   public Collection<CheckWikiDetection> check(Page page) {
     try {
       Collection<CheckWikiDetection> detections = null;
@@ -192,6 +198,26 @@ public class CheckWiki {
     } catch (APIException e) {
       return null;
     }
+  }
+
+  /**
+   * Check a page for errors of a given type.
+   * 
+   * @param page Page to be checked.
+   * @param errorNumber Error number.
+   * @return TRUE/FALSE depending on detection, null in case of problem.
+   */
+  public Boolean isErrorDetected(Page page, int errorNumber) {
+    Collection<CheckWikiDetection> detections = check(page);
+    if (detections == null) {
+      return null;
+    }
+    for (CheckWikiDetection detection : detections) {
+      if (detection.getErrorNumber() == errorNumber) {
+        return Boolean.TRUE;
+      }
+    }
+    return Boolean.FALSE;
   }
 
   /**

@@ -13,9 +13,11 @@ import java.util.List;
 import java.util.Set;
 
 import org.wikipediacleaner.api.APIException;
+import org.wikipediacleaner.api.APIFactory;
 import org.wikipediacleaner.api.MediaWiki;
 import org.wikipediacleaner.api.check.CheckError;
 import org.wikipediacleaner.api.check.CheckErrorPage;
+import org.wikipediacleaner.api.check.CheckWiki;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithm;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithms;
 import org.wikipediacleaner.api.constants.CWConfigurationError;
@@ -51,6 +53,7 @@ class CWCheckWhiteListsWorker extends BasicWorker {
   @Override
   public Object construct() {
     try {
+      CheckWiki checkWiki = APIFactory.getCheckWiki();
       MediaWiki mw = MediaWiki.getMediaWikiAccess(this);
       EnumWikipedia wiki = getWikipedia();
       StringBuilder result = new StringBuilder();
@@ -89,7 +92,16 @@ class CWCheckWhiteListsWorker extends BasicWorker {
                         "\">" +
                         page.getTitle() +
                         "</a>";
-                    details.append(GT._("The error hasn''t been detected in page {0}", pageLink));
+                    details.append(GT._("The error hasn''t been detected in page {0}.", pageLink));
+                    Boolean errorDetected = checkWiki.isErrorDetected(page, errorNumber);
+                    if (errorDetected != null) {
+                      details.append(" ");
+                      if (Boolean.TRUE.equals(errorDetected)) {
+                        details.append(GT._("It's still being detected by CheckWiki."));
+                      } else {
+                        details.append(GT._("It's not detected either by CheckWiki."));
+                      }
+                    }
                     details.append("</li>");
                   }
                 }
