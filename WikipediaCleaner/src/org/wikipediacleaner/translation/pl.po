@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2014-09-07 10:02+0200\n"
-"PO-Revision-Date: 2014-09-07 10:10+0100\n"
+"POT-Creation-Date: 2014-09-07 11:48+0200\n"
+"PO-Revision-Date: 2014-09-07 12:13+0100\n"
 "Last-Translator: Nicolas Vervelle <nvervelle@gmail.com>\n"
 "Language-Team: Polish <pl@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -1958,14 +1958,14 @@ msgstr "Artykuły, które linkują do stron ujednoznaczniających"
 
 #: org/wikipediacleaner/gui/swing/PageListWindow.java:426
 msgid ""
-"You are about to remove the pages from your local Watch list.\n"
-"Are you sure ?"
+"You are about to remove the pages from your local watchlist.\n"
+"Are you sure?"
 msgstr ""
 "Masz zamiar usunąć strony z lokalnej listy obserwowanych.\n"
 "Na pewno?"
 
 #: org/wikipediacleaner/gui/swing/PageListWindow.java:446
-msgid "Enter the page title you want to add to your local watch list"
+msgid "Enter the page title you want to add to your local watchlist"
 msgstr "Wpisz tytuł strony, którą chcesz dodać do lokalnej listy obserwowanych"
 
 #: org/wikipediacleaner/gui/swing/PageListWindow.java:613

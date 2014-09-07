@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2014-09-07 10:02+0200\n"
-"PO-Revision-Date: 2012-10-21 17:40+0000\n"
+"POT-Creation-Date: 2014-09-07 11:48+0200\n"
+"PO-Revision-Date: 2014-09-07 12:12+0100\n"
 "Last-Translator: Nicolas Vervelle <nvervelle@gmail.com>\n"
 "Language-Team: Norwegian Bokmal <nb@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -16,7 +16,8 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Launchpad-Export-Date: 2014-09-02 06:08+0000\n"
-"X-Generator: Launchpad (build 17192)\n"
+"X-Generator: Poedit 1.6.9\n"
+"Language: nb\n"
 
 #: org/wikipediacleaner/Version.java:31
 msgid "The Check Wiki project has evolved a lot recently."
@@ -37,8 +38,8 @@ msgstr ""
 #: org/wikipediacleaner/Version.java:35
 #, java-format
 msgid ""
-"I try to keep {0} up to date with Check Wiki, but if you find any discrepancy"
-"(ies) in the detections, please let me know."
+"I try to keep {0} up to date with Check Wiki, but if you find any "
+"discrepancy(ies) in the detections, please let me know."
 msgstr ""
 
 #: org/wikipediacleaner/Version.java:37
@@ -1181,9 +1182,8 @@ msgid "Other Language"
 msgstr "Andre språk"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:419
-#, fuzzy
 msgid "Username:"
-msgstr "&Brukernavn"
+msgstr "Brukernavn:"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:434
 msgid "Password :"
@@ -1909,12 +1909,12 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/PageListWindow.java:426
 msgid ""
-"You are about to remove the pages from your local Watch list.\n"
-"Are you sure ?"
+"You are about to remove the pages from your local watchlist.\n"
+"Are you sure?"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/PageListWindow.java:446
-msgid "Enter the page title you want to add to your local watch list"
+msgid "Enter the page title you want to add to your local watchlist"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/PageListWindow.java:613

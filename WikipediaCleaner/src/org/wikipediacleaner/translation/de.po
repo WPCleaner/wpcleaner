@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2014-09-07 10:02+0200\n"
+"POT-Creation-Date: 2014-09-07 11:48+0200\n"
 "PO-Revision-Date: 2014-09-07 00:23+0100\n"
 "Last-Translator: Nicolas Vervelle <nvervelle@gmail.com>\n"
 "Language-Team: German <de@li.org>\n"
@@ -1925,14 +1925,17 @@ msgid "Articles with links to disambiguation pages"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/PageListWindow.java:426
+#, fuzzy
 msgid ""
-"You are about to remove the pages from your local Watch list.\n"
-"Are you sure ?"
+"You are about to remove the pages from your local watchlist.\n"
+"Are you sure?"
 msgstr ""
+"Möchten Sie diese Seiten zu Ihrer lokalen Beobachtungsliste hinzufügen?"
 
 #: org/wikipediacleaner/gui/swing/PageListWindow.java:446
-msgid "Enter the page title you want to add to your local watch list"
-msgstr ""
+#, fuzzy
+msgid "Enter the page title you want to add to your local watchlist"
+msgstr "Möchten Sie diese Seite zu Ihrer lokalen Beobachtungsliste hinzufügen?"
 
 #: org/wikipediacleaner/gui/swing/PageListWindow.java:613
 #, java-format
