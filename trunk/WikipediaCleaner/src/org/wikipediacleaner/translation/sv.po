@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2014-09-07 11:48+0200\n"
+"POT-Creation-Date: 2014-09-07 12:52+0200\n"
 "PO-Revision-Date: 2013-07-06 19:07+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Swedish <sv@li.org>\n"
@@ -2018,16 +2018,15 @@ msgid "Previous occurrence"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/action/ActionWatchPage.java:45
-msgid "Add to Watch list"
+#: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:105
+msgid "Add to local watchlist"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/action/ActionWatchPage.java:166
-msgid "Would you like to add this page on your local Watch list ?"
-msgstr ""
-
-#: org/wikipediacleaner/gui/swing/action/ActionWatchPage.java:186
-msgid "Would you like to add these pages on your local Watch list ?"
-msgstr ""
+#: org/wikipediacleaner/gui/swing/action/ActionWatchPage.java:180
+msgid "Would you like to add this page on your local watchlist?"
+msgid_plural "Would you like to add these pages on your local watchlist?"
+msgstr[0] ""
+msgstr[1] ""
 
 #: org/wikipediacleaner/gui/swing/action/CheckCategoryLinkAction.java:88
 #, java-format
@@ -3095,10 +3094,6 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:73
 msgid "Shortcut options (restart needed)"
-msgstr ""
-
-#: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:105
-msgid "Add to Watchlist"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:160

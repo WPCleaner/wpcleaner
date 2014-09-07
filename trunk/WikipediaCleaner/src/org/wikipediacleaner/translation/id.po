@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2014-09-07 11:48+0200\n"
-"PO-Revision-Date: 2014-09-07 12:10+0100\n"
+"POT-Creation-Date: 2014-09-07 12:52+0200\n"
+"PO-Revision-Date: 2014-09-07 13:00+0100\n"
 "Last-Translator: Nicolas Vervelle <nvervelle@gmail.com>\n"
 "Language-Team: Indonesian <id@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -2039,17 +2039,14 @@ msgid "Previous occurrence"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/action/ActionWatchPage.java:45
-msgid "Add to Watch list"
-msgstr ""
+#: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:105
+msgid "Add to local watchlist"
+msgstr "Tambahkan pada daftar Pantauan"
 
-#: org/wikipediacleaner/gui/swing/action/ActionWatchPage.java:166
-msgid "Would you like to add this page on your local Watch list ?"
-msgstr "Tambahkan halaman ini pada daftar pantauan lokal anda ?"
-
-#: org/wikipediacleaner/gui/swing/action/ActionWatchPage.java:186
-msgid "Would you like to add these pages on your local Watch list ?"
-msgstr ""
-"Apakah anda ingin menambahkan halaman ini pada daftar Pantauan lokal anda ?"
+#: org/wikipediacleaner/gui/swing/action/ActionWatchPage.java:180
+msgid "Would you like to add this page on your local watchlist?"
+msgid_plural "Would you like to add these pages on your local watchlist?"
+msgstr[0] "Tambahkan halaman ini pada daftar pantauan lokal anda ?"
 
 #: org/wikipediacleaner/gui/swing/action/CheckCategoryLinkAction.java:88
 #, java-format
@@ -3123,10 +3120,6 @@ msgstr ""
 msgid "Shortcut options (restart needed)"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:105
-msgid "Add to Watchlist"
-msgstr "Tambahkan pada daftar Pantauan"
-
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:160
 msgid "Logout"
 msgstr ""
@@ -3393,6 +3386,14 @@ msgstr ""
 #, java-format
 msgid "The value can''t contain any of these characters: {0}"
 msgstr ""
+
+#~ msgid "Add to Watchlist"
+#~ msgstr "Tambahkan pada daftar Pantauan"
+
+#~ msgid "Would you like to add these pages on your local Watch list ?"
+#~ msgstr ""
+#~ "Apakah anda ingin menambahkan halaman ini pada daftar Pantauan lokal "
+#~ "anda ?"
 
 #~ msgid "&Close"
 #~ msgstr "&Tutup"

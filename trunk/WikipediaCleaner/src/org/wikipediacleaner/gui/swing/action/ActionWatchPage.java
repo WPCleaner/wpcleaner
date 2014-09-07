@@ -42,7 +42,7 @@ public class ActionWatchPage implements ActionListener {
     return Utilities.createJButton(
         showIcon ? "gnome-logviewer-add.png" : null,
         EnumImageSize.NORMAL,
-        GT._("Add to Watch list"), !showIcon,
+        GT._("Add to local watchlist"), !showIcon,
         useShortcut ? ConfigurationValueShortcut.ADD_TO_WATCH_LIST : null);
   }
 
@@ -161,45 +161,43 @@ public class ActionWatchPage implements ActionListener {
       return;
     }
 
-    // Add a single page
-    if ((list == null) && (title != null)) {
-      String message = GT._("Would you like to add this page on your local Watch list ?");
-      int answer = Utilities.displayYesNoWarning(parent, message);
-      if (answer == JOptionPane.YES_OPTION) {
-        Configuration config = Configuration.getConfiguration();
-        List<String> watch = config.getStringList(
-            wiki, Configuration.ARRAY_WATCH_PAGES);
-        if (!watch.contains(title)) {
-          watch.add(title);
-          Collections.sort(watch);
-          config.setStringList(wiki, Configuration.ARRAY_WATCH_PAGES, watch);
-        }
+    // Find which pages are to be added
+    Object[] links = null;
+    if (list != null) {
+      links = list.getSelectedValues();
+    } else {
+      if (title != null) {
+        links = new String[1];
+        links[0] = title;
       }
     }
+    if ((links == null) || (links.length == 0)) {
+      return;
+    }
 
-    // Add a list of selected pages
-    if (list != null) {
-      Object[] links = list.getSelectedValues();
-      if ((links == null) || (links.length == 0)) {
-        return;
+    // Ask for confirmation
+    String message = GT.__(
+        "Would you like to add this page on your local watchlist?",
+        "Would you like to add these pages on your local watchlist?",
+        links.length, (Object[]) null);
+    int answer = Utilities.displayYesNoWarning(parent, message);
+    if (answer != JOptionPane.YES_OPTION) {
+      return;
+    }
+
+    // Add pages
+    Configuration config = Configuration.getConfiguration();
+    List<String> watch = config.getStringList(wiki, Configuration.ARRAY_WATCH_PAGES);
+    boolean added = false;
+    for (Object link : links) {
+      if (!watch.contains(link.toString())) {
+        added = true;
+        watch.add(link.toString());
       }
-      String message = GT._("Would you like to add these pages on your local Watch list ?");
-      int answer = Utilities.displayYesNoWarning(parent, message);
-      if (answer == JOptionPane.YES_OPTION) {
-        Configuration config = Configuration.getConfiguration();
-        List<String> watch = config.getStringList(wiki, Configuration.ARRAY_WATCH_PAGES);
-        boolean added = false;
-        for (Object link : links) {
-          if (!watch.contains(link.toString())) {
-            added = true;
-            watch.add(link.toString());
-          }
-        }
-        if (added) {
-          Collections.sort(watch);
-          config.setStringList(wiki, Configuration.ARRAY_WATCH_PAGES, watch);
-        }
-      }
+    }
+    if (added) {
+      Collections.sort(watch);
+      config.setStringList(wiki, Configuration.ARRAY_WATCH_PAGES, watch);
     }
   }
 }

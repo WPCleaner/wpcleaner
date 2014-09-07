@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2014-09-07 11:48+0200\n"
-"PO-Revision-Date: 2014-09-07 12:12+0100\n"
+"POT-Creation-Date: 2014-09-07 12:52+0200\n"
+"PO-Revision-Date: 2014-09-07 13:03+0100\n"
 "Last-Translator: Nicolas Vervelle <nvervelle@gmail.com>\n"
 "Language-Team: Dutch <nl@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -2027,16 +2027,17 @@ msgid "Previous occurrence"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/action/ActionWatchPage.java:45
-msgid "Add to Watch list"
-msgstr ""
+#: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:105
+#, fuzzy
+msgid "Add to local watchlist"
+msgstr "Voeg aan &Kijk lijst toe"
 
-#: org/wikipediacleaner/gui/swing/action/ActionWatchPage.java:166
-msgid "Would you like to add this page on your local Watch list ?"
-msgstr ""
-
-#: org/wikipediacleaner/gui/swing/action/ActionWatchPage.java:186
-msgid "Would you like to add these pages on your local Watch list ?"
-msgstr "Wilt u deze pagina's aan uw locale Kijk-lijst toevoegen?"
+#: org/wikipediacleaner/gui/swing/action/ActionWatchPage.java:180
+#, fuzzy
+msgid "Would you like to add this page on your local watchlist?"
+msgid_plural "Would you like to add these pages on your local watchlist?"
+msgstr[0] "Wilt u deze pagina's aan uw locale Kijk-lijst toevoegen?"
+msgstr[1] "Wilt u deze pagina's aan uw locale Kijk-lijst toevoegen?"
 
 #: org/wikipediacleaner/gui/swing/action/CheckCategoryLinkAction.java:88
 #, java-format
@@ -3118,11 +3119,6 @@ msgstr ""
 msgid "Shortcut options (restart needed)"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:105
-#, fuzzy
-msgid "Add to Watchlist"
-msgstr "Voeg aan &Kijk lijst toe"
-
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:160
 msgid "Logout"
 msgstr ""
@@ -3389,6 +3385,10 @@ msgstr ""
 #, java-format
 msgid "The value can''t contain any of these characters: {0}"
 msgstr ""
+
+#, fuzzy
+#~ msgid "Add to Watchlist"
+#~ msgstr "Voeg aan &Kijk lijst toe"
 
 #~ msgid "&Wikipedia"
 #~ msgstr "&Wikipedia"

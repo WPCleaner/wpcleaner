@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2014-09-07 11:48+0200\n"
-"PO-Revision-Date: 2014-09-07 12:13+0100\n"
+"POT-Creation-Date: 2014-09-07 12:52+0200\n"
+"PO-Revision-Date: 2014-09-07 13:05+0100\n"
 "Last-Translator: Nicolas Vervelle <nvervelle@gmail.com>\n"
 "Language-Team: Polish <pl@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -2076,16 +2076,16 @@ msgid "Previous occurrence"
 msgstr "Poprzednie wystąpienie"
 
 #: org/wikipediacleaner/gui/swing/action/ActionWatchPage.java:45
-msgid "Add to Watch list"
+#: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:105
+msgid "Add to local watchlist"
 msgstr "Dodaj do obserwowanych"
 
-#: org/wikipediacleaner/gui/swing/action/ActionWatchPage.java:166
-msgid "Would you like to add this page on your local Watch list ?"
-msgstr "Czy chcesz dodać tę stronę do lokalnej listy obserwowanych?"
-
-#: org/wikipediacleaner/gui/swing/action/ActionWatchPage.java:186
-msgid "Would you like to add these pages on your local Watch list ?"
-msgstr "Czy chcesz dodać te strony do lokalnej listy obserwowanych?"
+#: org/wikipediacleaner/gui/swing/action/ActionWatchPage.java:180
+msgid "Would you like to add this page on your local watchlist?"
+msgid_plural "Would you like to add these pages on your local watchlist?"
+msgstr[0] "Czy chcesz dodać tę stronę do lokalnej listy obserwowanych?"
+msgstr[1] "Czy chcesz dodać te strony do lokalnej listy obserwowanych?"
+msgstr[2] "Czy chcesz dodać te strony do lokalnej listy obserwowanych?"
 
 #: org/wikipediacleaner/gui/swing/action/CheckCategoryLinkAction.java:88
 #, java-format
@@ -3194,10 +3194,6 @@ msgstr "Przywróć domyślne"
 msgid "Shortcut options (restart needed)"
 msgstr "Opcje skrótów klawiszowych (wymaga ponownego uruchomienia)"
 
-#: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:105
-msgid "Add to Watchlist"
-msgstr "Dodaj do obserwowanych"
-
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:160
 msgid "Logout"
 msgstr "Wyloguj"
@@ -3478,6 +3474,15 @@ msgstr "Nazwa przypisu nie może zawierać żadnego z tych znaków: {0}"
 #, java-format
 msgid "The value can''t contain any of these characters: {0}"
 msgstr "Wartość nie może zawierać tych znaków: {0}"
+
+#~ msgid "Add to Watchlist"
+#~ msgstr "Dodaj do obserwowanych"
+
+#~ msgid "Add to Watch list"
+#~ msgstr "Dodaj do obserwowanych"
+
+#~ msgid "Would you like to add these pages on your local Watch list ?"
+#~ msgstr "Czy chcesz dodać te strony do lokalnej listy obserwowanych?"
 
 #~ msgid ""
 #~ "You need to define the 'dab_warning_template' property in WikiCleaner "
