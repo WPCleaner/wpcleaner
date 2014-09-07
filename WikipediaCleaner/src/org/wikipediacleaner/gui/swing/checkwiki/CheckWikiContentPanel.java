@@ -43,7 +43,6 @@ import org.wikipediacleaner.api.APIFactory;
 import org.wikipediacleaner.api.check.CheckError;
 import org.wikipediacleaner.api.check.CheckErrorPage;
 import org.wikipediacleaner.api.check.CheckWiki;
-import org.wikipediacleaner.api.check.CheckWikiDetection;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithm;
 import org.wikipediacleaner.api.constants.Contributions;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
@@ -315,16 +314,11 @@ public class CheckWikiContentPanel
     }
     if ((error != null) && (errorFound == false)) {
       CheckWiki checkWiki = APIFactory.getCheckWiki();
-      Collection<CheckWikiDetection> detections = checkWiki.check(page);
+      Boolean errorDetected = checkWiki.isErrorDetected(
+          page, error.getAlgorithm().getErrorNumber());
       int answer = JOptionPane.NO_OPTION;
-      if (detections != null) {
-        boolean errorDetected = false;
-        for (CheckWikiDetection detection : detections) {
-          if (detection.getErrorNumber() == error.getAlgorithm().getErrorNumber()) {
-            errorDetected = true;
-          }
-        }
-        if (!errorDetected) {
+      if (errorDetected != null) {
+        if (Boolean.FALSE.equals(errorDetected)) {
           window.displayWarning(GT._(
               "The error n°{0} has already been fixed in the page {1}.",
               new Object[] { error.getAlgorithm().getErrorNumberString(), page.getTitle() }));
