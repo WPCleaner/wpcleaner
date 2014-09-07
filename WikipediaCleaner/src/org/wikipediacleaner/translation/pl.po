@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2014-09-07 09:06+0200\n"
-"PO-Revision-Date: 2014-09-07 00:58+0100\n"
+"POT-Creation-Date: 2014-09-07 09:26+0200\n"
+"PO-Revision-Date: 2014-09-07 09:37+0100\n"
 "Last-Translator: Nicolas Vervelle <nvervelle@gmail.com>\n"
 "Language-Team: Polish <pl@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -39,8 +39,8 @@ msgstr ""
 #: org/wikipediacleaner/Version.java:35
 #, java-format
 msgid ""
-"I try to keep {0} up to date with Check Wiki, but if you find any discrepancy"
-"(ies) in the detections, please let me know."
+"I try to keep {0} up to date with Check Wiki, but if you find any "
+"discrepancy(ies) in the detections, please let me know."
 msgstr ""
 
 #: org/wikipediacleaner/Version.java:37
@@ -54,8 +54,8 @@ msgid ""
 "WPCleaner configuration is available online, check the {0}System "
 "configuration{1}."
 msgstr ""
-"Konfiguracja WPCleanera jest dostępna online, zobacz {0}Konfiguracja systemu"
-"{1}."
+"Konfiguracja WPCleanera jest dostępna online, zobacz {0}Konfiguracja "
+"systemu{1}."
 
 #: org/wikipediacleaner/Version.java:43
 msgid "Please, report any other problem you find to me."
@@ -1464,7 +1464,7 @@ msgstr "Musisz wpisać nazwę strony do aktualizacji komunikatów o disambigach"
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1351
 #: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:1087
 #: org/wikipediacleaner/gui/swing/PageListWindow.java:413
-msgid "Do you want to update the disambiguation warning in talk page ?"
+msgid "Do you want to update the disambiguation warning on talk page?"
 msgstr "Czy chcesz aktualizować komunikat o disambigach w dyskusji?"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1397
@@ -1698,9 +1698,8 @@ msgid "Do you want to apply the automatic modifications?"
 msgstr "Czy chcesz zastosować automatyczne modyfikacje?"
 
 #: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:1113
-#, fuzzy
 msgid "Do you want to update the ISBN warning on talk page?"
-msgstr "Czy chcesz aktualizować komunikat o disambigach w dyskusji?"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:1419
 msgid "You must select the text that is written in a foreign language"
@@ -1954,14 +1953,6 @@ msgstr "Dodaj stronę"
 #: org/wikipediacleaner/gui/swing/PageListWindow.java:391
 msgid "Articles with links to disambiguation pages"
 msgstr "Artykuły, które linkują do stron ujednoznaczniających"
-
-#: org/wikipediacleaner/gui/swing/PageListWindow.java:409
-msgid ""
-"You need to define the 'dab_warning_template' property in WikiCleaner "
-"configuration."
-msgstr ""
-"Musisz najpierw zdefiniować 'dab_warning_template' w konfiguracji programu "
-"WikiCleaner"
 
 #: org/wikipediacleaner/gui/swing/PageListWindow.java:426
 msgid ""
@@ -3485,6 +3476,13 @@ msgstr "Nazwa przypisu nie może zawierać żadnego z tych znaków: {0}"
 #, java-format
 msgid "The value can''t contain any of these characters: {0}"
 msgstr "Wartość nie może zawierać tych znaków: {0}"
+
+#~ msgid ""
+#~ "You need to define the 'dab_warning_template' property in WikiCleaner "
+#~ "configuration."
+#~ msgstr ""
+#~ "Musisz najpierw zdefiniować 'dab_warning_template' w konfiguracji "
+#~ "programu WikiCleaner"
 
 #~ msgid "Local watch list"
 #~ msgstr "Lokalna lista obserwowanych"

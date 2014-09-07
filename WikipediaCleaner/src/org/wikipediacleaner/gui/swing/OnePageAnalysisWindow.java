@@ -1084,7 +1084,7 @@ public class OnePageAnalysisWindow extends OnePageWindow {
 
     int answer = Utilities.displayYesNoWarning(
         getParentComponent(),
-        GT._("Do you want to update the disambiguation warning in talk page ?"));
+        GT._("Do you want to update the disambiguation warning on talk page?"));
     if (answer != JOptionPane.YES_OPTION) {
       return;
     }
