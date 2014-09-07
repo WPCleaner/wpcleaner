@@ -734,19 +734,21 @@ public abstract class OnePageWindow
         if ((page.getContentsTimestamp() != null) && (!page.getContentsTimestamp().equals(""))) {
           Long duration = page.getContentsAge();
           if (duration != null) {
-            if (duration.longValue() <= 5 * 60) { // 5 minutes
-              lblLastModified.setForeground(Color.RED);
-              lblLastModified.setToolTipText(GT._(
-                  "Last modified at {0}. It was modified less than {1} minutes ago.",
-                  new Object[] { page.getContentsTimestamp(), Long.valueOf(duration / 60 + 1) } ));
-            } else if (duration.longValue() <= 60 * 60) { // 1 hour
-              lblLastModified.setForeground(Color.ORANGE);
-              lblLastModified.setToolTipText(GT._(
-                  "Last modified at {0}. It was modified less than {1} minutes ago.",
-                  new Object[] { page.getContentsTimestamp(), Long.valueOf(duration / 60 + 1) } ));
-            } else {
+            long minutes = duration.longValue() / 60 + 1;
+            if (minutes > 60) {
               lblLastModified.setToolTipText(GT._(
                   "Last modified at {0}", page.getContentsTimestamp()));
+            } else {
+              if (minutes <= 5) {
+                lblLastModified.setForeground(Color.RED);
+              } else {
+                lblLastModified.setForeground(Color.ORANGE);
+              }
+              lblLastModified.setToolTipText(GT.__(
+                  "Last modified at {0}. It was modified less than {1} minute ago.",
+                  "Last modified at {0}. It was modified less than {1} minutes ago.",
+                  minutes,
+                  new Object[] { page.getContentsTimestamp(), Long.valueOf(minutes) } ));
             }
           }
           lblLastModified.setText(page.getContentsTimestamp());
