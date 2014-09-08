@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2014-09-08 19:37+0200\n"
+"POT-Creation-Date: 2014-09-08 20:29+0200\n"
 "PO-Revision-Date: 2014-09-08 19:46+0100\n"
 "Last-Translator: Nicolas Vervelle <nvervelle@gmail.com>\n"
 "Language-Team: Chinese (Simplified) <zh_CN@li.org>\n"
@@ -38,8 +38,8 @@ msgstr ""
 #: org/wikipediacleaner/Version.java:35
 #, java-format
 msgid ""
-"I try to keep {0} up to date with Check Wiki, but if you find any "
-"discrepancy(ies) in the detections, please let me know."
+"I try to keep {0} up to date with Check Wiki, but if you find any discrepancy"
+"(ies) in the detections, please let me know."
 msgstr ""
 
 #: org/wikipediacleaner/Version.java:37
@@ -2334,10 +2334,9 @@ msgstr "您想为#{1}标记已修复{0}吗"
 
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiContentPanel.java:471
 #, java-format
-msgid "The error n°{0} is still found {1} time in the page."
-msgid_plural "The error n°{0} is still found {1} times in the page."
+msgid "The error n°{0} is still found {1} time on the page."
+msgid_plural "The error n°{0} is still found {1} times on the page."
 msgstr[0] ""
-msgstr[1] ""
 
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiContentPanel.java:476
 msgid "Are you really sure that you want to mark it as fixed ?"
