@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2014-09-08 18:54+0200\n"
+"POT-Creation-Date: 2014-09-08 19:18+0200\n"
 "PO-Revision-Date: 2014-06-29 11:10+0000\n"
 "Last-Translator: Magioladitis <Unknown>\n"
 "Language-Team: Greek <el@li.org>\n"
@@ -2321,8 +2321,8 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiContentPanel.java:339
 #, java-format
 msgid ""
-"The error n°{0} hasn''t been found in the page {1}.\n"
-"Do you want to mark it as fixed ?"
+"The error n°{0} hasn''t been found on the page {1}.\n"
+"Do you want to mark it as fixed?"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiContentPanel.java:458
