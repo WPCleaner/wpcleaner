@@ -479,7 +479,7 @@ public class CheckWikiContentPanel
       }
     } else if (errorPage.getErrorFound()) {
       if (window.displayYesNoWarning(GT._(
-          "The error n°{0} is still found in the page.\n" +
+          "The error n°{0} is still found on the page.\n" +
           "Are you really sure that you want to mark it as fixed ?",
           Integer.toString(error.getErrorNumber()))) != JOptionPane.YES_OPTION) {
         return;
