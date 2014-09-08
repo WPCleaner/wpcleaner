@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2014-09-08 18:54+0200\n"
-"PO-Revision-Date: 2014-09-07 13:45+0100\n"
+"POT-Creation-Date: 2014-09-08 19:18+0200\n"
+"PO-Revision-Date: 2014-09-08 19:24+0100\n"
 "Last-Translator: Nicolas Vervelle <nvervelle@gmail.com>\n"
 "Language-Team: Spanish\n"
 "MIME-Version: 1.0\n"
@@ -42,8 +42,8 @@ msgstr ""
 #: org/wikipediacleaner/Version.java:35
 #, java-format
 msgid ""
-"I try to keep {0} up to date with Check Wiki, but if you find any discrepancy"
-"(ies) in the detections, please let me know."
+"I try to keep {0} up to date with Check Wiki, but if you find any "
+"discrepancy(ies) in the detections, please let me know."
 msgstr ""
 "Intento mantener {0} actualizado con Check Wikipedia pero, si encuentra "
 "alguna discrepancia en las detecciones, por favor hágamelo saber."
@@ -2338,7 +2338,7 @@ msgid "The page {0} doesn''t exist on Wikipedia"
 msgstr "La página {0} no existe en Wikipedia"
 
 #: org/wikipediacleaner/gui/swing/bot/CWCheckWhiteListsWorker.java:95
-#, fuzzy, java-format
+#, java-format
 msgid "The error hasn''t been detected in page {0}."
 msgstr "No se ha detectado el error en la página {0}"
 
@@ -2417,8 +2417,8 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiContentPanel.java:339
 #, java-format
 msgid ""
-"The error n°{0} hasn''t been found in the page {1}.\n"
-"Do you want to mark it as fixed ?"
+"The error n°{0} hasn''t been found on the page {1}.\n"
+"Do you want to mark it as fixed?"
 msgstr ""
 "El error nº{0} no ha sido encontrado en la página {1}.\n"
 "¿Desea marcarlo como reparado?"

@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2014-09-08 18:54+0200\n"
-"PO-Revision-Date: 2014-09-07 13:45+0100\n"
+"POT-Creation-Date: 2014-09-08 19:18+0200\n"
+"PO-Revision-Date: 2014-09-08 19:25+0100\n"
 "Last-Translator: Nicolas Vervelle <nvervelle@gmail.com>\n"
 "Language-Team: French <fr@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -42,8 +42,8 @@ msgstr ""
 #: org/wikipediacleaner/Version.java:35
 #, java-format
 msgid ""
-"I try to keep {0} up to date with Check Wiki, but if you find any discrepancy"
-"(ies) in the detections, please let me know."
+"I try to keep {0} up to date with Check Wiki, but if you find any "
+"discrepancy(ies) in the detections, please let me know."
 msgstr ""
 "J’essaye de mettre à jour {0} avec Check Wiki, mais n'hésitez pas à "
 "m'informer si vous découvrez des incohérences."
@@ -572,7 +572,7 @@ msgstr "Une liste de textes qui peuvent être ajoutés à une section vide"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm084.java:138
 msgid "Restrict verification to titles with a higher level"
-msgstr ""
+msgstr "Restreindre la vérification aux niveaux de titre supérieurs"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm085.java:35
 msgid "Delete all tags without content"
@@ -2347,17 +2347,17 @@ msgid "The page {0} doesn''t exist on Wikipedia"
 msgstr "La page {0} n’existe pas sur Wikipédia"
 
 #: org/wikipediacleaner/gui/swing/bot/CWCheckWhiteListsWorker.java:95
-#, fuzzy, java-format
+#, java-format
 msgid "The error hasn''t been detected in page {0}."
-msgstr "L'erreur n'a pas été détecté dans la page {0}"
+msgstr "L'erreur n'a pas été détectée dans la page {0}."
 
 #: org/wikipediacleaner/gui/swing/bot/CWCheckWhiteListsWorker.java:100
 msgid "It's still being detected by CheckWiki."
-msgstr ""
+msgstr "Elle est toujours détectée par CheckWiki."
 
 #: org/wikipediacleaner/gui/swing/bot/CWCheckWhiteListsWorker.java:102
 msgid "It's not detected either by CheckWiki."
-msgstr ""
+msgstr "Elle n'est pas non plus détectée par CheckWiki."
 
 #: org/wikipediacleaner/gui/swing/bot/CWCheckWhiteListsWorker.java:121
 #, java-format
@@ -2427,10 +2427,10 @@ msgstr "L’erreur n° {0} a déjà été corrigée dans la page {1}."
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiContentPanel.java:339
 #, java-format
 msgid ""
-"The error n°{0} hasn''t been found in the page {1}.\n"
-"Do you want to mark it as fixed ?"
+"The error n°{0} hasn''t been found on the page {1}.\n"
+"Do you want to mark it as fixed?"
 msgstr ""
-"L’erreur n°{0} n’a pas été trouvée dans la page {1}.\n"
+"L’erreur n°{0} n’a pas été détectée dans la page {1}.\n"
 "Voulez-vous la marquer comme corrigée ?"
 
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiContentPanel.java:458

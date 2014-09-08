@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2014-09-08 18:54+0200\n"
+"POT-Creation-Date: 2014-09-08 19:18+0200\n"
 "PO-Revision-Date: 2014-09-07 13:00+0100\n"
 "Last-Translator: Nicolas Vervelle <nvervelle@gmail.com>\n"
 "Language-Team: Indonesian <id@li.org>\n"
@@ -2336,11 +2336,13 @@ msgid "The error n°{0} has already been fixed in the page {1}."
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiContentPanel.java:339
-#, java-format
+#, fuzzy, java-format
 msgid ""
-"The error n°{0} hasn''t been found in the page {1}.\n"
-"Do you want to mark it as fixed ?"
+"The error n°{0} hasn''t been found on the page {1}.\n"
+"Do you want to mark it as fixed?"
 msgstr ""
+"Galat n°{0} tetap ditemukan pada artikel.\n"
+"Anda yakin untuk menandai sudah diperbaiki ?"
 
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiContentPanel.java:458
 #, java-format

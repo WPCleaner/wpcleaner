@@ -336,8 +336,8 @@ public class CheckWikiContentPanel
               null,
               ConfigurationValueBoolean.CHECK_MARK_AS_FIXED)) {
             answer = window.displayYesNoAllWarning(GT._(
-                "The error n°{0} hasn''t been found in the page {1}.\n" +
-                "Do you want to mark it as fixed ?",
+                "The error n°{0} hasn''t been found on the page {1}.\n" +
+                "Do you want to mark it as fixed?",
                 new Object[] { error.getAlgorithm().getErrorNumberString(), page.getTitle() }));
           }
         }
