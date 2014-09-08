@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2014-09-08 19:37+0200\n"
-"PO-Revision-Date: 2014-09-08 19:41+0100\n"
+"POT-Creation-Date: 2014-09-08 20:29+0200\n"
+"PO-Revision-Date: 2014-09-08 20:35+0100\n"
 "Last-Translator: Nicolas Vervelle <nvervelle@gmail.com>\n"
 "Language-Team: English (United Kingdom) <en_GB@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -2386,8 +2386,8 @@ msgstr "Do you want to mark {0} as fixed for error n°{1} ?"
 
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiContentPanel.java:471
 #, java-format
-msgid "The error n°{0} is still found {1} time in the page."
-msgid_plural "The error n°{0} is still found {1} times in the page."
+msgid "The error n°{0} is still found {1} time on the page."
+msgid_plural "The error n°{0} is still found {1} times on the page."
 msgstr[0] "The error n°{0} is still found {1} time on the page."
 msgstr[1] "The error n°{0} is still found {1} times on the page."
 

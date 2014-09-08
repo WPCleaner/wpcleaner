@@ -468,8 +468,8 @@ public class CheckWikiContentPanel
         (!errorPage.getResults().isEmpty())) {
       String message =
           GT.__(
-              "The error n°{0} is still found {1} time in the page.",
-              "The error n°{0} is still found {1} times in the page.",
+              "The error n°{0} is still found {1} time on the page.",
+              "The error n°{0} is still found {1} times on the page.",
               errorPage.getResults().size(),
               new Object[] { Integer.toString(error.getErrorNumber()), errorPage.getResults().size() }) +
           "\n" +
