@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2014-09-08 19:18+0200\n"
+"POT-Creation-Date: 2014-09-08 19:37+0200\n"
 "PO-Revision-Date: 2013-07-06 19:08+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Esperanto <eo@li.org>\n"
@@ -2330,7 +2330,7 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiContentPanel.java:458
 #, java-format
-msgid "Do you want to mark {0} as fixed for error n°{1}"
+msgid "Do you want to mark {0} as fixed for error n°{1}?"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiContentPanel.java:471
