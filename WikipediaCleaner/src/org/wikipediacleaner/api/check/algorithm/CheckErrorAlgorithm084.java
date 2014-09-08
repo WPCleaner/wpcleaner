@@ -58,6 +58,17 @@ public class CheckErrorAlgorithm084 extends CheckErrorAlgorithmBase {
       texts = WPCConfiguration.convertPropertyToStringList(allTexts);
     }
 
+    // Retrieve maximum level to be checked
+    int maxLevel = 2;
+    String maxLevelString = getSpecificProperty("level", true, true, false);
+    if (maxLevelString != null) {
+      try {
+        maxLevel = Integer.parseInt(maxLevelString);
+      } catch (NumberFormatException e) {
+        // Nothing to do
+      }
+    }
+
     // Analyzing titles
     String contents = analysis.getContents();
     for (int i = 0; i < titles.size(); i++) {
@@ -87,7 +98,7 @@ public class CheckErrorAlgorithm084 extends CheckErrorAlgorithmBase {
             textFound = true;
           }
         }
-        if (!textFound) {
+        if (!textFound && (title.getFirstLevel() <= maxLevel)) {
           if (errors == null) {
             return true;
           }
@@ -124,6 +135,7 @@ public class CheckErrorAlgorithm084 extends CheckErrorAlgorithmBase {
   public Map<String, String> getParameters() {
     Map<String, String> parameters = super.getParameters();
     parameters.put("texts", GT._("A list of texts that can be added to sections without content"));
+    parameters.put("level", GT._("Restrict verification to titles with a higher level"));
     return parameters;
   }
 }

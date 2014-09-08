@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2014-09-07 21:12+0200\n"
+"POT-Creation-Date: 2014-09-08 18:54+0200\n"
 "PO-Revision-Date: 2014-09-07 13:44+0100\n"
 "Last-Translator: Nicolas Vervelle <nvervelle@gmail.com>\n"
 "Language-Team: English (United Kingdom) <en_GB@li.org>\n"
@@ -368,7 +368,7 @@ msgid "Used as a separator between consecutive {0} tags"
 msgstr "Used as a separator between consecutive {0} tags"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm062.java:151
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm084.java:105
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm084.java:116
 #, java-format
 msgid "Add {0}"
 msgstr "Add {0}"
@@ -550,13 +550,17 @@ msgstr ""
 msgid "What name do you want to use for this <ref> tag ?"
 msgstr "What name do you want to use for this <ref> tag ?"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm084.java:108
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm084.java:119
 msgid "Delete section"
 msgstr "Delete section"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm084.java:126
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm084.java:137
 msgid "A list of texts that can be added to sections without content"
 msgstr "A list of texts that can be added to sections without content"
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm084.java:138
+msgid "Restrict verification to titles with a higher level"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm085.java:35
 msgid "Delete all tags without content"
