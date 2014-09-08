@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2014-09-08 19:18+0200\n"
-"PO-Revision-Date: 2014-09-07 13:02+0100\n"
+"POT-Creation-Date: 2014-09-08 19:37+0200\n"
+"PO-Revision-Date: 2014-09-08 19:44+0100\n"
 "Last-Translator: Nicolas Vervelle <nvervelle@gmail.com>\n"
 "Language-Team: Italian <it@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -38,8 +38,8 @@ msgstr ""
 #: org/wikipediacleaner/Version.java:35
 #, java-format
 msgid ""
-"I try to keep {0} up to date with Check Wiki, but if you find any discrepancy"
-"(ies) in the detections, please let me know."
+"I try to keep {0} up to date with Check Wiki, but if you find any "
+"discrepancy(ies) in the detections, please let me know."
 msgstr ""
 
 #: org/wikipediacleaner/Version.java:37
@@ -2378,8 +2378,8 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiContentPanel.java:458
 #, java-format
-msgid "Do you want to mark {0} as fixed for error n°{1}"
-msgstr ""
+msgid "Do you want to mark {0} as fixed for error n°{1}?"
+msgstr "Vuoi segnare {0} come corretto per errore n°{1} ?"
 
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiContentPanel.java:471
 #, java-format

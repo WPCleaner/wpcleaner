@@ -455,7 +455,7 @@ public class CheckWikiContentPanel
 
     // Ask for confirmation
     if (window.displayYesNoWarning(GT._(
-        "Do you want to mark {0} as fixed for error n°{1}",
+        "Do you want to mark {0} as fixed for error n°{1}?",
         new Object[] { page.getTitle(), Integer.toString(error.getErrorNumber())})) != JOptionPane.YES_OPTION) {
       return;
     }
