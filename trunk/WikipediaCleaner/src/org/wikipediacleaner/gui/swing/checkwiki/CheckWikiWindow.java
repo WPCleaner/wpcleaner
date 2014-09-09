@@ -666,7 +666,7 @@ public class CheckWikiWindow extends OnePageWindow implements CheckWikiListener 
     toolbar.add(buttonErrorList);
     buttonWhiteList = Utilities.createJButton(
         "gnome-accessories-text-editor.png", EnumImageSize.NORMAL,
-        GT._("View or edit white list"), false, null);
+        GT._("View or edit whitelist"), false, null);
     buttonWhiteList.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionErrorWhiteList"));
     buttonWhiteList.setEnabled(false);
