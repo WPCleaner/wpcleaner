@@ -1231,8 +1231,8 @@ public class CheckWikiWindow extends OnePageWindow implements CheckWikiListener 
         String translationPage = wiki.getConfiguration().getString(
             WPCConfigurationString.CW_TRANSLATION_PAGE);
         Utilities.displayInformationMessage(getParentComponent(), GT._(
-            "There''s no white list defined for this error type.\n" +
-            "If you want to define a white list you need to add :\n" +
+            "There''s no whitelist defined for this error type.\n" +
+            "If you want to define a whitelist, you need to add:\n" +
             "  {0} = <page name> END\n" +
             "to the translation page ({1}) on \"{2}\"",
             new Object[] { parameter, translationPage, wiki.toString()
