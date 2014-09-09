@@ -51,6 +51,13 @@ class CheckResponseManager implements ResponseManager {
         while ((line = reader.readLine()) != null) {
           line = line.trim();
           if ((line.length() > 0) && (!"None".equalsIgnoreCase(line))) {
+            char locationMethod = '-';
+            if ((line.length() > 1) &&
+                !Character.isDigit(line.charAt(0)) &&
+                (line.charAt(1) == ' ')) {
+              locationMethod = line.charAt(0);
+              line = line.substring(2);
+            }
             int spaceIndex = line.indexOf(' ');
             if (spaceIndex > 0) {
               int errorNumber = Integer.parseInt(line.substring(0, spaceIndex));
@@ -60,7 +67,8 @@ class CheckResponseManager implements ResponseManager {
                 int location = Integer.parseInt(line.substring(0, spaceIndex));
                 line = line.substring(spaceIndex).trim();
                 String detection = line;
-                detections.add(new CheckWikiDetection(errorNumber, location, detection));
+                detections.add(new CheckWikiDetection(
+                    locationMethod, errorNumber, location, detection));
               }
             }
           }
