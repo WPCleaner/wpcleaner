@@ -118,7 +118,7 @@ public class CheckErrorPageListPopupListener extends MouseAdapter {
     CheckWiki checkWiki = APIFactory.getCheckWiki();
     String toolserverUrl = checkWiki.getUrlDescription(wiki, algorithm);
     menu.addItemView(null, popup, toolserverUrl, GT._("List on {0}", CheckWiki.getServerName(wiki)));
-    menu.addItemView(wiki, popup, algorithm.getWhiteListPageName(), GT._("View or edit white list"));
+    menu.addItemView(wiki, popup, algorithm.getWhiteListPageName(), GT._("View or edit whitelist"));
 
     popup.show(e.getComponent(), e.getX(), e.getY());
   }
