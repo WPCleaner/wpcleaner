@@ -450,13 +450,13 @@ public class UpdateISBNWarningWorker extends BasicWorker {
           stats.getAnalyedPagesCount(), Integer.toString(stats.getAnalyedPagesCount())));
       message.append("\n");
       message.append(GT.__(
-          "Warning has been updated in {0} page.",
-          "Warnings have been updated in {0} pages.",
+          "Warning has been updated on {0} page.",
+          "Warnings have been updated on {0} pages.",
           stats.getUpdatedPagesCount(), Integer.toString(stats.getUpdatedPagesCount())));
       message.append("\n");
       message.append(GT.__(
-          "Warning has been removed in {0} page.",
-          "Warnings have been removed in {0} pages.",
+          "Warning has been removed on {0} page.",
+          "Warnings have been removed on {0} pages.",
           stats.getRemovedWarningsCount(), Integer.toString(stats.getRemovedWarningsCount())));
       message.append("\n");
       message.append(GT.__(
