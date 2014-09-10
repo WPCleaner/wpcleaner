@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2014-09-10 19:03+0200\n"
-"PO-Revision-Date: 2014-09-10 18:45+0100\n"
+"POT-Creation-Date: 2014-09-10 23:52+0200\n"
+"PO-Revision-Date: 2014-09-11 00:06+0100\n"
 "Last-Translator: Nicolas Vervelle <nvervelle@gmail.com>\n"
 "Language-Team: Polish <pl@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -39,8 +39,8 @@ msgstr ""
 #: org/wikipediacleaner/Version.java:35
 #, java-format
 msgid ""
-"I try to keep {0} up to date with Check Wiki, but if you find any discrepancy"
-"(ies) in the detections, please let me know."
+"I try to keep {0} up to date with Check Wiki, but if you find any "
+"discrepancy(ies) in the detections, please let me know."
 msgstr ""
 
 #: org/wikipediacleaner/Version.java:37
@@ -54,8 +54,8 @@ msgid ""
 "WPCleaner configuration is available online, check the {0}System "
 "configuration{1}."
 msgstr ""
-"Konfiguracja WPCleanera jest dostępna online, zobacz {0}Konfiguracja systemu"
-"{1}."
+"Konfiguracja WPCleanera jest dostępna online, zobacz {0}Konfiguracja "
+"systemu{1}."
 
 #: org/wikipediacleaner/Version.java:43
 msgid "Please, report any other problem you find to me."
@@ -3487,8 +3487,11 @@ msgstr "Nazwa przypisu nie może zawierać żadnego z tych znaków: {0}"
 
 #: org/wikipediacleaner/utils/StringCheckerUnauthorizedCharacters.java:53
 #, java-format
-msgid "The value can''t contain any of these characters: {0}"
-msgstr "Wartość nie może zawierać tych znaków: {0}"
+msgid "The value cannot contain any of these characters: {0}"
+msgstr "Wartość nie może zawierać żadnego z tych znaków: {0}"
+
+#~ msgid "The value can''t contain any of these characters: {0}"
+#~ msgstr "Wartość nie może zawierać tych znaków: {0}"
 
 #~ msgid "Add to Watchlist"
 #~ msgstr "Dodaj do obserwowanych"
@@ -3761,9 +3764,6 @@ msgstr "Wartość nie może zawierać tych znaków: {0}"
 
 #~ msgid "&Apply"
 #~ msgstr "Zastosuj"
-
-#~ msgid "The value can't contain any of these characters: {0}"
-#~ msgstr "Wartość nie może zawierać żadnego z tych znaków: {0}"
 
 #~ msgid "What description would like to use for the image ?"
 #~ msgstr "Jak chcesz opisać grafikę?"

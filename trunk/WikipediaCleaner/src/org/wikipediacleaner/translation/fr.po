@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2014-09-10 19:03+0200\n"
-"PO-Revision-Date: 2014-09-10 22:08+0100\n"
+"POT-Creation-Date: 2014-09-10 23:52+0200\n"
+"PO-Revision-Date: 2014-09-11 00:05+0100\n"
 "Last-Translator: Nicolas Vervelle <nvervelle@gmail.com>\n"
 "Language-Team: French <fr@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -3527,8 +3527,11 @@ msgstr "Un nom de référence ne peut pas contenir les caractères suivants : {0
 
 #: org/wikipediacleaner/utils/StringCheckerUnauthorizedCharacters.java:53
 #, java-format
-msgid "The value can''t contain any of these characters: {0}"
-msgstr "La valeur ne doit contenir aucun de ces caractères : {0}"
+msgid "The value cannot contain any of these characters: {0}"
+msgstr "Une valeur ne peut pas contenir les caractères suivants : {0}"
+
+#~ msgid "The value can''t contain any of these characters: {0}"
+#~ msgstr "La valeur ne doit contenir aucun de ces caractères : {0}"
 
 #~ msgid "Add to Watchlist"
 #~ msgstr "Ajouter à la liste de suivi"
@@ -3856,9 +3859,6 @@ msgstr "La valeur ne doit contenir aucun de ces caractères : {0}"
 #~ "Il n’y a pas de liste de pages contenant beaucoup d’homonymie sur ce "
 #~ "Wikipédia.\n"
 #~ "Vous pouvez apprendre comment configurer WikiCleaner à cette adresse :"
-
-#~ msgid "The value can't contain any of these characters: {0}"
-#~ msgstr "Une valeur ne peut pas contenir les caractères suivants : {0}"
 
 #~ msgid "What description would like to use for the external link ?"
 #~ msgstr "Quelle description voulez-vous utiliser pour le lien externe ?"
