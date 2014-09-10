@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2014-09-10 18:20+0200\n"
+"POT-Creation-Date: 2014-09-10 18:37+0200\n"
 "PO-Revision-Date: 2014-07-29 00:35+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Japanese <ja@li.org>\n"
@@ -3051,7 +3051,7 @@ msgid "Maximum number of items in a menu :"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/LimitOptionsPanel.java:86
-msgid "Maximum number of simultaneous analysis :"
+msgid "Maximum number of simultaneous analyses :"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/LimitOptionsPanel.java:121

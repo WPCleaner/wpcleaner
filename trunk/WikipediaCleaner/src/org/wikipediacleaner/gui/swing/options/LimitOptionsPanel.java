@@ -83,7 +83,7 @@ public class LimitOptionsPanel extends OptionsPanel {
     spin = createJSpinner(
         ConfigurationValueInteger.MAXIMUM_PAGES,
         1, 99, 1);
-    JLabel labelMaxPages = Utilities.createJLabel(GT._("Maximum number of simultaneous analysis :"));
+    JLabel labelMaxPages = Utilities.createJLabel(GT._("Maximum number of simultaneous analyses :"));
     labelMaxPages.setLabelFor(spin);
     labelMaxPages.setHorizontalAlignment(SwingConstants.TRAILING);
     constraints.gridwidth = 2;

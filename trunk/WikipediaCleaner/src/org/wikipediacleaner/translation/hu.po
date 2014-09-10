@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2014-09-10 18:20+0200\n"
-"PO-Revision-Date: 2014-09-07 12:09+0100\n"
+"POT-Creation-Date: 2014-09-10 18:37+0200\n"
+"PO-Revision-Date: 2014-09-10 18:44+0100\n"
 "Last-Translator: Nicolas Vervelle <nvervelle@gmail.com>\n"
 "Language-Team: Hungarian <hu@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -38,8 +38,8 @@ msgstr ""
 #: org/wikipediacleaner/Version.java:35
 #, java-format
 msgid ""
-"I try to keep {0} up to date with Check Wiki, but if you find any discrepancy"
-"(ies) in the detections, please let me know."
+"I try to keep {0} up to date with Check Wiki, but if you find any "
+"discrepancy(ies) in the detections, please let me know."
 msgstr ""
 
 #: org/wikipediacleaner/Version.java:37
@@ -3062,7 +3062,7 @@ msgid "Maximum number of items in a menu :"
 msgstr "Maximum számú tárgy egy menüben:"
 
 #: org/wikipediacleaner/gui/swing/options/LimitOptionsPanel.java:86
-msgid "Maximum number of simultaneous analysis :"
+msgid "Maximum number of simultaneous analyses :"
 msgstr "Maximum számú egyidejű elemzés:"
 
 #: org/wikipediacleaner/gui/swing/options/LimitOptionsPanel.java:121
