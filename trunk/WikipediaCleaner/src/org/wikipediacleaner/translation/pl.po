@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2014-09-09 23:48+0200\n"
-"PO-Revision-Date: 2014-09-09 23:55+0100\n"
+"POT-Creation-Date: 2014-09-10 18:20+0200\n"
+"PO-Revision-Date: 2014-09-10 18:30+0100\n"
 "Last-Translator: Nicolas Vervelle <nvervelle@gmail.com>\n"
 "Language-Team: Polish <pl@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -2913,7 +2913,7 @@ msgstr "Opcje debugowania"
 
 #: org/wikipediacleaner/gui/swing/options/DebugOptionsPanel.java:67
 #, java-format
-msgid "Log all URL called by {0}"
+msgid "Log all URLs called by {0}"
 msgstr "Umieść w logach wszystkie URL-e wywoływane przez {0}"
 
 #: org/wikipediacleaner/gui/swing/options/DebugOptionsPanel.java:74

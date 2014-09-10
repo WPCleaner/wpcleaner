@@ -64,7 +64,7 @@ public class DebugOptionsPanel extends OptionsPanel {
 
     // Debug URL
     chk = createJCheckBox(
-        GT._("Log all URL called by {0}", Version.PROGRAM),
+        GT._("Log all URLs called by {0}", Version.PROGRAM),
         ConfigurationValueBoolean.DEBUG_URL);
     add(chk, constraints);
     constraints.gridy++;
