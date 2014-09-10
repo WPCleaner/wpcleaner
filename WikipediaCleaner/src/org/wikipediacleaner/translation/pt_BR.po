@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2014-09-10 18:37+0200\n"
-"PO-Revision-Date: 2014-09-10 18:46+0100\n"
+"POT-Creation-Date: 2014-09-10 19:03+0200\n"
+"PO-Revision-Date: 2014-09-10 22:09+0100\n"
 "Last-Translator: Nicolas Vervelle <nvervelle@gmail.com>\n"
 "Language-Team: Brazilian Portuguese <pt_BR@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -3423,16 +3423,16 @@ msgstr[1] "{0} páginas foram analisadas."
 #: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:276
 #: org/wikipediacleaner/gui/swing/worker/UpdateISBNWarningWorker.java:453
 #, java-format
-msgid "Warning has been updated in {0} page."
-msgid_plural "Warnings have been updated in {0} pages."
+msgid "Warning has been updated on {0} page."
+msgid_plural "Warnings have been updated on {0} pages."
 msgstr[0] "Aviso foi atualizado em {0} página."
 msgstr[1] "Avisos foram atualizados em {0} páginas."
 
 #: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:281
 #: org/wikipediacleaner/gui/swing/worker/UpdateISBNWarningWorker.java:458
 #, java-format
-msgid "Warning has been removed in {0} page."
-msgid_plural "Warnings have been removed in {0} pages."
+msgid "Warning has been removed on {0} page."
+msgid_plural "Warnings have been removed on {0} pages."
 msgstr[0] "Aviso foi removido em {0} página."
 msgstr[1] "Avisos foram removidos em {0} páginas."
 
