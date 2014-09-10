@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2014-09-09 23:48+0200\n"
-"PO-Revision-Date: 2014-09-08 20:36+0100\n"
+"POT-Creation-Date: 2014-09-10 18:20+0200\n"
+"PO-Revision-Date: 2014-09-10 18:29+0100\n"
 "Last-Translator: Nicolas Vervelle <nvervelle@gmail.com>\n"
 "Language-Team: Italian <it@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -38,8 +38,8 @@ msgstr ""
 #: org/wikipediacleaner/Version.java:35
 #, java-format
 msgid ""
-"I try to keep {0} up to date with Check Wiki, but if you find any discrepancy"
-"(ies) in the detections, please let me know."
+"I try to keep {0} up to date with Check Wiki, but if you find any "
+"discrepancy(ies) in the detections, please let me know."
 msgstr ""
 
 #: org/wikipediacleaner/Version.java:37
@@ -2879,8 +2879,8 @@ msgstr "Opzioni di debug"
 
 #: org/wikipediacleaner/gui/swing/options/DebugOptionsPanel.java:67
 #, java-format
-msgid "Log all URL called by {0}"
-msgstr ""
+msgid "Log all URLs called by {0}"
+msgstr "Metti nel log tutti gli URL chiamati da {0}"
 
 #: org/wikipediacleaner/gui/swing/options/DebugOptionsPanel.java:74
 msgid "Log all answers to MediaWiki API calls"
