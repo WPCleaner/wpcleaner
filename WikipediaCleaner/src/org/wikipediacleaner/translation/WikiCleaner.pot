@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2014-09-10 19:03+0200\n"
+"POT-Creation-Date: 2014-09-10 23:52+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -3371,5 +3371,5 @@ msgstr ""
 
 #: org/wikipediacleaner/utils/StringCheckerUnauthorizedCharacters.java:53
 #, java-format
-msgid "The value can''t contain any of these characters: {0}"
+msgid "The value cannot contain any of these characters: {0}"
 msgstr ""

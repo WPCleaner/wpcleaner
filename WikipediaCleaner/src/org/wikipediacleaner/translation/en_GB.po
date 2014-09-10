@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2014-09-10 19:03+0200\n"
-"PO-Revision-Date: 2014-09-10 22:08+0100\n"
+"POT-Creation-Date: 2014-09-10 23:52+0200\n"
+"PO-Revision-Date: 2014-09-11 00:04+0100\n"
 "Last-Translator: Nicolas Vervelle <nvervelle@gmail.com>\n"
 "Language-Team: English (United Kingdom) <en_GB@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -3463,8 +3463,11 @@ msgstr "A reference name cannot contain any of these characters: {0}"
 
 #: org/wikipediacleaner/utils/StringCheckerUnauthorizedCharacters.java:53
 #, java-format
-msgid "The value can''t contain any of these characters: {0}"
+msgid "The value cannot contain any of these characters: {0}"
 msgstr "The value cannot contain any of these characters: {0}"
+
+#~ msgid "The value can''t contain any of these characters: {0}"
+#~ msgstr "The value cannot contain any of these characters: {0}"
 
 #~ msgid "Add to Watchlist"
 #~ msgstr "Add to Watchlist"
@@ -3751,6 +3754,3 @@ msgstr "The value cannot contain any of these characters: {0}"
 
 #~ msgid "Constructing list of articles with disambiguation warning"
 #~ msgstr "Constructing list of articles with disambiguation warning"
-
-#~ msgid "The value can't contain any of these characters: {0}"
-#~ msgstr "The value can't contain any of these characters: {0}"

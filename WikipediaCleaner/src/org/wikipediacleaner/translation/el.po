@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2014-09-10 19:03+0200\n"
+"POT-Creation-Date: 2014-09-10 23:52+0200\n"
 "PO-Revision-Date: 2014-06-29 11:10+0000\n"
 "Last-Translator: Magioladitis <Unknown>\n"
 "Language-Team: Greek <el@li.org>\n"
@@ -3376,7 +3376,7 @@ msgstr ""
 
 #: org/wikipediacleaner/utils/StringCheckerUnauthorizedCharacters.java:53
 #, java-format
-msgid "The value can''t contain any of these characters: {0}"
+msgid "The value cannot contain any of these characters: {0}"
 msgstr ""
 
 #~ msgid "Error {0} detected: Waiting and retrying"

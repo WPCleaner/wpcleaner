@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2014-09-10 19:03+0200\n"
+"POT-Creation-Date: 2014-09-10 23:52+0200\n"
 "PO-Revision-Date: 2014-09-10 22:08+0100\n"
 "Last-Translator: Nicolas Vervelle <nvervelle@gmail.com>\n"
 "Language-Team: Spanish\n"
@@ -42,8 +42,8 @@ msgstr ""
 #: org/wikipediacleaner/Version.java:35
 #, java-format
 msgid ""
-"I try to keep {0} up to date with Check Wiki, but if you find any "
-"discrepancy(ies) in the detections, please let me know."
+"I try to keep {0} up to date with Check Wiki, but if you find any discrepancy"
+"(ies) in the detections, please let me know."
 msgstr ""
 "Intento mantener {0} actualizado con Check Wikipedia pero, si encuentra "
 "alguna discrepancia en las detecciones, por favor hágamelo saber."
@@ -3511,9 +3511,9 @@ msgstr ""
 "El nombre de referencia no puede tener cualquiera de estos caracteres {0}"
 
 #: org/wikipediacleaner/utils/StringCheckerUnauthorizedCharacters.java:53
-#, java-format
-msgid "The value can''t contain any of these characters: {0}"
-msgstr ""
+#, fuzzy, java-format
+msgid "The value cannot contain any of these characters: {0}"
+msgstr "El valor no contiene ninguno de estos caractéres: {0}"
 
 #~ msgid "Add to Watchlist"
 #~ msgstr "Agregar a la lista de seguimiento"
@@ -3851,9 +3851,6 @@ msgstr ""
 
 #~ msgid "What alternate description would like to use for the image ?"
 #~ msgstr "¿Qué descripción alternativa le gustaría usar para la imagen?"
-
-#~ msgid "The value can't contain any of these characters: {0}"
-#~ msgstr "El valor no contiene ninguno de estos caractéres: {0}"
 
 #~ msgid "I hope you'll like WPCleaner."
 #~ msgstr "Espero que le guste WPCleaner."
