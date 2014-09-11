@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2014-09-10 23:52+0200\n"
+"POT-Creation-Date: 2014-09-11 20:06+0200\n"
 "PO-Revision-Date: 2014-09-08 20:51+0100\n"
 "Last-Translator: Nicolas Vervelle <nvervelle@gmail.com>\n"
 "Language-Team: Danish <da@li.org>\n"
@@ -1807,7 +1807,7 @@ msgid "Expand templates &and Preview"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:999
-#: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiContentPanel.java:562
+#: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiContentPanel.java:580
 msgid "A comment is required for sending the page."
 msgstr "En kommentar er nødvendig for at sende siden."
 
@@ -2242,7 +2242,7 @@ msgid "Checking whitelist for error {0}"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/bot/CWCheckWhiteListsWorker.java:82
-#: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiContentPanel.java:283
+#: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiContentPanel.java:284
 #, java-format
 msgid "The page {0} doesn''t exist on Wikipedia"
 msgstr ""
@@ -2314,16 +2314,27 @@ msgstr ""
 msgid "At what page do you wish to start updating the warnings ?"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiContentPanel.java:191
+#: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiContentPanel.java:192
 msgid "Mark as already fixed"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiContentPanel.java:323
-#, java-format
-msgid "The error n°{0} has already been fixed in the page {1}."
+#: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiContentPanel.java:330
+#, fuzzy, java-format
+msgid ""
+"The error n°{0} hasn''t been detected in page {1}, but CheckWiki still "
+"reports it."
 msgstr ""
+"Fejl nr {0} er stadig fundet i siden..\n"
+"Er du sikker på at du vil mærkere den som rettet?"
 
-#: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiContentPanel.java:339
+#: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiContentPanel.java:341
+#, fuzzy, java-format
+msgid "The error n°{0} has already been fixed in page {1}."
+msgstr ""
+"Fejl nr {0} er fundet {1} steder i siden.\n"
+"Er du sikker på at du vil mærkere den som rettet?"
+
+#: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiContentPanel.java:357
 #, fuzzy, java-format
 msgid ""
 "The error n°{0} hasn''t been found on the page {1}.\n"
@@ -2332,12 +2343,12 @@ msgstr ""
 "Fejl nr {0} er stadig fundet i siden..\n"
 "Er du sikker på at du vil mærkere den som rettet?"
 
-#: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiContentPanel.java:458
+#: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiContentPanel.java:476
 #, java-format
 msgid "Do you want to mark {0} as fixed for error n°{1}?"
 msgstr "Vil du mærkere {0} som rettet for fejl nr. {1}"
 
-#: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiContentPanel.java:471
+#: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiContentPanel.java:489
 #, fuzzy, java-format
 msgid "The error n°{0} is still found {1} time on the page."
 msgid_plural "The error n°{0} is still found {1} times on the page."
@@ -2348,11 +2359,11 @@ msgstr[1] ""
 "Fejl nr {0} er fundet {1} steder i siden.\n"
 "Er du sikker på at du vil mærkere den som rettet?"
 
-#: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiContentPanel.java:476
+#: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiContentPanel.java:494
 msgid "Are you really sure that you want to mark it as fixed ?"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiContentPanel.java:482
+#: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiContentPanel.java:500
 #, java-format
 msgid ""
 "The error n°{0} is still found on the page.\n"
@@ -2361,7 +2372,7 @@ msgstr ""
 "Fejl nr {0} er stadig fundet i siden..\n"
 "Er du sikker på at du vil mærkere den som rettet?"
 
-#: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiContentPanel.java:494
+#: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiContentPanel.java:512
 msgid ""
 "You have already fixed this error by modifying the page.\n"
 "You should send your modifications, the page will be marked as fixed."

@@ -43,6 +43,7 @@ import org.wikipediacleaner.api.APIFactory;
 import org.wikipediacleaner.api.check.CheckError;
 import org.wikipediacleaner.api.check.CheckErrorPage;
 import org.wikipediacleaner.api.check.CheckWiki;
+import org.wikipediacleaner.api.check.CheckWikiDetection;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithm;
 import org.wikipediacleaner.api.constants.Contributions;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
@@ -314,13 +315,30 @@ public class CheckWikiContentPanel
     }
     if ((error != null) && (errorFound == false)) {
       CheckWiki checkWiki = APIFactory.getCheckWiki();
-      Boolean errorDetected = checkWiki.isErrorDetected(
-          page, error.getAlgorithm().getErrorNumber());
+      Collection<CheckWikiDetection> detections = checkWiki.check(page);
       int answer = JOptionPane.NO_OPTION;
-      if (errorDetected != null) {
-        if (Boolean.FALSE.equals(errorDetected)) {
+      if (detections != null) {
+        boolean errorDetected = false;
+        for (CheckWikiDetection detection : detections) {
+          if (detection.getErrorNumber() == error.getErrorNumber()) {
+            errorDetected = true;
+          }
+        }
+        if (errorDetected) {
+          StringBuilder message = new StringBuilder();
+          message.append(GT._(
+              "The error n°{0} hasn''t been detected in page {1}, but CheckWiki still reports it.",
+              new Object[] { error.getAlgorithm().getErrorNumberString(), page.getTitle() }));
+          for (CheckWikiDetection detection : detections) {
+            if (detection.getErrorNumber() == error.getErrorNumber()) {
+              message.append("\n");
+              message.append(detection.getLine());
+            }
+          }
+          window.displayWarning(message.toString());
+        } else {
           window.displayWarning(GT._(
-              "The error n°{0} has already been fixed in the page {1}.",
+              "The error n°{0} has already been fixed in page {1}.",
               new Object[] { error.getAlgorithm().getErrorNumberString(), page.getTitle() }));
           answer = JOptionPane.YES_OPTION;
         }
