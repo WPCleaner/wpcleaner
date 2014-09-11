@@ -18,6 +18,11 @@ import org.wikipediacleaner.api.data.PageElementComment;
 public class CheckWikiDetection {
 
   /**
+   * Full line.
+   */
+  private final String line;
+
+  /**
    * Method to interpret the location.
    */
   private final char locationMethod;
@@ -38,18 +43,67 @@ public class CheckWikiDetection {
   private final String detection;
 
   /**
+   * Analyze a line produced by checkarticle.cgi
+   * 
+   * @param line Line.
+   * @return Detection.
+   */
+  public static CheckWikiDetection analyzeLine(String line) {
+    if (line == null) {
+      return null;
+    }
+    line = line.trim();
+    if ((line.length() == 0) || "None".equalsIgnoreCase(line)) {
+      return null;
+    }
+    char locationMethod = '-';
+    String originalLine = line;
+    if ((line.length() > 1) &&
+        !Character.isDigit(line.charAt(0)) &&
+        (line.charAt(1) == ' ')) {
+      locationMethod = line.charAt(0);
+      line = line.substring(2);
+    }
+    int spaceIndex = line.indexOf(' ');
+    if (spaceIndex <= 0) {
+      return null;
+    }
+    int errorNumber = Integer.parseInt(line.substring(0, spaceIndex));
+    line = line.substring(spaceIndex).trim();
+    spaceIndex = line.indexOf(' ');
+    if (spaceIndex <= 0) {
+      return null;
+    }
+    int location = Integer.parseInt(line.substring(0, spaceIndex));
+    line = line.substring(spaceIndex).trim();
+    String detection = line;
+    return new CheckWikiDetection(
+        originalLine, locationMethod, errorNumber, location, detection);
+  }
+
+  /**
+   * @param line Full line.
    * @param locationMethod Method to interprete the location.
    * @param errorNumber Error number (algorithm).
    * @param location Location of the error.
    * @param detection Text near the error.
    */
-  CheckWikiDetection(
+  private CheckWikiDetection(
+      String line,
       char locationMethod, int errorNumber,
       int location, String detection) {
+    this.line = line;
     this.locationMethod = locationMethod;
     this.errorNumber = errorNumber;
     this.location = location;
     this.detection = detection;
+  }
+
+  /**
+   * @return Full line.
+   */
+  public String getLine() {
+    return line;
   }
 
   /**
