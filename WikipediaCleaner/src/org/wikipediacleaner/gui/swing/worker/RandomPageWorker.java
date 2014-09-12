@@ -27,6 +27,8 @@ public class RandomPageWorker extends BasicWorker {
 
   private final JComboBox combo;
 
+  private String title;
+
   /**
    * @param wikipedia Wikipedia.
    * @param window Window.
@@ -35,6 +37,7 @@ public class RandomPageWorker extends BasicWorker {
   public RandomPageWorker(EnumWikipedia wikipedia, BasicWindow window, JComboBox combo) {
     super(wikipedia, window);
     this.combo = combo;
+    this.title = null;
   }
 
   /* (non-Javadoc)
@@ -48,13 +51,26 @@ public class RandomPageWorker extends BasicWorker {
       setText(GT._("Getting random page"));
       List<Page> pages = api.getRandomPages(getWikipedia(), 1, false);
       if (pages.size() > 0) {
-        combo.setSelectedItem(pages.get(0).getTitle());
+        title = pages.get(0).getTitle();
       } else {
-        combo.setSelectedItem("");
+        title = "";
       }
     } catch (APIException e) {
       return e;
     }
     return null;
+  }
+
+  /**
+   * Update combo box.
+   * 
+   * @see org.wikipediacleaner.gui.swing.basic.BasicWorker#finished()
+   */
+  @Override
+  public void finished() {
+    if (title != null) {
+      combo.setSelectedItem(title);
+    }
+    super.finished();
   }
 }

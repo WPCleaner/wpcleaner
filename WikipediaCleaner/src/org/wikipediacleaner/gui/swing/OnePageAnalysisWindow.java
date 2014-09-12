@@ -73,6 +73,7 @@ import org.wikipediacleaner.api.data.PageElementInternalLink;
 import org.wikipediacleaner.api.data.PageElementLanguageLink;
 import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.User;
+import org.wikipediacleaner.gui.swing.action.ActionCheckArticle;
 import org.wikipediacleaner.gui.swing.action.ActionDisambiguationAnalysis;
 import org.wikipediacleaner.gui.swing.action.ActionExternalViewer;
 import org.wikipediacleaner.gui.swing.action.ActionFullAnalysis;
@@ -122,6 +123,7 @@ public class OnePageAnalysisWindow extends OnePageWindow {
   private JButton buttonToc;
   private JButton buttonDelete;
   private JButton buttonValidate;
+  private JButton buttonCheckArticle;
   private JButton buttonView;
   private JButton buttonViewHistory;
   private JButton buttonWatch;
@@ -264,6 +266,7 @@ public class OnePageAnalysisWindow extends OnePageWindow {
     setEnabledStatus(buttonToc, isPageLoaded());
     setEnabledStatus(buttonTranslation, isPageLoaded());
     setEnabledStatus(buttonValidate, isPageLoaded());
+    setEnabledStatus(buttonCheckArticle, isPageLoaded());
     setEnabledStatus(buttonView, isPageLoaded());
     setEnabledStatus(buttonViewHistory, isPageLoaded());
     setEnabledStatus(buttonWatch, isPageLoaded());
@@ -437,6 +440,8 @@ public class OnePageAnalysisWindow extends OnePageWindow {
     toolbarButtons.addSeparator();
 
     addButtonReload(toolbarButtons, true);
+    buttonCheckArticle = ActionCheckArticle.addButton(
+        getParentComponent(), toolbarButtons, getWikipedia(), getPageName(), true);
     buttonView = ActionExternalViewer.addButton(
         toolbarButtons, getWikipedia(), getPageName(), false, true, false);
     buttonViewHistory = ActionExternalViewer.addButton(
