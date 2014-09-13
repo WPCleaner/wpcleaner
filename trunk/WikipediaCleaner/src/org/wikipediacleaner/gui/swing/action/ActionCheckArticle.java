@@ -140,7 +140,7 @@ public class ActionCheckArticle extends AbstractAction implements ActionListener
     if (detections.isEmpty()) {
       Utilities.displayInformationMessage(
           parent,
-          GT._("No errors are currently deteced by CheckWiki."));
+          GT._("No errors are currently detected by CheckWiki."));
       return;
     }
     StringBuilder message = new StringBuilder();
