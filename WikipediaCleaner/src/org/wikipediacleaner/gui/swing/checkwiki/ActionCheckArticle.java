@@ -6,7 +6,7 @@
  */
 
 
-package org.wikipediacleaner.gui.swing.action;
+package org.wikipediacleaner.gui.swing.checkwiki;
 
 import java.awt.Component;
 import java.awt.event.ActionEvent;

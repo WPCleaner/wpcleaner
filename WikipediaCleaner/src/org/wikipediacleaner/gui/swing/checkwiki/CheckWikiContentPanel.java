@@ -52,7 +52,6 @@ import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.gui.swing.Controller;
 import org.wikipediacleaner.gui.swing.OnePageWindow;
-import org.wikipediacleaner.gui.swing.action.ActionCheckArticle;
 import org.wikipediacleaner.gui.swing.action.ActionExternalViewer;
 import org.wikipediacleaner.gui.swing.action.ActionFullAnalysis;
 import org.wikipediacleaner.gui.swing.action.ActionOccurrence;
