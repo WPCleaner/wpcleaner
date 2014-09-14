@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2014-09-14 13:40+0200\n"
+"POT-Creation-Date: 2014-09-14 15:00+0200\n"
 "PO-Revision-Date: 2014-09-11 00:06+0100\n"
 "Last-Translator: Nicolas Vervelle <nvervelle@gmail.com>\n"
 "Language-Team: Polish <pl@li.org>\n"
@@ -2640,6 +2640,19 @@ msgstr ""
 "W celu zdefiniowania strony z opisem należy umieścić:\n"
 "  {0} = <nazwa strony> END\n"
 "w odpowiednim miejscu na stronie z tłumaczeniem ({1}) na \"{2}\""
+
+#: org/wikipediacleaner/gui/swing/checkwiki/DetectionListTableModel.java:79
+msgid "Error"
+msgstr ""
+
+#: org/wikipediacleaner/gui/swing/checkwiki/DetectionListTableModel.java:81
+#, fuzzy
+msgid "Location"
+msgstr "Informacja"
+
+#: org/wikipediacleaner/gui/swing/checkwiki/DetectionListTableModel.java:85
+msgid "Notice"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/component/CheckErrorPageListPopupListener.java:99
 #, java-format
