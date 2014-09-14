@@ -231,7 +231,7 @@ public class CheckError {
             }
           }
           // System.err.println("Line: " + tmpLine);
-          if (pageName != null) {
+          if ((pageName != null) && (pageName.trim().length() > 0)) {
             pageName = pageName.replaceAll(Pattern.quote("&#039;"), "'");
             pageName = pageName.replaceAll(Pattern.quote("&quot;"), "\"");
             pageName = pageName.replaceAll(Pattern.quote("&amp;"), "&");
