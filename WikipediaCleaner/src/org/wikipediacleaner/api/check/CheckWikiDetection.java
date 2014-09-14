@@ -114,6 +114,20 @@ public class CheckWikiDetection {
   }
 
   /**
+   * @return Location method of the error.
+   */
+  public char getLocationMethod() {
+    return locationMethod;
+  }
+
+  /**
+   * @return Location of the error.
+   */
+  public int getLocation() {
+    return location;
+  }
+
+  /**
    * @return Location of the error.
    */
   public int getLocation(PageAnalysis analysis) {

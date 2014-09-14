@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2014-09-14 13:40+0200\n"
+"POT-Creation-Date: 2014-09-14 15:00+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -2544,6 +2544,18 @@ msgid ""
 "If you want to define a whitelist, you need to add:\n"
 "  {0} = <page name> END\n"
 "to the translation page ({1}) on \"{2}\""
+msgstr ""
+
+#: org/wikipediacleaner/gui/swing/checkwiki/DetectionListTableModel.java:79
+msgid "Error"
+msgstr ""
+
+#: org/wikipediacleaner/gui/swing/checkwiki/DetectionListTableModel.java:81
+msgid "Location"
+msgstr ""
+
+#: org/wikipediacleaner/gui/swing/checkwiki/DetectionListTableModel.java:85
+msgid "Notice"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/component/CheckErrorPageListPopupListener.java:99
