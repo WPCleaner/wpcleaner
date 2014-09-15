@@ -8,15 +8,15 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2014-09-14 15:00+0200\n"
-"PO-Revision-Date: 2014-09-10 18:43+0100\n"
-"Last-Translator: Nicolas Vervelle <nvervelle@gmail.com>\n"
+"PO-Revision-Date: 2014-09-10 23:22+0000\n"
+"Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Hebrew <he@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2014-09-02 06:08+0000\n"
-"X-Generator: Poedit 1.6.9\n"
+"X-Launchpad-Export-Date: 2014-09-15 18:08+0000\n"
+"X-Generator: Launchpad (build 17196)\n"
 "Language: he\n"
 
 #: org/wikipediacleaner/Version.java:31
@@ -38,8 +38,8 @@ msgstr ""
 #: org/wikipediacleaner/Version.java:35
 #, java-format
 msgid ""
-"I try to keep {0} up to date with Check Wiki, but if you find any discrepancy"
-"(ies) in the detections, please let me know."
+"I try to keep {0} up to date with Check Wiki, but if you find any "
+"discrepancy(ies) in the detections, please let me know."
 msgstr ""
 
 #: org/wikipediacleaner/Version.java:37
@@ -415,9 +415,9 @@ msgstr "תוכנת צפייה חיצונית"
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:175
 msgid ""
 "A template that can be used instead of the link to an other language. It "
-"must be specified as: <template name>|<param name for local page name>|"
-"<param name for code of other language>|<param name for page name in other "
-"language>|<param name for displayed text>"
+"must be specified as: <template name>|<param name for local page "
+"name>|<param name for code of other language>|<param name for page name in "
+"other language>|<param name for displayed text>"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:257
@@ -976,7 +976,8 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:205
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:611
 #: org/wikipediacleaner/gui/swing/bot/BotToolsWindow.java:89
-msgid "On some Wikipedia projects, you may need the bot status for doing this."
+msgid ""
+"On some Wikipedia projects, you may need the bot status for doing this."
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:206
@@ -1340,14 +1341,12 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/MainWindow.java:848
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1808
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:195
-#, fuzzy
 msgid "Local Watchlist"
-msgstr "רשימת מ&עקב מקומית"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:858
-#, fuzzy
 msgid "Watchlist"
-msgstr "רשימת מ&עקב מקומית"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:867
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1830
@@ -1392,9 +1391,9 @@ msgid "You must input your password before login"
 msgstr "עליך להזין את הסיסמה שלך לפני ההתחברות"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1108
-#, fuzzy, java-format
+#, java-format
 msgid "You can learn how to configure {0} at the following URL:"
-msgstr "תוכל ללמוד כיצד להוסיף שפות אחרות בכתובת הבאה:"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1157
 msgid "Activate all"
@@ -1405,9 +1404,9 @@ msgid "Deactivate all"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1264
-#, fuzzy, java-format
+#, java-format
 msgid "You can read the help on {0} at the following URL:"
-msgstr "תוכל לקרוא את העזרה אודות מנקה הויקיפדיה בכתובת הבאה:"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1278
 msgid "You can submit bug reports or feature requests at the following URL:"
@@ -1461,7 +1460,8 @@ msgid "Links to {0}"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1458
-msgid "You must input a page name for retrieving the list of category members"
+msgid ""
+"You must input a page name for retrieving the list of category members"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1476
@@ -1470,11 +1470,10 @@ msgid "Category members of {0}"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1484
-#, fuzzy
 msgid ""
 "You must input a page name for retrieving the list of page in which it is "
 "embedded"
-msgstr "עליך להזין שם עמוד להרצת ניתוח מלא"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1502
 #, java-format
@@ -1780,7 +1779,8 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:748
 #, java-format
 msgid "Last modified at {0}. It was modified less than {1} minute ago."
-msgid_plural "Last modified at {0}. It was modified less than {1} minutes ago."
+msgid_plural ""
+"Last modified at {0}. It was modified less than {1} minutes ago."
 msgstr[0] ""
 msgstr[1] ""
 
@@ -1915,18 +1915,14 @@ msgid "Articles with links to disambiguation pages"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/PageListWindow.java:426
-#, fuzzy
 msgid ""
 "You are about to remove the pages from your local watchlist.\n"
 "Are you sure?"
 msgstr ""
-"אתם עומדים להסיר את העמודים מרשימת המעקב המקומית שלכם.\n"
-"האם הינכם בטוחים?"
 
 #: org/wikipediacleaner/gui/swing/PageListWindow.java:446
-#, fuzzy
 msgid "Enter the page title you want to add to your local watchlist"
-msgstr "הזינו את כותרת העמוד שברצונכם להוסיף לרשימת המעקב המקומית שלכם"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/PageListWindow.java:613
 #, java-format
@@ -2034,16 +2030,14 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/action/ActionWatchPage.java:45
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:105
-#, fuzzy
 msgid "Add to local watchlist"
-msgstr "הוסף לרשימת ה&מעקב"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/action/ActionWatchPage.java:180
-#, fuzzy
 msgid "Would you like to add this page on your local watchlist?"
 msgid_plural "Would you like to add these pages on your local watchlist?"
-msgstr[0] "האם ברצונך להוסיף עמוד זה לרשימת המעקב המקומית שלך?"
-msgstr[1] "האם ברצונך להוסיף עמוד זה לרשימת המעקב המקומית שלך?"
+msgstr[0] ""
+msgstr[1] ""
 
 #: org/wikipediacleaner/gui/swing/action/CheckCategoryLinkAction.java:88
 #, java-format
@@ -2205,7 +2199,8 @@ msgstr[1] ""
 #: org/wikipediacleaner/gui/swing/bot/AutomaticCWWorker.java:275
 #, java-format
 msgid "{0} page has been marked as fixed for the selected algorithms"
-msgid_plural "{0} pages have been marked as fixed for the selected algorithms"
+msgid_plural ""
+"{0} pages have been marked as fixed for the selected algorithms"
 msgstr[0] ""
 msgstr[1] ""
 
@@ -2271,9 +2266,8 @@ msgid "The following problems were detected on the whitelist for error {0}:"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/bot/CWCheckWhiteListsWorker.java:147
-#, fuzzy
 msgid "Whitelists"
-msgstr "רשימת מ&עקב מקומית"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:145
 msgid "Analyze pages that couldn't be fixed by bot"
@@ -2566,9 +2560,8 @@ msgid "Error"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/checkwiki/DetectionListTableModel.java:81
-#, fuzzy
 msgid "Location"
-msgstr "כניסה"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/checkwiki/DetectionListTableModel.java:85
 msgid "Notice"
@@ -2803,7 +2796,8 @@ msgid "Create disambiguation warning on talk page (in main namespace)"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/AnalysisOptionsPanel.java:86
-msgid "Create disambiguation warning on talk page (in encyclopedic namespaces)"
+msgid ""
+"Create disambiguation warning on talk page (in encyclopedic namespaces)"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/AnalysisOptionsPanel.java:93
@@ -2815,7 +2809,8 @@ msgid "Update disambiguation warning on talk page (in main namespace)"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/AnalysisOptionsPanel.java:107
-msgid "Update disambiguation warning on talk page (in encyclopedic namespaces)"
+msgid ""
+"Update disambiguation warning on talk page (in encyclopedic namespaces)"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/AnalysisOptionsPanel.java:114
@@ -3425,13 +3420,6 @@ msgstr ""
 msgid "The value cannot contain any of these characters: {0}"
 msgstr ""
 
-#, fuzzy
-#~ msgid "Add to Watchlist"
-#~ msgstr "הוסף לרשימת ה&מעקב"
-
-#~ msgid "Would you like to add these pages on your local Watch list ?"
-#~ msgstr "האם ברצונך להוסיף עמודים אלו לרשימת המעקב המקומית שלך?"
-
 #~ msgid "&Close"
 #~ msgstr "ס&גור"
 
@@ -3444,8 +3432,17 @@ msgstr ""
 #~ msgid "&Next occurrence"
 #~ msgstr "המו&פע הבא"
 
+#~ msgid "Add to &Watch list"
+#~ msgstr "הוסף לרשימת ה&מעקב"
+
 #~ msgid "&Full analysis"
 #~ msgstr "ניתוח &מלא"
+
+#~ msgid "Would you like to add these pages on your local Watch list ?"
+#~ msgstr "האם ברצונך להוסיף עמודים אלו לרשימת המעקב המקומית שלך?"
+
+#~ msgid "Would you like to add this page on your local Watch list ?"
+#~ msgstr "האם ברצונך להוסיף עמוד זה לרשימת המעקב המקומית שלך?"
 
 #~ msgid "&Disambiguation"
 #~ msgstr "&פירושון"
@@ -3456,6 +3453,9 @@ msgstr ""
 #~ msgid "&Password :"
 #~ msgstr "&סיסמה :"
 
+#~ msgid "&User name :"
+#~ msgstr "&שם משתמש :"
+
 #~ msgid "Lan&guage"
 #~ msgstr "&שפה"
 
@@ -3465,11 +3465,23 @@ msgstr ""
 #~ msgid "L&ogout"
 #~ msgstr "י&ציאה"
 
+#~ msgid "You must input your user name before login"
+#~ msgstr "עליך להזין את שם המשתמש שלך לפני ההתחברות"
+
 #~ msgid "&Current Disambiguation List"
 #~ msgstr "רשימת הפרושונים ה&נוכחית"
 
+#~ msgid "Local &Watch list"
+#~ msgstr "רשימת מ&עקב מקומית"
+
 #~ msgid "&Idea ? Bug ?"
 #~ msgstr "&רעיון ? באג ?"
+
+#~ msgid "You can read the help on Wikipedia Cleaner at the following URL:"
+#~ msgstr "תוכל לקרוא את העזרה אודות מנקה הויקיפדיה בכתובת הבאה:"
+
+#~ msgid "Maximum number of simultaneous analysis :"
+#~ msgstr "מספר הניתוחים המקבילים המירבי :"
 
 #~ msgid "Count &other pages"
 #~ msgstr "ספור דפים &אחרים"
@@ -3492,15 +3504,27 @@ msgstr ""
 #~ msgid "&Restore defaults"
 #~ msgstr "&שחזר את ברירות המחדל"
 
+#~ msgid ""
+#~ "You are about to remove the pages from your local Watch list.\n"
+#~ "Are you sure ?"
+#~ msgstr ""
+#~ "אתם עומדים להסיר את העמודים מרשימת המעקב המקומית שלכם.\n"
+#~ "האם הינכם בטוחים?"
+
+#~ msgid "Enter the page title you want to add to your local watch list"
+#~ msgstr "הזינו את כותרת העמוד שברצונכם להוסיף לרשימת המעקב המקומית שלכם"
+
 #~ msgid "Possible pages"
 #~ msgstr "עמודים אפשריים"
 
 #~ msgid "Search"
 #~ msgstr "חיפוש"
 
+#, java-format
 #~ msgid "Red links Analysis - {0}"
 #~ msgstr "ניתוח קישורים אדומים - {0}"
 
+#, java-format
 #~ msgid "&Apply only to {0}"
 #~ msgstr "ה&חל רק על {0}"
 
@@ -3525,18 +3549,21 @@ msgstr ""
 #~ msgid "&Ends with"
 #~ msgstr "מ&סתיים ב-"
 
+#, java-format
 #~ msgid "An error occured: {0}"
 #~ msgstr "ארעה שגיאה: {0}"
 
 #~ msgid "An unknown error occured"
 #~ msgstr "ארעה שגיאה לא ידועה"
 
+#, java-format
 #~ msgid "Reverse to [[{0}|{1}]]"
 #~ msgstr "חזור אל [[{0}|{1}]]"
 
 #~ msgid "Red links analysis"
 #~ msgstr "ניתוח קישורים אדומים"
 
+#, java-format
 #~ msgid "{0} links in Main Namespace / {1} total links"
 #~ msgstr "{0} קישורים במרווח השם הראשי / {1} סך כל הקישורים"
 
