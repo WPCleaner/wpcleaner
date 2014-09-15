@@ -8,15 +8,15 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2014-09-14 15:00+0200\n"
-"PO-Revision-Date: 2014-09-10 18:44+0100\n"
-"Last-Translator: Nicolas Vervelle <nvervelle@gmail.com>\n"
+"PO-Revision-Date: 2014-09-10 23:23+0000\n"
+"Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Hungarian <hu@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2014-09-02 06:08+0000\n"
-"X-Generator: Poedit 1.6.9\n"
+"X-Launchpad-Export-Date: 2014-09-15 18:08+0000\n"
+"X-Generator: Launchpad (build 17196)\n"
 "Language: hu\n"
 
 #: org/wikipediacleaner/Version.java:31
@@ -38,8 +38,8 @@ msgstr ""
 #: org/wikipediacleaner/Version.java:35
 #, java-format
 msgid ""
-"I try to keep {0} up to date with Check Wiki, but if you find any discrepancy"
-"(ies) in the detections, please let me know."
+"I try to keep {0} up to date with Check Wiki, but if you find any "
+"discrepancy(ies) in the detections, please let me know."
 msgstr ""
 
 #: org/wikipediacleaner/Version.java:37
@@ -415,9 +415,9 @@ msgstr "Külső néző"
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:175
 msgid ""
 "A template that can be used instead of the link to an other language. It "
-"must be specified as: <template name>|<param name for local page name>|"
-"<param name for code of other language>|<param name for page name in other "
-"language>|<param name for displayed text>"
+"must be specified as: <template name>|<param name for local page "
+"name>|<param name for code of other language>|<param name for page name in "
+"other language>|<param name for displayed text>"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:257
@@ -976,7 +976,8 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:205
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:611
 #: org/wikipediacleaner/gui/swing/bot/BotToolsWindow.java:89
-msgid "On some Wikipedia projects, you may need the bot status for doing this."
+msgid ""
+"On some Wikipedia projects, you may need the bot status for doing this."
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:206
@@ -1340,14 +1341,12 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/MainWindow.java:848
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1808
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:195
-#, fuzzy
 msgid "Local Watchlist"
-msgstr "Helyi Figyelőlista"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:858
-#, fuzzy
 msgid "Watchlist"
-msgstr "Helyi Figyelőlista"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:867
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1830
@@ -1396,9 +1395,9 @@ msgid "You must input your password before login"
 msgstr "A bejelentkezéshez be kell írnod a jelszavad"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1108
-#, fuzzy, java-format
+#, java-format
 msgid "You can learn how to configure {0} at the following URL:"
-msgstr "Ezt a hivatkozást követve új nyelveket adhatsz hozzá:"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1157
 msgid "Activate all"
@@ -1467,7 +1466,8 @@ msgid "Links to {0}"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1458
-msgid "You must input a page name for retrieving the list of category members"
+msgid ""
+"You must input a page name for retrieving the list of category members"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1476
@@ -1476,11 +1476,10 @@ msgid "Category members of {0}"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1484
-#, fuzzy
 msgid ""
 "You must input a page name for retrieving the list of page in which it is "
 "embedded"
-msgstr "Tejles elemzés előtt be kell írnod a lap nevét"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1502
 #, java-format
@@ -1786,7 +1785,8 @@ msgstr "Utoljára módosítva ekkor {0}"
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:748
 #, java-format
 msgid "Last modified at {0}. It was modified less than {1} minute ago."
-msgid_plural "Last modified at {0}. It was modified less than {1} minutes ago."
+msgid_plural ""
+"Last modified at {0}. It was modified less than {1} minutes ago."
 msgstr[0] ""
 msgstr[1] ""
 
@@ -2039,16 +2039,14 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/action/ActionWatchPage.java:45
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:105
-#, fuzzy
 msgid "Add to local watchlist"
-msgstr "Lap figyelése"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/action/ActionWatchPage.java:180
-#, fuzzy
 msgid "Would you like to add this page on your local watchlist?"
 msgid_plural "Would you like to add these pages on your local watchlist?"
-msgstr[0] "Hozzá akarod adni ezt az oldalt a Figyelőlistádhoz ?"
-msgstr[1] "Hozzá akarod adni ezt az oldalt a Figyelőlistádhoz ?"
+msgstr[0] ""
+msgstr[1] ""
 
 #: org/wikipediacleaner/gui/swing/action/CheckCategoryLinkAction.java:88
 #, java-format
@@ -2210,7 +2208,8 @@ msgstr[1] ""
 #: org/wikipediacleaner/gui/swing/bot/AutomaticCWWorker.java:275
 #, java-format
 msgid "{0} page has been marked as fixed for the selected algorithms"
-msgid_plural "{0} pages have been marked as fixed for the selected algorithms"
+msgid_plural ""
+"{0} pages have been marked as fixed for the selected algorithms"
 msgstr[0] ""
 msgstr[1] ""
 
@@ -2276,9 +2275,8 @@ msgid "The following problems were detected on the whitelist for error {0}:"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/bot/CWCheckWhiteListsWorker.java:147
-#, fuzzy
 msgid "Whitelists"
-msgstr "Helyi Figyelőlista"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:145
 msgid "Analyze pages that couldn't be fixed by bot"
@@ -2571,9 +2569,8 @@ msgid "Error"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/checkwiki/DetectionListTableModel.java:81
-#, fuzzy
 msgid "Location"
-msgstr "Bejelentkezés"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/checkwiki/DetectionListTableModel.java:85
 msgid "Notice"
@@ -2808,7 +2805,8 @@ msgid "Create disambiguation warning on talk page (in main namespace)"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/AnalysisOptionsPanel.java:86
-msgid "Create disambiguation warning on talk page (in encyclopedic namespaces)"
+msgid ""
+"Create disambiguation warning on talk page (in encyclopedic namespaces)"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/AnalysisOptionsPanel.java:93
@@ -2820,7 +2818,8 @@ msgid "Update disambiguation warning on talk page (in main namespace)"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/AnalysisOptionsPanel.java:107
-msgid "Update disambiguation warning on talk page (in encyclopedic namespaces)"
+msgid ""
+"Update disambiguation warning on talk page (in encyclopedic namespaces)"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/AnalysisOptionsPanel.java:114
@@ -3430,18 +3429,14 @@ msgstr ""
 msgid "The value cannot contain any of these characters: {0}"
 msgstr ""
 
-#, fuzzy
-#~ msgid "Add to Watchlist"
-#~ msgstr "Lap figyelése"
-
-#~ msgid "Would you like to add these pages on your local Watch list ?"
-#~ msgstr "Hozzá akarod adni ezeket az oldalakat a helyi Figyelsőlistádhoz?"
-
 #~ msgid "Error unkown from WikiCleaner"
 #~ msgstr "A WikiCleaner számára ismeretlen hiba"
 
 #~ msgid "&Close"
 #~ msgstr "&Bezár"
+
+#~ msgid "Add to &Watch list"
+#~ msgstr "Lap figyelése"
 
 #~ msgid "&Wikipedia"
 #~ msgstr "&Wikipédia"
@@ -3461,17 +3456,35 @@ msgstr ""
 #~ msgid "&Password :"
 #~ msgstr "&Jelszó:"
 
+#~ msgid "&User name :"
+#~ msgstr "&Felhasználónév:"
+
 #~ msgid "L&ogout"
 #~ msgstr "K&ijelentkezés"
 
 #~ msgid "&Idea ? Bug ?"
 #~ msgstr "&Ötlet ? Hiba ?"
 
+#~ msgid ""
+#~ "Demo mode is only available for testing WikiCleaner.\n"
+#~ "You won't be able to modify pages on Wikipedia in Demo mode.\n"
+#~ "Do you want to continue ?"
+#~ msgstr ""
+#~ "A Bemutató mód csak a WikiCleaner tesztelésére van.\n"
+#~ "A Bemutató módban nem lehet a Wikipédia lapjait módosítani.\n"
+#~ "Folytatni akarod?"
+
+#~ msgid "You must input your user name before login"
+#~ msgstr "A bejelentkezéshez be kell írnod a felhasználóneved"
+
 #~ msgid "&Apply"
 #~ msgstr "&Alkalmaz"
 
 #~ msgid "&Send"
 #~ msgstr "&Küldés"
+
+#~ msgid "Would you like to add this page on your local Watch list ?"
+#~ msgstr "Hozzá akarod adni ezt az oldalt a Figyelőlistádhoz ?"
 
 #~ msgid "Search"
 #~ msgstr "Keresés"
@@ -3488,26 +3501,47 @@ msgstr ""
 #~ msgid "&Disambiguation"
 #~ msgstr "&Egyértelműsítő lapok"
 
+#~ msgid "Local &Watch list"
+#~ msgstr "Helyi Figyelőlista"
+
 #~ msgid "Count &other pages"
 #~ msgstr "Egyéb lapok számlálása"
 
 #~ msgid "&Hide window when sending"
 #~ msgstr "&Ablak elrejtése a küldés után"
 
+#~ msgid ""
+#~ "You are about to remove the pages from your local Watch list.\n"
+#~ "Are you sure ?"
+#~ msgstr ""
+#~ "El fogod távolítani a lapokat a helyi Figyelőlistádból.\n"
+#~ "Biztos vagy benne?"
+
+#~ msgid "Enter the page title you want to add to your local watch list"
+#~ msgstr "Írd be a lap nevét amit hozzá akarsz adni a helyi Figyelőlistádhoz"
+
+#, java-format
 #~ msgid "Red links Analysis - {0}"
 #~ msgstr "Piros linkek elemzése - {0}"
 
 #~ msgid "Red links analysis"
 #~ msgstr "Piros linkek elemzése"
 
+#, java-format
 #~ msgid "An error occured: {0}"
 #~ msgstr "Egy hiba történt: {0}"
+
+#~ msgid "Would you like to add these pages on your local Watch list ?"
+#~ msgstr "Hozzá akarod adni ezeket az oldalakat a helyi Figyelsőlistádhoz?"
 
 #~ msgid "&External Viewer"
 #~ msgstr "&Külső néző"
 
 #~ msgid "&Current Disambiguation List"
 #~ msgstr "&Jelenlegi egyértelműsítő lap lista"
+
+#~ msgid "You can read the help on Wikipedia Cleaner at the following URL:"
+#~ msgstr "Ezt a hivatkozást követve elérheted a Wikipedia Cleaner súgóját:"
 
 #~ msgid "Count &redirect pages"
 #~ msgstr "Átirányítások számlálása"
@@ -3530,6 +3564,10 @@ msgstr ""
 #~ msgid "&Search for possible pages"
 #~ msgstr "&Lehetséges lapok kersése"
 
+#~ msgid "Maximum number of simultaneous analysis :"
+#~ msgstr "Maximum számú egyidejű elemzés:"
+
+#, java-format
 #~ msgid "&Apply only to {0}"
 #~ msgstr "&Alkalmazás csak erre: {0}"
 
@@ -3542,6 +3580,7 @@ msgstr ""
 #~ msgid "&Reload page list"
 #~ msgstr "&Oldal lista újratöltése"
 
+#, java-format
 #~ msgid "The page {0} doesn't exist on Wikipedia"
 #~ msgstr "Az oldal {0} nem létezik a Wikipédián."
 

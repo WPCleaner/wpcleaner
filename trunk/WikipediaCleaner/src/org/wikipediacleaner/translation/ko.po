@@ -8,15 +8,15 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2014-09-14 15:00+0200\n"
-"PO-Revision-Date: 2014-09-07 12:11+0100\n"
-"Last-Translator: Nicolas Vervelle <nvervelle@gmail.com>\n"
+"PO-Revision-Date: 2014-09-07 20:03+0000\n"
+"Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Korean <ko@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Launchpad-Export-Date: 2014-09-02 06:08+0000\n"
-"X-Generator: Poedit 1.6.9\n"
+"X-Launchpad-Export-Date: 2014-09-15 18:08+0000\n"
+"X-Generator: Launchpad (build 17196)\n"
 "Language: ko\n"
 
 #: org/wikipediacleaner/Version.java:31
@@ -38,8 +38,8 @@ msgstr ""
 #: org/wikipediacleaner/Version.java:35
 #, java-format
 msgid ""
-"I try to keep {0} up to date with Check Wiki, but if you find any discrepancy"
-"(ies) in the detections, please let me know."
+"I try to keep {0} up to date with Check Wiki, but if you find any "
+"discrepancy(ies) in the detections, please let me know."
 msgstr ""
 
 #: org/wikipediacleaner/Version.java:37
@@ -415,9 +415,9 @@ msgstr ""
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:175
 msgid ""
 "A template that can be used instead of the link to an other language. It "
-"must be specified as: <template name>|<param name for local page name>|"
-"<param name for code of other language>|<param name for page name in other "
-"language>|<param name for displayed text>"
+"must be specified as: <template name>|<param name for local page "
+"name>|<param name for code of other language>|<param name for page name in "
+"other language>|<param name for displayed text>"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:257
@@ -976,10 +976,9 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:205
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:611
 #: org/wikipediacleaner/gui/swing/bot/BotToolsWindow.java:89
-msgid "On some Wikipedia projects, you may need the bot status for doing this."
-msgstr ""
-"일부 위키백과 프로젝트에서는, 당신이 이 작업을 하려면 봇 권한이 필요할 수 있"
-"습니다."
+msgid ""
+"On some Wikipedia projects, you may need the bot status for doing this."
+msgstr "일부 위키백과 프로젝트에서는, 당신이 이 작업을 하려면 봇 권한이 필요할 수 있습니다."
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:206
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:612
@@ -1458,7 +1457,8 @@ msgid "Links to {0}"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1458
-msgid "You must input a page name for retrieving the list of category members"
+msgid ""
+"You must input a page name for retrieving the list of category members"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1476
@@ -1776,8 +1776,10 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:748
 #, java-format
 msgid "Last modified at {0}. It was modified less than {1} minute ago."
-msgid_plural "Last modified at {0}. It was modified less than {1} minutes ago."
+msgid_plural ""
+"Last modified at {0}. It was modified less than {1} minutes ago."
 msgstr[0] ""
+msgstr[1] ""
 
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:793
 msgid "Fix &redirects"
@@ -2032,6 +2034,7 @@ msgstr ""
 msgid "Would you like to add this page on your local watchlist?"
 msgid_plural "Would you like to add these pages on your local watchlist?"
 msgstr[0] ""
+msgstr[1] ""
 
 #: org/wikipediacleaner/gui/swing/action/CheckCategoryLinkAction.java:88
 #, java-format
@@ -2193,7 +2196,8 @@ msgstr[1] ""
 #: org/wikipediacleaner/gui/swing/bot/AutomaticCWWorker.java:275
 #, java-format
 msgid "{0} page has been marked as fixed for the selected algorithms"
-msgid_plural "{0} pages have been marked as fixed for the selected algorithms"
+msgid_plural ""
+"{0} pages have been marked as fixed for the selected algorithms"
 msgstr[0] ""
 msgstr[1] ""
 
@@ -2355,6 +2359,7 @@ msgstr ""
 msgid "The error n°{0} is still found {1} time on the page."
 msgid_plural "The error n°{0} is still found {1} times on the page."
 msgstr[0] ""
+msgstr[1] ""
 
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiContentPanel.java:497
 msgid "Are you really sure that you want to mark it as fixed ?"
@@ -2552,9 +2557,8 @@ msgid "Error"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/checkwiki/DetectionListTableModel.java:81
-#, fuzzy
 msgid "Location"
-msgstr "로그인"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/checkwiki/DetectionListTableModel.java:85
 msgid "Notice"
@@ -2789,7 +2793,8 @@ msgid "Create disambiguation warning on talk page (in main namespace)"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/AnalysisOptionsPanel.java:86
-msgid "Create disambiguation warning on talk page (in encyclopedic namespaces)"
+msgid ""
+"Create disambiguation warning on talk page (in encyclopedic namespaces)"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/AnalysisOptionsPanel.java:93
@@ -2801,7 +2806,8 @@ msgid "Update disambiguation warning on talk page (in main namespace)"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/AnalysisOptionsPanel.java:107
-msgid "Update disambiguation warning on talk page (in encyclopedic namespaces)"
+msgid ""
+"Update disambiguation warning on talk page (in encyclopedic namespaces)"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/AnalysisOptionsPanel.java:114
@@ -3333,6 +3339,7 @@ msgstr[1] ""
 msgid "Warning has been updated on {0} page."
 msgid_plural "Warnings have been updated on {0} pages."
 msgstr[0] ""
+msgstr[1] ""
 
 #: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:281
 #: org/wikipediacleaner/gui/swing/worker/UpdateISBNWarningWorker.java:458
@@ -3340,6 +3347,7 @@ msgstr[0] ""
 msgid "Warning has been removed on {0} page."
 msgid_plural "Warnings have been removed on {0} pages."
 msgstr[0] ""
+msgstr[1] ""
 
 #: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:286
 #: org/wikipediacleaner/gui/swing/worker/UpdateISBNWarningWorker.java:463
@@ -3435,6 +3443,9 @@ msgstr ""
 
 #~ msgid "&Password :"
 #~ msgstr "암호(&P) :"
+
+#~ msgid "&User name :"
+#~ msgstr "사용자 이름(&U) :"
 
 #~ msgid "L&ogout"
 #~ msgstr "로그 아웃(&O)"

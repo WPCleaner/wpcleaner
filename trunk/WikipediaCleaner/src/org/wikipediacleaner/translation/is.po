@@ -8,15 +8,15 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2014-09-14 15:00+0200\n"
-"PO-Revision-Date: 2014-09-10 18:45+0100\n"
-"Last-Translator: Nicolas Vervelle <nvervelle@gmail.com>\n"
+"PO-Revision-Date: 2014-09-10 23:21+0000\n"
+"Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Icelandic <is@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2014-09-02 06:08+0000\n"
-"X-Generator: Poedit 1.6.9\n"
+"X-Launchpad-Export-Date: 2014-09-15 18:08+0000\n"
+"X-Generator: Launchpad (build 17196)\n"
 "Language: is\n"
 
 #: org/wikipediacleaner/Version.java:31
@@ -38,8 +38,8 @@ msgstr ""
 #: org/wikipediacleaner/Version.java:35
 #, java-format
 msgid ""
-"I try to keep {0} up to date with Check Wiki, but if you find any discrepancy"
-"(ies) in the detections, please let me know."
+"I try to keep {0} up to date with Check Wiki, but if you find any "
+"discrepancy(ies) in the detections, please let me know."
 msgstr ""
 
 #: org/wikipediacleaner/Version.java:37
@@ -415,9 +415,9 @@ msgstr "Útvær skoðari"
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:175
 msgid ""
 "A template that can be used instead of the link to an other language. It "
-"must be specified as: <template name>|<param name for local page name>|"
-"<param name for code of other language>|<param name for page name in other "
-"language>|<param name for displayed text>"
+"must be specified as: <template name>|<param name for local page "
+"name>|<param name for code of other language>|<param name for page name in "
+"other language>|<param name for displayed text>"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:257
@@ -976,7 +976,8 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:205
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:611
 #: org/wikipediacleaner/gui/swing/bot/BotToolsWindow.java:89
-msgid "On some Wikipedia projects, you may need the bot status for doing this."
+msgid ""
+"On some Wikipedia projects, you may need the bot status for doing this."
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:206
@@ -1340,14 +1341,12 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/MainWindow.java:848
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1808
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:195
-#, fuzzy
 msgid "Local Watchlist"
-msgstr "&Vaktlisti"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:858
-#, fuzzy
 msgid "Watchlist"
-msgstr "&Vaktlisti"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:867
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1830
@@ -1395,10 +1394,9 @@ msgid "You must input your password before login"
 msgstr "Þú verður að skrá lykilorð fyrir innskráningu"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1108
-#, fuzzy, java-format
+#, java-format
 msgid "You can learn how to configure {0} at the following URL:"
 msgstr ""
-"Þú getur lært hvernig á að bæta við öðru tungumáli á eftirfarandi síðu:"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1157
 msgid "Activate all"
@@ -1465,7 +1463,8 @@ msgid "Links to {0}"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1458
-msgid "You must input a page name for retrieving the list of category members"
+msgid ""
+"You must input a page name for retrieving the list of category members"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1476
@@ -1474,11 +1473,10 @@ msgid "Category members of {0}"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1484
-#, fuzzy
 msgid ""
 "You must input a page name for retrieving the list of page in which it is "
 "embedded"
-msgstr "Þú verður að skrifa inn síðuheiti til að fá fulla lýsingu"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1502
 #, java-format
@@ -1784,7 +1782,8 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:748
 #, java-format
 msgid "Last modified at {0}. It was modified less than {1} minute ago."
-msgid_plural "Last modified at {0}. It was modified less than {1} minutes ago."
+msgid_plural ""
+"Last modified at {0}. It was modified less than {1} minutes ago."
 msgstr[0] ""
 msgstr[1] ""
 
@@ -2036,9 +2035,8 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/action/ActionWatchPage.java:45
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:105
-#, fuzzy
 msgid "Add to local watchlist"
-msgstr "Bæta við &Vaktlista"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/action/ActionWatchPage.java:180
 msgid "Would you like to add this page on your local watchlist?"
@@ -2206,7 +2204,8 @@ msgstr[1] ""
 #: org/wikipediacleaner/gui/swing/bot/AutomaticCWWorker.java:275
 #, java-format
 msgid "{0} page has been marked as fixed for the selected algorithms"
-msgid_plural "{0} pages have been marked as fixed for the selected algorithms"
+msgid_plural ""
+"{0} pages have been marked as fixed for the selected algorithms"
 msgstr[0] ""
 msgstr[1] ""
 
@@ -2272,9 +2271,8 @@ msgid "The following problems were detected on the whitelist for error {0}:"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/bot/CWCheckWhiteListsWorker.java:147
-#, fuzzy
 msgid "Whitelists"
-msgstr "&Vaktlisti"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:145
 msgid "Analyze pages that couldn't be fixed by bot"
@@ -2567,9 +2565,8 @@ msgid "Error"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/checkwiki/DetectionListTableModel.java:81
-#, fuzzy
 msgid "Location"
-msgstr "Innskrá"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/checkwiki/DetectionListTableModel.java:85
 msgid "Notice"
@@ -2804,7 +2801,8 @@ msgid "Create disambiguation warning on talk page (in main namespace)"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/AnalysisOptionsPanel.java:86
-msgid "Create disambiguation warning on talk page (in encyclopedic namespaces)"
+msgid ""
+"Create disambiguation warning on talk page (in encyclopedic namespaces)"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/AnalysisOptionsPanel.java:93
@@ -2816,7 +2814,8 @@ msgid "Update disambiguation warning on talk page (in main namespace)"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/AnalysisOptionsPanel.java:107
-msgid "Update disambiguation warning on talk page (in encyclopedic namespaces)"
+msgid ""
+"Update disambiguation warning on talk page (in encyclopedic namespaces)"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/AnalysisOptionsPanel.java:114
@@ -3426,18 +3425,14 @@ msgstr ""
 msgid "The value cannot contain any of these characters: {0}"
 msgstr ""
 
-#, fuzzy
-#~ msgid "Add to Watchlist"
-#~ msgstr "Bæta við &Vaktlista"
-
-#~ msgid "Would you like to add these pages on your local Watch list ?"
-#~ msgstr "Viltu bæta þessum síðum við vaktlistann?"
-
 #~ msgid "&Close"
 #~ msgstr "&Loka"
 
 #~ msgid "&Send"
 #~ msgstr "&Senda"
+
+#~ msgid "Add to &Watch list"
+#~ msgstr "Bæta við &Vaktlista"
 
 #~ msgid "&External Viewer"
 #~ msgstr "&Útvær skoðari"
@@ -3448,6 +3443,12 @@ msgstr ""
 #~ msgid "&Full analysis"
 #~ msgstr "&Full lýsing"
 
+#~ msgid "Would you like to add these pages on your local Watch list ?"
+#~ msgstr "Viltu bæta þessum síðum við vaktlistann?"
+
+#~ msgid "Would you like to add this page on your local Watch list ?"
+#~ msgstr "Viltu bæta þessari síðu við á vaktlistann?"
+
 #~ msgid "&Disambiguation"
 #~ msgstr "&Aðgreining"
 
@@ -3456,6 +3457,9 @@ msgstr ""
 
 #~ msgid "&Password :"
 #~ msgstr "&Lykilorð:"
+
+#~ msgid "&User name :"
+#~ msgstr "&Notandanafn:"
 
 #~ msgid "Lan&guage"
 #~ msgstr "Tungu&mál"
@@ -3471,6 +3475,18 @@ msgstr ""
 
 #~ msgid "&Current Disambiguation List"
 #~ msgstr "&Núverandi aðgreiningalisti"
+
+#~ msgid "Local &Watch list"
+#~ msgstr "&Vaktlisti"
+
+#~ msgid "You must input your user name before login"
+#~ msgstr "Þú verður að skrá notandanafn fyrir innskráningu"
+
+#~ msgid "You can read the help on Wikipedia Cleaner at the following URL:"
+#~ msgstr "Þú getur fengið hjálp með Wikipedia Cleaner á þessari síðu:"
+
+#~ msgid "Maximum number of simultaneous analysis :"
+#~ msgstr "Hámarksfjöldi lýsinga (samtímis):"
 
 #~ msgid "Count &other pages"
 #~ msgstr "Telja &aðrar síður"
@@ -3493,9 +3509,21 @@ msgstr ""
 #~ msgid "&Apply"
 #~ msgstr "&Virkja"
 
+#~ msgid ""
+#~ "You are about to remove the pages from your local Watch list.\n"
+#~ "Are you sure ?"
+#~ msgstr ""
+#~ "Þú ert í þann mund að fjarlægja síðu af vaktlistanum þínum.\n"
+#~ "Ertu viss?"
+
+#~ msgid "Enter the page title you want to add to your local watch list"
+#~ msgstr "Sláðu inn síðutitil sem þú vilt bæta við vaktlistann."
+
+#, java-format
 #~ msgid "Red links Analysis - {0}"
 #~ msgstr "Lýsing rauðra tengla - {0}"
 
+#, java-format
 #~ msgid "&Apply only to {0}"
 #~ msgstr "&Bæta bara við {0}"
 
@@ -3526,6 +3554,7 @@ msgstr ""
 #~ msgid "Search"
 #~ msgstr "Leita"
 
+#, java-format
 #~ msgid "An error occured: {0}"
 #~ msgstr "Villa: {0}"
 
@@ -3535,8 +3564,10 @@ msgstr ""
 #~ msgid "Red links analysis"
 #~ msgstr "Lýsing á rauðum tenglum"
 
+#, java-format
 #~ msgid "Reverse to [[{0}|{1}]]"
 #~ msgstr "Bylta í [[{0}|{1}]]"
 
+#, java-format
 #~ msgid "{0} links in Main Namespace / {1} total links"
 #~ msgstr "{0} tenglar í aðalnafnrými / {1} tenglar alls"

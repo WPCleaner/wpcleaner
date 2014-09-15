@@ -15,8 +15,8 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Launchpad-Export-Date: 2014-09-02 06:08+0000\n"
-"X-Generator: Launchpad (build 17192)\n"
+"X-Launchpad-Export-Date: 2014-09-15 18:08+0000\n"
+"X-Generator: Launchpad (build 17196)\n"
 "Language: ja\n"
 
 #: org/wikipediacleaner/Version.java:31
@@ -38,8 +38,8 @@ msgstr ""
 #: org/wikipediacleaner/Version.java:35
 #, java-format
 msgid ""
-"I try to keep {0} up to date with Check Wiki, but if you find any discrepancy"
-"(ies) in the detections, please let me know."
+"I try to keep {0} up to date with Check Wiki, but if you find any "
+"discrepancy(ies) in the detections, please let me know."
 msgstr ""
 
 #: org/wikipediacleaner/Version.java:37
@@ -415,9 +415,9 @@ msgstr "外部ブラウザ"
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:175
 msgid ""
 "A template that can be used instead of the link to an other language. It "
-"must be specified as: <template name>|<param name for local page name>|"
-"<param name for code of other language>|<param name for page name in other "
-"language>|<param name for displayed text>"
+"must be specified as: <template name>|<param name for local page "
+"name>|<param name for code of other language>|<param name for page name in "
+"other language>|<param name for displayed text>"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:257
@@ -976,7 +976,8 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:205
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:611
 #: org/wikipediacleaner/gui/swing/bot/BotToolsWindow.java:89
-msgid "On some Wikipedia projects, you may need the bot status for doing this."
+msgid ""
+"On some Wikipedia projects, you may need the bot status for doing this."
 msgstr "プロジェクトごとに事前にボットフラグの取得が必要です。"
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:206
@@ -984,9 +985,7 @@ msgstr "プロジェクトごとに事前にボットフラグの取得が必要
 #: org/wikipediacleaner/gui/swing/bot/BotToolsWindow.java:90
 msgid ""
 "Please, check if you need the bot status by reading the rules of Wikipedia."
-msgstr ""
-"各プロジェクトのルールをチェックし、ボットフラグが必要かどうか確認してくださ"
-"い。"
+msgstr "各プロジェクトのルールをチェックし、ボットフラグが必要かどうか確認してください。"
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:222
 #: org/wikipediacleaner/gui/swing/options/SortingOptionsPanel.java:110
@@ -1188,9 +1187,8 @@ msgid "Other Language"
 msgstr "その他の言語"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:419
-#, fuzzy
 msgid "Username:"
-msgstr "利用者名(&U) :"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:434
 msgid "Password :"
@@ -1343,14 +1341,12 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/MainWindow.java:848
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1808
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:195
-#, fuzzy
 msgid "Local Watchlist"
-msgstr "ローカル・ウォッチリスト(&W)"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:858
-#, fuzzy
 msgid "Watchlist"
-msgstr "ローカル・ウォッチリスト(&W)"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:867
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1830
@@ -1461,7 +1457,8 @@ msgid "Links to {0}"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1458
-msgid "You must input a page name for retrieving the list of category members"
+msgid ""
+"You must input a page name for retrieving the list of category members"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1476
@@ -1779,8 +1776,10 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:748
 #, java-format
 msgid "Last modified at {0}. It was modified less than {1} minute ago."
-msgid_plural "Last modified at {0}. It was modified less than {1} minutes ago."
+msgid_plural ""
+"Last modified at {0}. It was modified less than {1} minutes ago."
 msgstr[0] ""
+msgstr[1] ""
 
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:793
 msgid "Fix &redirects"
@@ -1913,16 +1912,14 @@ msgid "Articles with links to disambiguation pages"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/PageListWindow.java:426
-#, fuzzy
 msgid ""
 "You are about to remove the pages from your local watchlist.\n"
 "Are you sure?"
-msgstr "このページをあなたのローカル・ウォッチリストに追加しますか？"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/PageListWindow.java:446
-#, fuzzy
 msgid "Enter the page title you want to add to your local watchlist"
-msgstr "このページをあなたのローカル・ウォッチリストに追加しますか？"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/PageListWindow.java:613
 #, java-format
@@ -2030,15 +2027,14 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/action/ActionWatchPage.java:45
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:105
-#, fuzzy
 msgid "Add to local watchlist"
-msgstr "ウォッチリストに追加(&W)"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/action/ActionWatchPage.java:180
-#, fuzzy
 msgid "Would you like to add this page on your local watchlist?"
 msgid_plural "Would you like to add these pages on your local watchlist?"
-msgstr[0] "このページをあなたのローカル・ウォッチリストに追加しますか？"
+msgstr[0] ""
+msgstr[1] ""
 
 #: org/wikipediacleaner/gui/swing/action/CheckCategoryLinkAction.java:88
 #, java-format
@@ -2200,7 +2196,8 @@ msgstr[1] ""
 #: org/wikipediacleaner/gui/swing/bot/AutomaticCWWorker.java:275
 #, java-format
 msgid "{0} page has been marked as fixed for the selected algorithms"
-msgid_plural "{0} pages have been marked as fixed for the selected algorithms"
+msgid_plural ""
+"{0} pages have been marked as fixed for the selected algorithms"
 msgstr[0] ""
 msgstr[1] ""
 
@@ -2266,9 +2263,8 @@ msgid "The following problems were detected on the whitelist for error {0}:"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/bot/CWCheckWhiteListsWorker.java:147
-#, fuzzy
 msgid "Whitelists"
-msgstr "ローカル・ウォッチリスト(&W)"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:145
 msgid "Analyze pages that couldn't be fixed by bot"
@@ -2363,6 +2359,7 @@ msgstr ""
 msgid "The error n°{0} is still found {1} time on the page."
 msgid_plural "The error n°{0} is still found {1} times on the page."
 msgstr[0] ""
+msgstr[1] ""
 
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiContentPanel.java:497
 msgid "Are you really sure that you want to mark it as fixed ?"
@@ -2560,9 +2557,8 @@ msgid "Error"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/checkwiki/DetectionListTableModel.java:81
-#, fuzzy
 msgid "Location"
-msgstr "ログイン"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/checkwiki/DetectionListTableModel.java:85
 msgid "Notice"
@@ -2797,7 +2793,8 @@ msgid "Create disambiguation warning on talk page (in main namespace)"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/AnalysisOptionsPanel.java:86
-msgid "Create disambiguation warning on talk page (in encyclopedic namespaces)"
+msgid ""
+"Create disambiguation warning on talk page (in encyclopedic namespaces)"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/AnalysisOptionsPanel.java:93
@@ -2809,7 +2806,8 @@ msgid "Update disambiguation warning on talk page (in main namespace)"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/AnalysisOptionsPanel.java:107
-msgid "Update disambiguation warning on talk page (in encyclopedic namespaces)"
+msgid ""
+"Update disambiguation warning on talk page (in encyclopedic namespaces)"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/AnalysisOptionsPanel.java:114
@@ -3341,6 +3339,7 @@ msgstr[1] ""
 msgid "Warning has been updated on {0} page."
 msgid_plural "Warnings have been updated on {0} pages."
 msgstr[0] ""
+msgstr[1] ""
 
 #: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:281
 #: org/wikipediacleaner/gui/swing/worker/UpdateISBNWarningWorker.java:458
@@ -3348,6 +3347,7 @@ msgstr[0] ""
 msgid "Warning has been removed on {0} page."
 msgid_plural "Warnings have been removed on {0} pages."
 msgstr[0] ""
+msgstr[1] ""
 
 #: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:286
 #: org/wikipediacleaner/gui/swing/worker/UpdateISBNWarningWorker.java:463
@@ -3417,22 +3417,19 @@ msgstr ""
 msgid "The value cannot contain any of these characters: {0}"
 msgstr ""
 
-#, fuzzy
-#~ msgid "Add to Watchlist"
-#~ msgstr "ウォッチリストに追加(&W)"
-
-#~ msgid "Would you like to add these pages on your local Watch list ?"
-#~ msgstr "このページをあなたのローカル・ウォッチリストに追加しますか？"
-
 #~ msgid "Error unkown from WikiCleaner"
 #~ msgstr "ウィキクリーナーで未知のエラー"
 
 #~ msgid "What name would like to use for the <ref> tag ?"
 #~ msgstr "<ref> タグに何という name 属性を追加しますか？"
 
+#~ msgid "Would you like to add these pages on your local Watch list ?"
+#~ msgstr "このページをあなたのローカル・ウォッチリストに追加しますか？"
+
 #~ msgid "List on toolserver"
 #~ msgstr "ツールサーバ上にある一覧"
 
+#, java-format
 #~ msgid "The page {0} doesn't exist on Wikipedia"
 #~ msgstr "ウィキペディアに {0} というページは存在しません"
 
@@ -3454,12 +3451,16 @@ msgstr ""
 #~ msgid "Add to Watch list (Alt + &W)"
 #~ msgstr "ウォッチリストに追加 (Alt + &W)"
 
+#~ msgid "Would you like to add this page on your local Watch list ?"
+#~ msgstr "このページをあなたのローカル・ウォッチリストに追加しますか？"
+
 #~ msgid "Search"
 #~ msgstr "検索"
 
 #~ msgid "An unknown error occured"
 #~ msgstr "未知のエラーが発生しました"
 
+#, java-format
 #~ msgid "An error occured: {0}"
 #~ msgstr "エラーが発生しました: {0}"
 
@@ -3491,6 +3492,9 @@ msgstr ""
 #~ msgid "&Password :"
 #~ msgstr "パスワード(&P) :"
 
+#~ msgid "&User name :"
+#~ msgstr "利用者名(&U) :"
+
 #~ msgid "Lan&guage"
 #~ msgstr "言語(&G)"
 
@@ -3503,8 +3507,14 @@ msgstr ""
 #~ msgid "L&ogout"
 #~ msgstr "ログアウト(&O)"
 
+#~ msgid "Local &Watch list"
+#~ msgstr "ローカル・ウォッチリスト(&W)"
+
 #~ msgid "&Send"
 #~ msgstr "送信(&S)"
+
+#~ msgid "Add to &Watch list"
+#~ msgstr "ウォッチリストに追加(&W)"
 
 #~ msgid "&History"
 #~ msgstr "履歴(&H)"
@@ -3518,6 +3528,7 @@ msgstr ""
 #~ msgid "&Ends with"
 #~ msgstr "で終わる(&C)"
 
+#, java-format
 #~ msgid "&Apply only to {0}"
 #~ msgstr "{0} にだけ適用(&A)"
 
