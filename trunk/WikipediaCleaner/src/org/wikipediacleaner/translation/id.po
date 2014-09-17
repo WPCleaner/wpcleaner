@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2014-09-14 15:00+0200\n"
+"POT-Creation-Date: 2014-09-17 18:45+0200\n"
 "PO-Revision-Date: 2014-09-14 18:17+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Indonesian <id@li.org>\n"
@@ -38,8 +38,8 @@ msgstr ""
 #: org/wikipediacleaner/Version.java:35
 #, java-format
 msgid ""
-"I try to keep {0} up to date with Check Wiki, but if you find any "
-"discrepancy(ies) in the detections, please let me know."
+"I try to keep {0} up to date with Check Wiki, but if you find any discrepancy"
+"(ies) in the detections, please let me know."
 msgstr ""
 
 #: org/wikipediacleaner/Version.java:37
@@ -53,8 +53,8 @@ msgid ""
 "WPCleaner configuration is available online, check the {0}System "
 "configuration{1}."
 msgstr ""
-"Konfigurasi WPCleaner tersedia secara online, periksa {0}Sistem "
-"konfigurasi{1}."
+"Konfigurasi WPCleaner tersedia secara online, periksa {0}Sistem konfigurasi"
+"{1}."
 
 #: org/wikipediacleaner/Version.java:43
 msgid "Please, report any other problem you find to me."
@@ -421,9 +421,9 @@ msgstr "Program editing luar"
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:175
 msgid ""
 "A template that can be used instead of the link to an other language. It "
-"must be specified as: <template name>|<param name for local page "
-"name>|<param name for code of other language>|<param name for page name in "
-"other language>|<param name for displayed text>"
+"must be specified as: <template name>|<param name for local page name>|"
+"<param name for code of other language>|<param name for page name in other "
+"language>|<param name for displayed text>"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:257
@@ -982,8 +982,7 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:205
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:611
 #: org/wikipediacleaner/gui/swing/bot/BotToolsWindow.java:89
-msgid ""
-"On some Wikipedia projects, you may need the bot status for doing this."
+msgid "On some Wikipedia projects, you may need the bot status for doing this."
 msgstr ""
 "Pada beberapa ProyekWiki, anda memerlukan status bot guna melakukan hal ini."
 
@@ -1474,8 +1473,7 @@ msgid "Links to {0}"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1458
-msgid ""
-"You must input a page name for retrieving the list of category members"
+msgid "You must input a page name for retrieving the list of category members"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1476
@@ -1793,8 +1791,7 @@ msgstr "Perubahan terakhir pada {0}"
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:748
 #, java-format
 msgid "Last modified at {0}. It was modified less than {1} minute ago."
-msgid_plural ""
-"Last modified at {0}. It was modified less than {1} minutes ago."
+msgid_plural "Last modified at {0}. It was modified less than {1} minutes ago."
 msgstr[0] ""
 "Perubahan terakhir pada {0}. Diubah kurang dari {1} menit yang lalu."
 
@@ -2215,8 +2212,7 @@ msgstr[1] ""
 #: org/wikipediacleaner/gui/swing/bot/AutomaticCWWorker.java:275
 #, java-format
 msgid "{0} page has been marked as fixed for the selected algorithms"
-msgid_plural ""
-"{0} pages have been marked as fixed for the selected algorithms"
+msgid_plural "{0} pages have been marked as fixed for the selected algorithms"
 msgstr[0] ""
 msgstr[1] ""
 
@@ -2329,20 +2325,20 @@ msgstr ""
 msgid "At what page do you wish to start updating the warnings ?"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/checkwiki/ActionCheckArticle.java:55
+#: org/wikipediacleaner/gui/swing/checkwiki/ActionCheckArticle.java:56
 msgid "Check article with CheckWiki"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/checkwiki/ActionCheckArticle.java:137
+#: org/wikipediacleaner/gui/swing/checkwiki/ActionCheckArticle.java:138
 msgid "Unable to retrieve analysis from CheckWiki."
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/checkwiki/ActionCheckArticle.java:143
+#: org/wikipediacleaner/gui/swing/checkwiki/ActionCheckArticle.java:144
 msgid "No errors are currently detected by CheckWiki."
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/checkwiki/ActionCheckArticle.java:147
-msgid "The following errors are currently detected by CheckWiki:"
+#: org/wikipediacleaner/gui/swing/checkwiki/ActionCheckArticle.java:149
+msgid "Detections"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiContentPanel.java:192
@@ -2587,6 +2583,10 @@ msgstr ""
 msgid "Notice"
 msgstr ""
 
+#: org/wikipediacleaner/gui/swing/checkwiki/DetectionPanel.java:56
+msgid "The following errors are currently detected by CheckWiki:"
+msgstr ""
+
 #: org/wikipediacleaner/gui/swing/component/CheckErrorPageListPopupListener.java:99
 #, java-format
 msgid "Error n°{0}"
@@ -2816,8 +2816,7 @@ msgid "Create disambiguation warning on talk page (in main namespace)"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/AnalysisOptionsPanel.java:86
-msgid ""
-"Create disambiguation warning on talk page (in encyclopedic namespaces)"
+msgid "Create disambiguation warning on talk page (in encyclopedic namespaces)"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/AnalysisOptionsPanel.java:93
@@ -2829,8 +2828,7 @@ msgid "Update disambiguation warning on talk page (in main namespace)"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/AnalysisOptionsPanel.java:107
-msgid ""
-"Update disambiguation warning on talk page (in encyclopedic namespaces)"
+msgid "Update disambiguation warning on talk page (in encyclopedic namespaces)"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/AnalysisOptionsPanel.java:114
@@ -3454,14 +3452,16 @@ msgstr ""
 
 #~ msgid "Would you like to add these pages on your local Watch list ?"
 #~ msgstr ""
-#~ "Apakah anda ingin menambahkan halaman ini pada daftar Pantauan lokal anda ?"
+#~ "Apakah anda ingin menambahkan halaman ini pada daftar Pantauan lokal "
+#~ "anda ?"
 
 #~ msgid "List on toolserver"
 #~ msgstr "Daftar pada toolserver"
 
 #~ msgid "This function will do all the replacements in all selected pages."
 #~ msgstr ""
-#~ "Fungsi ini akan melakukan pergantian pada keseluruhan halaman yang dipilih."
+#~ "Fungsi ini akan melakukan pergantian pada keseluruhan halaman yang "
+#~ "dipilih."
 
 #~ msgid "&Wikipedia"
 #~ msgstr "&Wikipedia"
@@ -3554,9 +3554,9 @@ msgstr ""
 #~ msgid "&External Viewer"
 #~ msgstr "Program editing &luar"
 
-#, java-format
 #~ msgid "Last modified at {0}. It was modified less than {1} minutes ago."
-#~ msgstr "Perubahan terakhir pada {0}. Diubah kurang dari {1} menit yang lalu."
+#~ msgstr ""
+#~ "Perubahan terakhir pada {0}. Diubah kurang dari {1} menit yang lalu."
 
 #~ msgid "&History"
 #~ msgstr "&Sejarah penyuntingan"
@@ -3564,7 +3564,6 @@ msgstr ""
 #~ msgid "&Reload page list"
 #~ msgstr "&Muat ulang daftar halaman"
 
-#, java-format
 #~ msgid "Red links Analysis - {0}"
 #~ msgstr "Analisa pranala merah - {0}"
 
@@ -3574,7 +3573,6 @@ msgstr ""
 #~ msgid "Search"
 #~ msgstr "Cari"
 
-#, java-format
 #~ msgid "&Apply only to {0}"
 #~ msgstr "&Terapkan hanya pada {0}"
 
@@ -3596,11 +3594,9 @@ msgstr ""
 #~ msgid "Red links analysis"
 #~ msgstr "Analisa pranala merah"
 
-#, java-format
 #~ msgid "Reverse to [[{0}|{1}]]"
 #~ msgstr "Kembalikan pada [[{0}|{1}]]"
 
-#, java-format
 #~ msgid "{0} links in Main Namespace / {1} total links"
 #~ msgstr "{0} pranala dalam ruangnama Utama / {1} total pranala"
 
@@ -3610,11 +3606,9 @@ msgstr ""
 #~ msgid "Mark as Fixed"
 #~ msgstr "Tandai sudah diperbaiki"
 
-#, java-format
 #~ msgid "The page {0} doesn't exist on Wikipedia"
 #~ msgstr "Artikel {0} tidak ada di Wikipedia"
 
-#, java-format
 #~ msgid ""
 #~ "The error n°{0} is still found in the page.\n"
 #~ "Are you really sure that you want to mark it as fixed ?"
@@ -3622,7 +3616,6 @@ msgstr ""
 #~ "Galat n°{0} tetap ditemukan pada artikel.\n"
 #~ "Anda yakin untuk menandai sudah diperbaiki ?"
 
-#, java-format
 #~ msgid ""
 #~ "The error n°{0} is still found {1} times in the page.\n"
 #~ "Are you really sure that you want to mark it as fixed ?"
@@ -3642,16 +3635,15 @@ msgstr ""
 #~ msgid "An unknown error occured"
 #~ msgstr "Galat tak dikenal ditemukan"
 
-#, java-format
 #~ msgid "An error occured: {0}"
 #~ msgstr "Sebuah galat ditemukan: {0}"
 
-#, java-format
 #~ msgid "Do you want to mark {0} as fixed for error n°{1}"
 #~ msgstr "Anda ingin tandai {0} sudah diperbaiki pada galat n°{1}"
 
 #~ msgid ""
-#~ "Also, verify again the texts you have inputed before running this function."
+#~ "Also, verify again the texts you have inputed before running this "
+#~ "function."
 #~ msgstr "Ingat, periksa teks yang dimasukkan sebelum menjalankan fungsi ini."
 
 #~ msgid ""
@@ -3685,14 +3677,12 @@ msgstr ""
 #~ msgid "&Ends with"
 #~ msgstr "&Akhiri dengan"
 
-#, java-format
 #~ msgid "The following modifications have been done ({0} pages):"
 #~ msgstr "Perubahan ini telah selesai dikerjakan ({0} artikel):"
 
 #~ msgid "Fixing orthograph or typography based on a list of suggestions."
 #~ msgstr "Memperbaiki orthograph atau tipografi berdasarkan daftar saran."
 
-#, java-format
 #~ msgid "Error {0} detected: Waiting and retrying"
 #~ msgstr "Galat {0} terdeteksi: Tunggu dan coba lagi"
 

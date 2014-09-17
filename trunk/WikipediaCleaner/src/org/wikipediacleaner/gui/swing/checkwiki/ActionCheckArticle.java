@@ -11,10 +11,11 @@ package org.wikipediacleaner.gui.swing.checkwiki;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Collection;
+import java.util.List;
 
 import javax.swing.AbstractAction;
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 import javax.swing.JToolBar;
 
 import org.wikipediacleaner.api.APIFactory;
@@ -130,7 +131,7 @@ public class ActionCheckArticle extends AbstractAction implements ActionListener
   public void actionPerformed(ActionEvent e) {
     CheckWiki checkWiki = APIFactory.getCheckWiki();
     Page page = DataManager.getPage(wiki, title, null, null, null);
-    Collection<CheckWikiDetection> detections = checkWiki.check(page);
+    List<CheckWikiDetection> detections = checkWiki.check(page);
     if (detections == null) {
       Utilities.displayWarning(
           parent,
@@ -143,12 +144,9 @@ public class ActionCheckArticle extends AbstractAction implements ActionListener
           GT._("No errors are currently detected by CheckWiki."));
       return;
     }
-    StringBuilder message = new StringBuilder();
-    message.append(GT._("The following errors are currently detected by CheckWiki:"));
-    for (CheckWikiDetection detection : detections) {
-      message.append("\n  ");
-      message.append(detection.getLine());
-    }
-    Utilities.displayInformationMessage(parent, message.toString());
+    DetectionPanel panel = new DetectionPanel(detections);
+    JOptionPane.showMessageDialog(
+        parent, panel, GT._("Detections"),
+        JOptionPane.INFORMATION_MESSAGE);
   }
 }

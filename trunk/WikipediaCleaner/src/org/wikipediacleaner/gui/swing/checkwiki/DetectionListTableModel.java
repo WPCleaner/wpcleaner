@@ -96,7 +96,7 @@ public class DetectionListTableModel extends AbstractTableModel {
     case COLUMN_ERROR_NUMBER:
       return Integer.class;
     case COLUMN_LOCATION:
-      return String.class;
+      return Integer.class;
     case COLUMN_LOCATION_METHOD:
       return String.class;
     case COLUMN_NOTICE:

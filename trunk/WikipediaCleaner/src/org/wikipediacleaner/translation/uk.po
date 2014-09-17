@@ -7,15 +7,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2014-09-14 15:00+0200\n"
+"POT-Creation-Date: 2014-09-17 18:45+0200\n"
 "PO-Revision-Date: 2014-09-10 23:22+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Ukrainian <uk@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
-"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%"
+"10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 "X-Launchpad-Export-Date: 2014-09-15 18:08+0000\n"
 "X-Generator: Launchpad (build 17196)\n"
 "Language: uk\n"
@@ -39,8 +39,8 @@ msgstr ""
 #: org/wikipediacleaner/Version.java:35
 #, java-format
 msgid ""
-"I try to keep {0} up to date with Check Wiki, but if you find any "
-"discrepancy(ies) in the detections, please let me know."
+"I try to keep {0} up to date with Check Wiki, but if you find any discrepancy"
+"(ies) in the detections, please let me know."
 msgstr ""
 
 #: org/wikipediacleaner/Version.java:37
@@ -417,9 +417,9 @@ msgstr "Зовнішній переглядач"
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:175
 msgid ""
 "A template that can be used instead of the link to an other language. It "
-"must be specified as: <template name>|<param name for local page "
-"name>|<param name for code of other language>|<param name for page name in "
-"other language>|<param name for displayed text>"
+"must be specified as: <template name>|<param name for local page name>|"
+"<param name for code of other language>|<param name for page name in other "
+"language>|<param name for displayed text>"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:257
@@ -979,8 +979,7 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:205
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:611
 #: org/wikipediacleaner/gui/swing/bot/BotToolsWindow.java:89
-msgid ""
-"On some Wikipedia projects, you may need the bot status for doing this."
+msgid "On some Wikipedia projects, you may need the bot status for doing this."
 msgstr ""
 "В деяких проектах Вікіпедії потрібен статус бота, щоб виконувати такі "
 "функції."
@@ -1473,8 +1472,7 @@ msgid "Links to {0}"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1458
-msgid ""
-"You must input a page name for retrieving the list of category members"
+msgid "You must input a page name for retrieving the list of category members"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1476
@@ -1792,8 +1790,7 @@ msgstr "Остання зміна в {0}"
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:748
 #, java-format
 msgid "Last modified at {0}. It was modified less than {1} minute ago."
-msgid_plural ""
-"Last modified at {0}. It was modified less than {1} minutes ago."
+msgid_plural "Last modified at {0}. It was modified less than {1} minutes ago."
 msgstr[0] "Остання зміна в {0}. Сторінка змінена менше ніж {1} хв. тому."
 msgstr[1] "Остання зміна в {0}. Сторінка змінена менше ніж {1} хв. тому."
 msgstr[2] "Остання зміна в {0}. Сторінка змінена менше ніж {1} хв. тому."
@@ -2227,8 +2224,7 @@ msgstr[1] ""
 #: org/wikipediacleaner/gui/swing/bot/AutomaticCWWorker.java:275
 #, java-format
 msgid "{0} page has been marked as fixed for the selected algorithms"
-msgid_plural ""
-"{0} pages have been marked as fixed for the selected algorithms"
+msgid_plural "{0} pages have been marked as fixed for the selected algorithms"
 msgstr[0] ""
 msgstr[1] ""
 
@@ -2341,21 +2337,22 @@ msgstr ""
 msgid "At what page do you wish to start updating the warnings ?"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/checkwiki/ActionCheckArticle.java:55
+#: org/wikipediacleaner/gui/swing/checkwiki/ActionCheckArticle.java:56
 msgid "Check article with CheckWiki"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/checkwiki/ActionCheckArticle.java:137
+#: org/wikipediacleaner/gui/swing/checkwiki/ActionCheckArticle.java:138
 msgid "Unable to retrieve analysis from CheckWiki."
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/checkwiki/ActionCheckArticle.java:143
+#: org/wikipediacleaner/gui/swing/checkwiki/ActionCheckArticle.java:144
 msgid "No errors are currently detected by CheckWiki."
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/checkwiki/ActionCheckArticle.java:147
-msgid "The following errors are currently detected by CheckWiki:"
-msgstr ""
+#: org/wikipediacleaner/gui/swing/checkwiki/ActionCheckArticle.java:149
+#, fuzzy
+msgid "Detections"
+msgstr "Вилучити вибране"
 
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiContentPanel.java:192
 msgid "Mark as already fixed"
@@ -2566,8 +2563,8 @@ msgid ""
 "The error n°{0} can be configured with the following parameters in the <a "
 "href=\"{1}\">translation file</a> :"
 msgstr ""
-"Помилка n°{0} може бути сконфігурована з такими параметрами у <a "
-"href=\"{1}\">файлі перекладу</a> :"
+"Помилка n°{0} може бути сконфігурована з такими параметрами у <a href=\"{1}"
+"\">файлі перекладу</a> :"
 
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiWindow.java:1069
 msgid "What is the name of the selection?"
@@ -2601,6 +2598,10 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/checkwiki/DetectionListTableModel.java:85
 msgid "Notice"
+msgstr ""
+
+#: org/wikipediacleaner/gui/swing/checkwiki/DetectionPanel.java:56
+msgid "The following errors are currently detected by CheckWiki:"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/component/CheckErrorPageListPopupListener.java:99
@@ -2834,8 +2835,7 @@ msgstr ""
 "просторі імен)"
 
 #: org/wikipediacleaner/gui/swing/options/AnalysisOptionsPanel.java:86
-msgid ""
-"Create disambiguation warning on talk page (in encyclopedic namespaces)"
+msgid "Create disambiguation warning on talk page (in encyclopedic namespaces)"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/AnalysisOptionsPanel.java:93
@@ -2851,8 +2851,7 @@ msgstr ""
 "множині назв)"
 
 #: org/wikipediacleaner/gui/swing/options/AnalysisOptionsPanel.java:107
-msgid ""
-"Update disambiguation warning on talk page (in encyclopedic namespaces)"
+msgid "Update disambiguation warning on talk page (in encyclopedic namespaces)"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/AnalysisOptionsPanel.java:114
@@ -3486,14 +3485,12 @@ msgstr ""
 #~ msgid "List on toolserver"
 #~ msgstr "Список на сервері інструментів"
 
-#, java-format
 #~ msgid "Do you want to mark {0} as fixed for error n°{1}"
 #~ msgstr "Хочете позначити {0} як виправлену на помилку n°{1}"
 
 #~ msgid "Mark as Fixed"
 #~ msgstr "Позначити як виправлені"
 
-#, java-format
 #~ msgid ""
 #~ "The error n°{0} hasn''t been found in the page {1}.\n"
 #~ "Do you want to mark it as fixed ?"
@@ -3501,7 +3498,6 @@ msgstr ""
 #~ "Помилку n°{0} не знайдено на сторінці {1}.\n"
 #~ "Хочете позначити її як виправлену ?"
 
-#, java-format
 #~ msgid ""
 #~ "The error n°{0} is still found in the page.\n"
 #~ "Are you really sure that you want to mark it as fixed ?"
@@ -3509,11 +3505,9 @@ msgstr ""
 #~ "Помилка n°{0} все ще зустрічається на сторінці.\n"
 #~ "Ви впевнені? Позначити її як виправлену ?"
 
-#, java-format
 #~ msgid "The page {0} doesn't exist on Wikipedia"
 #~ msgstr "Сторінки {0} немає у Вікіпедії"
 
-#, java-format
 #~ msgid ""
 #~ "The error n°{0} is still found {1} times in the page.\n"
 #~ "Are you really sure that you want to mark it as fixed ?"
@@ -3528,7 +3522,8 @@ msgstr ""
 #~ msgstr "Хочете продовжити ?"
 
 #~ msgid ""
-#~ "Also, verify again the texts you have inputed before running this function."
+#~ "Also, verify again the texts you have inputed before running this "
+#~ "function."
 #~ msgstr "Також ще раз перевірте вибрані тексти перед виконанням цієї дії."
 
 #~ msgid "&Wikipedia"
@@ -3679,14 +3674,12 @@ msgstr ""
 #~ msgid "External Viewer (Alt + &E)"
 #~ msgstr "Зовнішній переглядач (Alt + &E)"
 
-#, java-format
 #~ msgid "Last modified at {0}. It was modified less than {1} minutes ago."
 #~ msgstr "Остання зміна в {0}. Сторінка змінена менше ніж {1} хв. тому."
 
 #~ msgid "&History"
 #~ msgstr "&Історія"
 
-#, java-format
 #~ msgid "Red links Analysis - {0}"
 #~ msgstr "Аналіз червоних посилань - {0}"
 
@@ -3714,32 +3707,27 @@ msgstr ""
 #~ msgid "Search"
 #~ msgstr "Пошук"
 
-#, java-format
 #~ msgid "&Apply only to {0}"
 #~ msgstr "З&астосувати лише до {0}"
 
 #~ msgid "&Reload page list"
 #~ msgstr "&Оновити список сторінок"
 
-#, java-format
 #~ msgid "An error occured: {0}"
 #~ msgstr "Виникла помилка: {0}"
 
 #~ msgid "An unknown error occured"
 #~ msgstr "Виникла невідома помилка"
 
-#, java-format
 #~ msgid "Reverse to [[{0}|{1}]]"
 #~ msgstr "Замінювати на [[{0}|{1}]]"
 
 #~ msgid "Red links analysis"
 #~ msgstr "Аналіз червоних посилань"
 
-#, java-format
 #~ msgid "The following modifications have been done ({0} pages):"
 #~ msgstr "Були зроблені такі зміни ({0} сторінок):"
 
-#, java-format
 #~ msgid "{0} links in Main Namespace / {1} total links"
 #~ msgstr "{0} посилань в множині назв головної сторінки / {1} всього посилань"
 
@@ -3775,4 +3763,5 @@ msgstr ""
 #~ msgid ""
 #~ "Add a warning on the talk page about the links to disambiguation pages"
 #~ msgstr ""
-#~ "Додати попередження на сторінці обговорення про посилання на сторінки значень"
+#~ "Додати попередження на сторінці обговорення про посилання на сторінки "
+#~ "значень"

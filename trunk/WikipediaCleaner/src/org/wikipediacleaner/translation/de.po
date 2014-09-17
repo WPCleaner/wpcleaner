@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2014-09-14 15:00+0200\n"
+"POT-Creation-Date: 2014-09-17 18:45+0200\n"
 "PO-Revision-Date: 2014-09-07 08:12+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: German <de@li.org>\n"
@@ -38,8 +38,8 @@ msgstr ""
 #: org/wikipediacleaner/Version.java:35
 #, java-format
 msgid ""
-"I try to keep {0} up to date with Check Wiki, but if you find any "
-"discrepancy(ies) in the detections, please let me know."
+"I try to keep {0} up to date with Check Wiki, but if you find any discrepancy"
+"(ies) in the detections, please let me know."
 msgstr ""
 
 #: org/wikipediacleaner/Version.java:37
@@ -418,9 +418,9 @@ msgstr ""
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:175
 msgid ""
 "A template that can be used instead of the link to an other language. It "
-"must be specified as: <template name>|<param name for local page "
-"name>|<param name for code of other language>|<param name for page name in "
-"other language>|<param name for displayed text>"
+"must be specified as: <template name>|<param name for local page name>|"
+"<param name for code of other language>|<param name for page name in other "
+"language>|<param name for displayed text>"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:257
@@ -979,8 +979,7 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:205
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:611
 #: org/wikipediacleaner/gui/swing/bot/BotToolsWindow.java:89
-msgid ""
-"On some Wikipedia projects, you may need the bot status for doing this."
+msgid "On some Wikipedia projects, you may need the bot status for doing this."
 msgstr ""
 "Bei einigen Wikipedia-Projekten benötigen Sie den Bot-Status um dies zu tun."
 
@@ -1471,8 +1470,7 @@ msgid "Links to {0}"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1458
-msgid ""
-"You must input a page name for retrieving the list of category members"
+msgid "You must input a page name for retrieving the list of category members"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1476
@@ -1790,8 +1788,7 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:748
 #, java-format
 msgid "Last modified at {0}. It was modified less than {1} minute ago."
-msgid_plural ""
-"Last modified at {0}. It was modified less than {1} minutes ago."
+msgid_plural "Last modified at {0}. It was modified less than {1} minutes ago."
 msgstr[0] ""
 msgstr[1] ""
 
@@ -2213,8 +2210,7 @@ msgstr[1] ""
 #: org/wikipediacleaner/gui/swing/bot/AutomaticCWWorker.java:275
 #, java-format
 msgid "{0} page has been marked as fixed for the selected algorithms"
-msgid_plural ""
-"{0} pages have been marked as fixed for the selected algorithms"
+msgid_plural "{0} pages have been marked as fixed for the selected algorithms"
 msgstr[0] ""
 msgstr[1] ""
 
@@ -2327,21 +2323,22 @@ msgstr ""
 msgid "At what page do you wish to start updating the warnings ?"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/checkwiki/ActionCheckArticle.java:55
+#: org/wikipediacleaner/gui/swing/checkwiki/ActionCheckArticle.java:56
 msgid "Check article with CheckWiki"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/checkwiki/ActionCheckArticle.java:137
+#: org/wikipediacleaner/gui/swing/checkwiki/ActionCheckArticle.java:138
 msgid "Unable to retrieve analysis from CheckWiki."
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/checkwiki/ActionCheckArticle.java:143
+#: org/wikipediacleaner/gui/swing/checkwiki/ActionCheckArticle.java:144
 msgid "No errors are currently detected by CheckWiki."
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/checkwiki/ActionCheckArticle.java:147
-msgid "The following errors are currently detected by CheckWiki:"
-msgstr ""
+#: org/wikipediacleaner/gui/swing/checkwiki/ActionCheckArticle.java:149
+#, fuzzy
+msgid "Detections"
+msgstr "Auswahl löschen"
 
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiContentPanel.java:192
 msgid "Mark as already fixed"
@@ -2581,6 +2578,10 @@ msgstr ""
 msgid "Notice"
 msgstr ""
 
+#: org/wikipediacleaner/gui/swing/checkwiki/DetectionPanel.java:56
+msgid "The following errors are currently detected by CheckWiki:"
+msgstr ""
+
 #: org/wikipediacleaner/gui/swing/component/CheckErrorPageListPopupListener.java:99
 #, java-format
 msgid "Error n°{0}"
@@ -2810,8 +2811,7 @@ msgid "Create disambiguation warning on talk page (in main namespace)"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/AnalysisOptionsPanel.java:86
-msgid ""
-"Create disambiguation warning on talk page (in encyclopedic namespaces)"
+msgid "Create disambiguation warning on talk page (in encyclopedic namespaces)"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/AnalysisOptionsPanel.java:93
@@ -2823,8 +2823,7 @@ msgid "Update disambiguation warning on talk page (in main namespace)"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/AnalysisOptionsPanel.java:107
-msgid ""
-"Update disambiguation warning on talk page (in encyclopedic namespaces)"
+msgid "Update disambiguation warning on talk page (in encyclopedic namespaces)"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/AnalysisOptionsPanel.java:114
@@ -3508,7 +3507,6 @@ msgstr ""
 #~ "Sie werden keine Artikel in Demomodus bei Wikipedia bearbeiten können.\n"
 #~ "Wollen Sie trotzdem fortfahren ?"
 
-#, java-format
 #~ msgid "The page {0} doesn't exist on Wikipedia"
 #~ msgstr "Die Seite {0} existiert nicht auf Wikipedia"
 
@@ -3541,7 +3539,6 @@ msgstr ""
 #~ msgid "Re&place"
 #~ msgstr "Er&setzen:"
 
-#, java-format
 #~ msgid "{0} pages"
 #~ msgstr "{0} Seiten"
 
@@ -3554,7 +3551,6 @@ msgstr ""
 #~ msgid "Fix all <br/> tags"
 #~ msgstr "Alle <br/>-Tags reparieren"
 
-#, java-format
 #~ msgid "Error {0} detected: Waiting and retrying"
 #~ msgstr "Fehler {0} festgestellt: Es wird gewartet und erneut versucht"
 

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2014-09-14 15:00+0200\n"
+"POT-Creation-Date: 2014-09-17 18:45+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -2304,20 +2304,20 @@ msgstr ""
 msgid "At what page do you wish to start updating the warnings ?"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/checkwiki/ActionCheckArticle.java:55
+#: org/wikipediacleaner/gui/swing/checkwiki/ActionCheckArticle.java:56
 msgid "Check article with CheckWiki"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/checkwiki/ActionCheckArticle.java:137
+#: org/wikipediacleaner/gui/swing/checkwiki/ActionCheckArticle.java:138
 msgid "Unable to retrieve analysis from CheckWiki."
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/checkwiki/ActionCheckArticle.java:143
+#: org/wikipediacleaner/gui/swing/checkwiki/ActionCheckArticle.java:144
 msgid "No errors are currently detected by CheckWiki."
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/checkwiki/ActionCheckArticle.java:147
-msgid "The following errors are currently detected by CheckWiki:"
+#: org/wikipediacleaner/gui/swing/checkwiki/ActionCheckArticle.java:149
+msgid "Detections"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiContentPanel.java:192
@@ -2556,6 +2556,10 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/checkwiki/DetectionListTableModel.java:85
 msgid "Notice"
+msgstr ""
+
+#: org/wikipediacleaner/gui/swing/checkwiki/DetectionPanel.java:56
+msgid "The following errors are currently detected by CheckWiki:"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/component/CheckErrorPageListPopupListener.java:99

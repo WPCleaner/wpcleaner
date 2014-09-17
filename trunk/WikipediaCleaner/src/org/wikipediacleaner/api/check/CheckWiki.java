@@ -178,9 +178,9 @@ public class CheckWiki {
    * @param page Page to be checked.
    * @return List of detected errors.
    */
-  public Collection<CheckWikiDetection> check(Page page) {
+  public List<CheckWikiDetection> check(Page page) {
     try {
-      Collection<CheckWikiDetection> detections = null;
+      List<CheckWikiDetection> detections = null;
       EnumWikipedia wiki = page.getWikipedia();
       boolean useLabs = wiki.getConfiguration().getBoolean(WPCConfigurationBoolean.CW_USE_LABS);
       boolean markBoth = wiki.getConfiguration().getBoolean(WPCConfigurationBoolean.CW_MARK_BOTH);
