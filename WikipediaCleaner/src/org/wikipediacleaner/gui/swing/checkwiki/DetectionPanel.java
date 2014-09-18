@@ -19,7 +19,6 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ScrollPaneConstants;
-import javax.swing.table.TableColumnModel;
 
 import org.wikipediacleaner.api.check.CheckWikiDetection;
 import org.wikipediacleaner.i18n.GT;
@@ -61,18 +60,7 @@ public class DetectionPanel extends JPanel {
     // List of detections
     DetectionListTableModel modelDetections = new DetectionListTableModel(detections);
     JTable tableDetections = new JTable(modelDetections);
-    TableColumnModel columnModel = tableDetections.getColumnModel();
-    columnModel.getColumn(DetectionListTableModel.COLUMN_ERROR_NUMBER).setMinWidth(50);
-    columnModel.getColumn(DetectionListTableModel.COLUMN_ERROR_NUMBER).setPreferredWidth(50);
-    columnModel.getColumn(DetectionListTableModel.COLUMN_ERROR_NUMBER).setMaxWidth(50);
-    columnModel.getColumn(DetectionListTableModel.COLUMN_LOCATION).setMinWidth(60);
-    columnModel.getColumn(DetectionListTableModel.COLUMN_LOCATION).setPreferredWidth(60);
-    columnModel.getColumn(DetectionListTableModel.COLUMN_LOCATION).setMaxWidth(100);
-    columnModel.getColumn(DetectionListTableModel.COLUMN_LOCATION_METHOD).setMinWidth(20);
-    columnModel.getColumn(DetectionListTableModel.COLUMN_LOCATION_METHOD).setPreferredWidth(20);
-    columnModel.getColumn(DetectionListTableModel.COLUMN_LOCATION_METHOD).setMaxWidth(20);
-    columnModel.getColumn(DetectionListTableModel.COLUMN_NOTICE).setMinWidth(100);
-    columnModel.getColumn(DetectionListTableModel.COLUMN_NOTICE).setPreferredWidth(300);
+    modelDetections.configureColumnModel(tableDetections.getColumnModel());
     JScrollPane scrollDetections = new JScrollPane(tableDetections);
     scrollDetections.setMinimumSize(new Dimension(500, 100));
     scrollDetections.setPreferredSize(new Dimension(500, 200));

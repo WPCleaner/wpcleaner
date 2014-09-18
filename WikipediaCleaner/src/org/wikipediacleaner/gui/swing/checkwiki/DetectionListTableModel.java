@@ -10,6 +10,7 @@ package org.wikipediacleaner.gui.swing.checkwiki;
 import java.util.List;
 
 import javax.swing.table.AbstractTableModel;
+import javax.swing.table.TableColumnModel;
 
 import org.wikipediacleaner.api.check.CheckWikiDetection;
 import org.wikipediacleaner.i18n.GT;
@@ -35,21 +36,48 @@ public class DetectionListTableModel extends AbstractTableModel {
     this.detections = detections;
   }
 
-  /* (non-Javadoc)
+  /**
+   * Configure a column model.
+   * 
+   * @param model Column model.
+   */
+  public void configureColumnModel(TableColumnModel model) {
+    model.getColumn(COLUMN_ERROR_NUMBER).setMinWidth(50);
+    model.getColumn(COLUMN_ERROR_NUMBER).setPreferredWidth(50);
+    model.getColumn(COLUMN_ERROR_NUMBER).setMaxWidth(50);
+
+    model.getColumn(COLUMN_LOCATION).setMinWidth(60);
+    model.getColumn(COLUMN_LOCATION).setPreferredWidth(60);
+    model.getColumn(COLUMN_LOCATION).setMaxWidth(100);
+
+    model.getColumn(COLUMN_LOCATION_METHOD).setMinWidth(20);
+    model.getColumn(COLUMN_LOCATION_METHOD).setPreferredWidth(20);
+    model.getColumn(COLUMN_LOCATION_METHOD).setMaxWidth(20);
+
+    model.getColumn(COLUMN_NOTICE).setMinWidth(100);
+    model.getColumn(COLUMN_NOTICE).setPreferredWidth(300);
+  }
+
+  /**
+   * @return Number of columns.
    * @see javax.swing.table.TableModel#getColumnCount()
    */
   public int getColumnCount() {
     return NB_COLUMNS;
   }
 
-  /* (non-Javadoc)
+  /**
+   * @return Number of rows.
    * @see javax.swing.table.TableModel#getRowCount()
    */
   public int getRowCount() {
     return (detections != null) ? detections.size() : 0;
   }
 
-  /* (non-Javadoc)
+  /**
+   * @param rowIndex Row index.
+   * @param columnIndex Column index.
+   * @return Value at row and column.
    * @see javax.swing.table.TableModel#getValueAt(int, int)
    */
   public Object getValueAt(int rowIndex, int columnIndex) {
@@ -69,7 +97,9 @@ public class DetectionListTableModel extends AbstractTableModel {
     return null;
   }
 
-  /* (non-Javadoc)
+  /**
+   * @param column Column index.
+   * @return Name of column.
    * @see javax.swing.table.AbstractTableModel#getColumnName(int)
    */
   @Override
@@ -87,7 +117,9 @@ public class DetectionListTableModel extends AbstractTableModel {
     return super.getColumnName(column);
   }
 
-  /* (non-Javadoc)
+  /**
+   * @param columnIndex Column index.
+   * @return Class of that data in the column.
    * @see javax.swing.table.AbstractTableModel#getColumnClass(int)
    */
   @Override
