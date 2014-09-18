@@ -10,7 +10,9 @@ package org.wikipediacleaner.gui.swing.checkwiki;
 import java.util.List;
 
 import javax.swing.table.AbstractTableModel;
+import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
+import javax.swing.text.JTextComponent;
 
 import org.wikipediacleaner.api.check.CheckWikiDetection;
 import org.wikipediacleaner.i18n.GT;
@@ -25,15 +27,19 @@ public class DetectionListTableModel extends AbstractTableModel {
 
   private List<CheckWikiDetection> detections;
 
+  private final JTextComponent textPane;
+
   public final static int COLUMN_LOCATION_METHOD = 0;
   public final static int COLUMN_LOCATION = COLUMN_LOCATION_METHOD + 1;
   public final static int COLUMN_ERROR_NUMBER = COLUMN_LOCATION + 1;
   public final static int COLUMN_NOTICE = COLUMN_ERROR_NUMBER + 1;
-  public final static int NB_COLUMNS = COLUMN_NOTICE + 1;
+  public final static int COLUMN_GOTO = COLUMN_NOTICE + 1;
+  public final static int NB_COLUMNS = COLUMN_GOTO + 1;
 
   public DetectionListTableModel(
       List<CheckWikiDetection> detections) {
     this.detections = detections;
+    this.textPane = null;
   }
 
   /**
@@ -42,20 +48,34 @@ public class DetectionListTableModel extends AbstractTableModel {
    * @param model Column model.
    */
   public void configureColumnModel(TableColumnModel model) {
-    model.getColumn(COLUMN_ERROR_NUMBER).setMinWidth(50);
-    model.getColumn(COLUMN_ERROR_NUMBER).setPreferredWidth(50);
-    model.getColumn(COLUMN_ERROR_NUMBER).setMaxWidth(50);
+    TableColumn column;
 
-    model.getColumn(COLUMN_LOCATION).setMinWidth(60);
-    model.getColumn(COLUMN_LOCATION).setPreferredWidth(60);
-    model.getColumn(COLUMN_LOCATION).setMaxWidth(100);
+    column = model.getColumn(COLUMN_ERROR_NUMBER);
+    column.setMinWidth(50);
+    column.setPreferredWidth(50);
+    column.setMaxWidth(50);
 
-    model.getColumn(COLUMN_LOCATION_METHOD).setMinWidth(20);
-    model.getColumn(COLUMN_LOCATION_METHOD).setPreferredWidth(20);
-    model.getColumn(COLUMN_LOCATION_METHOD).setMaxWidth(20);
+    column = model.getColumn(COLUMN_GOTO);
+    column.setMinWidth(30);
+    column.setPreferredWidth(30);
+    column.setMaxWidth(30);
+    DetectionRenderer detectionRenderer = new DetectionRenderer(textPane);
+    column.setCellEditor(detectionRenderer);
+    column.setCellRenderer(detectionRenderer);
 
-    model.getColumn(COLUMN_NOTICE).setMinWidth(100);
-    model.getColumn(COLUMN_NOTICE).setPreferredWidth(300);
+    column = model.getColumn(COLUMN_LOCATION);
+    column.setMinWidth(60);
+    column.setPreferredWidth(60);
+    column.setMaxWidth(100);
+
+    column = model.getColumn(COLUMN_LOCATION_METHOD);
+    column.setMinWidth(20);
+    column.setPreferredWidth(20);
+    column.setMaxWidth(20);
+
+    column = model.getColumn(COLUMN_NOTICE);
+    column.setMinWidth(100);
+    column.setPreferredWidth(300);
   }
 
   /**
@@ -86,6 +106,8 @@ public class DetectionListTableModel extends AbstractTableModel {
       switch (columnIndex) {
       case COLUMN_ERROR_NUMBER:
         return detection.getErrorNumber();
+      case COLUMN_GOTO:
+        return detection;
       case COLUMN_LOCATION:
         return detection.getLocation();
       case COLUMN_LOCATION_METHOD:
@@ -98,6 +120,20 @@ public class DetectionListTableModel extends AbstractTableModel {
   }
 
   /**
+   * @param rowIndex
+   * @param columnIndex
+   * @return
+   * @see javax.swing.table.AbstractTableModel#isCellEditable(int, int)
+   */
+  @Override
+  public boolean isCellEditable(int rowIndex, int columnIndex) {
+    if (columnIndex == COLUMN_GOTO) {
+      return (textPane != null);
+    }
+    return super.isCellEditable(rowIndex, columnIndex);
+  }
+
+  /**
    * @param column Column index.
    * @return Name of column.
    * @see javax.swing.table.AbstractTableModel#getColumnName(int)
@@ -107,6 +143,8 @@ public class DetectionListTableModel extends AbstractTableModel {
     switch (column) {
     case COLUMN_ERROR_NUMBER:
       return GT._("Error");
+    case COLUMN_GOTO:
+      return "";
     case COLUMN_LOCATION:
       return GT._("Location");
     case COLUMN_LOCATION_METHOD:
@@ -127,6 +165,8 @@ public class DetectionListTableModel extends AbstractTableModel {
     switch (columnIndex) {
     case COLUMN_ERROR_NUMBER:
       return Integer.class;
+    case COLUMN_GOTO:
+      return CheckWikiDetection.class;
     case COLUMN_LOCATION:
       return Integer.class;
     case COLUMN_LOCATION_METHOD:
