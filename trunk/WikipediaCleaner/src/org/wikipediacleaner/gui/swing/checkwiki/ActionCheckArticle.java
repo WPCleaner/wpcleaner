@@ -17,6 +17,7 @@ import javax.swing.AbstractAction;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JToolBar;
+import javax.swing.text.JTextComponent;
 
 import org.wikipediacleaner.api.APIFactory;
 import org.wikipediacleaner.api.check.CheckWiki;
@@ -34,15 +35,8 @@ import org.wikipediacleaner.images.EnumImageSize;
  */
 public class ActionCheckArticle extends AbstractAction implements ActionListener {
 
-  /**
-   * Serialization.
-   */
+  /** Serialization. */
   private static final long serialVersionUID = 5745075609820714955L;
-
-  /**
-   * Action for page history.
-   */
-  public static final String ACTION_HISTORY = "history";
 
   /**
    * @param showIcon True if the button should use an icon.
@@ -63,14 +57,16 @@ public class ActionCheckArticle extends AbstractAction implements ActionListener
    * @param parent Parent component.
    * @param wiki Wiki.
    * @param title Page title.
+   * @param textPane Text pane where the text is.
    * @param showIcon True if the button should use an icon.
    * @return Button.
    */
   public static JButton createButton(
       Component parent, EnumWikipedia wiki,
-      String title, boolean showIcon) {
+      String title, JTextComponent textPane,
+      boolean showIcon) {
     JButton button = createInternalButton(showIcon);
-    button.addActionListener(new ActionCheckArticle(parent, wiki, title));
+    button.addActionListener(new ActionCheckArticle(parent, wiki, title, textPane));
     return button;
   }
 
@@ -81,45 +77,47 @@ public class ActionCheckArticle extends AbstractAction implements ActionListener
    * @param toolbar Tool bar.
    * @param wiki Wiki.
    * @param title Page title.
+   * @param textPane Text pane where the text is.
    * @param showIcon True if the button should use an icon.
    * @return Button.
    */
   public static JButton addButton(
       Component parent, JToolBar toolbar,
-      EnumWikipedia wiki, String title,
+      EnumWikipedia wiki,
+      String title, JTextComponent textPane,
       boolean showIcon) {
-    JButton button = createButton(parent, wiki, title, showIcon);
+    JButton button = createButton(parent, wiki, title, textPane, showIcon);
     if ((button != null) && (toolbar != null)) {
       toolbar.add(button);
     }
     return button;
   }
 
-  /**
-   * Parent component.
-   */
+  /** Parent component. */
   private final Component parent;
 
-  /**
-   * Wiki.
-   */
+  /** Wiki. */
   private final EnumWikipedia wiki;
 
-  /**
-   * Page which is to be displayed.
-   */
+  /** Page which is to be displayed. */
   private final String title;
+
+  /** Text pane where the text is. */
+  private final JTextComponent textPane;
 
   /**
    * @param parent Parent component.
    * @param wiki Wiki.
    * @param title Page which is to be displayed.
+   * @param textPane Text pane where the text is.
    */
   private ActionCheckArticle(
-      Component parent, EnumWikipedia wiki, String title) {
+      Component parent, EnumWikipedia wiki,
+      String title, JTextComponent textPane) {
     this.parent = parent;
     this.wiki = wiki;
     this.title = title;
+    this.textPane = textPane;
   }
 
   /**
@@ -144,7 +142,8 @@ public class ActionCheckArticle extends AbstractAction implements ActionListener
           GT._("No errors are currently detected by CheckWiki."));
       return;
     }
-    DetectionPanel panel = new DetectionPanel(detections);
+    DetectionPanel panel = new DetectionPanel(
+        detections, textPane);
     JOptionPane.showMessageDialog(
         parent, panel, GT._("Detections"),
         JOptionPane.INFORMATION_MESSAGE);

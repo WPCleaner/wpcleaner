@@ -441,7 +441,8 @@ public class OnePageAnalysisWindow extends OnePageWindow {
 
     addButtonReload(toolbarButtons, true);
     buttonCheckArticle = ActionCheckArticle.addButton(
-        getParentComponent(), toolbarButtons, getWikipedia(), getPageName(), true);
+        getParentComponent(), toolbarButtons, getWikipedia(),
+        getPageName(), getTextContents(), true);
     buttonView = ActionExternalViewer.addButton(
         toolbarButtons, getWikipedia(), getPageName(), false, true, false);
     buttonViewHistory = ActionExternalViewer.addButton(

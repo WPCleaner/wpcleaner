@@ -34,12 +34,14 @@ public class DetectionListTableModel extends AbstractTableModel {
   public final static int COLUMN_ERROR_NUMBER = COLUMN_LOCATION + 1;
   public final static int COLUMN_NOTICE = COLUMN_ERROR_NUMBER + 1;
   public final static int COLUMN_GOTO = COLUMN_NOTICE + 1;
-  public final static int NB_COLUMNS = COLUMN_GOTO + 1;
+
+  public final static int NB_COLUMNS_WITHOUT_GOTO = COLUMN_GOTO;
+  public final static int NB_COLUMNS_WITH_GOTO = COLUMN_GOTO + 1;
 
   public DetectionListTableModel(
-      List<CheckWikiDetection> detections) {
+      List<CheckWikiDetection> detections, JTextComponent textPane) {
     this.detections = detections;
-    this.textPane = null;
+    this.textPane = textPane;
   }
 
   /**
@@ -55,13 +57,15 @@ public class DetectionListTableModel extends AbstractTableModel {
     column.setPreferredWidth(50);
     column.setMaxWidth(50);
 
-    column = model.getColumn(COLUMN_GOTO);
-    column.setMinWidth(30);
-    column.setPreferredWidth(30);
-    column.setMaxWidth(30);
-    DetectionRenderer detectionRenderer = new DetectionRenderer(textPane);
-    column.setCellEditor(detectionRenderer);
-    column.setCellRenderer(detectionRenderer);
+    if (textPane != null) {
+      column = model.getColumn(COLUMN_GOTO);
+      column.setMinWidth(30);
+      column.setPreferredWidth(30);
+      column.setMaxWidth(30);
+      DetectionRenderer detectionRenderer = new DetectionRenderer(textPane);
+      column.setCellEditor(detectionRenderer);
+      column.setCellRenderer(detectionRenderer);
+    }
 
     column = model.getColumn(COLUMN_LOCATION);
     column.setMinWidth(60);
@@ -83,7 +87,10 @@ public class DetectionListTableModel extends AbstractTableModel {
    * @see javax.swing.table.TableModel#getColumnCount()
    */
   public int getColumnCount() {
-    return NB_COLUMNS;
+    if (textPane != null) {
+      return NB_COLUMNS_WITH_GOTO;
+    }
+    return NB_COLUMNS_WITHOUT_GOTO;
   }
 
   /**

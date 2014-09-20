@@ -39,6 +39,7 @@ import javax.swing.SwingConstants;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
+import org.wikipediacleaner.Version;
 import org.wikipediacleaner.api.APIFactory;
 import org.wikipediacleaner.api.check.CheckError;
 import org.wikipediacleaner.api.check.CheckErrorPage;
@@ -196,7 +197,7 @@ public class CheckWikiContentPanel
     toolbarButtons.add(buttonMarkAsFixed);
     ActionCheckArticle.addButton(
         window.getParentComponent(), toolbarButtons,
-        getWiki(), page.getTitle(), true);
+        getWiki(), page.getTitle(), textPage, true);
     toolbarButtons.addSeparator();
     if (Utilities.isDesktopSupported()) { // External Viewer
       ActionExternalViewer.addButton(
@@ -318,7 +319,7 @@ public class CheckWikiContentPanel
     }
     if ((error != null) && (errorFound == false)) {
       CheckWiki checkWiki = APIFactory.getCheckWiki();
-      Collection<CheckWikiDetection> detections = checkWiki.check(page);
+      List<CheckWikiDetection> detections = checkWiki.check(page);
       int answer = JOptionPane.NO_OPTION;
       if (detections != null) {
         boolean errorDetected = false;
@@ -328,17 +329,13 @@ public class CheckWikiContentPanel
           }
         }
         if (errorDetected) {
-          StringBuilder message = new StringBuilder();
-          message.append(GT._(
+          DetectionPanel panel = new DetectionPanel(detections, null);
+          panel.setMessage(GT._(
               "The error n°{0} hasn''t been detected in page {1}, but CheckWiki still reports it.",
               new Object[] { error.getAlgorithm().getErrorNumberString(), page.getTitle() }));
-          for (CheckWikiDetection detection : detections) {
-            if (detection.getErrorNumber() == error.getErrorNumber()) {
-              message.append("\n");
-              message.append(detection.getLine());
-            }
-          }
-          window.displayWarning(message.toString());
+          JOptionPane.showMessageDialog(
+              window.getParentComponent(), panel,
+              Version.PROGRAM, JOptionPane.WARNING_MESSAGE);
         } else {
           window.displayWarning(GT._(
               "The error n°{0} has already been fixed in page {1}.",
