@@ -314,6 +314,11 @@ public class HttpUtils {
       return null;
     }
 
+    // Cleanup URL
+    while (url.endsWith("|")) {
+      url = url.substring(0, url.length() - 1);
+    }
+
     // Create URI
     URI uri = null;
     try {
