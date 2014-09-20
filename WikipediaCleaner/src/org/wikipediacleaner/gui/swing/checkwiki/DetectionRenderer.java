@@ -31,21 +31,18 @@ import org.wikipediacleaner.images.EnumImageSize;
 public class DetectionRenderer extends AbstractCellEditor implements
     TableCellRenderer, TableCellEditor {
 
-  /**
-   * Serialization.
-   */
+  /** Serialization. */
   private static final long serialVersionUID = 6604607833138200300L;
 
-  /**
-   * Maps of all the buttons.
-   */
+  /** Maps of all the buttons. */
   private HashMap<Object, JButton> buttons;
 
-  /**
-   * Text pane where the text is.
-   */
+  /** Text pane where the text is. */
   private final JTextComponent textPane;
 
+  /**
+   * @param textPane Text pane where the text is.
+   */
   public DetectionRenderer(JTextComponent textPane) {
     buttons = new HashMap<Object, JButton>();
     this.textPane = textPane;
@@ -60,12 +57,12 @@ public class DetectionRenderer extends AbstractCellEditor implements
   }
 
   /**
-   * @param table
-   * @param value
-   * @param isSelected
-   * @param row
-   * @param column
-   * @return
+   * @param table Table.
+   * @param value Value in the cell.
+   * @param isSelected True if cell is selected.
+   * @param row Row number.
+   * @param column Column number.
+   * @return Component to edit the cell.
    * @see javax.swing.table.TableCellEditor#getTableCellEditorComponent(javax.swing.JTable, java.lang.Object, boolean, int, int)
    */
   public Component getTableCellEditorComponent(JTable table, Object value,
@@ -74,13 +71,13 @@ public class DetectionRenderer extends AbstractCellEditor implements
   }
 
   /**
-   * @param table
-   * @param value
-   * @param isSelected
-   * @param hasFocus
-   * @param row
-   * @param column
-   * @return
+   * @param table Table.
+   * @param value Value in the cell.
+   * @param isSelected True if cell is selected.
+   * @param hasFocus True if cell has focus.
+   * @param row Row number.
+   * @param column Column number.
+   * @return Component to render the cell.
    * @see javax.swing.table.TableCellRenderer#getTableCellRendererComponent(javax.swing.JTable, java.lang.Object, boolean, boolean, int, int)
    */
   public Component getTableCellRendererComponent(JTable table, Object value,
@@ -103,7 +100,7 @@ public class DetectionRenderer extends AbstractCellEditor implements
     }
     CheckWikiDetection detection = (CheckWikiDetection) value;
     JButton button = new JButton(Utilities.getImageIcon(
-        "gnome-edit-find.png", EnumImageSize.NORMAL));
+        "gnome-edit-find.png", EnumImageSize.SMALL));
     button.setBorderPainted(false);
     button.setContentAreaFilled(false);
     button.setActionCommand(Integer.toString(detection.getLocation()));
@@ -124,6 +121,7 @@ public class DetectionRenderer extends AbstractCellEditor implements
         if ((locationValue >= 0) && (locationValue < textPane.getText().length())) {
           textPane.setCaretPosition(locationValue);
           textPane.moveCaretPosition(locationValue);
+          textPane.requestFocusInWindow();
         }
       } catch (NumberFormatException e) {
         //
