@@ -52,12 +52,15 @@ import org.wikipediacleaner.api.data.AutomaticFormatter;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageProvider;
+import org.wikipediacleaner.api.data.User;
 import org.wikipediacleaner.gui.swing.Controller;
 import org.wikipediacleaner.gui.swing.OnePageWindow;
+import org.wikipediacleaner.gui.swing.action.ActionDeletePage;
 import org.wikipediacleaner.gui.swing.action.ActionExternalViewer;
 import org.wikipediacleaner.gui.swing.action.ActionFullAnalysis;
 import org.wikipediacleaner.gui.swing.action.ActionInsertPredefinedText;
 import org.wikipediacleaner.gui.swing.action.ActionOccurrence;
+import org.wikipediacleaner.gui.swing.action.ListenerPageDeletion;
 import org.wikipediacleaner.gui.swing.basic.BasicWorker;
 import org.wikipediacleaner.gui.swing.basic.DefaultBasicWorkerListener;
 import org.wikipediacleaner.gui.swing.basic.Utilities;
@@ -79,7 +82,7 @@ import org.wikipediacleaner.utils.ConfigurationValueBoolean;
  */
 public class CheckWikiContentPanel
   extends JPanel
-  implements ActionListener, ItemListener, PageProvider {
+  implements ActionListener, ItemListener, ListenerPageDeletion, PageProvider {
 
   private static final long serialVersionUID = 1L;
 
@@ -192,6 +195,11 @@ public class CheckWikiContentPanel
     buttonSend = window.createButtonSend(this, true);
     buttonSend.setEnabled(false);
     toolbarButtons.add(buttonSend);
+    if ((getWiki().getConnection().getUser() != null) &&
+        (getWiki().getConnection().getUser().hasRight(User.RIGHT_DELETE))) {
+      ActionDeletePage.addButton(
+          toolbarButtons, window.getParentComponent(), this, this, true);
+    }
     buttonMarkAsFixed = Utilities.createJButton(
         "gnome-dialog-apply.png", EnumImageSize.NORMAL,
         GT._("Mark as already fixed"), false, null); // Mark as fixed
@@ -752,5 +760,18 @@ public class CheckWikiContentPanel
    */
   public Page getPage() {
     return page;
+  }
+
+  // ===========================================================================
+  // Implementation of ListenerPageDeletion
+  // ===========================================================================
+
+  /**
+   * Notification of the deletion of a page.
+   * 
+   * @param pageName Name of the page.
+   */
+  public void pageDeleted(String pageName) {
+    pane.remove(this);
   }
 }

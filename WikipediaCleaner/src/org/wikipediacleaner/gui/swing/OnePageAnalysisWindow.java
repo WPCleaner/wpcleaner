@@ -49,9 +49,6 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import org.wikipediacleaner.Version;
-import org.wikipediacleaner.api.API;
-import org.wikipediacleaner.api.APIException;
-import org.wikipediacleaner.api.APIFactory;
 import org.wikipediacleaner.api.check.CheckError;
 import org.wikipediacleaner.api.check.CheckErrorPage;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithm;
@@ -71,12 +68,14 @@ import org.wikipediacleaner.api.data.PageElementCategory;
 import org.wikipediacleaner.api.data.PageElementInternalLink;
 import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.User;
+import org.wikipediacleaner.gui.swing.action.ActionDeletePage;
 import org.wikipediacleaner.gui.swing.action.ActionDisambiguationAnalysis;
 import org.wikipediacleaner.gui.swing.action.ActionExternalViewer;
 import org.wikipediacleaner.gui.swing.action.ActionFullAnalysis;
 import org.wikipediacleaner.gui.swing.action.ActionInsertPredefinedText;
 import org.wikipediacleaner.gui.swing.action.ActionOccurrence;
 import org.wikipediacleaner.gui.swing.action.ActionWatchPage;
+import org.wikipediacleaner.gui.swing.action.ListenerPageDeletion;
 import org.wikipediacleaner.gui.swing.action.ListenerPredefinedTextInsertion;
 import org.wikipediacleaner.gui.swing.action.SetComparatorAction;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
@@ -115,7 +114,7 @@ import org.wikipediacleaner.utils.ConfigurationValueString;
  */
 public class OnePageAnalysisWindow
   extends OnePageWindow
-  implements ListenerPredefinedTextInsertion {
+  implements ListenerPageDeletion, ListenerPredefinedTextInsertion {
 
   private JButton buttonFirst;
   private JButton buttonPrevious;
@@ -402,12 +401,8 @@ public class OnePageAnalysisWindow
     addButtonSend(toolbarButtons, true);
     if ((getWikipedia().getConnection().getUser() != null) &&
         (getWikipedia().getConnection().getUser().hasRight(User.RIGHT_DELETE))) {
-      buttonDelete = Utilities.createJButton(
-          "gnome-edit-delete.png", EnumImageSize.NORMAL,
-          GT._("Delete page"), false, null);
-      buttonDelete.addActionListener(EventHandler.create(
-          ActionListener.class, this, "actionDelete"));
-      toolbarButtons.add(buttonDelete);
+      buttonDelete = ActionDeletePage.addButton(
+          toolbarButtons, getParentComponent(), this, this, true);
     }
     addButtonRedirect(toolbarButtons);
 
@@ -1575,23 +1570,17 @@ public class OnePageAnalysisWindow
     return 0;
   }
 
+  // ===========================================================================
+  // Implementation of ListenerPageDeletion
+  // ===========================================================================
+
   /**
-   * Action called when Delete button is pressed.
+   * Notification of the deletion of a page.
+   * 
+   * @param pageName Name of the page.
    */
-  public void actionDelete() {
-    String reason = askForValue(
-        GT._("Do you want to delete this page on Wikipedia ?\nPlease, enter the reason for deleting the page"),
-        "", null);
-    if ((reason == null) || (reason.trim().length() == 0)) {
-      return;
-    }
-    API api = APIFactory.getAPI();
-    try {
-      api.deletePage(getWikipedia(), getPage(), getWikipedia().formatComment(reason.trim(), false));
-      dispose();
-    } catch (APIException e) {
-      displayError(e);
-    }
+  public void pageDeleted(String pageName) {
+    dispose();
   }
 
   // ===========================================================================
