@@ -47,7 +47,6 @@ import javax.swing.SwingConstants;
 import javax.swing.WindowConstants;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-import javax.swing.text.BadLocationException;
 
 import org.wikipediacleaner.Version;
 import org.wikipediacleaner.api.API;
@@ -70,14 +69,15 @@ import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageComparator;
 import org.wikipediacleaner.api.data.PageElementCategory;
 import org.wikipediacleaner.api.data.PageElementInternalLink;
-import org.wikipediacleaner.api.data.PageElementLanguageLink;
 import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.User;
 import org.wikipediacleaner.gui.swing.action.ActionDisambiguationAnalysis;
 import org.wikipediacleaner.gui.swing.action.ActionExternalViewer;
 import org.wikipediacleaner.gui.swing.action.ActionFullAnalysis;
+import org.wikipediacleaner.gui.swing.action.ActionInsertPredefinedText;
 import org.wikipediacleaner.gui.swing.action.ActionOccurrence;
 import org.wikipediacleaner.gui.swing.action.ActionWatchPage;
+import org.wikipediacleaner.gui.swing.action.ListenerPredefinedTextInsertion;
 import org.wikipediacleaner.gui.swing.action.SetComparatorAction;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
 import org.wikipediacleaner.gui.swing.basic.BasicWorker;
@@ -98,7 +98,6 @@ import org.wikipediacleaner.gui.swing.component.PageListAnalyzeListener;
 import org.wikipediacleaner.gui.swing.component.PageListCellRenderer;
 import org.wikipediacleaner.gui.swing.component.PageListModel;
 import org.wikipediacleaner.gui.swing.component.MWPaneFormatter;
-import org.wikipediacleaner.gui.swing.menu.BasicMenuCreator;
 import org.wikipediacleaner.gui.swing.worker.FullAnalysisWorker;
 import org.wikipediacleaner.gui.swing.worker.TranslateWorker;
 import org.wikipediacleaner.gui.swing.worker.UpdateDabWarningWorker;
@@ -114,7 +113,9 @@ import org.wikipediacleaner.utils.ConfigurationValueString;
 /**
  * Analysis window.
  */
-public class OnePageAnalysisWindow extends OnePageWindow {
+public class OnePageAnalysisWindow
+  extends OnePageWindow
+  implements ListenerPredefinedTextInsertion {
 
   private JButton buttonFirst;
   private JButton buttonPrevious;
@@ -157,9 +158,6 @@ public class OnePageAnalysisWindow extends OnePageWindow {
   List<Page> knownPages;
 
   boolean translated;
-
-  private List<String> addedCategories;
-  private List<String> addedTemplates;
 
   /**
    * Create and display a AnalysisWindow.
@@ -397,12 +395,8 @@ public class OnePageAnalysisWindow extends OnePageWindow {
     buttonToc = createButtonToc(this, true);
     toolbarButtons.add(buttonToc);
     addChkSpelling(toolbarButtons, true);
-    buttonInsertText = Utilities.createJButton(
-        "gnome-insert-text.png", EnumImageSize.NORMAL,
-        GT._("Insert text"), false, null);
-    buttonInsertText.addActionListener(EventHandler.create(
-        ActionListener.class, this, "actionInsertText"));
-    toolbarButtons.add(buttonInsertText);
+    buttonInsertText = ActionInsertPredefinedText.addButton(
+        toolbarButtons, getTextContents(), this, this, true);
     buttonValidate = createButtonValidate(this, true);
     toolbarButtons.add(buttonValidate);
     addButtonSend(toolbarButtons, true);
@@ -1128,275 +1122,6 @@ public class OnePageAnalysisWindow extends OnePageWindow {
   }
 
   /**
-   * Action called when when Insert text button is pressed.
-   */
-  public void actionInsertText() {
-
-    // Check current page
-    boolean article = (isPageLoaded()) && (getPage() != null) && (getPage().isArticle());
-    boolean redirect = article && getPage().isRedirect();
-
-    // Check configuration
-    List<String> texts = getConfiguration().getStringList(
-        WPCConfigurationStringList.INSERT_TEXTS);
-    List<String> redirectCategories = null;
-    List<String> redirectTemplates = null;
-    if (redirect) {
-      redirectCategories = getConfiguration().getStringList(
-          WPCConfigurationStringList.REDIRECT_CATEGORIES);
-      redirectTemplates = getConfiguration().getStringList(
-          WPCConfigurationStringList.REDIRECT_TEMPLATES);
-    }
-    if (((texts == null) || (texts.isEmpty())) &&
-        ((redirectCategories == null) || (redirectCategories.isEmpty())) &&
-        ((redirectTemplates == null) || (redirectTemplates.isEmpty()))) {
-      List<String> params = new ArrayList<String>();
-      params.add(WPCConfigurationStringList.INSERT_TEXTS.getAttributeName());
-      if (redirect) {
-        params.add(WPCConfigurationStringList.REDIRECT_CATEGORIES.getAttributeName());
-        params.add(WPCConfigurationStringList.REDIRECT_TEMPLATES.getAttributeName());
-      }
-      Utilities.displayMessageForMissingConfiguration(
-          getParentComponent(), params);
-      return;
-    }
-
-    // Group by theme if available
-    Map<String, JMenu> themeMenus = new HashMap<String, JMenu>();
-
-    // Create menu
-    List<JMenuItem> items = new ArrayList<JMenuItem>();
-    if (texts != null) {
-      for (String text : texts) {
-        int pipeIndex = text.indexOf('|');
-        JMenu themeMenu = null;
-        if (pipeIndex > 0) {
-          String theme = text.substring(0, pipeIndex);
-          text = text.substring(pipeIndex + 1);
-          themeMenu = themeMenus.get(theme);
-          if (themeMenu == null) {
-            themeMenu = new JMenu(theme);
-            themeMenus.put(theme, themeMenu);
-            items.add(themeMenu);
-          }
-        }
-        pipeIndex = text.indexOf('|');
-        String label = null;
-        if (pipeIndex > 0) {
-          label = text.substring(0, pipeIndex);
-          text = text.substring(pipeIndex + 1);
-        }
-        JMenuItem item = new JMenuItem((label != null) ? label : text);
-        item.setActionCommand(text.replaceAll("\\\\n", "\n"));
-        item.addActionListener(EventHandler.create(
-            ActionListener.class, this, "actionAddText", "actionCommand"));
-        if (themeMenu == null) {
-          items.add(item);
-        } else {
-          themeMenu.add(item);
-        }
-      }
-    }
-    if (redirectCategories != null) {
-      for (String category : redirectCategories) {
-        int colonIndex = category.indexOf(':');
-        JMenu themeMenu = null;
-        if (colonIndex > 0) {
-          String theme = category.substring(0, colonIndex);
-          category = category.substring(colonIndex + 1);
-          themeMenu = themeMenus.get(theme);
-          if (themeMenu == null) {
-            themeMenu = new JMenu(theme);
-            themeMenus.put(theme, themeMenu);
-            items.add(themeMenu);
-          }
-        }
-        JMenuItem item = new JMenuItem(category);
-        item.setActionCommand(category);
-        item.addActionListener(EventHandler.create(
-            ActionListener.class, this, "actionAddCategory", "actionCommand"));
-        if (themeMenu == null) {
-          items.add(item);
-        } else {
-          themeMenu.add(item);
-        }
-      }
-    }
-    if (redirectTemplates != null) {
-      for (String template : redirectTemplates) {
-        int colonIndex = template.indexOf(':');
-        JMenu themeMenu = null;
-        if (colonIndex > 0) {
-          String theme = template.substring(0, colonIndex);
-          template = template.substring(colonIndex + 1);
-          themeMenu = themeMenus.get(theme);
-          if (themeMenu == null) {
-            themeMenu = new JMenu(theme);
-            themeMenus.put(theme, themeMenu);
-            items.add(themeMenu);
-          }
-        }
-        JMenuItem item = new JMenuItem("{{" + template + "}}");
-        item.setActionCommand(template);
-        item.addActionListener(EventHandler.create(
-            ActionListener.class, this, "actionAddTemplate", "actionCommand"));
-        if (themeMenu == null) {
-          items.add(item);
-        } else {
-          themeMenu.add(item);
-        }
-      }
-    }
-    BasicMenuCreator menu = new BasicMenuCreator();
-    JPopupMenu popup = menu.createPopupMenu(null);
-    menu.addSubmenus(popup, items);
-    popup.show(buttonInsertText, 0, buttonInsertText.getHeight());
-  }
-
-  /**
-   * Action called when a text is selected to be added.
-   * 
-   * @param text Text.
-   */
-  public void actionAddText(String text) {
-    if ((text == null) || (getPage() == null)) {
-      return;
-    }
-    try {
-      getTextContents().getDocument().insertString(
-          getTextContents().getCaretPosition(), text, null);
-    } catch (BadLocationException e) {
-      // Nothing to do
-    }
-  }
-
-  /**
-   * Action called when a category is selected to be added.
-   * 
-   * @param categoryName Category name.
-   */
-  public void actionAddCategory(String categoryName) {
-    if ((categoryName == null) || (getPage() == null)) {
-      return;
-    }
-    String contents = getTextContents().getText();
-    PageAnalysis analysis = getPage().getAnalysis(contents, false);
-
-    // Check that the category isn't already applied
-    List<PageElementCategory> categories = analysis.getCategories();
-    for (PageElementCategory category : categories) {
-      if (Page.areSameTitle(categoryName, category.getCategory())) {
-        return;
-      }
-    }
-
-    // Find where to add the category
-    int index = contents.length();
-    if (!categories.isEmpty()) {
-      index = categories.get(categories.size() - 1).getEndIndex();
-    } else {
-      List<PageElementLanguageLink> langLinks = analysis.getLanguageLinks();
-      if ((langLinks != null) && (!langLinks.isEmpty())) {
-        index = langLinks.get(0).getBeginIndex();
-      }
-    }
-
-    // Add the category
-    StringBuilder newContents = new StringBuilder();
-    if (index > 0) {
-      newContents.append(contents.substring(0, index));
-    }
-    newContents.append("\n");
-    newContents.append(PageElementCategory.createCategory(getWikipedia(), categoryName, null));
-    if (index < contents.length()) {
-      if (contents.charAt(index) != '\n') {
-        newContents.append('\n');
-      }
-      newContents.append(contents.substring(index));
-    }
-    getTextContents().changeText(newContents.toString());
-    if (addedCategories == null) {
-      addedCategories = new ArrayList<String>();
-    }
-    addedCategories.add(categoryName);
-    actionValidate(true);
-  }
-
-  /**
-   * Action called when a template is selected to be added.
-   * 
-   * @param templateName Template name.
-   */
-  public void actionAddTemplate(String templateName) {
-    if ((templateName == null) || (getPage() == null)) {
-      return;
-    }
-    String contents = getTextContents().getText();
-    PageAnalysis analysis = getPage().getAnalysis(contents, false);
-
-    // Check that the template isn't already applied
-    List<PageElementTemplate> templates = analysis.getTemplates(templateName);
-    if ((templates != null) && (!templates.isEmpty())) {
-      return;
-    }
-
-    // Find where to add the template
-    int crBefore = 0;
-    int crAfter = 2;
-    int index = contents.length();
-    templates = analysis.getTemplates();
-    if ((templates != null) && (!templates.isEmpty())) {
-      index = templates.get(0).getBeginIndex();
-      crAfter = 1;
-      int indexNewLine = contents.indexOf('\n');
-      if ((indexNewLine > 0) && (indexNewLine > index)) {
-        crBefore = 2;
-      }
-    } else {
-      List<PageElementCategory> categories = analysis.getCategories();
-      if ((categories != null) && (!categories.isEmpty())) {
-        index = categories.get(0).getBeginIndex();
-      } else {
-        List<PageElementLanguageLink> langLinks = analysis.getLanguageLinks();
-        if ((langLinks != null) && (!langLinks.isEmpty())) {
-          index = langLinks.get(0).getBeginIndex();
-        } else {
-          int indexNewLine = contents.indexOf('\n');
-          if (indexNewLine > 0) {
-            index = indexNewLine;
-          }
-          crBefore = 2;
-          crAfter = 0;
-        }
-      }
-    }
-
-    // Add the template
-    StringBuilder newContents = new StringBuilder();
-    if (index > 0) {
-      newContents.append(contents.substring(0, index));
-    }
-    for (int i = 0; i < crBefore; i++) {
-      newContents.append("\n");
-    }
-    newContents.append("{{");
-    newContents.append(templateName);
-    newContents.append("}}");
-    for (int i = 0; i < crAfter; i++) {
-      newContents.append("\n");
-    }
-    if (index < contents.length()) {
-      newContents.append(contents.substring(index));
-    }
-    getTextContents().changeText(newContents.toString());
-    if (addedTemplates == null) {
-      addedTemplates = new ArrayList<String>();
-    }
-    addedTemplates.add(templateName);
-    actionValidate(true);
-  }
-
-  /**
    * Action called when Other language button is pressed.
    */
   public void actionOtherLanguage() {
@@ -1867,5 +1592,45 @@ public class OnePageAnalysisWindow extends OnePageWindow {
     } catch (APIException e) {
       displayError(e);
     }
+  }
+
+  // ===========================================================================
+  // Implementation of ListenerPredefinedTextInsertion
+  // ===========================================================================
+
+  /** List of inserted categories. */
+  private List<String> addedCategories;
+
+  /** List of inserted templates. */
+  private List<String> addedTemplates;
+
+  /**
+   * Notification of the insertion of a category.
+   * 
+   * @param categoryName Name of the category.
+   */
+  public void categoryInserted(String categoryName) {
+    if (categoryName != null) {
+      if (addedCategories == null) {
+        addedCategories = new ArrayList<String>();
+      }
+      addedCategories.add(categoryName);
+    }
+    actionValidate(true);
+  }
+
+  /**
+   * Notification of the insertion of a template.
+   * 
+   * @param templateName Name of the template.
+   */
+  public void templateInserted(String templateName) {
+    if (templateName != null) {
+      if (addedTemplates == null) {
+        addedTemplates = new ArrayList<String>();
+      }
+      addedTemplates.add(templateName);
+    }
+    actionValidate(true);
   }
 }

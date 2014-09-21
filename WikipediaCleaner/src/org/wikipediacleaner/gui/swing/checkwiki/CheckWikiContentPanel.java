@@ -51,10 +51,12 @@ import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.AutomaticFormatter;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageAnalysis;
+import org.wikipediacleaner.api.data.PageProvider;
 import org.wikipediacleaner.gui.swing.Controller;
 import org.wikipediacleaner.gui.swing.OnePageWindow;
 import org.wikipediacleaner.gui.swing.action.ActionExternalViewer;
 import org.wikipediacleaner.gui.swing.action.ActionFullAnalysis;
+import org.wikipediacleaner.gui.swing.action.ActionInsertPredefinedText;
 import org.wikipediacleaner.gui.swing.action.ActionOccurrence;
 import org.wikipediacleaner.gui.swing.basic.BasicWorker;
 import org.wikipediacleaner.gui.swing.basic.DefaultBasicWorkerListener;
@@ -77,7 +79,7 @@ import org.wikipediacleaner.utils.ConfigurationValueBoolean;
  */
 public class CheckWikiContentPanel
   extends JPanel
-  implements ActionListener, ItemListener {
+  implements ActionListener, ItemListener, PageProvider {
 
   private static final long serialVersionUID = 1L;
 
@@ -183,6 +185,8 @@ public class CheckWikiContentPanel
     toolbarButtons.addSeparator();
     JButton buttonToc = window.createButtonToc(this, true);
     toolbarButtons.add(buttonToc);
+    ActionInsertPredefinedText.addButton(
+        toolbarButtons, textPage, this, null, true);
     JButton buttonValidate = window.createButtonValidate(this, true);
     toolbarButtons.add(buttonValidate);
     buttonSend = window.createButtonSend(this, true);
@@ -740,5 +744,13 @@ public class CheckWikiContentPanel
     if ((source == chkAutomaticComment)) {
       updateComment(null);
     }
+  }
+
+  /**
+   * @return Page.
+   * @see org.wikipediacleaner.api.data.PageProvider#getPage()
+   */
+  public Page getPage() {
+    return page;
   }
 }
