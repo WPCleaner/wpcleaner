@@ -21,7 +21,7 @@ public enum EnumQueryPage {
   DISAMBIGUATIONS("Disambiguations", GT._No("Pages linking to disambiguation pages")),
   DOUBLE_REDIRECTS("DoubleRedirects", GT._No("Double redirects")),
   FEWEST_REVISIONS("Fewestrevisions", GT._No("Pages with the fewest revisions")),
-  LIST_REDIRECTS("ListRedirects", GT._No("Redirects")),
+  LIST_REDIRECTS("Listredirects", GT._No("Redirects")),
   LONELY_PAGES("Lonelypages", GT._No("Orphaned pages")),
   LONG_PAGES("Longpages", GT._No("Long pages")),
   MOST_CATEGORIES("Mostcategories", GT._No("Pages with the most categories")),
