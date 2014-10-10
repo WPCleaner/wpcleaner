@@ -167,7 +167,7 @@ public class CheckErrorAlgorithm521 extends CheckErrorAlgorithmBase {
               return false; // Wrong format: missing closing quote
             }
             int length = tmpIndex - formatIndex - 1;
-            if ((valueIndex + length < value.length()) &&
+            if ((valueIndex + length <= value.length()) &&
                 format.substring(formatIndex + 1, tmpIndex).equals(value.substring(valueIndex, valueIndex + length))) {
               formatOk = true;
               valueIndex += length;
