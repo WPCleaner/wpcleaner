@@ -70,6 +70,7 @@ import org.wikipediacleaner.api.constants.wiki.WikipediaUk;
 import org.wikipediacleaner.api.constants.wiki.WikipediaVi;
 import org.wikipediacleaner.api.constants.wiki.WikipediaYi;
 import org.wikipediacleaner.api.constants.wiki.WikipediaZh;
+import org.wikipediacleaner.api.constants.wiki.WikiquoteCa;
 import org.wikipediacleaner.api.constants.wiki.WikisourceFr;
 import org.wikipediacleaner.api.constants.wiki.WikiversityFr;
 import org.wikipediacleaner.api.constants.wiki.WiktionaryEn;
@@ -147,6 +148,8 @@ public enum EnumWikipedia {
   WIKTIONARY_EN(new WiktionaryEn()),
   WIKTIONARY_FR(new WiktionaryFr()),
   WIKTIONARY_SV(new WiktionarySv()),
+
+  WIKIQUOTE_CA(new WikiquoteCa()),
 
   WIKISOURCE_FR(new WikisourceFr()),
 
