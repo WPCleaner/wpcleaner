@@ -5,7 +5,7 @@
  *  See README.txt file for licensing information.
  */
 
-package org.wikipediacleaner.gui.swing;
+package org.wikipediacleaner.gui.swing.pagelist;
 
 import java.util.Collections;
 import java.util.List;

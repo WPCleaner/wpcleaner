@@ -5,7 +5,7 @@
  *  See README.txt file for licensing information.
  */
 
-package org.wikipediacleaner.gui.swing;
+package org.wikipediacleaner.gui.swing.pagelist;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -13,6 +13,7 @@ import java.awt.event.MouseEvent;
 import javax.swing.JTable;
 
 import org.wikipediacleaner.api.data.Page;
+import org.wikipediacleaner.gui.swing.Controller;
 import org.wikipediacleaner.gui.swing.basic.Utilities;
 
 
