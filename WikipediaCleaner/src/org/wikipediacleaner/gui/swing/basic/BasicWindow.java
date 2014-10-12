@@ -25,6 +25,8 @@ import org.apache.commons.logging.LogFactory;
 import org.wikipediacleaner.Version;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.constants.WPCConfiguration;
+import org.wikipediacleaner.api.data.Page;
+import org.wikipediacleaner.api.data.PageProvider;
 import org.wikipediacleaner.i18n.GT;
 import org.wikipediacleaner.images.EnumImageSize;
 import org.wikipediacleaner.utils.Configuration;
@@ -34,7 +36,7 @@ import org.wikipediacleaner.utils.StringChecker;
 /**
  * A base class for all Wikipedia Cleaner windows.
  */
-public abstract class BasicWindow implements ActionListener {
+public abstract class BasicWindow implements ActionListener, PageProvider {
 
   static private ImageIcon icon;
   private JFrame parentComponent;
@@ -179,10 +181,24 @@ public abstract class BasicWindow implements ActionListener {
   }
 
   /**
+   * @return Wiki.
+   */
+  public EnumWikipedia getWiki() {
+    return wikipedia;
+  }
+
+  /**
    * @param wikipedia Wikipedia.
    */
   protected void setWikipedia(EnumWikipedia wikipedia) {
     this.wikipedia = wikipedia;
+  }
+
+  /**
+   * @return Page.
+   */
+  public Page getPage() {
+    return null;
   }
 
   /**

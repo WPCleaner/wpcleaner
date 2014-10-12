@@ -48,7 +48,6 @@ import org.wikipediacleaner.api.constants.WPCConfigurationStringList;
 import org.wikipediacleaner.api.data.DataManager;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageAnalysis;
-import org.wikipediacleaner.api.data.PageProvider;
 import org.wikipediacleaner.gui.swing.action.ActionFullAnalysis;
 import org.wikipediacleaner.gui.swing.action.ReplaceAllLinksAction;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
@@ -68,8 +67,7 @@ import org.wikipediacleaner.utils.ConfigurationValueShortcut;
  * A base class for Wikipedia Cleaner windows with one page contents.
  */
 public abstract class OnePageWindow
-  extends PageWindow
-  implements PageProvider {
+  extends PageWindow {
 
   private Page page;
   private String pageName;
@@ -79,6 +77,7 @@ public abstract class OnePageWindow
   /**
    * @return Page.
    */
+  @Override
   public Page getPage() {
     return page;
   }
