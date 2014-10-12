@@ -11,10 +11,14 @@ import java.util.Collections;
 import java.util.List;
 
 import javax.swing.table.AbstractTableModel;
+import javax.swing.table.TableColumn;
+import javax.swing.table.TableColumnModel;
 
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.ProgressionValue;
+import org.wikipediacleaner.gui.swing.component.BooleanIconCellRenderer;
+import org.wikipediacleaner.gui.swing.component.IconCellRenderer;
 import org.wikipediacleaner.i18n.GT;
 import org.wikipediacleaner.utils.Configuration;
 
@@ -46,6 +50,64 @@ public class PageListTableModel extends AbstractTableModel {
     this.wiki = wiki;
     this.pages = pages;
     updateWatchedPages();
+  }
+
+  /**
+   * Configure a column model.
+   * 
+   * @param model Column model.
+   */
+  public void configureColumnModel(TableColumnModel model) {
+    TableColumn column;
+
+    column = model.getColumn(COLUMN_BACKLINKS_MAIN);
+    column.setMinWidth(50);
+    column.setPreferredWidth(50);
+    column.setMaxWidth(100);
+
+    column = model.getColumn(COLUMN_BACKLINKS_OTHER);
+    column.setMinWidth(50);
+    column.setPreferredWidth(50);
+    column.setMaxWidth(100);
+
+    column = model.getColumn(COLUMN_BACKLINKS_TEMPLATE);
+    column.setMinWidth(40);
+    column.setPreferredWidth(40);
+    column.setMaxWidth(100);
+
+    column = model.getColumn(COLUMN_COMMENTS_TEXT);
+    column.setMinWidth(60);
+
+    column = model.getColumn(COLUMN_DISAMBIGUATION);
+    column.setMinWidth(20);
+    column.setPreferredWidth(20);
+    column.setMaxWidth(20);
+    column.setCellRenderer(
+        new BooleanIconCellRenderer("commons-disambig-colour.png", null));
+    column.setHeaderRenderer(
+        new IconCellRenderer("commons-disambig-colour.png"));
+
+    column = model.getColumn(COLUMN_REDIRECT);
+    column.setMinWidth(20);
+    column.setPreferredWidth(20);
+    column.setMaxWidth(20);
+    column.setCellRenderer(
+        new BooleanIconCellRenderer("commons-redirect-arrow-without-text.png", null));
+    column.setHeaderRenderer(
+        new IconCellRenderer("commons-redirect-arrow-without-text.png"));
+
+    column = model.getColumn(COLUMN_PAGE);
+    column.setMinWidth(100);
+    column.setPreferredWidth(200);
+
+    column = model.getColumn(COLUMN_WATCHED);
+    column.setMinWidth(20);
+    column.setPreferredWidth(20);
+    column.setMaxWidth(20);
+    column.setCellRenderer(
+        new BooleanIconCellRenderer("gnome-logviewer.png", null));
+    column.setHeaderRenderer(
+        new IconCellRenderer("gnome-logviewer.png"));
   }
 
   public void updateWatchedPages() {
