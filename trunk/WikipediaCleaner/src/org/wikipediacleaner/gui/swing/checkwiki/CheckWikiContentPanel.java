@@ -119,7 +119,7 @@ public class CheckWikiContentPanel
   /**
    * @return Wiki.
    */
-  private EnumWikipedia getWiki() {
+  public EnumWikipedia getWiki() {
     if (window != null) {
       return window.getWikipedia();
     }

@@ -66,6 +66,7 @@ import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.Suggestion;
 import org.wikipediacleaner.gui.swing.action.ActionDisambiguationAnalysis;
 import org.wikipediacleaner.gui.swing.action.ActionFullAnalysis;
+import org.wikipediacleaner.gui.swing.action.ActionUpdateWarning;
 import org.wikipediacleaner.gui.swing.action.ActionUtilities;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
 import org.wikipediacleaner.gui.swing.basic.BasicWindowListener;
@@ -76,7 +77,6 @@ import org.wikipediacleaner.gui.swing.component.MWHtmlRendererContext;
 import org.wikipediacleaner.gui.swing.worker.LoginWorker;
 import org.wikipediacleaner.gui.swing.worker.PageListWorker;
 import org.wikipediacleaner.gui.swing.worker.RandomPageWorker;
-import org.wikipediacleaner.gui.swing.worker.UpdateDabWarningWorker;
 import org.wikipediacleaner.i18n.GT;
 import org.wikipediacleaner.images.EnumImageSize;
 import org.wikipediacleaner.utils.Configuration;
@@ -137,7 +137,7 @@ public class MainWindow
   private JButton buttonEmbeddedIn;
   private JButton buttonInternalLinks;
   private JButton buttonCategoryMembers;
-  private JButton buttonUpdateDabWarning;
+  private JButton buttonUpdateWarning;
   private JButton buttonAddPage;
   private JButton buttonRemovePage;
   private JButton buttonRandomPage;
@@ -288,7 +288,7 @@ public class MainWindow
     buttonBackLinks.setEnabled(logged);
     buttonCategoryMembers.setEnabled(logged);
     buttonEmbeddedIn.setEnabled(logged);
-    buttonUpdateDabWarning.setEnabled(logged);
+    buttonUpdateWarning.setEnabled(logged);
     buttonRandomPage.setEnabled(logged);
     buttonAddPage.setEnabled(logged);
     buttonRemovePage.setEnabled(logged);
@@ -717,13 +717,10 @@ public class MainWindow
     panel.add(buttonEmbeddedIn, constraints);
     constraints.gridy++;
 
-    // Update disambiguation warning
-    buttonUpdateDabWarning = Utilities.createJButton(
-        "gnome-dialog-warning.png", EnumImageSize.NORMAL,
-        GT._("Update disambiguation warning"), true, null);
-    buttonUpdateDabWarning.addActionListener(EventHandler.create(
-        ActionListener.class, this, "actionUpdateDabWarning"));
-    panel.add(buttonUpdateDabWarning, constraints);
+    // Update warnings
+    buttonUpdateWarning = ActionUpdateWarning.createButton(
+        getParentComponent(), this, this, true, true);
+    panel.add(buttonUpdateWarning, constraints);
     constraints.gridy++;
 
     // Empty panel
@@ -1331,37 +1328,6 @@ public class MainWindow
   }
 
   /**
-   * Action called when Update Disambiguation Warning button is pressed.
-   */
-  public void actionUpdateDabWarning() {
-    String pageName = checkPagename(GT._(
-        "You must input a page name for updating the disambiguation warning"));
-    if (pageName == null) {
-      return;
-    }
-    String template = getConfiguration().getString(WPCConfigurationString.DAB_WARNING_TEMPLATE);
-    if ((template == null) || (template.trim().length() == 0)) {
-      Utilities.displayMessageForMissingConfiguration(
-          getParentComponent(),
-          WPCConfigurationString.DAB_WARNING_TEMPLATE.getAttributeName());
-      return;
-    }
-    int answer = Utilities.displayYesNoWarning(
-        getParentComponent(),
-        GT._("Do you want to update the disambiguation warning on talk page?"));
-    if (answer != JOptionPane.YES_OPTION) {
-      return;
-    }
-    UpdateDabWarningWorker worker = new UpdateDabWarningWorker(
-        getWikipedia(), this,
-        Collections.singletonList(DataManager.getPage(
-            getWikipedia(), pageName,
-            null, null, null)),
-        true);
-    worker.start();
-  }
-
-  /**
    * Action called when Internal links button is pressed.
    */
   public void actionInternalLinks() {
@@ -1952,5 +1918,18 @@ public class MainWindow
         textPassword.setText(password);
       }
     }
+  }
+
+  /**
+   * @return Page.
+   * @see org.wikipediacleaner.api.data.PageProvider#getPage()
+   */
+  @Override
+  public Page getPage() {
+    String pageName = checkPagename(null);
+    if (pageName != null) {
+      return DataManager.getPage(getWikipedia(), pageName, null, null, null);
+    }
+    return null;
   }
 }

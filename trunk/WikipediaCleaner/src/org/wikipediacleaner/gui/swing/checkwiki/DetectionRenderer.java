@@ -49,7 +49,7 @@ public class DetectionRenderer extends AbstractCellEditor implements
   }
 
   /**
-   * @return
+   * @return Value in the editor.
    * @see javax.swing.CellEditor#getCellEditorValue()
    */
   public Object getCellEditorValue() {

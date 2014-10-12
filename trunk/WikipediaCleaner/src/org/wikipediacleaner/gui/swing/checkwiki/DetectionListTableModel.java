@@ -127,9 +127,9 @@ public class DetectionListTableModel extends AbstractTableModel {
   }
 
   /**
-   * @param rowIndex
-   * @param columnIndex
-   * @return
+   * @param rowIndex Row index.
+   * @param columnIndex Column index.
+   * @return True if the cell is editable
    * @see javax.swing.table.AbstractTableModel#isCellEditable(int, int)
    */
   @Override
