@@ -405,7 +405,7 @@ public class MediaWiki extends MediaWikiController {
     if (page == null) {
       return;
     }
-    retrieveAllBacklinks(wikipedia, new Page[] { page }, block);
+    retrieveAllBacklinks(wikipedia, Collections.singleton(page), block);
   }
 
   /**
@@ -418,8 +418,8 @@ public class MediaWiki extends MediaWikiController {
    */
   public void retrieveAllBacklinks(
       EnumWikipedia wikipedia,
-      Page[] pageList, boolean block) throws APIException {
-    if ((pageList == null) || (pageList.length == 0)) {
+      Collection<Page> pageList, boolean block) throws APIException {
+    if ((pageList == null) || (pageList.size() == 0)) {
       return;
     }
     final API api = APIFactory.getAPI();

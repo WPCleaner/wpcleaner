@@ -390,12 +390,10 @@ public class PageListWorker extends BasicWorker {
   private void constructDabWatch(List<Page> pages) throws APIException {
     if (elementNames != null) {
       List<Page> tmpPages = constructInternalPageList();
-      Page[] tmpPages2 = new Page[tmpPages.size()];
-      tmpPages2 = tmpPages.toArray(tmpPages2);
       MediaWiki mw = MediaWiki.getMediaWikiAccess(this);
-      mw.retrieveAllBacklinks(getWikipedia(), tmpPages2, true);
+      mw.retrieveAllBacklinks(getWikipedia(), tmpPages, true);
       Configuration configuration = Configuration.getConfiguration();
-      for (Page tmpPage : tmpPages2) {
+      for (Page tmpPage : tmpPages) {
         List<Page> backlinks = tmpPage.getBackLinksWithRedirects();
         if (backlinks != null) {
           Properties pageProperties = configuration.getSubProperties(
@@ -510,7 +508,7 @@ public class PageListWorker extends BasicWorker {
     }
     setText(GT._("Checking that protected titles have backlinks"));
     MediaWiki mw = MediaWiki.getMediaWikiAccess(this);
-    mw.retrieveAllBacklinks(wiki, tmpPages.toArray(new Page[0]), true);
+    mw.retrieveAllBacklinks(wiki, tmpPages, true);
     for (Page page : tmpPages) {
       Integer backlinks = page.getBacklinksCountInMainNamespace();
       if ((backlinks != null) && (backlinks.intValue() > 0)) {

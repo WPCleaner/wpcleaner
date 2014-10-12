@@ -20,7 +20,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -30,7 +29,6 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JTable;
 import javax.swing.JToolBar;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingConstants;
@@ -41,14 +39,12 @@ import org.wikipediacleaner.api.constants.WPCConfigurationString;
 import org.wikipediacleaner.api.data.DataManager;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageComment;
-import org.wikipediacleaner.api.data.ProgressionValue;
 import org.wikipediacleaner.gui.swing.Controller;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
 import org.wikipediacleaner.gui.swing.basic.BasicWorker;
 import org.wikipediacleaner.gui.swing.basic.DefaultBasicWindowListener;
 import org.wikipediacleaner.gui.swing.basic.DefaultBasicWorkerListener;
 import org.wikipediacleaner.gui.swing.basic.Utilities;
-import org.wikipediacleaner.gui.swing.component.ProgressionValueCellRenderer;
 import org.wikipediacleaner.gui.swing.worker.PageListWorker;
 import org.wikipediacleaner.gui.swing.worker.UpdateDabWarningWorker;
 import org.wikipediacleaner.gui.swing.worker.UpdateInfoWorker;
@@ -70,8 +66,7 @@ public class PageListWindow extends BasicWindow {
   List<Page> pages;
   boolean watchList;
 
-  PageListTableModel modelPages;
-  JTable tablePages;
+  PageListTable tablePages;
 
   JLabel  labelLinksCount;
   
@@ -162,12 +157,7 @@ public class PageListWindow extends BasicWindow {
     // Table
     constraints.fill = GridBagConstraints.BOTH;
     constraints.weighty = 1;
-    modelPages = new PageListTableModel(getWikipedia(), pages);
-    tablePages = new JTable(modelPages);
-    tablePages.setDefaultRenderer(ProgressionValue.class, new ProgressionValueCellRenderer());
-    modelPages.configureColumnModel(tablePages.getColumnModel());
-    Utilities.addRowSorter(tablePages, modelPages);
-    tablePages.addMouseListener(new PageListMouseListener());
+    tablePages = PageListTable.createTable(getWikipedia(), pages);
     JScrollPane scrollPages = new JScrollPane(tablePages);
     scrollPages.setMinimumSize(new Dimension(300, 200));
     scrollPages.setPreferredSize(new Dimension(450, 500));
@@ -299,9 +289,10 @@ public class PageListWindow extends BasicWindow {
    * Action called when Full analysis button is pressed.
    */
   public void actionFullAnalysis() {
+    List<Page> selectedPages = tablePages.getSelectedPages();
     Controller.runFullAnalysis(
         getParentComponent(),
-        getSelectedPages(), null,
+        selectedPages.toArray(), null,
         getWikipedia());
   }
 
@@ -309,9 +300,10 @@ public class PageListWindow extends BasicWindow {
    * Action called when Disambiguation button is pressed.
    */
   public void actionDisambiguation() {
+    List<Page> selectedPages = tablePages.getSelectedPages();
     Controller.runDisambiguationAnalysis(
         getParentComponent(),
-        getSelectedPages(),
+        selectedPages.toArray(),
         getWikipedia());
   }
 
@@ -341,11 +333,12 @@ public class PageListWindow extends BasicWindow {
    * Action called when Disambiguation Watch button is pressed.
    */
   public void actionDisambiguationWatch() {
-    Page[] selectedPages = getSelectedPages();
-    if ((selectedPages == null) || (selectedPages.length == 0)) {
+    List<Page> selectedPages = tablePages.getSelectedPages();
+    if ((selectedPages == null) ||
+        (selectedPages.size() == 0)) {
       return;
     }
-    List<String> pageNames = new ArrayList<String>(selectedPages.length);
+    List<String> pageNames = new ArrayList<String>(selectedPages.size());
     for (Page page : selectedPages) {
       pageNames.add(page.getTitle());
     }
@@ -357,14 +350,11 @@ public class PageListWindow extends BasicWindow {
   }
 
   /**
-   * Action called when Update Dab Warning button is pressed.
+   * Action called when Update Disambiguation Warning button is pressed.
    */
   public void actionUpdateDabWarning() {
-    List<Page> tmpPages = new ArrayList<Page>();
-    for (int i = 0; i < getSelectedPages().length; i++) {
-      tmpPages.add(getSelectedPages()[i]);
-    }
-    if (tmpPages.isEmpty()) {
+    List<Page> selectedPages = tablePages.getSelectedPages();
+    if (selectedPages.isEmpty()) {
       return;
     }
     String template = getConfiguration().getString(WPCConfigurationString.DAB_WARNING_TEMPLATE);
@@ -379,12 +369,13 @@ public class PageListWindow extends BasicWindow {
     if (answer != JOptionPane.YES_OPTION) {
       return;
     }
-    UpdateDabWarningWorker worker = new UpdateDabWarningWorker(getWikipedia(), this, tmpPages, false);
+    UpdateDabWarningWorker worker = new UpdateDabWarningWorker(
+        getWikipedia(), this, selectedPages, false);
     worker.start();
   }
 
   /**
-   * Action called when Disambiguation button is pressed.
+   * Action called when Remove button is pressed.
    */
   public void actionRemove() {
     if (displayYesNoWarning(GT._(
@@ -392,15 +383,19 @@ public class PageListWindow extends BasicWindow {
         "Are you sure?")) != JOptionPane.YES_OPTION) {
       return;
     }
-    Page[] selectedPages = getSelectedPages();
-    modelPages.removePages(selectedPages);
-    List<Page> tmpPages = modelPages.getPages();
-    List<String> watchedPages = new ArrayList<String>(tmpPages.size());
-    for (Page p : tmpPages) {
-      watchedPages.add(p.getTitle());
+    List<Page> selectedPages = tablePages.getSelectedPages();
+    if ((selectedPages == null) || (selectedPages.isEmpty())) {
+      return;
     }
     Configuration config = Configuration.getConfiguration();
-    config.setStringList(getWikipedia(), Configuration.ARRAY_WATCH_PAGES, watchedPages);
+    List<String> watchedPages = config.getStringList(
+        getWikipedia(), Configuration.ARRAY_WATCH_PAGES);
+    for (Page page : selectedPages) {
+      watchedPages.remove(page.getTitle());
+    }
+    config.setStringList(
+        getWikipedia(), Configuration.ARRAY_WATCH_PAGES, watchedPages);
+    tablePages.removePages(selectedPages);
   }
 
   /**
@@ -411,13 +406,15 @@ public class PageListWindow extends BasicWindow {
         GT._("Enter the page title you want to add to your local watchlist"),
         "", null);
     if (value != null) {
+      Page page = DataManager.getPage(getWikipedia(), value, null, null, null);
       Configuration config = Configuration.getConfiguration();
-      List<String> watchedPages = config.getStringList(getWikipedia(), Configuration.ARRAY_WATCH_PAGES);
-      if (!watchedPages.contains(value)) {
-        watchedPages.add(value);
+      List<String> watchedPages = config.getStringList(
+          getWikipedia(), Configuration.ARRAY_WATCH_PAGES);
+      if (!watchedPages.contains(page.getTitle())) {
+        watchedPages.add(page.getTitle());
         Collections.sort(watchedPages);
         config.setStringList(getWikipedia(), Configuration.ARRAY_WATCH_PAGES, watchedPages);
-        modelPages.addPage(DataManager.getPage(getWikipedia(), value, null, null, null));
+        tablePages.addPage(page);
       }
     }
   }
@@ -426,7 +423,7 @@ public class PageListWindow extends BasicWindow {
    * Action called when Set comments button is pressed.
    */
   public void actionSetComments() {
-    Page[] selectedPages = getSelectedPages();
+    List<Page> selectedPages = tablePages.getSelectedPages();
     Controller.runPageComments(selectedPages, getWikipedia());
   }
 
@@ -434,11 +431,12 @@ public class PageListWindow extends BasicWindow {
    * Action called when Update information button is pressed. 
    */
   public void actionUpdateInfo() {
-    Page[] tmpPages = getSelectedPages();
-    if ((tmpPages == null) || (tmpPages.length == 0)) {
+    List<Page> selectedPages = tablePages.getSelectedPages();
+    if ((selectedPages == null) || (selectedPages.size() == 0)) {
       return;
     }
-    final UpdateInfoWorker updateWorker = new UpdateInfoWorker(getWikipedia(), this, tmpPages);
+    final UpdateInfoWorker updateWorker = new UpdateInfoWorker(
+        getWikipedia(), this, selectedPages);
     updateWorker.setListener(new DefaultBasicWorkerListener() {
 
       /* (non-Javadoc)
@@ -446,7 +444,7 @@ public class PageListWindow extends BasicWindow {
        */
       @Override
       public void afterFinished(BasicWorker worker, boolean ok) {
-        modelPages.updateWatchedPages();
+        tablePages.updateWatchedPages();
         super.afterFinished(worker, ok);
         updateBacklinksCount();
       }
@@ -459,9 +457,9 @@ public class PageListWindow extends BasicWindow {
    * Action called when View button is pressed. 
    */
   public void actionView() {
-    Page[] tmpPages = getSelectedPages();
-    if (tmpPages != null) {
-      for (Page page : tmpPages) {
+    List<Page> selectedPages = tablePages.getSelectedPages();
+    if (selectedPages != null) {
+      for (Page page : selectedPages) {
         Utilities.browseURL(getWikipedia(), page.getTitle(), false);
       }
     }
@@ -471,9 +469,9 @@ public class PageListWindow extends BasicWindow {
    * Action called when View History button is pressed. 
    */
   public void actionViewHistory() {
-    Page[] tmpPages = getSelectedPages();
-    if (tmpPages != null) {
-      for (Page page : tmpPages) {
+    List<Page> selectedPages = tablePages.getSelectedPages();
+    if (selectedPages != null) {
+      for (Page page : selectedPages) {
         Utilities.browseURL(getWikipedia(), page.getTitle(), "history");
       }
     }
@@ -517,18 +515,14 @@ public class PageListWindow extends BasicWindow {
    * Action called when Run Automatic Fixing button is pressed. 
    */
   public void actionRunAutomaticFixing() {
-    Page[] values = getSelectedPages();
-    if ((values == null) || (values.length == 0)) {
+    List<Page> selectedPages = tablePages.getSelectedPages();
+    if ((selectedPages == null) || (selectedPages.size() == 0)) {
       Utilities.displayWarning(
           getParentComponent(),
           GT._("You must select pages on which running automatic fixing."));
       return;
     }
-    Collection<Page> tmpPages = new ArrayList<Page>(values.length);
-    for (int i = 0; i < values.length; i++) {
-      tmpPages.add(values[i]);
-    }
-    Controller.runAutomatixFixing(pages, referencePage, getWikipedia());
+    Controller.runAutomatixFixing(selectedPages, referencePage, getWikipedia());
   }
 
   /**
@@ -581,16 +575,5 @@ public class PageListWindow extends BasicWindow {
             "Backlinks - Main namespace: {0}, All namespaces: {1}",
             new Object[] { txtMain, txtAll }));
   }
-  
-  /**
-   * @return Selected pages.
-   */
-  private Page[] getSelectedPages() {
-    int[] rows = tablePages.getSelectedRows();
-    for (int i = 0; i < rows.length; i++) {
-      rows[i] = Utilities.convertRowIndexToModel(tablePages, rows[i]);
-    }
-    Page[] result = modelPages.getPages(rows);
-    return result;
-  }
+
 }
