@@ -6,23 +6,18 @@
  */
 
 
-package org.wikipediacleaner.api.data;
+package org.wikipediacleaner.api.dataaccess;
 
-import org.wikipediacleaner.api.constants.EnumWikipedia;
+import org.wikipediacleaner.api.data.Page;
 
 
 /**
  * Interface for providing access to a page.
  */
-public interface PageProvider {
+public interface PageProvider extends WikiProvider {
 
   /**
    * @return Page.
    */
   public Page getPage();
-
-  /**
-   * @return Wiki.
-   */
-  public EnumWikipedia getWiki();
 }

@@ -1922,7 +1922,7 @@ public class MainWindow
 
   /**
    * @return Page.
-   * @see org.wikipediacleaner.api.data.PageProvider#getPage()
+   * @see org.wikipediacleaner.api.dataaccess.PageProvider#getPage()
    */
   @Override
   public Page getPage() {
