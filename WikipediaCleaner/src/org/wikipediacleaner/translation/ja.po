@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2014-10-12 21:40+0200\n"
+"POT-Creation-Date: 2014-10-12 22:42+0200\n"
 "PO-Revision-Date: 2014-07-29 00:35+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Japanese <ja@li.org>\n"
@@ -408,7 +408,7 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:151
 #: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:339
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:135
-#: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:247
+#: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:236
 msgid "External Viewer"
 msgstr "外部ブラウザ"
 
@@ -965,7 +965,7 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:140
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:528
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:301
-#: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:268
+#: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:257
 msgid "Automatic fixing"
 msgstr ""
 
@@ -1133,7 +1133,7 @@ msgid "Sort"
 msgstr "並べ替え"
 
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:544
-#: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:524
+#: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:521
 msgid "You must select pages on which running automatic fixing."
 msgstr ""
 
@@ -1251,7 +1251,7 @@ msgid "Save none of them"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:596
-#: org/wikipediacleaner/gui/swing/pagelist/PageListTableModel.java:231
+#: org/wikipediacleaner/gui/swing/pagelist/PageListTableModel.java:233
 msgid "Page"
 msgstr "ページ"
 
@@ -1644,7 +1644,7 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:338
 #: org/wikipediacleaner/gui/swing/action/ActionDisambiguationAnalysis.java:47
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:130
-#: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:201
+#: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:190
 msgid "Disambiguation"
 msgstr "曖昧さ回避"
 
@@ -1777,7 +1777,7 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/PageCommentsWindow.java:116
 #: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:115
-#: org/wikipediacleaner/gui/swing/pagelist/PageListTableModel.java:227
+#: org/wikipediacleaner/gui/swing/pagelist/PageListTableModel.java:229
 msgid "Comments"
 msgstr ""
 
@@ -1886,14 +1886,14 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:84
 #: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:160
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:150
-#: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:255
+#: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:244
 msgid "History"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/action/ActionFullAnalysis.java:49
 #: org/wikipediacleaner/gui/swing/options/OptionsWindow.java:94
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:140
-#: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:193
+#: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:182
 msgid "Full analysis"
 msgstr ""
 
@@ -1939,7 +1939,7 @@ msgid "Add a warning about ISBN errors"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/action/ActionUpdateWarning.java:293
-#: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:378
+#: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:367
 msgid "Do you want to update the disambiguation warning on talk page?"
 msgstr ""
 
@@ -3125,75 +3125,114 @@ msgstr ""
 msgid "Translate templates without parameters"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/pagelist/PageListTableModel.java:221
+#: org/wikipediacleaner/gui/swing/pagelist/PageListTableModel.java:223
 msgid "Main"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/pagelist/PageListTableModel.java:225
+#: org/wikipediacleaner/gui/swing/pagelist/PageListTableModel.java:227
 msgid "Other"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:179
+#: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:168
 msgid "Backlinks"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:209
+#: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:198
 msgid "Select disambiguation pages with too many backlinks"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:217
+#: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:206
 msgid "Analyze pages with links to disambiguation pages"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:225
+#: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:214
 msgid "Update disambiguation warning"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:233
+#: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:222
 msgid "Update page information (Alt + &U)"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:240
+#: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:229
 msgid "Set page comments (Alt + &C)"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:263
-#: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:488
+#: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:252
+#: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:485
 msgid "Save list"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:276
+#: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:265
 msgid "Remove page"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:283
+#: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:272
 msgid "Add page"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:356
+#: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:348
 msgid "Articles with links to disambiguation pages"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:391
+#: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:381
 msgid ""
 "You are about to remove the pages from your local watchlist.\n"
 "Are you sure?"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:411
+#: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:405
 msgid "Enter the page title you want to add to your local watchlist"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:578
+#: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:571
 #, java-format
 msgid "{0} page"
 msgid_plural "{0} pages"
 msgstr[0] ""
 msgstr[1] ""
 
-#: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:581
+#: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:574
 #, java-format
 msgid "Backlinks - Main namespace: {0}, All namespaces: {1}"
+msgstr ""
+
+#: org/wikipediacleaner/gui/swing/pagelist/PageListWorker.java:81
+msgid "Articles in main namespace"
+msgstr ""
+
+#: org/wikipediacleaner/gui/swing/pagelist/PageListWorker.java:82
+msgid "Articles associated to talk pages"
+msgstr ""
+
+#: org/wikipediacleaner/gui/swing/pagelist/PageListWorker.java:83
+msgid "Pages with missing templates"
+msgstr ""
+
+#: org/wikipediacleaner/gui/swing/pagelist/PageListWorker.java:84
+msgid "Protected titles with links from articles"
+msgstr ""
+
+#: org/wikipediacleaner/gui/swing/pagelist/PageListWorker.java:161
+msgid ""
+"You have loaded the list of all disambiguation pages to speed up page "
+"analysis.\n"
+"Do you want to display the list of all disambiguation pages ?"
+msgstr ""
+
+#: org/wikipediacleaner/gui/swing/pagelist/PageListWorker.java:471
+msgid "Retrieving list of missing templates"
+msgstr ""
+
+#: org/wikipediacleaner/gui/swing/pagelist/PageListWorker.java:476
+msgid "Checking that the templates are still missing"
+msgstr ""
+
+#: org/wikipediacleaner/gui/swing/pagelist/PageListWorker.java:502
+msgid "Retrieving list of protected titles"
+msgstr ""
+
+#: org/wikipediacleaner/gui/swing/pagelist/PageListWorker.java:508
+msgid "Checking that protected titles have backlinks"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/worker/AutomaticFixingWorker.java:105
@@ -3225,45 +3264,6 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/worker/NewSectionWorker.java:64
 msgid "Adding comment"
-msgstr ""
-
-#: org/wikipediacleaner/gui/swing/worker/PageListWorker.java:82
-msgid "Articles in main namespace"
-msgstr ""
-
-#: org/wikipediacleaner/gui/swing/worker/PageListWorker.java:83
-msgid "Articles associated to talk pages"
-msgstr ""
-
-#: org/wikipediacleaner/gui/swing/worker/PageListWorker.java:84
-msgid "Pages with missing templates"
-msgstr ""
-
-#: org/wikipediacleaner/gui/swing/worker/PageListWorker.java:85
-msgid "Protected titles with links from articles"
-msgstr ""
-
-#: org/wikipediacleaner/gui/swing/worker/PageListWorker.java:162
-msgid ""
-"You have loaded the list of all disambiguation pages to speed up page "
-"analysis.\n"
-"Do you want to display the list of all disambiguation pages ?"
-msgstr ""
-
-#: org/wikipediacleaner/gui/swing/worker/PageListWorker.java:474
-msgid "Retrieving list of missing templates"
-msgstr ""
-
-#: org/wikipediacleaner/gui/swing/worker/PageListWorker.java:479
-msgid "Checking that the templates are still missing"
-msgstr ""
-
-#: org/wikipediacleaner/gui/swing/worker/PageListWorker.java:505
-msgid "Retrieving list of protected titles"
-msgstr ""
-
-#: org/wikipediacleaner/gui/swing/worker/PageListWorker.java:511
-msgid "Checking that protected titles have backlinks"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/worker/RandomPageWorker.java:51
