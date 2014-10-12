@@ -26,7 +26,7 @@ import org.wikipediacleaner.Version;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.constants.WPCConfiguration;
 import org.wikipediacleaner.api.data.Page;
-import org.wikipediacleaner.api.data.PageProvider;
+import org.wikipediacleaner.api.dataaccess.PageProvider;
 import org.wikipediacleaner.i18n.GT;
 import org.wikipediacleaner.images.EnumImageSize;
 import org.wikipediacleaner.utils.Configuration;

@@ -51,8 +51,8 @@ import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.AutomaticFormatter;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageAnalysis;
-import org.wikipediacleaner.api.data.PageProvider;
 import org.wikipediacleaner.api.data.User;
+import org.wikipediacleaner.api.dataaccess.PageProvider;
 import org.wikipediacleaner.gui.swing.Controller;
 import org.wikipediacleaner.gui.swing.OnePageWindow;
 import org.wikipediacleaner.gui.swing.action.ActionDeletePage;
@@ -756,7 +756,7 @@ public class CheckWikiContentPanel
 
   /**
    * @return Page.
-   * @see org.wikipediacleaner.api.data.PageProvider#getPage()
+   * @see org.wikipediacleaner.api.dataaccess.PageProvider#getPage()
    */
   public Page getPage() {
     return page;
