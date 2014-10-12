@@ -35,17 +35,16 @@ import javax.swing.SwingConstants;
 import javax.swing.WindowConstants;
 
 import org.wikipediacleaner.api.constants.EnumWikipedia;
-import org.wikipediacleaner.api.constants.WPCConfigurationString;
 import org.wikipediacleaner.api.data.DataManager;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageComment;
 import org.wikipediacleaner.gui.swing.Controller;
+import org.wikipediacleaner.gui.swing.action.ActionUpdateWarning;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
 import org.wikipediacleaner.gui.swing.basic.BasicWorker;
 import org.wikipediacleaner.gui.swing.basic.DefaultBasicWindowListener;
 import org.wikipediacleaner.gui.swing.basic.DefaultBasicWorkerListener;
 import org.wikipediacleaner.gui.swing.basic.Utilities;
-import org.wikipediacleaner.gui.swing.worker.UpdateDabWarningWorker;
 import org.wikipediacleaner.gui.swing.worker.UpdateInfoWorker;
 import org.wikipediacleaner.i18n.GT;
 import org.wikipediacleaner.images.EnumImageSize;
@@ -78,7 +77,6 @@ public class PageListWindow extends BasicWindow {
   private JButton buttonRemove;
   private JButton buttonSave;
   private JButton buttonSelectDab;
-  private JButton buttonUpdateDabWarning;
   private JButton buttonUpdateInfo;
   private JButton buttonView;
   private JButton buttonViewHistory;
@@ -209,13 +207,8 @@ public class PageListWindow extends BasicWindow {
         ActionListener.class, this, "actionDisambiguationWatch"));
     toolbar.add(buttonDisambiguationWatch);
 
-    buttonUpdateDabWarning = Utilities.createJButton(
-        "gnome-dialog-warning.png", EnumImageSize.NORMAL,
-        GT._("Update disambiguation warning"),
-        false, null);
-    buttonUpdateDabWarning.addActionListener(EventHandler.create(
-        ActionListener.class, this, "actionUpdateDabWarning"));
-    toolbar.add(buttonUpdateDabWarning);
+    ActionUpdateWarning.addButton(
+        getParentComponent(), this, toolbar, tablePages, true, false);
 
     buttonUpdateInfo = Utilities.createJButton(
         "gnome-view-refresh.png", EnumImageSize.NORMAL,
@@ -346,31 +339,6 @@ public class PageListWindow extends BasicWindow {
         pageNames,
         PageListWorker.Mode.DAB_WATCH, false,
         GT._("Articles with links to disambiguation pages")).start();
-  }
-
-  /**
-   * Action called when Update Disambiguation Warning button is pressed.
-   */
-  public void actionUpdateDabWarning() {
-    List<Page> selectedPages = tablePages.getSelectedPages();
-    if (selectedPages.isEmpty()) {
-      return;
-    }
-    String template = getConfiguration().getString(WPCConfigurationString.DAB_WARNING_TEMPLATE);
-    if ((template == null) || (template.trim().length() == 0)) {
-      Utilities.displayMessageForMissingConfiguration(
-          getParentComponent(),
-          WPCConfigurationString.DAB_WARNING_TEMPLATE.getAttributeName());
-    }
-    int answer = Utilities.displayYesNoWarning(
-        getParentComponent(),
-        GT._("Do you want to update the disambiguation warning on talk page?"));
-    if (answer != JOptionPane.YES_OPTION) {
-      return;
-    }
-    UpdateDabWarningWorker worker = new UpdateDabWarningWorker(
-        getWikipedia(), this, selectedPages, false);
-    worker.start();
   }
 
   /**

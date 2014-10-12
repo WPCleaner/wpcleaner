@@ -12,13 +12,11 @@ import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.EventHandler;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JList;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu;
@@ -30,7 +28,9 @@ import org.wikipediacleaner.api.constants.WPCConfiguration;
 import org.wikipediacleaner.api.constants.WPCConfigurationString;
 import org.wikipediacleaner.api.data.DataManager;
 import org.wikipediacleaner.api.data.Page;
+import org.wikipediacleaner.api.dataaccess.PageListProvider;
 import org.wikipediacleaner.api.dataaccess.PageProvider;
+import org.wikipediacleaner.api.dataaccess.WikiProvider;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
 import org.wikipediacleaner.gui.swing.basic.Utilities;
 import org.wikipediacleaner.gui.swing.worker.UpdateDabWarningWorker;
@@ -109,18 +109,18 @@ public class ActionUpdateWarning implements ActionListener {
    * 
    * @param parent Parent component.
    * @param window Window.
-   * @param list List.
+   * @param pageListProvider Page list provider.
    * @param showIcon True if the button should use an icon.
    * @param showText True if the button should display the text.
    * @return Button.
    */
   public static JButton createButton(
       Component parent, BasicWindow window,
-      JList list,
+      PageListProvider pageListProvider,
       boolean showIcon, boolean showText) {
     JButton button = createInternalButton(showIcon, showText);
     button.addActionListener(new ActionUpdateWarning(
-        parent, window, list));
+        parent, window, pageListProvider));
     return button;
   }
 
@@ -130,16 +130,16 @@ public class ActionUpdateWarning implements ActionListener {
    * @param parent Parent component.
    * @param window Window.
    * @param toolbar Tool bar.
-   * @param list List.
+   * @param pageListProvider Page list provider.
    * @param showIcon True if the button should use an icon.
    * @param showText True if the button should display the text.
    * @return Button.
    */
   public static JButton addButton(
       Component parent, BasicWindow window, JToolBar toolbar,
-      JList list,
+      PageListProvider pageListProvider,
       boolean showIcon, boolean showText) {
-    JButton button = createButton(parent, window, list, showIcon, showText);
+    JButton button = createButton(parent, window, pageListProvider, showIcon, showText);
     if ((button != null) && (toolbar != null)) {
       toolbar.add(button);
     }
@@ -152,11 +152,14 @@ public class ActionUpdateWarning implements ActionListener {
   /** Window */
   private final BasicWindow window;
 
+  /** Wiki for which warnings should be updated. */
+  private final WikiProvider wikiProvider;
+
   /** Page for which warnings should be updated. */
   private final PageProvider pageProvider;
 
-  /** Selected pages in the JList for which warnings should be updated. */
-  private final JList list;
+  /** List of pages for which warnings should be updated. */
+  private final PageListProvider pageListProvider;
 
   /** Text component containing the page name. */
   private final JTextComponent text;
@@ -174,8 +177,9 @@ public class ActionUpdateWarning implements ActionListener {
       PageProvider pageProvider) {
     this.parent = parent;
     this.window = window;
+    this.wikiProvider = pageProvider;
     this.pageProvider = pageProvider;
-    this.list = null;
+    this.pageListProvider = null;
     this.text = null;
     this.combo = null;
   }
@@ -183,15 +187,16 @@ public class ActionUpdateWarning implements ActionListener {
   /**
    * @param parent Parent component.
    * @param window Window.
-   * @param list Selected pages for which warnings should be updated.
+   * @param pageListProvider List of pages for which warnings should be updated.
    */
   public ActionUpdateWarning(
       Component parent, BasicWindow window,
-      JList list) {
+      PageListProvider pageListProvider) {
     this.parent = parent;
     this.window = window;
+    this.wikiProvider = pageListProvider;
     this.pageProvider = null;
-    this.list = list;
+    this.pageListProvider = pageListProvider;
     this.text = null;
     this.combo = null;
   }
@@ -206,8 +211,9 @@ public class ActionUpdateWarning implements ActionListener {
       JTextComponent text) {
     this.parent = parent;
     this.window = window;
+    this.wikiProvider = null;
     this.pageProvider = null;
-    this.list = null;
+    this.pageListProvider = null;
     this.text = text;
     this.combo = null;
   }
@@ -222,8 +228,9 @@ public class ActionUpdateWarning implements ActionListener {
       JComboBox combo) {
     this.parent = parent;
     this.window = window;
+    this.wikiProvider = null;
     this.pageProvider = null;
-    this.list = null;
+    this.pageListProvider = null;
     this.text = null;
     this.combo = combo;
   }
@@ -265,15 +272,15 @@ public class ActionUpdateWarning implements ActionListener {
   public void actionDisambiguationWarning() {
 
     // Check selection
+    if (wikiProvider == null) {
+      return;
+    }
+    EnumWikipedia wiki = wikiProvider.getWiki();
+    if (wiki == null) {
+      return;
+    }
     List<Page> pages = getPages();
     if ((pages == null) || (pages.isEmpty())) {
-      return;
-    }
-    if (pageProvider == null) {
-      return;
-    }
-    EnumWikipedia wiki = pageProvider.getWiki();
-    if (wiki == null) {
       return;
     }
 
@@ -308,15 +315,15 @@ public class ActionUpdateWarning implements ActionListener {
   public void actionISBNWarning() {
 
     // Check selection
+    if (wikiProvider == null) {
+      return;
+    }
+    EnumWikipedia wiki = wikiProvider.getWiki();
+    if (wiki == null) {
+      return;
+    }
     List<Page> pages = getPages();
     if ((pages == null) || (pages.isEmpty())) {
-      return;
-    }
-    if (pageProvider == null) {
-      return;
-    }
-    EnumWikipedia wiki = pageProvider.getWiki();
-    if (wiki == null) {
       return;
     }
 
@@ -350,18 +357,21 @@ public class ActionUpdateWarning implements ActionListener {
    */
   private List<Page> getPages() {
 
-    EnumWikipedia wiki = (pageProvider != null) ? pageProvider.getWiki() : null;
-
     // Manage list of pages
-    if ((list != null) && (wiki != null)) {
-      List<Page> result = new ArrayList<Page>();
-      for (Object selection : list.getSelectedValues()) {
-        result.add(DataManager.getPage(wiki, selection.toString(), null, null, null));
+    if (pageListProvider != null) {
+      return pageListProvider.getPages();
+    }
+
+    // Manage a single page
+    if (pageProvider != null) {
+      Page page = pageProvider.getPage();
+      if (page != null) {
+        return Collections.singletonList(page);
       }
-      return result;
     }
 
     // Manage page name in a text field or combo box
+    EnumWikipedia wiki = (wikiProvider != null) ? wikiProvider.getWiki() : null;
     if (((text != null) || (combo != null)) && (wiki != null)) {
       String tmp = null;
       if (text != null) {
@@ -386,14 +396,6 @@ public class ActionUpdateWarning implements ActionListener {
       config.save();
       return Collections.singletonList(
           DataManager.getPage(wiki, tmp, null, null, null));
-    }
-
-    // Manage a single page
-    if (pageProvider != null) {
-      Page page = pageProvider.getPage();
-      if (page != null) {
-        return Collections.singletonList(page);
-      }
     }
 
     return null;

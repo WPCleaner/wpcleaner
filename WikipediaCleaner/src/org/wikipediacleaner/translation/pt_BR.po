@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2014-10-12 22:42+0200\n"
+"POT-Creation-Date: 2014-10-12 23:04+0200\n"
 "PO-Revision-Date: 2014-09-19 04:44+0000\n"
 "Last-Translator: Felipe L. <felipe.idj@hotmail.com>\n"
 "Language-Team: Brazilian Portuguese <pt_BR@li.org>\n"
@@ -430,7 +430,7 @@ msgstr "Substituir usando template {0}"
 #: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:151
 #: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:339
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:135
-#: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:236
+#: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:229
 msgid "External Viewer"
 msgstr "Visualizador externo"
 
@@ -1003,7 +1003,7 @@ msgstr "expressão regular"
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:140
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:528
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:301
-#: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:257
+#: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:250
 msgid "Automatic fixing"
 msgstr "Correção automática"
 
@@ -1180,7 +1180,7 @@ msgid "Sort"
 msgstr "Classificar"
 
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:544
-#: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:521
+#: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:489
 msgid "You must select pages on which running automatic fixing."
 msgstr ""
 "Você precisa selecionar as páginas nas quais quer executar correções "
@@ -1710,7 +1710,7 @@ msgstr "&Página:"
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:338
 #: org/wikipediacleaner/gui/swing/action/ActionDisambiguationAnalysis.java:47
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:130
-#: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:190
+#: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:188
 msgid "Disambiguation"
 msgstr "Desambiguação"
 
@@ -1956,14 +1956,14 @@ msgstr "Fechar"
 #: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:84
 #: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:160
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:150
-#: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:244
+#: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:237
 msgid "History"
 msgstr "Histórico"
 
 #: org/wikipediacleaner/gui/swing/action/ActionFullAnalysis.java:49
 #: org/wikipediacleaner/gui/swing/options/OptionsWindow.java:94
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:140
-#: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:182
+#: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:180
 msgid "Full analysis"
 msgstr "Análise completa"
 
@@ -2001,24 +2001,23 @@ msgstr "Ocorrência anterior"
 msgid "Add warnings on talk page"
 msgstr "Adicionar avisos em páginas de discussão"
 
-#: org/wikipediacleaner/gui/swing/action/ActionUpdateWarning.java:248
+#: org/wikipediacleaner/gui/swing/action/ActionUpdateWarning.java:255
 msgid "Add a warning about links to disambiguation pages"
 msgstr "Adicionar um aviso sobre links para páginas de desambiguação"
 
-#: org/wikipediacleaner/gui/swing/action/ActionUpdateWarning.java:254
+#: org/wikipediacleaner/gui/swing/action/ActionUpdateWarning.java:261
 msgid "Add a warning about ISBN errors"
 msgstr "Adicionar um aviso sobre erros de ISBN"
 
-#: org/wikipediacleaner/gui/swing/action/ActionUpdateWarning.java:293
-#: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:367
+#: org/wikipediacleaner/gui/swing/action/ActionUpdateWarning.java:300
 msgid "Do you want to update the disambiguation warning on talk page?"
 msgstr "Você quer atualizar o aviso de desambiguação na página de discussão?"
 
-#: org/wikipediacleaner/gui/swing/action/ActionUpdateWarning.java:336
+#: org/wikipediacleaner/gui/swing/action/ActionUpdateWarning.java:343
 msgid "Do you want to update the ISBN warning on talk page?"
 msgstr "Você quer atualizar o aviso ISBN na página de discussão?"
 
-#: org/wikipediacleaner/gui/swing/action/ActionUpdateWarning.java:378
+#: org/wikipediacleaner/gui/swing/action/ActionUpdateWarning.java:388
 #, fuzzy
 msgid "You must input a page name for updating warnings"
 msgstr ""
@@ -3249,48 +3248,44 @@ msgstr "Principal"
 msgid "Other"
 msgstr "Outro"
 
-#: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:168
+#: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:166
 msgid "Backlinks"
 msgstr "Backlinks"
 
-#: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:198
+#: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:196
 msgid "Select disambiguation pages with too many backlinks"
 msgstr "Selecione páginas de desambiguação com muitos backlinks"
 
-#: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:206
+#: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:204
 msgid "Analyze pages with links to disambiguation pages"
 msgstr "Analisar páginas com links para páginas de desambiguação"
 
-#: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:214
-msgid "Update disambiguation warning"
-msgstr "Atualize o aviso de desambiguação"
-
-#: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:222
+#: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:215
 msgid "Update page information (Alt + &U)"
 msgstr "Atualizar informações da página (Alt + &U)"
 
-#: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:229
+#: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:222
 msgid "Set page comments (Alt + &C)"
 msgstr "Definir comentários para a página (Alt + &C)"
 
-#: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:252
-#: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:485
+#: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:245
+#: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:453
 msgid "Save list"
 msgstr "Salvar a lista"
 
-#: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:265
+#: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:258
 msgid "Remove page"
 msgstr "Remover página"
 
-#: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:272
+#: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:265
 msgid "Add page"
 msgstr "Adicionar página"
 
-#: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:348
+#: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:341
 msgid "Articles with links to disambiguation pages"
 msgstr "Artigos com links para páginas de desambiguação"
 
-#: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:381
+#: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:349
 msgid ""
 "You are about to remove the pages from your local watchlist.\n"
 "Are you sure?"
@@ -3298,20 +3293,20 @@ msgstr ""
 "Você está prestes a remover as páginas da sua lista de páginas vigiadas.\n"
 "Você está certo disso?"
 
-#: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:405
+#: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:373
 msgid "Enter the page title you want to add to your local watchlist"
 msgstr ""
 "Insira o título da página que você quer adicionar a sua lista de páginas "
 "vigiadas"
 
-#: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:571
+#: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:539
 #, java-format
 msgid "{0} page"
 msgid_plural "{0} pages"
 msgstr[0] "{0} página"
 msgstr[1] "{0} páginas"
 
-#: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:574
+#: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:542
 #, java-format
 msgid "Backlinks - Main namespace: {0}, All namespaces: {1}"
 msgstr "Backlinks - Main namespace: {0}, Todos os namespaces: {1}"
@@ -3552,6 +3547,9 @@ msgstr ""
 #, java-format
 msgid "The value cannot contain any of these characters: {0}"
 msgstr "O valor não pode conter nenhum dos seguintes caracteres: {0}"
+
+#~ msgid "Update disambiguation warning"
+#~ msgstr "Atualize o aviso de desambiguação"
 
 #~ msgid "&Close"
 #~ msgstr "&Fechar"
