@@ -134,8 +134,8 @@ public class Controller {
    * @param wikipedia Wikipedia.
    */
   public static void runPageComments(
-      Page[]        pages,
-      EnumWikipedia wikipedia) {
+      Collection<Page> pages,
+      EnumWikipedia    wikipedia) {
     for (Page p : pages) {
       runPageComments(p, wikipedia);
     }

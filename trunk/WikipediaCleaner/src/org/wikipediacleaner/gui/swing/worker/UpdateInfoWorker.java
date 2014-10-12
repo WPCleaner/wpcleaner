@@ -7,6 +7,9 @@
 
 package org.wikipediacleaner.gui.swing.worker;
 
+import java.util.Collection;
+import java.util.List;
+
 import org.wikipediacleaner.api.APIException;
 import org.wikipediacleaner.api.MediaWiki;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
@@ -16,16 +19,18 @@ import org.wikipediacleaner.gui.swing.basic.BasicWorker;
 
 public class UpdateInfoWorker extends BasicWorker {
 
-  private final Page[] pageList;
+  private final Collection<Page> pageList;
 
   /**
    * @param wikipedia Wikipedia.
    * @param window Window.
    * @param pages Pages.
    */
-  public UpdateInfoWorker(EnumWikipedia wikipedia, BasicWindow window, Page[] pages) {
+  public UpdateInfoWorker(
+      EnumWikipedia wikipedia, BasicWindow window,
+      List<Page> pages) {
     super(wikipedia, window);
-    this.pageList = pages.clone();
+    this.pageList = pages;
   }
 
   /* (non-Javadoc)

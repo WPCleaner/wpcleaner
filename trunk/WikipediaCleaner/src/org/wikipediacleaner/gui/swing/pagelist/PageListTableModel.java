@@ -7,6 +7,8 @@
 
 package org.wikipediacleaner.gui.swing.pagelist;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -119,13 +121,13 @@ public class PageListTableModel extends AbstractTableModel {
    * @param rows Rows numbers.
    * @return Corresponding pages.
    */
-  public Page[] getPages(int[] rows) {
+  public List<Page> getPages(int[] rows) {
     if ((rows != null) && (rows.length > 0)) {
-      Page[] array = new Page[rows.length];
+      List<Page> result = new ArrayList<Page>();
       for (int i = 0; i < rows.length; i++) {
-        array[i] = pages.get(rows[i]);
+        result.add(pages.get(rows[i]));
       }
-      return array;
+      return result;
     }
     return null;
   }
@@ -150,9 +152,9 @@ public class PageListTableModel extends AbstractTableModel {
   /**
    * @param pageList List of pages to remove.
    */
-  public void removePages(Page[] pageList) {
-    for (int i = 0; i < pageList.length; i++) {
-      pages.remove(pageList[i]);
+  public void removePages(Collection<Page> pageList) {
+    for (Page page : pageList) {
+      pages.remove(page);
     }
     fireTableDataChanged();
   }
