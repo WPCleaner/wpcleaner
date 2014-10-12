@@ -35,7 +35,6 @@ import javax.swing.JToolBar;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingConstants;
 import javax.swing.WindowConstants;
-import javax.swing.table.TableColumnModel;
 
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.constants.WPCConfigurationString;
@@ -48,9 +47,7 @@ import org.wikipediacleaner.gui.swing.basic.BasicWorker;
 import org.wikipediacleaner.gui.swing.basic.DefaultBasicWindowListener;
 import org.wikipediacleaner.gui.swing.basic.DefaultBasicWorkerListener;
 import org.wikipediacleaner.gui.swing.basic.Utilities;
-import org.wikipediacleaner.gui.swing.component.IconCellRenderer;
 import org.wikipediacleaner.gui.swing.component.ProgressionValueCellRenderer;
-import org.wikipediacleaner.gui.swing.component.BooleanIconCellRenderer;
 import org.wikipediacleaner.gui.swing.worker.PageListWorker;
 import org.wikipediacleaner.gui.swing.worker.UpdateDabWarningWorker;
 import org.wikipediacleaner.gui.swing.worker.UpdateInfoWorker;
@@ -167,40 +164,7 @@ public class PageListWindow extends BasicWindow {
     modelPages = new PageListTableModel(getWikipedia(), pages);
     tablePages = new JTable(modelPages);
     tablePages.setDefaultRenderer(ProgressionValue.class, new ProgressionValueCellRenderer());
-    TableColumnModel columnModel = tablePages.getColumnModel();
-    columnModel.getColumn(PageListTableModel.COLUMN_BACKLINKS_MAIN).setMinWidth(50);
-    columnModel.getColumn(PageListTableModel.COLUMN_BACKLINKS_MAIN).setPreferredWidth(50);
-    columnModel.getColumn(PageListTableModel.COLUMN_BACKLINKS_MAIN).setMaxWidth(100);
-    columnModel.getColumn(PageListTableModel.COLUMN_BACKLINKS_OTHER).setMinWidth(50);
-    columnModel.getColumn(PageListTableModel.COLUMN_BACKLINKS_OTHER).setPreferredWidth(50);
-    columnModel.getColumn(PageListTableModel.COLUMN_BACKLINKS_OTHER).setMaxWidth(100);
-    columnModel.getColumn(PageListTableModel.COLUMN_BACKLINKS_TEMPLATE).setMinWidth(40);
-    columnModel.getColumn(PageListTableModel.COLUMN_BACKLINKS_TEMPLATE).setPreferredWidth(40);
-    columnModel.getColumn(PageListTableModel.COLUMN_BACKLINKS_TEMPLATE).setMaxWidth(100);
-    columnModel.getColumn(PageListTableModel.COLUMN_COMMENTS_TEXT).setMinWidth(60);
-    columnModel.getColumn(PageListTableModel.COLUMN_DISAMBIGUATION).setMinWidth(20);
-    columnModel.getColumn(PageListTableModel.COLUMN_DISAMBIGUATION).setPreferredWidth(20);
-    columnModel.getColumn(PageListTableModel.COLUMN_DISAMBIGUATION).setMaxWidth(20);
-    columnModel.getColumn(PageListTableModel.COLUMN_DISAMBIGUATION).setCellRenderer(
-        new BooleanIconCellRenderer("commons-disambig-colour.png", null));
-    columnModel.getColumn(PageListTableModel.COLUMN_DISAMBIGUATION).setHeaderRenderer(
-        new IconCellRenderer("commons-disambig-colour.png"));
-    columnModel.getColumn(PageListTableModel.COLUMN_REDIRECT).setMinWidth(20);
-    columnModel.getColumn(PageListTableModel.COLUMN_REDIRECT).setPreferredWidth(20);
-    columnModel.getColumn(PageListTableModel.COLUMN_REDIRECT).setMaxWidth(20);
-    columnModel.getColumn(PageListTableModel.COLUMN_REDIRECT).setCellRenderer(
-        new BooleanIconCellRenderer("commons-redirect-arrow-without-text.png", null));
-    columnModel.getColumn(PageListTableModel.COLUMN_REDIRECT).setHeaderRenderer(
-        new IconCellRenderer("commons-redirect-arrow-without-text.png"));
-    columnModel.getColumn(PageListTableModel.COLUMN_PAGE).setMinWidth(100);
-    columnModel.getColumn(PageListTableModel.COLUMN_PAGE).setPreferredWidth(200);
-    columnModel.getColumn(PageListTableModel.COLUMN_WATCHED).setMinWidth(20);
-    columnModel.getColumn(PageListTableModel.COLUMN_WATCHED).setPreferredWidth(20);
-    columnModel.getColumn(PageListTableModel.COLUMN_WATCHED).setMaxWidth(20);
-    columnModel.getColumn(PageListTableModel.COLUMN_WATCHED).setCellRenderer(
-        new BooleanIconCellRenderer("gnome-logviewer.png", null));
-    columnModel.getColumn(PageListTableModel.COLUMN_WATCHED).setHeaderRenderer(
-        new IconCellRenderer("gnome-logviewer.png"));
+    modelPages.configureColumnModel(tablePages.getColumnModel());
     Utilities.addRowSorter(tablePages, modelPages);
     tablePages.addMouseListener(new PageListMouseListener());
     JScrollPane scrollPages = new JScrollPane(tablePages);
