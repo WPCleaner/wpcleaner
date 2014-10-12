@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2014-10-12 22:42+0200\n"
+"POT-Creation-Date: 2014-10-12 23:04+0200\n"
 "PO-Revision-Date: 2014-09-14 18:20+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Czech <cs@li.org>\n"
@@ -422,7 +422,7 @@ msgstr "Nahradit za použití šablony {0}"
 #: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:151
 #: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:339
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:135
-#: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:236
+#: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:229
 msgid "External Viewer"
 msgstr "Externí prohlížeč"
 
@@ -994,7 +994,7 @@ msgstr "regulární výraz"
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:140
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:528
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:301
-#: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:257
+#: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:250
 msgid "Automatic fixing"
 msgstr "Automatická korekce"
 
@@ -1164,7 +1164,7 @@ msgid "Sort"
 msgstr "Řadit"
 
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:544
-#: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:521
+#: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:489
 msgid "You must select pages on which running automatic fixing."
 msgstr "Musíte vybrat stránky, na kterých se mají provést automatické opravy."
 
@@ -1687,7 +1687,7 @@ msgstr "Stránka:"
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:338
 #: org/wikipediacleaner/gui/swing/action/ActionDisambiguationAnalysis.java:47
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:130
-#: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:190
+#: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:188
 msgid "Disambiguation"
 msgstr "Rozcestník"
 
@@ -1932,14 +1932,14 @@ msgstr "Zavřít"
 #: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:84
 #: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:160
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:150
-#: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:244
+#: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:237
 msgid "History"
 msgstr "Historie"
 
 #: org/wikipediacleaner/gui/swing/action/ActionFullAnalysis.java:49
 #: org/wikipediacleaner/gui/swing/options/OptionsWindow.java:94
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:140
-#: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:182
+#: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:180
 msgid "Full analysis"
 msgstr "Plná analýza"
 
@@ -1976,24 +1976,23 @@ msgstr "Předchozí výskyt"
 msgid "Add warnings on talk page"
 msgstr "Vložit na diskusní stránku varování"
 
-#: org/wikipediacleaner/gui/swing/action/ActionUpdateWarning.java:248
+#: org/wikipediacleaner/gui/swing/action/ActionUpdateWarning.java:255
 msgid "Add a warning about links to disambiguation pages"
 msgstr "Přidat varování ohledně odkazů na rozcestníky"
 
-#: org/wikipediacleaner/gui/swing/action/ActionUpdateWarning.java:254
+#: org/wikipediacleaner/gui/swing/action/ActionUpdateWarning.java:261
 msgid "Add a warning about ISBN errors"
 msgstr "Přidat varování ohledně chyb v ISBN"
 
-#: org/wikipediacleaner/gui/swing/action/ActionUpdateWarning.java:293
-#: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:367
+#: org/wikipediacleaner/gui/swing/action/ActionUpdateWarning.java:300
 msgid "Do you want to update the disambiguation warning on talk page?"
 msgstr "Chcete aktualizovat rozcestníkové varování na diskuzní stránce?"
 
-#: org/wikipediacleaner/gui/swing/action/ActionUpdateWarning.java:336
+#: org/wikipediacleaner/gui/swing/action/ActionUpdateWarning.java:343
 msgid "Do you want to update the ISBN warning on talk page?"
 msgstr "Chcete na diskusní stránce aktualizovat varování ohledně chyb v ISBN?"
 
-#: org/wikipediacleaner/gui/swing/action/ActionUpdateWarning.java:378
+#: org/wikipediacleaner/gui/swing/action/ActionUpdateWarning.java:388
 #, fuzzy
 msgid "You must input a page name for updating warnings"
 msgstr "Musíte zadat jméno stránky pro aktualizaci rozcestníkového varování"
@@ -3227,48 +3226,44 @@ msgstr "Hlavní"
 msgid "Other"
 msgstr "Ostatní"
 
-#: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:168
+#: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:166
 msgid "Backlinks"
 msgstr "Zpětné odkazy"
 
-#: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:198
+#: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:196
 msgid "Select disambiguation pages with too many backlinks"
 msgstr "Vybrat rozcestníky, na které je nejvíckrát odkazováno"
 
-#: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:206
+#: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:204
 msgid "Analyze pages with links to disambiguation pages"
 msgstr "Analyzovat stránky s mnoha odkazy na rozcestníky"
 
-#: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:214
-msgid "Update disambiguation warning"
-msgstr "Aktualizovat rozcestníkové varování"
-
-#: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:222
+#: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:215
 msgid "Update page information (Alt + &U)"
 msgstr "Aktualizovat informace o stránce (Alt + &U)"
 
-#: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:229
+#: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:222
 msgid "Set page comments (Alt + &C)"
 msgstr "Nastavit komentář stránky  (Alt + &C)"
 
-#: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:252
-#: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:485
+#: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:245
+#: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:453
 msgid "Save list"
 msgstr "Uložit seznam"
 
-#: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:265
+#: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:258
 msgid "Remove page"
 msgstr "Odstranit stránku"
 
-#: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:272
+#: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:265
 msgid "Add page"
 msgstr "Přidat stránku"
 
-#: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:348
+#: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:341
 msgid "Articles with links to disambiguation pages"
 msgstr "Stránky s odkazy na rozcestníky"
 
-#: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:381
+#: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:349
 msgid ""
 "You are about to remove the pages from your local watchlist.\n"
 "Are you sure?"
@@ -3276,13 +3271,13 @@ msgstr ""
 "Chystáte se odebrat stránky z vašeho lokálního seznamu sledovaných stránek.\n"
 "Chcete pokračovat?"
 
-#: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:405
+#: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:373
 msgid "Enter the page title you want to add to your local watchlist"
 msgstr ""
 "Zadejte název stránky, kterou chcete přidat do vašeho lokálního seznamu "
 "sledovaných stránek"
 
-#: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:571
+#: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:539
 #, java-format
 msgid "{0} page"
 msgid_plural "{0} pages"
@@ -3290,7 +3285,7 @@ msgstr[0] "{0} stránka"
 msgstr[1] "{0} stránky"
 msgstr[2] "{0} stránek"
 
-#: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:574
+#: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:542
 #, java-format
 msgid "Backlinks - Main namespace: {0}, All namespaces: {1}"
 msgstr ""
@@ -3535,6 +3530,9 @@ msgstr "Název reference nemůže obsahovat tyto znaky: {0}"
 #, java-format
 msgid "The value cannot contain any of these characters: {0}"
 msgstr "Hodnota nemůže obsahovat žádný ze znaků: {0}"
+
+#~ msgid "Update disambiguation warning"
+#~ msgstr "Aktualizovat rozcestníkové varování"
 
 #~ msgid "Error unkown from WikiCleaner"
 #~ msgstr "Neznámá chyba z WikiCleaneru"
