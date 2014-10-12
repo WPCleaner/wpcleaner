@@ -5,7 +5,7 @@
  *  See README.txt file for licensing information.
  */
 
-package org.wikipediacleaner.gui.swing.worker;
+package org.wikipediacleaner.gui.swing.pagelist;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -32,7 +32,6 @@ import org.wikipediacleaner.api.data.PageComparator;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
 import org.wikipediacleaner.gui.swing.basic.BasicWorker;
 import org.wikipediacleaner.gui.swing.basic.Utilities;
-import org.wikipediacleaner.gui.swing.pagelist.PageListWindow;
 import org.wikipediacleaner.i18n.GT;
 import org.wikipediacleaner.utils.Configuration;
 
