@@ -62,9 +62,8 @@ public class ApiLinksRequest extends ApiPropertiesRequest {
     List<Collection<Page>> splitPagesList = splitListPages(pages, MAX_PAGES_PER_QUERY);
     for (Collection<Page> splitPages : splitPagesList) {
       Map<String, String> properties = getProperties(ACTION_QUERY, result.getFormat());
-      properties.put(
-          PROPERTY_PROP,
-          PROPERTY_PROP_LINKS);
+      properties.put(PROPERTY_PROP, PROPERTY_PROP_LINKS);
+      properties.put(PROPERTY_CONTINUE, PROPERTY_CONTINUE_DEFAULT);
       properties.put(PROPERTY_LIMIT, LIMIT_MAX);
       properties.put(PROPERTY_TITLES, constructListTitles(splitPages));
       Map<String, List<Page>> lists = new HashMap<String, List<Page>>();
@@ -101,6 +100,7 @@ public class ApiLinksRequest extends ApiPropertiesRequest {
       List<Page> redirects, boolean disambig) throws APIException {
     Map<String, String> properties = getProperties(ACTION_QUERY, result.getFormat());
     properties.put(PROPERTY_GENERATOR, PROPERTY_PROP_LINKS);
+    properties.put(PROPERTY_CONTINUE, PROPERTY_CONTINUE_DEFAULT);
     if (disambig) {
       properties.put(
           PROPERTY_PROP,

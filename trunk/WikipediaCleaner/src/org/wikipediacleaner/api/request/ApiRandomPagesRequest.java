@@ -68,6 +68,7 @@ public class ApiRandomPagesRequest extends ApiListRequest {
     properties.put(
         PROPERTY_LIST,
         PROPERTY_LIST_RANDOM);
+    properties.put(PROPERTY_CONTINUE, PROPERTY_CONTINUE_DEFAULT);
     properties.put(PROPERTY_LIMIT, Integer.toString(count));
     properties.put(PROPERTY_NAMESPACE, Integer.toString(Namespace.MAIN));
     if (redirects) {

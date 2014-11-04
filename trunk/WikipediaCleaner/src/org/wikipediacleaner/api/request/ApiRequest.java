@@ -118,9 +118,23 @@ public abstract class ApiRequest {
   public final static int MAX_PAGES_PER_QUERY = 50;
 
   /**
-   * Maximum size for an url encoded list.
+   * Maximum size for an URL encoded list.
    */
   public final static int MAX_LENGTH_LIST_URLENCODED = 1500;
+
+  // ==========================================================================
+  // Various parameters
+  // ==========================================================================
+
+  /**
+   * Continuation mechanism.
+   */
+  public final static String PROPERTY_CONTINUE = "continue";
+
+  /**
+   * Continuation mechanism.
+   */
+  public final static String PROPERTY_CONTINUE_DEFAULT = "";
 
   // ==========================================================================
   // Wiki management

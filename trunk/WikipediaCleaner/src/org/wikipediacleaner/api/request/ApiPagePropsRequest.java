@@ -82,6 +82,7 @@ public class ApiPagePropsRequest extends ApiPropertiesRequest {
       }
       Map<String, String> properties = getProperties(ACTION_QUERY, result.getFormat());
       properties.put(PROPERTY_PROP, PROPERTY_PROP_PAGEPROPS);
+      properties.put(PROPERTY_CONTINUE, PROPERTY_CONTINUE_DEFAULT);
       properties.put(PROPERTY_PROPERTIES, PROPERTY_PROPERTIES_DISAMBIGUATION);
       properties.put(PROPERTY_REDIRECTS, "");
       properties.put(PROPERTY_TITLES, constructListTitles(splitPages));

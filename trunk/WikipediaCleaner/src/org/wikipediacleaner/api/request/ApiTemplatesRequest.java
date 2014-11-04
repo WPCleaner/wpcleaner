@@ -72,6 +72,7 @@ public class ApiTemplatesRequest extends ApiPropertiesRequest {
   public void loadTemplates(Page page) throws APIException {
     Map<String, String> properties = getProperties(ACTION_QUERY, result.getFormat());
     properties.put(PROPERTY_PROP, PROPERTY_PROP_INFO);
+    properties.put(PROPERTY_CONTINUE, PROPERTY_CONTINUE_DEFAULT);
     properties.put(PROPERTY_GENERATOR, PROPERTY_PROP_TEMPLATES);
     properties.put(GENERATOR_PREFIX + PROPERTY_LIMIT, LIMIT_MAX);
     properties.put(PROPERTY_TITLES, page.getTitle());

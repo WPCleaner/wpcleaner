@@ -98,6 +98,7 @@ public class ApiSiteInfoRequest extends ApiMetaRequest {
     properties.put(
         PROPERTY_META,
         PROPERTY_META_SITEINFO);
+    properties.put(PROPERTY_CONTINUE, PROPERTY_CONTINUE_DEFAULT);
     Collection<String> information = new ArrayList<String>();
     if (general) {
       information.add(PROPERTY_PROP_GENERAL);

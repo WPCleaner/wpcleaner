@@ -200,6 +200,7 @@ public class ApiRevisionsRequest extends ApiPropertiesRequest {
     properties.put(
         PROPERTY_PROP,
         PROPERTY_PROP_REVISIONS + "|" + PROPERTY_PROP_INFO);
+    properties.put(PROPERTY_CONTINUE, PROPERTY_CONTINUE_DEFAULT);
     properties.put(
         PROPERTY_PROPERTIES,
         PROPERTY_PROPERTIES_CONTENT + "|" + PROPERTY_PROPERTIES_IDS + "|" + PROPERTY_PROPERTIES_TIMESTAMP);
