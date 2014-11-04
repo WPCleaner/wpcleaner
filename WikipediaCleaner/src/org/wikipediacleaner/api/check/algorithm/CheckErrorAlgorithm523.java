@@ -15,10 +15,12 @@ import java.util.Map;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.CheckErrorResult.ErrorLevel;
+import org.wikipediacleaner.api.data.MagicWord;
 import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementImage;
 import org.wikipediacleaner.api.data.PageElementTag;
+import org.wikipediacleaner.i18n.GT;
 
 
 /**
@@ -46,11 +48,50 @@ public class CheckErrorAlgorithm523 extends CheckErrorAlgorithmBase {
       return false;
     }
 
+    // Configuration
+    int minSize = 64;
+    String minSizeText = getSpecificProperty("min_size", true, true, false);
+    if (minSizeText != null) {
+      try {
+        minSize = Integer.parseInt(minSizeText, 10);
+      } catch (NumberFormatException e) {
+        // Nothing to do
+      }
+    }
+
     // Memorize where each single image is
     Map<String, List<Element>> imagesMap = new HashMap<String, List<Element>>();
     List<PageElementImage> images = analysis.getImages();
     for (PageElementImage image : images) {
-      addImage(imagesMap, image.getImage(), image.getBeginIndex(), image.getEndIndex());
+      boolean shouldAdd = true;
+
+      // Only images that respect a minimum size
+      if (shouldAdd) {
+        PageElementImage.Parameter paramWidth = image.getParameter(MagicWord.IMG_WIDTH);
+        if ((paramWidth != null) && (paramWidth.getContents() != null)) {
+          String contents = paramWidth.getContents().replaceAll("\\D", "");
+          try {
+            int size = Integer.parseInt(contents, 10);
+            if (size < minSize) {
+              shouldAdd = false;
+            }
+          } catch (NumberFormatException e) {
+            // Nothing to do
+          }
+        }
+      }
+
+      // Ignore images with a page parameter
+      if (shouldAdd) {
+        PageElementImage.Parameter paramPage = image.getParameter(MagicWord.IMG_PAGE);
+        if (paramPage != null) {
+          shouldAdd = false;
+        }
+      }
+
+      if (shouldAdd) {
+        addImage(imagesMap, image.getImage(), image.getBeginIndex(), image.getEndIndex());
+      }
     }
 
     // Memorize where each image in a gallery is
@@ -117,15 +158,34 @@ public class CheckErrorAlgorithm523 extends CheckErrorAlgorithmBase {
       Map<String, List<Element>> imagesMap,
       String imageName,
       int beginIndex, int endIndex) {
-    if (imagesMap == null) {
+    if ((imagesMap == null) || (imageName == null)) {
       return;
     }
-    List<Element> elements = imagesMap.get(imageName);
-    if (elements == null) {
-      elements = new ArrayList<Element>();
-      imagesMap.put(imageName, elements);
+    boolean shouldAdd = true;
+    if (shouldAdd) {
+      if (imageName.endsWith(".svg")) {
+        shouldAdd = false;
+      }
     }
-    elements.add(new Element(beginIndex, endIndex));
+    if (shouldAdd) {
+      List<Element> elements = imagesMap.get(imageName);
+      if (elements == null) {
+        elements = new ArrayList<Element>();
+        imagesMap.put(imageName, elements);
+      }
+      elements.add(new Element(beginIndex, endIndex));
+    }
+  }
+
+  /**
+   * @return Map of parameters (Name -> description).
+   * @see org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase#getParameters()
+   */
+  @Override
+  public Map<String, String> getParameters() {
+    Map<String, String> parameters = super.getParameters();
+    parameters.put("min_size", GT._("The size below which images are not reported as duplicates"));
+    return parameters;
   }
 
   /**
