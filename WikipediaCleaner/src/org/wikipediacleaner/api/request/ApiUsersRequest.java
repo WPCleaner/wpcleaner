@@ -104,6 +104,7 @@ public class ApiUsersRequest extends ApiListRequest {
   public User retrieveUser(String username) throws APIException {
     Map<String, String> properties = getProperties(ACTION_QUERY, result.getFormat());
     properties.put(PROPERTY_LIST, PROPERTY_LIST_USERS);
+    properties.put(PROPERTY_CONTINUE, PROPERTY_CONTINUE_DEFAULT);
     properties.put(PROPERTY_USERS, username);
     properties.put(PROPERTY_PROP, PROPERTY_PROP_GROUPS + "|" + PROPERTY_PROP_RIGHTS);
     return result.executeUser(properties);

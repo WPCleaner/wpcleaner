@@ -261,6 +261,7 @@ public class MediaWikiAPI implements API {
     throws APIException {
     Map<String, String> properties = getProperties(ApiRequest.ACTION_QUERY, true);
     properties.put("prop", "revisions|info");
+    properties.put("continue", "");
     properties.put("titles", page.getTitle());
     properties.put("rvprop", "content|ids|timestamp");
     properties.put("rvsection", Integer.toString(section));
@@ -295,6 +296,7 @@ public class MediaWikiAPI implements API {
       throws APIException {
     Map<String, String> properties = getProperties(ApiRequest.ACTION_QUERY, true);
     properties.put("prop", "revisions");
+    properties.put("continue", "");
     properties.put("rvprop", "content");
     StringBuilder titles = new StringBuilder();
     for (int i = 0; i < pages.size();) {
