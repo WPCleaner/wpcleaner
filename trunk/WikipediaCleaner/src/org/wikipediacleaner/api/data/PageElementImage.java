@@ -217,9 +217,10 @@ public class PageElementImage extends PageElement {
   }
 
   /**
-   * @return Image alternate description.
+   * @param magicWordName Magic word.
+   * @return Parameter matching the magic word.
    */
-  public String getAlternateDescription() {
+  public Parameter getParameter(String magicWordName) {
     if (parameters == null) {
       return null;
     }
@@ -228,13 +229,26 @@ public class PageElementImage extends PageElement {
       String contents = param.getContents();
       if ((contents != null) &&
           (param.getMagicWord() != null) &&
-          (wikiConfiguration.getMagicWordByName(MagicWord.IMG_ALT).isPossibleAlias(contents))) {
-        // TODO: Don't rely on "="
-        int equalIndex = contents.indexOf("=");
-        if (equalIndex >= 0) {
-          return contents.substring(equalIndex + 1).trim();
-        }
+          (wikiConfiguration.getMagicWordByName(magicWordName).isPossibleAlias(contents))) {
+        return param;
       }
+    }
+    return null;
+  }
+
+  /**
+   * @return Image alternate description.
+   */
+  public String getAlternateDescription() {
+    Parameter param = getParameter(MagicWord.IMG_ALT);
+    if ((param == null) || (param.getContents() == null)) {
+      return null;
+    }
+    String contents = param.getContents();
+    // TODO: Don't rely on "="
+    int equalIndex = contents.indexOf("=");
+    if (equalIndex >= 0) {
+      return contents.substring(equalIndex + 1).trim();
     }
     return null;
   }

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2014-10-12 23:04+0200\n"
+"POT-Creation-Date: 2014-11-04 14:39+0100\n"
 "PO-Revision-Date: 2014-09-18 05:21+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: French <fr@li.org>\n"
@@ -642,6 +642,14 @@ msgstr ""
 "Une liste de modèles et de paramètres pour lesquels le format devrait être "
 "vérifié"
 
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm521.java:344
+msgid "A list of text values for monthes"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm523.java:187
+msgid "The size below which images are not reported as duplicates"
+msgstr ""
+
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmBase.java:240
 msgid "Title of the article describing this type of error"
 msgstr "titre de la page d’aide décrivant l’erreur"
@@ -974,7 +982,7 @@ msgstr "Analyse du texte"
 msgid "Retrieving templates"
 msgstr "Récupération des modèles"
 
-#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:1659
+#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:1661
 msgid ""
 "This action is protected by a CAPTCHA.\n"
 "What is the answer to the following question ?"
@@ -982,7 +990,7 @@ msgstr ""
 "Cette action est protégée par un CAPTCHA.\n"
 "Quelle est la réponse à la question suivante ?"
 
-#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:1666
+#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:1668
 msgid ""
 "This action is protected by a CAPTCHA.\n"
 "What is the answer to the question displayed in your browser ?"
