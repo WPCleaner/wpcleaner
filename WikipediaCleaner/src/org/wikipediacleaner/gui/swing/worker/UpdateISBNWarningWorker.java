@@ -146,6 +146,17 @@ public class UpdateISBNWarningWorker extends BasicWorker {
         retrieveCheckWikiPages(72, warningPages); // Incorrect ISBN-10
         retrieveCheckWikiPages(73, warningPages); // Incorrect ISBN-13
 
+        // Retrieve articles already reported
+        String isbnErrorsPageName = configuration.getString(WPCConfigurationString.ISBN_ERRORS_PAGE);
+        if (isbnErrorsPageName != null) {
+          Page page = DataManager.getPage(wiki, isbnErrorsPageName, null, null, null);
+          api.retrieveLinks(wiki, page, Namespace.MAIN, null, false, false);
+          List<Page> links = page.getLinks();
+          if (links != null) {
+            warningPages.addAll(links);
+          }
+        }
+
         // Construct list of articles with warning
         setText(GT._("Constructing list of articles with warning"));
         HashSet<Page> tmpWarningPages = new HashSet<Page>();
