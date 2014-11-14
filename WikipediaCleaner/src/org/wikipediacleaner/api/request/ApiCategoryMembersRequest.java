@@ -225,9 +225,8 @@ public class ApiCategoryMembersRequest extends ApiListRequest {
       if (shouldAnalyze) {
         categoriesAnalyzed.add(categoryName);
         Map<String, String> properties = getProperties(ACTION_QUERY, result.getFormat());
-        properties.put(
-            PROPERTY_LIST,
-            PROPERTY_LIST_CATEGORYMEMBERS);
+        properties.put(PROPERTY_LIST, PROPERTY_LIST_CATEGORYMEMBERS);
+        properties.put(PROPERTY_CONTINUE, PROPERTY_CONTINUE_DEFAULT);
         properties.put(PROPERTY_LIMIT, LIMIT_MAX);
         properties.put(PROPERTY_TITLE, categoryName);
         List<Page> list = new ArrayList<Page>();

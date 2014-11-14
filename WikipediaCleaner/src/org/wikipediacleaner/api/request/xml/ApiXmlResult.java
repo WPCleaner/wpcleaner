@@ -264,6 +264,10 @@ public abstract class ApiXmlResult extends BasicApiResult {
     try {
       XPath xpa = XPath.newInstance(queryContinue);
       List results = xpa.selectNodes(root);
+      if ((results == null) || (results.isEmpty())) {
+        xpa = XPath.newInstance("/api/continue");
+        results = xpa.selectNodes(root);
+      }
       if (results != null) {
         for (Object currentNode : results) {
           List attributes = ((Element) currentNode).getAttributes();

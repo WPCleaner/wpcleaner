@@ -88,9 +88,8 @@ public class ApiEmbeddedInRequest extends ApiListRequest {
       Page page, List<Integer> namespaces,
       boolean limit) throws APIException {
     Map<String, String> properties = getProperties(ACTION_QUERY, result.getFormat());
-    properties.put(
-        PROPERTY_LIST,
-        PROPERTY_LIST_EMBEDDEDIN);
+    properties.put(PROPERTY_LIST, PROPERTY_LIST_EMBEDDEDIN);
+    properties.put(PROPERTY_CONTINUE, PROPERTY_CONTINUE_DEFAULT);
     properties.put(PROPERTY_LIMIT, LIMIT_MAX);
     if ((namespaces != null) && (namespaces.size() > 0)) {
       properties.put(PROPERTY_NAMESPACE, constructList(namespaces));
