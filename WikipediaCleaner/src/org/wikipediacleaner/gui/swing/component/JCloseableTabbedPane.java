@@ -8,22 +8,29 @@
 package org.wikipediacleaner.gui.swing.component;
 
 import java.awt.Component;
-import java.awt.event.KeyAdapter;
+import java.awt.event.ActionEvent;
+import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
+import javax.swing.AbstractAction;
+import javax.swing.ActionMap;
 import javax.swing.Icon;
+import javax.swing.InputMap;
 import javax.swing.JTabbedPane;
+import javax.swing.KeyStroke;
 
 
 /**
- * A JTabbedPane with closeable panes.
+ * A JTabbedPane with icons to close panes.
  */
-public class JCloseableTabbedPane extends JTabbedPane {
+public class JCloseableTabbedPane
+  extends JTabbedPane implements KeyListener {
 
   /**
-   * Serialisation. 
+   * Serialization.
    */
   private static final long serialVersionUID = 1L;
 
@@ -51,23 +58,32 @@ public class JCloseableTabbedPane extends JTabbedPane {
    */
   public JCloseableTabbedPane(int tabPlacement, int tabLayoutPolicy) {
     super(tabPlacement, tabLayoutPolicy);
-    addKeyListener(new KeyAdapter() {
-
-      /* (non-Javadoc)
-       * @see java.awt.event.KeyAdapter#keyPressed(java.awt.event.KeyEvent)
-       */
-      @Override
-      public void keyPressed(KeyEvent e) {
-        if ((e.getKeyCode() == KeyEvent.VK_W) &&
-            (e.isControlDown())) {
-          remove(getSelectedIndex());
-        }
-      }
+    addKeyListener(this);
+    ActionMap actionMap = getActionMap();
+    InputMap inputMap = getInputMap(WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
+    KeyStroke keyStroke = KeyStroke.getKeyStroke(KeyEvent.VK_M, InputEvent.CTRL_DOWN_MASK);
+    inputMap.put(keyStroke, "close-current-tab");
+    actionMap.put("close-current-tab", new AbstractAction() {
       
+      /** Serialization */
+      private static final long serialVersionUID = -1886432591524366546L;
+
+      /**
+       * @param e Event.
+       * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+       */
+      public void actionPerformed(ActionEvent e) {
+        remove(getSelectedIndex());
+      }
     });
   }
 
-  /* (non-Javadoc)
+  /**
+     * @param title the title to be displayed in this tab
+     * @param icon the icon to be displayed in this tab
+     * @param component The component to be displayed when this tab is clicked. 
+     * @param tip the tooltip to be displayed for this tab
+     * @param index the position to insert this new tab 
    * @see javax.swing.JTabbedPane#insertTab(java.lang.String, javax.swing.Icon, java.awt.Component, java.lang.String, int)
    */
   @Override
@@ -80,6 +96,13 @@ public class JCloseableTabbedPane extends JTabbedPane {
           "setTabComponentAt",
           new Class[] { int.class, Component.class });
       method.invoke(this, index, new CloseTabComponent(title, this));
+      component.addKeyListener(this);
+      /*if (component instanceof Container) {
+        Container container = (Container) component;
+        for (Component child : container.getComponents()) {
+          child.addKeyListener(this);
+        }
+      }*/
     } catch (SecurityException e) {
       // Nothing
     } catch (NoSuchMethodException e) {
@@ -92,6 +115,33 @@ public class JCloseableTabbedPane extends JTabbedPane {
       // Nothing
     }
     setIconAt(index, new JTabbedPaneCloseIcon(this, component));
+  }
+
+  /**
+   * @param e
+   * @see java.awt.event.KeyListener#keyTyped(java.awt.event.KeyEvent)
+   */
+  public void keyTyped(KeyEvent e) {
+    // Nothing to do
+  }
+
+  /**
+   * @param e
+   * @see java.awt.event.KeyListener#keyPressed(java.awt.event.KeyEvent)
+   */
+  public void keyPressed(KeyEvent e) {
+    if ((e.getKeyCode() == KeyEvent.VK_W) &&
+        (e.isControlDown())) {
+      remove(getSelectedIndex());
+    }
+  }
+
+  /**
+   * @param e
+   * @see java.awt.event.KeyListener#keyReleased(java.awt.event.KeyEvent)
+   */
+  public void keyReleased(KeyEvent e) {
+    // Nothing to do
   }
 
 }
