@@ -9,13 +9,17 @@ package org.wikipediacleaner.api.check.algorithm;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
+import org.wikipediacleaner.api.check.CheckErrorResult.ErrorLevel;
 import org.wikipediacleaner.api.check.SpecialCharacters;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
+import org.wikipediacleaner.api.constants.WPCConfiguration;
 import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementCategory;
 import org.wikipediacleaner.api.data.PageElementFunction;
+import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.PageElementTitle;
 import org.wikipediacleaner.i18n.GT;
 
@@ -126,6 +130,22 @@ public class CheckErrorAlgorithm037 extends CheckErrorAlgorithmBase {
         replacement = "\n\n" + replacement;
       }
     }
+    ErrorLevel errorLevel = ErrorLevel.ERROR;
+    if (automatic) {
+      String templates = getSpecificProperty("templates", true, false, false);
+      if (templates != null) {
+        List<String> templatesList = WPCConfiguration.convertPropertyToStringList(templates);
+        if (templatesList != null) {
+          for (String template : templatesList) {
+            List<PageElementTemplate> foundTemplates = analysis.getTemplates(template);
+            if ((foundTemplates != null) && (foundTemplates.size() > 0)) {
+              automatic = false;
+              errorLevel = ErrorLevel.WARNING;
+            }
+          }
+        }
+      }
+    }
     if (automatic) {
       int index = endIndex;
       while ((index < contents.length()) && (contents.charAt(index) == ' ')) {
@@ -150,7 +170,7 @@ public class CheckErrorAlgorithm037 extends CheckErrorAlgorithmBase {
     }
 
     CheckErrorResult errorResult = createCheckErrorResult(
-        analysis, beginIndex, endIndex);
+        analysis, beginIndex, endIndex, errorLevel);
     errorResult.addReplacement(replacement, GT._("Add DEFAULTSORT"), automatic);
     errors.add(errorResult);
     return true;
@@ -165,5 +185,22 @@ public class CheckErrorAlgorithm037 extends CheckErrorAlgorithmBase {
   @Override
   protected String internalAutomaticFix(PageAnalysis analysis) {
     return fixUsingAutomaticReplacement(analysis);
+  }
+
+  /**
+   * Return the parameters used to configure the algorithm.
+   * 
+   * @return Map of parameters (Name -> description).
+   */
+  @Override
+  public Map<String, String> getParameters() {
+    Map<String, String> parameters = super.getParameters();
+    parameters.put(
+        "first_characters",
+        GT._("Restrict the detection to the first characters"));
+    parameters.put(
+        "templates",
+        GT._("List of templates that prevent automatic fixing of this error"));
+    return parameters;
   }
 }
