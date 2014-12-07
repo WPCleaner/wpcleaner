@@ -58,9 +58,8 @@ public class ApiLanguageLinksRequest extends ApiPropertiesRequest {
   public String getLanguageLink(Page page, EnumWikipedia toWiki) throws APIException {
 
     Map<String, String> properties = getProperties(ACTION_QUERY, result.getFormat());
-    properties.put(
-        PROPERTY_PROP,
-        PROPERTY_PROP_LANGLINKS);
+    properties.put(PROPERTY_PROP, PROPERTY_PROP_LANGLINKS);
+    properties.put(PROPERTY_CONTINUE, PROPERTY_CONTINUE_DEFAULT);
     String toWikiCode = toWiki.getSettings().getCode();
     properties.put(PROPERTY_LANG, toWikiCode);
     properties.put(PROPERTY_LIMIT, LIMIT_MAX);

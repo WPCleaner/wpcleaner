@@ -207,6 +207,7 @@ public class ApiRevisionsRequest extends ApiPropertiesRequest {
     properties.put(
         ApiInfoRequest.PROPERTY_PROPERTIES,
         ApiInfoRequest.PROPERTY_PROPERTIES_PROTECTION);
+    properties.put(PROPERTY_CONTINUE, PROPERTY_CONTINUE_DEFAULT);
     if (usePageId) {
       properties.put(PROPERTY_PAGEIDS, constructListIds(pages));
     } else {
