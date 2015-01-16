@@ -8,15 +8,15 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2014-12-02 13:24+0100\n"
-"PO-Revision-Date: 2015-01-14 17:31+0000\n"
+"PO-Revision-Date: 2015-01-16 10:51+0000\n"
 "Last-Translator: Felipe L. <felipe.idj@hotmail.com>\n"
 "Language-Team: Brazilian Portuguese <pt_BR@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Launchpad-Export-Date: 2015-01-15 22:08+0000\n"
-"X-Generator: Launchpad (build 17303)\n"
+"X-Launchpad-Export-Date: 2015-01-16 12:12+0000\n"
+"X-Generator: Launchpad (build 17304)\n"
 "Language: pt_BR\n"
 
 #: org/wikipediacleaner/Version.java:31
@@ -69,7 +69,7 @@ msgstr ""
 
 #: org/wikipediacleaner/Version.java:46
 msgid "Disambiguator extension has been deployed to all WMF wikis."
-msgstr "Extensão disambiguator foi implantada em todas as wikis da WMF."
+msgstr "A extensão Disambiguator foi instalada em todas as wikis da WMF."
 
 #: org/wikipediacleaner/Version.java:47
 msgid "It defines the new magic word __DISAMBIG__."
@@ -151,7 +151,7 @@ msgstr "Sem descrição disponível"
 #: org/wikipediacleaner/api/check/CheckError.java:341
 #, java-format
 msgid "Error n°{0} ({1} - {2}) - {3}"
-msgstr "Erro n°{0} ({1} - {2}) - {3}"
+msgstr "Erro nº{0} ({1} - {2}) - {3}"
 
 #: org/wikipediacleaner/api/check/CheckErrorResult.java:137
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm026.java:82
@@ -202,7 +202,7 @@ msgstr "Fechar tag"
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm003.java:170
 #, java-format
 msgid "A list of templates resulting in the inclusion of {0}"
-msgstr "Uma lista de templates resultantes da inclusão de {0}"
+msgstr "Uma lista de predefinições resultantes da inclusão de {0}"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm005.java:77
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm005.java:93
@@ -237,7 +237,7 @@ msgstr "Remover todos os caracteres de controle"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:291
 msgid "To report control characters only in templates"
-msgstr "Para relatar caracteres de controle apenas em templates"
+msgstr "Para relatar caracteres de controle apenas em predefinições"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:299
 msgid "Non-breaking space"
@@ -305,7 +305,7 @@ msgstr "Substituir tudo"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm028.java:194
 msgid "Templates that can replace the end of a table"
-msgstr "Templates que podem substituir o final de uma tabela"
+msgstr "Predefinições que podem substituir o final de uma tabela"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm030.java:92
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm079.java:102
@@ -332,7 +332,7 @@ msgstr "Ver imagem"
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm061.java:237
 #, java-format
 msgid "Templates that can be used to replace {0} tags"
-msgstr "Templates que podem ser usados para substituir tags {0}"
+msgstr "Predefinições que podem ser usadas para substituir tags {0}"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm037.java:174
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm091_Old.java:97
@@ -345,7 +345,7 @@ msgstr "Restringir a detecção para os primeiros caracteres"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm037.java:203
 msgid "List of templates that prevent automatic fixing of this error"
-msgstr "Lista de templates que impedem a correção automática desse erro"
+msgstr "Lista de predefinições que impedem a correção automática desse erro"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm044.java:30
 msgid "Fix all bold headlines"
@@ -373,7 +373,7 @@ msgstr "Corrigir todos os títulos"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm059.java:170
 msgid "A list of templates that should be ignored"
-msgstr "Lista de templates que devem ser ignorados"
+msgstr "Lista de predefinições que devem ser ignoradas"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm061.java:234
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm067.java:301
@@ -431,7 +431,7 @@ msgstr "Qual o título da página nessa wiki?"
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm091.java:175
 #, java-format
 msgid "Replace using template {0}"
-msgstr "Substituir usando template {0}"
+msgstr "Substituir usando predefinição {0}"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:155
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm081.java:265
@@ -451,10 +451,10 @@ msgid ""
 "name>|<param name for code of other language>|<param name for page name in "
 "other language>|<param name for displayed text>"
 msgstr ""
-"Um template que pode ser usado no lugar do link para uma outra língua. Ele "
-"deve ser especificado como: <nome do template>|<parâmetro nome para o nome "
-"página local>|<parâmetro nome para o código de outra língua>|<parâmetro nome "
-"para nome da página em outro idioma>|<parâmetro nome para o texto exibido>"
+"Uma predefinição que pode ser usada em vez do link para outra língua. Ela "
+"deve ser especificada como:<nome da predefinição>|<param name para o nome "
+"local da página>|<param name para o código da outra língua>|<param name para "
+"o nome da página em outro idioma>|<param name para o texto a ser exibido>"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:257
 msgid "Do not replace"
@@ -484,7 +484,7 @@ msgstr ""
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:277
 #, java-format
 msgid "You can replace the link using template {0}."
-msgstr "Você pode substituir o link usando o template {0}."
+msgstr "Você pode substituir o link usando a predefinição {0}."
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm070.java:63
 #, java-format
@@ -636,16 +636,16 @@ msgstr "Compactar link"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm518.java:197
 msgid "A template that can be used instead of an apostrophe."
-msgstr "Um template que pode ser usado em vez de um apóstrofo."
+msgstr "Uma predefinição que pode ser usada em vez de um apóstrofo."
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm518.java:200
 msgid "A template that can be used instead of an asterisk."
-msgstr "Um template que pode ser usado em vez de um asterisco."
+msgstr "Uma predefinição que pode ser usada em vez de um asterisco."
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm521.java:343
 msgid "A list of templates and parameters in which format should be checked"
 msgstr ""
-"Uma lista de templates e parâmetros no qual o formato deve ser verificado"
+"Uma lista de predefinições e parâmetros no qual o formato deve ser verificado"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm521.java:344
 msgid "A list of text values for monthes"
@@ -701,7 +701,7 @@ msgstr "Pesquisar usando {0}"
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmTOC.java:101
 msgid "A list of templates resulting in the inclusion of a table of contents"
 msgstr ""
-"Uma lista de templates resultantes da inclusão de uma tabela de conteúdos"
+"Uma lista de predefinições resultantes da inclusão de uma tabela de conteúdos"
 
 #: org/wikipediacleaner/api/constants/CWConfiguration.java:79
 #, java-format
@@ -817,7 +817,7 @@ msgstr "Páginas com mais links para categorias"
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:31
 msgid "Most linked-to templates"
-msgstr "Páginas com mais links para templates"
+msgstr "Páginas com mais links para predefinições"
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:32
 msgid "Pages with the most revisions"
@@ -841,7 +841,7 @@ msgstr "Páginas não categorizadas"
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:37
 msgid "Uncategorized templates"
-msgstr "Templates não categorizados"
+msgstr "Predefinições não categorizadas"
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:38
 msgid "Unused categories"
@@ -853,7 +853,7 @@ msgstr "Arquivos não usados"
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:40
 msgid "Unused templates"
-msgstr "Templates não usados"
+msgstr "Predefinições não usadas"
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:41
 msgid "Wanted categories"
@@ -869,7 +869,7 @@ msgstr "Páginas pedidas"
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:44
 msgid "Wanted templates"
-msgstr "Templates pedidos"
+msgstr "Predefinições pedidas"
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:45
 msgid "Unwatched pages"
@@ -936,7 +936,7 @@ msgstr "Identificador de Página"
 #: org/wikipediacleaner/api/data/PageComparator.java:367
 #: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:127
 msgid "Template"
-msgstr "Modelo"
+msgstr "Predefinição"
 
 #: org/wikipediacleaner/api/data/PageComparator.java:405
 msgid "Redirect"
@@ -972,7 +972,7 @@ msgstr "Recuperando páginas em uso"
 
 #: org/wikipediacleaner/api/execution/ExpandTemplatesCallable.java:44
 msgid "Expanding templates"
-msgstr "Expandindo templates"
+msgstr "Expandindo predefinições"
 
 #: org/wikipediacleaner/api/execution/LinksWRCallable.java:54
 msgid "Retrieving page links"
@@ -985,7 +985,7 @@ msgstr "Analisando texto"
 #: org/wikipediacleaner/api/execution/TemplatesCallable.java:42
 #: org/wikipediacleaner/gui/swing/TemplateListWindow.java:207
 msgid "Retrieving templates"
-msgstr "Recuperando templates"
+msgstr "Recuperando predefinições"
 
 #: org/wikipediacleaner/api/impl/MediaWikiAPI.java:1661
 msgid ""
@@ -1465,7 +1465,7 @@ msgstr "Você deve preencher sua senha antes de efetuar o login"
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1105
 #, java-format
 msgid "You can learn how to configure {0} at the following URL:"
-msgstr "Você pode aprender a como configurar o {0} nas seguinte URL:"
+msgstr "Você pode aprender a como configurar o {0} na seguinte URL:"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1154
 msgid "Activate all"
@@ -1549,7 +1549,7 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1468
 #, java-format
 msgid "Template {0} embedded in"
-msgstr "Templates incorporados em {0}"
+msgstr "Predefinição incorporada em {0}"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1517
 msgid "Pages with many disambiguation links"
@@ -1703,7 +1703,7 @@ msgid ""
 "\"{0}\" has been tagged with the following templates, be careful when "
 "editing:"
 msgstr ""
-"\"{0}\" foi marcado com os seguintes templates, tenha cuidado ao editar:"
+"\"{0}\" foi marcado com as seguintes predefinições, tenha cuidado ao editar:"
 
 #: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:929
 msgid "Do you want to apply the automatic modifications?"
@@ -1744,7 +1744,7 @@ msgstr "Análise completa de redirecionamento"
 
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:372
 msgid "Disambiguation analysis of redirect"
-msgstr "Análise de redirecionamento de desambiguação"
+msgstr "Análise de desambiguação de redirecionamento"
 
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:403
 msgid "Reload (Alt + &R)"
@@ -1847,7 +1847,7 @@ msgstr "Pré-visualizar"
 
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:829
 msgid "&Expand templates"
-msgstr "&Expandir templates"
+msgstr "&Expandir predefinições"
 
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:834
 msgid "Expand templates &and Preview"
@@ -1884,7 +1884,7 @@ msgstr "Máximo de backlinks em main:"
 
 #: org/wikipediacleaner/gui/swing/PageCommentsWindow.java:190
 msgid "Max backlinks in Template :"
-msgstr "Máximo de backlinks em template:"
+msgstr "Máximo de backlinks na predefinição:"
 
 #: org/wikipediacleaner/gui/swing/PageCommentsWindow.java:222
 msgid "Max backlinks in other namespaces :"
@@ -1911,7 +1911,7 @@ msgstr "Pré-visualizar- {0}"
 #: org/wikipediacleaner/gui/swing/PreviewWindow.java:128
 #, java-format
 msgid "Expand Templates - {0}"
-msgstr "Expandir Templates - {0}"
+msgstr "Expandir predefinições - {0}"
 
 #: org/wikipediacleaner/gui/swing/PreviewWindow.java:214
 msgid "&Update"
@@ -1928,12 +1928,12 @@ msgstr "Usuário"
 #: org/wikipediacleaner/gui/swing/TemplateListWindow.java:90
 #, java-format
 msgid "Templates in {0}"
-msgstr "Templates em {0}"
+msgstr "Predefinições em {0}"
 
 #: org/wikipediacleaner/gui/swing/TemplateListWindow.java:115
 #, java-format
 msgid "Templates used in {0}, linking to {1}"
-msgstr "Templates utilizados em {0}, vinculados a {1}"
+msgstr "Predefinições utilizadas em {0}, vinculados a {1}"
 
 #: org/wikipediacleaner/gui/swing/TemplateListWindow.java:205
 #: org/wikipediacleaner/gui/swing/action/PurgeCacheAction.java:56
@@ -1950,11 +1950,11 @@ msgstr "Recuperando a API do MediaWiki"
 
 #: org/wikipediacleaner/gui/swing/TemplateListWindow.java:209
 msgid "Retrieving links in templates"
-msgstr "Recuperando vínculos em templates"
+msgstr "Recuperando vínculos em predefinições"
 
 #: org/wikipediacleaner/gui/swing/TemplateListWindow.java:211
 msgid "Displaying templates found"
-msgstr "Mostrando templates encontrados"
+msgstr "Mostrando predefinições encontradas"
 
 #: org/wikipediacleaner/gui/swing/action/ActionDeletePage.java:41
 msgid "Delete page"
@@ -2083,7 +2083,7 @@ msgid ""
 "It doesn''t exist either in the {2} Wikipedia."
 msgstr ""
 "A categoria {0} na Wikipédia {1} não tem um link de idioma para a Wikipédia "
-"{2} . \n"
+"{2}.\n"
 "Ela não existir nem na Wikipédia {2}."
 
 #: org/wikipediacleaner/gui/swing/action/CheckCategoryLinkAction.java:128
@@ -2094,7 +2094,7 @@ msgid ""
 "Do you want to replace the category by [[{3}]] ?"
 msgstr ""
 "A categoria {0} não existe na Wikipédia {2}.\n"
-"Na Wikipédia {1}, há um link do idioma para a Wikipédia {2}: {3}. \n"
+"Na Wikipédia {1}, há um link do idioma para a Wikipédia {2}: {3}.\n"
 "Você quer substituir a categoria por [[{3}]]?"
 
 #: org/wikipediacleaner/gui/swing/action/CheckLanguageLinkAction.java:84
@@ -2288,11 +2288,11 @@ msgstr "O erro não foi detectado na página {0}."
 
 #: org/wikipediacleaner/gui/swing/bot/CWCheckWhiteListsWorker.java:100
 msgid "It's still being detected by CheckWiki."
-msgstr "Ainda está sendo detectado pelo CheckWiki."
+msgstr "Ainda está sendo detectado pelo Check Wiki."
 
 #: org/wikipediacleaner/gui/swing/bot/CWCheckWhiteListsWorker.java:102
 msgid "It's not detected either by CheckWiki."
-msgstr "Não foi detectado pelo CheckWiki."
+msgstr "Não foi detectado pelo Check Wiki."
 
 #: org/wikipediacleaner/gui/swing/bot/CWCheckWhiteListsWorker.java:121
 #, java-format
@@ -2306,7 +2306,7 @@ msgstr "Listas brancas"
 
 #: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:145
 msgid "Analyze pages that couldn't be fixed by bot"
-msgstr "Analise as páginas que não podem ser corrigidos por bot"
+msgstr "Analisar as páginas que não podem ser corrigidos por bot"
 
 #: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:154
 msgid "Number of pages:"
@@ -2350,15 +2350,15 @@ msgstr "Em que página você deseja iniciar a atualização dos avisos?"
 
 #: org/wikipediacleaner/gui/swing/checkwiki/ActionCheckArticle.java:50
 msgid "Check article with CheckWiki"
-msgstr "Verificar o artigo com o CheckWiki"
+msgstr "Verificar o artigo com o Check Wiki"
 
 #: org/wikipediacleaner/gui/swing/checkwiki/ActionCheckArticle.java:136
 msgid "Unable to retrieve analysis from CheckWiki."
-msgstr "Não foi possível recuperar a análise do CheckWiki."
+msgstr "Não foi possível recuperar a análise do Check Wiki."
 
 #: org/wikipediacleaner/gui/swing/checkwiki/ActionCheckArticle.java:142
 msgid "No errors are currently detected by CheckWiki."
-msgstr "Nenhum erro foi detectado atualmente pelo CheckWiki."
+msgstr "Nenhum erro foi detectado atualmente pelo Check Wiki."
 
 #: org/wikipediacleaner/gui/swing/checkwiki/ActionCheckArticle.java:148
 msgid "Detections"
@@ -2374,13 +2374,13 @@ msgid ""
 "The error n°{0} hasn''t been detected in page {1}, but CheckWiki still "
 "reports it."
 msgstr ""
-"O erro n°{0} não foi detectado na página {1}, mas o CheckWiki continua "
+"O erro nº{0} não foi detectado na página {1}, mas o Check Wiki continua "
 "reportando-o."
 
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiContentPanel.java:353
 #, java-format
 msgid "The error n°{0} has already been fixed in page {1}."
-msgstr "O erro n°{0} já foi corrigido na página {1}."
+msgstr "O erro nº{0} já foi corrigido na página {1}."
 
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiContentPanel.java:369
 #, java-format
@@ -2421,7 +2421,7 @@ msgid ""
 "You have already fixed this error by modifying the page.\n"
 "You should send your modifications, the page will be marked as fixed."
 msgstr ""
-"Você já corrigiu este erro modificando a página. \n"
+"Você já corrigiu este erro modificando a página.\n"
 "Você deve enviar as suas modificações, a página será marcada como corrigida."
 
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiWindow.java:236
@@ -2590,7 +2590,7 @@ msgid ""
 "  {0} = <page name> END\n"
 "to the translation page ({1}) on \"{2}\""
 msgstr ""
-"Não há nenhuma página definida para este tipo de erro. \n"
+"Não há nenhuma página definida para este tipo de erro.\n"
 "Se você quiser definir uma página, você precisa adicionar:\n"
 "  {0} = <nome da página> END\n"
 "para a página de tradução ({1}) em \"{2}\""
@@ -2622,7 +2622,7 @@ msgstr "Aviso"
 
 #: org/wikipediacleaner/gui/swing/checkwiki/DetectionPanel.java:74
 msgid "The following errors are currently detected by CheckWiki:"
-msgstr "Os seguintes erros foram detectados pelo CheckWiki:"
+msgstr "Os seguintes erros foram detectados pelo Check Wiki:"
 
 #: org/wikipediacleaner/gui/swing/component/CheckErrorPageListPopupListener.java:99
 #, java-format
@@ -2662,7 +2662,7 @@ msgstr "Link externo: {0}"
 #: org/wikipediacleaner/gui/swing/component/MWPanePopupListener.java:471
 #, java-format
 msgid "Template: {0}"
-msgstr "Template: {0}"
+msgstr "Predefinição: {0}"
 
 #: org/wikipediacleaner/gui/swing/component/MWPanePopupListener.java:499
 #, java-format
@@ -2711,7 +2711,7 @@ msgstr "Encontrar texto"
 
 #: org/wikipediacleaner/gui/swing/menu/AnalysisPageListMenuCreator.java:61
 msgid "Search in templates"
-msgstr "Procurar em templates"
+msgstr "Procurar em predefinições"
 
 #: org/wikipediacleaner/gui/swing/menu/AnalysisPageListMenuCreator.java:91
 #: org/wikipediacleaner/gui/swing/menu/MWPaneDisambiguationMenuCreator.java:257
@@ -2720,11 +2720,11 @@ msgstr "Vincular a"
 
 #: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:149
 msgid "Template External Viewer"
-msgstr "Visualizador externo de template"
+msgstr "Visualizador externo de predefinição"
 
 #: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:158
 msgid "Template history"
-msgstr "História do template"
+msgstr "Histórico da predefinição"
 
 #: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:192
 msgid "Analyze"
@@ -2732,7 +2732,7 @@ msgstr "Analisar"
 
 #: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:231
 msgid "Analyze template"
-msgstr "Analisar template"
+msgstr "Analisar predefinição"
 
 #: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:233
 msgid "Analyze page"
@@ -2779,7 +2779,7 @@ msgstr "Usando {0}"
 
 #: org/wikipediacleaner/gui/swing/menu/MWPaneDisambiguationMenuCreator.java:87
 msgid "Mark as normal link using template"
-msgstr "Marcar como link normal usando template"
+msgstr "Marcar como link normal usando predefinição"
 
 #: org/wikipediacleaner/gui/swing/menu/MWPaneDisambiguationMenuCreator.java:112
 msgid "Mark as normal link using comment"
@@ -3010,11 +3010,11 @@ msgstr "Link pedido"
 
 #: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:217
 msgid "Disambiguation template"
-msgstr "Template de desambiguação"
+msgstr "Predefinição de desambiguação"
 
 #: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:223
 msgid "Normal template"
-msgstr "Template normal"
+msgstr "Predefinição normal"
 
 #: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:229
 msgid "Help requested"
@@ -3022,15 +3022,15 @@ msgstr "Ajuda solicitada"
 
 #: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:235
 msgid "Check wiki error"
-msgstr "Check wiki erro"
+msgstr "Check Wiki erro"
 
 #: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:241
 msgid "Check wiki warning"
-msgstr "Check wiki aviso"
+msgstr "Check Wiki aviso"
 
 #: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:247
 msgid "Check wiki OK"
-msgstr "Check wiki OK"
+msgstr "Check Wiki OK"
 
 #: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:357
 msgid "Italic"
@@ -3348,7 +3348,7 @@ msgstr "Artigos associados com páginas de discussão"
 
 #: org/wikipediacleaner/gui/swing/pagelist/PageListWorker.java:83
 msgid "Pages with missing templates"
-msgstr "Páginas sem templates faltando"
+msgstr "Páginas com predefinições faltando"
 
 #: org/wikipediacleaner/gui/swing/pagelist/PageListWorker.java:84
 msgid "Protected titles with links from articles"
@@ -3361,16 +3361,16 @@ msgid ""
 "Do you want to display the list of all disambiguation pages ?"
 msgstr ""
 "Você carregou a lista de todas as páginas de desambiguação para acelerar a "
-"análise das páginas. \n"
+"análise das páginas.\n"
 "Você quer ver a lista de todas as páginas de desambiguação?"
 
 #: org/wikipediacleaner/gui/swing/pagelist/PageListWorker.java:471
 msgid "Retrieving list of missing templates"
-msgstr "Recuperando lista de templates pedidos"
+msgstr "Recuperando lista de predefinições pedidas"
 
 #: org/wikipediacleaner/gui/swing/pagelist/PageListWorker.java:476
 msgid "Checking that the templates are still missing"
-msgstr "Verificando que os templates que ainda estão faltando"
+msgstr "Verificando que as predefinições que ainda estão faltando"
 
 #: org/wikipediacleaner/gui/swing/pagelist/PageListWorker.java:502
 msgid "Retrieving list of protected titles"
@@ -3393,15 +3393,15 @@ msgstr "Classificar erros por prioridade"
 
 #: org/wikipediacleaner/gui/swing/worker/LoginWorker.java:106
 msgid "Loading configuration"
-msgstr "Carregar configurações"
+msgstr "Carregando configuração"
 
 #: org/wikipediacleaner/gui/swing/worker/LoginWorker.java:133
 msgid "Retrieving disambiguation templates"
-msgstr "Recuperando templates de desambiguação"
+msgstr "Recuperando predefinições de desambiguação"
 
 #: org/wikipediacleaner/gui/swing/worker/LoginWorker.java:137
 msgid "Retrieving suggestions for text replacements"
-msgstr "Recuperando sugestões para próximas substituições"
+msgstr "Recuperando sugestões para substituição de texto"
 
 #: org/wikipediacleaner/gui/swing/worker/LoginWorker.java:141
 msgid "Retrieving Check Wiki configuration"
@@ -3470,7 +3470,7 @@ msgid ""
 "Error: {0}"
 msgstr ""
 "Ocorreu um erro durante a atualização dos avisos de desambiguação. Você quer "
-"continuar? \n"
+"continuar?\n"
 "\n"
 "Erro: {0}"
 
@@ -3530,7 +3530,7 @@ msgid ""
 "Analysis found {0} articles to check for ISBN errors.\n"
 "Do you want to update the warnings ?"
 msgstr ""
-"Análise encontrou {0} artigos para verificar erros ISBN. \n"
+"Análise encontrou {0} artigos para verificar erros ISBN.\n"
 "Você quer atualizar os avisos?"
 
 #: org/wikipediacleaner/gui/swing/worker/UpdateISBNWarningWorker.java:399
