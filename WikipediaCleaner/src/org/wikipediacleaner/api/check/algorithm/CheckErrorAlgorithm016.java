@@ -297,6 +297,7 @@ public class CheckErrorAlgorithm016 extends CheckErrorAlgorithmBase {
    */
   private enum ControlCharacter {
     NON_BREAKING_SPACE(0x00A0, 0x00A0, false, true, GT._No("Non-breaking space")),
+    SOFT_HYPHEN(0x00AD, 0x00AD, true, false, GT._No("Soft hyphen")),
     ZERO_WIDTH_SPACE(0x200B, 0x200B, true, false, GT._No("Zero-width space")),
     LEFT_TO_RIGHT_MARK(0x200E, 0x200E, true, false, GT._No("Left-to-right mark")),
     LINE_SEPARATOR(0x2028, 0x2028, true, false, GT._No("Line separator")),
@@ -358,6 +359,11 @@ public class CheckErrorAlgorithm016 extends CheckErrorAlgorithmBase {
         replacements = new ArrayList<String>();
         replacements.add(" ");
         replacements.add(HtmlCharacters.SYMBOL_NON_BREAKING_SPACE.getFullEntity());
+      }
+      if (codePoint == HtmlCharacters.SYMBOL_SOFT_HYPHEN.getValue()) {
+        replacements = new ArrayList<String>();
+        replacements.add("");
+        replacements.add("-");
       }
       if (codePoint == 0xF0FC) {
         replacements = new ArrayList<String>();

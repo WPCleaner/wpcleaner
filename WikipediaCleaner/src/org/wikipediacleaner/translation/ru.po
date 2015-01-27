@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2014-12-02 13:24+0100\n"
+"POT-Creation-Date: 2015-01-27 15:08+0100\n"
 "PO-Revision-Date: 2014-09-10 23:23+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Russian <ru@li.org>\n"
@@ -223,38 +223,42 @@ msgid "Non-breaking space"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:300
-msgid "Zero-width space"
+msgid "Soft hyphen"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:301
-msgid "Left-to-right mark"
+msgid "Zero-width space"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:302
-msgid "Line separator"
+msgid "Left-to-right mark"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:303
-msgid "Left-to-right embedding"
+msgid "Line separator"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:304
-msgid "Pop directional formatting"
+msgid "Left-to-right embedding"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:305
-msgid "Byte order mark"
+msgid "Pop directional formatting"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:306
-msgid "Private use area"
+msgid "Byte order mark"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:307
-msgid "Private use area A"
+msgid "Private use area"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:308
+msgid "Private use area A"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:309
 msgid "Private use area B"
 msgstr ""
 
