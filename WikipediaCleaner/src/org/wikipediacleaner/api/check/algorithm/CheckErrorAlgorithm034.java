@@ -10,6 +10,7 @@ package org.wikipediacleaner.api.check.algorithm;
 import java.util.Collection;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
+import org.wikipediacleaner.api.check.CheckErrorResult.ErrorLevel;
 import org.wikipediacleaner.api.data.MagicWord;
 import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.Page;
@@ -112,6 +113,7 @@ public class CheckErrorAlgorithm034 extends CheckErrorAlgorithmBase {
             MagicWord magicWord = function.getMagicWord();
             String magicWordName = magicWord.getName();
             boolean isOk = false;
+            ErrorLevel errorLevel = ErrorLevel.ERROR;
             if (MagicWord.DEFAULT_SORT.equals(magicWordName) ||
                 MagicWord.FORMAT_NUM.equals(magicWordName) ||
                 MagicWord.DISPLAY_TITLE.equals(magicWordName)) {
@@ -123,6 +125,10 @@ public class CheckErrorAlgorithm034 extends CheckErrorAlgorithmBase {
                 (PageElementTag.TAG_WIKI_REF.equals(function.getParameterValue(0)))) {
               isOk = true;
             }
+            if (!isOk &&
+                (MagicWord.SUBST.equals(magicWordName) || MagicWord.SAFE_SUBST.equals(magicWordName))) {
+              errorLevel = ErrorLevel.WARNING;
+            }
             if (!isOk) {
               result = true;
               done = true;
@@ -130,7 +136,7 @@ public class CheckErrorAlgorithm034 extends CheckErrorAlgorithmBase {
                 return true;
               }
               CheckErrorResult errorResult = createCheckErrorResult(
-                  analysis, function.getBeginIndex(), function.getEndIndex());
+                  analysis, function.getBeginIndex(), function.getEndIndex(), errorLevel);
               if (MagicWord.PAGE_NAME.equals(magicWordName)) {
                 errorResult.addReplacement(page.getTitle());
               }
@@ -142,7 +148,9 @@ public class CheckErrorAlgorithm034 extends CheckErrorAlgorithmBase {
               if ((analysis.isInTag(currentIndex, PageElementTag.TAG_WIKI_GALLERY) == null) &&
                   (analysis.isInTag(currentIndex, PageElementTag.TAG_WIKI_INCLUDEONLY) == null) &&
                   (analysis.isInTag(currentIndex, PageElementTag.TAG_WIKI_REF) == null) &&
-                  (analysis.isInTag(currentIndex, PageElementTag.TAG_WIKI_TIMELINE) == null)) {
+                  (analysis.isInTag(currentIndex, PageElementTag.TAG_WIKI_TIMELINE) == null) &&
+                  (!MagicWord.SUBST.equals(magicWordName)) &&
+                  (!MagicWord.SAFE_SUBST.equals(magicWordName))) {
                 errorResult.addReplacement(
                     "{{subst:" +
                     contents.substring(function.getBeginIndex() + 2, function.getEndIndex()));
