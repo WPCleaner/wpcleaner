@@ -133,16 +133,24 @@ public class WikiConfiguration {
    * @return Full page title.
    */
   public String getPageTitle(int namespaceId, String title) {
-    if (namespaceId == Namespace.MAIN) {
-      return title;
+    if (title == null) {
+      return null;
+    }
+    int colonIndex = title.indexOf(':');
+    if (colonIndex == 0) {
+      return title.substring(1);
     }
     Namespace namespace = getNamespace(namespaceId);
     if (namespace != null) {
-      int colonIndex = title.indexOf(':');
+      if (namespaceId == Namespace.MAIN) {
+        return namespace.getCaseSensitiveness().normalize(title);
+      }
       if (colonIndex > 0) {
         String possibleNamespace = title.substring(0, colonIndex);
-        if (namespace.isPossibleName(possibleNamespace)) {
-          title = title.substring(colonIndex + 1);
+        for (Namespace n : namespaces) {
+          if (n.isPossibleName(possibleNamespace)) {
+            return n.getTitle() + ":" + n.getCaseSensitiveness().normalize(title.substring(colonIndex + 1));
+          }
         }
       }
       return namespace.getTitle() + ":" + namespace.getCaseSensitiveness().normalize(title);
