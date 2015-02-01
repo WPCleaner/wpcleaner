@@ -24,7 +24,9 @@ import org.wikipediacleaner.i18n.GT;
 public class CheckErrorAlgorithm085 extends CheckErrorAlgorithmBase {
 
   private final static String[] interestingTags = {
+    PageElementTag.TAG_HTML_CENTER,
     PageElementTag.TAG_WIKI_INCLUDEONLY,
+    PageElementTag.TAG_WIKI_GALLERY,
     PageElementTag.TAG_WIKI_NOINCLUDE,
   };
 
