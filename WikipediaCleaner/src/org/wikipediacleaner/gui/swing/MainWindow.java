@@ -238,11 +238,16 @@ public class MainWindow
 
     // Message components
     if ((Version.MESSAGE != null) && !Version.MESSAGE.equals("")) {
-      constraints.gridwidth = 3;
-      constraints.gridx = 0;
-      constraints.weighty = 0;
-      panel.add(createMessageComponents(), constraints);
-      constraints.gridy++;
+      try {
+        Component messageComponents = createMessageComponents();
+        constraints.gridwidth = 3;
+        constraints.gridx = 0;
+        constraints.weighty = 0;
+        panel.add(messageComponents, constraints);
+        constraints.gridy++;
+      } catch (Throwable t) {
+        logError("Unable to create message components", t);
+      }
     }
 
     updateComponentState();
