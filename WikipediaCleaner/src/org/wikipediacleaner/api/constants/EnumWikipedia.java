@@ -27,7 +27,7 @@ import org.wikipediacleaner.api.constants.wiki.WikipediaArz;
 import org.wikipediacleaner.api.constants.wiki.WikipediaBar;
 import org.wikipediacleaner.api.constants.wiki.WikipediaBn;
 import org.wikipediacleaner.api.constants.wiki.WikipediaCa;
-import org.wikipediacleaner.api.constants.wiki.WikipediaCommons;
+import org.wikipediacleaner.api.constants.wiki.WikimediaCommons;
 import org.wikipediacleaner.api.constants.wiki.WikipediaCs;
 import org.wikipediacleaner.api.constants.wiki.WikipediaCy;
 import org.wikipediacleaner.api.constants.wiki.WikipediaDa;
@@ -143,7 +143,7 @@ public enum EnumWikipedia {
   VI(new WikipediaVi()),
   YI(new WikipediaYi()),
   ZH(new WikipediaZh()),
-  COMMONS(new WikipediaCommons()),
+  COMMONS(new WikimediaCommons()),
 
   WIKTIONARY_EN(new WiktionaryEn()),
   WIKTIONARY_FR(new WiktionaryFr()),
