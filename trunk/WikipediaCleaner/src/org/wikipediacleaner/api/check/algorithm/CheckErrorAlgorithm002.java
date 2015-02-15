@@ -9,12 +9,14 @@ package org.wikipediacleaner.api.check.algorithm;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.CheckErrorResult.ErrorLevel;
 import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementComment;
 import org.wikipediacleaner.api.data.PageElementTag;
+import org.wikipediacleaner.api.data.PageElementTag.Parameter;
 import org.wikipediacleaner.gui.swing.component.MWPane;
 import org.wikipediacleaner.i18n.GT;
 
@@ -123,6 +125,9 @@ public class CheckErrorAlgorithm002 extends CheckErrorAlgorithmBase {
     List<PageElementTag> tags = analysis.getTags(PageElementTag.TAG_HTML_BR);
     for (PageElementTag tag : tags) {
 
+      // Check for "clear" attribute
+      Parameter clearParameter = tag.getParameter("clear");
+
       // Check for extra characters before the br tag
       boolean extra = false;
       int beginIndex = tag.getBeginIndex();
@@ -138,16 +143,36 @@ public class CheckErrorAlgorithm002 extends CheckErrorAlgorithmBase {
         extra  = true;
       }
 
-      if (extra) {
+      if (extra || (clearParameter != null)) {
         if (errors == null) {
           return true;
         }
         result = true;
         CheckErrorResult errorResult = createCheckErrorResult(
             analysis, beginIndex, endIndex, ErrorLevel.WARNING);
-        errorResult.addReplacement(
-            PageElementTag.createTag(PageElementTag.TAG_HTML_BR, false, false),
-            false);
+        if (clearParameter != null) {
+          String clearValue = clearParameter.getTrimmedValue();
+          String clearReplacementName = null;
+          if ("all".equalsIgnoreCase(clearValue)) {
+            clearReplacementName = "clear_all";
+          } else if ("left".equalsIgnoreCase(clearValue)) {
+            clearReplacementName = "clear_left";
+          } else if ("right".equalsIgnoreCase(clearValue)) {
+            clearReplacementName = "clear_right";
+          }
+          String clearReplacement = null;
+          if (clearReplacementName != null) {
+            clearReplacement = getSpecificProperty(clearReplacementName, true, true, false);
+          }
+          if (clearReplacement != null) {
+            errorResult.addReplacement(clearReplacement);
+          }
+        }
+        if (extra) {
+          errorResult.addReplacement(
+              PageElementTag.createTag(PageElementTag.TAG_HTML_BR, false, false),
+              false);
+        }
         errors.add(errorResult);
       }
     }
@@ -185,5 +210,18 @@ public class CheckErrorAlgorithm002 extends CheckErrorAlgorithmBase {
   @Override
   public String fix(String fixName, PageAnalysis analysis, MWPane textPane) {
     return fixUsingAutomaticReplacement(analysis);
+  }
+
+  /**
+   * @return Map of parameters (Name -> description).
+   * @see org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase#getParameters()
+   */
+  @Override
+  public Map<String, String> getParameters() {
+    Map<String, String> parameters = super.getParameters();
+    parameters.put("clear_all", GT._("A replacement for {0}", "&lt;br clear=\"all\"/&gt;"));
+    parameters.put("clear_left", GT._("A replacement for {0}", "&lt;br clear=\"left\"/&gt;"));
+    parameters.put("clear_right", GT._("A replacement for {0}", "&lt;br clear=\"right\"/&gt;"));
+    return parameters;
   }
 }
