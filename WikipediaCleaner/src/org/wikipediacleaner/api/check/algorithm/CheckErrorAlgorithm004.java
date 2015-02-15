@@ -50,7 +50,7 @@ public class CheckErrorAlgorithm004 extends CheckErrorAlgorithmBase {
 
     // Check each tag
     WikiConfiguration wikiConf = analysis.getWikiConfiguration();
-    List<PageElementTag> tags = analysis.getCompleteTags(PageElementTag.TAG_HTML_A);
+    List<PageElementTag> tags = analysis.getTags(PageElementTag.TAG_HTML_A);
     if ((tags == null) || (tags.isEmpty())) {
       return false;
     }
@@ -59,6 +59,10 @@ public class CheckErrorAlgorithm004 extends CheckErrorAlgorithmBase {
     }
     for (PageElementTag tag : tags) {
       boolean shouldKeep = true;
+
+      if (!tag.isFullTag() && tag.isEndTag() && tag.isComplete()) {
+        shouldKeep = false;
+      }
 
       int index = tag.getBeginIndex();
       if ((analysis.getSurroundingTag(PageElementTag.TAG_WIKI_CODE, index) != null) ||
