@@ -41,6 +41,7 @@ import org.wikipediacleaner.api.constants.wiki.WikipediaFi;
 import org.wikipediacleaner.api.constants.wiki.WikipediaFr;
 import org.wikipediacleaner.api.constants.wiki.WikipediaFy;
 import org.wikipediacleaner.api.constants.wiki.WikipediaGd;
+import org.wikipediacleaner.api.constants.wiki.WikipediaGl;
 import org.wikipediacleaner.api.constants.wiki.WikipediaHe;
 import org.wikipediacleaner.api.constants.wiki.WikipediaHif;
 import org.wikipediacleaner.api.constants.wiki.WikipediaHu;
@@ -114,6 +115,7 @@ public enum EnumWikipedia {
   FR(new WikipediaFr()),
   FY(new WikipediaFy()),
   GD(new WikipediaGd()),
+  GL(new WikipediaGl()),
   HE(new WikipediaHe()),
   HIF(new WikipediaHif()),
   HU(new WikipediaHu()),
