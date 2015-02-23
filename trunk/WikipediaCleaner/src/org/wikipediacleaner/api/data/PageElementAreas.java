@@ -191,6 +191,15 @@ public class PageElementAreas {
   }
 
   /**
+   * Add PMIDs to non wiki text areas.
+   * 
+   * @param pmids List of PMIDs.
+   */
+  public void addPMID(List<PageElementPMID> pmids) {
+    addPageElements(pmids);
+  }
+
+  /**
    * Add templates to non wiki text areas.
    * 
    * @param templates List of templates.
