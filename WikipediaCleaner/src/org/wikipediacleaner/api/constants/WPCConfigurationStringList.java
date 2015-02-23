@@ -51,6 +51,10 @@ public enum WPCConfigurationStringList {
   MOST_DAB_LINKS("most_dab_links", false, true, false),
   // List of templates for preventing bot editions.
   NOBOT_TEMPLATES("general_nobot_templates", true, true, true),
+  // Templates to ask for help about PMID.
+  PMID_HELP_NEEDED_TEMPLATES("general_pmid_help_needed_templates", true, true, true),
+  // Templates for PMID.
+  PMID_TEMPLATES("general_pmid_templates", true, true, true, null ),
   // Categories that can be applied to redirect page.
   REDIRECT_CATEGORIES("redirect_categories", true, true, true),
   // Templates that can be applied to redirect page.
