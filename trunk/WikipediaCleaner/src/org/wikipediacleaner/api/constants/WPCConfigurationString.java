@@ -94,7 +94,7 @@ public enum WPCConfigurationString {
   // Title used to warn a user who has created a new article with disambiguation links
   MSG_NEW_ARTICLE_WITH_DAB_TITLE("rc_msg_new_article_with_dab_title", null, false, true, true),
   // Template creating a "|"
-  PIPE_TEMPLATE("general_pipe_template", null, false, true, false),
+  PIPE_TEMPLATE("general_pipe_template", "!", false, true, false),
   // Comment when adding categories to a redirect page
   REDIRECT_CATEGORIES_COMMENT("redirect_categories_comment", null, false, true, true),
   // Comment when adding templates to a redirect page
