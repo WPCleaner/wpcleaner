@@ -39,18 +39,13 @@ public class APIFactory {
     httpClient.getParams().setParameter("http.protocol.single-cookie-header", Boolean.TRUE);
     api = new MediaWikiAPI(httpClient);
 
-    // Initialize ToolServer access
-    connectionManger = new MultiThreadedHttpConnectionManager();
-    httpClient = createHttpClient(connectionManger);
-    HttpServer toolServer = new HttpServer(httpClient, "http://toolserver.org/");
-
     // Initialize WMF Labs access
     connectionManger = new MultiThreadedHttpConnectionManager();
     httpClient = createHttpClient(connectionManger);
     HttpServer labs = new HttpServer(httpClient, "http://tools.wmflabs.org/");
 
     // Initialize Check Wiki project
-    checkWiki = new CheckWiki(toolServer, labs);
+    checkWiki = new CheckWiki(labs);
   }
 
   /**

@@ -8,9 +8,6 @@
 
 package org.wikipediacleaner.api.check;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.StringReader;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -26,14 +23,12 @@ import org.wikipediacleaner.api.APIException;
 import org.wikipediacleaner.api.APIFactory;
 import org.wikipediacleaner.api.HttpServer;
 import org.wikipediacleaner.api.MediaWikiListener;
-import org.wikipediacleaner.api.ResponseManager;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithm;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithms;
 import org.wikipediacleaner.api.constants.CWConfiguration;
 import org.wikipediacleaner.api.constants.CWConfigurationError;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.constants.WPCConfiguration;
-import org.wikipediacleaner.api.constants.WPCConfigurationBoolean;
 import org.wikipediacleaner.api.constants.WPCConfigurationString;
 import org.wikipediacleaner.api.data.DataManager;
 import org.wikipediacleaner.api.data.Page;
@@ -50,11 +45,6 @@ public class CheckWiki {
   private final static boolean useBotList = true;
 
   /**
-   * Access to Tool Server.
-   */
-  private final HttpServer toolServer;
-
-  /**
    * Access to WMF labs.
    */
   private final HttpServer labs;
@@ -65,10 +55,9 @@ public class CheckWiki {
   private final List<WeakReference<CheckWikiListener>> listeners;
 
   /**
-   * @param toolServer Tool Server
+   * @param labs WMF Labs
    */
-  public CheckWiki(HttpServer toolServer, HttpServer labs) {
-    this.toolServer = toolServer;
+  public CheckWiki(HttpServer labs) {
     this.labs = labs;
     this.listeners = new ArrayList<WeakReference<CheckWikiListener>>();
   }
@@ -91,7 +80,6 @@ public class CheckWiki {
     }
 
     // Retrieving list of pages for the error number
-    boolean useLabs = wiki.getConfiguration().getBoolean(WPCConfigurationBoolean.CW_USE_LABS);
     String code = wiki.getSettings().getCodeCheckWiki().replace("-", "_");
     Map<String, String> properties = new HashMap<String, String>();
     properties.put("id", algorithm.getErrorNumberString());
@@ -100,19 +88,15 @@ public class CheckWiki {
     properties.put("project", code);
     if (!useBotList) {
       properties.put("view", "bots");
-      String url = useLabs ?
-          "checkwiki/cgi-bin/checkwiki.cgi" :
-          "~sk/cgi-bin/checkwiki/checkwiki.cgi";
-      HttpServer server = useLabs ? labs : toolServer;
+      String url = "checkwiki/cgi-bin/checkwiki.cgi";
+      HttpServer server = labs;
       server.sendPost(
           url, properties,
           new PagesResponseManager(true, algorithm, wiki, errors));
     } else {
       properties.put("action", "list");
-      String url = useLabs ?
-          "checkwiki/cgi-bin/checkwiki_bots.cgi" :
-          "~sk/cgi-bin/checkwiki/checkwiki_bots.cgi";
-      HttpServer server = useLabs ? labs : toolServer;
+      String url = "checkwiki/cgi-bin/checkwiki_bots.cgi";
+      HttpServer server = labs;
       server.sendPost(
           url, properties,
           new PagesResponseManager(false, algorithm, wiki, errors));
@@ -134,36 +118,21 @@ public class CheckWiki {
         return true;
       }
       EnumWikipedia wiki = page.getWikipedia();
-      boolean useLabs = wiki.getConfiguration().getBoolean(WPCConfigurationBoolean.CW_USE_LABS);
-      boolean markBoth = wiki.getConfiguration().getBoolean(WPCConfigurationBoolean.CW_MARK_BOTH);
       String code = wiki.getSettings().getCodeCheckWiki().replace("-", "_");
       Map<String, String> properties = new HashMap<String, String>();
       properties.put("id", Integer.toString(error));
       properties.put("project", code);
 
       // WMF Labs
-      if (useLabs || markBoth) {
-        properties.put("title", page.getTitle());
-        if (!useBotList) {
-          properties.put("view", "only");
-          labs.sendPost("checkwiki/cgi-bin/checkwiki.cgi", properties, null);
-        } else {
-          properties.put("action", "mark");
-          labs.sendPost("checkwiki/cgi-bin/checkwiki_bots.cgi", properties, null);
-        }
+      properties.put("title", page.getTitle());
+      if (!useBotList) {
+        properties.put("view", "only");
+        labs.sendPost("checkwiki/cgi-bin/checkwiki.cgi", properties, null);
+      } else {
+        properties.put("action", "mark");
+        labs.sendPost("checkwiki/cgi-bin/checkwiki_bots.cgi", properties, null);
       }
 
-      // Tool Server
-      if ((!useLabs || markBoth) && (page.getPageId() != null)) {
-        properties.put("pageid", Integer.toString(page.getPageId()));
-        if (!useBotList) {
-          properties.put("view", "only");
-          toolServer.sendPost("~sk/cgi-bin/checkwiki/checkwiki.cgi", properties, null);
-        } else {
-          properties.put("action", "mark");
-          toolServer.sendPost("~sk/cgi-bin/checkwiki/checkwiki_bots.cgi", properties, null);
-        }
-      }
     } catch (NumberFormatException e) {
       return false;
     } catch (APIException e) {
@@ -182,18 +151,14 @@ public class CheckWiki {
     try {
       List<CheckWikiDetection> detections = null;
       EnumWikipedia wiki = page.getWikipedia();
-      boolean useLabs = wiki.getConfiguration().getBoolean(WPCConfigurationBoolean.CW_USE_LABS);
-      boolean markBoth = wiki.getConfiguration().getBoolean(WPCConfigurationBoolean.CW_MARK_BOTH);
       String code = wiki.getSettings().getCodeCheckWiki().replace("-", "_");
       Map<String, String> properties = new HashMap<String, String>();
       properties.put("project", code);
       properties.put("article", page.getTitle());
-      if (useLabs || markBoth) {
-        detections = new ArrayList<CheckWikiDetection>();
-        labs.sendPost(
-            "checkwiki/cgi-bin/checkarticle.cgi", properties,
-            new CheckResponseManager(detections));
-      }
+      detections = new ArrayList<CheckWikiDetection>();
+      labs.sendPost(
+          "checkwiki/cgi-bin/checkarticle.cgi", properties,
+          new CheckResponseManager(detections));
       return detections;
     } catch (APIException e) {
       return null;
@@ -275,11 +240,8 @@ public class CheckWiki {
   public String getUrlDescription(
       final EnumWikipedia wiki,
       final CheckErrorAlgorithm algorithm) {
-    boolean useLabs = wiki.getConfiguration().getBoolean(WPCConfigurationBoolean.CW_USE_LABS);
-    String path = useLabs ?
-        "checkwiki/cgi-bin/checkwiki.cgi" :
-        "~sk/cgi-bin/checkwiki/checkwiki.cgi";
-    HttpServer server = useLabs ? labs : toolServer;
+    String path = "checkwiki/cgi-bin/checkwiki.cgi";
+    HttpServer server = labs;
     String url =
         server.getBaseUrl() + path +
         "?id=" + algorithm.getErrorNumberString() +
@@ -293,8 +255,7 @@ public class CheckWiki {
    * @return Server name.
    */
   public static String getServerName(EnumWikipedia wiki) {
-    boolean useLabs = wiki.getConfiguration().getBoolean(WPCConfigurationBoolean.CW_USE_LABS);
-    return useLabs ? "WMFLabs" : "Toolserver";
+    return "WMFLabs";
   }
 
   /**
@@ -311,27 +272,7 @@ public class CheckWiki {
     // Retrieve general configuration
     final API api = APIFactory.getAPI();
     final WPCConfiguration wpcConfiguration = wiki.getConfiguration();
-    boolean useLabs = wiki.getConfiguration().getBoolean(WPCConfigurationBoolean.CW_USE_LABS);
     final CWConfiguration cwConfiguration = wiki.getCWConfiguration();
-    if (!useLabs) {
-      String code = wiki.getSettings().getCodeCheckWiki().replace("-", "_");
-      try {
-        ResponseManager manager = new ResponseManager() {
-          
-          public void manageResponse(InputStream stream) throws IOException, APIException {
-            if (stream != null) {
-              cwConfiguration.setGeneralConfiguration(
-                  new InputStreamReader(stream, "UTF-8"));
-            }
-          }
-        };
-        toolServer.sendGet(
-            "~sk/checkwiki/" + code + "/" + code + "_translation.txt",
-            manager);
-      } catch (APIException e) {
-        System.err.println("Error retrieving Check Wiki configuration: " + e.getMessage());
-      }
-    }
 
     // Retrieve specific configuration
     try {
