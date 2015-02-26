@@ -153,7 +153,7 @@ public class CheckErrorAlgorithm002 extends CheckErrorAlgorithmBase {
         if (clearParameter != null) {
           String clearValue = clearParameter.getTrimmedValue();
           String clearReplacementName = null;
-          if ("all".equalsIgnoreCase(clearValue)) {
+          if ("all".equalsIgnoreCase(clearValue) || "both".equalsIgnoreCase(clearValue)) {
             clearReplacementName = "clear_all";
           } else if ("left".equalsIgnoreCase(clearValue)) {
             clearReplacementName = "clear_left";
