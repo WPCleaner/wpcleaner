@@ -165,7 +165,7 @@ public class CheckErrorAlgorithm002 extends CheckErrorAlgorithmBase {
             clearReplacement = getSpecificProperty(clearReplacementName, true, true, false);
           }
           if (clearReplacement != null) {
-            errorResult.addReplacement(clearReplacement);
+            errorResult.addReplacement(clearReplacement, !clearReplacement.isEmpty());
           }
         }
         if (extra) {
