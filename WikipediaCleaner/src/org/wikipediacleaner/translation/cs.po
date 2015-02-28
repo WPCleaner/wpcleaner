@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2015-02-15 18:29+0100\n"
-"PO-Revision-Date: 2015-02-25 19:44+0000\n"
+"PO-Revision-Date: 2015-02-27 18:18+0000\n"
 "Last-Translator: Matěj S. <matejsuchanek97@gmail.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
-"X-Launchpad-Export-Date: 2015-02-25 22:48+0000\n"
+"X-Launchpad-Export-Date: 2015-02-28 18:20+0000\n"
 "X-Generator: Launchpad (build 17361)\n"
 "Language: cs\n"
 
@@ -1916,7 +1916,7 @@ msgstr "Šablony v(e) {0}"
 #: org/wikipediacleaner/gui/swing/TemplateListWindow.java:115
 #, java-format
 msgid "Templates used in {0}, linking to {1}"
-msgstr "Šablony použité v(e) {0}, odkazující na {1}"
+msgstr "Šablony použité v(e) {0} a odkazující na {1}"
 
 #: org/wikipediacleaner/gui/swing/TemplateListWindow.java:205
 #: org/wikipediacleaner/gui/swing/action/PurgeCacheAction.java:56
