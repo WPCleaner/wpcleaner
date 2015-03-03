@@ -38,7 +38,7 @@ public class PageElementPMID extends PageElement {
   /**
    * PMID incorrect characters.
    */
-  private final static String INCORRECT_CHARACTERS = "- :‐\t—=–";
+  private final static String INCORRECT_CHARACTERS = "- :‐\t—=–\n";
 
   /**
    * @param analysis Page analysis.
