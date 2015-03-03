@@ -40,44 +40,95 @@ public class CheckErrorAlgorithm100 extends CheckErrorAlgorithmBase {
       return false;
     }
 
-    // Check every type of tag
-    boolean result = false;
-    result |= analyzeTag(analysis, PageElementTag.TAG_HTML_OL, errors);
-    result |= analyzeTag(analysis, PageElementTag.TAG_HTML_UL, errors);
-    result |= analyzeTag(analysis, PageElementTag.TAG_HTML_LI, errors);
-
-    return result;
-  }
-
-  /**
-   * Analyze a page to check if errors are present.
-   * 
-   * @param analysis Page analysis.
-   * @param tagName Tag to search for.
-   * @param errors Errors found in the page.
-   * @return Flag indicating if the error was found.
-   */
-  private boolean analyzeTag(
-      PageAnalysis analysis, String tagName,
-      Collection<CheckErrorResult> errors) {
-
     // Check every tag
-    List<PageElementTag> tags = analysis.getTags(tagName);
+    List<PageElementTag> tags = analysis.getTags();
     if ((tags == null) || (tags.isEmpty())) {
       return false;
     }
     boolean result = false;
     for (PageElementTag tag : tags) {
-      if (!tag.isComplete()) {
+
+      // Check if tag is an incomplete list tag
+      if (isListTag(tag) && !tag.isComplete()) {
         if (errors == null) {
           return true;
         }
         result = true;
+        int beginIndex = tag.getBeginIndex();
+        int endIndex = tag.getEndIndex();
+        String replacement = null;
+        boolean automatic = false;
+
+        // Manage suggestions
+        if (PageElementTag.TAG_HTML_LI.equals(tag.getNormalizedName())) {
+          int tmpIndex = beginIndex;
+          String contents = analysis.getContents();
+          while ((tmpIndex > 0) && (contents.charAt(tmpIndex - 1) == ' ')) {
+            tmpIndex--;
+          }
+          if ((tmpIndex == 0) || (contents.charAt(tmpIndex - 1) == '\n')) {
+            tmpIndex = endIndex;
+            boolean shouldContinue = true;
+            while (shouldContinue && (tmpIndex < contents.length())) {
+              char currentChar = contents.charAt(tmpIndex);
+              if (currentChar == '\n') {
+                shouldContinue = false;
+                endIndex = tmpIndex;
+                replacement =
+                    contents.substring(beginIndex, endIndex) +
+                    PageElementTag.createTag(tag.getName(), true, false);
+                automatic = true;
+              } else if (currentChar == '<') {
+                PageElementTag nextTag = analysis.isInTag(tmpIndex);
+                if ((nextTag.getBeginIndex() == tmpIndex) && isListTag(nextTag)) {
+                  shouldContinue = false;
+                }
+              }
+              tmpIndex++;
+            }
+          }
+        }
+
+        // Report error
         CheckErrorResult errorResult = createCheckErrorResult(
-            analysis, tag.getBeginIndex(), tag.getEndIndex());
+            analysis, beginIndex, endIndex);
+        if (replacement != null) {
+          errorResult.addReplacement(replacement, automatic);
+        }
         errors.add(errorResult);
       }
     }
+
     return result;
+  }
+
+  /**
+   * Test if a tag is a list tag.
+   * 
+   * @param tag Tag.
+   * @return True if it is a list tag.
+   */
+  private static boolean isListTag(PageElementTag tag) {
+    if (tag == null) {
+      return false;
+    }
+    String tagName = tag.getNormalizedName();
+    if ((PageElementTag.TAG_HTML_LI.equalsIgnoreCase(tagName)) ||
+        (PageElementTag.TAG_HTML_OL.equalsIgnoreCase(tagName)) ||
+        (PageElementTag.TAG_HTML_UL.equalsIgnoreCase(tagName))) {
+      return true;
+    }
+    return false;
+  }
+
+  /**
+   * Automatic fixing of some errors in the page.
+   * 
+   * @param analysis Page analysis.
+   * @return Page contents after fix.
+   */
+  @Override
+  protected String internalAutomaticFix(PageAnalysis analysis) {
+    return fixUsingAutomaticReplacement(analysis);
   }
 }
