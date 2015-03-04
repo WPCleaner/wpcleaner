@@ -74,13 +74,21 @@ public class CheckErrorAlgorithm100 extends CheckErrorAlgorithmBase {
               if (currentChar == '\n') {
                 shouldContinue = false;
                 endIndex = tmpIndex;
-                replacement =
-                    contents.substring(beginIndex, endIndex) +
-                    PageElementTag.createTag(tag.getName(), true, false);
-                automatic = true;
+                tmpIndex++;
+                PageElementTag nextTag = analysis.isInTag(tmpIndex);
+                if ((nextTag != null) &&
+                    (nextTag.getBeginIndex() == tmpIndex) &&
+                    isListTag(nextTag)) {
+                  replacement =
+                      contents.substring(beginIndex, endIndex) +
+                      PageElementTag.createTag(tag.getName(), true, false);
+                  automatic = true;
+                }
               } else if (currentChar == '<') {
                 PageElementTag nextTag = analysis.isInTag(tmpIndex);
-                if ((nextTag.getBeginIndex() == tmpIndex) && isListTag(nextTag)) {
+                if ((nextTag != null) &&
+                    (nextTag.getBeginIndex() == tmpIndex) &&
+                    isListTag(nextTag)) {
                   shouldContinue = false;
                 }
               }
