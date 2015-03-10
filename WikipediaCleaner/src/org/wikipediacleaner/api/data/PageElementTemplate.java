@@ -32,6 +32,7 @@ public class PageElementTemplate extends PageElement {
     final int pipeIndex;
     final String name;
     final String nameNotTrimmed;
+    final String computedName;
     final int nameStartIndex;
     final String value;
     final String valueNotTrimmed;
@@ -40,17 +41,19 @@ public class PageElementTemplate extends PageElement {
     /**
      * @param pipeIndex Index of the pipe "|" in page contents.
      * @param name Parameter name.
+     * @param computedName Computed name.
      * @param nameStartIndex Index of parameter name in page contents.
      * @param value Parameter value.
      * @param valueStartIndex Index of parameter value in page contents.
      */
     public Parameter(
         int pipeIndex,
-        String name, int nameStartIndex,
+        String name, String computedName, int nameStartIndex,
         String value, int valueStartIndex) {
       this.pipeIndex = pipeIndex;
       this.nameNotTrimmed = name;
       this.name = (name != null) ? name.trim() : null;
+      this.computedName = (computedName != null) ? computedName : this.name;
       this.nameStartIndex = nameStartIndex;
       this.valueNotTrimmed = value;
       this.value = (value != null) ? value.trim() : null;
@@ -76,6 +79,13 @@ public class PageElementTemplate extends PageElement {
      */
     public String getName() {
       return name;
+    }
+
+    /**
+     * @return Computed parameter name.
+     */
+    public String getComputedName() {
+      return computedName;
     }
 
     /**
@@ -469,8 +479,23 @@ public class PageElementTemplate extends PageElement {
       while ((spaces < parameter.length()) && (Character.isWhitespace(parameter.charAt(spaces)))) {
         spaces++;
       }
+      int paramNum = 0;
+      boolean found = true;
+      while (found) {
+        paramNum++;
+        String paramName = Integer.toString(paramNum);
+        found = false;
+        int paramIndex = 0;
+        while (!found && (paramIndex < parameters.size())) {
+          Parameter param = parameters.get(paramIndex);
+          if (paramName.equals(param.getComputedName())) {
+            found = true;
+          }
+          paramIndex++;
+        }
+      }
       parameters.add(new Parameter(
-          pipeIndex, "", offset + spaces, parameter, offset + spaces));
+          pipeIndex, "", Integer.toString(paramNum), offset + spaces, parameter, offset + spaces));
     } else {
       int spacesName = 0;
       while ((spacesName < equalIndex) && (Character.isWhitespace(parameter.charAt(spacesName)))) {
@@ -482,7 +507,7 @@ public class PageElementTemplate extends PageElement {
       }
       parameters.add(new Parameter(
           pipeIndex,
-          parameter.substring(0, equalIndex), offset + spacesName,
+          parameter.substring(0, equalIndex), null, offset + spacesName,
           parameter.substring(equalIndex + 1), offset + spacesValue));
     }
   }
