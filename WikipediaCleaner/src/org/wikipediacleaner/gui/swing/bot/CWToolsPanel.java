@@ -272,13 +272,20 @@ public class CWToolsPanel extends BotToolsPanel {
       max = number.intValue();
     }
     Configuration config = Configuration.getConfiguration();
-    boolean analyze = chkCWAnalyze.isSelected();
-    config.setBoolean(null, ConfigurationValueBoolean.CHECK_BOT_ANALYZE, analyze);
+    boolean analyze = false;
+    if (saveModifications) {
+      analyze = chkCWAnalyze.isSelected();
+      config.setBoolean(null, ConfigurationValueBoolean.CHECK_BOT_ANALYZE, analyze);
+    }
     config.setInt(null, ConfigurationValueInteger.CHECK_BOT_NB_PAGES, max);
+    List<CheckErrorAlgorithm> allAlgorithms = selectedAlgorithms;
+    if (saveModifications) {
+      allAlgorithms = modelCWAutomaticFixing.getAlgorithms();
+    }
     AutomaticCWWorker worker = new AutomaticCWWorker(
         wiki, window,
         selectedAlgorithms, max,
-        modelCWAutomaticFixing.getAlgorithms(),
+        allAlgorithms,
         txtComment.getText(),
         saveModifications, analyze);
     worker.start();
