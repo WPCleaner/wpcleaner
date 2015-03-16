@@ -19,12 +19,12 @@ import org.wikipediacleaner.api.data.PageElementTemplate.Parameter;
 
 /**
  * Algorithm for analyzing error 524 of check wikipedia project.
- * Error 524: Duplicated template argument
+ * Error 524: Duplicate template argument
  */
 public class CheckErrorAlgorithm524 extends CheckErrorAlgorithmBase {
 
   public CheckErrorAlgorithm524() {
-    super("Duplicated template argument");
+    super("Duplicate template argument");
   }
 
   /**
@@ -47,7 +47,7 @@ public class CheckErrorAlgorithm524 extends CheckErrorAlgorithmBase {
     if ((templates == null) || templates.isEmpty()) {
       return false;
     }
-    HashMap<String, Parameter> names = new HashMap<String, PageElementTemplate.Parameter>();
+    HashMap<String, ParameterInfo> names = new HashMap<String, ParameterInfo>();
     boolean result = false;
     for (PageElementTemplate template : templates) {
       int nbParam = template.getParameterCount();
@@ -56,26 +56,24 @@ public class CheckErrorAlgorithm524 extends CheckErrorAlgorithmBase {
         for (int numParam = 0; numParam < nbParam; numParam++) {
           Parameter param = template.getParameter(numParam);
           String paramName = param.getComputedName();
-          Parameter existingParam = names.get(paramName);
-          if (existingParam == null) {
-            names.put(paramName, param);
-          } else {
+          ParameterInfo existingParam = names.get(paramName);
+          names.put(paramName, new ParameterInfo(numParam, param));
+          if (existingParam != null) {
             if (errors == null) {
               return true;
             }
             result = true;
-            int paramBegin = param.getPipeIndex();
-            int paramEnd = template.getEndIndex() - 2;
-            if (numParam + 1 < nbParam) {
-              Parameter nextParam = template.getParameter(numParam + 1);
-              paramEnd = nextParam.getPipeIndex();
-            }
+            int paramBegin = existingParam.param.getPipeIndex();
+            Parameter nextParam = template.getParameter(existingParam.numParam + 1);
+            int paramEnd = nextParam.getPipeIndex();
             CheckErrorResult errorResult = createCheckErrorResult(
                 analysis, paramBegin, paramEnd);
-            String existingValue = existingParam.getValue();
+            String existingValue = existingParam.param.getValue();
             String value = param.getValue();
             if ((existingValue != null) && (existingValue.equals(value))) {
               errorResult.addReplacement("", true);
+            } else if (("".equals(existingValue))) {
+              errorResult.addReplacement("", false);
             }
             errors.add(errorResult);
           }
@@ -95,5 +93,17 @@ public class CheckErrorAlgorithm524 extends CheckErrorAlgorithmBase {
   @Override
   protected String internalAutomaticFix(PageAnalysis analysis) {
     return fixUsingAutomaticReplacement(analysis);
+  }
+
+  /**
+   * Bean for holding information about a parameter
+   */
+  private static class ParameterInfo {
+    public final int numParam;
+    public final Parameter param;
+    public ParameterInfo(int numParam, Parameter param) {
+      this.numParam = numParam;
+      this.param = param;
+    }
   }
 }
