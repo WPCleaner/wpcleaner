@@ -72,6 +72,11 @@ public class CheckErrorAlgorithm524 extends CheckErrorAlgorithmBase {
             }
             CheckErrorResult errorResult = createCheckErrorResult(
                 analysis, paramBegin, paramEnd);
+            String existingValue = existingParam.getValue();
+            String value = param.getValue();
+            if ((existingValue != null) && (existingValue.equals(value))) {
+              errorResult.addReplacement("", true);
+            }
             errors.add(errorResult);
           }
         }
@@ -79,5 +84,16 @@ public class CheckErrorAlgorithm524 extends CheckErrorAlgorithmBase {
     }
 
     return result;
+  }
+
+  /**
+   * Automatic fixing of some errors in the page.
+   * 
+   * @param analysis Page analysis.
+   * @return Page contents after fix.
+   */
+  @Override
+  protected String internalAutomaticFix(PageAnalysis analysis) {
+    return fixUsingAutomaticReplacement(analysis);
   }
 }
