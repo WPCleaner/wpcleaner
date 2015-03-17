@@ -70,10 +70,15 @@ public class CheckErrorAlgorithm524 extends CheckErrorAlgorithmBase {
                 analysis, paramBegin, paramEnd);
             String existingValue = existingParam.param.getValue();
             String value = param.getValue();
+            boolean automatic = true;
+            char lastChar = paramName.charAt(paramName.length() - 1);
+            if (Character.isDigit(lastChar)) {
+              automatic = false; // In case of incorrect argument number, don't do automatic replacement
+            }
             if ((existingValue != null) && (existingValue.equals(value))) {
-              errorResult.addReplacement("", true);
+              errorResult.addReplacement("", automatic);
             } else if (("".equals(existingValue))) {
-              errorResult.addReplacement("", false);
+              errorResult.addReplacement("", automatic);
             }
             errors.add(errorResult);
           }
