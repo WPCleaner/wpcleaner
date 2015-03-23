@@ -74,6 +74,9 @@ class AutomaticFixingTableModel extends AbstractTableModel {
    * @return List of automatic fixing expressions.
    */
   public List<AutomaticFixing> getData() {
+    if (data == null) {
+      return null;
+    }
     return Collections.unmodifiableList(data);
   }
 
