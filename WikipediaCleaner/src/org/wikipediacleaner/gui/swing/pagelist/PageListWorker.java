@@ -335,7 +335,7 @@ public class PageListWorker extends BasicWorker {
     final API api = APIFactory.getAPI();
     for (String pageName : elementNames) {
       Page page = DataManager.getPage(getWikipedia(), pageName, null, null, null);
-      api.retrieveCategoryMembers(getWikipedia(), page, 0, true);
+      api.retrieveCategoryMembers(getWikipedia(), page, 0, true, Integer.MAX_VALUE);
       List<Page> tmpPages = page.getRelatedPages(Page.RelatedPages.CATEGORY_MEMBERS);
       if (tmpPages != null) {
         for (Page tmpPage : tmpPages) {
@@ -357,7 +357,7 @@ public class PageListWorker extends BasicWorker {
     final API api = APIFactory.getAPI();
     for (String pageName : elementNames) {
       Page page = DataManager.getPage(getWikipedia(), pageName, null, null, null);
-      api.retrieveCategoryMembers(getWikipedia(), page, 0, true);
+      api.retrieveCategoryMembers(getWikipedia(), page, 0, true, Integer.MAX_VALUE);
       List<Page> tmpPages = page.getRelatedPages(Page.RelatedPages.CATEGORY_MEMBERS);
       if (tmpPages != null) {
         WPCConfiguration configuration = getWikipedia().getConfiguration();

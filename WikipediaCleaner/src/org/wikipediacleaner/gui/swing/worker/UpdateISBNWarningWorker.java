@@ -131,7 +131,7 @@ public class UpdateISBNWarningWorker extends BasicWorker {
           for (String category : categories) {
             String categoryTitle = wikiConfiguration.getPageTitle(Namespace.CATEGORY, category);
             Page categoryPage = DataManager.getPage(wiki, categoryTitle, null, null, null);
-            api.retrieveCategoryMembers(wiki, categoryPage, 0, false);
+            api.retrieveCategoryMembers(wiki, categoryPage, 0, false, Integer.MAX_VALUE);
             List<Page> categoryMembers = categoryPage.getRelatedPages(
                 Page.RelatedPages.CATEGORY_MEMBERS);
             if (categoryMembers != null) {

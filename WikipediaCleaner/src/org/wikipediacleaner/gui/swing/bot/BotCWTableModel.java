@@ -97,6 +97,7 @@ public class BotCWTableModel extends AbstractTableModel {
     addAlgorithm(90); // Internal link written as external link
     addAlgorithm(91); // Interwiki link written as external link
     addAlgorithm(92); // Headline double
+    addAlgorithm(524); // Duplicate template argument
   }
 
   /**
@@ -109,7 +110,10 @@ public class BotCWTableModel extends AbstractTableModel {
     if ((algorithm != null) &&
         (algorithm.isAvailable()) &&
         CheckErrorAlgorithms.isAlgorithmActive(wiki, errorNumber)) {
-      botAlgorithms.add(algorithm);
+      if ((errorNumber <= CheckErrorAlgorithm.MAX_ERROR_NUMBER_WITH_LIST) ||
+          (algorithm.hasSpecialList())) {
+          botAlgorithms.add(algorithm);
+      }
     }
   }
 

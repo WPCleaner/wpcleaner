@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2015-02-15 18:29+0100\n"
+"POT-Creation-Date: 2015-03-26 00:00+0100\n"
 "PO-Revision-Date: 2015-01-16 10:51+0000\n"
 "Last-Translator: Felipe L. <felipe.idj@hotmail.com>\n"
 "Language-Team: Brazilian Portuguese <pt_BR@li.org>\n"
@@ -142,11 +142,11 @@ msgstr "Página {0}:"
 msgid "Updating page {0}"
 msgstr "Atualizando página {0}"
 
-#: org/wikipediacleaner/api/check/CheckError.java:336
+#: org/wikipediacleaner/api/check/CheckError.java:372
 msgid "No available description"
 msgstr "Sem descrição disponível"
 
-#: org/wikipediacleaner/api/check/CheckError.java:341
+#: org/wikipediacleaner/api/check/CheckError.java:377
 #, java-format
 msgid "Error n°{0} ({1} - {2}) - {3}"
 msgstr "Erro nº{0} ({1} - {2}) - {3}"
@@ -173,7 +173,7 @@ msgstr "Substituir com {0}"
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm046.java:174
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm047.java:123
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm048.java:86
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm085.java:94
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm085.java:108
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm515.java:89
 #: org/wikipediacleaner/gui/swing/options/SortingOptionsPanel.java:115
 msgid "Delete"
@@ -587,7 +587,7 @@ msgstr "Uma lista de textos que podem ser adicionados às secções sem conteúd
 msgid "Restrict verification to titles with a higher level"
 msgstr "Restringir a verificação para títulos com um nível mais elevado"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm085.java:37
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm085.java:38
 msgid "Delete all tags without content"
 msgstr "Excluir todas as tags sem conteúdo"
 
@@ -662,21 +662,26 @@ msgstr "Uma lista de valores de texto por mês"
 msgid "The size below which images are not reported as duplicates"
 msgstr "O tamanho abaixo do qual as imagens não são relatadas como duplicadas"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmBase.java:240
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm524.java:158
+#, fuzzy
+msgid "A category containing the list of pages in error"
+msgstr "Página contendo a lista de falsos positivos para este tipo de erro"
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmBase.java:252
 msgid "Title of the article describing this type of error"
 msgstr "Título do artigo que descreve este tipo de erro"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmBase.java:241
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmBase.java:253
 msgid "Set to true to prevent automatic modifications for this type of error"
 msgstr ""
 "Defina como verdadeiro para evitar modificações automáticas para esse tipo "
 "de erro"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmBase.java:242
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmBase.java:254
 msgid "List of false positives for this type of error"
 msgstr "Lista de falsos positivos para esse tipo de erro"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmBase.java:243
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmBase.java:255
 msgid "Page containing the list of false positives for this type of error"
 msgstr "Página contendo a lista de falsos positivos para este tipo de erro"
 
@@ -993,7 +998,7 @@ msgstr "Analisando texto"
 msgid "Retrieving templates"
 msgstr "Recuperando predefinições"
 
-#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:1661
+#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:1662
 msgid ""
 "This action is protected by a CAPTCHA.\n"
 "What is the answer to the following question ?"
@@ -1001,7 +1006,7 @@ msgstr ""
 "Esta ação é protegida por CAPTCHA.\n"
 "Qual é a resposta para a seguinte questão?"
 
-#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:1668
+#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:1669
 msgid ""
 "This action is protected by a CAPTCHA.\n"
 "What is the answer to the question displayed in your browser ?"
@@ -1014,15 +1019,15 @@ msgstr ""
 msgid "About"
 msgstr "Sobre"
 
-#: org/wikipediacleaner/gui/swing/AutomaticFixingTableModel.java:176
+#: org/wikipediacleaner/gui/swing/AutomaticFixingTableModel.java:179
 msgid "Original text"
 msgstr "Texto original"
 
-#: org/wikipediacleaner/gui/swing/AutomaticFixingTableModel.java:178
+#: org/wikipediacleaner/gui/swing/AutomaticFixingTableModel.java:181
 msgid "Replacement text"
 msgstr "Texto para a substituição"
 
-#: org/wikipediacleaner/gui/swing/AutomaticFixingTableModel.java:180
+#: org/wikipediacleaner/gui/swing/AutomaticFixingTableModel.java:183
 msgid "regex"
 msgstr "expressão regular"
 
@@ -2244,11 +2249,11 @@ msgid_plural "{0} pages have been marked as fixed for other algorithms"
 msgstr[0] "{0} página foi marcada como corrigida com outros algoritmos"
 msgstr[1] "{0} páginas foram marcadas como corrigidas com outros algoritmos"
 
-#: org/wikipediacleaner/gui/swing/bot/BotCWTableModel.java:209
+#: org/wikipediacleaner/gui/swing/bot/BotCWTableModel.java:213
 msgid "Description"
 msgstr "Descrição"
 
-#: org/wikipediacleaner/gui/swing/bot/BotCWTableModel.java:211
+#: org/wikipediacleaner/gui/swing/bot/BotCWTableModel.java:215
 msgid "N°"
 msgstr "N°"
 

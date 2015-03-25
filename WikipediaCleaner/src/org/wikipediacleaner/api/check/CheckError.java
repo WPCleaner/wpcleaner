@@ -262,6 +262,42 @@ public class CheckError {
     errors.add(error);
   }
 
+  /**
+   * @param errors Errors list.
+   * @param wikipedia Wikipedia.
+   * @param errorNumber Error number.
+   * @param pages List of pages in error.
+   */
+  public static void addCheckErrorPages(
+      List<CheckError> errors,
+      EnumWikipedia wikipedia, int errorNumber,
+      List<Page> pages) {
+
+    // Analyze properties to find informations about error number
+    if (!CheckErrorAlgorithms.isAlgorithmActive(wikipedia, errorNumber)) {
+      return;
+    }
+
+    // Check that the list of pages in error is not empty
+    if ((pages == null) || (pages.isEmpty())) {
+      return;
+    }
+
+    // Create error
+    CheckError error = new CheckError(wikipedia, errorNumber);
+    for (Page page : pages) {
+      error.addPage(page.getTitle(), page.getPageId());
+    }
+
+    // Add / Replace error
+    for (int i = errors.size(); i > 0; i--) {
+      if (errors.get(i - 1).getErrorNumber() == errorNumber) {
+        errors.remove(i - 1);
+      }
+    }
+    errors.add(error);
+  }
+
   private final EnumWikipedia wikipedia;
   private final int errorNumber;
   private final CheckErrorAlgorithm algorithm;
