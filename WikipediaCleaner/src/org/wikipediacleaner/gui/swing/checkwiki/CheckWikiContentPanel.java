@@ -354,7 +354,7 @@ public class CheckWikiContentPanel
               new Object[] { error.getAlgorithm().getErrorNumberString(), page.getTitle() }));
           answer = JOptionPane.YES_OPTION;
         }
-      } else if (error.getAlgorithm().isFullDetection()) {
+      } else {
         Configuration config = Configuration.getConfiguration();
         answer = JOptionPane.YES_OPTION;
         if (window.yesAll) {
