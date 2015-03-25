@@ -52,11 +52,6 @@ public interface CheckErrorAlgorithm {
   public String getLongDescription();
 
   /**
-   * @return Flag indicating if the detection is fully done.
-   */
-  public boolean isFullDetection();
-
-  /**
    * @return Link to error description.
    */
   public String getLink();

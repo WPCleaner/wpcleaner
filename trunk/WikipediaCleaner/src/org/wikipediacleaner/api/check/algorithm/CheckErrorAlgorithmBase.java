@@ -107,13 +107,6 @@ public abstract class CheckErrorAlgorithmBase implements CheckErrorAlgorithm {
   }
 
   /**
-   * @return Flag indicating if the detection is fully done.
-   */
-  public boolean isFullDetection() {
-    return true;
-  }
-
-  /**
    * @return Link to error description.
    */
   public String getLink() {
