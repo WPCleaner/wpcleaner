@@ -245,7 +245,7 @@ public class AutomaticCWWorker extends BasicWorker {
       } else if (analyzeNonFixed) {
         Controller.runFullAnalysis(page.getTitle(), null, getWikipedia());
       }
-    } else {
+    } else if (algorithm.getErrorNumber() < CheckErrorAlgorithm.MAX_ERROR_NUMBER_WITH_LIST) {
       Boolean errorDetected = checkWiki.isErrorDetected(
           page, algorithm.getErrorNumber());
       if (Boolean.FALSE.equals(errorDetected)) {

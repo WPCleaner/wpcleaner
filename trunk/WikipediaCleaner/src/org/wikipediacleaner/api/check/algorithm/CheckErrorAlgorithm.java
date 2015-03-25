@@ -8,10 +8,13 @@
 package org.wikipediacleaner.api.check.algorithm;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.constants.CWConfigurationError;
+import org.wikipediacleaner.api.constants.EnumWikipedia;
+import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.gui.swing.component.MWPane;
 
@@ -86,6 +89,19 @@ public interface CheckErrorAlgorithm {
    */
   public int getErrorNumber();
 
+  /**
+   * @return True if the error has a special list of pages.
+   */
+  public boolean hasSpecialList();
+
+  /**
+   * Retrieve the list of pages in error.
+   * 
+   * @param wiki Wiki.
+   * @param limit Maximum number of pages to retrieve.
+   * @return List of pages in error.
+   */
+  public List<Page> getSpecialList(EnumWikipedia wiki, int limit);
 
   /**
    * @param name Property name.

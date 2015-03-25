@@ -59,7 +59,7 @@ public class ReloadCategoryMembersAction implements ActionListener {
       if (progressPanel != null) {
         progressPanel.setText(GT._("Retrieving members of a category"));
       }
-      api.retrieveCategoryMembers(wiki, category, 0, true);
+      api.retrieveCategoryMembers(wiki, category, 0, true, Integer.MAX_VALUE);
     } catch (APIException ex) {
       //
     } finally {

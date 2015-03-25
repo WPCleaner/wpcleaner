@@ -27,6 +27,7 @@ import org.wikipediacleaner.api.constants.CWConfigurationError;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.constants.WPCConfigurationString;
 import org.wikipediacleaner.api.data.MagicWord;
+import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.gui.swing.component.MWPane;
@@ -73,6 +74,24 @@ public abstract class CheckErrorAlgorithmBase implements CheckErrorAlgorithm {
    */
   public boolean isAvailable() {
     return true;
+  }
+
+  /**
+   * @return True if the error has a special list of pages.
+   */
+  public boolean hasSpecialList() {
+    return false;
+  }
+
+  /**
+   * Retrieve the list of pages in error.
+   * 
+   * @param wiki Wiki.
+   * @param limit Maximum number of pages to retrieve.
+   * @return List of pages in error.
+   */
+  public List<Page> getSpecialList(EnumWikipedia wiki, int limit) {
+    return null;
   }
 
   /**

@@ -10,11 +10,21 @@ package org.wikipediacleaner.api.check.algorithm;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import org.wikipediacleaner.api.API;
+import org.wikipediacleaner.api.APIException;
+import org.wikipediacleaner.api.APIFactory;
 import org.wikipediacleaner.api.check.CheckErrorResult;
+import org.wikipediacleaner.api.constants.EnumWikipedia;
+import org.wikipediacleaner.api.data.DataManager;
+import org.wikipediacleaner.api.data.Namespace;
+import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementTemplate;
+import org.wikipediacleaner.api.data.Page.RelatedPages;
 import org.wikipediacleaner.api.data.PageElementTemplate.Parameter;
+import org.wikipediacleaner.i18n.GT;
 
 
 /**
@@ -71,9 +81,11 @@ public class CheckErrorAlgorithm524 extends CheckErrorAlgorithmBase {
             String existingValue = existingParam.param.getValue();
             String value = param.getValue();
             boolean automatic = true;
-            char lastChar = paramName.charAt(paramName.length() - 1);
-            if (Character.isDigit(lastChar)) {
-              automatic = false; // In case of incorrect argument number, don't do automatic replacement
+            for (int pos = 0; pos < paramName.length(); pos++) {
+              char currentChar = paramName.charAt(pos);
+              if (Character.isDigit(currentChar)) {
+                automatic = false; // In case of incorrect argument number, don't do automatic replacement
+              }
             }
             if ((existingValue != null) && (existingValue.equals(value))) {
               errorResult.addReplacement("", automatic);
@@ -90,6 +102,42 @@ public class CheckErrorAlgorithm524 extends CheckErrorAlgorithmBase {
   }
 
   /**
+   * @return True if the error has a special list of pages.
+   */
+  @Override
+  public boolean hasSpecialList() {
+    String categoryName = getSpecificProperty("category", true, true, false);
+    return ((categoryName != null) &&
+            (categoryName.trim().length() > 0));
+  }
+
+  /**
+   * Retrieve the list of pages in error.
+   * 
+   * @param wiki Wiki.
+   * @param limit Maximum number of pages to retrieve.
+   * @return List of pages in error.
+   */
+  @Override
+  public List<Page> getSpecialList(EnumWikipedia wiki, int limit) {
+    List<Page> result = null;
+    String categoryName = getSpecificProperty("category", true, true, false);
+    if ((categoryName != null) &&
+        (categoryName.trim().length() > 0)) {
+      API api = APIFactory.getAPI();
+      String title = wiki.getWikiConfiguration().getPageTitle(Namespace.CATEGORY, categoryName);
+      Page category = DataManager.getPage(wiki, title, null, null, null);
+      try {
+        api.retrieveCategoryMembers(wiki, category, 0, false, limit);
+        result = category.getRelatedPages(RelatedPages.CATEGORY_MEMBERS);
+      } catch (APIException e) {
+        //
+      }
+    }
+    return result;
+  }
+
+  /**
    * Automatic fixing of some errors in the page.
    * 
    * @param analysis Page analysis.
@@ -98,6 +146,17 @@ public class CheckErrorAlgorithm524 extends CheckErrorAlgorithmBase {
   @Override
   protected String internalAutomaticFix(PageAnalysis analysis) {
     return fixUsingAutomaticReplacement(analysis);
+  }
+
+  /**
+   * @return Map of parameters (Name -> description).
+   * @see org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase#getParameters()
+   */
+  @Override
+  public Map<String, String> getParameters() {
+    Map<String, String> parameters = super.getParameters();
+    parameters.put("category", GT._("A category containing the list of pages in error"));
+    return parameters;
   }
 
   /**

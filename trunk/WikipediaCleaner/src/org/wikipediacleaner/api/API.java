@@ -302,12 +302,13 @@ public interface API {
    * @param category Category.
    * @param depth Depth of lookup for sub-categories.
    * @param limit Flag indicating if the number of results should be limited.
+   * @param max Absolute maximum number of results
    * @throws APIException
    * @see <a href="http://www.mediawiki.org/wiki/API:Categorymembers">API:Categorymembers</a>
    */
   public void retrieveCategoryMembers(
       EnumWikipedia wiki, Page category,
-      int depth, boolean limit) throws APIException;
+      int depth, boolean limit, int max) throws APIException;
 
   /**
    * Retrieves the pages in which <code>page</code> is embedded.

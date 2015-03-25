@@ -402,7 +402,7 @@ public enum EnumWikipedia {
       ArrayList<Page> tmpResult = new ArrayList<Page>();
       for (Page dabCategory : dabCategories) {
         api.retrieveCategoryMembers(
-            this, dabCategory, 0, false);
+            this, dabCategory, 0, false, Integer.MAX_VALUE);
         List<Page> tmpPages = dabCategory.getRelatedPages(Page.RelatedPages.CATEGORY_MEMBERS);
         if (tmpPages != null) {
           tmpResult.ensureCapacity(tmpResult.size() + tmpPages.size());

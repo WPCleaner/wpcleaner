@@ -186,15 +186,17 @@ public class ApiCategoryMembersRequest extends ApiListRequest {
    * @param category Category for which members are requested.
    * @param depth Depth of lookup for sub-categories.
    * @param limit Flag indicating if the number of results should be limited.
+   * @param max Absolute maximum number of results
    */
   public void loadCategoryMembers(
       Page category,
-      int depth, boolean limit) throws APIException {
+      int depth, boolean limit, int max) throws APIException {
 
     List<String> categoriesAnalyzed = new ArrayList<String>();
     Map<Page, Integer> categories = new HashMap<Page, Integer>();
     categories.put(category, Integer.valueOf(0));
     int maxSize = getMaxSize(limit, ConfigurationValueInteger.MAX_CATEGORY_MEMBERS);
+    maxSize = Math.min(maxSize, max);
     while (!categories.isEmpty()) {
 
       // Find which category to analyze
