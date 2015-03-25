@@ -74,6 +74,8 @@ public class CheckErrorAlgorithm085 extends CheckErrorAlgorithmBase {
   
         // Check tag
         if (interesting) {
+
+          // Check if text is found inside the tag
           boolean textFound = false;
           int currentIndex = tag.getValueBeginIndex();
           int lastIndex = tag.getValueEndIndex();
@@ -83,7 +85,18 @@ public class CheckErrorAlgorithm085 extends CheckErrorAlgorithmBase {
             }
             currentIndex++;
           }
+
+          // Check if tag has arguments
+          boolean hasArguments = false;
           if (!textFound) {
+            if (tag.getParametersCount() > 0) {
+              if (PageElementTag.TAG_WIKI_REF.equals(tag.getName())) {
+                hasArguments = true;
+              }
+            }
+          }
+
+          if (!textFound && !hasArguments) {
             if (errors == null) {
               return true;
             }
