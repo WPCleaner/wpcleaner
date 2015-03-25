@@ -59,6 +59,7 @@ public class CheckErrorAlgorithm524 extends CheckErrorAlgorithmBase {
     }
     HashMap<String, ParameterInfo> names = new HashMap<String, ParameterInfo>();
     boolean result = false;
+    String contents = analysis.getContents();
     for (PageElementTemplate template : templates) {
       int nbParam = template.getParameterCount();
       if (nbParam > 1) {
@@ -80,13 +81,25 @@ public class CheckErrorAlgorithm524 extends CheckErrorAlgorithmBase {
                 analysis, paramBegin, paramEnd);
             String existingValue = existingParam.param.getValue();
             String value = param.getValue();
+
             boolean automatic = true;
-            for (int pos = 0; pos < paramName.length(); pos++) {
-              char currentChar = paramName.charAt(pos);
-              if (Character.isDigit(currentChar)) {
-                automatic = false; // In case of incorrect argument number, don't do automatic replacement
+            if (automatic) {
+              // If the argument name contains digits, don't do automatic replacement
+              for (int pos = 0; pos < paramName.length(); pos++) {
+                char currentChar = paramName.charAt(pos);
+                if (Character.isDigit(currentChar)) {
+                  automatic = false;
+                }
               }
             }
+            if (automatic) {
+              // If there's a table start, don't do automatic replacement
+              int indexTable = contents.indexOf("{|", template.getBeginIndex() + 2);
+              if ((indexTable >= 0) && (indexTable < paramBegin)) {
+                automatic = false;
+              }
+            }
+
             if ((existingValue != null) && (existingValue.equals(value))) {
               errorResult.addReplacement("", automatic);
             } else if (("".equals(existingValue))) {
