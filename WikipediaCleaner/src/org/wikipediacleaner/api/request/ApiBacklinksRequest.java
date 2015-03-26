@@ -97,6 +97,7 @@ public class ApiBacklinksRequest extends ApiListRequest {
       properties.put(PROPERTY_REDIRECT, "");
     }
     properties.put(PROPERTY_TITLE, page.getTitle());
+    properties.put(PROPERTY_CONTINUE, PROPERTY_CONTINUE_DEFAULT);
     List<Page> list = new ArrayList<Page>();
     while (result.executeBacklinks(properties, page, list)) {
       //
