@@ -23,20 +23,34 @@ class ReplaceTextActionProvider implements ActionProvider {
 
   private final boolean automatic;
 
+  private final boolean automaticBot;
+
   /**
    * @param newText New text.
    */
   ReplaceTextActionProvider(String newText) {
-    this(newText, false);
+    this(newText, false, false);
   }
 
   /**
    * @param newText New text.
    * @param automatic True if the replacement can be done automatically.
    */
-  ReplaceTextActionProvider(String newText, boolean automatic) {
+  ReplaceTextActionProvider(
+      String newText, boolean automatic) {
+    this(newText, automatic, automatic);
+  }
+
+  /**
+   * @param newText New text.
+   * @param automatic True if the replacement can be done automatically.
+   * @param automaticBot True if the replacement can be done automatically in bot mode.
+   */
+  ReplaceTextActionProvider(
+      String newText, boolean automatic, boolean automaticBot) {
     this.newText = newText;
     this.automatic = automatic;
+    this.automaticBot = automaticBot;
   }
 
   /**
@@ -51,6 +65,13 @@ class ReplaceTextActionProvider implements ActionProvider {
    */
   public boolean isAutomatic() {
     return automatic;
+  }
+
+  /**
+   * @return True if the replacement can be done automatically in bot mode.
+   */
+  public boolean isAutomaticBot() {
+    return automaticBot;
   }
 
   /* (non-Javadoc)

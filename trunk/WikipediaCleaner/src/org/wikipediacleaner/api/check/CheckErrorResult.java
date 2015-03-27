@@ -131,12 +131,25 @@ public class CheckErrorResult implements Comparable<CheckErrorResult> {
    * @param automatic True if replacement can be done automatically.
    */
   public void addReplacement(String replacement, boolean automatic) {
+    addReplacement(replacement, automatic, automatic);
+  }
+
+  /**
+   * Add a possible replacement for the error.
+   * 
+   * @param replacement Possible replacement.
+   * @param automatic True if replacement can be done automatically.
+   * @param automaticBot True if replacement can be done automatically in bot mode.
+   */
+  public void addReplacement(
+      String replacement,
+      boolean automatic, boolean automaticBot) {
     addReplacement(
         replacement,
         (replacement.length() > 0) ?
             GT._("Replace with {0}", replacement.replaceAll("\\n", "\u21b5")) :
             GT._("Delete"),
-        automatic);
+        automatic, automaticBot);
   }
 
   /**
@@ -156,7 +169,23 @@ public class CheckErrorResult implements Comparable<CheckErrorResult> {
    * @param text Text explaining the replacement.
    * @param automatic True if replacement can be done automatically.
    */
-  public void addReplacement(String replacement, String text, boolean automatic) {
+  public void addReplacement(
+      String replacement, String text,
+      boolean automatic) {
+    addReplacement(replacement, text, automatic, automatic);
+  }
+
+  /**
+   * Add a possible replacement for the error.
+   * 
+   * @param replacement Possible replacement.
+   * @param text Text explaining the replacement.
+   * @param automatic True if replacement can be done automatically.
+   * @param automaticBot True if replacement can be done automatically in bot mode.
+   */
+  public void addReplacement(
+      String replacement, String text,
+      boolean automatic, boolean automaticBot) {
     if (replacement == null) {
       return;
     }
@@ -171,7 +200,8 @@ public class CheckErrorResult implements Comparable<CheckErrorResult> {
     }
     SimpleAction action = new SimpleAction(
         text,
-        new ReplaceTextActionProvider(replacement, automatic));
+        new ReplaceTextActionProvider(
+            replacement, automatic, automaticBot));
     possibleActions.add(action);
     possibleReplacements.add(action);
   }
@@ -210,6 +240,27 @@ public class CheckErrorResult implements Comparable<CheckErrorResult> {
         if (provider instanceof ReplaceTextActionProvider) {
           ReplaceTextActionProvider textProvider = (ReplaceTextActionProvider) provider;
           if (textProvider.isAutomatic()) {
+            return textProvider.getNewText();
+          }
+        }
+      }
+    }
+    return null;
+  }
+
+  /**
+   * @return Automatic bot replacement.
+   */
+  public String getAutomaticBotReplacement() {
+    if (possibleReplacements == null) {
+      return null;
+    }
+    for (Actionnable action : possibleReplacements) {
+      if (action instanceof SimpleAction) {
+        ActionProvider provider = ((SimpleAction) action).getActionProvider();
+        if (provider instanceof ReplaceTextActionProvider) {
+          ReplaceTextActionProvider textProvider = (ReplaceTextActionProvider) provider;
+          if (textProvider.isAutomaticBot()) {
             return textProvider.getNewText();
           }
         }

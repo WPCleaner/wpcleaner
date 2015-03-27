@@ -82,6 +82,7 @@ public class CheckErrorAlgorithm054 extends CheckErrorAlgorithmBase {
         int currentPos = endLineIndex - 1;
         int beginError = endLineIndex;
         int endError = endLineIndex;
+        boolean automaticBot = true;
         boolean shouldStop = false;
         while (!shouldStop) {
           shouldStop = true;
@@ -98,6 +99,9 @@ public class CheckErrorAlgorithm054 extends CheckErrorAlgorithmBase {
                 shouldStop = false;
                 beginError = tag.getBeginIndex();
                 currentPos = beginError - 1;
+                if (tag.getParametersCount() > 0) {
+                  automaticBot = false;
+                }
               } else if (!breakFound) {
                 /*if (PageElementTag.TAG_WIKI_MATH.equals(name)) {
                   tagAfter = true;
@@ -128,7 +132,7 @@ public class CheckErrorAlgorithm054 extends CheckErrorAlgorithmBase {
               analysis, beginError, endError,
               (tagAfter ? ErrorLevel.WARNING : ErrorLevel.ERROR));
           if (!tagAfter) {
-            errorResult.addReplacement("");
+            errorResult.addReplacement("", false, automaticBot);
           }
           errors.add(errorResult);
         }
@@ -145,7 +149,7 @@ public class CheckErrorAlgorithm054 extends CheckErrorAlgorithmBase {
    */
   @Override
   protected String internalBotFix(PageAnalysis analysis) {
-    return fixUsingRemove(globalFixes[0], analysis);
+    return fixUsingAutomaticBotReplacement(analysis);
   }
 
   /**
