@@ -149,6 +149,13 @@ public class CheckErrorAlgorithm524 extends CheckErrorAlgorithmBase {
                 automatic = false;
               }
             }
+            if (automatic) {
+              // If there's a table new line, don't do automatic replacement
+              int indexTable = contents.indexOf("|-", template.getBeginIndex() + 2);
+              if ((indexTable >= 0) && (indexTable < paramBegin)) {
+                automatic = false;
+              }
+            }
 
             if ((existingValue != null) && (existingValue.equals(value))) {
               errorResult.addReplacement("", automatic);
