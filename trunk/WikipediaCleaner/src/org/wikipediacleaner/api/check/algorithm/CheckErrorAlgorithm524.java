@@ -39,6 +39,11 @@ public class CheckErrorAlgorithm524 extends CheckErrorAlgorithmBase {
   }
 
   /**
+   * Tracking category.
+   */
+  private String trackingCategory;
+
+  /**
    * Analyze a page to check if errors are present.
    * 
    * @param analysis Page analysis.
@@ -129,9 +134,30 @@ public class CheckErrorAlgorithm524 extends CheckErrorAlgorithmBase {
    */
   @Override
   public boolean hasSpecialList() {
+    return (getTrackingCategory() != null);
+  }
+
+  /**
+   * @param category Tracking category.
+   */
+  public void setTrackingCategory(String category) {
+    trackingCategory = category;
+  }
+
+  /**
+   * @return Tracking category.
+   */
+  private String getTrackingCategory() {
     String categoryName = getSpecificProperty("category", true, true, false);
-    return ((categoryName != null) &&
-            (categoryName.trim().length() > 0));
+    if ((categoryName != null) &&
+        (categoryName.trim().length() > 0)) {
+      return categoryName;
+    }
+    if ((trackingCategory != null) &&
+        (trackingCategory.trim().length() > 0)) {
+      return trackingCategory;
+    }
+    return null;
   }
 
   /**
@@ -144,9 +170,8 @@ public class CheckErrorAlgorithm524 extends CheckErrorAlgorithmBase {
   @Override
   public List<Page> getSpecialList(EnumWikipedia wiki, int limit) {
     List<Page> result = null;
-    String categoryName = getSpecificProperty("category", true, true, false);
-    if ((categoryName != null) &&
-        (categoryName.trim().length() > 0)) {
+    String categoryName = getTrackingCategory();
+    if (categoryName != null) {
       API api = APIFactory.getAPI();
       String title = wiki.getWikiConfiguration().getPageTitle(Namespace.CATEGORY, categoryName);
       Page category = DataManager.getPage(wiki, title, null, null, null);

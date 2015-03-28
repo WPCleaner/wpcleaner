@@ -25,6 +25,11 @@ public class ApiMetaRequest extends ApiRequest {
   public final static String PROPERTY_META = "meta";
 
   /**
+   * Property for Meta / All messages.
+   */
+  public final static String PROPERTY_META_ALLMESSAGES = "allmessages";
+
+  /**
    * Property for Meta / Site info.
    */
   public final static String PROPERTY_META_SITEINFO = "siteinfo";

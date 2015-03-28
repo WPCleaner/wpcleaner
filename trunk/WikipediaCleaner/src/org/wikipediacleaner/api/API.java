@@ -163,6 +163,21 @@ public interface API {
   // ==========================================================================
 
   // ==========================================================================
+  // API : Queries / All messages
+  // ==========================================================================
+
+  /**
+   * Load messages.
+   * (<code>action=query</code>, <code>meta=allmessages</code>).
+   * 
+   * @param wiki Wiki.
+   * @param messageName Message name.
+   * @throws APIException
+   * @see <a href="https://www.mediawiki.org/wiki/API:Allmessages">API:Allmessages</a>
+   */
+  public String loadMessage(EnumWikipedia wiki, String messageName) throws APIException;
+
+  // ==========================================================================
   // API : Queries / Properties
   // ==========================================================================
 
