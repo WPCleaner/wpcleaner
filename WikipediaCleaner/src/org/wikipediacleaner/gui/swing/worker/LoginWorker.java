@@ -14,6 +14,9 @@ import java.util.Properties;
 import org.wikipediacleaner.api.API;
 import org.wikipediacleaner.api.APIException;
 import org.wikipediacleaner.api.APIFactory;
+import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithm;
+import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithm524;
+import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithms;
 import org.wikipediacleaner.api.constants.EnumLanguage;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.LoginResult;
@@ -140,6 +143,14 @@ public class LoginWorker extends BasicWorker {
       // Retrieving Check Wiki configuration
       setText(GT._("Retrieving Check Wiki configuration"));
       APIFactory.getCheckWiki().retrieveConfiguration(wiki, this);
+
+      // Retrieving special configuration
+      CheckErrorAlgorithm algo524 = CheckErrorAlgorithms.getAlgorithm(wiki, 524);
+      if ((algo524 != null) &&
+          algo524.isAvailable() &&
+          CheckErrorAlgorithms.isAlgorithmActive(wiki, 524)) {
+        ((CheckErrorAlgorithm524) algo524).setTrackingCategory(api.loadMessage(wiki, "duplicate-args-category"));
+      }
     } catch (APIException e) {
       return e;
     }

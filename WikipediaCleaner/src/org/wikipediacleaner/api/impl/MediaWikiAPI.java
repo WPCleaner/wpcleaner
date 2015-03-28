@@ -58,6 +58,8 @@ import org.wikipediacleaner.api.request.ApiAbuseFiltersRequest;
 import org.wikipediacleaner.api.request.ApiAbuseFiltersResult;
 import org.wikipediacleaner.api.request.ApiAbuseLogRequest;
 import org.wikipediacleaner.api.request.ApiAbuseLogResult;
+import org.wikipediacleaner.api.request.ApiAllMessagesRequest;
+import org.wikipediacleaner.api.request.ApiAllMessagesResult;
 import org.wikipediacleaner.api.request.ApiCategoriesRequest;
 import org.wikipediacleaner.api.request.ApiCategoriesResult;
 import org.wikipediacleaner.api.request.ApiCategoryMembersRequest;
@@ -113,6 +115,7 @@ import org.wikipediacleaner.api.request.ApiUsersRequest;
 import org.wikipediacleaner.api.request.ApiUsersResult;
 import org.wikipediacleaner.api.request.xml.ApiXmlAbuseFiltersResult;
 import org.wikipediacleaner.api.request.xml.ApiXmlAbuseLogResult;
+import org.wikipediacleaner.api.request.xml.ApiXmlAllMessagesResult;
 import org.wikipediacleaner.api.request.xml.ApiXmlCategoriesResult;
 import org.wikipediacleaner.api.request.xml.ApiXmlCategoryMembersResult;
 import org.wikipediacleaner.api.request.xml.ApiXmlDeleteResult;
@@ -835,6 +838,25 @@ public class MediaWikiAPI implements API {
     ApiSiteInfoResult result = new ApiXmlSiteInfoResult(wiki, httpClient);
     ApiSiteInfoRequest request = new ApiSiteInfoRequest(wiki, result);
     request.loadSiteInformation(true, true, true, true, true, true);
+  }
+
+  // ==========================================================================
+  // API : Queries / All messages
+  // ==========================================================================
+
+  /**
+   * Load messages.
+   * (<code>action=query</code>, <code>meta=allmessages</code>).
+   * 
+   * @param wiki Wiki.
+   * @param messageName Message name.
+   * @throws APIException
+   * @see <a href="https://www.mediawiki.org/wiki/API:Allmessages">API:Allmessages</a>
+   */
+  public String loadMessage(EnumWikipedia wiki, String messageName) throws APIException {
+    ApiAllMessagesResult result = new ApiXmlAllMessagesResult(wiki, httpClient);
+    ApiAllMessagesRequest request = new ApiAllMessagesRequest(wiki, result);
+    return request.loadMessage(messageName);
   }
 
   // ==========================================================================
