@@ -8,15 +8,15 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2015-03-28 12:16+0100\n"
-"PO-Revision-Date: 2014-09-09 01:38+0000\n"
-"Last-Translator: Nicolas Vervelle <Unknown>\n"
+"PO-Revision-Date: 2015-03-19 14:22+0000\n"
+"Last-Translator: Niels Verploegen <Unknown>\n"
 "Language-Team: Dutch <nl@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2014-09-21 06:01+0000\n"
-"X-Generator: Launchpad (build 17196)\n"
+"X-Launchpad-Export-Date: 2015-03-28 11:20+0000\n"
+"X-Generator: Launchpad (build 17413)\n"
 "Language: nl\n"
 
 #: org/wikipediacleaner/Version.java:31
@@ -307,7 +307,7 @@ msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm030.java:99
 msgid "Add an alternate description..."
-msgstr ""
+msgstr "Voeg een ander beschrijving toe..."
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm030.java:103
 msgid "What alternate description would you like to use for the image ?"
@@ -414,7 +414,7 @@ msgstr "Controleer taal-links"
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:279
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm091.java:162
 msgid "What is the title of the page on this wiki ?"
-msgstr ""
+msgstr "Wat is de titel van de pagina op deze wiki?"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:149
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm091.java:175
@@ -431,7 +431,7 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:135
 #: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:229
 msgid "External Viewer"
-msgstr ""
+msgstr "Externe viewer"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:175
 msgid ""
@@ -2349,52 +2349,52 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiWindow.java:236
 msgid "No errors available"
-msgstr ""
+msgstr "Geen fouten beschikbaar"
 
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiWindow.java:239
 msgid "No errors selected"
-msgstr ""
+msgstr "Geen fouten geselecteerd"
 
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiWindow.java:299
 msgid "Load all errors"
-msgstr ""
+msgstr "Alle fouten opvragen"
 
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiWindow.java:304
 msgid "Load all high priority errors"
-msgstr ""
+msgstr "Alle fouten van hoge prioriteit opvragen"
 
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiWindow.java:309
 msgid "Load all high and middle priority errors"
-msgstr ""
+msgstr "Alle fouten van hoge en medium prioriteit opvragen"
 
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiWindow.java:314
 msgid "Load all middle priority errors"
-msgstr ""
+msgstr "Alle fouten van medium prioriteit opvragen"
 
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiWindow.java:319
 msgid "Load all high, middle and lowest priority errors"
-msgstr ""
+msgstr "Alle fouten van hoge, medium en laagste prioriteit opvragen"
 
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiWindow.java:324
 msgid "Load all high and lowest priority errors"
-msgstr ""
+msgstr "Alle fouten van hoge en laagste prioriteit opvragen"
 
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiWindow.java:329
 msgid "Load all middle and lowest priority errors"
-msgstr ""
+msgstr "Alle fouten van medium en laagste prioriteit opvragen"
 
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiWindow.java:334
 msgid "Load all lowest priority errors"
-msgstr ""
+msgstr "Alle fouten van laagste prioriteit opvragen"
 
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiWindow.java:339
 msgid "Load all errors for bots"
-msgstr ""
+msgstr "Alle fouten voor bots opvragen"
 
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiWindow.java:362
 #, java-format
 msgid "Load errors {0}"
-msgstr ""
+msgstr "Fouten opvragen {0}"
 
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiWindow.java:369
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiWindow.java:624
@@ -2403,19 +2403,19 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiWindow.java:373
 msgid "Select all errors"
-msgstr ""
+msgstr "Alle fouten selecteren"
 
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiWindow.java:378
 msgid "Select high priority errors"
-msgstr ""
+msgstr "Alle fouten van hoge prioriteit selecteren"
 
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiWindow.java:383
 msgid "Select middle priority (and above) errors"
-msgstr ""
+msgstr "Alle fouten van medium (en hogere) prioriteit selecteren"
 
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiWindow.java:388
 msgid "Select middle priority errors"
-msgstr ""
+msgstr "Alle fouten van medium prioriteit selecteren"
 
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiWindow.java:393
 msgid "Select lowest priority (and above) errors"
@@ -2429,7 +2429,7 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiWindow.java:482
 #, java-format
 msgid "Errors from {0} to {1}"
-msgstr ""
+msgstr "Fouten van {0} tot {1}"
 
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiWindow.java:480
 msgid "Select only"
@@ -2454,7 +2454,7 @@ msgstr "Maximale aantal fouten om voor Controle Wiki:"
 
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiWindow.java:636
 msgid "Right click to select errors"
-msgstr ""
+msgstr "Rechts klikken om fouten te selecteren"
 
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiWindow.java:648
 msgid "List of errors detected :"
