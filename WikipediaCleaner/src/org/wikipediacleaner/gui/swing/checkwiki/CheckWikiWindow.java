@@ -250,9 +250,15 @@ public class CheckWikiWindow extends OnePageWindow implements CheckWikiListener 
     boolean allBotOnlyPrioritySelected = true;
     boolean noBotOnlyPrioritySelected = true;
     for (CheckErrorAlgorithm algorithm : allAlgorithms) {
+      boolean useAlgorithm = false;
       if (algorithm.isAvailable() &&
-          (algorithm.getErrorNumber() <= CheckErrorAlgorithm.MAX_ERROR_NUMBER_WITH_LIST) &&
           CWConfigurationError.isPriorityFullyActive(algorithm.getPriority())) {
+        if ((algorithm.getErrorNumber() <= CheckErrorAlgorithm.MAX_ERROR_NUMBER_WITH_LIST) ||
+            algorithm.hasSpecialList()) {
+          useAlgorithm = true;
+        }
+      }
+      if (useAlgorithm) {
         if (!selectedAlgorithms.contains(algorithm)) {
           allErrorsSelected = false;
           switch (algorithm.getPriority()) {
@@ -405,7 +411,14 @@ public class CheckWikiWindow extends OnePageWindow implements CheckWikiListener 
     for (CheckErrorAlgorithm algorithm : allAlgorithms) {
       if (algorithm != null) {
         int errorNumber = algorithm.getErrorNumber();
-        if ((errorNumber > 0) && (errorNumber <= CheckErrorAlgorithm.MAX_ERROR_NUMBER_WITH_LIST)) {
+        boolean useAlgorithm = false;
+        if (errorNumber > 0) {
+          if ((errorNumber <= CheckErrorAlgorithm.MAX_ERROR_NUMBER_WITH_LIST) ||
+              algorithm.hasSpecialList()) {
+            useAlgorithm = true;
+          }
+        }
+        if (useAlgorithm) {
           int part = (errorNumber - 1) / PART_SIZE;
           if ((subMenu == null) || (part > lastPart)) {
             int from = (part * PART_SIZE) + 1;
@@ -451,7 +464,14 @@ public class CheckWikiWindow extends OnePageWindow implements CheckWikiListener 
     for (CheckErrorAlgorithm algorithm : allAlgorithms) {
       if (algorithm != null) {
         int errorNumber = algorithm.getErrorNumber();
-        if ((errorNumber > 0) && (errorNumber <= CheckErrorAlgorithm.MAX_ERROR_NUMBER_WITH_LIST)) {
+        boolean useAlgorithm = false;
+        if (errorNumber > 0) {
+          if ((errorNumber <= CheckErrorAlgorithm.MAX_ERROR_NUMBER_WITH_LIST) ||
+              algorithm.hasSpecialList()) {
+            useAlgorithm = true;
+          }
+        }
+        if (useAlgorithm) {
           int part = (errorNumber - 1) / PART_SIZE;
           if ((subMenu == null) || (part > lastPart)) {
             int from = (part * PART_SIZE) + 1;

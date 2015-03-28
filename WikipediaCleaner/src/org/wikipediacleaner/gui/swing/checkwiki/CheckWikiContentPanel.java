@@ -290,12 +290,13 @@ public class CheckWikiContentPanel
   /**
    * Action called when a page is selected (after page is loaded).
    */
-  @SuppressWarnings("fallthrough")
   void actionPageSelected() {
     if (page == null) {
       pane.remove(this);
       return;
     }
+
+    // Deleted page
     if (Boolean.FALSE.equals(page.isExisting())) {
       window.displayWarning(GT._("The page {0} doesn''t exist on Wikipedia", page.getTitle()));
       if (error != null) {
@@ -308,6 +309,8 @@ public class CheckWikiContentPanel
       window.actionSelectErrorType();
       return;
     }
+
+    // Analyze initial errors
     textPage.setText(page.getContents());
     textPage.setModified(false);
     PageAnalysis pageAnalysis = page.getAnalysis(textPage.getText(), true);
@@ -329,32 +332,36 @@ public class CheckWikiContentPanel
         }
       }
     }
-    if ((error != null) && (errorFound == false)) {
-      CheckWiki checkWiki = APIFactory.getCheckWiki();
-      List<CheckWikiDetection> detections = checkWiki.check(page);
+
+    // Further analysis if expected error is not found
+    if ((error != null) &&
+        (error.getAlgorithm() != null) &&
+        (errorFound == false)) {
+      CheckErrorAlgorithm algorithm = error.getAlgorithm();
+      int errorNumber = algorithm.getErrorNumber();
       int answer = JOptionPane.NO_OPTION;
+
+      // Ask Check Wiki what errors are still detected
+      List<CheckWikiDetection> detections = null;
+      boolean errorDetected = false;
+      if (errorNumber <= CheckErrorAlgorithm.MAX_ERROR_NUMBER_WITH_LIST) {
+        CheckWiki checkWiki = APIFactory.getCheckWiki();
+        detections = checkWiki.check(page);
+      }
+
+      // Check if the expected error is still detected
       if (detections != null) {
-        boolean errorDetected = false;
         for (CheckWikiDetection detection : detections) {
           if (detection.getErrorNumber() == error.getErrorNumber()) {
             errorDetected = true;
           }
         }
-        if (errorDetected) {
-          DetectionPanel panel = new DetectionPanel(detections, null);
-          panel.setMessage(GT._(
-              "The error n°{0} hasn''t been detected in page {1}, but CheckWiki still reports it.",
-              new Object[] { error.getAlgorithm().getErrorNumberString(), page.getTitle() }));
-          JOptionPane.showMessageDialog(
-              window.getParentComponent(), panel,
-              Version.PROGRAM, JOptionPane.WARNING_MESSAGE);
-        } else {
-          window.displayWarning(GT._(
-              "The error n°{0} has already been fixed in page {1}.",
-              new Object[] { error.getAlgorithm().getErrorNumberString(), page.getTitle() }));
-          answer = JOptionPane.YES_OPTION;
-        }
-      } else {
+      }
+
+      // Inform user
+      if (detections == null) {
+
+        // Ask user if no information from Check Wiki
         Configuration config = Configuration.getConfiguration();
         answer = JOptionPane.YES_OPTION;
         if (window.yesAll) {
@@ -371,12 +378,38 @@ public class CheckWikiContentPanel
                 new Object[] { error.getAlgorithm().getErrorNumberString(), page.getTitle() }));
           }
         }
+      } else if (errorDetected) {
+
+        // Inform user if Check Wiki still detects the error
+        DetectionPanel panel = new DetectionPanel(detections, null);
+        panel.setMessage(GT._(
+            "The error n°{0} hasn''t been detected in page {1}, but CheckWiki still reports it.",
+            new Object[] { error.getAlgorithm().getErrorNumberString(), page.getTitle() }));
+        JOptionPane.showMessageDialog(
+            window.getParentComponent(), panel,
+            Version.PROGRAM, JOptionPane.WARNING_MESSAGE);
+      } else {
+
+        // Inform user if Check Wiki doesn't detect the error anymore
+        window.displayWarning(GT._(
+            "The error n°{0} has already been fixed in page {1}.",
+            new Object[] { error.getAlgorithm().getErrorNumberString(), page.getTitle() }));
+        answer = JOptionPane.YES_OPTION;
       }
 
+      // Act according to user answer
       switch (answer) {
       case Utilities.YES_ALL_OPTION:
         window.yesAll = true;
-        // Go through
+        answer = JOptionPane.YES_OPTION;
+        break;
+
+      case Utilities.NO_ALL_OPTION:
+        window.noAll = true;
+        answer = JOptionPane.NO_OPTION;
+        break;
+      }
+      switch (answer) {
       case JOptionPane.YES_OPTION:
         if (errorCount == 0) {
           pane.remove(this);
@@ -388,12 +421,10 @@ public class CheckWikiContentPanel
           return;
         }
         break;
-
-      case Utilities.NO_ALL_OPTION:
-        window.noAll = true;
-        break;
       }
     }
+
+    // Select error
     int index = modelErrors.indexOf(window.listAllErrors.getSelectedItem());
     if (index >= 0) {
       listErrors.setSelectedIndex(index);
