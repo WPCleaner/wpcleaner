@@ -15,8 +15,8 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
-"X-Launchpad-Export-Date: 2015-02-28 18:20+0000\n"
-"X-Generator: Launchpad (build 17361)\n"
+"X-Launchpad-Export-Date: 2015-03-28 11:20+0000\n"
+"X-Generator: Launchpad (build 17413)\n"
 "Language: cs\n"
 
 #: org/wikipediacleaner/Version.java:31
@@ -653,10 +653,8 @@ msgid "The size below which images are not reported as duplicates"
 msgstr "Velikost, pod níž nejsou obrázky hlášeny jako duplicitní"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm524.java:206
-#, fuzzy
 msgid "A category containing the list of pages in error"
 msgstr ""
-"Stránka obsahující seznam falešně pozitivních výsledků pro tento typ chyby"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmBase.java:252
 msgid "Title of the article describing this type of error"
