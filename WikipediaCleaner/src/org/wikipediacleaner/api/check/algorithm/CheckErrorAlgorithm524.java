@@ -89,9 +89,26 @@ public class CheckErrorAlgorithm524 extends CheckErrorAlgorithmBase {
               return true;
             }
             result = true;
+
+            // Compute actual area
             int paramBegin = existingParam.param.getPipeIndex();
             Parameter nextParam = template.getParameter(existingParam.numParam + 1);
             int paramEnd = nextParam.getPipeIndex();
+            boolean existingStartNewLine = false;
+            int tmpIndex = getLastIndexBeforeSpace(contents, paramBegin - 1);
+            if ((tmpIndex >= 0) && (contents.charAt(tmpIndex) == '\n')) {
+              existingStartNewLine = true;
+            }
+            boolean existingEndNewLine = false;
+            tmpIndex = getLastIndexBeforeSpace(contents, paramEnd - 1);
+            if ((tmpIndex >= 0) && (contents.charAt(tmpIndex) == '\n')) {
+              existingEndNewLine = true;
+            }
+            if (!existingStartNewLine && existingEndNewLine) {
+              paramEnd = tmpIndex;
+            }
+
+            // Create error
             CheckErrorResult errorResult = createCheckErrorResult(
                 analysis, paramBegin, paramEnd);
             String existingValue = existingParam.param.getValue();
@@ -99,11 +116,29 @@ public class CheckErrorAlgorithm524 extends CheckErrorAlgorithmBase {
 
             boolean automatic = true;
             if (automatic) {
+              // Detect special cases: first parameter unnamed, second one explicitly named
+              boolean special = false;
+              String existingName = existingParam.param.getName();
+              if (((existingName == null) || (existingName.trim().length() == 0)) &&
+                  (param.getName() != null) &&
+                  (param.getName().trim().length() > 0)) {
+                special = true;
+                // Avoid unnamed parameter in between
+                for (int numParam2 = existingParam.numParam + 1; numParam2 < numParam; numParam2++) {
+                  String name2 = template.getParameter(numParam2).getName();
+                  if ((name2 == null) || (name2.trim().length() == 0)) {
+                    special = false;
+                  }
+                }
+              }
+
               // If the argument name contains digits, don't do automatic replacement
-              for (int pos = 0; pos < paramName.length(); pos++) {
-                char currentChar = paramName.charAt(pos);
-                if (Character.isDigit(currentChar)) {
-                  automatic = false;
+              if (!special) {
+                for (int pos = 0; pos < paramName.length(); pos++) {
+                  char currentChar = paramName.charAt(pos);
+                  if (Character.isDigit(currentChar)) {
+                    automatic = false;
+                  }
                 }
               }
             }
