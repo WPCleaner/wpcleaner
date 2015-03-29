@@ -59,7 +59,7 @@ public class CheckErrorAlgorithm525 extends CheckErrorAlgorithmBase {
           isUseless = false;
         }
       }
-      if (tag.isFullTag() || !tag.isComplete()) {
+      if (!tag.isComplete()) {
         isUseless = true;
       }
 
