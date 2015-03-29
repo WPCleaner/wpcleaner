@@ -116,6 +116,11 @@ public class CheckErrorAlgorithm524 extends CheckErrorAlgorithmBase {
 
             boolean automatic = true;
             if (automatic) {
+              if (paramName.trim().length() == 0) {
+                automatic = false;
+              }
+            }
+            if (automatic) {
               // Detect special cases: first parameter unnamed, second one explicitly named
               boolean special = false;
               String existingName = existingParam.param.getName();
