@@ -44,6 +44,7 @@ public class PageElementTag extends PageElement {
   public final static String TAG_HTML_P            = "p";
   public final static String TAG_HTML_S            = "s";
   public final static String TAG_HTML_SMALL        = "small";
+  public final static String TAG_HTML_SPAN         = "span";
   public final static String TAG_HTML_STRIKE       = "strike";
   public final static String TAG_HTML_SUB          = "sub";
   public final static String TAG_HTML_SUP          = "sup";

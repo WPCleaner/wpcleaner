@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2015-03-28 12:16+0100\n"
+"POT-Creation-Date: 2015-03-29 14:33+0200\n"
 "PO-Revision-Date: 2014-09-16 16:31+0000\n"
 "Last-Translator: Wojciech T. Mężyk <Unknown>\n"
 "Language-Team: Polish <pl@li.org>\n"
@@ -368,8 +368,11 @@ msgid "Remove breaks in list"
 msgstr "Usuń wszystkie <br /> z list"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm055.java:155
-msgid "Remove <small> tags"
-msgstr "Skasuj znaczniki <small>"
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm077.java:92
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm525.java:82
+#, java-format
+msgid "Remove {0} tags"
+msgstr "Skasuj znaczniki {0}"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm057.java:30
 msgid "Fix all titles"
@@ -515,11 +518,6 @@ msgstr "Zamień każdy ciąg %20 na znak spacji"
 msgid "Replace %20 by space character"
 msgstr "Zamień %20 na spację"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm077.java:92
-#, java-format
-msgid "Remove {0} tags"
-msgstr "Skasuj znaczniki {0}"
-
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm079.java:106
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm079.java:117
 msgid "What description would you like to use for the external link ?"
@@ -655,7 +653,7 @@ msgstr ""
 msgid "The size below which images are not reported as duplicates"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm524.java:206
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm524.java:253
 #, fuzzy
 msgid "A category containing the list of pages in error"
 msgstr ""
@@ -3556,6 +3554,9 @@ msgstr "Nazwa przypisu nie może zawierać żadnego z tych znaków: {0}"
 #, java-format
 msgid "The value cannot contain any of these characters: {0}"
 msgstr "Wartość nie może zawierać żadnego z tych znaków: {0}"
+
+#~ msgid "Remove <small> tags"
+#~ msgstr "Skasuj znaczniki <small>"
 
 #~ msgid "Update disambiguation warning"
 #~ msgstr "Aktualizacja komunikatów o disambigach"

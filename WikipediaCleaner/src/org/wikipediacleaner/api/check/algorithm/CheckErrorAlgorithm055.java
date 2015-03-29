@@ -152,7 +152,7 @@ public class CheckErrorAlgorithm055 extends CheckErrorAlgorithmBase {
             if (doubleSmall) {
               errorResult.addReplacement(
                   contents.substring(tag.getEndIndex(), tag.getMatchingTag().getBeginIndex()),
-                  GT._("Remove <small> tags"));
+                  GT._("Remove {0} tags", PageElementTag.TAG_HTML_SMALL));
             }
             if (!tag.isComplete() && !tag.isFullTag() && !tag.isEndTag()) {
               errorResult.addReplacement(
