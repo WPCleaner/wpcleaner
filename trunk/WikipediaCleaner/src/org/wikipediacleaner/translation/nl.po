@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2015-03-28 12:16+0100\n"
+"POT-Creation-Date: 2015-03-29 14:33+0200\n"
 "PO-Revision-Date: 2015-03-19 14:22+0000\n"
 "Last-Translator: Niels Verploegen <Unknown>\n"
 "Language-Team: Dutch <nl@li.org>\n"
@@ -353,7 +353,10 @@ msgid "Remove breaks in list"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm055.java:155
-msgid "Remove <small> tags"
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm077.java:92
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm525.java:82
+#, java-format
+msgid "Remove {0} tags"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm057.java:30
@@ -494,11 +497,6 @@ msgstr ""
 msgid "Replace %20 by space character"
 msgstr "Vervang %20 door een spatie"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm077.java:92
-#, java-format
-msgid "Remove {0} tags"
-msgstr ""
-
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm079.java:106
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm079.java:117
 msgid "What description would you like to use for the external link ?"
@@ -633,7 +631,7 @@ msgstr ""
 msgid "The size below which images are not reported as duplicates"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm524.java:206
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm524.java:253
 msgid "A category containing the list of pages in error"
 msgstr ""
 

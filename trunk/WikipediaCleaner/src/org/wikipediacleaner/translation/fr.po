@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2015-03-28 12:16+0100\n"
+"POT-Creation-Date: 2015-03-29 14:33+0200\n"
 "PO-Revision-Date: 2015-03-28 11:17+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: French <fr@li.org>\n"
@@ -379,8 +379,11 @@ msgid "Remove breaks in list"
 msgstr "Supprimer les sauts de ligne en fin de liste"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm055.java:155
-msgid "Remove <small> tags"
-msgstr "Supprimer les balises <small>"
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm077.java:92
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm525.java:82
+#, java-format
+msgid "Remove {0} tags"
+msgstr "Supprimer les balises {0}"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm057.java:30
 msgid "Fix all titles"
@@ -527,11 +530,6 @@ msgstr "Remplacer tous les %20 par des espaces"
 msgid "Replace %20 by space character"
 msgstr "Remplacer %20 par un espace"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm077.java:92
-#, java-format
-msgid "Remove {0} tags"
-msgstr "Supprimer les balises {0}"
-
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm079.java:106
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm079.java:117
 msgid "What description would you like to use for the external link ?"
@@ -672,7 +670,7 @@ msgstr ""
 "La taille en-dessous de laquelle les images ne sont pas considérées comme "
 "dupliquées"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm524.java:206
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm524.java:253
 msgid "A category containing the list of pages in error"
 msgstr "Une catégorie contenant la liste des pages en erreur"
 
@@ -3595,6 +3593,9 @@ msgstr "Un nom de référence ne peut pas contenir les caractères suivants : {0
 #, java-format
 msgid "The value cannot contain any of these characters: {0}"
 msgstr "Une valeur ne peut pas contenir les caractères suivants : {0}"
+
+#~ msgid "Remove <small> tags"
+#~ msgstr "Supprimer les balises <small>"
 
 #~ msgid "&Close"
 #~ msgstr "&Fermer"
