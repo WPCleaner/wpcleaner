@@ -435,7 +435,7 @@ public class PageElementTemplate extends PageElement {
           } else if ((currentChar == '=') &&
                      (equalIndex < 0) &&
                      (equalDone == false)) {
-            int i = parameterBeginIndex;
+            /*int i = parameterBeginIndex;
             while ((i < tmpIndex) &&
                    ((contents.charAt(i) == ' ') || (contents.charAt(i) == '\n'))) {
               i++;
@@ -449,7 +449,8 @@ public class PageElementTemplate extends PageElement {
             }
             if (nameFound) {
               equalIndex = tmpIndex;
-            }
+            }*/
+            equalIndex = tmpIndex;
             equalDone = true;
             tmpIndex++;
           } else {
