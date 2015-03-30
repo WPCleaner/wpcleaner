@@ -7,13 +7,16 @@
 
 package org.wikipediacleaner.api.request;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Map;
 
 import org.wikipediacleaner.api.APIException;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
-import org.wikipediacleaner.api.data.AbuseFilter;
 import org.wikipediacleaner.api.data.Page;
 
 
@@ -143,15 +146,28 @@ public class ApiAbuseLogRequest extends ApiListRequest {
 
   /**
    * Load list of pages that triggered an abuse filters.
+   * 
+   * @param filterId Filter identifier.
+   * @param maxDuration Maximum number of days.
+   * @return List of pages that triggered that filter.
    */
-  public List<Page> loadAbuseLog(AbuseFilter filter) throws APIException {
+  public List<Page> loadAbuseLog(
+      Integer filterId, Integer maxDuration) throws APIException {
     Map<String, String> properties = getProperties(ACTION_QUERY, result.getFormat());
     properties.put(
         PROPERTY_LIST,
         PROPERTY_LIST_ABUSELOG);
+    properties.put(PROPERTY_CONTINUE, PROPERTY_CONTINUE_DEFAULT);
     properties.put(PROPERTY_LIMIT, LIMIT_MAX);
-    if (filter != null) {
-      properties.put(PROPERTY_FILTER, Integer.toString(filter.getId()));
+    if (filterId != null) {
+      properties.put(PROPERTY_FILTER, Integer.toString(filterId));
+    }
+    if (maxDuration != null) {
+      Calendar calendar = new GregorianCalendar();
+      calendar.add(Calendar.DAY_OF_MONTH, -maxDuration.intValue());
+      SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
+      String formattedDate = df.format(new Date(calendar.getTimeInMillis()));
+      properties.put(PROPERTY_END, formattedDate);
     }
     List<Page> list = new ArrayList<Page>();
     while (result.executeAbuseLog(properties, list)) {

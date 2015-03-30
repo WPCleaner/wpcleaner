@@ -289,11 +289,14 @@ public interface API {
    * (<code>action=query</code>, <code>list=abuselog</code>).
    * 
    * @param wiki Wiki.
+   * @param filterId Filter identifier.
+   * @param maxDuration Maximum number of days.
    * @throws APIException
    * @see <a href="http://www.mediawiki.org/wiki/API:Abuselog">API:Abuselog</a>
    */
   public List<Page> retrieveAbuseLog(
-      EnumWikipedia wiki, AbuseFilter filter) throws APIException;
+      EnumWikipedia wiki, Integer filterId,
+      Integer maxDuration) throws APIException;
 
   /**
    * Retrieves the back links of <code>page</code> and initialize redirect status.

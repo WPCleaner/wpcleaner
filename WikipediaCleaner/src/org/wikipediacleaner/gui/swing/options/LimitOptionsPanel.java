@@ -216,6 +216,23 @@ public class LimitOptionsPanel extends OptionsPanel {
     add(spin, constraints);
     constraints.gridy++;
 
+    // Maximum number of days for abuse logs
+    spin = createJSpinner(
+        ConfigurationValueInteger.MAX_DAYS_ABUSE_LOG,
+        100, 1000000, 1000);
+    JLabel labelAbuseLog = Utilities.createJLabel(GT._("Maximum duration for abuse logs :"));
+    labelAbuseLog.setLabelFor(spin);
+    labelAbuseLog.setHorizontalAlignment(SwingConstants.TRAILING);
+    constraints.gridwidth = 2;
+    constraints.gridx = 0;
+    constraints.weightx = 0;
+    add(labelAbuseLog, constraints);
+    constraints.gridwidth = 1;
+    constraints.gridx = 2;
+    constraints.weightx = 1;
+    add(spin, constraints);
+    constraints.gridy++;
+
     // Maximum number of embedding pages
     spin = createJSpinner(
         ConfigurationValueInteger.MAX_EMBEDDED_IN,

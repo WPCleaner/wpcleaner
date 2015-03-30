@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2015-03-29 14:33+0200\n"
+"POT-Creation-Date: 2015-03-30 20:50+0200\n"
 "PO-Revision-Date: 2014-09-10 23:23+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Hungarian <hu@li.org>\n"
@@ -609,12 +609,25 @@ msgstr ""
 msgid "Compact link"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm518.java:197
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm518.java:253
+#, java-format
+msgid "An identifier of an abuse filter that is triggered by {0} tags"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm518.java:257
 msgid "A template that can be used instead of an apostrophe."
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm518.java:200
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm518.java:260
 msgid "A template that can be used instead of an asterisk."
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm518.java:263
+msgid "A template that can be used instead of a closing square bracket."
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm518.java:266
+msgid "A template that can be used instead of an opening square bracket."
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm521.java:343
@@ -961,13 +974,13 @@ msgstr "Szöveg feldolgozása"
 msgid "Retrieving templates"
 msgstr "Sablonok letöltése"
 
-#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:1684
+#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:1688
 msgid ""
 "This action is protected by a CAPTCHA.\n"
 "What is the answer to the following question ?"
 msgstr ""
 
-#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:1691
+#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:1695
 msgid ""
 "This action is protected by a CAPTCHA.\n"
 "What is the answer to the question displayed in your browser ?"
@@ -1362,7 +1375,7 @@ msgid "Generate lists"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:850
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1779
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1781
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:195
 msgid "Local Watchlist"
 msgstr ""
@@ -1372,8 +1385,8 @@ msgid "Watchlist"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:869
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1801
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1866
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1803
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1868
 msgid "Random pages"
 msgstr ""
 
@@ -1506,28 +1519,28 @@ msgstr ""
 msgid "What abuse filter are you interested in?"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1577
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1579
 #, java-format
 msgid "Hits for filter {0}"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1637
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1639
 msgid "All disambiguations pages"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1793
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1795
 msgid "Watch list"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1805
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1807
 msgid "Random redirect pages"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1837
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1839
 msgid "How many pages do you want?"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1849
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1851
 #, java-format
 msgid "The number of pages must be between {0} and {1}"
 msgstr ""
@@ -3077,10 +3090,14 @@ msgid "Maximum number of category members :"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/LimitOptionsPanel.java:223
-msgid "Maximum number of embedding pages :"
+msgid "Maximum duration for abuse logs :"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/LimitOptionsPanel.java:240
+msgid "Maximum number of embedding pages :"
+msgstr ""
+
+#: org/wikipediacleaner/gui/swing/options/LimitOptionsPanel.java:257
 msgid "Maximum number of search results :"
 msgstr ""
 
