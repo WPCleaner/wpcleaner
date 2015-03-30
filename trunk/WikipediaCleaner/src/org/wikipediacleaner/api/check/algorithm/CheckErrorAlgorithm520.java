@@ -8,10 +8,20 @@
 package org.wikipediacleaner.api.check.algorithm;
 
 import java.util.Collection;
+import java.util.List;
+import java.util.Map;
 
+import org.wikipediacleaner.api.API;
+import org.wikipediacleaner.api.APIException;
+import org.wikipediacleaner.api.APIFactory;
 import org.wikipediacleaner.api.check.CheckErrorResult;
+import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.Namespace;
+import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageAnalysis;
+import org.wikipediacleaner.i18n.GT;
+import org.wikipediacleaner.utils.Configuration;
+import org.wikipediacleaner.utils.ConfigurationValueInteger;
 
 
 /**
@@ -65,5 +75,67 @@ public class CheckErrorAlgorithm520 extends CheckErrorAlgorithmBase {
     }
 
     return result;
+  }
+
+  /**
+   * @return True if the error has a special list of pages.
+   */
+  @Override
+  public boolean hasSpecialList() {
+    return (getAbuseFilter() != null);
+  }
+
+  /**
+   * @return Abuse filter.
+   */
+  private Integer getAbuseFilter() {
+    String abuseFilter = getSpecificProperty("abuse_filter", true, true, false);
+    if ((abuseFilter != null) &&
+        (abuseFilter.trim().length() > 0)) {
+      try {
+        return Integer.valueOf(abuseFilter);
+      } catch (NumberFormatException e) {
+        // Nothing to do
+      }
+    }
+    return null;
+  }
+
+  /**
+   * Retrieve the list of pages in error.
+   * 
+   * @param wiki Wiki.
+   * @param limit Maximum number of pages to retrieve.
+   * @return List of pages in error.
+   */
+  @Override
+  public List<Page> getSpecialList(EnumWikipedia wiki, int limit) {
+    List<Page> result = null;
+    Integer abuseFilter = getAbuseFilter();
+    if (abuseFilter != null) {
+      API api = APIFactory.getAPI();
+      Configuration config = Configuration.getConfiguration();
+      int maxDays = config.getInt(wiki, ConfigurationValueInteger.MAX_DAYS_ABUSE_LOG);
+      try {
+        result = api.retrieveAbuseLog(wiki, abuseFilter, maxDays);
+      } catch (APIException e) {
+        //
+      }
+    }
+    return result;
+  }
+
+  /**
+   * Return the parameters used to configure the algorithm.
+   * 
+   * @return Map of parameters (Name -> description).
+   */
+  @Override
+  public Map<String, String> getParameters() {
+    Map<String, String> parameters = super.getParameters();
+    parameters.put(
+        "abuse_filter",
+        GT._("An identifier of an abuse filter that is triggered by weird characters."));
+    return parameters;
   }
 }
