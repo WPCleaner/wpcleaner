@@ -110,9 +110,14 @@ public class BotCWTableModel extends AbstractTableModel {
     if ((algorithm != null) &&
         (algorithm.isAvailable()) &&
         CheckErrorAlgorithms.isAlgorithmActive(wiki, errorNumber)) {
-      if ((errorNumber <= CheckErrorAlgorithm.MAX_ERROR_NUMBER_WITH_LIST) ||
-          (algorithm.hasSpecialList())) {
+      if (errorNumber <= CheckErrorAlgorithm.MAX_ERROR_NUMBER_WITH_LIST) {
+        if (CheckErrorAlgorithms.isAlgorithmActive(wiki, errorNumber)) {
           botAlgorithms.add(algorithm);
+        }
+      } else {
+        if (algorithm.hasSpecialList()) {
+          botAlgorithms.add(algorithm);
+        }
       }
     }
   }

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2015-03-30 20:50+0200\n"
+"POT-Creation-Date: 2015-03-30 21:15+0200\n"
 "PO-Revision-Date: 2015-03-28 16:33+0000\n"
 "Last-Translator: Felipe L. <felipe.idj@hotmail.com>\n"
 "Language-Team: Brazilian Portuguese <pt_BR@li.org>\n"
@@ -641,7 +641,7 @@ msgstr "Compactar link"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm518.java:253
 #, java-format
-msgid "An identifier of an abuse filter that is triggered by {0} tags"
+msgid "An identifier of an abuse filter that is triggered by {0} tags."
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm518.java:257
@@ -661,6 +661,10 @@ msgstr "Uma predefinição que pode ser usada em vez de um asterisco."
 #, fuzzy
 msgid "A template that can be used instead of an opening square bracket."
 msgstr "Uma predefinição que pode ser usada em vez de um asterisco."
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm520.java:138
+msgid "An identifier of an abuse filter that is triggered by weird characters."
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm521.java:343
 msgid "A list of templates and parameters in which format should be checked"
@@ -2261,11 +2265,11 @@ msgid_plural "{0} pages have been marked as fixed for other algorithms"
 msgstr[0] "{0} página foi marcada como corrigida com outros algoritmos"
 msgstr[1] "{0} páginas foram marcadas como corrigidas com outros algoritmos"
 
-#: org/wikipediacleaner/gui/swing/bot/BotCWTableModel.java:213
+#: org/wikipediacleaner/gui/swing/bot/BotCWTableModel.java:218
 msgid "Description"
 msgstr "Descrição"
 
-#: org/wikipediacleaner/gui/swing/bot/BotCWTableModel.java:215
+#: org/wikipediacleaner/gui/swing/bot/BotCWTableModel.java:220
 msgid "N°"
 msgstr "N°"
 

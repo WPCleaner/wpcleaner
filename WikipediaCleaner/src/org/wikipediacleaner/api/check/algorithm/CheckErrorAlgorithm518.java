@@ -250,7 +250,7 @@ public class CheckErrorAlgorithm518 extends CheckErrorAlgorithmBase {
     parameters.put(
         "abuse_filter",
         GT._(
-            "An identifier of an abuse filter that is triggered by {0} tags",
+            "An identifier of an abuse filter that is triggered by {0} tags.",
             PageElementTag.TAG_WIKI_NOWIKI));
     parameters.put(
         "apostrophe_template",
