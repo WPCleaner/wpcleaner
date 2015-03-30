@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2015-03-30 21:15+0200\n"
+"POT-Creation-Date: 2015-03-31 00:50+0200\n"
 "PO-Revision-Date: 2014-09-16 16:31+0000\n"
 "Last-Translator: Wojciech T. Mężyk <Unknown>\n"
 "Language-Team: Polish <pl@li.org>\n"
@@ -678,6 +678,11 @@ msgid "A category containing the list of pages in error"
 msgstr ""
 "Adres strony zawierającej wykaz wyjątków (rezultatów fałszywie pozytywnych) "
 "dla tego typu błędu"
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm526.java:171
+msgid ""
+"An identifier of an abuse filter that is triggered by incorrect year links."
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmBase.java:252
 msgid "Title of the article describing this type of error"
