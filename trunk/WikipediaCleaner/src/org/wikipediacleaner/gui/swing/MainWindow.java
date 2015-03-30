@@ -1563,7 +1563,9 @@ public class MainWindow
             GT._("What abuse filter are you interested in?"),
             abuseFilters.toArray(), abuseFilters.get(0));
         if ((filter != null) && (filter instanceof AbuseFilter)) {
-          List<Page> pages = api.retrieveAbuseLog(getWikipedia(), (AbuseFilter) filter);
+          AbuseFilter abuseFilter = (AbuseFilter) filter;
+          List<Page> pages = api.retrieveAbuseLog(
+              getWikipedia(), abuseFilter.getId(), null);
           if ((pages != null) && (!pages.isEmpty())) {
             List<String> pageNames = new ArrayList<String>(pages.size());
             for (Page page : pages) {
