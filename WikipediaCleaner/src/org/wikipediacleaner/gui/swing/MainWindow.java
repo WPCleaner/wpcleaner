@@ -17,6 +17,9 @@ import java.awt.Insets;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemListener;
 import java.beans.EventHandler;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.StringReader;
 import java.text.DateFormat;
@@ -31,6 +34,7 @@ import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
@@ -43,6 +47,7 @@ import javax.swing.JRadioButton;
 import javax.swing.JToolBar;
 import javax.swing.SwingConstants;
 import javax.swing.border.TitledBorder;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 import org.lobobrowser.html.HtmlRendererContext;
 import org.lobobrowser.html.UserAgentContext;
@@ -141,6 +146,7 @@ public class MainWindow
   private JButton buttonAddPage;
   private JButton buttonRemovePage;
   private JButton buttonRandomPage;
+  private JButton buttonLoadList;
   private JButton buttonContributions;
 
   private JButton buttonOptions;
@@ -297,6 +303,7 @@ public class MainWindow
     buttonRandomPage.setEnabled(logged);
     buttonAddPage.setEnabled(logged);
     buttonRemovePage.setEnabled(logged);
+    buttonLoadList.setEnabled(logged);
     buttonContributions.setEnabled(logged);
   }
 
@@ -738,6 +745,15 @@ public class MainWindow
     constraints.gridy++;
     constraints.fill = GridBagConstraints.HORIZONTAL;
     constraints.weighty = 0;
+
+    // Load list from disk
+    buttonLoadList = Utilities.createJButton(
+        "gnome-drive-harddisk.png", EnumImageSize.NORMAL,
+        GT._("Load list from drive"), true, null);
+    buttonLoadList.addActionListener(EventHandler.create(
+        ActionListener.class, this, "actionLoadList"));
+    panel.add(buttonLoadList, constraints);
+    constraints.gridy++;
 
     // Contributions
     buttonContributions = Utilities.createJButton(
@@ -1793,6 +1809,55 @@ public class MainWindow
         wikipedia, this, null,
         null, PageListWorker.Mode.WATCH_LIST, true,
         GT._("Watch list")).start();
+  }
+
+  /**
+   * Action called when Load List button is pressed.
+   */
+  public void actionLoadList() {
+    EnumWikipedia wikipedia = getWikipedia();
+    if (wikipedia == null) {
+      return;
+    }
+    JFileChooser chooser = new JFileChooser();
+    FileNameExtensionFilter filter = new FileNameExtensionFilter(
+        "Text files", "txt");
+    chooser.setFileFilter(filter);
+    int returnVal = chooser.showOpenDialog(this.getParentComponent());
+    if (returnVal != JFileChooser.APPROVE_OPTION) {
+       return;
+    }
+    File chosenFile = chooser.getSelectedFile();
+    if ((chosenFile == null) ||
+        !chosenFile.isFile() ||
+        !chosenFile.canRead()){
+      return;
+    }
+    BufferedReader reader = null;
+    try {
+      reader = new BufferedReader(new FileReader(chosenFile));
+      List<String> pages = new ArrayList<String>();
+      String line = null;
+      while ((line = reader.readLine()) != null) {
+        if (line.trim().length() > 0) {
+          pages.add(line);
+        }
+      }
+      new PageListWorker(
+          wikipedia, this, null,
+          pages, PageListWorker.Mode.DIRECT, true,
+          GT._("List")).start();
+    } catch (IOException e) {
+      //
+    } finally {
+      if (reader != null) {
+        try {
+          reader.close();
+        } catch (Exception e) {
+          //
+        }
+      }
+    }
   }
 
   /**
