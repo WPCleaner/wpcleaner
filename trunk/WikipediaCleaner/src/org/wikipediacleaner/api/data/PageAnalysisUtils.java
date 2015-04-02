@@ -13,6 +13,7 @@ import java.util.Map;
 
 import org.wikipediacleaner.api.constants.WPCConfiguration;
 import org.wikipediacleaner.api.constants.WPCConfigurationStringList;
+import org.wikipediacleaner.api.data.PageElementTemplate.Parameter;
 
 
 /**
@@ -69,10 +70,13 @@ public class PageAnalysisUtils {
 
     // Search for simple internal links [[link]], [[link|text]], [[link#anchor|text]], ...
     List<PageElementInternalLink> internalLinks = pageAnalysis.getInternalLinks();
-    List<String> templatesAfter = pageAnalysis.getWPCConfiguration().getStringList(
+    WPCConfiguration wpcConfiguration = pageAnalysis.getWPCConfiguration();
+    List<String> templatesAfter = wpcConfiguration.getStringList(
         WPCConfigurationStringList.TEMPLATES_AFTER_HELP_ASKED);
-    List<String> commentsAfter = pageAnalysis.getWPCConfiguration().getStringList(
+    List<String> commentsAfter = wpcConfiguration.getStringList(
         WPCConfigurationStringList.COMMENTS_FOR_DAB_LINK);
+    List<String[]> templatesIgnoreDab = wpcConfiguration.getStringArrayList(
+        WPCConfigurationStringList.TEMPLATES_IGNORE_DAB);
     MagicWord redirect = pageAnalysis.getWikiConfiguration().getMagicWordByName(MagicWord.REDIRECT);
     String contents = pageAnalysis.getContents();
     int maxSize = contents.length();
@@ -111,6 +115,27 @@ public class PageAnalysisUtils {
                     String comment = nextComment.getComment().substring(0, commentAfter.length());
                     if (comment.equalsIgnoreCase(commentAfter)) {
                       good = true;
+                    }
+                  }
+                }
+              }
+            }
+          }
+          if (!good &&
+              (templatesIgnoreDab != null) &&
+              !templatesIgnoreDab.isEmpty()) {
+            PageElementTemplate template = pageAnalysis.isInTemplate(currentPos);
+            if (template != null) {
+              for (String[] currentTemplate : templatesIgnoreDab) {
+                if ((currentTemplate != null) &&
+                    (currentTemplate.length > 1) &&
+                    Page.areSameTitle(currentTemplate[0], template.getTemplateName())) {
+                  Parameter parameter = template.getParameterAtIndex(currentPos);
+                  if (parameter != null) {
+                    for (int index = 1; index < currentTemplate.length; index++) {
+                      if (parameter.getComputedName().equals(currentTemplate[index])) {
+                        good = true;
+                      }
                     }
                   }
                 }
