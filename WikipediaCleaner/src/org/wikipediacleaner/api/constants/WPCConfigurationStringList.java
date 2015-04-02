@@ -77,6 +77,8 @@ public enum WPCConfigurationStringList {
   TEMPLATES_FOR_LINKING_TEXT("link_text_templates", false, true, false),
   // Templates used for a link where help is required.
   TEMPLATES_FOR_NEEDING_HELP("needing_help_templates", false, true, false),
+  // Templates ignored for disambiguation link
+  TEMPLATES_IGNORE_DAB("dab_ignore_templates", true, true, true),
   // Templates creating links to "to do" lists.
   TODO_LINK_TEMPLATES("general_todo_link_templates", false, true, false),
   // Templates creating "to do" lists.
