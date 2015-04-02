@@ -182,7 +182,6 @@ public class CheckErrorAlgorithm011 extends CheckErrorAlgorithmHtmlNamedEntities
     htmlCharacters.add(HtmlCharacters.SYMBOL_REGISTERED_TRADEMARK);         // &reg;
     htmlCharacters.add(HtmlCharacters.LETTER_SMALL_RHO);                    // &rho;
     // htmlCharacters.add(HtmlCharacters.LETTER_CAPITAL_RHO);                  // &Rho;
-    htmlCharacters.add(HtmlCharacters.SYMBOL_RIGHT_ANGLE_QUOTATION_MARK);   // &raquo;
     htmlCharacters.add(HtmlCharacters.SYMBOL_SINGLE_RIGHT_ANGLE_QUOTATION); // &rsaquo;
     htmlCharacters.add(HtmlCharacters.SYMBOL_RIGHT_SINGLE_QUOTATION_MARK);  // &rsquo;
     htmlCharacters.add(HtmlCharacters.LETTER_SMALL_S_CARON);                // &scaron;
