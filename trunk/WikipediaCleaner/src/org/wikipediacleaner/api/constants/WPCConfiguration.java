@@ -1328,4 +1328,24 @@ public class WPCConfiguration {
     }
     return result;
   }
+
+  /**
+   * Convert a property on multiple lines to a string array list.
+   * 
+   * @param property Property.
+   * @return String array list.
+   */
+  public static List<String[]> convertPropertyToStringArrayList(String property) {
+    List<String> tmpResults = convertPropertyToStringList(property);
+    if (tmpResults == null) {
+      return null;
+    }
+    List<String[]> result = new ArrayList<String[]>();
+    for (String tmpResult : tmpResults) {
+      if (tmpResult != null) {
+        result.add(tmpResult.split("\\|"));
+      }
+    }
+    return result;
+  }
 }

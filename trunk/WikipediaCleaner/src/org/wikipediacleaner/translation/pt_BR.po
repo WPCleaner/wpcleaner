@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2015-04-02 20:19+0200\n"
+"POT-Creation-Date: 2015-04-03 19:54+0200\n"
 "PO-Revision-Date: 2015-03-31 08:24+0000\n"
 "Last-Translator: Felipe L. <felipe.idj@hotmail.com>\n"
 "Language-Team: Brazilian Portuguese <pt_BR@li.org>\n"
@@ -677,9 +677,13 @@ msgstr "Uma lista de valores de texto por mês"
 msgid "The size below which images are not reported as duplicates"
 msgstr "O tamanho abaixo do qual as imagens não são relatadas como duplicadas"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm524.java:253
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm524.java:276
 msgid "A category containing the list of pages in error"
 msgstr "Uma categoria que contém a lista de páginas com erro"
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm524.java:277
+msgid "Values that can be safely ignored for a given template and argument"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm526.java:171
 msgid ""
