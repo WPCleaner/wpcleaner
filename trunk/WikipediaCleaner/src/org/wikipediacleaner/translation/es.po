@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2015-04-04 00:18+0200\n"
-"PO-Revision-Date: 2015-03-31 08:29+0000\n"
+"PO-Revision-Date: 2015-04-03 05:42+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Spanish\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2015-03-31 22:13+0000\n"
+"X-Launchpad-Export-Date: 2015-04-03 22:21+0000\n"
 "X-Generator: Launchpad (build 17413)\n"
 "Language: es\n"
 
@@ -1607,9 +1607,8 @@ msgid "Watch list"
 msgstr "Lista de seguimiento"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1849
-#, fuzzy
 msgid "List"
-msgstr "Límites"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1872
 msgid "Random redirect pages"

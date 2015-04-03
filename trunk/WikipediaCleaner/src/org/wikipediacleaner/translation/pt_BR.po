@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2015-04-04 00:18+0200\n"
-"PO-Revision-Date: 2015-03-31 08:24+0000\n"
+"PO-Revision-Date: 2015-04-03 06:08+0000\n"
 "Last-Translator: Felipe L. <felipe.idj@hotmail.com>\n"
 "Language-Team: Brazilian Portuguese <pt_BR@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Launchpad-Export-Date: 2015-03-31 22:12+0000\n"
+"X-Launchpad-Export-Date: 2015-04-03 22:21+0000\n"
 "X-Generator: Launchpad (build 17413)\n"
 "Language: pt_BR\n"
 
@@ -196,7 +196,7 @@ msgstr "Corrigir todas as tags <br>"
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm002.java:224
 #, java-format
 msgid "A replacement for {0}"
-msgstr ""
+msgstr "Uma substituição para {0}"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm003.java:115
 msgid "Close tag"
@@ -249,7 +249,7 @@ msgstr "Espaço não-separável"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:300
 msgid "Soft hyphen"
-msgstr ""
+msgstr "Hífen"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:301
 msgid "Zero-width space"
@@ -642,6 +642,7 @@ msgstr "Compactar link"
 #, java-format
 msgid "An identifier of an abuse filter that is triggered by {0} tags."
 msgstr ""
+"Um identificador de um filtro de abuso que é desencadeado por tags {0}."
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm518.java:257
 msgid "A template that can be used instead of an apostrophe."
@@ -654,14 +655,17 @@ msgstr "Uma predefinição que pode ser usada em vez de um asterisco."
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm518.java:263
 msgid "A template that can be used instead of a closing square bracket."
 msgstr ""
+"Uma predefinição que pode ser usada em vez de um colchete de fechamento."
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm518.java:266
 msgid "A template that can be used instead of an opening square bracket."
-msgstr ""
+msgstr "Uma predefinição que pode ser usada em vez de um colchete de abertura."
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm520.java:138
 msgid "An identifier of an abuse filter that is triggered by weird characters."
 msgstr ""
+"Um identificador de um filtro de abuso que é desencadeado por caráteres "
+"estranhos."
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm521.java:343
 msgid "A list of templates and parameters in which format should be checked"
@@ -688,6 +692,8 @@ msgstr ""
 msgid ""
 "An identifier of an abuse filter that is triggered by incorrect year links."
 msgstr ""
+"Um identificador de um filtro de abuso que é desencadeado por links "
+"incorretos de anos."
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmBase.java:252
 msgid "Title of the article describing this type of error"
@@ -1395,7 +1401,7 @@ msgstr "Incorporado em"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:752
 msgid "Load list from drive"
-msgstr ""
+msgstr "Carregar lista do arquivo"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:761
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1308
@@ -1607,9 +1613,8 @@ msgid "Watch list"
 msgstr "Lista de páginas vigiadas"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1849
-#, fuzzy
 msgid "List"
-msgstr "Limites"
+msgstr "Lista"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1872
 msgid "Random redirect pages"
@@ -3216,7 +3221,7 @@ msgstr "Número máximo de membros de uma categoria:"
 
 #: org/wikipediacleaner/gui/swing/options/LimitOptionsPanel.java:223
 msgid "Maximum duration for abuse logs :"
-msgstr ""
+msgstr "Duração máxima para registros de abuso:"
 
 #: org/wikipediacleaner/gui/swing/options/LimitOptionsPanel.java:240
 msgid "Maximum number of embedding pages :"
