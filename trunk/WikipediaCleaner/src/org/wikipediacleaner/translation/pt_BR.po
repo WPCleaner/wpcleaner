@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2015-04-03 19:54+0200\n"
+"POT-Creation-Date: 2015-04-04 00:18+0200\n"
 "PO-Revision-Date: 2015-03-31 08:24+0000\n"
 "Last-Translator: Felipe L. <felipe.idj@hotmail.com>\n"
 "Language-Team: Brazilian Portuguese <pt_BR@li.org>\n"
@@ -173,7 +173,6 @@ msgstr "Substituir com {0}"
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm046.java:174
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm047.java:123
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm048.java:86
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm085.java:108
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm515.java:89
 #: org/wikipediacleaner/gui/swing/options/SortingOptionsPanel.java:115
 msgid "Delete"
@@ -585,7 +584,7 @@ msgstr "Uma lista de textos que podem ser adicionados às secções sem conteúd
 msgid "Restrict verification to titles with a higher level"
 msgstr "Restringir a verificação para títulos com um nível mais elevado"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm085.java:38
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm085.java:45
 msgid "Delete all tags without content"
 msgstr "Excluir todas as tags sem conteúdo"
 
@@ -677,11 +676,11 @@ msgstr "Uma lista de valores de texto por mês"
 msgid "The size below which images are not reported as duplicates"
 msgstr "O tamanho abaixo do qual as imagens não são relatadas como duplicadas"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm524.java:276
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm524.java:297
 msgid "A category containing the list of pages in error"
 msgstr "Uma categoria que contém a lista de páginas com erro"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm524.java:277
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm524.java:298
 msgid "Values that can be safely ignored for a given template and argument"
 msgstr ""
 
