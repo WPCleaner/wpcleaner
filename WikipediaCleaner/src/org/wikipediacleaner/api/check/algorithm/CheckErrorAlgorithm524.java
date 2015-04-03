@@ -17,6 +17,7 @@ import org.wikipediacleaner.api.APIException;
 import org.wikipediacleaner.api.APIFactory;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
+import org.wikipediacleaner.api.constants.WPCConfiguration;
 import org.wikipediacleaner.api.data.DataManager;
 import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.Page;
@@ -57,6 +58,10 @@ public class CheckErrorAlgorithm524 extends CheckErrorAlgorithmBase {
     if ((analysis == null) || (analysis.getPage() == null)) {
       return false;
     }
+
+    // Retrieve configuration
+    String ignoreString = getSpecificProperty("ignore", true, true, false);
+    List<String[]> ignore = WPCConfiguration.convertPropertyToStringArrayList(ignoreString);
 
     // Analyze each template
     List<PageElementTemplate> templates = analysis.getTemplates();
@@ -147,6 +152,24 @@ public class CheckErrorAlgorithm524 extends CheckErrorAlgorithmBase {
                 }
               }
             }
+
+            if (!automatic && (ignore != null) && !ignore.isEmpty()) {
+              // Manage some parameters safe to replace
+              for (String[] ignoreElement : ignore) {
+                if ((ignoreElement.length > 1) &&
+                    Page.areSameTitle(template.getTemplateName(), ignoreElement[0]) &&
+                    ignoreElement[1].equals(paramName)) {
+                  if (ignoreElement.length > 2) {
+                    for (int pos = 2; pos < ignoreElement.length; pos++) {
+                      if (ignoreElement[pos].equals(existingValue)) {
+                        automatic = true;
+                      }
+                    }
+                  }
+                }
+              }
+            }
+
             if (automatic) {
               // If there's a table start, don't do automatic replacement
               int indexTable = contents.indexOf("{|", template.getBeginIndex() + 2);
@@ -251,6 +274,7 @@ public class CheckErrorAlgorithm524 extends CheckErrorAlgorithmBase {
   public Map<String, String> getParameters() {
     Map<String, String> parameters = super.getParameters();
     parameters.put("category", GT._("A category containing the list of pages in error"));
+    parameters.put("ignore", GT._("Values that can be safely ignored for a given template and argument"));
     return parameters;
   }
 
