@@ -11,6 +11,7 @@ import java.util.Collection;
 import java.util.List;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
+import org.wikipediacleaner.api.check.CheckErrorResult.ErrorLevel;
 import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.gui.swing.component.MWPane;
@@ -29,6 +30,12 @@ public class CheckErrorAlgorithm085 extends CheckErrorAlgorithmBase {
     PageElementTag.TAG_WIKI_GALLERY,
     PageElementTag.TAG_WIKI_NOINCLUDE,
     PageElementTag.TAG_WIKI_REF,
+  };
+
+  private final static String[] ignoredTags = {
+    PageElementTag.TAG_WIKI_CODE,
+    PageElementTag.TAG_WIKI_PRE,
+    PageElementTag.TAG_WIKI_SCORE,
   };
 
   /**
@@ -74,16 +81,36 @@ public class CheckErrorAlgorithm085 extends CheckErrorAlgorithmBase {
   
         // Check tag
         if (interesting) {
+          ErrorLevel errorLevel = ErrorLevel.ERROR;
 
           // Check if text is found inside the tag
           boolean textFound = false;
           int currentIndex = tag.getValueBeginIndex();
           int lastIndex = tag.getValueEndIndex();
           while (!textFound && (currentIndex < lastIndex)) {
-            if (!Character.isWhitespace(contents.charAt(currentIndex))) {
+            char currentChar = contents.charAt(currentIndex);
+            if (Character.isWhitespace(currentChar)) {
+              currentIndex++;
+            } else if (currentChar == '<') {
+              boolean ok = false;
+              if (!ok) {
+                PageElementTag internalTag = analysis.isInTag(currentIndex);
+                if (internalTag != null) {
+                  for (String ignoredTag : ignoredTags) {
+                    if (ignoredTag.equals(internalTag.getName())) {
+                      ok = true;
+                      errorLevel = ErrorLevel.WARNING;
+                      currentIndex = internalTag.getCompleteEndIndex();
+                    }
+                  }
+                }
+              }
+              if (!ok) {
+                textFound = true;
+              }
+            } else {
               textFound = true;
             }
-            currentIndex++;
           }
 
           // Check if tag has arguments
@@ -104,8 +131,11 @@ public class CheckErrorAlgorithm085 extends CheckErrorAlgorithmBase {
             CheckErrorResult errorResult = createCheckErrorResult(
                 analysis,
                 tag.getCompleteBeginIndex(),
-                tag.getCompleteEndIndex());
-            errorResult.addReplacement("", GT._("Delete"));
+                tag.getCompleteEndIndex(),
+                errorLevel);
+            if (errorLevel == ErrorLevel.ERROR) {
+              errorResult.addReplacement("");
+            }
             errors.add(errorResult);
           }
         }

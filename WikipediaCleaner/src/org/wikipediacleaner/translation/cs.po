@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2015-04-03 19:54+0200\n"
+"POT-Creation-Date: 2015-04-04 00:18+0200\n"
 "PO-Revision-Date: 2015-03-31 08:30+0000\n"
 "Last-Translator: Matěj S. <matejsuchanek97@gmail.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
@@ -165,7 +165,6 @@ msgstr "Nahradit řetězcem {0}"
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm046.java:174
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm047.java:123
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm048.java:86
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm085.java:108
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm515.java:89
 #: org/wikipediacleaner/gui/swing/options/SortingOptionsPanel.java:115
 msgid "Delete"
@@ -576,7 +575,7 @@ msgstr "Seznam textových řetězců, které mohou být vloženy do sekcí bez o
 msgid "Restrict verification to titles with a higher level"
 msgstr "Prověřovat pouze nadpisy vyšší úrovně"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm085.java:38
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm085.java:45
 msgid "Delete all tags without content"
 msgstr "Odstranit všechny tagy bez obsahu"
 
@@ -667,11 +666,11 @@ msgstr "Seznam textových řetězců pro měsíce"
 msgid "The size below which images are not reported as duplicates"
 msgstr "Velikost, pod níž nejsou obrázky hlášeny jako duplicitní"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm524.java:276
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm524.java:297
 msgid "A category containing the list of pages in error"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm524.java:277
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm524.java:298
 msgid "Values that can be safely ignored for a given template and argument"
 msgstr ""
 
