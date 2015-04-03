@@ -7,6 +7,7 @@
 
 package org.wikipediacleaner.api.check.algorithm;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
@@ -16,6 +17,7 @@ import org.wikipediacleaner.api.API;
 import org.wikipediacleaner.api.APIException;
 import org.wikipediacleaner.api.APIFactory;
 import org.wikipediacleaner.api.check.CheckErrorResult;
+import org.wikipediacleaner.api.check.CheckErrorResult.ErrorLevel;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.constants.WPCConfiguration;
 import org.wikipediacleaner.api.data.DataManager;
@@ -69,6 +71,7 @@ public class CheckErrorAlgorithm524 extends CheckErrorAlgorithmBase {
       return false;
     }
     HashMap<String, ParameterInfo> names = new HashMap<String, ParameterInfo>();
+    List<ParameterInfo> duplicates = new ArrayList<ParameterInfo>();
     boolean result = false;
     String contents = analysis.getContents();
     for (PageElementTemplate template : templates) {
@@ -84,16 +87,21 @@ public class CheckErrorAlgorithm524 extends CheckErrorAlgorithmBase {
       }
       if (shouldCheck) {
         names.clear();
+        duplicates.clear();
         for (int numParam = 0; numParam < nbParam; numParam++) {
           Parameter param = template.getParameter(numParam);
           String paramName = param.getComputedName();
           ParameterInfo existingParam = names.get(paramName);
-          names.put(paramName, new ParameterInfo(numParam, param));
+          ParameterInfo newParam = new ParameterInfo(numParam, param);
+          names.put(paramName, newParam);
           if (existingParam != null) {
             if (errors == null) {
               return true;
             }
             result = true;
+
+            duplicates.remove(existingParam);
+            duplicates.add(newParam);
 
             // Compute actual area
             int paramBegin = existingParam.param.getPipeIndex();
@@ -192,6 +200,19 @@ public class CheckErrorAlgorithm524 extends CheckErrorAlgorithmBase {
             }
             errors.add(errorResult);
           }
+        }
+
+        // Mark duplicates
+        for (ParameterInfo paramInfo : duplicates) {
+          int endIndex = template.getEndIndex() - 2;
+          if (paramInfo.numParam + 1 < template.getParameterCount()) {
+            endIndex = template.getParameter(paramInfo.numParam + 1).getPipeIndex();
+          }
+          CheckErrorResult errorResult = createCheckErrorResult(
+              analysis,
+              paramInfo.param.getPipeIndex(), endIndex,
+              ErrorLevel.CORRECT);
+          errors.add(errorResult);
         }
       }
     }
