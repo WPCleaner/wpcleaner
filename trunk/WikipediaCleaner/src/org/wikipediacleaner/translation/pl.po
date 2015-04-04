@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2015-04-04 00:18+0200\n"
+"POT-Creation-Date: 2015-04-04 18:55+0200\n"
 "PO-Revision-Date: 2015-04-03 05:42+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Polish <pl@li.org>\n"
@@ -365,7 +365,7 @@ msgstr "Usuń wszystkie <br /> z list"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm055.java:155
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm077.java:92
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm525.java:82
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm525.java:87
 #, java-format
 msgid "Remove {0} tags"
 msgstr "Skasuj znaczniki {0}"
@@ -966,6 +966,7 @@ msgid "Template"
 msgstr "Szablon"
 
 #: org/wikipediacleaner/api/data/PageComparator.java:405
+#: org/wikipediacleaner/gui/swing/OnePageWindow.java:365
 msgid "Redirect"
 msgstr "Przekierowanie"
 
@@ -1302,8 +1303,8 @@ msgid "Help"
 msgstr "Pomoc"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:505
-#: org/wikipediacleaner/gui/swing/OnePageWindow.java:566
-#: org/wikipediacleaner/gui/swing/OnePageWindow.java:568
+#: org/wikipediacleaner/gui/swing/OnePageWindow.java:559
+#: org/wikipediacleaner/gui/swing/OnePageWindow.java:561
 #: org/wikipediacleaner/gui/swing/options/OptionsWindow.java:64
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:165
 msgid "Options"
@@ -1614,7 +1615,7 @@ msgid "New section in {0}"
 msgstr "Nowa sekcja w {0}"
 
 #: org/wikipediacleaner/gui/swing/NewSectionWindow.java:115
-#: org/wikipediacleaner/gui/swing/OnePageWindow.java:533
+#: org/wikipediacleaner/gui/swing/OnePageWindow.java:526
 msgid "Comment"
 msgstr "Komentarz"
 
@@ -1745,99 +1746,91 @@ msgstr "Z której Wikipedii pochodzi oryginalny tekst?"
 msgid "Translation"
 msgstr "Tłumaczenie"
 
-#: org/wikipediacleaner/gui/swing/OnePageWindow.java:317
+#: org/wikipediacleaner/gui/swing/OnePageWindow.java:314
 msgid "&Page :"
 msgstr "Strona:"
 
-#: org/wikipediacleaner/gui/swing/OnePageWindow.java:336
-#: org/wikipediacleaner/gui/swing/OnePageWindow.java:338
+#: org/wikipediacleaner/gui/swing/OnePageWindow.java:333
+#: org/wikipediacleaner/gui/swing/OnePageWindow.java:335
 #: org/wikipediacleaner/gui/swing/action/ActionDisambiguationAnalysis.java:47
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:130
 #: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:188
 msgid "Disambiguation"
 msgstr "Ujednoznacznianie"
 
-#: org/wikipediacleaner/gui/swing/OnePageWindow.java:367
-msgid "Full analysis of redirect"
-msgstr "Pełna analiza przekierowań"
-
-#: org/wikipediacleaner/gui/swing/OnePageWindow.java:372
-msgid "Disambiguation analysis of redirect"
-msgstr "Analiza ujednoznaczniająca przekierowań"
-
-#: org/wikipediacleaner/gui/swing/OnePageWindow.java:403
+#: org/wikipediacleaner/gui/swing/OnePageWindow.java:396
 msgid "Reload (Alt + &R)"
 msgstr "Wczytaj ponownie (Alt + &R)"
 
-#: org/wikipediacleaner/gui/swing/OnePageWindow.java:405
+#: org/wikipediacleaner/gui/swing/OnePageWindow.java:398
 msgid "&Reload"
 msgstr "Wczytaj ponownie"
 
-#: org/wikipediacleaner/gui/swing/OnePageWindow.java:436
+#: org/wikipediacleaner/gui/swing/OnePageWindow.java:429
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:180
 msgid "Send"
 msgstr "Wyślij"
 
-#: org/wikipediacleaner/gui/swing/OnePageWindow.java:453
-#: org/wikipediacleaner/gui/swing/OnePageWindow.java:455
+#: org/wikipediacleaner/gui/swing/OnePageWindow.java:446
+#: org/wikipediacleaner/gui/swing/OnePageWindow.java:448
 msgid "Undo"
 msgstr "Cofnij"
 
-#: org/wikipediacleaner/gui/swing/OnePageWindow.java:461
-#: org/wikipediacleaner/gui/swing/OnePageWindow.java:463
+#: org/wikipediacleaner/gui/swing/OnePageWindow.java:454
+#: org/wikipediacleaner/gui/swing/OnePageWindow.java:456
 msgid "Redo"
 msgstr "Ponów"
 
-#: org/wikipediacleaner/gui/swing/OnePageWindow.java:484
-#: org/wikipediacleaner/gui/swing/OnePageWindow.java:486
+#: org/wikipediacleaner/gui/swing/OnePageWindow.java:477
+#: org/wikipediacleaner/gui/swing/OnePageWindow.java:479
 msgid "Table of Contents"
 msgstr "Spis treści"
 
-#: org/wikipediacleaner/gui/swing/OnePageWindow.java:504
+#: org/wikipediacleaner/gui/swing/OnePageWindow.java:497
 #: org/wikipediacleaner/gui/swing/options/OptionsWindow.java:132
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:190
 msgid "Validate"
 msgstr "Skontroluj"
 
-#: org/wikipediacleaner/gui/swing/OnePageWindow.java:551
+#: org/wikipediacleaner/gui/swing/OnePageWindow.java:544
 msgid "Automatic comment"
 msgstr "Automatyczny komentarz"
 
-#: org/wikipediacleaner/gui/swing/OnePageWindow.java:577
+#: org/wikipediacleaner/gui/swing/OnePageWindow.java:570
 msgid "&Close after sending"
 msgstr "Zamknij po wysłaniu"
 
-#: org/wikipediacleaner/gui/swing/OnePageWindow.java:583
+#: org/wikipediacleaner/gui/swing/OnePageWindow.java:576
 msgid "&Add a note on talk page"
 msgstr "Dodaj wpis w dyskusji"
 
-#: org/wikipediacleaner/gui/swing/OnePageWindow.java:587
+#: org/wikipediacleaner/gui/swing/OnePageWindow.java:580
 msgid "Update disambiguation warning on talk page"
 msgstr "Aktualizuj w dyskusji komunikat o disambigach"
 
-#: org/wikipediacleaner/gui/swing/OnePageWindow.java:592
+#: org/wikipediacleaner/gui/swing/OnePageWindow.java:585
 msgid "Create disambiguation warning on talk page"
 msgstr "Twórz w dyskusji komunikat o disambigach"
 
-#: org/wikipediacleaner/gui/swing/OnePageWindow.java:616
+#: org/wikipediacleaner/gui/swing/OnePageWindow.java:609
 #: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:197
 msgid "Check spelling and typography"
 msgstr "Sprawdzaj ortografię i typografię"
 
-#: org/wikipediacleaner/gui/swing/OnePageWindow.java:618
+#: org/wikipediacleaner/gui/swing/OnePageWindow.java:611
 msgid "Spelling"
 msgstr "Pisownia"
 
-#: org/wikipediacleaner/gui/swing/OnePageWindow.java:653
+#: org/wikipediacleaner/gui/swing/OnePageWindow.java:646
 msgid "Protection level for editing the page"
 msgstr "Poziom zabezpieczenia przed edycją"
 
-#: org/wikipediacleaner/gui/swing/OnePageWindow.java:741
+#: org/wikipediacleaner/gui/swing/OnePageWindow.java:734
 #, java-format
 msgid "Last modified at {0}"
 msgstr "Ostatnio zmieniane: {0}"
 
-#: org/wikipediacleaner/gui/swing/OnePageWindow.java:749
+#: org/wikipediacleaner/gui/swing/OnePageWindow.java:742
 #, java-format
 msgid "Last modified at {0}. It was modified less than {1} minute ago."
 msgid_plural "Last modified at {0}. It was modified less than {1} minutes ago."
@@ -1845,37 +1838,51 @@ msgstr[0] "Ostatnio zmieniane: {0}, tj. krócej niż przez {1} minutami."
 msgstr[1] "Ostatnio zmieniane: {0}, tj. krócej niż przez {1} minutami."
 msgstr[2] "Ostatnio zmieniane: {0}, tj. krócej niż przez {1} minutami."
 
-#: org/wikipediacleaner/gui/swing/OnePageWindow.java:794
+#: org/wikipediacleaner/gui/swing/OnePageWindow.java:787
 msgid "Fix &redirects"
 msgstr "Popraw przekierowania"
 
-#: org/wikipediacleaner/gui/swing/OnePageWindow.java:803
+#: org/wikipediacleaner/gui/swing/OnePageWindow.java:796
 #, java-format
 msgid "Link \"{0}\" to \"{1}\""
 msgstr "Popraw \"{0}\" na \"{1}\""
 
-#: org/wikipediacleaner/gui/swing/OnePageWindow.java:820
+#: org/wikipediacleaner/gui/swing/OnePageWindow.java:813
 msgid "&Tools"
 msgstr "Narzędzia"
 
-#: org/wikipediacleaner/gui/swing/OnePageWindow.java:824
+#: org/wikipediacleaner/gui/swing/OnePageWindow.java:817
 msgid "&Preview"
 msgstr "Podgląd"
 
-#: org/wikipediacleaner/gui/swing/OnePageWindow.java:829
+#: org/wikipediacleaner/gui/swing/OnePageWindow.java:822
 msgid "&Expand templates"
 msgstr "Rozwiń szablony"
 
-#: org/wikipediacleaner/gui/swing/OnePageWindow.java:834
+#: org/wikipediacleaner/gui/swing/OnePageWindow.java:827
 msgid "Expand templates &and Preview"
 msgstr "Rozwiń szablony i Podgląd"
 
-#: org/wikipediacleaner/gui/swing/OnePageWindow.java:1000
+#: org/wikipediacleaner/gui/swing/OnePageWindow.java:919
+#: org/wikipediacleaner/gui/swing/action/ActionFullAnalysis.java:49
+#: org/wikipediacleaner/gui/swing/options/OptionsWindow.java:94
+#: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:140
+#: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:180
+msgid "Full analysis"
+msgstr "Pełna analiza"
+
+#: org/wikipediacleaner/gui/swing/OnePageWindow.java:923
+#: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:259
+#: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:264
+msgid "Disambiguation analysis"
+msgstr "Analiza ujednoznaczniająca"
+
+#: org/wikipediacleaner/gui/swing/OnePageWindow.java:1009
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiContentPanel.java:623
 msgid "A comment is required for sending the page."
 msgstr "Do wysłania tej strony wymaga się ręcznego wpisania komentarza."
 
-#: org/wikipediacleaner/gui/swing/OnePageWindow.java:1040
+#: org/wikipediacleaner/gui/swing/OnePageWindow.java:1049
 #, java-format
 msgid "Sending {0}"
 msgstr "Wysyłanie {0}"
@@ -2003,13 +2010,6 @@ msgstr "Zamknij"
 #: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:237
 msgid "History"
 msgstr "Historia"
-
-#: org/wikipediacleaner/gui/swing/action/ActionFullAnalysis.java:49
-#: org/wikipediacleaner/gui/swing/options/OptionsWindow.java:94
-#: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:140
-#: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:180
-msgid "Full analysis"
-msgstr "Pełna analiza"
 
 #: org/wikipediacleaner/gui/swing/action/ActionFullAnalysis.java:262
 msgid "You must input a page name for running a full analysis"
@@ -2754,11 +2754,6 @@ msgstr "Analizuj szablon"
 #: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:233
 msgid "Analyze page"
 msgstr "Analizuj"
-
-#: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:259
-#: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:264
-msgid "Disambiguation analysis"
-msgstr "Analiza ujednoznaczniająca"
 
 #: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:299
 msgid "Current chapter"
@@ -3584,6 +3579,12 @@ msgstr "Nazwa przypisu nie może zawierać żadnego z tych znaków: {0}"
 #, java-format
 msgid "The value cannot contain any of these characters: {0}"
 msgstr "Wartość nie może zawierać żadnego z tych znaków: {0}"
+
+#~ msgid "Full analysis of redirect"
+#~ msgstr "Pełna analiza przekierowań"
+
+#~ msgid "Disambiguation analysis of redirect"
+#~ msgstr "Analiza ujednoznaczniająca przekierowań"
 
 #~ msgid "&Close"
 #~ msgstr "&Zamknij"

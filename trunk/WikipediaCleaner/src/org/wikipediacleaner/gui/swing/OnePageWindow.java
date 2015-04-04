@@ -248,8 +248,7 @@ public abstract class OnePageWindow
 
   private JLabel textPagename;
   private JButton buttonDisambiguation;
-  private JButton buttonDisambiguationRedirect;
-  private JButton buttonFullAnalysisRedirect;
+  private JButton buttonAnalysisRedirect;
   private JButton buttonRedo;
   private JButton buttonUndo;
   private JButton buttonReload;
@@ -286,11 +285,9 @@ public abstract class OnePageWindow
     setEnabledStatus(textContents, pageLoaded);
 
     setEnabledStatus(buttonDisambiguation, pageLoaded);
-    setEnabledStatus(buttonDisambiguationRedirect, redirect);
-    setVisibleStatus(buttonDisambiguationRedirect, redirect);
     setEnabledStatus(buttonFullAnalysis, pageLoaded);
-    setEnabledStatus(buttonFullAnalysisRedirect, redirect);
-    setVisibleStatus(buttonFullAnalysisRedirect, redirect);
+    setEnabledStatus(buttonAnalysisRedirect, redirect);
+    setVisibleStatus(buttonAnalysisRedirect, redirect);
     setEnabledStatus(buttonOptions, pageLoaded);
     setEnabledStatus(buttonSend, pageLoaded && (textContents != null) && textContents.isModified());
 
@@ -363,16 +360,12 @@ public abstract class OnePageWindow
    * @param panel Container.
    */
   protected void addButtonRedirect(JComponent panel) {
-    buttonFullAnalysisRedirect = Utilities.createJButton(GT._(
-        "Full analysis of redirect"), null);
-    buttonFullAnalysisRedirect.setActionCommand(ACTION_FULL_ANALYSIS_REDIR);
-    buttonFullAnalysisRedirect.addActionListener(this);
-    panel.add(buttonFullAnalysisRedirect);
-    buttonDisambiguationRedirect = Utilities.createJButton(GT._(
-        "Disambiguation analysis of redirect"), null);
-    buttonDisambiguationRedirect.addActionListener(EventHandler.create(
-        ActionListener.class, this, "actionDisambiguationRedir"));
-    panel.add(buttonDisambiguationRedirect);
+    buttonAnalysisRedirect = Utilities.createJButton(
+        "commons-redirect-arrow-without-text.png", EnumImageSize.NORMAL,
+        GT._("Redirect"), false, null);
+    buttonAnalysisRedirect.addActionListener(EventHandler.create(
+        ActionListener.class, this, "actionAnalysisRedir"));
+    panel.add(buttonAnalysisRedirect);
   }
 
   /**
@@ -882,7 +875,6 @@ public abstract class OnePageWindow
   /* ====================================================================== */
 
   public final static String ACTION_FULL_ANALYSIS_PAGE   = "FULL ANALYSIS PAGE";
-  public final static String ACTION_FULL_ANALYSIS_REDIR  = "FULL ANALYSIS REDIR";
   public final static String ACTION_RELOAD               = "RELOAD";
   public final static String ACTION_SEND                 = "SEND";
   public final static String ACTION_TOC                  = "TOC";
@@ -901,8 +893,6 @@ public abstract class OnePageWindow
 
     if (ACTION_FULL_ANALYSIS_PAGE.equals(e.getActionCommand())) {
       actionFullAnalysis();
-    } else if (ACTION_FULL_ANALYSIS_REDIR.equals(e.getActionCommand())) {
-      actionFullAnalysisRedir();
     } else if (ACTION_RELOAD.equals(e.getActionCommand())) {
       actionReload();
     } else if (ACTION_SEND.equals(e.getActionCommand())) {
@@ -919,6 +909,25 @@ public abstract class OnePageWindow
    */
   public void actionDisambiguation() {
     Controller.runDisambiguationAnalysis(getPageName(), getWikipedia());
+  }
+
+  /**
+   * Action called when Analysis Redirect button is pressed.
+   */
+  public void actionAnalysisRedir() {
+    JPopupMenu menu = new JPopupMenu();
+    JMenuItem item = new JMenuItem(GT._("Full analysis"));
+    item.addActionListener(EventHandler.create(
+        ActionListener.class, this, "actionFullAnalysisRedir"));
+    menu.add(item);
+    item = new JMenuItem(GT._("Disambiguation analysis"));
+    item.addActionListener(EventHandler.create(
+        ActionListener.class, this, "actionDisambiguationRedir"));
+    menu.add(item);
+    menu.show(
+        buttonAnalysisRedirect,
+        0,
+        buttonAnalysisRedirect.getHeight());
   }
 
   /**
@@ -963,7 +972,7 @@ public abstract class OnePageWindow
   /**
    * Action called when Full analysis Redirect button is pressed.
    */
-  private void actionFullAnalysisRedir() {
+  public void actionFullAnalysisRedir() {
     if (page != null) {
       Controller.runFullAnalysis(
           page.getRedirectTitle(), null,
