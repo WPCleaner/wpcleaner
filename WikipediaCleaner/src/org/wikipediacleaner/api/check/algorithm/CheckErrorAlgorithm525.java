@@ -56,7 +56,12 @@ public class CheckErrorAlgorithm525 extends CheckErrorAlgorithmBase {
         Parameter param = tag.getParameter(numParam);
         String value = param.getTrimmedValue();
         if ((value != null) && (!value.isEmpty())) {
-          isUseless = false;
+          String lang = analysis.getWikipedia().getSettings().getLanguage();
+          if ("lang".equals(param.getName()) && (lang != null) && lang.equalsIgnoreCase(value)) {
+            // useful
+          } else {
+            isUseless = false;
+          }
         }
       }
       if (!tag.isComplete()) {
