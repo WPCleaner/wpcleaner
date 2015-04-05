@@ -101,6 +101,15 @@ public class PageElementISBN extends PageElement {
         int beginIndex = index;
         index += ISBN_PREFIX.length();
         if (!parameter) {
+          boolean correct = true;
+          if ((beginIndex >= 2) && (index + 2 < contents.length())) {
+            if (contents.startsWith("[[", beginIndex - 2) &&
+                contents.startsWith("]]", index)) {
+              correct = false;
+              beginIndex -= 2;
+              index += 2;
+            }
+          }
           boolean spaceFound = false;
           if (analysis.isInComment(index) == null) {
             while ((index < contents.length()) && (contents.charAt(index) == ' ')) {
@@ -111,7 +120,7 @@ public class PageElementISBN extends PageElement {
           int beginNumber = -1;
           int endNumber = beginNumber;
           boolean finished = false;
-          boolean correct = spaceFound;
+          correct &= spaceFound;
           boolean nextCorrect = correct;
           while (!finished && (index < contents.length())) {
             char currentChar = contents.charAt(index);
