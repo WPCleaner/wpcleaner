@@ -635,6 +635,12 @@ public class MediaWikiAPI implements API {
             exception.setURL(xpaUrl.valueOf(captcha));
             throw exception;
           }
+          XPath xpaSpamBlacklist = XPath.newInstance("./@spamblacklist");
+          String spamBlacklist = xpaSpamBlacklist.valueOf(node);
+          if (spamBlacklist != null) {
+            throw new APIException(GT._("URL {0} is blacklisted", spamBlacklist));
+          }
+          throw new APIException(xmlOutputter.outputString(node));
         }
         XPath xpaWait = XPath.newInstance("./@wait");
         XPath xpaDetails = XPath.newInstance("./@details");
@@ -1705,9 +1711,6 @@ public class MediaWikiAPI implements API {
    */
   private void traceDocument(Document doc) {
     if (DEBUG_XML) {
-      if (xmlOutputter == null) {
-        xmlOutputter = new XMLOutputter(Format.getPrettyFormat());
-      }
       try {
         System.out.println("********** START OF DOCUMENT **********");
         xmlOutputter.output(doc, System.out);
