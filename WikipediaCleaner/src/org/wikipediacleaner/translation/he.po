@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2015-04-04 18:55+0200\n"
+"POT-Creation-Date: 2015-04-07 07:04+0200\n"
 "PO-Revision-Date: 2014-09-10 23:22+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Hebrew <he@li.org>\n"
@@ -554,7 +554,7 @@ msgstr ""
 msgid "Restrict verification to titles with a higher level"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm085.java:45
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm085.java:46
 msgid "Delete all tags without content"
 msgstr ""
 
@@ -987,13 +987,18 @@ msgstr "מנתח טקסט"
 msgid "Retrieving templates"
 msgstr "מאחזר תבניות"
 
-#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:1688
+#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:641
+#, java-format
+msgid "URL {0} is blacklisted"
+msgstr ""
+
+#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:1694
 msgid ""
 "This action is protected by a CAPTCHA.\n"
 "What is the answer to the following question ?"
 msgstr ""
 
-#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:1695
+#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:1701
 msgid ""
 "This action is protected by a CAPTCHA.\n"
 "What is the answer to the question displayed in your browser ?"

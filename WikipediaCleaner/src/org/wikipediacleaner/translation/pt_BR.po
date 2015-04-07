@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2015-04-04 18:55+0200\n"
+"POT-Creation-Date: 2015-04-07 07:04+0200\n"
 "PO-Revision-Date: 2015-04-03 06:08+0000\n"
 "Last-Translator: Felipe L. <felipe.idj@hotmail.com>\n"
 "Language-Team: Brazilian Portuguese <pt_BR@li.org>\n"
@@ -584,7 +584,7 @@ msgstr "Uma lista de textos que podem ser adicionados às secções sem conteúd
 msgid "Restrict verification to titles with a higher level"
 msgstr "Restringir a verificação para títulos com um nível mais elevado"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm085.java:45
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm085.java:46
 msgid "Delete all tags without content"
 msgstr "Excluir todas as tags sem conteúdo"
 
@@ -1027,7 +1027,12 @@ msgstr "Analisando texto"
 msgid "Retrieving templates"
 msgstr "Recuperando predefinições"
 
-#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:1688
+#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:641
+#, java-format
+msgid "URL {0} is blacklisted"
+msgstr ""
+
+#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:1694
 msgid ""
 "This action is protected by a CAPTCHA.\n"
 "What is the answer to the following question ?"
@@ -1035,7 +1040,7 @@ msgstr ""
 "Esta ação é protegida por CAPTCHA.\n"
 "Qual é a resposta para a seguinte questão?"
 
-#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:1695
+#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:1701
 msgid ""
 "This action is protected by a CAPTCHA.\n"
 "What is the answer to the question displayed in your browser ?"
