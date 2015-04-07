@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2015-04-07 07:04+0200\n"
+"POT-Creation-Date: 2015-04-07 21:00+0200\n"
 "PO-Revision-Date: 2015-04-05 05:56+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Chinese (Simplified) <zh_CN@li.org>\n"
@@ -38,8 +38,8 @@ msgstr ""
 #: org/wikipediacleaner/Version.java:35
 #, java-format
 msgid ""
-"I try to keep {0} up to date with Check Wiki, but if you find any "
-"discrepancy(ies) in the detections, please let me know."
+"I try to keep {0} up to date with Check Wiki, but if you find any discrepancy"
+"(ies) in the detections, please let me know."
 msgstr ""
 
 #: org/wikipediacleaner/Version.java:37
@@ -436,9 +436,9 @@ msgstr "外部查看器"
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:175
 msgid ""
 "A template that can be used instead of the link to an other language. It "
-"must be specified as: <template name>|<param name for local page "
-"name>|<param name for code of other language>|<param name for page name in "
-"other language>|<param name for displayed text>"
+"must be specified as: <template name>|<param name for local page name>|"
+"<param name for code of other language>|<param name for page name in other "
+"language>|<param name for displayed text>"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:257
@@ -630,8 +630,7 @@ msgid "A template that can be used instead of an opening square bracket."
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm520.java:138
-msgid ""
-"An identifier of an abuse filter that is triggered by weird characters."
+msgid "An identifier of an abuse filter that is triggered by weird characters."
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm521.java:343
@@ -1038,8 +1037,7 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:205
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:611
 #: org/wikipediacleaner/gui/swing/bot/BotToolsWindow.java:89
-msgid ""
-"On some Wikipedia projects, you may need the bot status for doing this."
+msgid "On some Wikipedia projects, you may need the bot status for doing this."
 msgstr "在一些维基百科项目上，您可能需要执行此操作的机器人身份。"
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:206
@@ -1510,8 +1508,7 @@ msgid "Links to {0}"
 msgstr "链接到{0}"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1445
-msgid ""
-"You must input a page name for retrieving the list of category members"
+msgid "You must input a page name for retrieving the list of category members"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1463
@@ -1795,8 +1792,7 @@ msgstr "最后一次编辑在{0}"
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:742
 #, java-format
 msgid "Last modified at {0}. It was modified less than {1} minute ago."
-msgid_plural ""
-"Last modified at {0}. It was modified less than {1} minutes ago."
+msgid_plural "Last modified at {0}. It was modified less than {1} minutes ago."
 msgstr[0] ""
 msgstr[1] ""
 
@@ -1825,7 +1821,7 @@ msgstr ""
 msgid "Expand templates &and Preview"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/OnePageWindow.java:919
+#: org/wikipediacleaner/gui/swing/OnePageWindow.java:920
 #: org/wikipediacleaner/gui/swing/action/ActionFullAnalysis.java:49
 #: org/wikipediacleaner/gui/swing/options/OptionsWindow.java:94
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:140
@@ -1833,18 +1829,18 @@ msgstr ""
 msgid "Full analysis"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/OnePageWindow.java:923
+#: org/wikipediacleaner/gui/swing/OnePageWindow.java:926
 #: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:259
 #: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:264
 msgid "Disambiguation analysis"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/OnePageWindow.java:1009
+#: org/wikipediacleaner/gui/swing/OnePageWindow.java:1013
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiContentPanel.java:623
 msgid "A comment is required for sending the page."
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/OnePageWindow.java:1049
+#: org/wikipediacleaner/gui/swing/OnePageWindow.java:1053
 #, java-format
 msgid "Sending {0}"
 msgstr "正在发送{0}"
@@ -2114,6 +2110,13 @@ msgstr ""
 msgid "Do you want to proceed with the replacement ?"
 msgstr ""
 
+#: org/wikipediacleaner/gui/swing/action/ReplaceLinkAction.java:232
+#, java-format
+msgid ""
+"The link can be extended to include text before or after the current link.\n"
+"Would you like to extend the link to \"{0}\"?"
+msgstr ""
+
 #: org/wikipediacleaner/gui/swing/basic/BasicWindow.java:61
 #, java-format
 msgid "{0} is working..."
@@ -2193,8 +2196,7 @@ msgstr[1] ""
 #: org/wikipediacleaner/gui/swing/bot/AutomaticCWWorker.java:275
 #, java-format
 msgid "{0} page has been marked as fixed for the selected algorithms"
-msgid_plural ""
-"{0} pages have been marked as fixed for the selected algorithms"
+msgid_plural "{0} pages have been marked as fixed for the selected algorithms"
 msgstr[0] ""
 msgstr[1] ""
 
@@ -2789,8 +2791,7 @@ msgid "Create disambiguation warning on talk page (in main namespace)"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/AnalysisOptionsPanel.java:86
-msgid ""
-"Create disambiguation warning on talk page (in encyclopedic namespaces)"
+msgid "Create disambiguation warning on talk page (in encyclopedic namespaces)"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/AnalysisOptionsPanel.java:93
@@ -2802,8 +2803,7 @@ msgid "Update disambiguation warning on talk page (in main namespace)"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/AnalysisOptionsPanel.java:107
-msgid ""
-"Update disambiguation warning on talk page (in encyclopedic namespaces)"
+msgid "Update disambiguation warning on talk page (in encyclopedic namespaces)"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/AnalysisOptionsPanel.java:114
@@ -3513,7 +3513,6 @@ msgstr ""
 #~ msgid "Would you like to add this page on your local Watch list ?"
 #~ msgstr "您希望将这个页面加入您的本地监视列表吗？"
 
-#, java-format
 #~ msgid "An error occured: {0}"
 #~ msgstr "发生错误：{0}"
 
@@ -3523,6 +3522,5 @@ msgstr ""
 #~ msgid "View or edit white list"
 #~ msgstr "查看或编辑白名单"
 
-#, java-format
 #~ msgid "Do you want to mark {0} as fixed for error n°{1}"
 #~ msgstr "您想为#{1}标记已修复{0}吗"

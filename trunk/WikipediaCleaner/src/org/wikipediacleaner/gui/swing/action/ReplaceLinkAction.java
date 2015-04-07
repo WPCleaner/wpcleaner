@@ -9,6 +9,7 @@ package org.wikipediacleaner.gui.swing.action;
 
 import java.awt.event.ActionEvent;
 
+import javax.swing.JOptionPane;
 import javax.swing.JTextPane;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.Element;
@@ -18,7 +19,9 @@ import javax.swing.text.TextAction;
 
 import org.wikipediacleaner.api.data.LinkReplacement;
 import org.wikipediacleaner.api.data.Page;
+import org.wikipediacleaner.gui.swing.basic.Utilities;
 import org.wikipediacleaner.gui.swing.component.MWPaneFormatter;
+import org.wikipediacleaner.i18n.GT;
 import org.wikipediacleaner.utils.Configuration;
 import org.wikipediacleaner.utils.ConfigurationValueBoolean;
 
@@ -144,8 +147,8 @@ public class ReplaceLinkAction extends TextAction {
     }
 
     // Initialize
-    int startOffset = MWPaneFormatter.getUUIDStartOffset(localTextPane, localElement);
-    int endOffset = MWPaneFormatter.getUUIDEndOffet(localTextPane, localElement);
+    final int startOffset = MWPaneFormatter.getUUIDStartOffset(localTextPane, localElement);
+    final int endOffset = MWPaneFormatter.getUUIDEndOffet(localTextPane, localElement);
     String newText = null;
     int offsetBefore = 0;
     int offsetAfter = 0;
@@ -161,6 +164,7 @@ public class ReplaceLinkAction extends TextAction {
     if (firstCharEqual && title2.equals(text2)) {
       newText = "[[" + localText + "]]";
     }
+    String originalNewText = newText;
 
     // Check for possible extension of the title to the right
     if ((newText == null) && firstCharEqual && title2.startsWith(text2)) {
@@ -214,8 +218,24 @@ public class ReplaceLinkAction extends TextAction {
     }
 
     // Default replacement
+    if (originalNewText == null) {
+      originalNewText = "[[" + localNewTitle + "|" + localText + "]]";
+    }
     if (newText == null) {
       newText = "[[" + localNewTitle + "|" + localText + "]]";
+    }
+
+    // Ask user if there is a possible extension of the title
+    if ((offsetBefore != 0) || (offsetAfter != 0)) {
+      int answer = Utilities.displayYesNoWarning(
+          textPane.getRootPane(),
+          GT._("The link can be extended to include text before or after the current link.\n" +
+               "Would you like to extend the link to \"{0}\"?", newText));
+      if (answer != JOptionPane.YES_OPTION) {
+        offsetBefore = 0;
+        offsetAfter = 0;
+        newText = originalNewText;
+      }
     }
 
     // Replace
