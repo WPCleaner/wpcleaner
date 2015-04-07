@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2015-04-07 07:04+0200\n"
+"POT-Creation-Date: 2015-04-07 21:00+0200\n"
 "PO-Revision-Date: 2015-02-25 13:45+0000\n"
 "Last-Translator: Tobias Bannert <Unknown>\n"
 "Language-Team: German <de@li.org>\n"
@@ -1832,7 +1832,7 @@ msgstr "Vorlagen &erweitern"
 msgid "Expand templates &and Preview"
 msgstr "Vorlagen erweitern &und vorschauen"
 
-#: org/wikipediacleaner/gui/swing/OnePageWindow.java:919
+#: org/wikipediacleaner/gui/swing/OnePageWindow.java:920
 #: org/wikipediacleaner/gui/swing/action/ActionFullAnalysis.java:49
 #: org/wikipediacleaner/gui/swing/options/OptionsWindow.java:94
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:140
@@ -1840,18 +1840,18 @@ msgstr "Vorlagen erweitern &und vorschauen"
 msgid "Full analysis"
 msgstr "Vollständige Analyse"
 
-#: org/wikipediacleaner/gui/swing/OnePageWindow.java:923
+#: org/wikipediacleaner/gui/swing/OnePageWindow.java:926
 #: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:259
 #: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:264
 msgid "Disambiguation analysis"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/OnePageWindow.java:1009
+#: org/wikipediacleaner/gui/swing/OnePageWindow.java:1013
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiContentPanel.java:623
 msgid "A comment is required for sending the page."
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/OnePageWindow.java:1049
+#: org/wikipediacleaner/gui/swing/OnePageWindow.java:1053
 #, java-format
 msgid "Sending {0}"
 msgstr "Sende {0}"
@@ -2122,6 +2122,13 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/action/ReplaceAllLinksAction.java:53
 msgid "Do you want to proceed with the replacement ?"
+msgstr ""
+
+#: org/wikipediacleaner/gui/swing/action/ReplaceLinkAction.java:232
+#, java-format
+msgid ""
+"The link can be extended to include text before or after the current link.\n"
+"Would you like to extend the link to \"{0}\"?"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/basic/BasicWindow.java:61
