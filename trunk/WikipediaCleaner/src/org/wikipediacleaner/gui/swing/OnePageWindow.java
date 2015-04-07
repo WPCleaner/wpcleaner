@@ -916,11 +916,15 @@ public abstract class OnePageWindow
    */
   public void actionAnalysisRedir() {
     JPopupMenu menu = new JPopupMenu();
-    JMenuItem item = new JMenuItem(GT._("Full analysis"));
+    JMenuItem item = new JMenuItem(
+        GT._("Full analysis"),
+        Utilities.getImageIcon("gnome-system-run.png", EnumImageSize.NORMAL));
     item.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionFullAnalysisRedir"));
     menu.add(item);
-    item = new JMenuItem(GT._("Disambiguation analysis"));
+    item = new JMenuItem(
+        GT._("Disambiguation analysis"),
+        Utilities.getImageIcon("commons-disambig-colour.png", EnumImageSize.NORMAL));
     item.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionDisambiguationRedir"));
     menu.add(item);
