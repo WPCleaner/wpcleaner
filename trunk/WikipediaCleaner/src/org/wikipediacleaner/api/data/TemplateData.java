@@ -21,6 +21,11 @@ import java.util.List;
 public class TemplateData {
 
   /**
+   * Title of the template.
+   */
+  private String title;
+
+  /**
    * Template description.
    */
   private InterfaceText description;
@@ -57,7 +62,7 @@ public class TemplateData {
           }
         }
         if (param == null) {
-          param = new Parameter();
+          param = new Parameter(name);
           params.add(param);
         }
       }
@@ -68,6 +73,20 @@ public class TemplateData {
   }
 
   /**
+   * @return Name of the template.
+   */
+  public String getTitle() {
+    return title;
+  }
+
+  /**
+   * @param title Name of the template.
+   */
+  public void setTitle(String title) {
+    this.title = title;
+  }
+
+  /**
    * @return Template description.
    */
   public InterfaceText getDescription() {
@@ -75,10 +94,24 @@ public class TemplateData {
   }
 
   /**
+   * @param description Template description.
+   */
+  public void setDescription(InterfaceText description) {
+    this.description = description;
+  }
+
+  /**
    * @return Template parameters.
    */
   public List<Parameter> getParameters() {
     return parameters;
+  }
+
+  /**
+   * @param parameters Template parameters.
+   */
+  public void setParameters(List<Parameter> parameters) {
+    this.parameters = parameters;
   }
 
   /**
@@ -155,6 +188,21 @@ public class TemplateData {
     public List<LanguageValue> getTexts() {
       return Collections.unmodifiableList(texts);
     }
+
+    /**
+     * @return
+     * @see java.lang.Object#toString()
+     */
+    @Override
+    public String toString() {
+      if (!multipleLanguages) {
+        return text;
+      }
+      if ((texts != null) && !texts.isEmpty()) {
+        return texts.get(0).toString();
+      }
+      return super.toString();
+    }
   }
 
   /**
@@ -194,6 +242,15 @@ public class TemplateData {
     public String getText() {
       return text;
     }
+
+    /**
+     * @return
+     * @see java.lang.Object#toString()
+     */
+    @Override
+    public String toString() {
+      return "" + language + " - " + text;
+    }
   }
 
   /**
@@ -201,40 +258,50 @@ public class TemplateData {
    */
   public static class Parameter implements Comparable<Parameter> {
 
-    /**
-     * Parameter name.
-     */
+    /** Parameter name. */
     private String name;
 
+    /** Label for the parameter. */
     private InterfaceText label;
 
-    private boolean required;
-
+    /** Parameter description. */
     private InterfaceText description;
 
-    private String deprecated;
-
-    private List<String> aliases;
-
-    private String defaultValue;
-
+    /** Parameter type. */
     private String type;
 
-    private String inherits;
+    /** Parameter aliases. */
+    private List<String> aliases;
+
+    /** True if parameter is required. */
+    private boolean required;
+
+    /** True if parameter should be suggested. */
+    private boolean suggested;
+
+    /** True if parameter is deprecated. */
+    private boolean deprecated;
+
+    /** Value to use when adding the parameter. */
+    private String autoValue;
+
+    /** Default value when parameter is not set. */
+    private String defaultValue;
 
     /**
      * Default constructor.
      */
-    public Parameter() {
-      this.name = null;
+    public Parameter(String name) {
+      this.name = name;
       this.label = new InterfaceText();
-      this.required = false;
       this.description = new InterfaceText();
-      this.deprecated = null;
-      this.aliases = null;
-      this.defaultValue = null;
       this.type = null;
-      this.inherits = null;
+      this.aliases = null;
+      this.required = false;
+      this.suggested = false;
+      this.deprecated = false;
+      this.autoValue = null;
+      this.defaultValue = null;
     }
 
     /**
@@ -252,10 +319,10 @@ public class TemplateData {
     }
 
     /**
-     * @return True if parameter is required.
+     * @param label Parameter label.
      */
-    public boolean isRequired() {
-      return required;
+    public void setLabel(InterfaceText label) {
+      this.label = label;
     }
 
     /**
@@ -266,10 +333,29 @@ public class TemplateData {
     }
 
     /**
-     * @return True or text if parameter is deprecated.
+     * @param description Parameter description.
      */
-    public String getDeprecated() {
-      return deprecated;
+    public void setDescription(InterfaceText description) {
+      this.description = description;
+    }
+
+    /**
+     * @return Parameter type.
+     */
+    public EnumParameterType getType() {
+      for (EnumParameterType paramType : EnumParameterType.values()) {
+        if (paramType.type.equals(type)) {
+          return paramType;
+        }
+      }
+      return EnumParameterType.UNKNOWN;
+    }
+
+    /**
+     * @param type Parameter type.
+     */
+    public void setType(String type) {
+      this.type = type;
     }
 
     /**
@@ -280,6 +366,69 @@ public class TemplateData {
     }
 
     /**
+     * @param aliases Parameter aliases.
+     */
+    public void setAliases(List<String> aliases) {
+      this.aliases = aliases;
+    }
+
+    /**
+     * @return True if parameter is required.
+     */
+    public boolean isRequired() {
+      return required;
+    }
+
+    /**
+     * @param required True if parameter is required.
+     */
+    public void setRequired(boolean required) {
+      this.required = required;
+    }
+
+    /**
+     * @return True if parameter should be suggested.
+     */
+    public boolean isSuggested() {
+      return suggested;
+    }
+
+    /**
+     * @param suggested True if parameter should be suggested.
+     */
+    public void setSuggested(boolean suggested) {
+      this.suggested = suggested;
+    }
+
+    /**
+     * @return if parameter is deprecated.
+     */
+    public boolean isDeprecated() {
+      return deprecated;
+    }
+
+    /**
+     * @param deprecated True if parameter is deprecated.
+     */
+    public void setDeprecated(boolean deprecated) {
+      this.deprecated = deprecated;
+    }
+
+    /**
+     * @return Parameter auto value.
+     */
+    public String getAutoValue() {
+      return autoValue;
+    }
+
+    /**
+     * @param autoValue Parameter auto value.
+     */
+    public void setAutoValue(String autoValue) {
+      this.autoValue = autoValue;
+    }
+
+    /**
      * @return Parameter default value.
      */
     public String getDefaultValue() {
@@ -287,17 +436,10 @@ public class TemplateData {
     }
 
     /**
-     * @return Parameter type.
+     * @param defaultValue Parameter default value.
      */
-    public String getType() {
-      return type;
-    }
-
-    /**
-     * @return Parameter inheritance.
-     */
-    public String getInherits() {
-      return inherits;
+    public void setDefaultValue(String defaultValue) {
+      this.defaultValue = defaultValue;
     }
 
     /**
@@ -308,6 +450,18 @@ public class TemplateData {
      */
     public int compareTo(Parameter o) {
       return name.compareTo(o.name);
+    }
+
+    /**
+     * @return Description.
+     * @see java.lang.Object#toString()
+     */
+    @Override
+    public String toString() {
+      if (name != null) {
+        return name;
+      }
+      return super.toString();
     }
   }
 
@@ -326,6 +480,15 @@ public class TemplateData {
 
     EnumParameterType(String name) {
       this.type = name;
+    }
+
+    /**
+     * @return Description.
+     * @see java.lang.Enum#toString()
+     */
+    @Override
+    public String toString() {
+      return type;
     }
   }
 

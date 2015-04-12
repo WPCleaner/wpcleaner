@@ -69,10 +69,10 @@ public class DebugOptionsPanel extends OptionsPanel {
     add(chk, constraints);
     constraints.gridy++;
 
-    // Debug XML
+    // Debug API
     chk = createJCheckBox(
         GT._("Log all answers to MediaWiki API calls"),
-        ConfigurationValueBoolean.DEBUG_XML);
+        ConfigurationValueBoolean.DEBUG_API);
     add(chk, constraints);
     constraints.gridy++;
 

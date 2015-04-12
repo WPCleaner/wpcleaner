@@ -85,6 +85,11 @@ public abstract class ApiRequest {
   public final static String ACTION_QUERY = "query";
 
   /**
+   * API action for retrieving TemplateData.
+   */
+  public final static String ACTION_TEMPLATE_DATA = "templatedata";
+
+  /**
    * API action for retrieving tokens.
    */
   public final static String ACTION_TOKENS = "tokens";
@@ -97,6 +102,11 @@ public abstract class ApiRequest {
    * API format.
    */
   public final static String FORMAT = "format";
+
+  /**
+   * API JSON format.
+   */
+  public final static String FORMAT_JSON = "json";
 
   /**
    * API XML format.

@@ -18,6 +18,7 @@ import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.QueryResult;
 import org.wikipediacleaner.api.data.RecentChange;
 import org.wikipediacleaner.api.data.Section;
+import org.wikipediacleaner.api.data.TemplateData;
 import org.wikipediacleaner.api.data.User;
 
 
@@ -531,6 +532,23 @@ public interface API {
    */
   public void deletePage(
       EnumWikipedia wiki, Page page, String reason) throws APIException;
+
+  // ==========================================================================
+  // API : TemplateData.
+  // ==========================================================================
+
+  /**
+   * Retrieve the TemplateData for <code>page</code>.
+   * (<code>action=templatedata</code>).
+   * 
+   * @param wiki Wiki.
+   * @param page The page.
+   * @return TemplateData for the page.
+   * @throws APIException
+   * @see <a href="http://www.mediawiki.org/wiki/API:Delete">API:Delete</a>
+   */
+  public TemplateData retrieveTemplateData(
+      EnumWikipedia wiki, Page page) throws APIException;
 
   // ==========================================================================
   // Recent changes management.

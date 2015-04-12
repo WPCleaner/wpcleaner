@@ -14,5 +14,8 @@
 	<classpathentry kind="lib" path="libs/commons-codec-1.6/commons-codec-1.6.jar"/>
 	<classpathentry kind="lib" path="libs/cobra-0.98.4/cobra.jar"/>
 	<classpathentry kind="lib" path="libs/cobra-0.98.4/js.jar"/>
+	<classpathentry kind="lib" path="libs/jackson-2.5.2/jackson-databind-2.5.2.jar"/>
+	<classpathentry kind="lib" path="libs/jackson-2.5.2/jackson-core-2.5.2.jar"/>
+	<classpathentry kind="lib" path="libs/jackson-2.5.2/jackson-annotations-2.5.2.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
