@@ -150,6 +150,7 @@ abstract class OptionsPanel extends JPanel {
     }
     Configuration config = Configuration.getConfiguration();
     int value = config.getInt(null, property);
+    value = Math.max(minimum, Math.min(maximum, value));
     SpinnerNumberModel model = new SpinnerNumberModel(value, minimum, maximum, stepSize);
     JSpinner spin = new JSpinner(model);
     integerValues.put(property, spin);
