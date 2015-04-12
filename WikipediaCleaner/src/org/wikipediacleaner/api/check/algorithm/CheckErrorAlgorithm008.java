@@ -50,10 +50,18 @@ public class CheckErrorAlgorithm008 extends CheckErrorAlgorithmBase {
 
         // Check that it is indeed an error
         boolean errorFound = true;
-        if ((analysis.isInComment(currentIndex) != null) ||
-            (analysis.isInTitle(currentIndex) != null)) {
-          errorFound = false;
-        } else {
+        if (errorFound) {
+          if (analysis.isInComment(currentIndex) != null) {
+            errorFound = false;
+          }
+        }
+        if (errorFound) {
+          PageElementTitle title = analysis.isInTitle(currentIndex);
+          if ((title != null)  && (title.getSecondLevel() >= title.getFirstLevel())) {
+            errorFound = false;
+          }
+        }
+        if (errorFound) {
           if ((analysis.getSurroundingTag(PageElementTag.TAG_WIKI_CODE, currentIndex) != null) ||
               (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_MATH, currentIndex) != null) ||
               (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_NOWIKI, currentIndex) != null) ||
