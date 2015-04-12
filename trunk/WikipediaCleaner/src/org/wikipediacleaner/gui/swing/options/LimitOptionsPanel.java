@@ -219,7 +219,7 @@ public class LimitOptionsPanel extends OptionsPanel {
     // Maximum number of days for abuse logs
     spin = createJSpinner(
         ConfigurationValueInteger.MAX_DAYS_ABUSE_LOG,
-        100, 1000000, 1000);
+        1, 365, 1);
     JLabel labelAbuseLog = Utilities.createJLabel(GT._("Maximum duration for abuse logs :"));
     labelAbuseLog.setLabelFor(spin);
     labelAbuseLog.setHorizontalAlignment(SwingConstants.TRAILING);
