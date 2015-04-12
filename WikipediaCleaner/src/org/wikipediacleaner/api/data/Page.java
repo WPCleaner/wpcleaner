@@ -90,18 +90,31 @@ public class Page implements Comparable<Page> {
    * @return Indicates if <code>title1</code> and <code>title2</code> are the same title.
    */
   public static boolean areSameTitle(String title1, String title2) {
+    // TODO: should be by Wiki (capitalization of first letter)
     if ((title1 == null) || (title2 == null)) {
       return false;
     }
-    title1 = title1.trim();
-    title2 = title2.trim();
-    if ((title1.length() == 0) || (title2.length() == 0)) {
-      return false;
+    title1 = normalizeTitle(title1);
+    title2 = normalizeTitle(title2);
+    return title1.equals(title2);
+  }
+
+  /**
+   * @param pageTitle Title.
+   * @return Normalized title.
+   */
+  public static String normalizeTitle(String pageTitle) {
+    // TODO: should be by Wiki (capitalization of first letter)
+    if (pageTitle == null) {
+      return null;
     }
-    if (Character.toUpperCase(title1.charAt(0)) != Character.toUpperCase(title2.charAt(0))) {
-      return false;
-    }
-    return title1.substring(1).equals(title2.substring(1));
+    String result = pageTitle.trim();
+    result = result.replaceAll(" ", " ");
+    result = result.replaceAll("_", " ");
+    result = result.replaceAll(" +", " ");
+    result = result.trim();
+    result = Page.getStringUcFirst(result);
+    return result;
   }
 
   /**
