@@ -5,7 +5,7 @@
  *  See README.txt file for licensing information.
  */
 
-package org.wikipediacleaner.api.request.xml;
+package org.wikipediacleaner.api.request.json;
 
 import java.io.BufferedInputStream;
 import java.io.IOException;
@@ -13,6 +13,7 @@ import java.io.InputStream;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.zip.GZIPInputStream;
 
 import org.apache.commons.httpclient.Header;
@@ -20,14 +21,8 @@ import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpMethod;
 import org.apache.commons.httpclient.HttpStatus;
 import org.jdom.Attribute;
-import org.jdom.Document;
 import org.jdom.Element;
-import org.jdom.JDOMException;
 import org.jdom.input.JDOMParseException;
-import org.jdom.input.SAXBuilder;
-import org.jdom.output.Format;
-import org.jdom.output.XMLOutputter;
-import org.jdom.xpath.XPath;
 import org.wikipediacleaner.api.APIException;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.DataManager;
@@ -37,27 +32,36 @@ import org.wikipediacleaner.api.request.BasicApiResult;
 import org.wikipediacleaner.utils.Configuration;
 import org.wikipediacleaner.utils.ConfigurationValueBoolean;
 
+import com.fasterxml.jackson.core.JsonFactory;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 
 /**
- * MediaWiki API XML results.
+ * MediaWiki API JSON results.
  */
-public abstract class ApiXmlResult extends BasicApiResult {
+public abstract class ApiJsonResult extends BasicApiResult {
 
   // ==========================================================================
   // Configuration
   // ==========================================================================
 
   /**
-   * Flag for tracing XML.
+   * Flag for tracing JSON.
    */
-  private static boolean DEBUG_XML = false;
+  private static boolean DEBUG_JSON = false;
+
+  /**
+   * JSON factory.
+   */
+  protected final static JsonFactory factory = new JsonFactory();
 
   /**
    * Update configuration.
    */
   public static void updateConfiguration() {
     Configuration config = Configuration.getConfiguration();
-    DEBUG_XML = config.getBoolean(
+    DEBUG_JSON = config.getBoolean(
         null, ConfigurationValueBoolean.DEBUG_API);
   }
 
@@ -69,17 +73,17 @@ public abstract class ApiXmlResult extends BasicApiResult {
    * @param wiki Wiki on which requests are made.
    * @param httpClient HTTP client for making requests.
    */
-  public ApiXmlResult(
+  public ApiJsonResult(
       EnumWikipedia wiki,
       HttpClient httpClient) {
     super(wiki, httpClient);
   }
 
   /**
-   * @return Format of the XML result.
+   * @return Format of the JSON result.
    */
   public String getFormat() {
-    return ApiRequest.FORMAT_XML;
+    return ApiRequest.FORMAT_JSON;
   }
 
   /**
@@ -91,13 +95,13 @@ public abstract class ApiXmlResult extends BasicApiResult {
    * @throws JDOMParseException
    * @throws APIException
    */
-  protected Element getRoot(
+  protected JsonNode getRoot(
       Map<String, String> properties,
       int maxTry)
-          throws JDOMParseException, APIException {
+          throws APIException {
     int attempt = 0;
     for (;;) {
-      Element root = null;
+      JsonNode root = null;
       HttpMethod method = null;
       InputStream stream = null;
       try {
@@ -115,19 +119,12 @@ public abstract class ApiXmlResult extends BasicApiResult {
             stream = new GZIPInputStream(stream);
           }
         }
-        // for (Header header : method.getRequestHeaders()) {
-        //   System.out.println("Request header:" + header);
-        // }
-        // for (Header header : method.getResponseHeaders()) {
-        //   System.out.println("Response header:" + header);
-        // }
 
         // Read the response
         if (statusCode == HttpStatus.SC_OK){
-          SAXBuilder sxb = new SAXBuilder();
-          Document document = sxb.build(stream);
-          traceDocument(document);
-          root = document.getRootElement();
+          ObjectMapper mapper = new ObjectMapper(factory);
+          root = mapper.readValue(stream, JsonNode.class);
+          traceDocument(root);
           checkForError(root);
         } else {
           try {
@@ -154,18 +151,6 @@ public abstract class ApiXmlResult extends BasicApiResult {
           }
         } else {
           return root;
-        }
-      } catch (JDOMException e) {
-        String message = "JDOMException: " + e.getMessage();
-        log.error(message);
-        if (attempt > maxTry) {
-          log.warn("Error. Maximum attempts count reached.");
-          throw new APIException("Error parsing XML result", e);
-        }
-        try {
-          Thread.sleep(30000);
-        } catch (InterruptedException e2) {
-          // Nothing
         }
       } catch (IOException e) {
         String message = "IOException: " + e.getMessage();
@@ -206,83 +191,65 @@ public abstract class ApiXmlResult extends BasicApiResult {
    * @param root Document root.
    * @throws APIException
    */
-  protected void checkForError(Element root) throws APIException {
+  protected void checkForError(JsonNode root) throws APIException {
     if (root == null) {
       return;
     }
     
     // Check for errors
-    try {
-      XPath xpa = XPath.newInstance("/api/error");
-      List listErrors = xpa.selectNodes(root);
-      if (listErrors != null) {
-        Iterator iterErrors = listErrors.iterator();
-        XPath xpaCode = XPath.newInstance("./@code");
-        XPath xpaInfo = XPath.newInstance("./@info");
-        while (iterErrors.hasNext()) {
-          Element currentNode = (Element) iterErrors.next();
-          String text = "Error reported: " + xpaCode.valueOf(currentNode) + " - " + xpaInfo.valueOf(currentNode);
-          log.warn(text);
-          throw new APIException(text, xpaCode.valueOf(currentNode));
-        }
-      }
-    } catch (JDOMException e) {
-      log.error("JDOMException: " + e.getMessage());
+    JsonNode error = root.path("error");
+    if ((error != null) && !error.isMissingNode()) {
+      String code = error.path("code").asText("?");
+      String info = error.path("info").asText("?");
+      String text = "Error reported: " + code + " - " + info;
+      log.warn(text);
+      throw new APIException(text, code);
     }
-    
+
     // Check for warnings
-    try {
-      XPath xpa = XPath.newInstance("/api/warnings/*");
-      List listWarnings = xpa.selectNodes(root);
-      if (listWarnings != null) {
-        Iterator iterWarnings = listWarnings.iterator();
-        while (iterWarnings.hasNext()) {
-          Element currentNode = (Element) iterWarnings.next();
-          log.warn("Warning reported: " + currentNode.getName() + " - " + currentNode.getValue());
-        }
+    JsonNode warnings = root.path("warnings");
+    if ((warnings != null) && !warnings.isMissingNode()) {
+      log.warn("Warning reported: ");
+      String query = warnings.path("query").asText();
+      if (query != null) {
+        log.warn(query);
       }
-    } catch( JDOMException e) {
-      log.error("JDOMException: " + e.getMessage());
+      String info = warnings.path("info").asText();
+      if (info != null) {
+        log.warn(info);
+      }
     }
   }
 
   /**
    * Manage query-continue in request.
    * 
-   * @param root Root of the DOM tree.
+   * @param root Root of the JSON tree.
    * @param queryContinue XPath query to the query-continue node.
    * @param properties Properties defining request.
    * @return True if request should be continued.
    */
   protected boolean shouldContinue(
-      Element root, String queryContinue,
+      JsonNode root, String queryContinue,
       Map<String, String> properties) {
     if ((root == null) || (queryContinue == null)) {
       return false;
     }
     boolean result = false;
-    try {
-      XPath xpa = XPath.newInstance(queryContinue);
-      List results = xpa.selectNodes(root);
-      if ((results == null) || (results.isEmpty())) {
-        xpa = XPath.newInstance("/api/continue");
-        results = xpa.selectNodes(root);
-      }
-      if (results != null) {
-        for (Object currentNode : results) {
-          List attributes = ((Element) currentNode).getAttributes();
-          if (attributes != null) {
-            for (Object currentAttribute : attributes) {
-              Attribute attribute = (Attribute) currentAttribute;
-              properties.put(attribute.getName(), attribute.getValue());
-              result = true;
-            }
+    JsonNode continueNode = root.path("continue");
+    if ((continueNode != null) && !continueNode.isMissingNode()) {
+      Iterator<Entry<String, JsonNode>> continueIterator = continueNode.fields();
+      while (continueIterator.hasNext()) {
+        Entry<String, JsonNode> continueElement = continueIterator.next();
+        String name = continueElement.getKey();
+        String value = continueElement.getValue().asText();
+        if ((name != null) && (value != null)) {
+          properties.put(name, value);
+          if (!"".equals(value)) {
+            result = true;
           }
         }
       }
-    } catch (JDOMException e) {
-      log.error("Error analyzing query-continue", e);
-      return false;
     }
     return result;
   }
@@ -334,47 +301,17 @@ public abstract class ApiXmlResult extends BasicApiResult {
   }
 
   /**
-   * Utility method to create a XPath.
-   * 
-   * @param element Element.
-   * @param attribute Attribute.
-   * @param value Attribute value.
-   * @return XPath
-   * @throws JDOMException
-   */
-  protected static XPath createXPath(
-      String element,
-      String attribute,
-      String value)
-      throws JDOMException {
-    if ((value != null) && (value.indexOf("\"") != -1)) {
-      return XPath.newInstance(element + "[@" + attribute + "=\"" + xmlOutputter.escapeAttributeEntities(value) + "\"]");
-    }
-    return XPath.newInstance(element + "[@" + attribute + "=\"" + value + "\"]");
-  }
-
-  /**
-   * Formatter for XML output.
-   */
-  private static XMLOutputter xmlOutputter = new XMLOutputter(Format.getPrettyFormat());
-
-  /**
    * Trace a document contents.
    * 
-   * @param doc Document.
+   * @param parser JSON parser.
    */
-  private void traceDocument(Document doc) {
-    if (DEBUG_XML) {
-      if (xmlOutputter == null) {
-        xmlOutputter = new XMLOutputter(Format.getPrettyFormat());
+  private void traceDocument(JsonNode root) {
+    if (DEBUG_JSON) {
+      System.out.println("********** START OF DOCUMENT **********");
+      if (root != null) {
+        System.out.println(root.toString());
       }
-      try {
-        System.out.println("********** START OF DOCUMENT **********");
-        xmlOutputter.output(doc, System.out);
-        System.out.println("**********  END OF DOCUMENT  **********");
-      } catch (IOException e) {
-        // Nothing to do
-      }
+      System.out.println("**********  END OF DOCUMENT  **********");
     }
   }
 }

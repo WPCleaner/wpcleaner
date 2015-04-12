@@ -53,6 +53,7 @@ import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.QueryResult;
 import org.wikipediacleaner.api.data.RecentChange;
 import org.wikipediacleaner.api.data.Section;
+import org.wikipediacleaner.api.data.TemplateData;
 import org.wikipediacleaner.api.data.User;
 import org.wikipediacleaner.api.request.ApiAbuseFiltersRequest;
 import org.wikipediacleaner.api.request.ApiAbuseFiltersResult;
@@ -107,12 +108,15 @@ import org.wikipediacleaner.api.request.ApiSearchResult;
 import org.wikipediacleaner.api.request.ApiSiteInfoRequest;
 import org.wikipediacleaner.api.request.ApiSiteInfoResult;
 import org.wikipediacleaner.api.request.ApiRequest;
+import org.wikipediacleaner.api.request.ApiTemplateDataRequest;
+import org.wikipediacleaner.api.request.ApiTemplateDataResult;
 import org.wikipediacleaner.api.request.ApiTemplatesRequest;
 import org.wikipediacleaner.api.request.ApiTemplatesResult;
 import org.wikipediacleaner.api.request.ApiTokensRequest;
 import org.wikipediacleaner.api.request.ApiTokensResult;
 import org.wikipediacleaner.api.request.ApiUsersRequest;
 import org.wikipediacleaner.api.request.ApiUsersResult;
+import org.wikipediacleaner.api.request.json.ApiJsonTemplateDataResult;
 import org.wikipediacleaner.api.request.xml.ApiXmlAbuseFiltersResult;
 import org.wikipediacleaner.api.request.xml.ApiXmlAbuseLogResult;
 import org.wikipediacleaner.api.request.xml.ApiXmlAllMessagesResult;
@@ -186,7 +190,7 @@ public class MediaWikiAPI implements API {
   public static void updateConfiguration() {
     Configuration config = Configuration.getConfiguration();
     DEBUG_XML = config.getBoolean(
-        null, ConfigurationValueBoolean.DEBUG_XML);
+        null, ConfigurationValueBoolean.DEBUG_API);
     HttpUtils.updateConfiguration();
     ApiXmlResult.updateConfiguration();
   }
@@ -1379,6 +1383,27 @@ public class MediaWikiAPI implements API {
     ApiDeleteResult result = new ApiXmlDeleteResult(wiki, httpClient);
     ApiDeleteRequest request = new ApiDeleteRequest(wiki, result);
     request.deletePage(page, reason);
+  }
+
+  // ==========================================================================
+  // API : TemplateData.
+  // ==========================================================================
+
+  /**
+   * Retrieve the TemplateData for <code>page</code>.
+   * (<code>action=templatedata</code>).
+   * 
+   * @param wiki Wiki.
+   * @param page The page.
+   * @return TemplateData for the page.
+   * @throws APIException
+   * @see <a href="http://www.mediawiki.org/wiki/API:Delete">API:Delete</a>
+   */
+  public TemplateData retrieveTemplateData(EnumWikipedia wiki, Page page)
+      throws APIException {
+    ApiTemplateDataResult result = new ApiJsonTemplateDataResult(wiki, httpClient);
+    ApiTemplateDataRequest request = new ApiTemplateDataRequest(wiki, result);
+    return request.retrieveTemplateData(page);
   }
 
   // ==========================================================================

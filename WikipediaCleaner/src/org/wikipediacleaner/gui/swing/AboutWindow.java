@@ -109,6 +109,7 @@ public class AboutWindow extends BasicWindow {
     pane.addTab("JDOM", createJDomTab());
     pane.addTab("Jaxen", createJaxenTab());
     pane.addTab("Cobra", createCobraTab());
+    pane.addTab("Jackson", createJacksonTab());
     return pane;
   }
 
@@ -333,6 +334,23 @@ public class AboutWindow extends BasicWindow {
         "</html>");
     addFile(panel, constraints, "NOTICE_cobra.txt");
     addFile(panel, constraints, "LICENSE_cobra.txt");
+    return createScrollPane(panel);
+  }
+
+  /**
+   * @return Jackson tab.
+   */
+  private Component createJacksonTab() {
+    JPanel panel = new JPanel(new GridBagLayout());
+    GridBagConstraints constraints = initializeGridBagConstraints();
+    addPresentation(
+        panel, constraints,
+        "<html>" +
+        "<b>Jackson</b> is a multi-purpose Java library for processing JSON data format." +
+        "<br>" +
+        "See <a href='http://wiki.fasterxml.com/JacksonHome'>http://wiki.fasterxml.com/JacksonHome</a> for more information." +
+        "</html>");
+    addFile(panel, constraints, "LICENSE_jackson.txt");
     return createScrollPane(panel);
   }
 
