@@ -19,8 +19,9 @@ import java.awt.event.ItemListener;
 import java.beans.EventHandler;
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.StringReader;
 import java.text.DateFormat;
 import java.util.ArrayList;
@@ -68,6 +69,8 @@ import org.wikipediacleaner.api.data.AbuseFilter;
 import org.wikipediacleaner.api.data.DataManager;
 import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.Page;
+import org.wikipediacleaner.api.data.PageAnalysis;
+import org.wikipediacleaner.api.data.PageElementInternalLink;
 import org.wikipediacleaner.api.data.Suggestion;
 import org.wikipediacleaner.gui.swing.action.ActionDisambiguationAnalysis;
 import org.wikipediacleaner.gui.swing.action.ActionFullAnalysis;
@@ -90,6 +93,7 @@ import org.wikipediacleaner.utils.ConfigurationValueBoolean;
 import org.wikipediacleaner.utils.ConfigurationValueInteger;
 import org.wikipediacleaner.utils.ConfigurationValueShortcut;
 import org.wikipediacleaner.utils.ConfigurationValueString;
+import org.wikipediacleaner.utils.StringChecker;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
@@ -1819,6 +1823,8 @@ public class MainWindow
     if (wikipedia == null) {
       return;
     }
+
+    // Ask which file should be loaded
     JFileChooser chooser = new JFileChooser();
     FileNameExtensionFilter filter = new FileNameExtensionFilter(
         "Text files", "txt");
@@ -1833,15 +1839,65 @@ public class MainWindow
         !chosenFile.canRead()){
       return;
     }
+
+    // Ask in which format the file is
+    String[] values = {
+        GT._("Unformatted list of page names"),
+        GT._("Internal links in a formatted list")
+    };
+    String message =
+        GT._("The file must be encoded in UTF-8 to be read correctly.") + "\n" +
+        GT._("In which format is the file?");
+    String value = Utilities.askForValue(
+        getParentComponent(), message, values, true, values[0], (StringChecker) null);
+    if (value == null) {
+      return;
+    }
+    int choice = 0;
+    for (int i = 0; i < values.length; i++) {
+      if (value.equals(values[i])) {
+        choice = i;
+      }
+    }
+
+    // Read file
+    List<String> pages = new ArrayList<String>();
     BufferedReader reader = null;
+    String line = null;
     try {
-      reader = new BufferedReader(new FileReader(chosenFile));
-      List<String> pages = new ArrayList<String>();
-      String line = null;
-      while ((line = reader.readLine()) != null) {
-        if (line.trim().length() > 0) {
-          pages.add(line);
+      reader = new BufferedReader(new InputStreamReader(new FileInputStream(chosenFile), "UTF8"));
+      switch (choice) {
+      case 0: // Unformatted list
+        while ((line = reader.readLine()) != null) {
+          if (line.trim().length() > 0) {
+            pages.add(line);
+          }
         }
+        break;
+
+      case 1: // Formatted list with internal links
+        StringBuilder buffer = new StringBuilder();
+        while ((line = reader.readLine()) != null) {
+          if (buffer.length() > 0) {
+            buffer.append('\n');
+          }
+          buffer.append(line);
+        }
+        Page tmpPage = DataManager.getPage(getWiki(), chosenFile.getName(), null, null, null);
+        String contents = buffer.toString();
+        tmpPage.setContents(contents);
+        PageAnalysis analysis = tmpPage.getAnalysis(contents, false);
+        List<PageElementInternalLink> links = analysis.getInternalLinks();
+        for (PageElementInternalLink link : links) {
+          String target = link.getLink();
+          if (target.startsWith(":")) {
+            target = target.substring(1);
+          }
+          if (!pages.contains(target)) {
+            pages.add(target);
+          }
+        }
+        break;
       }
       new PageListWorker(
           wikipedia, this, null,
