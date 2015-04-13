@@ -2,56 +2,75 @@
 <project name="WPCleaner" default="main" basedir=".">
 
   <!-- Properties -->
-  <property name="WPCleaner.src.dir"     value="src" />
-  <property name="WPCleaner.build.dir"   value="build" />
-  <property name="WPCleaner.classes.dir" value="${WPCleaner.build.dir}/classes" />
-  <property name="WPCleaner.dist.dir"    value="${WPCleaner.build.dir}/dist" />
-  <property name="WPCleaner.jnlp.dir"    value="${WPCleaner.dist.dir}/jnlp" />
-  <property name="WPCleaner.full.dir"    value="${WPCleaner.dist.dir}/full" />
-  <property name="WPCleaner.javadoc.dir" value="${WPCleaner.dist.dir}/javadoc" />
-  <property name="WPCleaner.libs.dir"    value="libs" />
-  <property name="WPCleaner.res.dir"     value="resources" />
-  <property name="WPCleaner.po.dir"      value="${WPCleaner.src.dir}/org/wikipediacleaner/translation" />
+  <property name="WPCleaner.src.dir"                      value="src" />
+  <property name="WPCleaner.build.dir"                    value="build" />
+  <property name="WPCleaner.classes.dir"                  value="${WPCleaner.build.dir}/classes" />
+  <property name="WPCleaner.dist.dir"                     value="${WPCleaner.build.dir}/dist" />
+  <property name="WPCleaner.jnlp.dir"                     value="${WPCleaner.dist.dir}/jnlp" />
+  <property name="WPCleaner.full.dir"                     value="${WPCleaner.dist.dir}/full" />
+  <property name="WPCleaner.javadoc.dir"                  value="${WPCleaner.dist.dir}/javadoc" />
+  <property name="WPCleaner.libs.dir"                     value="libs" />
+  <property name="WPCleaner.res.dir"                      value="resources" />
+  <property name="WPCleaner.po.dir"                       value="${WPCleaner.src.dir}/org/wikipediacleaner/translation" />
 
-  <property name="WPCleaner.libs.cobra.dir"      value="libs/cobra-0.98.2" />
-  <property name="WPCleaner.libs.cobra.jar"      value="cobra.jar" />
-  <property name="WPCleaner.libs.cobra-js.jar"   value="js.jar" />
-  <property name="WPCleaner.libs.cobra.lic"      value="LICENSE.txt" />
-  <property name="WPCleaner.libs.cobra.not"      value="COBRA-README.txt" />
+  <property name="WPCleaner.libs.cobra.version"           value="0.98.2" />
+  <property name="WPCleaner.libs.cobra.dir"               value="libs/cobra-${WPCleaner.libs.cobra.version}" />
+  <property name="WPCleaner.libs.cobra.jar"               value="cobra.jar" />
+  <property name="WPCleaner.libs.cobra-js.jar"            value="js.jar" />
+  <property name="WPCleaner.libs.cobra.lic"               value="LICENSE.txt" />
+  <property name="WPCleaner.libs.cobra.not"               value="COBRA-README.txt" />
 
-  <property name="WPCleaner.libs.codec.dir"      value="libs/commons-codec-1.6" />
-  <property name="WPCleaner.libs.codec.jar"      value="commons-codec-1.6.jar" />
-  <property name="WPCleaner.libs.codec.lic"      value="LICENSE.txt" />
-  <property name="WPCleaner.libs.codec.not"      value="NOTICE.txt" />
+  <property name="WPCleaner.libs.codec.version"           value="1.6" />
+  <property name="WPCleaner.libs.codec.dir"               value="libs/commons-codec-${WPCleaner.libs.codec.version}" />
+  <property name="WPCleaner.libs.codec.jar"               value="commons-codec-${WPCleaner.libs.codec.version}.jar" />
+  <property name="WPCleaner.libs.codec.lic"               value="LICENSE.txt" />
+  <property name="WPCleaner.libs.codec.not"               value="NOTICE.txt" />
 
-  <property name="WPCleaner.libs.gettext.dir"    value="libs/gettext-commons-0.9.6" />
-  <property name="WPCleaner.libs.gettext.jar"    value="gettext-commons-0.9.6.jar" />
-  <property name="WPCleaner.libs.gettext.lic"    value="LICENSE_gettext-commons.txt" />
+  <property name="WPCleaner.libs.gettext.version"         value="0.9.6" />
+  <property name="WPCleaner.libs.gettext.dir"             value="libs/gettext-commons-${WPCleaner.libs.gettext.version}" />
+  <property name="WPCleaner.libs.gettext.jar"             value="gettext-commons-${WPCleaner.libs.gettext.version}.jar" />
+  <property name="WPCleaner.libs.gettext.lic"             value="LICENSE_gettext-commons.txt" />
 
-  <property name="WPCleaner.libs.httpclient.dir" value="libs/commons-httpclient-3.1" />
-  <property name="WPCleaner.libs.httpclient.jar" value="commons-httpclient-3.1.jar" />
-  <property name="WPCleaner.libs.httpclient.lic" value="LICENSE.txt" />
-  <property name="WPCleaner.libs.httpclient.not" value="NOTICE.txt" />
+  <property name="WPCleaner.libs.httpclient.version"      value="3.1" />
+  <property name="WPCleaner.libs.httpclient.dir"          value="libs/commons-httpclient-${WPCleaner.libs.httpclient.version}" />
+  <property name="WPCleaner.libs.httpclient.jar"          value="commons-httpclient-${WPCleaner.libs.httpclient.version}.jar" />
+  <property name="WPCleaner.libs.httpclient.lic"          value="LICENSE.txt" />
+  <property name="WPCleaner.libs.httpclient.not"          value="NOTICE.txt" />
 
-  <property name="WPCleaner.libs.jaxen-core.jar" value="jaxen-core.jar" />
-  <property name="WPCleaner.libs.jaxen-jdom.jar" value="jaxen-jdom.jar" />
-  <property name="WPCleaner.libs.jaxen.lic"      value="LICENSE_jaxen.txt" />
+  <property name="WPCleaner.libs.jackson.version"         value="2.5.2" />
+  <property name="WPCleaner.libs.jackson.dir"             value="libs/jackson-${WPCleaner.libs.jackson.version}" />
+  <property name="WPCleaner.libs.jackson-annotations.jar" value="jackson-annotations-${WPCleaner.libs.jackson.version}.jar" />
+  <property name="WPCleaner.libs.jackson-core.jar"        value="jackson-core-${WPCleaner.libs.jackson.version}.jar" />
+  <property name="WPCleaner.libs.jackson-databind.jar"    value="jackson-databind-${WPCleaner.libs.jackson.version}.jar" />
+  <property name="WPCleaner.libs.jackson.lic"             value="LICENSE.txt" />
 
-  <property name="WPCleaner.libs.jdom.dir"       value="libs/jdom-1.0" />
-  <property name="WPCleaner.libs.jdom.jar"       value="jdom.jar" />
-  <property name="WPCleaner.libs.jdom.lic"       value="LICENSE_jdom.txt" />
+  <property name="WPCleaner.libs.jaxen-core.jar"          value="jaxen-core.jar" />
+  <property name="WPCleaner.libs.jaxen-jdom.jar"          value="jaxen-jdom.jar" />
+  <property name="WPCleaner.libs.jaxen.lic"               value="LICENSE_jaxen.txt" />
 
-  <property name="WPCleaner.libs.logging.dir"    value="libs/commons-logging-1.1.3" />
-  <property name="WPCleaner.libs.logging.jar"    value="commons-logging-1.1.3.jar" />
-  <property name="WPCleaner.libs.logging.lic"    value="LICENSE.txt" />
-  <property name="WPCleaner.libs.logging.not"    value="NOTICE.txt" />
+  <property name="WPCleaner.libs.jdom.version"            value="1.0" />
+  <property name="WPCleaner.libs.jdom.dir"                value="libs/jdom-${WPCleaner.libs.jdom.version}" />
+  <property name="WPCleaner.libs.jdom.jar"                value="jdom.jar" />
+  <property name="WPCleaner.libs.jdom.lic"                value="LICENSE_jdom.txt" />
 
-  <property name="WPCleaner.libs.saxpath.jar"    value="saxpath.jar" />
+  <property name="WPCleaner.libs.logging.version"         value="1.1.3" />
+  <property name="WPCleaner.libs.logging.dir"             value="libs/commons-logging-${WPCleaner.libs.logging.version}" />
+  <property name="WPCleaner.libs.logging.jar"             value="commons-logging-${WPCleaner.libs.logging.version}.jar" />
+  <property name="WPCleaner.libs.logging.lic"             value="LICENSE.txt" />
+  <property name="WPCleaner.libs.logging.not"             value="NOTICE.txt" />
 
-  <property name="WPCleaner.libs.cobra.jars"     value="${WPCleaner.libs.cobra.jar} ${WPCleaner.libs.cobra-js.jar}" />
-  <property name="WPCleaner.libs.jdom.jars"      value="${WPCleaner.libs.jaxen-core.jar} ${WPCleaner.libs.jaxen-jdom.jar} ${WPCleaner.libs.jdom.jar} ${WPCleaner.libs.saxpath.jar}" />
-  <property name="WPCleaner.libs.various.jars"   value="${WPCleaner.libs.codec.jar} ${WPCleaner.libs.httpclient.jar} ${WPCleaner.libs.logging.jar} ${WPCleaner.libs.gettext.jar}" />
-  <property name="WPCleaner.libs.jars"           value="${WPCleaner.libs.cobra.jars} ${WPCleaner.libs.various.jars} ${WPCleaner.libs.jdom.jars}" />
+  <property name="WPCleaner.libs.saxpath.jar"             value="saxpath.jar" />
+
+  <property name="WPCleaner.libs.cobra.jars"
+            value="${WPCleaner.libs.cobra.jar} ${WPCleaner.libs.cobra-js.jar}" />
+  <property name="WPCleaner.libs.jackson.jars"
+            value="${WPCleaner.libs.jackson-annotations.jar} ${WPCleaner.libs.jackson-core.jar} ${WPCleaner.libs.jackson-databind.jar}" />
+  <property name="WPCleaner.libs.jdom.jars"
+            value="${WPCleaner.libs.jaxen-core.jar} ${WPCleaner.libs.jaxen-jdom.jar} ${WPCleaner.libs.jdom.jar} ${WPCleaner.libs.saxpath.jar}" />
+  <property name="WPCleaner.libs.various.jars"
+            value="${WPCleaner.libs.codec.jar} ${WPCleaner.libs.httpclient.jar} ${WPCleaner.libs.logging.jar} ${WPCleaner.libs.gettext.jar}" />
+  <property name="WPCleaner.libs.jars"
+            value="${WPCleaner.libs.cobra.jars} ${WPCleaner.libs.various.jars} ${WPCleaner.libs.jdom.jars}" />
 
   <property name="all.languages" value="ast,az,bn,cs,da,de,el,en_GB,eo,es,fa,fr,gl,he,hu,id,is,it,ja,ko,ms,nb,nl,oc,pl,pt_BR,ru,sv,tr,uk,zh_CN" />
 
@@ -101,16 +120,19 @@
     <mkdir dir="${WPCleaner.full.dir}" />
 
     <!-- Extract libraries -->
-    <unzip src="${WPCleaner.libs.cobra.dir}/${WPCleaner.libs.cobra.jar}"           dest="${WPCleaner.classes.dir}" />
-    <unzip src="${WPCleaner.libs.cobra.dir}/${WPCleaner.libs.cobra-js.jar}"        dest="${WPCleaner.classes.dir}" />
-    <unzip src="${WPCleaner.libs.codec.dir}/${WPCleaner.libs.codec.jar}"           dest="${WPCleaner.classes.dir}" />
-    <unzip src="${WPCleaner.libs.httpclient.dir}/${WPCleaner.libs.httpclient.jar}" dest="${WPCleaner.classes.dir}" />
-    <unzip src="${WPCleaner.libs.logging.dir}/${WPCleaner.libs.logging.jar}"       dest="${WPCleaner.classes.dir}" />
-    <unzip src="${WPCleaner.libs.gettext.dir}/${WPCleaner.libs.gettext.jar}"       dest="${WPCleaner.classes.dir}" />
-    <unzip src="${WPCleaner.libs.jdom.dir}/${WPCleaner.libs.jaxen-core.jar}"       dest="${WPCleaner.classes.dir}" />
-    <unzip src="${WPCleaner.libs.jdom.dir}/${WPCleaner.libs.jaxen-jdom.jar}"       dest="${WPCleaner.classes.dir}" />
-    <unzip src="${WPCleaner.libs.jdom.dir}/${WPCleaner.libs.jdom.jar}"             dest="${WPCleaner.classes.dir}" />
-    <unzip src="${WPCleaner.libs.jdom.dir}/${WPCleaner.libs.saxpath.jar}"          dest="${WPCleaner.classes.dir}" />
+    <unzip src="${WPCleaner.libs.cobra.dir}/${WPCleaner.libs.cobra.jar}"                 dest="${WPCleaner.classes.dir}" />
+    <unzip src="${WPCleaner.libs.cobra.dir}/${WPCleaner.libs.cobra-js.jar}"              dest="${WPCleaner.classes.dir}" />
+    <unzip src="${WPCleaner.libs.codec.dir}/${WPCleaner.libs.codec.jar}"                 dest="${WPCleaner.classes.dir}" />
+    <unzip src="${WPCleaner.libs.httpclient.dir}/${WPCleaner.libs.httpclient.jar}"       dest="${WPCleaner.classes.dir}" />
+    <unzip src="${WPCleaner.libs.logging.dir}/${WPCleaner.libs.logging.jar}"             dest="${WPCleaner.classes.dir}" />
+    <unzip src="${WPCleaner.libs.gettext.dir}/${WPCleaner.libs.gettext.jar}"             dest="${WPCleaner.classes.dir}" />
+    <unzip src="${WPCleaner.libs.jackson.dir}/${WPCleaner.libs.jackson-annotations.jar}" dest="${WPCleaner.classes.dir}" />
+    <unzip src="${WPCleaner.libs.jackson.dir}/${WPCleaner.libs.jackson-core.jar}"        dest="${WPCleaner.classes.dir}" />
+    <unzip src="${WPCleaner.libs.jackson.dir}/${WPCleaner.libs.jackson-databind.jar}"    dest="${WPCleaner.classes.dir}" />
+    <unzip src="${WPCleaner.libs.jdom.dir}/${WPCleaner.libs.jaxen-core.jar}"             dest="${WPCleaner.classes.dir}" />
+    <unzip src="${WPCleaner.libs.jdom.dir}/${WPCleaner.libs.jaxen-jdom.jar}"             dest="${WPCleaner.classes.dir}" />
+    <unzip src="${WPCleaner.libs.jdom.dir}/${WPCleaner.libs.jdom.jar}"                   dest="${WPCleaner.classes.dir}" />
+    <unzip src="${WPCleaner.libs.jdom.dir}/${WPCleaner.libs.saxpath.jar}"                dest="${WPCleaner.classes.dir}" />
     <delete includeemptydirs="true">
       <fileset dir="${WPCleaner.classes.dir}/META-INF" includes="**/*.txt" />
     </delete>
@@ -149,6 +171,8 @@
   	      tofile="${WPCleaner.classes.dir}/NOTICE_commons-logging.txt" />
     <copy file="${WPCleaner.libs.gettext.dir}/${WPCleaner.libs.gettext.lic}"
           tofile="${WPCleaner.classes.dir}/gettext-commons.license" />
+    <copy file="${WPCleaner.libs.jackson.dir}/${WPCleaner.libs.jackson.lic}"
+          tofile="${WPCleaner.classes.dir}/jackson.license" />
     <copy file="${WPCleaner.libs.jdom.dir}/${WPCleaner.libs.jdom.lic}"
           tofile="${WPCleaner.classes.dir}/jdom.license" />
     <copy file="${WPCleaner.libs.jdom.dir}/${WPCleaner.libs.jaxen.lic}"
