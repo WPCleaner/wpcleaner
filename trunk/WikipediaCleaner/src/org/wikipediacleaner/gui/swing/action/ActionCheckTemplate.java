@@ -115,6 +115,7 @@ public class ActionCheckTemplate implements ActionListener {
 
     // Check each parameter defined in TemplateData.
     for (TemplateData.Parameter param : templateData.getParameters()) {
+      String aliases = listAliases(param);
 
       // Find parameters matching the TemplateData parameter.
       List<PageElementTemplate.Parameter> parameters = new ArrayList<PageElementTemplate.Parameter>();
@@ -150,9 +151,15 @@ public class ActionCheckTemplate implements ActionListener {
               break;
             }
             if (!ok) {
-              warnings.add(GT._(
-                  "{0} says that parameter \"{1}\" should be of type \"{2}\", but actual value is \"{3}\".",
-                  new Object[] { "TemplateData", param.getName(), enumType.toString(), value }));
+              if (aliases != null) {
+                warnings.add(GT._(
+                    "Parameter defined as \"{0}\" (aliases {1}) in {2} should be of type \"{3}\", but actual value is \"{4}\".",
+                    new Object[] { param.getName(), aliases, "TemplateData", enumType.toString(), value }));
+              } else {
+                warnings.add(GT._(
+                    "Parameter defined as \"{0}\" in {1} should be of type \"{2}\", but actual value is \"{3}\".",
+                    new Object[] { param.getName(), "TemplateData", enumType.toString(), value }));
+              }
             }
           }
         }
@@ -160,9 +167,15 @@ public class ActionCheckTemplate implements ActionListener {
 
       // Check mandatory parameters
       if (param.isRequired() && parameters.isEmpty()) {
-        warnings.add(GT._(
-            "{0} says that parameter \"{1}\" is required, but it''s missing.",
-            new Object[] { "TemplateData", param.getName() }));
+        if (aliases != null) {
+          warnings.add(GT._(
+              "Parameter defined as \"{0}\" (aliases {1}) in {2} is required, but it''s missing.",
+              new Object[] { param.getName(), aliases, "TemplateData" }));
+        } else {
+          warnings.add(GT._(
+              "Parameter defined as \"{0}\" in {1} is required, but it''s missing.",
+              new Object[] { param.getName(), "TemplateData" }));
+        }
       }
 
       // Check duplicate parameters
@@ -174,18 +187,10 @@ public class ActionCheckTemplate implements ActionListener {
           }
           buffer.append(parameter.getComputedName());
         }
-        List<String> aliases = param.getAliases();
-        if ((aliases != null) && !aliases.isEmpty()) {
-          StringBuilder bufferAliases = new StringBuilder();
-          for (String alias : aliases) {
-            if (bufferAliases.length() > 0) {
-              bufferAliases.append(", ");
-            }
-            bufferAliases.append(alias);
-          }
+        if (aliases != null) {
           warnings.add(GT._(
               "Parameter defined as \"{0}\" (aliases {1}) in {2} is present several times: {3}.",
-              new Object[] { param.getName(), bufferAliases.toString(), "TemplateData", buffer.toString() }));
+              new Object[] { param.getName(), aliases, "TemplateData", buffer.toString() }));
         } else {
           warnings.add(GT._(
               "Parameter defined as \"{0}\" in {1} is present several times: {2}.",
@@ -224,5 +229,27 @@ public class ActionCheckTemplate implements ActionListener {
       buffer.append(warning);
     }
     Utilities.displayWarning(parent, buffer.toString());
+  }
+
+  /**
+   * @param param TemplateData parameter.
+   * @return String representation of parameter aliases.
+   */
+  private String listAliases(TemplateData.Parameter param) {
+    if (param == null) {
+      return null;
+    }
+    List<String> aliases = param.getAliases();
+    if ((aliases == null) || aliases.isEmpty()) {
+      return null;
+    }
+    StringBuilder bufferAliases = new StringBuilder();
+    for (String alias : aliases) {
+      if (bufferAliases.length() > 0) {
+        bufferAliases.append(", ");
+      }
+      bufferAliases.append(alias);
+    }
+    return bufferAliases.toString();
   }
 }
