@@ -7,6 +7,7 @@
 
 package org.wikipediacleaner.gui.swing.menu;
 
+import java.awt.Component;
 import java.awt.event.ActionListener;
 import java.util.Collection;
 import java.util.Iterator;
@@ -21,7 +22,9 @@ import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageAnalysisUtils;
+import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.PageElementTitle;
+import org.wikipediacleaner.gui.swing.action.ActionCheckTemplate;
 import org.wikipediacleaner.gui.swing.action.ActionDisambiguationAnalysis;
 import org.wikipediacleaner.gui.swing.action.ActionExternalViewer;
 import org.wikipediacleaner.gui.swing.action.ActionFullAnalysis;
@@ -357,35 +360,56 @@ public class BasicMenuCreator extends AbstractMenuCreator {
   /**
    * Add item for purging page cache. 
    * 
-   * @param wikipedia Wikipedia.
+   * @param wiki Wiki.
    * @param popup Popup menu.
    * @param page Page.
    * @param window Window.
    */
   public void addItemPurgeCache(
-      EnumWikipedia wikipedia, JPopupMenu popup, Page page, BasicWindow window) {
+      EnumWikipedia wiki, JPopupMenu popup, Page page, BasicWindow window) {
     if (page != null) {
       addItem(
           popup, null, GT._("Purge cache"), true,
-          new PurgeCacheAction(wikipedia, page, window));
+          new PurgeCacheAction(wiki, page, window));
     }
   }
 
   /**
    * Add item for reloading links. 
    * 
-   * @param wikipedia Wikipedia.
+   * @param wiki Wiki.
    * @param popup Popup menu.
    * @param page Page.
    * @param window Window.
    */
   public void addItemReloadLinks(
-      EnumWikipedia wikipedia, JPopupMenu popup, Page page, BasicWindow window) {
-    if ((wikipedia == null) || (popup == null) || (window == null)) {
+      EnumWikipedia wiki, JPopupMenu popup, Page page, BasicWindow window) {
+    if ((wiki == null) || (popup == null) || (window == null)) {
       return;
     }
     addItem(
         popup, null, GT._("Reload links"), true,
-        new ReloadLinksAction(wikipedia, page, window));
+        new ReloadLinksAction(wiki, page, window));
+  }
+
+  // ==========================================================================
+  // Check article
+  // ==========================================================================
+
+  /**
+   * Add menu for checking template.
+   * 
+   * @param wiki Wiki.
+   * @param parent Parent component.
+   * @param popup Popup menu.
+   * @param template Template.
+   */
+  public void addCheckTemplate(
+      EnumWikipedia wiki, Component parent, JPopupMenu popup,
+      PageElementTemplate template) {
+    if ((popup == null) || (template == null)) {
+      return;
+    }
+    popup.add(ActionCheckTemplate.createMenuItem(parent, wiki, template));
   }
 }
