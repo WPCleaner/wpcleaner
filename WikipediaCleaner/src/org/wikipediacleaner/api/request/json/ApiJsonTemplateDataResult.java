@@ -85,7 +85,15 @@ public class ApiJsonTemplateDataResult extends ApiJsonResult implements ApiTempl
       param.setLabel(createInterfaceText(paramNode.path("label")));
       param.setDescription(createInterfaceText(paramNode.path("description")));
       param.setType(paramNode.path("type").asText());
-      // TODO: param.setAliases(aliases);
+      JsonNode aliasesNode = paramNode.path("aliases");
+      if (aliasesNode.isArray()) {
+        List<String> aliases = new ArrayList<String>();
+        Iterator<JsonNode> itAliases = aliasesNode.elements();
+        while (itAliases.hasNext()) {
+          aliases.add(itAliases.next().asText());
+        }
+        param.setAliases(aliases);
+      }
       param.setRequired(paramNode.path("required").asBoolean(false));
       param.setSuggested(paramNode.path("suggested").asBoolean(false));
       param.setDeprecated(paramNode.path("deprecated").asBoolean(false));
