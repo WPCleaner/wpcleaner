@@ -206,7 +206,7 @@ public class TemplateData {
     }
 
     /**
-     * @return
+     * @return Description.
      * @see java.lang.Object#toString()
      */
     @Override
@@ -260,7 +260,7 @@ public class TemplateData {
     }
 
     /**
-     * @return
+     * @return Description.
      * @see java.lang.Object#toString()
      */
     @Override

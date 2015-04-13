@@ -116,12 +116,45 @@ public class ActionCheckTemplate implements ActionListener {
     // Check each parameter defined in TemplateData.
     for (TemplateData.Parameter param : templateData.getParameters()) {
 
-      // Construct list of parameters matching the TemplateData parameter.
+      // Find parameters matching the TemplateData parameter.
       List<PageElementTemplate.Parameter> parameters = new ArrayList<PageElementTemplate.Parameter>();
       for (int i = 0; i < template.getParameterCount(); i++) {
         PageElementTemplate.Parameter parameter = template.getParameter(i);
         if (param.isPossibleName(parameter.getComputedName())) {
           parameters.add(parameter);
+
+          // Check parameter type
+          if (param.getType() != null) {
+            boolean ok = true;
+            TemplateData.EnumParameterType enumType = param.getType();
+            String value = parameter.getValue();
+            switch (enumType) {
+            case STRING:
+            case WIKI_PAGE_NAME:
+            case WIKI_USER_NAME:
+            case UNKNOWN:
+              // Nothing to check;
+              break;
+
+            case NUMBER:
+              if (value != null) {
+                for (int charNum = 0; charNum < value.length(); charNum++) {
+                  char currentChar = value.charAt(charNum);
+                  if (!Character.isDigit(currentChar) &&
+                      !Character.isWhitespace(currentChar) &&
+                      (currentChar != '.')) {
+                    ok = false;
+                  }
+                }
+              }
+              break;
+            }
+            if (!ok) {
+              warnings.add(GT._(
+                  "{0} says that parameter \"{1}\" should be of type \"{2}\", but actual value is \"{3}\".",
+                  new Object[] { "TemplateData", param.getName(), enumType.toString(), value }));
+            }
+          }
         }
       }
 
