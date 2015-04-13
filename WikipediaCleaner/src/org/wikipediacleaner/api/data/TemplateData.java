@@ -108,6 +108,22 @@ public class TemplateData {
   }
 
   /**
+   * @param parameterName Parameter name.
+   * @return Parameter for the given name.
+   */
+  public Parameter getParameter(String parameterName) {
+    if ((parameterName == null) || (parameters == null)) {
+      return null;
+    }
+    for (Parameter param : parameters) {
+      if (param.isPossibleName(parameterName)) {
+        return param;
+      }
+    }
+    return null;
+  }
+
+  /**
    * @param parameters Template parameters.
    */
   public void setParameters(List<Parameter> parameters) {
@@ -309,6 +325,27 @@ public class TemplateData {
      */
     public String getName() {
       return name;
+    }
+
+    /**
+     * @param parameterName Parameter name.
+     * @return True if the parameter name matches this template data parameter.
+     */
+    public boolean isPossibleName(String parameterName) {
+      if (parameterName == null) {
+        return false;
+      }
+      if ((name != null) && (name.equals(parameterName))) {
+        return true;
+      }
+      if (aliases != null) {
+        for (String alias : aliases) {
+          if ((alias != null) && (alias.equals(parameterName))) {
+            return true;
+          }
+        }
+      }
+      return false;
     }
 
     /**

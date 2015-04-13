@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2015-04-12 13:14+0200\n"
+"POT-Creation-Date: 2015-04-13 20:52+0200\n"
 "PO-Revision-Date: 2015-04-05 05:57+0000\n"
 "Last-Translator: Matěj S. <matejsuchanek97@gmail.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
@@ -439,9 +439,9 @@ msgstr "Nahradit za použití šablony {0}"
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:155
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm081.java:265
 #: org/wikipediacleaner/gui/swing/action/ActionExternalViewer.java:61
-#: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:83
-#: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:151
-#: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:339
+#: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:86
+#: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:154
+#: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:342
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:135
 #: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:229
 msgid "External Viewer"
@@ -1012,12 +1012,12 @@ msgstr "Převádím text"
 msgid "Retrieving templates"
 msgstr "Přijímám šablony"
 
-#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:641
+#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:645
 #, java-format
 msgid "URL {0} is blacklisted"
 msgstr ""
 
-#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:1694
+#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:1719
 msgid ""
 "This action is protected by a CAPTCHA.\n"
 "What is the answer to the following question ?"
@@ -1025,7 +1025,7 @@ msgstr ""
 "Tato akce je chráněna funkcí CAPTCHA.\n"
 "Jaká je odpověď na následující otázku?"
 
-#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:1701
+#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:1726
 msgid ""
 "This action is protected by a CAPTCHA.\n"
 "What is the answer to the question displayed in your browser ?"
@@ -1891,8 +1891,8 @@ msgid "Full analysis"
 msgstr "Plná analýza"
 
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:926
-#: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:259
-#: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:264
+#: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:262
+#: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:267
 msgid "Disambiguation analysis"
 msgstr "Rozcestníková analýza"
 
@@ -1999,6 +1999,51 @@ msgstr "Přijímám odkazy v šablonách"
 msgid "Displaying templates found"
 msgstr "Zobrazuji nalezené šablony"
 
+#: org/wikipediacleaner/gui/swing/action/ActionCheckTemplate.java:48
+#, fuzzy
+msgid "Check template"
+msgstr "Analyzovat šablonu"
+
+#: org/wikipediacleaner/gui/swing/action/ActionCheckTemplate.java:107
+#, java-format
+msgid "Template \"{0}\" has no {1} block defined."
+msgstr ""
+
+#: org/wikipediacleaner/gui/swing/action/ActionCheckTemplate.java:131
+#, java-format
+msgid "{0} says that parameter \"{1}\" is required, but it''s missing."
+msgstr ""
+
+#: org/wikipediacleaner/gui/swing/action/ActionCheckTemplate.java:154
+#, java-format
+msgid ""
+"Parameter defined as \"{0}\" (aliases {1}) in {2} is present several times: "
+"{3}."
+msgstr ""
+
+#: org/wikipediacleaner/gui/swing/action/ActionCheckTemplate.java:158
+#, java-format
+msgid "Parameter defined as \"{0}\" in {1} is present several times: {2}."
+msgstr ""
+
+#: org/wikipediacleaner/gui/swing/action/ActionCheckTemplate.java:170
+#, java-format
+msgid "Parameter \"{0}\" is not defined in {1}."
+msgstr ""
+
+#: org/wikipediacleaner/gui/swing/action/ActionCheckTemplate.java:178
+#, fuzzy, java-format
+msgid "No problem has been detected with template \"{0}\"."
+msgstr "Chyba nebyla na stránce {0} nalezena"
+
+#: org/wikipediacleaner/gui/swing/action/ActionCheckTemplate.java:185
+#, fuzzy
+msgid "The following problem has been detected with template \"{0\":"
+msgid_plural "The following problems have been detected with template \"{0}\":"
+msgstr[0] "Ve whitelistu chyby {0} byly nalezeny následující problémy:"
+msgstr[1] "Ve whitelistu chyby {0} byly nalezeny následující problémy:"
+msgstr[2] "Ve whitelistu chyby {0} byly nalezeny následující problémy:"
+
 #: org/wikipediacleaner/gui/swing/action/ActionDeletePage.java:41
 msgid "Delete page"
 msgstr "Smazat stránku"
@@ -2021,8 +2066,8 @@ msgid "Close"
 msgstr "Zavřít"
 
 #: org/wikipediacleaner/gui/swing/action/ActionExternalViewer.java:55
-#: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:84
-#: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:160
+#: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:87
+#: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:163
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:150
 #: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:237
 msgid "History"
@@ -2702,17 +2747,17 @@ msgstr "Externí odkaz: {0}"
 msgid "Template: {0}"
 msgstr "Šablona: {0}"
 
-#: org/wikipediacleaner/gui/swing/component/MWPanePopupListener.java:499
+#: org/wikipediacleaner/gui/swing/component/MWPanePopupListener.java:500
 #, java-format
 msgid "Parameter: {0}"
 msgstr "Parametr: {0}"
 
-#: org/wikipediacleaner/gui/swing/component/MWPanePopupListener.java:524
+#: org/wikipediacleaner/gui/swing/component/MWPanePopupListener.java:525
 #, java-format
 msgid "Function: {0}"
 msgstr "Funkce: {0}"
 
-#: org/wikipediacleaner/gui/swing/component/MWPanePopupListener.java:549
+#: org/wikipediacleaner/gui/swing/component/MWPanePopupListener.java:550
 #, java-format
 msgid "ISBN: {0}"
 msgstr "ISBN: {0}"
@@ -2758,39 +2803,39 @@ msgstr "Hledat v šablonách"
 msgid "Link to"
 msgstr "Připojit k(e)"
 
-#: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:149
+#: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:152
 msgid "Template External Viewer"
 msgstr "Externí zobrazení šablony"
 
-#: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:158
+#: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:161
 msgid "Template history"
 msgstr "Historie šablony"
 
-#: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:192
+#: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:195
 msgid "Analyze"
 msgstr "Analyzovat"
 
-#: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:231
+#: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:234
 msgid "Analyze template"
 msgstr "Analyzovat šablonu"
 
-#: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:233
+#: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:236
 msgid "Analyze page"
 msgstr "Analyzovat stránku"
 
-#: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:299
+#: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:302
 msgid "Current chapter"
 msgstr "Aktuální kapitola"
 
-#: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:325
+#: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:328
 msgid "Remove link"
 msgstr "Odebrat odkaz"
 
-#: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:369
+#: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:372
 msgid "Purge cache"
 msgstr "Vyčistit vyrovnávací paměť"
 
-#: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:388
+#: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:391
 msgid "Reload links"
 msgstr "Obnovit odkazy"
 

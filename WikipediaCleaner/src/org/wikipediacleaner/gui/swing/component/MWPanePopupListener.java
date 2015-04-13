@@ -472,6 +472,7 @@ public abstract class MWPanePopupListener extends AbstractPopupListener {
         limitTextLength(template.getTemplateName(), 50)));
     menu.addCurrentChapter(popup, position, pageAnalysis);
     menu.addSeparator(popup);
+    menu.addCheckTemplate(wikipedia, window.getParentComponent(), popup, template);
     menu.addView(wikipedia, popup, page, false);
     menu.addAnalyze(wikipedia, popup, page);
 
