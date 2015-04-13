@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2015-04-13 22:29+0200\n"
+"POT-Creation-Date: 2015-04-13 22:39+0200\n"
 "PO-Revision-Date: 2014-09-10 23:23+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Hungarian <hu@li.org>\n"
@@ -1987,13 +1987,13 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/action/ActionCheckTemplate.java:172
 #, java-format
 msgid ""
-"Parameter defined as \"{0}\" (aliases {1}) in {2} is required, but it''s "
+"Parameter defined as \"{0}\" (aliases {1}) in {2} is required, but is "
 "missing."
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/action/ActionCheckTemplate.java:176
 #, java-format
-msgid "Parameter defined as \"{0}\" in {1} is required, but it''s missing."
+msgid "Parameter defined as \"{0}\" in {1} is required, but is missing."
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/action/ActionCheckTemplate.java:192

@@ -169,11 +169,11 @@ public class ActionCheckTemplate implements ActionListener {
       if (param.isRequired() && parameters.isEmpty()) {
         if (aliases != null) {
           warnings.add(GT._(
-              "Parameter defined as \"{0}\" (aliases {1}) in {2} is required, but it''s missing.",
+              "Parameter defined as \"{0}\" (aliases {1}) in {2} is required, but is missing.",
               new Object[] { param.getName(), aliases, "TemplateData" }));
         } else {
           warnings.add(GT._(
-              "Parameter defined as \"{0}\" in {1} is required, but it''s missing.",
+              "Parameter defined as \"{0}\" in {1} is required, but is missing.",
               new Object[] { param.getName(), "TemplateData" }));
         }
       }
