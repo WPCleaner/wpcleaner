@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2015-04-13 22:39+0200\n"
+"POT-Creation-Date: 2015-04-13 23:47+0200\n"
 "PO-Revision-Date: 2015-04-05 05:54+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Spanish\n"
@@ -20,26 +20,6 @@ msgstr ""
 "Language: es\n"
 
 #: org/wikipediacleaner/Version.java:31
-msgid "The Check Wiki project has evolved a lot recently."
-msgstr "El Wikiproyecto Check Wikipedia ha evolucionado mucho recientemente."
-
-#: org/wikipediacleaner/Version.java:32
-msgid ""
-"New detections have been added either with new error numbers or by replacing "
-"previously used error numbers."
-msgstr ""
-"Se han añadido nuevas detecciones, ya sea por medio de nuevos números de "
-"errores o reemplazando números de errores usados anteriormente."
-
-#: org/wikipediacleaner/Version.java:33
-msgid ""
-"You may need to update the Check Wiki translation file on your wiki to "
-"configure the new detections."
-msgstr ""
-"Puede ser que necesite actualizar el archivo de traducción de Check "
-"Wikipedia en su wiki para configurar las nuevas detecciones."
-
-#: org/wikipediacleaner/Version.java:35
 #, java-format
 msgid ""
 "I try to keep {0} up to date with Check Wiki, but if you find any discrepancy"
@@ -48,12 +28,12 @@ msgstr ""
 "Intento mantener {0} actualizado con Check Wikipedia pero, si encuentra "
 "alguna discrepancia en las detecciones, por favor hágamelo saber."
 
-#: org/wikipediacleaner/Version.java:37
+#: org/wikipediacleaner/Version.java:33
 #, java-format
 msgid "I hope you''ll like {0}."
 msgstr "Espero que le guste {0}."
 
-#: org/wikipediacleaner/Version.java:40
+#: org/wikipediacleaner/Version.java:36
 #, java-format
 msgid ""
 "WPCleaner configuration is available online, check the {0}System "
@@ -62,21 +42,41 @@ msgstr ""
 "La configuración de WPCleaner está disponible en línea. Compruebe la {0}"
 "configuración del sistema{1}."
 
-#: org/wikipediacleaner/Version.java:43
+#: org/wikipediacleaner/Version.java:39
 msgid "Please, report any other problem you find to me."
 msgstr "Por favor, informe de cualquier otro problema que encuentre."
 
-#: org/wikipediacleaner/Version.java:46
+#: org/wikipediacleaner/Version.java:42
+msgid "The Check Wiki project has evolved a lot recently."
+msgstr "El Wikiproyecto Check Wikipedia ha evolucionado mucho recientemente."
+
+#: org/wikipediacleaner/Version.java:43
+msgid ""
+"New detections have been added either with new error numbers or by replacing "
+"previously used error numbers."
+msgstr ""
+"Se han añadido nuevas detecciones, ya sea por medio de nuevos números de "
+"errores o reemplazando números de errores usados anteriormente."
+
+#: org/wikipediacleaner/Version.java:44
+msgid ""
+"You may need to update the Check Wiki translation file on your wiki to "
+"configure the new detections."
+msgstr ""
+"Puede ser que necesite actualizar el archivo de traducción de Check "
+"Wikipedia en su wiki para configurar las nuevas detecciones."
+
+#: org/wikipediacleaner/Version.java:45
 msgid "Disambiguator extension has been deployed to all WMF wikis."
 msgstr ""
 "La extensión Desambiguator ha sido implementada en todas las wikis de la "
 "Fundación Wikimedia."
 
-#: org/wikipediacleaner/Version.java:47
+#: org/wikipediacleaner/Version.java:46
 msgid "It defines the new magic word __DISAMBIG__."
 msgstr "Define la nueva palabra mágica __DISAMBIG__."
 
-#: org/wikipediacleaner/Version.java:48
+#: org/wikipediacleaner/Version.java:47
 msgid ""
 "This magic word should be added to all disambiguation pages (either through "
 "templates or directly)."
@@ -84,15 +84,15 @@ msgstr ""
 "Esta palabra mágica debe agregarse en cada página de desambiguación (ya sea "
 "por medio de plantillas o directamente)."
 
-#: org/wikipediacleaner/Version.java:49
+#: org/wikipediacleaner/Version.java:48
 msgid "WPCleaner v1.28 also uses this as the default system."
 msgstr ""
 
-#: org/wikipediacleaner/Version.java:50
+#: org/wikipediacleaner/Version.java:49
 msgid "An action may be required on your wiki:"
 msgstr "Puede que su wiki requiera de una acción:"
 
-#: org/wikipediacleaner/Version.java:52
+#: org/wikipediacleaner/Version.java:51
 #, java-format
 msgid ""
 "You can check if {0} is used on your wiki by opening an existing "
@@ -104,24 +104,24 @@ msgstr ""
 "en \"Información de la página\" en el menú de la izquierda. Por último, "
 "busque {0} en la página de información."
 
-#: org/wikipediacleaner/Version.java:56
+#: org/wikipediacleaner/Version.java:55
 #, java-format
 msgid "If {0} is not used on your wiki, you should add {1} to the page {2}."
 msgstr "Si {0} no se usa en su wiki, deberá agregar {1} a la página {2}."
 
-#: org/wikipediacleaner/Version.java:62
+#: org/wikipediacleaner/Version.java:61
 msgid "Many new features were added recently : try them !"
 msgstr ""
 "Se han agregado muchas características nuevas recientemente: ¡pruébelas!"
 
-#: org/wikipediacleaner/Version.java:64
+#: org/wikipediacleaner/Version.java:63
 msgid ""
 "Leaving a note on talk pages with the list of links to disambiguation pages."
 msgstr ""
 "Dejando una nota en las páginas de discusión con una lista de enlaces a "
 "páginas de desambiguación."
 
-#: org/wikipediacleaner/Version.java:65
+#: org/wikipediacleaner/Version.java:64
 msgid ""
 "Fixing errors detected by the Check Wiki project, in the full analysis "
 "window."
@@ -129,7 +129,7 @@ msgstr ""
 "Reparando errores detectados por el Wikiproyecto Check Wikipedia, en la "
 "ventana de análisis completo."
 
-#: org/wikipediacleaner/Version.java:66
+#: org/wikipediacleaner/Version.java:65
 msgid "Fixing spelling or typography based on a list of suggestions."
 msgstr ""
 

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2015-04-13 22:39+0200\n"
+"POT-Creation-Date: 2015-04-13 23:47+0200\n"
 "PO-Revision-Date: 2015-04-05 05:57+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Persian <fa@li.org>\n"
@@ -20,26 +20,6 @@ msgstr ""
 "Language: fa\n"
 
 #: org/wikipediacleaner/Version.java:31
-msgid "The Check Wiki project has evolved a lot recently."
-msgstr "از ویکی‌پروژه بازدید کنید اخیراً تغییرات بسیاری کرده‌است."
-
-#: org/wikipediacleaner/Version.java:32
-msgid ""
-"New detections have been added either with new error numbers or by replacing "
-"previously used error numbers."
-msgstr ""
-"شناخت‌های زیادی به ابزار افزوده شده‌است به کمک شماره خطاهای جدید یا با "
-"جایگزینی با خطاهای گذشته"
-
-#: org/wikipediacleaner/Version.java:33
-msgid ""
-"You may need to update the Check Wiki translation file on your wiki to "
-"configure the new detections."
-msgstr ""
-"شما باید فایل ترجمه ویکی چک در ویکی‌تان را به‌روز کنید تا شناخت‌های جدید فعال "
-"شوند."
-
-#: org/wikipediacleaner/Version.java:35
 #, java-format
 msgid ""
 "I try to keep {0} up to date with Check Wiki, but if you find any discrepancy"
@@ -48,12 +28,12 @@ msgstr ""
 "من تلاش کردم  {0} را به کمک ویکی‌چک به‌روز کنم ولی اگر هر گونه خطایی در شناخت "
 "را مشاهده کردید اطلاع‌رسانی کنید."
 
-#: org/wikipediacleaner/Version.java:37
+#: org/wikipediacleaner/Version.java:33
 #, java-format
 msgid "I hope you''ll like {0}."
 msgstr "امیدوارم  {0} را دوست داشته باشید."
 
-#: org/wikipediacleaner/Version.java:40
+#: org/wikipediacleaner/Version.java:36
 #, java-format
 msgid ""
 "WPCleaner configuration is available online, check the {0}System "
@@ -62,19 +42,39 @@ msgstr ""
 "تنظیمات برخط ابزار تمیزکننده موجود است کافی است {0}تنظمیات سامانه{1} را چک "
 "کنید"
 
-#: org/wikipediacleaner/Version.java:43
+#: org/wikipediacleaner/Version.java:39
 msgid "Please, report any other problem you find to me."
 msgstr "لطفاً هر مشکلی که یافتید گزارش دهید."
 
-#: org/wikipediacleaner/Version.java:46
+#: org/wikipediacleaner/Version.java:42
+msgid "The Check Wiki project has evolved a lot recently."
+msgstr "از ویکی‌پروژه بازدید کنید اخیراً تغییرات بسیاری کرده‌است."
+
+#: org/wikipediacleaner/Version.java:43
+msgid ""
+"New detections have been added either with new error numbers or by replacing "
+"previously used error numbers."
+msgstr ""
+"شناخت‌های زیادی به ابزار افزوده شده‌است به کمک شماره خطاهای جدید یا با "
+"جایگزینی با خطاهای گذشته"
+
+#: org/wikipediacleaner/Version.java:44
+msgid ""
+"You may need to update the Check Wiki translation file on your wiki to "
+"configure the new detections."
+msgstr ""
+"شما باید فایل ترجمه ویکی چک در ویکی‌تان را به‌روز کنید تا شناخت‌های جدید فعال "
+"شوند."
+
+#: org/wikipediacleaner/Version.java:45
 msgid "Disambiguator extension has been deployed to all WMF wikis."
 msgstr "افزونه ابهام‌زدائی در همه ویکی‌پدیاها فعال شده است."
 
-#: org/wikipediacleaner/Version.java:47
+#: org/wikipediacleaner/Version.java:46
 msgid "It defines the new magic word __DISAMBIG__."
 msgstr "این کلمه جادوئی __DISAMBIG__ را تعریف می‌کند"
 
-#: org/wikipediacleaner/Version.java:48
+#: org/wikipediacleaner/Version.java:47
 msgid ""
 "This magic word should be added to all disambiguation pages (either through "
 "templates or directly)."
@@ -82,15 +82,15 @@ msgstr ""
 "این کلمه جادوئی باید به همه صفحات ابهام‌زدائی افزوده شود (به صورت مستقیم یا "
 "با تراگنجایش در الگو:ابهام‌زدائی)"
 
-#: org/wikipediacleaner/Version.java:49
+#: org/wikipediacleaner/Version.java:48
 msgid "WPCleaner v1.28 also uses this as the default system."
 msgstr "WPCleaner ورژن 1.28 هم چنین به عنوان پیشفرض استفاده می شود."
 
-#: org/wikipediacleaner/Version.java:50
+#: org/wikipediacleaner/Version.java:49
 msgid "An action may be required on your wiki:"
 msgstr "ویکی شما نیاز به عمل دارد:"
 
-#: org/wikipediacleaner/Version.java:52
+#: org/wikipediacleaner/Version.java:51
 #, java-format
 msgid ""
 "You can check if {0} is used on your wiki by opening an existing "
@@ -101,27 +101,27 @@ msgstr ""
 "مبهم (disambiguation) باز کنید. سپس \"اطلاعات صفحه\" را کلیک کنید (منو سمت "
 "چپ) و دنبال {0} بگردید."
 
-#: org/wikipediacleaner/Version.java:56
+#: org/wikipediacleaner/Version.java:55
 #, java-format
 msgid "If {0} is not used on your wiki, you should add {1} to the page {2}."
 msgstr "اگر {0} در ویکی شما استفاده نشده است, {1} را به صفحه {2} اضافه کنید!"
 
-#: org/wikipediacleaner/Version.java:62
+#: org/wikipediacleaner/Version.java:61
 msgid "Many new features were added recently : try them !"
 msgstr "امکانات زیادی بتازگی اضافه شده اند: امتحانشان کنید!!"
 
-#: org/wikipediacleaner/Version.java:64
+#: org/wikipediacleaner/Version.java:63
 msgid ""
 "Leaving a note on talk pages with the list of links to disambiguation pages."
 msgstr ""
 
-#: org/wikipediacleaner/Version.java:65
+#: org/wikipediacleaner/Version.java:64
 msgid ""
 "Fixing errors detected by the Check Wiki project, in the full analysis "
 "window."
 msgstr ""
 
-#: org/wikipediacleaner/Version.java:66
+#: org/wikipediacleaner/Version.java:65
 msgid "Fixing spelling or typography based on a list of suggestions."
 msgstr "اصلاح تلفظ یا حروف‌چینی براساس فهرست پیشنهادها"
 
