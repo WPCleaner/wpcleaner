@@ -19,19 +19,15 @@ import org.wikipediacleaner.i18n.GT;
  */
 public final class Version {
 
-  public final static String VERSION = "1.34";
-  public final static Date   DATE = new GregorianCalendar(2014, Calendar.OCTOBER, 14).getTime();
+  public final static String VERSION = "1.35";
+  public final static Date   DATE = new GregorianCalendar(2015, Calendar.APRIL, 13).getTime();
 
   public final static String PROGRAM = "WPCleaner";
 
-  public final static boolean HIGHLIGHT = true;
+  public final static boolean HIGHLIGHT = false;
 
   public final static String MESSAGE =
     "<b>" +
-    GT._("The Check Wiki project has evolved a lot recently.") + " " +
-    GT._("New detections have been added either with new error numbers or by replacing previously used error numbers.") + " " +
-    GT._("You may need to update the Check Wiki translation file on your wiki to configure the new detections.") + " " +
-    "<br>" +
     GT._("I try to keep {0} up to date with Check Wiki, but if you find any discrepancy(ies) in the detections, please let me know.", PROGRAM) + " " +
     "</b><br><br>" +
     GT._("I hope you''ll like {0}.", PROGRAM) +
@@ -43,6 +39,9 @@ public final class Version {
     GT._("Please, report any other problem you find to me.");
 
   public final static String OLD_MESSAGES =
+      GT._("The Check Wiki project has evolved a lot recently.") + " " +
+      GT._("New detections have been added either with new error numbers or by replacing previously used error numbers.") + " " +
+      GT._("You may need to update the Check Wiki translation file on your wiki to configure the new detections.") + " " +
       GT._("Disambiguator extension has been deployed to all WMF wikis.") + " " +
       GT._("It defines the new magic word __DISAMBIG__.") + "<br>" +
       GT._("This magic word should be added to all disambiguation pages (either through templates or directly).") + "<br>" +
