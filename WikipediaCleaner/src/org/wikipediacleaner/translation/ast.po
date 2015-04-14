@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2015-04-13 23:47+0200\n"
+"POT-Creation-Date: 2015-04-14 18:43+0200\n"
 "PO-Revision-Date: 2015-04-05 05:56+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Asturian <ast@li.org>\n"
@@ -1986,41 +1986,55 @@ msgid ""
 "value is \"{3}\"."
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/action/ActionCheckTemplate.java:172
+#: org/wikipediacleaner/gui/swing/action/ActionCheckTemplate.java:171
+#, java-format
+msgid ""
+"Parameter defined as \"{0}\" (aliases {1}) in {2} is deprecated, but still "
+"present with value \"{3}\"."
+msgstr ""
+
+#: org/wikipediacleaner/gui/swing/action/ActionCheckTemplate.java:175
+#, java-format
+msgid ""
+"Parameter defined as \"{0}\" in {1} is deprecated, but still present with "
+"value \"{2}\"."
+msgstr ""
+
+#: org/wikipediacleaner/gui/swing/action/ActionCheckTemplate.java:186
 #, java-format
 msgid ""
 "Parameter defined as \"{0}\" (aliases {1}) in {2} is required, but is "
 "missing."
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/action/ActionCheckTemplate.java:176
+#: org/wikipediacleaner/gui/swing/action/ActionCheckTemplate.java:190
 #, java-format
 msgid "Parameter defined as \"{0}\" in {1} is required, but is missing."
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/action/ActionCheckTemplate.java:192
+#: org/wikipediacleaner/gui/swing/action/ActionCheckTemplate.java:206
 #, java-format
 msgid ""
 "Parameter defined as \"{0}\" (aliases {1}) in {2} is present several times: "
 "{3}."
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/action/ActionCheckTemplate.java:196
+#: org/wikipediacleaner/gui/swing/action/ActionCheckTemplate.java:210
 #, java-format
 msgid "Parameter defined as \"{0}\" in {1} is present several times: {2}."
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/action/ActionCheckTemplate.java:208
+#: org/wikipediacleaner/gui/swing/action/ActionCheckTemplate.java:222
 #, java-format
 msgid "Parameter \"{0}\" is not defined in {1}."
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/action/ActionCheckTemplate.java:216
+#: org/wikipediacleaner/gui/swing/action/ActionCheckTemplate.java:230
 #, java-format
 msgid "No problem has been detected with template \"{0}\"."
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/action/ActionCheckTemplate.java:223
+#: org/wikipediacleaner/gui/swing/action/ActionCheckTemplate.java:237
 msgid "The following problem has been detected with template \"{0\":"
 msgid_plural "The following problems have been detected with template \"{0}\":"
 msgstr[0] ""

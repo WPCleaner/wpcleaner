@@ -126,31 +126,9 @@ public class ActionCheckTemplate implements ActionListener {
 
           // Check parameter type
           if (param.getType() != null) {
-            boolean ok = true;
             TemplateData.EnumParameterType enumType = param.getType();
             String value = parameter.getValue();
-            switch (enumType) {
-            case STRING:
-            case WIKI_PAGE_NAME:
-            case WIKI_USER_NAME:
-            case UNKNOWN:
-              // Nothing to check;
-              break;
-
-            case NUMBER:
-              if (value != null) {
-                for (int charNum = 0; charNum < value.length(); charNum++) {
-                  char currentChar = value.charAt(charNum);
-                  if (!Character.isDigit(currentChar) &&
-                      !Character.isWhitespace(currentChar) &&
-                      (currentChar != '.')) {
-                    ok = false;
-                  }
-                }
-              }
-              break;
-            }
-            if (!ok) {
+            if (!enumType.isCompatible(value)) {
               if (aliases != null) {
                 warnings.add(GT._(
                     "Parameter defined as \"{0}\" (aliases {1}) in {2} should be of type \"{3}\", but actual value is \"{4}\".",
@@ -161,6 +139,25 @@ public class ActionCheckTemplate implements ActionListener {
                     new Object[] { param.getName(), "TemplateData", enumType.toString(), value }));
               }
             }
+          }
+
+          // Check deprecated parameter
+          if (param.isDeprecated()) {
+            String value = parameter.getValue();
+            String message = null;
+            if (aliases != null) {
+              message = GT._(
+                  "Parameter defined as \"{0}\" (aliases {1}) in {2} is deprecated, but still present with value \"{3}\".",
+                  new Object[] { param.getName(), aliases, "TemplateData", value });
+            } else {
+              message = GT._(
+                  "Parameter defined as \"{0}\" in {1} is deprecated, but still present with value \"{2}\".",
+                  new Object[] { param.getName(), "TemplateData", value });
+            }
+            if (param.getDeprecatedText() != null) {
+              message += " (" + param.getDeprecatedText() + ")";
+            }
+            warnings.add(message);
           }
         }
       }

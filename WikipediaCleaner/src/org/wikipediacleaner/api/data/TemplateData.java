@@ -298,6 +298,9 @@ public class TemplateData {
     /** True if parameter is deprecated. */
     private boolean deprecated;
 
+    /** Reason for deprecation. */
+    private String deprecatedText;
+
     /** Value to use when adding the parameter. */
     private String autoValue;
 
@@ -316,6 +319,7 @@ public class TemplateData {
       this.required = false;
       this.suggested = false;
       this.deprecated = false;
+      this.deprecatedText = null;
       this.autoValue = null;
       this.defaultValue = null;
     }
@@ -438,10 +442,17 @@ public class TemplateData {
     }
 
     /**
-     * @return if parameter is deprecated.
+     * @return True if parameter is deprecated.
      */
     public boolean isDeprecated() {
       return deprecated;
+    }
+
+    /**
+     * @return Reason for deprecation.
+     */
+    public String getDeprecatedText() {
+      return deprecatedText;
     }
 
     /**
@@ -449,6 +460,20 @@ public class TemplateData {
      */
     public void setDeprecated(boolean deprecated) {
       this.deprecated = deprecated;
+      this.deprecatedText = null;
+    }
+
+    /**
+     * @param text Reason for deprecation.
+     */
+    public void setDeprecated(String text) {
+      if ((text != null) && (text.trim().length() > 0)) {
+        this.deprecated = true;
+        this.deprecatedText = text.trim();
+      } else {
+        this.deprecated = false;
+        this.deprecatedText = null;
+      }
     }
 
     /**
@@ -507,16 +532,72 @@ public class TemplateData {
    */
   public static enum EnumParameterType {
 
+    BOOLEAN("boolean"),
+    CONTENT("content"),
+    LINE("line"),
     NUMBER("number"),
     STRING("string"),
-    UNKNOWN("unknown"),
-    WIKI_PAGE_NAME("string/wiki-page-name"),
-    WIKI_USER_NAME("string/wiki-user-name");
+    UNBALANCED_WIKITEXT("unbalanced-wikitext"),
+    WIKI_FILE_NAME("wiki-file-name"),
+    WIKI_PAGE_NAME("wiki-page-name"),
+    WIKI_USER_NAME("wiki-user-name"),
+
+    UNKNOWN("unknown");
 
     String type;
 
+    /**
+     * @param name Type name.
+     */
     EnumParameterType(String name) {
       this.type = name;
+    }
+
+    /**
+     * @param value Value.
+     * @return True if the value is compatible with the type.
+     */
+    public boolean isCompatible(String value) {
+      if (value == null) {
+        return true;
+      }
+
+      switch (this) {
+      case CONTENT:
+      case STRING:
+      case UNBALANCED_WIKITEXT:
+      case WIKI_FILE_NAME:
+      case WIKI_PAGE_NAME:
+      case WIKI_USER_NAME:
+        return true;
+
+      case BOOLEAN:
+        if (!value.trim().equals("0") && !value.trim().equals("1")) {
+          return false;
+        }
+        break;
+
+      case LINE:
+        // Check that it's not a multiple lines value
+        if (value.indexOf('\n') >= 0) {
+          return false;
+        }
+        break;
+
+      case NUMBER:
+        // Check that it's a number
+        for (int charNum = 0; charNum < value.length(); charNum++) {
+          char currentChar = value.charAt(charNum);
+          if (!Character.isDigit(currentChar) &&
+              !Character.isWhitespace(currentChar) &&
+              (currentChar != '.')) {
+            return false;
+          }
+        }
+        break;
+      }
+
+      return true;
     }
 
     /**

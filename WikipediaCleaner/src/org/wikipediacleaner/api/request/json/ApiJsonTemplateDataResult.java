@@ -96,7 +96,14 @@ public class ApiJsonTemplateDataResult extends ApiJsonResult implements ApiTempl
       }
       param.setRequired(paramNode.path("required").asBoolean(false));
       param.setSuggested(paramNode.path("suggested").asBoolean(false));
-      param.setDeprecated(paramNode.path("deprecated").asBoolean(false));
+      JsonNode deprecatedNode = paramNode.path("deprecated");
+      if (deprecatedNode.isMissingNode()) {
+        param.setDeprecated(true);
+      } else if (deprecatedNode.isBoolean()) {
+        param.setDeprecated(deprecatedNode.asBoolean(false));
+      } else {
+        param.setDeprecated(deprecatedNode.asText());
+      }
       param.setAutoValue(paramNode.path("autovalue").asText());
       param.setDefaultValue(paramNode.path("default").asText());
       parameters.add(param);
