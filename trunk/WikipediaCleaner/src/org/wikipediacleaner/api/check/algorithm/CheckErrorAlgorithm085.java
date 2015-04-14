@@ -9,11 +9,14 @@ package org.wikipediacleaner.api.check.algorithm;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.CheckErrorResult.ErrorLevel;
+import org.wikipediacleaner.api.constants.WPCConfiguration;
 import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementTag;
+import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.gui.swing.component.MWPane;
 import org.wikipediacleaner.i18n.GT;
 
@@ -86,6 +89,7 @@ public class CheckErrorAlgorithm085 extends CheckErrorAlgorithmBase {
 
           // Check if text is found inside the tag
           boolean textFound = false;
+          boolean ignoredText = false;
           int currentIndex = tag.getValueBeginIndex();
           int lastIndex = tag.getValueEndIndex();
           while (!textFound && (currentIndex < lastIndex)) {
@@ -100,6 +104,7 @@ public class CheckErrorAlgorithm085 extends CheckErrorAlgorithmBase {
                   for (String ignoredTag : ignoredTags) {
                     if (ignoredTag.equals(internalTag.getName())) {
                       ok = true;
+                      ignoredText = true;
                       errorLevel = ErrorLevel.WARNING;
                       currentIndex = internalTag.getCompleteEndIndex();
                     }
@@ -134,8 +139,33 @@ public class CheckErrorAlgorithm085 extends CheckErrorAlgorithmBase {
                 tag.getCompleteBeginIndex(),
                 tag.getCompleteEndIndex(),
                 errorLevel);
-            if (errorLevel == ErrorLevel.ERROR) {
+            if (!ignoredText) {
               errorResult.addReplacement("");
+            } else {
+              if (PageElementTag.TAG_HTML_CENTER.equals(tag.getName())) {
+                String templatesProp = getSpecificProperty("center_templates", true, true, false);
+                if (templatesProp != null) {
+                  List<String[]> templates = WPCConfiguration.convertPropertyToStringArrayList(templatesProp);
+                  if (templates != null) {
+                    for (String[] template : templates) {
+                      if (template.length > 1) {
+                        StringBuilder replacement = new StringBuilder();
+                        replacement.append("{{");
+                        replacement.append(template[0]);
+                        replacement.append("|");
+                        replacement.append(template[1]);
+                        replacement.append("=");
+                        replacement.append(contents.substring(
+                            tag.getValueBeginIndex(), tag.getValueEndIndex()));
+                        replacement.append("}}");
+                        errorResult.addReplacement(
+                            replacement.toString(),
+                            GT._("Use {0}", PageElementTemplate.createTemplate(template[0])));
+                      }
+                    }
+                  }
+                }
+              }
             }
             errors.add(errorResult);
           }
@@ -175,5 +205,16 @@ public class CheckErrorAlgorithm085 extends CheckErrorAlgorithmBase {
   @Override
   public String fix(String fixName, PageAnalysis analysis, MWPane textPane) {
     return fixUsingFirstReplacement(fixName, analysis);
+  }
+
+  /**
+   * @return Map of parameters (Name -> description).
+   * @see org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase#getParameters()
+   */
+  @Override
+  public Map<String, String> getParameters() {
+    Map<String, String> parameters = super.getParameters();
+    parameters.put("center_templates", GT._("A list of templates that can be used to replace &lt;center&gt; tags"));
+    return parameters;
   }
 }

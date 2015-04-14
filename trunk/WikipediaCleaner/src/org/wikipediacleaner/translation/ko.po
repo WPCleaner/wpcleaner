@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2015-04-14 18:43+0200\n"
+"POT-Creation-Date: 2015-04-14 20:56+0200\n"
 "PO-Revision-Date: 2014-09-07 20:03+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Korean <ko@li.org>\n"
@@ -554,8 +554,17 @@ msgstr ""
 msgid "Restrict verification to titles with a higher level"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm085.java:46
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm085.java:49
 msgid "Delete all tags without content"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm085.java:163
+#, fuzzy, java-format
+msgid "Use {0}"
+msgstr "페이지 {0}:"
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm085.java:217
+msgid "A list of templates that can be used to replace &lt;center&gt; tags"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm090.java:44
@@ -1963,69 +1972,69 @@ msgstr "틀"
 msgid "Template \"{0}\" has no {1} block defined."
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/action/ActionCheckTemplate.java:156
+#: org/wikipediacleaner/gui/swing/action/ActionCheckTemplate.java:134
 #, java-format
 msgid ""
 "Parameter defined as \"{0}\" (aliases {1}) in {2} should be of type \"{3}\", "
 "but actual value is \"{4}\"."
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/action/ActionCheckTemplate.java:160
+#: org/wikipediacleaner/gui/swing/action/ActionCheckTemplate.java:138
 #, java-format
 msgid ""
 "Parameter defined as \"{0}\" in {1} should be of type \"{2}\", but actual "
 "value is \"{3}\"."
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/action/ActionCheckTemplate.java:171
+#: org/wikipediacleaner/gui/swing/action/ActionCheckTemplate.java:150
 #, java-format
 msgid ""
 "Parameter defined as \"{0}\" (aliases {1}) in {2} is deprecated, but still "
 "present with value \"{3}\"."
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/action/ActionCheckTemplate.java:175
+#: org/wikipediacleaner/gui/swing/action/ActionCheckTemplate.java:154
 #, java-format
 msgid ""
 "Parameter defined as \"{0}\" in {1} is deprecated, but still present with "
 "value \"{2}\"."
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/action/ActionCheckTemplate.java:186
+#: org/wikipediacleaner/gui/swing/action/ActionCheckTemplate.java:169
 #, java-format
 msgid ""
 "Parameter defined as \"{0}\" (aliases {1}) in {2} is required, but is "
 "missing."
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/action/ActionCheckTemplate.java:190
+#: org/wikipediacleaner/gui/swing/action/ActionCheckTemplate.java:173
 #, java-format
 msgid "Parameter defined as \"{0}\" in {1} is required, but is missing."
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/action/ActionCheckTemplate.java:206
+#: org/wikipediacleaner/gui/swing/action/ActionCheckTemplate.java:189
 #, java-format
 msgid ""
 "Parameter defined as \"{0}\" (aliases {1}) in {2} is present several times: "
 "{3}."
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/action/ActionCheckTemplate.java:210
+#: org/wikipediacleaner/gui/swing/action/ActionCheckTemplate.java:193
 #, java-format
 msgid "Parameter defined as \"{0}\" in {1} is present several times: {2}."
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/action/ActionCheckTemplate.java:222
+#: org/wikipediacleaner/gui/swing/action/ActionCheckTemplate.java:205
 #, java-format
 msgid "Parameter \"{0}\" is not defined in {1}."
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/action/ActionCheckTemplate.java:230
+#: org/wikipediacleaner/gui/swing/action/ActionCheckTemplate.java:213
 #, java-format
 msgid "No problem has been detected with template \"{0}\"."
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/action/ActionCheckTemplate.java:237
+#: org/wikipediacleaner/gui/swing/action/ActionCheckTemplate.java:220
 msgid "The following problem has been detected with template \"{0\":"
 msgid_plural "The following problems have been detected with template \"{0}\":"
 msgstr[0] ""

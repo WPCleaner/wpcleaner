@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2015-04-14 18:43+0200\n"
+"POT-Creation-Date: 2015-04-14 20:56+0200\n"
 "PO-Revision-Date: 2015-04-13 21:16+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: French <fr@li.org>\n"
@@ -591,9 +591,19 @@ msgstr "Une liste de textes qui peuvent être ajoutés à une section vide"
 msgid "Restrict verification to titles with a higher level"
 msgstr "Restreindre la vérification aux niveaux de titre supérieurs"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm085.java:46
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm085.java:49
 msgid "Delete all tags without content"
 msgstr "Supprimer toutes les balises sans contenu"
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm085.java:163
+#, fuzzy, java-format
+msgid "Use {0}"
+msgstr "En utilisant {0}"
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm085.java:217
+#, fuzzy
+msgid "A list of templates that can be used to replace &lt;center&gt; tags"
+msgstr "Modèles pouvant être utilisés en remplacement des balises {0}"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm090.java:44
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm091.java:44
@@ -2047,7 +2057,7 @@ msgstr "Vérifier le modèle"
 msgid "Template \"{0}\" has no {1} block defined."
 msgstr "Le modèle « {0} » n’a pas de bloc {1} défini."
 
-#: org/wikipediacleaner/gui/swing/action/ActionCheckTemplate.java:156
+#: org/wikipediacleaner/gui/swing/action/ActionCheckTemplate.java:134
 #, java-format
 msgid ""
 "Parameter defined as \"{0}\" (aliases {1}) in {2} should be of type \"{3}\", "
@@ -2056,7 +2066,7 @@ msgstr ""
 "Le paramètre défini en tant que « {0} » (alias {1}) dans {2} devrait être de "
 "type « {3} », mais sa valeur est « {4} »."
 
-#: org/wikipediacleaner/gui/swing/action/ActionCheckTemplate.java:160
+#: org/wikipediacleaner/gui/swing/action/ActionCheckTemplate.java:138
 #, java-format
 msgid ""
 "Parameter defined as \"{0}\" in {1} should be of type \"{2}\", but actual "
@@ -2065,7 +2075,7 @@ msgstr ""
 "Le paramètre défini en tant que « {0} » dans {1} devrait être de type "
 "« {2} », mais sa valeur est « {3} »."
 
-#: org/wikipediacleaner/gui/swing/action/ActionCheckTemplate.java:171
+#: org/wikipediacleaner/gui/swing/action/ActionCheckTemplate.java:150
 #, fuzzy, java-format
 msgid ""
 "Parameter defined as \"{0}\" (aliases {1}) in {2} is deprecated, but still "
@@ -2074,7 +2084,7 @@ msgstr ""
 "Le paramètre défini en tant que « {0} » (alias {1}) dans {2} est présent "
 "plusieurs fois : {3}."
 
-#: org/wikipediacleaner/gui/swing/action/ActionCheckTemplate.java:175
+#: org/wikipediacleaner/gui/swing/action/ActionCheckTemplate.java:154
 #, fuzzy, java-format
 msgid ""
 "Parameter defined as \"{0}\" in {1} is deprecated, but still present with "
@@ -2083,7 +2093,7 @@ msgstr ""
 "Le paramètre défini en tant que « {0} » dans {1} est présent plusieurs "
 "fois : {2}."
 
-#: org/wikipediacleaner/gui/swing/action/ActionCheckTemplate.java:186
+#: org/wikipediacleaner/gui/swing/action/ActionCheckTemplate.java:169
 #, java-format
 msgid ""
 "Parameter defined as \"{0}\" (aliases {1}) in {2} is required, but is "
@@ -2092,14 +2102,14 @@ msgstr ""
 "Le paramètre défini en tant que « {0} » (alias {1}) dans {2} est "
 "obligatoire, mais manquant."
 
-#: org/wikipediacleaner/gui/swing/action/ActionCheckTemplate.java:190
+#: org/wikipediacleaner/gui/swing/action/ActionCheckTemplate.java:173
 #, java-format
 msgid "Parameter defined as \"{0}\" in {1} is required, but is missing."
 msgstr ""
 "Le paramètre défini en tant que « {0} » dans {1} est obligatoire, mais "
 "manquant."
 
-#: org/wikipediacleaner/gui/swing/action/ActionCheckTemplate.java:206
+#: org/wikipediacleaner/gui/swing/action/ActionCheckTemplate.java:189
 #, java-format
 msgid ""
 "Parameter defined as \"{0}\" (aliases {1}) in {2} is present several times: "
@@ -2108,24 +2118,24 @@ msgstr ""
 "Le paramètre défini en tant que « {0} » (alias {1}) dans {2} est présent "
 "plusieurs fois : {3}."
 
-#: org/wikipediacleaner/gui/swing/action/ActionCheckTemplate.java:210
+#: org/wikipediacleaner/gui/swing/action/ActionCheckTemplate.java:193
 #, java-format
 msgid "Parameter defined as \"{0}\" in {1} is present several times: {2}."
 msgstr ""
 "Le paramètre défini en tant que « {0} » dans {1} est présent plusieurs "
 "fois : {2}."
 
-#: org/wikipediacleaner/gui/swing/action/ActionCheckTemplate.java:222
+#: org/wikipediacleaner/gui/swing/action/ActionCheckTemplate.java:205
 #, java-format
 msgid "Parameter \"{0}\" is not defined in {1}."
 msgstr "Le paramètre « {0} » n’est pas défini dans {1}."
 
-#: org/wikipediacleaner/gui/swing/action/ActionCheckTemplate.java:230
+#: org/wikipediacleaner/gui/swing/action/ActionCheckTemplate.java:213
 #, java-format
 msgid "No problem has been detected with template \"{0}\"."
 msgstr "Aucun problème n’a été détecté avec le modèle « {0} »."
 
-#: org/wikipediacleaner/gui/swing/action/ActionCheckTemplate.java:237
+#: org/wikipediacleaner/gui/swing/action/ActionCheckTemplate.java:220
 msgid "The following problem has been detected with template \"{0\":"
 msgid_plural "The following problems have been detected with template \"{0}\":"
 msgstr[0] "Le problème suivant a été détecté avec le modèle « {0} » :"
