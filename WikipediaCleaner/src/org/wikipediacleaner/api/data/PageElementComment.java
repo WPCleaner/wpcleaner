@@ -7,6 +7,8 @@
 
 package org.wikipediacleaner.api.data;
 
+import java.util.List;
+
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 
 
@@ -53,16 +55,55 @@ public class PageElementComment extends PageElement {
         contents.substring(beginComment, endIndex));
   }
 
-  public String getComment() {
-    return comment;
+  /**
+   * @param comments List of comments.
+   * @param text Text.
+   * @param offset Index of the start of the text.
+   * @return Text stripped of its comments.
+   */
+  public static String stripComments(
+      List<PageElementComment> comments,
+      String text, int offset) {
+    if ((comments == null) || (text == null)) {
+      return text;
+    }
+    for (PageElementComment comment : comments) {
+      if ((comment.getBeginIndex() < offset + text.length()) &&
+          (comment.getEndIndex() > offset)) {
+        int startComment = Math.max(comment.getBeginIndex() - offset, 0);
+        int endComment = Math.min(comment.getEndIndex() - offset, text.length());
+        String tmpText = "";
+        if (startComment > 0) {
+          tmpText += text.substring(0, startComment);
+        }
+        if (endComment < text.length()) {
+          tmpText += text.substring(endComment);
+        }
+        text = tmpText;
+        offset += endComment - startComment;
+      }
+    }
+    return text;
   }
 
+  /**
+   * @param beginIndex Begin index for the comment.
+   * @param endIndex End index for the comment.
+   * @param comment Comment contents.
+   */
   private PageElementComment(
       int beginIndex, int endIndex,
       String comment) {
     super(beginIndex, endIndex);
     this.commentNotTrimmed = comment;
     this.comment = (comment != null) ? comment.trim() : null;
+  }
+
+  /**
+   * @return Comment.
+   */
+  public String getComment() {
+    return comment;
   }
 
   /* (non-Javadoc)
