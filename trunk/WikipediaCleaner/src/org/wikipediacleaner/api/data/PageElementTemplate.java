@@ -35,6 +35,7 @@ public class PageElementTemplate extends PageElement {
     final String computedName;
     final int nameStartIndex;
     final String value;
+    final String strippedValue;
     final String valueNotTrimmed;
     final int valueStartIndex;
 
@@ -44,12 +45,13 @@ public class PageElementTemplate extends PageElement {
      * @param computedName Computed name.
      * @param nameStartIndex Index of parameter name in page contents.
      * @param value Parameter value.
+     * @param strippedValue Parameter stripped value.
      * @param valueStartIndex Index of parameter value in page contents.
      */
     public Parameter(
         int pipeIndex,
         String name, String computedName, int nameStartIndex,
-        String value, int valueStartIndex) {
+        String value, String strippedValue, int valueStartIndex) {
       this.pipeIndex = pipeIndex;
       this.nameNotTrimmed = name;
       this.name = (name != null) ? name.trim() : null;
@@ -57,6 +59,7 @@ public class PageElementTemplate extends PageElement {
       this.nameStartIndex = nameStartIndex;
       this.valueNotTrimmed = value;
       this.value = (value != null) ? value.trim() : null;
+      this.strippedValue = (strippedValue != null) ? strippedValue.trim() : null;
       this.valueStartIndex = valueStartIndex;
     }
 
@@ -107,6 +110,13 @@ public class PageElementTemplate extends PageElement {
      */
     public String getValue() {
       return value;
+    }
+
+    /**
+     * @return Parameter stripped value.
+     */
+    public String getStrippedValue() {
+      return strippedValue;
     }
 
     /**
@@ -334,7 +344,8 @@ public class PageElementTemplate extends PageElement {
                   parameters, pipeIndex,
                   contents.substring(parameterBeginIndex, tmpIndex - 2),
                   equalIndex - parameterBeginIndex,
-                  parameterBeginIndex);
+                  parameterBeginIndex,
+                  comments);
               return tmpIndex;
             }
           }
@@ -426,7 +437,8 @@ public class PageElementTemplate extends PageElement {
                 parameters, pipeIndex,
                 contents.substring(parameterBeginIndex, tmpIndex),
                 equalIndex - parameterBeginIndex,
-                parameterBeginIndex);
+                parameterBeginIndex,
+                comments);
             pipeIndex = tmpIndex;
             tmpIndex++;
             parameterBeginIndex = tmpIndex;
@@ -470,11 +482,14 @@ public class PageElementTemplate extends PageElement {
    * @param parameter New parameter (name=value or value).
    * @param equalIndex Index of "=" in the parameter or < 0 if doesn't exist.
    * @param offset Offset of parameter start index in page contents.
+   * @param comments Comments in the page.
    */
   private static void addParameter(
       List<Parameter> parameters,
       int pipeIndex, String parameter,
-      int equalIndex, int offset) {
+      int equalIndex, int offset,
+      List<PageElementComment> comments) {
+
     if (equalIndex < 0) {
       int spaces = 0;
       while ((spaces < parameter.length()) && (Character.isWhitespace(parameter.charAt(spaces)))) {
@@ -495,8 +510,9 @@ public class PageElementTemplate extends PageElement {
           paramIndex++;
         }
       }
+      String strippedValue = PageElementComment.stripComments(comments, parameter, offset);
       parameters.add(new Parameter(
-          pipeIndex, "", Integer.toString(paramNum), offset + spaces, parameter, offset + spaces));
+          pipeIndex, "", Integer.toString(paramNum), offset + spaces, parameter, strippedValue, offset + spaces));
     } else {
       int spacesName = 0;
       while ((spacesName < equalIndex) && (Character.isWhitespace(parameter.charAt(spacesName)))) {
@@ -506,10 +522,12 @@ public class PageElementTemplate extends PageElement {
       while ((spacesValue < parameter.length()) && (Character.isWhitespace(parameter.charAt(spacesValue)))) {
         spacesValue++;
       }
+      String value = parameter.substring(equalIndex + 1);
+      String strippedValue = PageElementComment.stripComments(comments, value, offset + equalIndex + 1);
       parameters.add(new Parameter(
           pipeIndex,
           parameter.substring(0, equalIndex), null, offset + spacesName,
-          parameter.substring(equalIndex + 1), offset + spacesValue));
+          parameter.substring(equalIndex + 1), strippedValue, offset + spacesValue));
     }
   }
 

@@ -127,8 +127,8 @@ public class ActionCheckTemplate implements ActionListener {
           // Check parameter type
           if (param.getType() != null) {
             TemplateData.EnumParameterType enumType = param.getType();
-            String value = parameter.getValue();
-            if (!enumType.isCompatible(value)) {
+            if (!enumType.isCompatible(parameter.getStrippedValue())) {
+              String value = parameter.getValue();
               if (aliases != null) {
                 warnings.add(GT._(
                     "Parameter defined as \"{0}\" (aliases {1}) in {2} should be of type \"{3}\", but actual value is \"{4}\".",
