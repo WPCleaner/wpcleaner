@@ -8,15 +8,15 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2015-04-14 20:56+0200\n"
-"PO-Revision-Date: 2015-04-13 21:16+0000\n"
+"PO-Revision-Date: 2015-04-14 18:10+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: French <fr@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Launchpad-Export-Date: 2015-04-13 21:20+0000\n"
-"X-Generator: Launchpad (build 17423)\n"
+"X-Launchpad-Export-Date: 2015-04-14 18:12+0000\n"
+"X-Generator: Launchpad (build 17428)\n"
 "Language: fr\n"
 
 #: org/wikipediacleaner/Version.java:31
@@ -2076,22 +2076,22 @@ msgstr ""
 "« {2} », mais sa valeur est « {3} »."
 
 #: org/wikipediacleaner/gui/swing/action/ActionCheckTemplate.java:150
-#, fuzzy, java-format
+#, java-format
 msgid ""
 "Parameter defined as \"{0}\" (aliases {1}) in {2} is deprecated, but still "
 "present with value \"{3}\"."
 msgstr ""
-"Le paramètre défini en tant que « {0} » (alias {1}) dans {2} est présent "
-"plusieurs fois : {3}."
+"Le paramètre défini en tant que « {0} » (alias {1}) dans {2} est obsolète, "
+"mais toujours présent avec la valeur « {3} »."
 
 #: org/wikipediacleaner/gui/swing/action/ActionCheckTemplate.java:154
-#, fuzzy, java-format
+#, java-format
 msgid ""
 "Parameter defined as \"{0}\" in {1} is deprecated, but still present with "
 "value \"{2}\"."
 msgstr ""
-"Le paramètre défini en tant que « {0} » dans {1} est présent plusieurs "
-"fois : {2}."
+"Le paramètre défini en tant que « {0} » dans {1} est obsolète, mais toujours "
+"présent avec la valeur « {2} »."
 
 #: org/wikipediacleaner/gui/swing/action/ActionCheckTemplate.java:169
 #, java-format
