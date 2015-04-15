@@ -39,12 +39,14 @@ import org.wikipediacleaner.api.data.DataManager;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageComment;
 import org.wikipediacleaner.gui.swing.Controller;
+import org.wikipediacleaner.gui.swing.action.ActionCheckArticle;
 import org.wikipediacleaner.gui.swing.action.ActionUpdateWarning;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
 import org.wikipediacleaner.gui.swing.basic.BasicWorker;
 import org.wikipediacleaner.gui.swing.basic.DefaultBasicWindowListener;
 import org.wikipediacleaner.gui.swing.basic.DefaultBasicWorkerListener;
 import org.wikipediacleaner.gui.swing.basic.Utilities;
+import org.wikipediacleaner.gui.swing.worker.CheckArticleWorker;
 import org.wikipediacleaner.gui.swing.worker.UpdateInfoWorker;
 import org.wikipediacleaner.i18n.GT;
 import org.wikipediacleaner.images.EnumImageSize;
@@ -70,6 +72,7 @@ public class PageListWindow extends BasicWindow {
   
   private JButton buttonAdd;
   private JButton buttonAutomaticFixing;
+  private JButton buttonCheckArticle;
   private JButton buttonComments;
   private JButton buttonDisambiguation;
   private JButton buttonDisambiguationWatch;
@@ -190,6 +193,12 @@ public class PageListWindow extends BasicWindow {
     buttonDisambiguation.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionDisambiguation"));
     toolbar.add(buttonDisambiguation);
+
+    buttonCheckArticle = ActionCheckArticle.createInternalButton(
+        true, false, true);
+    buttonCheckArticle.addActionListener(EventHandler.create(
+        ActionListener.class, this, "actionCheckArticle"));
+    toolbar.add(buttonCheckArticle);
 
     buttonSelectDab = Utilities.createJButton(
         "wpc-select-disambig.png", EnumImageSize.NORMAL,
@@ -392,6 +401,19 @@ public class PageListWindow extends BasicWindow {
   public void actionSetComments() {
     List<Page> selectedPages = tablePages.getSelectedPages();
     Controller.runPageComments(selectedPages, getWikipedia());
+  }
+
+  /**
+   * Action called when Check article button is pressed. 
+   */
+  public void actionCheckArticle() {
+    List<Page> selectedPages = tablePages.getSelectedPages();
+    if ((selectedPages == null) || (selectedPages.size() == 0)) {
+      return;
+    }
+    final CheckArticleWorker checkWorker = new CheckArticleWorker(
+        getWikipedia(), this, selectedPages);
+    checkWorker.start();
   }
 
   /**
