@@ -82,7 +82,7 @@ public class CheckArticleTools {
     initCurrentReport(null, null);
     CheckArticleStep step = currentReport.setCurrentStep(null);
     TemplateData templateData = retrieveTemplateData(template);
-    checkTemplate(step, template, templateData);
+    checkTemplate(step, template, templateData, false);
   }
 
   // ==========================================================================
@@ -106,6 +106,7 @@ public class CheckArticleTools {
     // Check the existence of TemplateData blocks for every template
     CheckArticleElement element = step.setCurrentElement(GT._("Existence of {0} blocks", "TemplateData"));
     Map<String, TemplateData> templateDataMap = new HashMap<String, TemplateData>();
+    Map<String, TemplateData> backupTemplateDataMap = new HashMap<String, TemplateData>();
     for (PageElementTemplate template : templates) {
       String templateName = template.getTemplateName();
       if (!templateDataMap.containsKey(templateName)) {
@@ -116,6 +117,10 @@ public class CheckArticleTools {
               "Template \"{0}\" has no {1} block defined.",
               new Object[] { template.getTemplateName(), "TemplateData" });
           element.addWarning(message);
+          templateData = computeTemplateData(template);
+          if (templateData != null) {
+            backupTemplateDataMap.put(templateName, templateData);
+          }
         }
       }
     }
@@ -124,7 +129,12 @@ public class CheckArticleTools {
     for (PageElementTemplate template : templates) {
       TemplateData templateData = templateDataMap.get(template.getTemplateName());
       if (templateData != null) {
-        checkTemplate(step, template, templateData);
+        checkTemplate(step, template, templateData, false);
+      } else {
+        templateData = backupTemplateDataMap.get(template.getTemplateName());
+        if (templateData != null) {
+          checkTemplate(step, template, templateData, true);
+        }
       }
     }
     // Clean up
@@ -146,18 +156,39 @@ public class CheckArticleTools {
     Page templatePage = DataManager.getPage(
         wiki, title, null, null, null);
     API api = APIFactory.getAPI();
-    TemplateData templateData = api.retrieveTemplateData(wiki, templatePage);
-    return templateData;
+    return api.retrieveTemplateData(wiki, templatePage);
+  }
+
+  /**
+   * Compute TemplateData.
+   * 
+   * @param template Template.
+   * @return TemplateData.
+   * @throws APIException
+   */
+  private TemplateData computeTemplateData(
+      PageElementTemplate template) throws APIException {
+    String templateName = template.getTemplateName();
+    String title = wiki.getWikiConfiguration().getPageTitle(
+        Namespace.TEMPLATE, templateName);
+    Page templatePage = DataManager.getPage(
+        wiki, title, null, null, null);
+    API api = APIFactory.getAPI();
+    api.retrieveContents(wiki, Collections.singletonList(templatePage), false, true);
+    return TemplateData.createFromContent(
+        templatePage.getAnalysis(templatePage.getContents(), false));
   }
 
   /**
    * @param step Current step.
    * @param template Template.
    * @param templateData Template data.
+   * @param correct True if the template data is generated.
    */
   private void checkTemplate(
       CheckArticleStep step,
-      PageElementTemplate template, TemplateData templateData) {
+      PageElementTemplate template,
+      TemplateData templateData, boolean generated) {
 
     String templateName = template.getTemplateName();
     String message = GT._(
@@ -248,13 +279,15 @@ public class CheckArticleTools {
     }
 
     // Check each parameter
-    for (int i = 0; i < template.getParameterCount(); i++) {
-      PageElementTemplate.Parameter parameter = template.getParameter(i);
-      TemplateData.Parameter param = templateData.getParameter(parameter.getComputedName());
-      if (param == null) {
-        element.addWarning(GT._(
-            "Parameter \"{0}\" is not defined in {1}.",
-            new Object[] { parameter.getComputedName(), "TemplateData" }));
+    if (!generated) {
+      for (int i = 0; i < template.getParameterCount(); i++) {
+        PageElementTemplate.Parameter parameter = template.getParameter(i);
+        TemplateData.Parameter param = templateData.getParameter(parameter.getComputedName());
+        if (param == null) {
+          element.addWarning(GT._(
+              "Parameter \"{0}\" is not defined in {1}.",
+              new Object[] { parameter.getComputedName(), "TemplateData" }));
+        }
       }
     }
   }
