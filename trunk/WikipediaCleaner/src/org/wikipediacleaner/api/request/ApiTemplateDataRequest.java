@@ -30,6 +30,11 @@ public class ApiTemplateDataRequest extends ApiRequest {
   public final static String PROPERTY_PAGEIDS = "pageids";
 
   /**
+   * Property for Redirects.
+   */
+  public final static String PROPERTY_REDIRECTS = "redirects";
+
+  /**
    * Property for Titles.
    */
   public final static String PROPERTY_TITLES = "titles";
@@ -58,6 +63,7 @@ public class ApiTemplateDataRequest extends ApiRequest {
   public TemplateData retrieveTemplateData(Page page) throws APIException {
     Map<String, String> properties = getProperties(ACTION_TEMPLATE_DATA, result.getFormat());
     properties.put(PROPERTY_TITLES, page.getTitle());
+    properties.put(PROPERTY_REDIRECTS, "");
     return result.executeTemplateData(properties);
   }
 }
