@@ -196,6 +196,15 @@ public class CheckArticleTools {
         new Object[] { templateName, template.getBeginIndex(), template.getEndIndex() });
     CheckArticleElement element = step.setCurrentElement(message);
 
+    // Check TemplateData
+    if (templateData == null) {
+      String warning = GT._(
+          "Template \"{0}\" has no {1} block defined.",
+          new Object[] { template.getTemplateName(), "TemplateData" });
+      element.addWarning(warning);
+      return;
+    }
+
     // Check each parameter defined in TemplateData.
     for (TemplateData.Parameter param : templateData.getParameters()) {
       String aliases = listAliases(param);
