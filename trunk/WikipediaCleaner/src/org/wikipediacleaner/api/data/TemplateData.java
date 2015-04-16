@@ -534,6 +534,7 @@ public class TemplateData {
 
     BOOLEAN("boolean"),
     CONTENT("content"),
+    DATE("date"),
     LINE("line"),
     NUMBER("number"),
     STRING("string"),
@@ -556,6 +557,7 @@ public class TemplateData {
     /**
      * @param value Value.
      * @return True if the value is compatible with the type.
+     * @see https://www.mediawiki.org/wiki/Extension:TemplateData#Format
      */
     public boolean isCompatible(String value) {
       if (value == null) {
@@ -563,28 +565,52 @@ public class TemplateData {
       }
 
       switch (this) {
-      case CONTENT:
-      case STRING:
-      case UNBALANCED_WIKITEXT:
-      case WIKI_FILE_NAME:
-      case WIKI_PAGE_NAME:
-      case WIKI_USER_NAME:
+      case CONTENT: // Page content in wikitext, such as text style, links, images, etc.
+      case STRING: // Any textual value
+      case UNBALANCED_WIKITEXT: // Raw wikitext that should not be treated as standalone content because it is unbalanced
+      case WIKI_FILE_NAME: // A valid MediaWiki file name for the current wiki
+      case WIKI_PAGE_NAME: // A valid MediaWiki page name for the current wiki
+      case WIKI_USER_NAME: // A valid MediaWiki user name for the current wiki
         return true;
 
-      case BOOLEAN:
-        if (!value.trim().equals("0") && !value.trim().equals("1")) {
+      case BOOLEAN: // A boolean value ('1' for true, '0' for false, '' for unknown)
+        if (!value.trim().equals("0") &&
+            !value.trim().equals("1") &&
+            !value.trim().equals("")) {
           return false;
         }
         break;
 
-      case LINE:
-        // Check that it's not a multiple lines value
+      case DATE: // A date in ISO 8601 format, e.g. "2014-05-09" or "2014-05-09T16:01:12Z"
+        // TODO
+        // According to https://en.wikipedia.org/wiki/ISO_8601, some possible formats:
+        //  Date:
+        //   YYYY
+        //   ±YYYYY
+        //   YYYY-MM-DD or YYYYMMDD
+        //   YYYY-MM
+        //   YYYY-Www or YYYYWww
+        //   YYYY-Www-D or YYYYWwwD
+        //   YYYY-DDD or YYYYDDD
+        //  Time: T for beginning time ; . or , are equivalent ; . or , can be used on the last item
+        //   hh:mm:ss.sss or hhmmss.sss
+        //   hh:mm:ss or hhmmss
+        //   hh:mm or hhmm
+        //   hh
+        //  Time zone:
+        //   <time>Z
+        //   <time>±hh:mm
+        //   <time>±hhmm
+        //   <time>±hh
+        break;
+
+      case LINE: // Short text field - use for names, labels, and other short-form fields
         if (value.indexOf('\n') >= 0) {
           return false;
         }
         break;
 
-      case NUMBER:
+      case NUMBER: // Any numerical value (without decimal points or thousand separators)
         // Check that it's a number
         for (int charNum = 0; charNum < value.length(); charNum++) {
           char currentChar = value.charAt(charNum);
