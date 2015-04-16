@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2015-04-15 21:10+0200\n"
+"POT-Creation-Date: 2015-04-16 18:31+0200\n"
 "PO-Revision-Date: 2015-04-05 05:57+0000\n"
 "Last-Translator: Anthony Harrington <untaintableangel@ubuntu.com>\n"
 "Language-Team: English (United Kingdom) <en_GB@li.org>\n"
@@ -3442,81 +3442,82 @@ msgstr "Template"
 msgid "Existence of {0} blocks"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/worker/CheckArticleTools.java:116
+#: org/wikipediacleaner/gui/swing/worker/CheckArticleTools.java:117
+#: org/wikipediacleaner/gui/swing/worker/CheckArticleTools.java:202
 #, java-format
 msgid "Template \"{0}\" has no {1} block defined."
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/worker/CheckArticleTools.java:164
+#: org/wikipediacleaner/gui/swing/worker/CheckArticleTools.java:195
 #, fuzzy, java-format
 msgid "Template \"{0}\" ({1}-{2})"
 msgstr "Template: {0}"
 
-#: org/wikipediacleaner/gui/swing/worker/CheckArticleTools.java:186
+#: org/wikipediacleaner/gui/swing/worker/CheckArticleTools.java:226
 #, java-format
 msgid ""
 "Parameter defined as \"{0}\" (aliases {1}) in {2} should be of type \"{3}\", "
 "but actual value is \"{4}\"."
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/worker/CheckArticleTools.java:190
+#: org/wikipediacleaner/gui/swing/worker/CheckArticleTools.java:230
 #, java-format
 msgid ""
 "Parameter defined as \"{0}\" in {1} should be of type \"{2}\", but actual "
 "value is \"{3}\"."
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/worker/CheckArticleTools.java:201
+#: org/wikipediacleaner/gui/swing/worker/CheckArticleTools.java:241
 #, java-format
 msgid ""
 "Parameter defined as \"{0}\" (aliases {1}) in {2} is deprecated, but still "
 "present with value \"{3}\"."
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/worker/CheckArticleTools.java:205
+#: org/wikipediacleaner/gui/swing/worker/CheckArticleTools.java:245
 #, java-format
 msgid ""
 "Parameter defined as \"{0}\" in {1} is deprecated, but still present with "
 "value \"{2}\"."
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/worker/CheckArticleTools.java:220
+#: org/wikipediacleaner/gui/swing/worker/CheckArticleTools.java:260
 #, java-format
 msgid ""
 "Parameter defined as \"{0}\" (aliases {1}) in {2} is required, but is "
 "missing."
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/worker/CheckArticleTools.java:224
+#: org/wikipediacleaner/gui/swing/worker/CheckArticleTools.java:264
 #, java-format
 msgid "Parameter defined as \"{0}\" in {1} is required, but is missing."
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/worker/CheckArticleTools.java:240
+#: org/wikipediacleaner/gui/swing/worker/CheckArticleTools.java:280
 #, java-format
 msgid ""
 "Parameter defined as \"{0}\" (aliases {1}) in {2} is present several times: "
 "{3}."
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/worker/CheckArticleTools.java:244
+#: org/wikipediacleaner/gui/swing/worker/CheckArticleTools.java:284
 #, java-format
 msgid "Parameter defined as \"{0}\" in {1} is present several times: {2}."
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/worker/CheckArticleTools.java:256
+#: org/wikipediacleaner/gui/swing/worker/CheckArticleTools.java:297
 #, java-format
 msgid "Parameter \"{0}\" is not defined in {1}."
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/worker/CheckArticleTools.java:326
-#: org/wikipediacleaner/gui/swing/worker/CheckArticleTools.java:344
-#: org/wikipediacleaner/gui/swing/worker/CheckArticleTools.java:362
+#: org/wikipediacleaner/gui/swing/worker/CheckArticleTools.java:368
+#: org/wikipediacleaner/gui/swing/worker/CheckArticleTools.java:386
+#: org/wikipediacleaner/gui/swing/worker/CheckArticleTools.java:404
 #, fuzzy
 msgid "No problem has been detected."
 msgstr "The error hasn''t been detected in page {0}."
 
-#: org/wikipediacleaner/gui/swing/worker/CheckArticleTools.java:367
+#: org/wikipediacleaner/gui/swing/worker/CheckArticleTools.java:409
 #, fuzzy
 msgid "The following problem has been detected:"
 msgid_plural "The following problems have been detected:"
