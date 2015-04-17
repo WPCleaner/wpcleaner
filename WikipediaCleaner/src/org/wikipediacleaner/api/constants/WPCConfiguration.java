@@ -1174,6 +1174,54 @@ public class WPCConfiguration {
   }
 
   /* ================================================================================= */
+  /* Duplicate arguments warning                                                       */
+  /* ================================================================================= */
+
+  /**
+   * @param elements Elements that still need to be fixed.
+   * @return Comment for warning about duplicate arguments errors in a page.
+   */
+  public String getDuplicateArgsWarningComment(Collection<String> elements) {
+    int count = (elements != null) ? elements.size() : 0;
+    String comment = null;
+    if (count == 1) {
+      comment = getString(WPCConfigurationString.DUPLICATE_ARGS_WARNING_COMMENT_1);
+    }
+    if (comment == null) {
+      comment = getString(WPCConfigurationString.DUPLICATE_ARGS_WARNING_COMMENT);
+    }
+    if (comment == null) {
+      comment = getString(WPCConfigurationString.DUPLICATE_ARGS_WARNING_TEMPLATE);
+    } else {
+      try {
+        comment = MessageFormat.format(comment, Integer.valueOf(count));
+      } catch (IllegalArgumentException e) {
+        //
+      }
+    }
+    /*if (elements != null) {
+      StringBuilder sb = new StringBuilder();
+      for (String element : elements) {
+        sb.append(sb.length() > 0 ? ", " : " - ");
+        sb.append(element);
+      }
+      comment += sb.toString();
+    }*/
+    return comment;
+  }
+
+  /**
+   * @return Comment for telling that duplicate arguments errors have been fixed.
+   */
+  public String getDuplicateArgsWarningCommentDone() {
+    String comment = getString(WPCConfigurationString.DUPLICATE_ARGS_WARNING_COMMENT_DONE);
+    if (comment != null) {
+      return comment;
+    }
+    return getString(WPCConfigurationString.DUPLICATE_ARGS_WARNING_TEMPLATE);
+  }
+
+  /* ================================================================================= */
   /* Templates                                                                         */
   /* ================================================================================= */
 

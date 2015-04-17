@@ -29,6 +29,8 @@ public enum WPCConfigurationBoolean {
   DAB_USE_DISAMBIG_MAGIC_WORD("dab_use_disambig", true, true, false),
   // Allow disambiguation warning outside section 0 of talk page.
   DAB_WARNING_SECTION_0("dab_warning_section_0", true, true, false),
+  // Allow duplicate arguments warning outside section 0 of talk page.
+  DUPLICATE_ARGS_WARNING_SECTION_0("duplicate_args_warning_section_0", true, true, false),
   // Allow ISBN warning outside section 0 of talk page.
   ISBN_WARNING_SECTION_0("isbn_warning_section_0", true, true, false),
   // Force usage of "to do" sub-page in main name space.

@@ -45,9 +45,9 @@ import org.wikipediacleaner.utils.ConfigurationValueString;
 
 
 /**
- * SwingWorker for updating ISBN warning.
+ * SwingWorker for updating duplicate arguments warning.
  */
-public class UpdateISBNWarningWorker extends BasicWorker {
+public class UpdateDuplicateArgsWarningWorker extends BasicWorker {
 
   private final List<Page> warningPages;
   private final boolean useList;
@@ -60,7 +60,7 @@ public class UpdateISBNWarningWorker extends BasicWorker {
    * @param window Window.
    * @param simulation True if this is a simulation.
    */
-  public UpdateISBNWarningWorker(
+  public UpdateDuplicateArgsWarningWorker(
       EnumWikipedia wiki, BasicWindow window,
       boolean simulation) {
     super(wiki, window);
@@ -78,7 +78,7 @@ public class UpdateISBNWarningWorker extends BasicWorker {
    * @param contentsAvailable True if contents is already available in pages.
    * @param automaticEdit True if the edit should be considered automatic.
    */
-  public UpdateISBNWarningWorker(
+  public UpdateDuplicateArgsWarningWorker(
       EnumWikipedia wiki, BasicWindow window, List<Page> pages,
       boolean contentsAvailable, boolean automaticEdit) {
     super(wiki, window);
@@ -110,7 +110,8 @@ public class UpdateISBNWarningWorker extends BasicWorker {
         warningPages.clear();
 
         // Retrieve talk pages including a warning
-        String warningTemplateName = configuration.getString(WPCConfigurationString.ISBN_WARNING_TEMPLATE);
+        String warningTemplateName = configuration.getString(
+            WPCConfigurationString.DUPLICATE_ARGS_WARNING_TEMPLATE);
         if (warningTemplateName != null) {
           setText(GT._("Retrieving talk pages including {0}", "{{" + warningTemplateName + "}}"));
           String templateTitle = wikiConfiguration.getPageTitle(
@@ -125,37 +126,8 @@ public class UpdateISBNWarningWorker extends BasicWorker {
           warningPages.addAll(warningTemplate.getRelatedPages(Page.RelatedPages.EMBEDDED_IN));
         }
 
-        // Retrieve articles in categories for ISBN errors
-        List<String> categories = configuration.getStringList(WPCConfigurationStringList.ISBN_ERRORS_CATEGORIES);
-        if (categories != null) {
-          for (String category : categories) {
-            String categoryTitle = wikiConfiguration.getPageTitle(Namespace.CATEGORY, category);
-            Page categoryPage = DataManager.getPage(wiki, categoryTitle, null, null, null);
-            api.retrieveCategoryMembers(wiki, categoryPage, 0, false, Integer.MAX_VALUE);
-            List<Page> categoryMembers = categoryPage.getRelatedPages(
-                Page.RelatedPages.CATEGORY_MEMBERS);
-            if (categoryMembers != null) {
-              warningPages.addAll(categoryMembers);
-            }
-          }
-        }
-
-        // Retrieve articles listed for ISBN errors in Check Wiki
-        retrieveCheckWikiPages(70, warningPages); // Incorrect length
-        retrieveCheckWikiPages(71, warningPages); // Incorrect X
-        retrieveCheckWikiPages(72, warningPages); // Incorrect ISBN-10
-        retrieveCheckWikiPages(73, warningPages); // Incorrect ISBN-13
-
-        // Retrieve articles already reported
-        String isbnErrorsPageName = configuration.getString(WPCConfigurationString.ISBN_ERRORS_PAGE);
-        if (isbnErrorsPageName != null) {
-          Page page = DataManager.getPage(wiki, isbnErrorsPageName, null, null, null);
-          api.retrieveLinks(wiki, page, Namespace.MAIN, null, false, false);
-          List<Page> links = page.getLinks();
-          if (links != null) {
-            warningPages.addAll(links);
-          }
-        }
+        // Retrieve articles listed for duplicate arguments errors in Check Wiki
+        retrieveCheckWikiPages(524, warningPages); // Duplicate template arguments
 
         // Construct list of articles with warning
         setText(GT._("Constructing list of articles with warning"));
@@ -195,7 +167,7 @@ public class UpdateISBNWarningWorker extends BasicWorker {
 
         if (getWindow() != null) {
           int answer = getWindow().displayYesNoWarning(GT._(
-              "Analysis found {0} articles to check for ISBN errors.\n" +
+              "Analysis found {0} articles to check for duplicate arguments errors.\n" +
               "Do you want to update the warnings ?",
               Integer.valueOf(tmpWarningPages.size()).toString() ));
           if (answer != JOptionPane.YES_OPTION) {
@@ -214,7 +186,8 @@ public class UpdateISBNWarningWorker extends BasicWorker {
       }
 
       // Working with sublists
-      UpdateISBNWarningTools tools = new UpdateISBNWarningTools(wiki, this, true, automaticEdit);
+      UpdateDuplicateArgsWarningTools tools = new UpdateDuplicateArgsWarningTools(
+          wiki, this, true, automaticEdit);
       tools.setContentsAvailable(contentsAvailable);
       tools.prepareErrorsMap();
       if (simulation) {
@@ -245,7 +218,7 @@ public class UpdateISBNWarningWorker extends BasicWorker {
           } catch (APIException e) {
             if (getWindow() != null) {
               int answer = getWindow().displayYesNoWarning(GT._(
-                  "An error occurred when updating ISBN warnings. Do you want to continue ?\n\n" +
+                  "An error occurred when updating duplicate arguments warnings. Do you want to continue ?\n\n" +
                   "Error: {0}", e.getMessage()));
               if (answer != JOptionPane.YES_OPTION) {
                 return e;
@@ -255,7 +228,7 @@ public class UpdateISBNWarningWorker extends BasicWorker {
           }
           if (shouldStop()) {
             Configuration config = Configuration.getConfiguration();
-            config.setString(null, ConfigurationValueString.LAST_ISBN_WARNING, lastTitle);
+            config.setString(null, ConfigurationValueString.LAST_DUPLICATE_ARGS_WARNING, lastTitle);
             displayResult(stats, startTime, null);
             return Integer.valueOf(stats.getUpdatedPagesCount());
           }
@@ -278,7 +251,7 @@ public class UpdateISBNWarningWorker extends BasicWorker {
       errors = tools.getErrorsMap();
       if (warningPages.isEmpty()) {
         Configuration config = Configuration.getConfiguration();
-        config.setString(null, ConfigurationValueString.LAST_ISBN_WARNING, (String) null);
+        config.setString(null, ConfigurationValueString.LAST_DUPLICATE_ARGS_WARNING, (String) null);
       }
     } catch (APIException e) {
       return e;

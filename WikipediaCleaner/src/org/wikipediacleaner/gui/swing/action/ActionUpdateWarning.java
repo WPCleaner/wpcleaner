@@ -34,6 +34,7 @@ import org.wikipediacleaner.api.dataaccess.WikiProvider;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
 import org.wikipediacleaner.gui.swing.basic.Utilities;
 import org.wikipediacleaner.gui.swing.worker.UpdateDabWarningWorker;
+import org.wikipediacleaner.gui.swing.worker.UpdateDuplicateArgsWarningWorker;
 import org.wikipediacleaner.gui.swing.worker.UpdateISBNWarningWorker;
 import org.wikipediacleaner.i18n.GT;
 import org.wikipediacleaner.images.EnumImageSize;
@@ -257,12 +258,21 @@ public class ActionUpdateWarning implements ActionListener {
     menuItem.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionDisambiguationWarning"));
     menuWarning.add(menuItem);
+
     menuItem = Utilities.createJMenuItem(
         GT._("Add a warning about ISBN errors"),
         true);
     menuItem.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionISBNWarning"));
     menuWarning.add(menuItem);
+
+    menuItem = Utilities.createJMenuItem(
+        GT._("Add a warning about duplicate arguments errors"),
+        true);
+    menuItem.addActionListener(EventHandler.create(
+        ActionListener.class, this, "actionDuplicateArgsWarning"));
+    menuWarning.add(menuItem);
+
     menuWarning.show(source, 0, source.getHeight());
   }
 
@@ -347,6 +357,49 @@ public class ActionUpdateWarning implements ActionListener {
 
     // Update warning
     UpdateISBNWarningWorker worker = new UpdateISBNWarningWorker(
+        wiki, window, pages,
+        false, false);
+    worker.start();
+  }
+
+  /**
+   * Update duplicate arguments warnings on talk page.
+   */
+  public void actionDuplicateArgsWarning() {
+
+    // Check selection
+    if (wikiProvider == null) {
+      return;
+    }
+    EnumWikipedia wiki = wikiProvider.getWiki();
+    if (wiki == null) {
+      return;
+    }
+    List<Page> pages = getPages();
+    if ((pages == null) || (pages.isEmpty())) {
+      return;
+    }
+
+    // Check configuration
+    WPCConfiguration wpcConfig = wiki.getConfiguration();
+    String template = wpcConfig.getString(WPCConfigurationString.DUPLICATE_ARGS_WARNING_TEMPLATE);
+    if ((template == null) || (template.trim().length() == 0)) {
+      Utilities.displayMessageForMissingConfiguration(
+          parent,
+          WPCConfigurationString.DUPLICATE_ARGS_WARNING_TEMPLATE.getAttributeName());
+      return;
+    }
+
+    // Ask for confirmation
+    int answer = Utilities.displayYesNoWarning(
+        parent,
+        GT._("Do you want to update the duplicate arguments warning on talk page?"));
+    if (answer != JOptionPane.YES_OPTION) {
+      return;
+    }
+
+    // Update warning
+    UpdateDuplicateArgsWarningWorker worker = new UpdateDuplicateArgsWarningWorker(
         wiki, window, pages,
         false, false);
     worker.start();
