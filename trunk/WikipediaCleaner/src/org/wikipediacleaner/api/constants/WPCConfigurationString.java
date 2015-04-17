@@ -53,6 +53,16 @@ public enum WPCConfigurationString {
   DAB_WARNING_TEMPLATE_COMMENT("dab_warning_template_comment", null, false, true, false),
   // localized DEFAULTSORT
   DEFAULTSORT("general_defaultsort", null, false, true, true),
+  // Comment for warning about duplicate arguments errors in a page
+  DUPLICATE_ARGS_WARNING_COMMENT("duplicate_args_warning_comment", null, false, true, true),
+  // Comment for warning about one duplicate arguments error in a page
+  DUPLICATE_ARGS_WARNING_COMMENT_1("duplicate_args_warning_comment_1", null, false, true, true),
+  // Comment for telling that duplicate arguments errors have been fixed
+  DUPLICATE_ARGS_WARNING_COMMENT_DONE("duplicate_args_warning_comment_done", null, false, true, true),
+  // Template for warning about duplicate arguments errors in a page
+  DUPLICATE_ARGS_WARNING_TEMPLATE("duplicate_args_warning_template", null, false, true, false),
+  // Comment for warning template about duplicate arguments errors in a page
+  DUPLICATE_ARGS_WARNING_TEMPLATE_COMMENT("duplicate_args_warning_template_comment", null, false, true, false),
   // Help page
   HELP_PAGE("help_page", null, false, true, false),
   // URL of the help page
