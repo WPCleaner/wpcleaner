@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2015-04-17 20:45+0200\n"
+"POT-Creation-Date: 2015-04-18 16:04+0200\n"
 "PO-Revision-Date: 2013-06-14 22:05+0000\n"
 "Last-Translator: Rashid Aliyev <Unknown>\n"
 "Language-Team: Azerbaijani <az@li.org>\n"
@@ -2332,27 +2332,31 @@ msgstr ""
 msgid "Check whitelists"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/bot/GeneralToolsPanel.java:100
+#: org/wikipediacleaner/gui/swing/bot/GeneralToolsPanel.java:106
 msgid "Semi-automatic disambiguation fixing"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/bot/GeneralToolsPanel.java:109
+#: org/wikipediacleaner/gui/swing/bot/GeneralToolsPanel.java:115
 msgid "Update existing disambiguation warning messages"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/bot/GeneralToolsPanel.java:118
+#: org/wikipediacleaner/gui/swing/bot/GeneralToolsPanel.java:124
 msgid "Update ISBN warning messages"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/bot/GeneralToolsPanel.java:127
+#: org/wikipediacleaner/gui/swing/bot/GeneralToolsPanel.java:133
 msgid "List ISBN errors"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/bot/GeneralToolsPanel.java:136
+#: org/wikipediacleaner/gui/swing/bot/GeneralToolsPanel.java:142
+msgid "Update duplicate argument warning messages"
+msgstr ""
+
+#: org/wikipediacleaner/gui/swing/bot/GeneralToolsPanel.java:151
 msgid "Monitor recent changes"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/bot/GeneralToolsPanel.java:181
+#: org/wikipediacleaner/gui/swing/bot/GeneralToolsPanel.java:196
 msgid "At what page do you wish to start updating the warnings ?"
 msgstr ""
 
@@ -3521,7 +3525,7 @@ msgstr ""
 msgid "Retrieving disambiguation pages"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:217
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:210
 #, java-format
 msgid ""
 "An error occurred when updating disambiguation warnings. Do you want to "
@@ -3530,45 +3534,45 @@ msgid ""
 "Error: {0}"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:271
-#: org/wikipediacleaner/gui/swing/worker/UpdateDuplicateArgsWarningWorker.java:432
-#: org/wikipediacleaner/gui/swing/worker/UpdateISBNWarningWorker.java:459
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:264
+#: org/wikipediacleaner/gui/swing/worker/UpdateDuplicateArgsWarningWorker.java:427
+#: org/wikipediacleaner/gui/swing/worker/UpdateISBNWarningWorker.java:454
 #, java-format
 msgid "{0} page has been analyzed."
 msgid_plural "{0} pages have been analyzed."
 msgstr[0] ""
 msgstr[1] ""
 
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:276
-#: org/wikipediacleaner/gui/swing/worker/UpdateDuplicateArgsWarningWorker.java:437
-#: org/wikipediacleaner/gui/swing/worker/UpdateISBNWarningWorker.java:464
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:269
+#: org/wikipediacleaner/gui/swing/worker/UpdateDuplicateArgsWarningWorker.java:432
+#: org/wikipediacleaner/gui/swing/worker/UpdateISBNWarningWorker.java:459
 #, java-format
 msgid "Warning has been updated on {0} page."
 msgid_plural "Warnings have been updated on {0} pages."
 msgstr[0] ""
 msgstr[1] ""
 
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:281
-#: org/wikipediacleaner/gui/swing/worker/UpdateDuplicateArgsWarningWorker.java:442
-#: org/wikipediacleaner/gui/swing/worker/UpdateISBNWarningWorker.java:469
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:274
+#: org/wikipediacleaner/gui/swing/worker/UpdateDuplicateArgsWarningWorker.java:437
+#: org/wikipediacleaner/gui/swing/worker/UpdateISBNWarningWorker.java:464
 #, java-format
 msgid "Warning has been removed on {0} page."
 msgid_plural "Warnings have been removed on {0} pages."
 msgstr[0] ""
 msgstr[1] ""
 
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:286
-#: org/wikipediacleaner/gui/swing/worker/UpdateDuplicateArgsWarningWorker.java:447
-#: org/wikipediacleaner/gui/swing/worker/UpdateISBNWarningWorker.java:474
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:279
+#: org/wikipediacleaner/gui/swing/worker/UpdateDuplicateArgsWarningWorker.java:442
+#: org/wikipediacleaner/gui/swing/worker/UpdateISBNWarningWorker.java:469
 #, java-format
 msgid "{0} still needs to be fixed."
 msgid_plural "{0} still need to be fixed."
 msgstr[0] ""
 msgstr[1] ""
 
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:292
-#: org/wikipediacleaner/gui/swing/worker/UpdateDuplicateArgsWarningWorker.java:453
-#: org/wikipediacleaner/gui/swing/worker/UpdateISBNWarningWorker.java:480
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:285
+#: org/wikipediacleaner/gui/swing/worker/UpdateDuplicateArgsWarningWorker.java:448
+#: org/wikipediacleaner/gui/swing/worker/UpdateISBNWarningWorker.java:475
 #, java-format
 msgid "It took {0} second"
 msgid_plural "It took {0} seconds"
@@ -3592,7 +3596,7 @@ msgid ""
 "Do you want to update the warnings ?"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/worker/UpdateDuplicateArgsWarningWorker.java:221
+#: org/wikipediacleaner/gui/swing/worker/UpdateDuplicateArgsWarningWorker.java:216
 #, java-format
 msgid ""
 "An error occurred when updating duplicate arguments warnings. Do you want to "
@@ -3601,8 +3605,8 @@ msgid ""
 "Error: {0}"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/worker/UpdateDuplicateArgsWarningWorker.java:372
-#: org/wikipediacleaner/gui/swing/worker/UpdateISBNWarningWorker.java:399
+#: org/wikipediacleaner/gui/swing/worker/UpdateDuplicateArgsWarningWorker.java:367
+#: org/wikipediacleaner/gui/swing/worker/UpdateISBNWarningWorker.java:394
 #, java-format
 msgid "Do you want to update {0}?"
 msgstr ""
@@ -3624,7 +3628,7 @@ msgid ""
 "Do you want to update the warnings ?"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/worker/UpdateISBNWarningWorker.java:248
+#: org/wikipediacleaner/gui/swing/worker/UpdateISBNWarningWorker.java:243
 #, java-format
 msgid ""
 "An error occurred when updating ISBN warnings. Do you want to continue ?\n"
