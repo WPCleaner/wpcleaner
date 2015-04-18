@@ -190,14 +190,7 @@ public class UpdateDabWarningWorker extends BasicWorker {
       int countUnsaved = 0;
       while (!warningPages.isEmpty()) {
         // Creating sublist
-        int size = Math.min(10, warningPages.size());
-        List<Page> sublist = new ArrayList<Page>(size);
-        while ((sublist.size() < size) && (warningPages.size() > 0)) {
-          Page page = warningPages.remove(0);
-          if ((start.length() == 0) || (start.compareTo(page.getTitle()) < 0)) {
-            sublist.add(page);
-          }
-        }
+        List<Page> sublist = tools.extractSublist(warningPages, 10, false);
         if (sublist.isEmpty()) {
           displayResult(stats, startTime);
           return Integer.valueOf(stats.getUpdatedPagesCount());
