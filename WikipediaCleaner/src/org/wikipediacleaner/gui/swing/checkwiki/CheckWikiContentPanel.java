@@ -631,9 +631,11 @@ public class CheckWikiContentPanel
       contributions.increaseCheckWikiError(algorithm.getErrorNumber(), 1);
     }
 
-    // Check for errors fixed about ISBN
+    // Check for errors fixed
     boolean updateISBNWarning = false;
     boolean createISBNWarning = false;
+    boolean updateDuplicateArgsWarning = false;
+    boolean createDuplicateArgsWarning = false;
     for (CheckErrorAlgorithm errorFixed : errorsFixed) {
       int errorNumber = errorFixed.getErrorNumber();
       if ((errorNumber == 69) ||
@@ -642,6 +644,9 @@ public class CheckWikiContentPanel
           (errorNumber == 72) ||
           (errorNumber == 73)) {
         updateISBNWarning = true;
+      }
+      if (errorNumber == 524) {
+        updateDuplicateArgsWarning = true;
       }
     }
 
@@ -653,7 +658,9 @@ public class CheckWikiContentPanel
         configuration.getBoolean(
             null,
             ConfigurationValueBoolean.FORCE_WATCH),
-        false, false, updateISBNWarning, createISBNWarning,
+        false, false,
+        updateISBNWarning, createISBNWarning,
+        updateDuplicateArgsWarning, createDuplicateArgsWarning,
         contributions, errorsFixed);
     sendWorker.setListener(new DefaultBasicWorkerListener() {
       @Override

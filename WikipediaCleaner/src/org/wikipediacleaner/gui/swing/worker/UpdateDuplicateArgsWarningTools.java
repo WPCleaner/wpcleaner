@@ -138,6 +138,10 @@ public class UpdateDuplicateArgsWarningTools extends UpdateWarningTools {
                (contents.charAt(beginIndex) != '}')) {
           beginIndex++;
         }
+        if ((beginIndex < contents.length()) &&
+            (contents.charAt(beginIndex) == '|')) {
+          beginIndex++;
+        }
         String templateName = null;
         String argumentName = null;
         String chapterName = "";
