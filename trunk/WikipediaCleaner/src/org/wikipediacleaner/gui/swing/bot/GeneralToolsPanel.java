@@ -24,6 +24,7 @@ import org.wikipediacleaner.gui.swing.Controller;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
 import org.wikipediacleaner.gui.swing.basic.Utilities;
 import org.wikipediacleaner.gui.swing.worker.UpdateDabWarningWorker;
+import org.wikipediacleaner.gui.swing.worker.UpdateDuplicateArgsWarningWorker;
 import org.wikipediacleaner.gui.swing.worker.UpdateISBNWarningWorker;
 import org.wikipediacleaner.i18n.GT;
 import org.wikipediacleaner.images.EnumImageSize;
@@ -60,6 +61,11 @@ public class GeneralToolsPanel extends BotToolsPanel {
    * Button for updating ISBN warnings on all wiki.
    */
   private JButton buttonUpdateISBNWarning;
+
+  /**
+   * Button for updating duplicate arguments warnings on all wiki.
+   */
+  private JButton buttonUpdateDuplicateArgsWarning;
 
   /**
    * Button for listing ISBN warnings on all wiki.
@@ -128,6 +134,15 @@ public class GeneralToolsPanel extends BotToolsPanel {
     buttonListISBNError.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionListISBNErrors"));
     add(buttonListISBNError, constraints);
+    constraints.gridy++;
+
+    // Update duplicate arguments warning
+    buttonUpdateDuplicateArgsWarning = Utilities.createJButton(
+        "commons-nuvola-web-broom.png", EnumImageSize.NORMAL,
+        GT._("Update duplicate argument warning messages"), true, null);
+    buttonUpdateDuplicateArgsWarning.addActionListener(EventHandler.create(
+        ActionListener.class, this, "actionUpdateDuplicateArgsWarning"));
+    add(buttonUpdateDuplicateArgsWarning, constraints);
     constraints.gridy++;
 
     // Monitor recent changes
@@ -221,6 +236,24 @@ public class GeneralToolsPanel extends BotToolsPanel {
     }
     UpdateISBNWarningWorker worker = new UpdateISBNWarningWorker(
         wiki, window, simulation);
+    worker.start();
+  }
+
+  /**
+   * Action called when Update Duplicate Arguments Warning button is pressed.
+   */
+  public void actionUpdateDuplicateArgsWarning() {
+    EnumWikipedia wiki = window.getWikipedia();
+    WPCConfiguration wpcConfig = wiki.getConfiguration();
+    String template = wpcConfig.getString(WPCConfigurationString.DUPLICATE_ARGS_WARNING_TEMPLATE);
+    if ((template == null) || (template.trim().length() == 0)) {
+      Utilities.displayMessageForMissingConfiguration(
+          window.getParentComponent(),
+          WPCConfigurationString.DUPLICATE_ARGS_WARNING_TEMPLATE.getAttributeName());
+      return;
+    }
+    UpdateDuplicateArgsWarningWorker worker = new UpdateDuplicateArgsWarningWorker(
+        wiki, window, false);
     worker.start();
   }
 
