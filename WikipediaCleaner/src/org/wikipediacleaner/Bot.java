@@ -28,6 +28,7 @@ import org.wikipediacleaner.gui.swing.basic.BasicWorkerListener;
 import org.wikipediacleaner.gui.swing.bot.AutomaticCWWorker;
 import org.wikipediacleaner.gui.swing.worker.LoginWorker;
 import org.wikipediacleaner.gui.swing.worker.UpdateDabWarningWorker;
+import org.wikipediacleaner.gui.swing.worker.UpdateDuplicateArgsWarningWorker;
 import org.wikipediacleaner.gui.swing.worker.UpdateISBNWarningWorker;
 import org.wikipediacleaner.i18n.GT;
 import org.wikipediacleaner.utils.Configuration;
@@ -186,6 +187,8 @@ public class Bot implements BasicWorkerListener {
       worker = new UpdateISBNWarningWorker(wiki, null, false);
     } else if ("ListISBNWarnings".equalsIgnoreCase(action)) {
       worker = new UpdateISBNWarningWorker(wiki, null, true);
+    } else if ("UpdateDuplicateArgsWarnings".equalsIgnoreCase(action)) {
+      worker = new UpdateDuplicateArgsWarningWorker(wiki, null, false);
     } else if ("FixCheckWiki".equalsIgnoreCase(action)) {
       List<CheckErrorAlgorithm> algorithms = new ArrayList<CheckErrorAlgorithm>();
       List<CheckErrorAlgorithm> allAlgorithms = new ArrayList<CheckErrorAlgorithm>();
