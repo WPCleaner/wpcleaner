@@ -223,12 +223,7 @@ public class UpdateISBNWarningWorker extends BasicWorker {
       String lastTitle = null;
       while (!warningPages.isEmpty()) {
         // Creating sublist
-        int size = Math.min(10, warningPages.size());
-        List<Page> sublist = new ArrayList<Page>(size);
-        while ((sublist.size() < size) && (warningPages.size() > 0)) {
-          Page page = warningPages.remove(0);
-          sublist.add(page);
-        }
+        List<Page> sublist = tools.extractSublist(warningPages, 10, false);
         if (sublist.isEmpty()) {
           errors = tools.getErrorsMap();
           displayResult(stats, startTime, errors);

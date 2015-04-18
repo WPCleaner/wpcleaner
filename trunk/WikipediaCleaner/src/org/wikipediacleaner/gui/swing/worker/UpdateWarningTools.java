@@ -1461,6 +1461,28 @@ public abstract class UpdateWarningTools {
     }
   }
 
+  /**
+   * Extract a sub list of pages from a list.
+   * 
+   * @param list List (extracted pages are removed from the list).
+   * @param max Maximum number of pages.
+   * @param talkPages True if talk pages should be included.
+   * @return Sub list of pages.
+   */
+  public List<Page> extractSublist(List<Page> list, int max, boolean talkPages) {
+    if (list == null) {
+      return null;
+    }
+    List<Page> sublist = new ArrayList<Page>(Math.min(max, list.size()));
+    while ((sublist.size() < max) && !list.isEmpty()) {
+      Page page = list.remove(0);
+      if (talkPages || page.isArticle()) {
+        sublist.add(page);
+      }
+    }
+    return sublist;
+  }
+
   // ==========================================================================
   // Statistics
   // ==========================================================================
