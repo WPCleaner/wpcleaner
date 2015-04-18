@@ -557,7 +557,7 @@ public class TemplateData {
     /**
      * @param value Value.
      * @return True if the value is compatible with the type.
-     * @see https://www.mediawiki.org/wiki/Extension:TemplateData#Format
+     * @see <a href="https://www.mediawiki.org/wiki/Extension:TemplateData#Format">TemplateData format</a>
      */
     public boolean isCompatible(String value) {
       if (value == null) {
