@@ -37,6 +37,8 @@ public class SendWorker extends BasicWorker {
   private final boolean createDabWarning;
   private final boolean updateISBNWarning;
   private final boolean createISBNWarning;
+  private final boolean updateDuplicateArgsWarning;
+  private final boolean createDuplicateArgsWarning;
   private final Contributions contributions;
   private final Collection<CheckErrorAlgorithm> errorsFixed;
 
@@ -51,6 +53,8 @@ public class SendWorker extends BasicWorker {
    * @param createDabWarning Create disambiguation warning on talk page.
    * @param updateISBNWarning Update ISBN warning on talk page.
    * @param createISBNWarning Create ISBN warning on talk page.
+   * @param updateDuplicateArgsWarning Update duplicate arguments warning on talk page.
+   * @param createDuplicateArgsWarning Create duplicate arguments warning on talk page.
    * @param contributions Contributions.
    * @param errorsFixed Errors fixed by this update.
    */
@@ -60,6 +64,7 @@ public class SendWorker extends BasicWorker {
       boolean forceWatch,
       boolean updateDabWarning, boolean createDabWarning,
       boolean updateISBNWarning, boolean createISBNWarning,
+      boolean updateDuplicateArgsWarning, boolean createDuplicateArgsWarning,
       Contributions contributions,
       Collection<CheckErrorAlgorithm> errorsFixed) {
     super(wikipedia, window);
@@ -71,6 +76,8 @@ public class SendWorker extends BasicWorker {
     this.createDabWarning = createDabWarning;
     this.updateISBNWarning = updateISBNWarning;
     this.createISBNWarning = createISBNWarning;
+    this.updateDuplicateArgsWarning = updateDuplicateArgsWarning;
+    this.createDuplicateArgsWarning = createDuplicateArgsWarning;
     this.contributions = contributions;
     this.errorsFixed = errorsFixed;
   }
@@ -122,6 +129,20 @@ public class SendWorker extends BasicWorker {
             getWikipedia(), this, createISBNWarning, false);
         PageAnalysis pageAnalysis = page.getAnalysis(text, true);
         isbnWarningTools.updateWarning(
+            pageAnalysis, queryResult.getPageNewRevId(),
+            null, null, null, null, null);
+      } catch (APIException e) {
+        return e;
+      }
+    }
+
+    // Updating duplicate arguments warning
+    if (updateDuplicateArgsWarning) {
+      try {
+        UpdateDuplicateArgsWarningTools duplicateArgsWarningTools = new UpdateDuplicateArgsWarningTools(
+            getWikipedia(), this, createDuplicateArgsWarning, false);
+        PageAnalysis pageAnalysis = page.getAnalysis(text, true);
+        duplicateArgsWarningTools.updateWarning(
             pageAnalysis, queryResult.getPageNewRevId(),
             null, null, null, null, null);
       } catch (APIException e) {

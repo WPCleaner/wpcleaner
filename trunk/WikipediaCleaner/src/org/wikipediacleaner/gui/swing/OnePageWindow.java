@@ -1034,6 +1034,8 @@ public abstract class OnePageWindow
     final boolean createDabWarning = (chkCreateDabWarning != null) && (chkCreateDabWarning.isSelected());
     final boolean createISBNWarning = false;
     boolean updateISBNWarning = false;
+    final boolean createDuplicateArgsWarning = false;
+    boolean updateDuplicateArgsWarning = false;
     List<CheckErrorAlgorithm> errorsFixed = computeErrorsFixed();
     if (errorsFixed != null) {
       for (CheckErrorAlgorithm errorFixed : errorsFixed) {
@@ -1044,6 +1046,9 @@ public abstract class OnePageWindow
             (errorNumber == 72) ||
             (errorNumber == 73)) {
           updateISBNWarning = true;
+        }
+        if (errorNumber == 524) {
+          updateDuplicateArgsWarning = true;
         }
       }
     }
@@ -1059,6 +1064,7 @@ public abstract class OnePageWindow
         forceWatch,
         updateDabWarning, createDabWarning,
         updateISBNWarning, createISBNWarning,
+        updateDuplicateArgsWarning, createDuplicateArgsWarning,
         getContributions(), errorsFixed);
     sendWorker.setListener(new DefaultBasicWorkerListener() {
       @Override
