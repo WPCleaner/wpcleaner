@@ -198,6 +198,9 @@ public abstract class UpdateWarningTools {
           (creators != null) ? creators.get(page.getTitle()) : null,
           (modifiers != null) ? modifiers.get(page.getTitle()) : null,
           stats);
+      if (updated) {
+        log.debug("Page " + page.getTitle() + " has been updated.");
+      }
       if (stats != null) {
         stats.addAnalyzedPage(page);
         if (updated) {
@@ -226,7 +229,9 @@ public abstract class UpdateWarningTools {
       Page talkPage, Page todoSubpage,
       String creator, List<String> modifiers,
       Stats stats) throws APIException {
-    if ((pageAnalysis == null) || (pageAnalysis.getPage() == null)) {
+    if ((pageAnalysis == null) ||
+        (pageAnalysis.getPage() == null) ||
+        !pageAnalysis.getPage().isArticle()) {
       return false;
     }
     List<String> todoTemplates = configuration.getStringList(WPCConfigurationStringList.TODO_TEMPLATES);
