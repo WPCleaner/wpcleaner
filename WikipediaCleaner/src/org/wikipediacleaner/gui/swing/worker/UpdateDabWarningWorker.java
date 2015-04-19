@@ -27,7 +27,6 @@ import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageComparator;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
 import org.wikipediacleaner.gui.swing.basic.BasicWorker;
-import org.wikipediacleaner.gui.swing.basic.Utilities;
 import org.wikipediacleaner.gui.swing.worker.UpdateWarningTools.Stats;
 import org.wikipediacleaner.i18n.GT;
 import org.wikipediacleaner.utils.Configuration;
@@ -253,38 +252,16 @@ public class UpdateDabWarningWorker extends BasicWorker {
   }
 
   /**
+   * Display results.
+   * 
    * @param stats Statistics.
    * @param startTime Start time.
    */
-  private void displayResult(Stats stats, long startTime) {
-    if ((!useList) && (getWindow() != null)) {
-      long endTime = System.currentTimeMillis();
-      StringBuilder message = new StringBuilder();
-      message.append(GT.__(
-          "{0} page has been analyzed.",
-          "{0} pages have been analyzed.",
-          stats.getAnalyedPagesCount(), Integer.toString(stats.getAnalyedPagesCount())));
-      message.append("\n");
-      message.append(GT.__(
-          "Warning has been updated on {0} page.",
-          "Warnings have been updated on {0} pages.",
-          stats.getUpdatedPagesCount(), Integer.toString(stats.getUpdatedPagesCount())));
-      message.append("\n");
-      message.append(GT.__(
-          "Warning has been removed on {0} page.",
-          "Warnings have been removed on {0} pages.",
-          stats.getRemovedWarningsCount(), Integer.toString(stats.getRemovedWarningsCount())));
-      message.append("\n");
-      message.append(GT.__(
-          "{0} still needs to be fixed.",
-          "{0} still need to be fixed.",
-          stats.getLinksCount(), Integer.toString(stats.getLinksCount())));
-      message.append("\n");
-      long time = (endTime - startTime) / 1000;
-      message.append(GT.__(
-          "It took {0} second", "It took {0} seconds", time, Long.toString(time)));
-      Utilities.displayInformationMessage(
-          getWindow().getParentComponent(), message.toString());
+  private void displayResult(
+      Stats stats, long startTime) {
+    if (useList) {
+      return;
     }
+    UpdateWarningTools.displayStats(getWindow(), stats, startTime);
   }
 }
