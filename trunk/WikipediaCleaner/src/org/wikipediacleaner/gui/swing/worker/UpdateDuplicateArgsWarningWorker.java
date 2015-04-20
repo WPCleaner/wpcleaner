@@ -7,7 +7,6 @@
 
 package org.wikipediacleaner.gui.swing.worker;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
@@ -17,10 +16,6 @@ import javax.swing.JOptionPane;
 import org.wikipediacleaner.api.API;
 import org.wikipediacleaner.api.APIException;
 import org.wikipediacleaner.api.APIFactory;
-import org.wikipediacleaner.api.check.CheckError;
-import org.wikipediacleaner.api.check.CheckWiki;
-import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithm;
-import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithms;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.constants.WPCConfiguration;
 import org.wikipediacleaner.api.constants.WPCConfigurationString;
@@ -30,7 +25,6 @@ import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageComparator;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
-import org.wikipediacleaner.gui.swing.basic.BasicWorker;
 import org.wikipediacleaner.gui.swing.worker.UpdateWarningTools.Stats;
 import org.wikipediacleaner.i18n.GT;
 import org.wikipediacleaner.utils.Configuration;
@@ -40,13 +34,7 @@ import org.wikipediacleaner.utils.ConfigurationValueString;
 /**
  * SwingWorker for updating duplicate arguments warning.
  */
-public class UpdateDuplicateArgsWarningWorker extends BasicWorker {
-
-  private final List<Page> warningPages;
-  private final boolean useList;
-  private final boolean contentsAvailable;
-  private final boolean simulation;
-  private final boolean automaticEdit;
+public class UpdateDuplicateArgsWarningWorker extends UpdateWarningWorker {
 
   /**
    * @param wiki Wiki.
@@ -56,12 +44,7 @@ public class UpdateDuplicateArgsWarningWorker extends BasicWorker {
   public UpdateDuplicateArgsWarningWorker(
       EnumWikipedia wiki, BasicWindow window,
       boolean simulation) {
-    super(wiki, window);
-    this.warningPages = new ArrayList<Page>();
-    this.useList = false;
-    this.contentsAvailable = false;
-    this.simulation = simulation;
-    this.automaticEdit = true;
+    super(wiki, window, simulation);
   }
 
   /**
@@ -74,12 +57,7 @@ public class UpdateDuplicateArgsWarningWorker extends BasicWorker {
   public UpdateDuplicateArgsWarningWorker(
       EnumWikipedia wiki, BasicWindow window, List<Page> pages,
       boolean contentsAvailable, boolean automaticEdit) {
-    super(wiki, window);
-    this.warningPages = new ArrayList<Page>(pages);
-    this.useList = true;
-    this.contentsAvailable = contentsAvailable;
-    this.simulation = false;
-    this.automaticEdit = automaticEdit;
+    super(wiki, window, pages, contentsAvailable, automaticEdit);
   }
 
   /* (non-Javadoc)
@@ -89,88 +67,24 @@ public class UpdateDuplicateArgsWarningWorker extends BasicWorker {
   public Object construct() {
     long startTime = System.currentTimeMillis();
     EnumWikipedia wiki = getWikipedia();
-    WPCConfiguration configuration = wiki.getConfiguration();
-
-    setText(GT._("Retrieving MediaWiki API"));
-    API api = APIFactory.getAPI();
     int lastCount = 0;
-    WikiConfiguration wikiConfiguration = wiki.getWikiConfiguration();
-
     Stats stats = new Stats();
     try {
       if (!useList) {
-        warningPages.clear();
+        listWarningPages();
 
-        // Retrieve talk pages including a warning
-        String warningTemplateName = configuration.getString(
-            WPCConfigurationString.DUPLICATE_ARGS_WARNING_TEMPLATE);
-        if (warningTemplateName != null) {
-          setText(GT._("Retrieving talk pages including {0}", "{{" + warningTemplateName + "}}"));
-          String templateTitle = wikiConfiguration.getPageTitle(
-              Namespace.TEMPLATE,
-              warningTemplateName);
-          Page warningTemplate = DataManager.getPage(
-              wiki, templateTitle, null, null, null);
-          api.retrieveEmbeddedIn(
-              wiki, warningTemplate,
-              configuration.getEncyclopedicTalkNamespaces(),
-              false);
-          warningPages.addAll(warningTemplate.getRelatedPages(Page.RelatedPages.EMBEDDED_IN));
-        }
-
-        // Retrieve articles listed for duplicate arguments errors in Check Wiki
-        retrieveCheckWikiPages(524, warningPages); // Duplicate template arguments
-
-        // Construct list of articles with warning
-        setText(GT._("Constructing list of articles with warning"));
-        HashSet<Page> tmpWarningPages = new HashSet<Page>();
-        List<Integer> encyclopedicNamespaces = configuration.getEncyclopedicNamespaces();
-        for (Page warningPage : warningPages) {
-
-          // Get article page for talks pages and to do sub-pages
-          String title = warningPage.getTitle();
-          if (!warningPage.isArticle()) {
-            String todoSubpage = configuration.getString(WPCConfigurationString.TODO_SUBPAGE);
-            if (title.endsWith("/" + todoSubpage)) {
-              title = title.substring(0, title.length() - 1 - todoSubpage.length());
-            }
-            Integer namespace = warningPage.getNamespace();
-            if (namespace != null) {
-              Namespace namespaceTalk = wikiConfiguration.getNamespace(namespace.intValue());
-              if (namespaceTalk != null) {
-                int colonIndex = title.indexOf(':');
-                if (colonIndex >= 0) {
-                  title = title.substring(colonIndex + 1);
-                }
-                if (namespace != Namespace.MAIN_TALK) {
-                  title = wikiConfiguration.getPageTitle(namespace - 1, title);
-                }
-              }
-            }
-          }
-
-          // Add article to the list
-          Page page = DataManager.getPage(wiki, title, null, null, null);
-          if (encyclopedicNamespaces.contains(page.getNamespace()) &&
-              !tmpWarningPages.contains(page)) {
-            tmpWarningPages.add(page);
-          }
-        }
-
+        // Ask for confirmation
         if (getWindow() != null) {
           int answer = getWindow().displayYesNoWarning(GT._(
               "Analysis found {0} articles to check for duplicate arguments errors.\n" +
               "Do you want to update the warnings ?",
-              Integer.valueOf(tmpWarningPages.size()).toString() ));
+              Integer.valueOf(warningPages.size()).toString() ));
           if (answer != JOptionPane.YES_OPTION) {
             return Integer.valueOf(0);
           }
         }
 
         // Sort the list of articles
-        warningPages.clear();
-        warningPages.addAll(tmpWarningPages);
-        tmpWarningPages.clear();
         Collections.sort(warningPages, PageComparator.getTitleFirstComparator());
         if (warningPages.isEmpty()) {
           return Integer.valueOf(0);
@@ -190,7 +104,7 @@ public class UpdateDuplicateArgsWarningWorker extends BasicWorker {
         // Creating sublist
         List<Page> sublist = tools.extractSublist(warningPages, 10, false);
         if (sublist.isEmpty()) {
-          displayResult(stats, startTime);
+          displayStats(stats, startTime);
           return Integer.valueOf(stats.getUpdatedPagesCount());
         }
 
@@ -215,7 +129,7 @@ public class UpdateDuplicateArgsWarningWorker extends BasicWorker {
           if (shouldStop()) {
             Configuration config = Configuration.getConfiguration();
             config.setString(null, ConfigurationValueString.LAST_DUPLICATE_ARGS_WARNING, lastTitle);
-            displayResult(stats, startTime);
+            displayStats(stats, startTime);
             return Integer.valueOf(stats.getUpdatedPagesCount());
           }
         }
@@ -242,44 +156,79 @@ public class UpdateDuplicateArgsWarningWorker extends BasicWorker {
       return e;
     }
 
-    displayResult(stats, startTime);
+    displayStats(stats, startTime);
     return Integer.valueOf(stats.getUpdatedPagesCount());
   }
 
   /**
-   * Retrieve pages for a given error number.
-   * 
-   * @param errorNumber Error number.
-   * @param pages List of pages to complete.
+   * Generate the list of warning pages.
    */
-  private void retrieveCheckWikiPages(int errorNumber, List<Page> pages) {
-    CheckWiki cw = APIFactory.getCheckWiki();
+  @Override
+  protected void listWarningPages() throws APIException {
     EnumWikipedia wiki = getWikipedia();
-    CheckErrorAlgorithm algorithm = CheckErrorAlgorithms.getAlgorithm(wiki, errorNumber);
-    List<CheckError> errors = new ArrayList<CheckError>();
-    try {
-      cw.retrievePages(algorithm, 10000, wiki, errors);
-      for (CheckError error: errors) {
-        for (int pageNum = 0; pageNum < error.getPageCount(); pageNum++) {
-          pages.add(error.getPage(pageNum));
+    WPCConfiguration configuration = wiki.getConfiguration();
+    WikiConfiguration wikiConfiguration = wiki.getWikiConfiguration();
+    API api = APIFactory.getAPI();
+
+    // Retrieve talk pages including a warning
+    String warningTemplateName = configuration.getString(
+        WPCConfigurationString.DUPLICATE_ARGS_WARNING_TEMPLATE);
+    if (warningTemplateName != null) {
+      setText(GT._("Retrieving talk pages including {0}", "{{" + warningTemplateName + "}}"));
+      String templateTitle = wikiConfiguration.getPageTitle(
+          Namespace.TEMPLATE,
+          warningTemplateName);
+      Page warningTemplate = DataManager.getPage(
+          wiki, templateTitle, null, null, null);
+      api.retrieveEmbeddedIn(
+          wiki, warningTemplate,
+          configuration.getEncyclopedicTalkNamespaces(),
+          false);
+      warningPages.addAll(warningTemplate.getRelatedPages(Page.RelatedPages.EMBEDDED_IN));
+    }
+
+    // Retrieve articles listed for duplicate arguments errors in Check Wiki
+    retrieveCheckWikiPages(524, warningPages); // Duplicate template arguments
+
+    // Construct list of articles with warning
+    setText(GT._("Constructing list of articles with warning"));
+    HashSet<Page> tmpWarningPages = new HashSet<Page>();
+    List<Integer> encyclopedicNamespaces = configuration.getEncyclopedicNamespaces();
+    for (Page warningPage : warningPages) {
+
+      // Get article page for talks pages and to do sub-pages
+      String title = warningPage.getTitle();
+      if (!warningPage.isArticle()) {
+        String todoSubpage = configuration.getString(WPCConfigurationString.TODO_SUBPAGE);
+        if (title.endsWith("/" + todoSubpage)) {
+          title = title.substring(0, title.length() - 1 - todoSubpage.length());
+        }
+        Integer namespace = warningPage.getNamespace();
+        if (namespace != null) {
+          Namespace namespaceTalk = wikiConfiguration.getNamespace(namespace.intValue());
+          if (namespaceTalk != null) {
+            int colonIndex = title.indexOf(':');
+            if (colonIndex >= 0) {
+              title = title.substring(colonIndex + 1);
+            }
+            if (namespace != Namespace.MAIN_TALK) {
+              title = wikiConfiguration.getPageTitle(namespace - 1, title);
+            }
+          }
         }
       }
-    } catch (APIException e) {
-      // Nothing
-    }
-  }
 
-  /**
-   * Display results.
-   * 
-   * @param stats Statistics.
-   * @param startTime Start time.
-   */
-  private void displayResult(
-      Stats stats, long startTime) {
-    if (useList) {
-      return;
+      // Add article to the list
+      Page page = DataManager.getPage(wiki, title, null, null, null);
+      if (encyclopedicNamespaces.contains(page.getNamespace()) &&
+          !tmpWarningPages.contains(page)) {
+        tmpWarningPages.add(page);
+      }
     }
-    UpdateWarningTools.displayStats(getWindow(), stats, startTime);
+
+    // Fill up the list
+    warningPages.clear();
+    warningPages.addAll(tmpWarningPages);
+    tmpWarningPages.clear();
   }
 }

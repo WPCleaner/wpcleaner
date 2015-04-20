@@ -7,7 +7,6 @@
 
 package org.wikipediacleaner.gui.swing.worker;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
@@ -26,7 +25,6 @@ import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageComparator;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
-import org.wikipediacleaner.gui.swing.basic.BasicWorker;
 import org.wikipediacleaner.gui.swing.worker.UpdateWarningTools.Stats;
 import org.wikipediacleaner.i18n.GT;
 import org.wikipediacleaner.utils.Configuration;
@@ -36,15 +34,11 @@ import org.wikipediacleaner.utils.ConfigurationValueString;
 /**
  * SwingWorker for updating disambiguation warning.
  */
-public class UpdateDabWarningWorker extends BasicWorker {
+public class UpdateDabWarningWorker extends UpdateWarningWorker {
 
   private final String start;
-  private final List<Page> warningPages;
-  private final boolean useList;
-  private final boolean contentsAvailable;
   private final boolean linksAvailable;
   private final boolean dabInformationAvailable;
-  private final boolean automaticEdit;
 
   /**
    * @param wikipedia Wikipedia.
@@ -52,14 +46,10 @@ public class UpdateDabWarningWorker extends BasicWorker {
    * @param start Start at this page.
    */
   public UpdateDabWarningWorker(EnumWikipedia wikipedia, BasicWindow window, String start) {
-    super(wikipedia, window);
+    super(wikipedia, window, false);
     this.start = (start != null) ? start.trim() : "";
-    this.warningPages = new ArrayList<Page>();
-    this.useList = false;
-    this.contentsAvailable = false;
     this.linksAvailable = false;
     this.dabInformationAvailable = false;
-    this.automaticEdit = true;
   }
 
   /**
@@ -87,14 +77,10 @@ public class UpdateDabWarningWorker extends BasicWorker {
       EnumWikipedia wikipedia, BasicWindow window, List<Page> pages,
       boolean contentsAvailable, boolean linksAvailable,
       boolean dabInformationAvailable, boolean automaticEdit) {
-    super(wikipedia, window);
+    super(wikipedia, window, pages, contentsAvailable, automaticEdit);
     this.start = "";
-    this.warningPages = new ArrayList<Page>(pages);
-    this.useList = true;
-    this.contentsAvailable = contentsAvailable;
     this.linksAvailable = linksAvailable;
     this.dabInformationAvailable = dabInformationAvailable;
-    this.automaticEdit = automaticEdit;
   }
 
   /* (non-Javadoc)
@@ -105,71 +91,28 @@ public class UpdateDabWarningWorker extends BasicWorker {
     long startTime = System.currentTimeMillis();
     EnumWikipedia wikipedia = getWikipedia();
     WPCConfiguration configuration = wikipedia.getConfiguration();
-
     setText(GT._("Retrieving MediaWiki API"));
-    API api = APIFactory.getAPI();
     int lastCount = 0;
-    WikiConfiguration wikiConfiguration = wikipedia.getWikiConfiguration();
 
     Stats stats = new Stats();
     try {
       if (!useList) {
-        // Retrieve talk pages including a warning
-        String warningTemplateName = configuration.getString(WPCConfigurationString.DAB_WARNING_TEMPLATE);
-        setText(GT._("Retrieving talk pages including {0}", "{{" + warningTemplateName + "}}"));
-        String templateTitle = wikiConfiguration.getPageTitle(
-            Namespace.TEMPLATE,
-            warningTemplateName);
-        Page warningTemplate = DataManager.getPage(
-            wikipedia, templateTitle, null, null, null);
-        api.retrieveEmbeddedIn(
-            wikipedia, warningTemplate,
-            configuration.getEncyclopedicTalkNamespaces(),
-            false);
-        List<Page> warningTalkPages = warningTemplate.getRelatedPages(Page.RelatedPages.EMBEDDED_IN);
-  
-        // Construct list of articles with warning
-        setText(GT._("Constructing list of articles with warning"));
-        HashSet<Page> tmpWarningPages = new HashSet<Page>();
-        for (Page warningPage : warningTalkPages) {
-          String title = warningPage.getTitle();
-          String todoSubpage = configuration.getString(WPCConfigurationString.TODO_SUBPAGE);
-          if (title.endsWith("/" + todoSubpage)) {
-            title = title.substring(0, title.length() - 1 - todoSubpage.length());
-          }
-          int colonIndex = title.indexOf(':');
-          if (colonIndex >= 0) {
-            for (Integer namespace : configuration.getEncyclopedicTalkNamespaces()) {
-              Namespace namespaceTalk = wikiConfiguration.getNamespace(namespace);
-              if ((namespaceTalk != null) &&
-                  (namespaceTalk.isPossibleName(title.substring(0, colonIndex)))) {
-                String tmpTitle = title.substring(colonIndex + 1);
-                if (namespace != Namespace.MAIN_TALK) {
-                  tmpTitle = wikiConfiguration.getPageTitle(namespace - 1, tmpTitle);
-                }
-                if ((start.length() == 0) || (start.compareTo(tmpTitle) < 0)) {
-                  Page page = DataManager.getPage(wikipedia, tmpTitle, null, null, null);
-                  if (!tmpWarningPages.contains(page)) {
-                    tmpWarningPages.add(page);
-                  }
-                }
-              }
-            }
-          }
-        }
+        listWarningPages();
+
+        // Ask for confirmation
         if (getWindow() != null) {
           int answer = getWindow().displayYesNoWarning(GT._(
               "Analysis found {0} articles with disambiguation warning {1}.\n" +
               "Do you want to update the disambiguation warnings ?",
-              new Object[] { Integer.valueOf(tmpWarningPages.size()), "{{" + warningTemplateName + "}}" }));
+              new Object[] {
+                  Integer.valueOf(warningPages.size()),
+                  "{{" + configuration.getString(WPCConfigurationString.DAB_WARNING_TEMPLATE) + "}}" }));
           if (answer != JOptionPane.YES_OPTION) {
             return Integer.valueOf(0);
           }
         }
 
         // Sort the list of articles
-        warningPages.addAll(tmpWarningPages);
-        tmpWarningPages.clear();
         Collections.sort(warningPages, PageComparator.getTitleFirstComparator());
         if (warningPages.isEmpty()) {
           return Integer.valueOf(0);
@@ -191,7 +134,7 @@ public class UpdateDabWarningWorker extends BasicWorker {
         // Creating sublist
         List<Page> sublist = tools.extractSublist(warningPages, 10, false);
         if (sublist.isEmpty()) {
-          displayResult(stats, startTime);
+          displayStats(stats, startTime);
           return Integer.valueOf(stats.getUpdatedPagesCount());
         }
         countUnsaved += sublist.size();
@@ -220,7 +163,7 @@ public class UpdateDabWarningWorker extends BasicWorker {
             countUnsaved = 0;
           }
           if (shouldStop()) {
-            displayResult(stats, startTime);
+            displayStats(stats, startTime);
             return Integer.valueOf(stats.getUpdatedPagesCount());
           }
         }
@@ -247,21 +190,66 @@ public class UpdateDabWarningWorker extends BasicWorker {
       return e;
     }
 
-    displayResult(stats, startTime);
+    displayStats(stats, startTime);
     return Integer.valueOf(stats.getUpdatedPagesCount());
   }
 
   /**
-   * Display results.
-   * 
-   * @param stats Statistics.
-   * @param startTime Start time.
+   * Generate the list of warning pages.
    */
-  private void displayResult(
-      Stats stats, long startTime) {
-    if (useList) {
-      return;
+  @Override
+  protected void listWarningPages() throws APIException {
+    EnumWikipedia wiki = getWikipedia();
+    WPCConfiguration configuration = wiki.getConfiguration();
+    WikiConfiguration wikiConfiguration = wiki.getWikiConfiguration();
+    API api = APIFactory.getAPI();
+
+    // Retrieve talk pages including a warning
+    String warningTemplateName = configuration.getString(WPCConfigurationString.DAB_WARNING_TEMPLATE);
+    setText(GT._("Retrieving talk pages including {0}", "{{" + warningTemplateName + "}}"));
+    String templateTitle = wikiConfiguration.getPageTitle(
+        Namespace.TEMPLATE,
+        warningTemplateName);
+    Page warningTemplate = DataManager.getPage(
+        wiki, templateTitle, null, null, null);
+    api.retrieveEmbeddedIn(
+        wiki, warningTemplate,
+        configuration.getEncyclopedicTalkNamespaces(),
+        false);
+    List<Page> warningTalkPages = warningTemplate.getRelatedPages(Page.RelatedPages.EMBEDDED_IN);
+
+    // Construct list of articles with warning
+    setText(GT._("Constructing list of articles with warning"));
+    HashSet<Page> tmpWarningPages = new HashSet<Page>();
+    for (Page warningPage : warningTalkPages) {
+      String title = warningPage.getTitle();
+      String todoSubpage = configuration.getString(WPCConfigurationString.TODO_SUBPAGE);
+      if (title.endsWith("/" + todoSubpage)) {
+        title = title.substring(0, title.length() - 1 - todoSubpage.length());
+      }
+      int colonIndex = title.indexOf(':');
+      if (colonIndex >= 0) {
+        for (Integer namespace : configuration.getEncyclopedicTalkNamespaces()) {
+          Namespace namespaceTalk = wikiConfiguration.getNamespace(namespace);
+          if ((namespaceTalk != null) &&
+              (namespaceTalk.isPossibleName(title.substring(0, colonIndex)))) {
+            String tmpTitle = title.substring(colonIndex + 1);
+            if (namespace != Namespace.MAIN_TALK) {
+              tmpTitle = wikiConfiguration.getPageTitle(namespace - 1, tmpTitle);
+            }
+            if ((start.length() == 0) || (start.compareTo(tmpTitle) < 0)) {
+              Page page = DataManager.getPage(wiki, tmpTitle, null, null, null);
+              if (!tmpWarningPages.contains(page)) {
+                tmpWarningPages.add(page);
+              }
+            }
+          }
+        }
+      }
     }
-    UpdateWarningTools.displayStats(getWindow(), stats, startTime);
+
+    // Fill up the list    
+    warningPages.addAll(tmpWarningPages);
+    tmpWarningPages.clear();
   }
 }
