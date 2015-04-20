@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -166,6 +167,9 @@ public abstract class UpdateWarningTools {
       return;
     }
 
+    // Deal with non encyclopedic pages
+    manageNonEncyclopedicPages(pages);
+
     // Load talk pages and "To do" sub pages
     Map<Page, Page> mapTalkPages = new HashMap<Page, Page>();
     Map<Page, Page> mapTodoSubpages = new HashMap<Page, Page>();
@@ -210,6 +214,35 @@ public abstract class UpdateWarningTools {
       }
     }
     return;
+  }
+
+  /**
+   * Manage talk pages present in the list.
+   * 
+   * @param pages List of pages.
+   * @throws APIException
+   */
+  private void manageNonEncyclopedicPages(List<Page> pages)
+      throws APIException {
+    if (pages == null) {
+      return;
+    }
+    Iterator<Page> itPage = pages.iterator();
+    List<Integer> encyclopedicNamespaces = configuration.getEncyclopedicNamespaces();
+    while (itPage.hasNext()) {
+      Page page = itPage.next();
+      if (!page.isArticle() ||
+          !encyclopedicNamespaces.contains(page.getNamespace())) {
+        itPage.remove();
+        if (!simulation) {
+          PageAnalysis analysis = page.getAnalysis(page.getContents(), true);
+          Collection<String> elements = constructWarningElements(analysis, null, null);
+          if ((elements == null) || (elements.isEmpty())) {
+            purgePage(page);
+          }
+        }
+      }
+    }
   }
 
   /**
@@ -341,8 +374,13 @@ public abstract class UpdateWarningTools {
       if (!simulation) {
         result |= removeWarningOnTodoSubpage(todoSubpage);
         result |= removeWarningOnTalkPage(talkPage);
-        if (result && (stats != null)) {
-          stats.addRemovedWarning(pageAnalysis.getPage());
+        if (result) {
+          if (stats != null) {
+            stats.addRemovedWarning(pageAnalysis.getPage());
+          }
+        } else {
+          purgePage(talkPage);
+          purgePage(pageAnalysis.getPage());
         }
       }
     } else {
@@ -381,8 +419,12 @@ public abstract class UpdateWarningTools {
     if ((elements == null) || (elements.isEmpty())) {
       if (!simulation) {
         result = removeWarningOnTalkPage(talkPage);
-        if (result && (stats != null)) {
-          stats.addRemovedWarning(pageAnalysis.getPage());
+        if (result) {
+          if (stats != null) {
+            stats.addRemovedWarning(pageAnalysis.getPage());
+          }
+        } else {
+          purgePage(pageAnalysis.getPage());
         }
       }
     } else {
@@ -1440,6 +1482,16 @@ public abstract class UpdateWarningTools {
       Page page, String title, int section,
       String contents, boolean forceWatch) throws APIException {
     return api.updateSection(wiki, page, title, section, contents, forceWatch);
+  }
+
+  /**
+   * Purge a page cache.
+   * 
+   * @param page Page.
+   * @throws APIException
+   */
+  protected void purgePage(Page page) throws APIException {
+    api.purgePageCache(wiki, page);
   }
 
   /**
