@@ -375,12 +375,12 @@ public abstract class UpdateWarningTools {
         result |= removeWarningOnTodoSubpage(todoSubpage);
         result |= removeWarningOnTalkPage(talkPage);
         if (result) {
+          purgePage(talkPage);
           if (stats != null) {
             stats.addRemovedWarning(pageAnalysis.getPage());
           }
         } else {
-          purgePage(talkPage);
-          purgePage(pageAnalysis.getPage());
+          //purgePage(pageAnalysis.getPage());
         }
       }
     } else {
@@ -424,7 +424,7 @@ public abstract class UpdateWarningTools {
             stats.addRemovedWarning(pageAnalysis.getPage());
           }
         } else {
-          purgePage(pageAnalysis.getPage());
+          //purgePage(pageAnalysis.getPage());
         }
       }
     } else {
