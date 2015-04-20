@@ -167,7 +167,7 @@ public class PageElementISBN extends PageElement {
               analyzeTemplateParams(
                   analysis, isbns, template,
                   (isbnTemplate.length > 1) ? isbnTemplate[1] : "1",
-                  false, false, false, false);
+                  false, false, true, false);
             }
           }
         }
