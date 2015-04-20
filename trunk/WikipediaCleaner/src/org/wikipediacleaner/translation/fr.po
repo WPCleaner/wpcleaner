@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2015-04-20 20:08+0200\n"
+"POT-Creation-Date: 2015-04-21 00:57+0200\n"
 "PO-Revision-Date: 2015-04-17 19:51+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: French <fr@li.org>\n"
@@ -2036,7 +2036,7 @@ msgstr "Modèles utilisés dans {0}, pointant vers {1}"
 #: org/wikipediacleaner/gui/swing/worker/NewSectionWorker.java:62
 #: org/wikipediacleaner/gui/swing/worker/RandomPageWorker.java:49
 #: org/wikipediacleaner/gui/swing/worker/SendWorker.java:90
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:94
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:87
 msgid "Retrieving MediaWiki API"
 msgstr "Récupération de l’API MediaWiki"
 
@@ -3669,7 +3669,7 @@ msgstr "Suppression de l’avertissement d’homonymie - {0}"
 msgid "Updating disambiguation warning - {0}"
 msgstr "Mise à jour de l’avertissement d’homonymie - {0}"
 
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:105
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:98
 #, java-format
 msgid ""
 "Analysis found {0} articles with disambiguation warning {1}.\n"
@@ -3678,11 +3678,11 @@ msgstr ""
 "L’analyse a trouvé {0} articles avec un avertissement d’homonymie {1}.\n"
 "Voulez-vous mettre à jour cet avertissement ?"
 
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:128
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:121
 msgid "Retrieving disambiguation pages"
 msgstr "Récupération des pages d’homonymie"
 
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:152
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:145
 #, java-format
 msgid ""
 "An error occurred when updating disambiguation warnings. Do you want to "
@@ -3695,19 +3695,6 @@ msgstr ""
 "\n"
 "Erreur : {0}"
 
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:209
-#: org/wikipediacleaner/gui/swing/worker/UpdateDuplicateArgsWarningWorker.java:177
-#: org/wikipediacleaner/gui/swing/worker/UpdateISBNWarningWorker.java:186
-#, java-format
-msgid "Retrieving talk pages including {0}"
-msgstr "Récupération des pages de discussion incluant {0}"
-
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:222
-#: org/wikipediacleaner/gui/swing/worker/UpdateDuplicateArgsWarningWorker.java:194
-#: org/wikipediacleaner/gui/swing/worker/UpdateISBNWarningWorker.java:232
-msgid "Constructing list of articles with warning"
-msgstr "Construction de la liste des articles avec un message d’avertissement"
-
 #: org/wikipediacleaner/gui/swing/worker/UpdateDuplicateArgsWarningTools.java:231
 #, java-format
 msgid "Removing duplicate arguments warning - {0}"
@@ -3718,7 +3705,7 @@ msgstr "Suppression de l’avertissement des arguments dupliqués - {0}"
 msgid "Updating duplicate arguments warning - {0}"
 msgstr "Mise à jour de l’avertissement des arguments dupliqués - {0}"
 
-#: org/wikipediacleaner/gui/swing/worker/UpdateDuplicateArgsWarningWorker.java:79
+#: org/wikipediacleaner/gui/swing/worker/UpdateDuplicateArgsWarningWorker.java:74
 #, java-format
 msgid ""
 "Analysis found {0} articles to check for duplicate arguments errors.\n"
@@ -3728,7 +3715,7 @@ msgstr ""
 "dupliqués.\n"
 "Voulez-vous mettre à jour les avertissements ?"
 
-#: org/wikipediacleaner/gui/swing/worker/UpdateDuplicateArgsWarningWorker.java:121
+#: org/wikipediacleaner/gui/swing/worker/UpdateDuplicateArgsWarningWorker.java:116
 #, java-format
 msgid ""
 "An error occurred when updating duplicate arguments warnings. Do you want to "
@@ -3751,7 +3738,7 @@ msgstr "Suppression de l’avertissement ISBN - {0}"
 msgid "Updating ISBN warning - {0}"
 msgstr "Mise à jour de l’avertissement ISBN - {0}"
 
-#: org/wikipediacleaner/gui/swing/worker/UpdateISBNWarningWorker.java:88
+#: org/wikipediacleaner/gui/swing/worker/UpdateISBNWarningWorker.java:86
 #, java-format
 msgid ""
 "Analysis found {0} articles to check for ISBN errors.\n"
@@ -3760,7 +3747,7 @@ msgstr ""
 "L’analyse a trouvé {0} articles avec un avertissement ISBN.\n"
 "Voulez-vous mettre à jour cet avertissement ?"
 
-#: org/wikipediacleaner/gui/swing/worker/UpdateISBNWarningWorker.java:130
+#: org/wikipediacleaner/gui/swing/worker/UpdateISBNWarningWorker.java:128
 #, java-format
 msgid ""
 "An error occurred when updating ISBN warnings. Do you want to continue ?\n"
@@ -3772,51 +3759,60 @@ msgstr ""
 "\n"
 "Erreur : {0}"
 
-#: org/wikipediacleaner/gui/swing/worker/UpdateISBNWarningWorker.java:360
+#: org/wikipediacleaner/gui/swing/worker/UpdateISBNWarningWorker.java:292
 #, java-format
 msgid "Do you want to update {0}?"
 msgstr "Voulez-vous mettre à jour {0} ?"
 
-#: org/wikipediacleaner/gui/swing/worker/UpdateWarningTools.java:254
-#: org/wikipediacleaner/gui/swing/worker/UpdateWarningTools.java:269
+#: org/wikipediacleaner/gui/swing/worker/UpdateWarningTools.java:287
+#: org/wikipediacleaner/gui/swing/worker/UpdateWarningTools.java:302
 #, java-format
 msgid "Retrieving page contents - {0}"
 msgstr "Récupération du contenu de la page - {0}"
 
-#: org/wikipediacleaner/gui/swing/worker/UpdateWarningTools.java:1585
+#: org/wikipediacleaner/gui/swing/worker/UpdateWarningTools.java:1637
 #, java-format
 msgid "{0} page has been analyzed."
 msgid_plural "{0} pages have been analyzed."
 msgstr[0] "{0} page a été analysée."
 msgstr[1] "{0} pages ont été analysées."
 
-#: org/wikipediacleaner/gui/swing/worker/UpdateWarningTools.java:1590
+#: org/wikipediacleaner/gui/swing/worker/UpdateWarningTools.java:1642
 #, java-format
 msgid "Warning has been updated on {0} page."
 msgid_plural "Warnings have been updated on {0} pages."
 msgstr[0] "Le message d’avertissement a été mis à jour dans {0} page."
 msgstr[1] "Les messages d’avertissement ont été mis à jour dans {0} pages."
 
-#: org/wikipediacleaner/gui/swing/worker/UpdateWarningTools.java:1595
+#: org/wikipediacleaner/gui/swing/worker/UpdateWarningTools.java:1647
 #, java-format
 msgid "Warning has been removed on {0} page."
 msgid_plural "Warnings have been removed on {0} pages."
 msgstr[0] "Le message d’avertissement a été retiré sur {0} page."
 msgstr[1] "Les messages d’avertissement ont été retirés sur {0} pages."
 
-#: org/wikipediacleaner/gui/swing/worker/UpdateWarningTools.java:1600
+#: org/wikipediacleaner/gui/swing/worker/UpdateWarningTools.java:1652
 #, java-format
 msgid "{0} still needs to be fixed."
 msgid_plural "{0} still need to be fixed."
 msgstr[0] "Il reste {0} avertissement à corriger"
 msgstr[1] "Il reste {0} avertissements à corriger"
 
-#: org/wikipediacleaner/gui/swing/worker/UpdateWarningTools.java:1606
+#: org/wikipediacleaner/gui/swing/worker/UpdateWarningTools.java:1658
 #, java-format
 msgid "It took {0} second"
 msgid_plural "It took {0} seconds"
 msgstr[0] "Ceci a été réalisé en {0} seconde."
 msgstr[1] "Ceci a été réalisé en {0} secondes."
+
+#: org/wikipediacleaner/gui/swing/worker/UpdateWarningWorker.java:122
+#, java-format
+msgid "Retrieving talk pages including {0}"
+msgstr "Récupération des pages de discussion incluant {0}"
+
+#: org/wikipediacleaner/gui/swing/worker/UpdateWarningWorker.java:134
+msgid "Constructing list of articles with warning"
+msgstr "Construction de la liste des articles avec un message d’avertissement"
 
 #: org/wikipediacleaner/utils/Configuration.java:278
 msgid ""
