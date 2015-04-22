@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2015-04-22 18:35+0200\n"
+"POT-Creation-Date: 2015-04-22 20:55+0200\n"
 "PO-Revision-Date: 2015-04-13 16:30+0000\n"
 "Last-Translator: Matěj S. <matejsuchanek97@gmail.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
@@ -1109,8 +1109,8 @@ msgid "Save"
 msgstr "Uložit"
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:253
-#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:124
-#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:184
+#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:109
+#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:173
 msgid "Automatic fixing for Check Wiki"
 msgstr "Automatické opravy chyb Check Wikipedia"
 
@@ -2321,11 +2321,11 @@ msgstr[0] "{0} stránka byla označena jako opravená pro jiný algoritmus"
 msgstr[1] "{0} stránky byly označeny jako opravené pro jiný algoritmus"
 msgstr[2] "{0} stránek bylo označeno jako opravené pro jiný algoritmus"
 
-#: org/wikipediacleaner/gui/swing/bot/BotCWTableModel.java:324
+#: org/wikipediacleaner/gui/swing/bot/BotCWTableModel.java:345
 msgid "Description"
 msgstr "Popis"
 
-#: org/wikipediacleaner/gui/swing/bot/BotCWTableModel.java:330
+#: org/wikipediacleaner/gui/swing/bot/BotCWTableModel.java:351
 msgid "N°"
 msgstr "Č."
 
@@ -2379,35 +2379,50 @@ msgstr "Ve whitelistu chyby {0} byly nalezeny následující problémy:"
 msgid "Whitelists"
 msgstr "Whitelisty"
 
-#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:146
+#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:131
 msgid "Analyze pages that couldn't be fixed by bot"
 msgstr "Analyzovat stránky, které nemohly být botem opraveny"
 
-#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:155
+#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:140
 msgid "Number of pages:"
 msgstr "Počet stránek:"
 
-#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:169
+#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:154
 msgid "Comment:"
 msgstr "Shrnutí"
 
-#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:195
+#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:181
 msgid "Mark errors already fixed"
 msgstr "Označit již opravené chyby"
 
-#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:206
+#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:189
 msgid "Check whitelists"
 msgstr "Zkontrolovat white listy"
 
-#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:253
+#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:197
+#, fuzzy
+msgid "Save selection"
+msgstr "Použít volbu"
+
+#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:205
+#, fuzzy
+msgid "Load selection"
+msgstr "Použít volbu"
+
+#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:246
 #, fuzzy
 msgid "You must select at least one algorithm for fixing errors"
 msgstr "Než se přihlásíte, musíte zvolit jazyk"
 
-#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:258
+#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:251
 #, fuzzy
 msgid "You must select at least one algorithm for listing errors"
 msgstr "Než se přihlásíte, musíte zvolit jazyk"
+
+#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:293
+#: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiWindow.java:1089
+msgid "What is the name of the selection?"
+msgstr "Jaké je jméno výběru?"
 
 #: org/wikipediacleaner/gui/swing/bot/GeneralToolsPanel.java:106
 msgid "Semi-automatic disambiguation fixing"
@@ -2667,10 +2682,6 @@ msgid ""
 msgstr ""
 "Chyba číslo {0} může být <a href=\"{1}\">konfigurována</a> následujícími "
 "parametry:"
-
-#: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiWindow.java:1089
-msgid "What is the name of the selection?"
-msgstr "Jaké je jméno výběru?"
 
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiWindow.java:1209
 #, java-format
@@ -3774,7 +3785,7 @@ msgstr "Nahrávám diskuzní stránky obsahující {0}"
 msgid "Constructing list of articles with warning"
 msgstr "Sestavuji seznam článků s varováním"
 
-#: org/wikipediacleaner/utils/Configuration.java:278
+#: org/wikipediacleaner/utils/Configuration.java:279
 msgid ""
 "Wikipedia Cleaner options have changed to allow different settings for each "
 "Wikipedia.\n"

@@ -13,21 +13,30 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionListener;
 import java.beans.EventHandler;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Properties;
+import java.util.Set;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
+import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
+import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.JToolBar;
 import javax.swing.ListSelectionModel;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.SpinnerNumberModel;
+import javax.swing.SwingConstants;
 
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithm;
+import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithms;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
 import org.wikipediacleaner.gui.swing.basic.Utilities;
@@ -43,50 +52,26 @@ import org.wikipediacleaner.utils.ConfigurationValueInteger;
  */
 public class CWToolsPanel extends BotToolsPanel {
 
-  /**
-   * Serialization.
-   */
+  /** Serialization. */
   private static final long serialVersionUID = -8468890591813838957L;
 
-  /**
-   * Button for running automatic fixing of Check Wiki errors.
-   */
-  private JButton buttonCWAutomaticFixing;
-
-  /**
-   * Button for marking already fixed Check Wiki errors.
-   */
-  private JButton buttonCWAutomaticMarking;
-
-  /**
-   * Button for checking white lists.
-   */
-  private JButton buttonCWCheckWhiteLists;
-
-  /**
-   * Configure if page that couldn't be fixed should be analyzed.
-   */
+  /** Configure if page that couldn't be fixed should be analyzed. */
   private JCheckBox chkCWAnalyze;
 
-  /**
-   * Configure number of pages for each error.
-   */
+  /** Configure number of pages for each error. */
   private SpinnerNumberModel modelNbPages;
 
-  /**
-   * Comment.
-   */
+  /** Comment. */
   private JTextField txtComment;
 
-  /**
-   * Table model for Check Wiki automatic fixing.
-   */
+  /** Table model for Check Wiki automatic fixing. */
   BotCWTableModel modelCWAutomaticFixing;
 
-  /**
-   * Table for Check Wiki automatic fixing.
-   */
+  /** Table for Check Wiki automatic fixing. */
   private JTable tableCWAutomaticFixing;
+
+  /** Button for loading selection. */
+  private JButton buttonLoadSelection;
 
   /**
    * Construct a Check Wiki bot tools panel.
@@ -178,50 +163,58 @@ public class CWToolsPanel extends BotToolsPanel {
     constraints.gridx = 0;
     constraints.gridy++;
 
+    // Buttons
+    JToolBar toolbarButtons = new JToolBar(SwingConstants.HORIZONTAL);
+    toolbarButtons.setFloatable(false);
+
     // Button for running the automatic fixing
-    buttonCWAutomaticFixing = Utilities.createJButton(
+    JButton buttonCWAutomaticFixing = Utilities.createJButton(
         "commons-nuvola-web-broom.png", EnumImageSize.NORMAL,
-        GT._("Automatic fixing for Check Wiki"), true, null);
+        GT._("Automatic fixing for Check Wiki"), false, null);
     buttonCWAutomaticFixing.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionCWAutomaticFixing"));
-    constraints.gridwidth = maxX;
-    constraints.weightx = 1;
-    add(buttonCWAutomaticFixing, constraints);
-    constraints.gridy++;
+    toolbarButtons.add(buttonCWAutomaticFixing);
 
     // Button for marking errors already fixed
-    buttonCWAutomaticMarking = Utilities.createJButton(
-        "commons-nuvola-web-broom.png", EnumImageSize.NORMAL,
-        GT._("Mark errors already fixed"), true, null);
+    JButton buttonCWAutomaticMarking = Utilities.createJButton(
+        "gnome-dialog-apply.png", EnumImageSize.NORMAL,
+        GT._("Mark errors already fixed"), false, null);
     buttonCWAutomaticMarking.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionCWAutomaticMarking"));
-    constraints.gridwidth = maxX;
-    constraints.weightx = 1;
-    add(buttonCWAutomaticMarking, constraints);
-    constraints.gridy++;
+    toolbarButtons.add(buttonCWAutomaticMarking);
 
     // Button for checking white lists
-    buttonCWCheckWhiteLists = Utilities.createJButton(
+    JButton buttonCWCheckWhiteLists = Utilities.createJButton(
         "gnome-edit-find.png", EnumImageSize.NORMAL,
-        GT._("Check whitelists"), true, null);
+        GT._("Check whitelists"), false, null);
     buttonCWCheckWhiteLists.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionCWCheckWhiteLists"));
+    toolbarButtons.add(buttonCWCheckWhiteLists);
+
+    // Button for saving selection
+    JButton buttonSaveSelection = Utilities.createJButton(
+        "gnome-document-save.png", EnumImageSize.NORMAL,
+        GT._("Save selection"), false, null);
+    buttonSaveSelection.addActionListener(EventHandler.create(
+        ActionListener.class, this, "actionSaveSelection"));
+    toolbarButtons.add(buttonSaveSelection);
+
+    // Button for loading selection
+    buttonLoadSelection = Utilities.createJButton(
+        "gnome-drive-harddisk.png", EnumImageSize.NORMAL,
+        GT._("Load selection"), false, null);
+    buttonLoadSelection.addActionListener(EventHandler.create(
+        ActionListener.class, this, "actionLoadSelection"));
+    toolbarButtons.add(buttonLoadSelection);
+
     constraints.gridwidth = maxX;
     constraints.weightx = 1;
-    add(buttonCWCheckWhiteLists, constraints);
+    add(toolbarButtons, constraints);
     constraints.gridy++;
 
     // Select errors that can be fixed by bot
     ListSelectionModel selectionModel = tableCWAutomaticFixing.getSelectionModel();
     selectionModel.clearSelection();
-  }
-
-  /**
-   * Update components state.
-   */
-  @Override
-  protected void updateComponentState() {
-    buttonCWAutomaticFixing.setEnabled(true);
   }
 
   /**
@@ -290,5 +283,120 @@ public class CWToolsPanel extends BotToolsPanel {
     EnumWikipedia wiki = window.getWikipedia();
     CWCheckWhiteListsWorker worker = new CWCheckWhiteListsWorker(wiki, window);
     worker.start();
+  }
+
+  /**
+   * Action called when Save Selection button is pressed.
+   */
+  public void actionSaveSelection() {
+    // Retrieve configuration name
+    String name = window.askForValue(GT._("What is the name of the selection?"), null, null);
+    if ((name == null) || (name.isEmpty())) {
+      return;
+    }
+
+    // Create a string representing the current selection
+    StringBuilder buffer = new StringBuilder();
+    List<CheckErrorAlgorithm> algorithms = modelCWAutomaticFixing.getFixAlgorithms();
+    if (algorithms != null) {
+      for (int i = 0; i < algorithms.size(); i++) {
+        if (i > 0) {
+          buffer.append(",");
+        }
+        buffer.append(algorithms.get(i).getErrorNumber());
+      }
+    }
+    buffer.append("|");
+    algorithms = modelCWAutomaticFixing.getListAlgorithms();
+    if (algorithms != null) {
+      for (int i = 0; i < algorithms.size(); i++) {
+        if (i > 0) {
+          buffer.append(",");
+        }
+        buffer.append(algorithms.get(i).getErrorNumber());
+      }
+    }
+
+    // Save configuration
+    Configuration config = Configuration.getConfiguration();
+    config.setSubString(null, Configuration.ARRAY_CHECK_BOT_SELECTION, name, buffer.toString());
+  }
+
+  /**
+   * Action called when Load Selection button is pressed.
+   */
+  public void actionLoadSelection() {
+
+    // Retrieve possible selections
+    Configuration config = Configuration.getConfiguration();
+    Properties properties = config.getProperties(null, Configuration.ARRAY_CHECK_BOT_SELECTION);
+    if ((properties == null) || (properties.isEmpty())) {
+      return;
+    }
+    Set<Object> keySet = properties.keySet();
+    List<String> keyList = new ArrayList<String>();
+    for (Object key : keySet) {
+      keyList.add(key.toString());
+    }
+    Collections.sort(keyList);
+
+    // Create menu
+    JPopupMenu menu = new JPopupMenu();
+    for (String name : keyList) {
+      JMenuItem item = Utilities.createJMenuItem(name, true);
+      item.setActionCommand(properties.getProperty(name));
+      item.addActionListener(EventHandler.create(
+          ActionListener.class, this, "actionLoadSelection", "actionCommand"));
+      menu.add(item);
+    }
+    menu.show(
+        buttonLoadSelection,
+        0,
+        buttonLoadSelection.getHeight());
+  }
+
+  /**
+   * Action called when Load Selection menu item is selected.
+   * 
+   * @param selection Selection.
+   */
+  public void actionLoadSelection(String selection) {
+    if (selection == null) {
+      return;
+    }
+    String[] parts = selection.split("\\|");
+    if ((parts == null) || (parts.length < 2)) {
+      return;
+    }
+    List<CheckErrorAlgorithm> algorithms = new ArrayList<CheckErrorAlgorithm>();
+    String[] elements = parts[0].split("\\,");
+    for (int i = 0; i < elements.length; i++) {
+      try {
+        int errorNumber = Integer.parseInt(elements[i]);
+        CheckErrorAlgorithm algorithm = CheckErrorAlgorithms.getAlgorithm(
+            window.getWiki(), errorNumber);
+        if (algorithm != null) {
+          algorithms.add(algorithm);
+        }
+      } catch (NumberFormatException e) {
+        //
+      }
+    }
+    modelCWAutomaticFixing.setFixAlgorithms(algorithms);
+    algorithms.clear();
+    elements = parts[1].split("\\,");
+    for (int i = 0; i < elements.length; i++) {
+      try {
+        int errorNumber = Integer.parseInt(elements[i]);
+        CheckErrorAlgorithm algorithm = CheckErrorAlgorithms.getAlgorithm(
+            window.getWiki(), errorNumber);
+        if (algorithm != null) {
+          algorithms.add(algorithm);
+        }
+      } catch (NumberFormatException e) {
+        //
+      }
+    }
+    modelCWAutomaticFixing.setListAlgorithms(algorithms);
   }
 }
