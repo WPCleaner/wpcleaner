@@ -372,10 +372,13 @@ public abstract class UpdateWarningTools {
     boolean result = false;
     if ((elements == null) || (elements.isEmpty())) {
       if (!simulation) {
-        result |= removeWarningOnTodoSubpage(todoSubpage);
-        result |= removeWarningOnTalkPage(talkPage);
+        boolean resultTodo = removeWarningOnTodoSubpage(todoSubpage);
+        boolean resultTalk = removeWarningOnTalkPage(talkPage);
+        result = resultTodo || resultTalk;
         if (result) {
-          purgePage(talkPage);
+          if (!resultTalk) {
+            purgePage(talkPage);
+          }
           if (stats != null) {
             stats.addRemovedWarning(pageAnalysis.getPage());
           }
