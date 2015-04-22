@@ -245,10 +245,32 @@ public class BotCWTableModel extends AbstractTableModel {
   }
 
   /**
+   * @param fixAlgorithms Algorithms selected for fixing errors.
+   */
+  public void setFixAlgorithms(List<CheckErrorAlgorithm> fixAlgorithms) {
+    this.fixAlgorithms.clear();
+    if (fixAlgorithms != null) {
+      this.fixAlgorithms.addAll(fixAlgorithms);
+    }
+    fireTableDataChanged();
+  }
+
+  /**
    * @return Algorithms selected for listing errors.
    */
   public List<CheckErrorAlgorithm> getListAlgorithms() {
     return listAlgorithms;
+  }
+
+  /**
+   * @param listAlgorithms Algorithms selected for listing errors.
+   */
+  public void setListAlgorithms(List<CheckErrorAlgorithm> listAlgorithms) {
+    this.listAlgorithms.clear();
+    if (listAlgorithms != null) {
+      this.listAlgorithms.addAll(listAlgorithms);
+    }
+    fireTableDataChanged();
   }
 
   /**

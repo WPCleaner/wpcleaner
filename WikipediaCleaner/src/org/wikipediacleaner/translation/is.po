@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2015-04-22 18:35+0200\n"
+"POT-Creation-Date: 2015-04-22 20:55+0200\n"
 "PO-Revision-Date: 2014-09-10 23:21+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Icelandic <is@li.org>\n"
@@ -1077,8 +1077,8 @@ msgid "Save"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:253
-#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:124
-#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:184
+#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:109
+#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:173
 msgid "Automatic fixing for Check Wiki"
 msgstr ""
 
@@ -2261,11 +2261,11 @@ msgid_plural "{0} pages have been marked as fixed for other algorithms"
 msgstr[0] ""
 msgstr[1] ""
 
-#: org/wikipediacleaner/gui/swing/bot/BotCWTableModel.java:324
+#: org/wikipediacleaner/gui/swing/bot/BotCWTableModel.java:345
 msgid "Description"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/bot/BotCWTableModel.java:330
+#: org/wikipediacleaner/gui/swing/bot/BotCWTableModel.java:351
 msgid "N°"
 msgstr ""
 
@@ -2319,35 +2319,48 @@ msgstr ""
 msgid "Whitelists"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:146
+#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:131
 msgid "Analyze pages that couldn't be fixed by bot"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:155
+#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:140
 msgid "Number of pages:"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:169
+#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:154
 msgid "Comment:"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:195
+#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:181
 msgid "Mark errors already fixed"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:206
+#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:189
 msgid "Check whitelists"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:253
+#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:197
+msgid "Save selection"
+msgstr ""
+
+#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:205
+msgid "Load selection"
+msgstr ""
+
+#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:246
 #, fuzzy
 msgid "You must select at least one algorithm for fixing errors"
 msgstr "Þú verður að velja tungumál fyrir innskráningu"
 
-#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:258
+#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:251
 #, fuzzy
 msgid "You must select at least one algorithm for listing errors"
 msgstr "Þú verður að velja tungumál fyrir innskráningu"
+
+#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:293
+#: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiWindow.java:1089
+msgid "What is the name of the selection?"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/bot/GeneralToolsPanel.java:106
 msgid "Semi-automatic disambiguation fixing"
@@ -2595,10 +2608,6 @@ msgstr ""
 msgid ""
 "The error n°{0} can be configured with the following parameters in the <a "
 "href=\"{1}\">translation file</a> :"
-msgstr ""
-
-#: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiWindow.java:1089
-msgid "What is the name of the selection?"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiWindow.java:1209
@@ -3646,7 +3655,7 @@ msgstr ""
 msgid "Constructing list of articles with warning"
 msgstr ""
 
-#: org/wikipediacleaner/utils/Configuration.java:278
+#: org/wikipediacleaner/utils/Configuration.java:279
 msgid ""
 "Wikipedia Cleaner options have changed to allow different settings for each "
 "Wikipedia.\n"

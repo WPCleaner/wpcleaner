@@ -44,6 +44,7 @@ public class Configuration implements WindowListener {
 
   // Array properties
   public  final static String  ARRAY_CHECK_SELECTION     = "CheckWikiSelection";
+  public  final static String  ARRAY_CHECK_BOT_SELECTION = "CheckBotSelection";
   public  final static String  ARRAY_FILTER_NS           = "FilterNS";
   public  final static String  ARRAY_INTERESTING_PAGES   = "InterestingPages";
   public  final static String  ARRAY_SORT_ORDERS         = "SortOrders";
