@@ -13,7 +13,6 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionListener;
 import java.beans.EventHandler;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JButton;
@@ -129,7 +128,9 @@ public class CWToolsPanel extends BotToolsPanel {
     // Table for listing errors
     modelCWAutomaticFixing = new BotCWTableModel(window.getWikipedia());
     tableCWAutomaticFixing = new JTable(modelCWAutomaticFixing);
-    modelCWAutomaticFixing.configureColumnModel(tableCWAutomaticFixing.getColumnModel());
+    tableCWAutomaticFixing.setRowSelectionAllowed(false);
+    tableCWAutomaticFixing.setColumnSelectionAllowed(false);
+    modelCWAutomaticFixing.configureColumnModel(tableCWAutomaticFixing);
     Utilities.addRowSorter(tableCWAutomaticFixing, modelCWAutomaticFixing);
     JScrollPane paneCWAutomaticFixing = new JScrollPane(tableCWAutomaticFixing);
     paneCWAutomaticFixing.setMinimumSize(new Dimension(200, 200));
@@ -213,11 +214,6 @@ public class CWToolsPanel extends BotToolsPanel {
     // Select errors that can be fixed by bot
     ListSelectionModel selectionModel = tableCWAutomaticFixing.getSelectionModel();
     selectionModel.clearSelection();
-    for (int i = 0; i < modelCWAutomaticFixing.getRowCount(); i++) {
-      if (modelCWAutomaticFixing.isBotAlgorithm(i)) {
-        selectionModel.addSelectionInterval(i, i);
-      }
-    }
   }
 
   /**
@@ -241,7 +237,7 @@ public class CWToolsPanel extends BotToolsPanel {
   public void actionCWAutomaticMarking() {
     automaticFixing(false);
   }
-  
+
   /**
    * @param saveModifications True if modifications should be saved.
    */
@@ -252,15 +248,15 @@ public class CWToolsPanel extends BotToolsPanel {
           window.getParentComponent(), null);
       return;
     }
-    int[] selection = tableCWAutomaticFixing.getSelectedRows();
-    if ((selection == null) || (selection.length == 0)) {
+    List<CheckErrorAlgorithm> fixAlgorithms = modelCWAutomaticFixing.getFixAlgorithms();
+    if ((fixAlgorithms == null) || fixAlgorithms.isEmpty()) {
+      window.displayWarning(GT._("You must select at least one algorithm for fixing errors"));
       return;
     }
-    List<CheckErrorAlgorithm> selectedAlgorithms = new ArrayList<CheckErrorAlgorithm>();
-    for (int i = 0; i < selection.length; i++) {
-      int row = Utilities.convertRowIndexToModel(tableCWAutomaticFixing, selection[i]);
-      CheckErrorAlgorithm algorithm = modelCWAutomaticFixing.getAlgorithm(row);
-      selectedAlgorithms.add(algorithm);
+    List<CheckErrorAlgorithm> listAlgorithms = modelCWAutomaticFixing.getListAlgorithms();
+    if ((listAlgorithms == null) || listAlgorithms.isEmpty()) {
+      window.displayWarning(GT._("You must select at least one algorithm for listing errors"));
+      return;
     }
     int answer = window.displayYesNoWarning(BasicWindow.experimentalMessage);
     if (answer != JOptionPane.YES_OPTION) {
@@ -278,14 +274,10 @@ public class CWToolsPanel extends BotToolsPanel {
       config.setBoolean(null, ConfigurationValueBoolean.CHECK_BOT_ANALYZE, analyze);
     }
     config.setInt(null, ConfigurationValueInteger.CHECK_BOT_NB_PAGES, max);
-    List<CheckErrorAlgorithm> allAlgorithms = selectedAlgorithms;
-    if (saveModifications) {
-      allAlgorithms = modelCWAutomaticFixing.getAlgorithms();
-    }
     AutomaticCWWorker worker = new AutomaticCWWorker(
         wiki, window,
-        selectedAlgorithms, max,
-        allAlgorithms,
+        listAlgorithms, max,
+        fixAlgorithms,
         txtComment.getText(),
         saveModifications, analyze);
     worker.start();

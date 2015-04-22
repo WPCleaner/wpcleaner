@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2015-04-21 00:57+0200\n"
+"POT-Creation-Date: 2015-04-22 18:35+0200\n"
 "PO-Revision-Date: 2015-04-05 05:54+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Spanish\n"
@@ -1124,8 +1124,8 @@ msgid "Save"
 msgstr "Guardar"
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:253
-#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:125
-#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:183
+#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:124
+#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:184
 msgid "Automatic fixing for Check Wiki"
 msgstr "Corrección automática de Check Wikipedia"
 
@@ -2320,19 +2320,19 @@ msgstr "Comprobando por el error nº{0}"
 msgid "Analyzing page {0}"
 msgstr "Analizando la página {0}"
 
-#: org/wikipediacleaner/gui/swing/bot/AutomaticCWWorker.java:228
+#: org/wikipediacleaner/gui/swing/bot/AutomaticCWWorker.java:227
 #, java-format
 msgid "Fixing page {0}"
 msgstr "Corrigiendo página {0}"
 
-#: org/wikipediacleaner/gui/swing/bot/AutomaticCWWorker.java:270
+#: org/wikipediacleaner/gui/swing/bot/AutomaticCWWorker.java:269
 #, java-format
 msgid "{0} page has been modified"
 msgid_plural "{0} pages have been modified"
 msgstr[0] "Se ha modificado {0} página"
 msgstr[1] "Se han modificado {0} páginas"
 
-#: org/wikipediacleaner/gui/swing/bot/AutomaticCWWorker.java:275
+#: org/wikipediacleaner/gui/swing/bot/AutomaticCWWorker.java:274
 #, java-format
 msgid "{0} page has been marked as fixed for the selected algorithms"
 msgid_plural "{0} pages have been marked as fixed for the selected algorithms"
@@ -2342,18 +2342,18 @@ msgstr[1] ""
 "{0} páginas han sido marcadas como corregidas para los algoritmos "
 "selecccionados"
 
-#: org/wikipediacleaner/gui/swing/bot/AutomaticCWWorker.java:280
+#: org/wikipediacleaner/gui/swing/bot/AutomaticCWWorker.java:279
 #, java-format
 msgid "{0} page has been marked as fixed for other algorithms"
 msgid_plural "{0} pages have been marked as fixed for other algorithms"
 msgstr[0] "{0} página ha sido marcada como corregida para otros algoritmos"
 msgstr[1] "{0} páginas han sido marcadas como corregidas para otros algoritmos"
 
-#: org/wikipediacleaner/gui/swing/bot/BotCWTableModel.java:218
+#: org/wikipediacleaner/gui/swing/bot/BotCWTableModel.java:324
 msgid "Description"
 msgstr "Descripción"
 
-#: org/wikipediacleaner/gui/swing/bot/BotCWTableModel.java:220
+#: org/wikipediacleaner/gui/swing/bot/BotCWTableModel.java:330
 msgid "N°"
 msgstr "N.º"
 
@@ -2411,25 +2411,35 @@ msgstr ""
 msgid "Whitelists"
 msgstr "Listas blancas"
 
-#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:145
+#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:146
 msgid "Analyze pages that couldn't be fixed by bot"
 msgstr "Analizar páginas que no pudieron ser corregidas por un bot"
 
-#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:154
+#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:155
 msgid "Number of pages:"
 msgstr "N.º de páginas:"
 
-#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:168
+#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:169
 msgid "Comment:"
 msgstr "Comentario:"
 
-#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:194
+#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:195
 msgid "Mark errors already fixed"
 msgstr "Marcar errores que ya han sido corregidos"
 
-#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:205
+#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:206
 msgid "Check whitelists"
 msgstr "Revisar listas blancas"
+
+#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:253
+#, fuzzy
+msgid "You must select at least one algorithm for fixing errors"
+msgstr "Debe seleccionar un idioma antes de iniciar la sesión"
+
+#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:258
+#, fuzzy
+msgid "You must select at least one algorithm for listing errors"
+msgstr "Debe seleccionar un idioma antes de iniciar la sesión"
 
 #: org/wikipediacleaner/gui/swing/bot/GeneralToolsPanel.java:106
 msgid "Semi-automatic disambiguation fixing"
