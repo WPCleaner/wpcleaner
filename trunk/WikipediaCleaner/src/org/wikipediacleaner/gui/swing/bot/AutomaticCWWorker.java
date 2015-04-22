@@ -193,13 +193,12 @@ public class AutomaticCWWorker extends BasicWorker {
       }
     }
 
-    // Analyze page to check if error has been found
+    // Analyze page to check if an error has been found
     List<CheckErrorPage> errorPages = CheckError.analyzeErrors(allAlgorithms, analysis, true);
     boolean found = false;
     if (errorPages != null) {
       for (CheckErrorPage errorPage : errorPages) {
-        if (algorithm.equals(errorPage.getAlgorithm()) &&
-            errorPage.getErrorFound()) {
+        if (errorPage.getErrorFound()) {
           found = true;
         }
       }
