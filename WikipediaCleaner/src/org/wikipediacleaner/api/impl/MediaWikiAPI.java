@@ -874,6 +874,23 @@ public class MediaWikiAPI implements API {
   // ==========================================================================
 
   /**
+   * Retrieves the categories of a page.
+   * (<code>action=query</code>, <code>prop=categories</code>).
+   * 
+   * @param wiki Wiki.
+   * @param page Page.
+   * @throws APIException
+   * @see <a href="https://www.mediawiki.org/wiki/API:Categories">API:Categories</a>
+   */
+  public void retrieveCategories(
+      EnumWikipedia wiki,
+      Page page) throws APIException {
+    ApiCategoriesResult result = new ApiXmlCategoriesResult(wiki, httpClient);
+    ApiCategoriesRequest request = new ApiCategoriesRequest(wiki, result);
+    request.retrieveCategories(page);
+  }
+
+  /**
    * Retrieves the informations of a list of pages.
    * (<code>action=query</code>, <code>prop=info</code>).
    * 

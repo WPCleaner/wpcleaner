@@ -19,6 +19,7 @@ import org.jdom.JDOMException;
 import org.jdom.xpath.XPath;
 import org.wikipediacleaner.api.APIException;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
+import org.wikipediacleaner.api.data.DataManager;
 import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.request.ApiCategoriesResult;
@@ -38,6 +39,53 @@ public class ApiXmlCategoriesResult extends ApiXmlPropertiesResult implements Ap
       EnumWikipedia wiki,
       HttpClient httpClient) {
     super(wiki, httpClient);
+  }
+
+  /**
+   * Execute categories request.
+   * 
+   * @param properties Properties defining request.
+   * @param page Page.
+   * @param list List to be filled with categories.
+   * @return True if request should be continued.
+   * @throws APIException
+   */
+  public boolean executeCategories(
+      Map<String, String> properties,
+      Page page,
+      List<Page> list) throws APIException {
+    try {
+      Element root = getRoot(properties, ApiRequest.MAX_ATTEMPTS);
+
+      // Retrieve back links
+      XPath xpa = XPath.newInstance("/api/query/pages/page/categories/cl");
+      List listCategories = xpa.selectNodes(root);
+      Iterator itCategory = listCategories.iterator();
+      while (itCategory.hasNext()) {
+        Element currentCategory = (Element) itCategory.next();
+        String pageId = currentCategory.getAttributeValue("pageid");
+        String ns = currentCategory.getAttributeValue("ns");
+        String title = currentCategory.getAttributeValue("title");
+        Page category = DataManager.getPage(
+            getWiki(), title, null, null, null);
+        category.setNamespace(ns);
+        category.setPageId(pageId);
+        if (currentCategory.getAttribute("missing") != null) {
+          category.setExisting(Boolean.FALSE);
+        }
+        if (!list.contains(category)) {
+          list.add(category);
+        }
+      }
+
+      // Retrieve continue
+      return shouldContinue(
+          root, "/api/query-continue/categories",
+          properties);
+    } catch (JDOMException e) {
+      log.error("Error loading templates", e);
+      throw new APIException("Error parsing XML", e);
+    }
   }
 
   /**

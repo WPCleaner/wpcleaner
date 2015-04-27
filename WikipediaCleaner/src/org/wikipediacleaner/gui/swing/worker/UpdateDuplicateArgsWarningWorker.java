@@ -64,9 +64,12 @@ public class UpdateDuplicateArgsWarningWorker extends UpdateWarningWorker {
     EnumWikipedia wiki = getWikipedia();
     int lastCount = 0;
     Stats stats = new Stats();
+    UpdateDuplicateArgsWarningTools tools = new UpdateDuplicateArgsWarningTools(
+        wiki, this, true, automaticEdit);
+    tools.setUsePurge(false);
     try {
       if (!useList) {
-        listWarningPages();
+        listWarningPages(tools);
 
         // Ask for confirmation
         if (getWindow() != null) {
@@ -87,8 +90,6 @@ public class UpdateDuplicateArgsWarningWorker extends UpdateWarningWorker {
       }
 
       // Working with sublists
-      UpdateDuplicateArgsWarningTools tools = new UpdateDuplicateArgsWarningTools(
-          wiki, this, true, automaticEdit);
       tools.setContentsAvailable(contentsAvailable);
       tools.prepareErrorsMap();
       if (simulation) {
@@ -157,9 +158,12 @@ public class UpdateDuplicateArgsWarningWorker extends UpdateWarningWorker {
 
   /**
    * Generate the list of warning pages.
+   * 
+   * @param tools Update warning tools.
+   * @throws APIException
    */
   @Override
-  protected void listWarningPages() throws APIException {
+  protected void listWarningPages(UpdateWarningTools tools) throws APIException {
     Map<String, Page> tmpWarningPages = new HashMap<String, Page>();
 
     // Retrieve talk pages including a warning
@@ -168,7 +172,7 @@ public class UpdateDuplicateArgsWarningWorker extends UpdateWarningWorker {
         tmpWarningPages);
 
     // Retrieve articles listed for duplicate arguments errors in Check Wiki
-    retrieveCheckWikiPages(524, tmpWarningPages); // Duplicate template arguments
+    retrieveCheckWikiPages(524, tmpWarningPages, tools); // Duplicate template arguments
 
     // Fill up the list
     warningPages.clear();

@@ -9,6 +9,7 @@ package org.wikipediacleaner.api.request;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -16,6 +17,7 @@ import java.util.Map;
 import org.wikipediacleaner.api.APIException;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.Page;
+import org.wikipediacleaner.api.data.Page.RelatedPages;
 
 
 /**
@@ -85,6 +87,26 @@ public class ApiCategoriesRequest extends ApiPropertiesRequest {
   public ApiCategoriesRequest(EnumWikipedia wiki, ApiCategoriesResult result) {
     super(wiki);
     this.result = result;
+  }
+
+  /**
+   * Retrieve the categories of a page.
+   * 
+   * @param page Page.
+   * @throws APIException
+   */
+  public void retrieveCategories(Page page) throws APIException {
+    Map<String, String> properties = getProperties(ACTION_QUERY, result.getFormat());
+    properties.put(PROPERTY_PROP, PROPERTY_PROP_CATEGORIES);
+    properties.put(PROPERTY_CONTINUE, PROPERTY_CONTINUE_DEFAULT);
+    properties.put(PROPERTY_LIMIT, LIMIT_MAX);
+    properties.put(PROPERTY_TITLES, page.getTitle());
+    List<Page> list = new ArrayList<Page>();
+    while (result.executeCategories(properties, page, list)) {
+      //
+    }
+    Collections.sort(list);
+    page.setRelatedPages(RelatedPages.CATEGORIES, list);
   }
 
   /**

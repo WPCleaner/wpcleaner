@@ -76,9 +76,10 @@ public class UpdateISBNWarningWorker extends UpdateWarningWorker {
     int lastCount = 0;
     Stats stats = new Stats();
     Map<String, List<String>> errors = null;
+    UpdateISBNWarningTools tools = new UpdateISBNWarningTools(wiki, this, true, automaticEdit);
     try {
       if (!useList) {
-        listWarningPages();
+        listWarningPages(tools);
 
         // Ask for confirmation
         if (getWindow() != null) {
@@ -99,7 +100,6 @@ public class UpdateISBNWarningWorker extends UpdateWarningWorker {
       }
 
       // Working with sublists
-      UpdateISBNWarningTools tools = new UpdateISBNWarningTools(wiki, this, true, automaticEdit);
       tools.setContentsAvailable(contentsAvailable);
       tools.prepareErrorsMap();
       if (simulation) {
@@ -170,9 +170,12 @@ public class UpdateISBNWarningWorker extends UpdateWarningWorker {
 
   /**
    * Generate the list of warning pages.
+   * 
+   * @param tools Update warning tools.
+   * @throws APIException
    */
   @Override
-  protected void listWarningPages() throws APIException {
+  protected void listWarningPages(UpdateWarningTools tools) throws APIException {
     Map<String, Page> tmpWarningPages = new HashMap<String, Page>();
 
     // Retrieve talk pages including a warning
@@ -186,10 +189,10 @@ public class UpdateISBNWarningWorker extends UpdateWarningWorker {
         tmpWarningPages);
 
     // Retrieve articles listed for ISBN errors in Check Wiki
-    retrieveCheckWikiPages(70, tmpWarningPages); // Incorrect length
-    retrieveCheckWikiPages(71, tmpWarningPages); // Incorrect X
-    retrieveCheckWikiPages(72, tmpWarningPages); // Incorrect ISBN-10
-    retrieveCheckWikiPages(73, tmpWarningPages); // Incorrect ISBN-13
+    retrieveCheckWikiPages(70, tmpWarningPages, null); // Incorrect length
+    retrieveCheckWikiPages(71, tmpWarningPages, null); // Incorrect X
+    retrieveCheckWikiPages(72, tmpWarningPages, null); // Incorrect ISBN-10
+    retrieveCheckWikiPages(73, tmpWarningPages, null); // Incorrect ISBN-13
 
     // Retrieve articles already reported
     retrieveInternalLinks(

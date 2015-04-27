@@ -88,9 +88,10 @@ public class UpdateDabWarningWorker extends UpdateWarningWorker {
     int lastCount = 0;
 
     Stats stats = new Stats();
+    UpdateDabWarningTools tools = new UpdateDabWarningTools(wikipedia, this, true, automaticEdit);
     try {
       if (!useList) {
-        listWarningPages();
+        listWarningPages(tools);
 
         // Ask for confirmation
         if (getWindow() != null) {
@@ -113,7 +114,6 @@ public class UpdateDabWarningWorker extends UpdateWarningWorker {
       }
 
       // Working with sublists
-      UpdateDabWarningTools tools = new UpdateDabWarningTools(wikipedia, this, true, automaticEdit);
       tools.setContentsAvailable(contentsAvailable);
       tools.setLinksAvailable(linksAvailable);
       tools.setDabInformationAvailable(dabInformationAvailable);
@@ -189,9 +189,12 @@ public class UpdateDabWarningWorker extends UpdateWarningWorker {
 
   /**
    * Generate the list of warning pages.
+   * 
+   * @param tools Update warning tools.
+   * @throws APIException
    */
   @Override
-  protected void listWarningPages() throws APIException {
+  protected void listWarningPages(UpdateWarningTools tools) throws APIException {
     Map<String, Page> tmpWarningPages = new HashMap<String, Page>();
 
     // Retrieve talk pages including a warning

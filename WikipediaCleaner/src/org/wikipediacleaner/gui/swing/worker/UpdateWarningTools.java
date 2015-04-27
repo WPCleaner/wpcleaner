@@ -13,10 +13,12 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -79,11 +81,17 @@ public abstract class UpdateWarningTools {
   /** True if contents is already available in pages. */
   private boolean contentsAvailable;
 
+  /** True if purge page cache should be attempted when errors are not found. */
+  private boolean usePurge;
+
   /** True if this is a simulation. */
   private boolean simulation;
 
   /** Map for errors. */
   private Map<String, List<String>> errorsMap;
+
+  /** List of articles titles supposed to have the error. */
+  private Set<String> articles;
 
   /**
    * @param wiki Wiki.
@@ -102,6 +110,7 @@ public abstract class UpdateWarningTools {
     this.window = window;
     this.createWarning = createWarning;
     this.automaticEdit = automaticEdit;
+    this.usePurge = false;
     this.section0 = useSection0();
     this.api = APIFactory.getAPI();
   }
@@ -118,6 +127,13 @@ public abstract class UpdateWarningTools {
    */
   public boolean getContentsAvailable() {
     return contentsAvailable;
+  }
+
+  /**
+   * @param purge True if purge page cache should be attempted.
+   */
+  public void setUsePurge(boolean purge) {
+    this.usePurge = purge;
   }
 
   /**
@@ -205,7 +221,7 @@ public abstract class UpdateWarningTools {
           (modifiers != null) ? modifiers.get(page.getTitle()) : null,
           stats);
       if (updated) {
-        log.debug("Page " + page.getTitle() + " has been updated.");
+        // log.debug("Page " + page.getTitle() + " has been updated.");
       }
       if (stats != null) {
         stats.addAnalyzedPage(page);
@@ -384,7 +400,7 @@ public abstract class UpdateWarningTools {
             stats.addRemovedWarning(pageAnalysis.getPage());
           }
         } else {
-          //purgePage(pageAnalysis.getPage());
+          purgeArticle(pageAnalysis.getPage());
         }
       }
     } else {
@@ -428,7 +444,7 @@ public abstract class UpdateWarningTools {
             stats.addRemovedWarning(pageAnalysis.getPage());
           }
         } else {
-          //purgePage(pageAnalysis.getPage());
+          purgeArticle(pageAnalysis.getPage());
         }
       }
     } else {
@@ -1496,6 +1512,44 @@ public abstract class UpdateWarningTools {
    */
   protected void purgePage(Page page) throws APIException {
     api.purgePageCache(wiki, page);
+  }
+
+  /**
+   * @param articles List of articles.
+   */
+  void setArticles(Set<String> articles) {
+    this.articles = new HashSet<String>();
+    if (articles != null) {
+      this.articles.addAll(articles);
+    }
+  }
+
+  /**
+   * @param article Article.
+   */
+  void addArticle(String article) {
+    if (articles == null) {
+      articles = new HashSet<String>();
+    }
+    articles.add(article);
+  }
+
+  /**
+   * Purge an article  when error is not found but article is still listed.
+   * 
+   * @param page Article to purge.
+   * @throws APIException
+   */
+  protected void purgeArticle(Page page) throws APIException {
+    if (!usePurge) {
+      return;
+    }
+    if ((page == null) || (articles == null)) {
+      return;
+    }
+    if (articles.contains(page.getTitle())) {
+      api.purgePageCache(wiki, page);
+    }
   }
 
   /**
