@@ -7,12 +7,18 @@
 
 package org.wikipediacleaner.gui.swing.bot;
 
+import java.awt.Component;
+import java.awt.Point;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.beans.EventHandler;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.ImageIcon;
+import javax.swing.JMenuItem;
+import javax.swing.JPopupMenu;
 import javax.swing.JTable;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableColumn;
@@ -21,9 +27,11 @@ import javax.swing.table.TableColumnModel;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithm;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithms;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
+import org.wikipediacleaner.gui.swing.basic.Utilities;
 import org.wikipediacleaner.gui.swing.component.BooleanIconCellRenderer;
 import org.wikipediacleaner.gui.swing.component.IconCellRenderer;
 import org.wikipediacleaner.i18n.GT;
+import org.wikipediacleaner.images.EnumImageSize;
 
 
 /**
@@ -205,12 +213,40 @@ public class BotCWTableModel extends AbstractTableModel {
    * @param e Mouse event.
    */
   public void mouseClicked(MouseEvent e) {
-    if ((e != null) && (e.getClickCount() == 1)) {
-      JTable target = (JTable) e.getSource();
-      int row = target.rowAtPoint(e.getPoint());
-      int column = target.columnAtPoint(e.getPoint());
-      int modelRow = target.convertRowIndexToModel(row);
-      int modelColumn = target.convertColumnIndexToModel(column);
+    if (e == null) {
+      return;
+    }
+
+    // Extract information
+    int count = e.getClickCount();
+    JTable target = (JTable) e.getSource();
+    int row = target.rowAtPoint(e.getPoint());
+    int column = target.columnAtPoint(e.getPoint());
+    int modelRow = target.convertRowIndexToModel(row);
+    int modelColumn = target.convertColumnIndexToModel(column);
+
+    // Act depending on the button clicked
+    switch (e.getButton()) {
+    case MouseEvent.BUTTON1:
+      cellClickedLeft(count, modelRow, modelColumn);
+      break;
+
+    case MouseEvent.BUTTON3:
+      cellClickedRight(target, e.getPoint());
+      break;
+    }
+  }
+
+  /**
+   * Called when user left clicks on the table.
+   * 
+   * @param count Number of clicks.
+   * @param modelRow Row number for the model.
+   * @param modelColumn Column number for the model.
+   */
+  private void cellClickedLeft(
+      int count, int modelRow, int modelColumn) {
+    if (count == 1) {
       CheckErrorAlgorithm algorithm = getAlgorithm(modelRow);
       List<CheckErrorAlgorithm> list = null;
       switch (modelColumn) {
@@ -230,6 +266,119 @@ public class BotCWTableModel extends AbstractTableModel {
         fireTableCellUpdated(modelRow, modelColumn);
       }
     }
+  }
+
+  /**
+   * Called when user right clicks on the table.
+   * 
+   * @param invoker Invoker.
+   * @param point Position of the click.
+   */
+  private void cellClickedRight(Component invoker, Point point) {
+    JPopupMenu menu = new JPopupMenu();
+    JMenuItem item = null;
+    ImageIcon icon = null;
+
+    icon = Utilities.getImageIcon(
+        "commons-nuvola-apps-kcmsystem.png",
+        EnumImageSize.SMALL);
+    item = new JMenuItem(
+        GT._("Activate automatic fixing for all algorithms"),
+        icon);
+    item.addActionListener(EventHandler.create(
+        ActionListener.class, this, "addAllFixAlgorithms"));
+    menu.add(item);
+    item = new JMenuItem(
+        GT._("Deactivate automatic fixing for all algorithms"),
+        icon);
+    item.addActionListener(EventHandler.create(
+        ActionListener.class, this, "removeAllFixAlgorithms"));
+    menu.add(item);
+    item = new JMenuItem(
+        GT._("Reverse the selection"),
+        icon);
+    item.addActionListener(EventHandler.create(
+        ActionListener.class, this, "reverseFixAlgorithms"));
+    menu.add(item);
+
+    menu.addSeparator();
+    icon = Utilities.getImageIcon(
+        "gnome-logviewer.png",
+        EnumImageSize.SMALL);
+    item = new JMenuItem(
+        GT._("Use the list of pages of each algorithm"),
+        icon);
+    item.addActionListener(EventHandler.create(
+        ActionListener.class, this, "addAllListAlgorithms"));
+    menu.add(item);
+    item = new JMenuItem(
+        GT._("Use no list of pages"),
+        icon);
+    item.addActionListener(EventHandler.create(
+        ActionListener.class, this, "removeAllListAlgorithms"));
+    menu.add(item);
+    item = new JMenuItem(
+        GT._("Reverse the selection"),
+        icon);
+    item.addActionListener(EventHandler.create(
+        ActionListener.class, this, "reverseListAlgorithms"));
+    menu.add(item);
+
+    menu.show(invoker, point.x, point.y);
+  }
+
+  /**
+   * Select all algorithms for fixing errors.
+   */
+  public void addAllFixAlgorithms() {
+    setFixAlgorithms(getAlgorithms());
+  }
+
+  /**
+   * Select no algorithms for fixing errors.
+   */
+  public void removeAllFixAlgorithms() {
+    setFixAlgorithms(null);
+  }
+
+  /**
+   * Reverse the selection of algorithms for fixing errors.
+   */
+  public void reverseFixAlgorithms() {
+    List<CheckErrorAlgorithm> tmpAlgorithms = new ArrayList<CheckErrorAlgorithm>();
+    for (CheckErrorAlgorithm algorithm : getAlgorithms()) {
+      if (!fixAlgorithms.contains(algorithm)) {
+        tmpAlgorithms.add(algorithm);
+      }
+    }
+    setFixAlgorithms(tmpAlgorithms);
+  }
+
+  /**
+   * Select all algorithms for listing errors.
+   */
+  public void addAllListAlgorithms() {
+    setListAlgorithms(getAlgorithms());
+  }
+
+  /**
+   * Select no algorithms for listing errors.
+   */
+  public void removeAllListAlgorithms() {
+    setListAlgorithms(null);
+  }
+
+  /**
+   * Reverse the selection of algorithms for listing errors.
+   */
+  public void reverseListAlgorithms() {
+    List<CheckErrorAlgorithm> tmpAlgorithms = new ArrayList<CheckErrorAlgorithm>();
+    for (CheckErrorAlgorithm algorithm : getAlgorithms()) {
+      if (!listAlgorithms.contains(algorithm)) {
+        tmpAlgorithms.add(algorithm);
+      }
+    }
+    setListAlgorithms(tmpAlgorithms);
   }
 
   /**
