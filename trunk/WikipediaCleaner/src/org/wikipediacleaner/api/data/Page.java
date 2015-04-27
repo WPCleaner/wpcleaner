@@ -33,6 +33,7 @@ public class Page implements Comparable<Page> {
    */
   public static enum RelatedPages {
     BACKLINKS,
+    CATEGORIES,
     CATEGORY_MEMBERS,
     EMBEDDED_IN,
     SIMILAR_PAGES;

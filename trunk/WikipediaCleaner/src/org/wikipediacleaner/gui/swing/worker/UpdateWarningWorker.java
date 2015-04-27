@@ -98,9 +98,10 @@ public abstract class UpdateWarningWorker extends BasicWorker {
   /**
    * Generate the list of warning pages.
    * 
+   * @param tools Update warning tools.
    * @throws APIException
    */
-  protected abstract void listWarningPages() throws APIException;
+  protected abstract void listWarningPages(UpdateWarningTools tools) throws APIException;
 
   /**
    * Retrieve pages with a warning on their talk page.
@@ -171,10 +172,12 @@ public abstract class UpdateWarningWorker extends BasicWorker {
    * 
    * @param errorNumber Error number.
    * @param pages Map of (title,page) to complete.
+   * @param tools Update warning tools if the pages should be added as articles.
    */
   protected void retrieveCheckWikiPages(
       int errorNumber,
-      Map<String, Page> pages) {
+      Map<String, Page> pages,
+      UpdateWarningTools tools) {
     CheckWiki cw = APIFactory.getCheckWiki();
     EnumWikipedia wiki = getWikipedia();
     CheckErrorAlgorithm algorithm = CheckErrorAlgorithms.getAlgorithm(wiki, errorNumber);
@@ -185,6 +188,9 @@ public abstract class UpdateWarningWorker extends BasicWorker {
         for (int pageNum = 0; pageNum < error.getPageCount(); pageNum++) {
           Page page = error.getPage(pageNum);
           addPage(page, pages);
+          if (tools != null) {
+            tools.addArticle(page.getTitle());
+          }
         }
       }
     } catch (APIException e) {

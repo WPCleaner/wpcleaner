@@ -183,13 +183,26 @@ public interface API {
   // ==========================================================================
 
   /**
+   * Retrieves the categories of a page.
+   * (<code>action=query</code>, <code>prop=categories</code>).
+   * 
+   * @param wiki Wiki.
+   * @param page Page.
+   * @throws APIException
+   * @see <a href="https://www.mediawiki.org/wiki/API:Categories">API:Categories</a>
+   */
+  public void retrieveCategories(
+      EnumWikipedia wiki,
+      Page page) throws APIException;
+
+  /**
    * Retrieves the informations of a list of pages.
    * (<code>action=query</code>, <code>prop=info</code>).
    * 
    * @param wiki Wiki.
    * @param pages List of pages.
    * @throws APIException
-   * @see <a href="http://www.mediawiki.org/wiki/API:Properties#info_.2F_in">API:Properties#info</a>
+   * @see <a href="https://www.mediawiki.org/wiki/API:Info">API:Info</a>
    */
   public void retrieveInfo(
       EnumWikipedia wiki,
