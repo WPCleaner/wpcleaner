@@ -9,6 +9,7 @@
 package org.wikipediacleaner.gui.swing.worker;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -39,7 +40,7 @@ import org.wikipediacleaner.i18n.GT;
 public abstract class UpdateWarningWorker extends BasicWorker {
 
   /** List of pages. */
-  protected final List<Page> warningPages;
+  protected final LinkedList<Page> warningPages;
 
   /** True if the list of pages should be used. */
   protected final boolean useList;
@@ -66,7 +67,7 @@ public abstract class UpdateWarningWorker extends BasicWorker {
       EnumWikipedia wiki, BasicWindow window,
       String start, boolean simulation) {
     super(wiki, window);
-    this.warningPages = new ArrayList<Page>();
+    this.warningPages = new LinkedList<Page>();
     this.useList = false;
     this.start = (start != null) ? start.trim() : "";
     this.contentsAvailable = false;
@@ -86,7 +87,7 @@ public abstract class UpdateWarningWorker extends BasicWorker {
       List<Page> pages, boolean contentsAvailable,
       boolean automaticEdit) {
     super(wiki, window);
-    this.warningPages = new ArrayList<Page>(pages);
+    this.warningPages = new LinkedList<Page>(pages);
     this.useList = true;
     this.start = "";
     this.contentsAvailable = contentsAvailable;

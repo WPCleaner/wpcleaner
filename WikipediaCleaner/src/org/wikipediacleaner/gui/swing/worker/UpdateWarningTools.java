@@ -14,6 +14,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -1530,13 +1531,13 @@ public abstract class UpdateWarningTools {
    * @param talkPages True if talk pages should be included.
    * @return Sub list of pages.
    */
-  public List<Page> extractSublist(List<Page> list, int max, boolean talkPages) {
+  public List<Page> extractSublist(LinkedList<Page> list, int max, boolean talkPages) {
     if (list == null) {
       return null;
     }
     List<Page> sublist = new ArrayList<Page>(Math.min(max, list.size()));
     while ((sublist.size() < max) && !list.isEmpty()) {
-      Page page = list.remove(0);
+      Page page = list.removeFirst();
       if (talkPages || page.isArticle()) {
         sublist.add(page);
       }
