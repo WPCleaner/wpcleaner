@@ -207,11 +207,13 @@ public class BotCWTableModel extends AbstractTableModel {
   public void mouseClicked(MouseEvent e) {
     if ((e != null) && (e.getClickCount() == 1)) {
       JTable target = (JTable) e.getSource();
-      int row = target.getSelectedRow();
-      int column = target.getSelectedColumn();
-      CheckErrorAlgorithm algorithm = getAlgorithm(row);
+      int row = target.rowAtPoint(e.getPoint());
+      int column = target.columnAtPoint(e.getPoint());
+      int modelRow = target.convertRowIndexToModel(row);
+      int modelColumn = target.convertColumnIndexToModel(column);
+      CheckErrorAlgorithm algorithm = getAlgorithm(modelRow);
       List<CheckErrorAlgorithm> list = null;
-      switch (column) {
+      switch (modelColumn) {
       case COLUMN_FIX:
         list = fixAlgorithms;
         break;
@@ -225,7 +227,7 @@ public class BotCWTableModel extends AbstractTableModel {
         } else {
           list.add(algorithm);
         }
-        fireTableCellUpdated(row, column);
+        fireTableCellUpdated(modelRow, modelColumn);
       }
     }
   }
