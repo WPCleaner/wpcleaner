@@ -104,7 +104,8 @@ public class CheckErrorAlgorithm524 extends CheckErrorAlgorithmBase {
             duplicates.add(newParam);
 
             // Compute actual area
-            int paramBegin = existingParam.param.getPipeIndex();
+            int pipeBefore = existingParam.param.getPipeIndex();
+            int paramBegin = pipeBefore;
             Parameter nextParam = template.getParameter(existingParam.numParam + 1);
             int paramEnd = nextParam.getPipeIndex();
             boolean existingStartNewLine = false;
@@ -193,11 +194,41 @@ public class CheckErrorAlgorithm524 extends CheckErrorAlgorithmBase {
               }
             }
 
+            // Suggestions to remove the parameter
             if ((existingValue != null) && (existingValue.equals(value))) {
               errorResult.addReplacement("", automatic);
             } else if (("".equals(existingValue))) {
               errorResult.addReplacement("", automatic);
             }
+
+            // Suggestions to comment the parameter
+            if ((existingValue != null) && (!"".equals(existingValue))) {
+              boolean numericName = true;
+              for (int i = 0; i < paramName.length(); i++) {
+                if (!Character.isDigit(paramName.charAt(i))) {
+                  numericName = false;
+                }
+              }
+              if (!numericName) {
+                StringBuilder replacement = new StringBuilder();
+                if (paramBegin < pipeBefore) {
+                  replacement.append(contents.substring(paramBegin, pipeBefore));
+                }
+                replacement.append("<!--");
+                tmpIndex = paramEnd;
+                while ((tmpIndex > pipeBefore) &&
+                       Character.isWhitespace(contents.charAt(tmpIndex - 1))) {
+                  tmpIndex--;
+                }
+                replacement.append(contents.substring(pipeBefore, tmpIndex));
+                replacement.append("-->");
+                if (paramEnd > tmpIndex) {
+                  replacement.append(contents.substring(tmpIndex, paramEnd));
+                }
+                errorResult.addReplacement(replacement.toString(), GT._("Comment"));
+              }
+            }
+
             errors.add(errorResult);
           }
         }
