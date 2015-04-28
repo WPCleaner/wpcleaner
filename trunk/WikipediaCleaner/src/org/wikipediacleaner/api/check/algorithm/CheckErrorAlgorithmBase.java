@@ -77,6 +77,16 @@ public abstract class CheckErrorAlgorithmBase implements CheckErrorAlgorithm {
   }
 
   /**
+   * @return True if the error has a list of pages.
+   */
+  public boolean hasList() {
+    if (getErrorNumber() < MAX_ERROR_NUMBER_WITH_LIST) {
+      return true;
+    }
+    return hasSpecialList();
+  }
+
+  /**
    * @return True if the error has a special list of pages.
    */
   public boolean hasSpecialList() {
