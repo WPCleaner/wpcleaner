@@ -14,6 +14,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.beans.EventHandler;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.swing.ImageIcon;
@@ -25,6 +26,7 @@ import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithm;
+import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmComparator;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithms;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.gui.swing.basic.Utilities;
@@ -392,6 +394,9 @@ public class BotCWTableModel extends AbstractTableModel {
    * @return Algorithms selected for fixing errors.
    */
   public List<CheckErrorAlgorithm> getFixAlgorithms() {
+    if (fixAlgorithms != null) {
+      Collections.sort(fixAlgorithms, new CheckErrorAlgorithmComparator());
+    }
     return fixAlgorithms;
   }
 
@@ -410,6 +415,9 @@ public class BotCWTableModel extends AbstractTableModel {
    * @return Algorithms selected for listing errors.
    */
   public List<CheckErrorAlgorithm> getListAlgorithms() {
+    if (listAlgorithms != null) {
+      Collections.sort(listAlgorithms, new CheckErrorAlgorithmComparator());
+    }
     return listAlgorithms;
   }
 
