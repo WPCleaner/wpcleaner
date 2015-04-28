@@ -25,6 +25,7 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -56,7 +57,6 @@ import javax.swing.SpinnerNumberModel;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 import javax.swing.WindowConstants;
-import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import org.lobobrowser.html.HtmlRendererContext;
@@ -151,8 +151,8 @@ public class CheckWikiWindow extends OnePageWindow implements CheckWikiListener 
         null);
   }
 
-  /* (non-Javadoc)
-   * @see org.wikipediacleaner.gui.swing.basic.BasicWindow#getTitle()
+  /**
+   * @return Window title.
    */
   @Override
   public String getTitle() {
@@ -215,12 +215,8 @@ public class CheckWikiWindow extends OnePageWindow implements CheckWikiListener 
     constraints.weighty = 1;
     contentPane = new JCloseableTabbedPane();
     contentPane.setPreferredSize(new Dimension(900, 600));
-    contentPane.addChangeListener(new ChangeListener() {
-      
-      public void stateChanged(@SuppressWarnings("unused") ChangeEvent e) {
-        displayErrorDescription();
-      }
-    });
+    contentPane.addChangeListener(EventHandler.create(
+        ChangeListener.class, this, "displayErrorDescription"));
     panel.add(contentPane, constraints);
     constraints.gridy++;
 
@@ -811,8 +807,8 @@ public class CheckWikiWindow extends OnePageWindow implements CheckWikiListener 
     return panel;
   }
   
-  /* (non-Javadoc)
-   * @see org.wikipediacleaner.gui.swing.PageWindow#afterFinishedReloadWorker()
+  /**
+   * Callback called at the end of the Reload Worker.
    */
   @Override
   protected void afterFinishedReloadWorker() {
@@ -848,7 +844,7 @@ public class CheckWikiWindow extends OnePageWindow implements CheckWikiListener 
             modelAllErrors.addElement(error);
           }
         }
-        if (modelAllErrors.getSize() > 1) {
+        if (!getPagesWithSeveralErrors().isEmpty()) {
           modelAllErrors.insertElementAt(GT._("Pages with several errors"), 0);
           if (selectedIndex > 0) {
             selectedIndex++;
@@ -860,6 +856,28 @@ public class CheckWikiWindow extends OnePageWindow implements CheckWikiListener 
         listAllErrors.setSelectedIndex(selectedIndex);
       }
     }
+  }
+
+  /**
+   * @return List of pages with several errors.
+   */
+  private List<String> getPagesWithSeveralErrors() {
+    Set<String> pagesWithMultipleErrors = new HashSet<String>();
+    Set<String> pagesWithError = new HashSet<String>();
+    for (CheckError error : errors) {
+      for (int pageNumber = 0; pageNumber < error.getPageCount(); pageNumber++) {
+        Page page = error.getPage(pageNumber);
+        String title = page.getTitle();
+        if (pagesWithError.contains(title)) {
+          pagesWithMultipleErrors.add(title);
+        } else {
+          pagesWithError.add(title);
+        }
+      }
+    }
+    List<String> result = new ArrayList<String>(pagesWithMultipleErrors);
+    Collections.sort(result);
+    return result;
   }
 
   /**
@@ -900,23 +918,7 @@ public class CheckWikiWindow extends OnePageWindow implements CheckWikiListener 
       displayErrorDescription();
 
       if (selection instanceof String) {
-        List<String> listTmp = new ArrayList<String>();
-        for (CheckError error : errors) {
-          int nbPages = error.getPageCount();
-          for (int numPage = 0; numPage < nbPages; numPage++) {
-            Page page = error.getPage(numPage);
-            listTmp.add(page.getTitle());
-          }
-        }
-        Collections.sort(listTmp);
-        List<String> listErrorPages = new ArrayList<String>();
-        for (int listPosition = 1; listPosition < listTmp.size(); listPosition++) {
-          if (listTmp.get(listPosition - 1).equals(listTmp.get(listPosition))) {
-            if (!listErrorPages.contains(listTmp.get(listPosition))) {
-              listErrorPages.add(listTmp.get(listPosition));
-            }
-          }
-        }
+        List<String> listErrorPages = getPagesWithSeveralErrors();
         for (String page : listErrorPages) {
           CheckErrorPage errorPage = new CheckErrorPage(DataManager.getPage(getWikipedia(), page, null, null, null), null);
           modelPages.addElement(errorPage);
