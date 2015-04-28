@@ -91,7 +91,7 @@ public class CheckWikiContentPanel
   final CheckWikiWindow window;
   final JTabbedPane pane;
   final Page page;
-  private final CheckError error;
+  private final List<CheckError> errors;
 
   private JList listErrors;
   private DefaultListModel modelErrors;
@@ -103,16 +103,19 @@ public class CheckWikiContentPanel
   private MWPane textPage;
 
   /**
+   * @param window Enclosing window.
+   * @param pane Enclosing pane.
    * @param page Page.
+   * @param errors List of errors.
    */
   CheckWikiContentPanel(
       CheckWikiWindow window, JTabbedPane pane,
-      Page page, CheckError error) {
+      Page page, List<CheckError> errors) {
     super(new GridBagLayout());
     this.window = window;
     this.pane = pane;
     this.page = page;
-    this.error = error;
+    this.errors = errors;
     setName(page.getTitle());
   }
 
@@ -283,7 +286,7 @@ public class CheckWikiContentPanel
       buttonSend.setEnabled((textPage != null) && (textPage.isModified()));
     }
     if (buttonMarkAsFixed != null) {
-      buttonMarkAsFixed.setEnabled(error != null);
+      buttonMarkAsFixed.setEnabled((errors != null) && (errors.size() == 1));
     }
   }
 
@@ -299,12 +302,16 @@ public class CheckWikiContentPanel
     // Deleted page
     if (Boolean.FALSE.equals(page.isExisting())) {
       window.displayWarning(GT._("The page {0} doesn''t exist on Wikipedia", page.getTitle()));
-      if (error != null) {
-        error.remove(page);
+      if (errors != null) {
+        for (CheckError error : errors) {
+          error.remove(page);
+        }
       }
       pane.remove(this);
-      if (error != null) {
-        OnePageWindow.markPageAsFixed(error.getAlgorithm().getErrorNumberString(), page);
+      if (errors != null) {
+        for (CheckError error : errors) {
+          OnePageWindow.markPageAsFixed(error.getAlgorithm().getErrorNumberString(), page);
+        }
       }
       window.actionSelectErrorType();
       return;
@@ -325,37 +332,54 @@ public class CheckWikiContentPanel
         modelErrors.addElement(tmpError);
         initialErrors.add(tmpError);
         errorCount++;
-        if ((error != null) &&
-            (error.getAlgorithm() != null) &&
-            (error.getAlgorithm().getErrorNumber()== tmpError.getAlgorithm().getErrorNumber())) {
-          errorFound = true;
+        for (CheckError error : errors) {
+          CheckErrorAlgorithm algorithm = error.getAlgorithm();
+          if ((algorithm != null) &&
+              (algorithm.getErrorNumber()== tmpError.getAlgorithm().getErrorNumber())) {
+            errorFound = true;
+          }
         }
       }
     }
 
     // Further analysis if expected error is not found
-    if ((error != null) &&
-        (error.getAlgorithm() != null) &&
+    if ((errors != null) &&
+        !errors.isEmpty() &&
         (errorFound == false)) {
-      CheckErrorAlgorithm algorithm = error.getAlgorithm();
-      int errorNumber = algorithm.getErrorNumber();
       int answer = JOptionPane.NO_OPTION;
 
       // Ask Check Wiki what errors are still detected
       List<CheckWikiDetection> detections = null;
-      boolean errorDetected = false;
-      if (errorNumber <= CheckErrorAlgorithm.MAX_ERROR_NUMBER_WITH_LIST) {
+      boolean shouldCheck = false;
+      for (CheckError error : errors) {
+        if (error.getErrorNumber() < CheckErrorAlgorithm.MAX_ERROR_NUMBER_WITH_LIST) {
+          shouldCheck = true;
+        }
+      }
+      if (shouldCheck) {
         CheckWiki checkWiki = APIFactory.getCheckWiki();
         detections = checkWiki.check(page);
       }
 
       // Check if the expected error is still detected
+      boolean errorDetected = false;
       if (detections != null) {
         for (CheckWikiDetection detection : detections) {
-          if (detection.getErrorNumber() == error.getErrorNumber()) {
-            errorDetected = true;
+          for (CheckError error : errors) {
+            if (detection.getErrorNumber() == error.getErrorNumber()) {
+              errorDetected = true;
+            }
           }
         }
+      }
+
+      // Construct a list of errors
+      StringBuilder txtErrors = new StringBuilder();
+      for (CheckError error : errors) {
+        if (txtErrors.length() > 0) {
+          txtErrors.append("-");
+        }
+        txtErrors.append(error.getErrorNumber());
       }
 
       // Inform user
@@ -375,7 +399,7 @@ public class CheckWikiContentPanel
             answer = window.displayYesNoAllWarning(GT._(
                 "The error n°{0} hasn''t been found on the page {1}.\n" +
                 "Do you want to mark it as fixed?",
-                new Object[] { error.getAlgorithm().getErrorNumberString(), page.getTitle() }));
+                new Object[] { txtErrors, page.getTitle() }));
           }
         }
       } else if (errorDetected) {
@@ -384,7 +408,7 @@ public class CheckWikiContentPanel
         DetectionPanel panel = new DetectionPanel(detections, null);
         panel.setMessage(GT._(
             "The error n°{0} hasn''t been detected in page {1}, but CheckWiki still reports it.",
-            new Object[] { error.getAlgorithm().getErrorNumberString(), page.getTitle() }));
+            new Object[] { txtErrors, page.getTitle() }));
         JOptionPane.showMessageDialog(
             window.getParentComponent(), panel,
             Version.PROGRAM, JOptionPane.WARNING_MESSAGE);
@@ -393,7 +417,7 @@ public class CheckWikiContentPanel
         // Inform user if Check Wiki doesn't detect the error anymore
         window.displayWarning(GT._(
             "The error n°{0} has already been fixed in page {1}.",
-            new Object[] { error.getAlgorithm().getErrorNumberString(), page.getTitle() }));
+            new Object[] { txtErrors, page.getTitle() }));
         answer = JOptionPane.YES_OPTION;
       }
 
@@ -414,8 +438,13 @@ public class CheckWikiContentPanel
         if (errorCount == 0) {
           pane.remove(this);
         }
-        error.remove(page);
-        OnePageWindow.markPageAsFixed(error.getAlgorithm().getErrorNumberString(), page);
+        for (CheckError error : errors) {
+          error.remove(page);
+        }
+        for (CheckError error : errors) {
+          OnePageWindow.markPageAsFixed(
+              error.getAlgorithm().getErrorNumberString(), page);
+        }
         window.actionSelectErrorType();
         if (errorCount == 0) {
           return;
@@ -514,17 +543,28 @@ public class CheckWikiContentPanel
    */
   private void actionMarkAsFixed() {
 
+    // Unique algorithm
+    CheckErrorAlgorithm algorithm = null;
+    CheckError error = null;
+    if ((errors != null) && (errors.size() == 1)) {
+      error = errors.get(0);
+      algorithm = error.getAlgorithm();
+    }
+    if ((error == null) || (algorithm == null)) {
+      return;
+    }
+
     // Ask for confirmation
     if (window.displayYesNoWarning(GT._(
         "Do you want to mark {0} as fixed for error n°{1}?",
-        new Object[] { page.getTitle(), Integer.toString(error.getErrorNumber())})) != JOptionPane.YES_OPTION) {
+        new Object[] { page.getTitle(), algorithm.getErrorNumberString() })) != JOptionPane.YES_OPTION) {
       return;
     }
 
     // Check if error is still present
     PageAnalysis pageAnalysis = page.getAnalysis(textPage.getText(), true);
     CheckErrorPage errorPage = CheckError.analyzeError(
-        error.getAlgorithm(), pageAnalysis);
+        algorithm, pageAnalysis);
     if ((errorPage.getResults() != null) &&
         (!errorPage.getResults().isEmpty())) {
       String message =
@@ -532,7 +572,7 @@ public class CheckWikiContentPanel
               "The error n°{0} is still found {1} time on the page.",
               "The error n°{0} is still found {1} times on the page.",
               errorPage.getResults().size(),
-              new Object[] { Integer.toString(error.getErrorNumber()), errorPage.getResults().size() }) +
+              new Object[] { algorithm.getErrorNumberString(), errorPage.getResults().size() }) +
           "\n" +
           GT._("Are you really sure that you want to mark it as fixed ?");
       if (window.displayYesNoWarning(message) != JOptionPane.YES_OPTION) {
@@ -542,7 +582,7 @@ public class CheckWikiContentPanel
       if (window.displayYesNoWarning(GT._(
           "The error n°{0} is still found on the page.\n" +
           "Are you really sure that you want to mark it as fixed ?",
-          Integer.toString(error.getErrorNumber()))) != JOptionPane.YES_OPTION) {
+          algorithm.getErrorNumberString())) != JOptionPane.YES_OPTION) {
         return;
       }
     } else {
@@ -550,7 +590,7 @@ public class CheckWikiContentPanel
       for (int i = 0; i < modelErrors.size(); i++) {
         if (modelErrors.elementAt(i) instanceof CheckErrorPage) {
           CheckErrorPage tmp = (CheckErrorPage) modelErrors.elementAt(i);
-          if (tmp.getAlgorithm() == error.getAlgorithm()) {
+          if (tmp.getAlgorithm() == algorithm) {
             window.displayWarning(GT._(
                 "You have already fixed this error by modifying the page.\n" +
                 "You should send your modifications, the page will be marked as fixed."));

@@ -90,6 +90,11 @@ public interface CheckErrorAlgorithm {
   public int getErrorNumber();
 
   /**
+   * @return True if the error has a list of pages.
+   */
+  public boolean hasList();
+
+  /**
    * @return True if the error has a special list of pages.
    */
   public boolean hasSpecialList();

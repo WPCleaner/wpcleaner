@@ -249,8 +249,7 @@ public class CheckWikiWindow extends OnePageWindow implements CheckWikiListener 
       boolean useAlgorithm = false;
       if (algorithm.isAvailable() &&
           CWConfigurationError.isPriorityFullyActive(algorithm.getPriority())) {
-        if ((algorithm.getErrorNumber() <= CheckErrorAlgorithm.MAX_ERROR_NUMBER_WITH_LIST) ||
-            algorithm.hasSpecialList()) {
+        if (algorithm.hasList()) {
           useAlgorithm = true;
         }
       }
@@ -409,8 +408,7 @@ public class CheckWikiWindow extends OnePageWindow implements CheckWikiListener 
         int errorNumber = algorithm.getErrorNumber();
         boolean useAlgorithm = false;
         if (errorNumber > 0) {
-          if ((errorNumber <= CheckErrorAlgorithm.MAX_ERROR_NUMBER_WITH_LIST) ||
-              algorithm.hasSpecialList()) {
+          if (algorithm.hasList()) {
             useAlgorithm = true;
           }
         }
@@ -798,11 +796,16 @@ public class CheckWikiWindow extends OnePageWindow implements CheckWikiListener 
   }
 
   /**
+   * @param pane Pane.
    * @param page Page.
+   * @param pageErrors Errors detected in the page.
    * @return Contents components.
    */
-  public CheckWikiContentPanel createContentsComponents(JTabbedPane pane, Page page, CheckError error) {
-    CheckWikiContentPanel panel = new CheckWikiContentPanel(this, pane, page, error);
+  public CheckWikiContentPanel createContentsComponents(
+      JTabbedPane pane, Page page,
+      List<CheckError> pageErrors) {
+    CheckWikiContentPanel panel = new CheckWikiContentPanel(
+        this, pane, page, pageErrors);
     panel.initialize();
     return panel;
   }
@@ -877,6 +880,26 @@ public class CheckWikiWindow extends OnePageWindow implements CheckWikiListener 
     }
     List<String> result = new ArrayList<String>(pagesWithMultipleErrors);
     Collections.sort(result);
+    return result;
+  }
+
+  /**
+   * @param pageTitle Page title.
+   * @return List of errors for the page.
+   */
+  List<CheckError> getErrorsForPage(String pageTitle) {
+    List<CheckError> result = new ArrayList<CheckError>();
+    if (pageTitle != null) {
+      for (CheckError error : errors) {
+        for (int pageNumber = 0; pageNumber < error.getPageCount(); pageNumber++) {
+          Page page = error.getPage(pageNumber);
+          String title = page.getTitle();
+          if (Page.areSameTitle(pageTitle, title)) {
+            result.add(error);
+          }
+        }
+      }
+    }
     return result;
   }
 
@@ -1080,6 +1103,7 @@ public class CheckWikiWindow extends OnePageWindow implements CheckWikiListener 
       selectedAlgorithms.clear();
       for (CheckErrorAlgorithm algorithm : allAlgorithms) {
         if (algorithm.isAvailable() &&
+            algorithm.hasList() &&
             CWConfigurationError.isPriorityFullyActive(algorithm.getPriority())) {
           selectedAlgorithms.add(algorithm);
         }
@@ -1132,6 +1156,7 @@ public class CheckWikiWindow extends OnePageWindow implements CheckWikiListener 
             int priority = Integer.parseInt(unit.substring(1));
             for (CheckErrorAlgorithm algorithm : allAlgorithms) {
               if (algorithm.isAvailable() &&
+                  algorithm.hasList() &&
                   CWConfigurationError.isPriorityActive(algorithm.getPriority()) &&
                   (priority == algorithm.getPriority())) {
                 selectedAlgorithms.add(algorithm);
@@ -1170,6 +1195,7 @@ public class CheckWikiWindow extends OnePageWindow implements CheckWikiListener 
             int errorNumber = Integer.parseInt(unit);
             for (CheckErrorAlgorithm algorithm : allAlgorithms) {
               if (algorithm.isAvailable() &&
+                  algorithm.hasList() &&
                   CWConfigurationError.isPriorityActive(algorithm.getPriority()) &&
                   (errorNumber == algorithm.getErrorNumber())) {
                 if (!selectedAlgorithms.contains(algorithm)) {
@@ -1307,7 +1333,9 @@ public class CheckWikiWindow extends OnePageWindow implements CheckWikiListener 
               Object errorSelected = modelAllErrors.getSelectedItem();
               final CheckWikiContentPanel contentPanel = createContentsComponents(
                   contentPane, page,
-                  (errorSelected instanceof CheckError) ? (CheckError) errorSelected : null);
+                  (errorSelected instanceof CheckError) ?
+                      Collections.singletonList((CheckError) errorSelected) :
+                      getErrorsForPage(page.getTitle()));
               contentPane.add(contentPanel);
               contentPane.setSelectedComponent(contentPanel);
               contentPanels.add(contentPanel);
@@ -1430,6 +1458,15 @@ public class CheckWikiWindow extends OnePageWindow implements CheckWikiListener 
           itError.remove();
           modelAllErrors.removeElement(error);
         }
+      }
+    }
+
+    // Remove list of pages with several errors if needed
+    if ((modelAllErrors.getSize() > 0) &&
+        !(modelAllErrors.getElementAt(0) instanceof CheckError)) {
+      List<String> severalErrors = getPagesWithSeveralErrors();
+      if ((severalErrors != null) && severalErrors.isEmpty()) {
+        modelAllErrors.removeElementAt(0);
       }
     }
 

@@ -75,10 +75,10 @@ public class CheckWiki {
       final CheckErrorAlgorithm algorithm, int errorLimit,
       final EnumWikipedia wiki,
       final List<CheckError> errors) throws APIException {
-    if (algorithm.getErrorNumber() > CheckErrorAlgorithm.MAX_ERROR_NUMBER_WITH_LIST) {
-      if (!algorithm.hasSpecialList()) {
-        return;
-      }
+    if (!algorithm.hasList()) {
+      return;
+    }
+    if (algorithm.hasSpecialList()) {
       List<Page> pages = algorithm.getSpecialList(wiki, errorLimit);
       CheckError.addCheckErrorPages(errors, wiki, algorithm.getErrorNumber(), pages);
       return;
