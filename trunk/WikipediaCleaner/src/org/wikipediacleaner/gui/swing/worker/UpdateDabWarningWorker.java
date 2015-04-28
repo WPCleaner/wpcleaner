@@ -7,6 +7,7 @@
 
 package org.wikipediacleaner.gui.swing.worker;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -106,11 +107,14 @@ public class UpdateDabWarningWorker extends UpdateWarningWorker {
           }
         }
 
-        // Sort the list of articles
-        Collections.sort(warningPages, PageComparator.getTitleFirstComparator());
+        // Sort the list of articles (trying a temporary ArrayList for performance)
         if (warningPages.isEmpty()) {
           return Integer.valueOf(0);
         }
+        List<Page> tmpWarningPages = new ArrayList<Page>(warningPages);
+        Collections.sort(tmpWarningPages, PageComparator.getTitleFirstComparator());
+        warningPages.clear();
+        warningPages.addAll(tmpWarningPages);
       }
 
       // Working with sublists
