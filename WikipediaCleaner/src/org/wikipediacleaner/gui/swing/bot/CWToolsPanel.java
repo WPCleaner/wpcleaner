@@ -28,6 +28,7 @@ import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
 import javax.swing.JTable;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.JToolBar;
 import javax.swing.ListSelectionModel;
@@ -125,6 +126,18 @@ public class CWToolsPanel extends BotToolsPanel {
     add(paneCWAutomaticFixing, constraints);
     constraints.gridy++;
     constraints.weighty = 0;
+
+    // Explanation
+    String txtExplanation =
+      GT._("To use Check Wiki bot tools:") + "\n" +
+      "  - " + GT._("Select algorithms for which automatic fixing will be applied") + "\n" +
+      "  - " + GT._("Select algorithms that will be used to create a list of pages to work on") + "\n" +
+      "  - " + GT._("Run the tools below");
+    JTextArea lblExplanation = new JTextArea(txtExplanation);
+    lblExplanation.setEditable(false);
+    lblExplanation.setBackground(getBackground());
+    add(lblExplanation, constraints);
+    constraints.gridy++;
 
     // Check box to decide if pages should be analyzed if not fixed
     chkCWAnalyze = Utilities.createJCheckBox(

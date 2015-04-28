@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2015-04-27 23:01+0200\n"
+"POT-Creation-Date: 2015-04-28 17:58+0200\n"
 "PO-Revision-Date: 2015-04-13 16:30+0000\n"
 "Last-Translator: Matěj S. <matejsuchanek97@gmail.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
@@ -1109,8 +1109,8 @@ msgid "Save"
 msgstr "Uložit"
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:253
-#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:109
-#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:173
+#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:110
+#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:186
 msgid "Automatic fixing for Check Wiki"
 msgstr "Automatické opravy chyb Check Wikipedia"
 
@@ -2321,35 +2321,35 @@ msgstr[0] "{0} stránka byla označena jako opravená pro jiný algoritmus"
 msgstr[1] "{0} stránky byly označeny jako opravené pro jiný algoritmus"
 msgstr[2] "{0} stránek bylo označeno jako opravené pro jiný algoritmus"
 
-#: org/wikipediacleaner/gui/swing/bot/BotCWTableModel.java:286
+#: org/wikipediacleaner/gui/swing/bot/BotCWTableModel.java:288
 #, fuzzy
 msgid "Activate automatic fixing for all algorithms"
 msgstr "Automatické opravy chyb Check Wikipedia"
 
-#: org/wikipediacleaner/gui/swing/bot/BotCWTableModel.java:292
+#: org/wikipediacleaner/gui/swing/bot/BotCWTableModel.java:294
 msgid "Deactivate automatic fixing for all algorithms"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/bot/BotCWTableModel.java:298
-#: org/wikipediacleaner/gui/swing/bot/BotCWTableModel.java:321
+#: org/wikipediacleaner/gui/swing/bot/BotCWTableModel.java:300
+#: org/wikipediacleaner/gui/swing/bot/BotCWTableModel.java:323
 #, fuzzy
 msgid "Reverse the selection"
 msgstr "Odstranit volbu"
 
-#: org/wikipediacleaner/gui/swing/bot/BotCWTableModel.java:309
+#: org/wikipediacleaner/gui/swing/bot/BotCWTableModel.java:311
 msgid "Use the list of pages of each algorithm"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/bot/BotCWTableModel.java:315
+#: org/wikipediacleaner/gui/swing/bot/BotCWTableModel.java:317
 #, fuzzy
 msgid "Use no list of pages"
 msgstr "Neformátovaný seznam názvů stránek"
 
-#: org/wikipediacleaner/gui/swing/bot/BotCWTableModel.java:496
+#: org/wikipediacleaner/gui/swing/bot/BotCWTableModel.java:504
 msgid "Description"
 msgstr "Popis"
 
-#: org/wikipediacleaner/gui/swing/bot/BotCWTableModel.java:502
+#: org/wikipediacleaner/gui/swing/bot/BotCWTableModel.java:510
 msgid "N°"
 msgstr "Č."
 
@@ -2403,47 +2403,64 @@ msgstr "Ve whitelistu chyby {0} byly nalezeny následující problémy:"
 msgid "Whitelists"
 msgstr "Whitelisty"
 
-#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:131
+#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:132
+msgid "To use Check Wiki bot tools:"
+msgstr ""
+
+#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:133
+msgid "Select algorithms for which automatic fixing will be applied"
+msgstr ""
+
+#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:134
+msgid ""
+"Select algorithms that will be used to create a list of pages to work on"
+msgstr ""
+
+#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:135
+msgid "Run the tools below"
+msgstr ""
+
+#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:144
 msgid "Analyze pages that couldn't be fixed by bot"
 msgstr "Analyzovat stránky, které nemohly být botem opraveny"
 
-#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:140
+#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:153
 msgid "Number of pages:"
 msgstr "Počet stránek:"
 
-#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:154
+#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:167
 msgid "Comment:"
 msgstr "Shrnutí"
 
-#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:181
+#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:194
 msgid "Mark errors already fixed"
 msgstr "Označit již opravené chyby"
 
-#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:189
+#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:202
 msgid "Check whitelists"
 msgstr "Zkontrolovat white listy"
 
-#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:197
+#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:210
 #, fuzzy
 msgid "Save selection"
 msgstr "Použít volbu"
 
-#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:205
+#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:218
 #, fuzzy
 msgid "Load selection"
 msgstr "Použít volbu"
 
-#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:246
+#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:259
 #, fuzzy
 msgid "You must select at least one algorithm for fixing errors"
 msgstr "Než se přihlásíte, musíte zvolit jazyk"
 
-#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:251
+#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:264
 #, fuzzy
 msgid "You must select at least one algorithm for listing errors"
 msgstr "Než se přihlásíte, musíte zvolit jazyk"
 
-#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:293
+#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:306
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiWindow.java:1089
 msgid "What is the name of the selection?"
 msgstr "Jaké je jméno výběru?"
