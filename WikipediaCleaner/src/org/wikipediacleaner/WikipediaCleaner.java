@@ -8,6 +8,9 @@
 package org.wikipediacleaner;
 
 import java.awt.Font;
+import java.awt.Toolkit;
+import java.awt.event.InputEvent;
+import java.awt.event.KeyEvent;
 import java.util.Locale;
 import java.util.logging.FileHandler;
 import java.util.logging.Handler;
@@ -15,11 +18,14 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 
+import javax.swing.InputMap;
+import javax.swing.KeyStroke;
 import javax.swing.RepaintManager;
 import javax.swing.UIDefaults;
 import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
 import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.text.DefaultEditorKit;
 
 import org.wikipediacleaner.api.constants.EnumLanguage;
 import org.wikipediacleaner.api.data.ISBNRange;
@@ -97,6 +103,17 @@ public class WikipediaCleaner {
           font = font.deriveFont((float) (font.getSize() + fontSize));
           defaults.put(key, font);
         }
+      }
+    }
+
+    // Manage copy/paste for OS X
+    int menuShortcut = Toolkit.getDefaultToolkit().getMenuShortcutKeyMask();
+    if (menuShortcut == InputEvent.META_DOWN_MASK) {
+      InputMap im = (InputMap) UIManager.get("TextField.focusInputMap");
+      if (im != null) {
+        im.put(KeyStroke.getKeyStroke(KeyEvent.VK_C, menuShortcut), DefaultEditorKit.copyAction);
+        im.put(KeyStroke.getKeyStroke(KeyEvent.VK_V, menuShortcut), DefaultEditorKit.pasteAction);
+        im.put(KeyStroke.getKeyStroke(KeyEvent.VK_X, menuShortcut), DefaultEditorKit.cutAction);
       }
     }
 
