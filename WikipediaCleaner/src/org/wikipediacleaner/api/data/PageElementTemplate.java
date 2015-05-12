@@ -495,19 +495,11 @@ public class PageElementTemplate extends PageElement {
       while ((spaces < parameter.length()) && (Character.isWhitespace(parameter.charAt(spaces)))) {
         spaces++;
       }
-      int paramNum = 0;
-      boolean found = true;
-      while (found) {
-        paramNum++;
-        String paramName = Integer.toString(paramNum);
-        found = false;
-        int paramIndex = 0;
-        while (!found && (paramIndex < parameters.size())) {
-          Parameter param = parameters.get(paramIndex);
-          if (paramName.equals(param.getComputedName())) {
-            found = true;
-          }
-          paramIndex++;
+      int paramNum = 1;
+      for (Parameter param : parameters) {
+        String paramName = param.getName();
+        if ((paramName == null) || ("".equals(paramName))) {
+          paramNum++;
         }
       }
       String strippedValue = PageElementComment.stripComments(comments, parameter, offset);
