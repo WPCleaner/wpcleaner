@@ -162,7 +162,8 @@ public class CheckErrorAlgorithm524 extends CheckErrorAlgorithmBase {
               }
             }
 
-            if (!automatic && (ignore != null) && !ignore.isEmpty()) {
+            boolean ignored = false;
+            if ((ignore != null) && !ignore.isEmpty()) {
               // Manage some parameters safe to replace
               for (String[] ignoreElement : ignore) {
                 if ((ignoreElement.length > 1) &&
@@ -171,7 +172,7 @@ public class CheckErrorAlgorithm524 extends CheckErrorAlgorithmBase {
                   if (ignoreElement.length > 2) {
                     for (int pos = 2; pos < ignoreElement.length; pos++) {
                       if (ignoreElement[pos].equals(existingValue)) {
-                        automatic = true;
+                        ignored = true;
                       }
                     }
                   }
@@ -198,6 +199,8 @@ public class CheckErrorAlgorithm524 extends CheckErrorAlgorithmBase {
             if ((existingValue != null) && (existingValue.equals(value))) {
               errorResult.addReplacement("", automatic);
             } else if (("".equals(existingValue))) {
+              errorResult.addReplacement("", automatic);
+            } else if (ignored) {
               errorResult.addReplacement("", automatic);
             }
 
