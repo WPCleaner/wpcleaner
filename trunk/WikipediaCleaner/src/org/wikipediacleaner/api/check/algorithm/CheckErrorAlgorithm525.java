@@ -7,6 +7,7 @@
 
 package org.wikipediacleaner.api.check.algorithm;
 
+import java.awt.ComponentOrientation;
 import java.util.Collection;
 import java.util.List;
 
@@ -59,6 +60,14 @@ public class CheckErrorAlgorithm525 extends CheckErrorAlgorithmBase {
           String lang = analysis.getWikipedia().getSettings().getLanguage();
           if ("lang".equals(param.getName()) && (lang != null) && lang.equalsIgnoreCase(value)) {
             // useful
+          } else if ("dir".equals(param.getName())) {
+            ComponentOrientation dir = analysis.getWikipedia().getSettings().getComponentOrientation();
+            if (("ltr".equalsIgnoreCase(value) && (dir == ComponentOrientation.LEFT_TO_RIGHT)) ||
+                ("rtl".equalsIgnoreCase(value) && (dir == ComponentOrientation.RIGHT_TO_LEFT))) {
+              // useful
+            } else {
+              isUseless = false;
+            }
           } else {
             isUseless = false;
           }
