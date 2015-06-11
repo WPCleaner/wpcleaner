@@ -199,15 +199,17 @@ public abstract class UpdateWarningTools {
         mapTodoSubpages.put(page, todoSubpage);
       }
     }
-    MediaWiki mw = MediaWiki.getMediaWikiAccess(worker);
-    if (section0) {
-      mw.retrieveSectionContents(wiki, mapTalkPages.values(), 0, false);
-    } else {
-      mw.retrieveContents(wiki, mapTalkPages.values(), false, false, false, false);
-    }
-    mw.retrieveContents(wiki, mapTodoSubpages.values(), true, false, false, false);
-    if (mw.shouldStop()) {
-      return;
+    if (canUpdateWarning()) {
+      MediaWiki mw = MediaWiki.getMediaWikiAccess(worker);
+      if (section0) {
+        mw.retrieveSectionContents(wiki, mapTalkPages.values(), 0, false);
+      } else {
+        mw.retrieveContents(wiki, mapTalkPages.values(), false, false, false, false);
+      }
+      mw.retrieveContents(wiki, mapTodoSubpages.values(), true, false, false, false);
+      if (mw.shouldStop()) {
+        return;
+      }
     }
 
     // Update warning
@@ -260,6 +262,22 @@ public abstract class UpdateWarningTools {
         }
       }
     }
+  }
+
+  /**
+   * @return true if warnings can be updated.
+   */
+  public boolean canUpdateWarning() {
+    List<String> todoTemplates = configuration.getStringList(WPCConfigurationStringList.TODO_TEMPLATES);
+    if ((todoTemplates == null) ||
+        (todoTemplates.isEmpty())) {
+      return false;
+    }
+    String warningTemplate = configuration.getString(getWarningTemplate());
+    if ((warningTemplate == null) || (warningTemplate.trim().length() == 0)) {
+      return false;
+    }
+    return true;
   }
 
   /**
