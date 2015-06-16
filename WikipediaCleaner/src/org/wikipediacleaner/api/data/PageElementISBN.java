@@ -140,7 +140,7 @@ public class PageElementISBN extends PageElement {
               index++;
               nextCorrect = false;
             } else {
-              if (Character.isLetter(currentChar)) {
+              if ((endNumber == index) && (Character.isLetter(currentChar))) {
                 correct = false;
               }
               finished = true;
