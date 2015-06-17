@@ -378,36 +378,37 @@ public class CWToolsPanel extends BotToolsPanel {
       return;
     }
     String[] parts = selection.split("\\|");
-    if ((parts == null) || (parts.length < 2)) {
-      return;
-    }
     List<CheckErrorAlgorithm> algorithms = new ArrayList<CheckErrorAlgorithm>();
-    String[] elements = parts[0].split("\\,");
-    for (int i = 0; i < elements.length; i++) {
-      try {
-        int errorNumber = Integer.parseInt(elements[i]);
-        CheckErrorAlgorithm algorithm = CheckErrorAlgorithms.getAlgorithm(
-            window.getWiki(), errorNumber);
-        if (algorithm != null) {
-          algorithms.add(algorithm);
+    if ((parts != null) && (parts.length > 0)) {
+      String[] elements = parts[0].split("\\,");
+      for (int i = 0; i < elements.length; i++) {
+        try {
+          int errorNumber = Integer.parseInt(elements[i]);
+          CheckErrorAlgorithm algorithm = CheckErrorAlgorithms.getAlgorithm(
+              window.getWiki(), errorNumber);
+          if (algorithm != null) {
+            algorithms.add(algorithm);
+          }
+        } catch (NumberFormatException e) {
+          //
         }
-      } catch (NumberFormatException e) {
-        //
       }
     }
     modelCWAutomaticFixing.setFixAlgorithms(algorithms);
     algorithms.clear();
-    elements = parts[1].split("\\,");
-    for (int i = 0; i < elements.length; i++) {
-      try {
-        int errorNumber = Integer.parseInt(elements[i]);
-        CheckErrorAlgorithm algorithm = CheckErrorAlgorithms.getAlgorithm(
-            window.getWiki(), errorNumber);
-        if (algorithm != null) {
-          algorithms.add(algorithm);
+    if ((parts != null) && (parts.length > 1)) {
+      String[] elements = parts[1].split("\\,");
+      for (int i = 0; i < elements.length; i++) {
+        try {
+          int errorNumber = Integer.parseInt(elements[i]);
+          CheckErrorAlgorithm algorithm = CheckErrorAlgorithms.getAlgorithm(
+              window.getWiki(), errorNumber);
+          if (algorithm != null) {
+            algorithms.add(algorithm);
+          }
+        } catch (NumberFormatException e) {
+          //
         }
-      } catch (NumberFormatException e) {
-        //
       }
     }
     modelCWAutomaticFixing.setListAlgorithms(algorithms);
