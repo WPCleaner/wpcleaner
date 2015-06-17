@@ -502,8 +502,9 @@ public class MediaWikiAPI implements API {
       properties.put("bot", "");
       properties.put("minor", "");
       properties.put("section", section);
-      if (page.getStartTimestamp() != null) {
-        properties.put("starttimestamp", page.getStartTimestamp());
+      String startTimestamp = page.getStartTimestamp();
+      if ((startTimestamp != null) && !startTimestamp.isEmpty()) {
+        properties.put("starttimestamp", startTimestamp);
       }
       properties.put("summary", title);
       properties.put("text", contents);
