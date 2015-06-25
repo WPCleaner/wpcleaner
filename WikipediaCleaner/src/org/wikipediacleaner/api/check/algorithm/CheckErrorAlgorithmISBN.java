@@ -30,6 +30,7 @@ import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementComment;
 import org.wikipediacleaner.api.data.PageElementISBN;
 import org.wikipediacleaner.api.data.PageElementTemplate;
+import org.wikipediacleaner.api.data.ISBNRange.ISBNInformation;
 import org.wikipediacleaner.api.data.PageElementTemplate.Parameter;
 import org.wikipediacleaner.gui.swing.action.ActionExternalViewer;
 import org.wikipediacleaner.i18n.GT;
@@ -73,9 +74,9 @@ public abstract class CheckErrorAlgorithmISBN extends CheckErrorAlgorithmBase {
     }
     CheckErrorResult result = createCheckErrorResult(
         analysis, isbn.getBeginIndex(), isbn.getEndIndex(), level);
-    List<String> infos = ISBNRange.getInformation(isbn.getISBN());
-    if (infos != null) {
-      for (String info : infos) {
+    ISBNInformation infos = ISBNRange.getInformation(isbn.getISBN());
+    if ((infos != null) && (infos.getTexts() != null)) {
+      for (String info : infos.getTexts()) {
         result.addPossibleAction(info, new NullActionProvider());
       }
     }
