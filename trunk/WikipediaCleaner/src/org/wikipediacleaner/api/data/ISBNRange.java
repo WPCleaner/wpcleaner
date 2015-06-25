@@ -50,74 +50,141 @@ public class ISBNRange {
   }
 
   /**
-   * @param isbn ISBN.
-   * @return Information about ISBN.
+   * @param isbn ISBN
+   * @return EAN prefix for the given ISBN.
    */
-  public static List<String> getInformation(String isbn) {
-    if (isbn == null) {
+  public static Range getEANPrefix(String isbn) {
+    return getRange(isbn, eanPrefixes);
+  }
+
+  /**
+   * @param isbn ISBN
+   * @return Registration group for the given ISBN.
+   */
+  public static Range getRegistrationGroup(String isbn) {
+    return getRange(isbn, registrationGroups);
+  }
+
+  /**
+   * @param isbn ISBN
+   * @param ranges List of ranges.
+   * @return Range for the given ISBN.
+   */
+  private static Range getRange(String isbn, List<Range> ranges) {
+    if ((isbn == null) || (ranges == null)) {
       return null;
     }
     isbn = PageElementISBN.cleanISBN(isbn);
-    List<String> results = new ArrayList<String>();
-    addInformation(isbn, results, eanPrefixes);
+    if (isbn.length() == 10) {
+      isbn = "978" + isbn;
+    }
+    for (Range range : ranges) {
+      String cleanPrefix = range.getCleanPrefix();
+      if ((cleanPrefix != null) && (isbn.startsWith(cleanPrefix))) {
+        return range;
+      }
+    }
+    return null;
+  }
+
+  /**
+   * Bean for holding information about an ISBN.
+   */
+  public static class ISBNInformation {
+    
+    List<String> texts;
+
+    boolean unknownRange;
+
+    boolean reservedRange;
+
+    ISBNInformation() {
+      this.texts = new ArrayList<String>();
+    }
+
+    public List<String> getTexts() {
+      return texts;
+    }
+
+    public boolean isInUnknownRange() {
+      return unknownRange;
+    }
+
+    public boolean isInReservedRange() {
+      return reservedRange;
+    }
+  }
+
+  /**
+   * @param isbn ISBN.
+   * @return Information about ISBN.
+   */
+  public static ISBNInformation getInformation(String isbn) {
+    if (isbn == null) {
+      return null;
+    }
+
+    // Retrieve information about ISBN
+    isbn = PageElementISBN.cleanISBN(isbn);
     boolean isbn10 = false;
     if (isbn.length() == 10) {
       isbn = "978" + isbn;
       isbn10 = true;
     }
-    Range range = addInformation(isbn, results, registrationGroups);
+    Range eanPrefix = getEANPrefix(isbn);
+    Range registrationGroup = getRegistrationGroup(isbn);
+
+    // Build information
+    ISBNInformation isbnInfo = new ISBNInformation();
+    if ((eanPrefix != null) && !isbn10) {
+      isbnInfo.texts.add(eanPrefix.getPrefix() + " - " + eanPrefix.getAgency());
+    }
+    String prefix = null;
+    String cleanPrefix = null;
+    if (registrationGroup != null) {
+      prefix = registrationGroup.getPrefix();
+      cleanPrefix = registrationGroup.getCleanPrefix();
+      if (isbn10 && (prefix != null) && (prefix.length() > 4)) {
+        // Remove "978-"
+        prefix = prefix.substring(4);
+      }
+      if ((prefix != null) && (prefix.length() > 0)) {
+        isbnInfo.texts.add(prefix + "-" + registrationGroup.getAgency());
+      }
+    }
 
     // Suggest a formatted ISBN
-    String prefix = (range != null) ? range.getPrefix() : "";
-    if (isbn10 && (prefix != null) && (prefix.length() >= 4)) {
-      prefix = prefix.substring(4);
-    }
-    String cleanPrefix = (range != null) ? range.getCleanPrefix() : "";
-    String suffix = isbn.substring(cleanPrefix.length());
-    Rule rule = (range != null) ? range.getRule(suffix) : null;
-    int nextLength = (rule != null) ? rule.getLength() : 0;
-
-    if (nextLength > 0) {
-      if (suffix.length() > nextLength + 1) {
-        results.add(
-            prefix + "-" +
-            suffix.substring(0, nextLength) + "-" +
-            suffix.substring(nextLength, suffix.length() - 1) + "-" +
-            suffix.substring(suffix.length() - 1));
+    if ((registrationGroup != null) && (cleanPrefix != null)) {
+      String suffix = isbn.substring(cleanPrefix.length());
+      Rule rule = registrationGroup.getRule(suffix);
+      if (rule == null) {
+        isbnInfo.texts.add(GT._("No range found for ISBN"));
+        isbnInfo.unknownRange = true;
       } else {
-        results.add(GT._("ISBN length incoherent with range found"));
+        int nextLength = rule.getLength();
+        if (nextLength > 0) {
+          if (suffix.length() > nextLength + 1) {
+            String suggestedISBN = prefix + "-" +
+                suffix.substring(0, nextLength) + "-" +
+                suffix.substring(nextLength, suffix.length() - 1) + "-" +
+                suffix.substring(suffix.length() - 1);
+            isbnInfo.texts.add(GT._("Suggested format: {0}", suggestedISBN));
+          } else {
+            isbnInfo.texts.add(GT._("ISBN length incoherent with range found"));
+          }
+        } else {
+          isbnInfo.texts.add(GT._(
+              "ISBN is in a reserved range {0}",
+              prefix + "-(" + rule.getFrom() + "-" + rule.getTo() + ")"));
+          isbnInfo.reservedRange = true;
+        }
       }
-    } else if (rule != null) {
-      results.add(GT._(
-          "ISBN is in a reserved range {0}",
-          prefix + "-(" + rule.getFrom() + "-" + rule.getTo() + ")"));
     } else {
-      results.add(GT._("No range found for ISBN"));
+      isbnInfo.texts.add(GT._("No range found for ISBN"));
+      isbnInfo.unknownRange = true;
     }
 
-    return results;
-  }
-
-  /**
-   * @param isbn ISBN.
-   * @param results Information about ISBN to be completed.
-   * @param ranges List of ranges.
-   * @return Range according to the ISBN.
-   */
-  private static Range addInformation(
-      String isbn, List<String> results,
-      List<Range> ranges) {
-    if (ranges == null) {
-      return null;
-    }
-    for (Range range : ranges) {
-      String cleanPrefix = range.getCleanPrefix();
-      if ((cleanPrefix != null) && (isbn.startsWith(cleanPrefix))) {
-        results.add(range.getPrefix() + " - " + range.getAgency());
-        return range;
-      }
-    }
-    return null;
+    return isbnInfo;
   }
 
   /**

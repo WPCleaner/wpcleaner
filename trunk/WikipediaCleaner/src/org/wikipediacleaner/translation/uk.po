@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2015-04-28 23:51+0200\n"
+"POT-Creation-Date: 2015-06-25 23:42+0200\n"
 "PO-Revision-Date: 2014-09-10 23:22+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Ukrainian <uk@li.org>\n"
@@ -354,7 +354,7 @@ msgstr "Вилучити розбивку в списку"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm055.java:155
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm077.java:92
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm525.java:87
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm525.java:96
 #, java-format
 msgid "Remove {0} tags"
 msgstr ""
@@ -657,17 +657,17 @@ msgstr ""
 msgid "The size below which images are not reported as duplicates"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm524.java:228
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm524.java:231
 #: org/wikipediacleaner/gui/swing/NewSectionWindow.java:115
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:526
 msgid "Comment"
 msgstr "Коментар"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm524.java:328
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm524.java:331
 msgid "A category containing the list of pages in error"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm524.java:329
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm524.java:332
 msgid "Values that can be safely ignored for a given template and argument"
 msgstr ""
 
@@ -692,26 +692,26 @@ msgstr "Список помилкових спрацьовувань для та
 msgid "Page containing the list of false positives for this type of error"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISBN.java:311
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISBN.java:312
 #, java-format
 msgid "Ask for help using {0}"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISBN.java:336
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISBN.java:337
 msgid "Add a comment"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISBN.java:367
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISBN.java:368
 #, java-format
 msgid "Search ISBN {0}"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISBN.java:397
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISBN.java:398
 #, java-format
 msgid "Search ISSN {0}"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISBN.java:461
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISBN.java:462
 #, java-format
 msgid "Search using {0}"
 msgstr ""
@@ -919,17 +919,23 @@ msgstr ""
 msgid "Attribute {0} should be integer value"
 msgstr ""
 
-#: org/wikipediacleaner/api/data/ISBNRange.java:88
+#: org/wikipediacleaner/api/data/ISBNRange.java:161
+#: org/wikipediacleaner/api/data/ISBNRange.java:183
+msgid "No range found for ISBN"
+msgstr ""
+
+#: org/wikipediacleaner/api/data/ISBNRange.java:171
+#, java-format
+msgid "Suggested format: {0}"
+msgstr ""
+
+#: org/wikipediacleaner/api/data/ISBNRange.java:173
 msgid "ISBN length incoherent with range found"
 msgstr ""
 
-#: org/wikipediacleaner/api/data/ISBNRange.java:92
+#: org/wikipediacleaner/api/data/ISBNRange.java:177
 #, java-format
 msgid "ISBN is in a reserved range {0}"
-msgstr ""
-
-#: org/wikipediacleaner/api/data/ISBNRange.java:95
-msgid "No range found for ISBN"
 msgstr ""
 
 #: org/wikipediacleaner/api/data/PageComparator.java:194
@@ -1005,18 +1011,18 @@ msgstr "Аналіз тексту"
 msgid "Retrieving templates"
 msgstr "Отримання шаблонів"
 
-#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:645
+#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:646
 #, java-format
 msgid "URL {0} is blacklisted"
 msgstr ""
 
-#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:1736
+#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:1737
 msgid ""
 "This action is protected by a CAPTCHA.\n"
 "What is the answer to the following question ?"
 msgstr ""
 
-#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:1743
+#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:1744
 msgid ""
 "This action is protected by a CAPTCHA.\n"
 "What is the answer to the question displayed in your browser ?"
@@ -1966,7 +1972,7 @@ msgstr "Шаблони, використані в {0}, що посилаютьс
 #: org/wikipediacleaner/gui/swing/worker/NewSectionWorker.java:62
 #: org/wikipediacleaner/gui/swing/worker/RandomPageWorker.java:49
 #: org/wikipediacleaner/gui/swing/worker/SendWorker.java:90
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:87
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:88
 msgid "Retrieving MediaWiki API"
 msgstr "Отримання MediaWiki API"
 
@@ -3614,18 +3620,18 @@ msgstr ""
 msgid "Updating disambiguation warning - {0}"
 msgstr "Оновлення повідомлень сторінки значень - {0}"
 
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:99
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:100
 #, java-format
 msgid ""
 "Analysis found {0} articles with disambiguation warning {1}.\n"
 "Do you want to update the disambiguation warnings ?"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:121
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:125
 msgid "Retrieving disambiguation pages"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:145
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:149
 #, java-format
 msgid ""
 "An error occurred when updating disambiguation warnings. Do you want to "
@@ -3690,41 +3696,41 @@ msgstr ""
 msgid "Do you want to update {0}?"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/worker/UpdateWarningTools.java:304
-#: org/wikipediacleaner/gui/swing/worker/UpdateWarningTools.java:319
+#: org/wikipediacleaner/gui/swing/worker/UpdateWarningTools.java:322
+#: org/wikipediacleaner/gui/swing/worker/UpdateWarningTools.java:337
 #, java-format
 msgid "Retrieving page contents - {0}"
 msgstr "Отримання вмісту сторінки - {0}"
 
-#: org/wikipediacleaner/gui/swing/worker/UpdateWarningTools.java:1695
+#: org/wikipediacleaner/gui/swing/worker/UpdateWarningTools.java:1713
 #, java-format
 msgid "{0} page has been analyzed."
 msgid_plural "{0} pages have been analyzed."
 msgstr[0] ""
 msgstr[1] ""
 
-#: org/wikipediacleaner/gui/swing/worker/UpdateWarningTools.java:1700
+#: org/wikipediacleaner/gui/swing/worker/UpdateWarningTools.java:1718
 #, java-format
 msgid "Warning has been updated on {0} page."
 msgid_plural "Warnings have been updated on {0} pages."
 msgstr[0] ""
 msgstr[1] ""
 
-#: org/wikipediacleaner/gui/swing/worker/UpdateWarningTools.java:1705
+#: org/wikipediacleaner/gui/swing/worker/UpdateWarningTools.java:1723
 #, java-format
 msgid "Warning has been removed on {0} page."
 msgid_plural "Warnings have been removed on {0} pages."
 msgstr[0] ""
 msgstr[1] ""
 
-#: org/wikipediacleaner/gui/swing/worker/UpdateWarningTools.java:1710
+#: org/wikipediacleaner/gui/swing/worker/UpdateWarningTools.java:1728
 #, java-format
 msgid "{0} still needs to be fixed."
 msgid_plural "{0} still need to be fixed."
 msgstr[0] ""
 msgstr[1] ""
 
-#: org/wikipediacleaner/gui/swing/worker/UpdateWarningTools.java:1716
+#: org/wikipediacleaner/gui/swing/worker/UpdateWarningTools.java:1734
 #, java-format
 msgid "It took {0} second"
 msgid_plural "It took {0} seconds"

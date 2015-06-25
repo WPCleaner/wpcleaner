@@ -10,7 +10,6 @@ package org.wikipediacleaner.gui.swing.component;
 import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
-import java.util.List;
 
 import javax.swing.JPopupMenu;
 import javax.swing.text.BadLocationException;
@@ -33,6 +32,7 @@ import org.wikipediacleaner.api.data.PageElementInterwikiLink;
 import org.wikipediacleaner.api.data.PageElementLanguageLink;
 import org.wikipediacleaner.api.data.PageElementParameter;
 import org.wikipediacleaner.api.data.PageElementTemplate;
+import org.wikipediacleaner.api.data.ISBNRange.ISBNInformation;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
 import org.wikipediacleaner.gui.swing.menu.BasicMenuCreator;
 import org.wikipediacleaner.i18n.GT;
@@ -549,9 +549,9 @@ public abstract class MWPanePopupListener extends AbstractPopupListener {
     JPopupMenu popup = menu.createPopupMenu(GT._(
         "ISBN: {0}",
         limitTextLength(isbn.getISBN(), 50)));
-    List<String> infos = ISBNRange.getInformation(isbn.getISBN());
-    if (infos != null) {
-      for (String info : infos) {
+    ISBNInformation infos = ISBNRange.getInformation(isbn.getISBN());
+    if ((infos != null) && (infos.getTexts() != null)) {
+      for (String info : infos.getTexts()) {
         menu.addDisabledText(popup, info);
       }
     }
