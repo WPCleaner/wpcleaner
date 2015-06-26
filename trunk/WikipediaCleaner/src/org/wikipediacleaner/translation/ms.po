@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2015-06-25 23:42+0200\n"
+"POT-Creation-Date: 2015-06-26 23:15+0200\n"
 "PO-Revision-Date: 2013-06-14 16:35+0000\n"
 "Last-Translator: abuyop <Unknown>\n"
 "Language-Team: Malay <ms@li.org>\n"
@@ -475,15 +475,38 @@ msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm070.java:131
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm071.java:106
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm072.java:122
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm073.java:148
 msgid "An explanation of the problem"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm072.java:66
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm073.java:65
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm072.java:64
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm073.java:63
 #, java-format
 msgid "The checksum is {0} instead of {1}"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm072.java:70
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm073.java:69
+msgid "There's no existing range for this ISBN"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm072.java:72
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm073.java:71
+msgid "This ISBN is inside a reserved range"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm072.java:164
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm073.java:192
+msgid "An explanation of the problem (incorrect checksum)"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm072.java:166
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm073.java:194
+msgid "An explanation of the problem (non-existing range of ISBN numbers)"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm072.java:168
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm073.java:196
+msgid "An explanation of the problem (reserved range of ISBN numbers)"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm076.java:30
