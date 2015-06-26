@@ -14,9 +14,11 @@ import java.util.Map;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.NullActionProvider;
+import org.wikipediacleaner.api.data.ISBNRange;
 import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementISBN;
 import org.wikipediacleaner.api.data.PageElementTemplate;
+import org.wikipediacleaner.api.data.ISBNRange.ISBNInformation;
 import org.wikipediacleaner.i18n.GT;
 
 
@@ -54,18 +56,31 @@ public class CheckErrorAlgorithm072 extends CheckErrorAlgorithmISBN {
         char check = Character.toUpperCase(number.charAt(9));
         char computedCheck = Character.toUpperCase(
             PageElementISBN.computeChecksum(number));
+
+        String message = null;
         if ((check != computedCheck) &&
             (Character.isDigit(computedCheck) || (computedCheck == 'X'))) {
+          message = GT._(
+              "The checksum is {0} instead of {1}",
+              new Object[] { check, computedCheck } );
+        } else {
+          ISBNInformation isbnInfo = ISBNRange.getInformation(number);
+          if (isbnInfo != null) {
+            if (isbnInfo.isInUnknownRange()) {
+              message = GT._("There's no existing range for this ISBN");
+            } else if (isbnInfo.isInReservedRange()) {
+              message = GT._("This ISBN is inside a reserved range");
+            }
+          }
+        }
+
+        if (message != null) {
           if (errors == null) {
             return true;
           }
           result = true;
           CheckErrorResult errorResult = createCheckErrorResult(analysis, isbn, true);
-          errorResult.addPossibleAction(
-              GT._(
-                  "The checksum is {0} instead of {1}",
-                  new Object[] { check, computedCheck } ),
-              new NullActionProvider());
+          errorResult.addPossibleAction(message, new NullActionProvider());
           addHelpNeededTemplates(analysis, errorResult, isbn);
           addHelpNeededComment(analysis, errorResult, isbn);
           String value = isbn.getISBN();
@@ -97,17 +112,44 @@ public class CheckErrorAlgorithm072 extends CheckErrorAlgorithmISBN {
     if (isbn == null) {
       return null;
     }
-    String reasonTemplate = getSpecificProperty("reason", true, true, false);
-    if (reasonTemplate == null) {
-      return null;
-    }
     String number = isbn.getISBN();
     if (number == null) {
       return null;
     }
     char check = Character.toUpperCase(number.charAt(9));
     char computedCheck = Character.toUpperCase(PageElementISBN.computeChecksum(number));
-    return MessageFormat.format(reasonTemplate, computedCheck, check);
+    if (check != computedCheck) {
+      String reasonTemplate = getSpecificProperty("reason_checksum", true, true, false);
+      if (reasonTemplate == null) {
+        reasonTemplate = getSpecificProperty("reason", true, true, false);
+      }
+      if (reasonTemplate == null) {
+        return null;
+      }
+      return MessageFormat.format(reasonTemplate, computedCheck, check);
+    }
+
+    // Retrieve information about ISBN number
+    ISBNInformation isbnInfo = ISBNRange.getInformation(number);
+    if (isbnInfo != null) {
+      if (isbnInfo.isInUnknownRange()) {
+        String reasonTemplate = getSpecificProperty("reason_no_range", true, true, false);
+        if (reasonTemplate == null) {
+          return null;
+        }
+        return reasonTemplate;
+      }
+
+      if (isbnInfo.isInReservedRange()) {
+        String reasonTemplate = getSpecificProperty("reason_reserved", true, true, false);
+        if (reasonTemplate == null) {
+          return null;
+        }
+        return reasonTemplate;
+      }
+    }
+
+    return null;
   }
 
   /**
@@ -119,7 +161,11 @@ public class CheckErrorAlgorithm072 extends CheckErrorAlgorithmISBN {
   public Map<String, String> getParameters() {
     Map<String, String> parameters = super.getParameters();
     parameters.put(
-        "reason", GT._("An explanation of the problem"));
+        "reason_checksum", GT._("An explanation of the problem (incorrect checksum)"));
+    parameters.put(
+        "reason_no_range", GT._("An explanation of the problem (non-existing range of ISBN numbers)"));
+    parameters.put(
+        "reason_reserved", GT._("An explanation of the problem (reserved range of ISBN numbers)"));
     return parameters;
   }
 }
