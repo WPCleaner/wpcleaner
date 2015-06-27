@@ -86,8 +86,10 @@ public class CheckErrorAlgorithm073 extends CheckErrorAlgorithmISBN {
           // Use search engines
           String value = number;
           addSearchEngines(analysis, errorResult, value);
-          value = number.substring(0, number.length() - 1) + computedCheck;
-          addSearchEngines(analysis, errorResult, value);
+          if (computedCheck != check) {
+            value = number.substring(0, number.length() - 1) + computedCheck;
+            addSearchEngines(analysis, errorResult, value);
+          }
           if (!number.startsWith("978") && !number.startsWith("979")) {
             int count = 0;
             count += (number.charAt(0) == '9') ? 1 : 0;
