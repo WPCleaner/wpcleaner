@@ -49,7 +49,12 @@ public class CheckErrorAlgorithm094 extends CheckErrorAlgorithmBase {
     }
     String contents = analysis.getContents();
     for (PageElementTag tag : refTags) {
-      if (!tag.isFullTag() && !tag.isComplete()) {
+      boolean shouldCheck = true;
+      if (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_NOWIKI, tag.getBeginIndex()) != null) {
+        shouldCheck = false;
+      }
+
+      if (shouldCheck && !tag.isFullTag() && !tag.isComplete()) {
         if (errors == null) {
           return true;
         }
