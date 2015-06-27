@@ -85,8 +85,10 @@ public class CheckErrorAlgorithm072 extends CheckErrorAlgorithmISBN {
           addHelpNeededComment(analysis, errorResult, isbn);
           String value = isbn.getISBN();
           addSearchEngines(analysis, errorResult, value);
-          value = value.substring(0, value.length() - 1) + computedCheck;
-          addSearchEngines(analysis, errorResult, value);
+          if (computedCheck != check) {
+            value = value.substring(0, value.length() - 1) + computedCheck;
+            addSearchEngines(analysis, errorResult, value);
+          }
           value = "978" + isbn.getISBN();
           if (PageElementISBN.isValid(value)) {
             addSearchEngines(analysis, errorResult, value);
