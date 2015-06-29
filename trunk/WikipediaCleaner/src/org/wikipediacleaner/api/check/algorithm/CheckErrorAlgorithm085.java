@@ -15,6 +15,7 @@ import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.CheckErrorResult.ErrorLevel;
 import org.wikipediacleaner.api.constants.WPCConfiguration;
 import org.wikipediacleaner.api.data.PageAnalysis;
+import org.wikipediacleaner.api.data.PageElementComment;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.gui.swing.component.MWPane;
@@ -29,6 +30,8 @@ public class CheckErrorAlgorithm085 extends CheckErrorAlgorithmBase {
 
   private final static String[] interestingTags = {
     PageElementTag.TAG_HTML_CENTER,
+    PageElementTag.TAG_HTML_DIV,
+    PageElementTag.TAG_HTML_SPAN,
     PageElementTag.TAG_WIKI_INCLUDEONLY,
     PageElementTag.TAG_WIKI_GALLERY,
     PageElementTag.TAG_WIKI_NOINCLUDE,
@@ -94,7 +97,7 @@ public class CheckErrorAlgorithm085 extends CheckErrorAlgorithmBase {
           int lastIndex = tag.getValueEndIndex();
           while (!textFound && (currentIndex < lastIndex)) {
             char currentChar = contents.charAt(currentIndex);
-            if (Character.isWhitespace(currentChar)) {
+            if (Character.isWhitespace(currentChar) || (' ' == currentChar)) {
               currentIndex++;
             } else if (currentChar == '<') {
               boolean ok = false;
@@ -108,6 +111,13 @@ public class CheckErrorAlgorithm085 extends CheckErrorAlgorithmBase {
                       errorLevel = ErrorLevel.WARNING;
                       currentIndex = internalTag.getCompleteEndIndex();
                     }
+                  }
+                } else {
+                  PageElementComment comment = analysis.isInComment(currentIndex);
+                  if (comment != null) {
+                    ok = true;
+                    errorLevel = ErrorLevel.WARNING;
+                    currentIndex = comment.getEndIndex();
                   }
                 }
               }
@@ -140,6 +150,10 @@ public class CheckErrorAlgorithm085 extends CheckErrorAlgorithmBase {
                 tag.getCompleteEndIndex(),
                 errorLevel);
             if (!ignoredText) {
+              if (tag.getValueEndIndex() > tag.getValueBeginIndex()) {
+                errorResult.addReplacement(contents.substring(
+                    tag.getValueBeginIndex(), tag.getValueEndIndex()));
+              }
               errorResult.addReplacement("");
             } else {
               if (PageElementTag.TAG_HTML_CENTER.equals(tag.getName())) {
