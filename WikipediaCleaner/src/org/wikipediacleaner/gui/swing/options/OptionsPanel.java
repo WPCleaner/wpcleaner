@@ -270,11 +270,11 @@ abstract class OptionsPanel extends JPanel {
 
   protected JComboBox createJComboBox(
       ConfigurationValueString property,
-      Vector<?> items) {
+      Vector<String> items) {
     if (property == null) {
       return null;
     }
-    JComboBox combo = new JComboBox(items);
+    JComboBox<String> combo = new JComboBox<String>(items);
     combo.setEditable(false);
     Configuration config = Configuration.getConfiguration();
     String value = config.getString(null, property);

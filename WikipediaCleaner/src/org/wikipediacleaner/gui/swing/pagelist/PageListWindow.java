@@ -293,7 +293,7 @@ public class PageListWindow extends BasicWindow {
     List<Page> selectedPages = tablePages.getSelectedPages();
     Controller.runFullAnalysis(
         getParentComponent(),
-        selectedPages.toArray(), null,
+        selectedPages, null,
         getWikipedia());
   }
 
@@ -304,7 +304,7 @@ public class PageListWindow extends BasicWindow {
     List<Page> selectedPages = tablePages.getSelectedPages();
     Controller.runDisambiguationAnalysis(
         getParentComponent(),
-        selectedPages.toArray(),
+        selectedPages,
         getWikipedia());
   }
 

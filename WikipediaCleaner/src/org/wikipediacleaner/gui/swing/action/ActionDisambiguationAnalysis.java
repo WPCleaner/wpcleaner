@@ -19,6 +19,7 @@ import javax.swing.JToolBar;
 import javax.swing.text.JTextComponent;
 
 import org.wikipediacleaner.api.constants.EnumWikipedia;
+import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.gui.swing.Controller;
 import org.wikipediacleaner.gui.swing.basic.Utilities;
 import org.wikipediacleaner.i18n.GT;
@@ -100,7 +101,7 @@ public class ActionDisambiguationAnalysis implements ActionListener {
    */
   public static JButton createButton(
       Component parent,
-      EnumWikipedia wiki, JList list,
+      EnumWikipedia wiki, JList<Page> list,
       boolean showIcon, boolean useShortcut) {
     JButton button = createInternalButton(showIcon, false, useShortcut);
     button.addActionListener(new ActionDisambiguationAnalysis(parent, wiki, list));
@@ -120,7 +121,7 @@ public class ActionDisambiguationAnalysis implements ActionListener {
    */
   public static JButton addButton(
       Component parent, JToolBar toolbar,
-      EnumWikipedia wiki, JList list,
+      EnumWikipedia wiki, JList<Page> list,
       boolean showIcon, boolean useShortcut) {
     JButton button = createButton(parent, wiki, list, showIcon, useShortcut);
     if ((button != null) && (toolbar != null)) {
@@ -147,7 +148,7 @@ public class ActionDisambiguationAnalysis implements ActionListener {
   /**
    * Selected pages in the JList should be analyzed.
    */
-  private final JList list;
+  private final JList<Page> list;
 
   /**
    * Text component containing the page name.
@@ -177,7 +178,7 @@ public class ActionDisambiguationAnalysis implements ActionListener {
    * @param wiki Wiki.
    * @param list Selected pages should be analyzed.
    */
-  public ActionDisambiguationAnalysis(Component parent, EnumWikipedia wiki, JList list) {
+  public ActionDisambiguationAnalysis(Component parent, EnumWikipedia wiki, JList<Page> list) {
     this.parent = parent;
     this.wiki = wiki;
     this.title = null;
@@ -228,7 +229,7 @@ public class ActionDisambiguationAnalysis implements ActionListener {
 
     // Analyze a list of selected pages
     if (list != null) {
-      Controller.runDisambiguationAnalysis(parent, list.getSelectedValues(), wiki);
+      Controller.runDisambiguationAnalysis(parent, list.getSelectedValuesList(), wiki);
       return;
     }
 
