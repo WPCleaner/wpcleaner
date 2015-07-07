@@ -1156,6 +1156,7 @@ public class Configuration implements WindowListener {
   /* (non-Javadoc)
    * @see java.awt.event.WindowListener#windowActivated(java.awt.event.WindowEvent)
    */
+  @Override
   public void windowActivated(@SuppressWarnings("unused") WindowEvent e) {
     //
   }
@@ -1163,6 +1164,7 @@ public class Configuration implements WindowListener {
   /* (non-Javadoc)
    * @see java.awt.event.WindowListener#windowClosed(java.awt.event.WindowEvent)
    */
+  @Override
   public void windowClosed(@SuppressWarnings("unused") WindowEvent e) {
     //
   }
@@ -1170,6 +1172,7 @@ public class Configuration implements WindowListener {
   /* (non-Javadoc)
    * @see java.awt.event.WindowListener#windowClosing(java.awt.event.WindowEvent)
    */
+  @Override
   public void windowClosing(WindowEvent e) {
     if ((e != null) && (e.getWindow() != null)) {
       saveWindowPosition(e.getWindow());
@@ -1179,6 +1182,7 @@ public class Configuration implements WindowListener {
   /* (non-Javadoc)
    * @see java.awt.event.WindowListener#windowDeactivated(java.awt.event.WindowEvent)
    */
+  @Override
   public void windowDeactivated(@SuppressWarnings("unused") WindowEvent e) {
     //
   }
@@ -1186,6 +1190,7 @@ public class Configuration implements WindowListener {
   /* (non-Javadoc)
    * @see java.awt.event.WindowListener#windowDeiconified(java.awt.event.WindowEvent)
    */
+  @Override
   public void windowDeiconified(@SuppressWarnings("unused") WindowEvent e) {
     //
   }
@@ -1193,6 +1198,7 @@ public class Configuration implements WindowListener {
   /* (non-Javadoc)
    * @see java.awt.event.WindowListener#windowIconified(java.awt.event.WindowEvent)
    */
+  @Override
   public void windowIconified(@SuppressWarnings("unused") WindowEvent e) {
     //
   }
@@ -1200,6 +1206,7 @@ public class Configuration implements WindowListener {
   /* (non-Javadoc)
    * @see java.awt.event.WindowListener#windowOpened(java.awt.event.WindowEvent)
    */
+  @Override
   public void windowOpened(@SuppressWarnings("unused") WindowEvent e) {
     //
   }

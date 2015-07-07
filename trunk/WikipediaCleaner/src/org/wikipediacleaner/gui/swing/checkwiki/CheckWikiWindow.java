@@ -649,6 +649,7 @@ public class CheckWikiWindow extends OnePageWindow implements CheckWikiListener 
     modelAllErrors = new DefaultComboBoxModel();
     listAllErrors = new JComboBox(modelAllErrors);
     listAllErrors.addActionListener(new ActionListener() {
+      @Override
       public void actionPerformed(@SuppressWarnings("unused") ActionEvent e) {
         actionSelectErrorType();
       }
@@ -1403,6 +1404,7 @@ public class CheckWikiWindow extends OnePageWindow implements CheckWikiListener 
    * @param errorNumber
    * @see org.wikipediacleaner.api.check.CheckWikiListener#pageFixed(org.wikipediacleaner.api.data.Page, int)
    */
+  @Override
   public void pageFixed(Page page, int errorNumber) {
     if ((errors == null) || (errors.isEmpty())) {
       return;
@@ -1429,6 +1431,7 @@ public class CheckWikiWindow extends OnePageWindow implements CheckWikiListener 
     } else {
       SwingUtilities.invokeLater(new Runnable() {
         
+        @Override
         public void run() {
           doUpdate();
         }

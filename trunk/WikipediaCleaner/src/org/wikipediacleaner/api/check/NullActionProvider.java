@@ -22,6 +22,7 @@ public class NullActionProvider implements ActionProvider {
    * @param textPane Text component.
    * @return Action.
    */
+  @Override
   public Action getAction(Element element, JTextPane textPane) {
     return null;
   }
@@ -30,6 +31,7 @@ public class NullActionProvider implements ActionProvider {
    * @param text New text.
    * @return True if this action can give this new text.
    */
+  @Override
   public boolean isPossibleReplacement(String text) {
     return false;
   }

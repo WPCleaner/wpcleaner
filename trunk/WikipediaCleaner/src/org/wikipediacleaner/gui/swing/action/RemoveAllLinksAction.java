@@ -33,6 +33,7 @@ public class RemoveAllLinksAction implements ActionListener {
   /* (non-Javadoc)
    * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
    */
+  @Override
   public void actionPerformed(@SuppressWarnings("unused") ActionEvent e) {
     String originalText = textPane.getText();
     PageAnalysis analysis = textPane.getWikiPage().getAnalysis(originalText, true);

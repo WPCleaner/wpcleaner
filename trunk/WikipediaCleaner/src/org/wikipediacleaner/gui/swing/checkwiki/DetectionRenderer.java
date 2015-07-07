@@ -52,6 +52,7 @@ public class DetectionRenderer extends AbstractCellEditor implements
    * @return Value in the editor.
    * @see javax.swing.CellEditor#getCellEditorValue()
    */
+  @Override
   public Object getCellEditorValue() {
     return null;
   }
@@ -65,6 +66,7 @@ public class DetectionRenderer extends AbstractCellEditor implements
    * @return Component to edit the cell.
    * @see javax.swing.table.TableCellEditor#getTableCellEditorComponent(javax.swing.JTable, java.lang.Object, boolean, int, int)
    */
+  @Override
   public Component getTableCellEditorComponent(JTable table, Object value,
       boolean isSelected, int row, int column) {
     return getButton(value);
@@ -80,6 +82,7 @@ public class DetectionRenderer extends AbstractCellEditor implements
    * @return Component to render the cell.
    * @see javax.swing.table.TableCellRenderer#getTableCellRendererComponent(javax.swing.JTable, java.lang.Object, boolean, boolean, int, int)
    */
+  @Override
   public Component getTableCellRendererComponent(JTable table, Object value,
       boolean isSelected, boolean hasFocus, int row, int column) {
     return getButton(value);

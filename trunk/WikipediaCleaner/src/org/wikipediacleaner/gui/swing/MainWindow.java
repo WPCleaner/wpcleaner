@@ -175,6 +175,7 @@ public class MainWindow
      * @param window BasicWindow.
      * @see org.wikipediacleaner.gui.swing.basic.BasicWindowListener#initializeWindow(org.wikipediacleaner.gui.swing.basic.BasicWindow)
      */
+    @Override
     public void initializeWindow(BasicWindow window) {
       // Nothing to do
     }
@@ -185,6 +186,7 @@ public class MainWindow
      * @param window BasicWindow.
      * @see org.wikipediacleaner.gui.swing.basic.BasicWindowListener#displayWindow(org.wikipediacleaner.gui.swing.basic.BasicWindow)
      */
+    @Override
     public void displayWindow(BasicWindow window) {
       Configuration config = Configuration.getConfiguration();
       config.checkVersion(window.getParentComponent());
@@ -1058,6 +1060,7 @@ public class MainWindow
        * 
        * @param worker Current worker.
        */
+      @Override
       public void beforeStart(BasicWorker worker) {
         // Nothing to do
       }
@@ -1067,6 +1070,7 @@ public class MainWindow
        * 
        * @param worker Current worker.
        */
+      @Override
       public void afterStart(BasicWorker worker) {
         // Nothing to do
       }
@@ -1076,6 +1080,7 @@ public class MainWindow
        * 
        * @param worker Current worker.
        */
+      @Override
       public void beforeFinished(BasicWorker worker) {
         if (worker instanceof LoginWorker) {
           logged = ((LoginWorker) worker).isLogged();
@@ -1091,6 +1096,7 @@ public class MainWindow
        * @param worker Current worker.
        * @param ok Flag indicating if the worker finished OK.
        */
+      @Override
       public void afterFinished(BasicWorker worker, boolean ok) {
         // Nothing to do
       }

@@ -361,6 +361,7 @@ public class RecentChange implements Comparable<RecentChange> {
    *    is less than, equal to, or greater than the specified object.
    * @see java.lang.Comparable#compareTo(java.lang.Object)
    */
+  @Override
   public int compareTo(RecentChange o) {
     if (o.id != id) {
       return (o.id < id) ? -1 : 1;

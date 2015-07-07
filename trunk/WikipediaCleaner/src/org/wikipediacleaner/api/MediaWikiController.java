@@ -23,7 +23,7 @@ import org.wikipediacleaner.utils.ConfigurationValueInteger;
 
 
 /**
- * Centralisation of access to MediaWiki.
+ * Centralization of access to MediaWiki.
  */
 public abstract class MediaWikiController implements MediaWikiListener {
 
@@ -140,6 +140,7 @@ public abstract class MediaWikiController implements MediaWikiListener {
   /**
    * @param text Text to display.
    */
+  @Override
   public void setText(String text) {
     if (listener != null) {
       listener.setText(text);
@@ -149,6 +150,7 @@ public abstract class MediaWikiController implements MediaWikiListener {
   /**
    * @return Flag indicating if the processing should stop.
    */
+  @Override
   public boolean shouldStop() {
     if (listener != null) {
       return listener.shouldStop();

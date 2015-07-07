@@ -39,6 +39,7 @@ public class BasicWorker extends SwingWorker implements MediaWikiListener {
    * 
    * @param message Message to display.
    */
+  @Override
   public void setText(String message) {
     if ((window != null) && (window.getGlassPane() != null)) {
       window.getGlassPane().setText(message);
@@ -63,6 +64,7 @@ public class BasicWorker extends SwingWorker implements MediaWikiListener {
   /**
    * @return Flag indicating if the Swing Worker should stop.
    */
+  @Override
   public boolean shouldStop() {
     return !shouldContinue();
   }

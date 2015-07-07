@@ -379,6 +379,7 @@ public class Suggestion implements Comparable<Suggestion> {
    *    is less than, equal to, or greater than the specified object.
    * @see java.lang.Comparable#compareTo(java.lang.Object)
    */
+  @Override
   public int compareTo(Suggestion o) {
     if (o == null) {
       return -1;

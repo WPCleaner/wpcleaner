@@ -46,6 +46,7 @@ public class ApiXmlPagesWithPropResult extends ApiXmlResult implements ApiPagesW
    * @return True if request should be continued.
    * @throws APIException
    */
+  @Override
   public boolean executePagesWithProp(
       Map<String, String> properties,
       List<Page> list) throws APIException {

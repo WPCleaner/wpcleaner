@@ -48,6 +48,7 @@ public class ApiXmlLinksResult extends ApiXmlPropertiesResult implements ApiLink
    * @return True if request should be continued.
    * @throws APIException
    */
+  @Override
   public boolean executeLinks(
       Map<String, String> properties,
       Map<String, List<Page>> lists,
@@ -104,6 +105,7 @@ public class ApiXmlLinksResult extends ApiXmlPropertiesResult implements ApiLink
    * @return True if request should be continued.
    * @throws APIException
    */
+  @Override
   public boolean executeLinks(
       Map<String, String> properties,
       List<Page> links,

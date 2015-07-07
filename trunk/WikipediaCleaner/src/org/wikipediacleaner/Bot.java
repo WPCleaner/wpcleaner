@@ -221,6 +221,7 @@ public class Bot implements BasicWorkerListener {
    * @param worker
    * @see org.wikipediacleaner.gui.swing.basic.BasicWorkerListener#beforeStart(org.wikipediacleaner.gui.swing.basic.BasicWorker)
    */
+  @Override
   public void beforeStart(BasicWorker worker) {
     // Do nothing
   }
@@ -229,6 +230,7 @@ public class Bot implements BasicWorkerListener {
    * @param worker
    * @see org.wikipediacleaner.gui.swing.basic.BasicWorkerListener#afterStart(org.wikipediacleaner.gui.swing.basic.BasicWorker)
    */
+  @Override
   public void afterStart(BasicWorker worker) {
     // Do nothing
   }
@@ -237,6 +239,7 @@ public class Bot implements BasicWorkerListener {
    * @param worker
    * @see org.wikipediacleaner.gui.swing.basic.BasicWorkerListener#beforeFinished(org.wikipediacleaner.gui.swing.basic.BasicWorker)
    */
+  @Override
   public void beforeFinished(BasicWorker worker) {
     // Do nothing
   }
@@ -246,6 +249,7 @@ public class Bot implements BasicWorkerListener {
    * @param ok
    * @see org.wikipediacleaner.gui.swing.basic.BasicWorkerListener#afterFinished(org.wikipediacleaner.gui.swing.basic.BasicWorker, boolean)
    */
+  @Override
   public void afterFinished(BasicWorker worker, boolean ok) {
     if (!ok) {
       System.exit(1);

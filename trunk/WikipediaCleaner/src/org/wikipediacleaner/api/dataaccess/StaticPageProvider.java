@@ -31,6 +31,7 @@ public class StaticPageProvider implements PageProvider {
    * @return Page.
    * @see org.wikipediacleaner.api.dataaccess.PageProvider#getPage()
    */
+  @Override
   public Page getPage() {
     return page;
   }
@@ -39,6 +40,7 @@ public class StaticPageProvider implements PageProvider {
    * @return Wiki.
    * @see org.wikipediacleaner.api.dataaccess.WikiProvider#getWiki()
    */
+  @Override
   public EnumWikipedia getWiki() {
     if (page != null) {
       return page.getWikipedia();

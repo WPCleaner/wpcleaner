@@ -43,6 +43,7 @@ public class ApiXmlInfoResult extends ApiXmlPropertiesResult implements ApiInfoR
    * @return True if request should be continued.
    * @throws APIException
    */
+  @Override
   public boolean executeInformations(
       Map<String, String> properties,
       Collection<Page> pages) throws APIException {

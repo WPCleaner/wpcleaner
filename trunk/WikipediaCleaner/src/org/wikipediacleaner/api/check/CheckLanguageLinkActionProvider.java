@@ -45,6 +45,7 @@ public class CheckLanguageLinkActionProvider implements ActionProvider {
    * @param textPane Text component.
    * @return Action.
    */
+  @Override
   public Action getAction(Element element, JTextPane textPane) {
     return new CheckLanguageLinkAction(
         fromWikipedia, toWikipedia, title, text, element, textPane);
@@ -54,6 +55,7 @@ public class CheckLanguageLinkActionProvider implements ActionProvider {
    * @param newText New text.
    * @return True if this action can give this new text.
    */
+  @Override
   public boolean isPossibleReplacement(String newText) {
     return false;
   }

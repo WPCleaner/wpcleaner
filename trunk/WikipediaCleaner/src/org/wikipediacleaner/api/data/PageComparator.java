@@ -143,6 +143,7 @@ public abstract class PageComparator implements NamedComparator<Page>, Externali
   /* (non-Javadoc)
    * @see java.io.Externalizable#writeExternal(java.io.ObjectOutput)
    */
+  @Override
   public void writeExternal(@SuppressWarnings("unused") ObjectOutput output) {
     //
   }
@@ -150,6 +151,7 @@ public abstract class PageComparator implements NamedComparator<Page>, Externali
   /* (non-Javadoc)
    * @see java.io.Externalizable#readExternal(java.io.ObjectInput)
    */
+  @Override
   public void readExternal(@SuppressWarnings("unused") ObjectInput input) {
     //
   }
@@ -169,6 +171,7 @@ public abstract class PageComparator implements NamedComparator<Page>, Externali
     /* (non-Javadoc)
      * @see org.wikipediacleaner.api.data.NamedComparator#getName()
      */
+    @Override
     public String getName() {
       return "Namespace";
     }
@@ -176,6 +179,7 @@ public abstract class PageComparator implements NamedComparator<Page>, Externali
     /* (non-Javadoc)
      * @see java.util.Comparator#compare(java.lang.Object, java.lang.Object)
      */
+    @Override
     public int compare(Page o1, Page o2) {
       if (o1.getNamespace() == null) {
         if (o2.getNamespace() == null) {
@@ -210,6 +214,7 @@ public abstract class PageComparator implements NamedComparator<Page>, Externali
     /* (non-Javadoc)
      * @see org.wikipediacleaner.api.data.NamedComparator#getName()
      */
+    @Override
     public String getName() {
       return "Title";
     }
@@ -217,6 +222,7 @@ public abstract class PageComparator implements NamedComparator<Page>, Externali
     /* (non-Javadoc)
      * @see java.util.Comparator#compare(java.lang.Object, java.lang.Object)
      */
+    @Override
     public int compare(Page o1, Page o2) {
       if (o1.getTitle() == null) {
         if (o2.getTitle() == null) {
@@ -251,6 +257,7 @@ public abstract class PageComparator implements NamedComparator<Page>, Externali
     /* (non-Javadoc)
      * @see org.wikipediacleaner.api.data.NamedComparator#getName()
      */
+    @Override
     public String getName() {
       return "RevisionId";
     }
@@ -258,6 +265,7 @@ public abstract class PageComparator implements NamedComparator<Page>, Externali
     /* (non-Javadoc)
      * @see java.util.Comparator#compare(java.lang.Object, java.lang.Object)
      */
+    @Override
     public int compare(Page o1, Page o2) {
       if (o1.getRevisionId() == null) {
         if (o2.getRevisionId() == null) {
@@ -292,6 +300,7 @@ public abstract class PageComparator implements NamedComparator<Page>, Externali
     /* (non-Javadoc)
      * @see org.wikipediacleaner.api.data.NamedComparator#getName()
      */
+    @Override
     public String getName() {
       return "PageId";
     }
@@ -299,6 +308,7 @@ public abstract class PageComparator implements NamedComparator<Page>, Externali
     /* (non-Javadoc)
      * @see java.util.Comparator#compare(java.lang.Object, java.lang.Object)
      */
+    @Override
     public int compare(Page o1, Page o2) {
       if (o1.getPageId() == null) {
         if (o2.getPageId() == null) {
@@ -333,6 +343,7 @@ public abstract class PageComparator implements NamedComparator<Page>, Externali
     /* (non-Javadoc)
      * @see org.wikipediacleaner.api.data.NamedComparator#getName()
      */
+    @Override
     public String getName() {
       return "Template";
     }
@@ -340,6 +351,7 @@ public abstract class PageComparator implements NamedComparator<Page>, Externali
     /* (non-Javadoc)
      * @see java.util.Comparator#compare(java.lang.Object, java.lang.Object)
      */
+    @Override
     public int compare(Page o1, Page o2) {
       if (o1.getNamespace() == null) {
         if (o2.getNamespace() == null) {
@@ -383,6 +395,7 @@ public abstract class PageComparator implements NamedComparator<Page>, Externali
     /* (non-Javadoc)
      * @see org.wikipediacleaner.api.data.NamedComparator#getName()
      */
+    @Override
     public String getName() {
       return "Redirect";
     }
@@ -390,6 +403,7 @@ public abstract class PageComparator implements NamedComparator<Page>, Externali
     /* (non-Javadoc)
      * @see java.util.Comparator#compare(java.lang.Object, java.lang.Object)
      */
+    @Override
     public int compare(Page o1, Page o2) {
       if (o1.isRedirect() == o2.isRedirect()) {
         return 0; 

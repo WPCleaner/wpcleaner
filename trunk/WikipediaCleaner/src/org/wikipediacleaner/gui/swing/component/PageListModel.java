@@ -81,6 +81,7 @@ public class PageListModel extends AbstractListModel {
   /* (non-Javadoc)
    * @see javax.swing.ListModel#getElementAt(int)
    */
+  @Override
   public Object getElementAt(int index) {
     if ((index >= 0) && (index < filteredList.size())) {
       return filteredList.get(index);
@@ -91,6 +92,7 @@ public class PageListModel extends AbstractListModel {
   /* (non-Javadoc)
    * @see javax.swing.ListModel#getSize()
    */
+  @Override
   public int getSize() {
     return filteredList.size();
   }

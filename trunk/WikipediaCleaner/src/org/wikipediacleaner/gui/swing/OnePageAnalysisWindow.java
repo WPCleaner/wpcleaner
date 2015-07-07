@@ -716,6 +716,7 @@ public class OnePageAnalysisWindow
    */
   class AnalysisListSelectionListener implements ListSelectionListener {
 
+    @Override
     public void valueChanged(ListSelectionEvent e) {
       if (e.getSource() instanceof JList) {
         JList list = (JList) e.getSource();
@@ -1499,6 +1500,7 @@ public class OnePageAnalysisWindow
    * 
    * @param pageName Name of the page.
    */
+  @Override
   public void pageDeleted(String pageName) {
     dispose();
   }
@@ -1518,6 +1520,7 @@ public class OnePageAnalysisWindow
    * 
    * @param categoryName Name of the category.
    */
+  @Override
   public void categoryInserted(String categoryName) {
     if (categoryName != null) {
       if (addedCategories == null) {
@@ -1533,6 +1536,7 @@ public class OnePageAnalysisWindow
    * 
    * @param templateName Name of the template.
    */
+  @Override
   public void templateInserted(String templateName) {
     if (templateName != null) {
       if (addedTemplates == null) {

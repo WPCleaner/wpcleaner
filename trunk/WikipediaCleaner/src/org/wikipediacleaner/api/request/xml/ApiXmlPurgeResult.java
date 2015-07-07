@@ -38,6 +38,7 @@ public class ApiXmlPurgeResult extends ApiXmlResult implements ApiPurgeResult {
    * @param properties Properties defining request.
    * @throws APIException
    */
+  @Override
   public void executePurge(
       Map<String, String> properties)
           throws APIException {

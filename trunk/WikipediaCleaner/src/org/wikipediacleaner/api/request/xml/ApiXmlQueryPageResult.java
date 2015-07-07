@@ -46,6 +46,7 @@ public class ApiXmlQueryPageResult extends ApiXmlResult implements ApiQueryPageR
    * @return True if request should be continued.
    * @throws APIException
    */
+  @Override
   public boolean executeQueryPage(
       Map<String, String> properties,
       List<Page> list) throws APIException {

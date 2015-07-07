@@ -419,6 +419,7 @@ public class LanguageRegistry {
      *    is less than, equal to, or greater than the code of the specified element.
      * @see java.lang.Comparable#compareTo(java.lang.Object)
      */
+    @Override
     public int compareTo(Element o) {
       return code.compareTo(o.code);
     }

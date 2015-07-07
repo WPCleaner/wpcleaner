@@ -115,6 +115,7 @@ public class ProgressionValue implements Comparable<ProgressionValue> {
   /* (non-Javadoc)
    * @see java.lang.Comparable#compareTo(java.lang.Object)
    */
+  @Override
   public int compareTo(ProgressionValue o) {
     if (o == null) {
       return -1;

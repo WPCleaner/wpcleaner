@@ -86,6 +86,7 @@ public class DetectionListTableModel extends AbstractTableModel {
    * @return Number of columns.
    * @see javax.swing.table.TableModel#getColumnCount()
    */
+  @Override
   public int getColumnCount() {
     if (textPane != null) {
       return NB_COLUMNS_WITH_GOTO;
@@ -97,6 +98,7 @@ public class DetectionListTableModel extends AbstractTableModel {
    * @return Number of rows.
    * @see javax.swing.table.TableModel#getRowCount()
    */
+  @Override
   public int getRowCount() {
     return (detections != null) ? detections.size() : 0;
   }
@@ -107,6 +109,7 @@ public class DetectionListTableModel extends AbstractTableModel {
    * @return Value at row and column.
    * @see javax.swing.table.TableModel#getValueAt(int, int)
    */
+  @Override
   public Object getValueAt(int rowIndex, int columnIndex) {
     if ((detections != null) && (rowIndex >= 0) && (rowIndex < detections.size())) {
       CheckWikiDetection detection = detections.get(rowIndex);

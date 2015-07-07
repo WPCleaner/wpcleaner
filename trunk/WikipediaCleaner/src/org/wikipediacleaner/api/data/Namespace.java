@@ -150,6 +150,7 @@ public class Namespace implements Comparable<Namespace> {
   /* (non-Javadoc)
    * @see java.lang.Comparable#compareTo(java.lang.Object)
    */
+  @Override
   public int compareTo(Namespace bl) {
     int compare;
 

@@ -67,6 +67,7 @@ class RecentChangesRunnable implements Runnable {
    * 
    * @see java.lang.Runnable#run()
    */
+  @Override
   public void run() {
     while (!shouldStop) {
       try {

@@ -453,6 +453,7 @@ public class BotCWTableModel extends AbstractTableModel {
    * @return Number of rows.
    * @see javax.swing.table.TableModel#getRowCount()
    */
+  @Override
   public int getRowCount() {
     return (algorithms != null) ? algorithms.size() : 0;
   }
@@ -461,6 +462,7 @@ public class BotCWTableModel extends AbstractTableModel {
    * @return Number of columns.
    * @see javax.swing.table.TableModel#getColumnCount()
    */
+  @Override
   public int getColumnCount() {
     return NB_COLUMNS;
   }
@@ -471,6 +473,7 @@ public class BotCWTableModel extends AbstractTableModel {
    * @return Value at row and column.
    * @see javax.swing.table.TableModel#getValueAt(int, int)
    */
+  @Override
   public Object getValueAt(int rowIndex, int columnIndex) {
     if ((rowIndex >= 0) && (rowIndex < algorithms.size())) {
       CheckErrorAlgorithm algorithm = algorithms.get(rowIndex);

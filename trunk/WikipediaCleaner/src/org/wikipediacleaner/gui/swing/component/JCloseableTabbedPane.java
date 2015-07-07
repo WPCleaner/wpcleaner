@@ -72,6 +72,7 @@ public class JCloseableTabbedPane
        * @param e Event.
        * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
        */
+      @Override
       public void actionPerformed(ActionEvent e) {
         remove(getSelectedIndex());
       }
@@ -121,6 +122,7 @@ public class JCloseableTabbedPane
    * @param e
    * @see java.awt.event.KeyListener#keyTyped(java.awt.event.KeyEvent)
    */
+  @Override
   public void keyTyped(KeyEvent e) {
     // Nothing to do
   }
@@ -129,6 +131,7 @@ public class JCloseableTabbedPane
    * @param e
    * @see java.awt.event.KeyListener#keyPressed(java.awt.event.KeyEvent)
    */
+  @Override
   public void keyPressed(KeyEvent e) {
     if ((e.getKeyCode() == KeyEvent.VK_W) &&
         (e.isControlDown())) {
@@ -140,6 +143,7 @@ public class JCloseableTabbedPane
    * @param e
    * @see java.awt.event.KeyListener#keyReleased(java.awt.event.KeyEvent)
    */
+  @Override
   public void keyReleased(KeyEvent e) {
     // Nothing to do
   }

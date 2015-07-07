@@ -67,6 +67,7 @@ public class PageListTable extends JTable implements PageListProvider {
    * @return Wiki
    * @see org.wikipediacleaner.api.dataaccess.WikiProvider#getWiki()
    */
+  @Override
   public EnumWikipedia getWiki() {
     return wiki;
   }
@@ -75,6 +76,7 @@ public class PageListTable extends JTable implements PageListProvider {
    * @return List of selected pages
    * @see org.wikipediacleaner.api.dataaccess.PageListProvider#getPages()
    */
+  @Override
   public List<Page> getPages() {
     return getSelectedPages();
   }

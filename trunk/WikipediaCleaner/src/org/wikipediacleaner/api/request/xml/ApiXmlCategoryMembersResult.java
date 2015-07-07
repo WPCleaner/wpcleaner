@@ -49,6 +49,7 @@ public class ApiXmlCategoryMembersResult extends ApiXmlResult implements ApiCate
    * @return True if request should be continued.
    * @throws APIException
    */
+  @Override
   public boolean executeCategoryMembers(
       Map<String, String> properties,
       List<Page> list,

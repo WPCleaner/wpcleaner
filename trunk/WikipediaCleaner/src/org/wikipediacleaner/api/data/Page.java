@@ -1040,6 +1040,7 @@ public class Page implements Comparable<Page> {
    *         is less than, equal to, or greater the specified page.
    * @see java.lang.Comparable#compareTo(java.lang.Object)
    */
+  @Override
   public int compareTo(Page bl) {
     int compare;
 

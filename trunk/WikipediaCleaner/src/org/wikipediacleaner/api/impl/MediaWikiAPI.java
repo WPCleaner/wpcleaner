@@ -198,6 +198,7 @@ public class MediaWikiAPI implements API {
   /**
    * @return Maximum number of pages per query.
    */
+  @Override
   public int getMaxPagesPerQuery() {
     return MAX_PAGES_PER_QUERY;
   }
@@ -212,6 +213,7 @@ public class MediaWikiAPI implements API {
    * @param wiki Wiki.
    * @param userName User name.
    */
+  @Override
   public void loadConfiguration(
       EnumWikipedia wiki,
       String userName) throws APIException {
@@ -264,6 +266,7 @@ public class MediaWikiAPI implements API {
    * @param section Section number.
    * @throws APIException
    */
+  @Override
   public void retrieveSectionContents(EnumWikipedia wikipedia, Page page, int section)
     throws APIException {
     Map<String, String> properties = getProperties(ApiRequest.ACTION_QUERY, true);
@@ -339,6 +342,7 @@ public class MediaWikiAPI implements API {
    * @return Result of the command.
    * @throws APIException
    */
+  @Override
   public QueryResult updatePage(
       EnumWikipedia wikipedia, Page page,
       String newContents, String comment,
@@ -437,6 +441,7 @@ public class MediaWikiAPI implements API {
    * @return Result of the command.
    * @throws APIException
    */
+  @Override
   public QueryResult addNewSection(
       EnumWikipedia wikipedia,
       Page page, String title, String contents, boolean forceWatch) throws APIException {
@@ -455,6 +460,7 @@ public class MediaWikiAPI implements API {
    * @return Result of the command.
    * @throws APIException
    */
+  @Override
   public QueryResult updateSection(
       EnumWikipedia wikipedia,
       Page page, String title, int section,
@@ -555,6 +561,7 @@ public class MediaWikiAPI implements API {
    * @param pages List of pages.
    * @throws APIException
    */
+  @Override
   public void initializeRedirect(
       EnumWikipedia wiki, List<Page> pages) throws APIException {
     if ((pages == null) || (pages.isEmpty())) {
@@ -786,6 +793,7 @@ public class MediaWikiAPI implements API {
    * @throws APIException
    * @see <a href="http://www.mediawiki.org/wiki/API:Login">API:Login</a>
    */
+  @Override
   public LoginResult login(
       EnumWikipedia wiki,
       String username,
@@ -807,6 +815,7 @@ public class MediaWikiAPI implements API {
    * @param wiki Wiki.
    * @see <a href="http://www.mediawiki.org/wiki/API:Logout">API:Logout</a>
    */
+  @Override
   public void logout(EnumWikipedia wiki) {
     if (!wiki.getConnection().isClean()) {
       wiki.getConnection().clean();
@@ -827,6 +836,7 @@ public class MediaWikiAPI implements API {
    * @param wiki Wiki.
    * @throws APIException
    */
+  @Override
   public void retrieveTokens(EnumWikipedia wiki) throws APIException {
     ApiTokensResult result = new ApiXmlTokensResult(wiki, httpClient);
     ApiTokensRequest request = new ApiTokensRequest(wiki, result);
@@ -864,6 +874,7 @@ public class MediaWikiAPI implements API {
    * @throws APIException
    * @see <a href="https://www.mediawiki.org/wiki/API:Allmessages">API:Allmessages</a>
    */
+  @Override
   public String loadMessage(EnumWikipedia wiki, String messageName) throws APIException {
     ApiAllMessagesResult result = new ApiXmlAllMessagesResult(wiki, httpClient);
     ApiAllMessagesRequest request = new ApiAllMessagesRequest(wiki, result);
@@ -883,6 +894,7 @@ public class MediaWikiAPI implements API {
    * @throws APIException
    * @see <a href="https://www.mediawiki.org/wiki/API:Categories">API:Categories</a>
    */
+  @Override
   public void retrieveCategories(
       EnumWikipedia wiki,
       Page page) throws APIException {
@@ -900,6 +912,7 @@ public class MediaWikiAPI implements API {
    * @throws APIException
    * @see <a href="http://www.mediawiki.org/wiki/API:Properties#info_.2F_in">API:Properties#info</a>
    */
+  @Override
   public void retrieveInfo(
       EnumWikipedia wiki,
       Collection<Page> pages) throws APIException {
@@ -919,6 +932,7 @@ public class MediaWikiAPI implements API {
    * @throws APIException
    * @see <a href="http://www.mediawiki.org/wiki/API:Properties#revisions_.2F_rv">API:Properties#revisions</a>
    */
+  @Override
   public void retrieveContents(
       EnumWikipedia wiki,
       Collection<Page> pages, boolean usePageId,
@@ -935,6 +949,7 @@ public class MediaWikiAPI implements API {
    * @param wiki Wiki.
    * @param page The page.
    */
+  @Override
   public void retrieveTemplates(EnumWikipedia wiki, Page page)
       throws APIException {
     ApiTemplatesResult result = new ApiXmlTemplatesResult(wiki, httpClient);
@@ -954,6 +969,7 @@ public class MediaWikiAPI implements API {
    * @see <a href="http://www.mediawiki.org/wiki/API:Properties#categories_.2F_cl">API:Properties#categories</a>
    * @see <a href="http://www.mediawiki.org/wiki/API:Properties#templates_.2F_tl">API:Properties#templates</a>
    */
+  @Override
   public void initializeDisambiguationStatus(
       EnumWikipedia wiki, List<Page> pages,
       boolean forceApiCall)
@@ -1007,6 +1023,7 @@ public class MediaWikiAPI implements API {
    * @throws APIException
    * @see <a href="http://www.mediawiki.org/wiki/API:Properties#links_.2F_pl">API:Properties#links</a>
    */
+  @Override
   public void retrieveLinks(EnumWikipedia wiki, Collection<Page> pages)
       throws APIException {
     ApiLinksResult result = new ApiXmlLinksResult(wiki, httpClient);
@@ -1027,6 +1044,7 @@ public class MediaWikiAPI implements API {
    * @throws APIException
    * @see <a href="http://www.mediawiki.org/wiki/API:Properties#links_.2F_pl">API:Properties#links</a>
    */
+  @Override
   public void retrieveLinks(
       EnumWikipedia wiki, Page page, Integer namespace,
       List<Page> knownPages,
@@ -1062,6 +1080,7 @@ public class MediaWikiAPI implements API {
    * @throws APIException
    * @see <a href="http://www.mediawiki.org/wiki/API:Properties#langlinks_.2F_ll">API:Properties#langlinks</a>
    */
+  @Override
   public String getLanguageLink(EnumWikipedia from, EnumWikipedia to, String title)
       throws APIException {
     ApiLanguageLinksResult result = new ApiXmlLanguageLinksResult(from, httpClient);
@@ -1081,6 +1100,7 @@ public class MediaWikiAPI implements API {
    * @throws APIException
    * @see <a href="http://www.mediawiki.org/wiki/API:Abusefilters">API:Abusefilters</a>
    */
+  @Override
   public List<AbuseFilter> retrieveAbuseFilters(EnumWikipedia wiki)
       throws APIException {
     ApiAbuseFiltersResult result = new ApiXmlAbuseFiltersResult(wiki, httpClient);
@@ -1098,6 +1118,7 @@ public class MediaWikiAPI implements API {
    * @throws APIException
    * @see <a href="http://www.mediawiki.org/wiki/API:Abuselog">API:Abuselog</a>
    */
+  @Override
   public List<Page> retrieveAbuseLog(
       EnumWikipedia wiki, Integer filterId,
       Integer maxDuration)
@@ -1117,6 +1138,7 @@ public class MediaWikiAPI implements API {
    * @throws APIException
    * @see <a href="http://www.mediawiki.org/wiki/API:Backlinks">API:Backlinks</a>
    */
+  @Override
   public void retrieveBackLinks(
       EnumWikipedia wiki, Page page,
       boolean redirects)
@@ -1138,6 +1160,7 @@ public class MediaWikiAPI implements API {
    * @throws APIException
    * @see <a href="http://www.mediawiki.org/wiki/API:Categorymembers">API:Categorymembers</a>
    */
+  @Override
   public void retrieveCategoryMembers(
       EnumWikipedia wiki, Page category,
       int depth, boolean limit, int max) throws APIException {
@@ -1157,6 +1180,7 @@ public class MediaWikiAPI implements API {
    * @throws APIException
    * @see <a href="http://www.mediawiki.org/wiki/API:Embeddedin">API:Embeddedin</a>
    */
+  @Override
   public void retrieveEmbeddedIn(
       EnumWikipedia wiki, Page page,
       List<Integer> namespaces, boolean limit) throws APIException {
@@ -1175,6 +1199,7 @@ public class MediaWikiAPI implements API {
    * @throws APIException
    * @see <a href="http://www.mediawiki.org/wiki/API:Pageswithprop">API:Pageswithprop</a>
    */
+  @Override
   public List<Page> retrievePagesWithProp(
       EnumWikipedia wiki,
       String property, boolean limit) throws APIException {
@@ -1193,6 +1218,7 @@ public class MediaWikiAPI implements API {
    * @throws APIException
    * @see <a href="http://www.mediawiki.org/wiki/API:Protectedtitles">API:Protectedtitles</a>
    */
+  @Override
   public List<Page> getProtectedTitles(
       EnumWikipedia wiki,
       List<Integer> namespaces, boolean limit) throws APIException {
@@ -1211,6 +1237,7 @@ public class MediaWikiAPI implements API {
    * @throws APIException
    * @see <a href="http://www.mediawiki.org/wiki/API:Querypage">API:Querypage</a>
    */
+  @Override
   public List<Page> getQueryPages(
       EnumWikipedia wiki, EnumQueryPage query) throws APIException {
     ApiQueryPageResult result = new ApiXmlQueryPageResult(wiki, httpClient);
@@ -1228,6 +1255,7 @@ public class MediaWikiAPI implements API {
    * @throws APIException
    * @see <a href="http://www.mediawiki.org/wiki/API:Random">API:Random</a>
    */
+  @Override
   public List<Page> getRandomPages(
       EnumWikipedia wiki, int count,
       boolean redirects) throws APIException {
@@ -1247,6 +1275,7 @@ public class MediaWikiAPI implements API {
    * @throws APIException
    * @see <a href="http://www.mediawiki.org/wiki/API:Recentchanges">API:Recentchanges</a>
    */
+  @Override
   public String getRecentChanges(
       EnumWikipedia wiki,
       String start, List<RecentChange> recentChanges) throws APIException {
@@ -1265,6 +1294,7 @@ public class MediaWikiAPI implements API {
    * @throws APIException
    * @see <a href="http://www.mediawiki.org/wiki/API:Search">API:Search</a>
    */
+  @Override
   public void retrieveSimilarPages(
       EnumWikipedia wiki, Page page, boolean limit)
       throws APIException {
@@ -1282,6 +1312,7 @@ public class MediaWikiAPI implements API {
    * @throws APIException
    * @see <a href="http://www.mediawiki.org/wiki/API:Users">API:Users</a>
    */
+  @Override
   public User retrieveUser(
       EnumWikipedia wiki, String name) throws APIException {
     ApiUsersResult result = new ApiXmlUsersResult(wiki, httpClient);
@@ -1297,6 +1328,7 @@ public class MediaWikiAPI implements API {
    * @throws APIException
    * @see <a href="http://www.mediawiki.org/wiki/API:Watchlistraw">API:Watchlistraw</a>
    */
+  @Override
   public List<Page> retrieveRawWatchlist(EnumWikipedia wiki) throws APIException {
     ApiRawWatchlistResult result =
         new ApiXmlRawWatchlistResult(wiki, httpClient);
@@ -1320,6 +1352,7 @@ public class MediaWikiAPI implements API {
    * @throws APIException
    * @see <a href="http://www.mediawiki.org/wiki/API:Parsing_wikitext#expandtemplates">API:Parsing wikitext</a>
    */
+  @Override
   public String expandTemplates(
       EnumWikipedia wiki, String title, String text) throws APIException {
     ApiExpandResult result = new ApiXmlExpandResult(wiki, httpClient);
@@ -1338,6 +1371,7 @@ public class MediaWikiAPI implements API {
    * @throws APIException
    * @see <a href="http://www.mediawiki.org/wiki/API:Parsing_wikitext#parse">API:Parsing wikitext</a>
    */
+  @Override
   public String parseText(
       EnumWikipedia wiki, String title, String text) throws APIException {
     ApiParseResult result = new ApiXmlParseResult(wiki, httpClient);
@@ -1355,6 +1389,7 @@ public class MediaWikiAPI implements API {
    * @throws APIException
    * @see <a href="http://www.mediawiki.org/wiki/API:Parsing_wikitext#parse">API:Parsing wikitext</a>
    */
+  @Override
   public List<Section> retrieveSections(
       EnumWikipedia wiki, Page page) throws APIException {
     ApiParseResult result = new ApiXmlParseResult(wiki, httpClient);
@@ -1375,6 +1410,7 @@ public class MediaWikiAPI implements API {
    * @throws APIException
    * @see <a href="http://www.mediawiki.org/wiki/API:Purge">API:Purge</a>
    */
+  @Override
   public void purgePageCache(EnumWikipedia wiki, Page page)
       throws APIException {
     ApiPurgeResult result = new ApiXmlPurgeResult(wiki, httpClient);
@@ -1396,6 +1432,7 @@ public class MediaWikiAPI implements API {
    * @throws APIException
    * @see <a href="http://www.mediawiki.org/wiki/API:Delete">API:Delete</a>
    */
+  @Override
   public void deletePage(EnumWikipedia wiki, Page page, String reason)
       throws APIException {
     ApiDeleteResult result = new ApiXmlDeleteResult(wiki, httpClient);
@@ -1417,6 +1454,7 @@ public class MediaWikiAPI implements API {
    * @throws APIException
    * @see <a href="http://www.mediawiki.org/wiki/API:Delete">API:Delete</a>
    */
+  @Override
   public TemplateData retrieveTemplateData(EnumWikipedia wiki, Page page)
       throws APIException {
     ApiTemplateDataResult result = new ApiJsonTemplateDataResult(wiki, httpClient);
@@ -1440,6 +1478,7 @@ public class MediaWikiAPI implements API {
    * @param wiki Wiki.
    * @param listener Recent changes listener.
    */
+  @Override
   public void addRecentChangesListener(
       EnumWikipedia wiki,
       RecentChangesListener listener) {
@@ -1457,6 +1496,7 @@ public class MediaWikiAPI implements API {
    * @param wiki Wiki.
    * @param listener Recent changes listener.
    */
+  @Override
   public void removeRecentChangesListener(
       EnumWikipedia wiki,
       RecentChangesListener listener) {

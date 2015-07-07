@@ -47,6 +47,7 @@ public class ApiXmlParseResult extends ApiXmlResult implements ApiParseResult {
    * @return Parsed text.
    * @throws APIException
    */
+  @Override
   public String executeParse(
       Map<String, String> properties)
           throws APIException {
@@ -68,6 +69,7 @@ public class ApiXmlParseResult extends ApiXmlResult implements ApiParseResult {
    * @return List of sections.
    * @throws APIException
    */
+  @Override
   public List<Section> executeSections(
       Page page, Map<String, String> properties)
           throws APIException {

@@ -48,6 +48,7 @@ public class FindTextAction extends TextAction {
   /* (non-Javadoc)
    * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
    */
+  @Override
   public void actionPerformed(ActionEvent e) {
     JTextComponent text = (textPane != null) ? textPane : getTextComponent(e);
     String currentSearch = JOptionPane.showInputDialog(

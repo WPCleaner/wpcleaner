@@ -149,6 +149,7 @@ public abstract class AbstractPageListPopupListener extends AbstractPopupListene
    *  
    *  @param e Event.
    */
+  @Override
   public void popupMenuWillBecomeVisible(PopupMenuEvent e) {
     // Nothing to do
   }
@@ -159,6 +160,7 @@ public abstract class AbstractPageListPopupListener extends AbstractPopupListene
    * 
    * @param e Event.
    */
+  @Override
   public void popupMenuWillBecomeInvisible(PopupMenuEvent e) {
     if (list != null) {
       list.repaint();
@@ -170,6 +172,7 @@ public abstract class AbstractPageListPopupListener extends AbstractPopupListene
    * 
    * @param e Event.
    */
+  @Override
   public void popupMenuCanceled(PopupMenuEvent e) {
     // Nothing to do
   }

@@ -15,6 +15,7 @@ import java.util.Comparator;
  */
 public class PageElementComparator implements Comparator<PageElement> {
 
+  @Override
   public int compare(PageElement o1, PageElement o2) {
     if (o1 == null) {
       if (o2 == null) {

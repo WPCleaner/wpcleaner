@@ -16,6 +16,7 @@ public class DefaultBasicWorkerListener implements BasicWorkerListener {
   /* (non-Javadoc)
    * @see org.wikipediacleaner.gui.swing.basic.BasicWorkerListener#beforeStart(org.wikipediacleaner.gui.swing.basic.BasicWorker)
    */
+  @Override
   public void beforeStart(
       @SuppressWarnings("unused") BasicWorker worker) {
     //
@@ -24,6 +25,7 @@ public class DefaultBasicWorkerListener implements BasicWorkerListener {
   /* (non-Javadoc)
    * @see org.wikipediacleaner.gui.swing.basic.BasicWorkerListener#afterStart(org.wikipediacleaner.gui.swing.basic.BasicWorker)
    */
+  @Override
   public void afterStart(
       @SuppressWarnings("unused") BasicWorker worker) {
     //
@@ -32,6 +34,7 @@ public class DefaultBasicWorkerListener implements BasicWorkerListener {
   /* (non-Javadoc)
    * @see org.wikipediacleaner.gui.swing.basic.BasicWorkerListener#beforeFinished(org.wikipediacleaner.gui.swing.basic.BasicWorker)
    */
+  @Override
   public void beforeFinished(
       @SuppressWarnings("unused") BasicWorker worker) {
     //
@@ -40,6 +43,7 @@ public class DefaultBasicWorkerListener implements BasicWorkerListener {
   /* (non-Javadoc)
    * @see org.wikipediacleaner.gui.swing.basic.BasicWorkerListener#afterFinished(org.wikipediacleaner.gui.swing.basic.BasicWorker, boolean)
    */
+  @Override
   public void afterFinished(
       @SuppressWarnings("unused") BasicWorker worker,
       @SuppressWarnings("unused") boolean ok) {

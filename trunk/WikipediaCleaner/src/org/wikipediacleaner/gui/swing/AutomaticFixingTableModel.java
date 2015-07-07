@@ -125,6 +125,7 @@ class AutomaticFixingTableModel extends AbstractTableModel {
    * @return Number of rows in the table.
    * @see javax.swing.table.TableModel#getRowCount()
    */
+  @Override
   public int getRowCount() {
     if (data != null) {
       return data.size();
@@ -136,6 +137,7 @@ class AutomaticFixingTableModel extends AbstractTableModel {
    * @return Number of columns in the table.
    * @see javax.swing.table.TableModel#getColumnCount()
    */
+  @Override
   public int getColumnCount() {
     return NB_COLUMNS;
   }
@@ -146,6 +148,7 @@ class AutomaticFixingTableModel extends AbstractTableModel {
    * @return Value in the designated cell.
    * @see javax.swing.table.TableModel#getValueAt(int, int)
    */
+  @Override
   public Object getValueAt(int rowIndex, int columnIndex) {
     if ((data == null) ||
         (rowIndex < 0) || (rowIndex >= getRowCount()) ||

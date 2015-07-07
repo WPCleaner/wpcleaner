@@ -54,6 +54,7 @@ public abstract class BasicApiResult implements ApiResult {
   /**
    * @return Wiki on which requests are made.
    */
+  @Override
   public EnumWikipedia getWiki() {
     return wiki;
   }
@@ -61,6 +62,7 @@ public abstract class BasicApiResult implements ApiResult {
   /**
    * @return HTTP client for making requests.
    */
+  @Override
   public HttpClient getHttpClient() {
     return httpClient;
   }

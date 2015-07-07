@@ -38,6 +38,7 @@ public class InternalLinkCounter implements InternalLinkNotification {
    * @param good True if link is good.
    * @param helpNeeded True if help is needed.
    */
+  @Override
   public void linkFound(
       Page link, PageElementInternalLink internalLink,
       boolean good, boolean helpNeeded) {
@@ -58,6 +59,7 @@ public class InternalLinkCounter implements InternalLinkNotification {
    * @param template Template in which the link is found.
    * @param matcher Matcher used to find the link in the template.
    */
+  @Override
   public void linkFound(
       Page link, PageElementTemplate template,
       TemplateMatcher matcher) {

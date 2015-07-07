@@ -122,6 +122,7 @@ public class CheckWikiContentPanel
   /**
    * @return Wiki.
    */
+  @Override
   public EnumWikipedia getWiki() {
     if (window != null) {
       return window.getWikipedia();
@@ -239,6 +240,7 @@ public class CheckWikiContentPanel
     listErrors.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
     listErrors.addListSelectionListener(new ListSelectionListener() {
 
+      @Override
       public void valueChanged(ListSelectionEvent e) {
         if (e.getValueIsAdjusting()) {
           return;
@@ -520,6 +522,7 @@ public class CheckWikiContentPanel
   /* (non-Javadoc)
    * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
    */
+  @Override
   public void actionPerformed(ActionEvent e) {
     if (e == null) {
       return;
@@ -822,6 +825,7 @@ public class CheckWikiContentPanel
   /* (non-Javadoc)
    * @see java.awt.event.ItemListener#itemStateChanged(java.awt.event.ItemEvent)
    */
+  @Override
   public void itemStateChanged(ItemEvent e) {
     if ((e == null) || (e.getSource() == null)) {
       return;
@@ -836,6 +840,7 @@ public class CheckWikiContentPanel
    * @return Page.
    * @see org.wikipediacleaner.api.dataaccess.PageProvider#getPage()
    */
+  @Override
   public Page getPage() {
     return page;
   }
@@ -849,6 +854,7 @@ public class CheckWikiContentPanel
    * 
    * @param pageName Name of the page.
    */
+  @Override
   public void pageDeleted(String pageName) {
     pane.remove(this);
   }

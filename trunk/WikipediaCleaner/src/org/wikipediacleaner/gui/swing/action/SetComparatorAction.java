@@ -37,6 +37,7 @@ public class SetComparatorAction implements ActionListener {
   /* (non-Javadoc)
    * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
    */
+  @Override
   public void actionPerformed(@SuppressWarnings("unused") ActionEvent e) {
     if ((model != null) && (comparator != null)) {
       model.setComparator(comparator);

@@ -46,6 +46,7 @@ public class ApiXmlProtectedTitlesResult extends ApiXmlResult implements ApiProt
    * @return True if request should be continued.
    * @throws APIException
    */
+  @Override
   public boolean executeProtectedTitles(
       Map<String, String> properties,
       List<Page> list) throws APIException {

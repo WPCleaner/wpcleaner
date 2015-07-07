@@ -49,6 +49,7 @@ public class TextProviderUrlTitle implements TextProvider {
   /**
    * @return Possible texts.
    */
+  @Override
   public Collection<String> getTexts() {
     log.fine("IN");
     Collection<String> result = new ArrayList<String>();

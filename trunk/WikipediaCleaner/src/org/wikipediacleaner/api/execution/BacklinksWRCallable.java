@@ -38,6 +38,7 @@ public class BacklinksWRCallable extends MediaWikiCallable<Page> {
   /* (non-Javadoc)
    * @see java.util.concurrent.Callable#call()
    */
+  @Override
   public Page call() throws APIException {
     setText(GT._("Retrieving page back links") + " - " + page.getTitle());
     api.retrieveBackLinks(getWikipedia(), page, true);

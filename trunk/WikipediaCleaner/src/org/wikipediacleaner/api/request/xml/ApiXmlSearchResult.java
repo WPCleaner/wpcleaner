@@ -46,6 +46,7 @@ public class ApiXmlSearchResult extends ApiXmlResult implements ApiSearchResult 
    * @return True if request should be continued.
    * @throws APIException
    */
+  @Override
   public boolean executeSearch(
       Map<String, String> properties,
       List<Page> list)

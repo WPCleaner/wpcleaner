@@ -85,6 +85,7 @@ public class ApiXmlPropertiesResult extends ApiXmlResult implements ApiPropertie
    * @param pages Pages to be filled with redirect information.
    * @throws APIException
    */
+  @Override
   public void executeRedirect(
       Map<String, String> properties,
       List<Page> pages) throws APIException {

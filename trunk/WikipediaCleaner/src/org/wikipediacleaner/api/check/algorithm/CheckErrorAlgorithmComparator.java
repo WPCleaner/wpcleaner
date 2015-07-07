@@ -24,6 +24,7 @@ public class CheckErrorAlgorithmComparator implements
    *           argument is less than, equal to, or greater than the second
    * @see java.util.Comparator#compare(java.lang.Object, java.lang.Object)
    */
+  @Override
   public int compare(CheckErrorAlgorithm o1, CheckErrorAlgorithm o2) {
 
     // Check on null values

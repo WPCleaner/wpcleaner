@@ -34,12 +34,14 @@ public abstract class MediaWikiCallable<T> implements Callable<T>, MediaWikiList
     this.api = api;
   }
 
+  @Override
   public void setText(String text) {
     if (listener != null) {
       listener.setText(text);
     }
   }
 
+  @Override
   public boolean shouldStop() {
     if (listener != null) {
       return listener.shouldStop();

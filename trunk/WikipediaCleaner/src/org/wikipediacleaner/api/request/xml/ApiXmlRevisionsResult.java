@@ -46,6 +46,7 @@ public class ApiXmlRevisionsResult extends ApiXmlPropertiesResult implements Api
    * @return True if request should be continued.
    * @throws APIException
    */
+  @Override
   public boolean executeLastRevision(
       Map<String, String> properties,
       Collection<Page> pages) throws APIException {

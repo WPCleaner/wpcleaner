@@ -29,6 +29,7 @@ public class BasicActionProvider implements ActionProvider {
   /* (non-Javadoc)
    * @see org.wikipediacleaner.api.check.ActionProvider#getAction(javax.swing.text.Element, javax.swing.JTextPane)
    */
+  @Override
   public Action getAction(
       @SuppressWarnings("unused") Element element,
       @SuppressWarnings("unused") JTextPane textPane) {
@@ -39,6 +40,7 @@ public class BasicActionProvider implements ActionProvider {
    * @param text New text.
    * @return True if this action can give this new text.
    */
+  @Override
   public boolean isPossibleReplacement(String text) {
     return false;
   }

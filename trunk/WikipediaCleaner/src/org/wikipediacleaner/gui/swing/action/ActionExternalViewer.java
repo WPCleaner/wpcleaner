@@ -386,6 +386,7 @@ public class ActionExternalViewer extends AbstractAction implements ActionListen
    * @param e Event triggering this call.
    * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
    */
+  @Override
   public void actionPerformed(ActionEvent e) {
     if (list != null) {
       for (Object selection : list.getSelectedValues()) {
