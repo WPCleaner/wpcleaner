@@ -55,10 +55,10 @@ public class SortingOptionsPanel
   private JButton buttonSortUp;
   private JButton buttonSortDown;
 
-  private JList listSort;
-  private DefaultListModel modelSort;
-  private JList listSortItem;
-  private DefaultListModel modelSortItem;
+  private JList<CompositeComparator<Page>> listSort;
+  private DefaultListModel<CompositeComparator<Page>> modelSort;
+  private JList<NamedComparator<Page>> listSortItem;
+  private DefaultListModel<NamedComparator<Page>> modelSortItem;
 
   /**
    * Construct a General Options panel. 
@@ -91,12 +91,12 @@ public class SortingOptionsPanel
         BorderFactory.createEtchedBorder(), GT._("Sort orders")));
     constraints.fill = GridBagConstraints.BOTH;
     constraints.weighty = 1;
-    modelSort = new DefaultListModel();
+    modelSort = new DefaultListModel<CompositeComparator<Page>>();
     List<CompositeComparator<Page>> comparators = PageComparator.getComparators();
     for (CompositeComparator<Page> comparator : comparators) {
       modelSort.addElement(comparator);
     }
-    listSort = new JList(modelSort);
+    listSort = new JList<CompositeComparator<Page>>(modelSort);
     listSort.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
     listSort.addListSelectionListener(this);
     JScrollPane scrollSort = new JScrollPane(listSort);
@@ -129,8 +129,8 @@ public class SortingOptionsPanel
     constraints.gridy = 0;
     constraints.fill = GridBagConstraints.BOTH;
     constraints.weighty = 1;
-    modelSortItem = new DefaultListModel();
-    listSortItem = new JList(modelSortItem);
+    modelSortItem = new DefaultListModel<NamedComparator<Page>>();
+    listSortItem = new JList<NamedComparator<Page>>(modelSortItem);
     listSortItem.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
     JScrollPane scrollSortItem = new JScrollPane(listSortItem);
     scrollSortItem.setMinimumSize(new Dimension(100, 100));
@@ -247,18 +247,18 @@ public class SortingOptionsPanel
    * @param up Flag indicating if it's the Up button.
    */
   private void actionSortMove(boolean up) {
-    Object selectedSort = listSort.getSelectedValue();
-    Object selectedItem = listSortItem.getSelectedValue();
-    if ((selectedSort instanceof CompositeComparator) &&
-        (selectedItem instanceof NamedComparator)) {
-      CompositeComparator comparators = (CompositeComparator) selectedSort;
-      NamedComparator comparator = (NamedComparator) selectedItem;
+    CompositeComparator<Page> selectedSort = listSort.getSelectedValue();
+    NamedComparator<Page> selectedItem = listSortItem.getSelectedValue();
+    if ((selectedSort != null) &&
+        (selectedItem != null)) {
+      CompositeComparator<Page> comparators = selectedSort;
+      NamedComparator<Page> comparator = selectedItem;
       comparators.moveComparator(comparator.getName(), up);
       int selected = listSortItem.getSelectedIndex();
       selected += up ? -1 : 1;
       modelSortItem.clear();
       for (int i = 0; i < comparators.getComparatorsCount(); i++) {
-        NamedComparator item = comparators.getComparator(i);
+        NamedComparator<Page> item = comparators.getComparator(i);
         modelSortItem.addElement(item);
       }
       listSortItem.setSelectedIndex(Math.min(Math.max(0, selected), modelSortItem.size() - 1));

@@ -82,7 +82,7 @@ public class AutomaticFixingWindow extends OnePageWindow {
   private JTextPane paneOriginal;
   private JTextPane paneResult;
 
-  JList listPages;
+  JList<Page> listPages;
   PageListModel modelPages;
   private PageListCellRenderer listCellRenderer;
 
@@ -326,7 +326,7 @@ public class AutomaticFixingWindow extends OnePageWindow {
   private Component createLinksComponents() {
     JPanel panel = new JPanel(new GridBagLayout());
 
-    listPages = new JList(modelPages);
+    listPages = new JList<Page>(modelPages);
 
     // Initialize constraints
     GridBagConstraints constraints = new GridBagConstraints();
@@ -576,8 +576,8 @@ public class AutomaticFixingWindow extends OnePageWindow {
   private void runAutomaticFixing(boolean save) {
 
     // Check that information is set
-    Object[] values = listPages.getSelectedValues();
-    if ((values == null) || (values.length == 0)) {
+    List<Page> values = listPages.getSelectedValuesList();
+    if ((values == null) || (values.size() == 0)) {
       Utilities.displayWarning(
           getParentComponent(),
           GT._("You must select the pages on which running automatic fixing."));
@@ -619,9 +619,9 @@ public class AutomaticFixingWindow extends OnePageWindow {
     }
 
     // Prepare the replacements
-    Page[] tmpPages = new Page[values.length];
-    for (int i = 0; i < values.length; i++) {
-      tmpPages[i] = (Page) values[i];
+    Page[] tmpPages = new Page[values.size()];
+    for (int i = 0; i < values.size(); i++) {
+      tmpPages[i] = values.get(i);
     }
     Map<String, List<AutomaticFixing>> replacements = new HashMap<String, List<AutomaticFixing>>();
     if (getPage() != null) {
@@ -676,8 +676,8 @@ public class AutomaticFixingWindow extends OnePageWindow {
     }
 
     // Test replacements in the page list
-    Object[] values = listPages.getSelectedValues();
-    if ((values != null) && (values.length > 0)) {
+    List<Page> values = listPages.getSelectedValuesList();
+    if ((values != null) && (values.size() > 0)) {
       String message = GT._("Do you want to test the replacements on the pages ?");
       int answer = Utilities.displayYesNoWarning(getParentComponent(), message);
       if (answer == JOptionPane.YES_OPTION) {

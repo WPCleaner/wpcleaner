@@ -163,16 +163,15 @@ public class ActionWatchPage implements ActionListener {
     }
 
     // Find which pages are to be added
-    Object[] links = null;
+    List<?> links = null;
     if (list != null) {
-      links = list.getSelectedValues();
+      links = list.getSelectedValuesList();
     } else {
       if (title != null) {
-        links = new String[1];
-        links[0] = title;
+        links = Collections.singletonList(title);
       }
     }
-    if ((links == null) || (links.length == 0)) {
+    if ((links == null) || (links.size() == 0)) {
       return;
     }
 
@@ -180,7 +179,7 @@ public class ActionWatchPage implements ActionListener {
     String message = GT.__(
         "Would you like to add this page on your local watchlist?",
         "Would you like to add these pages on your local watchlist?",
-        links.length, (Object[]) null);
+        links.size(), (Object[]) null);
     int answer = Utilities.displayYesNoWarning(parent, message);
     if (answer != JOptionPane.YES_OPTION) {
       return;

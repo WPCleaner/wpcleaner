@@ -126,7 +126,7 @@ public class OnePageAnalysisWindow
   private JButton buttonViewHistory;
   private JButton buttonWatch;
 
-  JList listLinks;
+  JList<Page> listLinks;
   PageListCellRenderer listCellRenderer;
   PageListModel modelLinks;
   Map<String, Integer> mapLinksTotalCount;
@@ -524,7 +524,7 @@ public class OnePageAnalysisWindow
   private Component createLinksComponents() {
     JPanel panel = new JPanel(new GridBagLayout());
 
-    listLinks = new JList(modelLinks);
+    listLinks = new JList<Page>(modelLinks);
 
     // Initialize constraints
     GridBagConstraints constraints = new GridBagConstraints();
@@ -644,27 +644,25 @@ public class OnePageAnalysisWindow
    */
   void updateTextFormatting(JList list) {
     if (list == null) {
-      Object[] selection = listLinks.getSelectedValues();
-      if ((selection != null) && (selection.length > 0)) {
+      List<Page> selection = listLinks.getSelectedValuesList();
+      if ((selection != null) && (selection.size() > 0)) {
         list = listLinks;
       }
     }
     if (list == null) {
-      Object[] selection = listErrors.getSelectedValues();
-      if ((selection != null) && (selection.length > 0)) {
+      List<?> selection = listErrors.getSelectedValuesList();
+      if ((selection != null) && (selection.size() > 0)) {
         list = listErrors;
       }
     }
     if (list == listLinks) {
       // List of links
-      Object[] selection = listLinks.getSelectedValues();
-      if ((selection != null) && (selection.length > 0)) {
+      List<Page> selection = listLinks.getSelectedValuesList();
+      if ((selection != null) && (selection.size() > 0)) {
         listErrors.clearSelection();
         List<Page> pages = new ArrayList<Page>();
-        for (int i = 0; i < selection.length; i++) {
-          if (selection[i] instanceof Page) {
-            pages.add((Page) selection[i]);
-          }
+        for (Page page : selection) {
+          pages.add(page);
         }
         MWPaneFormatter formatter = getTextContents().getFormatter();
         if (formatter instanceof MWPaneDisambiguationFormatter) {
@@ -998,15 +996,13 @@ public class OnePageAnalysisWindow
    * Action called when Remove all links button is pressed.
    */
   public void actionRemoveAllLinks() {
-    Object[] selected = listLinks.getSelectedValues();
-    if ((selected == null) || (selected.length == 0)) {
+    List<Page> selected = listLinks.getSelectedValuesList();
+    if ((selected == null) || (selected.size() == 0)) {
       return;
     }
     List<String> titles = new ArrayList<String>();
-    for (Object selectedLine : selected) {
-      if (selectedLine instanceof Page) {
-        titles.add(((Page) selectedLine).getTitle());
-      }
+    for (Page selectedLine : selected) {
+      titles.add(selectedLine.getTitle());
     }
     if (titles.size() == 0) {
       return;
@@ -1474,15 +1470,13 @@ public class OnePageAnalysisWindow
 
     // Count disambiguation links
     if (listLinks.getSelectedValue() != null) {
-      Object[] values = listLinks.getSelectedValues();
+      List<Page> values = listLinks.getSelectedValuesList();
       if (values != null) {
         int count = 0;
-        for (Object value : values) {
-          if (value instanceof Page) {
-            InternalLinkCount tmpCount = analysis.getLinkCount((Page) value);
-            if (tmpCount != null) {
-              count += tmpCount.getTotalLinkCount();
-            }
+        for (Page value : values) {
+          InternalLinkCount tmpCount = analysis.getLinkCount(value);
+          if (tmpCount != null) {
+            count += tmpCount.getTotalLinkCount();
           }
         }
         return count;

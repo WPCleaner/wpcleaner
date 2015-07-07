@@ -105,7 +105,7 @@ public class Controller {
    * @param referencePage Page.
    * @param wikipedia Wikipedia
    */
-  public static void runAutomatixFixing(
+  public static void runAutomaticFixing(
       Collection<Page> pages,
       Page referencePage, EnumWikipedia wikipedia) {
     if (pages != null) {

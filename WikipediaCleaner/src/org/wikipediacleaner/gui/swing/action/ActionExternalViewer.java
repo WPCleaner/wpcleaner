@@ -389,7 +389,7 @@ public class ActionExternalViewer extends AbstractAction implements ActionListen
   @Override
   public void actionPerformed(ActionEvent e) {
     if (list != null) {
-      for (Object selection : list.getSelectedValues()) {
+      for (Object selection : list.getSelectedValuesList()) {
         if (selection instanceof Page) {
           viewPage(((Page) selection).getTitle());
         }

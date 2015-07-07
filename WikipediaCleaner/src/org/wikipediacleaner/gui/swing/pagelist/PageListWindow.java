@@ -511,7 +511,7 @@ public class PageListWindow extends BasicWindow {
           GT._("You must select pages on which running automatic fixing."));
       return;
     }
-    Controller.runAutomatixFixing(selectedPages, referencePage, getWikipedia());
+    Controller.runAutomaticFixing(selectedPages, referencePage, getWikipedia());
   }
 
   /**

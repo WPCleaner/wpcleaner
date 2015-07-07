@@ -25,7 +25,7 @@ import org.wikipediacleaner.images.EnumImageSize;
 /**
  * A renderer for CheckErrorAlgorithm items in a list.
  */
-public class CheckErrorPageListCellRenderer extends JLabel implements ListCellRenderer {
+public class CheckErrorPageListCellRenderer extends JLabel implements ListCellRenderer<CheckErrorPage> {
 
   private static final long serialVersionUID = 1L;
 
@@ -61,8 +61,8 @@ public class CheckErrorPageListCellRenderer extends JLabel implements ListCellRe
    */
   @Override
   public Component getListCellRendererComponent(
-      JList list,
-      Object value,
+      JList<? extends CheckErrorPage> list,
+      CheckErrorPage value,
       @SuppressWarnings("unused") int index,
       boolean isSelected,
       @SuppressWarnings("unused") boolean cellHasFocus) {
@@ -72,8 +72,8 @@ public class CheckErrorPageListCellRenderer extends JLabel implements ListCellRe
     Boolean errorsPresent = null;
     Boolean globalFix = null;
     boolean whiteList = false;
-    if (value instanceof CheckErrorPage) {
-      CheckErrorPage errorPage = (CheckErrorPage) value;
+    if (value != null) {
+      CheckErrorPage errorPage = value;
       whiteList = errorPage.isInWhiteList();
       if (forPage && (errorPage.getPage() != null)) {
         text = errorPage.getPage().getTitle();
