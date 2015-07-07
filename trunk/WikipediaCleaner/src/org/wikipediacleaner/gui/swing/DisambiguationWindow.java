@@ -16,7 +16,6 @@ import java.awt.Insets;
 import java.awt.event.ActionListener;
 import java.beans.EventHandler;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.Properties;
 
@@ -70,7 +69,7 @@ public class DisambiguationWindow extends OnePageWindow {
 
   private Properties backlinksProperties;
 
-  JList listLinks;
+  JList<Page> listLinks;
   PageListModel modelLinks;
   private PageListCellRenderer listCellRenderer;
   private DisambiguationPageListPopupListener popupListenerLinks;
@@ -273,7 +272,7 @@ public class DisambiguationWindow extends OnePageWindow {
     JPanel panel = new JPanel(new GridBagLayout());
     Configuration configuration = Configuration.getConfiguration();
 
-    listLinks = new JList(modelLinks);
+    listLinks = new JList<Page>(modelLinks);
 
     // Initialize constraints
     GridBagConstraints constraints = new GridBagConstraints();
@@ -537,18 +536,14 @@ public class DisambiguationWindow extends OnePageWindow {
    * Action called when Run Automatic Fixing button is pressed. 
    */
   public void actionRunAutomaticFixing() {
-    Object[] values = listLinks.getSelectedValues();
-    if ((values == null) || (values.length == 0)) {
+    List<Page> values = listLinks.getSelectedValuesList();
+    if ((values == null) || (values.size() == 0)) {
       Utilities.displayWarning(
           getParentComponent(),
           GT._("You must select pages on which running automatic fixing."));
       return;
     }
-    Collection<Page> pages = new ArrayList<Page>(values.length);
-    for (int i = 0; i < values.length; i++) {
-      pages.add((Page) values[i]);
-    }
-    Controller.runAutomatixFixing(pages, getPage(), getWikipedia());
+    Controller.runAutomaticFixing(values, getPage(), getWikipedia());
   }
 
   /**
@@ -569,10 +564,9 @@ public class DisambiguationWindow extends OnePageWindow {
    * Action called when Mark back link button is pressed.
    */
   private void actionMarkBacklink(String mark) {
-    for (Object selection : listLinks.getSelectedValues()) {
-      if (selection instanceof Page) {
-        Page selected = (Page) selection;
-        backlinksProperties.put(selected.getTitle(), mark);
+    for (Page selection : listLinks.getSelectedValuesList()) {
+      if (selection != null) {
+        backlinksProperties.put(selection.getTitle(), mark);
       }
     }
     Configuration configuration = Configuration.getConfiguration();

@@ -28,7 +28,7 @@ import org.wikipediacleaner.utils.Configuration;
 /**
  * A list cell renderer for Page. 
  */
-public class PageListCellRenderer extends JLabel implements ListCellRenderer {
+public class PageListCellRenderer extends JLabel implements ListCellRenderer<Page> {
 
   private static final long serialVersionUID = 1456336109709806845L;
 
@@ -113,8 +113,8 @@ public class PageListCellRenderer extends JLabel implements ListCellRenderer {
    */
   @Override
   public Component getListCellRendererComponent(
-      JList list,
-      Object value,
+      JList<? extends Page> list,
+      Page value,
       @SuppressWarnings("unused") int index,
       boolean isSelected,
       @SuppressWarnings("unused") boolean cellHasFocus) {
@@ -126,8 +126,8 @@ public class PageListCellRenderer extends JLabel implements ListCellRenderer {
     Boolean exist = null;
     boolean redirect = false;
     InternalLinkCount count = null;
-    if (value instanceof Page) {
-      Page pageElement = (Page) value;
+    if (value != null) {
+      Page pageElement = value;
       pageName = pageElement.getTitle();
       text = pageName;
       disambiguation = pageElement.isDisambiguationPage();

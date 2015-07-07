@@ -110,8 +110,8 @@ public class MainWindow
   private final static String URL_OTHER_WIKIPEDIA = "http://en.wikipedia.org/wiki/Wikipedia:WPCleaner/Wikis";
   private final static String URL_TALK_PAGE       = "http://fr.wikipedia.org/wiki/Discussion_Wikipédia:WPCleaner";
 
-  private JComboBox comboWikipedia;
-  private JComboBox comboLanguage;
+  private JComboBox<EnumWikipedia> comboWikipedia;
+  private JComboBox<EnumLanguage> comboLanguage;
   private JComboBox comboUser;
   private JPasswordField textPassword;
   private char echoPassword = '*';
@@ -138,7 +138,7 @@ public class MainWindow
   private JButton buttonWatchlistLocal;
   private JButton buttonWatchlist;
 
-  private JComboBox comboPagename;
+  private JComboBox<String> comboPagename;
   private JButton buttonFullAnalysis;
   private JButton buttonDisambiguation;
   private JButton buttonSearchTitles;
@@ -372,7 +372,7 @@ public class MainWindow
 
     // Wikipedia
     EnumWikipedia defaultWikipedia = configuration.getWikipedia();
-    comboWikipedia = new JComboBox(EnumWikipedia.getList().toArray());
+    comboWikipedia = new JComboBox<EnumWikipedia>(EnumWikipedia.getList().toArray(new EnumWikipedia[0]));
     comboWikipedia.setEditable(false);
     comboWikipedia.setSelectedItem(defaultWikipedia);
     comboWikipedia.addItemListener(EventHandler.create(
@@ -401,7 +401,7 @@ public class MainWindow
     constraints.gridy++;
 
     // Language
-    comboLanguage = new JComboBox(EnumLanguage.getList().toArray());
+    comboLanguage = new JComboBox<EnumLanguage>(EnumLanguage.getList().toArray(new EnumLanguage[0]));
     comboLanguage.setEditable(false);
     comboLanguage.setSelectedItem(configuration.getLanguage());
     comboLanguage.addItemListener(EventHandler.create(
@@ -637,9 +637,9 @@ public class MainWindow
     List<String> interestingPages = configuration.getStringList(
         null, Configuration.ARRAY_INTERESTING_PAGES);
     if (interestingPages != null) {
-      comboPagename = new JComboBox(interestingPages.toArray());
+      comboPagename = new JComboBox<String>(interestingPages.toArray(new String[0]));
     } else {
-      comboPagename = new JComboBox();
+      comboPagename = new JComboBox<String>();
     }
     comboPagename.setEditable(true);
     comboPagename.setPrototypeDisplayValue("XXXXXXXXXXXXXXXXXXXXXXXXX");

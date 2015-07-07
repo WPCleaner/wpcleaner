@@ -26,7 +26,7 @@ import org.wikipediacleaner.i18n.GT;
 /**
  * A list model for manipulating MediaWiki pages.
  */
-public class PageListModel extends AbstractListModel {
+public class PageListModel extends AbstractListModel<Page> {
 
   private static final long serialVersionUID = 8914341302198128905L;
 
@@ -82,7 +82,7 @@ public class PageListModel extends AbstractListModel {
    * @see javax.swing.ListModel#getElementAt(int)
    */
   @Override
-  public Object getElementAt(int index) {
+  public Page getElementAt(int index) {
     if ((index >= 0) && (index < filteredList.size())) {
       return filteredList.get(index);
     }
