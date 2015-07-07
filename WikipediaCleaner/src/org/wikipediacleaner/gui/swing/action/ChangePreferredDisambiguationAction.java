@@ -72,6 +72,7 @@ public class ChangePreferredDisambiguationAction extends TextAction {
   /* (non-Javadoc)
    * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
    */
+  @Override
   public void actionPerformed(@SuppressWarnings("unused") ActionEvent e) {
     Configuration config = Configuration.getConfiguration();
     List<String> preferredDabs = config.getStringSubList(

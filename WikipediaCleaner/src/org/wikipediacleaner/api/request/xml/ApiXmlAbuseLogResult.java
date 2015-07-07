@@ -46,6 +46,7 @@ public class ApiXmlAbuseLogResult extends ApiXmlResult implements ApiAbuseLogRes
    * @return True if request should be continued.
    * @throws APIException
    */
+  @Override
   public boolean executeAbuseLog(
       Map<String, String> properties,
       List<Page> list) throws APIException {

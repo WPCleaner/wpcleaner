@@ -38,6 +38,7 @@ public class ApiXmlDeleteResult extends ApiXmlResult implements ApiDeleteResult 
    * @param properties Properties defining request.
    * @throws APIException
    */
+  @Override
   public void executeDelete(
       Map<String, String> properties)
           throws APIException {

@@ -41,6 +41,7 @@ public class ReplaceTextAction extends TextAction {
   /* (non-Javadoc)
    * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
    */
+  @Override
   public void actionPerformed(ActionEvent e) {
     JTextPane localTextPane = textPane;
     if (localTextPane == null) {

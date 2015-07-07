@@ -43,6 +43,7 @@ public class MWPaneReplaceAllAction extends MWPaneAction {
    * @param e
    * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
    */
+  @Override
   public void actionPerformed(ActionEvent e) {
     MWPane textPane = getMWPane(e);
     if (textPane == null) {

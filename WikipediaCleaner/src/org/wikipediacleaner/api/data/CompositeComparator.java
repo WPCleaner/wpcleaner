@@ -71,6 +71,7 @@ public class CompositeComparator<T> implements NamedComparator<T>, Cloneable, Ex
   /* (non-Javadoc)
    * @see org.wikipediacleaner.api.data.NamedComparator#getName()
    */
+  @Override
   public String getName() {
     return name;
   }
@@ -191,6 +192,7 @@ public class CompositeComparator<T> implements NamedComparator<T>, Cloneable, Ex
   /* (non-Javadoc)
    * @see java.util.Comparator#compare(java.lang.Object, java.lang.Object)
    */
+  @Override
   public int compare(T o1, T o2) {
     if (comparators != null) {
       Iterator<NamedComparator<T>> itComparator = comparators.iterator();
@@ -211,6 +213,7 @@ public class CompositeComparator<T> implements NamedComparator<T>, Cloneable, Ex
   /* (non-Javadoc)
    * @see java.io.Externalizable#readExternal(java.io.ObjectInput)
    */
+  @Override
   public void readExternal(@SuppressWarnings("unused") ObjectInput input) {
     //
   }
@@ -218,6 +221,7 @@ public class CompositeComparator<T> implements NamedComparator<T>, Cloneable, Ex
   /* (non-Javadoc)
    * @see java.io.Externalizable#writeExternal(java.io.ObjectOutput)
    */
+  @Override
   public void writeExternal(@SuppressWarnings("unused") ObjectOutput output) {
     //
   }

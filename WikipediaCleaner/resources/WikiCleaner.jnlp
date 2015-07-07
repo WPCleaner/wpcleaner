@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<jnlp spec="1.5+" codebase="http://site4145.mutu.sivit.org/WikiCleaner" href="WikiCleaner.jnlp">
+<jnlp spec="6.0+" codebase="http://site4145.mutu.sivit.org/WikiCleaner" href="WikiCleaner.jnlp">
   <information>
     <title>WPCleaner</title>
     <vendor>User:NicoV</vendor>
@@ -16,7 +16,7 @@
     <all-permissions/>
   </security>
   <resources>
-    <j2se version="1.5+" java-vm-args="-Xmx512M"/>
+    <j2se version="7+" java-vm-args="-Xmx512M"/>
     <jar href="WikipediaCleaner.jar" download="eager" main="true"/>
   </resources>
   <application-desc main-class="org.wikipediacleaner.WikipediaCleaner"/>

@@ -57,6 +57,7 @@ public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
    * @param onlyAutomatic True if analysis could be restricted to errors automatically fixed.
    * @return Flag indicating if the error was found.
    */
+  @Override
   public boolean analyze(
       PageAnalysis analysis,
       Collection<CheckErrorResult> errors,
@@ -761,6 +762,7 @@ public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
      * @return
      * @see java.lang.Comparable#compareTo(java.lang.Object)
      */
+    @Override
     public int compareTo(Replacement o) {
       if (begin != o.begin) {
         return (begin < o.begin ? -1 : 1);
@@ -789,6 +791,7 @@ public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
      * @return
      * @see java.util.Comparator#compare(java.lang.Object, java.lang.Object)
      */
+    @Override
     public int compare(Replacement o1, Replacement o2) {
       
       // Comparison on native pattern

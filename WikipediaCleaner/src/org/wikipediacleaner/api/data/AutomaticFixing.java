@@ -186,6 +186,7 @@ public class AutomaticFixing implements Comparable<AutomaticFixing> {
    * @return Comparison of the two automatic fixing expressions.
    * @see java.lang.Comparable#compareTo(java.lang.Object)
    */
+  @Override
   public int compareTo(AutomaticFixing af) {
     if (af == null) {
       return -1;

@@ -77,6 +77,7 @@ class ReplaceTextActionProvider implements ActionProvider {
   /* (non-Javadoc)
    * @see org.wikipediacleaner.api.check.ActionProvider#getAction(javax.swing.text.Element, javax.swing.JTextPane)
    */
+  @Override
   public Action getAction(Element element, JTextPane textPane) {
     return new ReplaceTextAction(newText, element, textPane);
   }
@@ -85,6 +86,7 @@ class ReplaceTextActionProvider implements ActionProvider {
    * @param text New text.
    * @return True if this action can give this new text.
    */
+  @Override
   public boolean isPossibleReplacement(String text) {
     return (text != null) && (text.equals(newText));
   }

@@ -21,6 +21,7 @@ public class CheckErrorComparator implements Comparator<CheckError> {
   /* (non-Javadoc)
    * @see java.util.Comparator#compare(java.lang.Object, java.lang.Object)
    */
+  @Override
   public int compare(CheckError o1, CheckError o2) {
 
     // Check on null values

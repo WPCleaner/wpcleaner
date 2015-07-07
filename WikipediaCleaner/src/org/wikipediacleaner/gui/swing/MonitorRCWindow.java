@@ -196,6 +196,7 @@ public class MonitorRCWindow extends BasicWindow implements RecentChangesListene
    * @param currentTime Current time.
    * @see org.wikipediacleaner.api.RecentChangesListener#recentChanges(java.util.List, java.util.Date)
    */
+  @Override
   public void recentChanges(List<RecentChange> newRC, Date currentTime) {
 
     // Retrieve configuration

@@ -54,10 +54,12 @@ public class JTabbedPaneCloseIcon implements Icon {
     pane.addMouseListener(adapter);
   }
 
+  @Override
   public int getIconHeight() {
     return SIZE;
   }
 
+  @Override
   public int getIconWidth() {
     return SIZE;
   }
@@ -65,6 +67,7 @@ public class JTabbedPaneCloseIcon implements Icon {
   /* (non-Javadoc)
    * @see javax.swing.Icon#paintIcon(java.awt.Component, java.awt.Graphics, int, int)
    */
+  @Override
   public void paintIcon(@SuppressWarnings("unused") Component c, Graphics g, int x, int y) {
     if (g instanceof Graphics2D) {
       Graphics2D g2 = (Graphics2D) g.create();

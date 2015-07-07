@@ -173,6 +173,7 @@ public class RecentChangesTableModel extends AbstractTableModel {
    * @return Number of rows.
    * @see javax.swing.table.TableModel#getRowCount()
    */
+  @Override
   public int getRowCount() {
     return recentChanges.size();
   }
@@ -181,6 +182,7 @@ public class RecentChangesTableModel extends AbstractTableModel {
    * @return Number of columns.
    * @see javax.swing.table.TableModel#getColumnCount()
    */
+  @Override
   public int getColumnCount() {
     return NB_COLUMNS;
   }
@@ -191,6 +193,7 @@ public class RecentChangesTableModel extends AbstractTableModel {
    * @return Value at row and column.
    * @see javax.swing.table.TableModel#getValueAt(int, int)
    */
+  @Override
   public Object getValueAt(int rowIndex, int columnIndex) {
     if ((rowIndex >= 0) && (rowIndex < recentChanges.size())) {
       RecentChange rc = recentChanges.get(rowIndex);

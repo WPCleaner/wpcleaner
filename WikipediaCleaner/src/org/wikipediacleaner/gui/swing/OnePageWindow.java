@@ -684,6 +684,7 @@ public abstract class OnePageWindow
             /* (non-Javadoc)
              * @see java.beans.PropertyChangeListener#propertyChange(java.beans.PropertyChangeEvent)
              */
+            @Override
             public void propertyChange(@SuppressWarnings("unused") PropertyChangeEvent evt) {
               updateComponentState();
             }
@@ -766,6 +767,7 @@ public abstract class OnePageWindow
       updateComponentState();
     } else {
       SwingUtilities.invokeLater(new Runnable() {
+        @Override
         public void run() {
           setContents();
         }
@@ -839,6 +841,7 @@ public abstract class OnePageWindow
   /* (non-Javadoc)
    * @see java.awt.event.ItemListener#itemStateChanged(java.awt.event.ItemEvent)
    */
+  @Override
   public void itemStateChanged(ItemEvent e) {
     if ((e == null) || (e.getSource() == null)) {
       return;
@@ -861,6 +864,7 @@ public abstract class OnePageWindow
   /* (non-Javadoc)
    * @see java.beans.PropertyChangeListener#propertyChange(java.beans.PropertyChangeEvent)
    */
+  @Override
   public void propertyChange(PropertyChangeEvent evt) {
     if (evt == null) {
       return;
@@ -1171,6 +1175,7 @@ public abstract class OnePageWindow
     if (pageFixed != null) {
       MediaWikiController.addSimpleTask(new Callable<Page>() {
   
+        @Override
         public Page call() throws Exception
         {
           CheckWiki checkWiki = APIFactory.getCheckWiki();

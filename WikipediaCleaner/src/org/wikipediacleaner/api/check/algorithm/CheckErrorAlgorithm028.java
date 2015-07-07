@@ -39,6 +39,7 @@ public class CheckErrorAlgorithm028 extends CheckErrorAlgorithmBase {
    * @param onlyAutomatic True if analysis could be restricted to errors automatically fixed.
    * @return Flag indicating if the error was found.
    */
+  @Override
   public boolean analyze(
       PageAnalysis analysis,
       Collection<CheckErrorResult> errors, boolean onlyAutomatic) {
@@ -215,6 +216,7 @@ public class CheckErrorAlgorithm028 extends CheckErrorAlgorithmBase {
      * @return
      * @see java.lang.Comparable#compareTo(java.lang.Object)
      */
+    @Override
     public int compareTo(TableElement o) {
       return beginIndex - o.beginIndex;
     }

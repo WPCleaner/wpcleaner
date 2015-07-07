@@ -48,6 +48,7 @@ public class ReplaceAllLinksAction implements ActionListener {
   /* (non-Javadoc)
    * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
    */
+  @Override
   public void actionPerformed(@SuppressWarnings("unused") ActionEvent e) {
     if ((warning != null) && (warning.trim().length() > 0)) {
       String message = warning + "\n" + GT._("Do you want to proceed with the replacement ?");

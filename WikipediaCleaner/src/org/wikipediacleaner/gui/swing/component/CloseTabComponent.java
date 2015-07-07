@@ -90,6 +90,7 @@ public class CloseTabComponent extends JPanel {
     /* (non-Javadoc)
      * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
      */
+    @Override
     public void actionPerformed(@SuppressWarnings("unused") ActionEvent e) {
       int i = pane.indexOfTabComponent(CloseTabComponent.this);
       if (i != -1) {

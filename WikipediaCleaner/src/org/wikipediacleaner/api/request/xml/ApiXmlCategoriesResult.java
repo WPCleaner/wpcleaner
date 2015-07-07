@@ -50,6 +50,7 @@ public class ApiXmlCategoriesResult extends ApiXmlPropertiesResult implements Ap
    * @return True if request should be continued.
    * @throws APIException
    */
+  @Override
   public boolean executeCategories(
       Map<String, String> properties,
       Page page,
@@ -96,6 +97,7 @@ public class ApiXmlCategoriesResult extends ApiXmlPropertiesResult implements Ap
    * @return True if request should be continued.
    * @throws APIException
    */
+  @Override
   public boolean setDiambiguationStatus(
       Map<String, String> properties,
       Collection<Page> pages) throws APIException {

@@ -16,6 +16,7 @@ public abstract class DefaultBasicWindowListener implements BasicWindowListener 
   /* (non-Javadoc)
    * @see org.wikipediacleaner.gui.swing.basic.BasicWindowCreation#initializeWindow(org.wikipediacleaner.gui.swing.basic.BasicWindow)
    */
+  @Override
   public void initializeWindow(
       @SuppressWarnings("unused") BasicWindow window) {
     //
@@ -24,6 +25,7 @@ public abstract class DefaultBasicWindowListener implements BasicWindowListener 
   /* (non-Javadoc)
    * @see org.wikipediacleaner.gui.swing.basic.BasicWindowCreation#displayWindow(org.wikipediacleaner.gui.swing.basic.BasicWindow)
    */
+  @Override
   public void displayWindow(
       @SuppressWarnings("unused") BasicWindow window) {
     //

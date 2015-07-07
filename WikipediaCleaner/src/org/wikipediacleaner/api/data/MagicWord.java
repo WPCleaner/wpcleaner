@@ -515,6 +515,7 @@ public class MagicWord implements Comparable<MagicWord> {
   /* (non-Javadoc)
    * @see java.lang.Comparable#compareTo(java.lang.Object)
    */
+  @Override
   public int compareTo(MagicWord mw) {
     int compare;
 

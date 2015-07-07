@@ -46,6 +46,7 @@ public class ApiXmlEmbeddedInResult extends ApiXmlResult implements ApiEmbeddedI
    * @return True if request should be continued.
    * @throws APIException
    */
+  @Override
   public boolean executeEmbeddedIn(
       Map<String, String> properties,
       List<Page> list) throws APIException {

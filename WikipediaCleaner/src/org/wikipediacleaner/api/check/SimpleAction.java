@@ -46,6 +46,7 @@ public class SimpleAction implements Actionnable {
   /* (non-Javadoc)
    * @see org.wikipediacleaner.api.check.Actionnable#getAction(javax.swing.text.Element, javax.swing.JTextPane)
    */
+  @Override
   public Action getAction(Element element, JTextPane textPane) {
     if (actionProvider != null) {
       return actionProvider.getAction(element, textPane);
@@ -63,6 +64,7 @@ public class SimpleAction implements Actionnable {
   /* (non-Javadoc)
    * @see org.wikipediacleaner.api.check.Actionnable#getActions()
    */
+  @Override
   public List<Actionnable> getActions() {
     return null;
   }
@@ -70,6 +72,7 @@ public class SimpleAction implements Actionnable {
   /* (non-Javadoc)
    * @see org.wikipediacleaner.api.check.Actionnable#getName()
    */
+  @Override
   public String getName() {
     return name;
   }
@@ -77,6 +80,7 @@ public class SimpleAction implements Actionnable {
   /* (non-Javadoc)
    * @see org.wikipediacleaner.api.check.Actionnable#isCompositeAction()
    */
+  @Override
   public boolean isCompositeAction() {
     return false;
   }
@@ -85,6 +89,7 @@ public class SimpleAction implements Actionnable {
    * @param newText New text.
    * @return True if this action can give this new text.
    */
+  @Override
   public boolean isPossibleReplacement(String newText) {
     if (actionProvider == null) {
       return false;

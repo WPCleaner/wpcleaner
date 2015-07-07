@@ -510,6 +510,7 @@ public class TemplateData {
      *    is less than, equal to, or greater than the specified TemplateData.
      * @see java.lang.Comparable#compareTo(java.lang.Object)
      */
+    @Override
     public int compareTo(Parameter o) {
       return name.compareTo(o.name);
     }

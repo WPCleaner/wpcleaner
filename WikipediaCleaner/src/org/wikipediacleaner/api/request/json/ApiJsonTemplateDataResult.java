@@ -48,6 +48,7 @@ public class ApiJsonTemplateDataResult extends ApiJsonResult implements ApiTempl
    * @return TemplateData for the page.
    * @throws APIException
    */
+  @Override
   public TemplateData executeTemplateData(Map<String, String> properties)
       throws APIException {
     JsonNode root = getRoot(properties, ApiRequest.MAX_ATTEMPTS);

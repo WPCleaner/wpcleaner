@@ -48,6 +48,7 @@ public class MarkBacklinkAction implements ActionListener {
   /* (non-Javadoc)
    * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
    */
+  @Override
   public void actionPerformed(@SuppressWarnings("unused") ActionEvent e) {
     if (mark == null) {
       backlinksProperties.remove(link.getTitle());

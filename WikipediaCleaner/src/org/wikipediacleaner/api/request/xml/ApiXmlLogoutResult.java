@@ -36,6 +36,7 @@ public class ApiXmlLogoutResult extends ApiXmlResult implements ApiLogoutResult 
    * @param properties Properties defining request.
    * @throws APIException
    */
+  @Override
   public void executeLogout(
       Map<String, String> properties)
           throws APIException {

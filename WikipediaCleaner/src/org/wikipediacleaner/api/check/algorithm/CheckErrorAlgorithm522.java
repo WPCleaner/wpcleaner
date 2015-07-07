@@ -34,6 +34,7 @@ public class CheckErrorAlgorithm522 extends CheckErrorAlgorithmBase {
    * @param onlyAutomatic True if analysis could be restricted to errors automatically fixed.
    * @return Flag indicating if the error was found.
    */
+  @Override
   public boolean analyze(
       PageAnalysis analysis,
       Collection<CheckErrorResult> errors, boolean onlyAutomatic) {

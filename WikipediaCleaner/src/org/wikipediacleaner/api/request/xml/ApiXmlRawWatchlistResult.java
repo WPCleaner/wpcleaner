@@ -46,6 +46,7 @@ public class ApiXmlRawWatchlistResult extends ApiXmlResult implements ApiRawWatc
    * @return True if request should be continued.
    * @throws APIException
    */
+  @Override
   public boolean executeWatchlistRaw(
       Map<String, String> properties,
       List<Page> watchlist)

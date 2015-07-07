@@ -46,6 +46,7 @@ public class ApiXmlRandomPagesResult extends ApiXmlResult implements ApiRandomPa
    * @param list List to be filled with random pages.
    * @throws APIException
    */
+  @Override
   public void executeRandomList(
       Map<String, String> properties,
       List<Page> list) throws APIException {

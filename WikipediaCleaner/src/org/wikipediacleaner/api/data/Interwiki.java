@@ -86,6 +86,7 @@ public class Interwiki implements Comparable<Interwiki> {
   /* (non-Javadoc)
    * @see java.lang.Comparable#compareTo(java.lang.Object)
    */
+  @Override
   public int compareTo(Interwiki iw) {
     int compare;
 

@@ -53,6 +53,7 @@ public class CheckErrorGlobalFixAction extends AbstractAction {
   /* (non-Javadoc)
    * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
    */
+  @Override
   public void actionPerformed(@SuppressWarnings("unused") ActionEvent e) {
     String contents = textComponent.getText();
     PageAnalysis analysis = page.getAnalysis(contents, true);

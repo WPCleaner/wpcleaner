@@ -79,6 +79,7 @@ public abstract class BasicWindow implements ActionListener, PageProvider {
       final Class               windowClass,
       final BasicWindowListener creation) {
     SwingUtilities.invokeLater(new Runnable() {
+      @Override
       public void run() {
         internalCreateWindow(
             name, wikipedia,
@@ -183,6 +184,7 @@ public abstract class BasicWindow implements ActionListener, PageProvider {
   /**
    * @return Wiki.
    */
+  @Override
   public EnumWikipedia getWiki() {
     return wikipedia;
   }
@@ -197,6 +199,7 @@ public abstract class BasicWindow implements ActionListener, PageProvider {
   /**
    * @return Page.
    */
+  @Override
   public Page getPage() {
     return null;
   }
@@ -433,6 +436,7 @@ public abstract class BasicWindow implements ActionListener, PageProvider {
    * 
    * @param e Event.
    */
+  @Override
   public void actionPerformed(ActionEvent e) {
     //
   }

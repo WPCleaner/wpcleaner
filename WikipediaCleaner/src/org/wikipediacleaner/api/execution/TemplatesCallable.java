@@ -38,6 +38,7 @@ public class TemplatesCallable extends MediaWikiCallable<Page> {
   /* (non-Javadoc)
    * @see java.util.concurrent.Callable#call()
    */
+  @Override
   public Page call() throws APIException {
     setText(GT._("Retrieving templates") + " - " + page.getTitle());
     api.retrieveTemplates(getWikipedia(), page);

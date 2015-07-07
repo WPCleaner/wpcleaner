@@ -87,6 +87,7 @@ public class AddTextActionProvider implements ActionProvider {
   /* (non-Javadoc)
    * @see org.wikipediacleaner.api.check.ActionProvider#getAction(javax.swing.text.Element, javax.swing.JTextPane)
    */
+  @Override
   public Action getAction(Element element, JTextPane textPane) {
     return new AddTextAction(
         prefix, suffix, textProvider, question,
@@ -99,6 +100,7 @@ public class AddTextActionProvider implements ActionProvider {
    * @param text New text.
    * @return True if this action can give this new text.
    */
+  @Override
   public boolean isPossibleReplacement(String text) {
     return false;
   }

@@ -42,6 +42,7 @@ public class CheckCategoryLinkActionProvider implements ActionProvider {
   /* (non-Javadoc)
    * @see org.wikipediacleaner.api.check.SimpleAction#getAction(javax.swing.text.Element, javax.swing.JTextPane)
    */
+  @Override
   public Action getAction(Element element, JTextPane textPane) {
     return new CheckCategoryLinkAction(fromWikipedia, toWikipedia, title, order, element, textPane);
   }
@@ -50,6 +51,7 @@ public class CheckCategoryLinkActionProvider implements ActionProvider {
    * @param text New text.
    * @return True if this action can give this new text.
    */
+  @Override
   public boolean isPossibleReplacement(String text) {
     return false;
   }

@@ -41,6 +41,7 @@ public class ApiXmlExpandResult extends ApiXmlResult implements ApiExpandResult 
    * @return Expanded text.
    * @throws APIException
    */
+  @Override
   public String executeExpandTemplates(
       Map<String, String> properties)
           throws APIException {

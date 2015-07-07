@@ -45,6 +45,7 @@ public class ApiXmlRecentChangesResult extends ApiXmlResult implements ApiRecent
    * @return The timestamp to use as a starting point for the next call.
    * @throws APIException
    */
+  @Override
   public String executeRecentChanges(
       Map<String, String> properties,
       List<RecentChange> recentChanges) throws APIException {

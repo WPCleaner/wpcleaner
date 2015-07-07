@@ -137,6 +137,7 @@ public class MWPane
       /* (non-Javadoc)
        * @see javax.swing.event.DocumentListener#changedUpdate(javax.swing.event.DocumentEvent)
        */
+      @Override
       public void changedUpdate(@SuppressWarnings("unused") DocumentEvent e) {
         changeDocument();
       }
@@ -144,6 +145,7 @@ public class MWPane
       /* (non-Javadoc)
        * @see javax.swing.event.DocumentListener#insertUpdate(javax.swing.event.DocumentEvent)
        */
+      @Override
       public void insertUpdate(@SuppressWarnings("unused") DocumentEvent e) {
         changeDocument();
       }
@@ -151,6 +153,7 @@ public class MWPane
       /* (non-Javadoc)
        * @see javax.swing.event.DocumentListener#removeUpdate(javax.swing.event.DocumentEvent)
        */
+      @Override
       public void removeUpdate(@SuppressWarnings("unused") DocumentEvent e) {
         changeDocument();
       }

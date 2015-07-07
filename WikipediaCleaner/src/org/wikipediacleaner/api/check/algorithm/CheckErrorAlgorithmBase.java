@@ -72,6 +72,7 @@ public abstract class CheckErrorAlgorithmBase implements CheckErrorAlgorithm {
   /**
    * @return Flag indicating if this algorithm is available.
    */
+  @Override
   public boolean isAvailable() {
     return true;
   }
@@ -79,6 +80,7 @@ public abstract class CheckErrorAlgorithmBase implements CheckErrorAlgorithm {
   /**
    * @return True if the error has a list of pages.
    */
+  @Override
   public boolean hasList() {
     if (getErrorNumber() < MAX_ERROR_NUMBER_WITH_LIST) {
       return true;
@@ -89,6 +91,7 @@ public abstract class CheckErrorAlgorithmBase implements CheckErrorAlgorithm {
   /**
    * @return True if the error has a special list of pages.
    */
+  @Override
   public boolean hasSpecialList() {
     return false;
   }
@@ -100,6 +103,7 @@ public abstract class CheckErrorAlgorithmBase implements CheckErrorAlgorithm {
    * @param limit Maximum number of pages to retrieve.
    * @return List of pages in error.
    */
+  @Override
   public List<Page> getSpecialList(EnumWikipedia wiki, int limit) {
     return null;
   }
@@ -108,6 +112,7 @@ public abstract class CheckErrorAlgorithmBase implements CheckErrorAlgorithm {
    * @param configuration Configuration of the error.
    * @see org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithm#setConfiguration(org.wikipediacleaner.api.constants.CWConfigurationError)
    */
+  @Override
   public void setConfiguration(CWConfigurationError configuration) {
     this.configuration = configuration;
   }
@@ -116,6 +121,7 @@ public abstract class CheckErrorAlgorithmBase implements CheckErrorAlgorithm {
    * @return Short description of the error.
    * (See Check Wikipedia project for the description of errors)
    */
+  @Override
   public String getShortDescription() {
     return configuration.getShortDescription();
   }
@@ -123,6 +129,7 @@ public abstract class CheckErrorAlgorithmBase implements CheckErrorAlgorithm {
   /**
    * @return Short description of the error.
    */
+  @Override
   public String getShortDescriptionReplaced() {
     return configuration.getShortDescriptionReplaced();
   }
@@ -131,6 +138,7 @@ public abstract class CheckErrorAlgorithmBase implements CheckErrorAlgorithm {
    * @return Long description of the error.
    * (See Check Wikipedia project for the description of errors)
    */
+  @Override
   public String getLongDescription() {
     return configuration.getLongDescription();
   }
@@ -138,6 +146,7 @@ public abstract class CheckErrorAlgorithmBase implements CheckErrorAlgorithm {
   /**
    * @return Link to error description.
    */
+  @Override
   public String getLink() {
     return configuration.getLink();
   }
@@ -148,6 +157,7 @@ public abstract class CheckErrorAlgorithmBase implements CheckErrorAlgorithm {
    * @param title Page title.
    * @return Page among the white list ?
    */
+  @Override
   public boolean isInWhiteList(String title) {
     return configuration.isInWhiteList(title);
   }
@@ -155,6 +165,7 @@ public abstract class CheckErrorAlgorithmBase implements CheckErrorAlgorithm {
   /**
    * @return White list page name.
    */
+  @Override
   public String getWhiteListPageName() {
     return configuration.getWhiteListPageName();
   }
@@ -206,6 +217,7 @@ public abstract class CheckErrorAlgorithmBase implements CheckErrorAlgorithm {
   /**
    * @return Priority.
    */
+  @Override
   public int getPriority() {
     return configuration.getPriority();
   }
@@ -214,6 +226,7 @@ public abstract class CheckErrorAlgorithmBase implements CheckErrorAlgorithm {
    * @return Error number.
    * (See Check Wikipedia project for the description of errors)
    */
+  @Override
   public String getErrorNumberString() {
     String baseName = CheckErrorAlgorithm.class.getName();
     String className = getClass().getName();
@@ -227,6 +240,7 @@ public abstract class CheckErrorAlgorithmBase implements CheckErrorAlgorithm {
    * @return Error number.
    * (See Check Wikipedia project for the description of errors)
    */
+  @Override
   public int getErrorNumber() {
     int errorNumber = -1;
     try {
@@ -246,6 +260,7 @@ public abstract class CheckErrorAlgorithmBase implements CheckErrorAlgorithm {
    * @param acceptEmpty Flag indicating if empty strings are accepted.
    * @return Property value.
    */
+  @Override
   public String getSpecificProperty(
       String property,
       boolean useWiki, boolean useGeneral, boolean acceptEmpty) {
@@ -257,6 +272,7 @@ public abstract class CheckErrorAlgorithmBase implements CheckErrorAlgorithm {
    * 
    * @return Map of parameters (Name -> description).
    */
+  @Override
   public Map<String, String> getParameters() {
     Map<String, String> parameters = new Hashtable<String, String>();
     parameters.put("link", GT._("Title of the article describing this type of error"));
@@ -272,6 +288,7 @@ public abstract class CheckErrorAlgorithmBase implements CheckErrorAlgorithm {
    * @param analysis Page analysis.
    * @return Page contents after fix.
    */
+  @Override
   public final String automaticFix(PageAnalysis analysis) {
     if (configuration.getNoAuto()) {
       return analysis.getContents();
@@ -295,6 +312,7 @@ public abstract class CheckErrorAlgorithmBase implements CheckErrorAlgorithm {
    * @param analysis Page analysis.
    * @return Page contents after fix.
    */
+  @Override
   public final String botFix(PageAnalysis analysis) {
     if (configuration.getNoAuto()) {
       return analysis.getContents();
@@ -315,6 +333,7 @@ public abstract class CheckErrorAlgorithmBase implements CheckErrorAlgorithm {
   /**
    * @return List of possible global fixes.
    */
+  @Override
   public String[] getGlobalFixes() {
     return null;
   }
@@ -327,6 +346,7 @@ public abstract class CheckErrorAlgorithmBase implements CheckErrorAlgorithm {
    * @param textPane Text pane.
    * @return Page contents after fix.
    */
+  @Override
   public String fix(String fixName, PageAnalysis analysis, MWPane textPane) {
     throw new IllegalStateException("This algorithm has no global fixes");
   }

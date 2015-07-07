@@ -313,6 +313,7 @@ public class CheckErrorResult implements Comparable<CheckErrorResult> {
    * @return Comparison of the two check error results.
    * @see java.lang.Comparable#compareTo(java.lang.Object)
    */
+  @Override
   public int compareTo(CheckErrorResult cer) {
     if (cer == null) {
       return -1;

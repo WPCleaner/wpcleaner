@@ -126,6 +126,7 @@ public class ActionCheckArticle extends AbstractAction implements ActionListener
    * @param e Event triggering this call.
    * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
    */
+  @Override
   public void actionPerformed(ActionEvent e) {
     CheckWiki checkWiki = APIFactory.getCheckWiki();
     Page page = DataManager.getPage(wiki, title, null, null, null);

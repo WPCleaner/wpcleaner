@@ -33,6 +33,7 @@ public class StringCheckerReferenceName implements StringChecker {
    * @param text Text to check.
    * @return Result.
    */
+  @Override
   public Result checkString(String text) {
     if ((unauthorized == null) ||
         (unauthorized.length() == 0) ||

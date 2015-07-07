@@ -44,6 +44,7 @@ public class ApiXmlLanguageLinksResult extends ApiXmlPropertiesResult implements
    * @return True if request should be continued.
    * @throws APIException
    */
+  @Override
   public boolean getLanguageLinks(
       Map<String, String> properties,
       Map<String, String> languageLinks) throws APIException {

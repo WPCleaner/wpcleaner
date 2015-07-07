@@ -103,6 +103,7 @@ public class AbuseFilter implements Comparable<AbuseFilter> {
    *         is less than, equal to, or greater the specified abuse filter.
    * @see java.lang.Comparable#compareTo(java.lang.Object)
    */
+  @Override
   public int compareTo(AbuseFilter bl) {
     return id - bl.id;
   }

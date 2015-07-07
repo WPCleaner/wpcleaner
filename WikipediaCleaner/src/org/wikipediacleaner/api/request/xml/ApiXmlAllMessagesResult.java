@@ -41,6 +41,7 @@ public class ApiXmlAllMessagesResult extends ApiXmlResult implements ApiAllMessa
    * @return Message.
    * @throws APIException
    */
+  @Override
   public String executeMessage(
       Map<String, String> properties)
           throws APIException {

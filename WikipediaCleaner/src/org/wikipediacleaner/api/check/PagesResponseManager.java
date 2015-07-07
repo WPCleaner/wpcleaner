@@ -71,6 +71,7 @@ class PagesResponseManager implements ResponseManager {
    * @throws APIException
    * @see org.wikipediacleaner.api.ResponseManager#manageResponse(java.io.InputStream)
    */
+  @Override
   public void manageResponse(InputStream stream) throws IOException,
       APIException {
     if (classic) {

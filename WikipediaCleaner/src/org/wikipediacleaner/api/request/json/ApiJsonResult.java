@@ -82,6 +82,7 @@ public abstract class ApiJsonResult extends BasicApiResult {
   /**
    * @return Format of the JSON result.
    */
+  @Override
   public String getFormat() {
     return ApiRequest.FORMAT_JSON;
   }

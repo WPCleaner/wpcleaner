@@ -552,6 +552,7 @@ public class ShortcutOptionsPanel extends OptionsPanel {
      * @param e Event.
      * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
      */
+    @Override
     public void actionPerformed(ActionEvent e) {
       showNotice(true);
       KeyboardFocusManager.getCurrentKeyboardFocusManager().addKeyEventDispatcher(this);
@@ -564,6 +565,7 @@ public class ShortcutOptionsPanel extends OptionsPanel {
      * @return True if processing should end.
      * @see java.awt.KeyEventDispatcher#dispatchKeyEvent(java.awt.event.KeyEvent)
      */
+    @Override
     public boolean dispatchKeyEvent(KeyEvent e) {
       int key = e.getKeyCode();
       if ((key == KeyEvent.VK_ALT) ||

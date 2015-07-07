@@ -56,6 +56,7 @@ public class BasicJFrame extends JFrame implements Versionned {
   /**
    * @return Window version.
    */
+  @Override
   public Integer getVersion() {
     return version;
   }

@@ -48,6 +48,7 @@ public class ApiXmlBacklinksResult extends ApiXmlResult implements ApiBacklinksR
    * @return True if request should be continued.
    * @throws APIException
    */
+  @Override
   public boolean executeBacklinks(
       Map<String, String> properties,
       Page page,

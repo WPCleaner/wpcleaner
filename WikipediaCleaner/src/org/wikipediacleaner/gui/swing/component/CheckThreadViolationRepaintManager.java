@@ -126,6 +126,7 @@ public class CheckThreadViolationRepaintManager extends RepaintManager {
         RepaintManager.setCurrentManager(new CheckThreadViolationRepaintManager());
         //Valid code  
         SwingUtilities.invokeAndWait(new Runnable() {
+          @Override
             public void run() {
                 test();
             }
@@ -133,7 +134,7 @@ public class CheckThreadViolationRepaintManager extends RepaintManager {
         System.out.println("Valid code passed...");
         repaintTest();
         System.out.println("Repaint test - correct code");
-        //Invalide code (stack trace expected) 
+        //Invalid code (stack trace expected) 
         test();
     }
 
@@ -163,6 +164,7 @@ public class CheckThreadViolationRepaintManager extends RepaintManager {
     static void repaintTest() {
         try {
             SwingUtilities.invokeAndWait(new Runnable() {
+              @Override
                 public void run() {
                     test = new JButton();
                     test.setSize(100, 100);

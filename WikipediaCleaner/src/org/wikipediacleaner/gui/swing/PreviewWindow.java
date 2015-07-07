@@ -243,6 +243,7 @@ public class PreviewWindow
   /* (non-Javadoc)
    * @see org.wikipediacleaner.gui.swing.worker.HtmlPreview#setHtml(java.lang.String)
    */
+  @Override
   public void setHtml(String text) {
     try {
       DocumentBuilderImpl dbi = new DocumentBuilderImpl(ucontext, rcontext);

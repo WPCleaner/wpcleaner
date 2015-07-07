@@ -76,6 +76,7 @@ public class ActionCheckTemplate implements ActionListener {
    * @param e Event triggering this call.
    * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
    */
+  @Override
   public void actionPerformed(ActionEvent e) {
     if ((e == null) || (wiki == null) || (template == null)) {
       return;

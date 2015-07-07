@@ -50,6 +50,7 @@ public class ApiXmlTemplatesResult extends ApiXmlPropertiesResult implements Api
    * @return True if request should be continued.
    * @throws APIException
    */
+  @Override
   public boolean executeTemplates(
       Map<String, String> properties,
       Page page,
@@ -97,6 +98,7 @@ public class ApiXmlTemplatesResult extends ApiXmlPropertiesResult implements Api
    * @return True if request should be continued.
    * @throws APIException
    */
+  @Override
   public boolean setDiambiguationStatus(
       Map<String, String> properties,
       Collection<Page> pages) throws APIException {

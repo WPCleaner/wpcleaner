@@ -50,6 +50,7 @@ public class LinksWRCallable extends MediaWikiCallable<Page> {
   /* (non-Javadoc)
    * @see java.util.concurrent.Callable#call()
    */
+  @Override
   public Page call() throws APIException {
     setText(GT._("Retrieving page links") + " - " + page.getTitle());
     api.retrieveLinks(getWikipedia(), page, namespace, knownPages, true, disambigNeeded);

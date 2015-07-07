@@ -42,6 +42,7 @@ public class TextProviderImageDescription implements TextProvider {
   /**
    * @return Possible texts.
    */
+  @Override
   public Collection<String> getTexts() {
     Collection<String> result = new ArrayList<String>();
     if (image != null) {

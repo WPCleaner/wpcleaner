@@ -78,6 +78,7 @@ public abstract class ApiXmlResult extends BasicApiResult {
   /**
    * @return Format of the XML result.
    */
+  @Override
   public String getFormat() {
     return ApiRequest.FORMAT_XML;
   }

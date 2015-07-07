@@ -53,6 +53,7 @@ public class CompositeAction implements Actionnable {
   /* (non-Javadoc)
    * @see org.wikipediacleaner.api.check.Actionnable#getAction(javax.swing.text.Element, javax.swing.JTextPane)
    */
+  @Override
   public Action getAction(
       @SuppressWarnings("unused") Element element,
       @SuppressWarnings("unused") JTextPane textPane) {
@@ -62,6 +63,7 @@ public class CompositeAction implements Actionnable {
   /* (non-Javadoc)
    * @see org.wikipediacleaner.api.check.Actionnable#getActions()
    */
+  @Override
   public List<Actionnable> getActions() {
     return actions;
   }
@@ -69,6 +71,7 @@ public class CompositeAction implements Actionnable {
   /* (non-Javadoc)
    * @see org.wikipediacleaner.api.check.Actionnable#getName()
    */
+  @Override
   public String getName() {
     return name;
   }
@@ -76,6 +79,7 @@ public class CompositeAction implements Actionnable {
   /* (non-Javadoc)
    * @see org.wikipediacleaner.api.check.Actionnable#isCompositeAction()
    */
+  @Override
   public boolean isCompositeAction() {
     return true;
   }
@@ -84,6 +88,7 @@ public class CompositeAction implements Actionnable {
    * @param newText New text.
    * @return True if this action can give this new text.
    */
+  @Override
   public boolean isPossibleReplacement(String newText) {
     if (actions == null) {
       return false;

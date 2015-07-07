@@ -40,6 +40,7 @@ public class ActionClick extends AbstractAction {
    * @param e Event.
    * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
    */
+  @Override
   public void actionPerformed(ActionEvent e) {
     if (button != null) {
       button.doClick();

@@ -171,6 +171,7 @@ public class PageListTableModel extends AbstractTableModel {
   /* (non-Javadoc)
    * @see javax.swing.table.TableModel#getColumnCount()
    */
+  @Override
   public int getColumnCount() {
     return NB_COLUMNS;
   }
@@ -178,6 +179,7 @@ public class PageListTableModel extends AbstractTableModel {
   /* (non-Javadoc)
    * @see javax.swing.table.TableModel#getRowCount()
    */
+  @Override
   public int getRowCount() {
     return (pages != null) ? pages.size() : 0;
   }
@@ -185,6 +187,7 @@ public class PageListTableModel extends AbstractTableModel {
   /* (non-Javadoc)
    * @see javax.swing.table.TableModel#getValueAt(int, int)
    */
+  @Override
   public Object getValueAt(int rowIndex, int columnIndex) {
     if ((pages != null) && (rowIndex >= 0) && (rowIndex < pages.size())) {
       Page page = pages.get(rowIndex);

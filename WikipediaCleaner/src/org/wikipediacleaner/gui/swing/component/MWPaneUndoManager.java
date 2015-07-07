@@ -154,6 +154,7 @@ public class MWPaneUndoManager implements ActionListener {
    * @param e Event.
    * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
    */
+  @Override
   public void actionPerformed(ActionEvent e) {
     if ((e == null) || (e.getActionCommand() == null)) {
       return;

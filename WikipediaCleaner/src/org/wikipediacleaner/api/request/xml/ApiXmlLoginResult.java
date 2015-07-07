@@ -44,6 +44,7 @@ public class ApiXmlLoginResult extends ApiXmlResult implements ApiLoginResult {
    * @return Login result.
    * @throws APIException
    */
+  @Override
   public LoginResult executeLogin(
       Map<String, String> properties)
           throws APIException {

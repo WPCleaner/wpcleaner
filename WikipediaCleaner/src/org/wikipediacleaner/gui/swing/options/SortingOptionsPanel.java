@@ -273,6 +273,7 @@ public class SortingOptionsPanel
    * @see javax.swing.event.ListSelectionListener#valueChanged(javax.swing.event.ListSelectionEvent)
    */
   @SuppressWarnings("unchecked")
+  @Override
   public void valueChanged(ListSelectionEvent e) {
     if ((e == null) || (e.getSource() == null)) {
       return;
