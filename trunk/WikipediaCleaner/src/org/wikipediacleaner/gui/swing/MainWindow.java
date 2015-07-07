@@ -112,7 +112,7 @@ public class MainWindow
 
   private JComboBox<EnumWikipedia> comboWikipedia;
   private JComboBox<EnumLanguage> comboLanguage;
-  private JComboBox comboUser;
+  private JComboBox<Object> comboUser;
   private JPasswordField textPassword;
   private char echoPassword = '*';
   private ButtonGroup groupSaveUsernamePassword;
@@ -430,7 +430,7 @@ public class MainWindow
     constraints.gridy++;
 
     // User name
-    comboUser = new JComboBox();
+    comboUser = new JComboBox<Object>();
     comboUser.setEditable(true);
     comboUser.addItemListener(EventHandler.create(
         ItemListener.class, this, "actionChangeUser"));

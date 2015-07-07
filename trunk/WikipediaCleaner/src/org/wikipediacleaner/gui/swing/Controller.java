@@ -50,7 +50,7 @@ public class Controller {
    * @param wikipedia Wikipedia
    */
   public static void runFullAnalysis(
-      Component parentComponent, Object[] pages,
+      Component parentComponent, List<Page> pages,
       List<Page> knownPages,
       EnumWikipedia wikipedia) {
     if (pages == null) {
@@ -58,7 +58,7 @@ public class Controller {
     }
     int pagesCount = getCountOfPages(parentComponent, pages);
     for (int i = 0; i < pagesCount; i++) {
-      Object page = pages[i];
+      Object page = pages.get(i);
       if (page != null) {
         runFullAnalysis(page.toString(), knownPages, wikipedia);
       }
@@ -85,13 +85,13 @@ public class Controller {
    * @param wikipedia Wikipedia
    */
   public static void runDisambiguationAnalysis(
-      Component parentComponent, Object[] pages, EnumWikipedia wikipedia) {
+      Component parentComponent, List<Page> pages, EnumWikipedia wikipedia) {
     if (pages == null) {
       return;
     }
     int pagesCount = getCountOfPages(parentComponent, pages);
     for (int i = 0; i < pagesCount; i++) {
-      Object page = pages[i];
+      Object page = pages.get(i);
       if (page != null) {
         runDisambiguationAnalysis(page.toString(), wikipedia);
       }
@@ -225,11 +225,11 @@ public class Controller {
    * @param pages Array of pages.
    * @return Number of pages to analyze.
    */
-  private static int getCountOfPages(Component parentComponent, Object[] pages) {
+  private static int getCountOfPages(Component parentComponent, List<Page> pages) {
     if (pages == null) {
       return 0;
     }
-    int pagesCount = pages.length;
+    int pagesCount = pages.size();
     Configuration config = Configuration.getConfiguration();
     int maxPagesCount = config.getInt(
         null,
