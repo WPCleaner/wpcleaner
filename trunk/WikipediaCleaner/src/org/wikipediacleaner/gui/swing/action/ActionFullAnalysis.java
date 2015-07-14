@@ -11,6 +11,7 @@ package org.wikipediacleaner.gui.swing.action;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JButton;
@@ -19,6 +20,7 @@ import javax.swing.JList;
 import javax.swing.JToolBar;
 import javax.swing.text.JTextComponent;
 
+import org.wikipediacleaner.api.check.CheckErrorPage;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.gui.swing.Controller;
@@ -103,7 +105,7 @@ public class ActionFullAnalysis implements ActionListener {
    */
   public static JButton createButton(
       Component parent,
-      EnumWikipedia wiki, JList<Page> list,
+      EnumWikipedia wiki, JList<? extends Object> list,
       List<Page> knownPages, boolean showIcon, boolean useShortcut) {
     JButton button = createInternalButton(showIcon, false, useShortcut);
     button.addActionListener(new ActionFullAnalysis(parent, wiki, list, knownPages));
@@ -124,7 +126,7 @@ public class ActionFullAnalysis implements ActionListener {
    */
   public static JButton addButton(
       Component parent, JToolBar toolbar,
-      EnumWikipedia wiki, JList<Page> list,
+      EnumWikipedia wiki, JList<? extends Object> list,
       List<Page> knownPages, boolean showIcon, boolean useShortcut) {
     JButton button = createButton(parent, wiki, list, knownPages, showIcon, useShortcut);
     if ((button != null) && (toolbar != null)) {
@@ -156,7 +158,7 @@ public class ActionFullAnalysis implements ActionListener {
   /**
    * Selected pages in the JList should be analyzed.
    */
-  private final JList<Page> list;
+  private final JList<? extends Object> list;
 
   /**
    * Text component containing the page name.
@@ -188,7 +190,7 @@ public class ActionFullAnalysis implements ActionListener {
    * @param list Selected pages should be analyzed.
    * @param knownPages List of known pages.
    */
-  public ActionFullAnalysis(Component parent, EnumWikipedia wiki, JList<Page> list, List<Page> knownPages) {
+  public ActionFullAnalysis(Component parent, EnumWikipedia wiki, JList<? extends Object> list, List<Page> knownPages) {
     this.parent = parent;
     this.wiki = wiki;
     this.title = null;
@@ -242,7 +244,18 @@ public class ActionFullAnalysis implements ActionListener {
 
     // Analyze a list of selected pages
     if (list != null) {
-      Controller.runFullAnalysis(parent, list.getSelectedValuesList(), knownPages, wiki);
+      List<? extends Object> selection = list.getSelectedValuesList();
+      List<Page> pages = new ArrayList<Page>();
+      if (selection != null) {
+        for (Object object : selection) {
+          if (object instanceof Page) {
+            pages.add((Page) object);
+          } else if (object instanceof CheckErrorPage) {
+            pages.add(((CheckErrorPage) object).getPage());
+          }
+        }
+      }
+      Controller.runFullAnalysis(parent, pages, knownPages, wiki);
       return;
     }
 

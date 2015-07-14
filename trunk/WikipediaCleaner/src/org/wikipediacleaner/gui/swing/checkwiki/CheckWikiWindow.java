@@ -105,7 +105,7 @@ public class CheckWikiWindow extends OnePageWindow implements CheckWikiListener 
   List<CheckError> errors;
   Properties checkWikiConfig;
   JComboBox listAllErrors;
-  DefaultComboBoxModel modelAllErrors;
+  DefaultComboBoxModel<Object> modelAllErrors;
   private HTMLPane textDescription;
   private HTMLPane textParameters;
   private int lastErrorDisplayed = -1;
@@ -114,8 +114,8 @@ public class CheckWikiWindow extends OnePageWindow implements CheckWikiListener 
   private JButton buttonErrorList;
   private JButton buttonWhiteList;
 
-  private JList listPages;
-  private DefaultListModel modelPages;
+  private JList<CheckErrorPage> listPages;
+  private DefaultListModel<CheckErrorPage> modelPages;
   boolean yesAll = false;
   boolean noAll = false;
 
@@ -633,8 +633,8 @@ public class CheckWikiWindow extends OnePageWindow implements CheckWikiListener 
     constraints.weightx = 0;
     constraints.weighty = 0;
     panel.add(labelErrors, constraints);
-    modelAllErrors = new DefaultComboBoxModel();
-    listAllErrors = new JComboBox(modelAllErrors);
+    modelAllErrors = new DefaultComboBoxModel<Object>();
+    listAllErrors = new JComboBox<Object>(modelAllErrors);
     listAllErrors.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(@SuppressWarnings("unused") ActionEvent e) {
@@ -715,8 +715,8 @@ public class CheckWikiWindow extends OnePageWindow implements CheckWikiListener 
     panel.setBorder(BorderFactory.createTitledBorder(
         BorderFactory.createEtchedBorder(), GT._("Pages")));
 
-    modelPages = new DefaultListModel();
-    listPages = new JList(modelPages);
+    modelPages = new DefaultListModel<CheckErrorPage>();
+    listPages = new JList<CheckErrorPage>(modelPages);
 
     // Initialize constraints
     GridBagConstraints constraints = new GridBagConstraints();
@@ -1274,11 +1274,10 @@ public class CheckWikiWindow extends OnePageWindow implements CheckWikiListener 
    * Action called when requesting to load selected pages.
    */
   public void actionLoadPages() {
-    Object[] selection = listPages.getSelectedValues();
+    final List<CheckErrorPage> selection = listPages.getSelectedValuesList();
     final List<Page> pages = new ArrayList<Page>();
     if (selection != null) {
-      for (int i = 0; i < selection.length; i++) {
-        CheckErrorPage errorPage = (CheckErrorPage) selection[i];
+      for (CheckErrorPage errorPage : selection) {
         pages.add(errorPage.getPage());
       }
     }
