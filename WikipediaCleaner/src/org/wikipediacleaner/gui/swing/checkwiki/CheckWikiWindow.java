@@ -19,8 +19,6 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.font.TextAttribute;
 import java.beans.EventHandler;
-import java.io.IOException;
-import java.io.StringReader;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -59,12 +57,6 @@ import javax.swing.SwingUtilities;
 import javax.swing.WindowConstants;
 import javax.swing.event.ChangeListener;
 
-import org.lobobrowser.html.HtmlRendererContext;
-import org.lobobrowser.html.UserAgentContext;
-import org.lobobrowser.html.gui.HtmlPanel;
-import org.lobobrowser.html.parser.DocumentBuilderImpl;
-import org.lobobrowser.html.test.SimpleUserAgentContext;
-import org.w3c.dom.Document;
 import org.wikipediacleaner.api.APIFactory;
 import org.wikipediacleaner.api.check.CheckError;
 import org.wikipediacleaner.api.check.CheckErrorPage;
@@ -84,8 +76,8 @@ import org.wikipediacleaner.gui.swing.basic.BasicWorker;
 import org.wikipediacleaner.gui.swing.basic.DefaultBasicWorkerListener;
 import org.wikipediacleaner.gui.swing.basic.Utilities;
 import org.wikipediacleaner.gui.swing.component.CheckErrorPageListCellRenderer;
+import org.wikipediacleaner.gui.swing.component.HTMLPane;
 import org.wikipediacleaner.gui.swing.component.JCloseableTabbedPane;
-import org.wikipediacleaner.gui.swing.component.MWHtmlRendererContext;
 import org.wikipediacleaner.gui.swing.worker.CheckWikiProjectWorker;
 import org.wikipediacleaner.gui.swing.worker.RetrieveContentWorker;
 import org.wikipediacleaner.i18n.GT;
@@ -93,8 +85,6 @@ import org.wikipediacleaner.images.EnumImageSize;
 import org.wikipediacleaner.utils.Configuration;
 import org.wikipediacleaner.utils.ConfigurationValueBoolean;
 import org.wikipediacleaner.utils.ConfigurationValueInteger;
-import org.xml.sax.InputSource;
-import org.xml.sax.SAXException;
 
 /**
  * Check Wiki Project window.
@@ -116,11 +106,8 @@ public class CheckWikiWindow extends OnePageWindow implements CheckWikiListener 
   Properties checkWikiConfig;
   JComboBox listAllErrors;
   DefaultComboBoxModel modelAllErrors;
-  private HtmlPanel textDescription;
-  private HtmlPanel textParameters;
-  private UserAgentContext ucontext;
-  private HtmlRendererContext rcontextDescription;
-  private HtmlRendererContext rcontextParameters;
+  private HTMLPane textDescription;
+  private HTMLPane textParameters;
   private int lastErrorDisplayed = -1;
   private JButton buttonReloadError;
   private JButton buttonErrorDetail;
@@ -693,15 +680,12 @@ public class CheckWikiWindow extends OnePageWindow implements CheckWikiListener 
     constraints.gridy++;
 
     // Error description
-    textDescription = new HtmlPanel();
-    ucontext = new SimpleUserAgentContext();
-    rcontextDescription = new MWHtmlRendererContext(textDescription, ucontext);
+    textDescription = HTMLPane.createHTMLPane(null);
     textDescription.setPreferredSize(new Dimension(500, 100));
     textDescription.setMinimumSize(new Dimension(200, 100));
 
     // Parameters description
-    textParameters = new HtmlPanel();
-    rcontextParameters = new MWHtmlRendererContext(textParameters, ucontext);
+    textParameters = HTMLPane.createHTMLPane(null);
     textParameters.setPreferredSize(new Dimension(500, 100));
     textParameters.setMinimumSize(new Dimension(200, 100));
 
@@ -1011,55 +995,35 @@ public class CheckWikiWindow extends OnePageWindow implements CheckWikiListener 
     }
     // Display description
     if ((algorithm != null) && (description != null)) {
+
       // Error type description
-      try {
-        DocumentBuilderImpl dbi = new DocumentBuilderImpl(ucontext, rcontextDescription);
-        InputSource is = new InputSource(new StringReader(description));
-        CheckWiki cw = APIFactory.getCheckWiki();
-        is.setSystemId(cw.getUrlDescription(getWikipedia(), algorithm));
-        Document document = dbi.parse(is);
-        textDescription.setDocument(document, rcontextDescription);
-      } catch (SAXException e) {
-        textDescription.clearDocument();
-      } catch (IOException e) {
-        textDescription.clearDocument();
-      }
+      textDescription.setText(description);
 
       // Parameters description
-      try {
-        Configuration config = Configuration.getConfiguration();
-        boolean secured = config.getBoolean(null, ConfigurationValueBoolean.SECURE_URL);
-        EnumWikipedia wiki = getWikipedia();
-        String translationPage = wiki.getConfiguration().getString(
-            WPCConfigurationString.CW_TRANSLATION_PAGE);
-        String url = wiki.getSettings().getURL(translationPage, true, secured);
-        StringBuilder parametersDescription = new StringBuilder();
-        parametersDescription.append(GT._(
-            "The error n°{0} can be configured with the following parameters in the <a href=\"{1}\">translation file</a> :",
-            new Object[] { Integer.toString(errorNumber), url }));
-        parametersDescription.append("\n<ul>");
-        Map<String, String> parameters = algorithm.getParameters();
-        for (Map.Entry<String, String> entry : parameters.entrySet()) {
-          parametersDescription.append("<li><b>");
-          parametersDescription.append(entry.getKey());
-          parametersDescription.append("</b>: ");
-          parametersDescription.append(entry.getValue());
-          parametersDescription.append("</li>\n");
-        }
-        parametersDescription.append("</ul>");
-        DocumentBuilderImpl dbi = new DocumentBuilderImpl(ucontext, rcontextParameters);
-        InputSource is = new InputSource(new StringReader(parametersDescription.toString()));
-        is.setSystemId(url);
-        Document document = dbi.parse(is);
-        textParameters.setDocument(document, rcontextParameters);
-      } catch (SAXException e) {
-        textParameters.clearDocument();
-      } catch (IOException e) {
-        textParameters.clearDocument();
+      Configuration config = Configuration.getConfiguration();
+      boolean secured = config.getBoolean(null, ConfigurationValueBoolean.SECURE_URL);
+      EnumWikipedia wiki = getWikipedia();
+      String translationPage = wiki.getConfiguration().getString(
+          WPCConfigurationString.CW_TRANSLATION_PAGE);
+      String url = wiki.getSettings().getURL(translationPage, true, secured);
+      StringBuilder parametersDescription = new StringBuilder();
+      parametersDescription.append(GT._(
+          "The error n°{0} can be configured with the following parameters in the <a href=\"{1}\">translation file</a> :",
+          new Object[] { Integer.toString(errorNumber), url }));
+      parametersDescription.append("\n<ul>");
+      Map<String, String> parameters = algorithm.getParameters();
+      for (Map.Entry<String, String> entry : parameters.entrySet()) {
+        parametersDescription.append("<li><b>");
+        parametersDescription.append(entry.getKey());
+        parametersDescription.append("</b>: ");
+        parametersDescription.append(entry.getValue());
+        parametersDescription.append("</li>\n");
       }
+      parametersDescription.append("</ul>");
+      textParameters.setText(parametersDescription.toString());
     } else {
-      textDescription.clearDocument();
-      textParameters.clearDocument();
+      textDescription.clearText();
+      textParameters.clearText();
     }
   }
 
