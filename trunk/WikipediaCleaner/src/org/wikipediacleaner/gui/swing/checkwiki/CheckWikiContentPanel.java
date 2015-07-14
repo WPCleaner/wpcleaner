@@ -93,8 +93,8 @@ public class CheckWikiContentPanel
   final Page page;
   private final List<CheckError> errors;
 
-  private JList listErrors;
-  private DefaultListModel modelErrors;
+  private JList<CheckErrorPage> listErrors;
+  private DefaultListModel<CheckErrorPage> modelErrors;
   private List<CheckErrorPage> initialErrors;
   private JTextField textComment;
   private JCheckBox chkAutomaticComment;
@@ -232,8 +232,8 @@ public class CheckWikiContentPanel
     constraints.gridy++;
 
     // Errors list
-    modelErrors = new DefaultListModel();
-    listErrors = new JList(modelErrors);
+    modelErrors = new DefaultListModel<CheckErrorPage>();
+    listErrors = new JList<CheckErrorPage>(modelErrors);
     CheckErrorPageListCellRenderer cellRenderer = new CheckErrorPageListCellRenderer(false);
     cellRenderer.showCountOccurence(true);
     listErrors.setCellRenderer(cellRenderer);
@@ -591,8 +591,8 @@ public class CheckWikiContentPanel
     } else {
       // Check if error was initially present
       for (int i = 0; i < modelErrors.size(); i++) {
-        if (modelErrors.elementAt(i) instanceof CheckErrorPage) {
-          CheckErrorPage tmp = (CheckErrorPage) modelErrors.elementAt(i);
+        if (modelErrors.elementAt(i) != null) {
+          CheckErrorPage tmp = modelErrors.elementAt(i);
           if (tmp.getAlgorithm() == algorithm) {
             window.displayWarning(GT._(
                 "You have already fixed this error by modifying the page.\n" +
@@ -772,7 +772,7 @@ public class CheckWikiContentPanel
       for (CheckErrorPage tmpError : errorsFound) {
         boolean errorFound = false;
         for (int index = 0; index < modelErrors.getSize(); index++) {
-          CheckErrorPage errorModel = (CheckErrorPage) modelErrors.get(index);
+          CheckErrorPage errorModel = modelErrors.get(index);
           if ((errorModel != null) &&
               (errorModel.getAlgorithm() != null) &&
               (errorModel.getAlgorithm().equals(tmpError.getAlgorithm()))) {
@@ -786,7 +786,7 @@ public class CheckWikiContentPanel
       }
     }
     for (int index = 0; index < modelErrors.getSize(); index++) {
-      CheckErrorPage errorModel = (CheckErrorPage) modelErrors.get(index);
+      CheckErrorPage errorModel = modelErrors.get(index);
       if ((errorsFound == null) || (!errorsFound.contains(errorModel))) {
         CheckErrorPage newError = new CheckErrorPage(page, errorModel.getAlgorithm());
         modelErrors.set(index, newError);
