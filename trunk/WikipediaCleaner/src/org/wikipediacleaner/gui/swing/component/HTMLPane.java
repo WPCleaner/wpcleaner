@@ -46,6 +46,13 @@ public class HTMLPane extends JEditorPane {
   }
 
   /**
+   * Clear text.
+   */
+  public void clearText() {
+    setText("<html></html>");
+  }
+
+  /**
    * @param event Event triggering the call.
    */
   public void hyperLink(HyperlinkEvent event) {
