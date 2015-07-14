@@ -108,7 +108,6 @@ public class AboutWindow extends BasicWindow {
     pane.addTab("Gettext Commons", createGettextCommonsTab());
     pane.addTab("JDOM", createJDomTab());
     pane.addTab("Jaxen", createJaxenTab());
-    pane.addTab("Cobra", createCobraTab());
     pane.addTab("Jackson", createJacksonTab());
     return pane;
   }
@@ -316,24 +315,6 @@ public class AboutWindow extends BasicWindow {
   private Component createJaxenTab() {
     JPanel panel = new JPanel(new GridBagLayout());
     //TODO
-    return createScrollPane(panel);
-  }
-
-  /**
-   * @return Cobra tab.
-   */
-  private Component createCobraTab() {
-    JPanel panel = new JPanel(new GridBagLayout());
-    GridBagConstraints constraints = initializeGridBagConstraints();
-    addPresentation(
-        panel, constraints,
-        "<html>" +
-        "<b>Cobra</b> is a pure Java HTML renderer and DOM parser that is being developed to support HTML 4, Javascript and CSS 2." +
-        "<br>" +
-        "See <a href='http://lobobrowser.org/cobra.jsp'>http://lobobrowser.org/cobra.jsp</a> for more information." +
-        "</html>");
-    addFile(panel, constraints, "NOTICE_cobra.txt");
-    addFile(panel, constraints, "LICENSE_cobra.txt");
     return createScrollPane(panel);
   }
 

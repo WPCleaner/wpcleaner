@@ -13,8 +13,6 @@ import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-import java.io.IOException;
-import java.io.StringReader;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -25,20 +23,13 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingConstants;
 import javax.swing.WindowConstants;
 
-import org.lobobrowser.html.HtmlRendererContext;
-import org.lobobrowser.html.UserAgentContext;
-import org.lobobrowser.html.gui.HtmlPanel;
-import org.lobobrowser.html.parser.DocumentBuilderImpl;
-import org.lobobrowser.html.test.SimpleUserAgentContext;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.gui.swing.action.ActionDispose;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
 import org.wikipediacleaner.gui.swing.basic.DefaultBasicWindowListener;
 import org.wikipediacleaner.gui.swing.basic.Utilities;
-import org.wikipediacleaner.gui.swing.component.MWHtmlRendererContext;
+import org.wikipediacleaner.gui.swing.component.HTMLPane;
 import org.wikipediacleaner.i18n.GT;
-import org.xml.sax.InputSource;
-import org.xml.sax.SAXException;
 
 
 /**
@@ -52,9 +43,7 @@ public class InformationWindow
   boolean html;
   JLabel lblTitle;
   JTextPane textPane;
-  HtmlPanel textInformation;
-  UserAgentContext ucontextInformation;
-  HtmlRendererContext rcontextInformation;
+  HTMLPane textInformation;
   private JButton buttonClose;
 
   /**
@@ -100,21 +89,11 @@ public class InformationWindow
    * Update information.
    */
   void updateInformation() {
-    try {
-      lblTitle.setText(title);
-      if (html) {
-        DocumentBuilderImpl dbi = new DocumentBuilderImpl(
-            ucontextInformation, rcontextInformation);
-        InputSource is = new InputSource(new StringReader(information));
-        is.setSystemId("http://localhost");
-        textInformation.setDocument(dbi.parse(is), rcontextInformation);
-      } else {
-        textPane.setText(information);
-      }
-    } catch (SAXException e) {
-      // Nothing
-    } catch (IOException e) {
-      // Nothing
+    lblTitle.setText(title);
+    if (html) {
+      textInformation.setText(information);
+    } else {
+      textPane.setText(information);
     }
   }
 
@@ -157,18 +136,17 @@ public class InformationWindow
     // Information
     Component component = null;
     if (html) {
-      textInformation = new HtmlPanel();
-      ucontextInformation = new SimpleUserAgentContext();
-      rcontextInformation = new MWHtmlRendererContext(textInformation, ucontextInformation);
+      textInformation = HTMLPane.createHTMLPane(null);
       component = textInformation;
     } else {
       textPane = new JTextPane();
       textPane.setEditable(false);
-      JScrollPane scrollPane = new JScrollPane(textPane);
-      scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-      scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-      component = scrollPane;
+      component = textPane;
     }
+    JScrollPane scrollPane = new JScrollPane(component);
+    scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+    scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+    component = scrollPane;
     component.setPreferredSize(new Dimension(500, 500));
     component.setMinimumSize(new Dimension(100, 100));
     lblTitle.setLabelFor(component);

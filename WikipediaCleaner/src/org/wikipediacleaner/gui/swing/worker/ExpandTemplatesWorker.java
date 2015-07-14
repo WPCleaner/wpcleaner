@@ -25,6 +25,9 @@ public class ExpandTemplatesWorker extends BasicWorker {
   private final JTextComponent textExpanded;
   private final HtmlPreview htmlPreview;
 
+  private String valueTextExpanded;
+  private String valueHtmlPreview;
+
   /**
    * @param wikipedia Wikipedia.
    * @param window Window.
@@ -53,17 +56,30 @@ public class ExpandTemplatesWorker extends BasicWorker {
     try {
       MediaWiki mw = MediaWiki.getMediaWikiAccess(this);
       if (textExpanded != null) {
-        textExpanded.setText(mw.expandTemplates(getWikipedia(), title, textOriginal.getText()));
+        valueTextExpanded = mw.expandTemplates(getWikipedia(), title, textOriginal.getText());
       }
       if (htmlPreview != null) {
         String text = mw.parseText(getWikipedia(), title, textOriginal.getText());
-        htmlPreview.setHtml(
-            "<html><head>" +
-            "</head><body>" + text + "</body></html>");
+        valueHtmlPreview = "<html><head></head><body>" + text + "</body></html>";
       }
     } catch (APIException e) {
       return e;
     }
     return null;
+  }
+
+  /**
+   * 
+   * @see org.wikipediacleaner.gui.swing.basic.BasicWorker#finished()
+   */
+  @Override
+  public void finished() {
+    if (textExpanded != null) {
+      textExpanded.setText(valueTextExpanded);
+    }
+    if (htmlPreview != null) {
+      htmlPreview.setHtml(valueHtmlPreview);
+    }
+    super.finished();
   }
 }

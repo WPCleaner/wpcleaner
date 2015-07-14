@@ -15,8 +15,6 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionListener;
 import java.beans.EventHandler;
-import java.io.IOException;
-import java.io.StringReader;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -27,12 +25,6 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingConstants;
 import javax.swing.WindowConstants;
 
-import org.lobobrowser.html.HtmlRendererContext;
-import org.lobobrowser.html.UserAgentContext;
-import org.lobobrowser.html.gui.HtmlPanel;
-import org.lobobrowser.html.parser.DocumentBuilderImpl;
-import org.lobobrowser.html.test.SimpleUserAgentContext;
-import org.w3c.dom.Document;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.DataManager;
 import org.wikipediacleaner.api.data.Page;
@@ -40,14 +32,12 @@ import org.wikipediacleaner.gui.swing.action.ActionDispose;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
 import org.wikipediacleaner.gui.swing.basic.DefaultBasicWindowListener;
 import org.wikipediacleaner.gui.swing.basic.Utilities;
-import org.wikipediacleaner.gui.swing.component.MWHtmlRendererContext;
+import org.wikipediacleaner.gui.swing.component.HTMLPane;
 import org.wikipediacleaner.gui.swing.component.MWPane;
 import org.wikipediacleaner.gui.swing.component.MWPaneBasicFormatter;
 import org.wikipediacleaner.gui.swing.worker.ExpandTemplatesWorker;
 import org.wikipediacleaner.gui.swing.worker.HtmlPreview;
 import org.wikipediacleaner.i18n.GT;
-import org.xml.sax.InputSource;
-import org.xml.sax.SAXException;
 
 
 /**
@@ -66,9 +56,7 @@ public class PreviewWindow
   private JButton    buttonClose;
   MWPane  textOriginal;
   private MWPane  textExpanded;
-  private HtmlPanel  htmlPreview;
-  UserAgentContext ucontext;
-  HtmlRendererContext rcontext;
+  private HTMLPane  htmlPreview;
 
   /**
    * Create and display a ExpandTemplatesWindow.
@@ -197,15 +185,17 @@ public class PreviewWindow
 
     // Preview
     if (showPreview) {
-      htmlPreview = new HtmlPanel();
-      ucontext = new SimpleUserAgentContext();
-      rcontext = new MWHtmlRendererContext(htmlPreview, ucontext);
+      htmlPreview = HTMLPane.createHTMLPane(null);
+      JScrollPane scrollPreview = new JScrollPane(htmlPreview);
+      scrollPreview.setMinimumSize(new Dimension(100, 100));
+      scrollPreview.setPreferredSize(new Dimension(1000, 500));
+      scrollPreview.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
       constraints.fill = GridBagConstraints.BOTH;
       constraints.gridwidth = 2;
       constraints.gridx = 0;
       constraints.weightx = 1;
       constraints.weighty = 1;
-      panel.add(htmlPreview, constraints);
+      panel.add(scrollPreview, constraints);
       constraints.gridy++;
     }
 
@@ -245,16 +235,6 @@ public class PreviewWindow
    */
   @Override
   public void setHtml(String text) {
-    try {
-      DocumentBuilderImpl dbi = new DocumentBuilderImpl(ucontext, rcontext);
-      InputSource is = new InputSource(new StringReader(text));
-      is.setSystemId(getWikipedia().getSettings().getURL(textTitle.getText(), true, false));
-      Document document = dbi.parse(is);
-      htmlPreview.setDocument(document, rcontext);
-    } catch (SAXException e) {
-      htmlPreview.clearDocument();
-    } catch (IOException e) {
-      htmlPreview.clearDocument();
-    }
+    htmlPreview.setText(text);
   }
 }
