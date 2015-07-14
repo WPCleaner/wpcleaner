@@ -194,18 +194,19 @@ public class AutomaticCWWorker extends BasicWorker {
     }
 
     // Analyze page to check if an error has been found
-    List<CheckErrorPage> errorPages = CheckError.analyzeErrors(allAlgorithms, analysis, true);
+    CheckErrorPage errorPage = CheckError.analyzeError(algorithm, analysis);
     boolean found = false;
-    if (errorPages != null) {
-      for (CheckErrorPage errorPage : errorPages) {
-        if (errorPage.getErrorFound()) {
-          found = true;
-        }
+    if (errorPage != null) {
+      if (errorPage.getErrorFound()) {
+        found = true;
       }
     }
 
     CheckWiki checkWiki = APIFactory.getCheckWiki();
     if (found) {
+      if (!saveModifications) {
+        return;
+      }
 
       // Fix all errors that can be fixed
       String newContents = page.getContents();
@@ -214,10 +215,7 @@ public class AutomaticCWWorker extends BasicWorker {
 
       // Save page if errors have been fixed
       if ((!newContents.equals(page.getContents())) &&
-          (!usedAlgorithms.isEmpty())) {
-        if (!saveModifications) {
-          return;
-        }
+          (usedAlgorithms.contains(algorithm))) {
         StringBuilder comment = new StringBuilder();
         if ((extraComment != null) && (extraComment.trim().length() > 0)) {
           comment.append(extraComment.trim());
@@ -231,7 +229,7 @@ public class AutomaticCWWorker extends BasicWorker {
             false);
         countModified++;
         for (CheckErrorAlgorithm usedAlgorithm : usedAlgorithms) {
-          CheckErrorPage errorPage = CheckError.analyzeError(usedAlgorithm, page.getAnalysis(newContents, true));
+          errorPage = CheckError.analyzeError(usedAlgorithm, page.getAnalysis(newContents, true));
           if ((errorPage != null) && (!errorPage.getErrorFound())) {
             checkWiki.markAsFixed(page, usedAlgorithm.getErrorNumberString());
             if (selectedAlgorithms.contains(usedAlgorithm)) {
