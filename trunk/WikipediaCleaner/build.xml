@@ -13,13 +13,6 @@
   <property name="WPCleaner.res.dir"                      value="resources" />
   <property name="WPCleaner.po.dir"                       value="${WPCleaner.src.dir}/org/wikipediacleaner/translation" />
 
-  <property name="WPCleaner.libs.cobra.version"           value="0.98.2" />
-  <property name="WPCleaner.libs.cobra.dir"               value="libs/cobra-${WPCleaner.libs.cobra.version}" />
-  <property name="WPCleaner.libs.cobra.jar"               value="cobra.jar" />
-  <property name="WPCleaner.libs.cobra-js.jar"            value="js.jar" />
-  <property name="WPCleaner.libs.cobra.lic"               value="LICENSE.txt" />
-  <property name="WPCleaner.libs.cobra.not"               value="COBRA-README.txt" />
-
   <property name="WPCleaner.libs.codec.version"           value="1.6" />
   <property name="WPCleaner.libs.codec.dir"               value="libs/commons-codec-${WPCleaner.libs.codec.version}" />
   <property name="WPCleaner.libs.codec.jar"               value="commons-codec-${WPCleaner.libs.codec.version}.jar" />
@@ -61,8 +54,6 @@
 
   <property name="WPCleaner.libs.saxpath.jar"             value="saxpath.jar" />
 
-  <property name="WPCleaner.libs.cobra.jars"
-            value="${WPCleaner.libs.cobra.jar} ${WPCleaner.libs.cobra-js.jar}" />
   <property name="WPCleaner.libs.jackson.jars"
             value="${WPCleaner.libs.jackson-annotations.jar} ${WPCleaner.libs.jackson-core.jar} ${WPCleaner.libs.jackson-databind.jar}" />
   <property name="WPCleaner.libs.jdom.jars"
@@ -70,7 +61,7 @@
   <property name="WPCleaner.libs.various.jars"
             value="${WPCleaner.libs.codec.jar} ${WPCleaner.libs.httpclient.jar} ${WPCleaner.libs.logging.jar} ${WPCleaner.libs.gettext.jar}" />
   <property name="WPCleaner.libs.jars"
-            value="${WPCleaner.libs.cobra.jars} ${WPCleaner.libs.various.jars} ${WPCleaner.libs.jdom.jars}" />
+            value="${WPCleaner.libs.various.jars} ${WPCleaner.libs.jdom.jars}" />
 
   <property name="all.languages" value="ast,az,bn,cs,da,de,el,en_GB,eo,es,fa,fr,gl,he,hu,id,is,it,ja,ko,ms,nb,nl,oc,pl,pt_BR,ru,sv,tr,uk,zh_CN" />
 
@@ -120,8 +111,6 @@
     <mkdir dir="${WPCleaner.full.dir}" />
 
     <!-- Extract libraries -->
-    <unzip src="${WPCleaner.libs.cobra.dir}/${WPCleaner.libs.cobra.jar}"                 dest="${WPCleaner.classes.dir}" />
-    <unzip src="${WPCleaner.libs.cobra.dir}/${WPCleaner.libs.cobra-js.jar}"              dest="${WPCleaner.classes.dir}" />
     <unzip src="${WPCleaner.libs.codec.dir}/${WPCleaner.libs.codec.jar}"                 dest="${WPCleaner.classes.dir}" />
     <unzip src="${WPCleaner.libs.httpclient.dir}/${WPCleaner.libs.httpclient.jar}"       dest="${WPCleaner.classes.dir}" />
     <unzip src="${WPCleaner.libs.logging.dir}/${WPCleaner.libs.logging.jar}"             dest="${WPCleaner.classes.dir}" />
@@ -153,10 +142,6 @@
           todir="${WPCleaner.jnlp.dir}" />
     <copy file="${WPCleaner.res.dir}/commons-nuvola-web-broom-64px.gif"
           todir="${WPCleaner.jnlp.dir}" />
-    <copy file="${WPCleaner.libs.cobra.dir}/${WPCleaner.libs.cobra.lic}"
-          tofile="${WPCleaner.classes.dir}/LICENSE_cobra.txt" />
-    <copy file="${WPCleaner.libs.cobra.dir}/${WPCleaner.libs.cobra.not}"
-          tofile="${WPCleaner.classes.dir}/NOTICE_cobra.txt" />
     <copy file="${WPCleaner.libs.codec.dir}/${WPCleaner.libs.codec.lic}"
           tofile="${WPCleaner.classes.dir}/LICENSE_commons-codec.txt" />
     <copy file="${WPCleaner.libs.codec.dir}/${WPCleaner.libs.codec.not}"
