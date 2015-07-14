@@ -22,7 +22,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.StringReader;
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -50,11 +49,6 @@ import javax.swing.SwingConstants;
 import javax.swing.border.TitledBorder;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
-import org.lobobrowser.html.HtmlRendererContext;
-import org.lobobrowser.html.UserAgentContext;
-import org.lobobrowser.html.gui.HtmlPanel;
-import org.lobobrowser.html.parser.DocumentBuilderImpl;
-import org.lobobrowser.html.test.SimpleUserAgentContext;
 import org.wikipediacleaner.Version;
 import org.wikipediacleaner.api.API;
 import org.wikipediacleaner.api.APIException;
@@ -81,7 +75,7 @@ import org.wikipediacleaner.gui.swing.basic.BasicWindowListener;
 import org.wikipediacleaner.gui.swing.basic.BasicWorker;
 import org.wikipediacleaner.gui.swing.basic.BasicWorkerListener;
 import org.wikipediacleaner.gui.swing.basic.Utilities;
-import org.wikipediacleaner.gui.swing.component.MWHtmlRendererContext;
+import org.wikipediacleaner.gui.swing.component.HTMLPane;
 import org.wikipediacleaner.gui.swing.pagelist.PageListWorker;
 import org.wikipediacleaner.gui.swing.worker.LoginWorker;
 import org.wikipediacleaner.gui.swing.worker.RandomPageWorker;
@@ -94,8 +88,6 @@ import org.wikipediacleaner.utils.ConfigurationValueInteger;
 import org.wikipediacleaner.utils.ConfigurationValueShortcut;
 import org.wikipediacleaner.utils.ConfigurationValueString;
 import org.wikipediacleaner.utils.StringChecker;
-import org.xml.sax.InputSource;
-import org.xml.sax.SAXException;
 
 /**
  * Main Window of WikipediaCleaner. 
@@ -327,23 +319,8 @@ public class MainWindow
     if (Version.HIGHLIGHT) {
       panel.setBackground(Color.RED);
     }
-    HtmlPanel textMessage = new HtmlPanel();
-    UserAgentContext ucontextMessage = new SimpleUserAgentContext();
-    HtmlRendererContext rcontextMessage = new MWHtmlRendererContext(
-        textMessage, ucontextMessage);
-    textMessage.setPreferredSize(new Dimension(500, 150));
-    textMessage.setMinimumSize(new Dimension(100, 100));
-    DocumentBuilderImpl dbi = new DocumentBuilderImpl(
-        ucontextMessage, rcontextMessage);
-    InputSource is = new InputSource(new StringReader(Version.MESSAGE));
-    is.setSystemId(EnumWikipedia.EN.getConfiguration().getString(WPCConfigurationString.HELP_URL));
-    try {
-      textMessage.setDocument(dbi.parse(is), rcontextMessage);
-    } catch (SAXException e) {
-      // Nothing
-    } catch (IOException e) {
-      // Nothing
-    }
+    HTMLPane textMessage = HTMLPane.createHTMLPane(Version.MESSAGE);
+    textMessage.setMaximumSize(new Dimension(500, 500));
     panel.add(textMessage);
     return panel;
   }
