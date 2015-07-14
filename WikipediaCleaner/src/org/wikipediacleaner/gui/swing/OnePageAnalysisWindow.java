@@ -148,8 +148,8 @@ public class OnePageAnalysisWindow
   private JButton buttonTranslation;
 
   List<CheckErrorAlgorithm> allAlgorithms;
-  JList listErrors;
-  private DefaultListModel modelErrors;
+  JList<CheckErrorPage> listErrors;
+  private DefaultListModel<CheckErrorPage> modelErrors;
 
   List<Page> knownPages;
 
@@ -619,8 +619,8 @@ public class OnePageAnalysisWindow
     constraints.gridy++;
 
     // Errors list
-    modelErrors = new DefaultListModel();
-    listErrors = new JList(modelErrors);
+    modelErrors = new DefaultListModel<CheckErrorPage>();
+    listErrors = new JList<CheckErrorPage>(modelErrors);
     CheckErrorPageListCellRenderer cellRenderer = new CheckErrorPageListCellRenderer(false);
     cellRenderer.showCountOccurence(true);
     listErrors.setCellRenderer(cellRenderer);
@@ -1385,7 +1385,7 @@ public class OnePageAnalysisWindow
       for (CheckErrorPage tmpError : errorsFound) {
         boolean errorFound = false;
         for (int index = 0; index < modelErrors.getSize(); index++) {
-          CheckErrorPage errorModel = (CheckErrorPage) modelErrors.get(index);
+          CheckErrorPage errorModel = modelErrors.get(index);
           if ((errorModel != null) &&
               (errorModel.getAlgorithm() != null) &&
               (errorModel.getAlgorithm().equals(tmpError.getAlgorithm()))) {
@@ -1399,7 +1399,7 @@ public class OnePageAnalysisWindow
       }
     }
     for (int index = 0; index < modelErrors.getSize(); index++) {
-      CheckErrorPage errorModel = (CheckErrorPage) modelErrors.get(index);
+      CheckErrorPage errorModel = modelErrors.get(index);
       if ((errorsFound == null) || (!errorsFound.contains(errorModel))) {
         CheckErrorPage newError = new CheckErrorPage(getPage(), errorModel.getAlgorithm());
         modelErrors.set(index, newError);
@@ -1416,7 +1416,7 @@ public class OnePageAnalysisWindow
 
       if (listErrors.getSelectedValue() != null) {
         // The previous selection was in the check wiki errors
-        CheckErrorPage errorPage = (CheckErrorPage) listErrors.getSelectedValue();
+        CheckErrorPage errorPage = listErrors.getSelectedValue();
         if (!errorPage.getErrorFound() || (currentCount == previousCount)) {
           int selected = listErrors.getSelectedIndex();
           selected++;
@@ -1464,7 +1464,7 @@ public class OnePageAnalysisWindow
   private int countSelectedErrors(PageAnalysis analysis) {
     // Count check wiki errors
     if (listErrors.getSelectedValue() != null) {
-      CheckErrorPage errorPage = (CheckErrorPage) listErrors.getSelectedValue();
+      CheckErrorPage errorPage = listErrors.getSelectedValue();
       return errorPage.getResultsCount();
     }
 
