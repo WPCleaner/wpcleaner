@@ -64,7 +64,9 @@ public class CheckErrorAlgorithm095 extends CheckErrorAlgorithmBase {
         Integer namespace = page.getNamespace();
         if ((namespace != null) &&
             ((namespace.intValue() == Namespace.USER) ||
-             (namespace.intValue() == Namespace.USER_TALK))) {
+             (namespace.intValue() == Namespace.USER_TALK) ||
+             (namespace.intValue() == Namespace.DRAFT) ||
+             (namespace.intValue() == Namespace.DRAFT_TALK))) {
           if (errors == null) {
             return true;
           }

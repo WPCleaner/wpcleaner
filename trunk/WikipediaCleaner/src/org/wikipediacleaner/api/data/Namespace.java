@@ -34,6 +34,9 @@ public class Namespace implements Comparable<Namespace> {
   public final static int CATEGORY = 14;
   public final static int CATEGORY_TALK = 15;
 
+  public final static int DRAFT = 118;
+  public final static int DRAFT_TALK = 119;
+
   private final Integer id;
   private final String title;
   private final String canonicalTitle;
