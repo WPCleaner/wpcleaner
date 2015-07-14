@@ -140,7 +140,7 @@
     <!-- Java compilation -->
   	<javac srcdir="${WPCleaner.src.dir}"
            destdir="${WPCleaner.classes.dir}"
-           optimize="on" encoding="UTF-8" target="1.5" source="1.5">
+           optimize="on" encoding="UTF-8" target="7" source="7">
       <classpath refid="WPCleaner.class.path" />
     </javac>
 
