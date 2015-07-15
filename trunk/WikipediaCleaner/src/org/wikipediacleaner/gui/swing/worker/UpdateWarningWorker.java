@@ -242,14 +242,42 @@ public abstract class UpdateWarningWorker extends BasicWorker {
     EnumWikipedia wiki = getWikipedia();
     WPCConfiguration configuration = wiki.getConfiguration();
     API api = APIFactory.getAPI();
-    String isbnErrorsPageName = configuration.getString(pageNameProperty);
-    if (isbnErrorsPageName != null) {
-      Page page = DataManager.getPage(wiki, isbnErrorsPageName, null, null, null);
+    String pageName = configuration.getString(pageNameProperty);
+    if (pageName != null) {
+      Page page = DataManager.getPage(wiki, pageName, null, null, null);
       api.retrieveLinks(wiki, page, Namespace.MAIN, null, false, false);
       List<Page> links = page.getLinks();
       if (links != null) {
         for (Page link : links) {
           addPage(link, pages);
+        }
+      }
+    }
+  }
+
+  /**
+   * Retrieve internal links in a page.
+   * 
+   * @param pageNameProperty Property for the name of the page.
+   * @param pages Map of (title,page) to complete.
+   * @throws APIException
+   */
+  protected void retrieveInternalLinks(
+      WPCConfigurationStringList pageNameProperty,
+      Map<String, Page> pages) throws APIException {
+    EnumWikipedia wiki = getWikipedia();
+    WPCConfiguration configuration = wiki.getConfiguration();
+    API api = APIFactory.getAPI();
+    List<String> pageNames = configuration.getStringList(pageNameProperty);
+    if (pageNames != null) {
+      for (String pageName : pageNames) {
+        Page page = DataManager.getPage(wiki, pageName, null, null, null);
+        api.retrieveLinks(wiki, page, Namespace.MAIN, null, false, false);
+        List<Page> links = page.getLinks();
+        if (links != null) {
+          for (Page link : links) {
+            addPage(link, pages);
+          }
         }
       }
     }

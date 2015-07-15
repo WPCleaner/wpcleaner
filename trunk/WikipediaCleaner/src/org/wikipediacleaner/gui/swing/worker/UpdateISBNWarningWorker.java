@@ -188,6 +188,11 @@ public class UpdateISBNWarningWorker extends UpdateWarningWorker {
         WPCConfigurationStringList.ISBN_ERRORS_CATEGORIES,
         tmpWarningPages);
 
+    // Retrieve articles in lists for ISBN errors
+    retrieveInternalLinks(
+        WPCConfigurationStringList.ISBN_ERRORS_LISTS,
+        tmpWarningPages);
+
     // Retrieve articles listed for ISBN errors in Check Wiki
     retrieveCheckWikiPages(70, tmpWarningPages, null); // Incorrect length
     retrieveCheckWikiPages(71, tmpWarningPages, null); // Incorrect X

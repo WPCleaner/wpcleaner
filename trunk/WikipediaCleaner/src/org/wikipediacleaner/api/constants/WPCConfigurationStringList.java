@@ -30,6 +30,8 @@ public enum WPCConfigurationStringList {
   INSERT_TEXTS("general_insert_texts", true, true, true),
   // Categories for ISBN errors.
   ISBN_ERRORS_CATEGORIES("isbn_errors_categories", true, true, true),
+  // Lists for ISBN errors.
+  ISBN_ERRORS_LISTS("isbn_errors_lists", true, true, true),
   // Templates to ask for help about ISBN.
   ISBN_HELP_NEEDED_TEMPLATES("general_isbn_help_needed_templates", true, true, true),
   // ISBN search engines.
