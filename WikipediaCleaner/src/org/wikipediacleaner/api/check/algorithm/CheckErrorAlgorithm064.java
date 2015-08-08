@@ -62,7 +62,8 @@ public class CheckErrorAlgorithm064 extends CheckErrorAlgorithmBase {
       String anchor = link.getAnchor();
       String linkName = link.getLink();
       String text = link.getText();
-      String padding = null;
+      String paddingLeft = "";
+      String paddingRight = "";
       boolean same = false;
       boolean automatic = false;
       if (((anchor == null) || (anchor.trim().length() == 0)) &&
@@ -76,6 +77,24 @@ public class CheckErrorAlgorithm064 extends CheckErrorAlgorithmBase {
           automatic = false;
         }
         if (!same) {
+          int position = text.length();
+          while ((position > 0) && (",.".indexOf(text.charAt(position - 1)) >= 0)) {
+            position--;
+          }
+          if (position < text.length()) {
+            paddingRight = text.substring(position);
+            text = text.substring(0, position);
+            if (!same && Page.areSameTitle(linkName, text)) {
+              same = true;
+              automatic = true;
+            }
+            if (!same && Page.areSameTitle(linkName, text.replaceAll("\\_", " "))) {
+              same = true;
+              automatic = false;
+            }
+          }
+        }
+        if (!same) {
           int countQuoteBefore = 0;
           while ((countQuoteBefore < text.length()) && (text.charAt(countQuoteBefore) == '\'')) {
             countQuoteBefore++;
@@ -85,7 +104,8 @@ public class CheckErrorAlgorithm064 extends CheckErrorAlgorithmBase {
             countQuoteAfter++;
           }
           if ((countQuoteBefore > 1) && (countQuoteAfter == countQuoteBefore) && (text.length() > countQuoteBefore)) {
-            padding = text.substring(0, countQuoteBefore);
+            paddingLeft = paddingLeft + text.substring(0, countQuoteBefore);
+            paddingRight = text.substring(text.length() - countQuoteAfter) + paddingRight;
             text = text.substring(countQuoteBefore, text.length() - countQuoteAfter);
             if (Page.areSameTitle(linkName, text) || Page.areSameTitle(linkName, text.replaceAll("\\_", " "))) {
               same = true;
@@ -105,24 +125,13 @@ public class CheckErrorAlgorithm064 extends CheckErrorAlgorithmBase {
             analysis,
             link.getBeginIndex(),
             link.getEndIndex());
-        if (padding == null) {
+        errorResult.addReplacement(
+            paddingLeft + PageElementInternalLink.createInternalLink(text, null) + paddingRight,
+            automatic);
+        if (text.contains("_")) {
           errorResult.addReplacement(
-              PageElementInternalLink.createInternalLink(text, null),
-              automatic);
-          if (text.contains("_")) {
-            errorResult.addReplacement(
-                PageElementInternalLink.createInternalLink(text.replaceAll("\\_", " "), null),
-                false);
-          }
-        } else {
-          errorResult.addReplacement(
-              padding + PageElementInternalLink.createInternalLink(text, null) + padding,
-              automatic);
-          if (text.contains("_")) {
-            errorResult.addReplacement(
-                padding + PageElementInternalLink.createInternalLink(text.replaceAll("\\_", " "), null) + padding,
-                false);
-          }
+              paddingLeft + PageElementInternalLink.createInternalLink(text.replaceAll("\\_", " "), null) + paddingRight,
+              false);
         }
         errors.add(errorResult);
       }
