@@ -683,16 +683,20 @@ public class CheckWikiWindow extends OnePageWindow implements CheckWikiListener 
     textDescription = HTMLPane.createHTMLPane(null);
     textDescription.setPreferredSize(new Dimension(500, 100));
     textDescription.setMinimumSize(new Dimension(200, 100));
+    JScrollPane scrollDescription = new JScrollPane(textDescription);
+    scrollDescription.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 
     // Parameters description
     textParameters = HTMLPane.createHTMLPane(null);
     textParameters.setPreferredSize(new Dimension(500, 100));
     textParameters.setMinimumSize(new Dimension(200, 100));
+    JScrollPane scrollParameters = new JScrollPane(textParameters);
+    scrollParameters.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 
     // Split pane
     JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
-    splitPane.setLeftComponent(textDescription);
-    splitPane.setRightComponent(textParameters);
+    splitPane.setLeftComponent(scrollDescription);
+    splitPane.setRightComponent(scrollParameters);
     splitPane.setPreferredSize(new Dimension(700, 100));
     splitPane.setMinimumSize(new Dimension(300, 100));
     splitPane.setResizeWeight(1.0);

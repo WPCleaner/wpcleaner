@@ -14,6 +14,9 @@ import java.net.URISyntaxException;
 import javax.swing.JEditorPane;
 import javax.swing.event.HyperlinkEvent;
 import javax.swing.event.HyperlinkListener;
+import javax.swing.text.Document;
+import javax.swing.text.SimpleAttributeSet;
+import javax.swing.text.StyledDocument;
 
 import org.wikipediacleaner.gui.swing.basic.Utilities;
 
@@ -49,7 +52,15 @@ public class HTMLPane extends JEditorPane {
    * Clear text.
    */
   public void clearText() {
-    setText("<html></html>");
+    Document doc = getDocument();
+    if (doc != null) {
+      if (doc instanceof StyledDocument) {
+        StyledDocument styledDoc = (StyledDocument) doc;
+        styledDoc.setCharacterAttributes(0, doc.getLength(), new SimpleAttributeSet(), true);
+        styledDoc.setParagraphAttributes(0, doc.getLength(), new SimpleAttributeSet(), true);
+      }
+    }
+    setText("");
   }
 
   /**

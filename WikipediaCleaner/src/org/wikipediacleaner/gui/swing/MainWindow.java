@@ -44,7 +44,9 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JPopupMenu;
 import javax.swing.JRadioButton;
+import javax.swing.JScrollPane;
 import javax.swing.JToolBar;
+import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingConstants;
 import javax.swing.border.TitledBorder;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -320,8 +322,9 @@ public class MainWindow
       panel.setBackground(Color.RED);
     }
     HTMLPane textMessage = HTMLPane.createHTMLPane(Version.MESSAGE);
-    textMessage.setMaximumSize(new Dimension(500, 500));
-    panel.add(textMessage);
+    JScrollPane scrollMessage = new JScrollPane(textMessage);
+    scrollMessage.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+    panel.add(scrollMessage);
     return panel;
   }
 
