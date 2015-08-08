@@ -660,7 +660,7 @@ public class AutomaticFormatter {
    * @param character Character to insert.
    * @param count Number of characters to insert.
    * @param end Index where to end inserting characters.
-   * @return
+   * @return Modified string.
    */
   private static String changeCharacters(
       String contents, int begin, char character, int count, int end) {

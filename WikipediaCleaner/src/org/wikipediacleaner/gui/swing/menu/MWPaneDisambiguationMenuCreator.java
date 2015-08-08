@@ -735,12 +735,12 @@ public class MWPaneDisambiguationMenuCreator extends BasicMenuCreator {
   }
 
   /**
-   * Create a replacement text in the form {{template|pageTitle}} or {{template|pageTitle|text}}
+   * Create a text in the form {{template|pageTitle}} or {{template|pageTitle|text}}
    * 
    * @param template Template name.
    * @param pageTitle Page title.
    * @param text Text
-   * @return
+   * @return Modified text.
    */
   private String createTextForTemplate(String template, String pageTitle, String text) {
     StringBuilder newText = new StringBuilder();
@@ -757,12 +757,12 @@ public class MWPaneDisambiguationMenuCreator extends BasicMenuCreator {
   }
 
   /**
-   * Create a replacement text in the form [[pageTitle]]{{template}} or [[pageTitle|text]]{{template}}
+   * Create a text in the form [[pageTitle]]{{template}} or [[pageTitle|text]]{{template}}
    * 
    * @param template Template name and optional arguments.
    * @param pageTitle Page title.
    * @param text Text
-   * @return
+   * @return Modified text.
    */
   private String createTextForTemplateAfterLink(List<String> template, String pageTitle, String text) {
     StringBuilder newText = new StringBuilder();
