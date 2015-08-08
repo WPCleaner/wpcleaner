@@ -57,9 +57,12 @@ public class CheckErrorAlgorithm064 extends CheckErrorAlgorithmBase {
     }
     boolean result = false;
     for (PageElementInternalLink link : links) {
+
+      // Analyze
       String anchor = link.getAnchor();
       String linkName = link.getLink();
       String text = link.getText();
+      String padding = null;
       boolean same = false;
       boolean automatic = false;
       if (((anchor == null) || (anchor.trim().length() == 0)) &&
@@ -72,7 +75,27 @@ public class CheckErrorAlgorithm064 extends CheckErrorAlgorithmBase {
           same = true;
           automatic = false;
         }
+        if (!same) {
+          int countQuoteBefore = 0;
+          while ((countQuoteBefore < text.length()) && (text.charAt(countQuoteBefore) == '\'')) {
+            countQuoteBefore++;
+          }
+          int countQuoteAfter = 0;
+          while ((countQuoteAfter < text.length()) && (text.charAt(text.length() - countQuoteAfter - 1) == '\'')) {
+            countQuoteAfter++;
+          }
+          if ((countQuoteBefore > 1) && (countQuoteAfter == countQuoteBefore) && (text.length() > countQuoteBefore)) {
+            padding = text.substring(0, countQuoteBefore);
+            text = text.substring(countQuoteBefore, text.length() - countQuoteAfter);
+            if (Page.areSameTitle(linkName, text) || Page.areSameTitle(linkName, text.replaceAll("\\_", " "))) {
+              same = true;
+              automatic = false;
+            }
+          }
+        }
       }
+
+      // Report error
       if (same && (text != null)) {
         if (errors == null) {
           return true;
@@ -82,13 +105,24 @@ public class CheckErrorAlgorithm064 extends CheckErrorAlgorithmBase {
             analysis,
             link.getBeginIndex(),
             link.getEndIndex());
-        errorResult.addReplacement(
-            PageElementInternalLink.createInternalLink(text, null),
-            automatic);
-        if (text.contains("_")) {
+        if (padding == null) {
           errorResult.addReplacement(
-              PageElementInternalLink.createInternalLink(text.replaceAll("\\_", " "), null),
-              false);
+              PageElementInternalLink.createInternalLink(text, null),
+              automatic);
+          if (text.contains("_")) {
+            errorResult.addReplacement(
+                PageElementInternalLink.createInternalLink(text.replaceAll("\\_", " "), null),
+                false);
+          }
+        } else {
+          errorResult.addReplacement(
+              padding + PageElementInternalLink.createInternalLink(text, null) + padding,
+              automatic);
+          if (text.contains("_")) {
+            errorResult.addReplacement(
+                padding + PageElementInternalLink.createInternalLink(text.replaceAll("\\_", " "), null) + padding,
+                false);
+          }
         }
         errors.add(errorResult);
       }
