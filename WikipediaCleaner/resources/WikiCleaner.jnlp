@@ -16,7 +16,7 @@
     <all-permissions/>
   </security>
   <resources>
-    <j2se version="7+" java-vm-args="-Xmx512M"/>
+    <j2se version="1.7+" java-vm-args="-Xmx512M"/>
     <jar href="WikipediaCleaner.jar" download="eager" main="true"/>
   </resources>
   <application-desc main-class="org.wikipediacleaner.WikipediaCleaner"/>
