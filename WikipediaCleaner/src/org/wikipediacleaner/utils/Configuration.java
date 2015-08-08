@@ -450,7 +450,7 @@ public class Configuration implements WindowListener {
     try {
       if (getPreferences(wikipedia) != null) {
         // First, remove the old properties
-        if (getPreferences().nodeExists(property)) {
+        if (getPreferences(wikipedia).nodeExists(property)) {
           removeNode(getPreferences(wikipedia), property + "/" + subProperty);
         }
   
