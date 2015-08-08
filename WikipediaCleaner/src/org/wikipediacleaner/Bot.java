@@ -23,6 +23,7 @@ import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithm;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithms;
 import org.wikipediacleaner.api.constants.EnumLanguage;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
+import org.wikipediacleaner.api.data.ISBNRange;
 import org.wikipediacleaner.gui.swing.basic.BasicWorker;
 import org.wikipediacleaner.gui.swing.basic.BasicWorkerListener;
 import org.wikipediacleaner.gui.swing.bot.AutomaticCWWorker;
@@ -74,6 +75,9 @@ public class Bot implements BasicWorkerListener {
 
     // Language
     GT.setCurrentLanguage(config.getLanguage());
+
+    // Various initializations
+    ISBNRange.initialize();
 
     new Bot(args);
   }
