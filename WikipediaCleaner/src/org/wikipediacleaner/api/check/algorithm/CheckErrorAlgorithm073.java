@@ -149,7 +149,7 @@ public class CheckErrorAlgorithm073 extends CheckErrorAlgorithmISBN {
     char computedCheck = Character.toUpperCase(PageElementISBN.computeChecksum(number));
 
     // Invalid checksum
-    if (check != computedCheck) {
+    if ((check != computedCheck) && Character.isDigit(computedCheck)) {
       String reasonTemplate = getSpecificProperty("reason_checksum", true, true, false);
       if (reasonTemplate == null) {
         reasonTemplate = getSpecificProperty("reason", true, true, false);
