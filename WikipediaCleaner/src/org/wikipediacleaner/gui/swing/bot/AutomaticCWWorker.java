@@ -37,49 +37,34 @@ import org.wikipediacleaner.i18n.GT;
  */
 public class AutomaticCWWorker extends BasicWorker {
 
-  /**
-   * Algorithms for which to fix pages.
-   */
+  /** Algorithms for which to fix pages. */
   private final List<CheckErrorAlgorithm> selectedAlgorithms;
 
-  /**
-   * Maximum number of pages.
-   */
+  /** Maximum number of pages. */
   private final int max;
 
-  /**
-   * List of potential algorithms to fix.
-   */
+  /** True to ignore limit for non Labs errors. */
+  private final boolean noLimit;
+
+  /** List of potential algorithms to fix. */
   private final List<CheckErrorAlgorithm> allAlgorithms;
 
-  /**
-   * Extra comment.
-   */
+  /** Extra comment. */
   private final String extraComment;
 
-  /**
-   * True if modifications should be saved.
-   */
+  /** True if modifications should be saved. */
   private final boolean saveModifications;
 
-  /**
-   * True if pages that couldn't be fixed should be analyzed.
-   */
+  /** True if pages that couldn't be fixed should be analyzed. */
   private final boolean analyzeNonFixed;
 
-  /**
-   * Count of modified pages.
-   */
+  /** Count of modified pages. */
   private int countModified;
 
-  /**
-   * Count of marked pages.
-   */
+  /** Count of marked pages. */
   private int countMarked;
 
-  /**
-   * Count of marked pages for other algorithms.
-   */
+  /** Count of marked pages for other algorithms. */
   private int countMarkedOther;
 
   /**
@@ -87,6 +72,7 @@ public class AutomaticCWWorker extends BasicWorker {
    * @param window Window.
    * @param selectedAlgorithms List of selected algorithms.
    * @param max Maximum number of pages for each algorithm.
+   * @param noLimit Ignore limit for non Labs errors.
    * @param allAlgorithms List of possible algorithms.
    * @param extraComment Extra comment.
    * @param saveModifications True if modifications should be saved.
@@ -94,13 +80,15 @@ public class AutomaticCWWorker extends BasicWorker {
    */
   public AutomaticCWWorker(
       EnumWikipedia wiki, BasicWindow window,
-      List<CheckErrorAlgorithm> selectedAlgorithms, int max,
+      List<CheckErrorAlgorithm> selectedAlgorithms,
+      int max, boolean noLimit,
       List<CheckErrorAlgorithm> allAlgorithms,
       String extraComment,
       boolean saveModifications, boolean analyzeNonFixed) {
     super(wiki, window);
     this.selectedAlgorithms = selectedAlgorithms;
     this.max = max;
+    this.noLimit = noLimit;
     this.allAlgorithms = allAlgorithms;
     this.extraComment = extraComment;
     this.saveModifications = saveModifications;
@@ -129,7 +117,11 @@ public class AutomaticCWWorker extends BasicWorker {
             GT._("Checking for errors n°{0}", Integer.toString(algorithm.getErrorNumber())) +
             " - " + algorithm.getShortDescriptionReplaced());
         errors.clear();
-        checkWiki.retrievePages(algorithm, max, getWikipedia(), errors);
+        int maxSize = max;
+        if (noLimit && algorithm.hasSpecialList()) {
+          maxSize = Integer.MAX_VALUE;
+        }
+        checkWiki.retrievePages(algorithm, maxSize, getWikipedia(), errors);
         while (!errors.isEmpty()) {
           CheckError error = errors.remove(0);
           int maxErrors = error.getPageCount();

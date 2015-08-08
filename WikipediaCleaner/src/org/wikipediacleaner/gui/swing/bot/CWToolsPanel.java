@@ -59,6 +59,9 @@ public class CWToolsPanel extends BotToolsPanel {
   /** Configure if page that couldn't be fixed should be analyzed. */
   private JCheckBox chkCWAnalyze;
 
+  /** No limit of number of pages for non CW error. */
+  private JCheckBox chkNoLimit;
+
   /** Configure number of pages for each error. */
   private SpinnerNumberModel modelNbPages;
 
@@ -144,6 +147,12 @@ public class CWToolsPanel extends BotToolsPanel {
         GT._("Analyze pages that couldn't be fixed by bot"),
         config.getBoolean(null, ConfigurationValueBoolean.CHECK_BOT_ANALYZE));
     add(chkCWAnalyze, constraints);
+    constraints.gridy++;
+
+    // No limit for number of errors
+    chkNoLimit = Utilities.createJCheckBox(
+        GT._("Ignore limit for errors not on Labs"), false);
+    add(chkNoLimit, constraints);
     constraints.gridy++;
 
     // Number of errors
@@ -279,10 +288,11 @@ public class CWToolsPanel extends BotToolsPanel {
       analyze = chkCWAnalyze.isSelected();
       config.setBoolean(null, ConfigurationValueBoolean.CHECK_BOT_ANALYZE, analyze);
     }
+    boolean noLimit = chkNoLimit.isSelected();
     config.setInt(null, ConfigurationValueInteger.CHECK_BOT_NB_PAGES, max);
     AutomaticCWWorker worker = new AutomaticCWWorker(
         wiki, window,
-        listAlgorithms, max,
+        listAlgorithms, max, noLimit,
         fixAlgorithms,
         txtComment.getText(),
         saveModifications, analyze);

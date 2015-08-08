@@ -212,7 +212,7 @@ public class Bot implements BasicWorkerListener {
         }
       }
       worker = new AutomaticCWWorker(
-          wiki, null, algorithms, 10000, allAlgorithms, null, true, false);
+          wiki, null, algorithms, 10000, true, allAlgorithms, null, true, false);
     }
     if (worker != null) {
       worker.setListener(this);
