@@ -136,7 +136,7 @@ public class ActionDeletePage implements ActionListener {
     try {
       EnumWikipedia wiki = page.getWikipedia();
       api.deletePage(
-          wiki, page, wiki.formatComment(reason.trim(), false));
+          wiki, page, reason.trim(), false);
       if (listener != null) {
         listener.pageDeleted(page.getTitle());
       }

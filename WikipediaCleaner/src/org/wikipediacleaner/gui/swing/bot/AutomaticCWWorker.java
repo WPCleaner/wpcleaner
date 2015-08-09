@@ -217,8 +217,8 @@ public class AutomaticCWWorker extends BasicWorker {
         setText(prefix + " - " + GT._("Fixing page {0}", page.getTitle()));
         api.updatePage(
             getWikipedia(), page, newContents,
-            getWikipedia().createUpdatePageComment(comment.toString(), null, true),
-            false);
+            comment.toString(),
+            true, false);
         countModified++;
         for (CheckErrorAlgorithm usedAlgorithm : usedAlgorithms) {
           errorPage = CheckError.analyzeError(usedAlgorithm, page.getAnalysis(newContents, true));

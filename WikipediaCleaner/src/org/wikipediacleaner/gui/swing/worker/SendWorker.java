@@ -96,8 +96,8 @@ public class SendWorker extends BasicWorker {
       setText(GT._("Updating page contents"));
       queryResult = api.updatePage(
           getWikipedia(), page, text,
-          getWikipedia().createUpdatePageComment(comment, null, false),
-          forceWatch);
+          comment,
+          false, forceWatch);
     } catch (APIException e) {
       return e;
     }

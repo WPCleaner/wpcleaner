@@ -62,7 +62,7 @@ public class NewSectionWorker extends BasicWorker {
       setText(GT._("Retrieving MediaWiki API"));
       API api = APIFactory.getAPI();
       setText(GT._("Adding comment"));
-      api.addNewSection(getWikipedia(), page, section, text, forceWatch);
+      api.addNewSection(getWikipedia(), page, section, text, false, forceWatch);
     } catch (APIException e) {
       return e;
     }

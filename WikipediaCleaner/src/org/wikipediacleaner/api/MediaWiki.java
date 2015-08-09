@@ -237,7 +237,7 @@ public class MediaWiki extends MediaWikiController {
           if (!oldContents.equals(newContents)) {
             // Initialize comment
             StringBuilder fullComment = new StringBuilder();
-            fullComment.append(wiki.createUpdatePageComment(comment, details.toString(), false));
+            fullComment.append(wiki.createUpdatePageComment(comment, details.toString()));
 
             // Apply automatic Check Wiki fixing
             if (automaticCW) {
@@ -265,7 +265,7 @@ public class MediaWiki extends MediaWikiController {
             setText(GT._("Updating page {0}", page.getTitle()));
             count++;
             if (save) {
-              api.updatePage(wiki, page, newContents, fullComment.toString(), false);
+              api.updatePage(wiki, page, newContents, fullComment.toString(), false, false);
               if (updateDabWarning) {
                 dabWarnings.updateWarning(
                     Collections.singletonList(page), null, null, null);

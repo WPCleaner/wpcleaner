@@ -80,6 +80,8 @@ import org.wikipediacleaner.api.constants.wiki.WiktionarySv;
 import org.wikipediacleaner.api.data.DataManager;
 import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.Page;
+import org.wikipediacleaner.api.impl.CommentDecorator;
+import org.wikipediacleaner.api.impl.ProgramCommentDecorator;
 import org.wikipediacleaner.utils.Configuration;
 import org.wikipediacleaner.utils.ConfigurationValueBoolean;
 
@@ -308,65 +310,35 @@ public enum EnumWikipedia {
   /**
    * @param text Comment.
    * @param details Details about the update.
-   * @param automatic True if this an automatic edit.
    * @return Full comment.
    */
-  public String createUpdatePageComment(String text, String details, boolean automatic) {
-    return formatComment(
-           (((text != null) && (text.length() > 0)) ? text : "") +
-           (((details != null) && (details.length() > 0)) ? " - " + details : ""),
-           automatic);
+  public String createUpdatePageComment(String text, String details) {
+    StringBuilder comment = new StringBuilder();
+    if ((text != null) && (text.length() > 0)) {
+      comment.append(text);
+    }
+    if ((details != null) && (details.length() > 0)) {
+      if (comment.length() > 0) {
+        comment.append(" - ");
+      }
+      comment.append(details);
+    }
+    return comment.toString();
   }
 
   /**
-   * Format a comment.
-   * 
-   * @param comment Original comment.
-   * @param automatic True if this an automatic edit.
-   * @return Formatted comment (with WPCleaner version).
+   * @return Comment decorator.
    */
-  public String formatComment(String comment, boolean automatic) {
+  public CommentDecorator getCommentDecorator() {
     Configuration config = Configuration.getConfiguration();
-    boolean showWikiCleaner = config.getBoolean(
+    boolean showProgram = config.getBoolean(
         null,
         ConfigurationValueBoolean.WIKICLEANER_COMMENT);
-    StringBuilder formattedComment = new StringBuilder();
-    if (showWikiCleaner) {
-      String link = WPCConfiguration.getString(WPCConfigurationString.HELP_PAGE);
-      if ((link != null) && (link.trim().length() > 0)) {
-        formattedComment.append("[[");
-        formattedComment.append(link);
-        formattedComment.append("|");
-        formattedComment.append(Version.PROGRAM);
-        formattedComment.append("]] ");
-      } else {
-        formattedComment.append(Version.PROGRAM);
-        formattedComment.append(" ");
-      }
-      formattedComment.append("v");
-      formattedComment.append(Version.VERSION);
-      if (automatic) {
-        formattedComment.append("b");
-      }
-    }
-    if (comment != null) {
-      if (formattedComment.length() > 0) {
-        formattedComment.append(" - ");
-      }
-      formattedComment.append(comment);
-    }
-    if (!showWikiCleaner) {
-      if (formattedComment.length() > 0) {
-        formattedComment.append(" ");
-      }
-      formattedComment.append("(v");
-      formattedComment.append(Version.VERSION);
-      if (automatic) {
-        formattedComment.append("b");
-      }
-      formattedComment.append(")");
-    }
-    return formattedComment.toString();
+    String link = WPCConfiguration.getString(WPCConfigurationString.HELP_PAGE);
+    String tag = WPCConfiguration.getString(WPCConfigurationString.TAG);
+    return new ProgramCommentDecorator(
+        Version.PROGRAM, Version.VERSION,
+        showProgram, link, tag);
   }
 
   /**

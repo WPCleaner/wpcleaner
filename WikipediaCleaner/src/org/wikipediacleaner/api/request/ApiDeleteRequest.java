@@ -12,6 +12,7 @@ import java.util.Map;
 import org.wikipediacleaner.api.APIException;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.Page;
+import org.wikipediacleaner.api.impl.CommentDecorator;
 
 
 /**
@@ -78,14 +79,21 @@ public class ApiDeleteRequest extends ApiRequest {
    * 
    * @param page Page to be deleted.
    * @param reason Reason for deletion.
+   * @param automatic True if the modification is automatic.
    */
-  public void deletePage(Page page, String reason) throws APIException {
+  public void deletePage(
+      Page page, String reason,
+      boolean automatic) throws APIException {
     Map<String, String> properties = getProperties(ACTION_DELETE, result.getFormat());
     if (reason != null) {
       properties.put(PROPERTY_REASON, reason);
     }
     properties.put(PROPERTY_TITLE, page.getTitle());
     properties.put(PROPERTY_TOKEN, getWiki().getConnection().getDeleteToken());
+    CommentDecorator decorator = getWiki().getCommentDecorator();
+    if (decorator != null) {
+      decorator.manageComment(properties, PROPERTY_REASON, null, automatic);
+    }
     result.executeDelete(properties);
   }
 }

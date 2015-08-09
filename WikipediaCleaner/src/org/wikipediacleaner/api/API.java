@@ -59,6 +59,7 @@ public interface API {
    * @param page Page.
    * @param newContents New contents to use.
    * @param comment Comment.
+   * @param automatic True if the modification is automatic.
    * @param forceWatch Force watching the page.
    * @return Result of the command.
    * @throws APIException
@@ -66,7 +67,7 @@ public interface API {
   public QueryResult updatePage(
       EnumWikipedia wikipedia, Page page,
       String newContents, String comment,
-      boolean forceWatch) throws APIException;
+      boolean automatic, boolean forceWatch) throws APIException;
 
   /**
    * Add a new section in a page.
@@ -75,13 +76,15 @@ public interface API {
    * @param page Page.
    * @param title Title of the new section.
    * @param contents Contents.
+   * @param automatic True if the modification is automatic.
    * @param forceWatch Force watching the page.
    * @return Result of the command.
    * @throws APIException
    */
   public QueryResult addNewSection(
       EnumWikipedia wikipedia,
-      Page page, String title, String contents, boolean forceWatch) throws APIException;
+      Page page, String title, String contents,
+      boolean automatic, boolean forceWatch) throws APIException;
 
 
   /**
@@ -92,6 +95,7 @@ public interface API {
    * @param title Title of the new section.
    * @param section Section. 
    * @param contents Contents.
+   * @param automatic True if the modification is automatic.
    * @param forceWatch Force watching the page.
    * @return Result of the command.
    * @throws APIException
@@ -99,7 +103,8 @@ public interface API {
   public QueryResult updateSection(
       EnumWikipedia wikipedia,
       Page page, String title, int section,
-      String contents, boolean forceWatch) throws APIException;
+      String contents,
+      boolean automatic, boolean forceWatch) throws APIException;
 
   /**
    * Retrieves the templates of <code>page</code>.
@@ -540,11 +545,13 @@ public interface API {
    * @param wiki Wiki.
    * @param page The page.
    * @param reason Reason for deleting the page.
+   * @param automatic True if the modification is automatic.
    * @throws APIException
    * @see <a href="http://www.mediawiki.org/wiki/API:Delete">API:Delete</a>
    */
   public void deletePage(
-      EnumWikipedia wiki, Page page, String reason) throws APIException;
+      EnumWikipedia wiki, Page page,
+      String reason, boolean automatic) throws APIException;
 
   // ==========================================================================
   // API : TemplateData.

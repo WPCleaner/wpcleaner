@@ -518,9 +518,7 @@ public abstract class UpdateWarningTools {
       tmp.append('\n');
       updatePage(
           todoSubpage, tmp.toString(),
-          wiki.formatComment(
-              getWarningComment(elements),
-              automaticEdit),
+          getWarningComment(elements),
           false);
 
       // Inform creator and modifiers of the page
@@ -553,10 +551,8 @@ public abstract class UpdateWarningTools {
       }
       api.updatePage(
           wiki, todoSubpage, tmp.toString(),
-          wiki.formatComment(
-              getWarningComment(elements),
-              automaticEdit),
-          false);
+          getWarningComment(elements),
+          automaticEdit, false);
 
       return true;
     }
@@ -653,9 +649,7 @@ public abstract class UpdateWarningTools {
         }
         tmp.append(contents.substring(indexStart));
       }
-      String comment = wiki.formatComment(
-          getWarningComment(elements),
-          automaticEdit);
+      String comment = getWarningComment(elements);
       updateTalkPage(talkPage, tmp.toString(), comment);
 
       // Inform creator and modifiers of the page
@@ -694,9 +688,7 @@ public abstract class UpdateWarningTools {
         }
         tmp.append(contents.substring(indexEnd));
       }
-      String comment = wiki.formatComment(
-          getWarningComment(elements),
-          automaticEdit);
+      String comment = getWarningComment(elements);
       updateTalkPage(talkPage, tmp.toString(), comment);
       return true;
     }
@@ -718,9 +710,7 @@ public abstract class UpdateWarningTools {
       if (templateTodo.getEndIndex() < contents.length()) {
         tmp.append(contents.substring(templateTodo.getEndIndex()));
       }
-      String comment = wiki.formatComment(
-          getWarningComment(elements),
-          automaticEdit);
+      String comment = getWarningComment(elements);
       updateTalkPage(talkPage, tmp.toString(), comment);
       return true;
     }
@@ -775,11 +765,11 @@ public abstract class UpdateWarningTools {
 
     // Remove the warning
     String newContents = tmp.toString();
-    String reason = wiki.formatComment(getWarningCommentDone(), automaticEdit);
+    String reason = getWarningCommentDone();
     if ((newContents.trim().length() == 0) &&
         (wiki.getConnection().getUser() != null) &&
         (wiki.getConnection().getUser().hasRight(User.RIGHT_DELETE))) {
-      api.deletePage(wiki, todoSubpage, reason);
+      api.deletePage(wiki, todoSubpage, reason, automaticEdit);
     } else {
       if (newContents.trim().length() == 0) {
         String delete = configuration.getString(WPCConfigurationString.TODO_SUBPAGE_DELETE);
@@ -812,9 +802,7 @@ public abstract class UpdateWarningTools {
       return false;
     }
     if (Boolean.FALSE.equals(talkPage.isExisting())) {
-      String comment = wiki.formatComment(
-          getWarningComment(elements),
-          automaticEdit);
+      String comment = getWarningComment(elements);
       String newContents = "{{" + todoTemplates.get(0) + "}}";
       updateTalkPage(talkPage, newContents, comment);
       return true;
@@ -879,9 +867,7 @@ public abstract class UpdateWarningTools {
         }
         tmp.append(contents.substring(indexStart));
       }
-      String comment = wiki.formatComment(
-          getWarningComment(elements),
-          automaticEdit);
+      String comment = getWarningComment(elements);
       updateTalkPage(talkPage, tmp.toString(), comment);
       return true;
     }
@@ -949,9 +935,7 @@ public abstract class UpdateWarningTools {
         }
         tmp.append(contents.substring(templateTodo.getEndIndex()));
       }
-      String comment = wiki.formatComment(
-          getWarningComment(elements),
-          automaticEdit);
+      String comment = getWarningComment(elements);
       updateTalkPage(talkPage, tmp.toString(), comment);
       return true;
     }
@@ -1028,7 +1012,7 @@ public abstract class UpdateWarningTools {
         if (templateTodo.getEndIndex() < contents.length()) {
           tmp.append(contents.substring(templateTodo.getEndIndex()));
         }
-        String comment = wiki.formatComment(getWarningCommentDone(), automaticEdit);
+        String comment = getWarningCommentDone();
         updateTalkPage(talkPage, tmp.toString(), comment);
         return true;
       }
@@ -1390,7 +1374,9 @@ public abstract class UpdateWarningTools {
             fullMessage.append(" ==\n");
           }
           fullMessage.append(message);
-          api.addNewSection(wiki, userTalkPage, globalTitle, fullMessage.toString(), false);
+          api.addNewSection(
+              wiki, userTalkPage, globalTitle,
+              fullMessage.toString(), automaticEdit, false);
         } else {
           // Add the message in the existing title
           Integer revisionId = userTalkPage.getRevisionId();
@@ -1402,14 +1388,18 @@ public abstract class UpdateWarningTools {
               fullMessage.append("\n");
             }
             fullMessage.append(message);
-            api.updateSection(wiki, userTalkPage, globalTitle, section.getIndex(), fullMessage.toString(), false);
+            api.updateSection(
+                wiki, userTalkPage, globalTitle, section.getIndex(),
+                fullMessage.toString(), automaticEdit, false);
           } else {
             System.err.println("Page " + userTalk + " has been modified between two requests");
           }
         }
       } else {
         if (title != null) {
-          api.addNewSection(wiki, userTalkPage, title, message, false);
+          api.addNewSection(
+              wiki, userTalkPage, title,
+              message, automaticEdit, false);
         } else {
           // TODO: No global title, no title => Should append the message at the end
           log.warn("Should add " + message + " in " + userTalk);
@@ -1502,7 +1492,9 @@ public abstract class UpdateWarningTools {
       Page page,
       String newContents, String comment,
       boolean forceWatch) throws APIException {
-    return api.updatePage(wiki, page, newContents, comment, forceWatch);
+    return api.updatePage(
+        wiki, page, newContents,
+        comment, automaticEdit, forceWatch);
   }
 
   /**
@@ -1519,7 +1511,9 @@ public abstract class UpdateWarningTools {
   protected QueryResult updateSection(
       Page page, String title, int section,
       String contents, boolean forceWatch) throws APIException {
-    return api.updateSection(wiki, page, title, section, contents, forceWatch);
+    return api.updateSection(
+        wiki, page, title, section,
+        contents, automaticEdit, forceWatch);
   }
 
   /**

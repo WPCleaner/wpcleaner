@@ -338,6 +338,7 @@ public class MediaWikiAPI implements API {
    * @param page Page.
    * @param newContents New contents to use.
    * @param comment Comment.
+   * @param automatic True if the modification is automatic.
    * @param forceWatch Force watching the page.
    * @return Result of the command.
    * @throws APIException
@@ -346,7 +347,7 @@ public class MediaWikiAPI implements API {
   public QueryResult updatePage(
       EnumWikipedia wikipedia, Page page,
       String newContents, String comment,
-      boolean forceWatch) throws APIException {
+      boolean automatic, boolean forceWatch) throws APIException {
     if (page == null) {
       throw new APIException("Page is null");
     }
@@ -380,6 +381,10 @@ public class MediaWikiAPI implements API {
         properties.put("token", wikipedia.getConnection().getEditToken());
       }
       properties.put("watchlist", forceWatch ? "watch" : "nochange");
+      CommentDecorator commentDecorator = wikipedia.getCommentDecorator();
+      if (commentDecorator != null) {
+        commentDecorator.manageComment(properties, "summary", "tags", automatic);
+      }
       checkTimeForEdit(wikipedia.getConnection().getUser(), page.getNamespace());
       try {
         boolean hasCaptcha = false;
@@ -437,6 +442,7 @@ public class MediaWikiAPI implements API {
    * @param page Page.
    * @param title Title of the new section.
    * @param contents Contents.
+   * @param automatic True if the modification is automatic.
    * @param forceWatch Force watching the page.
    * @return Result of the command.
    * @throws APIException
@@ -444,8 +450,9 @@ public class MediaWikiAPI implements API {
   @Override
   public QueryResult addNewSection(
       EnumWikipedia wikipedia,
-      Page page, String title, String contents, boolean forceWatch) throws APIException {
-    return updateSection(wikipedia, page, title, "new", contents, forceWatch);
+      Page page, String title, String contents,
+      boolean automatic, boolean forceWatch) throws APIException {
+    return updateSection(wikipedia, page, title, "new", contents, automatic, forceWatch);
   }
 
   /**
@@ -456,6 +463,7 @@ public class MediaWikiAPI implements API {
    * @param title Title of the new section.
    * @param section Section. 
    * @param contents Contents.
+   * @param automatic True if the modification is automatic.
    * @param forceWatch Force watching the page.
    * @return Result of the command.
    * @throws APIException
@@ -464,8 +472,9 @@ public class MediaWikiAPI implements API {
   public QueryResult updateSection(
       EnumWikipedia wikipedia,
       Page page, String title, int section,
-      String contents, boolean forceWatch) throws APIException {
-    return updateSection(wikipedia, page, title, Integer.toString(section), contents, forceWatch);
+      String contents,
+      boolean automatic, boolean forceWatch) throws APIException {
+    return updateSection(wikipedia, page, title, Integer.toString(section), contents, automatic, forceWatch);
   }
 
   /**
@@ -477,13 +486,15 @@ public class MediaWikiAPI implements API {
    * @param section Section ("new" for a new section). 
    * @param contents Contents.
    * @param forceWatch Force watching the page.
+   * @param automatic True if the modification is automatic.
    * @return Result of the command.
    * @throws APIException
    */
   private QueryResult updateSection(
       EnumWikipedia wikipedia,
       Page page, String title, String section,
-      String contents, boolean forceWatch) throws APIException {
+      String contents,
+      boolean automatic, boolean forceWatch) throws APIException {
     if (page == null) {
       throw new APIException("Page is null");
     }
@@ -508,15 +519,21 @@ public class MediaWikiAPI implements API {
       properties.put("bot", "");
       properties.put("minor", "");
       properties.put("section", section);
+      properties.put("sectiontitle", title);
       String startTimestamp = page.getStartTimestamp();
       if ((startTimestamp != null) && !startTimestamp.isEmpty()) {
         properties.put("starttimestamp", startTimestamp);
       }
-      properties.put("summary", title);
+      String comment = title;
+      properties.put("summary", comment);
       properties.put("text", contents);
       properties.put("title", page.getTitle());
       properties.put("token", wikipedia.getConnection().getEditToken());
       properties.put("watchlist", forceWatch ? "watch" : "nochange");
+      CommentDecorator commentDecorator = wikipedia.getCommentDecorator();
+      if (commentDecorator != null) {
+        commentDecorator.manageComment(properties, "summary", "tags", automatic);
+      }
       checkTimeForEdit(wikipedia.getConnection().getUser(), page.getNamespace());
       try {
         boolean hasCaptcha = false;
@@ -1429,15 +1446,18 @@ public class MediaWikiAPI implements API {
    * @param wiki Wiki.
    * @param page The page.
    * @param reason Reason for deleting the page.
+   * @param automatic True if the modification is automatic.
    * @throws APIException
    * @see <a href="http://www.mediawiki.org/wiki/API:Delete">API:Delete</a>
    */
   @Override
-  public void deletePage(EnumWikipedia wiki, Page page, String reason)
+  public void deletePage(
+      EnumWikipedia wiki, Page page,
+      String reason, boolean automatic)
       throws APIException {
     ApiDeleteResult result = new ApiXmlDeleteResult(wiki, httpClient);
     ApiDeleteRequest request = new ApiDeleteRequest(wiki, result);
-    request.deletePage(page, reason);
+    request.deletePage(page, reason, automatic);
   }
 
   // ==========================================================================
