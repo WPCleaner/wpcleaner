@@ -1231,10 +1231,12 @@ public class OnePageAnalysisWindow
           if ((page != null) && (page.getLinks() != null)) {
             for (Page link : page.getLinks()) {
               if (Page.areSameTitle(p.getKey(), link.getTitle())) {
-                InternalLinkCount count = analysis.getLinkCount(link);
-                if (count != null) {
-                  currentCount = Integer.valueOf(count.getTotalLinkCount());
-                  currentHelpCount = Integer.valueOf(count.getHelpNeededCount());
+                if (analysis != null) {
+                  InternalLinkCount count = analysis.getLinkCount(link);
+                  if (count != null) {
+                    currentCount = Integer.valueOf(count.getTotalLinkCount());
+                    currentHelpCount = Integer.valueOf(count.getHelpNeededCount());
+                  }
                 }
               }
             }
@@ -1252,17 +1254,19 @@ public class OnePageAnalysisWindow
       }
 
       // Compute list of disambiguation links that still need to be fixed
-      List<Page> links = analysis.getPage().getLinks();
-      if (links != null) {
-        analysis.countLinks(links);
-        for (Page link : links) {
-          if (Boolean.TRUE.equals(link.isDisambiguationPage())) {
-            InternalLinkCount linkCount = analysis.getLinkCount(link);
-            if (linkCount != null) {
-              if ((linkCount.getInternalLinkCount() > 0) ||
-                  (linkCount.getIncorrectTemplateCount() > 0) ||
-                  (linkCount.getHelpNeededCount() > 0)) {
-                dabLinks.add(link.getTitle());
+      if (analysis != null) {
+        List<Page> links = analysis.getPage().getLinks();
+        if (links != null) {
+          analysis.countLinks(links);
+          for (Page link : links) {
+            if (Boolean.TRUE.equals(link.isDisambiguationPage())) {
+              InternalLinkCount linkCount = analysis.getLinkCount(link);
+              if (linkCount != null) {
+                if ((linkCount.getInternalLinkCount() > 0) ||
+                    (linkCount.getIncorrectTemplateCount() > 0) ||
+                    (linkCount.getHelpNeededCount() > 0)) {
+                  dabLinks.add(link.getTitle());
+                }
               }
             }
           }
@@ -1309,7 +1313,7 @@ public class OnePageAnalysisWindow
 
     // Comments for added categories / templates
     boolean isCategoryAdded = false;
-    if (addedCategories != null) {
+    if ((addedCategories != null) && (analysis != null)) {
       for (PageElementCategory category : analysis.getCategories()) {
         for (String category2 : addedCategories) {
           if (Page.areSameTitle(category.getName(), category2)) {
@@ -1319,7 +1323,7 @@ public class OnePageAnalysisWindow
       }
     }
     boolean isTemplateAdded = false;
-    if (addedTemplates != null) {
+    if ((addedTemplates != null) && (analysis != null)) {
       for (PageElementTemplate template : analysis.getTemplates()) {
         for (String template2 : addedTemplates) {
           if (Page.areSameTitle(template.getTemplateName(), template2)) {
