@@ -56,6 +56,7 @@ public class CheckErrorAlgorithm064 extends CheckErrorAlgorithmBase {
       return false;
     }
     boolean result = false;
+    String content = analysis.getContents();
     for (PageElementInternalLink link : links) {
 
       // Analyze
@@ -109,7 +110,13 @@ public class CheckErrorAlgorithm064 extends CheckErrorAlgorithmBase {
             text = text.substring(countQuoteBefore, text.length() - countQuoteAfter);
             if (Page.areSameTitle(linkName, text) || Page.areSameTitle(linkName, text.replaceAll("\\_", " "))) {
               same = true;
-              automatic = false;
+              automatic = true;
+              if ((link.getBeginIndex() > 0) && (content.charAt(link.getBeginIndex() - 1) == '\'')) {
+                automatic = false;
+              }
+              if ((link.getEndIndex() < content.length()) && (content.charAt(link.getEndIndex()) == '\'')) {
+                automatic = false;
+              }
             }
           }
         }
