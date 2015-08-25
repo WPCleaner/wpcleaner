@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2015-08-08 19:51+0200\n"
+"POT-Creation-Date: 2015-08-25 22:24+0200\n"
 "PO-Revision-Date: 2015-05-05 19:32+0000\n"
 "Last-Translator: Matěj S. <matejsuchanek97@gmail.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
@@ -644,6 +644,11 @@ msgstr "Seznam řadových přípon"
 msgid "List of possible replacements"
 msgstr "Seznam možných náhrad"
 
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm103.java:30
+#, fuzzy
+msgid "Replace all pipe templates"
+msgstr "Nahradit za použití šablony {0}"
+
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm501.java:173
 msgid "Restore original text"
 msgstr "Navrátit původní text"
@@ -1061,12 +1066,12 @@ msgstr "Převádím text"
 msgid "Retrieving templates"
 msgstr "Přijímám šablony"
 
-#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:653
+#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:670
 #, java-format
 msgid "URL {0} is blacklisted"
 msgstr "URL {0} je na černé listině"
 
-#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:1777
+#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:1797
 msgid ""
 "This action is protected by a CAPTCHA.\n"
 "What is the answer to the following question ?"
@@ -1074,7 +1079,7 @@ msgstr ""
 "Tato akce je chráněna funkcí CAPTCHA.\n"
 "Jaká je odpověď na následující otázku?"
 
-#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:1784
+#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:1804
 msgid ""
 "This action is protected by a CAPTCHA.\n"
 "What is the answer to the question displayed in your browser ?"
@@ -3814,7 +3819,7 @@ msgstr "Chcete {0} aktualizovat?"
 msgid "Retrieving page contents - {0}"
 msgstr "Načítám obsah stránky - {0}"
 
-#: org/wikipediacleaner/gui/swing/worker/UpdateWarningTools.java:1713
+#: org/wikipediacleaner/gui/swing/worker/UpdateWarningTools.java:1707
 #, java-format
 msgid "{0} page has been analyzed."
 msgid_plural "{0} pages have been analyzed."
@@ -3822,7 +3827,7 @@ msgstr[0] "Byla analyzována {0} stránka."
 msgstr[1] "Byly analyzovány {0} stránky."
 msgstr[2] "Bylo analyzováno {0} stránek."
 
-#: org/wikipediacleaner/gui/swing/worker/UpdateWarningTools.java:1718
+#: org/wikipediacleaner/gui/swing/worker/UpdateWarningTools.java:1712
 #, java-format
 msgid "Warning has been updated on {0} page."
 msgid_plural "Warnings have been updated on {0} pages."
@@ -3830,7 +3835,7 @@ msgstr[0] "Varování bylo aktualizováno na jedné stránce."
 msgstr[1] "Varování byla aktualizována na {0} stránkách."
 msgstr[2] "Varování byla aktualizována na {0} stránkách."
 
-#: org/wikipediacleaner/gui/swing/worker/UpdateWarningTools.java:1723
+#: org/wikipediacleaner/gui/swing/worker/UpdateWarningTools.java:1717
 #, java-format
 msgid "Warning has been removed on {0} page."
 msgid_plural "Warnings have been removed on {0} pages."
@@ -3838,7 +3843,7 @@ msgstr[0] "Varování bylo odstraněno z {0} stránky."
 msgstr[1] "Varování byla odstraněna z(e) {0} stránek."
 msgstr[2] "Varování byla odstraněna z(e) {0} stránek."
 
-#: org/wikipediacleaner/gui/swing/worker/UpdateWarningTools.java:1728
+#: org/wikipediacleaner/gui/swing/worker/UpdateWarningTools.java:1722
 #, java-format
 msgid "{0} still needs to be fixed."
 msgid_plural "{0} still need to be fixed."
@@ -3846,7 +3851,7 @@ msgstr[0] "Jedno stále čeká na opravu."
 msgstr[1] "{0} stále čekají na opravu."
 msgstr[2] "{0} stále čeká na opravu."
 
-#: org/wikipediacleaner/gui/swing/worker/UpdateWarningTools.java:1734
+#: org/wikipediacleaner/gui/swing/worker/UpdateWarningTools.java:1728
 #, java-format
 msgid "It took {0} second"
 msgid_plural "It took {0} seconds"

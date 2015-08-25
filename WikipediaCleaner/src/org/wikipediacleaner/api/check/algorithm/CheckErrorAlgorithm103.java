@@ -15,6 +15,8 @@ import org.wikipediacleaner.api.check.CheckErrorResult.ErrorLevel;
 import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementImage;
 import org.wikipediacleaner.api.data.PageElementTemplate;
+import org.wikipediacleaner.gui.swing.component.MWPane;
+import org.wikipediacleaner.i18n.GT;
 
 
 /**
@@ -22,6 +24,11 @@ import org.wikipediacleaner.api.data.PageElementTemplate;
  * Error 103: Unnecessary pipe template
  */
 public class CheckErrorAlgorithm103 extends CheckErrorAlgorithmBase {
+
+  /** Possible global fixes. */
+  private final static String[] globalFixes = new String[] {
+    GT._("Replace all pipe templates"),
+  };
 
   public CheckErrorAlgorithm103() {
     super("Unnecessary pipe template");
@@ -102,5 +109,26 @@ public class CheckErrorAlgorithm103 extends CheckErrorAlgorithmBase {
     }
 
     return result;
+  }
+
+  /**
+   * @return List of possible global fixes.
+   */
+  @Override
+  public String[] getGlobalFixes() {
+    return globalFixes;
+  }
+
+  /**
+   * Fix all the errors in the page.
+   * 
+   * @param fixName Fix name (extracted from getGlobalFixes()).
+   * @param analysis Page analysis.
+   * @param textPane Text pane.
+   * @return Page contents after fix.
+   */
+  @Override
+  public String fix(String fixName, PageAnalysis analysis, MWPane textPane) {
+    return fixUsingFirstReplacement(fixName, analysis);
   }
 }

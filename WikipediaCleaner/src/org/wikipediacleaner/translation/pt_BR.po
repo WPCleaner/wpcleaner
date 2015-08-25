@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2015-08-08 19:51+0200\n"
+"POT-Creation-Date: 2015-08-25 22:24+0200\n"
 "PO-Revision-Date: 2015-06-28 00:40+0000\n"
 "Last-Translator: Felipe L. <felipe.idj@hotmail.com>\n"
 "Language-Team: Brazilian Portuguese <pt_BR@li.org>\n"
@@ -652,6 +652,11 @@ msgstr "Lista de sufixos ordinais"
 msgid "List of possible replacements"
 msgstr "Lista de substituições possíveis"
 
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm103.java:30
+#, fuzzy
+msgid "Replace all pipe templates"
+msgstr "Substituir usando predefinição {0}"
+
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm501.java:173
 msgid "Restore original text"
 msgstr "Restaurar texto original"
@@ -1076,12 +1081,12 @@ msgstr "Analisando texto"
 msgid "Retrieving templates"
 msgstr "Recuperando predefinições"
 
-#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:653
+#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:670
 #, java-format
 msgid "URL {0} is blacklisted"
 msgstr "A URL {0} está na lista negra"
 
-#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:1777
+#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:1797
 msgid ""
 "This action is protected by a CAPTCHA.\n"
 "What is the answer to the following question ?"
@@ -1089,7 +1094,7 @@ msgstr ""
 "Esta ação é protegida por CAPTCHA.\n"
 "Qual é a resposta para a seguinte questão?"
 
-#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:1784
+#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:1804
 msgid ""
 "This action is protected by a CAPTCHA.\n"
 "What is the answer to the question displayed in your browser ?"
@@ -3840,35 +3845,35 @@ msgstr "Você quer atualizar {0}?"
 msgid "Retrieving page contents - {0}"
 msgstr "Recuperando conteúdo da página - {0}"
 
-#: org/wikipediacleaner/gui/swing/worker/UpdateWarningTools.java:1713
+#: org/wikipediacleaner/gui/swing/worker/UpdateWarningTools.java:1707
 #, java-format
 msgid "{0} page has been analyzed."
 msgid_plural "{0} pages have been analyzed."
 msgstr[0] "{0} página foi analisada."
 msgstr[1] "{0} páginas foram analisadas."
 
-#: org/wikipediacleaner/gui/swing/worker/UpdateWarningTools.java:1718
+#: org/wikipediacleaner/gui/swing/worker/UpdateWarningTools.java:1712
 #, java-format
 msgid "Warning has been updated on {0} page."
 msgid_plural "Warnings have been updated on {0} pages."
 msgstr[0] "Aviso foi atualizado em {0} página."
 msgstr[1] "Avisos foram atualizados em {0} páginas."
 
-#: org/wikipediacleaner/gui/swing/worker/UpdateWarningTools.java:1723
+#: org/wikipediacleaner/gui/swing/worker/UpdateWarningTools.java:1717
 #, java-format
 msgid "Warning has been removed on {0} page."
 msgid_plural "Warnings have been removed on {0} pages."
 msgstr[0] "Aviso foi removido em {0} página."
 msgstr[1] "Avisos foram removidos em {0} páginas."
 
-#: org/wikipediacleaner/gui/swing/worker/UpdateWarningTools.java:1728
+#: org/wikipediacleaner/gui/swing/worker/UpdateWarningTools.java:1722
 #, java-format
 msgid "{0} still needs to be fixed."
 msgid_plural "{0} still need to be fixed."
 msgstr[0] "{0} ainda precisa ser corrigido."
 msgstr[1] "{0} ainda precisam ser corrigidos."
 
-#: org/wikipediacleaner/gui/swing/worker/UpdateWarningTools.java:1734
+#: org/wikipediacleaner/gui/swing/worker/UpdateWarningTools.java:1728
 #, java-format
 msgid "It took {0} second"
 msgid_plural "It took {0} seconds"
