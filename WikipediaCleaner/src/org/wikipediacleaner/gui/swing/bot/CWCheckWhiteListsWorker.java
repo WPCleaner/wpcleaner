@@ -12,6 +12,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
+import org.wikipediacleaner.api.API;
 import org.wikipediacleaner.api.APIException;
 import org.wikipediacleaner.api.APIFactory;
 import org.wikipediacleaner.api.MediaWiki;
@@ -22,8 +23,11 @@ import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithm;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithms;
 import org.wikipediacleaner.api.constants.CWConfigurationError;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
+import org.wikipediacleaner.api.constants.WPCConfigurationString;
 import org.wikipediacleaner.api.data.DataManager;
 import org.wikipediacleaner.api.data.Page;
+import org.wikipediacleaner.api.data.PageAnalysis;
+import org.wikipediacleaner.api.data.PageElementInternalLink;
 import org.wikipediacleaner.gui.swing.InformationWindow;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
 import org.wikipediacleaner.gui.swing.basic.BasicWorker;
@@ -55,6 +59,7 @@ class CWCheckWhiteListsWorker extends BasicWorker {
     try {
       CheckWiki checkWiki = APIFactory.getCheckWiki();
       MediaWiki mw = MediaWiki.getMediaWikiAccess(this);
+      API api = APIFactory.getAPI();
       EnumWikipedia wiki = getWikipedia();
       StringBuilder result = new StringBuilder();
       StringBuilder details = new StringBuilder();
@@ -67,20 +72,26 @@ class CWCheckWhiteListsWorker extends BasicWorker {
           CWConfigurationError cwConfig = wiki.getCWConfiguration().getErrorConfiguration(errorNumber);
           Set<String> whiteList = cwConfig.getWhiteList();
           if (whiteList != null) {
+            List<Page> unnecessaryPages = new ArrayList<>();
             details.setLength(0);
             if (whiteList.size() > 0) {
-              List<Page> pages = new ArrayList<Page>(whiteList.size());
+
+              // Prepare list of pages to check
+              List<Page> pages = new ArrayList<>(whiteList.size());
               for (String pageName : whiteList) {
                 Page page = DataManager.getPage(wiki, pageName, null, null, null);
                 pages.add(page);
               }
               Collections.sort(pages);
               mw.retrieveContents(wiki, pages, true, false, false, false);
+
+              // Check each page
               for (Page page : pages) {
                 if (Boolean.FALSE.equals(page.isExisting())) {
                   details.append("<li>");
                   details.append(GT._("The page {0} doesn''t exist on Wikipedia", page.getTitle()));
                   details.append("</li>");
+                  unnecessaryPages.add(page);
                 } else {
                   CheckErrorPage errorPage = CheckError.analyzeError(
                       algorithm, page.getAnalysis(page.getContents(), true));
@@ -100,6 +111,7 @@ class CWCheckWhiteListsWorker extends BasicWorker {
                         details.append(GT._("It's still being detected by CheckWiki."));
                       } else {
                         details.append(GT._("It's not detected either by CheckWiki."));
+                        unnecessaryPages.add(page);
                       }
                     }
                     details.append("</li>");
@@ -107,9 +119,14 @@ class CWCheckWhiteListsWorker extends BasicWorker {
                 }
               }
             }
+
+            // Take results into account
             if (details.length() > 0) {
+
+              // Establish a report
               String pageLink = String.valueOf(errorNumber);
-              if (cwConfig.getWhiteListPageName() != null) {
+              String whiteListPageName = cwConfig.getWhiteListPageName();
+              if (whiteListPageName != null) {
                 pageLink =
                     "<a href=\"" +
                     wiki.getSettings().getURL(cwConfig.getWhiteListPageName(), false, true) +
@@ -123,6 +140,48 @@ class CWCheckWhiteListsWorker extends BasicWorker {
               result.append("<ul>");
               result.append(details.toString());
               result.append("</ul>");
+
+              // Update white list
+              String comment = wiki.getConfiguration().getString(WPCConfigurationString.CW_WHITELISTE_COMMENT);
+              if (!unnecessaryPages.isEmpty() &&
+                  (whiteListPageName != null) &&
+                  (comment != null)) {
+                Page whiteListPage = DataManager.getPage(wiki, whiteListPageName, null, null, null);
+                api.retrieveContents(wiki, Collections.singletonList(whiteListPage), false, false);
+                String initialContents = whiteListPage.getContents();
+                String contents = initialContents;
+                for (Page page : unnecessaryPages) {
+                  PageAnalysis analysis = whiteListPage.getAnalysis(contents, false);
+                  List<PageElementInternalLink> links = analysis.getInternalLinks();
+                  for (int linkNumber = links.size(); linkNumber > 0; linkNumber--) {
+                    PageElementInternalLink link = links.get(linkNumber - 1);
+                    if (Page.areSameTitle(page.getTitle(), link.getLink())) {
+                      int lineBegin = link.getBeginIndex();
+                      while ((lineBegin > 0) && (contents.charAt(lineBegin) != '\n')) {
+                        lineBegin--;
+                      }
+                      int lineEnd = link.getEndIndex();
+                      while ((lineEnd < contents.length()) && (contents.charAt(lineEnd) != '\n')) {
+                        lineEnd++;
+                      }
+                      boolean lineOk = true;
+                      for (PageElementInternalLink tmpLink : links) {
+                        if ((tmpLink != link) &&
+                            (tmpLink.getBeginIndex() < lineEnd) &&
+                            (tmpLink.getEndIndex() > lineBegin)) {
+                          lineOk = false;
+                        }
+                      }
+                      if (lineOk) {
+                        contents = contents.substring(0, lineBegin) + contents.substring(lineEnd);
+                      }
+                    }
+                  }
+                }
+                if (!contents.equals(initialContents)) {
+                  api.updatePage(wiki, whiteListPage, contents, comment, true, false);
+                }
+              }
             }
           }
         }

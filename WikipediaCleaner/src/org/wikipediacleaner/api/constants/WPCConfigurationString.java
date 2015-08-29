@@ -27,6 +27,8 @@ public enum WPCConfigurationString {
   CW_PROJECT_PAGE("check_wiki_project_page", null, false, true, false),
   // Check Wiki translation page
   CW_TRANSLATION_PAGE("check_wiki_translation_page", null, false, true, false),
+  // Comment used when cleaning white list
+  CW_WHITELISTE_COMMENT("check_wiki_whitelist_comment", null, false, true, true),
   // Comment for disambiguation links that have been fixed
   DAB_COMMENT("dab_comment", null, false, true, true),
   // Comment for one disambiguation link that has been fixed
