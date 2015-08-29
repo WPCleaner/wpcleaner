@@ -23,7 +23,6 @@ public interface CommentDecorator {
    * @param propertyComment Name of the property for the comment.
    * @param propertyTag Name of the property for the tag.
    * @param automatic True if the modification is automatic.
-   * @return Modified comment.
    */
   public void manageComment(
       Map<String, String> properties,

@@ -57,8 +57,7 @@ public class ProgramCommentDecorator implements CommentDecorator {
    * @param propertyComment Name of the property for the comment.
    * @param propertyTag Name of the property for the tag.
    * @param automatic True if the modification is automatic.
-   * @return Modified comment.
-   * @see org.wikipediacleaner.api.impl.CommentDecorator#updateComment(java.lang.String)
+   * @see org.wikipediacleaner.api.impl.CommentDecorator#manageComment(Map, String, String, boolean)
    */
   @Override
   public void manageComment(
