@@ -110,6 +110,13 @@ public class PageElementISBN extends PageElement {
               index += 2;
             }
           }
+          if (beginIndex >= 3) {
+            if (contents.startsWith("10-", beginIndex - 3) ||
+                contents.startsWith("13-", beginIndex - 3)) {
+              correct = false;
+              beginIndex -= 3;
+            }
+          }
           boolean spaceFound = false;
           if (analysis.isInComment(index) == null) {
             while ((index < contents.length()) && (contents.charAt(index) == ' ')) {
