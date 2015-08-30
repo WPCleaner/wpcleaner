@@ -29,6 +29,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -1016,11 +1018,12 @@ public class CheckWikiWindow extends OnePageWindow implements CheckWikiListener 
           new Object[] { Integer.toString(errorNumber), url }));
       parametersDescription.append("\n<ul>");
       Map<String, String> parameters = algorithm.getParameters();
-      for (Map.Entry<String, String> entry : parameters.entrySet()) {
+      SortedSet<String> keySet = new TreeSet<>(parameters.keySet());
+      for (String key: keySet) {
         parametersDescription.append("<li><b>");
-        parametersDescription.append(entry.getKey());
+        parametersDescription.append(key);
         parametersDescription.append("</b>: ");
-        parametersDescription.append(entry.getValue());
+        parametersDescription.append(parameters.get(key));
         parametersDescription.append("</li>\n");
       }
       parametersDescription.append("</ul>");
