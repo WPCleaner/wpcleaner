@@ -64,7 +64,9 @@ public class CheckErrorAlgorithm064 extends CheckErrorAlgorithmBase {
       String linkName = link.getLink();
       String text = link.getText();
       String paddingLeft = "";
+      String simplePaddingLeft = "";
       String paddingRight = "";
+      String simplePaddingRight = "";
       boolean same = false;
       boolean automatic = false;
       if (((anchor == null) || (anchor.trim().length() == 0)) &&
@@ -84,6 +86,7 @@ public class CheckErrorAlgorithm064 extends CheckErrorAlgorithmBase {
           }
           if (position < text.length()) {
             paddingRight = text.substring(position);
+            simplePaddingRight = paddingRight;
             text = text.substring(0, position);
             if (!same && Page.areSameTitle(linkName, text)) {
               same = true;
@@ -128,6 +131,7 @@ public class CheckErrorAlgorithm064 extends CheckErrorAlgorithmBase {
           return true;
         }
         result = true;
+        String cleanedText = text.replaceAll("\\_", " ");
         CheckErrorResult errorResult = createCheckErrorResult(
             analysis,
             link.getBeginIndex(),
@@ -135,10 +139,18 @@ public class CheckErrorAlgorithm064 extends CheckErrorAlgorithmBase {
         errorResult.addReplacement(
             paddingLeft + PageElementInternalLink.createInternalLink(text, null) + paddingRight,
             automatic);
-        if (text.contains("_")) {
+        if (!text.equals(cleanedText)) {
           errorResult.addReplacement(
-              paddingLeft + PageElementInternalLink.createInternalLink(text.replaceAll("\\_", " "), null) + paddingRight,
+              paddingLeft + PageElementInternalLink.createInternalLink(cleanedText, null) + paddingRight,
               false);
+        }
+        if (!simplePaddingLeft.equals(paddingLeft) || !simplePaddingRight.equals(paddingRight)) {
+          errorResult.addReplacement(
+              simplePaddingLeft + PageElementInternalLink.createInternalLink(text, null) + simplePaddingRight);
+          if (!text.equals(cleanedText)) {
+            errorResult.addReplacement(
+                simplePaddingLeft + PageElementInternalLink.createInternalLink(cleanedText, null) + simplePaddingRight);
+          }
         }
         errors.add(errorResult);
       }
