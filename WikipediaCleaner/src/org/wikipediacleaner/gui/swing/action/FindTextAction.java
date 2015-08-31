@@ -51,10 +51,17 @@ public class FindTextAction extends TextAction {
   @Override
   public void actionPerformed(ActionEvent e) {
     JTextComponent text = (textPane != null) ? textPane : getTextComponent(e);
-    String currentSearch = JOptionPane.showInputDialog(
+    String currentSearch = search;
+    if ((currentSearch == null) || (currentSearch.isEmpty())) {
+      currentSearch = text.getSelectedText();
+    }
+    if ((currentSearch == null) || (currentSearch.isEmpty())) {
+      currentSearch = lastSearch;
+    }
+    currentSearch = JOptionPane.showInputDialog(
         text.getParent(),
         GT._("String to find"),
-        (search == null) ? lastSearch : search);
+        currentSearch);
     if ((currentSearch == null) || ("".equals(currentSearch.trim()))) {
       return;
     }
