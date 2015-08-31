@@ -177,7 +177,7 @@ public class CheckErrorAlgorithm064 extends CheckErrorAlgorithmBase {
             countQuoteBefore++;
           }
           while ((tmpIndex < content.length()) &&
-                 (" ,.".indexOf(content.charAt(tmpIndex)) >= 0)) {
+                 (" ,.:".indexOf(content.charAt(tmpIndex)) >= 0)) {
             tmpIndex++;
           }
           int countQuoteAfter = 0;
