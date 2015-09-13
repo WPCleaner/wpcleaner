@@ -175,10 +175,19 @@ public class PageElementISBN extends PageElement {
           List<PageElementTemplate> templates = analysis.getTemplates(isbnTemplate[0]);
           if (templates != null) {
             for (PageElementTemplate template : templates) {
-              analyzeTemplateParams(
-                  analysis, isbns, template,
-                  (isbnTemplate.length > 1) ? isbnTemplate[1] : "1",
-                  false, false, true, false);
+              String[] params = null;
+              if (isbnTemplate.length > 1) {
+                params = isbnTemplate[1].split(",");
+              } else {
+                params = new String[]{ "1" };
+              }
+              for (String param : params) {
+                if ((param != null) && (param.length() > 0)) {
+                  analyzeTemplateParams(
+                      analysis, isbns, template, param,
+                      false, false, true, false);
+                }
+              }
             }
           }
         }
