@@ -8,15 +8,15 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2015-08-25 22:24+0200\n"
-"PO-Revision-Date: 2013-11-27 14:42+0000\n"
+"PO-Revision-Date: 2015-08-29 14:31+0000\n"
 "Last-Translator: Aftabuzzaman <Leemon432@gmail.com>\n"
 "Language-Team: Bengali <bn@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2014-09-21 06:01+0000\n"
-"X-Generator: Launchpad (build 17196)\n"
+"X-Launchpad-Export-Date: 2015-09-13 21:48+0000\n"
+"X-Generator: Launchpad (build 17720)\n"
 
 #: org/wikipediacleaner/Version.java:31
 #, java-format
@@ -155,7 +155,7 @@ msgstr "{0}-এর সাথে প্রতিস্থাপন"
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm515.java:90
 #: org/wikipediacleaner/gui/swing/options/SortingOptionsPanel.java:115
 msgid "Delete"
-msgstr "মুছে ফেলুন"
+msgstr "অপসারণ"
 
 #: org/wikipediacleaner/api/check/CheckErrorResult.java:277
 msgid "Edit table of contents"
@@ -581,9 +581,9 @@ msgid "Delete all tags without content"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm085.java:178
-#, fuzzy, java-format
+#, java-format
 msgid "Use {0}"
-msgstr "{0}টি পাতা:"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm085.java:232
 msgid "A list of templates that can be used to replace &lt;center&gt; tags"
