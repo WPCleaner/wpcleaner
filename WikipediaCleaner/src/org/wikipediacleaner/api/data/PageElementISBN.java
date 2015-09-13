@@ -374,39 +374,28 @@ public class PageElementISBN extends PageElement {
     }
   }
 
-  /**
-   * Full text.
-   */
+  /** WPCleaner configuration */
+  private final WPCConfiguration wpcConfiguration;
+
+  /** Full text */
   private final String fullText;
 
-  /**
-   * ISBN not trimmed.
-   */
+  /** ISBN not trimmed */
   private final String isbnNotTrimmed;
 
-  /**
-   * ISBN (trimmed).
-   */
+  /** ISBN (trimmed) */
   private final String isbn;
 
-  /**
-   * True if ISBN is in a valid location.
-   */
+  /** True if ISBN is in a valid location */
   private final boolean isValid;
 
-  /**
-   * True if ISBN syntax is correct.
-   */
+  /** True if ISBN syntax is correct */
   private final boolean isCorrect;
 
-  /**
-   * Template if ISBN is a template parameter (ISBN=...)
-   */
+  /** Template if ISBN is a template parameter (ISBN=...) */
   private final PageElementTemplate template;
 
-  /**
-   * True if help has been requested for this ISBN
-   */
+  /** True if help has been requested for this ISBN */
   private final boolean helpRequested;
 
   /**
@@ -424,6 +413,7 @@ public class PageElementISBN extends PageElement {
       boolean isCorrect, boolean helpRequested,
       PageElementTemplate template) {
     super(beginIndex, endIndex);
+    this.wpcConfiguration = analysis.getWPCConfiguration();
     this.fullText = analysis.getContents().substring(beginIndex, endIndex);
     this.isbnNotTrimmed = isbn;
     this.isbn = cleanISBN(isbn);
@@ -539,7 +529,7 @@ public class PageElementISBN extends PageElement {
         index++;
       }
       if (ok && (index < cleanedISBN.length())) {
-        result.add(prefix + cleanedISBN.substring(index));
+        addCorrectISBN(result, prefix, cleanedISBN.substring(index));
       }
     }
 
@@ -573,14 +563,51 @@ public class PageElementISBN extends PageElement {
         index++;
       }
       if (ok && (index < cleanedISBN.length())) {
-        result.add(prefix + cleanedISBN.substring(index));
+        addCorrectISBN(result, prefix, cleanedISBN.substring(index));
       }
     }
 
     // Basic replacement
-    result.add(prefix + cleanedISBN);
+    addCorrectISBN(result, prefix, cleanedISBN);
     
     return result;
+  }
+
+  /**
+   * @param result List of possible replacements
+   * @param prefix ISBN prefix.
+   * @param cleanedISBN Cleaned up ISBN.
+   */
+  private void addCorrectISBN(List<String> result, String prefix, String cleanedISBN) {
+    result.add(prefix + cleanedISBN);
+    if (!isTemplateParameter()) {
+      List<String[]> isbnTemplates = wpcConfiguration.getStringArrayList(
+          WPCConfigurationStringList.ISBN_TEMPLATES);
+      if (isbnTemplates != null) {
+        for (String[] isbnTemplate : isbnTemplates) {
+          String[] params = null;
+          if (isbnTemplate.length > 1) {
+            params = isbnTemplate[1].split(",");
+          } else {
+            params = new String[]{ "1" };
+          }
+          if (params.length > 0) {
+            StringBuilder buffer = new StringBuilder();
+            buffer.append("{{");
+            buffer.append(isbnTemplate[0]);
+            buffer.append("|");
+            if (!"1".equals(params[0])) {
+              buffer.append(params[0]);
+              buffer.append("=");
+            }
+            buffer.append(cleanedISBN);
+            buffer.append("}}");
+            result.add(buffer.toString());
+          }
+        }
+      }
+      
+    }
   }
 
   /**
