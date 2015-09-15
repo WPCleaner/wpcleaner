@@ -127,23 +127,61 @@ public class CheckErrorAlgorithm068 extends CheckErrorAlgorithmBase {
             for (String template : templatesList) {
               String[] templateArgs = template.split("\\|");
               if (templateArgs.length >= 5) {
-                String prefix =
-                  "{{" + templateArgs[0] + "|" + templateArgs[1] + "=";
-                String suffix =
-                  "|" + templateArgs[2] + "=" + lgCode +
-                  "|" + templateArgs[3] + "=" + pageTitle +
-                  "|" + templateArgs[4] + "=" + ((link.getText() != null) ? link.getText() : pageTitle) +
-                  "}}";
+
+                // Compute order of parameters
+                List<String> order = new ArrayList<>();
+                if (templateArgs.length >= 6) {
+                  String[] tmpOrder = templateArgs[5].split(",");
+                  for (String tmp : tmpOrder) {
+                    order.add(tmp);
+                  }
+                }
+                for (int numParam = 1; numParam <= 4; numParam++) {
+                  if (!order.contains(templateArgs[numParam])) {
+                    order.add(templateArgs[numParam]);
+                  }
+                }
+
+                StringBuilder prefix = new StringBuilder();
+                StringBuilder suffix = new StringBuilder();
+                prefix.append("{{");
+                prefix.append(templateArgs[0]);
+                boolean localTitle = false;
+                for (String param : order) {
+                  if (param.equals(templateArgs[1])) {
+                    prefix.append("|");
+                    prefix.append(templateArgs[1]);
+                    prefix.append("=");
+                    localTitle = true;
+                  } else {
+                    String value = "";
+                    if (param.equals(templateArgs[2])) {
+                      value = lgCode;
+                    } else if (param.equals(templateArgs[3])) {
+                      value = pageTitle;
+                    } else if (param.equals(templateArgs[4])) {
+                      value = (link.getText() != null) ? link.getText() : pageTitle;
+                    }
+                    StringBuilder buffer = localTitle ? suffix : prefix;
+                    buffer.append("|");
+                    buffer.append(param);
+                    buffer.append("=");
+                    if (value != null) {
+                      buffer.append(value);
+                    }
+                  }
+                }
+                suffix.append("}}");
                 String question = GT._("What is the title of the page on this wiki ?");
                 AddTextActionProvider action = null;
                 if ((link.getText() != null) && (!link.getText().equals(pageTitle))) {
                   String[] possibleValues = { null, pageTitle, link.getText() };
                   action = new AddTextActionProvider(
-                      prefix, suffix, null, question,
+                      prefix.toString(), suffix.toString(), null, question,
                       possibleValues, false, null, checker);
                 } else {
                   action = new AddTextActionProvider(
-                      prefix, suffix, null, question,
+                      prefix.toString(), suffix.toString(), null, question,
                       pageTitle, checker);
                 }
                 errorResult.addPossibleAction(
