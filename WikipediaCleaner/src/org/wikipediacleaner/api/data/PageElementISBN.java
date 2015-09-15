@@ -585,24 +585,22 @@ public class PageElementISBN extends PageElement {
           WPCConfigurationStringList.ISBN_TEMPLATES);
       if (isbnTemplates != null) {
         for (String[] isbnTemplate : isbnTemplates) {
-          String[] params = null;
-          if (isbnTemplate.length > 1) {
-            params = isbnTemplate[1].split(",");
-          } else {
-            params = new String[]{ "1" };
-          }
-          if (params.length > 0) {
-            StringBuilder buffer = new StringBuilder();
-            buffer.append("{{");
-            buffer.append(isbnTemplate[0]);
-            buffer.append("|");
-            if (!"1".equals(params[0])) {
-              buffer.append(params[0]);
-              buffer.append("=");
+          if (isbnTemplate.length > 2) {
+            String[] params = isbnTemplate[1].split(",");
+            Boolean suggested = Boolean.valueOf(isbnTemplate[2]);
+            if ((params.length > 0) && (Boolean.TRUE.equals(suggested))) {
+              StringBuilder buffer = new StringBuilder();
+              buffer.append("{{");
+              buffer.append(isbnTemplate[0]);
+              buffer.append("|");
+              if (!"1".equals(params[0])) {
+                buffer.append(params[0]);
+                buffer.append("=");
+              }
+              buffer.append(cleanedISBN);
+              buffer.append("}}");
+              result.add(buffer.toString());
             }
-            buffer.append(cleanedISBN);
-            buffer.append("}}");
-            result.add(buffer.toString());
           }
         }
       }
