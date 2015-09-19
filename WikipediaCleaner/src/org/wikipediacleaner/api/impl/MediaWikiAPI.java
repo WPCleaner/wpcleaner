@@ -1384,16 +1384,25 @@ public class MediaWikiAPI implements API {
    * @param wiki Wiki.
    * @param title The title to use (for example in {{PAGENAME}}).
    * @param text The text with templates in it.
+   * @param full True to do a full parsing.
    * @return Parsed text.
    * @throws APIException
    * @see <a href="http://www.mediawiki.org/wiki/API:Parsing_wikitext#parse">API:Parsing wikitext</a>
    */
   @Override
   public String parseText(
-      EnumWikipedia wiki, String title, String text) throws APIException {
+      EnumWikipedia wiki, String title, String text, boolean full) throws APIException {
     ApiParseResult result = new ApiXmlParseResult(wiki, httpClient);
     ApiParseRequest request = new ApiParseRequest(wiki, result);
-    return request.parseText(title, text);
+    StringBuilder suffix = new StringBuilder();
+    while ((text != null) &&
+           (text.length() > 0) &&
+           (text.charAt(text.length() - 1) == '\n')) {
+      suffix.append('\n');
+      text = text.substring(0, text.length() - 1);
+    }
+    text = request.parseText(title, text, full);
+    return text + suffix.toString();
   }
 
   /**

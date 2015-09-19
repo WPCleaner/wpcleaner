@@ -24,6 +24,9 @@ import javax.swing.JPopupMenu;
 import javax.swing.JToolBar;
 import javax.swing.text.BadLocationException;
 
+import org.wikipediacleaner.api.API;
+import org.wikipediacleaner.api.APIException;
+import org.wikipediacleaner.api.APIFactory;
 import org.wikipediacleaner.api.constants.WPCConfiguration;
 import org.wikipediacleaner.api.constants.WPCConfigurationStringList;
 import org.wikipediacleaner.api.data.Page;
@@ -277,6 +280,12 @@ public class ActionInsertPredefinedText implements ActionListener {
     Page page = pageProvider.getPage();
     if (page == null) {
       return;
+    }
+    try {
+      API api = APIFactory.getAPI();
+      text = api.parseText(pageProvider.getWiki(), page.getTitle(), text, false);
+    } catch (APIException e) {
+      // Nothing to do
     }
     try {
       pane.getDocument().insertString(

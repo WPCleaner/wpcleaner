@@ -26,6 +26,11 @@ public class ApiParseRequest extends ApiRequest {
   // ==========================================================================
 
   /**
+   * Property for OnlyPST (transform before save, but no analysis)
+   */
+  public final static String PROPERTY_ONLY_PST = "onlypst";
+
+  /**
    * Property for Page.
    */
   public final static String PROPERTY_PAGE = "page";
@@ -110,13 +115,18 @@ public class ApiParseRequest extends ApiRequest {
    * 
    * @param title Page title.
    * @param text Page contents.
+   * @param full True to do a full parsing.
    * @return Parsed text.
    * @throws APIException
    */
-  public String parseText(String title, String text) throws APIException {
+  public String parseText(String title, String text, boolean full) throws APIException {
     Map<String, String> properties = getProperties(ACTION_PARSE, result.getFormat());
     properties.put(PROPERTY_TITLE, title);
     properties.put(PROPERTY_TEXT, text);
+    properties.put(PROPERTY_PROPERTIES, PROPERTY_PROPERTIES_TEXT);
+    if (!full) {
+      properties.put(PROPERTY_ONLY_PST, "");
+    }
     return result.executeParse(properties);
   }
 

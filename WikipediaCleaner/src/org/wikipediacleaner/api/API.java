@@ -494,12 +494,13 @@ public interface API {
    * @param wiki Wiki.
    * @param title The title to use (for example in {{PAGENAME}}).
    * @param text The text with templates in it.
+   * @param full True to do a full parsing.
    * @return Parsed text.
    * @throws APIException
    * @see <a href="http://www.mediawiki.org/wiki/API:Parsing_wikitext#parse">API:Parsing wikitext</a>
    */
   public String parseText(
-      EnumWikipedia wiki, String title, String text) throws APIException;
+      EnumWikipedia wiki, String title, String text, boolean full) throws APIException;
 
   /**
    * Retrieve list of sections.
