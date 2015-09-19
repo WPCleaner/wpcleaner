@@ -209,7 +209,7 @@ public abstract class CheckErrorAlgorithmBase implements CheckErrorAlgorithm {
       }
     }
     return new CheckErrorResult(
-        this,
+        this, analysis.getPage(),
         startPosition, endPosition,
         errorLevel);
   }

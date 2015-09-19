@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithm;
+import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.gui.swing.component.MWPaneEditTocAction;
 import org.wikipediacleaner.i18n.GT;
 
@@ -21,6 +22,7 @@ import org.wikipediacleaner.i18n.GT;
 public class CheckErrorResult implements Comparable<CheckErrorResult> {
 
   private final CheckErrorAlgorithm algorithm;
+  private final Page page;
   private final int startPosition;
   private final int endPosition;
   private final ErrorLevel errorLevel;
@@ -47,9 +49,11 @@ public class CheckErrorResult implements Comparable<CheckErrorResult> {
    */
   public CheckErrorResult(
       CheckErrorAlgorithm algorithm,
+      Page page,
       int startPosition, int endPosition,
       ErrorLevel errorLevel) {
     this.algorithm = algorithm;
+    this.page = page;
     this.startPosition = startPosition;
     this.endPosition = endPosition;
     this.errorLevel = errorLevel;
@@ -66,8 +70,9 @@ public class CheckErrorResult implements Comparable<CheckErrorResult> {
    */
   public CheckErrorResult(
       CheckErrorAlgorithm algorithm,
+      Page page,
       int startPosition, int endPosition) {
-    this(algorithm, startPosition, endPosition, ErrorLevel.ERROR);
+    this(algorithm, page, startPosition, endPosition, ErrorLevel.ERROR);
   }
 
   /**
@@ -201,7 +206,7 @@ public class CheckErrorResult implements Comparable<CheckErrorResult> {
     SimpleAction action = new SimpleAction(
         text,
         new ReplaceTextActionProvider(
-            replacement, automatic, automaticBot));
+            page, replacement, automatic, automaticBot));
     possibleActions.add(action);
     possibleReplacements.add(action);
   }
