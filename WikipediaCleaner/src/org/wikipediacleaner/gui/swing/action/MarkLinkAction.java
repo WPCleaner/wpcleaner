@@ -9,12 +9,19 @@ package org.wikipediacleaner.gui.swing.action;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 
 import javax.swing.AbstractButton;
 import javax.swing.JTextPane;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.Element;
 
+import org.wikipediacleaner.api.API;
+import org.wikipediacleaner.api.APIException;
+import org.wikipediacleaner.api.APIFactory;
+import org.wikipediacleaner.api.data.Page;
+import org.wikipediacleaner.api.data.PageAnalysis;
+import org.wikipediacleaner.api.data.PageElementFunction;
 import org.wikipediacleaner.gui.swing.component.MWPaneFormatter;
 
 
@@ -23,16 +30,19 @@ import org.wikipediacleaner.gui.swing.component.MWPaneFormatter;
  */
 public class MarkLinkAction implements ActionListener {
 
+  private final Page page;
   private final Element element;
   private final String newText;
   private final JTextPane textPane;
   private final AbstractButton checkBox;
 
   public MarkLinkAction(
+      Page page,
       Element element,
       String newText,
       JTextPane textPane,
       AbstractButton checkBox) {
+    this.page = page;
     this.newText = newText;
     this.element = element;
     this.textPane = textPane;
@@ -48,6 +58,21 @@ public class MarkLinkAction implements ActionListener {
         (textPane != null) &&
         (newText != null)) {
 
+      // Text finalization
+      String localNewText = newText;
+      if (page != null) {
+        try {
+          PageAnalysis analysis = page.getAnalysis(localNewText, false);
+          List<PageElementFunction> functions = analysis.getFunctions();
+          if ((functions != null) && (!functions.isEmpty())) {
+            API api = APIFactory.getAPI();
+            localNewText = api.parseText(page.getWikipedia(), page.getTitle(), localNewText, false);
+          }
+        } catch (APIException ex) {
+          // Nothing to do
+        }
+      }
+
       // Initialize
       int startOffset = MWPaneFormatter.getUUIDStartOffset(textPane, element);
       int endOffset = MWPaneFormatter.getUUIDEndOffet(textPane, element);
@@ -55,7 +80,7 @@ public class MarkLinkAction implements ActionListener {
       // Replace
       try {
         textPane.getDocument().remove(startOffset, endOffset - startOffset);
-        textPane.getDocument().insertString(startOffset, newText, element.getAttributes());
+        textPane.getDocument().insertString(startOffset, localNewText, element.getAttributes());
       } catch (BadLocationException e1) {
         // Nothing to be done
       }

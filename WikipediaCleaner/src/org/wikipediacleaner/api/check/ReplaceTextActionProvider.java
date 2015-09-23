@@ -11,6 +11,7 @@ import javax.swing.Action;
 import javax.swing.JTextPane;
 import javax.swing.text.Element;
 
+import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.gui.swing.action.ReplaceTextAction;
 
 
@@ -18,6 +19,8 @@ import org.wikipediacleaner.gui.swing.action.ReplaceTextAction;
  * An action provider for ReplaceTextAction.
  */
 class ReplaceTextActionProvider implements ActionProvider {
+
+  private final Page page;
 
   private final String newText;
 
@@ -48,6 +51,18 @@ class ReplaceTextActionProvider implements ActionProvider {
    */
   ReplaceTextActionProvider(
       String newText, boolean automatic, boolean automaticBot) {
+    this(null, newText, automatic, automaticBot);
+  }
+
+  /**
+   * @param newText New text.
+   * @param automatic True if the replacement can be done automatically.
+   * @param automaticBot True if the replacement can be done automatically in bot mode.
+   */
+  ReplaceTextActionProvider(
+      Page page, String newText,
+      boolean automatic, boolean automaticBot) {
+    this.page = page;
     this.newText = newText;
     this.automatic = automatic;
     this.automaticBot = automaticBot;
@@ -79,7 +94,7 @@ class ReplaceTextActionProvider implements ActionProvider {
    */
   @Override
   public Action getAction(Element element, JTextPane textPane) {
-    return new ReplaceTextAction(newText, element, textPane);
+    return new ReplaceTextAction(page, newText, element, textPane);
   }
 
   /**

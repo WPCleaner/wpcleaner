@@ -8,6 +8,7 @@
 package org.wikipediacleaner.gui.swing.action;
 
 import java.awt.event.ActionEvent;
+import java.util.List;
 
 import javax.swing.JTextPane;
 import javax.swing.text.BadLocationException;
@@ -15,6 +16,12 @@ import javax.swing.text.Element;
 import javax.swing.text.JTextComponent;
 import javax.swing.text.TextAction;
 
+import org.wikipediacleaner.api.API;
+import org.wikipediacleaner.api.APIException;
+import org.wikipediacleaner.api.APIFactory;
+import org.wikipediacleaner.api.data.Page;
+import org.wikipediacleaner.api.data.PageAnalysis;
+import org.wikipediacleaner.api.data.PageElementFunction;
 import org.wikipediacleaner.gui.swing.component.MWPaneFormatter;
 
 
@@ -24,15 +31,18 @@ import org.wikipediacleaner.gui.swing.component.MWPaneFormatter;
 @SuppressWarnings("serial")
 public class ReplaceTextAction extends TextAction {
 
+  private final Page page;
   private final String newText;
   private final Element element;
   private final JTextPane textPane;
 
   public ReplaceTextAction(
+      Page page,
       String newText,
       Element element,
       JTextPane textPane) {
     super("ReplaceText");
+    this.page = page;
     this.newText = newText;
     this.element = element;
     this.textPane = textPane;
@@ -69,6 +79,20 @@ public class ReplaceTextAction extends TextAction {
         (localTextPane == null) ||
         (localNewText == null)) {
       return;
+    }
+
+    // Text finalization
+    if (page != null) {
+      try {
+        PageAnalysis analysis = page.getAnalysis(localNewText, false);
+        List<PageElementFunction> functions = analysis.getFunctions();
+        if ((functions != null) && (!functions.isEmpty())) {
+          API api = APIFactory.getAPI();
+          localNewText = api.parseText(page.getWikipedia(), page.getTitle(), localNewText, false);
+        }
+      } catch (APIException e) {
+        // Nothing to do
+      }
     }
 
     // Initialize

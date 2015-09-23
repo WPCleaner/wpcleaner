@@ -78,14 +78,14 @@ public class MWPaneDisambiguationMenuCreator extends BasicMenuCreator {
             }
             addItem(
                 submenu, null, message, true,
-                new ReplaceTextAction(replacement, element, textPane));
+                new ReplaceTextAction(page, replacement, element, textPane));
           }
           popup.add(submenu);
         } else {
           String replacement = createTextForTemplate(templates.get(0)[0], page.getTitle(), text);
           addItem(
               popup, null, GT._("Mark as normal link using template"), true,
-              new ReplaceTextAction(replacement, element, textPane));
+              new ReplaceTextAction(page, replacement, element, textPane));
         }
       }
 
@@ -101,7 +101,7 @@ public class MWPaneDisambiguationMenuCreator extends BasicMenuCreator {
                 PageElementComment.createComment(comment);
             addItem(
                 submenu, null, GT._("Using {0}", comment), true,
-                new ReplaceTextAction(replacement, element, textPane));
+                new ReplaceTextAction(page, replacement, element, textPane));
           }
           popup.add(submenu);
         } else {
@@ -110,7 +110,7 @@ public class MWPaneDisambiguationMenuCreator extends BasicMenuCreator {
               PageElementComment.createComment(comments.get(0));
           addItem(
               popup, null, GT._("Mark as normal link using comment"), true,
-              new ReplaceTextAction(replacement, element, textPane));
+              new ReplaceTextAction(page, replacement, element, textPane));
         }
       }
     }
@@ -155,7 +155,7 @@ public class MWPaneDisambiguationMenuCreator extends BasicMenuCreator {
             addItem(
                 submenu, null, GT._("Using {0}", "{{" + template + "}}"), true,
                 new MarkLinkAction(
-                    element,
+                    page, element,
                     createTextForTemplate(template, page.getTitle(), text),
                     textPane, checkBox));
           }
@@ -166,7 +166,7 @@ public class MWPaneDisambiguationMenuCreator extends BasicMenuCreator {
             addItem(
                 submenu, null, GT._("Using {0}", "[[…]]{{" + templateName + "}}"), true,
                 new MarkLinkAction(
-                    element,
+                    page, element,
                     createTextForTemplateAfterLink(template, page.getTitle(), text),
                     textPane, checkBox));
           }
@@ -182,7 +182,7 @@ public class MWPaneDisambiguationMenuCreator extends BasicMenuCreator {
         if (newText != null) {
           addItem(
               popup, null, GT._("Mark as needing help"), true,
-              new MarkLinkAction(element, newText.toString(), textPane, checkBox));
+              new MarkLinkAction(page, element, newText.toString(), textPane, checkBox));
         }
       }
     }
@@ -217,7 +217,7 @@ public class MWPaneDisambiguationMenuCreator extends BasicMenuCreator {
           addItem(
               submenu, null, GT._("Using {0}", "{{" + template + "}}"), true,
               new MarkLinkAction(
-                  element,
+                  page, element,
                   createTextForTemplate(template, page.getTitle(), text),
                   textPane, null));
         }
@@ -226,7 +226,7 @@ public class MWPaneDisambiguationMenuCreator extends BasicMenuCreator {
         addItem(
             popup, null, GT._("Link text"), true,
             new MarkLinkAction(
-                element,
+                page, element,
                 createTextForTemplate(templates.get(0), page.getTitle(), text),
                 textPane, null));
       }
@@ -616,6 +616,7 @@ public class MWPaneDisambiguationMenuCreator extends BasicMenuCreator {
             fixedBegin += addItem(
                 submenu, null, preferredDab, true,
                 new ReplaceTextAction(
+                    page,
                     matcher.getReplacement(page, template, indexReplacement, preferredDab),
                     element, textPane));
           }
@@ -626,6 +627,7 @@ public class MWPaneDisambiguationMenuCreator extends BasicMenuCreator {
             fixedBegin += addItem(
                 submenu, null, title, true,
                 new ReplaceTextAction(
+                    page,
                     matcher.getReplacement(page, template, indexReplacement, title),
                     element, textPane));
           }
@@ -642,6 +644,7 @@ public class MWPaneDisambiguationMenuCreator extends BasicMenuCreator {
             addItem(
                 submenu, null, name, true,
                 new ReplaceTextAction(
+                    page,
                     matcher.getReplacement(page, template, indexReplacement, name),
                     element, textPane));
           }
@@ -667,6 +670,7 @@ public class MWPaneDisambiguationMenuCreator extends BasicMenuCreator {
                 addItem(
                     submenu1, pageTmp, null, true,
                     new ReplaceTextAction(
+                        page,
                         matcher.getReplacement(page, template, indexReplacement, pageTmp.getTitle()),
                         element, textPane));
         
@@ -675,6 +679,7 @@ public class MWPaneDisambiguationMenuCreator extends BasicMenuCreator {
                     addItem(
                         submenu1, pageTmp, anchor, true,
                         new ReplaceTextAction(
+                            page,
                             matcher.getReplacement(page, template, indexReplacement, anchor),
                             element, textPane));
                   }
@@ -686,6 +691,7 @@ public class MWPaneDisambiguationMenuCreator extends BasicMenuCreator {
               addItem(
                   submenu, p, null, true,
                   new ReplaceTextAction(
+                      page,
                       matcher.getReplacement(page, template, indexReplacement, p.getTitle()),
                       element, textPane));
 
@@ -696,6 +702,7 @@ public class MWPaneDisambiguationMenuCreator extends BasicMenuCreator {
                   addItem(
                       submenu, p, anchor, true,
                       new ReplaceTextAction(
+                          page,
                           matcher.getReplacement(page, template, indexReplacement, anchor),
                           element, textPane));
                 }
@@ -712,6 +719,7 @@ public class MWPaneDisambiguationMenuCreator extends BasicMenuCreator {
               fixedEnd += addItem(
                   submenu, null, preferredDab, true,
                   new ReplaceTextAction(
+                      page,
                       matcher.getReplacement(page, template, indexReplacement, preferredDab),
                       element, textPane));
             }
@@ -723,6 +731,7 @@ public class MWPaneDisambiguationMenuCreator extends BasicMenuCreator {
               fixedEnd += addItem(
                   submenu, null, title, true,
                   new ReplaceTextAction(
+                      page,
                       matcher.getReplacement(page, template, indexReplacement, title),
                       element, textPane));
             }
