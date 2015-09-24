@@ -18,24 +18,159 @@ import java.net.URLEncoder;
 public abstract class AbstractWikiSettings {
 
   /**
-   * @return Wiki language.
+   * @param language Language.
+   * @param name Name.
+   * @param host Host.
+   * @param apiPath Path for the API, relative to the host URL.
    */
-  public abstract String getLanguage();
+  public AbstractWikiSettings(
+      String language, String name,
+      String host, String apiPath, String indexPath,
+      String code, String codeCheckWiki) {
+    this.language = language;
+    this.name = name;
+    this.host = host;
+    this.hostUrl = "http://" + host;
+    this.securedHostUrl = "https://" + host;
+    this.apiPath = apiPath;
+    this.apiUrl = hostUrl + apiPath;
+    this.securedApiUrl = securedHostUrl + apiPath;
+    this.indexPath = indexPath;
+    this.indexUrl = hostUrl + indexPath;
+    this.securedIndexUrl = securedHostUrl + indexPath;
+    this.code = code;
+    this.codeCheckWiki = codeCheckWiki;
+  }
+
+  /** Language */
+  private final String language;
 
   /**
-   * @return Wiki code.
+   * @return Language.
    */
-  public abstract String getCode();
+  public final String getLanguage() {
+    return language;
+  }
+
+  /** Name */
+  private final String name;
+
+  /**
+   * @return Name.
+   */
+  public final String getName() {
+    return name;
+  }
+
+  /**
+   * @return True if connection can be secured.
+   */
+  protected boolean canBeSecured() {
+    return true;
+  }
+
+  /** Host */
+  private final String host;
+
+  /** Host URL (URL to host) */
+  private final String hostUrl;
+
+  /** Secured host URL (URL to host) */
+  private final String securedHostUrl;
+
+  /**
+   * @return Host.
+   */
+  public final String getHost() {
+    return host;
+  }
+
+  /**
+   * @param secured True if secured connection is requested.
+   * @return Host URL (URL to host).
+   */
+  public final String getHostURL(boolean secured) {
+    if (secured && canBeSecured()) {
+      return securedHostUrl;
+    }
+    return hostUrl;
+  }
+
+  /** Path for the API, relative to the host URL */
+  private final String apiPath;
+
+  /** API URL (URL to api.php) */
+  private final String apiUrl;
+
+  /** Secured API URL (URL to api.php) */
+  private final String securedApiUrl;
+
+  /**
+   * @return API path.
+   */
+  public final String getApiPath() {
+    return apiPath;
+  }
+
+  /**
+   * @param secured True if secured connection is requested.
+   * @return API URL (URL to api.php).
+   */
+  public final String getApiURL(boolean secured) {
+    if (secured && canBeSecured()) {
+      return securedApiUrl;
+    }
+    return apiUrl;
+  }
+
+  /** Path for the index, relative to the host URL */
+  private final String indexPath;
+
+  /** Index URL (URL to index.php) */
+  private final String indexUrl;
+
+  /** Secured index URL (URL to index.php) */
+  private final String securedIndexUrl;
+
+  /**
+   * @return Index path.
+   */
+  public final String getIndexPath() {
+    return indexPath;
+  }
+
+  /**
+   * @param secured True if secured connection is requested.
+   * @return Index URL (URL to index.php).
+   */
+  public final String getIndexURL(boolean secured) {
+    if (secured && canBeSecured()) {
+      return securedIndexUrl;
+    }
+    return indexUrl;
+  }
+
+  /** Code */
+  private final String code;
+
+  /**
+   * @return Code.
+   */
+  public final String getCode() {
+    return code;
+  }
+
+  /**
+   * CheckWiki code.
+   */
+  private final String codeCheckWiki;
 
   /**
    * @return CheckWiki code.
    */
-  public abstract String getCodeCheckWiki();
-
-  /**
-   * @return Wiki name.
-   */
-  public abstract String getName();
+  public final String getCodeCheckWiki() {
+    return codeCheckWiki;
+  }
 
   /**
    * @return Component orientation.
@@ -43,24 +178,6 @@ public abstract class AbstractWikiSettings {
   public ComponentOrientation getComponentOrientation() {
     return ComponentOrientation.LEFT_TO_RIGHT;
   }
-
-  /**
-   * @param secured True if secured connection is requested.
-   * @return Host URL (URL to wiki host).
-   */
-  public abstract String getHostURL(boolean secured);
-
-  /**
-   * @param secured True if secured connection is requested.
-   * @return API URL (URL to api.php).
-   */
-  public abstract String getApiURL(boolean secured);
-
-  /**
-   * @param secured True if secured connection is requested.
-   * @return Index URL (URL to index.php).
-   */
-  public abstract String getIndexURL(boolean secured);
 
   /**
    * @param pageTitle Title.

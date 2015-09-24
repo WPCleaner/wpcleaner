@@ -17,72 +17,9 @@ public final class WikimediaCommons extends AbstractWikiSettings {
    * Constructor.
    */
   public WikimediaCommons() {
-    //
-  }
-
-  /**
-   * @return Language.
-   * @see org.wikipediacleaner.api.constants.wiki.AbstractWikiSettings#getLanguage()
-   */
-  @Override
-  public String getLanguage() {
-    return "commons";
-  }
-
-  /**
-   * @return Code.
-   * @see org.wikipediacleaner.api.constants.wiki.AbstractWikiSettings#getCode()
-   */
-  @Override
-  public String getCode() {
-    return "commons";
-  }
-
-  /**
-   * @return Code for Check Wiki.
-   * @see org.wikipediacleaner.api.constants.wiki.AbstractWikiSettings#getCodeCheckWiki()
-   */
-  @Override
-  public String getCodeCheckWiki() {
-    return "commons";
-  }
-
-  /**
-   * @return Name.
-   * @see org.wikipediacleaner.api.constants.wiki.AbstractWikiSettings#getName()
-   */
-  @Override
-  public String getName() {
-    return "Commons";
-  }
-
-  /**
-   * @param secured True if secured URL should be returned.
-   * @return Host URL.
-   * @see org.wikipediacleaner.api.constants.wiki.AbstractWikiSettings#getHostURL(boolean)
-   */
-  @Override
-  public String getHostURL(boolean secured) {
-    return "https://commons.wikimedia.org";
-  }
-
-  /**
-   * @param secured True if secured URL should be returned.
-   * @return API URL.
-   * @see org.wikipediacleaner.api.constants.wiki.AbstractWikiSettings#getApiURL(boolean)
-   */
-  @Override
-  public String getApiURL(boolean secured) {
-    return "https://commons.wikimedia.org/w/api.php";
-  }
-
-  /**
-   * @param secured True if secured URL should be returned.
-   * @return URL for index.php.
-   * @see org.wikipediacleaner.api.constants.wiki.AbstractWikiSettings#getIndexURL(boolean)
-   */
-  @Override
-  public String getIndexURL(boolean secured) {
-    return "https://commons.wikimedia.org/w/index.php";
+    super(
+        "commons", "Commons",
+        "commons.wikimedia.org", "/w/api.php", "/w/index.php",
+        "commons", "commons");
   }
 }
