@@ -61,11 +61,29 @@ public class CheckErrorAlgorithm090 extends CheckErrorAlgorithmBase {
   public boolean analyze(
       PageAnalysis analysis,
       Collection<CheckErrorResult> errors, boolean onlyAutomatic) {
-    if ((analysis == null) || (analysis.getInternalLinks() == null)) {
+    if (analysis == null) {
       return false;
     }
 
-    // Analyze each external link
+    // Analyze each link
+    boolean result = false;
+    result |= analyzeExternalLinks(analysis, errors, onlyAutomatic);
+    result |= analyzeInternalLinks(analysis, errors, onlyAutomatic);
+
+    return result;
+  }
+
+  /**
+   * Analyze external links.
+   * 
+   * @param analysis Page analysis.
+   * @param errors Errors found in the page.
+   * @param onlyAutomatic True if analysis could be restricted to errors automatically fixed.
+   * @return Flag indicating if the error was found.
+   */
+  private boolean analyzeExternalLinks(
+      PageAnalysis analysis,
+      Collection<CheckErrorResult> errors, boolean onlyAutomatic) {
     boolean result = false;
     List<PageElementExternalLink> links = analysis.getExternalLinks();
     if (links == null) {
@@ -127,7 +145,40 @@ public class CheckErrorAlgorithm090 extends CheckErrorAlgorithmBase {
         }
       }
     }
+    return result;
+  }
 
+  /**
+   * Analyze internal links.
+   * 
+   * @param analysis Page analysis.
+   * @param errors Errors found in the page.
+   * @param onlyAutomatic True if analysis could be restricted to errors automatically fixed.
+   * @return Flag indicating if the error was found.
+   */
+  private boolean analyzeInternalLinks(
+      PageAnalysis analysis,
+      Collection<CheckErrorResult> errors, boolean onlyAutomatic) {
+    boolean result = false;
+    List<PageElementInternalLink> links = analysis.getInternalLinks();
+    if (links == null) {
+      return result;
+    }
+    EnumWikipedia wiki = analysis.getWikipedia();
+    String host = wiki.getSettings().getHost();
+    for (PageElementInternalLink link : links) {
+      String target = link.getLink();
+      if ((target != null) && (target.length() >= host.length()) &&
+          Page.areSameTitle(host, target.substring(0, host.length()))) {
+        if (errors == null) {
+          return true;
+        }
+        result = true;
+        CheckErrorResult errorResult = createCheckErrorResult(
+            analysis, link.getBeginIndex(), link.getEndIndex());
+        errors.add(errorResult);
+      }
+    }
     return result;
   }
 
