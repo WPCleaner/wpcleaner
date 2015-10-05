@@ -82,6 +82,12 @@ public class PageElementTag extends PageElement {
   // =========================================================================
   public final static String TAG_OTHER_TYPO        = "typo";
 
+  private final static String PARAM_NAME_CHARS =
+      "ABCDEFGHIJKLMNOPQRSTUVWXYZ" +
+      "abcdefghijklmnopqrstuvwxyz" +
+      "0123456789" +
+      "-";
+
   /**
    * Tag name.
    */
@@ -252,7 +258,7 @@ public class PageElementTag extends PageElement {
     }
     int endNameIndex = startNameIndex;
     while ((endNameIndex < maxLength) &&
-           (Character.isLetter(paramString.charAt(endNameIndex)))) {
+           (PARAM_NAME_CHARS.indexOf(paramString.charAt(endNameIndex)) >= 0)) {
       endNameIndex++;
     }
     if ((endNameIndex < maxLength) &&
