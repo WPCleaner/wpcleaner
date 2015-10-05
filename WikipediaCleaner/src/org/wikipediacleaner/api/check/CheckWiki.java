@@ -75,7 +75,7 @@ public class CheckWiki {
       final CheckErrorAlgorithm algorithm, int errorLimit,
       final EnumWikipedia wiki,
       final List<CheckError> errors) throws APIException {
-    if (!algorithm.hasList()) {
+    if ((algorithm == null) || !algorithm.hasList()) {
       return;
     }
     if (algorithm.hasSpecialList()) {
