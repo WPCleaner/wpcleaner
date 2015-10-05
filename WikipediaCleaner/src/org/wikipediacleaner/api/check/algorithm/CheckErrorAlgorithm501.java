@@ -97,6 +97,11 @@ public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
       result |= analyzeInternalLinks(analysis, activeSuggestions, replacements);
     }
 
+    // Check spelling in tags
+    if ((result == false) || (errors != null)) {
+      result |= analyzeTags(analysis, activeSuggestions, replacements);
+    }
+
     // Check spelling in normal text with non native regular expressions
     if ((result == false) || (errors != null)) {
       result |= analyzeNonNativeText(analysis, activeSuggestions, replacements, slowRegexp);
@@ -380,7 +385,7 @@ public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
       List<Replacement> replacements) {
     boolean result = false;
 
-    // Check every suggestion
+    // Check each suggestion
     List<PageElementTemplate> templates = analysis.getTemplates();
     List<PageElementFunction> functions = analysis.getFunctions();
     String contents = analysis.getContents();
@@ -392,7 +397,7 @@ public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
         itSuggestion.remove();
         Matcher matcher = suggestion.initMatcher(contents);
 
-        // Check suggestion on every template
+        // Check suggestion on each template
         for (PageElementTemplate template : templates) {
           int begin = template.getBeginIndex();
           if (matcher.region(begin, contentsLength).lookingAt()) {
@@ -407,7 +412,7 @@ public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
           }
         }
 
-        // Check suggestion on every function
+        // Check suggestion on each function
         for (PageElementFunction function : functions) {
           int begin = function.getBeginIndex();
           if (matcher.region(begin, contentsLength).lookingAt()) {
@@ -440,7 +445,7 @@ public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
       List<Replacement> replacements) {
     boolean result = false;
 
-    // Check every suggestion
+    // Check each suggestion
     List<PageElementInternalLink> links = analysis.getInternalLinks();
     String contents = analysis.getContents();
     int contentsLength = contents.length();
@@ -451,9 +456,53 @@ public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
         itSuggestion.remove();
         Matcher matcher = suggestion.initMatcher(contents);
 
-        // Check suggestion on every internal links
+        // Check suggestion on each internal link
         for (PageElementInternalLink link : links) {
           int begin = link.getBeginIndex();
+          if (matcher.region(begin, contentsLength).lookingAt()) {
+            int end = matcher.end();
+            if ((end >= contentsLength) ||
+                (!Character.isLetterOrDigit(contents.charAt(end))) ||
+                (!Character.isLetterOrDigit(contents.charAt(end - 1)))) {
+              result |= addReplacements(
+                  begin, end, contents, begin, contentsLength,
+                  suggestion, replacements);
+            }
+          }
+        }
+      }
+    }
+
+    return result;
+  }
+
+  /**
+   * Check spelling in tags.
+   * 
+   * @param analysis Page analysis.
+   * @param suggestions Active suggestions.
+   * @param replacements List of possible replacements.
+   * @return True if an error has been found.
+   */
+  private boolean analyzeTags(
+      PageAnalysis analysis, List<Suggestion> suggestions,
+      List<Replacement> replacements) {
+    boolean result = false;
+
+    // Check each suggestion
+    List<PageElementTag> tags = analysis.getTags();
+    String contents = analysis.getContents();
+    int contentsLength = contents.length();
+    Iterator<Suggestion> itSuggestion = suggestions.iterator();
+    while (itSuggestion.hasNext()) {
+      Suggestion suggestion = itSuggestion.next();
+      if (suggestion.getPatternText().startsWith("<")) {
+        itSuggestion.remove();
+        Matcher matcher = suggestion.initMatcher(contents);
+
+        // Check suggestion on each tag
+        for (PageElementTag tag : tags) {
+          int begin = tag.getBeginIndex();
           if (matcher.region(begin, contentsLength).lookingAt()) {
             int end = matcher.end();
             if ((end >= contentsLength) ||
