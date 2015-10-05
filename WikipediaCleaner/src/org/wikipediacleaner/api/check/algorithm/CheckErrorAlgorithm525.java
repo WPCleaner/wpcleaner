@@ -12,6 +12,7 @@ import java.util.Collection;
 import java.util.List;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
+import org.wikipediacleaner.api.check.CheckErrorResult.ErrorLevel;
 import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.PageElementTag.Parameter;
@@ -54,6 +55,7 @@ public class CheckErrorAlgorithm525 extends CheckErrorAlgorithmBase {
     for (PageElementTag tag : tags) {
       // Decide if tag is useful
       boolean isUseless = true;
+      ErrorLevel level = ErrorLevel.ERROR;
       for (int numParam = 0; numParam < tag.getParametersCount(); numParam++) {
         Parameter param = tag.getParameter(numParam);
         String value = param.getTrimmedValue();
@@ -69,6 +71,13 @@ public class CheckErrorAlgorithm525 extends CheckErrorAlgorithmBase {
             } else {
               isUseless = false;
             }
+          } else if ("class".equals(param.getName()) && "cx-segment".equals(param.getValue())) {
+            // useful: Content Translation tool garbage
+          } else if ("data-segmentid".equals(param.getName())) {
+            // useful: Content Translation tool garbage
+          } else if ("class".equals(param.getName()) ||
+                     "id".equals(param.getName())) {
+            level = ErrorLevel.WARNING;
           } else {
             isUseless = false;
           }
@@ -86,7 +95,7 @@ public class CheckErrorAlgorithm525 extends CheckErrorAlgorithmBase {
 
         // Create error
         CheckErrorResult errorResult = createCheckErrorResult(
-            analysis, tag.getCompleteBeginIndex(), tag.getCompleteEndIndex());
+            analysis, tag.getCompleteBeginIndex(), tag.getCompleteEndIndex(), level);
         if (tag.isFullTag() || !tag.isComplete()) {
           errorResult.addReplacement("");
         } else {
