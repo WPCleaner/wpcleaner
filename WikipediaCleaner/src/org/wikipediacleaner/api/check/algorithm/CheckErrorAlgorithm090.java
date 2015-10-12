@@ -93,56 +93,56 @@ public class CheckErrorAlgorithm090 extends CheckErrorAlgorithmBase {
     WikiConfiguration wikiConf = wiki.getWikiConfiguration();
     String contents = analysis.getContents();
     for (PageElementExternalLink link : links) {
-      if (link.hasSquare()) {
-        String article = wikiConf.isArticleUrl(link.getLink());
-        if ((article != null) &&
-            (article.length() > 0)) {
-          if (errors == null) {
-            return true;
-          }
-          result = true;
-          int beginIndex = link.getBeginIndex();
-          int endIndex = link.getEndIndex();
+      String article = wikiConf.isArticleUrl(link.getLink());
+      if ((article != null) &&
+          (article.length() > 0)) {
+        if (errors == null) {
+          return true;
+        }
+        result = true;
+        int beginIndex = link.getBeginIndex();
+        int endIndex = link.getEndIndex();
+        if (link.hasSquare()) {
           if ((beginIndex > 0) && (contents.charAt(beginIndex - 1) == '[') &&
               (endIndex < contents.length()) && (contents.charAt(endIndex) == ']')) {
             beginIndex--;
             endIndex++;
           }
-          CheckErrorResult errorResult = createCheckErrorResult(
-              analysis, beginIndex, endIndex);
-          if (link.hasSecondSquare() && (link.getLink().indexOf('?') < 0)) {
-            Page articlePage = DataManager.getPage(analysis.getWikipedia(), article, null, null, null);
-            boolean needColon = false;
-            if (articlePage.getNamespace() != null) {
-              int ns = articlePage.getNamespace().intValue();
-              if (ns % 2 == 0) {
-                if ((ns != Namespace.MAIN) &&
-                    (ns != Namespace.USER) &&
-                    (ns != Namespace.HELP) &&
-                    (ns != Namespace.MEDIAWIKI) &&
-                    (ns != Namespace.TEMPLATE) &&
-                    (ns != Namespace.WIKIPEDIA)) {
-                  needColon = true;
-                }
+        }
+        CheckErrorResult errorResult = createCheckErrorResult(
+            analysis, beginIndex, endIndex);
+        if (link.hasSquare() && link.hasSecondSquare() && (link.getLink().indexOf('?') < 0)) {
+          Page articlePage = DataManager.getPage(analysis.getWikipedia(), article, null, null, null);
+          boolean needColon = false;
+          if (articlePage.getNamespace() != null) {
+            int ns = articlePage.getNamespace().intValue();
+            if (ns % 2 == 0) {
+              if ((ns != Namespace.MAIN) &&
+                  (ns != Namespace.USER) &&
+                  (ns != Namespace.HELP) &&
+                  (ns != Namespace.MEDIAWIKI) &&
+                  (ns != Namespace.TEMPLATE) &&
+                  (ns != Namespace.WIKIPEDIA)) {
+                needColon = true;
               }
             }
-            if (link.getText() != null) {
-              errorResult.addReplacement(
-                  PageElementInternalLink.createInternalLink(
-                      (needColon ? ":" : "") + article, link.getText()),
-                  true);
-            } else {
-              String question = GT._("What text should be displayed by the link?");
-              AddTextActionProvider action = new AddTextActionProvider(
-                  "[[" + (needColon ? ":" : "") + article + "|", "]]", null,
-                  question, article, checker);
-              errorResult.addPossibleAction(
-                  GT._("Convert into an internal link"),
-                  action);
-            }
           }
-          errors.add(errorResult);
+          if (link.getText() != null) {
+            errorResult.addReplacement(
+                PageElementInternalLink.createInternalLink(
+                    (needColon ? ":" : "") + article, link.getText()),
+                true);
+          } else {
+            String question = GT._("What text should be displayed by the link?");
+            AddTextActionProvider action = new AddTextActionProvider(
+                "[[" + (needColon ? ":" : "") + article + "|", "]]", null,
+                question, article, checker);
+            errorResult.addPossibleAction(
+                GT._("Convert into an internal link"),
+                action);
+          }
         }
+        errors.add(errorResult);
       }
     }
     return result;
