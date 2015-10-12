@@ -1,0 +1,10 @@
+# Hay's tools - Tools Directory - https://tools.wmflabs.org/hay/directory/#/
+{
+    "name" : "WPCleaner",
+    "title" : "WPCleaner",
+    "description" : "WPCleaner is a tool designed to help with various maintenance tasks, especially repairing links to disambiguation pages, checking Wikipedia, fixing spelling and typography, and helping with translation of articles coming from other wikis.",
+    "url" : "https://en.wikipedia.org/wiki/Wikipedia:WPCleaner",
+    "keywords" : "tools",
+    "author" : "NicoV",
+    "repository" : "https://github.com/WPCleaner/wpcleaner"
+}
