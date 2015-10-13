@@ -1397,8 +1397,8 @@ public class MediaWikiAPI implements API {
     StringBuilder suffix = new StringBuilder();
     while ((text != null) &&
            (text.length() > 0) &&
-           (text.charAt(text.length() - 1) == '\n')) {
-      suffix.append('\n');
+           ("\n ".indexOf(text.charAt(text.length() - 1)) >= 0)) {
+      suffix.append(text.charAt(text.length() - 1));
       text = text.substring(0, text.length() - 1);
     }
     text = request.parseText(title, text, full);
