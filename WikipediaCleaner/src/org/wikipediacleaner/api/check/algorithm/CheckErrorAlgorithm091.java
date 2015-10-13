@@ -89,105 +89,102 @@ public class CheckErrorAlgorithm091 extends CheckErrorAlgorithmBase {
     List<Interwiki> interwikis = wiki.getWikiConfiguration().getInterwikis();
     String contents = analysis.getContents();
     for (PageElementExternalLink link : links) {
-      if (link.hasSquare()) {
-
-        // Check if this is a external link to an other wiki
-        String article = null;
-        String prefix = null;
-        String language = null;
-        boolean local = false;
-        for (Interwiki interwiki : interwikis) {
-          String tmp = interwiki.isArticleUrl(link.getLink());
-          if (tmp != null) {
-            if ((article == null) || (interwiki.getLanguage() != null)) {
-              article = tmp;
-              prefix = interwiki.getPrefix();
-              language = interwiki.getLanguage();
-              local = interwiki.getLocal();
-            }
+      // Check if this is a external link to an other wiki
+      String article = null;
+      String prefix = null;
+      String language = null;
+      boolean local = false;
+      for (Interwiki interwiki : interwikis) {
+        String tmp = interwiki.isArticleUrl(link.getLink());
+        if (tmp != null) {
+          if ((article == null) || (interwiki.getLanguage() != null)) {
+            article = tmp;
+            prefix = interwiki.getPrefix();
+            language = interwiki.getLanguage();
+            local = interwiki.getLocal();
           }
         }
-        EnumWikipedia fromWiki = null;
-        if (prefix != null) {
-          fromWiki = EnumWikipedia.getWikipedia(prefix);
-          if (!prefix.equals(fromWiki.getSettings().getCode())) {
-            fromWiki = null;
-          }
+      }
+      EnumWikipedia fromWiki = null;
+      if (prefix != null) {
+        fromWiki = EnumWikipedia.getWikipedia(prefix);
+        if (!prefix.equals(fromWiki.getSettings().getCode())) {
+          fromWiki = null;
+        }
+      }
+
+      // Mark error
+      if ((article != null) &&
+          ((article.length() > 0) || (local && (link.getText() != null))) &&
+          (prefix != null) && (prefix.length() > 0) &&
+          (fromWiki != wiki) &&
+          (!onlyLanguage || (language != null)) &&
+          (!onlyLocal || local)) {
+        if (errors == null) {
+          return true;
+        }
+        result = true;
+        int beginIndex = link.getBeginIndex();
+        int endIndex = link.getEndIndex();
+        if ((beginIndex > 0) && (contents.charAt(beginIndex - 1) == '[') &&
+            (endIndex < contents.length()) && (contents.charAt(endIndex) == ']')) {
+          beginIndex--;
+          endIndex++;
         }
 
-        // Mark error
-        if ((article != null) &&
-            ((article.length() > 0) || (local && (link.getText() != null))) &&
-            (prefix != null) && (prefix.length() > 0) &&
-            (fromWiki != wiki) &&
-            (!onlyLanguage || (language != null)) &&
-            (!onlyLocal || local)) {
-          if (errors == null) {
-            return true;
-          }
-          result = true;
-          int beginIndex = link.getBeginIndex();
-          int endIndex = link.getEndIndex();
-          if ((beginIndex > 0) && (contents.charAt(beginIndex - 1) == '[') &&
-              (endIndex < contents.length()) && (contents.charAt(endIndex) == ']')) {
-            beginIndex--;
-            endIndex++;
-          }
+        // Check language link
+        CheckErrorResult errorResult = createCheckErrorResult(
+            analysis, beginIndex, endIndex);
+        if ((fromWiki != null) && (article.length() >0)) {
+          errorResult.addPossibleAction(
+              GT._("Check language links"),
+              new CheckLanguageLinkActionProvider(
+                  fromWiki, analysis.getWikipedia(),
+                  article, link.getText()));
+        }
 
-          // Check language link
-          CheckErrorResult errorResult = createCheckErrorResult(
-              analysis, beginIndex, endIndex);
-          if ((fromWiki != null) && (article.length() >0)) {
-            errorResult.addPossibleAction(
-                GT._("Check language links"),
-                new CheckLanguageLinkActionProvider(
-                    fromWiki, analysis.getWikipedia(),
-                    article, link.getText()));
-          }
-
-          // Use templates
-          if ((templatesList != null) &&
-              (templatesList.size() > 0) &&
-              (article.length() > 0) &&
-              (language != null)) {
-            for (String template : templatesList) {
-              String[] templateArgs = template.split("\\|");
-              if (templateArgs.length >= 5) {
-                String textPrefix =
-                  "{{" + templateArgs[0] + "|" + templateArgs[1] + "=";
-                String textSuffix =
-                  "|" + templateArgs[2] + "=" + prefix +
-                  "|" + templateArgs[3] + "=" + article +
-                  "|" + templateArgs[4] + "=" + ((link.getText() != null) ? link.getText() : article) +
-                  "}}";
-                String question = GT._("What is the title of the page on this wiki ?");
-                AddTextActionProvider action = null;
-                if ((link.getText() != null) && (!link.getText().equals(article))) {
-                  String[] possibleValues = { null, article, link.getText() };
-                  action = new AddTextActionProvider(
-                      textPrefix, textSuffix, null, question,
-                      possibleValues, false, null, checker);
-                } else {
-                  action = new AddTextActionProvider(
-                      textPrefix, textSuffix, null, question,
-                      article, checker);
-                }
-                errorResult.addPossibleAction(
-                    GT._("Replace using template {0}", "{{" + templateArgs[0] + "}}"),
-                    action);
+        // Use templates
+        if ((templatesList != null) &&
+            (templatesList.size() > 0) &&
+            (article.length() > 0) &&
+            (language != null)) {
+          for (String template : templatesList) {
+            String[] templateArgs = template.split("\\|");
+            if (templateArgs.length >= 5) {
+              String textPrefix =
+                "{{" + templateArgs[0] + "|" + templateArgs[1] + "=";
+              String textSuffix =
+                "|" + templateArgs[2] + "=" + prefix +
+                "|" + templateArgs[3] + "=" + article +
+                "|" + templateArgs[4] + "=" + ((link.getText() != null) ? link.getText() : article) +
+                "}}";
+              String question = GT._("What is the title of the page on this wiki ?");
+              AddTextActionProvider action = null;
+              if ((link.getText() != null) && (!link.getText().equals(article))) {
+                String[] possibleValues = { null, article, link.getText() };
+                action = new AddTextActionProvider(
+                    textPrefix, textSuffix, null, question,
+                    possibleValues, false, null, checker);
+              } else {
+                action = new AddTextActionProvider(
+                    textPrefix, textSuffix, null, question,
+                    article, checker);
               }
+              errorResult.addPossibleAction(
+                  GT._("Replace using template {0}", "{{" + templateArgs[0] + "}}"),
+                  action);
             }
           }
-
-          // Create internal link
-          if (link.hasSquare() && link.hasSecondSquare()) {
-            boolean first = (errorResult.getPossibleActions() == null) || (errorResult.getPossibleActions().isEmpty());
-            errorResult.addReplacement(
-                "[[:" + prefix + ":" + article + "|" + (link.getText() != null ? link.getText() : article) + "]]",
-                first);
-          }
-          errors.add(errorResult);
         }
+
+        // Create internal link
+        if (!link.hasSquare() || link.hasSecondSquare()) {
+          boolean first = (errorResult.getPossibleActions() == null) || (errorResult.getPossibleActions().isEmpty());
+          errorResult.addReplacement(
+              "[[:" + prefix + ":" + article + "|" + (link.getText() != null ? link.getText() : article) + "]]",
+              first);
+        }
+        errors.add(errorResult);
       }
     }
 
