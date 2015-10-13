@@ -62,6 +62,7 @@ public class PageElementTag extends PageElement {
   // =========================================================================
   public final static String TAG_WIKI_CODE            = "code";
   public final static String TAG_WIKI_GALLERY         = "gallery";
+  public final static String TAG_WIKI_GRAPH           = "graph";
   public final static String TAG_WIKI_HIERO           = "hiero";
   public final static String TAG_WIKI_IMAGEMAP        = "imagemap";
   public final static String TAG_WIKI_INCLUDEONLY     = "includeonly";
