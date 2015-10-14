@@ -2,7 +2,7 @@ Make a copy of the previous WPCleaner.p12 file
 
 == Obtaining a Code Signing Certificate ==
 
-You can get a free Open Source Code Signing Certificate from certum.pl
+You can get a cheap Open Source Code Signing Certificate from certum.pl, for example.
 Once you have received the mail confirming that the certificate has been created, follow the link to the certificate in your account.
 Click on "Install online" in Chrome to install the certificate in Chrome.
 Go to Chrome "Settings" ("Advanced Settings")
