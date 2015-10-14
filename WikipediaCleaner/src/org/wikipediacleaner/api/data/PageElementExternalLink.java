@@ -28,7 +28,7 @@ public class PageElementExternalLink extends PageElement {
 
   private final static String SEPARATORS_EXCLUDED = " \t";
 
-  private final static String SEPARATORS_INCLUDED = "<>";
+  private final static String SEPARATORS_INCLUDED = "<>|";
 
   private final static String UNACCEPTABLE = "\n";
 
