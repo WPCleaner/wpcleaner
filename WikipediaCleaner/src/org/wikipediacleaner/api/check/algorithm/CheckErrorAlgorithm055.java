@@ -29,6 +29,9 @@ public class CheckErrorAlgorithm055 extends CheckErrorAlgorithmBase {
     super("HTML text style element <small> double");
   }
 
+  /** Closing small tag */
+  private final static String CLOSING_TAG = PageElementTag.createTag(PageElementTag.TAG_HTML_SMALL, true, false);
+
   /**
    * Analyze a page to check if errors are present.
    * 
@@ -54,6 +57,7 @@ public class CheckErrorAlgorithm055 extends CheckErrorAlgorithmBase {
     int level = 0;
     boolean result = false;
     PageElementTag level0Tag = null;
+    boolean previousUnclosedTag = false;
     int tagIndex = 0;
     while (tagIndex < tags.size()) {
       PageElementTag tag = tags.get(tagIndex);
@@ -69,6 +73,9 @@ public class CheckErrorAlgorithm055 extends CheckErrorAlgorithmBase {
           CheckErrorResult errorResult = createCheckErrorResult(
               analysis,
               tag.getBeginIndex(), tag.getEndIndex());
+          if (previousUnclosedTag) {
+            errorResult.addReplacement(CLOSING_TAG);
+          }
           errorResult.addReplacement("");
           errors.add(errorResult);
         }
@@ -107,7 +114,7 @@ public class CheckErrorAlgorithm055 extends CheckErrorAlgorithmBase {
             }
           }
 
-          if (level0Tag != null) {
+          if ((level0Tag != null) && previousUnclosedTag) {
             int possibleEnd = getPossibleEnd(analysis, level0Tag);
             if (possibleEnd > 0) {
               CheckErrorResult errorResult = createCheckErrorResult(
@@ -115,7 +122,7 @@ public class CheckErrorAlgorithm055 extends CheckErrorAlgorithmBase {
                   level0Tag.getBeginIndex(), possibleEnd,
                   ErrorLevel.WARNING);
               errorResult.addReplacement(
-                  contents.substring(level0Tag.getBeginIndex(), possibleEnd) + "</small>",
+                  contents.substring(level0Tag.getBeginIndex(), possibleEnd) + CLOSING_TAG,
                   "<small>...</small>");
               errors.add(errorResult);
             } else {
@@ -142,7 +149,7 @@ public class CheckErrorAlgorithm055 extends CheckErrorAlgorithmBase {
             CheckErrorResult errorResult = createCheckErrorResult(
                 analysis, tag.getBeginIndex(), possibleEnd);
             errorResult.addReplacement(
-                contents.substring(tag.getBeginIndex(), possibleEnd) + "</small>",
+                contents.substring(tag.getBeginIndex(), possibleEnd) + CLOSING_TAG,
                 "<small>...</small>");
             errors.add(errorResult);
           } else {
@@ -155,9 +162,8 @@ public class CheckErrorAlgorithm055 extends CheckErrorAlgorithmBase {
                   contents.substring(tag.getEndIndex(), tag.getMatchingTag().getBeginIndex()),
                   GT._("Remove {0} tags", PageElementTag.TAG_HTML_SMALL));
             }
-            if (!tag.isComplete() && !tag.isFullTag() && !tag.isEndTag()) {
-              errorResult.addReplacement(
-                  PageElementTag.createTag(PageElementTag.TAG_HTML_SMALL, true, false));
+            if (!tag.isComplete() && !tag.isFullTag() && !tag.isEndTag() && previousUnclosedTag) {
+              errorResult.addReplacement(CLOSING_TAG);
             }
             errors.add(errorResult);
             if (tag.isComplete()) {
@@ -167,6 +173,9 @@ public class CheckErrorAlgorithm055 extends CheckErrorAlgorithmBase {
         }
         level++;
       }
+
+      // Memorize if tag is unclosed
+      previousUnclosedTag = !tag.isComplete() && !tag.isFullTag() && !tag.isEndTag();
     }
 
     return result;
