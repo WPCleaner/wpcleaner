@@ -22,7 +22,7 @@ import org.wikipediacleaner.i18n.GT;
 
 /**
  * Algorithm for analyzing error 2 of check wikipedia project.
- * Error 2: Article with false &lt;br&gt;
+ * Error 2: Article with incorrect tags (&lt;br&gt;, &lt;center&gt;, &lt;small&gt;)
  */
 public class CheckErrorAlgorithm002 extends CheckErrorAlgorithmBase {
 
@@ -30,11 +30,11 @@ public class CheckErrorAlgorithm002 extends CheckErrorAlgorithmBase {
    * Possible global fixes.
    */
   private final static String[] globalFixes = new String[] {
-    GT._("Fix all <br> tags"),
+    GT._("Fix all incorrect tags"),
   };
 
   public CheckErrorAlgorithm002() {
-    super("Article with false <br>");
+    super("Article with incorrect tags");
   }
 
   /**
@@ -52,6 +52,65 @@ public class CheckErrorAlgorithm002 extends CheckErrorAlgorithmBase {
     if (analysis == null) {
       return false;
     }
+
+    // Check for various tags
+    boolean result = false;
+    result |= analyzeBrTags(analysis, errors);
+    result |= analyzeNonFullTags(analysis, errors, PageElementTag.TAG_HTML_CENTER);
+    result |= analyzeNonFullTags(analysis, errors, PageElementTag.TAG_HTML_SMALL);
+
+    return result;
+  }
+
+  /**
+   * Analyze a page to check if errors are present in some tags.
+   * 
+   * @param analysis Page analysis.
+   * @param errors Errors found in the page.
+   * @param tagName Tag name.
+   * @return Flag indicating if the error was found.
+   */
+  private boolean analyzeNonFullTags(
+      PageAnalysis analysis,
+      Collection<CheckErrorResult> errors,
+      String tagName) {
+
+    // Check for tags
+    boolean result = false;
+    List<PageElementTag> tags = analysis.getTags(tagName);
+    PageElementTag previousTag = null;
+    for (PageElementTag tag : tags) {
+      if ((tag != null) && tag.isFullTag()) {
+        if (errors == null) {
+          return true;
+        }
+        result = true;
+        CheckErrorResult errorResult =
+            createCheckErrorResult(analysis, tag.getBeginIndex(), tag.getEndIndex());
+        if ((previousTag != null) &&
+            !previousTag.isComplete() &&
+            !previousTag.isEndTag()) {
+          errorResult.addReplacement(PageElementTag.createTag(tagName, true, false));
+        }
+        errorResult.addReplacement("");
+        errors.add(errorResult);
+      }
+      previousTag = tag;
+    }
+
+    return result;
+  }
+
+  /**
+   * Analyze a page to check if errors are present in br tags.
+   * 
+   * @param analysis Page analysis.
+   * @param errors Errors found in the page.
+   * @return Flag indicating if the error was found.
+   */
+  private boolean analyzeBrTags(
+      PageAnalysis analysis,
+      Collection<CheckErrorResult> errors) {
 
     // Check for incorrect br tags
     boolean result = false;
