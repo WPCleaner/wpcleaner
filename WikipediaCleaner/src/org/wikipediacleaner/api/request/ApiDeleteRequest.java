@@ -92,7 +92,7 @@ public class ApiDeleteRequest extends ApiRequest {
     properties.put(PROPERTY_TOKEN, getWiki().getConnection().getDeleteToken());
     CommentDecorator decorator = getWiki().getCommentDecorator();
     if (decorator != null) {
-      decorator.manageComment(properties, PROPERTY_REASON, null, automatic);
+      decorator.manageComment(properties, PROPERTY_REASON, "tags", automatic);
     }
     result.executeDelete(properties);
   }
