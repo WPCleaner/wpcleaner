@@ -9,10 +9,12 @@ package org.wikipediacleaner.api.check.algorithm;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 import org.wikipediacleaner.api.check.AddTextActionProvider;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
+import org.wikipediacleaner.api.constants.WPCConfiguration;
 import org.wikipediacleaner.api.constants.WikiConfiguration;
 import org.wikipediacleaner.api.data.DataManager;
 import org.wikipediacleaner.api.data.Namespace;
@@ -20,6 +22,7 @@ import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementExternalLink;
 import org.wikipediacleaner.api.data.PageElementInternalLink;
+import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.gui.swing.component.MWPane;
 import org.wikipediacleaner.i18n.GT;
 import org.wikipediacleaner.utils.StringChecker;
@@ -84,6 +87,15 @@ public class CheckErrorAlgorithm090 extends CheckErrorAlgorithmBase {
   private boolean analyzeExternalLinks(
       PageAnalysis analysis,
       Collection<CheckErrorResult> errors, boolean onlyAutomatic) {
+
+    // Configuration
+    String templates = getSpecificProperty("link_templates", true, true, false);
+    List<String> linkTemplates = null;
+    if (templates != null) {
+      linkTemplates = WPCConfiguration.convertPropertyToStringList(templates);
+    }
+
+    // Analyze each external link
     boolean result = false;
     List<PageElementExternalLink> links = analysis.getExternalLinks();
     if (links == null) {
@@ -109,9 +121,29 @@ public class CheckErrorAlgorithm090 extends CheckErrorAlgorithmBase {
             endIndex++;
           }
         }
+
+        String text = link.getText();
+
+        // Check if link is in template
+        if (linkTemplates != null) {
+          PageElementTemplate template = analysis.isInTemplate(beginIndex);
+          if (template != null) {
+            for (String linkTemplate : linkTemplates) {
+              String[] elements = linkTemplate.split("\\|");
+              if ((elements.length > 2) &&
+                  Page.areSameTitle(elements[0], template.getTemplateName()) &&
+                  link.getLink().trim().equals(template.getParameterValue(elements[1]))) {
+                text = template.getParameterValue(elements[2]);
+                beginIndex = template.getBeginIndex();
+                endIndex = template.getEndIndex();
+              }
+            }
+          }
+        }
+
         CheckErrorResult errorResult = createCheckErrorResult(
             analysis, beginIndex, endIndex);
-        if (link.hasSquare() && link.hasSecondSquare() && (link.getLink().indexOf('?') < 0)) {
+        if (link.getLink().indexOf('?') < 0) {
           Page articlePage = DataManager.getPage(analysis.getWikipedia(), article, null, null, null);
           boolean needColon = false;
           if (articlePage.getNamespace() != null) {
@@ -127,10 +159,10 @@ public class CheckErrorAlgorithm090 extends CheckErrorAlgorithmBase {
               }
             }
           }
-          if (link.getText() != null) {
+          if (text != null) {
             errorResult.addReplacement(
                 PageElementInternalLink.createInternalLink(
-                    (needColon ? ":" : "") + article, link.getText()),
+                    (needColon ? ":" : "") + article, text),
                 true);
           } else {
             String question = GT._("What text should be displayed by the link?");
@@ -212,5 +244,16 @@ public class CheckErrorAlgorithm090 extends CheckErrorAlgorithmBase {
   @Override
   public String fix(String fixName, PageAnalysis analysis, MWPane textPane) {
     return fixUsingAutomaticReplacement(analysis);
+  }
+
+  /**
+   * @return Map of parameters (Name -> description).
+   * @see org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase#getParameters()
+   */
+  @Override
+  public Map<String, String> getParameters() {
+    Map<String, String> parameters = super.getParameters();
+    parameters.put("link_templates", GT._("Templates using external links"));
+    return parameters;
   }
 }

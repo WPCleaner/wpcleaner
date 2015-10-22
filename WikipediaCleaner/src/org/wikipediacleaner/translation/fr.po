@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2015-10-21 18:33+0200\n"
+"POT-Creation-Date: 2015-10-22 23:49+0200\n"
 "PO-Revision-Date: 2015-09-13 22:21+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: French <fr@li.org>\n"
@@ -630,18 +630,23 @@ msgstr ""
 "Une liste de modèles pouvant être utilisés pour remplacer les balises "
 "<center>"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm090.java:44
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm090.java:47
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm091.java:44
 msgid "Convert them to internal links"
 msgstr "Convertir en liens internes"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm090.java:136
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm090.java:168
 msgid "What text should be displayed by the link?"
 msgstr "Quel texte devrait être affiché par le lien ?"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm090.java:141
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm090.java:173
 msgid "Convert into an internal link"
 msgstr "Convertir en lien interne"
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm090.java:256
+#, fuzzy
+msgid "Templates using external links"
+msgstr "Traduire le texte des liens internes"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm091.java:233
 msgid "To report only links to other languages"

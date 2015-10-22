@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2015-10-21 18:33+0200\n"
+"POT-Creation-Date: 2015-10-22 23:49+0200\n"
 "PO-Revision-Date: 2015-02-26 20:30+0000\n"
 "Last-Translator: Xosé <Unknown>\n"
 "Language-Team: Galician <gl@li.org>\n"
@@ -610,17 +610,21 @@ msgstr "Páxina {0}:"
 msgid "A list of templates that can be used to replace &lt;center&gt; tags"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm090.java:44
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm090.java:47
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm091.java:44
 msgid "Convert them to internal links"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm090.java:136
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm090.java:168
 msgid "What text should be displayed by the link?"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm090.java:141
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm090.java:173
 msgid "Convert into an internal link"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm090.java:256
+msgid "Templates using external links"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm091.java:233
