@@ -41,6 +41,11 @@ public class PageElementISBN extends PageElement {
   private final static String INCORRECT_CHARACTERS = ":‐\t—=–#";
 
   /**
+   * ISBN incorrect characters at the beginning.
+   */
+  private final static String INCORRECT_BEGIN_CHARACTERS = ":;‐\t—=–#";
+
+  /**
    * @param analysis Page analysis.
    * @return List of ISBN.
    */
@@ -122,6 +127,11 @@ public class PageElementISBN extends PageElement {
             while ((index < contents.length()) && (contents.charAt(index) == ' ')) {
               index++;
               spaceFound = true;
+            }
+            while ((index < contents.length()) &&
+                (INCORRECT_BEGIN_CHARACTERS.indexOf(contents.charAt(index)) >= 0)) {
+              index++;
+              correct = false;
             }
           }
           int beginNumber = -1;
