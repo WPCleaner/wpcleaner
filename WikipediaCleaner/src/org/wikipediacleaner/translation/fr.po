@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2015-10-22 23:49+0200\n"
+"POT-Creation-Date: 2015-10-24 22:17+0200\n"
 "PO-Revision-Date: 2015-10-24 08:45+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: French <fr@li.org>\n"
@@ -434,18 +434,18 @@ msgid "Check all links to other language"
 msgstr "Vérifier tous les liens vers une autre langue"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:122
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm091.java:140
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm091.java:166
 msgid "Check language links"
 msgstr "Vérifier les liens inter-langues"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:175
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:318
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm091.java:161
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm091.java:187
 msgid "What is the title of the page on this wiki ?"
 msgstr "Quel est le titre de cet article sur ce wiki ?"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:188
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm091.java:174
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm091.java:200
 #, java-format
 msgid "Replace using template {0}"
 msgstr "Remplacer en utilisant le modèle {0}"
@@ -630,7 +630,7 @@ msgstr ""
 "<center>"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm090.java:47
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm091.java:44
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm091.java:46
 msgid "Convert them to internal links"
 msgstr "Convertir en liens internes"
 
@@ -643,15 +643,16 @@ msgid "Convert into an internal link"
 msgstr "Convertir en lien interne"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm090.java:256
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm091.java:259
 #, fuzzy
 msgid "Templates using external links"
 msgstr "Traduire le texte des liens internes"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm091.java:233
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm091.java:260
 msgid "To report only links to other languages"
 msgstr "Pour détecter uniquement les liens vers d’autres langues"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm091.java:234
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm091.java:261
 msgid "To report only links to local wikis"
 msgstr "Pour détecter uniquement les liens vers les wikis locaux"
 

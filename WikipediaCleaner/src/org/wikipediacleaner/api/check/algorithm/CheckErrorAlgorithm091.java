@@ -18,8 +18,10 @@ import org.wikipediacleaner.api.constants.CWConfigurationError;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.constants.WPCConfiguration;
 import org.wikipediacleaner.api.data.Interwiki;
+import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementExternalLink;
+import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.gui.swing.component.MWPane;
 import org.wikipediacleaner.i18n.GT;
 import org.wikipediacleaner.utils.StringChecker;
@@ -79,6 +81,11 @@ public class CheckErrorAlgorithm091 extends CheckErrorAlgorithmBase {
     boolean onlyLanguage = (strOnlyLanguage != null) ? Boolean.valueOf(strOnlyLanguage) : true;
     String strOnlyLocal = getSpecificProperty("only_local", true, false, false);
     boolean onlyLocal = (strOnlyLocal != null) ? Boolean.valueOf(strOnlyLocal) : true;
+    String templates = getSpecificProperty("link_templates", true, true, false);
+    List<String> linkTemplates = null;
+    if (templates != null) {
+      linkTemplates = WPCConfiguration.convertPropertyToStringList(templates);
+    }
 
     // Analyze each external link
     boolean result = false;
@@ -132,6 +139,25 @@ public class CheckErrorAlgorithm091 extends CheckErrorAlgorithmBase {
           endIndex++;
         }
 
+        String text = link.getText();
+
+        // Check if link is in template
+        if (linkTemplates != null) {
+          PageElementTemplate template = analysis.isInTemplate(beginIndex);
+          if (template != null) {
+            for (String linkTemplate : linkTemplates) {
+              String[] elements = linkTemplate.split("\\|");
+              if ((elements.length > 2) &&
+                  Page.areSameTitle(elements[0], template.getTemplateName()) &&
+                  link.getLink().trim().equals(template.getParameterValue(elements[1]))) {
+                text = template.getParameterValue(elements[2]);
+                beginIndex = template.getBeginIndex();
+                endIndex = template.getEndIndex();
+              }
+            }
+          }
+        }
+
         // Check language link
         CheckErrorResult errorResult = createCheckErrorResult(
             analysis, beginIndex, endIndex);
@@ -140,7 +166,7 @@ public class CheckErrorAlgorithm091 extends CheckErrorAlgorithmBase {
               GT._("Check language links"),
               new CheckLanguageLinkActionProvider(
                   fromWiki, analysis.getWikipedia(),
-                  article, link.getText()));
+                  article, text));
         }
 
         // Use templates
@@ -156,12 +182,12 @@ public class CheckErrorAlgorithm091 extends CheckErrorAlgorithmBase {
               String textSuffix =
                 "|" + templateArgs[2] + "=" + prefix +
                 "|" + templateArgs[3] + "=" + article +
-                "|" + templateArgs[4] + "=" + ((link.getText() != null) ? link.getText() : article) +
+                "|" + templateArgs[4] + "=" + ((text != null) ? text : article) +
                 "}}";
               String question = GT._("What is the title of the page on this wiki ?");
               AddTextActionProvider action = null;
-              if ((link.getText() != null) && (!link.getText().equals(article))) {
-                String[] possibleValues = { null, article, link.getText() };
+              if ((text != null) && (!text.equals(article))) {
+                String[] possibleValues = { null, article, text };
                 action = new AddTextActionProvider(
                     textPrefix, textSuffix, null, question,
                     possibleValues, false, null, checker);
@@ -181,7 +207,7 @@ public class CheckErrorAlgorithm091 extends CheckErrorAlgorithmBase {
         if (!link.hasSquare() || link.hasSecondSquare()) {
           boolean first = (errorResult.getPossibleActions() == null) || (errorResult.getPossibleActions().isEmpty());
           errorResult.addReplacement(
-              "[[:" + prefix + ":" + article + "|" + (link.getText() != null ? link.getText() : article) + "]]",
+              "[[:" + prefix + ":" + article + "|" + (text != null ? text : article) + "]]",
               first);
         }
         errors.add(errorResult);
@@ -230,6 +256,7 @@ public class CheckErrorAlgorithm091 extends CheckErrorAlgorithmBase {
   @Override
   public Map<String, String> getParameters() {
     Map<String, String> parameters = super.getParameters();
+    parameters.put("link_templates", GT._("Templates using external links"));
     parameters.put("only_language", GT._("To report only links to other languages"));
     parameters.put("only_local", GT._("To report only links to local wikis"));
     return parameters;
