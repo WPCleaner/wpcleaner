@@ -125,10 +125,11 @@ public class CheckErrorAlgorithm080 extends CheckErrorAlgorithmBase {
               StringBuilder replacement = new StringBuilder();
               replacement.append(contents.substring(beginIndex, linkEndIndex));
               if (linkEndIndex < possibleEnd) {
-                if (contents.charAt(linkEndIndex) != ' ') {
+                String tmp = contents.substring(linkEndIndex, possibleEnd).replaceAll("\\n", "");
+                if ((tmp.length() > 0) && !Character.isWhitespace(tmp.charAt(0))) {
                   replacement.append(' ');
                 }
-                replacement.append(contents.substring(linkEndIndex, possibleEnd).replaceAll("\\n", ""));
+                replacement.append(tmp);
               }
               if (contents.charAt(possibleEnd - 1) != ']') {
                 replacement.append("]");
