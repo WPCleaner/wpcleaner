@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2015-10-20 10:29+0000\n"
+"X-Launchpad-Export-Date: 2015-10-24 08:48+0000\n"
 "X-Generator: Launchpad (build 17812)\n"
 
 #: org/wikipediacleaner/Version.java:31
@@ -177,9 +177,8 @@ msgid "Remove {0} namespace from template name"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm002.java:33
-#, fuzzy
 msgid "Fix all incorrect tags"
-msgstr "Διόρθωση όλων των ετικετών <br>"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm002.java:282
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm002.java:283
