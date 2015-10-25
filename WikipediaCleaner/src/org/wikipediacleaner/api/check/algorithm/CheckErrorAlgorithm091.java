@@ -7,6 +7,8 @@
 
 package org.wikipediacleaner.api.check.algorithm;
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -14,6 +16,7 @@ import java.util.Map;
 import org.wikipediacleaner.api.check.AddTextActionProvider;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.CheckLanguageLinkActionProvider;
+import org.wikipediacleaner.api.check.CheckErrorResult.ErrorLevel;
 import org.wikipediacleaner.api.constants.CWConfigurationError;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.constants.WPCConfiguration;
@@ -93,127 +96,181 @@ public class CheckErrorAlgorithm091 extends CheckErrorAlgorithmBase {
     if (links == null) {
       return result;
     }
-    List<Interwiki> interwikis = wiki.getWikiConfiguration().getInterwikis();
     String contents = analysis.getContents();
     for (PageElementExternalLink link : links) {
+
       // Check if this is a external link to an other wiki
+      boolean fullLink = true;
+      String linkDest = link.getLink();
+      Interwiki interwiki = getInterwiki(wiki, linkDest);
+      if (interwiki == null) {
+        try {
+          URL url = new URL(linkDest);
+          String query = url.getQuery();
+          if ((query != null) && (query.length() > 0)) {
+            String[] elements = query.split("\\&");
+            for (String element : elements) {
+              String[] parts = element.split("\\=");
+              if ((parts != null) && (parts.length > 1)) {
+                Interwiki tmp = getInterwiki(wiki, parts[1]);
+                if (tmp != null) {
+                  interwiki = tmp;
+                  linkDest = parts[1];
+                  fullLink = false;
+                }
+              }
+            }
+          }
+        } catch (MalformedURLException e) {
+          // Nothing to be done
+        }
+      }
       String article = null;
-      String prefix = null;
-      String language = null;
-      boolean local = false;
-      for (Interwiki interwiki : interwikis) {
-        String tmp = interwiki.isArticleUrl(link.getLink());
-        if (tmp != null) {
-          if ((article == null) || (interwiki.getLanguage() != null)) {
-            article = tmp;
-            prefix = interwiki.getPrefix();
-            language = interwiki.getLanguage();
-            local = interwiki.getLocal();
+      if (interwiki != null) {
+        article = interwiki.isArticleUrl(linkDest);
+      }
+
+      if ((interwiki != null) && (article != null)) {
+        // Decide if error should be reported
+        String prefix = interwiki.getPrefix();
+        String language = interwiki.getLanguage();
+        boolean local = interwiki.getLocal();
+        EnumWikipedia fromWiki = null;
+        if (prefix != null) {
+          fromWiki = EnumWikipedia.getWikipedia(prefix);
+          if (!prefix.equals(fromWiki.getSettings().getCode())) {
+            fromWiki = null;
           }
         }
-      }
-      EnumWikipedia fromWiki = null;
-      if (prefix != null) {
-        fromWiki = EnumWikipedia.getWikipedia(prefix);
-        if (!prefix.equals(fromWiki.getSettings().getCode())) {
-          fromWiki = null;
+        boolean isError = true;
+        if (isError && (article.length() == 0) && (!local || link.getText() == null)) {
+          isError = false;
         }
-      }
-
-      // Mark error
-      if ((article != null) &&
-          ((article.length() > 0) || (local && (link.getText() != null))) &&
-          (prefix != null) && (prefix.length() > 0) &&
-          (fromWiki != wiki) &&
-          (!onlyLanguage || (language != null)) &&
-          (!onlyLocal || local)) {
-        if (errors == null) {
-          return true;
+        if (fromWiki == wiki) {
+          isError = false;
         }
-        result = true;
-        int beginIndex = link.getBeginIndex();
-        int endIndex = link.getEndIndex();
-        if ((beginIndex > 0) && (contents.charAt(beginIndex - 1) == '[') &&
-            (endIndex < contents.length()) && (contents.charAt(endIndex) == ']')) {
-          beginIndex--;
-          endIndex++;
+        if ((prefix == null) || (prefix.length() == 0)) {
+          isError = false;
         }
-
-        String text = link.getText();
-
-        // Check if link is in template
-        if (linkTemplates != null) {
-          PageElementTemplate template = analysis.isInTemplate(beginIndex);
-          if (template != null) {
-            for (String linkTemplate : linkTemplates) {
-              String[] elements = linkTemplate.split("\\|");
-              if ((elements.length > 2) &&
-                  Page.areSameTitle(elements[0], template.getTemplateName()) &&
-                  link.getLink().trim().equals(template.getParameterValue(elements[1]))) {
-                text = template.getParameterValue(elements[2]);
-                beginIndex = template.getBeginIndex();
-                endIndex = template.getEndIndex();
+        if (onlyLanguage && (language == null)) {
+          isError = false;
+        }
+        if (onlyLocal && !local) {
+          isError = false;
+        }
+  
+        // Mark error
+        if (isError) {
+          if (errors == null) {
+            return true;
+          }
+          result = true;
+          int beginIndex = link.getBeginIndex();
+          int endIndex = link.getEndIndex();
+          if ((beginIndex > 0) && (contents.charAt(beginIndex - 1) == '[') &&
+              (endIndex < contents.length()) && (contents.charAt(endIndex) == ']')) {
+            beginIndex--;
+            endIndex++;
+          }
+  
+          String text = link.getText();
+  
+          // Check if link is in template
+          if (linkTemplates != null) {
+            PageElementTemplate template = analysis.isInTemplate(beginIndex);
+            if (template != null) {
+              for (String linkTemplate : linkTemplates) {
+                String[] elements = linkTemplate.split("\\|");
+                if ((elements.length > 2) &&
+                    Page.areSameTitle(elements[0], template.getTemplateName()) &&
+                    link.getLink().trim().equals(template.getParameterValue(elements[1]))) {
+                  text = template.getParameterValue(elements[2]);
+                  beginIndex = template.getBeginIndex();
+                  endIndex = template.getEndIndex();
+                }
               }
             }
           }
-        }
-
-        // Check language link
-        CheckErrorResult errorResult = createCheckErrorResult(
-            analysis, beginIndex, endIndex);
-        if ((fromWiki != null) && (article.length() >0)) {
-          errorResult.addPossibleAction(
-              GT._("Check language links"),
-              new CheckLanguageLinkActionProvider(
-                  fromWiki, analysis.getWikipedia(),
-                  article, text));
-        }
-
-        // Use templates
-        if ((templatesList != null) &&
-            (templatesList.size() > 0) &&
-            (article.length() > 0) &&
-            (language != null)) {
-          for (String template : templatesList) {
-            String[] templateArgs = template.split("\\|");
-            if (templateArgs.length >= 5) {
-              String textPrefix =
-                "{{" + templateArgs[0] + "|" + templateArgs[1] + "=";
-              String textSuffix =
-                "|" + templateArgs[2] + "=" + prefix +
-                "|" + templateArgs[3] + "=" + article +
-                "|" + templateArgs[4] + "=" + ((text != null) ? text : article) +
-                "}}";
-              String question = GT._("What is the title of the page on this wiki ?");
-              AddTextActionProvider action = null;
-              if ((text != null) && (!text.equals(article))) {
-                String[] possibleValues = { null, article, text };
-                action = new AddTextActionProvider(
-                    textPrefix, textSuffix, null, question,
-                    possibleValues, false, null, checker);
-              } else {
-                action = new AddTextActionProvider(
-                    textPrefix, textSuffix, null, question,
-                    article, checker);
+  
+          // Check language link
+          CheckErrorResult errorResult = createCheckErrorResult(
+              analysis, beginIndex, endIndex,
+              fullLink ? ErrorLevel.ERROR : ErrorLevel.WARNING);
+          if ((fromWiki != null) && (article.length() >0)) {
+            errorResult.addPossibleAction(
+                GT._("Check language links"),
+                new CheckLanguageLinkActionProvider(
+                    fromWiki, analysis.getWikipedia(),
+                    article, text));
+          }
+  
+          // Use templates
+          if ((templatesList != null) &&
+              (templatesList.size() > 0) &&
+              (article.length() > 0) &&
+              (language != null)) {
+            for (String template : templatesList) {
+              String[] templateArgs = template.split("\\|");
+              if (templateArgs.length >= 5) {
+                String textPrefix =
+                  "{{" + templateArgs[0] + "|" + templateArgs[1] + "=";
+                String textSuffix =
+                  "|" + templateArgs[2] + "=" + prefix +
+                  "|" + templateArgs[3] + "=" + article +
+                  "|" + templateArgs[4] + "=" + ((text != null) ? text : article) +
+                  "}}";
+                String question = GT._("What is the title of the page on this wiki ?");
+                AddTextActionProvider action = null;
+                if ((text != null) && (!text.equals(article))) {
+                  String[] possibleValues = { null, article, text };
+                  action = new AddTextActionProvider(
+                      textPrefix, textSuffix, null, question,
+                      possibleValues, false, null, checker);
+                } else {
+                  action = new AddTextActionProvider(
+                      textPrefix, textSuffix, null, question,
+                      article, checker);
+                }
+                errorResult.addPossibleAction(
+                    GT._("Replace using template {0}", "{{" + templateArgs[0] + "}}"),
+                    action);
               }
-              errorResult.addPossibleAction(
-                  GT._("Replace using template {0}", "{{" + templateArgs[0] + "}}"),
-                  action);
             }
           }
+  
+          // Create internal link
+          if (!link.hasSquare() || link.hasSecondSquare()) {
+            boolean first = (errorResult.getPossibleActions() == null) || (errorResult.getPossibleActions().isEmpty());
+            errorResult.addReplacement(
+                "[[:" + prefix + ":" + article + "|" + (text != null ? text : article) + "]]",
+                first && fullLink);
+          }
+          errors.add(errorResult);
         }
-
-        // Create internal link
-        if (!link.hasSquare() || link.hasSecondSquare()) {
-          boolean first = (errorResult.getPossibleActions() == null) || (errorResult.getPossibleActions().isEmpty());
-          errorResult.addReplacement(
-              "[[:" + prefix + ":" + article + "|" + (text != null ? text : article) + "]]",
-              first);
-        }
-        errors.add(errorResult);
       }
     }
 
+    return result;
+  }
+
+  /**
+   * @param wiki Current wiki.
+   * @param link External link.
+   * @return Interwiki matching the external link if it exists.
+   */
+  private Interwiki getInterwiki(EnumWikipedia wiki, String link) {
+    Interwiki result = null;
+    List<Interwiki> interwikis = wiki.getWikiConfiguration().getInterwikis();
+    if (interwikis != null) {
+      for (Interwiki interwiki : interwikis) {
+        String tmp = interwiki.isArticleUrl(link);
+        if (tmp != null) {
+          if ((result == null) || (interwiki.getLanguage() != null)) {
+            result = interwiki;
+          }
+        }
+      }
+    }
     return result;
   }
 
