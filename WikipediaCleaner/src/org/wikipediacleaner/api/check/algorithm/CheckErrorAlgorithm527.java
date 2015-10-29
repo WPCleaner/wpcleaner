@@ -67,16 +67,15 @@ public class CheckErrorAlgorithm527 extends CheckErrorAlgorithmBase {
     String content = analysis.getContents();
     for (PageElementTag refTag : refTags) {
       if (refTag.isComplete() && !refTag.isFullTag()) {
-        Parameter paramName = refTag.getParameter("name");
+        String tagId = getTagIdentifier(refTag);
         String value = content.substring(refTag.getValueBeginIndex(), refTag.getValueEndIndex());
-        if ((paramName != null) &&
-            (paramName.getValue() != null) &&
+        if ((tagId != null) &&
             (value != null) &&
             (value.length() > 0)) {
-          List<PageElementTag> namedTags = namedRefTags.get(paramName.getValue());
+          List<PageElementTag> namedTags = namedRefTags.get(tagId);
           if (namedTags == null) {
             namedTags = new ArrayList<>();
-            namedRefTags.put(paramName.getValue(), namedTags);
+            namedRefTags.put(tagId, namedTags);
           }
           namedTags.add(refTag);
         }
@@ -135,6 +134,28 @@ public class CheckErrorAlgorithm527 extends CheckErrorAlgorithmBase {
     }
 
     return result;
+  }
+
+  /**
+   * @param tag Reference tag.
+   * @return Identifier for the tag.
+   */
+  private String getTagIdentifier(PageElementTag tag) {
+    if (tag == null) {
+      return null;
+    }
+    Parameter paramName = tag.getParameter("name");
+    if ((paramName == null) || (paramName.getValue() == null)) {
+      return null;
+    }
+    StringBuilder result = new StringBuilder();
+    Parameter paramGroup = tag.getParameter("group");
+    if ((paramGroup != null) && (paramGroup.getValue() != null)) {
+      result.append(paramGroup.getValue());
+      result.append("#####");
+    }
+    result.append(paramName.getValue());
+    return result.toString();
   }
 
   /**
