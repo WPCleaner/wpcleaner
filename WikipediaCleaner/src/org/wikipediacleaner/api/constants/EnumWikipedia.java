@@ -53,6 +53,7 @@ import org.wikipediacleaner.api.constants.wiki.WikipediaJa;
 import org.wikipediacleaner.api.constants.wiki.WikipediaKo;
 import org.wikipediacleaner.api.constants.wiki.WikipediaLa;
 import org.wikipediacleaner.api.constants.wiki.WikipediaLi;
+import org.wikipediacleaner.api.constants.wiki.WikipediaLv;
 import org.wikipediacleaner.api.constants.wiki.WikipediaNds;
 import org.wikipediacleaner.api.constants.wiki.WikipediaNdsNl;
 import org.wikipediacleaner.api.constants.wiki.WikipediaNl;
@@ -129,6 +130,7 @@ public enum EnumWikipedia {
   Ko(new WikipediaKo()),
   LA(new WikipediaLa()),
   LI(new WikipediaLi()),
+  LV(new WikipediaLv()),
   NDS(new WikipediaNds()),
   NDS_NL(new WikipediaNdsNl()),
   NL(new WikipediaNl()),
