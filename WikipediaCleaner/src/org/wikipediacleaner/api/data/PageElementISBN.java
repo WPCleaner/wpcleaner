@@ -579,17 +579,23 @@ public class PageElementISBN extends PageElement {
 
     // Basic replacement
     addCorrectISBN(result, prefix, cleanedISBN);
-    
+
+    // Common mistyped characters
+    cleanedISBN = cleanedISBN.replaceAll("O", "0");
+    cleanedISBN = cleanedISBN.replaceAll("I", "1");
+    cleanedISBN = cleanedISBN.replaceAll("B", "8");
+    addCorrectISBN(result, prefix, cleanedISBN);
+
     return result;
   }
 
   /**
-   * @param result List of possible replacements
+   * @param result List of possible replacements.
    * @param prefix ISBN prefix.
    * @param cleanedISBN Cleaned up ISBN.
    */
   private void addCorrectISBN(List<String> result, String prefix, String cleanedISBN) {
-    result.add(prefix + cleanedISBN);
+    addCorrectISBN(result, prefix + cleanedISBN);
     if (!isTemplateParameter()) {
       List<String[]> isbnTemplates = wpcConfiguration.getStringArrayList(
           WPCConfigurationStringList.ISBN_TEMPLATES);
@@ -609,12 +615,25 @@ public class PageElementISBN extends PageElement {
               }
               buffer.append(cleanedISBN);
               buffer.append("}}");
-              result.add(buffer.toString());
+              addCorrectISBN(result, buffer.toString());
             }
           }
         }
       }
       
+    }
+  }
+
+  /**
+   * @param result List of possible replacements.
+   * @param correctISBN Possible replacement.
+   */
+  private void addCorrectISBN(List<String> result, String correctISBN) {
+    if ((result == null) || (correctISBN == null)) {
+      return;
+    }
+    if (!result.contains(correctISBN)) {
+      result.add(correctISBN);
     }
   }
 
