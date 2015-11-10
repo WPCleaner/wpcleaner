@@ -499,6 +499,7 @@ public class PageElementISBN extends PageElement {
           (EXTRA_CHARACTERS.indexOf(currentChar) >= 0)) {
         buffer.append(currentChar);
       } else if ((currentChar == '‐') ||
+                 (currentChar == '–') ||
                  (currentChar == '.')) {
         buffer.append("-");
       } else if (currentChar == '\t') {
