@@ -301,8 +301,20 @@ public class PageElementTemplate extends PageElement {
     if (contents == null) {
       return -1;
     }
-    int tmpIndex = parametersBeginIndex;
+
+    // Compute max length
     int maxLength = contents.length();
+    if (tags != null) {
+      for (PageElementTag tag : tags) {
+        if ((tag.getCompleteBeginIndex() < parametersBeginIndex) &&
+            (tag.getCompleteEndIndex() > parametersBeginIndex) &&
+            (PageElementTag.TAG_WIKI_REF.equals(tag.getName()))) {
+          maxLength = Math.min(maxLength, tag.getCompleteEndIndex());
+        }
+      }
+    }
+
+    int tmpIndex = parametersBeginIndex;
     int depth2CurlyBrackets = 0;
     int depth3CurlyBrackets = 0;
     int depth2SquareBrackets = 0;
