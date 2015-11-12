@@ -10,7 +10,9 @@ package org.wikipediacleaner.api.check.algorithm;
 import java.util.Collection;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
+import org.wikipediacleaner.api.check.CheckErrorResult.ErrorLevel;
 import org.wikipediacleaner.api.data.PageAnalysis;
+import org.wikipediacleaner.api.data.PageElementExternalLink;
 import org.wikipediacleaner.api.data.PageElementFunction;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.PageElementTemplate;
@@ -80,42 +82,64 @@ public class CheckErrorAlgorithm047 extends CheckErrorAlgorithmBase {
         }
       }
       if (shouldCount) {
+        if (errors == null) {
+          return true;
+        }
+        result = true;
+        boolean errorReported = false;
+
+        // Check if it's an external link
+        PageElementExternalLink link = analysis.isInExternalLink(currentIndex);
+        if ((link != null) &&
+            link.hasSquare() && link.hasSecondSquare() &&
+            (currentIndex < link.getBeginIndex() + link.getTextOffset())) {
+          String text = link.getLink();
+          text = text.replaceAll("\\{", "%7B");
+          text = text.replaceAll("\\}", "%7D");
+          CheckErrorResult errorResult = createCheckErrorResult(
+              analysis,
+              link.getBeginIndex(), link.getEndIndex(),
+              ErrorLevel.WARNING);
+          errorResult.addReplacement(
+              PageElementExternalLink.createExternalLink(text, link.getDisplayedText()));
+          errors.add(errorResult);
+          errorReported = true;
+        }
 
         // Check if there is a potential beginning
-        int tmpIndex = currentIndex - 1;
-        boolean errorReported = false;
-        boolean finished = false;
-        while (!finished && tmpIndex >= 0) {
-          char tmpChar = contents.charAt(tmpIndex);
-          if ((tmpChar == '\n') ||
-              (tmpChar == ']') ||
-              (tmpChar == '}')) {
-            finished = true;
-          } else if (tmpChar == '{') {
-            if ((tmpIndex == 0) || (contents.charAt(tmpIndex - 1) != '{')) {
+        if (!errorReported) {
+          int tmpIndex = currentIndex - 1;
+          boolean finished = false;
+          while (!finished && tmpIndex >= 0) {
+            char tmpChar = contents.charAt(tmpIndex);
+            if ((tmpChar == '\n') ||
+                (tmpChar == ']') ||
+                (tmpChar == '}')) {
+              finished = true;
+            } else if (tmpChar == '{') {
+              if ((tmpIndex == 0) || (contents.charAt(tmpIndex - 1) != '{')) {
+                CheckErrorResult errorResult = createCheckErrorResult(
+                    analysis, tmpIndex, currentIndex + 2);
+                errorResult.addReplacement("{" + contents.substring(tmpIndex, currentIndex + 2));
+                errors.add(errorResult);
+              }
+              errorReported = true;
+              finished = true;
+            } else if (tmpChar == '[') {
+              int firstChar = tmpIndex;
+              if ((firstChar > 0) && (contents.charAt(firstChar - 1) == '[')) {
+                firstChar--;
+              }
               CheckErrorResult errorResult = createCheckErrorResult(
-                  analysis, tmpIndex, currentIndex + 2);
-              errorResult.addReplacement("{" + contents.substring(tmpIndex, currentIndex + 2));
+                  analysis, firstChar, currentIndex + 2);
+              errorResult.addReplacement("{{" + contents.substring(tmpIndex + 1, currentIndex + 2));
+              errorResult.addReplacement("[[" + contents.substring(tmpIndex + 1, currentIndex) + "]]");
               errors.add(errorResult);
-              result = true;
+              errorReported = true;
+              finished = true;
             }
-            errorReported = true;
-            finished = true;
-          } else if (tmpChar == '[') {
-            int firstChar = tmpIndex;
-            if ((firstChar > 0) && (contents.charAt(firstChar - 1) == '[')) {
-              firstChar--;
-            }
-            CheckErrorResult errorResult = createCheckErrorResult(
-                analysis, firstChar, currentIndex + 2);
-            errorResult.addReplacement("{{" + contents.substring(tmpIndex + 1, currentIndex + 2));
-            errorResult.addReplacement("[[" + contents.substring(tmpIndex + 1, currentIndex) + "]]");
-            errors.add(errorResult);
-            result = true;
-            errorReported = true;
-            finished = true;
+            tmpIndex--;
           }
-          tmpIndex--;
         }
 
         // Default
@@ -124,7 +148,6 @@ public class CheckErrorAlgorithm047 extends CheckErrorAlgorithmBase {
               analysis, currentIndex, currentIndex + 2);
           errorResult.addReplacement("", GT._("Delete"));
           errors.add(errorResult);
-          result = true;
         }
       }
       currentIndex = contents.indexOf("}}", currentIndex + 2);
