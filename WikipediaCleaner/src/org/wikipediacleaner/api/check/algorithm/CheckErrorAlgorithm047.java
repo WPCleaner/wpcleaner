@@ -82,10 +82,6 @@ public class CheckErrorAlgorithm047 extends CheckErrorAlgorithmBase {
         }
       }
       if (shouldCount) {
-        if (errors == null) {
-          return true;
-        }
-        result = true;
         boolean errorReported = false;
 
         // Check if it's an external link
@@ -104,6 +100,7 @@ public class CheckErrorAlgorithm047 extends CheckErrorAlgorithmBase {
               PageElementExternalLink.createExternalLink(text, link.getDisplayedText()));
           errors.add(errorResult);
           errorReported = true;
+          result = true;
         }
 
         // Check if there is a potential beginning
@@ -122,6 +119,7 @@ public class CheckErrorAlgorithm047 extends CheckErrorAlgorithmBase {
                     analysis, tmpIndex, currentIndex + 2);
                 errorResult.addReplacement("{" + contents.substring(tmpIndex, currentIndex + 2));
                 errors.add(errorResult);
+                result = true;
               }
               errorReported = true;
               finished = true;
@@ -136,6 +134,7 @@ public class CheckErrorAlgorithm047 extends CheckErrorAlgorithmBase {
               errorResult.addReplacement("[[" + contents.substring(tmpIndex + 1, currentIndex) + "]]");
               errors.add(errorResult);
               errorReported = true;
+              result = true;
               finished = true;
             }
             tmpIndex--;
@@ -148,6 +147,10 @@ public class CheckErrorAlgorithm047 extends CheckErrorAlgorithmBase {
               analysis, currentIndex, currentIndex + 2);
           errorResult.addReplacement("", GT._("Delete"));
           errors.add(errorResult);
+          result = true;
+        }
+        if ((result == true) && (errors == null)) {
+          return true;
         }
       }
       currentIndex = contents.indexOf("}}", currentIndex + 2);
