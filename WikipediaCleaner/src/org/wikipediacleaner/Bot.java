@@ -196,13 +196,52 @@ public class Bot implements BasicWorkerListener {
     } else if ("FixCheckWiki".equalsIgnoreCase(action)) {
       List<CheckErrorAlgorithm> algorithms = new ArrayList<CheckErrorAlgorithm>();
       List<CheckErrorAlgorithm> allAlgorithms = new ArrayList<CheckErrorAlgorithm>();
-      for (int i = 1; i < args.length; i++) {
-        boolean addition = false;
-        String algorithmNumber = args[i];
-        if (algorithmNumber.startsWith("+")) {
-          addition = true;
-          algorithmNumber = algorithmNumber.substring(1);
+      extractAlgorithms(algorithms, allAlgorithms, args);
+      worker = new AutomaticCWWorker(
+          wiki, null, algorithms, 10000, true, allAlgorithms, null, true, false);
+    } else if ("MarkCheckWiki".equalsIgnoreCase(action)) {
+      List<CheckErrorAlgorithm> algorithms = new ArrayList<CheckErrorAlgorithm>();
+      List<CheckErrorAlgorithm> allAlgorithms = new ArrayList<CheckErrorAlgorithm>();
+      extractAlgorithms(algorithms, allAlgorithms, args);
+      worker = new AutomaticCWWorker(
+          wiki, null, algorithms, 10000, true, allAlgorithms, null, false, false);
+    }
+    if (worker != null) {
+      worker.setListener(this);
+      worker.setTimeLimit(timeLimit);
+      worker.start();
+    }
+  }
+
+  /**
+   * @param algorithms List of selected algorithms.
+   * @param allAlgorithms List of all possible algorithms.
+   * @param args Arguments.
+   */
+  private void extractAlgorithms(
+      List<CheckErrorAlgorithm> algorithms,
+      List<CheckErrorAlgorithm> allAlgorithms,
+      String[] args) {
+    for (int i = 1; i < args.length; i++) {
+      boolean addition = false;
+      String algorithmNumber = args[i];
+      if (algorithmNumber.startsWith("+")) {
+        addition = true;
+        algorithmNumber = algorithmNumber.substring(1);
+      }
+      if (algorithmNumber.equals("*") || algorithmNumber.equals("!")) {
+        // NOTE: Allowing "!" because of Eclipse bug with "*"
+        // https://bugs.eclipse.org/bugs/show_bug.cgi?id=212264
+        List<CheckErrorAlgorithm> possibleAlgorithms = CheckErrorAlgorithms.getAlgorithms(wiki);
+        for (CheckErrorAlgorithm algorithm : possibleAlgorithms) {
+          if ((algorithm != null) && algorithm.isAvailable()) {
+            if (!addition) {
+              algorithms.add(algorithm);
+            }
+            allAlgorithms.add(algorithm);
+          }
         }
+      } else {
         CheckErrorAlgorithm algorithm = CheckErrorAlgorithms.getAlgorithm(wiki, Integer.parseInt(algorithmNumber));
         if (algorithm != null) {
           if (!addition) {
@@ -211,13 +250,6 @@ public class Bot implements BasicWorkerListener {
           allAlgorithms.add(algorithm);
         }
       }
-      worker = new AutomaticCWWorker(
-          wiki, null, algorithms, 10000, true, allAlgorithms, null, true, false);
-    }
-    if (worker != null) {
-      worker.setListener(this);
-      worker.setTimeLimit(timeLimit);
-      worker.start();
     }
   }
 
