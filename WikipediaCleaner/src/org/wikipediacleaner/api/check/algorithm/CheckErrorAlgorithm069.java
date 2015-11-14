@@ -9,10 +9,12 @@ package org.wikipediacleaner.api.check.algorithm;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementISBN;
+import org.wikipediacleaner.i18n.GT;
 
 
 /**
@@ -91,6 +93,26 @@ public class CheckErrorAlgorithm069 extends CheckErrorAlgorithmISBN {
    */
   @Override
   public String getReason(PageElementISBN isbn) {
-    return null;
+    if (isbn == null) {
+      return null;
+    }
+    String reasonTemplate = getSpecificProperty("reason", true, true, false);
+    if (reasonTemplate == null) {
+      return null;
+    }
+    return reasonTemplate;
+  }
+
+  /**
+   * Return the parameters used to configure the algorithm.
+   * 
+   * @return Map of parameters (Name -> description).
+   */
+  @Override
+  public Map<String, String> getParameters() {
+    Map<String, String> parameters = super.getParameters();
+    parameters.put(
+        "reason", GT._("An explanation of the problem"));
+    return parameters;
   }
 }

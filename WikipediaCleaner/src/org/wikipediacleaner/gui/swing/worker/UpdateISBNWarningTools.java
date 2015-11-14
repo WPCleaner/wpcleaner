@@ -109,6 +109,7 @@ public class UpdateISBNWarningTools extends UpdateWarningTools {
 
     // Prepare list of algorithms
     List<CheckErrorAlgorithm> algorithms = new ArrayList<CheckErrorAlgorithm>();
+    algorithms.add(CheckErrorAlgorithms.getAlgorithm(wiki, 69)); // Incorrect syntax
     algorithms.add(CheckErrorAlgorithms.getAlgorithm(wiki, 70)); // Incorrect length
     algorithms.add(CheckErrorAlgorithms.getAlgorithm(wiki, 71)); // Incorrect X
     algorithms.add(CheckErrorAlgorithms.getAlgorithm(wiki, 72)); // Incorrect ISBN-10
