@@ -69,6 +69,9 @@ public class PageElementISBN extends PageElement {
       if (isISBN && (analysis.isInTag(index) != null)) {
         isISBN = false;
       }
+      if (isISBN && (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_NOWIKI, index) != null)) {
+        isISBN = false;
+      }
       if (isISBN) {
         PageElementExternalLink link = analysis.isInExternalLink(index);
         if (link != null) {
@@ -84,6 +87,14 @@ public class PageElementISBN extends PageElement {
         if (template != null) {
           if ((template.getParameterCount() == 0) ||
               (index < template.getParameterPipeIndex(0))) {
+            isISBN = false;
+          }
+        }
+      }
+      if (isISBN) {
+        PageElementImage image = analysis.isInImage(index);
+        if (image != null) {
+          if (index < image.getBeginIndex() + image.getFirstPipeOffset()) {
             isISBN = false;
           }
         }
