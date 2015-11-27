@@ -8,22 +8,22 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2015-11-14 01:33+0100\n"
-"PO-Revision-Date: 2014-09-10 23:21+0000\n"
-"Last-Translator: Nicolas Vervelle <Unknown>\n"
+"PO-Revision-Date: 2015-11-05 04:57+0000\n"
+"Last-Translator: Stefán Örvar Sigmundsson <stefan.orvar.sigmundsson@emi.is>\n"
 "Language-Team: Icelandic <is@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2014-09-21 06:01+0000\n"
-"X-Generator: Launchpad (build 17196)\n"
+"X-Launchpad-Export-Date: 2015-11-24 21:04+0000\n"
+"X-Generator: Launchpad (build 17850)\n"
 "Language: is\n"
 
 #: org/wikipediacleaner/Version.java:31
 #, java-format
 msgid ""
-"I try to keep {0} up to date with Check Wiki, but if you find any discrepancy"
-"(ies) in the detections, please let me know."
+"I try to keep {0} up to date with Check Wiki, but if you find any "
+"discrepancy(ies) in the detections, please let me know."
 msgstr ""
 
 #: org/wikipediacleaner/Version.java:33
@@ -168,9 +168,8 @@ msgid "Remove {0} namespace from template name"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm002.java:33
-#, fuzzy
 msgid "Fix all incorrect tags"
-msgstr "Laga valdar síður"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm002.java:282
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm002.java:283
@@ -437,9 +436,9 @@ msgstr "Útvær skoðari"
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:214
 msgid ""
 "A template that can be used instead of the link to an other language. It "
-"must be specified as: <template name>|<param name for local page name>|"
-"<param name for code of other language>|<param name for page name in other "
-"language>|<param name for displayed text>"
+"must be specified as: <template name>|<param name for local page "
+"name>|<param name for code of other language>|<param name for page name in "
+"other language>|<param name for displayed text>"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:296
@@ -627,9 +626,8 @@ msgid "List of possible replacements"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm103.java:30
-#, fuzzy
 msgid "Replace all pipe templates"
-msgstr "Leita í sniðum"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm501.java:178
 msgid "Restore original text"
@@ -674,7 +672,8 @@ msgid "A template that can be used instead of an opening square bracket."
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm520.java:139
-msgid "An identifier of an abuse filter that is triggered by weird characters."
+msgid ""
+"An identifier of an abuse filter that is triggered by weird characters."
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm521.java:344
@@ -710,9 +709,8 @@ msgid ""
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm527.java:127
-#, fuzzy
 msgid "Trim text"
-msgstr "Finna texta"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmBase.java:278
 msgid "Title of the article describing this type of error"
@@ -1098,7 +1096,8 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:205
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:611
 #: org/wikipediacleaner/gui/swing/bot/BotToolsWindow.java:89
-msgid "On some Wikipedia projects, you may need the bot status for doing this."
+msgid ""
+"On some Wikipedia projects, you may need the bot status for doing this."
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:206
@@ -1573,7 +1572,8 @@ msgid "Links to {0}"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1435
-msgid "You must input a page name for retrieving the list of category members"
+msgid ""
+"You must input a page name for retrieving the list of category members"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1453
@@ -1799,27 +1799,27 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:398
 msgid "&Reload"
-msgstr "&Endurlesa"
+msgstr "&Endurhlaða"
 
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:429
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:180
 msgid "Send"
-msgstr ""
+msgstr "Senda"
 
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:446
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:448
 msgid "Undo"
-msgstr "Taka til baka"
+msgstr "Afgera"
 
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:454
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:456
 msgid "Redo"
-msgstr "Gera aftur"
+msgstr "Endurgera"
 
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:477
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:479
 msgid "Table of Contents"
-msgstr ""
+msgstr "Efnisyfirlit"
 
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:497
 #: org/wikipediacleaner/gui/swing/options/OptionsWindow.java:132
@@ -1868,7 +1868,8 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:743
 #, java-format
 msgid "Last modified at {0}. It was modified less than {1} minute ago."
-msgid_plural "Last modified at {0}. It was modified less than {1} minutes ago."
+msgid_plural ""
+"Last modified at {0}. It was modified less than {1} minutes ago."
 msgstr[0] ""
 msgstr[1] ""
 
@@ -2014,9 +2015,8 @@ msgid "Displaying templates found"
 msgstr "Sýni fundin snið"
 
 #: org/wikipediacleaner/gui/swing/action/ActionCheckArticle.java:51
-#, fuzzy
 msgid "Check article"
-msgstr "Leita í sniðum"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/action/ActionCheckArticle.java:262
 #: org/wikipediacleaner/gui/swing/action/ActionFullAnalysis.java:276
@@ -2026,14 +2026,12 @@ msgstr "Þú verður að skrifa inn síðuheiti til að fá fulla lýsingu"
 #: org/wikipediacleaner/gui/swing/action/ActionCheckArticle.java:293
 #: org/wikipediacleaner/gui/swing/action/ActionCheckArticle.java:309
 #: org/wikipediacleaner/gui/swing/worker/CheckArticleWorker.java:52
-#, fuzzy
 msgid "Analysis"
-msgstr "Lýsing - {0}"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/action/ActionCheckTemplate.java:41
-#, fuzzy
 msgid "Check template"
-msgstr "Leita í sniðum"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/action/ActionDeletePage.java:41
 msgid "Delete page"
@@ -2116,9 +2114,8 @@ msgid "Do you want to update the duplicate arguments warning on talk page?"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/action/ActionUpdateWarning.java:442
-#, fuzzy
 msgid "You must input a page name for updating warnings"
-msgstr "Þú verður að skrifa inn síðuheiti til að fá fulla lýsingu"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/action/ActionWatchPage.java:45
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:105
@@ -2298,7 +2295,8 @@ msgstr[1] ""
 #: org/wikipediacleaner/gui/swing/bot/AutomaticCWWorker.java:264
 #, java-format
 msgid "{0} page has been marked as fixed for the selected algorithms"
-msgid_plural "{0} pages have been marked as fixed for the selected algorithms"
+msgid_plural ""
+"{0} pages have been marked as fixed for the selected algorithms"
 msgstr[0] ""
 msgstr[1] ""
 
@@ -2438,14 +2436,12 @@ msgid "Load selection"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:268
-#, fuzzy
 msgid "You must select at least one algorithm for fixing errors"
-msgstr "Þú verður að velja tungumál fyrir innskráningu"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:273
-#, fuzzy
 msgid "You must select at least one algorithm for listing errors"
-msgstr "Þú verður að velja tungumál fyrir innskráningu"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:316
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiWindow.java:1087
@@ -2958,7 +2954,8 @@ msgid "Create disambiguation warning on talk page (in main namespace)"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/AnalysisOptionsPanel.java:86
-msgid "Create disambiguation warning on talk page (in encyclopedic namespaces)"
+msgid ""
+"Create disambiguation warning on talk page (in encyclopedic namespaces)"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/AnalysisOptionsPanel.java:93
@@ -2970,7 +2967,8 @@ msgid "Update disambiguation warning on talk page (in main namespace)"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/AnalysisOptionsPanel.java:107
-msgid "Update disambiguation warning on talk page (in encyclopedic namespaces)"
+msgid ""
+"Update disambiguation warning on talk page (in encyclopedic namespaces)"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/AnalysisOptionsPanel.java:114
@@ -3481,9 +3479,8 @@ msgstr[0] ""
 msgstr[1] ""
 
 #: org/wikipediacleaner/gui/swing/worker/CheckArticleTools.java:104
-#, fuzzy
 msgid "Templates"
-msgstr "Snið"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/worker/CheckArticleTools.java:107
 #, java-format
@@ -3497,9 +3494,9 @@ msgid "Template \"{0}\" has no {1} block defined."
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/worker/CheckArticleTools.java:195
-#, fuzzy, java-format
+#, java-format
 msgid "Template \"{0}\" ({1}-{2})"
-msgstr "Snið í {0}"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/worker/CheckArticleTools.java:226
 #, java-format
@@ -3769,12 +3766,6 @@ msgstr ""
 msgid "The value cannot contain any of these characters: {0}"
 msgstr ""
 
-#~ msgid "Full analysis of redirect"
-#~ msgstr "Full lýsing á aðgreiningu"
-
-#~ msgid "Disambiguation analysis of redirect"
-#~ msgstr "Aðgreining á tilvísun"
-
 #~ msgid "&Close"
 #~ msgstr "&Loka"
 
@@ -3789,6 +3780,12 @@ msgstr ""
 
 #~ msgid "&Next occurrence"
 #~ msgstr "&Næsta atvik"
+
+#~ msgid "Full analysis of redirect"
+#~ msgstr "Full lýsing á aðgreiningu"
+
+#~ msgid "Disambiguation analysis of redirect"
+#~ msgstr "Aðgreining á tilvísun"
 
 #~ msgid "&Full analysis"
 #~ msgstr "&Full lýsing"
@@ -3869,9 +3866,11 @@ msgstr ""
 #~ msgid "Enter the page title you want to add to your local watch list"
 #~ msgstr "Sláðu inn síðutitil sem þú vilt bæta við vaktlistann."
 
+#, java-format
 #~ msgid "Red links Analysis - {0}"
 #~ msgstr "Lýsing rauðra tengla - {0}"
 
+#, java-format
 #~ msgid "&Apply only to {0}"
 #~ msgstr "&Bæta bara við {0}"
 
@@ -3902,6 +3901,7 @@ msgstr ""
 #~ msgid "Search"
 #~ msgstr "Leita"
 
+#, java-format
 #~ msgid "An error occured: {0}"
 #~ msgstr "Villa: {0}"
 
@@ -3911,8 +3911,10 @@ msgstr ""
 #~ msgid "Red links analysis"
 #~ msgstr "Lýsing á rauðum tenglum"
 
+#, java-format
 #~ msgid "Reverse to [[{0}|{1}]]"
 #~ msgstr "Bylta í [[{0}|{1}]]"
 
+#, java-format
 #~ msgid "{0} links in Main Namespace / {1} total links"
 #~ msgstr "{0} tenglar í aðalnafnrými / {1} tenglar alls"
