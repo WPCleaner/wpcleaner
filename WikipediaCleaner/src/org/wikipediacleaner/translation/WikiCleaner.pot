@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2015-11-14 01:33+0100\n"
+"POT-Creation-Date: 2015-11-28 14:50+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -700,9 +700,13 @@ msgstr ""
 msgid "Values that can be safely ignored for a given template and argument"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm526.java:172
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm526.java:190
 msgid ""
 "An identifier of an abuse filter that is triggered by incorrect year links."
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm526.java:193
+msgid "Text added after the link to ask for help."
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm527.java:127

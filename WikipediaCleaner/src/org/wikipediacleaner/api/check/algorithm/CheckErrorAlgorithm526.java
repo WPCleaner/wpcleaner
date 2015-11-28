@@ -16,6 +16,7 @@ import org.wikipediacleaner.api.APIException;
 import org.wikipediacleaner.api.APIFactory;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
+import org.wikipediacleaner.api.constants.WPCConfiguration;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementInternalLink;
@@ -104,6 +105,23 @@ public class CheckErrorAlgorithm526 extends CheckErrorAlgorithmBase {
             analysis, link.getBeginIndex(), link.getEndIndex());
         errorResult.addReplacement(PageElementInternalLink.createInternalLink(target, target));
         errorResult.addReplacement(PageElementInternalLink.createInternalLink(text, text));
+        String askHelp = getSpecificProperty("ask_help", true, true, false);
+        if (askHelp != null) {
+          List<String> askHelpList = WPCConfiguration.convertPropertyToStringList(askHelp, false);
+          if (askHelpList != null) {
+            for (String askHelpElement : askHelpList) {
+              int pipeIndex = askHelpElement.indexOf('|');
+              if ((pipeIndex > 0) && (pipeIndex < askHelpElement.length())) {
+                String replacement =
+                    analysis.getContents().substring(link.getBeginIndex(), link.getEndIndex()) +
+                    askHelpElement.substring(pipeIndex + 1);
+                errorResult.addReplacement(
+                    replacement,
+                    askHelpElement.substring(0, pipeIndex));
+              }
+            }
+          }
+        }
         errors.add(errorResult);
       }
     }
@@ -170,6 +188,9 @@ public class CheckErrorAlgorithm526 extends CheckErrorAlgorithmBase {
     parameters.put(
         "abuse_filter",
         GT._("An identifier of an abuse filter that is triggered by incorrect year links."));
+    parameters.put(
+        "ask_help",
+        GT._("Text added after the link to ask for help."));
     return parameters;
   }
 }
