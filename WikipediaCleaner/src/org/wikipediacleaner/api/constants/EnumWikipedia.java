@@ -70,6 +70,7 @@ import org.wikipediacleaner.api.constants.wiki.WikipediaSv;
 import org.wikipediacleaner.api.constants.wiki.WikipediaTa;
 import org.wikipediacleaner.api.constants.wiki.WikipediaTr;
 import org.wikipediacleaner.api.constants.wiki.WikipediaUk;
+import org.wikipediacleaner.api.constants.wiki.WikipediaUr;
 import org.wikipediacleaner.api.constants.wiki.WikipediaVi;
 import org.wikipediacleaner.api.constants.wiki.WikipediaYi;
 import org.wikipediacleaner.api.constants.wiki.WikipediaZh;
@@ -147,6 +148,7 @@ public enum EnumWikipedia {
   TA(new WikipediaTa()),
   TR(new WikipediaTr()),
   UK(new WikipediaUk()),
+  UR(new WikipediaUr()),
   VI(new WikipediaVi()),
   YI(new WikipediaYi()),
   ZH(new WikipediaZh()),
