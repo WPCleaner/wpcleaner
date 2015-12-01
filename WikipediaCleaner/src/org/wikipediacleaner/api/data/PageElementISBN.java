@@ -370,9 +370,11 @@ public class PageElementISBN extends PageElement {
               if (tmpIndex >= 2) {
                 if (contents.startsWith("10", tmpIndex - 2) ||
                     contents.startsWith("13", tmpIndex - 2)) {
-                  correct = false;
-                  beginIndex = tmpIndex - 2;
-                  endIndex = template.getEndIndex();
+                  if ((tmpIndex == 2) || !Character.isDigit(contents.charAt(tmpIndex - 3))) {
+                    correct = false;
+                    beginIndex = tmpIndex - 2;
+                    endIndex = template.getEndIndex();
+                  }
                 }
               }
             }
