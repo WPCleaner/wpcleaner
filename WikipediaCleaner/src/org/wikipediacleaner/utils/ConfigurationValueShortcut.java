@@ -292,7 +292,7 @@ public enum ConfigurationValueShortcut {
           buffer.append("Ctrl + ");
         }
         if (alt) {
-          buffer.append("Atl + ");
+          buffer.append("Alt + ");
         }
         if (shift) {
           buffer.append("Shift + ");
