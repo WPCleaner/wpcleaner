@@ -22,6 +22,7 @@ public class PageElementTitle extends PageElement {
   private final String titleNotTrimmed;
   private final String title;
   private final String afterTitleNotTrimmed;
+  private final boolean multiline;
 
   /**
    * Analyze contents to check if it matches a title.
@@ -30,11 +31,13 @@ public class PageElementTitle extends PageElement {
    * @param contents Contents.
    * @param index Block start index.
    * @param comments Comments in the page.
+   * @param tags Tags in the page.
    * @return Block details it there's a block.
    */
   public static PageElementTitle analyzeBlock(
       EnumWikipedia wikipedia, String contents, int index,
-      List<PageElementComment> comments) {
+      List<PageElementComment> comments,
+      List<PageElementTag> tags) {
     // Verify arguments
     if (contents == null) {
       return null;
@@ -60,6 +63,7 @@ public class PageElementTitle extends PageElement {
 
     // Analyze title
     boolean endFound = false;
+    boolean jump = false;
     int secondLevel = 0;
     int lastEqualIndex = index;
     int endTitleIndex = index;
@@ -85,9 +89,23 @@ public class PageElementTitle extends PageElement {
           }
         }
         if (comment == null) {
-          endFound = false;
+          PageElementTag ref = null;
+          for (PageElementTag tmpTag : tags) {
+            if ((tmpTag.getBeginIndex() == index) &&
+                PageElementTag.TAG_WIKI_REF.equals(tmpTag.getName()) &&
+                (tmpTag.isComplete())) {
+              ref = tmpTag;
+            }
+          }
+          if (ref == null) {
+            endFound = false;
+          } else {
+            nextIndex = ref.getCompleteEndIndex();
+            jump = true;
+          }
         } else {
           nextIndex = comment.getEndIndex();
+          jump = true;
         }
       } else {
         endFound = false;
@@ -99,12 +117,21 @@ public class PageElementTitle extends PageElement {
     if (!endFound) {
       return null;
     }
+    boolean multiline = false;
+    if (jump) {
+      for (int i = beginIndex; i < endIndex; i++) {
+        if (contents.charAt(i) == '\n') {
+          multiline = true;
+        }
+      }
+    }
 
     return new PageElementTitle(
         beginIndex, endIndex,
         firstLevel, secondLevel,
         contents.substring(beginTitleIndex, endTitleIndex),
-        contents.substring(lastEqualIndex + 1, endIndex));
+        contents.substring(lastEqualIndex + 1, endIndex),
+        multiline);
   }
 
   /**
@@ -156,16 +183,34 @@ public class PageElementTitle extends PageElement {
     return afterTitleNotTrimmed;
   }
 
+  /**
+   * @return True if title spans on several lines.
+   */
+  public boolean isMultiline() {
+    return multiline;
+  }
+
+  /**
+   * @param beginIndex Begin index.
+   * @param endIndex End infex.
+   * @param firstLevel Title level (using the first "=")
+   * @param secondLevel Title level (using the last "=")
+   * @param title Title itself.
+   * @param afterTitle Text after the title.
+   * @param multiline True if title spans on several lines.
+   */
   private PageElementTitle(
       int beginIndex, int endIndex,
       int firstLevel, int secondLevel,
-      String title, String afterTitle) {
+      String title, String afterTitle,
+      boolean multiline) {
     super(beginIndex, endIndex);
     this.firstLevel = firstLevel;
     this.secondLevel = secondLevel;
     this.titleNotTrimmed = title;
     this.title = (title != null) ? title.trim() : null;
     this.afterTitleNotTrimmed = afterTitle;
+    this.multiline = multiline;
   }
 
   /* (non-Javadoc)

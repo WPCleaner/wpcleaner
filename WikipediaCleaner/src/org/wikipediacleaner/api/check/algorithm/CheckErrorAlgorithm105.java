@@ -90,7 +90,7 @@ public class CheckErrorAlgorithm105 extends CheckErrorAlgorithmBase {
           Parameter param = template.getParameterAtIndex(tmpIndex);
           if (param != null) {
             int valueIndex = param.getValueStartIndex();
-            if ((valueIndex == tmpIndex) || (valueIndex == tmpIndex + 1)) {
+            if (valueIndex >= tmpIndex) {
               errorFound = false;
             }
           }

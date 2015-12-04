@@ -716,7 +716,7 @@ public class PageAnalysis {
 
     // Check if this is a title
     PageElementTitle title = PageElementTitle.analyzeBlock(
-        getWikipedia(), contents, currentIndex, comments);
+        getWikipedia(), contents, currentIndex, comments, tags);
     if (title != null) {
       titles.add(title);
       return title.getBeginIndex() + title.getFirstLevel();
