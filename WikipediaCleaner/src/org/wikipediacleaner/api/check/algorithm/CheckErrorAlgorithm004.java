@@ -55,9 +55,7 @@ public class CheckErrorAlgorithm004 extends CheckErrorAlgorithmBase {
     if ((tags == null) || (tags.isEmpty())) {
       return false;
     }
-    if (errors == null) {
-      return true;
-    }
+    boolean result = false;
     for (PageElementTag tag : tags) {
       boolean shouldKeep = true;
 
@@ -77,6 +75,10 @@ public class CheckErrorAlgorithm004 extends CheckErrorAlgorithmBase {
       }
 
       if (shouldKeep) {
+        if (errors == null) {
+          return true;
+        }
+        result = true;
         CheckErrorResult errorResult = createCheckErrorResult(
             analysis, tag.getCompleteBeginIndex(), tag.getCompleteEndIndex());
         if (tag.isFullTag()) {
@@ -120,7 +122,7 @@ public class CheckErrorAlgorithm004 extends CheckErrorAlgorithmBase {
       }
     }
 
-    return true;
+    return result;
   }
 
   /**
