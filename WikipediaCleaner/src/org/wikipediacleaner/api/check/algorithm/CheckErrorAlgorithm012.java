@@ -7,10 +7,6 @@
 
 package org.wikipediacleaner.api.check.algorithm;
 
-import java.util.Collection;
-
-import org.wikipediacleaner.api.check.CheckErrorResult;
-import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementTag;
 
 
@@ -18,31 +14,26 @@ import org.wikipediacleaner.api.data.PageElementTag;
  * Algorithm for analyzing error 12 of check wikipedia project.
  * Error 12: HTML List elements
  */
-public class CheckErrorAlgorithm012 extends CheckErrorAlgorithmBase {
+public class CheckErrorAlgorithm012 extends CheckErrorAlgorithmTags {
 
   public CheckErrorAlgorithm012() {
     super("HTML List elements");
   }
 
   /**
-   * Analyze a page to check if errors are present.
-   * 
-   * @param analysis Page analysis.
-   * @param errors Errors found in the page.
-   * @param onlyAutomatic True if analysis could be restricted to errors automatically fixed.
-   * @return Flag indicating if the error was found.
+   * Tags to look for.
+   */
+  private final static String[] TAGS = {
+    PageElementTag.TAG_HTML_LI,
+    PageElementTag.TAG_HTML_OL,
+    PageElementTag.TAG_HTML_UL,
+  };
+
+  /**
+   * @return Tags to look for.
    */
   @Override
-  public boolean analyze(
-      PageAnalysis analysis,
-      Collection<CheckErrorResult> errors, boolean onlyAutomatic) {
-    if (analysis == null) {
-      return false;
-    }
-    boolean result = false;
-    result = addTags(result, analysis, errors, PageElementTag.TAG_HTML_OL);
-    result = addTags(result, analysis, errors, PageElementTag.TAG_HTML_UL);
-    result = addTags(result, analysis, errors, PageElementTag.TAG_HTML_LI);
-    return result;
+  protected String[] getTags() {
+    return TAGS;
   }
 }

@@ -29,7 +29,6 @@ import org.wikipediacleaner.api.constants.WPCConfigurationString;
 import org.wikipediacleaner.api.data.MagicWord;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageAnalysis;
-import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.gui.swing.component.MWPane;
 import org.wikipediacleaner.i18n.GT;
 
@@ -605,49 +604,6 @@ public abstract class CheckErrorAlgorithmBase implements CheckErrorAlgorithm {
         startIndex = endIndex;
       } else {
         startIndex = contents.length();
-      }
-    }
-    return result;
-  }
-
-  /**
-   * Find tags.
-   * 
-   * @param found Flag indicating if a tag has already been found.
-   * @param analysis Page analysis.
-   * @param errors Errors.
-   * @param tagName Tag name.
-   * @return Flag indicating if a tag has been found.
-   */
-  protected boolean addTags(
-      boolean found, PageAnalysis analysis,
-      Collection<CheckErrorResult> errors, String tagName) {
-    if (found && (errors == null)) {
-      return found;
-    }
-    boolean result = found;
-    Collection<PageElementTag> tags = analysis.getTags(tagName);
-    if (tags != null) {
-      for (PageElementTag tag : tags) {
-        boolean shouldCount = true;
-        if (shouldCount &&
-            !PageElementTag.TAG_WIKI_NOWIKI.equalsIgnoreCase(tagName)) {
-          if (analysis.getSurroundingTag(
-              PageElementTag.TAG_WIKI_NOWIKI,
-              tag.getBeginIndex()) != null) {
-            shouldCount = false;
-          }
-        }
-        if (shouldCount) {
-          if (errors == null) {
-            return true;
-          }
-          result = true;
-          CheckErrorResult errorResult = createCheckErrorResult(
-              analysis,
-              tag.getBeginIndex(), tag.getEndIndex());
-          errors.add(errorResult);
-        }
       }
     }
     return result;
