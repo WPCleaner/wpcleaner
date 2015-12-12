@@ -12,6 +12,7 @@ import java.util.Collection;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementTag;
+import org.wikipediacleaner.api.data.PageElementTag.Parameter;
 
 
 /**
@@ -55,7 +56,19 @@ public class CheckErrorAlgorithm104 extends CheckErrorAlgorithmBase {
         // Ignore tags correctly detected
         PageElementTag tag = analysis.isInTag(currentIndex);
         if ((tag != null) && (tag.getBeginIndex() == currentIndex)) {
-          shouldReport = false;
+          if (PageElementTag.TAG_WIKI_REF.equalsIgnoreCase(tag.getName())) {
+            boolean ok = true;
+            Parameter paramName = tag.getParameter("name");
+            if ((paramName != null) &&
+                paramName.hasUnbalancedQuotes()) {
+              ok = false;
+            }
+            if (ok) {
+              shouldReport = false;
+            }
+          } else {
+            shouldReport = false;
+          }
         }
       }
       if (shouldReport) {
@@ -77,8 +90,8 @@ public class CheckErrorAlgorithm104 extends CheckErrorAlgorithmBase {
         }
       }
       String replacement = null;
+      int endIndex = currentIndex + 1;
       if (shouldReport) {
-        int endIndex = currentIndex + 1;
         while ((endIndex < maxLen) &&
             Character.isWhitespace(contents.charAt(endIndex))) {
           endIndex++;
@@ -100,32 +113,6 @@ public class CheckErrorAlgorithm104 extends CheckErrorAlgorithmBase {
         } else {
           endIndex += 4;
         }
-        if (shouldReport) {
-          nextIndex = endIndex;
-          int tmpIndex = endIndex;
-          int lastNonSpace = tmpIndex;
-          if ((tmpIndex < maxLen) && (contents.charAt(tmpIndex) == '\"')) {
-            tmpIndex++;
-            while ((tmpIndex < maxLen) &&
-                ((Character.isLetter(contents.charAt(tmpIndex))) ||
-                 (Character.isDigit(contents.charAt(tmpIndex))) ||
-                 (contents.charAt(tmpIndex) == ' '))) {
-              tmpIndex++;
-              if (contents.charAt(tmpIndex) != ' ') {
-                lastNonSpace = tmpIndex;
-              }
-            }
-          }
-          if ((tmpIndex < maxLen) &&
-              (lastNonSpace > endIndex) &&
-              (contents.charAt(tmpIndex) == '>')) {
-            endIndex = tmpIndex + 1;
-            replacement =
-                contents.substring(currentIndex, lastNonSpace + 1) +
-                '\"' +
-                contents.substring(lastNonSpace + 1, endIndex);
-          }
-        }
       }
 
       // Report error
@@ -134,8 +121,58 @@ public class CheckErrorAlgorithm104 extends CheckErrorAlgorithmBase {
           return true;
         }
         result = true;
+
+        // Try to find a suggestion
+        nextIndex = endIndex;
+        int tmpIndex = endIndex;
+        int lastNonSpace = tmpIndex;
+        boolean canExtend = true;
+        if ((tmpIndex < maxLen) && (contents.charAt(tmpIndex) == '=')) {
+          tmpIndex++;
+          while ((tmpIndex < maxLen) && (contents.charAt(tmpIndex) == ' ')) {
+            tmpIndex++;
+          }
+        } else {
+          canExtend = false;
+        }
+        if ((tmpIndex < maxLen) && (contents.charAt(tmpIndex) == '\"')) {
+          tmpIndex++;
+          while ((tmpIndex < maxLen) &&
+              ((Character.isLetter(contents.charAt(tmpIndex))) ||
+               (Character.isDigit(contents.charAt(tmpIndex))) ||
+               (" -_".indexOf(contents.charAt(tmpIndex)) >= 0))) {
+            tmpIndex++;
+            if (contents.charAt(tmpIndex) != ' ') {
+              lastNonSpace = tmpIndex;
+            }
+          }
+        } else {
+          canExtend = false;
+        }
+        if (canExtend &&
+            (tmpIndex + 1< maxLen) &&
+            (lastNonSpace > endIndex)) {
+          boolean replace = false;
+          if (contents.charAt(tmpIndex) == '>') {
+            endIndex = tmpIndex + 1;
+            replace = true;
+          } else if ((contents.charAt(tmpIndex) == '/') &&
+              (contents.charAt(tmpIndex + 1) == '>')) {
+            endIndex = tmpIndex + 2;
+            replace = true;
+          }
+          if (replace) {
+            int separation = Math.min(lastNonSpace + 1, tmpIndex);
+            replacement =
+                contents.substring(currentIndex, separation) +
+                '\"' +
+                contents.substring(separation, endIndex);
+          }
+        }
+
+        // Report error
         CheckErrorResult errorResult = createCheckErrorResult(
-            analysis, currentIndex, nextIndex);
+            analysis, currentIndex, endIndex);
         if (replacement != null) {
           errorResult.addReplacement(replacement);
         }

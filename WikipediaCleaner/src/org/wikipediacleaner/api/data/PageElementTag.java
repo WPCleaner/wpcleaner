@@ -896,6 +896,19 @@ public class PageElementTag extends PageElement {
     }
 
     /**
+     * @return True if parameter has unbalanced quotes.
+     */
+    public boolean hasUnbalancedQuotes() {
+      if ("\"".equals(beforeMarker) && (afterMarker == null)) {
+        return true;
+      }
+      if ((beforeMarker == null) && "\"".equals(afterMarker)) {
+        return true;
+      }
+      return false;
+    }
+
+    /**
      * @return Text equivalent to the parameter.
      * @see java.lang.Object#toString()
      */
