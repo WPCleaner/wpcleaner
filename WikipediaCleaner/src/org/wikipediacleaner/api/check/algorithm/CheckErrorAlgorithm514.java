@@ -15,8 +15,11 @@ import java.util.Map;
 import java.util.Set;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
+import org.wikipediacleaner.api.constants.WPCConfiguration;
 import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementTag;
+import org.wikipediacleaner.api.data.PageElementTemplate;
+import org.wikipediacleaner.i18n.GT;
 
 
 /**
@@ -94,6 +97,25 @@ public class CheckErrorAlgorithm514 extends CheckErrorAlgorithmBase {
           if (set != null) {
             found = set.contains(nameValue);
           }
+          if (!found && (groupValue == null)) {
+            String refByTemplate = getSpecificProperty("ref_by_template", true, true, false);
+            if (refByTemplate != null) {
+              List<String> refByTemplateList = WPCConfiguration.convertPropertyToStringList(refByTemplate);
+              if (refByTemplateList != null) {
+                for (String refByTemplateElement : refByTemplateList) {
+                  String[] elements = refByTemplateElement.split("\\|");
+                  for (int numElement = 1; numElement < elements.length; numElement++) {
+                    if (elements[numElement].equals(nameValue)) {
+                      List<PageElementTemplate> templates = analysis.getTemplates(elements[0]);
+                      if ((templates != null) && !templates.isEmpty()) {
+                        found = true;
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
           if (!found) {
             if (errors == null) {
               return false;
@@ -107,5 +129,19 @@ public class CheckErrorAlgorithm514 extends CheckErrorAlgorithmBase {
       }
     }
     return result;
+  }
+
+  /**
+   * Return the parameters used to configure the algorithm.
+   * 
+   * @return Map of parameters (Name -> description).
+   */
+  @Override
+  public Map<String, String> getParameters() {
+    Map<String, String> parameters = super.getParameters();
+    parameters.put(
+        "ref_by_template",
+        GT._("References defined by templates."));
+    return parameters;
   }
 }

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2015-11-28 14:50+0100\n"
+"POT-Creation-Date: 2015-12-14 17:58+0100\n"
 "PO-Revision-Date: 2015-04-05 05:58+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Polish <pl@li.org>\n"
@@ -678,6 +678,11 @@ msgstr "Skrócone linki"
 msgid "Compact link"
 msgstr "Skrócony link"
 
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm514.java:144
+#, fuzzy
+msgid "References defined by templates."
+msgstr "Szukaj w szablonach"
+
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm518.java:254
 #, java-format
 msgid "An identifier of an abuse filter that is triggered by {0} tags."
@@ -744,21 +749,21 @@ msgstr ""
 msgid "Trim text"
 msgstr "Tekst linka"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmBase.java:278
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmBase.java:277
 msgid "Title of the article describing this type of error"
 msgstr "Nazwa strony z opisem tego typu błędu"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmBase.java:279
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmBase.java:278
 msgid "Set to true to prevent automatic modifications for this type of error"
 msgstr ""
 "Ustaw wartość na true, aby wyłączyć automatyczne poprawianie dla tego typu "
 "błędu"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmBase.java:280
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmBase.java:279
 msgid "List of false positives for this type of error"
 msgstr "Wykaz wyjątków (rezultatów fałszywie pozytywnych) dla tego typu błędu"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmBase.java:281
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmBase.java:280
 msgid "Page containing the list of false positives for this type of error"
 msgstr ""
 "Adres strony zawierającej wykaz wyjątków (rezultatów fałszywie pozytywnych) "
