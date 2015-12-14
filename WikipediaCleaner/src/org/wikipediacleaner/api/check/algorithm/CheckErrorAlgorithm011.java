@@ -49,6 +49,7 @@ public class CheckErrorAlgorithm011 extends CheckErrorAlgorithmHtmlNamedEntities
     htmlCharacters.add(HtmlCharacters.LETTER_CAPITAL_A_TILDE);              // &Atilde;
     htmlCharacters.add(HtmlCharacters.LETTER_SMALL_A_UMLAUT_MARK);          // &auml;
     htmlCharacters.add(HtmlCharacters.LETTER_CAPITAL_A_UMLAUT_MARK);        // &Auml;
+    htmlCharacters.add(HtmlCharacters.SYMBOL_DOUBLE_LOW_9_QUOTATION_MARK);  // &bdquo;
     htmlCharacters.add(HtmlCharacters.LETTER_SMALL_BETA);                   // &beta;
     // htmlCharacters.add(HtmlCharacters.LETTER_CAPITAL_BETA);                 // &Beta;
     htmlCharacters.add(HtmlCharacters.SYMBOL_BROKEN_VERTICAL_BAR);          // &brvbar;
