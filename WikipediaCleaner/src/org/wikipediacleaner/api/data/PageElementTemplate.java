@@ -318,9 +318,6 @@ public class PageElementTemplate extends PageElement {
     int depth2CurlyBrackets = 0;
     int depth3CurlyBrackets = 0;
     int depth2SquareBrackets = 0;
-    int depthTagNoWiki = 0;
-    int depthTagMath = 0;
-    int depthTagRef = 0;
     int parameterBeginIndex = parametersBeginIndex;
     int equalIndex = -1;
     boolean equalDone = false;
@@ -328,55 +325,43 @@ public class PageElementTemplate extends PageElement {
       if (contents.startsWith("{{{", tmpIndex)) {
         // Possible start of a parameter
         tmpIndex += 3;
-        if (depthTagNoWiki == 0) {
-          depth3CurlyBrackets++;
-        }
+        depth3CurlyBrackets++;
       } else if (contents.startsWith("{{", tmpIndex)) {
         // Possible start of nested template
         tmpIndex += 2;
-        if ((depthTagNoWiki == 0) && (depthTagMath == 0)) {
-          depth2CurlyBrackets++;
-        }
+        depth2CurlyBrackets++;
       } else if (contents.startsWith("}}", tmpIndex)) {
         if (contents.startsWith("}}}", tmpIndex) &&
             (depth3CurlyBrackets > 0)) {
           // Possible end of parameter
           tmpIndex += 3;
-          if (depthTagNoWiki == 0) {
-            depth3CurlyBrackets--;
-          }
+          depth3CurlyBrackets--;
         } else {
           // Possible end of template
           tmpIndex += 2;
-          if ((depthTagNoWiki == 0) && (depthTagMath == 0)) {
-            if (depth2CurlyBrackets > 0) {
-              depth2CurlyBrackets--;
-            } else {
-              addParameter(
-                  parameters, pipeIndex,
-                  contents.substring(parameterBeginIndex, tmpIndex - 2),
-                  equalIndex - parameterBeginIndex,
-                  parameterBeginIndex,
-                  comments);
-              return tmpIndex;
-            }
+          if (depth2CurlyBrackets > 0) {
+            depth2CurlyBrackets--;
+          } else {
+            addParameter(
+                parameters, pipeIndex,
+                contents.substring(parameterBeginIndex, tmpIndex - 2),
+                equalIndex - parameterBeginIndex,
+                parameterBeginIndex,
+                comments);
+            return tmpIndex;
           }
         }
       } else if (contents.startsWith("[[", tmpIndex)) {
         // Possible start of nested internal links
         tmpIndex += 2;
-        if ((depthTagNoWiki == 0) && (depthTagMath == 0)) {
-          depth2SquareBrackets++;
-        }
+        depth2SquareBrackets++;
       } else if (contents.startsWith("]]", tmpIndex)) {
         // Possible end of nested internal link
         tmpIndex += 2;
-        if ((depthTagNoWiki == 0) && (depthTagMath == 0)) {
-          if (depth2SquareBrackets > 0) {
-            depth2SquareBrackets--;
-          } else {
-            return -1;
-          }
+        if (depth2SquareBrackets > 0) {
+          depth2SquareBrackets--;
+        } else {
+          return -1;
         }
       } else if (contents.startsWith("<", tmpIndex)) {
         // Possible start of a tag
@@ -389,33 +374,15 @@ public class PageElementTemplate extends PageElement {
           }
         }
         if (tag != null) {
-          int count = 0;
-          if (tag.isFullTag()) {
-            count = 0;
-          } else if (tag.isEndTag()) {
-            count = -1;
+          String tagName = tag.getName();
+          if (PageElementTag.TAG_WIKI_NOWIKI.equals(tagName) ||
+              PageElementTag.TAG_WIKI_MATH.equals(tagName) ||
+              PageElementTag.TAG_WIKI_REF.equals(tagName) ||
+              PageElementTag.TAG_WIKI_SCORE.equals(tagName)) {
+            tmpIndex = tag.getCompleteEndIndex();
           } else {
-            count = 1;
+            tmpIndex = tag.getEndIndex();
           }
-          if (PageElementTag.TAG_WIKI_NOWIKI.equals(tag.getName())) {
-            depthTagNoWiki += count;
-            if (depthTagNoWiki < 0) {
-              depthTagNoWiki = 0;
-            }
-          } else if (PageElementTag.TAG_WIKI_MATH.equals(tag.getName())) {
-            depthTagMath += count;
-            if (depthTagMath < 0) {
-              depthTagMath = 0;
-            }
-          } else if (PageElementTag.TAG_WIKI_REF.equals(tag.getName())) {
-            if (depthTagNoWiki == 0) {
-              depthTagRef += count;
-              if (depthTagRef < 0) {
-                depthTagRef = 0;
-              }
-            }
-          }
-          tmpIndex = tag.getEndIndex();
         } else {
           // Possible start of a comment
           PageElementComment comment = null;
@@ -435,10 +402,7 @@ public class PageElementTemplate extends PageElement {
       } else {
         if ((depth2CurlyBrackets <= 0) &&
             (depth3CurlyBrackets <= 0) &&
-            (depth2SquareBrackets <= 0) &&
-            (depthTagNoWiki <= 0) &&
-            (depthTagMath <= 0) &&
-            (depthTagRef <= 0)) {
+            (depth2SquareBrackets <= 0)) {
           char currentChar = contents.charAt(tmpIndex);
           if (currentChar == '|') {
             // Separation with next parameter
