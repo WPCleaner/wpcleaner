@@ -98,6 +98,7 @@ public class HttpUtils {
       Map<String, String> properties) {
     StringBuilder debugUrl = (DEBUG_URL) ? new StringBuilder("POST " + url) : null;
     PostMethod method = new PostMethod(url);
+    method.getParams().setSoTimeout(60000);
     method.getParams().setContentCharset("UTF-8");
     method.setRequestHeader("Accept-Encoding", "gzip");
     if (properties != null) {
@@ -145,6 +146,7 @@ public class HttpUtils {
 
     // Initialize GET Method
     GetMethod method = new GetMethod(url);
+    method.getParams().setSoTimeout(60000);
     method.getParams().setContentCharset("UTF-8");
     method.setRequestHeader("Accept-Encoding", "gzip");
 
