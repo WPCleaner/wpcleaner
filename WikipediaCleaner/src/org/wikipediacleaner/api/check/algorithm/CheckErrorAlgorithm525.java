@@ -52,6 +52,7 @@ public class CheckErrorAlgorithm525 extends CheckErrorAlgorithmBase {
     }
     boolean result = false;
     String contents = analysis.getContents();
+    int lastIndex = 0;
     for (PageElementTag tag : tags) {
       // Decide if tag is useful
       boolean isUseless = true;
@@ -75,6 +76,8 @@ public class CheckErrorAlgorithm525 extends CheckErrorAlgorithmBase {
             // useful: Content Translation tool garbage
           } else if ("data-segmentid".equals(param.getName())) {
             // useful: Content Translation tool garbage
+          } else if ("contenteditable".equals(param.getName())) {
+            // useful: Content Translation tool garbage
           } else if ("class".equals(param.getName()) ||
                      "id".equals(param.getName())) {
             level = ErrorLevel.WARNING;
@@ -87,11 +90,12 @@ public class CheckErrorAlgorithm525 extends CheckErrorAlgorithmBase {
         isUseless = true;
       }
 
-      if (isUseless) {
+      if (isUseless && (tag.getBeginIndex() >= lastIndex)) {
         if (errors == null) {
           return true;
         }
         result = true;
+        lastIndex = tag.getCompleteEndIndex();
 
         // Create error
         CheckErrorResult errorResult = createCheckErrorResult(
