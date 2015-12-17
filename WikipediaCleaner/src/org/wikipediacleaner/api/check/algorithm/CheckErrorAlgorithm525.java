@@ -56,9 +56,11 @@ public class CheckErrorAlgorithm525 extends CheckErrorAlgorithmBase {
     for (PageElementTag tag : tags) {
       // Decide if tag is useful
       boolean isUseless = true;
+      boolean onlyUselessParameter = true;
       ErrorLevel level = ErrorLevel.ERROR;
       for (int numParam = 0; numParam < tag.getParametersCount(); numParam++) {
         Parameter param = tag.getParameter(numParam);
+        boolean isParameterUseless = false;
         String value = param.getTrimmedValue();
         if ((value != null) && (!value.isEmpty())) {
           String lang = analysis.getWikipedia().getSettings().getLanguage();
@@ -74,8 +76,10 @@ public class CheckErrorAlgorithm525 extends CheckErrorAlgorithmBase {
             }
           } else if ("class".equals(param.getName()) && "cx-segment".equals(param.getValue())) {
             // useful: Content Translation tool garbage
+            isParameterUseless = true;
           } else if ("data-segmentid".equals(param.getName())) {
             // useful: Content Translation tool garbage
+            isParameterUseless = true;
           } else if ("contenteditable".equals(param.getName())) {
             // useful: Content Translation tool garbage
           } else if ("class".equals(param.getName()) ||
@@ -84,6 +88,9 @@ public class CheckErrorAlgorithm525 extends CheckErrorAlgorithmBase {
           } else {
             isUseless = false;
           }
+        }
+        if (!isParameterUseless) {
+          onlyUselessParameter = false;
         }
       }
       if (!tag.isComplete()) {
@@ -107,12 +114,24 @@ public class CheckErrorAlgorithm525 extends CheckErrorAlgorithmBase {
               tag.getValueBeginIndex(), tag.getValueEndIndex());
           errorResult.addReplacement(
               replacement,
-              GT._("Remove {0} tags", PageElementTag.TAG_HTML_SPAN));
+              GT._("Remove {0} tags", PageElementTag.TAG_HTML_SPAN),
+              onlyUselessParameter);
         }
         errors.add(errorResult);
       }
     }
 
     return result;
+  }
+
+  /**
+   * Automatic fixing of some errors in the page.
+   * 
+   * @param analysis Page analysis.
+   * @return Page contents after fix.
+   */
+  @Override
+  protected String internalAutomaticFix(PageAnalysis analysis) {
+    return fixUsingAutomaticReplacement(analysis);
   }
 }
