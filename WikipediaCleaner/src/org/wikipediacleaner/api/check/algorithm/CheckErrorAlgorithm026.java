@@ -59,6 +59,14 @@ public class CheckErrorAlgorithm026 extends CheckErrorAlgorithmBase {
         errorFound = true;
       }
 
+      // Check that error should be reported
+      if (errorFound) {
+        int index = bTag.getBeginIndex();
+        if ((analysis.getSurroundingTag(PageElementTag.TAG_WIKI_SCORE, index) != null)) {
+          errorFound = false;
+        }
+      }
+
       // Mark error
       if (errorFound) {
         if (errors == null) {

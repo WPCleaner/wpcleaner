@@ -69,6 +69,7 @@ public class CheckErrorAlgorithm004 extends CheckErrorAlgorithmBase {
           (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_MATH, index) != null) ||
           (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_NOWIKI, index) != null) ||
           (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_PRE, index) != null) ||
+          (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_SCORE, index) != null) ||
           (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_SOURCE, index) != null) ||
           (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_SYNTAXHIGHLIGHT, index) != null)) {
         shouldKeep = false;
