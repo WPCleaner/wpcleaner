@@ -61,12 +61,16 @@ public class CheckErrorAlgorithm043 extends CheckErrorAlgorithmBase {
           (analysis.isInTag(currentIndex) != null)) {
         shouldCount = false;
       }
+      int maxEnd = maxLength;
       if (shouldCount) {
         PageElementTemplate template = analysis.isInTemplate(currentIndex + 2);
-        if ((template != null) &&
-            ((template.getBeginIndex() == currentIndex) ||
-             (template.getBeginIndex() == currentIndex + 1))) {
-          shouldCount = false;
+        if (template != null) {
+          if ((template.getBeginIndex() == currentIndex) ||
+              (template.getBeginIndex() == currentIndex + 1)) {
+            shouldCount = false;
+          } else {
+            maxEnd = Math.min(maxEnd, template.getEndIndex() - 2);
+          }
         }
       }
       if (shouldCount) {
@@ -84,12 +88,18 @@ public class CheckErrorAlgorithm043 extends CheckErrorAlgorithmBase {
         }
       }
       if (shouldCount) {
-        
+
+        // Limit search
+        PageElementTag tagRef = analysis.getSurroundingTag(PageElementTag.TAG_WIKI_REF, currentIndex);
+        if ((tagRef != null) && tagRef.isComplete()) {
+          maxEnd = Math.min(maxEnd, tagRef.getValueEndIndex());
+        }
+
         // Check if there is a potential end
         int tmpIndex = currentIndex + 2;
         boolean errorReported = false;
         boolean finished = false;
-        while (!finished && (tmpIndex < maxLength)) {
+        while (!finished && (tmpIndex < maxEnd)) {
           char tmpChar = contents.charAt(tmpIndex);
           if ((tmpChar == '\n') ||
               (tmpChar == '[') ||
