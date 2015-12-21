@@ -55,6 +55,11 @@ public class CheckErrorAlgorithm091 extends CheckErrorAlgorithmBase {
   }
 
   /**
+   * Possible separation characters at the end of the internal link. 
+   */
+  private final static String SEPARATION_CHARACTERS = ",.";
+
+  /**
    * Analyze a page to check if errors are present.
    * 
    * @param analysis Page analysis.
@@ -240,10 +245,24 @@ public class CheckErrorAlgorithm091 extends CheckErrorAlgorithmBase {
   
           // Create internal link
           if (!link.hasSquare() || link.hasSecondSquare()) {
-            boolean first = (errorResult.getPossibleActions() == null) || (errorResult.getPossibleActions().isEmpty());
-            errorResult.addReplacement(
-                "[[:" + prefix + ":" + article + "|" + (text != null ? text : article) + "]]",
-                first && fullLink);
+            int lastSure = article.length();
+            while ((lastSure > 0) &&
+                   (SEPARATION_CHARACTERS.indexOf(article.charAt(lastSure - 1)) >= 0)) {
+              lastSure--;
+            }
+            if ((text == null) && (lastSure < article.length())) {
+              while (lastSure <= article.length()) {
+                String actualArticle = article.substring(0, lastSure);
+                errorResult.addReplacement(
+                    "[[:" + prefix + ":" + actualArticle + "|" + actualArticle + "]]" + article.substring(lastSure));
+                lastSure++;
+              }
+            } else {
+              boolean first = (errorResult.getPossibleActions() == null) || (errorResult.getPossibleActions().isEmpty());
+              errorResult.addReplacement(
+                  "[[:" + prefix + ":" + article + "|" + (text != null ? text : article) + "]]",
+                  first && fullLink);
+            }
           }
           errors.add(errorResult);
         }
