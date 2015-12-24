@@ -45,10 +45,20 @@ public enum WPCConfigurationStringList {
   ISBN_SEARCH_ENGINES_TEMPLATES("general_isbn_search_engines_templates", true, true, true),
   // Templates for ISBN.
   ISBN_TEMPLATES("general_isbn_templates", true, true, true, new String[] { "ISBN|1" } ),
+  // Categories for ISSN errors.
+  ISSN_ERRORS_CATEGORIES("issn_errors_categories", true, true, true),
+  // Lists for ISSN errors.
+  ISSN_ERRORS_LISTS("issn_errors_lists", true, true, true),
+  // Templates to ask for help about ISSN.
+  ISSN_HELP_NEEDED_TEMPLATES("general_issn_help_needed_templates", true, true, true),
   // ISSN search engines.
   ISSN_SEARCH_ENGINES("general_issn_search_engines", true, true, true, new String[] { 
       "WorldCat|http://worldcat.org/issn/{0}",
   } ),
+  // ISSN search engines.
+  ISSN_SEARCH_ENGINES_TEMPLATES("general_issn_search_engines_templates", true, true, true),
+  // Templates for ISSN.
+  ISSN_TEMPLATES("general_issn_templates", true, true, true, new String[] { "ISSN|1" } ),
   // Pages containing the list of pages with many disambiguation links.
   MOST_DAB_LINKS("most_dab_links", false, true, false),
   // List of templates for preventing bot editions.

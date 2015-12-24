@@ -26,6 +26,7 @@ import org.wikipediacleaner.api.data.PageElementComment;
 import org.wikipediacleaner.api.data.PageElementExternalLink;
 import org.wikipediacleaner.api.data.PageElementFunction;
 import org.wikipediacleaner.api.data.PageElementISBN;
+import org.wikipediacleaner.api.data.PageElementISSN;
 import org.wikipediacleaner.api.data.PageElementImage;
 import org.wikipediacleaner.api.data.PageElementInternalLink;
 import org.wikipediacleaner.api.data.PageElementInterwikiLink;
@@ -229,6 +230,12 @@ public abstract class MWPanePopupListener extends AbstractPopupListener {
     if (element instanceof PageElementISBN) {
       PageElementISBN isbn = (PageElementISBN) element;
       return createDefaultPopupISBN(pageAnalysis, position, isbn);
+    }
+
+    // Menu for ISSN
+    if (element instanceof PageElementISSN) {
+      PageElementISSN issn = (PageElementISSN) element;
+      return createDefaultPopupISSN(pageAnalysis, position, issn);
     }
 
     // Default menu
@@ -555,6 +562,31 @@ public abstract class MWPanePopupListener extends AbstractPopupListener {
         menu.addDisabledText(popup, info);
       }
     }
+    menu.addCurrentChapter(popup, position, pageAnalysis);
+
+    return popup;
+  }
+
+  /**
+   * Create a default popup menu for an ISSN.
+   * 
+   * @param pageAnalysis Page analysis.
+   * @param position Position in the text.
+   * @param issn ISSN.
+   * @return Popup menu.
+   */
+  protected JPopupMenu createDefaultPopupISSN(
+      PageAnalysis pageAnalysis, int position,
+      PageElementISSN issn) {
+    if (issn == null) {
+      return null;
+    }
+
+    // Menu creation
+    BasicMenuCreator menu = new BasicMenuCreator();
+    JPopupMenu popup = menu.createPopupMenu(GT._(
+        "ISSN: {0}",
+        limitTextLength(issn.getISSN(), 50)));
     menu.addCurrentChapter(popup, position, pageAnalysis);
 
     return popup;

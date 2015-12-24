@@ -498,12 +498,14 @@ public class PageAnalysis {
    */
   private void fourthLevelAnalysis() {
     synchronized (fourthLevelLock) {
-      if ((isbns != null) || (pmids != null)) {
+      if ((isbns != null) || (issns != null) || (pmids != null)) {
         return;
       }
       thirdLevelAnalysis();
       isbns = PageElementISBN.analyzePage(this);
       areas.addISBN(isbns);
+      issns = PageElementISSN.analyzePage(this);
+      areas.addISSN(issns);
       pmids = PageElementPMID.analyzePage(this);
       areas.addPMID(pmids);
     }
@@ -1503,7 +1505,7 @@ public class PageAnalysis {
   }
 
   // ==========================================================================
-  // ISBN and PMID management
+  // ISBN, ISSN and PMID management
   // ==========================================================================
 
   /**
@@ -1535,6 +1537,36 @@ public class PageAnalysis {
   }
 
 
+
+  /**
+   * All ISSNs in the page
+   */
+  private List<PageElementISSN> issns;
+
+  /**
+   * @return All ISSNs in the page.
+   */
+  public List<PageElementISSN> getISSNs() {
+    fourthLevelAnalysis();
+    return issns;
+  }
+
+  /**
+   * @param currentIndex Current index.
+   * @return ISSN if the current index is inside an ISSN.
+   */
+  public PageElementISSN isInISSN(int currentIndex) {
+    List<PageElementISSN> tmpIsbns = getISSNs();
+    for (PageElementISSN issn : tmpIsbns) {
+      if ((issn.getBeginIndex() <= currentIndex) &&
+          (issn.getEndIndex() > currentIndex)) {
+        return issn;
+      }
+    }
+    return null;
+  }
+
+  
   /**
    * All PMIDs in the page
    */

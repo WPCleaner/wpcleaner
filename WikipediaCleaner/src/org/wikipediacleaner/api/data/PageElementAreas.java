@@ -191,6 +191,15 @@ public class PageElementAreas {
   }
 
   /**
+   * Add ISSNs to non wiki text areas.
+   * 
+   * @param issns List of ISSNs.
+   */
+  public void addISSN(List<PageElementISSN> issns) {
+    addPageElements(issns);
+  }
+
+  /**
    * Add PMIDs to non wiki text areas.
    * 
    * @param pmids List of PMIDs.

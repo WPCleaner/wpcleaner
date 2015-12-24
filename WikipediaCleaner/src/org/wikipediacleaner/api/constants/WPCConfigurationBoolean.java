@@ -33,6 +33,8 @@ public enum WPCConfigurationBoolean {
   DUPLICATE_ARGS_WARNING_SECTION_0("duplicate_args_warning_section_0", true, true, false),
   // Allow ISBN warning outside section 0 of talk page.
   ISBN_WARNING_SECTION_0("isbn_warning_section_0", true, true, false),
+  // Allow ISSN warning outside section 0 of talk page.
+  ISSN_WARNING_SECTION_0("issn_warning_section_0", true, true, false),
   // Force usage of "to do" sub-page in main name space.
   TODO_SUBPAGE_FORCE("general_todo_subpage_force", false, true, false),
   // Force usage of "to do" sub-page in other name spaces.

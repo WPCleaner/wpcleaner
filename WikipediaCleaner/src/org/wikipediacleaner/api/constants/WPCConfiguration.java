@@ -1174,6 +1174,54 @@ public class WPCConfiguration {
   }
 
   /* ================================================================================= */
+  /* ISSN warning                                                                      */
+  /* ================================================================================= */
+
+  /**
+   * @param elements Elements that still need to be fixed.
+   * @return Comment for warning about ISSN errors in a page.
+   */
+  public String getISSNWarningComment(Collection<String> elements) {
+    int count = (elements != null) ? elements.size() : 0;
+    String comment = null;
+    if (count == 1) {
+      comment = getString(WPCConfigurationString.ISSN_WARNING_COMMENT_1);
+    }
+    if (comment == null) {
+      comment = getString(WPCConfigurationString.ISSN_WARNING_COMMENT);
+    }
+    if (comment == null) {
+      comment = getString(WPCConfigurationString.ISSN_WARNING_TEMPLATE);
+    } else {
+      try {
+        comment = MessageFormat.format(comment, Integer.valueOf(count));
+      } catch (IllegalArgumentException e) {
+        //
+      }
+    }
+    if (elements != null) {
+      StringBuilder sb = new StringBuilder();
+      for (String element : elements) {
+        sb.append(sb.length() > 0 ? ", " : " - ");
+        sb.append(element);
+      }
+      comment += sb.toString();
+    }
+    return comment;
+  }
+
+  /**
+   * @return Comment for telling that ISSN errors have been fixed.
+   */
+  public String getISSNWarningCommentDone() {
+    String comment = getString(WPCConfigurationString.ISSN_WARNING_COMMENT_DONE);
+    if (comment != null) {
+      return comment;
+    }
+    return getString(WPCConfigurationString.ISSN_WARNING_TEMPLATE);
+  }
+
+  /* ================================================================================= */
   /* Duplicate arguments warning                                                       */
   /* ================================================================================= */
 

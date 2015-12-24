@@ -18,6 +18,7 @@ public enum ConfigurationValueString {
   LAST_DAB_WARNING("LastDabWarning", null),
   LAST_DUPLICATE_ARGS_WARNING("LastDuplicateArgsWarning", null),
   LAST_ISBN_WARNING("LastISBNWarning", null),
+  LAST_ISSN_WARNING("LastISSNWarning", null),
   LAST_LANGUAGE("LastLanguage", null),
   LAST_USER("LastUser", null),
   PAGE_NAME("PageName", null),

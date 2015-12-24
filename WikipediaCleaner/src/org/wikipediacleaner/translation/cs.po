@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2015-12-14 17:58+0100\n"
+"POT-Creation-Date: 2015-12-24 18:05+0100\n"
 "PO-Revision-Date: 2015-12-04 18:15+0000\n"
 "Last-Translator: Matěj S. <matejsuchanek97@gmail.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
@@ -22,8 +22,8 @@ msgstr ""
 #: org/wikipediacleaner/Version.java:31
 #, java-format
 msgid ""
-"I try to keep {0} up to date with Check Wiki, but if you find any "
-"discrepancy(ies) in the detections, please let me know."
+"I try to keep {0} up to date with Check Wiki, but if you find any discrepancy"
+"(ies) in the detections, please let me know."
 msgstr ""
 "Pokusím se, aby {0} s Check Wiki držel krok, ale pokud v detekcích objevíte "
 "nesoulad, dejte mi, prosím, vědět."
@@ -144,8 +144,8 @@ msgid "Error n°{0} ({1} - {2}) - {3}"
 msgstr "chyba č. {0} ({1} - {2}) - {3}"
 
 #: org/wikipediacleaner/api/check/CheckErrorResult.java:155
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm026.java:83
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm026.java:86
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm026.java:91
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm026.java:94
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm038.java:83
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm038.java:86
 #, java-format
@@ -155,12 +155,12 @@ msgstr "Nahradit řetězcem {0}"
 #: org/wikipediacleaner/api/check/CheckErrorResult.java:156
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm010.java:176
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm017.java:165
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm026.java:88
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm026.java:94
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm026.java:96
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm026.java:102
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm038.java:88
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm038.java:94
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm042_Old.java:62
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm043.java:137
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm043.java:147
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm045.java:130
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm046.java:175
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm047.java:148
@@ -365,7 +365,7 @@ msgstr "Odstranit zalomení v seznamu"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm055.java:163
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm077.java:93
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm525.java:106
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm525.java:117
 #, java-format
 msgid "Remove {0} tags"
 msgstr "Odstranit tagy {0}"
@@ -420,18 +420,18 @@ msgid "Check all links to other language"
 msgstr "Zkontrolovat všechny odkazy do jiného jazyka"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:122
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm091.java:201
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm091.java:206
 msgid "Check language links"
 msgstr "Zkontrolovat jazykové odkazy"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:175
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:318
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm091.java:222
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm091.java:227
 msgid "What is the title of the page on this wiki ?"
 msgstr "Jaký je název stránky na této wiki?"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:188
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm091.java:235
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm091.java:240
 #, java-format
 msgid "Replace using template {0}"
 msgstr "Nahradit za použití šablony {0}"
@@ -450,9 +450,9 @@ msgstr "Externí prohlížeč"
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:214
 msgid ""
 "A template that can be used instead of the link to an other language. It "
-"must be specified as: <template name>|<param name for local page "
-"name>|<param name for code of other language>|<param name for page name in "
-"other language>|<param name for displayed text>"
+"must be specified as: <template name>|<param name for local page name>|"
+"<param name for code of other language>|<param name for page name in other "
+"language>|<param name for displayed text>"
 msgstr ""
 "Šablona, která může být použita namísto odkazu do jiného jazyka. Měla by být "
 "zadána ve tvaru: <název šablony> | <jméno této stránky> | <kód pro "
@@ -593,8 +593,7 @@ msgstr "Odstranit sekci"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm084.java:138
 msgid "A list of texts that can be added to sections without content"
-msgstr ""
-"Seznam textových řetězců, které mohou být vloženy do sekcí bez obsahu"
+msgstr "Seznam textových řetězců, které mohou být vloženy do sekcí bez obsahu"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm084.java:139
 msgid "Restrict verification to titles with a higher level"
@@ -627,15 +626,15 @@ msgid "Convert into an internal link"
 msgstr "Převést na interní odkaz"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm090.java:256
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm091.java:316
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm091.java:335
 msgid "Templates using external links"
 msgstr "Šablony používající externí odkazy"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm091.java:317
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm091.java:336
 msgid "To report only links to other languages"
 msgstr "Hlásit pouze odkazy do jiného jazyka"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm091.java:318
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm091.java:337
 msgid "To report only links to local wikis"
 msgstr "Hlásit pouze odkazy do místních wiki"
 
@@ -698,8 +697,7 @@ msgid "A template that can be used instead of an opening square bracket."
 msgstr "Šablona použitelná místo levé hranaté závorky."
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm520.java:139
-msgid ""
-"An identifier of an abuse filter that is triggered by weird characters."
+msgid "An identifier of an abuse filter that is triggered by weird characters."
 msgstr "Identifikátor editačního filtru, který spouští podivné znaky."
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm521.java:344
@@ -761,25 +759,30 @@ msgstr ""
 "Stránka obsahující seznam falešně pozitivních výsledků pro tento typ chyby"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISBN.java:312
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISSN.java:280
 #, java-format
 msgid "Ask for help using {0}"
 msgstr "Požádejte o pomoc pomocí {0}"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISBN.java:337
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISSN.java:305
 msgid "Add a comment"
 msgstr "Přidat komentář"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISBN.java:368
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISSN.java:366
 #, java-format
 msgid "Search ISBN {0}"
 msgstr "Hledat ISBN {0}"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISBN.java:398
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISSN.java:336
 #, java-format
 msgid "Search ISSN {0}"
 msgstr "Hledat ISSN {0}"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISBN.java:462
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISSN.java:430
 #, java-format
 msgid "Search using {0}"
 msgstr "Hledat pomocí {0}"
@@ -1135,8 +1138,7 @@ msgstr "Tato vlastnost může změnit mnoho stránek v krátkém čase."
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:205
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:611
 #: org/wikipediacleaner/gui/swing/bot/BotToolsWindow.java:89
-msgid ""
-"On some Wikipedia projects, you may need the bot status for doing this."
+msgid "On some Wikipedia projects, you may need the bot status for doing this."
 msgstr "Na některých Wikipediích je pro tuto funkci nutný příznak bota."
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:206
@@ -1297,8 +1299,7 @@ msgstr "Řadit"
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:543
 #: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:511
 msgid "You must select pages on which running automatic fixing."
-msgstr ""
-"Musíte vybrat stránky, na kterých se mají provést automatické opravy."
+msgstr "Musíte vybrat stránky, na kterých se mají provést automatické opravy."
 
 #: org/wikipediacleaner/gui/swing/InformationWindow.java:105
 msgid "Information"
@@ -1618,8 +1619,7 @@ msgid "Links to {0}"
 msgstr "Odkazuje na {0}"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1435
-msgid ""
-"You must input a page name for retrieving the list of category members"
+msgid "You must input a page name for retrieving the list of category members"
 msgstr "Musíte zadat jméno stránky pro získání seznamu členů kategorie"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1453
@@ -1918,8 +1918,7 @@ msgstr "Naposledy změněno: {0}"
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:743
 #, java-format
 msgid "Last modified at {0}. It was modified less than {1} minute ago."
-msgid_plural ""
-"Last modified at {0}. It was modified less than {1} minutes ago."
+msgid_plural "Last modified at {0}. It was modified less than {1} minutes ago."
 msgstr[0] "Naposledy změněno: {0}, tj. méně než před {1} minutami."
 msgstr[1] "Naposledy změněno: {0}, tj. méně než před {1} minutami."
 msgstr[2] "Naposledy změněno: {0}, tj. méně než před {1} minutami."
@@ -2160,8 +2159,7 @@ msgstr "Chcete aktualizovat rozcestníkové varování na diskuzní stránce?"
 
 #: org/wikipediacleaner/gui/swing/action/ActionUpdateWarning.java:354
 msgid "Do you want to update the ISBN warning on talk page?"
-msgstr ""
-"Chcete na diskusní stránce aktualizovat varování ohledně chyb v ISBN?"
+msgstr "Chcete na diskusní stránce aktualizovat varování ohledně chyb v ISBN?"
 
 #: org/wikipediacleaner/gui/swing/action/ActionUpdateWarning.java:397
 msgid "Do you want to update the duplicate arguments warning on talk page?"
@@ -2365,8 +2363,7 @@ msgstr[2] "{0} stránek bylo editováno"
 #: org/wikipediacleaner/gui/swing/bot/AutomaticCWWorker.java:264
 #, java-format
 msgid "{0} page has been marked as fixed for the selected algorithms"
-msgid_plural ""
-"{0} pages have been marked as fixed for the selected algorithms"
+msgid_plural "{0} pages have been marked as fixed for the selected algorithms"
 msgstr[0] "{0} stránka byla pro daný algoritmus označena jako opravená"
 msgstr[1] "{0} stránky byly pro daný algoritmus označeny jako opravené"
 msgstr[2] "{0} stránek bylo pro daný algoritmus označeno jako opravené"
@@ -2830,50 +2827,55 @@ msgstr "Chyba číslo {0}"
 msgid "Close this tab"
 msgstr "Zavřít tuto kartu"
 
-#: org/wikipediacleaner/gui/swing/component/MWPanePopupListener.java:237
-#: org/wikipediacleaner/gui/swing/component/MWPanePopupListener.java:268
+#: org/wikipediacleaner/gui/swing/component/MWPanePopupListener.java:244
+#: org/wikipediacleaner/gui/swing/component/MWPanePopupListener.java:275
 #, java-format
 msgid "Page: {0}"
 msgstr "Stránka: {0}"
 
-#: org/wikipediacleaner/gui/swing/component/MWPanePopupListener.java:303
+#: org/wikipediacleaner/gui/swing/component/MWPanePopupListener.java:310
 #, java-format
 msgid "Interwiki: {0}"
 msgstr "Interwiki: {0}"
 
-#: org/wikipediacleaner/gui/swing/component/MWPanePopupListener.java:374
+#: org/wikipediacleaner/gui/swing/component/MWPanePopupListener.java:381
 #, java-format
 msgid "Image: {0}"
 msgstr "Obrázek: {0}"
 
-#: org/wikipediacleaner/gui/swing/component/MWPanePopupListener.java:410
+#: org/wikipediacleaner/gui/swing/component/MWPanePopupListener.java:417
 #, java-format
 msgid "Category: {0}"
 msgstr "Kategorie: {0}"
 
-#: org/wikipediacleaner/gui/swing/component/MWPanePopupListener.java:438
+#: org/wikipediacleaner/gui/swing/component/MWPanePopupListener.java:445
 #, java-format
 msgid "External link: {0}"
 msgstr "Externí odkaz: {0}"
 
-#: org/wikipediacleaner/gui/swing/component/MWPanePopupListener.java:471
+#: org/wikipediacleaner/gui/swing/component/MWPanePopupListener.java:478
 #, java-format
 msgid "Template: {0}"
 msgstr "Šablona: {0}"
 
-#: org/wikipediacleaner/gui/swing/component/MWPanePopupListener.java:500
+#: org/wikipediacleaner/gui/swing/component/MWPanePopupListener.java:507
 #, java-format
 msgid "Parameter: {0}"
 msgstr "Parametr: {0}"
 
-#: org/wikipediacleaner/gui/swing/component/MWPanePopupListener.java:525
+#: org/wikipediacleaner/gui/swing/component/MWPanePopupListener.java:532
 #, java-format
 msgid "Function: {0}"
 msgstr "Funkce: {0}"
 
-#: org/wikipediacleaner/gui/swing/component/MWPanePopupListener.java:550
+#: org/wikipediacleaner/gui/swing/component/MWPanePopupListener.java:557
 #, java-format
 msgid "ISBN: {0}"
+msgstr "ISBN: {0}"
+
+#: org/wikipediacleaner/gui/swing/component/MWPanePopupListener.java:588
+#, fuzzy, java-format
+msgid "ISSN: {0}"
 msgstr "ISBN: {0}"
 
 #: org/wikipediacleaner/gui/swing/component/MWPaneTitleTreeManager.java:88
@@ -3049,8 +3051,7 @@ msgstr ""
 "prostoru)"
 
 #: org/wikipediacleaner/gui/swing/options/AnalysisOptionsPanel.java:86
-msgid ""
-"Create disambiguation warning on talk page (in encyclopedic namespaces)"
+msgid "Create disambiguation warning on talk page (in encyclopedic namespaces)"
 msgstr ""
 "Vytvořit rozcestníkové varování na diskuzní stránce (v encyklopedických "
 "jmenných prostorech)"
@@ -3068,8 +3069,7 @@ msgstr ""
 "prostoru)"
 
 #: org/wikipediacleaner/gui/swing/options/AnalysisOptionsPanel.java:107
-msgid ""
-"Update disambiguation warning on talk page (in encyclopedic namespaces)"
+msgid "Update disambiguation warning on talk page (in encyclopedic namespaces)"
 msgstr ""
 "Aktualizovat rozcestníkové varování na diskuzní stránce (v encyklopedických "
 "jmenných prostorech)"
@@ -3660,8 +3660,7 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/worker/CheckArticleTools.java:264
 #, java-format
 msgid "Parameter defined as \"{0}\" in {1} is required, but is missing."
-msgstr ""
-"Parametr definovaný jako „{0}“ v šabloně {1} je vyžadován, ale chybí."
+msgstr "Parametr definovaný jako „{0}“ v šabloně {1} je vyžadován, ale chybí."
 
 #: org/wikipediacleaner/gui/swing/worker/CheckArticleTools.java:280
 #, java-format
@@ -3834,9 +3833,40 @@ msgstr ""
 "Chyba: {0}"
 
 #: org/wikipediacleaner/gui/swing/worker/UpdateISBNWarningWorker.java:300
+#: org/wikipediacleaner/gui/swing/worker/UpdateISSNWarningWorker.java:276
 #, java-format
 msgid "Do you want to update {0}?"
 msgstr "Chcete {0} aktualizovat?"
+
+#: org/wikipediacleaner/gui/swing/worker/UpdateISSNWarningTools.java:248
+#, fuzzy, java-format
+msgid "Removing ISSN warning - {0}"
+msgstr "Odstraňuji ISBN varování - {0}"
+
+#: org/wikipediacleaner/gui/swing/worker/UpdateISSNWarningTools.java:257
+#, fuzzy, java-format
+msgid "Updating ISSN warning - {0}"
+msgstr "Aktualizuji ISBN varování - {0}"
+
+#: org/wikipediacleaner/gui/swing/worker/UpdateISSNWarningWorker.java:85
+#, fuzzy, java-format
+msgid ""
+"Analysis found {0} articles to check for ISSN errors.\n"
+"Do you want to update the warnings ?"
+msgstr ""
+"Analýza nalezla {0} článků ke kontrole chyb v ISBN.\n"
+"Chcete aktualizovat varování?"
+
+#: org/wikipediacleaner/gui/swing/worker/UpdateISSNWarningWorker.java:126
+#, fuzzy, java-format
+msgid ""
+"An error occurred when updating ISSN warnings. Do you want to continue ?\n"
+"\n"
+"Error: {0}"
+msgstr ""
+"Při aktualizaci varování ohledně ISBN došlo k chybě. Chcete pokračovat?\n"
+"\n"
+"Chyba: {0}"
 
 #: org/wikipediacleaner/gui/swing/worker/UpdateWarningTools.java:322
 #: org/wikipediacleaner/gui/swing/worker/UpdateWarningTools.java:337
@@ -3925,7 +3955,6 @@ msgstr "Hodnota nemůže obsahovat žádný ze znaků: {0}"
 #~ msgid "Error unkown from WikiCleaner"
 #~ msgstr "Neznámá chyba z WikiCleaneru"
 
-#, java-format
 #~ msgid "The page {0} doesn't exist on Wikipedia"
 #~ msgstr "Stránka {0} na Wikipedii neexistuje"
 
@@ -4013,11 +4042,9 @@ msgstr "Hodnota nemůže obsahovat žádný ze znaků: {0}"
 #~ msgid "Search"
 #~ msgstr "Hledat"
 
-#, java-format
 #~ msgid "&Apply only to {0}"
 #~ msgstr "&Aplikovat jen na {0}"
 
-#, java-format
 #~ msgid "An error occured: {0}"
 #~ msgstr "Nastala chyba: {0}"
 
@@ -4031,7 +4058,8 @@ msgstr "Hodnota nemůže obsahovat žádný ze znaků: {0}"
 #~ "You are about to remove the pages from your local Watch list.\n"
 #~ "Are you sure ?"
 #~ msgstr ""
-#~ "Chystáte se odebrat stránky z vašeho lokálního seznamu sledovaných stránek.\n"
+#~ "Chystáte se odebrat stránky z vašeho lokálního seznamu sledovaných "
+#~ "stránek.\n"
 #~ "Chcete pokračovat?"
 
 #~ msgid "Enter the page title you want to add to your local watch list"
@@ -4039,19 +4067,17 @@ msgstr "Hodnota nemůže obsahovat žádný ze znaků: {0}"
 #~ "Zadejte název stránky, kterou chcete přidat do vašeho lokálního seznamu "
 #~ "sledovaných stránek"
 
-#, java-format
 #~ msgid "Last modified at {0}. It was modified less than {1} minutes ago."
 #~ msgstr "Naposledy změněno: {0}, tj. méně než před {1} minutami."
 
 #~ msgid "Would you like to add this page on your local Watch list ?"
 #~ msgstr ""
-#~ "Chcete přidat tuto stránku do vašeho lokálního seznamu sledovaných stránek?"
+#~ "Chcete přidat tuto stránku do vašeho lokálního seznamu sledovaných "
+#~ "stránek?"
 
-#, java-format
 #~ msgid "Red links Analysis - {0}"
 #~ msgstr "Analýza červených odkazů - {0}"
 
-#, java-format
 #~ msgid "{0} links in Main Namespace / {1} total links"
 #~ msgstr "{0} odkazů v hlavním jmenném prostoru / {1} odkazů celkem"
 
@@ -4102,7 +4128,8 @@ msgstr "Hodnota nemůže obsahovat žádný ze znaků: {0}"
 #~ "You need to define the 'dab_warning_template' property in WikiCleaner "
 #~ "configuration."
 #~ msgstr ""
-#~ "Musíte definovat vlastnost 'dab_warning_template' v konfiguraci WikiCleaneru."
+#~ "Musíte definovat vlastnost 'dab_warning_template' v konfiguraci "
+#~ "WikiCleaneru."
 
 #~ msgid ""
 #~ "Add a warning on the talk page about the links to disambiguation pages"
@@ -4146,14 +4173,14 @@ msgstr "Hodnota nemůže obsahovat žádný ze znaků: {0}"
 #~ msgid "Do you want to update the disambiguation warning in talk page ?"
 #~ msgstr "Chcete aktualizovat rozcestníkové varování na diskuzní stránce?"
 
-#, java-format
 #~ msgid ""
 #~ "An error occured when updating disambiguation warnings. Do you want to "
 #~ "continue ?\n"
 #~ "\n"
 #~ "Error: {0}"
 #~ msgstr ""
-#~ "Při aktualizaci rozcestníkových varování nastala chyba. Chcete pokračovat?\n"
+#~ "Při aktualizaci rozcestníkových varování nastala chyba. Chcete "
+#~ "pokračovat?\n"
 #~ "\n"
 #~ "Chyba: {0}"
 
@@ -4175,14 +4202,12 @@ msgstr "Hodnota nemůže obsahovat žádný ze znaků: {0}"
 #~ msgid "Help (Alt + &H)"
 #~ msgstr "Nápověda (Alt + &H)"
 
-#, java-format
 #~ msgid "{0} pages"
 #~ msgstr "{0} stránek"
 
 #~ msgid "Add page (Alt + &A)"
 #~ msgstr "Přidat stránku (Alt + &A)"
 
-#, java-format
 #~ msgid "Fixed using [[{0}]]"
 #~ msgstr "Opraveno pomocí [[{0}]]"
 
@@ -4208,14 +4233,15 @@ msgstr "Hodnota nemůže obsahovat žádný ze znaků: {0}"
 #~ msgstr "Zobrazit nebo upravit whitelist"
 
 #~ msgid ""
-#~ "You must input a page name for retrieving the list of page it is embedded in"
+#~ "You must input a page name for retrieving the list of page it is embedded "
+#~ "in"
 #~ msgstr ""
-#~ "Musíte vložit jméno stránky, aby se mohl nahrát seznam stránek obsahujících "
-#~ "šablonu"
+#~ "Musíte vložit jméno stránky, aby se mohl nahrát seznam stránek "
+#~ "obsahujících šablonu"
 
 #~ msgid ""
-#~ "There's no known list of pages containing many disambiguation links for this "
-#~ "Wikipedia.\n"
+#~ "There's no known list of pages containing many disambiguation links for "
+#~ "this Wikipedia.\n"
 #~ "You can learn how to configure WikiCleaner at the following URL:"
 #~ msgstr ""
 #~ "Seznam stránek obsahující mnoho odkazů na rozcestníky na této wiki "
@@ -4228,7 +4254,6 @@ msgstr "Hodnota nemůže obsahovat žádný ze znaků: {0}"
 #~ msgid "Orthograph"
 #~ msgstr "Pravopis"
 
-#, java-format
 #~ msgid ""
 #~ "The page {0} in \"{1}\" has a language link to \"{2}\": {3}.\n"
 #~ "Do you want to replace the link by [[{3}]] ?"
@@ -4236,7 +4261,6 @@ msgstr "Hodnota nemůže obsahovat žádný ze znaků: {0}"
 #~ "Stránka „{0}“ na {1}.wiki obsahuje iw do {2}.wiki na stránku „{3}“.\n"
 #~ "Chcete nahradit link [[{3}]]?"
 
-#, java-format
 #~ msgid "Error {0} detected: Waiting and retrying"
 #~ msgstr "Zjištěna chyba {0}: čekám a pokouším se o nápravu"
 
@@ -4246,7 +4270,6 @@ msgstr "Hodnota nemůže obsahovat žádný ze znaků: {0}"
 #~ msgid "Fixing orthograph or typography based on a list of suggestions."
 #~ msgstr "Opravy pravopisu nebo typografie založené na seznamu návrhů"
 
-#, java-format
 #~ msgid "Reverse to [[{0}|{1}]]"
 #~ msgstr "Prohodit na [[{0}|{1}]]"
 
@@ -4274,7 +4297,6 @@ msgstr "Hodnota nemůže obsahovat žádný ze znaků: {0}"
 #~ msgid "Add to &Watch list"
 #~ msgstr "Přidat do Sledovaných stránek"
 
-#, java-format
 #~ msgid ""
 #~ "The error n°{0} is still found {1} times in the page.\n"
 #~ "Are you really sure that you want to mark it as fixed ?"
@@ -4282,22 +4304,18 @@ msgstr "Hodnota nemůže obsahovat žádný ze znaků: {0}"
 #~ "Chyba č. {0} je na stránce ještě {1}krát.\n"
 #~ "Opravdu ji chcete označit jako opravenou?"
 
-#, java-format
 #~ msgid "You have edited {0} page(s)."
 #~ msgstr "Editoval jste {0} strán(ek/ku)."
 
-#, java-format
 #~ msgid "You have fixed {0} link(s) to disambiguation pages."
 #~ msgstr "Opravil jste {0} odkaz(ů/y) na rozcestník(y)."
 
-#, java-format
 #~ msgid "You have fixed {0} error(s) \"{1}\"."
 #~ msgstr "Opravil jste {0} chyb(u) „{1}“."
 
 #~ msgid "&Close"
 #~ msgstr "Zavřít"
 
-#, java-format
 #~ msgid "Do you want to mark {0} as fixed for error n°{1}"
 #~ msgstr "Chcete označit {0} jako vyřešená pro chybu č. {1}"
 
@@ -4328,18 +4346,15 @@ msgstr "Hodnota nemůže obsahovat žádný ze znaků: {0}"
 #~ msgid "Count &other pages"
 #~ msgstr "Počítat &ostatní stránky"
 
-#, java-format
 #~ msgid "Log all URL called by {0}"
 #~ msgstr "Získat všechny URL adresy volané stránkou „{0}“"
 
-#, java-format
 #~ msgid "The following modifications have been done ({0} pages):"
 #~ msgstr "Následující změny byly provedeny na {0} stránkách:"
 
 #~ msgid "Constructing list of articles with disambiguation warning"
 #~ msgstr "Sestavuji seznam článků s rozcestníkovými upozorněními"
 
-#, java-format
 #~ msgid ""
 #~ "Disambiguation links have been analyzed in {0} pages.\n"
 #~ "The disambiguation warning has been updated in {1} pages.\n"
@@ -4350,14 +4365,14 @@ msgstr "Hodnota nemůže obsahovat žádný ze znaků: {0}"
 #~ "Trvalo to {2} sekund."
 
 #~ msgid ""
-#~ "Also, verify again the texts you have inputed before running this function."
+#~ "Also, verify again the texts you have inputed before running this "
+#~ "function."
 #~ msgstr ""
 #~ "Také znovu zkontrolujte všechny zadané texty před spuštěním této funkce."
 
 #~ msgid "Mark as Fixed"
 #~ msgstr "Označit jako opravené"
 
-#, java-format
 #~ msgid ""
 #~ "The error n°{0} hasn''t been found in the page {1}.\n"
 #~ "Do you want to mark it as fixed ?"
@@ -4365,7 +4380,6 @@ msgstr "Hodnota nemůže obsahovat žádný ze znaků: {0}"
 #~ "Chyba číslo {0} nebyla na stránce „{1}“ nalezena.\n"
 #~ "Chcete ji označit jako opravenou?"
 
-#, java-format
 #~ msgid ""
 #~ "The error n°{0} is still found in the page.\n"
 #~ "Are you really sure that you want to mark it as fixed ?"
@@ -4373,7 +4387,6 @@ msgstr "Hodnota nemůže obsahovat žádný ze znaků: {0}"
 #~ "Chyba číslo {0} je stále na této stránce.\n"
 #~ "Opravdu ji chcete označit jako opravenou?"
 
-#, java-format
 #~ msgid ""
 #~ "There''s no white list defined for this error type.\n"
 #~ "If you want to define a white list you need to add :\n"
@@ -4394,7 +4407,6 @@ msgstr "Hodnota nemůže obsahovat žádný ze znaků: {0}"
 #~ msgid "&Contains"
 #~ msgstr "Obsahují&cí"
 
-#, java-format
 #~ msgid ""
 #~ "The page \"{0}\" in \"{1}\" has a language link to \"{2}\": {3}.\n"
 #~ "By what text do you want to replace the link ?"

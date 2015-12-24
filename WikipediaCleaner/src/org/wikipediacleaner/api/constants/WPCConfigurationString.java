@@ -85,6 +85,22 @@ public enum WPCConfigurationString {
   ISBN_WARNING_TEMPLATE("isbn_warning_template", null, false, true, false),
   // Comment for warning template about ISBN errors in a page
   ISBN_WARNING_TEMPLATE_COMMENT("isbn_warning_template_comment", null, false, true, false),
+  // Comment used to indicate an ISSN with an error
+  ISSN_HELP_NEEDED_COMMENT("general_issn_help_needed_comment", null, false, true, true),
+  // Page for storing a synthesis of ISSN errors
+  ISSN_ERRORS_PAGE("issn_errors_page", null, false, true, true),
+  // Comment for storing a synthesis of ISSN errors
+  ISSN_ERRORS_PAGE_COMMENT("issn_errors_page_comment", "ISSN", false, true, true),
+  // Comment for warning about ISSN errors in a page
+  ISSN_WARNING_COMMENT("issn_warning_comment", null, false, true, true),
+  // Comment for warning about one ISSN error in a page
+  ISSN_WARNING_COMMENT_1("issn_warning_comment_1", null, false, true, true),
+  // Comment for telling that ISSN errors have been fixed
+  ISSN_WARNING_COMMENT_DONE("issn_warning_comment_done", null, false, true, true),
+  // Template for warning about ISSN errors in a page
+  ISSN_WARNING_TEMPLATE("issn_warning_template", null, false, true, false),
+  // Comment for warning template about ISSN errors in a page
+  ISSN_WARNING_TEMPLATE_COMMENT("issn_warning_template_comment", null, false, true, false),
   // Template used to mark a text as being in a foreign language
   LANG_TEMPLATE("lang_template", null, false, true, false),
   // Template used to group all messages on a user talk page

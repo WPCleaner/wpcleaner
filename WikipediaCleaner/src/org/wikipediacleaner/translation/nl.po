@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2015-12-14 17:58+0100\n"
+"POT-Creation-Date: 2015-12-24 18:05+0100\n"
 "PO-Revision-Date: 2015-03-19 14:22+0000\n"
 "Last-Translator: Niels Verploegen <Unknown>\n"
 "Language-Team: Dutch <nl@li.org>\n"
@@ -132,8 +132,8 @@ msgid "Error n°{0} ({1} - {2}) - {3}"
 msgstr "Fout n°{0} ({1} - {2}) - {3}"
 
 #: org/wikipediacleaner/api/check/CheckErrorResult.java:155
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm026.java:83
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm026.java:86
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm026.java:91
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm026.java:94
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm038.java:83
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm038.java:86
 #, java-format
@@ -143,12 +143,12 @@ msgstr "Vervang met {0}"
 #: org/wikipediacleaner/api/check/CheckErrorResult.java:156
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm010.java:176
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm017.java:165
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm026.java:88
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm026.java:94
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm026.java:96
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm026.java:102
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm038.java:88
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm038.java:94
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm042_Old.java:62
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm043.java:137
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm043.java:147
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm045.java:130
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm046.java:175
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm047.java:148
@@ -353,7 +353,7 @@ msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm055.java:163
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm077.java:93
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm525.java:106
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm525.java:117
 #, java-format
 msgid "Remove {0} tags"
 msgstr ""
@@ -408,18 +408,18 @@ msgid "Check all links to other language"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:122
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm091.java:201
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm091.java:206
 msgid "Check language links"
 msgstr "Controleer taal-links"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:175
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:318
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm091.java:222
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm091.java:227
 msgid "What is the title of the page on this wiki ?"
 msgstr "Wat is de titel van de pagina op deze wiki?"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:188
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm091.java:235
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm091.java:240
 #, java-format
 msgid "Replace using template {0}"
 msgstr ""
@@ -607,15 +607,15 @@ msgid "Convert into an internal link"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm090.java:256
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm091.java:316
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm091.java:335
 msgid "Templates using external links"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm091.java:317
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm091.java:336
 msgid "To report only links to other languages"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm091.java:318
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm091.java:337
 msgid "To report only links to local wikis"
 msgstr ""
 
@@ -739,25 +739,30 @@ msgid "Page containing the list of false positives for this type of error"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISBN.java:312
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISSN.java:280
 #, java-format
 msgid "Ask for help using {0}"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISBN.java:337
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISSN.java:305
 msgid "Add a comment"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISBN.java:368
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISSN.java:366
 #, java-format
 msgid "Search ISBN {0}"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISBN.java:398
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISSN.java:336
 #, java-format
 msgid "Search ISSN {0}"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISBN.java:462
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISSN.java:430
 #, java-format
 msgid "Search using {0}"
 msgstr ""
@@ -2759,50 +2764,55 @@ msgstr ""
 msgid "Close this tab"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/component/MWPanePopupListener.java:237
-#: org/wikipediacleaner/gui/swing/component/MWPanePopupListener.java:268
+#: org/wikipediacleaner/gui/swing/component/MWPanePopupListener.java:244
+#: org/wikipediacleaner/gui/swing/component/MWPanePopupListener.java:275
 #, java-format
 msgid "Page: {0}"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/component/MWPanePopupListener.java:303
+#: org/wikipediacleaner/gui/swing/component/MWPanePopupListener.java:310
 #, java-format
 msgid "Interwiki: {0}"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/component/MWPanePopupListener.java:374
+#: org/wikipediacleaner/gui/swing/component/MWPanePopupListener.java:381
 #, java-format
 msgid "Image: {0}"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/component/MWPanePopupListener.java:410
+#: org/wikipediacleaner/gui/swing/component/MWPanePopupListener.java:417
 #, java-format
 msgid "Category: {0}"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/component/MWPanePopupListener.java:438
+#: org/wikipediacleaner/gui/swing/component/MWPanePopupListener.java:445
 #, java-format
 msgid "External link: {0}"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/component/MWPanePopupListener.java:471
+#: org/wikipediacleaner/gui/swing/component/MWPanePopupListener.java:478
 #, java-format
 msgid "Template: {0}"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/component/MWPanePopupListener.java:500
+#: org/wikipediacleaner/gui/swing/component/MWPanePopupListener.java:507
 #, java-format
 msgid "Parameter: {0}"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/component/MWPanePopupListener.java:525
+#: org/wikipediacleaner/gui/swing/component/MWPanePopupListener.java:532
 #, java-format
 msgid "Function: {0}"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/component/MWPanePopupListener.java:550
+#: org/wikipediacleaner/gui/swing/component/MWPanePopupListener.java:557
 #, java-format
 msgid "ISBN: {0}"
+msgstr ""
+
+#: org/wikipediacleaner/gui/swing/component/MWPanePopupListener.java:588
+#, java-format
+msgid "ISSN: {0}"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/component/MWPaneTitleTreeManager.java:88
@@ -3705,8 +3715,34 @@ msgid ""
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/worker/UpdateISBNWarningWorker.java:300
+#: org/wikipediacleaner/gui/swing/worker/UpdateISSNWarningWorker.java:276
 #, java-format
 msgid "Do you want to update {0}?"
+msgstr ""
+
+#: org/wikipediacleaner/gui/swing/worker/UpdateISSNWarningTools.java:248
+#, java-format
+msgid "Removing ISSN warning - {0}"
+msgstr ""
+
+#: org/wikipediacleaner/gui/swing/worker/UpdateISSNWarningTools.java:257
+#, java-format
+msgid "Updating ISSN warning - {0}"
+msgstr ""
+
+#: org/wikipediacleaner/gui/swing/worker/UpdateISSNWarningWorker.java:85
+#, java-format
+msgid ""
+"Analysis found {0} articles to check for ISSN errors.\n"
+"Do you want to update the warnings ?"
+msgstr ""
+
+#: org/wikipediacleaner/gui/swing/worker/UpdateISSNWarningWorker.java:126
+#, java-format
+msgid ""
+"An error occurred when updating ISSN warnings. Do you want to continue ?\n"
+"\n"
+"Error: {0}"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/worker/UpdateWarningTools.java:322
