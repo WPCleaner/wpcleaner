@@ -567,6 +567,9 @@ public class PageElementTemplate extends PageElement {
     if ((index < getBeginIndex()) || (index >= getEndIndex())) {
       return null;
     }
+    if (parameters == null) {
+      return null;
+    }
     for (int paramNum = 0; paramNum < parameters.size() - 1; paramNum++) {
       if (parameters.get(paramNum + 1).getPipeIndex() >= index) {
         return parameters.get(paramNum);
