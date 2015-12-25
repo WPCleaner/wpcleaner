@@ -249,7 +249,7 @@ public class UpdateISBNWarningTools extends UpdateWarningTools {
    */
   @Override
   protected String getMessageRemoveWarning(String title) {
-    return GT._("Removing ISBN warning - {0}", title);
+    return GT._("Removing {1} warning - {0}", new Object[] { title, "ISBN" });
   }
 
   /**
@@ -258,6 +258,6 @@ public class UpdateISBNWarningTools extends UpdateWarningTools {
    */
   @Override
   protected String getMessageUpdateWarning(String title) {
-    return GT._("Updating ISBN warning - {0}", title);
+    return GT._("Updating {1} warning - {0}", new Object[] { title, "ISBN" });
   }
 }

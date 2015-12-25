@@ -82,9 +82,9 @@ public class UpdateISSNWarningWorker extends UpdateWarningWorker {
         // Ask for confirmation
         if (getWindow() != null) {
           int answer = getWindow().displayYesNoWarning(GT._(
-              "Analysis found {0} articles to check for ISSN errors.\n" +
+              "Analysis found {0} articles to check for {1} errors.\n" +
               "Do you want to update the warnings ?",
-              Integer.valueOf(warningPages.size()).toString() ));
+              new Object[] { Integer.valueOf(warningPages.size()).toString(), "ISSN" } ));
           if (answer != JOptionPane.YES_OPTION) {
             return Integer.valueOf(0);
           }
@@ -123,8 +123,9 @@ public class UpdateISSNWarningWorker extends UpdateWarningWorker {
           } catch (APIException e) {
             if (getWindow() != null) {
               int answer = getWindow().displayYesNoWarning(GT._(
-                  "An error occurred when updating ISSN warnings. Do you want to continue ?\n\n" +
-                  "Error: {0}", e.getMessage()));
+                  "An error occurred when updating {1} warnings. Do you want to continue ?\n\n" +
+                  "Error: {0}",
+                  new Object[] { e.getMessage(), "ISSN" }));
               if (answer != JOptionPane.YES_OPTION) {
                 return e;
               }

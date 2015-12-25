@@ -26,6 +26,7 @@ import org.wikipediacleaner.gui.swing.basic.Utilities;
 import org.wikipediacleaner.gui.swing.worker.UpdateDabWarningWorker;
 import org.wikipediacleaner.gui.swing.worker.UpdateDuplicateArgsWarningWorker;
 import org.wikipediacleaner.gui.swing.worker.UpdateISBNWarningWorker;
+import org.wikipediacleaner.gui.swing.worker.UpdateISSNWarningWorker;
 import org.wikipediacleaner.i18n.GT;
 import org.wikipediacleaner.images.EnumImageSize;
 import org.wikipediacleaner.utils.Configuration;
@@ -63,6 +64,11 @@ public class GeneralToolsPanel extends BotToolsPanel {
   private JButton buttonUpdateISBNWarning;
 
   /**
+   * Button for updating ISSN warnings on all wiki.
+   */
+  private JButton buttonUpdateISSNWarning;
+
+  /**
    * Button for updating duplicate arguments warnings on all wiki.
    */
   private JButton buttonUpdateDuplicateArgsWarning;
@@ -71,6 +77,11 @@ public class GeneralToolsPanel extends BotToolsPanel {
    * Button for listing ISBN warnings on all wiki.
    */
   private JButton buttonListISBNError;
+
+  /**
+   * Button for listing ISSN warnings on all wiki.
+   */
+  private JButton buttonListISSNError;
 
   /**
    * Construct a general bot tools panel.
@@ -121,7 +132,7 @@ public class GeneralToolsPanel extends BotToolsPanel {
     // Update ISBN warning
     buttonUpdateISBNWarning = Utilities.createJButton(
         "commons-nuvola-web-broom.png", EnumImageSize.NORMAL,
-        GT._("Update ISBN warning messages"), true, null);
+        GT._("Update {0} warning messages", "ISBN"), true, null);
     buttonUpdateISBNWarning.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionUpdateISBNWarning"));
     add(buttonUpdateISBNWarning, constraints);
@@ -130,10 +141,28 @@ public class GeneralToolsPanel extends BotToolsPanel {
     // List ISBN errors
     buttonListISBNError = Utilities.createJButton(
         "commons-nuvola-web-broom.png", EnumImageSize.NORMAL,
-        GT._("List ISBN errors"), true, null);
+        GT._("List {0} errors", "ISBN"), true, null);
     buttonListISBNError.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionListISBNErrors"));
     add(buttonListISBNError, constraints);
+    constraints.gridy++;
+
+    // Update ISSN warning
+    buttonUpdateISSNWarning = Utilities.createJButton(
+        "commons-nuvola-web-broom.png", EnumImageSize.NORMAL,
+        GT._("Update {0} warning messages", "ISSN"), true, null);
+    buttonUpdateISSNWarning.addActionListener(EventHandler.create(
+        ActionListener.class, this, "actionUpdateISSNWarning"));
+    add(buttonUpdateISSNWarning, constraints);
+    constraints.gridy++;
+
+    // List ISSN errors
+    buttonListISSNError = Utilities.createJButton(
+        "commons-nuvola-web-broom.png", EnumImageSize.NORMAL,
+        GT._("List {0} errors", "ISSN"), true, null);
+    buttonListISSNError.addActionListener(EventHandler.create(
+        ActionListener.class, this, "actionListISSNErrors"));
+    add(buttonListISSNError, constraints);
     constraints.gridy++;
 
     // Update duplicate arguments warning
@@ -235,6 +264,42 @@ public class GeneralToolsPanel extends BotToolsPanel {
       }
     }
     UpdateISBNWarningWorker worker = new UpdateISBNWarningWorker(
+        wiki, window, simulation);
+    worker.start();
+  }
+
+  /**
+   * Action called when Update ISSN Warning button is pressed.
+   */
+  public void actionUpdateISSNWarning() {
+    actionISSNWarning(false);
+  }
+
+  /**
+   * Action called when List ISSN Errors button is pressed.
+   */
+  public void actionListISSNErrors() {
+    actionISSNWarning(true);
+  }
+
+  /**
+   * Analyze ISSN errors.
+   * 
+   * @param simulation True if this is a simulation.
+   */
+  private void actionISSNWarning(boolean simulation) {
+    EnumWikipedia wiki = window.getWikipedia();
+    if (!simulation) {
+      WPCConfiguration wpcConfig = wiki.getConfiguration();
+      String template = wpcConfig.getString(WPCConfigurationString.ISSN_WARNING_TEMPLATE);
+      if ((template == null) || (template.trim().length() == 0)) {
+        Utilities.displayMessageForMissingConfiguration(
+            window.getParentComponent(),
+            WPCConfigurationString.ISSN_WARNING_TEMPLATE.getAttributeName());
+        return;
+      }
+    }
+    UpdateISSNWarningWorker worker = new UpdateISSNWarningWorker(
         wiki, window, simulation);
     worker.start();
   }
