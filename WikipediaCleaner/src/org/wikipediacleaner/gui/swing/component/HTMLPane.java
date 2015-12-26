@@ -9,6 +9,7 @@
 package org.wikipediacleaner.gui.swing.component;
 
 import java.beans.EventHandler;
+import java.net.URI;
 import java.net.URISyntaxException;
 
 import javax.swing.JEditorPane;
@@ -72,7 +73,23 @@ public class HTMLPane extends JEditorPane {
     }
     if (event.getEventType() == HyperlinkEvent.EventType.ACTIVATED) {
       try {
-        Utilities.browseURL(event.getURL().toURI());
+        URI uri = null;
+        if (event.getURL() != null) {
+          uri = event.getURL().toURI();
+        }
+        if (uri == null) {
+          String description = event.getDescription();
+          if ((description != null) && (description.startsWith("//"))) {
+            try {
+              uri = new URI("https", description, null);
+            } catch (URISyntaxException e) {
+              // Nothing to do
+            }
+          }
+        }
+        if (uri != null) {
+          Utilities.browseURL(uri);
+        }
       } catch (URISyntaxException e) {
         // Nothing to do
       }
