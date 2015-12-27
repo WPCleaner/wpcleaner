@@ -43,6 +43,8 @@ public enum WPCConfigurationStringList {
   } ),
   // ISBN search engines.
   ISBN_SEARCH_ENGINES_TEMPLATES("general_isbn_search_engines_templates", true, true, true),
+  // ISBN search engines.
+  ISBN_SPECIAL_VALUES("isbn_special_values", true, true, true),
   // Templates for ISBN.
   ISBN_TEMPLATES("general_isbn_templates", true, true, true, new String[] { "ISBN|1" } ),
   // Categories for ISSN errors.

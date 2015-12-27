@@ -12,8 +12,13 @@ import java.util.List;
 import java.util.Map;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
+import org.wikipediacleaner.api.constants.WPCConfiguration;
+import org.wikipediacleaner.api.constants.WPCConfigurationStringList;
+import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementISBN;
+import org.wikipediacleaner.api.data.PageElementTemplate;
+import org.wikipediacleaner.api.data.PageElementTemplate.Parameter;
 import org.wikipediacleaner.i18n.GT;
 
 
@@ -47,7 +52,35 @@ public class CheckErrorAlgorithm069 extends CheckErrorAlgorithmISBN {
     boolean result = false;
     List<PageElementISBN> isbns = analysis.getISBNs();
     for (PageElementISBN isbn : isbns) {
+      boolean isError = false;
       if (!isbn.isCorrect() && isbn.isValid()) {
+        isError = true;
+      }
+      if (isError && isbn.isTemplateParameter()) {
+        WPCConfiguration config = analysis.getWPCConfiguration();
+        List<String[]> specialValues = config.getStringArrayList(
+            WPCConfigurationStringList.ISBN_SPECIAL_VALUES);
+        if ((specialValues != null) && !specialValues.isEmpty()) {
+          PageElementTemplate template = analysis.isInTemplate(isbn.getBeginIndex());
+          if (template != null) {
+            Parameter param = template.getParameterAtIndex(isbn.getBeginIndex());
+            if ((param != null) &&
+                (param.getName() != null) &&
+                (param.getName().trim().length() > 0)) {
+              String name = param.getName().trim();
+              for (String[] specialValue : specialValues) {
+                if ((specialValue.length > 2) &&
+                    (Page.areSameTitle(template.getTemplateName(), specialValue[0])) &&
+                    (name.equals(specialValue[1])) &&
+                    (isbn.getISBNNotTrimmed().equals(specialValue[2]))) {
+                  isError = false;
+                }
+              }
+            }
+          }
+        }
+      }
+      if (isError) {
         if (errors == null) {
           return true;
         }
