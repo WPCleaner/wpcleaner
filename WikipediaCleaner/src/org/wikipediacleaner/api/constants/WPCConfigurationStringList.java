@@ -56,6 +56,7 @@ public enum WPCConfigurationStringList {
   // ISSN search engines.
   ISSN_SEARCH_ENGINES("general_issn_search_engines", true, true, true, new String[] { 
       "WorldCat|http://worldcat.org/issn/{0}",
+      "MIAR|http://miar.ub.edu/issn/{0}",
   } ),
   // ISSN search engines.
   ISSN_SEARCH_ENGINES_TEMPLATES("general_issn_search_engines_templates", true, true, true),
