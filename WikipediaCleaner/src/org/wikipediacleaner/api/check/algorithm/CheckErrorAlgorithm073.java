@@ -17,6 +17,7 @@ import org.wikipediacleaner.api.check.NullActionProvider;
 import org.wikipediacleaner.api.data.ISBNRange;
 import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementISBN;
+import org.wikipediacleaner.api.data.PageElementISSN;
 import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.ISBNRange.ISBNInformation;
 import org.wikipediacleaner.i18n.GT;
@@ -123,6 +124,13 @@ public class CheckErrorAlgorithm073 extends CheckErrorAlgorithmISBN {
           if (isbn.isTemplateParameter()) {
             PageElementTemplate template = analysis.isInTemplate(isbn.getBeginIndex());
             addSearchEngines(analysis, errorResult, template);
+          }
+          if (number.startsWith("977")) { // Prefix for ISSN
+            value = number.substring(3, 10);
+            char checkISSN = PageElementISSN.computeChecksum(value + '0');
+            if (checkISSN > 0) {
+              addSearchEnginesISSN(analysis, errorResult, value + checkISSN);
+            }
           }
           errors.add(errorResult);
         }
