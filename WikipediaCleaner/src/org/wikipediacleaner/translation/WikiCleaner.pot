@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2015-12-25 13:56+0100\n"
+"POT-Creation-Date: 2016-01-02 15:59+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -466,9 +466,10 @@ msgstr ""
 msgid "You can replace the link using template {0}."
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm069.java:115
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm069.java:148
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm070.java:132
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm071.java:107
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm106.java:148
 msgid "An explanation of the problem"
 msgstr ""
 

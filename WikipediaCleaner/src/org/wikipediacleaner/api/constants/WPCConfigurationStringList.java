@@ -43,7 +43,7 @@ public enum WPCConfigurationStringList {
   } ),
   // ISBN search engines.
   ISBN_SEARCH_ENGINES_TEMPLATES("general_isbn_search_engines_templates", true, true, true),
-  // ISBN search engines.
+  // ISBN special values.
   ISBN_SPECIAL_VALUES("isbn_special_values", true, true, true),
   // Templates for ISBN.
   ISBN_TEMPLATES("general_isbn_templates", true, true, true, new String[] { "ISBN|1" } ),
@@ -60,6 +60,8 @@ public enum WPCConfigurationStringList {
   } ),
   // ISSN search engines.
   ISSN_SEARCH_ENGINES_TEMPLATES("general_issn_search_engines_templates", true, true, true),
+  // ISSN special values.
+  ISSN_SPECIAL_VALUES("issn_special_values", true, true, true),
   // Templates for ISSN.
   ISSN_TEMPLATES("general_issn_templates", true, true, true, new String[] { "ISSN|1" } ),
   // Pages containing the list of pages with many disambiguation links.
