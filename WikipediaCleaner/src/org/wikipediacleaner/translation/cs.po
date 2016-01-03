@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2016-01-03 12:52+0100\n"
+"POT-Creation-Date: 2016-01-03 13:07+0100\n"
 "PO-Revision-Date: 2015-12-25 13:46+0100\n"
 "Last-Translator: Nicolas Vervelle <nvervelle@gmail.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
@@ -504,6 +504,7 @@ msgstr "Délka ISBN je {0} místo 10 nebo 13"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm072.java:65
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm073.java:65
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm108.java:63
 #, java-format
 msgid "The checksum is {0} instead of {1}"
 msgstr "Kontrolní součet je {0} místo {1}"
@@ -520,6 +521,7 @@ msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm072.java:167
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm073.java:203
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm108.java:132
 msgid "An explanation of the problem (incorrect checksum)"
 msgstr "Vysvěltení problému (nesprávný kontrolní součet)"
 

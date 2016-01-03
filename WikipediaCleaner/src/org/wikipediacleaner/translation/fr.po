@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2016-01-03 12:52+0100\n"
+"POT-Creation-Date: 2016-01-03 13:07+0100\n"
 "PO-Revision-Date: 2015-12-25 13:49+0100\n"
 "Last-Translator: Nicolas Vervelle <nvervelle@gmail.com>\n"
 "Language-Team: French <fr@li.org>\n"
@@ -518,6 +518,7 @@ msgstr "La longueur du numéro ISBN est {0} au lieu de 10 ou 13"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm072.java:65
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm073.java:65
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm108.java:63
 #, java-format
 msgid "The checksum is {0} instead of {1}"
 msgstr "La somme de contrôle est {0} à la place de {1}"
@@ -534,6 +535,7 @@ msgstr "Cet ISBN est dans une plage de valeurs réservées"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm072.java:167
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm073.java:203
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm108.java:132
 msgid "An explanation of the problem (incorrect checksum)"
 msgstr "Une explication du problème (somme de contrôle incorrecte)"
 

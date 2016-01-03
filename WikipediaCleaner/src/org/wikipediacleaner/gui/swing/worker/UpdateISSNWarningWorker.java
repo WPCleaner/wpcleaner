@@ -194,7 +194,7 @@ public class UpdateISSNWarningWorker extends UpdateWarningWorker {
 
     // Retrieve articles listed for ISSN errors in Check Wiki
     retrieveCheckWikiPages(107, tmpWarningPages, null); // Incorrect length
-    // TODO: add others
+    retrieveCheckWikiPages(108, tmpWarningPages, null); // Wrong checksum
 
     // Retrieve articles already reported
     retrieveInternalLinks(
