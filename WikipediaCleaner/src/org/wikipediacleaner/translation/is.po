@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2016-01-02 15:59+0100\n"
+"POT-Creation-Date: 2016-01-03 12:52+0100\n"
 "PO-Revision-Date: 2015-11-05 04:57+0000\n"
 "Last-Translator: Stefán Örvar Sigmundsson <stefan.orvar.sigmundsson@emi.is>\n"
 "Language-Team: Icelandic <is@li.org>\n"
@@ -472,6 +472,7 @@ msgstr ""
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm070.java:132
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm071.java:107
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm106.java:148
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm107.java:123
 msgid "An explanation of the problem"
 msgstr ""
 
@@ -481,33 +482,33 @@ msgid "Length of ISBN is {0} instead of 10 or 13"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm072.java:65
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm073.java:64
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm073.java:65
 #, java-format
 msgid "The checksum is {0} instead of {1}"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm072.java:71
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm073.java:70
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm073.java:71
 msgid "There's no existing range for this ISBN"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm072.java:73
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm073.java:72
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm073.java:73
 msgid "This ISBN is inside a reserved range"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm072.java:167
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm073.java:195
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm073.java:203
 msgid "An explanation of the problem (incorrect checksum)"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm072.java:169
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm073.java:197
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm073.java:205
 msgid "An explanation of the problem (non-existing range of ISBN numbers)"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm072.java:171
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm073.java:199
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm073.java:207
 msgid "An explanation of the problem (reserved range of ISBN numbers)"
 msgstr ""
 
@@ -628,6 +629,11 @@ msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm103.java:30
 msgid "Replace all pipe templates"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm107.java:65
+#, java-format
+msgid "Length of ISSN is {0} instead of 8"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm501.java:178
@@ -3680,13 +3686,13 @@ msgid ""
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/worker/UpdateISBNWarningTools.java:252
-#: org/wikipediacleaner/gui/swing/worker/UpdateISSNWarningTools.java:248
+#: org/wikipediacleaner/gui/swing/worker/UpdateISSNWarningTools.java:250
 #, java-format
 msgid "Removing {1} warning - {0}"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/worker/UpdateISBNWarningTools.java:261
-#: org/wikipediacleaner/gui/swing/worker/UpdateISSNWarningTools.java:257
+#: org/wikipediacleaner/gui/swing/worker/UpdateISSNWarningTools.java:259
 #, java-format
 msgid "Updating {1} warning - {0}"
 msgstr ""
@@ -3709,7 +3715,7 @@ msgid ""
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/worker/UpdateISBNWarningWorker.java:301
-#: org/wikipediacleaner/gui/swing/worker/UpdateISSNWarningWorker.java:277
+#: org/wikipediacleaner/gui/swing/worker/UpdateISSNWarningWorker.java:278
 #, java-format
 msgid "Do you want to update {0}?"
 msgstr ""

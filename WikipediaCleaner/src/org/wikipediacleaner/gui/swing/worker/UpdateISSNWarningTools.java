@@ -109,7 +109,9 @@ public class UpdateISSNWarningTools extends UpdateWarningTools {
 
     // Prepare list of algorithms
     List<CheckErrorAlgorithm> algorithms = new ArrayList<CheckErrorAlgorithm>();
-    // TODO algorithms.add(CheckErrorAlgorithms.getAlgorithm(wiki, 69)); // Incorrect syntax
+    algorithms.add(CheckErrorAlgorithms.getAlgorithm(wiki, 106)); // Incorrect syntax
+    algorithms.add(CheckErrorAlgorithms.getAlgorithm(wiki, 107)); // Wrong length
+    // TODO: add others
 
     // Retrieve list of errors
     List<CheckErrorResult> errorResults = new ArrayList<CheckErrorResult>();

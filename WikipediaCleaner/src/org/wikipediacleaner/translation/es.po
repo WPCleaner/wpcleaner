@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2016-01-02 15:59+0100\n"
+"POT-Creation-Date: 2016-01-03 12:52+0100\n"
 "PO-Revision-Date: 2015-04-05 05:54+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Spanish\n"
@@ -505,6 +505,7 @@ msgstr "Puede reemplazar el enlace utilizando la plantilla {0}."
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm070.java:132
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm071.java:107
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm106.java:148
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm107.java:123
 msgid "An explanation of the problem"
 msgstr "Una explicación del problema"
 
@@ -514,35 +515,35 @@ msgid "Length of ISBN is {0} instead of 10 or 13"
 msgstr "La longitud del ISBN es de {0} en vez de 10 o 13"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm072.java:65
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm073.java:64
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm073.java:65
 #, java-format
 msgid "The checksum is {0} instead of {1}"
 msgstr "La suma de comprobación (checksum) es {0} en lugar de {1}"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm072.java:71
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm073.java:70
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm073.java:71
 msgid "There's no existing range for this ISBN"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm072.java:73
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm073.java:72
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm073.java:73
 msgid "This ISBN is inside a reserved range"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm072.java:167
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm073.java:195
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm073.java:203
 #, fuzzy
 msgid "An explanation of the problem (incorrect checksum)"
 msgstr "Una explicación del problema"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm072.java:169
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm073.java:197
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm073.java:205
 #, fuzzy
 msgid "An explanation of the problem (non-existing range of ISBN numbers)"
 msgstr "Una explicación del problema"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm072.java:171
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm073.java:199
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm073.java:207
 #, fuzzy
 msgid "An explanation of the problem (reserved range of ISBN numbers)"
 msgstr "Una explicación del problema"
@@ -671,6 +672,11 @@ msgstr "Lista de posibles reemplazos"
 #, fuzzy
 msgid "Replace all pipe templates"
 msgstr "Reemplazar usando plantilla {0}"
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm107.java:65
+#, fuzzy, java-format
+msgid "Length of ISSN is {0} instead of 8"
+msgstr "La longitud del ISBN es de {0} en vez de 10 o 13"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm501.java:178
 msgid "Restore original text"
@@ -3839,13 +3845,13 @@ msgstr ""
 "Error: {0}"
 
 #: org/wikipediacleaner/gui/swing/worker/UpdateISBNWarningTools.java:252
-#: org/wikipediacleaner/gui/swing/worker/UpdateISSNWarningTools.java:248
+#: org/wikipediacleaner/gui/swing/worker/UpdateISSNWarningTools.java:250
 #, fuzzy, java-format
 msgid "Removing {1} warning - {0}"
 msgstr "Quitando advertencia de desambiguación - {0}"
 
 #: org/wikipediacleaner/gui/swing/worker/UpdateISBNWarningTools.java:261
-#: org/wikipediacleaner/gui/swing/worker/UpdateISSNWarningTools.java:257
+#: org/wikipediacleaner/gui/swing/worker/UpdateISSNWarningTools.java:259
 #, fuzzy, java-format
 msgid "Updating {1} warning - {0}"
 msgstr "Actualizando advertencia de desambiguación - {0}"
@@ -3874,7 +3880,7 @@ msgstr ""
 "Error: {0}"
 
 #: org/wikipediacleaner/gui/swing/worker/UpdateISBNWarningWorker.java:301
-#: org/wikipediacleaner/gui/swing/worker/UpdateISSNWarningWorker.java:277
+#: org/wikipediacleaner/gui/swing/worker/UpdateISSNWarningWorker.java:278
 #, java-format
 msgid "Do you want to update {0}?"
 msgstr "¿Desea actualizar {0}?"
