@@ -33,12 +33,12 @@ public class PageElementISSN extends PageElement {
   /**
    * ISSN possible extraneous characters.
    */
-  private final static String EXTRA_CHARACTERS = "-  ";
+  private final static String EXTRA_CHARACTERS = "-";
 
   /**
    * ISSN incorrect characters.
    */
-  private final static String INCORRECT_CHARACTERS = ":‐\t—=–#";
+  private final static String INCORRECT_CHARACTERS = ":‐\t—=–#  ";
 
   /**
    * ISSN incorrect characters at the beginning.
@@ -152,9 +152,14 @@ public class PageElementISSN extends PageElement {
               endNumber = index + 1;
               index++;
               correct = nextCorrect;
+              if (endNumber - beginNumber == 5) {
+                correct = false; // 5th character is a separation character
+              }
             } else if (EXTRA_CHARACTERS.indexOf(currentChar) >= 0) {
               if (beginNumber < 0) {
                 nextCorrect = false;
+              } else if (index - beginNumber != 4) {
+                correct = false; // 5th character is the only place for a separation character
               }
               index++;
             } else if (INCORRECT_CHARACTERS.indexOf(currentChar) >= 0) {
@@ -299,9 +304,15 @@ public class PageElementISSN extends PageElement {
             } else if (Character.toUpperCase(currentChar) == 'X') {
               endIndex = i + 1;
             }
+            if (endIndex - beginIndex == 5) {
+              correct = false; // 5th character is a separation character
+            }
             i++;
           } else if (EXTRA_CHARACTERS.indexOf(currentChar) >= 0) {
             i++;
+            if (i - beginIndex != 5) {
+              correct = false; // 5th character is the only place for a separation character
+            }
           } else if (INCORRECT_CHARACTERS.indexOf(currentChar) >= 0) {
             i++;
             correct = false;
@@ -477,18 +488,23 @@ public class PageElementISSN extends PageElement {
     StringBuilder buffer = new StringBuilder();
     for (int i = 0; i < issnNotTrimmed.length(); i++) {
       char currentChar = issnNotTrimmed.charAt(i);
-      if ((POSSIBLE_CHARACTERS.indexOf(currentChar) >= 0) ||
-          (EXTRA_CHARACTERS.indexOf(currentChar) >= 0)) {
+      if (POSSIBLE_CHARACTERS.indexOf(currentChar) >= 0) {
         buffer.append(currentChar);
+      } else if (EXTRA_CHARACTERS.indexOf(currentChar) >= 0) {
+        // Nothing to add
       } else if ((currentChar == '‐') ||
                  (currentChar == '–') ||
                  (currentChar == '.')) {
-        buffer.append("-");
-      } else if (currentChar == '\t') {
-        buffer.append(" ");
+        // Nothing to add
+      } else if ((currentChar == '\t') ||
+                 (currentChar == ' ')) {
+        // Nothing to add
       } else {
         buffer.append(currentChar);
       }
+    }
+    if (buffer.length() == 8) {
+      buffer.insert(4, '-');
     }
     String cleanedISSN = buffer.toString().trim();
 
