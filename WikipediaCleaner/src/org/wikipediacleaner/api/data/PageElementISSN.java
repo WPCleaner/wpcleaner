@@ -151,7 +151,7 @@ public class PageElementISSN extends PageElement {
               }
               endNumber = index + 1;
               index++;
-              correct = nextCorrect;
+              correct &= nextCorrect;
               if (endNumber - beginNumber == 5) {
                 correct = false; // 5th character is a separation character
               }
@@ -159,7 +159,7 @@ public class PageElementISSN extends PageElement {
               if (beginNumber < 0) {
                 nextCorrect = false;
               } else if (index - beginNumber != 4) {
-                correct = false; // 5th character is the only place for a separation character
+                nextCorrect = false; // 5th character is the only place for a separation character
               }
               index++;
             } else if (INCORRECT_CHARACTERS.indexOf(currentChar) >= 0) {
