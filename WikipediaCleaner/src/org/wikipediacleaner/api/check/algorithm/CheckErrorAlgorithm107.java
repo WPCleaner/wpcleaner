@@ -15,7 +15,6 @@ import java.util.Map;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.NullActionProvider;
 import org.wikipediacleaner.api.data.PageAnalysis;
-import org.wikipediacleaner.api.data.PageElementISBN;
 import org.wikipediacleaner.api.data.PageElementISSN;
 import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.i18n.GT;
@@ -77,7 +76,7 @@ public class CheckErrorAlgorithm107 extends CheckErrorAlgorithmISSN {
           if ((length == 10) || (length == 13)) {
             addSearchEnginesISBN(analysis, errorResult, issn.getISSN());
           } else if (length == 7) {
-            char computedCheck = PageElementISBN.computeChecksum(value + '0');
+            char computedCheck = PageElementISSN.computeChecksum(value + '0');
             if (computedCheck > 0) {
               addSearchEngines(analysis, errorResult, value + computedCheck);
             }
