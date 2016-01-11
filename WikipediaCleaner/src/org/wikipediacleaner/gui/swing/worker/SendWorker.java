@@ -29,55 +29,134 @@ import org.wikipediacleaner.i18n.GT;
  */
 public class SendWorker extends BasicWorker {
 
+  /**
+   * Utility class for storing SendWorker parameters.
+   */
+  private static class Params {
+    protected boolean updateDabWarning;
+    protected boolean createDabWarning;
+    protected boolean updateISBNWarning;
+    protected boolean createISBNWarning;
+    protected boolean updateISSNWarning;
+    protected boolean createISSNWarning;
+    protected boolean updateDuplicateArgsWarning;
+    protected boolean createDuplicateArgsWarning;
+
+    protected Params() {
+      //
+    }
+  }
+
+  /**
+   * Utility class for building a SendWorker.
+   */
+  public static class Builder {
+    private Params params;
+
+    /**
+     * Prepare for the creation of a SendWorker.
+     */
+    public Builder() {
+      params = new Params();
+    }
+
+    /**
+     * @param update Allow/Deny update of disambiguation warning.
+     * @param create Allow/Deny creation of disambiguation warning.
+     * @return Builder itself.
+     */
+    public Builder allowDabWarning(boolean update, boolean create) {
+      params.updateDabWarning = update;
+      params.createDabWarning = create;
+      return this;
+    }
+
+    /**
+     * @param update Allow/Deny update of ISBN warning.
+     * @param create Allow/Deny creation of ISBN warning.
+     * @return Builder itself.
+     */
+    public Builder allowISBNWarning(boolean update, boolean create) {
+      params.updateISBNWarning = update;
+      params.createISBNWarning = create;
+      return this;
+    }
+
+    /**
+     * @param update Allow/Deny update of ISSN warning.
+     * @param create Allow/Deny creation of ISSN warning.
+     * @return Builder itself.
+     */
+    public Builder allowISSNWarning(boolean update, boolean create) {
+      params.updateISSNWarning = update;
+      params.createISSNWarning = create;
+      return this;
+    }
+
+    /**
+     * @param update Allow/Deny update of duplicate arguments warning.
+     * @param create Allow/Deny creation of duplicate arguments warning.
+     * @return Builder itself.
+     */
+    public Builder allowDuplicateArgsWarning(boolean update, boolean create) {
+      params.updateDuplicateArgsWarning = update;
+      params.createDuplicateArgsWarning = create;
+      return this;
+    }
+
+    /**
+     * @param wiki Wiki.
+     * @param window Window.
+     * @param page Page.
+     * @param text Page contents.
+     * @param comment Comment.
+     * @param forceWatch Force watching the page.
+     * @param params Parameters.
+     * @param contributions Contributions.
+     * @param errorsFixed Errors fixed by this update.
+     */
+    public SendWorker createWorker(
+        EnumWikipedia wiki, BasicWindow window,
+        Page page, String text, String comment,
+        boolean forceWatch,
+        Contributions contributions,
+        Collection<CheckErrorAlgorithm> errorsFixed) {
+      return new SendWorker(wiki, window, page, text, comment, forceWatch, params, contributions, errorsFixed);
+    }
+  }
+
   private final Page page;
   private final String text;
   private final String comment;
   private final boolean forceWatch;
-  private final boolean updateDabWarning;
-  private final boolean createDabWarning;
-  private final boolean updateISBNWarning;
-  private final boolean createISBNWarning;
-  private final boolean updateDuplicateArgsWarning;
-  private final boolean createDuplicateArgsWarning;
+  private final Params params;
   private final Contributions contributions;
   private final Collection<CheckErrorAlgorithm> errorsFixed;
 
   /**
-   * @param wikipedia Wikipedia.
+   * @param wiki Wiki.
    * @param window Window.
    * @param page Page.
    * @param text Page contents.
    * @param comment Comment.
    * @param forceWatch Force watching the page.
-   * @param updateDabWarning Update disambiguation warning on talk page.
-   * @param createDabWarning Create disambiguation warning on talk page.
-   * @param updateISBNWarning Update ISBN warning on talk page.
-   * @param createISBNWarning Create ISBN warning on talk page.
-   * @param updateDuplicateArgsWarning Update duplicate arguments warning on talk page.
-   * @param createDuplicateArgsWarning Create duplicate arguments warning on talk page.
+   * @param params Parameters.
    * @param contributions Contributions.
    * @param errorsFixed Errors fixed by this update.
    */
-  public SendWorker(
-      EnumWikipedia wikipedia, BasicWindow window,
+  SendWorker(
+      EnumWikipedia wiki, BasicWindow window,
       Page page, String text, String comment,
       boolean forceWatch,
-      boolean updateDabWarning, boolean createDabWarning,
-      boolean updateISBNWarning, boolean createISBNWarning,
-      boolean updateDuplicateArgsWarning, boolean createDuplicateArgsWarning,
+      Params params,
       Contributions contributions,
       Collection<CheckErrorAlgorithm> errorsFixed) {
-    super(wikipedia, window);
+    super(wiki, window);
     this.page = page;
     this.text = text;
     this.comment = comment;
     this.forceWatch = forceWatch;
-    this.updateDabWarning = updateDabWarning;
-    this.createDabWarning = createDabWarning;
-    this.updateISBNWarning = updateISBNWarning;
-    this.createISBNWarning = createISBNWarning;
-    this.updateDuplicateArgsWarning = updateDuplicateArgsWarning;
-    this.createDuplicateArgsWarning = createDuplicateArgsWarning;
+    this.params = params;
     this.contributions = contributions;
     this.errorsFixed = errorsFixed;
   }
@@ -109,10 +188,10 @@ public class SendWorker extends BasicWorker {
     }
 
     // Updating disambiguation warning
-    if (updateDabWarning) {
+    if (params.updateDabWarning) {
       try {
         UpdateDabWarningTools dabWarningTools = new UpdateDabWarningTools(
-            getWikipedia(), this, createDabWarning, false);
+            getWikipedia(), this, params.createDabWarning, false);
         PageAnalysis pageAnalysis = page.getAnalysis(text, true);
         dabWarningTools.updateWarning(
             pageAnalysis, queryResult.getPageNewRevId(),
@@ -123,10 +202,10 @@ public class SendWorker extends BasicWorker {
     }
 
     // Updating ISBN warning
-    if (updateISBNWarning) {
+    if (params.updateISBNWarning) {
       try {
         UpdateISBNWarningTools isbnWarningTools = new UpdateISBNWarningTools(
-            getWikipedia(), this, createISBNWarning, false);
+            getWikipedia(), this, params.createISBNWarning, false);
         PageAnalysis pageAnalysis = page.getAnalysis(text, true);
         isbnWarningTools.updateWarning(
             pageAnalysis, queryResult.getPageNewRevId(),
@@ -136,11 +215,25 @@ public class SendWorker extends BasicWorker {
       }
     }
 
+    // Updating ISSN warning
+    if (params.updateISSNWarning) {
+      try {
+        UpdateISSNWarningTools issnWarningTools = new UpdateISSNWarningTools(
+            getWikipedia(), this, params.createISSNWarning, false);
+        PageAnalysis pageAnalysis = page.getAnalysis(text, true);
+        issnWarningTools.updateWarning(
+            pageAnalysis, queryResult.getPageNewRevId(),
+            null, null, null, null, null);
+      } catch (APIException e) {
+        return e;
+      }
+    }
+
     // Updating duplicate arguments warning
-    if (updateDuplicateArgsWarning) {
+    if (params.updateDuplicateArgsWarning) {
       try {
         UpdateDuplicateArgsWarningTools duplicateArgsWarningTools = new UpdateDuplicateArgsWarningTools(
-            getWikipedia(), this, createDuplicateArgsWarning, false);
+            getWikipedia(), this, params.createDuplicateArgsWarning, false);
         PageAnalysis pageAnalysis = page.getAnalysis(text, true);
         duplicateArgsWarningTools.updateWarning(
             pageAnalysis, queryResult.getPageNewRevId(),

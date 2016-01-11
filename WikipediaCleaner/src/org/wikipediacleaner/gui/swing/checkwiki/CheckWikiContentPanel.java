@@ -677,6 +677,8 @@ public class CheckWikiContentPanel
     // Check for errors fixed
     boolean updateISBNWarning = false;
     boolean createISBNWarning = false;
+    boolean updateISSNWarning = false;
+    boolean createISSNWarning = false;
     boolean updateDuplicateArgsWarning = false;
     boolean createDuplicateArgsWarning = false;
     for (CheckErrorAlgorithm errorFixed : errorsFixed) {
@@ -688,6 +690,11 @@ public class CheckWikiContentPanel
           (errorNumber == 73)) {
         updateISBNWarning = true;
       }
+      if ((errorNumber == 106) ||
+          (errorNumber == 107) ||
+          (errorNumber == 108)) {
+        updateISSNWarning = true;
+      }
       if (errorNumber == 524) {
         updateDuplicateArgsWarning = true;
       }
@@ -695,16 +702,17 @@ public class CheckWikiContentPanel
 
     // Send page
     final Configuration configuration = Configuration.getConfiguration();
-    SendWorker sendWorker = new SendWorker(
-        getWiki(), window,
-        page, textPage.getText(), textComment.getText(),
-        configuration.getBoolean(
-            null,
-            ConfigurationValueBoolean.FORCE_WATCH),
-        false, false,
-        updateISBNWarning, createISBNWarning,
-        updateDuplicateArgsWarning, createDuplicateArgsWarning,
-        contributions, errorsFixed);
+    SendWorker sendWorker = new SendWorker.Builder().
+        allowISBNWarning(updateISBNWarning, createISBNWarning).
+        allowISSNWarning(updateISSNWarning, createISSNWarning).
+        allowDuplicateArgsWarning(updateDuplicateArgsWarning, createDuplicateArgsWarning).
+        createWorker(
+          getWiki(), window,
+          page, textPage.getText(), textComment.getText(),
+          configuration.getBoolean(
+              null,
+              ConfigurationValueBoolean.FORCE_WATCH),
+          contributions, errorsFixed);
     sendWorker.setListener(new DefaultBasicWorkerListener() {
       @Override
       public void afterFinished(

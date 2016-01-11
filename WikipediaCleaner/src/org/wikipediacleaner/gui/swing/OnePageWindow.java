@@ -1038,6 +1038,8 @@ public abstract class OnePageWindow
     final boolean createDabWarning = (chkCreateDabWarning != null) && (chkCreateDabWarning.isSelected());
     final boolean createISBNWarning = false;
     boolean updateISBNWarning = false;
+    final boolean createISSNWarning = false;
+    boolean updateISSNWarning = false;
     final boolean createDuplicateArgsWarning = false;
     boolean updateDuplicateArgsWarning = false;
     List<CheckErrorAlgorithm> errorsFixed = computeErrorsFixed();
@@ -1051,6 +1053,11 @@ public abstract class OnePageWindow
             (errorNumber == 73)) {
           updateISBNWarning = true;
         }
+        if ((errorNumber == 106) ||
+            (errorNumber == 107) ||
+            (errorNumber == 108)) {
+          updateISSNWarning = true;
+        }
         if (errorNumber == 524) {
           updateDuplicateArgsWarning = true;
         }
@@ -1060,16 +1067,18 @@ public abstract class OnePageWindow
       getParentComponent().setExtendedState(Frame.ICONIFIED);
     }
     getParentComponent().setTitle(GT._("Sending {0}", page.getTitle()));
-    SendWorker sendWorker = new SendWorker(
-        getWikipedia(), this, page, getTextContents().getText(),
-        (textComment != null) ?
-            textComment.getText() :
-            getWikipedia().getConfiguration().getUpdatePageMessage(),
-        forceWatch,
-        updateDabWarning, createDabWarning,
-        updateISBNWarning, createISBNWarning,
-        updateDuplicateArgsWarning, createDuplicateArgsWarning,
-        getContributions(), errorsFixed);
+    SendWorker sendWorker = new SendWorker.Builder().
+        allowDabWarning(updateDabWarning, createDabWarning).
+        allowISBNWarning(updateISBNWarning, createISBNWarning).
+        allowISSNWarning(updateISSNWarning, createISSNWarning).
+        allowDuplicateArgsWarning(updateDuplicateArgsWarning, createDuplicateArgsWarning).
+        createWorker(
+          getWikipedia(), this, page, getTextContents().getText(),
+          (textComment != null) ?
+              textComment.getText() :
+              getWikipedia().getConfiguration().getUpdatePageMessage(),
+          forceWatch,
+          getContributions(), errorsFixed);
     sendWorker.setListener(new DefaultBasicWorkerListener() {
       @Override
       public void afterFinished(
