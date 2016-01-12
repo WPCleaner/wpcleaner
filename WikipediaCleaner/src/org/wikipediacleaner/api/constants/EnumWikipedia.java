@@ -66,6 +66,7 @@ import org.wikipediacleaner.api.constants.wiki.WikipediaRu;
 import org.wikipediacleaner.api.constants.wiki.WikipediaSimple;
 import org.wikipediacleaner.api.constants.wiki.WikipediaSk;
 import org.wikipediacleaner.api.constants.wiki.WikipediaSl;
+import org.wikipediacleaner.api.constants.wiki.WikipediaSq;
 import org.wikipediacleaner.api.constants.wiki.WikipediaSv;
 import org.wikipediacleaner.api.constants.wiki.WikipediaTa;
 import org.wikipediacleaner.api.constants.wiki.WikipediaTr;
@@ -144,6 +145,7 @@ public enum EnumWikipedia {
   SIMPLE(new WikipediaSimple()),
   SK(new WikipediaSk()),
   SL(new WikipediaSl()),
+  SQ(new WikipediaSq()),
   SV(new WikipediaSv()),
   TA(new WikipediaTa()),
   TR(new WikipediaTr()),
