@@ -258,7 +258,14 @@ public class CheckErrorAlgorithm011 extends CheckErrorAlgorithmHtmlNamedEntities
     // If math tags are present, don't report the error
     List<PageElementTag> tags = analysis.getTags(PageElementTag.TAG_WIKI_MATH);
     if ((tags != null) && (!tags.isEmpty())) {
-      return false;
+      for (PageElementTag tag : tags) {
+        int index = tag.getBeginIndex();
+        if ((analysis.getSurroundingTag(PageElementTag.TAG_WIKI_NOWIKI, index) == null) &&
+            (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_SOURCE, index) == null) &&
+            (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_SYNTAXHIGHLIGHT, index) == null)) {
+          return false;
+        }
+      }
     }
 
     // If math templates are present, don't report the error
