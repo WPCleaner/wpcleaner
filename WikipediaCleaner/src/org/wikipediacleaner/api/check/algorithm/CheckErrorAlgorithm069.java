@@ -104,42 +104,60 @@ public class CheckErrorAlgorithm069 extends CheckErrorAlgorithmISBN {
     List<PageElementTemplate> templates = analysis.getTemplates();
     for (PageElementTemplate template : templates) {
       for (int paramNum = 0; paramNum < template.getParameterCount(); paramNum++) {
-        String paramName = template.getParameterName(paramNum);
+        Parameter param = template.getParameter(paramNum);
+        String paramName = param.getName();
         if ("ISBN10".equalsIgnoreCase(paramName) ||
             "ISBN13".equalsIgnoreCase(paramName)) {
           if (errors == null) {
             return true;
           }
           result = true;
-          int begin = template.getParameterNameStartIndex(paramNum);
-          CheckErrorResult errorResult = createCheckErrorResult(
-              analysis, begin,
-              begin + template.getParameterName(paramNum).length(),
-              ErrorLevel.WARNING);
-          boolean found = false;
-          int number = 1;
-          while ((number < 10) && !found) {
-            boolean exist = false;
-            for (int paramNum2 = 0; paramNum2 < template.getParameterCount(); paramNum2++) {
-              String paramName2 = template.getParameterName(paramNum2);
-              if ((number == 1) && ("ISBN".equalsIgnoreCase(paramName2))) {
-                exist = true;
-              }
-              if (("ISBN" + number).equalsIgnoreCase(paramName2)) {
-                exist = true;
-              }
+
+          // For an empty parameter, suggest to remove the parameter
+          String value = param.getStrippedValue();
+          if ((value == null) || (value.trim().length() == 0)) {
+            int begin = param.getPipeIndex();
+            int end = template.getEndIndex() - 2;
+            if (paramNum + 1 < template.getParameterCount()) {
+              end = template.getParameter(paramNum + 1).getPipeIndex();
             }
-            if (!exist) {
-              found = true;
-              if (number == 1) {
-                errorResult.addReplacement(paramName.substring(0, 4));
-              } else {
-                errorResult.addReplacement(paramName.substring(0, 4) + number);
+            CheckErrorResult errorResult = createCheckErrorResult(
+                analysis, begin, end,
+                ErrorLevel.WARNING);
+            errorResult.addReplacement("");
+            errors.add(errorResult);
+
+          // For a parameter with a value, suggest the first available name
+          } else {
+            int begin = template.getParameterNameStartIndex(paramNum);
+            CheckErrorResult errorResult = createCheckErrorResult(
+                analysis, begin, begin + paramName.length(),
+                ErrorLevel.WARNING);
+            boolean found = false;
+            int number = 1;
+            while ((number < 10) && !found) {
+              boolean exist = false;
+              for (int paramNum2 = 0; paramNum2 < template.getParameterCount(); paramNum2++) {
+                String paramName2 = template.getParameterName(paramNum2);
+                if ((number == 1) && ("ISBN".equalsIgnoreCase(paramName2))) {
+                  exist = true;
+                }
+                if (("ISBN" + number).equalsIgnoreCase(paramName2)) {
+                  exist = true;
+                }
               }
+              if (!exist) {
+                found = true;
+                if (number == 1) {
+                  errorResult.addReplacement(paramName.substring(0, 4));
+                } else {
+                  errorResult.addReplacement(paramName.substring(0, 4) + number);
+                }
+              }
+              number++;
             }
-            number++;
+            errors.add(errorResult);
           }
-          errors.add(errorResult);
         }
       }
     }
