@@ -143,6 +143,7 @@ public class UpdateISSNWarningTools extends UpdateWarningTools {
       String error = analysis.getContents().substring(beginIndex, endIndex);
       error = error.replaceAll("\\=", "&#x3D;"); // Replace "=" by its HTML value
       error = error.replaceAll("\n", "\u21b5"); // Replacer \n by a visual character
+      error = error.replaceAll("\\<", "&lt;"); // Replace "<" by its HTML element
       boolean keep = true;
       StringBuilder comment = new StringBuilder();
       while (pos < next) {

@@ -28,6 +28,7 @@ import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageComparator;
 import org.wikipediacleaner.api.data.PageElementComment;
 import org.wikipediacleaner.api.data.PageElementISBN;
+import org.wikipediacleaner.api.data.PageElementISSN;
 import org.wikipediacleaner.gui.swing.InformationWindow;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
 import org.wikipediacleaner.gui.swing.basic.Utilities;
@@ -258,9 +259,11 @@ public class UpdateISBNWarningWorker extends UpdateWarningWorker {
           String clean = key.replaceAll("\\&\\#x3D\\;", "=");
           clean = PageElementISBN.cleanISBN(clean);
           if (clean.length() == 8) {
-            buffer.append(" ([");
-            buffer.append(MessageFormat.format(issnUrl, clean));
-            buffer.append(" ISSN?])");
+            if (clean.charAt(7) == PageElementISSN.computeChecksum(clean)) {
+              buffer.append(" ([");
+              buffer.append(MessageFormat.format(issnUrl, clean));
+              buffer.append(" ISSN?])");
+            }
           }
         }
         buffer.append(" : ");
