@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
+import org.wikipediacleaner.api.check.CheckErrorResult.ErrorLevel;
 import org.wikipediacleaner.api.constants.WPCConfiguration;
 import org.wikipediacleaner.api.constants.WPCConfigurationStringList;
 import org.wikipediacleaner.api.data.Page;
@@ -100,22 +101,48 @@ public class CheckErrorAlgorithm069 extends CheckErrorAlgorithmISBN {
     }
 
     // Analyze each template parameter
-    /*List<PageElementTemplate> templates = analysis.getTemplates();
+    List<PageElementTemplate> templates = analysis.getTemplates();
     for (PageElementTemplate template : templates) {
       for (int paramNum = 0; paramNum < template.getParameterCount(); paramNum++) {
-        if ("ISBN10".equalsIgnoreCase(template.getParameterName(paramNum))) {
+        String paramName = template.getParameterName(paramNum);
+        if ("ISBN10".equalsIgnoreCase(paramName) ||
+            "ISBN13".equalsIgnoreCase(paramName)) {
           if (errors == null) {
             return true;
           }
           result = true;
-          int begin = template.getParameterNameOffset(paramNum);
+          int begin = template.getParameterNameStartIndex(paramNum);
           CheckErrorResult errorResult = createCheckErrorResult(
               analysis, begin,
-              begin + template.getParameterName(paramNum).length());
+              begin + template.getParameterName(paramNum).length(),
+              ErrorLevel.WARNING);
+          boolean found = false;
+          int number = 1;
+          while ((number < 10) && !found) {
+            boolean exist = false;
+            for (int paramNum2 = 0; paramNum2 < template.getParameterCount(); paramNum2++) {
+              String paramName2 = template.getParameterName(paramNum2);
+              if ((number == 1) && ("ISBN".equalsIgnoreCase(paramName2))) {
+                exist = true;
+              }
+              if (("ISBN" + number).equalsIgnoreCase(paramName2)) {
+                exist = true;
+              }
+            }
+            if (!exist) {
+              found = true;
+              if (number == 1) {
+                errorResult.addReplacement(paramName.substring(0, 4));
+              } else {
+                errorResult.addReplacement(paramName.substring(0, 4) + number);
+              }
+            }
+            number++;
+          }
           errors.add(errorResult);
         }
       }
-    }*/
+    }
 
     return result;
   }
