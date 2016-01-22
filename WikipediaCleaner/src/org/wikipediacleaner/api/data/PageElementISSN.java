@@ -53,6 +53,58 @@ public class PageElementISSN extends PageElement {
       PageAnalysis analysis) {
     List<PageElementISSN> issns = new ArrayList<PageElementISSN>();
 
+    // Search for ISSN templates
+    WPCConfiguration config = analysis.getWPCConfiguration();
+    List<String[]> issnTemplates = config.getStringArrayList(WPCConfigurationStringList.ISSN_TEMPLATES);
+    if (issnTemplates != null) {
+      for (String[] issnTemplate : issnTemplates) {
+        if (issnTemplate.length > 0) {
+          List<PageElementTemplate> templates = analysis.getTemplates(issnTemplate[0]);
+          if (templates != null) {
+            for (PageElementTemplate template : templates) {
+              String[] params = null;
+              if (issnTemplate.length > 1) {
+                params = issnTemplate[1].split(",");
+              } else {
+                params = new String[]{ "1" };
+              }
+              for (String param : params) {
+                if ((param != null) && (param.length() > 0)) {
+                  analyzeTemplateParams(
+                      analysis, issns, template, param,
+                      false, false, true, false);
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+
+    // Search for ISSN templates where help is requested
+    issnTemplates = config.getStringArrayList(WPCConfigurationStringList.ISSN_HELP_NEEDED_TEMPLATES);
+    if (issnTemplates != null) {
+      for (String[] issnTemplate : issnTemplates) {
+        if (issnTemplate.length > 0) {
+          List<PageElementTemplate> templates = analysis.getTemplates(issnTemplate[0]);
+          if (templates != null) {
+            for (PageElementTemplate template : templates) {
+              analyzeTemplateParams(
+                  analysis, issns, template,
+                  ((issnTemplate.length > 1) && (issnTemplate[1].length() > 0)) ? issnTemplate[1] : "1",
+                  false, false, false, true);
+            }
+          }
+        }
+      }
+    }
+
+    // Search for ISSN in template parameters
+    List<PageElementTemplate> templates = analysis.getTemplates();
+    for (PageElementTemplate template : templates) {
+      analyzeTemplateParams(analysis, issns, template, "ISSN", true, true, true, false);
+    }
+
     // Search for ISSN in plain texts
     String contents = analysis.getContents();
     int index = 0;
@@ -71,6 +123,9 @@ public class PageElementISSN extends PageElement {
       }
       if (isISSN && (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_NOWIKI, index) != null)) {
         isISSN = false;
+      }
+      if (isISSN && isInISSN(index, issns)) {
+        isISSN = false; // to avoid issn=ISSN xxxx-xxxx being detected twice
       }
       if (isISSN) {
         PageElementExternalLink link = analysis.isInExternalLink(index);
@@ -185,59 +240,24 @@ public class PageElementISSN extends PageElement {
       }
     }
 
-    // Search for ISSN templates
-    WPCConfiguration config = analysis.getWPCConfiguration();
-    List<String[]> issnTemplates = config.getStringArrayList(WPCConfigurationStringList.ISSN_TEMPLATES);
-    if (issnTemplates != null) {
-      for (String[] issnTemplate : issnTemplates) {
-        if (issnTemplate.length > 0) {
-          List<PageElementTemplate> templates = analysis.getTemplates(issnTemplate[0]);
-          if (templates != null) {
-            for (PageElementTemplate template : templates) {
-              String[] params = null;
-              if (issnTemplate.length > 1) {
-                params = issnTemplate[1].split(",");
-              } else {
-                params = new String[]{ "1" };
-              }
-              for (String param : params) {
-                if ((param != null) && (param.length() > 0)) {
-                  analyzeTemplateParams(
-                      analysis, issns, template, param,
-                      false, false, true, false);
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-
-    // Search for ISSN templates where help is requested
-    issnTemplates = config.getStringArrayList(WPCConfigurationStringList.ISSN_HELP_NEEDED_TEMPLATES);
-    if (issnTemplates != null) {
-      for (String[] issnTemplate : issnTemplates) {
-        if (issnTemplate.length > 0) {
-          List<PageElementTemplate> templates = analysis.getTemplates(issnTemplate[0]);
-          if (templates != null) {
-            for (PageElementTemplate template : templates) {
-              analyzeTemplateParams(
-                  analysis, issns, template,
-                  ((issnTemplate.length > 1) && (issnTemplate[1].length() > 0)) ? issnTemplate[1] : "1",
-                  false, false, false, true);
-            }
-          }
-        }
-      }
-    }
-
-    // Search for ISSN in template parameters
-    List<PageElementTemplate> templates = analysis.getTemplates();
-    for (PageElementTemplate template : templates) {
-      analyzeTemplateParams(analysis, issns, template, "ISSN", true, true, true, false);
-    }
-
     return issns;
+  }
+
+  /**
+   * @param index Current index.
+   * @param issns List of ISSN.
+   * @return True if the current index is already in a ISSN.
+   */
+  private static boolean isInISSN(int index, List<PageElementISSN> issns) {
+    if (issns != null) {
+      for (PageElementISSN tmpIssn : issns) {
+        if ((tmpIssn.getBeginIndex() <= index) &&
+            (tmpIssn.getEndIndex() > index)) {
+          return true;
+        }
+      }
+    }
+    return false;
   }
 
   /**
