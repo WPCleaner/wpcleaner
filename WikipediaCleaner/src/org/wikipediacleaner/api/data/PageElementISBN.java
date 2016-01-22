@@ -53,6 +53,58 @@ public class PageElementISBN extends PageElement {
       PageAnalysis analysis) {
     List<PageElementISBN> isbns = new ArrayList<PageElementISBN>();
 
+    // Search for ISBN templates
+    WPCConfiguration config = analysis.getWPCConfiguration();
+    List<String[]> isbnTemplates = config.getStringArrayList(WPCConfigurationStringList.ISBN_TEMPLATES);
+    if (isbnTemplates != null) {
+      for (String[] isbnTemplate : isbnTemplates) {
+        if (isbnTemplate.length > 0) {
+          List<PageElementTemplate> templates = analysis.getTemplates(isbnTemplate[0]);
+          if (templates != null) {
+            for (PageElementTemplate template : templates) {
+              String[] params = null;
+              if (isbnTemplate.length > 1) {
+                params = isbnTemplate[1].split(",");
+              } else {
+                params = new String[]{ "1" };
+              }
+              for (String param : params) {
+                if ((param != null) && (param.length() > 0)) {
+                  analyzeTemplateParams(
+                      analysis, isbns, template, param,
+                      false, false, true, false);
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+
+    // Search for ISBN templates where help is requested
+    isbnTemplates = config.getStringArrayList(WPCConfigurationStringList.ISBN_HELP_NEEDED_TEMPLATES);
+    if (isbnTemplates != null) {
+      for (String[] isbnTemplate : isbnTemplates) {
+        if (isbnTemplate.length > 0) {
+          List<PageElementTemplate> templates = analysis.getTemplates(isbnTemplate[0]);
+          if (templates != null) {
+            for (PageElementTemplate template : templates) {
+              analyzeTemplateParams(
+                  analysis, isbns, template,
+                  ((isbnTemplate.length > 1) && (isbnTemplate[1].length() > 0)) ? isbnTemplate[1] : "1",
+                  false, false, false, true);
+            }
+          }
+        }
+      }
+    }
+
+    // Search for ISBN in template parameters
+    List<PageElementTemplate> templates = analysis.getTemplates();
+    for (PageElementTemplate template : templates) {
+      analyzeTemplateParams(analysis, isbns, template, "ISBN", true, true, true, false);
+    }
+
     // Search for ISBN in plain texts
     String contents = analysis.getContents();
     int index = 0;
@@ -70,6 +122,9 @@ public class PageElementISBN extends PageElement {
         isISBN = false;
       }
       if (isISBN && (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_NOWIKI, index) != null)) {
+        isISBN = false;
+      }
+      if (isISBN && isInISBN(index, isbns)) {
         isISBN = false;
       }
       if (isISBN) {
@@ -187,59 +242,24 @@ public class PageElementISBN extends PageElement {
       }
     }
 
-    // Search for ISBN templates
-    WPCConfiguration config = analysis.getWPCConfiguration();
-    List<String[]> isbnTemplates = config.getStringArrayList(WPCConfigurationStringList.ISBN_TEMPLATES);
-    if (isbnTemplates != null) {
-      for (String[] isbnTemplate : isbnTemplates) {
-        if (isbnTemplate.length > 0) {
-          List<PageElementTemplate> templates = analysis.getTemplates(isbnTemplate[0]);
-          if (templates != null) {
-            for (PageElementTemplate template : templates) {
-              String[] params = null;
-              if (isbnTemplate.length > 1) {
-                params = isbnTemplate[1].split(",");
-              } else {
-                params = new String[]{ "1" };
-              }
-              for (String param : params) {
-                if ((param != null) && (param.length() > 0)) {
-                  analyzeTemplateParams(
-                      analysis, isbns, template, param,
-                      false, false, true, false);
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-
-    // Search for ISBN templates where help is requested
-    isbnTemplates = config.getStringArrayList(WPCConfigurationStringList.ISBN_HELP_NEEDED_TEMPLATES);
-    if (isbnTemplates != null) {
-      for (String[] isbnTemplate : isbnTemplates) {
-        if (isbnTemplate.length > 0) {
-          List<PageElementTemplate> templates = analysis.getTemplates(isbnTemplate[0]);
-          if (templates != null) {
-            for (PageElementTemplate template : templates) {
-              analyzeTemplateParams(
-                  analysis, isbns, template,
-                  ((isbnTemplate.length > 1) && (isbnTemplate[1].length() > 0)) ? isbnTemplate[1] : "1",
-                  false, false, false, true);
-            }
-          }
-        }
-      }
-    }
-
-    // Search for ISBN in template parameters
-    List<PageElementTemplate> templates = analysis.getTemplates();
-    for (PageElementTemplate template : templates) {
-      analyzeTemplateParams(analysis, isbns, template, "ISBN", true, true, true, false);
-    }
-
     return isbns;
+  }
+
+  /**
+   * @param index Current index.
+   * @param isbns List of ISBN.
+   * @return True if the current index is already in a ISBN.
+   */
+  private static boolean isInISBN(int index, List<PageElementISBN> isbns) {
+    if (isbns != null) {
+      for (PageElementISBN tmpIsbn : isbns) {
+        if ((tmpIsbn.getBeginIndex() <= index) &&
+            (tmpIsbn.getEndIndex() > index)) {
+          return true;
+        }
+      }
+    }
+    return false;
   }
 
   /**
