@@ -106,32 +106,45 @@ public abstract class MediaWikiController implements MediaWikiListener {
    */
   protected Object getNextResult() throws APIException {
     while (hasRemainingTask()) {
-      synchronized (results) {
-        for (Future<?> result : results) {
-          if (result.isDone()) {
-            results.remove(result);
-            try {
-              return result.get(10, TimeUnit.MILLISECONDS);
-            } catch (InterruptedException e) {
-              // Nothing to do
-            } catch (ExecutionException e) {
-              Throwable cause = e.getCause();
-              if (cause instanceof APIException) {
-                throw (APIException) cause;
-              }
-              return cause;
-            } catch (TimeoutException e) {
-              // Shouldn't arrive
-            } catch (CancellationException e) {
-              //
-            }
+      Future<?> result = getNextDoneResult();
+      if (result != null) {
+        try {
+          return result.get(10, TimeUnit.MILLISECONDS);
+        } catch (InterruptedException e) {
+          // Nothing to do
+        } catch (ExecutionException e) {
+          Throwable cause = e.getCause();
+          if (cause instanceof APIException) {
+            throw (APIException) cause;
           }
+          return cause;
+        } catch (TimeoutException e) {
+          // Shouldn't arrive
+        } catch (CancellationException e) {
+          //
         }
       }
       try {
         Thread.sleep(100);
       } catch (InterruptedException e) {
         // Nothing to do
+      }
+    }
+    return null;
+  }
+
+  /**
+   * @return The result of one of the completed remaining tasks.
+   */
+  protected Future<?> getNextDoneResult() {
+    if (hasRemainingTask()) {
+      synchronized (results) {
+        for (Future<?> result : results) {
+          if (result.isDone()) {
+            results.remove(result);
+            return result;
+          }
+        }
       }
     }
     return null;

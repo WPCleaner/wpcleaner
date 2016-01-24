@@ -13,6 +13,7 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionListener;
 import java.beans.EventHandler;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -21,6 +22,7 @@ import java.util.Set;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
+import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
@@ -53,28 +55,28 @@ import org.wikipediacleaner.utils.ConfigurationValueInteger;
  */
 public class CWToolsPanel extends BotToolsPanel {
 
-  /** Serialization. */
+  /** Serialization */
   private static final long serialVersionUID = -8468890591813838957L;
 
-  /** Configure if page that couldn't be fixed should be analyzed. */
+  /** Configure if page that couldn't be fixed should be analyzed */
   private JCheckBox chkCWAnalyze;
 
-  /** No limit of number of pages for non CW error. */
+  /** No limit of number of pages for non CW error */
   private JCheckBox chkNoLimit;
 
-  /** Configure number of pages for each error. */
+  /** Configure number of pages for each error */
   private SpinnerNumberModel modelNbPages;
 
-  /** Comment. */
+  /** Comment */
   private JTextField txtComment;
 
-  /** Table model for Check Wiki automatic fixing. */
+  /** Table model for Check Wiki automatic fixing */
   BotCWTableModel modelCWAutomaticFixing;
 
-  /** Table for Check Wiki automatic fixing. */
+  /** Table for Check Wiki automatic fixing */
   private JTable tableCWAutomaticFixing;
 
-  /** Button for loading selection. */
+  /** Button for loading selection */
   private JButton buttonLoadSelection;
 
   /**
@@ -213,6 +215,14 @@ public class CWToolsPanel extends BotToolsPanel {
         ActionListener.class, this, "actionCWCheckWhiteLists"));
     toolbarButtons.add(buttonCWCheckWhiteLists);
 
+    // Button for listing errors from dump file
+    JButton buttonListCW = Utilities.createJButton(
+        "gnome-logviewer.png", EnumImageSize.NORMAL,
+        GT._("Analyze dump file"), false, null);
+    buttonListCW.addActionListener(EventHandler.create(
+        ActionListener.class, this, "actionCWLists"));
+    toolbarButtons.add(buttonListCW);
+
     // Button for saving selection
     JButton buttonSaveSelection = Utilities.createJButton(
         "gnome-document-save.png", EnumImageSize.NORMAL,
@@ -305,6 +315,46 @@ public class CWToolsPanel extends BotToolsPanel {
   public void actionCWCheckWhiteLists() {
     EnumWikipedia wiki = window.getWikipedia();
     CWCheckWhiteListsWorker worker = new CWCheckWhiteListsWorker(wiki, window);
+    worker.start();
+  }
+
+  /**
+   * Action called when List Check Wiki errors button is pressed.
+   */
+  public void actionCWLists() {
+    EnumWikipedia wiki = window.getWikipedia();
+    if (!wiki.getCWConfiguration().isProjectAvailable()) {
+      Utilities.displayMissingConfiguration(
+          window.getParentComponent(), null);
+      return;
+    }
+    List<CheckErrorAlgorithm> listAlgorithms = modelCWAutomaticFixing.getListAlgorithms();
+    if ((listAlgorithms == null) || listAlgorithms.isEmpty()) {
+      window.displayWarning(GT._("You must select at least one algorithm for listing errors"));
+      return;
+    }
+    int answer = window.displayYesNoWarning(BasicWindow.experimentalMessage);
+    if (answer != JOptionPane.YES_OPTION) {
+      return;
+    }
+    JFileChooser fileChooser = new JFileChooser();
+    fileChooser.setCurrentDirectory(new File("."));
+    fileChooser.setDialogTitle(GT._("Dump file"));
+    answer = fileChooser.showOpenDialog(window.getParentComponent());
+    if (answer != JFileChooser.APPROVE_OPTION) {
+      return;
+    }
+    File dumpFile = fileChooser.getSelectedFile();
+    JFileChooser dirChooser = new JFileChooser();
+    dirChooser.setCurrentDirectory(new File("."));
+    dirChooser.setDialogTitle(GT._("Export directory"));
+    dirChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+    answer = dirChooser.showOpenDialog(window.getParentComponent());
+    if (answer != JFileChooser.APPROVE_OPTION) {
+      return;
+    }
+    File outputDir = dirChooser.getSelectedFile();
+    ListCWWorker worker = new ListCWWorker(wiki, window, dumpFile, outputDir, listAlgorithms);
     worker.start();
   }
 

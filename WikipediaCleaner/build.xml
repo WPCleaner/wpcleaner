@@ -19,6 +19,12 @@
   <property name="WPCleaner.libs.codec.lic"               value="LICENSE.txt" />
   <property name="WPCleaner.libs.codec.not"               value="NOTICE.txt" />
 
+  <property name="WPCleaner.libs.compress.version"        value="1.10" />
+  <property name="WPCleaner.libs.compress.dir"            value="libs/commons-compress-${WPCleaner.libs.compress.version}" />
+  <property name="WPCleaner.libs.compress.jar"            value="commons-compress-${WPCleaner.libs.compress.version}.jar" />
+  <property name="WPCleaner.libs.compress.lic"            value="LICENSE.txt" />
+  <property name="WPCleaner.libs.compress.not"            value="NOTICE.txt" />
+
   <property name="WPCleaner.libs.gettext.version"         value="0.9.6" />
   <property name="WPCleaner.libs.gettext.dir"             value="libs/gettext-commons-${WPCleaner.libs.gettext.version}" />
   <property name="WPCleaner.libs.gettext.jar"             value="gettext-commons-${WPCleaner.libs.gettext.version}.jar" />
@@ -59,7 +65,7 @@
   <property name="WPCleaner.libs.jdom.jars"
             value="${WPCleaner.libs.jaxen-core.jar} ${WPCleaner.libs.jaxen-jdom.jar} ${WPCleaner.libs.jdom.jar} ${WPCleaner.libs.saxpath.jar}" />
   <property name="WPCleaner.libs.various.jars"
-            value="${WPCleaner.libs.codec.jar} ${WPCleaner.libs.httpclient.jar} ${WPCleaner.libs.logging.jar} ${WPCleaner.libs.gettext.jar}" />
+            value="${WPCleaner.libs.codec.jar} ${WPCleaner.libs.compress.jar} ${WPCleaner.libs.httpclient.jar} ${WPCleaner.libs.logging.jar} ${WPCleaner.libs.gettext.jar}" />
   <property name="WPCleaner.libs.jars"
             value="${WPCleaner.libs.various.jars} ${WPCleaner.libs.jdom.jars}" />
 
@@ -112,6 +118,7 @@
 
     <!-- Extract libraries -->
     <unzip src="${WPCleaner.libs.codec.dir}/${WPCleaner.libs.codec.jar}"                 dest="${WPCleaner.classes.dir}" />
+    <unzip src="${WPCleaner.libs.compress.dir}/${WPCleaner.libs.compress.jar}"           dest="${WPCleaner.classes.dir}" />
     <unzip src="${WPCleaner.libs.httpclient.dir}/${WPCleaner.libs.httpclient.jar}"       dest="${WPCleaner.classes.dir}" />
     <unzip src="${WPCleaner.libs.logging.dir}/${WPCleaner.libs.logging.jar}"             dest="${WPCleaner.classes.dir}" />
     <unzip src="${WPCleaner.libs.gettext.dir}/${WPCleaner.libs.gettext.jar}"             dest="${WPCleaner.classes.dir}" />
@@ -146,6 +153,10 @@
           tofile="${WPCleaner.classes.dir}/LICENSE_commons-codec.txt" />
     <copy file="${WPCleaner.libs.codec.dir}/${WPCleaner.libs.codec.not}"
           tofile="${WPCleaner.classes.dir}/NOTICE_commons-codec.txt" />
+    <copy file="${WPCleaner.libs.compress.dir}/${WPCleaner.libs.compress.lic}"
+          tofile="${WPCleaner.classes.dir}/LICENSE_commons-compress.txt" />
+    <copy file="${WPCleaner.libs.compress.dir}/${WPCleaner.libs.compress.not}"
+          tofile="${WPCleaner.classes.dir}/NOTICE_commons-compress.txt" />
     <copy file="${WPCleaner.libs.httpclient.dir}/${WPCleaner.libs.httpclient.lic}"
           tofile="${WPCleaner.classes.dir}/LICENSE_commons-httpclient.txt" />
     <copy file="${WPCleaner.libs.httpclient.dir}/${WPCleaner.libs.httpclient.not}"

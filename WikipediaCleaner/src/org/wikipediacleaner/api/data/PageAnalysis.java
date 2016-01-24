@@ -343,7 +343,7 @@ public class PageAnalysis {
       comments = new ArrayList<PageElementComment>();
 
       // Go through all the text of the page
-      int maxIndex = contents.length();
+      int maxIndex = (contents != null) ? contents.length() : 0;
       int currentIndex = 0;
       while (currentIndex < maxIndex) {
         currentIndex = contents.indexOf("<!--", currentIndex);
@@ -380,7 +380,7 @@ public class PageAnalysis {
       tags = new ArrayList<PageElementTag>();
 
       // Go through all the text of the page
-      int maxIndex = contents.length();
+      int maxIndex = (contents != null) ? contents.length() : 0;
       int currentIndex = 0;
       while (currentIndex < maxIndex) {
         currentIndex = contents.indexOf('<', currentIndex);
@@ -451,7 +451,7 @@ public class PageAnalysis {
       externalLinks = new ArrayList<PageElementExternalLink>();
 
       // Go through all the text of the page
-      int maxIndex = contents.length();
+      int maxIndex = (contents != null) ? contents.length() : 0;
       int currentIndex = 0;
       while (currentIndex < maxIndex) {
 

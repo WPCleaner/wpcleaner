@@ -7,6 +7,7 @@
 
 package org.wikipediacleaner;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -27,6 +28,7 @@ import org.wikipediacleaner.api.data.ISBNRange;
 import org.wikipediacleaner.gui.swing.basic.BasicWorker;
 import org.wikipediacleaner.gui.swing.basic.BasicWorkerListener;
 import org.wikipediacleaner.gui.swing.bot.AutomaticCWWorker;
+import org.wikipediacleaner.gui.swing.bot.ListCWWorker;
 import org.wikipediacleaner.gui.swing.worker.LoginWorker;
 import org.wikipediacleaner.gui.swing.worker.UpdateDabWarningWorker;
 import org.wikipediacleaner.gui.swing.worker.UpdateDuplicateArgsWarningWorker;
@@ -201,15 +203,23 @@ public class Bot implements BasicWorkerListener {
     } else if ("FixCheckWiki".equalsIgnoreCase(action)) {
       List<CheckErrorAlgorithm> algorithms = new ArrayList<CheckErrorAlgorithm>();
       List<CheckErrorAlgorithm> allAlgorithms = new ArrayList<CheckErrorAlgorithm>();
-      extractAlgorithms(algorithms, allAlgorithms, args);
+      extractAlgorithms(algorithms, allAlgorithms, args, 1);
       worker = new AutomaticCWWorker(
           wiki, null, algorithms, 10000, true, allAlgorithms, null, true, false);
     } else if ("MarkCheckWiki".equalsIgnoreCase(action)) {
       List<CheckErrorAlgorithm> algorithms = new ArrayList<CheckErrorAlgorithm>();
       List<CheckErrorAlgorithm> allAlgorithms = new ArrayList<CheckErrorAlgorithm>();
-      extractAlgorithms(algorithms, allAlgorithms, args);
+      extractAlgorithms(algorithms, allAlgorithms, args, 1);
       worker = new AutomaticCWWorker(
           wiki, null, algorithms, 10000, true, allAlgorithms, null, false, false);
+    } else if ("ListCheckWiki".equalsIgnoreCase(action)) {
+      if (args.length > 3) {
+        File dumpFile = new File(args[1]);
+        File outputDir = new File(args[2]);
+        List<CheckErrorAlgorithm> algorithms = new ArrayList<CheckErrorAlgorithm>();
+        extractAlgorithms(algorithms, null, args, 3);
+        worker = new ListCWWorker(wiki, null, dumpFile, outputDir, algorithms);
+      }
     }
     if (worker != null) {
       worker.setListener(this);
@@ -222,12 +232,13 @@ public class Bot implements BasicWorkerListener {
    * @param algorithms List of selected algorithms.
    * @param allAlgorithms List of all possible algorithms.
    * @param args Arguments.
+   * @param startIndex Start index in the arguments.
    */
   private void extractAlgorithms(
       List<CheckErrorAlgorithm> algorithms,
       List<CheckErrorAlgorithm> allAlgorithms,
-      String[] args) {
-    for (int i = 1; i < args.length; i++) {
+      String[] args, int startIndex) {
+    for (int i = startIndex; i < args.length; i++) {
       boolean addition = false;
       String algorithmNumber = args[i];
       if (algorithmNumber.startsWith("+")) {
@@ -243,7 +254,9 @@ public class Bot implements BasicWorkerListener {
             if (!addition) {
               algorithms.add(algorithm);
             }
-            allAlgorithms.add(algorithm);
+            if (allAlgorithms != null) {
+              allAlgorithms.add(algorithm);
+            }
           }
         }
       } else {
@@ -252,7 +265,9 @@ public class Bot implements BasicWorkerListener {
           if (!addition) {
             algorithms.add(algorithm);
           }
-          allAlgorithms.add(algorithm);
+          if (allAlgorithms != null) {
+            allAlgorithms.add(algorithm);
+          }
         }
       }
     }

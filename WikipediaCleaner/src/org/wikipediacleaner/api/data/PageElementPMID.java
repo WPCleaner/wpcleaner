@@ -48,8 +48,54 @@ public class PageElementPMID extends PageElement {
       PageAnalysis analysis) {
     List<PageElementPMID> pmids = new ArrayList<PageElementPMID>();
 
+    // Search for PMID templates
+    WPCConfiguration config = analysis.getWPCConfiguration();
+    List<String[]> pmidTemplates = config.getStringArrayList(WPCConfigurationStringList.PMID_TEMPLATES);
+    if (pmidTemplates != null) {
+      for (String[] pmidTemplate : pmidTemplates) {
+        if (pmidTemplate.length > 0) {
+          List<PageElementTemplate> templates = analysis.getTemplates(pmidTemplate[0]);
+          if (templates != null) {
+            for (PageElementTemplate template : templates) {
+              analyzeTemplateParams(
+                  analysis, pmids, template,
+                  (pmidTemplate.length > 1) ? pmidTemplate[1] : "1",
+                  false, false, false, false);
+            }
+          }
+        }
+      }
+    }
+
+    // Search for PMID templates where help is requested
+    pmidTemplates = config.getStringArrayList(WPCConfigurationStringList.PMID_HELP_NEEDED_TEMPLATES);
+    if (pmidTemplates != null) {
+      for (String[] pmidTemplate : pmidTemplates) {
+        if (pmidTemplate.length > 0) {
+          List<PageElementTemplate> templates = analysis.getTemplates(pmidTemplate[0]);
+          if (templates != null) {
+            for (PageElementTemplate template : templates) {
+              analyzeTemplateParams(
+                  analysis, pmids, template,
+                  ((pmidTemplate.length > 1) && (pmidTemplate[1].length() > 0)) ? pmidTemplate[1] : "1",
+                  false, false, false, true);
+            }
+          }
+        }
+      }
+    }
+
+    // Search for PMID in template parameters
+    List<PageElementTemplate> templates = analysis.getTemplates();
+    for (PageElementTemplate template : templates) {
+      analyzeTemplateParams(analysis, pmids, template, "PMID", true, true, true, false);
+    }
+
     // Search for PMID in plain texts
     String contents = analysis.getContents();
+    if (contents == null) {
+      return pmids;
+    }
     int index = 0;
     int maxIndex = contents.length() - PMID_PREFIX.length();
     while (index < maxIndex) {
@@ -73,6 +119,9 @@ public class PageElementPMID extends PageElement {
             isValid = false;
           }
         }
+      }
+      if (isPMID && isInPMID(index, pmids)) {
+        isPMID = false;
       }
       if (isPMID) {
         PageElementTemplate template = analysis.isInTemplate(index);
@@ -146,50 +195,24 @@ public class PageElementPMID extends PageElement {
       }
     }
 
-    // Search for PMID templates
-    WPCConfiguration config = analysis.getWPCConfiguration();
-    List<String[]> pmidTemplates = config.getStringArrayList(WPCConfigurationStringList.PMID_TEMPLATES);
-    if (pmidTemplates != null) {
-      for (String[] pmidTemplate : pmidTemplates) {
-        if (pmidTemplate.length > 0) {
-          List<PageElementTemplate> templates = analysis.getTemplates(pmidTemplate[0]);
-          if (templates != null) {
-            for (PageElementTemplate template : templates) {
-              analyzeTemplateParams(
-                  analysis, pmids, template,
-                  (pmidTemplate.length > 1) ? pmidTemplate[1] : "1",
-                  false, false, false, false);
-            }
-          }
-        }
-      }
-    }
-
-    // Search for PMID templates where help is requested
-    pmidTemplates = config.getStringArrayList(WPCConfigurationStringList.PMID_HELP_NEEDED_TEMPLATES);
-    if (pmidTemplates != null) {
-      for (String[] pmidTemplate : pmidTemplates) {
-        if (pmidTemplate.length > 0) {
-          List<PageElementTemplate> templates = analysis.getTemplates(pmidTemplate[0]);
-          if (templates != null) {
-            for (PageElementTemplate template : templates) {
-              analyzeTemplateParams(
-                  analysis, pmids, template,
-                  ((pmidTemplate.length > 1) && (pmidTemplate[1].length() > 0)) ? pmidTemplate[1] : "1",
-                  false, false, false, true);
-            }
-          }
-        }
-      }
-    }
-
-    // Search for PMID in template parameters
-    List<PageElementTemplate> templates = analysis.getTemplates();
-    for (PageElementTemplate template : templates) {
-      analyzeTemplateParams(analysis, pmids, template, "PMID", true, true, true, false);
-    }
-
     return pmids;
+  }
+
+  /**
+   * @param index Current index.
+   * @param pmids List of PMID.
+   * @return True if the current index is already in a PMID.
+   */
+  private static boolean isInPMID(int index, List<PageElementPMID> pmids) {
+    if (pmids != null) {
+      for (PageElementPMID tmpPmid : pmids) {
+        if ((tmpPmid.getBeginIndex() <= index) &&
+            (tmpPmid.getEndIndex() > index)) {
+          return true;
+        }
+      }
+    }
+    return false;
   }
 
   /**

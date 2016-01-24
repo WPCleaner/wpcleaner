@@ -107,6 +107,9 @@ public class PageElementISBN extends PageElement {
 
     // Search for ISBN in plain texts
     String contents = analysis.getContents();
+    if (contents == null) {
+      return isbns;
+    }
     int index = 0;
     int maxIndex = contents.length() - ISBN_PREFIX.length();
     while (index < maxIndex) {

@@ -102,9 +102,10 @@ public class AboutWindow extends BasicWindow {
   private Component createAboutComponents() {
     JTabbedPane pane = new JTabbedPane();
     pane.addTab(Version.PROGRAM, createWPCleanerTab());
-    pane.addTab("Commons Logging", createCommonsLoggingTab());
     pane.addTab("Commons Codec", createCommonsCodecTab());
+    pane.addTab("Commons Compress", createCommonsCompressTab());
     pane.addTab("Commons HttpClient", createCommonsHttpClientTab());
+    pane.addTab("Commons Logging", createCommonsLoggingTab());
     pane.addTab("Gettext Commons", createGettextCommonsTab());
     pane.addTab("JDOM", createJDomTab());
     pane.addTab("Jaxen", createJaxenTab());
@@ -270,6 +271,26 @@ public class AboutWindow extends BasicWindow {
         "</html>");
     addFile(panel, constraints, "NOTICE_commons-codec.txt");
     addFile(panel, constraints, "LICENSE_commons-codec.txt");
+    return createScrollPane(panel);
+  }
+
+  /**
+   * @return Apache Commons Compress tab.
+   */
+  private Component createCommonsCompressTab() {
+    JPanel panel = new JPanel(new GridBagLayout());
+    GridBagConstraints constraints = initializeGridBagConstraints();
+    addPresentation(
+        panel, constraints,
+        "<html>" +
+        "<b>Apache Commons Compress</b> is a component of Commons Apache projet." +
+        "<br>" +
+        "The Apache Commons Compress library defines an API for working with ar, cpio, Unix dump, tar, zip, gzip, XZ, Pack200, bzip2, 7z, arj, lzma, snappy, DEFLATE and Z files." +
+        "<br>" +
+        "See <a href='http://commons.apache.org/proper/commons-compress/'>http://commons.apache.org/proper/commons-compress/</a> for more information." +
+        "</html>");
+    addFile(panel, constraints, "NOTICE_commons-compress.txt");
+    addFile(panel, constraints, "LICENSE_commons-compress.txt");
     return createScrollPane(panel);
   }
 

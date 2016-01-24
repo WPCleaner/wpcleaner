@@ -107,6 +107,9 @@ public class PageElementISSN extends PageElement {
 
     // Search for ISSN in plain texts
     String contents = analysis.getContents();
+    if (contents == null) {
+      return issns;
+    }
     int index = 0;
     int maxIndex = contents.length() - ISSN_PREFIX.length();
     while (index < maxIndex) {
@@ -303,7 +306,18 @@ public class PageElementISSN extends PageElement {
           }
         }
       }
-      
+
+      // Parameter is for an ISSN, analyze that it's not filled by WikiData
+      if (nameOk) {
+        String paramValue = template.getParameterValue(paramNum);
+        if ((paramValue == null) ||
+            (paramValue.trim().length() == 0) ||
+            "{{#property:p236}}".equalsIgnoreCase(paramValue.trim())) {
+          nameOk = false;
+        }
+      }
+
+      // Parameter is for an ISSN, analyze its value
       if (nameOk) {
         String paramValue = template.getParameterValue(paramNum);
         boolean ok = true;
