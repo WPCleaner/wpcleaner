@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2016-01-03 13:07+0100\n"
+"POT-Creation-Date: 2016-01-24 14:10+0100\n"
 "PO-Revision-Date: 2015-12-25 13:53+0100\n"
 "Last-Translator: Nicolas Vervelle <nvervelle@gmail.com>\n"
 "Language-Team: Brazilian Portuguese <pt_BR@li.org>\n"
@@ -497,11 +497,11 @@ msgstr "A página \"{0} \" em \"{1} \" não tem um link de idioma para \"{2} \".
 msgid "You can replace the link using template {0}."
 msgstr "Você pode substituir o link usando a predefinição {0}."
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm069.java:148
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm069.java:193
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm070.java:132
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm071.java:107
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm106.java:148
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm107.java:123
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm107.java:122
 msgid "An explanation of the problem"
 msgstr "Uma explicação sobre o problema"
 
@@ -668,7 +668,7 @@ msgstr "Lista de substituições possíveis"
 msgid "Replace all pipe templates"
 msgstr "Substituir todos os pipe templates"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm107.java:65
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm107.java:64
 #, fuzzy, java-format
 msgid "Length of ISSN is {0} instead of 8"
 msgstr "O comprimento do ISBN é {0} em vez de 10 ou 13"
@@ -1206,8 +1206,8 @@ msgid "Save"
 msgstr "Salvar"
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:253
-#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:113
-#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:195
+#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:115
+#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:197
 msgid "Automatic fixing for Check Wiki"
 msgstr "Correções automáticas para Check Wiki"
 
@@ -2012,7 +2012,7 @@ msgstr "Análise de desambiguação"
 msgid "A comment is required for sending the page."
 msgstr "Um comentário é requerido para enviar a página."
 
-#: org/wikipediacleaner/gui/swing/OnePageWindow.java:1062
+#: org/wikipediacleaner/gui/swing/OnePageWindow.java:1069
 #, java-format
 msgid "Sending {0}"
 msgstr "Enviando {0}"
@@ -2096,7 +2096,7 @@ msgstr "Predefinições utilizadas em {0}, vinculados a {1}"
 #: org/wikipediacleaner/gui/swing/worker/LoginWorker.java:88
 #: org/wikipediacleaner/gui/swing/worker/NewSectionWorker.java:62
 #: org/wikipediacleaner/gui/swing/worker/RandomPageWorker.java:49
-#: org/wikipediacleaner/gui/swing/worker/SendWorker.java:90
+#: org/wikipediacleaner/gui/swing/worker/SendWorker.java:169
 #: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:88
 msgid "Retrieving MediaWiki API"
 msgstr "Recuperando a API do MediaWiki"
@@ -2504,67 +2504,81 @@ msgstr ""
 msgid "Whitelists"
 msgstr "Listas brancas"
 
-#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:135
+#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:137
 msgid "To use Check Wiki bot tools:"
 msgstr "Para usar as ferramentas de boot do Check Wiki"
 
-#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:136
+#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:138
 msgid "Select algorithms for which automatic fixing will be applied"
 msgstr ""
 "Selecione os algoritmos para os quais a correção automática será aplicada"
 
-#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:137
+#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:139
 msgid ""
 "Select algorithms that will be used to create a list of pages to work on"
 msgstr ""
 "Selecione os algoritmos que vão ser utilizados para criar uma lista de "
 "páginas"
 
-#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:138
+#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:140
 msgid "Run the tools below"
 msgstr "Executar as ferramentas abaixo"
 
-#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:147
+#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:149
 msgid "Analyze pages that couldn't be fixed by bot"
 msgstr "Analisar as páginas que não podem ser corrigidos por bot"
 
-#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:154
+#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:156
 msgid "Ignore limit for errors not on Labs"
 msgstr "Ignorar limite de erros que não estão em Labs"
 
-#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:162
+#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:164
 msgid "Number of pages:"
 msgstr "Número de páginas:"
 
-#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:176
+#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:178
 msgid "Comment:"
 msgstr "Comentário:"
 
-#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:203
+#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:205
 msgid "Mark errors already fixed"
 msgstr "Marcar erros já corrigidos"
 
-#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:211
+#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:213
 msgid "Check whitelists"
 msgstr "Verificar listas brancas"
 
-#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:219
+#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:221
+#, fuzzy
+msgid "Analyze dump file"
+msgstr "Analisar predefinição"
+
+#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:229
 msgid "Save selection"
 msgstr "Salvar a seleção"
 
-#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:227
+#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:237
 msgid "Load selection"
 msgstr "Carregar seleção"
 
-#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:268
+#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:278
 msgid "You must select at least one algorithm for fixing errors"
 msgstr "Você deve selecionar pelo menos um algoritmo para corrigir os erros"
 
-#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:273
+#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:283
+#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:333
 msgid "You must select at least one algorithm for listing errors"
 msgstr "Você deve selecionar pelo menos um algoritmo para listar os erros"
 
-#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:316
+#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:342
+msgid "Dump file"
+msgstr ""
+
+#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:350
+msgid "Export directory"
+msgstr ""
+
+#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:366
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiWindow.java:1087
 msgid "What is the name of the selection?"
 msgstr "Qual é o nome desta seleção?"
@@ -2600,6 +2614,20 @@ msgstr "Monitor mudanças recentes"
 #: org/wikipediacleaner/gui/swing/bot/GeneralToolsPanel.java:225
 msgid "At what page do you wish to start updating the warnings ?"
 msgstr "Em que página você deseja iniciar a atualização dos avisos?"
+
+#: org/wikipediacleaner/gui/swing/bot/ListCWWorker.java:171
+#, fuzzy, java-format
+msgid "{0} page has been analyzed"
+msgid_plural "{0} pages have been analyzed"
+msgstr[0] "{0} página foi analisada."
+msgstr[1] "{0} páginas foram analisadas."
+
+#: org/wikipediacleaner/gui/swing/bot/ListCWWorker.java:180
+#, fuzzy, java-format
+msgid "{0} page has been detected for algorithm {1}"
+msgid_plural "{0} pages have been detected for algorithm {1}"
+msgstr[0] "{0} página foi marcada como corrigida com outros algoritmos"
+msgstr[1] "{0} páginas foram marcadas como corrigidas com outros algoritmos"
 
 #: org/wikipediacleaner/gui/swing/checkwiki/ActionCheckArticle.java:50
 msgid "Check article with CheckWiki"
@@ -3769,7 +3797,7 @@ msgstr "Adicionando comentário"
 msgid "Getting random page"
 msgstr "Obtendo página randômica"
 
-#: org/wikipediacleaner/gui/swing/worker/SendWorker.java:96
+#: org/wikipediacleaner/gui/swing/worker/SendWorker.java:175
 msgid "Updating page contents"
 msgstr "Atualizando conteúdo da página"
 
@@ -3849,19 +3877,19 @@ msgstr ""
 "\n"
 "Erro: {0}"
 
-#: org/wikipediacleaner/gui/swing/worker/UpdateISBNWarningTools.java:252
-#: org/wikipediacleaner/gui/swing/worker/UpdateISSNWarningTools.java:250
+#: org/wikipediacleaner/gui/swing/worker/UpdateISBNWarningTools.java:253
+#: org/wikipediacleaner/gui/swing/worker/UpdateISSNWarningTools.java:251
 #, java-format
 msgid "Removing {1} warning - {0}"
 msgstr "Removendo aviso {1} - {0}"
 
-#: org/wikipediacleaner/gui/swing/worker/UpdateISBNWarningTools.java:261
-#: org/wikipediacleaner/gui/swing/worker/UpdateISSNWarningTools.java:259
+#: org/wikipediacleaner/gui/swing/worker/UpdateISBNWarningTools.java:262
+#: org/wikipediacleaner/gui/swing/worker/UpdateISSNWarningTools.java:260
 #, java-format
 msgid "Updating {1} warning - {0}"
 msgstr "Atualizando aviso {1} - {0}"
 
-#: org/wikipediacleaner/gui/swing/worker/UpdateISBNWarningWorker.java:87
+#: org/wikipediacleaner/gui/swing/worker/UpdateISBNWarningWorker.java:88
 #: org/wikipediacleaner/gui/swing/worker/UpdateISSNWarningWorker.java:85
 #, java-format
 msgid ""
@@ -3871,7 +3899,7 @@ msgstr ""
 "Análise encontrou {0} artigos para verificar erros {1}.\n"
 "Você quer atualizar os avisos?"
 
-#: org/wikipediacleaner/gui/swing/worker/UpdateISBNWarningWorker.java:128
+#: org/wikipediacleaner/gui/swing/worker/UpdateISBNWarningWorker.java:129
 #: org/wikipediacleaner/gui/swing/worker/UpdateISSNWarningWorker.java:126
 #, java-format
 msgid ""
@@ -3883,7 +3911,7 @@ msgstr ""
 "\n"
 "Erro: {0}"
 
-#: org/wikipediacleaner/gui/swing/worker/UpdateISBNWarningWorker.java:301
+#: org/wikipediacleaner/gui/swing/worker/UpdateISBNWarningWorker.java:304
 #: org/wikipediacleaner/gui/swing/worker/UpdateISSNWarningWorker.java:278
 #, java-format
 msgid "Do you want to update {0}?"

@@ -53,6 +53,8 @@ public enum WPCConfigurationStringList {
   ISSN_ERRORS_LISTS("issn_errors_lists", true, true, true),
   // Templates to ask for help about ISSN.
   ISSN_HELP_NEEDED_TEMPLATES("general_issn_help_needed_templates", true, true, true),
+  // Templates to ignore for ISSN.
+  ISSN_IGNORE_TEMPLATES("issn_ignore_templates", true, true, true),
   // ISSN search engines.
   ISSN_SEARCH_ENGINES("general_issn_search_engines", true, true, true, new String[] { 
       "WorldCat|http://worldcat.org/issn/{0}",

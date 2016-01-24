@@ -53,8 +53,11 @@ public class PageElementISSN extends PageElement {
       PageAnalysis analysis) {
     List<PageElementISSN> issns = new ArrayList<PageElementISSN>();
 
-    // Search for ISSN templates
+    // Configuration
     WPCConfiguration config = analysis.getWPCConfiguration();
+    List<String[]> issnIgnoreTemplates = config.getStringArrayList(WPCConfigurationStringList.ISSN_IGNORE_TEMPLATES); 
+
+    // Search for ISSN templates
     List<String[]> issnTemplates = config.getStringArrayList(WPCConfigurationStringList.ISSN_TEMPLATES);
     if (issnTemplates != null) {
       for (String[] issnTemplate : issnTemplates) {
@@ -71,7 +74,8 @@ public class PageElementISSN extends PageElement {
               for (String param : params) {
                 if ((param != null) && (param.length() > 0)) {
                   analyzeTemplateParams(
-                      analysis, issns, template, param,
+                      analysis, issns, issnIgnoreTemplates,
+                      template, param,
                       false, false, true, false);
                 }
               }
@@ -90,7 +94,8 @@ public class PageElementISSN extends PageElement {
           if (templates != null) {
             for (PageElementTemplate template : templates) {
               analyzeTemplateParams(
-                  analysis, issns, template,
+                  analysis, issns, issnIgnoreTemplates,
+                  template,
                   ((issnTemplate.length > 1) && (issnTemplate[1].length() > 0)) ? issnTemplate[1] : "1",
                   false, false, false, true);
             }
@@ -102,7 +107,9 @@ public class PageElementISSN extends PageElement {
     // Search for ISSN in template parameters
     List<PageElementTemplate> templates = analysis.getTemplates();
     for (PageElementTemplate template : templates) {
-      analyzeTemplateParams(analysis, issns, template, "ISSN", true, true, true, false);
+      analyzeTemplateParams(
+          analysis, issns, issnIgnoreTemplates,
+          template, "ISSN", true, true, true, false);
     }
 
     // Search for ISSN in plain texts
@@ -268,6 +275,7 @@ public class PageElementISSN extends PageElement {
    * 
    * @param analysis Page analysis.
    * @param issns Current list of ISSN.
+   * @param ignoreTemplates List of templates (with parameter and value) to ignore.
    * @param template Template.
    * @param argumentName Template parameter name.
    * @param ignoreCase True if parameter name should compared ignoring case.
@@ -277,10 +285,37 @@ public class PageElementISSN extends PageElement {
    */
   private static void analyzeTemplateParams(
       PageAnalysis analysis, List<PageElementISSN> issns,
+      List<String[]> ignoreTemplates,
       PageElementTemplate template,
       String argumentName,
       boolean ignoreCase, boolean acceptNumbers,
       boolean acceptAllValues, boolean helpRequested) {
+
+    // Check if template should be ignored
+    if (ignoreTemplates != null) {
+      for (String[] ignoreTemplate : ignoreTemplates) {
+        if ((ignoreTemplate != null) &&
+            (ignoreTemplate.length > 0) &&
+            (Page.areSameTitle(ignoreTemplate[0], template.getTemplateName()))) {
+          if (ignoreTemplate.length > 1) {
+            String paramValue = template.getParameterValue(ignoreTemplate[1]);
+            if (ignoreTemplate.length > 2) {
+              if ((paramValue != null) &&
+                  (paramValue.trim().equals(ignoreTemplate[2].trim()))) {
+                return; // Ignore all templates with this name and parameter set to a given value
+              }
+            } else {
+              if (paramValue != null) {
+                return; // Ignore all templates with this name and parameter present
+              }
+            }
+          } else {
+            return; // Ignore all templates with this name
+          }
+        }
+      }
+    }
+
     int paramDefaultName = 1;
     for (int paramNum = 0; paramNum < template.getParameterCount(); paramNum++) {
 
