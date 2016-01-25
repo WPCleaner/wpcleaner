@@ -111,6 +111,7 @@ public class ListCWWorker extends BasicWorker {
       if ((error != null) && (error.getKey() != null) && (error.getValue() != null)) {
         CheckErrorAlgorithm algorithm = error.getKey();
         List<Detection> pages = error.getValue();
+        Collections.sort(pages);
         File outputFile = new File(
             outputDir,
             "CW_" + getWikipedia().getSettings().getCodeCheckWiki() + "_" + algorithm.getErrorNumberString() + ".txt");
@@ -343,7 +344,7 @@ public class ListCWWorker extends BasicWorker {
   /**
    * Bean for holding detection results.
    */
-  static class Detection {
+  static class Detection implements Comparable<Detection> {
 
     /** Page */
     public final Page page;
@@ -367,6 +368,25 @@ public class ListCWWorker extends BasicWorker {
           }
         }
       }
+    }
+
+    /**
+     * @param o
+     * @return
+     * @see java.lang.Comparable#compareTo(java.lang.Object)
+     */
+    @Override
+    public int compareTo(Detection o) {
+      if (o == null) {
+        return -1;
+      }
+      if (page == null) {
+        if (o.page == null) {
+          return 0;
+        }
+        return 1;
+      }
+      return page.compareTo(o.page);
     }
   }
 }
