@@ -46,6 +46,7 @@ public enum EnumLanguage {
   NL   (new Locale("nl")      , "Dutch"),
   OC   (new Locale("oc")      , "Occitan"),
   PL   (new Locale("pl")      , "Polish"),
+  PS   (new Locale("ps")      , "Pashto"),
   PT_BR(new Locale("pt", "BR"), "Brazilian Portuguese"),
   RU   (new Locale("ru")      , "Russian"),
   SV   (new Locale("sv")      , "Swedish"),
