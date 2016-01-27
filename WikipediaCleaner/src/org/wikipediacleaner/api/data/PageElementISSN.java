@@ -554,9 +554,13 @@ public class PageElementISSN extends PageElement {
     }
 
     // Construct a basic ISSN number
+    String tmpISSN = issnNotTrimmed.trim();
+    if (tmpISSN.startsWith(ISSN_PREFIX)) {
+      tmpISSN = tmpISSN.substring(ISSN_PREFIX.length()).trim();
+    }
     StringBuilder buffer = new StringBuilder();
-    for (int i = 0; i < issnNotTrimmed.length(); i++) {
-      char currentChar = issnNotTrimmed.charAt(i);
+    for (int i = 0; i < tmpISSN.length(); i++) {
+      char currentChar = tmpISSN.charAt(i);
       if (POSSIBLE_CHARACTERS.indexOf(currentChar) >= 0) {
         buffer.append(currentChar);
       } else if (EXTRA_CHARACTERS.indexOf(currentChar) >= 0) {
@@ -596,6 +600,9 @@ public class PageElementISSN extends PageElement {
    * @param cleanedISSN Cleaned up ISSN.
    */
   private void addCorrectISSN(List<String> result, String prefix, String cleanedISSN) {
+    if (computeChecksum(cleanedISSN) != cleanedISSN.charAt(cleanedISSN.length() - 1)) {
+      return;
+    }
     addCorrectISSN(result, prefix + cleanedISSN);
     if (!isTemplateParameter()) {
       List<String[]> issnTemplates = wpcConfiguration.getStringArrayList(

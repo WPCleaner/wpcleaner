@@ -8,6 +8,7 @@
 package org.wikipediacleaner.api.check.algorithm;
 
 import java.text.MessageFormat;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -73,22 +74,83 @@ public class CheckErrorAlgorithm108 extends CheckErrorAlgorithmISSN {
           errorResult.addPossibleAction(message, new NullActionProvider());
           addHelpNeededTemplates(analysis, errorResult, issn);
           addHelpNeededComment(analysis, errorResult, issn);
-          String value = issn.getISSN();
-          addSearchEngines(analysis, errorResult, value);
+
+          // Add original ISSN
+          List<String> searchISSN = new ArrayList<>();
+          String originalValue = issn.getISSN();
+          addSearchISSN(searchISSN, originalValue, true);
+
+          // Add ISSN with modified checksum
           if (computedCheck != check) {
-            value = value.substring(0, value.length() - 1) + computedCheck;
-            addSearchEngines(analysis, errorResult, value);
+            String value = originalValue.substring(0, originalValue.length() - 1) + computedCheck;
+            addSearchISSN(searchISSN, value, false);
           }
+
+          // Add ISSN with characters inversion
+          if (originalValue.length() == 8) {
+            int previousChar = -1;
+            for (int currentChar = 0; currentChar < originalValue.length(); currentChar++) {
+              if (Character.isDigit(originalValue.charAt(currentChar))) {
+                if (previousChar >= 0) {
+                  String value =
+                      originalValue.substring(0, previousChar) +
+                      originalValue.charAt(currentChar) +
+                      originalValue.substring(previousChar + 1, currentChar) +
+                      originalValue.charAt(previousChar) +
+                      originalValue.substring(currentChar + 1);
+                  addSearchISSN(searchISSN, value, false);
+                }
+                previousChar = currentChar;
+              }
+            }
+          }
+
+          // Add ISSN with one modified digit
+          if (originalValue.length() == 8) {
+            for (int currentChar = 0; currentChar < originalValue.length(); currentChar++) {
+              if (Character.isDigit(originalValue.charAt(currentChar))) {
+                for (char newChar = '0'; newChar <= '9'; newChar++) {
+                  String value =
+                      originalValue.substring(0, currentChar) +
+                      newChar +
+                      originalValue.substring(currentChar + 1);
+                  addSearchISSN(searchISSN, value, false);
+                }
+              }
+            }
+          }
+
+          // Add direct search engines
+          for (String issnValue : searchISSN) {
+            addSearchEngines(analysis, errorResult, issnValue);
+          }
+
+          // Add search engines using other parameters of the template
           if (issn.isTemplateParameter()) {
             PageElementTemplate template = analysis.isInTemplate(issn.getBeginIndex());
             addSearchEngines(analysis, errorResult, template);
           }
+
           errors.add(errorResult);
         }
       }
     }
 
     return result;
+  }
+
+  /**
+   * @param searchISSN List of ISSN.
+   * @param issn ISSN to be added.
+   * @param force True if ISSN should be added even if incorrect.
+   */
+  private void addSearchISSN(List<String> searchISSN, String issn, boolean force) {
+    if (!searchISSN.contains(issn)) {
+      if (force ||
+          (PageElementISSN.computeChecksum(issn) == issn.charAt(issn.length() - 1))) {
+        searchISSN.add(issn);
+      }
+    }
   }
 
   /**
