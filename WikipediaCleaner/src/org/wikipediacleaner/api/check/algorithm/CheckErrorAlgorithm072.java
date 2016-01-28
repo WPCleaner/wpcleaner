@@ -8,6 +8,7 @@
 package org.wikipediacleaner.api.check.algorithm;
 
 import java.text.MessageFormat;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -84,26 +85,85 @@ public class CheckErrorAlgorithm072 extends CheckErrorAlgorithmISBN {
           errorResult.addPossibleAction(message, new NullActionProvider());
           addHelpNeededTemplates(analysis, errorResult, isbn);
           addHelpNeededComment(analysis, errorResult, isbn);
-          String value = isbn.getISBN();
-          addSearchEngines(analysis, errorResult, value);
-          if (computedCheck != check) {
-            value = value.substring(0, value.length() - 1) + computedCheck;
-            addSearchEngines(analysis, errorResult, value);
-          }
-          value = "978" + isbn.getISBN();
-          if (PageElementISBN.isValid(value)) {
-            addSearchEngines(analysis, errorResult, value);
-          }
+
+          // Add original ISBN
+          addSearchEngines(analysis, errorResult, number);
+
+          // Add search engines using other parameters of the template
           if (isbn.isTemplateParameter()) {
             PageElementTemplate template = analysis.isInTemplate(isbn.getBeginIndex());
             addSearchEngines(analysis, errorResult, template);
           }
+
+          // Add ISBN with modified checksum
+          List<String> searchISBN = new ArrayList<>();
+          if (computedCheck != check) {
+            String value = number.substring(0, number.length() - 1) + computedCheck;
+            addSearchISBN(searchISBN, value, false);
+          }
+
+          // Try ISBN-10
+          addSearchISBN(searchISBN, "978" + number, false);
+
+          // Add ISBN with characters inversion
+          if (number.length() == 10) {
+            int previousChar = -1;
+            for (int currentChar = 0; currentChar < number.length(); currentChar++) {
+              if (Character.isDigit(number.charAt(currentChar))) {
+                if (previousChar >= 0) {
+                  String value =
+                      number.substring(0, previousChar) +
+                      number.charAt(currentChar) +
+                      number.substring(previousChar + 1, currentChar) +
+                      number.charAt(previousChar) +
+                      number.substring(currentChar + 1);
+                  addSearchISBN(searchISBN, value, false);
+                }
+                previousChar = currentChar;
+              }
+            }
+          }
+
+          // Add ISBN with one modified digit
+          if (number.length() == 10) {
+            for (int currentChar = 0; currentChar < number.length(); currentChar++) {
+              if (Character.isDigit(number.charAt(currentChar))) {
+                for (char newChar = '0'; newChar <= '9'; newChar++) {
+                  String value =
+                      number.substring(0, currentChar) +
+                      newChar +
+                      number.substring(currentChar + 1);
+                  addSearchISBN(searchISBN, value, false);
+                }
+              }
+            }
+          }
+
+          // Add direct search engines
+          addSearchEngines(
+              analysis, errorResult, searchISBN,
+              GT._("Similar ISBN"));
+
           errors.add(errorResult);
         }
       }
     }
 
     return result;
+  }
+
+  /**
+   * @param searchISBN List of ISBN.
+   * @param isbn ISBN to be added.
+   * @param force True if ISBN should be added even if incorrect.
+   */
+  private void addSearchISBN(List<String> searchISBN, String isbn, boolean force) {
+    if (!searchISBN.contains(isbn)) {
+      if (force ||
+          (PageElementISBN.computeChecksum(isbn) == isbn.charAt(isbn.length() - 1))) {
+        searchISBN.add(isbn);
+      }
+    }
   }
 
   /**

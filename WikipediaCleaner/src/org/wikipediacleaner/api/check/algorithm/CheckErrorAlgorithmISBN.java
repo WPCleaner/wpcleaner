@@ -33,6 +33,7 @@ import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.ISBNRange.ISBNInformation;
 import org.wikipediacleaner.api.data.PageElementTemplate.Parameter;
 import org.wikipediacleaner.gui.swing.action.ActionExternalViewer;
+import org.wikipediacleaner.gui.swing.action.ActionMultiple;
 import org.wikipediacleaner.i18n.GT;
 
 
@@ -336,6 +337,72 @@ public abstract class CheckErrorAlgorithmISBN extends CheckErrorAlgorithmBase {
             replacement;
         errorResult.addReplacement(replacement, GT._("Add a comment"));
       }
+    }
+  }
+
+  /**
+   * @param analysis Page analysis.
+   * @param errorResult Error result.
+   * @param searches List of strings to search.
+   * @param title Title for the group of searches.
+   */
+  protected void addSearchEngines(
+      PageAnalysis analysis, CheckErrorResult errorResult,
+      List<String> searches, String title) {
+
+    // Check configuration
+    if ((searches == null) || searches.isEmpty()) {
+      return;
+    }
+    WPCConfiguration config = analysis.getWPCConfiguration();
+    List<String[]> searchEngines = config.getStringArrayList(
+        WPCConfigurationStringList.ISBN_SEARCH_ENGINES);
+    if ((searchEngines == null) || searchEngines.isEmpty()) {
+      return;
+    }
+
+    // Add title
+    if ((title != null) && (searches.size() > 1)) {
+      errorResult.addPossibleAction(new SimpleAction(title, null));
+    }
+
+    // Create global actions
+    if (searches.size() > 1) {
+      List<Actionnable> actions = new ArrayList<>();
+      for (String[] searchEngine : searchEngines) {
+        if (searchEngine.length > 1) {
+          ActionMultiple action = new ActionMultiple();
+          for (String search : searches) {
+            try {
+              action.addAction(
+                  new ActionExternalViewer(MessageFormat.format(searchEngine[1], search)));
+            } catch (IllegalArgumentException e) {
+              //
+            }
+          }
+          actions.add(new SimpleAction(searchEngine[0], action));
+        }
+      }
+      errorResult.addPossibleAction(new CompositeAction(
+          GT._("Search all ISBN"), actions));
+    }
+
+    // Create unit actions
+    for (String search : searches) {
+      List<Actionnable> actions = new ArrayList<>();
+      for (String[] searchEngine : searchEngines) {
+        try {
+          if (searchEngine.length > 1) {
+            actions.add(new SimpleAction(
+                searchEngine[0],
+                new ActionExternalViewer(MessageFormat.format(searchEngine[1], search))));
+          }
+        } catch (IllegalArgumentException e) {
+          //
+        }
+      }
+      errorResult.addPossibleAction(new CompositeAction(
+          GT._("Search ISBN {0}", search), actions));
     }
   }
 

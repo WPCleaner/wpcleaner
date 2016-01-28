@@ -8,6 +8,7 @@
 package org.wikipediacleaner.api.check.algorithm;
 
 import java.text.MessageFormat;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -85,13 +86,32 @@ public class CheckErrorAlgorithm073 extends CheckErrorAlgorithmISBN {
           addHelpNeededTemplates(analysis, errorResult, isbn);
           addHelpNeededComment(analysis, errorResult, isbn);
 
-          // Use search engines
-          String value = number;
-          addSearchEngines(analysis, errorResult, value);
-          if (computedCheck != check) {
-            value = number.substring(0, number.length() - 1) + computedCheck;
-            addSearchEngines(analysis, errorResult, value);
+          // Add original ISBN
+          addSearchEngines(analysis, errorResult, number);
+
+          // Add search engines using other parameters of the template
+          if (isbn.isTemplateParameter()) {
+            PageElementTemplate template = analysis.isInTemplate(isbn.getBeginIndex());
+            addSearchEngines(analysis, errorResult, template);
           }
+
+          // Add ISSN if number starts with 977=Prefix for ISSN
+          if (number.startsWith("977")) { // Prefix for ISSN
+            String value = number.substring(3, 10);
+            char checkISSN = PageElementISSN.computeChecksum(value + '0');
+            if (checkISSN > 0) {
+              addSearchEnginesISSN(analysis, errorResult, value + checkISSN);
+            }
+          }
+
+          // Add ISBN with modified checksum
+          List<String> searchISBN = new ArrayList<>();
+          if (computedCheck != check) {
+            String value = number.substring(0, number.length() - 1) + computedCheck;
+            addSearchISBN(searchISBN, value, false);
+          }
+
+          // Try specific replacements if ISBN doesn't start with 978 or 979
           if (!number.startsWith("978") && !number.startsWith("979")) {
             int count = 0;
             count += (number.charAt(0) == '9') ? 1 : 0;
@@ -99,45 +119,76 @@ public class CheckErrorAlgorithm073 extends CheckErrorAlgorithmISBN {
             count += (number.charAt(2) == '8') ? 1 : 0;
             count += (number.charAt(2) == '9') ? 1 : 0;
             if (count == 2) {
-              if (number.charAt(2) == '9') {
-                value = "979" + number.substring(3);
-              } else {
-                value = "978" + number.substring(3);
-              }
-              if (PageElementISBN.isValid(value)) {
-                addSearchEngines(analysis, errorResult, value);
-              }
+              String value = ((number.charAt(2) == '9') ? "979" : "978") + number.substring(3);
+              addSearchISBN(searchISBN, value, false);
             }
           }
-          if (number.startsWith("987")) {
-            value = "978" + number.substring(3);
-            if (PageElementISBN.isValid(value)) {
-              addSearchEngines(analysis, errorResult, value);
-            }
-          }
+
+          // Try ISBN-10
           if (number.startsWith("978")) {
-            value = number.substring(3);
-            if (PageElementISBN.isValid(value)) {
-              addSearchEngines(analysis, errorResult, value);
+            String value = number.substring(3);
+            addSearchISBN(searchISBN, value, false);
+          }
+
+          // Add ISBN with characters inversion
+          if (number.length() == 13) {
+            int previousChar = -1;
+            for (int currentChar = 0; currentChar < number.length(); currentChar++) {
+              if (Character.isDigit(number.charAt(currentChar))) {
+                if (previousChar >= 0) {
+                  String value =
+                      number.substring(0, previousChar) +
+                      number.charAt(currentChar) +
+                      number.substring(previousChar + 1, currentChar) +
+                      number.charAt(previousChar) +
+                      number.substring(currentChar + 1);
+                  addSearchISBN(searchISBN, value, false);
+                }
+                previousChar = currentChar;
+              }
             }
           }
-          if (isbn.isTemplateParameter()) {
-            PageElementTemplate template = analysis.isInTemplate(isbn.getBeginIndex());
-            addSearchEngines(analysis, errorResult, template);
-          }
-          if (number.startsWith("977")) { // Prefix for ISSN
-            value = number.substring(3, 10);
-            char checkISSN = PageElementISSN.computeChecksum(value + '0');
-            if (checkISSN > 0) {
-              addSearchEnginesISSN(analysis, errorResult, value + checkISSN);
+
+          // Add ISBN with one modified digit
+          if (number.length() == 13) {
+            for (int currentChar = 0; currentChar < number.length(); currentChar++) {
+              if (Character.isDigit(number.charAt(currentChar))) {
+                for (char newChar = '0'; newChar <= '9'; newChar++) {
+                  String value =
+                      number.substring(0, currentChar) +
+                      newChar +
+                      number.substring(currentChar + 1);
+                  addSearchISBN(searchISBN, value, false);
+                }
+              }
             }
           }
+
+          // Add direct search engines
+          addSearchEngines(
+              analysis, errorResult, searchISBN,
+              GT._("Similar ISBN"));
+
           errors.add(errorResult);
         }
       }
     }
 
     return result;
+  }
+
+  /**
+   * @param searchISBN List of ISBN.
+   * @param isbn ISBN to be added.
+   * @param force True if ISBN should be added even if incorrect.
+   */
+  private void addSearchISBN(List<String> searchISBN, String isbn, boolean force) {
+    if (!searchISBN.contains(isbn)) {
+      if (force ||
+          (PageElementISBN.computeChecksum(isbn) == isbn.charAt(isbn.length() - 1))) {
+        searchISBN.add(isbn);
+      }
+    }
   }
 
   /**
