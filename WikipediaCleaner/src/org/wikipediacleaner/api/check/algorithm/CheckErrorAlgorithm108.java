@@ -76,11 +76,17 @@ public class CheckErrorAlgorithm108 extends CheckErrorAlgorithmISSN {
           addHelpNeededComment(analysis, errorResult, issn);
 
           // Add original ISSN
-          List<String> searchISSN = new ArrayList<>();
           String originalValue = issn.getISSN();
-          addSearchISSN(searchISSN, originalValue, true);
+          addSearchEngines(analysis, errorResult, originalValue);
+
+          // Add search engines using other parameters of the template
+          if (issn.isTemplateParameter()) {
+            PageElementTemplate template = analysis.isInTemplate(issn.getBeginIndex());
+            addSearchEngines(analysis, errorResult, template);
+          }
 
           // Add ISSN with modified checksum
+          List<String> searchISSN = new ArrayList<>();
           if (computedCheck != check) {
             String value = originalValue.substring(0, originalValue.length() - 1) + computedCheck;
             addSearchISSN(searchISSN, value, false);
@@ -121,15 +127,9 @@ public class CheckErrorAlgorithm108 extends CheckErrorAlgorithmISSN {
           }
 
           // Add direct search engines
-          for (String issnValue : searchISSN) {
-            addSearchEngines(analysis, errorResult, issnValue);
-          }
-
-          // Add search engines using other parameters of the template
-          if (issn.isTemplateParameter()) {
-            PageElementTemplate template = analysis.isInTemplate(issn.getBeginIndex());
-            addSearchEngines(analysis, errorResult, template);
-          }
+          addSearchEngines(
+              analysis, errorResult, searchISSN,
+              GT._("Similar ISSN"));
 
           errors.add(errorResult);
         }

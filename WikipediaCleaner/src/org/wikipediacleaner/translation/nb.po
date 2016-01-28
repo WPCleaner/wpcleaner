@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2016-01-24 14:10+0100\n"
+"POT-Creation-Date: 2016-01-28 19:53+0100\n"
 "PO-Revision-Date: 2014-09-07 19:59+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Norwegian Bokmal <nb@li.org>\n"
@@ -472,7 +472,7 @@ msgstr ""
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm070.java:132
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm071.java:107
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm106.java:148
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm107.java:122
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm107.java:180
 msgid "An explanation of the problem"
 msgstr ""
 
@@ -483,7 +483,7 @@ msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm072.java:65
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm073.java:65
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm108.java:63
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm108.java:64
 #, java-format
 msgid "The checksum is {0} instead of {1}"
 msgstr ""
@@ -500,7 +500,7 @@ msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm072.java:167
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm073.java:203
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm108.java:132
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm108.java:194
 msgid "An explanation of the problem (incorrect checksum)"
 msgstr ""
 
@@ -634,9 +634,14 @@ msgstr ""
 msgid "Replace all pipe templates"
 msgstr "Søk i maler"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm107.java:64
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm107.java:65
 #, java-format
 msgid "Length of ISSN is {0} instead of 8"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm107.java:126
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm108.java:132
+msgid "Similar ISSN"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm501.java:178
@@ -748,32 +753,37 @@ msgid "Page containing the list of false positives for this type of error"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISBN.java:312
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISSN.java:280
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISSN.java:281
 #, java-format
 msgid "Ask for help using {0}"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISBN.java:337
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISSN.java:305
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISSN.java:306
 msgid "Add a comment"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISBN.java:368
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISSN.java:366
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISSN.java:433
 #, java-format
 msgid "Search ISBN {0}"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISBN.java:398
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISSN.java:336
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISSN.java:373
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISSN.java:403
 #, java-format
 msgid "Search ISSN {0}"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISBN.java:462
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISSN.java:430
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISSN.java:497
 #, java-format
 msgid "Search using {0}"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISSN.java:355
+msgid "Search all ISSN"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmTOC.java:101
@@ -2513,14 +2523,14 @@ msgstr ""
 msgid "At what page do you wish to start updating the warnings ?"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/bot/ListCWWorker.java:171
+#: org/wikipediacleaner/gui/swing/bot/ListCWWorker.java:172
 #, java-format
 msgid "{0} page has been analyzed"
 msgid_plural "{0} pages have been analyzed"
 msgstr[0] ""
 msgstr[1] ""
 
-#: org/wikipediacleaner/gui/swing/bot/ListCWWorker.java:180
+#: org/wikipediacleaner/gui/swing/bot/ListCWWorker.java:181
 #, java-format
 msgid "{0} page has been detected for algorithm {1}"
 msgid_plural "{0} pages have been detected for algorithm {1}"

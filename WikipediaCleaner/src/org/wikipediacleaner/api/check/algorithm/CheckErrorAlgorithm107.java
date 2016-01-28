@@ -8,6 +8,7 @@
 package org.wikipediacleaner.api.check.algorithm;
 
 import java.text.MessageFormat;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -67,26 +68,83 @@ public class CheckErrorAlgorithm107 extends CheckErrorAlgorithmISSN {
           addSuggestions(analysis, errorResult, issn);
           addHelpNeededTemplates(analysis, errorResult, issn);
           addHelpNeededComment(analysis, errorResult, issn);
-          String value = issn.getISSN();
-          addSearchEngines(analysis, errorResult, value);
+
+          // Add original ISSN
+          String originalValue = issn.getISSN();
+          addSearchEngines(analysis, errorResult, originalValue);
+
+          // Add search engines using other parameters of the template
           if (issn.isTemplateParameter()) {
             PageElementTemplate template = analysis.isInTemplate(issn.getBeginIndex());
             addSearchEngines(analysis, errorResult, template);
           }
+
+          // Add search for potential ISBN
           if ((length == 10) || (length == 13)) {
             addSearchEnginesISBN(analysis, errorResult, issn.getISSN());
-          } else if (length == 7) {
-            char computedCheck = PageElementISSN.computeChecksum(value + '0');
+          }
+
+          // Add ISSN with added checksum
+          List<String> searchISSN = new ArrayList<>();
+          if (length == 7) {
+            char computedCheck = PageElementISSN.computeChecksum(originalValue + '0');
             if (computedCheck > 0) {
-              addSearchEngines(analysis, errorResult, value + computedCheck);
+              addSearchISSN(searchISSN, originalValue + computedCheck, false);
             }
           }
+
+          // Add ISSN with one extra digit
+          if (originalValue.length() == 7) {
+            for (int currentChar = 0; currentChar < originalValue.length(); currentChar++) {
+              if (Character.isDigit(originalValue.charAt(currentChar))) {
+                for (char newChar = '0'; newChar <= '9'; newChar++) {
+                  String value =
+                      originalValue.substring(0, currentChar) +
+                      newChar +
+                      originalValue.substring(currentChar);
+                  addSearchISSN(searchISSN, value, false);
+                }
+              }
+            }
+          }
+
+          // Add ISSN with one digit removed
+          if (originalValue.length() == 9) {
+            for (int currentChar = 0; currentChar < originalValue.length(); currentChar++) {
+              if (Character.isDigit(originalValue.charAt(currentChar))) {
+                String value =
+                    originalValue.substring(0, currentChar) +
+                    originalValue.substring(currentChar + 1);
+                addSearchISSN(searchISSN, value, false);
+              }
+            }
+          }
+
+          // Add direct search engines
+          addSearchEngines(
+              analysis, errorResult, searchISSN,
+              GT._("Similar ISSN"));
+
           errors.add(errorResult);
         }
       }
     }
 
     return result;
+  }
+
+  /**
+   * @param searchISSN List of ISSN.
+   * @param issn ISSN to be added.
+   * @param force True if ISSN should be added even if incorrect.
+   */
+  private void addSearchISSN(List<String> searchISSN, String issn, boolean force) {
+    if (!searchISSN.contains(issn)) {
+      if (force ||
+          (PageElementISSN.computeChecksum(issn) == issn.charAt(issn.length() - 1))) {
+        searchISSN.add(issn);
+      }
+    }
   }
 
   /**
