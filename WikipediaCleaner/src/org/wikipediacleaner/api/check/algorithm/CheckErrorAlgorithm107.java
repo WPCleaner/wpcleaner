@@ -93,6 +93,14 @@ public class CheckErrorAlgorithm107 extends CheckErrorAlgorithmISSN {
             }
           }
 
+          // Add ISSN for EAN 977
+          if ((originalValue.length() == 13) && (originalValue.startsWith("977"))) {
+            String value = originalValue.substring(3, 10);
+            char computedCheck = PageElementISSN.computeChecksum(value + '0');
+            if (computedCheck > 0) {
+              addSearchISSN(searchISSN, value + computedCheck, false);
+            }
+          }
           // Add ISSN with one extra digit
           if (originalValue.length() == 7) {
             for (int currentChar = 0; currentChar < originalValue.length(); currentChar++) {
