@@ -209,6 +209,9 @@ public class PageElementISSN extends PageElement {
           boolean finished = false;
           correct &= spaceFound;
           boolean nextCorrect = correct;
+          int digitCount = 0;
+          boolean hasSeparator = false;
+          boolean hasExtraSeparator = false;
           while (!finished && (index < contents.length())) {
             char currentChar = contents.charAt(index);
             if (POSSIBLE_CHARACTERS.indexOf(currentChar) >= 0) {
@@ -217,15 +220,18 @@ public class PageElementISSN extends PageElement {
               }
               endNumber = index + 1;
               index++;
-              correct &= nextCorrect;
-              if (endNumber - beginNumber == 5) {
-                correct = false; // 5th character is a separation character
+              digitCount++;
+              if (!Character.isDigit(currentChar) && (digitCount != 8)) {
+                correct = false;
               }
+              correct &= nextCorrect;
             } else if (EXTRA_CHARACTERS.indexOf(currentChar) >= 0) {
               if (beginNumber < 0) {
                 nextCorrect = false;
-              } else if (index - beginNumber != 4) {
-                nextCorrect = false; // 5th character is the only place for a separation character
+              } else if ((digitCount == 4) && !hasSeparator) {
+                hasSeparator = true;
+              } else {
+                hasExtraSeparator = true;
               }
               index++;
             } else if (INCORRECT_CHARACTERS.indexOf(currentChar) >= 0) {
@@ -236,6 +242,11 @@ public class PageElementISSN extends PageElement {
                 correct = false;
               }
               finished = true;
+            }
+          }
+          if (digitCount == 8) {
+            if (!hasSeparator || hasExtraSeparator) {
+              correct = false;
             }
           }
           if (endNumber > beginNumber) {
@@ -362,9 +373,9 @@ public class PageElementISSN extends PageElement {
         int beginIndex = -1;
         int endIndex = -1;
         int digitCount = 0;
-        boolean separationPresent = false;
-        boolean separationExtra = false;
-        boolean extraCharaters = false;
+        boolean hasSeparator = false;
+        boolean hasExtraSeparator = false;
+        boolean hasExtraCharacters = false;
         boolean ok = true;
         boolean correct = true;
         boolean isEmpty = true;
@@ -382,11 +393,11 @@ public class PageElementISSN extends PageElement {
             isEmpty = false;
             i++;
             if (beginIndex >= 0) {
-              extraCharaters = true;
+              hasExtraCharacters = true;
             }
           } else if (POSSIBLE_CHARACTERS.indexOf(currentChar) >= 0) {
             isEmpty = false;
-            if (extraCharaters) {
+            if (hasExtraCharacters) {
               correct = false;
             }
             if (Character.isDigit(currentChar)) {
@@ -407,10 +418,10 @@ public class PageElementISSN extends PageElement {
             isEmpty = false;
             i++;
             // Only one separation character after 4th digit
-            if ((digitCount == 4) && !separationPresent) {
-              separationPresent = true;
+            if ((digitCount == 4) && !hasSeparator) {
+              hasSeparator = true;
             } else {
-              separationExtra = true;
+              hasExtraSeparator = true;
             }
           } else if (INCORRECT_CHARACTERS.indexOf(currentChar) >= 0) {
             isEmpty = false;
@@ -425,7 +436,7 @@ public class PageElementISSN extends PageElement {
           ok = false;
         }
         if (digitCount == 8) {
-          if (!separationPresent || separationExtra) {
+          if (!hasSeparator || hasExtraSeparator) {
             correct = false;
           }
         }
