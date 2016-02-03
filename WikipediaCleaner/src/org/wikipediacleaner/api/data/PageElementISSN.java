@@ -13,6 +13,7 @@ import java.util.List;
 
 import org.wikipediacleaner.api.constants.WPCConfiguration;
 import org.wikipediacleaner.api.constants.WPCConfigurationStringList;
+import org.wikipediacleaner.api.data.PageElementTemplate.Parameter;
 
 
 /**
@@ -320,7 +321,8 @@ public class PageElementISSN extends PageElement {
     for (int paramNum = 0; paramNum < template.getParameterCount(); paramNum++) {
 
       // Check parameter name
-      String paramName = template.getParameterName(paramNum);
+      Parameter param = template.getParameter(paramNum);
+      String paramName = param.getName();
       if ((paramName == null) || (paramName.trim().length() == 0)) {
         paramName = Integer.toString(paramDefaultName);
         paramDefaultName++;
@@ -344,7 +346,7 @@ public class PageElementISSN extends PageElement {
 
       // Parameter is for an ISSN, analyze that it's not filled by WikiData
       if (nameOk) {
-        String paramValue = template.getParameterValue(paramNum);
+        String paramValue = param.getValue();
         if ((paramValue == null) ||
             (paramValue.trim().length() == 0) ||
             "{{#property:p236}}".equalsIgnoreCase(paramValue.trim())) {
@@ -354,77 +356,81 @@ public class PageElementISSN extends PageElement {
 
       // Parameter is for an ISSN, analyze its value
       if (nameOk) {
-        String paramValue = template.getParameterValue(paramNum);
-        boolean ok = true;
-        boolean hasDigit = false;
+        String paramValue = param.getValue();
+        int delta = param.getValueStartIndex();
         int i = 0;
         int beginIndex = -1;
         int endIndex = -1;
+        int digitCount = 0;
+        boolean separationPresent = false;
+        boolean separationExtra = false;
+        boolean extraCharaters = false;
+        boolean ok = true;
         boolean correct = true;
+        boolean isEmpty = true;
         while (ok && (i < paramValue.length())) {
           char currentChar = paramValue.charAt(i);
-          if (POSSIBLE_CHARACTERS.indexOf(currentChar) >= 0) {
+          if (currentChar == '<') {
+            PageElementComment comment = analysis.isInComment(delta + i + 1);
+            if ((comment != null) && (comment.getBeginIndex() == delta + i)) {
+              i += comment.getEndIndex() - comment.getBeginIndex();
+            } else {
+              ok = false;
+              isEmpty = false;
+            }
+          } else if (" \n".indexOf(currentChar) >= 0) {
+            isEmpty = false;
+            i++;
+            if (beginIndex >= 0) {
+              extraCharaters = true;
+            }
+          } else if (POSSIBLE_CHARACTERS.indexOf(currentChar) >= 0) {
+            isEmpty = false;
+            if (extraCharaters) {
+              correct = false;
+            }
             if (Character.isDigit(currentChar)) {
+              digitCount++;
               if (beginIndex < 0) {
                 beginIndex = i;
               }
               endIndex = i + 1;
-              hasDigit = true;
             } else if (Character.toUpperCase(currentChar) == 'X') {
               endIndex = i + 1;
-            }
-            if (endIndex - beginIndex == 5) {
-              correct = false; // 5th character is a separation character
+              digitCount++;
+              if (digitCount != 8) {
+                correct = false;
+              }
             }
             i++;
           } else if (EXTRA_CHARACTERS.indexOf(currentChar) >= 0) {
+            isEmpty = false;
             i++;
-            if (i - beginIndex != 5) {
-              correct = false; // 5th character is the only place for a separation character
+            // Only one separation character after 4th digit
+            if ((digitCount == 4) && !separationPresent) {
+              separationPresent = true;
+            } else {
+              separationExtra = true;
             }
           } else if (INCORRECT_CHARACTERS.indexOf(currentChar) >= 0) {
+            isEmpty = false;
             i++;
             correct = false;
           } else {
+            isEmpty = false;
             ok = false;
           }
         }
-        int delta = template.getParameterValueStartIndex(paramNum);
-        if (beginIndex < 0) {
-          beginIndex = 0;
-        }
-        beginIndex += delta;
-        if (endIndex < 0) {
-          endIndex = 0;
-        }
-        endIndex += delta;
-        if (beginIndex < 0) {
+        if ((beginIndex < 0) || (endIndex < 0)) {
           ok = false;
-        } else {
-          if (!ok && hasDigit && (paramValue.charAt(i) == '<')) {
-            PageElementComment comment = analysis.isInComment(beginIndex + i);
-            if ((comment != null) &&
-                (comment.getBeginIndex() == beginIndex + i)) {
-              ok = true;
-              i += comment.getEndIndex() - comment.getBeginIndex();
-              while (ok && (i < paramValue.length())) {
-                char currentChar = paramValue.charAt(i);
-                if (currentChar == '<') {
-                  comment = analysis.isInComment(beginIndex + i);
-                  if (comment != null) {
-                    i += comment.getEndIndex() - comment.getBeginIndex();
-                  } else {
-                    ok = false;
-                  }
-                } else if ((currentChar != ' ') && (currentChar != '\n')) {
-                  ok = false;
-                } else {
-                  i++;
-                }
-              }
-            }
+        }
+        if (digitCount == 8) {
+          if (!separationPresent || separationExtra) {
+            correct = false;
           }
         }
+        beginIndex += delta;
+        endIndex += delta;
         if (ok) {
           String contents = analysis.getContents();
           String value = contents.substring(beginIndex, endIndex);
@@ -435,7 +441,7 @@ public class PageElementISSN extends PageElement {
                 true, correct, helpRequested, template));
           }
         } else if (acceptAllValues) {
-          if (paramValue.length() > 0) {
+          if (!isEmpty) {
             issns.add(new PageElementISSN(
                 template.getParameterValueStartIndex(paramNum),
                 template.getParameterValueStartIndex(paramNum) + paramValue.length(),
