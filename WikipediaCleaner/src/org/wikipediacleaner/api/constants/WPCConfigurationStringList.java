@@ -80,6 +80,8 @@ public enum WPCConfigurationStringList {
   REDIRECT_TEMPLATES("redirect_templates", true, true, true),
   // Templates that can be used instead of <references/>.
   REFERENCES_TEMPLATES("general_references_templates", true, true, true),
+  // Search engines.
+  SEARCH_ENGINES_TEMPLATES("general_search_engines_templates", true, true, true),
   // Chapters to be ignored for suggestions.
   SUGGESTION_IGNORE("general_suggestions_ignore", true, true, true),
   // Pages containing spelling suggestions.

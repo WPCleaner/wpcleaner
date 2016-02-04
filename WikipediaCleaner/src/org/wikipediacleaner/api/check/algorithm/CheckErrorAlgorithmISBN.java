@@ -8,12 +8,12 @@
 
 package org.wikipediacleaner.api.check.algorithm;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.text.MessageFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import org.wikipediacleaner.api.check.Actionnable;
 import org.wikipediacleaner.api.check.CheckErrorResult;
@@ -25,11 +25,11 @@ import org.wikipediacleaner.api.constants.WPCConfiguration;
 import org.wikipediacleaner.api.constants.WPCConfigurationString;
 import org.wikipediacleaner.api.constants.WPCConfigurationStringList;
 import org.wikipediacleaner.api.data.ISBNRange;
-import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementComment;
 import org.wikipediacleaner.api.data.PageElementISBN;
 import org.wikipediacleaner.api.data.PageElementTemplate;
+import org.wikipediacleaner.api.data.SearchEngine;
 import org.wikipediacleaner.api.data.ISBNRange.ISBNInformation;
 import org.wikipediacleaner.api.data.PageElementTemplate.Parameter;
 import org.wikipediacleaner.gui.swing.action.ActionExternalViewer;
@@ -477,56 +477,25 @@ public abstract class CheckErrorAlgorithmISBN extends CheckErrorAlgorithmBase {
     if (template == null) {
       return;
     }
-    WPCConfiguration config = analysis.getWPCConfiguration();
-    List<String[]> searchEngines = config.getStringArrayList(
+
+    // Add search engines
+    Map<String, List<SearchEngine>> searchEngines = SearchEngine.getSearchEngines(
+        analysis.getWikipedia(), template,
         WPCConfigurationStringList.ISBN_SEARCH_ENGINES_TEMPLATES);
     if (searchEngines == null) {
       return;
     }
-
-    // Keep only search engines relative to the template
-    int index = 0;
-    while (index < searchEngines.size()) {
-      boolean keep = false;
-      String[] searchEngine = searchEngines.get(index);
-      if ((searchEngine.length >= 4) &&
-          (Page.areSameTitle(template.getTemplateName(), searchEngine[2]))) {
-        String value = template.getParameterValue(searchEngine[3]);
-        if ((value != null) && (value.trim().length() > 0)) {
-          keep = true;
-        }
-      }
-      if (keep) {
-        index++;
-      } else {
-        searchEngines.remove(index);
-      }
-    }
-
-    // Add search engines
-    while (!searchEngines.isEmpty()) {
-      String paramName = searchEngines.get(0)[3].trim();
-      String paramValue = template.getParameterValue(paramName);
-      List<Actionnable> actions = new ArrayList<Actionnable>();
-      index = 0;
-      while (index < searchEngines.size()) {
-        String[] searchEngine = searchEngines.get(index);
-        if (paramName.equals(searchEngine[3].trim())) {
-          try {
-            actions.add(new SimpleAction(
-                searchEngine[0],
-                new ActionExternalViewer(MessageFormat.format(
-                    searchEngine[1], URLEncoder.encode(paramValue, "UTF8")))));
-          } catch (UnsupportedEncodingException e) {
-            // Nothing to do
-          }
-          searchEngines.remove(index);
-        } else {
-          index++;
-        }
+    List<String> parameterNames = new ArrayList<>(searchEngines.keySet());
+    Collections.sort(parameterNames);
+    for (String parameterName : parameterNames) {
+      List<Actionnable> actions = new ArrayList<>();
+      for (SearchEngine searchEngine : searchEngines.get(parameterName)) {
+        actions.add(new SimpleAction(
+            searchEngine.getName(),
+            new ActionExternalViewer(searchEngine.getUrl())));
       }
       errorResult.addPossibleAction(new CompositeAction(
-          GT._("Search using {0}", paramName), actions));
+          GT._("Search using {0}", parameterName), actions));
     }
   }
 

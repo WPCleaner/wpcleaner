@@ -358,6 +358,21 @@ public class BasicMenuCreator extends AbstractMenuCreator {
   }
 
   /**
+   * Add item for viewing page.
+   * 
+   * @param wiki Wiki.
+   * @param menu Menu.
+   * @param url URL.
+   * @param label Menu label.
+   */
+  public void addItemView(
+      EnumWikipedia wiki, JMenu menu, String url, String label) {
+    if ((url != null) && (Utilities.isDesktopSupported())) {
+      addItem(menu, null, label, true, new ActionExternalViewer(wiki, url));
+    }
+  }
+
+  /**
    * Add item for purging page cache. 
    * 
    * @param wiki Wiki.

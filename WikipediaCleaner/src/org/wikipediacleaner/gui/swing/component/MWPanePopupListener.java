@@ -10,7 +10,12 @@ package org.wikipediacleaner.gui.swing.component;
 import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
 
+import javax.swing.JMenu;
 import javax.swing.JPopupMenu;
 import javax.swing.text.BadLocationException;
 
@@ -34,6 +39,7 @@ import org.wikipediacleaner.api.data.PageElementLanguageLink;
 import org.wikipediacleaner.api.data.PageElementParameter;
 import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.ISBNRange.ISBNInformation;
+import org.wikipediacleaner.api.data.SearchEngine;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
 import org.wikipediacleaner.gui.swing.menu.BasicMenuCreator;
 import org.wikipediacleaner.i18n.GT;
@@ -478,6 +484,24 @@ public abstract class MWPanePopupListener extends AbstractPopupListener {
         "Template: {0}",
         limitTextLength(template.getTemplateName(), 50)));
     menu.addCurrentChapter(popup, position, pageAnalysis);
+
+    // Search engines
+    Map<String, List<SearchEngine>> searchEngines = SearchEngine.getSearchEngines(
+        wikipedia, template, null);
+    if ((searchEngines != null) && !searchEngines.isEmpty()) {
+      menu.addSeparator(popup);
+      List<String> parameterNames = new ArrayList<>(searchEngines.keySet());
+      Collections.sort(parameterNames);
+      for (String parameterName : parameterNames) {
+        JMenu submenu = new JMenu(GT._("Search using {0}", parameterName));
+        for (SearchEngine searchEngine : searchEngines.get(parameterName)) {
+          menu.addItemView(null, submenu, searchEngine.getUrl(), searchEngine.getName());
+        }
+        menu.addSubmenu(popup, submenu, 0, 0);
+      }
+    }
+
+    // General items
     menu.addSeparator(popup);
     menu.addCheckTemplate(wikipedia, window.getParentComponent(), popup, template);
     menu.addView(wikipedia, popup, page, false);

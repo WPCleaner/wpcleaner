@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2016-01-28 22:18+0100\n"
+"POT-Creation-Date: 2016-02-04 18:40+0100\n"
 "PO-Revision-Date: 2015-04-05 05:56+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Chinese (Simplified) <zh_CN@li.org>\n"
@@ -473,7 +473,7 @@ msgstr "您可以用模板{0}来替换链接。"
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm070.java:184
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm071.java:107
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm106.java:148
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm107.java:180
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm107.java:188
 msgid "An explanation of the problem"
 msgstr "问题的说明"
 
@@ -652,7 +652,7 @@ msgstr "使用替换模板{0}替换"
 msgid "Length of ISSN is {0} instead of 8"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm107.java:126
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm107.java:134
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm108.java:132
 #, fuzzy
 msgid "Similar ISSN"
@@ -796,8 +796,9 @@ msgstr "搜索ISBN {0}"
 msgid "Search ISSN {0}"
 msgstr "搜索ISSN {0}"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISBN.java:529
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISSN.java:497
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISBN.java:498
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISSN.java:466
+#: org/wikipediacleaner/gui/swing/component/MWPanePopupListener.java:496
 #, java-format
 msgid "Search using {0}"
 msgstr "用{0}进行搜索"
@@ -2827,53 +2828,53 @@ msgstr ""
 msgid "Close this tab"
 msgstr "关闭此标签"
 
-#: org/wikipediacleaner/gui/swing/component/MWPanePopupListener.java:244
-#: org/wikipediacleaner/gui/swing/component/MWPanePopupListener.java:275
+#: org/wikipediacleaner/gui/swing/component/MWPanePopupListener.java:250
+#: org/wikipediacleaner/gui/swing/component/MWPanePopupListener.java:281
 #, java-format
 msgid "Page: {0}"
 msgstr "页面：{0}"
 
-#: org/wikipediacleaner/gui/swing/component/MWPanePopupListener.java:310
+#: org/wikipediacleaner/gui/swing/component/MWPanePopupListener.java:316
 #, java-format
 msgid "Interwiki: {0}"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/component/MWPanePopupListener.java:381
+#: org/wikipediacleaner/gui/swing/component/MWPanePopupListener.java:387
 #, java-format
 msgid "Image: {0}"
 msgstr "图像：{0}"
 
-#: org/wikipediacleaner/gui/swing/component/MWPanePopupListener.java:417
+#: org/wikipediacleaner/gui/swing/component/MWPanePopupListener.java:423
 #, java-format
 msgid "Category: {0}"
 msgstr "分类：{0}"
 
-#: org/wikipediacleaner/gui/swing/component/MWPanePopupListener.java:445
+#: org/wikipediacleaner/gui/swing/component/MWPanePopupListener.java:451
 #, java-format
 msgid "External link: {0}"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/component/MWPanePopupListener.java:478
+#: org/wikipediacleaner/gui/swing/component/MWPanePopupListener.java:484
 #, java-format
 msgid "Template: {0}"
 msgstr "模板：{0}"
 
-#: org/wikipediacleaner/gui/swing/component/MWPanePopupListener.java:507
+#: org/wikipediacleaner/gui/swing/component/MWPanePopupListener.java:531
 #, java-format
 msgid "Parameter: {0}"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/component/MWPanePopupListener.java:532
+#: org/wikipediacleaner/gui/swing/component/MWPanePopupListener.java:556
 #, java-format
 msgid "Function: {0}"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/component/MWPanePopupListener.java:557
+#: org/wikipediacleaner/gui/swing/component/MWPanePopupListener.java:581
 #, java-format
 msgid "ISBN: {0}"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/component/MWPanePopupListener.java:588
+#: org/wikipediacleaner/gui/swing/component/MWPanePopupListener.java:612
 #, fuzzy, java-format
 msgid "ISSN: {0}"
 msgstr "搜索ISSN {0}"
@@ -2945,11 +2946,11 @@ msgstr ""
 msgid "Remove link"
 msgstr "移除链接"
 
-#: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:372
+#: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:387
 msgid "Purge cache"
 msgstr "清除缓存"
 
-#: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:391
+#: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:406
 msgid "Reload links"
 msgstr "重新加载链接"
 
