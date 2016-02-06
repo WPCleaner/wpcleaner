@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2016-02-04 18:40+0100\n"
+"POT-Creation-Date: 2016-02-06 21:59+0100\n"
 "PO-Revision-Date: 2014-09-14 18:17+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Indonesian <id@li.org>\n"
@@ -479,7 +479,7 @@ msgstr ""
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm070.java:184
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm071.java:107
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm106.java:148
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm107.java:188
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm107.java:198
 msgid "An explanation of the problem"
 msgstr ""
 
@@ -496,7 +496,7 @@ msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm072.java:66
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm073.java:66
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm108.java:64
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm108.java:66
 #, java-format
 msgid "The checksum is {0} instead of {1}"
 msgstr ""
@@ -513,7 +513,7 @@ msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm072.java:227
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm073.java:254
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm108.java:194
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm108.java:204
 msgid "An explanation of the problem (incorrect checksum)"
 msgstr ""
 
@@ -647,13 +647,25 @@ msgstr ""
 msgid "Replace all pipe templates"
 msgstr "Cari pada templat"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm107.java:65
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm107.java:67
 #, java-format
 msgid "Length of ISSN is {0} instead of 8"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm107.java:134
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm108.java:132
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm107.java:91
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm108.java:92
+#, fuzzy
+msgid "Search as OCLC"
+msgstr "Cari"
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm107.java:94
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm108.java:95
+#, fuzzy
+msgid "Search as LCCN"
+msgstr "Cari"
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm107.java:144
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm108.java:142
 msgid "Similar ISSN"
 msgstr ""
 
@@ -4005,9 +4017,6 @@ msgstr ""
 
 #~ msgid "Possible pages"
 #~ msgstr "Halaman yang mungkin"
-
-#~ msgid "Search"
-#~ msgstr "Cari"
 
 #~ msgid "&Apply only to {0}"
 #~ msgstr "&Terapkan hanya pada {0}"
