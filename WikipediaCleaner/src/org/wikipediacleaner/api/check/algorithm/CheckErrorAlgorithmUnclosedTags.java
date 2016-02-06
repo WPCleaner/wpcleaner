@@ -58,9 +58,20 @@ public abstract class CheckErrorAlgorithmUnclosedTags extends CheckErrorAlgorith
         int endIndex = tag.getEndIndex();
         if (!tag.isEndTag() && !tag.isComplete()) {
 
+          // Check error
+          boolean shouldReport = true;
+          if (!PageElementTag.TAG_WIKI_NOWIKI.equals(tagName)) {
+            if (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_NOWIKI, beginIndex) != null) {
+              shouldReport = false;
+            }
+            if ((analysis.getSurroundingTag(PageElementTag.TAG_WIKI_SOURCE, beginIndex) != null) ||
+                (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_SYNTAXHIGHLIGHT, beginIndex) != null)) {
+              shouldReport = false;
+            }
+          }
+
           // Unclosed tag
-          if (PageElementTag.TAG_WIKI_NOWIKI.equals(tagName) ||
-              (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_NOWIKI, beginIndex) == null)) {
+          if (shouldReport) {
             if (errors == null) {
               return true;
             }
