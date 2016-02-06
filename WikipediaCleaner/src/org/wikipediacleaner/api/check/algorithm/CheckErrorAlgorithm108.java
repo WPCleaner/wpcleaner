@@ -15,9 +15,11 @@ import java.util.Map;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.NullActionProvider;
+import org.wikipediacleaner.api.check.SimpleAction;
 import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementISSN;
 import org.wikipediacleaner.api.data.PageElementTemplate;
+import org.wikipediacleaner.gui.swing.action.ActionExternalViewer;
 import org.wikipediacleaner.i18n.GT;
 
 
@@ -84,6 +86,14 @@ public class CheckErrorAlgorithm108 extends CheckErrorAlgorithmISSN {
             PageElementTemplate template = analysis.isInTemplate(issn.getBeginIndex());
             addSearchEngines(analysis, errorResult, template);
           }
+
+          // Add search for other identifiers
+          errorResult.addPossibleAction(new SimpleAction(GT._(
+              "Search as OCLC"),
+              new ActionExternalViewer(MessageFormat.format("http://worldcat.org/oclc/{0}", originalValue))));
+          errorResult.addPossibleAction(new SimpleAction(GT._(
+              "Search as LCCN"),
+              new ActionExternalViewer(MessageFormat.format("http://lccn.loc.gov/{0}", originalValue))));
 
           // Add ISSN with modified checksum
           List<String> searchISSN = new ArrayList<>();
