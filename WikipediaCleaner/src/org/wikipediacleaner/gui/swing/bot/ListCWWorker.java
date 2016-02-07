@@ -11,6 +11,7 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -49,8 +50,8 @@ public class ListCWWorker extends BasicWorker {
   /** File containing the dump */
   private final File dumpFile;
 
-  /** Directory in which the output is written */
-  private final File outputDir;
+  /** Directory (or file with place holder for error number) in which the output is written */
+  private final File output;
 
   /** Algorithms for which to analyze pages */
   final List<CheckErrorAlgorithm> selectedAlgorithms;
@@ -65,16 +66,16 @@ public class ListCWWorker extends BasicWorker {
    * @param wiki Wiki.
    * @param window Window.
    * @param dumpFile File containing the dump to be analyzed.
-   * @param outputDir Directory in which the output is written.
+   * @param output Directory (or file with place holder for error number) in which the output is written.
    * @param selectedAlgorithms List of selected algorithms.
    */
   public ListCWWorker(
       EnumWikipedia wiki, BasicWindow window,
-      File dumpFile, File outputDir,
+      File dumpFile, File output,
       List<CheckErrorAlgorithm> selectedAlgorithms) {
     super(wiki, window);
     this.dumpFile = dumpFile;
-    this.outputDir = outputDir;
+    this.output = output;
     this.selectedAlgorithms = selectedAlgorithms;
     this.detections = new HashMap<CheckErrorAlgorithm, List<Detection>>();
     this.countAnalyzed = 0;
@@ -91,7 +92,10 @@ public class ListCWWorker extends BasicWorker {
     if ((dumpFile == null) || !dumpFile.canRead() || !dumpFile.isFile()) {
       return null;
     }
-    if ((outputDir == null) || !outputDir.canWrite() || !outputDir.isDirectory()) {
+    if ((output == null) || !output.canWrite()) {
+      return null;
+    }
+    if (!output.getName().contains("{0}") && !output.isDirectory()) {
       return null;
     }
     if ((selectedAlgorithms == null) || selectedAlgorithms.isEmpty()) {
@@ -112,9 +116,14 @@ public class ListCWWorker extends BasicWorker {
         CheckErrorAlgorithm algorithm = error.getKey();
         List<Detection> pages = error.getValue();
         Collections.sort(pages);
-        File outputFile = new File(
-            outputDir,
-            "CW_" + getWikipedia().getSettings().getCodeCheckWiki() + "_" + algorithm.getErrorNumberString() + ".txt");
+        File outputFile = null;
+        if (!output.getName().contains("{0}")) {
+          outputFile = new File(
+              output,
+              "CW_" + getWikipedia().getSettings().getCodeCheckWiki() + "_" + algorithm.getErrorNumberString() + ".txt");
+        } else {
+          outputFile = new File(MessageFormat.format(output.getAbsolutePath(), algorithm.getErrorNumberString()));
+        }
         BufferedWriter writer = null;
         try {
           writer = new BufferedWriter(new FileWriter(outputFile, false));

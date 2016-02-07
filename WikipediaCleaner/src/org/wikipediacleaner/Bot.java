@@ -215,10 +215,10 @@ public class Bot implements BasicWorkerListener {
     } else if ("ListCheckWiki".equalsIgnoreCase(action)) {
       if (args.length > 3) {
         File dumpFile = new File(args[1]);
-        File outputDir = new File(args[2]);
+        File output = new File(args[2]);
         List<CheckErrorAlgorithm> algorithms = new ArrayList<CheckErrorAlgorithm>();
         extractAlgorithms(algorithms, null, args, 3);
-        worker = new ListCWWorker(wiki, null, dumpFile, outputDir, algorithms);
+        worker = new ListCWWorker(wiki, null, dumpFile, output, algorithms);
       }
     }
     if (worker != null) {
