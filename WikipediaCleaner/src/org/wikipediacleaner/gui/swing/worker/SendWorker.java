@@ -111,7 +111,6 @@ public class SendWorker extends BasicWorker {
      * @param text Page contents.
      * @param comment Comment.
      * @param forceWatch Force watching the page.
-     * @param params Parameters.
      * @param contributions Contributions.
      * @param errorsFixed Errors fixed by this update.
      */
