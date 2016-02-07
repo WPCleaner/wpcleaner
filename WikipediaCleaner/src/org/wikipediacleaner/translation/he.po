@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2016-02-06 21:59+0100\n"
+"POT-Creation-Date: 2016-02-07 11:49+0100\n"
 "PO-Revision-Date: 2014-09-10 23:22+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Hebrew <he@li.org>\n"
@@ -470,54 +470,72 @@ msgid "You can replace the link using template {0}."
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm069.java:193
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm070.java:184
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm070.java:194
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm071.java:107
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm106.java:148
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm107.java:198
 msgid "An explanation of the problem"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm070.java:65
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm070.java:67
 #, java-format
 msgid "Length of ISBN is {0} instead of 10 or 13"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm070.java:130
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm072.java:145
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm073.java:170
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm070.java:85
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm072.java:102
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm073.java:102
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm107.java:91
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm108.java:92
+#, fuzzy
+msgid "Search as OCLC"
+msgstr "חיפוש"
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm070.java:88
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm072.java:105
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm073.java:105
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm107.java:94
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm108.java:95
+#, fuzzy
+msgid "Search as LCCN"
+msgstr "חיפוש"
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm070.java:140
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm072.java:155
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm073.java:180
 msgid "Similar ISBN"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm072.java:66
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm073.java:66
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm072.java:68
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm073.java:68
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm108.java:66
 #, java-format
 msgid "The checksum is {0} instead of {1}"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm072.java:72
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm073.java:72
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm072.java:74
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm073.java:74
 msgid "There's no existing range for this ISBN"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm072.java:74
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm073.java:74
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm072.java:76
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm073.java:76
 msgid "This ISBN is inside a reserved range"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm072.java:227
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm073.java:254
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm072.java:237
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm073.java:272
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm108.java:204
 msgid "An explanation of the problem (incorrect checksum)"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm072.java:229
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm073.java:256
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm072.java:239
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm073.java:274
 msgid "An explanation of the problem (non-existing range of ISBN numbers)"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm072.java:231
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm073.java:258
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm072.java:241
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm073.java:276
 msgid "An explanation of the problem (reserved range of ISBN numbers)"
 msgstr ""
 
@@ -645,18 +663,6 @@ msgstr "חפש בתבניות"
 #, java-format
 msgid "Length of ISSN is {0} instead of 8"
 msgstr ""
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm107.java:91
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm108.java:92
-#, fuzzy
-msgid "Search as OCLC"
-msgstr "חיפוש"
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm107.java:94
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm108.java:95
-#, fuzzy
-msgid "Search as LCCN"
-msgstr "חיפוש"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm107.java:144
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm108.java:142

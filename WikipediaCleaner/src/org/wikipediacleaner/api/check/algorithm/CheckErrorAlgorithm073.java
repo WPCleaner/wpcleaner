@@ -15,12 +15,14 @@ import java.util.Map;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.NullActionProvider;
+import org.wikipediacleaner.api.check.SimpleAction;
 import org.wikipediacleaner.api.data.ISBNRange;
 import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementISBN;
 import org.wikipediacleaner.api.data.PageElementISSN;
 import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.ISBNRange.ISBNInformation;
+import org.wikipediacleaner.gui.swing.action.ActionExternalViewer;
 import org.wikipediacleaner.i18n.GT;
 
 
@@ -94,6 +96,14 @@ public class CheckErrorAlgorithm073 extends CheckErrorAlgorithmISBN {
             PageElementTemplate template = analysis.isInTemplate(isbn.getBeginIndex());
             addSearchEngines(analysis, errorResult, template);
           }
+
+          // Add search for other identifiers
+          errorResult.addPossibleAction(new SimpleAction(GT._(
+              "Search as OCLC"),
+              new ActionExternalViewer(MessageFormat.format("http://worldcat.org/oclc/{0}", number))));
+          errorResult.addPossibleAction(new SimpleAction(GT._(
+              "Search as LCCN"),
+              new ActionExternalViewer(MessageFormat.format("http://lccn.loc.gov/{0}", number))));
 
           // Add ISSN if number starts with 977=Prefix for ISSN
           if (number.startsWith("977")) { // Prefix for ISSN
@@ -187,6 +197,14 @@ public class CheckErrorAlgorithm073 extends CheckErrorAlgorithmISBN {
       if (force ||
           (PageElementISBN.computeChecksum(isbn) == isbn.charAt(isbn.length() - 1))) {
         searchISBN.add(isbn);
+      }
+    }
+    if ((isbn.length() == 13) && isbn.startsWith("978")) {
+      isbn = isbn.substring(3);
+      if (!searchISBN.contains(isbn)) {
+        if (PageElementISBN.computeChecksum(isbn) == isbn.charAt(isbn.length() - 1)) {
+          searchISBN.add(isbn);
+        }
       }
     }
   }
