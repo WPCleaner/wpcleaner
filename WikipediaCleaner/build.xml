@@ -166,7 +166,7 @@
     <copy file="${WPCleaner.libs.logging.dir}/${WPCleaner.libs.logging.not}"
   	      tofile="${WPCleaner.classes.dir}/NOTICE_commons-logging.txt" />
     <copy file="${WPCleaner.libs.gettext.dir}/${WPCleaner.libs.gettext.lic}"
-          tofile="${WPCleaner.classes.dir}/gettext-commons.license" />
+          tofile="${WPCleaner.classes.dir}/LICENSE_gettext-commons.txt" />
     <copy file="${WPCleaner.libs.jackson.dir}/${WPCleaner.libs.jackson.lic}"
           tofile="${WPCleaner.classes.dir}/jackson.license" />
     <copy file="${WPCleaner.libs.jdom.dir}/${WPCleaner.libs.jdom.lic}"

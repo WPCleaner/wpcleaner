@@ -243,7 +243,7 @@ public class AboutWindow extends BasicWindow {
     addPresentation(
         panel, constraints,
         "<html>" +
-        "<b>Apache Commons Logging</b> is a component of Commons Apache projet." +
+        "<b>Apache Commons Logging</b> is a component of Commons Apache project." +
         "<br>" +
         "The Logging package is an ultra-thin bridge between different logging implementations." +
         "<br>" +
@@ -263,7 +263,7 @@ public class AboutWindow extends BasicWindow {
     addPresentation(
         panel, constraints,
         "<html>" +
-        "<b>Apache Commons Codec</b> is a component of Commons Apache projet." +
+        "<b>Apache Commons Codec</b> is a component of Commons Apache project." +
         "<br>" +
         "Commons Codec provides implementations of common encoders and decoders such as Base64, Hex, Phonetic and URLs." +
         "<br>" +
@@ -283,7 +283,7 @@ public class AboutWindow extends BasicWindow {
     addPresentation(
         panel, constraints,
         "<html>" +
-        "<b>Apache Commons Compress</b> is a component of Commons Apache projet." +
+        "<b>Apache Commons Compress</b> is a component of Commons Apache project." +
         "<br>" +
         "The Apache Commons Compress library defines an API for working with ar, cpio, Unix dump, tar, zip, gzip, XZ, Pack200, bzip2, 7z, arj, lzma, snappy, DEFLATE and Z files." +
         "<br>" +
@@ -303,7 +303,7 @@ public class AboutWindow extends BasicWindow {
     addPresentation(
         panel, constraints,
         "<html>" +
-        "<b>Jakarta Commons HttpClient</b> is an Apache projet." +
+        "<b>Jakarta Commons HttpClient</b> is an Apache project." +
         "<br>" +
         "See <a href='http://jakarta.apache.org/httpcomponents/httpclient-3.x/'>http://jakarta.apache.org/httpcomponents/httpclient-3.x/</a> for more information." +
         "</html>");
@@ -317,7 +317,15 @@ public class AboutWindow extends BasicWindow {
    */
   private Component createGettextCommonsTab() {
     JPanel panel = new JPanel(new GridBagLayout());
-    //TODO
+    GridBagConstraints constraints = initializeGridBagConstraints();
+    addPresentation(
+	panel, constraints,
+    	"<html>" +
+    	"<b>Gettext Commons</b> provides Java classes for internationalization (i18n)." +
+    	"<br>" +
+    	"See <a href='https://www.gnu.org/software/gettext/'>https://www.gnu.org/software/gettext/</a> for more information." +
+        "</html>");
+    addFile(panel, constraints,"LICENSE_gettext-commons.txt");
     return createScrollPane(panel);
   }
 
