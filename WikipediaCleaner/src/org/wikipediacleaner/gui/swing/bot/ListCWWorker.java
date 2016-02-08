@@ -32,6 +32,7 @@ import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.DataManager;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageAnalysis;
+import org.wikipediacleaner.api.data.PageElementComment;
 import org.wikipediacleaner.api.data.PageElementInternalLink;
 import org.wikipediacleaner.api.dump.DumpProcessor;
 import org.wikipediacleaner.api.dump.PageProcessor;
@@ -52,6 +53,9 @@ public class ListCWWorker extends BasicWorker {
 
   /** Directory (or file with place holder for error number) in which the output is written */
   private final File output;
+
+  /** Page name (with place holder for error number) in which the output is written */
+  private final String pageName;
 
   /** Algorithms for which to analyze pages */
   final List<CheckErrorAlgorithm> selectedAlgorithms;
@@ -76,6 +80,27 @@ public class ListCWWorker extends BasicWorker {
     super(wiki, window);
     this.dumpFile = dumpFile;
     this.output = output;
+    this.pageName = null;
+    this.selectedAlgorithms = selectedAlgorithms;
+    this.detections = new HashMap<CheckErrorAlgorithm, List<Detection>>();
+    this.countAnalyzed = 0;
+  }
+
+  /**
+   * @param wiki Wiki.
+   * @param window Window.
+   * @param dumpFile File containing the dump to be analyzed.
+   * @param Page name (with place holder for error number) in which the output is written.
+   * @param selectedAlgorithms List of selected algorithms.
+   */
+  public ListCWWorker(
+      EnumWikipedia wiki, BasicWindow window,
+      File dumpFile, String pageName,
+      List<CheckErrorAlgorithm> selectedAlgorithms) {
+    super(wiki, window);
+    this.dumpFile = dumpFile;
+    this.output = null;
+    this.pageName = pageName;
     this.selectedAlgorithms = selectedAlgorithms;
     this.detections = new HashMap<CheckErrorAlgorithm, List<Detection>>();
     this.countAnalyzed = 0;
@@ -92,11 +117,16 @@ public class ListCWWorker extends BasicWorker {
     if ((dumpFile == null) || !dumpFile.canRead() || !dumpFile.isFile()) {
       return null;
     }
-    if ((output == null) || !output.canWrite()) {
+    if ((output == null) && (pageName == null)) {
       return null;
     }
-    if (!output.getName().contains("{0}") && !output.isDirectory()) {
-      return null;
+    if (output != null) {
+      if (!output.canWrite()) {
+        return null;
+      }
+      if (!output.getName().contains("{0}") && !output.isDirectory()) {
+        return null;
+      }
     }
     if ((selectedAlgorithms == null) || selectedAlgorithms.isEmpty()) {
       return null;
@@ -115,51 +145,111 @@ public class ListCWWorker extends BasicWorker {
       if ((error != null) && (error.getKey() != null) && (error.getValue() != null)) {
         CheckErrorAlgorithm algorithm = error.getKey();
         List<Detection> pages = error.getValue();
-        Collections.sort(pages);
-        File outputFile = null;
-        if (!output.getName().contains("{0}")) {
-          outputFile = new File(
-              output,
-              "CW_" + getWikipedia().getSettings().getCodeCheckWiki() + "_" + algorithm.getErrorNumberString() + ".txt");
-        } else {
-          outputFile = new File(MessageFormat.format(output.getAbsolutePath(), algorithm.getErrorNumberString()));
-        }
-        BufferedWriter writer = null;
-        try {
-          writer = new BufferedWriter(new FileWriter(outputFile, false));
-          for (Detection detection : pages) {
-            writer.write("* ");
-            writer.write(PageElementInternalLink.createInternalLink(
-                detection.page.getTitle(), null));
-            writer.write(": ");
-            if (detection.notices != null) {
-              boolean first = true;
-              for (String notice : detection.notices) {
-                if (!first) {
-                  writer.write(", ");
-                }
-                first = false;
-                writer.write("<nowiki>");
-                writer.write(notice.replaceAll("\\<", "&lt;"));
-                writer.write("</nowiki>");
-              }
-            }
-            writer.write("\n");
+        outputResult(algorithm, pages);
+      }
+    }
+    return null;
+  }
+
+  /**
+   * Output result of the analysis.
+   * 
+   * @param algorithm Algorithm.
+   * @param pages List of pages with detections.
+   */
+  private void outputResult(CheckErrorAlgorithm algorithm, List<Detection> pages) {
+    if ((algorithm == null) || (pages == null)) {
+      return;
+    }
+
+    // Prepare result
+    Collections.sort(pages);
+    StringBuilder buffer = new StringBuilder();
+    buffer.append("<!-- Generated using " + dumpFile.getName() + " -->\n");
+    for (Detection detection : pages) {
+      buffer.append("* ");
+      buffer.append(PageElementInternalLink.createInternalLink(
+          detection.page.getTitle(), null));
+      buffer.append(": ");
+      if (detection.notices != null) {
+        boolean first = true;
+        for (String notice : detection.notices) {
+          if (!first) {
+            buffer.append(", ");
           }
-        } catch (IOException e) {
-          // Nothing to do
-        } finally {
-          if (writer != null) {
-            try {
-              writer.close();
-            } catch (IOException e) {
-              // Nothing to do
-            }
+          first = false;
+          buffer.append("<nowiki>");
+          buffer.append(notice.replaceAll("\\<", "&lt;"));
+          buffer.append("</nowiki>");
+        }
+      }
+      buffer.append("\n");
+    }
+
+    // Output to file
+    if (output != null) {
+      File outputFile = null;
+      if (!output.getName().contains("{0}")) {
+        outputFile = new File(
+            output,
+            "CW_" + getWikipedia().getSettings().getCodeCheckWiki() + "_" + algorithm.getErrorNumberString() + ".txt");
+      } else {
+        outputFile = new File(MessageFormat.format(output.getAbsolutePath(), algorithm.getErrorNumberString()));
+      }
+      BufferedWriter writer = null;
+      try {
+        writer = new BufferedWriter(new FileWriter(outputFile, false));
+        writer.write(buffer.toString());
+      } catch (IOException e) {
+        // Nothing to do
+      } finally {
+        if (writer != null) {
+          try {
+            writer.close();
+          } catch (IOException e) {
+            // Nothing to do
           }
         }
       }
     }
-    return null;
+
+    // Output to a page
+    if (pageName != null) {
+      try {
+        String truePageName = MessageFormat.format(pageName, algorithm.getErrorNumberString());
+        Page page = DataManager.getPage(getWikipedia(), truePageName, null, null, null);
+        API api = APIFactory.getAPI();
+        api.retrieveContents(getWikipedia(), Collections.singletonList(page), false, false);
+        String contents = page.getContents();
+        if (contents != null) {
+          int begin = -1;
+          int end = -1;
+          for (PageElementComment comment : page.getAnalysis(contents, true).getComments()) {
+            String value = comment.getComment().trim();
+            if ("BOT BEGIN".equals(value)) {
+              if (begin < 0) {
+                begin = comment.getEndIndex();
+              }
+            } else if ("BOT END".equals(value)) {
+              end = comment.getBeginIndex();
+            }
+          }
+          if ((begin >= 0) && (end > begin)) {
+            StringBuilder newText = new StringBuilder();
+            newText.append(contents.substring(0, begin));
+            newText.append("\n");
+            newText.append(buffer.toString());
+            newText.append(contents.substring(end));
+            api.updatePage(
+                getWikipedia(), page, newText.toString(),
+                "Dump analysis for error n°" + algorithm.getErrorNumberString(),
+                true, false);
+          }
+        }
+      } catch (APIException e) {
+        // Nothing
+      }
+    }
   }
 
   /**
