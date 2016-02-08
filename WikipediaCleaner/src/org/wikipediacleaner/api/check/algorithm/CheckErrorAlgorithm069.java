@@ -12,7 +12,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
-import org.wikipediacleaner.api.check.CheckErrorResult.ErrorLevel;
 import org.wikipediacleaner.api.constants.WPCConfiguration;
 import org.wikipediacleaner.api.constants.WPCConfigurationStringList;
 import org.wikipediacleaner.api.data.Page;
@@ -100,8 +99,8 @@ public class CheckErrorAlgorithm069 extends CheckErrorAlgorithmISBN {
       }
     }
 
-    // Analyze each template parameter
-    List<PageElementTemplate> templates = analysis.getTemplates();
+    // Analyze each template parameter for ISBN10 or ISBN13 parameters
+    /* List<PageElementTemplate> templates = analysis.getTemplates();
     for (PageElementTemplate template : templates) {
       for (int paramNum = 0; paramNum < template.getParameterCount(); paramNum++) {
         Parameter param = template.getParameter(paramNum);
@@ -160,7 +159,7 @@ public class CheckErrorAlgorithm069 extends CheckErrorAlgorithmISBN {
           }
         }
       }
-    }
+    }*/
 
     return result;
   }
