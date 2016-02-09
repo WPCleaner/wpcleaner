@@ -141,13 +141,11 @@ public class ListCWWorker extends BasicWorker {
         // Nothing to do
       }
     }
-    for (Entry<CheckErrorAlgorithm, List<Detection>> error : detections.entrySet()) {
-      if ((error != null) && (error.getKey() != null) && (error.getValue() != null)) {
-        CheckErrorAlgorithm algorithm = error.getKey();
-        List<Detection> pages = error.getValue();
-        outputResult(algorithm, pages);
-      }
+    for (CheckErrorAlgorithm algorithm : selectedAlgorithms) {
+      List<Detection> pages = detections.get(algorithm);
+      outputResult(algorithm, pages);
     }
+
     return null;
   }
 
@@ -357,7 +355,8 @@ public class ListCWWorker extends BasicWorker {
       PageAnalysis currentAnalysis = null; 
       for (CheckErrorAlgorithm algorithm : selectedAlgorithms) {
         List<CheckErrorResult> errors = new ArrayList<>();
-        if (algorithm.analyze(analysis, errors, false)) {
+        if (!algorithm.isInWhiteList(page.getTitle()) &&
+            algorithm.analyze(analysis, errors, false)) {
           try {
             if (currentPage == null) {
               currentPage = DataManager.getPage(wiki, page.getTitle(), null, null, null);

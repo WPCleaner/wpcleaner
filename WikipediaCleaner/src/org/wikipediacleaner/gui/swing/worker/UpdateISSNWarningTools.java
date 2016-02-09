@@ -117,7 +117,8 @@ public class UpdateISSNWarningTools extends UpdateWarningTools {
     List<CheckErrorResult> errorResults = new ArrayList<CheckErrorResult>();
     for (CheckErrorAlgorithm algorithm : algorithms) {
       int errorNumber = algorithm.getErrorNumber();
-      if (CheckErrorAlgorithms.isAlgorithmActive(wiki, errorNumber)) {
+      if (CheckErrorAlgorithms.isAlgorithmActive(wiki, errorNumber) &&
+          !algorithm.isInWhiteList(analysis.getPage().getTitle())) {
         CheckErrorPage errorPage = CheckError.analyzeError(algorithm, analysis);
         List<CheckErrorResult> results = errorPage.getResults();
         if (results != null) {
