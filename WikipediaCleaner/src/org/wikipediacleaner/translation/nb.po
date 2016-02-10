@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2016-02-07 11:49+0100\n"
+"POT-Creation-Date: 2016-02-10 18:07+0100\n"
 "PO-Revision-Date: 2014-09-07 19:59+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Norwegian Bokmal <nb@li.org>\n"
@@ -468,7 +468,7 @@ msgstr ""
 msgid "You can replace the link using template {0}."
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm069.java:193
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm069.java:192
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm070.java:194
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm071.java:107
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm106.java:148
@@ -724,7 +724,7 @@ msgid "A list of templates and parameters in which format should be checked"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm521.java:345
-msgid "A list of text values for monthes"
+msgid "A list of text values for months"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm523.java:188
@@ -2056,7 +2056,7 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/worker/LoginWorker.java:88
 #: org/wikipediacleaner/gui/swing/worker/NewSectionWorker.java:62
 #: org/wikipediacleaner/gui/swing/worker/RandomPageWorker.java:49
-#: org/wikipediacleaner/gui/swing/worker/SendWorker.java:169
+#: org/wikipediacleaner/gui/swing/worker/SendWorker.java:168
 #: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:88
 msgid "Retrieving MediaWiki API"
 msgstr ""
@@ -2553,14 +2553,14 @@ msgstr ""
 msgid "At what page do you wish to start updating the warnings ?"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/bot/ListCWWorker.java:172
+#: org/wikipediacleaner/gui/swing/bot/ListCWWorker.java:272
 #, java-format
 msgid "{0} page has been analyzed"
 msgid_plural "{0} pages have been analyzed"
 msgstr[0] ""
 msgstr[1] ""
 
-#: org/wikipediacleaner/gui/swing/bot/ListCWWorker.java:181
+#: org/wikipediacleaner/gui/swing/bot/ListCWWorker.java:281
 #, java-format
 msgid "{0} page has been detected for algorithm {1}"
 msgid_plural "{0} pages have been detected for algorithm {1}"
@@ -3688,7 +3688,7 @@ msgstr ""
 msgid "Getting random page"
 msgstr "Henter tilfeldig side"
 
-#: org/wikipediacleaner/gui/swing/worker/SendWorker.java:175
+#: org/wikipediacleaner/gui/swing/worker/SendWorker.java:174
 msgid "Updating page contents"
 msgstr ""
 
@@ -3755,14 +3755,14 @@ msgid ""
 "Error: {0}"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/worker/UpdateISBNWarningTools.java:253
-#: org/wikipediacleaner/gui/swing/worker/UpdateISSNWarningTools.java:251
+#: org/wikipediacleaner/gui/swing/worker/UpdateISBNWarningTools.java:254
+#: org/wikipediacleaner/gui/swing/worker/UpdateISSNWarningTools.java:252
 #, java-format
 msgid "Removing {1} warning - {0}"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/worker/UpdateISBNWarningTools.java:262
-#: org/wikipediacleaner/gui/swing/worker/UpdateISSNWarningTools.java:260
+#: org/wikipediacleaner/gui/swing/worker/UpdateISBNWarningTools.java:263
+#: org/wikipediacleaner/gui/swing/worker/UpdateISSNWarningTools.java:261
 #, java-format
 msgid "Updating {1} warning - {0}"
 msgstr ""

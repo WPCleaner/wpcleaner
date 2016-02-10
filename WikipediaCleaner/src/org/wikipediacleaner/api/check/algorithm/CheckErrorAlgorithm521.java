@@ -342,7 +342,7 @@ public class CheckErrorAlgorithm521 extends CheckErrorAlgorithmBase {
   public Map<String, String> getParameters() {
     Map<String, String> parameters = super.getParameters();
     parameters.put("templates", GT._("A list of templates and parameters in which format should be checked"));
-    parameters.put("months", GT._("A list of text values for monthes"));
+    parameters.put("months", GT._("A list of text values for months"));
     return parameters;
   }
 }
