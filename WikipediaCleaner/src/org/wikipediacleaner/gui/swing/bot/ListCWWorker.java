@@ -143,6 +143,9 @@ public class ListCWWorker extends BasicWorker {
     }
     for (CheckErrorAlgorithm algorithm : selectedAlgorithms) {
       List<Detection> pages = detections.get(algorithm);
+      if (pages == null) {
+        pages = new ArrayList<>();
+      }
       outputResult(algorithm, pages);
     }
 
