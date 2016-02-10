@@ -319,11 +319,11 @@ public class AboutWindow extends BasicWindow {
     JPanel panel = new JPanel(new GridBagLayout());
     GridBagConstraints constraints = initializeGridBagConstraints();
     addPresentation(
-	panel, constraints,
-    	"<html>" +
-    	"<b>Gettext Commons</b> provides Java classes for internationalization (i18n)." +
-    	"<br>" +
-    	"See <a href='https://www.gnu.org/software/gettext/'>https://www.gnu.org/software/gettext/</a> for more information." +
+        panel, constraints,
+        "<html>" +
+        "<b>Gettext Commons</b> provides Java classes for internationalization (i18n)." +
+        "<br>" +
+        "See <a href='https://www.gnu.org/software/gettext/'>https://www.gnu.org/software/gettext/</a> for more information." +
         "</html>");
     addFile(panel, constraints,"LICENSE_gettext-commons.txt");
     return createScrollPane(panel);
@@ -334,18 +334,34 @@ public class AboutWindow extends BasicWindow {
    */
   private Component createJDomTab() {
     JPanel panel = new JPanel(new GridBagLayout());
-    //TODO
-    return createScrollPane(panel);
-  }
+    GridBagConstraints constraints = initializeGridBagConstraints();
+    addPresentation(
+        panel, constraints,
+        "<html>" +
+        "<b>JDOM</b> is a Java-based solution for accessing, manipulating, and outputting XML data from Java code." +
+        "<br>" +
+        "See <a href='http://www.jdom.org/index.html'>http://www.jdom.org/index.html</a> for more information." +
+        "</html");
+        addFile(panel, constraints, "LICENSE_jdom.txt");
+        return createScrollPane(panel);
+ }
 
   /**
    * @return Jaxen tab.
    */
   private Component createJaxenTab() {
     JPanel panel = new JPanel(new GridBagLayout());
-    //TODO
-    return createScrollPane(panel);
-  }
+    GridBagConstraints constraints = initializeGridBagConstraints();
+    addPresentation(
+        panel, constraints,
+        "<html>" +
+        "<b>Jaxen</b> is an open source XPath library written in Java." +
+        "<br>" +
+        "See <a href='http://jaxen.org/'>http://jaxen.org/</a> for more information." +
+        "</html>");
+        addFile(panel, constraints,"LICENSE_jaxen.txt");
+        return createScrollPane(panel);
+ }
 
   /**
    * @return Jackson tab.
@@ -360,9 +376,9 @@ public class AboutWindow extends BasicWindow {
         "<br>" +
         "See <a href='http://wiki.fasterxml.com/JacksonHome'>http://wiki.fasterxml.com/JacksonHome</a> for more information." +
         "</html>");
-    addFile(panel, constraints, "LICENSE_jackson.txt");
-    return createScrollPane(panel);
-  }
+        addFile(panel, constraints, "LICENSE_jackson.txt");
+        return createScrollPane(panel);
+ }
 
   /**
    * @return Command components.
