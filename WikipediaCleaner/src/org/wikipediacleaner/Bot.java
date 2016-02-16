@@ -189,6 +189,13 @@ public class Bot implements BasicWorkerListener {
     if ("UpdateDabWarnings".equalsIgnoreCase(action)) {
       Configuration config = Configuration.getConfiguration();
       String start = config.getString(null, ConfigurationValueString.LAST_DAB_WARNING);
+      if (args.length > 1) {
+        if (args[1].equals("*")) {
+          start = null;
+        } else {
+          start = args[1];
+        }
+      }
       worker = new UpdateDabWarningWorker(wiki, null, start);
     } else if ("UpdateISBNWarnings".equalsIgnoreCase(action)) {
       worker = new UpdateISBNWarningWorker(wiki, null, false);
