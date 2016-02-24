@@ -30,7 +30,7 @@ import org.wikipediacleaner.utils.ConfigurationValueInteger;
 
 /**
  * Algorithm for analyzing error 526 of check wikipedia project.
- * Error 526: Incorrect date link
+ * Error 526: Incorrect link
  */
 public class CheckErrorAlgorithm526 extends CheckErrorAlgorithmBase {
 
@@ -66,6 +66,7 @@ public class CheckErrorAlgorithm526 extends CheckErrorAlgorithmBase {
       return false;
     }
     boolean result = false;
+    String contents = analysis.getContents();
     for (PageElementInternalLink link : links) {
 
       // Decide if link is an error
@@ -139,15 +140,27 @@ public class CheckErrorAlgorithm526 extends CheckErrorAlgorithmBase {
         if (askHelp != null) {
           List<String> askHelpList = WPCConfiguration.convertPropertyToStringList(askHelp, false);
           if (askHelpList != null) {
+            boolean firstReplacement = true;
             for (String askHelpElement : askHelpList) {
               int pipeIndex = askHelpElement.indexOf('|');
               if ((pipeIndex > 0) && (pipeIndex < askHelpElement.length())) {
+                String suffix = askHelpElement.substring(pipeIndex + 1);
+                boolean botReplace = false;
+                if (suffix.startsWith("{{") &&
+                    (link.getEndIndex() < contents.length())) {
+                  char nextChar = contents.charAt(link.getEndIndex());
+                  if ((nextChar != '{') && (nextChar != '}')) {
+                    botReplace = true;
+                  }
+                }
                 String replacement =
                     analysis.getContents().substring(link.getBeginIndex(), link.getEndIndex()) +
-                    askHelpElement.substring(pipeIndex + 1);
+                    suffix;
                 errorResult.addReplacement(
                     replacement,
-                    askHelpElement.substring(0, pipeIndex));
+                    askHelpElement.substring(0, pipeIndex),
+                    false, firstReplacement && botReplace);
+                firstReplacement = false;
               }
             }
           }
@@ -254,5 +267,15 @@ public class CheckErrorAlgorithm526 extends CheckErrorAlgorithmBase {
         "dump_analysis",
         GT._("A page containing a dump analysis for this error."));
     return parameters;
+  }
+
+  /**
+   * @param analysis Page analysis
+   * @return Modified page content after bot fixing.
+   * @see org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase#internalBotFix(org.wikipediacleaner.api.data.PageAnalysis)
+   */
+  @Override
+  protected String internalBotFix(PageAnalysis analysis) {
+    return fixUsingAutomaticBotReplacement(analysis);
   }
 }

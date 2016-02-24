@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2016-02-24 19:24+0100\n"
+"POT-Creation-Date: 2016-02-25 00:47+0100\n"
 "PO-Revision-Date: 2016-02-10 18:16+0100\n"
 "Last-Translator: Nicolas Vervelle <nvervelle@gmail.com>\n"
 "Language-Team: Brazilian Portuguese <pt_BR@li.org>\n"
@@ -789,16 +789,21 @@ msgstr ""
 "Valores que podem ser ignorados com segurança para uma determinada "
 "predefinição e argumento"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm526.java:217
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm526.java:262
 msgid ""
 "An identifier of an abuse filter that is triggered by incorrect year links."
 msgstr ""
 "Um identificador de um filtro de abuso que é desencadeado por links "
 "incorretos de anos."
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm526.java:220
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm526.java:265
 msgid "Text added after the link to ask for help."
 msgstr "Texto adicionado após o link para pedir ajuda."
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm526.java:268
+#, fuzzy
+msgid "A page containing a dump analysis for this error."
+msgstr "Página contendo a lista de falsos positivos para este tipo de erro"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm527.java:127
 msgid "Trim text"
