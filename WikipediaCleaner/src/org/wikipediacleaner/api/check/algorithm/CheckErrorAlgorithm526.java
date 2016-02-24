@@ -71,25 +71,52 @@ public class CheckErrorAlgorithm526 extends CheckErrorAlgorithmBase {
       boolean isProblematic = false;
       if ((target != null) &&
           (text != null) &&
-          !target.equals(text) &&
-          (target.length() >= MIN_LENGTH) &&
-          (target.length() <= MAX_LENGTH) &&
-          (text.length() >= MIN_LENGTH) &&
-          (text.length() <= MAX_LENGTH)) {
-        isProblematic = true;
-        int pos = 0;
-        while (isProblematic && (pos < target.length())) {
-          if (!Character.isDigit(target.charAt(pos))) {
-            isProblematic = false;
+          !Page.areSameTitle(target, text)) {
+
+        // Check text first (only digits)
+        int yearDisplayed = -1;
+        if ((text.length() >= MIN_LENGTH) &&
+            (text.length() <= MAX_LENGTH)) {
+          boolean onlyDigits = true;
+          for (int pos = 0; pos < text.length(); pos++) {
+            if (!Character.isDigit(text.charAt(pos))) {
+              onlyDigits = false;
+            }
           }
-          pos++;
+          if (onlyDigits) {
+            yearDisplayed = Integer.valueOf(text);
+          }
         }
-        pos = 0;
-        while (isProblematic && (pos < text.length())) {
-          if (!Character.isDigit(text.charAt(pos))) {
-            isProblematic = false;
+
+        // Check link if needed
+        if (yearDisplayed > 0) {
+          int nbDigits = 0;
+          while ((nbDigits < target.length()) &&
+                 (Character.isDigit(target.charAt(nbDigits)))) {
+            nbDigits++;
           }
-          pos++;
+          int yearLinked = -1;
+          if ((nbDigits >= MIN_LENGTH) &&
+              (nbDigits <= MAX_LENGTH)) {
+            yearLinked = Integer.valueOf(target.substring(0, nbDigits));
+          }
+          if ((yearLinked > 0) && (yearLinked != yearDisplayed)) {
+            if (target.length() == nbDigits) {
+              isProblematic = true;
+            } else {
+              if (target.charAt(nbDigits) == ' ') {
+                boolean incorrectCharacter = false;
+                for (int pos = nbDigits + 1; pos < target.length(); pos++) {
+                  if (Character.isDigit(target.charAt(pos))) {
+                    incorrectCharacter = true;
+                  }
+                }
+                if (!incorrectCharacter) {
+                  isProblematic = true;
+                }
+              }
+            }
+          }
         }
       }
 
