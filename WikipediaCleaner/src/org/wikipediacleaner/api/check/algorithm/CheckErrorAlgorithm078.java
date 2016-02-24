@@ -7,17 +7,25 @@
 
 package org.wikipediacleaner.api.check.algorithm;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import java.util.regex.PatternSyntaxException;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.CheckErrorResult.ErrorLevel;
+import org.wikipediacleaner.api.constants.WPCConfiguration;
 import org.wikipediacleaner.api.data.PageAnalysis;
+import org.wikipediacleaner.api.data.PageElement;
+import org.wikipediacleaner.api.data.PageElementComparator;
 import org.wikipediacleaner.api.data.PageElementTag;
+import org.wikipediacleaner.api.data.PageElementTemplate;
+import org.wikipediacleaner.i18n.GT;
 
 
 /**
@@ -46,55 +54,113 @@ public class CheckErrorAlgorithm078 extends CheckErrorAlgorithmBase {
       return false;
     }
 
-    // Retrieve all <references> tags
+    // Build a map of references by group name
+    Map<String, List<PageElement>> referencesByGroup = new HashMap<>();
+
+    // Manage <references> tags
     List<PageElementTag> referencesTags = analysis.getTags(PageElementTag.TAG_WIKI_REFERENCES);
-    if ((referencesTags == null) || (referencesTags.size() == 0)) {
-      return false;
+    if ((referencesTags != null) && !referencesTags.isEmpty()) {
+      for (PageElementTag referencesTag : referencesTags) {
+        
+        // Use only beginning tags
+        if (referencesTag.isFullTag() || !referencesTag.isEndTag()) {
+          
+          // Retrieve "group"
+          PageElementTag.Parameter group = referencesTag.getParameter("group");
+          String groupName = "";
+          if ((group != null) && (group.getValue() != null)) {
+            groupName = group.getValue();
+          }
+
+          // Store <references> tag
+          List<PageElement> existingReferences = referencesByGroup.get(groupName);
+          if (existingReferences == null) {
+            existingReferences = new ArrayList<>();
+            referencesByGroup.put(groupName, existingReferences);
+          }
+          existingReferences.add(referencesTag);
+        }
+      }
     }
 
-    // Check all <references> tags
-    boolean result = false;
-    Map<String, PageElementTag> firstTags = new HashMap<String, PageElementTag>();
-    Set<String> tagUsed = new TreeSet<String>();
-    for (PageElementTag referencesTag : referencesTags) {
-
-      // Use only beginning tags
-      if (referencesTag.isFullTag() || !referencesTag.isEndTag()) {
-        // Retrieve "group"
-        PageElementTag.Parameter group = referencesTag.getParameter("group");
-        String groupName = "";
-        if ((group != null) && (group.getValue() != null)) {
-          groupName = group.getValue();
-        }
-  
-        // Check if a <references> tag already exist for this group
-        PageElementTag firstTag = firstTags.get(groupName);
-        if (firstTag == null) {
-          firstTags.put(groupName, referencesTag);
-        } else {
-          if (errors == null) {
-            return true;
+    // Manage templates
+    String templatesString = getSpecificProperty("templates", true, true, false);
+    List<String> templates = WPCConfiguration.convertPropertyToStringList(templatesString);
+    if ((templates != null) && !templates.isEmpty()) {
+      String contents = analysis.getContents();
+      for (String templateRegexp : templates) {
+        try {
+          if (templateRegexp.length() > 0) {
+            char firstLetter = templateRegexp.charAt(0);
+            if (Character.isUpperCase(firstLetter) || Character.isLowerCase(firstLetter)) {
+              templateRegexp =
+                  "[" + Character.toUpperCase(firstLetter) + Character.toLowerCase(firstLetter) + "]" +
+                  templateRegexp.substring(1);
+            }
           }
-          result = true;
-          if (!tagUsed.contains(groupName)) {
-            tagUsed.add(groupName);
-            CheckErrorResult errorResult = createCheckErrorResult(
-                analysis,
-                firstTag.getCompleteBeginIndex(),
-                firstTag.getCompleteEndIndex(),
-                ErrorLevel.CORRECT);
-            errorResult.addReplacement("");
-            errors.add(errorResult);
+          Pattern pattern = Pattern.compile("\\{\\{" + templateRegexp);
+          Matcher matcher = pattern.matcher(contents);
+          while (matcher.find()) {
+            int beginIndex = matcher.start();
+            PageElementTemplate template = analysis.isInTemplate(beginIndex);
+            if (template != null) {
+              String groupName = "";
+              List<PageElement> existingReferences = referencesByGroup.get(groupName);
+              if (existingReferences == null) {
+                existingReferences = new ArrayList<>();
+                referencesByGroup.put(groupName, existingReferences);
+              }
+              existingReferences.add(template);
+            }
+          }
+        } catch (PatternSyntaxException e) {
+          // TODO: log?
+        }
+      }
+    }
+
+    // Report errors
+    boolean result = false;
+    for (List<PageElement> referencesForGroup : referencesByGroup.values()) {
+      if ((referencesForGroup != null) && (referencesForGroup.size() > 1)) {
+        if (errors == null) {
+          return true;
+        }
+        result = true;
+
+        // Find first references for the group
+        Collections.sort(referencesForGroup, new PageElementComparator());
+        PageElement firstReferences = referencesForGroup.get(0);
+
+        // Report errors
+        for (PageElement referencesElement : referencesForGroup) {
+          int beginIndex = referencesElement.getBeginIndex();
+          int endIndex = referencesElement.getEndIndex();
+          if (referencesElement instanceof PageElementTag) {
+            PageElementTag tag = (PageElementTag) referencesElement;
+            beginIndex = tag.getCompleteBeginIndex();
+            endIndex = tag.getCompleteEndIndex();
           }
           CheckErrorResult errorResult = createCheckErrorResult(
-              analysis,
-              referencesTag.getCompleteBeginIndex(),
-              referencesTag.getCompleteEndIndex());
+              analysis, beginIndex, endIndex,
+              (referencesElement == firstReferences) ? ErrorLevel.CORRECT : ErrorLevel.ERROR);
           errorResult.addReplacement("");
           errors.add(errorResult);
         }
       }
     }
+
     return result;
+  }
+
+  /**
+   * @return Map of parameters (Name -> description).
+   * @see org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase#getParameters()
+   */
+  @Override
+  public Map<String, String> getParameters() {
+    Map<String, String> parameters = super.getParameters();
+    parameters.put("templates", GT._("A list of regular expressions to find templates replacing <references> tags"));
+    return parameters;
   }
 }

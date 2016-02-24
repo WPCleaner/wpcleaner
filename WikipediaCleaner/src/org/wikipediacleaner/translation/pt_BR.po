@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2016-02-10 18:07+0100\n"
+"POT-Creation-Date: 2016-02-24 19:24+0100\n"
 "PO-Revision-Date: 2016-02-10 18:16+0100\n"
 "Last-Translator: Nicolas Vervelle <nvervelle@gmail.com>\n"
 "Language-Team: Brazilian Portuguese <pt_BR@li.org>\n"
@@ -22,8 +22,8 @@ msgstr ""
 #: org/wikipediacleaner/Version.java:31
 #, java-format
 msgid ""
-"I try to keep {0} up to date with Check Wiki, but if you find any "
-"discrepancy(ies) in the detections, please let me know."
+"I try to keep {0} up to date with Check Wiki, but if you find any discrepancy"
+"(ies) in the detections, please let me know."
 msgstr ""
 "Eu tento manter o {0} atualizado com o Check Wiki, mas se você encontrar "
 "qualquer discrepância nas detecções, por favor, me avise."
@@ -575,6 +575,11 @@ msgstr "Substituir todos %20 por caracteres de espaço"
 msgid "Replace %20 by space character"
 msgstr "Substituir %20 pelo caractere espaço"
 
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm078.java:163
+msgid ""
+"A list of regular expressions to find templates replacing <references> tags"
+msgstr ""
+
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm079.java:107
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm079.java:118
 msgid "What description would you like to use for the external link ?"
@@ -784,14 +789,14 @@ msgstr ""
 "Valores que podem ser ignorados com segurança para uma determinada "
 "predefinição e argumento"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm526.java:190
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm526.java:217
 msgid ""
 "An identifier of an abuse filter that is triggered by incorrect year links."
 msgstr ""
 "Um identificador de um filtro de abuso que é desencadeado por links "
 "incorretos de anos."
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm526.java:193
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm526.java:220
 msgid "Text added after the link to ask for help."
 msgstr "Texto adicionado após o link para pedir ajuda."
 

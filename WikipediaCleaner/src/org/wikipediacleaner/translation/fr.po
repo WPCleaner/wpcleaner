@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2016-02-10 18:07+0100\n"
+"POT-Creation-Date: 2016-02-24 19:24+0100\n"
 "PO-Revision-Date: 2016-02-10 18:13+0100\n"
 "Last-Translator: Nicolas Vervelle <nvervelle@gmail.com>\n"
 "Language-Team: French <fr@li.org>\n"
@@ -22,8 +22,8 @@ msgstr ""
 #: org/wikipediacleaner/Version.java:31
 #, java-format
 msgid ""
-"I try to keep {0} up to date with Check Wiki, but if you find any "
-"discrepancy(ies) in the detections, please let me know."
+"I try to keep {0} up to date with Check Wiki, but if you find any discrepancy"
+"(ies) in the detections, please let me know."
 msgstr ""
 "J’essaye de mettre à jour {0} avec Check Wiki, mais n’hésitez pas à "
 "m’informer si vous découvrez des incohérences."
@@ -579,6 +579,11 @@ msgstr "Remplacer tous les %20 par des espaces"
 msgid "Replace %20 by space character"
 msgstr "Remplacer %20 par un espace"
 
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm078.java:163
+msgid ""
+"A list of regular expressions to find templates replacing <references> tags"
+msgstr ""
+
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm079.java:107
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm079.java:118
 msgid "What description would you like to use for the external link ?"
@@ -788,14 +793,14 @@ msgstr ""
 "Valeurs pouvant être ignorées sans risques pour un modèle et un argument "
 "donnés"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm526.java:190
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm526.java:217
 msgid ""
 "An identifier of an abuse filter that is triggered by incorrect year links."
 msgstr ""
 "Un  identifiant de filtre anti-abus déclenché par des liens incorrects sur "
 "les années."
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm526.java:193
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm526.java:220
 msgid "Text added after the link to ask for help."
 msgstr "Texte ajouté après le lien pour demander de l’aide"
 
