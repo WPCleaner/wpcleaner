@@ -71,19 +71,22 @@ public class CheckWikiDetection {
     int errorNumber = Integer.parseInt(line.substring(0, spaceIndex));
     line = line.substring(spaceIndex).trim();
     spaceIndex = line.indexOf(' ');
+    int location = -1;
+    String detection = null;
     if (spaceIndex <= 0) {
-      return null;
+      location = Integer.parseInt(line);
+    } else {
+      location = Integer.parseInt(line.substring(0, spaceIndex));
+      line = line.substring(spaceIndex).trim();
+      detection = line;
     }
-    int location = Integer.parseInt(line.substring(0, spaceIndex));
-    line = line.substring(spaceIndex).trim();
-    String detection = line;
     return new CheckWikiDetection(
         originalLine, locationMethod, errorNumber, location, detection);
   }
 
   /**
    * @param line Full line.
-   * @param locationMethod Method to interprete the location.
+   * @param locationMethod Method to interpret the location.
    * @param errorNumber Error number (algorithm).
    * @param location Location of the error.
    * @param detection Text near the error.
