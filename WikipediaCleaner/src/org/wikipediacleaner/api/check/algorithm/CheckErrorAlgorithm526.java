@@ -7,7 +7,9 @@
 
 package org.wikipediacleaner.api.check.algorithm;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -17,6 +19,7 @@ import org.wikipediacleaner.api.APIFactory;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.constants.WPCConfiguration;
+import org.wikipediacleaner.api.data.DataManager;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementInternalLink;
@@ -161,7 +164,7 @@ public class CheckErrorAlgorithm526 extends CheckErrorAlgorithmBase {
    */
   @Override
   public boolean hasSpecialList() {
-    return (getAbuseFilter() != null);
+    return (getAbuseFilter() != null) || (getDumpAnalysis() != null);
   }
 
   /**
@@ -181,6 +184,13 @@ public class CheckErrorAlgorithm526 extends CheckErrorAlgorithmBase {
   }
 
   /**
+   * @return Page name containing a dump analysis for this error.
+   */
+  private String getDumpAnalysis() {
+    return getSpecificProperty("dump_analysis", true, true, false);
+  }
+
+  /**
    * Retrieve the list of pages in error.
    * 
    * @param wiki Wiki.
@@ -189,18 +199,40 @@ public class CheckErrorAlgorithm526 extends CheckErrorAlgorithmBase {
    */
   @Override
   public List<Page> getSpecialList(EnumWikipedia wiki, int limit) {
-    List<Page> result = null;
+    List<Page> result = new ArrayList<>();
+
+    // Use abuse filter
     Integer abuseFilter = getAbuseFilter();
     if (abuseFilter != null) {
       API api = APIFactory.getAPI();
       Configuration config = Configuration.getConfiguration();
       int maxDays = config.getInt(wiki, ConfigurationValueInteger.MAX_DAYS_ABUSE_LOG);
       try {
-        result = api.retrieveAbuseLog(wiki, abuseFilter, maxDays);
+        List<Page> tmpResult = api.retrieveAbuseLog(wiki, abuseFilter, maxDays);
+        if (tmpResult != null) {
+          result.addAll(tmpResult);
+        }
       } catch (APIException e) {
         //
       }
     }
+
+    // Use internal links
+    String dumpAnalysis = getDumpAnalysis();
+    if (dumpAnalysis != null) {
+      API api = APIFactory.getAPI();
+      Page page = DataManager.getPage(wiki, dumpAnalysis, null, null, null);
+      try {
+        api.retrieveLinks(wiki, page, null, null, false, false);
+        if (page.getLinks() != null) {
+          result.addAll(page.getLinks());
+        }
+      } catch (APIException e) {
+        //
+      }
+    }
+
+    Collections.sort(result);
     return result;
   }
 
@@ -218,6 +250,9 @@ public class CheckErrorAlgorithm526 extends CheckErrorAlgorithmBase {
     parameters.put(
         "ask_help",
         GT._("Text added after the link to ask for help."));
+    parameters.put(
+        "dump_analysis",
+        GT._("A page containing a dump analysis for this error."));
     return parameters;
   }
 }
