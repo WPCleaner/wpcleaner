@@ -150,7 +150,12 @@ public class CheckErrorAlgorithm526 extends CheckErrorAlgorithmBase {
                     (link.getEndIndex() < contents.length())) {
                   char nextChar = contents.charAt(link.getEndIndex());
                   if ((nextChar != '{') && (nextChar != '}')) {
-                    botReplace = true;
+                    if ((target != null) &&
+                        (target.indexOf('#') < 0) &&
+                        (target.indexOf('(') < 0) &&
+                        (target.indexOf(')') < 0)) {
+                      botReplace = true;
+                    }
                   }
                 }
                 String replacement =
