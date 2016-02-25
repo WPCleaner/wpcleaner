@@ -229,7 +229,7 @@ public class CheckErrorResult implements Comparable<CheckErrorResult> {
     if (!(provider instanceof ReplaceTextActionProvider)) {
       return null;
     }
-    return ((ReplaceTextActionProvider) provider).getNewText();
+    return ((ReplaceTextActionProvider) provider).getFinalizedNewText();
   }
 
   /**
@@ -245,7 +245,7 @@ public class CheckErrorResult implements Comparable<CheckErrorResult> {
         if (provider instanceof ReplaceTextActionProvider) {
           ReplaceTextActionProvider textProvider = (ReplaceTextActionProvider) provider;
           if (textProvider.isAutomatic()) {
-            return textProvider.getNewText();
+            return textProvider.getFinalizedNewText();
           }
         }
       }
@@ -266,7 +266,7 @@ public class CheckErrorResult implements Comparable<CheckErrorResult> {
         if (provider instanceof ReplaceTextActionProvider) {
           ReplaceTextActionProvider textProvider = (ReplaceTextActionProvider) provider;
           if (textProvider.isAutomaticBot()) {
-            return textProvider.getNewText();
+            return textProvider.getFinalizedNewText();
           }
         }
       }

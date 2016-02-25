@@ -146,7 +146,9 @@ public class CheckErrorAlgorithm526 extends CheckErrorAlgorithmBase {
               if ((pipeIndex > 0) && (pipeIndex < askHelpElement.length())) {
                 String suffix = askHelpElement.substring(pipeIndex + 1);
                 boolean botReplace = false;
-                if (suffix.startsWith("{{") &&
+                Page page = analysis.getPage();
+                if (page.isArticle() && page.isInMainNamespace() &&
+                    suffix.startsWith("{{") &&
                     (link.getEndIndex() < contents.length())) {
                   char nextChar = contents.charAt(link.getEndIndex());
                   if ((nextChar != '{') && (nextChar != '}')) {

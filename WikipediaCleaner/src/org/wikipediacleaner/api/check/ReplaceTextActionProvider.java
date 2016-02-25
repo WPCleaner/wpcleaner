@@ -7,11 +7,18 @@
 
 package org.wikipediacleaner.api.check;
 
+import java.util.List;
+
 import javax.swing.Action;
 import javax.swing.JTextPane;
 import javax.swing.text.Element;
 
+import org.wikipediacleaner.api.API;
+import org.wikipediacleaner.api.APIException;
+import org.wikipediacleaner.api.APIFactory;
 import org.wikipediacleaner.api.data.Page;
+import org.wikipediacleaner.api.data.PageAnalysis;
+import org.wikipediacleaner.api.data.PageElementFunction;
 import org.wikipediacleaner.gui.swing.action.ReplaceTextAction;
 
 
@@ -73,6 +80,33 @@ class ReplaceTextActionProvider implements ActionProvider {
    */
   public String getNewText() {
     return newText;
+  }
+
+  /**
+   * @return New text.
+   */
+  public String getFinalizedNewText() {
+
+    if (newText == null) {
+      return null;
+    }
+
+    // Text finalization
+    String localNewText = newText;
+    if (page != null) {
+      try {
+        PageAnalysis analysis = page.getAnalysis(localNewText, false);
+        List<PageElementFunction> functions = analysis.getFunctions();
+        if ((functions != null) && (!functions.isEmpty())) {
+          API api = APIFactory.getAPI();
+          localNewText = api.parseText(page.getWikipedia(), page.getTitle(), localNewText, false);
+        }
+      } catch (APIException e) {
+        // Nothing to do
+      }
+    }
+
+    return localNewText;
   }
 
   /**
