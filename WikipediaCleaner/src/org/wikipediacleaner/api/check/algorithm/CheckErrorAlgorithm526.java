@@ -17,6 +17,7 @@ import org.wikipediacleaner.api.API;
 import org.wikipediacleaner.api.APIException;
 import org.wikipediacleaner.api.APIFactory;
 import org.wikipediacleaner.api.check.CheckErrorResult;
+import org.wikipediacleaner.api.check.CheckErrorResult.ErrorLevel;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.constants.WPCConfiguration;
 import org.wikipediacleaner.api.data.DataManager;
@@ -132,8 +133,13 @@ public class CheckErrorAlgorithm526 extends CheckErrorAlgorithmBase {
         result = true;
 
         // Create error
+        ErrorLevel errorLevel = ErrorLevel.ERROR;
+        if ((link.getEndIndex() < contents.length()) &&
+            (contents.charAt(link.getEndIndex()) == '{')) {
+          errorLevel = ErrorLevel.WARNING;
+        }
         CheckErrorResult errorResult = createCheckErrorResult(
-            analysis, link.getBeginIndex(), link.getEndIndex());
+            analysis, link.getBeginIndex(), link.getEndIndex(), errorLevel);
         errorResult.addReplacement(PageElementInternalLink.createInternalLink(target, target));
         errorResult.addReplacement(PageElementInternalLink.createInternalLink(text, text));
         String askHelp = getSpecificProperty("ask_help", true, true, false);

@@ -27,6 +27,7 @@ import org.wikipediacleaner.api.APIFactory;
 import org.wikipediacleaner.api.MediaWikiController;
 import org.wikipediacleaner.api.MediaWikiListener;
 import org.wikipediacleaner.api.check.CheckErrorResult;
+import org.wikipediacleaner.api.check.CheckErrorResult.ErrorLevel;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithm;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.DataManager;
@@ -453,6 +454,9 @@ public class ListCWWorker extends BasicWorker {
     /** List of notices */
     public final List<String> notices;
 
+    /** Maximum level for the errors */
+    public final ErrorLevel maxLevel;
+
     /**
      * @param page Page.
      * @param errors List of errors.
@@ -460,6 +464,7 @@ public class ListCWWorker extends BasicWorker {
     public Detection(Page page, List<CheckErrorResult> errors) {
       this.page = page;
       this.notices = new ArrayList<>();
+      ErrorLevel tmpLevel = ErrorLevel.CORRECT;
       if (errors != null) {
         for (CheckErrorResult error : errors) {
           String contents = page.getContents();
@@ -467,8 +472,13 @@ public class ListCWWorker extends BasicWorker {
             notices.add(contents.substring(
                 error.getStartPosition(), error.getEndPosition()));
           }
+          ErrorLevel currentLevel = error.getErrorLevel();
+          if (currentLevel.ordinal() < tmpLevel.ordinal()) {
+            tmpLevel = currentLevel;
+          }
         }
       }
+      this.maxLevel = tmpLevel;
     }
 
     /**
@@ -481,6 +491,16 @@ public class ListCWWorker extends BasicWorker {
       if (o == null) {
         return -1;
       }
+
+      // Compare error level
+      if (!maxLevel.equals(o.maxLevel)) {
+        if (maxLevel.ordinal() < o.maxLevel.ordinal()) {
+          return -1;
+        }
+        return 1;
+      }
+
+      // Compare pages
       if (page == null) {
         if (o.page == null) {
           return 0;
