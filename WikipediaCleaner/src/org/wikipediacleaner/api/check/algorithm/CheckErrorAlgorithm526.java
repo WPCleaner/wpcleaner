@@ -157,7 +157,7 @@ public class CheckErrorAlgorithm526 extends CheckErrorAlgorithmBase {
                     suffix.startsWith("{{") &&
                     (link.getEndIndex() < contents.length())) {
                   char nextChar = contents.charAt(link.getEndIndex());
-                  if ((nextChar != '{') && (nextChar != '}')) {
+                  if (nextChar != '{') {
                     if ((target != null) &&
                         (target.indexOf('#') < 0) &&
                         (target.indexOf('(') < 0) &&
