@@ -168,7 +168,13 @@ public class ListCWWorker extends BasicWorker {
     Collections.sort(pages);
     StringBuilder buffer = new StringBuilder();
     buffer.append("<!-- Generated using " + dumpFile.getName() + " -->\n");
+    ErrorLevel lastLevel = null;
     for (Detection detection : pages) {
+      if ((detection.maxLevel != null) &&
+          !detection.maxLevel.equals(lastLevel)) {
+        lastLevel = detection.maxLevel;
+        buffer.append("<!-- " + lastLevel.toString() + " -->\n");
+      }
       buffer.append("* ");
       buffer.append(PageElementInternalLink.createInternalLink(
           detection.page.getTitle(), null));

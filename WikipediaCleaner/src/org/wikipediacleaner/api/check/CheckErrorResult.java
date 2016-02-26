@@ -34,9 +34,29 @@ public class CheckErrorResult implements Comparable<CheckErrorResult> {
    * Error levels.
    */
   public static enum ErrorLevel {
-    ERROR(),
-    WARNING(),
-    CORRECT();
+    ERROR("Error"),
+    WARNING("Warning"),
+    CORRECT("Correct");
+
+    /** Description of error level */
+    private final String description;
+
+    /**
+     * @param description Description of the error level.
+     */
+    private ErrorLevel(String description) {
+      this.description = description;
+    }
+
+    /**
+     * @return Description of the error level.
+     * @see java.lang.Enum#toString()
+     */
+    @Override
+    public String toString() {
+      return description;
+    }
+
   }
 
   /**
