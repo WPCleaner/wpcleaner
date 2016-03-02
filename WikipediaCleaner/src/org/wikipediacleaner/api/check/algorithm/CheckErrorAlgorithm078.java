@@ -17,6 +17,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.CheckErrorResult.ErrorLevel;
 import org.wikipediacleaner.api.constants.WPCConfiguration;
@@ -33,6 +35,9 @@ import org.wikipediacleaner.i18n.GT;
  * Error 78: Reference double
  */
 public class CheckErrorAlgorithm078 extends CheckErrorAlgorithmBase {
+
+  /** Logs */
+  private final Log log = LogFactory.getLog(CheckErrorAlgorithm078.class);
 
   public CheckErrorAlgorithm078() {
     super("Reference double");
@@ -89,6 +94,7 @@ public class CheckErrorAlgorithm078 extends CheckErrorAlgorithmBase {
     if ((templates != null) && !templates.isEmpty()) {
       String contents = analysis.getContents();
       for (String templateRegexp : templates) {
+        String patternText = null;
         try {
           if (templateRegexp.length() > 0) {
             char firstLetter = templateRegexp.charAt(0);
@@ -98,7 +104,8 @@ public class CheckErrorAlgorithm078 extends CheckErrorAlgorithmBase {
                   templateRegexp.substring(1);
             }
           }
-          Pattern pattern = Pattern.compile("\\{\\{" + templateRegexp);
+          patternText = "\\{\\{" + templateRegexp;
+          Pattern pattern = Pattern.compile(patternText);
           Matcher matcher = pattern.matcher(contents);
           while (matcher.find()) {
             int beginIndex = matcher.start();
@@ -114,7 +121,7 @@ public class CheckErrorAlgorithm078 extends CheckErrorAlgorithmBase {
             }
           }
         } catch (PatternSyntaxException e) {
-          // TODO: log?
+          log.warn(e.getMessage() + " (" + patternText + ")");
         }
       }
     }
@@ -128,9 +135,9 @@ public class CheckErrorAlgorithm078 extends CheckErrorAlgorithmBase {
         }
         result = true;
 
-        // Find first references for the group
+        // Find first suggested references for the group
         Collections.sort(referencesForGroup, new PageElementComparator());
-        PageElement firstReferences = referencesForGroup.get(0);
+        PageElement suggestedReferences = referencesForGroup.get(referencesForGroup.size() - 1);
 
         // Report errors
         for (PageElement referencesElement : referencesForGroup) {
@@ -143,7 +150,7 @@ public class CheckErrorAlgorithm078 extends CheckErrorAlgorithmBase {
           }
           CheckErrorResult errorResult = createCheckErrorResult(
               analysis, beginIndex, endIndex,
-              (referencesElement == firstReferences) ? ErrorLevel.CORRECT : ErrorLevel.ERROR);
+              (referencesElement == suggestedReferences) ? ErrorLevel.WARNING : ErrorLevel.ERROR);
           errorResult.addReplacement("");
           errors.add(errorResult);
         }

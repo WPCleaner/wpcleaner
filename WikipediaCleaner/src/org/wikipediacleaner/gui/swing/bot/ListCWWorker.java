@@ -91,7 +91,7 @@ public class ListCWWorker extends BasicWorker {
    * @param wiki Wiki.
    * @param window Window.
    * @param dumpFile File containing the dump to be analyzed.
-   * @param Page name (with place holder for error number) in which the output is written.
+   * @param pageName Page name (with place holder for error number) in which the output is written.
    * @param selectedAlgorithms List of selected algorithms.
    */
   public ListCWWorker(
