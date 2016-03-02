@@ -90,6 +90,15 @@ public abstract class MediaWikiController implements MediaWikiListener {
   }
 
   /**
+   * @return Number of remaining tasks.
+   */
+  protected int getRemainingTasksCount() {
+    synchronized (results) {
+      return results.size();
+    }
+  }
+
+  /**
    * Stop remaining tasks.
    */
   protected void stopRemainingTasks() {
