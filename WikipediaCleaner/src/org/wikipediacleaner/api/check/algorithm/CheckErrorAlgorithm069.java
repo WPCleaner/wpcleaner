@@ -14,8 +14,10 @@ import java.util.Map;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.constants.WPCConfiguration;
 import org.wikipediacleaner.api.constants.WPCConfigurationStringList;
+import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageAnalysis;
+import org.wikipediacleaner.api.data.PageElementFunction;
 import org.wikipediacleaner.api.data.PageElementISBN;
 import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.PageElementTemplate.Parameter;
@@ -56,6 +58,8 @@ public class CheckErrorAlgorithm069 extends CheckErrorAlgorithmISBN {
       if (!isbn.isCorrect() && isbn.isValid()) {
         isError = true;
       }
+
+      // Exclude special configured values for ISBN
       if (isError && isbn.isTemplateParameter()) {
         WPCConfiguration config = analysis.getWPCConfiguration();
         List<String[]> specialValues = config.getStringArrayList(
@@ -80,6 +84,30 @@ public class CheckErrorAlgorithm069 extends CheckErrorAlgorithmISBN {
           }
         }
       }
+
+      // Exclude parameters in templates
+      if (isError &&
+          isbn.isTemplateParameter() &&
+          analysis.isInNamespace(Namespace.TEMPLATE)) {
+        PageElementTemplate template = analysis.isInTemplate(isbn.getBeginIndex());
+        if (template != null) {
+          Parameter param = template.getParameterAtIndex(isbn.getBeginIndex());
+          if (param != null) {
+            List<PageElementFunction> functions = analysis.getFunctions();
+            if (functions != null) {
+              for (PageElementFunction function : functions) {
+                int functionIndex = function.getBeginIndex();
+                if ((template == analysis.isInTemplate(functionIndex)) &&
+                    (param == template.getParameterAtIndex(functionIndex))) {
+                  isError = false;
+                }
+              }
+            }
+          }
+        }
+      }
+
+      // Report error
       if (isError) {
         if (errors == null) {
           return true;

@@ -14,8 +14,10 @@ import java.util.Map;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.constants.WPCConfiguration;
 import org.wikipediacleaner.api.constants.WPCConfigurationStringList;
+import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageAnalysis;
+import org.wikipediacleaner.api.data.PageElementFunction;
 import org.wikipediacleaner.api.data.PageElementISSN;
 import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.PageElementTemplate.Parameter;
@@ -48,7 +50,7 @@ public class CheckErrorAlgorithm106 extends CheckErrorAlgorithmISSN {
       return false;
     }
 
-    // Analyze each ISBN
+    // Analyze each ISSN
     boolean result = false;
     List<PageElementISSN> issns = analysis.getISSNs();
     for (PageElementISSN issn : issns) {
@@ -56,7 +58,10 @@ public class CheckErrorAlgorithm106 extends CheckErrorAlgorithmISSN {
       if (!issn.isCorrect() && issn.isValid()) {
         isError = true;
       }
-      if (isError && issn.isTemplateParameter()) {
+
+      // Exclude special configured values for ISSN
+      if (isError &&
+          issn.isTemplateParameter()) {
         WPCConfiguration config = analysis.getWPCConfiguration();
         List<String[]> specialValues = config.getStringArrayList(
             WPCConfigurationStringList.ISSN_SPECIAL_VALUES);
@@ -80,6 +85,30 @@ public class CheckErrorAlgorithm106 extends CheckErrorAlgorithmISSN {
           }
         }
       }
+
+      // Exclude parameters in templates
+      if (isError &&
+          issn.isTemplateParameter() &&
+          analysis.isInNamespace(Namespace.TEMPLATE)) {
+        PageElementTemplate template = analysis.isInTemplate(issn.getBeginIndex());
+        if (template != null) {
+          Parameter param = template.getParameterAtIndex(issn.getBeginIndex());
+          if (param != null) {
+            List<PageElementFunction> functions = analysis.getFunctions();
+            if (functions != null) {
+              for (PageElementFunction function : functions) {
+                int functionIndex = function.getBeginIndex();
+                if ((template == analysis.isInTemplate(functionIndex)) &&
+                    (param == template.getParameterAtIndex(functionIndex))) {
+                  isError = false;
+                }
+              }
+            }
+          }
+        }
+      }
+
+      // Report error
       if (isError) {
         if (errors == null) {
           return true;
@@ -98,24 +127,6 @@ public class CheckErrorAlgorithm106 extends CheckErrorAlgorithmISSN {
         }
       }
     }
-
-    // Analyze each template parameter
-    /*List<PageElementTemplate> templates = analysis.getTemplates();
-    for (PageElementTemplate template : templates) {
-      for (int paramNum = 0; paramNum < template.getParameterCount(); paramNum++) {
-        if ("ISBN10".equalsIgnoreCase(template.getParameterName(paramNum))) {
-          if (errors == null) {
-            return true;
-          }
-          result = true;
-          int begin = template.getParameterNameOffset(paramNum);
-          CheckErrorResult errorResult = createCheckErrorResult(
-              analysis, begin,
-              begin + template.getParameterName(paramNum).length());
-          errors.add(errorResult);
-        }
-      }
-    }*/
 
     return result;
   }

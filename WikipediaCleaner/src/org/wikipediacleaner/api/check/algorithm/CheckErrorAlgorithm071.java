@@ -12,9 +12,12 @@ import java.util.List;
 import java.util.Map;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
+import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.PageAnalysis;
+import org.wikipediacleaner.api.data.PageElementFunction;
 import org.wikipediacleaner.api.data.PageElementISBN;
 import org.wikipediacleaner.api.data.PageElementTemplate;
+import org.wikipediacleaner.api.data.PageElementTemplate.Parameter;
 import org.wikipediacleaner.i18n.GT;
 
 
@@ -50,6 +53,8 @@ public class CheckErrorAlgorithm071 extends CheckErrorAlgorithmISBN {
     for (PageElementISBN isbn : isbns) {
       String isbnNumber = isbn.getISBN();
       if (isbnNumber != null) {
+
+        // Analyze for error
         boolean found = false;
         for (int i = 0; i < isbnNumber.length(); i++) {
           if (Character.toUpperCase(isbnNumber.charAt(i)) == 'X') {
@@ -59,6 +64,29 @@ public class CheckErrorAlgorithm071 extends CheckErrorAlgorithmISBN {
           }
         }
 
+        // Exclude parameters in templates
+        if (found &&
+            isbn.isTemplateParameter() &&
+            analysis.isInNamespace(Namespace.TEMPLATE)) {
+          PageElementTemplate template = analysis.isInTemplate(isbn.getBeginIndex());
+          if (template != null) {
+            Parameter param = template.getParameterAtIndex(isbn.getBeginIndex());
+            if (param != null) {
+              List<PageElementFunction> functions = analysis.getFunctions();
+              if (functions != null) {
+                for (PageElementFunction function : functions) {
+                  int functionIndex = function.getBeginIndex();
+                  if ((template == analysis.isInTemplate(functionIndex)) &&
+                      (param == template.getParameterAtIndex(functionIndex))) {
+                    found = false;
+                  }
+                }
+              }
+            }
+          }
+        }
+
+        // Report error
         if (found) {
           if (errors == null) {
             return true;

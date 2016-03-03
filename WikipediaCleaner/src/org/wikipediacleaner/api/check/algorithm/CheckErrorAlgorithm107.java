@@ -16,9 +16,12 @@ import java.util.Map;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.NullActionProvider;
 import org.wikipediacleaner.api.check.SimpleAction;
+import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.PageAnalysis;
+import org.wikipediacleaner.api.data.PageElementFunction;
 import org.wikipediacleaner.api.data.PageElementISSN;
 import org.wikipediacleaner.api.data.PageElementTemplate;
+import org.wikipediacleaner.api.data.PageElementTemplate.Parameter;
 import org.wikipediacleaner.gui.swing.action.ActionExternalViewer;
 import org.wikipediacleaner.i18n.GT;
 
@@ -55,8 +58,36 @@ public class CheckErrorAlgorithm107 extends CheckErrorAlgorithmISSN {
     for (PageElementISSN issn : issns) {
       String issnNumber = issn.getISSN();
       if ((issnNumber != null) && (issn.isValid())) {
+        boolean isError = false;
         int length = issnNumber.length();
         if ((length != 8) && (length != 0)) {
+          isError = true;
+        }
+
+        // Exclude parameters in templates
+        if (isError &&
+            issn.isTemplateParameter() &&
+            analysis.isInNamespace(Namespace.TEMPLATE)) {
+          PageElementTemplate template = analysis.isInTemplate(issn.getBeginIndex());
+          if (template != null) {
+            Parameter param = template.getParameterAtIndex(issn.getBeginIndex());
+            if (param != null) {
+              List<PageElementFunction> functions = analysis.getFunctions();
+              if (functions != null) {
+                for (PageElementFunction function : functions) {
+                  int functionIndex = function.getBeginIndex();
+                  if ((template == analysis.isInTemplate(functionIndex)) &&
+                      (param == template.getParameterAtIndex(functionIndex))) {
+                    isError = false;
+                  }
+                }
+              }
+            }
+          }
+        }
+
+        // Report error
+        if (isError) {
           if (errors == null) {
             return true;
           }
