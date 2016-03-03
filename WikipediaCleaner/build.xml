@@ -218,7 +218,15 @@
                  storepass="${WPCleaner.p12.password}"
                  alias="wpcleaner-sign"
                  keypass="${WPCleaner.p12key.password}"
-                 tsaurl="http://time.certum.pl/">
+                 tsaurl="http://dse200.ncipher.com/TSS/HttpTspServer">
+        	<!-- Time Stamping Servers:
+        	     http://time.certum.pl/
+        	     http://dse200.ncipher.com/TSS/HttpTspServer
+        	     http://tsa.safecreative.org/
+        	     http://zeitstempel.dfn.de/
+        	     http://tsa.tecxoft.com/
+        	     http://services.fourit.eu/tsp/tspservice.cgi
+        	-->
         </signjar>
       </then>
       <else>
