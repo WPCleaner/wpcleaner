@@ -8,6 +8,9 @@
 package org.wikipediacleaner.utils;
 
 import java.io.PrintStream;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
 
 
 /**
@@ -15,55 +18,54 @@ import java.io.PrintStream;
  */
 public class Performance {
 
-  /**
-   * Stream to write performance information to.
-   */
+  /** Stream to write performance information to */
   private final static PrintStream output = System.err;
 
-  /**
-   * Global flag for printing.
-   */
+  /** Global flag for printing */
   private static boolean print = true;
 
-  /**
-   * Global flag for using high precision.
-   */
+  /** Global flag for using high precision */
   private static boolean highPrecision = false;
 
-  /**
-   * Method name.
-   */
+  /** Method name */
   private final String method;
 
-  /**
-   * Unit of time.
-   */
+  /** Unit of time */
   private final String unit;
 
-  /**
-   * Initial time.
-   */
+  /** Initial time */
   private long initialTime;
 
-  /**
-   * Last time.
-   */
+  /** Last time */
   private long lastTime;
 
-  /**
-   * Threshold for printing duration.
-   */
+  /** Threshold for printing duration */
   private long threshold;
+
+  /** Map to measure parts of the execution */
+  private Map<String, Long> parts;
+
+  /** Initial time for a part of the execution */
+  private long partInitialTime;
 
   /**
    * @param method Method name.
    */
   public Performance(String method) {
+    this(method, 0);
+  }
+
+  /**
+   * @param method Method name.
+   * @param threshold Threshold for printing results.
+   */
+  public Performance(String method, long threshold) {
     this.method = method;
     this.unit = highPrecision ? "ns" : "ms";
+    this.threshold = threshold;
     initialTime = currentTime();
+    partInitialTime = initialTime;
     lastTime = initialTime;
-    threshold = 0;
   }
 
   /**
@@ -132,12 +134,41 @@ public class Performance {
   }
 
   /**
+   * Start measuring time for a part of the execution.
+   */
+  public void startPart() {
+    partInitialTime = currentTime();
+  }
+
+  /**
+   * Stop measuring time for a part of the execution.
+   * 
+   * @param part Part name.
+   */
+  public void stopPart(String part) {
+    long time = currentTime();
+    if (time <= partInitialTime) {
+      return;
+    }
+    if (parts == null) {
+      parts = new HashMap<String, Long>();
+    }
+    Long previousTime = parts.get(part);
+    if (previousTime != null) {
+      parts.put(part, Long.valueOf(time - partInitialTime + previousTime.longValue()));
+    } else {
+      parts.put(part, Long.valueOf(time - partInitialTime));
+    }
+    partInitialTime = time;
+  }
+
+  /**
    * Print an end message.
    */
   public void printEnd() {
     long time = currentTime();
     if (time > initialTime + threshold) {
-      printMessage("(" + (time - initialTime) + unit + ")");
+      printDetail("(" + (time - initialTime) + unit + ")");
     }
   }
 
@@ -147,7 +178,7 @@ public class Performance {
   public void printEnd(String message) {
     long time = currentTime();
     if (time > initialTime + threshold) {
-      printMessage(message + "(" + (time - initialTime) + unit + ")");
+      printDetail(message + "(" + (time - initialTime) + unit + ")");
     }
   }
 
@@ -157,7 +188,16 @@ public class Performance {
   public void printEnd(String message, String message2) {
     long time = currentTime();
     if (time > initialTime + threshold) {
-      printMessage(message + ":" + message2 + "(" + (time - initialTime) + unit + ")");
+      printDetail(message + ":" + message2 + "(" + (time - initialTime) + unit + ")");
+    }
+  }
+
+  private void printDetail(String message) {
+    printMessage(message);
+    if (parts != null) {
+      for (Entry<String, Long> entry : parts.entrySet()) {
+        printMessage("  " + entry.getKey() + "(" + entry.getValue() + unit + ")");
+      }
     }
   }
 

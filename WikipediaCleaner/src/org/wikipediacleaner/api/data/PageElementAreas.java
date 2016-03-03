@@ -18,9 +18,10 @@ import java.util.List;
  */
 public class PageElementAreas {
 
-  /**
-   * List of non wiki text areas.
-   */
+  /** Flag to activate areas checking */
+  private static boolean CHECK_AREAS = false;
+
+  /** List of non wiki text areas */
   private final List<Area> areas;
 
   /**
@@ -351,7 +352,9 @@ public class PageElementAreas {
       if (beginIndex <= area.endIndex) {
         if (endIndex < area.beginIndex) {
           areas.add(currentIndex, new Area(beginIndex, endIndex));
-          checkAreas();
+          if (CHECK_AREAS) {
+            checkAreas();
+          }
           return;
         }
         area.beginIndex = Math.min(area.beginIndex, beginIndex);
@@ -362,19 +365,25 @@ public class PageElementAreas {
         while (itArea.hasNext()) {
           Area tmpArea = itArea.next();
           if (tmpArea.beginIndex > endIndex) {
-            checkAreas();
+            if (CHECK_AREAS) {
+              checkAreas();
+            }
             return;
           }
           area.endIndex = Math.max(area.endIndex, tmpArea.endIndex);
           itArea.remove();
         }
-        checkAreas();
+        if (CHECK_AREAS) {
+          checkAreas();
+        }
         return;
       }
       currentIndex++;
     }
     areas.add(new Area(beginIndex, endIndex));
-    checkAreas();
+    if (CHECK_AREAS) {
+      checkAreas();
+    }
   }
 
   /**

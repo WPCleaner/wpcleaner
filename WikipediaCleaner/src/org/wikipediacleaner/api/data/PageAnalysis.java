@@ -20,6 +20,7 @@ import org.wikipediacleaner.api.constants.WikiConfiguration;
 import org.wikipediacleaner.api.constants.wiki.AbstractWikiSettings;
 import org.wikipediacleaner.utils.Configuration;
 import org.wikipediacleaner.utils.ConfigurationValueBoolean;
+import org.wikipediacleaner.utils.Performance;
 
 
 /**
@@ -27,19 +28,19 @@ import org.wikipediacleaner.utils.ConfigurationValueBoolean;
  */
 public class PageAnalysis {
 
-  /**
-   * Page currently analyzed.
-   */
+  /** Flag for tracing time taken by execution */
+  private static boolean traceTime = false;
+
+  /** Threshold for tracing time taken by execution */
+  private final static long TRACE_THRESHOLD = 100;
+
+  /** Page currently analyzed */
   private final Page page;
 
-  /**
-   * Current version of the text.
-   */
+  /** Current version of the text */
   private final String contents;
 
-  /**
-   * True if spelling should be checked.
-   */
+  /** True if spelling should be checked */
   private boolean checkSpelling;
 
   /**
@@ -339,6 +340,11 @@ public class PageAnalysis {
         return;
       }
 
+      Performance perf = null;
+      if (traceTime) {
+        perf = new Performance("PageAnalysis.firstLevelAnalysis", TRACE_THRESHOLD);
+      }
+
       // Initialize
       comments = new ArrayList<PageElementComment>();
 
@@ -363,6 +369,10 @@ public class PageAnalysis {
 
       // Update areas of non wiki text
       areas.addComments(comments);
+
+      if (perf != null) {
+        perf.printEnd();
+      }
     }
   }
 
@@ -375,6 +385,11 @@ public class PageAnalysis {
         return;
       }
       firstLevelAnalysis();
+
+      Performance perf = null;
+      if (traceTime) {
+        perf = new Performance("PageAnalysis.secondLevelAnalysis", TRACE_THRESHOLD);
+      }
 
       // Initialize
       tags = new ArrayList<PageElementTag>();
@@ -426,6 +441,10 @@ public class PageAnalysis {
 
       // Update areas of non wiki text
       areas.addTags(tags);
+
+      if (perf != null) {
+        perf.printEnd();
+      }
     }
   }
 
@@ -438,6 +457,13 @@ public class PageAnalysis {
         return;
       }
       secondLevelAnalysis();
+
+      Performance perf = null;
+      if (traceTime) {
+        perf = new Performance("PageAnalysis.thirdLevelAnalysis", TRACE_THRESHOLD);
+        perf.startPart();
+      }
+
       internalLinks = new ArrayList<PageElementInternalLink>();
       images = new ArrayList<PageElementImage>();
       categories = new ArrayList<PageElementCategory>();
@@ -449,31 +475,73 @@ public class PageAnalysis {
       parameters = new ArrayList<PageElementParameter>();
       titles = new ArrayList<PageElementTitle>();
       externalLinks = new ArrayList<PageElementExternalLink>();
+      if (perf != null) {
+        perf.stopPart("new");
+      }
 
       // Go through all the text of the page
       int maxIndex = (contents != null) ? contents.length() : 0;
       int currentIndex = 0;
+      int areaIndex = 0;
+      List<PageElementAreas.Area> tmpAeras = areas.getAreas();
       while (currentIndex < maxIndex) {
 
         // Checking if the current index is in wiki text area.
-        int nextIndex = areas.getEndArea(currentIndex);
+        boolean areaFound = false;
+        int nextIndex = currentIndex;
+        while ((areaIndex < tmpAeras.size()) && !areaFound) {
+          PageElementAreas.Area area = tmpAeras.get(areaIndex);
+          if (area.beginIndex > currentIndex) {
+            areaFound = true;
+          } else if (area.endIndex > currentIndex) {
+            areaFound = true;
+            nextIndex = area.endIndex;
+          } else {
+            areaIndex++;
+          }
+        }
+        if (perf != null) {
+          perf.stopPart("nextIndex");
+        }
+
         if (nextIndex > currentIndex) {
           currentIndex = nextIndex;
         } else {
           if (contents.startsWith("[[", currentIndex)) {
             currentIndex = analyze2SquareBrackets(currentIndex);
+            if (perf != null) {
+              perf.stopPart("analyze2SquareBrackets");
+            }
           } else if (contents.startsWith("[", currentIndex)) {
             currentIndex = analyze1SquareBracket(currentIndex);
+            if (perf != null) {
+              perf.stopPart("analyze1SquareBracket");
+            }
           } else if (contents.startsWith("{{{", currentIndex)) {
             currentIndex = analyze3CurlyBrackets(currentIndex);
+            if (perf != null) {
+              perf.stopPart("analyze3CurlyBrackets");
+            }
           } else if (contents.startsWith("{{", currentIndex)) {
             currentIndex = analyze2CurlyBrackets(currentIndex);
+            if (perf != null) {
+              perf.stopPart("analyze2CurlyBrackets");
+            }
           } else if (contents.startsWith("=", currentIndex)) {
             currentIndex = analyze1Equal(currentIndex);
+            if (perf != null) {
+              perf.stopPart("analyze1Equal");
+            }
           } else if (contents.startsWith("__", currentIndex)) {
             currentIndex = analyze2Undescore(currentIndex);
+            if (perf != null) {
+              perf.stopPart("analyze2UnderscoreBrackets");
+            }
           } else {
             currentIndex = analyzeText(currentIndex);
+            if (perf != null) {
+              perf.stopPart("analyzeText");
+            }
           }
         }
       }
@@ -490,6 +558,11 @@ public class PageAnalysis {
       areas.addParameters(parameters);
       areas.addTitles(titles);
       areas.addExternalLinks(externalLinks);
+
+      if (perf != null) {
+        perf.stopPart("addAreas");
+        perf.printEnd();
+      }
     }
   }
 
@@ -502,12 +575,22 @@ public class PageAnalysis {
         return;
       }
       thirdLevelAnalysis();
+
+      Performance perf = null;
+      if (traceTime) {
+        perf = new Performance("PageAnalysis.fourthLevelAnalysis", TRACE_THRESHOLD);
+      }
+
       isbns = PageElementISBN.analyzePage(this);
       areas.addISBN(isbns);
       issns = PageElementISSN.analyzePage(this);
       areas.addISSN(issns);
       pmids = PageElementPMID.analyzePage(this);
       areas.addPMID(pmids);
+
+      if (perf != null) {
+        perf.printEnd();
+      }
     }
   }
 

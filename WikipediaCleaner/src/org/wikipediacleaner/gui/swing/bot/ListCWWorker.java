@@ -394,6 +394,9 @@ public class ListCWWorker extends BasicWorker {
         }
       }
       countAnalyzed++;
+      if (countAnalyzed % 1000 == 0) {
+        System.out.println("Pages processed: " + countAnalyzed);
+      }
       return page;
     }
   }
@@ -412,9 +415,6 @@ public class ListCWWorker extends BasicWorker {
     /** API */
     private final API api;
 
-    /** Count of pages processed */
-    private long pageCount;
-
     /**
      * @param wiki Wiki.
      */
@@ -422,7 +422,6 @@ public class ListCWWorker extends BasicWorker {
       this.wiki = wiki;
       this.controller = new CWController(null);
       this.api = APIFactory.getAPI();
-      this.pageCount = 0;
     }
 
     /**
@@ -442,10 +441,6 @@ public class ListCWWorker extends BasicWorker {
     public void processPage(Page page) {
       if ((page != null) && page.isInMainNamespace()) {
         controller.addTask(new CWPageCallable(wiki, null, api, page));
-        pageCount++;
-        if (pageCount % 1000 == 0) {
-          System.out.println("Pages processed: " + pageCount);
-        }
       }
     }
 
