@@ -259,6 +259,12 @@ public class CheckErrorAlgorithm526 extends CheckErrorAlgorithmBase {
     }
 
     Collections.sort(result);
+
+    // Limit result size
+    while (result.size() > limit) {
+      result.remove(result.size() - 1);
+    }
+
     return result;
   }
 

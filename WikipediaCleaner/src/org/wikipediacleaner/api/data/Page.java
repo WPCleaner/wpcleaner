@@ -1049,6 +1049,8 @@ public class Page implements Comparable<Page> {
       if (bl.namespace != null) {
         return -1;
       }
+    } else if (bl.namespace == null) {
+      return 1;
     } else {
       compare = namespace.compareTo(bl.namespace);
       if (compare != 0) {
@@ -1061,6 +1063,8 @@ public class Page implements Comparable<Page> {
       if (bl.title != null) {
         return -1;
       }
+    } else if (bl.title == null) {
+      return 1;
     } else {
       compare = title.compareTo(bl.title);
       if (compare != 0) {
@@ -1073,6 +1077,8 @@ public class Page implements Comparable<Page> {
       if (bl.pageId != null) {
         return -1;
       }
+    } else if (bl.pageId == null) {
+      return 1;
     } else {
       compare = pageId.compareTo(bl.pageId);
       if (compare != 0) {
