@@ -177,7 +177,7 @@ public class ListCWWorker extends BasicWorker {
       }
       buffer.append("* ");
       buffer.append(PageElementInternalLink.createInternalLink(
-          detection.page.getTitle(), null));
+          detection.pageName, null));
       buffer.append(": ");
       if (detection.notices != null) {
         boolean first = true;
@@ -457,8 +457,8 @@ public class ListCWWorker extends BasicWorker {
    */
   static class Detection implements Comparable<Detection> {
 
-    /** Page */
-    public final Page page;
+    /** Page name */
+    public final String pageName;
 
     /** List of notices */
     public final List<String> notices;
@@ -471,15 +471,15 @@ public class ListCWWorker extends BasicWorker {
      * @param errors List of errors.
      */
     public Detection(Page page, List<CheckErrorResult> errors) {
-      this.page = page;
+      this.pageName = page.getTitle();
       this.notices = new ArrayList<>();
       ErrorLevel tmpLevel = ErrorLevel.CORRECT;
       if (errors != null) {
         for (CheckErrorResult error : errors) {
           String contents = page.getContents();
           if (contents != null) {
-            notices.add(contents.substring(
-                error.getStartPosition(), error.getEndPosition()));
+            notices.add(new String(contents.substring(
+                error.getStartPosition(), error.getEndPosition())));
           }
           ErrorLevel currentLevel = error.getErrorLevel();
           if (currentLevel.ordinal() < tmpLevel.ordinal()) {
@@ -510,13 +510,16 @@ public class ListCWWorker extends BasicWorker {
       }
 
       // Compare pages
-      if (page == null) {
-        if (o.page == null) {
+      if (pageName == null) {
+        if (o.pageName == null) {
           return 0;
         }
         return 1;
       }
-      return page.compareTo(o.page);
+      if (o.pageName == null) {
+        return -1;
+      }
+      return pageName.compareTo(o.pageName);
     }
   }
 }
