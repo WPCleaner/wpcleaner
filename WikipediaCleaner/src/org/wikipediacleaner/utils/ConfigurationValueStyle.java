@@ -72,6 +72,16 @@ public enum ConfigurationValueStyle {
       true, Color.RED,
       false, Color.WHITE,
       false, true, false, false)),
+  INTERNAL_LINK_DEFAULT_MISSING("InternalLinkDefaultMissing", new StyleProperties(
+      false,
+      false, Color.BLACK,
+      true, new Color(204, 255, 255),
+      false, false, false, true)),
+  INTERNAL_LINK_DEFAULT_REDIRECT("InternalLinkDefaultRedirect", new StyleProperties(
+      false,
+      false, Color.BLACK,
+      true, new Color(204, 255, 255),
+      true, false, false, false)),
   INTERNAL_LINK_MISSING("InternalLinkMissing", new StyleProperties(
       true,
       true, Color.ORANGE,

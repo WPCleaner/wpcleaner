@@ -17,6 +17,7 @@ import javax.swing.text.StyleConstants;
 import javax.swing.text.StyleContext;
 import javax.swing.text.StyledDocument;
 
+import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElement;
 import org.wikipediacleaner.api.data.PageElementCategory;
@@ -112,15 +113,15 @@ public abstract class MWPaneFormatter {
    * Format elements in a MediaWikiPane.
    * 
    * @param doc Document to be formatted.
-   * @param pageAnalysis Page analysis.
+   * @param analysis Page analysis.
    */
   public void defaultFormatElements(
       StyledDocument doc,
-      PageAnalysis pageAnalysis) {
+      PageAnalysis analysis) {
     if (showNonWikiText) {
-      formatWikiText(doc, pageAnalysis);
+      formatWikiText(doc, analysis);
     } else {
-      formatWikiSyntax(doc, pageAnalysis);
+      formatWikiSyntax(doc, analysis);
     }
   }
 
@@ -128,13 +129,13 @@ public abstract class MWPaneFormatter {
    * Format elements in a MediaWikiPane following Wiki syntax.
    * 
    * @param doc Document to be formatted.
-   * @param pageAnalysis Page analysis.
+   * @param analysis Page analysis.
    */
   private void formatWikiSyntax(
       StyledDocument doc,
-      PageAnalysis pageAnalysis) {
+      PageAnalysis analysis) {
     // Basic checks
-    if ((doc == null) || (pageAnalysis == null)) {
+    if ((doc == null) || (analysis == null)) {
       return;
     }
 
@@ -168,7 +169,7 @@ public abstract class MWPaneFormatter {
         ConfigurationValueStyle.TITLE);
 
     // Format
-    List<PageElement> elements = pageAnalysis.getElements(
+    List<PageElement> elements = analysis.getElements(
         styleCategory.getEnabled(),
         styleComments.getEnabled(),
         styleExternalLink.getEnabled(),
@@ -182,23 +183,23 @@ public abstract class MWPaneFormatter {
         styleTag.getEnabled(),
         styleTemplate.getEnabled(),
         styleTitle.getEnabled());
-    formatElementsDirectly(doc, elements, 0, elements.size());
+    formatElementsDirectly(doc, analysis, elements, 0, elements.size());
   }
 
   /**
    * Format elements in a MediaWikiPane highlighting non wiki text.
    * 
    * @param doc Document to be formatted.
-   * @param pageAnalysis Page analysis.
+   * @param analysis Page analysis.
    */
   private void formatWikiText(
       StyledDocument doc,
-      PageAnalysis pageAnalysis) {
-    if ((doc == null) || (pageAnalysis == null)) {
+      PageAnalysis analysis) {
+    if ((doc == null) || (analysis == null)) {
       return;
     }
     Style style = doc.getStyle(ConfigurationValueStyle.COMMENTS.getName());
-    List<Area> areas = pageAnalysis.getAreas().getAreas();
+    List<Area> areas = analysis.getAreas().getAreas();
     if (areas != null) {
       for (Area area : areas) {
         int beginIndex = area.getBeginIndex();
@@ -214,12 +215,14 @@ public abstract class MWPaneFormatter {
    * Format a list of elements in a document.
    * 
    * @param doc Document.
+   * @param analysis Page analysis.
    * @param elements Elements.
    * @param begin Begin index in the elements.
    * @param end End index in the elements.
    */
   private void formatElementsDirectly(
       StyledDocument doc,
+      PageAnalysis analysis,
       List<PageElement> elements,
       int begin, int end) {
     for (int i = begin; i < end; i++) {
@@ -242,7 +245,7 @@ public abstract class MWPaneFormatter {
       } else if (element instanceof PageElementImage) {
         style = doc.getStyle(ConfigurationValueStyle.IMAGE.getName());
       } else if (element instanceof PageElementInternalLink) {
-        style = doc.getStyle(ConfigurationValueStyle.INTERNAL_LINK.getName());
+        style = getInternalLinkStyle(doc, analysis, (PageElementInternalLink) element);
       } else if (element instanceof PageElementLanguageLink) {
         style = doc.getStyle(ConfigurationValueStyle.LANGUAGE_LINK.getName());
       } else if (element instanceof PageElementParameter) {
@@ -271,6 +274,42 @@ public abstract class MWPaneFormatter {
             style, true);
       }
     }
+  }
+
+  private Style getInternalLinkStyle(
+      StyledDocument doc,
+      PageAnalysis analysis,
+      PageElementInternalLink link) {
+    Style style = null;
+
+    if ((analysis != null) &&
+        (analysis.getPage() != null) &&
+        (analysis.getPage().getLinks() != null)) {
+
+      // Find link target
+      Page target = null;
+      for (Page tmpPage : analysis.getPage().getLinks()) {
+        if (Page.areSameTitle(tmpPage.getTitle(), link.getLink())) {
+          target = tmpPage;
+        }
+      }
+
+      // Specific styles
+      if (target != null) {
+        if (target.isRedirect()) {
+          style = doc.getStyle(ConfigurationValueStyle.INTERNAL_LINK_DEFAULT_REDIRECT.getName());
+        } else if (Boolean.FALSE.equals(target.isExisting())) {
+          style = doc.getStyle(ConfigurationValueStyle.INTERNAL_LINK_DEFAULT_MISSING.getName());
+        }
+      }
+    }
+
+    // Apply default style for internal links
+    if (style == null) {
+      style = doc.getStyle(ConfigurationValueStyle.INTERNAL_LINK.getName());
+    }
+
+    return style;
   }
 
   /**
@@ -399,115 +438,131 @@ public abstract class MWPaneFormatter {
 
         // Style for category
         Style categoryStyle = addStyle(
-            ConfigurationValueStyle.CATEGORY, rootStyle);
+            ConfigurationValueStyle.CATEGORY, rootStyle, false);
         categoryStyle.addAttribute(ATTRIBUTE_OCCURRENCE, Boolean.FALSE);
 
         // Style for comment
         Style commentStyle = addStyle(
-            ConfigurationValueStyle.COMMENTS, rootStyle);
+            ConfigurationValueStyle.COMMENTS, rootStyle, false);
         commentStyle.addAttribute(ATTRIBUTE_OCCURRENCE, Boolean.FALSE);
 
         // Style for DEFAULTSORT
         Style defaultsortStyle = addStyle(
-            ConfigurationValueStyle.DEFAULTSORT, rootStyle);
+            ConfigurationValueStyle.DEFAULTSORT, rootStyle, false);
         defaultsortStyle.addAttribute(ATTRIBUTE_OCCURRENCE, Boolean.FALSE);
 
         // Style for external link
         Style externalLinkStyle = addStyle(
-            ConfigurationValueStyle.EXTERNAL_LINK, rootStyle);
+            ConfigurationValueStyle.EXTERNAL_LINK, rootStyle, false);
         externalLinkStyle.addAttribute(ATTRIBUTE_OCCURRENCE, Boolean.FALSE);
 
         // Style for image
         Style imageStyle = addStyle(
-            ConfigurationValueStyle.IMAGE, rootStyle);
+            ConfigurationValueStyle.IMAGE, rootStyle, false);
         imageStyle.addAttribute(ATTRIBUTE_OCCURRENCE, Boolean.FALSE);
 
         // Style for internal link
         Style internalLinkStyle = addStyle(
-            ConfigurationValueStyle.INTERNAL_LINK, rootStyle);
+            ConfigurationValueStyle.INTERNAL_LINK, rootStyle, false);
         internalLinkStyle.addAttribute(ATTRIBUTE_OCCURRENCE, Boolean.FALSE);
+
+        // Style for missing internal link
+        Style internalLinkStyleDefaultMissing = addStyle(
+            ConfigurationValueStyle.INTERNAL_LINK_DEFAULT_MISSING, internalLinkStyle, true);
+        if (internalLinkStyleDefaultMissing != null) {
+          internalLinkStyleDefaultMissing.addAttribute(ATTRIBUTE_OCCURRENCE, Boolean.FALSE);
+        }
+
+        // Style for redirect internal link
+        Style internalLinkStyleDefaultRedirect = addStyle(
+            ConfigurationValueStyle.INTERNAL_LINK_DEFAULT_REDIRECT, internalLinkStyle, true);
+        if (internalLinkStyleDefaultRedirect != null) {
+          internalLinkStyleDefaultRedirect.addAttribute(ATTRIBUTE_OCCURRENCE, Boolean.FALSE);
+        }
 
         // Style for interwiki link
         Style interwikiLinkStyle = addStyle(
-            ConfigurationValueStyle.INTERWIKI_LINK, rootStyle);
+            ConfigurationValueStyle.INTERWIKI_LINK, rootStyle, false);
         interwikiLinkStyle.addAttribute(ATTRIBUTE_OCCURRENCE, Boolean.FALSE);
 
         // Style for language link
         Style languageLinkStyle = addStyle(
-            ConfigurationValueStyle.LANGUAGE_LINK, rootStyle);
+            ConfigurationValueStyle.LANGUAGE_LINK, rootStyle, false);
         languageLinkStyle.addAttribute(ATTRIBUTE_OCCURRENCE, Boolean.FALSE);
 
         // Style for parameter
         Style parameterStyle = addStyle(
-            ConfigurationValueStyle.PROGRAMMING, rootStyle);
+            ConfigurationValueStyle.PROGRAMMING, rootStyle, false);
         parameterStyle.addAttribute(ATTRIBUTE_OCCURRENCE, Boolean.FALSE);
 
         // Style for reference contents
-        Style refStyle = addStyle(ConfigurationValueStyle.REFERENCE, rootStyle);
+        Style refStyle = addStyle(
+            ConfigurationValueStyle.REFERENCE, rootStyle, false);
         refStyle.addAttribute(ATTRIBUTE_OCCURRENCE, Boolean.FALSE);
 
         // Style for tag
-        Style tagStyle = addStyle(ConfigurationValueStyle.TAG, rootStyle);
+        Style tagStyle = addStyle(
+            ConfigurationValueStyle.TAG, rootStyle, false);
         tagStyle.addAttribute(ATTRIBUTE_OCCURRENCE, Boolean.FALSE);
 
         // Style for template
         Style templateStyle = addStyle(
-            ConfigurationValueStyle.TEMPLATE, rootStyle);
+            ConfigurationValueStyle.TEMPLATE, rootStyle, false);
         templateStyle.addAttribute(ATTRIBUTE_OCCURRENCE, Boolean.FALSE);
 
         // Style for title
         Style titleStyle = addStyle(
-            ConfigurationValueStyle.TITLE, rootStyle);
+            ConfigurationValueStyle.TITLE, rootStyle, false);
         titleStyle.addAttribute(ATTRIBUTE_OCCURRENCE, Boolean.FALSE);
 
         // Style for disambiguation link 
         Style internalLinkDabStyle = addStyle(
-            ConfigurationValueStyle.INTERNAL_LINK_DAB, rootStyle);
+            ConfigurationValueStyle.INTERNAL_LINK_DAB, rootStyle, false);
         internalLinkDabStyle.addAttribute(ATTRIBUTE_TYPE, VALUE_DISAMBIGUATION_LINK);
 
         // Style for normal internal link
         Style internalLinkNormalStyle = addStyle(
-            ConfigurationValueStyle.INTERNAL_LINK_NORMAL, rootStyle);
+            ConfigurationValueStyle.INTERNAL_LINK_NORMAL, rootStyle, false);
         internalLinkNormalStyle.addAttribute(ATTRIBUTE_TYPE, VALUE_NORMAL_LINK);
 
         // Style for redirect link
         Style internalLinkRedirectStyle = addStyle(
-            ConfigurationValueStyle.INTERNAL_LINK_REDIRECT, rootStyle);
+            ConfigurationValueStyle.INTERNAL_LINK_REDIRECT, rootStyle, false);
         internalLinkRedirectStyle.addAttribute(ATTRIBUTE_TYPE, VALUE_REDIRECT_LINK);
 
         // Style for missing link
         Style internalLinkMissingStyle = addStyle(
-            ConfigurationValueStyle.INTERNAL_LINK_MISSING, rootStyle);
+            ConfigurationValueStyle.INTERNAL_LINK_MISSING, rootStyle, false);
         internalLinkMissingStyle.addAttribute(ATTRIBUTE_TYPE, VALUE_MISSING_LINK);
 
         // Style for disambiguation template
         Style templateDabStyle = addStyle(
-            ConfigurationValueStyle.TEMPLATE_DAB, rootStyle);
+            ConfigurationValueStyle.TEMPLATE_DAB, rootStyle, false);
         templateDabStyle.addAttribute(ATTRIBUTE_TYPE, VALUE_DISAMBIGUATION_TEMPLATE);
 
         // Style for normal template
         Style templateNormalStyle = addStyle(
-            ConfigurationValueStyle.TEMPLATE_NORMAL, rootStyle);
+            ConfigurationValueStyle.TEMPLATE_NORMAL, rootStyle, false);
         templateNormalStyle.addAttribute(ATTRIBUTE_TYPE, VALUE_NORMAL_TEMPLATE);
 
         // Style for help requested
         Style helpRequestedStyle = addStyle(
-            ConfigurationValueStyle.HELP_REQUESTED, rootStyle);
+            ConfigurationValueStyle.HELP_REQUESTED, rootStyle, false);
         helpRequestedStyle.addAttribute(ATTRIBUTE_TYPE, VALUE_HELP_REQUESTED_LINK);
 
         // Style for CheckWiki error
         Style checkWikiErrorStyle = addStyle(
-            ConfigurationValueStyle.CHECK_WIKI_ERROR, rootStyle);
+            ConfigurationValueStyle.CHECK_WIKI_ERROR, rootStyle, false);
         checkWikiErrorStyle.addAttribute(ATTRIBUTE_TYPE, VALUE_CHECK_WIKI_ERROR);
 
         // Style for CheckWiki warning
         Style checkWikiWarningStyle = addStyle(
-            ConfigurationValueStyle.CHECK_WIKI_WARNING, rootStyle);
+            ConfigurationValueStyle.CHECK_WIKI_WARNING, rootStyle, false);
         checkWikiWarningStyle.addAttribute(ATTRIBUTE_TYPE, VALUE_CHECK_WIKI_WARNING);
 
         // Style for CheckWiki OK
         Style checkWikiOkStyle = addStyle(
-            ConfigurationValueStyle.CHECK_WIKI_OK, rootStyle);
+            ConfigurationValueStyle.CHECK_WIKI_OK, rootStyle, false);
         checkWikiOkStyle.addAttribute(ATTRIBUTE_TYPE, VALUE_CHECK_WIKI_OK);
         checkWikiOkStyle.addAttribute(ATTRIBUTE_OCCURRENCE, Boolean.FALSE);
 
@@ -521,21 +576,31 @@ public abstract class MWPaneFormatter {
    * @param rootStyle Root style.
    * @return New style.
    */
-  private static Style addStyle(ConfigurationValueStyle defaultStyle, Style rootStyle) {
+  private static Style addStyle(
+      ConfigurationValueStyle defaultStyle, Style rootStyle,
+      boolean onlyEnabled) {
     if (defaultStyle == null) {
       return null;
     }
-    Style newStyle = styleContext.addStyle(defaultStyle.getName(), rootStyle);
+
+    // Check that style should be created
     Configuration config = Configuration.getConfiguration();
     ConfigurationValueStyle.StyleProperties configStyle = config.getStyle(defaultStyle);
-    if (configStyle != null) {
-      formatStyleForeground(newStyle, config, configStyle);
-      formatStyleBackground(newStyle, config, configStyle);
-      formatStyleBold(newStyle, config, configStyle);
-      formatStyleItalic(newStyle, config, configStyle);
-      formatStyleUnderline(newStyle, config, configStyle);
-      formatStyleStrikeThrough(newStyle, config, configStyle);
+    if (configStyle == null) {
+      return null;
     }
+    if (onlyEnabled && !configStyle.getEnabled()) {
+      return null;
+    }
+
+    // Create style
+    Style newStyle = styleContext.addStyle(defaultStyle.getName(), rootStyle);
+    formatStyleForeground(newStyle, config, configStyle);
+    formatStyleBackground(newStyle, config, configStyle);
+    formatStyleBold(newStyle, config, configStyle);
+    formatStyleItalic(newStyle, config, configStyle);
+    formatStyleUnderline(newStyle, config, configStyle);
+    formatStyleStrikeThrough(newStyle, config, configStyle);
     return newStyle;
   }
 

@@ -122,6 +122,18 @@ public class FormattingOptionsPanel extends OptionsPanel {
         true, true, true, true, true, true,
         ConfigurationValueStyle.INTERNAL_LINK);
 
+    // Add line for internal link style (for redirect link)
+    addLine(
+        panel, constraints, true, GT._("Redirect link"),
+        true, true, true, true, true, true,
+        ConfigurationValueStyle.INTERNAL_LINK_DEFAULT_REDIRECT);
+
+    // Add line for internal link style (for missing link)
+    addLine(
+        panel, constraints, true, GT._("Missing link"),
+        true, true, true, true, true, true,
+        ConfigurationValueStyle.INTERNAL_LINK_DEFAULT_MISSING);
+
     // Add line for template style
     addLine(
         panel, constraints, true, GT._("Template"),
