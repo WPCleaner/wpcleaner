@@ -16,6 +16,7 @@ import org.apache.commons.logging.LogFactory;
 import org.wikipediacleaner.api.HttpUtils;
 import org.wikipediacleaner.api.constants.ConnectionInformation;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
+import org.wikipediacleaner.api.request.login.ApiLoginRequest;
 import org.wikipediacleaner.utils.Configuration;
 import org.wikipediacleaner.utils.ConfigurationValueBoolean;
 
