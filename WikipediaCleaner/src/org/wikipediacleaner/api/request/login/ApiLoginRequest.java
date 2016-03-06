@@ -10,6 +10,7 @@ package org.wikipediacleaner.api.request.login;
 import java.util.Map;
 
 import org.wikipediacleaner.api.APIException;
+import org.wikipediacleaner.api.constants.ConnectionInformation;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.LoginResult;
 import org.wikipediacleaner.api.request.ApiRequest;
@@ -75,6 +76,10 @@ public class ApiLoginRequest extends ApiRequest {
     Map<String, String> properties = getProperties(ACTION_LOGIN, result.getFormat());
     properties.put(PROPERTY_NAME, username);
     properties.put(PROPERTY_PASSWORD, password);
+    ConnectionInformation connection = getWiki().getConnection();
+    if ((connection != null) && (connection.getLoginToken() != null)) {
+      properties.put(PROPERTY_TOKEN, connection.getLoginToken());
+    }
     LoginResult loginResult = result.executeLogin(properties);
     return loginResult;
   }

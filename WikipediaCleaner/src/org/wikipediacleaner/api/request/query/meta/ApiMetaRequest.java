@@ -20,20 +20,17 @@ public class ApiMetaRequest extends ApiRequest {
   // API properties
   // ==========================================================================
 
-  /**
-   * Property for Meta.
-   */
+  /** Property for Meta */
   public final static String PROPERTY_META = "meta";
 
-  /**
-   * Property for Meta / All messages.
-   */
+  /** Property for Meta / All messages */
   public final static String PROPERTY_META_ALLMESSAGES = "allmessages";
 
-  /**
-   * Property for Meta / Site info.
-   */
+  /** Property for Meta / Site info */
   public final static String PROPERTY_META_SITEINFO = "siteinfo";
+
+  /** Property for Meta / Tokens */
+  public final static String PROPERTY_META_TOKENS = "tokens";
 
   // ==========================================================================
   // Wiki management

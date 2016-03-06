@@ -55,8 +55,14 @@ public class ApiXmlTokensResult extends ApiXmlResult implements ApiTokensResult 
       Iterator iter = results.iterator();
       while (iter.hasNext()) {
         Element currentNode = (Element) iter.next();
-        getWiki().getConnection().setDeleteToken(currentNode.getAttributeValue("deletetoken"));
-        getWiki().getConnection().setEditToken(currentNode.getAttributeValue("edittoken"));
+        String deleteToken = currentNode.getAttributeValue("deletetoken");
+        if (deleteToken != null) {
+          getWiki().getConnection().setDeleteToken(deleteToken);
+        }
+        String editToken = currentNode.getAttributeValue("edittoken");
+        if (editToken != null) {
+          getWiki().getConnection().setEditToken(editToken);
+        }
       }
     } catch (JDOMException e) {
       log.error("Error retrieving tokens", e);

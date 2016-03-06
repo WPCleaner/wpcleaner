@@ -15,36 +15,30 @@ import org.wikipediacleaner.api.data.User;
  */
 public class ConnectionInformation {
 
-  /**
-   * Parameter <code>lgToken</code> for API calls.
-   */
+  /** Parameter <code>lgToken</code> for API calls */
   private String lgToken;
 
-  /**
-   * Parameter <code>lgUserName</code> for API calls. 
-   */
+  /** Parameter <code>lgUserName</code> for API calls */
   private String lgUserName;
 
-  /**
-   * Parameter <code>lgUserId</code> for API calls.
-   */
+  /** Parameter <code>lgUserId</code> for API calls */
   private String lgUserId;
 
-  /**
-   * User.
-   */
+  /** User */
   private User user;
 
-  /**
-   * Delete token.
-   */
+  /** Login token */
+  private String loginToken;
+
+  /** Delete token */
   private String deleteToken;
 
-  /**
-   * Edit token.
-   */
+  /** Edit token */
   private String editToken;
 
+  /**
+   * Create a clean connection information.
+   */
   public ConnectionInformation() {
     clean();
   }
@@ -56,6 +50,8 @@ public class ConnectionInformation {
     lgToken = null;
     lgUserName = null;
     lgUserId = null;
+    loginToken = null;
+    deleteToken = null;
     editToken = null;
   }
 
@@ -131,6 +127,20 @@ public class ConnectionInformation {
    */
   public void setUser(User user) {
     this.user = user;
+  }
+
+  /**
+   * @return Login token.
+   */
+  public String getLoginToken() {
+    return loginToken;
+  }
+
+  /**
+   * @param token Login token.
+   */
+  public void setLoginToken(String token) {
+    this.loginToken = token;
   }
 
   /**

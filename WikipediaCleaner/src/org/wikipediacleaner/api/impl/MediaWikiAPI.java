@@ -116,8 +116,11 @@ import org.wikipediacleaner.api.request.query.list.ApiXmlSearchResult;
 import org.wikipediacleaner.api.request.query.list.ApiXmlUsersResult;
 import org.wikipediacleaner.api.request.query.meta.ApiAllMessagesRequest;
 import org.wikipediacleaner.api.request.query.meta.ApiAllMessagesResult;
+import org.wikipediacleaner.api.request.query.meta.ApiJsonTokensResult;
 import org.wikipediacleaner.api.request.query.meta.ApiSiteInfoRequest;
 import org.wikipediacleaner.api.request.query.meta.ApiSiteInfoResult;
+import org.wikipediacleaner.api.request.query.meta.ApiTokensRequest;
+import org.wikipediacleaner.api.request.query.meta.ApiTokensResult;
 import org.wikipediacleaner.api.request.query.meta.ApiXmlAllMessagesResult;
 import org.wikipediacleaner.api.request.query.meta.ApiXmlSiteInfoResult;
 import org.wikipediacleaner.api.request.query.prop.ApiCategoriesRequest;
@@ -145,9 +148,6 @@ import org.wikipediacleaner.api.request.query.prop.ApiXmlTemplatesResult;
 import org.wikipediacleaner.api.request.templatedata.ApiJsonTemplateDataResult;
 import org.wikipediacleaner.api.request.templatedata.ApiTemplateDataRequest;
 import org.wikipediacleaner.api.request.templatedata.ApiTemplateDataResult;
-import org.wikipediacleaner.api.request.tokens.ApiTokensRequest;
-import org.wikipediacleaner.api.request.tokens.ApiTokensResult;
-import org.wikipediacleaner.api.request.tokens.ApiXmlTokensResult;
 import org.wikipediacleaner.gui.swing.basic.Utilities;
 import org.wikipediacleaner.i18n.GT;
 import org.wikipediacleaner.utils.Configuration;
@@ -817,9 +817,15 @@ public class MediaWikiAPI implements API {
       String password,
       boolean login) throws APIException {
     logout(wiki);
-    ApiLoginResult result = new ApiXmlLoginResult(wiki, httpClient);
-    ApiLoginRequest request = new ApiLoginRequest(wiki, result);
     if (login) {
+      // Retrieve login token
+      ApiTokensResult tokensResult = new ApiJsonTokensResult(wiki, httpClient);
+      ApiTokensRequest tokensRequest = new ApiTokensRequest(wiki, tokensResult);
+      tokensRequest.retrieveToken(ApiTokensRequest.PROPERTY_TYPE_LOGIN);
+
+      // Login
+      ApiLoginResult result = new ApiXmlLoginResult(wiki, httpClient);
+      ApiLoginRequest request = new ApiLoginRequest(wiki, result);
       return request.login(username, password);
     }
     return LoginResult.createCorrectLogin();
@@ -855,9 +861,9 @@ public class MediaWikiAPI implements API {
    */
   @Override
   public void retrieveTokens(EnumWikipedia wiki) throws APIException {
-    ApiTokensResult result = new ApiXmlTokensResult(wiki, httpClient);
+    ApiTokensResult result = new ApiJsonTokensResult(wiki, httpClient);
     ApiTokensRequest request = new ApiTokensRequest(wiki, result);
-    request.retrieveTokens();
+    request.retrieveToken(ApiTokensRequest.PROPERTY_TYPE_CSRF);
   }
 
   // ==========================================================================
