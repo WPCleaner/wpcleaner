@@ -8,11 +8,11 @@
 package org.wikipediacleaner.api.check.algorithm;
 
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
+import org.wikipediacleaner.api.check.CheckErrorResult.ErrorLevel;
 import org.wikipediacleaner.api.constants.WPCConfiguration;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageAnalysis;
@@ -47,31 +47,34 @@ public class CheckErrorAlgorithm003 extends CheckErrorAlgorithmBase {
     }
 
     // Analyzing text for <ref> tags
-    boolean refFound = false;
+    PageElementTag lastRefTag = null;
     List<PageElementTag> refTags = analysis.getTags(PageElementTag.TAG_WIKI_REF);
     if ((refTags != null) && (refTags.size() > 0)) {
-      Iterator<PageElementTag> itRefTags = refTags.iterator();
-      while (!refFound && itRefTags.hasNext()) {
+      for (int numTag = refTags.size() - 1; (numTag >= 0) && (lastRefTag == null); numTag--) {
         boolean usefulRef = true;
-        PageElementTag refTag = itRefTags.next();
+        PageElementTag refTag = refTags.get(numTag);
         if (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_NOWIKI, refTag.getBeginIndex()) != null) {
           usefulRef =  false;
         }
         if (usefulRef) {
-          refFound = true;
+          lastRefTag = refTag;
         }
       }
     }
-    if (!refFound) {
+    if (lastRefTag == null) {
       return false;
     }
+    boolean referencesFound = false;
 
     // Analyzing text for <references> tags
     List<PageElementTag> referencesTags = analysis.getTags(PageElementTag.TAG_WIKI_REFERENCES);
     if (referencesTags != null) {
       for (PageElementTag referencesTag : referencesTags) {
+        referencesFound = true;
         if (referencesTag.isComplete()) {
-          return false;
+          if (referencesTag.getCompleteEndIndex() > lastRefTag.getCompleteEndIndex()) {
+            return false;
+          }
         }
       }
     }
@@ -95,52 +98,65 @@ public class CheckErrorAlgorithm003 extends CheckErrorAlgorithmBase {
         PageElementTemplate template = allTemplates.get(templateNum);
         for (String referencesTemplate : referencesTemplates) {
           if (Page.areSameTitle(template.getTemplateName(), referencesTemplate)) {
-            return false;
+            referencesFound = true;
+            if (template.getEndIndex() > lastRefTag.getCompleteEndIndex()) {
+              return false;
+            }
           }
         }
       }
     }
 
-    // Try to make some suggestions
+    // Report error
     if (errors == null) {
       return true;
     }
+    CheckErrorResult errorResult = createCheckErrorResult(
+        analysis,
+        lastRefTag.getCompleteBeginIndex(),
+        lastRefTag.getCompleteEndIndex(),
+        referencesFound ? ErrorLevel.WARNING : ErrorLevel.ERROR);
+    errors.add(errorResult);
+
+    // Try to make some suggestions
     String contents = analysis.getContents();
     if (referencesTags != null) {
       for (PageElementTag referencesTag : referencesTags) {
-        CheckErrorResult errorResult = createCheckErrorResult(
-            analysis, referencesTag.getBeginIndex(), referencesTag.getEndIndex());
-        if (referencesTags.size() == 1) {
-          errorResult.addReplacement(
-              PageElementTag.createTag(PageElementTag.TAG_WIKI_REFERENCES, true, true),
-              GT._("Close tag"));
+        if (!referencesTag.isComplete()) {
+          errorResult = createCheckErrorResult(
+              analysis, referencesTag.getBeginIndex(), referencesTag.getEndIndex());
+          if (referencesTags.size() == 1) {
+            errorResult.addReplacement(
+                PageElementTag.createTag(PageElementTag.TAG_WIKI_REFERENCES, true, true),
+                GT._("Close tag"));
+          }
+          errors.add(errorResult);
         }
-        errors.add(errorResult);
-        if (referencesTags.size() == 1) {
-          int index = referencesTag.getEndIndex();
-          boolean ok = true;
-          while (ok && (index < contents.length())) {
-            char currentChar = contents.charAt(index);
-            if (Character.isWhitespace(currentChar)) {
-              index++;
-            } else if (currentChar == '<') {
-              PageElementTag tag = analysis.isInTag(index);
-              if ((tag != null) &&
-                  (tag.getBeginIndex() == index) &&
-                  (PageElementTag.TAG_WIKI_REF.equals(tag.getNormalizedName()))) {
-                index = tag.getCompleteEndIndex();
-              } else {
-                if (contents.startsWith("</references/>", index)) {
-                  errorResult = createCheckErrorResult(analysis, index, index + 14);
-                  errorResult.addReplacement(PageElementTag.createTag(
-                      PageElementTag.TAG_WIKI_REFERENCES, true, false), true);
-                  errors.add(errorResult);
-                }
-                ok = false;
-              }
+      }
+      if (referencesTags.size() == 1) {
+        int index = referencesTags.get(0).getEndIndex();
+        boolean ok = true;
+        while (ok && (index < contents.length())) {
+          char currentChar = contents.charAt(index);
+          if (Character.isWhitespace(currentChar)) {
+            index++;
+          } else if (currentChar == '<') {
+            PageElementTag tag = analysis.isInTag(index);
+            if ((tag != null) &&
+                (tag.getBeginIndex() == index) &&
+                (PageElementTag.TAG_WIKI_REF.equals(tag.getNormalizedName()))) {
+              index = tag.getCompleteEndIndex();
             } else {
+              if (contents.startsWith("</references/>", index)) {
+                errorResult = createCheckErrorResult(analysis, index, index + 14);
+                errorResult.addReplacement(PageElementTag.createTag(
+                    PageElementTag.TAG_WIKI_REFERENCES, true, false), true);
+                errors.add(errorResult);
+              }
               ok = false;
             }
+          } else {
+            ok = false;
           }
         }
       }
