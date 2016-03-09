@@ -89,12 +89,7 @@ public class ApiTokensRequest extends ApiMetaRequest {
   /**
    * Load one token.
    * 
-   * @param general True if general information are requested.
-   * @param namespaces True if information about name spaces are requested.
-   * @param namespaceAliases True if information about name spaces aliases are requested.
-   * @param languages True if information about languages are requested.
-   * @param interwikiMap True if information about interwiki map are requested.
-   * @param magicWords True if information about magic words are requested.
+   * @param tokenName Name of the token to retrieve.
    */
   public void retrieveToken(
       String tokenName) throws APIException {
