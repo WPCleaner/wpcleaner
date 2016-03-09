@@ -13,6 +13,7 @@ import java.util.List;
 
 import org.wikipediacleaner.api.constants.WPCConfiguration;
 import org.wikipediacleaner.api.constants.WPCConfigurationStringList;
+import org.wikipediacleaner.api.data.PageElementTemplate.Parameter;
 
 
 /**
@@ -283,15 +284,12 @@ public class PageElementISBN extends PageElement {
       String argumentName,
       boolean ignoreCase, boolean acceptNumbers,
       boolean acceptAllValues, boolean helpRequested) {
-    int paramDefaultName = 1;
+
     for (int paramNum = 0; paramNum < template.getParameterCount(); paramNum++) {
 
       // Check parameter name
-      String paramName = template.getParameterName(paramNum);
-      if ((paramName == null) || (paramName.trim().length() == 0)) {
-        paramName = Integer.toString(paramDefaultName);
-        paramDefaultName++;
-      }
+      Parameter param = template.getParameter(paramNum);
+      String paramName = param.getComputedName();
       boolean nameOk = false;
       if ((ignoreCase && argumentName.equalsIgnoreCase(paramName)) ||
           (argumentName.equals(paramName))) {
@@ -310,24 +308,16 @@ public class PageElementISBN extends PageElement {
       }
       
       if (nameOk) {
-        String paramValue = template.getParameterValue(paramNum);
+        String paramValue = param.getStrippedValue();
         boolean ok = true;
         boolean hasDigit = false;
         int i = 0;
-        int beginIndex = -1;
-        int endIndex = -1;
         boolean correct = true;
         while (ok && (i < paramValue.length())) {
           char currentChar = paramValue.charAt(i);
           if (POSSIBLE_CHARACTERS.indexOf(currentChar) >= 0) {
             if (Character.isDigit(currentChar)) {
-              if (beginIndex < 0) {
-                beginIndex = i;
-              }
-              endIndex = i + 1;
               hasDigit = true;
-            } else if (Character.toUpperCase(currentChar) == 'X') {
-              endIndex = i + 1;
             }
             i++;
           } else if (EXTRA_CHARACTERS.indexOf(currentChar) >= 0) {
@@ -339,15 +329,14 @@ public class PageElementISBN extends PageElement {
             ok = false;
           }
         }
-        int delta = template.getParameterValueStartIndex(paramNum);
-        if (beginIndex < 0) {
-          beginIndex = 0;
+        int beginIndex = param.getValueStartIndex();
+        int endIndex = (paramNum + 1 < template.getParameterCount()) ?
+            template.getParameterPipeIndex(paramNum + 1) :
+            template.getEndIndex() - 2;
+        while ((endIndex > beginIndex) &&
+            Character.isWhitespace(analysis.getContents().charAt(endIndex - 1))) {
+          endIndex--;
         }
-        beginIndex += delta;
-        if (endIndex < 0) {
-          endIndex = 0;
-        }
-        endIndex += delta;
         if (beginIndex < 0) {
           ok = false;
         } else {
