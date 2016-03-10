@@ -41,6 +41,7 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.JToggleButton;
 import javax.swing.KeyStroke;
+import javax.swing.SwingUtilities;
 import javax.swing.table.TableModel;
 import javax.swing.text.JTextComponent;
 
@@ -71,6 +72,30 @@ public class Utilities {
   public final static int NO_ALL_OPTION = 102;
 
   private final static String URL_CONFIGURATION_HELP = "http://en.wikipedia.org/wiki/Wikipedia:WPCleaner/Configuration/Help";
+
+  // ==========================================================================
+  // Manage event thread
+  // ==========================================================================
+
+  /**
+   * Utility method to run a task in the event dispatch thread.
+   * 
+   * @param doRun Task to be run.
+   */
+  public static void runInEventDispatchThread(Runnable doRun) {
+    if (doRun == null) {
+      return;
+    }
+    if (SwingUtilities.isEventDispatchThread()) {
+      doRun.run();
+    } else {
+      try {
+        SwingUtilities.invokeAndWait(doRun);
+      } catch (InvocationTargetException | InterruptedException e) {
+        log.error("Error waiting for execution on event dispatch thread", e);
+      }
+    }
+  }
 
   // ==========================================================================
   // Display message box
@@ -228,10 +253,8 @@ public class Utilities {
       String message,
       Component focus,
       int messageType) {
-    JOptionPane.showMessageDialog(parent, message, Version.PROGRAM, messageType);
-    if (focus != null) {
-      focus.requestFocusInWindow();
-    }
+    runInEventDispatchThread(
+        new TaskMessageDialog(parent, message, focus, messageType));
   }
 
   /**
@@ -258,10 +281,10 @@ public class Utilities {
       StringChecker checker) {
     String defaultValue = value;
     while (true) {
-      Object result = JOptionPane.showInputDialog(
-          parent, message, Version.PROGRAM,
-          JOptionPane.QUESTION_MESSAGE, null, null,
-          defaultValue);
+      TaskInputDialog task = new TaskInputDialog(
+          parent, message, null, defaultValue);
+      runInEventDispatchThread(task);
+      Object result = task.getResult();
       if (result == null) {
         return null;
       }
@@ -310,10 +333,10 @@ public class Utilities {
       possibles[possibles.length - 1] = other;
     }
     while (true) {
-      Object result = JOptionPane.showInputDialog(
-          parent, message, Version.PROGRAM,
-          JOptionPane.QUESTION_MESSAGE, null,
-          possibles, defaultValue);
+      TaskInputDialog task = new TaskInputDialog(
+          parent, message, possibles, defaultValue);
+      runInEventDispatchThread(task);
+      Object result = task.getResult();
       if (result == null) {
         return null;
       }
@@ -354,10 +377,10 @@ public class Utilities {
     if ((possibleValues == null) || (possibleValues.length == 0)) {
       return null;
     }
-    return JOptionPane.showInputDialog(
-        parent, message, Version.PROGRAM,
-        JOptionPane.QUESTION_MESSAGE, null,
-        possibleValues, value);
+    TaskInputDialog task = new TaskInputDialog(
+        parent, message, possibleValues, value);
+    runInEventDispatchThread(task);
+    return task.getResult();
   }
 
   /**
@@ -368,9 +391,10 @@ public class Utilities {
    * @return Answer {@link JOptionPane#YES_OPTION} or {@link JOptionPane#NO_OPTION}.
    */
   public static int displayYesNoWarning(Component parent, String message) {
-    return JOptionPane.showConfirmDialog(
-        parent, message, Version.PROGRAM,
-        JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+    TaskConfirmDialog task = new TaskConfirmDialog(
+        parent, message, JOptionPane.YES_NO_OPTION);
+    runInEventDispatchThread(task);
+    return task.getResult();
   }
 
   /**
@@ -381,9 +405,10 @@ public class Utilities {
    * @return Answer {@link JOptionPane#YES_OPTION}, {@link JOptionPane#NO_OPTION} or {@link JOptionPane#CANCEL_OPTION}.
    */
   public static int displayYesNoCancelWarning(Component parent, String message) {
-    return JOptionPane.showConfirmDialog(
-        parent, message, Version.PROGRAM,
-        JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE);
+    TaskConfirmDialog task = new TaskConfirmDialog(
+        parent, message, JOptionPane.YES_NO_CANCEL_OPTION);
+    runInEventDispatchThread(task);
+    return task.getResult();
   }
 
   /**
@@ -433,10 +458,9 @@ public class Utilities {
    * @return Selected value.
    */
   public static int displayQuestion(Component parent, String message, Object[] values) {
-    return JOptionPane.showOptionDialog(
-        parent, message, Version.PROGRAM,
-        JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE,
-        null, values, null);
+    TaskOptionDialog task = new TaskOptionDialog(parent, message, values);
+    runInEventDispatchThread(task);
+    return task.getResult();
   }
 
   // ==========================================================================
