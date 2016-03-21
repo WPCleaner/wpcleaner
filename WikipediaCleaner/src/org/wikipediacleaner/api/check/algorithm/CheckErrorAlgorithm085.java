@@ -96,9 +96,13 @@ public class CheckErrorAlgorithm085 extends CheckErrorAlgorithmBase {
           boolean ignoredText = false;
           int currentIndex = tag.getValueBeginIndex();
           int lastIndex = tag.getValueEndIndex();
+          StringBuilder replacementText = new StringBuilder();
+          replacementText.append(contents.substring(tag.getBeginIndex(), tag.getEndIndex()));
+          boolean useReplacement = false;
           while (!textFound && (currentIndex < lastIndex)) {
             char currentChar = contents.charAt(currentIndex);
             if (Character.isWhitespace(currentChar) || (' ' == currentChar)) {
+              replacementText.append(currentChar);
               currentIndex++;
             } else if (currentChar == '<') {
               boolean ok = false;
@@ -110,6 +114,14 @@ public class CheckErrorAlgorithm085 extends CheckErrorAlgorithmBase {
                       ok = true;
                       ignoredText = true;
                       errorLevel = ErrorLevel.WARNING;
+                      if (PageElementTag.TAG_WIKI_NOWIKI.equals(ignoredTag)) {
+                        replacementText.append(contents.substring(
+                            internalTag.getValueBeginIndex(), internalTag.getValueEndIndex()));
+                        useReplacement = true;
+                      } else {
+                        replacementText.append(contents.substring(
+                            currentIndex, internalTag.getCompleteEndIndex()));
+                      }
                       currentIndex = internalTag.getCompleteEndIndex();
                     }
                   }
@@ -117,6 +129,7 @@ public class CheckErrorAlgorithm085 extends CheckErrorAlgorithmBase {
                   PageElementComment comment = analysis.isInComment(currentIndex);
                   if (comment != null) {
                     ok = true;
+                    replacementText.append(contents.substring(currentIndex, comment.getEndIndex()));
                     errorLevel = ErrorLevel.WARNING;
                     currentIndex = comment.getEndIndex();
                   }
@@ -129,6 +142,8 @@ public class CheckErrorAlgorithm085 extends CheckErrorAlgorithmBase {
               textFound = true;
             }
           }
+          replacementText.append(contents.substring(
+              tag.getValueEndIndex(), tag.getCompleteEndIndex()));
 
           // Check if tag has arguments
           boolean hasArguments = false;
@@ -157,6 +172,9 @@ public class CheckErrorAlgorithm085 extends CheckErrorAlgorithmBase {
               }
               errorResult.addReplacement("");
             } else {
+              if (useReplacement) {
+                errorResult.addReplacement(replacementText.toString());
+              }
               if (PageElementTag.TAG_HTML_CENTER.equals(tag.getName())) {
                 String templatesProp = getSpecificProperty("center_templates", true, true, false);
                 if (templatesProp != null) {
