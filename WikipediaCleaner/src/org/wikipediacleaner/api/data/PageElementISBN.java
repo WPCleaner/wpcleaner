@@ -21,30 +21,26 @@ import org.wikipediacleaner.api.data.PageElementTemplate.Parameter;
  */
 public class PageElementISBN extends PageElement {
 
-  /**
-   * ISBN prefix.
-   */
+  /** ISBN prefix */
   private final static String ISBN_PREFIX = "ISBN";
 
-  /**
-   * ISBN possible meaningful characters.
-   */
+  /** ISBN incorrect prefixes */
+  private final static String[] ISBN_INCORRECT_PREFIX = {
+    "ISNB",
+    "isbn"
+  };
+
+  /** ISBN possible meaningful characters */
   private final static String POSSIBLE_CHARACTERS = "0123456789Xx";
 
-  /**
-   * ISBN possible extraneous characters.
-   */
+  /** ISBN possible extraneous characters */
   private final static String EXTRA_CHARACTERS = "-  ";
 
-  /**
-   * ISBN incorrect characters.
-   */
+  /** ISBN incorrect characters */
   private final static String INCORRECT_CHARACTERS = ":‐\t—=–#";
 
-  /**
-   * ISBN incorrect characters at the beginning.
-   */
-  private final static String INCORRECT_BEGIN_CHARACTERS = ":;‐\t—=–#";
+  /** ISBN incorrect characters at the beginning */
+  private final static String INCORRECT_BEGIN_CHARACTERS = ":;‐\t—=–#('";
 
   /**
    * @param analysis Page analysis.
@@ -107,18 +103,56 @@ public class PageElementISBN extends PageElement {
     }
 
     // Search for ISBN in plain texts
+    analyzePlainText(analysis, isbns, ISBN_PREFIX, true, true);
+    for (String prefix : ISBN_INCORRECT_PREFIX) {
+      analyzePlainText(analysis, isbns, prefix, false, false);
+    }
+
+    return isbns;
+  }
+
+  /**
+   * @param index Current index.
+   * @param isbns List of ISBN.
+   * @return True if the current index is already in a ISBN.
+   */
+  private static boolean isInISBN(int index, List<PageElementISBN> isbns) {
+    if (isbns != null) {
+      for (PageElementISBN tmpIsbn : isbns) {
+        if ((tmpIsbn.getBeginIndex() <= index) &&
+            (tmpIsbn.getEndIndex() > index)) {
+          return true;
+        }
+      }
+    }
+    return false;
+  }
+
+  /**
+   * Analyze plain text for ISBN.
+   * 
+   * @param analysis Page analysis.
+   * @param isbns Current list of ISBN.
+   * @param prefix ISBN prefix.
+   * @param correct True if ISBN should be considered correct by default.
+   * @param caseSensitive True if ISBN prefix is case sensitive.
+   */
+  private static void analyzePlainText(
+      PageAnalysis analysis, List<PageElementISBN> isbns,
+      String prefix, boolean correct, boolean caseSensitive) {
     String contents = analysis.getContents();
-    if (contents == null) {
-      return isbns;
+    if ((contents == null) || (prefix == null)) {
+      return;
     }
     int index = 0;
-    int maxIndex = contents.length() - ISBN_PREFIX.length();
+    int maxIndex = contents.length() - prefix.length();
     while (index < maxIndex) {
 
       // Check if it's a potential ISBN
       boolean isValid = true;
-      boolean isISBN = ISBN_PREFIX.equalsIgnoreCase(
-          contents.substring(index, index + ISBN_PREFIX.length()));
+      String nextChars = contents.substring(index, index + prefix.length());
+      boolean isISBN = caseSensitive ?
+          prefix.equals(nextChars) : prefix.equalsIgnoreCase(nextChars);
       if (isISBN && (analysis.isInComment(index) != null)) {
         isISBN = false;
       }
@@ -174,9 +208,8 @@ public class PageElementISBN extends PageElement {
         }
 
         int beginIndex = index;
-        index += ISBN_PREFIX.length();
+        index += prefix.length();
         if (!parameter) {
-          boolean correct = true;
           if ((beginIndex >= 2) && (index + 2 < contents.length())) {
             if (contents.startsWith("[[", beginIndex - 2) &&
                 contents.startsWith("]]", index)) {
@@ -245,25 +278,6 @@ public class PageElementISBN extends PageElement {
         index++;
       }
     }
-
-    return isbns;
-  }
-
-  /**
-   * @param index Current index.
-   * @param isbns List of ISBN.
-   * @return True if the current index is already in a ISBN.
-   */
-  private static boolean isInISBN(int index, List<PageElementISBN> isbns) {
-    if (isbns != null) {
-      for (PageElementISBN tmpIsbn : isbns) {
-        if ((tmpIsbn.getBeginIndex() <= index) &&
-            (tmpIsbn.getEndIndex() > index)) {
-          return true;
-        }
-      }
-    }
-    return false;
   }
 
   /**
