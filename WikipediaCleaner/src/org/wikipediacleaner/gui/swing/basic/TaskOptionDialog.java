@@ -36,7 +36,6 @@ public class TaskOptionDialog implements Runnable {
    * @param parent Parent component.
    * @param message Message.
    * @param possibleValues Array of possible values.
-   * @param defaultValue Default value.
    */
   public TaskOptionDialog(
       Component parent,
