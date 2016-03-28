@@ -40,7 +40,7 @@ public class PageElementISBN extends PageElement {
   private final static String INCORRECT_CHARACTERS = ":‐\t—=–#";
 
   /** ISBN incorrect characters at the beginning */
-  private final static String INCORRECT_BEGIN_CHARACTERS = ":;‐\t—=–#('";
+  private final static String INCORRECT_BEGIN_CHARACTERS = ":;‐\t—=–#('|";
 
   /**
    * @param analysis Page analysis.
@@ -209,11 +209,12 @@ public class PageElementISBN extends PageElement {
 
         int beginIndex = index;
         index += prefix.length();
+        boolean isCorrect = correct;
         if (!parameter) {
           if ((beginIndex >= 2) && (index + 2 < contents.length())) {
             if (contents.startsWith("[[", beginIndex - 2) &&
                 contents.startsWith("]]", index)) {
-              correct = false;
+              isCorrect = false;
               beginIndex -= 2;
               index += 2;
             }
@@ -221,7 +222,7 @@ public class PageElementISBN extends PageElement {
           if (beginIndex >= 3) {
             if (contents.startsWith("10-", beginIndex - 3) ||
                 contents.startsWith("13-", beginIndex - 3)) {
-              correct = false;
+              isCorrect = false;
               beginIndex -= 3;
             }
           }
@@ -234,14 +235,14 @@ public class PageElementISBN extends PageElement {
             while ((index < contents.length()) &&
                 (INCORRECT_BEGIN_CHARACTERS.indexOf(contents.charAt(index)) >= 0)) {
               index++;
-              correct = false;
+              isCorrect = false;
             }
           }
           int beginNumber = -1;
           int endNumber = beginNumber;
           boolean finished = false;
-          correct &= spaceFound;
-          boolean nextCorrect = correct;
+          isCorrect &= spaceFound;
+          boolean nextCorrect = isCorrect;
           while (!finished && (index < contents.length())) {
             char currentChar = contents.charAt(index);
             if (POSSIBLE_CHARACTERS.indexOf(currentChar) >= 0) {
@@ -250,7 +251,7 @@ public class PageElementISBN extends PageElement {
               }
               endNumber = index + 1;
               index++;
-              correct = nextCorrect;
+              isCorrect = nextCorrect;
             } else if (EXTRA_CHARACTERS.indexOf(currentChar) >= 0) {
               if (beginNumber < 0) {
                 nextCorrect = false;
@@ -261,7 +262,7 @@ public class PageElementISBN extends PageElement {
               nextCorrect = false;
             } else {
               if ((endNumber == index) && (Character.isLetter(currentChar))) {
-                correct = false;
+                isCorrect = false;
               }
               finished = true;
             }
@@ -270,7 +271,7 @@ public class PageElementISBN extends PageElement {
             String number = contents.substring(beginNumber, endNumber);
             isbns.add(new PageElementISBN(
                 beginIndex, endNumber, analysis, number,
-                isValid, correct, false, null));
+                isValid, isCorrect, false, null));
             index = endNumber;
           }
         }
