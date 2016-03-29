@@ -113,13 +113,53 @@ public class CheckErrorAlgorithm069 extends CheckErrorAlgorithmISBN {
           return true;
         }
         result = true;
+
+        // Check for potential extra characters around
+        int beginIndex = isbn.getBeginIndex();
+        int endIndex = isbn.getEndIndex();
+        String contents = analysis.getContents();
+        boolean tryAgain = true;
+        while (tryAgain) {
+          tryAgain = false;
+          if ((beginIndex > 0) && (endIndex < contents.length())) {
+            char previousChar = contents.charAt(beginIndex - 1);
+            char nextChar = contents.charAt(endIndex);
+            if (((previousChar == '(') && (nextChar == ')')) ||
+                ((previousChar == '[') && (nextChar == ']'))) {
+              beginIndex--;
+              endIndex++;
+              tryAgain = true;
+            }
+          }
+        }
+        final String SMALL_OPEN = "<small>";
+        final String SMALL_CLOSE = "</small>";
+        if ((beginIndex >= SMALL_OPEN.length()) && (endIndex < contents.length())) {
+          if (contents.startsWith(SMALL_OPEN, beginIndex - SMALL_OPEN.length()) &&
+              contents.startsWith(SMALL_CLOSE, endIndex)) {
+            beginIndex -= SMALL_OPEN.length();
+            endIndex += SMALL_CLOSE.length();
+          }
+        }
+
         CheckErrorResult errorResult = createCheckErrorResult(analysis, isbn, false);
+        String prefix = null;
+        String suffix = null;
+        if ((beginIndex < isbn.getBeginIndex()) && (endIndex > isbn.getEndIndex())) {
+          prefix = contents.substring(beginIndex, isbn.getBeginIndex());
+          suffix = contents.substring(isbn.getEndIndex(), endIndex);
+          errorResult = createCheckErrorResult(
+              analysis, beginIndex, endIndex, errorResult.getErrorLevel());
+        }
         addSuggestions(analysis, errorResult, isbn);
         errors.add(errorResult);
         List<String> replacements = isbn.getCorrectISBN();
         if (replacements != null) {
           for (String replacement : replacements) {
             if (!replacement.equals(analysis.getContents().substring(isbn.getBeginIndex(), isbn.getEndIndex()))) {
+              if ((prefix != null) && (suffix != null)) {
+                errorResult.addReplacement(prefix + replacement + suffix);
+              }
               errorResult.addReplacement(replacement);
             }
           }
