@@ -162,6 +162,12 @@ public class PageElementISBN extends PageElement {
       if (isISBN && (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_NOWIKI, index) != null)) {
         isISBN = false;
       }
+      if (isISBN) {
+        if ((analysis.getSurroundingTag(PageElementTag.TAG_WIKI_SOURCE, index) != null) ||
+            (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_SYNTAXHIGHLIGHT, index) != null)) {
+          isISBN = false;
+        }
+      }
       if (isISBN && isInISBN(index, isbns)) {
         isISBN = false;
       }
