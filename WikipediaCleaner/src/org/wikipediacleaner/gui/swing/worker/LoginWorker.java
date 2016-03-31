@@ -19,6 +19,8 @@ import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithm524;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithms;
 import org.wikipediacleaner.api.constants.EnumLanguage;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
+import org.wikipediacleaner.api.constants.WPCConfiguration;
+import org.wikipediacleaner.api.constants.WPCConfigurationBoolean;
 import org.wikipediacleaner.api.data.LoginResult;
 import org.wikipediacleaner.api.data.User;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
@@ -131,14 +133,18 @@ public class LoginWorker extends BasicWorker {
             saveUser);
       }
       Configuration.getConfiguration().save();
+      WPCConfiguration wpcConfig = wiki.getConfiguration();
 
       // Retrieving disambiguation templates
-      setText(GT._("Retrieving disambiguation templates"));
-      wiki.initDisambiguationTemplates(api);
+      boolean useDisambig = wpcConfig.getBoolean(WPCConfigurationBoolean.DAB_USE_DISAMBIG_MAGIC_WORD);
+      if (!useDisambig) {
+        setText(GT._("Retrieving disambiguation templates"));
+        wiki.initDisambiguationTemplates(api);
+      }
 
       // Retrieving suggestions for text replacements
       setText(GT._("Retrieving suggestions for text replacements"));
-      wiki.getConfiguration().initSuggestions(api, reloadOnly);
+      wpcConfig.initSuggestions(api, reloadOnly);
 
       // Retrieving Check Wiki configuration
       setText(GT._("Retrieving Check Wiki configuration"));
