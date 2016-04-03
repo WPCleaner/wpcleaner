@@ -377,6 +377,7 @@ public class PageElementTemplate extends PageElement {
           String tagName = tag.getName();
           if (PageElementTag.TAG_WIKI_NOWIKI.equals(tagName) ||
               PageElementTag.TAG_WIKI_MATH.equals(tagName) ||
+              PageElementTag.TAG_WIKI_MATH_CHEM.equals(tagName) ||
               PageElementTag.TAG_WIKI_REF.equals(tagName) ||
               PageElementTag.TAG_WIKI_SCORE.equals(tagName)) {
             tmpIndex = tag.getCompleteEndIndex();

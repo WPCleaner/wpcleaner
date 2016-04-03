@@ -604,6 +604,7 @@ public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
     removeCompleteTags(chunks, analysis, PageElementTag.TAG_WIKI_CODE);
     removeCompleteTags(chunks, analysis, PageElementTag.TAG_WIKI_IMAGEMAP); // TODO: keep descriptions
     removeCompleteTags(chunks, analysis, PageElementTag.TAG_WIKI_MATH);
+    removeCompleteTags(chunks, analysis, PageElementTag.TAG_WIKI_MATH_CHEM);
     removeCompleteTags(chunks, analysis, PageElementTag.TAG_WIKI_SCORE);
     removeCompleteTags(chunks, analysis, PageElementTag.TAG_WIKI_SOURCE);
     removeCompleteTags(chunks, analysis, PageElementTag.TAG_WIKI_SYNTAXHIGHLIGHT);

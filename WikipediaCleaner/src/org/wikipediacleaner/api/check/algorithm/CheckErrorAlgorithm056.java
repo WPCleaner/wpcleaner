@@ -80,6 +80,7 @@ public class CheckErrorAlgorithm056 extends CheckErrorAlgorithmBase {
     PageElementTag.TAG_WIKI_CODE,
     PageElementTag.TAG_WIKI_HIERO,
     PageElementTag.TAG_WIKI_MATH,
+    PageElementTag.TAG_WIKI_MATH_CHEM,
     PageElementTag.TAG_WIKI_NOWIKI,
     PageElementTag.TAG_WIKI_PRE,
     PageElementTag.TAG_WIKI_SCORE,

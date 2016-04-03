@@ -72,7 +72,8 @@ public class PageElementAreas {
       for (PageElementTag tag : tags) {
         if (!tag.isFullTag() &&
             (PageElementTag.TAG_WIKI_NOWIKI.equals(tag.getNormalizedName()) ||
-             PageElementTag.TAG_WIKI_MATH.equals(tag.getNormalizedName()))) {
+             PageElementTag.TAG_WIKI_MATH.equals(tag.getNormalizedName()) ||
+             PageElementTag.TAG_WIKI_MATH_CHEM.equals(tag.getNormalizedName()))) {
           if (!tag.isEndTag() || !tag.isComplete()) {
             addArea(tag.getCompleteBeginIndex(), tag.getCompleteEndIndex());
           }

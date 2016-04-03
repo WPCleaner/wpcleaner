@@ -67,6 +67,7 @@ public class PageElementTag extends PageElement {
   public final static String TAG_WIKI_IMAGEMAP        = "imagemap";
   public final static String TAG_WIKI_INCLUDEONLY     = "includeonly";
   public final static String TAG_WIKI_MATH            = "math";
+  public final static String TAG_WIKI_MATH_CHEM       = "ce"; // Shortcut for math chem
   public final static String TAG_WIKI_NOINCLUDE       = "noinclude";
   public final static String TAG_WIKI_NOWIKI          = "nowiki";
   public final static String TAG_WIKI_PRE             = "pre";

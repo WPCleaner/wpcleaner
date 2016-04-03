@@ -62,6 +62,7 @@ public class CheckErrorAlgorithm060 extends CheckErrorAlgorithmBase {
                 if ((tag != null) &&
                     (tag.getBeginIndex() == tmpIndex) &&
                     ((PageElementTag.TAG_WIKI_MATH.equals(tag.getNormalizedName())) ||
+                     (PageElementTag.TAG_WIKI_MATH_CHEM.equals(tag.getNormalizedName())) ||
                      (PageElementTag.TAG_WIKI_NOWIKI.equals(tag.getNormalizedName())) ||
                      (PageElementTag.TAG_WIKI_SOURCE.equals(tag.getNormalizedName())) ||
                      (PageElementTag.TAG_WIKI_SCORE.equals(tag.getNormalizedName())) ||
