@@ -353,6 +353,21 @@ public class CheckErrorAlgorithm016 extends CheckErrorAlgorithmBase {
     }
 
     /**
+     * @param codePoint Character.
+     * @param control Control characters set.
+     * @return True if the character is in the control character set.
+     */
+    public static boolean isIncluded(int codePoint, ControlCharacter control) {
+      if (control == null) {
+        return false;
+      }
+      if ((codePoint >= control.begin) && (codePoint <= control.end)) {
+        return true;
+      }
+      return false;
+    }
+
+    /**
      * @param codePoint Code point.
      * @return Potential replacement.
      */
@@ -363,18 +378,27 @@ public class CheckErrorAlgorithm016 extends CheckErrorAlgorithmBase {
         replacements = Collections.singletonList(HtmlCharacters.LEFT_TO_RIGHT_MARK.getFullEntity());
       }*/
       if (codePoint == HtmlCharacters.SYMBOL_NON_BREAKING_SPACE.getValue()) {
-        replacements = new ArrayList<String>();
+        replacements = new ArrayList<>();
         replacements.add(" ");
         replacements.add(HtmlCharacters.SYMBOL_NON_BREAKING_SPACE.getFullEntity());
       }
       if (codePoint == HtmlCharacters.SYMBOL_SOFT_HYPHEN.getValue()) {
-        replacements = new ArrayList<String>();
+        replacements = new ArrayList<>();
         replacements.add(HtmlCharacters.SYMBOL_SOFT_HYPHEN.getFullEntity());
         replacements.add("-");
         replacements.add("");
       }
+      if (isIncluded(codePoint, THREE_PER_EM_SPACE) ||
+          isIncluded(codePoint, FOUR_PER_EM_SPACE) ||
+          isIncluded(codePoint, SIX_PER_EM_SPACE) ||
+          isIncluded(codePoint, FIGURE_SPACE) ||
+          isIncluded(codePoint, PUNCTUATION_SPACE)) {
+        replacements = new ArrayList<>();
+        replacements.add(" ");
+        replacements.add("");
+      }
       if (codePoint == 0xF0FC) {
-        replacements = new ArrayList<String>();
+        replacements = new ArrayList<>();
         replacements.add("*");
         replacements.add("✓");
       }
