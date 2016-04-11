@@ -106,44 +106,64 @@ public class AutomaticCWWorker extends BasicWorker {
    */
   @Override
   public Object construct() {
-    List<CheckError> errors = new ArrayList<CheckError>();
     try {
-      CheckWiki checkWiki = APIFactory.getCheckWiki();
       for (CheckErrorAlgorithm algorithm : selectedAlgorithms) {
         if (!shouldContinue()) {
           return null;
         }
-        setText(
-            GT._("Checking for errors n°{0}", Integer.toString(algorithm.getErrorNumber())) +
-            " - " + algorithm.getShortDescriptionReplaced());
-        errors.clear();
-        int maxSize = max;
-        if (noLimit && algorithm.hasSpecialList()) {
-          maxSize = Integer.MAX_VALUE;
-        }
-        checkWiki.retrievePages(algorithm, maxSize, getWikipedia(), errors);
-        while (!errors.isEmpty()) {
-          CheckError error = errors.remove(0);
-          int maxErrors = error.getPageCount();
-          for (int numPage = 0;
-              (error.getPageCount() > 0) && shouldContinue();
-              numPage++) {
-            try {
-              Page page = error.getPage(0);
-              error.remove(page);
-              analyzePage(
-                  page, algorithm,
-                  algorithm.getErrorNumberString() + " - " + (numPage + 1) + "/" + maxErrors);
-            } catch (APIException e) {
-              //
-            }
-          }
-        }
+        analyzeAlgorithm(algorithm);
       }
     } catch (APIException e) {
       return e;
     }
     return null;
+  }
+
+  /**
+   * Analyze an algorithm.
+   * 
+   * @param algorithm Algorithm.
+   * @throws APIException
+   */
+  private void analyzeAlgorithm(CheckErrorAlgorithm algorithm) throws APIException {
+
+    // Check if analysis is useful
+    if (!saveModifications) {
+      if (algorithm.getErrorNumber() >= CheckErrorAlgorithm.MAX_ERROR_NUMBER_WITH_LIST) {
+        return;
+      }
+    }
+
+    // Configuration
+    setText(
+        GT._("Checking for errors n°{0}", Integer.toString(algorithm.getErrorNumber())) +
+        " - " + algorithm.getShortDescriptionReplaced());
+    int maxSize = max;
+    if (noLimit && algorithm.hasSpecialList()) {
+      maxSize = Integer.MAX_VALUE;
+    }
+
+    // Analysis
+    List<CheckError> errors = new ArrayList<CheckError>();
+    CheckWiki checkWiki = APIFactory.getCheckWiki();
+    checkWiki.retrievePages(algorithm, maxSize, getWikipedia(), errors);
+    while (!errors.isEmpty()) {
+      CheckError error = errors.remove(0);
+      int maxErrors = error.getPageCount();
+      for (int numPage = 0;
+          (error.getPageCount() > 0) && shouldContinue();
+          numPage++) {
+        try {
+          Page page = error.getPage(0);
+          error.remove(page);
+          analyzePage(
+              page, algorithm,
+              algorithm.getErrorNumberString() + " - " + (numPage + 1) + "/" + maxErrors);
+        } catch (APIException e) {
+          //
+        }
+      }
+    }
   }
 
   /**
