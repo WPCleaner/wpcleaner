@@ -131,11 +131,21 @@ public class CheckErrorAlgorithm091 extends CheckErrorAlgorithmBase {
         }
       }
       String article = null;
+      String articleName = null;
       if (interwiki != null) {
         article = interwiki.isArticleUrl(linkDest);
+        if (article != null) {
+          int questionMark = article.indexOf('?');
+          if (questionMark < 0) {
+            articleName = article;
+          } else {
+            articleName = article.substring(0, questionMark);
+            fullLink = false;
+          }
+        }
       }
 
-      if ((interwiki != null) && (article != null)) {
+      if ((interwiki != null) && (article != null) && (articleName != null)) {
         // Decide if error should be reported
         String prefix = interwiki.getPrefix();
         String language = interwiki.getLanguage();
@@ -178,6 +188,7 @@ public class CheckErrorAlgorithm091 extends CheckErrorAlgorithmBase {
             endIndex++;
           }
   
+          // Compute informations
           String text = link.getText();
   
           // Check if link is in template
@@ -201,18 +212,18 @@ public class CheckErrorAlgorithm091 extends CheckErrorAlgorithmBase {
           CheckErrorResult errorResult = createCheckErrorResult(
               analysis, beginIndex, endIndex,
               fullLink ? ErrorLevel.ERROR : ErrorLevel.WARNING);
-          if ((fromWiki != null) && (article.length() >0)) {
+          if ((fromWiki != null) && (articleName.length() >0)) {
             errorResult.addPossibleAction(
                 GT._("Check language links"),
                 new CheckLanguageLinkActionProvider(
                     fromWiki, analysis.getWikipedia(),
-                    article, text));
+                    articleName, text));
           }
   
           // Use templates
           if ((templatesList != null) &&
               (templatesList.size() > 0) &&
-              (article.length() > 0) &&
+              (articleName.length() > 0) &&
               (language != null)) {
             for (String template : templatesList) {
               String[] templateArgs = template.split("\\|");
@@ -221,7 +232,7 @@ public class CheckErrorAlgorithm091 extends CheckErrorAlgorithmBase {
                   "{{" + templateArgs[0] + "|" + templateArgs[1] + "=";
                 String textSuffix =
                   "|" + templateArgs[2] + "=" + prefix +
-                  "|" + templateArgs[3] + "=" + article +
+                  "|" + templateArgs[3] + "=" + articleName +
                   "|" + templateArgs[4] + "=" + ((text != null) ? text : article) +
                   "}}";
                 String question = GT._("What is the title of the page on this wiki ?");
@@ -234,7 +245,7 @@ public class CheckErrorAlgorithm091 extends CheckErrorAlgorithmBase {
                 } else {
                   action = new AddTextActionProvider(
                       textPrefix, textSuffix, null, question,
-                      article, checker);
+                      articleName, checker);
                 }
                 errorResult.addPossibleAction(
                     GT._("Replace using template {0}", "{{" + templateArgs[0] + "}}"),
@@ -244,26 +255,29 @@ public class CheckErrorAlgorithm091 extends CheckErrorAlgorithmBase {
           }
   
           // Create internal link
-          if (!link.hasSquare() || link.hasSecondSquare()) {
-            int lastSure = article.length();
-            while ((lastSure > 0) &&
-                   (SEPARATION_CHARACTERS.indexOf(article.charAt(lastSure - 1)) >= 0)) {
-              lastSure--;
-            }
-            if ((text == null) && (lastSure < article.length())) {
-              while (lastSure <= article.length()) {
-                String actualArticle = article.substring(0, lastSure);
-                errorResult.addReplacement(
-                    "[[:" + prefix + ":" + actualArticle + "|" + actualArticle + "]]" + article.substring(lastSure));
-                lastSure++;
+          if (articleName.length() > 0) {
+            if (!link.hasSquare() || link.hasSecondSquare()) {
+              int lastSure = article.length();
+              while ((lastSure > 0) &&
+                     (SEPARATION_CHARACTERS.indexOf(article.charAt(lastSure - 1)) >= 0)) {
+                lastSure--;
               }
-            } else {
-              boolean first = (errorResult.getPossibleActions() == null) || (errorResult.getPossibleActions().isEmpty());
-              errorResult.addReplacement(
-                  "[[:" + prefix + ":" + article + "|" + (text != null ? text : article) + "]]",
-                  first && fullLink);
+              if ((text == null) && (lastSure < article.length())) {
+                while (lastSure <= article.length()) {
+                  String actualArticle = article.substring(0, lastSure);
+                  errorResult.addReplacement(
+                      "[[:" + prefix + ":" + actualArticle + "|" + actualArticle + "]]" + article.substring(lastSure));
+                  lastSure++;
+                }
+              } else {
+                boolean first = (errorResult.getPossibleActions() == null) || (errorResult.getPossibleActions().isEmpty());
+                errorResult.addReplacement(
+                    "[[:" + prefix + ":" + article + "|" + (text != null ? text : article) + "]]",
+                    first && fullLink);
+              }
             }
           }
+
           errors.add(errorResult);
         }
       }
