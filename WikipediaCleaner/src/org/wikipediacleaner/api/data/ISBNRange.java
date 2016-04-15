@@ -366,9 +366,14 @@ public class ISBNRange {
      */
     Rule getRule(String suffix) {
       for (Rule rule : rules) {
-        if ((suffix.compareTo(rule.getFrom()) >= 0) &&
-            (suffix.compareTo(rule.getTo()) <= 0)) {
-          return rule;
+        if (suffix.compareTo(rule.getFrom()) >= 0) {
+          String to = rule.getTo();
+          if (suffix.length() > to.length()) {
+            suffix = suffix.substring(0, to.length());
+          }
+          if (suffix.compareTo(to) <= 0) {
+            return rule;
+          }
         }
       }
       return null;
