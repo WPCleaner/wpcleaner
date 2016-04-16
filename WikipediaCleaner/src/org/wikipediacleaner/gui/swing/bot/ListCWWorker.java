@@ -13,6 +13,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.text.MessageFormat;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -62,7 +63,7 @@ public class ListCWWorker extends BasicWorker {
   final List<CheckErrorAlgorithm> selectedAlgorithms;
 
   /** List of errors found for each algorithm */
-  final Map<CheckErrorAlgorithm, List<Detection>> detections;
+  final Map<CheckErrorAlgorithm, Map<String, Detection>> detections;
 
   /** Count of pages analyzed */
   int countAnalyzed;
@@ -83,7 +84,7 @@ public class ListCWWorker extends BasicWorker {
     this.output = output;
     this.pageName = null;
     this.selectedAlgorithms = selectedAlgorithms;
-    this.detections = new HashMap<CheckErrorAlgorithm, List<Detection>>();
+    this.detections = new HashMap<>();
     this.countAnalyzed = 0;
   }
 
@@ -103,7 +104,7 @@ public class ListCWWorker extends BasicWorker {
     this.output = null;
     this.pageName = pageName;
     this.selectedAlgorithms = selectedAlgorithms;
-    this.detections = new HashMap<CheckErrorAlgorithm, List<Detection>>();
+    this.detections = new HashMap<>();
     this.countAnalyzed = 0;
   }
 
@@ -143,11 +144,11 @@ public class ListCWWorker extends BasicWorker {
       }
     }
     for (CheckErrorAlgorithm algorithm : selectedAlgorithms) {
-      List<Detection> pages = detections.get(algorithm);
+      Map<String, Detection> pages = detections.get(algorithm);
       if (pages == null) {
-        pages = new ArrayList<>();
+        pages = new HashMap<>();
       }
-      outputResult(algorithm, pages);
+      outputResult(algorithm, pages.values());
     }
 
     return null;
@@ -159,17 +160,18 @@ public class ListCWWorker extends BasicWorker {
    * @param algorithm Algorithm.
    * @param pages List of pages with detections.
    */
-  private void outputResult(CheckErrorAlgorithm algorithm, List<Detection> pages) {
+  private void outputResult(CheckErrorAlgorithm algorithm, Collection<Detection> pages) {
     if ((algorithm == null) || (pages == null)) {
       return;
     }
 
     // Prepare result
-    Collections.sort(pages);
+    List<Detection> tmpPages = new ArrayList<>(pages);
+    Collections.sort(tmpPages);
     StringBuilder buffer = new StringBuilder();
     buffer.append("<!-- Generated using " + dumpFile.getName() + " -->\n");
     ErrorLevel lastLevel = null;
-    for (Detection detection : pages) {
+    for (Detection detection : tmpPages) {
       if ((detection.maxLevel != null) &&
           !detection.maxLevel.equals(lastLevel)) {
         lastLevel = detection.maxLevel;
@@ -279,10 +281,10 @@ public class ListCWWorker extends BasicWorker {
           "{0} page has been analyzed",
           "{0} pages have been analyzed",
           countAnalyzed, Integer.toString(countAnalyzed)));
-      for (Entry<CheckErrorAlgorithm, List<Detection>> error : detections.entrySet()) {
+      for (Entry<CheckErrorAlgorithm, Map<String, Detection>> error : detections.entrySet()) {
         if ((error != null) && (error.getKey() != null) && (error.getValue() != null)) {
           CheckErrorAlgorithm algorithm = error.getKey();
-          List<Detection> pages = error.getValue();
+          Map<String, Detection> pages = error.getValue();
           message.append("\n");
           message.append(GT.__(
               "{0} page has been detected for algorithm {1}",
@@ -381,12 +383,12 @@ public class ListCWWorker extends BasicWorker {
                   "Detection confirmed for " + page.getTitle() +
                   ": " + algorithm.getErrorNumberString() +
                   " - " + algorithm.getShortDescription());
-              List<Detection> pages = detections.get(algorithm);
+              Map<String, Detection> pages = detections.get(algorithm);
               if (pages == null) {
-                pages = new ArrayList<>();
+                pages = new HashMap<>();
                 detections.put(algorithm, pages);
               }
-              pages.add(new Detection(currentPage, errors));
+              pages.put(currentPage.getTitle(), new Detection(currentPage, errors));
             }
           } catch (APIException e) {
             // Nothing to do
