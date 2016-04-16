@@ -12,9 +12,12 @@ import java.util.Collection;
 import java.util.List;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
+import org.wikipediacleaner.api.constants.WPCConfiguration;
+import org.wikipediacleaner.api.constants.WPCConfigurationString;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementInternalLink;
+import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.gui.swing.component.MWPane;
 import org.wikipediacleaner.i18n.GT;
 
@@ -193,61 +196,115 @@ public class CheckErrorAlgorithm064 extends CheckErrorAlgorithmBase {
           }
         }
 
+        // Analyze for possible extra quotes around the link
+        int fullBeginIndex = beginIndex;
+        int fullEndIndex = endIndex;
+        while ((fullBeginIndex > 0) && (content.charAt(fullBeginIndex - 1) == '\'')) {
+          fullBeginIndex--;
+        }
+        while ((fullEndIndex < content.length()) && (content.charAt(fullEndIndex) == '\'')) {
+          fullEndIndex++;
+        }
+        String prefix = (fullBeginIndex < beginIndex) ? content.substring(fullBeginIndex, beginIndex) : "";
+        String suffix = (fullEndIndex > endIndex) ? content.substring(endIndex, fullEndIndex) : "";
+        WPCConfiguration config = analysis.getWPCConfiguration();
+
         CheckErrorResult errorResult = createCheckErrorResult(
-            analysis, beginIndex, endIndex);
+            analysis, fullBeginIndex, fullEndIndex);
         List<String> replacements = new ArrayList<>();
-        String replacement = null;
-        replacement = paddingLeft + PageElementInternalLink.createInternalLink(text, null) + paddingRight + extraRight;
-        if (!automatic && !replacements.contains(replacement)) {
-          errorResult.addReplacement(replacement);
-          replacements.add(replacement);
+        if (!automatic) {
+          addReplacement(
+              config, errorResult, replacements,
+              paddingLeft + PageElementInternalLink.createInternalLink(text, null) + paddingRight + extraRight,
+              prefix, suffix, false);
         }
-        replacement = paddingLeft + PageElementInternalLink.createInternalLink(text, null) + paddingRight + extraFullRight;
-        if (!replacements.contains(replacement)) {
-          errorResult.addReplacement(replacement, automatic);
-          replacements.add(replacement);
-        }
-        replacement = paddingLeft + PageElementInternalLink.createInternalLink(text, null) + paddingRight + extraRight;
-        if (!replacements.contains(replacement)) {
-          errorResult.addReplacement(replacement);
-          replacements.add(replacement);
-        }
-        replacement = paddingLeft + PageElementInternalLink.createInternalLink(cleanedText, null) + paddingRight + extraFullRight;
-        if (!replacements.contains(replacement)) {
-          errorResult.addReplacement(replacement);
-          replacements.add(replacement);
-        }
-        replacement = paddingLeft + PageElementInternalLink.createInternalLink(cleanedText, null) + paddingRight + extraRight;
-        if (!replacements.contains(replacement)) {
-          errorResult.addReplacement(replacement);
-          replacements.add(replacement);
-        }
+        addReplacement(
+            config, errorResult, replacements,
+            paddingLeft + PageElementInternalLink.createInternalLink(text, null) + paddingRight + extraFullRight,
+            prefix, suffix, automatic);
+        addReplacement(
+            config, errorResult, replacements,
+            paddingLeft + PageElementInternalLink.createInternalLink(text, null) + paddingRight + extraRight,
+            prefix, suffix, false);
+        addReplacement(
+            config, errorResult, replacements,
+            paddingLeft + PageElementInternalLink.createInternalLink(cleanedText, null) + paddingRight + extraFullRight,
+            prefix, suffix, false);
+        addReplacement(
+            config, errorResult, replacements,
+            paddingLeft + PageElementInternalLink.createInternalLink(cleanedText, null) + paddingRight + extraRight,
+            prefix, suffix, false);
         paddingLeft = paddingLeft.replaceAll("\'", "");
         paddingRight = paddingRight.replaceAll("\'", "");
-        replacement = paddingLeft + PageElementInternalLink.createInternalLink(text, null) + paddingRight + extraFullRight;
-        if (!replacements.contains(replacement)) {
-          errorResult.addReplacement(replacement);
-          replacements.add(replacement);
-        }
-        replacement = paddingLeft + PageElementInternalLink.createInternalLink(text, null) + paddingRight + extraRight;
-        if (!replacements.contains(replacement)) {
-          errorResult.addReplacement(replacement);
-          replacements.add(replacement);
-        }
-        replacement = paddingLeft + PageElementInternalLink.createInternalLink(cleanedText, null) + paddingRight + extraFullRight;
-        if (!replacements.contains(replacement)) {
-          errorResult.addReplacement(replacement);
-          replacements.add(replacement);
-        }
-        replacement = paddingLeft + PageElementInternalLink.createInternalLink(cleanedText, null) + paddingRight + extraRight;
-        if (!replacements.contains(replacement)) {
-          errorResult.addReplacement(replacement);
-          replacements.add(replacement);
-        }
+        addReplacement(
+            config, errorResult, replacements,
+            paddingLeft + PageElementInternalLink.createInternalLink(text, null) + paddingRight + extraFullRight,
+            prefix, suffix, false);
+        addReplacement(
+            config, errorResult, replacements,
+            paddingLeft + PageElementInternalLink.createInternalLink(text, null) + paddingRight + extraRight,
+            prefix, suffix, false);
+        addReplacement(
+            config, errorResult, replacements,
+            paddingLeft + PageElementInternalLink.createInternalLink(cleanedText, null) + paddingRight + extraFullRight,
+            prefix, suffix, false);
+        addReplacement(
+            config, errorResult, replacements,
+            paddingLeft + PageElementInternalLink.createInternalLink(cleanedText, null) + paddingRight + extraRight,
+            prefix, suffix, false);
         errors.add(errorResult);
       }
     }
     return result;
+  }
+
+  /**
+   * Add a bunch of replacements.
+   * 
+   * @param errorResult Error.
+   * @param replacements List of existing replacements.
+   * @param replacement Replacement.
+   * @param prefix Prefix for the replacement.
+   * @param suffix Suffix for the replacement.
+   * @param automatic True if replacement is automatic.
+   */
+  private void addReplacement(
+      WPCConfiguration config,
+      CheckErrorResult errorResult, List<String> replacements,
+      String replacement, String prefix, String suffix, boolean automatic) {
+    boolean apostrophe =
+        prefix.contains("'") || suffix.contains("'") ||
+        replacement.startsWith("'") || replacement.endsWith("'");
+    if (automatic || !apostrophe) {
+      addReplacement(errorResult, replacements, prefix + replacement + suffix, automatic);
+    }
+    String apostropheTemplate = config.getString(
+        WPCConfigurationString.APOSTROPHE_TEMPLATE);
+    if ((apostropheTemplate != null) && (apostropheTemplate.length() > 0)) {
+      String replacedPrefix = prefix.replaceAll("\\'", PageElementTemplate.createTemplate(apostropheTemplate));
+      String replacedSuffix = suffix.replaceAll("\\'", PageElementTemplate.createTemplate(apostropheTemplate));
+      addReplacement(errorResult, replacements, replacedPrefix + replacement + replacedSuffix, false);
+      addReplacement(errorResult, replacements, replacedPrefix + replacement + suffix, false);
+      addReplacement(errorResult, replacements, prefix + replacement + replacedSuffix, false);
+    }
+    addReplacement(errorResult, replacements, prefix + replacement + suffix, automatic);
+  }
+
+  /**
+   * Add a replacement.
+   * 
+   * @param errorResult Error.
+   * @param replacements List of existing replacements.
+   * @param replacement Replacement.
+   * @param automatic True if replacement is automatic.
+   */
+  private void addReplacement(
+      CheckErrorResult errorResult, List<String> replacements,
+      String replacement, boolean automatic) {
+    if (!replacements.contains(replacement)) {
+      errorResult.addReplacement(replacement, automatic);
+      replacements.add(replacement);
+    }
   }
 
   /**

@@ -13,6 +13,8 @@ package org.wikipediacleaner.api.constants;
  */
 public enum WPCConfigurationString {
 
+  // Template for replacing an apostrophe
+  APOSTROPHE_TEMPLATE("general_apostrophe_template", null, false, true, true),
   // Automatic formatting: number of carriage returns before categories
   AUTO_CR_BEFORE_CATEGORY("auto_cr_before_category", null, false, true, true),
   // Automatic formatting: number of carriage returns between categories
