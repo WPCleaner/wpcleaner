@@ -50,7 +50,7 @@ public class CheckErrorAlgorithm047 extends CheckErrorAlgorithmBase {
     int maxLength = contents.length();
     int currentIndex = contents.indexOf("}}");
     boolean result = false;
-    while (currentIndex > 0) {
+    while (currentIndex >= 0) {
       boolean shouldCount = true;
       if ((analysis.isInComment(currentIndex) != null) ||
           (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_NOWIKI, currentIndex) != null) ||
