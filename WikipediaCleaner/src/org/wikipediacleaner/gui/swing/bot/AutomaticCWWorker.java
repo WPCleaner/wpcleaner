@@ -144,7 +144,7 @@ public class AutomaticCWWorker extends BasicWorker {
     }
 
     // Analysis
-    List<CheckError> errors = new ArrayList<CheckError>();
+    List<CheckError> errors = new ArrayList<>();
     CheckWiki checkWiki = APIFactory.getCheckWiki();
     checkWiki.retrievePages(algorithm, maxSize, getWikipedia(), errors);
     while (!errors.isEmpty()) {
@@ -187,6 +187,7 @@ public class AutomaticCWWorker extends BasicWorker {
     PageAnalysis analysis = page.getAnalysis(page.getContents(), true);
 
     // Check that robots are authorized to change this page
+    boolean preventBot = false;
     if (saveModifications) {
       WPCConfiguration config = getWikipedia().getConfiguration();
       List<String[]> nobotTemplates = config.getStringArrayList(
@@ -196,10 +197,7 @@ public class AutomaticCWWorker extends BasicWorker {
           String templateName = nobotTemplate[0];
           List<PageElementTemplate> templates = analysis.getTemplates(templateName);
           if ((templates != null) && (!templates.isEmpty())) {
-            if (analyzeNonFixed) {
-              Controller.runFullAnalysis(page.getTitle(), null, getWikipedia());
-            }
-            return;
+            preventBot = true;
           }
         }
       }
@@ -222,8 +220,10 @@ public class AutomaticCWWorker extends BasicWorker {
 
       // Fix all errors that can be fixed
       String newContents = page.getContents();
-      List<CheckErrorAlgorithm> usedAlgorithms = new ArrayList<CheckErrorAlgorithm>();
-      newContents = AutomaticFormatter.tidyArticle(page, newContents, allAlgorithms, true, usedAlgorithms);
+      List<CheckErrorAlgorithm> usedAlgorithms = new ArrayList<>();
+      if (!preventBot) {
+        newContents = AutomaticFormatter.tidyArticle(page, newContents, allAlgorithms, true, usedAlgorithms);
+      }
 
       // Save page if errors have been fixed
       if ((!newContents.equals(page.getContents())) &&
