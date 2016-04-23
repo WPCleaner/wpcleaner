@@ -138,6 +138,7 @@ public class CheckErrorAlgorithm070 extends CheckErrorAlgorithmISBN {
           // Try specific replacements
           if ((length == 12) && isbnNumber.startsWith("78")) {
             addSearchISBN(searchISBN, "9" + isbnNumber, false);
+            addSearchISBN(searchISBN, isbnNumber.substring(2), false);
           }
 
           // Add ISBN with one extra digit
@@ -150,6 +151,9 @@ public class CheckErrorAlgorithm070 extends CheckErrorAlgorithmISBN {
                       newChar +
                       isbnNumber.substring(currentChar);
                   addSearchISBN(searchISBN, value, false);
+                  if ((value.length() == 13) && (value.startsWith("978"))) {
+                    addSearchISBN(searchISBN, value.substring(3), false);
+                  }
                 }
               }
             }
@@ -163,6 +167,9 @@ public class CheckErrorAlgorithm070 extends CheckErrorAlgorithmISBN {
                     isbnNumber.substring(0, currentChar) +
                     isbnNumber.substring(currentChar + 1);
                 addSearchISBN(searchISBN, value, false);
+                if ((value.length() == 13) && (value.startsWith("978"))) {
+                  addSearchISBN(searchISBN, value.substring(3), false);
+                }
               }
             }
           }
