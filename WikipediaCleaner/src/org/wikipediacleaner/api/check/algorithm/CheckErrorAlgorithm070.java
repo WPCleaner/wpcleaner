@@ -158,10 +158,32 @@ public class CheckErrorAlgorithm070 extends CheckErrorAlgorithmISBN {
           // Add ISBN with one digit removed
           if ((length == 11) || (length == 14)) {
             for (int currentChar = 0; currentChar < isbnNumber.length(); currentChar++) {
-              if (Character.isDigit(isbnNumber.charAt(currentChar))) {
+              char currentValue = isbnNumber.charAt(currentChar);
+              if (Character.isDigit(currentValue) || (currentValue == 'X')) {
                 String value =
                     isbnNumber.substring(0, currentChar) +
                     isbnNumber.substring(currentChar + 1);
+                addSearchISBN(searchISBN, value, false);
+              }
+            }
+          }
+
+          // Add ISBN with consecutive digits removed
+          if (isbnNumber.startsWith("978") || isbnNumber.startsWith("979")) {
+            if (length > 14) {
+              for (int currentChar = 0; currentChar < 13; currentChar++) {
+                String value =
+                    isbnNumber.substring(0, currentChar) +
+                    isbnNumber.substring(currentChar + length - 13);
+                addSearchISBN(searchISBN, value, false);
+              }
+            }
+          } else {
+            if (length > 11) {
+              for (int currentChar = 0; currentChar < 10; currentChar++) {
+                String value =
+                    isbnNumber.substring(0, currentChar) +
+                    isbnNumber.substring(currentChar + length - 10);
                 addSearchISBN(searchISBN, value, false);
               }
             }
