@@ -138,7 +138,6 @@ public class CheckErrorAlgorithm070 extends CheckErrorAlgorithmISBN {
           // Try specific replacements
           if ((length == 12) && isbnNumber.startsWith("78")) {
             addSearchISBN(searchISBN, "9" + isbnNumber, false);
-            addSearchISBN(searchISBN, isbnNumber.substring(2), false);
           }
 
           // Add ISBN with one extra digit
@@ -151,9 +150,6 @@ public class CheckErrorAlgorithm070 extends CheckErrorAlgorithmISBN {
                       newChar +
                       isbnNumber.substring(currentChar);
                   addSearchISBN(searchISBN, value, false);
-                  if ((value.length() == 13) && (value.startsWith("978"))) {
-                    addSearchISBN(searchISBN, value.substring(3), false);
-                  }
                 }
               }
             }
@@ -167,9 +163,6 @@ public class CheckErrorAlgorithm070 extends CheckErrorAlgorithmISBN {
                     isbnNumber.substring(0, currentChar) +
                     isbnNumber.substring(currentChar + 1);
                 addSearchISBN(searchISBN, value, false);
-                if ((value.length() == 13) && (value.startsWith("978"))) {
-                  addSearchISBN(searchISBN, value.substring(3), false);
-                }
               }
             }
           }
@@ -193,10 +186,26 @@ public class CheckErrorAlgorithm070 extends CheckErrorAlgorithmISBN {
    * @param force True if ISBN should be added even if incorrect.
    */
   private void addSearchISBN(List<String> searchISBN, String isbn, boolean force) {
+    boolean checksumOk = (PageElementISBN.computeChecksum(isbn) == isbn.charAt(isbn.length() - 1)); 
     if (!searchISBN.contains(isbn)) {
-      if (force ||
-          (PageElementISBN.computeChecksum(isbn) == isbn.charAt(isbn.length() - 1))) {
+      if (force || checksumOk) {
         searchISBN.add(isbn);
+      }
+    }
+
+    // Suggestions for ISBN-10 based on ISBN-13s
+    if ((isbn.length() == 13) && (isbn.startsWith("978"))) {
+      String isbn10 = isbn.substring(3);
+      char checksum = PageElementISBN.computeChecksum(isbn10);
+      if (!searchISBN.contains(isbn10) && (checksum == isbn10.charAt(isbn10.length() - 1))) {
+        searchISBN.add(isbn10);
+      }
+
+      if (checksumOk && (checksum > 0)) {
+        isbn10 = isbn10.substring(0, isbn10.length() - 1) + checksum;
+        if (!searchISBN.contains(isbn10)) {
+          searchISBN.add(isbn10);
+        }
       }
     }
   }
