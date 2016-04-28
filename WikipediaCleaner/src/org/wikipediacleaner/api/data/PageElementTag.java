@@ -84,45 +84,35 @@ public class PageElementTag extends PageElement {
   // =========================================================================
   public final static String TAG_OTHER_TYPO        = "typo";
 
+  /** Possible characters for parameter name */
   private final static String PARAM_NAME_CHARS =
       "ABCDEFGHIJKLMNOPQRSTUVWXYZ" +
       "abcdefghijklmnopqrstuvwxyz" +
       "0123456789" +
       "-";
 
-  /**
-   * Tag name.
-   */
+  /** Possible separation characters after tag name */
+  private final static String SEP_CHARS_AFTER_TAG_NAME = " \n";
+
+  /** Tag name */
   private final String name;
 
-  /**
-   * Normalized tag name.
-   */
+  /** Normalized tag name */
   private final String normalizedName;
 
-  /**
-   * Tag parameters.
-   */
+  /** Tag parameters */
   private final List<PageElementTag.Parameter> parameters;
 
-  /**
-   * Flag indicating if this is a closing tag.
-   */
+  /** Flag indicating if this is a closing tag */
   private final boolean endTag;
 
-  /**
-   * Flag indicating if this is a full tag (opening + closing.
-   */
+  /** Flag indicating if this is a full tag (opening + closing) */
   private final boolean fullTag;
 
-  /**
-   * Flag indicating if there are white space characters at the end.
-   */
+  /** Flag indicating if there are white space characters at the end */
   private final boolean endWithSpace;
 
-  /**
-   * Matching tag.
-   */
+  /** Matching tag */
   private PageElementTag matchingTag;
 
   /**
@@ -186,7 +176,7 @@ public class PageElementTag extends PageElement {
 
     // Possible whitespace characters
     while ((tmpIndex < maxLength) &&
-           (contents.charAt(tmpIndex) == ' ')) {
+           (SEP_CHARS_AFTER_TAG_NAME.indexOf(contents.charAt(tmpIndex)) >= 0)) {
       tmpIndex++;
     }
 
