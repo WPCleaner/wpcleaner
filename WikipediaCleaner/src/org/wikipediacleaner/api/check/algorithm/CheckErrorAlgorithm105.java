@@ -57,7 +57,7 @@ public class CheckErrorAlgorithm105 extends CheckErrorAlgorithmBase {
       while ((tmpIndex < maxLen) && (contents.charAt(tmpIndex) == '=')) {
         tmpIndex++;
       }
-      if ((tmpIndex > currentIndex) &&
+      if ((tmpIndex > currentIndex + 1) && // At least 2 "="
           (tmpIndex < maxLen) &&
           (contents.charAt(tmpIndex) == '\n')) {
         errorFound = true;
