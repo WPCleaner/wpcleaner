@@ -71,7 +71,7 @@ public class CheckErrorAlgorithm526 extends CheckErrorAlgorithmBase {
     for (PageElementInternalLink link : links) {
 
       // Decide if link is an error
-      String target = link.getLink();
+      String target = link.getFullLink();
       String text = link.getText();
       boolean isProblematic = false;
       if ((target != null) &&
