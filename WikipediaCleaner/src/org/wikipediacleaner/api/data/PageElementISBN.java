@@ -327,7 +327,19 @@ public class PageElementISBN extends PageElement {
           }
         }
       }
-      
+
+      // Parameter is for an ISBN, analyze that it's not filled by WikiData
+      if (nameOk) {
+        String paramValue = param.getValue();
+        if ((paramValue == null) ||
+            (paramValue.trim().length() == 0) ||
+            "{{#property:p212}}".equalsIgnoreCase(paramValue.trim()) || // ISBN-13
+            "{{#property:p957}}".equalsIgnoreCase(paramValue.trim())) { // ISBN-10
+          nameOk = false;
+        }
+      }
+
+      // Parameter is for an ISVN, analyze its value
       if (nameOk) {
         String paramValue = param.getStrippedValue();
         boolean ok = true;
