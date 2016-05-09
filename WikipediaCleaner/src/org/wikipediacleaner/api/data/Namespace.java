@@ -17,6 +17,8 @@ import org.wikipediacleaner.api.constants.EnumCaseSensitiveness;
  */
 public class Namespace implements Comparable<Namespace> {
 
+  public final static int MEDIA = -2;
+  public final static int SPECIAL = -1;
   public final static int MAIN = 0;
   public final static int MAIN_TALK = 1;
   public final static int USER = 2;

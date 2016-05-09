@@ -12,13 +12,17 @@ import java.util.List;
 import java.util.Map;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
+import org.wikipediacleaner.api.check.CheckErrorResult.ErrorLevel;
 import org.wikipediacleaner.api.constants.WPCConfiguration;
 import org.wikipediacleaner.api.constants.WPCConfigurationStringList;
 import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageAnalysis;
+import org.wikipediacleaner.api.data.PageElement;
 import org.wikipediacleaner.api.data.PageElementFunction;
 import org.wikipediacleaner.api.data.PageElementISBN;
+import org.wikipediacleaner.api.data.PageElementInternalLink;
+import org.wikipediacleaner.api.data.PageElementInterwikiLink;
 import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.PageElementTemplate.Parameter;
 import org.wikipediacleaner.i18n.GT;
@@ -164,72 +168,73 @@ public class CheckErrorAlgorithm069 extends CheckErrorAlgorithmISBN {
             }
           }
         }
-      }
-    }
-
-    // Analyze each template parameter for ISBN10 or ISBN13 parameters
-    /* List<PageElementTemplate> templates = analysis.getTemplates();
-    for (PageElementTemplate template : templates) {
-      for (int paramNum = 0; paramNum < template.getParameterCount(); paramNum++) {
-        Parameter param = template.getParameter(paramNum);
-        String paramName = param.getName();
-        if ("ISBN10".equalsIgnoreCase(paramName) ||
-            "ISBN13".equalsIgnoreCase(paramName)) {
-          if (errors == null) {
-            return true;
-          }
-          result = true;
-
-          // For an empty parameter, suggest to remove the parameter
-          String value = param.getStrippedValue();
-          if ((value == null) || (value.trim().length() == 0)) {
-            int begin = param.getPipeIndex();
-            int end = template.getEndIndex() - 2;
-            if (paramNum + 1 < template.getParameterCount()) {
-              end = template.getParameter(paramNum + 1).getPipeIndex();
+      } else {
+        if (!isbn.isTemplateParameter()) {
+          // Analyze to find links to Special/BookSources
+          PageElement element = null;
+          ErrorLevel level = ErrorLevel.CORRECT;
+          String isbnText = analysis.getContents().substring(isbn.getBeginIndex(), isbn.getEndIndex());
+          PageElementInternalLink link = analysis.isInInternalLink(isbn.getBeginIndex());
+          if ((link != null) && (isbnText.equals(link.getText()))) {
+            level = isSpecialBookSources(analysis, link.getLink());
+            if (level != ErrorLevel.CORRECT) {
+              element = link;
             }
-            CheckErrorResult errorResult = createCheckErrorResult(
-                analysis, begin, end,
-                ErrorLevel.WARNING);
-            errorResult.addReplacement("");
-            errors.add(errorResult);
-
-          // For a parameter with a value, suggest the first available name
-          } else {
-            int begin = template.getParameterNameStartIndex(paramNum);
-            CheckErrorResult errorResult = createCheckErrorResult(
-                analysis, begin, begin + paramName.length(),
-                ErrorLevel.WARNING);
-            boolean found = false;
-            int number = 1;
-            while ((number < 10) && !found) {
-              boolean exist = false;
-              for (int paramNum2 = 0; paramNum2 < template.getParameterCount(); paramNum2++) {
-                String paramName2 = template.getParameterName(paramNum2);
-                if ((number == 1) && ("ISBN".equalsIgnoreCase(paramName2))) {
-                  exist = true;
-                }
-                if (("ISBN" + number).equalsIgnoreCase(paramName2)) {
-                  exist = true;
-                }
+          }
+          if (element == null) {
+            PageElementInterwikiLink iwLink = analysis.isInInterwikiLink(isbn.getBeginIndex());
+            if ((iwLink != null) && (isbnText.equals(iwLink.getText()))) {
+              level = isSpecialBookSources(analysis, iwLink.getLink());
+              if (level != ErrorLevel.CORRECT) {
+                element = iwLink;
               }
-              if (!exist) {
-                found = true;
-                if (number == 1) {
-                  errorResult.addReplacement(paramName.substring(0, 4));
-                } else {
-                  errorResult.addReplacement(paramName.substring(0, 4) + number);
-                }
-              }
-              number++;
+            }
+          }
+          if (element != null) {
+            if (errors == null) {
+              return true;
+            }
+            result = true;
+            CheckErrorResult errorResult = createCheckErrorResult(
+                analysis, element.getBeginIndex(), element.getEndIndex(), level);
+            List<String> replacements = isbn.getCorrectISBN();
+            for (String replacement : replacements) {
+              errorResult.addReplacement(replacement);
             }
             errors.add(errorResult);
           }
         }
       }
-    }*/
+    }
 
     return result;
+  }
+
+  /**
+   * @param analysis Page analysis.
+   * @param link Link destination.
+   * @return Error level.
+   */
+  private ErrorLevel isSpecialBookSources(PageAnalysis analysis, String link) {
+    if (link == null) {
+      return ErrorLevel.CORRECT;
+    }
+    int colonIndex = link.indexOf(':');
+    if (colonIndex == 0) {
+      link = link.substring(1);
+      colonIndex = link.indexOf(':');
+    }
+    if (colonIndex > 0) {
+      Namespace special = analysis.getWikiConfiguration().getNamespace(Namespace.SPECIAL);
+      String prefix = link.substring(0, colonIndex);
+      if ((special != null) && (special.isPossibleName(prefix))) {
+        if (link.startsWith("BookSources", colonIndex + 1)) {
+          return ErrorLevel.ERROR;
+        }
+        return ErrorLevel.WARNING;
+      }
+    }
+    return ErrorLevel.CORRECT;
   }
 
   /**
