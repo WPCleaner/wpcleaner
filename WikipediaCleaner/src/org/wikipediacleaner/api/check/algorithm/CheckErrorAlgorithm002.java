@@ -22,7 +22,7 @@ import org.wikipediacleaner.i18n.GT;
 
 /**
  * Algorithm for analyzing error 2 of check wikipedia project.
- * Error 2: Article with incorrect tags (&lt;br&gt;, &lt;center&gt;, &lt;small&gt;)
+ * Error 2: Article with incorrect tags (&lt;br&gt;, &lt;center&gt;, &lt;div&gt;, &lt;small&gt;, &lt;span&gt;)
  */
 public class CheckErrorAlgorithm002 extends CheckErrorAlgorithmBase {
 
@@ -57,13 +57,15 @@ public class CheckErrorAlgorithm002 extends CheckErrorAlgorithmBase {
     boolean result = false;
     result |= analyzeBrTags(analysis, errors);
     result |= analyzeNonFullTags(analysis, errors, PageElementTag.TAG_HTML_CENTER);
+    result |= analyzeNonFullTags(analysis, errors, PageElementTag.TAG_HTML_DIV);
     result |= analyzeNonFullTags(analysis, errors, PageElementTag.TAG_HTML_SMALL);
+    result |= analyzeNonFullTags(analysis, errors, PageElementTag.TAG_HTML_SPAN);
 
     return result;
   }
 
   /**
-   * Analyze a page to check if errors are present in some tags.
+   * Analyze a page to check if full tags are present.
    * 
    * @param analysis Page analysis.
    * @param errors Errors found in the page.
