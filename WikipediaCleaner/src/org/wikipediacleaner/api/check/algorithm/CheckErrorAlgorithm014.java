@@ -35,4 +35,12 @@ public class CheckErrorAlgorithm014 extends CheckErrorAlgorithmUnclosedTags {
   protected List<String> getTags() {
     return tags;
   }
+
+  /**
+   * @return True if full tags should be reported.
+   */
+  @Override
+  protected boolean reportFullTags() {
+    return true;
+  }
 }
