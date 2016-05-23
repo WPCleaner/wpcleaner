@@ -284,7 +284,9 @@ public class PageElementTag extends PageElement {
       startValueIndex++;
     }
     if (startValueIndex >= maxLength) {
-      return false;
+      Parameter param = new Parameter(name);
+      parameters.add(param);
+      return analyzeParameters(paramString.substring(startValueIndex), parameters);
     }
 
     // Find parameter value
