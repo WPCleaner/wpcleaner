@@ -171,11 +171,24 @@ public class CheckErrorAlgorithm104 extends CheckErrorAlgorithmBase {
           }
         }
 
+        // Compute possible end
+        int fullEnd = endIndex;
+        while ((fullEnd < contents.length()) && ("\n<>".indexOf(contents.charAt(fullEnd)) < 0)) {
+          fullEnd++;
+        }
+        if (fullEnd >= contents.length()) {
+          fullEnd = endIndex;
+        } else if (contents.charAt(fullEnd) == '>') {
+          fullEnd++;
+        } else if (contents.charAt(fullEnd) != '<') {
+          fullEnd = endIndex;
+        }
+
         // Report error
         CheckErrorResult errorResult = createCheckErrorResult(
-            analysis, currentIndex, endIndex);
+            analysis, currentIndex, fullEnd);
         if (replacement != null) {
-          errorResult.addReplacement(replacement);
+          errorResult.addReplacement(replacement + contents.substring(endIndex, fullEnd));
         }
         errors.add(errorResult);
       }
