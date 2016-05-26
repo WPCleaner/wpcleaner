@@ -467,6 +467,20 @@ public class PageElementTemplate extends PageElement {
       int equalIndex, int offset,
       List<PageElementComment> comments) {
 
+    // Check if the "=" is meaningful
+    if (equalIndex >= 0) {
+      boolean meaningful = false;
+      for (int index = 0; index < equalIndex; index++) {
+        if ((index < parameter.length()) && (!Character.isWhitespace(parameter.charAt(index)))) {
+          meaningful = true;
+        }
+      }
+      if (!meaningful) {
+        equalIndex = -1;
+      }
+    }
+
+    // Analyze parameter
     if (equalIndex < 0) {
       int spaces = 0;
       while ((spaces < parameter.length()) && (Character.isWhitespace(parameter.charAt(spaces)))) {
