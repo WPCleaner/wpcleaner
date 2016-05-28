@@ -111,6 +111,9 @@ public class Page implements Comparable<Page> {
     }
     String result = pageTitle.trim();
     result = result.replaceAll(" ", " ");
+    while ((result.length() > 0) && (result.charAt(result.length() - 1) == 0x200E)) {
+      result = result.substring(0, result.length() - 1);
+    }
     result = result.replaceAll("_", " ");
     result = result.replaceAll(" +", " ");
     result = result.trim();
