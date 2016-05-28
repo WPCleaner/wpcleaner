@@ -775,8 +775,28 @@ public class PageAnalysis {
   private int analyze1Equal(int currentIndex) {
 
     // Check that it's a beginning of a line
-    if ((currentIndex > 0) && (contents.charAt(currentIndex - 1) != '\n')) {
-      return currentIndex + 1;
+    boolean hasNewLine = false;
+    int tmpIndex = currentIndex;
+    while ((tmpIndex >= 0) && !hasNewLine) {
+      tmpIndex--;
+      if (tmpIndex < 0) {
+        hasNewLine = true;
+      } else if (contents.charAt(tmpIndex) == '\n') {
+        hasNewLine = true;
+      } else if (contents.charAt(tmpIndex) == '>') {
+        PageElementComment comment = null;
+        for (PageElementComment tmpComment : comments) {
+          if (tmpComment.getEndIndex() == tmpIndex + 1) {
+            comment = tmpComment;
+          }
+        }
+        if (comment == null) {
+          return currentIndex + 1;
+        }
+        tmpIndex = comment.getBeginIndex();
+      } else {
+        return currentIndex + 1;
+      }
     }
 
     // Check that it's not a template value

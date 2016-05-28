@@ -45,13 +45,33 @@ public class PageElementTitle extends PageElement {
     int maxLength = contents.length();
 
     // Check that this is an equal sign at the beginning of a line
-    if ((index > 0) && (contents.charAt(index - 1) != '\n')) {
-      return null;
-    }
     int beginIndex = index;
+    boolean hasNewLine = false;
+    while ((index >= 0) && !hasNewLine) {
+      index--;
+      if (index < 0) {
+        hasNewLine = true;
+      } else if (contents.charAt(index) == '\n') {
+        hasNewLine = true;
+      } else if (contents.charAt(index) == '>') {
+        PageElementComment comment = null;
+        for (PageElementComment tmpComment : comments) {
+          if (tmpComment.getEndIndex() == index + 1) {
+            comment = tmpComment;
+          }
+        }
+        if (comment == null) {
+          return null;
+        }
+        index = comment.getBeginIndex();
+      } else {
+        return null;
+      }
+    }
 
     // Compute first title level
     int firstLevel = 0;
+    index = beginIndex;
     while ((index < maxLength) && (contents.charAt(index) == '=')) {
       index++;
       firstLevel++;
