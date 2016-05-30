@@ -79,8 +79,6 @@ import org.wikipediacleaner.api.request.query.list.ApiAbuseFiltersRequest;
 import org.wikipediacleaner.api.request.query.list.ApiAbuseFiltersResult;
 import org.wikipediacleaner.api.request.query.list.ApiAbuseLogRequest;
 import org.wikipediacleaner.api.request.query.list.ApiAbuseLogResult;
-import org.wikipediacleaner.api.request.query.list.ApiBacklinksRequest;
-import org.wikipediacleaner.api.request.query.list.ApiBacklinksResult;
 import org.wikipediacleaner.api.request.query.list.ApiCategoryMembersRequest;
 import org.wikipediacleaner.api.request.query.list.ApiCategoryMembersResult;
 import org.wikipediacleaner.api.request.query.list.ApiEmbeddedInRequest;
@@ -103,7 +101,6 @@ import org.wikipediacleaner.api.request.query.list.ApiUsersRequest;
 import org.wikipediacleaner.api.request.query.list.ApiUsersResult;
 import org.wikipediacleaner.api.request.query.list.ApiXmlAbuseFiltersResult;
 import org.wikipediacleaner.api.request.query.list.ApiXmlAbuseLogResult;
-import org.wikipediacleaner.api.request.query.list.ApiXmlBacklinksResult;
 import org.wikipediacleaner.api.request.query.list.ApiXmlCategoryMembersResult;
 import org.wikipediacleaner.api.request.query.list.ApiXmlEmbeddedInResult;
 import org.wikipediacleaner.api.request.query.list.ApiXmlPagesWithPropResult;
@@ -129,10 +126,14 @@ import org.wikipediacleaner.api.request.query.prop.ApiInfoRequest;
 import org.wikipediacleaner.api.request.query.prop.ApiInfoResult;
 import org.wikipediacleaner.api.request.query.prop.ApiLanguageLinksRequest;
 import org.wikipediacleaner.api.request.query.prop.ApiLanguageLinksResult;
+import org.wikipediacleaner.api.request.query.prop.ApiLinksHereRequest;
+import org.wikipediacleaner.api.request.query.prop.ApiLinksHereResult;
 import org.wikipediacleaner.api.request.query.prop.ApiLinksRequest;
 import org.wikipediacleaner.api.request.query.prop.ApiLinksResult;
 import org.wikipediacleaner.api.request.query.prop.ApiPagePropsRequest;
 import org.wikipediacleaner.api.request.query.prop.ApiPagePropsResult;
+import org.wikipediacleaner.api.request.query.prop.ApiRedirectsRequest;
+import org.wikipediacleaner.api.request.query.prop.ApiRedirectsResult;
 import org.wikipediacleaner.api.request.query.prop.ApiRevisionsRequest;
 import org.wikipediacleaner.api.request.query.prop.ApiRevisionsResult;
 import org.wikipediacleaner.api.request.query.prop.ApiTemplatesRequest;
@@ -140,9 +141,11 @@ import org.wikipediacleaner.api.request.query.prop.ApiTemplatesResult;
 import org.wikipediacleaner.api.request.query.prop.ApiXmlCategoriesResult;
 import org.wikipediacleaner.api.request.query.prop.ApiXmlInfoResult;
 import org.wikipediacleaner.api.request.query.prop.ApiXmlLanguageLinksResult;
+import org.wikipediacleaner.api.request.query.prop.ApiXmlLinksHereResult;
 import org.wikipediacleaner.api.request.query.prop.ApiXmlLinksResult;
 import org.wikipediacleaner.api.request.query.prop.ApiXmlPagePropsResult;
 import org.wikipediacleaner.api.request.query.prop.ApiXmlPropertiesResult;
+import org.wikipediacleaner.api.request.query.prop.ApiXmlRedirectsResult;
 import org.wikipediacleaner.api.request.query.prop.ApiXmlRevisionsResult;
 import org.wikipediacleaner.api.request.query.prop.ApiXmlTemplatesResult;
 import org.wikipediacleaner.api.request.templatedata.ApiJsonTemplateDataResult;
@@ -1093,6 +1096,30 @@ public class MediaWikiAPI implements API {
   }
 
   /**
+   * Retrieves links to the <code>page</code> and initialize redirect status.
+   * (<code>action=query</code>, <code>prop=linkshere</code>).
+   * 
+   * @param wiki Wiki.
+   * @param page The page.
+   * @param redirects True if it should also retrieve links through redirects.
+   * @throws APIException
+   * @see <a href="http://www.mediawiki.org/wiki/API:Linkshere">API:Linkshere</a>
+   */
+  @Override
+  public void retrieveLinksHere(
+      EnumWikipedia wiki, Page page,
+      boolean redirects)
+      throws APIException {
+    ApiRedirectsResult redirectResult = new ApiXmlRedirectsResult(wiki, httpClient);
+    ApiRedirectsRequest redirectRequest = new ApiRedirectsRequest(wiki, redirectResult);
+    redirectRequest.loadRedirects(page);
+
+    ApiLinksHereResult result = new ApiXmlLinksHereResult(wiki, httpClient);
+    ApiLinksHereRequest request = new ApiLinksHereRequest(wiki, result);
+    request.loadLinksHere(page, redirects);
+  }
+
+  /**
    * Retrieve a specific language link in a page.
    * (<code>action=query</code>, <code>prop=langlinks</code>).
    * 
@@ -1161,7 +1188,7 @@ public class MediaWikiAPI implements API {
    * @throws APIException
    * @see <a href="http://www.mediawiki.org/wiki/API:Backlinks">API:Backlinks</a>
    */
-  @Override
+  /* @Override
   public void retrieveBackLinks(
       EnumWikipedia wiki, Page page,
       boolean redirects)
@@ -1169,7 +1196,7 @@ public class MediaWikiAPI implements API {
     ApiBacklinksResult result = new ApiXmlBacklinksResult(wiki, httpClient);
     ApiBacklinksRequest request = new ApiBacklinksRequest(wiki, result);
     request.loadBacklinks(page, redirects);
-  }
+  }*/
 
   /**
    * Retrieves the pages in which <code>page</code> is embedded.

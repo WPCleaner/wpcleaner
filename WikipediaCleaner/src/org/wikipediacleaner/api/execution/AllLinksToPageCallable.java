@@ -18,7 +18,7 @@ import org.wikipediacleaner.i18n.GT;
 /**
  * A Callable implementation for retrieving Backlinks with Redirects.
  */
-public class BacklinksWRCallable extends MediaWikiCallable<Page> {
+public class AllLinksToPageCallable extends MediaWikiCallable<Page> {
 
   private final Page page;
 
@@ -28,7 +28,7 @@ public class BacklinksWRCallable extends MediaWikiCallable<Page> {
    * @param api MediaWiki API.
    * @param page Page.
    */
-  public BacklinksWRCallable(
+  public AllLinksToPageCallable(
       EnumWikipedia wikipedia, MediaWikiListener listener, API api,
       Page page) {
     super(wikipedia, listener, api);
@@ -40,8 +40,8 @@ public class BacklinksWRCallable extends MediaWikiCallable<Page> {
    */
   @Override
   public Page call() throws APIException {
-    setText(GT._("Retrieving page back links") + " - " + page.getTitle());
-    api.retrieveBackLinks(getWikipedia(), page, true);
+    setText(GT._("Retrieving all links to page") + " - " + page.getTitle());
+    api.retrieveLinksHere(getWikipedia(), page, true);
     return page;
   }
 

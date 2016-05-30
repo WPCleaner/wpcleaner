@@ -61,9 +61,19 @@ public class ApiPropertiesRequest extends ApiRequest {
   public final static String PROPERTY_PROP_LINKS = "links";
 
   /**
+   * Property value for Properties / Links here.
+   */
+  public final static String PROPERTY_PROP_LINKSHERE = "linkshere";
+
+  /**
    * Property value for Properties / Page properties.
    */
   public final static String PROPERTY_PROP_PAGEPROPS = "pageprops";
+
+  /**
+   * Property value for Properties / Redirects.
+   */
+  public final static String PROPERTY_PROP_REDIRECTS = "redirects";
 
   /**
    * Property value for Properties / Revisions.

@@ -27,6 +27,7 @@ import org.wikipediacleaner.api.request.ApiXmlResult;
 /**
  * MediaWiki API XML back links results.
  */
+@Deprecated
 public class ApiXmlBacklinksResult extends ApiXmlResult implements ApiBacklinksResult {
 
   /**

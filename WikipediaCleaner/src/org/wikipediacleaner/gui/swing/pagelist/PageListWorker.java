@@ -313,8 +313,8 @@ public class PageListWorker extends BasicWorker {
     final API api = APIFactory.getAPI();
     for (String pageName : elementNames) {
       Page page = DataManager.getPage(getWikipedia(), pageName, null, null, null);
-      api.retrieveBackLinks(getWikipedia(), page, true);
-      List<Page> tmpPages = page.getRelatedPages(Page.RelatedPages.BACKLINKS);
+      api.retrieveLinksHere(getWikipedia(), page, true);
+      List<Page> tmpPages = page.getRelatedPages(Page.RelatedPages.LINKS_HERE);
       if (tmpPages != null) {
         for (Page tmpPage : tmpPages) {
           if (!pages.contains(tmpPage)) {
@@ -390,10 +390,10 @@ public class PageListWorker extends BasicWorker {
     if (elementNames != null) {
       List<Page> tmpPages = constructInternalPageList();
       MediaWiki mw = MediaWiki.getMediaWikiAccess(this);
-      mw.retrieveAllBacklinks(getWikipedia(), tmpPages, true);
+      mw.retrieveAllLinksToPages(getWikipedia(), tmpPages, true);
       Configuration configuration = Configuration.getConfiguration();
       for (Page tmpPage : tmpPages) {
-        List<Page> backlinks = tmpPage.getBackLinksWithRedirects();
+        List<Page> backlinks = tmpPage.getAllLinksToPage();
         if (backlinks != null) {
           Properties pageProperties = configuration.getSubProperties(
               getWikipedia(), Configuration.PROPERTIES_BACKLINKS, tmpPage.getTitle());
@@ -507,7 +507,7 @@ public class PageListWorker extends BasicWorker {
     }
     setText(GT._("Checking that protected titles have backlinks"));
     MediaWiki mw = MediaWiki.getMediaWikiAccess(this);
-    mw.retrieveAllBacklinks(wiki, tmpPages, true);
+    mw.retrieveAllLinksToPages(wiki, tmpPages, true);
     for (Page page : tmpPages) {
       Integer backlinks = page.getBacklinksCountInMainNamespace();
       if ((backlinks != null) && (backlinks.intValue() > 0)) {

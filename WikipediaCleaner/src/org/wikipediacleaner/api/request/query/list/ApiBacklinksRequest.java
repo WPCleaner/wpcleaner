@@ -20,6 +20,7 @@ import org.wikipediacleaner.api.data.Page;
 /**
  * MediaWiki back links requests.
  */
+@Deprecated
 public class ApiBacklinksRequest extends ApiListRequest {
 
   // ==========================================================================

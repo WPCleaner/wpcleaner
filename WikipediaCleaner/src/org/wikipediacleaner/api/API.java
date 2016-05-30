@@ -257,6 +257,21 @@ public interface API {
       EnumWikipedia wiki, Collection<Page> pages) throws APIException;
 
   /**
+   * Retrieves links to the <code>page</code> and initialize redirect status.
+   * (<code>action=query</code>, <code>prop=linkshere</code>).
+   * 
+   * @param wiki Wiki.
+   * @param page The page.
+   * @param redirects True if it should also retrieve links through redirects.
+   * @throws APIException
+   * @see <a href="http://www.mediawiki.org/wiki/API:Linkshere">API:Linkshere</a>
+   */
+  public void retrieveLinksHere(
+      EnumWikipedia wiki, Page page,
+      boolean redirects)
+      throws APIException;
+
+  /**
    * Retrieves internal links of one page.
    * (<code>action=query</code>, <code>prop=links</code>).
    * 
@@ -298,7 +313,7 @@ public interface API {
    * 
    * @param wiki Wiki.
    * @throws APIException
-   * @see <a href="http://www.mediawiki.org/wiki/API:Backlinks">API:Backlinks</a>
+   * @see <a href="http://www.mediawiki.org/wiki/API:Abusefilters">API:Abusefilters</a>
    */
   public List<AbuseFilter> retrieveAbuseFilters(
       EnumWikipedia wiki) throws APIException;
@@ -327,9 +342,10 @@ public interface API {
    * @throws APIException
    * @see <a href="http://www.mediawiki.org/wiki/API:Backlinks">API:Backlinks</a>
    */
+  /* @Deprecated
   public void retrieveBackLinks(
       EnumWikipedia wiki, Page page,
-      boolean redirects) throws APIException;
+      boolean redirects) throws APIException;*/
 
   /**
    * Retrieves the pages in which <code>page</code> is embedded.

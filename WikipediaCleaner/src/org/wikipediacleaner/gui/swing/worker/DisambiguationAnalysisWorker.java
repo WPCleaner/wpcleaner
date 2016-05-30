@@ -41,10 +41,10 @@ public class DisambiguationAnalysisWorker extends BasicWorker {
     try {
       MediaWiki mw = MediaWiki.getMediaWikiAccess(this);
       mw.retrieveContents(getWikipedia(), page, false, false, false, true, false);
-      mw.retrieveAllBacklinks(getWikipedia(), page, true);
+      mw.retrieveAllLinksToPage(getWikipedia(), page, true);
       ArrayList<Page> pageAndRedirects = new ArrayList<Page>();
       pageAndRedirects.add(page);
-      for (Page backlink : page.getBackLinksWithRedirects()) {
+      for (Page backlink : page.getAllLinksToPage()) {
         if ((backlink != null) && (backlink.isRedirect())) {
           pageAndRedirects.add(backlink);
           mw.retrieveContents(getWikipedia(), backlink, false, false, false, false, false);

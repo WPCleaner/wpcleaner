@@ -32,10 +32,12 @@ public class Page implements Comparable<Page> {
    * Kinds of related pages.
    */
   public static enum RelatedPages {
-    BACKLINKS,
+    @Deprecated BACKLINKS, // Replaced by LINKS_HERE (back links notion is too problematic in API)
     CATEGORIES,
     CATEGORY_MEMBERS,
     EMBEDDED_IN,
+    LINKS_HERE,
+    REDIRECTS,
     SIMILAR_PAGES;
   }
 
@@ -632,30 +634,22 @@ public class Page implements Comparable<Page> {
   }
 
   /**
-   * @return Back links of the page (including redirects).
+   * @return Links to the page (including through redirects).
    */
-  public List<Page> getBackLinksWithRedirects() {
-    List<Page> backLinks = getRelatedPages(RelatedPages.BACKLINKS);
-    List<Page> result = backLinks;
+  public List<Page> getAllLinksToPage() {
+    List<Page> linksHere = getRelatedPages(RelatedPages.LINKS_HERE);
+    List<Page> result = linksHere;
     boolean originalList = true;
-    if (backLinks != null) {
-      for (Page p : backLinks) {
-        if (p.isRedirect()) {
-          List<Page> tmpRedirects = p.getRedirects();
-          for (int i = 0; i < tmpRedirects.size(); i++) {
-            Page tmp = tmpRedirects.get(i);
-            if (areSameTitle(title, tmp.getTitle())) {
-              List<Page> tmpBackLinks = p.getBackLinksWithRedirects();
-              if ((tmpBackLinks != null) && (!tmpBackLinks.isEmpty())) {
-                if (originalList) {
-                  result = new ArrayList<Page>(result);
-                  originalList = false;
-                }
-                result.addAll(tmpBackLinks);
-              }
-              break;
-            }
+    List<Page> tmpRedirects = getRelatedPages(RelatedPages.REDIRECTS);
+    if (tmpRedirects != null) {
+      for (Page p : tmpRedirects) {
+        List<Page> tmpLinksHere = p.getAllLinksToPage();
+        if ((tmpLinksHere != null) && (!tmpLinksHere.isEmpty())) {
+          if (originalList) {
+            result = new ArrayList<Page>(result);
+            originalList = false;
           }
+          result.addAll(tmpLinksHere);
         }
       }
     }
@@ -676,7 +670,7 @@ public class Page implements Comparable<Page> {
    * @return Backlinks count.
    */
   public Integer getBacklinksCount() {
-    List<Page> backlinks = getBackLinksWithRedirects();
+    List<Page> backlinks = getAllLinksToPage();
     if (backlinks != null) {
       return backlinks.size();
     }
@@ -687,7 +681,7 @@ public class Page implements Comparable<Page> {
    * @return Backlinks count in article namespace.
    */
   public Integer getBacklinksCountInMainNamespace() {
-    List<Page> backlinks = getBackLinksWithRedirects();
+    List<Page> backlinks = getAllLinksToPage();
     if (backlinks != null) {
       int count = 0;
       for (int i = 0; i < backlinks.size(); i++) {
@@ -704,7 +698,7 @@ public class Page implements Comparable<Page> {
    * @return Backlinks count in template namespace.
    */
   public Integer getBacklinksCountInTemplateNamespace() {
-    List<Page> backlinks = getBackLinksWithRedirects();
+    List<Page> backlinks = getAllLinksToPage();
     if (backlinks != null) {
       int count = 0;
       for (int i = 0; i < backlinks.size(); i++) {

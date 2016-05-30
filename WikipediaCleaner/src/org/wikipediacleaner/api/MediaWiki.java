@@ -21,7 +21,7 @@ import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.AutomaticFixing;
 import org.wikipediacleaner.api.data.AutomaticFormatter;
 import org.wikipediacleaner.api.data.Page;
-import org.wikipediacleaner.api.execution.BacklinksWRCallable;
+import org.wikipediacleaner.api.execution.AllLinksToPageCallable;
 import org.wikipediacleaner.api.execution.ContentsCallable;
 import org.wikipediacleaner.api.execution.DisambiguationStatusCallable;
 import org.wikipediacleaner.api.execution.EmbeddedInCallable;
@@ -392,31 +392,31 @@ public class MediaWiki extends MediaWikiController {
   }
 
   /**
-   * Retrieve all backlinks (with redirects) of a page.
+   * Retrieve all links to a page (with redirects).
    * 
    * @param wikipedia Wikipedia.
    * @param page Page.
    * @param block Flag indicating if the call should block until completed.
    * @throws APIException
    */
-  public void retrieveAllBacklinks(
+  public void retrieveAllLinksToPage(
       EnumWikipedia wikipedia,
       Page page, boolean block) throws APIException {
     if (page == null) {
       return;
     }
-    retrieveAllBacklinks(wikipedia, Collections.singleton(page), block);
+    retrieveAllLinksToPages(wikipedia, Collections.singleton(page), block);
   }
 
   /**
-   * Retrieve all backlinks (with redirects) of a list of pages.
+   * Retrieve all links to a list of pages (with redirects).
    * 
    * @param wikipedia Wikipedia.
    * @param pageList List of pages.
    * @param block Flag indicating if the call should block until completed.
    * @throws APIException
    */
-  public void retrieveAllBacklinks(
+  public void retrieveAllLinksToPages(
       EnumWikipedia wikipedia,
       Collection<Page> pageList, boolean block) throws APIException {
     if ((pageList == null) || (pageList.size() == 0)) {
@@ -424,7 +424,7 @@ public class MediaWiki extends MediaWikiController {
     }
     final API api = APIFactory.getAPI();
     for (final Page page : pageList) {
-      addTask(new BacklinksWRCallable(wikipedia, this, api, page));
+      addTask(new AllLinksToPageCallable(wikipedia, this, api, page));
     }
     block(block);
   }

@@ -487,7 +487,7 @@ public class DisambiguationWindow extends OnePageWindow {
     listCellRenderer.setPageProperties(backlinksProperties);
     popupListenerLinks.setPage(page);
     popupListenerLinks.setBackLinksProperties(backlinksProperties);
-    List<Page> links = page.getBackLinksWithRedirects();
+    List<Page> links = page.getAllLinksToPage();
     if (config.getBoolean(null, ConfigurationValueBoolean.IGNORE_DAB_USER_NS)) {
       links = new ArrayList<Page>(links);
       for (int i = links.size(); i > 0; i--) {
@@ -509,7 +509,7 @@ public class DisambiguationWindow extends OnePageWindow {
     if (getPage() != null) {
       knownPages = new ArrayList<Page>(1);
       knownPages.add(getPage());
-      for (Page backLink : getPage().getBackLinksWithRedirects()) {
+      for (Page backLink : getPage().getAllLinksToPage()) {
         if ((backLink != null) &&
             (backLink.isRedirect()) &&
             (Page.areSameTitle(getPage().getTitle(), backLink.getRedirectDestination()))) {
