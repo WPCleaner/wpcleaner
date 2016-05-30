@@ -173,8 +173,10 @@ public class CheckErrorAlgorithm104 extends CheckErrorAlgorithmBase {
 
         // Compute possible end
         int fullEnd = endIndex;
-        while ((fullEnd < contents.length()) && ("\n<>".indexOf(contents.charAt(fullEnd)) < 0)) {
-          fullEnd++;
+        if ((fullEnd - 1 < contents.length()) && ("\n<>".indexOf(contents.charAt(fullEnd - 1)) < 0)) {
+          while ((fullEnd < contents.length()) && ("\n<>".indexOf(contents.charAt(fullEnd)) < 0)) {
+            fullEnd++;
+          }
         }
         if (fullEnd >= contents.length()) {
           fullEnd = endIndex;
