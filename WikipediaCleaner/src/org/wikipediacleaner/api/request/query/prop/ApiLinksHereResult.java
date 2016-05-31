@@ -7,7 +7,6 @@
 
 package org.wikipediacleaner.api.request.query.prop;
 
-import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
@@ -25,13 +24,13 @@ public interface ApiLinksHereResult extends ApiResult {
    * Execute links here request.
    * 
    * @param properties Properties defining request.
-   * @param pages List of pages.
+   * @param page Main page.
    * @param lists Lists to be filled with links to the page.
    * @return True if request should be continued.
    * @throws APIException
    */
   public boolean executeLinksHere(
       Map<String, String> properties,
-      Collection<Page> pages,
+      Page page,
       Map<String, List<Page>> lists) throws APIException;
 }

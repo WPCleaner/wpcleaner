@@ -8,7 +8,6 @@
 package org.wikipediacleaner.api.request.query.prop;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -21,6 +20,7 @@ import org.wikipediacleaner.api.APIException;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.DataManager;
 import org.wikipediacleaner.api.data.Page;
+import org.wikipediacleaner.api.data.Page.RelatedPages;
 import org.wikipediacleaner.api.request.ApiRequest;
 import org.wikipediacleaner.api.request.ApiXmlResult;
 
@@ -45,7 +45,7 @@ public class ApiXmlLinksHereResult extends ApiXmlResult implements ApiLinksHereR
    * Execute links here request.
    * 
    * @param properties Properties defining request.
-   * @param pages List of pages.
+   * @param page Main page.
    * @param lists Lists to be filled with links to the page.
    * @return True if request should be continued.
    * @throws APIException
@@ -53,7 +53,7 @@ public class ApiXmlLinksHereResult extends ApiXmlResult implements ApiLinksHereR
   @Override
   public boolean executeLinksHere(
       Map<String, String> properties,
-      Collection<Page> pages,
+      Page page,
       Map<String, List<Page>> lists) throws APIException {
     try {
       Element root = getRoot(properties, ApiRequest.MAX_ATTEMPTS);
@@ -80,7 +80,7 @@ public class ApiXmlLinksHereResult extends ApiXmlResult implements ApiLinksHereR
         while (itLinks.hasNext()) {
           Element currentLink = (Element) itLinks.next();
           Page link = DataManager.getPage(
-              getWiki(), xpaTitle.valueOf(currentLink), null, null, null);
+              getWiki(), xpaTitle.valueOf(currentLink), null, null, page.getRelatedPages(RelatedPages.REDIRECTS));
           link.setNamespace(xpaNs.valueOf(currentLink));
           link.setPageId(xpaPageId.valueOf(currentLink));
           if (currentLink.getAttribute("redirect") != null) {

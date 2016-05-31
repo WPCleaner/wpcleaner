@@ -112,7 +112,7 @@ public class ApiLinksHereRequest extends ApiPropertiesRequest {
     Map<String, List<Page>> results = new HashMap<>();
     for (Collection<Page> splitPages : splitPagesList) {
       properties.put(PROPERTY_TITLES, constructListTitles(splitPages));
-      while (result.executeLinksHere(properties, pages, results)) {
+      while (result.executeLinksHere(properties, page, results)) {
         //
       }
     }
