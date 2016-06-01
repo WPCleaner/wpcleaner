@@ -181,6 +181,58 @@ public class CheckErrorAlgorithm105 extends CheckErrorAlgorithmBase {
         // Create error
         CheckErrorResult errorResult = createCheckErrorResult(
             analysis, beginLine, tmpIndex);
+
+        // Suggest possible replacements
+        if (contents.charAt(beginLine) == '=') {
+          int equalsBefore = beginLine;
+          while ((equalsBefore < tmpIndex) && (contents.charAt(equalsBefore) == '=')) {
+            equalsBefore++;
+          }
+          int equalsAfter = tmpIndex;
+          while ((equalsAfter > beginLine) && (contents.charAt(equalsAfter - 1) == '=')) {
+            equalsAfter--;
+          }
+          if (equalsBefore - beginLine != tmpIndex - equalsAfter) {
+            errorResult.addReplacement(
+                contents.substring(beginLine, equalsAfter) +
+                contents.substring(beginLine, equalsBefore));
+            errorResult.addReplacement(
+                contents.substring(equalsAfter, tmpIndex) +
+                contents.substring(equalsBefore, tmpIndex));
+          } else {
+            int extraBefore = equalsBefore;
+            while ((extraBefore < tmpIndex) && (contents.charAt(extraBefore) == ' ')) {
+              extraBefore++;
+            }
+            boolean extraBeforeFound = false;
+            while ((extraBefore < tmpIndex) && (contents.charAt(extraBefore) == '=')) {
+              extraBefore++;
+              extraBeforeFound = true;
+            }
+            if (!extraBeforeFound) {
+              extraBefore = equalsBefore;
+            }
+            int extraAfter = equalsAfter;
+            while ((extraAfter > beginLine) && (contents.charAt(extraAfter - 1) == ' ')) {
+              extraAfter--;
+            }
+            boolean extraAfterFound = false;
+            while ((extraAfter > beginLine) && (contents.charAt(extraAfter - 1) == '=')) {
+              extraAfter--;
+              extraAfterFound = true;
+            }
+            if (!extraAfterFound) {
+              extraAfter = equalsAfter;
+            }
+            if (extraBeforeFound || extraAfterFound && (extraAfter > extraBefore)) {
+              errorResult.addReplacement(
+                  contents.substring(beginLine, equalsBefore) +
+                  contents.substring(extraBefore, extraAfter) +
+                  contents.substring(equalsAfter, tmpIndex));
+            }
+          }
+        }
+
         errors.add(errorResult);
       }
 
