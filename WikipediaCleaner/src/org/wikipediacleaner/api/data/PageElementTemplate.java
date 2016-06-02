@@ -469,10 +469,10 @@ public class PageElementTemplate extends PageElement {
 
     // Check if the "=" is meaningful
     if (equalIndex >= 0) {
-      boolean meaningful = false;
-      for (int index = 0; index < equalIndex; index++) {
-        if ((index < parameter.length()) && (!Character.isWhitespace(parameter.charAt(index)))) {
-          meaningful = true;
+      boolean meaningful = true;
+      if ((equalIndex > 0) && (parameter.charAt(equalIndex - 1) == '\n')) {
+        if ((equalIndex + 1 < parameter.length()) && (parameter.charAt(equalIndex + 1) == '=')) {
+          meaningful = false;
         }
       }
       if (!meaningful) {
