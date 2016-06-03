@@ -7,7 +7,9 @@
 
 package org.wikipediacleaner.api.check.algorithm;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.data.PageAnalysis;
@@ -90,7 +92,8 @@ public class CheckErrorAlgorithm104 extends CheckErrorAlgorithmBase {
           shouldReport = false;
         }
       }
-      String replacement = null;
+
+      // Ensure that it's in the form "<ref name"
       int endIndex = currentIndex + 1;
       if (shouldReport) {
         while ((endIndex < maxLen) &&
@@ -123,54 +126,6 @@ public class CheckErrorAlgorithm104 extends CheckErrorAlgorithmBase {
         }
         result = true;
 
-        // Try to find a suggestion
-        nextIndex = endIndex;
-        int tmpIndex = endIndex;
-        int lastNonSpace = tmpIndex;
-        boolean canExtend = true;
-        if ((tmpIndex < maxLen) && (contents.charAt(tmpIndex) == '=')) {
-          tmpIndex++;
-          while ((tmpIndex < maxLen) && (contents.charAt(tmpIndex) == ' ')) {
-            tmpIndex++;
-          }
-        } else {
-          canExtend = false;
-        }
-        if ((tmpIndex < maxLen) && (contents.charAt(tmpIndex) == '\"')) {
-          tmpIndex++;
-          while ((tmpIndex < maxLen) &&
-              ((Character.isLetter(contents.charAt(tmpIndex))) ||
-               (Character.isDigit(contents.charAt(tmpIndex))) ||
-               (" -_".indexOf(contents.charAt(tmpIndex)) >= 0))) {
-            tmpIndex++;
-            if (contents.charAt(tmpIndex) != ' ') {
-              lastNonSpace = tmpIndex;
-            }
-          }
-        } else {
-          canExtend = false;
-        }
-        if (canExtend &&
-            (tmpIndex + 1< maxLen) &&
-            (lastNonSpace > endIndex)) {
-          boolean replace = false;
-          if (contents.charAt(tmpIndex) == '>') {
-            endIndex = tmpIndex + 1;
-            replace = true;
-          } else if ((contents.charAt(tmpIndex) == '/') &&
-              (contents.charAt(tmpIndex + 1) == '>')) {
-            endIndex = tmpIndex + 2;
-            replace = true;
-          }
-          if (replace) {
-            int separation = Math.min(lastNonSpace + 1, tmpIndex);
-            replacement =
-                contents.substring(currentIndex, separation) +
-                '\"' +
-                contents.substring(separation, endIndex);
-          }
-        }
-
         // Compute possible end
         int fullEnd = endIndex;
         if ((fullEnd - 1 < contents.length()) && ("\n<>".indexOf(contents.charAt(fullEnd - 1)) < 0)) {
@@ -189,8 +144,72 @@ public class CheckErrorAlgorithm104 extends CheckErrorAlgorithmBase {
         // Report error
         CheckErrorResult errorResult = createCheckErrorResult(
             analysis, currentIndex, fullEnd);
-        if (replacement != null) {
-          errorResult.addReplacement(replacement + contents.substring(endIndex, fullEnd));
+        List<String> replacements = new ArrayList<>();
+
+        // Check if there's an equal sign after "name"
+        int equalSign = endIndex;
+        while ((equalSign < fullEnd) && (contents.charAt(equalSign) == ' ')) {
+          equalSign++;
+        }
+        if (contents.charAt(equalSign) != '=') {
+          equalSign = -1;
+        }
+
+        // Case like <ref name=a name>, <ref name=>, <ref name="a name>, <ref name=a name">...
+        if (contents.charAt(fullEnd - 1) == '>') {
+          int tmpIndex = (equalSign > 0) ? equalSign + 1 : endIndex;
+          while ((tmpIndex < fullEnd - 1) &&
+              (" \"".indexOf(contents.charAt(tmpIndex)) >= 0)) {
+            tmpIndex++;
+          }
+          int startName = tmpIndex;
+          boolean finished = false;
+          while ((tmpIndex < fullEnd - 1) && !finished) {
+            char currentChar = contents.charAt(tmpIndex);
+            if (!Character.isLetter(currentChar) &&
+                !Character.isDigit(currentChar) &&
+                (" -_".indexOf(currentChar) < 0)) {
+              finished = true;
+            }
+            if (!finished) {
+              tmpIndex++;
+            }
+          }
+          int endName = tmpIndex;
+          while ((tmpIndex < fullEnd - 1) &&
+              (" \"".indexOf(contents.charAt(tmpIndex)) >= 0)) {
+            tmpIndex++;
+          }
+          boolean closing = false;
+          while ((tmpIndex < fullEnd - 1) && (contents.charAt(tmpIndex) == '/')) {
+            tmpIndex++;
+            closing = true;
+          }
+          while ((tmpIndex < fullEnd - 1) &&
+              (" \"".indexOf(contents.charAt(tmpIndex)) >= 0)) {
+            tmpIndex++;
+          }
+          if (tmpIndex == fullEnd - 1) {
+            String replacement = null;
+            if (endName > startName) {
+              replacement =
+                  contents.substring(currentIndex, endIndex) +
+                  "=\"" +
+                  contents.substring(startName, endName) +
+                  "\"" +
+                  (closing ? " /" : "") +
+                  ">";
+            } else {
+              replacement = "<ref>";
+            }
+            if (!replacements.contains(replacement)) {
+              replacements.add(replacement);
+            }
+          }
+        }
+
+        for (String tmp : replacements) {
+          errorResult.addReplacement(tmp);
         }
         errors.add(errorResult);
       }
