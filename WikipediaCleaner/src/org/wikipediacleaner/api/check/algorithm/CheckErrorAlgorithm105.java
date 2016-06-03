@@ -167,8 +167,17 @@ public class CheckErrorAlgorithm105 extends CheckErrorAlgorithmBase {
 
       // Compute line beginning
       int beginLine = currentIndex;
-      while ((beginLine > 0) && (contents.charAt(beginLine - 1) != '\n')) {
-        beginLine--;
+      if (errorFound) {
+        while ((beginLine > 0) && (contents.charAt(beginLine - 1) != '\n')) {
+          beginLine--;
+        }
+      }
+
+      // Ignore in tables
+      if (errorFound) {
+        if ((beginLine > 0) && (contents.charAt(beginLine) == '|')) {
+          errorFound = false;
+        }
       }
 
       // Signal error
