@@ -159,7 +159,7 @@ public class CheckErrorAlgorithm104 extends CheckErrorAlgorithmBase {
         if (contents.charAt(fullEnd - 1) == '>') {
           int tmpIndex = (equalSign > 0) ? equalSign + 1 : endIndex;
           while ((tmpIndex < fullEnd - 1) &&
-              (" \"".indexOf(contents.charAt(tmpIndex)) >= 0)) {
+              (" \"'".indexOf(contents.charAt(tmpIndex)) >= 0)) {
             tmpIndex++;
           }
           int startName = tmpIndex;
@@ -168,7 +168,7 @@ public class CheckErrorAlgorithm104 extends CheckErrorAlgorithmBase {
             char currentChar = contents.charAt(tmpIndex);
             if (!Character.isLetter(currentChar) &&
                 !Character.isDigit(currentChar) &&
-                (" -_".indexOf(currentChar) < 0)) {
+                (" -_,".indexOf(currentChar) < 0)) {
               finished = true;
             }
             if (!finished) {
@@ -176,8 +176,11 @@ public class CheckErrorAlgorithm104 extends CheckErrorAlgorithmBase {
             }
           }
           int endName = tmpIndex;
+          while ((endName > startName) && (contents.charAt(endName - 1) == ' ')) {
+            endName--;
+          }
           while ((tmpIndex < fullEnd - 1) &&
-              (" \"".indexOf(contents.charAt(tmpIndex)) >= 0)) {
+              (" \"'".indexOf(contents.charAt(tmpIndex)) >= 0)) {
             tmpIndex++;
           }
           boolean closing = false;
