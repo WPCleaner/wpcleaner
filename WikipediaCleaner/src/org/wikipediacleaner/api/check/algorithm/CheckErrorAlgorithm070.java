@@ -14,7 +14,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
-import org.wikipediacleaner.api.check.NullActionProvider;
 import org.wikipediacleaner.api.check.SimpleAction;
 import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.PageAnalysis;
@@ -95,11 +94,10 @@ public class CheckErrorAlgorithm070 extends CheckErrorAlgorithmISBN {
           }
           result = true;
           CheckErrorResult errorResult = createCheckErrorResult(analysis, isbn, true);
-          errorResult.addPossibleAction(
+          errorResult.addText(
               GT._(
                   "Length of ISBN is {0} instead of 10 or 13",
-                  Integer.toString(length) ),
-              new NullActionProvider());
+                  Integer.toString(length) ));
           addSuggestions(analysis, errorResult, isbn);
           addHelpNeededTemplates(analysis, errorResult, isbn);
           addHelpNeededComment(analysis, errorResult, isbn);

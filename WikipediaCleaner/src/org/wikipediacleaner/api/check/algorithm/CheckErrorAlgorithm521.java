@@ -12,7 +12,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
-import org.wikipediacleaner.api.check.NullActionProvider;
 import org.wikipediacleaner.api.constants.WPCConfiguration;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageAnalysis;
@@ -92,7 +91,7 @@ public class CheckErrorAlgorithm521 extends CheckErrorAlgorithmBase {
                 CheckErrorResult errorResult = createCheckErrorResult(
                     analysis, beginIndex, endIndex);
                 for (int i = 2; i < elements.length; i++) {
-                  errorResult.addPossibleAction(elements[i], new NullActionProvider());
+                  errorResult.addText(elements[i]);
                 }
                 errors.add(errorResult);
               }

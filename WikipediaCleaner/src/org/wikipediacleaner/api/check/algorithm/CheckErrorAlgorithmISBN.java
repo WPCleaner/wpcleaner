@@ -17,7 +17,6 @@ import java.util.Map;
 
 import org.wikipediacleaner.api.check.Actionnable;
 import org.wikipediacleaner.api.check.CheckErrorResult;
-import org.wikipediacleaner.api.check.NullActionProvider;
 import org.wikipediacleaner.api.check.CheckErrorResult.ErrorLevel;
 import org.wikipediacleaner.api.check.CompositeAction;
 import org.wikipediacleaner.api.check.SimpleAction;
@@ -78,7 +77,7 @@ public abstract class CheckErrorAlgorithmISBN extends CheckErrorAlgorithmBase {
     ISBNInformation infos = ISBNRange.getInformation(isbn.getISBN());
     if ((infos != null) && (infos.getTexts() != null)) {
       for (String info : infos.getTexts()) {
-        result.addPossibleAction(info, new NullActionProvider());
+        result.addText(info);
       }
     }
     return result;

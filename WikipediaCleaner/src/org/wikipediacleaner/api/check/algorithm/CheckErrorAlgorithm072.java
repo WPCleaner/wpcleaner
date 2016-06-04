@@ -14,7 +14,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
-import org.wikipediacleaner.api.check.NullActionProvider;
 import org.wikipediacleaner.api.check.SimpleAction;
 import org.wikipediacleaner.api.data.ISBNRange;
 import org.wikipediacleaner.api.data.PageAnalysis;
@@ -84,7 +83,7 @@ public class CheckErrorAlgorithm072 extends CheckErrorAlgorithmISBN {
           }
           result = true;
           CheckErrorResult errorResult = createCheckErrorResult(analysis, isbn, true);
-          errorResult.addPossibleAction(message, new NullActionProvider());
+          errorResult.addText(message);
           addHelpNeededTemplates(analysis, errorResult, isbn);
           addHelpNeededComment(analysis, errorResult, isbn);
 

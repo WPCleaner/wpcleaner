@@ -14,7 +14,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
-import org.wikipediacleaner.api.check.NullActionProvider;
 import org.wikipediacleaner.api.check.SimpleAction;
 import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.PageAnalysis;
@@ -93,11 +92,10 @@ public class CheckErrorAlgorithm107 extends CheckErrorAlgorithmISSN {
           }
           result = true;
           CheckErrorResult errorResult = createCheckErrorResult(analysis, issn, true);
-          errorResult.addPossibleAction(
+          errorResult.addText(
               GT._(
                   "Length of ISSN is {0} instead of 8",
-                  Integer.toString(length) ),
-              new NullActionProvider());
+                  Integer.toString(length) ));
           addSuggestions(analysis, errorResult, issn);
           addHelpNeededTemplates(analysis, errorResult, issn);
           addHelpNeededComment(analysis, errorResult, issn);

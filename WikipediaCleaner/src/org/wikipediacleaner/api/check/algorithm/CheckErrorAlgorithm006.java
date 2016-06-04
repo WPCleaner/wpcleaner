@@ -11,7 +11,6 @@ import java.util.Collection;
 import java.util.List;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
-import org.wikipediacleaner.api.check.NullActionProvider;
 import org.wikipediacleaner.api.check.SpecialCharacters;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.PageAnalysis;
@@ -97,9 +96,8 @@ public class CheckErrorAlgorithm006 extends CheckErrorAlgorithmBase {
           if (characterReplaced) {
             errorResult.addReplacement(PageElementFunction.createFunction(tag.getFunctionName(), text));
           } else {
-            errorResult.addPossibleAction(
-                GT._("Unable to replace the characters [{0}]", unknownCharacters),
-                new NullActionProvider());
+            errorResult.addText(
+                GT._("Unable to replace the characters [{0}]", unknownCharacters));
           }
           errors.add(errorResult);
         }

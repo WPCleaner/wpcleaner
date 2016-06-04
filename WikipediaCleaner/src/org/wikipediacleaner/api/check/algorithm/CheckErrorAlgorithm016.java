@@ -14,7 +14,6 @@ import java.util.Map;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.HtmlCharacters;
-import org.wikipediacleaner.api.check.NullActionProvider;
 import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.gui.swing.component.MWPane;
@@ -135,9 +134,8 @@ public class CheckErrorAlgorithm016 extends CheckErrorAlgorithmBase {
         for (Integer controlFound : controls) {
           ControlCharacter found = getControlCharacter(controlFound.intValue());
           if (found != null) {
-            errorResult.addPossibleAction(
-                Integer.toHexString(controlFound.intValue()) + " - " + GT._(found.description),
-                new NullActionProvider());
+            errorResult.addText(
+                Integer.toHexString(controlFound.intValue()) + " - " + GT._(found.description));
           }
         }
         StringBuilder replacementB = new StringBuilder();

@@ -21,7 +21,6 @@ import java.util.regex.Matcher;
 import org.wikipediacleaner.api.check.Actionnable;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.CompositeAction;
-import org.wikipediacleaner.api.check.NullActionProvider;
 import org.wikipediacleaner.api.check.SimpleAction;
 import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.PageAnalysis;
@@ -164,9 +163,9 @@ public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
         // Manage comment
         String comment = replacement.getComment();
         if (comment == null) {
-          error.addPossibleAction(null, new NullActionProvider());
+          error.addText(null);
         } else if (!comment.equals(previousComment)) {
-          error.addPossibleAction(comment, new NullActionProvider());
+          error.addText(comment);
         }
         previousComment = comment;
 
