@@ -168,7 +168,7 @@ public class CheckErrorAlgorithm104 extends CheckErrorAlgorithmBase {
             char currentChar = contents.charAt(tmpIndex);
             if (!Character.isLetter(currentChar) &&
                 !Character.isDigit(currentChar) &&
-                (" -_,".indexOf(currentChar) < 0)) {
+                (" -_,.".indexOf(currentChar) < 0)) {
               finished = true;
             }
             if (!finished) {
