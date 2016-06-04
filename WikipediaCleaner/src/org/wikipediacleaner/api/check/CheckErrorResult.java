@@ -327,6 +327,15 @@ public class CheckErrorResult implements Comparable<CheckErrorResult> {
   }
 
   /**
+   * Add grayed text.
+   * 
+   * @param name Action name.
+   */
+  public void addText(String name) {
+    addPossibleAction(name, new NullActionProvider());
+  }
+
+  /**
    * @return Possible actions.
    */
   public List<Actionnable> getPossibleActions() {

@@ -125,6 +125,19 @@ public class CheckErrorAlgorithm527 extends CheckErrorAlgorithmBase {
                   value.trim() +
                   content.substring(namedRef.getValueEndIndex(), namedRef.getCompleteEndIndex());
               errorResult.addReplacement(replacement, GT._("Trim text"), true);
+            } else {
+              errorResult.addText(value);
+              List<String> others = new ArrayList<>();
+              others.add(value);
+              for (PageElementTag tmpNamedRef : namedRefs) {
+                value = content.substring(
+                    tmpNamedRef.getValueBeginIndex(),
+                    tmpNamedRef.getValueEndIndex());
+                if (!others.contains(value)) {
+                  errorResult.addText(value);
+                  others.add(value);
+                }
+              }
             }
             errors.add(errorResult);
             first = false;
