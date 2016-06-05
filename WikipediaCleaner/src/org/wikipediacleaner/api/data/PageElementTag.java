@@ -325,6 +325,9 @@ public class PageElementTag extends PageElement {
       while ((endValueIndex < maxLength) &&
              (paramString.charAt(endValueIndex) != ' ') &&
              (paramString.charAt(endValueIndex) != '"')) {
+        if (paramString.charAt(endValueIndex) == '<') {
+          return false;
+        }
         endValueIndex++;
       }
       value = paramString.substring(startValueIndex, endValueIndex);
