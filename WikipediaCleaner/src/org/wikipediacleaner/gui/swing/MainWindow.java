@@ -104,10 +104,10 @@ public class MainWindow
   private final static String URL_OTHER_WIKIPEDIA = "http://en.wikipedia.org/wiki/Wikipedia:WPCleaner/Wikis";
   private final static String URL_TALK_PAGE       = "http://fr.wikipedia.org/wiki/Discussion_Wikipédia:WPCleaner";
 
-  private JComboBox<EnumWikipedia> comboWikipedia;
+  JComboBox<EnumWikipedia> comboWikipedia;
   private JComboBox<EnumLanguage> comboLanguage;
-  private JComboBox<Object> comboUser;
-  private JPasswordField textPassword;
+  JComboBox<Object> comboUser;
+  JPasswordField textPassword;
   private char echoPassword = '*';
   private ButtonGroup groupSaveUsernamePassword;
   private JRadioButton radSavePassword;
@@ -159,8 +159,14 @@ public class MainWindow
 
   private static class MainWindowListener implements BasicWindowListener {
 
-    public MainWindowListener() {
-      //
+    private final EnumWikipedia wiki;
+    private final String userName;
+    private final String password;
+
+    public MainWindowListener(EnumWikipedia wiki, String userName, String password) {
+      this.wiki = wiki;
+      this.userName = userName;
+      this.password = password;
     }
 
     /**
@@ -184,6 +190,20 @@ public class MainWindow
     public void displayWindow(BasicWindow window) {
       Configuration config = Configuration.getConfiguration();
       config.checkVersion(window.getParentComponent());
+
+      MainWindow mainWindow = (MainWindow) window;
+      if (wiki != null) {
+        mainWindow.comboWikipedia.setSelectedItem(wiki);
+      }
+      if (userName != null) {
+        mainWindow.comboUser.setSelectedItem(userName);
+      }
+      if (password != null) {
+        mainWindow.textPassword.setText(password);
+      }
+      if ((wiki != null) && (userName != null) && (password != null)) {
+        mainWindow.actionLogin();
+      }
     }
     
   }
@@ -191,13 +211,13 @@ public class MainWindow
   /**
    * Create and display a MainWindow.
    */
-  public static void createMainWindow() {
+  public static void createMainWindow(EnumWikipedia wiki, String userName, String password) {
     createWindow(
         "MainWindow",
         null,
         JFrame.EXIT_ON_CLOSE,
         MainWindow.class,
-        new MainWindowListener());
+        new MainWindowListener(wiki, userName, password));
   }
 
   /**

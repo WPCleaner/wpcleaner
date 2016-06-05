@@ -28,6 +28,7 @@ import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.text.DefaultEditorKit;
 
 import org.wikipediacleaner.api.constants.EnumLanguage;
+import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.ISBNRange;
 import org.wikipediacleaner.gui.swing.MainWindow;
 import org.wikipediacleaner.gui.swing.component.CheckThreadViolationRepaintManager;
@@ -137,8 +138,33 @@ public class WikipediaCleaner {
     // Various initializations
     ISBNRange.initialize();
 
+    // Analyze command line arguments
+    int currentArg = 0;
+
+    // Retrieve wiki
+    EnumWikipedia wiki = null;
+    if (args.length > currentArg) {
+      String wikiCode = args[currentArg];
+      wiki = EnumWikipedia.getWikipedia(wikiCode);
+    }
+    currentArg++;
+
+    // Retrieve user name
+    String userName = null;
+    if (args.length > currentArg) {
+      userName = args[currentArg];
+    }
+    currentArg++;
+
+    // Retrieve password
+    String password = null;
+    if (args.length > currentArg) {
+      password = args[currentArg];
+    }
+    currentArg++;
+
     // Running
-    MainWindow.createMainWindow();
+    MainWindow.createMainWindow(wiki, userName, password);
   }
 
   /**
