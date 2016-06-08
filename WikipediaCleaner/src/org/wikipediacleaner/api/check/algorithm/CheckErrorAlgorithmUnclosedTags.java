@@ -56,24 +56,7 @@ public abstract class CheckErrorAlgorithmUnclosedTags extends CheckErrorAlgorith
       for (PageElementTag tag : tags) {
         int beginIndex = tag.getBeginIndex();
         int endIndex = tag.getEndIndex();
-        if (tag.isEndTag()) {
-
-          // Closing tag with white space (detected by CW)
-          String contents = analysis.getContents();
-          if ((contents.charAt(endIndex - 1) == '>') &&
-              (contents.charAt(endIndex - 2) == ' ')) {
-            if (errors == null) {
-              return true;
-            }
-            result = true;
-            CheckErrorResult errorResult = createCheckErrorResult(
-                analysis, beginIndex, endIndex, ErrorLevel.WARNING);
-            errorResult.addReplacement(
-                PageElementTag.createTag(tagName, true, false),
-                true);
-            errors.add(errorResult);
-          }
-        } else if (!tag.isComplete() || (tag.isFullTag() && reportFullTags())) {
+        if (!tag.isComplete() || (tag.isFullTag() && reportFullTags())) {
 
           // Check error
           boolean shouldReport = true;
@@ -98,7 +81,25 @@ public abstract class CheckErrorAlgorithmUnclosedTags extends CheckErrorAlgorith
             errorResult.addReplacement("");
             errors.add(errorResult);
           }
+        } else if (tag.isEndTag()) {
+
+          // Closing tag with white space (detected by CW)
+          String contents = analysis.getContents();
+          if ((contents.charAt(endIndex - 1) == '>') &&
+              (contents.charAt(endIndex - 2) == ' ')) {
+            if (errors == null) {
+              return true;
+            }
+            result = true;
+            CheckErrorResult errorResult = createCheckErrorResult(
+                analysis, beginIndex, endIndex, ErrorLevel.WARNING);
+            errorResult.addReplacement(
+                PageElementTag.createTag(tagName, true, false),
+                true);
+            errors.add(errorResult);
+          }
         }
+
       }
     }
     return result;
