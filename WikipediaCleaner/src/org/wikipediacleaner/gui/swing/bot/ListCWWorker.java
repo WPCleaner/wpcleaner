@@ -30,6 +30,7 @@ import org.wikipediacleaner.api.MediaWikiListener;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.CheckErrorResult.ErrorLevel;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithm;
+import org.wikipediacleaner.api.constants.EnumQueryResult;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.DataManager;
 import org.wikipediacleaner.api.data.Page;
@@ -155,23 +156,14 @@ public class ListCWWorker extends BasicWorker {
   }
 
   /**
-   * Output result of the analysis.
-   * 
-   * @param algorithm Algorithm.
-   * @param pages List of pages with detections.
+   * @param pages List of detections.
+   * @return Formatted result.
    */
-  private void outputResult(CheckErrorAlgorithm algorithm, Collection<Detection> pages) {
-    if ((algorithm == null) || (pages == null)) {
-      return;
-    }
-
-    // Prepare result
-    List<Detection> tmpPages = new ArrayList<>(pages);
-    Collections.sort(tmpPages);
+  private String generateResult(List<Detection> pages) {
     StringBuilder buffer = new StringBuilder();
     buffer.append("<!-- Generated using " + dumpFile.getName() + " -->\n");
     ErrorLevel lastLevel = null;
-    for (Detection detection : tmpPages) {
+    for (Detection detection : pages) {
       if ((detection.maxLevel != null) &&
           !detection.maxLevel.equals(lastLevel)) {
         lastLevel = detection.maxLevel;
@@ -189,12 +181,32 @@ public class ListCWWorker extends BasicWorker {
           }
           first = false;
           buffer.append("<nowiki>");
-          buffer.append(notice.replaceAll("\\<", "&lt;"));
+          notice = notice.replaceAll("\n", "\u21b5"); // Replacer \n by a visual character
+          notice = notice.replaceAll("\\<", "&lt;"); // Replace "<" by its HTML element
+          buffer.append(notice);
           buffer.append("</nowiki>");
         }
       }
       buffer.append("\n");
     }
+    return buffer.toString();
+  }
+
+  /**
+   * Output result of the analysis.
+   * 
+   * @param algorithm Algorithm.
+   * @param pages List of pages with detections.
+   */
+  private void outputResult(CheckErrorAlgorithm algorithm, Collection<Detection> pages) {
+    if ((algorithm == null) || (pages == null)) {
+      return;
+    }
+
+    // Prepare result
+    List<Detection> tmpPages = new ArrayList<>(pages);
+    Collections.sort(tmpPages);
+    String result = generateResult(tmpPages);
 
     // Output to file
     if (output != null) {
@@ -209,7 +221,7 @@ public class ListCWWorker extends BasicWorker {
       BufferedWriter writer = null;
       try {
         writer = new BufferedWriter(new FileWriter(outputFile, false));
-        writer.write(buffer.toString());
+        writer.write(result);
       } catch (IOException e) {
         // Nothing to do
       } finally {
@@ -225,39 +237,57 @@ public class ListCWWorker extends BasicWorker {
 
     // Output to a page
     if (pageName != null) {
-      try {
-        String truePageName = MessageFormat.format(pageName, algorithm.getErrorNumberString());
-        Page page = DataManager.getPage(getWikipedia(), truePageName, null, null, null);
-        API api = APIFactory.getAPI();
-        api.retrieveContents(getWikipedia(), Collections.singletonList(page), false, false);
-        String contents = page.getContents();
-        if (contents != null) {
-          int begin = -1;
-          int end = -1;
-          for (PageElementComment comment : page.getAnalysis(contents, true).getComments()) {
-            String value = comment.getComment().trim();
-            if ("BOT BEGIN".equals(value)) {
-              if (begin < 0) {
-                begin = comment.getEndIndex();
+      boolean finished = false;
+      while (!finished) {
+        try {
+          finished = true;
+          String truePageName = MessageFormat.format(pageName, algorithm.getErrorNumberString());
+          Page page = DataManager.getPage(getWikipedia(), truePageName, null, null, null);
+          API api = APIFactory.getAPI();
+          api.retrieveContents(getWikipedia(), Collections.singletonList(page), false, false);
+          String contents = page.getContents();
+          if (contents != null) {
+            int begin = -1;
+            int end = -1;
+            for (PageElementComment comment : page.getAnalysis(contents, true).getComments()) {
+              String value = comment.getComment().trim();
+              if ("BOT BEGIN".equals(value)) {
+                if (begin < 0) {
+                  begin = comment.getEndIndex();
+                }
+              } else if ("BOT END".equals(value)) {
+                end = comment.getBeginIndex();
               }
-            } else if ("BOT END".equals(value)) {
-              end = comment.getBeginIndex();
+            }
+            if ((begin >= 0) && (end > begin)) {
+              StringBuilder newText = new StringBuilder();
+              newText.append(contents.substring(0, begin));
+              newText.append("\n");
+              newText.append(result);
+              newText.append(contents.substring(end));
+              try {
+                api.updatePage(
+                    getWikipedia(), page, newText.toString(),
+                    "Dump analysis for error n°" + algorithm.getErrorNumberString(),
+                    true, false);
+              } catch (APIException e) {
+                if (EnumQueryResult.CONTENT_TOO_BIG.equals(e.getQueryResult())) {
+                  for (int i = 0; i < 100; i++) {
+                    if (!tmpPages.isEmpty()) {
+                      finished = false;
+                      tmpPages.remove(tmpPages.size() - 1);
+                    }
+                  }
+                  result = generateResult(tmpPages);
+                } else {
+                  throw e;
+                }
+              }
             }
           }
-          if ((begin >= 0) && (end > begin)) {
-            StringBuilder newText = new StringBuilder();
-            newText.append(contents.substring(0, begin));
-            newText.append("\n");
-            newText.append(buffer.toString());
-            newText.append(contents.substring(end));
-            api.updatePage(
-                getWikipedia(), page, newText.toString(),
-                "Dump analysis for error n°" + algorithm.getErrorNumberString(),
-                true, false);
-          }
+        } catch (APIException e) {
+          // Nothing
         }
-      } catch (APIException e) {
-        // Nothing
       }
     }
   }

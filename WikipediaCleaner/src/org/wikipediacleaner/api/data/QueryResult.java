@@ -50,6 +50,10 @@ public class QueryResult {
     this.pageNewRevId = pageNewRevId;
   }
 
+  public EnumQueryResult getQueryResult() {
+    return queryResult;
+  }
+
   public boolean isQuerySuccessful() {
     if (queryResult != null) {
       return queryResult.isOk();
