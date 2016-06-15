@@ -70,6 +70,7 @@ public class PageElementTag extends PageElement {
   public final static String TAG_WIKI_MATH_CHEM       = "ce"; // Shortcut for math chem
   public final static String TAG_WIKI_NOINCLUDE       = "noinclude";
   public final static String TAG_WIKI_NOWIKI          = "nowiki";
+  public final static String TAG_WIKI_ONLYINCLUDE     = "onlyinclude";
   public final static String TAG_WIKI_PRE             = "pre";
   public final static String TAG_WIKI_REF             = "ref";
   public final static String TAG_WIKI_REFERENCES      = "references";
