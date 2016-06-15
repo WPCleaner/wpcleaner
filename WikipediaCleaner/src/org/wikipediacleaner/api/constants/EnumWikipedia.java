@@ -63,6 +63,7 @@ import org.wikipediacleaner.api.constants.wiki.WikipediaPl;
 import org.wikipediacleaner.api.constants.wiki.WikipediaPt;
 import org.wikipediacleaner.api.constants.wiki.WikipediaRo;
 import org.wikipediacleaner.api.constants.wiki.WikipediaRu;
+import org.wikipediacleaner.api.constants.wiki.WikipediaSco;
 import org.wikipediacleaner.api.constants.wiki.WikipediaSimple;
 import org.wikipediacleaner.api.constants.wiki.WikipediaSk;
 import org.wikipediacleaner.api.constants.wiki.WikipediaSl;
@@ -142,6 +143,7 @@ public enum EnumWikipedia {
   PT(new WikipediaPt()),
   RO(new WikipediaRo()),
   RU(new WikipediaRu()),
+  SCO(new WikipediaSco()),
   SIMPLE(new WikipediaSimple()),
   SK(new WikipediaSk()),
   SL(new WikipediaSl()),
