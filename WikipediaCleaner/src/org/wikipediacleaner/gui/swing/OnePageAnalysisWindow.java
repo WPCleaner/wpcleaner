@@ -1299,14 +1299,15 @@ public class OnePageAnalysisWindow
 
     // Comment for fixed Check Wiki errors
     if ((getInitialErrors() != null) && (getInitialErrors().size() > 0)) {
-      List<CheckErrorAlgorithm> errorsFixed = computeErrorsFixed();
+      List<CheckError.Progress> errorsFixed = computeErrorsFixed();
       if ((errorsFixed != null) && (errorsFixed.size() > 0)) {
         if (comment.length() > 0) {
           comment.append(" / ");
         }
         comment.append(getWikipedia().getCWConfiguration().getComment(errorsFixed));
-        for (CheckErrorAlgorithm errorFixed : errorsFixed) {
-          contributions.increaseCheckWikiError(errorFixed.getErrorNumber(), 1);
+        for (CheckError.Progress errorFixed : errorsFixed) {
+          CheckErrorAlgorithm algorithm = errorFixed.algorithm;
+          contributions.increaseCheckWikiError(algorithm.getErrorNumber(), 1);
         }
       }
     }

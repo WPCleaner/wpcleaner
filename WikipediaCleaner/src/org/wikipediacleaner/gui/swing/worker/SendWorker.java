@@ -12,6 +12,7 @@ import java.util.Collection;
 import org.wikipediacleaner.api.API;
 import org.wikipediacleaner.api.APIException;
 import org.wikipediacleaner.api.APIFactory;
+import org.wikipediacleaner.api.check.CheckError;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithm;
 import org.wikipediacleaner.api.constants.CWConfigurationError;
 import org.wikipediacleaner.api.constants.Contributions;
@@ -119,7 +120,7 @@ public class SendWorker extends BasicWorker {
         Page page, String text, String comment,
         boolean forceWatch,
         Contributions contributions,
-        Collection<CheckErrorAlgorithm> errorsFixed) {
+        Collection<CheckError.Progress> errorsFixed) {
       return new SendWorker(wiki, window, page, text, comment, forceWatch, params, contributions, errorsFixed);
     }
   }
@@ -130,7 +131,7 @@ public class SendWorker extends BasicWorker {
   private final boolean forceWatch;
   private final Params params;
   private final Contributions contributions;
-  private final Collection<CheckErrorAlgorithm> errorsFixed;
+  private final Collection<CheckError.Progress> errorsFixed;
 
   /**
    * @param wiki Wiki.
@@ -149,7 +150,7 @@ public class SendWorker extends BasicWorker {
       boolean forceWatch,
       Params params,
       Contributions contributions,
-      Collection<CheckErrorAlgorithm> errorsFixed) {
+      Collection<CheckError.Progress> errorsFixed) {
     super(wiki, window);
     this.page = page;
     this.text = text;
@@ -244,9 +245,11 @@ public class SendWorker extends BasicWorker {
 
     // Mark errors fixed
     if (errorsFixed != null) {
-      for (CheckErrorAlgorithm error: errorsFixed) {
-        if (error.getPriority() != CWConfigurationError.PRIORITY_BOT_ONLY) {
-          OnePageWindow.markPageAsFixed(error.getErrorNumberString(), page);
+      for (CheckError.Progress error: errorsFixed) {
+        CheckErrorAlgorithm algorithm = error.algorithm;
+        if ((algorithm.getPriority() != CWConfigurationError.PRIORITY_BOT_ONLY) &&
+            (error.full)) {
+          OnePageWindow.markPageAsFixed(algorithm.getErrorNumberString(), page);
         }
       }
     }

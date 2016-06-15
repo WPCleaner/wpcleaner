@@ -1042,10 +1042,11 @@ public abstract class OnePageWindow
     boolean updateISSNWarning = false;
     final boolean createDuplicateArgsWarning = false;
     boolean updateDuplicateArgsWarning = false;
-    List<CheckErrorAlgorithm> errorsFixed = computeErrorsFixed();
+    List<CheckError.Progress> errorsFixed = computeErrorsFixed();
     if (errorsFixed != null) {
-      for (CheckErrorAlgorithm errorFixed : errorsFixed) {
-        int errorNumber = errorFixed.getErrorNumber();
+      for (CheckError.Progress errorFixed : errorsFixed) {
+        CheckErrorAlgorithm algorithm = errorFixed.algorithm;
+        int errorNumber = algorithm.getErrorNumber();
         if ((errorNumber == 69) ||
             (errorNumber == 70) ||
             (errorNumber == 71) ||
@@ -1199,24 +1200,7 @@ public abstract class OnePageWindow
   /**
    * @return Errors fixed.
    */
-  protected List<CheckErrorAlgorithm> computeErrorsFixed() {
-    final List<CheckErrorAlgorithm> errorsFixed = new ArrayList<CheckErrorAlgorithm>();
-    PageAnalysis pageAnalysis = null;
-    if ((initialErrors != null) && (initialErrors.size() > 0)) {
-      String contents = getTextContents().getText();
-      for (CheckErrorPage initialError : initialErrors) {
-        if (pageAnalysis == null) {
-          pageAnalysis = initialError.getPage().getAnalysis(contents, true);
-          pageAnalysis.shouldCheckSpelling(shouldCheckSpelling());
-        }
-        CheckErrorPage errorPage = CheckError.analyzeError(
-            initialError.getAlgorithm(), pageAnalysis);
-        if ((errorPage.getErrorFound() == false) ||
-            (errorPage.getActiveResultsCount() < initialError.getActiveResultsCount())) {
-          errorsFixed.add(initialError.getAlgorithm());
-        }
-      }
-    }
-    return errorsFixed;
+  protected List<CheckError.Progress> computeErrorsFixed() {
+    return CheckError.computeErrorsFixed(initialErrors, getTextContents().getText(), shouldCheckSpelling());
   }
 }

@@ -122,6 +122,34 @@ public class CheckError {
   }
 
   /**
+   * @param initialErrors List of initial errors.
+   * @param contents Current contents.
+   * @param shouldCheckSpelling True if spelling should be checked.
+   * @return Information about errors fixed.
+   */
+  public static List<Progress> computeErrorsFixed(
+      List<CheckErrorPage> initialErrors,
+      String contents, boolean shouldCheckSpelling) {
+    final List<Progress> errorsFixed = new ArrayList<>();
+    PageAnalysis analysis = null;
+    if (initialErrors != null) {
+      for (CheckErrorPage initialError : initialErrors) {
+        if (analysis == null) {
+          analysis = initialError.getPage().getAnalysis(contents, true);
+          analysis.shouldCheckSpelling(shouldCheckSpelling);
+        }
+        CheckErrorPage errorPage = analyzeError(
+            initialError.getAlgorithm(), analysis);
+        if ((errorPage.getErrorFound() == false) ||
+            (errorPage.getActiveResultsCount() < initialError.getActiveResultsCount())) {
+          errorsFixed.add(new Progress(initialError.getAlgorithm(), errorPage.getErrorFound() == false));
+        }
+      }
+    }
+    return errorsFixed;
+  }
+
+  /**
    * @param errors Errors list.
    * @param wikipedia Wikipedia.
    * @param errorNumber Error number.
@@ -401,5 +429,26 @@ public class CheckError {
       }
     }
     return removed;
+  }
+
+  /**
+   * Bean for holding progress report on fixing errors.
+   */
+  public static class Progress {
+
+    /** Algorithm */
+    final public CheckErrorAlgorithm algorithm;
+
+    /** True if error has been completely fixed */
+    final public boolean full;
+
+    /**
+     * @param algorithm Algorithm.
+     * @param full True if error has been completely fixed.
+     */
+    public Progress(CheckErrorAlgorithm algorithm, boolean full) {
+      this.algorithm = algorithm;
+      this.full = full;
+    }
   }
 }

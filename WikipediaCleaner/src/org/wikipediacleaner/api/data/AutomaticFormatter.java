@@ -11,6 +11,7 @@ package org.wikipediacleaner.api.data;
 import java.util.Collection;
 import java.util.List;
 
+import org.wikipediacleaner.api.check.CheckError;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithm;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithms;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
@@ -37,7 +38,7 @@ public class AutomaticFormatter {
   public static String tidyArticle(
       Page page, String contents,
       Collection<CheckErrorAlgorithm> algorithms, boolean botFix,
-      List<CheckErrorAlgorithm> usedAlgorithms) {
+      List<CheckError.Progress> usedAlgorithms) {
     if ((page == null) || (contents == null)) {
       return contents;
     }
@@ -53,7 +54,8 @@ public class AutomaticFormatter {
           PageAnalysis analysis = page.getAnalysis(currentContents, true);
           contents = botFix ? algorithm.botFix(analysis) : algorithm.automaticFix(analysis);
           if ((usedAlgorithms != null) && (!contents.equals(currentContents))) {
-            usedAlgorithms.add(algorithm);
+            // TODO: compute if fix is complete ?
+            usedAlgorithms.add(new CheckError.Progress(algorithm, true));
           }
         }
       }

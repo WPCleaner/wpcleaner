@@ -626,30 +626,15 @@ public class CheckWikiContentPanel
    * @param errorsFixed Errors fixed
    * @return Comment.
    */
-  private String getComment(List<CheckErrorAlgorithm> errorsFixed) {
+  private String getComment(List<CheckError.Progress> errorsFixed) {
     return getWiki().getCWConfiguration().getComment(errorsFixed);
   }
 
   /**
    * @return Errors fixed.
    */
-  private List<CheckErrorAlgorithm> computeErrorsFixed() {
-    final List<CheckErrorAlgorithm> errorsFixed = new ArrayList<CheckErrorAlgorithm>();
-    PageAnalysis pageAnalysis = null;
-    if (initialErrors != null) {
-      for (CheckErrorPage initialError : initialErrors) {
-        if (pageAnalysis == null) {
-          pageAnalysis = initialError.getPage().getAnalysis(textPage.getText(), true);
-        }
-        CheckErrorPage errorPage = CheckError.analyzeError(
-            initialError.getAlgorithm(), pageAnalysis);
-        if ((errorPage.getErrorFound() == false) ||
-            (errorPage.getActiveResultsCount() < initialError.getActiveResultsCount())) {
-          errorsFixed.add(initialError.getAlgorithm());
-        }
-      }
-    }
-    return errorsFixed;
+  private List<CheckError.Progress> computeErrorsFixed() {
+    return CheckError.computeErrorsFixed(initialErrors, textPage.getText(), false);
   }
 
   /**
@@ -657,7 +642,7 @@ public class CheckWikiContentPanel
    */
   private void actionSend() {
     // Check page text to see what errors are still present
-    final List<CheckErrorAlgorithm> errorsFixed = computeErrorsFixed();
+    final List<CheckError.Progress> errorsFixed = computeErrorsFixed();
     updateComment(errorsFixed);
 
     // Check that a comment is available
@@ -670,7 +655,8 @@ public class CheckWikiContentPanel
     // Count contributions
     Contributions contributions = new Contributions(getWiki());
     contributions.increasePages(1);
-    for (CheckErrorAlgorithm algorithm : errorsFixed) {
+    for (CheckError.Progress errorFixed : errorsFixed) {
+      CheckErrorAlgorithm algorithm = errorFixed.algorithm;
       contributions.increaseCheckWikiError(algorithm.getErrorNumber(), 1);
     }
 
@@ -681,8 +667,9 @@ public class CheckWikiContentPanel
     boolean createISSNWarning = false;
     boolean updateDuplicateArgsWarning = false;
     boolean createDuplicateArgsWarning = false;
-    for (CheckErrorAlgorithm errorFixed : errorsFixed) {
-      int errorNumber = errorFixed.getErrorNumber();
+    for (CheckError.Progress errorFixed : errorsFixed) {
+      CheckErrorAlgorithm algorithm = errorFixed.algorithm;
+      int errorNumber = algorithm.getErrorNumber();
       if ((errorNumber == 69) ||
           (errorNumber == 70) ||
           (errorNumber == 71) ||
@@ -728,19 +715,21 @@ public class CheckWikiContentPanel
    * @param errorsFixed
    * @param ok
    */
-  void afterSendingFinished(List<CheckErrorAlgorithm> errorsFixed, boolean ok) {
+  void afterSendingFinished(List<CheckError.Progress> errorsFixed, boolean ok) {
     if (ok) {
       // Close pane
       pane.remove(this);
 
       // Remove errors fixed
       List<CheckError> errorsToBeRemoved = new ArrayList<CheckError>();
-      for (CheckErrorAlgorithm algoFixed : errorsFixed) {
+      for (CheckError.Progress errorFixed : errorsFixed) {
+        CheckErrorAlgorithm algoFixed = errorFixed.algorithm;
         for (int posError = 0; posError < window.modelAllErrors.getSize(); posError++) {
           Object element = window.modelAllErrors.getElementAt(posError);
           if (element instanceof CheckError) {
             final CheckError tmpError = (CheckError) element;
-            if (tmpError.getAlgorithm().getErrorNumberString().equals(algoFixed.getErrorNumberString())) {
+            if (tmpError.getAlgorithm().getErrorNumberString().equals(algoFixed.getErrorNumberString()) &&
+                errorFixed.full) {
               tmpError.remove(page);
               if (tmpError.getPageCount() == 0) {
                 errorsToBeRemoved.add(tmpError);
@@ -820,7 +809,7 @@ public class CheckWikiContentPanel
    * 
    * @param errorsFixed Errors.
    */
-  private void updateComment(List<CheckErrorAlgorithm> errorsFixed) {
+  private void updateComment(List<CheckError.Progress> errorsFixed) {
     if ((chkAutomaticComment != null) &&
         (textComment != null)) {
       textComment.setEditable(!chkAutomaticComment.isSelected());

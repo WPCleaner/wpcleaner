@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import org.wikipediacleaner.api.APIException;
+import org.wikipediacleaner.api.check.CheckError;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithm;
 import org.wikipediacleaner.i18n.GT;
 import org.wikipediacleaner.utils.Configuration;
@@ -82,7 +83,7 @@ public class CWConfiguration {
   /**
    * @return Comment for Check Wiki project.
    */
-  public String getComment(Collection<CheckErrorAlgorithm> algorithms) {
+  public String getComment(Collection<CheckError.Progress> algorithms) {
     if ((algorithms == null) || (algorithms.isEmpty())) {
       return "";
     }
@@ -90,7 +91,8 @@ public class CWConfiguration {
     // Build part of the comment for the errors that were fixed
     StringBuilder algorithmsComment = new StringBuilder();
     Configuration config = Configuration.getConfiguration();
-    for (CheckErrorAlgorithm algorithm : algorithms) {
+    for (CheckError.Progress progress : algorithms) {
+      CheckErrorAlgorithm algorithm = progress.algorithm;
       if (algorithmsComment.length() > 0) {
         algorithmsComment.append(" - ");
       }

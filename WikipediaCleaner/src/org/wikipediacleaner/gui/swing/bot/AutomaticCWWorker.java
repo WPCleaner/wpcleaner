@@ -220,27 +220,37 @@ public class AutomaticCWWorker extends BasicWorker {
 
       // Fix all errors that can be fixed
       String newContents = page.getContents();
-      List<CheckErrorAlgorithm> usedAlgorithms = new ArrayList<>();
+      List<CheckError.Progress> errorsFixed = new ArrayList<>();
       if (!preventBot) {
-        newContents = AutomaticFormatter.tidyArticle(page, newContents, allAlgorithms, true, usedAlgorithms);
+        newContents = AutomaticFormatter.tidyArticle(page, newContents, allAlgorithms, true, errorsFixed);
+      }
+
+      // Check if error has been fixed
+      boolean isFixed = false;
+      if (!newContents.equals(page.getContents())) {
+        for (CheckError.Progress errorFixed : errorsFixed) {
+          if ((algorithm != null) && (algorithm.equals(errorFixed.algorithm))) {
+            isFixed = true;
+          }
+        }
       }
 
       // Save page if errors have been fixed
-      if ((!newContents.equals(page.getContents())) &&
-          (usedAlgorithms.contains(algorithm))) {
+      if (isFixed) {
         StringBuilder comment = new StringBuilder();
         if ((extraComment != null) && (extraComment.trim().length() > 0)) {
           comment.append(extraComment.trim());
           comment.append(" - ");
         }
-        comment.append(getWikipedia().getCWConfiguration().getComment(usedAlgorithms));
+        comment.append(getWikipedia().getCWConfiguration().getComment(errorsFixed));
         setText(prefix + " - " + GT._("Fixing page {0}", page.getTitle()));
         api.updatePage(
             getWikipedia(), page, newContents,
             comment.toString(),
             true, false);
         countModified++;
-        for (CheckErrorAlgorithm usedAlgorithm : usedAlgorithms) {
+        for (CheckError.Progress errorFixed : errorsFixed) {
+          CheckErrorAlgorithm usedAlgorithm = errorFixed.algorithm;
           errorPage = CheckError.analyzeError(usedAlgorithm, page.getAnalysis(newContents, true));
           if ((errorPage != null) && (!errorPage.getErrorFound())) {
             checkWiki.markAsFixed(page, usedAlgorithm.getErrorNumberString());

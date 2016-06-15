@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import org.wikipediacleaner.api.check.CheckError;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithm;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithms;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
@@ -242,14 +243,15 @@ public class MediaWiki extends MediaWikiController {
             // Apply automatic Check Wiki fixing
             if (automaticCW) {
               List<CheckErrorAlgorithm> algorithms = CheckErrorAlgorithms.getAlgorithms(wiki);
-              List<CheckErrorAlgorithm> usedAlgorithms = new ArrayList<CheckErrorAlgorithm>();
+              List<CheckError.Progress> usedAlgorithms = new ArrayList<>();
               newContents = AutomaticFormatter.tidyArticle(
                   page, newContents, algorithms, false, usedAlgorithms);
               if (!usedAlgorithms.isEmpty()) {
                 fullComment.append(" / ");
                 fullComment.append(wiki.getCWConfiguration().getComment(usedAlgorithms));
                 if (description != null) {
-                  for (CheckErrorAlgorithm algorithm : usedAlgorithms) {
+                  for (CheckError.Progress progress : usedAlgorithms) {
+                    CheckErrorAlgorithm algorithm = progress.algorithm;
                     description.append("<li>");
                     description.append(algorithm.getShortDescriptionReplaced());
                     description.append("</li>\n");
