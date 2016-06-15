@@ -13,6 +13,7 @@ import java.util.Map;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.CheckErrorResult.ErrorLevel;
+import org.wikipediacleaner.api.constants.WPCConfiguration;
 import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementComment;
 import org.wikipediacleaner.api.data.PageElementTag;
@@ -77,6 +78,16 @@ public class CheckErrorAlgorithm002 extends CheckErrorAlgorithmBase {
       Collection<CheckErrorResult> errors,
       String tagName) {
 
+    // Retrieve configuration
+    List<String[]> anchorTemplates = null;
+    if ((PageElementTag.TAG_HTML_DIV.equals(tagName)) ||
+        (PageElementTag.TAG_HTML_SPAN.equals(tagName))) {
+      String anchorProperty = getSpecificProperty("anchor_templates", true, true, false);
+      if (anchorProperty != null) {
+        anchorTemplates = WPCConfiguration.convertPropertyToStringArrayList(anchorProperty);
+      }
+    }
+
     // Check for tags
     boolean result = false;
     List<PageElementTag> tags = analysis.getTags(tagName);
@@ -89,11 +100,52 @@ public class CheckErrorAlgorithm002 extends CheckErrorAlgorithmBase {
         result = true;
         CheckErrorResult errorResult =
             createCheckErrorResult(analysis, tag.getBeginIndex(), tag.getEndIndex());
+
+        // Check for consecutive opening tags without matching closing tags
         if ((previousTag != null) &&
             !previousTag.isComplete() &&
             !previousTag.isEndTag()) {
           errorResult.addReplacement(PageElementTag.createTag(tagName, true, false));
         }
+
+        // Check for id tags (<span id="..."/> or <div id="..."/>)
+        if ((anchorTemplates != null) &&
+            !anchorTemplates.isEmpty() &&
+            (tag.isComplete() || !tag.isEndTag())) {
+          String idAttribute = null;
+          boolean hasOtherAttribute = false;
+          for (int numAttribute = 0; numAttribute < tag.getParametersCount(); numAttribute++) {
+            Parameter param = tag.getParameter(numAttribute);
+            if ((param != null) && (param.getName() != null)) {
+              if ("id".equals(param.getName())) {
+                if ((param.getTrimmedValue() != null) &&
+                    !"".equals(param.getTrimmedValue())) {
+                  idAttribute = param.getTrimmedValue();
+                }
+              } else {
+                hasOtherAttribute = true;
+              }
+            }
+          }
+          if ((idAttribute != null) && (idAttribute.length() > 0) && !hasOtherAttribute) {
+            for (String[] anchorTemplate : anchorTemplates) {
+              if ((anchorTemplate.length > 0) && (anchorTemplate[0].length() > 0)) {
+                StringBuilder replacement = new StringBuilder();
+                replacement.append("{{");
+                replacement.append(anchorTemplate[0]);
+                replacement.append("|");
+                if ((anchorTemplate.length > 1) && !"1".equals(anchorTemplate[1])) {
+                  replacement.append(anchorTemplate[1]);
+                  replacement.append("=");
+                }
+                replacement.append(idAttribute);
+                replacement.append("}}");
+                errorResult.addReplacement(replacement.toString());
+              }
+            }
+          }
+        }
+
         errorResult.addReplacement("");
         errors.add(errorResult);
       }
@@ -281,6 +333,7 @@ public class CheckErrorAlgorithm002 extends CheckErrorAlgorithmBase {
   @Override
   public Map<String, String> getParameters() {
     Map<String, String> parameters = super.getParameters();
+    parameters.put("anchor_templates", GT._("A replacement for {0}", "&lt;span id=\"xxx\"/&gt;"));
     parameters.put("clear_all", GT._("A replacement for {0}", "&lt;br clear=\"all\"/&gt;"));
     parameters.put("clear_left", GT._("A replacement for {0}", "&lt;br clear=\"left\"/&gt;"));
     parameters.put("clear_right", GT._("A replacement for {0}", "&lt;br clear=\"right\"/&gt;"));
