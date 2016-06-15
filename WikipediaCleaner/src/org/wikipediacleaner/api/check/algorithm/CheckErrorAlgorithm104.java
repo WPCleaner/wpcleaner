@@ -158,6 +158,9 @@ public class CheckErrorAlgorithm104 extends CheckErrorAlgorithmBase {
         // Case like <ref name=a name>, <ref name=>, <ref name="a name>, <ref name=a name">...
         if (contents.charAt(fullEnd - 1) == '>') {
           int tmpIndex = (equalSign > 0) ? equalSign + 1 : endIndex;
+          while ((tmpIndex < fullEnd - 1) && (contents.charAt(tmpIndex) == '=')) {
+            tmpIndex++;
+          }
           while ((tmpIndex < fullEnd - 1) &&
               (" \"'”".indexOf(contents.charAt(tmpIndex)) >= 0)) {
             tmpIndex++;
