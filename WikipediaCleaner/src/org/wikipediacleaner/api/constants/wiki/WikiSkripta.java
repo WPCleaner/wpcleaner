@@ -7,6 +7,8 @@
 
 package org.wikipediacleaner.api.constants.wiki;
 
+import java.awt.ComponentOrientation;
+
 
 /**
  * Configuration for <a href="http://www.wikiskripta.eu/index.php/Home">WikiSkripta</a>.
@@ -21,7 +23,8 @@ public class WikiSkripta
     super(
         "cs", "WikiSkripta",
         "www.wikiskripta.eu", "/api.php", "/index.php",
-        "wikiskripta", null);
+        "wikiskripta", null,
+        ComponentOrientation.LEFT_TO_RIGHT);
   }
 
   /**

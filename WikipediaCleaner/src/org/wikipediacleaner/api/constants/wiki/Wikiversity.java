@@ -7,23 +7,38 @@
 
 package org.wikipediacleaner.api.constants.wiki;
 
+import java.awt.ComponentOrientation;
+
 
 /**
- * Abstract base class for Wikiversity configuration.
+ * Class for Wikiversity configuration.
  */
-public abstract class AbstractWikiversitySettings
+public class Wikiversity
   extends AbstractWikiSettings {
 
   /**
    * @param language Language.
    * @param name Name.
    */
-  protected AbstractWikiversitySettings(
+  public Wikiversity(
       String language,
       String name) {
+    this(language, name, ComponentOrientation.LEFT_TO_RIGHT);
+  }
+
+  /**
+   * @param language Language.
+   * @param name Name.
+   * @param orientation Text orientation.
+   */
+  public Wikiversity(
+      String language,
+      String name,
+      ComponentOrientation orientation) {
     super(
         language, name,
         language + ".wikiversity.org", "/w/api.php", "/w/index.php",
-        "v:" + language, language + "wikiversity");
+        "v:" + language, language + "wikiversity",
+        orientation);
   }
 }

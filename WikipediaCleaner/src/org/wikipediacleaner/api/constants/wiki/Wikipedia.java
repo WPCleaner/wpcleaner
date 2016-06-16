@@ -7,23 +7,38 @@
 
 package org.wikipediacleaner.api.constants.wiki;
 
+import java.awt.ComponentOrientation;
+
 
 /**
- * Abstract base class for Wikipedia configuration.
+ * Class for Wikipedia configuration.
  */
-public abstract class AbstractWikipediaSettings
+public class Wikipedia
   extends AbstractWikiSettings {
 
   /**
    * @param language Language.
    * @param name Name.
    */
-  protected AbstractWikipediaSettings(
+  public Wikipedia(
       String language,
       String name) {
+    this(language, name, ComponentOrientation.LEFT_TO_RIGHT);
+  }
+
+  /**
+   * @param language Language.
+   * @param name Name.
+   * @param orientation Text orientation.
+   */
+  public Wikipedia(
+      String language,
+      String name,
+      ComponentOrientation orientation) {
     super(
         language, name,
         language + ".wikipedia.org", "/w/api.php", "/w/index.php",
-        language, language + "wiki");
+        language, language + "wiki",
+        orientation);
   }
 }

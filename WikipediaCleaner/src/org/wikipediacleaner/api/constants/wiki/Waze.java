@@ -7,6 +7,8 @@
 
 package org.wikipediacleaner.api.constants.wiki;
 
+import java.awt.ComponentOrientation;
+
 
 /**
  * Configuration for <a href="http://wiki.waze.com/wiki/">Waze</a>.
@@ -21,6 +23,7 @@ public class Waze
     super(
         "en", "Waze",
         "wiki.waze.com", "/wiki/api.php", "/wiki/index.php",
-        "waze", null);
+        "waze", null,
+        ComponentOrientation.LEFT_TO_RIGHT);
   }
 }

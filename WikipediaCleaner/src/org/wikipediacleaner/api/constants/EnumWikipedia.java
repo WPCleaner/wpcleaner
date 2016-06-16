@@ -7,6 +7,7 @@
 
 package org.wikipediacleaner.api.constants;
 
+import java.awt.ComponentOrientation;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
@@ -21,67 +22,12 @@ import org.wikipediacleaner.api.APIException;
 import org.wikipediacleaner.api.constants.wiki.AbstractWikiSettings;
 import org.wikipediacleaner.api.constants.wiki.Waze;
 import org.wikipediacleaner.api.constants.wiki.WikiSkripta;
-import org.wikipediacleaner.api.constants.wiki.WikipediaAf;
-import org.wikipediacleaner.api.constants.wiki.WikipediaAls;
-import org.wikipediacleaner.api.constants.wiki.WikipediaAr;
-import org.wikipediacleaner.api.constants.wiki.WikipediaArz;
-import org.wikipediacleaner.api.constants.wiki.WikipediaBar;
-import org.wikipediacleaner.api.constants.wiki.WikipediaBn;
-import org.wikipediacleaner.api.constants.wiki.WikipediaCa;
 import org.wikipediacleaner.api.constants.wiki.WikimediaCommons;
-import org.wikipediacleaner.api.constants.wiki.WikipediaCs;
-import org.wikipediacleaner.api.constants.wiki.WikipediaCy;
-import org.wikipediacleaner.api.constants.wiki.WikipediaDa;
-import org.wikipediacleaner.api.constants.wiki.WikipediaDe;
-import org.wikipediacleaner.api.constants.wiki.WikipediaEl;
-import org.wikipediacleaner.api.constants.wiki.WikipediaEn;
-import org.wikipediacleaner.api.constants.wiki.WikipediaEo;
-import org.wikipediacleaner.api.constants.wiki.WikipediaEs;
-import org.wikipediacleaner.api.constants.wiki.WikipediaFa;
-import org.wikipediacleaner.api.constants.wiki.WikipediaFi;
-import org.wikipediacleaner.api.constants.wiki.WikipediaFr;
-import org.wikipediacleaner.api.constants.wiki.WikipediaFy;
-import org.wikipediacleaner.api.constants.wiki.WikipediaGd;
-import org.wikipediacleaner.api.constants.wiki.WikipediaGl;
-import org.wikipediacleaner.api.constants.wiki.WikipediaHe;
-import org.wikipediacleaner.api.constants.wiki.WikipediaHif;
-import org.wikipediacleaner.api.constants.wiki.WikipediaHu;
-import org.wikipediacleaner.api.constants.wiki.WikipediaId;
-import org.wikipediacleaner.api.constants.wiki.WikipediaIs;
-import org.wikipediacleaner.api.constants.wiki.WikipediaIt;
-import org.wikipediacleaner.api.constants.wiki.WikipediaJa;
-import org.wikipediacleaner.api.constants.wiki.WikipediaKo;
-import org.wikipediacleaner.api.constants.wiki.WikipediaLa;
-import org.wikipediacleaner.api.constants.wiki.WikipediaLi;
-import org.wikipediacleaner.api.constants.wiki.WikipediaLv;
-import org.wikipediacleaner.api.constants.wiki.WikipediaNds;
-import org.wikipediacleaner.api.constants.wiki.WikipediaNdsNl;
-import org.wikipediacleaner.api.constants.wiki.WikipediaNl;
-import org.wikipediacleaner.api.constants.wiki.WikipediaNo;
-import org.wikipediacleaner.api.constants.wiki.WikipediaPdc;
-import org.wikipediacleaner.api.constants.wiki.WikipediaPl;
-import org.wikipediacleaner.api.constants.wiki.WikipediaPt;
-import org.wikipediacleaner.api.constants.wiki.WikipediaRo;
-import org.wikipediacleaner.api.constants.wiki.WikipediaRu;
-import org.wikipediacleaner.api.constants.wiki.WikipediaSco;
-import org.wikipediacleaner.api.constants.wiki.WikipediaSimple;
-import org.wikipediacleaner.api.constants.wiki.WikipediaSk;
-import org.wikipediacleaner.api.constants.wiki.WikipediaSl;
-import org.wikipediacleaner.api.constants.wiki.WikipediaSq;
-import org.wikipediacleaner.api.constants.wiki.WikipediaSv;
-import org.wikipediacleaner.api.constants.wiki.WikipediaTa;
-import org.wikipediacleaner.api.constants.wiki.WikipediaTr;
-import org.wikipediacleaner.api.constants.wiki.WikipediaUk;
-import org.wikipediacleaner.api.constants.wiki.WikipediaUr;
-import org.wikipediacleaner.api.constants.wiki.WikipediaVi;
-import org.wikipediacleaner.api.constants.wiki.WikipediaYi;
-import org.wikipediacleaner.api.constants.wiki.WikipediaZh;
-import org.wikipediacleaner.api.constants.wiki.WikiquoteCa;
-import org.wikipediacleaner.api.constants.wiki.WikisourceFr;
-import org.wikipediacleaner.api.constants.wiki.WikiversityFr;
-import org.wikipediacleaner.api.constants.wiki.WiktionaryEn;
-import org.wikipediacleaner.api.constants.wiki.WiktionaryFr;
-import org.wikipediacleaner.api.constants.wiki.WiktionarySv;
+import org.wikipediacleaner.api.constants.wiki.Wikipedia;
+import org.wikipediacleaner.api.constants.wiki.Wikiquote;
+import org.wikipediacleaner.api.constants.wiki.Wikisource;
+import org.wikipediacleaner.api.constants.wiki.Wikiversity;
+import org.wikipediacleaner.api.constants.wiki.Wiktionary;
 import org.wikipediacleaner.api.data.DataManager;
 import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.Page;
@@ -102,74 +48,76 @@ public enum EnumWikipedia {
    * For each Wikipedia, a configuration object is required.
    */
 
-  AF(new WikipediaAf()),
-  ALS(new WikipediaAls()),
-  AR(new WikipediaAr()),
-  ARZ(new WikipediaArz()),
-  BAR(new WikipediaBar()),
-  BN(new WikipediaBn()),
-  CA(new WikipediaCa()),
-  CS(new WikipediaCs()),
-  CY(new WikipediaCy()),
-  DA(new WikipediaDa()),
-  DE(new WikipediaDe()),
-  EL(new WikipediaEl()),
-  EN(new WikipediaEn()),
-  EO(new WikipediaEo()),
-  ES(new WikipediaEs()),
-  FA(new WikipediaFa()),
-  FI(new WikipediaFi()),
-  FR(new WikipediaFr()),
-  FY(new WikipediaFy()),
-  GD(new WikipediaGd()),
-  GL(new WikipediaGl()),
-  HE(new WikipediaHe()),
-  HIF(new WikipediaHif()),
-  HU(new WikipediaHu()),
-  ID(new WikipediaId()),
-  IS(new WikipediaIs()),
-  IT(new WikipediaIt()),
-  JA(new WikipediaJa()),
-  Ko(new WikipediaKo()),
-  LA(new WikipediaLa()),
-  LI(new WikipediaLi()),
-  LV(new WikipediaLv()),
-  NDS(new WikipediaNds()),
-  NDS_NL(new WikipediaNdsNl()),
-  NL(new WikipediaNl()),
-  NO(new WikipediaNo()),
-  PDC(new WikipediaPdc()),
-  PL(new WikipediaPl()),
-  PT(new WikipediaPt()),
-  RO(new WikipediaRo()),
-  RU(new WikipediaRu()),
-  SCO(new WikipediaSco()),
-  SIMPLE(new WikipediaSimple()),
-  SK(new WikipediaSk()),
-  SL(new WikipediaSl()),
-  SQ(new WikipediaSq()),
-  SV(new WikipediaSv()),
-  TA(new WikipediaTa()),
-  TR(new WikipediaTr()),
-  UK(new WikipediaUk()),
-  UR(new WikipediaUr()),
-  VI(new WikipediaVi()),
-  YI(new WikipediaYi()),
-  ZH(new WikipediaZh()),
+  AF(new Wikipedia("af", "Afrikaans Wikipedia")),
+  ALS(new Wikipedia("als", "Alemannisch Wikipedia")),
+  AR(new Wikipedia("ar", "Arabic Wikipedia", ComponentOrientation.RIGHT_TO_LEFT)),
+  ARZ(new Wikipedia("arz", "Egyptian Arabic Wikipedia", ComponentOrientation.RIGHT_TO_LEFT)),
+  BAR(new Wikipedia("bar", "Boarich Wikipedia")),
+  BN(new Wikipedia("bn", "Bengali Wikipedia")),
+  CA(new Wikipedia("ca", "Viquipèdia en català")),
+  CS(new Wikipedia("cs", "Czech Wikipedia")),
+  CY(new Wikipedia("cy", "Welsh Wikipedia")),
+  DA(new Wikipedia("da", "Danish Wikipedia")),
+  DE(new Wikipedia("de", "Deutschsprachige Wikipedia")),
+  EL(new Wikipedia("el", "Greek Wikipedia")),
+  EN(new Wikipedia("en", "English Wikipedia")),
+  EO(new Wikipedia("eo", "Esperanto Wikipedia")),
+  ES(new Wikipedia("es", "Wikipedia en español")),
+  FA(new Wikipedia("fa", "Persian Wikipedia", ComponentOrientation.RIGHT_TO_LEFT)),
+  FI(new Wikipedia("fi", "Finnish Wikipedia")),
+  FR(new Wikipedia("fr", "Wikipédia en Français")),
+  FY(new Wikipedia("fy", "West Frisian Wikipedia")),
+  GD(new Wikipedia("gd", "Scottish Gaelic Wikipedia")),
+  GL(new Wikipedia("gl", "Galipedia")),
+  HE(new Wikipedia("he", "ויקיפדיה העברית", ComponentOrientation.RIGHT_TO_LEFT)),
+  HIF(new Wikipedia("hif", "Fiji Hindi Wikipedia")),
+  HU(new Wikipedia("hu", "Magyar Wikipedia")),
+  ID(new Wikipedia("id", "Indonesian Wikipedia")),
+  IS(new Wikipedia("is", "Wikipedia á íslensku")),
+  IT(new Wikipedia("it", "Italian Wikipedia")),
+  JA(new Wikipedia("ja", "Japanese Wikipedia")),
+  Ko(new Wikipedia("ko", "Korean Wikipedia")),
+  LA(new Wikipedia("la", "Latin Wikipedia")),
+  LI(new Wikipedia("li", "Limburgish Wikipedia")),
+  LV(new Wikipedia("lv", "Latvian Wikipedia")),
+  NDS(new Wikipedia("nds", "Low Saxon Wikipedia")),
+  NDS_NL(new Wikipedia("nds-nl", "Dutch Low Saxon Wikipedia")),
+  NL(new Wikipedia("nl", "Nederlandstalige Wikipedia")),
+  NO(new Wikipedia("no", "Norsk Wikipedia på bokmål og riksmål")),
+  PDC(new Wikipedia("pdc", "Pennsylvania German Wikipedia")),
+  PL(new Wikipedia("pl", "Polska Wikipedia")),
+  PT(new Wikipedia("pt", "Wikipédia em português")),
+  RO(new Wikipedia("ro", "Romanian Wikipedia")),
+  RU(new Wikipedia("ru", "Русская Википедия")),
+  SCO(new Wikipedia("sco", "Scots wikipedia")),
+  SIMPLE(new Wikipedia("simple", "Simple English Wikipedia")),
+  SK(new Wikipedia("sk", "Slovak Wikipedia")),
+  SL(new Wikipedia("sl", "Slovenska Wikipedija")),
+  SQ(new Wikipedia("sq", "Albanian Wikipedia")),
+  SV(new Wikipedia("sv", "Swedish Wikipedia")),
+  TA(new Wikipedia("ta", "தமிழ் விக்கிப்பீடியா")),
+  TR(new Wikipedia("tr", "Turkish Wikipedia")),
+  UK(new Wikipedia("uk", "Ukrainian Wikipedia")),
+  UR(new Wikipedia("ur", "Urdu Wikipedia", ComponentOrientation.RIGHT_TO_LEFT)),
+  VI(new Wikipedia("vi", "Vietnamese Wikipedia")),
+  YI(new Wikipedia("yi", "Yiddish Wikipedia", ComponentOrientation.RIGHT_TO_LEFT)),
+  ZH(new Wikipedia("zh", "维基百科")),
   COMMONS(new WikimediaCommons()),
 
-  WIKTIONARY_EN(new WiktionaryEn()),
-  WIKTIONARY_FR(new WiktionaryFr()),
-  WIKTIONARY_SV(new WiktionarySv()),
+  WIKTIONARY_EN(new Wiktionary("en", "English Wiktionary")),
+  WIKTIONARY_FR(new Wiktionary("fr", "Wiktionnaire en français")),
+  WIKTIONARY_SV(new Wiktionary("sv", "Swedish Wiktionary")),
 
-  WIKIQUOTE_CA(new WikiquoteCa()),
+  WIKIQUOTE_CA(new Wikiquote("ca", "Viquidites")),
 
-  WIKISOURCE_FR(new WikisourceFr()),
+  WIKISOURCE_FR(new Wikisource("fr", "Wikisource en français")),
 
-  WIKIVERSITY_FR(new WikiversityFr()),
+  WIKIVERSITY_FR(new Wikiversity("fr", "Wikiversité en français")),
   
   WAZE(new Waze()),
-  WIKISKRIPTA(new WikiSkripta());
+  WIKISKRIPTA(new WikiSkripta()),
+  
+  TEST(new Wikipedia("test", "Test Wikipedia"));
 
   private final AbstractWikiSettings settings;
 

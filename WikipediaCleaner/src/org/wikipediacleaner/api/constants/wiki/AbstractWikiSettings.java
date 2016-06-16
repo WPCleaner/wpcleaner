@@ -22,11 +22,16 @@ public abstract class AbstractWikiSettings {
    * @param name Name.
    * @param host Host.
    * @param apiPath Path for the API, relative to the host URL.
+   * @param indexPath Path for index.php, relative to the host URL.
+   * @param code Code for the wiki.
+   * @param codeCheckWiki CW code for the wiki.
+   * @param orientation Text orientation.
    */
   public AbstractWikiSettings(
       String language, String name,
       String host, String apiPath, String indexPath,
-      String code, String codeCheckWiki) {
+      String code, String codeCheckWiki,
+      ComponentOrientation orientation) {
     this.language = language;
     this.name = name;
     this.host = host;
@@ -40,6 +45,7 @@ public abstract class AbstractWikiSettings {
     this.securedIndexUrl = securedHostUrl + indexPath;
     this.code = code;
     this.codeCheckWiki = codeCheckWiki;
+    this.orientation = orientation;
   }
 
   /** Language */
@@ -172,11 +178,14 @@ public abstract class AbstractWikiSettings {
     return codeCheckWiki;
   }
 
+  /** Text orientation. */
+  private final ComponentOrientation orientation;
+
   /**
    * @return Component orientation.
    */
   public ComponentOrientation getComponentOrientation() {
-    return ComponentOrientation.LEFT_TO_RIGHT;
+    return orientation;
   }
 
   /**

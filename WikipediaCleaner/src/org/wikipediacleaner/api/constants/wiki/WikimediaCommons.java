@@ -7,6 +7,8 @@
 
 package org.wikipediacleaner.api.constants.wiki;
 
+import java.awt.ComponentOrientation;
+
 
 /**
  * Configuration for <a href="http://commons.wikimedia.org/w/index.php">Commons wikimedia</a>.
@@ -20,6 +22,7 @@ public final class WikimediaCommons extends AbstractWikiSettings {
     super(
         "commons", "Commons",
         "commons.wikimedia.org", "/w/api.php", "/w/index.php",
-        "commons", "commons");
+        "commons", "commons",
+        ComponentOrientation.LEFT_TO_RIGHT);
   }
 }

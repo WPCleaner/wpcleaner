@@ -7,23 +7,38 @@
 
 package org.wikipediacleaner.api.constants.wiki;
 
+import java.awt.ComponentOrientation;
+
 
 /**
- * Abstract base class for Wiktionary configuration.
+ * Class for Wiktionary configuration.
  */
-public abstract class AbstractWiktionarySettings
+public class Wiktionary
   extends AbstractWikiSettings {
 
   /**
    * @param language Language.
    * @param name Name.
    */
-  protected AbstractWiktionarySettings(
+  public Wiktionary(
       String language,
       String name) {
+    this(language, name, ComponentOrientation.LEFT_TO_RIGHT);
+  }
+
+  /**
+   * @param language Language.
+   * @param name Name.
+   * @param orientation Text orientation.
+   */
+  public Wiktionary(
+      String language,
+      String name,
+      ComponentOrientation orientation) {
     super(
         language, name,
         language + ".wiktionary.org", "/w/api.php", "/w/index.php",
-        "wikt:" + language, language + "wiktionary");
+        "wikt:" + language, language + "wiktionary",
+        orientation);
   }
 }

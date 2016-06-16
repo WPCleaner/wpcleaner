@@ -7,23 +7,38 @@
 
 package org.wikipediacleaner.api.constants.wiki;
 
+import java.awt.ComponentOrientation;
+
 
 /**
- * Abstract base class for Wikiquote configuration.
+ * Class for Wikiquote configuration.
  */
-public abstract class AbstractWikiquoteSettings
+public class Wikiquote
   extends AbstractWikiSettings {
 
   /**
    * @param language Language.
    * @param name Name.
    */
-  protected AbstractWikiquoteSettings(
+  public Wikiquote(
       String language,
       String name) {
+    this(language, name, ComponentOrientation.LEFT_TO_RIGHT);
+  }
+
+  /**
+   * @param language Language.
+   * @param name Name.
+   * @param orientation Text orientation.
+   */
+  public Wikiquote(
+      String language,
+      String name,
+      ComponentOrientation orientation) {
     super(
         language, name,
         language + ".wikiquote.org", "/w/api.php", "/w/index.php",
-        "q:" + language, language + "wikiquote");
+        "q:" + language, language + "wikiquote",
+        orientation);
   }
 }
