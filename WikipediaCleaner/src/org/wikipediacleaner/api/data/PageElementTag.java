@@ -324,9 +324,8 @@ public class PageElementTag extends PageElement {
       }
     } else {
       while ((endValueIndex < maxLength) &&
-             (paramString.charAt(endValueIndex) != ' ') &&
-             (paramString.charAt(endValueIndex) != '"')) {
-        if (paramString.charAt(endValueIndex) == '<') {
+             (paramString.charAt(endValueIndex) != ' ')) {
+        if ("<\"=".indexOf(paramString.charAt(endValueIndex)) >= 0) {
           return false;
         }
         endValueIndex++;
