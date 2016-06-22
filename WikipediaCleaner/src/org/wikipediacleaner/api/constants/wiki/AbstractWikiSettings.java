@@ -10,6 +10,8 @@ package org.wikipediacleaner.api.constants.wiki;
 import java.awt.ComponentOrientation;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -100,6 +102,18 @@ public abstract class AbstractWikiSettings {
       return securedHostUrl;
     }
     return hostUrl;
+  }
+
+  public List<String> getArticleDirectPath() {
+    List<String> result = new ArrayList<>();
+    result.add(host + "/wiki/$1");
+    return result;
+  }
+
+  public List<String> getArticleParamPath() {
+    List<String> result = new ArrayList<>();
+    result.add(host + "/w/index.php");
+    return result;
   }
 
   /** Path for the API, relative to the host URL */

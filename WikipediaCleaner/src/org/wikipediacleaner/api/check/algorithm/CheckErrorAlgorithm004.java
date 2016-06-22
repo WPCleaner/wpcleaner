@@ -11,7 +11,7 @@ import java.util.Collection;
 import java.util.List;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
-import org.wikipediacleaner.api.constants.WikiConfiguration;
+import org.wikipediacleaner.api.constants.ArticleUrl;
 import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementExternalLink;
@@ -50,7 +50,6 @@ public class CheckErrorAlgorithm004 extends CheckErrorAlgorithmBase {
     }
 
     // Check each tag
-    WikiConfiguration wikiConf = analysis.getWikiConfiguration();
     List<PageElementTag> tags = analysis.getTags(PageElementTag.TAG_HTML_A);
     if ((tags == null) || (tags.isEmpty())) {
       return false;
@@ -99,11 +98,19 @@ public class CheckErrorAlgorithm004 extends CheckErrorAlgorithmBase {
   
           // Check for link with internal link as href
           if (hrefValue != null) {
-            String article = wikiConf.isArticleUrl(hrefValue);
-            if ((article != null) && (article.length() > 0)) {
-              errorResult.addReplacement(
-                  PageElementInternalLink.createInternalLink(article, internalText),
-                  true);
+            ArticleUrl articleUrl = ArticleUrl.isArticleUrl(analysis.getWikipedia(), hrefValue);
+            if (articleUrl != null) {
+              String article = articleUrl.getTitle();
+              if ((article != null) && (article.length() > 0)) {
+                boolean automatic = true;
+                if ((articleUrl.getAttributes() != null) ||
+                    (articleUrl.getFragment() != null)) {
+                  automatic = false;
+                }
+                errorResult.addReplacement(
+                    PageElementInternalLink.createInternalLink(article, internalText),
+                    automatic);
+              }
             }
           }
   

@@ -42,12 +42,8 @@ import org.wikipediacleaner.utils.ConfigurationValueBoolean;
  */
 public enum EnumWikipedia {
 
-  /*
-   * List of Wikipedia WPCleaner is able to deal with.
-   * 
-   * For each Wikipedia, a configuration object is required.
-   */
-
+  // List of wikis WPCleaner is able to deal with.
+  // For each wiki, a configuration object is required.
   AF(new Wikipedia("af", "Afrikaans Wikipedia")),
   ALS(new Wikipedia("als", "Alemannisch Wikipedia")),
   AR(new Wikipedia("ar", "Arabic Wikipedia", ComponentOrientation.RIGHT_TO_LEFT)),
@@ -119,21 +115,8 @@ public enum EnumWikipedia {
   
   TEST(new Wikipedia("test", "Test Wikipedia"));
 
-  private final AbstractWikiSettings settings;
-
-  private final String configPage;
   private Set<String> disambiguationPages;
   private List<Page> disambiguationTemplates;
-
-  /**
-   * Wiki configuration.
-   */
-  private final WikiConfiguration wikiConfiguration;
-
-  /**
-   * WPCleaner configuration.
-   */
-  private final WPCConfiguration WPCConfiguration;
 
   /**
    * Configuration for Check Wiki project.
@@ -206,6 +189,22 @@ public enum EnumWikipedia {
     return result;
   }
 
+  // =========================================================================
+  // Configuration
+  // =========================================================================
+
+  /** Wiki settings */
+  private final AbstractWikiSettings settings;
+
+  /** Configuration page name */
+  private final String configPage;
+
+  /** Wiki configuration */
+  private final WikiConfiguration wikiConfiguration;
+
+  /** WPCleaner configuration */
+  private final WPCConfiguration WPCConfiguration;
+
   /**
    * @return Wiki settings.
    */
@@ -218,6 +217,20 @@ public enum EnumWikipedia {
    */
   public WikiConfiguration getWikiConfiguration() {
     return wikiConfiguration;
+  }
+
+  /**
+   * @return WPCleaner configuration.
+   */
+  public WPCConfiguration getConfiguration() {
+    return WPCConfiguration;
+  }
+
+  /**
+   * @return Check Wiki project configuration.
+   */
+  public CWConfiguration getCWConfiguration() {
+    return CWConfiguration;
   }
 
   /**
@@ -237,9 +250,9 @@ public enum EnumWikipedia {
     return userPrefix + ":" + userName + "/" + configPage;
   }
 
-  /* ========================================================================= */
-  /* User management                                                           */
-  /* ========================================================================= */
+  // =========================================================================
+  // User management
+  // =========================================================================
 
   /**
    * Connection information.
@@ -298,6 +311,10 @@ public enum EnumWikipedia {
         Version.PROGRAM, Version.VERSION,
         showProgram, link, tag);
   }
+
+  // =========================================================================
+  // Disambiguation
+  // =========================================================================
 
   /**
    * Construct list of disambiguation pages.
@@ -486,21 +503,12 @@ public enum EnumWikipedia {
     return disambiguationTemplates;
   }
 
-  /**
-   * @return WPCleaner configuration.
-   */
-  public WPCConfiguration getConfiguration() {
-    return WPCConfiguration;
-  }
+  // =========================================================================
+  // Tools
+  // =========================================================================
 
   /**
-   * @return Check Wiki project configuration.
-   */
-  public CWConfiguration getCWConfiguration() {
-    return CWConfiguration;
-  }
-
-  /* (non-Javadoc)
+   * @return Description of the settings.
    * @see java.lang.Enum#toString()
    */
   @Override

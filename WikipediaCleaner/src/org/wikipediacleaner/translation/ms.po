@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2016-06-15 17:43+0200\n"
+"POT-Creation-Date: 2016-06-22 21:37+0200\n"
 "PO-Revision-Date: 2013-06-14 16:35+0000\n"
 "Last-Translator: abuyop <Unknown>\n"
 "Language-Team: Malay <ms@li.org>\n"
@@ -112,21 +112,21 @@ msgstr ""
 msgid "Fixing spelling or typography based on a list of suggestions."
 msgstr ""
 
-#: org/wikipediacleaner/api/MediaWiki.java:214
+#: org/wikipediacleaner/api/MediaWiki.java:215
 #, java-format
 msgid "Page {0}:"
 msgstr ""
 
-#: org/wikipediacleaner/api/MediaWiki.java:265
+#: org/wikipediacleaner/api/MediaWiki.java:267
 #, java-format
 msgid "Updating page {0}"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/CheckError.java:372
+#: org/wikipediacleaner/api/check/CheckError.java:400
 msgid "No available description"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/CheckError.java:377
+#: org/wikipediacleaner/api/check/CheckError.java:405
 #, java-format
 msgid "Error n°{0} ({1} - {2}) - {3}"
 msgstr ""
@@ -644,22 +644,21 @@ msgstr ""
 msgid "A list of templates that can be used to replace &lt;center&gt; tags"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm090.java:47
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm091.java:49
-msgid "Convert them to internal links"
-msgstr ""
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm090.java:168
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm090.java:202
 msgid "What text should be displayed by the link?"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm090.java:173
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm090.java:207
 msgid "Convert into an internal link"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm090.java:256
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm090.java:281
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm091.java:349
 msgid "Templates using external links"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm091.java:49
+msgid "Convert them to internal links"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm091.java:350
@@ -846,7 +845,7 @@ msgstr ""
 msgid "A list of templates resulting in the inclusion of a table of contents"
 msgstr ""
 
-#: org/wikipediacleaner/api/constants/CWConfiguration.java:79
+#: org/wikipediacleaner/api/constants/CWConfiguration.java:80
 #, java-format
 msgid "Fixed using {0}"
 msgstr ""
@@ -1994,11 +1993,11 @@ msgid "Disambiguation analysis"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:1017
-#: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiContentPanel.java:666
+#: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiContentPanel.java:651
 msgid "A comment is required for sending the page."
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/OnePageWindow.java:1069
+#: org/wikipediacleaner/gui/swing/OnePageWindow.java:1070
 #, java-format
 msgid "Sending {0}"
 msgstr ""
@@ -2082,7 +2081,7 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/worker/LoginWorker.java:90
 #: org/wikipediacleaner/gui/swing/worker/NewSectionWorker.java:62
 #: org/wikipediacleaner/gui/swing/worker/RandomPageWorker.java:49
-#: org/wikipediacleaner/gui/swing/worker/SendWorker.java:168
+#: org/wikipediacleaner/gui/swing/worker/SendWorker.java:169
 #: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:88
 msgid "Retrieving MediaWiki API"
 msgstr ""
@@ -2361,26 +2360,26 @@ msgstr ""
 msgid "Analyzing page {0}"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/bot/AutomaticCWWorker.java:237
+#: org/wikipediacleaner/gui/swing/bot/AutomaticCWWorker.java:246
 #, java-format
 msgid "Fixing page {0}"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/bot/AutomaticCWWorker.java:279
+#: org/wikipediacleaner/gui/swing/bot/AutomaticCWWorker.java:289
 #, java-format
 msgid "{0} page has been modified"
 msgid_plural "{0} pages have been modified"
 msgstr[0] ""
 msgstr[1] ""
 
-#: org/wikipediacleaner/gui/swing/bot/AutomaticCWWorker.java:284
+#: org/wikipediacleaner/gui/swing/bot/AutomaticCWWorker.java:294
 #, java-format
 msgid "{0} page has been marked as fixed for the selected algorithms"
 msgid_plural "{0} pages have been marked as fixed for the selected algorithms"
 msgstr[0] ""
 msgstr[1] ""
 
-#: org/wikipediacleaner/gui/swing/bot/AutomaticCWWorker.java:289
+#: org/wikipediacleaner/gui/swing/bot/AutomaticCWWorker.java:299
 #, java-format
 msgid "{0} page has been marked as fixed for other algorithms"
 msgid_plural "{0} pages have been marked as fixed for other algorithms"
@@ -3709,7 +3708,7 @@ msgstr ""
 msgid "Getting random page"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/worker/SendWorker.java:174
+#: org/wikipediacleaner/gui/swing/worker/SendWorker.java:175
 msgid "Updating page contents"
 msgstr ""
 

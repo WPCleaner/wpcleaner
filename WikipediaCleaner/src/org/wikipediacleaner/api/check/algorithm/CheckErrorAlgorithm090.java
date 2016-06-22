@@ -13,17 +13,19 @@ import java.util.Map;
 
 import org.wikipediacleaner.api.check.AddTextActionProvider;
 import org.wikipediacleaner.api.check.CheckErrorResult;
+import org.wikipediacleaner.api.constants.ArticleUrl;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.constants.WPCConfiguration;
-import org.wikipediacleaner.api.constants.WikiConfiguration;
 import org.wikipediacleaner.api.data.DataManager;
+import org.wikipediacleaner.api.data.MagicWord;
 import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementExternalLink;
+import org.wikipediacleaner.api.data.PageElementImage;
+import org.wikipediacleaner.api.data.PageElementImage.Parameter;
 import org.wikipediacleaner.api.data.PageElementInternalLink;
 import org.wikipediacleaner.api.data.PageElementTemplate;
-import org.wikipediacleaner.gui.swing.component.MWPane;
 import org.wikipediacleaner.i18n.GT;
 import org.wikipediacleaner.utils.StringChecker;
 import org.wikipediacleaner.utils.StringCheckerUnauthorizedCharacters;
@@ -39,13 +41,6 @@ public class CheckErrorAlgorithm090 extends CheckErrorAlgorithmBase {
    * String checker for text inputed by user.
    */
   private final StringChecker checker;
-
-  /**
-   * Possible global fixes.
-   */
-  private final static String[] globalFixes = new String[] {
-    GT._("Convert them to internal links"),
-  };
 
   public CheckErrorAlgorithm090() {
     super("Internal link written as external link");
@@ -94,6 +89,7 @@ public class CheckErrorAlgorithm090 extends CheckErrorAlgorithmBase {
     if (templates != null) {
       linkTemplates = WPCConfiguration.convertPropertyToStringList(templates);
     }
+    Namespace imageNamespace = analysis.getWikiConfiguration().getNamespace(Namespace.IMAGE);
 
     // Analyze each external link
     boolean result = false;
@@ -102,16 +98,53 @@ public class CheckErrorAlgorithm090 extends CheckErrorAlgorithmBase {
       return result;
     }
     EnumWikipedia wiki = analysis.getWikipedia();
-    WikiConfiguration wikiConf = wiki.getWikiConfiguration();
     String contents = analysis.getContents();
     for (PageElementExternalLink link : links) {
-      String article = wikiConf.isArticleUrl(link.getLink());
-      if ((article != null) &&
-          (article.length() > 0)) {
+      ArticleUrl articleUrl = ArticleUrl.isArticleUrl(wiki, link.getLink());
+      if (articleUrl != null) {
         if (errors == null) {
           return true;
         }
         result = true;
+        boolean errorReported = false;
+        String article = articleUrl.getTitle();
+
+        // Check if link is in image as a link attribute
+        PageElementImage image = analysis.isInImage(link.getBeginIndex());
+        if ((image != null) && (!errorReported)) {
+          Parameter imgParameter = image.getParameter(MagicWord.IMG_LINK);
+          if (imgParameter != null) {
+            int beginParam = image.getBeginIndex() + imgParameter.getBeginOffset();
+            int endParam = image.getBeginIndex() + imgParameter.getEndOffset();
+            if ((beginParam < link.getBeginIndex()) &&
+                (endParam > link.getBeginIndex())) {
+
+              // Decide if replacement can be automatic
+              boolean automatic = true;
+              if ((articleUrl.getAttributes() != null) ||
+                  (articleUrl.getFragment() != null)) {
+                automatic = false;
+              }
+              if (link.hasSquare()) {
+                automatic = false;
+              }
+              int colonIndex = article.indexOf(':');
+              if ((colonIndex <= 0) ||
+                  (!imageNamespace.isPossibleName(article.substring(0, colonIndex).trim())) ||
+                  (!Page.areSameTitle(article.substring(colonIndex + 1), image.getImage()))) {
+                automatic = false;
+              }
+
+              // Report error
+              CheckErrorResult errorResult = createCheckErrorResult(
+                  analysis, beginParam - 1, endParam);
+              errorResult.addReplacement("", automatic);
+              errors.add(errorResult);
+              errorReported = true;
+            }
+          }
+        }
+
         int beginIndex = link.getBeginIndex();
         int endIndex = link.getEndIndex();
         if (link.hasSquare()) {
@@ -141,40 +174,42 @@ public class CheckErrorAlgorithm090 extends CheckErrorAlgorithmBase {
           }
         }
 
-        CheckErrorResult errorResult = createCheckErrorResult(
-            analysis, beginIndex, endIndex);
-        if (link.getLink().indexOf('?') < 0) {
-          Page articlePage = DataManager.getPage(analysis.getWikipedia(), article, null, null, null);
-          boolean needColon = false;
-          if (articlePage.getNamespace() != null) {
-            int ns = articlePage.getNamespace().intValue();
-            if (ns % 2 == 0) {
-              if ((ns != Namespace.MAIN) &&
-                  (ns != Namespace.USER) &&
-                  (ns != Namespace.HELP) &&
-                  (ns != Namespace.MEDIAWIKI) &&
-                  (ns != Namespace.TEMPLATE) &&
-                  (ns != Namespace.WIKIPEDIA)) {
-                needColon = true;
+        if (!errorReported) {
+          CheckErrorResult errorResult = createCheckErrorResult(
+              analysis, beginIndex, endIndex);
+          if (link.getLink().indexOf('?') < 0) {
+            Page articlePage = DataManager.getPage(analysis.getWikipedia(), article, null, null, null);
+            boolean needColon = false;
+            if (articlePage.getNamespace() != null) {
+              int ns = articlePage.getNamespace().intValue();
+              if (ns % 2 == 0) {
+                if ((ns != Namespace.MAIN) &&
+                    (ns != Namespace.USER) &&
+                    (ns != Namespace.HELP) &&
+                    (ns != Namespace.MEDIAWIKI) &&
+                    (ns != Namespace.TEMPLATE) &&
+                    (ns != Namespace.WIKIPEDIA)) {
+                  needColon = true;
+                }
               }
             }
+            if (text != null) {
+              errorResult.addReplacement(
+                  PageElementInternalLink.createInternalLink(
+                      (needColon ? ":" : "") + articleUrl.getTitleAndFragment(), text),
+                  true);
+            } else {
+              String question = GT._("What text should be displayed by the link?");
+              AddTextActionProvider action = new AddTextActionProvider(
+                  "[[" + (needColon ? ":" : "") + article + "|", "]]", null,
+                  question, article, checker);
+              errorResult.addPossibleAction(
+                  GT._("Convert into an internal link"),
+                  action);
+            }
           }
-          if (text != null) {
-            errorResult.addReplacement(
-                PageElementInternalLink.createInternalLink(
-                    (needColon ? ":" : "") + article, text),
-                true);
-          } else {
-            String question = GT._("What text should be displayed by the link?");
-            AddTextActionProvider action = new AddTextActionProvider(
-                "[[" + (needColon ? ":" : "") + article + "|", "]]", null,
-                question, article, checker);
-            errorResult.addPossibleAction(
-                GT._("Convert into an internal link"),
-                action);
-          }
+          errors.add(errorResult);
         }
-        errors.add(errorResult);
       }
     }
     return result;
@@ -215,6 +250,17 @@ public class CheckErrorAlgorithm090 extends CheckErrorAlgorithmBase {
   }
 
   /**
+   * Automatic fixing of all the errors in the page.
+   * 
+   * @param analysis Page analysis.
+   * @return Page contents after fix.
+   */
+  @Override
+  protected String internalAutomaticFix(PageAnalysis analysis) {
+    return fixUsingAutomaticReplacement(analysis);
+  }
+
+  /**
    * Bot fixing of all the errors in the page.
    * 
    * @param analysis Page analysis.
@@ -222,28 +268,7 @@ public class CheckErrorAlgorithm090 extends CheckErrorAlgorithmBase {
    */
   @Override
   protected String internalBotFix(PageAnalysis analysis) {
-    return fix(globalFixes[0], analysis, null);
-  }
-
-  /**
-   * @return List of possible global fixes.
-   */
-  @Override
-  public String[] getGlobalFixes() {
-    return globalFixes;
-  }
-
-  /**
-   * Fix all the errors in the page.
-   * 
-   * @param fixName Fix name (extracted from getGlobalFixes()).
-   * @param analysis Page analysis.
-   * @param textPane Text pane.
-   * @return Page contents after fix.
-   */
-  @Override
-  public String fix(String fixName, PageAnalysis analysis, MWPane textPane) {
-    return fixUsingAutomaticReplacement(analysis);
+    return fixUsingAutomaticBotReplacement(analysis);
   }
 
   /**

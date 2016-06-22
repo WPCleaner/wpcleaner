@@ -11,7 +11,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-import org.wikipediacleaner.api.HttpUtils;
 import org.wikipediacleaner.api.data.Interwiki;
 import org.wikipediacleaner.api.data.Language;
 import org.wikipediacleaner.api.data.MagicWord;
@@ -43,32 +42,17 @@ public class WikiConfiguration {
   private String script;
 
   /**
-   * Test if an URL matches an article.
-   * 
-   * @param url URL to be tested.
-   * @return Article if the URL matches an article.
-   */
-  public String isArticleUrl(String url) {
-    if ((url == null) || (server == null)) {
-      return null;
-    }
-
-    String article = HttpUtils.getArticleFromUrl(url, server + articlePath);
-    if ((article == null) && (script != null)) {
-      article = HttpUtils.getArticleFromUrl(url, server + script + "?title=$1");
-    }
-    if ((article != null) && (article.endsWith("/"))) {
-      article = article.substring(0, article.length() - 1);
-    }
-
-    return article;
-  }
-
-  /**
    * @param server Server URL (without protocol).
    */
   public void setServer(String server) {
     this.server = server;
+  }
+
+  /**
+   * @return Server URL (without protocol).
+   */
+  public String getServer() {
+    return server;
   }
 
   /**
@@ -79,10 +63,24 @@ public class WikiConfiguration {
   }
 
   /**
+   * @return Article path.
+   */
+  public String getArticlePath() {
+    return articlePath;
+  }
+
+  /**
    * @param script Script.
    */
   public void setScript(String script) {
     this.script = script;
+  }
+
+  /**
+   * @return Script.
+   */
+  public String getScript() {
+    return script;
   }
 
   // ==========================================================================

@@ -281,7 +281,7 @@ public class HttpUtils {
    * @param encodings Characters sets.
    * @return Decoded string.
    */
-  private static String parseEncodedString(String segment, Charset... encodings) {
+  public static String parseEncodedString(String segment, Charset... encodings) {
     if ((segment == null) || (segment.indexOf('%') < 0)) {
       return segment;
     }
