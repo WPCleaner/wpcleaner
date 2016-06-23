@@ -22,6 +22,7 @@ import org.wikipediacleaner.utils.TextProvider;
 public class AddInternalLinkActionProvider implements ActionProvider {
 
   private final String article;
+  private final String anchor;
   private final String prefix;
   private final String suffix;
   private final TextProvider textProvider;
@@ -33,6 +34,7 @@ public class AddInternalLinkActionProvider implements ActionProvider {
 
   /**
    * @param article Article title.
+   * @param anchor Anchor.
    * @param prefix Prefix.
    * @param suffix Suffix.
    * @param textProvider Optional text provider.
@@ -40,14 +42,15 @@ public class AddInternalLinkActionProvider implements ActionProvider {
    * @param checker String checker to verify the value.
    */
   public AddInternalLinkActionProvider(
-      String article, String prefix, String suffix,
+      String article, String anchor, String prefix, String suffix,
       TextProvider textProvider, String question,
       StringChecker checker) {
-    this(article, prefix, suffix, textProvider, question, "", checker);
+    this(article, anchor, prefix, suffix, textProvider, question, "", checker);
   }
 
   /**
    * @param article Article title.
+   * @param anchor Anchor.
    * @param prefix Prefix.
    * @param suffix Suffix.
    * @param textProvider Optional text provider.
@@ -56,16 +59,18 @@ public class AddInternalLinkActionProvider implements ActionProvider {
    * @param checker String checker to verify the value.
    */
   public AddInternalLinkActionProvider(
-      String article, String prefix, String suffix, TextProvider textProvider,
+      String article, String anchor, String prefix, String suffix,
+      TextProvider textProvider,
       String question, String defaultValue,
       StringChecker checker) {
     this(
-        article, prefix, suffix, textProvider, question,
+        article, anchor, prefix, suffix, textProvider, question,
         null, false, defaultValue, checker);
   }
 
   /**
    * @param article Article title.
+   * @param anchor Anchor.
    * @param prefix Prefix.
    * @param suffix Suffix.
    * @param textProvider Optional text provider.
@@ -74,11 +79,13 @@ public class AddInternalLinkActionProvider implements ActionProvider {
    * @param checker String checker to verify the value.
    */
   public AddInternalLinkActionProvider(
-      String article, String prefix, String suffix, TextProvider textProvider,
+      String article, String anchor, String prefix, String suffix,
+      TextProvider textProvider,
       String question,
       String[] possibleValues, boolean onlyList, String defaultValue,
       StringChecker checker) {
     this.article = article;
+    this.anchor = anchor;
     this.prefix = prefix;
     this.suffix = suffix;
     this.textProvider = textProvider;
@@ -95,7 +102,7 @@ public class AddInternalLinkActionProvider implements ActionProvider {
   @Override
   public Action getAction(Element element, JTextPane textPane) {
     return new AddInternalLinkAction(
-        article, prefix, suffix, textProvider, question,
+        article, anchor, prefix, suffix, textProvider, question,
         possibleValues, onlyList, defaultValue,
         checker,
         element, textPane);

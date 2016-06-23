@@ -30,6 +30,7 @@ import org.wikipediacleaner.utils.TextProvider;
 public class AddInternalLinkAction extends TextAction {
 
   private final String article;
+  private final String anchor;
   private final String prefix;
   private final String suffix;
   private final TextProvider textProvider;
@@ -43,6 +44,7 @@ public class AddInternalLinkAction extends TextAction {
 
   public AddInternalLinkAction(
       String article,
+      String anchor,
       String prefix,
       String suffix,
       TextProvider textProvider,
@@ -52,13 +54,14 @@ public class AddInternalLinkAction extends TextAction {
       Element element,
       JTextPane textPane) {
     this(
-        article, prefix, suffix, textProvider, question,
+        article, anchor, prefix, suffix, textProvider, question,
         null, false, defaultValue,
         checker, element, textPane);
   }
 
   public AddInternalLinkAction(
       String article,
+      String anchor,
       String prefix,
       String suffix,
       TextProvider textProvider,
@@ -71,6 +74,7 @@ public class AddInternalLinkAction extends TextAction {
       JTextPane textPane) {
     super("AddInternalLink");
     this.article = article;
+    this.anchor = anchor;
     this.prefix = prefix;
     this.suffix = suffix;
     this.textProvider = textProvider;
@@ -133,7 +137,7 @@ public class AddInternalLinkAction extends TextAction {
       if (prefix != null) {
         newText.append(prefix);
       }
-      newText.append(PageElementInternalLink.createInternalLink(article, value));
+      newText.append(PageElementInternalLink.createInternalLink(article, anchor, value));
       if (suffix != null) {
         newText.append(suffix);
       }

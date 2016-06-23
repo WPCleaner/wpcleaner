@@ -140,7 +140,7 @@ public class ArticleUrl {
     StringBuilder buffer = new StringBuilder();
     buffer.append("//");
     buffer.append(uri.getAuthority());
-    buffer.append(HttpUtils.parseEncodedString(uri.getRawPath(), utf8Charset, iso88591Charset));
+    buffer.append(HttpUtils.parseEncodedString(uri.getPath(), utf8Charset, iso88591Charset));
     int paramIndex = base.indexOf("$1");
     if (paramIndex < 0) {
       return null;

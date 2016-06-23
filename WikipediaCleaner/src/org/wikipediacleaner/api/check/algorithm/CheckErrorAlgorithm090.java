@@ -158,6 +158,7 @@ public class CheckErrorAlgorithm090 extends CheckErrorAlgorithmBase {
         String text = link.getText();
 
         // Check if link is in template
+        boolean isInTemplate = false;
         if (linkTemplates != null) {
           PageElementTemplate template = analysis.isInTemplate(beginIndex);
           if (template != null) {
@@ -169,6 +170,7 @@ public class CheckErrorAlgorithm090 extends CheckErrorAlgorithmBase {
                 text = template.getParameterValue(elements[2]);
                 beginIndex = template.getBeginIndex();
                 endIndex = template.getEndIndex();
+                isInTemplate = true;
               }
             }
           }
@@ -177,37 +179,49 @@ public class CheckErrorAlgorithm090 extends CheckErrorAlgorithmBase {
         if (!errorReported) {
           CheckErrorResult errorResult = createCheckErrorResult(
               analysis, beginIndex, endIndex);
-          if (link.getLink().indexOf('?') < 0) {
-            Page articlePage = DataManager.getPage(analysis.getWikipedia(), article, null, null, null);
-            boolean needColon = false;
-            if (articlePage.getNamespace() != null) {
-              int ns = articlePage.getNamespace().intValue();
-              if (ns % 2 == 0) {
-                if ((ns != Namespace.MAIN) &&
-                    (ns != Namespace.USER) &&
-                    (ns != Namespace.HELP) &&
-                    (ns != Namespace.MEDIAWIKI) &&
-                    (ns != Namespace.TEMPLATE) &&
-                    (ns != Namespace.WIKIPEDIA)) {
-                  needColon = true;
+
+          Page articlePage = DataManager.getPage(analysis.getWikipedia(), article, null, null, null);
+          boolean needColon = false;
+          if (articlePage.getNamespace() != null) {
+            int ns = articlePage.getNamespace().intValue();
+            if (ns % 2 == 0) {
+              if ((ns != Namespace.MAIN) &&
+                  (ns != Namespace.USER) &&
+                  (ns != Namespace.HELP) &&
+                  (ns != Namespace.MEDIAWIKI) &&
+                  (ns != Namespace.TEMPLATE) &&
+                  (ns != Namespace.WIKIPEDIA)) {
+                needColon = true;
+              }
+            }
+          }
+          if (text != null) {
+            boolean automatic = !isInTemplate;
+            if (articleUrl.getAttributes() != null) {
+              for (Map.Entry<String, String> attribute : articleUrl.getAttributes().entrySet()) {
+                if ("venotify".equals(attribute.getKey())) {
+                  if (!"created".equals(attribute.getValue())) {
+                    automatic = false;
+                  }
+                } else {
+                  automatic = false;
                 }
               }
             }
-            if (text != null) {
-              errorResult.addReplacement(
-                  PageElementInternalLink.createInternalLink(
-                      (needColon ? ":" : "") + articleUrl.getTitleAndFragment(), text),
-                  true);
-            } else {
-              String question = GT._("What text should be displayed by the link?");
-              AddInternalLinkActionProvider action = new AddInternalLinkActionProvider(
-                  article, null, null, null,
-                  question, article, checker);
-              errorResult.addPossibleAction(
-                  GT._("Convert into an internal link"),
-                  action);
-            }
+            errorResult.addReplacement(
+                PageElementInternalLink.createInternalLink(
+                    (needColon ? ":" : "") + articleUrl.getTitleAndFragment(), text),
+                automatic);
+          } else {
+            String question = GT._("What text should be displayed by the link?");
+            AddInternalLinkActionProvider action = new AddInternalLinkActionProvider(
+                article, articleUrl.getFragment(), null, null, null,
+                question, articleUrl.getTitleAndFragment().replaceAll("\\_", " "), checker);
+            errorResult.addPossibleAction(
+                GT._("Convert into an internal link"),
+                action);
           }
+
           errors.add(errorResult);
         }
       }
