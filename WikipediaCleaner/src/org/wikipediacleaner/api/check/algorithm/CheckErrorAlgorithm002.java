@@ -190,7 +190,7 @@ public class CheckErrorAlgorithm002 extends CheckErrorAlgorithmBase {
         int tmpIndex = getFirstIndexAfterSpace(contents, currentIndex + 1);
         boolean incorrectChar = false;
         while ((tmpIndex < maxSize) &&
-               (" \\.,:?/\n|".indexOf(contents.charAt(tmpIndex)) >= 0)) {
+               (" \\.,:?/\n|+".indexOf(contents.charAt(tmpIndex)) >= 0)) {
           tmpIndex++;
           incorrectChar = true;
         }
@@ -209,7 +209,7 @@ public class CheckErrorAlgorithm002 extends CheckErrorAlgorithmBase {
           }
           tmpIndex = getFirstIndexAfterSpace(contents, tmpIndex);
           while ((tmpIndex < maxSize) &&
-                 (" \\.,:?/\n|".indexOf(contents.charAt(tmpIndex)) >= 0)) {
+                 (" \\.,:?/\n|+".indexOf(contents.charAt(tmpIndex)) >= 0)) {
             tmpIndex++;
             incorrectChar = true;
           }
