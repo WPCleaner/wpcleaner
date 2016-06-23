@@ -16,6 +16,7 @@ import javax.swing.text.Element;
 import javax.swing.text.JTextComponent;
 import javax.swing.text.TextAction;
 
+import org.wikipediacleaner.api.data.PageElementInternalLink;
 import org.wikipediacleaner.gui.swing.basic.Utilities;
 import org.wikipediacleaner.gui.swing.component.MWPaneFormatter;
 import org.wikipediacleaner.utils.StringChecker;
@@ -23,11 +24,12 @@ import org.wikipediacleaner.utils.TextProvider;
 
 
 /**
- * An action listener for replacing text.
+ * An action listener for replacing text by an internal link.
  */
 @SuppressWarnings("serial")
-public class AddTextAction extends TextAction {
+public class AddInternalLinkAction extends TextAction {
 
+  private final String article;
   private final String prefix;
   private final String suffix;
   private final TextProvider textProvider;
@@ -39,7 +41,8 @@ public class AddTextAction extends TextAction {
   private final Element element;
   private final JTextPane textPane;
 
-  public AddTextAction(
+  public AddInternalLinkAction(
+      String article,
       String prefix,
       String suffix,
       TextProvider textProvider,
@@ -49,12 +52,13 @@ public class AddTextAction extends TextAction {
       Element element,
       JTextPane textPane) {
     this(
-        prefix, suffix, textProvider, question,
+        article, prefix, suffix, textProvider, question,
         null, false, defaultValue,
         checker, element, textPane);
   }
 
-  public AddTextAction(
+  public AddInternalLinkAction(
+      String article,
       String prefix,
       String suffix,
       TextProvider textProvider,
@@ -65,7 +69,8 @@ public class AddTextAction extends TextAction {
       StringChecker checker,
       Element element,
       JTextPane textPane) {
-    super("AddText");
+    super("AddInternalLink");
+    this.article = article;
     this.prefix = prefix;
     this.suffix = suffix;
     this.textProvider = textProvider;
@@ -128,7 +133,7 @@ public class AddTextAction extends TextAction {
       if (prefix != null) {
         newText.append(prefix);
       }
-      newText.append(value);
+      newText.append(PageElementInternalLink.createInternalLink(article, value));
       if (suffix != null) {
         newText.append(suffix);
       }

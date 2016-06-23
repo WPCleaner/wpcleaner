@@ -11,7 +11,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
-import org.wikipediacleaner.api.check.AddTextActionProvider;
+import org.wikipediacleaner.api.check.AddInternalLinkActionProvider;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.constants.ArticleUrl;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
@@ -200,8 +200,8 @@ public class CheckErrorAlgorithm090 extends CheckErrorAlgorithmBase {
                   true);
             } else {
               String question = GT._("What text should be displayed by the link?");
-              AddTextActionProvider action = new AddTextActionProvider(
-                  "[[" + (needColon ? ":" : "") + article + "|", "]]", null,
+              AddInternalLinkActionProvider action = new AddInternalLinkActionProvider(
+                  article, null, null, null,
                   question, article, checker);
               errorResult.addPossibleAction(
                   GT._("Convert into an internal link"),

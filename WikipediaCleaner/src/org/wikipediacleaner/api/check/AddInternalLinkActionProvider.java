@@ -11,16 +11,17 @@ import javax.swing.Action;
 import javax.swing.JTextPane;
 import javax.swing.text.Element;
 
-import org.wikipediacleaner.gui.swing.action.AddTextAction;
+import org.wikipediacleaner.gui.swing.action.AddInternalLinkAction;
 import org.wikipediacleaner.utils.StringChecker;
 import org.wikipediacleaner.utils.TextProvider;
 
 
 /**
- * An action provider for replacing text.
+ * An action provider for replacing text by an internal link.
  */
-public class AddTextActionProvider implements ActionProvider {
+public class AddInternalLinkActionProvider implements ActionProvider {
 
+  private final String article;
   private final String prefix;
   private final String suffix;
   private final TextProvider textProvider;
@@ -31,20 +32,22 @@ public class AddTextActionProvider implements ActionProvider {
   private final StringChecker checker;
 
   /**
+   * @param article Article title.
    * @param prefix Prefix.
    * @param suffix Suffix.
    * @param textProvider Optional text provider.
    * @param question Question asked to the user.
    * @param checker String checker to verify the value.
    */
-  public AddTextActionProvider(
-      String prefix, String suffix,
+  public AddInternalLinkActionProvider(
+      String article, String prefix, String suffix,
       TextProvider textProvider, String question,
       StringChecker checker) {
-    this(prefix, suffix, textProvider, question, "", checker);
+    this(article, prefix, suffix, textProvider, question, "", checker);
   }
 
   /**
+   * @param article Article title.
    * @param prefix Prefix.
    * @param suffix Suffix.
    * @param textProvider Optional text provider.
@@ -52,16 +55,17 @@ public class AddTextActionProvider implements ActionProvider {
    * @param defaultValue Value used by default.
    * @param checker String checker to verify the value.
    */
-  public AddTextActionProvider(
-      String prefix, String suffix, TextProvider textProvider,
+  public AddInternalLinkActionProvider(
+      String article, String prefix, String suffix, TextProvider textProvider,
       String question, String defaultValue,
       StringChecker checker) {
     this(
-        prefix, suffix, textProvider, question,
+        article, prefix, suffix, textProvider, question,
         null, false, defaultValue, checker);
   }
 
   /**
+   * @param article Article title.
    * @param prefix Prefix.
    * @param suffix Suffix.
    * @param textProvider Optional text provider.
@@ -69,11 +73,12 @@ public class AddTextActionProvider implements ActionProvider {
    * @param defaultValue Value used by default.
    * @param checker String checker to verify the value.
    */
-  public AddTextActionProvider(
-      String prefix, String suffix, TextProvider textProvider,
+  public AddInternalLinkActionProvider(
+      String article, String prefix, String suffix, TextProvider textProvider,
       String question,
       String[] possibleValues, boolean onlyList, String defaultValue,
       StringChecker checker) {
+    this.article = article;
     this.prefix = prefix;
     this.suffix = suffix;
     this.textProvider = textProvider;
@@ -89,8 +94,8 @@ public class AddTextActionProvider implements ActionProvider {
    */
   @Override
   public Action getAction(Element element, JTextPane textPane) {
-    return new AddTextAction(
-        prefix, suffix, textProvider, question,
+    return new AddInternalLinkAction(
+        article, prefix, suffix, textProvider, question,
         possibleValues, onlyList, defaultValue,
         checker,
         element, textPane);
