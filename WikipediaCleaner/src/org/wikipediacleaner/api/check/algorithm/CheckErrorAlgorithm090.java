@@ -216,8 +216,75 @@ public class CheckErrorAlgorithm090 extends CheckErrorAlgorithmBase {
         // Check if link is in a timeline tag
         if (!errorReported) {
           PageElementTag timelineTag = analysis.getSurroundingTag(PageElementTag.TAG_WIKI_TIMELINE, beginIndex);
-          if (timelineTag != null) {
+          if ((timelineTag != null) && !isInTemplate) {
             automatic = false;
+
+            boolean timelineOk = true;
+            int timelineEnd = endIndex;
+            if (contents.charAt(timelineEnd) == '\"') {
+              timelineEnd++;
+            }
+            int timelineBegin = beginIndex;
+            if (contents.charAt(timelineBegin - 1) == '\"') {
+              timelineBegin--;
+            }
+            while ((timelineBegin > 0) && (contents.charAt(timelineBegin - 1) == ' ')) {
+              timelineBegin--;
+            }
+            if (contents.startsWith("link:", timelineBegin - "link:".length())) {
+              timelineBegin -= "link:".length();
+            } else {
+              timelineOk = false;
+            }
+            while ((timelineBegin > 0) && (contents.charAt(timelineBegin - 1) == ' ')) {
+              timelineBegin--;
+            }
+            String displayedText = null;
+            if (timelineBegin > 0) {
+              if (contents.charAt(timelineBegin - 1) == '\"') {
+                timelineBegin--;
+                int tmpIndex = timelineBegin;
+                while ((tmpIndex > 0) && ("\"\n".indexOf(contents.charAt(tmpIndex - 1)) < 0)) {
+                  tmpIndex--;
+                }
+                if ((tmpIndex > 0) && (contents.charAt(tmpIndex - 1) == '\"')) {
+                  displayedText = contents.substring(tmpIndex, timelineBegin);
+                }
+                timelineBegin = tmpIndex - 1;
+              } else {
+                int tmpIndex = timelineBegin;
+                while ((tmpIndex > 0) && (" :".indexOf(contents.charAt(tmpIndex - 1)) < 0)) {
+                  tmpIndex--;
+                }
+                if (tmpIndex > 0) {
+                  displayedText = contents.substring(tmpIndex, timelineBegin);
+                }
+                timelineBegin = tmpIndex;
+              }
+            }
+            if (displayedText == null) {
+              timelineOk = false;
+            }
+            while ((timelineBegin > 0) && (contents.charAt(timelineBegin - 1) == ' ')) {
+              timelineBegin--;
+            }
+            if (contents.startsWith("text:", timelineBegin - "text:".length())) {
+              timelineBegin -= "text:".length();
+            } else {
+              timelineOk = false;
+            }
+
+            if (timelineOk) {
+              CheckErrorResult errorResult = createCheckErrorResult(
+                  analysis, timelineBegin, timelineEnd);
+              errorResult.addReplacement(
+                  "text:\"" +
+                  PageElementInternalLink.createInternalLink(
+                      article, articleUrl.getFragment(), displayedText) +
+                  "\"");
+              errors.add(errorResult);
+              errorReported = true;
+            }
           }
         }
 
