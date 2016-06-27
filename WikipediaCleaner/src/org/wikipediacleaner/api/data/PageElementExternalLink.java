@@ -26,7 +26,7 @@ public class PageElementExternalLink extends PageElement {
   private final boolean hasSquare;
   private final boolean hasSecondSquare;
 
-  private final static String SEPARATORS_EXCLUDED = " \t";
+  private final static String SEPARATORS_EXCLUDED = " \t\"";
 
   private final static String SEPARATORS_INCLUDED = "<>|";
 

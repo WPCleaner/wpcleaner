@@ -23,6 +23,7 @@ import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementExternalLink;
 import org.wikipediacleaner.api.data.PageElementImage;
+import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.PageElementImage.Parameter;
 import org.wikipediacleaner.api.data.PageElementInternalLink;
 import org.wikipediacleaner.api.data.PageElementTemplate;
@@ -145,6 +146,7 @@ public class CheckErrorAlgorithm090 extends CheckErrorAlgorithmBase {
           }
         }
 
+        // Retrieve information about link
         int beginIndex = link.getBeginIndex();
         int endIndex = link.getEndIndex();
         if (link.hasSquare()) {
@@ -154,8 +156,22 @@ public class CheckErrorAlgorithm090 extends CheckErrorAlgorithmBase {
             endIndex++;
           }
         }
-
         String text = link.getText();
+        Page articlePage = DataManager.getPage(analysis.getWikipedia(), article, null, null, null);
+        boolean needColon = false;
+        if (articlePage.getNamespace() != null) {
+          int ns = articlePage.getNamespace().intValue();
+          if (ns % 2 == 0) {
+            if ((ns != Namespace.MAIN) &&
+                (ns != Namespace.USER) &&
+                (ns != Namespace.HELP) &&
+                (ns != Namespace.MEDIAWIKI) &&
+                (ns != Namespace.TEMPLATE) &&
+                (ns != Namespace.WIKIPEDIA)) {
+              needColon = true;
+            }
+          }
+        }
 
         // Check if link is in template
         boolean isInTemplate = false;
@@ -176,53 +192,137 @@ public class CheckErrorAlgorithm090 extends CheckErrorAlgorithmBase {
           }
         }
 
-        if (!errorReported) {
-          CheckErrorResult errorResult = createCheckErrorResult(
-              analysis, beginIndex, endIndex);
-
-          Page articlePage = DataManager.getPage(analysis.getWikipedia(), article, null, null, null);
-          boolean needColon = false;
-          if (articlePage.getNamespace() != null) {
-            int ns = articlePage.getNamespace().intValue();
-            if (ns % 2 == 0) {
-              if ((ns != Namespace.MAIN) &&
-                  (ns != Namespace.USER) &&
-                  (ns != Namespace.HELP) &&
-                  (ns != Namespace.MEDIAWIKI) &&
-                  (ns != Namespace.TEMPLATE) &&
-                  (ns != Namespace.WIKIPEDIA)) {
-                needColon = true;
+        // Restrict automatic modifications
+        boolean automatic = !isInTemplate;
+        if (Page.areSameTitle(article, analysis.getPage().getTitle())) {
+          automatic = false;
+        }
+        if (articleUrl.getAttributes() != null) {
+          for (Map.Entry<String, String> attribute : articleUrl.getAttributes().entrySet()) {
+            if ("venotify".equals(attribute.getKey())) {
+              if (!"created".equals(attribute.getValue())) {
+                automatic = false;
               }
+            } else if ("action".equals(attribute.getKey())) {
+              if (!"edit".equals(attribute.getValue())) {
+                automatic = false;
+              }
+            } else if (!"redlink".equals(attribute.getKey())) {
+              automatic = false;
             }
           }
-          if (text != null) {
-            boolean automatic = !isInTemplate;
-            if (articleUrl.getAttributes() != null) {
-              for (Map.Entry<String, String> attribute : articleUrl.getAttributes().entrySet()) {
-                if ("venotify".equals(attribute.getKey())) {
-                  if (!"created".equals(attribute.getValue())) {
-                    automatic = false;
-                  }
-                } else {
-                  automatic = false;
+        }
+
+        // Check if link is in a timeline tag
+        if (!errorReported) {
+          PageElementTag timelineTag = analysis.getSurroundingTag(PageElementTag.TAG_WIKI_TIMELINE, beginIndex);
+          if (timelineTag != null) {
+            automatic = false;
+          }
+        }
+
+        // Check if link is in a ref tag
+        if (!errorReported) {
+          PageElementTag refTag = analysis.getSurroundingTag(PageElementTag.TAG_WIKI_REF, beginIndex);
+          if (refTag != null) {
+
+            // Determine if the link is the full tag
+            boolean full = true;
+            int tmpIndex = beginIndex;
+            while ((tmpIndex > refTag.getValueBeginIndex()) &&
+                   (contents.charAt(tmpIndex - 1) == ' ')) {
+              tmpIndex--;
+            }
+            if (tmpIndex > refTag.getValueBeginIndex()) {
+              full = false;
+            }
+            tmpIndex = endIndex;
+            while ((tmpIndex < refTag.getValueEndIndex()) &&
+                   (contents.charAt(tmpIndex) == ' ')) {
+              tmpIndex++;
+            }
+            if (tmpIndex < refTag.getValueEndIndex()) {
+              full = false;
+            }
+            if (full) {
+              automatic = false;
+            }
+
+            // Check if there's an equivalent link or text before
+            tmpIndex = refTag.getCompleteBeginIndex();
+            while ((tmpIndex > 0) && (contents.charAt(tmpIndex - 1) == ' ')) {
+              tmpIndex--;
+            }
+            if (tmpIndex > 0) {
+              PageElementInternalLink previousLink = analysis.isInInternalLink(tmpIndex - 1);
+              if ((previousLink != null) && Page.areSameTitle(previousLink.getLink(), article)) {
+                CheckErrorResult errorResult = createCheckErrorResult(
+                    analysis, previousLink.getBeginIndex(), refTag.getCompleteEndIndex());
+                errorResult.addReplacement(
+                    contents.substring(previousLink.getBeginIndex(), previousLink.getEndIndex()));
+                errors.add(errorResult);
+                errorReported = true;
+              } else if (tmpIndex > article.length()) {
+                String textBefore = contents.substring(tmpIndex - article.length(), tmpIndex);
+                if (Page.areSameTitle(article, textBefore)) {
+                  CheckErrorResult errorResult = createCheckErrorResult(
+                      analysis, tmpIndex - article.length(), refTag.getCompleteEndIndex());
+                  errorResult.addReplacement(
+                      PageElementInternalLink.createInternalLink(article, articleUrl.getFragment(), textBefore));
+                  errors.add(errorResult);
+                  errorReported = true;
                 }
               }
             }
-            errorResult.addReplacement(
-                PageElementInternalLink.createInternalLink(
-                    (needColon ? ":" : "") + articleUrl.getTitleAndFragment(), text),
-                automatic);
-          } else {
-            String question = GT._("What text should be displayed by the link?");
-            AddInternalLinkActionProvider action = new AddInternalLinkActionProvider(
-                article, articleUrl.getFragment(), null, null, null,
-                question, articleUrl.getTitleAndFragment().replaceAll("\\_", " "), checker);
-            errorResult.addPossibleAction(
-                GT._("Convert into an internal link"),
-                action);
           }
+        }
 
+        // Link with text
+        if (!errorReported && (text != null)) {
+          CheckErrorResult errorResult = createCheckErrorResult(
+              analysis, beginIndex, endIndex);
+          errorResult.addReplacement(
+              PageElementInternalLink.createInternalLink(
+                  (needColon ? ":" : "") + articleUrl.getTitleAndFragment(), text),
+              automatic);
           errors.add(errorResult);
+          errorReported = true;
+        }
+
+        // Link without text but previous text
+        if (!errorReported && (text == null)) {
+          int tmpIndex = beginIndex;
+          while ((tmpIndex > 0) && (contents.charAt(tmpIndex - 1) == ' ')) {
+            tmpIndex--;
+          }
+          if (tmpIndex > article.length()) {
+            String textBefore = contents.substring(tmpIndex - article.length(), tmpIndex);
+            if (Page.areSameTitle(article, textBefore)) {
+              CheckErrorResult errorResult = createCheckErrorResult(
+                  analysis, tmpIndex - article.length(), endIndex);
+              errorResult.addReplacement(
+                  PageElementInternalLink.createInternalLink(
+                      (needColon ? ":" : "") + articleUrl.getTitleAndFragment(), textBefore),
+                  automatic);
+              errors.add(errorResult);
+              errorReported = true;
+            }
+          }
+        }
+
+        // Link without text
+        if (!errorReported && (text == null)) {
+          CheckErrorResult errorResult = createCheckErrorResult(
+              analysis, beginIndex, endIndex);
+          String question = GT._("What text should be displayed by the link?");
+          AddInternalLinkActionProvider action = new AddInternalLinkActionProvider(
+              article, articleUrl.getFragment(), null, null, null,
+              question, articleUrl.getTitleAndFragment().replaceAll("\\_", " "), checker);
+          errorResult.addPossibleAction(
+              GT._("Convert into an internal link"),
+              action);
+          errors.add(errorResult);
+          errorReported = true;
         }
       }
     }
