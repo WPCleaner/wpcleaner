@@ -22,7 +22,10 @@ public class Waze
   public Waze() {
     super(
         "en", "Waze",
-        "wiki.waze.com", "/wiki/api.php", "/wiki/index.php",
+        new String[] {
+            "wiki.waze.com",
+        },
+        "/wiki/api.php", "/wiki/index.php",
         "waze", null,
         ComponentOrientation.LEFT_TO_RIGHT);
   }

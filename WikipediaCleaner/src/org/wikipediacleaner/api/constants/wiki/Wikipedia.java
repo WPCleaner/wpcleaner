@@ -37,7 +37,11 @@ public class Wikipedia
       ComponentOrientation orientation) {
     super(
         language, name,
-        language + ".wikipedia.org", "/w/api.php", "/w/index.php",
+        new String[] {
+            language + ".wikipedia.org",
+            language + ".m.wikipedia.org",
+        },
+        "/w/api.php", "/w/index.php",
         language, language + "wiki",
         orientation);
   }

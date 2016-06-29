@@ -37,7 +37,10 @@ public class Wikisource
       ComponentOrientation orientation) {
     super(
         language, name,
-        language + ".wikisource.org", "/w/api.php", "/w/index.php",
+        new String[] {
+            language + ".wikisource.org",
+        },
+        "/w/api.php", "/w/index.php",
         "s:" + language, language + "wikisource",
         orientation);
   }

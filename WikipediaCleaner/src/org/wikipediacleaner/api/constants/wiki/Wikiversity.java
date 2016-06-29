@@ -37,7 +37,10 @@ public class Wikiversity
       ComponentOrientation orientation) {
     super(
         language, name,
-        language + ".wikiversity.org", "/w/api.php", "/w/index.php",
+        new String[] {
+            language + ".wikiversity.org",
+        },
+        "/w/api.php", "/w/index.php",
         "v:" + language, language + "wikiversity",
         orientation);
   }

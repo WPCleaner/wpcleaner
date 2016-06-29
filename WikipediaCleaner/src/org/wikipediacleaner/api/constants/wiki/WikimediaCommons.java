@@ -21,7 +21,10 @@ public final class WikimediaCommons extends AbstractWikiSettings {
   public WikimediaCommons() {
     super(
         "commons", "Commons",
-        "commons.wikimedia.org", "/w/api.php", "/w/index.php",
+        new String[] {
+            "commons.wikimedia.org",
+        },
+        "/w/api.php", "/w/index.php",
         "commons", "commons",
         ComponentOrientation.LEFT_TO_RIGHT);
   }

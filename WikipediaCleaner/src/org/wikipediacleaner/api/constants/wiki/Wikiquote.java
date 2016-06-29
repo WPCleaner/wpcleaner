@@ -37,7 +37,10 @@ public class Wikiquote
       ComponentOrientation orientation) {
     super(
         language, name,
-        language + ".wikiquote.org", "/w/api.php", "/w/index.php",
+        new String[] {
+            language + ".wikiquote.org",
+        },
+        "/w/api.php", "/w/index.php",
         "q:" + language, language + "wikiquote",
         orientation);
   }

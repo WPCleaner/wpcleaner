@@ -47,12 +47,12 @@ public class ArticleUrl {
     AbstractWikiSettings settings = wiki.getSettings();
     if (settings != null) {
       for (String directPath : settings.getArticleDirectPath()) {
-        if (result != null) {
+        if (result == null) {
           result = isArticleDirectUrl(url, directPath);
         }
       }
       for (String paramPath : settings.getArticleParamPath()) {
-        if (result != null) {
+        if (result == null) {
           result = isArticleParamUrl(url, paramPath, "title");
         }
       }

@@ -22,7 +22,10 @@ public class WikiSkripta
   public WikiSkripta() {
     super(
         "cs", "WikiSkripta",
-        "www.wikiskripta.eu", "/api.php", "/index.php",
+        new String[] {
+            "www.wikiskripta.eu",
+        },
+        "/api.php", "/index.php",
         "wikiskripta", null,
         ComponentOrientation.LEFT_TO_RIGHT);
   }

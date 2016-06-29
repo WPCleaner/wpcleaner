@@ -37,7 +37,10 @@ public class Wiktionary
       ComponentOrientation orientation) {
     super(
         language, name,
-        language + ".wiktionary.org", "/w/api.php", "/w/index.php",
+        new String[] {
+            language + ".wiktionary.org",
+        },
+        "/w/api.php", "/w/index.php",
         "wikt:" + language, language + "wiktionary",
         orientation);
   }

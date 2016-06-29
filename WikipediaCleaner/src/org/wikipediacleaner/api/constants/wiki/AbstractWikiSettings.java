@@ -22,7 +22,8 @@ public abstract class AbstractWikiSettings {
   /**
    * @param language Language.
    * @param name Name.
-   * @param host Host.
+   * @param hosts List of possible host names.
+   * @param mobileHost Mobile host.
    * @param apiPath Path for the API, relative to the host URL.
    * @param indexPath Path for index.php, relative to the host URL.
    * @param code Code for the wiki.
@@ -31,20 +32,19 @@ public abstract class AbstractWikiSettings {
    */
   public AbstractWikiSettings(
       String language, String name,
-      String host, String apiPath, String indexPath,
+      String[] hosts, String apiPath, String indexPath,
       String code, String codeCheckWiki,
       ComponentOrientation orientation) {
     this.language = language;
     this.name = name;
-    this.host = host;
-    this.hostUrl = "http://" + host;
-    this.securedHostUrl = "https://" + host;
+    this.hosts = hosts;
     this.apiPath = apiPath;
-    this.apiUrl = hostUrl + apiPath;
-    this.securedApiUrl = securedHostUrl + apiPath;
+    String host = hosts[0];
+    this.apiUrl = "http://" + host + apiPath;
+    this.securedApiUrl = "https://" + host + apiPath;
     this.indexPath = indexPath;
-    this.indexUrl = hostUrl + indexPath;
-    this.securedIndexUrl = securedHostUrl + indexPath;
+    this.indexUrl = "http://" + host + indexPath;
+    this.securedIndexUrl = "https://" + host + indexPath;
     this.code = code;
     this.codeCheckWiki = codeCheckWiki;
     this.orientation = orientation;
@@ -77,20 +77,17 @@ public abstract class AbstractWikiSettings {
     return true;
   }
 
-  /** Host */
-  private final String host;
-
-  /** Host URL (URL to host) */
-  private final String hostUrl;
-
-  /** Secured host URL (URL to host) */
-  private final String securedHostUrl;
+  /** Host names */
+  private final String[] hosts;
 
   /**
    * @return Host.
    */
   public final String getHost() {
-    return host;
+    if ((hosts == null) || (hosts.length == 0)) {
+      return null;
+    }
+    return hosts[0];
   }
 
   /**
@@ -98,21 +95,39 @@ public abstract class AbstractWikiSettings {
    * @return Host URL (URL to host).
    */
   public final String getHostURL(boolean secured) {
-    if (secured && canBeSecured()) {
-      return securedHostUrl;
+    String host = getHost();
+    if (host == null) {
+      return null;
     }
-    return hostUrl;
+    if (secured && canBeSecured()) {
+      return "https://" + host;
+    }
+    return "http://" + host;
   }
 
+  /**
+   * @return List of possible direct paths to article.
+   */
   public List<String> getArticleDirectPath() {
     List<String> result = new ArrayList<>();
-    result.add(host + "/wiki/$1");
+    if (hosts != null) {
+      for (String host : hosts) {
+        result.add("//" + host + "/wiki/$1");
+      }
+    }
     return result;
   }
 
+  /**
+   * @return List of possible paths with article named passed as a title parameter.
+   */
   public List<String> getArticleParamPath() {
     List<String> result = new ArrayList<>();
-    result.add(host + "/w/index.php");
+    if (hosts != null) {
+      for (String host : hosts) {
+        result.add("//" + host + "/w/index.php");
+      }
+    }
     return result;
   }
 
