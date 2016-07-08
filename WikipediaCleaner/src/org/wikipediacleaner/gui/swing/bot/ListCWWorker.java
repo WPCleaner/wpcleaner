@@ -9,8 +9,9 @@ package org.wikipediacleaner.gui.swing.bot;
 
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileWriter;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -220,7 +221,7 @@ public class ListCWWorker extends BasicWorker {
       }
       BufferedWriter writer = null;
       try {
-        writer = new BufferedWriter(new FileWriter(outputFile, false));
+        writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(outputFile, false), "UTF8"));
         writer.write(result);
       } catch (IOException e) {
         // Nothing to do
