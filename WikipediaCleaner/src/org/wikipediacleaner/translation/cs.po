@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2016-06-22 21:37+0200\n"
+"POT-Creation-Date: 2016-07-10 09:51+0200\n"
 "PO-Revision-Date: 2016-03-19 19:20+0000\n"
 "Last-Translator: Matěj S. <matejsuchanek97@gmail.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
@@ -669,18 +669,26 @@ msgstr "Použít {0}"
 msgid "A list of templates that can be used to replace &lt;center&gt; tags"
 msgstr "Seznam šablon, kterými je možné nahradit značky &lt;center&gt;"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm090.java:202
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm090.java:599
 msgid "What text should be displayed by the link?"
 msgstr "Jaký text by se měl u odkazu zobrazit?"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm090.java:207
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm090.java:604
 msgid "Convert into an internal link"
 msgstr "Převést na interní odkaz"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm090.java:281
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm090.java:690
+msgid "Templates to be used for linking to the history of an article"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm090.java:691
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm091.java:349
 msgid "Templates using external links"
 msgstr "Šablony používající externí odkazy"
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm090.java:692
+msgid "Templates to be used for linking to an old version of an article"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm091.java:49
 msgid "Convert them to internal links"
@@ -2645,7 +2653,7 @@ msgstr "Sledovat poslední změny"
 msgid "At what page do you wish to start updating the warnings ?"
 msgstr "Na které stránce chcete začít aktualizovat varování?"
 
-#: org/wikipediacleaner/gui/swing/bot/ListCWWorker.java:311
+#: org/wikipediacleaner/gui/swing/bot/ListCWWorker.java:312
 #, java-format
 msgid "{0} page has been analyzed"
 msgid_plural "{0} pages have been analyzed"
@@ -2653,7 +2661,7 @@ msgstr[0] "Byla analyzována {0} stránka"
 msgstr[1] "Byly analyzovány {0} stránky"
 msgstr[2] "Bylo analyzováno {0} stránek"
 
-#: org/wikipediacleaner/gui/swing/bot/ListCWWorker.java:320
+#: org/wikipediacleaner/gui/swing/bot/ListCWWorker.java:321
 #, java-format
 msgid "{0} page has been detected for algorithm {1}"
 msgid_plural "{0} pages have been detected for algorithm {1}"
