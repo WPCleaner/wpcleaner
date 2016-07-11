@@ -550,8 +550,6 @@ public class MagicWord implements Comparable<MagicWord> {
    */
   @Override
   public int hashCode() {
-    int hash = 7;
-    hash = 31 * hash + name.hashCode();
-    return hash;
+    return name.hashCode();
   }
 }

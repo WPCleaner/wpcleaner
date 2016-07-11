@@ -55,6 +55,11 @@ public class ApiSiteInfoRequest extends ApiMetaRequest {
   public final static String PROPERTY_PROP_NAMESPACE_ALIASES = "namespacealiases";
 
   /**
+   * Property for Properties / Special page aliases.
+   */
+  public final static String PROPERTY_PROP_SPECIAL_PAGE_ALIASES = "specialpagealiases";
+
+  /**
    * Property for Properties / Name spaces.
    */
   public final static String PROPERTY_PROP_NAMESPACES = "namespaces";
@@ -88,12 +93,13 @@ public class ApiSiteInfoRequest extends ApiMetaRequest {
    * @param languages True if information about languages are requested.
    * @param interwikiMap True if information about interwiki map are requested.
    * @param magicWords True if information about magic words are requested.
+   * @param specialPageAliases True if information about special page aliases are requested.
    */
   public void loadSiteInformation(
       boolean general,
       boolean namespaces, boolean namespaceAliases,
       boolean languages, boolean interwikiMap,
-      boolean magicWords) throws APIException {
+      boolean magicWords, boolean specialPageAliases) throws APIException {
     Map<String, String> properties = getProperties(ACTION_QUERY, result.getFormat());
     properties.put(
         PROPERTY_META,
@@ -117,6 +123,9 @@ public class ApiSiteInfoRequest extends ApiMetaRequest {
     }
     if (magicWords) {
       information.add(PROPERTY_PROP_MAGIC_WORDS);
+    }
+    if (specialPageAliases) {
+      information.add(PROPERTY_PROP_SPECIAL_PAGE_ALIASES);
     }
     properties.put(
         PROPERTY_PROP,

@@ -57,7 +57,7 @@ public class PageElementMagicWord extends PageElement {
 
     // Check that it is really a magic word
     String text = contents.substring(beginIndex, endIndex);
-    MagicWord magicWord = wiki.getWikiConfiguration().getMagicWordByValue(text);
+    MagicWord magicWord = wiki.getWikiConfiguration().getMagicWordByAlias(text);
     if (magicWord == null) {
       return null;
     }

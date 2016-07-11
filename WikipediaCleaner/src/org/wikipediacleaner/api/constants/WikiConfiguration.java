@@ -15,6 +15,7 @@ import org.wikipediacleaner.api.data.Interwiki;
 import org.wikipediacleaner.api.data.Language;
 import org.wikipediacleaner.api.data.MagicWord;
 import org.wikipediacleaner.api.data.Namespace;
+import org.wikipediacleaner.api.data.SpecialPage;
 
 
 /**
@@ -223,10 +224,10 @@ public class WikiConfiguration {
   }
 
   /**
-   * @param value Magic word value.
+   * @param value Magic word alias.
    * @return Magic word.
    */
-  public MagicWord getMagicWordByValue(String value) {
+  public MagicWord getMagicWordByAlias(String value) {
     if ((value == null) || (magicWords == null)) {
       return null;
     }
@@ -280,5 +281,48 @@ public class WikiConfiguration {
    */
   public void setMagicWords(Map<String, MagicWord> magicWords) {
     this.magicWords = magicWords;
+  }
+
+  // ==========================================================================
+  // Special pages
+  // ==========================================================================
+
+  /**
+   * Special pages.
+   */
+  private Map<String, SpecialPage> specialPages;
+
+  /**
+   * @param name Special page name.
+   * @return Special page.
+   */
+  public SpecialPage getSpecialPageByName(String name) {
+    if ((name == null) || (specialPages == null)) {
+      return null;
+    }
+    return specialPages.get(name); 
+  }
+
+  /**
+   * @param value Special page alias.
+   * @return Special page.
+   */
+  public SpecialPage getSpecialPageByAlias(String value) {
+    if ((value == null) || (specialPages == null)) {
+      return null;
+    }
+    for (SpecialPage specialPage : specialPages.values()) {
+      if (specialPage.isPossibleAlias(value)) {
+        return specialPage;
+      }
+    }
+    return null; 
+  }
+
+  /**
+   * @param specialPages Special pages.
+   */
+  public void setSpecialPages(Map<String, SpecialPage> specialPages) {
+    this.specialPages = specialPages;
   }
 }

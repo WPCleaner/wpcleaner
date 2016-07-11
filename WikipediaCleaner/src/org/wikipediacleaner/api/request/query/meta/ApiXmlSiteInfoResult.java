@@ -26,6 +26,7 @@ import org.wikipediacleaner.api.data.Interwiki;
 import org.wikipediacleaner.api.data.Language;
 import org.wikipediacleaner.api.data.MagicWord;
 import org.wikipediacleaner.api.data.Namespace;
+import org.wikipediacleaner.api.data.SpecialPage;
 import org.wikipediacleaner.api.request.ApiRequest;
 import org.wikipediacleaner.api.request.ApiXmlResult;
 
@@ -73,7 +74,7 @@ public class ApiXmlSiteInfoResult extends ApiXmlResult implements ApiSiteInfoRes
       xpa = XPath.newInstance("/api/query/namespaces/ns");
       List results = xpa.selectNodes(root);
       Iterator iter = results.iterator();
-      namespaces = new HashMap<Integer, Namespace>();
+      namespaces = new HashMap<>();
       while (iter.hasNext()) {
         Element currentNode = (Element) iter.next();
         String title = currentNode.getText();
@@ -104,11 +105,11 @@ public class ApiXmlSiteInfoResult extends ApiXmlResult implements ApiSiteInfoRes
       }
 
       // Update name space list
-      LinkedList<Namespace> list = new LinkedList<Namespace>(namespaces.values());
+      LinkedList<Namespace> list = new LinkedList<>(namespaces.values());
       wikiConfiguration.setNamespaces(list);
 
       // Retrieve languages
-      List<Language> languages = new ArrayList<Language>();
+      List<Language> languages = new ArrayList<>();
       xpa = XPath.newInstance("/api/query/languages/lang");
       results = xpa.selectNodes(root);
       iter = results.iterator();
@@ -121,7 +122,7 @@ public class ApiXmlSiteInfoResult extends ApiXmlResult implements ApiSiteInfoRes
       wikiConfiguration.setLanguages(languages);
 
       // Retrieve interwikis
-      List<Interwiki> interwikis = new ArrayList<Interwiki>();
+      List<Interwiki> interwikis = new ArrayList<>();
       xpa = XPath.newInstance("/api/query/interwikimap/iw");
       results = xpa.selectNodes(root);
       iter = results.iterator();
@@ -136,7 +137,7 @@ public class ApiXmlSiteInfoResult extends ApiXmlResult implements ApiSiteInfoRes
       wikiConfiguration.setInterwikis(interwikis);
 
       // Retrieve magic words
-      Map<String, MagicWord> magicWords = new HashMap<String, MagicWord>();
+      Map<String, MagicWord> magicWords = new HashMap<>();
       xpa = XPath.newInstance("/api/query/magicwords/magicword");
       results = xpa.selectNodes(root);
       iter = results.iterator();
@@ -145,7 +146,7 @@ public class ApiXmlSiteInfoResult extends ApiXmlResult implements ApiSiteInfoRes
       while (iter.hasNext()) {
         Element currentNode = (Element) iter.next();
         String magicWord = currentNode.getAttributeValue("name");
-        List<String> aliases = new ArrayList<String>();
+        List<String> aliases = new ArrayList<>();
         List resultsAlias = xpaAlias.selectNodes(currentNode);
         Iterator iterAlias = resultsAlias.iterator();
         while (iterAlias.hasNext()) {
@@ -159,6 +160,28 @@ public class ApiXmlSiteInfoResult extends ApiXmlResult implements ApiSiteInfoRes
             new MagicWord(magicWord, aliases, caseSensitive));
       }
       wikiConfiguration.setMagicWords(magicWords);
+
+      // Retrieve special page aliases
+      Map<String, SpecialPage> specialPages = new HashMap<>();
+      xpa = XPath.newInstance("/api/query/specialpagealiases/specialpage");
+      results = xpa.selectNodes(root);
+      iter = results.iterator();
+      while (iter.hasNext()) {
+        Element currentNode = (Element) iter.next();
+        String specialPage = currentNode.getAttributeValue("realname");
+        List<String> aliases = new ArrayList<String>();
+        List resultsAlias = xpaAlias.selectNodes(currentNode);
+        Iterator iterAlias = resultsAlias.iterator();
+        while (iterAlias.hasNext()) {
+          Element currentAlias = (Element) iterAlias.next();
+          String alias = xpaAliasValue.valueOf(currentAlias);
+          aliases.add(alias);
+        }
+        specialPages.put(
+            specialPage,
+            new SpecialPage(specialPage, aliases));
+      }
+      wikiConfiguration.setSpecialPages(specialPages);
     } catch (JDOMException e) {
       log.error("Error loading namespaces", e);
       throw new APIException("Error parsing XML", e);
