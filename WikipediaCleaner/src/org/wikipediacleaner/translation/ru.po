@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2016-07-10 09:51+0200\n"
+"POT-Creation-Date: 2016-07-15 12:36+0200\n"
 "PO-Revision-Date: 2015-04-05 05:58+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Russian <ru@li.org>\n"
@@ -652,26 +652,30 @@ msgstr "Страница {0}:"
 msgid "A list of templates that can be used to replace &lt;center&gt; tags"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm090.java:599
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm090.java:706
 msgid "What text should be displayed by the link?"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm090.java:604
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm090.java:711
 msgid "Convert into an internal link"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm090.java:690
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm090.java:797
 msgid "Templates to be used for linking to the history of an article"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm090.java:691
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm090.java:798
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm091.java:349
 #, fuzzy
 msgid "Templates using external links"
 msgstr "Внешний просмотрщик шаблонов"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm090.java:692
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm090.java:799
 msgid "Templates to be used for linking to an old version of an article"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm090.java:800
+msgid "Templates to be used instead of Special:PrefixIndex"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm091.java:49

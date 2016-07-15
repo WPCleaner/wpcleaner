@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2016-07-10 09:51+0200\n"
+"POT-Creation-Date: 2016-07-15 12:36+0200\n"
 "PO-Revision-Date: 2016-04-11 11:24+0200\n"
 "Last-Translator: Nicolas Vervelle <nvervelle@gmail.com>\n"
 "Language-Team: French <fr@li.org>\n"
@@ -685,26 +685,31 @@ msgstr ""
 "Une liste de modèles pouvant être utilisés pour remplacer les balises "
 "<center>"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm090.java:599
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm090.java:706
 msgid "What text should be displayed by the link?"
 msgstr "Quel texte devrait être affiché par le lien ?"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm090.java:604
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm090.java:711
 msgid "Convert into an internal link"
 msgstr "Convertir en lien interne"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm090.java:690
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm090.java:797
 msgid "Templates to be used for linking to the history of an article"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm090.java:691
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm090.java:798
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm091.java:349
 msgid "Templates using external links"
 msgstr "Modèles utilisant des liens externes"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm090.java:692
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm090.java:799
 msgid "Templates to be used for linking to an old version of an article"
 msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm090.java:800
+#, fuzzy
+msgid "Templates to be used instead of Special:PrefixIndex"
+msgstr "Un modèle qui peut être utilisé à la place d’une astérisque"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm091.java:49
 msgid "Convert them to internal links"

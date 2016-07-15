@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2016-07-10 09:51+0200\n"
+"POT-Creation-Date: 2016-07-15 12:36+0200\n"
 "PO-Revision-Date: 2016-03-19 19:20+0000\n"
 "Last-Translator: Matěj S. <matejsuchanek97@gmail.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
@@ -669,26 +669,31 @@ msgstr "Použít {0}"
 msgid "A list of templates that can be used to replace &lt;center&gt; tags"
 msgstr "Seznam šablon, kterými je možné nahradit značky &lt;center&gt;"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm090.java:599
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm090.java:706
 msgid "What text should be displayed by the link?"
 msgstr "Jaký text by se měl u odkazu zobrazit?"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm090.java:604
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm090.java:711
 msgid "Convert into an internal link"
 msgstr "Převést na interní odkaz"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm090.java:690
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm090.java:797
 msgid "Templates to be used for linking to the history of an article"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm090.java:691
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm090.java:798
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm091.java:349
 msgid "Templates using external links"
 msgstr "Šablony používající externí odkazy"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm090.java:692
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm090.java:799
 msgid "Templates to be used for linking to an old version of an article"
 msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm090.java:800
+#, fuzzy
+msgid "Templates to be used instead of Special:PrefixIndex"
+msgstr "Šablona, která může být použita místo hvězdičky (*)."
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm091.java:49
 msgid "Convert them to internal links"

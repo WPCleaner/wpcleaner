@@ -27,6 +27,7 @@ import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.PageElementImage.Parameter;
 import org.wikipediacleaner.api.data.PageElementInternalLink;
 import org.wikipediacleaner.api.data.PageElementTemplate;
+import org.wikipediacleaner.api.data.SpecialPage;
 import org.wikipediacleaner.i18n.GT;
 import org.wikipediacleaner.utils.StringChecker;
 import org.wikipediacleaner.utils.StringCheckerUnauthorizedCharacters;
@@ -100,6 +101,11 @@ public class CheckErrorAlgorithm090 extends CheckErrorAlgorithmBase {
     if (templates != null) {
       historyTemplates = WPCConfiguration.convertPropertyToStringArrayList(templates);
     }
+    templates = getSpecificProperty("prefix_index_templates", true, true, false);
+    List<String[]> prefixIndexTemplates = null;
+    if (templates != null) {
+      prefixIndexTemplates = WPCConfiguration.convertPropertyToStringArrayList(templates);
+    }
 
     // Analyze each external link
     boolean result = false;
@@ -117,7 +123,7 @@ public class CheckErrorAlgorithm090 extends CheckErrorAlgorithmBase {
         result = true;
         boolean errorReported = false;
         AnalysisInformation info = new AnalysisInformation(
-            analysis, link, articleUrl, errors);
+            analysis, link, articleUrl, wiki, errors);
 
         // Check if link is in image as a link attribute
         if (!errorReported) {
@@ -141,6 +147,11 @@ public class CheckErrorAlgorithm090 extends CheckErrorAlgorithmBase {
         // Check if link is in a ref tag
         if (!errorReported) {
           errorReported = checkRefTag(info);
+        }
+
+        // Check links to special pages
+        if (!errorReported) {
+          errorReported = checkSpecialPrefixIndexLink(info, prefixIndexTemplates);
         }
 
         // Check special kinds of links
@@ -377,6 +388,102 @@ public class CheckErrorAlgorithm090 extends CheckErrorAlgorithmBase {
     }
 
     return false;
+  }
+
+  /**
+   * Analyze cases of links with Special:PrefixIndex.
+   * 
+   * @param info Analysis information.
+   * @param prefixIndexTemplates Templates that can be used for links with Special:PrefixIndex.
+   * @return True if error has been reported.
+   */
+  private boolean checkSpecialPrefixIndexLink(
+      AnalysisInformation info, List<String[]> prefixIndexTemplates) {
+
+    // Check if templates are defined
+    if ((prefixIndexTemplates == null) || (prefixIndexTemplates.size() == 0)) {
+      return false;
+    }
+
+    // Check if it is Special:PrefixIndex link
+    int colonIndex = info.article.indexOf(':');
+    if ((colonIndex <= 0) || (colonIndex >= info.article.length() - 1)) {
+      return false;
+    }
+    String namespace = info.article.substring(0, colonIndex);
+    Namespace specialNamespace = info.wiki.getWikiConfiguration().getNamespace(Namespace.SPECIAL);
+    if ((specialNamespace == null)  || !specialNamespace.isPossibleName(namespace)) {
+      return false;
+    }
+    String specialPageName = info.article.substring(colonIndex + 1);
+    SpecialPage specialPrefixIndex = info.wiki.getWikiConfiguration().getSpecialPageByName(SpecialPage.PREFIX_INDEX);
+    if ((specialPrefixIndex == null) || !specialPrefixIndex.isPossibleAlias(specialPageName)) {
+      return false;
+    }
+
+    // Retrieve information
+    String prefix = null;
+    if (info.articleUrl.getAttributes() != null) {
+      for (Map.Entry<String, String> attribute : info.articleUrl.getAttributes().entrySet()) {
+        String key = attribute.getKey();
+        if ("prefix".equals(key)) {
+          prefix = attribute.getValue();
+          while ((prefix.length() > 0) && (prefix.charAt(prefix.length() - 1) == '+')) {
+            prefix = prefix.substring(0, prefix.length() - 1);
+          }
+        } else if ("namespace".equals(key)) {
+          // Should we check for namespace=0 ?
+        } else {
+          return false;
+        }
+      }
+    }
+    if ((prefix == null) || (prefix.isEmpty())) {
+      return false;
+    }
+
+    CheckErrorResult errorResult = createCheckErrorResult(
+        info.analysis, info.beginIndex, info.endIndex);
+    for (String[] prefixIndexTemplate : prefixIndexTemplates) {
+      if ((prefixIndexTemplate != null) && (prefixIndexTemplate.length > 0)) {
+        StringBuilder replacement = new StringBuilder();
+        replacement.append("{{");
+        replacement.append(prefixIndexTemplate[0]);
+        replacement.append("|");
+        String articleParam = null;
+        if (prefixIndexTemplate.length > 1) {
+          if ((prefixIndexTemplate[1].length() > 0) && !"1".equals(prefixIndexTemplate[1])) {
+            articleParam = prefixIndexTemplate[1];
+          }
+        }
+        if ((articleParam != null) || (prefix.contains("="))) {
+          replacement.append((articleParam != null) ? articleParam : "1");
+          replacement.append("=");
+        }
+        replacement.append(prefix);
+        replacement.append("|");
+        String textParam = null;
+        if (prefixIndexTemplate.length > 2) {
+          if ((prefixIndexTemplate[2].length() > 0) && !"2".equals(prefixIndexTemplate[2])) {
+            textParam = prefixIndexTemplate[2];
+          }
+        }
+        if ((textParam != null) ||
+            ((info.text != null) && (info.text.contains("=")))) {
+          replacement.append((textParam != null) ? textParam : "2");
+          replacement.append("=");
+        }
+        if (info.text != null) {
+          replacement.append(info.text);
+        }
+        replacement.append("}}");
+        errorResult.addReplacement(replacement.toString());
+
+        addBasicReplacement(info, errorResult);
+      }
+    }
+    info.errors.add(errorResult);
+    return true;
   }
 
   /**
@@ -690,6 +797,7 @@ public class CheckErrorAlgorithm090 extends CheckErrorAlgorithmBase {
     parameters.put("history_templates", GT._("Templates to be used for linking to the history of an article"));
     parameters.put("link_templates", GT._("Templates using external links"));
     parameters.put("oldid_templates", GT._("Templates to be used for linking to an old version of an article"));
+    parameters.put("prefix_index_templates", GT._("Templates to be used instead of Special:PrefixIndex"));
     return parameters;
   }
 
@@ -712,6 +820,9 @@ public class CheckErrorAlgorithm090 extends CheckErrorAlgorithmBase {
 
     /** Article title */
     public final String article;
+
+    /** Wiki */
+    public final EnumWikipedia wiki;
 
     /** Errors */
     public final Collection<CheckErrorResult> errors;
@@ -738,12 +849,14 @@ public class CheckErrorAlgorithm090 extends CheckErrorAlgorithmBase {
         PageAnalysis analysis,
         PageElementExternalLink link,
         ArticleUrl articleUrl,
+        EnumWikipedia wiki,
         Collection<CheckErrorResult> errors) {
       this.analysis = analysis;
       this.contents = analysis.getContents();
       this.link = link;
       this.articleUrl = articleUrl;
       this.article = articleUrl.getTitle();
+      this.wiki = wiki;
       this.errors = errors;
       this.beginIndex = link.getBeginIndex();
       this.endIndex = link.getEndIndex();
