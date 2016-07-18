@@ -23,7 +23,7 @@ import org.wikipediacleaner.i18n.GT;
 
 /**
  * Algorithm for analyzing error 2 of check wikipedia project.
- * Error 2: Article with incorrect tags (&lt;br&gt;, &lt;center&gt;, &lt;div&gt;, &lt;small&gt;, &lt;span&gt;)
+ * Error 2: Article with incorrect tags (&lt;br&gt;, &lt;center&gt;, &lt;div&gt;, &lt;small&gt;, &lt;span&gt;...)
  */
 public class CheckErrorAlgorithm002 extends CheckErrorAlgorithmBase {
 
@@ -57,10 +57,24 @@ public class CheckErrorAlgorithm002 extends CheckErrorAlgorithmBase {
     // Check for various tags
     boolean result = false;
     result |= analyzeBrTags(analysis, errors);
-    result |= analyzeNonFullTags(analysis, errors, PageElementTag.TAG_HTML_CENTER);
-    result |= analyzeNonFullTags(analysis, errors, PageElementTag.TAG_HTML_DIV);
-    result |= analyzeNonFullTags(analysis, errors, PageElementTag.TAG_HTML_SMALL);
-    result |= analyzeNonFullTags(analysis, errors, PageElementTag.TAG_HTML_SPAN);
+    String[] listTags = new String[] {
+        PageElementTag.TAG_HTML_ABBR,
+        PageElementTag.TAG_HTML_BIG,
+        PageElementTag.TAG_HTML_BLOCKQUOTE,
+        PageElementTag.TAG_HTML_CENTER,
+        PageElementTag.TAG_HTML_CITE,
+        PageElementTag.TAG_HTML_DIV,
+        PageElementTag.TAG_HTML_FONT,
+        PageElementTag.TAG_HTML_P,
+        PageElementTag.TAG_HTML_S,
+        PageElementTag.TAG_HTML_SMALL,
+        PageElementTag.TAG_HTML_SPAN,
+        PageElementTag.TAG_HTML_TT,
+    };
+    for (String tagName : listTags) {
+      result |= analyzeNonFullTags(analysis, errors, tagName);
+    }
+    result |= analyzeIncorrectTags(analysis, errors, listTags);
 
     return result;
   }
@@ -80,8 +94,9 @@ public class CheckErrorAlgorithm002 extends CheckErrorAlgorithmBase {
 
     // Retrieve configuration
     List<String[]> anchorTemplates = null;
-    if ((PageElementTag.TAG_HTML_DIV.equals(tagName)) ||
-        (PageElementTag.TAG_HTML_SPAN.equals(tagName))) {
+    if (PageElementTag.TAG_HTML_CITE.equals(tagName) ||
+        PageElementTag.TAG_HTML_DIV.equals(tagName) ||
+        PageElementTag.TAG_HTML_SPAN.equals(tagName)) {
       String anchorProperty = getSpecificProperty("anchor_templates", true, true, false);
       if (anchorProperty != null) {
         anchorTemplates = WPCConfiguration.convertPropertyToStringArrayList(anchorProperty);
@@ -150,6 +165,92 @@ public class CheckErrorAlgorithm002 extends CheckErrorAlgorithmBase {
         errors.add(errorResult);
       }
       previousTag = tag;
+    }
+
+    return result;
+  }
+
+  /**
+   * Analyze a page to check for incorrectly written tags.
+   * 
+   * @param analysis Page analysis.
+   * @param errors Errors found in the page.
+   * @param tagNames Tag names.
+   * @return Flag indicating if the error was found.
+   */
+  private boolean analyzeIncorrectTags(
+      PageAnalysis analysis,
+      Collection<CheckErrorResult> errors,
+      String[] tagNames) {
+
+    boolean result = false;
+
+    // Check for incorrectly written tags (</xxx/>)
+    int currentIndex = 0;
+    String contents = analysis.getContents();
+    while ((currentIndex >= 0) && (currentIndex < contents.length())) {
+      currentIndex = contents.indexOf('<', currentIndex);
+      String selectedTagName = null;
+      if (currentIndex >= 0) {
+        int beginIndex = currentIndex;
+        boolean ok = true;
+        currentIndex++;
+        if (ok) {
+          currentIndex = getFirstIndexAfterSpace(contents, currentIndex);
+          if ((currentIndex < contents.length()) &&
+              contents.charAt(currentIndex) == '/') {
+            currentIndex++;
+          } else {
+            ok = false;
+          }
+        }
+        if (ok &&
+            (currentIndex < contents.length())) {
+          currentIndex = getFirstIndexAfterSpace(contents, currentIndex);
+        }
+        if (ok) {
+          for (String tagName : tagNames) {
+            int length = tagName.length();
+            if ((selectedTagName == null) &&
+                (currentIndex + length < contents.length()) &&
+                tagName.equalsIgnoreCase(contents.substring(currentIndex, currentIndex + length)) &&
+                !Character.isLetterOrDigit(contents.charAt(currentIndex + length))) {
+              currentIndex += length;
+              selectedTagName = tagName;
+            }
+          }
+          if (selectedTagName == null) {
+            ok = false;
+          }
+        }
+        if (ok) {
+          currentIndex = getFirstIndexAfterSpace(contents, currentIndex);
+          if ((currentIndex < contents.length()) &&
+              contents.charAt(currentIndex) == '/') {
+            currentIndex++;
+          } else {
+            ok = false;
+          }
+        }
+        if (ok) {
+          currentIndex = getFirstIndexAfterSpace(contents, currentIndex);
+          if ((currentIndex < contents.length()) &&
+              contents.charAt(currentIndex) == '>') {
+            currentIndex++;
+          } else {
+            ok = false;
+          }
+        }
+        if (ok) {
+          if (errors == null) {
+            return true;
+          }
+          result = true;
+          CheckErrorResult errorResult = createCheckErrorResult(analysis, beginIndex, currentIndex);
+          errorResult.addReplacement(PageElementTag.createTag(selectedTagName, true, false));
+          errors.add(errorResult);
+        }
+      }
     }
 
     return result;

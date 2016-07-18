@@ -23,10 +23,13 @@ public class PageElementTag extends PageElement {
   // HTML tags
   // =========================================================================
   public final static String TAG_HTML_A            = "a";
+  public final static String TAG_HTML_ABBR         = "abbr";
   public final static String TAG_HTML_B            = "b";
   public final static String TAG_HTML_BIG          = "big";
+  public final static String TAG_HTML_BLOCKQUOTE   = "blockquote";
   public final static String TAG_HTML_BR           = "br";
   public final static String TAG_HTML_CENTER       = "center";
+  public final static String TAG_HTML_CITE         = "cite";
   public final static String TAG_HTML_DEL          = "del";
   public final static String TAG_HTML_DIV          = "div";
   public final static String TAG_HTML_FONT         = "font";
