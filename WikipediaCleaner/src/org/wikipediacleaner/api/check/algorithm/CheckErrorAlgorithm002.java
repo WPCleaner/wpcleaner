@@ -63,12 +63,15 @@ public class CheckErrorAlgorithm002 extends CheckErrorAlgorithmBase {
         PageElementTag.TAG_HTML_BLOCKQUOTE,
         PageElementTag.TAG_HTML_CENTER,
         PageElementTag.TAG_HTML_CITE,
+        PageElementTag.TAG_HTML_DEL,
         PageElementTag.TAG_HTML_DIV,
         PageElementTag.TAG_HTML_FONT,
         PageElementTag.TAG_HTML_P,
         PageElementTag.TAG_HTML_S,
         PageElementTag.TAG_HTML_SMALL,
         PageElementTag.TAG_HTML_SPAN,
+        PageElementTag.TAG_HTML_TD,
+        PageElementTag.TAG_HTML_TR,
         PageElementTag.TAG_HTML_TT,
     };
     for (String tagName : listTags) {
