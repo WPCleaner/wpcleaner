@@ -59,6 +59,7 @@ public class CheckErrorAlgorithm002 extends CheckErrorAlgorithmBase {
     result |= analyzeBrTags(analysis, errors);
     String[] listTags = new String[] {
         PageElementTag.TAG_HTML_ABBR,
+        PageElementTag.TAG_HTML_B,
         PageElementTag.TAG_HTML_BIG,
         PageElementTag.TAG_HTML_BLOCKQUOTE,
         PageElementTag.TAG_HTML_CENTER,
@@ -66,13 +67,16 @@ public class CheckErrorAlgorithm002 extends CheckErrorAlgorithmBase {
         PageElementTag.TAG_HTML_DEL,
         PageElementTag.TAG_HTML_DIV,
         PageElementTag.TAG_HTML_FONT,
+        PageElementTag.TAG_HTML_I,
         PageElementTag.TAG_HTML_P,
         PageElementTag.TAG_HTML_S,
         PageElementTag.TAG_HTML_SMALL,
         PageElementTag.TAG_HTML_SPAN,
+        PageElementTag.TAG_HTML_STRIKE,
         PageElementTag.TAG_HTML_TD,
         PageElementTag.TAG_HTML_TR,
         PageElementTag.TAG_HTML_TT,
+        PageElementTag.TAG_HTML_U,
     };
     for (String tagName : listTags) {
       result |= analyzeNonFullTags(analysis, errors, tagName);
