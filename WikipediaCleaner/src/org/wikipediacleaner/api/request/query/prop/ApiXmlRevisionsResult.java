@@ -8,6 +8,7 @@
 package org.wikipediacleaner.api.request.query.prop;
 
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -55,6 +56,10 @@ public class ApiXmlRevisionsResult extends ApiXmlPropertiesResult implements Api
       // Manage redirects and missing pages
       updateRedirect(root, pages);
 
+      // Retrieving normalization information
+      Map<String, String> normalization = new HashMap<String, String>();
+      retrieveNormalization(root, normalization);
+
       // Retrieve pages
       XPath xpa = XPath.newInstance("/api/query/pages/page");
       List results = xpa.selectNodes(root);
@@ -81,6 +86,10 @@ public class ApiXmlRevisionsResult extends ApiXmlPropertiesResult implements Api
               samePage = pageId.equals(page.getPageId());
             } else {
               samePage = Page.areSameTitle(page.getTitle(), title);
+              if (!samePage) {
+                String normalizedTitle = getNormalizedTitle(page.getTitle(), normalization);
+                samePage = Page.areSameTitle(normalizedTitle, title);
+              }
             }
             if (samePage) {
               page.setNamespace(namespace);
