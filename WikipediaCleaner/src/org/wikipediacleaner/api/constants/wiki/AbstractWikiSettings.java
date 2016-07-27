@@ -23,7 +23,6 @@ public abstract class AbstractWikiSettings {
    * @param language Language.
    * @param name Name.
    * @param hosts List of possible host names.
-   * @param mobileHost Mobile host.
    * @param apiPath Path for the API, relative to the host URL.
    * @param indexPath Path for index.php, relative to the host URL.
    * @param code Code for the wiki.
