@@ -352,7 +352,26 @@ public class CheckErrorAlgorithm002 extends CheckErrorAlgorithmBase {
     for (PageElementTag tag : tags) {
 
       // Check for "clear" attribute
-      Parameter clearParameter = tag.getParameter("clear");
+      String clearValue = null;
+      if (true) {
+        Parameter clearParameter = tag.getParameter("clear");
+        if (clearParameter != null) {
+          clearValue = clearParameter.getTrimmedValue();
+        }
+      }
+      if (clearValue == null) {
+        Parameter styleParameter = tag.getParameter("style");
+        if (styleParameter != null) {
+          String styleValue = styleParameter.getTrimmedValue();
+          final String prefix = "clear:";
+          if ((styleValue != null) && styleValue.startsWith(prefix)) {
+            clearValue = styleValue.substring(prefix.length());
+            while ((clearValue.length() > 0) && (clearValue.endsWith(";"))) {
+              clearValue = clearValue.substring(0, clearValue.length() - 1);
+            }
+          }
+        }
+      }
 
       // Check for extra characters before the br tag
       boolean extra = false;
@@ -369,15 +388,14 @@ public class CheckErrorAlgorithm002 extends CheckErrorAlgorithmBase {
         extra  = true;
       }
 
-      if (extra || (clearParameter != null)) {
+      if (extra || (clearValue != null)) {
         if (errors == null) {
           return true;
         }
         result = true;
         CheckErrorResult errorResult = createCheckErrorResult(
             analysis, beginIndex, endIndex, ErrorLevel.WARNING);
-        if (clearParameter != null) {
-          String clearValue = clearParameter.getTrimmedValue();
+        if (clearValue != null) {
           String clearReplacementName = null;
           if ("all".equalsIgnoreCase(clearValue) || "both".equalsIgnoreCase(clearValue)) {
             clearReplacementName = "clear_all";
