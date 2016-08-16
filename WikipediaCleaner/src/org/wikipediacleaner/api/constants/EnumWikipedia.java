@@ -81,6 +81,7 @@ public enum EnumWikipedia {
   NDS_NL(new Wikipedia("nds-nl", "Dutch Low Saxon Wikipedia")),
   NL(new Wikipedia("nl", "Nederlandstalige Wikipedia")),
   NO(new Wikipedia("no", "Norsk Wikipedia på bokmål og riksmål")),
+  PA(new Wikipedia("pa", "Punjabi (Gurmukhi)")),
   PDC(new Wikipedia("pdc", "Pennsylvania German Wikipedia")),
   PL(new Wikipedia("pl", "Polska Wikipedia")),
   PT(new Wikipedia("pt", "Wikipédia em português")),
