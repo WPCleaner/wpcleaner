@@ -25,6 +25,7 @@ public class CheckErrorAlgorithm014 extends CheckErrorAlgorithmUnclosedTags {
   public CheckErrorAlgorithm014() {
     super("Source not correct end");
     tags = new ArrayList<String>();
+    tags.add(PageElementTag.TAG_WIKI_SYNTAXHIGHLIGHT);
     tags.add(PageElementTag.TAG_WIKI_SOURCE);
   }
 
