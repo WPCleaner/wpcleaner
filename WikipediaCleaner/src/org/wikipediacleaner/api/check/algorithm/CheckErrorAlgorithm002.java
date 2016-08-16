@@ -315,11 +315,11 @@ public class CheckErrorAlgorithm002 extends CheckErrorAlgorithmBase {
           tmpIndex++;
         }
         if ((tmpIndex < maxSize) && (brTag)) {
-          tmpIndex = getFirstIndexAfterSpace(contents, tmpIndex);
+          tmpIndex = getFirstIndexAfter(contents, tmpIndex, " \n");
           if ((tmpIndex < maxSize) && (contents.charAt(tmpIndex) == '/')) {
             tmpIndex++;
           }
-          tmpIndex = getFirstIndexAfterSpace(contents, tmpIndex);
+          tmpIndex = getFirstIndexAfter(contents, tmpIndex, " \n");
           while ((tmpIndex < maxSize) &&
                  (" \\.,:?/\n|+&)(".indexOf(contents.charAt(tmpIndex)) >= 0)) {
             tmpIndex++;

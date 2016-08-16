@@ -453,15 +453,37 @@ public abstract class CheckErrorAlgorithmBase implements CheckErrorAlgorithm {
   /**
    * @param contents Contents.
    * @param startIndex Index for starting the search.
-   * @return First index after the start index that is not a space character.
+   * @param characters Authorized characters.
+   * @return First index after the start index that is not an authorized character.
    */
-  protected int getFirstIndexAfterSpace(String contents, int startIndex) {
-    if (contents == null) {
+  protected int getFirstIndexAfter(String contents, int startIndex, String characters) {
+    if ((contents == null) || (characters == null)) {
       return startIndex;
     }
     int maxLength = contents.length();
-    while ((startIndex < maxLength) && (contents.charAt(startIndex) == ' ')) {
+    while ((startIndex < maxLength) &&
+           (characters.indexOf(contents.charAt(startIndex)) >= 0)) {
       startIndex++;
+    }
+    return startIndex;
+  }
+
+  /**
+   * @param contents Contents.
+   * @param startIndex Index for starting the search.
+   * @return First index after the start index that is not a space character.
+   */
+  protected int getFirstIndexAfterSpace(String contents, int startIndex) {
+    return getFirstIndexAfter(contents, startIndex, " ");
+  }
+
+  protected int getLastIndexBefore(String contents, int startIndex, String characters) {
+    if ((contents == null) || (characters == null)) {
+      return startIndex;
+    }
+    while ((startIndex >= 0) &&
+           (characters.indexOf(contents.charAt(startIndex)) >= 0)) {
+      startIndex--;
     }
     return startIndex;
   }
@@ -472,13 +494,7 @@ public abstract class CheckErrorAlgorithmBase implements CheckErrorAlgorithm {
    * @return Last index before the start index that is not a space character.
    */
   protected int getLastIndexBeforeSpace(String contents, int startIndex) {
-    if (contents == null) {
-      return startIndex;
-    }
-    while ((startIndex >= 0) && (contents.charAt(startIndex) == ' ')) {
-      startIndex--;
-    }
-    return startIndex;
+    return getLastIndexBefore(contents, startIndex, " ");
   }
 
   /**
