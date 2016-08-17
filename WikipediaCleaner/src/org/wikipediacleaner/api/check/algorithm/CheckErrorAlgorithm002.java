@@ -365,11 +365,17 @@ public class CheckErrorAlgorithm002 extends CheckErrorAlgorithmBase {
           String styleValue = styleParameter.getTrimmedValue();
           final String prefix = "clear:";
           if ((styleValue != null) && styleValue.startsWith(prefix)) {
-            clearValue = styleValue.substring(prefix.length());
+            clearValue = styleValue.substring(prefix.length()).trim();
             while ((clearValue.length() > 0) && (clearValue.endsWith(";"))) {
               clearValue = clearValue.substring(0, clearValue.length() - 1);
             }
           }
+        }
+      }
+      if (clearValue == null) {
+        Parameter breakParameter = tag.getParameter("break");
+        if (breakParameter != null) {
+          clearValue = breakParameter.getTrimmedValue();
         }
       }
 
