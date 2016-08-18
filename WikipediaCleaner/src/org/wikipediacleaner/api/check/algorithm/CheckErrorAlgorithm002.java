@@ -328,31 +328,52 @@ public class CheckErrorAlgorithm002 extends CheckErrorAlgorithmBase {
           tmpIndex++;
         }
         if ((tmpIndex < maxSize) && brTag) {
-          brTag = !Character.isAlphabetic(contents.charAt(tmpIndex));
+          char tmpChar = contents.charAt(tmpIndex);
+          brTag = !Character.isUpperCase(tmpChar) && !Character.isLowerCase(tmpChar);
         }
         if ((tmpIndex < maxSize) && brTag) {
+          tmpIndex = getFirstIndexAfter(contents, tmpIndex, " \n");
+          while ((tmpIndex < maxSize) &&
+                 (" \\.,:?\n|+&)(`".indexOf(contents.charAt(tmpIndex)) >= 0)) {
+            tmpIndex++;
+            incorrectChar = true;
+          }
           tmpIndex = getFirstIndexAfter(contents, tmpIndex, " \n");
           if ((tmpIndex < maxSize) && (contents.charAt(tmpIndex) == '/')) {
             tmpIndex++;
           }
           tmpIndex = getFirstIndexAfter(contents, tmpIndex, " \n");
           while ((tmpIndex < maxSize) &&
-                 (" \\.,:?/\n|+&)(".indexOf(contents.charAt(tmpIndex)) >= 0)) {
+                 (" \\.,:?/\n|+&)(`".indexOf(contents.charAt(tmpIndex)) >= 0)) {
             tmpIndex++;
             incorrectChar = true;
           }
           if (tmpIndex < maxSize) {
-            if (incorrectChar || (contents.charAt(tmpIndex) != '>')) {
+            boolean shouldReport = false;
+            if (incorrectChar) {
+              shouldReport = true;
+            } else {
+              if (contents.charAt(tmpIndex) != '>') {
+                PageElementTag tag = analysis.isInTag(currentIndex, PageElementTag.TAG_HTML_BR);
+                if (tag == null) {
+                  shouldReport = true;
+                }
+              }
+            }
+            if (shouldReport) {
               if (errors == null) {
                 return true;
               }
               result = true;
-              tmpIndex++;
+              boolean endsWithGT = (contents.charAt(tmpIndex) == '>');
+              if (endsWithGT) {
+                tmpIndex++;
+              }
               CheckErrorResult errorResult = createCheckErrorResult(
                   analysis, currentIndex, tmpIndex);
               errorResult.addReplacement(
                   PageElementTag.createTag(PageElementTag.TAG_HTML_BR, false, false),
-                  contents.charAt(tmpIndex) == '>');
+                  endsWithGT && incorrectChar);
               errors.add(errorResult);
               nextIndex = tmpIndex;
             }
@@ -385,7 +406,7 @@ public class CheckErrorAlgorithm002 extends CheckErrorAlgorithmBase {
         extra  = true;
       }
 
-      if (extra || (clearValue != null)) {
+      if (extra || (clearValue != null) || (tag.getParametersCount() > 0)) {
         if (errors == null) {
           return true;
         }
@@ -398,7 +419,7 @@ public class CheckErrorAlgorithm002 extends CheckErrorAlgorithmBase {
             errorResult.addReplacement(clearReplacement, !clearReplacement.isEmpty());
           }
         }
-        if (extra) {
+        if (extra || (tag.getParametersCount() > 0)) {
           errorResult.addReplacement(
               PageElementTag.createTag(PageElementTag.TAG_HTML_BR, false, false),
               false);
