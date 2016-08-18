@@ -327,7 +327,10 @@ public class CheckErrorAlgorithm002 extends CheckErrorAlgorithmBase {
           }
           tmpIndex++;
         }
-        if ((tmpIndex < maxSize) && (brTag)) {
+        if ((tmpIndex < maxSize) && brTag) {
+          brTag = !Character.isAlphabetic(contents.charAt(tmpIndex));
+        }
+        if ((tmpIndex < maxSize) && brTag) {
           tmpIndex = getFirstIndexAfter(contents, tmpIndex, " \n");
           if ((tmpIndex < maxSize) && (contents.charAt(tmpIndex) == '/')) {
             tmpIndex++;
@@ -338,8 +341,8 @@ public class CheckErrorAlgorithm002 extends CheckErrorAlgorithmBase {
             tmpIndex++;
             incorrectChar = true;
           }
-          if ((tmpIndex < maxSize) && (contents.charAt(tmpIndex) == '>')) {
-            if (incorrectChar) {
+          if (tmpIndex < maxSize) {
+            if (incorrectChar || (contents.charAt(tmpIndex) != '>')) {
               if (errors == null) {
                 return true;
               }
@@ -349,7 +352,7 @@ public class CheckErrorAlgorithm002 extends CheckErrorAlgorithmBase {
                   analysis, currentIndex, tmpIndex);
               errorResult.addReplacement(
                   PageElementTag.createTag(PageElementTag.TAG_HTML_BR, false, false),
-                  true);
+                  contents.charAt(tmpIndex) == '>');
               errors.add(errorResult);
               nextIndex = tmpIndex;
             }
