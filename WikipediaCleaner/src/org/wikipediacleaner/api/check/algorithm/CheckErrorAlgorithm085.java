@@ -39,7 +39,7 @@ public class CheckErrorAlgorithm085 extends CheckErrorAlgorithmBase {
   };
 
   private final static String[] ignoredTags = {
-    PageElementTag.TAG_WIKI_CODE,
+    PageElementTag.TAG_HTML_CODE,
     PageElementTag.TAG_WIKI_NOWIKI,
     PageElementTag.TAG_WIKI_PRE,
     PageElementTag.TAG_WIKI_SCORE,

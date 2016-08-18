@@ -64,6 +64,7 @@ public class CheckErrorAlgorithm002 extends CheckErrorAlgorithmBase {
         PageElementTag.TAG_HTML_BLOCKQUOTE,
         PageElementTag.TAG_HTML_CENTER,
         PageElementTag.TAG_HTML_CITE,
+        PageElementTag.TAG_HTML_CODE,
         PageElementTag.TAG_HTML_DEL,
         PageElementTag.TAG_HTML_DIV,
         PageElementTag.TAG_HTML_EM,
@@ -81,6 +82,7 @@ public class CheckErrorAlgorithm002 extends CheckErrorAlgorithmBase {
         PageElementTag.TAG_HTML_TR,
         PageElementTag.TAG_HTML_TT,
         PageElementTag.TAG_HTML_U,
+        PageElementTag.TAG_HTML_UL,
     };
     for (String tagName : listTags) {
       result |= analyzeNonFullTags(analysis, errors, tagName);
@@ -132,6 +134,17 @@ public class CheckErrorAlgorithm002 extends CheckErrorAlgorithmBase {
             !previousTag.isComplete() &&
             !previousTag.isEndTag()) {
           errorResult.addReplacement(PageElementTag.createTag(tagName, true, false));
+        }
+
+        // Check for clear tags (<div clear="..."/>)
+        if (PageElementTag.TAG_HTML_DIV.equals(tagName)) {
+          String clearValue = getClearValue(tag);
+          if (clearValue != null) {
+            String clearReplacement = getClearReplacement(clearValue);
+            if (clearReplacement != null) {
+              errorResult.addReplacement(clearReplacement, false);
+            }
+          }
         }
 
         // Check for id tags (<span id="..."/> or <div id="..."/>)
@@ -352,32 +365,7 @@ public class CheckErrorAlgorithm002 extends CheckErrorAlgorithmBase {
     for (PageElementTag tag : tags) {
 
       // Check for "clear" attribute
-      String clearValue = null;
-      if (true) {
-        Parameter clearParameter = tag.getParameter("clear");
-        if (clearParameter != null) {
-          clearValue = clearParameter.getTrimmedValue();
-        }
-      }
-      if (clearValue == null) {
-        Parameter styleParameter = tag.getParameter("style");
-        if (styleParameter != null) {
-          String styleValue = styleParameter.getTrimmedValue();
-          final String prefix = "clear:";
-          if ((styleValue != null) && styleValue.startsWith(prefix)) {
-            clearValue = styleValue.substring(prefix.length()).trim();
-            while ((clearValue.length() > 0) && (clearValue.endsWith(";"))) {
-              clearValue = clearValue.substring(0, clearValue.length() - 1);
-            }
-          }
-        }
-      }
-      if (clearValue == null) {
-        Parameter breakParameter = tag.getParameter("break");
-        if (breakParameter != null) {
-          clearValue = breakParameter.getTrimmedValue();
-        }
-      }
+      String clearValue = getClearValue(tag);
 
       // Check for extra characters before the br tag
       boolean extra = false;
@@ -402,18 +390,7 @@ public class CheckErrorAlgorithm002 extends CheckErrorAlgorithmBase {
         CheckErrorResult errorResult = createCheckErrorResult(
             analysis, beginIndex, endIndex, ErrorLevel.WARNING);
         if (clearValue != null) {
-          String clearReplacementName = null;
-          if ("all".equalsIgnoreCase(clearValue) || "both".equalsIgnoreCase(clearValue)) {
-            clearReplacementName = "clear_all";
-          } else if ("left".equalsIgnoreCase(clearValue)) {
-            clearReplacementName = "clear_left";
-          } else if ("right".equalsIgnoreCase(clearValue)) {
-            clearReplacementName = "clear_right";
-          }
-          String clearReplacement = null;
-          if (clearReplacementName != null) {
-            clearReplacement = getSpecificProperty(clearReplacementName, true, true, false);
-          }
+          String clearReplacement = getClearReplacement(clearValue);
           if (clearReplacement != null) {
             errorResult.addReplacement(clearReplacement, !clearReplacement.isEmpty());
           }
@@ -428,6 +405,62 @@ public class CheckErrorAlgorithm002 extends CheckErrorAlgorithmBase {
     }
 
     return result;
+  }
+
+  /**
+   * @param tag Tag.
+   * @return Value of clear attribute (or equivalent).
+   */
+  protected String getClearValue(PageElementTag tag) {
+    if (tag == null) {
+      return null;
+    }
+
+    // Attribute clear
+    Parameter clearParameter = tag.getParameter("clear");
+    if (clearParameter != null) {
+      return clearParameter.getTrimmedValue();
+    }
+
+    // Attribute style
+    Parameter styleParameter = tag.getParameter("style");
+    if (styleParameter != null) {
+      String styleValue = styleParameter.getTrimmedValue();
+      final String prefix = "clear:";
+      if ((styleValue != null) && styleValue.startsWith(prefix)) {
+        String clearValue = styleValue.substring(prefix.length()).trim();
+        while ((clearValue.length() > 0) && (clearValue.endsWith(";"))) {
+          clearValue = clearValue.substring(0, clearValue.length() - 1);
+        }
+        return clearValue;
+      }
+    }
+
+    // Attribute break;
+    Parameter breakParameter = tag.getParameter("break");
+    if (breakParameter != null) {
+      return breakParameter.getTrimmedValue();
+    }
+
+    return null;
+  }
+
+  /**
+   * @param clearValue Value of clear attribute.
+   * @return Replacement for this value of clear attribute.
+   */
+  protected String getClearReplacement(String clearValue) {
+    String clearReplacementName = null;
+    if ("all".equalsIgnoreCase(clearValue) || "both".equalsIgnoreCase(clearValue)) {
+      clearReplacementName = "clear_all";
+    } else if ("left".equalsIgnoreCase(clearValue)) {
+      clearReplacementName = "clear_left";
+    } else if ("right".equalsIgnoreCase(clearValue)) {
+      clearReplacementName = "clear_right";
+    } else {
+      return null;
+    }
+    return getSpecificProperty(clearReplacementName, true, true, false);
   }
 
   /**

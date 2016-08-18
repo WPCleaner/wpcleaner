@@ -63,7 +63,7 @@ public class CheckErrorAlgorithm004 extends CheckErrorAlgorithmBase {
       }
 
       int index = tag.getBeginIndex();
-      if ((analysis.getSurroundingTag(PageElementTag.TAG_WIKI_CODE, index) != null) ||
+      if ((analysis.getSurroundingTag(PageElementTag.TAG_HTML_CODE, index) != null) ||
           (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_IMAGEMAP, index) != null) ||
           (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_MATH, index) != null) ||
           (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_MATH_CHEM, index) != null) ||

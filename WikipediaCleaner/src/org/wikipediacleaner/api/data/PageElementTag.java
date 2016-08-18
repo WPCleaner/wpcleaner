@@ -30,6 +30,7 @@ public class PageElementTag extends PageElement {
   public final static String TAG_HTML_BR           = "br";
   public final static String TAG_HTML_CENTER       = "center";
   public final static String TAG_HTML_CITE         = "cite";
+  public final static String TAG_HTML_CODE         = "code";
   public final static String TAG_HTML_DEL          = "del";
   public final static String TAG_HTML_DIV          = "div";
   public final static String TAG_HTML_EM           = "em";
@@ -64,7 +65,6 @@ public class PageElementTag extends PageElement {
   // =========================================================================
   // Wiki tags
   // =========================================================================
-  public final static String TAG_WIKI_CODE            = "code";
   public final static String TAG_WIKI_GALLERY         = "gallery";
   public final static String TAG_WIKI_GRAPH           = "graph";
   public final static String TAG_WIKI_HIERO           = "hiero";

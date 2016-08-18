@@ -25,7 +25,7 @@ public class CheckErrorAlgorithm015 extends CheckErrorAlgorithmUnclosedTags {
   public CheckErrorAlgorithm015() {
     super("Code not correct end");
     tags = new ArrayList<String>();
-    tags.add(PageElementTag.TAG_WIKI_CODE);
+    tags.add(PageElementTag.TAG_HTML_CODE);
   }
 
   /**
