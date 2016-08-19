@@ -117,6 +117,14 @@ public class CheckErrorAlgorithm090 extends CheckErrorAlgorithmBase {
     for (PageElementExternalLink link : links) {
       ArticleUrl articleUrl = ArticleUrl.isArticleUrl(wiki, link.getLink());
       if (articleUrl != null) {
+        int index = link.getBeginIndex();
+        if ((analysis.getSurroundingTag(PageElementTag.TAG_HTML_CODE, index) != null) ||
+            (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_SOURCE, index) != null) ||
+            (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_SYNTAXHIGHLIGHT, index) != null)) {
+          articleUrl = null;
+        }
+      }
+      if (articleUrl != null) {
         if (errors == null) {
           return true;
         }
