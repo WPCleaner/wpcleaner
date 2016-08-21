@@ -14,9 +14,11 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.httpclient.HttpClient;
-import org.jdom.Element;
-import org.jdom.JDOMException;
-import org.jdom.xpath.XPath;
+import org.jdom2.Element;
+import org.jdom2.JDOMException;
+import org.jdom2.filter.Filters;
+import org.jdom2.xpath.XPathExpression;
+import org.jdom2.xpath.XPathFactory;
 import org.wikipediacleaner.api.APIException;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.DataManager;
@@ -58,11 +60,12 @@ public class ApiXmlCategoriesResult extends ApiXmlPropertiesResult implements Ap
       Element root = getRoot(properties, ApiRequest.MAX_ATTEMPTS);
 
       // Retrieve back links
-      XPath xpa = XPath.newInstance("/api/query/pages/page/categories/cl");
-      List listCategories = xpa.selectNodes(root);
-      Iterator itCategory = listCategories.iterator();
+      XPathExpression<Element> xpa = XPathFactory.instance().compile(
+          "/api/query/pages/page/categories/cl", Filters.element());
+      List<Element> listCategories = xpa.evaluate(root);
+      Iterator<Element> itCategory = listCategories.iterator();
       while (itCategory.hasNext()) {
-        Element currentCategory = (Element) itCategory.next();
+        Element currentCategory = itCategory.next();
         String pageId = currentCategory.getAttributeValue("pageid");
         String ns = currentCategory.getAttributeValue("ns");
         String title = currentCategory.getAttributeValue("title");
@@ -107,15 +110,16 @@ public class ApiXmlCategoriesResult extends ApiXmlPropertiesResult implements Ap
       updateRedirect(root, pages);
 
       // Set disambiguation status
-      XPath xpa = XPath.newInstance("/api/query/pages/page");
-      List results = xpa.selectNodes(root);
-      Iterator iter = results.iterator();
-      XPath xpaTitle = XPath.newInstance("./@title");
-      XPath xpaCategory = createXPath("categories/cl", "ns", "" + Namespace.CATEGORY);
+      XPathExpression<Element> xpa = XPathFactory.instance().compile(
+          "/api/query/pages/page", Filters.element());
+      List<Element> results = xpa.evaluate(root);
+      Iterator<Element> iter = results.iterator();
+      XPathExpression<Element> xpaCategory = XPathFactory.instance().compile(
+          "categories/cl", Filters.element());
       List<Page> tmpPages = new ArrayList<Page>();
       while (iter.hasNext()) {
-        Element currentNode = (Element) iter.next();
-        String title = xpaTitle.valueOf(currentNode);
+        Element currentNode = iter.next();
+        String title = currentNode.getAttributeValue("title");
         for (Page p : pages) {
           tmpPages.clear();
           Iterator<Page> it = p.getRedirectIteratorWithPage();
@@ -124,8 +128,14 @@ public class ApiXmlCategoriesResult extends ApiXmlPropertiesResult implements Ap
             tmpPages.add(p2);
             if ((p2.getTitle() != null) &&
                 (Page.areSameTitle(p2.getTitle(), title))) {
-              List listCategories = xpaCategory.selectNodes(currentNode);
-              if (listCategories.size() > 0) {
+              List<Element> listCategories = xpaCategory.evaluate(currentNode);
+              boolean dab = false;
+              for (Element category : listCategories) {
+                if (!dab && (category.getAttribute("ns").equals("" + Namespace.CATEGORY))) {
+                  dab = true;
+                }
+              }
+              if (dab) {
                 for (Page p3 : tmpPages) {
                   p3.setDisambiguationPage(Boolean.TRUE);
                 }

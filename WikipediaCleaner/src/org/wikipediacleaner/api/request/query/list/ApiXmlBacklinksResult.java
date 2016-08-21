@@ -13,9 +13,11 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.httpclient.HttpClient;
-import org.jdom.Element;
-import org.jdom.JDOMException;
-import org.jdom.xpath.XPath;
+import org.jdom2.Element;
+import org.jdom2.JDOMException;
+import org.jdom2.filter.Filters;
+import org.jdom2.xpath.XPathExpression;
+import org.jdom2.xpath.XPathFactory;
 import org.wikipediacleaner.api.APIException;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.DataManager;
@@ -59,19 +61,18 @@ public class ApiXmlBacklinksResult extends ApiXmlResult implements ApiBacklinksR
       Element root = getRoot(properties, ApiRequest.MAX_ATTEMPTS);
 
       // Retrieve back links
-      XPath xpa = XPath.newInstance("/api/query/backlinks/bl");
-      List listBacklinks = xpa.selectNodes(root);
-      Iterator itBacklink = listBacklinks.iterator();
-      XPath xpaPageId = XPath.newInstance("./@pageid");
-      XPath xpaNs = XPath.newInstance("./@ns");
-      XPath xpaTitle = XPath.newInstance("./@title");
-      XPath xpaRedirLinks = XPath.newInstance("redirlinks/bl");
+      XPathExpression<Element> xpa = XPathFactory.instance().compile(
+          "/api/query/backlinks/bl", Filters.element());
+      List<Element> listBacklinks = xpa.evaluate(root);
+      Iterator<Element> itBacklink = listBacklinks.iterator();
+      XPathExpression<Element> xpaRedirLinks = XPathFactory.instance().compile(
+          "redirlinks/bl", Filters.element());
       while (itBacklink.hasNext()) {
-        Element currentBacklink = (Element) itBacklink.next();
+        Element currentBacklink = itBacklink.next();
         Page link = DataManager.getPage(
-            getWiki(), xpaTitle.valueOf(currentBacklink), null, null, null);
-        link.setNamespace(xpaNs.valueOf(currentBacklink));
-        link.setPageId(xpaPageId.valueOf(currentBacklink));
+            getWiki(), currentBacklink.getAttributeValue("title"), null, null, null);
+        link.setNamespace(currentBacklink.getAttributeValue("ns"));
+        link.setPageId(currentBacklink.getAttributeValue("pageid"));
         if (currentBacklink.getAttribute("redirect") != null) {
           link.addRedirect(page);
         }
@@ -80,16 +81,16 @@ public class ApiXmlBacklinksResult extends ApiXmlResult implements ApiBacklinksR
         }
 
         // Links through redirects
-        List listRedirLinks = xpaRedirLinks.selectNodes(currentBacklink);
+        List<Element> listRedirLinks = xpaRedirLinks.evaluate(currentBacklink);
         if (listRedirLinks != null) {
           List<Page> linkList = new ArrayList<Page>();
-          Iterator itRedirLink = listRedirLinks.iterator();
+          Iterator<Element> itRedirLink = listRedirLinks.iterator();
           while (itRedirLink.hasNext()) {
-            currentBacklink = (Element) itRedirLink.next();
+            currentBacklink = itRedirLink.next();
             Page link2 = DataManager.getPage(
-                getWiki(), xpaTitle.valueOf(currentBacklink), null, null, null);
-            link2.setNamespace(xpaNs.valueOf(currentBacklink));
-            link2.setPageId(xpaPageId.valueOf(currentBacklink));
+                getWiki(), currentBacklink.getAttributeValue("title"), null, null, null);
+            link2.setNamespace(currentBacklink.getAttributeValue("ns"));
+            link2.setPageId(currentBacklink.getAttributeValue("pageid"));
             if (!list.contains(link2)) {
               list.add(link2);
             }

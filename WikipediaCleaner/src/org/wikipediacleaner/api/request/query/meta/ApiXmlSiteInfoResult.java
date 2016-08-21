@@ -15,9 +15,11 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.httpclient.HttpClient;
-import org.jdom.Element;
-import org.jdom.JDOMException;
-import org.jdom.xpath.XPath;
+import org.jdom2.Element;
+import org.jdom2.JDOMException;
+import org.jdom2.filter.Filters;
+import org.jdom2.xpath.XPathExpression;
+import org.jdom2.xpath.XPathFactory;
 import org.wikipediacleaner.api.APIException;
 import org.wikipediacleaner.api.constants.EnumCaseSensitiveness;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
@@ -61,8 +63,9 @@ public class ApiXmlSiteInfoResult extends ApiXmlResult implements ApiSiteInfoRes
       WikiConfiguration wikiConfiguration = getWiki().getWikiConfiguration();
 
       // Retrieve general information
-      XPath xpa = XPath.newInstance("/api/query/general");
-      Element generalNode = (Element) xpa.selectSingleNode(root);
+      XPathExpression<Element> xpa = XPathFactory.instance().compile(
+          "/api/query/general", Filters.element());
+      Element generalNode = xpa.evaluateFirst(root);
       if (generalNode != null) {
         wikiConfiguration.setArticlePath(generalNode.getAttributeValue("articlepath"));
         wikiConfiguration.setScript(generalNode.getAttributeValue("script"));
@@ -71,12 +74,13 @@ public class ApiXmlSiteInfoResult extends ApiXmlResult implements ApiSiteInfoRes
 
       // Retrieve name spaces
       HashMap<Integer, Namespace> namespaces = null;
-      xpa = XPath.newInstance("/api/query/namespaces/ns");
-      List results = xpa.selectNodes(root);
-      Iterator iter = results.iterator();
+      xpa = XPathFactory.instance().compile(
+          "/api/query/namespaces/ns", Filters.element());
+      List<Element> results = xpa.evaluate(root);
+      Iterator<Element> iter = results.iterator();
       namespaces = new HashMap<>();
       while (iter.hasNext()) {
-        Element currentNode = (Element) iter.next();
+        Element currentNode = iter.next();
         String title = currentNode.getText();
         String canonical = currentNode.getAttributeValue("canonical");
         String id = currentNode.getAttributeValue("id");
@@ -87,11 +91,12 @@ public class ApiXmlSiteInfoResult extends ApiXmlResult implements ApiSiteInfoRes
       }
 
       // Retrieve name space aliases
-      xpa = XPath.newInstance("/api/query/namespacealiases/ns");
-      results = xpa.selectNodes(root);
+      xpa = XPathFactory.instance().compile(
+          "/api/query/namespacealiases/ns", Filters.element());
+      results = xpa.evaluate(root);
       iter = results.iterator();
       while (iter.hasNext()) {
-        Element currentNode = (Element) iter.next();
+        Element currentNode = iter.next();
         Integer nsId = null;
         try {
           nsId = Integer.parseInt(currentNode.getAttributeValue("id"));
@@ -110,11 +115,12 @@ public class ApiXmlSiteInfoResult extends ApiXmlResult implements ApiSiteInfoRes
 
       // Retrieve languages
       List<Language> languages = new ArrayList<>();
-      xpa = XPath.newInstance("/api/query/languages/lang");
-      results = xpa.selectNodes(root);
+      xpa = XPathFactory.instance().compile(
+          "/api/query/languages/lang", Filters.element());
+      results = xpa.evaluate(root);
       iter = results.iterator();
       while (iter.hasNext()) {
-        Element currentNode = (Element) iter.next();
+        Element currentNode = iter.next();
         String code = currentNode.getAttributeValue("code");
         String name = currentNode.getText();
         languages.add(new Language(code, name));
@@ -123,11 +129,12 @@ public class ApiXmlSiteInfoResult extends ApiXmlResult implements ApiSiteInfoRes
 
       // Retrieve interwikis
       List<Interwiki> interwikis = new ArrayList<>();
-      xpa = XPath.newInstance("/api/query/interwikimap/iw");
-      results = xpa.selectNodes(root);
+      xpa = XPathFactory.instance().compile(
+          "/api/query/interwikimap/iw", Filters.element());
+      results = xpa.evaluate(root);
       iter = results.iterator();
       while (iter.hasNext()) {
-        Element currentNode = (Element) iter.next();
+        Element currentNode = iter.next();
         String prefix = currentNode.getAttributeValue("prefix");
         boolean local = (currentNode.getAttribute("local") != null);
         String language = currentNode.getAttributeValue("language");
@@ -138,20 +145,21 @@ public class ApiXmlSiteInfoResult extends ApiXmlResult implements ApiSiteInfoRes
 
       // Retrieve magic words
       Map<String, MagicWord> magicWords = new HashMap<>();
-      xpa = XPath.newInstance("/api/query/magicwords/magicword");
-      results = xpa.selectNodes(root);
+      xpa = XPathFactory.instance().compile(
+          "/api/query/magicwords/magicword", Filters.element());
+      results = xpa.evaluate(root);
       iter = results.iterator();
-      XPath xpaAlias = XPath.newInstance("./aliases/alias");
-      XPath xpaAliasValue = XPath.newInstance(".");
+      XPathExpression<Element> xpaAlias = XPathFactory.instance().compile(
+          "./aliases/alias", Filters.element());
       while (iter.hasNext()) {
-        Element currentNode = (Element) iter.next();
+        Element currentNode = iter.next();
         String magicWord = currentNode.getAttributeValue("name");
         List<String> aliases = new ArrayList<>();
-        List resultsAlias = xpaAlias.selectNodes(currentNode);
-        Iterator iterAlias = resultsAlias.iterator();
+        List<Element> resultsAlias = xpaAlias.evaluate(currentNode);
+        Iterator<Element> iterAlias = resultsAlias.iterator();
         while (iterAlias.hasNext()) {
-          Element currentAlias = (Element) iterAlias.next();
-          String alias = xpaAliasValue.valueOf(currentAlias);
+          Element currentAlias = iterAlias.next();
+          String alias = currentAlias.getText();
           aliases.add(alias);
         }
         boolean caseSensitive = (currentNode.getAttribute("case-sensitive") != null);
@@ -163,18 +171,19 @@ public class ApiXmlSiteInfoResult extends ApiXmlResult implements ApiSiteInfoRes
 
       // Retrieve special page aliases
       Map<String, SpecialPage> specialPages = new HashMap<>();
-      xpa = XPath.newInstance("/api/query/specialpagealiases/specialpage");
-      results = xpa.selectNodes(root);
+      xpa = XPathFactory.instance().compile(
+          "/api/query/specialpagealiases/specialpage", Filters.element());
+      results = xpa.evaluate(root);
       iter = results.iterator();
       while (iter.hasNext()) {
-        Element currentNode = (Element) iter.next();
+        Element currentNode = iter.next();
         String specialPage = currentNode.getAttributeValue("realname");
         List<String> aliases = new ArrayList<String>();
-        List resultsAlias = xpaAlias.selectNodes(currentNode);
-        Iterator iterAlias = resultsAlias.iterator();
+        List<Element> resultsAlias = xpaAlias.evaluate(currentNode);
+        Iterator<Element> iterAlias = resultsAlias.iterator();
         while (iterAlias.hasNext()) {
-          Element currentAlias = (Element) iterAlias.next();
-          String alias = xpaAliasValue.valueOf(currentAlias);
+          Element currentAlias = iterAlias.next();
+          String alias = currentAlias.getText();
           aliases.add(alias);
         }
         specialPages.put(

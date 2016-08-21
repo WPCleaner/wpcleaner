@@ -29,17 +29,17 @@ public class PageHandler extends DefaultHandler {
   /** Page title */
   private String title;
 
-  /** True when parsing namespace */
+  /** True when parsing name space */
   private boolean isInNamespace;
 
-  /** Namespace */
-  private Integer namespace;
+  /** Name space */
+  private String namespace;
 
   /** True when parsing a page id */
   private boolean isInPageId;
 
   /** Page id */
-  private Integer pageId;
+  private String pageId;
 
   /** True when parsing a revision */
   private boolean isInRevision;
@@ -48,7 +48,7 @@ public class PageHandler extends DefaultHandler {
   private boolean isInRevisionId;
 
   /** Revision id */
-  private Integer revisionId;
+  private String revisionId;
 
   /** True when parsing a revision text */
   private boolean isInRevisionText;
@@ -151,11 +151,15 @@ public class PageHandler extends DefaultHandler {
     if (isInPage) {
       if (qName.equalsIgnoreCase("page")) {
         if (processor != null) {
-          Page page = DataManager.getPage(
-              processor.getWiki(), title, pageId, revisionId.toString(), null);
-          page.setNamespace(namespace);
-          page.setContents(revisionText);
-          processor.processPage(page);
+          try {
+            Page page = DataManager.getPage(
+                processor.getWiki(), title, Integer.valueOf(pageId, 10), revisionId, null);
+            page.setNamespace(namespace);
+            page.setContents(revisionText);
+            processor.processPage(page);
+          } catch (NumberFormatException e) {
+            System.err.println("Problem in endElement: " + e.getMessage());
+          }
         }
         isInPage = false;
         cleanPageInformation();
@@ -197,21 +201,39 @@ public class PageHandler extends DefaultHandler {
   @Override
   public void characters(char ch[], int start, int length) throws SAXException {
     if (isInPage) {
+      String value = new String(ch, start, length);
       if (isInRevision) {
         if (isInRevisionId) {
-          revisionId = Integer.valueOf(new String(ch, start, length));
+          if (revisionId == null) {
+            revisionId = value;
+          } else {
+            revisionId += value;
+          }
         } else if (isInRevisionText) {
           if (revisionText == null) {
-            revisionText = "";
+            revisionText = value;
+          } else {
+            revisionText += value;
           }
-          revisionText += new String(ch, start, length);
         }
       } else if (isInTitle) {
-        title = new String(ch, start, length);
+        if (title == null) {
+          title = value;
+        } else {
+          title += value;
+        }
       } else if (isInNamespace) {
-        namespace = Integer.valueOf(new String(ch, start, length));
+        if (namespace == null) {
+          namespace = value;
+        } else {
+          namespace += value;
+        }
       } else if (isInPageId) {
-        pageId = Integer.valueOf(new String(ch, start, length));
+        if (pageId == null) {
+          pageId = value;
+        } else {
+          pageId += value;
+        }
       }
     }
   }

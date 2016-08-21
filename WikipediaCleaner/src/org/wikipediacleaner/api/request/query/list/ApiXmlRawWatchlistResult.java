@@ -12,9 +12,11 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.httpclient.HttpClient;
-import org.jdom.Element;
-import org.jdom.JDOMException;
-import org.jdom.xpath.XPath;
+import org.jdom2.Element;
+import org.jdom2.JDOMException;
+import org.jdom2.filter.Filters;
+import org.jdom2.xpath.XPathExpression;
+import org.jdom2.xpath.XPathFactory;
 import org.wikipediacleaner.api.APIException;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.DataManager;
@@ -55,14 +57,14 @@ public class ApiXmlRawWatchlistResult extends ApiXmlResult implements ApiRawWatc
       Element root = getRoot(properties, ApiRequest.MAX_ATTEMPTS);
 
       // Retrieve watch list
-      XPath xpa = XPath.newInstance("/api/watchlistraw/wr");
-      List results = xpa.selectNodes(root);
-      Iterator iter = results.iterator();
-      XPath xpaTitle = XPath.newInstance("./@title");
+      XPathExpression<Element> xpa = XPathFactory.instance().compile(
+          "/api/watchlistraw/wr", Filters.element());
+      List<Element> results = xpa.evaluate(root);
+      Iterator<Element> iter = results.iterator();
       while (iter.hasNext()) {
-        Element currentNode = (Element) iter.next();
+        Element currentNode = iter.next();
         Page page = DataManager.getPage(
-            getWiki(), xpaTitle.valueOf(currentNode), null, null, null);
+            getWiki(), currentNode.getAttributeValue("title"), null, null, null);
         if (page.isArticle()) {
           watchlist.add(page);
         }

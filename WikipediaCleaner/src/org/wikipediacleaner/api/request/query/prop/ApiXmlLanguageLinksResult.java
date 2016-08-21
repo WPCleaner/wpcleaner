@@ -12,9 +12,11 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.httpclient.HttpClient;
-import org.jdom.Element;
-import org.jdom.JDOMException;
-import org.jdom.xpath.XPath;
+import org.jdom2.Element;
+import org.jdom2.JDOMException;
+import org.jdom2.filter.Filters;
+import org.jdom2.xpath.XPathExpression;
+import org.jdom2.xpath.XPathFactory;
 import org.wikipediacleaner.api.APIException;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.request.ApiRequest;
@@ -51,15 +53,14 @@ public class ApiXmlLanguageLinksResult extends ApiXmlPropertiesResult implements
       Element root = getRoot(properties, ApiRequest.MAX_ATTEMPTS);
 
       // Set disambiguation status
-      XPath xpa = XPath.newInstance("/api/query/pages/page/langlinks/ll");
-      List results = xpa.selectNodes(root);
-      Iterator iter = results.iterator();
-      XPath xpaTitle = XPath.newInstance(".");
-      XPath xpaLang = XPath.newInstance("./@lang");
+      XPathExpression<Element> xpa = XPathFactory.instance().compile(
+          "/api/query/pages/page/langlinks/ll", Filters.element());
+      List<Element> results = xpa.evaluate(root);
+      Iterator<Element> iter = results.iterator();
       while (iter.hasNext()) {
-        Element currentNode = (Element) iter.next();
-        String title = xpaTitle.valueOf(currentNode);
-        String lang = xpaLang.valueOf(currentNode);
+        Element currentNode = iter.next();
+        String title = currentNode.getText();
+        String lang = currentNode.getAttributeValue("lang");
         if ((title != null) && (title.trim().length() > 0)) {
           languageLinks.put(lang, title);
         }

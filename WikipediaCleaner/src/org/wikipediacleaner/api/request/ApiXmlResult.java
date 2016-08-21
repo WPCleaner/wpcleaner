@@ -19,15 +19,17 @@ import org.apache.commons.httpclient.Header;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpMethod;
 import org.apache.commons.httpclient.HttpStatus;
-import org.jdom.Attribute;
-import org.jdom.Document;
-import org.jdom.Element;
-import org.jdom.JDOMException;
-import org.jdom.input.JDOMParseException;
-import org.jdom.input.SAXBuilder;
-import org.jdom.output.Format;
-import org.jdom.output.XMLOutputter;
-import org.jdom.xpath.XPath;
+import org.jdom2.Attribute;
+import org.jdom2.Document;
+import org.jdom2.Element;
+import org.jdom2.JDOMException;
+import org.jdom2.filter.Filters;
+import org.jdom2.input.JDOMParseException;
+import org.jdom2.input.SAXBuilder;
+import org.jdom2.output.Format;
+import org.jdom2.output.XMLOutputter;
+import org.jdom2.xpath.XPathExpression;
+import org.jdom2.xpath.XPathFactory;
 import org.wikipediacleaner.api.APIException;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.DataManager;
@@ -211,37 +213,32 @@ public abstract class ApiXmlResult extends BasicApiResult {
     }
     
     // Check for errors
-    try {
-      XPath xpa = XPath.newInstance("/api/error");
-      List listErrors = xpa.selectNodes(root);
-      if (listErrors != null) {
-        Iterator iterErrors = listErrors.iterator();
-        XPath xpaCode = XPath.newInstance("./@code");
-        XPath xpaInfo = XPath.newInstance("./@info");
-        while (iterErrors.hasNext()) {
-          Element currentNode = (Element) iterErrors.next();
-          String text = "Error reported: " + xpaCode.valueOf(currentNode) + " - " + xpaInfo.valueOf(currentNode);
-          log.warn(text);
-          throw new APIException(text, xpaCode.valueOf(currentNode));
-        }
+    XPathExpression<Element> xpa = XPathFactory.instance().compile(
+        "/api/error", Filters.element());
+    List<Element> listErrors = xpa.evaluate(root);
+    if (listErrors != null) {
+      Iterator<Element> iterErrors = listErrors.iterator();
+      while (iterErrors.hasNext()) {
+        Element currentNode = iterErrors.next();
+        String text =
+            "Error reported: " +
+            currentNode.getAttributeValue("code") + " - " +
+            currentNode.getAttributeValue("info");
+        log.warn(text);
+        throw new APIException(text, currentNode.getAttributeValue("code"));
       }
-    } catch (JDOMException e) {
-      log.error("JDOMException: " + e.getMessage());
     }
     
     // Check for warnings
-    try {
-      XPath xpa = XPath.newInstance("/api/warnings/*");
-      List listWarnings = xpa.selectNodes(root);
-      if (listWarnings != null) {
-        Iterator iterWarnings = listWarnings.iterator();
-        while (iterWarnings.hasNext()) {
-          Element currentNode = (Element) iterWarnings.next();
-          log.warn("Warning reported: " + currentNode.getName() + " - " + currentNode.getValue());
-        }
+    xpa = XPathFactory.instance().compile(
+        "/api/warnings/*", Filters.element());
+    List<Element> listWarnings = xpa.evaluate(root);
+    if (listWarnings != null) {
+      Iterator<Element> iterWarnings = listWarnings.iterator();
+      while (iterWarnings.hasNext()) {
+        Element currentNode = iterWarnings.next();
+        log.warn("Warning reported: " + currentNode.getName() + " - " + currentNode.getValue());
       }
-    } catch( JDOMException e) {
-      log.error("JDOMException: " + e.getMessage());
     }
   }
 
@@ -260,28 +257,25 @@ public abstract class ApiXmlResult extends BasicApiResult {
       return false;
     }
     boolean result = false;
-    try {
-      XPath xpa = XPath.newInstance(queryContinue);
-      List results = xpa.selectNodes(root);
-      if ((results == null) || (results.isEmpty())) {
-        xpa = XPath.newInstance("/api/continue");
-        results = xpa.selectNodes(root);
-      }
-      if (results != null) {
-        for (Object currentNode : results) {
-          List attributes = ((Element) currentNode).getAttributes();
-          if (attributes != null) {
-            for (Object currentAttribute : attributes) {
-              Attribute attribute = (Attribute) currentAttribute;
-              properties.put(attribute.getName(), attribute.getValue());
-              result = true;
-            }
+    XPathExpression<Element> xpa = XPathFactory.instance().compile(
+        queryContinue, Filters.element());
+    List<Element> results = xpa.evaluate(root);
+    if ((results == null) || (results.isEmpty())) {
+      xpa = XPathFactory.instance().compile(
+          "/api/continue", Filters.element());
+      results = xpa.evaluate(root);
+    }
+    if (results != null) {
+      for (Object currentNode : results) {
+        List attributes = ((Element) currentNode).getAttributes();
+        if (attributes != null) {
+          for (Object currentAttribute : attributes) {
+            Attribute attribute = (Attribute) currentAttribute;
+            properties.put(attribute.getName(), attribute.getValue());
+            result = true;
           }
         }
       }
-    } catch (JDOMException e) {
-      log.error("Error analyzing query-continue", e);
-      return false;
     }
     return result;
   }
@@ -330,26 +324,6 @@ public abstract class ApiXmlResult extends BasicApiResult {
       page.setDisambiguationPage(Boolean.valueOf(dabPage));
     }
     return page;
-  }
-
-  /**
-   * Utility method to create a XPath.
-   * 
-   * @param element Element.
-   * @param attribute Attribute.
-   * @param value Attribute value.
-   * @return XPath
-   * @throws JDOMException
-   */
-  protected static XPath createXPath(
-      String element,
-      String attribute,
-      String value)
-      throws JDOMException {
-    if ((value != null) && (value.indexOf("\"") != -1)) {
-      return XPath.newInstance(element + "[@" + attribute + "=\"" + xmlOutputter.escapeAttributeEntities(value) + "\"]");
-    }
-    return XPath.newInstance(element + "[@" + attribute + "=\"" + value + "\"]");
   }
 
   /**

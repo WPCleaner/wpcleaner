@@ -10,10 +10,11 @@ package org.wikipediacleaner.api.request.login;
 import java.util.Map;
 
 import org.apache.commons.httpclient.HttpClient;
-import org.jdom.Element;
-import org.jdom.JDOMException;
-import org.jdom.input.JDOMParseException;
-import org.jdom.xpath.XPath;
+import org.jdom2.Element;
+import org.jdom2.filter.Filters;
+import org.jdom2.input.JDOMParseException;
+import org.jdom2.xpath.XPathExpression;
+import org.jdom2.xpath.XPathFactory;
 import org.wikipediacleaner.api.APIException;
 import org.wikipediacleaner.api.constants.EnumLoginResult;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
@@ -69,33 +70,28 @@ public class ApiXmlLoginResult extends ApiXmlResult implements ApiLoginResult {
    */
   private LoginResult constructLogin(Element root)
       throws APIException {
-    try {
-      XPath xpa = XPath.newInstance("/api/login");
-      Element node = (Element) xpa.selectSingleNode(root);
+//    try {
+      XPathExpression<Element> xpa = XPathFactory.instance().compile(
+          "/api/login", Filters.element());
+      Element node = xpa.evaluateFirst(root);
       if (node != null) {
-        XPath xpaResult = XPath.newInstance("./@result");
-        String result = xpaResult.valueOf(node);
+        String result = node.getAttributeValue("result");
         if ("Success".equalsIgnoreCase(result)) {
-          XPath xpaUserid = XPath.newInstance("./@lguserid");
-          XPath xpaUsername = XPath.newInstance("./@lgusername");
-          XPath xpaToken = XPath.newInstance("./@lgtoken");
           getWiki().getConnection().setLgInformation(
-              xpaToken.valueOf(node),
-              xpaUsername.valueOf(node),
-              xpaUserid.valueOf(node));
+              node.getAttributeValue("lgtoken"),
+              node.getAttributeValue("lgusername"),
+              node.getAttributeValue("lguserid"));
           return LoginResult.createCorrectLogin();
         } else if (EnumLoginResult.NEED_TOKEN.getCode().equalsIgnoreCase(result)) {
-          XPath xpaToken = XPath.newInstance("./@token");
-          return LoginResult.createNeedTokenLogin(xpaToken.valueOf(node));
+          return LoginResult.createNeedTokenLogin(node.getAttributeValue("token"));
         }
-        XPath xpaWait = XPath.newInstance("./@wait");
-        XPath xpaDetails = XPath.newInstance("./@details");
-        return LoginResult.createErrorLogin(result, xpaDetails.valueOf(node), xpaWait.valueOf(node));
+        return LoginResult.createErrorLogin(
+            result, node.getAttributeValue("details"), node.getAttributeValue("wait"));
       }
-    } catch (JDOMException e) {
-      log.error("Error login", e);
-      throw new APIException("Error parsing XML result", e);
-    }
+//    } catch (JDOMException e) {
+//      log.error("Error login", e);
+//      throw new APIException("Error parsing XML result", e);
+//    }
     return LoginResult.createErrorLogin(null, null, null);
   }
 

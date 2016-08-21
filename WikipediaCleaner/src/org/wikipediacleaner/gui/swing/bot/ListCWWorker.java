@@ -427,7 +427,7 @@ public class ListCWWorker extends BasicWorker {
         }
       }
       countAnalyzed++;
-      if (countAnalyzed % 1000 == 0) {
+      if (countAnalyzed % 100000 == 0) {
         System.out.println("Pages processed: " + countAnalyzed);
       }
       return page;

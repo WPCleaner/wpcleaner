@@ -13,9 +13,11 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.httpclient.HttpClient;
-import org.jdom.Element;
-import org.jdom.JDOMException;
-import org.jdom.xpath.XPath;
+import org.jdom2.Element;
+import org.jdom2.JDOMException;
+import org.jdom2.filter.Filters;
+import org.jdom2.xpath.XPathExpression;
+import org.jdom2.xpath.XPathFactory;
 import org.wikipediacleaner.api.APIException;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.DataManager;
@@ -60,29 +62,29 @@ public class ApiXmlLinksHereResult extends ApiXmlResult implements ApiLinksHereR
 
       // Retrieve links to page
       // TODO
-      XPath xpa = XPath.newInstance("/api/query/pages/page");
-      List listPages = xpa.selectNodes(root);
-      Iterator itPages = listPages.iterator();
-      XPath xpaPageId = XPath.newInstance("./@pageid");
-      XPath xpaNs = XPath.newInstance("./@ns");
-      XPath xpaTitle = XPath.newInstance("./@title");
-      XPath xpaLinksHere = XPath.newInstance("./linkshere/lh");
+      XPathExpression<Element> xpa = XPathFactory.instance().compile(
+          "/api/query/pages/page", Filters.element());
+      List<Element> listPages = xpa.evaluate(root);
+      Iterator<Element> itPages = listPages.iterator();
+      XPathExpression<Element> xpaLinksHere = XPathFactory.instance().compile(
+          "./linkshere/lh", Filters.element());
       while (itPages.hasNext()) {
-        Element currentPage = (Element) itPages.next();
-        String title = xpaTitle.valueOf(currentPage);
+        Element currentPage = itPages.next();
+        String title = currentPage.getAttributeValue("title");
         List<Page> list = lists.get(title);
         if (list == null) {
           list = new ArrayList<>();
           lists.put(title, list);
         }
-        List listLinks = xpaLinksHere.selectNodes(currentPage);
-        Iterator itLinks = listLinks.iterator();
+        List<Element> listLinks = xpaLinksHere.evaluate(currentPage);
+        Iterator<Element> itLinks = listLinks.iterator();
         while (itLinks.hasNext()) {
-          Element currentLink = (Element) itLinks.next();
+          Element currentLink = itLinks.next();
           Page link = DataManager.getPage(
-              getWiki(), xpaTitle.valueOf(currentLink), null, null, page.getRelatedPages(RelatedPages.REDIRECTS));
-          link.setNamespace(xpaNs.valueOf(currentLink));
-          link.setPageId(xpaPageId.valueOf(currentLink));
+              getWiki(), currentLink.getAttributeValue("title"),
+              null, null, page.getRelatedPages(RelatedPages.REDIRECTS));
+          link.setNamespace(currentLink.getAttributeValue("ns"));
+          link.setPageId(currentLink.getAttributeValue("pageid"));
           if (currentLink.getAttribute("redirect") != null) {
             link.isRedirect(true);
           }

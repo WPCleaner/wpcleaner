@@ -10,7 +10,7 @@ package org.wikipediacleaner.api.request.delete;
 import java.util.Map;
 
 import org.apache.commons.httpclient.HttpClient;
-import org.jdom.input.JDOMParseException;
+import org.jdom2.input.JDOMParseException;
 import org.wikipediacleaner.api.APIException;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.request.ApiRequest;

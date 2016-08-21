@@ -12,9 +12,11 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.httpclient.HttpClient;
-import org.jdom.Element;
-import org.jdom.JDOMException;
-import org.jdom.xpath.XPath;
+import org.jdom2.Element;
+import org.jdom2.JDOMException;
+import org.jdom2.filter.Filters;
+import org.jdom2.xpath.XPathExpression;
+import org.jdom2.xpath.XPathFactory;
 import org.wikipediacleaner.api.APIException;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.DataManager;
@@ -54,11 +56,12 @@ public class ApiXmlAbuseLogResult extends ApiXmlResult implements ApiAbuseLogRes
       Element root = getRoot(properties, ApiRequest.MAX_ATTEMPTS);
 
       // Retrieve category members
-      XPath xpa = XPath.newInstance("/api/query/abuselog/item");
-      List results = xpa.selectNodes(root);
-      Iterator iter = results.iterator();
+      XPathExpression<Element> xpa = XPathFactory.instance().compile(
+          "/api/query/abuselog/item", Filters.element());
+      List<Element> results = xpa.evaluate(root);
+      Iterator<Element> iter = results.iterator();
       while (iter.hasNext()) {
-        Element currentNode = (Element) iter.next();
+        Element currentNode = iter.next();
         String title = currentNode.getAttributeValue("title");
         Page page = DataManager.getPage(getWiki(), title, null, null, null);
         list.add(page);

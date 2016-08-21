@@ -14,9 +14,11 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.httpclient.HttpClient;
-import org.jdom.Element;
-import org.jdom.JDOMException;
-import org.jdom.xpath.XPath;
+import org.jdom2.Element;
+import org.jdom2.JDOMException;
+import org.jdom2.filter.Filters;
+import org.jdom2.xpath.XPathExpression;
+import org.jdom2.xpath.XPathFactory;
 import org.wikipediacleaner.api.APIException;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.Page;
@@ -61,11 +63,12 @@ public class ApiXmlRevisionsResult extends ApiXmlPropertiesResult implements Api
       retrieveNormalization(root, normalization);
 
       // Retrieve pages
-      XPath xpa = XPath.newInstance("/api/query/pages/page");
-      List results = xpa.selectNodes(root);
-      Iterator iter = results.iterator();
+      XPathExpression<Element> xpa = XPathFactory.instance().compile(
+          "/api/query/pages/page", Filters.element());
+      List<Element> results = xpa.evaluate(root);
+      Iterator<Element> iter = results.iterator();
       while (iter.hasNext()) {
-        Element pageNode = (Element) iter.next();
+        Element pageNode = iter.next();
         String title = pageNode.getAttributeValue("title");
         Integer pageId = null;
         try {
@@ -97,8 +100,9 @@ public class ApiXmlRevisionsResult extends ApiXmlPropertiesResult implements Api
   
               // Retrieve revisions
               if (!Boolean.FALSE.equals(page.isExisting())) {
-                XPath xpaRevisions = XPath.newInstance("revisions/rev");
-                Element revNode = (Element) xpaRevisions.selectSingleNode(pageNode);
+                XPathExpression<Element> xpaRevisions = XPathFactory.instance().compile(
+                    "revisions/rev", Filters.element());
+                Element revNode = xpaRevisions.evaluateFirst(pageNode);
                 if (revNode != null) {
                   page.setContents(revNode.getText());
                   page.setExisting(Boolean.TRUE);

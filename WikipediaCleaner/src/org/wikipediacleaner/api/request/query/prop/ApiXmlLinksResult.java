@@ -13,9 +13,11 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.httpclient.HttpClient;
-import org.jdom.Element;
-import org.jdom.JDOMException;
-import org.jdom.xpath.XPath;
+import org.jdom2.Element;
+import org.jdom2.JDOMException;
+import org.jdom2.filter.Filters;
+import org.jdom2.xpath.XPathExpression;
+import org.jdom2.xpath.XPathFactory;
 import org.wikipediacleaner.api.APIException;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.DataManager;
@@ -59,22 +61,24 @@ public class ApiXmlLinksResult extends ApiXmlPropertiesResult implements ApiLink
       retrieveNormalization(root, normalization);
 
       // Retrieve back links
-      XPath xpaPages = XPath.newInstance("/api/query/pages/page");
-      List listPages = xpaPages.selectNodes(root);
-      Iterator itPage = listPages.iterator();
-      XPath xpaLinks = XPath.newInstance("links/pl");
+      XPathExpression<Element> xpaPages = XPathFactory.instance().compile(
+          "/api/query/pages/page", Filters.element());
+      List<Element> listPages = xpaPages.evaluate(root);
+      Iterator<Element> itPage = listPages.iterator();
+      XPathExpression<Element> xpaLinks = XPathFactory.instance().compile(
+          "links/pl", Filters.element());
       while (itPage.hasNext()) {
-        Element pageNode = (Element) itPage.next();
+        Element pageNode = itPage.next();
         String pageTitle = pageNode.getAttributeValue("title");
         List<Page> links = lists.get(pageTitle);
         if (links == null) {
           links = new ArrayList<Page>();
           lists.put(pageTitle, links);
         }
-        List listLinks = xpaLinks.selectNodes(pageNode);
-        Iterator itLinks = listLinks.iterator();
+        List<Element> listLinks = xpaLinks.evaluate(pageNode);
+        Iterator<Element> itLinks = listLinks.iterator();
         while (itLinks.hasNext()) {
-          Element linkNode = (Element) itLinks.next();
+          Element linkNode = itLinks.next();
           Page link = DataManager.getPage(
               getWiki(), linkNode.getAttributeValue("title"), null, null, null);
           link.setNamespace(linkNode.getAttributeValue("ns"));
@@ -118,11 +122,12 @@ public class ApiXmlLinksResult extends ApiXmlPropertiesResult implements ApiLink
       retrieveNormalization(root, normalization);
 
       // Retrieve back links
-      XPath xpaPages = XPath.newInstance("/api/query/pages/page");
-      List listLinks = xpaPages.selectNodes(root);
-      Iterator itLinks = listLinks.iterator();
+      XPathExpression<Element> xpaPages = XPathFactory.instance().compile(
+          "/api/query/pages/page", Filters.element());
+      List<Element> listLinks = xpaPages.evaluate(root);
+      Iterator<Element> itLinks = listLinks.iterator();
       while (itLinks.hasNext()) {
-        Element linkNode = (Element) itLinks.next();
+        Element linkNode = itLinks.next();
         Page link = getPage(getWiki(), linkNode, knownPages, useDisambig);
         if ((redirects != null) && (link.isRedirect())) {
           redirects.add(link);

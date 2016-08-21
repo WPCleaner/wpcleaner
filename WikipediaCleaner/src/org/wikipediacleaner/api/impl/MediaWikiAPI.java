@@ -28,14 +28,16 @@ import org.apache.commons.httpclient.HttpMethod;
 import org.apache.commons.httpclient.HttpStatus;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.jdom.Document;
-import org.jdom.Element;
-import org.jdom.JDOMException;
-import org.jdom.input.JDOMParseException;
-import org.jdom.input.SAXBuilder;
-import org.jdom.output.Format;
-import org.jdom.output.XMLOutputter;
-import org.jdom.xpath.XPath;
+import org.jdom2.Document;
+import org.jdom2.Element;
+import org.jdom2.JDOMException;
+import org.jdom2.filter.Filters;
+import org.jdom2.input.JDOMParseException;
+import org.jdom2.input.SAXBuilder;
+import org.jdom2.output.Format;
+import org.jdom2.output.XMLOutputter;
+import org.jdom2.xpath.XPathExpression;
+import org.jdom2.xpath.XPathFactory;
 import org.wikipediacleaner.api.API;
 import org.wikipediacleaner.api.APIException;
 import org.wikipediacleaner.api.CaptchaException;
@@ -621,67 +623,55 @@ public class MediaWikiAPI implements API {
    */
   private QueryResult constructEdit(Element root, String query)
       throws APIException, CaptchaException {
-    try {
-      XPath xpa = XPath.newInstance(query);
-      Element node = (Element) xpa.selectSingleNode(root);
-      if (node != null) {
-        XPath xpaResult = XPath.newInstance("./@result");
-        String result = xpaResult.valueOf(node);
-        if ("Success".equalsIgnoreCase(result)) {
-          XPath xpaPageId = XPath.newInstance("./@pageid");
-          Integer pageId = null;
-          try {
-            pageId = Integer.valueOf(xpaPageId.valueOf(node));
-          } catch (NumberFormatException e) {
-            //
-          }
-          XPath xpaPageTitle = XPath.newInstance("./@title");
-          XPath xpaPageOldRevId = XPath.newInstance("./@oldrevid");
-          Integer pageOldRevId = null;
-          try {
-            pageOldRevId = Integer.valueOf(xpaPageOldRevId.valueOf(node));
-          } catch (NumberFormatException e) {
-            //
-          }
-          XPath xpaPageNewRevId = XPath.newInstance("./@newrevid");
-          Integer pageNewRevId = null;
-          try {
-            pageNewRevId = Integer.valueOf(xpaPageNewRevId.valueOf(node));
-          } catch (NumberFormatException e) {
-            //
-          }
-          return QueryResult.createCorrectQuery(
-              pageId, xpaPageTitle.valueOf(node),
-              pageOldRevId, pageNewRevId);
-        } else if ("Failure".equalsIgnoreCase(result)) {
-          XPath xpaCaptcha = XPath.newInstance("./captcha");
-          Element captcha = (Element) xpaCaptcha.selectSingleNode(node);
-          if (captcha != null) {
-            XPath xpaType = XPath.newInstance("./@type");
-            CaptchaException exception = new CaptchaException("Captcha", xpaType.valueOf(captcha));
-            XPath xpaMime = XPath.newInstance("./@mime");
-            exception.setMime(xpaMime.valueOf(captcha));
-            XPath xpaId = XPath.newInstance("./@id");
-            exception.setId(xpaId.valueOf(captcha));
-            XPath xpaUrl = XPath.newInstance("./@url");
-            exception.setURL(xpaUrl.valueOf(captcha));
-            throw exception;
-          }
-          XPath xpaSpamBlacklist = XPath.newInstance("./@spamblacklist");
-          String spamBlacklist = xpaSpamBlacklist.valueOf(node);
-          if (spamBlacklist != null) {
-            throw new APIException(GT._("URL {0} is blacklisted", spamBlacklist));
-          }
-          throw new APIException(xmlOutputter.outputString(node));
+
+    XPathExpression<Element> xpa = XPathFactory.instance().compile(
+        query, Filters.element());
+    Element node = xpa.evaluateFirst(root);
+    if (node != null) {
+      String result = node.getAttributeValue("result");
+      if ("Success".equalsIgnoreCase(result)) {
+        Integer pageId = null;
+        try {
+          pageId = Integer.valueOf(node.getAttributeValue("pageid"));
+        } catch (NumberFormatException e) {
+          //
         }
-        XPath xpaWait = XPath.newInstance("./@wait");
-        XPath xpaDetails = XPath.newInstance("./@details");
-        return QueryResult.createErrorQuery(result, xpaDetails.valueOf(node), xpaWait.valueOf(node));
+        Integer pageOldRevId = null;
+        try {
+          pageOldRevId = Integer.valueOf(node.getAttributeValue("oldrevid"));
+        } catch (NumberFormatException e) {
+          //
+        }
+        Integer pageNewRevId = null;
+        try {
+          pageNewRevId = Integer.valueOf(node.getAttributeValue("newrevid"));
+        } catch (NumberFormatException e) {
+          //
+        }
+        return QueryResult.createCorrectQuery(
+            pageId, node.getAttributeValue("title"),
+            pageOldRevId, pageNewRevId);
+      } else if ("Failure".equalsIgnoreCase(result)) {
+        XPathExpression<Element> xpaCaptcha = XPathFactory.instance().compile(
+            "./captcha", Filters.element());
+        Element captcha = xpaCaptcha.evaluateFirst(node);
+        if (captcha != null) {
+          CaptchaException exception = new CaptchaException("Captcha", captcha.getAttributeValue("type"));
+          exception.setMime(captcha.getAttributeValue("mime"));
+          exception.setId(captcha.getAttributeValue("id"));
+          exception.setURL(captcha.getAttributeValue("url"));
+          throw exception;
+        }
+        String spamBlacklist = node.getAttributeValue("spamblacklist");
+        if (spamBlacklist != null) {
+          throw new APIException(GT._("URL {0} is blacklisted", spamBlacklist));
+        }
+        throw new APIException(xmlOutputter.outputString(node));
       }
-    } catch (JDOMException e) {
-      log.error("Error login", e);
-      throw new APIException("Error parsing XML result", e);
+      return QueryResult.createErrorQuery(
+          result, node.getAttributeValue("details"), node.getAttributeValue("wait"));
     }
+
     return QueryResult.createErrorQuery(null, null, null);
   }
 
@@ -697,45 +687,38 @@ public class MediaWikiAPI implements API {
       throw new APIException("Page is null");
     }
     boolean redirect = false;
-    try {
-      XPath xpaPage = XPath.newInstance(query);
-      Element node = (Element) xpaPage.selectSingleNode(root);
-      if (node != null) {
-        XPath xpaNamespace = XPath.newInstance("./@ns");
-        page.setNamespace(xpaNamespace.valueOf(node));
-        if (node.getAttribute("redirect") != null) {
-          redirect = true;
-          page.isRedirect(true);
-        }
-        if (node.getAttribute("missing") != null) {
-          page.setExisting(Boolean.FALSE);
-        }
-        XPath xpaPageId = XPath.newInstance("./@pageid");
-        page.setPageId(xpaPageId.valueOf(node));
-        XPath xpaStartTimestamp = XPath.newInstance("./@starttimestamp");
-        page.setStartTimestamp(xpaStartTimestamp.valueOf(node));
+
+    XPathExpression<Element> xpaPage = XPathFactory.instance().compile(
+        query, Filters.element());
+    Element node = xpaPage.evaluateFirst(root);
+    if (node != null) {
+      page.setNamespace(node.getAttributeValue("ns"));
+      if (node.getAttribute("redirect") != null) {
+        redirect = true;
+        page.isRedirect(true);
       }
-      XPath xpa = XPath.newInstance(query + "/revisions/rev");
-      node = (Element) xpa.selectSingleNode(root);
-      if (node != null) {
-        XPath xpaContents = XPath.newInstance(".");
-        XPath xpaRevision = XPath.newInstance("./@revid");
-        XPath xpaTimestamp = XPath.newInstance("./@timestamp");
-        page.setContents(xpaContents.valueOf(node));
-        page.setExisting(Boolean.TRUE);
-        page.setRevisionId(xpaRevision.valueOf(node));
-        page.setContentsTimestamp(xpaTimestamp.valueOf(node));
+      if (node.getAttribute("missing") != null) {
+        page.setExisting(Boolean.FALSE);
       }
-      xpa = XPath.newInstance(query + "/protection/pr[@type=\"edit\"]");
-      node = (Element) xpa.selectSingleNode(root);
-      if (node != null) {
-        XPath xpaLevel = XPath.newInstance("./@level");
-        page.setEditProtectionLevel(xpaLevel.valueOf(node));
-      }
-    } catch (JDOMException e) {
-      log.error("Error contents for page " + page.getTitle(), e);
-      throw new APIException("Error parsing XML result", e);
+      page.setPageId(node.getAttributeValue("pageid"));
+      page.setStartTimestamp(node.getAttributeValue("starttimestamp"));
     }
+    XPathExpression<Element> xpa = XPathFactory.instance().compile(
+        query + "/revisions/rev", Filters.element());
+    node = xpa.evaluateFirst(root);
+    if (node != null) {
+      page.setContents(node.getText());
+      page.setExisting(Boolean.TRUE);
+      page.setRevisionId(node.getAttributeValue("revid"));
+      page.setContentsTimestamp(node.getAttributeValue("timestamp"));
+    }
+    xpa = XPathFactory.instance().compile(query + "/protection/pr", Filters.element());
+    for (Element prNode : xpa.evaluate(root)) {
+      if ("edit".equals(prNode.getAttributeValue("type"))) {
+        page.setEditProtectionLevel(prNode.getAttributeValue("level"));
+      }
+    }
+
     return redirect;
   }
 
@@ -750,28 +733,24 @@ public class MediaWikiAPI implements API {
     if (pages == null) {
       throw new APIException("Pages is null");
     }
-    try {
-      XPath xpaPage = XPath.newInstance(query);
-      XPath xpaTitle = XPath.newInstance("./@title");
-      XPath xpaRev = XPath.newInstance("./revisions/rev");
-      XPath xpaContents = XPath.newInstance(".");
-      List resultPages = xpaPage.selectNodes(root);
-      Iterator iterPages = resultPages.iterator();
-      while (iterPages.hasNext()) {
-        Element currentPage = (Element) iterPages.next();
-        String title = xpaTitle.valueOf(currentPage);
-        Element currentRev = (Element) xpaRev.selectSingleNode(currentPage);
-        String contents = xpaContents.valueOf(currentRev);
-        
-        for (Page page : pages) {
-          if (Page.areSameTitle(page.getTitle(), title)) {
-            page.setContents(contents);
-          }
+
+    XPathExpression<Element> xpaPage = XPathFactory.instance().compile(
+        query, Filters.element());
+    XPathExpression<Element> xpaRev = XPathFactory.instance().compile(
+        "./revisions/rev", Filters.element());
+    List<Element> resultPages = xpaPage.evaluate(root);
+    Iterator<Element> iterPages = resultPages.iterator();
+    while (iterPages.hasNext()) {
+      Element currentPage = iterPages.next();
+      String title = currentPage.getAttributeValue("title");
+      Element currentRev = xpaRev.evaluateFirst(currentPage);
+      String contents = currentRev.getText();
+      
+      for (Page page : pages) {
+        if (Page.areSameTitle(page.getTitle(), title)) {
+          page.setContents(contents);
         }
       }
-    } catch (JDOMException e) {
-      log.error("Error contents for pages", e);
-      throw new APIException("Error parsing XML result", e);
     }
   }
 
@@ -1785,37 +1764,29 @@ public class MediaWikiAPI implements API {
     }
     
     // Check for errors
-    try {
-      XPath xpa = XPath.newInstance("/api/error");
-      List listErrors = xpa.selectNodes(root);
-      if (listErrors != null) {
-        Iterator iterErrors = listErrors.iterator();
-        XPath xpaCode = XPath.newInstance("./@code");
-        XPath xpaInfo = XPath.newInstance("./@info");
-        while (iterErrors.hasNext()) {
-          Element currentNode = (Element) iterErrors.next();
-          String text = "Error reported: " + xpaCode.valueOf(currentNode) + " - " + xpaInfo.valueOf(currentNode);
-          log.warn(text);
-          throw new APIException(text, xpaCode.valueOf(currentNode));
-        }
+    XPathExpression<Element> xpa = XPathFactory.instance().compile(
+        "/api/error", Filters.element());
+    List<Element> listErrors = xpa.evaluate(root);
+    if (listErrors != null) {
+      Iterator<Element> iterErrors = listErrors.iterator();
+      while (iterErrors.hasNext()) {
+        Element currentNode = iterErrors.next();
+        String text = "Error reported: " + currentNode.getAttributeValue("code") + " - " + currentNode.getAttributeValue("info");
+        log.warn(text);
+        throw new APIException(text, currentNode.getAttributeValue("code"));
       }
-    } catch (JDOMException e) {
-      log.error("JDOMException: " + e.getMessage());
     }
     
     // Check for warnings
-    try {
-      XPath xpa = XPath.newInstance("/api/warnings/*");
-      List listWarnings = xpa.selectNodes(root);
-      if (listWarnings != null) {
-        Iterator iterWarnings = listWarnings.iterator();
-        while (iterWarnings.hasNext()) {
-          Element currentNode = (Element) iterWarnings.next();
-          log.warn("Warning reported: " + currentNode.getName() + " - " + currentNode.getValue());
-        }
+    xpa = XPathFactory.instance().compile(
+        "/api/warnings/*", Filters.element());
+    List<Element> listWarnings = xpa.evaluate(root);
+    if (listWarnings != null) {
+      Iterator iterWarnings = listWarnings.iterator();
+      while (iterWarnings.hasNext()) {
+        Element currentNode = (Element) iterWarnings.next();
+        log.warn("Warning reported: " + currentNode.getName() + " - " + currentNode.getValue());
       }
-    } catch( JDOMException e) {
-      log.error("JDOMException: " + e.getMessage());
     }
   }
 

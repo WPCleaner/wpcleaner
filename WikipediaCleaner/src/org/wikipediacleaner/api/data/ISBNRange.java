@@ -14,11 +14,13 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import org.jdom.Document;
-import org.jdom.Element;
-import org.jdom.JDOMException;
-import org.jdom.input.SAXBuilder;
-import org.jdom.xpath.XPath;
+import org.jdom2.Document;
+import org.jdom2.Element;
+import org.jdom2.JDOMException;
+import org.jdom2.filter.Filters;
+import org.jdom2.input.SAXBuilder;
+import org.jdom2.xpath.XPathExpression;
+import org.jdom2.xpath.XPathFactory;
 import org.wikipediacleaner.i18n.GT;
 
 
@@ -260,11 +262,11 @@ public class ISBNRange {
    * @throws JDOMException
    */
   private static void analyzeRanges(Element root, List<Range> ranges, String xpath) throws JDOMException {
-    XPath xpa = XPath.newInstance(xpath);
-    List results = xpa.selectNodes(root);
-    Iterator iter = results.iterator();
+    XPathExpression<Element> xpa = XPathFactory.instance().compile(xpath, Filters.element());
+    List<Element> results = xpa.evaluate(root);
+    Iterator<Element> iter = results.iterator();
     while (iter.hasNext()) {
-      Element node = (Element) iter.next();
+      Element node = iter.next();
       Element prefixNode = node.getChild("Prefix");
       String prefix = (prefixNode != null) ? prefixNode.getValue() : null;
       Element agencyNode = node.getChild("Agency");
@@ -283,11 +285,12 @@ public class ISBNRange {
    * @throws JDOMException
    */
   private static void analyzeRules(Element node, Range rangeElement) throws JDOMException {
-    XPath xpa = XPath.newInstance("./Rules/Rule");
-    List results = xpa.selectNodes(node);
-    Iterator iter = results.iterator();
+    XPathExpression<Element> xpa = XPathFactory.instance().compile(
+        "./Rules/Rule", Filters.element());
+    List<Element> results = xpa.evaluate(node);
+    Iterator<Element> iter = results.iterator();
     while (iter.hasNext()) {
-      Element ruleNode = (Element) iter.next();
+      Element ruleNode = iter.next();
       Element rangeNode = ruleNode.getChild("Range");
       String range = (rangeNode != null) ? rangeNode.getValue() : null;
       Element lengthNode = ruleNode.getChild("Length");

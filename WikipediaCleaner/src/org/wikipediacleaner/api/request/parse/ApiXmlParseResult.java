@@ -13,9 +13,11 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.httpclient.HttpClient;
-import org.jdom.Element;
-import org.jdom.JDOMException;
-import org.jdom.xpath.XPath;
+import org.jdom2.Element;
+import org.jdom2.JDOMException;
+import org.jdom2.filter.Filters;
+import org.jdom2.xpath.XPathExpression;
+import org.jdom2.xpath.XPathFactory;
 import org.wikipediacleaner.api.APIException;
 import org.wikipediacleaner.api.constants.EnumQueryResult;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
@@ -52,9 +54,11 @@ public class ApiXmlParseResult extends ApiXmlResult implements ApiParseResult {
       Map<String, String> properties)
           throws APIException {
     try {
-      XPath xpaContents = XPath.newInstance("/api/parse/text/.");
+      XPathExpression<Element> xpaText = XPathFactory.instance().compile(
+          "/api/parse/text", Filters.element());
       Element root = getRoot(properties, ApiRequest.MAX_ATTEMPTS);
-      return xpaContents.valueOf(root);
+      Element text = xpaText.evaluateFirst(root);
+      return (text != null) ? text.getText() : null;
     } catch (JDOMException e) {
       log.error("Error expanding templates", e);
       throw new APIException("Error parsing XML", e);
@@ -85,12 +89,13 @@ public class ApiXmlParseResult extends ApiXmlResult implements ApiParseResult {
       }
 
       // Retrieve sections
-      XPath xpaSections = XPath.newInstance("/api/parse/sections/s");
-      List listSections = xpaSections.selectNodes(root);
+      XPathExpression<Element> xpaSections = XPathFactory.instance().compile(
+          "/api/parse/sections/s", Filters.element());
+      List<Element> listSections = xpaSections.evaluate(root);
       List<Section> result = new ArrayList<Section>(listSections.size());
-      Iterator itSection = listSections.iterator();
+      Iterator<Element> itSection = listSections.iterator();
       while (itSection.hasNext()) {
-        Element sectionNode = (Element) itSection.next();
+        Element sectionNode = itSection.next();
         try {
           Section section = new Section(
               Integer.valueOf(sectionNode.getAttributeValue("toclevel")),
@@ -105,8 +110,9 @@ public class ApiXmlParseResult extends ApiXmlResult implements ApiParseResult {
       }
 
       // Retrieve revision id
-      XPath xpaPage = XPath.newInstance("/api/parse");
-      Element parseNode = (Element) xpaPage.selectSingleNode(root);
+      XPathExpression<Element> xpaPage = XPathFactory.instance().compile(
+          "/api/parse", Filters.element());
+      Element parseNode = xpaPage.evaluateFirst(root);
       if ((parseNode != null) && (parseNode.getAttributeValue("revid") != null)) {
         page.setRevisionId(parseNode.getAttributeValue("revid"));
       }

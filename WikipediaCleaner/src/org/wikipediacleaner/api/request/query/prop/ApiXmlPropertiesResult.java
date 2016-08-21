@@ -14,10 +14,12 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.httpclient.HttpClient;
-import org.jdom.Attribute;
-import org.jdom.Element;
-import org.jdom.JDOMException;
-import org.jdom.xpath.XPath;
+import org.jdom2.Attribute;
+import org.jdom2.Element;
+import org.jdom2.JDOMException;
+import org.jdom2.filter.Filters;
+import org.jdom2.xpath.XPathExpression;
+import org.jdom2.xpath.XPathFactory;
 import org.wikipediacleaner.api.APIException;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.DataManager;
@@ -70,11 +72,13 @@ public class ApiXmlPropertiesResult extends ApiXmlResult implements ApiPropertie
     }
 
     // Retrieve protection information
-    XPath xpaProtection = XPath.newInstance("protection/pr[@type=\"edit\"]");
-    Element protectionNode = (Element) xpaProtection.selectSingleNode(node);
-    if (protectionNode != null) {
-      XPath xpaLevel = XPath.newInstance("./@level");
-      page.setEditProtectionLevel(xpaLevel.valueOf(protectionNode));
+    XPathExpression<Element> xpaProtection = XPathFactory.instance().compile(
+        "protection/pr[@type=\"edit\"]", Filters.element());
+    List<Element> protectionNodes = xpaProtection.evaluate(node);
+    for (Element protectionNode : protectionNodes) {
+      if ("edit".equals(protectionNode.getAttributeValue("type"))) {
+        page.setEditProtectionLevel(protectionNode.getAttributeValue("level"));
+      }
     }
   }
 
@@ -113,18 +117,17 @@ public class ApiXmlPropertiesResult extends ApiXmlResult implements ApiPropertie
     if (normalization == null) {
       return;
     }
-    XPath xpaNormalized = XPath.newInstance("/api/query/normalized/n");
-    List listNormalized = xpaNormalized.selectNodes(root);
+    XPathExpression<Element> xpaNormalized = XPathFactory.instance().compile(
+        "/api/query/normalized/n", Filters.element());
+    List<Element> listNormalized = xpaNormalized.evaluate(root);
     if ((listNormalized == null) || (listNormalized.isEmpty())) {
       return;
     }
-    Iterator itNormalized = listNormalized.iterator();
-    XPath xpaFrom = XPath.newInstance("./@from");
-    XPath xpaTo = XPath.newInstance("./@to");
+    Iterator<Element> itNormalized = listNormalized.iterator();
     while (itNormalized.hasNext()) {
-      Element normalized = (Element) itNormalized.next();
-      String from = xpaFrom.valueOf(normalized);
-      String to = xpaTo.valueOf(normalized);
+      Element normalized = itNormalized.next();
+      String from = normalized.getAttributeValue("from");
+      String to = normalized.getAttributeValue("to");
       if ((from != null) && (to != null)) {
         normalization.put(from, to);
       }
@@ -159,17 +162,14 @@ public class ApiXmlPropertiesResult extends ApiXmlResult implements ApiPropertie
   public void updateRedirect(Element root, Collection<Page> pages) throws JDOMException {
 
     // Retrieving redirects
-    XPath xpaRedirects = XPath.newInstance("/api/query/redirects/r");
-    List listRedirects = xpaRedirects.selectNodes(root);
-    XPath xpaFrom = XPath.newInstance("./@from");
-    XPath xpaTo = XPath.newInstance("./@to");
+    XPathExpression<Element> xpaRedirects = XPathFactory.instance().compile(
+        "/api/query/redirects/r", Filters.element());
+    List<Element> listRedirects = xpaRedirects.evaluate(root);
 
     // Retrieving pages
-    XPath xpaPages = XPath.newInstance("/api/query/pages");
-    Element listPages = (Element) xpaPages.selectSingleNode(root);
-    XPath xpaPageId = XPath.newInstance("./@pageid");
-    XPath xpaNamespace = XPath.newInstance("./@ns");
-    XPath xpaTitle = XPath.newInstance("./@title");
+    XPathExpression<Element> xpaPages = XPathFactory.instance().compile(
+        "/api/query/pages", Filters.element());
+    Element listPages = xpaPages.evaluateFirst(root);
 
     // Retrieving normalization information
     Map<String, String> normalization = new HashMap<String, String>();
@@ -179,8 +179,8 @@ public class ApiXmlPropertiesResult extends ApiXmlResult implements ApiPropertie
     Iterator itRedirect = listRedirects.iterator();
     while (itRedirect.hasNext()) {
       Element currentRedirect = (Element) itRedirect.next();
-      String fromPage = xpaFrom.valueOf(currentRedirect);
-      String toPage = xpaTo.valueOf(currentRedirect);
+      String fromPage = currentRedirect.getAttributeValue("from");
+      String toPage = currentRedirect.getAttributeValue("to");
       for (Page p : pages) {
 
         // Find if the redirect is already taken into account
@@ -200,14 +200,20 @@ public class ApiXmlPropertiesResult extends ApiXmlResult implements ApiPropertie
           Page tmp = itPage.next();
           String title = getNormalizedTitle(tmp.getTitle(), normalization);
           if (!exists && Page.areSameTitle(title, fromPage)) {
-            XPath xpaPage = createXPath("page", "title", toPage);
-            List listTo = xpaPage.selectNodes(listPages);
-            if (!listTo.isEmpty()) {
-              Element to = (Element) listTo.get(0);
+            XPathExpression<Element> xpaPage = XPathFactory.instance().compile(
+                "page", Filters.element()); 
+            List<Element> listPage = xpaPage.evaluate(listPages);
+            Element to = null;
+            for (Element page : listPage) {
+              if ((to == null) && toPage.equals(page.getAttribute("title"))) {
+                to = page;
+              }
+            }
+            if (to != null) {
               Page pageTo = DataManager.getPage(
-                  p.getWikipedia(), xpaTitle.valueOf(to), null, null, null);
-              pageTo.setNamespace(xpaNamespace.valueOf(to));
-              pageTo.setPageId(xpaPageId.valueOf(to));
+                  p.getWikipedia(), to.getAttributeValue("title"), null, null, null);
+              pageTo.setNamespace(to.getAttributeValue("ns"));
+              pageTo.setPageId(to.getAttributeValue("pageid"));
               p.addRedirect(pageTo);
             }
           }
@@ -221,11 +227,17 @@ public class ApiXmlPropertiesResult extends ApiXmlResult implements ApiPropertie
       while (itPage.hasNext()) {
         Page tmp = itPage.next();
         String title = getNormalizedTitle(tmp.getTitle(), normalization);
-        XPath xpaPage = createXPath("page", "title", title);
-        Element page = (Element) xpaPage.selectSingleNode(listPages);
+        XPathExpression<Element> xpaPage = XPathFactory.instance().compile(
+            "page", Filters.element()); 
+        List<Element> listPage = xpaPage.evaluate(listPages);
+        Element page = null;
+        for (Element tmpPage : listPage) {
+          if ((page == null) && title.equals(tmpPage.getAttribute("title"))) {
+            page = tmpPage;
+          }
+        }
         if (page != null) {
-          List pageId = xpaPageId.selectNodes(page);
-          if ((pageId != null) && (!pageId.isEmpty())) {
+          if (page.getAttribute("pageid") != null) {
             tmp.setExisting(Boolean.TRUE);
           } else {
             Attribute attrMissing = page.getAttribute("missing");

@@ -43,13 +43,13 @@
   <property name="WPCleaner.libs.jackson-databind.jar"    value="jackson-databind-${WPCleaner.libs.jackson.version}.jar" />
   <property name="WPCleaner.libs.jackson.lic"             value="LICENSE.txt" />
 
-  <property name="WPCleaner.libs.jaxen-core.jar"          value="jaxen-core.jar" />
-  <property name="WPCleaner.libs.jaxen-jdom.jar"          value="jaxen-jdom.jar" />
+  <property name="WPCleaner.libs.jaxen.version"           value="1.1.6" />
+  <property name="WPCleaner.libs.jaxen.jar"               value="jaxen-${WPCleaner.libs.jaxen.version}.jar" />
   <property name="WPCleaner.libs.jaxen.lic"               value="LICENSE_jaxen.txt" />
 
-  <property name="WPCleaner.libs.jdom.version"            value="1.0" />
+  <property name="WPCleaner.libs.jdom.version"            value="2.0.6" />
   <property name="WPCleaner.libs.jdom.dir"                value="libs/jdom-${WPCleaner.libs.jdom.version}" />
-  <property name="WPCleaner.libs.jdom.jar"                value="jdom.jar" />
+  <property name="WPCleaner.libs.jdom.jar"                value="jdom-${WPCleaner.libs.jdom.version}.jar" />
   <property name="WPCleaner.libs.jdom.lic"                value="LICENSE_jdom.txt" />
 
   <property name="WPCleaner.libs.logging.version"         value="1.1.3" />
@@ -58,7 +58,10 @@
   <property name="WPCleaner.libs.logging.lic"             value="LICENSE.txt" />
   <property name="WPCleaner.libs.logging.not"             value="NOTICE.txt" />
 
-  <property name="WPCleaner.libs.saxpath.jar"             value="saxpath.jar" />
+  <property name="WPCleaner.libs.xerces-impl.jar"         value="xercesImpl.jar" />
+  <property name="WPCleaner.libs.xerces-xml-apis.jar"     value="xml-apis.jar" />
+  <property name="WPCleaner.libs.xerces.lic"              value="LICENSE_xerces.txt" />
+  <property name="WPCleaner.libs.xerces.not"              value="NOTICE_xerces.txt" />
 
   <property name="WPCleaner.libs.jackson.jars"
             value="${WPCleaner.libs.jackson-annotations.jar} ${WPCleaner.libs.jackson-core.jar} ${WPCleaner.libs.jackson-databind.jar}" />
@@ -125,10 +128,10 @@
     <unzip src="${WPCleaner.libs.jackson.dir}/${WPCleaner.libs.jackson-annotations.jar}" dest="${WPCleaner.classes.dir}" />
     <unzip src="${WPCleaner.libs.jackson.dir}/${WPCleaner.libs.jackson-core.jar}"        dest="${WPCleaner.classes.dir}" />
     <unzip src="${WPCleaner.libs.jackson.dir}/${WPCleaner.libs.jackson-databind.jar}"    dest="${WPCleaner.classes.dir}" />
-    <unzip src="${WPCleaner.libs.jdom.dir}/${WPCleaner.libs.jaxen-core.jar}"             dest="${WPCleaner.classes.dir}" />
-    <unzip src="${WPCleaner.libs.jdom.dir}/${WPCleaner.libs.jaxen-jdom.jar}"             dest="${WPCleaner.classes.dir}" />
+    <unzip src="${WPCleaner.libs.jdom.dir}/${WPCleaner.libs.jaxen.jar}"                  dest="${WPCleaner.classes.dir}" />
     <unzip src="${WPCleaner.libs.jdom.dir}/${WPCleaner.libs.jdom.jar}"                   dest="${WPCleaner.classes.dir}" />
-    <unzip src="${WPCleaner.libs.jdom.dir}/${WPCleaner.libs.saxpath.jar}"                dest="${WPCleaner.classes.dir}" />
+    <unzip src="${WPCleaner.libs.jdom.dir}/${WPCleaner.libs.xerces-impl.jar}"            dest="${WPCleaner.classes.dir}" />
+    <unzip src="${WPCleaner.libs.jdom.dir}/${WPCleaner.libs.xerces-xml-apis.jar}"        dest="${WPCleaner.classes.dir}" />
     <delete includeemptydirs="true">
       <fileset dir="${WPCleaner.classes.dir}/META-INF" includes="**/*.txt" />
     </delete>
@@ -173,6 +176,10 @@
           tofile="${WPCleaner.classes.dir}/LICENSE_jdom.txt" />
     <copy file="${WPCleaner.libs.jdom.dir}/${WPCleaner.libs.jaxen.lic}"
           tofile="${WPCleaner.classes.dir}/LICENSE_jaxen.txt" />
+    <copy file="${WPCleaner.libs.jdom.dir}/${WPCleaner.libs.xerces.lic}"
+          tofile="${WPCleaner.classes.dir}/LICENSE_xerces.txt" />
+    <copy file="${WPCleaner.libs.jdom.dir}/${WPCleaner.libs.xerces.not}"
+          tofile="${WPCleaner.classes.dir}/NOTICE_xerces.txt" />
     <copy file="LICENSE.txt" todir="${WPCleaner.classes.dir}" />
     <copy file="README.txt" todir="${WPCleaner.classes.dir}" />
 

@@ -13,9 +13,11 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.httpclient.HttpClient;
-import org.jdom.Element;
-import org.jdom.JDOMException;
-import org.jdom.xpath.XPath;
+import org.jdom2.Element;
+import org.jdom2.JDOMException;
+import org.jdom2.filter.Filters;
+import org.jdom2.xpath.XPathExpression;
+import org.jdom2.xpath.XPathFactory;
 import org.wikipediacleaner.api.APIException;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.User;
@@ -52,26 +54,29 @@ public class ApiXmlUsersResult extends ApiXmlResult implements ApiUsersResult {
       Element root = getRoot(properties, ApiRequest.MAX_ATTEMPTS);
 
       // Get recent changes list
-      XPath xpa = XPath.newInstance("/api/query/users/user");
-      List results = xpa.selectNodes(root);
-      Iterator iter = results.iterator();
+      XPathExpression<Element> xpa = XPathFactory.instance().compile(
+          "/api/query/users/user", Filters.element());
+      List<Element> results = xpa.evaluate(root);
+      Iterator<Element> iter = results.iterator();
       while (iter.hasNext()) {
-        Element currentNode = (Element) iter.next();
+        Element currentNode = iter.next();
         User user = new User(currentNode.getAttributeValue("name"));
         List<String> groups = new ArrayList<String>();
-        XPath xpaGroups = XPath.newInstance("./groups/g");
-        List resultGroups = xpaGroups.selectNodes(currentNode);
-        Iterator itGroups = resultGroups.iterator();
+        XPathExpression<Element> xpaGroups = XPathFactory.instance().compile(
+            "./groups/g", Filters.element());
+        List<Element> resultGroups = xpaGroups.evaluate(currentNode);
+        Iterator<Element> itGroups = resultGroups.iterator();
         while (itGroups.hasNext()) {
-          groups.add(((Element) itGroups.next()).getValue());
+          groups.add(itGroups.next().getValue());
         }
         user.setGroups(groups);
         List<String> rights = new ArrayList<String>();
-        XPath xpaRights = XPath.newInstance("./rights/r");
-        List resultRights = xpaRights.selectNodes(currentNode);
-        Iterator itRights = resultRights.iterator();
+        XPathExpression<Element> xpaRights = XPathFactory.instance().compile(
+            "./rights/r", Filters.element());
+        List<Element> resultRights = xpaRights.evaluate(currentNode);
+        Iterator<Element> itRights = resultRights.iterator();
         while (itRights.hasNext()) {
-          rights.add(((Element) itRights.next()).getValue());
+          rights.add(itRights.next().getValue());
         }
         user.setRights(rights);
         return user;

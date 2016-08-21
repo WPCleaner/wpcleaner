@@ -12,9 +12,11 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.httpclient.HttpClient;
-import org.jdom.Element;
-import org.jdom.JDOMException;
-import org.jdom.xpath.XPath;
+import org.jdom2.Element;
+import org.jdom2.JDOMException;
+import org.jdom2.filter.Filters;
+import org.jdom2.xpath.XPathExpression;
+import org.jdom2.xpath.XPathFactory;
 import org.wikipediacleaner.api.APIException;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.DataManager;
@@ -54,11 +56,12 @@ public class ApiXmlPagesWithPropResult extends ApiXmlResult implements ApiPagesW
       Element root = getRoot(properties, ApiRequest.MAX_ATTEMPTS);
 
       // Retrieve embedding pages
-      XPath xpa = XPath.newInstance("/api/query/pageswithprop/page");
-      List results = xpa.selectNodes(root);
-      Iterator iter = results.iterator();
+      XPathExpression<Element> xpa = XPathFactory.instance().compile(
+          "/api/query/pageswithprop/page", Filters.element());
+      List<Element> results = xpa.evaluate(root);
+      Iterator<Element> iter = results.iterator();
       while (iter.hasNext()) {
-        Element currentNode = (Element) iter.next();
+        Element currentNode = iter.next();
         Integer pageId = null;
         try {
           String tmp = currentNode.getAttributeValue("pageid");

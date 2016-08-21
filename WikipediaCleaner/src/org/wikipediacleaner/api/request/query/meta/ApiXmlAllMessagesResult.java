@@ -10,9 +10,11 @@ package org.wikipediacleaner.api.request.query.meta;
 import java.util.Map;
 
 import org.apache.commons.httpclient.HttpClient;
-import org.jdom.Element;
-import org.jdom.JDOMException;
-import org.jdom.xpath.XPath;
+import org.jdom2.Element;
+import org.jdom2.JDOMException;
+import org.jdom2.filter.Filters;
+import org.jdom2.xpath.XPathExpression;
+import org.jdom2.xpath.XPathFactory;
 import org.wikipediacleaner.api.APIException;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.request.ApiRequest;
@@ -49,8 +51,9 @@ public class ApiXmlAllMessagesResult extends ApiXmlResult implements ApiAllMessa
       Element root = getRoot(properties, ApiRequest.MAX_ATTEMPTS);
 
       // Retrieve general information
-      XPath xpa = XPath.newInstance("/api/query/allmessages/message");
-      Element generalNode = (Element) xpa.selectSingleNode(root);
+      XPathExpression<Element> xpa = XPathFactory.instance().compile(
+          "/api/query/allmessages/message", Filters.element());
+      Element generalNode = xpa.evaluateFirst(root);
       if (generalNode != null) {
         return generalNode.getValue();
       }

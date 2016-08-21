@@ -14,9 +14,11 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.httpclient.HttpClient;
-import org.jdom.Element;
-import org.jdom.JDOMException;
-import org.jdom.xpath.XPath;
+import org.jdom2.Element;
+import org.jdom2.JDOMException;
+import org.jdom2.filter.Filters;
+import org.jdom2.xpath.XPathExpression;
+import org.jdom2.xpath.XPathFactory;
 import org.wikipediacleaner.api.APIException;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.DataManager;
@@ -59,11 +61,12 @@ public class ApiXmlTemplatesResult extends ApiXmlPropertiesResult implements Api
       Element root = getRoot(properties, ApiRequest.MAX_ATTEMPTS);
 
       // Retrieve back links
-      XPath xpa = XPath.newInstance("/api/query/pages/page");
-      List listTemplates = xpa.selectNodes(root);
-      Iterator itTemplate = listTemplates.iterator();
+      XPathExpression<Element> xpa = XPathFactory.instance().compile(
+          "/api/query/pages/page", Filters.element());
+      List<Element> listTemplates = xpa.evaluate(root);
+      Iterator<Element> itTemplate = listTemplates.iterator();
       while (itTemplate.hasNext()) {
-        Element currentTemplate = (Element) itTemplate.next();
+        Element currentTemplate = itTemplate.next();
         String pageId = currentTemplate.getAttributeValue("pageid");
         String ns = currentTemplate.getAttributeValue("ns");
         String title = currentTemplate.getAttributeValue("title");
@@ -108,15 +111,16 @@ public class ApiXmlTemplatesResult extends ApiXmlPropertiesResult implements Api
       updateRedirect(root, pages);
 
       // Set disambiguation status
-      XPath xpa = XPath.newInstance("/api/query/pages/page");
-      List results = xpa.selectNodes(root);
-      Iterator iter = results.iterator();
-      XPath xpaTitle = XPath.newInstance("./@title");
-      XPath xpaTemplate = createXPath("templates/tl", "ns", "" + Namespace.TEMPLATE);
+      XPathExpression<Element> xpa = XPathFactory.instance().compile(
+          "/api/query/pages/page", Filters.element());
+      List<Element> results = xpa.evaluate(root);
+      Iterator<Element> iter = results.iterator();
+      XPathExpression<Element> xpaTemplates = XPathFactory.instance().compile(
+          "templates/tl", Filters.element());
       List<Page> tmpPages = new ArrayList<Page>();
       while (iter.hasNext()) {
-        Element currentNode = (Element) iter.next();
-        String title = xpaTitle.valueOf(currentNode);
+        Element currentNode = iter.next();
+        String title = currentNode.getAttributeValue("title");
         for (Page p : pages) {
           tmpPages.clear();
           Iterator<Page> it = p.getRedirectIteratorWithPage();
@@ -125,8 +129,14 @@ public class ApiXmlTemplatesResult extends ApiXmlPropertiesResult implements Api
             tmpPages.add(p2);
             if ((p2.getTitle() != null) &&
                 (Page.areSameTitle(p2.getTitle(), title))) {
-              List listTemplates = xpaTemplate.selectNodes(currentNode);
-              if (listTemplates.size() > 0) {
+              List<Element> listTemplates = xpaTemplates.evaluate(currentNode);
+              boolean hasTemplate = false;
+              for (Element template : listTemplates) {
+                if (!hasTemplate && ("" + Namespace.TEMPLATE).equals(template.getAttribute("ns"))) {
+                  hasTemplate = true;
+                }
+              }
+              if (hasTemplate) {
                 for (Page p3 : tmpPages) {
                   p3.setDisambiguationPage(Boolean.TRUE);
                 }

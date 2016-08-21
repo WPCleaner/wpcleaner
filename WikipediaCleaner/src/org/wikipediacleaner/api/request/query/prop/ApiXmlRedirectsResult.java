@@ -12,9 +12,11 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.httpclient.HttpClient;
-import org.jdom.Element;
-import org.jdom.JDOMException;
-import org.jdom.xpath.XPath;
+import org.jdom2.Element;
+import org.jdom2.JDOMException;
+import org.jdom2.filter.Filters;
+import org.jdom2.xpath.XPathExpression;
+import org.jdom2.xpath.XPathFactory;
 import org.wikipediacleaner.api.APIException;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.DataManager;
@@ -57,18 +59,16 @@ public class ApiXmlRedirectsResult extends ApiXmlResult implements ApiRedirectsR
       Element root = getRoot(properties, ApiRequest.MAX_ATTEMPTS);
 
       // Retrieve redirects
-      XPath xpa = XPath.newInstance("/api/query/pages/page/redirects/rd");
-      List listRedirects = xpa.selectNodes(root);
-      Iterator itRedirects = listRedirects.iterator();
-      XPath xpaPageId = XPath.newInstance("./@pageid");
-      XPath xpaNs = XPath.newInstance("./@ns");
-      XPath xpaTitle = XPath.newInstance("./@title");
+      XPathExpression<Element> xpa = XPathFactory.instance().compile(
+          "/api/query/pages/page/redirects/rd", Filters.element());
+      List<Element> listRedirects = xpa.evaluate(root);
+      Iterator<Element> itRedirects = listRedirects.iterator();
       while (itRedirects.hasNext()) {
-        Element currentRedirect = (Element) itRedirects.next();
+        Element currentRedirect = itRedirects.next();
         Page link = DataManager.getPage(
-            getWiki(), xpaTitle.valueOf(currentRedirect), null, null, null);
-        link.setNamespace(xpaNs.valueOf(currentRedirect));
-        link.setPageId(xpaPageId.valueOf(currentRedirect));
+            getWiki(), currentRedirect.getAttributeValue("title"), null, null, null);
+        link.setNamespace(currentRedirect.getAttributeValue("ns"));
+        link.setPageId(currentRedirect.getAttributeValue("pageid"));
         link.addRedirect(page);
         if (!list.contains(link)) {
           list.add(link);
