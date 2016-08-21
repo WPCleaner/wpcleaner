@@ -214,15 +214,16 @@ public class PageElementTemplate extends PageElement {
     }
 
     // Check that it's not a function
-    String firstPart = templateName;
-    int colonIndex = templateName.indexOf(':');
-    if (colonIndex > 0) {
-      firstPart = templateName.substring(0, colonIndex);
-    }
-    MagicWord magicWord = wiki.getWikiConfiguration().getFunctionMagicWord(firstPart, colonIndex > 0);
-    if (magicWord != null) {
-      return null;
-    }
+    // REMOVED: prevents detecting templates like {{Heure|...}}
+    //String firstPart = templateName;
+    //int colonIndex = templateName.indexOf(':');
+    //if (colonIndex > 0) {
+    //  firstPart = templateName.substring(0, colonIndex);
+    //}
+    //MagicWord magicWord = wiki.getWikiConfiguration().getFunctionMagicWord(firstPart, colonIndex > 0);
+    //if (magicWord != null) {
+    //  return null;
+    //}
 
     do {
       moved = false;
