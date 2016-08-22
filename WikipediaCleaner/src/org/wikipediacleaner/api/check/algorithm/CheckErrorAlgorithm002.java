@@ -121,13 +121,26 @@ public class CheckErrorAlgorithm002 extends CheckErrorAlgorithmBase {
     List<PageElementTag> tags = analysis.getTags(tagName);
     PageElementTag previousTag = null;
     for (PageElementTag tag : tags) {
-      if ((tag != null) && tag.isFullTag()) {
+
+      boolean shouldReport = false;
+      int beginIndex = tag.getBeginIndex();
+      if (tag.isFullTag()) {
+        shouldReport = true;
+      }
+      if (shouldReport) {
+        if ((analysis.getSurroundingTag(PageElementTag.TAG_WIKI_SOURCE, beginIndex) != null) ||
+            (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_SYNTAXHIGHLIGHT, beginIndex) != null)) {
+          shouldReport = false;
+        }
+      }
+
+      if (shouldReport) {
         if (errors == null) {
           return true;
         }
         result = true;
         CheckErrorResult errorResult =
-            createCheckErrorResult(analysis, tag.getBeginIndex(), tag.getEndIndex());
+            createCheckErrorResult(analysis, beginIndex, tag.getEndIndex());
 
         // Check for consecutive opening tags without matching closing tags
         if ((previousTag != null) &&
