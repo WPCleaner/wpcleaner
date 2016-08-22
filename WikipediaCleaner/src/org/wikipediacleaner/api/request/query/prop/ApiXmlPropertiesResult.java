@@ -168,17 +168,17 @@ public class ApiXmlPropertiesResult extends ApiXmlResult implements ApiPropertie
 
     // Retrieving pages
     XPathExpression<Element> xpaPages = XPathFactory.instance().compile(
-        "/api/query/pages", Filters.element());
-    Element listPages = xpaPages.evaluateFirst(root);
+        "/api/query/pages/page", Filters.element());
+    List<Element> listPages = xpaPages.evaluate(root);
 
     // Retrieving normalization information
     Map<String, String> normalization = new HashMap<String, String>();
     retrieveNormalization(root, normalization);
 
     // Analyzing redirects
-    Iterator itRedirect = listRedirects.iterator();
+    Iterator<Element> itRedirect = listRedirects.iterator();
     while (itRedirect.hasNext()) {
-      Element currentRedirect = (Element) itRedirect.next();
+      Element currentRedirect = itRedirect.next();
       String fromPage = currentRedirect.getAttributeValue("from");
       String toPage = currentRedirect.getAttributeValue("to");
       for (Page p : pages) {
@@ -200,12 +200,10 @@ public class ApiXmlPropertiesResult extends ApiXmlResult implements ApiPropertie
           Page tmp = itPage.next();
           String title = getNormalizedTitle(tmp.getTitle(), normalization);
           if (!exists && Page.areSameTitle(title, fromPage)) {
-            XPathExpression<Element> xpaPage = XPathFactory.instance().compile(
-                "page", Filters.element()); 
-            List<Element> listPage = xpaPage.evaluate(listPages);
             Element to = null;
-            for (Element page : listPage) {
-              if ((to == null) && toPage.equals(page.getAttribute("title"))) {
+            for (Element page : listPages) {
+              if ((to == null) &&
+                  Page.areSameTitle(toPage, page.getAttributeValue("title"))) {
                 to = page;
               }
             }
