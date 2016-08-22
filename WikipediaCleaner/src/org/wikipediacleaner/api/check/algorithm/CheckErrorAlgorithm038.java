@@ -58,6 +58,13 @@ public class CheckErrorAlgorithm038 extends CheckErrorAlgorithmBase {
       } else {
         errorFound = true;
       }
+      int beginIndex = iTag.getCompleteBeginIndex();
+      if (errorFound) {
+        if ((analysis.getSurroundingTag(PageElementTag.TAG_WIKI_SOURCE, beginIndex) != null) ||
+            (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_SYNTAXHIGHLIGHT, beginIndex) != null)) {
+          errorFound = false;
+        }
+      }
 
       // Mark error
       if (errorFound) {
