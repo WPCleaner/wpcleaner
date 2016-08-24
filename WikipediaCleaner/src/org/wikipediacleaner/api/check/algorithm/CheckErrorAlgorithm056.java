@@ -155,12 +155,42 @@ public class CheckErrorAlgorithm056 extends CheckErrorAlgorithmBase {
             return true;
           }
           result = true;
-          CheckErrorResult errorResult = createCheckErrorResult(
-              analysis, currentIndex, currentIndex + arrowLen);
-          for (int i = 1; i < arrows.length; i++) {
-            errorResult.addReplacement(arrows[i]);
+
+          // Check for cases like <ref name=>
+          boolean reported = false;
+          if ((arrowLen == 2) && (contents.startsWith("=>", currentIndex))) {
+            PageElementTag tag = analysis.isInTag(currentIndex);
+            if ((tag != null) && (tag.getEndIndex() == currentIndex + 2)) {
+              int tmpIndex = currentIndex - 1;
+              while ((tmpIndex > 0) && (Character.isLetter(contents.charAt(tmpIndex)))) {
+                tmpIndex--;
+              }
+              if ((tmpIndex > 0) &&
+                  (currentIndex > tmpIndex + 1) &&
+                  (contents.charAt(tmpIndex) == ' ')) {
+                String attributeName = contents.substring(tmpIndex + 1, currentIndex);
+                boolean automatic = false;
+                if (PageElementTag.TAG_WIKI_REF.equals(tag.getName()) &&
+                    attributeName.equals("name")) {
+                  automatic = true;
+                }
+                CheckErrorResult errorResult = createCheckErrorResult(
+                    analysis, tmpIndex, currentIndex + arrowLen);
+                errorResult.addReplacement(">", automatic);
+                errors.add(errorResult);
+                reported = true;
+              }
+            }
           }
-          errors.add(errorResult);
+
+          if (!reported) {
+            CheckErrorResult errorResult = createCheckErrorResult(
+                analysis, currentIndex, currentIndex + arrowLen);
+            for (int i = 1; i < arrows.length; i++) {
+              errorResult.addReplacement(arrows[i]);
+            }
+            errors.add(errorResult);
+          }
         }
         nextIndex = currentIndex + arrowLen;
       }
@@ -168,5 +198,16 @@ public class CheckErrorAlgorithm056 extends CheckErrorAlgorithmBase {
     }
 
     return result;
+  }
+
+  /**
+   * Automatic fixing of all the errors in the page.
+   * 
+   * @param analysis Page analysis.
+   * @return Page contents after fix.
+   */
+  @Override
+  protected String internalAutomaticFix(PageAnalysis analysis) {
+    return fixUsingAutomaticReplacement(analysis);
   }
 }
