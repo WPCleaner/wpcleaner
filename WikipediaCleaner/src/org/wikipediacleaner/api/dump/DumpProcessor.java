@@ -11,6 +11,8 @@ package org.wikipediacleaner.api.dump;
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
 
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
@@ -18,6 +20,7 @@ import javax.xml.parsers.SAXParserFactory;
 import org.apache.commons.compress.compressors.bzip2.BZip2CompressorInputStream;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.xml.sax.InputSource;
 
 
 /**
@@ -58,9 +61,11 @@ public class DumpProcessor {
       fis = new FileInputStream(file);
       bis = new BufferedInputStream(fis);
       bzis = new BZip2CompressorInputStream(bis);
+      Reader reader = new InputStreamReader(bzis, "UTF-8");
+      InputSource is = new InputSource(reader); 
       DumpHandler dh = new DumpHandler();
       dh.setPageProcessor(pageProcessor);
-      parser.parse(bzis, dh);
+      parser.parse(is, dh);
     } catch (Exception e) {
       log.error("Error processing dump file", e);
     } finally {
