@@ -27,19 +27,19 @@ public class PageHandler extends DefaultHandler {
   private boolean isInTitle;
 
   /** Page title */
-  private String title;
+  private StringBuilder title;
 
   /** True when parsing name space */
   private boolean isInNamespace;
 
   /** Name space */
-  private String namespace;
+  private StringBuilder namespace;
 
   /** True when parsing a page id */
   private boolean isInPageId;
 
   /** Page id */
-  private String pageId;
+  private StringBuilder pageId;
 
   /** True when parsing a revision */
   private boolean isInRevision;
@@ -48,19 +48,28 @@ public class PageHandler extends DefaultHandler {
   private boolean isInRevisionId;
 
   /** Revision id */
-  private String revisionId;
+  private StringBuilder revisionId;
 
   /** True when parsing a revision text */
   private boolean isInRevisionText;
 
   /** Revision text */
-  private String revisionText;
+  private StringBuilder revisionText;
 
   /** Page processor */
   private PageProcessor processor;
 
+  /**
+   * Constructor.
+   */
   public PageHandler() {
     isInPage = false;
+    title = new StringBuilder();
+    namespace = new StringBuilder();
+    pageId = new StringBuilder();
+    revisionId = new StringBuilder();
+    revisionText = new StringBuilder();
+    cleanPageInformation();
   }
 
   /**
@@ -72,11 +81,6 @@ public class PageHandler extends DefaultHandler {
 
   /**
    * Receive notification of the start of an element.
-   *
-   * <p>By default, do nothing.  Application writers may override this
-   * method in a subclass to take specific actions at the start of
-   * each element (such as allocating a new tree node or writing
-   * output to a file).</p>
    *
    * @param uri The Namespace URI, or the empty string if the
    *        element has no Namespace URI or if Namespace
@@ -99,26 +103,26 @@ public class PageHandler extends DefaultHandler {
       if (isInRevision) {
         if (qName.equals("id")) {
           isInRevisionId = true;
-          revisionId = null;
+          revisionId.setLength(0);
         } else if (qName.equals("text")) {
           isInRevisionText = true;
-          revisionText = null;
+          revisionText.setLength(0);
         }
       } else if (qName.equalsIgnoreCase("title")) {
         isInTitle = true;
-        title = null;
+        title.setLength(0);
       } else if (qName.equalsIgnoreCase("ns")) {
         isInNamespace = true;
-        namespace = null;
+        namespace.setLength(0);
       } else if (qName.equalsIgnoreCase("id")) {
         isInPageId = true;
-        pageId = null;
+        pageId.setLength(0);
       } else if (qName.equalsIgnoreCase("revision")) {
         isInRevision = true;
         isInRevisionId = false;
-        revisionId = null;
+        revisionId.setLength(0);
         isInRevisionText = false;
-        revisionText = null;
+        revisionText.setLength(0);
       }
     } else if (qName.equalsIgnoreCase("page")) {
       isInPage = true;
@@ -128,11 +132,6 @@ public class PageHandler extends DefaultHandler {
 
   /**
    * Receive notification of the end of an element.
-   *
-   * <p>By default, do nothing.  Application writers may override this
-   * method in a subclass to take specific actions at the end of
-   * each element (such as finalising a tree node or writing
-   * output to a file).</p>
    *
    * @param uri The Namespace URI, or the empty string if the
    *        element has no Namespace URI or if Namespace
@@ -153,9 +152,11 @@ public class PageHandler extends DefaultHandler {
         if (processor != null) {
           try {
             Page page = DataManager.getPage(
-                processor.getWiki(), title, Integer.valueOf(pageId, 10), revisionId, null);
-            page.setNamespace(namespace);
-            page.setContents(revisionText);
+                processor.getWiki(), title.toString(),
+                Integer.valueOf(pageId.toString(), 10), revisionId.toString(),
+                null);
+            page.setNamespace(namespace.toString());
+            page.setContents(revisionText.toString());
             processor.processPage(page);
           } catch (NumberFormatException e) {
             System.err.println("Problem in endElement: " + e.getMessage());
@@ -185,11 +186,6 @@ public class PageHandler extends DefaultHandler {
   /**
    * Receive notification of character data inside an element.
    *
-   * <p>By default, do nothing.  Application writers may override this
-   * method to take specific actions for each chunk of character data
-   * (such as adding the data to a node or buffer, or printing it to
-   * a file).</p>
-   *
    * @param ch The characters.
    * @param start The start position in the character array.
    * @param length The number of characters to use from the
@@ -201,39 +197,18 @@ public class PageHandler extends DefaultHandler {
   @Override
   public void characters(char ch[], int start, int length) throws SAXException {
     if (isInPage) {
-      String value = new String(ch, start, length);
       if (isInRevision) {
         if (isInRevisionId) {
-          if (revisionId == null) {
-            revisionId = value;
-          } else {
-            revisionId += value;
-          }
+          revisionId.append(ch, start, length);
         } else if (isInRevisionText) {
-          if (revisionText == null) {
-            revisionText = value;
-          } else {
-            revisionText += value;
-          }
+          revisionText.append(ch, start, length);
         }
       } else if (isInTitle) {
-        if (title == null) {
-          title = value;
-        } else {
-          title += value;
-        }
+        title.append(ch, start, length);
       } else if (isInNamespace) {
-        if (namespace == null) {
-          namespace = value;
-        } else {
-          namespace += value;
-        }
+        namespace.append(ch, start, length);
       } else if (isInPageId) {
-        if (pageId == null) {
-          pageId = value;
-        } else {
-          pageId += value;
-        }
+        pageId.append(ch, start, length);
       }
     }
   }
@@ -243,15 +218,15 @@ public class PageHandler extends DefaultHandler {
    */
   private void cleanPageInformation() {
     isInTitle = false;
-    title = null;
+    title.setLength(0);
     isInNamespace = false;
-    namespace = null;
+    namespace.setLength(0);
     isInPageId = false;
-    pageId = null;
+    pageId.setLength(0);
     isInRevision = false;
     isInRevisionId = false;
-    revisionId = null;
+    revisionId.setLength(0);
     isInRevisionText = false;
-    revisionText = null;
+    revisionText.setLength(0);
   }
 }
