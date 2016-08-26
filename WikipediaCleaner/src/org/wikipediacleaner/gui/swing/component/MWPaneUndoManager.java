@@ -120,6 +120,9 @@ public class MWPaneUndoManager implements ActionListener {
         return;
       }
       undoTexts.removeLast();
+      if (undoTexts.isEmpty()) {
+        return;
+      }
       newText = undoTexts.getLast();
     }
     undoTexts.removeLast();
