@@ -28,7 +28,8 @@ public class Language implements Comparable<Language> {
       return false;
     }
     for (Language language : languages) {
-      if ((language != null) && (code.equals(language.getCode()))) {
+      if ((language != null) &&
+          areCodesEqual(code, language.getCode())) {
         return true;
       }
     }
@@ -56,6 +57,34 @@ public class Language implements Comparable<Language> {
    */
   public String getName() {
     return name;
+  }
+
+  /**
+   * Compare language codes.
+   * 
+   * @param code1 First language code.
+   * @param code2 Second language code.
+   * @return True if language codes are equal.
+   */
+  public static boolean areCodesEqual(String code1, String code2) {
+    if (code1 == null) {
+      return (code2 == null);
+    }
+    if (code2 == null) {
+      return false;
+    }
+    if (code1.equals(code2)) {
+      return true;
+    }
+    if ((code1.length() == 0) || (code2.length() == 0)) {
+      return false;
+    }
+    if (code1.length() != code2.length()) {
+      return false;
+    }
+    code1 = Character.toUpperCase(code1.charAt(0)) + code1.substring(1);
+    code2 = Character.toUpperCase(code2.charAt(0)) + code2.substring(1);
+    return code1.equals(code2);
   }
 
   /* (non-Javadoc)
