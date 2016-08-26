@@ -69,6 +69,15 @@ public class CheckErrorAlgorithm002 extends CheckErrorAlgorithmBase {
         PageElementTag.TAG_HTML_DIV,
         PageElementTag.TAG_HTML_EM,
         PageElementTag.TAG_HTML_FONT,
+        PageElementTag.TAG_HTML_H1,
+        PageElementTag.TAG_HTML_H2,
+        PageElementTag.TAG_HTML_H3,
+        PageElementTag.TAG_HTML_H4,
+        PageElementTag.TAG_HTML_H5,
+        PageElementTag.TAG_HTML_H6,
+        PageElementTag.TAG_HTML_H7,
+        PageElementTag.TAG_HTML_H8,
+        PageElementTag.TAG_HTML_H9,
         PageElementTag.TAG_HTML_I,
         PageElementTag.TAG_HTML_P,
         PageElementTag.TAG_HTML_S,
@@ -77,6 +86,7 @@ public class CheckErrorAlgorithm002 extends CheckErrorAlgorithmBase {
         PageElementTag.TAG_HTML_STRIKE,
         PageElementTag.TAG_HTML_SUB,
         PageElementTag.TAG_HTML_SUP,
+        PageElementTag.TAG_HTML_TABLE,
         PageElementTag.TAG_HTML_TD,
         PageElementTag.TAG_HTML_TH,
         PageElementTag.TAG_HTML_TR,
@@ -84,6 +94,7 @@ public class CheckErrorAlgorithm002 extends CheckErrorAlgorithmBase {
         PageElementTag.TAG_HTML_U,
         PageElementTag.TAG_HTML_UL,
     };
+    // Valid HTML tags are only: area, base, br, col, embed, hr, img, input, keygen, link, meta, param, source, track, wbr
     for (String tagName : listTags) {
       result |= analyzeNonFullTags(analysis, errors, tagName);
     }
