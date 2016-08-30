@@ -119,7 +119,7 @@ public class CheckErrorAlgorithm084 extends CheckErrorAlgorithmBase {
           }
           errorResult.addReplacement("", GT._("Delete section"));
           if ((nextTitle != null) && (nextTitle.getLevel() == title.getLevel())) {
-            errorResult.addEditTocAction();
+            errorResult.addEditTocAction(title);
           }
           errors.add(errorResult);
         }

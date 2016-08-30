@@ -27,6 +27,7 @@ import javax.swing.text.StyledDocument;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageAnalysis;
+import org.wikipediacleaner.api.data.PageElementTitle;
 import org.wikipediacleaner.gui.swing.action.FindTextAction;
 import org.wikipediacleaner.gui.swing.action.ReplaceLinkAction;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
@@ -463,10 +464,12 @@ public class MWPane
 
   /**
    * Display Table of Contents.
+   * 
+   * @param title Title to be selected.
    */
-  public void displayToc() {
+  public void displayToc(PageElementTitle title) {
     if (treeManager != null) {
-      treeManager.displayToc();
+      treeManager.displayToc(title);
     }
   }
 

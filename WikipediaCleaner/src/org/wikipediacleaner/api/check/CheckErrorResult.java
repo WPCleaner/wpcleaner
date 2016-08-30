@@ -12,6 +12,7 @@ import java.util.List;
 
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithm;
 import org.wikipediacleaner.api.data.Page;
+import org.wikipediacleaner.api.data.PageElementTitle;
 import org.wikipediacleaner.gui.swing.component.MWPaneEditTocAction;
 import org.wikipediacleaner.i18n.GT;
 
@@ -297,10 +298,10 @@ public class CheckErrorResult implements Comparable<CheckErrorResult> {
   /**
    * Add an action for editing the table of contents.
    */
-  public void addEditTocAction() {
+  public void addEditTocAction(PageElementTitle title) {
     addPossibleAction(
         new SimpleAction(GT._("Edit table of contents"),
-        new MWPaneEditTocAction()));
+        new MWPaneEditTocAction(title)));
   }
 
   /**

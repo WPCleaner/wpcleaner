@@ -86,7 +86,7 @@ public class CheckErrorAlgorithm092 extends CheckErrorAlgorithmBase {
         CheckErrorResult errorResult = createCheckErrorResult(
             analysis,
             title.getBeginIndex(), title.getEndIndex());
-        errorResult.addEditTocAction();
+        errorResult.addEditTocAction(title);
         errors.add(errorResult);
       }
 

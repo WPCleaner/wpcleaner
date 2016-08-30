@@ -9,22 +9,28 @@ package org.wikipediacleaner.gui.swing.component;
 
 import java.awt.event.ActionEvent;
 
+import org.wikipediacleaner.api.data.PageElementTitle;
+
 
 /**
  * An Action that opens the Table of Contents pane.
  */
 public class MWPaneEditTocAction extends MWPaneAction {
 
-  /**
-   * Serialization.
-   */
+  /** Serialization */
   private static final long serialVersionUID = -8884273905628744049L;
+
+  /** Title to be selected when opening the TOC */
+  private final PageElementTitle title;
 
   /**
    * Constructor.
+   * 
+   * @param title Title to be selected.
    */
-  public MWPaneEditTocAction() {
+  public MWPaneEditTocAction(PageElementTitle title) {
     super("MWPaneEditTocAction");
+    this.title = title;
   }
 
   /**
@@ -37,6 +43,6 @@ public class MWPaneEditTocAction extends MWPaneAction {
     if (textPane == null) {
       return;
     }
-    textPane.displayToc();
+    textPane.displayToc(title);
   }
 }

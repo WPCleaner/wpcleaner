@@ -159,14 +159,16 @@ public class MWPaneTitleTreeManager {
     if (tocIsDisplayed) {
       hideToc();
     } else {
-      displayToc();
+      displayToc(null);
     }
   }
 
   /**
-   * Dispay table of contents.
+   * Display table of contents.
+   * 
+   * @param title Title to be selected.
    */
-  public void displayToc() {
+  public void displayToc(PageElementTitle title) {
     if (!tocIsDisplayed) {
       updateTreeToc();
       updateTreeToc2();
@@ -177,6 +179,16 @@ public class MWPaneTitleTreeManager {
     splitPane.setDividerSize(2);
     splitPane.setResizeWeight(0.0);
     textPane.setEditableInternal(false);
+    if (title != null) {
+      MWPaneTitleTreeNode node = findTreeNode(
+          (MWPaneTitleTreeNode) modelToc.getRoot(),
+          title);
+      if (node != null) {
+        TreePath treePath = new TreePath(node.getPath());
+        treeToc.scrollPathToVisible(treePath);
+        treeToc.setSelectionPath(treePath);
+      }
+    }
   }
 
   /**
