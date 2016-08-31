@@ -18,6 +18,7 @@ import org.wikipediacleaner.api.check.SpecialCharacters;
 import org.wikipediacleaner.api.constants.WPCConfiguration;
 import org.wikipediacleaner.api.constants.WPCConfigurationStringList;
 import org.wikipediacleaner.api.data.PageAnalysis;
+import org.wikipediacleaner.api.data.PageElementComment;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.i18n.GT;
 
@@ -100,14 +101,9 @@ public class CheckErrorAlgorithm067 extends CheckErrorAlgorithmBase {
       PageElementTag lastTag = tags.get(lastTagIndex);
       tagIndex = lastTagIndex + 1;
 
-      // Remove possible whitespace characters before first reference
-      int tmpIndex = firstTag.getBeginIndex() - 1;
-      while ((tmpIndex >= 0) &&
-             (Character.isWhitespace(contents.charAt(tmpIndex)))) {
-        tmpIndex--;
-      }
-
       // Check if previous character is a punctuation
+      int tmpIndex = firstTag.getBeginIndex() - 1;
+      String previousComment = "";
       boolean punctuationFoundBefore = false;
       boolean punctuationFoundBetween = false;
       char punctuation = ' ';
@@ -117,8 +113,28 @@ public class CheckErrorAlgorithm067 extends CheckErrorAlgorithmBase {
             (currentTag.isFullTag()) ||
             (!currentTag.isEndTag())) {
           int testIndex = currentTag.getBeginIndex() - 1;
-          while ((testIndex >= 0) && (Character.isWhitespace(contents.charAt(testIndex)))) {
-            testIndex--;
+          boolean done = false;
+          while (!done) {
+            done = true;
+            if (testIndex >= 0) {
+              char testChar = contents.charAt(testIndex);
+              if (Character.isWhitespace(testChar)) {
+                testIndex--;
+                done = false;
+              } else  if ((testChar == '>')) {
+                PageElementComment comment = analysis.isInComment(testIndex);
+                if ((comment != null) && (comment.getEndIndex() == testIndex + 1)) {
+                  if (currentTagIndex == firstTagIndex) {
+                    previousComment += contents.substring(comment.getBeginIndex(), comment.getEndIndex());
+                  }
+                  testIndex = comment.getBeginIndex() - 1;
+                  done = false;
+                }
+              }
+            }
+          }
+          if (currentTagIndex == firstTagIndex) {
+            tmpIndex = testIndex;
           }
           if (testIndex >= 0) {
             char currentPunctuation = contents.charAt(testIndex);
@@ -247,7 +263,9 @@ public class CheckErrorAlgorithm067 extends CheckErrorAlgorithmBase {
             }
             if (contents.startsWith("\n\n", tmpIndex) ||
                 contents.startsWith("\n*", tmpIndex)) {
-              automatic = true;
+              if (previousComment.isEmpty()) {
+                automatic = true;
+              }
             }
           }
           for (String[] generalAbbreviation : generalAbbreviationFound) {
@@ -258,17 +276,17 @@ public class CheckErrorAlgorithm067 extends CheckErrorAlgorithmBase {
                 meaning = " (" + generalAbbreviation[1] + ")";
               }
               errorResult.addReplacement(
-                  abbreviation + replace + punctuationAfter,
+                  abbreviation + previousComment + replace + punctuationAfter,
                   abbreviation + textReplace + punctuationAfter + meaning);
             }
           }
           errorResult.addReplacement(
-              prefix + replace + moveablePrefix + allPunctuations,
+              prefix + previousComment + replace + moveablePrefix + allPunctuations,
               prefix + textReplace + moveablePrefix + allPunctuations, automatic);
           if (punctuationFoundAfter &&
               !allPunctuations.equals(punctuationAfter)) {
             errorResult.addReplacement(
-                prefix + replace + moveablePrefix + punctuationAfter,
+                prefix + previousComment + replace + moveablePrefix + punctuationAfter,
                 prefix + textReplace + moveablePrefix + punctuationAfter);
           }
           errors.add(errorResult);
