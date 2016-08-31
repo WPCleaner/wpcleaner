@@ -1324,8 +1324,19 @@ public class CheckWikiWindow extends OnePageWindow implements CheckWikiListener 
           }
           yesAll = false;
           noAll = false;
+          List<String> messages = new ArrayList<>();
           for (CheckWikiContentPanel contentPanel : contentPanels) {
-            contentPanel.actionPageSelected();
+            contentPanel.actionPageSelected(messages);
+          }
+          if (!messages.isEmpty()) {
+            StringBuilder message = new StringBuilder();
+            for (String line : messages) {
+              if (message.length() > 0) {
+                message.append('\n');
+              }
+              message.append(line);
+            }
+            displayWarning(message.toString());
           }
         }
         //

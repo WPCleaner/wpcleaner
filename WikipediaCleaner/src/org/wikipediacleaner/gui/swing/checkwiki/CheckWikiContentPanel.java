@@ -294,8 +294,10 @@ public class CheckWikiContentPanel
 
   /**
    * Action called when a page is selected (after page is loaded).
+   * 
+   * @param messages List to complete with messages (deleted pages, fixed pages...).
    */
-  void actionPageSelected() {
+  void actionPageSelected(List<String> messages) {
     if (page == null) {
       pane.remove(this);
       return;
@@ -303,7 +305,12 @@ public class CheckWikiContentPanel
 
     // Deleted page
     if (Boolean.FALSE.equals(page.isExisting())) {
-      window.displayWarning(GT._("The page {0} doesn''t exist on Wikipedia", page.getTitle()));
+      String message = GT._("The page {0} doesn''t exist on Wikipedia", page.getTitle());
+      if (messages != null) {
+        messages.add(message);
+      } else {
+        window.displayWarning(message);
+      }
       if (errors != null) {
         for (CheckError error : errors) {
           error.remove(page);
@@ -417,9 +424,14 @@ public class CheckWikiContentPanel
       } else {
 
         // Inform user if Check Wiki doesn't detect the error anymore
-        window.displayWarning(GT._(
+        String message = GT._(
             "The error n°{0} has already been fixed in page {1}.",
-            new Object[] { txtErrors, page.getTitle() }));
+            new Object[] { txtErrors, page.getTitle() });
+        if (messages != null) {
+          messages.add(message);
+        } else {
+          window.displayWarning(message);
+        }
         answer = JOptionPane.YES_OPTION;
       }
 
