@@ -225,17 +225,14 @@ public class ApiXmlPropertiesResult extends ApiXmlResult implements ApiPropertie
       while (itPage.hasNext()) {
         Page tmp = itPage.next();
         String title = getNormalizedTitle(tmp.getTitle(), normalization);
-        XPathExpression<Element> xpaPage = XPathFactory.instance().compile(
-            "page", Filters.element()); 
-        List<Element> listPage = xpaPage.evaluate(listPages);
         Element page = null;
-        for (Element tmpPage : listPage) {
-          if ((page == null) && title.equals(tmpPage.getAttribute("title"))) {
+        for (Element tmpPage : listPages) {
+          if ((page == null) && title.equals(tmpPage.getAttributeValue("title"))) {
             page = tmpPage;
           }
         }
         if (page != null) {
-          if (page.getAttribute("pageid") != null) {
+          if (page.getAttributeValue("pageid") != null) {
             tmp.setExisting(Boolean.TRUE);
           } else {
             Attribute attrMissing = page.getAttribute("missing");
