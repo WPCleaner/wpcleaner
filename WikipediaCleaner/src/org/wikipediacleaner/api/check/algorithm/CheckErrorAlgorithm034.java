@@ -16,6 +16,7 @@ import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementFunction;
+import org.wikipediacleaner.api.data.PageElementMagicWord;
 import org.wikipediacleaner.api.data.PageElementParameter;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.PageElementTemplate;
@@ -58,7 +59,27 @@ public class CheckErrorAlgorithm034 extends CheckErrorAlgorithmBase {
     int currentIndex = 0;
     while (currentIndex < maxLen) {
       int nextIndex = currentIndex;
-      if (contents.startsWith("{{", currentIndex)) {
+      if (contents.startsWith("__", currentIndex)) {
+        nextIndex = currentIndex + 2;
+        PageElementMagicWord magicWord = analysis.isInMagicWord(currentIndex);
+        if ((magicWord != null) && (magicWord.getBeginIndex() == currentIndex)) {
+          nextIndex = magicWord.getEndIndex();
+          String magicWordName = magicWord.getMagicWord().getName();
+          if (MagicWord.FORCE_TOC.equals(magicWordName) ||
+              MagicWord.INDEX.equals(magicWordName) ||
+              MagicWord.NO_INDEX.equals(magicWordName) ||
+              MagicWord.NO_NEW_SECTION_LINK.equals(magicWordName)) {
+            result = true;
+            if (errors == null) {
+              return true;
+            }
+            CheckErrorResult errorResult = createCheckErrorResult(
+                analysis, magicWord.getBeginIndex(), magicWord.getEndIndex());
+            errorResult.addReplacement("");
+            errors.add(errorResult);
+          }
+        }
+      } else if (contents.startsWith("{{", currentIndex)) {
         boolean done = false;
 
         // Check for templates beginning with '{{{' instead of '{{'
