@@ -12,6 +12,8 @@ import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -162,6 +164,7 @@ public class TemplateListWindow extends BasicWindow {
 
     private final Page page1;
     private final Page link1;
+    private final List<Page> pages;
 
     /**
      * @param wikipedia Wikipedia.
@@ -173,6 +176,7 @@ public class TemplateListWindow extends BasicWindow {
       super(wikipedia, window);
       this.page1 = page;
       this.link1 = link;
+      this.pages = new ArrayList<>();
     }
 
     /* (non-Javadoc)
@@ -191,6 +195,9 @@ public class TemplateListWindow extends BasicWindow {
     @Override
     public void finished() {
       super.finished();
+      for (Page p : pages) {
+        addLink(p);
+      }
       if (modelLinks.getSize() > 0) {
         listLinks.setSelectedIndex(0);
       }
@@ -218,7 +225,7 @@ public class TemplateListWindow extends BasicWindow {
             }
           }
           if (found) {
-            addLink(p);
+            pages.add(p);
           }
         }
       } catch (APIException e) {
