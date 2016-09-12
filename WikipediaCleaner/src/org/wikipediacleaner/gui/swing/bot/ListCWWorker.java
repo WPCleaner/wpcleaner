@@ -135,7 +135,7 @@ public class ListCWWorker extends BasicWorker {
     if ((selectedAlgorithms == null) || selectedAlgorithms.isEmpty()) {
       return null;
     }
-    CWPageProcessor pageProcessor = new CWPageProcessor(getWikipedia());
+    CWPageProcessor pageProcessor = new CWPageProcessor(getWikipedia(), this);
     DumpProcessor dumpProcessor = new DumpProcessor(pageProcessor);
     dumpProcessor.processDump(dumpFile);
     while (!pageProcessor.hasFinished()) {
@@ -430,6 +430,9 @@ public class ListCWWorker extends BasicWorker {
       if (countAnalyzed % 100000 == 0) {
         System.out.println("Pages processed: " + countAnalyzed);
       }
+      if (countAnalyzed % 1000 == 0) {
+        setText(GT._("{0} pages processed", Integer.toString(countAnalyzed)));
+      }
       return page;
     }
   }
@@ -442,6 +445,9 @@ public class ListCWWorker extends BasicWorker {
     /** Wiki */
     private final EnumWikipedia wiki;
 
+    /** Listener */
+    private final MediaWikiListener listener;
+
     /** Controller for background tasks */
     private final CWController controller;
 
@@ -450,9 +456,11 @@ public class ListCWWorker extends BasicWorker {
 
     /**
      * @param wiki Wiki.
+     * @param listener Listener.
      */
-    public CWPageProcessor(EnumWikipedia wiki) {
+    public CWPageProcessor(EnumWikipedia wiki, MediaWikiListener listener) {
       this.wiki = wiki;
+      this.listener = listener;
       this.controller = new CWController(null);
       this.api = APIFactory.getAPI();
     }
@@ -473,7 +481,7 @@ public class ListCWWorker extends BasicWorker {
     @Override
     public void processPage(Page page) {
       if ((page != null) && page.isInMainNamespace()) {
-        controller.addTask(new CWPageCallable(wiki, null, api, page));
+        controller.addTask(new CWPageCallable(wiki, listener, api, page));
       }
     }
 
