@@ -181,7 +181,7 @@ public class Bot implements BasicWorkerListener {
     if (currentArg >= args.length) {
       return;
     }
-    String action = args[0];
+    String action = args[currentArg];
     currentArg++;
 
     // Execute action depending on the parameters
@@ -189,11 +189,11 @@ public class Bot implements BasicWorkerListener {
     if ("UpdateDabWarnings".equalsIgnoreCase(action)) {
       Configuration config = Configuration.getConfiguration();
       String start = config.getString(null, ConfigurationValueString.LAST_DAB_WARNING);
-      if (args.length > 1) {
-        if (args[1].equals("*")) {
+      if (args.length > currentArg) {
+        if (args[currentArg].equals("*")) {
           start = null;
         } else {
-          start = args[1];
+          start = args[currentArg];
         }
       }
       worker = new UpdateDabWarningWorker(wiki, null, start);
@@ -210,26 +210,48 @@ public class Bot implements BasicWorkerListener {
     } else if ("FixCheckWiki".equalsIgnoreCase(action)) {
       List<CheckErrorAlgorithm> algorithms = new ArrayList<CheckErrorAlgorithm>();
       List<CheckErrorAlgorithm> allAlgorithms = new ArrayList<CheckErrorAlgorithm>();
-      extractAlgorithms(algorithms, allAlgorithms, args, 1);
+      if (args.length > currentArg) {
+        extractAlgorithms(algorithms, allAlgorithms, args, currentArg);
+      }
       worker = new AutomaticCWWorker(
           wiki, null, algorithms, 10000, true, allAlgorithms, null, true, false);
     } else if ("MarkCheckWiki".equalsIgnoreCase(action)) {
       List<CheckErrorAlgorithm> algorithms = new ArrayList<CheckErrorAlgorithm>();
       List<CheckErrorAlgorithm> allAlgorithms = new ArrayList<CheckErrorAlgorithm>();
-      extractAlgorithms(algorithms, allAlgorithms, args, 1);
+      if (args.length > currentArg) {
+        extractAlgorithms(algorithms, allAlgorithms, args, currentArg);
+      }
       worker = new AutomaticCWWorker(
           wiki, null, algorithms, 10000, true, allAlgorithms, null, false, false);
     } else if ("ListCheckWiki".equalsIgnoreCase(action)) {
-      if (args.length > 3) {
-        File dumpFile = new File(args[1]);
-        List<CheckErrorAlgorithm> algorithms = new ArrayList<CheckErrorAlgorithm>();
-        extractAlgorithms(algorithms, null, args, 3);
-        if (args[2].startsWith("wiki:")) {
-          String pageName = args[2].substring(5);
-          worker = new ListCWWorker(wiki, null, dumpFile, pageName, algorithms);
+      boolean check = true;
+      boolean onlyRecheck = false;
+      boolean optionsFinished = false;
+      while (!optionsFinished && (args.length > currentArg)) {
+        if ("-nocheck".equalsIgnoreCase(args[currentArg])) {
+          check = false;
+          currentArg++;
+        } else if ("-onlyRecheck".equalsIgnoreCase(args[currentArg])) {
+          onlyRecheck = true;
+          currentArg++;
         } else {
-          File output = new File(args[2]);
-          worker = new ListCWWorker(wiki, null, dumpFile, output, algorithms);
+          optionsFinished = true;
+        }
+      }
+      if (args.length > currentArg + 2) {
+        File dumpFile = new File(args[currentArg]);
+        List<CheckErrorAlgorithm> algorithms = new ArrayList<CheckErrorAlgorithm>();
+        extractAlgorithms(algorithms, null, args, currentArg + 2);
+        if (args[currentArg + 1].startsWith("wiki:")) {
+          String pageName = args[currentArg + 1].substring(5);
+          worker = new ListCWWorker(
+              wiki, null, dumpFile, pageName,
+              algorithms, check, onlyRecheck);
+        } else {
+          File output = new File(args[currentArg + 1]);
+          worker = new ListCWWorker(
+              wiki, null, dumpFile, output,
+              algorithms, check);
         }
       }
     }

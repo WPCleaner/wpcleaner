@@ -16,7 +16,10 @@ import java.util.prefs.Preferences;
 public enum ConfigurationValueString {
 
   LAST_DAB_WARNING("LastDabWarning", null),
+  LAST_DUMP_FILE("LastDumpFile", null),
   LAST_DUPLICATE_ARGS_WARNING("LastDuplicateArgsWarning", null),
+  LAST_EXPORT_DIRECTORY("LastExportDirectory", null),
+  LAST_EXPORT_PAGE("LastExportPage", null),
   LAST_ISBN_WARNING("LastISBNWarning", null),
   LAST_ISSN_WARNING("LastISSNWarning", null),
   LAST_LANGUAGE("LastLanguage", null),

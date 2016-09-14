@@ -40,6 +40,8 @@ public enum ConfigurationValueBoolean {
   DEBUG_FILE("DebugFile", false),
   DEBUG_TIME("DebugTime", false),
   DEBUG_URL("DebugURL", true),
+  DUMP_CHECK_WIKI("DumpCheckWiki", false),
+  DUMP_ON_WIKI("DumpOnWiki", false),
   IGNORE_DAB_USER_NS("IgnoreDabUserNS", false),
   FORCE_HTTP_API("ForceHttpApi", false),
   FORCE_WATCH("ForceWatch", false),

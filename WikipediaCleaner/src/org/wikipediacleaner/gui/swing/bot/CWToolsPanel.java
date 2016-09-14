@@ -22,7 +22,6 @@ import java.util.Set;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
-import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
@@ -337,24 +336,44 @@ public class CWToolsPanel extends BotToolsPanel {
     if (answer != JOptionPane.YES_OPTION) {
       return;
     }
-    JFileChooser fileChooser = new JFileChooser();
-    fileChooser.setCurrentDirectory(new File("."));
-    fileChooser.setDialogTitle(GT._("Dump file"));
-    answer = fileChooser.showOpenDialog(window.getParentComponent());
-    if (answer != JFileChooser.APPROVE_OPTION) {
-      return;
+    boolean done = false;
+    File dumpFile = null;
+    boolean exportWiki = false;
+    File outputDir = null;
+    String exportPage = null;
+    boolean checkWiki = false;
+    boolean onlyRecheck = false;
+    while (!done) {
+      ListCWPanel panel = new ListCWPanel(wiki);
+      int result = JOptionPane.showConfirmDialog(
+          window.getParentComponent(), panel, GT._("Analyze dump file"),
+          JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+      if (result != JOptionPane.OK_OPTION) {
+        return;
+      }
+      dumpFile = panel.getDumpFile();
+      exportWiki = panel.exportOnWiki();
+      outputDir = panel.getExportDir();
+      exportPage = panel.getExportPage();
+      checkWiki = panel.checkWiki();
+      onlyRecheck = panel.onlyRecheck();
+      if ((dumpFile != null) &&
+          ((exportWiki && (exportPage != null)) ||
+           (!exportWiki && (outputDir != null)))) {
+        done = true;
+        panel.saveConfiguration();
+      }
     }
-    File dumpFile = fileChooser.getSelectedFile();
-    JFileChooser dirChooser = new JFileChooser();
-    dirChooser.setCurrentDirectory(new File("."));
-    dirChooser.setDialogTitle(GT._("Export directory"));
-    dirChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-    answer = dirChooser.showOpenDialog(window.getParentComponent());
-    if (answer != JFileChooser.APPROVE_OPTION) {
-      return;
+    ListCWWorker worker = null;
+    if (exportWiki) {
+      worker = new ListCWWorker(
+          wiki, window, dumpFile, exportPage,
+          listAlgorithms, checkWiki, onlyRecheck);
+    } else {
+      worker = new ListCWWorker(
+          wiki, window, dumpFile, outputDir,
+          listAlgorithms, checkWiki);
     }
-    File outputDir = dirChooser.getSelectedFile();
-    ListCWWorker worker = new ListCWWorker(wiki, window, dumpFile, outputDir, listAlgorithms);
     worker.start();
   }
 

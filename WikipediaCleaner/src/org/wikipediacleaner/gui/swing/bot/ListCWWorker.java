@@ -64,6 +64,12 @@ public class ListCWWorker extends BasicWorker {
   /** Algorithms for which to analyze pages */
   final List<CheckErrorAlgorithm> selectedAlgorithms;
 
+  /** True if article should be checked on wiki */
+  final boolean checkWiki;
+
+  /** True to just check the pages that have been previously reported */
+  final boolean onlyRecheck;
+
   /** List of errors found for each algorithm */
   final Map<CheckErrorAlgorithm, Map<String, Detection>> detections;
 
@@ -76,11 +82,13 @@ public class ListCWWorker extends BasicWorker {
    * @param dumpFile File containing the dump to be analyzed.
    * @param output Directory (or file with place holder for error number) in which the output is written.
    * @param selectedAlgorithms List of selected algorithms.
+   * @param checkWiki True if last version of articles should be checked on wiki.
    */
   public ListCWWorker(
       EnumWikipedia wiki, BasicWindow window,
       File dumpFile, File output,
-      List<CheckErrorAlgorithm> selectedAlgorithms) {
+      List<CheckErrorAlgorithm> selectedAlgorithms,
+      boolean checkWiki) {
     super(wiki, window);
     this.dumpFile = dumpFile;
     this.output = output;
@@ -88,6 +96,8 @@ public class ListCWWorker extends BasicWorker {
     this.selectedAlgorithms = selectedAlgorithms;
     this.detections = new HashMap<>();
     this.countAnalyzed = 0;
+    this.checkWiki = checkWiki;
+    this.onlyRecheck = false;
   }
 
   /**
@@ -96,11 +106,14 @@ public class ListCWWorker extends BasicWorker {
    * @param dumpFile File containing the dump to be analyzed.
    * @param pageName Page name (with place holder for error number) in which the output is written.
    * @param selectedAlgorithms List of selected algorithms.
+   * @param checkWiki True if last version of articles should be checked on wiki.
+   * @param onlyRecheck True to just check the pages that have been previously reported.
    */
   public ListCWWorker(
       EnumWikipedia wiki, BasicWindow window,
       File dumpFile, String pageName,
-      List<CheckErrorAlgorithm> selectedAlgorithms) {
+      List<CheckErrorAlgorithm> selectedAlgorithms,
+      boolean checkWiki, boolean onlyRecheck) {
     super(wiki, window);
     this.dumpFile = dumpFile;
     this.output = null;
@@ -108,6 +121,8 @@ public class ListCWWorker extends BasicWorker {
     this.selectedAlgorithms = selectedAlgorithms;
     this.detections = new HashMap<>();
     this.countAnalyzed = 0;
+    this.checkWiki = checkWiki;
+    this.onlyRecheck = onlyRecheck;
   }
 
   /** 
@@ -136,6 +151,28 @@ public class ListCWWorker extends BasicWorker {
       return null;
     }
     CWPageProcessor pageProcessor = new CWPageProcessor(getWikipedia(), this);
+    if (onlyRecheck) {
+      try {
+        List<Page> outputPages = new ArrayList<>();
+        for (CheckErrorAlgorithm algorithm : selectedAlgorithms) {
+          String truePageName = MessageFormat.format(pageName, algorithm.getErrorNumberString());
+          Page page = DataManager.getPage(getWikipedia(), truePageName, null, null, null);
+          outputPages.add(page);
+        }
+        API api = APIFactory.getAPI();
+        api.retrieveLinks(getWikipedia(), outputPages);
+        for (Page page : outputPages) {
+          List<Page> links = page.getLinks();
+          if (links != null) {
+            for (Page link : links) {
+              pageProcessor.addPage(link);
+            }
+          }
+        }
+      } catch (APIException e) {
+        // Nothing to do
+      }
+    }
     DumpProcessor dumpProcessor = new DumpProcessor(pageProcessor);
     dumpProcessor.processDump(dumpFile);
     while (!pageProcessor.hasFinished()) {
@@ -379,6 +416,7 @@ public class ListCWWorker extends BasicWorker {
      * @param listener Listener of MediaWiki events.
      * @param api MediaWiki API.
      * @param page Page.
+     * @param checkWiki True if last version should be checked on wiki.
      */
     public CWPageCallable(
         EnumWikipedia wiki, MediaWikiListener listener, API api,
@@ -400,29 +438,42 @@ public class ListCWWorker extends BasicWorker {
         List<CheckErrorResult> errors = new ArrayList<>();
         if (!algorithm.isInWhiteList(page.getTitle()) &&
             algorithm.analyze(analysis, errors, false)) {
-          try {
-            if (currentPage == null) {
-              currentPage = DataManager.getPage(wiki, page.getTitle(), null, null, null);
-            }
-            if (currentAnalysis == null) {
-              api.retrieveContents(wiki, Collections.singleton(currentPage), false, false);
-              currentAnalysis = currentPage.getAnalysis(currentPage.getContents(), false);
-            }
-            errors.clear();
-            if (algorithm.analyze(currentAnalysis, errors, false)) {
-              System.out.println(
-                  "Detection confirmed for " + page.getTitle() +
-                  ": " + algorithm.getErrorNumberString() +
-                  " - " + algorithm.getShortDescription());
-              Map<String, Detection> pages = detections.get(algorithm);
-              if (pages == null) {
-                pages = new HashMap<>();
-                detections.put(algorithm, pages);
+          boolean detectionConfirmed = false;
+
+          // Confirm detection
+          if (checkWiki) {
+            try {
+              if (currentPage == null) {
+                currentPage = DataManager.getPage(wiki, page.getTitle(), null, null, null);
               }
-              pages.put(currentPage.getTitle(), new Detection(currentPage, errors));
+              if (currentAnalysis == null) {
+                api.retrieveContents(wiki, Collections.singleton(currentPage), false, false);
+                currentAnalysis = currentPage.getAnalysis(currentPage.getContents(), false);
+              }
+              errors.clear();
+              if (algorithm.analyze(currentAnalysis, errors, false)) {
+                detectionConfirmed = true;
+              }
+            } catch (APIException e) {
+              // Nothing to do
             }
-          } catch (APIException e) {
-            // Nothing to do
+          } else {
+            detectionConfirmed = true;
+            currentPage = page;
+          }
+
+          // Memorize detection
+          if (detectionConfirmed) {
+            System.out.println(
+                "Detection confirmed for " + page.getTitle() +
+                ": " + algorithm.getErrorNumberString() +
+                " - " + algorithm.getShortDescription());
+            Map<String, Detection> pages = detections.get(algorithm);
+            if (pages == null) {
+              pages = new HashMap<>();
+              detections.put(algorithm, pages);
+            }
+            pages.put(currentPage.getTitle(), new Detection(currentPage, errors));
           }
         }
       }
@@ -454,6 +505,9 @@ public class ListCWWorker extends BasicWorker {
     /** API */
     private final API api;
 
+    /** Restrict the processing to this list of pages */
+    private List<String> pagesList;
+
     /**
      * @param wiki Wiki.
      * @param listener Listener.
@@ -475,13 +529,33 @@ public class ListCWWorker extends BasicWorker {
     }
 
     /**
+     * Add a page to the list of pages to check.
+     * 
+     * @param page Page to be checked.
+     */
+    public void addPage(Page page) {
+      if (page == null) {
+        return;
+      }
+      String title = page.getTitle();
+      if (pagesList == null) {
+        pagesList = new ArrayList<>();
+      }
+      if (!pagesList.contains(title)) {
+        pagesList.add(title);
+      }
+    }
+
+    /**
      * @param page Page.
      * @see org.wikipediacleaner.api.dump.PageProcessor#processPage(org.wikipediacleaner.api.data.Page)
      */
     @Override
     public void processPage(Page page) {
       if ((page != null) && page.isInMainNamespace()) {
-        controller.addTask(new CWPageCallable(wiki, listener, api, page));
+        if ((pagesList == null) || pagesList.contains(page.getTitle())) {
+          controller.addTask(new CWPageCallable(wiki, listener, api, page));
+        }
       }
     }
 
