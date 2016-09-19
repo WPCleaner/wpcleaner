@@ -50,7 +50,23 @@ public class CheckErrorAlgorithm100 extends CheckErrorAlgorithmBase {
     for (PageElementTag tag : tags) {
 
       // Check if tag is an incomplete list tag
+      boolean shouldReport = false;
       if (isListTag(tag) && !tag.isComplete()) {
+        shouldReport = true;
+      }
+
+      // Special cases for <li> tags
+      // @see https://html.spec.whatwg.org/multipage/semantics.html#the-li-element
+      if (shouldReport && PageElementTag.TAG_HTML_LI.equals(tag.getNormalizedName())) {
+        int index = tag.getBeginIndex();
+        if ((analysis.getSurroundingTag(PageElementTag.TAG_HTML_OL, index) != null) ||
+            (analysis.getSurroundingTag(PageElementTag.TAG_HTML_UL, index) != null)) {
+          shouldReport = false;
+        }
+      }
+
+      // Report error
+      if (shouldReport) {
         if (errors == null) {
           return true;
         }
