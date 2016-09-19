@@ -7,6 +7,7 @@
 
 package org.wikipediacleaner.api.check.algorithm;
 
+import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementTag;
 
 
@@ -35,5 +36,23 @@ public class CheckErrorAlgorithm012 extends CheckErrorAlgorithmTags {
   @Override
   protected String[] getTags() {
     return TAGS;
+  }
+
+  /**
+   * @param analysis Page analysis.
+   * @param tag Tag to be analyzed.
+   * @return True if tag should be reported.
+   */
+  @Override
+  protected boolean shouldReport(PageAnalysis analysis, PageElementTag tag) {
+    if (!super.shouldReport(analysis, tag)) {
+      return false;
+    }
+    if (PageElementTag.TAG_HTML_LI.equalsIgnoreCase(tag.getNormalizedName())) {
+      if (tag.getParameter("value") != null) {
+        return false;
+      }
+    }
+    return true;
   }
 }

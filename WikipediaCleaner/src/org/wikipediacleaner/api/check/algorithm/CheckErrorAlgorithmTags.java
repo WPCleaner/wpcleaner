@@ -86,25 +86,7 @@ public abstract class CheckErrorAlgorithmTags extends CheckErrorAlgorithmBase {
     Collection<PageElementTag> tags = analysis.getTags(tagName);
     if (tags != null) {
       for (PageElementTag tag : tags) {
-        boolean shouldCount = true;
-        if (shouldCount &&
-            !PageElementTag.TAG_WIKI_NOWIKI.equalsIgnoreCase(tagName)) {
-          if (analysis.getSurroundingTag(
-              PageElementTag.TAG_WIKI_NOWIKI,
-              tag.getBeginIndex()) != null) {
-            shouldCount = false;
-          }
-        }
-        String[] ignoredTags = getIgnoredTags();
-        if (ignoredTags != null) {
-          for (String ignoredTag : ignoredTags) {
-            if (shouldCount &&
-                (analysis.getSurroundingTag(ignoredTag, tag.getBeginIndex()) != null)) {
-              shouldCount = false;
-            }
-          }
-        }
-        if (shouldCount) {
+        if (shouldReport(analysis, tag)) {
           if (errors == null) {
             return true;
           }
@@ -119,4 +101,30 @@ public abstract class CheckErrorAlgorithmTags extends CheckErrorAlgorithmBase {
     return result;
   }
 
+  /**
+   * @param analysis Page analysis.
+   * @param tag Tag to be analyzed.
+   * @return True if tag should be reported.
+   */
+  protected boolean shouldReport(PageAnalysis analysis, PageElementTag tag) {
+    if (tag == null) {
+      return false;
+    }
+    if (!PageElementTag.TAG_WIKI_NOWIKI.equalsIgnoreCase(tag.getNormalizedName())) {
+      if (analysis.getSurroundingTag(
+          PageElementTag.TAG_WIKI_NOWIKI,
+          tag.getBeginIndex()) != null) {
+        return false;
+      }
+    }
+    String[] ignoredTags = getIgnoredTags();
+    if (ignoredTags != null) {
+      for (String ignoredTag : ignoredTags) {
+        if (analysis.getSurroundingTag(ignoredTag, tag.getBeginIndex()) != null) {
+          return false;
+        }
+      }
+    }
+    return true;
+  }
 }
