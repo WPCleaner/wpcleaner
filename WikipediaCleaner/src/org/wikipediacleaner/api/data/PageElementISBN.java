@@ -340,7 +340,7 @@ public class PageElementISBN extends PageElement {
         }
       }
 
-      // Parameter is for an ISVN, analyze its value
+      // Parameter is for an ISBN, analyze its value
       if (nameOk) {
         String paramValue = param.getStrippedValue();
         boolean ok = true;
