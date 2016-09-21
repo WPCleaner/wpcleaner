@@ -58,6 +58,10 @@ public class CheckErrorAlgorithm007 extends CheckErrorAlgorithmBase {
     CheckErrorResult errorResult = createCheckErrorResult(
         analysis,
         titles.get(0).getBeginIndex(), titles.get(0).getEndIndex());
+    if (titles.size() == 1) {
+      errorResult.addReplacement(PageElementTitle.createTitle(
+          2, titles.get(0).getTitle(), titles.get(0).getAfterTitle()));
+    }
     errorResult.addEditTocAction(titles.get(0));
     errors.add(errorResult);
     return true;
