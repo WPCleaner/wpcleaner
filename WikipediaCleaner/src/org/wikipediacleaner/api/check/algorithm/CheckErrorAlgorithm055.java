@@ -245,6 +245,10 @@ public class CheckErrorAlgorithm055 extends CheckErrorAlgorithmBase {
         (!contents.startsWith("||", tmpIndex))) {
       return -1;
     }
+    while ((tmpIndex > 0) &&
+        (contents.charAt(tmpIndex - 1) == ' ')) {
+      tmpIndex--;
+    }
     if (tmpIndex <= tag.getEndIndex()) {
       return -1;
     }
