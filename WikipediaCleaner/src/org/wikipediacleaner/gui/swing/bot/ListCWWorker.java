@@ -298,14 +298,26 @@ public class ListCWWorker extends BasicWorker {
               }
             }
             if ((begin >= 0) && (end > begin)) {
-              StringBuilder newText = new StringBuilder();
-              newText.append(contents.substring(0, begin));
-              newText.append("\n");
-              newText.append(result);
-              newText.append(contents.substring(end));
+              String text = null;
+              finished = false;
+              while (!finished) {
+                StringBuilder newText = new StringBuilder();
+                newText.append(contents.substring(0, begin));
+                newText.append("\n");
+                newText.append(result);
+                newText.append(contents.substring(end));
+                text = newText.toString();
+                if (!getWikipedia().getWikiConfiguration().isArticleTooLong(text) ||
+                    tmpPages.isEmpty()) {
+                  finished = true; 
+                } else {
+                  tmpPages.remove(tmpPages.size() - 1);
+                  result = generateResult(tmpPages);
+                }
+              }
               try {
                 api.updatePage(
-                    getWikipedia(), page, newText.toString(),
+                    getWikipedia(), page, text,
                     "Dump analysis for error n°" + algorithm.getErrorNumberString(),
                     true, false);
               } catch (APIException e) {

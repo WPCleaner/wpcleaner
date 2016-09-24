@@ -7,6 +7,7 @@
 
 package org.wikipediacleaner.api.constants;
 
+import java.io.UnsupportedEncodingException;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -27,20 +28,17 @@ public class WikiConfiguration {
   // General information
   // ==========================================================================
 
-  /**
-   * Server URL (without protocol).
-   */
+  /** Server URL (without protocol) */
   private String server;
 
-  /**
-   * Article path.
-   */
+  /** Article path */
   private String articlePath;
 
-  /**
-   * Script.
-   */
+  /** Script */
   private String script;
+
+  /** Max article size */
+  private Long maxArticleSize;
 
   /**
    * @param server Server URL (without protocol).
@@ -84,6 +82,35 @@ public class WikiConfiguration {
     return script;
   }
 
+  /**
+   * @param size Max article size in bytes.
+   */
+  public void setMaxArticleSize(String size) {
+    maxArticleSize = null;
+    try {
+      maxArticleSize = Long.valueOf(size);
+    } catch (NumberFormatException e) {
+      // Nothing to do
+    }
+  }
+
+  /**
+   * @param text Text to check.
+   * @return True if text doesn't respect the max article size.
+   */
+  public boolean isArticleTooLong(String text) {
+    if ((maxArticleSize == null) || (text == null)) {
+      return false;
+    }
+    try {
+      if (text.getBytes("UTF-8").length > maxArticleSize.longValue()) {
+        return true;
+      }
+    } catch (UnsupportedEncodingException e) {
+      // Nothing to do
+    }
+    return false;
+  }
   // ==========================================================================
   // Name spaces
   // ==========================================================================

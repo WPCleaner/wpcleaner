@@ -68,6 +68,7 @@ public class ApiXmlSiteInfoResult extends ApiXmlResult implements ApiSiteInfoRes
       Element generalNode = xpa.evaluateFirst(root);
       if (generalNode != null) {
         wikiConfiguration.setArticlePath(generalNode.getAttributeValue("articlepath"));
+        wikiConfiguration.setMaxArticleSize(generalNode.getAttributeValue("maxarticlesize"));
         wikiConfiguration.setScript(generalNode.getAttributeValue("script"));
         wikiConfiguration.setServer(generalNode.getAttributeValue("server"));
       }
