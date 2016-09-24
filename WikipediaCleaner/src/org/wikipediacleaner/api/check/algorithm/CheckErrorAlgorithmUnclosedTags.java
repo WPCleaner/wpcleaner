@@ -95,11 +95,27 @@ public abstract class CheckErrorAlgorithmUnclosedTags extends CheckErrorAlgorith
                 analysis, beginIndex, endIndex, ErrorLevel.WARNING);
             errorResult.addReplacement(
                 PageElementTag.createTag(tagName, true, false),
-                true);
+                tag.getParametersCount() == 0);
+            errors.add(errorResult);
+          }
+        } else {
+
+          // Opening tag with white space (detected by CW)
+          String contents = analysis.getContents();
+          if ((contents.charAt(beginIndex) == '<') &&
+              (contents.charAt(beginIndex + 1) == ' ')) {
+            if (errors == null) {
+              return true;
+            }
+            result = true;
+            CheckErrorResult errorResult = createCheckErrorResult(
+                analysis, beginIndex, endIndex, ErrorLevel.WARNING);
+            errorResult.addReplacement(
+                PageElementTag.createTag(tagName, false, false),
+                tag.getParametersCount() == 0);
             errors.add(errorResult);
           }
         }
-
       }
     }
     return result;
