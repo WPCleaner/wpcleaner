@@ -30,6 +30,7 @@ public class PageElementTemplate extends PageElement {
    */
   public static class Parameter {
     final int pipeIndex;
+    final int endIndex;
     final String name;
     final String nameNotTrimmed;
     final String computedName;
@@ -41,6 +42,7 @@ public class PageElementTemplate extends PageElement {
 
     /**
      * @param pipeIndex Index of the pipe "|" in page contents.
+     * @param endIndex Index of the end of the parameter.
      * @param name Parameter name.
      * @param computedName Computed name.
      * @param nameStartIndex Index of parameter name in page contents.
@@ -49,10 +51,11 @@ public class PageElementTemplate extends PageElement {
      * @param valueStartIndex Index of parameter value in page contents.
      */
     public Parameter(
-        int pipeIndex,
+        int pipeIndex, int endIndex,
         String name, String computedName, int nameStartIndex,
         String value, String strippedValue, int valueStartIndex) {
       this.pipeIndex = pipeIndex;
+      this.endIndex = endIndex;
       this.nameNotTrimmed = name;
       this.name = (name != null) ? name.trim() : null;
       this.computedName = (computedName != null) ? computedName : this.name;
@@ -68,6 +71,13 @@ public class PageElementTemplate extends PageElement {
      */
     public int getPipeIndex() {
       return pipeIndex;
+    }
+
+    /**
+     * @return Parameter end index.
+     */
+    public int getEndIndex() {
+      return endIndex;
     }
 
     /**
@@ -344,7 +354,7 @@ public class PageElementTemplate extends PageElement {
             depth2CurlyBrackets--;
           } else {
             addParameter(
-                parameters, pipeIndex,
+                parameters, pipeIndex, tmpIndex - 2,
                 contents.substring(parameterBeginIndex, tmpIndex - 2),
                 equalIndex - parameterBeginIndex,
                 parameterBeginIndex,
@@ -412,7 +422,7 @@ public class PageElementTemplate extends PageElement {
             depth3CurlyBrackets = 0;
             depth2SquareBrackets = 0;
             addParameter(
-                parameters, pipeIndex,
+                parameters, pipeIndex, tmpIndex,
                 contents.substring(parameterBeginIndex, tmpIndex),
                 equalIndex - parameterBeginIndex,
                 parameterBeginIndex,
@@ -457,6 +467,7 @@ public class PageElementTemplate extends PageElement {
   /**
    * @param parameters List of parameters.
    * @param pipeIndex Index of "|".
+   * @param endIndex Index of the end of the parameter.
    * @param parameter New parameter (name=value or value).
    * @param equalIndex Index of "=" in the parameter or < 0 if doesn't exist.
    * @param offset Offset of parameter start index in page contents.
@@ -464,7 +475,7 @@ public class PageElementTemplate extends PageElement {
    */
   private static void addParameter(
       List<Parameter> parameters,
-      int pipeIndex, String parameter,
+      int pipeIndex, int endIndex, String parameter,
       int equalIndex, int offset,
       List<PageElementComment> comments) {
 
@@ -496,7 +507,9 @@ public class PageElementTemplate extends PageElement {
       }
       String strippedValue = PageElementComment.stripComments(comments, parameter, offset);
       parameters.add(new Parameter(
-          pipeIndex, "", Integer.toString(paramNum), offset + spaces, parameter, strippedValue, offset + spaces));
+          pipeIndex, endIndex,
+          "", Integer.toString(paramNum), offset + spaces,
+          parameter, strippedValue, offset + spaces));
     } else {
       int spacesName = 0;
       while ((spacesName < equalIndex) && (Character.isWhitespace(parameter.charAt(spacesName)))) {
@@ -509,7 +522,7 @@ public class PageElementTemplate extends PageElement {
       String value = parameter.substring(equalIndex + 1);
       String strippedValue = PageElementComment.stripComments(comments, value, offset + equalIndex + 1);
       parameters.add(new Parameter(
-          pipeIndex,
+          pipeIndex, endIndex,
           parameter.substring(0, equalIndex), null, offset + spacesName,
           parameter.substring(equalIndex + 1), strippedValue, offset + spacesValue));
     }

@@ -16,6 +16,7 @@ import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementFunction;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.PageElementTemplate;
+import org.wikipediacleaner.api.data.PageElementTemplate.Parameter;
 import org.wikipediacleaner.i18n.GT;
 
 
@@ -191,14 +192,63 @@ public class CheckErrorAlgorithm055 extends CheckErrorAlgorithmBase {
   private int getPossibleEnd(
       PageAnalysis analysis,
       PageElementTag tag) {
+
     // Check arguments
     if ((analysis == null) || (analysis.getContents() == null)) {
       return -1;
     }
-    String contents = analysis.getContents();
     if ((tag == null) || tag.isComplete() || tag.isEndTag()) {
       return -1;
     }
+
+    // Check various cases
+    int possibleEnd = -1;
+    int tmp = getPossibleEndInTable(analysis, tag);
+    if ((tmp > 0) && ((possibleEnd <= 0) || (tmp < possibleEnd))) {
+      possibleEnd = tmp;
+    }
+    tmp = getPossibleEndInTemplate(analysis, tag);
+    if ((tmp > 0) && ((possibleEnd <= 0) || (tmp < possibleEnd))) {
+      possibleEnd = tmp;
+    }
+
+    // Check that there is no other small tag in the selected area
+    if (possibleEnd > 0) {
+      List<PageElementTag> tags = analysis.getTags(PageElementTag.TAG_HTML_SMALL);
+      for (PageElementTag tmpTag : tags) {
+        if ((tmpTag.getBeginIndex() >= tag.getEndIndex()) &&
+            (tmpTag.getBeginIndex() < possibleEnd)) {
+          return -1;
+        }
+      }
+    }
+
+    // Restrict selection
+    if (possibleEnd > 0) {
+      String contents = analysis.getContents();
+      while ((possibleEnd > 0) &&
+             (" \n".indexOf(contents.charAt(possibleEnd - 1)) >= 0)) {
+        possibleEnd--;
+      }
+      if (possibleEnd <= tag.getEndIndex()) {
+        return -1;
+      }
+    }
+
+    return possibleEnd;
+  }
+
+  /**
+   * Find a possible end for a single small tag in a table.
+   * 
+   * @param analysis Page analysis.
+   * @param tag Current small tag.
+   * @return Possible end if found, -1 otherwise.
+   */
+  private int getPossibleEndInTable(
+      PageAnalysis analysis,
+      PageElementTag tag) {
+    String contents = analysis.getContents();
 
     // Check the beginning of the line
     int tmpIndex = tag.getBeginIndex();
@@ -217,14 +267,6 @@ public class CheckErrorAlgorithm055 extends CheckErrorAlgorithmBase {
       if ((contents.charAt(tmpIndex) == '\n') ||
           (contents.startsWith("||", tmpIndex))) {
         finished = true;
-      }
-      if (contents.charAt(tmpIndex) == '<') {
-        List<PageElementTag> tags = analysis.getTags(PageElementTag.TAG_HTML_SMALL);
-        for (PageElementTag tmpTag : tags) {
-          if (tmpTag.getBeginIndex() == tmpIndex) {
-            return -1;
-          }
-        }
       }
       if (contents.charAt(tmpIndex) == '{') {
         PageElementTemplate template = analysis.isInTemplate(tmpIndex);
@@ -245,14 +287,30 @@ public class CheckErrorAlgorithm055 extends CheckErrorAlgorithmBase {
         (!contents.startsWith("||", tmpIndex))) {
       return -1;
     }
-    while ((tmpIndex > 0) &&
-        (contents.charAt(tmpIndex - 1) == ' ')) {
-      tmpIndex--;
-    }
-    if (tmpIndex <= tag.getEndIndex()) {
-      return -1;
-    }
 
     return tmpIndex;
+  }
+
+  /**
+   * Find a possible end for a single small tag in a template.
+   * 
+   * @param analysis Page analysis.
+   * @param tag Current small tag.
+   * @return Possible end if found, -1 otherwise.
+   */
+  private int getPossibleEndInTemplate(
+      PageAnalysis analysis,
+      PageElementTag tag) {
+
+    // Check if in template
+    PageElementTemplate template = analysis.isInTemplate(tag.getBeginIndex());
+    if (template == null) {
+      return -1;
+    }
+    Parameter param = template.getParameterAtIndex(tag.getBeginIndex());
+    if (param == null) {
+      return -1;
+    }
+    return param.getEndIndex();
   }
 }
