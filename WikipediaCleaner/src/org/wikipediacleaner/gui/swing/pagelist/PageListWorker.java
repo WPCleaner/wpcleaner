@@ -425,7 +425,9 @@ public class PageListWorker extends BasicWorker {
     if (elementNames != null) {
       List<Page> tmpPages = constructInternalPageList();
       MediaWiki mw = MediaWiki.getMediaWikiAccess(this);
-      pages.addAll(mw.retrieveAllEmbeddedIn(getWikipedia(), tmpPages, null, true));
+      pages.addAll(mw.retrieveAllEmbeddedIn(
+          getWikipedia(), tmpPages, null,
+          !getWikipedia().getConnection().getUser().isMemberOf("bot")));
     }
   }
 

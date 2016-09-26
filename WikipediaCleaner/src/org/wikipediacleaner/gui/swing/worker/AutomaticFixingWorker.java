@@ -14,6 +14,7 @@ import org.wikipediacleaner.api.APIException;
 import org.wikipediacleaner.api.MediaWiki;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.AutomaticFixing;
+import org.wikipediacleaner.api.data.DataManager;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.gui.swing.InformationWindow;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
@@ -76,7 +77,11 @@ public class AutomaticFixingWorker extends BasicWorker {
       String comment, boolean showDescription,
       boolean automaticCW, boolean save) {
     super(wiki, window);
-    this.pages = pages.clone();
+    this.pages = new Page[pages.length];
+    for (int numPage = 0; numPage < pages.length; numPage++) {
+      this.pages[numPage] = DataManager.getPage(
+          wiki, pages[numPage].getTitle(), pages[numPage].getPageId(), null, null);
+    }
     this.replacements = replacements;
     this.comment = comment;
     this.showDescription = showDescription;

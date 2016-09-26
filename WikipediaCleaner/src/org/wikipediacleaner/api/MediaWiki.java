@@ -34,6 +34,7 @@ import org.wikipediacleaner.gui.swing.worker.UpdateDabWarningTools;
 import org.wikipediacleaner.i18n.GT;
 import org.wikipediacleaner.utils.Configuration;
 import org.wikipediacleaner.utils.ConfigurationValueBoolean;
+import org.wikipediacleaner.utils.ConfigurationValueInteger;
 
 
 /**
@@ -181,17 +182,31 @@ public class MediaWiki extends MediaWikiController {
     if ((pages == null) || (replacements == null) || (replacements.size() == 0)) {
       return 0;
     }
-    UpdateDabWarningTools dabWarnings = new UpdateDabWarningTools(wiki, null, false, false);
-    for (Page page : pages) {
-      retrieveContents(wiki, page, false, true, false, true, false); // TODO: withRedirects=false ?
+
+    // Initialize page loading
+    Configuration config = Configuration.getConfiguration();
+    int nThreads = Math.max(
+        config.getInt(null, ConfigurationValueInteger.INTERROG_THREAD), 1);
+    int currentPage = 0;
+    while ((currentPage < nThreads) && (currentPage < pages.length)) {
+      retrieveContents(wiki, pages[currentPage], false, true, false, true, false); // TODO: withRedirects=false ?
+      pages[currentPage] = null; // To release memory
+      currentPage++;
     }
+
+    // Analyze pages
+    boolean secured = config.getBoolean(null, ConfigurationValueBoolean.SECURE_URL);
+    UpdateDabWarningTools dabWarnings = new UpdateDabWarningTools(wiki, null, false, false);
     int count = 0;
     final API api = APIFactory.getAPI();
     StringBuilder details = new StringBuilder();
-    Configuration config = Configuration.getConfiguration();
-    boolean secured = config.getBoolean(null, ConfigurationValueBoolean.SECURE_URL);
     while (hasRemainingTask() && !shouldStop()) {
       Object result = getNextResult();
+      if (currentPage < pages.length) {
+        retrieveContents(wiki, pages[currentPage], false, true, false, true, false); // TODO: withRedirects=false ?
+        pages[currentPage] = null; // To release memory
+        currentPage++;
+      }
       if ((result != null) && (result instanceof Page)) {
         boolean changed = false;
         List<String> replacementsDone = new ArrayList<String>();
@@ -219,7 +234,7 @@ public class MediaWiki extends MediaWikiController {
                 }
                 for (String replacementDone : replacementsDone) {
                   description.append("<li>");
-                  description.append(replacementDone);
+                  description.append(replacementDone.replaceAll("\\&", "&amp;").replaceAll("\\<", "&lt;"));
                   description.append("</li>\n");
                 }
               }
