@@ -95,6 +95,13 @@ public class WikiConfiguration {
   }
 
   /**
+   * @return Max article size in bytes.
+   */
+  public Long getMaxArticleSize() {
+    return maxArticleSize;
+  }
+
+  /**
    * @param text Text to check.
    * @return True if text doesn't respect the max article size.
    */
@@ -111,6 +118,7 @@ public class WikiConfiguration {
     }
     return false;
   }
+
   // ==========================================================================
   // Name spaces
   // ==========================================================================

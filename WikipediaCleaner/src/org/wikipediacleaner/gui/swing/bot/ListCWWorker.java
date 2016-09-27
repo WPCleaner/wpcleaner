@@ -197,36 +197,46 @@ public class ListCWWorker extends BasicWorker {
    * @param pages List of detections.
    * @return Formatted result.
    */
-  private String generateResult(List<Detection> pages) {
+  private String generateResult(List<Detection> pages, Long maxSize) {
     StringBuilder buffer = new StringBuilder();
     buffer.append("<!-- Generated using " + dumpFile.getName() + " -->\n");
     ErrorLevel lastLevel = null;
+    StringBuilder line = new StringBuilder();
+    List<Detection> pagesToRemove = new ArrayList<>();
     for (Detection detection : pages) {
+      line.setLength(0);
       if ((detection.maxLevel != null) &&
           !detection.maxLevel.equals(lastLevel)) {
         lastLevel = detection.maxLevel;
-        buffer.append("<!-- " + lastLevel.toString() + " -->\n");
+        line.append("<!-- " + lastLevel.toString() + " -->\n");
       }
-      buffer.append("* ");
-      buffer.append(PageElementInternalLink.createInternalLink(
+      line.append("* ");
+      line.append(PageElementInternalLink.createInternalLink(
           detection.pageName, null));
-      buffer.append(": ");
+      line.append(": ");
       if (detection.notices != null) {
         boolean first = true;
         for (String notice : detection.notices) {
           if (!first) {
-            buffer.append(", ");
+            line.append(", ");
           }
           first = false;
-          buffer.append("<nowiki>");
+          line.append("<nowiki>");
           notice = notice.replaceAll("\n", "\u21b5"); // Replacer \n by a visual character
           notice = notice.replaceAll("\\<", "&lt;"); // Replace "<" by its HTML element
-          buffer.append(notice);
-          buffer.append("</nowiki>");
+          line.append(notice);
+          line.append("</nowiki>");
         }
       }
-      buffer.append("\n");
+      line.append("\n");
+      if ((maxSize == null) ||
+          (buffer.length() + line.length() < maxSize)) {
+        buffer.append(line);
+      } else {
+        pagesToRemove.add(detection);
+      }
     }
+    pages.removeAll(pagesToRemove);
     return buffer.toString();
   }
 
@@ -244,7 +254,7 @@ public class ListCWWorker extends BasicWorker {
     // Prepare result
     List<Detection> tmpPages = new ArrayList<>(pages);
     Collections.sort(tmpPages);
-    String result = generateResult(tmpPages);
+    String result = generateResult(tmpPages, null);
 
     // Output to file
     if (output != null) {
@@ -312,7 +322,9 @@ public class ListCWWorker extends BasicWorker {
                   finished = true; 
                 } else {
                   tmpPages.remove(tmpPages.size() - 1);
-                  result = generateResult(tmpPages);
+                  result = generateResult(
+                      tmpPages,
+                      getWikipedia().getWikiConfiguration().getMaxArticleSize());
                 }
               }
               try {
@@ -328,7 +340,9 @@ public class ListCWWorker extends BasicWorker {
                       tmpPages.remove(tmpPages.size() - 1);
                     }
                   }
-                  result = generateResult(tmpPages);
+                  result = generateResult(
+                      tmpPages,
+                      getWikipedia().getWikiConfiguration().getMaxArticleSize());
                 } else {
                   throw e;
                 }
