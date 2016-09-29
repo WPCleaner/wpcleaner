@@ -77,11 +77,7 @@ public class AutomaticFixingWorker extends BasicWorker {
       String comment, boolean showDescription,
       boolean automaticCW, boolean save) {
     super(wiki, window);
-    this.pages = new Page[pages.length];
-    for (int numPage = 0; numPage < pages.length; numPage++) {
-      this.pages[numPage] = DataManager.getPage(
-          wiki, pages[numPage].getTitle(), pages[numPage].getPageId(), null, null);
-    }
+    this.pages = pages;
     this.replacements = replacements;
     this.comment = comment;
     this.showDescription = showDescription;
@@ -100,9 +96,14 @@ public class AutomaticFixingWorker extends BasicWorker {
   @Override
   public Object construct() {
     try {
+      Page[] tmpPages = new Page[pages.length];
+      for (int numPage = 0; numPage < pages.length; numPage++) {
+        tmpPages[numPage] = DataManager.getPage(
+            getWikipedia(), pages[numPage].getTitle(), pages[numPage].getPageId(), null, null);
+      }
       MediaWiki mw = MediaWiki.getMediaWikiAccess(this);
       Integer count = Integer.valueOf(mw.replaceText(
-          pages, replacements, getWikipedia(),
+          tmpPages, replacements, getWikipedia(),
           comment, description, automaticCW, save, true));
       if (showDescription && (count > 0)) {
         InformationWindow.createInformationWindow(
