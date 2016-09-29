@@ -83,7 +83,8 @@ public class CheckErrorAlgorithm044 extends CheckErrorAlgorithmBase {
           errorResult.addReplacement(
               PageElementTitle.createTitle(
                   title.getLevel(), text, title.getAfterTitle()),
-              false, (countBold == 1));
+              false,
+              (countBold == 2) && text.startsWith("'''") && text.endsWith("'''"));
           errors.add(errorResult);
         }
       }
