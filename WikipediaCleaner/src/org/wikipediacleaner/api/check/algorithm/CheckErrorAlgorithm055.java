@@ -226,9 +226,16 @@ public class CheckErrorAlgorithm055 extends CheckErrorAlgorithmBase {
     // Restrict selection
     if (possibleEnd > 0) {
       String contents = analysis.getContents();
-      while ((possibleEnd > 0) &&
-             (" \n".indexOf(contents.charAt(possibleEnd - 1)) >= 0)) {
-        possibleEnd--;
+      boolean finished = false;
+      while (!finished) {
+        finished = true;
+        if (possibleEnd > 0) {
+          char previousChar = contents.charAt(possibleEnd - 1);
+          if (" \n".indexOf(previousChar) >= 0) {
+            possibleEnd--;
+            finished = false;
+          }
+        }
       }
       if (possibleEnd <= tag.getEndIndex()) {
         return -1;
@@ -255,7 +262,8 @@ public class CheckErrorAlgorithm055 extends CheckErrorAlgorithmBase {
     while ((tmpIndex > 0) && (contents.charAt(tmpIndex - 1) != '\n')) {
       tmpIndex--;
     }
-    if (contents.charAt(tmpIndex) != '|') {
+    if ((contents.charAt(tmpIndex) != '|') &&
+        (contents.charAt(tmpIndex) != '!')) {
       return -1;
     }
 
@@ -265,7 +273,8 @@ public class CheckErrorAlgorithm055 extends CheckErrorAlgorithmBase {
     while ((tmpIndex < contents.length()) && !finished) {
       int nextIndex = tmpIndex + 1;
       if ((contents.charAt(tmpIndex) == '\n') ||
-          (contents.startsWith("||", tmpIndex))) {
+          (contents.startsWith("||", tmpIndex)) ||
+          (contents.startsWith("!!", tmpIndex))) {
         finished = true;
       }
       if (contents.charAt(tmpIndex) == '{') {
