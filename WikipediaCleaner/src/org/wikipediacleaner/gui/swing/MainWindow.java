@@ -1402,7 +1402,7 @@ public class MainWindow
         pageName);
     config.save();
     new PageListWorker(
-        getWikipedia(), this, null,
+        getWikipedia(), this, DataManager.getPage(getWikipedia(), pageName, null, null, null),
         Collections.singletonList(pageName),
         PageListWorker.Mode.valueOf(mode), false,
         GT._("Internal links in {0}", pageName)).start();
