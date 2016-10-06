@@ -66,11 +66,16 @@ public class Page implements Comparable<Page> {
   private ProgressionValue backLinksTemplateProgression;
 
   /**
-   * @param wiki Wiki;
+   * @param wiki Wiki.
    * @param title Page title.
    */
   Page(EnumWikipedia wikipedia, String title) {
     this.wikipedia = wikipedia;
+    if (title != null) {
+      while ((title.length() > 0) && (title.charAt(title.length() - 1) == 0x200E)) {
+        title = title.substring(0, title.length() - 1);
+      }
+    }
     this.title = title;
     this.relatedPages = new Hashtable<Page.RelatedPages, List<Page>>();
     setContents("");
