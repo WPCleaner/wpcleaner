@@ -56,7 +56,8 @@ public class CheckErrorAlgorithm002 extends CheckErrorAlgorithmBase {
 
     // Check for various tags
     boolean result = false;
-    result |= analyzeBrTags(analysis, errors);
+    result |= analyzeSelfClosingTags(analysis, errors, PageElementTag.TAG_HTML_BR);
+    result |= analyzeSelfClosingTags(analysis, errors, PageElementTag.TAG_HTML_HR);
     String[] listTags = new String[] {
         PageElementTag.TAG_HTML_ABBR,
         PageElementTag.TAG_HTML_B,
@@ -305,21 +306,22 @@ public class CheckErrorAlgorithm002 extends CheckErrorAlgorithmBase {
   }
 
   /**
-   * Analyze a page to check if errors are present in br tags.
+   * Analyze a page to check if errors are present in self closing tags.
    * 
    * @param analysis Page analysis.
    * @param errors Errors found in the page.
+   * @param tagName Tag name.
    * @return Flag indicating if the error was found.
    */
-  private boolean analyzeBrTags(
+  private boolean analyzeSelfClosingTags(
       PageAnalysis analysis,
-      Collection<CheckErrorResult> errors) {
+      Collection<CheckErrorResult> errors,
+      String tagName) {
 
-    // Check for incorrect br tags
+    // Check for incorrect self closing tags
     boolean result = false;
     int currentIndex = 0;
     String contents = analysis.getContents();
-    String br = PageElementTag.TAG_HTML_BR;
     int maxSize = contents.length();
     while (currentIndex < maxSize) {
       int nextIndex = currentIndex + 1;
@@ -334,7 +336,7 @@ public class CheckErrorAlgorithm002 extends CheckErrorAlgorithmBase {
         }
       }
 
-      // Check if this is a br tag
+      // Check if this is a self closing tag for the given name
       if ((shouldCheck) && (contents.charAt(currentIndex) == '<')) {
         int tmpIndex = getFirstIndexAfterSpace(contents, currentIndex + 1);
         boolean incorrectChar = false;
@@ -343,19 +345,19 @@ public class CheckErrorAlgorithm002 extends CheckErrorAlgorithmBase {
           tmpIndex++;
           incorrectChar = true;
         }
-        boolean brTag = true;
-        for (int i = 0; i < br.length(); i++) {
+        boolean selfClosingTag = true;
+        for (int i = 0; i < tagName.length(); i++) {
           if ((tmpIndex >= maxSize) ||
-              (Character.toUpperCase(contents.charAt(tmpIndex)) != Character.toUpperCase(br.charAt(i)))) {
-            brTag = false;
+              (Character.toUpperCase(contents.charAt(tmpIndex)) != Character.toUpperCase(tagName.charAt(i)))) {
+            selfClosingTag = false;
           }
           tmpIndex++;
         }
-        if ((tmpIndex < maxSize) && brTag) {
+        if ((tmpIndex < maxSize) && selfClosingTag) {
           char tmpChar = contents.charAt(tmpIndex);
-          brTag = !Character.isUpperCase(tmpChar) && !Character.isLowerCase(tmpChar);
+          selfClosingTag = !Character.isUpperCase(tmpChar) && !Character.isLowerCase(tmpChar);
         }
-        if ((tmpIndex < maxSize) && brTag) {
+        if ((tmpIndex < maxSize) && selfClosingTag) {
           tmpIndex = getFirstIndexAfter(contents, tmpIndex, " \n");
           while ((tmpIndex < maxSize) &&
                  (" \\.,:?\n|+&)(`".indexOf(contents.charAt(tmpIndex)) >= 0)) {
@@ -378,7 +380,7 @@ public class CheckErrorAlgorithm002 extends CheckErrorAlgorithmBase {
               shouldReport = true;
             } else {
               if (contents.charAt(tmpIndex) != '>') {
-                PageElementTag tag = analysis.isInTag(currentIndex, PageElementTag.TAG_HTML_BR);
+                PageElementTag tag = analysis.isInTag(currentIndex, tagName);
                 if (tag == null) {
                   shouldReport = true;
                 }
@@ -396,7 +398,7 @@ public class CheckErrorAlgorithm002 extends CheckErrorAlgorithmBase {
               CheckErrorResult errorResult = createCheckErrorResult(
                   analysis, currentIndex, tmpIndex);
               errorResult.addReplacement(
-                  PageElementTag.createTag(PageElementTag.TAG_HTML_BR, false, false),
+                  PageElementTag.createTag(tagName, false, false),
                   endsWithGT && incorrectChar);
               errors.add(errorResult);
               nextIndex = tmpIndex;
@@ -408,47 +410,49 @@ public class CheckErrorAlgorithm002 extends CheckErrorAlgorithmBase {
       currentIndex = nextIndex;
     }
 
-    // Check for br tags with extra characters
-    List<PageElementTag> tags = analysis.getTags(PageElementTag.TAG_HTML_BR);
-    for (PageElementTag tag : tags) {
-
-      // Check for "clear" attribute
-      String clearValue = getClearValue(tag);
-
-      // Check for extra characters before the br tag
-      boolean extra = false;
-      int beginIndex = tag.getBeginIndex();
-      while ((beginIndex > 0) && (contents.charAt(beginIndex - 1) == '<')) {
-        beginIndex--;
-        extra = true;
-      }
-
-      // Check for extra characters after the br tag
-      int endIndex = tag.getEndIndex();
-      while ((endIndex < contents.length()) && (contents.charAt(endIndex) == '>')) {
-        endIndex++;
-        extra  = true;
-      }
-
-      if (extra || (clearValue != null) || (tag.getParametersCount() > 0)) {
-        if (errors == null) {
-          return true;
+    // Check for self closing tags with extra characters
+    if (PageElementTag.TAG_HTML_BR.equals(tagName)) {
+      List<PageElementTag> tags = analysis.getTags(tagName);
+      for (PageElementTag tag : tags) {
+  
+        // Check for "clear" attribute
+        String clearValue = getClearValue(tag);
+  
+        // Check for extra characters before the self closing tag
+        boolean extra = false;
+        int beginIndex = tag.getBeginIndex();
+        while ((beginIndex > 0) && (contents.charAt(beginIndex - 1) == '<')) {
+          beginIndex--;
+          extra = true;
         }
-        result = true;
-        CheckErrorResult errorResult = createCheckErrorResult(
-            analysis, beginIndex, endIndex, ErrorLevel.WARNING);
-        if (clearValue != null) {
-          String clearReplacement = getClearReplacement(clearValue);
-          if (clearReplacement != null) {
-            errorResult.addReplacement(clearReplacement, !clearReplacement.isEmpty());
+  
+        // Check for extra characters after the self closing tag
+        int endIndex = tag.getEndIndex();
+        while ((endIndex < contents.length()) && (contents.charAt(endIndex) == '>')) {
+          endIndex++;
+          extra  = true;
+        }
+  
+        if (extra || (clearValue != null) || (tag.getParametersCount() > 0)) {
+          if (errors == null) {
+            return true;
           }
+          result = true;
+          CheckErrorResult errorResult = createCheckErrorResult(
+              analysis, beginIndex, endIndex, ErrorLevel.WARNING);
+          if (clearValue != null) {
+            String clearReplacement = getClearReplacement(clearValue);
+            if (clearReplacement != null) {
+              errorResult.addReplacement(clearReplacement, !clearReplacement.isEmpty());
+            }
+          }
+          if (extra || (tag.getParametersCount() > 0)) {
+            errorResult.addReplacement(
+                PageElementTag.createTag(tagName, false, false),
+                false);
+          }
+          errors.add(errorResult);
         }
-        if (extra || (tag.getParametersCount() > 0)) {
-          errorResult.addReplacement(
-              PageElementTag.createTag(PageElementTag.TAG_HTML_BR, false, false),
-              false);
-        }
-        errors.add(errorResult);
       }
     }
 
