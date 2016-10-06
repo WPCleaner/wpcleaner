@@ -64,21 +64,33 @@ public class CheckErrorAlgorithm049 extends CheckErrorAlgorithmBase {
       List<PageElementTag> tags = analysis.getCompleteTags(tagName);
       if (tags != null) {
         for (PageElementTag tag : tags) {
-          if (errors == null) {
-            return true;
+          // Decide if error should be reported
+          boolean shouldReport = true;
+          int index = tag.getBeginIndex();
+          if (shouldReport &&
+              ((analysis.getSurroundingTag(PageElementTag.TAG_WIKI_SOURCE, index) != null) ||
+               (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_SYNTAXHIGHLIGHT, index) != null))) {
+            shouldReport = false;
           }
-          result = true;
 
-          // Find possible replacement
-          String replacement = analysis.getContents().substring(
-              tag.getValueBeginIndex(), tag.getValueEndIndex());
-
-          // Create error
-          CheckErrorResult errorResult = createCheckErrorResult(
-              analysis, tag.getCompleteBeginIndex(), tag.getCompleteEndIndex());
-          errorResult.addReplacement(PageElementTitle.createTitle(
-              level + 1, replacement, null));
-          errors.add(errorResult);
+          // Report error
+          if (shouldReport) {
+            if (errors == null) {
+              return true;
+            }
+            result = true;
+  
+            // Find possible replacement
+            String replacement = analysis.getContents().substring(
+                tag.getValueBeginIndex(), tag.getValueEndIndex());
+  
+            // Create error
+            CheckErrorResult errorResult = createCheckErrorResult(
+                analysis, tag.getCompleteBeginIndex(), tag.getCompleteEndIndex());
+            errorResult.addReplacement(PageElementTitle.createTitle(
+                level + 1, replacement, null));
+            errors.add(errorResult);
+          }
         }
       }
     }
