@@ -100,6 +100,9 @@ public class PageElementTag extends PageElement {
   /** Possible separation characters after tag name */
   private final static String SEP_CHARS_AFTER_TAG_NAME = " \n";
 
+  /** Possible separation characters at the end */
+  private final static String SEP_CHARS_END = " \n" + '\u00A0';
+
   /** Tag name */
   private final String name;
 
@@ -191,13 +194,15 @@ public class PageElementTag extends PageElement {
     if (endIndex < 0) {
       return null;
     }
-    boolean endWithSpace = (contents.charAt(endIndex - 1) == ' ');
 
     // Possible whitespace characters
     int tmpIndex2 = endIndex - 1;
+    boolean endWithSpace = false;
+    System.err.println("Last " + ((int) contents.charAt(tmpIndex2)));
     while ((tmpIndex2 > tmpIndex) &&
-           (contents.charAt(tmpIndex2) == ' ')) {
+           (SEP_CHARS_END.indexOf(contents.charAt(tmpIndex2)) >= 0)) {
       tmpIndex2--;
+      endWithSpace = true;
     }
 
     // Check for possible full tag
