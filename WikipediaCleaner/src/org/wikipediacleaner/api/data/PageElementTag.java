@@ -198,7 +198,6 @@ public class PageElementTag extends PageElement {
     // Possible whitespace characters
     int tmpIndex2 = endIndex - 1;
     boolean endWithSpace = false;
-    System.err.println("Last " + ((int) contents.charAt(tmpIndex2)));
     while ((tmpIndex2 > tmpIndex) &&
            (SEP_CHARS_END.indexOf(contents.charAt(tmpIndex2)) >= 0)) {
       tmpIndex2--;
