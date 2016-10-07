@@ -115,8 +115,8 @@ public class CheckErrorAlgorithm055 extends CheckErrorAlgorithmBase {
             }
           }
 
-          if ((level0Tag != null) && previousUnclosedTag) {
-            int possibleEnd = getPossibleEnd(analysis, level0Tag);
+          if (level0Tag != null) {
+            int possibleEnd = previousUnclosedTag ? getPossibleEnd(analysis, level0Tag) : 0;
             if (possibleEnd > 0) {
               CheckErrorResult errorResult = createCheckErrorResult(
                   analysis,
@@ -131,14 +131,14 @@ public class CheckErrorAlgorithm055 extends CheckErrorAlgorithmBase {
                   analysis,
                   level0Tag.getBeginIndex(),
                   level0Tag.getEndIndex(),
-                  ErrorLevel.CORRECT);
+                  ErrorLevel.WARNING);
               errors.add(errorResult);
               if (level0Tag.getMatchingTag() != null) {
                 errorResult = createCheckErrorResult(
                     analysis,
                     level0Tag.getMatchingTag().getBeginIndex(),
                     level0Tag.getMatchingTag().getEndIndex(),
-                    ErrorLevel.CORRECT);
+                    ErrorLevel.WARNING);
                 errors.add(errorResult);
               }
             }
