@@ -211,6 +211,10 @@ public class CheckErrorAlgorithm055 extends CheckErrorAlgorithmBase {
     if ((tmp > 0) && ((possibleEnd <= 0) || (tmp < possibleEnd))) {
       possibleEnd = tmp;
     }
+    tmp = getPossibleEndInGallery(analysis, tag);
+    if ((tmp > 0) && ((possibleEnd <= 0) || (tmp < possibleEnd))) {
+      possibleEnd = tmp;
+    }
 
     // Check that there is no other small tag in the selected area
     if (possibleEnd > 0) {
@@ -234,6 +238,36 @@ public class CheckErrorAlgorithm055 extends CheckErrorAlgorithmBase {
           if (" \n".indexOf(previousChar) >= 0) {
             possibleEnd--;
             finished = false;
+          } else if (previousChar == '>') {
+            PageElementTag tmpTag = analysis.isInTag(possibleEnd - 1);
+            if (tmpTag != null) {
+              int completeBegin = tmpTag.getCompleteBeginIndex();
+              if (PageElementTag.TAG_HTML_BR.equalsIgnoreCase(tmpTag.getNormalizedName())) {
+                possibleEnd = completeBegin;
+                finished = false;
+              } else if (PageElementTag.TAG_WIKI_REF.equalsIgnoreCase(tmpTag.getNormalizedName())) {
+                while ((tmpTag != null) &&
+                       (PageElementTag.TAG_WIKI_REF.equalsIgnoreCase(tmpTag.getNormalizedName()))) {
+                  previousChar = contents.charAt(completeBegin - 1);
+                  if ("},.;:!".indexOf(previousChar) >= 0) {
+                    tmpTag = null;
+                  } else if (previousChar == '>') {
+                    tmpTag = analysis.isInTag(completeBegin - 1);
+                    if (tmpTag == null) {
+                      possibleEnd = completeBegin;
+                      finished = false;
+                    } else if (!PageElementTag.TAG_WIKI_REF.equalsIgnoreCase(tmpTag.getNormalizedName())) {
+                      possibleEnd = tmpTag.getCompleteBeginIndex();
+                      finished = false;
+                    }
+                  } else {
+                    tmpTag = null;
+                    possibleEnd = completeBegin;
+                    finished = false;
+                  }
+                }
+              }
+            }
           }
         }
       }
@@ -321,5 +355,40 @@ public class CheckErrorAlgorithm055 extends CheckErrorAlgorithmBase {
       return -1;
     }
     return param.getEndIndex();
+  }
+
+  /**
+   * Find a possible end for a single small tag in a gallery.
+   * 
+   * @param analysis Page analysis.
+   * @param tag Current small tag.
+   * @return Possible end if found, -1 otherwise.
+   */
+  private int getPossibleEndInGallery(
+      PageAnalysis analysis,
+      PageElementTag tag) {
+
+    // Check if in gallery
+    PageElementTag tagGallery = analysis.getSurroundingTag(
+        PageElementTag.TAG_WIKI_GALLERY, tag.getBeginIndex());
+    if (tagGallery == null) {
+      return -1;
+    }
+
+    // Check that nothing prevents from closing the tag at the end of the line
+    int index = tag.getValueBeginIndex();
+    String contents = analysis.getContents();
+    while (index < contents.length()) {
+      char currentChar = contents.charAt(index);
+      if (currentChar == '\n') {
+        return index;
+      }
+      if ("|<{".indexOf(currentChar) >= 0) {
+        return -1;
+      }
+      index++;
+    }
+
+    return -1;
   }
 }
