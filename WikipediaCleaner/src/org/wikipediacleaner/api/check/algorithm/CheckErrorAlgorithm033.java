@@ -65,11 +65,13 @@ public class CheckErrorAlgorithm033 extends CheckErrorAlgorithmBase {
         }
       }
 
-      // Ignore tags inside nowiki
+      // Check that error should be reported
       if (shouldCount) {
-        if (analysis.getSurroundingTag(
-            PageElementTag.TAG_WIKI_NOWIKI,
-            tag.getBeginIndex()) != null) {
+        int index = tag.getBeginIndex();
+        if ((analysis.getSurroundingTag(PageElementTag.TAG_WIKI_NOWIKI, index) != null) ||
+            (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_PRE, index) != null) ||
+            (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_SOURCE, index) != null) ||
+            (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_SYNTAXHIGHLIGHT, index) != null)) {
           shouldCount = false;
         }
       }
