@@ -254,6 +254,7 @@ public class ListCWWorker extends BasicWorker {
     // Prepare result
     List<Detection> tmpPages = new ArrayList<>(pages);
     Collections.sort(tmpPages);
+    int nbPages = tmpPages.size();
     String result = generateResult(tmpPages, null);
 
     // Output to file
@@ -330,7 +331,7 @@ public class ListCWWorker extends BasicWorker {
               try {
                 api.updatePage(
                     getWikipedia(), page, text,
-                    "Dump analysis for error n°" + algorithm.getErrorNumberString(),
+                    "Dump analysis for error n°" + algorithm.getErrorNumberString() + "(" + nbPages + " pages)",
                     true, false);
               } catch (APIException e) {
                 if (EnumQueryResult.CONTENT_TOO_BIG.equals(e.getQueryResult())) {
