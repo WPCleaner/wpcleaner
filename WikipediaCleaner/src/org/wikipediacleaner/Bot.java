@@ -8,10 +8,13 @@
 package org.wikipediacleaner;
 
 import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
+import java.util.Properties;
 import java.util.logging.FileHandler;
 import java.util.logging.Handler;
 import java.util.logging.Level;
@@ -108,11 +111,16 @@ public class Bot implements BasicWorkerListener {
     // Process general command line arguments
     boolean done = false;
     timeLimit = null;
+    String credentials = null;
     while (!done) {
       if (args.length > currentArg) {
         String arg = args[currentArg];
+
         if ("-timelimit".equals(arg)) {
           timeLimit = Integer.valueOf(args[currentArg + 1]);
+          currentArg += 2;
+        } else if ("-credentials".equals(arg)) {
+          credentials = args[currentArg + 1];
           currentArg += 2;
         } else {
           done = true;
@@ -131,19 +139,29 @@ public class Bot implements BasicWorkerListener {
     }
     currentArg++;
 
-    // Retrieve user name
+    // Retrieve user name and password
     String userName = null;
-    if (args.length > currentArg) {
-      userName = args[currentArg];
-    }
-    currentArg++;
-
-    // Retrieve password
     String password = null;
-    if (args.length > currentArg) {
-      password = args[currentArg];
+    if (credentials != null) {
+      Properties properties = new Properties();
+      try {
+        properties.load(new FileReader(credentials));
+      } catch (IOException e) {
+        log.warn("Unable to load credentials file " + credentials);
+        return;
+      }
+      userName = properties.getProperty("user");
+      password = properties.getProperty("password");
+    } else {
+      if (args.length > currentArg) {
+        userName = args[currentArg];
+      }
+      currentArg++;
+      if (args.length > currentArg) {
+        password = args[currentArg];
+      }
+      currentArg++;
     }
-    currentArg++;
 
     // Retrieve action
     actions = (args.length > currentArg) ?
@@ -156,6 +174,7 @@ public class Bot implements BasicWorkerListener {
         (password == null) ||
         (actions == null) ||
         (actions.length == 0)) {
+      log.warn("Some parameters are incorrect");
       return;
     }
 
