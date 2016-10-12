@@ -259,6 +259,8 @@ public class CheckErrorAlgorithm055 extends CheckErrorAlgorithmBase {
                     } else if (!PageElementTag.TAG_WIKI_REF.equalsIgnoreCase(tmpTag.getNormalizedName())) {
                       possibleEnd = tmpTag.getCompleteBeginIndex();
                       finished = false;
+                    } else {
+                      tmpTag = null;
                     }
                   } else {
                     tmpTag = null;
