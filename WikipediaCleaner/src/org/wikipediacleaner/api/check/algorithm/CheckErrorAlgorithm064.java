@@ -28,12 +28,16 @@ import org.wikipediacleaner.i18n.GT;
  */
 public class CheckErrorAlgorithm064 extends CheckErrorAlgorithmBase {
 
-  /**
-   * Possible global fixes.
-   */
+  /** Possible global fixes */
   private final static String[] globalFixes = new String[] {
     GT._("Modify all internal links"),
   };
+
+  /** Possible quotes before text */
+  private final static String POSSIBLE_QUOTES_BEFORE = "«'`‘\"„“” ";
+
+  /** Possible quotes after text */
+  private final static String POSSIBLE_QUOTES_AFTER = "»'`‘\"„“” ";
 
   public CheckErrorAlgorithm064() {
     super("Link equal to linktext");
@@ -109,15 +113,15 @@ public class CheckErrorAlgorithm064 extends CheckErrorAlgorithmBase {
         if (!same && (text != null)) {
           int countQuoteBefore = 0;
           while ((countQuoteBefore < text.length()) &&
-                 (text.charAt(countQuoteBefore) == '\'')) {
+                 (POSSIBLE_QUOTES_BEFORE.indexOf(text.charAt(countQuoteBefore)) >= 0)) {
             countQuoteBefore++;
           }
           int countQuoteAfter = 0;
           while ((countQuoteAfter < text.length()) &&
-                 (text.charAt(text.length() - countQuoteAfter - 1) == '\'')) {
+                 (POSSIBLE_QUOTES_AFTER.indexOf(text.charAt(text.length() - countQuoteAfter - 1)) >= 0)) {
             countQuoteAfter++;
           }
-          if ((countQuoteBefore > 1) &&
+          if (((countQuoteBefore >= 1) || (countQuoteAfter >= 1)) &&
               (text.length() > countQuoteBefore)) {
             paddingLeft = paddingLeft + text.substring(0, countQuoteBefore);
             paddingRight = text.substring(text.length() - countQuoteAfter) + paddingRight;
@@ -125,13 +129,20 @@ public class CheckErrorAlgorithm064 extends CheckErrorAlgorithmBase {
             cleanedText = (text != null) ? text.replaceAll("\\_", " ") : text;
             if (Page.areSameTitle(linkName, text)) {
               same = true;
-              if ((link.getBeginIndex() <= 0) ||
-                  (content.charAt(link.getBeginIndex() - 1) != '\'')) {
-                if ((link.getEndIndex() >= content.length()) ||
-                    (content.charAt(link.getEndIndex()) != '\'')) {
-                  automatic = true;
-                }
+              boolean risk = false;
+              if ((link.getBeginIndex() > 0) &&
+                  (content.charAt(link.getBeginIndex() - 1) == '\'') &&
+                  (paddingLeft.length() > 0) &&
+                  (paddingLeft.charAt(paddingLeft.length() - 1) == '\'')) {
+                risk = true;
               }
+              if ((link.getEndIndex() < content.length()) &&
+                  (content.charAt(link.getEndIndex()) == '\'') &&
+                  (paddingRight.length() > 0) &&
+                  (paddingRight.charAt(0) == '\'')) {
+                risk = true;
+              }
+              automatic = !risk;
             } else if (Page.areSameTitle(linkName, cleanedText)) {
               same = true;
             }
