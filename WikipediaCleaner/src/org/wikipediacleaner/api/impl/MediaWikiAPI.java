@@ -513,7 +513,10 @@ public class MediaWikiAPI implements API {
     if (contents == null) {
       throw new APIException("Contents is null");
     }
-    if (wikipedia.getConnection().getLgToken() == null) {
+    ConnectionInformation connection = wikipedia.getConnection();
+    if ((connection.getLgToken() == null) &&
+        (connection.getLgUserId() == null) &&
+        (connection.getLgUserName() == null)){
       throw new APIException("You must be logged in to update pages");
     }
     int attemptNumber = 0;
