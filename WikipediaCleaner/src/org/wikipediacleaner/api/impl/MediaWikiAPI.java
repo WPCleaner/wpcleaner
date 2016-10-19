@@ -43,6 +43,7 @@ import org.wikipediacleaner.api.APIException;
 import org.wikipediacleaner.api.CaptchaException;
 import org.wikipediacleaner.api.HttpUtils;
 import org.wikipediacleaner.api.RecentChangesListener;
+import org.wikipediacleaner.api.constants.ConnectionInformation;
 import org.wikipediacleaner.api.constants.EnumQueryPage;
 import org.wikipediacleaner.api.constants.EnumQueryResult;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
@@ -362,7 +363,10 @@ public class MediaWikiAPI implements API {
     if (comment == null) {
       throw new APIException("Comment is null");
     }
-    if (wikipedia.getConnection().getLgToken() == null) {
+    ConnectionInformation connection = wikipedia.getConnection();
+    if ((connection.getLgToken() == null) &&
+        (connection.getLgUserId() == null) &&
+        (connection.getLgUserName() == null)){
       throw new APIException("You must be logged in to update pages");
     }
     int attemptNumber = 0;
