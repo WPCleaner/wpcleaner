@@ -34,10 +34,10 @@ public class CheckErrorAlgorithm064 extends CheckErrorAlgorithmBase {
   };
 
   /** Possible quotes before text */
-  private final static String POSSIBLE_QUOTES_BEFORE = "«'`‘\"„“” ";
+  private final static String POSSIBLE_QUOTES_BEFORE = "«'`‘\"„“” .,";
 
   /** Possible quotes after text */
-  private final static String POSSIBLE_QUOTES_AFTER = "»'`‘\"„“” ";
+  private final static String POSSIBLE_QUOTES_AFTER = "»'`‘\"„“” .,";
 
   public CheckErrorAlgorithm064() {
     super("Link equal to linktext");
@@ -90,27 +90,8 @@ public class CheckErrorAlgorithm064 extends CheckErrorAlgorithmBase {
           }
         }
 
-        // Check for extra punctuation at the end
+        // Check for extra characters around or before
         if (!same) {
-          int position = text.length();
-          while ((position > 0) && (",.".indexOf(text.charAt(position - 1)) >= 0)) {
-            position--;
-          }
-          if (position < text.length()) {
-            paddingRight = text.substring(position) + paddingRight;
-            text = text.substring(0, position);
-            cleanedText = (text != null) ? text.replaceAll("\\_", " ") : text;
-            if (Page.areSameTitle(linkName, text)) {
-              same = true;
-              automatic = true;
-            } else if (Page.areSameTitle(linkName, cleanedText)) {
-              same = true;
-            }
-          }
-        }
-
-        // Check for surrounding quotes
-        if (!same && (text != null)) {
           int countQuoteBefore = 0;
           while ((countQuoteBefore < text.length()) &&
                  (POSSIBLE_QUOTES_BEFORE.indexOf(text.charAt(countQuoteBefore)) >= 0)) {
@@ -146,25 +127,6 @@ public class CheckErrorAlgorithm064 extends CheckErrorAlgorithmBase {
             } else if (Page.areSameTitle(linkName, cleanedText)) {
               same = true;
             }
-          }
-        }
-      }
-
-      // Check for extra punctuation at the end (again, in case punctuation removed)
-      if (!same && (text != null)) {
-        int position = text.length();
-        while ((position > 0) && (",.".indexOf(text.charAt(position - 1)) >= 0)) {
-          position--;
-        }
-        if (position < text.length()) {
-          paddingRight = text.substring(position) + paddingRight;
-          text = text.substring(0, position);
-          cleanedText = (text != null) ? text.replaceAll("\\_", " ") : text;
-          if (Page.areSameTitle(linkName, text)) {
-            same = true;
-            automatic = true;
-          } else if (Page.areSameTitle(linkName, cleanedText)) {
-            same = true;
           }
         }
       }
