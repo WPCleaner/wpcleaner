@@ -9,6 +9,7 @@ package org.wikipediacleaner;
 
 import java.io.File;
 import java.io.FileReader;
+import java.io.FilenameFilter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -258,7 +259,7 @@ public class Bot implements BasicWorkerListener {
         }
       }
       if (args.length > currentArg + 2) {
-        File dumpFile = new File(args[currentArg]);
+        File dumpFile = getDumpFile(args[currentArg]);
         List<CheckErrorAlgorithm> algorithms = new ArrayList<CheckErrorAlgorithm>();
         extractAlgorithms(algorithms, null, args, currentArg + 2);
         if (args[currentArg + 1].startsWith("wiki:")) {
@@ -324,6 +325,42 @@ public class Bot implements BasicWorkerListener {
         }
       }
     }
+  }
+
+  /**
+   * @param path Path to the dump file.
+   * @return Dump file.
+   */
+  private File getDumpFile(String path) {
+    File file = new File(path);
+    if (file.exists() && file.isFile() && file.canRead()) {
+      return file;
+    }
+    File parent = file.getParentFile();
+    if ((parent == null) || (!parent.exists()) || (!parent.isDirectory())) {
+      return null;
+    }
+    final String filename = file.getName();
+    final int starIndex = filename.indexOf('$');
+    if (starIndex < 0) {
+      return null;
+    }
+    String[] filenames = parent.list(new FilenameFilter() {
+      
+      @Override
+      public boolean accept(@SuppressWarnings("unused") File dir, String name) {
+        if (name.startsWith(filename.substring(0, starIndex)) &&
+            name.endsWith(filename.substring(starIndex + 1))) {
+          return true;
+        }
+        return false;
+      }
+    });
+    if (filenames.length == 0) {
+      return null;
+    }
+    Arrays.sort(filenames);
+    return new File(parent, filenames[filenames.length - 1]);
   }
 
   /**
