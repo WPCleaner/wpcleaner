@@ -109,21 +109,33 @@ public class CheckErrorAlgorithm064 extends CheckErrorAlgorithmBase {
             text = text.substring(countQuoteBefore, text.length() - countQuoteAfter);
             cleanedText = (text != null) ? text.replaceAll("\\_", " ") : text;
             if (Page.areSameTitle(linkName, text)) {
-              same = true;
-              boolean risk = false;
-              if ((link.getBeginIndex() > 0) &&
-                  (content.charAt(link.getBeginIndex() - 1) == '\'') &&
-                  (paddingLeft.length() > 0) &&
-                  (paddingLeft.charAt(paddingLeft.length() - 1) == '\'')) {
-                risk = true;
+
+              // Specific cases
+              boolean shouldReport = true;
+              if (".".equals(paddingLeft) && "".equals(paddingRight)) {
+                shouldReport = false; // Only a "." before
+              } else if ("".equals(paddingLeft) && "'".equals(paddingRight)) {
+                shouldReport = false; // Only a "'" after
               }
-              if ((link.getEndIndex() < content.length()) &&
-                  (content.charAt(link.getEndIndex()) == '\'') &&
-                  (paddingRight.length() > 0) &&
-                  (paddingRight.charAt(0) == '\'')) {
-                risk = true;
+
+              // Report problem
+              if (shouldReport) {
+                same = true;
+                boolean risk = false;
+                if ((link.getBeginIndex() > 0) &&
+                    (content.charAt(link.getBeginIndex() - 1) == '\'') &&
+                    (paddingLeft.length() > 0) &&
+                    (paddingLeft.charAt(paddingLeft.length() - 1) == '\'')) {
+                  risk = true;
+                }
+                if ((link.getEndIndex() < content.length()) &&
+                    (content.charAt(link.getEndIndex()) == '\'') &&
+                    (paddingRight.length() > 0) &&
+                    (paddingRight.charAt(0) == '\'')) {
+                  risk = true;
+                }
+                automatic = !risk;
               }
-              automatic = !risk;
             } else if (Page.areSameTitle(linkName, cleanedText)) {
               same = true;
             }
