@@ -660,6 +660,9 @@ public abstract class UpdateWarningTools {
 
     // Search warning in the "To do" parameter
     String parameter = templateTodo.getParameterValue("1");
+    if (parameter == null) {
+      parameter = "";
+    }
     PageAnalysis parameterAnalysis = talkPage.getAnalysis(parameter, false);
     PageElementTemplate templateWarning = getFirstWarningTemplate(parameterAnalysis);
     if (templateWarning == null) {
@@ -671,7 +674,7 @@ public abstract class UpdateWarningTools {
           tmp.append("\n");
         }
       }
-      StringBuilder tmpParameter = new StringBuilder((parameter != null) ? parameter : "");
+      StringBuilder tmpParameter = new StringBuilder(parameter);
       if ((tmpParameter.length() == 0) ||
           (tmpParameter.charAt(tmpParameter.length() - 1) != '\n')) {
         tmpParameter.append("\n");
