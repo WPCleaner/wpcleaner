@@ -222,8 +222,23 @@ public class ListCWWorker extends BasicWorker {
           }
           first = false;
           line.append("<nowiki>");
-          notice = notice.replaceAll("\n", "\u21b5"); // Replacer \n by a visual character
+          notice = notice.replaceAll("\n", "\u21b5"); // Replace \n by a visual character
           notice = notice.replaceAll("\\<", "&lt;"); // Replace "<" by its HTML element
+          notice = notice.replaceAll("\u007F", "[DEL]"); // Replace control characters by visible text
+          notice = notice.replaceAll("\u00A0", "[NBSP]");
+          notice = notice.replaceAll("\u00AD", "[SHY]");
+          notice = notice.replaceAll("\u2004", "[3EM]");
+          notice = notice.replaceAll("\u2005", "[4EM]");
+          notice = notice.replaceAll("\u2006", "[6EM]");
+          notice = notice.replaceAll("\u2007", "[FS]");
+          notice = notice.replaceAll("\u2008", "[PS]");
+          notice = notice.replaceAll("\u2004", "[3EM]");
+          notice = notice.replaceAll("\u200B", "[0WS]");
+          notice = notice.replaceAll("\u200E", "[LRM]");
+          notice = notice.replaceAll("\u2028", "[LS]");
+          notice = notice.replaceAll("\u202A", "[LRE]");
+          notice = notice.replaceAll("\u202C", "[POPD]");
+          notice = notice.replaceAll("\uFEFF", "[BOM]");
           line.append(notice);
           line.append("</nowiki>");
         }
