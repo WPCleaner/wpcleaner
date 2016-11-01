@@ -309,6 +309,7 @@ public class CheckErrorAlgorithm016 extends CheckErrorAlgorithmBase {
     LEFT_TO_RIGHT_EMBEDDING(0x202A, 0x202A, true, false, GT._No("Left-to-right embedding")),
     POP_DIRECTIONAL_FORMATTING(0x202C, 0x202C, true, false, GT._No("Pop directional formatting")),
     BYTE_ORDER_MARK(0xFEFF, 0xFEFF, true, false, GT._No("Byte order mark")),
+    OBJECT_REPLACEMENT_CHARACTER(0xFFFC, 0xFFFC, true, false, GT._No("Object replacement character")),
     PUA(0xE000, 0xF8FF, false, false, GT._No("Private use area")),
     PUA_A(0XF0000, 0xFFFFD, false, false, GT._No("Private use area A")),
     PUA_B(0x100000, 0x10FFFD, false, false, GT._No("Private use area B"));
