@@ -169,6 +169,7 @@ public class MediaWiki extends MediaWikiController {
    * @param comment Comment used for the modification.
    * @param description (Out) description of changes made.
    * @param automaticCW True if automatic Check Wiki fixing should be done also.
+   * @param forceCW True if Check Wiki fixing should be done even if no automatic replacement was done.
    * @param save True if modification should be saved.
    * @return Count of modified pages.
    * @throws APIException
@@ -177,7 +178,7 @@ public class MediaWiki extends MediaWikiController {
       Page[] pages, Map<String, List<AutomaticFixing>> replacements,
       EnumWikipedia wiki, String comment,
       StringBuilder description,
-      boolean automaticCW, boolean save,
+      boolean automaticCW, boolean forceCW, boolean save,
       boolean updateDabWarning) throws APIException {
     if ((pages == null) || (replacements == null) || (replacements.size() == 0)) {
       return 0;
@@ -200,6 +201,8 @@ public class MediaWiki extends MediaWikiController {
     int count = 0;
     final API api = APIFactory.getAPI();
     StringBuilder details = new StringBuilder();
+    StringBuilder fullComment = new StringBuilder();
+    StringBuilder tmpDescription = (description != null) ? new StringBuilder() : null;
     while (hasRemainingTask() && !shouldStop()) {
       Object result = getNextResult();
       if (currentPage < pages.length) {
@@ -208,13 +211,24 @@ public class MediaWiki extends MediaWikiController {
         currentPage++;
       }
       if ((result != null) && (result instanceof Page)) {
-        boolean changed = false;
         List<String> replacementsDone = new ArrayList<String>();
         Page page = (Page) result;
         String oldContents = page.getContents();
         if (oldContents != null) {
           String newContents = oldContents;
           details.setLength(0);
+          fullComment.setLength(0);
+          if (tmpDescription != null) {
+            tmpDescription.setLength(0);
+            String title =
+                "<a href=\"" + wiki.getSettings().getURL(page.getTitle(), false, secured) + "\">" +
+                page.getTitle() + "</a>";
+            tmpDescription.append(GT._("Page {0}:", title));
+            tmpDescription.append("\n");
+            tmpDescription.append("<ul>\n");
+          }
+
+          // Apply automatic fixing
           for (Entry<String, List<AutomaticFixing>> replacement : replacements.entrySet()) {
             replacementsDone.clear();
             String tmpContents = AutomaticFixing.apply(replacement.getValue(), newContents, replacementsDone);
@@ -222,20 +236,11 @@ public class MediaWiki extends MediaWikiController {
               newContents = tmpContents;
 
               // Update description
-              if (description != null) {
-                if (!changed) {
-                  String title =
-                    "<a href=\"" + wiki.getSettings().getURL(page.getTitle(), false, secured) + "\">" +
-                    page.getTitle() + "</a>";
-                  description.append(GT._("Page {0}:", title));
-                  description.append("\n");
-                  description.append("<ul>\n");
-                  changed = true;
-                }
+              if (tmpDescription != null) {
                 for (String replacementDone : replacementsDone) {
-                  description.append("<li>");
-                  description.append(replacementDone.replaceAll("\\&", "&amp;").replaceAll("\\<", "&lt;"));
-                  description.append("</li>\n");
+                  tmpDescription.append("<li>");
+                  tmpDescription.append(replacementDone.replaceAll("\\&", "&amp;").replaceAll("\\<", "&lt;"));
+                  tmpDescription.append("</li>\n");
                 }
               }
 
@@ -248,15 +253,12 @@ public class MediaWiki extends MediaWikiController {
               }
             }
           }
+          fullComment.append(wiki.createUpdatePageComment(comment, details.toString()));
 
-          // Page contents has been modified
-          if (!oldContents.equals(newContents)) {
-            // Initialize comment
-            StringBuilder fullComment = new StringBuilder();
-            fullComment.append(wiki.createUpdatePageComment(comment, details.toString()));
-
-            // Apply automatic Check Wiki fixing
-            if (automaticCW) {
+          // Apply automatic Check Wiki fixing if needed
+          if (automaticCW) {
+            if (!oldContents.equals(newContents) || forceCW) {
+              String tmpContents = newContents;
               List<CheckErrorAlgorithm> algorithms = CheckErrorAlgorithms.getAlgorithms(wiki);
               List<CheckError.Progress> usedAlgorithms = new ArrayList<>();
               newContents = AutomaticFormatter.tidyArticle(
@@ -264,18 +266,28 @@ public class MediaWiki extends MediaWikiController {
               if (!usedAlgorithms.isEmpty()) {
                 fullComment.append(" / ");
                 fullComment.append(wiki.getCWConfiguration().getComment(usedAlgorithms));
-                if (description != null) {
+                if (tmpDescription != null) {
                   for (CheckError.Progress progress : usedAlgorithms) {
                     CheckErrorAlgorithm algorithm = progress.algorithm;
-                    description.append("<li>");
-                    description.append(algorithm.getShortDescriptionReplaced());
-                    description.append("</li>\n");
+                    tmpDescription.append("<li>");
+                    tmpDescription.append(algorithm.getShortDescriptionReplaced());
+                    tmpDescription.append("</li>\n");
                   }
                 }
+              } else if (oldContents.equals(tmpContents)) {
+                // If no automatic modifications done before CW, don't keep the modifications for general tidiness
+                newContents = tmpContents;
               }
             }
-            if ((description != null) && (changed)) {
-              description.append("</ul>\n");
+          }
+
+          // Page contents has been modified
+          if (!oldContents.equals(newContents)) {
+            if (tmpDescription != null) {
+              tmpDescription.append("</ul>\n");
+              if (description != null) {
+                description.append(tmpDescription);
+              }
             }
 
             // Save page

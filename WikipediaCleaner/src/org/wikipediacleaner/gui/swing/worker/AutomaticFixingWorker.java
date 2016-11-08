@@ -26,39 +26,28 @@ import org.wikipediacleaner.i18n.GT;
  */
 public class AutomaticFixingWorker extends BasicWorker {
 
-  /**
-   * List of pages on which the automatic fixing is to be done.
-   */
+  /** List of pages on which the automatic fixing is to be done. */
   private final Page[] pages;
 
-  /**
-   * Replacements to be done.
-   */
+  /** Replacements to be done. */
   private final Map<String, List<AutomaticFixing>> replacements;
 
-  /**
-   * Comment to use for the replacements.
-   */
+  /** Comment to use for the replacements. */
   private final String comment;
 
-  /**
-   * Description of the replacements done.
-   */
+  /** Description of the replacements done. */
   private final StringBuilder description;
 
-  /**
-   * True if the description of the replacements should be displayed.
-   */
+  /** True if the description of the replacements should be displayed. */
   private final boolean showDescription;
 
-  /**
-   * True if automatic Check Wiki fixing should be done also.
-   */
+  /** True if automatic Check Wiki fixing should be done also. */
   private final boolean automaticCW;
 
-  /**
-   * True if modifications should be saved.
-   */
+  /** True if Check Wiki fixing should be done even if no automatic replacement was done. */
+  private final boolean forceCW;
+
+  /** True if modifications should be saved. */
   private final boolean save;
 
   /**
@@ -69,13 +58,14 @@ public class AutomaticFixingWorker extends BasicWorker {
    * @param comment Comment to use for the replacements.
    * @param showDescription True if the description of the replacements should be displayed.
    * @param automaticCW True if automatic Check Wiki fixing should be done also.
+   * @param forceCW True if Check Wiki fixing should be done even if no automatic replacement was done.
    * @param save True if modifications should be saved.
    */
   public AutomaticFixingWorker(
       EnumWikipedia wiki, BasicWindow window,
       Page[] pages, Map<String, List<AutomaticFixing>> replacements,
       String comment, boolean showDescription,
-      boolean automaticCW, boolean save) {
+      boolean automaticCW, boolean forceCW, boolean save) {
     super(wiki, window);
     this.pages = pages;
     this.replacements = replacements;
@@ -83,6 +73,7 @@ public class AutomaticFixingWorker extends BasicWorker {
     this.showDescription = showDescription;
     this.description = (showDescription ? new StringBuilder() : null);
     this.automaticCW = automaticCW;
+    this.forceCW = forceCW;
     this.save = save;
   }
 
@@ -104,7 +95,7 @@ public class AutomaticFixingWorker extends BasicWorker {
       MediaWiki mw = MediaWiki.getMediaWikiAccess(this);
       Integer count = Integer.valueOf(mw.replaceText(
           tmpPages, replacements, getWikipedia(),
-          comment, description, automaticCW, save, true));
+          comment, description, automaticCW, forceCW, save, true));
       if (showDescription && (count > 0)) {
         InformationWindow.createInformationWindow(
             GT.__(

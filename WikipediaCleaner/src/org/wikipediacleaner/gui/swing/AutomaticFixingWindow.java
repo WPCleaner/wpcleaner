@@ -79,6 +79,7 @@ public class AutomaticFixingWindow extends OnePageWindow {
   private JButton buttonSave;
   private JButton buttonTest;
   private JToggleButton buttonAutomaticCW;
+  private JCheckBox chkForceCW;
   private JTextPane paneOriginal;
   private JTextPane paneResult;
 
@@ -270,6 +271,14 @@ public class AutomaticFixingWindow extends OnePageWindow {
     constraints.gridwidth = 2;
     constraints.weighty = 0;
     panel.add(toolBarButtons, constraints);
+    constraints.gridy++;
+
+    chkForceCW = Utilities.createJCheckBox(
+        GT._("Always apply automatic fixing for Check Wiki"), false);
+    constraints.fill = GridBagConstraints.HORIZONTAL;
+    constraints.gridwidth = 2;
+    constraints.weighty = 0;
+    panel.add(chkForceCW, constraints);
     constraints.gridy++;
 
     // Comment
@@ -595,10 +604,12 @@ public class AutomaticFixingWindow extends OnePageWindow {
     }
     List<AutomaticFixing> fixing = modelAutomaticFixing.getData();
     if ((fixing == null) || (fixing.isEmpty())) {
-      Utilities.displayWarning(
-          getParentComponent(),
-          GT._("You must input the initial and destination texts."));
-      return;
+      if (!buttonAutomaticCW.isSelected() || !chkForceCW.isSelected()) {
+        Utilities.displayWarning(
+            getParentComponent(),
+            GT._("You must input the initial and destination texts."));
+        return;
+      }
     }
 
     // Warn the user about what this function does
@@ -633,7 +644,7 @@ public class AutomaticFixingWindow extends OnePageWindow {
     // Do the replacements
     AutomaticFixingWorker dabWorker = new AutomaticFixingWorker(
         getWikipedia(), this, tmpPages, replacements,
-        comment, true, buttonAutomaticCW.isSelected(), save);
+        comment, true, buttonAutomaticCW.isSelected(), chkForceCW.isSelected(), save);
     dabWorker.setListener(new DefaultBasicWorkerListener() {
       @Override
       public void afterFinished(
