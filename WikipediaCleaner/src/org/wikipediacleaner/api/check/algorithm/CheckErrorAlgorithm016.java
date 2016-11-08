@@ -297,7 +297,7 @@ public class CheckErrorAlgorithm016 extends CheckErrorAlgorithmBase {
   private enum ControlCharacter {
     DELETE(0x007F, 0x007F, true, false, GT._No("Delete")),
     NON_BREAKING_SPACE(0x00A0, 0x00A0, false, true, GT._No("Non-breaking space")),
-    SOFT_HYPHEN(0x00AD, 0x00AD, true, true, GT._No("Soft hyphen")),
+    SOFT_HYPHEN(0x00AD, 0x00AD, true, false, GT._No("Soft hyphen")),
     THREE_PER_EM_SPACE(0x2004, 0x2004, true, false, GT._No("Thee-per-em space")),
     FOUR_PER_EM_SPACE(0x2005, 0x2005, true, false, GT._No("Four-per-em space")),
     SIX_PER_EM_SPACE(0x2006, 0x2006, true, false, GT._No("Six-per-em space")),
