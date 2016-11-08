@@ -34,10 +34,10 @@ public class CheckErrorAlgorithm064 extends CheckErrorAlgorithmBase {
   };
 
   /** Possible quotes before text */
-  private final static String POSSIBLE_QUOTES_BEFORE = "«'`‘\"„“” .,(";
+  private final static String POSSIBLE_QUOTES_BEFORE = "«'`‘\"„“” .,(–־—";
 
   /** Possible quotes after text */
-  private final static String POSSIBLE_QUOTES_AFTER = "»'`‘\"„“” .,);:";
+  private final static String POSSIBLE_QUOTES_AFTER = "»'`‘\"„“” .,);:–־—";
 
   public CheckErrorAlgorithm064() {
     super("Link equal to linktext");
