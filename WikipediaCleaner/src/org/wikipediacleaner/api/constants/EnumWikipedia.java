@@ -50,6 +50,7 @@ public enum EnumWikipedia {
   ARZ(new Wikipedia("arz", "Egyptian Arabic Wikipedia", ComponentOrientation.RIGHT_TO_LEFT)),
   BAR(new Wikipedia("bar", "Boarich Wikipedia")),
   BE(new Wikipedia("be", "Belarus Wikipedia")),
+  BE_TARASK(new Wikipedia("be-tarask", "Belarusian (Taraškievica) Wikipedia")),
   BN(new Wikipedia("bn", "Bengali Wikipedia")),
   CA(new Wikipedia("ca", "Viquipèdia en català")),
   CS(new Wikipedia("cs", "Czech Wikipedia")),
