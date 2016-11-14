@@ -69,6 +69,7 @@ public enum EnumWikipedia {
   GL(new Wikipedia("gl", "Galipedia")),
   HE(new Wikipedia("he", "ויקיפדיה העברית", ComponentOrientation.RIGHT_TO_LEFT)),
   HIF(new Wikipedia("hif", "Fiji Hindi Wikipedia")),
+  HR(new Wikipedia("hr", "Croatian Wikipedia")),
   HU(new Wikipedia("hu", "Magyar Wikipedia")),
   ID(new Wikipedia("id", "Indonesian Wikipedia")),
   IS(new Wikipedia("is", "Wikipedia á íslensku")),
