@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2016-11-08 08:34+0100\n"
+"POT-Creation-Date: 2016-11-15 18:18+0100\n"
 "PO-Revision-Date: 2016-03-06 19:44+0000\n"
 "Last-Translator: Felipe L. <felipe.idj@hotmail.com>\n"
 "Language-Team: Brazilian Portuguese <pt_BR@li.org>\n"
@@ -200,12 +200,13 @@ msgstr "Corrigir todas as tags incorretas"
 msgid "A replacement for {0}"
 msgstr "Uma substituição para {0}"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm003.java:131
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm003.java:126
 msgid "Close tag"
 msgstr "Fechar tag"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm003.java:186
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm003.java:187
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm003.java:181
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm003.java:182
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm111.java:146
 #, java-format
 msgid "A list of templates resulting in the inclusion of {0}"
 msgstr "Uma lista de predefinições resultantes da inclusão de {0}"

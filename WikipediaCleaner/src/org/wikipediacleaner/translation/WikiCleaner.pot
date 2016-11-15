@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2016-11-08 08:34+0100\n"
+"POT-Creation-Date: 2016-11-15 18:18+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -178,12 +178,13 @@ msgstr ""
 msgid "A replacement for {0}"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm003.java:131
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm003.java:126
 msgid "Close tag"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm003.java:186
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm003.java:187
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm003.java:181
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm003.java:182
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm111.java:146
 #, java-format
 msgid "A list of templates resulting in the inclusion of {0}"
 msgstr ""

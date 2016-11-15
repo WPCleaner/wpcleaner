@@ -21,13 +21,13 @@ import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.i18n.GT;
 
 /**
- * Algorithm for analyzing error 3 of check wikipedia project.
- * Error 3: Article with &lt;ref&gt; and no &lt;references /&gt;
+ * Algorithm for analyzing error 111 of check wikipedia project.
+ * Error 111: Ref after last reference list
  */
-public class CheckErrorAlgorithm003 extends CheckErrorAlgorithmBase {
+public class CheckErrorAlgorithm111 extends CheckErrorAlgorithmBase {
 
-  public CheckErrorAlgorithm003() {
-    super("Article with <ref> and no <references />");
+  public CheckErrorAlgorithm111() {
+    super("Ref after last reference list");
   }
 
   /**
@@ -71,9 +71,11 @@ public class CheckErrorAlgorithm003 extends CheckErrorAlgorithmBase {
     if (referencesTags != null) {
       for (PageElementTag referencesTag : referencesTags) {
         if (referencesTag.isComplete()) {
-          return false;
+          if (referencesTag.getCompleteEndIndex() > lastRefTag.getCompleteEndIndex()) {
+            return false;
+          }
+          referencesFound = true;
         }
-        referencesFound = true;
       }
     }
 
@@ -96,10 +98,16 @@ public class CheckErrorAlgorithm003 extends CheckErrorAlgorithmBase {
         PageElementTemplate template = allTemplates.get(templateNum);
         for (String referencesTemplate : referencesTemplates) {
           if (Page.areSameTitle(template.getTemplateName(), referencesTemplate)) {
-            return false;
+            if (template.getEndIndex() > lastRefTag.getCompleteEndIndex()) {
+              return false;
+            }
+            referencesFound = true;
           }
         }
       }
+    }
+    if (!referencesFound) {
+      return false;
     }
 
     // Report error
@@ -112,50 +120,6 @@ public class CheckErrorAlgorithm003 extends CheckErrorAlgorithmBase {
         lastRefTag.getCompleteEndIndex(),
         referencesFound ? ErrorLevel.WARNING : ErrorLevel.ERROR);
     errors.add(errorResult);
-
-    // Try to make some suggestions
-    String contents = analysis.getContents();
-    if (referencesTags != null) {
-      for (PageElementTag referencesTag : referencesTags) {
-        if (!referencesTag.isComplete()) {
-          errorResult = createCheckErrorResult(
-              analysis, referencesTag.getBeginIndex(), referencesTag.getEndIndex());
-          if (referencesTags.size() == 1) {
-            errorResult.addReplacement(
-                PageElementTag.createTag(PageElementTag.TAG_WIKI_REFERENCES, true, true),
-                GT._("Close tag"));
-          }
-          errors.add(errorResult);
-        }
-      }
-      if (referencesTags.size() == 1) {
-        int index = referencesTags.get(0).getEndIndex();
-        boolean ok = true;
-        while (ok && (index < contents.length())) {
-          char currentChar = contents.charAt(index);
-          if (Character.isWhitespace(currentChar)) {
-            index++;
-          } else if (currentChar == '<') {
-            PageElementTag tag = analysis.isInTag(index);
-            if ((tag != null) &&
-                (tag.getBeginIndex() == index) &&
-                (PageElementTag.TAG_WIKI_REF.equals(tag.getNormalizedName()))) {
-              index = tag.getCompleteEndIndex();
-            } else {
-              if (contents.startsWith("</references/>", index)) {
-                errorResult = createCheckErrorResult(analysis, index, index + 14);
-                errorResult.addReplacement(PageElementTag.createTag(
-                    PageElementTag.TAG_WIKI_REFERENCES, true, false), true);
-                errors.add(errorResult);
-              }
-              ok = false;
-            }
-          } else {
-            ok = false;
-          }
-        }
-      }
-    }
 
     return true;
   }
@@ -178,7 +142,7 @@ public class CheckErrorAlgorithm003 extends CheckErrorAlgorithmBase {
   @Override
   public Map<String, String> getParameters() {
     Map<String, String> parameters = super.getParameters();
-    parameters.put("references_templates", GT._("A list of templates resulting in the inclusion of {0}", "&lt;references/&gt;"));
+    //parameters.put("references_templates", GT._("A list of templates resulting in the inclusion of {0}", "&lt;references/&gt;"));
     parameters.put("templates", GT._("A list of templates resulting in the inclusion of {0}", "&lt;references/&gt;"));
     return parameters;
   }

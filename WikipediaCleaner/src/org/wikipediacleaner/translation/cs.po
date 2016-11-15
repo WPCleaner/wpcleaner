@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2016-11-08 08:34+0100\n"
+"POT-Creation-Date: 2016-11-15 18:18+0100\n"
 "PO-Revision-Date: 2016-03-19 19:20+0000\n"
 "Last-Translator: Matěj S. <matejsuchanek97@gmail.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
@@ -192,12 +192,13 @@ msgstr "Opravit všechny chybné značky"
 msgid "A replacement for {0}"
 msgstr "Náhrada za {0}"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm003.java:131
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm003.java:126
 msgid "Close tag"
 msgstr "Uzavřít tag"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm003.java:186
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm003.java:187
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm003.java:181
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm003.java:182
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm111.java:146
 #, java-format
 msgid "A list of templates resulting in the inclusion of {0}"
 msgstr "Seznam šablon s vloženou {0}"
