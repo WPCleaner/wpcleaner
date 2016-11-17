@@ -135,17 +135,18 @@ public class CheckErrorAlgorithm085 extends CheckErrorAlgorithmBase {
               textFound = true;
             }
           }
+          boolean shouldReport = !textFound;
           replacementText.append(contents.substring(
               tag.getValueEndIndex(), tag.getCompleteEndIndex()));
 
           // Check if tag has arguments
-          boolean hasBlockingArguments = false;
           boolean hasUnsafeArguments = false;
-          if (!textFound) {
+          if (shouldReport) {
             if (tag.getParametersCount() > 0) {
-              if (PageElementTag.TAG_WIKI_REF.equals(tag.getName())) {
-                hasBlockingArguments = true;
-              } else if (PageElementTag.TAG_HTML_SPAN.equals(tag.getName())) {
+              String tagName = tag.getName();
+              if (PageElementTag.TAG_WIKI_REF.equals(tagName)) {
+                shouldReport = false;
+              } else if (PageElementTag.TAG_HTML_SPAN.equals(tagName)) {
                 for (int paramNum = 0; paramNum < tag.getParametersCount(); paramNum++) {
                   Parameter param = tag.getParameter(paramNum);
                   if (param != null) {
@@ -155,13 +156,34 @@ public class CheckErrorAlgorithm085 extends CheckErrorAlgorithmBase {
                     }
                   }
                 }
+              } else if (PageElementTag.TAG_HTML_DIV.equals(tagName)) {
+                if ((tag.getParametersCount() == 1) && (tag.getParameter("id") != null)) {
+                  shouldReport = false;
+                }
+                for (int paramNum = 0; paramNum < tag.getParametersCount(); paramNum++) {
+                  hasUnsafeArguments = true;
+                  Parameter param = tag.getParameter("style");
+                  if (param != null) {
+                    String paramValue = param.getValue();
+                    if (paramValue != null) {
+                      String[] styles = paramValue.split(";");
+                      for (String style : styles) {
+                        int colonIndex = style.indexOf(':');
+                        if ((colonIndex > 0) &&
+                            ("clear".equalsIgnoreCase(style.substring(0, colonIndex).trim()))) {
+                          shouldReport = false;
+                        }
+                      }
+                    }
+                  }
+                }
               } else {
                 hasUnsafeArguments = true;
               }
             }
           }
 
-          if (!textFound && !hasBlockingArguments) {
+          if (shouldReport) {
             if (errors == null) {
               return true;
             }
