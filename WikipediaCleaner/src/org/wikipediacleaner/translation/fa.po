@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2016-11-15 18:18+0100\n"
+"POT-Creation-Date: 2016-11-17 08:20+0100\n"
 "PO-Revision-Date: 2016-07-07 19:35+0000\n"
 "Last-Translator: reza <reza.energy@gmail.com>\n"
 "Language-Team: Persian <fa@li.org>\n"
@@ -649,16 +649,12 @@ msgstr ""
 msgid "Restrict verification to titles with a higher level"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm085.java:52
-msgid "Delete all tags without content"
-msgstr ""
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm085.java:196
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm085.java:205
 #, java-format
 msgid "Use {0}"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm085.java:250
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm085.java:238
 msgid "A list of templates that can be used to replace &lt;center&gt; tags"
 msgstr ""
 

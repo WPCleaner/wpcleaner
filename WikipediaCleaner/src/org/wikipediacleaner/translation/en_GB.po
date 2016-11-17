@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2016-11-15 18:18+0100\n"
+"POT-Creation-Date: 2016-11-17 08:20+0100\n"
 "PO-Revision-Date: 2016-08-05 10:29+0000\n"
 "Last-Translator: Andi Chandler <Unknown>\n"
 "Language-Team: English (United Kingdom) <en_GB@li.org>\n"
@@ -661,16 +661,12 @@ msgstr "A list of texts that can be added to sections without content"
 msgid "Restrict verification to titles with a higher level"
 msgstr "Restrict verification to titles with a higher level"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm085.java:52
-msgid "Delete all tags without content"
-msgstr "Delete all tags without content"
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm085.java:196
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm085.java:205
 #, java-format
 msgid "Use {0}"
 msgstr "Use {0}"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm085.java:250
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm085.java:238
 msgid "A list of templates that can be used to replace &lt;center&gt; tags"
 msgstr "A list of templates that can be used to replace &lt;centre&gt; tags"
 
@@ -4052,6 +4048,9 @@ msgstr "A reference name cannot contain any of these characters: {0}"
 #, java-format
 msgid "The value cannot contain any of these characters: {0}"
 msgstr "The value cannot contain any of these characters: {0}"
+
+#~ msgid "Delete all tags without content"
+#~ msgstr "Delete all tags without content"
 
 #~ msgid "Error {0} detected: Waiting and retrying"
 #~ msgstr "Error {0} detected: Waiting and retrying"

@@ -17,8 +17,8 @@ import org.wikipediacleaner.api.constants.WPCConfiguration;
 import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementComment;
 import org.wikipediacleaner.api.data.PageElementTag;
+import org.wikipediacleaner.api.data.PageElementTag.Parameter;
 import org.wikipediacleaner.api.data.PageElementTemplate;
-import org.wikipediacleaner.gui.swing.component.MWPane;
 import org.wikipediacleaner.i18n.GT;
 
 
@@ -43,13 +43,6 @@ public class CheckErrorAlgorithm085 extends CheckErrorAlgorithmBase {
     PageElementTag.TAG_WIKI_NOWIKI,
     PageElementTag.TAG_WIKI_PRE,
     PageElementTag.TAG_WIKI_SCORE,
-  };
-
-  /**
-   * Possible global fixes.
-   */
-  private final static String[] globalFixes = new String[] {
-    GT._("Delete all tags without content"),
   };
 
   public CheckErrorAlgorithm085() {
@@ -146,16 +139,29 @@ public class CheckErrorAlgorithm085 extends CheckErrorAlgorithmBase {
               tag.getValueEndIndex(), tag.getCompleteEndIndex()));
 
           // Check if tag has arguments
-          boolean hasArguments = false;
+          boolean hasBlockingArguments = false;
+          boolean hasUnsafeArguments = false;
           if (!textFound) {
             if (tag.getParametersCount() > 0) {
               if (PageElementTag.TAG_WIKI_REF.equals(tag.getName())) {
-                hasArguments = true;
+                hasBlockingArguments = true;
+              } else if (PageElementTag.TAG_HTML_SPAN.equals(tag.getName())) {
+                for (int paramNum = 0; paramNum < tag.getParametersCount(); paramNum++) {
+                  Parameter param = tag.getParameter(paramNum);
+                  if (param != null) {
+                    String paramName = param.getName();
+                    if (!"contenteditable".equals(paramName)) {
+                      hasUnsafeArguments = true;
+                    }
+                  }
+                }
+              } else {
+                hasUnsafeArguments = true;
               }
             }
           }
 
-          if (!textFound && !hasArguments) {
+          if (!textFound && !hasBlockingArguments) {
             if (errors == null) {
               return true;
             }
@@ -167,10 +173,13 @@ public class CheckErrorAlgorithm085 extends CheckErrorAlgorithmBase {
                 errorLevel);
             if (!ignoredText) {
               if (tag.getValueEndIndex() > tag.getValueBeginIndex()) {
-                errorResult.addReplacement(contents.substring(
-                    tag.getValueBeginIndex(), tag.getValueEndIndex()));
+                errorResult.addReplacement(
+                    contents.substring(tag.getValueBeginIndex(), tag.getValueEndIndex()),
+                    !hasUnsafeArguments);
+                errorResult.addReplacement("");
+              } else {
+                errorResult.addReplacement("", !hasUnsafeArguments);
               }
-              errorResult.addReplacement("");
             } else {
               if (useReplacement) {
                 errorResult.addReplacement(replacementText.toString());
@@ -209,35 +218,14 @@ public class CheckErrorAlgorithm085 extends CheckErrorAlgorithmBase {
   }
 
   /**
-   * Bot fixing of all the errors in the page.
+   * Automatic fixing of all the errors in the page.
    * 
    * @param analysis Page analysis.
    * @return Page contents after fix.
    */
   @Override
-  protected String internalBotFix(PageAnalysis analysis) {
-    return fix(globalFixes[0], analysis, null);
-  }
-
-  /**
-   * @return List of possible global fixes.
-   */
-  @Override
-  public String[] getGlobalFixes() {
-    return globalFixes;
-  }
-
-  /**
-   * Fix all the errors in the page.
-   * 
-   * @param fixName Fix name (extracted from getGlobalFixes()).
-   * @param analysis Page analysis.
-   * @param textPane Text pane.
-   * @return Page contents after fix.
-   */
-  @Override
-  public String fix(String fixName, PageAnalysis analysis, MWPane textPane) {
-    return fixUsingFirstReplacement(fixName, analysis);
+  protected String internalAutomaticFix(PageAnalysis analysis) {
+    return fixUsingAutomaticReplacement(analysis);
   }
 
   /**

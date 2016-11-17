@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2016-11-15 18:18+0100\n"
+"POT-Creation-Date: 2016-11-17 08:20+0100\n"
 "PO-Revision-Date: 2016-01-29 04:30+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Spanish\n"
@@ -674,16 +674,12 @@ msgstr "Una lista de textos que se pueden añadir a las secciones sin contenido"
 msgid "Restrict verification to titles with a higher level"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm085.java:52
-msgid "Delete all tags without content"
-msgstr "Eliminar todas las etiquetas sin contenido"
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm085.java:196
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm085.java:205
 #, java-format
 msgid "Use {0}"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm085.java:250
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm085.java:238
 msgid "A list of templates that can be used to replace &lt;center&gt; tags"
 msgstr ""
 
@@ -4076,6 +4072,9 @@ msgstr ""
 #, java-format
 msgid "The value cannot contain any of these characters: {0}"
 msgstr ""
+
+#~ msgid "Delete all tags without content"
+#~ msgstr "Eliminar todas las etiquetas sin contenido"
 
 #~ msgid "Retrieving page back links"
 #~ msgstr "Recuperando páginas enlazadas"
