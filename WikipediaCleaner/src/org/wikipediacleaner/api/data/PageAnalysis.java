@@ -148,6 +148,8 @@ public class PageAnalysis {
     firstLevelAnalysis();
     secondLevelAnalysis();
     thirdLevelAnalysis();
+    fourthLevelAnalysis();
+    fifthLevelAnalysis();
   }
 
   // ==========================================================================
@@ -163,7 +165,7 @@ public class PageAnalysis {
    * @return List of non wiki text areas.
    */
   public PageElementAreas getAreas() {
-    thirdLevelAnalysis();
+    fifthLevelAnalysis();
     return areas;
   }
 
@@ -311,25 +313,20 @@ public class PageAnalysis {
   // Content analysis
   // ==========================================================================
 
-  /**
-   * Internal lock for first level analysis.
-   */
+  /** Internal lock for first level analysis. */
   private final Object firstLevelLock = new Object();
 
-  /**
-   * Internal lock for second level analysis.
-   */
+  /** Internal lock for second level analysis. */
   private final Object secondLevelLock = new Object();
 
-  /**
-   * Internal lock for third level analysis.
-   */
+  /** Internal lock for third level analysis. */
   private final Object thirdLevelLock = new Object();
 
-  /**
-   * Internal lock for fourth level analysis.
-   */
+  /** Internal lock for fourth level analysis. */
   private final Object fourthLevelLock = new Object();
+
+  /** Internal lock for fifth level analysis. */
+  private final Object fifthLevelLock = new Object();
 
   /**
    * Perform a first level analysis of the page (comments).
@@ -474,7 +471,6 @@ public class PageAnalysis {
       templates = new ArrayList<PageElementTemplate>();
       parameters = new ArrayList<PageElementParameter>();
       titles = new ArrayList<PageElementTitle>();
-      externalLinks = new ArrayList<PageElementExternalLink>();
       if (perf != null) {
         perf.stopPart("new");
       }
@@ -512,11 +508,6 @@ public class PageAnalysis {
             if (perf != null) {
               perf.stopPart("analyze2SquareBrackets");
             }
-          } else if (contents.startsWith("[", currentIndex)) {
-            currentIndex = analyze1SquareBracket(currentIndex);
-            if (perf != null) {
-              perf.stopPart("analyze1SquareBracket");
-            }
           } else if (contents.startsWith("{{{", currentIndex)) {
             currentIndex = analyze3CurlyBrackets(currentIndex);
             if (perf != null) {
@@ -538,10 +529,7 @@ public class PageAnalysis {
               perf.stopPart("analyze2UnderscoreBrackets");
             }
           } else {
-            currentIndex = analyzeText(currentIndex);
-            if (perf != null) {
-              perf.stopPart("analyzeText");
-            }
+            currentIndex++;
           }
         }
       }
@@ -557,7 +545,6 @@ public class PageAnalysis {
       areas.addMagicWords(magicWords);
       areas.addParameters(parameters);
       areas.addTitles(titles);
-      areas.addExternalLinks(externalLinks);
 
       if (perf != null) {
         perf.stopPart("addAreas");
@@ -567,11 +554,11 @@ public class PageAnalysis {
   }
 
   /**
-   * Perform a fourth level analysis of the page (ISBN).
+   * Perform a fourth level analysis of the page (external links).
    */
   private void fourthLevelAnalysis() {
     synchronized (fourthLevelLock) {
-      if ((isbns != null) || (issns != null) || (pmids != null)) {
+      if (externalLinks != null) {
         return;
       }
       thirdLevelAnalysis();
@@ -579,6 +566,68 @@ public class PageAnalysis {
       Performance perf = null;
       if (traceTime) {
         perf = new Performance("PageAnalysis.fourthLevelAnalysis", TRACE_THRESHOLD);
+      }
+
+      // Go through all the text of the page
+      externalLinks = new ArrayList<PageElementExternalLink>();
+      int maxIndex = (contents != null) ? contents.length() : 0;
+      int currentIndex = 0;
+      int areaIndex = 0;
+      List<PageElementAreas.Area> tmpAeras = areas.getAreas();
+      while (currentIndex < maxIndex) {
+
+        // Checking if the current index is in wiki text area.
+        boolean areaFound = false;
+        int nextIndex = currentIndex;
+        while ((areaIndex < tmpAeras.size()) && !areaFound) {
+          PageElementAreas.Area area = tmpAeras.get(areaIndex);
+          if (area.beginIndex > currentIndex) {
+            areaFound = true;
+          } else if (area.endIndex > currentIndex) {
+            areaFound = true;
+            nextIndex = area.endIndex;
+          } else {
+            areaIndex++;
+          }
+        }
+
+        if (nextIndex > currentIndex) {
+          currentIndex = nextIndex;
+        } else {
+          if (contents.startsWith("[", currentIndex)) {
+            currentIndex = analyze1SquareBracket(currentIndex);
+            if (perf != null) {
+              perf.stopPart("analyze1SquareBracket");
+            }
+          } else {
+            currentIndex = analyzeText(currentIndex);
+            if (perf != null) {
+              perf.stopPart("analyzeText");
+            }
+          }
+        }
+      }
+      areas.addExternalLinks(externalLinks);
+
+      if (perf != null) {
+        perf.printEnd();
+      }
+    }
+  }
+
+  /**
+   * Perform a fifth level analysis of the page (ISBN).
+   */
+  private void fifthLevelAnalysis() {
+    synchronized (fifthLevelLock) {
+      if ((isbns != null) || (issns != null) || (pmids != null)) {
+        return;
+      }
+      fourthLevelAnalysis();
+
+      Performance perf = null;
+      if (traceTime) {
+        perf = new Performance("PageAnalysis.fifthLevelAnalysis", TRACE_THRESHOLD);
       }
 
       isbns = PageElementISBN.analyzePage(this);
@@ -1074,7 +1123,7 @@ public class PageAnalysis {
    * @return All external links in the page.
    */
   public List<PageElementExternalLink> getExternalLinks() {
-    thirdLevelAnalysis();
+    fourthLevelAnalysis();
     return externalLinks;
   }
 
@@ -1620,7 +1669,7 @@ public class PageAnalysis {
    * @return All ISBNs in the page.
    */
   public List<PageElementISBN> getISBNs() {
-    fourthLevelAnalysis();
+    fifthLevelAnalysis();
     return isbns;
   }
 
@@ -1650,7 +1699,7 @@ public class PageAnalysis {
    * @return All ISSNs in the page.
    */
   public List<PageElementISSN> getISSNs() {
-    fourthLevelAnalysis();
+    fifthLevelAnalysis();
     return issns;
   }
 
@@ -1679,7 +1728,7 @@ public class PageAnalysis {
    * @return All PMIDs in the page.
    */
   public List<PageElementPMID> getPMIDs() {
-    fourthLevelAnalysis();
+    fifthLevelAnalysis();
     return pmids;
   }
 
