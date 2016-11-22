@@ -218,7 +218,8 @@ public class PageElementPMID extends PageElement {
           }
           boolean spaceFound = false;
           if (analysis.isInComment(index) == null) {
-            while ((index < contents.length()) && (contents.charAt(index) == ' ')) {
+            while ((index < contents.length()) &&
+                (" \u00A0".indexOf(contents.charAt(index)) >= 0)) {
               index++;
               spaceFound = true;
             }

@@ -16,6 +16,7 @@ import org.wikipediacleaner.api.APIException;
 import org.wikipediacleaner.api.APIFactory;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithm;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithm524;
+import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithm528;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithms;
 import org.wikipediacleaner.api.constants.EnumLanguage;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
@@ -156,6 +157,12 @@ public class LoginWorker extends BasicWorker {
           algo524.isAvailable() &&
           CheckErrorAlgorithms.isAlgorithmActive(wiki, 524)) {
         ((CheckErrorAlgorithm524) algo524).setTrackingCategory(api.loadMessage(wiki, "duplicate-args-category"));
+      }
+      CheckErrorAlgorithm algo528 = CheckErrorAlgorithms.getAlgorithm(wiki, 528);
+      if ((algo528 != null) &&
+          algo528.isAvailable() &&
+          CheckErrorAlgorithms.isAlgorithmActive(wiki, 528)) {
+        ((CheckErrorAlgorithm528) algo528).setTrackingCategory(api.loadMessage(wiki, "magiclink-tracking-pmid"));
       }
     } catch (APIException e) {
       return e;

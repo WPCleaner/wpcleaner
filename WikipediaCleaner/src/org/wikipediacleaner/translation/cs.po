@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2016-11-17 08:20+0100\n"
+"POT-Creation-Date: 2016-11-22 15:17+0100\n"
 "PO-Revision-Date: 2016-03-19 19:20+0000\n"
 "Last-Translator: Matěj S. <matejsuchanek97@gmail.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
@@ -330,7 +330,7 @@ msgstr "Zakomentovat kategorii"
 msgid "Replace all"
 msgstr "Nahradit vše"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm028.java:196
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm028.java:199
 msgid "Templates that can replace the end of a table"
 msgstr "Šablony, které mohou nahradit zakončení tabulky"
 
@@ -659,12 +659,12 @@ msgstr "Seznam textových řetězců, které mohou být vloženy do sekcí bez o
 msgid "Restrict verification to titles with a higher level"
 msgstr "Prověřovat pouze nadpisy vyšší úrovně"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm085.java:205
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm085.java:227
 #, java-format
 msgid "Use {0}"
 msgstr "Použít {0}"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm085.java:238
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm085.java:260
 msgid "A list of templates that can be used to replace &lt;center&gt; tags"
 msgstr "Seznam šablon, kterými je možné nahradit značky &lt;center&gt;"
 
@@ -797,6 +797,7 @@ msgstr "Shrnutí"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm524.java:332
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm527.java:248
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm528.java:172
 msgid "A category containing the list of pages in error"
 msgstr "Kategorie obsahující seznam stránek s chybou"
 
@@ -1432,7 +1433,7 @@ msgstr "Zpráva"
 #: org/wikipediacleaner/gui/swing/MainWindow.java:357
 #: org/wikipediacleaner/gui/swing/MainWindow.java:468
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:155
-#: org/wikipediacleaner/gui/swing/worker/LoginWorker.java:96
+#: org/wikipediacleaner/gui/swing/worker/LoginWorker.java:97
 msgid "Login"
 msgstr "Přihlásit"
 
@@ -2145,7 +2146,7 @@ msgstr "Šablony použité na {0} a odkazující na {1}"
 #: org/wikipediacleaner/gui/swing/action/PurgeCacheAction.java:57
 #: org/wikipediacleaner/gui/swing/action/ReloadCategoryMembersAction.java:57
 #: org/wikipediacleaner/gui/swing/action/ReloadLinksAction.java:60
-#: org/wikipediacleaner/gui/swing/worker/LoginWorker.java:90
+#: org/wikipediacleaner/gui/swing/worker/LoginWorker.java:91
 #: org/wikipediacleaner/gui/swing/worker/NewSectionWorker.java:62
 #: org/wikipediacleaner/gui/swing/worker/RandomPageWorker.java:49
 #: org/wikipediacleaner/gui/swing/worker/SendWorker.java:169
@@ -3859,19 +3860,19 @@ msgstr[2] "Byly nalezeny následující problémy:"
 msgid "Sorting errors by priority"
 msgstr "Třídím chyby dle priority"
 
-#: org/wikipediacleaner/gui/swing/worker/LoginWorker.java:111
+#: org/wikipediacleaner/gui/swing/worker/LoginWorker.java:112
 msgid "Loading configuration"
 msgstr "Nahrávám konfiguraci"
 
-#: org/wikipediacleaner/gui/swing/worker/LoginWorker.java:141
+#: org/wikipediacleaner/gui/swing/worker/LoginWorker.java:142
 msgid "Retrieving disambiguation templates"
 msgstr "Získávám rozcestníkové šablony"
 
-#: org/wikipediacleaner/gui/swing/worker/LoginWorker.java:146
+#: org/wikipediacleaner/gui/swing/worker/LoginWorker.java:147
 msgid "Retrieving suggestions for text replacements"
 msgstr "Nahrávám příkazy pro nahrazování textu"
 
-#: org/wikipediacleaner/gui/swing/worker/LoginWorker.java:150
+#: org/wikipediacleaner/gui/swing/worker/LoginWorker.java:151
 msgid "Retrieving Check Wiki configuration"
 msgstr "Přijímám konfiguraci Check Wikipedia"
 

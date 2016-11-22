@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2016-11-17 08:20+0100\n"
+"POT-Creation-Date: 2016-11-22 15:17+0100\n"
 "PO-Revision-Date: 2016-11-09 17:57+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: French <fr@li.org>\n"
@@ -343,7 +343,7 @@ msgstr "Mettre la catégorie en commentaires"
 msgid "Replace all"
 msgstr "Remplacer tout"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm028.java:196
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm028.java:199
 msgid "Templates that can replace the end of a table"
 msgstr "Modèles pouvant remplacer une fin de tableau"
 
@@ -675,12 +675,12 @@ msgstr "Une liste de textes qui peuvent être ajoutés à une section vide"
 msgid "Restrict verification to titles with a higher level"
 msgstr "Restreindre la vérification aux niveaux de titre supérieurs"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm085.java:205
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm085.java:227
 #, java-format
 msgid "Use {0}"
 msgstr "Utiliser {0}"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm085.java:238
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm085.java:260
 msgid "A list of templates that can be used to replace &lt;center&gt; tags"
 msgstr ""
 "Une liste de modèles pouvant être utilisés pour remplacer les balises "
@@ -820,6 +820,7 @@ msgstr "Commentaire"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm524.java:332
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm527.java:248
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm528.java:172
 msgid "A category containing the list of pages in error"
 msgstr "Une catégorie contenant la liste des pages en erreur"
 
@@ -1469,7 +1470,7 @@ msgstr "Message"
 #: org/wikipediacleaner/gui/swing/MainWindow.java:357
 #: org/wikipediacleaner/gui/swing/MainWindow.java:468
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:155
-#: org/wikipediacleaner/gui/swing/worker/LoginWorker.java:96
+#: org/wikipediacleaner/gui/swing/worker/LoginWorker.java:97
 msgid "Login"
 msgstr "Connexion"
 
@@ -2187,7 +2188,7 @@ msgstr "Modèles utilisés dans {0}, pointant vers {1}"
 #: org/wikipediacleaner/gui/swing/action/PurgeCacheAction.java:57
 #: org/wikipediacleaner/gui/swing/action/ReloadCategoryMembersAction.java:57
 #: org/wikipediacleaner/gui/swing/action/ReloadLinksAction.java:60
-#: org/wikipediacleaner/gui/swing/worker/LoginWorker.java:90
+#: org/wikipediacleaner/gui/swing/worker/LoginWorker.java:91
 #: org/wikipediacleaner/gui/swing/worker/NewSectionWorker.java:62
 #: org/wikipediacleaner/gui/swing/worker/RandomPageWorker.java:49
 #: org/wikipediacleaner/gui/swing/worker/SendWorker.java:169
@@ -3910,19 +3911,19 @@ msgstr[1] "Les problèmes suivants ont été détectés :"
 msgid "Sorting errors by priority"
 msgstr "Tri des erreurs par priorité"
 
-#: org/wikipediacleaner/gui/swing/worker/LoginWorker.java:111
+#: org/wikipediacleaner/gui/swing/worker/LoginWorker.java:112
 msgid "Loading configuration"
 msgstr "Chargement de la configuration"
 
-#: org/wikipediacleaner/gui/swing/worker/LoginWorker.java:141
+#: org/wikipediacleaner/gui/swing/worker/LoginWorker.java:142
 msgid "Retrieving disambiguation templates"
 msgstr "Récupération des modèles d'homonymie"
 
-#: org/wikipediacleaner/gui/swing/worker/LoginWorker.java:146
+#: org/wikipediacleaner/gui/swing/worker/LoginWorker.java:147
 msgid "Retrieving suggestions for text replacements"
 msgstr "Récupération des suggestions pour les remplacements de texte"
 
-#: org/wikipediacleaner/gui/swing/worker/LoginWorker.java:150
+#: org/wikipediacleaner/gui/swing/worker/LoginWorker.java:151
 msgid "Retrieving Check Wiki configuration"
 msgstr "Récupération de la configuration du projet de correction syntaxique"
 
