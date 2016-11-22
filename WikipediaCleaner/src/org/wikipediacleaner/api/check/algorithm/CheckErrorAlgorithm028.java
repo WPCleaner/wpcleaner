@@ -181,6 +181,9 @@ public class CheckErrorAlgorithm028 extends CheckErrorAlgorithmBase {
         (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_NOWIKI, index) != null)) {
       return false;
     }
+    if (analysis.isInComment(index) != null) {
+      return false;
+    }
     return true;
   }
 
