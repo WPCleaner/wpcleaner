@@ -611,12 +611,12 @@ public class AutomaticFormatter {
         // Count space characters
         int nbSpaceBefore = 0;
         while ((nbSpaceBefore < titleValue.length()) &&
-               (titleValue.charAt(nbSpaceBefore) == ' ')) {
+               (" \u00A0".indexOf(titleValue.charAt(nbSpaceBefore)) >= 0)) {
           nbSpaceBefore++;
         }
         int nbSpaceAfter = 0;
         while ((nbSpaceAfter < titleValue.length()) &&
-               (titleValue.charAt(titleValue.length() - nbSpaceAfter - 1) == ' ')) {
+               (" \u00A0".indexOf(titleValue.charAt(titleValue.length() - nbSpaceAfter - 1)) >= 0)) {
           nbSpaceAfter++;
         }
 
