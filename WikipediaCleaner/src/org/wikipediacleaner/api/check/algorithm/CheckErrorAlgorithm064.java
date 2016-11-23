@@ -134,6 +134,10 @@ public class CheckErrorAlgorithm064 extends CheckErrorAlgorithmBase {
                     (paddingRight.charAt(0) == '\'')) {
                   risk = true;
                 }
+                if ((paddingRight.length() > 0) &&
+                    (paddingRight.charAt(0) == '‘')) {
+                  risk = true;
+                }
                 automatic = !risk;
               }
             } else if (Page.areSameTitle(linkName, cleanedText)) {
