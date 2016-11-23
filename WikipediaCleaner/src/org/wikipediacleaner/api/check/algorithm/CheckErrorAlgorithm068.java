@@ -128,6 +128,19 @@ public class CheckErrorAlgorithm068 extends CheckErrorAlgorithmBase {
               String[] templateArgs = template.split("\\|");
               if (templateArgs.length >= 5) {
 
+                // Parameters
+                String templateName = templateArgs[0];
+                String paramLocalTitle = templateArgs[1];
+                String paramLang = templateArgs[2];
+                String defaultLang = null;
+                if (paramLang.indexOf('=') > 0) {
+                  int equalIndex = paramLang.indexOf('=');
+                  defaultLang = paramLang.substring(equalIndex + 1);
+                  paramLang = paramLang.substring(0, equalIndex);
+                }
+                String paramDistantTitle = templateArgs[3];
+                String paramText = templateArgs[4];
+
                 // Compute order of parameters
                 List<String> order = new ArrayList<>();
                 if (templateArgs.length >= 6) {
@@ -136,38 +149,53 @@ public class CheckErrorAlgorithm068 extends CheckErrorAlgorithmBase {
                     order.add(tmp);
                   }
                 }
-                for (int numParam = 1; numParam <= 4; numParam++) {
-                  if (!order.contains(templateArgs[numParam])) {
-                    order.add(templateArgs[numParam]);
-                  }
+                if (!order.contains(paramLocalTitle)) {
+                  order.add(paramLocalTitle);
+                }
+                if (!order.contains(paramLang)) {
+                  order.add(paramLang);
+                }
+                if (!order.contains(paramDistantTitle)) {
+                  order.add(paramDistantTitle);
+                }
+                if (!order.contains(paramText)) {
+                  order.add(paramText);
                 }
 
+                // Build text
                 StringBuilder prefix = new StringBuilder();
                 StringBuilder suffix = new StringBuilder();
                 prefix.append("{{");
-                prefix.append(templateArgs[0]);
+                prefix.append(templateName);
                 boolean localTitle = false;
                 for (String param : order) {
-                  if (param.equals(templateArgs[1])) {
+                  if (param.equals(paramLocalTitle)) {
                     prefix.append("|");
-                    prefix.append(templateArgs[1]);
+                    prefix.append(paramLocalTitle);
                     prefix.append("=");
                     localTitle = true;
                   } else {
                     String value = "";
-                    if (param.equals(templateArgs[2])) {
-                      value = lgCode;
-                    } else if (param.equals(templateArgs[3])) {
+                    boolean append = true;
+                    if (param.equals(paramLang)) {
+                      if ((defaultLang != null) && defaultLang.equals(lgCode)) {
+                        append = false;
+                      } else {
+                        value = lgCode;
+                      } 
+                    } else if (param.equals(paramDistantTitle)) {
                       value = pageTitle;
-                    } else if (param.equals(templateArgs[4])) {
+                    } else if (param.equals(paramText)) {
                       value = (link.getText() != null) ? link.getText() : pageTitle;
                     }
-                    StringBuilder buffer = localTitle ? suffix : prefix;
-                    buffer.append("|");
-                    buffer.append(param);
-                    buffer.append("=");
-                    if (value != null) {
-                      buffer.append(value);
+                    if (append) {
+                      StringBuilder buffer = localTitle ? suffix : prefix;
+                      buffer.append("|");
+                      buffer.append(param);
+                      buffer.append("=");
+                      if (value != null) {
+                        buffer.append(value);
+                      }
                     }
                   }
                 }
