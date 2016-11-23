@@ -158,9 +158,18 @@ public class CheckErrorAlgorithm028 extends CheckErrorAlgorithmBase {
     if ((templateNames != null) && (templateNames.trim().length() > 0)) {
       String[] templatesList = templateNames.split("\n");
       for (String templateName : templatesList) {
-        List<PageElementTemplate> templates = analysis.getTemplates(templateName.trim());
-        for (PageElementTemplate template : templates) {
-          list.add(new TableElement(template.getBeginIndex(), template.getEndIndex(), false));
+        templateName = templateName.trim();
+        if (templateName.startsWith("{{")) {
+          templateName = templateName.substring(2);
+          if (templateName.endsWith("}}")) {
+            templateName = templateName.substring(0, templateName.length() - 2);
+          }
+        }
+        if (templateName.length() > 0) {
+          List<PageElementTemplate> templates = analysis.getTemplates(templateName.trim());
+          for (PageElementTemplate template : templates) {
+            list.add(new TableElement(template.getBeginIndex(), template.getEndIndex(), false));
+          }
         }
       }
     }
