@@ -73,18 +73,23 @@ public class CheckErrorAlgorithm528 extends CheckErrorAlgorithmBase {
             WPCConfigurationStringList.PMID_TEMPLATES);
         if (pmidTemplates != null) {
           for (String[] pmidTemplate : pmidTemplates) {
-            if (pmidTemplate.length > 0) {
-              StringBuilder replacement = new StringBuilder();
-              replacement.append("{{");
-              replacement.append(pmidTemplate[0]);
-              replacement.append("|");
-              if ((pmidTemplate.length > 1) && (!"1".equals(pmidTemplate[1]))) {
-                replacement.append(pmidTemplate[1]);
-                replacement.append("=");
+            if (pmidTemplate.length > 2) {
+              String templateName = pmidTemplate[0];
+              String[] params = pmidTemplate[1].split(",");
+              Boolean suggested = Boolean.valueOf(pmidTemplate[2]);
+              if ((params.length > 0) && (Boolean.TRUE.equals(suggested))) {
+                StringBuilder replacement = new StringBuilder();
+                replacement.append("{{");
+                replacement.append(templateName);
+                replacement.append("|");
+                if (!"1".equals(params[0])) {
+                  replacement.append(params[0]);
+                  replacement.append("=");
+                }
+                replacement.append(pmid.getPMID());
+                replacement.append("}}");
+                errorResult.addReplacement(replacement.toString());
               }
-              replacement.append(pmid.getPMID());
-              replacement.append("}}");
-              errorResult.addReplacement(replacement.toString());
             }
           }
         }
