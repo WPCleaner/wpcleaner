@@ -23,6 +23,7 @@ import org.wikipediacleaner.api.data.PageElementFunction;
 import org.wikipediacleaner.api.data.PageElementISBN;
 import org.wikipediacleaner.api.data.PageElementInternalLink;
 import org.wikipediacleaner.api.data.PageElementInterwikiLink;
+import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.PageElementTemplate.Parameter;
 import org.wikipediacleaner.i18n.GT;
@@ -202,6 +203,65 @@ public class CheckErrorAlgorithm069 extends CheckErrorAlgorithmISBN {
               errorResult.addReplacement(replacement);
             }
             errors.add(errorResult);
+          }
+        }
+      }
+    }
+
+    // Report also ISBN inside <nowiki>
+    List<PageElementTag> nowikiTags = analysis.getCompleteTags(PageElementTag.TAG_WIKI_NOWIKI);
+    if (nowikiTags != null) {
+      String contents = analysis.getContents();
+      for (PageElementTag nowikiTag : nowikiTags) {
+        if (!nowikiTag.isFullTag() && nowikiTag.isComplete()) {
+          String nowikiContent = contents.substring(
+              nowikiTag.getValueBeginIndex(), nowikiTag.getValueEndIndex());
+          int index = 0;
+          while (index < nowikiContent.length()) {
+            if (nowikiContent.startsWith(PageElementISBN.ISBN_PREFIX, index)) {
+              int tmpIndex = index + PageElementISBN.ISBN_PREFIX.length();
+              boolean hasSeparator = false;
+              while ((tmpIndex < nowikiContent.length()) && 
+                     (PageElementISBN.EXTRA_CHARACTERS.indexOf(nowikiContent.charAt(tmpIndex)) >= 0)) {
+                hasSeparator = true;
+                tmpIndex++;
+              }
+              boolean hasCharacter = false;
+              boolean shouldContinue = true;
+              while (shouldContinue) {
+                int tmpIndex2 = tmpIndex;
+                shouldContinue = false;
+                while ((tmpIndex2 < nowikiContent.length()) &&
+                       (PageElementISBN.EXTRA_CHARACTERS.indexOf(nowikiContent.charAt(tmpIndex2)) >= 0)) {
+                  tmpIndex2++;
+                }
+                while ((tmpIndex2 < nowikiContent.length()) &&
+                       (PageElementISBN.POSSIBLE_CHARACTERS.indexOf(nowikiContent.charAt(tmpIndex2)) >= 0)) {
+                  hasCharacter = true;
+                  shouldContinue = true;
+                  tmpIndex2++;
+                }
+                if (shouldContinue) {
+                  tmpIndex = tmpIndex2;
+                }
+              }
+              if (hasSeparator && hasCharacter) {
+                if (errors == null) {
+                  return true;
+                }
+                result = true;
+                CheckErrorResult errorResult = createCheckErrorResult(
+                    analysis,
+                    nowikiTag.getValueBeginIndex() + index,
+                    nowikiTag.getValueBeginIndex() + tmpIndex);
+                errors.add(errorResult);
+                index = tmpIndex;
+              } else {
+                index += PageElementISBN.ISBN_PREFIX.length();
+              }
+            } else {
+              index++;
+            }
           }
         }
       }

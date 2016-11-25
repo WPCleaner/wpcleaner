@@ -22,7 +22,7 @@ import org.wikipediacleaner.api.data.PageElementTemplate.Parameter;
 public class PageElementISBN extends PageElement {
 
   /** ISBN prefix */
-  private final static String ISBN_PREFIX = "ISBN";
+  public final static String ISBN_PREFIX = "ISBN";
 
   /** ISBN incorrect prefixes */
   private final static String[] ISBN_INCORRECT_PREFIX = {
@@ -31,10 +31,10 @@ public class PageElementISBN extends PageElement {
   };
 
   /** ISBN possible meaningful characters */
-  private final static String POSSIBLE_CHARACTERS = "0123456789Xx";
+  public final static String POSSIBLE_CHARACTERS = "0123456789Xx";
 
   /** ISBN possible extraneous characters */
-  private final static String EXTRA_CHARACTERS = "-  ";
+  public final static String EXTRA_CHARACTERS = "- \u00A0";
 
   /** ISBN incorrect characters */
   private final static String INCORRECT_CHARACTERS = ":‐\t—=–#";
