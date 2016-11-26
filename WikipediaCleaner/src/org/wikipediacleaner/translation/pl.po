@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2016-11-22 15:17+0100\n"
+"POT-Creation-Date: 2016-11-26 12:38+0100\n"
 "PO-Revision-Date: 2015-04-05 05:58+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Polish <pl@li.org>\n"
@@ -333,7 +333,7 @@ msgstr "Zakomentuj kategorię"
 msgid "Replace all"
 msgstr "Zamień wszystkie"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm028.java:199
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm028.java:211
 msgid "Templates that can replace the end of a table"
 msgstr "Szablony, które mogą zastąpić znak końca tabeli"
 
@@ -455,19 +455,19 @@ msgstr "Sprawdź linki do innego języka"
 msgid "Check language links"
 msgstr "Sprawdź wszystkie linki do innego języka"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:175
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:318
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:203
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:346
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm091.java:238
 msgid "What is the title of the page on this wiki ?"
 msgstr "Jaka jest nazwa strony na tej wiki?"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:188
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:216
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm091.java:251
 #, java-format
 msgid "Replace using template {0}"
 msgstr "Zastąp szablonem {0}"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:194
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:222
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm081.java:266
 #: org/wikipediacleaner/gui/swing/action/ActionExternalViewer.java:61
 #: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:86
@@ -478,7 +478,7 @@ msgstr "Zastąp szablonem {0}"
 msgid "External Viewer"
 msgstr "W zewnętrznej przeglądarce"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:214
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:242
 msgid ""
 "A template that can be used instead of the link to an other language. It "
 "must be specified as: <template name>|<param name for local page name>|"
@@ -490,17 +490,17 @@ msgstr ""
 "strony>|<parametr określający kod innego języka>|<parametr określający tytuł "
 "strony w innym języku>|<parametr określający tekst wyświetlany>"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:296
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:324
 msgid "Do not replace"
 msgstr "Nie zamieniaj"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:297
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:325
 #: org/wikipediacleaner/gui/swing/Controller.java:241
 #: org/wikipediacleaner/gui/swing/action/ActionDispose.java:37
 msgid "Cancel"
 msgstr "Anuluj"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:301
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:329
 #, java-format
 msgid ""
 "The page \"{0}\" in \"{1}\" has a language link to \"{2}\": {3}.\n"
@@ -509,17 +509,17 @@ msgstr ""
 "Strona {0} na \"{1}\" zawiera odnośnik interwiki do \"{2}\": {3}.\n"
 "Jakim tekstem chcesz zastąpić istniejący link?"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:314
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:342
 #, java-format
 msgid "The page \"{0}\" in \"{1}\" doesn''t have a language link to \"{2}\"."
 msgstr "Strona \"{0}\" na \"{1}\" nie zawiera odnośnika interwiki do \"{2}\"."
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:316
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:344
 #, java-format
 msgid "You can replace the link using template {0}."
 msgstr "Możesz zastąpić link używając szablonu {0}"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm069.java:265
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm069.java:395
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm070.java:263
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm071.java:135
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm106.java:159
@@ -809,7 +809,8 @@ msgstr "Komentarz"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm524.java:332
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm527.java:248
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm528.java:172
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm528.java:177
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm529.java:177
 msgid "A category containing the list of pages in error"
 msgstr ""
 

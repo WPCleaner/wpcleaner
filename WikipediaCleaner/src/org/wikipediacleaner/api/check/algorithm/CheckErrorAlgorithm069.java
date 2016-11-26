@@ -39,6 +39,20 @@ public class CheckErrorAlgorithm069 extends CheckErrorAlgorithmISBN {
     super("ISBN wrong syntax");
   }
 
+  /** List of string that could be before an ISBN in <nowiki>. */
+  private final static String[] EXTEND_BEFORE_NOWIKI = {
+    "<nowiki>",
+    "<small>",
+    "(",
+  };
+
+  /** List of string that could be after an ISBN in <nowiki>. */
+  private final static String[] EXTEND_AFTER_NOWIKI = {
+    "</nowiki>",
+    "</small>",
+    ")",
+  };
+
   /**
    * Analyze a page to check if errors are present.
    * 
@@ -208,7 +222,7 @@ public class CheckErrorAlgorithm069 extends CheckErrorAlgorithmISBN {
       }
     }
 
-    // Report also ISBN inside <nowiki>
+    // Report also ISBN inside <nowiki> tags
     List<PageElementTag> nowikiTags = analysis.getCompleteTags(PageElementTag.TAG_WIKI_NOWIKI);
     if (nowikiTags != null) {
       String contents = analysis.getContents();
@@ -227,6 +241,7 @@ public class CheckErrorAlgorithm069 extends CheckErrorAlgorithmISBN {
                 tmpIndex++;
               }
               boolean hasCharacter = false;
+              int indexCharacter = tmpIndex;
               boolean shouldContinue = true;
               while (shouldContinue) {
                 int tmpIndex2 = tmpIndex;
@@ -250,10 +265,65 @@ public class CheckErrorAlgorithm069 extends CheckErrorAlgorithmISBN {
                   return true;
                 }
                 result = true;
+
+                // Try to extend area
+                int beginIndex = nowikiTag.getValueBeginIndex() + index;
+                boolean extensionFound = false;
+                do {
+                  extensionFound = false;
+                  for (String before : EXTEND_BEFORE_NOWIKI) {
+                    if ((beginIndex >= before.length()) &&
+                        (contents.startsWith(before, beginIndex - before.length()))) {
+                      extensionFound = true;
+                      beginIndex -= before.length();
+                    }
+                  }
+                } while (extensionFound);
+                int endIndex = nowikiTag.getValueBeginIndex() + tmpIndex;
+                do {
+                  extensionFound = false;
+                  for (String after : EXTEND_AFTER_NOWIKI) {
+                    if ((endIndex < contents.length()) &&
+                        (contents.startsWith(after, endIndex))) {
+                      extensionFound = true;
+                      endIndex += after.length();
+                    }
+                  }
+                } while (extensionFound);
+
+                // Report error
                 CheckErrorResult errorResult = createCheckErrorResult(
-                    analysis,
-                    nowikiTag.getValueBeginIndex() + index,
-                    nowikiTag.getValueBeginIndex() + tmpIndex);
+                    analysis, beginIndex, endIndex);
+                if ((beginIndex <= nowikiTag.getCompleteBeginIndex()) &&
+                    (endIndex >= nowikiTag.getCompleteEndIndex())) {
+                  errorResult.addReplacement(contents.substring(
+                      nowikiTag.getValueBeginIndex() + index,
+                      nowikiTag.getValueBeginIndex() + tmpIndex));
+                  List<String[]> isbnTemplates = analysis.getWPCConfiguration().getStringArrayList(
+                      WPCConfigurationStringList.ISBN_TEMPLATES);
+                  if (isbnTemplates != null) {
+                    for (String[] isbnTemplate : isbnTemplates) {
+                      if (isbnTemplate.length > 2) {
+                        String templateName = isbnTemplate[0];
+                        String[] params = isbnTemplate[1].split(",");
+                        Boolean suggested = Boolean.valueOf(isbnTemplate[2]);
+                        if ((params.length > 0) && (Boolean.TRUE.equals(suggested))) {
+                          StringBuilder replacement = new StringBuilder();
+                          replacement.append("{{");
+                          replacement.append(templateName);
+                          replacement.append("|");
+                          if (!"1".equals(params[0])) {
+                            replacement.append(params[0]);
+                            replacement.append("=");
+                          }
+                          replacement.append(nowikiContent.substring(indexCharacter, tmpIndex));
+                          replacement.append("}}");
+                          errorResult.addReplacement(replacement.toString());
+                        }
+                      }
+                    }
+                  }
+                }
                 errors.add(errorResult);
                 index = tmpIndex;
               } else {
