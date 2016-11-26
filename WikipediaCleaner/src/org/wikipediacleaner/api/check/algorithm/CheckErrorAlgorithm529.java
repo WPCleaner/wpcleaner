@@ -36,6 +36,18 @@ public class CheckErrorAlgorithm529 extends CheckErrorAlgorithmBase {
     super("ISBN magical link");
   }
 
+  /** List of string that could be before an ISBN. */
+  private final static String[] EXTEND_BEFORE_ISBN = {
+    "<small>",
+    "(",
+  };
+
+  /** List of string that could be after an ISBN. */
+  private final static String[] EXTEND_AFTER_ISBN = {
+    "</small>",
+    ")",
+  };
+
   /** Tracking category. */
   private String trackingCategory;
 
@@ -55,20 +67,51 @@ public class CheckErrorAlgorithm529 extends CheckErrorAlgorithmBase {
       return false;
     }
 
-    // Analyze each PMID
+    // Analyze each ISBN
     boolean result = false;
     List<PageElementISBN> isbns = analysis.getISBNs();
     if ((isbns == null) || (isbns.isEmpty())) {
       return false;
     }
+    String contents = analysis.getContents();
     for (PageElementISBN isbn : isbns) {
       if (!isbn.isTemplateParameter() && isbn.isCorrect()) {
         if (errors == null) {
           return true;
         }
         result = true;
+
+        // Try to extend area
+        int isbnBeginIndex = isbn.getBeginIndex();
+        int isbnEndIndex = isbn.getEndIndex();
+        int beginIndex = isbnBeginIndex;
+        boolean extensionFound = false;
+        do {
+          extensionFound = false;
+          for (String before : EXTEND_BEFORE_ISBN) {
+            if ((beginIndex >= before.length()) &&
+                (contents.startsWith(before, beginIndex - before.length()))) {
+              extensionFound = true;
+              beginIndex -= before.length();
+            }
+          }
+        } while (extensionFound);
+        int endIndex = isbnEndIndex;
+        do {
+          extensionFound = false;
+          for (String after : EXTEND_AFTER_ISBN) {
+            if ((endIndex < contents.length()) &&
+                (contents.startsWith(after, endIndex))) {
+              extensionFound = true;
+              endIndex += after.length();
+            }
+          }
+        } while (extensionFound);
+        String prefix = contents.substring(beginIndex, isbnBeginIndex);
+        String suffix = contents.substring(isbnEndIndex, endIndex);
+
         CheckErrorResult errorResult = createCheckErrorResult(
-            analysis, isbn.getBeginIndex(), isbn.getEndIndex());
+            analysis, beginIndex, endIndex);
         List<String[]> isbnTemplates = analysis.getWPCConfiguration().getStringArrayList(
             WPCConfigurationStringList.ISBN_TEMPLATES);
         if (isbnTemplates != null) {
@@ -89,6 +132,9 @@ public class CheckErrorAlgorithm529 extends CheckErrorAlgorithmBase {
                 replacement.append(isbn.getISBNNotTrimmed());
                 replacement.append("}}");
                 errorResult.addReplacement(replacement.toString());
+                if (!prefix.isEmpty() || !suffix.isEmpty()) {
+                  errorResult.addReplacement(prefix + replacement.toString() + suffix);
+                }
               }
             }
           }
