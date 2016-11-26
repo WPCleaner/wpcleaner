@@ -26,4 +26,16 @@ public interface ApiAllMessagesResult extends ApiResult {
    * @throws APIException
    */
   public String executeMessage(Map<String, String> properties) throws APIException;
+
+  /**
+   * Execute messages request.
+   * 
+   * @param properties Properties defining request.
+   * @param messages Map of messages to be filled with the results.
+   * @return True if request should be continued.
+   * @throws APIException
+   */
+  public boolean executeMessages(
+      Map<String, String> properties,
+      Map<String, String> messages) throws APIException;
 }

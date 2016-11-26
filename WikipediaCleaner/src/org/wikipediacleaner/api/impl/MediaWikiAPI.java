@@ -883,6 +883,7 @@ public class MediaWikiAPI implements API {
    * 
    * @param wiki Wiki.
    * @param messageName Message name.
+   * @return Message.
    * @throws APIException
    * @see <a href="https://www.mediawiki.org/wiki/API:Allmessages">API:Allmessages</a>
    */
@@ -891,6 +892,23 @@ public class MediaWikiAPI implements API {
     ApiAllMessagesResult result = new ApiXmlAllMessagesResult(wiki, httpClient);
     ApiAllMessagesRequest request = new ApiAllMessagesRequest(wiki, result);
     return request.loadMessage(messageName);
+  }
+
+  /**
+   * Load messages.
+   * (<code>action=query</code>, <code>meta=allmessages</code>).
+   * 
+   * @param wiki Wiki.
+   * @param messageNames Message name.
+   * @return Messages.
+   * @throws APIException
+   * @see <a href="https://www.mediawiki.org/wiki/API:Allmessages">API:Allmessages</a>
+   */
+  @Override
+  public Map<String, String> loadMessages(EnumWikipedia wiki, List<String> messageNames) throws APIException {
+    ApiAllMessagesResult result = new ApiXmlAllMessagesResult(wiki, httpClient);
+    ApiAllMessagesRequest request = new ApiAllMessagesRequest(wiki, result);
+    return request.loadMessages(messageNames);
   }
 
   // ==========================================================================

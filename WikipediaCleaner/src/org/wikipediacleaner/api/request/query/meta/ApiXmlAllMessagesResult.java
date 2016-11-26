@@ -7,6 +7,8 @@
 
 package org.wikipediacleaner.api.request.query.meta;
 
+import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.httpclient.HttpClient;
@@ -59,6 +61,43 @@ public class ApiXmlAllMessagesResult extends ApiXmlResult implements ApiAllMessa
       }
 
       return null;
+    } catch (JDOMException e) {
+      log.error("Error loading messages", e);
+      throw new APIException("Error parsing XML", e);
+    }
+  }
+
+  /**
+   * Execute messages request.
+   * 
+   * @param properties Properties defining request.
+   * @param messages Map of messages to be filled with the results.
+   * @return True if request should be continued.
+   * @throws APIException
+   */
+  @Override
+  public boolean executeMessages(
+      Map<String, String> properties,
+      Map<String, String> messages) throws APIException {
+    try {
+      Element root = getRoot(properties, ApiRequest.MAX_ATTEMPTS);
+
+      // Retrieve general information
+      XPathExpression<Element> xpa = XPathFactory.instance().compile(
+          "/api/query/allmessages/message", Filters.element());
+      List<Element> listMessages = xpa.evaluate(root);
+      Iterator<Element> itMessages = listMessages.iterator();
+      while (itMessages.hasNext()) {
+        Element message = itMessages.next();
+        String name = message.getAttributeValue("name");
+        String text = message.getText().trim();
+        messages.put(name, text);
+      }
+
+      // Retrieve continue
+      return shouldContinue(
+          root, "/api/query-continue/allmessages",
+          properties);
     } catch (JDOMException e) {
       log.error("Error loading messages", e);
       throw new APIException("Error parsing XML", e);

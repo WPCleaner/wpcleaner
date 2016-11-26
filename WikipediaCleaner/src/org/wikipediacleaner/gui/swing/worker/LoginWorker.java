@@ -9,6 +9,9 @@
 package org.wikipediacleaner.gui.swing.worker;
 
 import java.awt.Component;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 
 import org.wikipediacleaner.api.API;
@@ -17,11 +20,13 @@ import org.wikipediacleaner.api.APIFactory;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithm;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithm524;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithm528;
+import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithm529;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithms;
 import org.wikipediacleaner.api.constants.EnumLanguage;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.constants.WPCConfiguration;
 import org.wikipediacleaner.api.constants.WPCConfigurationBoolean;
+import org.wikipediacleaner.api.constants.WikiConfiguration;
 import org.wikipediacleaner.api.data.LoginResult;
 import org.wikipediacleaner.api.data.User;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
@@ -152,17 +157,45 @@ public class LoginWorker extends BasicWorker {
       APIFactory.getCheckWiki().retrieveConfiguration(wiki, this);
 
       // Retrieving special configuration
+      // TODO: Refactoring
+      List<String> messageNames = new ArrayList<>();
       CheckErrorAlgorithm algo524 = CheckErrorAlgorithms.getAlgorithm(wiki, 524);
       if ((algo524 != null) &&
           algo524.isAvailable() &&
           CheckErrorAlgorithms.isAlgorithmActive(wiki, 524)) {
-        ((CheckErrorAlgorithm524) algo524).setTrackingCategory(api.loadMessage(wiki, "duplicate-args-category"));
+        messageNames.add("duplicate-args-category");
       }
       CheckErrorAlgorithm algo528 = CheckErrorAlgorithms.getAlgorithm(wiki, 528);
       if ((algo528 != null) &&
           algo528.isAvailable() &&
           CheckErrorAlgorithms.isAlgorithmActive(wiki, 528)) {
-        ((CheckErrorAlgorithm528) algo528).setTrackingCategory(api.loadMessage(wiki, "magiclink-tracking-pmid"));
+        messageNames.add("magiclink-tracking-pmid");
+      }
+      CheckErrorAlgorithm algo529 = CheckErrorAlgorithms.getAlgorithm(wiki, 529);
+      if ((algo529 != null) &&
+          algo529.isAvailable() &&
+          CheckErrorAlgorithms.isAlgorithmActive(wiki, 529)) {
+        messageNames.add("magiclink-tracking-isbn");
+      }
+      if (!messageNames.isEmpty()) {
+        Map<String, String> messages = api.loadMessages(wiki, messageNames);
+        WikiConfiguration wikiConfig = wiki.getWikiConfiguration();
+        wikiConfig.setMessages(messages);
+        if ((algo524 != null) &&
+            algo524.isAvailable() &&
+            CheckErrorAlgorithms.isAlgorithmActive(wiki, 524)) {
+          ((CheckErrorAlgorithm524) algo524).setTrackingCategory(messages.get("duplicate-args-category"));
+        }
+        if ((algo528 != null) &&
+            algo528.isAvailable() &&
+            CheckErrorAlgorithms.isAlgorithmActive(wiki, 528)) {
+          ((CheckErrorAlgorithm528) algo528).setTrackingCategory(messages.get("magiclink-tracking-pmid"));
+        }
+        if ((algo529 != null) &&
+            algo529.isAvailable() &&
+            CheckErrorAlgorithms.isAlgorithmActive(wiki, 529)) {
+          ((CheckErrorAlgorithm529) algo529).setTrackingCategory(messages.get("magiclink-tracking-isbn"));
+        }
       }
     } catch (APIException e) {
       return e;

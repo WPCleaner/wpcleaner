@@ -9,6 +9,7 @@ package org.wikipediacleaner.api;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 import org.wikipediacleaner.api.constants.EnumQueryPage;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
@@ -178,10 +179,23 @@ public interface API {
    * 
    * @param wiki Wiki.
    * @param messageName Message name.
+   * @return Message.
    * @throws APIException
    * @see <a href="https://www.mediawiki.org/wiki/API:Allmessages">API:Allmessages</a>
    */
   public String loadMessage(EnumWikipedia wiki, String messageName) throws APIException;
+
+  /**
+   * Load messages.
+   * (<code>action=query</code>, <code>meta=allmessages</code>).
+   * 
+   * @param wiki Wiki.
+   * @param messageNames Message names.
+   * @return Messages.
+   * @throws APIException
+   * @see <a href="https://www.mediawiki.org/wiki/API:Allmessages">API:Allmessages</a>
+   */
+  public Map<String, String> loadMessages(EnumWikipedia wiki, List<String> messageNames) throws APIException;
 
   // ==========================================================================
   // API : Queries / Properties

@@ -360,4 +360,31 @@ public class WikiConfiguration {
   public void setSpecialPages(Map<String, SpecialPage> specialPages) {
     this.specialPages = specialPages;
   }
+
+  // ==========================================================================
+  // Messages
+  // ==========================================================================
+
+  /**
+   * Messages.
+   */
+  private Map<String, String> messages;
+
+  /**
+   * @param name Message name.
+   * @return Message.
+   */
+  public String getMessageByName(String name) {
+    if ((name == null) || (messages == null)) {
+      return null;
+    }
+    return messages.get(name); 
+  }
+
+  /**
+   * @param messages Messages.
+   */
+  public void setMessages(Map<String, String> messages) {
+    this.messages = messages;
+  }
 }

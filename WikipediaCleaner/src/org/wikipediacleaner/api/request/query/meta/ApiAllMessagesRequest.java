@@ -7,6 +7,8 @@
 
 package org.wikipediacleaner.api.request.query.meta;
 
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.wikipediacleaner.api.APIException;
@@ -122,5 +124,26 @@ public class ApiAllMessagesRequest extends ApiMetaRequest {
     properties.put(PROPERTY_CONTINUE, PROPERTY_CONTINUE_DEFAULT);
     properties.put(PROPERTY_MESSAGES, messageName);
     return result.executeMessage(properties);
+  }
+
+  /**
+   * Load several messages.
+   * 
+   * @param messageNames Names of the messages.
+   * @return Messages.
+   */
+  public Map<String, String> loadMessages(
+      List<String> messageNames) throws APIException {
+    Map<String, String> properties = getProperties(ACTION_QUERY, result.getFormat());
+    properties.put(
+        PROPERTY_META,
+        PROPERTY_META_ALLMESSAGES);
+    properties.put(PROPERTY_CONTINUE, PROPERTY_CONTINUE_DEFAULT);
+    properties.put(PROPERTY_MESSAGES, constructList(messageNames));
+    Map<String, String> messages = new HashMap<>();
+    while (result.executeMessages(properties, messages)) {
+      // Nothing to do
+    }
+    return messages;
   }
 }
