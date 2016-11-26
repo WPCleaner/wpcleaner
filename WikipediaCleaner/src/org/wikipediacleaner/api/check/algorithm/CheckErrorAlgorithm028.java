@@ -104,8 +104,10 @@ public class CheckErrorAlgorithm028 extends CheckErrorAlgorithmBase {
     String contents = analysis.getContents();
     int index = contents.indexOf("{|");
     while (index >= 0) {
-      if (shouldCount(analysis, index)) {
-        list.add(new TableElement(index, index + 2, true));
+      if ((index == 0) || (contents.charAt(index - 1) != '{')) {
+        if (shouldCount(analysis, index)) {
+          list.add(new TableElement(index, index + 2, true));
+        }
       }
       index = contents.indexOf("{|", index + 1);
     }
@@ -187,7 +189,8 @@ public class CheckErrorAlgorithm028 extends CheckErrorAlgorithmBase {
     if ((analysis.getSurroundingTag(PageElementTag.TAG_HTML_CODE, index) != null) ||
         (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_MATH, index) != null) ||
         (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_MATH_CHEM, index) != null) ||
-        (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_NOWIKI, index) != null)) {
+        (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_NOWIKI, index) != null) ||
+        (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_PRE, index) != null)) {
       return false;
     }
     if (analysis.isInComment(index) != null) {
