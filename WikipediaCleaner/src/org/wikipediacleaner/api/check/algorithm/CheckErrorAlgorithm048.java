@@ -11,10 +11,12 @@ import java.util.Collection;
 import java.util.List;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
+import org.wikipediacleaner.api.constants.WPCConfigurationString;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementInternalLink;
 import org.wikipediacleaner.api.data.PageElementTag;
+import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.PageElementTitle;
 import org.wikipediacleaner.gui.swing.component.MWPane;
 import org.wikipediacleaner.i18n.GT;
@@ -97,8 +99,6 @@ public class CheckErrorAlgorithm048 extends CheckErrorAlgorithmBase {
         } else {
           int beginIndex = link.getBeginIndex();
           int endIndex = link.getEndIndex();
-          CheckErrorResult errorResult = createCheckErrorResult(
-              analysis, beginIndex, endIndex);
 
           // Analysis regarding titles
           boolean beforeFirstTitle = true;
@@ -123,10 +123,32 @@ public class CheckErrorAlgorithm048 extends CheckErrorAlgorithmBase {
             inBold = false;
           }
 
+          // Apostrophe before
+          String prefix = "";
+          boolean apostropheBefore = false;
+          if ((beginIndex > 1) &&
+              (contents.charAt(beginIndex - 1) == '\'') &&
+              (contents.charAt(beginIndex - 2) != '\'')) {
+            apostropheBefore = true;
+            prefix = "'";
+            beginIndex--;
+          }
+
           // Suggestions
-          errorResult.addReplacement(link.getDisplayedText(), beforeFirstTitle && inBold);
-          if (beforeFirstTitle && !inBold) {
-            errorResult.addReplacement("'''" + link.getDisplayedText() + "'''");
+          CheckErrorResult errorResult = createCheckErrorResult(
+              analysis, beginIndex, endIndex);
+          errorResult.addReplacement(prefix + link.getDisplayedText(), beforeFirstTitle && inBold);
+          if (!inBold) {
+            if (apostropheBefore) {
+              String apostropheTemplate = analysis.getWPCConfiguration().getString(
+                  WPCConfigurationString.APOSTROPHE_TEMPLATE);
+              if (apostropheTemplate != null) {
+                errorResult.addReplacement(
+                    PageElementTemplate.createTemplate(apostropheTemplate) +
+                    "'''" + link.getDisplayedText() + "'''");
+              }
+            }
+            errorResult.addReplacement(prefix + "'''" + link.getDisplayedText() + "'''");
           }
 
           errors.add(errorResult);
