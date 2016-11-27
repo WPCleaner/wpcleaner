@@ -8,6 +8,7 @@
 package org.wikipediacleaner.api.check.algorithm;
 
 import java.util.Collection;
+import java.util.List;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.data.Page;
@@ -53,6 +54,12 @@ public class CheckErrorAlgorithm048 extends CheckErrorAlgorithmBase {
       return false;
     }
 
+    // Do not report redirects
+    if (analysis.getPage().isRedirect()) {
+      return false;
+    }
+
+    // Analyze each internal link
     boolean result = false;
     Collection<PageElementInternalLink> links = analysis.getInternalLinks();
     String pageTitle = analysis.getPage().getTitle();
@@ -88,16 +95,56 @@ public class CheckErrorAlgorithm048 extends CheckErrorAlgorithmBase {
           }
           errors.add(errorResult);
         } else {
+          int beginIndex = link.getBeginIndex();
+          int endIndex = link.getEndIndex();
           CheckErrorResult errorResult = createCheckErrorResult(
-              analysis,
-              link.getBeginIndex(), link.getEndIndex());
-          errorResult.addReplacement(link.getDisplayedText());
-          errorResult.addReplacement("'''" + link.getDisplayedText() + "'''");
+              analysis, beginIndex, endIndex);
+
+          // Analysis regarding titles
+          boolean beforeFirstTitle = true;
+          List<PageElementTitle> titles = analysis.getTitles();
+          if ((titles != null) && !titles.isEmpty()) {
+            PageElementTitle title = titles.get(0);
+            if (title.getBeginIndex() < endIndex) {
+              beforeFirstTitle = false;
+            }
+          }
+
+          // Analysis regarding bold
+          boolean inBold = true;
+          if ((beginIndex < 3) || !contents.startsWith("'''", beginIndex - 3)) {
+            inBold = false;
+          } else if ((beginIndex > 3) && (contents.charAt(beginIndex - 4) == '\'')) {
+            inBold = false;
+          }
+          if (!contents.startsWith("'''", endIndex)) {
+            inBold = false;
+          } else if ((contents.length() > endIndex + 4) && (contents.charAt(endIndex + 4) == '\'')) {
+            inBold = false;
+          }
+
+          // Suggestions
+          errorResult.addReplacement(link.getDisplayedText(), beforeFirstTitle && inBold);
+          if (beforeFirstTitle && !inBold) {
+            errorResult.addReplacement("'''" + link.getDisplayedText() + "'''");
+          }
+
           errors.add(errorResult);
         }
       }
     }
     return result;
+  }
+
+  /**
+   * Automatic fixing of all the errors in the page.
+   * 
+   * @param analysis Page analysis.
+   * @return Page contents after fix.
+   */
+  @Override
+  protected String internalAutomaticFix(PageAnalysis analysis) {
+    return fixUsingAutomaticReplacement(analysis);
   }
 
   /**
