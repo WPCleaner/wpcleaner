@@ -195,7 +195,7 @@ public class CheckErrorAlgorithm016 extends CheckErrorAlgorithmBase {
           }
           i += Character.charCount(codePoint);
         }
-        boolean automatic = !unsafeCharacter || !checkUnsafe;
+        boolean automatic = (!unsafeCharacter || !checkUnsafe) && !analysis.getPage().isRedirect();
         String original = contents.substring(begin, end);
         String replacement = replacementB.toString();
         if (!replacement.equals(original)) {
