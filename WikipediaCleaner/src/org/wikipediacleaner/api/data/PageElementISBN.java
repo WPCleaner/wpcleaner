@@ -218,12 +218,13 @@ public class PageElementISBN extends PageElement {
         index += prefix.length();
         boolean isCorrect = correct;
         if (!parameter) {
-          if ((beginIndex >= 2) && (index + 2 < contents.length())) {
-            if (contents.startsWith("[[", beginIndex - 2) &&
-                contents.startsWith("]]", index)) {
+          if (beginIndex >= 2) {
+            if (contents.startsWith("[[", beginIndex - 2)) {
               isCorrect = false;
               beginIndex -= 2;
-              index += 2;
+              if ((index + 2 < contents.length()) && contents.startsWith("]]", index)) {
+                index += 2;
+              }
             }
           }
           if (beginIndex >= 3) {
@@ -276,6 +277,10 @@ public class PageElementISBN extends PageElement {
           }
           if (endNumber > beginNumber) {
             String number = contents.substring(beginNumber, endNumber);
+            if (contents.startsWith("[[", beginIndex) &&
+                contents.startsWith("]]", endNumber)) {
+              endNumber += 2;
+            }
             isbns.add(new PageElementISBN(
                 beginIndex, endNumber, analysis, number,
                 isValid, isCorrect, false, null));
