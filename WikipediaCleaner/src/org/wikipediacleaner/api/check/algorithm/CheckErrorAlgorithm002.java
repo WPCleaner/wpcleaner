@@ -54,10 +54,13 @@ public class CheckErrorAlgorithm002 extends CheckErrorAlgorithmBase {
       return false;
     }
 
-    // Check for various tags
+    // Check for true self closing tags
     boolean result = false;
     result |= analyzeSelfClosingTags(analysis, errors, PageElementTag.TAG_HTML_BR);
     result |= analyzeSelfClosingTags(analysis, errors, PageElementTag.TAG_HTML_HR);
+
+    // Check for tags that should not be self closing
+    // Valid HTML tags are only: area, base, br, col, embed, hr, img, input, keygen, link, meta, param, source, track, wbr
     String[] listTags = new String[] {
         PageElementTag.TAG_HTML_ABBR,
         PageElementTag.TAG_HTML_B,
@@ -95,11 +98,55 @@ public class CheckErrorAlgorithm002 extends CheckErrorAlgorithmBase {
         PageElementTag.TAG_HTML_U,
         PageElementTag.TAG_HTML_UL,
     };
-    // Valid HTML tags are only: area, base, br, col, embed, hr, img, input, keygen, link, meta, param, source, track, wbr
     for (String tagName : listTags) {
       result |= analyzeNonFullTags(analysis, errors, tagName);
     }
+
+    // Check for incorrectly written tags
     result |= analyzeIncorrectTags(analysis, errors, listTags);
+
+    // Check for <cite> tags inside <ref> tags
+    result |= analyzeCiteTags(analysis, errors);
+
+    return result;
+  }
+
+  /**
+   * Analyze a page to check if cite tags are incorrectly used.
+   * 
+   * @param analysis Page analysis.
+   * @param errors Errors found in the page.
+   * @return Flag indicating if the error was found.
+   */
+  private boolean analyzeCiteTags(
+      PageAnalysis analysis,
+      Collection<CheckErrorResult> errors) {
+    List<PageElementTag> citeTags = analysis.getTags(PageElementTag.TAG_HTML_CITE);
+    if ((citeTags == null) || citeTags.isEmpty()) {
+      return false;
+    }
+
+    // Check each cite tag
+    boolean result = false;
+    String contents = analysis.getContents();
+    for (PageElementTag citeTag : citeTags) {
+      if (!citeTag.isEndTag()) {
+        PageElementTag refTag = analysis.getSurroundingTag(
+            PageElementTag.TAG_WIKI_REF, citeTag.getBeginIndex());
+        if ((refTag != null) && (refTag.getEndIndex() == citeTag.getBeginIndex())) {
+          if (errors == null) {
+            return true;
+          }
+          result = true;
+          CheckErrorResult errorResult = createCheckErrorResult(
+              analysis, citeTag.getCompleteBeginIndex(), citeTag.getCompleteEndIndex());
+          errorResult.addReplacement(
+              contents.substring(citeTag.getValueBeginIndex(), citeTag.getValueEndIndex()),
+              GT._("Remove {0} tags", PageElementTag.TAG_HTML_CITE));
+          errors.add(errorResult);
+        }
+      }
+    }
 
     return result;
   }

@@ -90,7 +90,7 @@ public class CheckErrorAlgorithm066 extends CheckErrorAlgorithmBase {
                 analysis, image.getBeginIndex(), image.getEndIndex());
             errorResult.addReplacement(
                 image.getDescriptionReplacement(innerText.toString()),
-                GT._("Remove <small> tag"));
+                GT._("Remove {0} tags", "<small>"));
             errors.add(errorResult);
           }
         }

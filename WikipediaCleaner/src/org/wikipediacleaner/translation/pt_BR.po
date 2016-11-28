@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2016-11-26 12:38+0100\n"
+"POT-Creation-Date: 2016-11-28 10:00+0100\n"
 "PO-Revision-Date: 2016-03-06 19:44+0000\n"
 "Last-Translator: Felipe L. <felipe.idj@hotmail.com>\n"
 "Language-Team: Brazilian Portuguese <pt_BR@li.org>\n"
@@ -173,7 +173,7 @@ msgstr "Substituir com {0}"
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm045.java:130
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm046.java:176
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm047.java:149
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm048.java:87
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm048.java:96
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm515.java:90
 #: org/wikipediacleaner/gui/swing/options/SortingOptionsPanel.java:115
 msgid "Delete"
@@ -192,10 +192,19 @@ msgstr "Remover domínio {0} do nome da predefinição"
 msgid "Fix all incorrect tags"
 msgstr "Corrigir todas as tags incorretas"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm002.java:557
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm002.java:558
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm002.java:559
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm002.java:560
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm002.java:145
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm055.java:164
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm066.java:93
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm077.java:93
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm525.java:117
+#, java-format
+msgid "Remove {0} tags"
+msgstr "Remover as tags {0}"
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm002.java:604
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm002.java:605
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm002.java:606
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm002.java:607
 #, java-format
 msgid "A replacement for {0}"
 msgstr "Uma substituição para {0}"
@@ -386,24 +395,17 @@ msgstr "Lista de predefinições que impedem a correção automática desse erro
 msgid "Fix all bold headlines"
 msgstr "Corrigir todos os títulos em negrito"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm048.java:32
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm048.java:35
 msgid "Remove all links to title (first in bold)"
 msgstr "Remover todos os links para títulos (primeiro em negrito)"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm048.java:33
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm048.java:36
 msgid "Remove all links to title"
 msgstr "Remover todas as ligações para o título"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm054.java:32
 msgid "Remove breaks in list"
 msgstr "Remover quebras na lista"
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm055.java:164
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm077.java:93
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm525.java:117
-#, java-format
-msgid "Remove {0} tags"
-msgstr "Remover as tags {0}"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm057.java:30
 msgid "Fix all titles"
@@ -437,10 +439,6 @@ msgstr "Modificar todas as ligações internas"
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm066.java:31
 msgid "Remove all <small> tags"
 msgstr "Remover <small> tags"
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm066.java:93
-msgid "Remove <small> tag"
-msgstr "Remover tag <small>"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm067.java:317
 #, java-format
@@ -815,7 +813,7 @@ msgstr "Comentário"
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm524.java:332
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm527.java:248
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm528.java:177
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm529.java:177
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm529.java:223
 msgid "A category containing the list of pages in error"
 msgstr "Uma categoria que contém a lista de páginas com erro"
 
@@ -1203,7 +1201,7 @@ msgstr "Recuperando predefinições"
 msgid "URL {0} is blacklisted"
 msgstr "A URL {0} está na lista negra"
 
-#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:1817
+#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:1835
 msgid ""
 "This action is protected by a CAPTCHA.\n"
 "What is the answer to the following question ?"
@@ -1211,7 +1209,7 @@ msgstr ""
 "Esta ação é protegida por CAPTCHA.\n"
 "Qual é a resposta para a seguinte questão?"
 
-#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:1824
+#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:1842
 msgid ""
 "This action is protected by a CAPTCHA.\n"
 "What is the answer to the question displayed in your browser ?"
@@ -1462,7 +1460,7 @@ msgstr "Mensagem"
 #: org/wikipediacleaner/gui/swing/MainWindow.java:357
 #: org/wikipediacleaner/gui/swing/MainWindow.java:468
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:155
-#: org/wikipediacleaner/gui/swing/worker/LoginWorker.java:97
+#: org/wikipediacleaner/gui/swing/worker/LoginWorker.java:102
 msgid "Login"
 msgstr "Conectar"
 
@@ -2179,7 +2177,7 @@ msgstr "Predefinições utilizadas em {0}, vinculados a {1}"
 #: org/wikipediacleaner/gui/swing/action/PurgeCacheAction.java:57
 #: org/wikipediacleaner/gui/swing/action/ReloadCategoryMembersAction.java:57
 #: org/wikipediacleaner/gui/swing/action/ReloadLinksAction.java:60
-#: org/wikipediacleaner/gui/swing/worker/LoginWorker.java:91
+#: org/wikipediacleaner/gui/swing/worker/LoginWorker.java:96
 #: org/wikipediacleaner/gui/swing/worker/NewSectionWorker.java:62
 #: org/wikipediacleaner/gui/swing/worker/RandomPageWorker.java:49
 #: org/wikipediacleaner/gui/swing/worker/SendWorker.java:169
@@ -3888,19 +3886,19 @@ msgstr[1] "Os seguintes problemas foram detectados:"
 msgid "Sorting errors by priority"
 msgstr "Classificar erros por prioridade"
 
-#: org/wikipediacleaner/gui/swing/worker/LoginWorker.java:112
+#: org/wikipediacleaner/gui/swing/worker/LoginWorker.java:117
 msgid "Loading configuration"
 msgstr "Carregando configuração"
 
-#: org/wikipediacleaner/gui/swing/worker/LoginWorker.java:142
+#: org/wikipediacleaner/gui/swing/worker/LoginWorker.java:147
 msgid "Retrieving disambiguation templates"
 msgstr "Recuperando predefinições de desambiguação"
 
-#: org/wikipediacleaner/gui/swing/worker/LoginWorker.java:147
+#: org/wikipediacleaner/gui/swing/worker/LoginWorker.java:152
 msgid "Retrieving suggestions for text replacements"
 msgstr "Recuperando sugestões para substituição de texto"
 
-#: org/wikipediacleaner/gui/swing/worker/LoginWorker.java:151
+#: org/wikipediacleaner/gui/swing/worker/LoginWorker.java:156
 msgid "Retrieving Check Wiki configuration"
 msgstr "Recuperando configurações do Check Wiki"
 
@@ -4112,6 +4110,9 @@ msgstr ""
 #, java-format
 msgid "The value cannot contain any of these characters: {0}"
 msgstr "O valor não pode conter nenhum dos seguintes caracteres: {0}"
+
+#~ msgid "Remove <small> tag"
+#~ msgstr "Remover tag <small>"
 
 #~ msgid "Delete all tags without content"
 #~ msgstr "Excluir todas as tags sem conteúdo"
