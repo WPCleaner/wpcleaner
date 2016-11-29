@@ -138,8 +138,45 @@ public class CheckErrorAlgorithm002 extends CheckErrorAlgorithmBase {
             return true;
           }
           result = true;
+
+          // Try to extend area
+          boolean extended = false;
+          int endIndex = citeTag.getCompleteEndIndex();
+          do {
+            extended = false;
+            if (endIndex < contents.length()) {
+              if (contents.charAt(endIndex) == '<') {
+                PageElementTag nextTag = analysis.isInTag(endIndex);
+                if ((nextTag != null) && !nextTag.isFullTag() && nextTag.isComplete()) {
+                  if (PageElementTag.TAG_HTML_SPAN.equals(nextTag.getName())) {
+                    Parameter title = nextTag.getParameter("title");
+                    if ((title != null) &&
+                        (title.getValue() != null) &&
+                        (title.getValue().startsWith("ctx_ver="))) {
+                      String nextTagValue = contents.substring(
+                          nextTag.getValueBeginIndex(), nextTag.getValueEndIndex());
+                      if ((nextTagValue == null) ||
+                          nextTagValue.equals("&nbsp;") ||
+                          nextTagValue.equals("&#x20;")) {
+                        extended = true;
+                        endIndex = nextTag.getCompleteEndIndex();
+                      }
+                    }
+                  } else if (PageElementTag.TAG_HTML_CITE.equals(nextTag.getName())) {
+                    String nextTagValue = contents.substring(
+                        nextTag.getValueBeginIndex(), nextTag.getValueEndIndex());
+                    if ((nextTagValue == null) ||
+                        nextTagValue.trim().equals("")) {
+                      extended = true;
+                      endIndex = nextTag.getCompleteEndIndex();
+                    }
+                  }
+                }
+              }
+            }
+          } while (extended);
           CheckErrorResult errorResult = createCheckErrorResult(
-              analysis, citeTag.getCompleteBeginIndex(), citeTag.getCompleteEndIndex());
+              analysis, citeTag.getCompleteBeginIndex(), endIndex);
           String replacement = contents.substring(
               citeTag.getValueBeginIndex(), citeTag.getValueEndIndex());
           if (citeTag.getCompleteEndIndex() == refTag.getValueEndIndex()) {
