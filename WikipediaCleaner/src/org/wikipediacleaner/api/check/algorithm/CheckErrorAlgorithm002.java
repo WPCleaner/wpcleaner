@@ -140,8 +140,13 @@ public class CheckErrorAlgorithm002 extends CheckErrorAlgorithmBase {
           result = true;
           CheckErrorResult errorResult = createCheckErrorResult(
               analysis, citeTag.getCompleteBeginIndex(), citeTag.getCompleteEndIndex());
+          String replacement = contents.substring(
+              citeTag.getValueBeginIndex(), citeTag.getValueEndIndex());
+          if (citeTag.getCompleteEndIndex() == refTag.getValueEndIndex()) {
+            replacement = replacement.trim();
+          }
           errorResult.addReplacement(
-              contents.substring(citeTag.getValueBeginIndex(), citeTag.getValueEndIndex()),
+              replacement,
               GT._("Remove {0} tags", PageElementTag.TAG_HTML_CITE));
           errors.add(errorResult);
         }

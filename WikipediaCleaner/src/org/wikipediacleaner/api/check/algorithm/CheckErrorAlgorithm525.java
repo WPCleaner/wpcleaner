@@ -112,6 +112,11 @@ public class CheckErrorAlgorithm525 extends CheckErrorAlgorithmBase {
         } else {
           String replacement = contents.substring(
               tag.getValueBeginIndex(), tag.getValueEndIndex());
+          PageElementTag refTag = analysis.isInTag(
+              tag.getCompleteEndIndex(), PageElementTag.TAG_WIKI_REF);
+          if ((refTag != null) && (refTag.isEndTag())) {
+            replacement = replacement.trim();
+          }
           errorResult.addReplacement(
               replacement,
               GT._("Remove {0} tags", PageElementTag.TAG_HTML_SPAN),
