@@ -95,7 +95,7 @@ public class PageElementTag extends PageElement {
       "ABCDEFGHIJKLMNOPQRSTUVWXYZ" +
       "abcdefghijklmnopqrstuvwxyz" +
       "0123456789" +
-      "-";
+      "!$%&()*,-.:;<@[]^_`{|}~"; // List from https://en.wikipedia.org/wiki/Wikipedia:REFNAME
 
   /** Possible separation characters after tag name */
   private final static String SEP_CHARS_AFTER_TAG_NAME = " \n";
