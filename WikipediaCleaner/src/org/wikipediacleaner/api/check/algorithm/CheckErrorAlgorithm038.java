@@ -62,7 +62,8 @@ public class CheckErrorAlgorithm038 extends CheckErrorAlgorithmBase {
       // Check that error should be reported
       int beginIndex = iTag.getCompleteBeginIndex();
       if (errorFound) {
-        if ((analysis.getSurroundingTag(PageElementTag.TAG_WIKI_NOWIKI, beginIndex) != null) ||
+        if ((analysis.getSurroundingTag(PageElementTag.TAG_WIKI_MATH, beginIndex) != null) ||
+            (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_NOWIKI, beginIndex) != null) ||
             (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_PRE, beginIndex) != null) ||
             (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_SOURCE, beginIndex) != null) ||
             (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_SYNTAXHIGHLIGHT, beginIndex) != null)) {
