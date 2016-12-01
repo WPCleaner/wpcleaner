@@ -187,6 +187,9 @@ public class ListCWWorker extends BasicWorker {
         // Nothing to do
       }
     }
+    System.out.println(
+        "Total pages processed: " + countAnalyzed +
+        " / errors detected: " + countDetections);
     for (CheckErrorAlgorithm algorithm : selectedAlgorithms) {
       Map<String, Detection> pages = detections.get(algorithm);
       if (pages == null) {
@@ -204,7 +207,9 @@ public class ListCWWorker extends BasicWorker {
    */
   private String generateResult(List<Detection> pages, Long maxSize) {
     StringBuilder buffer = new StringBuilder();
-    buffer.append("<!-- Generated using " + dumpFile.getName() + " -->\n");
+    buffer.append("<!-- Generated using ");
+    buffer.append(dumpFile.getName());
+    buffer.append(" -->\n");
     ErrorLevel lastLevel = null;
     StringBuilder line = new StringBuilder();
     List<Detection> pagesToRemove = new ArrayList<>();
@@ -213,7 +218,9 @@ public class ListCWWorker extends BasicWorker {
       if ((detection.maxLevel != null) &&
           !detection.maxLevel.equals(lastLevel)) {
         lastLevel = detection.maxLevel;
-        line.append("<!-- " + lastLevel.toString() + " -->\n");
+        line.append("<!-- ");
+        line.append(lastLevel.toString());
+        line.append(" -->\n");
       }
       line.append("* ");
       line.append(PageElementInternalLink.createInternalLink(
@@ -495,11 +502,19 @@ public class ListCWWorker extends BasicWorker {
               }
               if (currentAnalysis == null) {
                 api.retrieveContents(wiki, Collections.singleton(currentPage), false, false);
-                currentAnalysis = currentPage.getAnalysis(currentPage.getContents(), false);
+                if (currentPage.getContents().equals(page.getContents())) {
+                  currentAnalysis = analysis; 
+                } else {
+                  currentAnalysis = currentPage.getAnalysis(currentPage.getContents(), false);
+                }
               }
-              errors.clear();
-              if (algorithm.analyze(currentAnalysis, errors, false)) {
+              if (currentAnalysis == analysis) {
                 detectionConfirmed = true;
+              } else {
+                errors.clear();
+                if (algorithm.analyze(currentAnalysis, errors, false)) {
+                  detectionConfirmed = true;
+                }
               }
             } catch (APIException e) {
               // Nothing to do
