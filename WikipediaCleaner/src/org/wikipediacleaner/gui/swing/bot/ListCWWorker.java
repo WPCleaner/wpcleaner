@@ -76,6 +76,9 @@ public class ListCWWorker extends BasicWorker {
   /** Count of pages analyzed */
   int countAnalyzed;
 
+  /** Count of pages found with errors */
+  int countDetections;
+
   /**
    * @param wiki Wiki.
    * @param window Window.
@@ -96,6 +99,7 @@ public class ListCWWorker extends BasicWorker {
     this.selectedAlgorithms = selectedAlgorithms;
     this.detections = new HashMap<>();
     this.countAnalyzed = 0;
+    this.countDetections = 0;
     this.checkWiki = checkWiki;
     this.onlyRecheck = false;
   }
@@ -121,6 +125,7 @@ public class ListCWWorker extends BasicWorker {
     this.selectedAlgorithms = selectedAlgorithms;
     this.detections = new HashMap<>();
     this.countAnalyzed = 0;
+    this.countDetections = 0;
     this.checkWiki = checkWiki;
     this.onlyRecheck = onlyRecheck;
   }
@@ -516,12 +521,15 @@ public class ListCWWorker extends BasicWorker {
               detections.put(algorithm, pages);
             }
             pages.put(currentPage.getTitle(), new Detection(currentPage, errors));
+            countDetections++;
           }
         }
       }
       countAnalyzed++;
       if (countAnalyzed % 100000 == 0) {
-        System.out.println("Pages processed: " + countAnalyzed);
+        System.out.println(
+            "Pages processed: " + countAnalyzed +
+            " / errors detected: " + countDetections);
       }
       if (countAnalyzed % 1000 == 0) {
         setText(GT._("{0} pages processed", Integer.toString(countAnalyzed)));
