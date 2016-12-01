@@ -98,9 +98,6 @@ public class PageElementTag extends PageElement {
       "-";
 
   private final static String PARAM_VALUE_UNQUOTED_CHARS =
-      "ABCDEFGHIJKLMNOPQRSTUVWXYZ" +
-      "abcdefghijklmnopqrstuvwxyz" +
-      "0123456789" +
       "!$%&()*,-.:;<@[]^_`{|}~"; // List from https://en.wikipedia.org/wiki/Wikipedia:REFNAME
 
   /** Possible separation characters after tag name */
@@ -341,7 +338,8 @@ public class PageElementTag extends PageElement {
       while ((endValueIndex < maxLength) &&
              (paramString.charAt(endValueIndex) != ' ')) {
         char currentChar = paramString.charAt(endValueIndex);
-        if (PARAM_VALUE_UNQUOTED_CHARS.indexOf(currentChar) < 0) {
+        if (!Character.isLetterOrDigit(currentChar) &&
+            (PARAM_VALUE_UNQUOTED_CHARS.indexOf(currentChar) < 0)) {
           return false;
         }
         endValueIndex++;
