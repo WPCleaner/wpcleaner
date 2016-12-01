@@ -40,18 +40,24 @@ public class CheckErrorAlgorithm069 extends CheckErrorAlgorithmISBN {
     super("ISBN wrong syntax");
   }
 
-  /** List of string that could be before an ISBN in <nowiki>. */
+  /** List of strings that could be before an ISBN in <nowiki>. */
   private final static String[] EXTEND_BEFORE_NOWIKI = {
     "<nowiki>",
     "<small>",
     "(",
   };
 
-  /** List of string that could be after an ISBN in <nowiki>. */
+  /** List of strings that could be after an ISBN in <nowiki>. */
   private final static String[] EXTEND_AFTER_NOWIKI = {
     "</nowiki>",
     "</small>",
     ")",
+  };
+
+  /** List of strings that could be between "ISBN" and its value. */
+  private final static String[] FIRST_SEPARATOR = {
+    "&nbsp;",
+    "&#x20;",
   };
 
   /**
@@ -282,6 +288,58 @@ public class CheckErrorAlgorithm069 extends CheckErrorAlgorithmISBN {
                 textPrefix + contents.substring(isbn.getBeginIndex(), isbn.getEndIndex()));
           }
           errors.add(errorResult);
+        }
+      }
+    }
+
+    // Report also ISBN like [[International Standard Book Number|ISBN]]&nbsp;978-0321637734
+    List<PageElementInternalLink> links = analysis.getInternalLinks();
+    if (links != null) {
+      for (PageElementInternalLink link : links) {
+        if (PageElementISBN.ISBN_PREFIX.equals(link.getDisplayedText().trim())) {
+          int tmpIndex = link.getEndIndex();
+          String contents = analysis.getContents();
+          boolean shouldContinue = true;
+          while (shouldContinue) {
+            shouldContinue = false;
+            if (tmpIndex < contents.length()) {
+              if (" \u00A0".indexOf(contents.charAt(tmpIndex)) >= 0) {
+                tmpIndex++;
+                shouldContinue = true;
+              } else {
+                for (String separator : FIRST_SEPARATOR) {
+                  if (contents.startsWith(separator, tmpIndex)) {
+                    tmpIndex += separator.length();
+                    shouldContinue = true;
+                  }
+                }
+              }
+            }
+          }
+          boolean isbnFound = false;
+          int beginISBN = tmpIndex;
+          if ((tmpIndex < contents.length()) &&
+              (PageElementISBN.POSSIBLE_CHARACTERS.indexOf(contents.charAt(tmpIndex)) >= 0)) {
+            isbnFound = true;
+          }
+          while ((tmpIndex < contents.length()) &&
+                 ((PageElementISBN.POSSIBLE_CHARACTERS.indexOf(contents.charAt(tmpIndex)) >= 0) ||
+                  (PageElementISBN.EXTRA_CHARACTERS.indexOf(contents.charAt(tmpIndex)) >= 0 ))) {
+            tmpIndex++;
+          }
+
+          // Report error
+          if (isbnFound) {
+            if (errors == null) {
+              return true;
+            }
+            result = true;
+            CheckErrorResult errorResult = createCheckErrorResult(
+                analysis, link.getBeginIndex(), beginISBN);
+            errorResult.addReplacement(
+                PageElementISBN.ISBN_PREFIX + " ");
+            errors.add(errorResult);
+          }
         }
       }
     }
