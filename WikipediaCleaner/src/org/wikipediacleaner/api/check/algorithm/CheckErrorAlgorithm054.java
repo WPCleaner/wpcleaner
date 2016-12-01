@@ -14,6 +14,7 @@ import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.CheckErrorResult.ErrorLevel;
 import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementImage;
+import org.wikipediacleaner.api.data.PageElementInternalLink;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.gui.swing.component.MWPane;
 import org.wikipediacleaner.i18n.GT;
@@ -62,6 +63,7 @@ public class CheckErrorAlgorithm054 extends CheckErrorAlgorithmBase {
     boolean result = false;
     int endLineIndex = -1;
     String contents = analysis.getContents();
+    StringBuilder suffix = new StringBuilder();
     while (endLineIndex + 1 < contents.length()) {
 
       // Check if the next line is a list
@@ -85,6 +87,7 @@ public class CheckErrorAlgorithm054 extends CheckErrorAlgorithmBase {
         int endError = endLineIndex;
         boolean automaticBot = true;
         boolean shouldStop = false;
+        suffix.setLength(0);
         while (!shouldStop) {
           shouldStop = true;
           while ((currentPos > beginLineIndex) &&
@@ -112,6 +115,14 @@ public class CheckErrorAlgorithm054 extends CheckErrorAlgorithmBase {
                 }*/
               }
             }
+          } else if (contents.charAt(currentPos) == ']') {
+            PageElementInternalLink link = analysis.isInInternalLink(currentPos);
+            if ((link != null) && (link.getEndIndex() == currentPos + 1)) {
+              currentPos -= 2;
+              shouldStop = false;
+              automaticBot = false;
+              suffix.insert(0, "]]");
+            }
           }
         }
 
@@ -133,7 +144,7 @@ public class CheckErrorAlgorithm054 extends CheckErrorAlgorithmBase {
               analysis, beginError, endError,
               (tagAfter ? ErrorLevel.WARNING : ErrorLevel.ERROR));
           if (!tagAfter) {
-            errorResult.addReplacement("", false, automaticBot);
+            errorResult.addReplacement(suffix.toString(), false, automaticBot);
           }
           errors.add(errorResult);
         }
