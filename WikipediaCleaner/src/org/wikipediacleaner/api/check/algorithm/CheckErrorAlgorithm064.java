@@ -17,6 +17,7 @@ import org.wikipediacleaner.api.constants.WPCConfigurationString;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementInternalLink;
+import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.gui.swing.component.MWPane;
 import org.wikipediacleaner.i18n.GT;
@@ -87,6 +88,27 @@ public class CheckErrorAlgorithm064 extends CheckErrorAlgorithmBase {
             automatic = true;
           } else if (Page.areSameTitle(linkName, cleanedText)) {
             same = true;
+          }
+        }
+
+        // Check for extra <br> tag at the end
+        if (!same) {
+          int tmpIndex = link.getEndIndex() - 3;
+          while ((tmpIndex >= 0) && (content.charAt(tmpIndex) == ' ')) {
+            tmpIndex--;
+          }
+          if (content.charAt(tmpIndex) == '>') {
+            PageElementTag brTag = analysis.isInTag(tmpIndex, PageElementTag.TAG_HTML_BR);
+            if (brTag != null) {
+              String cutText = text.substring(
+                  0,
+                  text.length() - link.getEndIndex() + tmpIndex + 4 - brTag.getEndIndex() + brTag.getBeginIndex()).trim();
+              if ((cutText != null) && (Page.areSameTitle(linkName, cutText))) {
+                same = true;
+                text = cutText;
+                cleanedText = text;
+              }
+            }
           }
         }
 
