@@ -286,6 +286,12 @@ public class CheckErrorAlgorithm069 extends CheckErrorAlgorithmISBN {
             errorResult.addReplacement(
                 replacementPrefix + contents.substring(isbn.getBeginIndex(), isbn.getEndIndex()),
                 textPrefix + contents.substring(isbn.getBeginIndex(), isbn.getEndIndex()));
+          } else if (endIndex >= link.getEndIndex() - 1) {
+            List<String> replacements = isbn.getCorrectISBN();
+            for (String replacement : replacements) {
+              errorResult.addReplacement(replacement);
+            }
+            errorResult.addReplacement(contents.substring(isbn.getBeginIndex(), isbn.getEndIndex()));
           }
           errors.add(errorResult);
         }
