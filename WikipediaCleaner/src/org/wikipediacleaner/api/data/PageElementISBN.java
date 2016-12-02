@@ -40,7 +40,7 @@ public class PageElementISBN extends PageElement {
   private final static String INCORRECT_CHARACTERS = ":‐\t—=–#";
 
   /** ISBN incorrect characters at the beginning */
-  private final static String INCORRECT_BEGIN_CHARACTERS = ":;‐\t—=–#('|";
+  private final static String INCORRECT_BEGIN_CHARACTERS = ":;‐\t—=–#('|.";
 
   /**
    * @param analysis Page analysis.
