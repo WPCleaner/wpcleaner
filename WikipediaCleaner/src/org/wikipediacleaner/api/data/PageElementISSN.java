@@ -129,6 +129,13 @@ public class PageElementISSN extends PageElement {
       if (isISSN && (analysis.isInComment(index) != null)) {
         isISSN = false;
       }
+      if (isISSN &&
+          (index > 0) &&
+          (contents.charAt(index - 1) == '/') &&
+          (index + ISSN_PREFIX.length() < contents.length()) &&
+          (Character.isDigit(contents.charAt(index + ISSN_PREFIX.length())))) {
+        isISSN = false; // to avoid DOI like doi:10.5547/issn0195-6574-ej-vol10-no1-14
+      }
       if (isISSN && (analysis.isInTag(index) != null)) {
         isISSN = false;
       }
