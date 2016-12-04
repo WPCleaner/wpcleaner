@@ -211,6 +211,42 @@ public class CheckErrorAlgorithm104 extends CheckErrorAlgorithmBase {
             if (!replacements.contains(replacement)) {
               replacements.add(replacement);
             }
+          } else if (equalSign > 0) {
+            tmpIndex = fullEnd - 1;
+            while ((tmpIndex > equalSign) &&
+                   (" ".indexOf(contents.charAt(tmpIndex - 1)) >= 0)) {
+              tmpIndex--;
+            }
+            closing = false;
+            if ((tmpIndex > equalSign) && (contents.charAt(tmpIndex - 1) == '/')) {
+              closing = true;
+              tmpIndex--;
+            }
+            while ((tmpIndex > equalSign) &&
+                   (" \u00A0/\"″“”„’»".indexOf(contents.charAt(tmpIndex - 1)) >= 0)) {
+              tmpIndex--;
+            }
+            int endValue = tmpIndex;
+            while ((tmpIndex > equalSign) &&
+                   ("=\"\n".indexOf(contents.charAt(tmpIndex - 1)) < 0)) {
+              tmpIndex--;
+            }
+            if (tmpIndex == equalSign + 1) {
+              while ((equalSign < endValue) &&
+                     ("= \u00A0\"″“”„‘’»".indexOf(contents.charAt(equalSign)) >= 0)) {
+                equalSign++;
+              }
+              StringBuilder replacement = new StringBuilder();
+              replacement.append(contents.substring(currentIndex, endIndex));
+              replacement.append("=\"");
+              replacement.append(contents.substring(equalSign, endValue));
+              replacement.append("\"");
+              if (closing) {
+                replacement.append(" /");
+              }
+              replacement.append(">");
+              replacements.add(replacement.toString());
+            }
           }
         }
 
