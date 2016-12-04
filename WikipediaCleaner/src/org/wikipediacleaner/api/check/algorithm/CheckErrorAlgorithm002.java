@@ -130,62 +130,94 @@ public class CheckErrorAlgorithm002 extends CheckErrorAlgorithmBase {
     boolean result = false;
     String contents = analysis.getContents();
     for (PageElementTag citeTag : citeTags) {
-      if (!citeTag.isEndTag()) {
-        PageElementTag refTag = analysis.getSurroundingTag(
-            PageElementTag.TAG_WIKI_REF, citeTag.getBeginIndex());
-        if ((refTag != null) && (refTag.getEndIndex() == citeTag.getBeginIndex())) {
-          if (errors == null) {
-            return true;
-          }
-          result = true;
-
-          // Try to extend area
-          boolean extended = false;
-          int endIndex = citeTag.getCompleteEndIndex();
-          do {
-            extended = false;
-            if (endIndex < contents.length()) {
-              if (contents.charAt(endIndex) == '<') {
-                PageElementTag nextTag = analysis.isInTag(endIndex);
-                if ((nextTag != null) && !nextTag.isFullTag() && nextTag.isComplete()) {
-                  if (PageElementTag.TAG_HTML_SPAN.equals(nextTag.getName())) {
-                    Parameter title = nextTag.getParameter("title");
-                    if ((title != null) &&
-                        (title.getValue() != null) &&
-                        (title.getValue().startsWith("ctx_ver="))) {
-                      String nextTagValue = contents.substring(
-                          nextTag.getValueBeginIndex(), nextTag.getValueEndIndex());
-                      if ((nextTagValue == null) ||
-                          nextTagValue.equals("&nbsp;") ||
-                          nextTagValue.equals("&#x20;")) {
-                        extended = true;
-                        endIndex = nextTag.getCompleteEndIndex();
+      PageElementTag refTag = analysis.getSurroundingTag(
+          PageElementTag.TAG_WIKI_REF, citeTag.getBeginIndex());
+      if (refTag != null) {
+        if (!citeTag.isEndTag()) {
+          if (refTag.getEndIndex() == citeTag.getBeginIndex()) {
+            if (errors == null) {
+              return true;
+            }
+            result = true;
+  
+            // Try to extend area
+            boolean extended = false;
+            int endIndex = citeTag.getCompleteEndIndex();
+            if (endIndex >= refTag.getCompleteEndIndex()) {
+              CheckErrorResult errorResult = createCheckErrorResult(
+                  analysis, citeTag.getBeginIndex(), citeTag.getEndIndex());
+              errors.add(errorResult);
+            } else {
+              do {
+                extended = false;
+                if (endIndex < contents.length()) {
+                  if (contents.charAt(endIndex) == '<') {
+                    PageElementTag nextTag = analysis.isInTag(endIndex);
+                    if ((nextTag != null) && !nextTag.isFullTag() && nextTag.isComplete()) {
+                      if (PageElementTag.TAG_HTML_SPAN.equals(nextTag.getName())) {
+                        Parameter title = nextTag.getParameter("title");
+                        if ((title != null) &&
+                            (title.getValue() != null) &&
+                            (title.getValue().startsWith("ctx_ver="))) {
+                          String nextTagValue = contents.substring(
+                              nextTag.getValueBeginIndex(), nextTag.getValueEndIndex());
+                          if ((nextTagValue == null) ||
+                              nextTagValue.equals("&nbsp;") ||
+                              nextTagValue.equals("&#x20;")) {
+                            extended = true;
+                            endIndex = nextTag.getCompleteEndIndex();
+                          }
+                        }
+                      } else if (PageElementTag.TAG_HTML_CITE.equals(nextTag.getName())) {
+                        String nextTagValue = contents.substring(
+                            nextTag.getValueBeginIndex(), nextTag.getValueEndIndex());
+                        if ((nextTagValue == null) ||
+                            nextTagValue.trim().equals("")) {
+                          extended = true;
+                          endIndex = nextTag.getCompleteEndIndex();
+                        }
                       }
-                    }
-                  } else if (PageElementTag.TAG_HTML_CITE.equals(nextTag.getName())) {
-                    String nextTagValue = contents.substring(
-                        nextTag.getValueBeginIndex(), nextTag.getValueEndIndex());
-                    if ((nextTagValue == null) ||
-                        nextTagValue.trim().equals("")) {
-                      extended = true;
-                      endIndex = nextTag.getCompleteEndIndex();
                     }
                   }
                 }
+              } while (extended);
+              CheckErrorResult errorResult = createCheckErrorResult(
+                  analysis, citeTag.getCompleteBeginIndex(), endIndex);
+              String replacement = contents.substring(
+                  citeTag.getValueBeginIndex(), citeTag.getValueEndIndex());
+              if (citeTag.getCompleteEndIndex() == refTag.getValueEndIndex()) {
+                replacement = replacement.trim();
               }
+              errorResult.addReplacement(
+                  replacement,
+                  GT._("Remove {0} tags", PageElementTag.TAG_HTML_CITE));
+              errors.add(errorResult);
             }
-          } while (extended);
-          CheckErrorResult errorResult = createCheckErrorResult(
-              analysis, citeTag.getCompleteBeginIndex(), endIndex);
-          String replacement = contents.substring(
-              citeTag.getValueBeginIndex(), citeTag.getValueEndIndex());
-          if (citeTag.getCompleteEndIndex() == refTag.getValueEndIndex()) {
-            replacement = replacement.trim();
           }
-          errorResult.addReplacement(
-              replacement,
-              GT._("Remove {0} tags", PageElementTag.TAG_HTML_CITE));
-          errors.add(errorResult);
+        } else if (refTag.getMatchingTag() != null) {
+          if (citeTag.getEndIndex() == refTag.getValueEndIndex()) {
+            if (errors == null) {
+              return true;
+            }
+            result = true;
+
+            if ((citeTag.getMatchingTag() == null) ||
+                (citeTag.getMatchingTag().getBeginIndex() < refTag.getCompleteBeginIndex())) {
+              CheckErrorResult errorResult = createCheckErrorResult(
+                  analysis, citeTag.getBeginIndex(), citeTag.getEndIndex());
+              errors.add(errorResult);
+            } else if (citeTag.getCompleteBeginIndex() > refTag.getEndIndex()) {
+              CheckErrorResult errorResult = createCheckErrorResult(
+                  analysis, citeTag.getCompleteBeginIndex(), citeTag.getCompleteEndIndex());
+              String replacement = contents.substring(
+                  citeTag.getValueBeginIndex(), citeTag.getValueEndIndex());
+              replacement = replacement.trim();
+              errorResult.addReplacement(
+                  replacement,
+                  GT._("Remove {0} tags", PageElementTag.TAG_HTML_CITE));
+              errors.add(errorResult);
+            }
+          }
         }
       }
     }
