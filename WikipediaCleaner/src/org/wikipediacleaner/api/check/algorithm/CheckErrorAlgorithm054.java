@@ -13,8 +13,11 @@ import java.util.List;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.CheckErrorResult.ErrorLevel;
 import org.wikipediacleaner.api.data.PageAnalysis;
+import org.wikipediacleaner.api.data.PageElementCategory;
+import org.wikipediacleaner.api.data.PageElementExternalLink;
 import org.wikipediacleaner.api.data.PageElementImage;
 import org.wikipediacleaner.api.data.PageElementInternalLink;
+import org.wikipediacleaner.api.data.PageElementInterwikiLink;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.gui.swing.component.MWPane;
 import org.wikipediacleaner.i18n.GT;
@@ -116,12 +119,46 @@ public class CheckErrorAlgorithm054 extends CheckErrorAlgorithmBase {
               }
             }
           } else if (contents.charAt(currentPos) == ']') {
-            PageElementInternalLink link = analysis.isInInternalLink(currentPos);
-            if ((link != null) && (link.getEndIndex() == currentPos + 1)) {
-              currentPos -= 2;
-              shouldStop = false;
-              automaticBot = false;
-              suffix.insert(0, "]]");
+            boolean linkFound = false;
+            if (!linkFound) {
+              PageElementInternalLink link = analysis.isInInternalLink(currentPos);
+              if ((link != null) && (link.getEndIndex() == currentPos + 1)) {
+                currentPos -= 2;
+                shouldStop = false;
+                automaticBot = false;
+                suffix.insert(0, "]]");
+                linkFound = true;
+              }
+            }
+            if (!linkFound) {
+              PageElementInterwikiLink link = analysis.isInInterwikiLink(currentPos);
+              if ((link != null) && (link.getEndIndex() == currentPos + 1)) {
+                currentPos -= 2;
+                shouldStop = false;
+                automaticBot = false;
+                suffix.insert(0, "]]");
+                linkFound = true;
+              }
+            }
+            if (!linkFound) {
+              PageElementCategory link = analysis.isInCategory(currentPos);
+              if ((link != null) && (link.getEndIndex() == currentPos + 1)) {
+                currentPos -= 2;
+                shouldStop = false;
+                automaticBot = false;
+                suffix.insert(0, "]]");
+                linkFound = true;
+              }
+            }
+            if (!linkFound) {
+              PageElementExternalLink link = analysis.isInExternalLink(currentPos);
+              if ((link != null) && (link.getEndIndex() == currentPos + 1)) {
+                currentPos -= 1;
+                shouldStop = false;
+                automaticBot = false;
+                suffix.insert(0, "]");
+                linkFound = true;
+              }
             }
           }
         }
