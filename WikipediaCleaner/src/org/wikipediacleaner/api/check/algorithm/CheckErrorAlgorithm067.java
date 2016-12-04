@@ -107,60 +107,62 @@ public class CheckErrorAlgorithm067 extends CheckErrorAlgorithmBase {
       boolean punctuationFoundBefore = false;
       boolean punctuationFoundBetween = false;
       char punctuation = ' ';
-      for (int currentTagIndex = firstTagIndex; currentTagIndex <= lastTagIndex; currentTagIndex++) {
-        PageElementTag currentTag = tags.get(currentTagIndex);
-        if ((currentTagIndex == firstTagIndex) ||
-            (currentTag.isFullTag()) ||
-            (!currentTag.isEndTag())) {
-          int testIndex = currentTag.getBeginIndex() - 1;
-          boolean done = false;
-          while (!done) {
-            done = true;
-            if (testIndex >= 0) {
-              char testChar = contents.charAt(testIndex);
-              if (Character.isWhitespace(testChar)) {
-                testIndex--;
-                done = false;
-              } else  if ((testChar == '>')) {
-                PageElementComment comment = analysis.isInComment(testIndex);
-                if ((comment != null) && (comment.getEndIndex() == testIndex + 1)) {
-                  if (currentTagIndex == firstTagIndex) {
-                    previousComment += contents.substring(comment.getBeginIndex(), comment.getEndIndex());
-                  }
-                  testIndex = comment.getBeginIndex() - 1;
+      if (firstTag.isComplete() || !firstTag.isEndTag()) {
+        for (int currentTagIndex = firstTagIndex; currentTagIndex <= lastTagIndex; currentTagIndex++) {
+          PageElementTag currentTag = tags.get(currentTagIndex);
+          if ((currentTagIndex == firstTagIndex) ||
+              (currentTag.isFullTag()) ||
+              (!currentTag.isEndTag())) {
+            int testIndex = currentTag.getBeginIndex() - 1;
+            boolean done = false;
+            while (!done) {
+              done = true;
+              if (testIndex >= 0) {
+                char testChar = contents.charAt(testIndex);
+                if (Character.isWhitespace(testChar)) {
+                  testIndex--;
                   done = false;
+                } else  if ((testChar == '>')) {
+                  PageElementComment comment = analysis.isInComment(testIndex);
+                  if ((comment != null) && (comment.getEndIndex() == testIndex + 1)) {
+                    if (currentTagIndex == firstTagIndex) {
+                      previousComment += contents.substring(comment.getBeginIndex(), comment.getEndIndex());
+                    }
+                    testIndex = comment.getBeginIndex() - 1;
+                    done = false;
+                  }
                 }
               }
             }
-          }
-          if (currentTagIndex == firstTagIndex) {
-            tmpIndex = testIndex;
-          }
-          if (testIndex >= 0) {
-            char currentPunctuation = contents.charAt(testIndex);
-            if (SpecialCharacters.isPunctuation(currentPunctuation)) {
-              boolean punctuationFound = true;
-              if (punctuation == ';') {
-                int punctuationIndex = testIndex;
-                testIndex--;
-                while((testIndex >= 0) && (Character.isLetterOrDigit(contents.charAt(testIndex)))) {
+            if (currentTagIndex == firstTagIndex) {
+              tmpIndex = testIndex;
+            }
+            if (testIndex >= 0) {
+              char currentPunctuation = contents.charAt(testIndex);
+              if (SpecialCharacters.isPunctuation(currentPunctuation)) {
+                boolean punctuationFound = true;
+                if (punctuation == ';') {
+                  int punctuationIndex = testIndex;
                   testIndex--;
-                }
-                if ((testIndex >= 0) && (contents.charAt(testIndex) == '&')) {
-                  String name = contents.substring(testIndex + 1, punctuationIndex);
-                  for (HtmlCharacters htmlCharacter : HtmlCharacters.values()) {
-                    if (name.equals(htmlCharacter.getName())) {
-                      punctuationFound = false;
+                  while((testIndex >= 0) && (Character.isLetterOrDigit(contents.charAt(testIndex)))) {
+                    testIndex--;
+                  }
+                  if ((testIndex >= 0) && (contents.charAt(testIndex) == '&')) {
+                    String name = contents.substring(testIndex + 1, punctuationIndex);
+                    for (HtmlCharacters htmlCharacter : HtmlCharacters.values()) {
+                      if (name.equals(htmlCharacter.getName())) {
+                        punctuationFound = false;
+                      }
                     }
                   }
                 }
-              }
-              if (punctuationFound) {
-                if (currentTagIndex == firstTagIndex) {
-                  punctuationFoundBefore = true;
-                  punctuation = currentPunctuation;
-                } else {
-                  punctuationFoundBetween = true;
+                if (punctuationFound) {
+                  if (currentTagIndex == firstTagIndex) {
+                    punctuationFoundBefore = true;
+                    punctuation = currentPunctuation;
+                  } else {
+                    punctuationFoundBetween = true;
+                  }
                 }
               }
             }
