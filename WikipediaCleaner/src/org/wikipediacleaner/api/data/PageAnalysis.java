@@ -636,6 +636,8 @@ public class PageAnalysis {
       areas.addISSN(issns);
       pmids = PageElementPMID.analyzePage(this);
       areas.addPMID(pmids);
+      rfcs = PageElementRFC.analyzePage(this);
+      areas.addRFC(rfcs);
 
       if (perf != null) {
         perf.printEnd();
@@ -1657,7 +1659,7 @@ public class PageAnalysis {
   }
 
   // ==========================================================================
-  // ISBN, ISSN and PMID management
+  // ISBN, ISSN, PMID and RFC management
   // ==========================================================================
 
   /**
@@ -1687,7 +1689,6 @@ public class PageAnalysis {
     }
     return null;
   }
-
 
 
   /**
@@ -1742,6 +1743,35 @@ public class PageAnalysis {
       if ((pmid.getBeginIndex() <= currentIndex) &&
           (pmid.getEndIndex() > currentIndex)) {
         return pmid;
+      }
+    }
+    return null;
+  }
+
+  
+  /**
+   * All RFCs in the page
+   */
+  private List<PageElementRFC> rfcs;
+
+  /**
+   * @return All RFCs in the page.
+   */
+  public List<PageElementRFC> getRFCs() {
+    fifthLevelAnalysis();
+    return rfcs;
+  }
+
+  /**
+   * @param currentIndex Current index.
+   * @return RFC if the current index is inside a RFC.
+   */
+  public PageElementRFC isInRFC(int currentIndex) {
+    List<PageElementRFC> tmpRfcs = getRFCs();
+    for (PageElementRFC rfc : tmpRfcs) {
+      if ((rfc.getBeginIndex() <= currentIndex) &&
+          (rfc.getEndIndex() > currentIndex)) {
+        return rfc;
       }
     }
     return null;

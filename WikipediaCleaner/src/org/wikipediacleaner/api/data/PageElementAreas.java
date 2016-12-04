@@ -214,6 +214,15 @@ public class PageElementAreas {
   }
 
   /**
+   * Add RFCs to non wiki text areas.
+   * 
+   * @param rfcs List of RFCs.
+   */
+  public void addRFC(List<PageElementRFC> rfcs) {
+    addPageElements(rfcs);
+  }
+
+  /**
    * Add templates to non wiki text areas.
    * 
    * @param templates List of templates.

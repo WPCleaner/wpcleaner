@@ -21,6 +21,7 @@ import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithm;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithm524;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithm528;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithm529;
+import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithm530;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithms;
 import org.wikipediacleaner.api.constants.EnumLanguage;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
@@ -177,6 +178,12 @@ public class LoginWorker extends BasicWorker {
           CheckErrorAlgorithms.isAlgorithmActive(wiki, 529)) {
         messageNames.add("magiclink-tracking-isbn");
       }
+      CheckErrorAlgorithm algo530 = CheckErrorAlgorithms.getAlgorithm(wiki, 530);
+      if ((algo530 != null) &&
+          algo530.isAvailable() &&
+          CheckErrorAlgorithms.isAlgorithmActive(wiki, 530)) {
+        messageNames.add("magiclink-tracking-rfc");
+      }
       if (!messageNames.isEmpty()) {
         Map<String, String> messages = api.loadMessages(wiki, messageNames);
         WikiConfiguration wikiConfig = wiki.getWikiConfiguration();
@@ -195,6 +202,11 @@ public class LoginWorker extends BasicWorker {
             algo529.isAvailable() &&
             CheckErrorAlgorithms.isAlgorithmActive(wiki, 529)) {
           ((CheckErrorAlgorithm529) algo529).setTrackingCategory(messages.get("magiclink-tracking-isbn"));
+        }
+        if ((algo530 != null) &&
+            algo530.isAvailable() &&
+            CheckErrorAlgorithms.isAlgorithmActive(wiki, 530)) {
+          ((CheckErrorAlgorithm530) algo530).setTrackingCategory(messages.get("magiclink-tracking-rfc"));
         }
       }
     } catch (APIException e) {
