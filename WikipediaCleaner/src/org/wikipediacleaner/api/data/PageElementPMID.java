@@ -22,7 +22,7 @@ import org.wikipediacleaner.api.data.PageElementTemplate.Parameter;
 public class PageElementPMID extends PageElement {
 
   /** PMID prefix */
-  private final static String PMID_PREFIX = "PMID";
+  public final static String PMID_PREFIX = "PMID";
 
   /** PMID incorrect prefixes */
   private final static String[] PMID_INCORRECT_PREFIX = {
@@ -30,15 +30,15 @@ public class PageElementPMID extends PageElement {
   };
 
   /** PMID possible meaningful characters */
-  private final static String POSSIBLE_CHARACTERS = "0123456789";
+  public final static String POSSIBLE_CHARACTERS = "0123456789";
 
   /** PMID possible extraneous characters */
-  private final static String EXTRA_CHARACTERS = "";
+  public final static String EXTRA_CHARACTERS = "";
 
   /** PMID incorrect characters */
   private final static String INCORRECT_CHARACTERS = "- :‐\t—=–\n";
 
-  /** ISBN incorrect characters at the beginning */
+  /** PMID incorrect characters at the beginning */
   private final static String INCORRECT_BEGIN_CHARACTERS = "- :‐\t—=–\n";
 
   /**
@@ -122,7 +122,7 @@ public class PageElementPMID extends PageElement {
    * Analyze plain text for PMID.
    * 
    * @param analysis Page analysis.
-   * @param isbns Current list of PMID.
+   * @param pmids Current list of PMID.
    * @param prefix PMID prefix.
    * @param correct True if PMID should be considered correct by default.
    * @param caseSensitive True if PMID prefix is case sensitive.
@@ -261,7 +261,7 @@ public class PageElementPMID extends PageElement {
           if (endNumber > beginNumber) {
             String number = contents.substring(beginNumber, endNumber);
             pmids.add(new PageElementPMID(
-                beginIndex, endNumber, number,
+                beginIndex, endNumber, analysis, number,
                 isValid, isCorrect, false, false));
             index = endNumber;
           }
@@ -281,8 +281,8 @@ public class PageElementPMID extends PageElement {
    * @param argumentName Template parameter name.
    * @param ignoreCase True if parameter name should compared ignoring case.
    * @param acceptNumbers True if numbers are accepted after parameter name.
-   * @param acceptAllValues True if all values are accepted, even if not compatible with ISBN. 
-   * @param helpRequested True if help has been requested for this ISBN.
+   * @param acceptAllValues True if all values are accepted, even if not compatible with PMID. 
+   * @param helpRequested True if help has been requested for this PMID.
    */
   private static void analyzeTemplateParams(
       PageAnalysis analysis, List<PageElementPMID> pmids,
@@ -387,48 +387,40 @@ public class PageElementPMID extends PageElement {
           String value = analysis.getContents().substring(beginIndex, endIndex);
           if (paramValue.length() > 0) {
             pmids.add(new PageElementPMID(
-                beginIndex, endIndex, value, true, correct, helpRequested, true));
+                beginIndex, endIndex, analysis,
+                value, true, correct, helpRequested, true));
           }
         } else if (acceptAllValues) {
           if (paramValue.length() > 0) {
             pmids.add(new PageElementPMID(
                 template.getParameterValueStartIndex(paramNum),
                 template.getParameterValueStartIndex(paramNum) + paramValue.length(),
-                paramValue, true, false, false, true));
+                analysis, paramValue, true, false, false, true));
           }
         }
       }
     }
   }
 
-  /**
-   * PMID not trimmed.
-   */
+  /** WPCleaner configuration */
+  private final WPCConfiguration wpcConfiguration;
+
+  /** PMID not trimmed. */
   private final String pmidNotTrimmed;
 
-  /**
-   * PMID (trimmed).
-   */
+  /** PMID (trimmed). */
   private final String pmid;
 
-  /**
-   * True if ISBN is in a valid location.
-   */
+  /** True if PMID is in a valid location. */
   private final boolean isValid;
 
-  /**
-   * True if PMID syntax is correct.
-   */
+  /** True if PMID syntax is correct. */
   private final boolean isCorrect;
 
-  /**
-   * True if PMID is a template parameter (PMID=...)
-   */
+  /** True if PMID is a template parameter (PMID=...) */
   private final boolean isTemplateParameter;
 
-  /**
-   * True if help has been requested for this PMID
-   */
+  /** True if help has been requested for this PMID */
   private final boolean helpRequested;
 
   /**
@@ -441,11 +433,12 @@ public class PageElementPMID extends PageElement {
    * @param isTemplateParameter True if PMID is a template parameter.
    */
   private PageElementPMID(
-      int beginIndex, int endIndex,
+      int beginIndex, int endIndex, PageAnalysis analysis,
       String pmid, boolean isValid,
       boolean isCorrect, boolean helpRequested,
       boolean isTemplateParameter) {
     super(beginIndex, endIndex);
+    this.wpcConfiguration = analysis.getWPCConfiguration();
     this.pmidNotTrimmed = pmid;
     this.pmid = cleanPMID(pmid);
     this.isValid = isValid;
@@ -522,9 +515,57 @@ public class PageElementPMID extends PageElement {
     String cleanedPMID = buffer.toString().trim();
 
     // Basic replacement
-    result.add(prefix + cleanedPMID);
+    addCorrectPMID(result, prefix, cleanedPMID);
     
     return result;
+  }
+
+  /**
+   * @param result List of possible replacements.
+   * @param prefix PMI prefix.
+   * @param cleanedPMID Cleaned up PMID.
+   */
+  private void addCorrectPMID(List<String> result, String prefix, String cleanedPMID) {
+    addCorrectPMID(result, prefix + cleanedPMID);
+    if (!isTemplateParameter()) {
+      List<String[]> pmidTemplates = wpcConfiguration.getStringArrayList(
+          WPCConfigurationStringList.PMID_TEMPLATES);
+      if (pmidTemplates != null) {
+        for (String[] pmidTemplate : pmidTemplates) {
+          if (pmidTemplate.length > 2) {
+            String[] params = pmidTemplate[1].split(",");
+            Boolean suggested = Boolean.valueOf(pmidTemplate[2]);
+            if ((params.length > 0) && (Boolean.TRUE.equals(suggested))) {
+              StringBuilder buffer = new StringBuilder();
+              buffer.append("{{");
+              buffer.append(pmidTemplate[0]);
+              buffer.append("|");
+              if (!"1".equals(params[0])) {
+                buffer.append(params[0]);
+                buffer.append("=");
+              }
+              buffer.append(cleanedPMID);
+              buffer.append("}}");
+              addCorrectPMID(result, buffer.toString());
+            }
+          }
+        }
+      }
+      
+    }
+  }
+
+  /**
+   * @param result List of possible replacements.
+   * @param correctPMID Possible replacement.
+   */
+  private void addCorrectPMID(List<String> result, String correctPMID) {
+    if ((result == null) || (correctPMID == null)) {
+      return;
+    }
+    if (!result.contains(correctPMID)) {
+      result.add(correctPMID);
+    }
   }
 
   /**
@@ -547,7 +588,7 @@ public class PageElementPMID extends PageElement {
     replacement.append("{{");
     replacement.append(helpNeededTemplate[0]);
 
-    // ISBN
+    // PMID
     replacement.append("|");
     if ((helpNeededTemplate.length > 1) &&
         (helpNeededTemplate[1].length() > 0)) {
