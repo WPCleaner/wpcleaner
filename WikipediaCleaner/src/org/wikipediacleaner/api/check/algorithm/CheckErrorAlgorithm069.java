@@ -338,14 +338,34 @@ public class CheckErrorAlgorithm069 extends CheckErrorAlgorithmISBN {
           }
           boolean isbnFound = false;
           int beginISBN = tmpIndex;
-          if ((tmpIndex < contents.length()) &&
-              (PageElementISBN.POSSIBLE_CHARACTERS.indexOf(contents.charAt(tmpIndex)) >= 0)) {
-            isbnFound = true;
-          }
-          while ((tmpIndex < contents.length()) &&
-                 ((PageElementISBN.POSSIBLE_CHARACTERS.indexOf(contents.charAt(tmpIndex)) >= 0) ||
-                  (PageElementISBN.EXTRA_CHARACTERS.indexOf(contents.charAt(tmpIndex)) >= 0 ))) {
-            tmpIndex++;
+          String suffix = null;
+          if (tmpIndex < contents.length()) {
+            PageElementInternalLink nextLink = null;
+            if (contents.charAt(tmpIndex) == '[') {
+              nextLink = analysis.isInInternalLink(tmpIndex);
+              if (nextLink != null) {
+                tmpIndex += 2;
+                int offset = nextLink.getTextOffset();
+                if (offset > 0) {
+                  tmpIndex += offset;
+                }
+              }
+            }
+            if ((tmpIndex < contents.length()) &&
+                (PageElementISBN.POSSIBLE_CHARACTERS.indexOf(contents.charAt(tmpIndex)) >= 0)) {
+              isbnFound = true;
+            }
+            if (nextLink != null) {
+              suffix = nextLink.getDisplayedText();
+              tmpIndex = nextLink.getEndIndex();
+            } else {
+              while ((tmpIndex < contents.length()) &&
+                     ((PageElementISBN.POSSIBLE_CHARACTERS.indexOf(contents.charAt(tmpIndex)) >= 0) ||
+                      (PageElementISBN.EXTRA_CHARACTERS.indexOf(contents.charAt(tmpIndex)) >= 0 ))) {
+                tmpIndex++;
+              }
+              suffix = contents.substring(beginISBN, tmpIndex);
+            }
           }
 
           // Report error
@@ -355,9 +375,9 @@ public class CheckErrorAlgorithm069 extends CheckErrorAlgorithmISBN {
             }
             result = true;
             CheckErrorResult errorResult = createCheckErrorResult(
-                analysis, link.getBeginIndex(), beginISBN);
+                analysis, link.getBeginIndex(), tmpIndex);
             errorResult.addReplacement(
-                PageElementISBN.ISBN_PREFIX + " ");
+                PageElementISBN.ISBN_PREFIX + " " + suffix);
             errors.add(errorResult);
           }
         }

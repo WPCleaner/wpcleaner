@@ -37,10 +37,10 @@ public class PageElementISBN extends PageElement {
   public final static String EXTRA_CHARACTERS = "- \u00A0";
 
   /** ISBN incorrect characters */
-  private final static String INCORRECT_CHARACTERS = ":‐\t—=–#";
+  private final static String INCORRECT_CHARACTERS = ":‐\t—=–#]";
 
   /** ISBN incorrect characters at the beginning */
-  private final static String INCORRECT_BEGIN_CHARACTERS = ":;‐\t—=–#('|.";
+  private final static String INCORRECT_BEGIN_CHARACTERS = ":;‐\t—=–#('|.[";
 
   /**
    * @param analysis Page analysis.
@@ -236,14 +236,21 @@ public class PageElementISBN extends PageElement {
           }
           boolean spaceFound = false;
           if (analysis.isInComment(index) == null) {
-            while ((index < contents.length()) && (contents.charAt(index) == ' ')) {
-              index++;
-              spaceFound = true;
-            }
-            while ((index < contents.length()) &&
-                (INCORRECT_BEGIN_CHARACTERS.indexOf(contents.charAt(index)) >= 0)) {
-              index++;
-              isCorrect = false;
+            boolean done = false;
+            while (!done) {
+              done = true;
+              if (index < contents.length()) {
+                char currentChar = contents.charAt(index);
+                if (currentChar == ' ') {
+                  index++;
+                  spaceFound = true;
+                  done = false;
+                } else if (INCORRECT_BEGIN_CHARACTERS.indexOf(currentChar) >= 0) {
+                  index++;
+                  isCorrect = false;
+                  done = false;
+                }
+              }
             }
           }
           int beginNumber = -1;
