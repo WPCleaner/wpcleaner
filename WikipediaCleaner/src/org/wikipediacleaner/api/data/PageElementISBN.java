@@ -37,10 +37,10 @@ public class PageElementISBN extends PageElement {
   public final static String EXTRA_CHARACTERS = "- \u00A0";
 
   /** ISBN incorrect characters */
-  private final static String INCORRECT_CHARACTERS = ":‐\t—=–#]";
+  private final static String INCORRECT_CHARACTERS = ":‐\t—=–#";
 
   /** ISBN incorrect characters at the beginning */
-  private final static String INCORRECT_BEGIN_CHARACTERS = ":;‐\t—=–#('|.[";
+  private final static String INCORRECT_BEGIN_CHARACTERS = ":;‐\t—=–#('|.";
 
   /**
    * @param analysis Page analysis.
@@ -235,6 +235,8 @@ public class PageElementISBN extends PageElement {
             }
           }
           boolean spaceFound = false;
+          PageElementInternalLink iLink = null;
+          PageElementExternalLink eLink = null;
           if (analysis.isInComment(index) == null) {
             boolean done = false;
             while (!done) {
@@ -245,6 +247,26 @@ public class PageElementISBN extends PageElement {
                   index++;
                   spaceFound = true;
                   done = false;
+                } else if (currentChar == '[') {
+                  iLink = analysis.isInInternalLink(index);
+                  if ((iLink != null) && (iLink.getBeginIndex() == index)) {
+                    isCorrect = false;
+                    if (iLink.getTextOffset() > 0) {
+                      index += iLink.getTextOffset();
+                    } else {
+                      index += 2;
+                    }
+                  } else {
+                    eLink = analysis.isInExternalLink(index);
+                    if ((eLink != null) && (eLink.getBeginIndex() == index)) {
+                      isCorrect = false;
+                      if (eLink.getTextOffset() > 0) {
+                        index += eLink.getTextOffset();
+                      } else {
+                        index += 1;
+                      }
+                    }
+                  }
                 } else if (INCORRECT_BEGIN_CHARACTERS.indexOf(currentChar) >= 0) {
                   index++;
                   isCorrect = false;
@@ -284,14 +306,24 @@ public class PageElementISBN extends PageElement {
           }
           if (endNumber > beginNumber) {
             String number = contents.substring(beginNumber, endNumber);
-            if (contents.startsWith("[[", beginIndex) &&
-                contents.startsWith("]]", endNumber)) {
+            if ((iLink != null) && (endNumber + 2 == iLink.getEndIndex())) {
+              endNumber = iLink.getEndIndex();
+            } else if ((eLink != null) && (endNumber + 1 == eLink.getEndIndex())) {
+              endNumber = eLink.getEndIndex();
+            } else if (contents.startsWith("[[", beginIndex) &&
+                       contents.startsWith("]]", endNumber)) {
               endNumber += 2;
             }
             isbns.add(new PageElementISBN(
                 beginIndex, endNumber, analysis, number,
                 isValid, isCorrect, false, null));
             index = endNumber;
+          } else {
+            if (contents.startsWith(prefix, index)) {
+              isbns.add(new PageElementISBN(
+                  beginIndex, index, analysis, "",
+                  isValid, false, false, null));
+            }
           }
         }
       } else {

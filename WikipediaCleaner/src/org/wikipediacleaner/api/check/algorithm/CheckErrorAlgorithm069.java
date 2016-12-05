@@ -341,6 +341,7 @@ public class CheckErrorAlgorithm069 extends CheckErrorAlgorithmISBN {
           String suffix = null;
           if (tmpIndex < contents.length()) {
             PageElementInternalLink nextLink = null;
+            PageElementExternalLink nextLinkE = null;
             if (contents.charAt(tmpIndex) == '[') {
               nextLink = analysis.isInInternalLink(tmpIndex);
               if (nextLink != null) {
@@ -348,6 +349,15 @@ public class CheckErrorAlgorithm069 extends CheckErrorAlgorithmISBN {
                 int offset = nextLink.getTextOffset();
                 if (offset > 0) {
                   tmpIndex += offset;
+                }
+              } else {
+                nextLinkE = analysis.isInExternalLink(tmpIndex);
+                if (nextLinkE != null) {
+                  tmpIndex += 1;
+                  int offset = nextLinkE.getTextOffset();
+                  if (offset > 0) {
+                    tmpIndex += offset;
+                  }
                 }
               }
             }
@@ -358,6 +368,9 @@ public class CheckErrorAlgorithm069 extends CheckErrorAlgorithmISBN {
             if (nextLink != null) {
               suffix = nextLink.getDisplayedText();
               tmpIndex = nextLink.getEndIndex();
+            } else if (nextLinkE != null) {
+              suffix = nextLinkE.getDisplayedText();
+              tmpIndex = nextLinkE.getEndIndex();
             } else {
               while ((tmpIndex < contents.length()) &&
                      ((PageElementISBN.POSSIBLE_CHARACTERS.indexOf(contents.charAt(tmpIndex)) >= 0) ||
