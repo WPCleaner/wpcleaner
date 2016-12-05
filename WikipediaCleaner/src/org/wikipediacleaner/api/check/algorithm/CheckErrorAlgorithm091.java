@@ -228,23 +228,45 @@ public class CheckErrorAlgorithm091 extends CheckErrorAlgorithmBase {
             for (String template : templatesList) {
               String[] templateArgs = template.split("\\|");
               if (templateArgs.length >= 5) {
+                String templateName = templateArgs[0];
+                String paramLocalTitle = templateArgs[1];
+                String paramLang = templateArgs[2];
+                String paramLangDefaultValue = null;
+                int equalIndex = paramLang.indexOf('=');
+                if (equalIndex > 0) {
+                  paramLangDefaultValue = paramLang.substring(equalIndex + 1);
+                  paramLang = paramLang.substring(0, equalIndex);
+                }
+                String paramOriginalTitle = templateArgs[3];
+                String paramText = templateArgs[4];
                 String textPrefix =
-                  "{{" + templateArgs[0] + "|" + templateArgs[1] + "=";
-                String textSuffix =
-                  "|" + templateArgs[2] + "=" + prefix +
-                  "|" + templateArgs[3] + "=" + articleName +
-                  "|" + templateArgs[4] + "=" + ((text != null) ? text : article) +
-                  "}}";
+                  "{{" + templateName + "|" + paramLocalTitle + "=";
+                StringBuilder textSuffix = new StringBuilder();
+                if ((prefix != null) && !prefix.equals(paramLangDefaultValue)) {
+                  textSuffix.append('|');
+                  textSuffix.append(paramLang);
+                  textSuffix.append('=');
+                  textSuffix.append(prefix);
+                }
+                textSuffix.append('|');
+                textSuffix.append(paramOriginalTitle);
+                textSuffix.append('=');
+                textSuffix.append(articleName);
+                textSuffix.append('|');
+                textSuffix.append(paramText);
+                textSuffix.append('=');
+                textSuffix.append((text != null) ? text : article);
+                textSuffix.append("}}");
                 String question = GT._("What is the title of the page on this wiki ?");
                 AddTextActionProvider action = null;
                 if ((text != null) && (!text.equals(article))) {
                   String[] possibleValues = { null, article, text };
                   action = new AddTextActionProvider(
-                      textPrefix, textSuffix, null, question,
+                      textPrefix, textSuffix.toString(), null, question,
                       possibleValues, false, null, checker);
                 } else {
                   action = new AddTextActionProvider(
-                      textPrefix, textSuffix, null, question,
+                      textPrefix, textSuffix.toString(), null, question,
                       articleName, checker);
                 }
                 errorResult.addPossibleAction(
