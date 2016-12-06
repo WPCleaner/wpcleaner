@@ -31,7 +31,7 @@ public class PageElementISBN extends PageElement {
   };
 
   /** ISBN possible meaningful characters */
-  public final static String POSSIBLE_CHARACTERS = "0123456789Xx";
+  public final static String POSSIBLE_CHARACTERS = "0123456789X";
 
   /** ISBN possible extraneous characters */
   public final static String EXTRA_CHARACTERS = "- \u00A0";
@@ -607,6 +607,8 @@ public class PageElementISBN extends PageElement {
         buffer.append("-");
       } else if (currentChar == '\t') {
         buffer.append(" ");
+      } else if (currentChar == 'x') {
+        buffer.append("X");
       } else {
         buffer.append(currentChar);
       }
@@ -685,6 +687,7 @@ public class PageElementISBN extends PageElement {
     addCorrectISBN(result, prefix, cleanedISBN);
 
     // Common mistyped characters
+    cleanedISBN = cleanedISBN.replaceAll("x", "X");
     cleanedISBN = cleanedISBN.replaceAll("O", "0");
     cleanedISBN = cleanedISBN.replaceAll("I", "1");
     cleanedISBN = cleanedISBN.replaceAll("B", "8");
