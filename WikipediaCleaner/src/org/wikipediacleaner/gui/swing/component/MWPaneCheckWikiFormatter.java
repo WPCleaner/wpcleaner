@@ -73,8 +73,12 @@ public class MWPaneCheckWikiFormatter extends MWPaneFormatter {
     }
     CheckErrorPage errorPage = CheckError.analyzeError(algorithm, pageAnalysis);
     if ((errorPage != null) && (errorPage.getResults() != null)) {
+      int lastPosition = -1;
       for (CheckErrorResult error : errorPage.getResults()) {
-        formatCheckWikiError(doc, error);
+        if (error.getStartPosition() >= lastPosition) {
+          formatCheckWikiError(doc, error);
+          lastPosition = error.getEndPosition();
+        }
       }
     }
   }
