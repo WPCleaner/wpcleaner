@@ -64,7 +64,9 @@ public class CheckErrorAlgorithm046 extends CheckErrorAlgorithmBase {
       }
       if (shouldCount) {
         PageElementImage image = analysis.isInImage(currentIndex);
-        if ((image != null) && (image.getEndIndex() == currentIndex + 2)) {
+        if ((image != null) &&
+            ((image.getEndIndex() == currentIndex + 2) ||
+             (image.getEndIndex() == currentIndex + 3))) {
           shouldCount = false;
         }
       }

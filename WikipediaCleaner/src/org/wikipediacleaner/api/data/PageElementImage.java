@@ -103,11 +103,17 @@ public class PageElementImage extends PageElement {
     int pipeIndex = firstPipeIndex;
     tmpIndex++;
     int linkCount = 0;
+    int externalLinkCount = 0;
     int templateCount = 0;
     List<Parameter> parameters = new ArrayList<Parameter>();
     WikiConfiguration wikiConfiguration = wikipedia.getWikiConfiguration();
     while (tmpIndex < contents.length()) {
       if ((templateCount <= 0) && (linkCount <= 0) && (contents.startsWith("]]", tmpIndex))) {
+        if ((externalLinkCount > 0) &&
+            (contents.startsWith("]]]", tmpIndex))) {
+          externalLinkCount--;
+          tmpIndex++;
+        }
         String element = contents.substring(pipeIndex + 1, tmpIndex).trim();
         if (element.length() > 0) {
           MagicWord magicWord = wikiConfiguration.getImgMagicWord(element);
@@ -136,8 +142,17 @@ public class PageElementImage extends PageElement {
         linkCount++;
         tmpIndex++;
       } else if (contents.startsWith("]]", tmpIndex)) {
+        if ((externalLinkCount > 0) &&
+            (contents.startsWith("]]]", tmpIndex))) {
+          externalLinkCount--;
+          tmpIndex++;
+        }
         linkCount--;
         tmpIndex++;
+      } else if (contents.startsWith("[", tmpIndex)) {
+        externalLinkCount++;
+      } else if (contents.startsWith("]", tmpIndex)) {
+        externalLinkCount--;
       } else if (contents.startsWith("{{", tmpIndex)) {
         templateCount++;
         tmpIndex++;
