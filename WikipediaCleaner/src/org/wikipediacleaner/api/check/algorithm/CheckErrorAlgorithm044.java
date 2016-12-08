@@ -97,12 +97,13 @@ public class CheckErrorAlgorithm044 extends CheckErrorAlgorithmBase {
                       title.getLevel(), replacement, title.getAfterTitle()));
             }
           }
-          text = text.replaceAll("'''", "");
-          errorResult.addReplacement(
-              PageElementTitle.createTitle(
-                  title.getLevel(), text, title.getAfterTitle()),
-              false,
-              (countBold == 2) && text.startsWith("'''") && text.endsWith("'''"));
+          if (countBold >= 2) {
+            errorResult.addReplacement(
+                PageElementTitle.createTitle(
+                    title.getLevel(), text.replaceAll("'''", ""), title.getAfterTitle()),
+                false,
+                (countBold == 2) && text.startsWith("'''") && text.endsWith("'''"));
+          }
           errors.add(errorResult);
         }
       }
