@@ -11,7 +11,9 @@ import java.util.Collection;
 import java.util.List;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
+import org.wikipediacleaner.api.constants.WPCConfigurationString;
 import org.wikipediacleaner.api.data.PageAnalysis;
+import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.PageElementTitle;
 import org.wikipediacleaner.gui.swing.component.MWPane;
 import org.wikipediacleaner.i18n.GT;
@@ -61,10 +63,14 @@ public class CheckErrorAlgorithm044 extends CheckErrorAlgorithmBase {
         // Check if the title is bold
         int index = 0;
         int countBold = 0;
+        boolean possibleApostrophe = false;
         while (index < text.length()) {
           if (text.startsWith("'''", index)) {
             index += 3;
             countBold++;
+          } else if ((countBold == 1) && (text.startsWith("''", index))) {
+            index += 2;
+            possibleApostrophe = true;
           } else {
             index++;
           }
@@ -76,10 +82,22 @@ public class CheckErrorAlgorithm044 extends CheckErrorAlgorithmBase {
             return true;
           }
           result = true;
-          text = text.replaceAll("'''", "");
           CheckErrorResult errorResult = createCheckErrorResult(
               analysis,
               title.getBeginIndex(), title.getEndIndex());
+          if ((countBold == 1) && possibleApostrophe) {
+            String template = analysis.getWPCConfiguration().getString(
+                WPCConfigurationString.APOSTROPHE_TEMPLATE);
+            if (template != null) {
+              String replacement = text.replaceFirst(
+                  "'''",
+                  PageElementTemplate.createTemplate(template) + "''");
+              errorResult.addReplacement(
+                  PageElementTitle.createTitle(
+                      title.getLevel(), replacement, title.getAfterTitle()));
+            }
+          }
+          text = text.replaceAll("'''", "");
           errorResult.addReplacement(
               PageElementTitle.createTitle(
                   title.getLevel(), text, title.getAfterTitle()),
