@@ -8,6 +8,8 @@
 
 package org.wikipediacleaner.api.check;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementComment;
 
@@ -17,29 +19,21 @@ import org.wikipediacleaner.api.data.PageElementComment;
  */
 public class CheckWikiDetection {
 
-  /**
-   * Full line.
-   */
+  private final static Log log = LogFactory.getLog(CheckWikiDetection.class);
+
+  /** Full line. */
   private final String line;
 
-  /**
-   * Method to interpret the location.
-   */
+  /** Method to interpret the location. */
   private final char locationMethod;
 
-  /**
-   * Error number (algorithm).
-   */
+  /** Error number (algorithm). */
   private final int errorNumber;
 
-  /**
-   * Location of the error in the wiki text.
-   */
+  /** Location of the error in the wiki text. */
   private final int location;
 
-  /**
-   * Wiki text where the error was found.
-   */
+  /** Wiki text where the error was found. */
   private final String detection;
 
   /**
@@ -68,20 +62,25 @@ public class CheckWikiDetection {
     if (spaceIndex <= 0) {
       return null;
     }
-    int errorNumber = Integer.parseInt(line.substring(0, spaceIndex));
-    line = line.substring(spaceIndex).trim();
-    spaceIndex = line.indexOf(' ');
-    int location = -1;
-    String detection = null;
-    if (spaceIndex <= 0) {
-      location = Integer.parseInt(line);
-    } else {
-      location = Integer.parseInt(line.substring(0, spaceIndex));
+    try {
+      int errorNumber = Integer.parseInt(line.substring(0, spaceIndex));
       line = line.substring(spaceIndex).trim();
-      detection = line;
+      spaceIndex = line.indexOf(' ');
+      int location = -1;
+      String detection = null;
+      if (spaceIndex <= 0) {
+        location = Integer.parseInt(line);
+      } else {
+        location = Integer.parseInt(line.substring(0, spaceIndex));
+        line = line.substring(spaceIndex).trim();
+        detection = line;
+      }
+      return new CheckWikiDetection(
+          originalLine, locationMethod, errorNumber, location, detection);
+    } catch (NumberFormatException e) {
+      log.error("Line with invalide format: " + line);
+      return null;
     }
-    return new CheckWikiDetection(
-        originalLine, locationMethod, errorNumber, location, detection);
   }
 
   /**
