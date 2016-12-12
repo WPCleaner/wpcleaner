@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2016-12-04 17:00+0100\n"
+"POT-Creation-Date: 2016-12-12 19:45+0100\n"
 "PO-Revision-Date: 2013-07-06 19:07+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Swedish <sv@li.org>\n"
@@ -150,7 +150,7 @@ msgstr ""
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm042_Old.java:62
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm043.java:148
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm045.java:130
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm046.java:176
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm046.java:178
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm047.java:149
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm048.java:113
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm515.java:90
@@ -196,6 +196,7 @@ msgstr ""
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm003.java:181
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm003.java:182
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm111.java:146
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm112.java:116
 #, java-format
 msgid "A list of templates resulting in the inclusion of {0}"
 msgstr ""
@@ -371,7 +372,7 @@ msgstr ""
 msgid "List of templates that prevent automatic fixing of this error"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm044.java:30
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm044.java:32
 msgid "Fix all bold headlines"
 msgstr ""
 
@@ -441,12 +442,12 @@ msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:203
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:346
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm091.java:238
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm091.java:260
 msgid "What is the title of the page on this wiki ?"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:216
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm091.java:251
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm091.java:273
 #, java-format
 msgid "Replace using template {0}"
 msgstr ""
@@ -497,7 +498,7 @@ msgstr ""
 msgid "You can replace the link using template {0}."
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm069.java:537
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm069.java:570
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm070.java:263
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm071.java:135
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm106.java:159
@@ -660,7 +661,7 @@ msgid "Templates to be used for linking to the history of an article"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm090.java:806
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm091.java:349
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm091.java:371
 msgid "Templates using external links"
 msgstr ""
 
@@ -676,11 +677,11 @@ msgstr ""
 msgid "Convert them to internal links"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm091.java:350
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm091.java:372
 msgid "To report only links to other languages"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm091.java:351
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm091.java:373
 msgid "To report only links to local wikis"
 msgstr ""
 
