@@ -51,6 +51,7 @@ public class CheckErrorAlgorithm112 extends CheckErrorAlgorithmBase {
         "-moz-column-gap",
         "-moz-column-width",
         "-moz-linear-gradient",
+        "-webkit-column-count",
     });
 
     return result;
