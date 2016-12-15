@@ -7,6 +7,8 @@
 
 package org.wikipediacleaner.gui.swing.component;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.UUID;
 
 import javax.swing.text.SimpleAttributeSet;
@@ -74,7 +76,9 @@ public class MWPaneCheckWikiFormatter extends MWPaneFormatter {
     CheckErrorPage errorPage = CheckError.analyzeError(algorithm, pageAnalysis);
     if ((errorPage != null) && (errorPage.getResults() != null)) {
       int lastPosition = -1;
-      for (CheckErrorResult error : errorPage.getResults()) {
+      List<CheckErrorResult> errorResults = errorPage.getResults();
+      Collections.sort(errorResults);
+      for (CheckErrorResult error : errorResults) {
         if (error.getStartPosition() >= lastPosition) {
           formatCheckWikiError(doc, error);
           lastPosition = error.getEndPosition();
