@@ -34,26 +34,37 @@ public class CheckErrorAlgorithm112 extends CheckErrorAlgorithmBase {
   /** List of attributes for tables */
   private final static String[] TABLE_ATTRIBUTES = new String[] {
     "contenteditable",
+    "data-cx-state",
     "data-cx-weight",
     "data-source",
     "id",
   };
 
   static {
-    TAGS.put(PageElementTag.TAG_HTML_CENTER, new String[] {
+    TAGS.put(null, new String[] {
         "contenteditable",
+        "data-cx-draft",
+        "date-cx-state",
         "data-cx-weight",
         "data-source",
+        "-moz-border-radius-bottomleft",
+        "-moz-border-radius-bottomright",
+        "-moz-border-radius-topleft",
+        "-moz-border-radius-topright",
+        "-moz-border-radius",
+        "-moz-box-shadow",
+        "-moz-linear-gradient",
+        "-webkit-border-radius",
+    });
+    TAGS.put(PageElementTag.TAG_HTML_CENTER, new String[] {
         "id",
     });
     TAGS.put(PageElementTag.TAG_HTML_DIV, new String[] {
-        "-moz-border-radius",
-        "-moz-box-shadow",
         "-moz-column-count",
         "-moz-column-gap",
         "-moz-column-width",
-        "-moz-linear-gradient",
         "-webkit-column-count",
+        "-webkit-column-width",
     });
   }
 
@@ -105,6 +116,8 @@ public class CheckErrorAlgorithm112 extends CheckErrorAlgorithmBase {
     int index = contents.indexOf("{|", 0);
     while (index >= 0) {
       if ((index == 0) || (contents.charAt(index - 1) == '\n')) {
+
+        // Analyze general table attributes
         int lineEnd = contents.indexOf('\n', index);
         if (lineEnd < 0) {
           lineEnd = contents.length();
@@ -118,11 +131,151 @@ public class CheckErrorAlgorithm112 extends CheckErrorAlgorithmBase {
               return true;
             }
             result = true;
-            attributeIndex += index;
+            int beginIndex = attributeIndex;
+            int endIndex = beginIndex + attributeName.length();
+            while ((beginIndex > 0) && (line.charAt(beginIndex - 1) == ' ')) {
+              beginIndex--;
+            }
+            boolean delete = false;
+            if (endIndex < line.length()) {
+              int tmpIndex = endIndex;
+              if ((tmpIndex < line.length()) && (line.charAt(tmpIndex) == '=')) {
+                tmpIndex++;
+                if ((tmpIndex < line.length()) && (line.charAt(tmpIndex) == '"')) {
+                  tmpIndex++;
+                  while ((tmpIndex < line.length()) && (line.charAt(tmpIndex) != '"')) {
+                    tmpIndex++;
+                  }
+                  if ((tmpIndex < line.length()) && (line.charAt(tmpIndex) == '"')) {
+                    tmpIndex++;
+                    endIndex = tmpIndex;
+                    delete = true;
+                  }
+                }
+              }
+            }
             CheckErrorResult errorResult = createCheckErrorResult(
-                analysis, attributeIndex, attributeIndex + attributeName.length());
+                analysis, index + beginIndex, index + endIndex);
+            if (delete) {
+              errorResult.addReplacement("");
+            }
             errors.add(errorResult);
           }
+        }
+
+        // Analyze table details
+        int lineBegin = lineEnd + 1;
+        boolean tableEndFound = false;
+        while ((lineBegin < contents.length()) && !tableEndFound) {
+          lineEnd = contents.indexOf('\n', lineBegin);
+          if (lineEnd < 0) {
+            lineEnd = contents.length();
+          }
+          line = contents.substring(lineBegin, lineEnd);
+
+          if (line.indexOf("|}") >= 0) {
+            tableEndFound = true;
+          } else {
+            if (line.startsWith("|-")) {
+
+              // Analyze new table lines
+              int attributeIndex = line.indexOf("id");
+              if ((attributeIndex > 0) &&
+                  !Character.isLetterOrDigit(line.charAt(attributeIndex - 1)) &&
+                  (attributeIndex + 2 < line.length()) &&
+                  !Character.isLetterOrDigit(line.charAt(attributeIndex + 2))) {
+                int beginIndex = attributeIndex;
+                int endIndex = beginIndex + 2;
+                while ((beginIndex > 0) && (line.charAt(beginIndex - 1) == ' ')) {
+                  beginIndex--;
+                }
+                if (errors == null) {
+                  return true;
+                }
+                result = true;
+                boolean delete = false;
+                if (endIndex < line.length()) {
+                  int tmpIndex = endIndex;
+                  if ((tmpIndex < line.length()) && (line.charAt(tmpIndex) == '=')) {
+                    tmpIndex++;
+                    if ((tmpIndex < line.length()) && (line.charAt(tmpIndex) == '"')) {
+                      tmpIndex++;
+                      while ((tmpIndex < line.length()) && Character.isDigit(line.charAt(tmpIndex))) {
+                        tmpIndex++;
+                      }
+                      if ((tmpIndex < line.length()) && (line.charAt(tmpIndex) == '"')) {
+                        tmpIndex++;
+                        endIndex = tmpIndex;
+                        delete = true;
+                      }
+                    }
+                  }
+                }
+                CheckErrorResult errorResult = createCheckErrorResult(
+                    analysis, lineBegin + beginIndex, lineBegin + endIndex);
+                if (delete) {
+                  errorResult.addReplacement("");
+                }
+                errors.add(errorResult);
+              }
+            } else if (line.startsWith("!") || line.startsWith("|")) {
+
+              // Analyze table lines
+              char separator = line.charAt(0);
+              int attributeIndex = line.indexOf("id");
+              while (attributeIndex > 0) {
+                if (!Character.isLetterOrDigit(line.charAt(attributeIndex - 1)) &&
+                    (attributeIndex + 2 < line.length()) &&
+                    !Character.isLetterOrDigit(line.charAt(attributeIndex + 2))) {
+                  int beginIndex = attributeIndex;
+                  int endIndex = beginIndex + 2;
+                  while ((beginIndex > 0) && (line.charAt(beginIndex - 1) == ' ')) {
+                    beginIndex--;
+                  }
+                  if (errors == null) {
+                    return true;
+                  }
+                  result = true;
+                  boolean delete = false;
+                  if (endIndex < line.length()) {
+                    int tmpIndex = endIndex;
+                    if ((tmpIndex < line.length()) && (line.charAt(tmpIndex) == '=')) {
+                      tmpIndex++;
+                      if ((tmpIndex < line.length()) && (line.charAt(tmpIndex) == '"')) {
+                        tmpIndex++;
+                        while ((tmpIndex < line.length()) && Character.isDigit(line.charAt(tmpIndex))) {
+                          tmpIndex++;
+                        }
+                        if ((tmpIndex < line.length()) && (line.charAt(tmpIndex) == '"')) {
+                          tmpIndex++;
+                          endIndex = tmpIndex;
+                          delete = true;
+                          if ((beginIndex > 0) && (line.charAt(beginIndex - 1) == separator)) {
+                            while ((tmpIndex < line.length()) && (line.charAt(tmpIndex) == ' ')) {
+                              tmpIndex++;
+                            }
+                            if ((tmpIndex < line.length()) && (line.charAt(tmpIndex) == '|')) {
+                              tmpIndex++;
+                              endIndex = tmpIndex;
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                  CheckErrorResult errorResult = createCheckErrorResult(
+                      analysis, lineBegin + beginIndex, lineBegin + endIndex);
+                  if (delete) {
+                    errorResult.addReplacement("");
+                  }
+                  errors.add(errorResult);
+                }
+                attributeIndex = line.indexOf("id", attributeIndex + 2);
+              }
+            }
+          }
+
+          lineBegin = lineEnd + 1;
         }
       }
       index = contents.indexOf("{|", index + 2);
@@ -147,7 +300,7 @@ public class CheckErrorAlgorithm112 extends CheckErrorAlgorithmBase {
 
     // Check each tag
     boolean result = false;
-    List<PageElementTag> tags = analysis.getTags(tagName);
+    List<PageElementTag> tags = (tagName != null) ? analysis.getTags(tagName) : analysis.getTags();
     for (PageElementTag tag : tags) {
       if ((tag != null) && (!tag.isEndTag())) {
         String tagText = analysis.getContents().substring(tag.getBeginIndex(), tag.getEndIndex());
