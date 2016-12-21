@@ -127,79 +127,9 @@ public class CheckErrorAlgorithm068 extends CheckErrorAlgorithmBase {
             for (String template : templatesList) {
               String[] templateArgs = template.split("\\|");
               if (templateArgs.length >= 5) {
-
-                // Parameters
-                String templateName = templateArgs[0];
-                String paramLocalTitle = templateArgs[1];
-                String paramLang = templateArgs[2];
-                String defaultLang = null;
-                if (paramLang.indexOf('=') > 0) {
-                  int equalIndex = paramLang.indexOf('=');
-                  defaultLang = paramLang.substring(equalIndex + 1);
-                  paramLang = paramLang.substring(0, equalIndex);
-                }
-                String paramDistantTitle = templateArgs[3];
-                String paramText = templateArgs[4];
-
-                // Compute order of parameters
-                List<String> order = new ArrayList<>();
-                if (templateArgs.length >= 6) {
-                  String[] tmpOrder = templateArgs[5].split(",");
-                  for (String tmp : tmpOrder) {
-                    order.add(tmp);
-                  }
-                }
-                if (!order.contains(paramLocalTitle)) {
-                  order.add(paramLocalTitle);
-                }
-                if (!order.contains(paramLang)) {
-                  order.add(paramLang);
-                }
-                if (!order.contains(paramDistantTitle)) {
-                  order.add(paramDistantTitle);
-                }
-                if (!order.contains(paramText)) {
-                  order.add(paramText);
-                }
-
-                // Build text
                 StringBuilder prefix = new StringBuilder();
                 StringBuilder suffix = new StringBuilder();
-                prefix.append("{{");
-                prefix.append(templateName);
-                boolean localTitle = false;
-                for (String param : order) {
-                  if (param.equals(paramLocalTitle)) {
-                    prefix.append("|");
-                    prefix.append(paramLocalTitle);
-                    prefix.append("=");
-                    localTitle = true;
-                  } else {
-                    String value = "";
-                    boolean append = true;
-                    if (param.equals(paramLang)) {
-                      if ((defaultLang != null) && defaultLang.equals(lgCode)) {
-                        append = false;
-                      } else {
-                        value = lgCode;
-                      } 
-                    } else if (param.equals(paramDistantTitle)) {
-                      value = pageTitle;
-                    } else if (param.equals(paramText)) {
-                      value = (link.getText() != null) ? link.getText() : pageTitle;
-                    }
-                    if (append) {
-                      StringBuilder buffer = localTitle ? suffix : prefix;
-                      buffer.append("|");
-                      buffer.append(param);
-                      buffer.append("=");
-                      if (value != null) {
-                        buffer.append(value);
-                      }
-                    }
-                  }
-                }
-                suffix.append("}}");
+                buildReplacementTemplate(templateArgs, link, prefix, suffix);
                 String question = GT._("What is the title of the page on this wiki ?");
                 AddTextActionProvider action = null;
                 if ((link.getText() != null) && (!link.getText().equals(pageTitle))) {
@@ -228,6 +158,91 @@ public class CheckErrorAlgorithm068 extends CheckErrorAlgorithmBase {
     }
 
     return result;
+  }
+
+  /**
+   * Build a replacement text with a template.
+   * 
+   * @param templateArgs Configuration for the template.
+   * @param link Link to the other wiki.
+   * @param prefix Prefix for the replacement text (output).
+   * @param suffix Suffix for the replacement text (output).
+   */
+  private void buildReplacementTemplate(
+      String[] templateArgs, PageElementInterwikiLink link,
+      StringBuilder prefix, StringBuilder suffix) {
+
+    // Parameters
+    String templateName = templateArgs[0];
+    String paramLocalTitle = templateArgs[1];
+    String paramLang = templateArgs[2];
+    String defaultLang = null;
+    if (paramLang.indexOf('=') > 0) {
+      int equalIndex = paramLang.indexOf('=');
+      defaultLang = paramLang.substring(equalIndex + 1);
+      paramLang = paramLang.substring(0, equalIndex);
+    }
+    String paramDistantTitle = templateArgs[3];
+    String paramText = templateArgs[4];
+
+    // Compute order of parameters
+    List<String> order = new ArrayList<>();
+    if (templateArgs.length >= 6) {
+      String[] tmpOrder = templateArgs[5].split(",");
+      for (String tmp : tmpOrder) {
+        order.add(tmp);
+      }
+    }
+    if (!order.contains(paramLocalTitle)) {
+      order.add(paramLocalTitle);
+    }
+    if (!order.contains(paramLang)) {
+      order.add(paramLang);
+    }
+    if (!order.contains(paramDistantTitle)) {
+      order.add(paramDistantTitle);
+    }
+    if (!order.contains(paramText)) {
+      order.add(paramText);
+    }
+
+    // Build text
+    prefix.append("{{");
+    prefix.append(templateName);
+    boolean localTitle = false;
+    String lgCode = link.getInterwiki().getPrefix();
+    for (String param : order) {
+      if (param.equals(paramLocalTitle)) {
+        prefix.append("|");
+        prefix.append(paramLocalTitle);
+        prefix.append("=");
+        localTitle = true;
+      } else {
+        String value = "";
+        boolean append = true;
+        if (param.equals(paramLang)) {
+          if ((defaultLang != null) && defaultLang.equals(lgCode)) {
+            append = false;
+          } else {
+            value = lgCode;
+          } 
+        } else if (param.equals(paramDistantTitle)) {
+          value = link.getLink();
+        } else if (param.equals(paramText)) {
+          value = (link.getText() != null) ? link.getText() : link.getLink();
+        }
+        if (append) {
+          StringBuilder buffer = localTitle ? suffix : prefix;
+          buffer.append("|");
+          buffer.append(param);
+          buffer.append("=");
+          if (value != null) {
+            buffer.append(value);
+          }
+        }
+      }
+    }
+    suffix.append("}}");
   }
 
   /**
@@ -352,13 +367,10 @@ public class CheckErrorAlgorithm068 extends CheckErrorAlgorithmBase {
                     textPane.getParent(), message, pageTitle, checker);
               }
               if (toTitle != null) {
-                replacement =
-                    "{{" + templateArgs[0] +
-                    "|" + templateArgs[1] + "=" + toTitle +
-                    "|" + templateArgs[2] + "=" + lgCode +
-                    "|" + templateArgs[3] + "=" + pageTitle +
-                    "|" + templateArgs[4] + "=" + ((link.getText() != null) ? link.getText() : pageTitle) +
-                    "}}";
+                StringBuilder prefix = new StringBuilder();
+                StringBuilder suffix = new StringBuilder();
+                buildReplacementTemplate(templateArgs, link, prefix, suffix);
+                replacement = prefix.toString() + toTitle + suffix.toString();
               }
             }
 
