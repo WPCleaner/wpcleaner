@@ -8,8 +8,10 @@
 package org.wikipediacleaner.api.check.algorithm;
 
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.data.PageAnalysis;
@@ -24,6 +26,35 @@ public class CheckErrorAlgorithm112 extends CheckErrorAlgorithmBase {
 
   public CheckErrorAlgorithm112() {
     super("Bad or deprecated CSS attributes");
+  }
+
+  /** List of attributes for each kind of tag */
+  private final static Map<String, String[]> TAGS = new HashMap<>();
+
+  /** List of attributes for tables */
+  private final static String[] TABLE_ATTRIBUTES = new String[] {
+    "contenteditable",
+    "data-cx-weight",
+    "data-source",
+    "id",
+  };
+
+  static {
+    TAGS.put(PageElementTag.TAG_HTML_CENTER, new String[] {
+        "contenteditable",
+        "data-cx-weight",
+        "data-source",
+        "id",
+    });
+    TAGS.put(PageElementTag.TAG_HTML_DIV, new String[] {
+        "-moz-border-radius",
+        "-moz-box-shadow",
+        "-moz-column-count",
+        "-moz-column-gap",
+        "-moz-column-width",
+        "-moz-linear-gradient",
+        "-webkit-column-count",
+    });
   }
 
   /**
@@ -44,15 +75,58 @@ public class CheckErrorAlgorithm112 extends CheckErrorAlgorithmBase {
 
     // Analyze each kind of tags
     boolean result = false;
-    result |= analyzeTag(analysis, errors, PageElementTag.TAG_HTML_DIV, new String[] {
-        "-moz-border-radius",
-        "-moz-box-shadow",
-        "-moz-column-count",
-        "-moz-column-gap",
-        "-moz-column-width",
-        "-moz-linear-gradient",
-        "-webkit-column-count",
-    });
+    for (Entry<String, String[]> tag : TAGS.entrySet()) {
+      result |= analyzeTag(analysis, errors, tag.getKey(), tag.getValue());
+      if (result && (errors == null)) {
+        return result;
+      }
+    }
+    result |= analyzeTables(analysis, errors, TABLE_ATTRIBUTES);
+
+    return result;
+  }
+
+  /**
+   * Analyze tables to check if errors are present.
+   * 
+   * @param analysis Page analysis.
+   * @param errors Errors found in the page.
+   * @param onlyAutomatic True if analysis could be restricted to errors automatically fixed.
+   * @return Flag indicating if the error was found.
+   */
+  private boolean analyzeTables(
+      PageAnalysis analysis,
+      Collection<CheckErrorResult> errors,
+      String[] attributeNames) {
+
+    // Check each table
+    boolean result = false;
+    String contents = analysis.getContents();
+    int index = contents.indexOf("{|", 0);
+    while (index >= 0) {
+      if ((index == 0) || (contents.charAt(index - 1) == '\n')) {
+        int lineEnd = contents.indexOf('\n', index);
+        if (lineEnd < 0) {
+          lineEnd = contents.length();
+        }
+        String line = contents.substring(index, lineEnd);
+        for (String attributeName : attributeNames) {
+          int attributeIndex = line.indexOf(attributeName);
+          if ((attributeIndex > 0) &&
+              !Character.isLetterOrDigit(line.charAt(attributeIndex - 1))) {
+            if (errors == null) {
+              return true;
+            }
+            result = true;
+            attributeIndex += index;
+            CheckErrorResult errorResult = createCheckErrorResult(
+                analysis, attributeIndex, attributeIndex + attributeName.length());
+            errors.add(errorResult);
+          }
+        }
+      }
+      index = contents.indexOf("{|", index + 2);
+    }
 
     return result;
   }
