@@ -38,6 +38,11 @@ public class CheckErrorAlgorithm112 extends CheckErrorAlgorithmBase {
     "data-cx-weight",
     "data-source",
     "id",
+    "-moz-border-radius-bottomleft",
+    "-moz-border-radius-bottomright",
+    "-moz-border-radius-topleft",
+    "-moz-border-radius-topright",
+    "-moz-border-radius",
   };
 
   static {
@@ -180,20 +185,23 @@ public class CheckErrorAlgorithm112 extends CheckErrorAlgorithmBase {
 
               // Analyze new table lines
               int attributeIndex = line.indexOf("id");
-              if ((attributeIndex > 0) &&
-                  !Character.isLetterOrDigit(line.charAt(attributeIndex - 1)) &&
-                  (attributeIndex + 2 < line.length()) &&
-                  !Character.isLetterOrDigit(line.charAt(attributeIndex + 2))) {
-                int beginIndex = attributeIndex;
-                int endIndex = beginIndex + 2;
+              boolean shouldReport = (attributeIndex > 0);
+              if (shouldReport &&
+                  Character.isLetterOrDigit(line.charAt(attributeIndex - 1))) {
+                shouldReport = false;
+              }
+              if (shouldReport &&
+                  (attributeIndex + 2 >= line.length()) ||
+                  Character.isLetterOrDigit(line.charAt(attributeIndex + 2))) {
+                shouldReport = false;
+              }
+              int beginIndex = attributeIndex;
+              int endIndex = beginIndex + 2;
+              boolean delete = false;
+              if (shouldReport) {
                 while ((beginIndex > 0) && (line.charAt(beginIndex - 1) == ' ')) {
                   beginIndex--;
                 }
-                if (errors == null) {
-                  return true;
-                }
-                result = true;
-                boolean delete = false;
                 if (endIndex < line.length()) {
                   int tmpIndex = endIndex;
                   if ((tmpIndex < line.length()) && (line.charAt(tmpIndex) == '=')) {
@@ -211,6 +219,17 @@ public class CheckErrorAlgorithm112 extends CheckErrorAlgorithmBase {
                     }
                   }
                 }
+                if (!delete) {
+                  shouldReport = false;
+                }
+              }
+
+              // Report error
+              if (shouldReport) {
+                if (errors == null) {
+                  return true;
+                }
+                result = true;
                 CheckErrorResult errorResult = createCheckErrorResult(
                     analysis, lineBegin + beginIndex, lineBegin + endIndex);
                 if (delete) {
@@ -224,19 +243,31 @@ public class CheckErrorAlgorithm112 extends CheckErrorAlgorithmBase {
               char separator = line.charAt(0);
               int attributeIndex = line.indexOf("id");
               while (attributeIndex > 0) {
-                if (!Character.isLetterOrDigit(line.charAt(attributeIndex - 1)) &&
-                    (attributeIndex + 2 < line.length()) &&
-                    !Character.isLetterOrDigit(line.charAt(attributeIndex + 2))) {
-                  int beginIndex = attributeIndex;
-                  int endIndex = beginIndex + 2;
+                boolean shouldReport = true;
+                if (shouldReport &&
+                    Character.isLetterOrDigit(line.charAt(attributeIndex - 1))) {
+                  shouldReport = false;
+                }
+                if (shouldReport &&
+                    (attributeIndex + 2 >= line.length()) ||
+                    Character.isLetterOrDigit(line.charAt(attributeIndex + 2))) {
+                  shouldReport = false;
+                }
+                if (shouldReport &&
+                    (analysis.isInExternalLink(lineBegin + attributeIndex) != null)) {
+                  shouldReport = false;
+                }
+                if (shouldReport &&
+                    (analysis.isInTemplate(lineBegin + attributeIndex) != null)) {
+                  shouldReport = false;
+                }
+                int beginIndex = attributeIndex;
+                int endIndex = beginIndex + 2;
+                boolean delete = false;
+                if (shouldReport) {
                   while ((beginIndex > 0) && (line.charAt(beginIndex - 1) == ' ')) {
                     beginIndex--;
                   }
-                  if (errors == null) {
-                    return true;
-                  }
-                  result = true;
-                  boolean delete = false;
                   if (endIndex < line.length()) {
                     int tmpIndex = endIndex;
                     if ((tmpIndex < line.length()) && (line.charAt(tmpIndex) == '=')) {
@@ -262,7 +293,18 @@ public class CheckErrorAlgorithm112 extends CheckErrorAlgorithmBase {
                         }
                       }
                     }
+                    if (!delete) {
+                      shouldReport = false;
+                    }
                   }
+                }
+
+                // Report error
+                if (shouldReport) {
+                  if (errors == null) {
+                    return true;
+                  }
+                  result = true;
                   CheckErrorResult errorResult = createCheckErrorResult(
                       analysis, lineBegin + beginIndex, lineBegin + endIndex);
                   if (delete) {
