@@ -263,7 +263,7 @@ public class CheckErrorAlgorithm112 extends CheckErrorAlgorithmBase {
                 }
                 int beginIndex = attributeIndex;
                 int endIndex = beginIndex + 2;
-                boolean delete = false;
+                String replacement = null;
                 if (shouldReport) {
                   while ((beginIndex > 0) && (line.charAt(beginIndex - 1) == ' ')) {
                     beginIndex--;
@@ -280,7 +280,7 @@ public class CheckErrorAlgorithm112 extends CheckErrorAlgorithmBase {
                         if ((tmpIndex < line.length()) && (line.charAt(tmpIndex) == '"')) {
                           tmpIndex++;
                           endIndex = tmpIndex;
-                          delete = true;
+                          replacement = "";
                           if ((beginIndex > 0) && (line.charAt(beginIndex - 1) == separator)) {
                             while ((tmpIndex < line.length()) && (line.charAt(tmpIndex) == ' ')) {
                               tmpIndex++;
@@ -288,12 +288,19 @@ public class CheckErrorAlgorithm112 extends CheckErrorAlgorithmBase {
                             if ((tmpIndex < line.length()) && (line.charAt(tmpIndex) == '|')) {
                               tmpIndex++;
                               endIndex = tmpIndex;
+                              if ((tmpIndex < line.length()) && (line.charAt(tmpIndex) != ' ')) {
+                                if (line.charAt(beginIndex) == ' ') {
+                                  beginIndex++;
+                                } else {
+                                  replacement = " ";
+                                }
+                              }
                             }
                           }
                         }
                       }
                     }
-                    if (!delete) {
+                    if (replacement == null) {
                       shouldReport = false;
                     }
                   }
@@ -307,7 +314,7 @@ public class CheckErrorAlgorithm112 extends CheckErrorAlgorithmBase {
                   result = true;
                   CheckErrorResult errorResult = createCheckErrorResult(
                       analysis, lineBegin + beginIndex, lineBegin + endIndex);
-                  if (delete) {
+                  if (replacement != null) {
                     errorResult.addReplacement("");
                   }
                   errors.add(errorResult);
