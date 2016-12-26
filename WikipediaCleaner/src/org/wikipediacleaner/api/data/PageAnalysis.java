@@ -144,12 +144,72 @@ public class PageAnalysis {
   /**
    * Perform page analysis.
    */
-  public void performFullPageAnalysis() {
+  public void performFullPageAnalysis(AnalysisPerformance perf) {
+    long beginTime = System.nanoTime();
     firstLevelAnalysis();
+    long firstTime = System.nanoTime();
     secondLevelAnalysis();
+    long secondTime = System.nanoTime();
     thirdLevelAnalysis();
+    long thirdTime = System.nanoTime();
     fourthLevelAnalysis();
+    long fourthTime = System.nanoTime();
     fifthLevelAnalysis();
+    long fifthTime = System.nanoTime();
+    if (perf != null) {
+      perf.firstLevel += (firstTime - beginTime);
+      perf.secondLevel += (secondTime - firstTime);
+      perf.thirdLevel += (thirdTime - secondTime);
+      perf.fourthLevel += (fourthTime - thirdTime);
+      perf.fifthLevel += (fifthTime - fourthTime);
+    }
+  }
+
+  /**
+   * Bean for holding information about analysis performance.
+   */
+  public static class AnalysisPerformance {
+    long firstLevel;
+    long secondLevel;
+    long thirdLevel;
+    long fourthLevel;
+    long fifthLevel;
+
+    public AnalysisPerformance() {
+      firstLevel = 0;
+      secondLevel = 0;
+      thirdLevel = 0;
+      fourthLevel = 0;
+      fifthLevel = 0;
+    }
+
+    /**
+     * @return Textual description of the object.
+     * @see java.lang.Object#toString()
+     */
+    @Override
+    public String toString() {
+      long first = firstLevel / 1000000000;
+      long second = secondLevel / 1000000000;
+      long third = thirdLevel / 1000000000;
+      long fourth = fourthLevel / 1000000000;
+      long fifth = fifthLevel / 1000000000;
+      StringBuilder result = new StringBuilder();
+      result.append(first + second + third + fourth + fifth);
+      result.append(" s (");
+      result.append(first);
+      result.append(" + ");
+      result.append(second);
+      result.append(" + ");
+      result.append(third);
+      result.append(" + ");
+      result.append(fourth);
+      result.append(" + ");
+      result.append(fifth);
+      result.append(")");
+      return result.toString();
+    }
+
   }
 
   // ==========================================================================
@@ -339,7 +399,8 @@ public class PageAnalysis {
 
       Performance perf = null;
       if (traceTime) {
-        perf = new Performance("PageAnalysis.firstLevelAnalysis", TRACE_THRESHOLD);
+        perf = Performance.getInstance(
+            "PageAnalysis.firstLevelAnalysis", TRACE_THRESHOLD);
       }
 
       // Initialize
@@ -369,6 +430,7 @@ public class PageAnalysis {
 
       if (perf != null) {
         perf.printEnd();
+        perf.release();
       }
     }
   }
@@ -385,7 +447,8 @@ public class PageAnalysis {
 
       Performance perf = null;
       if (traceTime) {
-        perf = new Performance("PageAnalysis.secondLevelAnalysis", TRACE_THRESHOLD);
+        perf = Performance.getInstance(
+            "PageAnalysis.secondLevelAnalysis", TRACE_THRESHOLD);
       }
 
       // Initialize
@@ -441,6 +504,7 @@ public class PageAnalysis {
 
       if (perf != null) {
         perf.printEnd();
+        perf.release();
       }
     }
   }
@@ -457,7 +521,8 @@ public class PageAnalysis {
 
       Performance perf = null;
       if (traceTime) {
-        perf = new Performance("PageAnalysis.thirdLevelAnalysis", TRACE_THRESHOLD);
+        perf = Performance.getInstance(
+            "PageAnalysis.thirdLevelAnalysis", TRACE_THRESHOLD);
         perf.startPart();
       }
 
@@ -549,6 +614,7 @@ public class PageAnalysis {
       if (perf != null) {
         perf.stopPart("addAreas");
         perf.printEnd();
+        perf.release();
       }
     }
   }
@@ -565,7 +631,8 @@ public class PageAnalysis {
 
       Performance perf = null;
       if (traceTime) {
-        perf = new Performance("PageAnalysis.fourthLevelAnalysis", TRACE_THRESHOLD);
+        perf = Performance.getInstance(
+            "PageAnalysis.fourthLevelAnalysis", TRACE_THRESHOLD);
       }
 
       // Go through all the text of the page
@@ -611,6 +678,7 @@ public class PageAnalysis {
 
       if (perf != null) {
         perf.printEnd();
+        perf.release();
       }
     }
   }
@@ -627,7 +695,8 @@ public class PageAnalysis {
 
       Performance perf = null;
       if (traceTime) {
-        perf = new Performance("PageAnalysis.fifthLevelAnalysis", TRACE_THRESHOLD);
+        perf = Performance.getInstance(
+            "PageAnalysis.fifthLevelAnalysis", TRACE_THRESHOLD);
       }
 
       isbns = PageElementISBN.analyzePage(this);
@@ -641,6 +710,7 @@ public class PageAnalysis {
 
       if (perf != null) {
         perf.printEnd();
+        perf.release();
       }
     }
   }

@@ -9,6 +9,8 @@ package org.wikipediacleaner.utils;
 
 import java.io.PrintStream;
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -22,16 +24,16 @@ public class Performance {
   private final static PrintStream output = System.err;
 
   /** Global flag for printing */
-  private static boolean print = true;
+  private final static boolean print = true;
 
   /** Global flag for using high precision */
-  private static boolean highPrecision = false;
+  private final static boolean highPrecision = false;
 
   /** Method name */
-  private final String method;
+  private String method;
 
   /** Unit of time */
-  private final String unit;
+  private String unit;
 
   /** Initial time */
   private long initialTime;
@@ -51,7 +53,7 @@ public class Performance {
   /**
    * @param method Method name.
    */
-  public Performance(String method) {
+  private Performance(String method) {
     this(method, 0);
   }
 
@@ -59,15 +61,76 @@ public class Performance {
    * @param method Method name.
    * @param threshold Threshold for printing results.
    */
-  public Performance(String method, long threshold) {
-    this.method = method;
+  private Performance(String method, long threshold) {
+    initialize(method, threshold);
+  }
+
+  /**
+   * Initialize a performance instance.
+   * 
+   * @param methodName Method name.
+   * @param thresholdValue Threshold for printing results.
+   */
+  private void initialize(String methodName, long thresholdValue) {
+    this.method = methodName;
     this.unit = highPrecision ? "ns" : "ms";
-    this.threshold = threshold;
+    this.threshold = thresholdValue;
     initialTime = currentTime();
     partInitialTime = initialTime;
     lastTime = initialTime;
   }
 
+  /** Available instances to measure performance. */
+  private final static List<Performance> availablePerformances = new LinkedList<>();
+
+  /** Instances currently used to measure performance. */
+  private final static List<Performance> usedPerformances = new LinkedList<>();
+
+  /**
+   * @param method Method name.
+   * @return An instance for measuring performance.
+   */
+  public static Performance getInstance(String method) {
+    return getInstance(method, 0);
+  }
+
+  /**
+   * @param method Method name.
+   * @param threshold Threshold for printing results.
+   * @return An instance for measuring performance.
+   */
+  public static Performance getInstance(String method, long threshold) {
+    Performance perf = null;
+
+    // Look for already created instances
+    synchronized (availablePerformances) {
+      if (!availablePerformances.isEmpty()) {
+        perf = availablePerformances.remove(0);
+        perf.initialize(method, threshold);
+      }
+    }
+
+    // Create a new instance if needed
+    if (perf == null) {
+      perf = new Performance(method, threshold);
+    }
+
+    // Register instance
+    synchronized (usedPerformances) {
+      usedPerformances.add(0, perf);
+    }
+
+    return perf;
+  }
+
+  /**
+   * Release a performance instance from the pool of performance objects.
+   */
+  public void release() {
+    synchronized (usedPerformances) {
+      usedPerformances.remove(this);
+    }
+  }
   /**
    * @param threshold Threshold for printing duration.
    */

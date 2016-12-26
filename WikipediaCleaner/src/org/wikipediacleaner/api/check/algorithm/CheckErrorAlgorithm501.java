@@ -218,7 +218,7 @@ public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
     while (itSuggestion.hasNext()) {
       Suggestion suggestion = itSuggestion.next();
       if (!suggestion.isOtherPattern()) {
-        Performance perf = new Performance("Slow regular expression");
+        Performance perf = Performance.getInstance("Slow regular expression");
         perf.setThreshold(slowRegexp);
         itSuggestion.remove();
         Matcher matcher = suggestion.initMatcher(contents);
@@ -262,6 +262,7 @@ public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
           }
         }
         perf.printEnd(suggestion.getPatternText());
+        perf.release();
       }
     }
 
@@ -290,7 +291,7 @@ public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
     while (itSuggestion.hasNext()) {
       Suggestion suggestion = itSuggestion.next();
       if (suggestion.isOtherPattern()) {
-        Performance perf = new Performance("Slow regular expression");
+        Performance perf = Performance.getInstance("Slow regular expression");
         perf.setThreshold(slowRegexp);
         itSuggestion.remove();
         Matcher matcher = suggestion.initMatcher(contents);
@@ -315,6 +316,7 @@ public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
           }
         }
         perf.printEnd(suggestion.getComment(), suggestion.getPatternText());
+        perf.release();
       }
     }
 

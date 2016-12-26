@@ -19,7 +19,6 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.concurrent.Callable;
 import java.util.concurrent.Future;
 
@@ -62,7 +61,7 @@ public class ListCWWorker extends BasicWorker {
   private final String pageName;
 
   /** Algorithms for which to analyze pages */
-  final List<CheckErrorAlgorithm> selectedAlgorithms;
+  final List<AlgorithmInformation> selectedAlgorithms;
 
   /** True if article should be checked on wiki */
   final boolean checkWiki;
@@ -70,8 +69,8 @@ public class ListCWWorker extends BasicWorker {
   /** True to just check the pages that have been previously reported */
   final boolean onlyRecheck;
 
-  /** List of errors found for each algorithm */
-  final Map<CheckErrorAlgorithm, Map<String, Detection>> detections;
+  /** Time spent in analysis. */
+  PageAnalysis.AnalysisPerformance analysisTime;
 
   /** Count of pages analyzed */
   int countAnalyzed;
@@ -96,8 +95,8 @@ public class ListCWWorker extends BasicWorker {
     this.dumpFile = dumpFile;
     this.output = output;
     this.pageName = null;
-    this.selectedAlgorithms = selectedAlgorithms;
-    this.detections = new HashMap<>();
+    this.selectedAlgorithms = AlgorithmInformation.createList(selectedAlgorithms);
+    this.analysisTime = new PageAnalysis.AnalysisPerformance();
     this.countAnalyzed = 0;
     this.countDetections = 0;
     this.checkWiki = checkWiki;
@@ -122,8 +121,8 @@ public class ListCWWorker extends BasicWorker {
     this.dumpFile = dumpFile;
     this.output = null;
     this.pageName = pageName;
-    this.selectedAlgorithms = selectedAlgorithms;
-    this.detections = new HashMap<>();
+    this.selectedAlgorithms = AlgorithmInformation.createList(selectedAlgorithms);
+    this.analysisTime = new PageAnalysis.AnalysisPerformance();
     this.countAnalyzed = 0;
     this.countDetections = 0;
     this.checkWiki = checkWiki;
@@ -159,8 +158,8 @@ public class ListCWWorker extends BasicWorker {
     if (onlyRecheck) {
       try {
         List<Page> outputPages = new ArrayList<>();
-        for (CheckErrorAlgorithm algorithm : selectedAlgorithms) {
-          String truePageName = MessageFormat.format(pageName, algorithm.getErrorNumberString());
+        for (AlgorithmInformation algorithm : selectedAlgorithms) {
+          String truePageName = MessageFormat.format(pageName, algorithm.algorithm.getErrorNumberString());
           Page page = DataManager.getPage(getWikipedia(), truePageName, null, null, null);
           outputPages.add(page);
         }
@@ -187,18 +186,31 @@ public class ListCWWorker extends BasicWorker {
         // Nothing to do
       }
     }
-    System.out.println(
-        "Total pages processed: " + countAnalyzed +
-        " / errors detected: " + countDetections);
-    for (CheckErrorAlgorithm algorithm : selectedAlgorithms) {
-      Map<String, Detection> pages = detections.get(algorithm);
+    for (AlgorithmInformation algorithm : selectedAlgorithms) {
+      Map<String, Detection> pages = algorithm.getDetections();
       if (pages == null) {
         pages = new HashMap<>();
       }
-      outputResult(algorithm, pages.values());
+      outputResult(algorithm.algorithm, pages.values());
     }
+    reportProgress();
 
     return null;
+  }
+
+  /**
+   * Report progress.
+   */
+  void reportProgress() {
+    System.out.println(
+        "Pages processed: " + countAnalyzed +
+        " / errors detected: " + countDetections);
+    System.out.println(" Analysis: " + analysisTime.toString());
+    for (AlgorithmInformation algorithm : selectedAlgorithms) {
+      System.out.println(
+          " Algorithm " + algorithm.algorithm.getErrorNumberString() +
+          ": " + (algorithm.getTimeSpent() / 1000000000));
+    }
   }
 
   /**
@@ -403,18 +415,16 @@ public class ListCWWorker extends BasicWorker {
           "{0} page has been analyzed",
           "{0} pages have been analyzed",
           countAnalyzed, Integer.toString(countAnalyzed)));
-      for (Entry<CheckErrorAlgorithm, Map<String, Detection>> error : detections.entrySet()) {
-        if ((error != null) && (error.getKey() != null) && (error.getValue() != null)) {
-          CheckErrorAlgorithm algorithm = error.getKey();
-          Map<String, Detection> pages = error.getValue();
-          message.append("\n");
-          message.append(GT.__(
-              "{0} page has been detected for algorithm {1}",
-              "{0} pages have been detected for algorithm {1}",
-              pages.size(), new Object[] {
-                pages.size(),
-                algorithm.getErrorNumberString() + " - " + algorithm.getShortDescription()}));
-        }
+      for (AlgorithmInformation algorithmInfo : selectedAlgorithms) {
+        CheckErrorAlgorithm algorithm = algorithmInfo.algorithm;
+        Map<String, Detection> pages = algorithmInfo.getDetections();
+        message.append("\n");
+        message.append(GT.__(
+            "{0} page has been detected for algorithm {1}",
+            "{0} pages have been detected for algorithm {1}",
+            pages.size(), new Object[] {
+              pages.size(),
+              algorithm.getErrorNumberString() + " - " + algorithm.getShortDescription()}));
       }
       Utilities.displayInformationMessage(
           getWindow().getParentComponent(), message.toString());
@@ -486,12 +496,21 @@ public class ListCWWorker extends BasicWorker {
     public Page call() throws APIException {
       EnumWikipedia wiki = getWikipedia();
       PageAnalysis analysis = page.getAnalysis(page.getContents(), false);
+      analysis.performFullPageAnalysis(analysisTime);
       Page currentPage = null;
       PageAnalysis currentAnalysis = null; 
-      for (CheckErrorAlgorithm algorithm : selectedAlgorithms) {
+      for (AlgorithmInformation algorithm : selectedAlgorithms) {
         List<CheckErrorResult> errors = new ArrayList<>();
-        if (!algorithm.isInWhiteList(page.getTitle()) &&
-            algorithm.analyze(analysis, errors, false)) {
+        boolean detected = false;
+        if (!algorithm.algorithm.isInWhiteList(page.getTitle())) {
+          long beginTime = System.nanoTime();
+          if (algorithm.algorithm.analyze(analysis, errors, false)) {
+            detected = true;
+          }
+          long endTime = System.nanoTime();
+          algorithm.addTimeSpent(endTime - beginTime);
+        }
+        if (detected) {
           boolean detectionConfirmed = false;
 
           // Confirm detection
@@ -506,15 +525,19 @@ public class ListCWWorker extends BasicWorker {
                   currentAnalysis = analysis; 
                 } else {
                   currentAnalysis = currentPage.getAnalysis(currentPage.getContents(), false);
+                  currentAnalysis.performFullPageAnalysis(analysisTime);
                 }
               }
               if (currentAnalysis == analysis) {
                 detectionConfirmed = true;
               } else {
                 errors.clear();
-                if (algorithm.analyze(currentAnalysis, errors, false)) {
+                long beginTime = System.nanoTime();
+                if (algorithm.algorithm.analyze(currentAnalysis, errors, false)) {
                   detectionConfirmed = true;
                 }
+                long endTime = System.nanoTime();
+                algorithm.addTimeSpent(endTime - beginTime);
               }
             } catch (APIException e) {
               // Nothing to do
@@ -528,23 +551,16 @@ public class ListCWWorker extends BasicWorker {
           if (detectionConfirmed) {
             System.out.println(
                 "Detection confirmed for " + page.getTitle() +
-                ": " + algorithm.getErrorNumberString() +
-                " - " + algorithm.getShortDescription());
-            Map<String, Detection> pages = detections.get(algorithm);
-            if (pages == null) {
-              pages = new HashMap<>();
-              detections.put(algorithm, pages);
-            }
-            pages.put(currentPage.getTitle(), new Detection(currentPage, errors));
+                ": " + algorithm.algorithm.getErrorNumberString() +
+                " - " + algorithm.algorithm.getShortDescription());
+            algorithm.addDetection(currentPage, errors);
             countDetections++;
           }
         }
       }
       countAnalyzed++;
       if (countAnalyzed % 100000 == 0) {
-        System.out.println(
-            "Pages processed: " + countAnalyzed +
-            " / errors detected: " + countDetections);
+        reportProgress();
       }
       if (countAnalyzed % 1000 == 0) {
         setText(GT._("{0} pages processed", Integer.toString(countAnalyzed)));
@@ -700,6 +716,73 @@ public class ListCWWorker extends BasicWorker {
         return -1;
       }
       return pageName.compareTo(o.pageName);
+    }
+  }
+
+  /**
+   * Bean for holding information about processing for an algorithm.
+   */
+  static class AlgorithmInformation {
+
+    /** Algorithm. */
+    final CheckErrorAlgorithm algorithm;
+
+    /** Errors found. */
+    private final Map<String, Detection> detections;
+
+    /** Time spent in analysis. */
+    private long timeSpent;
+
+    /**
+     * @param algorithm Algorithm.
+     */
+    private AlgorithmInformation(CheckErrorAlgorithm algorithm) {
+      this.algorithm = algorithm;
+      this.detections = new HashMap<>();
+      this.timeSpent = 0;
+    }
+
+    /**
+     * Create a list for information about processing algorithms.
+     * 
+     * @param algorithms List of algorithms.
+     * @return List of information initialized.
+     */
+    public static List<AlgorithmInformation> createList(List<CheckErrorAlgorithm> algorithms) {
+      List<AlgorithmInformation> list = new ArrayList<>(algorithms.size());
+      for (CheckErrorAlgorithm algorithm : algorithms) {
+        list.add(new AlgorithmInformation(algorithm));
+      }
+      return list;
+    }
+
+    /**
+     * @return Errors found.
+     */
+    public Map<String, Detection> getDetections() {
+      return detections;
+    }
+
+    /**
+     * @param page Page.
+     * @param errors List of errors.
+     */
+    public void addDetection(Page page, List<CheckErrorResult> errors) {
+      detections.put(page.getTitle(), new Detection(page, errors));
+    }
+
+    /**
+     * @param time Time spent.
+     */
+    public void addTimeSpent(long time) {
+      timeSpent += time;
+    }
+
+    /**
+     * @return Time spent.
+     */
+    public long getTimeSpent() {
+      return timeSpent;
     }
   }
 }

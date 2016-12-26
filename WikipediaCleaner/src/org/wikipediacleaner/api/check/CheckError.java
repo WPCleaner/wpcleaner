@@ -33,6 +33,7 @@ import org.wikipediacleaner.utils.Performance;
  */
 public class CheckError {
 
+  /** Flag to trace time spent in each analysis */
   private static boolean traceTime = false;
 
   /**
@@ -47,8 +48,9 @@ public class CheckError {
       Collection<CheckErrorAlgorithm> algorithms,
       PageAnalysis pageAnalysis,
       boolean onlyAutomatic) {
-    Performance perf = new Performance("CheckError.analyzeErrors");
+    Performance perf = null;
     if (traceTime) {
+      perf = Performance.getInstance("CheckError.analyzeErrors");
       perf.printStart();
     }
     List<CheckErrorPage> errorsFound = new ArrayList<CheckErrorPage>();
@@ -74,7 +76,7 @@ public class CheckError {
             errorPage.setResults(true, results);
             errorsFound.add(errorPage);
           }
-          if (traceTime) {
+          if (perf != null) {
             String message =
                 "Error n°" + algorithm.getErrorNumber() +
                 ", " + errorFound +
@@ -84,8 +86,9 @@ public class CheckError {
         }
       }
     }
-    if (traceTime) {
+    if (perf != null) {
       perf.printEnd();
+      perf.release();
     }
     return errorsFound;
   }
@@ -102,7 +105,10 @@ public class CheckError {
     if ((algorithm == null) || (pageAnalysis == null)) {
       return null;
     }
-    Performance perf = new Performance("CheckError.analyzeError");
+    Performance perf = null;
+    if (traceTime) {
+      perf = Performance.getInstance("CheckError.analyzeError");
+    }
     CheckErrorPage errorPage = new CheckErrorPage(pageAnalysis.getPage(), algorithm);
     boolean errorFound = false;
     List<CheckErrorResult> errorsFound = new ArrayList<CheckErrorResult>();
@@ -115,8 +121,9 @@ public class CheckError {
       pageAnalysis.setCheckWikiErrors(errorNumber, errorFound, errorsFound);
     }
     errorPage.setResults(errorFound, errorsFound);
-    if (traceTime) {
+    if (perf != null) {
       perf.printStep("Error n°" + algorithm.getErrorNumber());
+      perf.release();
     }
     return errorPage;
   }

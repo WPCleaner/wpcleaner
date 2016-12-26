@@ -76,7 +76,7 @@ public class ContentsCallable extends MediaWikiCallable<Page> {
     }
     if (doAnalysis) {
       PageAnalysis analysis = page.getAnalysis(page.getContents(), true);
-      analysis.performFullPageAnalysis();
+      analysis.performFullPageAnalysis(null);
     }
     return returnPage;
   }
