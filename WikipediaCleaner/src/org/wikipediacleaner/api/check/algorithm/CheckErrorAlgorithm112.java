@@ -249,8 +249,8 @@ public class CheckErrorAlgorithm112 extends CheckErrorAlgorithmBase {
                   shouldReport = false;
                 }
                 if (shouldReport &&
-                    (attributeIndex + 2 >= line.length()) ||
-                    Character.isLetterOrDigit(line.charAt(attributeIndex + 2))) {
+                    ((attributeIndex + 2 >= line.length()) ||
+                     Character.isLetterOrDigit(line.charAt(attributeIndex + 2)))) {
                   shouldReport = false;
                 }
                 if (shouldReport &&
