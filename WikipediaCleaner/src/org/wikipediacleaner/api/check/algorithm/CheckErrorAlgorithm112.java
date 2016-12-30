@@ -437,7 +437,7 @@ public class CheckErrorAlgorithm112 extends CheckErrorAlgorithmBase {
             if (offset == 0) {
               found = true;
             } else if ((offset > 0) &&
-                       (" ;".indexOf(styleValue.charAt(offset)) >= 0)) {
+                       (" ;".indexOf(styleValue.charAt(offset - 1)) >= 0)) {
               found = true;
             }
             if (found) {
