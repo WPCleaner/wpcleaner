@@ -84,9 +84,6 @@ public class MagicWord implements Comparable<MagicWord> {
   public final static String IF_ERROR                    = "iferror";
   public final static String IF_EXIST                    = "ifexist";
   public final static String IF_EXPR                     = "ifexpr";
-  public final static String INFO_PAGE                   = "infopage";
-  public final static String INT                         = "int";
-  public final static String INVOKE                      = "invoke";
   public final static String IMG_ALT                     = "img_alt";
   public final static String IMG_BASELINE                = "img_baseline";
   public final static String IMG_BORDER                  = "img_border";
@@ -112,6 +109,9 @@ public class MagicWord implements Comparable<MagicWord> {
   public final static String IMG_UPRIGHT                 = "img_upright";
   public final static String IMG_WIDTH                   = "img_width";
   public final static String INDEX                       = "index";
+  public final static String INFO_PAGE                   = "infopage";
+  public final static String INT                         = "int";
+  public final static String INVOKE                      = "invoke";
   public final static String LANGUAGE                    = "language";
   public final static String LC                          = "lc";
   public final static String LC_FIRST                    = "lcfirst";
@@ -283,6 +283,7 @@ public class MagicWord implements Comparable<MagicWord> {
     MagicWord.IF_EXIST,
     MagicWord.IF_EXPR,
     MagicWord.INT,
+    MagicWord.INVOKE,
     MagicWord.LANGUAGE,
     MagicWord.LC,
     MagicWord.LC_FIRST,
@@ -409,6 +410,7 @@ public class MagicWord implements Comparable<MagicWord> {
     MagicWord.IF_ERROR,
     MagicWord.IF_EXIST,
     MagicWord.IF_EXPR,
+    MagicWord.INVOKE,
     MagicWord.LANGUAGE,
     MagicWord.LEN,
     MagicWord.POS,
