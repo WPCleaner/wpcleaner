@@ -196,7 +196,12 @@ public class CheckErrorAlgorithm112 extends CheckErrorAlgorithmBase {
           if (line.indexOf("|}") >= 0) {
             tableEndFound = true;
           } else {
-            if (line.startsWith("|-")) {
+            int prefix = 0;
+            while ((prefix < line.length()) &&
+                   (line.charAt(prefix) == ' ')) {
+              prefix++;
+            }
+            if (line.startsWith("|-", prefix)) {
 
               // Analyze new table lines
               int attributeIndex = line.indexOf("id");
@@ -252,10 +257,10 @@ public class CheckErrorAlgorithm112 extends CheckErrorAlgorithmBase {
                 }
                 errors.add(errorResult);
               }
-            } else if (line.startsWith("!") || line.startsWith("|")) {
+            } else if (line.startsWith("!", prefix) || line.startsWith("|", prefix)) {
 
               // Analyze table lines
-              char separator = line.charAt(0);
+              char separator = line.charAt(prefix);
               int attributeIndex = line.indexOf("id");
               while (attributeIndex > 0) {
                 boolean shouldReport = true;
@@ -296,7 +301,9 @@ public class CheckErrorAlgorithm112 extends CheckErrorAlgorithmBase {
                           tmpIndex++;
                           endIndex = tmpIndex;
                           replacement = "";
-                          if ((beginIndex > 0) && (line.charAt(beginIndex - 1) == separator)) {
+                          if ((beginIndex > 0) &&
+                              ((line.charAt(beginIndex - 1) == separator)||
+                               (line.charAt(beginIndex - 1) == '|'))) {
                             while ((tmpIndex < line.length()) && (line.charAt(tmpIndex) == ' ')) {
                               tmpIndex++;
                             }
