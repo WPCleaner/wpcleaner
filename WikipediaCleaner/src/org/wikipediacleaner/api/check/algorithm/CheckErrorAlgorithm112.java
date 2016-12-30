@@ -16,6 +16,7 @@ import java.util.Map.Entry;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementTag;
+import org.wikipediacleaner.api.data.PageElementTag.Parameter;
 import org.wikipediacleaner.i18n.GT;
 
 /**
@@ -29,7 +30,10 @@ public class CheckErrorAlgorithm112 extends CheckErrorAlgorithmBase {
   }
 
   /** List of attributes for each kind of tag */
-  private final static Map<String, String[]> TAGS = new HashMap<>();
+  private final static Map<String, String[]> TAG_ATTRIBUTES = new HashMap<>();
+
+  /** List of styles for each kind of tag */
+  private final static Map<String, String[]> TAG_STYLES = new HashMap<>();
 
   /** List of attributes for tables */
   private final static String[] TABLE_ATTRIBUTES = new String[] {
@@ -45,13 +49,16 @@ public class CheckErrorAlgorithm112 extends CheckErrorAlgorithmBase {
     "-moz-border-radius",
   };
 
+  // Initialization of lists of attributes/styles/...
   static {
-    TAGS.put(null, new String[] {
+    TAG_ATTRIBUTES.put(null, new String[] {
         "contenteditable",
         "data-cx-draft",
         "date-cx-state",
         "data-cx-weight",
         "data-source",
+    });
+    TAG_STYLES.put(null, new String[] {
         "-moz-border-radius-bottomleft",
         "-moz-border-radius-bottomright",
         "-moz-border-radius-topleft",
@@ -61,10 +68,12 @@ public class CheckErrorAlgorithm112 extends CheckErrorAlgorithmBase {
         "-moz-linear-gradient",
         "-webkit-border-radius",
     });
-    TAGS.put(PageElementTag.TAG_HTML_CENTER, new String[] {
+
+    TAG_ATTRIBUTES.put(PageElementTag.TAG_HTML_CENTER, new String[] {
         "id",
     });
-    TAGS.put(PageElementTag.TAG_HTML_DIV, new String[] {
+
+    TAG_STYLES.put(PageElementTag.TAG_HTML_DIV, new String[] {
         "-moz-column-count",
         "-moz-column-gap",
         "-moz-column-width",
@@ -91,8 +100,14 @@ public class CheckErrorAlgorithm112 extends CheckErrorAlgorithmBase {
 
     // Analyze each kind of tags
     boolean result = false;
-    for (Entry<String, String[]> tag : TAGS.entrySet()) {
-      result |= analyzeTag(analysis, errors, tag.getKey(), tag.getValue());
+    for (Entry<String, String[]> tag : TAG_ATTRIBUTES.entrySet()) {
+      result |= analyzeTagAttributes(analysis, errors, tag.getKey(), tag.getValue());
+      if (result && (errors == null)) {
+        return result;
+      }
+    }
+    for (Entry<String, String[]> tag : TAG_STYLES.entrySet()) {
+      result |= analyzeTagStyles(analysis, errors, tag.getKey(), tag.getValue());
       if (result && (errors == null)) {
         return result;
       }
@@ -334,14 +349,15 @@ public class CheckErrorAlgorithm112 extends CheckErrorAlgorithmBase {
   }
 
   /**
-   * Analyze a page to check if errors are present.
+   * Analyze a page to check if errors are present in tag attributes.
    * 
    * @param analysis Page analysis.
    * @param errors Errors found in the page.
-   * @param onlyAutomatic True if analysis could be restricted to errors automatically fixed.
+   * @param tagName Tag name.
+   * @param attributeName Tag attribute names.
    * @return Flag indicating if the error was found.
    */
-  private boolean analyzeTag(
+  private boolean analyzeTagAttributes(
       PageAnalysis analysis,
       Collection<CheckErrorResult> errors,
       String tagName,
@@ -349,21 +365,93 @@ public class CheckErrorAlgorithm112 extends CheckErrorAlgorithmBase {
 
     // Check each tag
     boolean result = false;
+    String contents = analysis.getContents();
     List<PageElementTag> tags = (tagName != null) ? analysis.getTags(tagName) : analysis.getTags();
     for (PageElementTag tag : tags) {
       if ((tag != null) && (!tag.isEndTag())) {
-        String tagText = analysis.getContents().substring(tag.getBeginIndex(), tag.getEndIndex());
-        for (String attributeName : attributeNames) {
-          int pos = tagText.indexOf(attributeName);
-          if (pos > 0) {
-            if (errors == null) {
-              return true;
+        for (int paramNum = 0; paramNum < tag.getParametersCount(); paramNum++) {
+          Parameter param = tag.getParameter(paramNum);
+          for (String attributeName : attributeNames) {
+            if (attributeName.equals(param.getName())) {
+              if (errors == null) {
+                return true;
+              }
+              result = true;
+              int beginIndex = tag.getBeginIndex() + param.getOffsetBegin();
+              while ((beginIndex > 0) && (contents.charAt(beginIndex - 1) == ' ')) {
+                beginIndex--;
+              }
+              int endIndex = tag.getBeginIndex() + param.getOffsetEnd();
+              if ((endIndex < contents.length()) &&
+                  (contents.charAt(endIndex) != ' ') &&
+                  (contents.charAt(endIndex) != '>') &&
+                  (contents.charAt(beginIndex) == ' ')) {
+                beginIndex++;
+              }
+              CheckErrorResult errorResult = createCheckErrorResult(
+                  analysis, beginIndex, endIndex);
+              errorResult.addReplacement("");
+              errors.add(errorResult);
             }
-            result = true;
-            int beginIndex = tag.getBeginIndex() + pos;
-            CheckErrorResult errorResult = createCheckErrorResult(
-                analysis, beginIndex, beginIndex + attributeName.length());
-            errors.add(errorResult);
+          }
+        }
+      }
+    }
+    return result;
+  }
+
+  /**
+   * Analyze a page to check if errors are present in tag styles.
+   * 
+   * @param analysis Page analysis.
+   * @param errors Errors found in the page.
+   * @param tagName Tag name.
+   * @param styleNames Tag style names.
+   * @return Flag indicating if the error was found.
+   */
+  private boolean analyzeTagStyles(
+      PageAnalysis analysis,
+      Collection<CheckErrorResult> errors,
+      String tagName,
+      String[] styleNames) {
+
+    // Check each tag
+    boolean result = false;
+    String contents = analysis.getContents();
+    List<PageElementTag> tags = (tagName != null) ? analysis.getTags(tagName) : analysis.getTags();
+    for (PageElementTag tag : tags) {
+      if ((tag != null) && (!tag.isEndTag())) {
+        Parameter styleParam = tag.getParameter("style");
+        if ((styleParam != null) && (styleParam.getValue() != null)) {
+          String styleValue = styleParam.getValue();
+          for (String styleName : styleNames) {
+            int offset = styleValue.indexOf(styleName);
+            boolean found = false;
+            if (offset == 0) {
+              found = true;
+            } else if ((offset > 0) &&
+                       (" ;".indexOf(styleValue.charAt(offset)) >= 0)) {
+              found = true;
+            }
+            if (found) {
+              int end = offset + styleName.length();
+              if ((end >= styleValue.length()) ||
+                  (styleValue.charAt(end) == ':')) {
+                if (errors == null) {
+                  return true;
+                }
+                result = true;
+                int beginIndex = tag.getBeginIndex() + styleParam.getOffsetValue() + offset;
+                int endIndex = beginIndex + styleName.length();
+                while ((beginIndex > 0) && (contents.charAt(beginIndex - 1) == ' ')) {
+                  beginIndex--;
+                }
+                CheckErrorResult errorResult = createCheckErrorResult(
+                    analysis, beginIndex, endIndex);
+                errorResult.addReplacement("");
+                errors.add(errorResult);
+              }
+            }
           }
         }
       }

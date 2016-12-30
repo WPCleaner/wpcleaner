@@ -225,7 +225,7 @@ public class PageElementTag extends PageElement {
     List<Parameter> parameters = null;
     if (tmpIndex2 > tmpIndex) {
       parameters = new ArrayList<PageElementTag.Parameter>();
-      if (!analyzeParameters(contents.substring(tmpIndex, tmpIndex2 + 1), parameters)) {
+      if (!analyzeParameters(contents.substring(tmpIndex, tmpIndex2 + 1), tmpIndex - index, parameters)) {
         return null;
       }
     }
@@ -241,11 +241,12 @@ public class PageElementTag extends PageElement {
    * Analyze tag parameters.
    * 
    * @param paramString String containing the parameters.
+   * @param offset Offset of the string in the tag.
    * @param parameters Parameters.
    * @return True if analyze is correct.
    */
   private static boolean analyzeParameters(
-      String paramString,
+      String paramString, int offset,
       List<Parameter> parameters) {
     if (paramString == null) {
       return true;
@@ -280,14 +281,16 @@ public class PageElementTag extends PageElement {
       equalIndex++;
     }
     if (equalIndex >= maxLength) {
-      Parameter param = new Parameter(name);
+      Parameter param = new Parameter(
+          name, offset + startNameIndex, offset + endNameIndex);
       parameters.add(param);
       return true;
     }
     if (paramString.charAt(equalIndex) != '=') {
-      Parameter param = new Parameter(name);
+      Parameter param = new Parameter(name, startNameIndex, endNameIndex);
       parameters.add(param);
-      return analyzeParameters(paramString.substring(equalIndex), parameters);
+      return analyzeParameters(
+          paramString.substring(equalIndex), offset + equalIndex, parameters);
     }
 
     // Find beginning of parameter value
@@ -297,9 +300,10 @@ public class PageElementTag extends PageElement {
       startValueIndex++;
     }
     if (startValueIndex >= maxLength) {
-      Parameter param = new Parameter(name);
+      Parameter param = new Parameter(name, startNameIndex, endNameIndex);
       parameters.add(param);
-      return analyzeParameters(paramString.substring(startValueIndex), parameters);
+      return analyzeParameters(
+          paramString.substring(startValueIndex), offset + startValueIndex, parameters);
     }
 
     // Find parameter value
@@ -346,12 +350,16 @@ public class PageElementTag extends PageElement {
       }
       value = paramString.substring(startValueIndex, endValueIndex);
     }
-    Parameter param = new Parameter(name, value, beforeMarker, afterMarker);
+    Parameter param = new Parameter(
+        name, value,
+        offset + startNameIndex, offset + startValueIndex, offset + endValueIndex,
+        beforeMarker, afterMarker);
     parameters.add(param);
 
     // Deal with next parameter
     if (endValueIndex < maxLength) {
-      return analyzeParameters(paramString.substring(endValueIndex), parameters);
+      return analyzeParameters(
+          paramString.substring(endValueIndex), offset + endValueIndex, parameters);
     }
     return true;
   }
@@ -839,45 +847,55 @@ public class PageElementTag extends PageElement {
     return "<ref>...</ref>";
   }
 
-  /**
-   * Class for managing a parameter
-   */
+  /** Class for managing a parameter */
   public static class Parameter {
 
-    /**
-     * Parameter name.
-     */
+    /** Parameter name */
     private final String name;
 
-    /**
-     * Parameter value.
-     */
+    /** Parameter value */
     private final String value;
 
-    /**
-     * Marker.
-     */
+    /** Offset for the beginning of the parameter in the tag */
+    private final int offsetBegin;
+
+    /** Offset for the value of the parameter in the tag */
+    private final int offsetValue;
+
+    /** Offset for the end of the parameter in the tag */
+    private final int offsetEnd;
+
+    /** Marker */
     private final String beforeMarker;
     private final String afterMarker;
 
     /**
      * @param name Parameter name.
+     * @param offsetBegin Offset for the beginning of the parameter in the tag.
+     * @param offsetEnd Offset for the end of the parameter in the tag.
      */
-    Parameter(String name) {
-      this(name, null, null, null);
+    Parameter(String name, int offsetBegin, int offsetEnd) {
+      this(name, null, offsetBegin, offsetEnd, offsetEnd, null, null);
     }
 
     /**
      * @param name Parameter name.
      * @param value Parameter value.
+     * @param offsetBegin Offset for the beginning of the parameter in the tag.
+     * @param offsetValue Offset for the value of the parameter in the tag.
+     * @param offsetEnd Offset for the end of the parameter in the tag.
      * @param beforeMarker Marker (like quote) before the parameter value.
      * @param afterMarker Marker (like quote) after the parameter value.
      */
     Parameter(
         String name, String value,
+        int offsetBegin, int offsetValue, int offsetEnd,
         String beforeMarker, String afterMarker) {
       this.name = name;
       this.value = value;
+      this.offsetBegin = offsetBegin;
+      this.offsetValue = offsetValue;
+      this.offsetEnd = offsetEnd;
       this.beforeMarker = beforeMarker;
       this.afterMarker = afterMarker;
     }
@@ -904,6 +922,27 @@ public class PageElementTag extends PageElement {
         return null;
       }
       return value.trim();
+    }
+
+    /**
+     * @return Offset for the beginning of the parameter in the tag.
+     */
+    public int getOffsetBegin() {
+      return offsetBegin;
+    }
+
+    /**
+     * @return Offset for the value of the parameter in the tag.
+     */
+    public int getOffsetValue() {
+      return offsetValue;
+    }
+
+    /**
+     * @return Offset for the end of the parameter in the tag.
+     */
+    public int getOffsetEnd() {
+      return offsetEnd;
     }
 
     /**
