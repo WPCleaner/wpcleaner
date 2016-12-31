@@ -147,6 +147,10 @@ public class UpdateISBNWarningTools extends UpdateWarningTools {
       error = error.replaceAll("\\=", "&#x3D;"); // Replace "=" by its HTML value
       error = error.replaceAll("\n", "\u21b5"); // Replacer \n by a visual character
       error = error.replaceAll("\\<", "&lt;"); // Replace "<" by its HTML element
+      error = error.replaceAll("\\[", "&#x5B;"); // Replace "[" by its HTML value
+      error = error.replaceAll("\\]", "&#x5D;"); // Replace "]" by its HTML value
+      error = error.replaceAll("\\{", "&#x7B;"); // Replace "{" by its HTML value
+      error = error.replaceAll("\\}", "&#x7D;"); // Replace "}" by its HTML value
       boolean keep = true;
       StringBuilder comment = new StringBuilder();
       while (pos < next) {
