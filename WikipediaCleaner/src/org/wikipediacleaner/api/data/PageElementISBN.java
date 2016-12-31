@@ -319,7 +319,8 @@ public class PageElementISBN extends PageElement {
                 isValid, isCorrect, false, null));
             index = endNumber;
           } else {
-            if (contents.startsWith(prefix, index)) {
+            if (contents.startsWith(prefix, index) &&
+                !contents.startsWith("[[ISBN#", beginIndex)) {
               isbns.add(new PageElementISBN(
                   beginIndex, index, analysis, "",
                   isValid, false, false, null));
