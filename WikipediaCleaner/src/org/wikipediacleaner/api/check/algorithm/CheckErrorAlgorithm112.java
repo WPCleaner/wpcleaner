@@ -38,6 +38,7 @@ public class CheckErrorAlgorithm112 extends CheckErrorAlgorithmBase {
   /** List of attributes for tables */
   private final static String[] TABLE_ATTRIBUTES = new String[] {
     "contenteditable",
+    "data-cx-draft",
     "data-cx-state",
     "data-cx-weight",
     "data-source",
