@@ -16,5 +16,6 @@
 	<classpathentry kind="lib" path="libs/jdom-2.0.6/jdom-2.0.6.jar"/>
 	<classpathentry kind="lib" path="libs/jdom-2.0.6/xercesImpl.jar"/>
 	<classpathentry kind="lib" path="libs/jdom-2.0.6/xml-apis.jar"/>
+	<classpathentry kind="lib" path="libs/commons-net-3.5/commons-net-3.5.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
