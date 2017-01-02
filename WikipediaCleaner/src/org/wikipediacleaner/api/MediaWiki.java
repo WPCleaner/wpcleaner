@@ -18,6 +18,7 @@ import java.util.Map.Entry;
 import org.wikipediacleaner.api.check.CheckError;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithm;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithms;
+import org.wikipediacleaner.api.constants.EnumQueryResult;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.AutomaticFixing;
 import org.wikipediacleaner.api.data.AutomaticFormatter;
@@ -294,11 +295,20 @@ public class MediaWiki extends MediaWikiController {
             setText(GT._("Updating page {0}", page.getTitle()));
             count++;
             if (save) {
-              api.updatePage(wiki, page, newContents, fullComment.toString(), false, false);
-              if (updateDabWarning) {
-                List<Page> tmpList = new ArrayList<>(1);
-                tmpList.add(page);
-                dabWarnings.updateWarning(tmpList, null, null, null);
+              try {
+                api.updatePage(wiki, page, newContents, fullComment.toString(), false, false);
+                if (updateDabWarning) {
+                  List<Page> tmpList = new ArrayList<>(1);
+                  tmpList.add(page);
+                  dabWarnings.updateWarning(tmpList, null, null, null);
+                }
+              } catch (APIException e) {
+                EnumQueryResult error = e.getQueryResult();
+                if (EnumQueryResult.PROTECTED_PAGE.equals(error)) {
+                  System.err.println("Page " + page.getTitle() + " is protected.");
+                } else {
+                  throw e;
+                }
               }
             }
           }
