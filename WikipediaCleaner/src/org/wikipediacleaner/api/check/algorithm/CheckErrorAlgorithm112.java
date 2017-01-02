@@ -55,7 +55,7 @@ public class CheckErrorAlgorithm112 extends CheckErrorAlgorithmBase {
     TAG_ATTRIBUTES.put(null, new String[] {
         "contenteditable",
         "data-cx-draft",
-        "date-cx-state",
+        "data-cx-state",
         "data-cx-weight",
         "data-source",
     });
