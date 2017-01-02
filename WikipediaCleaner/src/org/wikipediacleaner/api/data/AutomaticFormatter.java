@@ -187,7 +187,7 @@ public class AutomaticFormatter {
     } else {
       sb.append(contents.substring(beginCategory, beginDefaultSort));
       if (endDefaultSort + delta < contents.length()) {
-        sb.append(endDefaultSort + delta);
+        sb.append(contents.substring(endDefaultSort + delta));
       }
     }
     contents = sb.toString();
