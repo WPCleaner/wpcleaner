@@ -20,6 +20,7 @@ public enum ConfigurationValueInteger {
   CHECK_BOT_NB_PAGES("CheckBotNbPages", 100),
   CHECK_NB_ERRORS("CheckNbErrors", 100),
   CONFIG_VERSION("ConfigurationVersion", 1),
+  EDITOR_FONT_SIZE("EditorFontSize", 12),
   FONT_SIZE("FontSize", 0),
   INTERROG_THREAD("InterrogationThreads", 30),
   MAXIMUM_PAGES("MaximumPages", 20),

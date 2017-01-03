@@ -9,6 +9,8 @@ package org.wikipediacleaner.gui.swing.options;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.GraphicsEnvironment;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -30,10 +32,12 @@ import javax.swing.SwingConstants;
 
 import org.wikipediacleaner.gui.swing.basic.Utilities;
 import org.wikipediacleaner.gui.swing.component.ColorButton;
+import org.wikipediacleaner.gui.swing.options.OptionsPanel;
 import org.wikipediacleaner.i18n.GT;
 import org.wikipediacleaner.images.EnumImageSize;
 import org.wikipediacleaner.utils.Configuration;
 import org.wikipediacleaner.utils.ConfigurationValueInteger;
+import org.wikipediacleaner.utils.ConfigurationValueString;
 import org.wikipediacleaner.utils.ConfigurationValueStyle;
 
 
@@ -94,6 +98,42 @@ public class FormattingOptionsPanel extends OptionsPanel {
     constraints.weightx = 1;
     constraints.weighty = 1;
     add(scrollPane, constraints);
+
+    // Add editor font name
+    JPanel efnPanel = new JPanel();
+    Vector<String> fonts = new Vector<String>();
+    for (Font font : GraphicsEnvironment.getLocalGraphicsEnvironment().getAllFonts()) {
+      fonts.addElement(font.getName());
+    }
+    efnPanel.add(createJComboBox(ConfigurationValueString.EDITOR_FONT_NAME, fonts));
+    JLabel efnLabel = Utilities.createJLabel(GT._("Select editor font name"));
+    efnLabel.setLabelFor(efnPanel);
+    efnLabel.setHorizontalAlignment(SwingConstants.TRAILING);
+    constraints.gridx = columnName;
+    constraints.gridwidth = 1;
+    constraints.weightx = 1;
+    panel.add(efnLabel, constraints);
+    constraints.gridx = columnName + 1;
+    constraints.gridwidth = columnCount - columnName - 1;
+    constraints.weightx = 0;
+    panel.add(efnPanel, constraints);
+    constraints.gridy++;
+
+
+    // Add editor font size
+    JSpinner efsSpin = createJSpinner(ConfigurationValueInteger.EDITOR_FONT_SIZE, 8, 72, 1);
+    JLabel efsLabel = Utilities.createJLabel(GT._("Select editor font size"));
+    efsLabel.setLabelFor(efsSpin);
+    efsLabel.setHorizontalAlignment(SwingConstants.TRAILING);
+    constraints.gridx = columnName;
+    constraints.gridwidth = 1;
+    constraints.weightx = 1;
+    panel.add(efsLabel, constraints);
+    constraints.gridx = columnName + 1;
+    constraints.gridwidth = columnCount - columnName - 1;
+    constraints.weightx = 0;
+    panel.add(efsSpin, constraints);
+    constraints.gridy++;
 
     // Add font size increase
     JSpinner spin = createJSpinner(ConfigurationValueInteger.FONT_SIZE, 0, 20, 1);

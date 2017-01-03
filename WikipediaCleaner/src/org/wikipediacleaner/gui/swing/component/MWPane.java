@@ -11,8 +11,11 @@ import java.awt.Font;
 import java.awt.GraphicsEnvironment;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
+import java.awt.font.TextAttribute;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.swing.AbstractButton;
 import javax.swing.ActionMap;
@@ -31,6 +34,9 @@ import org.wikipediacleaner.api.data.PageElementTitle;
 import org.wikipediacleaner.gui.swing.action.FindTextAction;
 import org.wikipediacleaner.gui.swing.action.ReplaceLinkAction;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
+import org.wikipediacleaner.utils.Configuration;
+import org.wikipediacleaner.utils.ConfigurationValueInteger;
+import org.wikipediacleaner.utils.ConfigurationValueString;
 
 
 /**
@@ -185,6 +191,13 @@ public class MWPane
 
     isInInternalModification = oldState;
     setModified(false);
+
+    // change pane default font family/size
+    Configuration config = Configuration.getConfiguration();
+    Map<TextAttribute, Object> attributes = new HashMap<TextAttribute, Object>();
+    attributes.put(TextAttribute.FAMILY, config.getString(null, ConfigurationValueString.EDITOR_FONT_NAME));
+    attributes.put(TextAttribute.SIZE, config.getInt(null, ConfigurationValueInteger.EDITOR_FONT_SIZE));
+    this.setFont(this.getFont().deriveFont(attributes));
   }
 
   /**
