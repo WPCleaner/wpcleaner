@@ -7,6 +7,7 @@
 
 package org.wikipediacleaner;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FilenameFilter;
@@ -99,7 +100,7 @@ public class Bot implements BasicWorkerListener {
   private boolean loginDone;
 
   /** Actions to be executed */
-  private String[] actions;
+  private List<String[]> actions;
 
   /**
    * @param args Command line arguments
@@ -165,16 +166,18 @@ public class Bot implements BasicWorkerListener {
     }
 
     // Retrieve action
-    actions = (args.length > currentArg) ?
-        Arrays.copyOfRange(args, currentArg, args.length) : null;
+    actions = new ArrayList<>();
+    if (args.length > currentArg) {
+      actions.add(Arrays.copyOfRange(args, currentArg, args.length));
+    }
     currentArg++;
 
     // Check arguments
     if ((wiki == null) ||
         (userName == null) ||
         (password == null) ||
-        (actions == null) ||
-        (actions.length == 0)) {
+        (actions.isEmpty()) ||
+        (actions.get(0).length == 0)) {
       log.warn("Some parameters are incorrect");
       return;
     }
@@ -206,7 +209,22 @@ public class Bot implements BasicWorkerListener {
 
     // Execute action depending on the parameters
     BasicWorker worker = null;
-    if ("UpdateDabWarnings".equalsIgnoreCase(action)) {
+    if ("DoTasks".equalsIgnoreCase(action)) {
+      if (args.length > currentArg) {
+        File tasks = new File(args[currentArg]);
+        try (BufferedReader reader = new BufferedReader(new FileReader(tasks))) {
+          String line = null;
+          while ((line = reader.readLine()) != null) {
+            String[] tmpArgs = line.split(" ");
+            if ((tmpArgs != null) && (tmpArgs.length > 0)) {
+              actions.add(tmpArgs);
+            }
+          }
+        } catch (IOException e) {
+          log.error("Unable to process tasks", e);
+        }
+      }
+    } else if ("UpdateDabWarnings".equalsIgnoreCase(action)) {
       Configuration config = Configuration.getConfiguration();
       String start = config.getString(null, ConfigurationValueString.LAST_DAB_WARNING);
       if (args.length > currentArg) {
@@ -279,6 +297,8 @@ public class Bot implements BasicWorkerListener {
       worker.setListener(this);
       worker.setTimeLimit(timeLimit);
       worker.start();
+    } else if (!actions.isEmpty()) {
+      executeAction(actions.remove(0));
     }
   }
 
@@ -400,10 +420,13 @@ public class Bot implements BasicWorkerListener {
     if (!ok) {
       System.exit(1);
     }
-    if (loginDone) {
+    if (!loginDone) {
+      loginDone = true;
+    }
+    if (actions.isEmpty()) {
       System.exit(0);
     }
-    loginDone = true;
-    executeAction(actions);
+    String[] currentAction = actions.remove(0);
+    executeAction(currentAction);
   }
 }
