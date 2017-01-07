@@ -190,7 +190,9 @@ public class CheckErrorAlgorithm028 extends CheckErrorAlgorithmBase {
         (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_MATH, index) != null) ||
         (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_MATH_CHEM, index) != null) ||
         (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_NOWIKI, index) != null) ||
-        (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_PRE, index) != null)) {
+        (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_PRE, index) != null) ||
+        (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_SOURCE, index) != null) ||
+        (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_SYNTAXHIGHLIGHT, index) != null)) {
       return false;
     }
     if (analysis.isInComment(index) != null) {
