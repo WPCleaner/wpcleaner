@@ -268,7 +268,7 @@ abstract class OptionsPanel extends JPanel {
     return txt;
   }
 
-  protected JComboBox createJComboBox(
+  protected JComboBox<String> createJComboBox(
       ConfigurationValueString property,
       Vector<String> items) {
     if (property == null) {

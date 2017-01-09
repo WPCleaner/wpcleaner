@@ -20,6 +20,7 @@ import java.util.Vector;
 
 import javax.swing.BorderFactory;
 import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -99,55 +100,66 @@ public class FormattingOptionsPanel extends OptionsPanel {
     constraints.weighty = 1;
     add(scrollPane, constraints);
 
-    // Add editor font name
-    JPanel efnPanel = new JPanel();
+    // Panel for first options
+    JPanel firstPanel = new JPanel(new GridBagLayout());
+
+    // Add font name
     Vector<String> fonts = new Vector<String>();
     for (Font font : GraphicsEnvironment.getLocalGraphicsEnvironment().getAllFonts()) {
       fonts.addElement(font.getName());
     }
-    efnPanel.add(createJComboBox(ConfigurationValueString.EDITOR_FONT_NAME, fonts));
-    JLabel efnLabel = Utilities.createJLabel(GT._("Select editor font name"));
-    efnLabel.setLabelFor(efnPanel);
-    efnLabel.setHorizontalAlignment(SwingConstants.TRAILING);
-    constraints.gridx = columnName;
+    JComboBox<String> cmbFontName = createJComboBox(ConfigurationValueString.EDITOR_FONT_NAME, fonts);
+    JLabel lblFontName = Utilities.createJLabel(GT._("Select editor font name"));
+    lblFontName.setLabelFor(cmbFontName);
+    lblFontName.setHorizontalAlignment(SwingConstants.TRAILING);
+    constraints.gridx = 0;
+    constraints.gridwidth = 1;
+    constraints.weightx = 0;
+    firstPanel.add(lblFontName, constraints);
+    constraints.gridx = 1;
     constraints.gridwidth = 1;
     constraints.weightx = 1;
-    panel.add(efnLabel, constraints);
-    constraints.gridx = columnName + 1;
-    constraints.gridwidth = columnCount - columnName - 1;
-    constraints.weightx = 0;
-    panel.add(efnPanel, constraints);
+    firstPanel.add(cmbFontName, constraints);
     constraints.gridy++;
 
 
-    // Add editor font size
-    JSpinner efsSpin = createJSpinner(ConfigurationValueInteger.EDITOR_FONT_SIZE, 8, 72, 1);
-    JLabel efsLabel = Utilities.createJLabel(GT._("Select editor font size"));
-    efsLabel.setLabelFor(efsSpin);
-    efsLabel.setHorizontalAlignment(SwingConstants.TRAILING);
-    constraints.gridx = columnName;
+    // Add font size
+    JSpinner spinFontSize = createJSpinner(ConfigurationValueInteger.EDITOR_FONT_SIZE, 8, 72, 1);
+    JLabel lblFontSize = Utilities.createJLabel(GT._("Select editor font size"));
+    lblFontSize.setLabelFor(spinFontSize);
+    lblFontSize.setHorizontalAlignment(SwingConstants.TRAILING);
+    constraints.gridx = 0;
+    constraints.gridwidth = 1;
+    constraints.weightx = 0;
+    firstPanel.add(lblFontSize, constraints);
+    constraints.gridx = 1;
     constraints.gridwidth = 1;
     constraints.weightx = 1;
-    panel.add(efsLabel, constraints);
-    constraints.gridx = columnName + 1;
-    constraints.gridwidth = columnCount - columnName - 1;
-    constraints.weightx = 0;
-    panel.add(efsSpin, constraints);
+    firstPanel.add(spinFontSize, constraints);
     constraints.gridy++;
 
     // Add font size increase
-    JSpinner spin = createJSpinner(ConfigurationValueInteger.FONT_SIZE, 0, 20, 1);
-    JLabel label = Utilities.createJLabel(GT._("Increase font size"));
-    label.setLabelFor(spin);
-    label.setHorizontalAlignment(SwingConstants.TRAILING);
-    constraints.gridx = columnName;
+    JSpinner spinFontIncrease = createJSpinner(ConfigurationValueInteger.FONT_SIZE, 0, 20, 1);
+    JLabel lblFontIncrease = Utilities.createJLabel(GT._("Increase font size"));
+    lblFontIncrease.setLabelFor(spinFontIncrease);
+    lblFontIncrease.setHorizontalAlignment(SwingConstants.TRAILING);
+    constraints.gridx = 0;
+    constraints.gridwidth = 1;
+    constraints.weightx = 0;
+    firstPanel.add(lblFontIncrease, constraints);
+    constraints.gridx = 1;
     constraints.gridwidth = 1;
     constraints.weightx = 1;
-    panel.add(label, constraints);
-    constraints.gridx = columnName + 1;
-    constraints.gridwidth = columnCount - columnName - 1;
-    constraints.weightx = 0;
-    panel.add(spin, constraints);
+    firstPanel.add(spinFontIncrease, constraints);
+    constraints.gridy++;
+
+    // Add first options in the first panel
+    constraints.gridx = columnName;
+    constraints.gridwidth = columnCount - columnName;
+    constraints.weightx = 1;
+    constraints.gridy = 0;
+    panel.add(firstPanel, constraints);
+    constraints.gridwidth = 1;
     constraints.gridy++;
 
     // Add line for comments style
@@ -306,6 +318,7 @@ public class FormattingOptionsPanel extends OptionsPanel {
     emptyPanel.setPreferredSize(new Dimension(0, 0));
     constraints.fill = GridBagConstraints.BOTH;
     constraints.insets = new Insets(0, 0, 0, 0);
+    constraints.gridx = 0;
     constraints.gridwidth = columnCount;
     constraints.weighty = 1;
     add(emptyPanel, constraints);
