@@ -15,6 +15,7 @@ import java.util.prefs.Preferences;
  */
 public enum ConfigurationValueString {
 
+  EDITOR_FONT_NAME("EditorFontName", "SansSerif.plain"),
   LAST_DAB_WARNING("LastDabWarning", null),
   LAST_DUMP_FILE("LastDumpFile", null),
   LAST_DUPLICATE_ARGS_WARNING("LastDuplicateArgsWarning", null),
