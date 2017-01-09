@@ -18,97 +18,101 @@ public enum WPCConfigurationStringList {
 
   // Possible replacements for abbreviations
   ABBREVIATIONS("general_abbreviations", true, true, true),
-  // Comment used for a normal link to a disambiguation page.
+  // Templates for columns
+  COLUMNS_TEMPLATES("general_columns_templates", true, true, true, null ),
+  // Templates for columns
+  COLUMNS2_TEMPLATES("general_columns2_templates", true, true, true, null ),
+  // Comment used for a normal link to a disambiguation page
   COMMENTS_FOR_DAB_LINK("dab_link_comments", false, true, true),
-  // Common languages.
+  // Common languages
   COMMON_LANGUAGES("common_languages", true, true, true),
-  // Pages containing the current list of disambiguation pages.
+  // Pages containing the current list of disambiguation pages
   CURRENT_DAB_LIST("dab_list", false, true, false),
-  // List of templates for displaying a warning when editing.
+  // List of templates for displaying a warning when editing
   EDIT_WARNING_TEMPLATES("general_edit_warning_templates", true, true, true),
   // Texts that can be inserted
   INSERT_TEXTS("general_insert_texts", true, true, true),
-  // Categories for ISBN errors.
+  // Categories for ISBN errors
   ISBN_ERRORS_CATEGORIES("isbn_errors_categories", true, true, true),
-  // Lists for ISBN errors.
+  // Lists for ISBN errors
   ISBN_ERRORS_LISTS("isbn_errors_lists", true, true, true),
-  // Templates to ask for help about ISBN.
+  // Templates to ask for help about ISBN
   ISBN_HELP_NEEDED_TEMPLATES("general_isbn_help_needed_templates", true, true, true),
-  // ISBN search engines.
+  // ISBN search engines
   ISBN_SEARCH_ENGINES("general_isbn_search_engines", true, true, true, new String[] { 
       "WorldCat|http://worldcat.org/isbn/{0}",
       "ISBNdb|http://isbndb.com/search/all?query={0}",
       "OttoBib|http://www.ottobib.com/isbn/{0}",
       "Copyright Clearance Center|http://www.copyright.com/openurl.do?isbn={0}&servicename=all&WT.mc_id=wikipedia",
   } ),
-  // ISBN search engines.
+  // ISBN search engines
   ISBN_SEARCH_ENGINES_TEMPLATES("general_isbn_search_engines_templates", true, true, true),
-  // ISBN special values.
+  // ISBN special values
   ISBN_SPECIAL_VALUES("isbn_special_values", true, true, true),
-  // Templates for ISBN.
+  // Templates for ISBN
   ISBN_TEMPLATES("general_isbn_templates", true, true, true, new String[] { "ISBN|1" } ),
-  // Categories for ISSN errors.
+  // Categories for ISSN errors
   ISSN_ERRORS_CATEGORIES("issn_errors_categories", true, true, true),
-  // Lists for ISSN errors.
+  // Lists for ISSN errors
   ISSN_ERRORS_LISTS("issn_errors_lists", true, true, true),
-  // Templates to ask for help about ISSN.
+  // Templates to ask for help about ISSN
   ISSN_HELP_NEEDED_TEMPLATES("general_issn_help_needed_templates", true, true, true),
-  // Templates to ignore for ISSN.
+  // Templates to ignore for ISSN
   ISSN_IGNORE_TEMPLATES("issn_ignore_templates", true, true, true),
-  // ISSN search engines.
+  // ISSN search engines
   ISSN_SEARCH_ENGINES("general_issn_search_engines", true, true, true, new String[] { 
       "WorldCat|http://worldcat.org/issn/{0}",
       "MIAR|http://miar.ub.edu/issn/{0}",
   } ),
-  // ISSN search engines.
+  // ISSN search engines
   ISSN_SEARCH_ENGINES_TEMPLATES("general_issn_search_engines_templates", true, true, true),
-  // ISSN special values.
+  // ISSN special values
   ISSN_SPECIAL_VALUES("issn_special_values", true, true, true),
-  // Templates for ISSN.
+  // Templates for ISSN
   ISSN_TEMPLATES("general_issn_templates", true, true, true, new String[] { "ISSN|1" } ),
-  // Pages containing the list of pages with many disambiguation links.
+  // Pages containing the list of pages with many disambiguation links
   MOST_DAB_LINKS("most_dab_links", false, true, false),
-  // List of templates for preventing bot editions.
+  // List of templates for preventing bot editions
   NOBOT_TEMPLATES("general_nobot_templates", true, true, true),
-  // Templates to ask for help about PMID.
+  // Templates to ask for help about PMID
   PMID_HELP_NEEDED_TEMPLATES("general_pmid_help_needed_templates", true, true, true),
-  // Templates for PMID.
+  // Templates for PMID
   PMID_TEMPLATES("general_pmid_templates", true, true, true, null ),
-  // Categories that can be applied to redirect page.
+  // Categories that can be applied to redirect page
   REDIRECT_CATEGORIES("redirect_categories", true, true, true),
-  // Templates that can be applied to redirect page.
+  // Templates that can be applied to redirect page
   REDIRECT_TEMPLATES("redirect_templates", true, true, true),
-  // Templates that can be used instead of <references/>.
+  // Templates that can be used instead of <references/>
   REFERENCES_TEMPLATES("general_references_templates", true, true, true),
-  // Templates to ask for help about RFC.
+  // Templates to ask for help about RFC
   RFC_HELP_NEEDED_TEMPLATES("general_rfc_help_needed_templates", true, true, true),
-  // Templates for RFC.
+  // Templates for RFC
   RFC_TEMPLATES("general_rfc_templates", true, true, true, null ),
-  // Search engines.
+  // Search engines
   SEARCH_ENGINES_TEMPLATES("general_search_engines_templates", true, true, true),
-  // Chapters to be ignored for suggestions.
+  // Chapters to be ignored for suggestions
   SUGGESTION_IGNORE("general_suggestions_ignore", true, true, true),
-  // Pages containing spelling suggestions.
+  // Pages containing spelling suggestions
   SUGGESTION_PAGES("general_suggestions", true, true, true),
-  // Pages containing spelling suggestions in AWB format.
+  // Pages containing spelling suggestions in AWB format
   SUGGESTION_TYPO_PAGES("general_suggestions_typo", true, true, true),
-  // Templates used after a disambiguation link asking for help.
+  // Templates used after a disambiguation link asking for help
   TEMPLATES_AFTER_HELP_ASKED("dab_help_asked_templates_after", false, true, false),
-  // Templates used for a normal link to a disambiguation page.
+  // Templates used for a normal link to a disambiguation page
   TEMPLATES_FOR_DAB_LINK("dab_link_templates", false, true, false),
-  // Templates used for finding pages where help is requested.
+  // Templates used for finding pages where help is requested
   TEMPLATES_FOR_HELP_REQUESTED("help_requested_templates", false, true, false),
-  // Templates used for linking text.
+  // Templates used for linking text
   TEMPLATES_FOR_LINKING_TEXT("link_text_templates", false, true, false),
-  // Templates used for a link where help is required.
+  // Templates used for a link where help is required
   TEMPLATES_FOR_NEEDING_HELP("needing_help_templates", false, true, false),
   // Templates ignored for disambiguation link
   TEMPLATES_IGNORE_DAB("dab_ignore_templates", true, true, true),
-  // Templates creating links to "to do" lists.
+  // Templates creating links to "to do" lists
   TODO_LINK_TEMPLATES("general_todo_link_templates", false, true, false),
-  // Templates creating "to do" lists.
+  // Templates creating "to do" lists
   TODO_TEMPLATES("general_todo_templates", false, true, false),
-  // List of templates that should be before the warning.
+  // List of templates that should be before the warning
   WARNING_AFTER_TEMPLATES("warning_after_templates", false, true, false);
 
   /**

@@ -14,9 +14,11 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
+import org.wikipediacleaner.api.constants.WPCConfigurationStringList;
 import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.PageElementTag.Parameter;
+import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.i18n.GT;
 
 /**
@@ -445,19 +447,144 @@ public class CheckErrorAlgorithm112 extends CheckErrorAlgorithmBase {
               int end = offset + styleName.length();
               if ((end >= styleValue.length()) ||
                   (styleValue.charAt(end) == ':')) {
+
+                // Report error
                 if (errors == null) {
                   return true;
                 }
                 result = true;
-                int beginIndex = tag.getBeginIndex() + styleParam.getOffsetValue() + offset;
-                int endIndex = beginIndex + styleName.length();
-                while ((beginIndex > 0) && (contents.charAt(beginIndex - 1) == ' ')) {
-                  beginIndex--;
+                boolean reported = false;
+
+                // Specific treatment for column count
+                if ("-moz-column-count".equals(styleName) ||
+                    "-webkit-column-count".equals(styleName)) {
+                  int currentIndex = 0;
+                  boolean onlyColumnCount = true;
+                  int columnCount = -1;
+                  while (onlyColumnCount && (currentIndex < styleValue.length())) {
+                    int tmpIndex = currentIndex;
+                    while ((tmpIndex < styleValue.length()) &&
+                           (" :".indexOf(styleValue.charAt(tmpIndex)) < 0)) {
+                      tmpIndex++;
+                    }
+                    if ((tmpIndex > currentIndex) &&
+                        (tmpIndex < styleValue.length()) &&
+                        (styleValue.charAt(tmpIndex) == ':')) {
+                      String tmpStyleName = styleValue.substring(currentIndex, tmpIndex);
+                      tmpIndex++;
+                      currentIndex = tmpIndex;
+                      while ((tmpIndex < styleValue.length()) &&
+                             (" ;".indexOf(styleValue.charAt(tmpIndex)) < 0)) {
+                        tmpIndex++;
+                      }
+                      if (tmpIndex > currentIndex) {
+                        String tmpStyleValue = styleValue.substring(currentIndex, tmpIndex);
+                        if ("column-count".equals(tmpStyleName) ||
+                            "-moz-column-count".equals(tmpStyleName) ||
+                            "-webkit-column-count".equals(tmpStyleName)) {
+                          try {
+                            int tmpColumnCount = Integer.parseInt(tmpStyleValue);
+                            if (tmpColumnCount <= 0) {
+                              onlyColumnCount = false;
+                            } else if ((columnCount < 0) || (columnCount == tmpColumnCount)) {
+                              columnCount = tmpColumnCount;
+                            } else {
+                              onlyColumnCount = false;
+                            }
+                          } catch (NumberFormatException e) {
+                            onlyColumnCount = false;
+                          }
+                        } else if ("-moz-column-gap".equals(tmpStyleName) ||
+                                   "-moz-column-width".equals(tmpStyleName) ||
+                                   "-webkit-column-width".equals(tmpStyleName)) {
+                          // Nothing to do
+                        } else {
+                          onlyColumnCount = false;
+                        }
+                      }
+                      while ((tmpIndex < styleValue.length()) &&
+                             (" ;".indexOf(styleValue.charAt(tmpIndex)) >= 0)) {
+                        tmpIndex++;
+                      }
+                      currentIndex = tmpIndex;
+                    } else {
+                      onlyColumnCount = false;
+                    }
+                  }
+
+                  if (onlyColumnCount && (columnCount > 0)) {
+                    List<String[]> columnsTemplates = analysis.getWPCConfiguration().getStringArrayList(
+                        WPCConfigurationStringList.COLUMNS_TEMPLATES);
+                    List<String[]> columns2Templates = analysis.getWPCConfiguration().getStringArrayList(
+                        WPCConfigurationStringList.COLUMNS2_TEMPLATES);
+
+                    if (((columnsTemplates != null) && (!columnsTemplates.isEmpty())) ||
+                        ((columns2Templates != null) && (!columns2Templates.isEmpty()))) {
+                      CheckErrorResult errorResult = createCheckErrorResult(
+                          analysis, tag.getCompleteBeginIndex(), tag.getCompleteEndIndex());
+                      String inside = contents.substring(tag.getValueBeginIndex(), tag.getValueEndIndex());
+                      StringBuilder replacement = new StringBuilder();
+                      if (columns2Templates != null) {
+                        for (String[] columns2Template : columns2Templates) {
+                          if (columns2Template.length > 2) {
+                            replacement.setLength(0);
+                            replacement.append("{{");
+                            replacement.append(columns2Template[0]);
+                            replacement.append("|");
+                            replacement.append(columns2Template[2]);
+                            replacement.append("=");
+                            replacement.append(columnCount);
+                            replacement.append("}}");
+                            replacement.append(inside);
+                            replacement.append(PageElementTemplate.createTemplate(columns2Template[1]));
+                            errorResult.addReplacement(
+                                replacement.toString(),
+                                GT._("Use {0} and {1}", new Object[] {
+                                    PageElementTemplate.createTemplate(columns2Template[0]),
+                                    PageElementTemplate.createTemplate(columns2Template[1]) }));
+                          }
+                        }
+                      }
+                      if (columnsTemplates != null) {
+                        for (String[] columnsTemplate : columnsTemplates) {
+                          if (columnsTemplate.length > 2) {
+                            replacement.setLength(0);
+                            replacement.append("{{");
+                            replacement.append(columnsTemplate[0]);
+                            replacement.append("|");
+                            replacement.append(columnsTemplate[2]);
+                            replacement.append("=");
+                            replacement.append(columnCount);
+                            replacement.append("|");
+                            replacement.append(columnsTemplate[1]);
+                            replacement.append("=");
+                            replacement.append(inside);
+                            replacement.append("}}");
+                            errorResult.addReplacement(
+                                replacement.toString(),
+                                GT._("Use {0}", PageElementTemplate.createTemplate(columnsTemplate[0])));
+                          }
+                        }
+                      }
+                      errors.add(errorResult);
+                      reported = true;
+                    }
+                  }
                 }
-                CheckErrorResult errorResult = createCheckErrorResult(
-                    analysis, beginIndex, endIndex);
-                errorResult.addReplacement("");
-                errors.add(errorResult);
+
+                // General case
+                if (!reported) {
+                  int beginIndex = tag.getBeginIndex() + styleParam.getOffsetValue() + offset;
+                  int endIndex = beginIndex + styleName.length();
+                  while ((beginIndex > 0) && (contents.charAt(beginIndex - 1) == ' ')) {
+                    beginIndex--;
+                  }
+                  CheckErrorResult errorResult = createCheckErrorResult(
+                      analysis, beginIndex, endIndex);
+                  errorResult.addReplacement("");
+                  errors.add(errorResult);
+                  reported = true;
+                }
               }
             }
           }
