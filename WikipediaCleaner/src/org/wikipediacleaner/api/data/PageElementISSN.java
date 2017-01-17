@@ -21,29 +21,24 @@ import org.wikipediacleaner.api.data.PageElementTemplate.Parameter;
  */
 public class PageElementISSN extends PageElement {
 
-  /**
-   * ISSN prefix.
-   */
-  private final static String ISSN_PREFIX = "ISSN";
+  /** ISSN prefix */
+  public final static String ISSN_PREFIX = "ISSN";
 
-  /**
-   * ISSN possible meaningful characters.
-   */
+  /** ISSN incorrect prefixes */
+  private final static String[] ISSN_INCORRECT_PREFIX = {
+    "issn"
+  };
+
+  /** ISSN possible meaningful characters */
   private final static String POSSIBLE_CHARACTERS = "0123456789Xx";
 
-  /**
-   * ISSN possible extraneous characters.
-   */
+  /** ISSN possible extraneous characters */
   private final static String EXTRA_CHARACTERS = "-";
 
-  /**
-   * ISSN incorrect characters.
-   */
+  /** ISSN incorrect characters */
   private final static String INCORRECT_CHARACTERS = ":‐\t—=–#  ";
 
-  /**
-   * ISSN incorrect characters at the beginning.
-   */
+  /** ISSN incorrect characters at the beginning */
   private final static String INCORRECT_BEGIN_CHARACTERS = ":;‐\t—=–#";
 
   /**
@@ -63,14 +58,16 @@ public class PageElementISSN extends PageElement {
     if (issnTemplates != null) {
       for (String[] issnTemplate : issnTemplates) {
         if (issnTemplate.length > 0) {
+          String[] params = null;
           List<PageElementTemplate> templates = analysis.getTemplates(issnTemplate[0]);
           if (templates != null) {
             for (PageElementTemplate template : templates) {
-              String[] params = null;
-              if (issnTemplate.length > 1) {
-                params = issnTemplate[1].split(",");
-              } else {
-                params = new String[]{ "1" };
+              if (params == null) {
+                if (issnTemplate.length > 1) {
+                  params = issnTemplate[1].split(",");
+                } else {
+                  params = new String[]{ "1" };
+                }
               }
               for (String param : params) {
                 if ((param != null) && (param.length() > 0)) {
@@ -113,161 +110,8 @@ public class PageElementISSN extends PageElement {
           template, "ISSN", true, true, true, false);
     }
 
-    // Search for ISSN in plain texts
-    String contents = analysis.getContents();
-    if (contents == null) {
-      return issns;
-    }
-    int index = 0;
-    int maxIndex = contents.length() - ISSN_PREFIX.length();
-    while (index < maxIndex) {
-
-      // Check if it's a potential ISSN
-      boolean isValid = true;
-      boolean isISSN = ISSN_PREFIX.equalsIgnoreCase(
-          contents.substring(index, index + ISSN_PREFIX.length()));
-      if (isISSN && (analysis.isInComment(index) != null)) {
-        isISSN = false;
-      }
-      if (isISSN &&
-          (index > 0) &&
-          (contents.charAt(index - 1) == '/') &&
-          (index + ISSN_PREFIX.length() < contents.length()) &&
-          (Character.isDigit(contents.charAt(index + ISSN_PREFIX.length())))) {
-        isISSN = false; // to avoid DOI like doi:10.5547/issn0195-6574-ej-vol10-no1-14
-      }
-      if (isISSN && (analysis.isInTag(index) != null)) {
-        isISSN = false;
-      }
-      if (isISSN && (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_NOWIKI, index) != null)) {
-        isISSN = false;
-      }
-      if (isISSN && isInISSN(index, issns)) {
-        isISSN = false; // to avoid issn=ISSN xxxx-xxxx being detected twice
-      }
-      if (isISSN) {
-        PageElementExternalLink link = analysis.isInExternalLink(index);
-        if (link != null) {
-          if (!link.hasSquare() ||
-              (index < link.getBeginIndex() + link.getTextOffset()) ||
-              (link.getText() == null)) {
-            isValid = false;
-          }
-        }
-      }
-      if (isISSN) {
-        PageElementTemplate template = analysis.isInTemplate(index);
-        if (template != null) {
-          if ((template.getParameterCount() == 0) ||
-              (index < template.getParameterPipeIndex(0))) {
-            isISSN = false;
-          }
-        }
-      }
-      if (isISSN) {
-        PageElementImage image = analysis.isInImage(index);
-        if (image != null) {
-          if (index < image.getBeginIndex() + image.getFirstPipeOffset()) {
-            isISSN = false;
-          }
-        }
-      }
-
-      if (isISSN) {
-
-        // Check if it's a template parameter
-        boolean parameter = false;
-        PageElementTemplate template = analysis.isInTemplate(index);
-        if (template != null) {
-          for (int paramNum = 0; paramNum < template.getParameterCount(); paramNum++) {
-            if ((template.getParameterPipeIndex(paramNum) < index) &&
-                (template.getParameterValueStartIndex(paramNum) > index)) {
-              parameter = true;
-            }
-          }
-        }
-
-        int beginIndex = index;
-        index += ISSN_PREFIX.length();
-        if (!parameter) {
-          boolean correct = true;
-          if ((beginIndex >= 2) && (index + 2 < contents.length())) {
-            if (contents.startsWith("[[", beginIndex - 2) &&
-                contents.startsWith("]]", index)) {
-              correct = false;
-              beginIndex -= 2;
-              index += 2;
-            }
-          }
-          boolean spaceFound = false;
-          if (analysis.isInComment(index) == null) {
-            while ((index < contents.length()) && (contents.charAt(index) == ' ')) {
-              index++;
-              spaceFound = true;
-            }
-            while ((index < contents.length()) &&
-                (INCORRECT_BEGIN_CHARACTERS.indexOf(contents.charAt(index)) >= 0)) {
-              index++;
-              correct = false;
-            }
-          }
-          int beginNumber = -1;
-          int endNumber = beginNumber;
-          boolean finished = false;
-          correct &= spaceFound;
-          boolean nextCorrect = correct;
-          int digitCount = 0;
-          boolean hasSeparator = false;
-          boolean hasExtraSeparator = false;
-          while (!finished && (index < contents.length())) {
-            char currentChar = contents.charAt(index);
-            if (POSSIBLE_CHARACTERS.indexOf(currentChar) >= 0) {
-              if (beginNumber < 0) {
-                beginNumber = index;
-              }
-              endNumber = index + 1;
-              index++;
-              digitCount++;
-              if (!Character.isDigit(currentChar) && (digitCount != 8)) {
-                correct = false;
-              }
-              correct &= nextCorrect;
-            } else if (EXTRA_CHARACTERS.indexOf(currentChar) >= 0) {
-              if (beginNumber < 0) {
-                nextCorrect = false;
-              } else if ((digitCount == 4) && !hasSeparator) {
-                hasSeparator = true;
-              } else {
-                hasExtraSeparator = true;
-              }
-              index++;
-            } else if (INCORRECT_CHARACTERS.indexOf(currentChar) >= 0) {
-              index++;
-              nextCorrect = false;
-            } else {
-              if ((endNumber == index) && (Character.isLetter(currentChar))) {
-                correct = false;
-              }
-              finished = true;
-            }
-          }
-          if (digitCount == 8) {
-            if (!hasSeparator || hasExtraSeparator) {
-              correct = false;
-            }
-          }
-          if (endNumber > beginNumber) {
-            String number = contents.substring(beginNumber, endNumber);
-            issns.add(new PageElementISSN(
-                beginIndex, endNumber, analysis, number,
-                isValid, correct, false, null));
-            index = endNumber;
-          }
-        }
-      } else {
-        index++;
-      }
-    }
+    // Search for ISBN in plain texts
+    analyzePlainText(analysis, issns);
 
     return issns;
   }
@@ -287,6 +131,238 @@ public class PageElementISSN extends PageElement {
       }
     }
     return false;
+  }
+
+  /**
+   * Analyze plain text for ISSN.
+   * 
+   * @param analysis Page analysis.
+   * @param issns Current list of ISSN.
+   */
+  private static void analyzePlainText(
+      PageAnalysis analysis, List<PageElementISSN> issns) {
+    String contents = analysis.getContents();
+    if (contents == null) {
+      return;
+    }
+    int index = 0;
+    int maxIndex = contents.length() - 1;
+    while (index < maxIndex) {
+      index = checkPlainText(analysis, contents, index, issns);
+    }
+  }
+
+  /**
+   * Check plain text for ISSN.
+   * 
+   * @param analysis Page analysis.
+   * @param contents Page contents.
+   * @param index Current index in the page.
+   * @param issns Current list of ISSN.
+   * @return Next index to check.
+   */
+  private static int checkPlainText(
+      PageAnalysis analysis, String contents, int index, List<PageElementISSN> issns) {
+
+    // Check special places
+    if (contents.charAt(index) == '<') {
+      PageElementComment comment = analysis.isInComment(index);
+      if (comment != null) {
+        return comment.getEndIndex();
+      }
+      PageElementTag tag = analysis.isInTag(index);
+      if (tag != null) {
+        String tagName = tag.getName();
+        if (PageElementTag.TAG_WIKI_NOWIKI.equals(tagName) ||
+            PageElementTag.TAG_WIKI_PRE.equals(tagName) ||
+            PageElementTag.TAG_WIKI_SOURCE.equals(tagName) ||
+            PageElementTag.TAG_WIKI_SYNTAXHIGHLIGHT.equals(tagName)) {
+          return tag.getCompleteEndIndex();
+        }
+        return tag.getEndIndex();
+      }
+    }
+    if (contents.charAt(index) == '[') {
+      PageElementInterwikiLink iwLink = analysis.isInInterwikiLink(index);
+      if ((iwLink != null) && (iwLink.getBeginIndex() == index)) {
+        return iwLink.getEndIndex();
+      }
+    }
+
+    // Check if it's a potential ISSN
+    String prefix = null;
+    boolean correct = false;
+    if (contents.startsWith(ISSN_PREFIX, index)) {
+      prefix = ISSN_PREFIX;
+      correct = true;
+    }
+    for (String tmpPrefix : ISSN_INCORRECT_PREFIX) {
+      if ((prefix == null) && (contents.length() >= index + tmpPrefix.length())) {
+        String nextChars = contents.substring(index, index + tmpPrefix.length());
+        if (tmpPrefix.equalsIgnoreCase(nextChars)) {
+          if ((contents.length() == index + tmpPrefix.length()) ||
+              // to avoid DOI like doi:10.5547/issn0195-6574-ej-vol10-no1-14
+              !Character.isDigit(contents.charAt(index + tmpPrefix.length()))) {
+            prefix = tmpPrefix;
+            correct = false;
+          }
+        }
+      }
+    }
+    if (prefix == null) {
+      return index + 1;
+    }
+
+    // Manage specific locations
+    if (isInISSN(index, issns)) {
+      return index + 1;
+    }
+    PageElementTemplate template = analysis.isInTemplate(index);
+    if (template != null) {
+      if (template.getParameterCount() == 0) {
+        return template.getEndIndex();
+      }
+      int pipeIndex = template.getParameterPipeIndex(0);
+      if (index < pipeIndex) {
+        return pipeIndex + 1;
+      }
+    }
+    PageElementImage image = analysis.isInImage(index);
+    if (image != null) {
+      int pipeIndex = image.getBeginIndex() + image.getFirstPipeOffset();
+      if (index < pipeIndex) {
+        return pipeIndex + 1;
+      }
+    }
+    boolean isValid = true;
+    PageElementExternalLink link = analysis.isInExternalLink(index);
+    if (link != null) {
+      if (!link.hasSquare() ||
+          (index < link.getBeginIndex() + link.getTextOffset()) ||
+          (link.getText() == null)) {
+        isValid = false;
+      }
+    }
+
+    // Check if it's a template parameter
+    boolean parameter = false;
+    if (template != null) {
+      for (int paramNum = 0; paramNum < template.getParameterCount(); paramNum++) {
+        if ((template.getParameterPipeIndex(paramNum) < index) &&
+            (template.getParameterValueStartIndex(paramNum) > index)) {
+          parameter = true;
+        }
+      }
+    }
+
+    int beginIndex = index;
+    index += prefix.length();
+    boolean isCorrect = correct;
+    if (!parameter) {
+      if (beginIndex >= 2) {
+        if (contents.startsWith("[[", beginIndex - 2)) {
+          isCorrect = false;
+          beginIndex -= 2;
+          if ((index + 2 < contents.length()) && contents.startsWith("]]", index)) {
+            index += 2;
+          }
+        }
+      }
+      boolean spaceFound = false;
+      PageElementInternalLink iLink = null;
+      PageElementExternalLink eLink = null;
+      if (analysis.isInComment(index) == null) {
+        boolean done = false;
+        while (!done) {
+          done = true;
+          if (index < contents.length()) {
+            char currentChar = contents.charAt(index);
+            if (currentChar == ' ') {
+              index++;
+              spaceFound = true;
+              done = false;
+            } else if (currentChar == '[') {
+              iLink = analysis.isInInternalLink(index);
+              if ((iLink != null) && (iLink.getBeginIndex() == index)) {
+                isCorrect = false;
+                if (iLink.getTextOffset() > 0) {
+                  index += iLink.getTextOffset();
+                } else {
+                  index += 2;
+                }
+              } else {
+                eLink = analysis.isInExternalLink(index);
+                if ((eLink != null) && (eLink.getBeginIndex() == index)) {
+                  isCorrect = false;
+                  if (eLink.getTextOffset() > 0) {
+                    index += eLink.getTextOffset();
+                  } else {
+                    index += 1;
+                  }
+                }
+              }
+            } else if (INCORRECT_BEGIN_CHARACTERS.indexOf(currentChar) >= 0) {
+              index++;
+              isCorrect = false;
+              done = false;
+            }
+          }
+        }
+      }
+      int beginNumber = -1;
+      int endNumber = beginNumber;
+      boolean finished = false;
+      isCorrect &= spaceFound;
+      boolean nextCorrect = isCorrect;
+      while (!finished && (index < contents.length())) {
+        char currentChar = contents.charAt(index);
+        if (POSSIBLE_CHARACTERS.indexOf(currentChar) >= 0) {
+          if (beginNumber < 0) {
+            beginNumber = index;
+          }
+          endNumber = index + 1;
+          index++;
+          isCorrect = nextCorrect;
+        } else if (EXTRA_CHARACTERS.indexOf(currentChar) >= 0) {
+          if (beginNumber < 0) {
+            nextCorrect = false;
+          }
+          index++;
+        } else if (INCORRECT_CHARACTERS.indexOf(currentChar) >= 0) {
+          index++;
+          nextCorrect = false;
+        } else {
+          if ((endNumber == index) && (Character.isLetter(currentChar))) {
+            isCorrect = false;
+          }
+          finished = true;
+        }
+      }
+      if (endNumber > beginNumber) {
+        String number = contents.substring(beginNumber, endNumber);
+        if ((iLink != null) && (endNumber + 2 == iLink.getEndIndex())) {
+          endNumber = iLink.getEndIndex();
+        } else if ((eLink != null) && (endNumber + 1 == eLink.getEndIndex())) {
+          endNumber = eLink.getEndIndex();
+        } else if (contents.startsWith("[[", beginIndex) &&
+                   contents.startsWith("]]", endNumber)) {
+          endNumber += 2;
+        }
+        issns.add(new PageElementISSN(
+            beginIndex, endNumber, analysis, number,
+            isValid, isCorrect, false, null));
+        index = endNumber;
+      } else {
+        if (contents.startsWith(prefix, index) &&
+            !contents.startsWith("[[ISBN#", beginIndex)) {
+          issns.add(new PageElementISSN(
+              beginIndex, index, analysis, "",
+              isValid, false, false, null));
+        }
+      }
+    }
+
+    return index;
   }
 
   /**
@@ -335,16 +411,11 @@ public class PageElementISSN extends PageElement {
       }
     }
 
-    int paramDefaultName = 1;
     for (int paramNum = 0; paramNum < template.getParameterCount(); paramNum++) {
 
       // Check parameter name
       Parameter param = template.getParameter(paramNum);
-      String paramName = param.getName();
-      if ((paramName == null) || (paramName.trim().length() == 0)) {
-        paramName = Integer.toString(paramDefaultName);
-        paramDefaultName++;
-      }
+      String paramName = param.getComputedName();
       boolean nameOk = false;
       if ((ignoreCase && argumentName.equalsIgnoreCase(paramName)) ||
           (argumentName.equals(paramName))) {

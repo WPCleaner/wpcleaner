@@ -38,6 +38,10 @@ public enum WPCConfigurationStringList {
   ISBN_ERRORS_LISTS("isbn_errors_lists", true, true, true),
   // Templates to ask for help about ISBN
   ISBN_HELP_NEEDED_TEMPLATES("general_isbn_help_needed_templates", true, true, true),
+  // Templates to ignore for ISBN
+  ISBN_IGNORE_TEMPLATES("isbn_ignore_templates", true, true, true),
+  // Interwikis for ISBN
+  ISBN_INTERWIKIS("general_isbn_interwikis", true, true, true, null ),
   // ISBN search engines
   ISBN_SEARCH_ENGINES("general_isbn_search_engines", true, true, true, new String[] { 
       "WorldCat|http://worldcat.org/isbn/{0}",
@@ -59,6 +63,8 @@ public enum WPCConfigurationStringList {
   ISSN_HELP_NEEDED_TEMPLATES("general_issn_help_needed_templates", true, true, true),
   // Templates to ignore for ISSN
   ISSN_IGNORE_TEMPLATES("issn_ignore_templates", true, true, true),
+  // Interwikis for ISSN
+  ISSN_INTERWIKIS("general_issn_interwikis", true, true, true, null ),
   // ISSN search engines
   ISSN_SEARCH_ENGINES("general_issn_search_engines", true, true, true, new String[] { 
       "WorldCat|http://worldcat.org/issn/{0}",
@@ -76,6 +82,10 @@ public enum WPCConfigurationStringList {
   NOBOT_TEMPLATES("general_nobot_templates", true, true, true),
   // Templates to ask for help about PMID
   PMID_HELP_NEEDED_TEMPLATES("general_pmid_help_needed_templates", true, true, true),
+  // Templates to ignore for PMID
+  PMID_IGNORE_TEMPLATES("pmid_ignore_templates", true, true, true),
+  // Interwikis for PMID
+  PMID_INTERWIKIS("general_pmid_interwikis", true, true, true, null ),
   // Templates for PMID
   PMID_TEMPLATES("general_pmid_templates", true, true, true, null ),
   // Categories that can be applied to redirect page
@@ -86,6 +96,10 @@ public enum WPCConfigurationStringList {
   REFERENCES_TEMPLATES("general_references_templates", true, true, true),
   // Templates to ask for help about RFC
   RFC_HELP_NEEDED_TEMPLATES("general_rfc_help_needed_templates", true, true, true),
+  // Templates to ignore for RFC
+  RFC_IGNORE_TEMPLATES("rfc_ignore_templates", true, true, true),
+  // Interwikis for RFC
+  RFC_INTERWIKIS("general_rfc_interwikis", true, true, true, null ),
   // Templates for RFC
   RFC_TEMPLATES("general_rfc_templates", true, true, true, null ),
   // Search engines

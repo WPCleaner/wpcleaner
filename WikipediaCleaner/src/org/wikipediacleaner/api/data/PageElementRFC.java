@@ -22,7 +22,7 @@ import org.wikipediacleaner.api.data.PageElementTemplate.Parameter;
 public class PageElementRFC extends PageElement {
 
   /** RFC prefix */
-  private final static String RFC_PREFIX = "RFC";
+  public final static String RFC_PREFIX = "RFC";
 
   /** RFC incorrect prefixes */
   private final static String[] RFC_INCORRECT_PREFIX = {
@@ -36,10 +36,10 @@ public class PageElementRFC extends PageElement {
   private final static String EXTRA_CHARACTERS = "";
 
   /** RFC incorrect characters */
-  private final static String INCORRECT_CHARACTERS = "- :‐\t—=–\n";
+  private final static String INCORRECT_CHARACTERS = "-:‐\t—=–\n";
 
   /** RFC incorrect characters at the beginning */
-  private final static String INCORRECT_BEGIN_CHARACTERS = "- :‐\t—=–\n";
+  private final static String INCORRECT_BEGIN_CHARACTERS = "-:‐\t—=–\n";
 
   /**
    * @param analysis Page analysis.
@@ -49,19 +49,34 @@ public class PageElementRFC extends PageElement {
       PageAnalysis analysis) {
     List<PageElementRFC> rfcs = new ArrayList<PageElementRFC>();
 
-    // Search for RFC templates
+    // Configuration
     WPCConfiguration config = analysis.getWPCConfiguration();
+    List<String[]> rfcIgnoreTemplates = config.getStringArrayList(WPCConfigurationStringList.RFC_IGNORE_TEMPLATES); 
+
+    // Search for RFC templates
     List<String[]> rfcTemplates = config.getStringArrayList(WPCConfigurationStringList.RFC_TEMPLATES);
     if (rfcTemplates != null) {
       for (String[] rfcTemplate : rfcTemplates) {
         if (rfcTemplate.length > 0) {
+          String[] params = null;
           List<PageElementTemplate> templates = analysis.getTemplates(rfcTemplate[0]);
           if (templates != null) {
             for (PageElementTemplate template : templates) {
-              analyzeTemplateParams(
-                  analysis, rfcs, template,
-                  (rfcTemplate.length > 1) ? rfcTemplate[1] : "1",
-                  false, false, false, false);
+              if (params == null) {
+                if (rfcTemplate.length > 1) {
+                  params = rfcTemplate[1].split(",");
+                } else {
+                  params = new String[]{ "1" };
+                }
+              }
+              for (String param : params) {
+                if ((param != null) && (param.length() > 0)) {
+                  analyzeTemplateParams(
+                      analysis, rfcs, rfcIgnoreTemplates,
+                      template, param,
+                      false, false, false, false);
+                }
+              }
             }
           }
         }
@@ -77,7 +92,8 @@ public class PageElementRFC extends PageElement {
           if (templates != null) {
             for (PageElementTemplate template : templates) {
               analyzeTemplateParams(
-                  analysis, rfcs, template,
+                  analysis, rfcs, rfcIgnoreTemplates,
+                  template,
                   ((rfcTemplate.length > 1) && (rfcTemplate[1].length() > 0)) ? rfcTemplate[1] : "1",
                   false, false, false, true);
             }
@@ -87,16 +103,15 @@ public class PageElementRFC extends PageElement {
     }
 
     // Search for RFC in template parameters
-    List<PageElementTemplate> templates = analysis.getTemplates();
-    for (PageElementTemplate template : templates) {
-      analyzeTemplateParams(analysis, rfcs, template, "RFC", true, true, true, false);
-    }
+    //List<PageElementTemplate> templates = analysis.getTemplates();
+    //for (PageElementTemplate template : templates) {
+    //  analyzeTemplateParams(
+    //      analysis, rfcs, rfcIgnoreTemplates,
+    //      template, "RFC", true, true, true, false);
+    //}
 
     // Search for RFC in plain texts
-    analyzePlainText(analysis, rfcs, RFC_PREFIX, true, true);
-    for (String prefix : RFC_INCORRECT_PREFIX) {
-      analyzePlainText(analysis, rfcs, prefix, false, false);
-    }
+    analyzePlainText(analysis, rfcs);
 
     return rfcs;
   }
@@ -123,153 +138,231 @@ public class PageElementRFC extends PageElement {
    * 
    * @param analysis Page analysis.
    * @param rfcs Current list of RFC.
-   * @param prefix RFC prefix.
-   * @param correct True if RFC should be considered correct by default.
-   * @param caseSensitive True if RFC prefix is case sensitive.
    */
   private static void analyzePlainText(
-      PageAnalysis analysis, List<PageElementRFC> rfcs,
-      String prefix, boolean correct, boolean caseSensitive) {
+      PageAnalysis analysis, List<PageElementRFC> rfcs) {
     String contents = analysis.getContents();
-    if ((contents == null) || (prefix == null)) {
+    if (contents == null) {
       return;
     }
     int index = 0;
-    int maxIndex = contents.length() - prefix.length();
+    int maxIndex = contents.length() - 1;
     while (index < maxIndex) {
+      index = checkPlainText(analysis, contents, index, rfcs);
+    }
+  }
 
-      // Check if it's a potential RFC
-      boolean isValid = true;
-      String nextChars = contents.substring(index, index + prefix.length());
-      boolean isRFC = caseSensitive ?
-          prefix.equals(nextChars) : prefix.equalsIgnoreCase(nextChars);
-      if (isRFC && (analysis.isInComment(index) != null)) {
-        isRFC = false;
-      }
-      if (isRFC && (analysis.isInTag(index) != null)) {
-        isRFC = false;
-      }
-      if (isRFC && (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_NOWIKI, index) != null)) {
-        isRFC = false;
-      }
-      if (isRFC) {
-        if ((analysis.getSurroundingTag(PageElementTag.TAG_WIKI_PRE, index) != null) ||
-            (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_SOURCE, index) != null) ||
-            (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_SYNTAXHIGHLIGHT, index) != null)) {
-          isRFC = false;
-        }
-      }
-      if (isRFC && isInRFC(index, rfcs)) {
-        isRFC = false;
-      }
-      if (isRFC) {
-        PageElementExternalLink link = analysis.isInExternalLink(index);
-        if (link != null) {
-          if (!link.hasSquare() ||
-              (index < link.getBeginIndex() + link.getTextOffset()) ||
-              (link.getText() == null)) {
-            isValid = false;
-          }
-        }
-      }
-      if (isRFC) {
-        PageElementTemplate template = analysis.isInTemplate(index);
-        if (template != null) {
-          if ((template.getParameterCount() == 0) ||
-              (index < template.getParameterPipeIndex(0))) {
-            isRFC = false;
-          }
-        }
-      }
-      if (isRFC) {
-        PageElementImage image = analysis.isInImage(index);
-        if (image != null) {
-          if (index < image.getBeginIndex() + image.getFirstPipeOffset()) {
-            isRFC = false;
-          }
-        }
-      }
+  /**
+   * Check plain text for RFC.
+   * 
+   * @param analysis Page analysis.
+   * @param contents Page contents.
+   * @param index Current index in the page.
+   * @param rfcs Current list of RFC.
+   * @return Next index to check.
+   */
+  private static int checkPlainText(
+      PageAnalysis analysis, String contents, int index, List<PageElementRFC> rfcs) {
 
-      if (isRFC) {
-
-        // Check if it's a template parameter
-        boolean parameter = false;
-        PageElementTemplate template = analysis.isInTemplate(index);
-        if (template != null) {
-          for (int paramNum = 0; paramNum < template.getParameterCount(); paramNum++) {
-            if ((template.getParameterPipeIndex(paramNum) < index) &&
-                (template.getParameterValueStartIndex(paramNum) > index)) {
-              parameter = true;
-            }
-          }
+    // Check special places
+    if (contents.charAt(index) == '<') {
+      PageElementComment comment = analysis.isInComment(index);
+      if (comment != null) {
+        return comment.getEndIndex();
+      }
+      PageElementTag tag = analysis.isInTag(index);
+      if (tag != null) {
+        String tagName = tag.getName();
+        if (PageElementTag.TAG_WIKI_NOWIKI.equals(tagName) ||
+            PageElementTag.TAG_WIKI_PRE.equals(tagName) ||
+            PageElementTag.TAG_WIKI_SOURCE.equals(tagName) ||
+            PageElementTag.TAG_WIKI_SYNTAXHIGHLIGHT.equals(tagName)) {
+          return tag.getCompleteEndIndex();
         }
-
-        int beginIndex = index;
-        index += prefix.length();
-        boolean isCorrect = correct;
-        if (!parameter) {
-          if ((beginIndex >= 2) && (index + 2 < contents.length())) {
-            if (contents.startsWith("[[", beginIndex - 2) &&
-                contents.startsWith("]]", index)) {
-              isCorrect = false;
-              beginIndex -= 2;
-              index += 2;
-            }
-          }
-          boolean spaceFound = false;
-          if (analysis.isInComment(index) == null) {
-            while ((index < contents.length()) &&
-                (" \u00A0".indexOf(contents.charAt(index)) >= 0)) {
-              index++;
-              spaceFound = true;
-            }
-            while ((index < contents.length()) &&
-                (INCORRECT_BEGIN_CHARACTERS.indexOf(contents.charAt(index)) >= 0)) {
-              index++;
-              isCorrect = false;
-            }
-          }
-          int beginNumber = -1;
-          int endNumber = beginNumber;
-          boolean finished = false;
-          isCorrect &= spaceFound;
-          boolean nextCorrect = isCorrect;
-          while (!finished && (index < contents.length())) {
-            char currentChar = contents.charAt(index);
-            if (POSSIBLE_CHARACTERS.indexOf(currentChar) >= 0) {
-              if (beginNumber < 0) {
-                beginNumber = index;
-              }
-              endNumber = index + 1;
-              index++;
-              isCorrect = nextCorrect;
-            } else if (EXTRA_CHARACTERS.indexOf(currentChar) >= 0) {
-              if (beginNumber < 0) {
-                nextCorrect = false;
-              }
-              index++;
-            } else if (INCORRECT_CHARACTERS.indexOf(currentChar) >= 0) {
-              index++;
-              nextCorrect = false;
-            } else {
-              if ((endNumber == index) && (Character.isLetter(currentChar))) {
-                isCorrect = false;
-              }
-              finished = true;
-            }
-          }
-          if (endNumber > beginNumber) {
-            String number = contents.substring(beginNumber, endNumber);
-            rfcs.add(new PageElementRFC(
-                beginIndex, endNumber, number,
-                isValid, isCorrect, false, false));
-            index = endNumber;
-          }
-        }
-      } else {
-        index++;
+        return tag.getEndIndex();
       }
     }
+    if (contents.charAt(index) == '[') {
+      PageElementInterwikiLink iwLink = analysis.isInInterwikiLink(index);
+      if ((iwLink != null) && (iwLink.getBeginIndex() == index)) {
+        return iwLink.getEndIndex();
+      }
+    }
+
+    // Check if it's a potential RFC
+    String prefix = null;
+    boolean correct = false;
+    if (contents.startsWith(RFC_PREFIX, index)) {
+      prefix = RFC_PREFIX;
+      correct = true;
+    }
+    for (String tmpPrefix : RFC_INCORRECT_PREFIX) {
+      if ((prefix == null) && (contents.length() >= index + tmpPrefix.length())) {
+        String nextChars = contents.substring(index, index + tmpPrefix.length());
+        if (tmpPrefix.equalsIgnoreCase(nextChars)) {
+          prefix = tmpPrefix;
+          correct = false;
+        }
+      }
+    }
+    if (prefix == null) {
+      return index + 1;
+    }
+
+    // Manage specific locations
+    if (isInRFC(index, rfcs)) {
+      return index + 1;
+    }
+    PageElementTemplate template = analysis.isInTemplate(index);
+    if (template != null) {
+      if (template.getParameterCount() == 0) {
+        return template.getEndIndex();
+      }
+      int pipeIndex = template.getParameterPipeIndex(0);
+      if (index < pipeIndex) {
+        return pipeIndex + 1;
+      }
+    }
+    PageElementImage image = analysis.isInImage(index);
+    if (image != null) {
+      int pipeIndex = image.getBeginIndex() + image.getFirstPipeOffset();
+      if (index < pipeIndex) {
+        return pipeIndex + 1;
+      }
+    }
+    boolean isValid = true;
+    PageElementExternalLink link = analysis.isInExternalLink(index);
+    if (link != null) {
+      if (!link.hasSquare() ||
+          (index < link.getBeginIndex() + link.getTextOffset()) ||
+          (link.getText() == null)) {
+        isValid = false;
+      }
+    }
+
+    // Check if it's a template parameter
+    boolean parameter = false;
+    if (template != null) {
+      for (int paramNum = 0; paramNum < template.getParameterCount(); paramNum++) {
+        if ((template.getParameterPipeIndex(paramNum) < index) &&
+            (template.getParameterValueStartIndex(paramNum) > index)) {
+          parameter = true;
+        }
+      }
+    }
+
+    int beginIndex = index;
+    index += prefix.length();
+    boolean isCorrect = correct;
+    if (!parameter) {
+      if (beginIndex >= 2) {
+        if (contents.startsWith("[[", beginIndex - 2)) {
+          isCorrect = false;
+          beginIndex -= 2;
+          if ((index + 2 < contents.length()) && contents.startsWith("]]", index)) {
+            index += 2;
+          }
+        }
+      }
+      boolean spaceFound = false;
+      PageElementInternalLink iLink = null;
+      PageElementExternalLink eLink = null;
+      if (analysis.isInComment(index) == null) {
+        boolean done = false;
+        while (!done) {
+          done = true;
+          if (index < contents.length()) {
+            char currentChar = contents.charAt(index);
+            if (currentChar == ' ') {
+              index++;
+              spaceFound = true;
+              done = false;
+            } else if (currentChar == '[') {
+              iLink = analysis.isInInternalLink(index);
+              if ((iLink != null) && (iLink.getBeginIndex() == index)) {
+                isCorrect = false;
+                if (iLink.getTextOffset() > 0) {
+                  index += iLink.getTextOffset();
+                } else {
+                  index += 2;
+                }
+              } else {
+                eLink = analysis.isInExternalLink(index);
+                if ((eLink != null) && (eLink.getBeginIndex() == index)) {
+                  isCorrect = false;
+                  if (eLink.getTextOffset() > 0) {
+                    index += eLink.getTextOffset();
+                  } else {
+                    index += 1;
+                  }
+                }
+              }
+            } else if (contents.startsWith("&nbsp;", index)) {
+              index += "&nbsp;".length();
+              spaceFound = true;
+              done = false;
+            } else if (INCORRECT_BEGIN_CHARACTERS.indexOf(currentChar) >= 0) {
+              index++;
+              isCorrect = false;
+              done = false;
+            }
+          }
+        }
+      }
+      int beginNumber = -1;
+      int endNumber = beginNumber;
+      boolean finished = false;
+      isCorrect &= spaceFound;
+      boolean nextCorrect = isCorrect;
+      while (!finished && (index < contents.length())) {
+        char currentChar = contents.charAt(index);
+        if (POSSIBLE_CHARACTERS.indexOf(currentChar) >= 0) {
+          if (beginNumber < 0) {
+            beginNumber = index;
+          }
+          endNumber = index + 1;
+          index++;
+          isCorrect = nextCorrect;
+        } else if (EXTRA_CHARACTERS.indexOf(currentChar) >= 0) {
+          if (beginNumber < 0) {
+            nextCorrect = false;
+          }
+          index++;
+        } else if (INCORRECT_CHARACTERS.indexOf(currentChar) >= 0) {
+          index++;
+          nextCorrect = false;
+        } else {
+          if ((endNumber == index) && (Character.isLetter(currentChar))) {
+            isCorrect = false;
+          }
+          finished = true;
+        }
+      }
+      if (endNumber > beginNumber) {
+        String number = contents.substring(beginNumber, endNumber);
+        if ((iLink != null) && (endNumber + 2 == iLink.getEndIndex())) {
+          endNumber = iLink.getEndIndex();
+        } else if ((eLink != null) && (endNumber + 1 == eLink.getEndIndex())) {
+          endNumber = eLink.getEndIndex();
+        } else if (contents.startsWith("[[", beginIndex) &&
+                   contents.startsWith("]]", endNumber)) {
+          endNumber += 2;
+        }
+        rfcs.add(new PageElementRFC(
+            beginIndex, endNumber, analysis, number,
+            isValid, isCorrect, false, null));
+        index = endNumber;
+      } else {
+        if (contents.startsWith(prefix, index) &&
+            !contents.startsWith("[[RFC#", beginIndex)) {
+          rfcs.add(new PageElementRFC(
+              beginIndex, index, analysis, "",
+              isValid, false, false, null));
+        }
+      }
+    }
+
+    return index;
   }
 
   /**
@@ -277,6 +370,7 @@ public class PageElementRFC extends PageElement {
    * 
    * @param analysis Page analysis.
    * @param rfcs Current list of RFC.
+   * @param ignoreTemplates List of templates (with parameter and value) to ignore.
    * @param template Template.
    * @param argumentName Template parameter name.
    * @param ignoreCase True if parameter name should compared ignoring case.
@@ -286,20 +380,42 @@ public class PageElementRFC extends PageElement {
    */
   private static void analyzeTemplateParams(
       PageAnalysis analysis, List<PageElementRFC> rfcs,
+      List<String[]> ignoreTemplates,
       PageElementTemplate template,
       String argumentName,
       boolean ignoreCase, boolean acceptNumbers,
       boolean acceptAllValues, boolean helpRequested) {
-    int paramDefaultName = 1;
+
+    // Check if template should be ignored
+    if (ignoreTemplates != null) {
+      for (String[] ignoreTemplate : ignoreTemplates) {
+        if ((ignoreTemplate != null) &&
+            (ignoreTemplate.length > 0) &&
+            (Page.areSameTitle(ignoreTemplate[0], template.getTemplateName()))) {
+          if (ignoreTemplate.length > 1) {
+            String paramValue = template.getParameterValue(ignoreTemplate[1]);
+            if (ignoreTemplate.length > 2) {
+              if ((paramValue != null) &&
+                  (paramValue.trim().equals(ignoreTemplate[2].trim()))) {
+                return; // Ignore all templates with this name and parameter set to a given value
+              }
+            } else {
+              if (paramValue != null) {
+                return; // Ignore all templates with this name and parameter present
+              }
+            }
+          } else {
+            return; // Ignore all templates with this name
+          }
+        }
+      }
+    }
+
     for (int paramNum = 0; paramNum < template.getParameterCount(); paramNum++) {
 
       // Check parameter name
       Parameter param = template.getParameter(paramNum);
       String paramName = param.getComputedName();
-      if ((paramName == null) || (paramName.trim().length() == 0)) {
-        paramName = Integer.toString(paramDefaultName);
-        paramDefaultName++;
-      }
       boolean nameOk = false;
       if ((ignoreCase && argumentName.equalsIgnoreCase(paramName)) ||
           (argumentName.equals(paramName))) {
@@ -317,6 +433,7 @@ public class PageElementRFC extends PageElement {
         }
       }
       
+      // Parameter is for a RFC, analyze its value
       if (nameOk) {
         String paramValue = param.getStrippedValue();
         boolean ok = true;
@@ -387,71 +504,69 @@ public class PageElementRFC extends PageElement {
           String value = analysis.getContents().substring(beginIndex, endIndex);
           if (paramValue.length() > 0) {
             rfcs.add(new PageElementRFC(
-                beginIndex, endIndex, value, true, correct, helpRequested, true));
+                beginIndex, endIndex, analysis, value,
+                true, correct, helpRequested, template));
           }
         } else if (acceptAllValues) {
           if (paramValue.length() > 0) {
             rfcs.add(new PageElementRFC(
                 template.getParameterValueStartIndex(paramNum),
                 template.getParameterValueStartIndex(paramNum) + paramValue.length(),
-                paramValue, true, false, false, true));
+                analysis, paramValue, true, false, false, template));
           }
         }
       }
     }
   }
 
-  /**
-   * RFC not trimmed.
-   */
+  /** WPCleaner configuration */
+  private final WPCConfiguration wpcConfiguration;
+
+  /** Full text */
+  private final String fullText;
+
+  /** RFC not trimmed */
   private final String rfcNotTrimmed;
 
-  /**
-   * RFC (trimmed).
-   */
+  /** RFC (trimmed) */
   private final String rfc;
 
-  /**
-   * True if RFC is in a valid location.
-   */
+  /** True if RFC is in a valid location */
   private final boolean isValid;
 
-  /**
-   * True if RFC syntax is correct.
-   */
+  /** True if RFC syntax is correct */
   private final boolean isCorrect;
 
-  /**
-   * True if RFC is a template parameter (RFC=...)
-   */
-  private final boolean isTemplateParameter;
+  /** Template if RFC is a template parameter (RFC=...) */
+  private final PageElementTemplate template;
 
-  /**
-   * True if help has been requested for this RFC
-   */
+  /** True if help has been requested for this RFC */
   private final boolean helpRequested;
 
   /**
    * @param beginIndex Begin index.
    * @param endIndex End index.
+   * @param analysis Page analysis.
    * @param rfc RFC.
    * @param isValid True if RFC is in a valid location.
    * @param isCorrect True if RFC syntax is correct.
    * @param helpRequested True if help has been requested for this RFC. 
-   * @param isTemplateParameter True if RFC is a template parameter.
+   * @param template Template if ISBN is a template parameter.
    */
   private PageElementRFC(
-      int beginIndex, int endIndex,
+      int beginIndex, int endIndex, PageAnalysis analysis,
       String rfc, boolean isValid,
       boolean isCorrect, boolean helpRequested,
-      boolean isTemplateParameter) {
+      PageElementTemplate template) {
     super(beginIndex, endIndex);
+    this.wpcConfiguration = analysis.getWPCConfiguration();
+    this.fullText = analysis.getContents().substring(beginIndex, endIndex);
     this.rfcNotTrimmed = rfc;
     this.rfc = cleanRFC(rfc);
     this.isValid = isValid;
     this.isCorrect = isCorrect;
     this.helpRequested = helpRequested;
-    this.isTemplateParameter = isTemplateParameter;
+    this.template = template;
   }
 
   /**
@@ -466,6 +581,13 @@ public class PageElementRFC extends PageElement {
    */
   public String getRFC() {
     return rfc;
+  }
+
+  /**
+   * @return URL to see the RFC.
+   */
+  public String getURL() {
+    return "https://tools.ietf.org/html/rfc" + rfc;
   }
 
   /**
@@ -493,7 +615,7 @@ public class PageElementRFC extends PageElement {
    * @return True if RFC is a template parameter.
    */
   public boolean isTemplateParameter() {
-    return isTemplateParameter;
+    return (template != null);
   }
 
   /**
@@ -501,7 +623,16 @@ public class PageElementRFC extends PageElement {
    */
   public List<String> getCorrectRFC() {
     List<String> result = new ArrayList<String>();
-    String prefix = isTemplateParameter ? "" : "RFC ";
+    String prefix = isTemplateParameter() ? "" : "RFC ";
+
+    // Prefix outside the template
+    if ((template != null) &&
+        (getBeginIndex() < template.getBeginIndex())) {
+      if (fullText != null) {
+        result.add(fullText.substring(template.getBeginIndex() - getBeginIndex()));
+      }
+      return result;
+    }
 
     // Construct a basic RFC number
     StringBuilder buffer = new StringBuilder();
@@ -510,9 +641,6 @@ public class PageElementRFC extends PageElement {
       if ((POSSIBLE_CHARACTERS.indexOf(currentChar) >= 0) ||
           (EXTRA_CHARACTERS.indexOf(currentChar) >= 0)) {
         buffer.append(currentChar);
-      } else if ((currentChar == '‐') ||
-                 (currentChar == '.')) {
-        buffer.append("-");
       } else if (currentChar == '\t') {
         buffer.append(" ");
       } else {
@@ -522,9 +650,57 @@ public class PageElementRFC extends PageElement {
     String cleanedRFC = buffer.toString().trim();
 
     // Basic replacement
-    result.add(prefix + cleanedRFC);
+    addCorrectRFC(result, prefix, cleanedRFC);
     
     return result;
+  }
+
+  /**
+   * @param result List of possible replacements.
+   * @param prefix RFC prefix.
+   * @param cleanedRFC Cleaned up RFC.
+   */
+  private void addCorrectRFC(List<String> result, String prefix, String cleanedRFC) {
+    addCorrectRFC(result, prefix + cleanedRFC);
+    if (!isTemplateParameter()) {
+      List<String[]> isbnTemplates = wpcConfiguration.getStringArrayList(
+          WPCConfigurationStringList.RFC_TEMPLATES);
+      if (isbnTemplates != null) {
+        for (String[] isbnTemplate : isbnTemplates) {
+          if (isbnTemplate.length > 2) {
+            String[] params = isbnTemplate[1].split(",");
+            Boolean suggested = Boolean.valueOf(isbnTemplate[2]);
+            if ((params.length > 0) && (Boolean.TRUE.equals(suggested))) {
+              StringBuilder buffer = new StringBuilder();
+              buffer.append("{{");
+              buffer.append(isbnTemplate[0]);
+              buffer.append("|");
+              if (!"1".equals(params[0])) {
+                buffer.append(params[0]);
+                buffer.append("=");
+              }
+              buffer.append(cleanedRFC);
+              buffer.append("}}");
+              addCorrectRFC(result, buffer.toString());
+            }
+          }
+        }
+      }
+      
+    }
+  }
+
+  /**
+   * @param result List of possible replacements.
+   * @param correctRFC Possible replacement.
+   */
+  private void addCorrectRFC(List<String> result, String correctRFC) {
+    if ((result == null) || (correctRFC == null)) {
+      return;
+    }
+    if (!result.contains(correctRFC)) {
+      result.add(correctRFC);
+    }
   }
 
   /**
@@ -538,7 +714,7 @@ public class PageElementRFC extends PageElement {
         (helpNeededTemplate.length == 0)) {
       return null;
     }
-    if (isTemplateParameter) {
+    if (isTemplateParameter()) {
       return null;
     }
 

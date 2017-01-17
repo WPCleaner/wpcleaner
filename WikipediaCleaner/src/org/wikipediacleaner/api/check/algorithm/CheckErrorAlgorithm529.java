@@ -75,7 +75,14 @@ public class CheckErrorAlgorithm529 extends CheckErrorAlgorithmBase {
     }
     String contents = analysis.getContents();
     for (PageElementISBN isbn : isbns) {
+      boolean isError = false;
       if (!isbn.isTemplateParameter() && isbn.isCorrect()) {
+        if (analysis.isInExternalLink(isbn.getBeginIndex()) == null) {
+          isError = true;
+        }
+      }
+
+      if (isError) {
         if (errors == null) {
           return true;
         }
@@ -112,6 +119,8 @@ public class CheckErrorAlgorithm529 extends CheckErrorAlgorithmBase {
 
         CheckErrorResult errorResult = createCheckErrorResult(
             analysis, beginIndex, endIndex);
+
+        // Suggest replacement with templates
         List<String[]> isbnTemplates = analysis.getWPCConfiguration().getStringArrayList(
             WPCConfigurationStringList.ISBN_TEMPLATES);
         if (isbnTemplates != null) {
@@ -139,6 +148,29 @@ public class CheckErrorAlgorithm529 extends CheckErrorAlgorithmBase {
             }
           }
         }
+
+        // Suggest replacement with interwikis
+        List<String[]> isbnInterwikis = analysis.getWPCConfiguration().getStringArrayList(
+            WPCConfigurationStringList.ISBN_INTERWIKIS);
+        if (isbnInterwikis != null) {
+          for (String[] isbnInterwiki : isbnInterwikis) {
+            if (isbnInterwiki.length > 0) {
+              String isbnCode = isbnInterwiki[0];
+              StringBuilder replacement = new StringBuilder();
+              replacement.append("[[:");
+              replacement.append(isbnCode);
+              replacement.append(":");
+              replacement.append(isbn.getISBN());
+              replacement.append("|");
+              replacement.append(PageElementISBN.ISBN_PREFIX);
+              replacement.append(" ");
+              replacement.append(isbn.getISBN());
+              replacement.append("]]");
+              errorResult.addReplacement(replacement.toString());
+            }
+          }
+        }
+
         errors.add(errorResult);
       }
     }

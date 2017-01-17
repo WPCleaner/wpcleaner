@@ -49,19 +49,34 @@ public class PageElementPMID extends PageElement {
       PageAnalysis analysis) {
     List<PageElementPMID> pmids = new ArrayList<PageElementPMID>();
 
-    // Search for PMID templates
+    // Configuration
     WPCConfiguration config = analysis.getWPCConfiguration();
+    List<String[]> pmidIgnoreTemplates = config.getStringArrayList(WPCConfigurationStringList.PMID_IGNORE_TEMPLATES); 
+
+    // Search for PMID templates
     List<String[]> pmidTemplates = config.getStringArrayList(WPCConfigurationStringList.PMID_TEMPLATES);
     if (pmidTemplates != null) {
       for (String[] pmidTemplate : pmidTemplates) {
         if (pmidTemplate.length > 0) {
+          String[] params = null;
           List<PageElementTemplate> templates = analysis.getTemplates(pmidTemplate[0]);
           if (templates != null) {
             for (PageElementTemplate template : templates) {
-              analyzeTemplateParams(
-                  analysis, pmids, template,
-                  (pmidTemplate.length > 1) ? pmidTemplate[1] : "1",
-                  false, false, false, false);
+              if (params == null) {
+                if (pmidTemplate.length > 1) {
+                  params = pmidTemplate[1].split(",");
+                } else {
+                  params = new String[]{ "1" };
+                }
+              }
+              for (String param : params) {
+                if ((param != null) && (param.length() > 0)) {
+                  analyzeTemplateParams(
+                      analysis, pmids, pmidIgnoreTemplates,
+                      template, param,
+                      false, false, false, false);
+                }
+              }
             }
           }
         }
@@ -77,7 +92,8 @@ public class PageElementPMID extends PageElement {
           if (templates != null) {
             for (PageElementTemplate template : templates) {
               analyzeTemplateParams(
-                  analysis, pmids, template,
+                  analysis, pmids, pmidIgnoreTemplates,
+                  template,
                   ((pmidTemplate.length > 1) && (pmidTemplate[1].length() > 0)) ? pmidTemplate[1] : "1",
                   false, false, false, true);
             }
@@ -89,14 +105,13 @@ public class PageElementPMID extends PageElement {
     // Search for PMID in template parameters
     List<PageElementTemplate> templates = analysis.getTemplates();
     for (PageElementTemplate template : templates) {
-      analyzeTemplateParams(analysis, pmids, template, "PMID", true, true, true, false);
+      analyzeTemplateParams(
+          analysis, pmids, pmidIgnoreTemplates,
+          template, "PMID", true, true, true, false);
     }
 
     // Search for PMID in plain texts
-    analyzePlainText(analysis, pmids, PMID_PREFIX, true, true);
-    for (String prefix : PMID_INCORRECT_PREFIX) {
-      analyzePlainText(analysis, pmids, prefix, false, false);
-    }
+    analyzePlainText(analysis, pmids);
 
     return pmids;
   }
@@ -123,153 +138,227 @@ public class PageElementPMID extends PageElement {
    * 
    * @param analysis Page analysis.
    * @param pmids Current list of PMID.
-   * @param prefix PMID prefix.
-   * @param correct True if PMID should be considered correct by default.
-   * @param caseSensitive True if PMID prefix is case sensitive.
    */
   private static void analyzePlainText(
-      PageAnalysis analysis, List<PageElementPMID> pmids,
-      String prefix, boolean correct, boolean caseSensitive) {
+      PageAnalysis analysis, List<PageElementPMID> pmids) {
     String contents = analysis.getContents();
-    if ((contents == null) || (prefix == null)) {
+    if (contents == null) {
       return;
     }
     int index = 0;
-    int maxIndex = contents.length() - prefix.length();
+    int maxIndex = contents.length() - 1;
     while (index < maxIndex) {
+      index = checkPlainText(analysis, contents, index, pmids);
+    }
+  }
 
-      // Check if it's a potential PMID
-      boolean isValid = true;
-      String nextChars = contents.substring(index, index + prefix.length());
-      boolean isPMID = caseSensitive ?
-          prefix.equals(nextChars) : prefix.equalsIgnoreCase(nextChars);
-      if (isPMID && (analysis.isInComment(index) != null)) {
-        isPMID = false;
-      }
-      if (isPMID && (analysis.isInTag(index) != null)) {
-        isPMID = false;
-      }
-      if (isPMID && (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_NOWIKI, index) != null)) {
-        isPMID = false;
-      }
-      if (isPMID) {
-        if ((analysis.getSurroundingTag(PageElementTag.TAG_WIKI_PRE, index) != null) ||
-            (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_SOURCE, index) != null) ||
-            (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_SYNTAXHIGHLIGHT, index) != null)) {
-          isPMID = false;
-        }
-      }
-      if (isPMID && isInPMID(index, pmids)) {
-        isPMID = false;
-      }
-      if (isPMID) {
-        PageElementExternalLink link = analysis.isInExternalLink(index);
-        if (link != null) {
-          if (!link.hasSquare() ||
-              (index < link.getBeginIndex() + link.getTextOffset()) ||
-              (link.getText() == null)) {
-            isValid = false;
-          }
-        }
-      }
-      if (isPMID) {
-        PageElementTemplate template = analysis.isInTemplate(index);
-        if (template != null) {
-          if ((template.getParameterCount() == 0) ||
-              (index < template.getParameterPipeIndex(0))) {
-            isPMID = false;
-          }
-        }
-      }
-      if (isPMID) {
-        PageElementImage image = analysis.isInImage(index);
-        if (image != null) {
-          if (index < image.getBeginIndex() + image.getFirstPipeOffset()) {
-            isPMID = false;
-          }
-        }
-      }
+  /**
+   * Check plain text for PMID.
+   * 
+   * @param analysis Page analysis.
+   * @param contents Page contents.
+   * @param index Current index in the page.
+   * @param pmids Current list of PMID.
+   * @return Next index to check.
+   */
+  private static int checkPlainText(
+      PageAnalysis analysis, String contents, int index, List<PageElementPMID> pmids) {
 
-      if (isPMID) {
-
-        // Check if it's a template parameter
-        boolean parameter = false;
-        PageElementTemplate template = analysis.isInTemplate(index);
-        if (template != null) {
-          for (int paramNum = 0; paramNum < template.getParameterCount(); paramNum++) {
-            if ((template.getParameterPipeIndex(paramNum) < index) &&
-                (template.getParameterValueStartIndex(paramNum) > index)) {
-              parameter = true;
-            }
-          }
+    // Check special places
+    if (contents.charAt(index) == '<') {
+      PageElementComment comment = analysis.isInComment(index);
+      if (comment != null) {
+        return comment.getEndIndex();
+      }
+      PageElementTag tag = analysis.isInTag(index);
+      if (tag != null) {
+        String tagName = tag.getName();
+        if (PageElementTag.TAG_WIKI_NOWIKI.equals(tagName) ||
+            PageElementTag.TAG_WIKI_PRE.equals(tagName) ||
+            PageElementTag.TAG_WIKI_SOURCE.equals(tagName) ||
+            PageElementTag.TAG_WIKI_SYNTAXHIGHLIGHT.equals(tagName)) {
+          return tag.getCompleteEndIndex();
         }
-
-        int beginIndex = index;
-        index += prefix.length();
-        boolean isCorrect = correct;
-        if (!parameter) {
-          if ((beginIndex >= 2) && (index + 2 < contents.length())) {
-            if (contents.startsWith("[[", beginIndex - 2) &&
-                contents.startsWith("]]", index)) {
-              isCorrect = false;
-              beginIndex -= 2;
-              index += 2;
-            }
-          }
-          boolean spaceFound = false;
-          if (analysis.isInComment(index) == null) {
-            while ((index < contents.length()) &&
-                (" \u00A0".indexOf(contents.charAt(index)) >= 0)) {
-              index++;
-              spaceFound = true;
-            }
-            while ((index < contents.length()) &&
-                (INCORRECT_BEGIN_CHARACTERS.indexOf(contents.charAt(index)) >= 0)) {
-              index++;
-              isCorrect = false;
-            }
-          }
-          int beginNumber = -1;
-          int endNumber = beginNumber;
-          boolean finished = false;
-          isCorrect &= spaceFound;
-          boolean nextCorrect = isCorrect;
-          while (!finished && (index < contents.length())) {
-            char currentChar = contents.charAt(index);
-            if (POSSIBLE_CHARACTERS.indexOf(currentChar) >= 0) {
-              if (beginNumber < 0) {
-                beginNumber = index;
-              }
-              endNumber = index + 1;
-              index++;
-              isCorrect = nextCorrect;
-            } else if (EXTRA_CHARACTERS.indexOf(currentChar) >= 0) {
-              if (beginNumber < 0) {
-                nextCorrect = false;
-              }
-              index++;
-            } else if (INCORRECT_CHARACTERS.indexOf(currentChar) >= 0) {
-              index++;
-              nextCorrect = false;
-            } else {
-              if ((endNumber == index) && (Character.isLetter(currentChar))) {
-                isCorrect = false;
-              }
-              finished = true;
-            }
-          }
-          if (endNumber > beginNumber) {
-            String number = contents.substring(beginNumber, endNumber);
-            pmids.add(new PageElementPMID(
-                beginIndex, endNumber, analysis, number,
-                isValid, isCorrect, false, false));
-            index = endNumber;
-          }
-        }
-      } else {
-        index++;
+        return tag.getEndIndex();
       }
     }
+    if (contents.charAt(index) == '[') {
+      PageElementInterwikiLink iwLink = analysis.isInInterwikiLink(index);
+      if ((iwLink != null) && (iwLink.getBeginIndex() == index)) {
+        return iwLink.getEndIndex();
+      }
+    }
+
+    // Check if it's a potential PMID
+    String prefix = null;
+    boolean correct = false;
+    if (contents.startsWith(PMID_PREFIX, index)) {
+      prefix = PMID_PREFIX;
+      correct = true;
+    }
+    for (String tmpPrefix : PMID_INCORRECT_PREFIX) {
+      if ((prefix == null) && (contents.length() >= index + tmpPrefix.length())) {
+        String nextChars = contents.substring(index, index + tmpPrefix.length());
+        if (tmpPrefix.equalsIgnoreCase(nextChars)) {
+          prefix = tmpPrefix;
+          correct = false;
+        }
+      }
+    }
+    if (prefix == null) {
+      return index + 1;
+    }
+
+    // Manage specific locations
+    if (isInPMID(index, pmids)) {
+      return index + 1;
+    }
+    PageElementTemplate template = analysis.isInTemplate(index);
+    if (template != null) {
+      if (template.getParameterCount() == 0) {
+        return template.getEndIndex();
+      }
+      int pipeIndex = template.getParameterPipeIndex(0);
+      if (index < pipeIndex) {
+        return pipeIndex + 1;
+      }
+    }
+    PageElementImage image = analysis.isInImage(index);
+    if (image != null) {
+      int pipeIndex = image.getBeginIndex() + image.getFirstPipeOffset();
+      if (index < pipeIndex) {
+        return pipeIndex + 1;
+      }
+    }
+    boolean isValid = true;
+    PageElementExternalLink link = analysis.isInExternalLink(index);
+    if (link != null) {
+      if (!link.hasSquare() ||
+          (index < link.getBeginIndex() + link.getTextOffset()) ||
+          (link.getText() == null)) {
+        isValid = false;
+      }
+    }
+
+    // Check if it's a template parameter
+    boolean parameter = false;
+    if (template != null) {
+      for (int paramNum = 0; paramNum < template.getParameterCount(); paramNum++) {
+        if ((template.getParameterPipeIndex(paramNum) < index) &&
+            (template.getParameterValueStartIndex(paramNum) > index)) {
+          parameter = true;
+        }
+      }
+    }
+
+    int beginIndex = index;
+    index += prefix.length();
+    boolean isCorrect = correct;
+    if (!parameter) {
+      if (beginIndex >= 2) {
+        if (contents.startsWith("[[", beginIndex - 2)) {
+          isCorrect = false;
+          beginIndex -= 2;
+          if ((index + 2 < contents.length()) && contents.startsWith("]]", index)) {
+            index += 2;
+          }
+        }
+      }
+      boolean spaceFound = false;
+      PageElementInternalLink iLink = null;
+      PageElementExternalLink eLink = null;
+      if (analysis.isInComment(index) == null) {
+        boolean done = false;
+        while (!done) {
+          done = true;
+          if (index < contents.length()) {
+            char currentChar = contents.charAt(index);
+            if (currentChar == ' ') {
+              index++;
+              spaceFound = true;
+              done = false;
+            } else if (currentChar == '[') {
+              iLink = analysis.isInInternalLink(index);
+              if ((iLink != null) && (iLink.getBeginIndex() == index)) {
+                isCorrect = false;
+                if (iLink.getTextOffset() > 0) {
+                  index += iLink.getTextOffset();
+                } else {
+                  index += 2;
+                }
+              } else {
+                eLink = analysis.isInExternalLink(index);
+                if ((eLink != null) && (eLink.getBeginIndex() == index)) {
+                  isCorrect = false;
+                  if (eLink.getTextOffset() > 0) {
+                    index += eLink.getTextOffset();
+                  } else {
+                    index += 1;
+                  }
+                }
+              }
+            } else if (INCORRECT_BEGIN_CHARACTERS.indexOf(currentChar) >= 0) {
+              index++;
+              isCorrect = false;
+              done = false;
+            }
+          }
+        }
+      }
+      int beginNumber = -1;
+      int endNumber = beginNumber;
+      boolean finished = false;
+      isCorrect &= spaceFound;
+      boolean nextCorrect = isCorrect;
+      while (!finished && (index < contents.length())) {
+        char currentChar = contents.charAt(index);
+        if (POSSIBLE_CHARACTERS.indexOf(currentChar) >= 0) {
+          if (beginNumber < 0) {
+            beginNumber = index;
+          }
+          endNumber = index + 1;
+          index++;
+          isCorrect = nextCorrect;
+        } else if (EXTRA_CHARACTERS.indexOf(currentChar) >= 0) {
+          if (beginNumber < 0) {
+            nextCorrect = false;
+          }
+          index++;
+        } else if (INCORRECT_CHARACTERS.indexOf(currentChar) >= 0) {
+          index++;
+          nextCorrect = false;
+        } else {
+          if ((endNumber == index) && (Character.isLetter(currentChar))) {
+            isCorrect = false;
+          }
+          finished = true;
+        }
+      }
+      if (endNumber > beginNumber) {
+        String number = contents.substring(beginNumber, endNumber);
+        if ((iLink != null) && (endNumber + 2 == iLink.getEndIndex())) {
+          endNumber = iLink.getEndIndex();
+        } else if ((eLink != null) && (endNumber + 1 == eLink.getEndIndex())) {
+          endNumber = eLink.getEndIndex();
+        } else if (contents.startsWith("[[", beginIndex) &&
+                   contents.startsWith("]]", endNumber)) {
+          endNumber += 2;
+        }
+        pmids.add(new PageElementPMID(
+            beginIndex, endNumber, analysis, number,
+            isValid, isCorrect, false, null));
+        index = endNumber;
+      } else {
+        if (contents.startsWith(prefix, index) &&
+            !contents.startsWith("[[PMID#", beginIndex)) {
+          pmids.add(new PageElementPMID(
+              beginIndex, index, analysis, "",
+              isValid, false, false, null));
+        }
+      }
+    }
+
+    return index;
   }
 
   /**
@@ -277,6 +366,7 @@ public class PageElementPMID extends PageElement {
    * 
    * @param analysis Page analysis.
    * @param pmids Current list of PMID.
+   * @param ignoreTemplates List of templates (with parameter and value) to ignore.
    * @param template Template.
    * @param argumentName Template parameter name.
    * @param ignoreCase True if parameter name should compared ignoring case.
@@ -286,20 +376,42 @@ public class PageElementPMID extends PageElement {
    */
   private static void analyzeTemplateParams(
       PageAnalysis analysis, List<PageElementPMID> pmids,
+      List<String[]> ignoreTemplates,
       PageElementTemplate template,
       String argumentName,
       boolean ignoreCase, boolean acceptNumbers,
       boolean acceptAllValues, boolean helpRequested) {
-    int paramDefaultName = 1;
+
+    // Check if template should be ignored
+    if (ignoreTemplates != null) {
+      for (String[] ignoreTemplate : ignoreTemplates) {
+        if ((ignoreTemplate != null) &&
+            (ignoreTemplate.length > 0) &&
+            (Page.areSameTitle(ignoreTemplate[0], template.getTemplateName()))) {
+          if (ignoreTemplate.length > 1) {
+            String paramValue = template.getParameterValue(ignoreTemplate[1]);
+            if (ignoreTemplate.length > 2) {
+              if ((paramValue != null) &&
+                  (paramValue.trim().equals(ignoreTemplate[2].trim()))) {
+                return; // Ignore all templates with this name and parameter set to a given value
+              }
+            } else {
+              if (paramValue != null) {
+                return; // Ignore all templates with this name and parameter present
+              }
+            }
+          } else {
+            return; // Ignore all templates with this name
+          }
+        }
+      }
+    }
+
     for (int paramNum = 0; paramNum < template.getParameterCount(); paramNum++) {
 
       // Check parameter name
       Parameter param = template.getParameter(paramNum);
       String paramName = param.getComputedName();
-      if ((paramName == null) || (paramName.trim().length() == 0)) {
-        paramName = Integer.toString(paramDefaultName);
-        paramDefaultName++;
-      }
       boolean nameOk = false;
       if ((ignoreCase && argumentName.equalsIgnoreCase(paramName)) ||
           (argumentName.equals(paramName))) {
@@ -317,6 +429,7 @@ public class PageElementPMID extends PageElement {
         }
       }
       
+      // Parameter is for a PMID, analyze its value
       if (nameOk) {
         String paramValue = param.getStrippedValue();
         boolean ok = true;
@@ -387,15 +500,15 @@ public class PageElementPMID extends PageElement {
           String value = analysis.getContents().substring(beginIndex, endIndex);
           if (paramValue.length() > 0) {
             pmids.add(new PageElementPMID(
-                beginIndex, endIndex, analysis,
-                value, true, correct, helpRequested, true));
+                beginIndex, endIndex, analysis, value,
+                true, correct, helpRequested, template));
           }
         } else if (acceptAllValues) {
           if (paramValue.length() > 0) {
             pmids.add(new PageElementPMID(
                 template.getParameterValueStartIndex(paramNum),
                 template.getParameterValueStartIndex(paramNum) + paramValue.length(),
-                analysis, paramValue, true, false, false, true));
+                analysis, paramValue, true, false, false, template));
           }
         }
       }
@@ -404,6 +517,9 @@ public class PageElementPMID extends PageElement {
 
   /** WPCleaner configuration */
   private final WPCConfiguration wpcConfiguration;
+
+  /** Full text */
+  private final String fullText;
 
   /** PMID not trimmed. */
   private final String pmidNotTrimmed;
@@ -417,8 +533,8 @@ public class PageElementPMID extends PageElement {
   /** True if PMID syntax is correct. */
   private final boolean isCorrect;
 
-  /** True if PMID is a template parameter (PMID=...) */
-  private final boolean isTemplateParameter;
+  /** Template if PMID is a template parameter (PMID=...) */
+  private final PageElementTemplate template;
 
   /** True if help has been requested for this PMID */
   private final boolean helpRequested;
@@ -426,25 +542,27 @@ public class PageElementPMID extends PageElement {
   /**
    * @param beginIndex Begin index.
    * @param endIndex End index.
+   * @param analysis Page analysis.
    * @param pmid PMID.
    * @param isValid True if PMID is in a valid location.
    * @param isCorrect True if PMID syntax is correct.
    * @param helpRequested True if help has been requested for this PMID. 
-   * @param isTemplateParameter True if PMID is a template parameter.
+   * @param template Template if PMID is a template parameter.
    */
   private PageElementPMID(
       int beginIndex, int endIndex, PageAnalysis analysis,
       String pmid, boolean isValid,
       boolean isCorrect, boolean helpRequested,
-      boolean isTemplateParameter) {
+      PageElementTemplate template) {
     super(beginIndex, endIndex);
     this.wpcConfiguration = analysis.getWPCConfiguration();
+    this.fullText = analysis.getContents().substring(beginIndex, endIndex);
     this.pmidNotTrimmed = pmid;
     this.pmid = cleanPMID(pmid);
     this.isValid = isValid;
     this.isCorrect = isCorrect;
     this.helpRequested = helpRequested;
-    this.isTemplateParameter = isTemplateParameter;
+    this.template = template;
   }
 
   /**
@@ -486,7 +604,7 @@ public class PageElementPMID extends PageElement {
    * @return True if PMID is a template parameter.
    */
   public boolean isTemplateParameter() {
-    return isTemplateParameter;
+    return (template != null);
   }
 
   /**
@@ -494,7 +612,16 @@ public class PageElementPMID extends PageElement {
    */
   public List<String> getCorrectPMID() {
     List<String> result = new ArrayList<String>();
-    String prefix = isTemplateParameter ? "" : "PMID ";
+    String prefix = isTemplateParameter() ? "" : "PMID ";
+
+    // Prefix outside the template
+    if ((template != null) &&
+        (getBeginIndex() < template.getBeginIndex())) {
+      if (fullText != null) {
+        result.add(fullText.substring(template.getBeginIndex() - getBeginIndex()));
+      }
+      return result;
+    }
 
     // Construct a basic PMID number
     StringBuilder buffer = new StringBuilder();
@@ -503,9 +630,6 @@ public class PageElementPMID extends PageElement {
       if ((POSSIBLE_CHARACTERS.indexOf(currentChar) >= 0) ||
           (EXTRA_CHARACTERS.indexOf(currentChar) >= 0)) {
         buffer.append(currentChar);
-      } else if ((currentChar == '‐') ||
-                 (currentChar == '.')) {
-        buffer.append("-");
       } else if (currentChar == '\t') {
         buffer.append(" ");
       } else {
@@ -579,7 +703,7 @@ public class PageElementPMID extends PageElement {
         (helpNeededTemplate.length == 0)) {
       return null;
     }
-    if (isTemplateParameter) {
+    if (isTemplateParameter()) {
       return null;
     }
 

@@ -62,13 +62,22 @@ public class CheckErrorAlgorithm528 extends CheckErrorAlgorithmBase {
       return false;
     }
     for (PageElementPMID pmid : pmids) {
+      boolean isError = false;
       if (!pmid.isTemplateParameter() && pmid.isCorrect()) {
+        if (analysis.isInExternalLink(pmid.getBeginIndex()) == null) {
+          isError = true;
+        }
+      }
+
+      if (isError) {
         if (errors == null) {
           return true;
         }
         result = true;
         CheckErrorResult errorResult = createCheckErrorResult(
             analysis, pmid.getBeginIndex(), pmid.getEndIndex());
+
+        // Suggest replacement with templates
         List<String[]> pmidTemplates = analysis.getWPCConfiguration().getStringArrayList(
             WPCConfigurationStringList.PMID_TEMPLATES);
         if (pmidTemplates != null) {
@@ -93,6 +102,29 @@ public class CheckErrorAlgorithm528 extends CheckErrorAlgorithmBase {
             }
           }
         }
+
+        // Suggest replacement with interwikis
+        List<String[]> pmidInterwikis = analysis.getWPCConfiguration().getStringArrayList(
+            WPCConfigurationStringList.PMID_INTERWIKIS);
+        if (pmidInterwikis != null) {
+          for (String[] pmidInterwiki : pmidInterwikis) {
+            if (pmidInterwiki.length > 0) {
+              String pmidCode = pmidInterwiki[0];
+              StringBuilder replacement = new StringBuilder();
+              replacement.append("[[:");
+              replacement.append(pmidCode);
+              replacement.append(":");
+              replacement.append(pmid.getPMID());
+              replacement.append("|");
+              replacement.append(PageElementPMID.PMID_PREFIX);
+              replacement.append(" ");
+              replacement.append(pmid.getPMID());
+              replacement.append("]]");
+              errorResult.addReplacement(replacement.toString());
+            }
+          }
+        }
+
         errors.add(errorResult);
       }
     }

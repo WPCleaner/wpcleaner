@@ -50,25 +50,31 @@ public class PageElementISBN extends PageElement {
       PageAnalysis analysis) {
     List<PageElementISBN> isbns = new ArrayList<PageElementISBN>();
 
-    // Search for ISBN templates
+    // Configuration
     WPCConfiguration config = analysis.getWPCConfiguration();
+    List<String[]> isbnIgnoreTemplates = config.getStringArrayList(WPCConfigurationStringList.ISBN_IGNORE_TEMPLATES); 
+
+    // Search for ISBN templates
     List<String[]> isbnTemplates = config.getStringArrayList(WPCConfigurationStringList.ISBN_TEMPLATES);
     if (isbnTemplates != null) {
       for (String[] isbnTemplate : isbnTemplates) {
         if (isbnTemplate.length > 0) {
+          String[] params = null;
           List<PageElementTemplate> templates = analysis.getTemplates(isbnTemplate[0]);
           if (templates != null) {
             for (PageElementTemplate template : templates) {
-              String[] params = null;
-              if (isbnTemplate.length > 1) {
-                params = isbnTemplate[1].split(",");
-              } else {
-                params = new String[]{ "1" };
+              if (params == null) {
+                if (isbnTemplate.length > 1) {
+                  params = isbnTemplate[1].split(",");
+                } else {
+                  params = new String[]{ "1" };
+                }
               }
               for (String param : params) {
                 if ((param != null) && (param.length() > 0)) {
                   analyzeTemplateParams(
-                      analysis, isbns, template, param,
+                      analysis, isbns, isbnIgnoreTemplates,
+                      template, param,
                       false, false, true, false);
                 }
               }
@@ -87,7 +93,8 @@ public class PageElementISBN extends PageElement {
           if (templates != null) {
             for (PageElementTemplate template : templates) {
               analyzeTemplateParams(
-                  analysis, isbns, template,
+                  analysis, isbns, isbnIgnoreTemplates,
+                  template,
                   ((isbnTemplate.length > 1) && (isbnTemplate[1].length() > 0)) ? isbnTemplate[1] : "1",
                   false, false, false, true);
             }
@@ -99,14 +106,13 @@ public class PageElementISBN extends PageElement {
     // Search for ISBN in template parameters
     List<PageElementTemplate> templates = analysis.getTemplates();
     for (PageElementTemplate template : templates) {
-      analyzeTemplateParams(analysis, isbns, template, "ISBN", true, true, true, false);
+      analyzeTemplateParams(
+          analysis, isbns, isbnIgnoreTemplates,
+          template, "ISBN", true, true, true, false);
     }
 
     // Search for ISBN in plain texts
-    analyzePlainText(analysis, isbns, ISBN_PREFIX, true, true);
-    for (String prefix : ISBN_INCORRECT_PREFIX) {
-      analyzePlainText(analysis, isbns, prefix, false, false);
-    }
+    analyzePlainText(analysis, isbns);
 
     return isbns;
   }
@@ -133,204 +139,234 @@ public class PageElementISBN extends PageElement {
    * 
    * @param analysis Page analysis.
    * @param isbns Current list of ISBN.
-   * @param prefix ISBN prefix.
-   * @param correct True if ISBN should be considered correct by default.
-   * @param caseSensitive True if ISBN prefix is case sensitive.
    */
   private static void analyzePlainText(
-      PageAnalysis analysis, List<PageElementISBN> isbns,
-      String prefix, boolean correct, boolean caseSensitive) {
+      PageAnalysis analysis, List<PageElementISBN> isbns) {
     String contents = analysis.getContents();
-    if ((contents == null) || (prefix == null)) {
+    if (contents == null) {
       return;
     }
     int index = 0;
-    int maxIndex = contents.length() - prefix.length();
+    int maxIndex = contents.length() - 1;
     while (index < maxIndex) {
+      index = checkPlainText(analysis, contents, index, isbns);
+    }
+  }
 
-      // Check if it's a potential ISBN
-      boolean isValid = true;
-      String nextChars = contents.substring(index, index + prefix.length());
-      boolean isISBN = caseSensitive ?
-          prefix.equals(nextChars) : prefix.equalsIgnoreCase(nextChars);
-      if (isISBN && (analysis.isInComment(index) != null)) {
-        isISBN = false;
-      }
-      if (isISBN && (analysis.isInTag(index) != null)) {
-        isISBN = false;
-      }
-      if (isISBN && (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_NOWIKI, index) != null)) {
-        isISBN = false;
-      }
-      if (isISBN) {
-        if ((analysis.getSurroundingTag(PageElementTag.TAG_WIKI_PRE, index) != null) ||
-            (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_SOURCE, index) != null) ||
-            (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_SYNTAXHIGHLIGHT, index) != null)) {
-          isISBN = false;
-        }
-      }
-      if (isISBN && isInISBN(index, isbns)) {
-        isISBN = false;
-      }
-      if (isISBN) {
-        PageElementExternalLink link = analysis.isInExternalLink(index);
-        if (link != null) {
-          if (!link.hasSquare() ||
-              (index < link.getBeginIndex() + link.getTextOffset()) ||
-              (link.getText() == null)) {
-            isValid = false;
-          }
-        }
-      }
-      if (isISBN) {
-        PageElementTemplate template = analysis.isInTemplate(index);
-        if (template != null) {
-          if ((template.getParameterCount() == 0) ||
-              (index < template.getParameterPipeIndex(0))) {
-            isISBN = false;
-          }
-        }
-      }
-      if (isISBN) {
-        PageElementImage image = analysis.isInImage(index);
-        if (image != null) {
-          if (index < image.getBeginIndex() + image.getFirstPipeOffset()) {
-            isISBN = false;
-          }
-        }
-      }
+  /**
+   * Check plain text for ISBN.
+   * 
+   * @param analysis Page analysis.
+   * @param contents Page contents.
+   * @param index Current index in the page.
+   * @param isbns Current list of ISBN.
+   * @return Next index to check.
+   */
+  private static int checkPlainText(
+      PageAnalysis analysis, String contents, int index, List<PageElementISBN> isbns) {
 
-      if (isISBN) {
-
-        // Check if it's a template parameter
-        boolean parameter = false;
-        PageElementTemplate template = analysis.isInTemplate(index);
-        if (template != null) {
-          for (int paramNum = 0; paramNum < template.getParameterCount(); paramNum++) {
-            if ((template.getParameterPipeIndex(paramNum) < index) &&
-                (template.getParameterValueStartIndex(paramNum) > index)) {
-              parameter = true;
-            }
-          }
+    // Check special places
+    if (contents.charAt(index) == '<') {
+      PageElementComment comment = analysis.isInComment(index);
+      if (comment != null) {
+        return comment.getEndIndex();
+      }
+      PageElementTag tag = analysis.isInTag(index);
+      if (tag != null) {
+        String tagName = tag.getName();
+        if (PageElementTag.TAG_WIKI_NOWIKI.equals(tagName) ||
+            PageElementTag.TAG_WIKI_PRE.equals(tagName) ||
+            PageElementTag.TAG_WIKI_SOURCE.equals(tagName) ||
+            PageElementTag.TAG_WIKI_SYNTAXHIGHLIGHT.equals(tagName)) {
+          return tag.getCompleteEndIndex();
         }
-
-        int beginIndex = index;
-        index += prefix.length();
-        boolean isCorrect = correct;
-        if (!parameter) {
-          if (beginIndex >= 2) {
-            if (contents.startsWith("[[", beginIndex - 2)) {
-              isCorrect = false;
-              beginIndex -= 2;
-              if ((index + 2 < contents.length()) && contents.startsWith("]]", index)) {
-                index += 2;
-              }
-            }
-          }
-          if (beginIndex >= 3) {
-            if (contents.startsWith("10-", beginIndex - 3) ||
-                contents.startsWith("13-", beginIndex - 3)) {
-              isCorrect = false;
-              beginIndex -= 3;
-            }
-          }
-          boolean spaceFound = false;
-          PageElementInternalLink iLink = null;
-          PageElementExternalLink eLink = null;
-          if (analysis.isInComment(index) == null) {
-            boolean done = false;
-            while (!done) {
-              done = true;
-              if (index < contents.length()) {
-                char currentChar = contents.charAt(index);
-                if (currentChar == ' ') {
-                  index++;
-                  spaceFound = true;
-                  done = false;
-                } else if (currentChar == '[') {
-                  iLink = analysis.isInInternalLink(index);
-                  if ((iLink != null) && (iLink.getBeginIndex() == index)) {
-                    isCorrect = false;
-                    if (iLink.getTextOffset() > 0) {
-                      index += iLink.getTextOffset();
-                    } else {
-                      index += 2;
-                    }
-                  } else {
-                    eLink = analysis.isInExternalLink(index);
-                    if ((eLink != null) && (eLink.getBeginIndex() == index)) {
-                      isCorrect = false;
-                      if (eLink.getTextOffset() > 0) {
-                        index += eLink.getTextOffset();
-                      } else {
-                        index += 1;
-                      }
-                    }
-                  }
-                } else if (INCORRECT_BEGIN_CHARACTERS.indexOf(currentChar) >= 0) {
-                  index++;
-                  isCorrect = false;
-                  done = false;
-                }
-              }
-            }
-          }
-          int beginNumber = -1;
-          int endNumber = beginNumber;
-          boolean finished = false;
-          isCorrect &= spaceFound;
-          boolean nextCorrect = isCorrect;
-          while (!finished && (index < contents.length())) {
-            char currentChar = contents.charAt(index);
-            if (POSSIBLE_CHARACTERS.indexOf(currentChar) >= 0) {
-              if (beginNumber < 0) {
-                beginNumber = index;
-              }
-              endNumber = index + 1;
-              index++;
-              isCorrect = nextCorrect;
-            } else if (EXTRA_CHARACTERS.indexOf(currentChar) >= 0) {
-              if (beginNumber < 0) {
-                nextCorrect = false;
-              }
-              index++;
-            } else if (INCORRECT_CHARACTERS.indexOf(currentChar) >= 0) {
-              index++;
-              nextCorrect = false;
-            } else {
-              if ((endNumber == index) && (Character.isLetter(currentChar))) {
-                isCorrect = false;
-              }
-              finished = true;
-            }
-          }
-          if (endNumber > beginNumber) {
-            String number = contents.substring(beginNumber, endNumber);
-            if ((iLink != null) && (endNumber + 2 == iLink.getEndIndex())) {
-              endNumber = iLink.getEndIndex();
-            } else if ((eLink != null) && (endNumber + 1 == eLink.getEndIndex())) {
-              endNumber = eLink.getEndIndex();
-            } else if (contents.startsWith("[[", beginIndex) &&
-                       contents.startsWith("]]", endNumber)) {
-              endNumber += 2;
-            }
-            isbns.add(new PageElementISBN(
-                beginIndex, endNumber, analysis, number,
-                isValid, isCorrect, false, null));
-            index = endNumber;
-          } else {
-            if (contents.startsWith(prefix, index) &&
-                !contents.startsWith("[[ISBN#", beginIndex)) {
-              isbns.add(new PageElementISBN(
-                  beginIndex, index, analysis, "",
-                  isValid, false, false, null));
-            }
-          }
-        }
-      } else {
-        index++;
+        return tag.getEndIndex();
       }
     }
+    if (contents.charAt(index) == '[') {
+      PageElementInterwikiLink iwLink = analysis.isInInterwikiLink(index);
+      if ((iwLink != null) && (iwLink.getBeginIndex() == index)) {
+        return iwLink.getEndIndex();
+      }
+    }
+
+    // Check if it's a potential ISBN
+    String prefix = null;
+    boolean correct = false;
+    if (contents.startsWith(ISBN_PREFIX, index)) {
+      prefix = ISBN_PREFIX;
+      correct = true;
+    }
+    for (String tmpPrefix : ISBN_INCORRECT_PREFIX) {
+      if ((prefix == null) && (contents.length() >= index + tmpPrefix.length())) {
+        String nextChars = contents.substring(index, index + tmpPrefix.length());
+        if (tmpPrefix.equalsIgnoreCase(nextChars)) {
+          prefix = tmpPrefix;
+          correct = false;
+        }
+      }
+    }
+    if (prefix == null) {
+      return index + 1;
+    }
+
+    // Manage specific locations
+    if (isInISBN(index, isbns)) {
+      return index + 1;
+    }
+    PageElementTemplate template = analysis.isInTemplate(index);
+    if (template != null) {
+      if (template.getParameterCount() == 0) {
+        return template.getEndIndex();
+      }
+      int pipeIndex = template.getParameterPipeIndex(0);
+      if (index < pipeIndex) {
+        return pipeIndex + 1;
+      }
+    }
+    PageElementImage image = analysis.isInImage(index);
+    if (image != null) {
+      int pipeIndex = image.getBeginIndex() + image.getFirstPipeOffset();
+      if (index < pipeIndex) {
+        return pipeIndex + 1;
+      }
+    }
+    boolean isValid = true;
+    PageElementExternalLink link = analysis.isInExternalLink(index);
+    if (link != null) {
+      if (!link.hasSquare() ||
+          (index < link.getBeginIndex() + link.getTextOffset()) ||
+          (link.getText() == null)) {
+        isValid = false;
+      }
+    }
+
+    // Check if it's a template parameter
+    boolean parameter = false;
+    if (template != null) {
+      for (int paramNum = 0; paramNum < template.getParameterCount(); paramNum++) {
+        if ((template.getParameterPipeIndex(paramNum) < index) &&
+            (template.getParameterValueStartIndex(paramNum) > index)) {
+          parameter = true;
+        }
+      }
+    }
+
+    int beginIndex = index;
+    index += prefix.length();
+    boolean isCorrect = correct;
+    if (!parameter) {
+      if (beginIndex >= 2) {
+        if (contents.startsWith("[[", beginIndex - 2)) {
+          isCorrect = false;
+          beginIndex -= 2;
+          if ((index + 2 < contents.length()) && contents.startsWith("]]", index)) {
+            index += 2;
+          }
+        }
+      }
+      if (beginIndex >= 3) {
+        if (contents.startsWith("10-", beginIndex - 3) ||
+            contents.startsWith("13-", beginIndex - 3)) {
+          isCorrect = false;
+          beginIndex -= 3;
+        }
+      }
+      boolean spaceFound = false;
+      PageElementInternalLink iLink = null;
+      PageElementExternalLink eLink = null;
+      if (analysis.isInComment(index) == null) {
+        boolean done = false;
+        while (!done) {
+          done = true;
+          if (index < contents.length()) {
+            char currentChar = contents.charAt(index);
+            if (currentChar == ' ') {
+              index++;
+              spaceFound = true;
+              done = false;
+            } else if (currentChar == '[') {
+              iLink = analysis.isInInternalLink(index);
+              if ((iLink != null) && (iLink.getBeginIndex() == index)) {
+                isCorrect = false;
+                if (iLink.getTextOffset() > 0) {
+                  index += iLink.getTextOffset();
+                } else {
+                  index += 2;
+                }
+              } else {
+                eLink = analysis.isInExternalLink(index);
+                if ((eLink != null) && (eLink.getBeginIndex() == index)) {
+                  isCorrect = false;
+                  if (eLink.getTextOffset() > 0) {
+                    index += eLink.getTextOffset();
+                  } else {
+                    index += 1;
+                  }
+                }
+              }
+            } else if (INCORRECT_BEGIN_CHARACTERS.indexOf(currentChar) >= 0) {
+              index++;
+              isCorrect = false;
+              done = false;
+            }
+          }
+        }
+      }
+      int beginNumber = -1;
+      int endNumber = beginNumber;
+      boolean finished = false;
+      isCorrect &= spaceFound;
+      boolean nextCorrect = isCorrect;
+      while (!finished && (index < contents.length())) {
+        char currentChar = contents.charAt(index);
+        if (POSSIBLE_CHARACTERS.indexOf(currentChar) >= 0) {
+          if (beginNumber < 0) {
+            beginNumber = index;
+          }
+          endNumber = index + 1;
+          index++;
+          isCorrect = nextCorrect;
+        } else if (EXTRA_CHARACTERS.indexOf(currentChar) >= 0) {
+          if (beginNumber < 0) {
+            nextCorrect = false;
+          }
+          index++;
+        } else if (INCORRECT_CHARACTERS.indexOf(currentChar) >= 0) {
+          index++;
+          nextCorrect = false;
+        } else {
+          if ((endNumber == index) && (Character.isLetter(currentChar))) {
+            isCorrect = false;
+          }
+          finished = true;
+        }
+      }
+      if (endNumber > beginNumber) {
+        String number = contents.substring(beginNumber, endNumber);
+        if ((iLink != null) && (endNumber + 2 == iLink.getEndIndex())) {
+          endNumber = iLink.getEndIndex();
+        } else if ((eLink != null) && (endNumber + 1 == eLink.getEndIndex())) {
+          endNumber = eLink.getEndIndex();
+        } else if (contents.startsWith("[[", beginIndex) &&
+                   contents.startsWith("]]", endNumber)) {
+          endNumber += 2;
+        }
+        isbns.add(new PageElementISBN(
+            beginIndex, endNumber, analysis, number,
+            isValid, isCorrect, false, null));
+        index = endNumber;
+      } else {
+        if (contents.startsWith(prefix, index) &&
+            !contents.startsWith("[[ISBN#", beginIndex)) {
+          isbns.add(new PageElementISBN(
+              beginIndex, index, analysis, "",
+              isValid, false, false, null));
+        }
+      }
+    }
+
+    return index;
   }
 
   /**
@@ -338,6 +374,7 @@ public class PageElementISBN extends PageElement {
    * 
    * @param analysis Page analysis.
    * @param isbns Current list of ISBN.
+   * @param ignoreTemplates List of templates (with parameter and value) to ignore.
    * @param template Template.
    * @param argumentName Template parameter name.
    * @param ignoreCase True if parameter name should compared ignoring case.
@@ -347,10 +384,36 @@ public class PageElementISBN extends PageElement {
    */
   private static void analyzeTemplateParams(
       PageAnalysis analysis, List<PageElementISBN> isbns,
+      List<String[]> ignoreTemplates,
       PageElementTemplate template,
       String argumentName,
       boolean ignoreCase, boolean acceptNumbers,
       boolean acceptAllValues, boolean helpRequested) {
+
+    // Check if template should be ignored
+    if (ignoreTemplates != null) {
+      for (String[] ignoreTemplate : ignoreTemplates) {
+        if ((ignoreTemplate != null) &&
+            (ignoreTemplate.length > 0) &&
+            (Page.areSameTitle(ignoreTemplate[0], template.getTemplateName()))) {
+          if (ignoreTemplate.length > 1) {
+            String paramValue = template.getParameterValue(ignoreTemplate[1]);
+            if (ignoreTemplate.length > 2) {
+              if ((paramValue != null) &&
+                  (paramValue.trim().equals(ignoreTemplate[2].trim()))) {
+                return; // Ignore all templates with this name and parameter set to a given value
+              }
+            } else {
+              if (paramValue != null) {
+                return; // Ignore all templates with this name and parameter present
+              }
+            }
+          } else {
+            return; // Ignore all templates with this name
+          }
+        }
+      }
+    }
 
     for (int paramNum = 0; paramNum < template.getParameterCount(); paramNum++) {
 
@@ -515,6 +578,7 @@ public class PageElementISBN extends PageElement {
   /**
    * @param beginIndex Begin index.
    * @param endIndex End index.
+   * @param analysis Page analysis.
    * @param isbn ISBN.
    * @param isValid True if ISBN is in a valid location.
    * @param isCorrect True if ISBN syntax is correct.

@@ -15,6 +15,7 @@ import org.wikipediacleaner.api.API;
 import org.wikipediacleaner.api.APIException;
 import org.wikipediacleaner.api.APIFactory;
 import org.wikipediacleaner.api.check.CheckErrorResult;
+import org.wikipediacleaner.api.check.SimpleAction;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.constants.WPCConfigurationStringList;
 import org.wikipediacleaner.api.data.DataManager;
@@ -23,6 +24,7 @@ import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.Page.RelatedPages;
 import org.wikipediacleaner.api.data.PageElementRFC;
+import org.wikipediacleaner.gui.swing.action.ActionExternalViewer;
 import org.wikipediacleaner.i18n.GT;
 
 
@@ -62,13 +64,22 @@ public class CheckErrorAlgorithm530 extends CheckErrorAlgorithmBase {
       return false;
     }
     for (PageElementRFC rfc : rfcs) {
+      boolean isError = false;
       if (!rfc.isTemplateParameter() && rfc.isCorrect()) {
+        if (analysis.isInExternalLink(rfc.getBeginIndex()) == null) {
+          isError = true;
+        }
+      }
+
+      if (isError) {
         if (errors == null) {
           return true;
         }
         result = true;
         CheckErrorResult errorResult = createCheckErrorResult(
             analysis, rfc.getBeginIndex(), rfc.getEndIndex());
+
+        // Suggest replacement with templates
         List<String[]> rfcTemplates = analysis.getWPCConfiguration().getStringArrayList(
             WPCConfigurationStringList.RFC_TEMPLATES);
         if (rfcTemplates != null) {
@@ -93,6 +104,34 @@ public class CheckErrorAlgorithm530 extends CheckErrorAlgorithmBase {
             }
           }
         }
+
+        // Suggest replacement with interwikis
+        List<String[]> rfcInterwikis = analysis.getWPCConfiguration().getStringArrayList(
+            WPCConfigurationStringList.RFC_INTERWIKIS);
+        if (rfcInterwikis != null) {
+          for (String[] rfcInterwiki : rfcInterwikis) {
+            if (rfcInterwiki.length > 0) {
+              String rfcCode = rfcInterwiki[0];
+              StringBuilder replacement = new StringBuilder();
+              replacement.append("[[:");
+              replacement.append(rfcCode);
+              replacement.append(":");
+              replacement.append(rfc.getRFC());
+              replacement.append("|");
+              replacement.append(PageElementRFC.RFC_PREFIX);
+              replacement.append(" ");
+              replacement.append(rfc.getRFC());
+              replacement.append("]]");
+              errorResult.addReplacement(replacement.toString());
+            }
+          }
+        }
+
+        // Suggest to view the RFC
+        errorResult.addPossibleAction(new SimpleAction(
+            GT._("View RFC"),
+            new ActionExternalViewer(rfc.getURL())));
+
         errors.add(errorResult);
       }
     }
