@@ -75,13 +75,14 @@ public class CheckErrorAlgorithm525 extends CheckErrorAlgorithmBase {
               isUseless = false;
             }
           } else if ("class".equals(param.getName()) && "cx-segment".equals(param.getValue())) {
-            // useful: Content Translation tool garbage
+            // useless: Content Translation tool garbage
             isParameterUseless = true;
           } else if ("data-segmentid".equals(param.getName())) {
-            // useful: Content Translation tool garbage
+            // useless: Content Translation tool garbage
             isParameterUseless = true;
           } else if ("contenteditable".equals(param.getName())) {
-            // useful: Content Translation tool garbage
+            // useless: Content Translation tool garbage
+            isParameterUseless = true;
           } else if ("class".equals(param.getName()) ||
                      "id".equals(param.getName())) {
             level = ErrorLevel.WARNING;
