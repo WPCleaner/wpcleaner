@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2017-01-09 20:01+0100\n"
+"POT-Creation-Date: 2017-01-17 18:58+0100\n"
 "PO-Revision-Date: 2015-11-05 04:57+0000\n"
 "Last-Translator: Stefán Örvar Sigmundsson <stefan.orvar.sigmundsson@emi.is>\n"
 "Language-Team: Icelandic <is@li.org>\n"
@@ -789,9 +789,9 @@ msgstr "Athugasemd"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm524.java:332
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm527.java:248
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm528.java:177
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm529.java:223
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm530.java:177
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm528.java:209
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm529.java:255
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm530.java:216
 msgid "A category containing the list of pages in error"
 msgstr ""
 
@@ -814,6 +814,10 @@ msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm527.java:127
 msgid "Trim text"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm530.java:132
+msgid "View RFC"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm531.java:106

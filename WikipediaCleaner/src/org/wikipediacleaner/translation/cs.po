@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2017-01-09 20:01+0100\n"
+"POT-Creation-Date: 2017-01-17 18:58+0100\n"
 "PO-Revision-Date: 2016-03-19 19:20+0000\n"
 "Last-Translator: Matěj S. <matejsuchanek97@gmail.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
@@ -807,9 +807,9 @@ msgstr "Shrnutí"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm524.java:332
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm527.java:248
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm528.java:177
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm529.java:223
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm530.java:177
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm528.java:209
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm529.java:255
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm530.java:216
 msgid "A category containing the list of pages in error"
 msgstr "Kategorie obsahující seznam stránek s chybou"
 
@@ -834,6 +834,10 @@ msgstr ""
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm527.java:127
 msgid "Trim text"
 msgstr "Otrimovat text"
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm530.java:132
+msgid "View RFC"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm531.java:106
 #, fuzzy

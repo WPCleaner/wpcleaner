@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2017-01-09 20:01+0100\n"
+"POT-Creation-Date: 2017-01-17 18:58+0100\n"
 "PO-Revision-Date: 2016-03-06 19:44+0000\n"
 "Last-Translator: Felipe L. <felipe.idj@hotmail.com>\n"
 "Language-Team: Brazilian Portuguese <pt_BR@li.org>\n"
@@ -824,9 +824,9 @@ msgstr "Comentário"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm524.java:332
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm527.java:248
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm528.java:177
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm529.java:223
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm530.java:177
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm528.java:209
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm529.java:255
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm530.java:216
 msgid "A category containing the list of pages in error"
 msgstr "Uma categoria que contém a lista de páginas com erro"
 
@@ -854,6 +854,10 @@ msgstr "Uma página que contém um dump de análise para este erro."
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm527.java:127
 msgid "Trim text"
 msgstr "Trim text"
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm530.java:132
+msgid "View RFC"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm531.java:106
 #, fuzzy
