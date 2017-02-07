@@ -252,12 +252,12 @@ public class HttpUtils {
     while (index < segment.length()) {
       if (segment.charAt(index) == '%') {
         appendBytes(buf, segment.substring(last, index));
-        if ((index < segment.length() + 2) &&
+        if ((index + 2 < segment.length()) &&
             ("ABCDEFabcdef0123456789".indexOf(segment.charAt(index + 1)) >= 0) &&
             ("ABCDEFabcdef0123456789".indexOf(segment.charAt(index + 2)) >= 0)) {
           buf.write((byte) Integer.parseInt(segment.substring(index + 1, index + 3), 16));
           index += 3;
-        } else if ((index < segment.length() + 1) &&
+        } else if ((index + 1 < segment.length()) &&
                    (segment.charAt(index + 1) == '%')) {
           buf.write((byte) '%');
           index += 2;
