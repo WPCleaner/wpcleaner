@@ -65,6 +65,12 @@ public class CheckErrorAlgorithm104 extends CheckErrorAlgorithmBase {
                 paramName.hasUnbalancedQuotes()) {
               ok = false;
             }
+            for (int paramNum = 0; paramNum < tag.getParametersCount(); paramNum++) {
+              Parameter tmpParam = tag.getParameter(paramNum);
+              if (tmpParam.getValue() == null) {
+                ok = false;
+              }
+            }
             if (ok) {
               shouldReport = false;
             }
