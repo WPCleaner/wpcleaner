@@ -125,7 +125,7 @@ public class CheckErrorAlgorithm064 extends CheckErrorAlgorithmBase {
             countQuoteAfter++;
           }
           if (((countQuoteBefore >= 1) || (countQuoteAfter >= 1)) &&
-              (text.length() > countQuoteBefore)) {
+              (text.length() > countQuoteBefore + countQuoteAfter)) {
             paddingLeft = paddingLeft + text.substring(0, countQuoteBefore);
             paddingRight = text.substring(text.length() - countQuoteAfter) + paddingRight;
             text = text.substring(countQuoteBefore, text.length() - countQuoteAfter);
