@@ -140,7 +140,11 @@ public class CheckErrorAlgorithm028 extends CheckErrorAlgorithmBase {
     int index = contents.indexOf("|}");
     while (index >= 0) {
       if (shouldCount(analysis, index)) {
-        list.add(new TableElement(index, index + 2, false));
+        PageElementTemplate template = analysis.isInTemplate(index);
+        if ((template == null) ||
+            (template.getEndIndex() != index + 3)) {
+          list.add(new TableElement(index, index + 2, false));
+        }
       }
       index = contents.indexOf("|}", index + 1);
     }
