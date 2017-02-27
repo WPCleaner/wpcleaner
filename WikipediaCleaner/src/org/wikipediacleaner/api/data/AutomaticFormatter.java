@@ -51,11 +51,19 @@ public class AutomaticFormatter {
         if (algorithm.isAvailable() &&
             CheckErrorAlgorithms.isAlgorithmActive(wiki, algorithm.getErrorNumber())) {
           String currentContents = contents;
-          PageAnalysis analysis = page.getAnalysis(currentContents, true);
-          contents = botFix ? algorithm.botFix(analysis) : algorithm.automaticFix(analysis);
-          if ((usedAlgorithms != null) && (!contents.equals(currentContents))) {
-            // TODO: compute if fix is complete ?
+          int iterations = 0;
+          boolean modified = false;
+          do {
+            currentContents = contents;
+            PageAnalysis analysis = page.getAnalysis(currentContents, true);
+            contents = botFix ? algorithm.botFix(analysis) : algorithm.automaticFix(analysis);
+            if (!contents.equals(currentContents)) {
+              modified = true;
+            }
+          } while ((!contents.equals(currentContents)) && (iterations < 10));
+          if ((usedAlgorithms != null) && modified) {
             usedAlgorithms.add(new CheckError.Progress(algorithm, true));
+            // TODO: compute if fix is complete ?
           }
         }
       }
