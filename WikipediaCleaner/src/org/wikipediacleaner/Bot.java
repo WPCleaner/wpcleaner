@@ -29,10 +29,13 @@ import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithm;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithms;
 import org.wikipediacleaner.api.constants.EnumLanguage;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
+import org.wikipediacleaner.api.data.DataManager;
 import org.wikipediacleaner.api.data.ISBNRange;
+import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.gui.swing.basic.BasicWorker;
 import org.wikipediacleaner.gui.swing.basic.BasicWorkerListener;
 import org.wikipediacleaner.gui.swing.bot.AutomaticCWWorker;
+import org.wikipediacleaner.gui.swing.bot.AutomaticListCWWorker;
 import org.wikipediacleaner.gui.swing.bot.ListCWWorker;
 import org.wikipediacleaner.gui.swing.worker.LoginWorker;
 import org.wikipediacleaner.gui.swing.worker.UpdateDabWarningWorker;
@@ -253,6 +256,19 @@ public class Bot implements BasicWorkerListener {
       }
       worker = new AutomaticCWWorker(
           wiki, null, algorithms, 10000, true, allAlgorithms, null, true, false);
+    } else if ("FixListCheckWiki".equalsIgnoreCase(action)) {
+      Page page = null;
+      if (args.length > currentArg) {
+        page = DataManager.getPage(wiki, args[currentArg], null, null, null);
+        currentArg++;
+      }
+      List<CheckErrorAlgorithm> algorithms = new ArrayList<CheckErrorAlgorithm>();
+      List<CheckErrorAlgorithm> allAlgorithms = new ArrayList<CheckErrorAlgorithm>();
+      if (args.length > currentArg) {
+        extractAlgorithms(algorithms, allAlgorithms, args, currentArg);
+      }
+      worker = new AutomaticListCWWorker(
+          wiki, null, page, algorithms, allAlgorithms, null, true, false);
     } else if ("MarkCheckWiki".equalsIgnoreCase(action)) {
       List<CheckErrorAlgorithm> algorithms = new ArrayList<CheckErrorAlgorithm>();
       List<CheckErrorAlgorithm> allAlgorithms = new ArrayList<CheckErrorAlgorithm>();

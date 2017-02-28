@@ -2,3 +2,4 @@ ListCheckWiki C:\Users\Nicolas\Downloads\frwiki-$-pages-articles.xml.bz2 wiki:Pr
 ListISBNWarnings
 ListISSNWarnings
 FixCheckWiki 526 +1 +2 +9 +16 +17 +18 +22 +48 +64 +88 +524 +526
+FixListCheckWiki Projet:Correction_syntaxique/Analyse_016 16 +1 +2 +9 +16 +17 +18 +22 +48 +64 +88 +524 +526
