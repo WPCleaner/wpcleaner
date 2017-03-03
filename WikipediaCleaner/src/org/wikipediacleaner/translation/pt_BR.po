@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2017-01-17 18:58+0100\n"
+"POT-Creation-Date: 2017-02-28 19:21+0100\n"
 "PO-Revision-Date: 2016-03-06 19:44+0000\n"
 "Last-Translator: Felipe L. <felipe.idj@hotmail.com>\n"
 "Language-Team: Brazilian Portuguese <pt_BR@li.org>\n"
@@ -169,10 +169,10 @@ msgstr "Substituir com {0}"
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm038.java:100
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm038.java:106
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm042_Old.java:62
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm043.java:148
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm043.java:149
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm045.java:130
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm046.java:178
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm047.java:149
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm047.java:150
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm048.java:113
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm515.java:90
 #: org/wikipediacleaner/gui/swing/options/SortingOptionsPanel.java:115
@@ -197,7 +197,7 @@ msgstr "Corrigir todas as tags incorretas"
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm055.java:164
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm066.java:93
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm077.java:93
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm525.java:122
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm525.java:123
 #, java-format
 msgid "Remove {0} tags"
 msgstr "Remover as tags {0}"
@@ -349,7 +349,7 @@ msgstr "Descomentar categoria"
 msgid "Replace all"
 msgstr "Substituir tudo"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm028.java:213
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm028.java:217
 msgid "Templates that can replace the end of a table"
 msgstr "Predefinições que podem substituir o final de uma tabela"
 
@@ -2500,16 +2500,19 @@ msgid "Checking for errors n°{0}"
 msgstr "Verificando erro nº{0}"
 
 #: org/wikipediacleaner/gui/swing/bot/AutomaticCWWorker.java:182
+#: org/wikipediacleaner/gui/swing/bot/AutomaticListCWWorker.java:127
 #, java-format
 msgid "Analyzing page {0}"
 msgstr "Analisando página {0}"
 
 #: org/wikipediacleaner/gui/swing/bot/AutomaticCWWorker.java:246
+#: org/wikipediacleaner/gui/swing/bot/AutomaticListCWWorker.java:193
 #, java-format
 msgid "Fixing page {0}"
 msgstr "Corrigindo página {0}"
 
 #: org/wikipediacleaner/gui/swing/bot/AutomaticCWWorker.java:289
+#: org/wikipediacleaner/gui/swing/bot/AutomaticListCWWorker.java:229
 #, java-format
 msgid "{0} page has been modified"
 msgid_plural "{0} pages have been modified"
@@ -2517,6 +2520,7 @@ msgstr[0] "{0} página foi modificada"
 msgstr[1] "{0} páginas foram modificadas"
 
 #: org/wikipediacleaner/gui/swing/bot/AutomaticCWWorker.java:294
+#: org/wikipediacleaner/gui/swing/bot/AutomaticListCWWorker.java:234
 #, java-format
 msgid "{0} page has been marked as fixed for the selected algorithms"
 msgid_plural "{0} pages have been marked as fixed for the selected algorithms"
@@ -2526,6 +2530,7 @@ msgstr[1] ""
 "{0} páginas foram marcadas como corrigidas com os algoritmos selecionados"
 
 #: org/wikipediacleaner/gui/swing/bot/AutomaticCWWorker.java:299
+#: org/wikipediacleaner/gui/swing/bot/AutomaticListCWWorker.java:239
 #, java-format
 msgid "{0} page has been marked as fixed for other algorithms"
 msgid_plural "{0} pages have been marked as fixed for other algorithms"
