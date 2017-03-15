@@ -36,6 +36,7 @@ public class CheckErrorAlgorithm011 extends CheckErrorAlgorithmHtmlNamedEntities
     htmlCharacters.add(HtmlCharacters.LETTER_CAPITAL_A_ACUTE_ACCENT);       // &Aacute;
     htmlCharacters.add(HtmlCharacters.LETTER_SMALL_A_CIRCUMFLEX_ACCENT);    // &acirc;
     htmlCharacters.add(HtmlCharacters.LETTER_CAPITAL_A_CIRCUMFLEX_ACCENT);  // &Acirc;
+    htmlCharacters.add(HtmlCharacters.SYMBOL_SPACING_ACUTE);                // &acute;
     htmlCharacters.add(HtmlCharacters.LETTER_SMALL_AE);                     // &aelig;
     htmlCharacters.add(HtmlCharacters.LETTER_CAPITAL_AE);                   // &AElig;
     htmlCharacters.add(HtmlCharacters.LETTER_SMALL_A_GRAVE_ACCENT);         // &agrave;
@@ -128,7 +129,7 @@ public class CheckErrorAlgorithm011 extends CheckErrorAlgorithmHtmlNamedEntities
     // htmlCharacters.add(HtmlCharacters.SYMBOL_EM_DASH);                      // &mdash;
     htmlCharacters.add(HtmlCharacters.SYMBOL_MICRO);                        // &micro;
     htmlCharacters.add(HtmlCharacters.SYMBOL_MIDDLE_DOT);                   // &middot;
-    // htmlCharacters.add(HtmlCharacters.SYMBOL_MINUS);                        // &minus;
+    htmlCharacters.add(HtmlCharacters.SYMBOL_MINUS);                        // &minus;
     htmlCharacters.add(HtmlCharacters.LETTER_SMALL_MU);                     // &mu;
     // htmlCharacters.add(HtmlCharacters.LETTER_CAPITAL_MU);                   // &Mu;
     // htmlCharacters.add(HtmlCharacters.SYMBOL_EN_DASH);                      // &ndash;
@@ -167,10 +168,10 @@ public class CheckErrorAlgorithm011 extends CheckErrorAlgorithmHtmlNamedEntities
     htmlCharacters.add(HtmlCharacters.LETTER_SMALL_PI);                     // &pi;
     htmlCharacters.add(HtmlCharacters.LETTER_CAPITAL_PI);                   // &Pi;
     htmlCharacters.add(HtmlCharacters.LETTER_PI_SYMBOL);                    // &piv;
-    htmlCharacters.add(HtmlCharacters.SYMBOL_PLUS_OR_MINUS);                // &plusm;
+    htmlCharacters.add(HtmlCharacters.SYMBOL_PLUS_OR_MINUS);                // &plusmn;
     htmlCharacters.add(HtmlCharacters.SYMBOL_POUND);                        // &pound;
-    // htmlCharacters.add(HtmlCharacters.SYMBOL_MINUTES);                      // &prime;
-    // htmlCharacters.add(HtmlCharacters.SYMBOL_SECONDS);                      // &Prime;
+    htmlCharacters.add(HtmlCharacters.SYMBOL_MINUTES);                      // &prime;
+    htmlCharacters.add(HtmlCharacters.SYMBOL_SECONDS);                      // &Prime;
     htmlCharacters.add(HtmlCharacters.SYMBOL_PROD);                         // &prod;
     htmlCharacters.add(HtmlCharacters.LETTER_SMALL_PSI);                    // &psi;
     htmlCharacters.add(HtmlCharacters.LETTER_CAPITAL_PSI);                  // &Psi;
@@ -185,6 +186,7 @@ public class CheckErrorAlgorithm011 extends CheckErrorAlgorithmHtmlNamedEntities
     // htmlCharacters.add(HtmlCharacters.LETTER_CAPITAL_RHO);                  // &Rho;
     htmlCharacters.add(HtmlCharacters.SYMBOL_SINGLE_RIGHT_ANGLE_QUOTATION); // &rsaquo;
     htmlCharacters.add(HtmlCharacters.SYMBOL_RIGHT_SINGLE_QUOTATION_MARK);  // &rsquo;
+    htmlCharacters.add(HtmlCharacters.SYMBOL_SINGLE_LOW_9_QUOTATION_MARK);  // &sbquo;
     htmlCharacters.add(HtmlCharacters.LETTER_SMALL_S_CARON);                // &scaron;
     htmlCharacters.add(HtmlCharacters.LETTER_CAPITAL_S_CARON);              // &Scaron;
     htmlCharacters.add(HtmlCharacters.SYMBOL_SECTION);                      // &sect;
@@ -205,7 +207,7 @@ public class CheckErrorAlgorithm011 extends CheckErrorAlgorithmHtmlNamedEntities
     htmlCharacters.add(HtmlCharacters.LETTER_SMALL_THORN);                  // &thorn;
     htmlCharacters.add(HtmlCharacters.LETTER_CAPITAL_THORN);                // &THORN;
     htmlCharacters.add(HtmlCharacters.SYMBOL_SMALL_TILDE);                  // &tilde;
-    // htmlCharacters.add(HtmlCharacters.SYMBOL_MULTIPLICATION);               // &times;
+    htmlCharacters.add(HtmlCharacters.SYMBOL_MULTIPLICATION);               // &times;
     htmlCharacters.add(HtmlCharacters.SYMBOL_TRADEMARK);                    // &trade;
     htmlCharacters.add(HtmlCharacters.LETTER_SMALL_U_ACUTE_ACCENT);         // &uacute;
     htmlCharacters.add(HtmlCharacters.LETTER_CAPITAL_U_ACUTE_ACCENT);       // &Uacute;
