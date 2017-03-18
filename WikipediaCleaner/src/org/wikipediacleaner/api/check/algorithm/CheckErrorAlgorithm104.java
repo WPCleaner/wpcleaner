@@ -257,7 +257,16 @@ public class CheckErrorAlgorithm104 extends CheckErrorAlgorithmBase {
         }
 
         for (String tmp : replacements) {
-          errorResult.addReplacement(tmp);
+          boolean automatic = false;
+          if ("<ref>".equals(tmp)) {
+            String original = contents.substring(currentIndex, fullEnd);
+            if ("<ref name>".equals(original) ||
+                "<ref name=>".equals(original) ||
+                "<ref name >".equals(original)) {
+              automatic = true;
+            }
+          }
+          errorResult.addReplacement(tmp, automatic);
         }
         errors.add(errorResult);
       }
@@ -265,5 +274,16 @@ public class CheckErrorAlgorithm104 extends CheckErrorAlgorithmBase {
     }
 
     return result;
+  }
+
+  /**
+   * Automatic fixing of all the errors in the page.
+   * 
+   * @param analysis Page analysis.
+   * @return Page contents after fix.
+   */
+  @Override
+  protected String internalAutomaticFix(PageAnalysis analysis) {
+    return fixUsingAutomaticReplacement(analysis);
   }
 }
