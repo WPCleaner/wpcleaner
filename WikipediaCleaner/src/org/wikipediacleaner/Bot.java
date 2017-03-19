@@ -218,7 +218,7 @@ public class Bot implements BasicWorkerListener {
         try (BufferedReader reader = new BufferedReader(new FileReader(tasks))) {
           String line = null;
           while ((line = reader.readLine()) != null) {
-            String[] tmpArgs = line.split(" ");
+            String[] tmpArgs = line.split(" +");
             if ((tmpArgs != null) && (tmpArgs.length > 0)) {
               actions.add(tmpArgs);
             }
@@ -310,6 +310,7 @@ public class Bot implements BasicWorkerListener {
       }
     }
     if (worker != null) {
+      System.out.println("Running task " + action);
       worker.setListener(this);
       worker.setTimeLimit(timeLimit);
       worker.start();
