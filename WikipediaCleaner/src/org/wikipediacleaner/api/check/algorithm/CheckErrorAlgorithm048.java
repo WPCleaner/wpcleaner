@@ -81,6 +81,7 @@ public class CheckErrorAlgorithm048 extends CheckErrorAlgorithmBase {
       // Check if is in some tags
       if (errorFound) {
         if ((analysis.getSurroundingTag(PageElementTag.TAG_WIKI_INCLUDEONLY, link.getBeginIndex()) != null) ||
+            (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_MAPFRAME, link.getBeginIndex()) != null) ||
             (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_TIMELINE, link.getBeginIndex()) != null)) {
           errorFound = false;
         }
