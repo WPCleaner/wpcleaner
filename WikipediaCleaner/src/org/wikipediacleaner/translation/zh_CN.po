@@ -8,22 +8,22 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2017-02-28 19:21+0100\n"
-"PO-Revision-Date: 2015-04-05 05:56+0000\n"
+"PO-Revision-Date: 2017-03-03 19:29+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Chinese (Simplified) <zh_CN@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Launchpad-Export-Date: 2015-04-07 07:08+0000\n"
-"X-Generator: Launchpad (build 17413)\n"
+"X-Launchpad-Export-Date: 2017-03-22 17:49+0000\n"
+"X-Generator: Launchpad (build 18334)\n"
 "Language: zh_CN\n"
 
 #: org/wikipediacleaner/Version.java:31
 #, java-format
 msgid ""
-"I try to keep {0} up to date with Check Wiki, but if you find any discrepancy"
-"(ies) in the detections, please let me know."
+"I try to keep {0} up to date with Check Wiki, but if you find any "
+"discrepancy(ies) in the detections, please let me know."
 msgstr ""
 
 #: org/wikipediacleaner/Version.java:33
@@ -169,9 +169,8 @@ msgid "Remove {0} namespace from template name"
 msgstr "从模板名称中移除{0}命名空间"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm002.java:34
-#, fuzzy
 msgid "Fix all incorrect tags"
-msgstr "修复所有的<br>标签"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm002.java:193
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm002.java:217
@@ -259,14 +258,12 @@ msgid "Six-per-em space"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:304
-#, fuzzy
 msgid "Figure space"
-msgstr "清除缓存"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:305
-#, fuzzy
 msgid "Punctuation space"
-msgstr "统计消歧义页"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:306
 msgid "Zero-width space"
@@ -293,9 +290,8 @@ msgid "Byte order mark"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:312
-#, fuzzy
 msgid "Object replacement character"
-msgstr "无法替换字符[{0}]"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:313
 msgid "Private use area"
@@ -471,9 +467,9 @@ msgstr "外部查看器"
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:257
 msgid ""
 "A template that can be used instead of the link to an other language. It "
-"must be specified as: <template name>|<param name for local page name>|"
-"<param name for code of other language>|<param name for page name in other "
-"language>|<param name for displayed text>"
+"must be specified as: <template name>|<param name for local page "
+"name>|<param name for code of other language>|<param name for page name in "
+"other language>|<param name for displayed text>"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:339
@@ -521,25 +517,22 @@ msgstr ""
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm073.java:101
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm107.java:120
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm108.java:91
-#, fuzzy
 msgid "Search as OCLC"
-msgstr "搜索ISSN {0}"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm070.java:119
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm072.java:104
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm073.java:104
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm107.java:123
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm108.java:94
-#, fuzzy
 msgid "Search as LCCN"
-msgstr "搜索ISSN {0}"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm070.java:193
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm072.java:154
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm073.java:179
-#, fuzzy
 msgid "Similar ISBN"
-msgstr "搜索ISSN {0}"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm072.java:67
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm073.java:67
@@ -561,21 +554,18 @@ msgstr ""
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm072.java:236
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm073.java:271
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm108.java:203
-#, fuzzy
 msgid "An explanation of the problem (incorrect checksum)"
-msgstr "问题的说明"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm072.java:238
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm073.java:273
-#, fuzzy
 msgid "An explanation of the problem (non-existing range of ISBN numbers)"
-msgstr "问题的说明"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm072.java:240
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm073.java:275
-#, fuzzy
 msgid "An explanation of the problem (reserved range of ISBN numbers)"
-msgstr "问题的说明"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm076.java:30
 msgid "Replace all %20 by space character"
@@ -652,14 +642,13 @@ msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm085.java:227
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm112.java:565
-#, fuzzy, java-format
+#, java-format
 msgid "Use {0}"
-msgstr "正在使用{0}"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm085.java:260
-#, fuzzy
 msgid "A list of templates that can be used to replace &lt;center&gt; tags"
-msgstr "可以用来代替{0}标签的模板"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm090.java:714
 msgid "What text should be displayed by the link?"
@@ -675,18 +664,16 @@ msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm090.java:806
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm091.java:371
-#, fuzzy
 msgid "Templates using external links"
-msgstr "将它们转换为内部链接"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm090.java:807
 msgid "Templates to be used for linking to an old version of an article"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm090.java:808
-#, fuzzy
 msgid "Templates to be used instead of Special:PrefixIndex"
-msgstr "可以用来代替星号的模板。"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm091.java:49
 msgid "Convert them to internal links"
@@ -709,9 +696,8 @@ msgid "List of possible replacements"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm103.java:30
-#, fuzzy
 msgid "Replace all pipe templates"
-msgstr "使用替换模板{0}替换"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm107.java:97
 #, java-format
@@ -720,14 +706,13 @@ msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm107.java:173
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm108.java:141
-#, fuzzy
 msgid "Similar ISSN"
-msgstr "搜索ISSN {0}"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm112.java:542
-#, fuzzy, java-format
+#, java-format
 msgid "Use {0} and {1}"
-msgstr "正在使用{0}"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm501.java:177
 msgid "Restore original text"
@@ -751,9 +736,8 @@ msgid "Compact link"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm514.java:144
-#, fuzzy
 msgid "References defined by templates."
-msgstr "正在检索模板"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm518.java:254
 #, java-format
@@ -777,7 +761,8 @@ msgid "A template that can be used instead of an opening square bracket."
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm520.java:139
-msgid "An identifier of an abuse filter that is triggered by weird characters."
+msgid ""
+"An identifier of an abuse filter that is triggered by weird characters."
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm521.java:343
@@ -824,18 +809,16 @@ msgid "A page containing a dump analysis for this error."
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm527.java:127
-#, fuzzy
 msgid "Trim text"
-msgstr "查找文本"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm530.java:132
 msgid "View RFC"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm531.java:106
-#, fuzzy
 msgid "A list of templates that can't be used inside a reference"
-msgstr "可以用来代替{0}标签的模板"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmBase.java:277
 msgid "Title of the article describing this type of error"
@@ -865,9 +848,8 @@ msgid "Add a comment"
 msgstr "添加评论"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISBN.java:386
-#, fuzzy
 msgid "Search all ISBN"
-msgstr "搜索ISSN {0}"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISBN.java:404
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISBN.java:434
@@ -891,9 +873,8 @@ msgid "Search using {0}"
 msgstr "用{0}进行搜索"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISSN.java:355
-#, fuzzy
 msgid "Search all ISSN"
-msgstr "搜索ISSN {0}"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmTOC.java:101
 msgid "A list of templates resulting in the inclusion of a table of contents"
@@ -1155,9 +1136,8 @@ msgid "Link parameter {0} to"
 msgstr "链接参数{0}到"
 
 #: org/wikipediacleaner/api/execution/AllLinksToPageCallable.java:43
-#, fuzzy
 msgid "Retrieving all links to page"
-msgstr "正在检索页面链接"
+msgstr ""
 
 #: org/wikipediacleaner/api/execution/ContentsCallable.java:63
 msgid "Retrieving contents"
@@ -1241,7 +1221,8 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:206
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:622
 #: org/wikipediacleaner/gui/swing/bot/BotToolsWindow.java:89
-msgid "On some Wikipedia projects, you may need the bot status for doing this."
+msgid ""
+"On some Wikipedia projects, you may need the bot status for doing this."
 msgstr "在一些维基百科项目上，您可能需要执行此操作的机器人身份。"
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:207
@@ -1716,7 +1697,8 @@ msgid "Links to {0}"
 msgstr "链接到{0}"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1455
-msgid "You must input a page name for retrieving the list of category members"
+msgid ""
+"You must input a page name for retrieving the list of category members"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1473
@@ -1757,9 +1739,8 @@ msgid "Watch list"
 msgstr "监视列表"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1851
-#, fuzzy
 msgid "Unformatted list of page names"
-msgstr "您必须输入一个页面名称"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1852
 msgid "Internal links in a formatted list"
@@ -2012,7 +1993,8 @@ msgstr "最后一次编辑在{0}"
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:743
 #, java-format
 msgid "Last modified at {0}. It was modified less than {1} minute ago."
-msgid_plural "Last modified at {0}. It was modified less than {1} minutes ago."
+msgid_plural ""
+"Last modified at {0}. It was modified less than {1} minutes ago."
 msgstr[0] ""
 msgstr[1] ""
 
@@ -2158,9 +2140,8 @@ msgid "Displaying templates found"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/action/ActionCheckArticle.java:51
-#, fuzzy
 msgid "Check article"
-msgstr "分析模板"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/action/ActionCheckArticle.java:262
 #: org/wikipediacleaner/gui/swing/action/ActionFullAnalysis.java:276
@@ -2170,14 +2151,12 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/action/ActionCheckArticle.java:293
 #: org/wikipediacleaner/gui/swing/action/ActionCheckArticle.java:309
 #: org/wikipediacleaner/gui/swing/worker/CheckArticleWorker.java:52
-#, fuzzy
 msgid "Analysis"
-msgstr "分析"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/action/ActionCheckTemplate.java:41
-#, fuzzy
 msgid "Check template"
-msgstr "分析模板"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/action/ActionDeletePage.java:41
 msgid "Delete page"
@@ -2445,7 +2424,8 @@ msgstr[1] ""
 #: org/wikipediacleaner/gui/swing/bot/AutomaticListCWWorker.java:234
 #, java-format
 msgid "{0} page has been marked as fixed for the selected algorithms"
-msgid_plural "{0} pages have been marked as fixed for the selected algorithms"
+msgid_plural ""
+"{0} pages have been marked as fixed for the selected algorithms"
 msgstr[0] ""
 msgstr[1] ""
 
@@ -2467,18 +2447,16 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/bot/BotCWTableModel.java:300
 #: org/wikipediacleaner/gui/swing/bot/BotCWTableModel.java:323
-#, fuzzy
 msgid "Reverse the selection"
-msgstr "删除选中内容"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/bot/BotCWTableModel.java:311
 msgid "Use the list of pages of each algorithm"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/bot/BotCWTableModel.java:317
-#, fuzzy
 msgid "Use no list of pages"
-msgstr "您必须输入一个页面名称"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/bot/BotCWTableModel.java:507
 msgid "Description"
@@ -2581,30 +2559,25 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:220
 #: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:349
-#, fuzzy
 msgid "Analyze dump file"
-msgstr "分析模板"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:228
-#, fuzzy
 msgid "Save selection"
-msgstr "删除选中内容"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:236
-#, fuzzy
 msgid "Load selection"
-msgstr "删除选中内容"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:277
-#, fuzzy
 msgid "You must select at least one algorithm for fixing errors"
-msgstr "在您登录前必须选择一种语言"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:282
 #: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:332
-#, fuzzy
 msgid "You must select at least one algorithm for listing errors"
-msgstr "在您登录前必须选择一种语言"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:385
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiWindow.java:1087
@@ -2627,9 +2600,9 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/bot/GeneralToolsPanel.java:144
 #: org/wikipediacleaner/gui/swing/bot/GeneralToolsPanel.java:162
-#, fuzzy, java-format
+#, java-format
 msgid "List {0} errors"
-msgstr "检测到的错误如下："
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/bot/GeneralToolsPanel.java:171
 msgid "Update duplicate argument warning messages"
@@ -2662,9 +2635,8 @@ msgid "Export directory"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/bot/ListCWPanel.java:142
-#, fuzzy
 msgid "Export pages:"
-msgstr "短页面"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/bot/ListCWPanel.java:157
 msgid "Check last version of article before reporting an error"
@@ -2679,12 +2651,14 @@ msgstr ""
 msgid "{0} page has been analyzed"
 msgid_plural "{0} pages have been analyzed"
 msgstr[0] ""
+msgstr[1] ""
 
 #: org/wikipediacleaner/gui/swing/bot/ListCWWorker.java:423
 #, java-format
 msgid "{0} page has been detected for algorithm {1}"
 msgid_plural "{0} pages have been detected for algorithm {1}"
 msgstr[0] ""
+msgstr[1] ""
 
 #: org/wikipediacleaner/gui/swing/bot/ListCWWorker.java:566
 #, java-format
@@ -3001,9 +2975,9 @@ msgid "ISBN: {0}"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/component/MWPanePopupListener.java:612
-#, fuzzy, java-format
+#, java-format
 msgid "ISSN: {0}"
-msgstr "搜索ISSN {0}"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/component/MWPaneTitleTreeManager.java:88
 msgid "Decrement title level"
@@ -3174,7 +3148,8 @@ msgid "Create disambiguation warning on talk page (in main namespace)"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/AnalysisOptionsPanel.java:86
-msgid "Create disambiguation warning on talk page (in encyclopedic namespaces)"
+msgid ""
+"Create disambiguation warning on talk page (in encyclopedic namespaces)"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/AnalysisOptionsPanel.java:93
@@ -3186,7 +3161,8 @@ msgid "Update disambiguation warning on talk page (in main namespace)"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/AnalysisOptionsPanel.java:107
-msgid "Update disambiguation warning on talk page (in encyclopedic namespaces)"
+msgid ""
+"Update disambiguation warning on talk page (in encyclopedic namespaces)"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/AnalysisOptionsPanel.java:114
@@ -3263,9 +3239,8 @@ msgid "Select editor font name"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:128
-#, fuzzy
 msgid "Select editor font size"
-msgstr "选择错误"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:143
 msgid "Increase font size"
@@ -3705,9 +3680,8 @@ msgstr[0] ""
 msgstr[1] ""
 
 #: org/wikipediacleaner/gui/swing/worker/CheckArticleTools.java:104
-#, fuzzy
 msgid "Templates"
-msgstr "模板"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/worker/CheckArticleTools.java:107
 #, java-format
@@ -3721,9 +3695,9 @@ msgid "Template \"{0}\" has no {1} block defined."
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/worker/CheckArticleTools.java:195
-#, fuzzy, java-format
+#, java-format
 msgid "Template \"{0}\" ({1}-{2})"
-msgstr "模板：{0}"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/worker/CheckArticleTools.java:226
 #, java-format
@@ -3792,6 +3766,7 @@ msgstr ""
 msgid "The following problem has been detected:"
 msgid_plural "The following problems have been detected:"
 msgstr[0] ""
+msgstr[1] ""
 
 #: org/wikipediacleaner/gui/swing/worker/CheckWikiProjectWorker.java:91
 msgid "Sorting errors by priority"
@@ -3890,15 +3865,15 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/worker/UpdateISBNWarningTools.java:258
 #: org/wikipediacleaner/gui/swing/worker/UpdateISSNWarningTools.java:256
-#, fuzzy, java-format
+#, java-format
 msgid "Removing {1} warning - {0}"
-msgstr "正在更新页面{0}"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/worker/UpdateISBNWarningTools.java:267
 #: org/wikipediacleaner/gui/swing/worker/UpdateISSNWarningTools.java:265
-#, fuzzy, java-format
+#, java-format
 msgid "Updating {1} warning - {0}"
-msgstr "正在更新页面{0}"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/worker/UpdateISBNWarningWorker.java:88
 #: org/wikipediacleaner/gui/swing/worker/UpdateISSNWarningWorker.java:85
@@ -3997,14 +3972,11 @@ msgstr ""
 msgid "The value cannot contain any of these characters: {0}"
 msgstr ""
 
-#~ msgid "Remove <small> tag"
-#~ msgstr "移除<small>标签"
-
-#~ msgid "Delete all tags without content"
-#~ msgstr "删除没有内容的所有标签"
-
 #~ msgid "Error unkown from WikiCleaner"
 #~ msgstr "来自WikiCleaner的未知错误"
+
+#~ msgid "Remove <small> tag"
+#~ msgstr "移除<small>标签"
 
 #~ msgid "What description would like to use for the image ?"
 #~ msgstr "希望该图像使用什么描述？"
@@ -4033,6 +4005,7 @@ msgstr ""
 #~ msgid "Would you like to add this page on your local Watch list ?"
 #~ msgstr "您希望将这个页面加入您的本地监视列表吗？"
 
+#, java-format
 #~ msgid "An error occured: {0}"
 #~ msgstr "发生错误：{0}"
 
@@ -4042,5 +4015,6 @@ msgstr ""
 #~ msgid "View or edit white list"
 #~ msgstr "查看或编辑白名单"
 
+#, java-format
 #~ msgid "Do you want to mark {0} as fixed for error n°{1}"
 #~ msgstr "您想为#{1}标记已修复{0}吗"

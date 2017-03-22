@@ -8,29 +8,31 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2017-02-28 19:21+0100\n"
-"PO-Revision-Date: 2015-04-05 05:58+0000\n"
+"PO-Revision-Date: 2017-03-03 19:32+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Russian <ru@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%"
-"10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Launchpad-Export-Date: 2015-04-07 07:08+0000\n"
-"X-Generator: Launchpad (build 17413)\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"X-Launchpad-Export-Date: 2017-03-22 17:48+0000\n"
+"X-Generator: Launchpad (build 18334)\n"
 "Language: ru\n"
 
 #: org/wikipediacleaner/Version.java:31
 #, java-format
 msgid ""
-"I try to keep {0} up to date with Check Wiki, but if you find any discrepancy"
-"(ies) in the detections, please let me know."
+"I try to keep {0} up to date with Check Wiki, but if you find any "
+"discrepancy(ies) in the detections, please let me know."
 msgstr ""
+"Я пытаюсь обновлять {0} одновременно с Check Wiki, но если вы обнаружите "
+"любое несоответствие в обнаруженных ошибках — пожалуйста, уведомите меня."
 
 #: org/wikipediacleaner/Version.java:33
 #, java-format
 msgid "I hope you''ll like {0}."
-msgstr ""
+msgstr "Надеюсь, вам понравится {0}"
 
 #: org/wikipediacleaner/Version.java:36
 #, java-format
@@ -38,6 +40,8 @@ msgid ""
 "WPCleaner configuration is available online, check the {0}System "
 "configuration{1}."
 msgstr ""
+"Справка по настройке WPCleaner доступна онлайн, см. {0}System "
+"configuration{1}."
 
 #: org/wikipediacleaner/Version.java:39
 msgid "Please, report any other problem you find to me."
@@ -45,7 +49,7 @@ msgstr "Пожалуйста, сообщайте о любых ошибках к
 
 #: org/wikipediacleaner/Version.java:42
 msgid "The Check Wiki project has evolved a lot recently."
-msgstr ""
+msgstr "Проект Check Wiki сильно развился за последнее время."
 
 #: org/wikipediacleaner/Version.java:43
 msgid ""
@@ -65,13 +69,15 @@ msgstr ""
 
 #: org/wikipediacleaner/Version.java:46
 msgid "It defines the new magic word __DISAMBIG__."
-msgstr ""
+msgstr "Это определяет новое магическое слово __DISAMBIG__."
 
 #: org/wikipediacleaner/Version.java:47
 msgid ""
 "This magic word should be added to all disambiguation pages (either through "
 "templates or directly)."
 msgstr ""
+"Это магическое слово должно быть добавлено на все страницы разрешения "
+"неоднозначности (либо через шаблон, либо напрямую)."
 
 #: org/wikipediacleaner/Version.java:48
 msgid "WPCleaner v1.28 also uses this as the default system."
@@ -96,7 +102,7 @@ msgstr ""
 
 #: org/wikipediacleaner/Version.java:61
 msgid "Many new features were added recently : try them !"
-msgstr ""
+msgstr "Недавно было добавлено множество новых возможностей: попробуйте!"
 
 #: org/wikipediacleaner/Version.java:63
 msgid ""
@@ -170,9 +176,8 @@ msgid "Remove {0} namespace from template name"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm002.java:34
-#, fuzzy
 msgid "Fix all incorrect tags"
-msgstr "Исправить все тэги </br>"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm002.java:193
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm002.java:217
@@ -260,14 +265,12 @@ msgid "Six-per-em space"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:304
-#, fuzzy
 msgid "Figure space"
-msgstr "Очистка кэша"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:305
-#, fuzzy
 msgid "Punctuation space"
-msgstr "Считать страницы значений"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:306
 msgid "Zero-width space"
@@ -294,9 +297,8 @@ msgid "Byte order mark"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:312
-#, fuzzy
 msgid "Object replacement character"
-msgstr "Невозможно заменить символы [{0}]"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:313
 msgid "Private use area"
@@ -345,7 +347,7 @@ msgstr "Добавить описание..."
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm030.java:97
 msgid "What description would you like to use for the image ?"
-msgstr "Какое описание использовать для изображения?"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm030.java:100
 msgid "Add an alternate description..."
@@ -404,7 +406,7 @@ msgstr "Исправить все заголовки"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm059.java:173
 msgid "A list of templates that should be ignored"
-msgstr ""
+msgstr "Список шаблонов, которые необходимо игнорировать"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm061.java:235
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm067.java:322
@@ -474,9 +476,9 @@ msgstr "Внешний просмотрщик"
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:257
 msgid ""
 "A template that can be used instead of the link to an other language. It "
-"must be specified as: <template name>|<param name for local page name>|"
-"<param name for code of other language>|<param name for page name in other "
-"language>|<param name for displayed text>"
+"must be specified as: <template name>|<param name for local page "
+"name>|<param name for code of other language>|<param name for page name in "
+"other language>|<param name for displayed text>"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:339
@@ -524,18 +526,16 @@ msgstr ""
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm073.java:101
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm107.java:120
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm108.java:91
-#, fuzzy
 msgid "Search as OCLC"
-msgstr "Поиск"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm070.java:119
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm072.java:104
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm073.java:104
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm107.java:123
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm108.java:94
-#, fuzzy
 msgid "Search as LCCN"
-msgstr "Поиск"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm070.java:193
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm072.java:154
@@ -632,6 +632,8 @@ msgstr "Заменить этот тэг <ref> \"{0}\" ?"
 msgid ""
 "Several <ref> tags share the same content, but none has been given a name."
 msgstr ""
+"Несколько тегов <ref> имеют одинаковое содержимое, но ни у одного из них нет "
+"имени."
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm081.java:368
 msgid "What name do you want to use for this <ref> tag ?"
@@ -651,9 +653,9 @@ msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm085.java:227
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm112.java:565
-#, fuzzy, java-format
+#, java-format
 msgid "Use {0}"
-msgstr "Страница {0}:"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm085.java:260
 msgid "A list of templates that can be used to replace &lt;center&gt; tags"
@@ -673,9 +675,8 @@ msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm090.java:806
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm091.java:371
-#, fuzzy
 msgid "Templates using external links"
-msgstr "Внешний просмотрщик шаблонов"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm090.java:807
 msgid "Templates to be used for linking to an old version of an article"
@@ -706,14 +707,13 @@ msgid "List of possible replacements"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm103.java:30
-#, fuzzy
 msgid "Replace all pipe templates"
-msgstr "Заменить с помощью шаблона {0}"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm107.java:97
-#, fuzzy, java-format
+#, java-format
 msgid "Length of ISSN is {0} instead of 8"
-msgstr "Контрольная сумма {0} вместо {1}"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm107.java:173
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm108.java:141
@@ -721,9 +721,9 @@ msgid "Similar ISSN"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm112.java:542
-#, fuzzy, java-format
+#, java-format
 msgid "Use {0} and {1}"
-msgstr "Страница {0}:"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm501.java:177
 msgid "Restore original text"
@@ -747,9 +747,8 @@ msgid "Compact link"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm514.java:144
-#, fuzzy
 msgid "References defined by templates."
-msgstr "Поиск в шаблонах"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm518.java:254
 #, java-format
@@ -773,7 +772,8 @@ msgid "A template that can be used instead of an opening square bracket."
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm520.java:139
-msgid "An identifier of an abuse filter that is triggered by weird characters."
+msgid ""
+"An identifier of an abuse filter that is triggered by weird characters."
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm521.java:343
@@ -820,9 +820,8 @@ msgid "A page containing a dump analysis for this error."
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm527.java:127
-#, fuzzy
 msgid "Trim text"
-msgstr "Сделать ссылкой"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm530.java:132
 msgid "View RFC"
@@ -924,7 +923,7 @@ msgstr "Приоритет неизвестен"
 #: org/wikipediacleaner/api/constants/Contributions.java:42
 #, java-format
 msgid "You have done the following contributions on \"{0}\":"
-msgstr ""
+msgstr "Вы внесли следующий вклад в \"{0}\":"
 
 #: org/wikipediacleaner/api/constants/Contributions.java:48
 #, java-format
@@ -950,7 +949,7 @@ msgstr[1] ""
 #: org/wikipediacleaner/api/constants/Contributions.java:82
 #, java-format
 msgid "You haven''t done any contribution on \"{0}\""
-msgstr ""
+msgstr "Вы не внесли никакого вклада в \"{0}\""
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:18
 msgid "Dormant pages"
@@ -1151,9 +1150,8 @@ msgid "Link parameter {0} to"
 msgstr "Сделать ссылку параметра {0} на"
 
 #: org/wikipediacleaner/api/execution/AllLinksToPageCallable.java:43
-#, fuzzy
 msgid "Retrieving all links to page"
-msgstr "Получение ссылок в шаблонах"
+msgstr ""
 
 #: org/wikipediacleaner/api/execution/ContentsCallable.java:63
 msgid "Retrieving contents"
@@ -1233,7 +1231,8 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:206
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:622
 #: org/wikipediacleaner/gui/swing/bot/BotToolsWindow.java:89
-msgid "On some Wikipedia projects, you may need the bot status for doing this."
+msgid ""
+"On some Wikipedia projects, you may need the bot status for doing this."
 msgstr ""
 "На некоторых проектах Википедии вам необходим статус бота, чтобы их "
 "использовать."
@@ -1272,7 +1271,7 @@ msgstr "Сохранить"
 #: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:114
 #: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:196
 msgid "Automatic fixing for Check Wiki"
-msgstr ""
+msgstr "Автоматически исправлять ошибки Check Wiki"
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:260
 msgid "Fix selected pages"
@@ -1285,7 +1284,7 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:277
 msgid "Always apply automatic fixing for Check Wiki"
-msgstr ""
+msgstr "Всегда применять автоматическое исправление ошибок Check Wiki"
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:507
 msgid "Text that should be replaced"
@@ -1409,7 +1408,7 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/LanguageSelectionPanel.java:192
 #: org/wikipediacleaner/gui/swing/MainWindow.java:409
 msgid "Language"
-msgstr ""
+msgstr "Язык"
 
 #: org/wikipediacleaner/gui/swing/LanguageSelectionPanel.java:206
 msgid "Script"
@@ -1442,7 +1441,7 @@ msgstr "Войти"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:380
 msgid "Wiki"
-msgstr ""
+msgstr "Вики:"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:388
 msgid "Other Wikipedia"
@@ -1454,28 +1453,28 @@ msgstr "Другой язык"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:437
 msgid "Username:"
-msgstr "Имя пользователя :"
+msgstr "Логин:"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:452
 msgid "Password :"
-msgstr ""
+msgstr "Пароль:"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:474
 msgid "Demo"
-msgstr ""
+msgstr "Демо"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:480
 msgid "Wiki logout"
-msgstr ""
+msgstr "Выход из Вики"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:487
 msgid "WPC logout"
-msgstr ""
+msgstr "Выход из WPC"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:504
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:145
 msgid "Help"
-msgstr ""
+msgstr "Справка"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:511
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:559
@@ -1496,12 +1495,12 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:531
 msgid "Check spelling options"
-msgstr ""
+msgstr "Настройки проверки орфографии"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:537
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:115
 msgid "Idea? Bug?"
-msgstr ""
+msgstr "Идея? Баг?"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:557
 msgid "Save username and password"
@@ -1562,7 +1561,7 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/MainWindow.java:767
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1318
 msgid "Your contributions"
-msgstr ""
+msgstr "Ваш вклад"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:781
 msgid "Projects"
@@ -1570,7 +1569,7 @@ msgstr "Проекты"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:799
 msgid "Preload disambiguations pages"
-msgstr ""
+msgstr "Предзагрузить страницы значений"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:808
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1523
@@ -1584,7 +1583,7 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:827
 msgid "Project Check Wikipedia"
-msgstr ""
+msgstr "Проект Check Wikipedia"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:836
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1576
@@ -1593,7 +1592,7 @@ msgstr "Запрос помощи..."
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:845
 msgid "Abuse filters"
-msgstr ""
+msgstr "Фильтры злоупотреблений"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:854
 msgid "Special lists"
@@ -1607,11 +1606,11 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1807
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:195
 msgid "Local Watchlist"
-msgstr ""
+msgstr "Локальный список наблюдения"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:882
 msgid "Watchlist"
-msgstr ""
+msgstr "Список наблюдения"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:891
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1930
@@ -1718,7 +1717,8 @@ msgid "Links to {0}"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1455
-msgid "You must input a page name for retrieving the list of category members"
+msgid ""
+"You must input a page name for retrieving the list of category members"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1473
@@ -1743,7 +1743,7 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1589
 msgid "What abuse filter are you interested in?"
-msgstr ""
+msgstr "Какой фильтр злоупотреблений вас интересует?"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1605
 #, java-format
@@ -1763,9 +1763,8 @@ msgid "Unformatted list of page names"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1852
-#, fuzzy
 msgid "Internal links in a formatted list"
-msgstr "Внутренние ссылки в {0}"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1855
 msgid "The file must be encoded in UTF-8 to be read correctly."
@@ -1837,7 +1836,7 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:436
 msgid "Translation of an article copied from an other wiki"
-msgstr ""
+msgstr "Перевод статьи, скопированной из другого вики-проекта"
 
 #: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:484
 msgid "&Options"
@@ -1887,7 +1886,7 @@ msgstr "Удалить все ссылки"
 #: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:614
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiWindow.java:148
 msgid "Check Wikipedia"
-msgstr "Проверка Википедии"
+msgstr "Check Wikipedia"
 
 #: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:842
 #, java-format
@@ -1908,7 +1907,7 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:928
 msgid "Do you want to apply the automatic modifications?"
-msgstr ""
+msgstr "Вы уверены, что хотите применить автоматические изменения?"
 
 #: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:1062
 msgid "You must select the text that is written in a foreign language"
@@ -1925,11 +1924,11 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:1214
 #: org/wikipediacleaner/gui/swing/options/OptionsWindow.java:109
 msgid "Translation"
-msgstr ""
+msgstr "Перевод"
 
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:314
 msgid "&Page :"
-msgstr "&Страница :"
+msgstr "&Страница:"
 
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:333
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:335
@@ -1996,7 +1995,7 @@ msgstr "Создать предупреждение о страницах зна
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:609
 #: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:197
 msgid "Check spelling and typography"
-msgstr ""
+msgstr "Проверять орфографию и оформление"
 
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:611
 msgid "Spelling"
@@ -2014,7 +2013,8 @@ msgstr "Последнее изменение в {0}"
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:743
 #, java-format
 msgid "Last modified at {0}. It was modified less than {1} minute ago."
-msgid_plural "Last modified at {0}. It was modified less than {1} minutes ago."
+msgid_plural ""
+"Last modified at {0}. It was modified less than {1} minutes ago."
 msgstr[0] ""
 "Последнее изменение в {0}. Страница была изменена менее чем {1} минут назад."
 msgstr[1] ""
@@ -2084,19 +2084,19 @@ msgstr "Комментарии"
 
 #: org/wikipediacleaner/gui/swing/PageCommentsWindow.java:136
 msgid "Comments :"
-msgstr "Комментарии :"
+msgstr "Комментарии:"
 
 #: org/wikipediacleaner/gui/swing/PageCommentsWindow.java:158
 msgid "Max backlinks in Main :"
-msgstr "Максимальное число обратных ссылок в Main :"
+msgstr "Максимальное число обратных ссылок в основном пространстве:"
 
 #: org/wikipediacleaner/gui/swing/PageCommentsWindow.java:190
 msgid "Max backlinks in Template :"
-msgstr ""
+msgstr "Максимальное число обратных ссылок в пространства Шаблон:"
 
 #: org/wikipediacleaner/gui/swing/PageCommentsWindow.java:222
 msgid "Max backlinks in other namespaces :"
-msgstr ""
+msgstr "Максимальное число обратных ссылок в других пространствах:"
 
 #: org/wikipediacleaner/gui/swing/PageCommentsWindow.java:280
 msgid "&OK"
@@ -2164,9 +2164,8 @@ msgid "Displaying templates found"
 msgstr "Отображение найденных шаблонов"
 
 #: org/wikipediacleaner/gui/swing/action/ActionCheckArticle.java:51
-#, fuzzy
 msgid "Check article"
-msgstr "Анализ шаблона"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/action/ActionCheckArticle.java:262
 #: org/wikipediacleaner/gui/swing/action/ActionFullAnalysis.java:276
@@ -2176,14 +2175,12 @@ msgstr "Вы должны ввести название страницы, что
 #: org/wikipediacleaner/gui/swing/action/ActionCheckArticle.java:293
 #: org/wikipediacleaner/gui/swing/action/ActionCheckArticle.java:309
 #: org/wikipediacleaner/gui/swing/worker/CheckArticleWorker.java:52
-#, fuzzy
 msgid "Analysis"
-msgstr "Анализ - {0}"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/action/ActionCheckTemplate.java:41
-#, fuzzy
 msgid "Check template"
-msgstr "Анализ шаблона"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/action/ActionDeletePage.java:41
 msgid "Delete page"
@@ -2262,9 +2259,8 @@ msgid "Do you want to update the ISBN warning on talk page?"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/action/ActionUpdateWarning.java:397
-#, fuzzy
 msgid "Do you want to update the duplicate arguments warning on talk page?"
-msgstr "Обновить предупреждение о страницах значений на странице обсуждений"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/action/ActionUpdateWarning.java:442
 msgid "You must input a page name for updating warnings"
@@ -2273,7 +2269,7 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/action/ActionWatchPage.java:45
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:105
 msgid "Add to local watchlist"
-msgstr ""
+msgstr "Добавить в локальный список наблюдения"
 
 #: org/wikipediacleaner/gui/swing/action/ActionWatchPage.java:180
 msgid "Would you like to add this page on your local watchlist?"
@@ -2378,7 +2374,7 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/basic/BasicWindow.java:61
 #, java-format
 msgid "{0} is working..."
-msgstr ""
+msgstr "{0} работает..."
 
 #: org/wikipediacleaner/gui/swing/basic/Utilities.java:119
 #: org/wikipediacleaner/gui/swing/basic/Utilities.java:124
@@ -2458,7 +2454,8 @@ msgstr[1] ""
 #: org/wikipediacleaner/gui/swing/bot/AutomaticListCWWorker.java:234
 #, java-format
 msgid "{0} page has been marked as fixed for the selected algorithms"
-msgid_plural "{0} pages have been marked as fixed for the selected algorithms"
+msgid_plural ""
+"{0} pages have been marked as fixed for the selected algorithms"
 msgstr[0] ""
 msgstr[1] ""
 
@@ -2480,9 +2477,8 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/bot/BotCWTableModel.java:300
 #: org/wikipediacleaner/gui/swing/bot/BotCWTableModel.java:323
-#, fuzzy
 msgid "Reverse the selection"
-msgstr "Удалить выбор"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/bot/BotCWTableModel.java:311
 msgid "Use the list of pages of each algorithm"
@@ -2593,30 +2589,25 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:220
 #: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:349
-#, fuzzy
 msgid "Analyze dump file"
-msgstr "Анализ шаблона"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:228
-#, fuzzy
 msgid "Save selection"
-msgstr "Использовать выбор"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:236
-#, fuzzy
 msgid "Load selection"
-msgstr "Использовать выбор"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:277
-#, fuzzy
 msgid "You must select at least one algorithm for fixing errors"
-msgstr "Вы должны выбрать язык, прежде чем войти"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:282
 #: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:332
-#, fuzzy
 msgid "You must select at least one algorithm for listing errors"
-msgstr "Вы должны выбрать язык, прежде чем войти"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:385
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiWindow.java:1087
@@ -2629,24 +2620,24 @@ msgstr "Полуавтоматическое исправление страни
 
 #: org/wikipediacleaner/gui/swing/bot/GeneralToolsPanel.java:126
 msgid "Update existing disambiguation warning messages"
-msgstr "Обновить существующие сообщения, предупреждающие о страницах значений"
+msgstr ""
+"Обновить существующие сообщения, предупреждающие о страницах значений"
 
 #: org/wikipediacleaner/gui/swing/bot/GeneralToolsPanel.java:135
 #: org/wikipediacleaner/gui/swing/bot/GeneralToolsPanel.java:153
-#, fuzzy, java-format
+#, java-format
 msgid "Update {0} warning messages"
-msgstr "Обновление предупреждения о значениях - {0}"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/bot/GeneralToolsPanel.java:144
 #: org/wikipediacleaner/gui/swing/bot/GeneralToolsPanel.java:162
-#, fuzzy, java-format
+#, java-format
 msgid "List {0} errors"
-msgstr "Список обнаруженных ошибок :"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/bot/GeneralToolsPanel.java:171
-#, fuzzy
 msgid "Update duplicate argument warning messages"
-msgstr "Обновление предупреждения о значениях - {0}"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/bot/GeneralToolsPanel.java:180
 msgid "Monitor recent changes"
@@ -2692,7 +2683,6 @@ msgid "{0} page has been analyzed"
 msgid_plural "{0} pages have been analyzed"
 msgstr[0] ""
 msgstr[1] ""
-msgstr[2] ""
 
 #: org/wikipediacleaner/gui/swing/bot/ListCWWorker.java:423
 #, java-format
@@ -2700,12 +2690,11 @@ msgid "{0} page has been detected for algorithm {1}"
 msgid_plural "{0} pages have been detected for algorithm {1}"
 msgstr[0] ""
 msgstr[1] ""
-msgstr[2] ""
 
 #: org/wikipediacleaner/gui/swing/bot/ListCWWorker.java:566
-#, fuzzy, java-format
+#, java-format
 msgid "{0} pages processed"
-msgstr "{0} страниц"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/checkwiki/ActionCheckArticle.java:50
 msgid "Check article with CheckWiki"
@@ -2884,7 +2873,7 @@ msgstr "Удалить выбор"
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiWindow.java:597
 #: org/wikipediacleaner/gui/swing/options/LimitOptionsPanel.java:104
 msgid "Maximum number of errors for Check Wiki :"
-msgstr "Максимальное число ошибок для Check Wiki :"
+msgstr "Максимальное число ошибок для Check Wiki:"
 
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiWindow.java:619
 msgid "Right click to select errors"
@@ -2892,7 +2881,7 @@ msgstr "Щёлкните правой кнопкой для выбора оши�
 
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiWindow.java:631
 msgid "List of errors detected :"
-msgstr "Список обнаруженных ошибок :"
+msgstr "Список обнаруженных ошибок:"
 
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiWindow.java:653
 msgid "Reload error"
@@ -2932,8 +2921,8 @@ msgid ""
 "The error n°{0} can be configured with the following parameters in the <a "
 "href=\"{1}\">translation file</a> :"
 msgstr ""
-"Ошибка №{0} может быть настроена со следующими параметрами в <a href=\"{1}"
-"\">файле переводов</a> :"
+"Ошибка №{0} может быть настроена со следующими параметрами в <a "
+"href=\"{1}\">файле переводов</a> :"
 
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiWindow.java:1209
 #, java-format
@@ -3172,7 +3161,8 @@ msgstr "Добавить другие предпочтительные стра�
 
 #: org/wikipediacleaner/gui/swing/menu/MWPaneDisambiguationMenuCreator.java:503
 msgid "What link do you want to add to the preferred disambiguations?"
-msgstr "Какую ссылку вы хотите добавить к предпочтительным страницам значений?"
+msgstr ""
+"Какую ссылку вы хотите добавить к предпочтительным страницам значений?"
 
 #: org/wikipediacleaner/gui/swing/menu/MWPaneDisambiguationMenuCreator.java:510
 msgid "Remove from preferred disambiguations"
@@ -3200,7 +3190,8 @@ msgstr ""
 "пространстве имён)"
 
 #: org/wikipediacleaner/gui/swing/options/AnalysisOptionsPanel.java:86
-msgid "Create disambiguation warning on talk page (in encyclopedic namespaces)"
+msgid ""
+"Create disambiguation warning on talk page (in encyclopedic namespaces)"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/AnalysisOptionsPanel.java:93
@@ -3216,7 +3207,8 @@ msgstr ""
 "пространстве имён)"
 
 #: org/wikipediacleaner/gui/swing/options/AnalysisOptionsPanel.java:107
-msgid "Update disambiguation warning on talk page (in encyclopedic namespaces)"
+msgid ""
+"Update disambiguation warning on talk page (in encyclopedic namespaces)"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/AnalysisOptionsPanel.java:114
@@ -3231,7 +3223,7 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/AnalysisOptionsPanel.java:128
 msgid "Show missing pages"
-msgstr ""
+msgstr "Показывать отсутствующие страницы"
 
 #: org/wikipediacleaner/gui/swing/options/AnalysisOptionsPanel.java:135
 msgid "Show redirect pages"
@@ -3255,15 +3247,15 @@ msgstr "Запоминать последнюю отредактированну
 
 #: org/wikipediacleaner/gui/swing/options/AnalysisOptionsPanel.java:200
 msgid "Number of links selected :"
-msgstr "Число выбранных ссылок :"
+msgstr "Число выбранных ссылок:"
 
 #: org/wikipediacleaner/gui/swing/options/AnalysisOptionsPanel.java:217
 msgid "Undo levels :"
-msgstr "Уровни отмены :"
+msgstr "Уровни отмены:"
 
 #: org/wikipediacleaner/gui/swing/options/DebugOptionsPanel.java:47
 msgid "Debug options"
-msgstr ""
+msgstr "Опции отладки"
 
 #: org/wikipediacleaner/gui/swing/options/DebugOptionsPanel.java:67
 #, java-format
@@ -3272,152 +3264,151 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/DebugOptionsPanel.java:74
 msgid "Log all answers to MediaWiki API calls"
-msgstr ""
+msgstr "Логгировать все ответы на вызовы MediaWiki API"
 
 #: org/wikipediacleaner/gui/swing/options/DebugOptionsPanel.java:81
 msgid "Add a timestamp to logs"
-msgstr ""
+msgstr "Добавлять время в лог"
 
 #: org/wikipediacleaner/gui/swing/options/DebugOptionsPanel.java:88
 msgid "Use a log file"
-msgstr ""
+msgstr "Использовать файл лога"
 
 #: org/wikipediacleaner/gui/swing/options/DebugOptionsPanel.java:95
 msgid "Detailed debugging"
-msgstr ""
+msgstr "Детализированная отладка"
 
 #: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:73
 msgid "Formatting options (restart needed)"
-msgstr ""
+msgstr "Настройки оформления (требуется перезапуск)"
 
 #: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:112
 msgid "Select editor font name"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:128
-#, fuzzy
 msgid "Select editor font size"
-msgstr "Выбрать ошибки"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:143
 msgid "Increase font size"
-msgstr ""
+msgstr "Увеличение размера шрифта"
 
 #: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:173
 msgid "Internal link"
-msgstr ""
+msgstr "Внутренняя ссылка"
 
 #: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:179
 #: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:269
 msgid "Redirect link"
-msgstr ""
+msgstr "Ссылка на перенаправление"
 
 #: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:185
 #: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:275
 msgid "Missing link"
-msgstr ""
+msgstr "Красная ссылка"
 
 #: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:203
 msgid "Image"
-msgstr ""
+msgstr "Изображение"
 
 #: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:209
 msgid "Category"
-msgstr ""
+msgstr "Категория"
 
 #: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:215
 msgid "Default sort"
-msgstr ""
+msgstr "Ключ сортировки"
 
 #: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:221
 msgid "Language link"
-msgstr ""
+msgstr "Языковая ссылка"
 
 #: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:227
 msgid "External link"
-msgstr ""
+msgstr "Внешняя ссылка"
 
 #: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:233
 msgid "Interwiki link"
-msgstr ""
+msgstr "Интервики-ссылка"
 
 #: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:239
 msgid "Tag"
-msgstr ""
+msgstr "Тег"
 
 #: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:245
 msgid "Reference"
-msgstr ""
+msgstr "Сноска"
 
 #: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:251
 msgid "Programming elements"
-msgstr ""
+msgstr "Элементы программирования шаблонов"
 
 #: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:257
 msgid "Disambiguation link"
-msgstr ""
+msgstr "Ссылка на неоднозначность"
 
 #: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:263
 msgid "Normal internal link"
-msgstr ""
+msgstr "Обычная внутренняя ссылка"
 
 #: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:281
 msgid "Disambiguation template"
-msgstr ""
+msgstr "Шаблон неоднозначности"
 
 #: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:287
 msgid "Normal template"
-msgstr ""
+msgstr "Обычный шаблон"
 
 #: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:293
 msgid "Help requested"
-msgstr ""
+msgstr "Запрошена помощь"
 
 #: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:299
 msgid "Check wiki error"
-msgstr ""
+msgstr "Ошибка Check wiki"
 
 #: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:305
 msgid "Check wiki warning"
-msgstr ""
+msgstr "Предупреждение Check wiki"
 
 #: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:311
 msgid "Check wiki OK"
-msgstr ""
+msgstr "Check wiki OK"
 
 #: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:422
 msgid "Italic"
-msgstr ""
+msgstr "Курсив"
 
 #: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:430
 msgid "Bold"
-msgstr ""
+msgstr "Жирный"
 
 #: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:438
 msgid "Underline"
-msgstr ""
+msgstr "Подчёркнутый"
 
 #: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:446
 msgid "Strike through"
-msgstr ""
+msgstr "Перечёркнутый"
 
 #: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:454
 #: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:459
 msgid "Foreground color"
-msgstr ""
+msgstr "Цвет текста"
 
 #: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:458
 msgid "Choose foreground color"
-msgstr ""
+msgstr "Выбор цвета текста"
 
 #: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:467
 #: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:472
 msgid "Background color"
-msgstr ""
+msgstr "Цвет  фона"
 
 #: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:471
 msgid "Choose background color"
-msgstr ""
+msgstr "Выбор цвета фона"
 
 #: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:59
 msgid "General options"
@@ -3425,11 +3416,11 @@ msgstr "Общие настройки"
 
 #: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:80
 msgid "Use HTTP for MediaWiki API calls (less secure)"
-msgstr ""
+msgstr "Использовать HTTP для вызова MediaWiki API (не безопасно)"
 
 #: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:89
 msgid "Use secure URL in external viewer (https)"
-msgstr ""
+msgstr "Использовать безопасные ссылки во внешнем просмотрщике (HTTPS)"
 
 #: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:98
 msgid "Close disambiguation window after sending"
@@ -3437,11 +3428,11 @@ msgstr "Закрыть окно значений после отправки"
 
 #: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:107
 msgid "Add a note on talk page when requesting help"
-msgstr ""
+msgstr "Добавить замечание на странице обсуждения при запросе помощи"
 
 #: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:116
 msgid "Ignore disambiguation links from User namespace"
-msgstr ""
+msgstr "Игнорировать ссылки на однозначности из личного пространства"
 
 #: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:125
 msgid "Restore window position"
@@ -3478,16 +3469,16 @@ msgstr "Следить за всеми отредактированными ст
 
 #: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:206
 msgid "Signature :"
-msgstr "Подпись :"
+msgstr "Подпись:"
 
 #: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:222
 msgid "Look & Feel"
-msgstr ""
+msgstr "Внешний вид"
 
 #: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:226
 #, java-format
 msgid "Let {0} choose the Look && Feel"
-msgstr ""
+msgstr "Позволить {0} выбрать внешний вид"
 
 #: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:231
 msgid "Use System Look && Feel"
@@ -3495,32 +3486,32 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:236
 msgid "Choose Look && Feel"
-msgstr ""
+msgstr "Выбрать внешний вид"
 
 #: org/wikipediacleaner/gui/swing/options/LimitOptionsPanel.java:49
 #: org/wikipediacleaner/gui/swing/options/OptionsWindow.java:91
 msgid "Limits"
-msgstr ""
+msgstr "Ограничения"
 
 #: org/wikipediacleaner/gui/swing/options/LimitOptionsPanel.java:69
 msgid "Maximum number of items in a menu :"
-msgstr "Максимальное число элементов в меню :"
+msgstr "Максимальное число элементов в меню:"
 
 #: org/wikipediacleaner/gui/swing/options/LimitOptionsPanel.java:86
 msgid "Maximum number of simultaneous analyses :"
-msgstr "Максимальное число одновременных анализов :"
+msgstr "Максимальное число одновременных анализов:"
 
 #: org/wikipediacleaner/gui/swing/options/LimitOptionsPanel.java:121
 msgid "Minimum time between consecutive edits :"
-msgstr ""
+msgstr "Минимальное время между двумя правками:"
 
 #: org/wikipediacleaner/gui/swing/options/LimitOptionsPanel.java:138
 msgid "Maximum number of edits per minute :"
-msgstr ""
+msgstr "Максимальное число правок в минуту:"
 
 #: org/wikipediacleaner/gui/swing/options/LimitOptionsPanel.java:155
 msgid "Maximum number of interrogation threads :"
-msgstr "Максимальное число потоков запроса :"
+msgstr "Максимальное число потоков запросов:"
 
 #: org/wikipediacleaner/gui/swing/options/LimitOptionsPanel.java:172
 msgid "Size limit for syntax highlighting"
@@ -3532,19 +3523,19 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/LimitOptionsPanel.java:206
 msgid "Maximum number of category members :"
-msgstr ""
+msgstr "Максимальное число членов категории:"
 
 #: org/wikipediacleaner/gui/swing/options/LimitOptionsPanel.java:223
 msgid "Maximum duration for abuse logs :"
-msgstr ""
+msgstr "Максимальная длительность логов злоупотреблений:"
 
 #: org/wikipediacleaner/gui/swing/options/LimitOptionsPanel.java:240
 msgid "Maximum number of embedding pages :"
-msgstr ""
+msgstr "Максимальное число включённых страниц:"
 
 #: org/wikipediacleaner/gui/swing/options/LimitOptionsPanel.java:257
 msgid "Maximum number of search results :"
-msgstr ""
+msgstr "Максимальное число результатов поиска:"
 
 #: org/wikipediacleaner/gui/swing/options/OptionsWindow.java:97
 msgid "Sorting"
@@ -3552,11 +3543,11 @@ msgstr "Сортировка"
 
 #: org/wikipediacleaner/gui/swing/options/OptionsWindow.java:100
 msgid "Formatting"
-msgstr ""
+msgstr "Оформление"
 
 #: org/wikipediacleaner/gui/swing/options/OptionsWindow.java:103
 msgid "Shortcuts"
-msgstr ""
+msgstr "Горячие клавиши"
 
 #: org/wikipediacleaner/gui/swing/options/OptionsWindow.java:106
 msgid "Debug"
@@ -3565,12 +3556,12 @@ msgstr "Отладка"
 #: org/wikipediacleaner/gui/swing/options/OptionsWindow.java:124
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:110
 msgid "Apply"
-msgstr ""
+msgstr "Применить"
 
 #: org/wikipediacleaner/gui/swing/options/OptionsWindow.java:144
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:175
 msgid "Restore defaults"
-msgstr ""
+msgstr "По умолчанию"
 
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:73
 msgid "Shortcut options (restart needed)"
@@ -3578,7 +3569,7 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:160
 msgid "Logout"
-msgstr ""
+msgstr "Выход"
 
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:229
 msgid "Press key for shortcut or ESC to cancel"
@@ -3602,7 +3593,7 @@ msgstr "Вниз"
 
 #: org/wikipediacleaner/gui/swing/options/TranslationOptionsPanel.java:46
 msgid "Translation options"
-msgstr ""
+msgstr "Настройки перевода"
 
 #: org/wikipediacleaner/gui/swing/options/TranslationOptionsPanel.java:66
 msgid "Translate internal links text"
@@ -3679,7 +3670,8 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:382
 msgid "Enter the page title you want to add to your local watchlist"
-msgstr "Введите заголовок страницы для добавления в локаьный список наблюдения"
+msgstr ""
+"Введите заголовок страницы для добавления в локаьный список наблюдения"
 
 #: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:561
 #, java-format
@@ -3704,7 +3696,7 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/pagelist/PageListWorker.java:83
 msgid "Pages with missing templates"
-msgstr ""
+msgstr "Страницы с отсуствующими шаблонами"
 
 #: org/wikipediacleaner/gui/swing/pagelist/PageListWorker.java:84
 msgid "Protected titles with links from articles"
@@ -3716,14 +3708,17 @@ msgid ""
 "analysis.\n"
 "Do you want to display the list of all disambiguation pages ?"
 msgstr ""
+"Вы загрузили список страниц разрешения неоднозначности для ускорения "
+"анализа.\n"
+"Хотите отобразить список всех страниц неоднозначностей?"
 
 #: org/wikipediacleaner/gui/swing/pagelist/PageListWorker.java:473
 msgid "Retrieving list of missing templates"
-msgstr ""
+msgstr "Получение списка отсутствующих шаблонов"
 
 #: org/wikipediacleaner/gui/swing/pagelist/PageListWorker.java:478
 msgid "Checking that the templates are still missing"
-msgstr ""
+msgstr "Проверка, что шаблоны по-прежнему отсутствуют"
 
 #: org/wikipediacleaner/gui/swing/pagelist/PageListWorker.java:504
 msgid "Retrieving list of protected titles"
@@ -3741,9 +3736,8 @@ msgstr[0] ""
 msgstr[1] ""
 
 #: org/wikipediacleaner/gui/swing/worker/CheckArticleTools.java:104
-#, fuzzy
 msgid "Templates"
-msgstr "Шаблон"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/worker/CheckArticleTools.java:107
 #, java-format
@@ -3757,9 +3751,9 @@ msgid "Template \"{0}\" has no {1} block defined."
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/worker/CheckArticleTools.java:195
-#, fuzzy, java-format
+#, java-format
 msgid "Template \"{0}\" ({1}-{2})"
-msgstr "Шаблоны в {0}"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/worker/CheckArticleTools.java:226
 #, java-format
@@ -3829,7 +3823,6 @@ msgid "The following problem has been detected:"
 msgid_plural "The following problems have been detected:"
 msgstr[0] ""
 msgstr[1] ""
-msgstr[2] ""
 
 #: org/wikipediacleaner/gui/swing/worker/CheckWikiProjectWorker.java:91
 msgid "Sorting errors by priority"
@@ -3901,14 +3894,14 @@ msgid ""
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/worker/UpdateDuplicateArgsWarningTools.java:231
-#, fuzzy, java-format
+#, java-format
 msgid "Removing duplicate arguments warning - {0}"
-msgstr "Обновление предупреждения о значениях - {0}"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/worker/UpdateDuplicateArgsWarningTools.java:240
-#, fuzzy, java-format
+#, java-format
 msgid "Updating duplicate arguments warning - {0}"
-msgstr "Обновление предупреждения о значениях - {0}"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/worker/UpdateDuplicateArgsWarningWorker.java:77
 #, java-format
@@ -3928,15 +3921,15 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/worker/UpdateISBNWarningTools.java:258
 #: org/wikipediacleaner/gui/swing/worker/UpdateISSNWarningTools.java:256
-#, fuzzy, java-format
+#, java-format
 msgid "Removing {1} warning - {0}"
-msgstr "Обновление предупреждения о значениях - {0}"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/worker/UpdateISBNWarningTools.java:267
 #: org/wikipediacleaner/gui/swing/worker/UpdateISSNWarningTools.java:265
-#, fuzzy, java-format
+#, java-format
 msgid "Updating {1} warning - {0}"
-msgstr "Обновление предупреждения о значениях - {0}"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/worker/UpdateISBNWarningWorker.java:88
 #: org/wikipediacleaner/gui/swing/worker/UpdateISSNWarningWorker.java:85
@@ -4035,17 +4028,11 @@ msgstr ""
 msgid "The value cannot contain any of these characters: {0}"
 msgstr ""
 
-#~ msgid "Remove <small> tag"
-#~ msgstr "Удалить тег <small>"
-
-#~ msgid "Delete all tags without content"
-#~ msgstr "Удалить все тэги без содержимого"
+#~ msgid "Error unkown from WikiCleaner"
+#~ msgstr "Неизвестная ошибка от WikiCleaner"
 
 #~ msgid "Retrieving page back links"
 #~ msgstr "Получение обратных ссылок страницы"
-
-#~ msgid "Error unkown from WikiCleaner"
-#~ msgstr "Неизвестная ошибка от WikiCleaner"
 
 #~ msgid "&Close"
 #~ msgstr "Закр&ыть"
@@ -4059,12 +4046,14 @@ msgstr ""
 #~ msgid "Would you like to add these pages on your local Watch list ?"
 #~ msgstr "Хотите добавить эти страницы в ваш локальный список наблюдения ?"
 
+#, java-format
 #~ msgid "Do you want to mark {0} as fixed for error n°{1}"
 #~ msgstr "Хотите пометить {0} как исправленную для ошибки №{1}"
 
 #~ msgid "Mark as Fixed"
 #~ msgstr "Пометить как исправленные"
 
+#, java-format
 #~ msgid ""
 #~ "The error n°{0} is still found in the page.\n"
 #~ "Are you really sure that you want to mark it as fixed ?"
@@ -4072,9 +4061,11 @@ msgstr ""
 #~ "Ошибка №{0} всё ещё присутствует на странице.\n"
 #~ "Вы уверены, что хотите пометить её, как исправленную ?"
 
+#, java-format
 #~ msgid "The page {0} doesn't exist on Wikipedia"
 #~ msgstr "Страница {0} отсутствует в Википедии"
 
+#, java-format
 #~ msgid ""
 #~ "The error n°{0} is still found {1} times in the page.\n"
 #~ "Are you really sure that you want to mark it as fixed ?"
@@ -4089,11 +4080,10 @@ msgstr ""
 #~ msgstr "Хотите продолжить ?"
 
 #~ msgid ""
-#~ "Also, verify again the texts you have inputed before running this "
-#~ "function."
+#~ "Also, verify again the texts you have inputed before running this function."
 #~ msgstr ""
-#~ "Также, рекомендуется ещё раз проверить введённые тексты перед запуском "
-#~ "этой функции."
+#~ "Также, рекомендуется ещё раз проверить введённые тексты перед запуском этой "
+#~ "функции."
 
 #~ msgid "&Password :"
 #~ msgstr "&Пароль :"
@@ -4177,10 +4167,10 @@ msgstr ""
 #~ msgid "Disambiguation analysis of redirect"
 #~ msgstr "Анализ перенаправления на значения"
 
+#, java-format
 #~ msgid "Last modified at {0}. It was modified less than {1} minutes ago."
 #~ msgstr ""
-#~ "Последнее изменение в {0}. Страница была изменена менее чем {1} минут "
-#~ "назад."
+#~ "Последнее изменение в {0}. Страница была изменена менее чем {1} минут назад."
 
 #~ msgid "Would you like to add this page on your local Watch list ?"
 #~ msgstr "Хотите добавить эту страницу в локальный список наблюдения ?"
@@ -4188,9 +4178,11 @@ msgstr ""
 #~ msgid "Possible pages"
 #~ msgstr "Возможные страницы"
 
+#, java-format
 #~ msgid "Red links Analysis - {0}"
 #~ msgstr "Анализ красных ссылок — {0}"
 
+#, java-format
 #~ msgid "&Apply only to {0}"
 #~ msgstr "&Применить только к {0}"
 
@@ -4215,6 +4207,10 @@ msgstr ""
 #~ msgid "&Ends with"
 #~ msgstr "&Заканчивается на"
 
+#~ msgid "Search"
+#~ msgstr "Поиск"
+
+#, java-format
 #~ msgid "An error occured: {0}"
 #~ msgstr "Произошла ошибка: {0}"
 
@@ -4224,11 +4220,16 @@ msgstr ""
 #~ msgid "Red links analysis"
 #~ msgstr "Анализ красных ссылок"
 
+#, java-format
 #~ msgid "The following modifications have been done ({0} pages):"
 #~ msgstr "Были сделаны следующие изменения ({0} страниц):"
 
+#, java-format
 #~ msgid "{0} links in Main Namespace / {1} total links"
 #~ msgstr "{0} ссылок в пространстве имён Main / {1} ссылок всего"
+
+#~ msgid "Remove <small> tag"
+#~ msgstr "Удалить тег <small>"
 
 #~ msgid "What description would like to use for the external link ?"
 #~ msgstr "Какое описание вы предпочтёте для внешней ссылки?"
@@ -4239,8 +4240,7 @@ msgstr ""
 #~ msgid ""
 #~ "Add a warning on the talk page about the links to disambiguation pages"
 #~ msgstr ""
-#~ "Добавить предупреждение на странице обсуждений о ссылках на страницы "
-#~ "значений"
+#~ "Добавить предупреждение на странице обсуждений о ссылках на страницы значений"
 
 #~ msgid "&Disambiguation"
 #~ msgstr "&Значения"
@@ -4255,6 +4255,7 @@ msgstr ""
 #~ msgid "List on toolserver"
 #~ msgstr "Список на сервере инструментов"
 
+#, java-format
 #~ msgid ""
 #~ "The error n°{0} hasn''t been found in the page {1}.\n"
 #~ "Do you want to mark it as fixed ?"
@@ -4347,6 +4348,7 @@ msgstr ""
 #~ msgid "Add to Watch list (Alt + &W)"
 #~ msgstr "Добавить в список наблюдения (Alt + &W)"
 
+#, java-format
 #~ msgid "Reverse to [[{0}|{1}]]"
 #~ msgstr "Обратить в [[{0}|{1}]]"
 
@@ -4370,6 +4372,13 @@ msgstr ""
 
 #~ msgid "Add page (Alt + &A)"
 #~ msgstr "Добавить статью (Alt + &A)"
+
+#, java-format
+#~ msgid "{0} pages"
+#~ msgstr "{0} страниц"
+
+#~ msgid "Fix all <br/> tags"
+#~ msgstr "Исправить все тэги </br>"
 
 #~ msgid "What alternate description would like to use for the image ?"
 #~ msgstr "Какое альтернативное описание использовать для изображения?"
