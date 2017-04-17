@@ -246,24 +246,74 @@ public class ListCWWorker extends BasicWorker {
           }
           first = false;
           line.append("<nowiki>");
-          notice = notice.replaceAll("\n", "\u21b5"); // Replace \n by a visual character
-          notice = notice.replaceAll("\\<", "&lt;"); // Replace "<" by its HTML element
-          notice = notice.replaceAll("\u007F", "[DEL]"); // Replace control characters by visible text
-          notice = notice.replaceAll("\u00A0", "[NBSP]");
-          notice = notice.replaceAll("\u00AD", "[SHY]");
-          notice = notice.replaceAll("\u2004", "[3EM]");
-          notice = notice.replaceAll("\u2005", "[4EM]");
-          notice = notice.replaceAll("\u2006", "[6EM]");
-          notice = notice.replaceAll("\u2007", "[FS]");
-          notice = notice.replaceAll("\u2008", "[PS]");
-          notice = notice.replaceAll("\u2004", "[3EM]");
-          notice = notice.replaceAll("\u200B", "[0WS]");
-          notice = notice.replaceAll("\u200E", "[LRM]");
-          notice = notice.replaceAll("\u2028", "[LS]");
-          notice = notice.replaceAll("\u202A", "[LRE]");
-          notice = notice.replaceAll("\u202C", "[POPD]");
-          notice = notice.replaceAll("\uFEFF", "[BOM]");
-          line.append(notice);
+          int index = 0;
+          while (index < notice.length()) {
+            int codePoint = notice.codePointAt(index);
+            switch (codePoint) {
+            case '\n': // Replace \n by a visual character
+              line.append('\u21b5');
+              break;
+            case '<': // Replace "<" by its HTML element
+              line.append("&lt;");
+              break;
+            case '\u007F': // Replace control characters by visible text
+              line.append("[DEL]");
+              break;
+            case '\u00A0': // Replace control characters by visible text
+              line.append("[NBSP]");
+              break;
+            case '\u00AD': // Replace control characters by visible text
+              line.append("[SHY]");
+              break;
+            case '\u2004': // Replace control characters by visible text
+              line.append("[3EM]");
+              break;
+            case '\u2005': // Replace control characters by visible text
+              line.append("[4EM]");
+              break;
+            case '\u2006': // Replace control characters by visible text
+              line.append("[6EM]");
+              break;
+            case '\u2007': // Replace control characters by visible text
+              line.append("[FS]");
+              break;
+            case '\u2008': // Replace control characters by visible text
+              line.append("[PS]");
+              break;
+            case '\u200B': // Replace control characters by visible text
+              line.append("[0WS]");
+              break;
+            case '\u200E': // Replace control characters by visible text
+              line.append("[LRM]");
+              break;
+            case '\u2028': // Replace control characters by visible text
+              line.append("[LS]");
+              break;
+            case '\u202A': // Replace control characters by visible text
+              line.append("[LRE]");
+              break;
+            case '\u202C': // Replace control characters by visible text
+              line.append("[POPD]");
+              break;
+            case '\uFEFF': // Replace control characters by visible text
+              line.append("[BOM]");
+              break;
+            case '\uFFFC': // Replace control characters by visible text
+              line.append("[ORC]");
+              break;
+            default:
+              if ((codePoint >= 0xE000) && (codePoint <= 0xF8FF)) {
+                line.append("[PUA]");
+              } else if ((codePoint >= 0XF0000) && (codePoint <= 0xFFFFD)) {
+                line.append("[PUA_A]");
+              } else if ((codePoint >= 0x100000) && (codePoint <= 0x10FFFD)) {
+                line.append("[PUA_B]");
+              } else {
+                line.appendCodePoint(codePoint);
+              }
+            } 
+            index = notice.offsetByCodePoints(index, 1);
+          }
           line.append("</nowiki>");
         }
       }
