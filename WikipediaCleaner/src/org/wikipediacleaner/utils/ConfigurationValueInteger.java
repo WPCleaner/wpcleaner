@@ -28,6 +28,7 @@ public enum ConfigurationValueInteger {
   MAX_DAYS_ABUSE_LOG("MaxDaysAbuseLog", 7),
   MAX_EDITS_PER_MINUTE("MaxEditsPerMinute", 0),
   MAX_EMBEDDED_IN("MaxEmbeddedIn", 1000),
+  MAX_LINT_ERRORS("MaxLintErrors", 1000),
   MAX_PAGES_WITH_PROP("MaxPagesWithProp", 1000),
   MAX_PROTECTED_TITLES("MaxProtectedTitles", 1000),
   MAX_QUERY_PAGE("MaxQueryPage", 1000),

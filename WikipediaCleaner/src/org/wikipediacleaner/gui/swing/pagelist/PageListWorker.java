@@ -80,6 +80,7 @@ public class PageListWorker extends BasicWorker {
     EMBEDDED_IN,
     INTERNAL_LINKS_MAIN(GT._("Articles in main namespace")),
     INTERNAL_LINKS_TALKPAGES_CONVERTED(GT._("Articles associated to talk pages")),
+    LINTER_CATEGORY(GT._("Linter extension category")),
     MISSING_TEMPLATES(GT._("Pages with missing templates")),
     PROTECTED_TITLES(GT._("Protected titles with links from articles")),
     QUERY_PAGE,
@@ -218,6 +219,11 @@ public class PageListWorker extends BasicWorker {
       // List internal links in a page
       case INTERNAL_LINKS_TALKPAGES_CONVERTED:
         constructInternalLinks(pages, true);
+        break;
+
+      // Retrieve list of pages in a Linter category
+      case LINTER_CATEGORY:
+        constructLinterCategory(pages);
         break;
 
       // Retrieve list of pages with missing templates
@@ -530,6 +536,22 @@ public class PageListWorker extends BasicWorker {
     EnumWikipedia wiki = getWikipedia();
     EnumQueryPage query = EnumQueryPage.findByCode(elementNames.get(0));
     List<Page> tmpPages = api.getQueryPages(wiki, query);
+    if (tmpPages != null) {
+      pages.addAll(tmpPages);
+    }
+  }
+
+  /**
+   * Construct list of pages in a Linter category.
+   * 
+   * @param pages List of pages.
+   * @throws APIException
+   */
+  private void constructLinterCategory(List<Page> pages) throws APIException {
+    final API api = APIFactory.getAPI();
+    EnumWikipedia wiki = getWikipedia();
+    String category = elementNames.get(0);
+    List<Page> tmpPages = api.retrieveLinterCategory(wiki, category, true, Integer.MAX_VALUE);
     if (tmpPages != null) {
       pages.addAll(tmpPages);
     }

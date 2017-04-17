@@ -63,6 +63,7 @@ import org.wikipediacleaner.api.constants.WPCConfigurationString;
 import org.wikipediacleaner.api.constants.WPCConfigurationStringList;
 import org.wikipediacleaner.api.data.AbuseFilter;
 import org.wikipediacleaner.api.data.DataManager;
+import org.wikipediacleaner.api.data.LinterCategory;
 import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageAnalysis;
@@ -129,6 +130,7 @@ public class MainWindow
   private JButton buttonMostDabLinks;
   private JButton buttonRandomPages;
   private JButton buttonSpecialLists;
+  private JButton buttonLinterCategories;
   private JButton buttonWatchlistLocal;
   private JButton buttonWatchlist;
 
@@ -308,6 +310,7 @@ public class MainWindow
     buttonMostDabLinks.setEnabled(logged);
     buttonRandomPages.setEnabled(logged);
     buttonSpecialLists.setEnabled(logged);
+    buttonLinterCategories.setEnabled(logged);
     buttonWatchlistLocal.setEnabled(logged);
     buttonWatchlist.setEnabled(logged);
 
@@ -855,6 +858,14 @@ public class MainWindow
     buttonSpecialLists.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionSpecialLists"));
     panel.add(buttonSpecialLists, constraints);
+    constraints.gridy++;
+
+    // Linter categories
+    buttonLinterCategories = Utilities.createJButton(
+        GT._("Linter categories"), null);
+    buttonLinterCategories.addActionListener(EventHandler.create(
+        ActionListener.class, this, "actionLinterCategories"));
+    panel.add(buttonLinterCategories, constraints);
     constraints.gridy++;
 
     // Generate lists
@@ -1649,6 +1660,49 @@ public class MainWindow
         Collections.singletonList(code),
         PageListWorker.Mode.QUERY_PAGE, false,
         query.getName()).start();
+  }
+
+  /**
+   * Action called when Linter Categories button is pressed.
+   */
+  public void actionLinterCategories() {
+    List<LinterCategory> categories = getWiki().getWikiConfiguration().getLinterCategories();
+    if ((categories == null) || (categories.isEmpty())) {
+      displayWarning("The Linter extension is not available on this wiki.");
+      return;
+    }
+
+    // Create menu for linter categories
+    Collections.sort(categories);
+    JPopupMenu menu = new JPopupMenu();
+    for (LinterCategory category : categories) {
+      JMenuItem item = new JMenuItem(category.getCategory());
+      item.setActionCommand(category.getCategory());
+      item.addActionListener(EventHandler.create(
+          ActionListener.class, this, "actionLinterCategory", "actionCommand"));
+      menu.add(item);
+    }
+    menu.show(
+        buttonLinterCategories,
+        0,
+        buttonLinterCategories.getHeight());
+  }
+
+  /**
+   * Action called to get a linter category.
+   * 
+   * @param category Linter category.
+   */
+  public void actionLinterCategory(String category) {
+    EnumWikipedia wikipedia = getWikipedia();
+    if (wikipedia == null) {
+      return;
+    }
+    new PageListWorker(
+        wikipedia, this, null,
+        Collections.singletonList(category),
+        PageListWorker.Mode.LINTER_CATEGORY, false,
+        category).start();
   }
 
   /**

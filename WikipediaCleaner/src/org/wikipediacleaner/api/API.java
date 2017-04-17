@@ -393,6 +393,19 @@ public interface API {
       List<Integer> namespaces, boolean limit) throws APIException;
 
   /**
+   * Retrieves the pages in the <code>category</code> Linter category.
+   * (<code>action=query</code>, <code>list=linterrors</code>).
+   * 
+   * @param wiki Wiki.
+   * @param category Category.
+   * @return List of pages in the given category.
+   * @throws APIException
+   */
+  public List<Page> retrieveLinterCategory(
+      EnumWikipedia wiki, String category,
+      boolean limit, int max) throws APIException;
+
+  /**
    * Retrieves the pages which have a given property.
    * (<code>action=query</code>, <code>list=pageswithprop</code>).
    * 

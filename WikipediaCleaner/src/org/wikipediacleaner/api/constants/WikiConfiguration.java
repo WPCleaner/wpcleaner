@@ -14,6 +14,7 @@ import java.util.Map;
 
 import org.wikipediacleaner.api.data.Interwiki;
 import org.wikipediacleaner.api.data.Language;
+import org.wikipediacleaner.api.data.LinterCategory;
 import org.wikipediacleaner.api.data.MagicWord;
 import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.SpecialPage;
@@ -359,6 +360,29 @@ public class WikiConfiguration {
    */
   public void setSpecialPages(Map<String, SpecialPage> specialPages) {
     this.specialPages = specialPages;
+  }
+
+  // ==========================================================================
+  // Linter categories
+  // ==========================================================================
+
+  /**
+   * Linter categories.
+   */
+  private List<LinterCategory> linterCategories;
+
+  /**
+   * @return Linter categories.
+   */
+  public List<LinterCategory> getLinterCategories() {
+    return linterCategories;
+  }
+
+  /**
+   * @param linterCategories Linter categories.
+   */
+  public void setLinterCategories(List<LinterCategory> linterCategories) {
+    this.linterCategories = linterCategories;
   }
 
   // ==========================================================================

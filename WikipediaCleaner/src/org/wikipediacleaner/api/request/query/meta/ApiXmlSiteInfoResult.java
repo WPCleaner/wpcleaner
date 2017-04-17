@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.httpclient.HttpClient;
+import org.jdom2.Attribute;
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
 import org.jdom2.filter.Filters;
@@ -26,6 +27,7 @@ import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.constants.WikiConfiguration;
 import org.wikipediacleaner.api.data.Interwiki;
 import org.wikipediacleaner.api.data.Language;
+import org.wikipediacleaner.api.data.LinterCategory;
 import org.wikipediacleaner.api.data.MagicWord;
 import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.SpecialPage;
@@ -192,6 +194,21 @@ public class ApiXmlSiteInfoResult extends ApiXmlResult implements ApiSiteInfoRes
             new SpecialPage(specialPage, aliases));
       }
       wikiConfiguration.setSpecialPages(specialPages);
+
+      // Retrieve linter configuration
+      List<LinterCategory> linterCategories = new ArrayList<>();
+      xpa = XPathFactory.instance().compile(
+          "/api/query/general/linter/*", Filters.element());
+      results = xpa.evaluate(root);
+      iter = results.iterator();
+      while (iter.hasNext()) {
+        Element currentNode = iter.next();
+        String level = currentNode.getName();
+        for (Attribute attribute : currentNode.getAttributes()) {
+          linterCategories.add(new LinterCategory(level, attribute.getName()));
+        }
+      }
+      wikiConfiguration.setLinterCategories(linterCategories);
     } catch (JDOMException e) {
       log.error("Error loading namespaces", e);
       throw new APIException("Error parsing XML", e);

@@ -86,6 +86,8 @@ import org.wikipediacleaner.api.request.query.list.ApiCategoryMembersRequest;
 import org.wikipediacleaner.api.request.query.list.ApiCategoryMembersResult;
 import org.wikipediacleaner.api.request.query.list.ApiEmbeddedInRequest;
 import org.wikipediacleaner.api.request.query.list.ApiEmbeddedInResult;
+import org.wikipediacleaner.api.request.query.list.ApiLintErrorsRequest;
+import org.wikipediacleaner.api.request.query.list.ApiLintErrorsResult;
 import org.wikipediacleaner.api.request.query.list.ApiPagesWithPropRequest;
 import org.wikipediacleaner.api.request.query.list.ApiPagesWithPropResult;
 import org.wikipediacleaner.api.request.query.list.ApiProtectedTitlesRequest;
@@ -106,6 +108,7 @@ import org.wikipediacleaner.api.request.query.list.ApiXmlAbuseFiltersResult;
 import org.wikipediacleaner.api.request.query.list.ApiXmlAbuseLogResult;
 import org.wikipediacleaner.api.request.query.list.ApiXmlCategoryMembersResult;
 import org.wikipediacleaner.api.request.query.list.ApiXmlEmbeddedInResult;
+import org.wikipediacleaner.api.request.query.list.ApiXmlLintErrorsResult;
 import org.wikipediacleaner.api.request.query.list.ApiXmlPagesWithPropResult;
 import org.wikipediacleaner.api.request.query.list.ApiXmlProtectedTitlesResult;
 import org.wikipediacleaner.api.request.query.list.ApiXmlQueryPageResult;
@@ -1241,6 +1244,26 @@ public class MediaWikiAPI implements API {
     ApiEmbeddedInResult result = new ApiXmlEmbeddedInResult(wiki, httpClient);
     ApiEmbeddedInRequest request = new ApiEmbeddedInRequest(wiki, result);
     request.loadEmbeddedIn(page, namespaces, limit);
+  }
+
+  /**
+   * Retrieves the pages in the <code>category</code> Linter category.
+   * (<code>action=query</code>, <code>list=linterrors</code>).
+   * 
+   * @param wiki Wiki.
+   * @param category Category.
+   * @param limit Flag indicating if the number of results should be limited.
+   * @param max Absolute maximum number of results
+   * @return List of pages in the given category.
+   * @throws APIException
+   */
+  @Override
+  public List<Page> retrieveLinterCategory(
+      EnumWikipedia wiki, String category,
+      boolean limit, int max) throws APIException {
+    ApiLintErrorsResult result = new ApiXmlLintErrorsResult(wiki, httpClient);
+    ApiLintErrorsRequest request = new ApiLintErrorsRequest(wiki, result);
+    return request.loadLintErrors(category, true, max);
   }
 
   /**
