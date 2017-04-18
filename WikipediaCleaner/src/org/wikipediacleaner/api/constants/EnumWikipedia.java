@@ -79,6 +79,7 @@ public enum EnumWikipedia {
   LA(new Wikipedia("la", "Latin Wikipedia")),
   LI(new Wikipedia("li", "Limburgish Wikipedia")),
   LV(new Wikipedia("lv", "Latvian Wikipedia")),
+  ML(new Wikipedia("ml", "Malayalam Wikipedia")),
   NDS(new Wikipedia("nds", "Low Saxon Wikipedia")),
   NDS_NL(new Wikipedia("nds-nl", "Dutch Low Saxon Wikipedia")),
   NL(new Wikipedia("nl", "Nederlandstalige Wikipedia")),
