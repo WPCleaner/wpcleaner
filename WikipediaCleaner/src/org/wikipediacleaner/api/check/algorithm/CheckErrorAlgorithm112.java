@@ -86,6 +86,15 @@ public class CheckErrorAlgorithm112 extends CheckErrorAlgorithmBase {
   }
 
   /**
+   * Characters used for "mw" identifiers.
+   */
+  private final static String CHARS_MW_ID =
+      "ABCDEFGHIJKLMNOPQRSTUVWXYZ" +
+      "abcdefghijklmnopqrstuvwxyz" +
+      "0123456789" +
+      "-_";
+
+  /**
    * Analyze a page to check if errors are present.
    * 
    * @param analysis Page analysis.
@@ -231,8 +240,18 @@ public class CheckErrorAlgorithm112 extends CheckErrorAlgorithmBase {
                     tmpIndex++;
                     if ((tmpIndex < line.length()) && (line.charAt(tmpIndex) == '"')) {
                       tmpIndex++;
-                      while ((tmpIndex < line.length()) && Character.isDigit(line.charAt(tmpIndex))) {
-                        tmpIndex++;
+                      if (tmpIndex < line.length()) {
+                        if (Character.isDigit(line.charAt(tmpIndex))) {
+                          while ((tmpIndex < line.length()) && Character.isDigit(line.charAt(tmpIndex))) {
+                            tmpIndex++;
+                          }
+                        } else if (line.startsWith("mw", tmpIndex)) {
+                          tmpIndex += 2;
+                          while ((tmpIndex < line.length()) &&
+                                 (CHARS_MW_ID.indexOf(line.charAt(tmpIndex)) >= 0)) {
+                            tmpIndex++;
+                          }
+                        }
                       }
                       if ((tmpIndex < line.length()) && (line.charAt(tmpIndex) == '"')) {
                         tmpIndex++;
@@ -297,8 +316,18 @@ public class CheckErrorAlgorithm112 extends CheckErrorAlgorithmBase {
                       tmpIndex++;
                       if ((tmpIndex < line.length()) && (line.charAt(tmpIndex) == '"')) {
                         tmpIndex++;
-                        while ((tmpIndex < line.length()) && Character.isDigit(line.charAt(tmpIndex))) {
-                          tmpIndex++;
+                        if (tmpIndex < line.length()) {
+                          if (Character.isDigit(line.charAt(tmpIndex))) {
+                            while ((tmpIndex < line.length()) && Character.isDigit(line.charAt(tmpIndex))) {
+                              tmpIndex++;
+                            }
+                          } else if (line.startsWith("mw", tmpIndex)) {
+                            tmpIndex += 2;
+                            while ((tmpIndex < line.length()) &&
+                                (CHARS_MW_ID.indexOf(line.charAt(tmpIndex)) >= 0)) {
+                              tmpIndex++;
+                            }
+                          }
                         }
                         if ((tmpIndex < line.length()) && (line.charAt(tmpIndex) == '"')) {
                           tmpIndex++;
