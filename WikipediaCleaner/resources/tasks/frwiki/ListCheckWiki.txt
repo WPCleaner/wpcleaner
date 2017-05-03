@@ -7,6 +7,6 @@ FixCheckWiki 524 +1 +2 +9 +16 +17 +18 +22 +48 +64 +88 +524 +526
 UpdateDuplicateArgsWarnings
 FixCheckWiki 526 +1 +2 +9 +16 +17 +18 +22 +48 +64 +88 +524 +526
 FixListCheckWiki Projet:Correction_syntaxique/Analyse_016 16 +1 +2 +9 +16 +17 +18 +22 +48 +64 +88 +524 +526
-FixListCheckWiki Projet:Correction_syntaxique/Analyse_064 16 +1 +2 +9 +16 +17 +18 +22 +48 +64 +88 +524 +526
+FixListCheckWiki Projet:Correction_syntaxique/Analyse_064 64 +1 +2 +9 +16 +17 +18 +22 +48 +64 +88 +524 +526
 ListISBNWarnings
 ListISSNWarnings
