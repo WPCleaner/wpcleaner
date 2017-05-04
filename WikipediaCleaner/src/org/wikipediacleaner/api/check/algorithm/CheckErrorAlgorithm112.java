@@ -496,11 +496,19 @@ public class CheckErrorAlgorithm112 extends CheckErrorAlgorithmBase {
                            (" :".indexOf(styleValue.charAt(tmpIndex)) < 0)) {
                       tmpIndex++;
                     }
+                    String tmpStyleName = styleValue.substring(currentIndex, tmpIndex);
+                    while ((tmpIndex < styleValue.length()) &&
+                           (styleValue.charAt(tmpIndex) == ' ')) {
+                      tmpIndex++;
+                    }
                     if ((tmpIndex > currentIndex) &&
                         (tmpIndex < styleValue.length()) &&
                         (styleValue.charAt(tmpIndex) == ':')) {
-                      String tmpStyleName = styleValue.substring(currentIndex, tmpIndex);
                       tmpIndex++;
+                      while ((tmpIndex < styleValue.length()) &&
+                             (styleValue.charAt(tmpIndex) == ' ')) {
+                        tmpIndex++;
+                      }
                       currentIndex = tmpIndex;
                       while ((tmpIndex < styleValue.length()) &&
                              (" ;".indexOf(styleValue.charAt(tmpIndex)) < 0)) {
