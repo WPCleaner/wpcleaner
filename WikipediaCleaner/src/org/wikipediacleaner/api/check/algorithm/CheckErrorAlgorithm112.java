@@ -157,28 +157,34 @@ public class CheckErrorAlgorithm112 extends CheckErrorAlgorithmBase {
         String line = contents.substring(index, lineEnd);
         for (String attributeName : attributeNames) {
           int attributeIndex = line.indexOf(attributeName);
-          if ((attributeIndex > 0) &&
-              !Character.isLetterOrDigit(line.charAt(attributeIndex - 1))) {
-            if (errors == null) {
-              return true;
+          boolean shouldReport = false;
+          while (!shouldReport && (attributeIndex > 0)) {
+            if (!Character.isLetterOrDigit(line.charAt(attributeIndex - 1))) {
+              shouldReport = true;
+            } else {
+              attributeIndex = line.indexOf(attributeName, attributeIndex + 1);
             }
-            result = true;
-            int beginIndex = attributeIndex;
-            int endIndex = beginIndex + attributeName.length();
+          }
+          int beginIndex = attributeIndex;
+          int endIndex = beginIndex + attributeName.length();
+          boolean delete = false;
+          String attributeValue = null;
+          if (shouldReport) {
             while ((beginIndex > 0) && (line.charAt(beginIndex - 1) == ' ')) {
               beginIndex--;
             }
-            boolean delete = false;
             if (endIndex < line.length()) {
               int tmpIndex = endIndex;
               if ((tmpIndex < line.length()) && (line.charAt(tmpIndex) == '=')) {
                 tmpIndex++;
                 if ((tmpIndex < line.length()) && (line.charAt(tmpIndex) == '"')) {
                   tmpIndex++;
+                  int valueIndex = tmpIndex;
                   while ((tmpIndex < line.length()) && (line.charAt(tmpIndex) != '"')) {
                     tmpIndex++;
                   }
                   if ((tmpIndex < line.length()) && (line.charAt(tmpIndex) == '"')) {
+                    attributeValue = line.substring(valueIndex, tmpIndex);
                     tmpIndex++;
                     endIndex = tmpIndex;
                     delete = true;
@@ -186,6 +192,26 @@ public class CheckErrorAlgorithm112 extends CheckErrorAlgorithmBase {
                 }
               }
             }
+          }
+          if (shouldReport && "id".equals(attributeName)) {
+            if ((attributeValue == null) || (attributeValue.trim().length() == 0)) {
+              shouldReport = false;
+            } else if (attributeValue.startsWith("mw") || attributeValue.startsWith("cx")) {
+              shouldReport = true;
+            } else {
+              for (int tmpIndex = 0; tmpIndex < attributeValue.length(); tmpIndex++) {
+                char tmpChar = attributeValue.charAt(tmpIndex);
+                if (!Character.isDigit(tmpChar) && !Character.isWhitespace(tmpChar)) {
+                  shouldReport = false;
+                }
+              }
+            }
+          }
+          if (shouldReport) {
+            if (errors == null) {
+              return true;
+            }
+            result = true;
             CheckErrorResult errorResult = createCheckErrorResult(
                 analysis, index + beginIndex, index + endIndex);
             if (delete) {
