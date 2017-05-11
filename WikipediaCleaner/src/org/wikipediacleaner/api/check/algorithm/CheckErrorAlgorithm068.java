@@ -21,6 +21,7 @@ import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.CheckLanguageLinkActionProvider;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.constants.WPCConfiguration;
+import org.wikipediacleaner.api.data.Interwiki;
 import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementInternalLink;
 import org.wikipediacleaner.api.data.PageElementInterwikiLink;
@@ -73,14 +74,24 @@ public class CheckErrorAlgorithm068 extends CheckErrorAlgorithmBase {
    * @param wiki Current wiki.
    * @return True if the interwiki link is a link to an other language.
    */
-  private boolean isLanguageLink(PageElementInterwikiLink link, EnumWikipedia wiki) {
+  private Interwiki isLanguageLink(PageElementInterwikiLink link, EnumWikipedia wiki) {
     if ((link != null) &&
-        (link.getInterwiki() != null) &&
-        (link.getInterwiki().getLanguage() != null) &&
-        (!link.getInterwikiText().equals(wiki.getSettings().getCode()))) {
-      return true;
+        (link.getInterwiki() != null)) {
+      if (link.getInterwiki().getLanguage() != null) {
+        if (!link.getInterwikiText().equals(wiki.getSettings().getCode())) {
+          return link.getInterwiki();
+        }
+      } else {
+        List<Interwiki> iws = wiki.getWikiConfiguration().getInterwikis();
+        for (Interwiki iw : iws) {
+          if ((iw.getLanguage() != null) &&
+              (iw.getURL().equals(link.getInterwiki().getURL()))) {
+            return iw;
+          }
+        }
+      }
     }
-    return false;
+    return null;
   }
 
   /**
@@ -107,14 +118,15 @@ public class CheckErrorAlgorithm068 extends CheckErrorAlgorithmBase {
     boolean result = false;
     EnumWikipedia toWiki = analysis.getWikipedia();
     for (PageElementInterwikiLink link : analysis.getInterwikiLinks()) {
-      if (isLanguageLink(link, toWiki)) {
+      Interwiki iw = isLanguageLink(link, toWiki);
+      if (iw != null) {
         if (errors == null) {
           return true;
         }
         result = true;
         CheckErrorResult errorResult = createCheckErrorResult(
             analysis, link.getBeginIndex(), link.getEndIndex());
-        String lgCode = link.getInterwiki().getPrefix();
+        String lgCode = iw.getPrefix();
         EnumWikipedia fromWiki = EnumWikipedia.getWikipedia(lgCode);
         if ((fromWiki != null) && (fromWiki.getSettings().getCode().equals(lgCode))) {
           String pageTitle = link.getLink();
@@ -304,8 +316,9 @@ public class CheckErrorAlgorithm068 extends CheckErrorAlgorithmBase {
     try {
       EnumWikipedia toWiki = analysis.getWikipedia();
       for (PageElementInterwikiLink link : analysis.getInterwikiLinks()) {
-        if (isLanguageLink(link, toWiki)) {
-          String lgCode = link.getInterwiki().getPrefix();
+        Interwiki iw = isLanguageLink(link, toWiki);
+        if (iw != null) {
+          String lgCode = iw.getPrefix();
           EnumWikipedia fromWiki = EnumWikipedia.getWikipedia(lgCode);
           if ((fromWiki != null) && (fromWiki.getSettings().getCode().equals(lgCode))) {
             String pageTitle = link.getLink();
