@@ -75,6 +75,12 @@ public class CheckErrorAlgorithm112 extends CheckErrorAlgorithmBase {
     TAG_ATTRIBUTES.put(PageElementTag.TAG_HTML_CENTER, new String[] {
         "id",
     });
+    TAG_ATTRIBUTES.put(PageElementTag.TAG_HTML_DIV, new String[] {
+        "id",
+    });
+    TAG_ATTRIBUTES.put(PageElementTag.TAG_HTML_SMALL, new String[] {
+        "id",
+    });
 
     TAG_STYLES.put(PageElementTag.TAG_HTML_DIV, new String[] {
         "-moz-column-count",
