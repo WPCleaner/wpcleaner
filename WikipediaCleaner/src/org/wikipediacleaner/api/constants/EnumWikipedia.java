@@ -21,6 +21,7 @@ import org.wikipediacleaner.api.API;
 import org.wikipediacleaner.api.APIException;
 import org.wikipediacleaner.api.constants.wiki.AbstractWikiSettings;
 import org.wikipediacleaner.api.constants.wiki.Waze;
+import org.wikipediacleaner.api.constants.wiki.WazeopediaUSA;
 import org.wikipediacleaner.api.constants.wiki.WikiSkripta;
 import org.wikipediacleaner.api.constants.wiki.WikimediaCommons;
 import org.wikipediacleaner.api.constants.wiki.Wikipedia;
@@ -116,6 +117,7 @@ public enum EnumWikipedia {
   WIKIVERSITY_FR(new Wikiversity("fr", "Wikiversité en français")),
   
   WAZE(new Waze()),
+  WAZEOPEDIA_USA(new WazeopediaUSA()),
   WIKISKRIPTA(new WikiSkripta()),
   
   TEST(new Wikipedia("test", "Test Wikipedia"));
