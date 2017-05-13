@@ -442,28 +442,47 @@ public class CheckErrorAlgorithm112 extends CheckErrorAlgorithmBase {
       if ((tag != null) && (!tag.isEndTag())) {
         for (int paramNum = 0; paramNum < tag.getParametersCount(); paramNum++) {
           Parameter param = tag.getParameter(paramNum);
+          boolean shouldReport = false;
           for (String attributeName : attributeNames) {
             if (attributeName.equals(param.getName())) {
-              if (errors == null) {
-                return true;
+              shouldReport = true;
+              if (shouldReport && "id".equals(attributeName)) {
+                String attributeValue = param.getValue();
+                if ((attributeValue == null) || (attributeValue.trim().length() == 0)) {
+                  shouldReport = false;
+                } else if (attributeValue.startsWith("mw") || attributeValue.startsWith("cx")) {
+                  shouldReport = true;
+                } else {
+                  for (int tmpIndex = 0; tmpIndex < attributeValue.length(); tmpIndex++) {
+                    char tmpChar = attributeValue.charAt(tmpIndex);
+                    if (!Character.isDigit(tmpChar) && !Character.isWhitespace(tmpChar)) {
+                      shouldReport = false;
+                    }
+                  }
+                }
               }
-              result = true;
-              int beginIndex = tag.getBeginIndex() + param.getOffsetBegin();
-              while ((beginIndex > 0) && (contents.charAt(beginIndex - 1) == ' ')) {
-                beginIndex--;
-              }
-              int endIndex = tag.getBeginIndex() + param.getOffsetEnd();
-              if ((endIndex < contents.length()) &&
-                  (contents.charAt(endIndex) != ' ') &&
-                  (contents.charAt(endIndex) != '>') &&
-                  (contents.charAt(beginIndex) == ' ')) {
-                beginIndex++;
-              }
-              CheckErrorResult errorResult = createCheckErrorResult(
-                  analysis, beginIndex, endIndex);
-              errorResult.addReplacement("");
-              errors.add(errorResult);
             }
+          }
+          if (shouldReport) {
+            if (errors == null) {
+              return true;
+            }
+            result = true;
+            int beginIndex = tag.getBeginIndex() + param.getOffsetBegin();
+            while ((beginIndex > 0) && (contents.charAt(beginIndex - 1) == ' ')) {
+              beginIndex--;
+            }
+            int endIndex = tag.getBeginIndex() + param.getOffsetEnd();
+            if ((endIndex < contents.length()) &&
+                (contents.charAt(endIndex) != ' ') &&
+                (contents.charAt(endIndex) != '>') &&
+                (contents.charAt(beginIndex) == ' ')) {
+              beginIndex++;
+            }
+            CheckErrorResult errorResult = createCheckErrorResult(
+                analysis, beginIndex, endIndex);
+            errorResult.addReplacement("");
+            errors.add(errorResult);
           }
         }
       }
