@@ -264,6 +264,7 @@ public abstract class OnePageWindow
   private JPopupMenu menuOptions;
   JMenuItem chkCloseAfterSend;
   private JMenuItem chkEditTalkPage;
+  private JMenuItem chkMarkEditMinor;
   JMenuItem chkUpdateDabWarning;
   JMenuItem chkCreateDabWarning;
 
@@ -297,6 +298,7 @@ public abstract class OnePageWindow
         (chkUpdateDabWarning != null) &&
         (chkUpdateDabWarning.isSelected()));
     setEnabledStatus(chkEditTalkPage, pageLoaded && article);
+    setEnabledStatus(chkMarkEditMinor, pageLoaded);
     setEnabledStatus(chkSpelling, pageLoaded);
     setEnabledStatus(chkUpdateDabWarning, pageLoaded && dabWarning);
 
@@ -566,6 +568,12 @@ public abstract class OnePageWindow
 
     Configuration config = Configuration.getConfiguration();
     menuOptions = new JPopupMenu();
+    chkMarkEditMinor = Utilities.createJCheckBoxMenuItm(
+        GT._("Mark edit as minor"),
+        config.getBoolean(
+            null,
+            ConfigurationValueBoolean.MARK_EDIT_MINOR));
+    menuOptions.add(chkMarkEditMinor);
     chkCloseAfterSend = Utilities.createJCheckBoxMenuItm(
         GT._("&Close after sending"),
         config.getBoolean(
@@ -1033,6 +1041,7 @@ public abstract class OnePageWindow
     final boolean forceWatch = config.getBoolean(
         null,
         ConfigurationValueBoolean.FORCE_WATCH);
+    final boolean minor = (chkMarkEditMinor == null) || (chkMarkEditMinor.isSelected());
     final int oldState = getParentComponent().getExtendedState();
     final boolean updateDabWarning = (chkUpdateDabWarning != null) && (chkUpdateDabWarning.isSelected());
     final boolean createDabWarning = (chkCreateDabWarning != null) && (chkCreateDabWarning.isSelected());
@@ -1078,7 +1087,7 @@ public abstract class OnePageWindow
           (textComment != null) ?
               textComment.getText() :
               getWikipedia().getConfiguration().getUpdatePageMessage(),
-          forceWatch,
+          minor, forceWatch,
           getContributions(), errorsFixed);
     sendWorker.setListener(new DefaultBasicWorkerListener() {
       @Override

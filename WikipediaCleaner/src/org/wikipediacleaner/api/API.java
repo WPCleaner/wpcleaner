@@ -60,6 +60,7 @@ public interface API {
    * @param page Page.
    * @param newContents New contents to use.
    * @param comment Comment.
+   * @param minor True if the modification should be tagged as minor.
    * @param automatic True if the modification is automatic.
    * @param forceWatch Force watching the page.
    * @return Result of the command.
@@ -68,7 +69,7 @@ public interface API {
   public QueryResult updatePage(
       EnumWikipedia wikipedia, Page page,
       String newContents, String comment,
-      boolean automatic, boolean forceWatch) throws APIException;
+      boolean minor, boolean automatic, boolean forceWatch) throws APIException;
 
   /**
    * Add a new section in a page.
@@ -77,6 +78,7 @@ public interface API {
    * @param page Page.
    * @param title Title of the new section.
    * @param contents Contents.
+   * @param minor True if the modification should be tagged as minor.
    * @param automatic True if the modification is automatic.
    * @param forceWatch Force watching the page.
    * @return Result of the command.
@@ -85,7 +87,7 @@ public interface API {
   public QueryResult addNewSection(
       EnumWikipedia wikipedia,
       Page page, String title, String contents,
-      boolean automatic, boolean forceWatch) throws APIException;
+      boolean minor, boolean automatic, boolean forceWatch) throws APIException;
 
 
   /**
@@ -96,6 +98,7 @@ public interface API {
    * @param title Title of the new section.
    * @param section Section. 
    * @param contents Contents.
+   * @param minor True if the modification should be tagged as minor.
    * @param automatic True if the modification is automatic.
    * @param forceWatch Force watching the page.
    * @return Result of the command.
@@ -105,7 +108,7 @@ public interface API {
       EnumWikipedia wikipedia,
       Page page, String title, int section,
       String contents,
-      boolean automatic, boolean forceWatch) throws APIException;
+      boolean minor, boolean automatic, boolean forceWatch) throws APIException;
 
   /**
    * Retrieves the templates of <code>page</code>.

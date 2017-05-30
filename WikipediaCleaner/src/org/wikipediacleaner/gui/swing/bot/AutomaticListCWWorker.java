@@ -194,7 +194,7 @@ public class AutomaticListCWWorker extends BasicWorker {
         api.updatePage(
             getWikipedia(), page, newContents,
             comment.toString(),
-            true, false);
+            true, true, false);
         countModified++;
         for (CheckError.Progress errorFixed : errorsFixed) {
           CheckErrorAlgorithm usedAlgorithm = errorFixed.algorithm;

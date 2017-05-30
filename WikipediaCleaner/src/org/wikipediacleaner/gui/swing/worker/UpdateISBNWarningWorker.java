@@ -337,7 +337,7 @@ public class UpdateISBNWarningWorker extends UpdateWarningWorker {
                 api.updatePage(
                     wiki, page, newText.toString(),
                     config.getString(WPCConfigurationString.ISBN_ERRORS_PAGE_COMMENT),
-                    true, false);
+                    true, true, false);
                 saved = true;
               }
             }

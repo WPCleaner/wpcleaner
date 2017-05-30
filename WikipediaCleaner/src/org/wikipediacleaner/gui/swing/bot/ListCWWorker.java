@@ -421,7 +421,7 @@ public class ListCWWorker extends BasicWorker {
                 api.updatePage(
                     getWikipedia(), page, text,
                     "Dump analysis for error n°" + algorithm.getErrorNumberString() + " (" + nbPages + " pages)",
-                    true, false);
+                    true, true, false);
               } catch (APIException e) {
                 if (EnumQueryResult.CONTENT_TOO_BIG.equals(e.getQueryResult())) {
                   for (int i = 0; i < 100; i++) {

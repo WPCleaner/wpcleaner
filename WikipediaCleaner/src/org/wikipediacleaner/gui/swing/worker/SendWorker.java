@@ -111,6 +111,7 @@ public class SendWorker extends BasicWorker {
      * @param page Page.
      * @param text Page contents.
      * @param comment Comment.
+     * @param minor True if the modification should be tagged as minor.
      * @param forceWatch Force watching the page.
      * @param contributions Contributions.
      * @param errorsFixed Errors fixed by this update.
@@ -118,16 +119,19 @@ public class SendWorker extends BasicWorker {
     public SendWorker createWorker(
         EnumWikipedia wiki, BasicWindow window,
         Page page, String text, String comment,
-        boolean forceWatch,
+        boolean minor, boolean forceWatch,
         Contributions contributions,
         Collection<CheckError.Progress> errorsFixed) {
-      return new SendWorker(wiki, window, page, text, comment, forceWatch, params, contributions, errorsFixed);
+      return new SendWorker(
+          wiki, window, page, text, comment,
+          minor, forceWatch, params, contributions, errorsFixed);
     }
   }
 
   private final Page page;
   private final String text;
   private final String comment;
+  private final boolean minor;
   private final boolean forceWatch;
   private final Params params;
   private final Contributions contributions;
@@ -139,6 +143,7 @@ public class SendWorker extends BasicWorker {
    * @param page Page.
    * @param text Page contents.
    * @param comment Comment.
+   * @param minor True if the modification should be tagged as minor.
    * @param forceWatch Force watching the page.
    * @param params Parameters.
    * @param contributions Contributions.
@@ -147,7 +152,7 @@ public class SendWorker extends BasicWorker {
   SendWorker(
       EnumWikipedia wiki, BasicWindow window,
       Page page, String text, String comment,
-      boolean forceWatch,
+      boolean minor, boolean forceWatch,
       Params params,
       Contributions contributions,
       Collection<CheckError.Progress> errorsFixed) {
@@ -155,6 +160,7 @@ public class SendWorker extends BasicWorker {
     this.page = page;
     this.text = text;
     this.comment = comment;
+    this.minor = minor;
     this.forceWatch = forceWatch;
     this.params = params;
     this.contributions = contributions;
@@ -176,7 +182,7 @@ public class SendWorker extends BasicWorker {
       queryResult = api.updatePage(
           getWikipedia(), page, text,
           comment,
-          false, forceWatch);
+          minor, false, forceWatch);
     } catch (APIException e) {
       return e;
     }

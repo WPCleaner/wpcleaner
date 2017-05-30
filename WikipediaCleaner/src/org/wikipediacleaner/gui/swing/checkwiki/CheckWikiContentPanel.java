@@ -710,6 +710,9 @@ public class CheckWikiContentPanel
           page, textPage.getText(), textComment.getText(),
           configuration.getBoolean(
               null,
+              ConfigurationValueBoolean.MARK_EDIT_MINOR),
+          configuration.getBoolean(
+              null,
               ConfigurationValueBoolean.FORCE_WATCH),
           contributions, errorsFixed);
     sendWorker.setListener(new DefaultBasicWorkerListener() {

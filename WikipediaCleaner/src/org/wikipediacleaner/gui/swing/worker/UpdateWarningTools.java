@@ -552,7 +552,7 @@ public abstract class UpdateWarningTools {
       api.updatePage(
           wiki, todoSubpage, tmp.toString(),
           getWarningComment(elements),
-          automaticEdit, false);
+          true, automaticEdit, false);
 
       return true;
     }
@@ -1379,7 +1379,7 @@ public abstract class UpdateWarningTools {
           fullMessage.append(message);
           api.addNewSection(
               wiki, userTalkPage, globalTitle,
-              fullMessage.toString(), automaticEdit, false);
+              fullMessage.toString(), true, automaticEdit, false);
         } else {
           // Add the message in the existing title
           Integer revisionId = userTalkPage.getRevisionId();
@@ -1393,7 +1393,7 @@ public abstract class UpdateWarningTools {
             fullMessage.append(message);
             api.updateSection(
                 wiki, userTalkPage, globalTitle, section.getIndex(),
-                fullMessage.toString(), automaticEdit, false);
+                fullMessage.toString(), true, automaticEdit, false);
           } else {
             System.err.println("Page " + userTalk + " has been modified between two requests");
           }
@@ -1402,7 +1402,7 @@ public abstract class UpdateWarningTools {
         if (title != null) {
           api.addNewSection(
               wiki, userTalkPage, title,
-              message, automaticEdit, false);
+              message, true, automaticEdit, false);
         } else {
           // TODO: No global title, no title => Should append the message at the end
           log.warn("Should add " + message + " in " + userTalk);
@@ -1497,7 +1497,7 @@ public abstract class UpdateWarningTools {
       boolean forceWatch) throws APIException {
     return api.updatePage(
         wiki, page, newContents,
-        comment, automaticEdit, forceWatch);
+        comment, true, automaticEdit, forceWatch);
   }
 
   /**
@@ -1516,7 +1516,7 @@ public abstract class UpdateWarningTools {
       String contents, boolean forceWatch) throws APIException {
     return api.updateSection(
         wiki, page, title, section,
-        contents, automaticEdit, forceWatch);
+        contents, true, automaticEdit, forceWatch);
   }
 
   /**

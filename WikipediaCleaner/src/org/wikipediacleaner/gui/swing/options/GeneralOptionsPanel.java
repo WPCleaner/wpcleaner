@@ -93,6 +93,15 @@ public class GeneralOptionsPanel extends OptionsPanel {
     add(chk, constraints);
     constraints.gridy++;
 
+    // Mark edits as minor
+    chk = createJCheckBox(
+        GT._("Mark edits as minor"),
+        ConfigurationValueBoolean.MARK_EDIT_MINOR);
+    constraints.gridx = 0;
+    constraints.weightx = 0;
+    add(chk, constraints);
+    constraints.gridy++;
+
     // Close disambiguation window after sending
     chk = createJCheckBox(
         GT._("Close disambiguation window after sending"),

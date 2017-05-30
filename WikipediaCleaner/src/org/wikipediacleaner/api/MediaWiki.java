@@ -172,6 +172,7 @@ public class MediaWiki extends MediaWikiController {
    * @param automaticCW True if automatic Check Wiki fixing should be done also.
    * @param forceCW True if Check Wiki fixing should be done even if no automatic replacement was done.
    * @param save True if modification should be saved.
+   * @param minor True if the modification should be tagged as minor.
    * @return Count of modified pages.
    * @throws APIException
    */
@@ -180,7 +181,7 @@ public class MediaWiki extends MediaWikiController {
       EnumWikipedia wiki, String comment,
       StringBuilder description,
       boolean automaticCW, boolean forceCW, boolean save,
-      boolean updateDabWarning) throws APIException {
+      boolean updateDabWarning, boolean minor) throws APIException {
     if ((pages == null) || (replacements == null) || (replacements.size() == 0)) {
       return 0;
     }
@@ -296,7 +297,8 @@ public class MediaWiki extends MediaWikiController {
             count++;
             if (save) {
               try {
-                api.updatePage(wiki, page, newContents, fullComment.toString(), false, false);
+                api.updatePage(
+                    wiki, page, newContents, fullComment.toString(), minor, false, false);
                 if (updateDabWarning) {
                   List<Page> tmpList = new ArrayList<>(1);
                   tmpList.add(page);

@@ -347,6 +347,7 @@ public class MediaWikiAPI implements API {
    * @param page Page.
    * @param newContents New contents to use.
    * @param comment Comment.
+   * @param minor True if the modification should be tagged as minor.
    * @param automatic True if the modification is automatic.
    * @param forceWatch Force watching the page.
    * @return Result of the command.
@@ -356,7 +357,7 @@ public class MediaWikiAPI implements API {
   public QueryResult updatePage(
       EnumWikipedia wikipedia, Page page,
       String newContents, String comment,
-      boolean automatic, boolean forceWatch) throws APIException {
+      boolean minor, boolean automatic, boolean forceWatch) throws APIException {
     if (page == null) {
       throw new APIException("Page is null");
     }
@@ -382,7 +383,9 @@ public class MediaWikiAPI implements API {
         properties.put("basetimestamp", page.getContentsTimestamp());
       }
       properties.put("bot", "");
-      properties.put("minor", "");
+      if (minor) {
+        properties.put("minor", "");
+      }
       if (page.getStartTimestamp() != null) {
         properties.put("starttimestamp", page.getStartTimestamp());
       }
@@ -454,6 +457,7 @@ public class MediaWikiAPI implements API {
    * @param page Page.
    * @param title Title of the new section.
    * @param contents Contents.
+   * @param minor True if the modification should be tagged as minor.
    * @param automatic True if the modification is automatic.
    * @param forceWatch Force watching the page.
    * @return Result of the command.
@@ -463,8 +467,8 @@ public class MediaWikiAPI implements API {
   public QueryResult addNewSection(
       EnumWikipedia wikipedia,
       Page page, String title, String contents,
-      boolean automatic, boolean forceWatch) throws APIException {
-    return updateSection(wikipedia, page, title, "new", contents, automatic, forceWatch);
+      boolean minor, boolean automatic, boolean forceWatch) throws APIException {
+    return updateSection(wikipedia, page, title, "new", contents, minor, automatic, forceWatch);
   }
 
   /**
@@ -475,6 +479,7 @@ public class MediaWikiAPI implements API {
    * @param title Title of the new section.
    * @param section Section. 
    * @param contents Contents.
+   * @param minor True if the modification should be tagged as minor.
    * @param automatic True if the modification is automatic.
    * @param forceWatch Force watching the page.
    * @return Result of the command.
@@ -485,8 +490,8 @@ public class MediaWikiAPI implements API {
       EnumWikipedia wikipedia,
       Page page, String title, int section,
       String contents,
-      boolean automatic, boolean forceWatch) throws APIException {
-    return updateSection(wikipedia, page, title, Integer.toString(section), contents, automatic, forceWatch);
+      boolean minor, boolean automatic, boolean forceWatch) throws APIException {
+    return updateSection(wikipedia, page, title, Integer.toString(section), contents, minor, automatic, forceWatch);
   }
 
   /**
@@ -497,6 +502,7 @@ public class MediaWikiAPI implements API {
    * @param title Title of the new section.
    * @param section Section ("new" for a new section). 
    * @param contents Contents.
+   * @param minor True if the modification should be tagged as minor.
    * @param forceWatch Force watching the page.
    * @param automatic True if the modification is automatic.
    * @return Result of the command.
@@ -506,7 +512,7 @@ public class MediaWikiAPI implements API {
       EnumWikipedia wikipedia,
       Page page, String title, String section,
       String contents,
-      boolean automatic, boolean forceWatch) throws APIException {
+      boolean minor, boolean automatic, boolean forceWatch) throws APIException {
     if (page == null) {
       throw new APIException("Page is null");
     }
@@ -532,7 +538,9 @@ public class MediaWikiAPI implements API {
         properties.put("basetimestamp", page.getContentsTimestamp());
       }
       properties.put("bot", "");
-      properties.put("minor", "");
+      if (minor) {
+        properties.put("minor", "");
+      }
       properties.put("section", section);
       properties.put("sectiontitle", title);
       String startTimestamp = page.getStartTimestamp();
