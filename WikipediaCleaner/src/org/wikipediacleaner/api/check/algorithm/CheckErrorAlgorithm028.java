@@ -191,6 +191,7 @@ public class CheckErrorAlgorithm028 extends CheckErrorAlgorithmBase {
    */
   private boolean shouldCount(PageAnalysis analysis, int index) {
     if ((analysis.getSurroundingTag(PageElementTag.TAG_HTML_CODE, index) != null) ||
+        (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_CHEM, index) != null) ||
         (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_MATH, index) != null) ||
         (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_MATH_CHEM, index) != null) ||
         (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_NOWIKI, index) != null) ||
