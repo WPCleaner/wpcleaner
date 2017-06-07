@@ -58,7 +58,6 @@ public class ApiLintErrorsRequest extends ApiListRequest {
    * Load list of lint errors.
    * 
    * @param category Linter category.
-   * @param depth Depth of lookup for sub-categories.
    * @param limit Flag indicating if the number of results should be limited.
    * @param max Absolute maximum number of results
    */
