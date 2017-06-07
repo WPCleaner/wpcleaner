@@ -435,6 +435,7 @@ public class MediaWikiAPI implements API {
           }
         }
         if (attemptNumber > 1) {
+          log.warn("Error updating page " + page.getTitle());
           throw e;
         }
         if (e.getQueryResult() == EnumQueryResult.BAD_TOKEN) {
