@@ -15,7 +15,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.httpclient.HttpClient;
-import org.jdom2.Attribute;
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
 import org.jdom2.filter.Filters;
@@ -142,7 +141,7 @@ public class ApiXmlSiteInfoResult extends ApiXmlResult implements ApiSiteInfoRes
         boolean local = (currentNode.getAttribute("local") != null);
         String language = currentNode.getAttributeValue("language");
         String url = currentNode.getAttributeValue("url");
-        interwikis.add(new Interwiki( prefix, local, language, url));
+        interwikis.add(new Interwiki(prefix, local, language, url));
       }
       wikiConfiguration.setInterwikis(interwikis);
 
@@ -204,8 +203,8 @@ public class ApiXmlSiteInfoResult extends ApiXmlResult implements ApiSiteInfoRes
       while (iter.hasNext()) {
         Element currentNode = iter.next();
         String level = currentNode.getName();
-        for (Attribute attribute : currentNode.getAttributes()) {
-          linterCategories.add(new LinterCategory(level, attribute.getName()));
+        for (Element child : currentNode.getChildren()) {
+          linterCategories.add(new LinterCategory(level, child.getTextTrim()));
         }
       }
       wikiConfiguration.setLinterCategories(linterCategories);

@@ -1676,7 +1676,7 @@ public class MainWindow
     Collections.sort(categories);
     JPopupMenu menu = new JPopupMenu();
     for (LinterCategory category : categories) {
-      JMenuItem item = new JMenuItem(category.getCategory());
+      JMenuItem item = new JMenuItem(category.getCategory() + " (" + category.getLevel() + ")");
       item.setActionCommand(category.getCategory());
       item.addActionListener(EventHandler.create(
           ActionListener.class, this, "actionLinterCategory", "actionCommand"));
