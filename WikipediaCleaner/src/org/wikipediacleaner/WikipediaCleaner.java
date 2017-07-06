@@ -11,7 +11,9 @@ import java.awt.Font;
 import java.awt.Toolkit;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
+import java.util.HashSet;
 import java.util.Locale;
+import java.util.Set;
 import java.util.logging.FileHandler;
 import java.util.logging.Handler;
 import java.util.logging.Level;
@@ -98,7 +100,8 @@ public class WikipediaCleaner {
     int fontSize = config.getInt(null, ConfigurationValueInteger.FONT_SIZE);
     if (fontSize > 0) {
       UIDefaults defaults = UIManager.getLookAndFeelDefaults();
-      for (Object key : defaults.keySet()) {
+      Set<Object> keys = new HashSet<>(defaults.keySet());
+      for (Object key : keys) {
         Font font = defaults.getFont(key);
         if (font != null) {
           font = font.deriveFont((float) (font.getSize() + fontSize));
