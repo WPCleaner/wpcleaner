@@ -20,28 +20,33 @@ import org.wikipediacleaner.api.impl.MediaWikiAPI;
  */
 public class APIFactory {
 
-  /**
-   * MediaWiki API.
-   */
+  /** MediaWiki API */
   private static API api;
 
-  /**
-   * Check Wiki project.
-   */
+  /** MediaWiki REST API */
+  private static MediaWikiRESTAPI restApi;
+
+  /** Check Wiki project */
   private static CheckWiki checkWiki;
 
   // Initialize static members
   static {
 
     // Initialize MediaWiki API
-    HttpConnectionManager connectionManger = new MultiThreadedHttpConnectionManager();
-    HttpClient httpClient = createHttpClient(connectionManger);
+    HttpConnectionManager connectionManager = new MultiThreadedHttpConnectionManager();
+    HttpClient httpClient = createHttpClient(connectionManager);
     httpClient.getParams().setParameter("http.protocol.single-cookie-header", Boolean.TRUE);
     api = new MediaWikiAPI(httpClient);
 
+    // Initialize MediaWiki REST API
+    connectionManager = new MultiThreadedHttpConnectionManager();
+    httpClient = createHttpClient(connectionManager);
+    httpClient.getParams().setParameter("http.protocol.single-cookie-header", Boolean.TRUE);
+    restApi = new MediaWikiRESTAPI(httpClient);
+
     // Initialize WMF Labs access
-    connectionManger = new MultiThreadedHttpConnectionManager();
-    httpClient = createHttpClient(connectionManger);
+    connectionManager = new MultiThreadedHttpConnectionManager();
+    httpClient = createHttpClient(connectionManager);
     HttpServer labs = new HttpServer(httpClient, "http://tools.wmflabs.org/");
 
     // Initialize Check Wiki project
@@ -53,6 +58,13 @@ public class APIFactory {
    */
   public static API getAPI() {
     return api;
+  }
+
+  /**
+   * @return MediaWiki REST API implementation.
+   */
+  public static MediaWikiRESTAPI getRESTAPI() {
+    return restApi;
   }
 
   /**

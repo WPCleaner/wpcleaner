@@ -71,6 +71,7 @@ import org.wikipediacleaner.gui.swing.component.MWPaneBasicFormatter;
 import org.wikipediacleaner.gui.swing.component.MWPaneCheckWikiFormatter;
 import org.wikipediacleaner.gui.swing.component.MWPaneCheckWikiPopupListener;
 import org.wikipediacleaner.gui.swing.component.MWPaneFormatter;
+import org.wikipediacleaner.gui.swing.linter.ActionLinter;
 import org.wikipediacleaner.gui.swing.worker.SendWorker;
 import org.wikipediacleaner.i18n.GT;
 import org.wikipediacleaner.images.EnumImageSize;
@@ -212,6 +213,9 @@ public class CheckWikiContentPanel
     buttonMarkAsFixed.addActionListener(this);
     toolbarButtons.add(buttonMarkAsFixed);
     ActionCheckArticle.addButton(
+        window.getParentComponent(), toolbarButtons,
+        getWiki(), page.getTitle(), textPage, true);
+    ActionLinter.addButton(
         window.getParentComponent(), toolbarButtons,
         getWiki(), page.getTitle(), textPage, true);
     toolbarButtons.addSeparator();
