@@ -44,7 +44,7 @@ public class ActionLinter extends AbstractAction implements ActionListener {
   private static JButton createInternalButton(
       boolean showIcon) {
     return Utilities.createJButton(
-        showIcon ? "commons-nuvola-web-broom.png" : null,
+        showIcon ? "Logo_for_the_Linter_Extension.png" : null,
         EnumImageSize.NORMAL,
         GT._("Check article with Linter"), !showIcon,
         null);
