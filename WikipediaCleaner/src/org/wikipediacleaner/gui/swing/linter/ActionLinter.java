@@ -11,6 +11,7 @@ package org.wikipediacleaner.gui.swing.linter;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.swing.AbstractAction;
@@ -23,6 +24,7 @@ import org.wikipediacleaner.api.APIException;
 import org.wikipediacleaner.api.APIFactory;
 import org.wikipediacleaner.api.MediaWikiRESTAPI;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
+import org.wikipediacleaner.api.data.LinterCategory;
 import org.wikipediacleaner.api.linter.LinterError;
 import org.wikipediacleaner.gui.swing.basic.Utilities;
 import org.wikipediacleaner.i18n.GT;
@@ -130,6 +132,22 @@ public class ActionLinter extends AbstractAction implements ActionListener {
             parent,
             GT._("Unable to retrieve analysis from Linter."));
         return;
+      }
+      Iterator<LinterError> itErrors = errors.iterator();
+      while (itErrors.hasNext()) {
+        LinterError error = itErrors.next();
+        boolean found = false;
+        List<LinterCategory> categories = wiki.getWikiConfiguration().getLinterCategories();
+        if (categories != null) {
+          for (LinterCategory category : wiki.getWikiConfiguration().getLinterCategories()) {
+            if (category.getCategory().equals(error.getType())) {
+              found = true;
+            }
+          }
+        }
+        if (!found) {
+          itErrors.remove();
+        }
       }
       if (errors.isEmpty()) {
         Utilities.displayInformationMessage(
