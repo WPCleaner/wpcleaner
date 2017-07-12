@@ -12,6 +12,8 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.wikipediacleaner.api.constants.WikiConfiguration;
+
 
 /**
  * Bean representing a Linter error.
@@ -24,33 +26,46 @@ public class LinterError {
   /** Parameters */
   private final Map<String, String> parameters;
 
-  /** Start position of the error */
-  private final int start;
+  /** Start offset of the error */
+  private final int startOffset;
 
-  /** End position of the error */
-  private final int end;
+  /** End offset of the error */
+  private final int endOffset;
 
   /**
    * @param type Error type.
    * @param parameters Parameters.
-   * @param start Start of the error.
-   * @param end End of the error.
+   * @param startOffset Start of the error.
+   * @param endOffset End of the error.
    */
   public LinterError(
       String type,
       Map<String, String> parameters,
-      int start,
-      int end) {
+      int startOffset,
+      int endOffset) {
     this.type = type;
     this.parameters = (parameters != null) ? new HashMap<String, String>(parameters) : null;
-    this.start = start;
-    this.end = end;
+    this.startOffset = startOffset;
+    this.endOffset = endOffset;
   }
 
   /**
    * @return Error type.
    */
   public String getType() {
+    return type;
+  }
+
+  /**
+   * @return Error type.
+   */
+  public String getTypeName(WikiConfiguration config) {
+    if (config != null) {
+      String result = config.getMessageByName("linter-category-" + type);
+      if (result != null) {
+        return result;
+      }
+    }
     return type;
   }
 
@@ -62,16 +77,16 @@ public class LinterError {
   }
 
   /**
-   * @return Start index of the error.
+   * @return Start offset of the error.
    */
-  public int getStart() {
-    return start;
+  public int getStartOffset() {
+    return startOffset;
   }
 
   /**
-   * @return End index of the error.
+   * @return End offset of the error.
    */
-  public int getEnd() {
-    return end;
+  public int getEndOffset() {
+    return endOffset;
   }
 }

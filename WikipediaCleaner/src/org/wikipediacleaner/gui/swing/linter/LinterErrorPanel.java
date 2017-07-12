@@ -21,6 +21,7 @@ import javax.swing.JTable;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.text.JTextComponent;
 
+import org.wikipediacleaner.api.constants.WikiConfiguration;
 import org.wikipediacleaner.api.linter.LinterError;
 import org.wikipediacleaner.i18n.GT;
 
@@ -33,6 +34,9 @@ public class LinterErrorPanel extends JPanel {
   /** Serialization */
   private static final long serialVersionUID = -3583784531089028512L;
 
+  /** Wiki configuration */
+  private final WikiConfiguration config;
+
   /** List of errors. */
   private final List<LinterError> errors;
 
@@ -43,13 +47,16 @@ public class LinterErrorPanel extends JPanel {
   private JLabel labelMessage;
 
   /**
+   * @param config Wiki configuration.
    * @param errors List of errors.
    * @param textPane Text pane where the text is.
    */
   public LinterErrorPanel(
+      WikiConfiguration config,
       List<LinterError> errors,
       JTextComponent textPane) {
     super(new GridBagLayout(), true);
+    this.config = config;
     this.errors = errors;
     this.textPane = textPane;
     constructContents();
@@ -78,7 +85,7 @@ public class LinterErrorPanel extends JPanel {
 
     // List of detections
     LinterErrorListTableModel modelErrors =
-        new LinterErrorListTableModel(errors, textPane);
+        new LinterErrorListTableModel(config, errors, textPane);
     JTable tableErrors = new JTable(modelErrors);
     modelErrors.configureColumnModel(tableErrors.getColumnModel());
     JScrollPane scrollErrors = new JScrollPane(tableErrors);

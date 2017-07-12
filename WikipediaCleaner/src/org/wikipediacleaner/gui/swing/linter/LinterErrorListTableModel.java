@@ -17,6 +17,7 @@ import javax.swing.table.TableColumnModel;
 import javax.swing.text.JTextComponent;
 
 import org.wikipediacleaner.api.check.CheckWikiDetection;
+import org.wikipediacleaner.api.constants.WikiConfiguration;
 import org.wikipediacleaner.api.linter.LinterError;
 import org.wikipediacleaner.i18n.GT;
 
@@ -29,8 +30,13 @@ public class LinterErrorListTableModel extends AbstractTableModel {
   /** Serialization */
   private static final long serialVersionUID = 6291117363909928449L;
 
-  private List<LinterError> errors;
+  /** Wiki configuration */
+  private final WikiConfiguration config;
 
+  /** List of errors */
+  private final List<LinterError> errors;
+
+  /** Text area */
   private final JTextComponent textPane;
 
   public final static int COLUMN_START = 0;
@@ -42,8 +48,16 @@ public class LinterErrorListTableModel extends AbstractTableModel {
   public final static int NB_COLUMNS_WITHOUT_GOTO = COLUMN_GOTO;
   public final static int NB_COLUMNS_WITH_GOTO = COLUMN_GOTO + 1;
 
+  /**
+   * @param config Wiki configuration.
+   * @param errors List of Linter errors.
+   * @param textPane Text area.
+   */
   public LinterErrorListTableModel(
-      List<LinterError> errors, JTextComponent textPane) {
+      WikiConfiguration config,
+      List<LinterError> errors,
+      JTextComponent textPane) {
+    this.config = config;
     this.errors = errors;
     this.textPane = textPane;
   }
@@ -118,7 +132,7 @@ public class LinterErrorListTableModel extends AbstractTableModel {
       LinterError error = errors.get(rowIndex);
       switch (columnIndex) {
       case COLUMN_END:
-        return error.getEnd();
+        return error.getEndOffset();
       case COLUMN_GOTO:
         return error;
       case COLUMN_PARAMETERS:
@@ -138,9 +152,9 @@ public class LinterErrorListTableModel extends AbstractTableModel {
         return tmp.toString();
       }
       case COLUMN_START:
-        return error.getStart();
+        return error.getStartOffset();
       case COLUMN_TYPE:
-        return error.getType();
+        return error.getTypeName(config);
       }
     }
     return null;

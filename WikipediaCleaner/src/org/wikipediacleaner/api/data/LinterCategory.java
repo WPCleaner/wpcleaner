@@ -8,6 +8,8 @@
 
 package org.wikipediacleaner.api.data;
 
+import org.wikipediacleaner.api.constants.WikiConfiguration;
+
 
 /**
  * Information about Linter categories.
@@ -40,9 +42,37 @@ public class LinterCategory implements Comparable<LinterCategory> {
   }
 
   /**
+   * @param config Wiki configuration.
+   * @return Localized name of the level.
+   */
+  public String getLevelName(WikiConfiguration config) {
+    if (config != null) {
+      String result = config.getMessageByName("linter-heading-" + level + "-priority");
+      if (result != null) {
+        return result;
+      }
+    }
+    return level;
+  }
+
+  /**
    * @return Name of the category.
    */
   public String getCategory() {
+    return category;
+  }
+
+  /**
+   * @param config Wiki configuration.
+   * @return Localized name of the category.
+   */
+  public String getCategoryName(WikiConfiguration config) {
+    if (config != null) {
+      String result = config.getMessageByName("linter-category-" + category);
+      if (result != null) {
+        return result;
+      }
+    }
     return category;
   }
 

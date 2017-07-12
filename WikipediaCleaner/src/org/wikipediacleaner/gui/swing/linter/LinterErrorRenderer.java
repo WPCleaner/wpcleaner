@@ -26,7 +26,7 @@ import org.wikipediacleaner.images.EnumImageSize;
 
 
 /**
- * Cell renderer and editor for a Check Wiki detection.
+ * Cell renderer and editor for a Linter error.
  */
 public class LinterErrorRenderer extends AbstractCellEditor implements
     TableCellRenderer, TableCellEditor {
@@ -106,7 +106,7 @@ public class LinterErrorRenderer extends AbstractCellEditor implements
         "gnome-edit-find.png", EnumImageSize.SMALL));
     button.setBorderPainted(false);
     button.setContentAreaFilled(false);
-    button.setActionCommand(Integer.toString(error.getStart()) + ";" + Integer.toString(error.getEnd()));
+    button.setActionCommand(Integer.toString(error.getStartOffset()) + ";" + Integer.toString(error.getEndOffset()));
     button.setEnabled(textPane != null);
     button.addActionListener(EventHandler.create(
         ActionListener.class, this, "goToError", "actionCommand"));

@@ -61,6 +61,7 @@ import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.constants.WPCConfiguration;
 import org.wikipediacleaner.api.constants.WPCConfigurationString;
 import org.wikipediacleaner.api.constants.WPCConfigurationStringList;
+import org.wikipediacleaner.api.constants.WikiConfiguration;
 import org.wikipediacleaner.api.data.AbuseFilter;
 import org.wikipediacleaner.api.data.DataManager;
 import org.wikipediacleaner.api.data.LinterCategory;
@@ -1666,7 +1667,8 @@ public class MainWindow
    * Action called when Linter Categories button is pressed.
    */
   public void actionLinterCategories() {
-    List<LinterCategory> categories = getWiki().getWikiConfiguration().getLinterCategories();
+    WikiConfiguration config = getWiki().getWikiConfiguration();
+    List<LinterCategory> categories = config.getLinterCategories();
     if ((categories == null) || (categories.isEmpty())) {
       displayWarning("The Linter extension is not available on this wiki.");
       return;
@@ -1675,8 +1677,16 @@ public class MainWindow
     // Create menu for linter categories
     Collections.sort(categories);
     JPopupMenu menu = new JPopupMenu();
+    String previousLevel = null;
     for (LinterCategory category : categories) {
-      JMenuItem item = new JMenuItem(category.getCategory() + " (" + category.getLevel() + ")");
+      String level = category.getLevelName(config);
+      if ((previousLevel == null) || (!previousLevel.equals(level))) {
+        JMenuItem separator = new JMenuItem(level);
+        separator.setEnabled(false);
+        menu.add(separator);
+        previousLevel = level;
+      }
+      JMenuItem item = new JMenuItem(category.getCategoryName(config));
       item.setActionCommand(category.getCategory());
       item.addActionListener(EventHandler.create(
           ActionListener.class, this, "actionLinterCategory", "actionCommand"));

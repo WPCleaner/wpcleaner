@@ -137,7 +137,7 @@ public class ActionLinter extends AbstractAction implements ActionListener {
             GT._("No errors are currently detected by Linter."));
         return;
       }
-      LinterErrorPanel panel = new LinterErrorPanel(errors, textPane);
+      LinterErrorPanel panel = new LinterErrorPanel(wiki.getWikiConfiguration(), errors, textPane);
       JOptionPane.showMessageDialog(
           parent, panel, GT._("Errors"),
           JOptionPane.INFORMATION_MESSAGE);

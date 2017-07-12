@@ -28,6 +28,7 @@ import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.constants.WPCConfiguration;
 import org.wikipediacleaner.api.constants.WPCConfigurationBoolean;
 import org.wikipediacleaner.api.constants.WikiConfiguration;
+import org.wikipediacleaner.api.data.LinterCategory;
 import org.wikipediacleaner.api.data.LoginResult;
 import org.wikipediacleaner.api.data.User;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
@@ -184,9 +185,21 @@ public class LoginWorker extends BasicWorker {
           CheckErrorAlgorithms.isAlgorithmActive(wiki, 530)) {
         messageNames.add("magiclink-tracking-rfc");
       }
+      WikiConfiguration wikiConfig = wiki.getWikiConfiguration();
+      if (wikiConfig.getLinterCategories() != null) {
+        for (LinterCategory category : wikiConfig.getLinterCategories()) {
+          String priority = "linter-heading-" + category.getLevel() + "-priority";
+          if (!messageNames.contains(priority)) {
+            messageNames.add(priority);
+          }
+          String cat = "linter-category-" + category.getCategory();
+          if (!messageNames.contains(cat)) {
+            messageNames.add(cat);
+          }
+        }
+      }
       if (!messageNames.isEmpty()) {
         Map<String, String> messages = api.loadMessages(wiki, messageNames);
-        WikiConfiguration wikiConfig = wiki.getWikiConfiguration();
         wikiConfig.setMessages(messages);
         if ((algo524 != null) &&
             algo524.isAvailable() &&
