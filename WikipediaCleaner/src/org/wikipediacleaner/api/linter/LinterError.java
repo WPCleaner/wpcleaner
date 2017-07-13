@@ -32,21 +32,31 @@ public class LinterError {
   /** End offset of the error */
   private final int endOffset;
 
+  private final boolean multiPartTemplateBlock;
+
+  private final String templateName;
+
   /**
    * @param type Error type.
    * @param parameters Parameters.
    * @param startOffset Start of the error.
    * @param endOffset End of the error.
+   * @param multiPartTemplateBlock True if the problem comes from multiple templates.
+   * @param templateName Name of the template if the problem comes from a template.
    */
   public LinterError(
       String type,
       Map<String, String> parameters,
       int startOffset,
-      int endOffset) {
+      int endOffset,
+      boolean multiPartTemplateBlock,
+      String templateName) {
     this.type = type;
     this.parameters = (parameters != null) ? new HashMap<String, String>(parameters) : null;
     this.startOffset = startOffset;
     this.endOffset = endOffset;
+    this.multiPartTemplateBlock = multiPartTemplateBlock;
+    this.templateName = templateName;
   }
 
   /**
@@ -88,5 +98,19 @@ public class LinterError {
    */
   public int getEndOffset() {
     return endOffset;
+  }
+
+  /**
+   * @return True if the problem comes from multiple template.
+   */
+  public boolean isMutiPartTemplateBlock() {
+    return multiPartTemplateBlock;
+  }
+
+  /**
+   * @return Name of the template if the problem comes from a template.
+   */
+  public String getTemplateName() {
+    return templateName;
   }
 }

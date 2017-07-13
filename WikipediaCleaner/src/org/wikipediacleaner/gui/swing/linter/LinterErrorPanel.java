@@ -90,7 +90,7 @@ public class LinterErrorPanel extends JPanel {
     modelErrors.configureColumnModel(tableErrors.getColumnModel());
     JScrollPane scrollErrors = new JScrollPane(tableErrors);
     scrollErrors.setMinimumSize(new Dimension(500, 100));
-    scrollErrors.setPreferredSize(new Dimension(500, 200));
+    scrollErrors.setPreferredSize(new Dimension(800, 200));
     scrollErrors.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
     constraints.weighty = 1;
     add(scrollErrors, constraints);

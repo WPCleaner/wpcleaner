@@ -89,9 +89,24 @@ public class RestApiTransformWikitextToLintResult extends RestApiJsonResult {
           }
         }
 
+        // Template information
+        boolean multiPartTemplateBlock = false;
+        String templateName = null;
+        JsonNode templateInfoNode = error.path("templateInfo");
+        if (templateInfoNode != null) {
+          JsonNode multiPartNode = templateInfoNode.get("multiPartTemplateBlock");
+          if (multiPartNode != null) {
+            multiPartTemplateBlock = multiPartNode.asBoolean(false);
+          }
+          JsonNode templateNameNode = templateInfoNode.get("name");
+          if (templateNameNode != null) {
+            templateName = templateNameNode.asText();
+          }
+        }
+
         // Create error
         if (ok) {
-          result.add(new LinterError(type, params, start, end));
+          result.add(new LinterError(type, params, start, end, multiPartTemplateBlock, templateName));
         }
       }
     }

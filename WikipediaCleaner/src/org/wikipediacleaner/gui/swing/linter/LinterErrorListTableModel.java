@@ -43,7 +43,8 @@ public class LinterErrorListTableModel extends AbstractTableModel {
   public final static int COLUMN_END = COLUMN_START + 1;
   public final static int COLUMN_TYPE = COLUMN_END + 1;
   public final static int COLUMN_PARAMETERS = COLUMN_TYPE + 1;
-  public final static int COLUMN_GOTO = COLUMN_PARAMETERS + 1;
+  public final static int COLUMN_TEMPLATE = COLUMN_PARAMETERS + 1;
+  public final static int COLUMN_GOTO = COLUMN_TEMPLATE + 1;
 
   public final static int NB_COLUMNS_WITHOUT_GOTO = COLUMN_GOTO;
   public final static int NB_COLUMNS_WITH_GOTO = COLUMN_GOTO + 1;
@@ -93,6 +94,10 @@ public class LinterErrorListTableModel extends AbstractTableModel {
     column.setMinWidth(60);
     column.setPreferredWidth(60);
     column.setMaxWidth(100);
+
+    column = model.getColumn(COLUMN_TEMPLATE);
+    column.setMinWidth(100);
+    column.setPreferredWidth(300);
 
     column = model.getColumn(COLUMN_TYPE);
     column.setMinWidth(100);
@@ -153,6 +158,14 @@ public class LinterErrorListTableModel extends AbstractTableModel {
       }
       case COLUMN_START:
         return error.getStartOffset();
+      case COLUMN_TEMPLATE:
+        if (error.getTemplateName() != null) {
+          return error.getTemplateName();
+        }
+        if (error.isMutiPartTemplateBlock()) {
+          return GT._("Multiple templates");
+        }
+        return "";
       case COLUMN_TYPE:
         return error.getTypeName(config);
       }
@@ -190,6 +203,8 @@ public class LinterErrorListTableModel extends AbstractTableModel {
       return GT._("Parameters");
     case COLUMN_START:
       return GT._("Start");
+    case COLUMN_TEMPLATE:
+      return GT._("Template");
     case COLUMN_TYPE:
       return GT._("Type");
     }
@@ -212,6 +227,8 @@ public class LinterErrorListTableModel extends AbstractTableModel {
       return String.class;
     case COLUMN_START:
       return Integer.class;
+    case COLUMN_TEMPLATE:
+      return String.class;
     case COLUMN_TYPE:
       return String.class;
     }
