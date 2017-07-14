@@ -67,7 +67,7 @@ public class ActionLinter extends AbstractAction implements ActionListener {
       String title, JTextComponent textPane,
       boolean showIcon) {
     JButton button = createInternalButton(showIcon);
-    button.addActionListener(new ActionLinter(parent, wiki, textPane));
+    button.addActionListener(new ActionLinter(parent, wiki, title, textPane));
     return button;
   }
 
@@ -100,6 +100,9 @@ public class ActionLinter extends AbstractAction implements ActionListener {
   /** Wiki */
   private final EnumWikipedia wiki;
 
+  /** Page title */
+  private final String title;
+
   /** Text pane where the text is */
   private final JTextComponent textPane;
 
@@ -110,9 +113,10 @@ public class ActionLinter extends AbstractAction implements ActionListener {
    */
   private ActionLinter(
       Component parent, EnumWikipedia wiki,
-      JTextComponent textPane) {
+      String title, JTextComponent textPane) {
     this.parent = parent;
     this.wiki = wiki;
+    this.title = title;
     this.textPane = textPane;
   }
 
@@ -126,7 +130,7 @@ public class ActionLinter extends AbstractAction implements ActionListener {
   public void actionPerformed(ActionEvent e) {
     MediaWikiRESTAPI api = APIFactory.getRESTAPI();
     try {
-      List<LinterError> errors = api.transformWikitextToLint(wiki, textPane.getText());
+      List<LinterError> errors = api.transformWikitextToLint(wiki, title, textPane.getText());
       if (errors == null) {
         Utilities.displayWarning(
             parent,
