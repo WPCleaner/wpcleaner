@@ -863,7 +863,8 @@ public class MainWindow
 
     // Linter categories
     buttonLinterCategories = Utilities.createJButton(
-        GT._("Linter categories"), null);
+        "Logo_for_the_Linter_extension.png", EnumImageSize.NORMAL,
+        GT._("Linter categories"), true, null);
     buttonLinterCategories.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionLinterCategories"));
     panel.add(buttonLinterCategories, constraints);
