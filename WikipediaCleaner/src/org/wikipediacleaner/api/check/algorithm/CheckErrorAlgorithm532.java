@@ -90,117 +90,15 @@ public class CheckErrorAlgorithm532 extends CheckErrorAlgorithmBase {
       PageAnalysis analysis, PageElementTag tag,
       Collection<CheckErrorResult> errors, boolean onlyAutomatic) {
     boolean hasBeenReported = false;
-    String contents = analysis.getContents();
 
     // Tags in image description
-    if (!hasBeenReported && PageElementTag.TAG_HTML_CENTER.equals(tag.getNormalizedName())) {
-      PageElementImage image = analysis.isInImage(tag.getBeginIndex());
-      if (image != null) {
-        Parameter desc = image.getDescriptionParameter();
-        if ((desc != null) && (tag.getBeginIndex() == image.getBeginIndex() + desc.getBeginOffset())) {
-          int currentIndex = tag.getEndIndex();
-          boolean ok = true;
-          while (currentIndex < image.getBeginIndex() + desc.getEndOffset()) {
-            char currentChar = contents.charAt(currentIndex);
-            if (currentChar == '<') {
-              PageElementTag secondTag = analysis.isInTag(currentIndex, tag.getNormalizedName());
-              if (secondTag != null) {
-                ok = false;
-                // TODO
-              }
-            }
-            currentIndex++;
-          }
-          if (ok) {
-            CheckErrorResult errorResult = createCheckErrorResult(
-                analysis,
-                image.getBeginIndex() + desc.getBeginOffset(),
-                image.getBeginIndex() + desc.getEndOffset());
-            String replacement =
-                contents.substring(image.getBeginIndex() + desc.getBeginOffset(), image.getBeginIndex() + desc.getEndOffset()) +
-                PageElementTag.createTag(tag.getName(), true, false);
-            String text =
-                contents.substring(tag.getBeginIndex(), tag.getEndIndex()) +
-                "..." +
-                PageElementTag.createTag(tag.getName(), true, false);
-            errorResult.addReplacement(
-                replacement, text, false);
-            errors.add(errorResult);
-            hasBeenReported = true;
-          }
-        }
-      }
+    if (!hasBeenReported) {
+      hasBeenReported = analyzeImageDescription(analysis, tag, errors);
     }
 
     // Tags in image description in gallery tags
-    if (!hasBeenReported && PageElementTag.TAG_HTML_CENTER.equals(tag.getNormalizedName())) {
-      PageElementTag galleryTag = analysis.getSurroundingTag(PageElementTag.TAG_WIKI_GALLERY, tag.getBeginIndex());
-      if (galleryTag != null) {
-        boolean ok = true;
-        int currentIndex = tag.getBeginIndex();
-        while (ok && (currentIndex > 0) && (contents.charAt(currentIndex - 1) == ' ')) {
-          currentIndex--;
-        }
-        if ((currentIndex <= 0) || (contents.charAt(currentIndex - 1) != '|')) {
-          ok = false;
-        }
-        currentIndex = tag.getEndIndex();
-        boolean finished = false;
-        while (ok && !finished && (currentIndex < contents.length())) {
-          char currentChar = contents.charAt(currentIndex);
-          if (currentChar == '\n') {
-            finished = true;
-          } else {
-            if (currentChar == '<') {
-              PageElementTag secondTag = analysis.isInTag(currentIndex, tag.getNormalizedName());
-              if (secondTag != null) {
-                if (secondTag.isComplete() || secondTag.isEndTag()) {
-                  ok = false;
-                }
-                if (ok) {
-                  currentIndex = secondTag.getEndIndex();
-                  while ((currentIndex < contents.length()) && (contents.charAt(currentIndex) == ' ')) {
-                    currentIndex++;
-                  }
-                  if ((currentIndex < contents.length()) && (contents.charAt(currentIndex) == '\n')) {
-                    finished = true;
-                    CheckErrorResult errorResult = createCheckErrorResult(
-                        analysis, tag.getBeginIndex(), secondTag.getEndIndex());
-                    String replacement =
-                        contents.substring(tag.getBeginIndex(), secondTag.getBeginIndex()) +
-                        PageElementTag.createTag(tag.getName(), true, false);
-                    String text =
-                        contents.substring(tag.getBeginIndex(), tag.getEndIndex()) +
-                        "..." +
-                        PageElementTag.createTag(tag.getName(), true, false);
-                    errorResult.addReplacement(
-                        replacement, text, false);
-                    errors.add(errorResult);
-                    hasBeenReported = true;
-                  } else {
-                    ok = false;
-                  }
-                }
-              }
-            }
-            currentIndex++;
-          }
-        }
-        if (ok && !hasBeenReported) {
-          CheckErrorResult errorResult = createCheckErrorResult(analysis, tag.getBeginIndex(), currentIndex);
-          String replacement =
-              contents.substring(tag.getBeginIndex(), currentIndex) +
-              PageElementTag.createTag(tag.getName(), true, false);
-          String text =
-              contents.substring(tag.getBeginIndex(), tag.getEndIndex()) +
-              "..." +
-              PageElementTag.createTag(tag.getName(), true, false);
-          errorResult.addReplacement(
-              replacement, text, false);
-          errors.add(errorResult);
-          hasBeenReported = true;
-        }
-      }
+    if (!hasBeenReported) {
+      hasBeenReported = analyzeGalleryImageDescription(analysis, tag, errors);
     }
 
     // Default reporting
@@ -208,5 +106,159 @@ public class CheckErrorAlgorithm532 extends CheckErrorAlgorithmBase {
       CheckErrorResult errorResult = createCheckErrorResult(analysis, tag.getBeginIndex(), tag.getEndIndex());
       errors.add(errorResult);
     }
+  }
+
+  /**
+   * @param analysis Page analysis.
+   * @param tag Tag.
+   * @param errors Errors found in the page.
+   * @return True if the error has been reported.
+   */
+  private boolean analyzeImageDescription(
+      PageAnalysis analysis, PageElementTag tag,
+      Collection<CheckErrorResult> errors) {
+
+    // Check type of tag
+    if (!PageElementTag.TAG_HTML_CENTER.equals(tag.getNormalizedName())) {
+      return false;
+    }
+
+    // Analyze if it is in an image description
+    PageElementImage image = analysis.isInImage(tag.getBeginIndex());
+    if (image == null) {
+      return false;
+    }
+    Parameter desc = image.getDescriptionParameter();
+    if ((desc == null) || (tag.getBeginIndex() != image.getBeginIndex() + desc.getBeginOffset())) {
+      return false;
+    }
+
+    // Check description
+    int currentIndex = tag.getEndIndex();
+    String contents = analysis.getContents();
+    while (currentIndex < image.getBeginIndex() + desc.getEndOffset()) {
+      char currentChar = contents.charAt(currentIndex);
+      if (currentChar == '<') {
+        PageElementTag secondTag = analysis.isInTag(currentIndex, tag.getNormalizedName());
+        if (secondTag != null) {
+          return false;
+          // TODO
+        }
+      }
+      currentIndex++;
+    }
+
+    // Report tag
+    CheckErrorResult errorResult = createCheckErrorResult(
+        analysis,
+        image.getBeginIndex() + desc.getBeginOffset(),
+        image.getBeginIndex() + desc.getEndOffset());
+    String replacement =
+        contents.substring(image.getBeginIndex() + desc.getBeginOffset(), image.getBeginIndex() + desc.getEndOffset()) +
+        PageElementTag.createTag(tag.getName(), true, false);
+    String text =
+        contents.substring(tag.getBeginIndex(), tag.getEndIndex()) +
+        "..." +
+        PageElementTag.createTag(tag.getName(), true, false);
+    errorResult.addReplacement(
+        replacement, text, true);
+    errors.add(errorResult);
+    return true;
+  }
+
+  /**
+   * @param analysis Page analysis.
+   * @param tag Tag.
+   * @param errors Errors found in the page.
+   * @return True if the error has been reported.
+   */
+  private boolean analyzeGalleryImageDescription(
+      PageAnalysis analysis, PageElementTag tag,
+      Collection<CheckErrorResult> errors) {
+
+    // Check type of tag
+    if (!PageElementTag.TAG_HTML_CENTER.equals(tag.getNormalizedName())) {
+      return false;
+    }
+
+    // Analyze if it is in a gallery tag
+    PageElementTag galleryTag = analysis.getSurroundingTag(PageElementTag.TAG_WIKI_GALLERY, tag.getBeginIndex());
+    if (galleryTag == null) {
+      return false;
+    }
+
+    // Check description
+    int currentIndex = tag.getBeginIndex();
+    String contents = analysis.getContents();
+    while ((currentIndex > 0) && (contents.charAt(currentIndex - 1) == ' ')) {
+      currentIndex--;
+    }
+    if ((currentIndex <= 0) || (contents.charAt(currentIndex - 1) != '|')) {
+      return false;
+    }
+    currentIndex = tag.getEndIndex();
+    boolean finished = false;
+    while (!finished && (currentIndex < contents.length())) {
+      char currentChar = contents.charAt(currentIndex);
+      if (currentChar == '\n') {
+        finished = true;
+      } else {
+        if (currentChar == '<') {
+          PageElementTag secondTag = analysis.isInTag(currentIndex, tag.getNormalizedName());
+          if (secondTag != null) {
+            if (secondTag.isComplete() || secondTag.isEndTag()) {
+              return false;
+            }
+            currentIndex = secondTag.getEndIndex();
+            while ((currentIndex < contents.length()) && (contents.charAt(currentIndex) == ' ')) {
+              currentIndex++;
+            }
+            if ((currentIndex < contents.length()) && (contents.charAt(currentIndex) == '\n')) {
+              finished = true;
+              CheckErrorResult errorResult = createCheckErrorResult(
+                  analysis, tag.getBeginIndex(), secondTag.getEndIndex());
+              String replacement =
+                  contents.substring(tag.getBeginIndex(), secondTag.getBeginIndex()) +
+                  PageElementTag.createTag(tag.getName(), true, false);
+              String text =
+                  contents.substring(tag.getBeginIndex(), tag.getEndIndex()) +
+                  "..." +
+                  PageElementTag.createTag(tag.getName(), true, false);
+              errorResult.addReplacement(
+                  replacement, text, true);
+              errors.add(errorResult);
+              return true;
+            }
+            return false;
+          }
+        }
+        currentIndex++;
+      }
+    }
+
+    // Report tag
+    CheckErrorResult errorResult = createCheckErrorResult(analysis, tag.getBeginIndex(), currentIndex);
+    String replacement =
+        contents.substring(tag.getBeginIndex(), currentIndex) +
+        PageElementTag.createTag(tag.getName(), true, false);
+    String text =
+        contents.substring(tag.getBeginIndex(), tag.getEndIndex()) +
+        "..." +
+        PageElementTag.createTag(tag.getName(), true, false);
+    errorResult.addReplacement(
+        replacement, text, true);
+    errors.add(errorResult);
+    return true;
+  }
+
+  /**
+   * Automatic fixing of some errors in the page.
+   * 
+   * @param analysis Page analysis.
+   * @return Page contents after fix.
+   */
+  @Override
+  protected String internalAutomaticFix(PageAnalysis analysis) {
+    return fixUsingAutomaticReplacement(analysis);
   }
 }
