@@ -14,6 +14,7 @@ import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementImage;
 import org.wikipediacleaner.api.data.PageElementImage.Parameter;
+import org.wikipediacleaner.api.data.PageElementInternalLink;
 import org.wikipediacleaner.api.data.PageElementTag;
 
 
@@ -30,6 +31,13 @@ public class CheckErrorAlgorithm532 extends CheckErrorAlgorithmBase {
   /** List of tags to be verified. */
   private final static String[] tagNames = {
     PageElementTag.TAG_HTML_CENTER,
+    PageElementTag.TAG_HTML_DIV,
+    PageElementTag.TAG_HTML_FONT,
+    PageElementTag.TAG_HTML_P,
+    PageElementTag.TAG_HTML_SMALL,
+    PageElementTag.TAG_HTML_SPAN,
+    PageElementTag.TAG_HTML_TD,
+    PageElementTag.TAG_HTML_TR,
   };
 
   /**
@@ -91,14 +99,29 @@ public class CheckErrorAlgorithm532 extends CheckErrorAlgorithmBase {
       Collection<CheckErrorResult> errors, boolean onlyAutomatic) {
     boolean hasBeenReported = false;
 
-    // Tags in image description
+    // Tag in link text
+    if (!hasBeenReported) {
+      hasBeenReported = analyzeLinkText(analysis, tag, errors);
+    }
+
+    // Tag in image description
     if (!hasBeenReported) {
       hasBeenReported = analyzeImageDescription(analysis, tag, errors);
     }
 
-    // Tags in image description in gallery tags
+    // Tag in image description in gallery tags
     if (!hasBeenReported) {
       hasBeenReported = analyzeGalleryImageDescription(analysis, tag, errors);
+    }
+
+    // Tag in list item
+    if (!hasBeenReported) {
+      hasBeenReported = analyzeListItem(analysis, tag, errors);
+    }
+
+    // Tag inside center tags
+    if (!hasBeenReported) {
+      hasBeenReported = analyzeInsideCenterTags(analysis, tag, errors);
     }
 
     // Default reporting
@@ -106,6 +129,53 @@ public class CheckErrorAlgorithm532 extends CheckErrorAlgorithmBase {
       CheckErrorResult errorResult = createCheckErrorResult(analysis, tag.getBeginIndex(), tag.getEndIndex());
       errors.add(errorResult);
     }
+  }
+
+  /**
+   * @param analysis Page analysis.
+   * @param tag Tag.
+   * @param errors Errors found in the page.
+   * @return True if the error has been reported.
+   */
+  private boolean analyzeLinkText(
+      PageAnalysis analysis, PageElementTag tag,
+      Collection<CheckErrorResult> errors) {
+
+    // Check type of tag
+    if (!PageElementTag.TAG_HTML_SPAN.equals(tag.getNormalizedName())) {
+      return false;
+    }
+
+    // Analyze if it is inside link text
+    PageElementInternalLink link = analysis.isInInternalLink(tag.getBeginIndex());
+    if ((link == null) ||
+        (link.getText() == null) ||
+        (tag.getBeginIndex() < link.getBeginIndex() + link.getTextOffset())) {
+      return false;
+    }
+    String contents = analysis.getContents();
+    int index = tag.getBeginIndex();
+    while ((index > 0) && (contents.charAt(index - 1) == ' ')) {
+      index--;
+    }
+    if (index > link.getBeginIndex() + link.getTextOffset()) {
+      return false;
+    }
+
+    // Report tag
+    int endIndex = link.getEndIndex() - 2;
+    CheckErrorResult errorResult = createCheckErrorResult(analysis, tag.getBeginIndex(), endIndex);
+    String replacement =
+        contents.substring(tag.getBeginIndex(), endIndex) +
+        PageElementTag.createTag(tag.getName(), true, false);
+    String text =
+        contents.substring(tag.getBeginIndex(), tag.getEndIndex()) +
+        "..." +
+        PageElementTag.createTag(tag.getName(), true, false);
+    errorResult.addReplacement(
+        replacement, text, true);
+    errors.add(errorResult);
+    return true;
   }
 
   /**
@@ -234,6 +304,111 @@ public class CheckErrorAlgorithm532 extends CheckErrorAlgorithmBase {
         }
         currentIndex++;
       }
+    }
+
+    // Report tag
+    CheckErrorResult errorResult = createCheckErrorResult(analysis, tag.getBeginIndex(), currentIndex);
+    String replacement =
+        contents.substring(tag.getBeginIndex(), currentIndex) +
+        PageElementTag.createTag(tag.getName(), true, false);
+    String text =
+        contents.substring(tag.getBeginIndex(), tag.getEndIndex()) +
+        "..." +
+        PageElementTag.createTag(tag.getName(), true, false);
+    errorResult.addReplacement(
+        replacement, text, true);
+    errors.add(errorResult);
+    return true;
+  }
+
+  /**
+   * @param analysis Page analysis.
+   * @param tag Tag.
+   * @param errors Errors found in the page.
+   * @return True if the error has been reported.
+   */
+  private boolean analyzeListItem(
+      PageAnalysis analysis, PageElementTag tag,
+      Collection<CheckErrorResult> errors) {
+
+    // Check type of tag
+    if (!PageElementTag.TAG_HTML_SMALL.equals(tag.getNormalizedName())) {
+      return false;
+    }
+
+    // Analyze if it is in a list item
+    String contents = analysis.getContents();
+    int index = tag.getBeginIndex();
+    while ((index > 0) && (contents.charAt(index - 1) != '\n')) {
+      index--;
+    }
+    if (contents.charAt(index) != '*') {
+      return false;
+    }
+
+    // Check item
+    int currentIndex = tag.getEndIndex();
+    boolean textFound = false;
+    while ((currentIndex < contents.length()) &&
+        (contents.charAt(currentIndex) != '\n')) {
+      textFound |= !Character.isWhitespace(contents.charAt(currentIndex));
+      currentIndex++;
+    }
+    if (!textFound) {
+      return false;
+    }
+
+    // Report tag
+    CheckErrorResult errorResult = createCheckErrorResult(analysis, tag.getBeginIndex(), currentIndex);
+    String replacement =
+        contents.substring(tag.getBeginIndex(), currentIndex) +
+        PageElementTag.createTag(tag.getName(), true, false);
+    String text =
+        contents.substring(tag.getBeginIndex(), tag.getEndIndex()) +
+        "..." +
+        PageElementTag.createTag(tag.getName(), true, false);
+    errorResult.addReplacement(
+        replacement, text, false);
+    errors.add(errorResult);
+    return true;
+  }
+
+  /**
+   * @param analysis Page analysis.
+   * @param tag Tag.
+   * @param errors Errors found in the page.
+   * @return True if the error has been reported.
+   */
+  private boolean analyzeInsideCenterTags(
+      PageAnalysis analysis, PageElementTag tag,
+      Collection<CheckErrorResult> errors) {
+
+    // Check type of tag
+    if (!PageElementTag.TAG_HTML_SMALL.equals(tag.getNormalizedName())) {
+      return false;
+    }
+
+    // Analyze if it is inside center tags
+    String contents = analysis.getContents();
+    int index = tag.getBeginIndex();
+    while ((index > 0) && (contents.charAt(index - 1) == ' ')) {
+      index--;
+    }
+    if ((index <= 0) || (contents.charAt(index - 1) != '>')) {
+      return false;
+    }
+    PageElementTag centerTag = analysis.isInTag(index - 1, PageElementTag.TAG_HTML_CENTER);
+    if ((centerTag == null) || !centerTag.isComplete() || centerTag.isFullTag()){
+      return false;
+    }
+
+    // Check item
+    int currentIndex = tag.getEndIndex();
+    while (currentIndex < centerTag.getValueEndIndex()) {
+      if (contents.charAt(currentIndex) == '\n') {
+        return false;
+      }
+      currentIndex++;
     }
 
     // Report tag
