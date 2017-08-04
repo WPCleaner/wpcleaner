@@ -170,7 +170,7 @@ public class MediaWiki extends MediaWikiController {
    * @param comment Comment used for the modification.
    * @param description (Out) description of changes made.
    * @param automaticCW True if automatic Check Wiki fixing should be done also.
-   * @param forceCW True if Check Wiki fixing should be done even if no automatic replacement was done.
+   * @param forceCW List of Check Wiki fixing that should be done even if no automatic replacement was done.
    * @param save True if modification should be saved.
    * @param minor True if the modification should be tagged as minor.
    * @return Count of modified pages.
@@ -180,7 +180,7 @@ public class MediaWiki extends MediaWikiController {
       Page[] pages, Map<String, List<AutomaticFixing>> replacements,
       EnumWikipedia wiki, String comment,
       StringBuilder description,
-      boolean automaticCW, boolean forceCW, boolean save,
+      boolean automaticCW, Collection<CheckErrorAlgorithm> forceCW, boolean save,
       boolean updateDabWarning, boolean minor) throws APIException {
     if ((pages == null) || (replacements == null) || (replacements.size() == 0)) {
       return 0;
@@ -259,13 +259,35 @@ public class MediaWiki extends MediaWikiController {
 
           // Apply automatic Check Wiki fixing if needed
           if (automaticCW) {
-            if (!oldContents.equals(newContents) || forceCW) {
+
+            // Decide if Check Wiki fixing should be applied
+            boolean shouldApply = false;
+            if (!oldContents.equals(newContents)) {
+              shouldApply = true;
+            } else if ((forceCW != null) && !forceCW.isEmpty()) {
+              shouldApply = true;
+            }
+
+            // Apply Check Wiki fixing
+            if (shouldApply) {
               String tmpContents = newContents;
               List<CheckErrorAlgorithm> algorithms = CheckErrorAlgorithms.getAlgorithms(wiki);
               List<CheckError.Progress> usedAlgorithms = new ArrayList<>();
               newContents = AutomaticFormatter.tidyArticle(
                   page, newContents, algorithms, false, usedAlgorithms);
-              if (!usedAlgorithms.isEmpty()) {
+
+              // Decide if modifications should be kept
+              boolean shouldKeep = (!oldContents.equals(tmpContents));
+              if (forceCW != null) {
+                for (CheckError.Progress progress : usedAlgorithms) {
+                  if (forceCW.contains(progress.algorithm)) {
+                    shouldKeep = true;
+                  }
+                }
+              }
+
+              // Keep modifications
+              if (shouldKeep && !usedAlgorithms.isEmpty()) {
                 fullComment.append(" / ");
                 fullComment.append(wiki.getCWConfiguration().getComment(usedAlgorithms));
                 if (tmpDescription != null) {

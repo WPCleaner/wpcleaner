@@ -7,11 +7,13 @@
 
 package org.wikipediacleaner.gui.swing.worker;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
 import org.wikipediacleaner.api.APIException;
 import org.wikipediacleaner.api.MediaWiki;
+import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithm;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.AutomaticFixing;
 import org.wikipediacleaner.api.data.DataManager;
@@ -44,8 +46,8 @@ public class AutomaticFixingWorker extends BasicWorker {
   /** True if automatic Check Wiki fixing should be done also. */
   private final boolean automaticCW;
 
-  /** True if Check Wiki fixing should be done even if no automatic replacement was done. */
-  private final boolean forceCW;
+  /** List of Check Wiki fixing that should be done even if no automatic replacement was done. */
+  private final Collection<CheckErrorAlgorithm> forceCW;
 
   /** True if modifications should be saved. */
   private final boolean save;
@@ -58,14 +60,14 @@ public class AutomaticFixingWorker extends BasicWorker {
    * @param comment Comment to use for the replacements.
    * @param showDescription True if the description of the replacements should be displayed.
    * @param automaticCW True if automatic Check Wiki fixing should be done also.
-   * @param forceCW True if Check Wiki fixing should be done even if no automatic replacement was done.
+   * @param forceCW List of Check Wiki fixing that should be done even if no automatic replacement was done.
    * @param save True if modifications should be saved.
    */
   public AutomaticFixingWorker(
       EnumWikipedia wiki, BasicWindow window,
       Page[] pages, Map<String, List<AutomaticFixing>> replacements,
       String comment, boolean showDescription,
-      boolean automaticCW, boolean forceCW, boolean save) {
+      boolean automaticCW, Collection<CheckErrorAlgorithm> forceCW, boolean save) {
     super(wiki, window);
     this.pages = pages;
     this.replacements = replacements;
