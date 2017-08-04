@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2017-08-04 00:47+0200\n"
+"POT-Creation-Date: 2017-08-04 19:13+0200\n"
 "PO-Revision-Date: 2017-03-22 17:44+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: French <fr@li.org>\n"
@@ -21,19 +21,48 @@ msgstr ""
 
 #: org/wikipediacleaner/Version.java:31
 #, java-format
-msgid ""
-"I try to keep {0} up to date with Check Wiki, but if you find any discrepancy"
-"(ies) in the detections, please let me know."
+msgid "{0} extension is now available on all WikiMedia wikis."
 msgstr ""
-"J’essaye de mettre à jour {0} avec Check Wiki, mais n’hésitez pas à "
-"m’informer si vous découvrez des incohérences."
+
+#: org/wikipediacleaner/Version.java:32
+msgid "It identifies wikitext patterns that must or can be fixed in pages."
+msgstr ""
 
 #: org/wikipediacleaner/Version.java:33
-#, java-format
-msgid "I hope you''ll like {0}."
-msgstr "J’espère que vous apprécierez {0}."
+msgid ""
+"It also provides some guidance about what the issues are with those patterns "
+"and how to fix them."
+msgstr ""
+
+#: org/wikipediacleaner/Version.java:35
+msgid "You can help by fixing problems identified by the Linter extension."
+msgstr ""
 
 #: org/wikipediacleaner/Version.java:36
+#, java-format
+msgid ""
+"Integration between {0} and the Linter extension is done in the following "
+"way:"
+msgstr ""
+
+#: org/wikipediacleaner/Version.java:38
+msgid ""
+"The \"Linter categories\" button in this window lets you retrieve a list of "
+"pages detected by Linter for a given type of problem."
+msgstr ""
+
+#: org/wikipediacleaner/Version.java:39
+msgid ""
+"The \"Check article with Linter\" button in the analysis window lets you "
+"check the current version of an article against Linter."
+msgstr ""
+
+#: org/wikipediacleaner/Version.java:40
+#, java-format
+msgid "Some errors detected by Linter are also reported directly by {0}."
+msgstr ""
+
+#: org/wikipediacleaner/Version.java:43
 #, java-format
 msgid ""
 "WPCleaner configuration is available online, check the {0}System "
@@ -42,15 +71,29 @@ msgstr ""
 "La configuration de WPCleaner est disponible en ligne, regardez la {0}"
 "configuration système{1}"
 
-#: org/wikipediacleaner/Version.java:39
+#: org/wikipediacleaner/Version.java:46
 msgid "Please, report any other problem you find to me."
 msgstr "S’il vous plait, informez-moi des problèmes rencontrés."
 
-#: org/wikipediacleaner/Version.java:42
+#: org/wikipediacleaner/Version.java:49
+#, java-format
+msgid "I hope you''ll like {0}."
+msgstr "J’espère que vous apprécierez {0}."
+
+#: org/wikipediacleaner/Version.java:50
+#, java-format
+msgid ""
+"I try to keep {0} up to date with Check Wiki, but if you find any discrepancy"
+"(ies) in the detections, please let me know."
+msgstr ""
+"J’essaye de mettre à jour {0} avec Check Wiki, mais n’hésitez pas à "
+"m’informer si vous découvrez des incohérences."
+
+#: org/wikipediacleaner/Version.java:51
 msgid "The Check Wiki project has evolved a lot recently."
 msgstr "Le projet Correction Syntaxe a beaucoup évolué récemment."
 
-#: org/wikipediacleaner/Version.java:43
+#: org/wikipediacleaner/Version.java:52
 msgid ""
 "New detections have been added either with new error numbers or by replacing "
 "previously used error numbers."
@@ -58,7 +101,7 @@ msgstr ""
 "De nouvelles détections ont été ajoutées, soit avec de nouveaux numéros "
 "d’erreurs, soit en réutilisant des numéros existants."
 
-#: org/wikipediacleaner/Version.java:44
+#: org/wikipediacleaner/Version.java:53
 msgid ""
 "You may need to update the Check Wiki translation file on your wiki to "
 "configure the new detections."
@@ -66,17 +109,17 @@ msgstr ""
 "Il se peut que vous deviez mettre à jour le fichier de traduction de Check "
 "Wiki sur votre wiki pour configurer ces nouvelles détections."
 
-#: org/wikipediacleaner/Version.java:45
+#: org/wikipediacleaner/Version.java:54
 msgid "Disambiguator extension has been deployed to all WMF wikis."
 msgstr ""
 "L’extension Disambiguator a été déployée sur tous les wikis de la Fondation "
 "WikiMédia."
 
-#: org/wikipediacleaner/Version.java:46
+#: org/wikipediacleaner/Version.java:55
 msgid "It defines the new magic word __DISAMBIG__."
 msgstr "Elle définit le nouveau mot magique __DISAMBIG__."
 
-#: org/wikipediacleaner/Version.java:47
+#: org/wikipediacleaner/Version.java:56
 msgid ""
 "This magic word should be added to all disambiguation pages (either through "
 "templates or directly)."
@@ -84,15 +127,15 @@ msgstr ""
 "Ce mot magique devrait être ajouté à chaque page d’homonymie (soit au "
 "travers d’un modèle, soit directement)."
 
-#: org/wikipediacleaner/Version.java:48
+#: org/wikipediacleaner/Version.java:57
 msgid "WPCleaner v1.28 also uses this as the default system."
 msgstr "WPCleaner v1.28 l’utilise aussi par défaut."
 
-#: org/wikipediacleaner/Version.java:49
+#: org/wikipediacleaner/Version.java:58
 msgid "An action may be required on your wiki:"
 msgstr "Une action peut être nécessaire pour votre wiki :"
 
-#: org/wikipediacleaner/Version.java:51
+#: org/wikipediacleaner/Version.java:60
 #, java-format
 msgid ""
 "You can check if {0} is used on your wiki by opening an existing "
@@ -104,26 +147,26 @@ msgstr ""
 "sur la page\" dans le menu sur la gauche. Enfin, rechercher {0} dans la page "
 "d’information."
 
-#: org/wikipediacleaner/Version.java:55
+#: org/wikipediacleaner/Version.java:64
 #, java-format
 msgid "If {0} is not used on your wiki, you should add {1} to the page {2}."
 msgstr ""
 "Si {0} n’est pas utilisé sur votre wiki, vous devriez ajouter {1} à la page "
 "{2}."
 
-#: org/wikipediacleaner/Version.java:61
+#: org/wikipediacleaner/Version.java:70
 msgid "Many new features were added recently : try them !"
 msgstr ""
 "Beaucoup de nouvelles fonctions ont été ajoutées récemment : essayez-les !"
 
-#: org/wikipediacleaner/Version.java:63
+#: org/wikipediacleaner/Version.java:72
 msgid ""
 "Leaving a note on talk pages with the list of links to disambiguation pages."
 msgstr ""
 "Laisser un mot sur les pages de discussion avec la liste des liens vers des "
 "homonymies"
 
-#: org/wikipediacleaner/Version.java:64
+#: org/wikipediacleaner/Version.java:73
 msgid ""
 "Fixing errors detected by the Check Wiki project, in the full analysis "
 "window."
@@ -131,7 +174,7 @@ msgstr ""
 "Corriger les erreurs détectées par le projet Correction Syntaxique dans la "
 "fenêtre d’analyse"
 
-#: org/wikipediacleaner/Version.java:65
+#: org/wikipediacleaner/Version.java:74
 msgid "Fixing spelling or typography based on a list of suggestions."
 msgstr ""
 "Correction orthographique et typographique basée sur une liste de "
