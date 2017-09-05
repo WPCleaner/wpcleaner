@@ -14,6 +14,7 @@ import java.util.List;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.constants.WPCConfiguration;
 import org.wikipediacleaner.api.constants.WPCConfigurationString;
+import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementInternalLink;
@@ -160,7 +161,8 @@ public class CheckErrorAlgorithm064 extends CheckErrorAlgorithmBase {
                     (paddingRight.charAt(0) == '‘')) {
                   risk = true;
                 }
-                automatic = !risk;
+                Integer namespace = analysis.getPage().getNamespace();
+                automatic = !risk && (namespace != null) && (namespace.intValue() == Namespace.MAIN);
               }
             } else if (Page.areSameTitle(linkName, cleanedText)) {
               same = true;
