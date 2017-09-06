@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2017-08-04 19:13+0200\n"
+"POT-Creation-Date: 2017-09-06 07:45+0200\n"
 "PO-Revision-Date: 2017-03-03 19:31+0000\n"
 "Last-Translator: Matěj S. <matejsuchanek97@gmail.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
@@ -473,7 +473,7 @@ msgstr "Přidat {0}"
 msgid "Remove {0}"
 msgstr "Odstranit {0}"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm064.java:34
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm064.java:35
 msgid "Modify all internal links"
 msgstr "Změnit všechny interní odkazy"
 
@@ -3657,39 +3657,44 @@ msgstr "Maximální počet položek v menu:"
 msgid "Maximum number of simultaneous analyses :"
 msgstr "Maximální počet současných analýz:"
 
-#: org/wikipediacleaner/gui/swing/options/LimitOptionsPanel.java:121
+#: org/wikipediacleaner/gui/swing/options/LimitOptionsPanel.java:122
+#, fuzzy
+msgid "Maximum number of errors for Linter :"
+msgstr "Maximální počet chyb pro Check Wikipedia:"
+
+#: org/wikipediacleaner/gui/swing/options/LimitOptionsPanel.java:139
 msgid "Minimum time between consecutive edits :"
 msgstr "Minimální prodleva mezi následujícími editacemi:"
 
-#: org/wikipediacleaner/gui/swing/options/LimitOptionsPanel.java:138
+#: org/wikipediacleaner/gui/swing/options/LimitOptionsPanel.java:156
 msgid "Maximum number of edits per minute :"
 msgstr "Maximální počet ediatcí za minutu:"
 
-#: org/wikipediacleaner/gui/swing/options/LimitOptionsPanel.java:155
+#: org/wikipediacleaner/gui/swing/options/LimitOptionsPanel.java:173
 msgid "Maximum number of interrogation threads :"
 msgstr "Maximální počet vláken:"
 
-#: org/wikipediacleaner/gui/swing/options/LimitOptionsPanel.java:172
+#: org/wikipediacleaner/gui/swing/options/LimitOptionsPanel.java:190
 msgid "Size limit for syntax highlighting"
 msgstr "Limit velikosti pro zvýraznění syntaxe"
 
-#: org/wikipediacleaner/gui/swing/options/LimitOptionsPanel.java:189
+#: org/wikipediacleaner/gui/swing/options/LimitOptionsPanel.java:207
 msgid "Threshold for slow regular expressions (ms)"
 msgstr "Práh pro pomalé regulární výrazy (ms)"
 
-#: org/wikipediacleaner/gui/swing/options/LimitOptionsPanel.java:206
+#: org/wikipediacleaner/gui/swing/options/LimitOptionsPanel.java:224
 msgid "Maximum number of category members :"
 msgstr "Maximální počet členů kategorie:"
 
-#: org/wikipediacleaner/gui/swing/options/LimitOptionsPanel.java:223
+#: org/wikipediacleaner/gui/swing/options/LimitOptionsPanel.java:241
 msgid "Maximum duration for abuse logs :"
 msgstr "Maximální trvání u záznamů zneužití:"
 
-#: org/wikipediacleaner/gui/swing/options/LimitOptionsPanel.java:240
+#: org/wikipediacleaner/gui/swing/options/LimitOptionsPanel.java:258
 msgid "Maximum number of embedding pages :"
 msgstr "Maximální počet stran pro vložení šablony:"
 
-#: org/wikipediacleaner/gui/swing/options/LimitOptionsPanel.java:257
+#: org/wikipediacleaner/gui/swing/options/LimitOptionsPanel.java:275
 msgid "Maximum number of search results :"
 msgstr "Maximální počet výsledků hledání:"
 

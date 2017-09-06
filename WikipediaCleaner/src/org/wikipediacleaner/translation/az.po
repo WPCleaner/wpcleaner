@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2017-08-04 19:13+0200\n"
+"POT-Creation-Date: 2017-09-06 07:45+0200\n"
 "PO-Revision-Date: 2013-06-14 22:05+0000\n"
 "Last-Translator: Rashid Aliyev <Unknown>\n"
 "Language-Team: Azerbaijani <az@li.org>\n"
@@ -462,7 +462,7 @@ msgstr ""
 msgid "Remove {0}"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm064.java:34
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm064.java:35
 msgid "Modify all internal links"
 msgstr ""
 
@@ -3549,39 +3549,43 @@ msgstr ""
 msgid "Maximum number of simultaneous analyses :"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/options/LimitOptionsPanel.java:121
+#: org/wikipediacleaner/gui/swing/options/LimitOptionsPanel.java:122
+msgid "Maximum number of errors for Linter :"
+msgstr ""
+
+#: org/wikipediacleaner/gui/swing/options/LimitOptionsPanel.java:139
 msgid "Minimum time between consecutive edits :"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/options/LimitOptionsPanel.java:138
+#: org/wikipediacleaner/gui/swing/options/LimitOptionsPanel.java:156
 msgid "Maximum number of edits per minute :"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/options/LimitOptionsPanel.java:155
+#: org/wikipediacleaner/gui/swing/options/LimitOptionsPanel.java:173
 msgid "Maximum number of interrogation threads :"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/options/LimitOptionsPanel.java:172
+#: org/wikipediacleaner/gui/swing/options/LimitOptionsPanel.java:190
 msgid "Size limit for syntax highlighting"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/options/LimitOptionsPanel.java:189
+#: org/wikipediacleaner/gui/swing/options/LimitOptionsPanel.java:207
 msgid "Threshold for slow regular expressions (ms)"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/options/LimitOptionsPanel.java:206
+#: org/wikipediacleaner/gui/swing/options/LimitOptionsPanel.java:224
 msgid "Maximum number of category members :"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/options/LimitOptionsPanel.java:223
+#: org/wikipediacleaner/gui/swing/options/LimitOptionsPanel.java:241
 msgid "Maximum duration for abuse logs :"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/options/LimitOptionsPanel.java:240
+#: org/wikipediacleaner/gui/swing/options/LimitOptionsPanel.java:258
 msgid "Maximum number of embedding pages :"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/options/LimitOptionsPanel.java:257
+#: org/wikipediacleaner/gui/swing/options/LimitOptionsPanel.java:275
 msgid "Maximum number of search results :"
 msgstr ""
 

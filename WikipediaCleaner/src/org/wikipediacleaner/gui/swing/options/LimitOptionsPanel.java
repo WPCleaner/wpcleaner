@@ -114,6 +114,24 @@ public class LimitOptionsPanel extends OptionsPanel {
     add(spin, constraints);
     constraints.gridy++;
 
+    // Max errors for Linter
+    spin = createJSpinner(
+        ConfigurationValueInteger.MAX_LINT_ERRORS,
+        1000, 100000, 1000);
+    JLabel labelMaxErrorsLinter = Utilities.createJLabel(
+        GT._("Maximum number of errors for Linter :"));
+    labelMaxErrorsLinter.setLabelFor(spin);
+    labelMaxErrorsLinter.setHorizontalAlignment(SwingConstants.TRAILING);
+    constraints.gridwidth = 2;
+    constraints.gridx = 0;
+    constraints.weightx = 0;
+    add(labelMaxErrorsLinter, constraints);
+    constraints.gridwidth = 1;
+    constraints.gridx = 2;
+    constraints.weightx = 1;
+    add(spin, constraints);
+    constraints.gridy++;
+
     // Time between edits
     spin = createJSpinner(
         ConfigurationValueInteger.TIME_BETWEEN_EDIT,
