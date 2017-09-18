@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2017-09-06 07:45+0200\n"
+"POT-Creation-Date: 2017-09-18 21:22+0200\n"
 "PO-Revision-Date: 2017-03-03 19:31+0000\n"
 "Last-Translator: Matěj S. <matejsuchanek97@gmail.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
@@ -1247,7 +1247,7 @@ msgstr "Přijímám šablony"
 msgid "URL {0} is blacklisted"
 msgstr "URL {0} je na černé listině"
 
-#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:1867
+#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:1868
 msgid ""
 "This action is protected by a CAPTCHA.\n"
 "What is the answer to the following question ?"
@@ -1255,7 +1255,7 @@ msgstr ""
 "Tato akce je chráněna funkcí CAPTCHA.\n"
 "Jaká je odpověď na následující otázku?"
 
-#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:1874
+#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:1875
 msgid ""
 "This action is protected by a CAPTCHA.\n"
 "What is the answer to the question displayed in your browser ?"
@@ -1687,7 +1687,7 @@ msgid "Generate lists"
 msgstr "Generovat seznamy"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:885
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1872
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1893
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:195
 msgid "Local Watchlist"
 msgstr "Místní sledované stránky"
@@ -1697,8 +1697,8 @@ msgid "Watchlist"
 msgstr "Sledované stránky"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:904
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1995
-#: org/wikipediacleaner/gui/swing/MainWindow.java:2060
+#: org/wikipediacleaner/gui/swing/MainWindow.java:2016
+#: org/wikipediacleaner/gui/swing/MainWindow.java:2081
 msgid "Random pages"
 msgstr "Náhodné stránky"
 
@@ -1837,43 +1837,48 @@ msgstr "Který editační filtr vás zajímá?"
 msgid "Hits for filter {0}"
 msgstr "Zásahy filtru {0}"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1730
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1691
+#, fuzzy
+msgid "All namespaces"
+msgstr "Filtrovat jmenné prostory"
+
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1751
 msgid "All disambiguations pages"
 msgstr "Všechny rozcestníkové stránky"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1886
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1907
 msgid "Watch list"
 msgstr "Sledované stránky"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1916
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1937
 msgid "Unformatted list of page names"
 msgstr "Neformátovaný seznam názvů stránek"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1917
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1938
 msgid "Internal links in a formatted list"
 msgstr "Formátovaný seznam s vnitřními odkazy."
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1920
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1941
 msgid "The file must be encoded in UTF-8 to be read correctly."
 msgstr "Aby byl soubor přečten správně, musí být kódován v UTF-8."
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1921
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1942
 msgid "In which format is the file?"
 msgstr "Formát souboru?"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1976
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1997
 msgid "List"
 msgstr "Seznam"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1999
+#: org/wikipediacleaner/gui/swing/MainWindow.java:2020
 msgid "Random redirect pages"
 msgstr "Náhodná přesměrování"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:2031
+#: org/wikipediacleaner/gui/swing/MainWindow.java:2052
 msgid "How many pages do you want?"
 msgstr "Kolik stránek chcete?"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:2043
+#: org/wikipediacleaner/gui/swing/MainWindow.java:2064
 #, java-format
 msgid "The number of pages must be between {0} and {1}"
 msgstr "Počet stránek musí být {0} až {1}"
@@ -3851,27 +3856,27 @@ msgid "Backlinks - Main namespace: {0}, All namespaces: {1}"
 msgstr ""
 "Zpětné odkazy - hlavní jmenný prostor: {0}, všechny jmenné prostory: {1}"
 
-#: org/wikipediacleaner/gui/swing/pagelist/PageListWorker.java:81
+#: org/wikipediacleaner/gui/swing/pagelist/PageListWorker.java:87
 msgid "Articles in main namespace"
 msgstr "Články v hlavním jmenném prostoru"
 
-#: org/wikipediacleaner/gui/swing/pagelist/PageListWorker.java:82
+#: org/wikipediacleaner/gui/swing/pagelist/PageListWorker.java:88
 msgid "Articles associated to talk pages"
 msgstr "Články související s diskusemi"
 
-#: org/wikipediacleaner/gui/swing/pagelist/PageListWorker.java:83
+#: org/wikipediacleaner/gui/swing/pagelist/PageListWorker.java:89
 msgid "Linter extension category"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/pagelist/PageListWorker.java:84
+#: org/wikipediacleaner/gui/swing/pagelist/PageListWorker.java:90
 msgid "Pages with missing templates"
 msgstr "Stránky s chybějícími šablonami"
 
-#: org/wikipediacleaner/gui/swing/pagelist/PageListWorker.java:85
+#: org/wikipediacleaner/gui/swing/pagelist/PageListWorker.java:91
 msgid "Protected titles with links from articles"
 msgstr "Zamčené názvy, na něž je odkazováno"
 
-#: org/wikipediacleaner/gui/swing/pagelist/PageListWorker.java:162
+#: org/wikipediacleaner/gui/swing/pagelist/PageListWorker.java:168
 msgid ""
 "You have loaded the list of all disambiguation pages to speed up page "
 "analysis.\n"
@@ -3880,19 +3885,19 @@ msgstr ""
 "Byl nahrán seznam všech rozcestníků pro urychlení analyzování stránek.\n"
 "Chcete tento seznam zobrazit?"
 
-#: org/wikipediacleaner/gui/swing/pagelist/PageListWorker.java:479
+#: org/wikipediacleaner/gui/swing/pagelist/PageListWorker.java:485
 msgid "Retrieving list of missing templates"
 msgstr "Nahrávám seznam chybějících šablon"
 
-#: org/wikipediacleaner/gui/swing/pagelist/PageListWorker.java:484
+#: org/wikipediacleaner/gui/swing/pagelist/PageListWorker.java:490
 msgid "Checking that the templates are still missing"
 msgstr "Ověřuji, zda dané šablony stále neexistují"
 
-#: org/wikipediacleaner/gui/swing/pagelist/PageListWorker.java:510
+#: org/wikipediacleaner/gui/swing/pagelist/PageListWorker.java:516
 msgid "Retrieving list of protected titles"
 msgstr "Nahrávám seznam zamčených názvů"
 
-#: org/wikipediacleaner/gui/swing/pagelist/PageListWorker.java:516
+#: org/wikipediacleaner/gui/swing/pagelist/PageListWorker.java:522
 msgid "Checking that protected titles have backlinks"
 msgstr "Ověřuji, zda na zamčené názvy něco odkazuje"
 

@@ -58,10 +58,16 @@ public class PageListWorker extends BasicWorker {
    * <li>DIRECT (direct list)</li>
    * <li>EMBEDDED_IN (list of templates):
    *     Retrieve list of pages embedding the templates.</li>
-   * <li>INTERNAL_LINKS (list of pages):
-   *     Retrieve list of internal links in the pages.</li>
+   * <li>INTERNAL_LINKS_MAIN (list of pages):
+   *     Retrieve list of internal links to the main nam espace in the pages.</li>
+   * <li>INTERNAL_LINKS_TALKPAGE_CONVERTED (list of pages):
+   *     Retrieve list of internal links to the articles (through their talk page if needed) in the pages.</li>
+   * <li>LINTER_CATEGORY (list of categories):
+   *     Retrieve list of linter errors for the given categories.</li>
    * <li>MISSING_TEMPLATES (list not used):
    *     Retrieve list of pages with missing templates.</li>
+   * <li>PROTECTED_TITLES (list not used):
+   *     Retrieve list of protected titles with links from articles.</li>
    * <li>QUERY_PAGE (code of the special list to retrieve)
    *     Retrieve list of pages of a special list.</li>
    * <li>SEARCH_TITLES (list of keywords)
@@ -551,7 +557,15 @@ public class PageListWorker extends BasicWorker {
     final API api = APIFactory.getAPI();
     EnumWikipedia wiki = getWikipedia();
     String category = elementNames.get(0);
-    List<Page> tmpPages = api.retrieveLinterCategory(wiki, category, true, Integer.MAX_VALUE);
+    Integer namespace = null;
+    if (elementNames.size() > 1) {
+      try {
+        namespace = Integer.parseInt(elementNames.get(1)); 
+      } catch (NumberFormatException e) {
+        // Nothing to do
+      }
+    }
+    List<Page> tmpPages = api.retrieveLinterCategory(wiki, category, namespace, true, Integer.MAX_VALUE);
     if (tmpPages != null) {
       pages.addAll(tmpPages);
     }

@@ -1687,11 +1687,24 @@ public class MainWindow
         menu.add(separator);
         previousLevel = level;
       }
-      JMenuItem item = new JMenuItem(category.getCategoryName(config));
+      JMenu subMenu = new JMenu(category.getCategoryName(config));
+      JMenuItem item = new JMenuItem(GT._("All namespaces"));
       item.setActionCommand(category.getCategory());
       item.addActionListener(EventHandler.create(
           ActionListener.class, this, "actionLinterCategory", "actionCommand"));
-      menu.add(item);
+      subMenu.add(item);
+      List<Namespace> namespaces = getWiki().getWikiConfiguration().getNamespaces();
+      if ((namespaces != null) && (namespaces.size() > 0)) {
+        subMenu.addSeparator();
+        for (Namespace namespace : namespaces) {
+          item = new JMenuItem(namespace.getTitle());
+          item.setActionCommand(category.getCategory() + "/" + namespace.getId().toString());
+          item.addActionListener(EventHandler.create(
+              ActionListener.class, this, "actionLinterCategory", "actionCommand"));
+          subMenu.add(item);
+        }
+      }
+      menu.add(subMenu);
     }
     menu.show(
         buttonLinterCategories,
@@ -1709,9 +1722,17 @@ public class MainWindow
     if (wikipedia == null) {
       return;
     }
+    List<String> elements = new ArrayList<>();
+    int separator = category.indexOf('/');
+    if (separator > 0) {
+      elements.add(category.substring(0, separator));
+      elements.add(category.substring(separator + 1));
+    } else {
+      elements.add(category);
+    }
     new PageListWorker(
         wikipedia, this, null,
-        Collections.singletonList(category),
+        elements,
         PageListWorker.Mode.LINTER_CATEGORY, false,
         category).start();
   }

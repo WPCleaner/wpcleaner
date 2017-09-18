@@ -58,11 +58,12 @@ public class ApiLintErrorsRequest extends ApiListRequest {
    * Load list of lint errors.
    * 
    * @param category Linter category.
+   * @param namespace Optional name space.
    * @param limit Flag indicating if the number of results should be limited.
    * @param max Absolute maximum number of results
    */
   public List<Page> loadLintErrors(
-      String category,
+      String category, Integer namespace,
       boolean limit, int max) throws APIException {
 
     int maxSize = getMaxSize(limit, ConfigurationValueInteger.MAX_LINT_ERRORS);
@@ -72,6 +73,9 @@ public class ApiLintErrorsRequest extends ApiListRequest {
     properties.put(PROPERTY_CONTINUE, PROPERTY_CONTINUE_DEFAULT);
     properties.put(PROPERTY_LIMIT, LIMIT_MAX);
     properties.put(PROPERTY_CATEGORIES, category);
+    if (namespace != null) {
+      properties.put(PROPERTY_NAMESPACE, namespace.toString());
+    }
     List<Page> list = new ArrayList<Page>();
     while (result.executeLinterCategory(
         properties, list, category) &&

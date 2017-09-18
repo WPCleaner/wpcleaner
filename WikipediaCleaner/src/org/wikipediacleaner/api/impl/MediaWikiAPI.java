@@ -1261,6 +1261,7 @@ public class MediaWikiAPI implements API {
    * 
    * @param wiki Wiki.
    * @param category Category.
+   * @param namespace Optional name space.
    * @param limit Flag indicating if the number of results should be limited.
    * @param max Absolute maximum number of results
    * @return List of pages in the given category.
@@ -1268,11 +1269,11 @@ public class MediaWikiAPI implements API {
    */
   @Override
   public List<Page> retrieveLinterCategory(
-      EnumWikipedia wiki, String category,
+      EnumWikipedia wiki, String category, Integer namespace,
       boolean limit, int max) throws APIException {
     ApiLintErrorsResult result = new ApiXmlLintErrorsResult(wiki, httpClient);
     ApiLintErrorsRequest request = new ApiLintErrorsRequest(wiki, result);
-    return request.loadLintErrors(category, true, max);
+    return request.loadLintErrors(category, namespace, true, max);
   }
 
   /**

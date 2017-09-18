@@ -401,11 +401,12 @@ public interface API {
    * 
    * @param wiki Wiki.
    * @param category Category.
+   * @param namespace Optional name space.
    * @return List of pages in the given category.
    * @throws APIException
    */
   public List<Page> retrieveLinterCategory(
-      EnumWikipedia wiki, String category,
+      EnumWikipedia wiki, String category, Integer namespace,
       boolean limit, int max) throws APIException;
 
   /**
