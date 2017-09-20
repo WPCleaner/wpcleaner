@@ -11,6 +11,7 @@ import java.util.Collection;
 import java.util.List;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
+import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementImage;
 import org.wikipediacleaner.api.data.PageElementImage.Parameter;
@@ -127,6 +128,11 @@ public class CheckErrorAlgorithm532 extends CheckErrorAlgorithmBase {
     // Tag inside center tags
     if (!hasBeenReported) {
       hasBeenReported = analyzeInsideCenterTags(analysis, tag, errors);
+    }
+
+    // Tag in the next line
+    if (!hasBeenReported) {
+      hasBeenReported = analyzeLastLine(analysis, tag, errors);
     }
 
     // Default reporting
@@ -469,6 +475,86 @@ public class CheckErrorAlgorithm532 extends CheckErrorAlgorithmBase {
         PageElementTag.createTag(tag.getName(), true, false);
     errorResult.addReplacement(
         replacement, text, true);
+    errors.add(errorResult);
+    return true;
+  }
+
+  /**
+   * @param analysis Page analysis.
+   * @param tag Tag.
+   * @param errors Errors found in the page.
+   * @return True if the error has been reported.
+   */
+  private boolean analyzeLastLine(
+      PageAnalysis analysis, PageElementTag tag,
+      Collection<CheckErrorResult> errors) {
+
+    // Check type of tag
+    if (!PageElementTag.TAG_HTML_CENTER.equals(tag.getNormalizedName()) &&
+        !PageElementTag.TAG_HTML_SMALL.equals(tag.getNormalizedName())) {
+      return false;
+    }
+
+    // Check namespace
+    Integer namespace = analysis.getPage().getNamespace();
+    if ((namespace == null) || (namespace.intValue() == Namespace.TEMPLATE)) {
+      return false;
+    }
+
+    // Analyze if it is in the last line
+    String contents = analysis.getContents();
+    int index = contents.length();
+    int tagEndIndex = tag.getEndIndex();
+    while ((index > tagEndIndex) && (contents.charAt(index - 1) == '\n')) {
+      index--;
+    }
+    int lastIndex = index;
+    while ((index > tagEndIndex) && (contents.charAt(index - 1) != '\n')) {
+      index--;
+    }
+    if (index > tagEndIndex) {
+      return false;
+    }
+
+    // Decide what to do
+    int lineCount = 0;
+    if (index < lastIndex) {
+      lineCount++;
+    }
+    boolean shouldDelete = false;
+    boolean shouldClose = true;
+    boolean automatic = true;
+    if (lineCount == 0) {
+      if (PageElementTag.TAG_HTML_CENTER.equals(tag.getNormalizedName())) {
+        shouldDelete = true;
+        shouldClose = false;
+      } else if (PageElementTag.TAG_HTML_SMALL.equals(tag.getNormalizedName())) {
+        automatic = false;
+        index = tag.getBeginIndex();
+        if ((index > 0) && (contents.charAt(index - 1) == '\n')) {
+          shouldDelete = true;
+        }
+      } else {
+        automatic = false;
+      }
+    }
+
+    // Report tag
+    CheckErrorResult errorResult = createCheckErrorResult(analysis, tag.getBeginIndex(), lastIndex);
+    if (shouldDelete) {
+      errorResult.addReplacement("", automatic);
+    }
+    if (shouldClose) {
+      String replacement =
+          contents.substring(tag.getBeginIndex(), lastIndex) +
+          PageElementTag.createTag(tag.getName(), true, false);
+      String text =
+          contents.substring(tag.getBeginIndex(), tag.getEndIndex()) +
+          "..." +
+          PageElementTag.createTag(tag.getName(), true, false);
+      errorResult.addReplacement(
+          replacement, text, automatic);
+    }
     errors.add(errorResult);
     return true;
   }
