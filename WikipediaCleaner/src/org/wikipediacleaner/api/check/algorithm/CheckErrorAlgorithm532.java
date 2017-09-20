@@ -99,6 +99,11 @@ public class CheckErrorAlgorithm532 extends CheckErrorAlgorithmBase {
       Collection<CheckErrorResult> errors, boolean onlyAutomatic) {
     boolean hasBeenReported = false;
 
+    // Id tag
+    if (!hasBeenReported) {
+      hasBeenReported = analyzeIdTag(analysis, tag, errors);
+    }
+
     // Tag in link text
     if (!hasBeenReported) {
       hasBeenReported = analyzeLinkText(analysis, tag, errors);
@@ -129,6 +134,48 @@ public class CheckErrorAlgorithm532 extends CheckErrorAlgorithmBase {
       CheckErrorResult errorResult = createCheckErrorResult(analysis, tag.getBeginIndex(), tag.getEndIndex());
       errors.add(errorResult);
     }
+  }
+
+  /**
+   * @param analysis Page analysis.
+   * @param tag Tag.
+   * @param errors Errors found in the page.
+   * @return True if the error has been reported.
+   */
+  private boolean analyzeIdTag(
+      PageAnalysis analysis, PageElementTag tag,
+      Collection<CheckErrorResult> errors) {
+
+    // Check type of tag
+    if (!PageElementTag.TAG_HTML_SPAN.equals(tag.getNormalizedName())) {
+      return false;
+    }
+
+    // Analyze if it is an id tag
+    boolean idAttribute = false;
+    boolean otherAttribute = false;
+    for (int paramNum = 0; paramNum < tag.getParametersCount(); paramNum++) {
+      PageElementTag.Parameter param = tag.getParameter(paramNum);
+      if ("id".equalsIgnoreCase(param.getName())) {
+        idAttribute = true;
+      } else {
+        otherAttribute = true;
+      }
+    }
+    if (!idAttribute || otherAttribute) {
+      return false;
+    }
+
+    // Report tag
+    String contents = analysis.getContents();
+    CheckErrorResult errorResult = createCheckErrorResult(analysis, tag.getBeginIndex(), tag.getEndIndex());
+    String replacement =
+        contents.substring(tag.getBeginIndex(), tag.getEndIndex()) +
+        PageElementTag.createTag(tag.getName(), true, false);
+    errorResult.addReplacement(
+        replacement, true);
+    errors.add(errorResult);
+    return true;
   }
 
   /**
