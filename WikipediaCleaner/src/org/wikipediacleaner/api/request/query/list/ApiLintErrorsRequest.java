@@ -78,7 +78,7 @@ public class ApiLintErrorsRequest extends ApiListRequest {
     }
     List<Page> list = new ArrayList<Page>();
     while (result.executeLinterCategory(
-        properties, list, category) &&
+        properties, list, category, (namespace != null)) &&
         (list.size() < maxSize)) {
       //
     }

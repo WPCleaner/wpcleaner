@@ -46,6 +46,7 @@ public class ApiXmlLintErrorsResult extends ApiXmlResult implements ApiLintError
    * @param properties Properties defining request.
    * @param list List to be filled with lint errors.
    * @param category Linter category.
+   * @param withTemplates Includes templates causing the error.
    * @return True if request should be continued.
    * @throws APIException
    */
@@ -53,7 +54,7 @@ public class ApiXmlLintErrorsResult extends ApiXmlResult implements ApiLintError
   public boolean executeLinterCategory(
       Map<String, String> properties,
       List<Page> list,
-      String category) throws APIException {
+      String category, boolean withTemplates) throws APIException {
     try {
       Element root = getRoot(properties, ApiRequest.MAX_ATTEMPTS);
 
@@ -68,6 +69,21 @@ public class ApiXmlLintErrorsResult extends ApiXmlResult implements ApiLintError
             getWiki(), currentNode.getAttributeValue("title"), null, null, null);
         if (!list.contains(page)) {
           list.add(page);
+        }
+        if (withTemplates) {
+          Element templateInfo = currentNode.getChild("templateInfo");
+          if (templateInfo != null) {
+            String templateName = templateInfo.getAttributeValue("name");
+            if ((templateName != null) &&
+                !templateName.startsWith("{") &&
+                !templateName.startsWith("#")) {
+              page = DataManager.getPage(
+                  getWiki(), templateName, null, null, null);
+              if (!list.contains(page)) {
+                list.add(page);
+              }
+            }
+          }
         }
       }
 
