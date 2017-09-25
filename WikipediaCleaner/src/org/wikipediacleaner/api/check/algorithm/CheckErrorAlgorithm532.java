@@ -34,6 +34,15 @@ public class CheckErrorAlgorithm532 extends CheckErrorAlgorithmBase {
     PageElementTag.TAG_HTML_CENTER,
     PageElementTag.TAG_HTML_DIV,
     PageElementTag.TAG_HTML_FONT,
+    PageElementTag.TAG_HTML_H1,
+    PageElementTag.TAG_HTML_H2,
+    PageElementTag.TAG_HTML_H3,
+    PageElementTag.TAG_HTML_H4,
+    PageElementTag.TAG_HTML_H5,
+    PageElementTag.TAG_HTML_H6,
+    PageElementTag.TAG_HTML_H7,
+    PageElementTag.TAG_HTML_H8,
+    PageElementTag.TAG_HTML_H9,
     PageElementTag.TAG_HTML_P,
     PageElementTag.TAG_HTML_SMALL,
     PageElementTag.TAG_HTML_SPAN,
@@ -58,35 +67,18 @@ public class CheckErrorAlgorithm532 extends CheckErrorAlgorithmBase {
     }
 
     // Analyze each reference tag
+    List<PageElementTag> tags = analysis.getTags();
     boolean result = false;
-    for (String tagName : tagNames) {
-      result |= analyzeTag(analysis, tagName, errors, onlyAutomatic);
-    }
-
-    return result;
-  }
-
-  /**
-   * @param analysis Page analysis.
-   * @param tagName Tag name.
-   * @param errors Errors found in the page.
-   * @param onlyAutomatic True if analysis could be restricted to errors automatically fixed.
-   * @return Flag indicating if the error was found.
-   */
-  private boolean analyzeTag(
-      PageAnalysis analysis, String tagName,
-      Collection<CheckErrorResult> errors, boolean onlyAutomatic) {
-    boolean errorFound = false;
-    List<PageElementTag> tags = analysis.getTags(tagName);
     for (PageElementTag tag : tags) {
       if (!tag.isComplete() && !tag.isEndTag()) {
-        errorFound = true;
+        result = true;
         if (errors != null) {
           reportTag(analysis, tag, errors, onlyAutomatic);
         }
       }
     }
-    return errorFound;
+
+    return result;
   }
 
   /**
@@ -130,6 +122,11 @@ public class CheckErrorAlgorithm532 extends CheckErrorAlgorithmBase {
       hasBeenReported = analyzeInsideCenterTags(analysis, tag, errors);
     }
 
+    // Headings
+    if (!hasBeenReported) {
+      hasBeenReported = analyzeHeadings(analysis, tag, errors);
+    }
+
     // Tag in the next line
     if (!hasBeenReported) {
       hasBeenReported = analyzeLastLine(analysis, tag, errors);
@@ -137,8 +134,16 @@ public class CheckErrorAlgorithm532 extends CheckErrorAlgorithmBase {
 
     // Default reporting
     if (!hasBeenReported) {
-      CheckErrorResult errorResult = createCheckErrorResult(analysis, tag.getBeginIndex(), tag.getEndIndex());
-      errors.add(errorResult);
+      boolean shouldBeReported = false;
+      for (String tagName : tagNames) {
+        if (tagName.equals(tag.getNormalizedName())) {
+          shouldBeReported = true;
+        }
+      }
+      if (shouldBeReported) {
+        CheckErrorResult errorResult = createCheckErrorResult(analysis, tag.getBeginIndex(), tag.getEndIndex());
+        errors.add(errorResult);
+      }
     }
   }
 
@@ -475,6 +480,72 @@ public class CheckErrorAlgorithm532 extends CheckErrorAlgorithmBase {
         PageElementTag.createTag(tag.getName(), true, false);
     errorResult.addReplacement(
         replacement, text, true);
+    errors.add(errorResult);
+    return true;
+  }
+
+  /**
+   * @param analysis Page analysis.
+   * @param tag Tag.
+   * @param errors Errors found in the page.
+   * @return True if the error has been reported.
+   */
+  private boolean analyzeHeadings(
+      PageAnalysis analysis, PageElementTag tag,
+      Collection<CheckErrorResult> errors) {
+
+    // Check type of tag
+    if (!PageElementTag.TAG_HTML_H1.equals(tag.getNormalizedName()) &&
+        !PageElementTag.TAG_HTML_H2.equals(tag.getNormalizedName()) &&
+        !PageElementTag.TAG_HTML_H3.equals(tag.getNormalizedName()) &&
+        !PageElementTag.TAG_HTML_H4.equals(tag.getNormalizedName()) &&
+        !PageElementTag.TAG_HTML_H5.equals(tag.getNormalizedName()) &&
+        !PageElementTag.TAG_HTML_H6.equals(tag.getNormalizedName()) &&
+        !PageElementTag.TAG_HTML_H7.equals(tag.getNormalizedName()) &&
+        !PageElementTag.TAG_HTML_H8.equals(tag.getNormalizedName()) &&
+        !PageElementTag.TAG_HTML_H9.equals(tag.getNormalizedName())) {
+      return false;
+    }
+
+    // Check that the tag is at the end of a line
+    String contents = analysis.getContents();
+    int endIndex = tag.getEndIndex();
+    while ((endIndex < contents.length()) &&
+        (contents.charAt(endIndex) == ' ')) {
+      endIndex++;
+    }
+    if ((endIndex < contents.length()) &&
+        (contents.charAt(endIndex) != '\n')) {
+      return false;
+    }
+
+    // Search previous tag
+    PageElementTag previousTag = null;
+    int index = tag.getBeginIndex();
+    while ((index > 0) && (previousTag == null)) {
+      char previousChar = contents.charAt(index - 1);
+      if (previousChar == '\n') {
+        return false;
+      }
+      if (previousChar == '>') {
+        previousTag = analysis.isInTag(index - 1);
+      }
+      index--;
+    }
+    if ((previousTag == null) ||
+        (!tag.getNormalizedName().equals(previousTag.getNormalizedName()))) {
+      return false;
+    }
+
+    // Check that the previous tag is at the beginning of a line
+    if ((previousTag.getBeginIndex() > 0) &&
+        (contents.charAt(previousTag.getBeginIndex() - 1) != '\n')) {
+      return false;
+    }
+
+    // Report tag
+    CheckErrorResult errorResult = createCheckErrorResult(analysis, tag.getBeginIndex(), tag.getEndIndex());
+    errorResult.addReplacement(PageElementTag.createTag(previousTag.getName(), true, false), true);
     errors.add(errorResult);
     return true;
   }
