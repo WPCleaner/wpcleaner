@@ -200,7 +200,8 @@ public class CheckErrorAlgorithm532 extends CheckErrorAlgorithmBase {
       Collection<CheckErrorResult> errors) {
 
     // Check type of tag
-    if (!PageElementTag.TAG_HTML_SPAN.equals(tag.getNormalizedName())) {
+    if (!PageElementTag.TAG_HTML_FONT.equals(tag.getNormalizedName()) &&
+        !PageElementTag.TAG_HTML_SPAN.equals(tag.getNormalizedName())) {
       return false;
     }
 
