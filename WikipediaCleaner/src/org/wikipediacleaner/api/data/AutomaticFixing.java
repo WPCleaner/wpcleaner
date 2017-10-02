@@ -13,10 +13,15 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
 
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
+
 
 /**
  * Utility class to memorize automatic fixing parameters
  */
+@XmlRootElement(name="replacement")
+@XmlType
 public class AutomaticFixing implements Comparable<AutomaticFixing> {
 
   /**

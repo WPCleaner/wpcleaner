@@ -18,6 +18,8 @@ import java.awt.Insets;
 import java.awt.event.ActionListener;
 import java.awt.font.TextAttribute;
 import java.beans.EventHandler;
+import java.io.File;
+import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -29,6 +31,7 @@ import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JCheckBoxMenuItem;
+import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JMenu;
@@ -47,7 +50,13 @@ import javax.swing.JToolBar;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingConstants;
 import javax.swing.WindowConstants;
+import javax.swing.filechooser.FileFilter;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.TableColumnModel;
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Marshaller;
+import javax.xml.bind.Unmarshaller;
 
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithm;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmComparator;
@@ -55,6 +64,7 @@ import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithms;
 import org.wikipediacleaner.api.constants.CWConfigurationError;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.AutomaticFixing;
+import org.wikipediacleaner.api.data.AutomaticFixingList;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageComparator;
 import org.wikipediacleaner.gui.swing.action.ActionDisambiguationAnalysis;
@@ -89,6 +99,8 @@ public class AutomaticFixingWindow extends OnePageWindow {
   private JButton buttonRun;
   private JButton buttonSave;
   private JButton buttonTest;
+  private JButton buttonLoadList;
+  private JButton buttonSaveList;
   private JToggleButton buttonAutomaticCW;
   private JCheckBox chkForceCW;
   private JButton buttonAlgorithms;
@@ -280,6 +292,18 @@ public class AutomaticFixingWindow extends OnePageWindow {
     buttonTest.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionTestAutomaticFixing"));
     toolBarButtons.add(buttonTest);
+    buttonLoadList = Utilities.createJButton(
+        "gnome-drive-harddisk.png", EnumImageSize.NORMAL,
+        GT._("Load replacements"), false, null);
+    buttonLoadList.addActionListener(EventHandler.create(
+        ActionListener.class, this, "actionLoadList"));
+    toolBarButtons.add(buttonLoadList);
+    buttonSaveList = Utilities.createJButton(
+        "gnome-document-save.png", EnumImageSize.NORMAL,
+        GT._("Save replacements"), false, null);
+    buttonSaveList.addActionListener(EventHandler.create(
+        ActionListener.class, this, "actionSaveList"));
+    toolBarButtons.add(buttonSaveList);
     constraints.fill = GridBagConstraints.HORIZONTAL;
     constraints.gridwidth = 2;
     constraints.weighty = 0;
@@ -750,6 +774,54 @@ public class AutomaticFixingWindow extends OnePageWindow {
       if (answer == JOptionPane.YES_OPTION) {
         runAutomaticFixing(false);
       }
+    }
+  }
+
+  /**
+   * Action called when Load List button is pressed.
+   */
+  public void actionLoadList() {
+    try {
+      JFileChooser fc = new JFileChooser();
+      FileFilter filter = new FileNameExtensionFilter(GT._("XML files"), "xml");
+      fc.addChoosableFileFilter(filter);
+      fc.setFileFilter(filter);
+      int returnVal = fc.showOpenDialog(getParentComponent());
+      if (returnVal == JFileChooser.APPROVE_OPTION) {
+        File file = fc.getSelectedFile();
+        JAXBContext context = JAXBContext.newInstance(AutomaticFixingList.class);
+        Unmarshaller um = context.createUnmarshaller();
+        AutomaticFixingList list = (AutomaticFixingList) um.unmarshal(new FileReader(file));
+        for (AutomaticFixing element : list.getReplacements()) {
+          modelAutomaticFixing.addAutomaticFixing(element);
+        }
+      }
+    } catch (Exception e) {
+      Utilities.displayError(getParentComponent(), e);
+    }
+  }
+
+  /**
+   * Action called when Save List button is pressed.
+   */
+  public void actionSaveList() {
+    try {
+      JFileChooser fc = new JFileChooser();
+      FileFilter filter = new FileNameExtensionFilter(GT._("XML files"), "xml");
+      fc.addChoosableFileFilter(filter);
+      fc.setFileFilter(filter);
+      int returnVal = fc.showSaveDialog(getParentComponent());
+      if (returnVal == JFileChooser.APPROVE_OPTION) {
+        File file = fc.getSelectedFile();
+        JAXBContext context = JAXBContext.newInstance(AutomaticFixingList.class);
+        Marshaller m = context.createMarshaller();
+        m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
+        AutomaticFixingList list = new AutomaticFixingList();
+        list.setReplacements(modelAutomaticFixing.getData());
+        m.marshal(list, file);
+      }
+    } catch (JAXBException e) {
+      Utilities.displayError(getParentComponent(), e);
     }
   }
 
