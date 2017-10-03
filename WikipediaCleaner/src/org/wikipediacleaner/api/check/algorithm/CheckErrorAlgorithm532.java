@@ -43,6 +43,7 @@ public class CheckErrorAlgorithm532 extends CheckErrorAlgorithmBase {
     PageElementTag.TAG_HTML_H7,
     PageElementTag.TAG_HTML_H8,
     PageElementTag.TAG_HTML_H9,
+    PageElementTag.TAG_HTML_LI,
     PageElementTag.TAG_HTML_P,
     PageElementTag.TAG_HTML_SMALL,
     PageElementTag.TAG_HTML_SPAN,
@@ -86,8 +87,9 @@ public class CheckErrorAlgorithm532 extends CheckErrorAlgorithmBase {
    * @param tag Tag.
    * @param errors Errors found in the page.
    * @param onlyAutomatic True if analysis could be restricted to errors automatically fixed.
+   * @return Flag indicating if the error was found.
    */
-  private void reportTag(
+  private boolean reportTag(
       PageAnalysis analysis, PageElementTag tag,
       Collection<CheckErrorResult> errors, boolean onlyAutomatic) {
     boolean hasBeenReported = false;
@@ -117,6 +119,11 @@ public class CheckErrorAlgorithm532 extends CheckErrorAlgorithmBase {
       hasBeenReported = analyzeListItem(analysis, tag, errors);
     }
 
+    // Tag for HTML list
+    if (!hasBeenReported) {
+      hasBeenReported = analyzeHTMLList(analysis, tag, errors);
+    }
+
     // Tag inside center tags
     if (!hasBeenReported) {
       hasBeenReported = analyzeInsideCenterTags(analysis, tag, errors);
@@ -143,8 +150,11 @@ public class CheckErrorAlgorithm532 extends CheckErrorAlgorithmBase {
       if (shouldBeReported) {
         CheckErrorResult errorResult = createCheckErrorResult(analysis, tag.getBeginIndex(), tag.getEndIndex());
         errors.add(errorResult);
+        hasBeenReported = true;
       }
     }
+
+    return hasBeenReported;
   }
 
   /**
@@ -428,6 +438,109 @@ public class CheckErrorAlgorithm532 extends CheckErrorAlgorithmBase {
         PageElementTag.createTag(tag.getName(), true, false);
     errorResult.addReplacement(
         replacement, text, false);
+    errors.add(errorResult);
+    return true;
+  }
+
+  /**
+   * @param analysis Page analysis.
+   * @param tag Tag.
+   * @param errors Errors found in the page.
+   * @return True if the error has been reported.
+   */
+  private boolean analyzeHTMLList(
+      PageAnalysis analysis, PageElementTag tag,
+      Collection<CheckErrorResult> errors) {
+
+    // Check type of tag
+    if (!PageElementTag.TAG_HTML_LI.equals(tag.getNormalizedName())) {
+      return false;
+    }
+
+    // Analyze if it is inside a HTML list
+    PageElementTag tagList = null;
+    PageElementTag tagOL = analysis.getSurroundingTag(PageElementTag.TAG_HTML_OL, tag.getBeginIndex());
+    if (tagOL != null) {
+      tagList = tagOL;
+    }
+    PageElementTag tagUL = analysis.getSurroundingTag(PageElementTag.TAG_HTML_UL, tag.getBeginIndex());
+    if (tagUL != null) {
+      if (tagList == null) {
+        tagList = tagUL;
+      } else if (tagUL.getBeginIndex() > tagList.getBeginIndex()) {
+        tagList = tagUL;
+      }
+    }
+    if (tagList == null) {
+      return false;
+    }
+
+    // Analyze the line
+    String contents = analysis.getContents();
+    int lineBegin = tag.getBeginIndex();
+    if ((lineBegin <= 1) || (contents.charAt(lineBegin - 1) != '\n')) {
+      return false;
+    }
+    int lineEnd = tag.getEndIndex();
+    while ((lineEnd < contents.length()) &&
+           (contents.charAt(lineEnd) != '\n') &&
+           (contents.charAt(lineEnd) != '<')) {
+      lineEnd++;
+    }
+    if ((lineEnd + 1 >= contents.length()) ||
+        (contents.charAt(lineEnd) != '\n')) {
+      return false;
+    }
+
+    // Analyze the next line
+    PageElementTag nextLineTag = analysis.isInTag(lineEnd + 1);
+    if (nextLineTag == null) {
+      return false;
+    }
+    if (PageElementTag.TAG_HTML_LI.equals(nextLineTag.getNormalizedName())) {
+      if (nextLineTag.isEndTag() || nextLineTag.isFullTag()) {
+        return false;
+      }
+    } else if (tagList.getNormalizedName().equals(nextLineTag.getNormalizedName())) {
+      if (!nextLineTag.isEndTag() || nextLineTag.isFullTag()) {
+        return false;
+      }
+    } else {
+      return false;
+    }
+
+    // Analyze the previous line
+    int tmpIndex = lineBegin - 1;
+    while ((tmpIndex > 0) && (contents.charAt(tmpIndex - 1) != '\n')) {
+      tmpIndex--;
+    }
+    PageElementTag previousLineTag = analysis.isInTag(tmpIndex);
+    if (previousLineTag == null){
+      return false;
+    }
+    if (PageElementTag.TAG_HTML_LI.equals(previousLineTag.getNormalizedName())) {
+      if (previousLineTag.isEndTag() || previousLineTag.isFullTag()) {
+        return false;
+      }
+    } else if (previousLineTag == tagList) {
+      if (tagList.getEndIndex() < lineBegin - 1) {
+        return false;
+      }
+    } else {
+      return false;
+    }
+
+    // Report tag
+    CheckErrorResult errorResult = createCheckErrorResult(analysis, lineBegin, lineEnd);
+    String replacement =
+        contents.substring(lineBegin, lineEnd) +
+        PageElementTag.createTag(tag.getName(), true, false);
+    String text =
+        contents.substring(lineBegin, tag.getEndIndex()) +
+        "..." +
+        PageElementTag.createTag(tag.getName(), true, false);
+    errorResult.addReplacement(
+        replacement, text, true);
     errors.add(errorResult);
     return true;
   }
