@@ -1697,7 +1697,14 @@ public class MainWindow
       if ((namespaces != null) && (namespaces.size() > 0)) {
         subMenu.addSeparator();
         for (Namespace namespace : namespaces) {
-          item = new JMenuItem(namespace.getTitle());
+          String title = namespace.getTitle();
+          if ((title == null) || title.isEmpty()) {
+            title = namespace.getCanonicalTitle();
+          }
+          if ((title == null) || title.isEmpty()) {
+            title = GT._("Main");
+          }
+          item = new JMenuItem(title);
           item.setActionCommand(category.getCategory() + "/" + namespace.getId().toString());
           item.addActionListener(EventHandler.create(
               ActionListener.class, this, "actionLinterCategory", "actionCommand"));
