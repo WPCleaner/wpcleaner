@@ -45,7 +45,6 @@ import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
-import javax.swing.JToggleButton;
 import javax.swing.JToolBar;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingConstants;
@@ -81,6 +80,7 @@ import org.wikipediacleaner.gui.swing.worker.AutomaticFixingWorker;
 import org.wikipediacleaner.i18n.GT;
 import org.wikipediacleaner.images.EnumImageSize;
 import org.wikipediacleaner.utils.Configuration;
+import org.wikipediacleaner.utils.ConfigurationValueString;
 
 
 /**
@@ -101,16 +101,16 @@ public class AutomaticFixingWindow extends OnePageWindow {
   private JButton buttonTest;
   private JButton buttonLoadList;
   private JButton buttonSaveList;
-  private JToggleButton buttonAutomaticCW;
-  private JCheckBox chkForceCW;
-  private JButton buttonAlgorithms;
+  private JButton buttonAutomaticCWAlgorithms;
+  private JButton buttonForceCWAlgorithms;
   private JTextPane paneOriginal;
   private JTextPane paneResult;
 
   JList<Page> listPages;
   PageListModel modelPages;
   private PageListCellRenderer listCellRenderer;
-  private List<CheckErrorAlgorithm> selectedAlgorithms;
+  private List<CheckErrorAlgorithm> automaticCWAlgorithms;
+  private List<CheckErrorAlgorithm> forceCWAlgorithms;
 
   Collection<Page> pages;
 
@@ -274,12 +274,6 @@ public class AutomaticFixingWindow extends OnePageWindow {
         ActionListener.class, this, "actionSaveAutomaticFixing"));
     toolBarButtons.add(buttonSave);    
     toolBarButtons.addSeparator();
-    buttonAutomaticCW = Utilities.createJToggleButton(
-        "commons-nuvola-web-broom.png", EnumImageSize.NORMAL,
-        GT._("Automatic fixing for Check Wiki"), false);
-    buttonAutomaticCW.setSelected(true);
-    toolBarButtons.add(buttonAutomaticCW);
-    toolBarButtons.addSeparator();
     buttonRun = Utilities.createJButton(
         "gnome-system-run.png", EnumImageSize.NORMAL,
         GT._("Fix selected pages"), false, null);
@@ -310,20 +304,37 @@ public class AutomaticFixingWindow extends OnePageWindow {
     panel.add(toolBarButtons, constraints);
     constraints.gridy++;
 
-    selectedAlgorithms = new ArrayList<>();
-    JPanel panelCW = new JPanel(new FlowLayout(FlowLayout.LEADING, 5, 0));
-    chkForceCW = Utilities.createJCheckBox(
-        GT._("Always apply automatic fixing for Check Wiki"), false);
-    panelCW.add(chkForceCW);
-    buttonAlgorithms = Utilities.createJButton("(List of errors)", null);
-    buttonAlgorithms.setBorderPainted(false);
-    buttonAlgorithms.addActionListener(EventHandler.create(
-        ActionListener.class, this, "actionSelectAlgorithms"));
-    panelCW.add(buttonAlgorithms);
+    // Apply automatic fixing for CW errors
+    automaticCWAlgorithms = new ArrayList<>();
+    JPanel panelAutomaticCW = new JPanel(new FlowLayout(FlowLayout.LEADING, 5, 0));
+    JLabel labelAutomaticCW = Utilities.createJLabel(GT._("Automatic fixing for Check Wiki"));
+    panelAutomaticCW.add(labelAutomaticCW);
+    buttonAutomaticCWAlgorithms = Utilities.createJButton("(List of errors)", null);
+    buttonAutomaticCWAlgorithms.setBorderPainted(false);
+    buttonAutomaticCWAlgorithms.addActionListener(EventHandler.create(
+        ActionListener.class, this, "actionAutomaticCWAlgorithms"));
+    panelAutomaticCW.add(buttonAutomaticCWAlgorithms);
     constraints.fill = GridBagConstraints.HORIZONTAL;
     constraints.gridwidth = 2;
     constraints.weighty = 0;
-    panel.add(panelCW, constraints);
+    panel.add(panelAutomaticCW, constraints);
+    constraints.gridy++;
+
+    // Force application of fixing for CW errors;
+    forceCWAlgorithms = new ArrayList<>();
+    JPanel panelForceCW = new JPanel(new FlowLayout(FlowLayout.LEADING, 5, 0));
+    JLabel labelForceCW = Utilities.createJLabel(
+        GT._("Always apply automatic fixing for Check Wiki"));
+    panelForceCW.add(labelForceCW);
+    buttonForceCWAlgorithms = Utilities.createJButton("(List of errors)", null);
+    buttonForceCWAlgorithms.setBorderPainted(false);
+    buttonForceCWAlgorithms.addActionListener(EventHandler.create(
+        ActionListener.class, this, "actionForceCWAlgorithms"));
+    panelForceCW.add(buttonForceCWAlgorithms);
+    constraints.fill = GridBagConstraints.HORIZONTAL;
+    constraints.gridwidth = 2;
+    constraints.weighty = 0;
+    panel.add(panelForceCW, constraints);
     constraints.gridy++;
 
     // Comment
@@ -441,36 +452,43 @@ public class AutomaticFixingWindow extends OnePageWindow {
     buttonRun.setEnabled(true);
     buttonSave.setEnabled(hasReference);
     buttonTest.setEnabled(true);
-    buttonAlgorithms.setEnabled(true);
+    buttonAutomaticCWAlgorithms.setEnabled(true);
+    buttonForceCWAlgorithms.setEnabled(true);
 
-    // Set label on algorithms button
-    String newLabel = null;
-    if ((selectedAlgorithms == null) || (selectedAlgorithms.isEmpty())) {
-      newLabel = GT._("No errors selected");
-    } else {
-      Collections.sort(selectedAlgorithms, new CheckErrorAlgorithmComparator());
-      StringBuilder msg = new StringBuilder();
-      for (int i = 0; i < selectedAlgorithms.size(); i++) {
-        int j = i;
-        while ((j + 1 < selectedAlgorithms.size()) &&
-               (selectedAlgorithms.get(j).getErrorNumber() + 1 == selectedAlgorithms.get(j + 1).getErrorNumber())) {
-          j++;
-        }
-        if (msg.length() > 0) {
-          msg.append(", ");
-        }
-        if (j > i + 1) {
-          msg.append(selectedAlgorithms.get(i).getErrorNumber());
-          msg.append("-");
-          msg.append(selectedAlgorithms.get(j).getErrorNumber());
-          i = j;
-        } else {
-          msg.append(selectedAlgorithms.get(i).getErrorNumber());
-        }
-      }
-      newLabel = "(" + msg.toString() + ")";
+    // Set label on algorithms buttons
+    buttonAutomaticCWAlgorithms.setText(computeAlgorithmsLabel(automaticCWAlgorithms));
+    buttonForceCWAlgorithms.setText(computeAlgorithmsLabel(forceCWAlgorithms));
+  }
+
+  /**
+   * @param list List of algorithms.
+   * @return Label for the list of algorithms.
+   */
+  private String computeAlgorithmsLabel(List<CheckErrorAlgorithm> list) {
+    if ((list == null) || (list.isEmpty())) {
+      return GT._("No errors selected");
     }
-    buttonAlgorithms.setText(newLabel);
+    Collections.sort(list, new CheckErrorAlgorithmComparator());
+    StringBuilder msg = new StringBuilder();
+    for (int i = 0; i < list.size(); i++) {
+      int j = i;
+      while ((j + 1 < list.size()) &&
+             (list.get(j).getErrorNumber() + 1 == list.get(j + 1).getErrorNumber())) {
+        j++;
+      }
+      if (msg.length() > 0) {
+        msg.append(", ");
+      }
+      if (j > i + 1) {
+        msg.append(list.get(i).getErrorNumber());
+        msg.append("-");
+        msg.append(list.get(j).getErrorNumber());
+        i = j;
+      } else {
+        msg.append(list.get(i).getErrorNumber());
+      }
+    }
+    return "(" + msg.toString() + ")";
   }
 
   /**
@@ -479,7 +497,8 @@ public class AutomaticFixingWindow extends OnePageWindow {
   @Override
   protected void clean() {
     modelPages.clear();
-    selectedAlgorithms.clear();
+    automaticCWAlgorithms.clear();
+    forceCWAlgorithms.clear();
     updateComponentState();
   }
 
@@ -508,6 +527,10 @@ public class AutomaticFixingWindow extends OnePageWindow {
     }
     listPages.clearSelection();
     listPages.setSelectionInterval(0, modelPages.getSize() - 1);
+
+    // Reset CW selection
+    toggleAlgorithm("*", automaticCWAlgorithms);
+    toggleAlgorithm("-", forceCWAlgorithms);
 
     // Fill list of automatic fixing
     Configuration config = Configuration.getConfiguration();
@@ -680,7 +703,7 @@ public class AutomaticFixingWindow extends OnePageWindow {
     }
     List<AutomaticFixing> fixing = modelAutomaticFixing.getData();
     if ((fixing == null) || (fixing.isEmpty())) {
-      if (!buttonAutomaticCW.isSelected() || !chkForceCW.isSelected()) {
+      if (automaticCWAlgorithms.isEmpty() || forceCWAlgorithms.isEmpty()) {
         Utilities.displayWarning(
             getParentComponent(),
             GT._("You must input the initial and destination texts."));
@@ -718,14 +741,12 @@ public class AutomaticFixingWindow extends OnePageWindow {
     }
 
     // Do the replacements
-    Collection<CheckErrorAlgorithm> algorithms = null;
-    if (chkForceCW.isSelected()) {
-      algorithms = selectedAlgorithms;
-    }
-    AutomaticFixingWorker dabWorker = new AutomaticFixingWorker(
+    AutomaticFixingWorker automaticWorker = new AutomaticFixingWorker(
         getWiki(), this, tmpPages, replacements,
-        comment, true, buttonAutomaticCW.isSelected(), algorithms, save);
-    dabWorker.setListener(new DefaultBasicWorkerListener() {
+        comment, true,
+        automaticCWAlgorithms, forceCWAlgorithms,
+        save);
+    automaticWorker.setListener(new DefaultBasicWorkerListener() {
       @Override
       public void afterFinished(
           BasicWorker worker,
@@ -742,7 +763,7 @@ public class AutomaticFixingWindow extends OnePageWindow {
         actionReload();
       }
     });
-    dabWorker.start();
+    automaticWorker.start();
   }
 
   /**
@@ -786,6 +807,11 @@ public class AutomaticFixingWindow extends OnePageWindow {
       FileFilter filter = new FileNameExtensionFilter(GT._("XML files"), "xml");
       fc.addChoosableFileFilter(filter);
       fc.setFileFilter(filter);
+      Configuration config = Configuration.getConfiguration();
+      String directory = config.getString(getWiki(), ConfigurationValueString.LAST_REPLACEMENTS_DIRECTORY);
+      if (directory != null) {
+        fc.setCurrentDirectory(new File(directory));
+      }
       int returnVal = fc.showOpenDialog(getParentComponent());
       if (returnVal == JFileChooser.APPROVE_OPTION) {
         File file = fc.getSelectedFile();
@@ -810,6 +836,11 @@ public class AutomaticFixingWindow extends OnePageWindow {
       FileFilter filter = new FileNameExtensionFilter(GT._("XML files"), "xml");
       fc.addChoosableFileFilter(filter);
       fc.setFileFilter(filter);
+      Configuration config = Configuration.getConfiguration();
+      String directory = config.getString(getWiki(), ConfigurationValueString.LAST_REPLACEMENTS_DIRECTORY);
+      if (directory != null) {
+        fc.setCurrentDirectory(new File(directory));
+      }
       int returnVal = fc.showSaveDialog(getParentComponent());
       if (returnVal == JFileChooser.APPROVE_OPTION) {
         File file = fc.getSelectedFile();
@@ -819,6 +850,9 @@ public class AutomaticFixingWindow extends OnePageWindow {
         AutomaticFixingList list = new AutomaticFixingList();
         list.setReplacements(modelAutomaticFixing.getData());
         m.marshal(list, file);
+        config.setString(
+            getWiki(), ConfigurationValueString.LAST_REPLACEMENTS_DIRECTORY,
+            file.getParentFile().getAbsolutePath());
       }
     } catch (JAXBException e) {
       Utilities.displayError(getParentComponent(), e);
@@ -838,14 +872,56 @@ public class AutomaticFixingWindow extends OnePageWindow {
   }
 
   /**
-   * Action called when Select Algorithms button is pressed.
+   * Action called when Select Automatic Algorithms button is pressed.
    */
-  public void actionSelectAlgorithms() {
+  public void actionAutomaticCWAlgorithms() {
+    displayMenuSelectAlgorithms(
+        automaticCWAlgorithms,
+        "actionAutomaticCWAlgorithm",
+        buttonAutomaticCWAlgorithms);
+  }
+
+  /**
+   * Action called when Select Force Algorithms button is pressed.
+   */
+  public void actionForceCWAlgorithms() {
+    displayMenuSelectAlgorithms(
+        forceCWAlgorithms,
+        "actionForceCWAlgorithm",
+        buttonForceCWAlgorithms);
+  }
+
+  /**
+   * Display a menu to select algorithms.
+   * 
+   * @param list List of already selected algorithms.
+   * @param action Name of the method to call.
+   * @param button Button where the menu should be displayed.
+   */
+  private void displayMenuSelectAlgorithms(
+      List<CheckErrorAlgorithm> list, String action, JButton button) {
     JPopupMenu popup = new JPopupMenu(GT._("Select errors"));
     List<CheckErrorAlgorithm> allAlgorithms = CheckErrorAlgorithms.getAlgorithms(getWiki());
     if ((allAlgorithms == null) || allAlgorithms.isEmpty()) {
       return;
     }
+    JMenuItem menuItem = null;
+
+    // Select all errors
+    menuItem = new JMenuItem(GT._("Select all errors"));
+    menuItem.setActionCommand("*");
+    menuItem.addActionListener(EventHandler.create(
+        ActionListener.class, this, action, "actionCommand"));
+    popup.add(menuItem);
+
+    // Select no errors
+    menuItem = new JMenuItem(GT._("Select no errors"));
+    menuItem.setActionCommand("-");
+    menuItem.addActionListener(EventHandler.create(
+        ActionListener.class, this, action, "actionCommand"));
+    popup.add(menuItem);
+
+    // Select individual errors
     final Map<TextAttribute, Boolean> inactiveAttributes = new HashMap<TextAttribute, Boolean>();
     inactiveAttributes.put(TextAttribute.STRIKETHROUGH, TextAttribute.STRIKETHROUGH_ON);
     final int PART_SIZE = 20; 
@@ -874,7 +950,7 @@ public class AutomaticFixingWindow extends OnePageWindow {
             algorithm.getErrorNumberString() + " - " +
             algorithm.getShortDescriptionReplaced();
 
-          JMenuItem menuItem = new JCheckBoxMenuItem(label, selectedAlgorithms.contains(algorithm));
+          menuItem = new JCheckBoxMenuItem(label, list.contains(algorithm));
           if (!CWConfigurationError.isPriorityActive(algorithm.getPriority())) {
             menuItem.setEnabled(false);
             menuItem.setFont(menuItem.getFont().deriveFont(inactiveAttributes));
@@ -883,32 +959,69 @@ public class AutomaticFixingWindow extends OnePageWindow {
           }
           menuItem.setActionCommand(algorithm.getErrorNumberString());
           menuItem.addActionListener(EventHandler.create(
-              ActionListener.class, this, "actionSelectAlgorithm", "actionCommand"));
+              ActionListener.class, this, action, "actionCommand"));
           subMenu.add(menuItem);
         }
       }
     }
-    popup.show(buttonAlgorithms, 0, buttonAlgorithms.getHeight());
+    popup.show(button, 0, button.getHeight());
   }
 
   /**
-   * Action called when an algorithm is selected.
+   * Action called when an algorithm is selected to be automatic.
    */
-  public void actionSelectAlgorithm(String error) {
-    int errorNumber = -1;
-    try {
-      errorNumber = Integer.parseInt(error);
-    } catch (NumberFormatException e) {
-      return;
-    }
-    CheckErrorAlgorithm algorithm = CheckErrorAlgorithms.getAlgorithm(getWiki(), errorNumber);
-    if (algorithm == null) {
-      return;
-    }
-    if (selectedAlgorithms.contains(algorithm)) {
-      selectedAlgorithms.remove(algorithm);
+  public void actionAutomaticCWAlgorithm(String error) {
+    toggleAlgorithm(error, automaticCWAlgorithms);
+  }
+
+  /**
+   * Action called when an algorithm is selected to be forced.
+   */
+  public void actionForceCWAlgorithm(String error) {
+    toggleAlgorithm(error, forceCWAlgorithms);
+  }
+
+  /**
+   * Remove or add an algorithm from the list depending if it's already in the list.
+   * 
+   * @param error Error number.
+   * @param list List of algorithms.
+   */
+  private void toggleAlgorithm(String error, List<CheckErrorAlgorithm> list) {
+    if (error == "*") {
+
+      // Select all errors
+      list.clear();
+      List<CheckErrorAlgorithm> allAlgorithms = CheckErrorAlgorithms.getAlgorithms(getWiki());
+      if (allAlgorithms != null) {
+        for (CheckErrorAlgorithm algorithm : allAlgorithms) {
+          if (CWConfigurationError.isPriorityActive(algorithm.getPriority())) {
+            list.add(algorithm);
+          }
+        }
+      }
+    } else if (error == "-") {
+
+      // Select no errors
+      list.clear();
     } else {
-      selectedAlgorithms.add(algorithm);
+  
+      // Toggle an individual error
+      int errorNumber = -1;
+      try {
+        errorNumber = Integer.parseInt(error);
+      } catch (NumberFormatException e) {
+        return;
+      }
+      CheckErrorAlgorithm algorithm = CheckErrorAlgorithms.getAlgorithm(getWiki(), errorNumber);
+      if ((algorithm == null) || (list == null)) {
+        return;
+      }
+      if (list.contains(algorithm)) {
+        list.remove(algorithm);
+      } else {
+        list.add(algorithm);
+      }
     }
     updateComponentState();
   }

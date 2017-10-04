@@ -17,7 +17,6 @@ import java.util.Map.Entry;
 
 import org.wikipediacleaner.api.check.CheckError;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithm;
-import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithms;
 import org.wikipediacleaner.api.constants.EnumQueryResult;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.AutomaticFixing;
@@ -169,8 +168,8 @@ public class MediaWiki extends MediaWikiController {
    * @param wiki Wiki.
    * @param comment Comment used for the modification.
    * @param description (Out) description of changes made.
-   * @param automaticCW True if automatic Check Wiki fixing should be done also.
-   * @param forceCW List of Check Wiki fixing that should be done even if no automatic replacement was done.
+   * @param automaticCW Lit of CW fixing that should be done.
+   * @param forceCW List of CW fixing that should be done even if no automatic replacement was done.
    * @param save True if modification should be saved.
    * @param minor True if the modification should be tagged as minor.
    * @return Count of modified pages.
@@ -180,8 +179,8 @@ public class MediaWiki extends MediaWikiController {
       Page[] pages, Map<String, List<AutomaticFixing>> replacements,
       EnumWikipedia wiki, String comment,
       StringBuilder description,
-      boolean automaticCW, Collection<CheckErrorAlgorithm> forceCW, boolean save,
-      boolean updateDabWarning, boolean minor) throws APIException {
+      Collection<CheckErrorAlgorithm> automaticCW, Collection<CheckErrorAlgorithm> forceCW,
+      boolean save, boolean updateDabWarning, boolean minor) throws APIException {
     if ((pages == null) || (replacements == null) || (replacements.size() == 0)) {
       return 0;
     }
@@ -257,37 +256,28 @@ public class MediaWiki extends MediaWikiController {
           }
           fullComment.append(wiki.createUpdatePageComment(comment, details.toString()));
 
-          // Apply automatic Check Wiki fixing if needed
-          if (automaticCW) {
+          // Apply automatic CW fixing if needed
+          if (automaticCW != null) {
 
-            // Decide if Check Wiki fixing should be applied
-            boolean shouldApply = false;
-            if (!oldContents.equals(newContents)) {
-              shouldApply = true;
-            } else if ((forceCW != null) && !forceCW.isEmpty()) {
-              shouldApply = true;
-            }
+            // Apply fixing
+            List<CheckError.Progress> usedAlgorithms = new ArrayList<>();
+            String tmpContents = AutomaticFormatter.tidyArticle(
+                page, newContents, automaticCW, false, usedAlgorithms);
 
-            // Apply Check Wiki fixing
-            if (shouldApply) {
-              String tmpContents = newContents;
-              List<CheckErrorAlgorithm> algorithms = CheckErrorAlgorithms.getAlgorithms(wiki);
-              List<CheckError.Progress> usedAlgorithms = new ArrayList<>();
-              newContents = AutomaticFormatter.tidyArticle(
-                  page, newContents, algorithms, false, usedAlgorithms);
-
-              // Decide if modifications should be kept
-              boolean shouldKeep = (!oldContents.equals(tmpContents));
-              if (forceCW != null) {
-                for (CheckError.Progress progress : usedAlgorithms) {
-                  if (forceCW.contains(progress.algorithm)) {
-                    shouldKeep = true;
-                  }
+            // Decide if modifications should be kept
+            boolean shouldKeep = (!oldContents.equals(newContents));
+            if (forceCW != null) {
+              for (CheckError.Progress progress : usedAlgorithms) {
+                if (forceCW.contains(progress.algorithm)) {
+                  shouldKeep = true;
                 }
               }
+            }
 
-              // Keep modifications
-              if (shouldKeep && !usedAlgorithms.isEmpty()) {
+            // Keep modifications
+            if (shouldKeep) {
+              newContents = tmpContents;
+              if (!usedAlgorithms.isEmpty()) {
                 fullComment.append(" / ");
                 fullComment.append(wiki.getCWConfiguration().getComment(usedAlgorithms));
                 if (tmpDescription != null) {
@@ -298,9 +288,6 @@ public class MediaWiki extends MediaWikiController {
                     tmpDescription.append("</li>\n");
                   }
                 }
-              } else if (oldContents.equals(tmpContents)) {
-                // If no automatic modifications done before CW, don't keep the modifications for general tidiness
-                newContents = tmpContents;
               }
             }
           }

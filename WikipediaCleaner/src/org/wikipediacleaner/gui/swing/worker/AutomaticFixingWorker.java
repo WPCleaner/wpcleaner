@@ -43,10 +43,10 @@ public class AutomaticFixingWorker extends BasicWorker {
   /** True if the description of the replacements should be displayed. */
   private final boolean showDescription;
 
-  /** True if automatic Check Wiki fixing should be done also. */
-  private final boolean automaticCW;
+  /** List of CW fixing that should be done. */
+  private final Collection<CheckErrorAlgorithm> automaticCW;
 
-  /** List of Check Wiki fixing that should be done even if no automatic replacement was done. */
+  /** List of CW fixing that should be done even if no automatic replacement was done. */
   private final Collection<CheckErrorAlgorithm> forceCW;
 
   /** True if modifications should be saved. */
@@ -59,15 +59,16 @@ public class AutomaticFixingWorker extends BasicWorker {
    * @param replacements Replacements to be done.
    * @param comment Comment to use for the replacements.
    * @param showDescription True if the description of the replacements should be displayed.
-   * @param automaticCW True if automatic Check Wiki fixing should be done also.
-   * @param forceCW List of Check Wiki fixing that should be done even if no automatic replacement was done.
+   * @param automaticCW List of CW fixing that should be done.
+   * @param forceCW List of CW fixing that should be done even if no automatic replacement was done.
    * @param save True if modifications should be saved.
    */
   public AutomaticFixingWorker(
       EnumWikipedia wiki, BasicWindow window,
       Page[] pages, Map<String, List<AutomaticFixing>> replacements,
       String comment, boolean showDescription,
-      boolean automaticCW, Collection<CheckErrorAlgorithm> forceCW, boolean save) {
+      Collection<CheckErrorAlgorithm> automaticCW, Collection<CheckErrorAlgorithm> forceCW,
+      boolean save) {
     super(wiki, window);
     this.pages = pages;
     this.replacements = replacements;
