@@ -382,6 +382,10 @@ public class AutomaticFixingWindow extends OnePageWindow {
     panel.add(testPanel, constraints);
     constraints.gridy++;
 
+    // Reset CW selection
+    toggleAlgorithm("*", automaticCWAlgorithms);
+    toggleAlgorithm("-", forceCWAlgorithms);
+
     return panel;
   }
 
@@ -497,8 +501,6 @@ public class AutomaticFixingWindow extends OnePageWindow {
   @Override
   protected void clean() {
     modelPages.clear();
-    automaticCWAlgorithms.clear();
-    forceCWAlgorithms.clear();
     updateComponentState();
   }
 
@@ -527,10 +529,6 @@ public class AutomaticFixingWindow extends OnePageWindow {
     }
     listPages.clearSelection();
     listPages.setSelectionInterval(0, modelPages.getSize() - 1);
-
-    // Reset CW selection
-    toggleAlgorithm("*", automaticCWAlgorithms);
-    toggleAlgorithm("-", forceCWAlgorithms);
 
     // Fill list of automatic fixing
     Configuration config = Configuration.getConfiguration();
