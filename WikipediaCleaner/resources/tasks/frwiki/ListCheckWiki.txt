@@ -1,12 +1,30 @@
+FixCheckWiki 1   +1 +2 +9 +16 +17 +18 +22 +48 +64 +88 +524 +526
+FixCheckWiki 9   +1 +2 +9 +16 +17 +18 +22 +48 +64 +88 +524 +526
 FixCheckWiki 16  +1 +2 +9 +16 +17 +18 +22 +48 +64 +88 +524 +526
+FixCheckWiki 17  +1 +2 +9 +16 +17 +18 +22 +48 +64 +88 +524 +526
+FixCheckWiki 18  +1 +2 +9 +16 +17 +18 +22 +48 +64 +88 +524 +526
 FixCheckWiki 524 +1 +2 +9 +16 +17 +18 +22 +48 +64 +88 +524 +526
 FixCheckWiki 526 +1 +2 +9 +16 +17 +18 +22 +48 +64 +88 +524 +526
+FixListCheckWiki Projet:Correction_syntaxique/Analyse_001 1  +1 +2 +9 +16 +17 +18 +22 +48 +64 +88 +524 +526
+FixListCheckWiki Projet:Correction_syntaxique/Analyse_009 9  +1 +2 +9 +16 +17 +18 +22 +48 +64 +88 +524 +526
+FixListCheckWiki Projet:Correction_syntaxique/Analyse_016 16 +1 +2 +9 +16 +17 +18 +22 +48 +64 +88 +524 +526
+FixListCheckWiki Projet:Correction_syntaxique/Analyse_017 17 +1 +2 +9 +16 +17 +18 +22 +48 +64 +88 +524 +526
+FixListCheckWiki Projet:Correction_syntaxique/Analyse_018 18 +1 +2 +9 +16 +17 +18 +22 +48 +64 +88 +524 +526
+FixListCheckWiki Projet:Correction_syntaxique/Analyse_064 64 +1 +2 +9 +16 +17 +18 +22 +48 +64 +88 +524 +526
 ListCheckWiki C:\Users\Nicolas\Downloads\frwiki-$-pages-articles.xml.bz2 wiki:Projet:Correction_syntaxique/Analyse_{0} 1 2 3 4 5 7 8 9 13 14 15 16 17 18 19 20 21 22 23 24 25 26 28 38 42 48 51 52 54 55 64 69 70 71 72 73 83 90 98 99 102 104 105 106 107 108 109 111 112 526
+FixCheckWiki 1   +1 +2 +9 +16 +17 +18 +22 +48 +64 +88 +524 +526
+FixCheckWiki 9   +1 +2 +9 +16 +17 +18 +22 +48 +64 +88 +524 +526
 FixCheckWiki 16  +1 +2 +9 +16 +17 +18 +22 +48 +64 +88 +524 +526
+FixCheckWiki 17  +1 +2 +9 +16 +17 +18 +22 +48 +64 +88 +524 +526
+FixCheckWiki 18  +1 +2 +9 +16 +17 +18 +22 +48 +64 +88 +524 +526
 FixCheckWiki 524 +1 +2 +9 +16 +17 +18 +22 +48 +64 +88 +524 +526
 UpdateDuplicateArgsWarnings
 FixCheckWiki 526 +1 +2 +9 +16 +17 +18 +22 +48 +64 +88 +524 +526
+FixListCheckWiki Projet:Correction_syntaxique/Analyse_001 1  +1 +2 +9 +16 +17 +18 +22 +48 +64 +88 +524 +526
+FixListCheckWiki Projet:Correction_syntaxique/Analyse_009 9  +1 +2 +9 +16 +17 +18 +22 +48 +64 +88 +524 +526
 FixListCheckWiki Projet:Correction_syntaxique/Analyse_016 16 +1 +2 +9 +16 +17 +18 +22 +48 +64 +88 +524 +526
+FixListCheckWiki Projet:Correction_syntaxique/Analyse_017 17 +1 +2 +9 +16 +17 +18 +22 +48 +64 +88 +524 +526
+FixListCheckWiki Projet:Correction_syntaxique/Analyse_018 18 +1 +2 +9 +16 +17 +18 +22 +48 +64 +88 +524 +526
 FixListCheckWiki Projet:Correction_syntaxique/Analyse_064 64 +1 +2 +9 +16 +17 +18 +22 +48 +64 +88 +524 +526
 ListISBNWarnings
 ListISSNWarnings

@@ -109,15 +109,24 @@ public class CheckErrorAlgorithm022 extends CheckErrorAlgorithmBase {
         }
         result = true;
         nameSimple = Page.getStringUcFirst(nameSimple);
+        String namespace = category.getCategoryNotTrimmed().trim();
         CheckErrorResult errorResult = createCheckErrorResult(
             analysis,
             category.getBeginIndex(), category.getEndIndex());
         if (sortSimple == null) {
           errorResult.addReplacement(
-              "[[" + preferredCategory + ":" + nameSimple + "]]");
+              "[[" + namespace + ":" + nameSimple + "]]", true);
+          if (!namespace.equals(preferredCategory)) {
+            errorResult.addReplacement(
+                "[[" + preferredCategory + ":" + nameSimple + "]]");
+          }
         } else {
           errorResult.addReplacement(
-              "[[" + preferredCategory + ":" + nameSimple + "|" + sortSimple + "]]");
+              "[[" + namespace + ":" + nameSimple + "|" + sortSimple + "]]");
+          if (!namespace.equals(preferredCategory)) {
+            errorResult.addReplacement(
+                "[[" + preferredCategory + ":" + nameSimple + "|" + sortSimple + "]]");
+          }
         }
         errors.add(errorResult);
       }
@@ -134,7 +143,7 @@ public class CheckErrorAlgorithm022 extends CheckErrorAlgorithmBase {
    */
   @Override
   protected String internalAutomaticFix(PageAnalysis analysis) {
-    return fix(globalFixes[0], analysis, null);
+    return fixUsingAutomaticReplacement(analysis);
   }
 
   /**

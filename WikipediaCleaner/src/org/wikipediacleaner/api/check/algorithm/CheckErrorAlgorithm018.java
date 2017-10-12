@@ -61,9 +61,10 @@ public class CheckErrorAlgorithm018 extends CheckErrorAlgorithmBase {
     for (PageElementCategory category : categories) {
       String namespace = category.getCategoryNotTrimmed().trim();
       boolean lowerCaseNamespace = false;
-      if ((namespace != null) &&
-          (namespace.length() > 0) &&
-          (Character.isLowerCase(namespace.charAt(0)))) {
+      if (namespace == null) {
+        namespace = categoryNamespace.getTitle();
+      } else if ((namespace.length() > 0) &&
+                 (Character.isLowerCase(namespace.charAt(0)))) {
         lowerCaseNamespace = true;
         namespace = "" + Character.toUpperCase(namespace.charAt(0)) + namespace.substring(1);
       }
@@ -98,10 +99,22 @@ public class CheckErrorAlgorithm018 extends CheckErrorAlgorithmBase {
             analysis, category.getBeginIndex(), category.getEndIndex());
         if (categorySort != null) {
           errorResult.addReplacement(
-              "[[" + categoryNamespace.getTitle() + ":" + categoryName + "|" + categorySort + "]]");
+              "[[" + namespace + ":" + categoryName + "|" + categorySort + "]]",
+              true);
+          if (!namespace.equals(categoryNamespace.getTitle())) {
+            errorResult.addReplacement(
+                "[[" + categoryNamespace.getTitle() + ":" + categoryName + "|" + categorySort + "]]",
+                false);
+          }
         } else {
           errorResult.addReplacement(
-              "[[" + categoryNamespace.getTitle() + ":" + categoryName + "]]");
+              "[[" + namespace + ":" + categoryName + "]]",
+              true);
+          if (!namespace.equals(categoryNamespace.getTitle())) {
+            errorResult.addReplacement(
+                "[[" + categoryNamespace.getTitle() + ":" + categoryName + "]]",
+                false);
+          }
         }
         errors.add(errorResult);
       }
@@ -117,7 +130,7 @@ public class CheckErrorAlgorithm018 extends CheckErrorAlgorithmBase {
    */
   @Override
   protected String internalAutomaticFix(PageAnalysis analysis) {
-    return fix(globalFixes[0], analysis, null);
+    return fixUsingAutomaticReplacement(analysis);
   }
 
   /**
