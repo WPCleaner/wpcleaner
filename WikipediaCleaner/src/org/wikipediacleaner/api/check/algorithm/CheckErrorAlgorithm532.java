@@ -13,10 +13,12 @@ import java.util.List;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.PageAnalysis;
+import org.wikipediacleaner.api.data.PageElementExternalLink;
 import org.wikipediacleaner.api.data.PageElementImage;
 import org.wikipediacleaner.api.data.PageElementImage.Parameter;
 import org.wikipediacleaner.api.data.PageElementInternalLink;
 import org.wikipediacleaner.api.data.PageElementTag;
+import org.wikipediacleaner.api.data.PageElementTemplate;
 
 
 /**
@@ -45,10 +47,19 @@ public class CheckErrorAlgorithm532 extends CheckErrorAlgorithmBase {
     PageElementTag.TAG_HTML_H9,
     PageElementTag.TAG_HTML_LI,
     PageElementTag.TAG_HTML_P,
+    PageElementTag.TAG_HTML_S,
     PageElementTag.TAG_HTML_SMALL,
     PageElementTag.TAG_HTML_SPAN,
+    PageElementTag.TAG_HTML_STRIKE,
     PageElementTag.TAG_HTML_TD,
     PageElementTag.TAG_HTML_TR,
+  };
+
+  /**
+   * Tags that are OK to be unclosed.
+   */
+  private final static String[] unclosedTags = {
+    PageElementTag.TAG_HTML_BR
   };
 
   /**
@@ -73,7 +84,7 @@ public class CheckErrorAlgorithm532 extends CheckErrorAlgorithmBase {
     for (PageElementTag tag : tags) {
       if (!tag.isComplete() && !tag.isEndTag()) {
         if (errors != null) {
-          result |= reportTag(analysis, tag, errors, onlyAutomatic);
+          result |= reportIncompleteTag(analysis, tag, errors, onlyAutomatic);
         }
       }
     }
@@ -88,7 +99,7 @@ public class CheckErrorAlgorithm532 extends CheckErrorAlgorithmBase {
    * @param onlyAutomatic True if analysis could be restricted to errors automatically fixed.
    * @return Flag indicating if the error was found.
    */
-  private boolean reportTag(
+  private boolean reportIncompleteTag(
       PageAnalysis analysis, PageElementTag tag,
       Collection<CheckErrorResult> errors, boolean onlyAutomatic) {
     boolean hasBeenReported = false;
@@ -187,15 +198,12 @@ public class CheckErrorAlgorithm532 extends CheckErrorAlgorithmBase {
     }
 
     // Report tag
-    String contents = analysis.getContents();
-    CheckErrorResult errorResult = createCheckErrorResult(analysis, tag.getBeginIndex(), tag.getEndIndex());
-    String replacement =
-        contents.substring(tag.getBeginIndex(), tag.getEndIndex()) +
-        PageElementTag.createTag(tag.getName(), true, false);
-    errorResult.addReplacement(
-        replacement, true);
-    errors.add(errorResult);
-    return true;
+    CheckErrorResult errorResult = closeTag(analysis, tag, tag.getBeginIndex(), tag.getEndIndex(), true);
+    if (errorResult != null) {
+      errors.add(errorResult);
+      return true;
+    }
+    return false;
   }
 
   /**
@@ -230,30 +238,14 @@ public class CheckErrorAlgorithm532 extends CheckErrorAlgorithmBase {
       return false;
     }
 
-    // Check that there are no other open tags
-    int endIndex = link.getEndIndex() - 2;
-    for (int tmpIndex = tag.getEndIndex(); tmpIndex < endIndex; tmpIndex++) {
-      if (contents.charAt(tmpIndex) == '<') {
-        PageElementTag tagAfter = analysis.isInTag(tmpIndex, tag.getNormalizedName());
-        if (tagAfter != null) {
-          return false;
-        }
-      }
-    }
-
     // Report tag
-    CheckErrorResult errorResult = createCheckErrorResult(analysis, tag.getBeginIndex(), endIndex);
-    String replacement =
-        contents.substring(tag.getBeginIndex(), endIndex) +
-        PageElementTag.createTag(tag.getName(), true, false);
-    String text =
-        contents.substring(tag.getBeginIndex(), tag.getEndIndex()) +
-        "..." +
-        PageElementTag.createTag(tag.getName(), true, false);
-    errorResult.addReplacement(
-        replacement, text, true);
-    errors.add(errorResult);
-    return true;
+    CheckErrorResult errorResult =
+        closeTag(analysis, tag, tag.getBeginIndex(), link.getEndIndex() - 2, true);
+    if (errorResult != null) {
+      errors.add(errorResult);
+      return true;
+    }
+    return false;
   }
 
   /**
@@ -277,41 +269,22 @@ public class CheckErrorAlgorithm532 extends CheckErrorAlgorithmBase {
       return false;
     }
     Parameter desc = image.getDescriptionParameter();
-    if ((desc == null) || (tag.getBeginIndex() != image.getBeginIndex() + desc.getBeginOffset())) {
+    if (desc == null) {
       return false;
     }
-
-    // Check description
-    int currentIndex = tag.getEndIndex();
-    String contents = analysis.getContents();
-    while (currentIndex < image.getBeginIndex() + desc.getEndOffset()) {
-      char currentChar = contents.charAt(currentIndex);
-      if (currentChar == '<') {
-        PageElementTag secondTag = analysis.isInTag(currentIndex, tag.getNormalizedName());
-        if (secondTag != null) {
-          return false;
-          // TODO
-        }
-      }
-      currentIndex++;
+    int beginIndex = image.getBeginIndex() + desc.getBeginOffset();
+    if (tag.getBeginIndex() != beginIndex) {
+      return false;
     }
+    int endIndex = image.getBeginIndex() + desc.getEndOffset();
 
     // Report tag
-    CheckErrorResult errorResult = createCheckErrorResult(
-        analysis,
-        image.getBeginIndex() + desc.getBeginOffset(),
-        image.getBeginIndex() + desc.getEndOffset());
-    String replacement =
-        contents.substring(image.getBeginIndex() + desc.getBeginOffset(), image.getBeginIndex() + desc.getEndOffset()) +
-        PageElementTag.createTag(tag.getName(), true, false);
-    String text =
-        contents.substring(tag.getBeginIndex(), tag.getEndIndex()) +
-        "..." +
-        PageElementTag.createTag(tag.getName(), true, false);
-    errorResult.addReplacement(
-        replacement, text, true);
-    errors.add(errorResult);
-    return true;
+    CheckErrorResult errorResult = closeTag(analysis, tag, beginIndex, endIndex, true);
+    if (errorResult != null) {
+      errors.add(errorResult);
+      return true;
+    }
+    return false;
   }
 
   /**
@@ -363,19 +336,11 @@ public class CheckErrorAlgorithm532 extends CheckErrorAlgorithmBase {
             }
             if ((currentIndex < contents.length()) && (contents.charAt(currentIndex) == '\n')) {
               finished = true;
-              CheckErrorResult errorResult = createCheckErrorResult(
-                  analysis, tag.getBeginIndex(), secondTag.getEndIndex());
-              String replacement =
-                  contents.substring(tag.getBeginIndex(), secondTag.getBeginIndex()) +
-                  PageElementTag.createTag(tag.getName(), true, false);
-              String text =
-                  contents.substring(tag.getBeginIndex(), tag.getEndIndex()) +
-                  "..." +
-                  PageElementTag.createTag(tag.getName(), true, false);
-              errorResult.addReplacement(
-                  replacement, text, true);
-              errors.add(errorResult);
-              return true;
+              CheckErrorResult errorResult = replaceByClosingTag(analysis, secondTag, tag, true);
+              if (errorResult != null) {
+                errors.add(errorResult);
+                return true;
+              }
             }
             return false;
           }
@@ -385,18 +350,12 @@ public class CheckErrorAlgorithm532 extends CheckErrorAlgorithmBase {
     }
 
     // Report tag
-    CheckErrorResult errorResult = createCheckErrorResult(analysis, tag.getBeginIndex(), currentIndex);
-    String replacement =
-        contents.substring(tag.getBeginIndex(), currentIndex) +
-        PageElementTag.createTag(tag.getName(), true, false);
-    String text =
-        contents.substring(tag.getBeginIndex(), tag.getEndIndex()) +
-        "..." +
-        PageElementTag.createTag(tag.getName(), true, false);
-    errorResult.addReplacement(
-        replacement, text, true);
-    errors.add(errorResult);
-    return true;
+    CheckErrorResult errorResult = closeTag(analysis, tag, tag.getBeginIndex(), currentIndex, true);
+    if (errorResult != null) {
+      errors.add(errorResult);
+      return true;
+    }
+    return false;
   }
 
   /**
@@ -437,18 +396,12 @@ public class CheckErrorAlgorithm532 extends CheckErrorAlgorithmBase {
     }
 
     // Report tag
-    CheckErrorResult errorResult = createCheckErrorResult(analysis, tag.getBeginIndex(), currentIndex);
-    String replacement =
-        contents.substring(tag.getBeginIndex(), currentIndex) +
-        PageElementTag.createTag(tag.getName(), true, false);
-    String text =
-        contents.substring(tag.getBeginIndex(), tag.getEndIndex()) +
-        "..." +
-        PageElementTag.createTag(tag.getName(), true, false);
-    errorResult.addReplacement(
-        replacement, text, false);
-    errors.add(errorResult);
-    return true;
+    CheckErrorResult errorResult = closeTag(analysis, tag, tag.getBeginIndex(), currentIndex, false);
+    if (errorResult != null) {
+      errors.add(errorResult);
+      return true;
+    }
+    return false;
   }
 
   /**
@@ -593,18 +546,12 @@ public class CheckErrorAlgorithm532 extends CheckErrorAlgorithmBase {
     }
 
     // Report tag
-    CheckErrorResult errorResult = createCheckErrorResult(analysis, tag.getBeginIndex(), currentIndex);
-    String replacement =
-        contents.substring(tag.getBeginIndex(), currentIndex) +
-        PageElementTag.createTag(tag.getName(), true, false);
-    String text =
-        contents.substring(tag.getBeginIndex(), tag.getEndIndex()) +
-        "..." +
-        PageElementTag.createTag(tag.getName(), true, false);
-    errorResult.addReplacement(
-        replacement, text, true);
-    errors.add(errorResult);
-    return true;
+    CheckErrorResult errorResult = closeTag(analysis, tag, tag.getBeginIndex(), currentIndex, true);
+    if (errorResult != null) {
+      errors.add(errorResult);
+      return true;
+    }
+    return false;
   }
 
   /**
@@ -651,7 +598,7 @@ public class CheckErrorAlgorithm532 extends CheckErrorAlgorithmBase {
         return false;
       }
       if (previousChar == '>') {
-        previousTag = analysis.isInTag(index - 1);
+        previousTag = analysis.isInTag(index - 1, tag.getNormalizedName());
       }
       index--;
     }
@@ -667,10 +614,12 @@ public class CheckErrorAlgorithm532 extends CheckErrorAlgorithmBase {
     }
 
     // Report tag
-    CheckErrorResult errorResult = createCheckErrorResult(analysis, tag.getBeginIndex(), tag.getEndIndex());
-    errorResult.addReplacement(PageElementTag.createTag(previousTag.getName(), true, false), true);
-    errors.add(errorResult);
-    return true;
+    CheckErrorResult errorResult = replaceByClosingTag(analysis, tag, previousTag, true);
+    if (errorResult != null) {
+      errors.add(errorResult);
+      return true;
+    }
+    return false;
   }
 
   /**
@@ -695,45 +644,36 @@ public class CheckErrorAlgorithm532 extends CheckErrorAlgorithmBase {
       return false;
     }
 
-    // Avoid some situations
-    int tagEndIndex = tag.getEndIndex();
-    if ((analysis.isInTemplate(tagEndIndex) != null) ||
-        (analysis.isInInternalLink(tagEndIndex) != null) ||
-        (analysis.isInExternalLink(tagEndIndex) != null)) {
+    // Go to the end of the last line
+    String contents = analysis.getContents();
+    int index = contents.length();
+    while ((index > 0) && (contents.charAt(index - 1) == '\n')) {
+      index--;
+    }
+    while ((index > 0) && (contents.charAt(index - 1) == ' ')) {
+      index--;
+    }
+    if (index == 0) {
       return false;
     }
 
-    // Analyze if it is in the last line
-    String contents = analysis.getContents();
-    int index = contents.length();
-    boolean hasTagAfter = false;
-    while ((index > tagEndIndex) && (contents.charAt(index - 1) == '\n')) {
-      index--;
-    }
+    // Check if there's a tag at the end of the last line
     int lastIndex = index;
+    PageElementTag lastTag = null;
+    if (contents.charAt(index - 1) == '>') {
+      lastTag = analysis.isInTag(index - 1);
+      if (lastTag != null) {
+        index = lastTag.getBeginIndex();
+      }
+    }
+
+    // Check if the tag is in the last line
+    int tagEndIndex = tag.getEndIndex();
     while ((index > tagEndIndex) && (contents.charAt(index - 1) != '\n')) {
       index--;
-      if (contents.charAt(index) == '<') {
-        PageElementTag tagAfter = analysis.isInTag(index);
-        if (tagAfter != null) {
-          if (tag.getNormalizedName().equals(tagAfter.getNormalizedName())) {
-            if (!tagAfter.isEndTag()) {
-              hasTagAfter = true;
-            }
-          } else {
-            if (tagAfter.isEndTag()) {
-              if (!tagAfter.isComplete()) {
-                return false;
-              }
-              if (tagAfter.getCompleteBeginIndex() < tag.getBeginIndex()) {
-                if (tagAfter.getEndIndex() == lastIndex) {
-                  lastIndex = tagAfter.getBeginIndex();
-                } else {
-                  return false;
-                }
-              }
-            }
-          }
+      if (contents.charAt(index) == '>') {
+        if (analysis.isInTag(index - 1, tag.getNormalizedName()) != null) {
+          return false;
         }
       }
     }
@@ -741,71 +681,213 @@ public class CheckErrorAlgorithm532 extends CheckErrorAlgorithmBase {
       return false;
     }
 
-    // Check if there's an other opening tag before in the last line
-    int tmpIndex = tag.getBeginIndex();
-    boolean hasTagBefore = false;
-    while ((tmpIndex > 0) && (contents.charAt(tmpIndex - 1) != '\n')) {
-      tmpIndex--;
-      if (contents.charAt(tmpIndex) == '<') {
-        PageElementTag tagBefore = analysis.isInTag(tmpIndex, tag.getNormalizedName());
-        if ((tagBefore != null) && (!tagBefore.isEndTag()) && (!tagBefore.isComplete())) {
-          hasTagBefore = true;
+    // Check if there's an other opening tag before in the page
+    List<PageElementTag> tags = analysis.getTags(tag.getNormalizedName());
+    boolean after = false;
+    boolean hasOtherTagBefore = false;
+    for (PageElementTag otherTag : tags) {
+      if (!after) {
+        if (otherTag == tag) {
+          after = true;
+        } else if (!otherTag.isComplete()) {
+          hasOtherTagBefore = true;
         }
       }
     }
 
     // Decide what to do
-    int lineCount = 0;
-    if (index < lastIndex) {
-      lineCount++;
+    if (lastTag == tag) {
+      CheckErrorResult errorResult = createCheckErrorResult(analysis, tag.getBeginIndex(), tag.getEndIndex());
+      errorResult.addReplacement("");
+      if (hasOtherTagBefore && (tag.getParametersCount() == 0)) {
+        errorResult.addReplacement(PageElementTag.createTag(tag.getName(), true, false));
+      }
+      errors.add(errorResult);
+      return true;
     }
-    boolean shouldDelete = false;
-    boolean shouldClose = !hasTagAfter && !hasTagBefore;
-    boolean shouldReplaceByClose = false;
-    boolean automatic = true;
-    if (lineCount == 0) {
-      if (PageElementTag.TAG_HTML_CENTER.equals(tag.getNormalizedName())) {
-        shouldDelete = true;
-        shouldClose = false;
-      } else if (PageElementTag.TAG_HTML_SMALL.equals(tag.getNormalizedName())) {
-        if (!hasTagAfter && hasTagBefore) {
-          shouldReplaceByClose = true;
-        } else {
-          automatic = false;
-          index = tag.getBeginIndex();
-          if ((index > 0) && (contents.charAt(index - 1) == '\n')) {
-            shouldDelete = true;
+    if (lastTag != null) {
+      CheckErrorResult errorResult = replaceByClosingTag(analysis, lastTag, tag, !hasOtherTagBefore);
+      if (errorResult != null) {
+        errors.add(errorResult);
+        return true;
+      }
+    } else {
+      CheckErrorResult errorResult = closeTag(analysis, tag, tag.getBeginIndex(), lastIndex, !hasOtherTagBefore);
+      if (errorResult != null) {
+        errors.add(errorResult);
+        return true;
+      }
+    }
+    return false;
+  }
+
+  // ==============================================================================================
+  // Elementary functions to report an error and propose a given fix.
+  // ==============================================================================================
+
+  /**
+   * Report an error that can be fixed by closing the opening tag later in the text.
+   * 
+   * @param analysis Page analysis.
+   * @param tag Tag that could be replaced.
+   * @param previousTag Previous opening tag.
+   * @param automatic True if automatic modifications can be done.
+   * @return Error result if the error can be reported.
+   */
+  private CheckErrorResult closeTag(
+      PageAnalysis analysis,
+      PageElementTag tag, int beginIndex, int endIndex,
+      boolean automatic) {
+
+    // Check tag
+    if ((tag == null) || tag.isEndTag() || tag.isComplete()) {
+      return null;
+    }
+    if ((tag.getBeginIndex() < beginIndex) || (tag.getEndIndex() > endIndex)) {
+      return null;
+    }
+
+    // Check what is after the opening tag
+    int currentIndex = tag.getEndIndex();
+    String contents = analysis.getContents();
+    int countBold = 0;
+    int countItalic = 0;
+    while (currentIndex < endIndex) {
+      char currentChar = contents.charAt(currentIndex);
+      int nextIndex = currentIndex + 1;
+      if (currentChar == '<') {
+        PageElementTag currentTag = analysis.isInTag(currentIndex);
+        if (currentTag != null) {
+          nextIndex = currentTag.getEndIndex();
+          if ((currentTag.getCompleteBeginIndex() < beginIndex) ||
+              (currentTag.getCompleteEndIndex() > endIndex)) {
+            return null;
+          }
+          if (!currentTag.isComplete()) {
+            boolean normal = false;
+            for (String tagName : unclosedTags) {
+              if (tagName.equals(currentTag.getNormalizedName())) {
+                normal = true;
+              }
+            }
+            if (!normal) {
+              return null;
+            }
           }
         }
-      } else {
-        automatic = false;
+      } else if (currentChar == '\'') {
+        while ((nextIndex < contents.length()) && (contents.charAt(nextIndex) == '\'')) {
+          nextIndex++;
+        }
+        switch (nextIndex - currentIndex) {
+        case 1:
+          break;
+        case 2:
+          countItalic++;
+          break;
+        case 3:
+          countBold++;
+          break;
+        case 5:
+          countItalic++;
+          countBold++;
+          break;
+        default:
+          automatic = false;
+        }
+      }
+      currentIndex = nextIndex;
+    }
+    if ((countBold % 2 != 0) || (countItalic % 2 != 0)) {
+      automatic = false;
+    }
+
+    // Check for some situations (not across some other constructions)
+    PageElementInternalLink iLink = analysis.isInInternalLink(tag.getBeginIndex());
+    if (iLink != null) {
+      if (iLink.getEndIndex() < endIndex) {
+        return null;
+      }
+    } else {
+      if (analysis.isInInternalLink(endIndex) != null) {
+        return null;
+      }
+    }
+    PageElementExternalLink eLink = analysis.isInExternalLink(tag.getBeginIndex());
+    if (eLink != null) {
+      if (eLink.getEndIndex() < endIndex) {
+        return null;
+      }
+    } else {
+      if (analysis.isInExternalLink(endIndex) != null) {
+        return null;
+      }
+    }
+    PageElementTemplate template = analysis.isInTemplate(tag.getBeginIndex());
+    if (template != null) {
+      if (template.getEndIndex() < endIndex) {
+        return null;
+      }
+      PageElementTemplate.Parameter param = template.getParameterAtIndex(tag.getBeginIndex());
+      if ((param != null) && (param.getEndIndex() < endIndex)) {
+        return null;
+      }
+    } else {
+      if (analysis.isInTemplate(endIndex) != null) {
+        return null;
       }
     }
 
-    // Report tag
-    CheckErrorResult errorResult = createCheckErrorResult(analysis, tag.getBeginIndex(), lastIndex);
-    if (shouldDelete) {
-      errorResult.addReplacement("", automatic);
+    // Create error
+    CheckErrorResult errorResult = createCheckErrorResult(analysis, beginIndex, endIndex);
+    String replacement =
+        contents.substring(beginIndex, endIndex) +
+        PageElementTag.createTag(tag.getName(), true, false);
+    String text =
+        contents.substring(beginIndex, tag.getEndIndex()) +
+        "..." +
+            PageElementTag.createTag(tag.getName(), true, false);
+    errorResult.addReplacement(replacement, text, automatic);
+    return errorResult;
+  }
+
+  /**
+   * Report an error that can be fixed by replacing the opening tag by a closing one.
+   * 
+   * @param analysis Page analysis.
+   * @param tag Tag that could be replaced.
+   * @param previousTag Previous opening tag.
+   * @param automatic True if automatic modifications can be done.
+   * @return Error result if the error can be reported.
+   */
+  private CheckErrorResult replaceByClosingTag(
+      PageAnalysis analysis,
+      PageElementTag tag, PageElementTag previousTag,
+      boolean automatic) {
+
+    // Check tags
+    if ((tag == null) || (previousTag == null)) {
+      return null;
     }
-    if (shouldClose) {
-      String replacement =
-          contents.substring(tag.getBeginIndex(), lastIndex) +
-          PageElementTag.createTag(tag.getName(), true, false);
-      String text =
-          contents.substring(tag.getBeginIndex(), tag.getEndIndex()) +
-          "..." +
-          PageElementTag.createTag(tag.getName(), true, false);
-      errorResult.addReplacement(
-          replacement, text, automatic);
+    if (tag.isEndTag() || previousTag.isEndTag()) {
+      return null;
     }
-    if (shouldReplaceByClose) {
-      String replacement =
-          PageElementTag.createTag(tag.getName(), true, false) +
-          contents.substring(tag.getEndIndex(), lastIndex);
-      errorResult.addReplacement(replacement, automatic);
+    if (tag.isComplete() || previousTag.isComplete()) {
+      return null;
     }
-    errors.add(errorResult);
-    return true;
+    if (!tag.getNormalizedName().equals(previousTag.getNormalizedName())) {
+      return null;
+    }
+    if (tag.getParametersCount() > 0) {
+      return null;
+    }
+
+    // TODO: extra verifications ?
+
+    // Create error
+    CheckErrorResult errorResult = createCheckErrorResult(analysis, tag.getBeginIndex(), tag.getEndIndex());
+    errorResult.addReplacement(PageElementTag.createTag(previousTag.getName(), true, false), automatic);
+    return errorResult;
   }
 
   /**

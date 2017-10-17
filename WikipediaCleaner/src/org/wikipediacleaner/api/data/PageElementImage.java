@@ -201,12 +201,13 @@ public class PageElementImage extends PageElement {
     if (parameters == null) {
       return null;
     }
+    Parameter result = null;
     for (Parameter param : parameters) {
       if (param.getMagicWord() == null) {
-        return param;
+        result = param; // To take the last parameter not related to a magic word
       }
     }
-    return null;
+    return result;
   }
 
   /**
