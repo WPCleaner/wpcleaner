@@ -130,7 +130,7 @@ public class PageElementImage extends PageElement {
             firstPipeIndex - index, parameters);
       } else if ((templateCount <= 0) && (linkCount <= 0) && (contents.charAt(tmpIndex) == '|')) {
         String element = contents.substring(pipeIndex + 1, tmpIndex).trim();
-        if (element.length() > 0) {
+        if (element.length() >= 0) {
           MagicWord magicWord = wikiConfiguration.getImgMagicWord(element);
           Parameter param = new Parameter(
               pipeIndex + 1 - index, tmpIndex - index,
