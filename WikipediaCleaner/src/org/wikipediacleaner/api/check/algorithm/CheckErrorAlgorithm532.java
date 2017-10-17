@@ -273,17 +273,41 @@ public class CheckErrorAlgorithm532 extends CheckErrorAlgorithmBase {
       return false;
     }
     int beginIndex = image.getBeginIndex() + desc.getBeginOffset();
-    if (tag.getBeginIndex() != beginIndex) {
-      return false;
-    }
-    int endIndex = image.getBeginIndex() + desc.getEndOffset();
 
     // Report tag
-    CheckErrorResult errorResult = closeTag(analysis, tag, beginIndex, endIndex, true);
-    if (errorResult != null) {
-      errors.add(errorResult);
-      return true;
+    int endIndex = image.getBeginIndex() + desc.getEndOffset();
+    if (tag.getBeginIndex() == beginIndex) {
+
+      // Tag at the beginning of the description
+      CheckErrorResult errorResult = closeTag(analysis, tag, beginIndex, endIndex, true);
+      if (errorResult != null) {
+        errors.add(errorResult);
+        return true;
+      }
+    } else {
+
+      // Check for tag at the end of the description
+      String contents = analysis.getContents();
+      while ((endIndex > 0) && (contents.charAt(endIndex - 1) == ' ')) {
+        endIndex--;
+      }
+      if (tag.getEndIndex() == endIndex) {
+        while (contents.charAt(beginIndex) == ' ') {
+          beginIndex++;
+        }
+        if (contents.charAt(beginIndex) == '<') {
+          PageElementTag previousTag = analysis.isInTag(beginIndex, tag.getNormalizedName());
+          if (previousTag != null) {
+            CheckErrorResult errorResult = replaceByClosingTag(analysis, tag, previousTag, true);
+            if (errorResult != null) {
+              errors.add(errorResult);
+              return true;
+            }
+          }
+        }
+      }
     }
+
     return false;
   }
 
