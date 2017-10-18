@@ -7,6 +7,8 @@
 
 package org.wikipediacleaner.api.rest;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.Map;
 
 import org.apache.commons.httpclient.HttpClient;
@@ -77,8 +79,14 @@ public abstract class BasicRestApiResult implements RestApiResult {
    */
   protected HttpMethod createHttpMethod(
       Map<String, String> properties, String path) {
+    String encodedPath = path;
+    try {
+      encodedPath = URLEncoder.encode(path, "UTF8");
+    } catch (UnsupportedEncodingException e) {
+      // Nothing
+    }
     return HttpUtils.createHttpMethod(
-        getWiki().getSettings().getHostURL(true) + "/" + path,
+        getWiki().getSettings().getHostURL(true) + "/" + encodedPath,
         properties, false);
   }
 }
