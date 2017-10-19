@@ -92,6 +92,7 @@ public class MagicWord implements Comparable<MagicWord> {
   public final static String IMG_CLASS                   = "img_class";
   public final static String IMG_FRAMED                  = "img_framed";
   public final static String IMG_FRAMELESS               = "img_frameless";
+  public final static String IMG_LANG                    = "img_lang";
   public final static String IMG_LEFT                    = "img_left";
   public final static String IMG_LINK                    = "img_link";
   public final static String IMG_LOSSY                   = "img_lossy";
@@ -380,6 +381,7 @@ public class MagicWord implements Comparable<MagicWord> {
     MagicWord.IMG_CLASS,
     MagicWord.IMG_FRAMED,
     MagicWord.IMG_FRAMELESS,
+    MagicWord.IMG_LANG,
     MagicWord.IMG_LEFT,
     MagicWord.IMG_LINK,
     MagicWord.IMG_LOSSY,
