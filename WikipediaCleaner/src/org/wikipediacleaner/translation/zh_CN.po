@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2017-10-04 18:46+0200\n"
+"POT-Creation-Date: 2017-10-30 11:17+0100\n"
 "PO-Revision-Date: 2017-03-03 19:29+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Chinese (Simplified) <zh_CN@li.org>\n"
@@ -155,15 +155,24 @@ msgstr ""
 msgid "Fixing spelling or typography based on a list of suggestions."
 msgstr "根据一个建议列表修正拼写或排版。"
 
-#: org/wikipediacleaner/api/MediaWiki.java:227
+#: org/wikipediacleaner/api/MediaWiki.java:234
 #, java-format
 msgid "Page {0}:"
 msgstr "第{0}页"
 
-#: org/wikipediacleaner/api/MediaWiki.java:305
+#: org/wikipediacleaner/api/MediaWiki.java:312
 #, java-format
 msgid "Updating page {0}"
 msgstr "正在更新页面{0}"
+
+#: org/wikipediacleaner/api/MediaWiki.java:326
+#, java-format
+msgid "The page {0} has been modified."
+msgstr ""
+
+#: org/wikipediacleaner/api/MediaWiki.java:327
+msgid "Do yo want to continue?"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/CheckError.java:407
 msgid "No available description"
@@ -1249,165 +1258,169 @@ msgstr ""
 msgid "regex"
 msgstr "表达式"
 
-#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:164
-#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:166
-#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:634
+#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:165
+#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:167
+#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:643
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:300
 #: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:259
 msgid "Automatic fixing"
 msgstr "自动修正"
 
-#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:230
+#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:231
 msgid "This feature may modify a lot of pages in a short period of time."
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:231
-#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:719
+#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:232
+#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:729
 #: org/wikipediacleaner/gui/swing/bot/BotToolsWindow.java:89
 msgid "On some Wikipedia projects, you may need the bot status for doing this."
 msgstr "在一些维基百科项目上，您可能需要执行此操作的机器人身份。"
 
-#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:232
-#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:720
+#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:233
+#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:730
 #: org/wikipediacleaner/gui/swing/bot/BotToolsWindow.java:90
 msgid ""
 "Please, check if you need the bot status by reading the rules of Wikipedia."
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:248
+#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:249
 #: org/wikipediacleaner/gui/swing/options/SortingOptionsPanel.java:110
 msgid "Add"
 msgstr "添加"
 
-#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:254
+#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:255
 msgid "Remove"
 msgstr "移除"
 
-#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:260
+#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:261
 msgid "Modify"
 msgstr "编辑"
 
-#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:266
+#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:267
 msgid "Clear"
 msgstr "清除"
 
-#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:272
+#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:273
 msgid "Save"
 msgstr "保存"
 
-#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:279
+#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:280
 msgid "Fix selected pages"
 msgstr "修复选中的页面"
 
-#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:285
-#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:369
+#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:286
+#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:378
 msgid "Test automatic replacements"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:291
+#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:292
 #, fuzzy
 msgid "Load replacements"
 msgstr "&加载页面"
 
-#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:297
+#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:298
 msgid "Save replacements"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:310
+#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:311
 #: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:114
 #: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:196
 msgid "Automatic fixing for Check Wiki"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:327
+#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:328
 msgid "Always apply automatic fixing for Check Wiki"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:473
+#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:343
+msgid "Pause after each edit"
+msgstr ""
+
+#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:482
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiWindow.java:224
 msgid "No errors selected"
 msgstr "没有错误被选中"
 
-#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:604
+#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:613
 msgid "Text that should be replaced"
 msgstr "应该被替换的文字"
 
-#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:615
+#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:624
 msgid "Text to be used as a replacement"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:626
+#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:635
 msgid "Use regular expressions"
 msgstr "使用正则表达式"
 
-#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:689
+#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:698
 msgid "You must select the pages on which running automatic fixing."
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:697
+#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:706
 msgid "A comment is required for automatic fixing."
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:707
+#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:716
 msgid "You must input the initial and destination texts."
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:716
+#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:726
 #: org/wikipediacleaner/gui/swing/bot/BotToolsWindow.java:86
 msgid "!!! WARNING !!!"
 msgstr "警告！"
 
-#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:717
+#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:727
 msgid "This function will carry out all replacements on all selected pages."
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:718
+#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:728
 msgid "It may modify a lot of pages in a short period of time."
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:721
+#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:731
 msgid ""
 "Also, verify again the texts you have inputted before running this function."
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:722
+#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:732
 msgid "You can also test the modifications before actually doing them."
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:723
+#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:733
 msgid "Do you want to proceed with the modifications ?"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:780
+#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:790
 msgid "The following replacements have been made:"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:791
+#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:801
 msgid "Do you want to test the replacements on the pages ?"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:805
-#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:834
+#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:815
+#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:844
 msgid "XML files"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:901
+#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:911
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiWindow.java:353
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiWindow.java:607
 msgid "Select errors"
 msgstr "选择错误"
 
-#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:909
+#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:919
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiWindow.java:357
 msgid "Select all errors"
 msgstr "选择所有错误"
 
-#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:916
+#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:926
 #, fuzzy
 msgid "Select no errors"
 msgstr "选择错误"
 
-#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:941
+#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:951
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiWindow.java:410
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiWindow.java:465
 #, java-format
@@ -3800,7 +3813,7 @@ msgstr ""
 msgid "Checking that protected titles have backlinks"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/worker/AutomaticFixingWorker.java:105
+#: org/wikipediacleaner/gui/swing/worker/AutomaticFixingWorker.java:117
 #, java-format
 msgid "The following modifications have been done ({0} page):"
 msgid_plural "The following modifications have been done ({0} pages):"

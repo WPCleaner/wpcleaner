@@ -7,6 +7,7 @@
 
 package org.wikipediacleaner.api;
 
+import java.awt.Component;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -14,6 +15,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+
+import javax.swing.JOptionPane;
 
 import org.wikipediacleaner.api.check.CheckError;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithm;
@@ -30,6 +33,7 @@ import org.wikipediacleaner.api.execution.ExpandTemplatesCallable;
 import org.wikipediacleaner.api.execution.LinksWRCallable;
 import org.wikipediacleaner.api.execution.ParseTextCallable;
 import org.wikipediacleaner.api.execution.TemplatesCallable;
+import org.wikipediacleaner.gui.swing.basic.Utilities;
 import org.wikipediacleaner.gui.swing.worker.UpdateDabWarningTools;
 import org.wikipediacleaner.i18n.GT;
 import org.wikipediacleaner.utils.Configuration;
@@ -172,6 +176,8 @@ public class MediaWiki extends MediaWikiController {
    * @param forceCW List of CW fixing that should be done even if no automatic replacement was done.
    * @param save True if modification should be saved.
    * @param minor True if the modification should be tagged as minor.
+   * @param pauseAfterEachEdit True to pause after each edit.
+   * @param parent Parent window.
    * @return Count of modified pages.
    * @throws APIException
    */
@@ -180,7 +186,8 @@ public class MediaWiki extends MediaWikiController {
       EnumWikipedia wiki, String comment,
       StringBuilder description,
       Collection<CheckErrorAlgorithm> automaticCW, Collection<CheckErrorAlgorithm> forceCW,
-      boolean save, boolean updateDabWarning, boolean minor) throws APIException {
+      boolean save, boolean updateDabWarning, boolean minor,
+      boolean pauseAfterEachEdit, Component parent) throws APIException {
     if ((pages == null) || (replacements == null) || (replacements.size() == 0)) {
       return 0;
     }
@@ -312,6 +319,21 @@ public class MediaWiki extends MediaWikiController {
                   List<Page> tmpList = new ArrayList<>(1);
                   tmpList.add(page);
                   dabWarnings.updateWarning(tmpList, null, null, null);
+                }
+                if (pauseAfterEachEdit) {
+                  int answer = Utilities.displayYesNoAllWarning(
+                      parent,
+                      GT._("The page {0} has been modified.", page.getTitle()) + "\n" +
+                      GT._("Do yo want to continue?"));
+                  switch (answer) {
+                  case JOptionPane.YES_OPTION:
+                    break;
+                  case Utilities.YES_ALL_OPTION:
+                    pauseAfterEachEdit = false;
+                    break;
+                  default:
+                    stopRemainingTasks();
+                  }
                 }
               } catch (APIException e) {
                 EnumQueryResult error = e.getQueryResult();

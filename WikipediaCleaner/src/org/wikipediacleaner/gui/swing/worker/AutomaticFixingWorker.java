@@ -7,6 +7,7 @@
 
 package org.wikipediacleaner.gui.swing.worker;
 
+import java.awt.Component;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -52,6 +53,12 @@ public class AutomaticFixingWorker extends BasicWorker {
   /** True if modifications should be saved. */
   private final boolean save;
 
+  /** True to pause after each edit */
+  private final boolean pauseAfterEachEdit;
+
+  /** Parent window */
+  private final Component parent;
+
   /**
    * @param wiki Wiki.
    * @param window Associated window.
@@ -62,13 +69,15 @@ public class AutomaticFixingWorker extends BasicWorker {
    * @param automaticCW List of CW fixing that should be done.
    * @param forceCW List of CW fixing that should be done even if no automatic replacement was done.
    * @param save True if modifications should be saved.
+   * @param pauseAfterEachEdit True to pause after each edit.
+   * @param parent Parent window.
    */
   public AutomaticFixingWorker(
       EnumWikipedia wiki, BasicWindow window,
       Page[] pages, Map<String, List<AutomaticFixing>> replacements,
       String comment, boolean showDescription,
       Collection<CheckErrorAlgorithm> automaticCW, Collection<CheckErrorAlgorithm> forceCW,
-      boolean save) {
+      boolean save, boolean pauseAfterEachEdit, Component parent) {
     super(wiki, window);
     this.pages = pages;
     this.replacements = replacements;
@@ -78,6 +87,8 @@ public class AutomaticFixingWorker extends BasicWorker {
     this.automaticCW = automaticCW;
     this.forceCW = forceCW;
     this.save = save;
+    this.pauseAfterEachEdit = pauseAfterEachEdit;
+    this.parent = parent;
   }
 
   /* (non-Javadoc)
@@ -98,7 +109,8 @@ public class AutomaticFixingWorker extends BasicWorker {
       MediaWiki mw = MediaWiki.getMediaWikiAccess(this);
       Integer count = Integer.valueOf(mw.replaceText(
           tmpPages, replacements, getWikipedia(),
-          comment, description, automaticCW, forceCW, save, true, true));
+          comment, description, automaticCW, forceCW,
+          save, true, true, pauseAfterEachEdit, parent));
       if (showDescription && (count > 0)) {
         InformationWindow.createInformationWindow(
             GT.__(

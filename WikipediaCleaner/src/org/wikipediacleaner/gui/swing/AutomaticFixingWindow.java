@@ -103,6 +103,7 @@ public class AutomaticFixingWindow extends OnePageWindow {
   private JButton buttonSaveList;
   private JButton buttonAutomaticCWAlgorithms;
   private JButton buttonForceCWAlgorithms;
+  private JCheckBox chkWaitAfterEdit;
   private JTextPane paneOriginal;
   private JTextPane paneResult;
 
@@ -335,6 +336,14 @@ public class AutomaticFixingWindow extends OnePageWindow {
     constraints.gridwidth = 2;
     constraints.weighty = 0;
     panel.add(panelForceCW, constraints);
+    constraints.gridy++;
+
+    // Wait after each edit
+    chkWaitAfterEdit = Utilities.createJCheckBox(
+        GT._("Pause after each edit"), true);
+    constraints.gridwidth = 2;
+    constraints.weighty = 0;
+    panel.add(chkWaitAfterEdit, constraints);
     constraints.gridy++;
 
     // Comment
@@ -708,6 +717,7 @@ public class AutomaticFixingWindow extends OnePageWindow {
         return;
       }
     }
+    boolean pauseAfterEachEdit = chkWaitAfterEdit.isSelected();
 
     // Warn the user about what this function does
     if (save) {
@@ -743,7 +753,7 @@ public class AutomaticFixingWindow extends OnePageWindow {
         getWiki(), this, tmpPages, replacements,
         comment, true,
         automaticCWAlgorithms, forceCWAlgorithms,
-        save);
+        save, pauseAfterEachEdit, this.getParentComponent());
     automaticWorker.setListener(new DefaultBasicWorkerListener() {
       @Override
       public void afterFinished(
