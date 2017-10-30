@@ -776,9 +776,11 @@ public class CheckErrorAlgorithm532 extends CheckErrorAlgorithmBase {
     String contents = analysis.getContents();
     int countBold = 0;
     int countItalic = 0;
+    boolean hasContentsAfter = false;
     while (currentIndex < endIndex) {
       char currentChar = contents.charAt(currentIndex);
       int nextIndex = currentIndex + 1;
+      hasContentsAfter |= (" \n".indexOf(currentChar) >= 0);
       if (currentChar == '<') {
         PageElementTag currentTag = analysis.isInTag(currentIndex);
         if (currentTag != null) {
@@ -819,10 +821,15 @@ public class CheckErrorAlgorithm532 extends CheckErrorAlgorithmBase {
         default:
           automatic = false;
         }
+      } else if (contents.startsWith(tag.getName(), currentIndex)) {
+        automatic = false;
       }
       currentIndex = nextIndex;
     }
     if ((countBold % 2 != 0) || (countItalic % 2 != 0)) {
+      automatic = false;
+    }
+    if (!hasContentsAfter) {
       automatic = false;
     }
 
@@ -872,6 +879,11 @@ public class CheckErrorAlgorithm532 extends CheckErrorAlgorithmBase {
         "..." +
             PageElementTag.createTag(tag.getName(), true, false);
     errorResult.addReplacement(replacement, text, automatic);
+    if (!hasContentsAfter) {
+      errorResult.addReplacement(
+          contents.substring(beginIndex, tag.getBeginIndex()) +
+          contents.substring(tag.getEndIndex(), endIndex));
+    }
     return errorResult;
   }
 
