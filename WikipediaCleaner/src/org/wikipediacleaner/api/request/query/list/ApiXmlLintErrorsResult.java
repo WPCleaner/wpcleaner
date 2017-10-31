@@ -77,6 +77,7 @@ public class ApiXmlLintErrorsResult extends ApiXmlResult implements ApiLintError
             if ((templateName != null) &&
                 !templateName.startsWith("{") &&
                 !templateName.startsWith("#")) {
+              templateName = Page.normalizeTitle(templateName);
               page = DataManager.getPage(
                   getWiki(), templateName, null, null, null);
               if (!list.contains(page)) {
