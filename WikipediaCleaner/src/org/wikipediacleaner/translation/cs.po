@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2017-10-30 11:17+0100\n"
+"POT-Creation-Date: 2017-10-31 14:37+0100\n"
 "PO-Revision-Date: 2017-03-03 19:31+0000\n"
 "Last-Translator: Matěj S. <matejsuchanek97@gmail.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
@@ -1257,7 +1257,7 @@ msgstr "Přijímám šablony"
 msgid "URL {0} is blacklisted"
 msgstr "URL {0} je na černé listině"
 
-#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:1868
+#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:1869
 msgid ""
 "This action is protected by a CAPTCHA.\n"
 "What is the answer to the following question ?"
@@ -1265,7 +1265,7 @@ msgstr ""
 "Tato akce je chráněna funkcí CAPTCHA.\n"
 "Jaká je odpověď na následující otázku?"
 
-#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:1875
+#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:1876
 msgid ""
 "This action is protected by a CAPTCHA.\n"
 "What is the answer to the question displayed in your browser ?"
@@ -1726,7 +1726,7 @@ msgid "Generate lists"
 msgstr "Generovat seznamy"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:885
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1900
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1926
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:195
 msgid "Local Watchlist"
 msgstr "Místní sledované stránky"
@@ -1736,8 +1736,8 @@ msgid "Watchlist"
 msgstr "Sledované stránky"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:904
-#: org/wikipediacleaner/gui/swing/MainWindow.java:2023
-#: org/wikipediacleaner/gui/swing/MainWindow.java:2088
+#: org/wikipediacleaner/gui/swing/MainWindow.java:2049
+#: org/wikipediacleaner/gui/swing/MainWindow.java:2114
 msgid "Random pages"
 msgstr "Náhodné stránky"
 
@@ -1878,51 +1878,61 @@ msgstr "Zásahy filtru {0}"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1691
 #, fuzzy
+msgid "Without templates"
+msgstr "Chybějící šablony"
+
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1694
+#, fuzzy
+msgid "With templates"
+msgstr "Chybějící šablony"
+
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1712
+#, fuzzy
 msgid "All namespaces"
 msgstr "Filtrovat jmenné prostory"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1705
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1728
 #: org/wikipediacleaner/gui/swing/pagelist/PageListTableModel.java:226
 msgid "Main"
 msgstr "Hlavní"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1758
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1784
 msgid "All disambiguations pages"
 msgstr "Všechny rozcestníkové stránky"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1914
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1940
 msgid "Watch list"
 msgstr "Sledované stránky"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1944
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1970
 msgid "Unformatted list of page names"
 msgstr "Neformátovaný seznam názvů stránek"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1945
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1971
 msgid "Internal links in a formatted list"
 msgstr "Formátovaný seznam s vnitřními odkazy."
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1948
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1974
 msgid "The file must be encoded in UTF-8 to be read correctly."
 msgstr "Aby byl soubor přečten správně, musí být kódován v UTF-8."
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1949
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1975
 msgid "In which format is the file?"
 msgstr "Formát souboru?"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:2004
+#: org/wikipediacleaner/gui/swing/MainWindow.java:2030
 msgid "List"
 msgstr "Seznam"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:2027
+#: org/wikipediacleaner/gui/swing/MainWindow.java:2053
 msgid "Random redirect pages"
 msgstr "Náhodná přesměrování"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:2059
+#: org/wikipediacleaner/gui/swing/MainWindow.java:2085
 msgid "How many pages do you want?"
 msgstr "Kolik stránek chcete?"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:2071
+#: org/wikipediacleaner/gui/swing/MainWindow.java:2097
 #, java-format
 msgid "The number of pages must be between {0} and {1}"
 msgstr "Počet stránek musí být {0} až {1}"

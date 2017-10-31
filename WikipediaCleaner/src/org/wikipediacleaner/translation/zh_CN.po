@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2017-10-30 11:17+0100\n"
+"POT-Creation-Date: 2017-10-31 14:37+0100\n"
 "PO-Revision-Date: 2017-03-03 19:29+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Chinese (Simplified) <zh_CN@li.org>\n"
@@ -1225,7 +1225,7 @@ msgstr "正在检索模板"
 msgid "URL {0} is blacklisted"
 msgstr ""
 
-#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:1868
+#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:1869
 msgid ""
 "This action is protected by a CAPTCHA.\n"
 "What is the answer to the following question ?"
@@ -1233,7 +1233,7 @@ msgstr ""
 "这个操作被验证码所保护。\n"
 "下列问题的答案是什么？"
 
-#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:1875
+#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:1876
 msgid ""
 "This action is protected by a CAPTCHA.\n"
 "What is the answer to the question displayed in your browser ?"
@@ -1691,7 +1691,7 @@ msgid "Generate lists"
 msgstr "生成列表"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:885
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1900
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1926
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:195
 msgid "Local Watchlist"
 msgstr "本地监视列表"
@@ -1701,8 +1701,8 @@ msgid "Watchlist"
 msgstr "监视列表"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:904
-#: org/wikipediacleaner/gui/swing/MainWindow.java:2023
-#: org/wikipediacleaner/gui/swing/MainWindow.java:2088
+#: org/wikipediacleaner/gui/swing/MainWindow.java:2049
+#: org/wikipediacleaner/gui/swing/MainWindow.java:2114
 msgid "Random pages"
 msgstr "随机页面"
 
@@ -1833,51 +1833,61 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1691
 #, fuzzy
+msgid "Without templates"
+msgstr "监视模板"
+
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1694
+#, fuzzy
+msgid "With templates"
+msgstr "监视模板"
+
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1712
+#, fuzzy
 msgid "All namespaces"
 msgstr "命名空间"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1705
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1728
 #: org/wikipediacleaner/gui/swing/pagelist/PageListTableModel.java:226
 msgid "Main"
 msgstr "主要"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1758
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1784
 msgid "All disambiguations pages"
 msgstr "所有的消歧义页"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1914
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1940
 msgid "Watch list"
 msgstr "监视列表"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1944
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1970
 msgid "Unformatted list of page names"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1945
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1971
 msgid "Internal links in a formatted list"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1948
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1974
 msgid "The file must be encoded in UTF-8 to be read correctly."
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1949
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1975
 msgid "In which format is the file?"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:2004
+#: org/wikipediacleaner/gui/swing/MainWindow.java:2030
 msgid "List"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:2027
+#: org/wikipediacleaner/gui/swing/MainWindow.java:2053
 msgid "Random redirect pages"
 msgstr "随机重定向页"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:2059
+#: org/wikipediacleaner/gui/swing/MainWindow.java:2085
 msgid "How many pages do you want?"
 msgstr "您想要多少页面？"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:2071
+#: org/wikipediacleaner/gui/swing/MainWindow.java:2097
 #, java-format
 msgid "The number of pages must be between {0} and {1}"
 msgstr "必须为介于{0}与{1}之间的数字"

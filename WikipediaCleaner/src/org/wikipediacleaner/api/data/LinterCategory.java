@@ -22,8 +22,9 @@ public class LinterCategory implements Comparable<LinterCategory> {
   /** Name of the category */
   private final String category;
 
-  public final static String LEVEL_ERROR = "errors";
-  public final static String LEVEL_WARNING = "warnings";
+  public final static String LEVEL_HIGH = "high";
+  public final static String LEVEL_MEDIUM = "medium";
+  public final static String LEVEL_LOW = "low";
 
   /**
    * @param level Level of the category.
@@ -86,14 +87,14 @@ public class LinterCategory implements Comparable<LinterCategory> {
     // Level
     compare = level.compareTo(lc.level);
     if (compare != 0) {
-      if (level.equals(LEVEL_ERROR)) {
+      if (level.equals(LEVEL_HIGH)) {
         return -1;
-      } else if (lc.level.equals(LEVEL_ERROR)) {
+      } else if (lc.level.equals(LEVEL_HIGH)) {
         return 1;
       }
-      if (level.equals(LEVEL_WARNING)) {
+      if (level.equals(LEVEL_MEDIUM)) {
         return -1;
-      } else if (lc.level.equals(LEVEL_WARNING)) {
+      } else if (lc.level.equals(LEVEL_MEDIUM)) {
         return 1;
       }
       return compare;

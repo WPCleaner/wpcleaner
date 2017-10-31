@@ -558,14 +558,24 @@ public class PageListWorker extends BasicWorker {
     EnumWikipedia wiki = getWikipedia();
     String category = elementNames.get(0);
     Integer namespace = null;
-    if (elementNames.size() > 1) {
+    if ((elementNames.size() > 1) &&
+        (elementNames.get(1) != null) &&
+        !elementNames.get(1).trim().isEmpty()) {
       try {
         namespace = Integer.parseInt(elementNames.get(1)); 
       } catch (NumberFormatException e) {
         // Nothing to do
       }
     }
-    List<Page> tmpPages = api.retrieveLinterCategory(wiki, category, namespace, true, Integer.MAX_VALUE);
+    boolean withTemplates = false;
+    if ((elementNames.size() > 2) &&
+        (elementNames.get(2) != null) &&
+        !elementNames.get(2).trim().isEmpty()) {
+      withTemplates = Boolean.parseBoolean(elementNames.get(2));
+    }
+    List<Page> tmpPages = api.retrieveLinterCategory(
+        wiki, category, namespace, withTemplates,
+        true, Integer.MAX_VALUE);
     if (tmpPages != null) {
       pages.addAll(tmpPages);
     }

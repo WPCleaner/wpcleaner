@@ -1688,35 +1688,55 @@ public class MainWindow
         previousLevel = level;
       }
       JMenu subMenu = new JMenu(category.getCategoryName(config));
-      JMenuItem item = new JMenuItem(GT._("All namespaces"));
-      item.setActionCommand(category.getCategory());
-      item.addActionListener(EventHandler.create(
-          ActionListener.class, this, "actionLinterCategory", "actionCommand"));
-      subMenu.add(item);
-      List<Namespace> namespaces = getWiki().getWikiConfiguration().getNamespaces();
-      if ((namespaces != null) && (namespaces.size() > 0)) {
-        subMenu.addSeparator();
-        for (Namespace namespace : namespaces) {
-          String title = namespace.getTitle();
-          if ((title == null) || title.isEmpty()) {
-            title = namespace.getCanonicalTitle();
-          }
-          if ((title == null) || title.isEmpty()) {
-            title = GT._("Main");
-          }
-          item = new JMenuItem(title);
-          item.setActionCommand(category.getCategory() + "/" + namespace.getId().toString());
-          item.addActionListener(EventHandler.create(
-              ActionListener.class, this, "actionLinterCategory", "actionCommand"));
-          subMenu.add(item);
-        }
-      }
+      JMenu subMenu2 = new JMenu(GT._("Without templates"));
+      fillLinterCategoryMenu(subMenu2, category, false);
+      subMenu.add(subMenu2);
+      subMenu2 = new JMenu(GT._("With templates"));
+      fillLinterCategoryMenu(subMenu2, category, true);
+      subMenu.add(subMenu2);
       menu.add(subMenu);
     }
     menu.show(
         buttonLinterCategories,
         0,
         buttonLinterCategories.getHeight());
+  }
+
+  /**
+   * @param menu Menu to fill for the Linter category.
+   * @param category Linter category.
+   * @param withTemplates True if templates should be included.
+   */
+  private void fillLinterCategoryMenu(
+      JMenu menu, LinterCategory category, boolean withTemplates) {
+    JMenuItem item = new JMenuItem(GT._("All namespaces"));
+    item.setActionCommand(
+        category.getCategory() + "//" +
+        Boolean.toString(withTemplates));
+    item.addActionListener(EventHandler.create(
+        ActionListener.class, this, "actionLinterCategory", "actionCommand"));
+    menu.add(item);
+    List<Namespace> namespaces = getWiki().getWikiConfiguration().getNamespaces();
+    if ((namespaces != null) && (namespaces.size() > 0)) {
+      menu.addSeparator();
+      for (Namespace namespace : namespaces) {
+        String title = namespace.getTitle();
+        if ((title == null) || title.isEmpty()) {
+          title = namespace.getCanonicalTitle();
+        }
+        if ((title == null) || title.isEmpty()) {
+          title = GT._("Main");
+        }
+        item = new JMenuItem(title);
+        item.setActionCommand(
+            category.getCategory() + "/" +
+            namespace.getId().toString() + "/" +
+            Boolean.toString(withTemplates));
+        item.addActionListener(EventHandler.create(
+            ActionListener.class, this, "actionLinterCategory", "actionCommand"));
+        menu.add(item);
+      }
+    }
   }
 
   /**
@@ -1733,7 +1753,13 @@ public class MainWindow
     int separator = category.indexOf('/');
     if (separator > 0) {
       elements.add(category.substring(0, separator));
-      elements.add(category.substring(separator + 1));
+      int separator2 = category.indexOf('/', separator + 1);
+      if (separator2 > 0) {
+        elements.add(category.substring(separator + 1, separator2));
+        elements.add(category.substring(separator2 + 1));
+      } else {
+        elements.add(category.substring(separator + 1));
+      }
     } else {
       elements.add(category);
     }

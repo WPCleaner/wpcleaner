@@ -59,11 +59,12 @@ public class ApiLintErrorsRequest extends ApiListRequest {
    * 
    * @param category Linter category.
    * @param namespace Optional name space.
+   * @param withTemplates True to retrieve also templates causing the error.
    * @param limit Flag indicating if the number of results should be limited.
    * @param max Absolute maximum number of results
    */
   public List<Page> loadLintErrors(
-      String category, Integer namespace,
+      String category, Integer namespace, boolean withTemplates,
       boolean limit, int max) throws APIException {
 
     int maxSize = getMaxSize(limit, ConfigurationValueInteger.MAX_LINT_ERRORS);
@@ -78,7 +79,7 @@ public class ApiLintErrorsRequest extends ApiListRequest {
     }
     List<Page> list = new ArrayList<Page>();
     while (result.executeLinterCategory(
-        properties, list, category, (namespace != null)) &&
+        properties, list, category, withTemplates) &&
         (list.size() < maxSize)) {
       //
     }

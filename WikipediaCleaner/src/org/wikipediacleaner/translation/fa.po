@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2017-10-30 11:17+0100\n"
+"POT-Creation-Date: 2017-10-31 14:37+0100\n"
 "PO-Revision-Date: 2016-07-07 19:35+0000\n"
 "Last-Translator: reza <reza.energy@gmail.com>\n"
 "Language-Team: Persian <fa@li.org>\n"
@@ -1241,13 +1241,13 @@ msgstr ""
 msgid "URL {0} is blacklisted"
 msgstr ""
 
-#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:1868
+#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:1869
 msgid ""
 "This action is protected by a CAPTCHA.\n"
 "What is the answer to the following question ?"
 msgstr ""
 
-#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:1875
+#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:1876
 msgid ""
 "This action is protected by a CAPTCHA.\n"
 "What is the answer to the question displayed in your browser ?"
@@ -1701,7 +1701,7 @@ msgid "Generate lists"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:885
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1900
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1926
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:195
 msgid "Local Watchlist"
 msgstr ""
@@ -1711,8 +1711,8 @@ msgid "Watchlist"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:904
-#: org/wikipediacleaner/gui/swing/MainWindow.java:2023
-#: org/wikipediacleaner/gui/swing/MainWindow.java:2088
+#: org/wikipediacleaner/gui/swing/MainWindow.java:2049
+#: org/wikipediacleaner/gui/swing/MainWindow.java:2114
 msgid "Random pages"
 msgstr ""
 
@@ -1842,51 +1842,59 @@ msgid "Hits for filter {0}"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1691
+msgid "Without templates"
+msgstr ""
+
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1694
+msgid "With templates"
+msgstr ""
+
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1712
 msgid "All namespaces"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1705
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1728
 #: org/wikipediacleaner/gui/swing/pagelist/PageListTableModel.java:226
 msgid "Main"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1758
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1784
 msgid "All disambiguations pages"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1914
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1940
 msgid "Watch list"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1944
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1970
 msgid "Unformatted list of page names"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1945
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1971
 msgid "Internal links in a formatted list"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1948
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1974
 msgid "The file must be encoded in UTF-8 to be read correctly."
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1949
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1975
 msgid "In which format is the file?"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:2004
+#: org/wikipediacleaner/gui/swing/MainWindow.java:2030
 msgid "List"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:2027
+#: org/wikipediacleaner/gui/swing/MainWindow.java:2053
 msgid "Random redirect pages"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:2059
+#: org/wikipediacleaner/gui/swing/MainWindow.java:2085
 msgid "How many pages do you want?"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:2071
+#: org/wikipediacleaner/gui/swing/MainWindow.java:2097
 #, java-format
 msgid "The number of pages must be between {0} and {1}"
 msgstr ""
