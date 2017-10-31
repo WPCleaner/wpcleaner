@@ -124,6 +124,11 @@ public class CheckErrorAlgorithm532 extends CheckErrorAlgorithmBase {
       hasBeenReported = analyzeGalleryImageDescription(analysis, tag, errors);
     }
 
+    // Tag in template
+    if (!hasBeenReported) {
+      hasBeenReported = analyzeTemplate(analysis, tag, errors);
+    }
+
     // Tag in list item
     if (!hasBeenReported) {
       hasBeenReported = analyzeListItem(analysis, tag, errors);
@@ -375,6 +380,68 @@ public class CheckErrorAlgorithm532 extends CheckErrorAlgorithmBase {
 
     // Report tag
     CheckErrorResult errorResult = closeTag(analysis, tag, tag.getBeginIndex(), currentIndex, true);
+    if (errorResult != null) {
+      errors.add(errorResult);
+      return true;
+    }
+    return false;
+  }
+
+  /**
+   * @param analysis Page analysis.
+   * @param tag Tag.
+   * @param errors Errors found in the page.
+   * @return True if the error has been reported.
+   */
+  private boolean analyzeTemplate(
+      PageAnalysis analysis, PageElementTag tag,
+      Collection<CheckErrorResult> errors) {
+
+    // Check type of tag
+    if (!PageElementTag.TAG_HTML_SMALL.equals(tag.getNormalizedName())) {
+      return false;
+    }
+
+    // Analyze if it is in a template argument
+    PageElementTemplate template = analysis.isInTemplate(tag.getBeginIndex());
+    if (template == null) {
+      return false;
+    }
+    PageElementTemplate.Parameter param = template.getParameterAtIndex(tag.getBeginIndex());
+    if (param == null) {
+      return false;
+    }
+    boolean automatic = true;
+
+    // Check if it's the only unclosed tag in the template
+    int currentIndex = template.getBeginIndex();
+    String contents = analysis.getContents();
+    while (automatic && (currentIndex < template.getEndIndex())) {
+      char currentChar = contents.charAt(currentIndex);
+      int nextIndex = currentIndex + 1;
+      if (currentChar == '<'){
+        PageElementTag otherTag = analysis.isInTag(currentIndex);
+        if (otherTag != null) {
+          nextIndex = otherTag.getEndIndex();
+          if ((currentIndex != tag.getBeginIndex()) &&
+              (!otherTag.isComplete())) {
+            automatic = false;
+          }
+        }
+      }
+      currentIndex = nextIndex;
+    }
+
+    // Limits
+    int beginIndex = param.getValueStartIndex();
+    int endIndex = param.getEndIndex();
+    while ((endIndex > 0) &&
+           (" \n".indexOf(contents.charAt(endIndex - 1)) >= 0)) {
+      endIndex--;
+    }
+
+    // Report tag
+    CheckErrorResult errorResult = closeTag(analysis, tag, beginIndex, endIndex, automatic);
     if (errorResult != null) {
       errors.add(errorResult);
       return true;
@@ -785,7 +852,7 @@ public class CheckErrorAlgorithm532 extends CheckErrorAlgorithmBase {
         PageElementTag currentTag = analysis.isInTag(currentIndex);
         if (currentTag != null) {
           nextIndex = currentTag.getEndIndex();
-          if ((currentTag.getCompleteBeginIndex() < beginIndex) ||
+          if ((currentTag.getCompleteBeginIndex() < tag.getBeginIndex()) ||
               (currentTag.getCompleteEndIndex() > endIndex)) {
             return null;
           }
