@@ -33,7 +33,11 @@ public class CheckErrorAlgorithm532 extends CheckErrorAlgorithmBase {
 
   /** List of tags to be verified. */
   private final static String[] tagNames = {
+    PageElementTag.TAG_HTML_B,
+    PageElementTag.TAG_HTML_BIG,
+    PageElementTag.TAG_HTML_BLOCKQUOTE,
     PageElementTag.TAG_HTML_CENTER,
+    PageElementTag.TAG_HTML_CODE,
     PageElementTag.TAG_HTML_DIV,
     PageElementTag.TAG_HTML_FONT,
     PageElementTag.TAG_HTML_H1,
@@ -46,13 +50,21 @@ public class CheckErrorAlgorithm532 extends CheckErrorAlgorithmBase {
     PageElementTag.TAG_HTML_H8,
     PageElementTag.TAG_HTML_H9,
     PageElementTag.TAG_HTML_LI,
+    PageElementTag.TAG_HTML_OL,
     PageElementTag.TAG_HTML_P,
     PageElementTag.TAG_HTML_S,
     PageElementTag.TAG_HTML_SMALL,
     PageElementTag.TAG_HTML_SPAN,
     PageElementTag.TAG_HTML_STRIKE,
+    PageElementTag.TAG_HTML_STRONG,
+    PageElementTag.TAG_HTML_SUB,
+    PageElementTag.TAG_HTML_SUP,
+    PageElementTag.TAG_HTML_TABLE,
     PageElementTag.TAG_HTML_TD,
     PageElementTag.TAG_HTML_TR,
+    PageElementTag.TAG_HTML_TT,
+    PageElementTag.TAG_HTML_U,
+    PageElementTag.TAG_HTML_UL,
   };
 
   /**
@@ -124,11 +136,6 @@ public class CheckErrorAlgorithm532 extends CheckErrorAlgorithmBase {
       hasBeenReported = analyzeGalleryImageDescription(analysis, tag, errors);
     }
 
-    // Tag in template
-    if (!hasBeenReported) {
-      hasBeenReported = analyzeTemplate(analysis, tag, errors);
-    }
-
     // Tag in list item
     if (!hasBeenReported) {
       hasBeenReported = analyzeListItem(analysis, tag, errors);
@@ -149,7 +156,12 @@ public class CheckErrorAlgorithm532 extends CheckErrorAlgorithmBase {
       hasBeenReported = analyzeHeadings(analysis, tag, errors);
     }
 
-    // Tag in the next line
+    // Tag in template
+    if (!hasBeenReported) {
+      hasBeenReported = analyzeTemplate(analysis, tag, errors);
+    }
+
+    // Tag in the last line
     if (!hasBeenReported) {
       hasBeenReported = analyzeLastLine(analysis, tag, errors);
     }
@@ -398,7 +410,8 @@ public class CheckErrorAlgorithm532 extends CheckErrorAlgorithmBase {
       Collection<CheckErrorResult> errors) {
 
     // Check type of tag
-    if (!PageElementTag.TAG_HTML_SMALL.equals(tag.getNormalizedName())) {
+    if (!PageElementTag.TAG_HTML_CENTER.equals(tag.getNormalizedName()) &&
+        !PageElementTag.TAG_HTML_SMALL.equals(tag.getNormalizedName())) {
       return false;
     }
 
@@ -847,7 +860,7 @@ public class CheckErrorAlgorithm532 extends CheckErrorAlgorithmBase {
     while (currentIndex < endIndex) {
       char currentChar = contents.charAt(currentIndex);
       int nextIndex = currentIndex + 1;
-      hasContentsAfter |= (" \n".indexOf(currentChar) >= 0);
+      hasContentsAfter |= (" \n".indexOf(currentChar) < 0);
       if (currentChar == '<') {
         PageElementTag currentTag = analysis.isInTag(currentIndex);
         if (currentTag != null) {
