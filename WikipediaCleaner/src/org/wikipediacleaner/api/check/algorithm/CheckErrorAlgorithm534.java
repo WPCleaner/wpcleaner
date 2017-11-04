@@ -272,9 +272,21 @@ public class CheckErrorAlgorithm534 extends CheckErrorAlgorithmBase {
                 }
                 if (newSuffixLength > 0) {
                   // Check what is after the variable
-                  if (!initialText.substring(initialText.length() - newSuffixLength).equalsIgnoreCase(alias.substring(alias.length() - newSuffixLength))) {
-                    ok = false;
+                  String initialSuffix = initialText.substring(initialText.length() - newSuffixLength);
+                  String aliasSuffix = alias.substring(alias.length() - newSuffixLength);
+                  boolean suffixOk = false;
+                  if (initialSuffix.equalsIgnoreCase(aliasSuffix)) {
+                    suffixOk = true;
+                  } else if (aliasSuffix.equals("px")) {
+                    if (initialSuffix.equalsIgnoreCase("px") ||
+                        initialSuffix.equalsIgnoreCase("xp")) {
+                      suffixOk = true;
+                    } else if (initialText.endsWith("pix")) {
+                      suffixOk = true;
+                      newSuffixLength = 3;
+                    }
                   }
+                  ok &= suffixOk;
                 }
               }
 
