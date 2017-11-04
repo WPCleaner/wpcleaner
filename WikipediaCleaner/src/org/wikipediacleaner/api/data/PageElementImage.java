@@ -115,7 +115,7 @@ public class PageElementImage extends PageElement {
           tmpIndex++;
         }
         String element = contents.substring(pipeIndex + 1, tmpIndex).trim();
-        if (element.length() > 0) {
+        if (element.length() >= 0) {
           MagicWord magicWord = wikiConfiguration.getImgMagicWord(element);
           Parameter param = new Parameter(
               pipeIndex + 1 - index, tmpIndex - index,
