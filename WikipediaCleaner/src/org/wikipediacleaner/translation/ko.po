@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2017-10-31 14:37+0100\n"
+"POT-Creation-Date: 2017-11-04 13:12+0100\n"
 "PO-Revision-Date: 2014-09-07 20:03+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Korean <ko@li.org>\n"
@@ -2472,52 +2472,52 @@ msgstr ""
 msgid "{0} is working..."
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/basic/Utilities.java:119
-#: org/wikipediacleaner/gui/swing/basic/Utilities.java:124
+#: org/wikipediacleaner/gui/swing/basic/TaskYesNoAllDialog.java:52
+msgid "Yes"
+msgstr ""
+
+#: org/wikipediacleaner/gui/swing/basic/TaskYesNoAllDialog.java:53
+msgid "Yes to all"
+msgstr ""
+
+#: org/wikipediacleaner/gui/swing/basic/TaskYesNoAllDialog.java:54
+msgid "No"
+msgstr ""
+
+#: org/wikipediacleaner/gui/swing/basic/TaskYesNoAllDialog.java:55
+msgid "No to all"
+msgstr ""
+
+#: org/wikipediacleaner/gui/swing/basic/Utilities.java:117
+#: org/wikipediacleaner/gui/swing/basic/Utilities.java:122
 #, java-format
 msgid "An error occurred: {0}"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/basic/Utilities.java:129
+#: org/wikipediacleaner/gui/swing/basic/Utilities.java:127
 msgid "An unknown error occurred"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/basic/Utilities.java:189
+#: org/wikipediacleaner/gui/swing/basic/Utilities.java:187
 #, java-format
 msgid "You need to define the ''{0}'' property in WPCleaner configuration."
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/basic/Utilities.java:217
+#: org/wikipediacleaner/gui/swing/basic/Utilities.java:215
 #, java-format
 msgid "You need to define the {0} properties in WPCleaner configuration."
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/basic/Utilities.java:227
+#: org/wikipediacleaner/gui/swing/basic/Utilities.java:225
 msgid "This function requires some configuration."
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/basic/Utilities.java:234
+#: org/wikipediacleaner/gui/swing/basic/Utilities.java:232
 msgid "Do you want to display help on configuring WPCleaner ?"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/basic/Utilities.java:329
+#: org/wikipediacleaner/gui/swing/basic/Utilities.java:327
 msgid "Other..."
-msgstr ""
-
-#: org/wikipediacleaner/gui/swing/basic/Utilities.java:423
-msgid "Yes"
-msgstr ""
-
-#: org/wikipediacleaner/gui/swing/basic/Utilities.java:424
-msgid "Yes to all"
-msgstr ""
-
-#: org/wikipediacleaner/gui/swing/basic/Utilities.java:425
-msgid "No"
-msgstr ""
-
-#: org/wikipediacleaner/gui/swing/basic/Utilities.java:426
-msgid "No to all"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/bot/AutomaticCWWorker.java:139

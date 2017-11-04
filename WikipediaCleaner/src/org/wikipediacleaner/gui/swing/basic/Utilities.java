@@ -31,7 +31,6 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JComponent;
-import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
@@ -47,7 +46,6 @@ import javax.swing.text.JTextComponent;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.wikipediacleaner.Version;
 import org.wikipediacleaner.api.APIException;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.gui.swing.action.ActionClick;
@@ -419,34 +417,9 @@ public class Utilities {
    * @return Answer {@link JOptionPane#YES_OPTION} or {@link JOptionPane#NO_OPTION} or YES_ALL_OPTION or NO_ALL_OPTION.
    */
   public static int displayYesNoAllWarning(Component parent, String message) {
-    Object[] options = new Object[] {
-        GT._("Yes"),
-        GT._("Yes to all"),
-        GT._("No"),
-        GT._("No to all"),
-    }; 
-    JOptionPane pane = new JOptionPane(
-        message, JOptionPane.WARNING_MESSAGE,
-        JOptionPane.YES_NO_OPTION, null, options);
-    JDialog dialog = pane.createDialog(parent, Version.PROGRAM);
-    dialog.setVisible(true);
-    Object selectedValue = pane.getValue();
-    if (selectedValue == null) {
-      return JOptionPane.CLOSED_OPTION;
-    }
-    if (options[0].equals(selectedValue)) {
-      return JOptionPane.YES_OPTION;
-    }
-    if (options[1].equals(selectedValue)) {
-      return YES_ALL_OPTION;
-    }
-    if (options[2].equals(selectedValue)) {
-      return JOptionPane.NO_OPTION;
-    }
-    if (options[3].equals(selectedValue)) {
-      return NO_ALL_OPTION;
-    }
-    return JOptionPane.CLOSED_OPTION;
+    TaskYesNoAllDialog task = new TaskYesNoAllDialog(parent, message);
+    runInEventDispatchThread(task);
+    return task.getResult();
   }
 
   /**
