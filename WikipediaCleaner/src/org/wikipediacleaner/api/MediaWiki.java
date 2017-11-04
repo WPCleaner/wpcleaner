@@ -211,7 +211,8 @@ public class MediaWiki extends MediaWikiController {
     StringBuilder details = new StringBuilder();
     StringBuilder fullComment = new StringBuilder();
     StringBuilder tmpDescription = (description != null) ? new StringBuilder() : null;
-    while (hasRemainingTask() && !shouldStop()) {
+    boolean stopRequested = false;
+    while (hasRemainingTask() && !shouldStop() && !stopRequested) {
       Object result = getNextResult();
       if (currentPage < pages.length) {
         retrieveContents(wiki, pages[currentPage], false, true, false, true, false); // TODO: withRedirects=false ?
@@ -311,7 +312,7 @@ public class MediaWiki extends MediaWikiController {
             // Save page
             setText(GT._("Updating page {0}", page.getTitle()));
             count++;
-            if (save) {
+            if (save && !stopRequested) {
               try {
                 api.updatePage(
                     wiki, page, newContents, fullComment.toString(), minor, false, false);
@@ -332,7 +333,7 @@ public class MediaWiki extends MediaWikiController {
                     pauseAfterEachEdit = false;
                     break;
                   default:
-                    stopRemainingTasks();
+                    stopRequested = true;
                   }
                 }
               } catch (APIException e) {
