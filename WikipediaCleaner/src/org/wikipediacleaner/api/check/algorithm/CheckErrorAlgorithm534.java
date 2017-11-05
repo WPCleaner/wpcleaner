@@ -278,12 +278,23 @@ public class CheckErrorAlgorithm534 extends CheckErrorAlgorithmBase {
                   if (initialSuffix.equalsIgnoreCase(aliasSuffix)) {
                     suffixOk = true;
                   } else if (aliasSuffix.equals("px")) {
-                    if (initialSuffix.equalsIgnoreCase("px") ||
-                        initialSuffix.equalsIgnoreCase("xp")) {
+                    int lastDigit = 0;
+                    while (((lastDigit) < initialText.length()) &&
+                           (Character.isDigit(initialText.charAt(lastDigit)))) {
+                      lastDigit++;
+                    }
+                    String currentSuffix = initialText.substring(lastDigit);
+                    if (currentSuffix.equalsIgnoreCase("p") ||
+                        currentSuffix.equalsIgnoreCase("x") ||
+                        currentSuffix.equalsIgnoreCase("px") ||
+                        currentSuffix.equalsIgnoreCase("xp")) {
                       suffixOk = true;
-                    } else if (initialText.endsWith("pix")) {
+                      newSuffixLength = currentSuffix.length();
+                    } else if ((currentSuffix.length() == 3) &&
+                               (Character.toLowerCase(currentSuffix.charAt(0)) == 'p') &&
+                               (Character.toLowerCase(currentSuffix.charAt(2)) == 'x')) {
                       suffixOk = true;
-                      newSuffixLength = 3;
+                      newSuffixLength = currentSuffix.length();
                     }
                   }
                   ok &= suffixOk;
