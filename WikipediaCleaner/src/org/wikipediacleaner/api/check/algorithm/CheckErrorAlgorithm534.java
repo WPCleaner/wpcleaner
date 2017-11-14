@@ -283,18 +283,25 @@ public class CheckErrorAlgorithm534 extends CheckErrorAlgorithmBase {
                            (Character.isDigit(initialText.charAt(lastDigit)))) {
                       lastDigit++;
                     }
-                    String currentSuffix = initialText.substring(lastDigit);
-                    if (currentSuffix.equalsIgnoreCase("p") ||
-                        currentSuffix.equalsIgnoreCase("x") ||
-                        currentSuffix.equalsIgnoreCase("px") ||
-                        currentSuffix.equalsIgnoreCase("xp")) {
-                      suffixOk = true;
-                      newSuffixLength = currentSuffix.length();
-                    } else if ((currentSuffix.length() == 3) &&
-                               (Character.toLowerCase(currentSuffix.charAt(0)) == 'p') &&
-                               (Character.toLowerCase(currentSuffix.charAt(2)) == 'x')) {
-                      suffixOk = true;
-                      newSuffixLength = currentSuffix.length();
+                    if (lastDigit > 0) {
+                      String currentSuffix = initialText.substring(lastDigit);
+                      if (currentSuffix.equalsIgnoreCase("p") ||
+                          currentSuffix.equalsIgnoreCase("x") ||
+                          currentSuffix.equalsIgnoreCase("px") ||
+                          currentSuffix.equalsIgnoreCase("xp")) {
+                        suffixOk = true;
+                        newSuffixLength = currentSuffix.length();
+                      } else if ((currentSuffix.length() == 2) &&
+                                 ((Character.toLowerCase(currentSuffix.charAt(0)) == 'p') ||
+                                  (Character.toLowerCase(currentSuffix.charAt(1)) == 'x'))) {
+                        suffixOk = true;
+                        newSuffixLength = currentSuffix.length();
+                      } else if ((currentSuffix.length() == 3) &&
+                                 (Character.toLowerCase(currentSuffix.charAt(0)) == 'p') &&
+                                 (Character.toLowerCase(currentSuffix.charAt(2)) == 'x')) {
+                        suffixOk = true;
+                        newSuffixLength = currentSuffix.length();
+                      }
                     }
                   }
                   ok &= suffixOk;
@@ -332,17 +339,23 @@ public class CheckErrorAlgorithm534 extends CheckErrorAlgorithmBase {
     new AutomaticReplacement("leftt", MagicWord.IMG_LEFT, "left", true),
 
     // IMG_RIGHT
+    new AutomaticReplacement("richt",  MagicWord.IMG_RIGHT, "right", true),
     new AutomaticReplacement("righ",   MagicWord.IMG_RIGHT, "right", true),
     new AutomaticReplacement("rightt", MagicWord.IMG_RIGHT, "right", true),
+    new AutomaticReplacement("rigt",   MagicWord.IMG_RIGHT, "right", true),
     new AutomaticReplacement("rigth",  MagicWord.IMG_RIGHT, "right", true),
     new AutomaticReplacement("rigtht", MagicWord.IMG_RIGHT, "right", true),
 
     // IMG_THUMBNAIL
-    new AutomaticReplacement("mini",     MagicWord.IMG_THUMBNAIL, "thumb", false), // de
-    new AutomaticReplacement("miniatur", MagicWord.IMG_THUMBNAIL, "thumb", false), // de
+    new AutomaticReplacement("mini",     MagicWord.IMG_THUMBNAIL, "thumb", true), // de
+    new AutomaticReplacement("miniatur", MagicWord.IMG_THUMBNAIL, "thumb", true), // de
+    new AutomaticReplacement("thum",     MagicWord.IMG_THUMBNAIL, "thumb", true),
+    new AutomaticReplacement("thump",    MagicWord.IMG_THUMBNAIL, "thumb", true),
+    new AutomaticReplacement("tuhmb",    MagicWord.IMG_THUMBNAIL, "thumb", true),
+    new AutomaticReplacement("tumb",     MagicWord.IMG_THUMBNAIL, "thumb", true),
 
     // IMG_UPRIGHT
-    new AutomaticReplacement("hochkant", MagicWord.IMG_UPRIGHT, "upright", false), // de
+    new AutomaticReplacement("hochkant", MagicWord.IMG_UPRIGHT, "upright", true), // de
     new AutomaticReplacement("uprighht", MagicWord.IMG_UPRIGHT, "upright", true),
     new AutomaticReplacement("uprigt",   MagicWord.IMG_UPRIGHT, "upright", true),
     new AutomaticReplacement("uprigth",  MagicWord.IMG_UPRIGHT, "upright", true),
