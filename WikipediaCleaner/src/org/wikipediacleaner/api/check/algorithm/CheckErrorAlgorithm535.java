@@ -1,0 +1,122 @@
+/*
+ *  WPCleaner: A tool to help on Wikipedia maintenance tasks.
+ *  Copyright (C) 2013  Nicolas Vervelle
+ *
+ *  See README.txt file for licensing information.
+ */
+
+package org.wikipediacleaner.api.check.algorithm;
+
+import java.util.Collection;
+import java.util.List;
+
+import org.wikipediacleaner.api.check.CheckErrorResult;
+import org.wikipediacleaner.api.data.PageAnalysis;
+import org.wikipediacleaner.api.data.PageElementInternalLink;
+import org.wikipediacleaner.api.data.PageElementTag;
+
+
+/**
+ * Algorithm for analyzing error 535 of check wikipedia project.
+ * Error 535: Tidy font bug (see [[Special:LintErrors/tidy-font-bug]])
+ */
+public class CheckErrorAlgorithm535 extends CheckErrorAlgorithmBase {
+
+  public CheckErrorAlgorithm535() {
+    super("Tidy bug affecting font tags wrapping links");
+  }
+
+  /**
+   * Analyze a page to check if errors are present.
+   * 
+   * @param analysis Page analysis.
+   * @param errors Errors found in the page.
+   * @param onlyAutomatic True if analysis could be restricted to errors automatically fixed.
+   * @return Flag indicating if the error was found.
+   */
+  @Override
+  public boolean analyze(
+      PageAnalysis analysis,
+      Collection<CheckErrorResult> errors, boolean onlyAutomatic) {
+    if ((analysis == null) || (analysis.getPage() == null)) {
+      return false;
+    }
+
+    // Analyze each font tag
+    List<PageElementTag> fontTags = analysis.getCompleteTags(PageElementTag.TAG_HTML_FONT);
+    String contents = analysis.getContents();
+    boolean result = false;
+    for (PageElementTag fontTag : fontTags) {
+
+      // Analyze font tag
+      if (fontTag.isComplete() &&
+          !fontTag.isEndTag() &&
+          !fontTag.isFullTag() &&
+          (fontTag.getMatchingTag() != null)) {
+
+        // Trim value of font tag
+        int valueBeginIndex = fontTag.getValueBeginIndex();
+        int valueEndIndex = fontTag.getValueEndIndex();
+        while ((valueBeginIndex < valueEndIndex) &&
+               ("\n ".indexOf(contents.charAt(valueBeginIndex)) >= 0)) {
+          valueBeginIndex++;
+        }
+        while ((valueBeginIndex < valueEndIndex) &&
+               ("\n ".indexOf(contents.charAt(valueEndIndex - 1)) >= 0)) {
+          valueEndIndex--;
+        }
+
+        // Check what is in the font tag
+        if ((valueBeginIndex < valueEndIndex) &&
+            (contents.charAt(valueBeginIndex) == '[') &&
+            (contents.charAt(valueEndIndex - 1) == ']')) {
+
+          // Internal link
+          PageElementInternalLink iLink = analysis.isInInternalLink(valueBeginIndex);
+          if ((iLink != null) &&
+              (iLink.getBeginIndex() == valueBeginIndex) &&
+              (iLink.getEndIndex() == valueEndIndex)) {
+
+            // Report error
+            result = true;
+            if (errors == null) {
+              return result;
+            }
+            CheckErrorResult errorResult = createCheckErrorResult(
+                analysis, fontTag.getCompleteBeginIndex(), fontTag.getCompleteEndIndex());
+            String openFont = contents.substring(fontTag.getBeginIndex(), fontTag.getEndIndex());
+            PageElementTag closeTag = fontTag.getMatchingTag();
+            String closeFont = contents.substring(closeTag.getBeginIndex(), closeTag.getEndIndex());
+            String replacement =
+              contents.substring(fontTag.getValueBeginIndex(), valueBeginIndex) +
+              PageElementInternalLink.createInternalLink(
+                iLink.getLink(),
+                openFont + iLink.getDisplayedText() + closeFont) +
+              contents.substring(valueEndIndex, fontTag.getValueEndIndex());
+            String text =
+              contents.substring(fontTag.getValueBeginIndex(), valueBeginIndex) +
+              PageElementInternalLink.createInternalLink(
+                iLink.getLink(),
+                openFont + "..." + closeFont) +
+              contents.substring(valueEndIndex, fontTag.getValueEndIndex());
+            errorResult.addReplacement(replacement, text, true);
+            errors.add(errorResult);
+          }
+        }
+      }
+    }
+
+    return result;
+  }
+
+  /**
+   * Automatic fixing of some errors in the page.
+   * 
+   * @param analysis Page analysis.
+   * @return Page contents after fix.
+   */
+  @Override
+  protected String internalAutomaticFix(PageAnalysis analysis) {
+    return fixUsingAutomaticReplacement(analysis);
+  }
+}
