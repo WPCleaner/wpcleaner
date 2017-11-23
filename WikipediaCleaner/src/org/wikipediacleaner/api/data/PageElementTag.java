@@ -436,6 +436,17 @@ public class PageElementTag extends PageElement {
   }
 
   /**
+   * @return True if an unclosed tag is normal.
+   */
+  public boolean mayBeUnclosed() {
+    if (TAG_HTML_BR.equals(normalizedName) ||
+        TAG_HTML_HR.equals(normalizedName)) {
+      return true;
+    }
+    return false;
+  }
+
+  /**
    * @return Ends with extra space characters ?
    */
   public boolean endWithSpace() {
