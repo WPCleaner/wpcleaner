@@ -30,6 +30,7 @@ import org.wikipediacleaner.api.data.PageElementInterwikiLink;
 import org.wikipediacleaner.api.data.PageElementLanguageLink;
 import org.wikipediacleaner.api.data.PageElementMagicWord;
 import org.wikipediacleaner.api.data.PageElementParameter;
+import org.wikipediacleaner.api.data.PageElementTable;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.PageElementTitle;
@@ -161,6 +162,8 @@ public abstract class MWPaneFormatter {
         ConfigurationValueStyle.LANGUAGE_LINK);
     ConfigurationValueStyle.StyleProperties styleProgramming = config.getStyle(
         ConfigurationValueStyle.PROGRAMMING);
+    ConfigurationValueStyle.StyleProperties styleTable = config.getStyle(
+        ConfigurationValueStyle.TABLE);
     ConfigurationValueStyle.StyleProperties styleTag = config.getStyle(
         ConfigurationValueStyle.TAG);
     ConfigurationValueStyle.StyleProperties styleTemplate = config.getStyle(
@@ -180,6 +183,7 @@ public abstract class MWPaneFormatter {
         styleLanguageLink.getEnabled(),
         styleProgramming.getEnabled(),
         styleProgramming.getEnabled(),
+        styleTable.getEnabled(),
         styleTag.getEnabled(),
         styleTemplate.getEnabled(),
         styleTitle.getEnabled());
@@ -226,56 +230,111 @@ public abstract class MWPaneFormatter {
       List<PageElement> elements,
       int begin, int end) {
     for (int i = begin; i < end; i++) {
-      PageElement element = elements.get(i);
-      int beginIndex = element.getBeginIndex();
-      int endIndex = element.getEndIndex();
-      Style style = null;
-      if (element instanceof PageElementCategory) {
-        style = doc.getStyle(ConfigurationValueStyle.CATEGORY.getName());
-      } else if (element instanceof PageElementComment) {
-        style = doc.getStyle(ConfigurationValueStyle.COMMENTS.getName());
-      } else if (element instanceof PageElementExternalLink) {
-        style = doc.getStyle(ConfigurationValueStyle.EXTERNAL_LINK.getName());
-      } else if (element instanceof PageElementInterwikiLink) {
-        style = doc.getStyle(ConfigurationValueStyle.INTERWIKI_LINK.getName());
-      } else if (element instanceof PageElementFunction) {
-        style = doc.getStyle(ConfigurationValueStyle.PROGRAMMING.getName());
-      } else if (element instanceof PageElementMagicWord) {
-        style = doc.getStyle(ConfigurationValueStyle.PROGRAMMING.getName());
-      } else if (element instanceof PageElementImage) {
-        style = doc.getStyle(ConfigurationValueStyle.IMAGE.getName());
-      } else if (element instanceof PageElementInternalLink) {
-        style = getInternalLinkStyle(doc, analysis, (PageElementInternalLink) element);
-      } else if (element instanceof PageElementLanguageLink) {
-        style = doc.getStyle(ConfigurationValueStyle.LANGUAGE_LINK.getName());
-      } else if (element instanceof PageElementParameter) {
-        style = doc.getStyle(ConfigurationValueStyle.PROGRAMMING.getName());
-      } else if (element instanceof PageElementTag) {
-        PageElementTag tag = (PageElementTag) element;
-        String name = tag.getNormalizedName();
-        if (PageElementTag.TAG_WIKI_REF.equals(name) ||
-            PageElementTag.TAG_WIKI_REFERENCES.equals(name)) {
-          style = doc.getStyle(ConfigurationValueStyle.REFERENCE.getName());
-          if (style != null) {
-            endIndex = tag.getCompleteEndIndex();
-          }
-        }
-        if (style == null) {
-          style = doc.getStyle(ConfigurationValueStyle.TAG.getName());
-        }
-      } else if (element instanceof PageElementTemplate) {
-        style = doc.getStyle(ConfigurationValueStyle.TEMPLATE.getName());
-      } else if (element instanceof PageElementTitle) {
-        style = doc.getStyle(ConfigurationValueStyle.TITLE.getName());
-      }
-      if (style != null) {
-        doc.setCharacterAttributes(
-            beginIndex, endIndex - beginIndex,
-            style, true);
-      }
+      formatElementDirectly(doc, analysis, elements.get(i));
     }
   }
 
+  /**
+   * Format an element in a document.
+   * 
+   * @param doc Document.
+   * @param analysis Page analysis.
+   * @param element Element.
+   */
+  private void formatElementDirectly(
+      StyledDocument doc,
+      PageAnalysis analysis,
+      PageElement element) {
+    if (element == null) {
+      return;
+    }
+    int beginIndex = element.getBeginIndex();
+    int endIndex = element.getEndIndex();
+    Style style = null;
+    if (element instanceof PageElementCategory) {
+      style = doc.getStyle(ConfigurationValueStyle.CATEGORY.getName());
+    } else if (element instanceof PageElementComment) {
+      style = doc.getStyle(ConfigurationValueStyle.COMMENTS.getName());
+    } else if (element instanceof PageElementExternalLink) {
+      style = doc.getStyle(ConfigurationValueStyle.EXTERNAL_LINK.getName());
+    } else if (element instanceof PageElementInterwikiLink) {
+      style = doc.getStyle(ConfigurationValueStyle.INTERWIKI_LINK.getName());
+    } else if (element instanceof PageElementFunction) {
+      style = doc.getStyle(ConfigurationValueStyle.PROGRAMMING.getName());
+    } else if (element instanceof PageElementMagicWord) {
+      style = doc.getStyle(ConfigurationValueStyle.PROGRAMMING.getName());
+    } else if (element instanceof PageElementImage) {
+      style = doc.getStyle(ConfigurationValueStyle.IMAGE.getName());
+    } else if (element instanceof PageElementInternalLink) {
+      style = getInternalLinkStyle(doc, analysis, (PageElementInternalLink) element);
+    } else if (element instanceof PageElementLanguageLink) {
+      style = doc.getStyle(ConfigurationValueStyle.LANGUAGE_LINK.getName());
+    } else if (element instanceof PageElementParameter) {
+      style = doc.getStyle(ConfigurationValueStyle.PROGRAMMING.getName());
+    } else if (element instanceof PageElementTable) {
+      PageElementTable table = (PageElementTable) element;
+      formatElementDirectly(doc, analysis, table.getTableStart());
+      formatElementDirectly(doc, analysis, table.getTableCaption());
+      List<PageElementTable.TableLine> lines = table.getTableLines();
+      if (lines != null) {
+        for (PageElementTable.TableLine line : lines) {
+          formatElementDirectly(doc, analysis, line);
+        }
+      }
+      formatElementDirectly(doc, analysis, table.getTableEnd());
+    } else if (element instanceof PageElementTable.TableCaption) {
+      style = doc.getStyle(ConfigurationValueStyle.TABLE.getName());
+    } else if (element instanceof PageElementTable.TableCell) {
+      PageElementTable.TableCell cell = (PageElementTable.TableCell) element;
+      beginIndex = cell.getBeginIndex();
+      endIndex = cell.getEndOptionsIndex();
+      style = doc.getStyle(ConfigurationValueStyle.TABLE.getName());
+    } else if (element instanceof PageElementTable.TableEnd) {
+      style = doc.getStyle(ConfigurationValueStyle.TABLE.getName());
+    } else if (element instanceof PageElementTable.TableLine) {
+      PageElementTable.TableLine line = (PageElementTable.TableLine) element;
+      List<PageElementTable.TableCell> cells = line.getCells();
+      if (cells != null) {
+        for (PageElementTable.TableCell cell: cells) {
+          formatElementDirectly(doc, analysis, cell);
+        }
+      }
+      beginIndex = line.getNewLineBeginIndex();
+      endIndex = line.getNewLineEndIndex();
+      style = doc.getStyle(ConfigurationValueStyle.TABLE.getName());
+    } else if (element instanceof PageElementTable.TableStart) {
+      style = doc.getStyle(ConfigurationValueStyle.TABLE.getName());
+    } else if (element instanceof PageElementTag) {
+      PageElementTag tag = (PageElementTag) element;
+      String name = tag.getNormalizedName();
+      if (PageElementTag.TAG_WIKI_REF.equals(name) ||
+          PageElementTag.TAG_WIKI_REFERENCES.equals(name)) {
+        style = doc.getStyle(ConfigurationValueStyle.REFERENCE.getName());
+        if (style != null) {
+          endIndex = tag.getCompleteEndIndex();
+        }
+      }
+      if (style == null) {
+        style = doc.getStyle(ConfigurationValueStyle.TAG.getName());
+      }
+    } else if (element instanceof PageElementTemplate) {
+      style = doc.getStyle(ConfigurationValueStyle.TEMPLATE.getName());
+    } else if (element instanceof PageElementTitle) {
+      style = doc.getStyle(ConfigurationValueStyle.TITLE.getName());
+    }
+    if (style != null) {
+      doc.setCharacterAttributes(
+          beginIndex, endIndex - beginIndex,
+          style, true);
+    }
+  }
+
+  /**
+   * @param doc Document.
+   * @param analysis Page analysis.
+   * @param link Link.
+   * @return Style depending on the status of the link.
+   */
   private Style getInternalLinkStyle(
       StyledDocument doc,
       PageAnalysis analysis,
@@ -499,6 +558,11 @@ public abstract class MWPaneFormatter {
         Style refStyle = addStyle(
             ConfigurationValueStyle.REFERENCE, rootStyle, false);
         refStyle.addAttribute(ATTRIBUTE_OCCURRENCE, Boolean.FALSE);
+
+        // Style for table
+        Style tableStyle = addStyle(
+            ConfigurationValueStyle.TABLE, rootStyle, false);
+        tableStyle.addAttribute(ATTRIBUTE_OCCURRENCE, Boolean.FALSE);
 
         // Style for tag
         Style tagStyle = addStyle(

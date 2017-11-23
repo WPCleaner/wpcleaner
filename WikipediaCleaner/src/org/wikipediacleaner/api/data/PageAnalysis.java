@@ -145,23 +145,26 @@ public class PageAnalysis {
    * Perform page analysis.
    */
   public void performFullPageAnalysis(AnalysisPerformance perf) {
-    long beginTime = System.nanoTime();
-    firstLevelAnalysis();
-    long firstTime = System.nanoTime();
-    secondLevelAnalysis();
-    long secondTime = System.nanoTime();
-    thirdLevelAnalysis();
-    long thirdTime = System.nanoTime();
-    fourthLevelAnalysis();
-    long fourthTime = System.nanoTime();
-    fifthLevelAnalysis();
-    long fifthTime = System.nanoTime();
+    long time0 = System.nanoTime();
+    level1Analysis();
+    long time1 = System.nanoTime();
+    level2Analysis();
+    long time2 = System.nanoTime();
+    level3Analysis();
+    long time3 = System.nanoTime();
+    level4Analysis();
+    long time4 = System.nanoTime();
+    level5Analysis();
+    long time5 = System.nanoTime();
+    level6Analysis();
+    long time6 = System.nanoTime();
     if (perf != null) {
-      perf.firstLevel += (firstTime - beginTime);
-      perf.secondLevel += (secondTime - firstTime);
-      perf.thirdLevel += (thirdTime - secondTime);
-      perf.fourthLevel += (fourthTime - thirdTime);
-      perf.fifthLevel += (fifthTime - fourthTime);
+      perf.level1 += (time1 - time0);
+      perf.level2 += (time2 - time1);
+      perf.level3 += (time3 - time2);
+      perf.level4 += (time4 - time3);
+      perf.level5 += (time5 - time4);
+      perf.level6 += (time6 - time5);
     }
   }
 
@@ -169,18 +172,20 @@ public class PageAnalysis {
    * Bean for holding information about analysis performance.
    */
   public static class AnalysisPerformance {
-    long firstLevel;
-    long secondLevel;
-    long thirdLevel;
-    long fourthLevel;
-    long fifthLevel;
+    long level1;
+    long level2;
+    long level3;
+    long level4;
+    long level5;
+    long level6;
 
     public AnalysisPerformance() {
-      firstLevel = 0;
-      secondLevel = 0;
-      thirdLevel = 0;
-      fourthLevel = 0;
-      fifthLevel = 0;
+      level1 = 0;
+      level2 = 0;
+      level3 = 0;
+      level4 = 0;
+      level5 = 0;
+      level6 = 0;
     }
 
     /**
@@ -189,23 +194,26 @@ public class PageAnalysis {
      */
     @Override
     public String toString() {
-      long first = firstLevel / 1000000000;
-      long second = secondLevel / 1000000000;
-      long third = thirdLevel / 1000000000;
-      long fourth = fourthLevel / 1000000000;
-      long fifth = fifthLevel / 1000000000;
+      long time1 = level1 / 1000000000;
+      long time2 = level2 / 1000000000;
+      long time3 = level3 / 1000000000;
+      long time4 = level4 / 1000000000;
+      long time5 = level5 / 1000000000;
+      long time6 = level6 / 1000000000;
       StringBuilder result = new StringBuilder();
-      result.append(first + second + third + fourth + fifth);
+      result.append(time1 + time2 + time3 + time4 + time5 + time6);
       result.append(" s (");
-      result.append(first);
+      result.append(time1);
       result.append(" + ");
-      result.append(second);
+      result.append(time2);
       result.append(" + ");
-      result.append(third);
+      result.append(time3);
       result.append(" + ");
-      result.append(fourth);
+      result.append(time4);
       result.append(" + ");
-      result.append(fifth);
+      result.append(time5);
+      result.append(" + ");
+      result.append(time6);
       result.append(")");
       return result.toString();
     }
@@ -225,17 +233,34 @@ public class PageAnalysis {
    * @return List of non wiki text areas.
    */
   public PageElementAreas getAreas() {
-    fifthLevelAnalysis();
+    level6Analysis();
     return areas;
   }
 
+  /**
+   * @param withCategories True if categories should be included in the result.
+   * @param withComments True if comments should be included in the result.
+   * @param withExternalLinks True if external links should be included in the result.
+   * @param withFunctions True if functions should be included in the result.
+   * @param withImages True if images should be included in the result.
+   * @param withInternalLinks True if internal links should be included in the result.
+   * @param withInterwikiLinks True if interwiki links should be included in the result.
+   * @param withLanguageLinks True if language links should be included in the result.
+   * @param withMagicWords True if magic words should be included in the result.
+   * @param withParameters True if parameters should be included in the result.
+   * @param withTables True if tables should be included in the result.
+   * @param withTags True if tags should be included in the result.
+   * @param withTemplates True if templates should be included in the result.
+   * @param withTitles True if titles should be included in the result.
+   * @return
+   */
   public List<PageElement> getElements(
       boolean withCategories, boolean withComments,
       boolean withExternalLinks, boolean withFunctions,
       boolean withImages, boolean withInternalLinks,
       boolean withInterwikiLinks, boolean withLanguageLinks,
       boolean withMagicWords, boolean withParameters,
-      boolean withTags, boolean withTemplates, boolean withTitles) {
+      boolean withTables, boolean withTags, boolean withTemplates, boolean withTitles) {
     List<PageElement> elements = new ArrayList<PageElement>();
     if (withCategories) {
       elements.addAll(getCategories());
@@ -266,6 +291,9 @@ public class PageAnalysis {
     }
     if (withParameters) {
       elements.addAll(getParameters());
+    }
+    if (withTables) {
+      elements.addAll(getTables());
     }
     if (withTags) {
       elements.addAll(getTags());
@@ -366,6 +394,13 @@ public class PageAnalysis {
       element = isbn;
     }
 
+    // Check if in table
+    PageElementTable table = isInTable(currentIndex);
+    if ((table != null) &&
+        ((element == null) || (element.getBeginIndex() < table.getBeginIndex()))) {
+      element = table;
+    }
+
     return element;
   }
 
@@ -373,26 +408,29 @@ public class PageAnalysis {
   // Content analysis
   // ==========================================================================
 
-  /** Internal lock for first level analysis. */
-  private final Object firstLevelLock = new Object();
+  /** Internal lock for level 1 analysis. */
+  private final Object level1Lock = new Object();
 
-  /** Internal lock for second level analysis. */
-  private final Object secondLevelLock = new Object();
+  /** Internal lock for level 2 analysis. */
+  private final Object level2Lock = new Object();
 
-  /** Internal lock for third level analysis. */
-  private final Object thirdLevelLock = new Object();
+  /** Internal lock for level 3 analysis. */
+  private final Object level3Lock = new Object();
 
-  /** Internal lock for fourth level analysis. */
-  private final Object fourthLevelLock = new Object();
+  /** Internal lock for level 4 analysis. */
+  private final Object level4Lock = new Object();
 
-  /** Internal lock for fifth level analysis. */
-  private final Object fifthLevelLock = new Object();
+  /** Internal lock for level 5 analysis. */
+  private final Object level5Lock = new Object();
+
+  /** Internal lock for level 6 analysis. */
+  private final Object level6Lock = new Object();
 
   /**
-   * Perform a first level analysis of the page (comments).
+   * Perform a level 1 analysis of the page (comments).
    */
-  private void firstLevelAnalysis() {
-    synchronized (firstLevelLock) {
+  private void level1Analysis() {
+    synchronized (level1Lock) {
       if (comments != null) {
         return;
       }
@@ -400,7 +438,7 @@ public class PageAnalysis {
       Performance perf = null;
       if (traceTime) {
         perf = Performance.getInstance(
-            "PageAnalysis.firstLevelAnalysis", TRACE_THRESHOLD);
+            "PageAnalysis.level1Analysis", TRACE_THRESHOLD);
       }
 
       // Initialize
@@ -436,19 +474,19 @@ public class PageAnalysis {
   }
 
   /**
-   * Perform a second level analysis of the page (tags).
+   * Perform a level analysis 2 of the page (tags).
    */
-  private void secondLevelAnalysis() {
-    synchronized (secondLevelLock) {
+  private void level2Analysis() {
+    synchronized (level2Lock) {
       if (tags != null) {
         return;
       }
-      firstLevelAnalysis();
+      level1Analysis();
 
       Performance perf = null;
       if (traceTime) {
         perf = Performance.getInstance(
-            "PageAnalysis.secondLevelAnalysis", TRACE_THRESHOLD);
+            "PageAnalysis.level2Analysis", TRACE_THRESHOLD);
       }
 
       // Initialize
@@ -510,19 +548,19 @@ public class PageAnalysis {
   }
 
   /**
-   * Perform a third level analysis of the page (links, templates, ...).
+   * Perform a level 3 analysis of the page (links, templates, ...).
    */
-  private void thirdLevelAnalysis() {
-    synchronized (thirdLevelLock) {
+  private void level3Analysis() {
+    synchronized (level3Lock) {
       if (internalLinks != null) {
         return;
       }
-      secondLevelAnalysis();
+      level2Analysis();
 
       Performance perf = null;
       if (traceTime) {
         perf = Performance.getInstance(
-            "PageAnalysis.thirdLevelAnalysis", TRACE_THRESHOLD);
+            "PageAnalysis.level3Analysis", TRACE_THRESHOLD);
         perf.startPart();
       }
 
@@ -620,19 +658,19 @@ public class PageAnalysis {
   }
 
   /**
-   * Perform a fourth level analysis of the page (external links).
+   * Perform a level 4 analysis of the page (external links).
    */
-  private void fourthLevelAnalysis() {
-    synchronized (fourthLevelLock) {
+  private void level4Analysis() {
+    synchronized (level4Lock) {
       if (externalLinks != null) {
         return;
       }
-      thirdLevelAnalysis();
+      level3Analysis();
 
       Performance perf = null;
       if (traceTime) {
         perf = Performance.getInstance(
-            "PageAnalysis.fourthLevelAnalysis", TRACE_THRESHOLD);
+            "PageAnalysis.level4Analysis", TRACE_THRESHOLD);
       }
 
       // Go through all the text of the page
@@ -684,19 +722,19 @@ public class PageAnalysis {
   }
 
   /**
-   * Perform a fifth level analysis of the page (ISBN).
+   * Perform a level 5 analysis of the page (identifiers).
    */
-  private void fifthLevelAnalysis() {
-    synchronized (fifthLevelLock) {
+  private void level5Analysis() {
+    synchronized (level5Lock) {
       if ((isbns != null) || (issns != null) || (pmids != null)) {
         return;
       }
-      fourthLevelAnalysis();
+      level4Analysis();
 
       Performance perf = null;
       if (traceTime) {
         perf = Performance.getInstance(
-            "PageAnalysis.fifthLevelAnalysis", TRACE_THRESHOLD);
+            "PageAnalysis.level5Analysis", TRACE_THRESHOLD);
       }
 
       isbns = PageElementISBN.analyzePage(this);
@@ -716,7 +754,33 @@ public class PageAnalysis {
   }
 
   /**
-   * Part of the third level of analysis when text is beginning with "[[".
+   * Perform a level 6 analysis of the page (tables).
+   */
+  private void level6Analysis() {
+    synchronized (level6Lock) {
+      if (tables != null) {
+        return;
+      }
+      level5Analysis();
+
+      Performance perf = null;
+      if (traceTime) {
+        perf = Performance.getInstance(
+            "PageAnalysis.level6Analysis", TRACE_THRESHOLD);
+      }
+
+      tables = PageElementTable.analyzePage(this);
+      // TODO: areas.addTables(tables);
+
+      if (perf != null) {
+        perf.printEnd();
+        perf.release();
+      }
+    }
+  }
+
+  /**
+   * Part of the analysis when text is beginning with "[[".
    * 
    * @param currentIndex Current index in the text.
    * @return Next index.
@@ -773,7 +837,7 @@ public class PageAnalysis {
   }
 
   /**
-   * Part of the third level of analysis when text is beginning with "[".
+   * Part of the analysis when text is beginning with "[".
    * 
    * @param currentIndex Current index in the text.
    * @return Next index.
@@ -795,7 +859,7 @@ public class PageAnalysis {
   }
 
   /**
-   * Part of the third level of analysis when text is beginning with "__".
+   * Part of the analysis when text is beginning with "__".
    * 
    * @param currentIndex Current index in the text.
    * @return Next index.
@@ -814,7 +878,7 @@ public class PageAnalysis {
   }
 
   /**
-   * Part of the third level of analysis for regular text.
+   * Part of the analysis for regular text.
    * 
    * @param currentIndex Current index in the text.
    * @return Next index.
@@ -836,7 +900,7 @@ public class PageAnalysis {
   }
 
   /**
-   * Part of the third level of analysis when text is beginning with "{{{".
+   * Part of the analysis when text is beginning with "{{{".
    * 
    * @param currentIndex Current index in the text.
    * @return Next index.
@@ -855,7 +919,7 @@ public class PageAnalysis {
   }
 
   /**
-   * Part of the third level of analysis when text is beginning with "{{".
+   * Part of the analysis when text is beginning with "{{".
    * 
    * @param currentIndex Current index in the text.
    * @return Next index.
@@ -888,7 +952,7 @@ public class PageAnalysis {
   }
 
   /**
-   * Part of the third level of analysis when text is beginning with "=".
+   * Part of the analysis when text is beginning with "=".
    * 
    * @param currentIndex Current index in the text.
    * @return Next index.
@@ -964,7 +1028,7 @@ public class PageAnalysis {
    * @return All comments in the page.
    */
   public List<PageElementComment> getComments() {
-    firstLevelAnalysis();
+    level1Analysis();
     return comments;
   }
 
@@ -996,7 +1060,7 @@ public class PageAnalysis {
    * @return All titles in the page.
    */
   public List<PageElementTitle> getTitles() {
-    thirdLevelAnalysis();
+    level3Analysis();
     return titles;
   }
 
@@ -1058,7 +1122,7 @@ public class PageAnalysis {
    * @return All internal links in the page.
    */
   public List<PageElementInternalLink> getInternalLinks() {
-    thirdLevelAnalysis();
+    level3Analysis();
     return internalLinks;
   }
 
@@ -1145,7 +1209,7 @@ public class PageAnalysis {
    * @return All images in the page.
    */
   public List<PageElementImage> getImages() {
-    thirdLevelAnalysis();
+    level3Analysis();
     return images;
   }
 
@@ -1195,7 +1259,7 @@ public class PageAnalysis {
    * @return All external links in the page.
    */
   public List<PageElementExternalLink> getExternalLinks() {
-    fourthLevelAnalysis();
+    level4Analysis();
     return externalLinks;
   }
 
@@ -1241,7 +1305,7 @@ public class PageAnalysis {
    * @return All templates in the page.
    */
   public List<PageElementTemplate> getTemplates() {
-    thirdLevelAnalysis();
+    level3Analysis();
     return templates;
   }
 
@@ -1308,7 +1372,7 @@ public class PageAnalysis {
    * @return All parameters in the page.
    */
   public List<PageElementParameter> getParameters() {
-    thirdLevelAnalysis();
+    level3Analysis();
     return parameters;
   }
 
@@ -1341,7 +1405,7 @@ public class PageAnalysis {
    * @return All functions in the page.
    */
   public List<PageElementFunction> getFunctions() {
-    thirdLevelAnalysis();
+    level3Analysis();
     return functions;
   }
 
@@ -1374,7 +1438,7 @@ public class PageAnalysis {
    * @return All magic words in the page.
    */
   public List<PageElementMagicWord> getMagicWords() {
-    thirdLevelAnalysis();
+    level3Analysis();
     return magicWords;
   }
 
@@ -1423,7 +1487,7 @@ public class PageAnalysis {
    * @return All tags in the page.
    */
   public List<PageElementTag> getTags() {
-    secondLevelAnalysis();
+    level2Analysis();
     return tags;
   }
 
@@ -1603,7 +1667,7 @@ public class PageAnalysis {
    * @return All categories in the page.
    */
   public List<PageElementCategory> getCategories() {
-    thirdLevelAnalysis();
+    level3Analysis();
     return categories;
   }
 
@@ -1649,7 +1713,7 @@ public class PageAnalysis {
    * @return All interwiki links in the page.
    */
   public List<PageElementInterwikiLink> getInterwikiLinks() {
-    thirdLevelAnalysis();
+    level3Analysis();
     return interwikiLinks;
   }
 
@@ -1695,7 +1759,7 @@ public class PageAnalysis {
    * @return All language links in the page.
    */
   public List<PageElementLanguageLink> getLanguageLinks() {
-    thirdLevelAnalysis();
+    level3Analysis();
     return languageLinks;
   }
 
@@ -1741,7 +1805,7 @@ public class PageAnalysis {
    * @return All ISBNs in the page.
    */
   public List<PageElementISBN> getISBNs() {
-    fifthLevelAnalysis();
+    level5Analysis();
     return isbns;
   }
 
@@ -1770,7 +1834,7 @@ public class PageAnalysis {
    * @return All ISSNs in the page.
    */
   public List<PageElementISSN> getISSNs() {
-    fifthLevelAnalysis();
+    level5Analysis();
     return issns;
   }
 
@@ -1799,7 +1863,7 @@ public class PageAnalysis {
    * @return All PMIDs in the page.
    */
   public List<PageElementPMID> getPMIDs() {
-    fifthLevelAnalysis();
+    level5Analysis();
     return pmids;
   }
 
@@ -1828,7 +1892,7 @@ public class PageAnalysis {
    * @return All RFCs in the page.
    */
   public List<PageElementRFC> getRFCs() {
-    fifthLevelAnalysis();
+    level5Analysis();
     return rfcs;
   }
 
@@ -1842,6 +1906,36 @@ public class PageAnalysis {
       if ((rfc.getBeginIndex() <= currentIndex) &&
           (rfc.getEndIndex() > currentIndex)) {
         return rfc;
+      }
+    }
+    return null;
+  }
+
+  // ==========================================================================
+  // Tables management
+  // ==========================================================================
+
+  /** All tables in the page */
+  private List<PageElementTable> tables;
+
+  /**
+   * @return All table in the page.
+   */
+  public List<PageElementTable> getTables() {
+    level6Analysis();
+    return tables;
+  }
+
+  /**
+   * @param currentIndex Current index.
+   * @return Table if the current index is inside a table.
+   */
+  public PageElementTable isInTable(int currentIndex) {
+    List<PageElementTable> tmpTables = getTables();
+    for (PageElementTable table : tmpTables) {
+      if ((table.getBeginIndex() <= currentIndex) &&
+          (table.getEndIndex() > currentIndex)) {
+        return table;
       }
     }
     return null;
