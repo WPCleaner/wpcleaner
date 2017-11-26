@@ -12,6 +12,7 @@ import java.util.List;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.data.PageAnalysis;
+import org.wikipediacleaner.api.data.PageElementExternalLink;
 import org.wikipediacleaner.api.data.PageElementInternalLink;
 import org.wikipediacleaner.api.data.PageElementTag;
 
@@ -71,6 +72,11 @@ public class CheckErrorAlgorithm535 extends CheckErrorAlgorithmBase {
             (contents.charAt(valueBeginIndex) == '[') &&
             (contents.charAt(valueEndIndex - 1) == ']')) {
 
+          // Initializations
+          String openFont = contents.substring(fontTag.getBeginIndex(), fontTag.getEndIndex());
+          PageElementTag closeTag = fontTag.getMatchingTag();
+          String closeFont = contents.substring(closeTag.getBeginIndex(), closeTag.getEndIndex());
+
           // Internal link
           PageElementInternalLink iLink = analysis.isInInternalLink(valueBeginIndex);
           if ((iLink != null) &&
@@ -84,9 +90,6 @@ public class CheckErrorAlgorithm535 extends CheckErrorAlgorithmBase {
             }
             CheckErrorResult errorResult = createCheckErrorResult(
                 analysis, fontTag.getCompleteBeginIndex(), fontTag.getCompleteEndIndex());
-            String openFont = contents.substring(fontTag.getBeginIndex(), fontTag.getEndIndex());
-            PageElementTag closeTag = fontTag.getMatchingTag();
-            String closeFont = contents.substring(closeTag.getBeginIndex(), closeTag.getEndIndex());
             String replacement =
               contents.substring(fontTag.getValueBeginIndex(), valueBeginIndex) +
               PageElementInternalLink.createInternalLink(
@@ -97,6 +100,36 @@ public class CheckErrorAlgorithm535 extends CheckErrorAlgorithmBase {
               contents.substring(fontTag.getValueBeginIndex(), valueBeginIndex) +
               PageElementInternalLink.createInternalLink(
                 iLink.getLink(),
+                openFont + "..." + closeFont) +
+              contents.substring(valueEndIndex, fontTag.getValueEndIndex());
+            errorResult.addReplacement(replacement, text, true);
+            errors.add(errorResult);
+          }
+
+          // External link
+          PageElementExternalLink eLink = analysis.isInExternalLink(valueBeginIndex);
+          if ((eLink != null) &&
+              (eLink.getBeginIndex() == valueBeginIndex) &&
+              (eLink.getEndIndex() == valueEndIndex) &&
+              (eLink.hasSquare())) {
+
+            // Report error
+            result = true;
+            if (errors == null) {
+              return result;
+            }
+            CheckErrorResult errorResult = createCheckErrorResult(
+                analysis, fontTag.getCompleteBeginIndex(), fontTag.getCompleteEndIndex());
+            String replacement =
+              contents.substring(fontTag.getValueBeginIndex(), valueBeginIndex) +
+              PageElementExternalLink.createExternalLink(
+                eLink.getLink(),
+                openFont + eLink.getDisplayedText() + closeFont) +
+              contents.substring(valueEndIndex, fontTag.getValueEndIndex());
+            String text =
+              contents.substring(fontTag.getValueBeginIndex(), valueBeginIndex) +
+              PageElementExternalLink.createExternalLink(
+                eLink.getLink(),
                 openFont + "..." + closeFont) +
               contents.substring(valueEndIndex, fontTag.getValueEndIndex());
             errorResult.addReplacement(replacement, text, true);
