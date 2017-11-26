@@ -101,7 +101,8 @@ public class PageElementTag extends PageElement {
       "-";
 
   private final static String PARAM_VALUE_UNQUOTED_CHARS =
-      "!$%&()*,-.:;<@[]^_`{|}~"; // List from https://en.wikipedia.org/wiki/Wikipedia:REFNAME
+      "!$%&()*,-.:;<@[]^_`{|}~" + // List from https://en.wikipedia.org/wiki/Wikipedia:REFNAME
+      "#"; // Other for common HTML parameter values
 
   /** Possible separation characters after tag name */
   private final static String SEP_CHARS_AFTER_TAG_NAME = " \n";
