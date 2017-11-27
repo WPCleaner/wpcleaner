@@ -220,4 +220,37 @@ public class PageElementInterwikiLink extends PageElement {
     sb.append("]]");
     return sb.toString();
   }
+
+  /**
+   * Create an interwiki link.
+   * 
+   * @param interwiki Interwiki.
+   * @param link Link.
+   * @param anchor Anchor
+   * @param text Displayed text.
+   * @return Internal link.
+   */
+  public static String createInterwikiLink(
+      String interwiki, String link, String anchor, String text) {
+    StringBuilder sb = new StringBuilder();
+    sb.append("[[");
+    String fullLink = null;
+    if ((interwiki != null) || (link != null) || (anchor != null)) {
+      fullLink =
+          ((interwiki != null) ? interwiki.trim() + ":" : "") +
+          ((link != null) ? link.trim() : "") +
+          ((anchor != null) ? ("#" + anchor.trim()) : "");
+    }
+    if (text != null) {
+      if ((fullLink != null) && (!Page.areSameTitle(fullLink, text))) {
+        sb.append(fullLink);
+        sb.append("|");
+      }
+      sb.append(text.trim());
+    } else {
+      sb.append(fullLink);
+    }
+    sb.append("]]");
+    return sb.toString();
+  }
 }

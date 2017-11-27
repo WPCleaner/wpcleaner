@@ -14,6 +14,7 @@ import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementExternalLink;
 import org.wikipediacleaner.api.data.PageElementInternalLink;
+import org.wikipediacleaner.api.data.PageElementInterwikiLink;
 import org.wikipediacleaner.api.data.PageElementTag;
 
 
@@ -93,7 +94,7 @@ public class CheckErrorAlgorithm535 extends CheckErrorAlgorithmBase {
             String replacement =
               contents.substring(fontTag.getValueBeginIndex(), valueBeginIndex) +
               PageElementInternalLink.createInternalLink(
-                iLink.getLink(),
+                iLink.getLink(), iLink.getAnchor(),
                 openFont + iLink.getDisplayedText() + closeFont) +
               contents.substring(valueEndIndex, fontTag.getValueEndIndex());
             String text =
@@ -130,6 +131,35 @@ public class CheckErrorAlgorithm535 extends CheckErrorAlgorithmBase {
               contents.substring(fontTag.getValueBeginIndex(), valueBeginIndex) +
               PageElementExternalLink.createExternalLink(
                 eLink.getLink(),
+                openFont + "..." + closeFont) +
+              contents.substring(valueEndIndex, fontTag.getValueEndIndex());
+            errorResult.addReplacement(replacement, text, true);
+            errors.add(errorResult);
+          }
+
+          // Interwiki link
+          PageElementInterwikiLink iwLink = analysis.isInInterwikiLink(valueBeginIndex);
+          if ((iwLink != null) &&
+              (iwLink.getBeginIndex() == valueBeginIndex) &&
+              (iwLink.getEndIndex() == valueEndIndex)) {
+
+            // Report error
+            result = true;
+            if (errors == null) {
+              return result;
+            }
+            CheckErrorResult errorResult = createCheckErrorResult(
+                analysis, fontTag.getCompleteBeginIndex(), fontTag.getCompleteEndIndex());
+            String replacement =
+              contents.substring(fontTag.getValueBeginIndex(), valueBeginIndex) +
+              PageElementInterwikiLink.createInterwikiLink(
+                iwLink.getInterwikiText(), iwLink.getLink(), iwLink.getAnchor(),
+                openFont + iwLink.getText() + closeFont) +
+              contents.substring(valueEndIndex, fontTag.getValueEndIndex());
+            String text =
+              contents.substring(fontTag.getValueBeginIndex(), valueBeginIndex) +
+              PageElementInterwikiLink.createInterwikiLink(
+                iwLink.getInterwikiText(), iwLink.getLink(), iwLink.getAnchor(),
                 openFont + "..." + closeFont) +
               contents.substring(valueEndIndex, fontTag.getValueEndIndex());
             errorResult.addReplacement(replacement, text, true);

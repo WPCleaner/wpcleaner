@@ -252,7 +252,7 @@ public class PageAnalysis {
    * @param withTags True if tags should be included in the result.
    * @param withTemplates True if templates should be included in the result.
    * @param withTitles True if titles should be included in the result.
-   * @return
+   * @return All elements.
    */
   public List<PageElement> getElements(
       boolean withCategories, boolean withComments,
