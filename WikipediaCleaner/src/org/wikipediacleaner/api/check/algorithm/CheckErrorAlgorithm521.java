@@ -224,61 +224,75 @@ public class CheckErrorAlgorithm521 extends CheckErrorAlgorithmBase {
             digitCount++;
             nextValueIndex++;
           }
+          int intValue = 0;
+          if (digitCount > 0) {
+            try {
+              intValue = Integer.parseInt(value.substring(valueIndex, nextValueIndex));
+            } catch (NumberFormatException e) {
+              // Nothing to do
+            }
+          }
   
           // Depending on the formatting character
           switch (formatChar) {
           case 'd': // Day
-            if (formatCount == 1) {
-              // Format "d": day number without leading 0
-              if ((digitCount != 0) && (digitCount <= 2) && (valueChar != '0')) {
-                formatOk = true;
-              }
-            } else {
-              // Format "dd": day number with leading 0
-              if (digitCount == 2) {
-                formatOk = true;
-              }
-            }
-            break;
-  
-          case 'M': // Month
-            if (formatCount == 1) {
-              // Format "M": month number without leading 0
-              if ((digitCount != 0) && (digitCount <= 2) && (valueChar != '0')) {
-                formatOk = true;
-              }
-            } else if (formatCount == 2) {
-              // Format "MM": month number with leading 0
-              if (digitCount == 2) {
-                formatOk = true;
-              }
-            } else {
-              // Format "MMM": month name
-              if ((digitCount == 0) && (months != null)) {
-                boolean monthFound = false;
-                for (String month : months) {
-                  if (!monthFound && value.startsWith(month, nextValueIndex)) {
-                    nextValueIndex += month.length();
-                    monthFound = true;
-                  }
+            if ((intValue > 0) && (intValue <= 31)) {
+              if (formatCount == 1) {
+                // Format "d": day number without leading 0
+                if ((digitCount != 0) && (digitCount <= 2) && (valueChar != '0')) {
+                  formatOk = true;
                 }
-                if (monthFound) {
+              } else {
+                // Format "dd": day number with leading 0
+                if (digitCount == 2) {
                   formatOk = true;
                 }
               }
             }
             break;
   
-          case 'y': // Year
-            if ((formatCount == 1) || (formatCount == 2)) {
-              // Format "Y" or "YY": year on 2 digits
-              if (digitCount == 2) {
-                formatOk = true;
+          case 'M': // Month
+            if ((intValue > 0) && (intValue <= 12)) {
+              if (formatCount == 1) {
+                // Format "M": month number without leading 0
+                if ((digitCount != 0) && (digitCount <= 2) && (valueChar != '0')) {
+                  formatOk = true;
+                }
+              } else if (formatCount == 2) {
+                // Format "MM": month number with leading 0
+                if (digitCount == 2) {
+                  formatOk = true;
+                }
+              } else {
+                // Format "MMM": month name
+                if ((digitCount == 0) && (months != null)) {
+                  boolean monthFound = false;
+                  for (String month : months) {
+                    if (!monthFound && value.startsWith(month, nextValueIndex)) {
+                      nextValueIndex += month.length();
+                      monthFound = true;
+                    }
+                  }
+                  if (monthFound) {
+                    formatOk = true;
+                  }
+                }
               }
-            } else {
-              // Format "YYY": year on as many digits as required
-              if ((digitCount != 0) && (valueChar != '0')) {
-                formatOk = true;
+            }
+            break;
+  
+          case 'y': // Year
+            if (intValue <= 9999) {
+              if ((formatCount == 1) || (formatCount == 2)) {
+                // Format "Y" or "YY": year on 2 digits
+                if (digitCount == 2) {
+                  formatOk = true;
+                }
+              } else {
+                // Format "YYY": year on as many digits as required
+                if ((digitCount != 0) && (valueChar != '0')) {
+                  formatOk = true;
+                }
               }
             }
             break;
