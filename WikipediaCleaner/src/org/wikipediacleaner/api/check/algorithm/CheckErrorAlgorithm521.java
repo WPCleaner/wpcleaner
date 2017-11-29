@@ -236,15 +236,17 @@ public class CheckErrorAlgorithm521 extends CheckErrorAlgorithmBase {
           // Depending on the formatting character
           switch (formatChar) {
           case 'd': // Day
-            if ((intValue > 0) && (intValue <= 31)) {
-              if (formatCount == 1) {
-                // Format "d": day number without leading 0
-                if ((digitCount != 0) && (digitCount <= 2) && (valueChar != '0')) {
+            if (formatCount == 1) {
+              // Format "d": day number without leading 0
+              if ((digitCount != 0) && (digitCount <= 2) && (valueChar != '0')) {
+                if ((intValue > 0) && (intValue <= 31)) {
                   formatOk = true;
                 }
-              } else {
-                // Format "dd": day number with leading 0
-                if (digitCount == 2) {
+              }
+            } else {
+              // Format "dd": day number with leading 0
+              if (digitCount == 2) {
+                if ((intValue > 0) && (intValue <= 31)) {
                   formatOk = true;
                 }
               }
@@ -252,30 +254,32 @@ public class CheckErrorAlgorithm521 extends CheckErrorAlgorithmBase {
             break;
   
           case 'M': // Month
-            if ((intValue > 0) && (intValue <= 12)) {
-              if (formatCount == 1) {
-                // Format "M": month number without leading 0
-                if ((digitCount != 0) && (digitCount <= 2) && (valueChar != '0')) {
+            if (formatCount == 1) {
+              // Format "M": month number without leading 0
+              if ((digitCount != 0) && (digitCount <= 2) && (valueChar != '0')) {
+                if ((intValue > 0) && (intValue <= 12)) {
                   formatOk = true;
                 }
-              } else if (formatCount == 2) {
-                // Format "MM": month number with leading 0
-                if (digitCount == 2) {
+              }
+            } else if (formatCount == 2) {
+              // Format "MM": month number with leading 0
+              if (digitCount == 2) {
+                if ((intValue > 0) && (intValue <= 12)) {
                   formatOk = true;
                 }
-              } else {
-                // Format "MMM": month name
-                if ((digitCount == 0) && (months != null)) {
-                  boolean monthFound = false;
-                  for (String month : months) {
-                    if (!monthFound && value.startsWith(month, nextValueIndex)) {
-                      nextValueIndex += month.length();
-                      monthFound = true;
-                    }
+              }
+            } else {
+              // Format "MMM": month name
+              if ((digitCount == 0) && (months != null)) {
+                boolean monthFound = false;
+                for (String month : months) {
+                  if (!monthFound && value.startsWith(month, nextValueIndex)) {
+                    nextValueIndex += month.length();
+                    monthFound = true;
                   }
-                  if (monthFound) {
-                    formatOk = true;
-                  }
+                }
+                if (monthFound) {
+                  formatOk = true;
                 }
               }
             }
