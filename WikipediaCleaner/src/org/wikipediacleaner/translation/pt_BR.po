@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2017-11-23 09:36+0100\n"
+"POT-Creation-Date: 2017-12-07 19:44+0100\n"
 "PO-Revision-Date: 2017-03-03 19:32+0000\n"
 "Last-Translator: Felipe L. <felipe.idj@hotmail.com>\n"
 "Language-Team: Brazilian Portuguese <pt_BR@li.org>\n"
@@ -856,12 +856,12 @@ msgstr ""
 "Um identificador de um filtro de abuso que é desencadeado por caráteres "
 "estranhos."
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm521.java:343
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm521.java:361
 msgid "A list of templates and parameters in which format should be checked"
 msgstr ""
 "Uma lista de predefinições e parâmetros no qual o formato deve ser verificado"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm521.java:344
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm521.java:362
 msgid "A list of text values for months"
 msgstr "Uma lista de valores de texto por mês"
 
@@ -915,6 +915,11 @@ msgstr ""
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm531.java:106
 msgid "A list of templates that can't be used inside a reference"
 msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm532.java:36
+#, fuzzy
+msgid "Fix tags"
+msgstr "Corrigir categorias"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmBase.java:277
 msgid "Title of the article describing this type of error"

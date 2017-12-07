@@ -13,12 +13,16 @@ import java.util.List;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.PageAnalysis;
+import org.wikipediacleaner.api.data.PageElementComment;
 import org.wikipediacleaner.api.data.PageElementExternalLink;
 import org.wikipediacleaner.api.data.PageElementImage;
+import org.wikipediacleaner.api.data.PageElementTable;
 import org.wikipediacleaner.api.data.PageElementImage.Parameter;
 import org.wikipediacleaner.api.data.PageElementInternalLink;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.PageElementTemplate;
+import org.wikipediacleaner.gui.swing.component.MWPane;
+import org.wikipediacleaner.i18n.GT;
 
 
 /**
@@ -26,6 +30,11 @@ import org.wikipediacleaner.api.data.PageElementTemplate;
  * Error 532: Missing end tag (see [[Special:LintErrors/missing-end-tag]])
  */
 public class CheckErrorAlgorithm532 extends CheckErrorAlgorithmBase {
+
+  /** Possible global fixes */
+  private final static String[] globalFixes = new String[] {
+    GT._("Fix tags"),
+  };
 
   public CheckErrorAlgorithm532() {
     super("Missing end tag");
@@ -65,13 +74,6 @@ public class CheckErrorAlgorithm532 extends CheckErrorAlgorithmBase {
     PageElementTag.TAG_HTML_TT,
     PageElementTag.TAG_HTML_U,
     PageElementTag.TAG_HTML_UL,
-  };
-
-  /**
-   * Tags that are OK to be unclosed.
-   */
-  private final static String[] unclosedTags = {
-    PageElementTag.TAG_HTML_BR
   };
 
   /**
@@ -136,6 +138,11 @@ public class CheckErrorAlgorithm532 extends CheckErrorAlgorithmBase {
       hasBeenReported = analyzeGalleryImageDescription(analysis, tag, errors);
     }
 
+    // Tag in table
+    if (!hasBeenReported) {
+      hasBeenReported = analyzeTable(analysis, tag, errors);
+    }
+
     // Tag in list item
     if (!hasBeenReported) {
       hasBeenReported = analyzeListItem(analysis, tag, errors);
@@ -195,7 +202,9 @@ public class CheckErrorAlgorithm532 extends CheckErrorAlgorithmBase {
       Collection<CheckErrorResult> errors) {
 
     // Check type of tag
-    if (!PageElementTag.TAG_HTML_SPAN.equals(tag.getNormalizedName())) {
+    if (!PageElementTag.TAG_HTML_DIV.equals(tag.getNormalizedName()) &&
+        !PageElementTag.TAG_HTML_FONT.equals(tag.getNormalizedName()) &&
+        !PageElementTag.TAG_HTML_SPAN.equals(tag.getNormalizedName())) {
       return false;
     }
 
@@ -215,12 +224,16 @@ public class CheckErrorAlgorithm532 extends CheckErrorAlgorithmBase {
     }
 
     // Report tag
-    CheckErrorResult errorResult = closeTag(analysis, tag, tag.getBeginIndex(), tag.getEndIndex(), true);
-    if (errorResult != null) {
-      errors.add(errorResult);
-      return true;
-    }
-    return false;
+    int beginIndex = tag.getBeginIndex();
+    int endIndex = tag.getEndIndex();
+    String contents = analysis.getContents();
+    CheckErrorResult errorResult = createCheckErrorResult(
+        analysis, beginIndex, endIndex);
+    errorResult.addReplacement(
+        contents.substring(beginIndex, endIndex) + PageElementTag.createTag(tag.getName(), true, false),
+        true);
+    errors.add(errorResult);
+    return true;
   }
 
   /**
@@ -256,8 +269,8 @@ public class CheckErrorAlgorithm532 extends CheckErrorAlgorithmBase {
     }
 
     // Report tag
-    CheckErrorResult errorResult =
-        closeTag(analysis, tag, tag.getBeginIndex(), link.getEndIndex() - 2, true);
+    CheckErrorResult errorResult = analyzeArea(
+        analysis, tag, tag.getBeginIndex(), link.getEndIndex() - 2, true);
     if (errorResult != null) {
       errors.add(errorResult);
       return true;
@@ -276,7 +289,9 @@ public class CheckErrorAlgorithm532 extends CheckErrorAlgorithmBase {
       Collection<CheckErrorResult> errors) {
 
     // Check type of tag
-    if (!PageElementTag.TAG_HTML_CENTER.equals(tag.getNormalizedName())) {
+    if (!PageElementTag.TAG_HTML_CENTER.equals(tag.getNormalizedName()) &&
+        !PageElementTag.TAG_HTML_FONT.equals(tag.getNormalizedName()) &&
+        !PageElementTag.TAG_HTML_SPAN.equals(tag.getNormalizedName())) {
       return false;
     }
 
@@ -290,39 +305,16 @@ public class CheckErrorAlgorithm532 extends CheckErrorAlgorithmBase {
       return false;
     }
     int beginIndex = image.getBeginIndex() + desc.getBeginOffset();
+    int endIndex = image.getBeginIndex() + desc.getEndOffset();
+    if ((tag.getBeginIndex() < beginIndex) || (tag.getEndIndex() > endIndex)) {
+      return false;
+    }
 
     // Report tag
-    int endIndex = image.getBeginIndex() + desc.getEndOffset();
-    if (tag.getBeginIndex() == beginIndex) {
-
-      // Tag at the beginning of the description
-      CheckErrorResult errorResult = closeTag(analysis, tag, beginIndex, endIndex, true);
-      if (errorResult != null) {
-        errors.add(errorResult);
-        return true;
-      }
-    } else {
-
-      // Check for tag at the end of the description
-      String contents = analysis.getContents();
-      while ((endIndex > 0) && (contents.charAt(endIndex - 1) == ' ')) {
-        endIndex--;
-      }
-      if (tag.getEndIndex() == endIndex) {
-        while (contents.charAt(beginIndex) == ' ') {
-          beginIndex++;
-        }
-        if (contents.charAt(beginIndex) == '<') {
-          PageElementTag previousTag = analysis.isInTag(beginIndex, tag.getNormalizedName());
-          if (previousTag != null) {
-            CheckErrorResult errorResult = replaceByClosingTag(analysis, tag, previousTag, true);
-            if (errorResult != null) {
-              errors.add(errorResult);
-              return true;
-            }
-          }
-        }
-      }
+    CheckErrorResult errorResult = analyzeArea(analysis, tag, beginIndex, endIndex, true);
+    if (errorResult != null) {
+      errors.add(errorResult);
+      return true;
     }
 
     return false;
@@ -339,7 +331,9 @@ public class CheckErrorAlgorithm532 extends CheckErrorAlgorithmBase {
       Collection<CheckErrorResult> errors) {
 
     // Check type of tag
-    if (!PageElementTag.TAG_HTML_CENTER.equals(tag.getNormalizedName())) {
+    if (!PageElementTag.TAG_HTML_CENTER.equals(tag.getNormalizedName()) &&
+        !PageElementTag.TAG_HTML_FONT.equals(tag.getNormalizedName()) &&
+        !PageElementTag.TAG_HTML_SPAN.equals(tag.getNormalizedName())) {
       return false;
     }
 
@@ -349,49 +343,95 @@ public class CheckErrorAlgorithm532 extends CheckErrorAlgorithmBase {
       return false;
     }
 
-    // Check description
-    int currentIndex = tag.getBeginIndex();
+    // Retrieve line information
+    int beginIndex = tag.getBeginIndex();
     String contents = analysis.getContents();
-    while ((currentIndex > 0) && (contents.charAt(currentIndex - 1) == ' ')) {
-      currentIndex--;
+    while ((beginIndex > 0) &&
+           (contents.charAt(beginIndex - 1) != '\n') &&
+           (beginIndex > galleryTag.getValueBeginIndex())) {
+      beginIndex--;
     }
-    if ((currentIndex <= 0) || (contents.charAt(currentIndex - 1) != '|')) {
-      return false;
+    while ((beginIndex < tag.getBeginIndex()) &&
+           (contents.charAt(beginIndex) != '|')) {
+      beginIndex++;
     }
-    currentIndex = tag.getEndIndex();
-    boolean finished = false;
-    while (!finished && (currentIndex < contents.length())) {
-      char currentChar = contents.charAt(currentIndex);
-      if (currentChar == '\n') {
-        finished = true;
-      } else {
-        if (currentChar == '<') {
-          PageElementTag secondTag = analysis.isInTag(currentIndex, tag.getNormalizedName());
-          if (secondTag != null) {
-            if (secondTag.isComplete() || secondTag.isEndTag()) {
-              return false;
-            }
-            currentIndex = secondTag.getEndIndex();
-            while ((currentIndex < contents.length()) && (contents.charAt(currentIndex) == ' ')) {
-              currentIndex++;
-            }
-            if ((currentIndex < contents.length()) && (contents.charAt(currentIndex) == '\n')) {
-              finished = true;
-              CheckErrorResult errorResult = replaceByClosingTag(analysis, secondTag, tag, true);
-              if (errorResult != null) {
-                errors.add(errorResult);
-                return true;
-              }
-            }
-            return false;
-          }
-        }
-        currentIndex++;
+    int endIndex = tag.getEndIndex();
+    while ((endIndex < contents.length()) &&
+           (contents.charAt(endIndex) != '\n') &&
+           (endIndex < galleryTag.getValueEndIndex())) {
+      endIndex++;
+    }
+
+    // Check that description doesn't span multiple lines
+    int tmpIndex = endIndex + 1;
+    boolean oneLine = false;
+    int colonIndex = contents.indexOf(':', tmpIndex);
+    if (colonIndex > tmpIndex) {
+      Namespace imageNamespace = analysis.getWikiConfiguration().getNamespace(Namespace.IMAGE);
+      if ((imageNamespace != null) &&
+          imageNamespace.isPossibleName(contents.substring(tmpIndex, colonIndex))) {
+        oneLine = true;
+      }
+    }
+    if (tmpIndex == galleryTag.getValueEndIndex()) {
+      oneLine = true;
+    }
+    if (!oneLine) {
+      while ((tmpIndex < contents.length()) &&
+             ("[|{<".indexOf(contents.charAt(tmpIndex)) < 0)) {
+        tmpIndex++;
+      }
+      if ((tmpIndex < contents.length()) &&
+          (contents.charAt(tmpIndex) == '|')) {
+        oneLine = true;
       }
     }
 
     // Report tag
-    CheckErrorResult errorResult = closeTag(analysis, tag, tag.getBeginIndex(), currentIndex, true);
+    CheckErrorResult errorResult = analyzeArea(
+        analysis, tag, beginIndex, endIndex, oneLine);
+    if (errorResult != null) {
+      errors.add(errorResult);
+      return true;
+    }
+    return false;
+  }
+
+  /**
+   * @param analysis Page analysis.
+   * @param tag Tag.
+   * @param errors Errors found in the page.
+   * @return True if the error has been reported.
+   */
+  private boolean analyzeTable(
+      PageAnalysis analysis, PageElementTag tag,
+      Collection<CheckErrorResult> errors) {
+
+    // Check type of tag
+    if (!PageElementTag.TAG_HTML_CENTER.equals(tag.getNormalizedName()) &&
+        !PageElementTag.TAG_HTML_FONT.equals(tag.getNormalizedName()) &&
+        !PageElementTag.TAG_HTML_S.equals(tag.getNormalizedName()) &&
+        !PageElementTag.TAG_HTML_SMALL.equals(tag.getNormalizedName()) &&
+        !PageElementTag.TAG_HTML_SPAN.equals(tag.getNormalizedName())) {
+      return false;
+    }
+
+    // Analyze if it is in a table
+    PageElementTable table = analysis.isInTable(tag.getBeginIndex());
+    if (table == null) {
+      return false;
+    }
+
+    // Retrieve cell
+    PageElementTable.TableCell cell = table.getCellAtIndex(tag.getBeginIndex());
+    if (cell == null) {
+      return false;
+    }
+
+    // Report tag
+    CheckErrorResult errorResult = analyzeArea(
+        analysis, tag,
+        cell.getEndOptionsIndex(), cell.getEndIndex(), true);
     if (errorResult != null) {
       errors.add(errorResult);
       return true;
@@ -411,6 +451,8 @@ public class CheckErrorAlgorithm532 extends CheckErrorAlgorithmBase {
 
     // Check type of tag
     if (!PageElementTag.TAG_HTML_CENTER.equals(tag.getNormalizedName()) &&
+        !PageElementTag.TAG_HTML_DIV.equals(tag.getNormalizedName()) &&
+        !PageElementTag.TAG_HTML_FONT.equals(tag.getNormalizedName()) &&
         !PageElementTag.TAG_HTML_SMALL.equals(tag.getNormalizedName())) {
       return false;
     }
@@ -437,30 +479,20 @@ public class CheckErrorAlgorithm532 extends CheckErrorAlgorithmBase {
         if (otherTag != null) {
           nextIndex = otherTag.getEndIndex();
           if ((currentIndex != tag.getBeginIndex()) &&
-              (!otherTag.isComplete())) {
-            boolean valid = false;
-            for (String unclosedTag : unclosedTags) {
-              valid |= unclosedTag.equals(otherTag.getNormalizedName());
-            }
-            if (!valid) {
-              automatic = false;
-            }
+              !otherTag.isComplete() &&
+              !otherTag.mayBeUnclosed()) {
+            automatic = false;
           }
         }
       }
       currentIndex = nextIndex;
     }
 
-    // Limits
+    // Report tag
     int beginIndex = param.getValueStartIndex();
     int endIndex = param.getEndIndex();
-    while ((endIndex > 0) &&
-           (" \n".indexOf(contents.charAt(endIndex - 1)) >= 0)) {
-      endIndex--;
-    }
-
-    // Report tag
-    CheckErrorResult errorResult = closeTag(analysis, tag, beginIndex, endIndex, automatic);
+    CheckErrorResult errorResult = analyzeArea(
+        analysis, tag, beginIndex, endIndex, automatic);
     if (errorResult != null) {
       errors.add(errorResult);
       return true;
@@ -479,7 +511,9 @@ public class CheckErrorAlgorithm532 extends CheckErrorAlgorithmBase {
       Collection<CheckErrorResult> errors) {
 
     // Check type of tag
-    if (!PageElementTag.TAG_HTML_SMALL.equals(tag.getNormalizedName())) {
+    if (!PageElementTag.TAG_HTML_FONT.equals(tag.getNormalizedName()) &&
+        !PageElementTag.TAG_HTML_SMALL.equals(tag.getNormalizedName()) &&
+        !PageElementTag.TAG_HTML_SPAN.equals(tag.getNormalizedName())) {
       return false;
     }
 
@@ -603,18 +637,12 @@ public class CheckErrorAlgorithm532 extends CheckErrorAlgorithmBase {
     }
 
     // Report tag
-    CheckErrorResult errorResult = createCheckErrorResult(analysis, lineBegin, lineEnd);
-    String replacement =
-        contents.substring(lineBegin, lineEnd) +
-        PageElementTag.createTag(tag.getName(), true, false);
-    String text =
-        contents.substring(lineBegin, tag.getEndIndex()) +
-        "..." +
-        PageElementTag.createTag(tag.getName(), true, false);
-    errorResult.addReplacement(
-        replacement, text, true);
-    errors.add(errorResult);
-    return true;
+    CheckErrorResult errorResult = analyzeArea(analysis, tag, lineBegin, lineEnd, true);
+    if (errorResult != null) {
+      errors.add(errorResult);
+      return true;
+    }
+    return false;
   }
 
   /**
@@ -628,35 +656,25 @@ public class CheckErrorAlgorithm532 extends CheckErrorAlgorithmBase {
       Collection<CheckErrorResult> errors) {
 
     // Check type of tag
-    if (!PageElementTag.TAG_HTML_SMALL.equals(tag.getNormalizedName())) {
+    if (!PageElementTag.TAG_HTML_FONT.equals(tag.getNormalizedName()) &&
+        !PageElementTag.TAG_HTML_SMALL.equals(tag.getNormalizedName()) &&
+        !PageElementTag.TAG_HTML_SPAN.equals(tag.getNormalizedName())) {
       return false;
     }
 
     // Analyze if it is inside center tags
-    String contents = analysis.getContents();
-    int index = tag.getBeginIndex();
-    while ((index > 0) && (contents.charAt(index - 1) == ' ')) {
-      index--;
-    }
-    if ((index <= 0) || (contents.charAt(index - 1) != '>')) {
+    PageElementTag centerTag = analysis.getSurroundingTag(PageElementTag.TAG_HTML_CENTER, tag.getBeginIndex());
+    if ((centerTag == null) ||
+        !centerTag.isComplete() ||
+        centerTag.isFullTag()){
       return false;
-    }
-    PageElementTag centerTag = analysis.isInTag(index - 1, PageElementTag.TAG_HTML_CENTER);
-    if ((centerTag == null) || !centerTag.isComplete() || centerTag.isFullTag()){
-      return false;
-    }
-
-    // Check item
-    int currentIndex = tag.getEndIndex();
-    while (currentIndex < centerTag.getValueEndIndex()) {
-      if (contents.charAt(currentIndex) == '\n') {
-        return false;
-      }
-      currentIndex++;
     }
 
     // Report tag
-    CheckErrorResult errorResult = closeTag(analysis, tag, tag.getBeginIndex(), currentIndex, true);
+    CheckErrorResult errorResult = analyzeArea(
+        analysis, tag,
+        centerTag.getValueBeginIndex(), centerTag.getValueEndIndex(),
+        true);
     if (errorResult != null) {
       errors.add(errorResult);
       return true;
@@ -724,7 +742,10 @@ public class CheckErrorAlgorithm532 extends CheckErrorAlgorithmBase {
     }
 
     // Report tag
-    CheckErrorResult errorResult = replaceByClosingTag(analysis, tag, previousTag, true);
+    CheckErrorResult errorResult = analyzeArea(
+        analysis, tag,
+        previousTag.getBeginIndex(), tag.getEndIndex(),
+        true);
     if (errorResult != null) {
       errors.add(errorResult);
       return true;
@@ -741,6 +762,8 @@ public class CheckErrorAlgorithm532 extends CheckErrorAlgorithmBase {
   private boolean analyzeLastLine(
       PageAnalysis analysis, PageElementTag tag,
       Collection<CheckErrorResult> errors) {
+
+    // TODO: Refactor
 
     // Check type of tag
     if (!PageElementTag.TAG_HTML_CENTER.equals(tag.getNormalizedName()) &&
@@ -836,11 +859,382 @@ public class CheckErrorAlgorithm532 extends CheckErrorAlgorithmBase {
   // ==============================================================================================
 
   /**
-   * Report an error that can be fixed by closing the opening tag later in the text.
+   * Report an error in an area of text.
    * 
    * @param analysis Page analysis.
    * @param tag Tag that could be replaced.
    * @param previousTag Previous opening tag.
+   * @param automatic True if automatic modifications can be done.
+   * @return Error result if the error can be reported.
+   */
+  private CheckErrorResult analyzeArea(
+      PageAnalysis analysis,
+      PageElementTag tag, int beginIndex, int endIndex,
+      boolean automatic) {
+
+    // Check parameters
+    if ((analysis == null) || (tag == null)) {
+      return null;
+    }
+    int tagBeginIndex = tag.getBeginIndex();
+    int tagEndIndex = tag.getEndIndex();
+    if ((tagBeginIndex < beginIndex) || (tagEndIndex > endIndex)) {
+      return null;
+    }
+
+    // Reduce area size if possible
+    String contents = analysis.getContents();
+    boolean tryReducing = true;
+    while (tryReducing) {
+      tryReducing = false;
+
+      // Remove whitespace
+      while ((beginIndex < tagBeginIndex) &&
+             ("\n ".indexOf(contents.charAt(beginIndex)) >= 0)) {
+        beginIndex++;
+        tryReducing = true;
+      }
+      while ((endIndex > tagEndIndex) &&
+             ("\n ".indexOf(contents.charAt(endIndex - 1)) >= 0)) {
+        endIndex--;
+        tryReducing = true;
+      }
+
+      // Remove comments
+      if ((beginIndex < tagBeginIndex) &&
+          (contents.charAt(beginIndex) == '<')) {
+        PageElementComment comment = analysis.isInComment(beginIndex);
+        if ((comment != null) && (comment.getBeginIndex() == beginIndex)) {
+          beginIndex = comment.getEndIndex();
+          tryReducing = true;
+        }
+      }
+      if ((endIndex > tagEndIndex) &&
+          (contents.charAt(endIndex - 1) == '>')) {
+        PageElementComment comment = analysis.isInComment(endIndex - 1);
+        if ((comment != null) && (comment.getEndIndex() == endIndex)) {
+          endIndex = comment.getBeginIndex();
+          tryReducing = true;
+        }
+      }
+
+      // Remove surrounding tags
+      if ((beginIndex < tagBeginIndex) &&
+          (contents.charAt(beginIndex) == '<') &&
+          (endIndex > tagEndIndex) &&
+          (contents.charAt(endIndex - 1) == '>')) {
+        PageElementTag surroundingTag = analysis.isInTag(beginIndex);
+        if ((surroundingTag != null) &&
+            (surroundingTag.getCompleteBeginIndex() == beginIndex) &&
+            (surroundingTag.getCompleteEndIndex() == endIndex)) {
+          beginIndex = surroundingTag.getValueBeginIndex();
+          endIndex = surroundingTag.getValueEndIndex();
+          tryReducing = true;
+        }
+      }
+
+      // Remove surrounding bold and italic (if there are none inside)
+      if ((beginIndex < tagBeginIndex) &&
+          (contents.charAt(beginIndex) == '\'') &&
+          (endIndex > tagEndIndex) &&
+          (contents.charAt(endIndex - 1) == '\'')) {
+        int length = 0;
+        while (contents.charAt(beginIndex + length) == '\'') {
+          length++;
+        }
+        boolean ok = true;
+        if ((length != 2) && (length != 3) && (length != 5)) {
+          ok = false;
+        }
+        for (int tmpIndex = endIndex - length; tmpIndex < endIndex; tmpIndex++) {
+          if (contents.charAt(tmpIndex) != '\'') {
+            ok = false;
+          }
+        }
+        for (int tmpIndex = beginIndex + length; tmpIndex < endIndex - length; tmpIndex++) {
+          if (contents.startsWith("''", tmpIndex)) {
+            ok = false;
+          }
+        }
+        if (ok) {
+          beginIndex += length;
+          endIndex -= length;
+          tryReducing = true;
+        }
+      }
+    }
+
+    // If tag is at the end of the area, check if closing it is possible
+    if ((endIndex == tagEndIndex) &&
+        !tag.isEndTag() &&
+        !tag.isComplete()) {
+
+      // Search for a previous tag
+      PageElementTag previousTag = null;
+      boolean severalPreviousTag = false;
+      boolean otherUnclosedTag = false;
+      int tmpIndex = tagBeginIndex;
+      while (tmpIndex > beginIndex) {
+        tmpIndex--;
+        if (contents.charAt(tmpIndex) == '>') {
+          PageElementTag tmpTag = analysis.isInTag(tmpIndex);
+          if (tmpTag != null) {
+            if (!tmpTag.isComplete()) {
+              if (tmpTag.getNormalizedName().equals(tag.getNormalizedName())) {
+                if (previousTag == null) {
+                  previousTag = tmpTag;
+                } else {
+                  severalPreviousTag = true;
+                }
+              } else {
+                otherUnclosedTag = true;
+              }
+            }
+            tmpIndex = tmpTag.getBeginIndex();
+          }
+        }
+      }
+
+      // If no previous tag, delete or close the tag
+      if (previousTag == null) {
+        CheckErrorResult errorResult = createCheckErrorResult(analysis, tagBeginIndex, tagEndIndex);
+        errorResult.addReplacement(
+            "", false);
+        errorResult.addReplacement(
+            contents.substring(tagBeginIndex, tagEndIndex) + PageElementTag.createTag(tag.getName(), true, false),
+            false);
+        return errorResult;
+      }
+
+      // Check for some situations (not across some other constructions)
+      if (!areInSameArea(analysis, previousTag.getEndIndex(), tagBeginIndex)) {
+        return null;
+      }
+
+      // If previous tag, close the tag
+      if (otherUnclosedTag || severalPreviousTag) {
+        automatic = false;
+      }
+      CheckErrorResult errorResult = createCheckErrorResult(analysis, beginIndex, tagEndIndex);
+      String replacement =
+          contents.substring(beginIndex, tagBeginIndex) +
+          PageElementTag.createTag(previousTag.getName(), true, false);
+      String text =
+          contents.substring(beginIndex, previousTag.getEndIndex()) +
+          "..." +
+          PageElementTag.createTag(previousTag.getName(), true, false);
+      errorResult.addReplacement(replacement, text, automatic);
+      return errorResult;
+    }
+
+    // Check what is before the tag
+    for (int tmpIndex = beginIndex; tmpIndex < tagBeginIndex; tmpIndex++) {
+      if (contents.charAt(tmpIndex) == '<') {
+        PageElementTag tmpTag = analysis.isInTag(tmpIndex, tag.getNormalizedName());
+        if ((tmpTag != null) && !tmpTag.isComplete()) {
+          return null;
+        }
+      }
+    }
+
+    // Check for some situations (not across some other constructions)
+    if (!areInSameArea(analysis, tagEndIndex, endIndex)) {
+      return null;
+    }
+
+    // Check what is after the opening tag
+    int currentIndex = tag.getEndIndex();
+    int countBold = 0;
+    int countItalic = 0;
+    boolean hasContentsAfter = false;
+    while (currentIndex < endIndex) {
+      char currentChar = contents.charAt(currentIndex);
+      int nextIndex = currentIndex + 1;
+      hasContentsAfter |= (" \n".indexOf(currentChar) < 0);
+      if (currentChar == '<') {
+        PageElementTag currentTag = analysis.isInTag(currentIndex);
+        if (currentTag != null) {
+          nextIndex = currentTag.getEndIndex();
+          if (!currentTag.isComplete() &&
+              !currentTag.mayBeUnclosed()) {
+            return null;
+          }
+        }
+      } else if (currentChar == '\'') {
+        while ((nextIndex < contents.length()) && (contents.charAt(nextIndex) == '\'')) {
+          nextIndex++;
+        }
+        switch (nextIndex - currentIndex) {
+        case 1:
+          break;
+        case 2:
+          countItalic++;
+          break;
+        case 3:
+          countBold++;
+          break;
+        case 5:
+          countItalic++;
+          countBold++;
+          break;
+        default:
+          automatic = false;
+        }
+      } else if (contents.startsWith(tag.getName(), currentIndex)) {
+        automatic = false;
+      }
+      currentIndex = nextIndex;
+    }
+    if ((countBold % 2 != 0) || (countItalic % 2 != 0)) {
+      automatic = false;
+    }
+    if (!hasContentsAfter) {
+      automatic = false;
+    }
+
+    // Create error
+    CheckErrorResult errorResult = createCheckErrorResult(analysis, beginIndex, endIndex);
+    String replacement =
+        contents.substring(beginIndex, endIndex) +
+        PageElementTag.createTag(tag.getName(), true, false);
+    String text =
+        contents.substring(beginIndex, tag.getEndIndex()) +
+        "..." +
+        PageElementTag.createTag(tag.getName(), true, false);
+    errorResult.addReplacement(replacement, text, automatic);
+    if ((countBold % 2 != 0) || (countItalic % 2 != 0)) {
+      int contentBegin = tag.getEndIndex();
+      int countApostrophe = 0;
+      while ((contentBegin < endIndex) &&
+             (contents.charAt(contentBegin + countApostrophe) == '\'')) {
+        countApostrophe++;
+      }
+      boolean shouldComplete = false;
+      if ((countApostrophe == 5) && (countBold % 2 != 0) && (countItalic % 2 != 0)) {
+        shouldComplete = true;
+      } else if ((countApostrophe == 3) && (countBold % 2 != 0) && (countItalic % 2 == 0)) {
+        shouldComplete = true;
+      } else if ((countApostrophe == 2) && (countBold % 2 == 0) && (countItalic % 2 != 0)) {
+        shouldComplete = true;
+      }
+      if (shouldComplete) {
+        replacement =
+            contents.substring(beginIndex, endIndex) +
+            contents.substring(contentBegin, contentBegin + countApostrophe) +
+            PageElementTag.createTag(tag.getName(), true, false);
+        text =
+            contents.substring(beginIndex, tag.getEndIndex()) +
+            "..." +
+            contents.substring(contentBegin, contentBegin + countApostrophe) +
+            PageElementTag.createTag(tag.getName(), true, false);
+        errorResult.addReplacement(replacement, text, false);
+      }
+    }
+    if (!hasContentsAfter) {
+      errorResult.addReplacement(
+          contents.substring(beginIndex, tag.getBeginIndex()) +
+          contents.substring(tag.getEndIndex(), endIndex));
+    }
+    return errorResult;
+  }
+
+  /**
+   * Check if two indexes are in the same area.
+   * 
+   * @param analysis Page analysis.
+   * @param beginIndex Begin index.
+   * @param endIndex End index.
+   * @return True if begin and end indexes are in the same area.
+   */
+  private boolean areInSameArea(
+      PageAnalysis analysis, int beginIndex, int endIndex) {
+
+    // Check for internal links
+    PageElementInternalLink iLink = analysis.isInInternalLink(beginIndex);
+    if ((iLink != null) && (iLink.getBeginIndex() < beginIndex)) {
+      if (iLink.getEndIndex() < endIndex) {
+        return false;
+      }
+    } else {
+      if (analysis.isInInternalLink(endIndex) != null) {
+        return false;
+      }
+    }
+
+    // Check for external links
+    PageElementExternalLink eLink = analysis.isInExternalLink(beginIndex);
+    if ((eLink != null) && (eLink.getBeginIndex() < beginIndex)) {
+      if (eLink.getEndIndex() < endIndex) {
+        return false;
+      }
+    } else {
+      if (analysis.isInExternalLink(endIndex) != null) {
+        return false;
+      }
+    }
+
+    // Check for templates
+    PageElementTemplate template = analysis.isInTemplate(beginIndex);
+    if ((template != null) && (template.getBeginIndex() < beginIndex)) {
+      if (template.getEndIndex() < endIndex) {
+        return false;
+      }
+      PageElementTemplate.Parameter param = template.getParameterAtIndex(beginIndex);
+      if ((param != null) && (param.getEndIndex() < endIndex)) {
+        return false;
+      }
+    } else {
+      if (analysis.isInTemplate(endIndex) != null) {
+        return false;
+      }
+    }
+
+    // Check for tags
+    List<PageElementTag> tags = analysis.getTags();
+    for (PageElementTag tag : tags) {
+      if (!tag.isFullTag()) {
+        if (tag.isComplete()) {
+          int tagBeginIndex = tag.getCompleteBeginIndex();
+          int tagEndIndex = tag.getCompleteEndIndex();
+          if ((beginIndex > tagBeginIndex) && (beginIndex < tagEndIndex)) {
+            if (endIndex > tagEndIndex) {
+              return false;
+            }
+          } else if ((endIndex > tagBeginIndex) && (endIndex < tagEndIndex)) {
+            return false;
+          }
+        } else {
+          // NOTE: should we check for other unclosed tags?
+        }
+      }
+    }
+
+    // Check for tables
+    PageElementTable table = analysis.isInTable(beginIndex);
+    if (table != null) {
+      if (table.getEndIndex() < endIndex) {
+        return false;
+      }
+      PageElementTable.TableCell cell = table.getCellAtIndex(beginIndex);
+      if ((cell != null) && (cell.getEndIndex() < endIndex)) {
+        return false;
+      }
+    } else {
+      if (analysis.isInTable(endIndex) != null) {
+        return false;
+      }
+    }
+
+    return true;
+  }
+
+  /**
+   * Report an error that can be fixed by closing the opening tag later in the text.
+   * 
+   * @param analysis Page analysis.
+   * @param tag Tag that could be replaced.
+   * @param beginIndex Begin index of the area.
+   * @param endIndex End index of the area.
    * @param automatic True if automatic modifications can be done.
    * @return Error result if the error can be reported.
    */
@@ -875,16 +1269,9 @@ public class CheckErrorAlgorithm532 extends CheckErrorAlgorithmBase {
               (currentTag.getCompleteEndIndex() > endIndex)) {
             return null;
           }
-          if (!currentTag.isComplete()) {
-            boolean normal = false;
-            for (String tagName : unclosedTags) {
-              if (tagName.equals(currentTag.getNormalizedName())) {
-                normal = true;
-              }
-            }
-            if (!normal) {
-              return null;
-            }
+          if (!currentTag.isComplete() &&
+              !currentTag.mayBeUnclosed()) {
+            return null;
           }
         }
       } else if (currentChar == '\'') {
@@ -920,39 +1307,8 @@ public class CheckErrorAlgorithm532 extends CheckErrorAlgorithmBase {
     }
 
     // Check for some situations (not across some other constructions)
-    PageElementInternalLink iLink = analysis.isInInternalLink(tag.getBeginIndex());
-    if (iLink != null) {
-      if (iLink.getEndIndex() < endIndex) {
-        return null;
-      }
-    } else {
-      if (analysis.isInInternalLink(endIndex) != null) {
-        return null;
-      }
-    }
-    PageElementExternalLink eLink = analysis.isInExternalLink(tag.getBeginIndex());
-    if (eLink != null) {
-      if (eLink.getEndIndex() < endIndex) {
-        return null;
-      }
-    } else {
-      if (analysis.isInExternalLink(endIndex) != null) {
-        return null;
-      }
-    }
-    PageElementTemplate template = analysis.isInTemplate(tag.getBeginIndex());
-    if (template != null) {
-      if (template.getEndIndex() < endIndex) {
-        return null;
-      }
-      PageElementTemplate.Parameter param = template.getParameterAtIndex(tag.getBeginIndex());
-      if ((param != null) && (param.getEndIndex() < endIndex)) {
-        return null;
-      }
-    } else {
-      if (analysis.isInTemplate(endIndex) != null) {
-        return null;
-      }
+    if (!areInSameArea(analysis, tag.getBeginIndex(), endIndex)) {
+      return null;
     }
 
     // Create error
@@ -1020,6 +1376,27 @@ public class CheckErrorAlgorithm532 extends CheckErrorAlgorithmBase {
    */
   @Override
   protected String internalAutomaticFix(PageAnalysis analysis) {
+    return fixUsingAutomaticReplacement(analysis);
+  }
+
+  /**
+   * @return List of possible global fixes.
+   */
+  @Override
+  public String[] getGlobalFixes() {
+    return globalFixes;
+  }
+
+  /**
+   * Fix all the errors in the page.
+   * 
+   * @param fixName Fix name (extracted from getGlobalFixes()).
+   * @param analysis Page analysis.
+   * @param textPane Text pane.
+   * @return Page contents after fix.
+   */
+  @Override
+  public String fix(String fixName, PageAnalysis analysis, MWPane textPane) {
     return fixUsingAutomaticReplacement(analysis);
   }
 }

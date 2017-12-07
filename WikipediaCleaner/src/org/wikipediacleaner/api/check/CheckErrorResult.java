@@ -357,7 +357,7 @@ public class CheckErrorResult implements Comparable<CheckErrorResult> {
       return startPosition - cer.startPosition;
     }
     if (endPosition != cer.endPosition) {
-      return endPosition - cer.endPosition;
+      return -(endPosition - cer.endPosition);
     }
     return 0;
   }
