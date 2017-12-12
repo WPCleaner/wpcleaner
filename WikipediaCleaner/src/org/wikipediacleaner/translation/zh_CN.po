@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2017-12-07 19:44+0100\n"
+"POT-Creation-Date: 2017-12-12 14:23+0100\n"
 "PO-Revision-Date: 2017-03-03 19:29+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Chinese (Simplified) <zh_CN@li.org>\n"
@@ -155,24 +155,30 @@ msgstr ""
 msgid "Fixing spelling or typography based on a list of suggestions."
 msgstr "根据一个建议列表修正拼写或排版。"
 
-#: org/wikipediacleaner/api/MediaWiki.java:235
-#, java-format
-msgid "Page {0}:"
-msgstr "第{0}页"
-
-#: org/wikipediacleaner/api/MediaWiki.java:313
+#: org/wikipediacleaner/api/MediaWiki.java:298
 #, java-format
 msgid "Updating page {0}"
 msgstr "正在更新页面{0}"
 
-#: org/wikipediacleaner/api/MediaWiki.java:327
+#: org/wikipediacleaner/api/MediaWiki.java:312
 #, java-format
 msgid "The page {0} has been modified."
 msgstr ""
 
-#: org/wikipediacleaner/api/MediaWiki.java:328
+#: org/wikipediacleaner/api/MediaWiki.java:313
 msgid "Do yo want to continue?"
 msgstr ""
+
+#: org/wikipediacleaner/api/ModificationReport.java:76
+#: org/wikipediacleaner/api/ModificationReport.java:104
+#, java-format
+msgid "Page {0}:"
+msgstr "第{0}页"
+
+#: org/wikipediacleaner/api/ModificationReport.java:94
+#, fuzzy
+msgid "The following errors have occurred:"
+msgstr "发生了一个未知错误"
 
 #: org/wikipediacleaner/api/check/CheckError.java:407
 msgid "No available description"
@@ -3833,7 +3839,7 @@ msgstr ""
 msgid "Checking that protected titles have backlinks"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/worker/AutomaticFixingWorker.java:117
+#: org/wikipediacleaner/gui/swing/worker/AutomaticFixingWorker.java:118
 #, java-format
 msgid "The following modifications have been done ({0} page):"
 msgid_plural "The following modifications have been done ({0} pages):"
@@ -4168,9 +4174,6 @@ msgstr ""
 
 #~ msgid "An error occured: {0}"
 #~ msgstr "发生错误：{0}"
-
-#~ msgid "An unknown error occured"
-#~ msgstr "发生了一个未知错误"
 
 #~ msgid "View or edit white list"
 #~ msgstr "查看或编辑白名单"

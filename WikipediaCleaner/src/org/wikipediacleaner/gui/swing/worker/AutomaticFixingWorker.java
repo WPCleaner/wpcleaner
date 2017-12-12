@@ -14,6 +14,7 @@ import java.util.Map;
 
 import org.wikipediacleaner.api.APIException;
 import org.wikipediacleaner.api.MediaWiki;
+import org.wikipediacleaner.api.ModificationReport;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithm;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.AutomaticFixing;
@@ -39,7 +40,7 @@ public class AutomaticFixingWorker extends BasicWorker {
   private final String comment;
 
   /** Description of the replacements done. */
-  private final StringBuilder description;
+  private final ModificationReport report;
 
   /** True if the description of the replacements should be displayed. */
   private final boolean showDescription;
@@ -83,7 +84,7 @@ public class AutomaticFixingWorker extends BasicWorker {
     this.replacements = replacements;
     this.comment = comment;
     this.showDescription = showDescription;
-    this.description = (showDescription ? new StringBuilder() : null);
+    this.report = (showDescription ? new ModificationReport() : null);
     this.automaticCW = automaticCW;
     this.forceCW = forceCW;
     this.save = save;
@@ -109,7 +110,7 @@ public class AutomaticFixingWorker extends BasicWorker {
       MediaWiki mw = MediaWiki.getMediaWikiAccess(this);
       Integer count = Integer.valueOf(mw.replaceText(
           tmpPages, replacements, getWikipedia(),
-          comment, description, automaticCW, forceCW,
+          comment, report, automaticCW, forceCW,
           save, true, true, pauseAfterEachEdit, parent));
       if (showDescription && (count > 0)) {
         InformationWindow.createInformationWindow(
@@ -117,7 +118,7 @@ public class AutomaticFixingWorker extends BasicWorker {
                 "The following modifications have been done ({0} page):",
                 "The following modifications have been done ({0} pages):",
                 count, count.toString()),
-            description.toString(), true, getWikipedia());
+            report.getReport(getWikipedia()), true, getWikipedia());
       }
       return count;
     } catch (APIException e) {

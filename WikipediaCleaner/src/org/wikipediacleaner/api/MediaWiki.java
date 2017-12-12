@@ -37,7 +37,6 @@ import org.wikipediacleaner.gui.swing.basic.Utilities;
 import org.wikipediacleaner.gui.swing.worker.UpdateDabWarningTools;
 import org.wikipediacleaner.i18n.GT;
 import org.wikipediacleaner.utils.Configuration;
-import org.wikipediacleaner.utils.ConfigurationValueBoolean;
 import org.wikipediacleaner.utils.ConfigurationValueInteger;
 
 
@@ -171,7 +170,7 @@ public class MediaWiki extends MediaWikiController {
    *        Value: Text replacements.
    * @param wiki Wiki.
    * @param comment Comment used for the modification.
-   * @param description (Out) description of changes made.
+   * @param report (Out) Report of changes made.
    * @param automaticCW Lit of CW fixing that should be done.
    * @param forceCW List of CW fixing that should be done even if no automatic replacement was done.
    * @param save True if modification should be saved.
@@ -184,7 +183,7 @@ public class MediaWiki extends MediaWikiController {
   public int replaceText(
       Page[] pages, Map<String, List<AutomaticFixing>> replacements,
       EnumWikipedia wiki, String comment,
-      StringBuilder description,
+      ModificationReport report,
       Collection<CheckErrorAlgorithm> automaticCW, Collection<CheckErrorAlgorithm> forceCW,
       boolean save, boolean updateDabWarning, boolean minor,
       boolean pauseAfterEachEdit, Component parent) throws APIException {
@@ -204,13 +203,12 @@ public class MediaWiki extends MediaWikiController {
     }
 
     // Analyze pages
-    boolean secured = config.getBoolean(null, ConfigurationValueBoolean.SECURE_URL);
     UpdateDabWarningTools dabWarnings = new UpdateDabWarningTools(wiki, null, false, false);
     int count = 0;
     final API api = APIFactory.getAPI();
     StringBuilder details = new StringBuilder();
     StringBuilder fullComment = new StringBuilder();
-    StringBuilder tmpDescription = (description != null) ? new StringBuilder() : null;
+    ModificationReport.Modification modification = null;
     boolean stopRequested = false;
     while (hasRemainingTask() && !shouldStop() && !stopRequested) {
       Object result = getNextResult();
@@ -227,14 +225,8 @@ public class MediaWiki extends MediaWikiController {
           String newContents = oldContents;
           details.setLength(0);
           fullComment.setLength(0);
-          if (tmpDescription != null) {
-            tmpDescription.setLength(0);
-            String title =
-                "<a href=\"" + wiki.getSettings().getURL(page.getTitle(), false, secured) + "\">" +
-                page.getTitle() + "</a>";
-            tmpDescription.append(GT._("Page {0}:", title));
-            tmpDescription.append("\n");
-            tmpDescription.append("<ul>\n");
+          if (report != null) {
+            modification = new ModificationReport.Modification(page.getTitle());
           }
 
           // Apply automatic fixing
@@ -245,11 +237,9 @@ public class MediaWiki extends MediaWikiController {
               newContents = tmpContents;
 
               // Update description
-              if (tmpDescription != null) {
+              if (modification != null) {
                 for (String replacementDone : replacementsDone) {
-                  tmpDescription.append("<li>");
-                  tmpDescription.append(replacementDone.replaceAll("\\&", "&amp;").replaceAll("\\<", "&lt;"));
-                  tmpDescription.append("</li>\n");
+                  modification.addModification(replacementDone);
                 }
               }
 
@@ -288,12 +278,10 @@ public class MediaWiki extends MediaWikiController {
               if (!usedAlgorithms.isEmpty()) {
                 fullComment.append(" / ");
                 fullComment.append(wiki.getCWConfiguration().getComment(usedAlgorithms));
-                if (tmpDescription != null) {
+                if (modification != null) {
                   for (CheckError.Progress progress : usedAlgorithms) {
                     CheckErrorAlgorithm algorithm = progress.algorithm;
-                    tmpDescription.append("<li>");
-                    tmpDescription.append(algorithm.getShortDescriptionReplaced());
-                    tmpDescription.append("</li>\n");
+                    modification.addModification(algorithm.getShortDescriptionReplaced());
                   }
                 }
               }
@@ -302,11 +290,8 @@ public class MediaWiki extends MediaWikiController {
 
           // Page contents has been modified
           if (!oldContents.equals(newContents)) {
-            if (tmpDescription != null) {
-              tmpDescription.append("</ul>\n");
-              if (description != null) {
-                description.append(tmpDescription);
-              }
+            if (report != null) {
+              report.addModification(modification);
             }
 
             // Save page
@@ -338,6 +323,9 @@ public class MediaWiki extends MediaWikiController {
                 }
               } catch (APIException e) {
                 EnumQueryResult error = e.getQueryResult();
+                if (report != null) {
+                  report.addError(new ModificationReport.Error(page.getTitle(), error));
+                }
                 if (EnumQueryResult.PROTECTED_PAGE.equals(error)) {
                   System.err.println("Page " + page.getTitle() + " is protected.");
                 } else {

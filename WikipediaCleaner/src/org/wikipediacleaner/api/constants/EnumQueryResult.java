@@ -188,6 +188,13 @@ public enum EnumQueryResult {
   }
 
   /**
+   * @return Code.
+   */
+  public String getCode() {
+    return code;
+  }
+
+  /**
    * @return Associated text.
    */
   public String getText() {

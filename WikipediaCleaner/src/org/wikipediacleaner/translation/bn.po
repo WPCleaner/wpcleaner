@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2017-12-07 19:44+0100\n"
+"POT-Creation-Date: 2017-12-12 14:23+0100\n"
 "PO-Revision-Date: 2015-08-29 14:31+0000\n"
 "Last-Translator: Aftabuzzaman <Leemon432@gmail.com>\n"
 "Language-Team: Bengali <bn@li.org>\n"
@@ -154,23 +154,28 @@ msgstr ""
 msgid "Fixing spelling or typography based on a list of suggestions."
 msgstr ""
 
-#: org/wikipediacleaner/api/MediaWiki.java:235
-#, java-format
-msgid "Page {0}:"
-msgstr "{0}টি পাতা:"
-
-#: org/wikipediacleaner/api/MediaWiki.java:313
+#: org/wikipediacleaner/api/MediaWiki.java:298
 #, java-format
 msgid "Updating page {0}"
 msgstr ""
 
-#: org/wikipediacleaner/api/MediaWiki.java:327
+#: org/wikipediacleaner/api/MediaWiki.java:312
 #, java-format
 msgid "The page {0} has been modified."
 msgstr ""
 
-#: org/wikipediacleaner/api/MediaWiki.java:328
+#: org/wikipediacleaner/api/MediaWiki.java:313
 msgid "Do yo want to continue?"
+msgstr ""
+
+#: org/wikipediacleaner/api/ModificationReport.java:76
+#: org/wikipediacleaner/api/ModificationReport.java:104
+#, java-format
+msgid "Page {0}:"
+msgstr "{0}টি পাতা:"
+
+#: org/wikipediacleaner/api/ModificationReport.java:94
+msgid "The following errors have occurred:"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/CheckError.java:407
@@ -3821,7 +3826,7 @@ msgstr ""
 msgid "Checking that protected titles have backlinks"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/worker/AutomaticFixingWorker.java:117
+#: org/wikipediacleaner/gui/swing/worker/AutomaticFixingWorker.java:118
 #, java-format
 msgid "The following modifications have been done ({0} page):"
 msgid_plural "The following modifications have been done ({0} pages):"
