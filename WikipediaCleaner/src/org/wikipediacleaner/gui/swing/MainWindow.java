@@ -1379,6 +1379,7 @@ public class MainWindow
     JPopupMenu menu = new JPopupMenu();
     addItemInInternalLinks(menu, PageListWorker.Mode.INTERNAL_LINKS_MAIN);
     addItemInInternalLinks(menu, PageListWorker.Mode.INTERNAL_LINKS_TALKPAGES_CONVERTED);
+    addItemInInternalLinks(menu, PageListWorker.Mode.INTERNAL_LINKS_ALL);
     menu.show(
         buttonInternalLinks,
         0,

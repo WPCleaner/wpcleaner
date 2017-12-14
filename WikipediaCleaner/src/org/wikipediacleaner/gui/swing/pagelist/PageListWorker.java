@@ -84,6 +84,7 @@ public class PageListWorker extends BasicWorker {
     DAB_WATCH,
     DIRECT,
     EMBEDDED_IN,
+    INTERNAL_LINKS_ALL(GT._("All articles")),
     INTERNAL_LINKS_MAIN(GT._("Articles in main namespace")),
     INTERNAL_LINKS_TALKPAGES_CONVERTED(GT._("Articles associated to talk pages")),
     LINTER_CATEGORY(GT._("Linter extension category")),
@@ -217,14 +218,19 @@ public class PageListWorker extends BasicWorker {
         constructEmbeddedIn(pages);
         break;
 
+      // List all internal links in a page
+      case INTERNAL_LINKS_ALL:
+        constructInternalLinks(pages, false, true);
+        break;
+
       // List internal links in a page
       case INTERNAL_LINKS_MAIN:
-        constructInternalLinks(pages, false);
+        constructInternalLinks(pages, false, false);
         break;
 
       // List internal links in a page
       case INTERNAL_LINKS_TALKPAGES_CONVERTED:
-        constructInternalLinks(pages, true);
+        constructInternalLinks(pages, true, false);
         break;
 
       // Retrieve list of pages in a Linter category
@@ -448,11 +454,13 @@ public class PageListWorker extends BasicWorker {
    * 
    * @param pages List of internal links in the pages.
    * @param convertTalkPages True if talk pages should be converted to their respective articles.
+   * @param allNamsepaces True if all name spaces should be taken into account.
    * @throws APIException
    */
   private void constructInternalLinks(
       List<Page> pages,
-      boolean convertTalkPages) throws APIException {
+      boolean convertTalkPages,
+      boolean allNamespaces) throws APIException {
     for (String dabList : elementNames) {
       Page page = DataManager.getPage(getWikipedia(), dabList, null, null, null);
       MediaWiki mw = MediaWiki.getMediaWikiAccess(this);
@@ -464,7 +472,7 @@ public class PageListWorker extends BasicWorker {
           if (convertTalkPages && !link.isArticle()) {
             link = link.getArticlePage();
           }
-          if ((link.isInMainNamespace()) &&
+          if ((link.isInMainNamespace() || allNamespaces) &&
               (!pages.contains(link))) {
             pages.add(link);
           }
