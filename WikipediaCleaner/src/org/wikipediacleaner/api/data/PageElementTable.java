@@ -273,20 +273,22 @@ public class PageElementTable extends PageElement {
 
       // Analyze the current character
       index = getMeaningfulIndex(analysis, index);
-      char currentChar = contents.charAt(index);
-      if (currentChar == '\n') {
-        previousCr = true;
-      } else if (previousCr) {
-        if (currentChar == '{') {
-          int nextIndex = getMeaningfulIndex(analysis, index + 1);
-          if ((nextIndex < contents.length()) &&
-              (contents.charAt(nextIndex) == '|')) {
-            list.add(Integer.valueOf(index));
+      if (index < contents.length()) {
+        char currentChar = contents.charAt(index);
+        if (currentChar == '\n') {
+          previousCr = true;
+        } else if (previousCr) {
+          if (currentChar == '{') {
+            int nextIndex = getMeaningfulIndex(analysis, index + 1);
+            if ((nextIndex < contents.length()) &&
+                (contents.charAt(nextIndex) == '|')) {
+              list.add(Integer.valueOf(index));
+            }
           }
+          previousCr = false;
         }
-        previousCr = false;
+        index++;
       }
-      index++;
     }
     return list;
   }
@@ -306,20 +308,22 @@ public class PageElementTable extends PageElement {
 
       // Analyze the current character
       index = getMeaningfulIndex(analysis, index);
-      char currentChar = contents.charAt(index);
-      if (currentChar == '\n') {
-        previousCr = true;
-      } else if (previousCr) {
-        if (currentChar == '|') {
-          int nextIndex = getMeaningfulIndex(analysis, index + 1);
-          if ((nextIndex < contents.length()) &&
-              (contents.charAt(nextIndex) == '}')) {
-            list.add(Integer.valueOf(nextIndex + 1));
+      if (index < contents.length()) {
+        char currentChar = contents.charAt(index);
+        if (currentChar == '\n') {
+          previousCr = true;
+        } else if (previousCr) {
+          if (currentChar == '|') {
+            int nextIndex = getMeaningfulIndex(analysis, index + 1);
+            if ((nextIndex < contents.length()) &&
+                (contents.charAt(nextIndex) == '}')) {
+              list.add(Integer.valueOf(nextIndex + 1));
+            }
           }
+          previousCr = false;
         }
-        previousCr = false;
+        index++;
       }
-      index++;
     }
     return list;
   }
@@ -331,7 +335,14 @@ public class PageElementTable extends PageElement {
    */
   private static int getMeaningfulIndex(
       PageAnalysis analysis, int index) {
-    char currentChar = analysis.getContents().charAt(index);
+    if (index < 0) {
+      return 0;
+    }
+    String contents = analysis.getContents();
+    if (index >= contents.length()) {
+      return contents.length();
+    }
+    char currentChar = contents.charAt(index);
     if (currentChar == '<') {
       PageElementComment comment = analysis.isInComment(index);
       if ((comment != null) &&
