@@ -7,6 +7,7 @@
 
 package org.wikipediacleaner.api.check.algorithm;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -92,19 +93,25 @@ public class CheckErrorAlgorithm532 extends CheckErrorAlgorithmBase {
       return false;
     }
 
-    // Analyze each reference tag
+    // Analyze each tag
     List<PageElementTag> tags = analysis.getTags();
     boolean result = false;
     for (PageElementTag tag : tags) {
       if (!tag.isComplete() && !tag.isEndTag()) {
-        if (errors != null) {
-          result |= reportIncompleteTag(analysis, tag, errors, onlyAutomatic);
-        }
+        result |= reportIncompleteTag(analysis, tag, errors, onlyAutomatic);
       }
     }
 
+    // Analyze formatting elements
+    result |= analyzeFormatting(analysis, errors);
+
     return result;
   }
+
+
+  // ==============================================================================================
+  // Tag analysis
+  // ==============================================================================================
 
   /**
    * @param analysis Page analysis.
@@ -857,10 +864,6 @@ public class CheckErrorAlgorithm532 extends CheckErrorAlgorithmBase {
     return false;
   }
 
-  // ==============================================================================================
-  // Elementary functions to report an error and propose a given fix.
-  // ==============================================================================================
-
   /**
    * Report an error in an area of text.
    * 
@@ -1141,6 +1144,286 @@ public class CheckErrorAlgorithm532 extends CheckErrorAlgorithmBase {
     return errorResult;
   }
 
+  // ==============================================================================================
+  // Formatting elements analysis
+  // ==============================================================================================
+
+  /**
+   * Analyze a page to check if formatting errors are present.
+   * 
+   * @param analysis Page analysis.
+   * @param errors Errors found in the page.
+   * @return Flag indicating if the error was found.
+   */
+  private boolean analyzeFormatting(
+      PageAnalysis analysis,
+      Collection<CheckErrorResult> errors) {
+
+    // Analyze contents to find formatting elements
+    boolean result = false;
+    List<FormattingElement> elements = new ArrayList<>();
+    String contents = analysis.getContents();
+    int index = 0;
+    while (index < contents.length()) {
+      if (contents.charAt(index) == '\'') {
+        int length = 1;
+        while ((index + length < contents.length()) &&
+               (contents.charAt(index + length) == '\'')) {
+          length++;
+        }
+        if (length > 1) {
+          elements.add(new FormattingElement(index, length));
+        }
+        index += length;
+      } else {
+        index++;
+      }
+    }
+    if (elements.isEmpty()) {
+      return result;
+    }
+
+    // Analyze table cells
+    List<PageElementTable> tables = analysis.getTables();
+    if (tables != null) {
+      for (PageElementTable table : tables) {
+        for (PageElementTable.TableLine line : table.getTableLines()) {
+          for (PageElementTable.TableCell cell : line.getCells()) {
+            result |= analyzeFormattingArea(
+                analysis, errors, elements,
+                cell.getEndOptionsIndex(), cell.getEndIndex(),
+                true);
+          }
+        }
+      }
+    }
+
+    return result;
+  }
+
+  /**
+   * Analyze an area of text to check if formatting errors are present.
+   * 
+   * @param analysis Page analysis.
+   * @param errors Errors found in the page.
+   * @param elements Formatting elements.
+   * @param beginIndex Begin index of the text area.
+   * @param endIndex End index of the text area.
+   * @param automatic True if automatic replacement could be done.
+   * @return Flag indicating if the error was found.
+   */
+  private boolean analyzeFormattingArea(
+      PageAnalysis analysis,
+      Collection<CheckErrorResult> errors,
+      List<FormattingElement> elements,
+      int beginIndex, int endIndex,
+      boolean automatic) {
+
+    // Analyze area
+    FormattingAnalysis formattings = FormattingElement.analyzeArea(elements, beginIndex, endIndex);
+    if ((formattings.boldCount + formattings.italicCount) % 2 == 0) {
+      return false;
+    }
+
+    // Reduce area size if possible
+    String contents = analysis.getContents();
+    boolean tryReducing = true;
+    while (tryReducing) {
+      tryReducing = false;
+
+      // Remove whitespace
+      while ((beginIndex < endIndex) &&
+             ("\n ".indexOf(contents.charAt(beginIndex)) >= 0)) {
+        beginIndex++;
+        tryReducing = true;
+      }
+      while ((endIndex > beginIndex) &&
+             ("\n ".indexOf(contents.charAt(endIndex - 1)) >= 0)) {
+        endIndex--;
+        tryReducing = true;
+      }
+
+      // Remove comments
+      if ((beginIndex < endIndex) &&
+          (contents.charAt(beginIndex) == '<')) {
+        PageElementComment comment = analysis.isInComment(beginIndex);
+        if ((comment != null) && (comment.getBeginIndex() == beginIndex)) {
+          beginIndex = comment.getEndIndex();
+          tryReducing = true;
+        }
+      }
+      if ((endIndex > beginIndex) &&
+          (contents.charAt(endIndex - 1) == '>')) {
+        PageElementComment comment = analysis.isInComment(endIndex - 1);
+        if ((comment != null) && (comment.getEndIndex() == endIndex)) {
+          endIndex = comment.getBeginIndex();
+          tryReducing = true;
+        }
+      }
+
+      // Remove surrounding tags
+      if ((beginIndex < endIndex) &&
+          (contents.charAt(beginIndex) == '<') &&
+          (contents.charAt(endIndex - 1) == '>')) {
+        PageElementTag surroundingTag = analysis.isInTag(beginIndex);
+        if ((surroundingTag != null) &&
+            (surroundingTag.getCompleteBeginIndex() == beginIndex) &&
+            (surroundingTag.getCompleteEndIndex() == endIndex)) {
+          beginIndex = surroundingTag.getValueBeginIndex();
+          endIndex = surroundingTag.getValueEndIndex();
+          tryReducing = true;
+        }
+      }
+    }
+    if (!areInSameArea(analysis, beginIndex, endIndex)) {
+      return false;
+    }
+
+    // Report error when only one formatting element
+    if (formattings.firstIndex == formattings.lastIndex) {
+      FormattingElement element = elements.get(formattings.firstIndex);
+
+      // Report error when formatting element is at the beginning of the area
+      if ((element.index == beginIndex) &&
+          (element.index + element.length < endIndex)) {
+        CheckErrorResult error = createCheckErrorResult(analysis, beginIndex, endIndex);
+        String addition = contents.substring(element.index, element.index + element.getMeaningfulLength());
+        String replacement = contents.substring(beginIndex, endIndex) + addition;
+        String text = addition + "..." + addition;
+        error.addReplacement(replacement, text, automatic);
+        errors.add(error);
+        return true;
+      }
+    }
+
+    // Report generic error
+    if (errors != null) {
+      CheckErrorResult error = createCheckErrorResult(analysis, beginIndex, endIndex);
+      errors.add(error);
+    }
+
+    return true;
+  }
+
+  /**
+   * Bean for memorizing formatting elements
+   */
+  private static class FormattingElement {
+
+    /** Index of the formatting element in the text */
+    final int index;
+
+    /** Length of the formatting element */
+    final int length;
+
+    /**
+     * @param index Begin index of the formatting element.
+     * @param length Length of the formatting element.
+     */
+    FormattingElement(int index, int length) {
+      this.index = index;
+      this.length = length;
+    }
+
+    /**
+     * @return Meaningful length.
+     */
+    public int getMeaningfulLength() {
+      switch (length) {
+      case 2:
+      case 3:
+      case 5:
+        return length;
+      case 4:
+        return 3;
+      default:
+        return 5;
+      }
+    }
+    /**
+     * Analyze an area for it formatting elements.
+     * 
+     * @param elements Formatting elements.
+     * @param beginIndex Begin index of the text area.
+     * @param endIndex End index of the text area.
+     * @return Analysis.
+     */
+    static FormattingAnalysis analyzeArea(
+        List<FormattingElement> elements,
+        int beginIndex, int endIndex) {
+      int count = 0;
+      int bold = 0;
+      int italic = 0;
+      int firstIndex = -1;
+      int lastIndex = 0-1;
+      for (int index = 0; index < elements.size(); index++) {
+        FormattingElement element = elements.get(index);
+        if ((element.index >= beginIndex) && (element.index + element.length <= endIndex)) {
+          if (count == 0) {
+            firstIndex = index;
+          }
+          lastIndex = index;
+          count++;
+          switch (element.length) {
+          case 2:
+            italic++;
+            break;
+          case 3:
+          case 4:
+            bold++;
+            break;
+          default:
+            bold++;
+            italic++;
+            break;
+          }
+        }
+      }
+      if ((bold == 0) && (italic == 0)) {
+        return FormattingAnalysis.EMPTY;
+      }
+      return new FormattingAnalysis(firstIndex, lastIndex, bold, italic);
+    }
+  }
+
+  /**
+   * Bean for storing the analysis of formatting elements in an area.
+   */
+  private static class FormattingAnalysis {
+
+    /** Index of first formatting element */
+    final int firstIndex;
+
+    /** Index of last formatting element */
+    final int lastIndex;
+
+    /** Count of bold formatting */
+    final int boldCount;
+
+    /** Count of italic formatting */
+    final int italicCount;
+
+    /** Static object for empty analysis to avoid useless memory allocation */
+    final static FormattingAnalysis EMPTY = new FormattingAnalysis(0, 0, 0, 0);
+
+    /**
+     * @param bold Count of bold formatting.
+     * @param italic Count of italic formatting.
+     */
+    FormattingAnalysis(
+        int first, int last,
+        int bold, int italic) {
+      this.firstIndex = first;
+      this.lastIndex = last;
+      this.boldCount = bold;
+      this.italicCount = italic;
+    }
+  }
+
+  // ==============================================================================================
+  // Elementary functions to report an error and propose a given fix.
+  // ==============================================================================================
+
   /**
    * Check if two indexes are in the same area.
    * 
@@ -1230,6 +1513,10 @@ public class CheckErrorAlgorithm532 extends CheckErrorAlgorithmBase {
 
     return true;
   }
+
+  // ==============================================================================================
+  // General functions
+  // ==============================================================================================
 
   /**
    * Automatic fixing of some errors in the page.
