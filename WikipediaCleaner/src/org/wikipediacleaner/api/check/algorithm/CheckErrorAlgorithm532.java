@@ -162,7 +162,7 @@ public class CheckErrorAlgorithm532 extends CheckErrorAlgorithmBase {
 
     // Tag inside center tags
     if (!hasBeenReported) {
-      hasBeenReported = analyzeInsideCenterTags(analysis, tag, errors);
+      hasBeenReported = analyzeInsideTags(analysis, tag, errors);
     }
 
     // Headings
@@ -659,29 +659,52 @@ public class CheckErrorAlgorithm532 extends CheckErrorAlgorithmBase {
    * @param errors Errors found in the page.
    * @return True if the error has been reported.
    */
-  private boolean analyzeInsideCenterTags(
+  private boolean analyzeInsideTags(
       PageAnalysis analysis, PageElementTag tag,
       Collection<CheckErrorResult> errors) {
 
     // Check type of tag
-    if (!PageElementTag.TAG_HTML_FONT.equals(tag.getNormalizedName()) &&
+    if (!PageElementTag.TAG_HTML_CENTER.equals(tag.getNormalizedName()) &&
+        !PageElementTag.TAG_HTML_FONT.equals(tag.getNormalizedName()) &&
         !PageElementTag.TAG_HTML_SMALL.equals(tag.getNormalizedName()) &&
         !PageElementTag.TAG_HTML_SPAN.equals(tag.getNormalizedName())) {
       return false;
     }
 
-    // Analyze if it is inside center tags
-    PageElementTag centerTag = analysis.getSurroundingTag(PageElementTag.TAG_HTML_CENTER, tag.getBeginIndex());
-    if ((centerTag == null) ||
-        !centerTag.isComplete() ||
-        centerTag.isFullTag()){
+    // Analyze if it is inside a tag
+    int beginIndex = tag.getBeginIndex() - 1;
+    String contents = analysis.getContents();
+    while ((beginIndex >= 0) &&
+           (" \n".indexOf(contents.charAt(beginIndex)) >= 0)) {
+      beginIndex--;
+    }
+    if ((beginIndex < 0) || (contents.charAt(beginIndex) != '>')) {
+      return false;
+    }
+    PageElementTag surroundingTag = analysis.isInTag(beginIndex);
+    if (surroundingTag == null) {
+      return false;
+    }
+
+    // Analyze if tag combination is valid
+    if (PageElementTag.TAG_HTML_CENTER.equals(surroundingTag.getNormalizedName())) {
+      if (!PageElementTag.TAG_HTML_FONT.equals(tag.getNormalizedName()) &&
+          !PageElementTag.TAG_HTML_SMALL.equals(tag.getNormalizedName()) &&
+          !PageElementTag.TAG_HTML_SPAN.equals(tag.getNormalizedName())) {
+        return false;
+      }
+    } else if (PageElementTag.TAG_HTML_DIV.equals(surroundingTag.getNormalizedName())) {
+      if (!PageElementTag.TAG_HTML_CENTER.equals(tag.getNormalizedName())) {
+        return false;
+      }
+    } else {
       return false;
     }
 
     // Report tag
     CheckErrorResult errorResult = analyzeArea(
         analysis, tag,
-        centerTag.getValueBeginIndex(), centerTag.getValueEndIndex(),
+        surroundingTag.getValueBeginIndex(), surroundingTag.getValueEndIndex(),
         true);
     if (errorResult != null) {
       errors.add(errorResult);
