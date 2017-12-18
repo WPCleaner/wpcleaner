@@ -1208,17 +1208,24 @@ public class CheckErrorAlgorithm532 extends CheckErrorAlgorithmBase {
 
     // Analyze table cells
     List<PageElementTable> tables = analysis.getTables();
-    if (tables != null) {
-      for (PageElementTable table : tables) {
-        for (PageElementTable.TableLine line : table.getTableLines()) {
-          for (PageElementTable.TableCell cell : line.getCells()) {
-            result |= analyzeFormattingArea(
-                analysis, errors, elements,
-                cell.getEndOptionsIndex(), cell.getEndIndex(),
-                true, true, false);
-          }
+    for (PageElementTable table : tables) {
+      for (PageElementTable.TableLine line : table.getTableLines()) {
+        for (PageElementTable.TableCell cell : line.getCells()) {
+          result |= analyzeFormattingArea(
+              analysis, errors, elements,
+              cell.getEndOptionsIndex(), cell.getEndIndex(),
+              true, true, false);
         }
       }
+    }
+
+    // Analyze references
+    List<PageElementTag> refTags = analysis.getCompleteTags(PageElementTag.TAG_WIKI_REF);
+    for (PageElementTag refTag : refTags) {
+      result |= analyzeFormattingArea(
+          analysis, errors, elements,
+          refTag.getValueBeginIndex(), refTag.getValueEndIndex(),
+          true, true, false);
     }
 
     return result;
@@ -1330,6 +1337,13 @@ public class CheckErrorAlgorithm532 extends CheckErrorAlgorithmBase {
         }
         errors.add(error);
         return true;
+      }
+
+      // Restrict automatic modification in some cases
+      if (automatic) {
+        if (contents.substring(beginIndex, endIndex).indexOf('"') >= 0) {
+          automatic = false;
+        }
       }
 
       // Report error when formatting element is at the beginning of the area
