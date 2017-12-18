@@ -852,6 +852,17 @@ public class AutomaticFixingWindow extends OnePageWindow {
       int returnVal = fc.showSaveDialog(getParentComponent());
       if (returnVal == JFileChooser.APPROVE_OPTION) {
         File file = fc.getSelectedFile();
+
+        // Check if file exists
+        if (file.exists()) {
+          int answer = displayYesNoWarning(
+              GT._("This file exists, do you want to overwrite it?"));
+          if (answer != JOptionPane.YES_OPTION) {
+            return;
+          }
+        }
+
+        // Save file
         JAXBContext context = JAXBContext.newInstance(AutomaticFixingList.class);
         Marshaller m = context.createMarshaller();
         m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);

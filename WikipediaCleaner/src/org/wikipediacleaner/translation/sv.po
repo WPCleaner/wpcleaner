@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2017-12-14 19:53+0100\n"
+"POT-Creation-Date: 2017-12-18 13:27+0100\n"
 "PO-Revision-Date: 2013-07-06 19:07+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Swedish <sv@li.org>\n"
@@ -875,7 +875,7 @@ msgstr ""
 msgid "A list of templates that can't be used inside a reference"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm532.java:36
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm532.java:37
 msgid "Fix tags"
 msgstr ""
 
@@ -1410,22 +1410,26 @@ msgstr ""
 msgid "XML files"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:911
+#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:859
+msgid "This file exists, do you want to overwrite it?"
+msgstr ""
+
+#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:922
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiWindow.java:353
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiWindow.java:607
 msgid "Select errors"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:919
+#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:930
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiWindow.java:357
 msgid "Select all errors"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:926
+#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:937
 msgid "Select no errors"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:951
+#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:962
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiWindow.java:410
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiWindow.java:465
 #, java-format
