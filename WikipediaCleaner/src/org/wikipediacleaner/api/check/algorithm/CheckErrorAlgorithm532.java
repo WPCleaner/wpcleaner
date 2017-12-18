@@ -1215,7 +1215,7 @@ public class CheckErrorAlgorithm532 extends CheckErrorAlgorithmBase {
             result |= analyzeFormattingArea(
                 analysis, errors, elements,
                 cell.getEndOptionsIndex(), cell.getEndIndex(),
-                true);
+                true, true, false);
           }
         }
       }
@@ -1233,6 +1233,8 @@ public class CheckErrorAlgorithm532 extends CheckErrorAlgorithmBase {
    * @param beginIndex Begin index of the text area.
    * @param endIndex End index of the text area.
    * @param automatic True if automatic replacement could be done.
+   * @param canDeleteEnd True if formatting can be deleted if at the end.
+   * @param allowEmpty True if formatting can be replaced by an empty area.
    * @return Flag indicating if the error was found.
    */
   private boolean analyzeFormattingArea(
@@ -1240,7 +1242,7 @@ public class CheckErrorAlgorithm532 extends CheckErrorAlgorithmBase {
       Collection<CheckErrorResult> errors,
       List<FormattingElement> elements,
       int beginIndex, int endIndex,
-      boolean automatic) {
+      boolean automatic, boolean canDeleteEnd, boolean allowEmpty) {
 
     // Analyze area
     FormattingAnalysis formattings = FormattingElement.analyzeArea(elements, beginIndex, endIndex);
@@ -1306,6 +1308,30 @@ public class CheckErrorAlgorithm532 extends CheckErrorAlgorithmBase {
     if (formattings.firstIndex == formattings.lastIndex) {
       FormattingElement element = elements.get(formattings.firstIndex);
 
+      // Report error when formatting element is the only thing in the area
+      if ((element.index == beginIndex) &&
+          (element.index + element.length == endIndex)) {
+        CheckErrorResult error = createCheckErrorResult(analysis, beginIndex, endIndex);
+        if (canDeleteEnd) {
+          boolean delete = allowEmpty;
+          if (!allowEmpty) {
+            if ((beginIndex > 0) &&
+                (" \n".indexOf(contents.charAt(beginIndex - 1)) >= 0)) {
+              delete = true;
+            }
+            if ((endIndex + 1 < contents.length()) &&
+                (" \n".indexOf(contents.charAt(endIndex + 1)) >= 0)) {
+              delete = true;
+            }
+          }
+          if (delete) {
+            error.addReplacement("", automatic);
+          }
+        }
+        errors.add(error);
+        return true;
+      }
+
       // Report error when formatting element is at the beginning of the area
       if ((element.index == beginIndex) &&
           (element.index + element.length < endIndex)) {
@@ -1317,6 +1343,22 @@ public class CheckErrorAlgorithm532 extends CheckErrorAlgorithmBase {
         errors.add(error);
         return true;
       }
+
+      // Report error when formatting element is at the end of the area
+      if ((element.index > beginIndex) &&
+          (element.index + element.length == endIndex)) {
+        CheckErrorResult error = createCheckErrorResult(analysis, element.index, endIndex);
+        if (canDeleteEnd) {
+          error.addReplacement("", automatic);
+        }
+        errors.add(error);
+        return true;
+      }
+
+      // Report other cases
+      CheckErrorResult error = createCheckErrorResult(analysis, element.index, endIndex);
+      errors.add(error);
+      return true;
     }
 
     // Report generic error
