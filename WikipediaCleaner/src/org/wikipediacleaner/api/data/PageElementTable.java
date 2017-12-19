@@ -393,7 +393,7 @@ public class PageElementTable extends PageElement {
       }
       PageElementCategory category = analysis.isInCategory(index);
       if ((category != null) && (category.getBeginIndex() == index)) {
-        return getTrueIndex(analysis, tables, category.getBeginIndex());
+        return getTrueIndex(analysis, tables, category.getEndIndex());
       }
     } else if (currentChar == '{') {
       PageElementTemplate template = analysis.isInTemplate(index);

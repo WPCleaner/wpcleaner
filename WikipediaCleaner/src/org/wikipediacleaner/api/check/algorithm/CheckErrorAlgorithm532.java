@@ -49,6 +49,7 @@ public class CheckErrorAlgorithm532 extends CheckErrorAlgorithmBase {
     PageElementTag.TAG_HTML_CENTER,
     PageElementTag.TAG_HTML_CODE,
     PageElementTag.TAG_HTML_DIV,
+    PageElementTag.TAG_HTML_EM,
     PageElementTag.TAG_HTML_FONT,
     PageElementTag.TAG_HTML_H1,
     PageElementTag.TAG_HTML_H2,
@@ -415,11 +416,14 @@ public class CheckErrorAlgorithm532 extends CheckErrorAlgorithmBase {
       Collection<CheckErrorResult> errors) {
 
     // Check type of tag
-    if (!PageElementTag.TAG_HTML_CENTER.equals(tag.getNormalizedName()) &&
+    if (!PageElementTag.TAG_HTML_BIG.equals(tag.getNormalizedName()) &&
+        !PageElementTag.TAG_HTML_CENTER.equals(tag.getNormalizedName()) &&
+        !PageElementTag.TAG_HTML_DIV.equals(tag.getNormalizedName()) &&
         !PageElementTag.TAG_HTML_FONT.equals(tag.getNormalizedName()) &&
         !PageElementTag.TAG_HTML_S.equals(tag.getNormalizedName()) &&
         !PageElementTag.TAG_HTML_SMALL.equals(tag.getNormalizedName()) &&
-        !PageElementTag.TAG_HTML_SPAN.equals(tag.getNormalizedName())) {
+        !PageElementTag.TAG_HTML_SPAN.equals(tag.getNormalizedName()) &&
+        !PageElementTag.TAG_HTML_TT.equals(tag.getNormalizedName())) {
       return false;
     }
 
@@ -1188,7 +1192,14 @@ public class CheckErrorAlgorithm532 extends CheckErrorAlgorithmBase {
     String contents = analysis.getContents();
     int index = 0;
     while (index < contents.length()) {
-      if (contents.charAt(index) == '\'') {
+      if (contents.charAt(index) == '<') {
+        PageElementComment comment = analysis.isInComment(index);
+        if ((comment != null) && (comment.getBeginIndex() == index)) {
+          index = comment.getEndIndex();
+        } else {
+          index++;
+        }
+      } else if (contents.charAt(index) == '\'') {
         int length = 1;
         while ((index + length < contents.length()) &&
                (contents.charAt(index + length) == '\'')) {
@@ -1206,6 +1217,29 @@ public class CheckErrorAlgorithm532 extends CheckErrorAlgorithmBase {
       return result;
     }
 
+    // Analyze internal links
+    List<PageElementInternalLink> iLinks = analysis.getInternalLinks();
+    for (PageElementInternalLink iLink : iLinks) {
+      if (iLink.getText() != null) {
+        result |= analyzeFormattingArea(
+            analysis, errors, elements,
+            iLink.getBeginIndex() + iLink.getTextOffset(), iLink.getEndIndex() - 2,
+            true, true, false);
+      }
+    }
+
+    // Analyze images
+    List<PageElementImage> images = analysis.getImages();
+    for (PageElementImage image : images) {
+      PageElementImage.Parameter paramDesc = image.getDescriptionParameter();
+      if (paramDesc != null) {
+        result |= analyzeFormattingArea(
+            analysis, errors, elements,
+            image.getBeginIndex() + paramDesc.getBeginOffset(),
+            image.getBeginIndex() + paramDesc.getEndOffset(),
+            true, true, false);
+      }
+    }
     // Analyze table cells
     List<PageElementTable> tables = analysis.getTables();
     for (PageElementTable table : tables) {
@@ -1312,7 +1346,12 @@ public class CheckErrorAlgorithm532 extends CheckErrorAlgorithmBase {
         }
       }
     }
+
+    // Do some verifications
     if (!areInSameArea(analysis, beginIndex, endIndex)) {
+      return false;
+    }
+    if (contents.substring(beginIndex, endIndex).indexOf('\n') > 0) {
       return false;
     }
 
@@ -1376,6 +1415,13 @@ public class CheckErrorAlgorithm532 extends CheckErrorAlgorithmBase {
 
       // Report other cases
       CheckErrorResult error = createCheckErrorResult(analysis, element.index, endIndex);
+      String addition = contents.substring(element.index, element.index + element.getMeaningfulLength());
+      String replacement = contents.substring(element.index, endIndex) + addition;
+      String text = addition + "..." + addition;
+      error.addReplacement(replacement, text, false);
+      error.addReplacement(
+          contents.substring(element.index + element.getMeaningfulLength(), endIndex),
+          GT._("Remove formatting element"), false);
       errors.add(error);
       return true;
     }
