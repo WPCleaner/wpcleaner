@@ -1211,10 +1211,15 @@ public class CheckErrorAlgorithm532 extends CheckErrorAlgorithmBase {
     for (PageElementTable table : tables) {
       for (PageElementTable.TableLine line : table.getTableLines()) {
         for (PageElementTable.TableCell cell : line.getCells()) {
+          boolean somethingInOptions = false;
+          if (cell.getEndOptionsIndex() > cell.getBeginIndex() + 1) {
+            somethingInOptions = FormattingElement.hasElementsInArea(
+                elements, cell.getBeginIndex(), cell.getEndOptionsIndex());
+          }
           result |= analyzeFormattingArea(
               analysis, errors, elements,
               cell.getEndOptionsIndex(), cell.getEndIndex(),
-              true, true, false);
+              !somethingInOptions, true, false);
         }
       }
     }
@@ -1419,8 +1424,29 @@ public class CheckErrorAlgorithm532 extends CheckErrorAlgorithmBase {
         return 5;
       }
     }
+
     /**
      * Analyze an area for it formatting elements.
+     * 
+     * @param elements Formatting elements.
+     * @param beginIndex Begin index of the text area.
+     * @param endIndex End index of the text area.
+     * @return True if area contains formatting elements.
+     */
+    static boolean hasElementsInArea(
+        List<FormattingElement> elements,
+        int beginIndex, int endIndex) {
+      for (FormattingElement element : elements) {
+        if ((element.index >= beginIndex) &&
+            (element.index + element.length <= endIndex)) {
+          return true;
+        }
+      }
+      return false;
+    }
+
+    /**
+     * Analyze an area for its formatting elements.
      * 
      * @param elements Formatting elements.
      * @param beginIndex Begin index of the text area.
@@ -1437,7 +1463,8 @@ public class CheckErrorAlgorithm532 extends CheckErrorAlgorithmBase {
       int lastIndex = 0-1;
       for (int index = 0; index < elements.size(); index++) {
         FormattingElement element = elements.get(index);
-        if ((element.index >= beginIndex) && (element.index + element.length <= endIndex)) {
+        if ((element.index >= beginIndex) &&
+            (element.index + element.length <= endIndex)) {
           if (count == 0) {
             firstIndex = index;
           }
