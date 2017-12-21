@@ -230,7 +230,7 @@ public class CheckErrorAlgorithm016 extends CheckErrorAlgorithmBase {
       "áàâäåãÀ" + "éèêëÉ" + "íìîïĩ" + "óôöōŌ" + "úùûü" + "ý" +
       "ćč" + "ńň" + "š" + "ź" +
       "0123456789" +
-      " []|(){}<>,.!?;:--–=+*#/%'\"«»\n\t";
+      " []|(){}<>,.!?;:--–=+*#/%'\"«»\n\t→";
 
   /**
    * @param codePoint Code point.
