@@ -64,6 +64,9 @@ public class CheckErrorAlgorithm090 extends CheckErrorAlgorithmBase {
     if (analysis == null) {
       return false;
     }
+    if (!analysis.getPage().isArticle()) {
+      return false;
+    }
 
     // Analyze each link
     boolean result = false;

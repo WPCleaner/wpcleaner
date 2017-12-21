@@ -168,6 +168,9 @@ public abstract class CheckErrorAlgorithmHtmlNamedEntities extends CheckErrorAlg
    */
   @Override
   protected String internalBotFix(PageAnalysis analysis) {
+    if (!analysis.getPage().isArticle()) {
+      return analysis.getContents();
+    }
     return fix(globalFixes[0], analysis, null);
   }
 

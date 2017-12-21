@@ -40,6 +40,11 @@ public class CheckErrorAlgorithm019 extends CheckErrorAlgorithmBase {
     if (analysis == null) {
       return false;
     }
+    if (!analysis.getPage().isArticle()) {
+      return false;
+    }
+
+    // Analyze each title
     boolean result = false;
     List<PageElementTitle> titles = analysis.getTitles();
     for (PageElementTitle title : titles) {

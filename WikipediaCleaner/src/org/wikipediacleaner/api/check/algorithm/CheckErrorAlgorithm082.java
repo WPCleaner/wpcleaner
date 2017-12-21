@@ -39,6 +39,9 @@ public class CheckErrorAlgorithm082 extends CheckErrorAlgorithmBase {
     if (analysis == null) {
       return false;
     }
+    if (!analysis.getPage().isArticle()) {
+      return false;
+    }
 
     // Analyzing the text from the beginning
     boolean result = false;

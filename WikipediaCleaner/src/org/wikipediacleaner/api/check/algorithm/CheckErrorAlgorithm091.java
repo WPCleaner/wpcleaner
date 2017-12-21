@@ -74,6 +74,9 @@ public class CheckErrorAlgorithm091 extends CheckErrorAlgorithmBase {
     if ((analysis == null) || (analysis.getInternalLinks() == null)) {
       return false;
     }
+    if (!analysis.getPage().isArticle()) {
+      return false;
+    }
 
     // Retrieve configuration
     EnumWikipedia wiki = analysis.getWikipedia();

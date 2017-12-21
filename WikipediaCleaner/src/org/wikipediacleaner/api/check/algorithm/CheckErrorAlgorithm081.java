@@ -172,6 +172,9 @@ public class CheckErrorAlgorithm081 extends CheckErrorAlgorithmBase {
     if (analysis == null) {
       return false;
     }
+    if (!analysis.getPage().isArticle()) {
+      return false;
+    }
 
     // Group tags by group and value for further analyze
     Map<String, Map<String, List<PageElementTag>>> refs =

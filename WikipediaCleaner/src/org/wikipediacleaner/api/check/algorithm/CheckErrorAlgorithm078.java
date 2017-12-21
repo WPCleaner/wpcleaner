@@ -58,6 +58,9 @@ public class CheckErrorAlgorithm078 extends CheckErrorAlgorithmBase {
     if (analysis == null) {
       return false;
     }
+    if (!analysis.getPage().isArticle()) {
+      return false;
+    }
 
     // Build a map of references by group name
     Map<String, List<PageElement>> referencesByGroup = new HashMap<>();

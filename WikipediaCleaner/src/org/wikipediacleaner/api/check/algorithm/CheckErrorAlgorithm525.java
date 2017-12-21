@@ -44,6 +44,9 @@ public class CheckErrorAlgorithm525 extends CheckErrorAlgorithmBase {
     if ((analysis == null) || (analysis.getPage() == null)) {
       return false;
     }
+    if (!analysis.getPage().isArticle()) {
+      return false;
+    }
 
     // Analyze each tag
     List<PageElementTag> tags = analysis.getCompleteTags(PageElementTag.TAG_HTML_SPAN);

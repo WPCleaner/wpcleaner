@@ -48,6 +48,9 @@ public class CheckErrorAlgorithm055 extends CheckErrorAlgorithmBase {
     if (analysis == null) {
       return false;
     }
+    if (!analysis.getPage().isArticle()) {
+      return false;
+    }
 
     // Analyzing the text from the beginning
     List<PageElementTag> tags = analysis.getTags(PageElementTag.TAG_HTML_SMALL);

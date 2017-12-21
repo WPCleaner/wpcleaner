@@ -41,6 +41,9 @@ public class CheckErrorAlgorithm026 extends CheckErrorAlgorithmBase {
     if (analysis == null) {
       return false;
     }
+    if (!analysis.getPage().isArticle()) {
+      return false;
+    }
 
     // Retrieve all <b> tags
     List<PageElementTag> bTags = analysis.getTags(PageElementTag.TAG_HTML_B);

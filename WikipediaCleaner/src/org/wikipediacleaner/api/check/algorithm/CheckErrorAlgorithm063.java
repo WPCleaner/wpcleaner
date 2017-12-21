@@ -40,6 +40,9 @@ public class CheckErrorAlgorithm063 extends CheckErrorAlgorithmBase {
     if (analysis == null) {
       return false;
     }
+    if (!analysis.getPage().isArticle()) {
+      return false;
+    }
 
     // Analyze each <small> tag
     boolean result = false;

@@ -41,6 +41,9 @@ public class CheckErrorAlgorithm025 extends CheckErrorAlgorithmBase {
     if (analysis == null) {
       return false;
     }
+    if (!analysis.getPage().isArticle()) {
+      return false;
+    }
 
     // Check every title
     List<PageElementTitle> titles = analysis.getTitles();

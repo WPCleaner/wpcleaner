@@ -39,6 +39,10 @@ public abstract class CheckErrorAlgorithmTags extends CheckErrorAlgorithmBase {
   @Override
   public boolean analyze(PageAnalysis analysis,
       Collection<CheckErrorResult> errors, boolean onlyAutomatic) {
+    if (!analysis.getPage().isArticle()) {
+      return false;
+    }
+
     boolean result = false;
     String[] tags = getTags();
     if (tags != null) {
