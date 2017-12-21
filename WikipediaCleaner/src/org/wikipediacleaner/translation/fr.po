@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2017-12-18 13:27+0100\n"
+"POT-Creation-Date: 2017-12-21 10:19+0100\n"
 "PO-Revision-Date: 2017-03-22 17:44+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: French <fr@li.org>\n"
@@ -933,6 +933,11 @@ msgstr ""
 #, fuzzy
 msgid "Fix tags"
 msgstr "Corriger les catégories"
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm532.java:1424
+#, fuzzy
+msgid "Remove formatting element"
+msgstr "Retirer de la liste"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmBase.java:277
 msgid "Title of the article describing this type of error"
