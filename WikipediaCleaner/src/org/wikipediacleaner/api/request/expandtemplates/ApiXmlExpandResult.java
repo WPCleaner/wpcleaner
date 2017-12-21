@@ -49,7 +49,7 @@ public class ApiXmlExpandResult extends ApiXmlResult implements ApiExpandResult 
           throws APIException {
     try {
       XPathExpression<Element> xpaText = XPathFactory.instance().compile(
-          "/api/expandtemplates", Filters.element());
+          "/api/expandtemplates/wikitext", Filters.element());
       Element root = getRoot(properties, ApiRequest.MAX_ATTEMPTS);
       Element text = xpaText.evaluateFirst(root);
       return (text != null) ? text.getText() : null;
