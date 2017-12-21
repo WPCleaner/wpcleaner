@@ -89,7 +89,7 @@ public class CheckErrorAlgorithm537 extends CheckErrorAlgorithmBase {
               count = 5;
               break;
             }
-            if (countQuotes == 1) {
+            if (firstQuotesIndex < 0) {
               firstQuotesIndex = index;
               firstQuotesSize = count;
             }
