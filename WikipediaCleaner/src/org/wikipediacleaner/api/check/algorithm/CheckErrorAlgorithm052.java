@@ -87,6 +87,9 @@ public class CheckErrorAlgorithm052 extends CheckErrorAlgorithmBase {
    */
   @Override
   protected String internalAutomaticFix(PageAnalysis analysis) {
+    if (!analysis.getPage().isArticle()) {
+      return analysis.getContents();
+    }
     return fixUsingAutomaticReplacement(analysis);
   }
 }
