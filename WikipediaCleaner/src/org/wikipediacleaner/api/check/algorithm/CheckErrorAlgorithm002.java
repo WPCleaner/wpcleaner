@@ -70,6 +70,7 @@ public class CheckErrorAlgorithm002 extends CheckErrorAlgorithmBase {
         PageElementTag.TAG_HTML_CITE,
         PageElementTag.TAG_HTML_CODE,
         PageElementTag.TAG_HTML_DEL,
+        PageElementTag.TAG_HTML_DFN,
         PageElementTag.TAG_HTML_DIV,
         PageElementTag.TAG_HTML_EM,
         PageElementTag.TAG_HTML_FONT,

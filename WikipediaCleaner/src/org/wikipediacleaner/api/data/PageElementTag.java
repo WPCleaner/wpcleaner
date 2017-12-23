@@ -32,6 +32,7 @@ public class PageElementTag extends PageElement {
   public final static String TAG_HTML_CITE         = "cite";
   public final static String TAG_HTML_CODE         = "code";
   public final static String TAG_HTML_DEL          = "del";
+  public final static String TAG_HTML_DFN          = "dfn";
   public final static String TAG_HTML_DIV          = "div";
   public final static String TAG_HTML_EM           = "em";
   public final static String TAG_HTML_FONT         = "font";
