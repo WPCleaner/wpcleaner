@@ -72,6 +72,7 @@ public abstract class RestApiJsonResult extends BasicRestApiResult {
    * 
    * @param properties Properties defining the request.
    * @param path Path to REST API method.
+   * @param param Parametere for REST API method.
    * @param maxTry Maximum number of tries.
    * @return Answer of MediaWiki API.
    * @throws JDOMParseException
@@ -79,7 +80,7 @@ public abstract class RestApiJsonResult extends BasicRestApiResult {
    */
   protected JsonNode getRoot(
       Map<String, String> properties,
-      String path,
+      String path, String param,
       int maxTry)
           throws APIException {
     int attempt = 0;
@@ -90,7 +91,7 @@ public abstract class RestApiJsonResult extends BasicRestApiResult {
       try {
         // Executing HTTP method
         attempt++;
-        method = createHttpMethod(properties, path);
+        method = createHttpMethod(properties, path, param);
         int statusCode = getHttpClient().executeMethod(method);
 
         // Accessing response

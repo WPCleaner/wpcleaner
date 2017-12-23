@@ -49,9 +49,9 @@ public class RestApiTransformWikitextToLintResult extends RestApiJsonResult {
     List<LinterError> result = new ArrayList<>();
     String url = "api/rest_v1/transform/wikitext/to/lint";
     if (title != null) {
-      url += "/" + title.replaceAll(" ", "_");
+      title = title.replaceAll(" ", "_");
     }
-    JsonNode root = getRoot(properties, url, RestApiRequest.MAX_ATTEMPTS);
+    JsonNode root = getRoot(properties, url, title, RestApiRequest.MAX_ATTEMPTS);
     if (root != null) {
       Iterator<JsonNode> itErrors = root.elements();
       while (itErrors.hasNext()) {

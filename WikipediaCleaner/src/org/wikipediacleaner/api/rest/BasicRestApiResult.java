@@ -75,15 +75,18 @@ public abstract class BasicRestApiResult implements RestApiResult {
    * 
    * @param properties Properties to drive the API.
    * @param path Path to REST API method.
+   * @param param Parametere for REST API method.
    * @return HttpMethod.
    */
   protected HttpMethod createHttpMethod(
-      Map<String, String> properties, String path) {
+      Map<String, String> properties, String path, String param) {
     String encodedPath = path;
-    try {
-      encodedPath = URLEncoder.encode(path, "UTF8");
-    } catch (UnsupportedEncodingException e) {
-      // Nothing
+    if (param != null) {
+      try {
+        encodedPath += "/" + URLEncoder.encode(param, "UTF8");
+      } catch (UnsupportedEncodingException e) {
+        // Nothing
+      }
     }
     return HttpUtils.createHttpMethod(
         getWiki().getSettings().getHostURL(true) + "/" + encodedPath,
