@@ -86,8 +86,8 @@ public class CheckErrorAlgorithm535 extends CheckErrorAlgorithmBase {
             if (paramName.equalsIgnoreCase("color")) {
               couldReport = true;
             } else if (paramName.equalsIgnoreCase("style")) {
-              couldReport = true;
-              automatic = false;
+              // couldReport = true;
+              // automatic = false;
             } else if (paramName.equalsIgnoreCase("face")) {
               // Nothing to do
             }
