@@ -68,10 +68,34 @@ public class CheckErrorAlgorithm535 extends CheckErrorAlgorithmBase {
           valueEndIndex--;
         }
 
-        // Check what is in the font tag
+        // Quick check of what inside the font tag
+        boolean couldReport = false;
+        boolean automatic = false;
         if ((valueBeginIndex < valueEndIndex) &&
             (contents.charAt(valueBeginIndex) == '[') &&
             (contents.charAt(valueEndIndex - 1) == ']')) {
+          couldReport = true;
+        }
+
+        // Check the attributes of the font tag
+        if (couldReport) {
+          couldReport = false;
+          for (int paramNum = 0; paramNum < fontTag.getParametersCount(); paramNum++) {
+            PageElementTag.Parameter param = fontTag.getParameter(paramNum);
+            String paramName = param.getName();
+            if (paramName.equalsIgnoreCase("color")) {
+              couldReport = true;
+            } else if (paramName.equalsIgnoreCase("style")) {
+              couldReport = true;
+              automatic = false;
+            } else if (paramName.equalsIgnoreCase("face")) {
+              // Nothing to do
+            }
+          }
+        }
+
+        // Check what is in the font tag
+        if (couldReport) {
 
           // Initializations
           String openFont = contents.substring(fontTag.getBeginIndex(), fontTag.getEndIndex());
@@ -103,7 +127,7 @@ public class CheckErrorAlgorithm535 extends CheckErrorAlgorithmBase {
                 iLink.getLink(),
                 openFont + "..." + closeFont) +
               contents.substring(valueEndIndex, fontTag.getValueEndIndex());
-            errorResult.addReplacement(replacement, text, true);
+            errorResult.addReplacement(replacement, text, automatic);
             errors.add(errorResult);
           }
 
@@ -133,7 +157,7 @@ public class CheckErrorAlgorithm535 extends CheckErrorAlgorithmBase {
                 eLink.getLink(),
                 openFont + "..." + closeFont) +
               contents.substring(valueEndIndex, fontTag.getValueEndIndex());
-            errorResult.addReplacement(replacement, text, true);
+            errorResult.addReplacement(replacement, text, automatic);
             errors.add(errorResult);
           }
 
@@ -162,7 +186,7 @@ public class CheckErrorAlgorithm535 extends CheckErrorAlgorithmBase {
                 iwLink.getInterwikiText(), iwLink.getLink(), iwLink.getAnchor(),
                 openFont + "..." + closeFont) +
               contents.substring(valueEndIndex, fontTag.getValueEndIndex());
-            errorResult.addReplacement(replacement, text, true);
+            errorResult.addReplacement(replacement, text, automatic);
             errors.add(errorResult);
           }
         }
