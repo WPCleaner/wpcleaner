@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2017-12-21 10:19+0100\n"
+"POT-Creation-Date: 2017-12-22 18:34+0100\n"
 "PO-Revision-Date: 2017-03-03 19:31+0000\n"
 "Last-Translator: Matěj S. <matejsuchanek97@gmail.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
@@ -203,8 +203,8 @@ msgid "Error n°{0} ({1} - {2}) - {3}"
 msgstr "chyba č. {0} ({1} - {2}) - {3}"
 
 #: org/wikipediacleaner/api/check/CheckErrorResult.java:176
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm026.java:96
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm026.java:99
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm026.java:102
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm038.java:95
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm038.java:98
 #, java-format
@@ -215,8 +215,8 @@ msgstr "Nahradit řetězcem {0}"
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm010.java:178
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:298
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm017.java:165
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm026.java:101
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm026.java:107
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm026.java:104
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm026.java:110
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm038.java:100
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm038.java:106
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm042_Old.java:62
@@ -245,18 +245,18 @@ msgstr "Opravit všechny chybné značky"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm002.java:193
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm002.java:217
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm055.java:164
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm055.java:167
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm066.java:93
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm077.java:93
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm525.java:123
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm525.java:126
 #, java-format
 msgid "Remove {0} tags"
 msgstr "Odstranit tagy {0}"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm002.java:678
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm002.java:679
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm002.java:680
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm002.java:681
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm002.java:682
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm002.java:683
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm002.java:684
 #, java-format
 msgid "A replacement for {0}"
 msgstr "Náhrada za {0}"
@@ -404,24 +404,24 @@ msgstr "Nahradit vše"
 msgid "Templates that can replace the end of a table"
 msgstr "Šablony, které mohou nahradit zakončení tabulky"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm030.java:93
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm030.java:96
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm079.java:103
 msgid "Add a description..."
 msgstr "Přidat popis…"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm030.java:97
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm030.java:100
 msgid "What description would you like to use for the image ?"
 msgstr "Jaký popisek obrázku chcete použít?"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm030.java:100
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm030.java:103
 msgid "Add an alternate description..."
 msgstr "Přidat alternativní popisek..."
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm030.java:104
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm030.java:107
 msgid "What alternate description would you like to use for the image ?"
 msgstr "Jaký alternativní popisek chcete obrázku přiřadit?"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm030.java:109
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm030.java:112
 msgid "View image"
 msgstr "Zobrazit obrázek"
 
@@ -510,24 +510,24 @@ msgid "Check all links to other language"
 msgstr "Zkontrolovat všechny odkazy do jiného jazyka"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:134
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm091.java:217
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm091.java:220
 msgid "Check language links"
 msgstr "Zkontrolovat jazykové odkazy"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:145
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:374
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm091.java:260
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm091.java:263
 msgid "What is the title of the page on this wiki ?"
 msgstr "Jaký je název stránky na této wiki?"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:158
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm091.java:273
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm091.java:276
 #, java-format
 msgid "Replace using template {0}"
 msgstr "Nahradit za použití šablony {0}"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:164
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm081.java:266
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm081.java:269
 #: org/wikipediacleaner/gui/swing/action/ActionExternalViewer.java:61
 #: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:86
 #: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:154
@@ -655,7 +655,7 @@ msgstr "Nahradit všechny řetězce „%20“ mezerou"
 msgid "Replace %20 by space character"
 msgstr "Nahradit %20 mezerou"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm078.java:170
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm078.java:173
 msgid ""
 "A list of regular expressions to find templates replacing <references> tags"
 msgstr ""
@@ -683,30 +683,30 @@ msgstr "Externí prohlížeč"
 msgid "Fix reference duplication"
 msgstr "Opravit duplicitní reference"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm081.java:255
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm081.java:258
 msgid "Give a name to the <ref> tag"
 msgstr "Přidat jméno ke značce <ref>"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm081.java:260
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm081.java:263
 msgid "What name would you like to use for the <ref> tag ?"
 msgstr "Jaké jméno chcete použít pro značku <ref>?"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm081.java:356
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm081.java:359
 #, java-format
 msgid "A <ref> tag shares the same content, and is named \"{0}\"."
 msgstr "Značka <ref> má stejný obsah a jmenuje se „{0}“."
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm081.java:357
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm081.java:360
 #, java-format
 msgid "Do you want to replace this <ref> tag by \"{0}\" ?"
 msgstr "Chcete nahradit tento tag <ref> „{0}“?"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm081.java:367
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm081.java:370
 msgid ""
 "Several <ref> tags share the same content, but none has been given a name."
 msgstr "Několik tagů <ref> sdílí stejný obsah, ale žádný není pojmenován."
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm081.java:368
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm081.java:371
 msgid "What name do you want to use for this <ref> tag ?"
 msgstr "Jaké jméno chcete použít pro tuto značku?"
 
@@ -728,32 +728,32 @@ msgstr "Prověřovat pouze nadpisy vyšší úrovně"
 msgid "Use {0}"
 msgstr "Použít {0}"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm085.java:260
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm085.java:263
 msgid "A list of templates that can be used to replace &lt;center&gt; tags"
 msgstr "Seznam šablon, kterými je možné nahradit značky &lt;center&gt;"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm090.java:714
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm090.java:717
 msgid "What text should be displayed by the link?"
 msgstr "Jaký text by se měl u odkazu zobrazit?"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm090.java:719
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm090.java:722
 msgid "Convert into an internal link"
 msgstr "Převést na interní odkaz"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm090.java:805
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm090.java:808
 msgid "Templates to be used for linking to the history of an article"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm090.java:806
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm091.java:371
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm090.java:809
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm091.java:374
 msgid "Templates using external links"
 msgstr "Šablony používající externí odkazy"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm090.java:807
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm090.java:810
 msgid "Templates to be used for linking to an old version of an article"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm090.java:808
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm090.java:811
 msgid "Templates to be used instead of Special:PrefixIndex"
 msgstr ""
 
@@ -761,11 +761,11 @@ msgstr ""
 msgid "Convert them to internal links"
 msgstr "Změnit je na interní odkazy"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm091.java:372
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm091.java:375
 msgid "To report only links to other languages"
 msgstr "Hlásit pouze odkazy do jiného jazyka"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm091.java:373
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm091.java:376
 msgid "To report only links to local wikis"
 msgstr "Hlásit pouze odkazy do místních wiki"
 
@@ -911,6 +911,11 @@ msgstr "Opravit kategorie"
 #, fuzzy
 msgid "Remove formatting element"
 msgstr "Odstranit ze seznamu"
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm538.java:28
+#, fuzzy
+msgid "Remove whitespace characters"
+msgstr "Odstranit všechny řídící znaky"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmBase.java:277
 msgid "Title of the article describing this type of error"
