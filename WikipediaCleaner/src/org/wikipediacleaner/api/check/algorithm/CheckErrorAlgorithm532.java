@@ -60,6 +60,7 @@ public class CheckErrorAlgorithm532 extends CheckErrorAlgorithmBase {
     PageElementTag.TAG_HTML_H7,
     PageElementTag.TAG_HTML_H8,
     PageElementTag.TAG_HTML_H9,
+    PageElementTag.TAG_HTML_I,
     PageElementTag.TAG_HTML_LI,
     PageElementTag.TAG_HTML_OL,
     PageElementTag.TAG_HTML_P,
