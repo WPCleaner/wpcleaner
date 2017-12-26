@@ -301,8 +301,10 @@ public class CheckErrorAlgorithm532 extends CheckErrorAlgorithmBase {
       Collection<CheckErrorResult> errors) {
 
     // Check type of tag
-    if (!PageElementTag.TAG_HTML_CENTER.equals(tag.getNormalizedName()) &&
+    if (!PageElementTag.TAG_HTML_BIG.equals(tag.getNormalizedName()) &&
+        !PageElementTag.TAG_HTML_CENTER.equals(tag.getNormalizedName()) &&
         !PageElementTag.TAG_HTML_FONT.equals(tag.getNormalizedName()) &&
+        !PageElementTag.TAG_HTML_SMALL.equals(tag.getNormalizedName()) &&
         !PageElementTag.TAG_HTML_SPAN.equals(tag.getNormalizedName())) {
       return false;
     }
@@ -1401,6 +1403,9 @@ public class CheckErrorAlgorithm532 extends CheckErrorAlgorithmBase {
         String addition = contents.substring(element.index, element.index + element.getMeaningfulLength());
         String replacement = contents.substring(beginIndex, endIndex) + addition;
         String text = addition + "..." + addition;
+        if (automatic && (contents.charAt(endIndex - 1) == '\'')) {
+          automatic = false;
+        }
         error.addReplacement(replacement, text, automatic);
         errors.add(error);
         return true;
