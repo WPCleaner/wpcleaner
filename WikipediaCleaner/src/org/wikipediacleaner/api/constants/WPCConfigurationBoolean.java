@@ -19,7 +19,9 @@ public enum WPCConfigurationBoolean {
   AUTO_LANGLINK_AFTER_CATEGORY("auto_langlink_after_category", false, true, true),
   // Automatic formatting: link default sort and categories
   AUTO_LINK_DEFAULTSORT_CATEGORY("auto_link_defaultsort_category", false, true, true),
-  // Used to force the activation of Check Wiki project even without a project page.
+  // Choose whether to close self closing tags or not
+  CLOSE_SELF_CLOSING_TAGS("close_self_closing_tags", true, true, false),
+  // Used to force the activation of Check Wiki project even without a project page
   CW_FORCE("check_wiki_force", false, true, false),
   // Used to mark error fixed both on Tool Server and WMF Labs
   // CW_MARK_BOTH("check_wiki_mark_both", false, true, true),
@@ -27,17 +29,17 @@ public enum WPCConfigurationBoolean {
   // CW_USE_LABS("check_wiki_use_labs", true, true, true),
   // Allow use of __DISAMBIG__ magic word.
   DAB_USE_DISAMBIG_MAGIC_WORD("dab_use_disambig", true, true, false),
-  // Allow disambiguation warning outside section 0 of talk page.
+  // Allow disambiguation warning outside section 0 of talk page
   DAB_WARNING_SECTION_0("dab_warning_section_0", true, true, false),
-  // Allow duplicate arguments warning outside section 0 of talk page.
+  // Allow duplicate arguments warning outside section 0 of talk page
   DUPLICATE_ARGS_WARNING_SECTION_0("duplicate_args_warning_section_0", true, true, false),
-  // Allow ISBN warning outside section 0 of talk page.
+  // Allow ISBN warning outside section 0 of talk page
   ISBN_WARNING_SECTION_0("isbn_warning_section_0", true, true, false),
-  // Allow ISSN warning outside section 0 of talk page.
+  // Allow ISSN warning outside section 0 of talk page
   ISSN_WARNING_SECTION_0("issn_warning_section_0", true, true, false),
-  // Force usage of "to do" sub-page in main name space.
+  // Force usage of "to do" sub-page in main name space
   TODO_SUBPAGE_FORCE("general_todo_subpage_force", false, true, false),
-  // Force usage of "to do" sub-page in other name spaces.
+  // Force usage of "to do" sub-page in other name spaces
   TODO_SUBPAGE_FORCE_OTHER("general_todo_subpage_force_other", false, true, false);
 
   /**

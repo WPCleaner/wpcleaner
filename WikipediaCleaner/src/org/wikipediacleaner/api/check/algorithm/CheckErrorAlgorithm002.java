@@ -14,6 +14,7 @@ import java.util.Map;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.CheckErrorResult.ErrorLevel;
 import org.wikipediacleaner.api.constants.WPCConfiguration;
+import org.wikipediacleaner.api.constants.WPCConfigurationBoolean;
 import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementComment;
 import org.wikipediacleaner.api.data.PageElementTag;
@@ -517,11 +518,16 @@ public class CheckErrorAlgorithm002 extends CheckErrorAlgorithmBase {
               if (endsWithGT) {
                 tmpIndex++;
               }
+              boolean close = analysis.getWPCConfiguration().getBoolean(
+                  WPCConfigurationBoolean.CLOSE_SELF_CLOSING_TAGS);
               CheckErrorResult errorResult = createCheckErrorResult(
                   analysis, currentIndex, tmpIndex);
               errorResult.addReplacement(
-                  PageElementTag.createTag(tagName, false, false),
+                  PageElementTag.createTag(tagName, false, close),
                   endsWithGT && incorrectChar);
+              errorResult.addReplacement(
+                  PageElementTag.createTag(tagName, false, close),
+                  false);
               errors.add(errorResult);
               nextIndex = tmpIndex;
             }
@@ -569,6 +575,9 @@ public class CheckErrorAlgorithm002 extends CheckErrorAlgorithmBase {
             }
           }
           if (extra || (tag.getParametersCount() > 0)) {
+            errorResult.addReplacement(
+                PageElementTag.createTag(tagName, false, true),
+                false);
             errorResult.addReplacement(
                 PageElementTag.createTag(tagName, false, false),
                 false);
