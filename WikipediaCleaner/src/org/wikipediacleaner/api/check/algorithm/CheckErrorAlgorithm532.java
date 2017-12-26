@@ -16,7 +16,10 @@ import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementComment;
 import org.wikipediacleaner.api.data.PageElementExternalLink;
+import org.wikipediacleaner.api.data.PageElementFunction;
 import org.wikipediacleaner.api.data.PageElementImage;
+import org.wikipediacleaner.api.data.PageElementMagicWord;
+import org.wikipediacleaner.api.data.PageElementParameter;
 import org.wikipediacleaner.api.data.PageElementTable;
 import org.wikipediacleaner.api.data.PageElementImage.Parameter;
 import org.wikipediacleaner.api.data.PageElementInternalLink;
@@ -1624,6 +1627,54 @@ public class CheckErrorAlgorithm532 extends CheckErrorAlgorithmBase {
       }
     } else {
       if (analysis.isInTemplate(endIndex) != null) {
+        return false;
+      }
+    }
+
+    // Check for images
+    PageElementImage image = analysis.isInImage(beginIndex);
+    if ((image != null) && (image.getBeginIndex() < beginIndex)) {
+      if (image.getEndIndex() < endIndex) {
+        return false;
+      }
+    } else {
+      if (analysis.isInImage(endIndex) != null) {
+        return false;
+      }
+    }
+
+    // Check for parameters
+    PageElementParameter parameter = analysis.isInParameter(beginIndex);
+    if ((parameter != null) && (parameter.getBeginIndex() < beginIndex)) {
+      if (parameter.getEndIndex() < endIndex) {
+        return false;
+      }
+    } else {
+      if (analysis.isInParameter(endIndex) != null) {
+        return false;
+      }
+    }
+
+    // Check for functions
+    PageElementFunction function = analysis.isInFunction(beginIndex);
+    if ((function != null) && (function.getBeginIndex() < beginIndex)) {
+      if (function.getEndIndex() < endIndex) {
+        return false;
+      }
+    } else {
+      if (analysis.isInFunction(endIndex) != null) {
+        return false;
+      }
+    }
+
+    // Check for magic words
+    PageElementMagicWord magicWord = analysis.isInMagicWord(beginIndex);
+    if ((magicWord != null) && (magicWord.getBeginIndex() < beginIndex)) {
+      if (magicWord.getEndIndex() < endIndex) {
+        return false;
+      }
+    } else {
+      if (analysis.isInMagicWord(endIndex) != null) {
         return false;
       }
     }
