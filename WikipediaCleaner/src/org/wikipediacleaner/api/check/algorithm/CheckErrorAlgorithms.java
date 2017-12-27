@@ -109,6 +109,37 @@ public final class CheckErrorAlgorithms {
   }
 
   /**
+   * @param algorithms List of algorithms.
+   * @return List of algorithms numbers.
+   */
+  public static List<Integer> convertToIntegerList(
+      List<CheckErrorAlgorithm> algorithms) {
+    List<Integer> result = new ArrayList<>();
+    if (algorithms != null) {
+      for (CheckErrorAlgorithm algorithm : algorithms) {
+        result.add(algorithm.getErrorNumber());
+      }
+    }
+    return result;
+  }
+
+  /**
+   * @param algorithms List of algorithms numbers.
+   * @param wiki Wiki.
+   * @return List of algorithms.
+   */
+  public static List<CheckErrorAlgorithm> convertToAlgorithmList(
+      List<Integer> algorithms, EnumWikipedia wiki) {
+    List<CheckErrorAlgorithm> result = new ArrayList<>();
+    if (algorithms != null) {
+      for (Integer algorithm : algorithms) {
+        result.add(getAlgorithm(wiki, algorithm.intValue()));
+      }
+    }
+    return result;
+  }
+
+  /**
    * @param wikipedia Wikipedia.
    * @param errorNumber Error number.
    * @return Algorithm active ?

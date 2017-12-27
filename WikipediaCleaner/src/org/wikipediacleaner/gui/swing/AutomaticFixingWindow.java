@@ -829,6 +829,14 @@ public class AutomaticFixingWindow extends OnePageWindow {
         for (AutomaticFixing element : list.getReplacements()) {
           modelAutomaticFixing.addAutomaticFixing(element);
         }
+        setComment(list.getComment());
+        automaticCWAlgorithms.clear();
+        automaticCWAlgorithms.addAll(CheckErrorAlgorithms.convertToAlgorithmList(
+            list.getAdditionalAlgorithms(), getWiki()));
+        forceCWAlgorithms.clear();
+        forceCWAlgorithms.addAll(CheckErrorAlgorithms.convertToAlgorithmList(
+            list.getForceAlgorithms(), getWiki()));
+        updateComponentState();
       }
     } catch (Exception e) {
       Utilities.displayError(getParentComponent(), e);
@@ -868,6 +876,11 @@ public class AutomaticFixingWindow extends OnePageWindow {
         m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
         AutomaticFixingList list = new AutomaticFixingList();
         list.setReplacements(modelAutomaticFixing.getData());
+        list.setComment(getComment());
+        list.setAdditionalAlgorithms(
+            CheckErrorAlgorithms.convertToIntegerList(automaticCWAlgorithms));
+        list.setForceAlgorithms(
+            CheckErrorAlgorithms.convertToIntegerList(forceCWAlgorithms));
         m.marshal(list, file);
         config.setString(
             getWiki(), ConfigurationValueString.LAST_REPLACEMENTS_DIRECTORY,
