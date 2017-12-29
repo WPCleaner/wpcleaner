@@ -404,6 +404,142 @@ public class PageAnalysis {
     return element;
   }
 
+  /**
+   * Check if two indexes are in the same area.
+   * 
+   * @param beginIndex Begin index.
+   * @param endIndex End index.
+   * @return True if begin and end indexes are in the same area.
+   */
+  public boolean areInSameArea(int beginIndex, int endIndex) {
+
+    // Check for internal links
+    PageElementInternalLink iLink = isInInternalLink(beginIndex);
+    if ((iLink != null) && (iLink.getBeginIndex() < beginIndex)) {
+      if (iLink.getEndIndex() < endIndex) {
+        return false;
+      }
+    } else {
+      if (isInInternalLink(endIndex) != null) {
+        return false;
+      }
+    }
+
+    // Check for external links
+    PageElementExternalLink eLink = isInExternalLink(beginIndex);
+    if ((eLink != null) && (eLink.getBeginIndex() < beginIndex)) {
+      if (eLink.getEndIndex() < endIndex) {
+        return false;
+      }
+    } else {
+      if (isInExternalLink(endIndex) != null) {
+        return false;
+      }
+    }
+
+    // Check for templates
+    PageElementTemplate template = isInTemplate(beginIndex);
+    if ((template != null) && (template.getBeginIndex() < beginIndex)) {
+      if (template.getEndIndex() < endIndex) {
+        return false;
+      }
+      PageElementTemplate.Parameter param = template.getParameterAtIndex(beginIndex);
+      if ((param != null) && (param.getEndIndex() < endIndex)) {
+        return false;
+      }
+    } else {
+      if (isInTemplate(endIndex) != null) {
+        return false;
+      }
+    }
+
+    // Check for images
+    PageElementImage image = isInImage(beginIndex);
+    if ((image != null) && (image.getBeginIndex() < beginIndex)) {
+      if (image.getEndIndex() < endIndex) {
+        return false;
+      }
+    } else {
+      if (isInImage(endIndex) != null) {
+        return false;
+      }
+    }
+
+    // Check for parameters
+    PageElementParameter parameter = isInParameter(beginIndex);
+    if ((parameter != null) && (parameter.getBeginIndex() < beginIndex)) {
+      if (parameter.getEndIndex() < endIndex) {
+        return false;
+      }
+    } else {
+      if (isInParameter(endIndex) != null) {
+        return false;
+      }
+    }
+
+    // Check for functions
+    PageElementFunction function = isInFunction(beginIndex);
+    if ((function != null) && (function.getBeginIndex() < beginIndex)) {
+      if (function.getEndIndex() < endIndex) {
+        return false;
+      }
+    } else {
+      if (isInFunction(endIndex) != null) {
+        return false;
+      }
+    }
+
+    // Check for magic words
+    PageElementMagicWord magicWord = isInMagicWord(beginIndex);
+    if ((magicWord != null) && (magicWord.getBeginIndex() < beginIndex)) {
+      if (magicWord.getEndIndex() < endIndex) {
+        return false;
+      }
+    } else {
+      if (isInMagicWord(endIndex) != null) {
+        return false;
+      }
+    }
+
+    // Check for tags
+    List<PageElementTag> allTags = getTags();
+    for (PageElementTag tag : allTags) {
+      if (!tag.isFullTag()) {
+        if (tag.isComplete()) {
+          int tagBeginIndex = tag.getCompleteBeginIndex();
+          int tagEndIndex = tag.getCompleteEndIndex();
+          if ((beginIndex > tagBeginIndex) && (beginIndex < tagEndIndex)) {
+            if (endIndex >= tagEndIndex) {
+              return false;
+            }
+          } else if ((endIndex > tagBeginIndex) && (endIndex < tagEndIndex)) {
+            return false;
+          }
+        } else {
+          // NOTE: should we check for other unclosed tags?
+        }
+      }
+    }
+
+    // Check for tables
+    PageElementTable table = isInTable(beginIndex);
+    if (table != null) {
+      if (table.getEndIndex() < endIndex) {
+        return false;
+      }
+      PageElementTable.TableCell cell = table.getCellAtIndex(beginIndex);
+      if ((cell != null) && (cell.getEndIndex() < endIndex)) {
+        return false;
+      }
+    } else {
+      if (isInTable(endIndex) != null) {
+        return false;
+      }
+    }
+
+    return true;
+  }
+
   // ==========================================================================
   // Content analysis
   // ==========================================================================

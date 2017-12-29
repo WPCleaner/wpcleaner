@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2017-12-22 18:34+0100\n"
+"POT-Creation-Date: 2017-12-29 13:35+0100\n"
 "PO-Revision-Date: 2017-03-03 19:32+0000\n"
 "Last-Translator: Felipe L. <felipe.idj@hotmail.com>\n"
 "Language-Team: Brazilian Portuguese <pt_BR@li.org>\n"
@@ -247,12 +247,12 @@ msgstr "Editar tabela de conteúdos"
 msgid "Remove {0} namespace from template name"
 msgstr "Remover domínio {0} do nome da predefinição"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm002.java:34
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm002.java:35
 msgid "Fix all incorrect tags"
 msgstr "Corrigir todas as tags incorretas"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm002.java:193
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm002.java:217
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm002.java:195
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm002.java:219
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm055.java:167
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm066.java:93
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm077.java:93
@@ -261,10 +261,10 @@ msgstr "Corrigir todas as tags incorretas"
 msgid "Remove {0} tags"
 msgstr "Remover as tags {0}"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm002.java:681
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm002.java:682
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm002.java:683
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm002.java:684
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm002.java:691
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm002.java:692
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm002.java:693
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm002.java:694
 #, java-format
 msgid "A replacement for {0}"
 msgstr "Uma substituição para {0}"
@@ -922,20 +922,20 @@ msgstr ""
 msgid "A list of templates that can't be used inside a reference"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm532.java:37
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm532.java:35
 #, fuzzy
 msgid "Fix tags"
 msgstr "Corrigir categorias"
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm532.java:1424
-#, fuzzy
-msgid "Remove formatting element"
-msgstr "Remover da lista"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm538.java:28
 #, fuzzy
 msgid "Remove whitespace characters"
 msgstr "Remover todos os caracteres de controle"
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm540.java:38
+#, fuzzy
+msgid "Fix bold and italic"
+msgstr "Corrigir todos os títulos em negrito"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmBase.java:277
 msgid "Title of the article describing this type of error"
@@ -1482,31 +1482,31 @@ msgid "Do you want to test the replacements on the pages ?"
 msgstr "Você quer testar as substituições feitas nas páginas?"
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:815
-#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:844
+#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:852
 msgid "XML files"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:859
+#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:867
 msgid "This file exists, do you want to overwrite it?"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:922
+#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:935
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiWindow.java:353
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiWindow.java:607
 msgid "Select errors"
 msgstr "Selecionar erros"
 
-#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:930
+#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:943
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiWindow.java:357
 msgid "Select all errors"
 msgstr "Selecionar todos os erros"
 
-#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:937
+#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:950
 #, fuzzy
 msgid "Select no errors"
 msgstr "Selecionar erros"
 
-#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:962
+#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:975
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiWindow.java:410
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiWindow.java:465
 #, java-format
@@ -4348,6 +4348,10 @@ msgstr ""
 #, java-format
 msgid "The value cannot contain any of these characters: {0}"
 msgstr "O valor não pode conter nenhum dos seguintes caracteres: {0}"
+
+#, fuzzy
+#~ msgid "Remove formatting element"
+#~ msgstr "Remover da lista"
 
 #~ msgid "&Close"
 #~ msgstr "&Fechar"
