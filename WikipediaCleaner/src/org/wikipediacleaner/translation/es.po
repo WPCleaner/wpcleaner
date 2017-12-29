@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2017-12-29 13:35+0100\n"
+"POT-Creation-Date: 2017-12-29 15:07+0100\n"
 "PO-Revision-Date: 2017-03-03 19:29+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Spanish\n"
@@ -3547,12 +3547,12 @@ msgid "Internal link"
 msgstr "Enlace interno"
 
 #: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:179
-#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:275
+#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:281
 msgid "Redirect link"
 msgstr "Enlace a redirección"
 
 #: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:185
-#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:281
+#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:287
 msgid "Missing link"
 msgstr "Enlace faltante"
 
@@ -3586,80 +3586,85 @@ msgstr "Etiqueta"
 
 #: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:245
 #, fuzzy
+msgid "List items"
+msgstr "Límites"
+
+#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:251
+#, fuzzy
 msgid "Table"
 msgstr "Título"
 
-#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:251
+#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:257
 msgid "Reference"
 msgstr "Referencia"
 
-#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:257
+#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:263
 msgid "Programming elements"
 msgstr "Elementos de programación"
 
-#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:263
+#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:269
 msgid "Disambiguation link"
 msgstr "Enlace de desambiguación"
 
-#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:269
+#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:275
 msgid "Normal internal link"
 msgstr "Enlace interno normal"
 
-#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:287
+#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:293
 msgid "Disambiguation template"
 msgstr "Plantilla de desambiguación"
 
-#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:293
+#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:299
 msgid "Normal template"
 msgstr "Plantilla normal"
 
-#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:299
+#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:305
 msgid "Help requested"
 msgstr "Ayuda requerida"
 
-#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:305
+#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:311
 msgid "Check wiki error"
 msgstr "Verificar error en el wiki"
 
-#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:311
+#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:317
 msgid "Check wiki warning"
 msgstr "Verificar advertencia en el wiki"
 
-#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:317
+#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:323
 msgid "Check wiki OK"
 msgstr "Verificar  wiki aprobada"
 
-#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:428
+#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:434
 msgid "Italic"
 msgstr "Itálica"
 
-#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:436
+#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:442
 msgid "Bold"
 msgstr "Negrita"
 
-#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:444
+#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:450
 msgid "Underline"
 msgstr "Subrayado"
 
-#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:452
+#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:458
 msgid "Strike through"
 msgstr "Tachar"
 
-#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:460
-#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:465
+#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:466
+#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:471
 msgid "Foreground color"
 msgstr "Color de primer plano"
 
-#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:464
+#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:470
 msgid "Choose foreground color"
 msgstr "Elija el color de primer plano"
 
-#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:473
-#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:478
+#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:479
+#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:484
 msgid "Background color"
 msgstr "Color de fondo"
 
-#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:477
+#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:483
 msgid "Choose background color"
 msgstr "Elija el color de fondo"
 

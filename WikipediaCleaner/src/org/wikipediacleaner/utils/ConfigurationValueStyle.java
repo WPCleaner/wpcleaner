@@ -107,6 +107,11 @@ public enum ConfigurationValueStyle {
       false, Color.BLACK,
       true, new Color(214, 214, 214),
       false, false, false, false)),
+  LIST_ITEM("ListItem", new StyleProperties(
+      true,
+      true, Color.BLUE,
+      false, Color.WHITE,
+      false, false, false, false)),
   PROGRAMMING("Programming", new StyleProperties(
       true,
       false, Color.BLACK,

@@ -246,6 +246,7 @@ public class PageAnalysis {
    * @param withInternalLinks True if internal links should be included in the result.
    * @param withInterwikiLinks True if interwiki links should be included in the result.
    * @param withLanguageLinks True if language links should be included in the result.
+   * @param withListItems True if list items should be included in the result.
    * @param withMagicWords True if magic words should be included in the result.
    * @param withParameters True if parameters should be included in the result.
    * @param withTables True if tables should be included in the result.
@@ -259,8 +260,10 @@ public class PageAnalysis {
       boolean withExternalLinks, boolean withFunctions,
       boolean withImages, boolean withInternalLinks,
       boolean withInterwikiLinks, boolean withLanguageLinks,
+      boolean withListItems,
       boolean withMagicWords, boolean withParameters,
-      boolean withTables, boolean withTags, boolean withTemplates, boolean withTitles) {
+      boolean withTables, boolean withTags,
+      boolean withTemplates, boolean withTitles) {
     List<PageElement> elements = new ArrayList<PageElement>();
     if (withCategories) {
       elements.addAll(getCategories());
@@ -285,6 +288,9 @@ public class PageAnalysis {
     }
     if (withLanguageLinks) {
       elements.addAll(getLanguageLinks());
+    }
+    if (withListItems) {
+      elements.addAll(getListItems());
     }
     if (withMagicWords) {
       elements.addAll(getMagicWords());
@@ -894,7 +900,7 @@ public class PageAnalysis {
    */
   private void level6Analysis() {
     synchronized (level6Lock) {
-      if (tables != null) {
+      if ((tables != null) || (listItems != null)) {
         return;
       }
       level5Analysis();
@@ -907,6 +913,8 @@ public class PageAnalysis {
 
       tables = PageElementTable.analyzePage(this);
       // TODO: areas.addTables(tables);
+      listItems = PageElementListItem.analyzePage(this);
+      // TODO: areas.addListItems(listItems);
 
       if (perf != null) {
         perf.printEnd();
@@ -2048,6 +2056,29 @@ public class PageAnalysis {
   }
 
   // ==========================================================================
+  // Lists management
+  // ==========================================================================
+
+  /** All list items in the page */
+  private List<PageElementListItem> listItems;
+
+  /**
+   * @return All list items in the page.
+   */
+  public List<PageElementListItem> getListItems() {
+    level6Analysis();
+    return listItems;
+  }
+
+  /**
+   * @param currentIndex Current index.
+   * @return List item if the current index is inside a list item.
+   */
+  public PageElementListItem isInListItem(int currentIndex) {
+    return PageElementListItem.isInListItem(currentIndex, getListItems());
+  }
+
+  // ==========================================================================
   // Tables management
   // ==========================================================================
 
@@ -2067,14 +2098,7 @@ public class PageAnalysis {
    * @return Table if the current index is inside a table.
    */
   public PageElementTable isInTable(int currentIndex) {
-    List<PageElementTable> tmpTables = getTables();
-    for (PageElementTable table : tmpTables) {
-      if ((table.getBeginIndex() <= currentIndex) &&
-          (table.getEndIndex() > currentIndex)) {
-        return table;
-      }
-    }
-    return null;
+    return PageElementTable.isInTable(currentIndex, getTables());
   }
 
   // ==========================================================================

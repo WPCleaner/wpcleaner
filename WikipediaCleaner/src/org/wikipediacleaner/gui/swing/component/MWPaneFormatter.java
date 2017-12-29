@@ -28,6 +28,7 @@ import org.wikipediacleaner.api.data.PageElementImage;
 import org.wikipediacleaner.api.data.PageElementInternalLink;
 import org.wikipediacleaner.api.data.PageElementInterwikiLink;
 import org.wikipediacleaner.api.data.PageElementLanguageLink;
+import org.wikipediacleaner.api.data.PageElementListItem;
 import org.wikipediacleaner.api.data.PageElementMagicWord;
 import org.wikipediacleaner.api.data.PageElementParameter;
 import org.wikipediacleaner.api.data.PageElementTable;
@@ -160,6 +161,8 @@ public abstract class MWPaneFormatter {
         ConfigurationValueStyle.INTERWIKI_LINK);
     ConfigurationValueStyle.StyleProperties styleLanguageLink = config.getStyle(
         ConfigurationValueStyle.LANGUAGE_LINK);
+    ConfigurationValueStyle.StyleProperties styleListItem = config.getStyle(
+        ConfigurationValueStyle.LIST_ITEM);
     ConfigurationValueStyle.StyleProperties styleProgramming = config.getStyle(
         ConfigurationValueStyle.PROGRAMMING);
     ConfigurationValueStyle.StyleProperties styleTable = config.getStyle(
@@ -181,6 +184,7 @@ public abstract class MWPaneFormatter {
         styleInternalLink.getEnabled(),
         styleInterwikiLink.getEnabled(),
         styleLanguageLink.getEnabled(),
+        styleListItem.getEnabled(),
         styleProgramming.getEnabled(),
         styleProgramming.getEnabled(),
         styleTable.getEnabled(),
@@ -269,6 +273,11 @@ public abstract class MWPaneFormatter {
       style = getInternalLinkStyle(doc, analysis, (PageElementInternalLink) element);
     } else if (element instanceof PageElementLanguageLink) {
       style = doc.getStyle(ConfigurationValueStyle.LANGUAGE_LINK.getName());
+    } else if (element instanceof PageElementListItem) {
+      PageElementListItem item = (PageElementListItem) element;
+      beginIndex = item.getBeginIndex();
+      endIndex = item.getBeginIndex() + item.getDepth();
+      style = doc.getStyle(ConfigurationValueStyle.LIST_ITEM.getName());
     } else if (element instanceof PageElementParameter) {
       style = doc.getStyle(ConfigurationValueStyle.PROGRAMMING.getName());
     } else if (element instanceof PageElementTable) {
@@ -548,6 +557,11 @@ public abstract class MWPaneFormatter {
         Style languageLinkStyle = addStyle(
             ConfigurationValueStyle.LANGUAGE_LINK, rootStyle, false);
         languageLinkStyle.addAttribute(ATTRIBUTE_OCCURRENCE, Boolean.FALSE);
+
+        // Style for list item
+        Style listItemStyle = addStyle(
+            ConfigurationValueStyle.LIST_ITEM, rootStyle, false);
+        listItemStyle.addAttribute(ATTRIBUTE_OCCURRENCE, Boolean.FALSE);
 
         // Style for parameter
         Style parameterStyle = addStyle(

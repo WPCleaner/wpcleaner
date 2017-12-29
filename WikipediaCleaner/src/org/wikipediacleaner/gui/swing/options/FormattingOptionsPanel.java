@@ -240,6 +240,12 @@ public class FormattingOptionsPanel extends OptionsPanel {
         true, true, true, true, true, true,
         ConfigurationValueStyle.TAG);
 
+    // Add line for list items style
+    addLine(
+        panel, constraints, true, GT._("List items"),
+        true, true, true, true, true, true,
+        ConfigurationValueStyle.LIST_ITEM);
+
     // Add line for table style
     addLine(
         panel, constraints, true, GT._("Table"),
