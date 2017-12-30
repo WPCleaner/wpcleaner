@@ -13,11 +13,11 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
-import org.wikipediacleaner.api.check.CheckErrorResult.ErrorLevel;
 import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementComment;
 import org.wikipediacleaner.api.data.PageElementExternalLink;
 import org.wikipediacleaner.api.data.PageElementImage;
+import org.wikipediacleaner.api.data.PageElementListItem;
 import org.wikipediacleaner.api.data.PageElementTable;
 import org.wikipediacleaner.api.data.PageElementInternalLink;
 import org.wikipediacleaner.api.data.PageElementTag;
@@ -82,10 +82,11 @@ public class CheckErrorAlgorithm540 extends CheckErrorAlgorithmBase {
 
     // Analyze contents to find formatting elements
     boolean result = false;
-    List<FormattingElement> elements = FormattingElement.listFormattingElements(analysis);
-    if (elements.isEmpty()) {
+    List<FormattingElement> initialElements = FormattingElement.listFormattingElements(analysis);
+    if (initialElements.isEmpty()) {
       return result;
     }
+    List<FormattingElement> elements = new ArrayList<>(initialElements);
 
     // Remove correct formatting tags from the list
     List<FormattingElement> reportElements = new ArrayList<>();
@@ -176,6 +177,18 @@ public class CheckErrorAlgorithm540 extends CheckErrorAlgorithmBase {
             beginIndex, endIndex,
             template.getBeginIndex(), template.getEndIndex());
       }
+
+      // Check list items
+      List<PageElementListItem> items = analysis.getListItems();
+      for (PageElementListItem item : items) {
+        int beginIndex = item.getBeginIndex() + item.getDepth();
+        int endIndex = item.getEndIndex();
+        shouldContinue |= analyzeCorrectArea(
+            elements, reportElements,
+            beginIndex, endIndex,
+            item.getBeginIndex(), item.getEndIndex());
+      }
+
       // Check tables
       List<PageElementTable> tables = analysis.getTables();
       for (PageElementTable table : tables) {
@@ -196,9 +209,7 @@ public class CheckErrorAlgorithm540 extends CheckErrorAlgorithmBase {
         return true;
       }
       result = true;
-      CheckErrorResult errorResult = createCheckErrorResult(
-          analysis, element.index, element.index + element.length, ErrorLevel.ERROR);
-      errors.add(errorResult);
+      reportFormattingElement(analysis, initialElements, element, errors);
     }
 
     // Report all formatting elements left
@@ -215,6 +226,17 @@ public class CheckErrorAlgorithm540 extends CheckErrorAlgorithmBase {
     return result;
   }
 
+  /**
+   * Analyze an area to exclude correct parts.
+   * 
+   * @param elements List of formatting elements.
+   * @param reportElements List of formatting elements to report.
+   * @param beginAnalysis Begin index for the analysis.
+   * @param endAnalysis End index for the analysis.
+   * @param beginArea Begin index for the area.
+   * @param endArea End index for the area.
+   * @return True if modifications have been done.
+   */
   private boolean analyzeCorrectArea(
       List<FormattingElement> elements,
       List<FormattingElement> reportElements,
@@ -264,16 +286,247 @@ public class CheckErrorAlgorithm540 extends CheckErrorAlgorithmBase {
     }
 
     // Clear area if correct
+    int countOutside =
+        formattingArea.boldCount + formattingArea.italicCount -
+        formattingAnalysis.boldCount - formattingAnalysis.italicCount;
     if ((formattingAnalysis.boldCount + formattingAnalysis.italicCount) % 2 == 0) {
-      int countOutside =
-          formattingArea.boldCount + formattingArea.italicCount -
-          formattingAnalysis.boldCount - formattingAnalysis.italicCount;
       if (countOutside % 2 != 0) {
         FormattingElement.excludeArea(elements, beginAnalysis, endAnalysis);
       } else {
         FormattingElement.excludeArea(elements, beginArea, endArea);
       }
       return true;
+    }
+
+    // If all formats are the same, report the last one
+    if ((formattingAnalysis.boldCount == 0) ||
+        (formattingAnalysis.italicCount == 0)) {
+      reportElements.add(formattingAnalysis.elements.get(formattingAnalysis.elements.size() - 1));
+      if (countOutside % 2 != 0) {
+        FormattingElement.excludeArea(elements, beginAnalysis, endAnalysis);
+      } else {
+        FormattingElement.excludeArea(elements, beginArea, endArea);
+      }
+      return true;
+    }
+
+    // Report one
+    reportElements.add(formattingAnalysis.elements.get(formattingAnalysis.elements.size() - 1));
+    if (countOutside % 2 != 0) {
+      FormattingElement.excludeArea(elements, beginAnalysis, endAnalysis);
+    } else {
+      FormattingElement.excludeArea(elements, beginArea, endArea);
+    }
+    return true;
+  }
+
+  /**
+   * @param analysis Page analysis.
+   * @param elements Formatting elements.
+   * @param element Formatting element to report.
+   * @param errors List of errors.
+   */
+  private void reportFormattingElement(
+      PageAnalysis analysis,
+      List<FormattingElement> elements,
+      FormattingElement element,
+      Collection<CheckErrorResult> errors) {
+
+    // Report inside a list item
+    PageElementListItem listItem = element.isInListItem();
+    if (listItem != null) {
+      if (reportFormattingElement(
+          analysis, elements, element, errors,
+          listItem.getBeginIndex() + listItem.getDepth(), listItem.getEndIndex(),
+          listItem.getBeginIndex(), listItem.getEndIndex(),
+          true, false, false, true)) {
+        return;
+      }
+    }
+
+    // Report inside an internal link
+    PageElementInternalLink iLink = element.isInInternalLink();
+    if (iLink != null) {
+      if (reportFormattingElement(
+          analysis, elements, element, errors,
+          iLink.getBeginIndex() + iLink.getTextOffset(), iLink.getEndIndex() - 2,
+          iLink.getBeginIndex(), iLink.getEndIndex(),
+          false, false, true, true)) {
+        return;
+      }
+    }
+
+    // Report inside an image
+    PageElementImage image = element.isInImage();
+    if (image != null) {
+      PageElementImage.Parameter paramDesc = image.getDescriptionParameter();
+      if (paramDesc != null) {
+        if (reportFormattingElement(
+            analysis, elements, element, errors,
+            image.getBeginIndex() + paramDesc.getBeginOffset(),
+            image.getBeginIndex() + paramDesc.getEndOffset(),
+            image.getBeginIndex() + paramDesc.getBeginOffset() - 1,
+            image.getBeginIndex() + paramDesc.getEndOffset(),
+            true, false, true, true)) {
+          return;
+        }
+      }
+    }
+
+    // Report inside an external link
+    PageElementExternalLink eLink = element.isInExternalLink();
+    if (eLink != null) {
+      if (reportFormattingElement(
+          analysis, elements, element, errors,
+          eLink.getBeginIndex() + eLink.getTextOffset(), eLink.getEndIndex() - 1,
+          eLink.getBeginIndex(), eLink.getEndIndex(),
+          false, false, true, true)) {
+        return;
+      }
+    }
+
+    // Report inside a title
+    PageElementTitle title = element.isInTitle();
+    if (title != null) {
+      if (reportFormattingElement(
+          analysis, elements, element, errors,
+          title.getBeginIndex() + title.getFirstLevel(),
+          title.getEndIndex() - title.getSecondLevel(),
+          title.getBeginIndex(), title.getEndIndex(),
+          true, false, true, true)) {
+        return;
+      }
+    }
+
+    // Report inside a reference tag
+    PageElementTag refTag = element.isInRefTag();
+    if (refTag != null) {
+      if (reportFormattingElement(
+          analysis, elements, element, errors,
+          refTag.getValueBeginIndex(), refTag.getValueEndIndex(),
+          refTag.getValueBeginIndex(), refTag.getValueEndIndex(),
+          false, true, false, true)) {
+        return;
+      }
+    }
+
+    // Report inside a table
+    PageElementTable.TableCell cell = element.isInTableCell();
+    if (cell != null) {
+      if (reportFormattingElement(
+          analysis, elements, element, errors,
+          cell.getEndOptionsIndex(), cell.getEndIndex(),
+          cell.getEndOptionsIndex(), cell.getEndIndex(),
+          true, false, true, true)) {
+        return;
+      }
+    }
+
+    // Default report
+    CheckErrorResult errorResult = createCheckErrorResult(
+        analysis, element.index, element.index + element.length);
+    errors.add(errorResult);
+  }
+
+  /**
+   * @param analysis Page analysis.
+   * @param elements List of formatting elements.
+   * @param element Formatting element to report.
+   * @param errors List of errors.
+   * @param beginIndex Begin index of the area.
+   * @param endIndex End index of the are.
+   * @return True if the error has been reported.
+   */
+  private boolean reportFormattingElement(
+      PageAnalysis analysis,
+      List<FormattingElement> elements,
+      FormattingElement element,
+      Collection<CheckErrorResult> errors,
+      int beginIndex, int endIndex,
+      int beginArea, int endArea,
+      boolean deleteEmpty, boolean requiresText,
+      boolean closeFull, boolean deleteEnd) {
+
+    // Reduce area
+    String contents = analysis.getContents();
+    while ((beginIndex < endIndex) &&
+           (" \n".indexOf(contents.charAt(beginIndex)) >= 0)) {
+      beginIndex++;
+    }
+    while ((endIndex > beginIndex) &&
+           (" \n".indexOf(contents.charAt(endIndex - 1)) >= 0)) {
+      endIndex--;
+    }
+    while ((beginArea < endArea) &&
+           (" \n".indexOf(contents.charAt(beginArea)) >= 0)) {
+      beginArea++;
+    }
+    while ((endArea > beginArea) &&
+           (" \n".indexOf(contents.charAt(endArea - 1)) >= 0)) {
+      endArea--;
+    }
+
+    // Check a few things
+    boolean hasSingleQuote = false;
+    boolean hasDoubleQuotes = false;
+    for (int index = beginIndex; index < endIndex; index++) {
+      if ((contents.charAt(index) == '\'') &&
+          (!contents.startsWith("''", index))) {
+        hasSingleQuote = true;
+      }
+      if (contents.charAt(index) == '"') {
+        hasDoubleQuotes = true;
+      }
+    }
+
+    // Report with only one formatting element
+    FormattingAnalysis formatting = FormattingAnalysis.analyzeArea(
+        elements, beginIndex, endIndex);
+    if (formatting.elements.size() == 1) {
+
+      // Report with only the formatting element
+      if ((element.index == beginIndex) &&
+          (element.index + element.length == endIndex)) {
+        CheckErrorResult errorResult = createCheckErrorResult(
+            analysis, beginArea, endArea);
+        if (requiresText &&
+            ((beginArea == 0) || (contents.charAt(beginIndex - 1) != ' ')) &&
+            ((endArea >= contents.length()) || (contents.charAt(endIndex) !=  ' '))) {
+          errorResult.addReplacement(" ", deleteEmpty);
+        } else {
+          errorResult.addReplacement("", deleteEmpty);
+        }
+        errors.add(errorResult);
+        return true;
+      }
+
+      // Report with the formatting element at the beginning
+      if (element.index == beginIndex) {
+        CheckErrorResult errorResult = createCheckErrorResult(
+            analysis, element.index, endIndex);
+        String addition = contents.substring(
+            element.index, element.index + element.getMeaningfulLength()); 
+        String replacement =
+            contents.substring(element.index, endIndex) +
+            addition;
+        String text = addition + "..." + addition;
+        errorResult.addReplacement(
+            replacement, text,
+            closeFull && !hasSingleQuote && !hasDoubleQuotes && (contents.charAt(endIndex - 1) != '\''));
+        errors.add(errorResult);
+        return true;
+      }
+
+      // Report with the formatting element at the end
+      if (element.index + element.length == endIndex) {
+        CheckErrorResult errorResult = createCheckErrorResult(
+            analysis, element.index, element.index + element.length);
+        errorResult.addReplacement(
+            "",
+            deleteEnd && !hasSingleQuote && !hasDoubleQuotes);
+        errors.add(errorResult);
+        return true;
+      }
     }
 
     return false;
@@ -317,6 +570,15 @@ public class CheckErrorAlgorithm540 extends CheckErrorAlgorithmBase {
     /** Image in which the element is */
     private PageElementImage inImage;
 
+    /** List item in which the element is */
+    private PageElementListItem inListItem;
+
+    /** Table in which the element is */
+    private PageElementTable inTable;
+
+    /** Table cell in which the element is */
+    private PageElementTable.TableCell inTableCell;
+
     /**
      * @param index Begin index of the formatting element.
      * @param length Length of the formatting element.
@@ -327,6 +589,22 @@ public class CheckErrorAlgorithm540 extends CheckErrorAlgorithmBase {
       this.index = index;
       this.length = length;
       this.analyzed = false;
+    }
+
+    /**
+     * @return Meaningful length.
+     */
+    public int getMeaningfulLength() {
+      switch (length) {
+      case 2:
+      case 3:
+      case 5:
+        return length;
+      case 4:
+        return 3;
+      default:
+        return 5;
+      }
     }
 
     /**
@@ -347,6 +625,9 @@ public class CheckErrorAlgorithm540 extends CheckErrorAlgorithmBase {
      * Perform an analysis of the element.
      */
     private void analyze() {
+      if (analyzed) {
+        return;
+      }
       inRefTag = analysis.getSurroundingTag(PageElementTag.TAG_WIKI_REF, index);
       inILink = analysis.isInInternalLink(index);
       inELink = analysis.isInExternalLink(index);
@@ -358,8 +639,71 @@ public class CheckErrorAlgorithm540 extends CheckErrorAlgorithmBase {
       }
       inTitle = analysis.isInTitle(index);
       inImage = analysis.isInImage(index);
+      inListItem = analysis.isInListItem(index);
+      inTable = analysis.isInTable(index);
+      if (inTable != null) {
+        inTableCell = inTable.getCellAtIndex(index);
+      } else {
+        inTableCell = null;
+      }
       // TODO: more analysis
       analyzed = true;
+    }
+
+    /**
+     * @return Reference tag in which the element is.
+     */
+    public PageElementTag isInRefTag() {
+      analyze();
+      return inRefTag;
+    }
+
+    /**
+     * @return Internal link in which the element is.
+     */
+    public PageElementInternalLink isInInternalLink() {
+      analyze();
+      return inILink;
+    }
+
+    /**
+     * @return External link in which the element is.
+     */
+    public PageElementExternalLink isInExternalLink() {
+      analyze();
+      return inELink;
+    }
+
+    /**
+     * @return Title in which the element is.
+     */
+    public PageElementTitle isInTitle() {
+      analyze();
+      return inTitle;
+    }
+
+    /**
+     * @return Image in which the element is.
+     */
+    public PageElementImage isInImage() {
+      analyze();
+      return inImage;
+    }
+
+    /**
+     * @return List item in which the element is.
+     */
+    public PageElementListItem isInListItem() {
+      analyze();
+      return inListItem;
+    }
+
+    /**
+     * @return Table cell in which the element is.
+     */
+    public PageElementTable.TableCell isInTableCell() {
+      analyze();
+      return inTableCell;
     }
 
     /**
@@ -437,6 +781,9 @@ public class CheckErrorAlgorithm540 extends CheckErrorAlgorithmBase {
       sameArea &= (first.inTemplateParameter == second.inTemplateParameter);
       sameArea &= (first.inTitle == second.inTitle);
       sameArea &= (first.inImage == second.inImage);
+      sameArea &= (first.inListItem == second.inListItem);
+      sameArea &= (first.inTable == second.inTable);
+      sameArea &= (first.inTableCell == second.inTableCell);
       // TODO
       return sameArea;
     }

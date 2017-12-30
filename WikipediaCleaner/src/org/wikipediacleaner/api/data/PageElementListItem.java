@@ -30,11 +30,11 @@ public class PageElementListItem extends PageElement {
     String contents = analysis.getContents();
     while (index < contents.length()) {
       char currentChar = contents.charAt(index);
-      if (("*:".indexOf(currentChar) >= 0) &&
+      if (("*:#".indexOf(currentChar) >= 0) &&
           ((index == 0) || (contents.charAt(index - 1) == '\n'))) {
         int beginIndex = index;
         while ((index < contents.length()) &&
-               ("*:".indexOf(contents.charAt(index)) >= 0)) {
+               ("*:#".indexOf(contents.charAt(index)) >= 0)) {
           index++;
         }
         int depth = index - beginIndex;
