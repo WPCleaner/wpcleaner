@@ -470,9 +470,13 @@ public class CheckErrorAlgorithm540 extends CheckErrorAlgorithmBase {
     boolean hasSingleQuote = false;
     boolean hasDoubleQuotes = false;
     for (int index = beginIndex; index < endIndex; index++) {
-      if ((contents.charAt(index) == '\'') &&
-          (!contents.startsWith("''", index))) {
-        hasSingleQuote = true;
+      if (contents.charAt(index) == '\'') {
+        if (((index <= beginIndex) ||
+             (contents.charAt(index - 1) != '\'')) &&
+            ((index + 1 >= endIndex) ||
+             (contents.charAt(index + 1) != '\''))) {
+          hasSingleQuote = true;
+        }
       }
       if (contents.charAt(index) == '"') {
         hasDoubleQuotes = true;
