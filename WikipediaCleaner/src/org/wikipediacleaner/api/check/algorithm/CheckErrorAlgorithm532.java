@@ -1112,7 +1112,20 @@ public class CheckErrorAlgorithm532 extends CheckErrorAlgorithmBase {
           automatic = false;
         }
       } else if (contents.startsWith(tag.getName(), currentIndex)) {
-        automatic = false;
+        boolean isSafe = false;
+        if (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_TIMELINE, currentIndex) != null) {
+          isSafe = true;
+        }
+        PageElementTable table = analysis.isInTable(currentIndex);
+        if (table != null) {
+          PageElementTable.TableStart start = table.getTableStart();
+          if ((start != null) && (start.containsIndex(currentIndex))) {
+            isSafe = true;
+          }
+        }
+        if (!isSafe) {
+          automatic = false;
+        }
       }
       currentIndex = nextIndex;
     }

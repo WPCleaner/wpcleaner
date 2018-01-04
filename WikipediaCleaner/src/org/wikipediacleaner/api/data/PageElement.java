@@ -42,6 +42,17 @@ public abstract class PageElement {
   }
 
   /**
+   * @param index Index.
+   * @return True if index is in the page element.
+   */
+  public boolean containsIndex(int index) {
+    if ((index >= beginIndex) && (index < endIndex)) {
+      return true;
+    }
+    return false;
+  }
+
+  /**
    * Group consecutive elements.
    * 
    * @param elements List of elements.
