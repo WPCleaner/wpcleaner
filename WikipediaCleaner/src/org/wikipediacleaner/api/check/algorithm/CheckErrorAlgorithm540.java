@@ -478,7 +478,7 @@ public class CheckErrorAlgorithm540 extends CheckErrorAlgorithmBase {
           hasSingleQuote = true;
         }
       }
-      if (contents.charAt(index) == '"') {
+      if ("\"“".indexOf(contents.charAt(index)) >= 0) {
         hasDoubleQuotes = true;
       }
     }
@@ -514,9 +514,11 @@ public class CheckErrorAlgorithm540 extends CheckErrorAlgorithmBase {
             contents.substring(element.index, endIndex) +
             addition;
         String text = addition + "..." + addition;
-        errorResult.addReplacement(
-            replacement, text,
-            closeFull && !hasSingleQuote && !hasDoubleQuotes && (contents.charAt(endIndex - 1) != '\''));
+        closeFull &= !hasSingleQuote;
+        closeFull &= !hasDoubleQuotes;
+        closeFull &= (contents.charAt(endIndex - 1) != '\'');
+        closeFull &= element.isAloneInArea(elements);
+        errorResult.addReplacement(replacement, text, closeFull);
         errors.add(errorResult);
         return true;
       }
@@ -525,9 +527,10 @@ public class CheckErrorAlgorithm540 extends CheckErrorAlgorithmBase {
       if (element.index + element.length == endIndex) {
         CheckErrorResult errorResult = createCheckErrorResult(
             analysis, element.index, element.index + element.length);
-        errorResult.addReplacement(
-            "",
-            deleteEnd && !hasSingleQuote && !hasDoubleQuotes);
+        deleteEnd &= !hasSingleQuote;
+        deleteEnd &= !hasDoubleQuotes;
+        deleteEnd &= element.isAloneInArea(elements);
+        errorResult.addReplacement("", deleteEnd);
         errors.add(errorResult);
         return true;
       }
@@ -711,6 +714,88 @@ public class CheckErrorAlgorithm540 extends CheckErrorAlgorithmBase {
     }
 
     /**
+     * @param elements Elements.
+     * @return True if an other element is in the same are.
+     */
+    public boolean isAloneInArea(List<FormattingElement> elements) {
+      if (elements != null) {
+        for (FormattingElement element : elements) {
+          if (element != this) {
+            boolean checked = false;
+
+            // Check inside a reference tag
+            if (!checked) {
+              if (inRefTag != null) {
+                if ((element.index >= inRefTag.getValueBeginIndex()) &&
+                    (element.index < inRefTag.getValueEndIndex())) {
+                  return false;
+                }
+                checked = true;
+              } else if (element.inRefTag != null) {
+                checked = true;
+              }
+            }
+
+            // Check inside a title
+            if (!checked) {
+              if (inTitle != null) {
+                if (inTitle.containsIndex(element.index)) {
+                  return false;
+                }
+                checked = true;
+              } else if (element.inTitle != null) {
+                checked = true;
+              }
+            }
+
+            // Check inside an image
+            if (!checked) {
+              if (inImage != null) {
+                if (inImage.containsIndex(element.index)) {
+                  return false;
+                }
+                checked = true;
+              } else if (element.inImage != null) {
+                checked = true;
+              }
+            }
+
+            // Check inside a table cell
+            if (!checked) {
+              if ((inTable != null) && (inTableCell != null)) {
+                if (inTableCell.containsIndex(element.index)) {
+                  return false;
+                }
+                checked = true;
+              } else if (element.inTableCell != null) {
+                checked = true;
+              }
+            }
+
+            // Check the rest of the elements
+            if (!checked) {
+              if ((inILink != null) && (inILink.containsIndex(element.index))) {
+                return false;
+              }
+              if ((inELink != null) && (inELink.containsIndex(element.index))) {
+                return false;
+              }
+              if ((inTemplate != null) && (inTemplate.containsIndex(element.index))) {
+                return false;
+              }
+              if ((inListItem != null) && (inListItem.containsIndex(element.index))) {
+                return false;
+              }
+              // TODO: change to true once paragraph is managed
+              return false;
+            }
+          }
+        }
+      }
+      return true;
+    }
+
+    /**
      * @param analysis Page analysis.
      * @return List of formatting elements in the page.
      */
@@ -764,6 +849,11 @@ public class CheckErrorAlgorithm540 extends CheckErrorAlgorithmBase {
       return elements;
     }
 
+    /**
+     * @param first First element.
+     * @param second Second element.
+     * @return True if both elements are in the same area.
+     */
     static boolean areInSameArea(
         FormattingElement first,
         FormattingElement second) {
