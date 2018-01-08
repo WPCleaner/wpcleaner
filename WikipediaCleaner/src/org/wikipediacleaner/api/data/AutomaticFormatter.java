@@ -47,26 +47,41 @@ public class AutomaticFormatter {
 
     // Fix Check Wiki errors
     if (algorithms != null) {
-      for (CheckErrorAlgorithm algorithm : algorithms) {
-        if (algorithm.isAvailable() &&
-            CheckErrorAlgorithms.isAlgorithmActive(wiki, algorithm.getErrorNumber())) {
-          String currentContents = contents;
-          int iterations = 0;
-          boolean modified = false;
-          do {
-            currentContents = contents;
-            PageAnalysis analysis = page.getAnalysis(currentContents, true);
-            contents = botFix ? algorithm.botFix(analysis) : algorithm.automaticFix(analysis);
-            if (!contents.equals(currentContents)) {
-              modified = true;
+      boolean finished = true;
+      do {
+        finished = true;
+        for (CheckErrorAlgorithm algorithm : algorithms) {
+          if (algorithm.isAvailable() &&
+              CheckErrorAlgorithms.isAlgorithmActive(wiki, algorithm.getErrorNumber())) {
+            String currentContents = contents;
+            int iterations = 0;
+            boolean modified = false;
+            do {
+              currentContents = contents;
+              PageAnalysis analysis = page.getAnalysis(currentContents, true);
+              contents = botFix ? algorithm.botFix(analysis) : algorithm.automaticFix(analysis);
+              if (!contents.equals(currentContents)) {
+                modified = true;
+              }
+            } while ((!contents.equals(currentContents)) && (iterations < 10));
+            if (modified) {
+              finished = false;
+              if (usedAlgorithms != null) {
+                boolean shouldAdd = true;
+                for (CheckError.Progress progress : usedAlgorithms) {
+                  if (progress.algorithm == algorithm) {
+                    shouldAdd = false;
+                  }
+                }
+                if (shouldAdd) {
+                  usedAlgorithms.add(new CheckError.Progress(algorithm, true));
+                  // TODO: compute if fix is complete ?
+                }
+              }
             }
-          } while ((!contents.equals(currentContents)) && (iterations < 10));
-          if ((usedAlgorithms != null) && modified) {
-            usedAlgorithms.add(new CheckError.Progress(algorithm, true));
-            // TODO: compute if fix is complete ?
           }
         }
-      }
+      } while (!finished);
     }
 
     // Auto formatting options
