@@ -192,6 +192,17 @@ public class CheckErrorAlgorithm540 extends CheckErrorAlgorithmBase {
       // Check tables
       List<PageElementTable> tables = analysis.getTables();
       for (PageElementTable table : tables) {
+
+        // Check table title
+        PageElementTable.TableCaption caption = table.getTableCaption();
+        if (caption != null) {
+          shouldContinue |= analyzeCorrectArea(
+              elements, reportElements,
+              caption.getBeginIndex() + 2, caption.getEndIndex(),
+              caption.getBeginIndex(), caption.getEndIndex());
+        }
+
+        // Check table cells
         for (PageElementTable.TableLine line : table.getTableLines()) {
           for (PageElementTable.TableCell cell : line.getCells()) {
             shouldContinue |= analyzeCorrectArea(
@@ -410,13 +421,37 @@ public class CheckErrorAlgorithm540 extends CheckErrorAlgorithmBase {
       }
     }
 
-    // Report inside a table
+    // Report inside a table caption
+    PageElementTable.TableCaption caption = element.isInTableCaption();
+    if (caption != null) {
+      if (reportFormattingElement(
+          analysis, elements, element, errors,
+          caption.getBeginIndex() + 2, caption.getEndIndex(),
+          caption.getBeginIndex(), caption.getEndIndex(),
+          true, false, true, true)) {
+        return;
+      }
+    }
+
+    // Report inside a table cell
     PageElementTable.TableCell cell = element.isInTableCell();
     if (cell != null) {
       if (reportFormattingElement(
           analysis, elements, element, errors,
           cell.getEndOptionsIndex(), cell.getEndIndex(),
           cell.getEndOptionsIndex(), cell.getEndIndex(),
+          true, false, true, true)) {
+        return;
+      }
+    }
+
+    // Report inside a template
+    PageElementTemplate.Parameter templateParam = element.isInTemplateParameter();
+    if (templateParam != null) {
+      if (reportFormattingElement(
+          analysis, elements, element, errors,
+          templateParam.getValueStartIndex(), templateParam.getEndIndex(),
+          templateParam.getValueStartIndex(), templateParam.getEndIndex(),
           true, false, true, true)) {
         return;
       }
@@ -448,36 +483,37 @@ public class CheckErrorAlgorithm540 extends CheckErrorAlgorithmBase {
       boolean closeFull, boolean deleteEnd) {
 
     // Reduce area
-    String contents = analysis.getContents();
-    while ((beginIndex < endIndex) &&
-           (" \n".indexOf(contents.charAt(beginIndex)) >= 0)) {
-      beginIndex++;
-    }
-    while ((endIndex > beginIndex) &&
-           (" \n".indexOf(contents.charAt(endIndex - 1)) >= 0)) {
-      endIndex--;
-    }
-    while ((beginArea < endArea) &&
-           (" \n".indexOf(contents.charAt(beginArea)) >= 0)) {
-      beginArea++;
-    }
-    while ((endArea > beginArea) &&
-           (" \n".indexOf(contents.charAt(endArea - 1)) >= 0)) {
-      endArea--;
-    }
+    beginIndex = moveBeginIndex(analysis, beginIndex, endIndex);
+    endIndex = moveEndIndex(analysis, beginIndex, endIndex);
+    beginArea = moveBeginIndex(analysis, beginArea, endArea);
+    endArea = moveEndIndex(analysis, beginArea, endArea);
 
     // Check a few things
     boolean hasSingleQuote = false;
     boolean hasDoubleQuotes = false;
+    String contents = analysis.getContents();
     for (int index = beginIndex; index < endIndex; index++) {
+
+      // Single quotes
       if (contents.charAt(index) == '\'') {
         if (((index <= beginIndex) ||
              (contents.charAt(index - 1) != '\'')) &&
             ((index + 1 >= endIndex) ||
              (contents.charAt(index + 1) != '\''))) {
-          hasSingleQuote = true;
+          boolean shouldCount = true;
+          if (shouldCount) {
+            if ((element.isInInternalLink() == null) &&
+                (analysis.isInInternalLink(index) != null)) {
+              shouldCount = false;
+            }
+          }
+          if (shouldCount) {
+            hasSingleQuote = true;
+          }
         }
       }
+
+      // Double quotes
       if ("\"“".indexOf(contents.charAt(index)) >= 0) {
         hasDoubleQuotes = true;
       }
@@ -540,6 +576,92 @@ public class CheckErrorAlgorithm540 extends CheckErrorAlgorithmBase {
   }
 
   /**
+   * @param analysis Page analysis.
+   * @param beginIndex Begin index.
+   * @param endIndex End index.
+   * @return New begin index with eventually reduced area.
+   */
+  private int moveBeginIndex(
+      PageAnalysis analysis, int beginIndex, int endIndex) {
+    String contents = analysis.getContents();
+    boolean tryAgain = false;
+    do {
+      tryAgain = false;
+
+      // Ignore whitespace at the beginning
+      while ((beginIndex < endIndex) &&
+             (" \n".indexOf(contents.charAt(beginIndex)) >= 0)) {
+        beginIndex++;
+        tryAgain = true;
+      }
+
+      // Ignore templates at the beginning
+      if ((beginIndex < endIndex) && (contents.charAt(beginIndex) == '{')) {
+        PageElementTemplate template = analysis.isInTemplate(beginIndex);
+        if ((template != null) && (template.getBeginIndex() == beginIndex)) {
+          if (template.getEndIndex() < endIndex) {
+            beginIndex = template.getEndIndex();
+            tryAgain = true;
+          }
+        }
+      }
+
+      // Ignore unclosed tags at the beginning
+      if ((beginIndex < endIndex) && (contents.charAt(beginIndex) == '<')) {
+        PageElementTag tag = analysis.isInTag(beginIndex);
+        if ((tag != null) && (tag.getBeginIndex() == beginIndex)) {
+          if (tag.isFullTag() || !tag.isComplete()) {
+            beginIndex = tag.getEndIndex();
+            tryAgain = true;
+          }
+        }
+      }
+
+      // Ignore comments at the beginning
+      if ((beginIndex < endIndex) && (contents.charAt(beginIndex) == '<')) {
+        PageElementComment comment = analysis.isInComment(beginIndex);
+        if ((comment != null) && (comment.getBeginIndex() == beginIndex)) {
+          beginIndex = comment.getEndIndex();
+          tryAgain = true;
+        }
+      }
+    } while (tryAgain);
+    return beginIndex;
+  }
+
+  /**
+   * @param analysis Page analysis.
+   * @param beginIndex Begin index.
+   * @param endIndex End index.
+   * @return New end index with eventually reduced area.
+   */
+  private int moveEndIndex(
+      PageAnalysis analysis, int beginIndex, int endIndex) {
+    String contents = analysis.getContents();
+    boolean tryAgain = false;
+    do {
+      tryAgain = false;
+
+      // Ignore whitespace at the end
+      while ((endIndex > beginIndex) &&
+             (" \n".indexOf(contents.charAt(endIndex - 1)) >= 0)) {
+        endIndex--;
+        tryAgain = true;
+      }
+
+      // Ignore comments at the end
+      if ((endIndex > beginIndex) && (contents.charAt(endIndex - 1) == '>')) {
+        PageElementComment comment = analysis.isInComment(endIndex - 1);
+        if ((comment != null) && (comment.getEndIndex() == endIndex)) {
+          endIndex = comment.getBeginIndex();
+          tryAgain = true;
+        }
+      }
+    } while (tryAgain);
+    return endIndex;
+  }
+
+  /**
    * Bean for memorizing formatting elements
    */
   private static class FormattingElement {
@@ -582,6 +704,9 @@ public class CheckErrorAlgorithm540 extends CheckErrorAlgorithmBase {
 
     /** Table in which the element is */
     private PageElementTable inTable;
+
+    /** Table caption in which the element is */
+    private PageElementTable.TableCaption inTableCaption;
 
     /** Table cell in which the element is */
     private PageElementTable.TableCell inTableCell;
@@ -649,8 +774,15 @@ public class CheckErrorAlgorithm540 extends CheckErrorAlgorithmBase {
       inListItem = analysis.isInListItem(index);
       inTable = analysis.isInTable(index);
       if (inTable != null) {
+        PageElementTable.TableCaption caption = inTable.getTableCaption();
+        if ((caption != null) && (caption.containsIndex(index))) {
+          inTableCaption = caption;
+        } else {
+          inTableCaption = null;
+        }
         inTableCell = inTable.getCellAtIndex(index);
       } else {
+        inTableCaption = null;
         inTableCell = null;
       }
       // TODO: more analysis
@@ -706,11 +838,27 @@ public class CheckErrorAlgorithm540 extends CheckErrorAlgorithmBase {
     }
 
     /**
+     * @return Table caption in which the element is.
+     */
+    public PageElementTable.TableCaption isInTableCaption() {
+      analyze();
+      return inTableCaption;
+    }
+
+    /**
      * @return Table cell in which the element is.
      */
     public PageElementTable.TableCell isInTableCell() {
       analyze();
       return inTableCell;
+    }
+
+    /**
+     * @return Template parameter in which the element is.
+     */
+    public PageElementTemplate.Parameter isInTemplateParameter() {
+      analyze();
+      return inTemplateParameter;
     }
 
     /**
@@ -760,6 +908,18 @@ public class CheckErrorAlgorithm540 extends CheckErrorAlgorithmBase {
               }
             }
 
+            // Check inside a table caption
+            if (!checked) {
+              if ((inTable != null) && (inTableCaption != null)) {
+                if (inTableCaption.containsIndex(element.index)) {
+                  return false;
+                }
+                checked = true;
+              } else if (element.inTableCaption != null) {
+                checked = true;
+              }
+            }
+
             // Check inside a table cell
             if (!checked) {
               if ((inTable != null) && (inTableCell != null)) {
@@ -780,10 +940,10 @@ public class CheckErrorAlgorithm540 extends CheckErrorAlgorithmBase {
               if ((inELink != null) && (inELink.containsIndex(element.index))) {
                 return false;
               }
-              if ((inTemplate != null) && (inTemplate.containsIndex(element.index))) {
+              if ((inListItem != null) && (inListItem.containsIndex(element.index))) {
                 return false;
               }
-              if ((inListItem != null) && (inListItem.containsIndex(element.index))) {
+              if ((inTemplate != null) && (inTemplate.containsIndex(element.index))) {
                 return false;
               }
               // TODO: change to true once paragraph is managed
@@ -877,6 +1037,7 @@ public class CheckErrorAlgorithm540 extends CheckErrorAlgorithmBase {
       sameArea &= (first.inImage == second.inImage);
       sameArea &= (first.inListItem == second.inListItem);
       sameArea &= (first.inTable == second.inTable);
+      sameArea &= (first.inTableCaption == second.inTableCaption);
       sameArea &= (first.inTableCell == second.inTableCell);
       // TODO
       return sameArea;
