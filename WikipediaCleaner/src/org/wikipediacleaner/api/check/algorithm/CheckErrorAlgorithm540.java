@@ -483,9 +483,10 @@ public class CheckErrorAlgorithm540 extends CheckErrorAlgorithmBase {
       boolean closeFull, boolean deleteEnd) {
 
     // Reduce area
-    beginIndex = moveBeginIndex(analysis, beginIndex, endIndex);
+    int initialBeginIndex = moveBeginIndex(analysis, beginIndex, endIndex, false);
+    beginIndex = moveBeginIndex(analysis, beginIndex, endIndex, true);
     endIndex = moveEndIndex(analysis, beginIndex, endIndex);
-    beginArea = moveBeginIndex(analysis, beginArea, endArea);
+    beginArea = moveBeginIndex(analysis, beginArea, endArea, true);
     endArea = moveEndIndex(analysis, beginArea, endArea);
 
     // Check a few things
@@ -534,7 +535,7 @@ public class CheckErrorAlgorithm540 extends CheckErrorAlgorithmBase {
     if (formatting.elements.size() == 1) {
 
       // Report with only the formatting element
-      if ((element.index == beginIndex) &&
+      if ((element.index == initialBeginIndex) &&
           (element.index + element.length == endIndex)) {
         CheckErrorResult errorResult = createCheckErrorResult(
             analysis, beginArea, endArea);
@@ -545,6 +546,18 @@ public class CheckErrorAlgorithm540 extends CheckErrorAlgorithmBase {
         } else {
           errorResult.addReplacement("", deleteEmpty);
         }
+        errors.add(errorResult);
+        return true;
+      }
+
+      // Report with the formatting element at the end
+      if (element.index + element.length == endIndex) {
+        CheckErrorResult errorResult = createCheckErrorResult(
+            analysis, element.index, element.index + element.length);
+        deleteEnd &= !hasSingleQuote;
+        deleteEnd &= !hasDoubleQuotes;
+        deleteEnd &= element.isAloneInArea(elements);
+        errorResult.addReplacement("", deleteEnd);
         errors.add(errorResult);
         return true;
       }
@@ -567,18 +580,6 @@ public class CheckErrorAlgorithm540 extends CheckErrorAlgorithmBase {
         errors.add(errorResult);
         return true;
       }
-
-      // Report with the formatting element at the end
-      if (element.index + element.length == endIndex) {
-        CheckErrorResult errorResult = createCheckErrorResult(
-            analysis, element.index, element.index + element.length);
-        deleteEnd &= !hasSingleQuote;
-        deleteEnd &= !hasDoubleQuotes;
-        deleteEnd &= element.isAloneInArea(elements);
-        errorResult.addReplacement("", deleteEnd);
-        errors.add(errorResult);
-        return true;
-      }
     }
 
     return false;
@@ -588,10 +589,13 @@ public class CheckErrorAlgorithm540 extends CheckErrorAlgorithmBase {
    * @param analysis Page analysis.
    * @param beginIndex Begin index.
    * @param endIndex End index.
+   * @param complete True if complete reduction should be done.
    * @return New begin index with eventually reduced area.
    */
   private int moveBeginIndex(
-      PageAnalysis analysis, int beginIndex, int endIndex) {
+      PageAnalysis analysis,
+      int beginIndex, int endIndex,
+      boolean complete) {
     String contents = analysis.getContents();
     boolean tryAgain = false;
     do {
@@ -605,7 +609,9 @@ public class CheckErrorAlgorithm540 extends CheckErrorAlgorithmBase {
       }
 
       // Ignore templates at the beginning
-      if ((beginIndex < endIndex) && (contents.charAt(beginIndex) == '{')) {
+      if (complete &&
+          (beginIndex < endIndex) &&
+          (contents.charAt(beginIndex) == '{')) {
         PageElementTemplate template = analysis.isInTemplate(beginIndex);
         if ((template != null) && (template.getBeginIndex() == beginIndex)) {
           if (template.getEndIndex() < endIndex) {
@@ -616,7 +622,9 @@ public class CheckErrorAlgorithm540 extends CheckErrorAlgorithmBase {
       }
 
       // Ignore unclosed tags at the beginning
-      if ((beginIndex < endIndex) && (contents.charAt(beginIndex) == '<')) {
+      if (complete &&
+          (beginIndex < endIndex) &&
+          (contents.charAt(beginIndex) == '<')) {
         PageElementTag tag = analysis.isInTag(beginIndex);
         if ((tag != null) && (tag.getBeginIndex() == beginIndex)) {
           if (tag.isFullTag() || !tag.isComplete()) {
