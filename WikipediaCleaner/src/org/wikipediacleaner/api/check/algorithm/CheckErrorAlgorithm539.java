@@ -33,20 +33,25 @@ public class CheckErrorAlgorithm539 extends CheckErrorAlgorithmBase {
         new String[] {
           PageElementTag.TAG_HTML_BIG,
           PageElementTag.TAG_HTML_SMALL,
-        }, true),
+        }, true, false),
     new Replacement(
         PageElementTag.TAG_HTML_DIV,
         new String[] {
           PageElementTag.TAG_HTML_BIG,
           PageElementTag.TAG_HTML_CENTER,
           PageElementTag.TAG_HTML_SMALL,
-        }, true),
+        }, true, false),
+    new Replacement(
+        PageElementTag.TAG_HTML_SMALL,
+        new String[] {
+          PageElementTag.TAG_HTML_CENTER,
+        }, true, true),
     new Replacement(
         PageElementTag.TAG_HTML_SPAN,
         new String[] {
           PageElementTag.TAG_HTML_BIG,
           PageElementTag.TAG_HTML_SMALL,
-        }, true),
+        }, true, false),
   };
 
   /**
@@ -88,40 +93,73 @@ public class CheckErrorAlgorithm539 extends CheckErrorAlgorithmBase {
     // Analyze each tag
     boolean result = false;
     List<PageElementTag> tags = analysis.getCompleteTags(replacement.firstTag);
-    String contents = analysis.getContents();
     for (PageElementTag tag : tags) {
-      int index = tag.getValueBeginIndex();
-      while (index < tag.getValueEndIndex()) {
+      result |= analyzeTag(analysis, errors, replacement, tag);
+    }
 
-        // Look for an other tag
-        PageElementTag internalTag = null;
-        if (contents.charAt(index) == '<') {
-          internalTag = analysis.isInTag(index);
-        }
+    return result;
+  }
 
-        // Analyze tag
-        if (internalTag != null) {
-          index = internalTag.getEndIndex();
-          if (internalTag.isComplete() &&
-              (internalTag.getCompleteEndIndex() > tag.getCompleteEndIndex())) {
-            if (errors == null) {
-              return true;
-            }
-            result = true;
+  /**
+   * @param analysis Page analysis.
+   * @param errors Errors found in the page.
+   * @param replacement Possible replacement.
+   * @param tag Tag currently being analyzed.
+   * @return Flag indicating if the error was found.
+   */
+  private boolean analyzeTag(
+      PageAnalysis analysis,
+      Collection<CheckErrorResult> errors,
+      Replacement replacement,
+      PageElementTag tag) {
 
-            // Analyze if a replacement can be suggested
-            boolean known = replacement.secondTags.contains(internalTag.getNormalizedName());
-            int tmpIndex = tag.getCompleteEndIndex();
-            while ((tmpIndex < internalTag.getValueEndIndex()) &&
-                   (" \n".indexOf(contents.charAt(tmpIndex)) >= 0)) {
-              tmpIndex++;
-            }
-            if (tmpIndex < internalTag.getValueEndIndex()) {
-              known = false;
-            }
+    String contents = analysis.getContents();
+    int index = tag.getValueBeginIndex();
+    while (index < tag.getValueEndIndex()) {
 
-            // Report error
-            if (known) {
+      // Look for an other tag
+      PageElementTag internalTag = null;
+      if (contents.charAt(index) == '<') {
+        internalTag = analysis.isInTag(index);
+      }
+
+      // Analyze tag
+      if (internalTag != null) {
+        index = internalTag.getEndIndex();
+        if (internalTag.isComplete() &&
+            (internalTag.getCompleteEndIndex() > tag.getCompleteEndIndex())) {
+          if (errors == null) {
+            return true;
+          }
+
+          // Analyze if a replacement can be suggested
+          boolean known = replacement.secondTags.contains(internalTag.getNormalizedName());
+          int tmpIndex = tag.getCompleteEndIndex();
+          while ((tmpIndex < internalTag.getValueEndIndex()) &&
+                 (" \n".indexOf(contents.charAt(tmpIndex)) >= 0)) {
+            tmpIndex++;
+          }
+          if (tmpIndex < internalTag.getValueEndIndex()) {
+            known = false;
+          }
+
+          // Report error
+          if (known) {
+            if (replacement.shouldReverse) {
+              CheckErrorResult errorResult = createCheckErrorResult(
+                  analysis, tag.getCompleteBeginIndex(), tag.getCompleteEndIndex());
+              String text =
+                  contents.substring(internalTag.getCompleteBeginIndex(), internalTag.getValueBeginIndex()) +
+                  contents.substring(tag.getCompleteBeginIndex(), internalTag.getCompleteBeginIndex()) +
+                  contents.substring(internalTag.getValueBeginIndex(), tag.getCompleteEndIndex());
+              String desc =
+                  contents.substring(internalTag.getCompleteBeginIndex(), internalTag.getValueBeginIndex()) +
+                  contents.substring(tag.getCompleteBeginIndex(), tag.getValueBeginIndex()) +
+                  "..." +
+                  contents.substring(tag.getValueEndIndex(), tag.getCompleteEndIndex());
+              errorResult.addReplacement(text, desc, replacement.automatic);
+              errors.add(errorResult);
+            } else {
               CheckErrorResult errorResult = createCheckErrorResult(
                   analysis, internalTag.getCompleteBeginIndex(), internalTag.getCompleteEndIndex());
               String text =
@@ -135,19 +173,20 @@ public class CheckErrorAlgorithm539 extends CheckErrorAlgorithmBase {
                   contents.substring(tag.getValueEndIndex(), tag.getCompleteEndIndex());
               errorResult.addReplacement(text,  desc, replacement.automatic);
               errors.add(errorResult);
-            } else {
-              CheckErrorResult errorResult = createCheckErrorResult(
-                  analysis, internalTag.getBeginIndex(), internalTag.getEndIndex());
-              errors.add(errorResult);
             }
+          } else {
+            CheckErrorResult errorResult = createCheckErrorResult(
+                analysis, internalTag.getBeginIndex(), internalTag.getEndIndex());
+            errors.add(errorResult);
           }
-        } else {
-          index++;
+          return true;
         }
+      } else {
+        index++;
       }
     }
 
-    return result;
+    return false;
   }
 
   /**
@@ -164,18 +203,24 @@ public class CheckErrorAlgorithm539 extends CheckErrorAlgorithmBase {
     /** True if replacement can be automatic */
     final boolean automatic;
 
+    /** True if tags order should be reversed */
+    final boolean shouldReverse;
+
     /**
      * @param firstTag Surrounding tag.
      * @param secondTags Tags that should be inside.
      * @param automatic Automatic replacement.
+     * @param shouldReverse True if tag order should be reversed.
      */
     Replacement(
         String firstTag,
         String[] secondTags,
-        boolean automatic) {
+        boolean automatic,
+        boolean shouldReverse) {
       this.firstTag = firstTag;
       this.secondTags = Arrays.asList(secondTags);
       this.automatic = automatic;
+      this.shouldReverse = shouldReverse;
     }
   }
 
