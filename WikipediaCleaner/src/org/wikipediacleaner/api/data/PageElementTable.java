@@ -182,12 +182,13 @@ public class PageElementTable extends PageElement {
           boolean cellOptionsFound = false;
           tmpIndex = getTrueIndex(analysis, tables, tmpIndex);
           boolean endCellFound = false;
+          String separators = (lineBeginChar == '!') ? "\n|!" : "\n|";
           while ((tmpIndex < endIndex) &&
-                 ("\n|!".indexOf(contents.charAt(tmpIndex)) < 0)) {
+                 (separators.indexOf(contents.charAt(tmpIndex)) < 0)) {
             tmpIndex = getTrueIndex(analysis, tables, tmpIndex + 1);
           }
           while ((tmpIndex < endIndex) && !endCellFound) {
-            while ("\n|!".indexOf(contents.charAt(tmpIndex)) < 0) {
+            while (separators.indexOf(contents.charAt(tmpIndex)) < 0) {
               tmpIndex = getTrueIndex(analysis, tables, tmpIndex + 1);
             }
             char currentChar = contents.charAt(tmpIndex);
