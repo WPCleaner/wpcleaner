@@ -212,7 +212,7 @@ public class PageElementTable extends PageElement {
               cellOptionsFound = true;
               while ((tmpIndex < endIndex) &&
                      ("\n ".indexOf(contents.charAt(tmpIndex)) >= 0)) {
-                tmpIndex = getTrueIndex(analysis, null, tmpIndex + 1);
+                tmpIndex = getMeaningfulIndex(analysis, tmpIndex + 1);
               }
               if ((tmpIndex < endIndex) &&
                   ("|!".indexOf(contents.charAt(tmpIndex)) >= 0)) {
