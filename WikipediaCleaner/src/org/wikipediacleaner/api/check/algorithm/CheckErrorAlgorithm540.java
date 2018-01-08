@@ -492,24 +492,31 @@ public class CheckErrorAlgorithm540 extends CheckErrorAlgorithmBase {
     boolean hasSingleQuote = false;
     boolean hasDoubleQuotes = false;
     String contents = analysis.getContents();
-    for (int index = beginIndex; index < endIndex; index++) {
+    int index = beginIndex;
+    while (index < endIndex) {
+
+      int nextIndex = index + 1;
 
       // Single quotes
       if (contents.charAt(index) == '\'') {
-        if (((index <= beginIndex) ||
-             (contents.charAt(index - 1) != '\'')) &&
-            ((index + 1 >= endIndex) ||
-             (contents.charAt(index + 1) != '\''))) {
-          boolean shouldCount = true;
-          if (shouldCount) {
-            if ((element.isInInternalLink() == null) &&
-                (analysis.isInInternalLink(index) != null)) {
-              shouldCount = false;
-            }
+        boolean shouldCount = true;
+        while ((nextIndex < endIndex) &&
+               (contents.charAt(nextIndex) == '\'')) {
+          nextIndex++;
+        }
+        if ((nextIndex - index == 2) ||
+            (nextIndex - index == 3) ||
+            (nextIndex - index == 4)) {
+          shouldCount = false;
+        }
+        if (shouldCount) {
+          if ((element.isInInternalLink() == null) &&
+              (analysis.isInInternalLink(index) != null)) {
+            shouldCount = false;
           }
-          if (shouldCount) {
-            hasSingleQuote = true;
-          }
+        }
+        if (shouldCount) {
+          hasSingleQuote = true;
         }
       }
 
@@ -517,6 +524,8 @@ public class CheckErrorAlgorithm540 extends CheckErrorAlgorithmBase {
       if ("\"“".indexOf(contents.charAt(index)) >= 0) {
         hasDoubleQuotes = true;
       }
+
+      index = nextIndex;
     }
 
     // Report with only one formatting element
