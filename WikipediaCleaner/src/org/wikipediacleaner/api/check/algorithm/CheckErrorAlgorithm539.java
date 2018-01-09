@@ -113,8 +113,21 @@ public class CheckErrorAlgorithm539 extends CheckErrorAlgorithmBase {
       Replacement replacement,
       PageElementTag tag) {
 
+    // Ignore whitespace characters at the beginning
     String contents = analysis.getContents();
     int index = tag.getValueBeginIndex();
+    while ((index < tag.getValueEndIndex()) &&
+           (" \n".indexOf(contents.charAt(index)) >= 0)) {
+      index++;
+    }
+
+    // Select area on the reverse option
+    int maxValue = tag.getValueEndIndex();
+    if (replacement.shouldReverse) {
+      maxValue = Math.min(maxValue, index + 1);
+    }
+
+    // Analyze area
     while (index < tag.getValueEndIndex()) {
 
       // Look for an other tag
@@ -140,6 +153,9 @@ public class CheckErrorAlgorithm539 extends CheckErrorAlgorithmBase {
             tmpIndex++;
           }
           if (tmpIndex < internalTag.getValueEndIndex()) {
+            known = false;
+          }
+          if (tmpIndex >= maxValue) {
             known = false;
           }
 
