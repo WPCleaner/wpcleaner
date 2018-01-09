@@ -138,7 +138,6 @@ public class CheckErrorAlgorithm539 extends CheckErrorAlgorithmBase {
 
       // Analyze tag
       if (internalTag != null) {
-        index = internalTag.getEndIndex();
         if (internalTag.isComplete() &&
             (internalTag.getCompleteEndIndex() > tag.getCompleteEndIndex())) {
           if (errors == null) {
@@ -155,7 +154,7 @@ public class CheckErrorAlgorithm539 extends CheckErrorAlgorithmBase {
           if (tmpIndex < internalTag.getValueEndIndex()) {
             known = false;
           }
-          if (tmpIndex >= maxValue) {
+          if (index >= maxValue) {
             known = false;
           }
 
@@ -197,6 +196,7 @@ public class CheckErrorAlgorithm539 extends CheckErrorAlgorithmBase {
           }
           return true;
         }
+        index = internalTag.getEndIndex();
       } else {
         index++;
       }
