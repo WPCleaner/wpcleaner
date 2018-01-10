@@ -13,6 +13,7 @@ import java.util.List;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.data.PageAnalysis;
+import org.wikipediacleaner.api.data.PageElementInternalLink;
 import org.wikipediacleaner.api.data.PageElementTag;
 
 
@@ -76,7 +77,88 @@ public class CheckErrorAlgorithm539 extends CheckErrorAlgorithmBase {
       result |= analyzeTags(analysis, errors, replacement);
     }
 
+    // Analyze each internal link
+    List<PageElementInternalLink> iLinks = analysis.getInternalLinks();
+    for (PageElementInternalLink iLink : iLinks) {
+      result |= analyzeInternalLink(analysis, errors, iLink);
+    }
+
     return result;
+  }
+
+  /**
+   * @param analysis Page analysis.
+   * @param errors Errors found in the page.
+   * @param link Internal link to be analyzed.
+   * @return Flag indicating if the error was found.
+   */
+  private boolean analyzeInternalLink(
+      PageAnalysis analysis,
+      Collection<CheckErrorResult> errors,
+      PageElementInternalLink link) {
+
+    // Preliminary check
+    if ((link == null) || (link.getText() == null)) {
+      return false;
+    }
+
+    // Analyze tags in the internal link
+    String contents = analysis.getContents();
+    int beginIndex = link.getBeginIndex() + link.getTextOffset();
+    int endIndex = link.getEndIndex() - 2;
+    int index = endIndex;
+    while (index > beginIndex) {
+      if (contents.charAt(index - 1) == '>') {
+        PageElementTag tag = analysis.isInTag(index -1);
+        if (tag != null) {
+          if ((tag.getEndIndex() == index) &&
+              (tag.isComplete()) &&
+              (!tag.isFullTag()) &&
+              (!tag.isEndTag())) {
+            if (tag.getCompleteEndIndex() > endIndex) {
+              if (errors == null) {
+                return true;
+              }
+
+              // Check if the closing tag is just after the link
+              PageElementTag closingTag = tag.getMatchingTag();
+              int tmpIndex = link.getEndIndex();
+              while ((tmpIndex < closingTag.getBeginIndex())&&
+                     (" \n".indexOf(contents.charAt(tmpIndex)) >= 0)) {
+                tmpIndex++;
+              }
+              if (tmpIndex < closingTag.getBeginIndex()) {
+                CheckErrorResult errorResult = createCheckErrorResult(
+                    analysis, tag.getBeginIndex(), tag.getEndIndex());
+                errors.add(errorResult);
+              } else {
+                CheckErrorResult errorResult = createCheckErrorResult(
+                    analysis, tag.getCompleteBeginIndex(), tag.getCompleteEndIndex());
+                String replacement =
+                    contents.substring(tag.getCompleteBeginIndex(), link.getEndIndex() - 2) +
+                    contents.substring(tag.getValueEndIndex(), tag.getCompleteEndIndex()) +
+                    contents.substring(link.getEndIndex() - 2, tag.getValueEndIndex());
+                String text =
+                    contents.substring(tag.getCompleteBeginIndex(), tag.getValueBeginIndex()) +
+                    "..." +
+                    contents.substring(tag.getValueEndIndex(), tag.getCompleteEndIndex()) +
+                    contents.substring(link.getEndIndex() - 2, tag.getValueEndIndex());
+                errorResult.addReplacement(replacement, text, true);
+                errors.add(errorResult);
+              }
+              return true;
+            }
+          }
+          index = tag.getBeginIndex();
+        } else {
+          index--;
+        }
+      } else {
+        index--;
+      }
+    }
+
+    return false;
   }
 
   /**
