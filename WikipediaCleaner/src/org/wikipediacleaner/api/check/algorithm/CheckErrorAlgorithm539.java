@@ -30,6 +30,11 @@ public class CheckErrorAlgorithm539 extends CheckErrorAlgorithmBase {
   /** Possible replacements */
   private final static Replacement[] replacements = {
     new Replacement(
+        PageElementTag.TAG_HTML_BIG,
+        new String[] {
+          PageElementTag.TAG_HTML_CENTER,
+        }, true, true),
+    new Replacement(
         PageElementTag.TAG_HTML_CENTER,
         new String[] {
           PageElementTag.TAG_HTML_BIG,
