@@ -48,6 +48,11 @@ public class CheckErrorAlgorithm539 extends CheckErrorAlgorithmBase {
           new ReplacementElement(PageElementTag.TAG_HTML_SMALL, true, Order.MUST_KEEP),
         }),
     new Replacement(
+        PageElementTag.TAG_HTML_FONT,
+          new ReplacementElement[] {
+          new ReplacementElement(PageElementTag.TAG_HTML_SUP, true, Order.BOTH_POSSIBLE),
+        }),
+    new Replacement(
         PageElementTag.TAG_HTML_SMALL,
         new ReplacementElement[] {
           new ReplacementElement(PageElementTag.TAG_HTML_CENTER, true, Order.MUST_INVERT),
