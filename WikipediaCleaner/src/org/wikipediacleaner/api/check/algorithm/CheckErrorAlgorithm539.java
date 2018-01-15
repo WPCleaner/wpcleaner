@@ -31,33 +31,34 @@ public class CheckErrorAlgorithm539 extends CheckErrorAlgorithmBase {
   private final static Replacement[] replacements = {
     new Replacement(
         PageElementTag.TAG_HTML_BIG,
-        new String[] {
-          PageElementTag.TAG_HTML_CENTER,
-        }, true, true),
+        new ReplacementElement[] {
+          new ReplacementElement(PageElementTag.TAG_HTML_CENTER, true, Order.MUST_INVERT),
+        }),
     new Replacement(
         PageElementTag.TAG_HTML_CENTER,
-        new String[] {
-          PageElementTag.TAG_HTML_BIG,
-          PageElementTag.TAG_HTML_SMALL,
-        }, true, false),
+        new ReplacementElement[] {
+          new ReplacementElement(PageElementTag.TAG_HTML_BIG, true, Order.MUST_KEEP),
+          new ReplacementElement(PageElementTag.TAG_HTML_SMALL, true, Order.MUST_KEEP),
+        }),
     new Replacement(
         PageElementTag.TAG_HTML_DIV,
-        new String[] {
-          PageElementTag.TAG_HTML_BIG,
-          PageElementTag.TAG_HTML_CENTER,
-          PageElementTag.TAG_HTML_SMALL,
-        }, true, false),
+        new ReplacementElement[] {
+          new ReplacementElement(PageElementTag.TAG_HTML_BIG, true, Order.MUST_KEEP),
+          new ReplacementElement(PageElementTag.TAG_HTML_CENTER, true, Order.BOTH_POSSIBLE),
+          new ReplacementElement(PageElementTag.TAG_HTML_SMALL, true, Order.MUST_KEEP),
+        }),
     new Replacement(
         PageElementTag.TAG_HTML_SMALL,
-        new String[] {
-          PageElementTag.TAG_HTML_CENTER,
-        }, true, true),
+        new ReplacementElement[] {
+          new ReplacementElement(PageElementTag.TAG_HTML_CENTER, true, Order.MUST_INVERT),
+          new ReplacementElement(PageElementTag.TAG_HTML_FONT, true, Order.BOTH_POSSIBLE),
+        }),
     new Replacement(
         PageElementTag.TAG_HTML_SPAN,
-        new String[] {
-          PageElementTag.TAG_HTML_BIG,
-          PageElementTag.TAG_HTML_SMALL,
-        }, true, false),
+        new ReplacementElement[] {
+          new ReplacementElement(PageElementTag.TAG_HTML_BIG, true, Order.BOTH_POSSIBLE),
+          new ReplacementElement(PageElementTag.TAG_HTML_SMALL, true, Order.BOTH_POSSIBLE),
+        }),
   };
 
   /**
@@ -208,12 +209,6 @@ public class CheckErrorAlgorithm539 extends CheckErrorAlgorithmBase {
       index++;
     }
 
-    // Select area on the reverse option
-    int maxValue = tag.getValueEndIndex();
-    if (replacement.shouldReverse) {
-      maxValue = Math.min(maxValue, index + 1);
-    }
-
     // Analyze area
     while (index < tag.getValueEndIndex()) {
 
@@ -232,55 +227,66 @@ public class CheckErrorAlgorithm539 extends CheckErrorAlgorithmBase {
           }
 
           // Analyze if a replacement can be suggested
-          boolean known = replacement.secondTags.contains(internalTag.getNormalizedName());
-          int tmpIndex = tag.getCompleteEndIndex();
-          while ((tmpIndex < internalTag.getValueEndIndex()) &&
-                 (" \n".indexOf(contents.charAt(tmpIndex)) >= 0)) {
-            tmpIndex++;
-          }
-          if (tmpIndex < internalTag.getValueEndIndex()) {
-            known = false;
-          }
-          if (index >= maxValue) {
-            known = false;
-          }
+          ReplacementElement element = replacement.getSecondTag(internalTag.getNormalizedName());
 
           // Report error
-          if (known) {
-            if (replacement.shouldReverse) {
-              CheckErrorResult errorResult = createCheckErrorResult(
-                  analysis, tag.getCompleteBeginIndex(), tag.getCompleteEndIndex());
-              String text =
-                  contents.substring(internalTag.getCompleteBeginIndex(), internalTag.getValueBeginIndex()) +
-                  contents.substring(tag.getCompleteBeginIndex(), internalTag.getCompleteBeginIndex()) +
-                  contents.substring(internalTag.getValueBeginIndex(), tag.getCompleteEndIndex());
-              String desc =
-                  contents.substring(internalTag.getCompleteBeginIndex(), internalTag.getValueBeginIndex()) +
-                  contents.substring(tag.getCompleteBeginIndex(), tag.getValueBeginIndex()) +
-                  "..." +
-                  contents.substring(tag.getValueEndIndex(), tag.getCompleteEndIndex());
-              errorResult.addReplacement(text, desc, replacement.automatic);
-              errors.add(errorResult);
-            } else {
-              CheckErrorResult errorResult = createCheckErrorResult(
-                  analysis, internalTag.getCompleteBeginIndex(), internalTag.getCompleteEndIndex());
-              String text =
-                  contents.substring(internalTag.getCompleteBeginIndex(), tag.getValueEndIndex()) +
-                  contents.substring(tag.getCompleteEndIndex(), internalTag.getCompleteEndIndex()) +
-                  contents.substring(tag.getValueEndIndex(), tag.getCompleteEndIndex());
-              String desc =
-                  contents.substring(internalTag.getCompleteBeginIndex(), internalTag.getValueBeginIndex()) +
-                  "..." +
-                  contents.substring(internalTag.getValueEndIndex(), internalTag.getCompleteEndIndex()) +
-                  contents.substring(tag.getValueEndIndex(), tag.getCompleteEndIndex());
-              errorResult.addReplacement(text,  desc, replacement.automatic);
-              errors.add(errorResult);
+          if (element != null) {
+
+            // Try with keeping order
+            if (element.order.canKeepOrder()) {
+              int tmpIndex = tag.getCompleteEndIndex();
+              while ((tmpIndex < internalTag.getValueEndIndex()) &&
+                     (" \n".indexOf(contents.charAt(tmpIndex)) >= 0)) {
+                tmpIndex++;
+              }
+              if (tmpIndex >= internalTag.getValueEndIndex()) {
+                CheckErrorResult errorResult = createCheckErrorResult(
+                    analysis, internalTag.getCompleteBeginIndex(), internalTag.getCompleteEndIndex());
+                String text =
+                    contents.substring(internalTag.getCompleteBeginIndex(), tag.getValueEndIndex()) +
+                    contents.substring(tag.getCompleteEndIndex(), internalTag.getCompleteEndIndex()) +
+                    contents.substring(tag.getValueEndIndex(), tag.getCompleteEndIndex());
+                String desc =
+                    contents.substring(internalTag.getCompleteBeginIndex(), internalTag.getValueBeginIndex()) +
+                    "..." +
+                    contents.substring(internalTag.getValueEndIndex(), internalTag.getCompleteEndIndex()) +
+                    contents.substring(tag.getValueEndIndex(), tag.getCompleteEndIndex());
+                errorResult.addReplacement(text,  desc, element.automatic);
+                errors.add(errorResult);
+                return true;
+              }
             }
-          } else {
-            CheckErrorResult errorResult = createCheckErrorResult(
-                analysis, internalTag.getBeginIndex(), internalTag.getEndIndex());
-            errors.add(errorResult);
+
+            // Try with inverting order
+            if (element.order.canInvertOrder()) {
+              int tmpIndex = tag.getValueBeginIndex();
+              while ((tmpIndex < internalTag.getCompleteBeginIndex()) &&
+                     (" \n".indexOf(contents.charAt(tmpIndex)) >= 0)) {
+                tmpIndex++;
+              }
+              if (tmpIndex >= internalTag.getCompleteBeginIndex()) {
+                CheckErrorResult errorResult = createCheckErrorResult(
+                    analysis, tag.getCompleteBeginIndex(), tag.getCompleteEndIndex());
+                String text =
+                    contents.substring(internalTag.getCompleteBeginIndex(), internalTag.getValueBeginIndex()) +
+                    contents.substring(tag.getCompleteBeginIndex(), internalTag.getCompleteBeginIndex()) +
+                    contents.substring(internalTag.getValueBeginIndex(), tag.getCompleteEndIndex());
+                String desc =
+                    contents.substring(internalTag.getCompleteBeginIndex(), internalTag.getValueBeginIndex()) +
+                    contents.substring(tag.getCompleteBeginIndex(), tag.getValueBeginIndex()) +
+                    "..." +
+                    contents.substring(tag.getValueEndIndex(), tag.getCompleteEndIndex());
+                errorResult.addReplacement(text, desc, element.automatic);
+                errors.add(errorResult);
+                return true;
+              }
+            }
           }
+
+          // Default reporting
+          CheckErrorResult errorResult = createCheckErrorResult(
+              analysis, internalTag.getBeginIndex(), internalTag.getEndIndex());
+          errors.add(errorResult);
           return true;
         }
         index = internalTag.getEndIndex();
@@ -301,29 +307,85 @@ public class CheckErrorAlgorithm539 extends CheckErrorAlgorithmBase {
     final String firstTag;
 
     /** Second tag: should be inside */
-    final List<String> secondTags;
-
-    /** True if replacement can be automatic */
-    final boolean automatic;
-
-    /** True if tags order should be reversed */
-    final boolean shouldReverse;
+    final List<ReplacementElement> elements;
 
     /**
      * @param firstTag Surrounding tag.
      * @param secondTags Tags that should be inside.
      * @param automatic Automatic replacement.
-     * @param shouldReverse True if tag order should be reversed.
      */
     Replacement(
         String firstTag,
-        String[] secondTags,
-        boolean automatic,
-        boolean shouldReverse) {
+        ReplacementElement[] elements) {
       this.firstTag = firstTag;
-      this.secondTags = Arrays.asList(secondTags);
+      this.elements = Arrays.asList(elements);
+    }
+
+    ReplacementElement getSecondTag(String tagName) {
+      for (ReplacementElement element : elements) {
+        if (element.tag.equals(tagName)) {
+          return element;
+        }
+      }
+      return null;
+    }
+  }
+
+  /**
+   * Bean for holding configuration for a replacement.
+   */
+  private static class ReplacementElement {
+
+    /** Tag */
+    final String tag;
+
+    /** True if replacement can be automatic */
+    final boolean automatic;
+
+    /** Possibilities for order of tags */
+    final Order order;
+
+    /**
+     * @param tag Included tag.
+     * @param automatic Automatic replacement.
+     * @order Possibilities for order of tags.
+     */
+    ReplacementElement(
+        String tag,
+        boolean automatic,
+        Order order) {
+      this.tag = tag;
       this.automatic = automatic;
-      this.shouldReverse = shouldReverse;
+      this.order = order;
+    }
+  }
+
+  /**
+   * Enumeration for possible order changes.
+   */
+  private static enum Order {
+    MUST_KEEP,
+    BOTH_POSSIBLE,
+    MUST_INVERT;
+
+    /**
+     * @return True if tags order can be keep.
+     */
+    boolean canKeepOrder() {
+      if ((this == MUST_KEEP) || (this == BOTH_POSSIBLE)) {
+        return true;
+      }
+      return false;
+    }
+
+    /**
+     * @return True if tags order can be inverted.
+     */
+    boolean canInvertOrder() {
+      if ((this == MUST_INVERT) || (this == BOTH_POSSIBLE)) {
+        return true;
+      }
+      return false;
     }
   }
 
