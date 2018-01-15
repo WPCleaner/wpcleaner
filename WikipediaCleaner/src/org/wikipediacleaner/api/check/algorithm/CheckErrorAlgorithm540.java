@@ -9,13 +9,14 @@ package org.wikipediacleaner.api.check.algorithm;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementComment;
 import org.wikipediacleaner.api.data.PageElementExternalLink;
+import org.wikipediacleaner.api.data.PageElementFormatting;
+import org.wikipediacleaner.api.data.PageElementFormattingAnalysis;
 import org.wikipediacleaner.api.data.PageElementImage;
 import org.wikipediacleaner.api.data.PageElementListItem;
 import org.wikipediacleaner.api.data.PageElementTable;
@@ -82,14 +83,14 @@ public class CheckErrorAlgorithm540 extends CheckErrorAlgorithmBase {
 
     // Analyze contents to find formatting elements
     boolean result = false;
-    List<FormattingElement> initialElements = FormattingElement.listFormattingElements(analysis);
+    List<PageElementFormatting> initialElements = PageElementFormatting.listFormattingElements(analysis);
     if (initialElements.isEmpty()) {
       return result;
     }
-    List<FormattingElement> elements = new ArrayList<>(initialElements);
+    List<PageElementFormatting> elements = new ArrayList<>(initialElements);
 
     // Remove correct formatting tags from the list
-    List<FormattingElement> reportElements = new ArrayList<>();
+    List<PageElementFormatting> reportElements = new ArrayList<>();
     boolean shouldContinue = true;
     while (shouldContinue) {
       shouldContinue = false;
@@ -215,7 +216,7 @@ public class CheckErrorAlgorithm540 extends CheckErrorAlgorithmBase {
     }
 
     // Report all errors
-    for (FormattingElement element : reportElements) {
+    for (PageElementFormatting element : reportElements) {
       if (errors == null) {
         return true;
       }
@@ -249,48 +250,48 @@ public class CheckErrorAlgorithm540 extends CheckErrorAlgorithmBase {
    * @return True if modifications have been done.
    */
   private boolean analyzeCorrectArea(
-      List<FormattingElement> elements,
-      List<FormattingElement> reportElements,
+      List<PageElementFormatting> elements,
+      List<PageElementFormatting> reportElements,
       int beginAnalysis, int endAnalysis,
       int beginArea, int endArea) {
 
     // Analyze area for formatting elements
-    FormattingAnalysis formattingArea = FormattingAnalysis.analyzeArea(elements, beginArea, endArea);
-    if (formattingArea.boldCount + formattingArea.italicCount == 0) {
+    PageElementFormattingAnalysis formattingArea = PageElementFormattingAnalysis.analyzeArea(elements, beginArea, endArea);
+    if (formattingArea.getBoldCount() + formattingArea.getItalicCount() == 0) {
       return false;
     }
 
     // If only one, there's a problem that can already be reported
-    if (formattingArea.boldCount + formattingArea.italicCount == 1) {
-      for (FormattingElement element : formattingArea.elements) {
+    if (formattingArea.getBoldCount() + formattingArea.getItalicCount() == 1) {
+      for (PageElementFormatting element : formattingArea.getElements()) {
         reportElements.add(element);
       }
-      FormattingElement.excludeArea(elements, beginArea, endArea);
+      PageElementFormatting.excludeArea(elements, beginArea, endArea);
       return true;
     }
 
     // Analyze area
-    FormattingAnalysis formattingAnalysis = formattingArea;
+    PageElementFormattingAnalysis formattingAnalysis = formattingArea;
     if ((beginAnalysis != beginArea) || (endAnalysis != endArea)) {
-      formattingAnalysis = FormattingAnalysis.analyzeArea(elements, beginAnalysis, endAnalysis);
+      formattingAnalysis = PageElementFormattingAnalysis.analyzeArea(elements, beginAnalysis, endAnalysis);
     }
-    if (formattingAnalysis.boldCount + formattingAnalysis.italicCount == 0) {
+    if (formattingAnalysis.getBoldCount() + formattingAnalysis.getItalicCount() == 0) {
       return false;
     }
 
     // If only one there's a problem that can already be reported
-    if (formattingArea.boldCount + formattingArea.italicCount == 1) {
-      for (FormattingElement element : formattingAnalysis.elements) {
+    if (formattingArea.getBoldCount() + formattingArea.getItalicCount() == 1) {
+      for (PageElementFormatting element : formattingAnalysis.getElements()) {
         reportElements.add(element);
       }
-      FormattingElement.excludeArea(elements, beginAnalysis, endAnalysis);
+      PageElementFormatting.excludeArea(elements, beginAnalysis, endAnalysis);
     }
 
     // Check that every element is in the same area
-    FormattingElement firstElement = formattingAnalysis.elements.get(0);
+    PageElementFormatting firstElement = formattingAnalysis.getElements().get(0);
     boolean sameArea = true;
-    for (FormattingElement element : formattingAnalysis.elements) {
-      sameArea &= FormattingElement.areInSameArea(firstElement, element);
+    for (PageElementFormatting element : formattingAnalysis.getElements()) {
+      sameArea &= PageElementFormatting.areInSameArea(firstElement, element);
     }
     if (!sameArea) {
       return false;
@@ -298,35 +299,35 @@ public class CheckErrorAlgorithm540 extends CheckErrorAlgorithmBase {
 
     // Clear area if correct
     int countOutside =
-        formattingArea.boldCount + formattingArea.italicCount -
-        formattingAnalysis.boldCount - formattingAnalysis.italicCount;
-    if ((formattingAnalysis.boldCount + formattingAnalysis.italicCount) % 2 == 0) {
+        formattingArea.getBoldCount() + formattingArea.getItalicCount() -
+        formattingAnalysis.getBoldCount() - formattingAnalysis.getItalicCount();
+    if ((formattingAnalysis.getBoldCount() + formattingAnalysis.getItalicCount()) % 2 == 0) {
       if (countOutside % 2 != 0) {
-        FormattingElement.excludeArea(elements, beginAnalysis, endAnalysis);
+        PageElementFormatting.excludeArea(elements, beginAnalysis, endAnalysis);
       } else {
-        FormattingElement.excludeArea(elements, beginArea, endArea);
+        PageElementFormatting.excludeArea(elements, beginArea, endArea);
       }
       return true;
     }
 
     // If all formats are the same, report the last one
-    if ((formattingAnalysis.boldCount == 0) ||
-        (formattingAnalysis.italicCount == 0)) {
-      reportElements.add(formattingAnalysis.elements.get(formattingAnalysis.elements.size() - 1));
+    if ((formattingAnalysis.getBoldCount() == 0) ||
+        (formattingAnalysis.getItalicCount() == 0)) {
+      reportElements.add(formattingAnalysis.getElements().get(formattingAnalysis.getElements().size() - 1));
       if (countOutside % 2 != 0) {
-        FormattingElement.excludeArea(elements, beginAnalysis, endAnalysis);
+        PageElementFormatting.excludeArea(elements, beginAnalysis, endAnalysis);
       } else {
-        FormattingElement.excludeArea(elements, beginArea, endArea);
+        PageElementFormatting.excludeArea(elements, beginArea, endArea);
       }
       return true;
     }
 
     // Report one
-    reportElements.add(formattingAnalysis.elements.get(formattingAnalysis.elements.size() - 1));
+    reportElements.add(formattingAnalysis.getElements().get(formattingAnalysis.getElements().size() - 1));
     if (countOutside % 2 != 0) {
-      FormattingElement.excludeArea(elements, beginAnalysis, endAnalysis);
+      PageElementFormatting.excludeArea(elements, beginAnalysis, endAnalysis);
     } else {
-      FormattingElement.excludeArea(elements, beginArea, endArea);
+      PageElementFormatting.excludeArea(elements, beginArea, endArea);
     }
     return true;
   }
@@ -339,13 +340,14 @@ public class CheckErrorAlgorithm540 extends CheckErrorAlgorithmBase {
    */
   private void reportFormattingElement(
       PageAnalysis analysis,
-      List<FormattingElement> elements,
-      FormattingElement element,
+      List<PageElementFormatting> elements,
+      PageElementFormatting element,
       Collection<CheckErrorResult> errors) {
 
     // Report inside a list item
     PageElementListItem listItem = element.isInListItem();
     if (listItem != null) {
+      // TODO: See if we can set closeFull = true
       if (reportFormattingElement(
           analysis, elements, element, errors,
           listItem.getBeginIndex() + listItem.getDepth(), listItem.getEndIndex(),
@@ -459,7 +461,7 @@ public class CheckErrorAlgorithm540 extends CheckErrorAlgorithmBase {
 
     // Default report
     CheckErrorResult errorResult = createCheckErrorResult(
-        analysis, element.index, element.index + element.length);
+        analysis, element.getIndex(), element.getIndex() + element.getLength());
     errors.add(errorResult);
   }
 
@@ -474,8 +476,8 @@ public class CheckErrorAlgorithm540 extends CheckErrorAlgorithmBase {
    */
   private boolean reportFormattingElement(
       PageAnalysis analysis,
-      List<FormattingElement> elements,
-      FormattingElement element,
+      List<PageElementFormatting> elements,
+      PageElementFormatting element,
       Collection<CheckErrorResult> errors,
       int beginIndex, int endIndex,
       int beginArea, int endArea,
@@ -530,13 +532,13 @@ public class CheckErrorAlgorithm540 extends CheckErrorAlgorithmBase {
     }
 
     // Report with only one formatting element
-    FormattingAnalysis formatting = FormattingAnalysis.analyzeArea(
+    PageElementFormattingAnalysis formatting = PageElementFormattingAnalysis.analyzeArea(
         elements, beginIndex, endIndex);
-    if (formatting.elements.size() == 1) {
+    if (formatting.getElements().size() == 1) {
 
       // Report with only the formatting element
-      if ((element.index == initialBeginIndex) &&
-          (element.index + element.length == endIndex)) {
+      if ((element.getIndex() == initialBeginIndex) &&
+          (element.getIndex() + element.getLength() == endIndex)) {
         CheckErrorResult errorResult = createCheckErrorResult(
             analysis, beginArea, endArea);
         if (requiresText &&
@@ -551,9 +553,9 @@ public class CheckErrorAlgorithm540 extends CheckErrorAlgorithmBase {
       }
 
       // Report with the formatting element at the end
-      if (element.index + element.length == endIndex) {
+      if (element.getIndex() + element.getLength() == endIndex) {
         CheckErrorResult errorResult = createCheckErrorResult(
-            analysis, element.index, element.index + element.length);
+            analysis, element.getIndex(), element.getIndex() + element.getLength());
         deleteEnd &= !hasSingleQuote;
         deleteEnd &= !hasDoubleQuotes;
         deleteEnd &= element.isAloneInArea(elements);
@@ -563,13 +565,13 @@ public class CheckErrorAlgorithm540 extends CheckErrorAlgorithmBase {
       }
 
       // Report with the formatting element at the beginning
-      if (element.index == beginIndex) {
+      if (element.getIndex() == beginIndex) {
         CheckErrorResult errorResult = createCheckErrorResult(
-            analysis, element.index, endIndex);
+            analysis, element.getIndex(), endIndex);
         String addition = contents.substring(
-            element.index, element.index + element.getMeaningfulLength()); 
+            element.getIndex(), element.getIndex() + element.getMeaningfulLength()); 
         String replacement =
-            contents.substring(element.index, endIndex) +
+            contents.substring(element.getIndex(), endIndex) +
             addition;
         String text = addition + "..." + addition;
         closeFull &= !hasSingleQuote;
@@ -676,475 +678,6 @@ public class CheckErrorAlgorithm540 extends CheckErrorAlgorithmBase {
       }
     } while (tryAgain);
     return endIndex;
-  }
-
-  /**
-   * Bean for memorizing formatting elements
-   */
-  private static class FormattingElement {
-
-    /** Page analysis */
-    private final PageAnalysis analysis;
-
-    /** Index of the formatting element in the text */
-    final int index;
-
-    /** Length of the formatting element */
-    final int length;
-
-    /** True when element has been analyzed */
-    private boolean analyzed;
-
-    /** <ref> tag in which the element is */
-    private PageElementTag inRefTag;
-
-    /** Internal link in which the element is */
-    private PageElementInternalLink inILink;
-
-    /** External link in which the element is */
-    private PageElementExternalLink inELink;
-
-    /** Template in which the element is */
-    private PageElementTemplate inTemplate;
-
-    /** Template parameter in which the element is */
-    private PageElementTemplate.Parameter inTemplateParameter;
-
-    /** Title in which the element is */
-    private PageElementTitle inTitle;
-
-    /** Image in which the element is */
-    private PageElementImage inImage;
-
-    /** List item in which the element is */
-    private PageElementListItem inListItem;
-
-    /** Table in which the element is */
-    private PageElementTable inTable;
-
-    /** Table caption in which the element is */
-    private PageElementTable.TableCaption inTableCaption;
-
-    /** Table cell in which the element is */
-    private PageElementTable.TableCell inTableCell;
-
-    /**
-     * @param index Begin index of the formatting element.
-     * @param length Length of the formatting element.
-     */
-    private FormattingElement(
-        PageAnalysis analysis, int index, int length) {
-      this.analysis = analysis;
-      this.index = index;
-      this.length = length;
-      this.analyzed = false;
-    }
-
-    /**
-     * @return Meaningful length.
-     */
-    public int getMeaningfulLength() {
-      switch (length) {
-      case 2:
-      case 3:
-      case 5:
-        return length;
-      case 4:
-        return 3;
-      default:
-        return 5;
-      }
-    }
-
-    /**
-     * @return True if formatting element has bold.
-     */
-    public boolean isBold() {
-      return (length > 2);
-    }
-
-    /**
-     * @return True if formatting element has italic.
-     */
-    public boolean isItalic() {
-      return ((length == 2) || (length >= 5));
-    }
-
-    /**
-     * Perform an analysis of the element.
-     */
-    private void analyze() {
-      if (analyzed) {
-        return;
-      }
-      inRefTag = analysis.getSurroundingTag(PageElementTag.TAG_WIKI_REF, index);
-      inILink = analysis.isInInternalLink(index);
-      inELink = analysis.isInExternalLink(index);
-      inTemplate = analysis.isInTemplate(index);
-      if (inTemplate != null) {
-        inTemplateParameter = inTemplate.getParameterAtIndex(index);
-      } else {
-        inTemplateParameter = null;
-      }
-      inTitle = analysis.isInTitle(index);
-      inImage = analysis.isInImage(index);
-      inListItem = analysis.isInListItem(index);
-      inTable = analysis.isInTable(index);
-      if (inTable != null) {
-        PageElementTable.TableCaption caption = inTable.getTableCaption();
-        if ((caption != null) && (caption.containsIndex(index))) {
-          inTableCaption = caption;
-        } else {
-          inTableCaption = null;
-        }
-        inTableCell = inTable.getCellAtIndex(index);
-      } else {
-        inTableCaption = null;
-        inTableCell = null;
-      }
-      // TODO: more analysis
-      analyzed = true;
-    }
-
-    /**
-     * @return Reference tag in which the element is.
-     */
-    public PageElementTag isInRefTag() {
-      analyze();
-      return inRefTag;
-    }
-
-    /**
-     * @return Internal link in which the element is.
-     */
-    public PageElementInternalLink isInInternalLink() {
-      analyze();
-      return inILink;
-    }
-
-    /**
-     * @return External link in which the element is.
-     */
-    public PageElementExternalLink isInExternalLink() {
-      analyze();
-      return inELink;
-    }
-
-    /**
-     * @return Title in which the element is.
-     */
-    public PageElementTitle isInTitle() {
-      analyze();
-      return inTitle;
-    }
-
-    /**
-     * @return Image in which the element is.
-     */
-    public PageElementImage isInImage() {
-      analyze();
-      return inImage;
-    }
-
-    /**
-     * @return List item in which the element is.
-     */
-    public PageElementListItem isInListItem() {
-      analyze();
-      return inListItem;
-    }
-
-    /**
-     * @return Table caption in which the element is.
-     */
-    public PageElementTable.TableCaption isInTableCaption() {
-      analyze();
-      return inTableCaption;
-    }
-
-    /**
-     * @return Table cell in which the element is.
-     */
-    public PageElementTable.TableCell isInTableCell() {
-      analyze();
-      return inTableCell;
-    }
-
-    /**
-     * @return Template parameter in which the element is.
-     */
-    public PageElementTemplate.Parameter isInTemplateParameter() {
-      analyze();
-      return inTemplateParameter;
-    }
-
-    /**
-     * @param elements Elements.
-     * @return True if an other element is in the same are.
-     */
-    public boolean isAloneInArea(List<FormattingElement> elements) {
-      if (elements != null) {
-        for (FormattingElement element : elements) {
-          if (element != this) {
-            boolean checked = false;
-
-            // Check inside a reference tag
-            if (!checked) {
-              if (inRefTag != null) {
-                if ((element.index >= inRefTag.getValueBeginIndex()) &&
-                    (element.index < inRefTag.getValueEndIndex())) {
-                  return false;
-                }
-                checked = true;
-              } else if (element.inRefTag != null) {
-                checked = true;
-              }
-            }
-
-            // Check inside a title
-            if (!checked) {
-              if (inTitle != null) {
-                if (inTitle.containsIndex(element.index)) {
-                  return false;
-                }
-                checked = true;
-              } else if (element.inTitle != null) {
-                checked = true;
-              }
-            }
-
-            // Check inside an image
-            if (!checked) {
-              if (inImage != null) {
-                if (inImage.containsIndex(element.index)) {
-                  return false;
-                }
-                checked = true;
-              } else if (element.inImage != null) {
-                checked = true;
-              }
-            }
-
-            // Check inside a table caption
-            if (!checked) {
-              if ((inTable != null) && (inTableCaption != null)) {
-                if (inTableCaption.containsIndex(element.index)) {
-                  return false;
-                }
-                checked = true;
-              } else if (element.inTableCaption != null) {
-                checked = true;
-              }
-            }
-
-            // Check inside a table cell
-            if (!checked) {
-              if ((inTable != null) && (inTableCell != null)) {
-                if (inTableCell.containsIndex(element.index)) {
-                  return false;
-                }
-                checked = true;
-              } else if (element.inTableCell != null) {
-                checked = true;
-              }
-            }
-
-            // Check the rest of the elements
-            if (!checked) {
-              if ((inILink != null) && (inILink.containsIndex(element.index))) {
-                return false;
-              }
-              if ((inELink != null) && (inELink.containsIndex(element.index))) {
-                return false;
-              }
-              if ((inListItem != null) && (inListItem.containsIndex(element.index))) {
-                return false;
-              }
-              if ((inTemplate != null) && (inTemplate.containsIndex(element.index))) {
-                return false;
-              }
-              // TODO: change to true once paragraph is managed
-              return false;
-            }
-          }
-        }
-      }
-      return true;
-    }
-
-    /**
-     * @param analysis Page analysis.
-     * @return List of formatting elements in the page.
-     */
-    static List<FormattingElement> listFormattingElements(
-        PageAnalysis analysis) {
-
-      // Analyze contents for formatting elements
-      List<FormattingElement> elements = new ArrayList<>();
-      String contents = analysis.getContents();
-      int index = 0;
-      do {
-        index = contents.indexOf('\'', index);
-        if (index >= 0) {
-          int length = 1;
-          while ((index + length < contents.length()) &&
-                 (contents.charAt(index + length) == '\'')) {
-            length++;
-          }
-          if (length > 1) {
-            elements.add(new FormattingElement(analysis, index, length));
-          }
-          index += length;
-        }
-      } while (index >= 0);
-
-      // Exclude comments
-      List<PageElementComment> comments = analysis.getComments();
-      for (PageElementComment comment : comments) {
-        FormattingElement.excludeArea(
-            elements, comment.getBeginIndex(), comment.getEndIndex());
-      }
-
-      // Exclude some tags
-      String[] tagsExclusions = new String[] {
-          PageElementTag.TAG_WIKI_CHEM,
-          PageElementTag.TAG_WIKI_MATH,
-          PageElementTag.TAG_WIKI_MATH_CHEM,
-          PageElementTag.TAG_WIKI_NOWIKI,
-          PageElementTag.TAG_WIKI_SOURCE,
-          PageElementTag.TAG_WIKI_SYNTAXHIGHLIGHT,
-          PageElementTag.TAG_WIKI_TIMELINE,
-      };
-      for (String tagsExclusion : tagsExclusions) {
-        List<PageElementTag> tags = analysis.getCompleteTags(tagsExclusion);
-        for (PageElementTag tag : tags) {
-          FormattingElement.excludeArea(
-              elements, tag.getCompleteBeginIndex(), tag.getCompleteEndIndex());
-        }
-      }
-
-      return elements;
-    }
-
-    /**
-     * @param first First element.
-     * @param second Second element.
-     * @return True if both elements are in the same area.
-     */
-    static boolean areInSameArea(
-        FormattingElement first,
-        FormattingElement second) {
-
-      // Perform analysis on each element
-      if (!first.analyzed) {
-        first.analyze();
-      }
-      if (!second.analyzed) {
-        second.analyze();
-      }
-
-      // Check if they are in the same area
-      boolean sameArea = true;
-      sameArea &= (first.inRefTag == second.inRefTag);
-      sameArea &= (first.inILink == second.inILink);
-      sameArea &= (first.inELink == second.inELink);
-      sameArea &= (first.inTemplate == second.inTemplate);
-      sameArea &= (first.inTemplateParameter == second.inTemplateParameter);
-      sameArea &= (first.inTitle == second.inTitle);
-      sameArea &= (first.inImage == second.inImage);
-      sameArea &= (first.inListItem == second.inListItem);
-      sameArea &= (first.inTable == second.inTable);
-      sameArea &= (first.inTableCaption == second.inTableCaption);
-      sameArea &= (first.inTableCell == second.inTableCell);
-      // TODO
-      return sameArea;
-    }
-
-    /**
-     * Exclude an area from the analysis.
-     * 
-     * @param elements Formatting elements. 
-     * @param beginIndex Begin index of the text area.
-     * @param endIndex End index of the text area.
-     */
-    static void excludeArea(
-        List<FormattingElement> elements,
-        int beginIndex, int endIndex) {
-      Iterator<FormattingElement> itElement = elements.iterator();
-      while (itElement.hasNext()) {
-        FormattingElement element = itElement.next();
-        if ((element.index >= beginIndex) &&
-            (element.index + element.length <= endIndex)) {
-          itElement.remove();
-        }
-      }
-    }
-  }
-
-  /**
-   * Bean for storing the analysis of formatting elements in an area.
-   */
-  private static class FormattingAnalysis {
-
-    /** List of formatting elements */
-    final List<FormattingElement> elements;
-
-    /** Count of bold formatting */
-    final int boldCount;
-
-    /** Count of italic formatting */
-    final int italicCount;
-
-    /** Static object for empty analysis to avoid useless memory allocation */
-    final private static FormattingAnalysis EMPTY = new FormattingAnalysis(new ArrayList<FormattingElement>(), 0, 0);
-
-    /**
-     * @param bold Count of bold formatting.
-     * @param italic Count of italic formatting.
-     */
-    private FormattingAnalysis(
-        List<FormattingElement> elements,
-        int bold, int italic) {
-      this.elements = elements;
-      this.boldCount = bold;
-      this.italicCount = italic;
-    }
-
-    /**
-     * Analyze an area for its formatting elements.
-     * 
-     * @param elements Formatting elements.
-     * @param beginIndex Begin index of the text area.
-     * @param endIndex End index of the text area.
-     * @return Analysis.
-     */
-    static FormattingAnalysis analyzeArea(
-        List<FormattingElement> elements,
-        int beginIndex, int endIndex) {
-      int bold = 0;
-      int italic = 0;
-      List<FormattingElement> selected = null;
-      for (int index = 0; index < elements.size(); index++) {
-        FormattingElement element = elements.get(index);
-        if ((element.index >= beginIndex) &&
-            (element.index + element.length <= endIndex)) {
-          if (selected == null) {
-            selected = new ArrayList<>();
-          }
-          selected.add(element);
-          if (element.isBold()) {
-            bold++;
-          }
-          if (element.isItalic()) {
-            italic++;
-          }
-        }
-      }
-      if (bold + italic == 0) {
-        return FormattingAnalysis.EMPTY;
-      }
-      return new FormattingAnalysis(selected, bold, italic);
-    }
   }
 
   // ==============================================================================================
