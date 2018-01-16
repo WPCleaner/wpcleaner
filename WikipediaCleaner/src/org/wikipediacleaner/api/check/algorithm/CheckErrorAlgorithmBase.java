@@ -389,13 +389,21 @@ public abstract class CheckErrorAlgorithmBase implements CheckErrorAlgorithm {
       Collections.sort(errors);
       for (int i = errors.size(); i > 0; i--) {
         CheckErrorResult errorResult = errors.get(i - 1);
-        String newText = errorResult.getAutomaticReplacement();
-        if (newText != null) {
-          String tmp =
-            result.substring(0, errorResult.getStartPosition()) +
-            newText +
-            result.substring(errorResult.getEndPosition());
-          result = tmp;
+        boolean shouldTry = true;
+        for (int j = 0; j < i - 1; j++) {
+          if (errors.get(j).getEndPosition() > errorResult.getStartPosition()) {
+            shouldTry = false;
+          }
+        }
+        if (shouldTry) {
+          String newText = errorResult.getAutomaticReplacement();
+          if (newText != null) {
+            String tmp =
+              result.substring(0, errorResult.getStartPosition()) +
+              newText +
+              result.substring(errorResult.getEndPosition());
+            result = tmp;
+          }
         }
       }
     }
