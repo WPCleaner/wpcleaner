@@ -128,7 +128,7 @@ public class LinterErrorRenderer extends AbstractCellEditor implements
             textPane.moveCaretPosition(startValue);
             if (locations.length > 1) {
               int endValue = Integer.valueOf(locations[1]);
-              if ((endValue >= 0) && (endValue < textPane.getText().length())) {
+              if ((endValue >= 0) && (endValue <= textPane.getText().length())) {
                 textPane.moveCaretPosition(endValue);
               }
             }
