@@ -634,6 +634,19 @@ public class CheckErrorAlgorithm540 extends CheckErrorAlgorithmBase {
         }
       }
 
+      // Ignore images at the beginning
+      if (complete &&
+          (beginIndex < endIndex) &&
+          (contents.charAt(beginIndex) == '[')) {
+        PageElementImage image = analysis.isInImage(beginIndex);
+        if ((image != null) && (image.getBeginIndex() == beginIndex)) {
+          if (image.getEndIndex() < endIndex) {
+            beginIndex = image.getEndIndex();
+            tryAgain = true;
+          }
+        }
+      }
+
       // Ignore unclosed tags at the beginning
       if (complete &&
           (beginIndex < endIndex) &&
