@@ -654,8 +654,10 @@ public class CheckErrorAlgorithm540 extends CheckErrorAlgorithmBase {
         PageElementTag tag = analysis.isInTag(beginIndex);
         if ((tag != null) && (tag.getBeginIndex() == beginIndex)) {
           if (tag.isFullTag() || !tag.isComplete()) {
-            beginIndex = tag.getEndIndex();
-            tryAgain = true;
+            if (tag.getEndIndex() < endIndex) {
+              beginIndex = tag.getEndIndex();
+              tryAgain = true;
+            }
           }
         }
       }
@@ -698,6 +700,19 @@ public class CheckErrorAlgorithm540 extends CheckErrorAlgorithmBase {
         if ((comment != null) && (comment.getEndIndex() == endIndex)) {
           endIndex = comment.getBeginIndex();
           tryAgain = true;
+        }
+      }
+
+      // Ignore reference tags at the end
+      if ((endIndex > beginIndex) && (contents.charAt(endIndex - 1) == '>')) {
+        PageElementTag tag = analysis.isInTag(endIndex - 1);
+        if ((tag != null) && (tag.getEndIndex() == endIndex) && tag.isComplete()) {
+          if (PageElementTag.TAG_WIKI_REF.equals(tag.getNormalizedName())) {
+            if (tag.getCompleteBeginIndex() > beginIndex) {
+              endIndex = tag.getCompleteBeginIndex();
+              tryAgain = true;
+            }
+          }
         }
       }
     } while (tryAgain);
