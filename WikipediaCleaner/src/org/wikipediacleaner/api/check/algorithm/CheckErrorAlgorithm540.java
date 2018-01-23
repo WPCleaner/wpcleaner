@@ -566,21 +566,32 @@ public class CheckErrorAlgorithm540 extends CheckErrorAlgorithmBase {
 
       // Report with the formatting element at the beginning
       if (element.getIndex() == beginIndex) {
-        CheckErrorResult errorResult = createCheckErrorResult(
-            analysis, element.getIndex(), endIndex);
-        String addition = contents.substring(
-            element.getIndex(), element.getIndex() + element.getMeaningfulLength()); 
-        String replacement =
-            contents.substring(element.getIndex(), endIndex) +
-            addition;
-        String text = addition + "..." + addition;
         closeFull &= !hasSingleQuote;
         closeFull &= !hasDoubleQuotes;
         closeFull &= (contents.charAt(endIndex - 1) != '\'');
         closeFull &= element.isAloneInArea(elements);
-        errorResult.addReplacement(replacement, text, closeFull);
-        errors.add(errorResult);
-        return true;
+        if (!element.canBeClosedAt(endIndex)) {
+          closeFull = false;
+          int tmpIndex = element.getIndex() + element.getLength();
+          while ((tmpIndex < endIndex) &&
+                 (contents.charAt(tmpIndex) != '\n')) {
+            tmpIndex++;
+          }
+          endIndex = tmpIndex;
+        }
+        if (element.canBeClosedAt(endIndex)) {
+          CheckErrorResult errorResult = createCheckErrorResult(
+              analysis, element.getIndex(), endIndex);
+          String addition = contents.substring(
+              element.getIndex(), element.getIndex() + element.getMeaningfulLength()); 
+          String replacement =
+              contents.substring(element.getIndex(), endIndex) +
+              addition;
+          String text = addition + "..." + addition;
+            errorResult.addReplacement(replacement, text, closeFull);
+          errors.add(errorResult);
+          return true;
+        }
       }
     }
 

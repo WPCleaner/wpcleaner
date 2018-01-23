@@ -28,9 +28,7 @@ public class PageElementTemplate extends PageElement {
   /**
    * Class containing information about a template parameter.
    */
-  public static class Parameter {
-    final int pipeIndex;
-    final int endIndex;
+  public static class Parameter extends PageElement {
     final String name;
     final String nameNotTrimmed;
     final String computedName;
@@ -54,8 +52,7 @@ public class PageElementTemplate extends PageElement {
         int pipeIndex, int endIndex,
         String name, String computedName, int nameStartIndex,
         String value, String strippedValue, int valueStartIndex) {
-      this.pipeIndex = pipeIndex;
-      this.endIndex = endIndex;
+      super(pipeIndex, endIndex);
       this.nameNotTrimmed = name;
       this.name = (name != null) ? name.trim() : null;
       this.computedName = (computedName != null) ? computedName : this.name;
@@ -70,14 +67,7 @@ public class PageElementTemplate extends PageElement {
      * @return Parameter pipe index.
      */
     public int getPipeIndex() {
-      return pipeIndex;
-    }
-
-    /**
-     * @return Parameter end index.
-     */
-    public int getEndIndex() {
-      return endIndex;
+      return getBeginIndex();
     }
 
     /**
@@ -618,7 +608,7 @@ public class PageElementTemplate extends PageElement {
    */
   public int getParameterPipeIndex(int index) {
     if ((index >= 0) && (index < parameters.size())) {
-      return parameters.get(index).pipeIndex;
+      return parameters.get(index).getPipeIndex();
     }
     return 0;
   }

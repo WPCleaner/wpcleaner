@@ -30,7 +30,13 @@ public class PageElementFormatting {
   /** True when element has been analyzed */
   private boolean analyzed;
 
-  /** <ref> tag in which the element is */
+  /** Beginning of the main area in which the element is */
+  private int mainAreaBegin;
+
+  /** End of the main area in which the element is */
+  private int mainAreaEnd;
+
+  /** Reference tag in which the element is */
   private PageElementTag inRefTag;
 
   /** Internal link in which the element is */
@@ -126,6 +132,8 @@ public class PageElementFormatting {
     if (analyzed) {
       return;
     }
+
+    // Analyze element compared to each kind of other elements
     inRefTag = analysis.getSurroundingTag(PageElementTag.TAG_WIKI_REF, index);
     inILink = analysis.isInInternalLink(index);
     inELink = analysis.isInExternalLink(index);
@@ -151,8 +159,26 @@ public class PageElementFormatting {
       inTableCaption = null;
       inTableCell = null;
     }
-    // TODO: more analysis
+    // TODO: add paragraph
+
+    // Compute main area
+    computeMainArea();
+
     analyzed = true;
+  }
+
+  /**
+   * @return Beginning of the main area in which the element is.
+   */
+  public int getMainAreaBegin() {
+    return mainAreaBegin;
+  }
+
+  /**
+   * @return End of the main area in which the element is.
+   */
+  public int getMainAreaEnd() {
+    return mainAreaEnd;
   }
 
   /**
@@ -228,96 +254,137 @@ public class PageElementFormatting {
   }
 
   /**
+   * @return Main area in which the formatting element is.
+   */
+  private void computeMainArea() {
+    mainAreaBegin = 0;
+    mainAreaEnd = analysis.getContents().length();
+
+    // Check inside a reference tag
+    if (inRefTag != null) {
+      mainAreaBegin = inRefTag.getValueBeginIndex();
+      mainAreaEnd = inRefTag.getValueEndIndex();
+    }
+
+    // Check inside a title
+    if (inTitle != null) {
+      mainAreaBegin = Math.max(mainAreaBegin, inTitle.getBeginIndex());
+      mainAreaEnd = Math.min(mainAreaEnd, inTitle.getEndIndex());
+    }
+
+    // Check inside an image
+    // NOTE: Unsafe for cases like [[File:...|''...]]''
+    //if (inImage != null) {
+    //  mainAreaBegin = Math.max(mainAreaBegin, inImage.getBeginIndex());
+    //  mainAreaEnd = Math.min(mainAreaEnd, inImage.getEndIndex());
+    //}
+
+    // Check inside a table caption
+    if ((inTable != null) && (inTableCaption != null)) {
+      mainAreaBegin = Math.max(mainAreaBegin, inTableCaption.getBeginIndex());
+      mainAreaEnd = Math.min(mainAreaEnd, inTableCaption.getEndIndex());
+    }
+
+    // Check inside a table cell
+    if ((inTable != null) && (inTableCell != null)) {
+      mainAreaBegin = Math.max(mainAreaBegin, inTableCell.getBeginIndex());
+      mainAreaEnd = Math.min(mainAreaEnd, inTableCell.getEndIndex());
+    }
+
+    // Check inside a list item
+    if (inListItem != null) {
+      mainAreaBegin = Math.max(mainAreaBegin, inListItem.getBeginIndex());
+      mainAreaEnd = Math.min(mainAreaEnd, inListItem.getEndIndex());
+    }
+
+    // TODO: Add paragraph
+  }
+
+  /**
    * @param elements Elements.
    * @return True if an other element is in the same are.
    */
   public boolean isAloneInArea(List<PageElementFormatting> elements) {
-    if (elements != null) {
-      for (PageElementFormatting element : elements) {
-        if (element != this) {
-          boolean checked = false;
 
-          // Check inside a reference tag
-          if (!checked) {
-            if (inRefTag != null) {
-              if ((element.index >= inRefTag.getValueBeginIndex()) &&
-                  (element.index < inRefTag.getValueEndIndex())) {
-                return false;
-              }
-              checked = true;
-            } else if (element.inRefTag != null) {
-              checked = true;
-            }
-          }
+    // If no elements, obviously alone
+    if (elements == null) {
+      return true;
+    }
 
-          // Check inside a title
-          if (!checked) {
-            if (inTitle != null) {
-              if (inTitle.containsIndex(element.index)) {
-                return false;
-              }
-              checked = true;
-            } else if (element.inTitle != null) {
-              checked = true;
-            }
-          }
+    // If main area is unknown, be safe and assume not alone
+    if ((mainAreaBegin == 0) &&
+        (mainAreaEnd == analysis.getContents().length())) {
+      return false;
+    }
 
-          // Check inside an image
-          if (!checked) {
-            if (inImage != null) {
-              if (inImage.containsIndex(element.index)) {
-                return false;
-              }
-              checked = true;
-            } else if (element.inImage != null) {
-              checked = true;
-            }
-          }
-
-          // Check inside a table caption
-          if (!checked) {
-            if ((inTable != null) && (inTableCaption != null)) {
-              if (inTableCaption.containsIndex(element.index)) {
-                return false;
-              }
-              checked = true;
-            } else if (element.inTableCaption != null) {
-              checked = true;
-            }
-          }
-
-          // Check inside a table cell
-          if (!checked) {
-            if ((inTable != null) && (inTableCell != null)) {
-              if (inTableCell.containsIndex(element.index)) {
-                return false;
-              }
-              checked = true;
-            } else if (element.inTableCell != null) {
-              checked = true;
-            }
-          }
-
-          // Check the rest of the elements
-          if (!checked) {
-            if ((inILink != null) && (inILink.containsIndex(element.index))) {
-              return false;
-            }
-            if ((inELink != null) && (inELink.containsIndex(element.index))) {
-              return false;
-            }
-            if ((inListItem != null) && (inListItem.containsIndex(element.index))) {
-              return false;
-            }
-            if ((inTemplate != null) && (inTemplate.containsIndex(element.index))) {
-              return false;
-            }
-            // TODO: change to true once paragraph is managed
-            return false;
-          }
+    // Check that other elements are not in the same main area
+    for (PageElementFormatting element : elements) {
+      if (element != this) {
+        if ((element.index >= mainAreaBegin) &&
+            (element.index < mainAreaEnd)) {
+          return false;
+        }
+        if ((index >= element.mainAreaBegin) &&
+            (index < element.mainAreaEnd)) {
+          return false;
         }
       }
     }
+
+    return true;
+  }
+
+  /**
+   * @param closeIndex Index where to close the formatting element.
+   * @return True if the formatting element can be closed safely.
+   */
+  public boolean canBeClosedAt(int closeIndex) {
+
+    // Check that the close index is in the same areas than the element
+    if ((inRefTag != null) && (!inRefTag.containsIndex(closeIndex - 1))) {
+      return false;
+    }
+    if ((inILink != null) && (!inILink.containsIndex(closeIndex - 1))) {
+      return false;
+    }
+    if ((inELink != null) && (!inELink.containsIndex(closeIndex - 1))) {
+      return false;
+    }
+    if ((inTemplate != null) && (!inTemplate.containsIndex(closeIndex - 1))) {
+      return false;
+    }
+    if ((inTemplateParameter != null) && (!inTemplateParameter.containsIndex(closeIndex - 1))) {
+      return false;
+    }
+    if ((inTitle != null) && (!inTitle.containsIndex(closeIndex - 1))) {
+      return false;
+    }
+    if ((inImage != null) && (!inImage.containsIndex(closeIndex - 1))) {
+      return false;
+    }
+    if ((inListItem != null) && (!inListItem.containsIndex(closeIndex - 1))) {
+      return false;
+    }
+    if ((inTable != null) && (!inTable.containsIndex(closeIndex - 1))) {
+      return false;
+    }
+    if ((inTableCaption != null) && (!inTableCaption.containsIndex(closeIndex - 1))) {
+      return false;
+    }
+    if ((inTableCell != null) && (!inTableCell.containsIndex(closeIndex - 1))) {
+      return false;
+    }
+
+    // Check that there are no line breaks
+    String contents = analysis.getContents();
+    for (int tmpIndex = index + length; tmpIndex < closeIndex; tmpIndex++) {
+      if (contents.charAt(tmpIndex) == '\n') {
+        return false;
+      }
+    }
+
+    // TODO: Check that closeIndex is not inside something else ?
+
     return true;
   }
 
