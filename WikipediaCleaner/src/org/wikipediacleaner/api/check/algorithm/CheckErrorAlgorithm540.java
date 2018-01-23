@@ -653,7 +653,9 @@ public class CheckErrorAlgorithm540 extends CheckErrorAlgorithmBase {
           (contents.charAt(beginIndex) == '<')) {
         PageElementTag tag = analysis.isInTag(beginIndex);
         if ((tag != null) && (tag.getBeginIndex() == beginIndex)) {
-          if (tag.isFullTag() || !tag.isComplete()) {
+          if (tag.isFullTag() ||
+              !tag.isComplete() ||
+              PageElementTag.TAG_HTML_BR.equals(tag.getNormalizedName())) {
             if (tag.getEndIndex() < endIndex) {
               beginIndex = tag.getEndIndex();
               tryAgain = true;
@@ -703,13 +705,19 @@ public class CheckErrorAlgorithm540 extends CheckErrorAlgorithmBase {
         }
       }
 
-      // Ignore reference tags at the end
+      // Ignore some tags at the end
       if ((endIndex > beginIndex) && (contents.charAt(endIndex - 1) == '>')) {
         PageElementTag tag = analysis.isInTag(endIndex - 1);
         if ((tag != null) && (tag.getEndIndex() == endIndex) && tag.isComplete()) {
           if (PageElementTag.TAG_WIKI_REF.equals(tag.getNormalizedName())) {
             if (tag.getCompleteBeginIndex() > beginIndex) {
               endIndex = tag.getCompleteBeginIndex();
+              tryAgain = true;
+            }
+          }
+          else if (PageElementTag.TAG_HTML_BR.equals(tag.getNormalizedName())) {
+            if (tag.getBeginIndex() > beginIndex) {
+              endIndex = tag.getBeginIndex();
               tryAgain = true;
             }
           }
