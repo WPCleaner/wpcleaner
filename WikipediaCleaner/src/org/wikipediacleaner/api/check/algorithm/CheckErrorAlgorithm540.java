@@ -442,7 +442,7 @@ public class CheckErrorAlgorithm540 extends CheckErrorAlgorithmBase {
           analysis, elements, element, errors,
           cell.getEndOptionsIndex(), cell.getEndIndex(),
           cell.getEndOptionsIndex(), cell.getEndIndex(),
-          true, false, true, true)) {
+          true, true, true, true)) {
         return;
       }
     }
