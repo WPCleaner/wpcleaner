@@ -318,15 +318,19 @@ public class PageElementFormatting {
     }
 
     // Check that other elements are not in the same main area
+    int textLength = analysis.getContents().length();
     for (PageElementFormatting element : elements) {
       if (element != this) {
         if ((element.index >= mainAreaBegin) &&
             (element.index < mainAreaEnd)) {
           return false;
         }
-        if ((index >= element.mainAreaBegin) &&
-            (index < element.mainAreaEnd)) {
-          return false;
+        if ((element.mainAreaBegin > 0) ||
+            (element.mainAreaEnd < textLength)) {
+          if ((index >= element.mainAreaBegin) &&
+              (index < element.mainAreaEnd)) {
+            return false;
+          }
         }
       }
     }
