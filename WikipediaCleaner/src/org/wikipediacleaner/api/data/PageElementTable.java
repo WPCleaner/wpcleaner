@@ -396,6 +396,10 @@ public class PageElementTable extends PageElement {
       if ((category != null) && (category.getBeginIndex() == index)) {
         return getTrueIndex(analysis, tables, category.getEndIndex());
       }
+      PageElementImage image = analysis.isInImage(index);
+      if ((image != null) && (image.getBeginIndex() == index)) {
+        return getTrueIndex(analysis, tables, image.getEndIndex());
+      }
     } else if (currentChar == '{') {
       PageElementTemplate template = analysis.isInTemplate(index);
       if ((template != null) && (template.getBeginIndex() == index)) {
