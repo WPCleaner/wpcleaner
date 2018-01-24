@@ -439,6 +439,12 @@ public class CheckErrorAlgorithm540 extends CheckErrorAlgorithmBase {
     // Report inside a table cell
     PageElementTable.TableCell cell = element.isInTableCell();
     if (cell != null) {
+      if (element.getIndex() < cell.getEndOptionsIndex()) {
+        if (reportFormattingElementInCellOptions(
+            analysis, elements, element, errors, cell)) {
+          return;
+        }
+      }
       if (reportFormattingElement(
           analysis, elements, element, errors,
           cell.getEndOptionsIndex(), cell.getEndIndex(),
@@ -464,6 +470,69 @@ public class CheckErrorAlgorithm540 extends CheckErrorAlgorithmBase {
     CheckErrorResult errorResult = createCheckErrorResult(
         analysis, element.getIndex(), element.getIndex() + element.getLength());
     errors.add(errorResult);
+  }
+
+  private boolean reportFormattingElementInCellOptions(
+      PageAnalysis analysis,
+      List<PageElementFormatting> elements,
+      PageElementFormatting element,
+      Collection<CheckErrorResult> errors,
+      PageElementTable.TableCell cell) {
+
+    // Check that the formatting element is alone in the cell options
+    String contents = analysis.getContents();
+    int beginIndex = element.getIndex();
+    while ((beginIndex > cell.getBeginIndex()) &&
+           (contents.charAt(beginIndex - 1) == ' ')) {
+      beginIndex--;
+    }
+    while ((beginIndex > cell.getBeginIndex()) &&
+           (contents.charAt(beginIndex - 1) == '|')) {
+      beginIndex--;
+    }
+    if (beginIndex != cell.getBeginIndex()) {
+      return false;
+    }
+    int endIndex = element.getIndex() + element.getLength();
+    while ((endIndex < cell.getEndOptionsIndex()) &&
+           (contents.charAt(endIndex) == ' ')) {
+      endIndex++;
+    }
+    if ((endIndex < cell.getEndOptionsIndex()) &&
+        (contents.charAt(endIndex) == '|')) {
+      endIndex++;
+    }
+    if (endIndex != cell.getEndOptionsIndex()) {
+      return false;
+    }
+
+    // Check other formatting elements in the cell
+    PageElementFormattingAnalysis otherFormatting = PageElementFormattingAnalysis.analyzeArea(
+        elements, cell.getEndOptionsIndex(), cell.getEndIndex());
+    if (otherFormatting.getElements().size() != 1) {
+      return false;
+    }
+    PageElementFormatting otherElement = otherFormatting.getElements().get(0);
+    if (otherElement.getLength() != element.getLength()) {
+      return false;
+    }
+    endIndex = otherElement.getIndex() + otherElement.getLength();
+    while ((endIndex < cell.getEndIndex()) &&
+           (" \n".indexOf(contents.charAt(endIndex)) >= 0)) {
+      endIndex++;
+    }
+    if (endIndex < cell.getEndIndex()) {
+      return false;
+    }
+
+    // Report error and suggestion
+    CheckErrorResult errorResult = createCheckErrorResult(
+        analysis, element.getIndex(), cell.getEndOptionsIndex());
+    errorResult.addReplacement(
+        contents.substring(element.getIndex(), element.getIndex() + element.getLength()),
+        true);
+    errors.add(errorResult);
+    return true;
   }
 
   /**
