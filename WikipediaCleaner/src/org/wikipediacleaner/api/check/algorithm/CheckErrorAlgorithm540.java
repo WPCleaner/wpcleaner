@@ -262,7 +262,8 @@ public class CheckErrorAlgorithm540 extends CheckErrorAlgorithmBase {
     }
 
     // If only one, there's a problem that can already be reported
-    if (formattingArea.getBoldCount() + formattingArea.getItalicCount() == 1) {
+    if ((formattingArea.getBoldCount() + formattingArea.getItalicCount() == 1) ||
+        (formattingArea.getElements().size() == 1)) {
       for (PageElementFormatting element : formattingArea.getElements()) {
         reportElements.add(element);
       }
@@ -509,7 +510,7 @@ public class CheckErrorAlgorithm540 extends CheckErrorAlgorithmBase {
         }
         if ((nextIndex - index == 2) ||
             (nextIndex - index == 3) ||
-            (nextIndex - index == 4)) {
+            (nextIndex - index == 5)) {
           shouldCount = false;
         }
         if (shouldCount) {
