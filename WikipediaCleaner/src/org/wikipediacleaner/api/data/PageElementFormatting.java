@@ -171,6 +171,7 @@ public class PageElementFormatting {
    * @return Beginning of the main area in which the element is.
    */
   public int getMainAreaBegin() {
+    analyze();
     return mainAreaBegin;
   }
 
@@ -178,6 +179,7 @@ public class PageElementFormatting {
    * @return End of the main area in which the element is.
    */
   public int getMainAreaEnd() {
+    analyze();
     return mainAreaEnd;
   }
 

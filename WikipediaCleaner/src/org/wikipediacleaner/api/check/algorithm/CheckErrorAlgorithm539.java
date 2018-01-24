@@ -13,6 +13,8 @@ import java.util.List;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.data.PageAnalysis;
+import org.wikipediacleaner.api.data.PageElementFormatting;
+import org.wikipediacleaner.api.data.PageElementFormattingAnalysis;
 import org.wikipediacleaner.api.data.PageElementInternalLink;
 import org.wikipediacleaner.api.data.PageElementTag;
 
@@ -41,7 +43,8 @@ public class CheckErrorAlgorithm539 extends CheckErrorAlgorithmBase {
           new ReplacementElement(PageElementTag.TAG_HTML_SUB, true, Order.BOTH_POSSIBLE),
           new ReplacementElement(PageElementTag.TAG_HTML_SUP, true, Order.BOTH_POSSIBLE),
           new ReplacementElement(PageElementTag.TAG_HTML_U, true, Order.BOTH_POSSIBLE),
-        }),
+        },
+        OrderFormatting.FORMATTING_ANYWHERE),
     new Replacement(
         PageElementTag.TAG_HTML_CENTER,
         new ReplacementElement[] {
@@ -54,7 +57,8 @@ public class CheckErrorAlgorithm539 extends CheckErrorAlgorithmBase {
           new ReplacementElement(PageElementTag.TAG_HTML_SUB, true, Order.MUST_KEEP),
           new ReplacementElement(PageElementTag.TAG_HTML_SUP, true, Order.MUST_KEEP),
           new ReplacementElement(PageElementTag.TAG_HTML_U, true, Order.MUST_KEEP),
-        }),
+        },
+        OrderFormatting.FORMATTING_INSIDE),
     new Replacement(
         PageElementTag.TAG_HTML_DIV,
         new ReplacementElement[] {
@@ -67,7 +71,8 @@ public class CheckErrorAlgorithm539 extends CheckErrorAlgorithmBase {
           new ReplacementElement(PageElementTag.TAG_HTML_SUB, true, Order.MUST_KEEP),
           new ReplacementElement(PageElementTag.TAG_HTML_SUP, true, Order.MUST_KEEP),
           new ReplacementElement(PageElementTag.TAG_HTML_U, true, Order.MUST_KEEP),
-        }),
+        },
+        OrderFormatting.FORMATTING_INSIDE),
     new Replacement(
         PageElementTag.TAG_HTML_FONT,
         new ReplacementElement[] {
@@ -80,7 +85,8 @@ public class CheckErrorAlgorithm539 extends CheckErrorAlgorithmBase {
           new ReplacementElement(PageElementTag.TAG_HTML_SUB, true, Order.BOTH_POSSIBLE),
           new ReplacementElement(PageElementTag.TAG_HTML_SUP, true, Order.BOTH_POSSIBLE),
           new ReplacementElement(PageElementTag.TAG_HTML_U, true, Order.BOTH_POSSIBLE),
-        }),
+        },
+        OrderFormatting.FORMATTING_ANYWHERE),
     new Replacement(
         PageElementTag.TAG_HTML_S,
         new ReplacementElement[] {
@@ -93,7 +99,8 @@ public class CheckErrorAlgorithm539 extends CheckErrorAlgorithmBase {
           new ReplacementElement(PageElementTag.TAG_HTML_SUB, true, Order.BOTH_POSSIBLE),
           new ReplacementElement(PageElementTag.TAG_HTML_SUP, true, Order.BOTH_POSSIBLE),
           new ReplacementElement(PageElementTag.TAG_HTML_U, true, Order.BOTH_POSSIBLE),
-        }),
+        },
+        OrderFormatting.FORMATTING_ANYWHERE),
     new Replacement(
         PageElementTag.TAG_HTML_SMALL,
         new ReplacementElement[] {
@@ -106,7 +113,8 @@ public class CheckErrorAlgorithm539 extends CheckErrorAlgorithmBase {
           new ReplacementElement(PageElementTag.TAG_HTML_SUB, true, Order.BOTH_POSSIBLE),
           new ReplacementElement(PageElementTag.TAG_HTML_SUP, true, Order.BOTH_POSSIBLE),
           new ReplacementElement(PageElementTag.TAG_HTML_U, true, Order.BOTH_POSSIBLE),
-        }),
+        },
+        OrderFormatting.FORMATTING_ANYWHERE),
     new Replacement(
         PageElementTag.TAG_HTML_SPAN,
         new ReplacementElement[] {
@@ -119,7 +127,8 @@ public class CheckErrorAlgorithm539 extends CheckErrorAlgorithmBase {
           new ReplacementElement(PageElementTag.TAG_HTML_SUB, true, Order.BOTH_POSSIBLE),
           new ReplacementElement(PageElementTag.TAG_HTML_SUP, true, Order.BOTH_POSSIBLE),
           new ReplacementElement(PageElementTag.TAG_HTML_U, true, Order.BOTH_POSSIBLE),
-        }),
+        },
+        OrderFormatting.FORMATTING_ANYWHERE),
     new Replacement(
         PageElementTag.TAG_HTML_SUB,
         new ReplacementElement[] {
@@ -132,7 +141,8 @@ public class CheckErrorAlgorithm539 extends CheckErrorAlgorithmBase {
           new ReplacementElement(PageElementTag.TAG_HTML_SPAN, true, Order.BOTH_POSSIBLE),
           new ReplacementElement(PageElementTag.TAG_HTML_SUP, true, Order.BOTH_POSSIBLE),
           new ReplacementElement(PageElementTag.TAG_HTML_U, true, Order.BOTH_POSSIBLE),
-        }),
+        },
+        OrderFormatting.FORMATTING_ANYWHERE),
     new Replacement(
         PageElementTag.TAG_HTML_SUP,
         new ReplacementElement[] {
@@ -145,7 +155,8 @@ public class CheckErrorAlgorithm539 extends CheckErrorAlgorithmBase {
           new ReplacementElement(PageElementTag.TAG_HTML_SPAN, true, Order.BOTH_POSSIBLE),
           new ReplacementElement(PageElementTag.TAG_HTML_SUB, true, Order.BOTH_POSSIBLE),
           new ReplacementElement(PageElementTag.TAG_HTML_U, true, Order.BOTH_POSSIBLE),
-        }),
+        },
+        OrderFormatting.FORMATTING_ANYWHERE),
     new Replacement(
         PageElementTag.TAG_HTML_U,
         new ReplacementElement[] {
@@ -158,7 +169,8 @@ public class CheckErrorAlgorithm539 extends CheckErrorAlgorithmBase {
           new ReplacementElement(PageElementTag.TAG_HTML_SPAN, true, Order.BOTH_POSSIBLE),
           new ReplacementElement(PageElementTag.TAG_HTML_SUB, true, Order.BOTH_POSSIBLE),
           new ReplacementElement(PageElementTag.TAG_HTML_SUP, true, Order.BOTH_POSSIBLE),
-        }),
+        },
+        OrderFormatting.FORMATTING_ANYWHERE),
   };
 
   /**
@@ -189,7 +201,204 @@ public class CheckErrorAlgorithm539 extends CheckErrorAlgorithmBase {
       result |= analyzeInternalLink(analysis, errors, iLink);
     }
 
+    // Analyze formatting elements
+    result |= analyzeFormattingElements(analysis, errors);
+
     return result;
+  }
+
+  /**
+   * @param analysis Page analysis.
+   * @param errors Errors found in the page.
+   * @return Flag indicating if the error was found.
+   */
+  private boolean analyzeFormattingElements(
+      PageAnalysis analysis,
+      Collection<CheckErrorResult> errors) {
+
+    // Analyze contents to find formatting elements
+    boolean result = false;
+    List<PageElementFormatting> elements = PageElementFormatting.listFormattingElements(analysis);
+    if (elements.isEmpty()) {
+      return false;
+    }
+
+    // Analyze inside tags
+    for (Replacement replacement : replacements) {
+      List<PageElementTag> tags = analysis.getCompleteTags(replacement.firstTag);
+      for (PageElementTag tag : tags) {
+        result |= analyzeTagForFormattingElements(
+            analysis, errors, tag, replacement, elements);
+      }
+    }
+
+    // Analyze inside internal links
+    // TODO
+
+    return result;
+  }
+
+  /**
+   * @param analysis Page analysis.
+   * @param errors Errors found in the page.
+   * @param tag Tag.
+   * @param replacement Replacement configuration.
+   * @param elements Formatting elements.
+   * @return Flag indicating if the error was found.
+   */
+  private boolean analyzeTagForFormattingElements(
+      PageAnalysis analysis,
+      Collection<CheckErrorResult> errors,
+      PageElementTag tag, Replacement replacement,
+      List<PageElementFormatting> elements) {
+
+    // Only deal with tags containing one formatting element
+    int tagBegin = tag.getCompleteBeginIndex();
+    int tagEnd = tag.getCompleteEndIndex();
+    int valueBegin = tag.getValueBeginIndex();
+    int valueEnd = tag.getValueEndIndex();
+    PageElementFormattingAnalysis formatting = PageElementFormattingAnalysis.analyzeArea(
+        elements, valueBegin, valueEnd);
+    if (formatting.getElements().size() != 1) {
+      return false;
+    }
+
+    // Check that the area contains a second formatting element
+    PageElementFormatting element = formatting.getElements().get(0);
+    int areaBegin = element.getMainAreaBegin();
+    int areaEnd = element.getMainAreaEnd();
+    String contents = analysis.getContents();
+    if ((areaBegin == 0) && (areaEnd == contents.length())) {
+      return false;
+    }
+    PageElementFormattingAnalysis areaFormatting = PageElementFormattingAnalysis.analyzeArea(
+        elements, areaBegin, areaEnd);
+    if (areaFormatting.getElements().size() != 2) {
+      return false;
+    }
+    int elementBegin = element.getIndex();
+    int elementEnd = element.getIndex() + element.getLength();
+
+    // Check where the element is at in the tag
+    int tmpIndex = elementBegin;
+    while ((tmpIndex > valueBegin) &&
+           (contents.charAt(tmpIndex - 1) == ' ')) {
+      tmpIndex--;
+    }
+    boolean atBeginning = (tmpIndex == valueBegin);
+    tmpIndex = elementEnd;
+    while ((tmpIndex < valueEnd) &&
+           (contents.charAt(tmpIndex) == ' ')) {
+      tmpIndex++;
+    }
+    boolean atEnd = (tmpIndex == valueEnd);
+    if (!atBeginning && !atEnd) {
+      return false;
+    }
+
+    // Determine the other formatting element
+    PageElementFormatting otherElement = areaFormatting.getElements().get(0);
+    if (otherElement == element) {
+      otherElement = areaFormatting.getElements().get(1);
+    }
+    if (otherElement.getLength() != element.getLength()) {
+      return false;
+    }
+    int otherBegin = otherElement.getIndex();
+    int otherEnd = otherElement.getIndex() + otherElement.getLength();
+    boolean otherAfter = (otherElement.getIndex() > valueEnd);
+    boolean otherClose = false;
+    if (otherAfter) {
+      tmpIndex = otherBegin;
+      while ((tmpIndex > tagEnd) &&
+             (contents.charAt(tmpIndex - 1) == ' ')) {
+        tmpIndex--;
+      }
+      otherClose = (tmpIndex == tagEnd);
+    } else {
+      tmpIndex = otherElement.getIndex() + otherElement.getLength();
+      while ((tmpIndex < tag.getCompleteBeginIndex()) &&
+             (contents.charAt(tmpIndex) == ' ')) {
+        tmpIndex++;
+      }
+      otherClose = (tmpIndex == tag.getCompleteBeginIndex());
+    }
+
+    // Manage when element is at the beginning of the tag
+    if (atBeginning) {
+      if (otherAfter) {
+
+        // Other tag is just after and can be placed inside
+        if (replacement.orderFormatting.canBeInside() && otherClose) {
+          CheckErrorResult errorResult = createCheckErrorResult(
+              analysis, valueEnd, otherEnd);
+          errorResult.addReplacement(
+              contents.substring(otherBegin, otherEnd) + contents.substring(valueEnd, otherBegin));
+          errors.add(errorResult);
+          return true;
+        }
+
+        // Other tag is after but first tag can be put outside
+        if (replacement.orderFormatting.canBeOutside()) {
+          CheckErrorResult errorResult = createCheckErrorResult(
+              analysis, tagBegin, elementEnd);
+          errorResult.addReplacement(
+              contents.substring(elementBegin, elementEnd) + contents.substring(tagBegin, elementBegin));
+          errors.add(errorResult);
+          return true;
+        }
+      } else {
+
+        // Other tag is before
+        if (!otherClose) {
+          CheckErrorResult errorResult = createCheckErrorResult(
+              analysis, tagBegin, elementEnd);
+          errorResult.addReplacement(
+              contents.substring(elementBegin, elementEnd) + contents.substring(tagBegin, elementBegin));
+          errors.add(errorResult);
+          return true;
+        }
+      }
+    }
+
+    // Manage when element is at the end of the tag
+    if (atEnd) {
+      if (!otherAfter) {
+
+        // Other tag is before but second tag can be put outside
+        if (replacement.orderFormatting.canBeOutside() && !otherClose) {
+          CheckErrorResult errorResult = createCheckErrorResult(
+              analysis, elementBegin, tagEnd);
+          errorResult.addReplacement(
+              contents.substring(elementEnd, tagEnd) + contents.substring(elementBegin, elementEnd));
+          errors.add(errorResult);
+          return true;
+        }
+
+        // Other tag is just before and can be placed inside
+        if (replacement.orderFormatting.canBeInside() && otherClose) {
+          CheckErrorResult errorResult = createCheckErrorResult(
+              analysis, otherBegin, valueBegin);
+          errorResult.addReplacement(
+              contents.substring(otherEnd, valueBegin) + contents.substring(otherBegin, otherEnd));
+          errors.add(errorResult);
+          return true;
+        }
+      } else {
+
+        // Other tag is after
+        if (!otherClose) {
+          CheckErrorResult errorResult = createCheckErrorResult(
+              analysis, elementBegin, tagEnd);
+          errorResult.addReplacement(
+              contents.substring(elementEnd, tagEnd) + contents.substring(elementBegin, elementEnd));
+          errors.add(errorResult);
+          return true;
+        }
+      }
+    }
+
+    return false;
   }
 
   /**
@@ -309,7 +518,7 @@ public class CheckErrorAlgorithm539 extends CheckErrorAlgorithmBase {
       index++;
     }
 
-    // Analyze area
+    // Analyze area for other tags
     while (index < tag.getValueEndIndex()) {
 
       // Look for an other tag
@@ -409,16 +618,21 @@ public class CheckErrorAlgorithm539 extends CheckErrorAlgorithmBase {
     /** Second tag: should be inside */
     final List<ReplacementElement> elements;
 
+    /** Formatting order */
+    final OrderFormatting orderFormatting;
+
     /**
      * @param firstTag Surrounding tag.
-     * @param secondTags Tags that should be inside.
-     * @param automatic Automatic replacement.
+     * @param elements Possible tags inside.
+     * @param orderFormatting Formatting order.
      */
     Replacement(
         String firstTag,
-        ReplacementElement[] elements) {
+        ReplacementElement[] elements,
+        OrderFormatting orderFormatting) {
       this.firstTag = firstTag;
       this.elements = Arrays.asList(elements);
+      this.orderFormatting = orderFormatting;
     }
 
     ReplacementElement getSecondTag(String tagName) {
@@ -483,6 +697,35 @@ public class CheckErrorAlgorithm539 extends CheckErrorAlgorithmBase {
      */
     boolean canInvertOrder() {
       if ((this == MUST_INVERT) || (this == BOTH_POSSIBLE)) {
+        return true;
+      }
+      return false;
+    }
+  }
+
+  /**
+   * Enumeration for possible order with formatting elements.
+   */
+  private static enum OrderFormatting {
+    FORMATTING_INSIDE,
+    FORMATTING_OUTSIDE,
+    FORMATTING_ANYWHERE;
+
+    /**
+     * @return True if formatting can be inside.
+     */
+    boolean canBeInside() {
+      if ((this == FORMATTING_INSIDE) || (this == FORMATTING_ANYWHERE)) {
+        return true;
+      }
+      return false;
+    }
+
+    /**
+     * @return True if formatting can be outside.
+     */
+    boolean canBeOutside() {
+      if ((this == FORMATTING_OUTSIDE) || (this == FORMATTING_ANYWHERE)) {
         return true;
       }
       return false;
