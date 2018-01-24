@@ -17,6 +17,8 @@ import java.util.List;
  */
 public class PageElementListItem extends PageElement {
 
+  final static String LIST_INDICATORS = "*:#;";
+
   /**
    * @param analysis Page analysis.
    * @return List of tables.
@@ -30,11 +32,11 @@ public class PageElementListItem extends PageElement {
     String contents = analysis.getContents();
     while (index < contents.length()) {
       char currentChar = contents.charAt(index);
-      if (("*:#".indexOf(currentChar) >= 0) &&
+      if ((LIST_INDICATORS.indexOf(currentChar) >= 0) &&
           ((index == 0) || (contents.charAt(index - 1) == '\n'))) {
         int beginIndex = index;
         while ((index < contents.length()) &&
-               ("*:#".indexOf(contents.charAt(index)) >= 0)) {
+               (LIST_INDICATORS.indexOf(contents.charAt(index)) >= 0)) {
           index++;
         }
         int depth = index - beginIndex;
