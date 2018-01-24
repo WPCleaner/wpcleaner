@@ -1111,7 +1111,8 @@ public class CheckErrorAlgorithm532 extends CheckErrorAlgorithmBase {
         default:
           automatic = false;
         }
-      } else if (contents.startsWith(tag.getName(), currentIndex)) {
+      } else if ((tag.getName().length() > 1) &&
+                 contents.startsWith(tag.getName(), currentIndex)) {
         boolean isSafe = false;
         if (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_TIMELINE, currentIndex) != null) {
           isSafe = true;
