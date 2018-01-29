@@ -915,6 +915,8 @@ public class PageAnalysis {
       // TODO: areas.addTables(tables);
       listItems = PageElementListItem.analyzePage(this);
       // TODO: areas.addListItems(listItems);
+      paragraphs = PageElementParagraph.analyzePage(this);
+      // TODO: areas.addParagraph(paragraphs);
 
       if (perf != null) {
         perf.printEnd();
@@ -2053,6 +2055,29 @@ public class PageAnalysis {
       }
     }
     return null;
+  }
+
+  // ==========================================================================
+  // Paragraphs management
+  // ==========================================================================
+
+  /** All paragraphs in the page */
+  private List<PageElementParagraph> paragraphs;
+
+  /**
+   * @return All paragraphs in the page.
+   */
+  public List<PageElementParagraph> getParagraphs() {
+    level6Analysis();
+    return paragraphs;
+  }
+
+  /**
+   * @param currentIndex Current index.
+   * @return Paragraph if the current index is inside a paragraph.
+   */
+  public PageElementParagraph isInParagraph(int currentIndex) {
+    return PageElementParagraph.isInParagraph(currentIndex, getParagraphs());
   }
 
   // ==========================================================================

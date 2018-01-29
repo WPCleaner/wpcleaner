@@ -17,7 +17,7 @@ import java.util.List;
  */
 public class PageElementListItem extends PageElement {
 
-  final static String LIST_INDICATORS = "*:#;";
+  public final static String LIST_INDICATORS = "*:#;";
 
   /**
    * @param analysis Page analysis.

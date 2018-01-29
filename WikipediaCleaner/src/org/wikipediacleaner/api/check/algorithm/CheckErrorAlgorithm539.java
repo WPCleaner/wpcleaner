@@ -227,13 +227,37 @@ public class CheckErrorAlgorithm539 extends CheckErrorAlgorithmBase {
     for (Replacement replacement : replacements) {
       List<PageElementTag> tags = analysis.getCompleteTags(replacement.firstTag);
       for (PageElementTag tag : tags) {
-        result |= analyzeTagForFormattingElements(
-            analysis, errors, tag, replacement, elements);
+        result |= analyzeForFormattingElements(
+            analysis, errors,
+            tag.getCompleteBeginIndex(), tag.getCompleteEndIndex(),
+            tag.getValueBeginIndex(), tag.getValueEndIndex(),
+            replacement.orderFormatting, elements);
       }
     }
 
     // Analyze inside internal links
-    // TODO
+    List<PageElementInternalLink> iLinks = analysis.getInternalLinks();
+    for (PageElementInternalLink iLink : iLinks) {
+      if (iLink.getTextOffset() > 0) {
+        result |= analyzeForFormattingElements(
+            analysis, errors,
+            iLink.getBeginIndex(), iLink.getEndIndex(),
+            iLink.getBeginIndex() + iLink.getTextOffset(), iLink.getEndIndex() - 2,
+            OrderFormatting.FORMATTING_ANYWHERE, elements);
+      }
+    }
+
+    // Analyze inside external links
+    /*List<PageElementExternalLink> eLinks = analysis.getExternalLinks();
+    for (PageElementExternalLink eLink : eLinks) {
+      if (eLink.hasSquare() && eLink.hasSecondSquare() && (eLink.getTextOffset() > 0)) {
+        result |= analyzeForFormattingElements(
+            analysis, errors,
+            eLink.getBeginIndex(), eLink.getEndIndex(),
+            eLink.getBeginIndex() + eLink.getTextOffset(), eLink.getEndIndex() - 1,
+            OrderFormatting.FORMATTING_ANYWHERE, elements);
+      }
+    }*/
 
     return result;
   }
@@ -246,19 +270,17 @@ public class CheckErrorAlgorithm539 extends CheckErrorAlgorithmBase {
    * @param elements Formatting elements.
    * @return Flag indicating if the error was found.
    */
-  private boolean analyzeTagForFormattingElements(
+  private boolean analyzeForFormattingElements(
       PageAnalysis analysis,
       Collection<CheckErrorResult> errors,
-      PageElementTag tag, Replacement replacement,
+      int externalBegin, int externalEnd,
+      int internalBegin, int internalEnd,
+      OrderFormatting orderFormatting,
       List<PageElementFormatting> elements) {
 
-    // Only deal with tags containing one formatting element
-    int tagBegin = tag.getCompleteBeginIndex();
-    int tagEnd = tag.getCompleteEndIndex();
-    int valueBegin = tag.getValueBeginIndex();
-    int valueEnd = tag.getValueEndIndex();
+    // Only deal with areas containing one formatting element
     PageElementFormattingAnalysis formatting = PageElementFormattingAnalysis.analyzeArea(
-        elements, valueBegin, valueEnd);
+        elements, internalBegin, internalEnd);
     if (formatting.getElements().size() != 1) {
       return false;
     }
@@ -279,19 +301,19 @@ public class CheckErrorAlgorithm539 extends CheckErrorAlgorithmBase {
     int elementBegin = element.getIndex();
     int elementEnd = element.getIndex() + element.getLength();
 
-    // Check where the element is at in the tag
+    // Check where the element is
     int tmpIndex = elementBegin;
-    while ((tmpIndex > valueBegin) &&
+    while ((tmpIndex > internalBegin) &&
            (contents.charAt(tmpIndex - 1) == ' ')) {
       tmpIndex--;
     }
-    boolean atBeginning = (tmpIndex == valueBegin);
+    boolean atBeginning = (tmpIndex == internalBegin);
     tmpIndex = elementEnd;
-    while ((tmpIndex < valueEnd) &&
+    while ((tmpIndex < internalEnd) &&
            (contents.charAt(tmpIndex) == ' ')) {
       tmpIndex++;
     }
-    boolean atEnd = (tmpIndex == valueEnd);
+    boolean atEnd = (tmpIndex == internalEnd);
     if (!atBeginning && !atEnd) {
       return false;
     }
@@ -306,22 +328,25 @@ public class CheckErrorAlgorithm539 extends CheckErrorAlgorithmBase {
     }
     int otherBegin = otherElement.getIndex();
     int otherEnd = otherElement.getIndex() + otherElement.getLength();
-    boolean otherAfter = (otherElement.getIndex() > valueEnd);
+    if ((otherBegin >= externalBegin) && (otherEnd <= externalEnd)) {
+      return false;
+    }
+    boolean otherAfter = (otherElement.getIndex() > internalEnd);
     boolean otherClose = false;
     if (otherAfter) {
       tmpIndex = otherBegin;
-      while ((tmpIndex > tagEnd) &&
+      while ((tmpIndex > externalEnd) &&
              (contents.charAt(tmpIndex - 1) == ' ')) {
         tmpIndex--;
       }
-      otherClose = (tmpIndex == tagEnd);
+      otherClose = (tmpIndex == externalEnd);
     } else {
       tmpIndex = otherElement.getIndex() + otherElement.getLength();
-      while ((tmpIndex < tag.getCompleteBeginIndex()) &&
+      while ((tmpIndex < externalBegin) &&
              (contents.charAt(tmpIndex) == ' ')) {
         tmpIndex++;
       }
-      otherClose = (tmpIndex == tag.getCompleteBeginIndex());
+      otherClose = (tmpIndex == externalBegin);
     }
 
     // Manage when element is at the beginning of the tag
@@ -329,21 +354,23 @@ public class CheckErrorAlgorithm539 extends CheckErrorAlgorithmBase {
       if (otherAfter) {
 
         // Other tag is just after and can be placed inside
-        if (replacement.orderFormatting.canBeInside() && otherClose) {
+        if (orderFormatting.canBeInside() && otherClose) {
           CheckErrorResult errorResult = createCheckErrorResult(
-              analysis, valueEnd, otherEnd);
+              analysis, internalEnd, otherEnd);
           errorResult.addReplacement(
-              contents.substring(otherBegin, otherEnd) + contents.substring(valueEnd, otherBegin));
+              contents.substring(otherBegin, otherEnd) + contents.substring(internalEnd, otherBegin),
+              true);
           errors.add(errorResult);
           return true;
         }
 
         // Other tag is after but first tag can be put outside
-        if (replacement.orderFormatting.canBeOutside()) {
+        if (orderFormatting.canBeOutside()) {
           CheckErrorResult errorResult = createCheckErrorResult(
-              analysis, tagBegin, elementEnd);
+              analysis, externalBegin, elementEnd);
           errorResult.addReplacement(
-              contents.substring(elementBegin, elementEnd) + contents.substring(tagBegin, elementBegin));
+              contents.substring(elementBegin, elementEnd) + contents.substring(externalBegin, elementBegin),
+              true);
           errors.add(errorResult);
           return true;
         }
@@ -352,9 +379,10 @@ public class CheckErrorAlgorithm539 extends CheckErrorAlgorithmBase {
         // Other tag is before
         if (!otherClose) {
           CheckErrorResult errorResult = createCheckErrorResult(
-              analysis, tagBegin, elementEnd);
+              analysis, externalBegin, elementEnd);
           errorResult.addReplacement(
-              contents.substring(elementBegin, elementEnd) + contents.substring(tagBegin, elementBegin));
+              contents.substring(elementBegin, elementEnd) + contents.substring(externalBegin, elementBegin),
+              true);
           errors.add(errorResult);
           return true;
         }
@@ -366,21 +394,23 @@ public class CheckErrorAlgorithm539 extends CheckErrorAlgorithmBase {
       if (!otherAfter) {
 
         // Other tag is before but second tag can be put outside
-        if (replacement.orderFormatting.canBeOutside() && !otherClose) {
+        if (orderFormatting.canBeOutside() && !otherClose) {
           CheckErrorResult errorResult = createCheckErrorResult(
-              analysis, elementBegin, tagEnd);
+              analysis, elementBegin, externalEnd);
           errorResult.addReplacement(
-              contents.substring(elementEnd, tagEnd) + contents.substring(elementBegin, elementEnd));
+              contents.substring(elementEnd, externalEnd) + contents.substring(elementBegin, elementEnd),
+              true);
           errors.add(errorResult);
           return true;
         }
 
         // Other tag is just before and can be placed inside
-        if (replacement.orderFormatting.canBeInside() && otherClose) {
+        if (orderFormatting.canBeInside() && otherClose) {
           CheckErrorResult errorResult = createCheckErrorResult(
-              analysis, otherBegin, valueBegin);
+              analysis, otherBegin, internalBegin);
           errorResult.addReplacement(
-              contents.substring(otherEnd, valueBegin) + contents.substring(otherBegin, otherEnd));
+              contents.substring(otherEnd, internalBegin) + contents.substring(otherBegin, otherEnd),
+              true);
           errors.add(errorResult);
           return true;
         }
@@ -389,9 +419,10 @@ public class CheckErrorAlgorithm539 extends CheckErrorAlgorithmBase {
         // Other tag is after
         if (!otherClose) {
           CheckErrorResult errorResult = createCheckErrorResult(
-              analysis, elementBegin, tagEnd);
+              analysis, elementBegin, externalEnd);
           errorResult.addReplacement(
-              contents.substring(elementEnd, tagEnd) + contents.substring(elementBegin, elementEnd));
+              contents.substring(elementEnd, externalEnd) + contents.substring(elementBegin, elementEnd),
+              true);
           errors.add(errorResult);
           return true;
         }

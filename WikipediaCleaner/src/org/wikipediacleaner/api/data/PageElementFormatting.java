@@ -60,6 +60,9 @@ public class PageElementFormatting {
   /** List item in which the element is */
   private PageElementListItem inListItem;
 
+  /** Paragraph in which the element is */
+  private PageElementParagraph inParagraph;
+
   /** Table in which the element is */
   private PageElementTable inTable;
 
@@ -159,7 +162,7 @@ public class PageElementFormatting {
       inTableCaption = null;
       inTableCell = null;
     }
-    // TODO: add paragraph
+    inParagraph = analysis.isInParagraph(index);
 
     // Compute main area
     computeMainArea();
@@ -232,6 +235,14 @@ public class PageElementFormatting {
   }
 
   /**
+   * @return Paragraph in which the element is.
+   */
+  public PageElementParagraph isInParagraph() {
+    analyze();
+    return inParagraph;
+  }
+
+  /**
    * @return Table caption in which the element is.
    */
   public PageElementTable.TableCaption isInTableCaption() {
@@ -299,7 +310,11 @@ public class PageElementFormatting {
       mainAreaEnd = Math.min(mainAreaEnd, inListItem.getEndIndex());
     }
 
-    // TODO: Add paragraph
+    // Check inside a paragraph
+    if (inParagraph != null) {
+      mainAreaBegin = Math.max(mainAreaBegin, inParagraph.getBeginIndex());
+      mainAreaEnd = Math.min(mainAreaEnd, inParagraph.getEndIndex());
+    }
   }
 
   /**
@@ -369,6 +384,9 @@ public class PageElementFormatting {
       return false;
     }
     if ((inListItem != null) && (!inListItem.containsIndex(closeIndex - 1))) {
+      return false;
+    }
+    if ((inParagraph != null) && (!inParagraph.containsIndex(closeIndex - 1))) {
       return false;
     }
     if ((inTable != null) && (!inTable.containsIndex(closeIndex - 1))) {
@@ -478,7 +496,7 @@ public class PageElementFormatting {
     sameArea &= (first.inTable == second.inTable);
     sameArea &= (first.inTableCaption == second.inTableCaption);
     sameArea &= (first.inTableCell == second.inTableCell);
-    // TODO
+    sameArea &= (first.inParagraph == second.inParagraph);
     return sameArea;
   }
 
