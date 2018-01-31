@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2017-12-29 15:07+0100\n"
+"POT-Creation-Date: 2018-01-31 08:17+0100\n"
 "PO-Revision-Date: 2017-03-03 19:29+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Spanish\n"
@@ -927,10 +927,39 @@ msgstr "Reparar categorías"
 msgid "Remove whitespace characters"
 msgstr "Eliminar todos los caracteres de control"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm540.java:38
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm540.java:39
 #, fuzzy
 msgid "Fix bold and italic"
 msgstr "Corregir todos los títulos de sección que estén en negritas"
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm541.java:135
+msgid "for marking an edit"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm541.java:139
+msgid "for anything else"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm541.java:155
+msgid "preferred for source code"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm541.java:159
+msgid "preferred for user input"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm541.java:163
+#, fuzzy
+msgid "preferred for variables"
+msgstr "No hay errores disponibles"
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm541.java:167
+msgid "preferred for output, function and tag names, etc."
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm541.java:171
+msgid "preferred for everything else"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmBase.java:277
 msgid "Title of the article describing this type of error"

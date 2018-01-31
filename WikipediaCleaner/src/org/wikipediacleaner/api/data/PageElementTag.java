@@ -47,10 +47,12 @@ public class PageElementTag extends PageElement {
   public final static String TAG_HTML_H9           = "h9";
   public final static String TAG_HTML_HR           = "hr";
   public final static String TAG_HTML_I            = "i";
+  public final static String TAG_HTML_KBD          = "kbd";
   public final static String TAG_HTML_LI           = "li";
   public final static String TAG_HTML_OL           = "ol";
   public final static String TAG_HTML_P            = "p";
   public final static String TAG_HTML_S            = "s";
+  public final static String TAG_HTML_SAMP         = "samp";
   public final static String TAG_HTML_SMALL        = "small";
   public final static String TAG_HTML_SPAN         = "span";
   public final static String TAG_HTML_STRIKE       = "strike";
@@ -64,6 +66,7 @@ public class PageElementTag extends PageElement {
   public final static String TAG_HTML_TT           = "tt";
   public final static String TAG_HTML_U            = "u";
   public final static String TAG_HTML_UL           = "ul";
+  public final static String TAG_HTML_VAR          = "var";
 
   // =========================================================================
   // Wiki tags
