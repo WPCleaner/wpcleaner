@@ -12,6 +12,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import org.wikipediacleaner.api.data.contents.ContentsComment;
+
 
 /**
  * Bean for memorizing formatting elements
@@ -439,8 +441,8 @@ public class PageElementFormatting {
     } while (index >= 0);
 
     // Exclude comments
-    List<PageElementComment> comments = analysis.getComments();
-    for (PageElementComment comment : comments) {
+    List<ContentsComment> comments = analysis.getComments();
+    for (ContentsComment comment : comments) {
       PageElementFormatting.excludeArea(
           elements, comment.getBeginIndex(), comment.getEndIndex());
     }

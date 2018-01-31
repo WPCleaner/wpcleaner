@@ -17,10 +17,10 @@ import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.constants.WPCConfigurationStringList;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageAnalysis;
-import org.wikipediacleaner.api.data.PageElementComment;
 import org.wikipediacleaner.api.data.PageElementInternalLink;
 import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.TemplateMatcher;
+import org.wikipediacleaner.api.data.contents.ContentsComment;
 import org.wikipediacleaner.utils.ConfigurationValueStyle;
 
 
@@ -158,7 +158,7 @@ public class MWPaneDisambiguationFormatter extends
           currentPos++;
         }
         if ((currentPos < maxSize) && (contents.charAt(currentPos) == '<')) {
-          PageElementComment comment = pageAnalysis.isInComment(currentPos);
+          ContentsComment comment = pageAnalysis.isInComment(currentPos);
           if (comment != null) {
             for (String commentAfter : commentsAfter) {
               String comment2 = comment.getComment();

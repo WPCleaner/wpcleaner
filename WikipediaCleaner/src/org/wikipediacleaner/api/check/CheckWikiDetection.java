@@ -11,7 +11,7 @@ package org.wikipediacleaner.api.check;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.wikipediacleaner.api.data.PageAnalysis;
-import org.wikipediacleaner.api.data.PageElementComment;
+import org.wikipediacleaner.api.data.contents.ContentsComment;
 
 
 /**
@@ -144,7 +144,7 @@ public class CheckWikiDetection {
              (currentCount < location)) {
         boolean moved = false;
         if (!moved) {
-          PageElementComment comment = analysis.isInComment(currentIndex);
+          ContentsComment comment = analysis.isInComment(currentIndex);
           if ((comment != null) && (comment.getBeginIndex() == currentIndex)) {
             moved = true;
             currentIndex = comment.getEndIndex();

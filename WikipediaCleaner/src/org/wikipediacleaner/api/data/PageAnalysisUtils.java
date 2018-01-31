@@ -14,6 +14,7 @@ import java.util.Map;
 import org.wikipediacleaner.api.constants.WPCConfiguration;
 import org.wikipediacleaner.api.constants.WPCConfigurationStringList;
 import org.wikipediacleaner.api.data.PageElementTemplate.Parameter;
+import org.wikipediacleaner.api.data.contents.ContentsComment;
 
 
 /**
@@ -35,8 +36,8 @@ public class PageAnalysisUtils {
     if (pageAnalysis == null) {
       return currentIndex;
     }
-    List<PageElementComment> comments = pageAnalysis.getComments();
-    for (PageElementComment comment : comments) {
+    List<ContentsComment> comments = pageAnalysis.getComments();
+    for (ContentsComment comment : comments) {
       if (currentIndex < comment.getEndIndex()) {
         if (currentIndex >= comment.getBeginIndex()) {
           return comment.getEndIndex();
@@ -107,7 +108,7 @@ public class PageAnalysisUtils {
           // Check if link is marked as normal
           boolean good = false;
           if ((currentPos < maxSize) && (contents.charAt(currentPos) == '<')) {
-            PageElementComment nextComment = pageAnalysis.isInComment(currentPos);
+            ContentsComment nextComment = pageAnalysis.isInComment(currentPos);
             if ((nextComment != null) && (nextComment.getComment() != null)) {
               if (commentsAfter != null) {
                 for (String commentAfter : commentsAfter) {

@@ -10,6 +10,8 @@ package org.wikipediacleaner.api.data;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.wikipediacleaner.api.data.contents.ContentsComment;
+
 
 /**
  * Class containing information about a paragraph.
@@ -59,7 +61,7 @@ public class PageElementParagraph extends PageElement {
         // Ignore comments
         if ((paragraphBegin < maxLen) &&
             (contents.charAt(paragraphBegin) == '<')) {
-          PageElementComment comment = analysis.isInComment(paragraphBegin);
+          ContentsComment comment = analysis.isInComment(paragraphBegin);
           if ((comment != null) && (comment.getBeginIndex() == paragraphBegin)) {
             paragraphBegin = comment.getEndIndex();
             tryMoving = true;

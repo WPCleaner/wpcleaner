@@ -11,8 +11,8 @@ import java.util.Collection;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.data.PageAnalysis;
-import org.wikipediacleaner.api.data.PageElementComment;
 import org.wikipediacleaner.api.data.PageElementTag;
+import org.wikipediacleaner.api.data.contents.ContentsComment;
 
 
 /**
@@ -130,7 +130,7 @@ public class CheckErrorAlgorithm056 extends CheckErrorAlgorithmBase {
 
       // Check if inside a comment
       if (shouldCheck) {
-        PageElementComment comment = analysis.isInComment(currentIndex);
+        ContentsComment comment = analysis.isInComment(currentIndex);
         if (comment != null) {
           nextIndex = comment.getEndIndex();
           shouldCheck = false;

@@ -13,7 +13,6 @@ import java.util.List;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.data.PageAnalysis;
-import org.wikipediacleaner.api.data.PageElementComment;
 import org.wikipediacleaner.api.data.PageElementExternalLink;
 import org.wikipediacleaner.api.data.PageElementFormatting;
 import org.wikipediacleaner.api.data.PageElementFormattingAnalysis;
@@ -24,6 +23,7 @@ import org.wikipediacleaner.api.data.PageElementInternalLink;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.PageElementTitle;
+import org.wikipediacleaner.api.data.contents.ContentsComment;
 import org.wikipediacleaner.gui.swing.component.MWPane;
 import org.wikipediacleaner.i18n.GT;
 
@@ -736,7 +736,7 @@ public class CheckErrorAlgorithm540 extends CheckErrorAlgorithmBase {
 
       // Ignore comments at the beginning
       if ((beginIndex < endIndex) && (contents.charAt(beginIndex) == '<')) {
-        PageElementComment comment = analysis.isInComment(beginIndex);
+        ContentsComment comment = analysis.isInComment(beginIndex);
         if ((comment != null) && (comment.getBeginIndex() == beginIndex)) {
           beginIndex = comment.getEndIndex();
           tryAgain = true;
@@ -768,7 +768,7 @@ public class CheckErrorAlgorithm540 extends CheckErrorAlgorithmBase {
 
       // Ignore comments at the end
       if ((endIndex > beginIndex) && (contents.charAt(endIndex - 1) == '>')) {
-        PageElementComment comment = analysis.isInComment(endIndex - 1);
+        ContentsComment comment = analysis.isInComment(endIndex - 1);
         if ((comment != null) && (comment.getEndIndex() == endIndex)) {
           endIndex = comment.getBeginIndex();
           tryAgain = true;

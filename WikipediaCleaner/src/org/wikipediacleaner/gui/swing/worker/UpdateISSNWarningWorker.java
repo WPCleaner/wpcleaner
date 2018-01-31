@@ -25,7 +25,7 @@ import org.wikipediacleaner.api.constants.WPCConfigurationStringList;
 import org.wikipediacleaner.api.data.DataManager;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageComparator;
-import org.wikipediacleaner.api.data.PageElementComment;
+import org.wikipediacleaner.api.data.contents.ContentsComment;
 import org.wikipediacleaner.gui.swing.InformationWindow;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
 import org.wikipediacleaner.gui.swing.basic.Utilities;
@@ -292,7 +292,7 @@ public class UpdateISSNWarningWorker extends UpdateWarningWorker {
             if (contents != null) {
               int begin = -1;
               int end = -1;
-              for (PageElementComment comment : page.getAnalysis(contents, true).getComments()) {
+              for (ContentsComment comment : page.getAnalysis(contents, true).getComments()) {
                 String value = comment.getComment().trim();
                 if ("BOT BEGIN".equals(value)) {
                   if (begin < 0) {

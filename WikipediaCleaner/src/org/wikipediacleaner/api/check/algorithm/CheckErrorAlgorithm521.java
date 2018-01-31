@@ -15,9 +15,9 @@ import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.constants.WPCConfiguration;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageAnalysis;
-import org.wikipediacleaner.api.data.PageElementComment;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.PageElementTemplate;
+import org.wikipediacleaner.api.data.contents.ContentsComment;
 import org.wikipediacleaner.i18n.GT;
 
 
@@ -130,7 +130,7 @@ public class CheckErrorAlgorithm521 extends CheckErrorAlgorithmBase {
       // If current value position is the beginning of a comment, skip it
       if ((valueChar == '<') &&
           (analysis.isInComment(offset + valueIndex) != null)) {
-        PageElementComment comment = analysis.isInComment(offset + valueIndex);
+        ContentsComment comment = analysis.isInComment(offset + valueIndex);
         formatOk = true;
         valueIndex = comment.getEndIndex() - offset;
 

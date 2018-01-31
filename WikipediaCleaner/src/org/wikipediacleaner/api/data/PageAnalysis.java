@@ -18,6 +18,10 @@ import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.constants.WPCConfiguration;
 import org.wikipediacleaner.api.constants.WikiConfiguration;
 import org.wikipediacleaner.api.constants.wiki.AbstractWikiSettings;
+import org.wikipediacleaner.api.data.contents.Contents;
+import org.wikipediacleaner.api.data.contents.ContentsComment;
+import org.wikipediacleaner.api.data.contents.ContentsElement;
+import org.wikipediacleaner.api.data.contents.ContentsElementComparator;
 import org.wikipediacleaner.utils.Configuration;
 import org.wikipediacleaner.utils.ConfigurationValueBoolean;
 import org.wikipediacleaner.utils.Performance;
@@ -38,7 +42,7 @@ public class PageAnalysis {
   private final Page page;
 
   /** Current version of the text */
-  private final String contents;
+  private final Contents contents;
 
   /** True if spelling should be checked */
   private boolean checkSpelling;
@@ -49,7 +53,7 @@ public class PageAnalysis {
    */
   PageAnalysis(Page page, String contents) {
     this.page = page;
-    this.contents = (contents != null) ? contents : page.getContents();
+    this.contents = Contents.createContents((contents != null) ? contents : page.getContents());
     this.areas = new PageElementAreas();
 
     // Default configuration
@@ -124,7 +128,7 @@ public class PageAnalysis {
    * @return Page contents.
    */
   public String getContents() {
-    return contents;
+    return contents.getText();
   }
 
   /**
@@ -255,7 +259,7 @@ public class PageAnalysis {
    * @param withTitles True if titles should be included in the result.
    * @return All elements.
    */
-  public List<PageElement> getElements(
+  public List<ContentsElement> getElements(
       boolean withCategories, boolean withComments,
       boolean withExternalLinks, boolean withFunctions,
       boolean withImages, boolean withInternalLinks,
@@ -264,7 +268,7 @@ public class PageAnalysis {
       boolean withMagicWords, boolean withParameters,
       boolean withTables, boolean withTags,
       boolean withTemplates, boolean withTitles) {
-    List<PageElement> elements = new ArrayList<PageElement>();
+    List<ContentsElement> elements = new ArrayList<>();
     if (withCategories) {
       elements.addAll(getCategories());
     }
@@ -310,7 +314,7 @@ public class PageAnalysis {
     if (withTitles) {
       elements.addAll(getTitles());
     }
-    Collections.sort(elements, new PageElementComparator());
+    Collections.sort(elements, new ContentsElementComparator());
     return elements;
   }
 
@@ -318,10 +322,10 @@ public class PageAnalysis {
    * @param currentIndex Index.
    * @return Element at the specified index.
    */
-  public PageElement isInElement(int currentIndex) {
+  public ContentsElement isInElement(int currentIndex) {
 
     // Check if in comment
-    PageElement element = isInComment(currentIndex);
+    ContentsElement element = isInComment(currentIndex);
     if (element != null) {
       return element;
     }
@@ -552,6 +556,7 @@ public class PageAnalysis {
 
   /** Internal lock for level 1 analysis. */
   private final Object level1Lock = new Object();
+  private boolean level1Done = false;
 
   /** Internal lock for level 2 analysis. */
   private final Object level2Lock = new Object();
@@ -573,7 +578,7 @@ public class PageAnalysis {
    */
   private void level1Analysis() {
     synchronized (level1Lock) {
-      if (comments != null) {
+      if (level1Done) {
         return;
       }
 
@@ -583,30 +588,8 @@ public class PageAnalysis {
             "PageAnalysis.level1Analysis", TRACE_THRESHOLD);
       }
 
-      // Initialize
-      comments = new ArrayList<PageElementComment>();
-
-      // Go through all the text of the page
-      int maxIndex = (contents != null) ? contents.length() : 0;
-      int currentIndex = 0;
-      while (currentIndex < maxIndex) {
-        currentIndex = contents.indexOf("<!--", currentIndex);
-        if (currentIndex < 0) {
-          currentIndex = maxIndex;
-        } else {
-          PageElementComment comment = PageElementComment.analyzeBlock(
-              getWikipedia(), contents, currentIndex);
-          if (comment != null) {
-            comments.add(comment);
-            currentIndex = comment.getEndIndex();
-          } else {
-            currentIndex++;
-          }
-        }
-      }
-
       // Update areas of non wiki text
-      areas.addComments(comments);
+      areas.addComments(getComments());
 
       if (perf != null) {
         perf.printEnd();
@@ -635,10 +618,11 @@ public class PageAnalysis {
       tags = new ArrayList<PageElementTag>();
 
       // Go through all the text of the page
-      int maxIndex = (contents != null) ? contents.length() : 0;
+      int maxIndex = contents.length();
+      String text = contents.getText();
       int currentIndex = 0;
       while (currentIndex < maxIndex) {
-        currentIndex = contents.indexOf('<', currentIndex);
+        currentIndex = text.indexOf('<', currentIndex);
         if (currentIndex < 0) {
           currentIndex = maxIndex;
         } else {
@@ -646,7 +630,7 @@ public class PageAnalysis {
           if (nextIndex > currentIndex) {
             currentIndex = nextIndex;
           } else {
-            PageElementTag tag = PageElementTag.analyzeBlock(contents, currentIndex);
+            PageElementTag tag = PageElementTag.analyzeBlock(text, currentIndex);
             if (tag != null) {
               if (tag.isEndTag() && !tag.isFullTag()) {
                 boolean found = false;
@@ -721,7 +705,8 @@ public class PageAnalysis {
       }
 
       // Go through all the text of the page
-      int maxIndex = (contents != null) ? contents.length() : 0;
+      int maxIndex = contents.length();
+      String text = contents.getText();
       int currentIndex = 0;
       int areaIndex = 0;
       List<PageElementAreas.Area> tmpAeras = areas.getAreas();
@@ -748,27 +733,27 @@ public class PageAnalysis {
         if (nextIndex > currentIndex) {
           currentIndex = nextIndex;
         } else {
-          if (contents.startsWith("[[", currentIndex)) {
+          if (text.startsWith("[[", currentIndex)) {
             currentIndex = analyze2SquareBrackets(currentIndex);
             if (perf != null) {
               perf.stopPart("analyze2SquareBrackets");
             }
-          } else if (contents.startsWith("{{{", currentIndex)) {
+          } else if (text.startsWith("{{{", currentIndex)) {
             currentIndex = analyze3CurlyBrackets(currentIndex);
             if (perf != null) {
               perf.stopPart("analyze3CurlyBrackets");
             }
-          } else if (contents.startsWith("{{", currentIndex)) {
+          } else if (text.startsWith("{{", currentIndex)) {
             currentIndex = analyze2CurlyBrackets(currentIndex);
             if (perf != null) {
               perf.stopPart("analyze2CurlyBrackets");
             }
-          } else if (contents.startsWith("=", currentIndex)) {
+          } else if (text.startsWith("=", currentIndex)) {
             currentIndex = analyze1Equal(currentIndex);
             if (perf != null) {
               perf.stopPart("analyze1Equal");
             }
-          } else if (contents.startsWith("__", currentIndex)) {
+          } else if (text.startsWith("__", currentIndex)) {
             currentIndex = analyze2Undescore(currentIndex);
             if (perf != null) {
               perf.stopPart("analyze2UnderscoreBrackets");
@@ -817,7 +802,8 @@ public class PageAnalysis {
 
       // Go through all the text of the page
       externalLinks = new ArrayList<PageElementExternalLink>();
-      int maxIndex = (contents != null) ? contents.length() : 0;
+      int maxIndex = contents.length();
+      String text = contents.getText();
       int currentIndex = 0;
       int areaIndex = 0;
       List<PageElementAreas.Area> tmpAeras = areas.getAreas();
@@ -841,7 +827,7 @@ public class PageAnalysis {
         if (nextIndex > currentIndex) {
           currentIndex = nextIndex;
         } else {
-          if (contents.startsWith("[", currentIndex)) {
+          if (text.startsWith("[", currentIndex)) {
             currentIndex = analyze1SquareBracket(currentIndex);
             if (perf != null) {
               perf.stopPart("analyze1SquareBracket");
@@ -933,9 +919,11 @@ public class PageAnalysis {
    */
   private int analyze2SquareBrackets(int currentIndex) {
 
+    String text = contents.getText();
+
     // Check if this is an internal link
     PageElementInternalLink link = PageElementInternalLink.analyzeBlock(
-        getWikipedia(), contents, currentIndex);
+        getWikipedia(), text, currentIndex);
     if (link != null) {
       internalLinks.add(link);
       if (link.getText() == null) {
@@ -946,7 +934,7 @@ public class PageAnalysis {
 
     // Check if this is an image
     PageElementImage image = PageElementImage.analyzeBlock(
-        getWikipedia(), contents, currentIndex);
+        getWikipedia(), text, currentIndex);
     if (image != null) {
       images.add(image);
       return image.getBeginIndex() + 2 + image.getNamespace().length() + 1;
@@ -954,7 +942,7 @@ public class PageAnalysis {
 
     // Check if this is a category
     PageElementCategory category = PageElementCategory.analyzeBlock(
-        getWikipedia(), contents, currentIndex);
+        getWikipedia(), text, currentIndex);
     if (category != null) {
       categories.add(category);
       return category.getEndIndex();
@@ -962,7 +950,7 @@ public class PageAnalysis {
 
     // Check if this is an interwiki link
     PageElementInterwikiLink interwiki = PageElementInterwikiLink.analyzeBlock(
-        getWikipedia(), contents, currentIndex);
+        getWikipedia(), text, currentIndex);
     if (interwiki != null) {
       interwikiLinks.add(interwiki);
       if (interwiki.getText() == null) {
@@ -973,7 +961,7 @@ public class PageAnalysis {
 
     // Check if this is a language link
     PageElementLanguageLink language = PageElementLanguageLink.analyzeBlock(
-        getWikipedia(), contents, currentIndex);
+        getWikipedia(), text, currentIndex);
     if (language != null) {
       languageLinks.add(language);
       return language.getEndIndex();
@@ -991,8 +979,9 @@ public class PageAnalysis {
   private int analyze1SquareBracket(int currentIndex) {
 
     // Check if this an external link
+    String text = contents.getText();
     PageElementExternalLink link = PageElementExternalLink.analyzeBlock(
-        getWikipedia(), contents, currentIndex, this);
+        getWikipedia(), text, currentIndex, this);
     if (link != null) {
       externalLinks.add(link);
       if (link.getText() == null) {
@@ -1013,8 +1002,9 @@ public class PageAnalysis {
   private int analyze2Undescore(int currentIndex) {
 
     // Check if this a magic word
+    String text = contents.getText();
     PageElementMagicWord magicWord = PageElementMagicWord.analyzeBlock(
-        getWikipedia(), contents, currentIndex);
+        getWikipedia(), text, currentIndex);
     if (magicWord != null) {
       magicWords.add(magicWord);
       return magicWord.getEndIndex();
@@ -1032,10 +1022,11 @@ public class PageAnalysis {
   private int analyzeText(int currentIndex) {
 
     // Check if this is an external link
+    String text = contents.getText();
     if ((externalLinks.size() == 0) ||
         (externalLinks.get(externalLinks.size() - 1).getEndIndex() <= currentIndex)) {
       PageElementExternalLink link = PageElementExternalLink.analyzeBlock(
-          getWikipedia(), contents, currentIndex, this);
+          getWikipedia(), text, currentIndex, this);
       if (link != null) {
         externalLinks.add(link);
         return link.getEndIndex();
@@ -1054,8 +1045,9 @@ public class PageAnalysis {
   private int analyze3CurlyBrackets(int currentIndex) {
 
     // Check if this is a parameter
+    String text = contents.getText();
     PageElementParameter parameter = PageElementParameter.analyzeBlock(
-        getWikipedia(), contents, currentIndex, comments, tags);
+        getWikipedia(), text, currentIndex, getComments(), tags);
     if (parameter != null) {
       parameters.add(parameter);
       return currentIndex + 3;
@@ -1072,9 +1064,11 @@ public class PageAnalysis {
    */
   private int analyze2CurlyBrackets(int currentIndex) {
 
+    String text = contents.getText();
+
     // Check if this is a function
     PageElementFunction function = PageElementFunction.analyzeBlock(
-        getWikipedia(), contents, currentIndex, comments, tags);
+        getWikipedia(), text, currentIndex, getComments(), tags);
     if (function != null) {
       functions.add(function);
       if (function.getParameterCount() == 0) {
@@ -1085,7 +1079,7 @@ public class PageAnalysis {
 
     // Check if this is a template
     PageElementTemplate template = PageElementTemplate.analyzeBlock(
-        getWikipedia(), contents, currentIndex, comments, tags);
+        getWikipedia(), text, currentIndex, getComments(), tags);
     if (template != null) {
       templates.add(template);
       if (template.getParameterCount() == 0) {
@@ -1106,17 +1100,18 @@ public class PageAnalysis {
   private int analyze1Equal(int currentIndex) {
 
     // Check that it's a beginning of a line
+    String text = contents.getText();
     boolean hasNewLine = false;
     int tmpIndex = currentIndex;
     while ((tmpIndex >= 0) && !hasNewLine) {
       tmpIndex--;
       if (tmpIndex < 0) {
         hasNewLine = true;
-      } else if (contents.charAt(tmpIndex) == '\n') {
+      } else if (text.charAt(tmpIndex) == '\n') {
         hasNewLine = true;
-      } else if (contents.charAt(tmpIndex) == '>') {
-        PageElementComment comment = null;
-        for (PageElementComment tmpComment : comments) {
+      } else if (text.charAt(tmpIndex) == '>') {
+        ContentsComment comment = null;
+        for (ContentsComment tmpComment : getComments()) {
           if (tmpComment.getEndIndex() == tmpIndex + 1) {
             comment = tmpComment;
           }
@@ -1152,7 +1147,7 @@ public class PageAnalysis {
 
     // Check if this is a title
     PageElementTitle title = PageElementTitle.analyzeBlock(
-        getWikipedia(), contents, currentIndex, comments, tags);
+        getWikipedia(), text, currentIndex, getComments(), tags);
     if (title != null) {
       titles.add(title);
       return title.getBeginIndex() + title.getFirstLevel();
@@ -1166,31 +1161,18 @@ public class PageAnalysis {
   // ==========================================================================
 
   /**
-   * All comments in the page
-   */
-  private List<PageElementComment> comments;
-
-  /**
    * @return All comments in the page.
    */
-  public List<PageElementComment> getComments() {
-    level1Analysis();
-    return comments;
+  public List<ContentsComment> getComments() {
+    return contents.getComments().getElements();
   }
 
   /**
    * @param currentIndex Current index.
    * @return Comment if the current index is inside a comment.
    */
-  public PageElementComment isInComment(int currentIndex) {
-    List<PageElementComment> tmpComments = getComments();
-    for (PageElementComment comment : tmpComments) {
-      if ((comment.getBeginIndex() <= currentIndex) &&
-          (comment.getEndIndex() > currentIndex)) {
-        return comment;
-      }
-    }
-    return null;
+  public ContentsComment isInComment(int currentIndex) {
+    return contents.getComments().getSmallestElementAtIndex(currentIndex);
   }
 
   // ==========================================================================

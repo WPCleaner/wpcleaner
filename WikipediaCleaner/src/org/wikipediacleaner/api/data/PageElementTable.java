@@ -12,6 +12,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import org.wikipediacleaner.api.data.contents.ContentsComment;
+
 
 /**
  * Class containing information about a table.
@@ -345,7 +347,7 @@ public class PageElementTable extends PageElement {
     }
     char currentChar = contents.charAt(index);
     if (currentChar == '<') {
-      PageElementComment comment = analysis.isInComment(index);
+      ContentsComment comment = analysis.isInComment(index);
       if ((comment != null) &&
           (comment.getBeginIndex() == index)) {
         return getMeaningfulIndex(analysis, comment.getEndIndex());
@@ -364,7 +366,7 @@ public class PageElementTable extends PageElement {
       PageAnalysis analysis, List<PageElementTable> tables, int index) {
     char currentChar = analysis.getContents().charAt(index);
     if (currentChar == '<') {
-      PageElementComment comment = analysis.isInComment(index);
+      ContentsComment comment = analysis.isInComment(index);
       if ((comment != null) && (comment.getBeginIndex() == index)) {
         return getTrueIndex(analysis, tables, comment.getEndIndex());
       }

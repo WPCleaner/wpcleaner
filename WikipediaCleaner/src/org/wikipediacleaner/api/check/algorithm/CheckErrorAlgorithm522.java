@@ -11,9 +11,9 @@ import java.util.Collection;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.data.PageAnalysis;
-import org.wikipediacleaner.api.data.PageElementComment;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.PageElementTitle;
+import org.wikipediacleaner.api.data.contents.ContentsComment;
 
 
 /**
@@ -60,7 +60,7 @@ public class CheckErrorAlgorithm522 extends CheckErrorAlgorithmBase {
              (contents.charAt(currentIndex) != '=')) {
         currentIndex = getFirstIndexAfterSpace(contents, currentIndex);
         if (currentIndex < lastIndex) {
-          PageElementComment comment = null;
+          ContentsComment comment = null;
           PageElementTag tag = null;
           char currentChar = contents.charAt(currentIndex);
           if (currentChar == '<') {

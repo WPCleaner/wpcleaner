@@ -9,47 +9,20 @@ package org.wikipediacleaner.api.data;
 
 import java.util.List;
 
+import org.wikipediacleaner.api.data.contents.ContentsElement;
+
 
 /**
  * Class containing information about an element of the page.
  */
-public abstract class PageElement {
-
-  private final int beginIndex;
-  private final int endIndex;
+public abstract class PageElement extends ContentsElement {
 
   /**
    * @param beginIndex Beginning of the page element.
    * @param endIndex End of the page element.
    */
   public PageElement(int beginIndex, int endIndex) {
-    this.beginIndex = beginIndex;
-    this.endIndex = endIndex;
-  }
-
-  /**
-   * @return Beginning of the page element.
-   */
-  public int getBeginIndex() {
-    return beginIndex;
-  }
-
-  /**
-   * @return End of the page element.
-   */
-  public int getEndIndex() {
-    return endIndex;
-  }
-
-  /**
-   * @param index Index.
-   * @return True if index is in the page element.
-   */
-  public boolean containsIndex(int index) {
-    if ((index >= beginIndex) && (index < endIndex)) {
-      return true;
-    }
-    return false;
+    super(null, beginIndex, endIndex);
   }
 
   /**

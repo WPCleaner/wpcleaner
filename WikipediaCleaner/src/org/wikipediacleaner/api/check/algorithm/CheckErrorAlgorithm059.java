@@ -16,10 +16,10 @@ import org.wikipediacleaner.api.check.CheckErrorResult.ErrorLevel;
 import org.wikipediacleaner.api.constants.WPCConfiguration;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageAnalysis;
-import org.wikipediacleaner.api.data.PageElementComment;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.PageElementTemplate.Parameter;
+import org.wikipediacleaner.api.data.contents.ContentsComment;
 import org.wikipediacleaner.gui.swing.component.MWPane;
 import org.wikipediacleaner.i18n.GT;
 
@@ -127,7 +127,7 @@ public class CheckErrorAlgorithm059 extends CheckErrorAlgorithmBase {
                   }
                 }
               } else {
-                PageElementComment comment = analysis.isInComment(paramValueStartIndex + currentValuePos);
+                ContentsComment comment = analysis.isInComment(paramValueStartIndex + currentValuePos);
                 if (comment != null) {
                   if (endError > 0) {
                     replacement += analysis.getContents().substring(comment.getBeginIndex(), comment.getEndIndex());

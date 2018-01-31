@@ -25,9 +25,7 @@ import org.wikipediacleaner.api.data.ISBNRange;
 import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageAnalysis;
-import org.wikipediacleaner.api.data.PageElement;
 import org.wikipediacleaner.api.data.PageElementCategory;
-import org.wikipediacleaner.api.data.PageElementComment;
 import org.wikipediacleaner.api.data.PageElementExternalLink;
 import org.wikipediacleaner.api.data.PageElementFunction;
 import org.wikipediacleaner.api.data.PageElementISBN;
@@ -40,6 +38,8 @@ import org.wikipediacleaner.api.data.PageElementParameter;
 import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.ISBNRange.ISBNInformation;
 import org.wikipediacleaner.api.data.SearchEngine;
+import org.wikipediacleaner.api.data.contents.ContentsComment;
+import org.wikipediacleaner.api.data.contents.ContentsElement;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
 import org.wikipediacleaner.gui.swing.menu.BasicMenuCreator;
 import org.wikipediacleaner.i18n.GT;
@@ -171,10 +171,10 @@ public abstract class MWPanePopupListener extends AbstractPopupListener {
     }
 
     // Find where the user has clicked
-    PageElement element = pageAnalysis.isInElement(position);
+    ContentsElement element = pageAnalysis.isInElement(position);
 
     // Comment
-    if (element instanceof PageElementComment) {
+    if (element instanceof ContentsComment) {
       return null;
     }
 

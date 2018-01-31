@@ -25,10 +25,10 @@ import org.wikipediacleaner.api.constants.WPCConfigurationStringList;
 import org.wikipediacleaner.api.data.LinkReplacement;
 import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.Page;
-import org.wikipediacleaner.api.data.PageElementComment;
 import org.wikipediacleaner.api.data.PageElementInternalLink;
 import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.TemplateMatcher;
+import org.wikipediacleaner.api.data.contents.ContentsCommentBuilder;
 import org.wikipediacleaner.gui.swing.action.ChangePreferredDisambiguationAction;
 import org.wikipediacleaner.gui.swing.action.MarkLinkAction;
 import org.wikipediacleaner.gui.swing.action.ReloadCategoryMembersAction;
@@ -98,7 +98,7 @@ public class MWPaneDisambiguationMenuCreator extends BasicMenuCreator {
           for (String comment : comments) {
             String replacement =
                 PageElementInternalLink.createInternalLink(page.getTitle(), text) +
-                PageElementComment.createComment(comment);
+                ContentsCommentBuilder.create(comment);
             addItem(
                 submenu, null, GT._("Using {0}", comment), true,
                 new ReplaceTextAction(page, replacement, element, textPane));
@@ -107,7 +107,7 @@ public class MWPaneDisambiguationMenuCreator extends BasicMenuCreator {
         } else {
           String replacement =
               PageElementInternalLink.createInternalLink(page.getTitle(), text) +
-              PageElementComment.createComment(comments.get(0));
+              ContentsCommentBuilder.create(comments.get(0));
           addItem(
               popup, null, GT._("Mark as normal link using comment"), true,
               new ReplaceTextAction(page, replacement, element, textPane));

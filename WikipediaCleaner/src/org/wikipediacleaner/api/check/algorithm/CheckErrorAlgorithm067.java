@@ -18,8 +18,8 @@ import org.wikipediacleaner.api.check.SpecialCharacters;
 import org.wikipediacleaner.api.constants.WPCConfiguration;
 import org.wikipediacleaner.api.constants.WPCConfigurationStringList;
 import org.wikipediacleaner.api.data.PageAnalysis;
-import org.wikipediacleaner.api.data.PageElementComment;
 import org.wikipediacleaner.api.data.PageElementTag;
+import org.wikipediacleaner.api.data.contents.ContentsComment;
 import org.wikipediacleaner.i18n.GT;
 
 
@@ -123,7 +123,7 @@ public class CheckErrorAlgorithm067 extends CheckErrorAlgorithmBase {
                   testIndex--;
                   done = false;
                 } else  if ((testChar == '>')) {
-                  PageElementComment comment = analysis.isInComment(testIndex);
+                  ContentsComment comment = analysis.isInComment(testIndex);
                   if ((comment != null) && (comment.getEndIndex() == testIndex + 1)) {
                     if (currentTagIndex == firstTagIndex) {
                       previousComment += contents.substring(comment.getBeginIndex(), comment.getEndIndex());

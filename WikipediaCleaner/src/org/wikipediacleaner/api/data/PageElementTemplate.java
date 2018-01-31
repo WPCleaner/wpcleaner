@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.wikipediacleaner.api.constants.EnumWikipedia;
+import org.wikipediacleaner.api.data.contents.ContentsComment;
 
 
 /**
@@ -148,7 +149,7 @@ public class PageElementTemplate extends PageElement {
   public static PageElementTemplate analyzeBlock(
       EnumWikipedia wiki,
       String contents, int index,
-      List<PageElementComment> comments,
+      List<ContentsComment> comments,
       List<PageElementTag> tags) {
     // Verify arguments
     if (contents == null) {
@@ -179,9 +180,9 @@ public class PageElementTemplate extends PageElement {
   
       // Possible comment
       if ((tmpIndex < contents.length()) && (contents.charAt(tmpIndex) == '<')) {
-        PageElementComment comment = null;
+        ContentsComment comment = null;
         if (comments != null) {
-          for (PageElementComment tmpComment : comments) {
+          for (ContentsComment tmpComment : comments) {
             if (tmpComment.getBeginIndex() == tmpIndex) {
               comment = tmpComment;
             }
@@ -230,9 +231,9 @@ public class PageElementTemplate extends PageElement {
 
       // Possible comment
       if ((tmpIndex < contents.length()) && (contents.charAt(tmpIndex) == '<')) {
-        PageElementComment comment = null;
+        ContentsComment comment = null;
         if (comments != null) {
-          for (PageElementComment tmpComment : comments) {
+          for (ContentsComment tmpComment : comments) {
             if (tmpComment.getBeginIndex() == tmpIndex) {
               comment = tmpComment;
             }
@@ -297,7 +298,7 @@ public class PageElementTemplate extends PageElement {
       EnumWikipedia wiki, String contents,
       int templateBeginIndex, int pipeIndex, int parametersBeginIndex,
       List<Parameter> parameters,
-      List<PageElementComment> comments,
+      List<ContentsComment> comments,
       List<PageElementTag> tags) {
     if (contents == null) {
       return -1;
@@ -387,9 +388,9 @@ public class PageElementTemplate extends PageElement {
           }
         } else {
           // Possible start of a comment
-          PageElementComment comment = null;
+          ContentsComment comment = null;
           if (comments != null) {
-            for (PageElementComment tmpComment : comments) {
+            for (ContentsComment tmpComment : comments) {
               if (tmpComment.getBeginIndex() == tmpIndex) {
                 comment = tmpComment;
               }
@@ -467,7 +468,7 @@ public class PageElementTemplate extends PageElement {
       List<Parameter> parameters,
       int pipeIndex, int endIndex, String parameter,
       int equalIndex, int offset,
-      List<PageElementComment> comments) {
+      List<ContentsComment> comments) {
 
     // Check if the "=" is meaningful
     if (equalIndex >= 0) {
@@ -495,7 +496,7 @@ public class PageElementTemplate extends PageElement {
           paramNum++;
         }
       }
-      String strippedValue = PageElementComment.stripComments(comments, parameter, offset);
+      String strippedValue = ContentsComment.stripComments(comments, parameter, offset);
       parameters.add(new Parameter(
           pipeIndex, endIndex,
           "", Integer.toString(paramNum), offset + spaces,
@@ -510,7 +511,7 @@ public class PageElementTemplate extends PageElement {
         spacesValue++;
       }
       String value = parameter.substring(equalIndex + 1);
-      String strippedValue = PageElementComment.stripComments(comments, value, offset + equalIndex + 1);
+      String strippedValue = ContentsComment.stripComments(comments, value, offset + equalIndex + 1);
       parameters.add(new Parameter(
           pipeIndex, endIndex,
           parameter.substring(0, equalIndex), null, offset + spacesName,

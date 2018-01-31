@@ -19,9 +19,7 @@ import javax.swing.text.StyledDocument;
 
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageAnalysis;
-import org.wikipediacleaner.api.data.PageElement;
 import org.wikipediacleaner.api.data.PageElementCategory;
-import org.wikipediacleaner.api.data.PageElementComment;
 import org.wikipediacleaner.api.data.PageElementExternalLink;
 import org.wikipediacleaner.api.data.PageElementFunction;
 import org.wikipediacleaner.api.data.PageElementImage;
@@ -36,6 +34,8 @@ import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.PageElementTitle;
 import org.wikipediacleaner.api.data.PageElementAreas.Area;
+import org.wikipediacleaner.api.data.contents.ContentsComment;
+import org.wikipediacleaner.api.data.contents.ContentsElement;
 import org.wikipediacleaner.utils.Configuration;
 import org.wikipediacleaner.utils.ConfigurationValueInteger;
 import org.wikipediacleaner.utils.ConfigurationValueStyle;
@@ -175,7 +175,7 @@ public abstract class MWPaneFormatter {
         ConfigurationValueStyle.TITLE);
 
     // Format
-    List<PageElement> elements = analysis.getElements(
+    List<ContentsElement> elements = analysis.getElements(
         styleCategory.getEnabled(),
         styleComments.getEnabled(),
         styleExternalLink.getEnabled(),
@@ -231,7 +231,7 @@ public abstract class MWPaneFormatter {
   private void formatElementsDirectly(
       StyledDocument doc,
       PageAnalysis analysis,
-      List<PageElement> elements,
+      List<ContentsElement> elements,
       int begin, int end) {
     for (int i = begin; i < end; i++) {
       formatElementDirectly(doc, analysis, elements.get(i));
@@ -248,7 +248,7 @@ public abstract class MWPaneFormatter {
   private void formatElementDirectly(
       StyledDocument doc,
       PageAnalysis analysis,
-      PageElement element) {
+      ContentsElement element) {
     if (element == null) {
       return;
     }
@@ -257,7 +257,7 @@ public abstract class MWPaneFormatter {
     Style style = null;
     if (element instanceof PageElementCategory) {
       style = doc.getStyle(ConfigurationValueStyle.CATEGORY.getName());
-    } else if (element instanceof PageElementComment) {
+    } else if (element instanceof ContentsComment) {
       style = doc.getStyle(ConfigurationValueStyle.COMMENTS.getName());
     } else if (element instanceof PageElementExternalLink) {
       style = doc.getStyle(ConfigurationValueStyle.EXTERNAL_LINK.getName());

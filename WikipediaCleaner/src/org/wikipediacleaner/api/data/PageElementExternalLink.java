@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.wikipediacleaner.api.constants.EnumWikipedia;
+import org.wikipediacleaner.api.data.contents.ContentsComment;
 
 
 /**
@@ -175,7 +176,7 @@ public class PageElementExternalLink extends PageElement {
             contents.substring(beginUrlIndex, endUrlIndex),
             null, -1, false, false);
       } else {
-        PageElementComment comment = null;
+        ContentsComment comment = null;
         PageElementTag tagNowiki = null;
         if ((contents.charAt(endTextIndex) == '<') && (analysis != null)) {
           comment = analysis.isInComment(endTextIndex);

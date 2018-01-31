@@ -11,9 +11,9 @@ import java.util.Collection;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.data.PageAnalysis;
-import org.wikipediacleaner.api.data.PageElementComment;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.PageElementTemplate;
+import org.wikipediacleaner.api.data.contents.ContentsComment;
 
 
 /**
@@ -54,7 +54,7 @@ public class CheckErrorAlgorithm060 extends CheckErrorAlgorithmBase {
             switch (paramValue.charAt(currentPos)) {
             case '<':
               int tmpIndex = paramValueStartIndex + currentPos;
-              PageElementComment comment = analysis.isInComment(tmpIndex);
+              ContentsComment comment = analysis.isInComment(tmpIndex);
               if (comment != null) {
                 currentPos = comment.getEndIndex() - 1 - paramValueStartIndex;
               } else {

@@ -16,9 +16,9 @@ import org.wikipediacleaner.api.check.CheckErrorResult.ErrorLevel;
 import org.wikipediacleaner.api.constants.WPCConfiguration;
 import org.wikipediacleaner.api.constants.WPCConfigurationBoolean;
 import org.wikipediacleaner.api.data.PageAnalysis;
-import org.wikipediacleaner.api.data.PageElementComment;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.PageElementTag.Parameter;
+import org.wikipediacleaner.api.data.contents.ContentsComment;
 import org.wikipediacleaner.gui.swing.component.MWPane;
 import org.wikipediacleaner.i18n.GT;
 
@@ -452,7 +452,7 @@ public class CheckErrorAlgorithm002 extends CheckErrorAlgorithmBase {
 
       // Check if we are in a comment
       if (shouldCheck) {
-        PageElementComment comment = analysis.isInComment(currentIndex);
+        ContentsComment comment = analysis.isInComment(currentIndex);
         if (comment != null) {
           shouldCheck = false;
           nextIndex = comment.getEndIndex();

@@ -14,6 +14,7 @@ import java.util.List;
 import org.wikipediacleaner.api.constants.WPCConfiguration;
 import org.wikipediacleaner.api.constants.WPCConfigurationStringList;
 import org.wikipediacleaner.api.data.PageElementTemplate.Parameter;
+import org.wikipediacleaner.api.data.contents.ContentsComment;
 
 
 /**
@@ -166,7 +167,7 @@ public class PageElementISSN extends PageElement {
 
     // Check special places
     if (contents.charAt(index) == '<') {
-      PageElementComment comment = analysis.isInComment(index);
+      ContentsComment comment = analysis.isInComment(index);
       if (comment != null) {
         return comment.getEndIndex();
       }
@@ -460,7 +461,7 @@ public class PageElementISSN extends PageElement {
         while (ok && (i < paramValue.length())) {
           char currentChar = paramValue.charAt(i);
           if (currentChar == '<') {
-            PageElementComment comment = analysis.isInComment(delta + i + 1);
+            ContentsComment comment = analysis.isInComment(delta + i + 1);
             if ((comment != null) && (comment.getBeginIndex() == delta + i)) {
               i += comment.getEndIndex() - comment.getBeginIndex();
             } else {
@@ -828,7 +829,7 @@ public class PageElementISSN extends PageElement {
     while (i < issn.length()) {
       char current = Character.toUpperCase(issn.charAt(i));
       if (current == '<') {
-        PageElementComment comment = analysis.isInComment(i);
+        ContentsComment comment = analysis.isInComment(i);
         if ((comment != null) && (comment.getBeginIndex() == i)) {
           i = comment.getEndIndex() - 1;
         } else {

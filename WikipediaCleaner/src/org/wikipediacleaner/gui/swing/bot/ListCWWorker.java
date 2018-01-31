@@ -35,8 +35,8 @@ import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.DataManager;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageAnalysis;
-import org.wikipediacleaner.api.data.PageElementComment;
 import org.wikipediacleaner.api.data.PageElementInternalLink;
+import org.wikipediacleaner.api.data.contents.ContentsComment;
 import org.wikipediacleaner.api.dump.DumpProcessor;
 import org.wikipediacleaner.api.dump.PageProcessor;
 import org.wikipediacleaner.api.execution.MediaWikiCallable;
@@ -387,7 +387,7 @@ public class ListCWWorker extends BasicWorker {
           if (contents != null) {
             int begin = -1;
             int end = -1;
-            for (PageElementComment comment : page.getAnalysis(contents, true).getComments()) {
+            for (ContentsComment comment : page.getAnalysis(contents, true).getComments()) {
               String value = comment.getComment().trim();
               if ("BOT BEGIN".equals(value)) {
                 if (begin < 0) {

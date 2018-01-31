@@ -12,6 +12,9 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.wikipediacleaner.api.data.contents.ContentsComment;
+import org.wikipediacleaner.api.data.contents.ContentsElement;
+
 
 /**
  * Management of non wiki text areas.
@@ -59,8 +62,8 @@ public class PageElementAreas {
    * 
    * @param comments List of comments.
    */
-  public void addComments(List<PageElementComment> comments) {
-    addPageElements(comments);
+  public void addComments(List<ContentsComment> comments) {
+    addContentsElements(comments);
   }
 
   /**
@@ -155,7 +158,7 @@ public class PageElementAreas {
    * @param categories List of categories.
    */
   public void addCategories(List<PageElementCategory> categories) {
-    addPageElements(categories);
+    addContentsElements(categories);
   }
 
   /**
@@ -184,7 +187,7 @@ public class PageElementAreas {
    * @param links List of language links.
    */
   public void addLanguageLinks(List<PageElementLanguageLink> links) {
-    addPageElements(links);
+    addContentsElements(links);
   }
 
   /**
@@ -193,7 +196,7 @@ public class PageElementAreas {
    * @param isbns List of ISBNs.
    */
   public void addISBN(List<PageElementISBN> isbns) {
-    addPageElements(isbns);
+    addContentsElements(isbns);
   }
 
   /**
@@ -202,7 +205,7 @@ public class PageElementAreas {
    * @param issns List of ISSNs.
    */
   public void addISSN(List<PageElementISSN> issns) {
-    addPageElements(issns);
+    addContentsElements(issns);
   }
 
   /**
@@ -211,7 +214,7 @@ public class PageElementAreas {
    * @param pmids List of PMIDs.
    */
   public void addPMID(List<PageElementPMID> pmids) {
-    addPageElements(pmids);
+    addContentsElements(pmids);
   }
 
   /**
@@ -220,7 +223,7 @@ public class PageElementAreas {
    * @param rfcs List of RFCs.
    */
   public void addRFC(List<PageElementRFC> rfcs) {
-    addPageElements(rfcs);
+    addContentsElements(rfcs);
   }
 
   /**
@@ -289,7 +292,7 @@ public class PageElementAreas {
    * @param magicWords List of magic words.
    */
   public void addMagicWords(List<PageElementMagicWord> magicWords) {
-    addPageElements(magicWords);
+    addContentsElements(magicWords);
   }
 
   /**
@@ -298,7 +301,7 @@ public class PageElementAreas {
    * @param parameters List of parameters.
    */
   public void addParameters(List<PageElementParameter> parameters) {
-    addPageElements(parameters);
+    addContentsElements(parameters);
   }
 
   /**
@@ -345,9 +348,9 @@ public class PageElementAreas {
    * 
    * @param elements List of elements.
    */
-  private void addPageElements(List<? extends PageElement> elements) {
+  private void addContentsElements(List<? extends ContentsElement> elements) {
     if (elements != null) {
-      for (PageElement element : elements) {
+      for (ContentsElement element : elements) {
         addArea(element.getBeginIndex(), element.getEndIndex());
       }
     }

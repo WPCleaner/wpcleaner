@@ -24,11 +24,11 @@ import org.wikipediacleaner.api.constants.WPCConfiguration;
 import org.wikipediacleaner.api.constants.WPCConfigurationString;
 import org.wikipediacleaner.api.constants.WPCConfigurationStringList;
 import org.wikipediacleaner.api.data.PageAnalysis;
-import org.wikipediacleaner.api.data.PageElementComment;
 import org.wikipediacleaner.api.data.PageElementISSN;
 import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.SearchEngine;
 import org.wikipediacleaner.api.data.PageElementTemplate.Parameter;
+import org.wikipediacleaner.api.data.contents.ContentsComment;
 import org.wikipediacleaner.gui.swing.action.ActionExternalViewer;
 import org.wikipediacleaner.gui.swing.action.ActionMultiple;
 import org.wikipediacleaner.i18n.GT;
@@ -64,7 +64,7 @@ public abstract class CheckErrorAlgorithmISSN extends CheckErrorAlgorithmBase {
         index++;
       }
       if ((index < contents.length()) && (contents.charAt(index) == '<')) {
-        PageElementComment comment = analysis.isInComment(index);
+        ContentsComment comment = analysis.isInComment(index);
         if (comment != null) {
           level = ErrorLevel.WARNING;
         }
