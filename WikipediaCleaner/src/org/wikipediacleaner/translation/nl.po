@@ -8,31 +8,35 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2018-01-31 08:17+0100\n"
-"PO-Revision-Date: 2017-03-11 15:59+0000\n"
-"Last-Translator: Grottem <grottem@hotmail.com>\n"
+"PO-Revision-Date: 2018-01-04 03:50+0000\n"
+"Last-Translator: SubjectIsDead <Unknown>\n"
 "Language-Team: Dutch <nl@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2017-03-22 17:48+0000\n"
-"X-Generator: Launchpad (build 18334)\n"
+"X-Launchpad-Export-Date: 2018-01-31 07:40+0000\n"
+"X-Generator: Launchpad (build 18534)\n"
 "Language: nl\n"
 
 #: org/wikipediacleaner/Version.java:31
 #, java-format
 msgid "{0} extension is now available on all WikiMedia wikis."
-msgstr ""
+msgstr "{0} extensie is nu beschikbaar op alle Wikimedia wikis"
 
 #: org/wikipediacleaner/Version.java:32
 msgid "It identifies wikitext patterns that must or can be fixed in pages."
 msgstr ""
+"Deze identificeert wikitekst-patronen die moeten of kunnen worden "
+"gecorrigeerd op pagina's."
 
 #: org/wikipediacleaner/Version.java:33
 msgid ""
 "It also provides some guidance about what the issues are with those patterns "
 "and how to fix them."
 msgstr ""
+"Ook geeft deze uitleg over wat de problemen met deze patronen zijn en hoe ze "
+"opgelost kunnen worden."
 
 #: org/wikipediacleaner/Version.java:35
 msgid "You can help by fixing problems identified by the Linter extension."
@@ -61,6 +65,8 @@ msgstr ""
 #, java-format
 msgid "Some errors detected by Linter are also reported directly by {0}."
 msgstr ""
+"Sommige fouten die worden ontdekt door Linter worden direct gerapporteerd "
+"door {0}."
 
 #: org/wikipediacleaner/Version.java:43
 #, java-format
@@ -78,7 +84,7 @@ msgstr "Rapporteer ieder ander probleem dat u vindt, alstublieft."
 #: org/wikipediacleaner/Version.java:49
 #, java-format
 msgid "I hope you''ll like {0}."
-msgstr "Ik hoop dat je {0} leuk vind."
+msgstr "Ik hoop dat je {0} leuk vindt."
 
 #: org/wikipediacleaner/Version.java:50
 #, java-format
@@ -87,7 +93,7 @@ msgid ""
 "(ies) in the detections, please let me know."
 msgstr ""
 "Ik zal proberen om {0} up to date te houden met Check Wiki, maar als u "
-"verschillen vind in de detecties, laat  het me weten"
+"verschillen vindt in de detecties, laat het me weten"
 
 #: org/wikipediacleaner/Version.java:51
 msgid "The Check Wiki project has evolved a lot recently."
@@ -125,7 +131,7 @@ msgstr "WPCleaner v1.28 gebruikt dit ook als het standaard systeem"
 
 #: org/wikipediacleaner/Version.java:58
 msgid "An action may be required on your wiki:"
-msgstr "Een actie is nodig op jou wiki:"
+msgstr "Een actie is nodig op uw wiki:"
 
 #: org/wikipediacleaner/Version.java:60
 #, java-format
@@ -171,14 +177,13 @@ msgid "Updating page {0}"
 msgstr "Updating pagina {0}"
 
 #: org/wikipediacleaner/api/MediaWiki.java:312
-#, fuzzy, java-format
+#, java-format
 msgid "The page {0} has been modified."
-msgstr "De pagina {0} bestaat niet op Wikipedia"
+msgstr ""
 
 #: org/wikipediacleaner/api/MediaWiki.java:313
-#, fuzzy
 msgid "Do yo want to continue?"
-msgstr "Verdergaan?"
+msgstr ""
 
 #: org/wikipediacleaner/api/ModificationReport.java:76
 #: org/wikipediacleaner/api/ModificationReport.java:104
@@ -187,9 +192,8 @@ msgid "Page {0}:"
 msgstr "Pagina {0}:"
 
 #: org/wikipediacleaner/api/ModificationReport.java:94
-#, fuzzy
 msgid "The following errors have occurred:"
-msgstr "Er is een onbekende fout opgetreden"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/CheckError.java:407
 msgid "No available description"
@@ -891,14 +895,12 @@ msgid "A list of templates that can't be used inside a reference"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm532.java:35
-#, fuzzy
 msgid "Fix tags"
-msgstr "Repareer categorieën"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm538.java:28
-#, fuzzy
 msgid "Remove whitespace characters"
-msgstr "Vervang alle controle karakters"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm540.java:39
 msgid "Fix bold and italic"
@@ -1379,9 +1381,8 @@ msgid "Test automatic replacements"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:292
-#, fuzzy
 msgid "Load replacements"
-msgstr "Pagina's &laden"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:298
 msgid "Save replacements"
@@ -1485,9 +1486,8 @@ msgid "Select all errors"
 msgstr "Alle fouten selecteren"
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:950
-#, fuzzy
 msgid "Select no errors"
-msgstr "Alle fouten selecteren"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:975
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiWindow.java:410
@@ -1749,9 +1749,8 @@ msgid "Special lists"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:867
-#, fuzzy
 msgid "Linter categories"
-msgstr "Repareer categorieën"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:876
 msgid "Generate lists"
@@ -1899,19 +1898,16 @@ msgid "Hits for filter {0}"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1692
-#, fuzzy
 msgid "Without templates"
-msgstr "Uitbreiden sjablonen"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1695
-#, fuzzy
 msgid "With templates"
-msgstr "Uitbreiden sjablonen"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1713
-#, fuzzy
 msgid "All namespaces"
-msgstr "Naamruimte"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1729
 #: org/wikipediacleaner/gui/swing/pagelist/PageListTableModel.java:226
@@ -3215,9 +3211,8 @@ msgid "Parameters"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/linter/LinterErrorListTableModel.java:205
-#, fuzzy
 msgid "Start"
-msgstr "Sorteren"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/linter/LinterErrorListTableModel.java:209
 msgid "Type"
@@ -3513,9 +3508,8 @@ msgid "List items"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:251
-#, fuzzy
 msgid "Table"
-msgstr "Titel"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:257
 msgid "Reference"
@@ -3687,9 +3681,8 @@ msgid "Maximum number of simultaneous analyses :"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/LimitOptionsPanel.java:122
-#, fuzzy
 msgid "Maximum number of errors for Linter :"
-msgstr "Maximale aantal fouten om voor Controle Wiki:"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/LimitOptionsPanel.java:139
 msgid "Minimum time between consecutive edits :"
@@ -3869,9 +3862,8 @@ msgid "Backlinks - Main namespace: {0}, All namespaces: {1}"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/pagelist/PageListWorker.java:87
-#, fuzzy
 msgid "All articles"
-msgstr "Naamruimte"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/pagelist/PageListWorker.java:88
 msgid "Articles in main namespace"
@@ -4234,6 +4226,9 @@ msgstr ""
 #~ msgid "Search"
 #~ msgstr "Zoeken"
 
+#~ msgid "An unknown error occured"
+#~ msgstr "Er is een onbekende fout opgetreden"
+
 #~ msgid "Error unkown from WikiCleaner"
 #~ msgstr "Onbekend probleem van WikiCleaner"
 
@@ -4268,6 +4263,9 @@ msgstr ""
 #~ msgid "Mark as Fixed"
 #~ msgstr "Markeren als gerepareerd"
 
+#~ msgid "The page {0} doesn't exist on Wikipedia"
+#~ msgstr "De pagina {0} bestaat niet op Wikipedia"
+
 #~ msgid "Do you want to mark {0} as fixed for error n°{1}"
 #~ msgstr "Wilt u {0} markeren als gerepareerd voor fout n°{1}"
 
@@ -4293,6 +4291,9 @@ msgstr ""
 
 #~ msgid "What name would like to use for the <ref> tag ?"
 #~ msgstr "Welke naam wil u de <ref> tag geven?"
+
+#~ msgid "Do you want to continue ?"
+#~ msgstr "Verdergaan?"
 
 #~ msgid "&Demo"
 #~ msgstr "&Demo"

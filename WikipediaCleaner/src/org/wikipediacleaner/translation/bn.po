@@ -8,15 +8,15 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2018-01-31 08:17+0100\n"
-"PO-Revision-Date: 2015-08-29 14:31+0000\n"
+"PO-Revision-Date: 2017-03-23 17:58+0000\n"
 "Last-Translator: Aftabuzzaman <Leemon432@gmail.com>\n"
 "Language-Team: Bengali <bn@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2015-09-13 21:48+0000\n"
-"X-Generator: Launchpad (build 17720)\n"
+"X-Launchpad-Export-Date: 2018-01-31 07:41+0000\n"
+"X-Generator: Launchpad (build 18534)\n"
 
 #: org/wikipediacleaner/Version.java:31
 #, java-format
@@ -180,7 +180,7 @@ msgstr ""
 
 #: org/wikipediacleaner/api/check/CheckError.java:407
 msgid "No available description"
-msgstr ""
+msgstr "কোন উপলব্ধ বিবরণ নেই"
 
 #: org/wikipediacleaner/api/check/CheckError.java:412
 #, java-format

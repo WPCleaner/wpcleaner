@@ -8,35 +8,39 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2018-01-31 08:17+0100\n"
-"PO-Revision-Date: 2015-04-05 05:56+0000\n"
-"Last-Translator: Nicolas Vervelle <Unknown>\n"
+"PO-Revision-Date: 2018-01-23 22:26+0000\n"
+"Last-Translator: Xuacu Saturio <xuacusk8@gmail.com>\n"
 "Language-Team: Asturian <ast@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2015-04-07 07:08+0000\n"
-"X-Generator: Launchpad (build 17413)\n"
+"X-Launchpad-Export-Date: 2018-01-31 07:41+0000\n"
+"X-Generator: Launchpad (build 18534)\n"
 "Language: ast\n"
 
 #: org/wikipediacleaner/Version.java:31
 #, java-format
 msgid "{0} extension is now available on all WikiMedia wikis."
-msgstr ""
+msgstr "La estensión {0} agora ta disponible'n toles wikis de WikiMedia."
 
 #: org/wikipediacleaner/Version.java:32
 msgid "It identifies wikitext patterns that must or can be fixed in pages."
 msgstr ""
+"Identifica patrones de testu wiki que pueden o tienen d'iguase nes páxines."
 
 #: org/wikipediacleaner/Version.java:33
 msgid ""
 "It also provides some guidance about what the issues are with those patterns "
 "and how to fix them."
 msgstr ""
+"Tamién ufre dellos conseyos sobre qué problemes tienen esos patrones y cómo "
+"igualos."
 
 #: org/wikipediacleaner/Version.java:35
 msgid "You can help by fixing problems identified by the Linter extension."
 msgstr ""
+"Puedes ayudar iguando los problemes identificaos pola estensión Linter."
 
 #: org/wikipediacleaner/Version.java:36
 #, java-format
@@ -44,18 +48,23 @@ msgid ""
 "Integration between {0} and the Linter extension is done in the following "
 "way:"
 msgstr ""
+"La integracion ente {0} y la estensión Linter faese de la siguiente manera:"
 
 #: org/wikipediacleaner/Version.java:38
 msgid ""
 "The \"Linter categories\" button in this window lets you retrieve a list of "
 "pages detected by Linter for a given type of problem."
 msgstr ""
+"El botón «Categoríes de Linter» d'esta ventana te permite llograr una llista "
+"de páxines detectaes por Linter pa una determinada triba de problemes."
 
 #: org/wikipediacleaner/Version.java:39
 msgid ""
 "The \"Check article with Linter\" button in the analysis window lets you "
 "check the current version of an article against Linter."
 msgstr ""
+"El botón «Revisar artículu con Linter» de la ventana d'analís te permite "
+"revisar la versión actual d'un artículu con Linter."
 
 #: org/wikipediacleaner/Version.java:40
 #, java-format
@@ -232,9 +241,8 @@ msgid "Remove {0} namespace from template name"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm002.java:35
-#, fuzzy
 msgid "Fix all incorrect tags"
-msgstr "Iguar toles etiquetes <br/>"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm002.java:195
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm002.java:219
@@ -354,9 +362,8 @@ msgid "Byte order mark"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:312
-#, fuzzy
 msgid "Object replacement character"
-msgstr "Ye imposible reemplazar los caráuteres [{0}]"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:313
 msgid "Private use area"
@@ -712,9 +719,9 @@ msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm085.java:227
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm112.java:653
-#, fuzzy, java-format
+#, java-format
 msgid "Use {0}"
-msgstr "Páxina {0}:"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm085.java:263
 msgid "A list of templates that can be used to replace &lt;center&gt; tags"
@@ -766,14 +773,13 @@ msgid "List of possible replacements"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm103.java:30
-#, fuzzy
 msgid "Replace all pipe templates"
-msgstr "Trocar usando la plantía {0}"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm107.java:97
-#, fuzzy, java-format
+#, java-format
 msgid "Length of ISSN is {0} instead of 8"
-msgstr "La suma de comprobación ye {0} en llugar de {1}"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm107.java:173
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm108.java:141
@@ -781,9 +787,9 @@ msgid "Similar ISSN"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm112.java:630
-#, fuzzy, java-format
+#, java-format
 msgid "Use {0} and {1}"
-msgstr "Páxina {0}:"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm501.java:177
 msgid "Restore original text"
@@ -891,19 +897,16 @@ msgid "A list of templates that can't be used inside a reference"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm532.java:35
-#, fuzzy
 msgid "Fix tags"
-msgstr "Reparar categoríes"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm538.java:28
-#, fuzzy
 msgid "Remove whitespace characters"
-msgstr "Desaniciar tolos caráuteres de control"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm540.java:39
-#, fuzzy
 msgid "Fix bold and italic"
-msgstr "Reparar les testeres en negrina"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm541.java:135
 msgid "for marking an edit"
@@ -1253,9 +1256,8 @@ msgid "Link parameter {0} to"
 msgstr ""
 
 #: org/wikipediacleaner/api/execution/AllLinksToPageCallable.java:43
-#, fuzzy
 msgid "Retrieving all links to page"
-msgstr "Desaniciar tolos enllaces al títulu"
+msgstr ""
 
 #: org/wikipediacleaner/api/execution/ContentsCallable.java:63
 msgid "Retrieving contents"
@@ -1744,9 +1746,8 @@ msgid "Special lists"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:867
-#, fuzzy
 msgid "Linter categories"
-msgstr "Reparar categoríes"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:876
 msgid "Generate lists"
@@ -1894,14 +1895,12 @@ msgid "Hits for filter {0}"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1692
-#, fuzzy
 msgid "Without templates"
-msgstr "Trocar usando la plantía {0}"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1695
-#, fuzzy
 msgid "With templates"
-msgstr "Comprobar categoría"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1713
 msgid "All namespaces"
@@ -2325,9 +2324,8 @@ msgid "Displaying templates found"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/action/ActionCheckArticle.java:51
-#, fuzzy
 msgid "Check article"
-msgstr "Comprobar categoría"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/action/ActionCheckArticle.java:262
 #: org/wikipediacleaner/gui/swing/action/ActionFullAnalysis.java:276
@@ -2341,9 +2339,8 @@ msgid "Analysis"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/action/ActionCheckTemplate.java:41
-#, fuzzy
 msgid "Check template"
-msgstr "Comprobar categoría"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/action/ActionDeletePage.java:41
 msgid "Delete page"
@@ -3173,9 +3170,8 @@ msgstr[0] ""
 msgstr[1] ""
 
 #: org/wikipediacleaner/gui/swing/linter/ActionLinter.java:51
-#, fuzzy
 msgid "Check article with Linter"
-msgstr "Comprobar categoría"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/linter/ActionLinter.java:137
 msgid "Unable to retrieve analysis from Linter."
@@ -3190,9 +3186,8 @@ msgid "Errors"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/linter/LinterErrorListTableModel.java:166
-#, fuzzy
 msgid "Multiple templates"
-msgstr "Trocar usando la plantía {0}"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/linter/LinterErrorListTableModel.java:199
 msgid "End"
@@ -3854,9 +3849,8 @@ msgid "Backlinks - Main namespace: {0}, All namespaces: {1}"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/pagelist/PageListWorker.java:87
-#, fuzzy
 msgid "All articles"
-msgstr "Comprobar categoría"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/pagelist/PageListWorker.java:88
 msgid "Articles in main namespace"
@@ -3909,9 +3903,8 @@ msgstr[0] ""
 msgstr[1] ""
 
 #: org/wikipediacleaner/gui/swing/worker/CheckArticleTools.java:104
-#, fuzzy
 msgid "Templates"
-msgstr "Comprobar categoría"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/worker/CheckArticleTools.java:107
 #, java-format
@@ -4095,15 +4088,15 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/worker/UpdateISBNWarningTools.java:258
 #: org/wikipediacleaner/gui/swing/worker/UpdateISSNWarningTools.java:256
-#, fuzzy, java-format
+#, java-format
 msgid "Removing {1} warning - {0}"
-msgstr "Anovando la páxina {0}"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/worker/UpdateISBNWarningTools.java:267
 #: org/wikipediacleaner/gui/swing/worker/UpdateISSNWarningTools.java:265
-#, fuzzy, java-format
+#, java-format
 msgid "Updating {1} warning - {0}"
-msgstr "Anovando la páxina {0}"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/worker/UpdateISBNWarningWorker.java:88
 #: org/wikipediacleaner/gui/swing/worker/UpdateISSNWarningWorker.java:85
@@ -4202,15 +4195,11 @@ msgstr ""
 msgid "The value cannot contain any of these characters: {0}"
 msgstr ""
 
-#, fuzzy
-#~ msgid "Remove formatting element"
-#~ msgstr "Desaniciar los saltos de la llista"
-
-#~ msgid "Remove <small> tag"
-#~ msgstr "Desaniciar la etiqueta <small>"
-
 #~ msgid "Error unkown from WikiCleaner"
 #~ msgstr "Error desconocíu de WikiCleaner"
+
+#~ msgid "Fix all <br/> tags"
+#~ msgstr "Iguar toles etiquetes <br/>"
 
 #~ msgid "Error {0} detected: Waiting and retrying"
 #~ msgstr "Error {0} detectáu: Esperando y reintentando"
@@ -4220,6 +4209,9 @@ msgstr ""
 
 #~ msgid "What description would like to use for the image ?"
 #~ msgstr "¿Qué descripción quier usar pa la imaxe?"
+
+#~ msgid "Remove <small> tag"
+#~ msgstr "Desaniciar la etiqueta <small>"
 
 #~ msgid "What description would like to use for the external link ?"
 #~ msgstr "¿Qué descripción quier usar pal enllaz esternu ?"

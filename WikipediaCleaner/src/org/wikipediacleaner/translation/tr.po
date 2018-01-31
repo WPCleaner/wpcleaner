@@ -8,15 +8,15 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2018-01-31 08:17+0100\n"
-"PO-Revision-Date: 2014-09-07 19:58+0000\n"
-"Last-Translator: Nicolas Vervelle <Unknown>\n"
+"PO-Revision-Date: 2017-04-17 14:45+0000\n"
+"Last-Translator: volkan <volkanyeke@gmail.com>\n"
 "Language-Team: Turkish <tr@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2014-09-21 06:01+0000\n"
-"X-Generator: Launchpad (build 17196)\n"
+"X-Launchpad-Export-Date: 2018-01-31 07:41+0000\n"
+"X-Generator: Launchpad (build 18534)\n"
 "Language: tr\n"
 
 #: org/wikipediacleaner/Version.java:31
@@ -68,10 +68,12 @@ msgid ""
 "WPCleaner configuration is available online, check the {0}System "
 "configuration{1}."
 msgstr ""
+"WPCleaner yapılandırması online olarak mevcuttur, {0}Sistem yapılandırmasını"
+"{1} kontrol edin."
 
 #: org/wikipediacleaner/Version.java:46
 msgid "Please, report any other problem you find to me."
-msgstr ""
+msgstr "Lütfen bulduğunuz diğer problemleri de bana iletin."
 
 #: org/wikipediacleaner/Version.java:49
 #, java-format
@@ -87,7 +89,7 @@ msgstr ""
 
 #: org/wikipediacleaner/Version.java:51
 msgid "The Check Wiki project has evolved a lot recently."
-msgstr ""
+msgstr "Check Wiki projesi son zamanlarda bayağı gelişti."
 
 #: org/wikipediacleaner/Version.java:52
 msgid ""
@@ -173,7 +175,7 @@ msgstr ""
 #: org/wikipediacleaner/api/ModificationReport.java:104
 #, java-format
 msgid "Page {0}:"
-msgstr ""
+msgstr "Sayfa {0}:"
 
 #: org/wikipediacleaner/api/ModificationReport.java:94
 msgid "The following errors have occurred:"
@@ -574,18 +576,16 @@ msgstr ""
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm073.java:101
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm107.java:120
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm108.java:91
-#, fuzzy
 msgid "Search as OCLC"
-msgstr "Arama"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm070.java:119
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm072.java:104
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm073.java:104
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm107.java:123
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm108.java:94
-#, fuzzy
 msgid "Search as LCCN"
-msgstr "Arama"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm070.java:193
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm072.java:154
@@ -867,9 +867,8 @@ msgid "A page containing a dump analysis for this error."
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm527.java:127
-#, fuzzy
 msgid "Trim text"
-msgstr "Metin bul"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm530.java:132
 msgid "View RFC"
@@ -1878,19 +1877,16 @@ msgid "Hits for filter {0}"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1692
-#, fuzzy
 msgid "Without templates"
-msgstr "Şablon"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1695
-#, fuzzy
 msgid "With templates"
-msgstr "Şablon"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1713
-#, fuzzy
 msgid "All namespaces"
-msgstr "İsim alanı"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1729
 #: org/wikipediacleaner/gui/swing/pagelist/PageListTableModel.java:226
@@ -2310,9 +2306,8 @@ msgid "Displaying templates found"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/action/ActionCheckArticle.java:51
-#, fuzzy
 msgid "Check article"
-msgstr "Şablon"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/action/ActionCheckArticle.java:262
 #: org/wikipediacleaner/gui/swing/action/ActionFullAnalysis.java:276
@@ -2322,14 +2317,12 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/action/ActionCheckArticle.java:293
 #: org/wikipediacleaner/gui/swing/action/ActionCheckArticle.java:309
 #: org/wikipediacleaner/gui/swing/worker/CheckArticleWorker.java:52
-#, fuzzy
 msgid "Analysis"
-msgstr "Analiz"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/action/ActionCheckTemplate.java:41
-#, fuzzy
 msgid "Check template"
-msgstr "Şablon"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/action/ActionDeletePage.java:41
 msgid "Delete page"
@@ -2731,9 +2724,8 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:220
 #: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:349
-#, fuzzy
 msgid "Analyze dump file"
-msgstr "Sayfa analizi"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:228
 msgid "Save selection"
@@ -3160,9 +3152,8 @@ msgstr[0] ""
 msgstr[1] ""
 
 #: org/wikipediacleaner/gui/swing/linter/ActionLinter.java:51
-#, fuzzy
 msgid "Check article with Linter"
-msgstr "Şablon"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/linter/ActionLinter.java:137
 msgid "Unable to retrieve analysis from Linter."
@@ -3177,9 +3168,8 @@ msgid "Errors"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/linter/LinterErrorListTableModel.java:166
-#, fuzzy
 msgid "Multiple templates"
-msgstr "Şablon"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/linter/LinterErrorListTableModel.java:199
 msgid "End"
@@ -3190,9 +3180,8 @@ msgid "Parameters"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/linter/LinterErrorListTableModel.java:205
-#, fuzzy
 msgid "Start"
-msgstr "Sırala"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/linter/LinterErrorListTableModel.java:209
 msgid "Type"
@@ -3488,9 +3477,8 @@ msgid "List items"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:251
-#, fuzzy
 msgid "Table"
-msgstr "Başlık"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:257
 msgid "Reference"
@@ -3843,9 +3831,8 @@ msgid "Backlinks - Main namespace: {0}, All namespaces: {1}"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/pagelist/PageListWorker.java:87
-#, fuzzy
 msgid "All articles"
-msgstr "Şablon"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/pagelist/PageListWorker.java:88
 msgid "Articles in main namespace"
@@ -3898,9 +3885,8 @@ msgstr[0] ""
 msgstr[1] ""
 
 #: org/wikipediacleaner/gui/swing/worker/CheckArticleTools.java:104
-#, fuzzy
 msgid "Templates"
-msgstr "Şablon"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/worker/CheckArticleTools.java:107
 #, java-format
@@ -4217,3 +4203,6 @@ msgstr ""
 
 #~ msgid "&Send"
 #~ msgstr "&Gönder"
+
+#~ msgid "Search"
+#~ msgstr "Arama"
