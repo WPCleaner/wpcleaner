@@ -36,10 +36,10 @@ public class CheckErrorAlgorithm064 extends CheckErrorAlgorithmBase {
   };
 
   /** Possible quotes before text */
-  private final static String POSSIBLE_QUOTES_BEFORE = "«'`‘\"„“” .,(–־—";
+  private final static String POSSIBLE_QUOTES_BEFORE = "«'`‘\"„“” .,()–־—";
 
   /** Possible quotes after text */
-  private final static String POSSIBLE_QUOTES_AFTER = "»'`‘\"„“” .,);:–־—";
+  private final static String POSSIBLE_QUOTES_AFTER = "»'`‘\"„“” .,();:–־—";
 
   public CheckErrorAlgorithm064() {
     super("Link equal to linktext");
@@ -117,12 +117,15 @@ public class CheckErrorAlgorithm064 extends CheckErrorAlgorithmBase {
         if (!same) {
           int countQuoteBefore = 0;
           while ((countQuoteBefore < text.length()) &&
-                 (POSSIBLE_QUOTES_BEFORE.indexOf(text.charAt(countQuoteBefore)) >= 0)) {
+                 (POSSIBLE_QUOTES_BEFORE.indexOf(text.charAt(countQuoteBefore)) >= 0) &&
+                 (linkName.charAt(0) != text.charAt(countQuoteBefore))) {
             countQuoteBefore++;
           }
           int countQuoteAfter = 0;
           while ((countQuoteAfter < text.length()) &&
-                 (POSSIBLE_QUOTES_AFTER.indexOf(text.charAt(text.length() - countQuoteAfter - 1)) >= 0)) {
+                 (POSSIBLE_QUOTES_AFTER.indexOf(text.charAt(text.length() - countQuoteAfter - 1)) >= 0) &&
+                 ((linkName.charAt(linkName.length() - 1) != text.charAt(text.length() - countQuoteAfter - 1)) ||
+                  (text.length() - countQuoteBefore - countQuoteAfter > linkName.length()))) {
             countQuoteAfter++;
           }
           if (((countQuoteBefore >= 1) || (countQuoteAfter >= 1)) &&
