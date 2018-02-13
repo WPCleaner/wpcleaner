@@ -129,7 +129,8 @@ public class PageElementAreas {
           for (PageElementImage.Parameter param : image.getParameters()) {
             MagicWord magicWord = param.getMagicWord();
             if (magicWord != null) {
-              if (MagicWord.IMG_ALT.equals(magicWord.getName())) {
+              if (MagicWord.IMG_ALT.equals(magicWord.getName()) ||
+                  MagicWord.IMG_LINK.equals(magicWord.getName())) {
                 int equalIndex = param.getContents().indexOf("=");
                 if (equalIndex < 0) {
                   addArea(
