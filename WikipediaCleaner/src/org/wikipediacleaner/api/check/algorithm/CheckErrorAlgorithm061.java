@@ -17,10 +17,10 @@ import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.SpecialCharacters;
 import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElement;
-import org.wikipediacleaner.api.data.PageElementComparator;
 import org.wikipediacleaner.api.data.PageElementFullTag;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.PageElementTemplate;
+import org.wikipediacleaner.api.data.contents.IntervalComparator;
 import org.wikipediacleaner.i18n.GT;
 
 
@@ -202,7 +202,7 @@ public class CheckErrorAlgorithm061 extends CheckErrorAlgorithmBase {
       }
     }
 
-    Collections.sort(refs, new PageElementComparator());
+    Collections.sort(refs, new IntervalComparator());
     return refs;
   }
 

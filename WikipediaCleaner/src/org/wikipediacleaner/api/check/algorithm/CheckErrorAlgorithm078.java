@@ -24,9 +24,9 @@ import org.wikipediacleaner.api.check.CheckErrorResult.ErrorLevel;
 import org.wikipediacleaner.api.constants.WPCConfiguration;
 import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElement;
-import org.wikipediacleaner.api.data.PageElementComparator;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.PageElementTemplate;
+import org.wikipediacleaner.api.data.contents.IntervalComparator;
 import org.wikipediacleaner.i18n.GT;
 
 
@@ -139,7 +139,7 @@ public class CheckErrorAlgorithm078 extends CheckErrorAlgorithmBase {
         result = true;
 
         // Find first suggested references for the group
-        Collections.sort(referencesForGroup, new PageElementComparator());
+        Collections.sort(referencesForGroup, new IntervalComparator());
         PageElement suggestedReferences = referencesForGroup.get(referencesForGroup.size() - 1);
 
         // Report errors

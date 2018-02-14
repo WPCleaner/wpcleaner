@@ -5,7 +5,7 @@
  *  See README.txt file for licensing information.
  */
 
-package org.wikipediacleaner.api.data;
+package org.wikipediacleaner.api.data.contents;
 
 import java.util.Comparator;
 
@@ -13,10 +13,10 @@ import java.util.Comparator;
 /**
  * Comparator for PageElement.
  */
-public class PageElementComparator implements Comparator<PageElement> {
+public class IntervalComparator implements Comparator<Interval> {
 
   @Override
-  public int compare(PageElement o1, PageElement o2) {
+  public int compare(Interval o1, Interval o2) {
     if (o1 == null) {
       if (o2 == null) {
         return 0;

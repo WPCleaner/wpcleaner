@@ -17,9 +17,9 @@ import org.wikipediacleaner.api.data.MagicWord;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElement;
-import org.wikipediacleaner.api.data.PageElementComparator;
 import org.wikipediacleaner.api.data.PageElementMagicWord;
 import org.wikipediacleaner.api.data.PageElementTemplate;
+import org.wikipediacleaner.api.data.contents.IntervalComparator;
 import org.wikipediacleaner.i18n.GT;
 
 
@@ -87,7 +87,7 @@ public abstract class CheckErrorAlgorithmTOC extends CheckErrorAlgorithmBase {
       }
     }
 
-    Collections.sort(result, new PageElementComparator());
+    Collections.sort(result, new IntervalComparator());
     return result;
   }
 
