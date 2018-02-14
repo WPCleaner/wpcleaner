@@ -453,6 +453,7 @@ public class PageElementFormatting {
         PageElementTag.TAG_WIKI_MATH,
         PageElementTag.TAG_WIKI_MATH_CHEM,
         PageElementTag.TAG_WIKI_NOWIKI,
+        PageElementTag.TAG_WIKI_SCORE,
         PageElementTag.TAG_WIKI_SOURCE,
         PageElementTag.TAG_WIKI_SYNTAXHIGHLIGHT,
         PageElementTag.TAG_WIKI_TIMELINE,
