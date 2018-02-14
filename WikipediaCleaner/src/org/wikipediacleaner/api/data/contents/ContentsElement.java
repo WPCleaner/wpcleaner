@@ -12,7 +12,7 @@ package org.wikipediacleaner.api.data.contents;
 /**
  * Structured element inside contents.
  */
-public abstract class ContentsElement {
+public abstract class ContentsElement implements Interval {
 
   /** Complete text of the element */
   private final String text;
@@ -58,6 +58,7 @@ public abstract class ContentsElement {
   /**
    * @return Begin index of the element.
    */
+  @Override
   final public int getBeginIndex() {
     return interval.getBeginIndex();
   }
@@ -65,6 +66,7 @@ public abstract class ContentsElement {
   /**
    * @return End index of the element.
    */
+  @Override
   final public int getEndIndex() {
     return interval.getEndIndex();
   }
@@ -73,6 +75,7 @@ public abstract class ContentsElement {
    * @param index Index to check.
    * @return True if the provided index is inside the element.
    */
+  @Override
   final public boolean containsIndex(int index) {
     return interval.containsIndex(index);
   }

@@ -12,7 +12,7 @@ package org.wikipediacleaner.api.data.contents;
 /**
  * A bean for handling intervals of contents.
  */
-public class ContentsInterval {
+public class ContentsInterval implements Interval {
 
   /** Begin index of the interval */
   private final int beginIndex;
@@ -32,6 +32,7 @@ public class ContentsInterval {
   /**
    * @return Begin index of the interval.
    */
+  @Override
   public int getBeginIndex() {
     return beginIndex;
   }
@@ -39,6 +40,7 @@ public class ContentsInterval {
   /**
    * @return End index of the interval.
    */
+  @Override
   public int getEndIndex() {
     return endIndex;
   }
@@ -47,6 +49,7 @@ public class ContentsInterval {
    * @param index Index to check.
    * @return True if the provided index is inside the interval.
    */
+  @Override
   public boolean containsIndex(int index) {
     if ((index >= beginIndex) && (index < endIndex)) {
       return true;
