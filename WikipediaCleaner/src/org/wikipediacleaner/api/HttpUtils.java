@@ -326,7 +326,12 @@ public class HttpUtils {
     try {
       uri = new URI(url);
     } catch (URISyntaxException e) {
-      return null;
+      url = url.replaceAll("\\&\\#x20\\;", "_");
+      try {
+        uri = new URI(url);
+      } catch (URISyntaxException e2) {
+        return null;
+      }
     }
 
     // Various checks
