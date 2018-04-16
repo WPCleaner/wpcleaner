@@ -42,7 +42,7 @@ public class ContentsCommentAnalyzer extends ContentsElementAnalyzer {
     do {
       beginIndex = contents.getText().indexOf(ContentsComment.START, beginIndex);
       if (beginIndex >= 0) {
-        int endIndex = contents.getText().indexOf(ContentsComment.END, beginIndex);
+        int endIndex = contents.getText().indexOf(ContentsComment.END, beginIndex + ContentsComment.START.length());
         if (endIndex >= 0) {
           endIndex += ContentsComment.END.length();
           comments.add(new ContentsComment(
