@@ -81,7 +81,7 @@ public abstract class ContentsElement implements Interval {
   }
 
   /**
-   * @return
+   * @return A string representation of the element.
    * @see java.lang.Object#toString()
    */
   @Override
