@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2018-01-31 08:17+0100\n"
+"POT-Creation-Date: 2018-04-18 21:08+0200\n"
 "PO-Revision-Date: 2014-09-09 01:36+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Danish <da@li.org>\n"
@@ -498,24 +498,25 @@ msgid "Check all links to other language"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:134
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm091.java:220
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm091.java:222
 msgid "Check language links"
 msgstr "Tjek sprog links"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:145
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:374
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm091.java:263
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm091.java:265
 msgid "What is the title of the page on this wiki ?"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:158
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm091.java:276
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm091.java:278
 #, java-format
 msgid "Replace using template {0}"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:164
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm081.java:269
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm091.java:310
 #: org/wikipediacleaner/gui/swing/action/ActionExternalViewer.java:61
 #: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:86
 #: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:154
@@ -726,7 +727,7 @@ msgid "Templates to be used for linking to the history of an article"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm090.java:809
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm091.java:374
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm091.java:382
 msgid "Templates using external links"
 msgstr ""
 
@@ -738,15 +739,15 @@ msgstr ""
 msgid "Templates to be used instead of Special:PrefixIndex"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm091.java:49
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm091.java:51
 msgid "Convert them to internal links"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm091.java:375
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm091.java:383
 msgid "To report only links to other languages"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm091.java:376
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm091.java:384
 msgid "To report only links to local wikis"
 msgstr ""
 

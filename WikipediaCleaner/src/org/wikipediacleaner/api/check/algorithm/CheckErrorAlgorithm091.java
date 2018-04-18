@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.wikipediacleaner.api.check.AddTextActionProvider;
+import org.wikipediacleaner.api.check.BasicActionProvider;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.CheckLanguageLinkActionProvider;
 import org.wikipediacleaner.api.check.CheckErrorResult.ErrorLevel;
@@ -25,6 +26,7 @@ import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementExternalLink;
 import org.wikipediacleaner.api.data.PageElementTemplate;
+import org.wikipediacleaner.gui.swing.action.ActionExternalViewer;
 import org.wikipediacleaner.gui.swing.component.MWPane;
 import org.wikipediacleaner.i18n.GT;
 import org.wikipediacleaner.utils.StringChecker;
@@ -302,6 +304,12 @@ public class CheckErrorAlgorithm091 extends CheckErrorAlgorithmBase {
               }
             }
           }
+
+          // External viewer
+          errorResult.addPossibleAction(
+              GT._("External Viewer"),
+              new BasicActionProvider(
+                  new ActionExternalViewer(link.getLink())));
 
           errors.add(errorResult);
         }
