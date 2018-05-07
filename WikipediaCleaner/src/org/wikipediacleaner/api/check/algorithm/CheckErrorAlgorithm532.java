@@ -1069,7 +1069,7 @@ public class CheckErrorAlgorithm532 extends CheckErrorAlgorithmBase {
     }
 
     // Check for some situations (not across some other constructions)
-    if (!analysis.areInSameArea(tagEndIndex, endIndex)) {
+    if (!analysis.areInSameArea(tagEndIndex - 1, endIndex)) {
       return null;
     }
 

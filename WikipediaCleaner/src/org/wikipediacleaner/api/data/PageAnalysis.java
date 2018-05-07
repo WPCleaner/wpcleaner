@@ -547,6 +547,17 @@ public class PageAnalysis {
       }
     }
 
+    // Check for lists
+    PageElementListItem listItem = isInListItem(beginIndex);
+    if (listItem != null) {
+      if (listItem.getEndIndex() < endIndex) {
+        return false;
+      }
+    } else {
+      if (isInListItem(endIndex) != null) {
+        return false;
+      }
+    }
     return true;
   }
 
