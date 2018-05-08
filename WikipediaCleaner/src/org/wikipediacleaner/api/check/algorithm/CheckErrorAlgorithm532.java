@@ -1078,6 +1078,7 @@ public class CheckErrorAlgorithm532 extends CheckErrorAlgorithmBase {
     int countBold = 0;
     int countItalic = 0;
     boolean hasContentsAfter = false;
+    PageElementTag selfClosedTag = null;
     while (currentIndex < endIndex) {
       char currentChar = contents.charAt(currentIndex);
       int nextIndex = currentIndex + 1;
@@ -1089,6 +1090,11 @@ public class CheckErrorAlgorithm532 extends CheckErrorAlgorithmBase {
           if (!currentTag.isComplete() &&
               !currentTag.mayBeUnclosed()) {
             return null;
+          }
+          if ((selfClosedTag == null) &&
+              currentTag.isFullTag() &&
+              currentTag.getNormalizedName().equals(tag.getNormalizedName())) {
+            selfClosedTag = currentTag;
           }
         }
       } else if (currentChar == '\'') {
@@ -1135,6 +1141,22 @@ public class CheckErrorAlgorithm532 extends CheckErrorAlgorithmBase {
     }
     if (!hasContentsAfter) {
       automatic = false;
+    }
+
+    // With a self closed tag
+    if (selfClosedTag != null) {
+      beginIndex = tag.getBeginIndex();
+      endIndex = selfClosedTag.getEndIndex();
+      CheckErrorResult errorResult = createCheckErrorResult(analysis, beginIndex, endIndex);
+      String replacement =
+          contents.substring(beginIndex, selfClosedTag.getBeginIndex()) +
+          PageElementTag.createTag(tag.getName(), true, false);
+      String text =
+          contents.substring(beginIndex, tag.getEndIndex()) +
+          "..." +
+          PageElementTag.createTag(tag.getName(), true, false);
+      errorResult.addReplacement(replacement, text, false);
+      return errorResult;
     }
 
     // Create error
