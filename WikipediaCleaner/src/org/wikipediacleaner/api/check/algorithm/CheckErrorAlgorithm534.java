@@ -114,6 +114,34 @@ public class CheckErrorAlgorithm534 extends CheckErrorAlgorithmBase {
       // Find a suggestion
       AutomaticReplacement replacement = findSuggestion(
           replacements, config, initialText);
+
+      // Handle specifically a second description
+      if ((replacement == null) && (param.getMagicWord() == null)) {
+        String secondDescription = null;
+        boolean hasAltDescription = false;
+        for (Parameter paramTmp : params) {
+          if ((paramTmp != param) && (paramTmp.getMagicWord() == null)) {
+            secondDescription = paramTmp.getContents();
+          }
+          if ((paramTmp.getMagicWord() != null) &&
+              MagicWord.IMG_ALT.equals(paramTmp.getMagicWord().getName())) {
+            hasAltDescription = true;
+          }
+        }
+        if (secondDescription != null) {
+          if (secondDescription.equals(initialText)) {
+            return new AutomaticReplacement(initialText, null, null, true);
+          }
+          if (!hasAltDescription) {
+            String targetText = "alt=" + initialText;
+            MagicWord alt = config.getMagicWordByName(MagicWord.IMG_ALT);
+            if ((alt != null) && (alt.isPossibleAlias(targetText))) {
+              return new AutomaticReplacement(
+                  initialText, MagicWord.IMG_ALT, targetText, false);
+            }
+          }
+        }
+      }
       if (replacement == null) {
         return null;
       }
@@ -179,6 +207,7 @@ public class CheckErrorAlgorithm534 extends CheckErrorAlgorithmBase {
           }
         }
       }
+
       return replacement;
     }
 
@@ -442,7 +471,7 @@ public class CheckErrorAlgorithm534 extends CheckErrorAlgorithmBase {
         }
       }
 
-      // Report images whit several parameters that can't be related to a magic word
+      // Report images with several parameters that can't be related to a magic word
       if (params.size() > 1) {
         result = true;
         if (errors == null) {
