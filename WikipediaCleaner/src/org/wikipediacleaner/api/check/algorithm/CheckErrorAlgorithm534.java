@@ -75,6 +75,11 @@ public class CheckErrorAlgorithm534 extends CheckErrorAlgorithmBase {
     };
 
     /**
+     * Extra characters that can be added to the parameter
+     */
+    private static String EXTRA_CHARACTERS = "abcdefghijklmnopqrstuvwxyz=";
+
+    /**
      * @param initialText Initial text.
      * @param targetMagicWord Target magic word.
      * @param targetText Target text.
@@ -262,6 +267,38 @@ public class CheckErrorAlgorithm534 extends CheckErrorAlgorithmBase {
       for (int letterIndex = 0; letterIndex < variablePos; letterIndex++) {
         StringBuilder modified = new StringBuilder(initialText.length() + 1);
 
+        // Try adding a letter
+        for (int letter = 0; letter < EXTRA_CHARACTERS.length(); letter++) {
+          modified.setLength(0);
+          if (letterIndex > 0) {
+            modified.append(initialText.substring(0, letterIndex));
+          }
+          modified.append(EXTRA_CHARACTERS.charAt(letter));
+          if (letterIndex < initialText.length()) {
+            modified.append(initialText.substring(letterIndex));
+          }
+          possible = findOtherSuggestion(config, modified.toString(), false);
+          if (possible != null) {
+            return possible;
+          }
+        }
+
+        // Try replacing a letter
+        for (int letter = 0; letter < EXTRA_CHARACTERS.length(); letter++) {
+          modified.setLength(0);
+          if (letterIndex > 0) {
+            modified.append(initialText.substring(0, letterIndex));
+          }
+          modified.append(EXTRA_CHARACTERS.charAt(letter));
+          if (letterIndex < initialText.length()) {
+            modified.append(initialText.substring(letterIndex + 1));
+          }
+          possible = findOtherSuggestion(config, modified.toString(), false);
+          if (possible != null) {
+            return possible;
+          }
+        }
+
         // Try removing a letter
         if (variablePos > 1) {
           modified.setLength(0);
@@ -378,6 +415,15 @@ public class CheckErrorAlgorithm534 extends CheckErrorAlgorithmBase {
                     }
                   }
                   ok &= suffixOk;
+                }
+              }
+
+              // Check special cases
+              if (ok && MagicWord.IMG_WIDTH.equals(mw.getName())) {
+                for (int index = newPrefixLength; index < initialText.length() - newSuffixLength; index++) {
+                  if (!Character.isDigit(initialText.charAt(index))) {
+                    ok = false;
+                  }
                 }
               }
 
@@ -522,39 +568,64 @@ public class CheckErrorAlgorithm534 extends CheckErrorAlgorithmBase {
         if (errors == null) {
           return result;
         }
-        for (int numParam = 0; numParam < params.size(); numParam++) {
-          Parameter param = params.get(numParam);
+        boolean reported = false;
+
+        // Case when last parameter is empty
+        if (!reported) {
+          Parameter param = params.get(params.size() - 1);
           int beginIndex = image.getBeginIndex() + param.getBeginOffset();
           int endIndex = image.getBeginIndex() + param.getEndOffset();
-          if (numParam == params.size() - 1) {
-            CheckErrorResult errorResult = createCheckErrorResult(
-                analysis, beginIndex, endIndex, ErrorLevel.CORRECT);
-            errors.add(errorResult);
-          } else {
-            boolean hasContents = false;
-            for (int index = beginIndex; index < endIndex; index++) {
-              if (contents.charAt(index) != ' ') {
-                hasContents = true;
-              }
+          boolean hasContents = false;
+          for (int index = beginIndex; index < endIndex; index++) {
+            if (contents.charAt(index) != ' ') {
+              hasContents = true;
             }
+          }
+          if (!hasContents) {
             CheckErrorResult errorResult = createCheckErrorResult(
                 analysis, beginIndex - 1, endIndex);
-            if (!hasContents) {
-              errorResult.addReplacement("", true);
+            errorResult.addReplacement("", false);
+            errors.add(errorResult);
+            reported = true;
+          }
+        }
+
+        // Check when last parameter is not empty
+        if (!reported) {
+          for (int numParam = 0; numParam < params.size(); numParam++) {
+            Parameter param = params.get(numParam);
+            int beginIndex = image.getBeginIndex() + param.getBeginOffset();
+            int endIndex = image.getBeginIndex() + param.getEndOffset();
+            if (numParam == params.size() - 1) {
+              CheckErrorResult errorResult = createCheckErrorResult(
+                  analysis, beginIndex, endIndex, ErrorLevel.CORRECT);
+              errors.add(errorResult);
             } else {
-              AutomaticReplacement replacement = AutomaticReplacement.suggestReplacement(
-                  automaticReplacements, analysis.getWikiConfiguration(),
-                  param, imageParameters);
-              if (replacement != null) {
-                String text = replacement.targetText;
-                if ((text != null) && !text.isEmpty()) {
-                  errorResult.addReplacement("|" + replacement.targetText, replacement.automatic);
-                } else {
-                  errorResult.addReplacement("", replacement.automatic);
+              boolean hasContents = false;
+              for (int index = beginIndex; index < endIndex; index++) {
+                if (contents.charAt(index) != ' ') {
+                  hasContents = true;
                 }
               }
+              CheckErrorResult errorResult = createCheckErrorResult(
+                  analysis, beginIndex - 1, endIndex);
+              if (!hasContents) {
+                errorResult.addReplacement("", true);
+              } else {
+                AutomaticReplacement replacement = AutomaticReplacement.suggestReplacement(
+                    automaticReplacements, analysis.getWikiConfiguration(),
+                    param, imageParameters);
+                if (replacement != null) {
+                  String text = replacement.targetText;
+                  if ((text != null) && !text.isEmpty()) {
+                    errorResult.addReplacement("|" + replacement.targetText, replacement.automatic);
+                  } else {
+                    errorResult.addReplacement("", replacement.automatic);
+                  }
+                }
+              }
+              errors.add(errorResult);
             }
-            errors.add(errorResult);
           }
         }
       }
