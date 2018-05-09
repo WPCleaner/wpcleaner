@@ -212,6 +212,8 @@ public class CheckErrorAlgorithm534 extends CheckErrorAlgorithmBase {
     }
 
     /**
+     * Find a suggestion for replacement.
+     * 
      * @param replacements List of automatic replacements.
      * @param config Wiki configuration.
      * @param initialText Initial text.
@@ -248,7 +250,49 @@ public class CheckErrorAlgorithm534 extends CheckErrorAlgorithmBase {
         }
       }
 
-      // Find various suggestions
+      // Find other suggestions
+      AutomaticReplacement possible = findOtherSuggestion(config, initialText, true);
+      if (possible != null) {
+        return possible;
+      }
+      int variablePos = initialText.indexOf('=');
+      if (variablePos < 0) {
+        variablePos = initialText.length();
+      }
+      for (int letterIndex = 0; letterIndex < variablePos; letterIndex++) {
+        StringBuilder modified = new StringBuilder(initialText.length() + 1);
+
+        // Try removing a letter
+        if (variablePos > 1) {
+          modified.setLength(0);
+          if (letterIndex > 0) {
+            modified.append(initialText.substring(0, letterIndex));
+          }
+          if (letterIndex + 1 < initialText.length()) {
+            modified.append(initialText.substring(letterIndex + 1));
+          }
+          possible = findOtherSuggestion(config, modified.toString(), false);
+          if (possible != null) {
+            return possible;
+          }
+        }
+      }
+
+      return null;
+    }
+
+    /**
+     * Find an other suggestion for replacement.
+     * 
+     * @param config Wiki configuration.
+     * @param initialText Initial text.
+     * @param automatic True if replacement can be automatic.
+     * @return Replacement for the initial text.
+     */
+    private static AutomaticReplacement findOtherSuggestion(
+        WikiConfiguration config,
+        String initialText,
+        boolean automatic) {
       for (String mwName : mwOptions) {
         MagicWord mw = config.getMagicWordByName(mwName);
         if ((mw != null) && (mw.getAliases() != null)) {
@@ -256,7 +300,7 @@ public class CheckErrorAlgorithm534 extends CheckErrorAlgorithmBase {
             int variablePos = alias.indexOf("$1");
             if (variablePos < 0) {
               if (initialText.equalsIgnoreCase(alias)) {
-                return new AutomaticReplacement(initialText, mwName, alias, true);
+                return new AutomaticReplacement(initialText, mwName, alias, automatic);
               }
             } else {
 
@@ -344,7 +388,7 @@ public class CheckErrorAlgorithm534 extends CheckErrorAlgorithmBase {
                     initialText.substring(newPrefixLength, initialText.length() - newSuffixLength) +
                     alias.substring(alias.length() - suffixLength);
                 if (mw.isPossibleAlias(newText)) {
-                  return new AutomaticReplacement(initialText, mwName, newText, true);
+                  return new AutomaticReplacement(initialText, mwName, newText, automatic);
                 }
               }
             }
