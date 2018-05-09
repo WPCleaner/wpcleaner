@@ -385,6 +385,7 @@ public class CheckErrorAlgorithm534 extends CheckErrorAlgorithmBase {
 
     // IMG_UPRIGHT
     new AutomaticReplacement("hochkant", MagicWord.IMG_UPRIGHT, "upright", true), // de
+    new AutomaticReplacement("upleft",   MagicWord.IMG_UPRIGHT, "upright", true),
     new AutomaticReplacement("uprighht", MagicWord.IMG_UPRIGHT, "upright", true),
     new AutomaticReplacement("uprigt",   MagicWord.IMG_UPRIGHT, "upright", true),
     new AutomaticReplacement("uprigth",  MagicWord.IMG_UPRIGHT, "upright", true),
