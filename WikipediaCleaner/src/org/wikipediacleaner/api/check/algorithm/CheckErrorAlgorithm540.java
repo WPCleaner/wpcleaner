@@ -18,6 +18,7 @@ import org.wikipediacleaner.api.data.PageElementFormatting;
 import org.wikipediacleaner.api.data.PageElementFormattingAnalysis;
 import org.wikipediacleaner.api.data.PageElementImage;
 import org.wikipediacleaner.api.data.PageElementListItem;
+import org.wikipediacleaner.api.data.PageElementParagraph;
 import org.wikipediacleaner.api.data.PageElementTable;
 import org.wikipediacleaner.api.data.PageElementInternalLink;
 import org.wikipediacleaner.api.data.PageElementTag;
@@ -99,7 +100,7 @@ public class CheckErrorAlgorithm540 extends CheckErrorAlgorithmBase {
       List<PageElementTag> tags = analysis.getTags();
       for (PageElementTag tag : tags) {
         if (tag.isComplete() && !tag.isFullTag()) {
-          shouldContinue = analyzeCorrectArea(
+          shouldContinue |= analyzeCorrectArea(
               elements, reportElements,
               tag.getValueBeginIndex(), tag.getValueEndIndex(),
               tag.getCompleteBeginIndex(), tag.getCompleteEndIndex());
@@ -212,6 +213,15 @@ public class CheckErrorAlgorithm540 extends CheckErrorAlgorithmBase {
                 cell.getBeginIndex(), cell.getEndIndex());
           }
         }
+      }
+
+      // Check paragraphs
+      List<PageElementParagraph> paragraphs = analysis.getParagraphs();
+      for (PageElementParagraph paragraph : paragraphs) {
+        shouldContinue |= analyzeCorrectArea(
+            elements, reportElements,
+            paragraph.getBeginIndex(), paragraph.getEndIndex(),
+            paragraph.getBeginIndex(), paragraph.getEndIndex());
       }
     }
 
