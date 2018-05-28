@@ -28,6 +28,7 @@ import org.wikipediacleaner.api.constants.wiki.Wikipedia;
 import org.wikipediacleaner.api.constants.wiki.Wikiquote;
 import org.wikipediacleaner.api.constants.wiki.Wikisource;
 import org.wikipediacleaner.api.constants.wiki.Wikiversity;
+import org.wikipediacleaner.api.constants.wiki.Wikivoyage;
 import org.wikipediacleaner.api.constants.wiki.Wiktionary;
 import org.wikipediacleaner.api.data.DataManager;
 import org.wikipediacleaner.api.data.Namespace;
@@ -118,6 +119,8 @@ public enum EnumWikipedia {
   WIKISOURCE_FR(new Wikisource("fr", "Wikisource en français")),
 
   WIKIVERSITY_FR(new Wikiversity("fr", "Wikiversité en français")),
+
+  WIKIVOYAGE_FR(new Wikivoyage("fr", "Wikivoyage en français")),
   
   WAZE(new Waze()),
   WAZEOPEDIA_USA(new WazeopediaUSA()),
