@@ -457,10 +457,17 @@ public class CheckErrorAlgorithm539 extends CheckErrorAlgorithmBase {
       if (contents.charAt(index - 1) == '>') {
         PageElementTag tag = analysis.isInTag(index -1);
         if (tag != null) {
+          boolean shouldCheckTag = false;
           if ((tag.getEndIndex() == index) &&
               (tag.isComplete()) &&
               (!tag.isFullTag()) &&
               (!tag.isEndTag())) {
+            shouldCheckTag = true;
+          }
+          if (shouldCheckTag && PageElementTag.TAG_WIKI_NOWIKI.equals(tag.getNormalizedName())) {
+            shouldCheckTag = false;
+          }
+          if (shouldCheckTag) {
             if (tag.getCompleteEndIndex() > endIndex) {
               if (errors == null) {
                 return true;
