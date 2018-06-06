@@ -355,6 +355,19 @@ public class CheckErrorAlgorithm540 extends CheckErrorAlgorithmBase {
       PageElementFormatting element,
       Collection<CheckErrorResult> errors) {
 
+    // Report inside redirects
+    if ((analysis.getPage() != null) &&
+        (analysis.getPage().isRedirect()) &&
+        (elements.size() == 1)) {
+      if (reportFormattingElement(
+          analysis, elements, element, errors,
+          element.getIndex(), element.getIndex() + element.getLength(),
+          element.getIndex(), element.getIndex() + element.getLength(),
+          true, false, false, true)) {
+        return;
+      }
+    }
+
     // Report inside a list item
     PageElementListItem listItem = element.isInListItem();
     if (listItem != null) {
