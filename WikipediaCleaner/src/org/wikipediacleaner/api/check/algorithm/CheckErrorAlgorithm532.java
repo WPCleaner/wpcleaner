@@ -274,7 +274,8 @@ public class CheckErrorAlgorithm532 extends CheckErrorAlgorithmBase {
 
     // Report tag
     CheckErrorResult errorResult = analyzeArea(
-        analysis, tag, tag.getBeginIndex(), link.getEndIndex() - 2, true);
+        analysis, tag, tag.getBeginIndex(), link.getEndIndex() - 2,
+        true, false);
     if (errorResult != null) {
       errors.add(errorResult);
       return true;
@@ -317,7 +318,8 @@ public class CheckErrorAlgorithm532 extends CheckErrorAlgorithmBase {
     }
 
     // Report tag
-    CheckErrorResult errorResult = analyzeArea(analysis, tag, beginIndex, endIndex, true);
+    CheckErrorResult errorResult = analyzeArea(
+        analysis, tag, beginIndex, endIndex, true, false);
     if (errorResult != null) {
       errors.add(errorResult);
       return true;
@@ -361,6 +363,10 @@ public class CheckErrorAlgorithm532 extends CheckErrorAlgorithmBase {
            (contents.charAt(beginIndex) != '|')) {
       beginIndex++;
     }
+    if ((beginIndex < tag.getBeginIndex()) &&
+        (contents.charAt(beginIndex) == '|')) {
+      beginIndex++;
+    }
     int endIndex = tag.getEndIndex();
     while ((endIndex < contents.length()) &&
            (contents.charAt(endIndex) != '\n') &&
@@ -395,7 +401,7 @@ public class CheckErrorAlgorithm532 extends CheckErrorAlgorithmBase {
 
     // Report tag
     CheckErrorResult errorResult = analyzeArea(
-        analysis, tag, beginIndex, endIndex, oneLine);
+        analysis, tag, beginIndex, endIndex, oneLine, true);
     if (errorResult != null) {
       errors.add(errorResult);
       return true;
@@ -440,7 +446,7 @@ public class CheckErrorAlgorithm532 extends CheckErrorAlgorithmBase {
     // Report tag
     CheckErrorResult errorResult = analyzeArea(
         analysis, tag,
-        cell.getEndOptionsIndex(), cell.getEndIndex(), true);
+        cell.getEndOptionsIndex(), cell.getEndIndex(), true, false);
     if (errorResult != null) {
       errors.add(errorResult);
       return true;
@@ -501,7 +507,7 @@ public class CheckErrorAlgorithm532 extends CheckErrorAlgorithmBase {
     int beginIndex = param.getValueStartIndex();
     int endIndex = param.getEndIndex();
     CheckErrorResult errorResult = analyzeArea(
-        analysis, tag, beginIndex, endIndex, automatic);
+        analysis, tag, beginIndex, endIndex, automatic, false);
     if (errorResult != null) {
       errors.add(errorResult);
       return true;
@@ -550,7 +556,7 @@ public class CheckErrorAlgorithm532 extends CheckErrorAlgorithmBase {
 
     // Report tag
     CheckErrorResult errorResult = analyzeArea(
-        analysis, tag, tag.getBeginIndex(), currentIndex, false); 
+        analysis, tag, tag.getBeginIndex(), currentIndex, false, false); 
     if (errorResult != null) {
       errors.add(errorResult);
       return true;
@@ -647,7 +653,8 @@ public class CheckErrorAlgorithm532 extends CheckErrorAlgorithmBase {
     }
 
     // Report tag
-    CheckErrorResult errorResult = analyzeArea(analysis, tag, lineBegin, lineEnd, true);
+    CheckErrorResult errorResult = analyzeArea(
+        analysis, tag, lineBegin, lineEnd, true, false);
     if (errorResult != null) {
       errors.add(errorResult);
       return true;
@@ -707,7 +714,7 @@ public class CheckErrorAlgorithm532 extends CheckErrorAlgorithmBase {
     CheckErrorResult errorResult = analyzeArea(
         analysis, tag,
         surroundingTag.getValueBeginIndex(), surroundingTag.getValueEndIndex(),
-        true);
+        true, false);
     if (errorResult != null) {
       errors.add(errorResult);
       return true;
@@ -778,7 +785,7 @@ public class CheckErrorAlgorithm532 extends CheckErrorAlgorithmBase {
     CheckErrorResult errorResult = analyzeArea(
         analysis, tag,
         previousTag.getBeginIndex(), tag.getEndIndex(),
-        true);
+        true, false);
     if (errorResult != null) {
       errors.add(errorResult);
       return true;
@@ -873,14 +880,16 @@ public class CheckErrorAlgorithm532 extends CheckErrorAlgorithmBase {
     }
     if (lastTag != null) {
       CheckErrorResult errorResult = analyzeArea(
-          analysis, tag, lastTag.getBeginIndex(), tag.getEndIndex(), !hasOtherTagBefore); 
+          analysis, tag, lastTag.getBeginIndex(), tag.getEndIndex(),
+          !hasOtherTagBefore, false); 
       if (errorResult != null) {
         errors.add(errorResult);
         return true;
       }
     } else {
       CheckErrorResult errorResult = analyzeArea(
-          analysis, tag, tag.getBeginIndex(), lastIndex, !hasOtherTagBefore); 
+          analysis, tag, tag.getBeginIndex(), lastIndex,
+          !hasOtherTagBefore, false); 
       if (errorResult != null) {
         errors.add(errorResult);
         return true;
@@ -894,14 +903,16 @@ public class CheckErrorAlgorithm532 extends CheckErrorAlgorithmBase {
    * 
    * @param analysis Page analysis.
    * @param tag Tag that could be replaced.
-   * @param previousTag Previous opening tag.
+   * @param beginIndex Begin index of the area.
+   * @param endIndex End index of the area.
    * @param automatic True if automatic modifications can be done.
+   * @param deleteIfAlone True if it can be deleted if alone in the area.
    * @return Error result if the error can be reported.
    */
   private CheckErrorResult analyzeArea(
       PageAnalysis analysis,
       PageElementTag tag, int beginIndex, int endIndex,
-      boolean automatic) {
+      boolean automatic, boolean deleteIfAlone) {
 
     // Check parameters
     if ((analysis == null) || (tag == null)) {
@@ -1030,7 +1041,7 @@ public class CheckErrorAlgorithm532 extends CheckErrorAlgorithmBase {
       if (previousTag == null) {
         CheckErrorResult errorResult = createCheckErrorResult(analysis, tagBeginIndex, tagEndIndex);
         errorResult.addReplacement(
-            "", false);
+            "", automatic && deleteIfAlone && (tagBeginIndex == beginIndex));
         errorResult.addReplacement(
             contents.substring(tagBeginIndex, tagEndIndex) + PageElementTag.createTag(tag.getName(), true, false),
             false);
