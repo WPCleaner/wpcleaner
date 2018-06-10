@@ -464,8 +464,11 @@ public class CheckErrorAlgorithm539 extends CheckErrorAlgorithmBase {
               (!tag.isEndTag())) {
             shouldCheckTag = true;
           }
-          if (shouldCheckTag && PageElementTag.TAG_WIKI_NOWIKI.equals(tag.getNormalizedName())) {
-            shouldCheckTag = false;
+          if (shouldCheckTag) {
+            if (PageElementTag.TAG_WIKI_NOWIKI.equals(tag.getNormalizedName()) ||
+                PageElementTag.TAG_HTML_CODE.equals(tag.getNormalizedName())) {
+              shouldCheckTag = false;
+            }
           }
           if (shouldCheckTag) {
             if (tag.getCompleteEndIndex() > endIndex) {
