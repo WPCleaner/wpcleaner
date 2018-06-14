@@ -13,6 +13,8 @@ import java.util.List;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.data.PageAnalysis;
+import org.wikipediacleaner.api.data.PageElement;
+import org.wikipediacleaner.api.data.PageElementExternalLink;
 import org.wikipediacleaner.api.data.PageElementFormatting;
 import org.wikipediacleaner.api.data.PageElementFormattingAnalysis;
 import org.wikipediacleaner.api.data.PageElementInternalLink;
@@ -201,6 +203,12 @@ public class CheckErrorAlgorithm539 extends CheckErrorAlgorithmBase {
       result |= analyzeInternalLink(analysis, errors, iLink);
     }
 
+    // Analyze each external link
+    List<PageElementExternalLink> eLinks = analysis.getExternalLinks();
+    for (PageElementExternalLink eLink : eLinks) {
+      result |= analyzeExternalLink(analysis, errors, eLink);
+    }
+
     // Analyze formatting elements
     result |= analyzeFormattingElements(analysis, errors);
 
@@ -248,7 +256,7 @@ public class CheckErrorAlgorithm539 extends CheckErrorAlgorithmBase {
     }
 
     // Analyze inside external links
-    /*List<PageElementExternalLink> eLinks = analysis.getExternalLinks();
+    List<PageElementExternalLink> eLinks = analysis.getExternalLinks();
     for (PageElementExternalLink eLink : eLinks) {
       if (eLink.hasSquare() && eLink.hasSecondSquare() && (eLink.getTextOffset() > 0)) {
         result |= analyzeForFormattingElements(
@@ -257,7 +265,7 @@ public class CheckErrorAlgorithm539 extends CheckErrorAlgorithmBase {
             eLink.getBeginIndex() + eLink.getTextOffset(), eLink.getEndIndex() - 1,
             OrderFormatting.FORMATTING_ANYWHERE, elements);
       }
-    }*/
+    }
 
     return result;
   }
@@ -444,14 +452,53 @@ public class CheckErrorAlgorithm539 extends CheckErrorAlgorithmBase {
       PageElementInternalLink link) {
 
     // Preliminary check
-    if ((link == null) || (link.getText() == null)) {
+    if ((link == null) ||
+        (link.getText() == null)) {
       return false;
     }
+    return analyzeLink(
+        analysis, errors, link,
+        link.getBeginIndex() + link.getTextOffset(),
+        link.getEndIndex() - 2);
+  }
+
+  /**
+   * @param analysis Page analysis.
+   * @param errors Errors found in the page.
+   * @param link Internal link to be analyzed.
+   * @return Flag indicating if the error was found.
+   */
+  private boolean analyzeExternalLink(
+      PageAnalysis analysis,
+      Collection<CheckErrorResult> errors,
+      PageElementExternalLink link) {
+
+    // Preliminary check
+    if ((link == null) ||
+        (link.getText() == null) ||
+        (!link.hasSquare()) ||
+        (!link.hasSecondSquare())) {
+      return false;
+    }
+    return analyzeLink(
+        analysis, errors, link,
+        link.getBeginIndex() + link.getTextOffset(),
+        link.getEndIndex() - 1);
+  }
+
+  /**
+   * @param analysis Page analysis.
+   * @param errors Errors found in the page.
+   * @param link Link to be analyzed.
+   * @return Flag indicating if the error was found.
+   */
+  private boolean analyzeLink(
+      PageAnalysis analysis,
+      Collection<CheckErrorResult> errors,
+      PageElement link, final int beginIndex, final int endIndex) {
 
     // Analyze tags in the internal link
     String contents = analysis.getContents();
-    int beginIndex = link.getBeginIndex() + link.getTextOffset();
-    int endIndex = link.getEndIndex() - 2;
     int index = endIndex;
     while (index > beginIndex) {
       if (contents.charAt(index - 1) == '>') {
@@ -491,14 +538,14 @@ public class CheckErrorAlgorithm539 extends CheckErrorAlgorithmBase {
                 CheckErrorResult errorResult = createCheckErrorResult(
                     analysis, tag.getCompleteBeginIndex(), tag.getCompleteEndIndex());
                 String replacement =
-                    contents.substring(tag.getCompleteBeginIndex(), link.getEndIndex() - 2) +
+                    contents.substring(tag.getCompleteBeginIndex(), endIndex) +
                     contents.substring(tag.getValueEndIndex(), tag.getCompleteEndIndex()) +
-                    contents.substring(link.getEndIndex() - 2, tag.getValueEndIndex());
+                    contents.substring(endIndex, tag.getValueEndIndex());
                 String text =
                     contents.substring(tag.getCompleteBeginIndex(), tag.getValueBeginIndex()) +
                     "..." +
                     contents.substring(tag.getValueEndIndex(), tag.getCompleteEndIndex()) +
-                    contents.substring(link.getEndIndex() - 2, tag.getValueEndIndex());
+                    contents.substring(endIndex, tag.getValueEndIndex());
                 errorResult.addReplacement(replacement, text, true);
                 errors.add(errorResult);
               }
