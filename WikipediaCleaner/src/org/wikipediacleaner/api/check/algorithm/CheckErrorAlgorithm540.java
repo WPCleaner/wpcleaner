@@ -13,6 +13,7 @@ import java.util.List;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.data.PageAnalysis;
+import org.wikipediacleaner.api.data.PageElement;
 import org.wikipediacleaner.api.data.PageElementExternalLink;
 import org.wikipediacleaner.api.data.PageElementFormatting;
 import org.wikipediacleaner.api.data.PageElementFormattingAnalysis;
@@ -371,7 +372,7 @@ public class CheckErrorAlgorithm540 extends CheckErrorAlgorithmBase {
     // Report inside a list item
     PageElementListItem listItem = element.isInListItem();
     if (listItem != null) {
-      // TODO: See if we can set closeFull = true
+      // NOTE: closeFull=true fixes lines incorrectly when the closing wasn't intended at the end
       if (reportFormattingElement(
           analysis, elements, element, errors,
           listItem.getBeginIndex() + listItem.getDepth(), listItem.getEndIndex(),
@@ -490,11 +491,82 @@ public class CheckErrorAlgorithm540 extends CheckErrorAlgorithmBase {
     }
 
     // Default report
+    reportError(
+        analysis, element,
+        element.getIndex(), element.getIndex() + element.getLength(),
+        errors);
+  }
+
+  /**
+   * @param analysis Page analysis.
+   * @param element Formatting element to report.
+   * @param beginIndex Beginning index of the area.
+   * @param endIndex End index of the area.
+   * @param errors List of errors.
+   * @param errors
+   */
+  private void reportError(
+      PageAnalysis analysis, PageElementFormatting element,
+      int beginIndex, int endIndex,
+      Collection<CheckErrorResult> errors) {
+
+    // Analyze text in the area
+    int completeBeginIndex = beginIndex;
+    int completeEndIndex = endIndex;
+    String contents = analysis.getContents();
+    int elementEndIndex = element.getIndex() + element.getLength();
+    PageElement closeElement = null;
+    if (elementEndIndex < contents.length()) {
+      char nextChar = contents.charAt(elementEndIndex);
+      if (nextChar == '[') {
+        PageElementInternalLink iLink = analysis.isInInternalLink(elementEndIndex);
+        if ((iLink != null) && (iLink.getBeginIndex() == elementEndIndex)) {
+          closeElement = iLink;
+          completeEndIndex = Math.max(completeEndIndex, iLink.getEndIndex());
+        }
+      }
+    }
+
+    // Report error
     CheckErrorResult errorResult = createCheckErrorResult(
-        analysis, element.getIndex(), element.getIndex() + element.getLength());
+        analysis, completeBeginIndex, completeEndIndex);
+    if (closeElement != null) {
+      String after = contents.substring(closeElement.getEndIndex(), completeEndIndex);
+      String addition = contents.substring(element.getIndex(), element.getIndex() + element.getMeaningfulLength());
+      String replacement = contents.substring(completeBeginIndex, closeElement.getEndIndex()) + addition + after;
+      String text = contents.substring(completeBeginIndex, closeElement.getBeginIndex()) + "[[...]]" + addition + after;
+      boolean automatic = false;
+      if (!automatic) {
+        // Mark as automatic if it goes to the end of the main area
+        int tmpIndex = closeElement.getEndIndex();
+        while ((tmpIndex < element.getMainAreaEnd()) &&
+               (" .".indexOf(contents.charAt(tmpIndex)) >= 0)) {
+          tmpIndex++;
+        }
+        automatic |= tmpIndex >= element.getMainAreaEnd();
+      }
+      if (!automatic) {
+        // Mark as automatic if it goes between parenthesis
+        if ((element.getIndex() > 0) &&
+            (contents.charAt(element.getIndex() - 1) == '(') &&
+            (closeElement.getEndIndex() < contents.length()) &&
+            (contents.charAt(closeElement.getEndIndex()) == ')')) {
+          automatic = true;
+        }
+      }
+      errorResult.addReplacement(replacement, text, automatic);
+    }
     errors.add(errorResult);
   }
 
+  /**
+   * @param analysis Page analysis.
+   * @param elements Formatting elements.
+   * @param element Formatting element to report.
+   * @param errors List of errors.
+   * @param cell Table cell.
+   * @return True if element has been reported.
+   */
   private boolean reportFormattingElementInCellOptions(
       PageAnalysis analysis,
       List<PageElementFormatting> elements,
@@ -608,6 +680,15 @@ public class CheckErrorAlgorithm540 extends CheckErrorAlgorithmBase {
         if (shouldCount) {
           if ((element.isInInternalLink() == null) &&
               (analysis.isInInternalLink(index) != null)) {
+            shouldCount = false;
+          }
+        }
+        if (shouldCount && (nextIndex - index == 1)) {
+          // Do not count single quotes between 2 letters (punctuation)
+          if ((index > 0) &&
+              (Character.isLetter(contents.charAt(index - 1))) &&
+              (nextIndex < contents.length()) &&
+              (Character.isLetter(contents.charAt(nextIndex)))) {
             shouldCount = false;
           }
         }
