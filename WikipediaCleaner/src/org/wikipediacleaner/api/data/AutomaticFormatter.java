@@ -8,9 +8,11 @@
 
 package org.wikipediacleaner.api.data;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import org.apache.commons.codec.digest.DigestUtils;
 import org.wikipediacleaner.api.check.CheckError;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithm;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithms;
@@ -48,22 +50,31 @@ public class AutomaticFormatter {
     // Fix Check Wiki errors
     if (algorithms != null) {
       boolean finished = true;
+      List<String> md5List = new ArrayList<>();
+      md5List.add(DigestUtils.md5Hex(contents));
+      int modificationsCount = 0; 
       do {
         finished = true;
         for (CheckErrorAlgorithm algorithm : algorithms) {
           if (algorithm.isAvailable() &&
               CheckErrorAlgorithms.isAlgorithmActive(wiki, algorithm.getErrorNumber())) {
             String currentContents = contents;
-            int iterations = 0;
             boolean modified = false;
             do {
               currentContents = contents;
               PageAnalysis analysis = page.getAnalysis(currentContents, true);
               contents = botFix ? algorithm.botFix(analysis) : algorithm.automaticFix(analysis);
               if (!contents.equals(currentContents)) {
-                modified = true;
+                String md5 = DigestUtils.md5Hex(contents);
+                if (md5List.contains(md5)) {
+                  contents = currentContents;
+                } else {
+                  modified = true;
+                  modificationsCount++;
+                  md5List.add(md5);
+                }
               }
-            } while ((!contents.equals(currentContents)) && (iterations < 10));
+            } while (!contents.equals(currentContents) && (modificationsCount < 1000));
             if (modified) {
               finished = false;
               if (usedAlgorithms != null) {

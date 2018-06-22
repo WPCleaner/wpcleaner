@@ -520,9 +520,13 @@ public class CheckErrorAlgorithm540 extends CheckErrorAlgorithmBase {
       char nextChar = contents.charAt(elementEndIndex);
       if (nextChar == '[') {
         PageElementInternalLink iLink = analysis.isInInternalLink(elementEndIndex);
-        if ((iLink != null) && (iLink.getBeginIndex() == elementEndIndex)) {
-          closeElement = iLink;
-          completeEndIndex = Math.max(completeEndIndex, iLink.getEndIndex());
+        if ((iLink != null) &&
+            (iLink.getBeginIndex() == elementEndIndex)) {
+          String subString = contents.substring(iLink.getBeginIndex(), iLink.getEndIndex());
+          if (!subString.contains("\n")) {
+            closeElement = iLink;
+            completeEndIndex = Math.max(completeEndIndex, iLink.getEndIndex());
+          }
         }
       }
     }
