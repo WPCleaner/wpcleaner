@@ -422,6 +422,7 @@ public class CheckErrorAlgorithm532 extends CheckErrorAlgorithmBase {
     // Check type of tag
     if (!PageElementTag.TAG_HTML_BIG.equals(tag.getNormalizedName()) &&
         !PageElementTag.TAG_HTML_CENTER.equals(tag.getNormalizedName()) &&
+        !PageElementTag.TAG_HTML_CODE.equals(tag.getNormalizedName()) &&
         !PageElementTag.TAG_HTML_DIV.equals(tag.getNormalizedName()) &&
         !PageElementTag.TAG_HTML_FONT.equals(tag.getNormalizedName()) &&
         !PageElementTag.TAG_HTML_S.equals(tag.getNormalizedName()) &&
