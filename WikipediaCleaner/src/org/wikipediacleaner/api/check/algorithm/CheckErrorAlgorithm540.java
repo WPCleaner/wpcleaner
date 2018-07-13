@@ -519,14 +519,30 @@ public class CheckErrorAlgorithm540 extends CheckErrorAlgorithmBase {
     if (elementEndIndex < contents.length()) {
       char nextChar = contents.charAt(elementEndIndex);
       if (nextChar == '[') {
-        PageElementInternalLink iLink = analysis.isInInternalLink(elementEndIndex);
-        if ((iLink != null) &&
-            (iLink.getBeginIndex() == elementEndIndex)) {
-          String subString = contents.substring(iLink.getBeginIndex(), iLink.getEndIndex());
-          if (!subString.contains("\n")) {
-            closeElement = iLink;
-            completeEndIndex = Math.max(completeEndIndex, iLink.getEndIndex());
+        // Check if it's a link
+        PageElement potentialCloseElement = analysis.isInInternalLink(elementEndIndex);
+        if (potentialCloseElement == null) {
+          potentialCloseElement = analysis.isInExternalLink(elementEndIndex);
+        }
+
+        // Check that it can be used
+        if ((potentialCloseElement != null) &&
+            (potentialCloseElement.getBeginIndex() != elementEndIndex)) {
+          potentialCloseElement = null;
+        }
+        if (potentialCloseElement != null) {
+          String subString = contents.substring(
+              potentialCloseElement.getBeginIndex(),
+              potentialCloseElement.getEndIndex());
+          if (subString.contains("\n") || subString.contains("''")) {
+            potentialCloseElement = null;
           }
+        }
+
+        // Use it
+        if (potentialCloseElement != null) {
+          closeElement = potentialCloseElement;
+          completeEndIndex = Math.max(completeEndIndex, closeElement.getEndIndex());
         }
       }
     }
