@@ -514,37 +514,9 @@ public class CheckErrorAlgorithm540 extends CheckErrorAlgorithmBase {
     int completeBeginIndex = beginIndex;
     int completeEndIndex = endIndex;
     String contents = analysis.getContents();
-    int elementEndIndex = element.getIndex() + element.getLength();
-    PageElement closeElement = null;
-    if (elementEndIndex < contents.length()) {
-      char nextChar = contents.charAt(elementEndIndex);
-      if (nextChar == '[') {
-        // Check if it's a link
-        PageElement potentialCloseElement = analysis.isInInternalLink(elementEndIndex);
-        if (potentialCloseElement == null) {
-          potentialCloseElement = analysis.isInExternalLink(elementEndIndex);
-        }
-
-        // Check that it can be used
-        if ((potentialCloseElement != null) &&
-            (potentialCloseElement.getBeginIndex() != elementEndIndex)) {
-          potentialCloseElement = null;
-        }
-        if (potentialCloseElement != null) {
-          String subString = contents.substring(
-              potentialCloseElement.getBeginIndex(),
-              potentialCloseElement.getEndIndex());
-          if (subString.contains("\n") || subString.contains("''")) {
-            potentialCloseElement = null;
-          }
-        }
-
-        // Use it
-        if (potentialCloseElement != null) {
-          closeElement = potentialCloseElement;
-          completeEndIndex = Math.max(completeEndIndex, closeElement.getEndIndex());
-        }
-      }
+    PageElement closeElement = getElementAfter(analysis, element);
+    if (closeElement != null) {
+      completeEndIndex = Math.max(completeEndIndex, closeElement.getEndIndex());
     }
 
     // Report error
@@ -577,6 +549,48 @@ public class CheckErrorAlgorithm540 extends CheckErrorAlgorithmBase {
       errorResult.addReplacement(replacement, text, automatic);
     }
     errors.add(errorResult);
+  }
+
+  /**
+   * @param analysis Page analysis.
+   * @param element Formatting element.
+   * @return Element just after the formatting element.
+   */
+  private PageElement getElementAfter(
+      PageAnalysis analysis, PageElementFormatting element) {
+    String contents = analysis.getContents();
+    int elementEndIndex = element.getIndex() + element.getLength();
+    if (elementEndIndex < contents.length()) {
+      char nextChar = contents.charAt(elementEndIndex);
+      if (nextChar == '[') {
+        // Check if it's a link
+        PageElement potentialCloseElement = analysis.isInInternalLink(elementEndIndex);
+        if (potentialCloseElement == null) {
+          potentialCloseElement = analysis.isInExternalLink(elementEndIndex);
+        }
+
+        // Check that it can be used
+        if ((potentialCloseElement != null) &&
+            (potentialCloseElement.getBeginIndex() != elementEndIndex)) {
+          potentialCloseElement = null;
+        }
+        if (potentialCloseElement != null) {
+          String subString = contents.substring(
+              potentialCloseElement.getBeginIndex(),
+              potentialCloseElement.getEndIndex());
+          if (subString.contains("\n") || subString.contains("''")) {
+            potentialCloseElement = null;
+          }
+        }
+
+        // Use it
+        if (potentialCloseElement != null) {
+          return potentialCloseElement;
+        }
+      }
+    }
+
+    return null;
   }
 
   /**
@@ -725,6 +739,9 @@ public class CheckErrorAlgorithm540 extends CheckErrorAlgorithmBase {
       index = nextIndex;
     }
 
+    // Analyze element after
+    PageElement elementAfter = getElementAfter(analysis, element);
+
     // Report with only one formatting element
     PageElementFormattingAnalysis formatting = PageElementFormattingAnalysis.analyzeArea(
         elements, beginIndex, endIndex);
@@ -760,18 +777,23 @@ public class CheckErrorAlgorithm540 extends CheckErrorAlgorithmBase {
 
       // Report with the formatting element at the beginning
       if (element.getIndex() == beginIndex) {
-        closeFull &= !hasSingleQuote;
-        closeFull &= !hasDoubleQuotes;
-        closeFull &= (contents.charAt(endIndex - 1) != '\'');
-        closeFull &= element.isAloneInArea(elements);
+        boolean preventCloseFull  = hasSingleQuote;
+        preventCloseFull |= hasDoubleQuotes;
+        preventCloseFull |= (contents.charAt(endIndex - 1) == '\'');
+        preventCloseFull |= !element.isAloneInArea(elements);
         if (!element.canBeClosedAt(endIndex)) {
-          closeFull = false;
+          preventCloseFull = true;
           int tmpIndex = element.getIndex() + element.getLength();
           while ((tmpIndex < endIndex) &&
                  (contents.charAt(tmpIndex) != '\n')) {
             tmpIndex++;
           }
           endIndex = tmpIndex;
+        }
+        if (!closeFull && (elementAfter != null)) {
+          if (elementAfter.getEndIndex() == endIndex) {
+            closeFull = true;
+          }
         }
         if (element.canBeClosedAt(endIndex)) {
           CheckErrorResult errorResult = createCheckErrorResult(
@@ -782,7 +804,7 @@ public class CheckErrorAlgorithm540 extends CheckErrorAlgorithmBase {
               contents.substring(element.getIndex(), endIndex) +
               addition;
           String text = addition + "..." + addition;
-            errorResult.addReplacement(replacement, text, closeFull);
+            errorResult.addReplacement(replacement, text, closeFull && !preventCloseFull);
           errors.add(errorResult);
           return true;
         }
