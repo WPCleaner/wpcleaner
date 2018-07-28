@@ -358,46 +358,58 @@ public class PageElementFormatting {
   }
 
   /**
+   * @param testIndex Index to be compared with.
+   * @return True if the formatting element can be closed safely.
+   */
+  public boolean isInSameArea(int testIndex) {
+    if ((inRefTag != null) && (!inRefTag.containsIndex(testIndex - 1))) {
+      return false;
+    }
+    if ((inILink != null) && (!inILink.containsIndex(testIndex - 1))) {
+      return false;
+    }
+    if ((inELink != null) && (!inELink.containsIndex(testIndex - 1))) {
+      return false;
+    }
+    if ((inTemplate != null) && (!inTemplate.containsIndex(testIndex - 1))) {
+      return false;
+    }
+    if ((inTemplateParameter != null) && (!inTemplateParameter.containsIndex(testIndex - 1))) {
+      return false;
+    }
+    if ((inTitle != null) && (!inTitle.containsIndex(testIndex - 1))) {
+      return false;
+    }
+    if ((inImage != null) && (!inImage.containsIndex(testIndex - 1))) {
+      return false;
+    }
+    if ((inListItem != null) && (!inListItem.containsIndex(testIndex - 1))) {
+      return false;
+    }
+    if ((inParagraph != null) && (!inParagraph.containsIndex(testIndex - 1))) {
+      return false;
+    }
+    if ((inTable != null) && (!inTable.containsIndex(testIndex - 1))) {
+      return false;
+    }
+    if ((inTableCaption != null) && (!inTableCaption.containsIndex(testIndex - 1))) {
+      return false;
+    }
+    if ((inTableCell != null) && (!inTableCell.containsIndex(testIndex - 1))) {
+      return false;
+    }
+
+    return true;
+  }
+
+  /**
    * @param closeIndex Index where to close the formatting element.
    * @return True if the formatting element can be closed safely.
    */
   public boolean canBeClosedAt(int closeIndex) {
 
     // Check that the close index is in the same areas than the element
-    if ((inRefTag != null) && (!inRefTag.containsIndex(closeIndex - 1))) {
-      return false;
-    }
-    if ((inILink != null) && (!inILink.containsIndex(closeIndex - 1))) {
-      return false;
-    }
-    if ((inELink != null) && (!inELink.containsIndex(closeIndex - 1))) {
-      return false;
-    }
-    if ((inTemplate != null) && (!inTemplate.containsIndex(closeIndex - 1))) {
-      return false;
-    }
-    if ((inTemplateParameter != null) && (!inTemplateParameter.containsIndex(closeIndex - 1))) {
-      return false;
-    }
-    if ((inTitle != null) && (!inTitle.containsIndex(closeIndex - 1))) {
-      return false;
-    }
-    if ((inImage != null) && (!inImage.containsIndex(closeIndex - 1))) {
-      return false;
-    }
-    if ((inListItem != null) && (!inListItem.containsIndex(closeIndex - 1))) {
-      return false;
-    }
-    if ((inParagraph != null) && (!inParagraph.containsIndex(closeIndex - 1))) {
-      return false;
-    }
-    if ((inTable != null) && (!inTable.containsIndex(closeIndex - 1))) {
-      return false;
-    }
-    if ((inTableCaption != null) && (!inTableCaption.containsIndex(closeIndex - 1))) {
-      return false;
-    }
-    if ((inTableCell != null) && (!inTableCell.containsIndex(closeIndex - 1))) {
+    if (!isInSameArea(closeIndex - 1)) {
       return false;
     }
 

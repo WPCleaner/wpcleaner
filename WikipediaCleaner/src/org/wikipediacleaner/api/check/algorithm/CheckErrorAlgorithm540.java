@@ -510,6 +510,10 @@ public class CheckErrorAlgorithm540 extends CheckErrorAlgorithmBase {
       int beginIndex, int endIndex,
       Collection<CheckErrorResult> errors) {
 
+    // Reduce area
+    beginIndex = moveBeginIndex(analysis, beginIndex, endIndex, true);
+    endIndex = moveEndIndex(analysis, beginIndex, endIndex);
+
     // Analyze text in the area
     int completeBeginIndex = beginIndex;
     int completeEndIndex = endIndex;
@@ -532,7 +536,7 @@ public class CheckErrorAlgorithm540 extends CheckErrorAlgorithmBase {
         // Mark as automatic if it goes to the end of the main area
         int tmpIndex = closeElement.getEndIndex();
         while ((tmpIndex < element.getMainAreaEnd()) &&
-               (" .".indexOf(contents.charAt(tmpIndex)) >= 0)) {
+               (" .:;,".indexOf(contents.charAt(tmpIndex)) >= 0)) {
           tmpIndex++;
         }
         automatic |= tmpIndex >= element.getMainAreaEnd();
@@ -765,14 +769,16 @@ public class CheckErrorAlgorithm540 extends CheckErrorAlgorithmBase {
 
       // Report with the formatting element at the end
       if (element.getIndex() + element.getLength() == endIndex) {
-        CheckErrorResult errorResult = createCheckErrorResult(
-            analysis, element.getIndex(), element.getIndex() + element.getLength());
-        deleteEnd &= !hasSingleQuote;
-        deleteEnd &= !hasDoubleQuotes;
-        deleteEnd &= element.isAloneInArea(elements);
-        errorResult.addReplacement("", deleteEnd);
-        errors.add(errorResult);
-        return true;
+        if (element.isInSameArea(beginArea)) {
+          CheckErrorResult errorResult = createCheckErrorResult(
+              analysis, element.getIndex(), element.getIndex() + element.getLength());
+          boolean preventDeleteEnd = hasSingleQuote;
+          preventDeleteEnd |= hasDoubleQuotes;
+          preventDeleteEnd |= !element.isAloneInArea(elements);
+          errorResult.addReplacement("", deleteEnd && !preventDeleteEnd);
+          errors.add(errorResult);
+          return true;
+        }
       }
 
       // Report with the formatting element at the beginning
@@ -792,6 +798,42 @@ public class CheckErrorAlgorithm540 extends CheckErrorAlgorithmBase {
         }
         if (!closeFull && (elementAfter != null)) {
           if (elementAfter.getEndIndex() == endIndex) {
+            closeFull = true;
+          }
+        }
+        if (!closeFull) {
+          boolean clean = true;
+          boolean hasDigit = false;
+          boolean hasLetter = false;
+          int tmpIndex = element.getIndex() + element.getLength();
+          while ((tmpIndex < endIndex) && clean) {
+            char tmpChar = contents.charAt(tmpIndex);
+            if ("'’-".indexOf(tmpChar) >= 0) {
+              if ((tmpIndex <= 0) ||
+                  !Character.isLetter(contents.charAt(tmpIndex - 1))) {
+                clean = false;
+              }
+              if ((tmpIndex + 1 >= endIndex) ||
+                  !Character.isLetter(contents.charAt(tmpIndex + 1))) {
+                clean = false;
+              }
+            } else if (Character.isLetter(tmpChar)) {
+              hasLetter = true;
+            } else if (Character.isDigit(tmpChar)) {
+              hasDigit = true;
+            } else if (!Character.isWhitespace(tmpChar)) {
+              // Do not check elsewhere for punctuation, as it may be a separation between a title and something else
+              if ((tmpIndex + 1 < endIndex) ||
+                  (",.!?:;".indexOf(tmpChar) < 0)) {
+                clean = false;
+              }
+            }
+            tmpIndex++;
+          }
+          if (hasDigit && hasLetter) {
+            clean = false;
+          }
+          if (clean) {
             closeFull = true;
           }
         }
@@ -832,7 +874,7 @@ public class CheckErrorAlgorithm540 extends CheckErrorAlgorithmBase {
 
       // Ignore whitespace at the beginning
       while ((beginIndex < endIndex) &&
-             (" \n".indexOf(contents.charAt(beginIndex)) >= 0)) {
+             (" \n\t".indexOf(contents.charAt(beginIndex)) >= 0)) {
         beginIndex++;
         tryAgain = true;
       }
@@ -907,7 +949,7 @@ public class CheckErrorAlgorithm540 extends CheckErrorAlgorithmBase {
 
       // Ignore whitespace at the end
       while ((endIndex > beginIndex) &&
-             (" \n".indexOf(contents.charAt(endIndex - 1)) >= 0)) {
+             (" \n\t".indexOf(contents.charAt(endIndex - 1)) >= 0)) {
         endIndex--;
         tryAgain = true;
       }
