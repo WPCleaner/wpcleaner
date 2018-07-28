@@ -160,12 +160,12 @@ public class OnePageAnalysisWindow
   /**
    * Create and display a AnalysisWindow.
    * 
-   * @param page Page name.
+   * @param pageNAme Page name.
    * @param knownPages Pages already loaded.
    * @param wikipedia Wikipedia.
    */
   public static void createAnalysisWindow(
-      final String page,
+      final String pageName,
       final List<Page> knownPages,
       final EnumWikipedia wikipedia) {
     createWindow(
@@ -176,39 +176,7 @@ public class OnePageAnalysisWindow
         new DefaultBasicWindowListener() {
           @Override
           public void initializeWindow(BasicWindow window) {
-            if (window instanceof OnePageAnalysisWindow) {
-              Configuration config = Configuration.getConfiguration();
-              OnePageAnalysisWindow analysis = (OnePageAnalysisWindow) window;
-              analysis.setPageName(page);
-              analysis.knownPages = knownPages;
-              analysis.modelLinks = new PageListModel();
-              analysis.modelLinks.setShowDisambiguation(config.getBoolean(
-                  null,
-                  ConfigurationValueBoolean.ANALYSIS_DISAMBIG_PAGES));
-              analysis.modelLinks.setShowMissing(config.getBoolean(
-                  null,
-                  ConfigurationValueBoolean.ANALYSIS_MISSING_PAGES));
-              analysis.modelLinks.setShowOther(config.getBoolean(
-                  null,
-                  ConfigurationValueBoolean.ANALYSIS_OTHER_PAGES));
-              analysis.modelLinks.setShowRedirect(config.getBoolean(
-                  null,
-                  ConfigurationValueBoolean.ANALYSIS_REDIRECT_PAGES));
-              analysis.modelLinks.setCountDisambiguation(config.getBoolean(
-                  null,
-                  ConfigurationValueBoolean.ANALYSIS_COUNT_DISAMBIG));
-              analysis.modelLinks.setCountMissing(config.getBoolean(
-                  null,
-                  ConfigurationValueBoolean.ANALYSIS_COUNT_MISSING));
-              analysis.modelLinks.setCountOther(config.getBoolean(
-                  null,
-                  ConfigurationValueBoolean.ANALYSIS_COUNT_OTHER));
-              analysis.modelLinks.setCountRedirect(config.getBoolean(
-                  null,
-                  ConfigurationValueBoolean.ANALYSIS_COUNT_REDIRECT));
-              analysis.modelLinks.setComparator(PageComparator.getNamespaceFirstComparator());
-              analysis.createTextContents(window);
-            }
+            OnePageAnalysisWindow.initializeWindow(window, pageName, knownPages);
           }
           @Override
           public void displayWindow(BasicWindow window) {
@@ -218,6 +186,52 @@ public class OnePageAnalysisWindow
             }
           }
         });
+  }
+
+  /**
+   * Initialize window.
+   * 
+   * @param window Window.
+   * @param pageName Page name.
+   * @param knownPages Pages already loaded.
+   */
+  static void initializeWindow(
+      BasicWindow window,
+      String pageName,
+      final List<Page> knownPages) {
+    if (window instanceof OnePageAnalysisWindow) {
+      Configuration config = Configuration.getConfiguration();
+      OnePageAnalysisWindow analysis = (OnePageAnalysisWindow) window;
+      analysis.setPageName(pageName);
+      analysis.knownPages = knownPages;
+      analysis.modelLinks = new PageListModel();
+      analysis.modelLinks.setShowDisambiguation(config.getBoolean(
+          null,
+          ConfigurationValueBoolean.ANALYSIS_DISAMBIG_PAGES));
+      analysis.modelLinks.setShowMissing(config.getBoolean(
+          null,
+          ConfigurationValueBoolean.ANALYSIS_MISSING_PAGES));
+      analysis.modelLinks.setShowOther(config.getBoolean(
+          null,
+          ConfigurationValueBoolean.ANALYSIS_OTHER_PAGES));
+      analysis.modelLinks.setShowRedirect(config.getBoolean(
+          null,
+          ConfigurationValueBoolean.ANALYSIS_REDIRECT_PAGES));
+      analysis.modelLinks.setCountDisambiguation(config.getBoolean(
+          null,
+          ConfigurationValueBoolean.ANALYSIS_COUNT_DISAMBIG));
+      analysis.modelLinks.setCountMissing(config.getBoolean(
+          null,
+          ConfigurationValueBoolean.ANALYSIS_COUNT_MISSING));
+      analysis.modelLinks.setCountOther(config.getBoolean(
+          null,
+          ConfigurationValueBoolean.ANALYSIS_COUNT_OTHER));
+      analysis.modelLinks.setCountRedirect(config.getBoolean(
+          null,
+          ConfigurationValueBoolean.ANALYSIS_COUNT_REDIRECT));
+      analysis.modelLinks.setComparator(PageComparator.getNamespaceFirstComparator());
+      analysis.createTextContents(window);
+    }
   }
 
   /* (non-Javadoc)
