@@ -27,6 +27,7 @@ import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.PageElementTemplate.Parameter;
 import org.wikipediacleaner.api.data.PageElementTitle;
 import org.wikipediacleaner.api.data.contents.ContentsComment;
+import org.wikipediacleaner.api.data.contents.ContentsElement;
 import org.wikipediacleaner.gui.swing.component.MWPane;
 import org.wikipediacleaner.i18n.GT;
 
@@ -377,124 +378,131 @@ public class CheckErrorAlgorithm540 extends CheckErrorAlgorithmBase {
       }
     }
 
-    // Report inside a list item
-    PageElementListItem listItem = element.isInListItem();
-    if (listItem != null) {
-      // NOTE: closeFull=true fixes lines incorrectly when the closing wasn't intended at the end
-      if (reportFormattingElement(
-          analysis, elements, element, errors,
-          listItem.getBeginIndex() + listItem.getDepth(), listItem.getEndIndex(),
-          listItem.getBeginIndex(), listItem.getEndIndex(),
-          true, false, false, true)) {
-        return;
-      }
-    }
+    // Try to report for each surrounding element
+    List<ContentsElement> surroundingElements = element.getSurroundingElements();
+    for (ContentsElement surroundingElement : surroundingElements) {
 
-    // Report inside an internal link
-    PageElementInternalLink iLink = element.isInInternalLink();
-    if (iLink != null) {
-      if (reportFormattingElement(
-          analysis, elements, element, errors,
-          iLink.getBeginIndex() + iLink.getTextOffset(), iLink.getEndIndex() - 2,
-          iLink.getBeginIndex(), iLink.getEndIndex(),
-          false, false, true, true)) {
-        return;
-      }
-    }
-
-    // Report inside an image
-    PageElementImage image = element.isInImage();
-    if (image != null) {
-      PageElementImage.Parameter paramDesc = image.getDescriptionParameter();
-      if (paramDesc != null) {
+      // Report inside a list item
+      if (surroundingElement instanceof PageElementListItem) {
+        // NOTE: closeFull=true fixes lines incorrectly when the closing wasn't intended at the end
+        PageElementListItem listItem = (PageElementListItem) surroundingElement;
         if (reportFormattingElement(
             analysis, elements, element, errors,
-            image.getBeginIndex() + paramDesc.getBeginOffset(),
-            image.getBeginIndex() + paramDesc.getEndOffset(),
-            image.getBeginIndex() + paramDesc.getBeginOffset() - 1,
-            image.getBeginIndex() + paramDesc.getEndOffset(),
+            listItem.getBeginIndex() + listItem.getDepth(), listItem.getEndIndex(),
+            listItem.getBeginIndex(), listItem.getEndIndex(),
+            true, false, false, true)) {
+          return;
+        }
+      }
+
+      // Report inside an internal link
+      if (surroundingElement instanceof PageElementInternalLink) {
+        PageElementInternalLink iLink = (PageElementInternalLink) surroundingElement;
+        if (reportFormattingElement(
+            analysis, elements, element, errors,
+            iLink.getBeginIndex() + iLink.getTextOffset(), iLink.getEndIndex() - 2,
+            iLink.getBeginIndex(), iLink.getEndIndex(),
+            false, false, true, true)) {
+          return;
+        }
+      }
+
+      // Report inside an image
+      if (surroundingElement instanceof PageElementImage) {
+        PageElementImage image = (PageElementImage) surroundingElement;
+        PageElementImage.Parameter paramDesc = image.getDescriptionParameter();
+        if (paramDesc != null) {
+          if (reportFormattingElement(
+              analysis, elements, element, errors,
+              image.getBeginIndex() + paramDesc.getBeginOffset(),
+              image.getBeginIndex() + paramDesc.getEndOffset(),
+              image.getBeginIndex() + paramDesc.getBeginOffset() - 1,
+              image.getBeginIndex() + paramDesc.getEndOffset(),
+              true, false, true, true)) {
+            return;
+          }
+        }
+      }
+
+      // Report inside an external link
+      if (surroundingElement instanceof PageElementExternalLink) {
+        PageElementExternalLink eLink = (PageElementExternalLink) surroundingElement;
+        if (reportFormattingElement(
+            analysis, elements, element, errors,
+            eLink.getBeginIndex() + eLink.getTextOffset(), eLink.getEndIndex() - 1,
+            eLink.getBeginIndex(), eLink.getEndIndex(),
+            false, false, true, true)) {
+          return;
+        }
+      }
+
+      // Report inside a title
+      if (surroundingElement instanceof PageElementTitle) {
+        PageElementTitle title = (PageElementTitle) surroundingElement;
+        if (reportFormattingElement(
+            analysis, elements, element, errors,
+            title.getBeginIndex() + title.getFirstLevel(),
+            title.getEndIndex() - title.getSecondLevel(),
+            title.getBeginIndex(), title.getEndIndex(),
             true, false, true, true)) {
           return;
         }
       }
-    }
 
-    // Report inside an external link
-    PageElementExternalLink eLink = element.isInExternalLink();
-    if (eLink != null) {
-      if (reportFormattingElement(
-          analysis, elements, element, errors,
-          eLink.getBeginIndex() + eLink.getTextOffset(), eLink.getEndIndex() - 1,
-          eLink.getBeginIndex(), eLink.getEndIndex(),
-          false, false, true, true)) {
-        return;
+      // Report inside a reference tag
+      if (surroundingElement instanceof PageElementTag) {
+        PageElementTag refTag = (PageElementTag) surroundingElement;
+        if (PageElementTag.TAG_WIKI_REF.equals(refTag.getNormalizedName())) {
+          if (reportFormattingElement(
+              analysis, elements, element, errors,
+              refTag.getValueBeginIndex(), refTag.getValueEndIndex(),
+              refTag.getValueBeginIndex(), refTag.getValueEndIndex(),
+              false, true, false, true)) {
+            return;
+          }
+        }
       }
-    }
 
-    // Report inside a title
-    PageElementTitle title = element.isInTitle();
-    if (title != null) {
-      if (reportFormattingElement(
-          analysis, elements, element, errors,
-          title.getBeginIndex() + title.getFirstLevel(),
-          title.getEndIndex() - title.getSecondLevel(),
-          title.getBeginIndex(), title.getEndIndex(),
-          true, false, true, true)) {
-        return;
-      }
-    }
-
-    // Report inside a reference tag
-    PageElementTag refTag = element.isInRefTag();
-    if (refTag != null) {
-      if (reportFormattingElement(
-          analysis, elements, element, errors,
-          refTag.getValueBeginIndex(), refTag.getValueEndIndex(),
-          refTag.getValueBeginIndex(), refTag.getValueEndIndex(),
-          false, true, false, true)) {
-        return;
-      }
-    }
-
-    // Report inside a table caption
-    PageElementTable.TableCaption caption = element.isInTableCaption();
-    if (caption != null) {
-      if (reportFormattingElement(
-          analysis, elements, element, errors,
-          caption.getBeginIndex() + 2, caption.getEndIndex(),
-          caption.getBeginIndex(), caption.getEndIndex(),
-          true, false, true, true)) {
-        return;
-      }
-    }
-
-    // Report inside a table cell
-    PageElementTable.TableCell cell = element.isInTableCell();
-    if (cell != null) {
-      if (element.getIndex() < cell.getEndOptionsIndex()) {
-        if (reportFormattingElementInCellOptions(
-            analysis, elements, element, errors, cell)) {
+      // Report inside a table caption
+      if (surroundingElement instanceof PageElementTable.TableCaption) {
+        PageElementTable.TableCaption caption = (PageElementTable.TableCaption) surroundingElement;
+        if (reportFormattingElement(
+            analysis, elements, element, errors,
+            caption.getBeginIndex() + 2, caption.getEndIndex(),
+            caption.getBeginIndex(), caption.getEndIndex(),
+            true, false, true, true)) {
           return;
         }
       }
-      if (reportFormattingElement(
-          analysis, elements, element, errors,
-          cell.getEndOptionsIndex(), cell.getEndIndex(),
-          cell.getEndOptionsIndex(), cell.getEndIndex(),
-          true, true, true, true)) {
-        return;
-      }
-    }
 
-    // Report inside a template
-    PageElementTemplate.Parameter templateParam = element.isInTemplateParameter();
-    if (templateParam != null) {
-      if (reportFormattingElement(
-          analysis, elements, element, errors,
-          templateParam.getValueStartIndex(), templateParam.getEndIndex(),
-          templateParam.getValueStartIndex(), templateParam.getEndIndex(),
-          true, false, true, true)) {
-        return;
+      // Report inside a table cell
+      if (surroundingElement instanceof PageElementTable.TableCell) {
+        PageElementTable.TableCell cell = (PageElementTable.TableCell) surroundingElement;
+        if (element.getIndex() < cell.getEndOptionsIndex()) {
+          if (reportFormattingElementInCellOptions(
+              analysis, elements, element, errors, cell)) {
+            return;
+          }
+        }
+        if (reportFormattingElement(
+            analysis, elements, element, errors,
+            cell.getEndOptionsIndex(), cell.getEndIndex(),
+            cell.getEndOptionsIndex(), cell.getEndIndex(),
+            true, true, true, true)) {
+          return;
+        }
+      }
+
+      // Report inside a template
+      if (surroundingElement instanceof PageElementTemplate.Parameter) {
+        PageElementTemplate.Parameter templateParam = (PageElementTemplate.Parameter) surroundingElement;
+        if (reportFormattingElement(
+            analysis, elements, element, errors,
+            templateParam.getValueStartIndex(), templateParam.getEndIndex(),
+            templateParam.getValueStartIndex(), templateParam.getEndIndex(),
+            true, false, true, true)) {
+          return;
+        }
       }
     }
 

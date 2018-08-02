@@ -9,10 +9,13 @@
 package org.wikipediacleaner.api.data;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
 import org.wikipediacleaner.api.data.contents.ContentsComment;
+import org.wikipediacleaner.api.data.contents.ContentsElement;
+import org.wikipediacleaner.api.data.contents.ContentsElementComparator;
 
 
 /**
@@ -37,6 +40,9 @@ public class PageElementFormatting {
 
   /** End of the main area in which the element is */
   private int mainAreaEnd;
+
+  /** List of all surrounding elements */
+  private List<ContentsElement> surroundingElements;
 
   /** Reference tag in which the element is */
   private PageElementTag inRefTag;
@@ -166,8 +172,9 @@ public class PageElementFormatting {
     }
     inParagraph = analysis.isInParagraph(index);
 
-    // Compute main area
+    // Compute various elements
     computeMainArea();
+    computeSurroundingElements();
 
     analyzed = true;
   }
@@ -186,6 +193,50 @@ public class PageElementFormatting {
   public int getMainAreaEnd() {
     analyze();
     return mainAreaEnd;
+  }
+
+  /**
+   * @return All surrounding elements sorted by the closest first.
+   */
+  public List<ContentsElement> getSurroundingElements() {
+    analyze();
+    return surroundingElements;
+  }
+
+  /**
+   * Compute the list of surrounding elements.
+   */
+  private void computeSurroundingElements() {
+    if ((inParagraph == null) &&
+        (inListItem == null) &&
+        (inRefTag == null) &&
+        (inILink == null) &&
+        (inELink == null) &&
+        (inTitle == null) &&
+        (inImage == null) &&
+        (inTableCaption == null) &&
+        (inTableCell == null) &&
+        (inTemplateParameter == null)) {
+      surroundingElements = Collections.emptyList();
+      return;
+    }
+    List<ContentsElement> elements = new ArrayList<>();
+    elements.add(inELink);
+    elements.add(inILink);
+    elements.add(inImage);
+    elements.add(inListItem);
+    elements.add(inParagraph);
+    elements.add(inRefTag);
+    elements.add(inTableCaption);
+    elements.add(inTableCell);
+    elements.add(inTemplateParameter);
+    elements.add(inTitle);
+    while (elements.remove(null)) {
+      // Nothing to do, remove() removes an element and return a boolean
+    }
+    Collections.sort(elements, new ContentsElementComparator());
+    Collections.reverse(elements);
+    surroundingElements = elements;
   }
 
   /**
