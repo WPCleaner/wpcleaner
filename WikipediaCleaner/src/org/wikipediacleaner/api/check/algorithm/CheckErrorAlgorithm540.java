@@ -24,6 +24,7 @@ import org.wikipediacleaner.api.data.PageElementTable;
 import org.wikipediacleaner.api.data.PageElementInternalLink;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.PageElementTemplate;
+import org.wikipediacleaner.api.data.PageElementTemplate.Parameter;
 import org.wikipediacleaner.api.data.PageElementTitle;
 import org.wikipediacleaner.api.data.contents.ContentsComment;
 import org.wikipediacleaner.gui.swing.component.MWPane;
@@ -179,6 +180,13 @@ public class CheckErrorAlgorithm540 extends CheckErrorAlgorithmBase {
             elements, reportElements,
             beginIndex, endIndex,
             template.getBeginIndex(), template.getEndIndex());
+        for (int paramNum = 0; paramNum < template.getParameterCount(); paramNum++) {
+          Parameter param = template.getParameter(paramNum);
+          shouldContinue |= analyzeCorrectArea(
+              elements, reportElements,
+              param.getBeginIndex(), param.getEndIndex(),
+              param.getBeginIndex(), param.getEndIndex());
+        }
       }
 
       // Check list items
@@ -564,37 +572,39 @@ public class CheckErrorAlgorithm540 extends CheckErrorAlgorithmBase {
       PageAnalysis analysis, PageElementFormatting element) {
     String contents = analysis.getContents();
     int elementEndIndex = element.getIndex() + element.getLength();
-    if (elementEndIndex < contents.length()) {
-      char nextChar = contents.charAt(elementEndIndex);
-      if (nextChar == '[') {
-        // Check if it's a link
-        PageElement potentialCloseElement = analysis.isInInternalLink(elementEndIndex);
-        if (potentialCloseElement == null) {
-          potentialCloseElement = analysis.isInExternalLink(elementEndIndex);
-        }
+    if (elementEndIndex >= contents.length()) {
+      return null;
+    }
 
-        // Check that it can be used
-        if ((potentialCloseElement != null) &&
-            (potentialCloseElement.getBeginIndex() != elementEndIndex)) {
-          potentialCloseElement = null;
-        }
-        if (potentialCloseElement != null) {
-          String subString = contents.substring(
-              potentialCloseElement.getBeginIndex(),
-              potentialCloseElement.getEndIndex());
-          if (subString.contains("\n") || subString.contains("''")) {
-            potentialCloseElement = null;
-          }
-        }
+    // Find a potential element
+    char nextChar = contents.charAt(elementEndIndex);
+    PageElement potentialCloseElement = null;
+    if (nextChar == '[') {
+      // Check if it's a link
+      potentialCloseElement = analysis.isInInternalLink(elementEndIndex);
+      if (potentialCloseElement == null) {
+        potentialCloseElement = analysis.isInExternalLink(elementEndIndex);
+      }
+    } else if (nextChar == '{') {
+      // Check if it's a template
+      potentialCloseElement = analysis.isInTemplate(elementEndIndex);
+    }
 
-        // Use it
-        if (potentialCloseElement != null) {
-          return potentialCloseElement;
-        }
+    // Check that it can be used
+    if ((potentialCloseElement != null) &&
+        (potentialCloseElement.getBeginIndex() != elementEndIndex)) {
+      potentialCloseElement = null;
+    }
+    if (potentialCloseElement != null) {
+      String subString = contents.substring(
+          potentialCloseElement.getBeginIndex(),
+          potentialCloseElement.getEndIndex());
+      if (subString.contains("\n") || subString.contains("''")) {
+        potentialCloseElement = null;
       }
     }
 
-    return null;
+    return potentialCloseElement;
   }
 
   /**
@@ -783,30 +793,27 @@ public class CheckErrorAlgorithm540 extends CheckErrorAlgorithmBase {
 
       // Report with the formatting element at the beginning
       if (element.getIndex() == beginIndex) {
-        boolean preventCloseFull  = hasSingleQuote;
-        preventCloseFull |= hasDoubleQuotes;
-        preventCloseFull |= (contents.charAt(endIndex - 1) == '\'');
-        preventCloseFull |= !element.isAloneInArea(elements);
-        if (!element.canBeClosedAt(endIndex)) {
-          preventCloseFull = true;
-          int tmpIndex = element.getIndex() + element.getLength();
-          while ((tmpIndex < endIndex) &&
-                 (contents.charAt(tmpIndex) != '\n')) {
-            tmpIndex++;
-          }
-          endIndex = tmpIndex;
+
+        // Check if there's a single element after the formatting element
+        boolean hasSingleElement = false;
+        boolean hasSingleElementWithoutSpace = true;
+        int tmpEndIndex = endIndex;
+        while ((tmpEndIndex > beginIndex) &&
+               (" .:;,".indexOf(contents.charAt(tmpEndIndex - 1)) >= 0)) {
+          tmpEndIndex--;
         }
-        if (!closeFull && (elementAfter != null)) {
-          if (elementAfter.getEndIndex() == endIndex) {
-            closeFull = true;
+        if (!hasSingleElement && (elementAfter != null)) {
+          if (elementAfter.getEndIndex() == tmpEndIndex) {
+            hasSingleElement = true;
+            endIndex = tmpEndIndex;
           }
         }
-        if (!closeFull) {
+        if (!hasSingleElement) {
           boolean clean = true;
           boolean hasDigit = false;
           boolean hasLetter = false;
           int tmpIndex = element.getIndex() + element.getLength();
-          while ((tmpIndex < endIndex) && clean) {
+          while ((tmpIndex < tmpEndIndex) && clean) {
             char tmpChar = contents.charAt(tmpIndex);
             if ("'’-".indexOf(tmpChar) >= 0) {
               if ((tmpIndex <= 0) ||
@@ -823,10 +830,12 @@ public class CheckErrorAlgorithm540 extends CheckErrorAlgorithmBase {
               hasDigit = true;
             } else if (!Character.isWhitespace(tmpChar)) {
               // Do not check elsewhere for punctuation, as it may be a separation between a title and something else
-              if ((tmpIndex + 1 < endIndex) ||
+              if ((tmpIndex + 1 < tmpEndIndex) ||
                   (",.!?:;".indexOf(tmpChar) < 0)) {
                 clean = false;
               }
+            } else {
+              hasSingleElementWithoutSpace = false;
             }
             tmpIndex++;
           }
@@ -834,9 +843,33 @@ public class CheckErrorAlgorithm540 extends CheckErrorAlgorithmBase {
             clean = false;
           }
           if (clean) {
-            closeFull = true;
+            hasSingleElement = true;
           }
         }
+        if (hasSingleElement) {
+          closeFull = true;
+        }
+
+        // Check if something can prevent closing
+        boolean preventCloseFull  = hasSingleQuote;
+        preventCloseFull |= hasDoubleQuotes;
+        preventCloseFull |= (contents.charAt(endIndex - 1) == '\'');
+        if (!hasSingleElement || !hasSingleElementWithoutSpace) {
+          preventCloseFull |= !element.isAloneInArea(elements);
+        } else {
+          preventCloseFull |= !element.isAloneInArea(elements, beginArea, endArea);
+        }
+        if (!element.canBeClosedAt(endIndex)) {
+          preventCloseFull = true;
+          int tmpIndex = element.getIndex() + element.getLength();
+          while ((tmpIndex < endIndex) &&
+                 (contents.charAt(tmpIndex) != '\n')) {
+            tmpIndex++;
+          }
+          endIndex = tmpIndex;
+        }
+
+        // Close element
         if (element.canBeClosedAt(endIndex)) {
           CheckErrorResult errorResult = createCheckErrorResult(
               analysis, element.getIndex(), endIndex);

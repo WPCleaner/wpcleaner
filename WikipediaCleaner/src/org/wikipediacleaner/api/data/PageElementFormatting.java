@@ -321,18 +321,29 @@ public class PageElementFormatting {
 
   /**
    * @param elements Elements.
-   * @return True if an other element is in the same are.
+   * @return True if an other element is in the same area.
    */
   public boolean isAloneInArea(List<PageElementFormatting> elements) {
+    return isAloneInArea(elements, mainAreaBegin, mainAreaEnd);
+  }
 
+  /**
+   * @param elements Elements.
+   * @param begin Begin index of the area.
+   * @param end End index of the area.
+   * @return True if an other element is in the same area.
+   */
+  public boolean isAloneInArea(
+      List<PageElementFormatting> elements,
+      int begin, int end) {
     // If no elements, obviously alone
     if (elements == null) {
       return true;
     }
 
     // If main area is unknown, be safe and assume not alone
-    if ((mainAreaBegin == 0) &&
-        (mainAreaEnd == analysis.getContents().length())) {
+    if ((begin == 0) &&
+        (end == analysis.getContents().length())) {
       return false;
     }
 
@@ -340,13 +351,15 @@ public class PageElementFormatting {
     int textLength = analysis.getContents().length();
     for (PageElementFormatting element : elements) {
       if (element != this) {
-        if ((element.index >= mainAreaBegin) &&
-            (element.index < mainAreaEnd)) {
+        if ((element.index >= begin) &&
+            (element.index < end)) {
           return false;
         }
         if ((element.mainAreaBegin > 0) ||
             (element.mainAreaEnd < textLength)) {
-          if ((index >= element.mainAreaBegin) &&
+          if ((begin == mainAreaBegin) &&
+              (end == mainAreaEnd) &&
+              (index >= element.mainAreaBegin) &&
               (index < element.mainAreaEnd)) {
             return false;
           }
