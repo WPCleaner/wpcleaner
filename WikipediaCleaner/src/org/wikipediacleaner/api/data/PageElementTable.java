@@ -323,7 +323,9 @@ public class PageElementTable extends PageElement {
               list.add(Integer.valueOf(nextIndex + 1));
             }
           }
-          previousCr = false;
+          if (currentChar != ' ') {
+            previousCr = false;
+          }
         }
         index++;
       }
