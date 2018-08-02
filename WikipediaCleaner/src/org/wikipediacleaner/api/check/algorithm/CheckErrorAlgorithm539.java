@@ -617,8 +617,19 @@ public class CheckErrorAlgorithm539 extends CheckErrorAlgorithmBase {
 
       // Analyze tag
       if (internalTag != null) {
+
+        // Analyze if error should be reported
+        boolean reportError = false;
         if (internalTag.isComplete() &&
             (internalTag.getCompleteEndIndex() > tag.getCompleteEndIndex())) {
+          if ((analysis.getSurroundingTag(PageElementTag.TAG_WIKI_SOURCE, index) == null) &&
+              (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_SYNTAXHIGHLIGHT, index) == null)) {
+            reportError = true;
+          }
+        }
+
+        // Report error
+        if (reportError) {
           if (errors == null) {
             return true;
           }
