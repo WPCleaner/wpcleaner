@@ -428,6 +428,7 @@ public class CheckErrorAlgorithm532 extends CheckErrorAlgorithmBase {
         !PageElementTag.TAG_HTML_S.equals(tag.getNormalizedName()) &&
         !PageElementTag.TAG_HTML_SMALL.equals(tag.getNormalizedName()) &&
         !PageElementTag.TAG_HTML_SPAN.equals(tag.getNormalizedName()) &&
+        !PageElementTag.TAG_HTML_SUB.equals(tag.getNormalizedName()) &&
         !PageElementTag.TAG_HTML_TT.equals(tag.getNormalizedName())) {
       return false;
     }
