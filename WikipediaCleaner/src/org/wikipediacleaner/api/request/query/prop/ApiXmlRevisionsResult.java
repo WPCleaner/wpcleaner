@@ -104,10 +104,15 @@ public class ApiXmlRevisionsResult extends ApiXmlPropertiesResult implements Api
                     "revisions/rev", Filters.element());
                 Element revNode = xpaRevisions.evaluateFirst(pageNode);
                 if (revNode != null) {
-                  page.setContents(revNode.getText());
-                  page.setExisting(Boolean.TRUE);
-                  page.setRevisionId(revNode.getAttributeValue("revid"));
-                  page.setContentsTimestamp(revNode.getAttributeValue("timestamp"));
+                  XPathExpression<Element> xpaSlots = XPathFactory.instance().compile(
+                      "slots/slot", Filters.element());
+                  Element slotNode = xpaSlots.evaluateFirst(revNode);
+                  if (slotNode != null) {
+                    page.setContents(slotNode.getText());
+                    page.setExisting(Boolean.TRUE);
+                    page.setRevisionId(revNode.getAttributeValue("revid"));
+                    page.setContentsTimestamp(revNode.getAttributeValue("timestamp"));
+                  }
                 }
               }
             }
