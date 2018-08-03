@@ -283,6 +283,7 @@ public class MediaWikiAPI implements API {
     properties.put("continue", "");
     properties.put("titles", page.getTitle());
     properties.put("rvprop", "content|ids|timestamp");
+    properties.put("rvslots", "main");
     properties.put("rvsection", Integer.toString(section));
     try {
       constructContents(
@@ -317,6 +318,7 @@ public class MediaWikiAPI implements API {
     properties.put("prop", "revisions");
     properties.put("continue", "");
     properties.put("rvprop", "content");
+    properties.put("rvslots", "main");
     StringBuilder titles = new StringBuilder();
     for (int i = 0; i < pages.size();) {
       titles.setLength(0);
@@ -726,7 +728,10 @@ public class MediaWikiAPI implements API {
         query + "/revisions/rev", Filters.element());
     node = xpa.evaluateFirst(root);
     if (node != null) {
-      page.setContents(node.getText());
+      XPathExpression<Element> xpaSlot = XPathFactory.instance().compile(
+          "slots/slot", Filters.element());
+      Element nodeSlot = xpaSlot.evaluateFirst(node);
+      page.setContents(nodeSlot != null ? nodeSlot.getText() : node.getText());
       page.setExisting(Boolean.TRUE);
       page.setRevisionId(node.getAttributeValue("revid"));
       page.setContentsTimestamp(node.getAttributeValue("timestamp"));
@@ -757,16 +762,19 @@ public class MediaWikiAPI implements API {
         query, Filters.element());
     XPathExpression<Element> xpaRev = XPathFactory.instance().compile(
         "./revisions/rev", Filters.element());
+    XPathExpression<Element> xpaSlot = XPathFactory.instance().compile(
+        "./slots/slot", Filters.element());
     List<Element> resultPages = xpaPage.evaluate(root);
     Iterator<Element> iterPages = resultPages.iterator();
     while (iterPages.hasNext()) {
       Element currentPage = iterPages.next();
       String title = currentPage.getAttributeValue("title");
-      Element currentRev = xpaRev.evaluateFirst(currentPage);
-      String contents = currentRev.getText();
-      
+
       for (Page page : pages) {
         if (Page.areSameTitle(page.getTitle(), title)) {
+          Element currentRev = xpaRev.evaluateFirst(currentPage);
+          Element currentSlot = xpaSlot.evaluateFirst(xpaRev);
+          String contents = (currentSlot != null) ? currentSlot.getText() : currentRev.getText();
           page.setContents(contents);
         }
       }
