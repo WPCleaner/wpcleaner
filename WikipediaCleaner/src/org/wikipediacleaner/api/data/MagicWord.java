@@ -398,6 +398,13 @@ public class MagicWord implements Comparable<MagicWord> {
     MagicWord.IMG_TOP,
     MagicWord.IMG_UPRIGHT,
     MagicWord.IMG_WIDTH,
+
+    // Include also Timed Media magic words
+    MagicWord.TIMED_MEDIA_ENDTIME,
+    MagicWord.TIMED_MEDIA_NOICON,
+    MagicWord.TIMED_MEDIA_NOPLAYER,
+    MagicWord.TIMED_MEDIA_STARTTIME,
+    MagicWord.TIMED_MEDIA_THUMBTIME,
   };
 
   /**
