@@ -19,14 +19,14 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.apache.commons.net.ftp.FTP;
 import org.apache.commons.net.ftp.FTPClient;
 import org.apache.commons.net.ftp.FTPClientConfig;
 import org.apache.commons.net.ftp.FTPFile;
 import org.apache.commons.net.ftp.FTPFileFilter;
 import org.apache.commons.net.ftp.FTPReply;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.wikipediacleaner.api.constants.EnumLanguage;
 import org.wikipediacleaner.i18n.GT;
 import org.wikipediacleaner.utils.Configuration;
@@ -36,7 +36,7 @@ import org.wikipediacleaner.utils.Configuration;
  */
 public class DumpDownloader {
 
-  private final static Log log = LogFactory.getLog(DumpDownloader.class);
+  private final static Logger log = LoggerFactory.getLogger(DumpDownloader.class);
 
   private final static int CODE_OK = 0;
   private final static int CODE_NOTHING_TO_DO = 1;

@@ -18,8 +18,8 @@ import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpException;
 import org.apache.commons.httpclient.HttpMethod;
 import org.apache.commons.httpclient.HttpStatus;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 /**
@@ -30,7 +30,7 @@ public class HttpServer {
   /**
    * Logs.
    */
-  private final Log log = LogFactory.getLog(HttpServer.class);
+  private final Logger log = LoggerFactory.getLogger(HttpServer.class);
 
   /**
    * HTTP Client.

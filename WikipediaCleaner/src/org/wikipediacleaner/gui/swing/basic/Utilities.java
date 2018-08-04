@@ -44,8 +44,8 @@ import javax.swing.SwingUtilities;
 import javax.swing.table.TableModel;
 import javax.swing.text.JTextComponent;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.wikipediacleaner.api.APIException;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.gui.swing.action.ActionClick;
@@ -63,7 +63,7 @@ import org.wikipediacleaner.utils.ConfigurationValueShortcut.ShortcutProperties;
  */
 public class Utilities {
 
-  private static Log log = LogFactory.getLog(Utilities.class);
+  private static Logger log = LoggerFactory.getLogger(Utilities.class);
 
   public final static int YES_ALL_OPTION = 101;
 

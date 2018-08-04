@@ -15,8 +15,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.wikipediacleaner.api.APIException;
 import org.wikipediacleaner.api.MediaWiki;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
@@ -37,7 +37,7 @@ import org.wikipediacleaner.i18n.GT;
  */
 public class UpdateDabWarningTools extends UpdateWarningTools {
 
-  private final static Log log = LogFactory.getLog(UpdateDabWarningTools.class);
+  private final static Logger log = LoggerFactory.getLogger(UpdateDabWarningTools.class);
 
   private final Map<String, Page> dabPages;
   private final Map<String, Page> nonDabPages;

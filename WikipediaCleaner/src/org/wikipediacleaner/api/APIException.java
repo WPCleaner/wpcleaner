@@ -7,8 +7,8 @@
 
 package org.wikipediacleaner.api;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.wikipediacleaner.api.constants.EnumQueryResult;
 import org.wikipediacleaner.api.impl.MediaWikiAPI;
 
@@ -144,7 +144,7 @@ public class APIException extends Exception {
   public void waitForRetry() {
     EnumQueryResult result = getQueryResult();
     if (result != null) {
-      final Log log = LogFactory.getLog(MediaWikiAPI.class);
+      final Logger log = LoggerFactory.getLogger(MediaWikiAPI.class);
       if (log != null) {
         log.warn("Waiting after error '" + code + "'");
       }

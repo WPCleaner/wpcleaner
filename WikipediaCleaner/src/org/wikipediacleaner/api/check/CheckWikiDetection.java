@@ -8,8 +8,8 @@
 
 package org.wikipediacleaner.api.check;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.contents.ContentsComment;
 
@@ -19,7 +19,7 @@ import org.wikipediacleaner.api.data.contents.ContentsComment;
  */
 public class CheckWikiDetection {
 
-  private final static Log log = LogFactory.getLog(CheckWikiDetection.class);
+  private final static Logger log = LoggerFactory.getLogger(CheckWikiDetection.class);
 
   /** Full line. */
   private final String line;

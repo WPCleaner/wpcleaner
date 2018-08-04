@@ -20,8 +20,8 @@ import javax.swing.JMenuBar;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.wikipediacleaner.Version;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.constants.WPCConfiguration;
@@ -41,7 +41,7 @@ public abstract class BasicWindow implements ActionListener, PageProvider {
   static private ImageIcon icon;
   private JFrame parentComponent;
   private ProgressPanel glassPane;
-  private Log log;
+  private Logger log;
   private EnumWikipedia wikipedia;
 
   /**
@@ -110,7 +110,7 @@ public abstract class BasicWindow implements ActionListener, PageProvider {
 
     // Window creation
     BasicWindow window;
-    Log log = LogFactory.getLog(windowClass);
+    Logger log = LoggerFactory.getLogger(windowClass);
     try {
       window = (BasicWindow) windowClass.newInstance();
     } catch (InstantiationException e) {
@@ -413,7 +413,7 @@ public abstract class BasicWindow implements ActionListener, PageProvider {
   /**
    * @return Logger.
    */
-  protected Log getLog() {
+  protected Logger getLog() {
     return log;
   }
 
@@ -424,7 +424,7 @@ public abstract class BasicWindow implements ActionListener, PageProvider {
    * @param error Error.
    */
   protected void logError(Object message, Throwable error) {
-    log.error(message, error);
+    log.error(message != null ? message.toString() : "", error);
   }
 
   /* ====================================================================== */

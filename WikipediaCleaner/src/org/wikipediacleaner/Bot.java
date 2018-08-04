@@ -17,14 +17,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 import java.util.Properties;
-import java.util.logging.FileHandler;
-import java.util.logging.Handler;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import java.util.logging.SimpleFormatter;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithm;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithms;
 import org.wikipediacleaner.api.constants.EnumLanguage;
@@ -45,7 +40,6 @@ import org.wikipediacleaner.gui.swing.worker.UpdateISSNWarningWorker;
 import org.wikipediacleaner.i18n.GT;
 import org.wikipediacleaner.utils.Configuration;
 import org.wikipediacleaner.utils.ConfigurationConstants;
-import org.wikipediacleaner.utils.ConfigurationValueBoolean;
 import org.wikipediacleaner.utils.ConfigurationValueString;
 
 
@@ -54,7 +48,7 @@ import org.wikipediacleaner.utils.ConfigurationValueString;
  */
 public class Bot implements BasicWorkerListener {
 
-  private final static Log log = LogFactory.getLog(Bot.class);
+  private final static Logger log = LoggerFactory.getLogger(Bot.class);
 
   /**
    * @param args Command line arguments.
@@ -62,27 +56,9 @@ public class Bot implements BasicWorkerListener {
   public static void main(String[] args) {
     log.info("Running as bot");
 
-    // Log levels
-    Logger.getLogger("org.lobobrowser").setLevel(Level.WARNING);
-    Logger.getLogger("").setLevel(Level.WARNING);
-
     Configuration config = Configuration.getConfiguration();
     EnumLanguage language = config.getLanguage();
     Locale.setDefault(language.getLocale());
-
-    // Debugging
-    if (config.getBoolean(null, ConfigurationValueBoolean.DEBUG_DETAILS)) {
-      Logger.getLogger("org.wikipediacleaner").setLevel(Level.FINE);
-    }
-    if (config.getBoolean(null, ConfigurationValueBoolean.DEBUG_FILE)) {
-      try {
-        Handler fh = new FileHandler("WPCleanerBot.log");
-        fh.setFormatter(new SimpleFormatter());
-        Logger.getLogger("").addHandler(fh);
-      } catch (Exception e) {
-        // Nothing to do
-      }
-    }
 
     // Language
     GT.setCurrentLanguage(config.getLanguage());

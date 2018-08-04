@@ -13,8 +13,8 @@ import java.util.Map;
 
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpMethod;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.wikipediacleaner.api.HttpUtils;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 
@@ -27,7 +27,7 @@ public abstract class BasicRestApiResult implements RestApiResult {
   /**
    * Logger.
    */
-  protected final Log log = LogFactory.getLog(BasicRestApiResult.class);
+  protected final Logger log = LoggerFactory.getLogger(BasicRestApiResult.class);
 
   /**
    * Wiki on which request are made.

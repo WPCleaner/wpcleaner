@@ -64,6 +64,15 @@
   <property name="WPCleaner.libs.logging.lic"             value="LICENSE.txt" />
   <property name="WPCleaner.libs.logging.not"             value="NOTICE.txt" />
 
+  <property name="WPCleaner.libs.logback.version"         value="1.2.3" />
+  <property name="WPCleaner.libs.logback.dir"             value="libs/logback-${WPCleaner.libs.logback.version}" />
+  <property name="WPCleaner.libs.logback.classic.jar"     value="logback-classic-${WPCleaner.libs.logback.version}.jar" />
+  <property name="WPCleaner.libs.logback.core.jar"        value="logback-core-${WPCleaner.libs.logback.version}.jar" />
+
+  <property name="WPCleaner.libs.slf4j.version"           value="1.7.25" />
+  <property name="WPCleaner.libs.slf4j.dir"               value="libs/slf4j-${WPCleaner.libs.slf4j.version}" />
+  <property name="WPCleaner.libs.slf4j.api.jar"           value="slf4j-api-${WPCleaner.libs.slf4j.version}.jar" />
+
   <property name="WPCleaner.libs.xerces-impl.jar"         value="xercesImpl.jar" />
   <property name="WPCleaner.libs.xerces-xml-apis.jar"     value="xml-apis.jar" />
   <property name="WPCleaner.libs.xerces.lic"              value="LICENSE_xerces.txt" />
@@ -135,6 +144,9 @@
     <unzip src="${WPCleaner.libs.compress.dir}/${WPCleaner.libs.compress.jar}"           dest="${WPCleaner.classes.dir}" />
     <unzip src="${WPCleaner.libs.httpclient.dir}/${WPCleaner.libs.httpclient.jar}"       dest="${WPCleaner.classes.dir}" />
     <unzip src="${WPCleaner.libs.logging.dir}/${WPCleaner.libs.logging.jar}"             dest="${WPCleaner.classes.dir}" />
+    <unzip src="${WPCleaner.libs.logback.dir}/${WPCleaner.libs.logback.classic.jar}"     dest="${WPCleaner.classes.dir}" />
+    <unzip src="${WPCleaner.libs.logback.dir}/${WPCleaner.libs.logback.core.jar}"        dest="${WPCleaner.classes.dir}" />
+    <unzip src="${WPCleaner.libs.slf4j.dir}/${WPCleaner.libs.slf4j.api.jar}"             dest="${WPCleaner.classes.dir}" />
     <unzip src="${WPCleaner.libs.gettext.dir}/${WPCleaner.libs.gettext.jar}"             dest="${WPCleaner.classes.dir}" />
     <unzip src="${WPCleaner.libs.jackson.dir}/${WPCleaner.libs.jackson-annotations.jar}" dest="${WPCleaner.classes.dir}" />
     <unzip src="${WPCleaner.libs.jackson.dir}/${WPCleaner.libs.jackson-core.jar}"        dest="${WPCleaner.classes.dir}" />
@@ -202,7 +214,7 @@
       <attribute name="Application-Library-Allowable-Classes" value="*" />
       <attribute name="Application-Name"                      value="WPCleaner" />
       <attribute name="Caller-Allowable-Codebase"             value="*" />
-      <attribute name="Codebase"                              value="*.sivit.org" />
+      <attribute name="Codebase"                              value="*.wmflabs.org" />
       <attribute name="Main-Class"                            value="org.wikipediacleaner.WikipediaCleaner" />
       <attribute name="Permissions"                           value="all-permissions" />
       <attribute name="Specification-Title"                   value="WPCleaner" />

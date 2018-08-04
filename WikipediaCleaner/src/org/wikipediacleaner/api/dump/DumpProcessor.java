@@ -18,8 +18,8 @@ import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
 import org.apache.commons.compress.compressors.bzip2.BZip2CompressorInputStream;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.xml.sax.InputSource;
 
 
@@ -29,7 +29,7 @@ import org.xml.sax.InputSource;
 public class DumpProcessor {
 
   /** Logger */
-  private final Log log = LogFactory.getLog(DumpProcessor.class);
+  private final Logger log = LoggerFactory.getLogger(DumpProcessor.class);
 
   /** Page processor */
   private PageProcessor pageProcessor;

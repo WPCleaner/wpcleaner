@@ -20,8 +20,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.wikipediacleaner.api.API;
 import org.wikipediacleaner.api.APIException;
 import org.wikipediacleaner.api.APIFactory;
@@ -52,7 +52,7 @@ import org.wikipediacleaner.utils.ConfigurationValueString;
  */
 public abstract class UpdateWarningTools {
 
-  private final static Log log = LogFactory.getLog(UpdateWarningTools.class);
+  private final static Logger log = LoggerFactory.getLogger(UpdateWarningTools.class);
 
   /** Wiki. */
   protected final EnumWikipedia wiki;

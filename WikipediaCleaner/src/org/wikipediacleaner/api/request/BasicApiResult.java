@@ -11,8 +11,8 @@ import java.util.Map;
 
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpMethod;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.wikipediacleaner.api.HttpUtils;
 import org.wikipediacleaner.api.constants.ConnectionInformation;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
@@ -29,7 +29,7 @@ public abstract class BasicApiResult implements ApiResult {
   /**
    * Logger.
    */
-  protected final Log log = LogFactory.getLog(BasicApiResult.class);
+  protected final Logger log = LoggerFactory.getLogger(BasicApiResult.class);
 
   /**
    * Wiki on which request are made.

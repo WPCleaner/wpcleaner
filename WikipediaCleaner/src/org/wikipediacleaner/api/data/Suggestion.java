@@ -17,8 +17,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.wikipediacleaner.utils.Configuration;
 
 
@@ -27,7 +27,7 @@ import org.wikipediacleaner.utils.Configuration;
  */
 public class Suggestion implements Comparable<Suggestion> {
 
-  private final static Log log = LogFactory.getLog(Suggestion.class);
+  private final static Logger log = LoggerFactory.getLogger(Suggestion.class);
 
   private final static String TAG_NOWIKI_1 = "<nowiki>";
   private final static String TAG_NOWIKI_2 = "</nowiki>";

@@ -26,8 +26,6 @@ import org.apache.commons.httpclient.Header;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpMethod;
 import org.apache.commons.httpclient.HttpStatus;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
@@ -38,6 +36,8 @@ import org.jdom2.output.Format;
 import org.jdom2.output.XMLOutputter;
 import org.jdom2.xpath.XPathExpression;
 import org.jdom2.xpath.XPathFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.wikipediacleaner.api.API;
 import org.wikipediacleaner.api.APIException;
 import org.wikipediacleaner.api.CaptchaException;
@@ -169,7 +169,7 @@ import org.wikipediacleaner.utils.ConfigurationValueInteger;
  */
 public class MediaWikiAPI implements API {
 
-  private final Log log = LogFactory.getLog(MediaWikiAPI.class);
+  private final Logger log = LoggerFactory.getLogger(MediaWikiAPI.class);
 
   private final static int MAX_PAGES_PER_QUERY = 50;
 
