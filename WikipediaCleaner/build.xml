@@ -4,7 +4,8 @@
   <!-- Properties -->
   <property name="WPCleaner.src.dir"                      value="src" />
   <property name="WPCleaner.build.dir"                    value="build" />
-  <property name="WPCleaner.classes.dir"                  value="${WPCleaner.build.dir}/classes" />
+  <property name="WPCleaner.classes_small.dir"            value="${WPCleaner.build.dir}/classes_small" />
+  <property name="WPCleaner.classes_full.dir"             value="${WPCleaner.build.dir}/classes_full" />
   <property name="WPCleaner.dist.dir"                     value="${WPCleaner.build.dir}/dist" />
   <property name="WPCleaner.tmp.dir"                      value="${WPCleaner.build.dir}/tmp" />
   <property name="WPCleaner.getdown.dir"                  value="${WPCleaner.dist.dir}/getdown" />
@@ -129,79 +130,89 @@
     <!-- Initialize -->
     <input message="Please enter Password for keystore:" addproperty="WPCleaner.keystore.password" />
     <mkdir dir="${WPCleaner.build.dir}" />
-    <mkdir dir="${WPCleaner.classes.dir}" />
+    <mkdir dir="${WPCleaner.classes_small.dir}" />
+    <mkdir dir="${WPCleaner.classes_full.dir}" />
     <mkdir dir="${WPCleaner.tmp.dir}" />
     <mkdir dir="${WPCleaner.dist.dir}" />
     <mkdir dir="${WPCleaner.jnlp.dir}" />
     <mkdir dir="${WPCleaner.full.dir}" />
 
     <!-- ============================================================================================================== -->
-    <!-- Preparation work in ${WPCleaner.classes.dir} : copy files, compile Java                                        -->
+    <!-- Preparation work in ${WPCleaner.classes_small.dir} : copy files, compile Java                                  -->
     <!-- ============================================================================================================== -->
 
-    <!-- Extract libraries -->
-    <unzip src="${WPCleaner.libs.codec.dir}/${WPCleaner.libs.codec.jar}"                 dest="${WPCleaner.classes.dir}" />
-    <unzip src="${WPCleaner.libs.compress.dir}/${WPCleaner.libs.compress.jar}"           dest="${WPCleaner.classes.dir}" />
-    <unzip src="${WPCleaner.libs.httpclient.dir}/${WPCleaner.libs.httpclient.jar}"       dest="${WPCleaner.classes.dir}" />
-    <unzip src="${WPCleaner.libs.logging.dir}/${WPCleaner.libs.logging.jar}"             dest="${WPCleaner.classes.dir}" />
-    <unzip src="${WPCleaner.libs.logback.dir}/${WPCleaner.libs.logback.classic.jar}"     dest="${WPCleaner.classes.dir}" />
-    <unzip src="${WPCleaner.libs.logback.dir}/${WPCleaner.libs.logback.core.jar}"        dest="${WPCleaner.classes.dir}" />
-    <unzip src="${WPCleaner.libs.slf4j.dir}/${WPCleaner.libs.slf4j.api.jar}"             dest="${WPCleaner.classes.dir}" />
-    <unzip src="${WPCleaner.libs.gettext.dir}/${WPCleaner.libs.gettext.jar}"             dest="${WPCleaner.classes.dir}" />
-    <unzip src="${WPCleaner.libs.jackson.dir}/${WPCleaner.libs.jackson-annotations.jar}" dest="${WPCleaner.classes.dir}" />
-    <unzip src="${WPCleaner.libs.jackson.dir}/${WPCleaner.libs.jackson-core.jar}"        dest="${WPCleaner.classes.dir}" />
-    <unzip src="${WPCleaner.libs.jackson.dir}/${WPCleaner.libs.jackson-databind.jar}"    dest="${WPCleaner.classes.dir}" />
-    <unzip src="${WPCleaner.libs.jdom.dir}/${WPCleaner.libs.jaxen.jar}"                  dest="${WPCleaner.classes.dir}" />
-    <unzip src="${WPCleaner.libs.jdom.dir}/${WPCleaner.libs.jdom.jar}"                   dest="${WPCleaner.classes.dir}" />
-    <unzip src="${WPCleaner.libs.jdom.dir}/${WPCleaner.libs.xerces-impl.jar}"            dest="${WPCleaner.classes.dir}" />
-    <unzip src="${WPCleaner.libs.jdom.dir}/${WPCleaner.libs.xerces-xml-apis.jar}"        dest="${WPCleaner.classes.dir}" />
-    <delete includeemptydirs="true">
-      <fileset dir="${WPCleaner.classes.dir}/META-INF" includes="**/*.txt" />
-    </delete>
-
     <!-- Java compilation -->
-  	<javac srcdir="${WPCleaner.src.dir}"
-           destdir="${WPCleaner.classes.dir}"
+    <javac srcdir="${WPCleaner.src.dir}"
+           destdir="${WPCleaner.classes_small.dir}"
            optimize="on" encoding="UTF-8" target="8" source="8">
       <classpath refid="WPCleaner.class.path" />
     </javac>
-
-    <!-- Copy various files for including them in the jar -->
-    <copy file="${WPCleaner.libs.codec.dir}/${WPCleaner.libs.codec.lic}"
-          tofile="${WPCleaner.classes.dir}/LICENSE_commons-codec.txt" />
-    <copy file="${WPCleaner.libs.codec.dir}/${WPCleaner.libs.codec.not}"
-          tofile="${WPCleaner.classes.dir}/NOTICE_commons-codec.txt" />
-    <copy file="${WPCleaner.libs.compress.dir}/${WPCleaner.libs.compress.lic}"
-          tofile="${WPCleaner.classes.dir}/LICENSE_commons-compress.txt" />
-    <copy file="${WPCleaner.libs.compress.dir}/${WPCleaner.libs.compress.not}"
-          tofile="${WPCleaner.classes.dir}/NOTICE_commons-compress.txt" />
-    <copy file="${WPCleaner.libs.httpclient.dir}/${WPCleaner.libs.httpclient.lic}"
-          tofile="${WPCleaner.classes.dir}/LICENSE_commons-httpclient.txt" />
-    <copy file="${WPCleaner.libs.httpclient.dir}/${WPCleaner.libs.httpclient.not}"
-          tofile="${WPCleaner.classes.dir}/NOTICE_commons-httpclient.txt" />
-    <copy file="${WPCleaner.libs.logging.dir}/${WPCleaner.libs.logging.lic}"
-  	      tofile="${WPCleaner.classes.dir}/LICENSE_commons-logging.txt" />
-    <copy file="${WPCleaner.libs.logging.dir}/${WPCleaner.libs.logging.not}"
-  	      tofile="${WPCleaner.classes.dir}/NOTICE_commons-logging.txt" />
-    <copy file="${WPCleaner.libs.gettext.dir}/${WPCleaner.libs.gettext.lic}"
-          tofile="${WPCleaner.classes.dir}/LICENSE_gettext-commons.txt" />
-    <copy file="${WPCleaner.libs.jackson.dir}/${WPCleaner.libs.jackson.lic}"
-          tofile="${WPCleaner.classes.dir}/LICENSE_jackson.txt" />
-    <copy file="${WPCleaner.libs.jdom.dir}/${WPCleaner.libs.jdom.lic}"
-          tofile="${WPCleaner.classes.dir}/LICENSE_jdom.txt" />
-    <copy file="${WPCleaner.libs.jdom.dir}/${WPCleaner.libs.jaxen.lic}"
-          tofile="${WPCleaner.classes.dir}/LICENSE_jaxen.txt" />
-    <copy file="${WPCleaner.libs.jdom.dir}/${WPCleaner.libs.xerces.lic}"
-          tofile="${WPCleaner.classes.dir}/LICENSE_xerces.txt" />
-    <copy file="${WPCleaner.libs.jdom.dir}/${WPCleaner.libs.xerces.not}"
-          tofile="${WPCleaner.classes.dir}/NOTICE_xerces.txt" />
-    <copy file="LICENSE.txt" todir="${WPCleaner.classes.dir}" />
-    <copy file="README.txt" todir="${WPCleaner.classes.dir}" />
-    <copy todir="${WPCleaner.classes.dir}">
+    <copy todir="${WPCleaner.classes_small.dir}">
       <fileset dir="${WPCleaner.src.dir}">
         <include name="**/*.png"/>
         <include name="**/*.txt.gz"/>
         <include name="**/*.xml"/>
+      </fileset>
+    </copy>
+    <copy file="LICENSE.txt" todir="${WPCleaner.classes_small.dir}" />
+    <copy file="README.txt" todir="${WPCleaner.classes_small.dir}" />
+
+    <!-- ============================================================================================================== -->
+    <!-- Preparation work in ${WPCleaner.classes_full.dir} : copy files, compile Java                                   -->
+    <!-- ============================================================================================================== -->
+
+    <!-- Extract libraries -->
+    <unzip src="${WPCleaner.libs.codec.dir}/${WPCleaner.libs.codec.jar}"                 dest="${WPCleaner.classes_full.dir}" />
+    <unzip src="${WPCleaner.libs.compress.dir}/${WPCleaner.libs.compress.jar}"           dest="${WPCleaner.classes_full.dir}" />
+    <unzip src="${WPCleaner.libs.httpclient.dir}/${WPCleaner.libs.httpclient.jar}"       dest="${WPCleaner.classes_full.dir}" />
+    <unzip src="${WPCleaner.libs.logging.dir}/${WPCleaner.libs.logging.jar}"             dest="${WPCleaner.classes_full.dir}" />
+    <unzip src="${WPCleaner.libs.logback.dir}/${WPCleaner.libs.logback.classic.jar}"     dest="${WPCleaner.classes_full.dir}" />
+    <unzip src="${WPCleaner.libs.logback.dir}/${WPCleaner.libs.logback.core.jar}"        dest="${WPCleaner.classes_full.dir}" />
+    <unzip src="${WPCleaner.libs.slf4j.dir}/${WPCleaner.libs.slf4j.api.jar}"             dest="${WPCleaner.classes_full.dir}" />
+    <unzip src="${WPCleaner.libs.gettext.dir}/${WPCleaner.libs.gettext.jar}"             dest="${WPCleaner.classes_full.dir}" />
+    <unzip src="${WPCleaner.libs.jackson.dir}/${WPCleaner.libs.jackson-annotations.jar}" dest="${WPCleaner.classes_full.dir}" />
+    <unzip src="${WPCleaner.libs.jackson.dir}/${WPCleaner.libs.jackson-core.jar}"        dest="${WPCleaner.classes_full.dir}" />
+    <unzip src="${WPCleaner.libs.jackson.dir}/${WPCleaner.libs.jackson-databind.jar}"    dest="${WPCleaner.classes_full.dir}" />
+    <unzip src="${WPCleaner.libs.jdom.dir}/${WPCleaner.libs.jaxen.jar}"                  dest="${WPCleaner.classes_full.dir}" />
+    <unzip src="${WPCleaner.libs.jdom.dir}/${WPCleaner.libs.jdom.jar}"                   dest="${WPCleaner.classes_full.dir}" />
+    <unzip src="${WPCleaner.libs.jdom.dir}/${WPCleaner.libs.xerces-impl.jar}"            dest="${WPCleaner.classes_full.dir}" />
+    <unzip src="${WPCleaner.libs.jdom.dir}/${WPCleaner.libs.xerces-xml-apis.jar}"        dest="${WPCleaner.classes_full.dir}" />
+    <delete includeemptydirs="true">
+      <fileset dir="${WPCleaner.classes_full.dir}/META-INF" includes="**/*.txt" />
+    </delete>
+
+    <!-- Copy various files for including them in the jar -->
+    <copy file="${WPCleaner.libs.codec.dir}/${WPCleaner.libs.codec.lic}"
+          tofile="${WPCleaner.classes_full.dir}/LICENSE_commons-codec.txt" />
+    <copy file="${WPCleaner.libs.codec.dir}/${WPCleaner.libs.codec.not}"
+          tofile="${WPCleaner.classes_full.dir}/NOTICE_commons-codec.txt" />
+    <copy file="${WPCleaner.libs.compress.dir}/${WPCleaner.libs.compress.lic}"
+          tofile="${WPCleaner.classes_full.dir}/LICENSE_commons-compress.txt" />
+    <copy file="${WPCleaner.libs.compress.dir}/${WPCleaner.libs.compress.not}"
+          tofile="${WPCleaner.classes_full.dir}/NOTICE_commons-compress.txt" />
+    <copy file="${WPCleaner.libs.httpclient.dir}/${WPCleaner.libs.httpclient.lic}"
+          tofile="${WPCleaner.classes_full.dir}/LICENSE_commons-httpclient.txt" />
+    <copy file="${WPCleaner.libs.httpclient.dir}/${WPCleaner.libs.httpclient.not}"
+          tofile="${WPCleaner.classes_full.dir}/NOTICE_commons-httpclient.txt" />
+    <copy file="${WPCleaner.libs.logging.dir}/${WPCleaner.libs.logging.lic}"
+  	      tofile="${WPCleaner.classes_full.dir}/LICENSE_commons-logging.txt" />
+    <copy file="${WPCleaner.libs.logging.dir}/${WPCleaner.libs.logging.not}"
+  	      tofile="${WPCleaner.classes_full.dir}/NOTICE_commons-logging.txt" />
+    <copy file="${WPCleaner.libs.gettext.dir}/${WPCleaner.libs.gettext.lic}"
+          tofile="${WPCleaner.classes_full.dir}/LICENSE_gettext-commons.txt" />
+    <copy file="${WPCleaner.libs.jackson.dir}/${WPCleaner.libs.jackson.lic}"
+          tofile="${WPCleaner.classes_full.dir}/LICENSE_jackson.txt" />
+    <copy file="${WPCleaner.libs.jdom.dir}/${WPCleaner.libs.jdom.lic}"
+          tofile="${WPCleaner.classes_full.dir}/LICENSE_jdom.txt" />
+    <copy file="${WPCleaner.libs.jdom.dir}/${WPCleaner.libs.jaxen.lic}"
+          tofile="${WPCleaner.classes_full.dir}/LICENSE_jaxen.txt" />
+    <copy file="${WPCleaner.libs.jdom.dir}/${WPCleaner.libs.xerces.lic}"
+          tofile="${WPCleaner.classes_full.dir}/LICENSE_xerces.txt" />
+    <copy file="${WPCleaner.libs.jdom.dir}/${WPCleaner.libs.xerces.not}"
+          tofile="${WPCleaner.classes_full.dir}/NOTICE_xerces.txt" />
+    <copy todir="${WPCleaner.classes_full.dir}">
+      <fileset dir="${WPCleaner.classes_small.dir}">
+        <include name="**/*"/>
       </fileset>
     </copy>
 
@@ -223,10 +234,18 @@
       <attribute name="Trusted-Only"                          value="false" />
     </manifest>
 
+    <!-- Create simple jar -->
+    <jar destfile="${WPCleaner.tmp.dir}/WPCleanerUnsigned.jar"
+         manifest="${WPCleaner.tmp.dir}/manifest.txt">
+      <fileset dir="${WPCleaner.classes_small.dir}">
+        <include name="**/*" />
+      </fileset>
+    </jar>
+
     <!-- Create complete jar -->
     <jar destfile="${WPCleaner.tmp.dir}/WikipediaCleanerUnsigned.jar"
          manifest="${WPCleaner.tmp.dir}/manifest.txt">
-      <fileset dir="${WPCleaner.classes.dir}">
+      <fileset dir="${WPCleaner.classes_full.dir}">
         <include name="**/*" />
       </fileset>
     </jar>
@@ -243,19 +262,34 @@
                  alias="wpcleaner-sign"
                  keypass="${WPCleaner.p12key.password}"
                  tsaurl="http://time.certum.pl/">
-            <!-- Time Stamping Servers:
-                 http://time.certum.pl/
-                 http://dse200.ncipher.com/TSS/HttpTspServer
-                 http://tsa.safecreative.org/
-                 http://zeitstempel.dfn.de/
-                 http://tsa.tecxoft.com/
-                 http://services.fourit.eu/tsp/tspservice.cgi
-            -->
         </signjar>
+        <signjar jar="${WPCleaner.tmp.dir}/WPCleanerUnsigned.jar"
+                 signedjar="${WPCleaner.tmp.dir}/WPCleaner.jar"
+                 keystore="${WPCleaner.res.dir}/certificate/WPCleaner.p12"
+                 storetype="pkcs12"
+                 storepass="${WPCleaner.p12.password}"
+                 alias="wpcleaner-sign"
+                 keypass="${WPCleaner.p12key.password}"
+                 tsaurl="http://time.certum.pl/">
+        </signjar>
+        <!-- Time Stamping Servers:
+             http://time.certum.pl/
+             http://dse200.ncipher.com/TSS/HttpTspServer
+             http://tsa.safecreative.org/
+             http://zeitstempel.dfn.de/
+             http://tsa.tecxoft.com/
+             http://services.fourit.eu/tsp/tspservice.cgi
+        -->
       </then>
       <else>
         <signjar jar="${WPCleaner.tmp.dir}/WikipediaCleanerUnsigned.jar"
                  signedjar="${WPCleaner.tmp.dir}/WikipediaCleaner.jar"
+                 keystore="${WPCleaner.res.dir}/certificate/WikipediaCleanerKeystore"
+                 storepass="${WPCleaner.keystore.password}"
+                 alias="wikipediacleaner" >
+        </signjar>
+        <signjar jar="${WPCleaner.tmp.dir}/WPCleanerUnsigned.jar"
+                 signedjar="${WPCleaner.tmp.dir}/WPCleaner.jar"
                  keystore="${WPCleaner.res.dir}/certificate/WikipediaCleanerKeystore"
                  storepass="${WPCleaner.keystore.password}"
                  alias="wikipediacleaner" >
@@ -268,15 +302,44 @@
     <!-- ============================================================================================================== -->
 
     <!-- Copy various files -->
-    <copy file="${WPCleaner.res.dir}/commons-nuvola-web-broom.png"      todir="${WPCleaner.getdown.dir}" />
-    <copy file="${WPCleaner.res.dir}/commons-nuvola-web-broom-64px.gif" todir="${WPCleaner.getdown.dir}" />
-    <copy file="${WPCleaner.res.dir}/commons-nuvola-web-broom-64px.png" todir="${WPCleaner.getdown.dir}" />
+    <copy file="${WPCleaner.res.dir}/commons-nuvola-web-broom.png"                       todir="${WPCleaner.getdown.dir}" />
+    <copy file="${WPCleaner.res.dir}/commons-nuvola-web-broom-64px.gif"                  todir="${WPCleaner.getdown.dir}" />
+    <copy file="${WPCleaner.res.dir}/commons-nuvola-web-broom-64px.png"                  todir="${WPCleaner.getdown.dir}" />
+    <copy file="${WPCleaner.tmp.dir}/WPCleaner.jar"                                      todir="${WPCleaner.getdown.dir}" />
+    <copy file="${WPCleaner.libs.codec.dir}/${WPCleaner.libs.codec.jar}"                 tofile="${WPCleaner.getdown.dir}/libs/commons-codec.jar" />
+    <copy file="${WPCleaner.libs.compress.dir}/${WPCleaner.libs.compress.jar}"           tofile="${WPCleaner.getdown.dir}/libs/commons-compress.jar" />
+    <copy file="${WPCleaner.libs.httpclient.dir}/${WPCleaner.libs.httpclient.jar}"       tofile="${WPCleaner.getdown.dir}/libs/commons-httpclient.jar" />
+    <copy file="${WPCleaner.libs.logging.dir}/${WPCleaner.libs.logging.jar}"             tofile="${WPCleaner.getdown.dir}/libs/commons-logging.jar" />
+    <copy file="${WPCleaner.libs.logback.dir}/${WPCleaner.libs.logback.classic.jar}"     tofile="${WPCleaner.getdown.dir}/libs/logback-classic.jar" />
+    <copy file="${WPCleaner.libs.logback.dir}/${WPCleaner.libs.logback.core.jar}"        tofile="${WPCleaner.getdown.dir}/libs/logback-core.jar" />
+    <copy file="${WPCleaner.libs.slf4j.dir}/${WPCleaner.libs.slf4j.api.jar}"             tofile="${WPCleaner.getdown.dir}/libs/slf4j-api.jar" />
+    <copy file="${WPCleaner.libs.gettext.dir}/${WPCleaner.libs.gettext.jar}"             tofile="${WPCleaner.getdown.dir}/libs/gettext-commons.jar" />
+    <copy file="${WPCleaner.libs.jackson.dir}/${WPCleaner.libs.jackson-annotations.jar}" tofile="${WPCleaner.getdown.dir}/libs/jackson-annotations.jar" />
+    <copy file="${WPCleaner.libs.jackson.dir}/${WPCleaner.libs.jackson-core.jar}"        tofile="${WPCleaner.getdown.dir}/libs/jackson-core.jar" />
+    <copy file="${WPCleaner.libs.jackson.dir}/${WPCleaner.libs.jackson-databind.jar}"    tofile="${WPCleaner.getdown.dir}/libs/jackson-databind.jar" />
+    <copy file="${WPCleaner.libs.jdom.dir}/${WPCleaner.libs.jaxen.jar}"                  tofile="${WPCleaner.getdown.dir}/libs/jaxen.jar" />
+    <copy file="${WPCleaner.libs.jdom.dir}/${WPCleaner.libs.jdom.jar}"                   tofile="${WPCleaner.getdown.dir}/libs/jdom.jar" />
+    <copy file="${WPCleaner.libs.jdom.dir}/${WPCleaner.libs.xerces-impl.jar}"            tofile="${WPCleaner.getdown.dir}/libs/xercesImpl.jar" />
+    <copy file="${WPCleaner.libs.jdom.dir}/${WPCleaner.libs.xerces-xml-apis.jar}"        tofile="${WPCleaner.getdown.dir}/libs/xml-apis.jar" />
+    <copy file="${WPCleaner.libs.codec.dir}/${WPCleaner.libs.codec.lic}"                 tofile="${WPCleaner.getdown.dir}/libs/LICENSE_commons-codec.txt" />
+    <copy file="${WPCleaner.libs.codec.dir}/${WPCleaner.libs.codec.not}"                 tofile="${WPCleaner.getdown.dir}/libs/NOTICE_commons-codec.txt" />
+    <copy file="${WPCleaner.libs.compress.dir}/${WPCleaner.libs.compress.lic}"           tofile="${WPCleaner.getdown.dir}/libs/LICENSE_commons-compress.txt" />
+    <copy file="${WPCleaner.libs.compress.dir}/${WPCleaner.libs.compress.not}"           tofile="${WPCleaner.getdown.dir}/libs/NOTICE_commons-compress.txt" />
+    <copy file="${WPCleaner.libs.httpclient.dir}/${WPCleaner.libs.httpclient.lic}"       tofile="${WPCleaner.getdown.dir}/libs/LICENSE_commons-httpclient.txt" />
+    <copy file="${WPCleaner.libs.httpclient.dir}/${WPCleaner.libs.httpclient.not}"       tofile="${WPCleaner.getdown.dir}/libs/NOTICE_commons-httpclient.txt" />
+    <copy file="${WPCleaner.libs.logging.dir}/${WPCleaner.libs.logging.lic}"             tofile="${WPCleaner.getdown.dir}/libs/LICENSE_commons-logging.txt" />
+    <copy file="${WPCleaner.libs.logging.dir}/${WPCleaner.libs.logging.not}"             tofile="${WPCleaner.getdown.dir}/libs/NOTICE_commons-logging.txt" />
+    <copy file="${WPCleaner.libs.gettext.dir}/${WPCleaner.libs.gettext.lic}"             tofile="${WPCleaner.getdown.dir}/libs/LICENSE_gettext-commons.txt" />
+    <copy file="${WPCleaner.libs.jackson.dir}/${WPCleaner.libs.jackson.lic}"             tofile="${WPCleaner.getdown.dir}/libs/LICENSE_jackson.txt" />
+    <copy file="${WPCleaner.libs.jdom.dir}/${WPCleaner.libs.jdom.lic}"                   tofile="${WPCleaner.getdown.dir}/libs/LICENSE_jdom.txt" />
+    <copy file="${WPCleaner.libs.jdom.dir}/${WPCleaner.libs.jaxen.lic}"                  tofile="${WPCleaner.getdown.dir}/libs/LICENSE_jaxen.txt" />
+    <copy file="${WPCleaner.libs.jdom.dir}/${WPCleaner.libs.xerces.lic}"                 tofile="${WPCleaner.getdown.dir}/libs/LICENSE_xerces.txt" />
+    <copy file="${WPCleaner.libs.jdom.dir}/${WPCleaner.libs.xerces.not}"                 tofile="${WPCleaner.getdown.dir}/libs/NOTICE_xerces.txt" />
     <copy todir="${WPCleaner.getdown.dir}">
       <fileset dir="${WPCleaner.res.dir}/getdown">
         <include name="**/*"/>
       </fileset>
     </copy>
-    <copy file="${WPCleaner.tmp.dir}/WikipediaCleaner.jar"              todir="${WPCleaner.getdown.dir}" />
     <java classname="com.threerings.getdown.tools.Digester">
       <arg value="${WPCleaner.getdown.dir}" />
       <classpath>
@@ -477,10 +540,10 @@
   </target>  
 
   <target name="check-uptodate-catalog">
-    <mkdir dir="${WPCleaner.classes.dir}/org/wikipediacleaner/i18n"/>
+    <mkdir dir="${WPCleaner.classes_small.dir}/org/wikipediacleaner/i18n"/>
     <condition property="uptodate-catalog-${WPCleaner_lang_value}">
       <uptodate srcfile="${WPCleaner.po.dir}/${WPCleaner_lang_value}.po"
-                targetfile="${WPCleaner.classes.dir}/org/wikipediacleaner/i18n/Messages_${WPCleaner_lang_value}.class"/>
+                targetfile="${WPCleaner.classes_small.dir}/org/wikipediacleaner/i18n/Messages_${WPCleaner_lang_value}.class"/>
     </condition>
   </target>
 
@@ -494,7 +557,7 @@
       <arg value="-l"/>
       <arg value="${WPCleaner_lang_value}"/>
       <arg value="-d"/>
-      <arg value="${basedir}/${WPCleaner.classes.dir}"/>
+      <arg value="${basedir}/${WPCleaner.classes_small.dir}"/>
       <arg value="-r"/>
       <arg value="org.wikipediacleaner.i18n.Messages"/>
       <arg value="${WPCleaner_lang_value}.po"/>

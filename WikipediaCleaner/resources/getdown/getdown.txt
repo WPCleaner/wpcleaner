@@ -17,7 +17,22 @@ ui.install_error = https://tools.wmflabs.org/wpcleaner/
 ui.hide_decorations = true
 
 # Code
-code = WikipediaCleaner.jar
+code = WPCleaner.jar
+code = libs/commons-codec.jar
+code = libs/commons-compress.jar
+code = libs/commons-httpclient.jar
+code = libs/commons-logging.jar
+code = libs/gettext-commons.jar
+code = libs/jackson-annotations.jar
+code = libs/jackson-core.jar
+code = libs/jackson-databind.jar
+code = libs/jaxen.jar
+code = libs/jdom.jar
+code = libs/xercesImpl.jar
+code = libs/xml-apis.jar
+code = libs/logback-classic.jar
+code = libs/logback-core.jar
+code = libs/slf4j-api.jar
 code = logback.xml
 
 # Resources
@@ -26,6 +41,20 @@ resource = commons-nuvola-web-broom-64px.gif
 resource = commons-nuvola-web-broom-64px.png
 resource = [windows] Bot.bat
 resource = [windows] WPCleaner.bat
+resource = libs/LICENSE_commons-codec.txt
+resource = libs/NOTICE_commons-codec.txt
+resource = libs/LICENSE_commons-compress.txt
+resource = libs/NOTICE_commons-compress.txt
+resource = libs/LICENSE_commons-httpclient.txt
+resource = libs/NOTICE_commons-httpclient.txt
+resource = libs/LICENSE_commons-logging.txt
+resource = libs/NOTICE_commons-logging.txt
+resource = libs/LICENSE_gettext-commons.txt
+resource = libs/LICENSE_jackson.txt
+resource = libs/LICENSE_jdom.txt
+resource = libs/LICENSE_jaxen.txt
+resource = libs/LICENSE_xerces.txt
+resource = libs/NOTICE_xerces.txt
 
 # Requirements on Java
 java_min_version = 1080000
