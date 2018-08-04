@@ -34,6 +34,7 @@ public class ColorButton extends JButton implements ActionListener {
    * Create a color button.
    *
    * @param color Color.
+   * @param title Button title.
    */
   public ColorButton(Color color, String title) {
     super("X");

@@ -309,7 +309,7 @@ public abstract class CheckErrorAlgorithmISBN extends CheckErrorAlgorithmBase {
         if (replacement != null) {
           errorResult.addReplacement(
               replacement.toString(),
-              GT._("Ask for help using {0}", "{{" + helpNeededTemplate[0] + "}}"));
+              GT._T("Ask for help using {0}", "{{" + helpNeededTemplate[0] + "}}"));
         }
       }
     }
@@ -334,7 +334,7 @@ public abstract class CheckErrorAlgorithmISBN extends CheckErrorAlgorithmBase {
         replacement =
             contents.substring(isbn.getBeginIndex(), isbn.getEndIndex()) +
             replacement;
-        errorResult.addReplacement(replacement, GT._("Add a comment"));
+        errorResult.addReplacement(replacement, GT._T("Add a comment"));
       }
     }
   }
@@ -383,7 +383,7 @@ public abstract class CheckErrorAlgorithmISBN extends CheckErrorAlgorithmBase {
         }
       }
       errorResult.addPossibleAction(new CompositeAction(
-          GT._("Search all ISBN"), actions));
+          GT._T("Search all ISBN"), actions));
     }
 
     // Create unit actions
@@ -401,7 +401,7 @@ public abstract class CheckErrorAlgorithmISBN extends CheckErrorAlgorithmBase {
         }
       }
       errorResult.addPossibleAction(new CompositeAction(
-          GT._("Search ISBN {0}", search), actions));
+          GT._T("Search ISBN {0}", search), actions));
     }
   }
 
@@ -431,7 +431,7 @@ public abstract class CheckErrorAlgorithmISBN extends CheckErrorAlgorithmBase {
         }
       }
       errorResult.addPossibleAction(new CompositeAction(
-          GT._("Search ISBN {0}", search), actions));
+          GT._T("Search ISBN {0}", search), actions));
     }
   }
 
@@ -461,7 +461,7 @@ public abstract class CheckErrorAlgorithmISBN extends CheckErrorAlgorithmBase {
         }
       }
       errorResult.addPossibleAction(new CompositeAction(
-          GT._("Search ISSN {0}", search), actions));
+          GT._T("Search ISSN {0}", search), actions));
     }
   }
 
@@ -494,7 +494,7 @@ public abstract class CheckErrorAlgorithmISBN extends CheckErrorAlgorithmBase {
             new ActionExternalViewer(searchEngine.getUrl())));
       }
       errorResult.addPossibleAction(new CompositeAction(
-          GT._("Search using {0}", parameterName), actions));
+          GT._T("Search using {0}", parameterName), actions));
     }
   }
 

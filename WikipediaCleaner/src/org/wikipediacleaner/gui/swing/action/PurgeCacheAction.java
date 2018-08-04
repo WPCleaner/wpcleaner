@@ -54,11 +54,11 @@ public class PurgeCacheAction implements ActionListener {
     try {
       if (progressPanel != null) {
         progressPanel.start();
-        progressPanel.setText(GT._("Retrieving MediaWiki API"));
+        progressPanel.setText(GT._T("Retrieving MediaWiki API"));
       }
       API api = APIFactory.getAPI();
       if (progressPanel != null) {
-        progressPanel.setText(GT._("Purging page cache"));
+        progressPanel.setText(GT._T("Purging page cache"));
       }
       api.purgePageCache(wikipedia, page);
     } catch (APIException ex) {

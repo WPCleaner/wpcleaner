@@ -26,7 +26,7 @@ public interface ApiProtectedTitlesResult extends ApiResult {
    * @param properties Properties defining request.
    * @param list List to be filled with protected titles.
    * @return True if request should be continued.
-   * @throws APIException
+   * @throws APIException Exception thrown by the API.
    */
   public boolean executeProtectedTitles(
       Map<String, String> properties,

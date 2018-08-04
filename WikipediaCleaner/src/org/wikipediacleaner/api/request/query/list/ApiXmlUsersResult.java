@@ -44,7 +44,7 @@ public class ApiXmlUsersResult extends ApiXmlResult implements ApiUsersResult {
    * Execute user request.
    * 
    * @param properties Properties defining request.
-   * @throws APIException
+   * @throws APIException Exception thrown by the API.
    */
   @Override
   public User executeUser(

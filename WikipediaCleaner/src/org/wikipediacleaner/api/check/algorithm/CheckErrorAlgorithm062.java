@@ -149,8 +149,8 @@ public class CheckErrorAlgorithm062 extends CheckErrorAlgorithmBase {
                 currentIndex, currentIndex + prefix.length());
             errorResult.addReplacement(
                 "http://" + analysis.getContents().substring(currentIndex, currentIndex + prefix.length()),
-                GT._("Add {0}", "http://"));
-            errorResult.addReplacement("", GT._("Remove {0}", prefix));
+                GT._T("Add {0}", "http://"));
+            errorResult.addReplacement("", GT._T("Remove {0}", prefix));
             errors.add(errorResult);
           }
         }

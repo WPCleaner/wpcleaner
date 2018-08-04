@@ -117,7 +117,7 @@ public class UpdateDabWarningTools extends UpdateWarningTools {
    * 
    * @param pages List of pages.
    * @return True if information was retrieved.
-   * @throws APIException
+   * @throws APIException Exception thrown by the API.
    */
   @Override
   protected boolean retrievePageInformation(
@@ -388,7 +388,7 @@ public class UpdateDabWarningTools extends UpdateWarningTools {
    */
   @Override
   protected String getMessageRemoveWarning(String title) {
-    return GT._("Removing disambiguation warning - {0}", title);
+    return GT._T("Removing disambiguation warning - {0}", title);
   }
 
   /**
@@ -397,6 +397,6 @@ public class UpdateDabWarningTools extends UpdateWarningTools {
    */
   @Override
   protected String getMessageUpdateWarning(String title) {
-    return GT._("Updating disambiguation warning - {0}", title);
+    return GT._T("Updating disambiguation warning - {0}", title);
   }
 }

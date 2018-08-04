@@ -40,7 +40,7 @@ public class CheckErrorAlgorithm540 extends CheckErrorAlgorithmBase {
 
   /** Possible global fixes */
   private final static String[] globalFixes = new String[] {
-    GT._("Fix bold and italic"),
+    GT._T("Fix bold and italic"),
   };
 
   public CheckErrorAlgorithm540() {

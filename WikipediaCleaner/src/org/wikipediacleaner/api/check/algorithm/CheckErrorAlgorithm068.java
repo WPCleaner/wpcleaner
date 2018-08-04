@@ -48,7 +48,7 @@ public class CheckErrorAlgorithm068 extends CheckErrorAlgorithmBase {
    * Possible global fixes.
    */
   private final static String[] globalFixes = new String[] {
-    GT._("Check all links to other language"),
+    GT._T("Check all links to other language"),
   };
 
   public CheckErrorAlgorithm068() {
@@ -131,7 +131,7 @@ public class CheckErrorAlgorithm068 extends CheckErrorAlgorithmBase {
         if ((fromWiki != null) && (fromWiki.getSettings().getCode().equals(lgCode))) {
           String pageTitle = link.getLink();
           errorResult.addPossibleAction(
-              GT._("Check language links"),
+              GT._T("Check language links"),
               new CheckLanguageLinkActionProvider(
                   fromWiki, toWiki,
                   pageTitle, link.getText()));
@@ -142,7 +142,7 @@ public class CheckErrorAlgorithm068 extends CheckErrorAlgorithmBase {
                 StringBuilder prefix = new StringBuilder();
                 StringBuilder suffix = new StringBuilder();
                 buildReplacementTemplate(templateArgs, link, prefix, suffix);
-                String question = GT._("What is the title of the page on this wiki ?");
+                String question = GT._T("What is the title of the page on this wiki ?");
                 AddTextActionProvider action = null;
                 if ((link.getText() != null) && (!link.getText().equals(pageTitle))) {
                   String[] possibleValues = { null, pageTitle, link.getText() };
@@ -155,13 +155,13 @@ public class CheckErrorAlgorithm068 extends CheckErrorAlgorithmBase {
                       pageTitle, checker);
                 }
                 errorResult.addPossibleAction(
-                    GT._("Replace using template {0}", "{{" + templateArgs[0] + "}}"),
+                    GT._T("Replace using template {0}", "{{" + templateArgs[0] + "}}"),
                     action);
               }
             }
           }
           errorResult.addPossibleAction(
-              GT._("External Viewer"),
+              GT._T("External Viewer"),
               new BasicActionProvider(
                   new ActionExternalViewer(fromWiki, pageTitle)));
         }
@@ -260,12 +260,12 @@ public class CheckErrorAlgorithm068 extends CheckErrorAlgorithmBase {
   /**
    * Return the parameters used to configure the algorithm.
    * 
-   * @return Map of parameters (Name -> description).
+   * @return Map of parameters (key=name, value=description).
    */
   @Override
   public Map<String, String> getParameters() {
     Map<String, String> parameters = super.getParameters();
-    parameters.put("template", GT._(
+    parameters.put("template", GT._T(
         "A template that can be used instead of the link to an other language. " +
         "It must be specified as: " +
           "<template name>|" +
@@ -349,11 +349,11 @@ public class CheckErrorAlgorithm068 extends CheckErrorAlgorithmBase {
               if (!possibleValues.contains(possible)) {
                 possibleValues.add(possible);
               }
-              possibleValues.add(GT._("Do not replace"));
-              possibleValues.add(GT._("Cancel"));
+              possibleValues.add(GT._T("Do not replace"));
+              possibleValues.add(GT._T("Cancel"));
 
               // Ask user what replacement to use
-              String message = GT._(
+              String message = GT._T(
                   "The page \"{0}\" in \"{1}\" has a language link to \"{2}\": {3}.\n" +
                   "With what text do you want to replace the link ?",
                   new Object[] { pageTitle, fromWiki, toWiki, toTitle } );
@@ -367,11 +367,11 @@ public class CheckErrorAlgorithm068 extends CheckErrorAlgorithmBase {
               }
             } else if (templateArgs != null) {
               String message =
-                  GT._("The page \"{0}\" in \"{1}\" doesn''t have a language link to \"{2}\".",
+                  GT._T("The page \"{0}\" in \"{1}\" doesn''t have a language link to \"{2}\".",
                        new Object[] { pageTitle, fromWiki, toWiki }) +"\n" +
-                  GT._("You can replace the link using template {0}.",
+                  GT._T("You can replace the link using template {0}.",
                        "{{" + templateArgs[0] + "}}") + "\n" +
-                  GT._("What is the title of the page on this wiki ?");
+                  GT._T("What is the title of the page on this wiki ?");
               if ((link.getText() != null) && (!link.getText().equals(pageTitle))) {
                 toTitle = Utilities.askForValue(
                     textPane.getParent(), message, link.getText(), checker);

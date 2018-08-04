@@ -27,7 +27,7 @@ public interface ApiRedirectsResult extends ApiResult {
    * @param page Page.
    * @param list List to be filled with links to the page.
    * @return True if request should be continued.
-   * @throws APIException
+   * @throws APIException Exception thrown by the API.
    */
   public boolean executeRedirects(
       Map<String, String> properties,

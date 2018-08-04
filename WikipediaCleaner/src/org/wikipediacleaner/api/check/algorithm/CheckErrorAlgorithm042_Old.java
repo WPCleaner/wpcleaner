@@ -59,7 +59,7 @@ public class CheckErrorAlgorithm042_Old extends CheckErrorAlgorithmBase {
           CheckErrorResult errorResult = createCheckErrorResult(
               analysis,
               tag.getBeginIndex(), tag.getEndIndex());
-          errorResult.addReplacement("", GT._("Delete"));
+          errorResult.addReplacement("", GT._T("Delete"));
           errors.add(errorResult);
         }
       } else if (tag.isEndTag()) {

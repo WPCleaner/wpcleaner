@@ -95,6 +95,8 @@ public class PageListTable extends JTable implements PageListProvider {
 
   /**
    * Remove pages.
+   * 
+   * @param pages List of pages.
    */
   public void removePages(List<Page> pages) {
     model.removePages(pages);

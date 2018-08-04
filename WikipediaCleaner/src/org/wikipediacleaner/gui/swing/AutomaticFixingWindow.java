@@ -162,9 +162,9 @@ public class AutomaticFixingWindow extends OnePageWindow {
   @Override
   public String getTitle() {
     if (getPageName() != null) {
-      return GT._("Automatic fixing") + " - " + getPageName();
+      return GT._T("Automatic fixing") + " - " + getPageName();
     }
-    return GT._("Automatic fixing");
+    return GT._T("Automatic fixing");
   }
 
   /**
@@ -228,9 +228,9 @@ public class AutomaticFixingWindow extends OnePageWindow {
 
     // Warning
     String txtWarning =
-      GT._("This feature may modify a lot of pages in a short period of time.") + "\n" +
-      GT._("On some Wikipedia projects, you may need the bot status for doing this.") + "\n" +
-      GT._("Please, check if you need the bot status by reading the rules of Wikipedia.");
+      GT._T("This feature may modify a lot of pages in a short period of time.") + "\n" +
+      GT._T("On some Wikipedia projects, you may need the bot status for doing this.") + "\n" +
+      GT._T("Please, check if you need the bot status by reading the rules of Wikipedia.");
     JTextArea lblWarning = new JTextArea(txtWarning);
     lblWarning.setEditable(false);
     lblWarning.setBackground(getParentComponent().getBackground());
@@ -246,56 +246,56 @@ public class AutomaticFixingWindow extends OnePageWindow {
     toolBarButtons.setFloatable(false);
     buttonAdd = Utilities.createJButton(
         "gnome-list-add.png", EnumImageSize.NORMAL,
-        GT._("Add"), false, null);
+        GT._T("Add"), false, null);
     buttonAdd.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionAddAutomaticFixing"));
     toolBarButtons.add(buttonAdd);
     buttonRemove = Utilities.createJButton(
         "gnome-list-remove.png", EnumImageSize.NORMAL,
-        GT._("Remove"), false, null);
+        GT._T("Remove"), false, null);
     buttonRemove.addActionListener(EventHandler.create(
         ActionListener.class, this, "ActionRmvAutomaticFixing"));
     toolBarButtons.add(buttonRemove);
     buttonModify = Utilities.createJButton(
         "gnome-accessories-text-editor.png", EnumImageSize.NORMAL,
-        GT._("Modify"), false, null);
+        GT._T("Modify"), false, null);
     buttonModify.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionMdfAutomaticFixing"));
     toolBarButtons.add(buttonModify);
     buttonClear = Utilities.createJButton(
         "gnome-edit-clear.png", EnumImageSize.NORMAL,
-        GT._("Clear"), false, null);
+        GT._T("Clear"), false, null);
     buttonClear.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionClrAutomaticFixing"));
     toolBarButtons.add(buttonClear);
     buttonSave = Utilities.createJButton(
         "gnome-media-floppy.png", EnumImageSize.NORMAL,
-        GT._("Save"), false, null);
+        GT._T("Save"), false, null);
     buttonSave.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionSaveAutomaticFixing"));
     toolBarButtons.add(buttonSave);    
     toolBarButtons.addSeparator();
     buttonRun = Utilities.createJButton(
         "gnome-system-run.png", EnumImageSize.NORMAL,
-        GT._("Fix selected pages"), false, null);
+        GT._T("Fix selected pages"), false, null);
     buttonRun.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionRunAutomaticFixing"));
     toolBarButtons.add(buttonRun);
     buttonTest = Utilities.createJButton(
         "gnome-edit-find.png", EnumImageSize.NORMAL,
-        GT._("Test automatic replacements"), false, null);
+        GT._T("Test automatic replacements"), false, null);
     buttonTest.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionTestAutomaticFixing"));
     toolBarButtons.add(buttonTest);
     buttonLoadList = Utilities.createJButton(
         "gnome-drive-harddisk.png", EnumImageSize.NORMAL,
-        GT._("Load replacements"), false, null);
+        GT._T("Load replacements"), false, null);
     buttonLoadList.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionLoadList"));
     toolBarButtons.add(buttonLoadList);
     buttonSaveList = Utilities.createJButton(
         "gnome-document-save.png", EnumImageSize.NORMAL,
-        GT._("Save replacements"), false, null);
+        GT._T("Save replacements"), false, null);
     buttonSaveList.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionSaveList"));
     toolBarButtons.add(buttonSaveList);
@@ -308,7 +308,7 @@ public class AutomaticFixingWindow extends OnePageWindow {
     // Apply automatic fixing for CW errors
     automaticCWAlgorithms = new ArrayList<>();
     JPanel panelAutomaticCW = new JPanel(new FlowLayout(FlowLayout.LEADING, 5, 0));
-    JLabel labelAutomaticCW = Utilities.createJLabel(GT._("Automatic fixing for Check Wiki"));
+    JLabel labelAutomaticCW = Utilities.createJLabel(GT._T("Automatic fixing for Check Wiki"));
     panelAutomaticCW.add(labelAutomaticCW);
     buttonAutomaticCWAlgorithms = Utilities.createJButton("(List of errors)", null);
     buttonAutomaticCWAlgorithms.setBorderPainted(false);
@@ -325,7 +325,7 @@ public class AutomaticFixingWindow extends OnePageWindow {
     forceCWAlgorithms = new ArrayList<>();
     JPanel panelForceCW = new JPanel(new FlowLayout(FlowLayout.LEADING, 5, 0));
     JLabel labelForceCW = Utilities.createJLabel(
-        GT._("Always apply automatic fixing for Check Wiki"));
+        GT._T("Always apply automatic fixing for Check Wiki"));
     panelForceCW.add(labelForceCW);
     buttonForceCWAlgorithms = Utilities.createJButton("(List of errors)", null);
     buttonForceCWAlgorithms.setBorderPainted(false);
@@ -340,7 +340,7 @@ public class AutomaticFixingWindow extends OnePageWindow {
 
     // Wait after each edit
     chkWaitAfterEdit = Utilities.createJCheckBox(
-        GT._("Pause after each edit"), true);
+        GT._T("Pause after each edit"), true);
     constraints.gridwidth = 2;
     constraints.weighty = 0;
     panel.add(chkWaitAfterEdit, constraints);
@@ -375,7 +375,7 @@ public class AutomaticFixingWindow extends OnePageWindow {
     JPanel testPanel = new JPanel(new GridLayout(1, 0));
     testPanel.setBorder(BorderFactory.createTitledBorder(
         BorderFactory.createEtchedBorder(),
-        GT._("Test automatic replacements")));
+        GT._T("Test automatic replacements")));
     paneOriginal = new JTextPane();
     JScrollPane scrollOriginal = new JScrollPane(paneOriginal);
     scrollOriginal.setMinimumSize(new Dimension(50, 50));
@@ -479,7 +479,7 @@ public class AutomaticFixingWindow extends OnePageWindow {
    */
   private String computeAlgorithmsLabel(List<CheckErrorAlgorithm> list) {
     if ((list == null) || (list.isEmpty())) {
-      return GT._("No errors selected");
+      return GT._T("No errors selected");
     }
     Collections.sort(list, new CheckErrorAlgorithmComparator());
     StringBuilder msg = new StringBuilder();
@@ -610,7 +610,7 @@ public class AutomaticFixingWindow extends OnePageWindow {
     constraints.weighty = 0;
 
     // Initial text
-    JLabel labelOriginal = Utilities.createJLabel(GT._("Text that should be replaced"));
+    JLabel labelOriginal = Utilities.createJLabel(GT._T("Text that should be replaced"));
     constraints.weightx = 0;
     panel.add(labelOriginal, constraints);
     constraints.gridx++;
@@ -621,7 +621,7 @@ public class AutomaticFixingWindow extends OnePageWindow {
     constraints.gridx = 0;
 
     // Replacement text
-    JLabel labelReplacement = Utilities.createJLabel(GT._("Text to be used as a replacement"));
+    JLabel labelReplacement = Utilities.createJLabel(GT._T("Text to be used as a replacement"));
     constraints.weightx = 0;
     panel.add(labelReplacement, constraints);
     constraints.gridx++;
@@ -632,7 +632,7 @@ public class AutomaticFixingWindow extends OnePageWindow {
     constraints.gridx = 0;
 
     // Regular expression
-    JCheckBox chkRegex = Utilities.createJCheckBox(GT._("Use regular expressions"), fixing.getRegex());
+    JCheckBox chkRegex = Utilities.createJCheckBox(GT._T("Use regular expressions"), fixing.getRegex());
     constraints.gridwidth = 2;
     constraints.weightx = 1;
     panel.add(chkRegex, constraints);
@@ -640,7 +640,7 @@ public class AutomaticFixingWindow extends OnePageWindow {
     constraints.gridy++;
 
     int result = JOptionPane.showConfirmDialog(
-        getParentComponent(), panel, GT._("Automatic fixing"),
+        getParentComponent(), panel, GT._T("Automatic fixing"),
         JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
     if (result != JOptionPane.OK_OPTION) {
       return false;
@@ -695,14 +695,14 @@ public class AutomaticFixingWindow extends OnePageWindow {
     if ((values == null) || (values.size() == 0)) {
       Utilities.displayWarning(
           getParentComponent(),
-          GT._("You must select the pages on which running automatic fixing."));
+          GT._T("You must select the pages on which running automatic fixing."));
       return;
     }
     String comment = getComment();
     if ((comment != null) &&
         (comment.trim().length() == 0)) {
       if (save) {
-        Utilities.displayWarning(getParentComponent(), GT._(
+        Utilities.displayWarning(getParentComponent(), GT._T(
             "A comment is required for automatic fixing."));
         return;
       }
@@ -713,7 +713,7 @@ public class AutomaticFixingWindow extends OnePageWindow {
       if (automaticCWAlgorithms.isEmpty() || forceCWAlgorithms.isEmpty()) {
         Utilities.displayWarning(
             getParentComponent(),
-            GT._("You must input the initial and destination texts."));
+            GT._T("You must input the initial and destination texts."));
         return;
       }
     }
@@ -723,14 +723,14 @@ public class AutomaticFixingWindow extends OnePageWindow {
     if (save) {
       int answer = Utilities.displayYesNoWarning(
           getParentComponent(),
-          GT._("!!! WARNING !!!") + "\n" +
-          GT._("This function will carry out all replacements on all selected pages.") + "\n" +
-          GT._("It may modify a lot of pages in a short period of time.") + "\n" +
-          GT._("On some Wikipedia projects, you may need the bot status for doing this.") + "\n" +
-          GT._("Please, check if you need the bot status by reading the rules of Wikipedia.") + "\n" +
-          GT._("Also, verify again the texts you have inputted before running this function.") + "\n" +
-          GT._("You can also test the modifications before actually doing them.") + "\n" +
-          GT._("Do you want to proceed with the modifications ?"));
+          GT._T("!!! WARNING !!!") + "\n" +
+          GT._T("This function will carry out all replacements on all selected pages.") + "\n" +
+          GT._T("It may modify a lot of pages in a short period of time.") + "\n" +
+          GT._T("On some Wikipedia projects, you may need the bot status for doing this.") + "\n" +
+          GT._T("Please, check if you need the bot status by reading the rules of Wikipedia.") + "\n" +
+          GT._T("Also, verify again the texts you have inputted before running this function.") + "\n" +
+          GT._T("You can also test the modifications before actually doing them.") + "\n" +
+          GT._T("Do you want to proceed with the modifications ?"));
       if (answer != JOptionPane.YES_OPTION) {
         return;
       }
@@ -787,7 +787,7 @@ public class AutomaticFixingWindow extends OnePageWindow {
       text = AutomaticFixing.apply(fixing, text, replacements);
       paneResult.setText(text);
       StringBuilder tmp = new StringBuilder();
-      tmp.append(GT._("The following replacements have been made:"));
+      tmp.append(GT._T("The following replacements have been made:"));
       for (String replacement : replacements) {
         tmp.append("\n - ");
         tmp.append(replacement);
@@ -798,7 +798,7 @@ public class AutomaticFixingWindow extends OnePageWindow {
     // Test replacements in the page list
     List<Page> values = listPages.getSelectedValuesList();
     if ((values != null) && (values.size() > 0)) {
-      String message = GT._("Do you want to test the replacements on the pages ?");
+      String message = GT._T("Do you want to test the replacements on the pages ?");
       int answer = Utilities.displayYesNoWarning(getParentComponent(), message);
       if (answer == JOptionPane.YES_OPTION) {
         runAutomaticFixing(false);
@@ -812,7 +812,7 @@ public class AutomaticFixingWindow extends OnePageWindow {
   public void actionLoadList() {
     try {
       JFileChooser fc = new JFileChooser();
-      FileFilter filter = new FileNameExtensionFilter(GT._("XML files"), "xml");
+      FileFilter filter = new FileNameExtensionFilter(GT._T("XML files"), "xml");
       fc.addChoosableFileFilter(filter);
       fc.setFileFilter(filter);
       Configuration config = Configuration.getConfiguration();
@@ -849,7 +849,7 @@ public class AutomaticFixingWindow extends OnePageWindow {
   public void actionSaveList() {
     try {
       JFileChooser fc = new JFileChooser();
-      FileFilter filter = new FileNameExtensionFilter(GT._("XML files"), "xml");
+      FileFilter filter = new FileNameExtensionFilter(GT._T("XML files"), "xml");
       fc.addChoosableFileFilter(filter);
       fc.setFileFilter(filter);
       Configuration config = Configuration.getConfiguration();
@@ -864,7 +864,7 @@ public class AutomaticFixingWindow extends OnePageWindow {
         // Check if file exists
         if (file.exists()) {
           int answer = displayYesNoWarning(
-              GT._("This file exists, do you want to overwrite it?"));
+              GT._T("This file exists, do you want to overwrite it?"));
           if (answer != JOptionPane.YES_OPTION) {
             return;
           }
@@ -932,7 +932,7 @@ public class AutomaticFixingWindow extends OnePageWindow {
    */
   private void displayMenuSelectAlgorithms(
       List<CheckErrorAlgorithm> list, String action, JButton button) {
-    JPopupMenu popup = new JPopupMenu(GT._("Select errors"));
+    JPopupMenu popup = new JPopupMenu(GT._T("Select errors"));
     List<CheckErrorAlgorithm> allAlgorithms = CheckErrorAlgorithms.getAlgorithms(getWiki());
     if ((allAlgorithms == null) || allAlgorithms.isEmpty()) {
       return;
@@ -940,14 +940,14 @@ public class AutomaticFixingWindow extends OnePageWindow {
     JMenuItem menuItem = null;
 
     // Select all errors
-    menuItem = new JMenuItem(GT._("Select all errors"));
+    menuItem = new JMenuItem(GT._T("Select all errors"));
     menuItem.setActionCommand("*");
     menuItem.addActionListener(EventHandler.create(
         ActionListener.class, this, action, "actionCommand"));
     popup.add(menuItem);
 
     // Select no errors
-    menuItem = new JMenuItem(GT._("Select no errors"));
+    menuItem = new JMenuItem(GT._T("Select no errors"));
     menuItem.setActionCommand("-");
     menuItem.addActionListener(EventHandler.create(
         ActionListener.class, this, action, "actionCommand"));
@@ -971,7 +971,7 @@ public class AutomaticFixingWindow extends OnePageWindow {
           if ((subMenu == null) || (part > lastPart)) {
             int from = (part * PART_SIZE) + 1;
             int to = (part + 1) * PART_SIZE;
-            subMenu = new JMenu(GT._(
+            subMenu = new JMenu(GT._T(
                 "Errors from {0} to {1}",
                 new Object[] { Integer.valueOf(from), Integer.valueOf(to) }));
             popup.add(subMenu);
@@ -1001,6 +1001,8 @@ public class AutomaticFixingWindow extends OnePageWindow {
 
   /**
    * Action called when an algorithm is selected to be automatic.
+   * 
+   * @param error Error number.
    */
   public void actionAutomaticCWAlgorithm(String error) {
     toggleAlgorithm(error, automaticCWAlgorithms);
@@ -1008,6 +1010,8 @@ public class AutomaticFixingWindow extends OnePageWindow {
 
   /**
    * Action called when an algorithm is selected to be forced.
+   * 
+   * @param error Error number.
    */
   public void actionForceCWAlgorithm(String error) {
     toggleAlgorithm(error, forceCWAlgorithms);

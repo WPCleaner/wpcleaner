@@ -40,7 +40,7 @@ public class TemplatesCallable extends MediaWikiCallable<Page> {
    */
   @Override
   public Page call() throws APIException {
-    setText(GT._("Retrieving templates") + " - " + page.getTitle());
+    setText(GT._T("Retrieving templates") + " - " + page.getTitle());
     api.retrieveTemplates(getWikipedia(), page);
     return page;
   }

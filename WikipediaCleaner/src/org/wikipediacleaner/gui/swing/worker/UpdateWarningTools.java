@@ -168,7 +168,7 @@ public abstract class UpdateWarningTools {
    * @param creators For each page title, user who has created the page.
    * @param modifiers For each page title, users who have modified the page.
    * @param stats Statistics.
-   * @throws APIException
+   * @throws APIException Exception thrown by the API.
    */
   public void updateWarning(
       List<Page> pages,
@@ -239,7 +239,7 @@ public abstract class UpdateWarningTools {
    * Manage talk pages present in the list.
    * 
    * @param pages List of pages.
-   * @throws APIException
+   * @throws APIException Exception thrown by the API.
    */
   private void manageNonEncyclopedicPages(List<Page> pages)
       throws APIException {
@@ -291,7 +291,7 @@ public abstract class UpdateWarningTools {
    * @param modifiers Users who have modified the page.
    * @param stats Statistics.
    * @return True if the warning has been updated.
-   * @throws APIException
+   * @throws APIException Exception thrown by the API.
    */
   public boolean updateWarning(
       PageAnalysis pageAnalysis, Integer pageRevId,
@@ -319,7 +319,7 @@ public abstract class UpdateWarningTools {
     // Retrieving talk page contents
     if (talkPage == null) {
       talkPage = page.getTalkPage();
-      setText(GT._("Retrieving page contents - {0}", talkPage.getTitle()));
+      setText(GT._T("Retrieving page contents - {0}", talkPage.getTitle()));
       if (section0) {
         api.retrieveSectionContents(wiki, talkPage, 0);
       } else {
@@ -334,7 +334,7 @@ public abstract class UpdateWarningTools {
       // Retrieving "To do" sub-page contents
       if (todoSubpage == null) {
         todoSubpage = talkPage.getSubPage(todoSubpageAttr);
-        setText(GT._("Retrieving page contents - {0}", todoSubpage.getTitle()));
+        setText(GT._T("Retrieving page contents - {0}", todoSubpage.getTitle()));
         api.retrieveContents(wiki, Collections.singletonList(todoSubpage), false, false);
       }
 
@@ -396,7 +396,7 @@ public abstract class UpdateWarningTools {
    * @param modifiers Users who have modified the page.
    * @param stats Statistics.
    * @return True if the warning has been updated.
-   * @throws APIException
+   * @throws APIException Exception thrown by the API.
    */
   private boolean manageWarningOnTodoSubpage(
       PageAnalysis pageAnalysis, Integer pageRevId,
@@ -446,7 +446,7 @@ public abstract class UpdateWarningTools {
    * @param modifiers Users who have modified the page.
    * @param stats Statistics.
    * @return True if the warning has been updated.
-   * @throws APIException
+   * @throws APIException Exception thrown by the API.
    */
   private boolean manageWarningOnTalkPage(
       PageAnalysis pageAnalysis, Integer pageRevId, Page talkPage,
@@ -486,7 +486,7 @@ public abstract class UpdateWarningTools {
    * @param creator User who has created the page.
    * @param modifiers Users who have modified the page.
    * @return True if the warning has been updated.
-   * @throws APIException
+   * @throws APIException Exception thrown by the API.
    */
   private boolean updateWarningOnTodoSubpage(
       Integer pageRevId, Page todoSubpage, Collection<String> elements,
@@ -570,7 +570,7 @@ public abstract class UpdateWarningTools {
    * @param creator User who has created the page.
    * @param modifiers Users who have modified the page.
    * @return True if the warning has been updated.
-   * @throws APIException
+   * @throws APIException Exception thrown by the API.
    */
   private boolean updateWarningOnTalkPage(
       PageAnalysis analysis, Integer pageRevId,
@@ -726,7 +726,7 @@ public abstract class UpdateWarningTools {
    * 
    * @param todoSubpage "To do" sub-page.
    * @return True if the warning has been updated.
-   * @throws APIException
+   * @throws APIException Exception thrown by the API.
    */
   private boolean removeWarningOnTodoSubpage(Page todoSubpage) throws APIException {
     // Check if page is already empty
@@ -792,7 +792,7 @@ public abstract class UpdateWarningTools {
    * @param talkPage Talk page.
    * @param elements Elements for the warning.
    * @return True if the warning has been updated.
-   * @throws APIException
+   * @throws APIException Exception thrown by the API.
    */
   private boolean cleanWarningOnTalkPage(
       Page talkPage, Collection<String> elements) throws APIException {
@@ -951,7 +951,7 @@ public abstract class UpdateWarningTools {
    * 
    * @param talkPage Talk page.
    * @return True if the warning has been updated.
-   * @throws APIException
+   * @throws APIException Exception thrown by the API.
    */
   private boolean removeWarningOnTalkPage(
       Page talkPage) throws APIException {
@@ -1098,7 +1098,7 @@ public abstract class UpdateWarningTools {
    * 
    * @param pages List of pages.
    * @return True if information was retrieved.
-   * @throws APIException
+   * @throws APIException Exception thrown by the API.
    */
   protected abstract boolean retrievePageInformation(
       List<Page> pages) throws APIException;
@@ -1470,7 +1470,7 @@ public abstract class UpdateWarningTools {
    * @param newContents New contents to use.
    * @param comment Comment.
    * @return Result of the command.
-   * @throws APIException
+   * @throws APIException Exception thrown by the API.
    */
   protected QueryResult updateTalkPage(
       Page page, String newContents,
@@ -1489,7 +1489,7 @@ public abstract class UpdateWarningTools {
    * @param comment Comment.
    * @param forceWatch Force watching the page.
    * @return Result of the command.
-   * @throws APIException
+   * @throws APIException Exception thrown by the API.
    */
   protected QueryResult updatePage(
       Page page,
@@ -1509,7 +1509,7 @@ public abstract class UpdateWarningTools {
    * @param contents Contents.
    * @param forceWatch Force watching the page.
    * @return Result of the command.
-   * @throws APIException
+   * @throws APIException Exception thrown by the API.
    */
   protected QueryResult updateSection(
       Page page, String title, int section,
@@ -1523,7 +1523,7 @@ public abstract class UpdateWarningTools {
    * Purge a page cache.
    * 
    * @param page Page.
-   * @throws APIException
+   * @throws APIException Exception thrown by the API.
    */
   protected void purgePage(Page page) throws APIException {
     api.purgePageCache(wiki, page);
@@ -1553,7 +1553,7 @@ public abstract class UpdateWarningTools {
    * Purge an article  when error is not found but article is still listed.
    * 
    * @param page Article to purge.
-   * @throws APIException
+   * @throws APIException Exception thrown by the API.
    */
   protected void purgeArticle(Page page) throws APIException {
     if (!usePurge) {

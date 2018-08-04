@@ -32,6 +32,8 @@ public class IconCellRenderer extends DefaultTableCellRenderer {
 
   /**
    * Constructor.
+   * 
+   * @param iconName Filename for the icon.
    */
   public IconCellRenderer(String iconName) {
     super();

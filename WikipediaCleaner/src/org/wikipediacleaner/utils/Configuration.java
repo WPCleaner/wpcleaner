@@ -275,7 +275,7 @@ public class Configuration implements WindowListener {
   private EnumWikipedia askForPreferredWikipedia(Component parent) {
     Object result = JOptionPane.showInputDialog(
         parent,
-        GT._(
+        GT._T(
             "Wikipedia Cleaner options have changed to allow different settings for each Wikipedia.\n" +
             "Previously, options were global for every Wikipedia.\n" +
             "The current options will be saved as the options for your preferred Wikipedia.\n" +

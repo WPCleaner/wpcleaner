@@ -46,7 +46,7 @@ public class ApiXmlRevisionsResult extends ApiXmlPropertiesResult implements Api
    * @param properties Properties defining request.
    * @param pages Pages to be filled with last revision content.
    * @return True if request should be continued.
-   * @throws APIException
+   * @throws APIException Exception thrown by the API.
    */
   @Override
   public boolean executeLastRevision(

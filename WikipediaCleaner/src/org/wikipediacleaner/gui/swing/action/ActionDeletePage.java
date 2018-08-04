@@ -38,7 +38,7 @@ public class ActionDeletePage implements ActionListener {
   private static JButton createInternalButton(
       boolean showIcon) {
     String iconName = "gnome-edit-delete.png";
-    String label = GT._("Delete page");
+    String label = GT._T("Delete page");
     return Utilities.createJButton(
         showIcon ? iconName : null,
         EnumImageSize.NORMAL,
@@ -127,7 +127,7 @@ public class ActionDeletePage implements ActionListener {
 
     String reason = Utilities.askForValue(
         parent,
-        GT._("Do you want to delete this page on Wikipedia ?\nPlease, enter the reason for deleting the page"),
+        GT._T("Do you want to delete this page on Wikipedia ?\nPlease, enter the reason for deleting the page"),
         "", null);
     if ((reason == null) || (reason.trim().length() == 0)) {
       return;

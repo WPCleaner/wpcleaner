@@ -59,7 +59,7 @@ public abstract class MediaWikiController implements MediaWikiListener {
   }
 
   /**
-   * @param task
+   * @param task Task.
    * @return Future result
    */
   static public Future<?> addSimpleTask(Callable<?> task) {

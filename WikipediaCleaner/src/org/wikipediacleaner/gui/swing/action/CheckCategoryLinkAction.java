@@ -85,7 +85,7 @@ public class CheckCategoryLinkAction extends TextAction {
       if (category.isExisting() == null) {
         Utilities.displayWarning(
             textPane.getParent(),
-            GT._(
+            GT._T(
                 "Unable to find if category {0} exists in \"{1}\".",
                 new Object[] { title, toWikipedia.toString() }));
         return;
@@ -94,7 +94,7 @@ public class CheckCategoryLinkAction extends TextAction {
         String replace = categoryName + ":" + title + ((order != null) ? "|" + order : "");
         int answer = Utilities.displayYesNoWarning(
             textPane.getParent(),
-            GT._(
+            GT._T(
                 "The category {0} exists in \"{1}\".\n" +
                 "Do you want to replace the category by [[{2}]] ?",
                 new Object[] { title, toWikipedia.toString(), replace }));
@@ -116,7 +116,7 @@ public class CheckCategoryLinkAction extends TextAction {
       if (languageLink == null) {
         Utilities.displayInformationMessage(
             textPane.getParent(),
-            GT._(
+            GT._T(
                 "The category {0} in the {1} Wikipedia doesn''t have a language link to the {2} Wikipedia.\n" +
                 "It doesn''t exist either in the {2} Wikipedia.",
                 new Object[] { title, fromWikipedia.getSettings().getCode(), toWikipedia.getSettings().getCode() } ));
@@ -125,7 +125,7 @@ public class CheckCategoryLinkAction extends TextAction {
       String replace = languageLink + ((order != null) ? "|" + order : "");
       int answer = Utilities.displayYesNoWarning(
           textPane.getParent(),
-          GT._(
+          GT._T(
               "The category {0} doesn''t exist in the {2} Wikipedia.\n" +
               "In the {1} Wikipedia, it has a language link to the {2} Wikipedia: {3}.\n" +
               "Do you want to replace the category by [[{3}]] ?",

@@ -130,6 +130,7 @@ public class CheckWikiDetection {
   }
 
   /**
+   * @param analysis Page analysis.
    * @return Location of the error.
    */
   public int getLocation(PageAnalysis analysis) {

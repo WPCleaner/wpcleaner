@@ -102,7 +102,7 @@ public class TranslateWorker extends BasicWorker {
     int lastPosition = 0;
     for (PageElementInternalLink link : links) {
       String linkPage = link.getLink();
-      setText(GT._("Retrieving interwiki for {0}", linkPage));
+      setText(GT._T("Retrieving interwiki for {0}", linkPage));
       String translated = null;
       if (!interwikis.containsKey(linkPage)) {
         translated = getLanguageLink(linkPage);
@@ -191,7 +191,7 @@ public class TranslateWorker extends BasicWorker {
     for (PageElementCategory category : categories) {
       String categoryName = category.getName();
       String fullCategoryName = categoryNamespace.getCanonicalTitle() + ":" + categoryName;
-      setText(GT._("Retrieving interwiki for {0}", fullCategoryName));
+      setText(GT._T("Retrieving interwiki for {0}", fullCategoryName));
       String translated = null;
       if (!interwikis.containsKey(categoryName)) {
         translated = getLanguageLink(fullCategoryName);
@@ -250,7 +250,7 @@ public class TranslateWorker extends BasicWorker {
     for (PageElementTemplate template : templates) {
       String templateName = template.getTemplateName();
       String fullTemplateName = templateNamespace.getCanonicalTitle() + ":" + templateName;
-      setText(GT._("Retrieving interwiki for {0}", fullTemplateName));
+      setText(GT._T("Retrieving interwiki for {0}", fullTemplateName));
       String translated = null;
       if (!interwikis.containsKey(templateName)) {
         translated = getLanguageLink(fullTemplateName);

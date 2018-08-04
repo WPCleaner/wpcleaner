@@ -102,7 +102,7 @@ public class InformationWindow
    */
   @Override
   public String getTitle() {
-    return GT._("Information");
+    return GT._T("Information");
   }
 
   /**

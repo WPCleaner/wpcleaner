@@ -42,7 +42,7 @@ public class ParseTextCallable extends MediaWikiCallable<String> {
    */
   @Override
   public String call() throws APIException {
-    setText(GT._("Parsing text") + " - " + title);
+    setText(GT._T("Parsing text") + " - " + title);
     return api.parseText(getWikipedia(), title, text, true);
   }
 

@@ -71,6 +71,8 @@ public class ListCWPanel extends JPanel {
 
   /**
    * Create a panel for configuring the List Check Wiki tool.
+   * 
+   * @param wiki Wiki.
    */
   public ListCWPanel(EnumWikipedia wiki) {
     super(new GridBagLayout(), true);
@@ -91,11 +93,11 @@ public class ListCWPanel extends JPanel {
     // Dump file
     String lastDumpFile = config.getString(wiki, ConfigurationValueString.LAST_DUMP_FILE);
     txtDumpFile = Utilities.createJTextField(lastDumpFile, 40);
-    JLabel labelDumpFile = Utilities.createJLabel(GT._("Dump file:"));
+    JLabel labelDumpFile = Utilities.createJLabel(GT._T("Dump file:"));
     labelDumpFile.setLabelFor(txtDumpFile);
     JButton buttonDumpFile = Utilities.createJButton(
         "gnome-logviewer.png", EnumImageSize.SMALL,
-        GT._("Dump file"), false, null);
+        GT._T("Dump file"), false, null);
     buttonDumpFile.addActionListener(
         EventHandler.create(ActionListener.class, this, "actionDumpFile"));
     constraints.gridx = 0;
@@ -116,13 +118,13 @@ public class ListCWPanel extends JPanel {
     // Export directory
     String lastExportDir = config.getString(wiki, ConfigurationValueString.LAST_EXPORT_DIRECTORY);
     txtExportDir = Utilities.createJTextField(lastExportDir, 40);
-    radExportDir = Utilities.createJRadioButton(GT._("Export directory:"), !exportOnWiki);
+    radExportDir = Utilities.createJRadioButton(GT._T("Export directory:"), !exportOnWiki);
     radExportDir.addItemListener(EventHandler.create(
         ItemListener.class, this, "updateComponentState"));
     groupExport.add(radExportDir);
     buttonExportDir = Utilities.createJButton(
         "gnome-folder.png", EnumImageSize.SMALL,
-        GT._("Export directory"), false, null);
+        GT._T("Export directory"), false, null);
     buttonExportDir.addActionListener(
         EventHandler.create(ActionListener.class, this, "actionExportDir"));
     constraints.gridx = 0;
@@ -139,7 +141,7 @@ public class ListCWPanel extends JPanel {
     // Export page
     String lastExportPage = config.getString(wiki, ConfigurationValueString.LAST_EXPORT_PAGE);
     txtExportPage = Utilities.createJTextField(lastExportPage, 40);
-    radExportPage = Utilities.createJRadioButton(GT._("Export pages:"), exportOnWiki);
+    radExportPage = Utilities.createJRadioButton(GT._T("Export pages:"), exportOnWiki);
     radExportPage.addItemListener(EventHandler.create(
         ItemListener.class, this, "updateComponentState"));
     groupExport.add(radExportPage);
@@ -154,7 +156,7 @@ public class ListCWPanel extends JPanel {
     // Check wiki
     boolean checkWiki = config.getBoolean(wiki, ConfigurationValueBoolean.DUMP_CHECK_WIKI);
     chkCheckWiki = Utilities.createJCheckBox(
-        GT._("Check last version of article before reporting an error"), checkWiki);
+        GT._T("Check last version of article before reporting an error"), checkWiki);
     constraints.gridx = 0;
     constraints.gridwidth = 3;
     constraints.weightx = 1;
@@ -163,7 +165,7 @@ public class ListCWPanel extends JPanel {
 
     // Only check articles previously reported
     chkOnlyRecheck = Utilities.createJCheckBox(
-        GT._("Only check articles previously reported"), false);
+        GT._T("Only check articles previously reported"), false);
     constraints.gridx = 0;
     constraints.gridwidth = 3;
     constraints.weightx = 1;
@@ -246,7 +248,7 @@ public class ListCWPanel extends JPanel {
     JFileChooser fileChooser = new JFileChooser();
     File dumpFile = getDumpFile();
     fileChooser.setCurrentDirectory((dumpFile != null) ? dumpFile.getParentFile() : new File("."));
-    fileChooser.setDialogTitle(GT._("Dump file"));
+    fileChooser.setDialogTitle(GT._T("Dump file"));
     int answer = fileChooser.showOpenDialog(getParent());
     if (answer == JFileChooser.APPROVE_OPTION) {
       String pathDumpFile = fileChooser.getSelectedFile().getAbsolutePath();
@@ -271,7 +273,7 @@ public class ListCWPanel extends JPanel {
     JFileChooser dirChooser = new JFileChooser();
     File exportDir = getExportDir();
     dirChooser.setCurrentDirectory((exportDir != null) ? exportDir : new File("."));
-    dirChooser.setDialogTitle(GT._("Export directory"));
+    dirChooser.setDialogTitle(GT._T("Export directory"));
     dirChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
     int answer = dirChooser.showOpenDialog(getParent());
     if (answer == JFileChooser.APPROVE_OPTION) {

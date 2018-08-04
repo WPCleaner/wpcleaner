@@ -62,6 +62,8 @@ public class ApiLintErrorsRequest extends ApiListRequest {
    * @param withTemplates True to retrieve also templates causing the error.
    * @param limit Flag indicating if the number of results should be limited.
    * @param max Absolute maximum number of results
+   * @return List of pages with the error.
+   * @throws APIException Exception thrown by the API.
    */
   public List<Page> loadLintErrors(
       String category, Integer namespace, boolean withTemplates,

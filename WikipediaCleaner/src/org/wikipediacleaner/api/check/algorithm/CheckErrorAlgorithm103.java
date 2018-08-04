@@ -27,7 +27,7 @@ public class CheckErrorAlgorithm103 extends CheckErrorAlgorithmBase {
 
   /** Possible global fixes. */
   private final static String[] globalFixes = new String[] {
-    GT._("Replace all pipe templates"),
+    GT._T("Replace all pipe templates"),
   };
 
   public CheckErrorAlgorithm103() {

@@ -559,6 +559,7 @@ public class Page implements Comparable<Page> {
   }
 
   /**
+   * @param type Type of related pages.
    * @param pages Similar pages.
    */
   public void setRelatedPages(RelatedPages type, List<Page> pages) {

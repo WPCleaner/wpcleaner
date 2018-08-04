@@ -54,6 +54,7 @@ public class ApiPurgeRequest extends ApiRequest {
    * Purge one page.
    * 
    * @param page Page to be purged.
+   * @throws APIException Exception thrown by the API.
    */
   public void purgePage(Page page) throws APIException {
     Map<String, String> properties = getProperties(ACTION_PURGE, result.getFormat());
@@ -66,6 +67,7 @@ public class ApiPurgeRequest extends ApiRequest {
    * Purge pages.
    * 
    * @param pages Pages to be purged.
+   * @throws APIException Exception thrown by the API.
    */
   public void purgePages(Collection<Page> pages) throws APIException {
     Map<String, String> properties = getProperties(ACTION_PURGE, result.getFormat());

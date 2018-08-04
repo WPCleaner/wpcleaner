@@ -34,7 +34,7 @@ public class MWPaneEditTocAction extends MWPaneAction {
   }
 
   /**
-   * @param e
+   * @param e Event.
    * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
    */
   @Override

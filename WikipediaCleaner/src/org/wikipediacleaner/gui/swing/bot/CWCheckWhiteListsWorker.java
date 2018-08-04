@@ -68,7 +68,7 @@ class CWCheckWhiteListsWorker extends BasicWorker {
         int errorNumber = algorithm.getErrorNumber();
         if (algorithm.isAvailable() &&
             CheckErrorAlgorithms.isAlgorithmActive(wiki, errorNumber)) {
-          setText(GT._("Checking whitelist for error {0}", String.valueOf(errorNumber)));
+          setText(GT._T("Checking whitelist for error {0}", String.valueOf(errorNumber)));
           CWConfigurationError cwConfig = wiki.getCWConfiguration().getErrorConfiguration(errorNumber);
           Set<String> whiteList = cwConfig.getWhiteList();
           if (whiteList != null) {
@@ -89,7 +89,7 @@ class CWCheckWhiteListsWorker extends BasicWorker {
               for (Page page : pages) {
                 if (Boolean.FALSE.equals(page.isExisting())) {
                   details.append("<li>");
-                  details.append(GT._("The page {0} doesn''t exist on Wikipedia", page.getTitle()));
+                  details.append(GT._T("The page {0} doesn''t exist on Wikipedia", page.getTitle()));
                   details.append("</li>");
                   unnecessaryPages.add(page);
                 } else {
@@ -103,14 +103,14 @@ class CWCheckWhiteListsWorker extends BasicWorker {
                         "\">" +
                         page.getTitle() +
                         "</a>";
-                    details.append(GT._("The error hasn''t been detected in page {0}.", pageLink));
+                    details.append(GT._T("The error hasn''t been detected in page {0}.", pageLink));
                     Boolean errorDetected = checkWiki.isErrorDetected(page, errorNumber);
                     if (errorDetected != null) {
                       details.append(" ");
                       if (Boolean.TRUE.equals(errorDetected)) {
-                        details.append(GT._("It's still being detected by CheckWiki."));
+                        details.append(GT._T("It's still being detected by CheckWiki."));
                       } else {
-                        details.append(GT._("It's not detected either by CheckWiki."));
+                        details.append(GT._T("It's not detected either by CheckWiki."));
                         unnecessaryPages.add(page);
                       }
                     }
@@ -134,7 +134,7 @@ class CWCheckWhiteListsWorker extends BasicWorker {
                     String.valueOf(errorNumber) +
                     "</a>";
               }
-              result.append(GT._(
+              result.append(GT._T(
                   "The following problems were detected on the whitelist for error {0}:",
                   pageLink));
               result.append("<ul>");
@@ -203,7 +203,7 @@ class CWCheckWhiteListsWorker extends BasicWorker {
     super.finished();
     if (getWindow() != null) {
       InformationWindow.createInformationWindow(
-          GT._("Whitelists"), get().toString(), true, getWikipedia());
+          GT._T("Whitelists"), get().toString(), true, getWikipedia());
     }
   }
 

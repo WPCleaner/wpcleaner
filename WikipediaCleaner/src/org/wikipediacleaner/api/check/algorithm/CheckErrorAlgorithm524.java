@@ -229,7 +229,7 @@ public class CheckErrorAlgorithm524 extends CheckErrorAlgorithmBase {
                 if (paramEnd > tmpIndex) {
                   replacement.append(contents.substring(tmpIndex, paramEnd));
                 }
-                errorResult.addReplacement(replacement.toString(), GT._("Comment"));
+                errorResult.addReplacement(replacement.toString(), GT._T("Comment"));
               }
             }
 
@@ -323,14 +323,14 @@ public class CheckErrorAlgorithm524 extends CheckErrorAlgorithmBase {
   }
 
   /**
-   * @return Map of parameters (Name -> description).
+   * @return Map of parameters (key=name, value=description).
    * @see org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase#getParameters()
    */
   @Override
   public Map<String, String> getParameters() {
     Map<String, String> parameters = super.getParameters();
-    parameters.put("category", GT._("A category containing the list of pages in error"));
-    parameters.put("ignore", GT._("Values that can be safely ignored for a given template and argument"));
+    parameters.put("category", GT._T("A category containing the list of pages in error"));
+    parameters.put("ignore", GT._T("Values that can be safely ignored for a given template and argument"));
     return parameters;
   }
 

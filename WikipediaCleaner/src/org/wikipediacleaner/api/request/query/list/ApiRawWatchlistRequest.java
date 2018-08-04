@@ -89,6 +89,7 @@ public class ApiRawWatchlistRequest extends ApiListRequest {
    * Load watch list raw.
    * 
    * @return List of pages in the watch list.
+   * @throws APIException Exception thrown by the API.
    */
   public List<Page> loadWatchlistRaw() throws APIException {
     Map<String, String> properties = getProperties(ACTION_QUERY, result.getFormat());

@@ -158,6 +158,7 @@ public class ApiSearchRequest extends ApiListRequest {
    * 
    * @param page Page for which similar pages are searched.
    * @param limit Flag indicating if the number of results should be limited.
+   * @throws APIException Exception thrown by the API.
    */
   public void searchSimilarPages(
       Page page, boolean limit) throws APIException {

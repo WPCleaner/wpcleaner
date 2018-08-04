@@ -48,7 +48,7 @@ public class ActionFullAnalysis implements ActionListener {
     return Utilities.createJButton(
         showIcon ? "gnome-system-run.png" : null,
         EnumImageSize.NORMAL,
-        GT._("Full analysis"), showText,
+        GT._T("Full analysis"), showText,
         useShortcut ? ConfigurationValueShortcut.FULL_ANALYSIS : null);
   }
 
@@ -273,7 +273,7 @@ public class ActionFullAnalysis implements ActionListener {
       if ((tmp == null) || (tmp.trim().length() == 0)) {
         Utilities.displayWarning(
             parent,
-            GT._("You must input a page name for running a full analysis"),
+            GT._T("You must input a page name for running a full analysis"),
             (text != null) ?  text : combo);
         return;
       }

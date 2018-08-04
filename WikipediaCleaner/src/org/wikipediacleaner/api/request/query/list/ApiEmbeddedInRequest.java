@@ -83,6 +83,7 @@ public class ApiEmbeddedInRequest extends ApiListRequest {
    * @param page Page for list of embedding pages is requested.
    * @param namespaces List of name spaces to restrict result.
    * @param limit Flag indicating if the number of results should be limited.
+   * @throws APIException Exception thrown by the API.
    */
   public void loadEmbeddedIn(
       Page page, List<Integer> namespaces,

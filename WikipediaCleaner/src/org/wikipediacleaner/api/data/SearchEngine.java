@@ -59,7 +59,7 @@ public class SearchEngine {
    * @param wiki Wiki.
    * @param template Template.
    * @param property Specific property (if null, only general property will be used).
-   * @return Map of search engines (parameter name => search engines)
+   * @return Map of search engines (key=parameter name, value=search engines)
    */
   public static Map<String, List<SearchEngine>> getSearchEngines(
       EnumWikipedia wiki, PageElementTemplate template,

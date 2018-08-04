@@ -50,7 +50,7 @@ public class CheckErrorAlgorithm081 extends CheckErrorAlgorithmBase {
    * Possible global fixes.
    */
   private final static String[] globalFixes = new String[] {
-    GT._("Fix reference duplication"),
+    GT._T("Fix reference duplication"),
   };
 
   public CheckErrorAlgorithm081() {
@@ -255,18 +255,18 @@ public class CheckErrorAlgorithm081 extends CheckErrorAlgorithmBase {
               String prefix = contents.substring(tag.getBeginIndex(), tag.getEndIndex() - 1);
               String suffix = contents.substring(tag.getEndIndex() - 1, tag.getCompleteEndIndex());
               errorResult.addPossibleAction(
-                  GT._("Give a name to the <ref> tag"),
+                  GT._T("Give a name to the <ref> tag"),
                   new AddTextActionProvider(
                       prefix + " name=\"",
                       "\"" + suffix,
                       provider,
-                      GT._("What name would you like to use for the <ref> tag ?"),
+                      GT._T("What name would you like to use for the <ref> tag ?"),
                       nameChecker));
 
               // Add actions for external links
               for (PageElementExternalLink link : links) {
                 errorResult.addPossibleAction(new SimpleAction(
-                    GT._("External Viewer"),
+                    GT._T("External Viewer"),
                     new ActionExternalViewer(link.getLink())));
               }
               errors.add(errorResult);
@@ -356,8 +356,8 @@ public class CheckErrorAlgorithm081 extends CheckErrorAlgorithmBase {
           if (mainRef != refTag) {
             String tmp = getClosedRefTag(groupName, selectedName, null);
             String message =
-                GT._("A <ref> tag shares the same content, and is named \"{0}\".", selectedName) + "\n" +
-                GT._("Do you want to replace this <ref> tag by \"{0}\" ?", tmp);
+                GT._T("A <ref> tag shares the same content, and is named \"{0}\".", selectedName) + "\n" +
+                GT._T("Do you want to replace this <ref> tag by \"{0}\" ?", tmp);
             int answer = Utilities.displayYesNoCancelWarning(textPane.getParent(), message);
             if (answer == JOptionPane.YES_OPTION) {
               replacement = tmp;
@@ -367,8 +367,8 @@ public class CheckErrorAlgorithm081 extends CheckErrorAlgorithmBase {
           }
         } else {
           String message =
-              GT._("Several <ref> tags share the same content, but none has been given a name.") +"\n" +
-              GT._("What name do you want to use for this <ref> tag ?");
+              GT._T("Several <ref> tags share the same content, but none has been given a name.") +"\n" +
+              GT._T("What name do you want to use for this <ref> tag ?");
           String newText = Utilities.askForValue(textPane.getParent(), message, (String) null, nameChecker);
           if (newText != null) {
             replacement = getClosedRefTag(groupName, newText, valueRef);

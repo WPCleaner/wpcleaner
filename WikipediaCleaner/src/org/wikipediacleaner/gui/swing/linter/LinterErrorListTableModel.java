@@ -163,7 +163,7 @@ public class LinterErrorListTableModel extends AbstractTableModel {
           return error.getTemplateName();
         }
         if (error.isMutiPartTemplateBlock()) {
-          return GT._("Multiple templates");
+          return GT._T("Multiple templates");
         }
         return "";
       case COLUMN_TYPE:
@@ -196,17 +196,17 @@ public class LinterErrorListTableModel extends AbstractTableModel {
   public String getColumnName(int column) {
     switch (column) {
     case COLUMN_END:
-      return GT._("End");
+      return GT._T("End");
     case COLUMN_GOTO:
       return "";
     case COLUMN_PARAMETERS:
-      return GT._("Parameters");
+      return GT._T("Parameters");
     case COLUMN_START:
-      return GT._("Start");
+      return GT._T("Start");
     case COLUMN_TEMPLATE:
-      return GT._("Template");
+      return GT._T("Template");
     case COLUMN_TYPE:
-      return GT._("Type");
+      return GT._T("Type");
     }
     return super.getColumnName(column);
   }

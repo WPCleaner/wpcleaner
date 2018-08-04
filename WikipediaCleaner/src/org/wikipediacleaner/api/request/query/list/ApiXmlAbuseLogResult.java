@@ -46,7 +46,7 @@ public class ApiXmlAbuseLogResult extends ApiXmlResult implements ApiAbuseLogRes
    * @param properties Properties defining request.
    * @param list List to be filled with abuse logs.
    * @return True if request should be continued.
-   * @throws APIException
+   * @throws APIException Exception thrown by the API.
    */
   @Override
   public boolean executeAbuseLog(

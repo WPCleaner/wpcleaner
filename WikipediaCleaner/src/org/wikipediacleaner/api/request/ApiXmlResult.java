@@ -89,8 +89,8 @@ public abstract class ApiXmlResult extends BasicApiResult {
    * @param properties Properties defining the request.
    * @param maxTry Maximum number of tries.
    * @return Answer of MediaWiki API.
-   * @throws JDOMParseException
-   * @throws APIException
+   * @throws JDOMParseException Exception thrown due to the DOM.
+   * @throws APIException Exception thrown by the API.
    */
   protected Element getRoot(
       Map<String, String> properties,
@@ -205,7 +205,7 @@ public abstract class ApiXmlResult extends BasicApiResult {
    * Check for errors reported by the API.
    * 
    * @param root Document root.
-   * @throws APIException
+   * @throws APIException Exception thrown by the API.
    */
   protected void checkForError(Element root) throws APIException {
     if (root == null) {

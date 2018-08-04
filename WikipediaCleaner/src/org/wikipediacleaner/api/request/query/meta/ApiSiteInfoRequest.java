@@ -94,6 +94,7 @@ public class ApiSiteInfoRequest extends ApiMetaRequest {
    * @param interwikiMap True if information about interwiki map are requested.
    * @param magicWords True if information about magic words are requested.
    * @param specialPageAliases True if information about special page aliases are requested.
+   * @throws APIException Exception thrown by the API.
    */
   public void loadSiteInformation(
       boolean general,

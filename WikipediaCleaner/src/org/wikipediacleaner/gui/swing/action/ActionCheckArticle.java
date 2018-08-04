@@ -48,7 +48,7 @@ public class ActionCheckArticle implements ActionListener {
     return Utilities.createJButton(
         showIcon ? "commons-text-x-generic-highlight-red-marker-round.png" : null,
         EnumImageSize.NORMAL,
-        GT._("Check article"), showText,
+        GT._T("Check article"), showText,
         useShortcut ? ConfigurationValueShortcut.CHECK_ARTICLE : null);
   }
 
@@ -259,7 +259,7 @@ public class ActionCheckArticle implements ActionListener {
       if ((tmp == null) || (tmp.trim().length() == 0)) {
         Utilities.displayWarning(
             parent,
-            GT._("You must input a page name for running a full analysis"),
+            GT._T("You must input a page name for running a full analysis"),
             (text != null) ?  text : combo);
         return;
       }
@@ -290,7 +290,7 @@ public class ActionCheckArticle implements ActionListener {
       return;
     }
     String report = tools.getReport();
-    InformationWindow.createInformationWindow(GT._("Analysis"), report, false, wiki);
+    InformationWindow.createInformationWindow(GT._T("Analysis"), report, false, wiki);
   }
 
   /**
@@ -306,6 +306,6 @@ public class ActionCheckArticle implements ActionListener {
       return;
     }
     String report = tools.getReport();
-    InformationWindow.createInformationWindow(GT._("Analysis"), report, false, wiki);
+    InformationWindow.createInformationWindow(GT._T("Analysis"), report, false, wiki);
   }
 }

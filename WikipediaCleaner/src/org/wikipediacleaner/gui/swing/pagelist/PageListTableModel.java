@@ -223,17 +223,17 @@ public class PageListTableModel extends AbstractTableModel {
   public String getColumnName(int column) {
     switch (column) {
     case COLUMN_BACKLINKS_MAIN:
-      return GT._("Main");
+      return GT._T("Main");
     case COLUMN_BACKLINKS_TEMPLATE:
       return "{{.}}";
     case COLUMN_BACKLINKS_OTHER:
-      return GT._("Other");
+      return GT._T("Other");
     case COLUMN_COMMENTS_TEXT:
-      return GT._("Comments");
+      return GT._T("Comments");
     case COLUMN_DISAMBIGUATION:
       return "D";
     case COLUMN_PAGE:
-      return GT._("Page");
+      return GT._T("Page");
     case COLUMN_REDIRECT:
       return "R";
     case COLUMN_WATCHED:

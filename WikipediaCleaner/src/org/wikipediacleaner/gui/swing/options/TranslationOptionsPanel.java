@@ -43,7 +43,7 @@ public class TranslationOptionsPanel extends OptionsPanel {
    */
   private void initialize() {
     setBorder(BorderFactory.createTitledBorder(
-        BorderFactory.createEtchedBorder(), GT._("Translation options")));
+        BorderFactory.createEtchedBorder(), GT._T("Translation options")));
     JCheckBox chk = null;
 
     // Initialize constraints
@@ -63,35 +63,35 @@ public class TranslationOptionsPanel extends OptionsPanel {
 
     // Internal links text
     chk = createJCheckBox(
-        GT._("Translate internal links text"),
+        GT._T("Translate internal links text"),
         ConfigurationValueBoolean.TRANSLATION_INTERNAL_LINK_TEXT);
     add(chk, constraints);
     constraints.gridy++;
 
     // Inter language links
     chk = createJCheckBox(
-        GT._("Convert internal links without interwiki to inter language links"),
+        GT._T("Convert internal links without interwiki to inter language links"),
         ConfigurationValueBoolean.TRANSLATION_INTERLANGUAGE);
     add(chk, constraints);
     constraints.gridy++;
 
     // Categories
     chk = createJCheckBox(
-        GT._("Translate categories"),
+        GT._T("Translate categories"),
         ConfigurationValueBoolean.TRANSLATION_CATEGORY);
     add(chk, constraints);
     constraints.gridy++;
 
     // Templates names
     chk = createJCheckBox(
-        GT._("Translate templates names"),
+        GT._T("Translate templates names"),
         ConfigurationValueBoolean.TRANSLATION_TEMPLATE_NAME);
     add(chk, constraints);
     constraints.gridy++;
 
     // Templates without parameters
     chk = createJCheckBox(
-        GT._("Translate templates without parameters"),
+        GT._T("Translate templates without parameters"),
         ConfigurationValueBoolean.TRANSLATION_TEMPLATE_NO_PARAM);
     add(chk, constraints);
     constraints.gridy++;

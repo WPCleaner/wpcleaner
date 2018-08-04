@@ -34,7 +34,7 @@ public class ActionDispose {
       boolean useShortcut, boolean cancel) {
     return Utilities.createJButton(
         null, EnumImageSize.NORMAL,
-        cancel ? GT._("Cancel") : GT._("Close"), true,
+        cancel ? GT._T("Cancel") : GT._T("Close"), true,
         useShortcut ? ConfigurationValueShortcut.CLOSE : null);
   }
 

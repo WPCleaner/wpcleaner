@@ -95,6 +95,7 @@ public class ApiLinksHereRequest extends ApiPropertiesRequest {
    * 
    * @param page Page for which links to it are requested.
    * @param redirects True if it should also retrieve links through redirects.
+   * @throws APIException Exception thrown by the API.
    */
   public void loadLinksHere(Page page, boolean redirects) throws APIException {
     Map<String, String> properties = getProperties(ACTION_QUERY, result.getFormat());

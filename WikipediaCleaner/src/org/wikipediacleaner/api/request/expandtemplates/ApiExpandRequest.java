@@ -104,6 +104,7 @@ public class ApiExpandRequest extends ApiRequest {
    * @param title Page title.
    * @param text Page contents.
    * @return Text with expanded templates.
+   * @throws APIException Exception thrown by the API.
    */
   public String expandTemplates(String title, String text) throws APIException {
     Map<String, String> properties = getProperties(ACTION_EXPAND, result.getFormat());

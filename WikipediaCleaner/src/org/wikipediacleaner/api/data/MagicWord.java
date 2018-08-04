@@ -431,6 +431,7 @@ public class MagicWord implements Comparable<MagicWord> {
   /**
    * @param name Magic word name.
    * @param aliases Magic word aliases.
+   * @param caseSensitive True if case sensitiveness is needed.
    */
   public MagicWord(String name, List<String> aliases, boolean caseSensitive) {
     this.name = name;

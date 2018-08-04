@@ -77,10 +77,11 @@ public class CWConfiguration {
       return comment;
     }
     String project = config.getString(WPCConfigurationString.CW_PROJECT_PAGE);
-    return GT._("Fixed using {0}", (project != null) ? "[[" + project + "]]" : "Check Wiki project");
+    return GT._T("Fixed using {0}", (project != null) ? "[[" + project + "]]" : "Check Wiki project");
   }
 
   /**
+   * @param algorithms Algorithms.
    * @return Comment for Check Wiki project.
    */
   public String getComment(Collection<CheckError.Progress> algorithms) {
@@ -117,7 +118,7 @@ public class CWConfiguration {
     if (comment.indexOf("{0}") < 0) {
       return comment + " (" + algorithmsComment.toString() + ")";
     }
-    return GT._(comment, algorithmsComment.toString());
+    return GT._T(comment, algorithmsComment.toString());
   }
 
   // =================================================================================
@@ -281,6 +282,7 @@ public class CWConfiguration {
 
   /**
    * @param input Reader for general project configuration.
+   * @throws APIException Exception thrown by the API.
    */
   public void setGeneralConfiguration(Reader input) throws APIException {
     BufferedReader reader = new BufferedReader(input);
@@ -296,6 +298,7 @@ public class CWConfiguration {
 
   /**
    * @param input Reader for project configuration specific for this wiki.
+   * @throws APIException Exception thrown by the API.
    */
   public void setWikiConfiguration(Reader input) throws APIException {
     BufferedReader reader = new BufferedReader(input);

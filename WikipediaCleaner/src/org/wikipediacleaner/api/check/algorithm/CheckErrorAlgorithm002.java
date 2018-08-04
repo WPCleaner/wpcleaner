@@ -32,7 +32,7 @@ public class CheckErrorAlgorithm002 extends CheckErrorAlgorithmBase {
    * Possible global fixes.
    */
   private final static String[] globalFixes = new String[] {
-    GT._("Fix all incorrect tags"),
+    GT._T("Fix all incorrect tags"),
   };
 
   public CheckErrorAlgorithm002() {
@@ -192,7 +192,7 @@ public class CheckErrorAlgorithm002 extends CheckErrorAlgorithmBase {
               }
               errorResult.addReplacement(
                   replacement,
-                  GT._("Remove {0} tags", PageElementTag.TAG_HTML_CITE));
+                  GT._T("Remove {0} tags", PageElementTag.TAG_HTML_CITE));
               errors.add(errorResult);
             }
           }
@@ -216,7 +216,7 @@ public class CheckErrorAlgorithm002 extends CheckErrorAlgorithmBase {
               replacement = replacement.trim();
               errorResult.addReplacement(
                   replacement,
-                  GT._("Remove {0} tags", PageElementTag.TAG_HTML_CITE));
+                  GT._T("Remove {0} tags", PageElementTag.TAG_HTML_CITE));
               errors.add(errorResult);
             }
           }
@@ -682,16 +682,16 @@ public class CheckErrorAlgorithm002 extends CheckErrorAlgorithmBase {
   }
 
   /**
-   * @return Map of parameters (Name -> description).
+   * @return Map of parameters (key=name, value=description).
    * @see org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase#getParameters()
    */
   @Override
   public Map<String, String> getParameters() {
     Map<String, String> parameters = super.getParameters();
-    parameters.put("anchor_templates", GT._("A replacement for {0}", "&lt;span id=\"xxx\"/&gt;"));
-    parameters.put("clear_all", GT._("A replacement for {0}", "&lt;br clear=\"all\"/&gt;"));
-    parameters.put("clear_left", GT._("A replacement for {0}", "&lt;br clear=\"left\"/&gt;"));
-    parameters.put("clear_right", GT._("A replacement for {0}", "&lt;br clear=\"right\"/&gt;"));
+    parameters.put("anchor_templates", GT._T("A replacement for {0}", "&lt;span id=\"xxx\"/&gt;"));
+    parameters.put("clear_all", GT._T("A replacement for {0}", "&lt;br clear=\"all\"/&gt;"));
+    parameters.put("clear_left", GT._T("A replacement for {0}", "&lt;br clear=\"left\"/&gt;"));
+    parameters.put("clear_right", GT._T("A replacement for {0}", "&lt;br clear=\"right\"/&gt;"));
     return parameters;
   }
 }

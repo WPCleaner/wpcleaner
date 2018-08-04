@@ -334,7 +334,7 @@ public enum EnumWikipedia {
    * 
    * @param api Wikipedia API
    * @return List of disambiguation pages
-   * @throws APIException
+   * @throws APIException Exception thrown by the API.
    */
   public List<Page> constuctDisambiguationPages(API api) throws APIException {
 
@@ -404,7 +404,7 @@ public enum EnumWikipedia {
    * Load all disambiguation pages.
    * 
    * @param api Wikipedia API.
-   * @throws APIException
+   * @throws APIException Exception thrown by the API.
    */
   public void loadDisambiguationPages(API api) throws APIException {
     try {

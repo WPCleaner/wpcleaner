@@ -285,19 +285,19 @@ public class BotCWTableModel extends AbstractTableModel {
         "commons-nuvola-apps-kcmsystem.png",
         EnumImageSize.SMALL);
     item = new JMenuItem(
-        GT._("Activate automatic fixing for all algorithms"),
+        GT._T("Activate automatic fixing for all algorithms"),
         icon);
     item.addActionListener(EventHandler.create(
         ActionListener.class, this, "addAllFixAlgorithms"));
     menu.add(item);
     item = new JMenuItem(
-        GT._("Deactivate automatic fixing for all algorithms"),
+        GT._T("Deactivate automatic fixing for all algorithms"),
         icon);
     item.addActionListener(EventHandler.create(
         ActionListener.class, this, "removeAllFixAlgorithms"));
     menu.add(item);
     item = new JMenuItem(
-        GT._("Reverse the selection"),
+        GT._T("Reverse the selection"),
         icon);
     item.addActionListener(EventHandler.create(
         ActionListener.class, this, "reverseFixAlgorithms"));
@@ -308,19 +308,19 @@ public class BotCWTableModel extends AbstractTableModel {
         "gnome-logviewer.png",
         EnumImageSize.SMALL);
     item = new JMenuItem(
-        GT._("Use the list of pages of each algorithm"),
+        GT._T("Use the list of pages of each algorithm"),
         icon);
     item.addActionListener(EventHandler.create(
         ActionListener.class, this, "addAllListAlgorithms"));
     menu.add(item);
     item = new JMenuItem(
-        GT._("Use no list of pages"),
+        GT._T("Use no list of pages"),
         icon);
     item.addActionListener(EventHandler.create(
         ActionListener.class, this, "removeAllListAlgorithms"));
     menu.add(item);
     item = new JMenuItem(
-        GT._("Reverse the selection"),
+        GT._T("Reverse the selection"),
         icon);
     item.addActionListener(EventHandler.create(
         ActionListener.class, this, "reverseListAlgorithms"));
@@ -504,13 +504,13 @@ public class BotCWTableModel extends AbstractTableModel {
     case COLUMN_BOT:
       return "Bot";
     case COLUMN_DESCRIPTION:
-      return GT._("Description");
+      return GT._T("Description");
     case COLUMN_FIX:
       return "Fix";
     case COLUMN_LIST:
       return "List";
     case COLUMN_NUMBER:
-      return GT._("N°");
+      return GT._T("N°");
     }
     return super.getColumnName(column);
   }

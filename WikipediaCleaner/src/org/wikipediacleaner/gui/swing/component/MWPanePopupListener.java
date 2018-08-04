@@ -144,6 +144,7 @@ public abstract class MWPanePopupListener extends AbstractPopupListener {
    * @param textPane Text pane.
    * @param position Position in text.
    * @param pageAnalysis Page analysis.
+   * @return Popup menu.
    */
   protected abstract JPopupMenu createPopup(
       MWPane textPane, int position,
@@ -246,7 +247,7 @@ public abstract class MWPanePopupListener extends AbstractPopupListener {
 
     // Default menu
     BasicMenuCreator menu = new BasicMenuCreator();
-    JPopupMenu popup = menu.createPopupMenu(GT._(
+    JPopupMenu popup = menu.createPopupMenu(GT._T(
         "Page: {0}",
         limitTextLength(pageAnalysis.getPage().getTitle(), 50)));
     menu.addCurrentChapter(popup, position, pageAnalysis);
@@ -277,7 +278,7 @@ public abstract class MWPanePopupListener extends AbstractPopupListener {
 
     // Menu creation
     BasicMenuCreator menu = new BasicMenuCreator();
-    JPopupMenu popup = menu.createPopupMenu(GT._(
+    JPopupMenu popup = menu.createPopupMenu(GT._T(
         "Page: {0}",
         limitTextLength(page.getTitle(), 50)));
     menu.addCurrentChapter(popup, position, pageAnalysis);
@@ -312,7 +313,7 @@ public abstract class MWPanePopupListener extends AbstractPopupListener {
 
     // Menu creation
     BasicMenuCreator menu = new BasicMenuCreator();
-    JPopupMenu popup = menu.createPopupMenu(GT._(
+    JPopupMenu popup = menu.createPopupMenu(GT._T(
         "Interwiki: {0}",
         limitTextLength(link.getInterwikiText() + ":" + link.getLink(), 50)));
     menu.addCurrentChapter(popup, position, pageAnalysis);
@@ -383,7 +384,7 @@ public abstract class MWPanePopupListener extends AbstractPopupListener {
 
     // Menu creation
     BasicMenuCreator menu = new BasicMenuCreator();
-    JPopupMenu popup = menu.createPopupMenu(GT._(
+    JPopupMenu popup = menu.createPopupMenu(GT._T(
         "Image: {0}",
         limitTextLength(image.getImage(), 50)));
     menu.addCurrentChapter(popup, position, pageAnalysis);
@@ -419,7 +420,7 @@ public abstract class MWPanePopupListener extends AbstractPopupListener {
 
     // Menu creation
     BasicMenuCreator menu = new BasicMenuCreator();
-    JPopupMenu popup = menu.createPopupMenu(GT._(
+    JPopupMenu popup = menu.createPopupMenu(GT._T(
         "Category: {0}",
         limitTextLength(category.getName(), 50)));
     menu.addCurrentChapter(popup, position, pageAnalysis);
@@ -447,7 +448,7 @@ public abstract class MWPanePopupListener extends AbstractPopupListener {
 
     // Menu creation
     BasicMenuCreator menu = new BasicMenuCreator();
-    JPopupMenu popup = menu.createPopupMenu(GT._(
+    JPopupMenu popup = menu.createPopupMenu(GT._T(
         "External link: {0}",
         limitTextLength(link.getLink(), 50)));
     menu.addCurrentChapter(popup, position, pageAnalysis);
@@ -480,7 +481,7 @@ public abstract class MWPanePopupListener extends AbstractPopupListener {
 
     // Menu creation
     BasicMenuCreator menu = new BasicMenuCreator();
-    JPopupMenu popup = menu.createPopupMenu(GT._(
+    JPopupMenu popup = menu.createPopupMenu(GT._T(
         "Template: {0}",
         limitTextLength(template.getTemplateName(), 50)));
     menu.addCurrentChapter(popup, position, pageAnalysis);
@@ -493,7 +494,7 @@ public abstract class MWPanePopupListener extends AbstractPopupListener {
       List<String> parameterNames = new ArrayList<>(searchEngines.keySet());
       Collections.sort(parameterNames);
       for (String parameterName : parameterNames) {
-        JMenu submenu = new JMenu(GT._("Search using {0}", parameterName));
+        JMenu submenu = new JMenu(GT._T("Search using {0}", parameterName));
         for (SearchEngine searchEngine : searchEngines.get(parameterName)) {
           menu.addItemView(null, submenu, searchEngine.getUrl(), searchEngine.getName());
         }
@@ -527,7 +528,7 @@ public abstract class MWPanePopupListener extends AbstractPopupListener {
 
     // Menu creation
     BasicMenuCreator menu = new BasicMenuCreator();
-    JPopupMenu popup = menu.createPopupMenu(GT._(
+    JPopupMenu popup = menu.createPopupMenu(GT._T(
         "Parameter: {0}",
         limitTextLength(parameter.getParameterName(), 50)));
     menu.addCurrentChapter(popup, position, pageAnalysis);
@@ -552,7 +553,7 @@ public abstract class MWPanePopupListener extends AbstractPopupListener {
 
     // Menu creation
     BasicMenuCreator menu = new BasicMenuCreator();
-    JPopupMenu popup = menu.createPopupMenu(GT._(
+    JPopupMenu popup = menu.createPopupMenu(GT._T(
         "Function: {0}",
         limitTextLength(function.getFunctionName(), 50)));
     menu.addCurrentChapter(popup, position, pageAnalysis);
@@ -577,7 +578,7 @@ public abstract class MWPanePopupListener extends AbstractPopupListener {
 
     // Menu creation
     BasicMenuCreator menu = new BasicMenuCreator();
-    JPopupMenu popup = menu.createPopupMenu(GT._(
+    JPopupMenu popup = menu.createPopupMenu(GT._T(
         "ISBN: {0}",
         limitTextLength(isbn.getISBN(), 50)));
     ISBNInformation infos = ISBNRange.getInformation(isbn.getISBN());
@@ -608,7 +609,7 @@ public abstract class MWPanePopupListener extends AbstractPopupListener {
 
     // Menu creation
     BasicMenuCreator menu = new BasicMenuCreator();
-    JPopupMenu popup = menu.createPopupMenu(GT._(
+    JPopupMenu popup = menu.createPopupMenu(GT._T(
         "ISSN: {0}",
         limitTextLength(issn.getISSN(), 50)));
     menu.addCurrentChapter(popup, position, pageAnalysis);

@@ -271,20 +271,20 @@ public class CheckErrorAlgorithm526 extends CheckErrorAlgorithmBase {
   /**
    * Return the parameters used to configure the algorithm.
    * 
-   * @return Map of parameters (Name -> description).
+   * @return Map of parameters (key=name, value=description).
    */
   @Override
   public Map<String, String> getParameters() {
     Map<String, String> parameters = super.getParameters();
     parameters.put(
         "abuse_filter",
-        GT._("An identifier of an abuse filter that is triggered by incorrect year links."));
+        GT._T("An identifier of an abuse filter that is triggered by incorrect year links."));
     parameters.put(
         "ask_help",
-        GT._("Text added after the link to ask for help."));
+        GT._T("Text added after the link to ask for help."));
     parameters.put(
         "dump_analysis",
-        GT._("A page containing a dump analysis for this error."));
+        GT._T("A page containing a dump analysis for this error."));
     return parameters;
   }
 

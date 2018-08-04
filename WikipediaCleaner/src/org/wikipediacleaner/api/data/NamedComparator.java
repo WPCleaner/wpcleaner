@@ -11,7 +11,7 @@ import java.util.Comparator;
 
 
 /**
- * A Comparator<T> extension for named comparators.
+ * A Comparator&lt;T&gt; extension for named comparators.
  */
 public interface NamedComparator<T> extends Comparator<T> {
 

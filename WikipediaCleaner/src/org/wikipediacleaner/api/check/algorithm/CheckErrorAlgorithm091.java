@@ -48,7 +48,7 @@ public class CheckErrorAlgorithm091 extends CheckErrorAlgorithmBase {
    * Possible global fixes.
    */
   private final static String[] globalFixes = new String[] {
-    GT._("Convert them to internal links"),
+    GT._T("Convert them to internal links"),
   };
 
   public CheckErrorAlgorithm091() {
@@ -219,7 +219,7 @@ public class CheckErrorAlgorithm091 extends CheckErrorAlgorithmBase {
               fullLink ? ErrorLevel.ERROR : ErrorLevel.WARNING);
           if ((fromWiki != null) && (articleName.length() >0)) {
             errorResult.addPossibleAction(
-                GT._("Check language links"),
+                GT._T("Check language links"),
                 new CheckLanguageLinkActionProvider(
                     fromWiki, analysis.getWikipedia(),
                     articleName, text));
@@ -262,7 +262,7 @@ public class CheckErrorAlgorithm091 extends CheckErrorAlgorithmBase {
                 textSuffix.append('=');
                 textSuffix.append((text != null) ? text : article);
                 textSuffix.append("}}");
-                String question = GT._("What is the title of the page on this wiki ?");
+                String question = GT._T("What is the title of the page on this wiki ?");
                 AddTextActionProvider action = null;
                 if ((text != null) && (!text.equals(article))) {
                   String[] possibleValues = { null, article, text };
@@ -275,7 +275,7 @@ public class CheckErrorAlgorithm091 extends CheckErrorAlgorithmBase {
                       articleName, checker);
                 }
                 errorResult.addPossibleAction(
-                    GT._("Replace using template {0}", "{{" + templateArgs[0] + "}}"),
+                    GT._T("Replace using template {0}", "{{" + templateArgs[0] + "}}"),
                     action);
               }
             }
@@ -307,7 +307,7 @@ public class CheckErrorAlgorithm091 extends CheckErrorAlgorithmBase {
 
           // External viewer
           errorResult.addPossibleAction(
-              GT._("External Viewer"),
+              GT._T("External Viewer"),
               new BasicActionProvider(
                   new ActionExternalViewer(link.getLink())));
 
@@ -373,15 +373,15 @@ public class CheckErrorAlgorithm091 extends CheckErrorAlgorithmBase {
   }
 
   /**
-   * @return Map of parameters (Name -> description).
+   * @return Map of parameters (key=name, value=description).
    * @see org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase#getParameters()
    */
   @Override
   public Map<String, String> getParameters() {
     Map<String, String> parameters = super.getParameters();
-    parameters.put("link_templates", GT._("Templates using external links"));
-    parameters.put("only_language", GT._("To report only links to other languages"));
-    parameters.put("only_local", GT._("To report only links to local wikis"));
+    parameters.put("link_templates", GT._T("Templates using external links"));
+    parameters.put("only_language", GT._T("To report only links to other languages"));
+    parameters.put("only_local", GT._T("To report only links to local wikis"));
     return parameters;
   }
 }

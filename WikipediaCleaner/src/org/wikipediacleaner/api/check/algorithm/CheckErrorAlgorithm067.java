@@ -309,17 +309,17 @@ public class CheckErrorAlgorithm067 extends CheckErrorAlgorithmBase {
   /**
    * Return the parameters used to configure the algorithm.
    * 
-   * @return Map of parameters (Name -> description).
+   * @return Map of parameters (key=name, value=description).
    */
   @Override
   public Map<String, String> getParameters() {
     Map<String, String> parameters = super.getParameters();
     parameters.put(
         "abbreviations",
-        GT._("A list of abbreviations that generate false positives when placed before {0}", "&lt;ref&gt;"));
+        GT._T("A list of abbreviations that generate false positives when placed before {0}", "&lt;ref&gt;"));
     parameters.put(
         "separator",
-        GT._("Used as a separator between consecutive {0} tags", "&lt;ref&gt;"));
+        GT._T("Used as a separator between consecutive {0} tags", "&lt;ref&gt;"));
     return parameters;
   }
 

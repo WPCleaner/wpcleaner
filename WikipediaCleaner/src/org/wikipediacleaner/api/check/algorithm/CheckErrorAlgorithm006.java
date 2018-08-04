@@ -28,7 +28,7 @@ public class CheckErrorAlgorithm006 extends CheckErrorAlgorithmBase {
    * Possible global fixes.
    */
   private final static String[] globalFixes = new String[] {
-    GT._("Fix DEFAULTSORT"),
+    GT._T("Fix DEFAULTSORT"),
   };
 
   public CheckErrorAlgorithm006() {
@@ -97,7 +97,7 @@ public class CheckErrorAlgorithm006 extends CheckErrorAlgorithmBase {
             errorResult.addReplacement(PageElementFunction.createFunction(tag.getFunctionName(), text));
           } else {
             errorResult.addText(
-                GT._("Unable to replace the characters [{0}]", unknownCharacters));
+                GT._T("Unable to replace the characters [{0}]", unknownCharacters));
           }
           errors.add(errorResult);
         }

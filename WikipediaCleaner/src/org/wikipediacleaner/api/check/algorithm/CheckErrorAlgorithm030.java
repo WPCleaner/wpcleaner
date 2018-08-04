@@ -93,23 +93,23 @@ public class CheckErrorAlgorithm030 extends CheckErrorAlgorithmBase {
           prefixFull.append("|");
           prefixShort.append("|alt=");
           errorResult.addPossibleAction(
-              GT._("Add a description..."),
+              GT._T("Add a description..."),
               new AddTextActionProvider(
                   prefixFull.toString(), "]]",
                   new TextProviderImageDescription(image),
-                  GT._("What description would you like to use for the image ?"),
+                  GT._T("What description would you like to use for the image ?"),
                   descriptionChecker));
           errorResult.addPossibleAction(
-              GT._("Add an alternate description..."),
+              GT._T("Add an alternate description..."),
               new AddTextActionProvider(
                   prefixShort.toString(), "]]",
                   new TextProviderImageDescription(image),
-                  GT._("What alternate description would you like to use for the image ?"),
+                  GT._T("What alternate description would you like to use for the image ?"),
                   descriptionChecker));
 
           // Action: view image
           errorResult.addPossibleAction(new SimpleAction(
-              GT._("View image"),
+              GT._T("View image"),
               new ActionExternalViewer(
                   wiki,
                   image.getNamespace() + ":" + image.getImage(),

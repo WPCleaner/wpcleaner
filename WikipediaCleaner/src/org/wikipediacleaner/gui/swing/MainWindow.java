@@ -213,6 +213,10 @@ public class MainWindow
 
   /**
    * Create and display a MainWindow.
+   * 
+   * @param wiki Wiki.
+   * @param userName User name.
+   * @param password Password.
    */
   public static void createMainWindow(EnumWikipedia wiki, String userName, String password) {
     createWindow(
@@ -229,7 +233,7 @@ public class MainWindow
    */
   @Override
   public String getTitle() {
-    return GT._(
+    return GT._T(
         "{0} - Version {1} ({2})",
         new Object[] { Version.PROGRAM, Version.VERSION, DateFormat.getDateInstance().format(Version.DATE) });
   }
@@ -340,7 +344,7 @@ public class MainWindow
         BorderFactory.createEtchedBorder(
             Version.HIGHLIGHT ? Color.RED : null,
             Version.HIGHLIGHT ? Color.RED : null),
-        GT._("Message"),
+        GT._T("Message"),
         TitledBorder.CENTER, TitledBorder.DEFAULT_POSITION));
     if (Version.HIGHLIGHT) {
       panel.setBackground(Color.RED);
@@ -358,7 +362,7 @@ public class MainWindow
   private Component createLoginComponents() {
     JPanel panel = new JPanel(new GridBagLayout());
     panel.setBorder(BorderFactory.createTitledBorder(
-        BorderFactory.createEtchedBorder(), GT._("Login")));
+        BorderFactory.createEtchedBorder(), GT._T("Login")));
     Configuration configuration = Configuration.getConfiguration();
 
     // Initialize constraints
@@ -381,7 +385,7 @@ public class MainWindow
     comboWikipedia.setSelectedItem(defaultWikipedia);
     comboWikipedia.addItemListener(EventHandler.create(
         ItemListener.class, this, "actionChangeWiki"));
-    JLabel labelWikipedia = Utilities.createJLabel(GT._("Wiki"));
+    JLabel labelWikipedia = Utilities.createJLabel(GT._T("Wiki"));
     labelWikipedia.setLabelFor(comboWikipedia);
     labelWikipedia.setHorizontalAlignment(SwingConstants.TRAILING);
     JToolBar toolbarWikipedia = new JToolBar(SwingConstants.HORIZONTAL);
@@ -389,7 +393,7 @@ public class MainWindow
     toolbarWikipedia.setBorderPainted(false);
     JButton buttonWikipediaInfo = Utilities.createJButton(
         "tango-help-browser.png", EnumImageSize.SMALL,
-        GT._("Other Wikipedia"), false, null);
+        GT._T("Other Wikipedia"), false, null);
     buttonWikipediaInfo.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionOtherWikipedia"));
     toolbarWikipedia.add(buttonWikipediaInfo);
@@ -410,7 +414,7 @@ public class MainWindow
     comboLanguage.setSelectedItem(configuration.getLanguage());
     comboLanguage.addItemListener(EventHandler.create(
         ItemListener.class, this, "actionChangeLanguage"));
-    JLabel labelLanguage = Utilities.createJLabel(GT._("Language"));
+    JLabel labelLanguage = Utilities.createJLabel(GT._T("Language"));
     labelLanguage.setLabelFor(comboLanguage);
     labelLanguage.setHorizontalAlignment(SwingConstants.TRAILING);
     JToolBar toolbarLanguage = new JToolBar(SwingConstants.HORIZONTAL);
@@ -418,7 +422,7 @@ public class MainWindow
     toolbarLanguage.setBorderPainted(false);
     JButton buttonLanguageInfo = Utilities.createJButton(
         "tango-help-browser.png", EnumImageSize.SMALL,
-        GT._("Other Language"), false, null);
+        GT._T("Other Language"), false, null);
     buttonLanguageInfo.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionOtherLanguage"));
     toolbarLanguage.add(buttonLanguageInfo);
@@ -438,7 +442,7 @@ public class MainWindow
     comboUser.setEditable(true);
     comboUser.addItemListener(EventHandler.create(
         ItemListener.class, this, "actionChangeUser"));
-    JLabel labelUsername = Utilities.createJLabel(GT._("Username:"));
+    JLabel labelUsername = Utilities.createJLabel(GT._T("Username:"));
     labelUsername.setLabelFor(comboUser);
     labelUsername.setHorizontalAlignment(SwingConstants.TRAILING);
     constraints.gridx = 0;
@@ -453,7 +457,7 @@ public class MainWindow
     textPassword = new JPasswordField();
     textPassword.setText("");
     echoPassword = textPassword.getEchoChar();
-    JLabel labelPassword = Utilities.createJLabel(GT._("Password :"));
+    JLabel labelPassword = Utilities.createJLabel(GT._T("Password :"));
     labelPassword.setLabelFor(textPassword);
     labelPassword.setHorizontalAlignment(SwingConstants.TRAILING);
     constraints.gridx = 0;
@@ -469,26 +473,26 @@ public class MainWindow
     buttonToolbar.setFloatable(false);
     buttonToolbar.setBorderPainted(false);
     buttonLogin = Utilities.createJButton(
-        GT._("Login"),
+        GT._T("Login"),
         ConfigurationValueShortcut.LOGIN);
     buttonLogin.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionLogin"));
     buttonToolbar.add(buttonLogin);
     buttonToolbar.addSeparator();
-    buttonDemo = Utilities.createJButton(GT._("Demo"), null);
+    buttonDemo = Utilities.createJButton(GT._T("Demo"), null);
     buttonDemo.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionDemo"));
     buttonToolbar.add(buttonDemo);
     buttonToolbar.addSeparator();
     buttonLogout = Utilities.createJButton(
-        GT._("Wiki logout"),
+        GT._T("Wiki logout"),
         ConfigurationValueShortcut.LOGOUT);
     buttonLogout.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionLogout"));
     buttonToolbar.add(buttonLogout);
     buttonToolbar.addSeparator();
     buttonDisconnect = Utilities.createJButton(
-        GT._("WPC logout"), null);
+        GT._T("WPC logout"), null);
     buttonDisconnect.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionDisconnect"));
     buttonToolbar.add(buttonDisconnect);
@@ -505,46 +509,46 @@ public class MainWindow
     buttonToolbar.setBorderPainted(false);
     buttonHelp = Utilities.createJButton(
         "tango-help-browser.png", EnumImageSize.NORMAL,
-        GT._("Help"), false,
+        GT._T("Help"), false,
         ConfigurationValueShortcut.HELP);
     buttonHelp.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionHelp"));
     buttonToolbar.add(buttonHelp);
     buttonOptions = Utilities.createJButton(
         "gnome-preferences-other.png", EnumImageSize.NORMAL,
-        GT._("Options"), false,
+        GT._T("Options"), false,
         ConfigurationValueShortcut.OPTIONS);
     buttonOptions.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionOptions"));
     buttonToolbar.add(buttonOptions);
     buttonOptionsSystem = Utilities.createJButton(
         "gnome-preferences-system.png", EnumImageSize.NORMAL,
-        GT._("System options"), false,
+        GT._T("System options"), false,
         ConfigurationValueShortcut.SYSTEM_OPTIONS);
     buttonOptionsSystem.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionOptionsSystem"));
     buttonToolbar.add(buttonOptionsSystem);
     buttonReloadOptions = Utilities.createJButton(
         "gnome-view-refresh.png", EnumImageSize.NORMAL,
-        GT._("Reload system options"), false, null);
+        GT._T("Reload system options"), false, null);
     buttonReloadOptions.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionReloadOptions"));
     buttonToolbar.add(buttonReloadOptions);
     buttonCheckSpelling = Utilities.createJButton(
         "gnome-tools-check-spelling.png", EnumImageSize.NORMAL,
-        GT._("Check spelling options"), false, null);
+        GT._T("Check spelling options"), false, null);
     buttonCheckSpelling.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionCheckSpelling"));
     buttonToolbar.add(buttonCheckSpelling);
     buttonToolbar.addSeparator();
     buttonIdea = Utilities.createJButton(
-        GT._("Idea? Bug?"),
+        GT._T("Idea? Bug?"),
         ConfigurationValueShortcut.BUG_REPORT);
     buttonIdea.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionIdea"));
     buttonToolbar.add(buttonIdea);
     buttonToolbar.addSeparator();
-    buttonAbout = Utilities.createJButton(GT._("About"), null);
+    buttonAbout = Utilities.createJButton(GT._T("About"), null);
     buttonAbout.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionAbout"));
     buttonToolbar.add(buttonAbout);
@@ -558,7 +562,7 @@ public class MainWindow
         null, ConfigurationValueInteger.SAVE_USER);
     groupSaveUsernamePassword = new ButtonGroup();
     radSavePassword = Utilities.createJRadioButton(
-        GT._("Save username and password"),
+        GT._T("Save username and password"),
         (saveUser == ConfigurationConstants.VALUE_SAVE_USER_BOTH));
     radSavePassword.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionSavePassword"));
@@ -570,7 +574,7 @@ public class MainWindow
     panel.add(radSavePassword, constraints);
     constraints.gridy++;
     radSaveUsername = Utilities.createJRadioButton(
-        GT._("Save username only"),
+        GT._T("Save username only"),
         (saveUser == ConfigurationConstants.VALUE_SAVE_USER_NAME));
     groupSaveUsernamePassword.add(radSaveUsername);
     constraints.fill = GridBagConstraints.NONE;
@@ -580,7 +584,7 @@ public class MainWindow
     panel.add(radSaveUsername, constraints);
     constraints.gridy++;
     radSaveNothing = Utilities.createJRadioButton(
-        GT._("Save none of them"),
+        GT._T("Save none of them"),
         (saveUser != ConfigurationConstants.VALUE_SAVE_USER_BOTH) &&
         (saveUser != ConfigurationConstants.VALUE_SAVE_USER_NAME));
     groupSaveUsernamePassword.add(radSaveNothing);
@@ -615,7 +619,7 @@ public class MainWindow
   private Component createPageComponents() {
     JPanel panel = new JPanel(new GridBagLayout());
     panel.setBorder(BorderFactory.createTitledBorder(
-        BorderFactory.createEtchedBorder(), GT._("Page")));
+        BorderFactory.createEtchedBorder(), GT._T("Page")));
     Configuration configuration = Configuration.getConfiguration();
 
     // Initialize constraints
@@ -657,21 +661,21 @@ public class MainWindow
     toolbarPage.setBorderPainted(false);
     buttonRandomPage = Utilities.createJButton(
         "commons-nuvola-apps-atlantik.png", EnumImageSize.SMALL,
-        GT._("Random page"), false,
+        GT._T("Random page"), false,
         ConfigurationValueShortcut.RANDOM_PAGE);
     buttonRandomPage.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionRandomPage"));
     toolbarPage.add(buttonRandomPage);
     buttonAddPage = Utilities.createJButton(
         "gnome-list-add.png", EnumImageSize.SMALL,
-        GT._("Add to list"), false,
+        GT._T("Add to list"), false,
         ConfigurationValueShortcut.LIST_ADD);
     buttonAddPage.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionAddPage"));
     toolbarPage.add(buttonAddPage);
     buttonRemovePage = Utilities.createJButton(
         "gnome-list-remove.png", EnumImageSize.SMALL,
-        GT._("Remove from list"), false,
+        GT._T("Remove from list"), false,
         ConfigurationValueShortcut.LIST_REMOVE);
     buttonRemovePage.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionRemovePage"));
@@ -697,7 +701,7 @@ public class MainWindow
     // Search button
     buttonSearchTitles = Utilities.createJButton(
         "gnome-system-search.png", EnumImageSize.NORMAL,
-        GT._("Search in titles"), true, null);
+        GT._T("Search in titles"), true, null);
     buttonSearchTitles.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionSearchTitles"));
     panel.add(buttonSearchTitles, constraints);
@@ -706,7 +710,7 @@ public class MainWindow
     // Links button
     buttonInternalLinks = Utilities.createJButton(
         "wpc-internal-link.png", EnumImageSize.NORMAL,
-        GT._("Internal links"), true, null);
+        GT._T("Internal links"), true, null);
     buttonInternalLinks.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionInternalLinks"));
     panel.add(buttonInternalLinks, constraints);
@@ -715,7 +719,7 @@ public class MainWindow
     // Backlinks
     buttonBackLinks = Utilities.createJButton(
         "wpc-internal-link.png", EnumImageSize.NORMAL,
-        GT._("What links here"), true, null);
+        GT._T("What links here"), true, null);
     buttonBackLinks.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionBackLinks"));
     panel.add(buttonBackLinks, constraints);
@@ -724,7 +728,7 @@ public class MainWindow
     // Category members
     buttonCategoryMembers = Utilities.createJButton(
         "commons-nuvola-apps-kpager.png", EnumImageSize.NORMAL,
-        GT._("Category members"), true, null);
+        GT._T("Category members"), true, null);
     buttonCategoryMembers.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionCategoryMembers"));
     panel.add(buttonCategoryMembers, constraints);
@@ -733,7 +737,7 @@ public class MainWindow
     // Embedded in
     buttonEmbeddedIn = Utilities.createJButton(
         "commons-curly-brackets.png", EnumImageSize.NORMAL,
-        GT._("Embedded in"), true, null);
+        GT._T("Embedded in"), true, null);
     buttonEmbeddedIn.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionEmbeddedIn"));
     panel.add(buttonEmbeddedIn, constraints);
@@ -759,7 +763,7 @@ public class MainWindow
     // Load list from disk
     buttonLoadList = Utilities.createJButton(
         "gnome-drive-harddisk.png", EnumImageSize.NORMAL,
-        GT._("Load list from drive"), true, null);
+        GT._T("Load list from drive"), true, null);
     buttonLoadList.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionLoadList"));
     panel.add(buttonLoadList, constraints);
@@ -768,7 +772,7 @@ public class MainWindow
     // Contributions
     buttonContributions = Utilities.createJButton(
         "gnome-utilities-system-monitor.png", EnumImageSize.NORMAL,
-        GT._("Your contributions"), true, null);
+        GT._T("Your contributions"), true, null);
     buttonContributions.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionContributions"));
     panel.add(buttonContributions, constraints);
@@ -782,7 +786,7 @@ public class MainWindow
   private Component createProjectsComponents() {
     JPanel panel = new JPanel(new GridBagLayout());
     panel.setBorder(BorderFactory.createTitledBorder(
-        BorderFactory.createEtchedBorder(), GT._("Projects")));
+        BorderFactory.createEtchedBorder(), GT._T("Projects")));
 
     // Initialize constraints
     GridBagConstraints constraints = new GridBagConstraints();
@@ -800,7 +804,7 @@ public class MainWindow
     // All disambiguation pages button
     buttonAllDab = Utilities.createJButton(
         "commons-disambig-colour.png", EnumImageSize.NORMAL,
-        GT._("Preload disambiguations pages"), true, null);
+        GT._T("Preload disambiguations pages"), true, null);
     buttonAllDab.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionAllDab"));
     panel.add(buttonAllDab, constraints);
@@ -809,7 +813,7 @@ public class MainWindow
     // Current disambiguation list button
     buttonCurrentDabList = Utilities.createJButton(
         "commons-disambig-colour.png", EnumImageSize.NORMAL,
-        GT._("Current disambiguation list"), true,
+        GT._T("Current disambiguation list"), true,
         ConfigurationValueShortcut.CURRENT_DAB_LIST);
     buttonCurrentDabList.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionCurrentDabList"));
@@ -819,7 +823,7 @@ public class MainWindow
     // Pages with most disambiguation links button
     buttonMostDabLinks = Utilities.createJButton(
         "commons-disambig-colour.png", EnumImageSize.NORMAL,
-        GT._("With many disambiguation links"), true, null);
+        GT._T("With many disambiguation links"), true, null);
     buttonMostDabLinks.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionMostDabLinks"));
     panel.add(buttonMostDabLinks, constraints);
@@ -828,7 +832,7 @@ public class MainWindow
     // Check Wiki Project button
     buttonCheckWiki = Utilities.createJButton(
         "commons-nuvola-web-broom.png", EnumImageSize.NORMAL,
-        GT._("Project Check Wikipedia"), true, null);
+        GT._T("Project Check Wikipedia"), true, null);
     buttonCheckWiki.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionCheckWiki"));
     panel.add(buttonCheckWiki, constraints);
@@ -837,7 +841,7 @@ public class MainWindow
     // Help requested button
     buttonHelpRequested = Utilities.createJButton(
         "gnome-dialog-question.png", EnumImageSize.NORMAL,
-        GT._("Help requested on..."), true, null);
+        GT._T("Help requested on..."), true, null);
     buttonHelpRequested.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionHelpRequestedOn"));
     panel.add(buttonHelpRequested, constraints);
@@ -846,7 +850,7 @@ public class MainWindow
     // Abuse filters
     buttonAbuseFilters = Utilities.createJButton(
         null, EnumImageSize.NORMAL,
-        GT._("Abuse filters"), true, null);
+        GT._T("Abuse filters"), true, null);
     buttonAbuseFilters.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionAbuseFilters"));
     panel.add(buttonAbuseFilters, constraints);
@@ -855,7 +859,7 @@ public class MainWindow
     // Special lists
     buttonSpecialLists = Utilities.createJButton(
         "gnome-colors-applications-office.png", EnumImageSize.NORMAL,
-        GT._("Special lists"), true, null);
+        GT._T("Special lists"), true, null);
     buttonSpecialLists.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionSpecialLists"));
     panel.add(buttonSpecialLists, constraints);
@@ -864,7 +868,7 @@ public class MainWindow
     // Linter categories
     buttonLinterCategories = Utilities.createJButton(
         "Linter_logo_v2.png", EnumImageSize.NORMAL,
-        GT._("Linter categories"), true, null);
+        GT._T("Linter categories"), true, null);
     buttonLinterCategories.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionLinterCategories"));
     panel.add(buttonLinterCategories, constraints);
@@ -873,7 +877,7 @@ public class MainWindow
     // Generate lists
     buttonGenerateLists = Utilities.createJButton(
         "gnome-colors-applications-office.png", EnumImageSize.NORMAL,
-        GT._("Generate lists"), true, null);
+        GT._T("Generate lists"), true, null);
     buttonGenerateLists.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionGenerateLists"));
     panel.add(buttonGenerateLists, constraints);
@@ -882,7 +886,7 @@ public class MainWindow
     // Local watch list button
     buttonWatchlistLocal = Utilities.createJButton(
         "gnome-logviewer.png", EnumImageSize.NORMAL,
-        GT._("Local Watchlist"), true,
+        GT._T("Local Watchlist"), true,
         ConfigurationValueShortcut.WATCH_LIST);
     buttonWatchlistLocal.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionWatchlistLocal"));
@@ -892,7 +896,7 @@ public class MainWindow
     // Watch list button
     buttonWatchlist = Utilities.createJButton(
         "gnome-logviewer.png", EnumImageSize.NORMAL,
-        GT._("Watchlist"), true, null);
+        GT._T("Watchlist"), true, null);
     buttonWatchlist.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionWatchlist"));
     panel.add(buttonWatchlist, constraints);
@@ -901,7 +905,7 @@ public class MainWindow
     // Random pages button
     buttonRandomPages = Utilities.createJButton(
         "commons-nuvola-apps-atlantik.png", EnumImageSize.NORMAL,
-        GT._("Random pages"), true, null);
+        GT._T("Random pages"), true, null);
     buttonRandomPages.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionRandom"));
     panel.add(buttonRandomPages, constraints);
@@ -910,7 +914,7 @@ public class MainWindow
     // Bot tools button
     buttonBotTools = Utilities.createJButton(
         "commons-nuvola-apps-kcmsystem.png", EnumImageSize.NORMAL,
-        GT._("Bot tools"), true, null);
+        GT._T("Bot tools"), true, null);
     buttonBotTools.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionBotTools"));
     panel.add(buttonBotTools, constraints);
@@ -953,7 +957,7 @@ public class MainWindow
    * Action called when Demo button is pressed. 
    */
   public void actionDemo() {
-    int answer = displayYesNoWarning(GT._(
+    int answer = displayYesNoWarning(GT._T(
         "Demo mode is only available for testing WPCleaner.\n" +
         "You won't be able to modify pages on Wikipedia in Demo mode.\n" +
         "Do you want to continue ?"));
@@ -971,7 +975,7 @@ public class MainWindow
       Utilities.browseURL(url);
     } else {
       displayUrlMessage(
-          GT._("You can learn how to add other Wikipedia at the following URL:"),
+          GT._T("You can learn how to add other Wikipedia at the following URL:"),
           url);
     }
   }
@@ -985,7 +989,7 @@ public class MainWindow
       Utilities.browseURL(url);
     } else {
       displayUrlMessage(
-          GT._("You can learn how to add other languages at the following URL:"),
+          GT._T("You can learn how to add other languages at the following URL:"),
           url);
     }
   }
@@ -1000,7 +1004,7 @@ public class MainWindow
     // Check that correct values are entered in Wikipedia combo
     if ((comboWikipedia == null) || (comboWikipedia.getSelectedIndex() == -1)) {
       displayWarning(
-          GT._("You must select which Wikipedia you want to work on before login"),
+          GT._T("You must select which Wikipedia you want to work on before login"),
           comboWikipedia);
       return;
     }
@@ -1009,7 +1013,7 @@ public class MainWindow
     // Check that correct values are entered in Language combo
     if ((comboLanguage == null) || (comboLanguage.getSelectedIndex() == -1)) {
       displayWarning(
-          GT._("You must select a language before login"),
+          GT._T("You must select a language before login"),
           comboLanguage);
       return;
     }
@@ -1022,7 +1026,7 @@ public class MainWindow
           (comboUser.getSelectedItem() == null) ||
           ("".equals(comboUser.getSelectedItem().toString().trim()))) {
         displayWarning(
-            GT._("You must input your username before login"),
+            GT._T("You must input your username before login"),
             comboUser);
         return;
       }
@@ -1034,7 +1038,7 @@ public class MainWindow
           (textPassword.getPassword() == null) ||
           (textPassword.getPassword().length == 0)) {
           displayWarning(
-              GT._("You must input your password before login"),
+              GT._T("You must input your password before login"),
               textPassword);
           return;       
       }
@@ -1146,7 +1150,7 @@ public class MainWindow
       Utilities.browseURL(wikipedia, wikipedia.getConfigurationPage(), true);
     } else {
       displayUrlMessage(
-          GT._("You can learn how to configure {0} at the following URL:", Version.PROGRAM),
+          GT._T("You can learn how to configure {0} at the following URL:", Version.PROGRAM),
           URL_OTHER_WIKIPEDIA);
     }
   }
@@ -1195,12 +1199,12 @@ public class MainWindow
       List<String> pageChapters = chapters.get(page);
       if (pageChapters.size() > 1) {
         JMenu pageMenu = new JMenu(page);
-        JMenuItem item = new JMenuItem(GT._("Activate all"));
+        JMenuItem item = new JMenuItem(GT._T("Activate all"));
         item.setActionCommand(page);
         item.addActionListener(EventHandler.create(
             ActionListener.class, this, "actionCheckSpellingActivatePage", "actionCommand"));
         pageMenu.add(item);
-        item = new JMenuItem(GT._("Deactivate all"));
+        item = new JMenuItem(GT._T("Deactivate all"));
         item.setActionCommand(page);
         item.addActionListener(EventHandler.create(
             ActionListener.class, this, "actionCheckSpellingDeactivatePage", "actionCommand"));
@@ -1302,7 +1306,7 @@ public class MainWindow
       Utilities.browseURL(url);
     } else {
       displayUrlMessage(
-          GT._("You can read the help on {0} at the following URL:", Version.PROGRAM),
+          GT._T("You can read the help on {0} at the following URL:", Version.PROGRAM),
           url);
     }
   }
@@ -1316,7 +1320,7 @@ public class MainWindow
       Utilities.browseURL(url);
     } else {
       displayUrlMessage(
-          GT._("You can submit bug reports or feature requests at the following URL:"),
+          GT._T("You can submit bug reports or feature requests at the following URL:"),
           url);
     }
   }
@@ -1328,7 +1332,7 @@ public class MainWindow
     EnumWikipedia wikipedia = getWikipedia();
     if ((wikipedia != null) && (wikipedia.getContributions() != null)) {
       InformationWindow.createInformationWindow(
-          GT._("Your contributions"),
+          GT._T("Your contributions"),
           wikipedia.getContributions().getDescription(), true,
           wikipedia);
     }
@@ -1340,7 +1344,7 @@ public class MainWindow
   public void actionSavePassword() {
     if ((radSavePassword.isSelected())) {
       int answer = displayYesNoWarning(
-          GT._("The password will be saved on your disk, " +
+          GT._T("The password will be saved on your disk, " +
                "so anyone having access to your computer may be able to get it.\n" +
                "Are you sure that you want to save it ?"));
       if (answer != JOptionPane.YES_OPTION) {
@@ -1402,9 +1406,11 @@ public class MainWindow
 
   /**
    * Action called when Internal Links button is pressed.
+   * 
+   * @param mode Mode.
    */
   public void actionInternalLinks(String mode) {
-    String pageName = checkPagename(GT._(
+    String pageName = checkPagename(GT._T(
         "You must input a page name for retrieving the list of internal links"));
     if ((pageName == null) || (mode == null)) {
       return;
@@ -1419,14 +1425,14 @@ public class MainWindow
         getWikipedia(), this, DataManager.getPage(getWikipedia(), pageName, null, null, null),
         Collections.singletonList(pageName),
         PageListWorker.Mode.valueOf(mode), false,
-        GT._("Internal links in {0}", pageName)).start();
+        GT._T("Internal links in {0}", pageName)).start();
   }
 
   /**
    * Action called when Search Titles button is pressed.
    */
   public void actionSearchTitles() {
-    String pageName = checkPagename(GT._("You must input a page name"));
+    String pageName = checkPagename(GT._T("You must input a page name"));
     if (pageName == null) {
       return;
     }
@@ -1434,14 +1440,14 @@ public class MainWindow
         getWikipedia(), this, null,
         Collections.singletonList(pageName),
         PageListWorker.Mode.SEARCH_TITLES, false,
-        GT._("Search results for {0}", pageName)).start();
+        GT._T("Search results for {0}", pageName)).start();
   }
 
   /**
    * Action called when Back links button is pressed.
    */
   public void actionBackLinks() {
-    String pageName = checkPagename(GT._(
+    String pageName = checkPagename(GT._T(
         "You must input a page name for retrieving the list of backlinks"));
     if (pageName == null) {
       return;
@@ -1458,14 +1464,14 @@ public class MainWindow
         getWikipedia(), this, page,
         Collections.singletonList(pageName),
         PageListWorker.Mode.BACKLINKS, false,
-        GT._("Links to {0}", pageName)).start();
+        GT._T("Links to {0}", pageName)).start();
   }
 
   /**
    * Action called when Category Members button is pressed.
    */
   public void actionCategoryMembers() {
-    String pageName = checkPagename(GT._(
+    String pageName = checkPagename(GT._T(
         "You must input a page name for retrieving the list of category members"));
     if (pageName == null) {
       return;
@@ -1484,14 +1490,14 @@ public class MainWindow
         getWikipedia(), this, page,
         Collections.singletonList(title),
         PageListWorker.Mode.CATEGORY_MEMBERS, false,
-        GT._("Category members of {0}", title)).start();
+        GT._T("Category members of {0}", title)).start();
   }
 
   /**
    * Action called when Embedded In button is pressed.
    */
   public void actionEmbeddedIn() {
-    String pageName = checkPagename(GT._(
+    String pageName = checkPagename(GT._T(
         "You must input a page name for retrieving the list of page in which it is embedded"));
     if (pageName == null) {
       return;
@@ -1510,7 +1516,7 @@ public class MainWindow
         getWikipedia(), this, page,
         Collections.singletonList(title),
         PageListWorker.Mode.EMBEDDED_IN, false,
-        GT._("Template {0} embedded in", title)).start();
+        GT._T("Template {0} embedded in", title)).start();
   }
 
   /**
@@ -1534,7 +1540,7 @@ public class MainWindow
         wikipedia, this, null,
         currentDabList,
         PageListWorker.Mode.INTERNAL_LINKS_MAIN, false,
-        GT._("Current disambiguation list")).start();
+        GT._T("Current disambiguation list")).start();
   }
 
   /**
@@ -1559,7 +1565,7 @@ public class MainWindow
         mostDabLinks,
         PageListWorker.Mode.CATEGORY_MEMBERS_ARTICLES,
         false,
-        GT._("Pages with many disambiguation links")).start();
+        GT._T("Pages with many disambiguation links")).start();
   }
 
   /**
@@ -1587,7 +1593,7 @@ public class MainWindow
     new PageListWorker(
         wikipedia, this, null,
         pageNames, PageListWorker.Mode.EMBEDDED_IN, false,
-        GT._("Help requested on...")).start();
+        GT._T("Help requested on...")).start();
   }
 
   /**
@@ -1600,7 +1606,7 @@ public class MainWindow
       if ((abuseFilters != null) && (abuseFilters.size() > 0)) {
         Object filter = Utilities.askForValue(
             getParentComponent(),
-            GT._("What abuse filter are you interested in?"),
+            GT._T("What abuse filter are you interested in?"),
             abuseFilters.toArray(), abuseFilters.get(0));
         if ((filter != null) && (filter instanceof AbuseFilter)) {
           AbuseFilter abuseFilter = (AbuseFilter) filter;
@@ -1616,7 +1622,7 @@ public class MainWindow
             new PageListWorker(
                 getWikipedia(), this, null,
                 pageNames, PageListWorker.Mode.DIRECT, false,
-                GT._("Hits for filter {0}", filter.toString())).start();
+                GT._T("Hits for filter {0}", filter.toString())).start();
           }
         }
       }
@@ -1689,10 +1695,10 @@ public class MainWindow
         previousLevel = level;
       }
       JMenu subMenu = new JMenu(category.getCategoryName(config));
-      JMenu subMenu2 = new JMenu(GT._("Without templates"));
+      JMenu subMenu2 = new JMenu(GT._T("Without templates"));
       fillLinterCategoryMenu(subMenu2, category, false);
       subMenu.add(subMenu2);
-      subMenu2 = new JMenu(GT._("With templates"));
+      subMenu2 = new JMenu(GT._T("With templates"));
       fillLinterCategoryMenu(subMenu2, category, true);
       subMenu.add(subMenu2);
       menu.add(subMenu);
@@ -1710,7 +1716,7 @@ public class MainWindow
    */
   private void fillLinterCategoryMenu(
       JMenu menu, LinterCategory category, boolean withTemplates) {
-    JMenuItem item = new JMenuItem(GT._("All namespaces"));
+    JMenuItem item = new JMenuItem(GT._T("All namespaces"));
     item.setActionCommand(
         category.getCategory() + "//" +
         Boolean.toString(withTemplates));
@@ -1726,7 +1732,7 @@ public class MainWindow
           title = namespace.getCanonicalTitle();
         }
         if ((title == null) || title.isEmpty()) {
-          title = GT._("Main");
+          title = GT._T("Main");
         }
         item = new JMenuItem(title);
         item.setActionCommand(
@@ -1782,7 +1788,7 @@ public class MainWindow
     new PageListWorker(
         wikipedia, this, null,
         null, PageListWorker.Mode.ALL_DAB_PAGES, false,
-        GT._("All disambiguations pages")).start();
+        GT._T("All disambiguations pages")).start();
   }
 
   /**
@@ -1924,7 +1930,7 @@ public class MainWindow
     new PageListWorker(
         wikipedia, this, null,
         pageNames, PageListWorker.Mode.DIRECT, true,
-        GT._("Local Watchlist")).start();
+        GT._T("Local Watchlist")).start();
   }
 
   /**
@@ -1938,7 +1944,7 @@ public class MainWindow
     new PageListWorker(
         wikipedia, this, null,
         null, PageListWorker.Mode.WATCH_LIST, true,
-        GT._("Watch list")).start();
+        GT._T("Watch list")).start();
   }
 
   /**
@@ -1968,12 +1974,12 @@ public class MainWindow
 
     // Ask in which format the file is
     String[] values = {
-        GT._("Unformatted list of page names"),
-        GT._("Internal links in a formatted list")
+        GT._T("Unformatted list of page names"),
+        GT._T("Internal links in a formatted list")
     };
     String message =
-        GT._("The file must be encoded in UTF-8 to be read correctly.") + "\n" +
-        GT._("In which format is the file?");
+        GT._T("The file must be encoded in UTF-8 to be read correctly.") + "\n" +
+        GT._T("In which format is the file?");
     String value = Utilities.askForValue(
         getParentComponent(), message, values, true, values[0], (StringChecker) null);
     if (value == null) {
@@ -2028,7 +2034,7 @@ public class MainWindow
       new PageListWorker(
           wikipedia, this, null,
           pages, PageListWorker.Mode.DIRECT, true,
-          GT._("List")).start();
+          GT._T("List")).start();
     } catch (IOException e) {
       //
     } finally {
@@ -2047,11 +2053,11 @@ public class MainWindow
    */
   public void actionRandom() {
     JPopupMenu menu = new JPopupMenu();
-    JMenuItem item = new JMenuItem(GT._("Random pages"));
+    JMenuItem item = new JMenuItem(GT._T("Random pages"));
     item.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionRandomPages"));
     menu.add(item);
-    item = new JMenuItem(GT._("Random redirect pages"));
+    item = new JMenuItem(GT._T("Random redirect pages"));
     item.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionRandomRedirects"));
     menu.add(item);
@@ -2083,7 +2089,7 @@ public class MainWindow
     int count = 0;
     while ((count < 1) || (count > maxPages)) {
       String answer = askForValue(
-          GT._("How many pages do you want?"),
+          GT._T("How many pages do you want?"),
           "20", null);
       if (answer == null) {
         return;
@@ -2094,7 +2100,7 @@ public class MainWindow
         return;
       }
       if ((count < 1) || (count > maxPages)) {
-        displayWarning(GT._(
+        displayWarning(GT._T(
             "The number of pages must be between {0} and {1}",
             new Object[] { Integer.valueOf(0), Integer.valueOf(maxPages) } ));
       }
@@ -2112,7 +2118,7 @@ public class MainWindow
       new PageListWorker(
           getWikipedia(), this, null, pageNames,
           PageListWorker.Mode.DIRECT, false,
-          GT._("Random pages")).start();
+          GT._T("Random pages")).start();
     } catch (APIException e) {
       displayError(e);
       return;

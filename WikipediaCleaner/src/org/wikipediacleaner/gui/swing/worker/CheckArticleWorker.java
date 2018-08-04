@@ -49,7 +49,7 @@ public class CheckArticleWorker extends BasicWorker {
           tools.checkArticle(page);
         }
         String report = tools.getReport();
-        InformationWindow.createInformationWindow(GT._("Analysis"), report, false, getWikipedia());
+        InformationWindow.createInformationWindow(GT._T("Analysis"), report, false, getWikipedia());
       }
     } catch (APIException e) {
       return e;

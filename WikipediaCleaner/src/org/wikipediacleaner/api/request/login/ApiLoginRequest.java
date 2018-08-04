@@ -71,6 +71,7 @@ public class ApiLoginRequest extends ApiRequest {
    * @param username User name.
    * @param password Password.
    * @return Login result.
+   * @throws APIException Exception thrown by the API.
    */
   public LoginResult login(String username, String password) throws APIException {
     Map<String, String> properties = getProperties(ACTION_LOGIN, result.getFormat());

@@ -70,7 +70,7 @@ public class ShortcutOptionsPanel extends OptionsPanel {
    */
   private void initialize() {
     setBorder(BorderFactory.createTitledBorder(
-        BorderFactory.createEtchedBorder(), GT._("Shortcut options (restart needed)")));
+        BorderFactory.createEtchedBorder(), GT._T("Shortcut options (restart needed)")));
 
     shortcuts = new Vector<ConfigurationValueShortcut>();
 
@@ -102,131 +102,131 @@ public class ShortcutOptionsPanel extends OptionsPanel {
 
     // Add line for add to watch list
     addLine(
-        panel, constraints, GT._("Add to local watchlist"),
+        panel, constraints, GT._T("Add to local watchlist"),
         ConfigurationValueShortcut.ADD_TO_WATCH_LIST);
 
     // Add line for apply
     addLine(
-        panel, constraints, GT._("Apply"),
+        panel, constraints, GT._T("Apply"),
         ConfigurationValueShortcut.APPLY);
 
     // Add line for bug report
     addLine(
-        panel, constraints, GT._("Idea? Bug?"),
+        panel, constraints, GT._T("Idea? Bug?"),
         ConfigurationValueShortcut.BUG_REPORT);
 
     // Add line for close
     addLine(
-        panel, constraints, GT._("Close"),
+        panel, constraints, GT._T("Close"),
         ConfigurationValueShortcut.CLOSE);
 
     // Add line for current disambiguation list
     addLine(
-        panel, constraints, GT._("Current disambiguation list"),
+        panel, constraints, GT._T("Current disambiguation list"),
         ConfigurationValueShortcut.CURRENT_DAB_LIST);
 
     // Add line for disambiguation analysis
     addLine(
-        panel, constraints, GT._("Disambiguation"),
+        panel, constraints, GT._T("Disambiguation"),
         ConfigurationValueShortcut.DAB_ANALYSIS);
 
     // Add line for external viewer
     addLine(
-        panel, constraints, GT._("External Viewer"),
+        panel, constraints, GT._T("External Viewer"),
         ConfigurationValueShortcut.EXTERNAL_VIEWER);
 
     // Add line for full analysis
     addLine(
-        panel, constraints, GT._("Full analysis"),
+        panel, constraints, GT._T("Full analysis"),
         ConfigurationValueShortcut.FULL_ANALYSIS);
 
     // Add line for help
     addLine(
-        panel, constraints, GT._("Help"),
+        panel, constraints, GT._T("Help"),
         ConfigurationValueShortcut.HELP);
 
     // Add line for history
     addLine(
-        panel, constraints, GT._("History"),
+        panel, constraints, GT._T("History"),
         ConfigurationValueShortcut.HISTORY);
 
     // Add line for login
     addLine(
-        panel, constraints, GT._("Login"),
+        panel, constraints, GT._T("Login"),
         ConfigurationValueShortcut.LOGIN);
 
     // Add line for logout
     addLine(
-        panel, constraints, GT._("Logout"),
+        panel, constraints, GT._T("Logout"),
         ConfigurationValueShortcut.LOGOUT);
 
     // Add line for options
     addLine(
-        panel, constraints, GT._("Options"),
+        panel, constraints, GT._T("Options"),
         ConfigurationValueShortcut.OPTIONS);
 
     // Add line for random page
     addLine(
-        panel, constraints, GT._("Random page"),
+        panel, constraints, GT._T("Random page"),
         ConfigurationValueShortcut.RANDOM_PAGE);
 
     // Add line for restore defaults
     addLine(
-        panel, constraints, GT._("Restore defaults"),
+        panel, constraints, GT._T("Restore defaults"),
         ConfigurationValueShortcut.RESTORE_DEFAULTS);
 
     // Add line for send
     addLine(
-        panel, constraints, GT._("Send"),
+        panel, constraints, GT._T("Send"),
         ConfigurationValueShortcut.SEND);
 
     // Add line for system options
     addLine(
-        panel, constraints, GT._("System options"),
+        panel, constraints, GT._T("System options"),
         ConfigurationValueShortcut.SYSTEM_OPTIONS);
 
     // Add line for validate
     addLine(
-        panel, constraints, GT._("Validate"),
+        panel, constraints, GT._T("Validate"),
         ConfigurationValueShortcut.VALIDATE);
 
     // Add line for watch list
     addLine(
-        panel, constraints, GT._("Local Watchlist"),
+        panel, constraints, GT._T("Local Watchlist"),
         ConfigurationValueShortcut.WATCH_LIST);
 
     // Add line for adding to list
     addLine(
-        panel, constraints, GT._("Add to list"),
+        panel, constraints, GT._T("Add to list"),
         ConfigurationValueShortcut.LIST_ADD);
 
     // Add line for removing from list
     addLine(
-        panel, constraints, GT._("Remove from list"),
+        panel, constraints, GT._T("Remove from list"),
         ConfigurationValueShortcut.LIST_REMOVE);
 
     // Add line for first occurrence
     addLine(
-        panel, constraints, GT._("First occurrence"),
+        panel, constraints, GT._T("First occurrence"),
         ConfigurationValueShortcut.OCCURRENCE_FIRST);
 
     // Add line for previous occurrence
     addLine(
-        panel, constraints, GT._("Previous occurrence"),
+        panel, constraints, GT._T("Previous occurrence"),
         ConfigurationValueShortcut.OCCURRENCE_PREVIOUS);
 
     // Add line for next occurrence
     addLine(
-        panel, constraints, GT._("Next occurrence"),
+        panel, constraints, GT._T("Next occurrence"),
         ConfigurationValueShortcut.OCCURRENCE_NEXT);
 
     // Add line for last occurrence
     addLine(
-        panel, constraints, GT._("Last occurrence"),
+        panel, constraints, GT._T("Last occurrence"),
         ConfigurationValueShortcut.OCCURRENCE_LAST);
 
     // Add a notice
-    notice = new JLabel(GT._("Press key for shortcut or ESC to cancel"));
+    notice = new JLabel(GT._T("Press key for shortcut or ESC to cancel"));
     notice.setForeground(Color.RED);
     notice.setVisible(false);
     notice.setHorizontalAlignment(SwingConstants.CENTER);

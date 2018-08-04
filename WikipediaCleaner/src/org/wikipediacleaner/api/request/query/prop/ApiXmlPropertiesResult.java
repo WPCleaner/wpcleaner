@@ -48,7 +48,7 @@ public class ApiXmlPropertiesResult extends ApiXmlResult implements ApiPropertie
    * 
    * @param node Element for the page.
    * @param page Page.
-   * @throws JDOMException
+   * @throws JDOMException Exception from due to the DOM.
    */
   public void updatePageInformation(Element node, Page page) throws JDOMException {
 
@@ -87,7 +87,7 @@ public class ApiXmlPropertiesResult extends ApiXmlResult implements ApiPropertie
    * 
    * @param properties Properties defining request.
    * @param pages Pages to be filled with redirect information.
-   * @throws APIException
+   * @throws APIException Exception thrown by the API.
    */
   @Override
   public void executeRedirect(
@@ -108,8 +108,8 @@ public class ApiXmlPropertiesResult extends ApiXmlResult implements ApiPropertie
    * Retrieve information about page title normalization.
    * 
    * @param root Root element.
-   * @param normalization Map containing information about title normalization (From => To).
-   * @throws JDOMException
+   * @param normalization Map containing information about title normalization (key=From, value=To).
+   * @throws JDOMException Exception thrown due to the DOM.
    */
   public void retrieveNormalization(
       Element root,
@@ -157,7 +157,7 @@ public class ApiXmlPropertiesResult extends ApiXmlResult implements ApiPropertie
    * 
    * @param root Root element.
    * @param pages List of pages.
-   * @throws JDOMException
+   * @throws JDOMException Exception thrown due to the DOM.
    */
   public void updateRedirect(Element root, Collection<Page> pages) throws JDOMException {
 

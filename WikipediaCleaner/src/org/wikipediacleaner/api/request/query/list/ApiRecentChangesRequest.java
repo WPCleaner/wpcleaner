@@ -230,6 +230,7 @@ public class ApiRecentChangesRequest extends ApiListRequest {
    * @param start The timestamp to start listing from.
    * @param recentChanges The list of recent changes to be filled.
    * @return The timestamp to use as a starting point for the next call.
+   * @throws APIException Exception thrown by the API.
    */
   public String loadRecentChanges(String start, List<RecentChange> recentChanges) throws APIException {
     Map<String, String> properties = getProperties(ACTION_QUERY, result.getFormat());

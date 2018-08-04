@@ -28,8 +28,8 @@ import javax.swing.SwingUtilities;
 /**
  * <p>This class is used to detect Event Dispatch Thread rule violations<br>
  * See <a href="http://java.sun.com/docs/books/tutorial/uiswing/misc/threads.html">How to Use Threads</a>
- * for more info</p>
- * <p/>
+ * for more info
+ * </p>
  * <p>This is a modification of original idea of Scott Delap<br>
  * Initial version of ThreadCheckingRepaintManager can be found here<br>
  * <a href="http://www.clientjava.com/blog/2004/08/20/1093059428000.html">Easily Find Swing Threading Mistakes</a>

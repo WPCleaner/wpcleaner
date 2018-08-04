@@ -230,7 +230,7 @@ public class ReplaceLinkAction extends TextAction {
     if ((offsetBefore != 0) || (offsetAfter != 0)) {
       int answer = Utilities.displayYesNoWarning(
           textPane.getRootPane(),
-          GT._("The link can be extended to include text before or after the current link.\n" +
+          GT._T("The link can be extended to include text before or after the current link.\n" +
                "Would you like to extend the link to \"{0}\"?", newText));
       if (answer != JOptionPane.YES_OPTION) {
         offsetBefore = 0;

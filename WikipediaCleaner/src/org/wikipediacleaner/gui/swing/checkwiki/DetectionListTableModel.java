@@ -152,15 +152,15 @@ public class DetectionListTableModel extends AbstractTableModel {
   public String getColumnName(int column) {
     switch (column) {
     case COLUMN_ERROR_NUMBER:
-      return GT._("Error");
+      return GT._T("Error");
     case COLUMN_GOTO:
       return "";
     case COLUMN_LOCATION:
-      return GT._("Location");
+      return GT._T("Location");
     case COLUMN_LOCATION_METHOD:
       return "";
     case COLUMN_NOTICE:
-      return GT._("Notice");
+      return GT._T("Notice");
     }
     return super.getColumnName(column);
   }

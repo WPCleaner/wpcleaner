@@ -19,7 +19,7 @@ import org.wikipediacleaner.api.data.PageAnalysis;
 public abstract class CheckErrorAlgorithmUnavailable extends CheckErrorAlgorithmBase {
 
   /**
-   * @param shortDescription
+   * @param shortDescription Short description of the algorithm.
    */
   public CheckErrorAlgorithmUnavailable(String shortDescription) {
     super(shortDescription);

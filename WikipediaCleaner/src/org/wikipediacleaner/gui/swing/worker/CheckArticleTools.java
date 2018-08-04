@@ -53,7 +53,7 @@ public class CheckArticleTools {
 
   /**
    * @param page Page to be checked.
-   * @throws APIException
+   * @throws APIException Exception thrown by the API.
    */
   public void checkArticle(Page page)
       throws APIException {
@@ -65,7 +65,7 @@ public class CheckArticleTools {
   /**
    * @param page Page to be checked.
    * @param contents Current contents.
-   * @throws APIException
+   * @throws APIException Exception thrown by the API.
    */
   public void checkArticle(Page page, String contents)
       throws APIException {
@@ -75,7 +75,7 @@ public class CheckArticleTools {
 
   /**
    * @param template Template.
-   * @throws APIException
+   * @throws APIException Exception thrown by the API.
    */
   public void checkTemplate(PageElementTemplate template)
       throws APIException {
@@ -92,7 +92,7 @@ public class CheckArticleTools {
   /**
    * Check templates in the current page.
    * 
-   * @throws APIException
+   * @throws APIException Exception thrown by the API.
    */
   private void checkTemplates() throws APIException {
 
@@ -101,10 +101,10 @@ public class CheckArticleTools {
     if (templates == null) {
       return;
     }
-    CheckArticleStep step = currentReport.setCurrentStep(GT._("Templates"));
+    CheckArticleStep step = currentReport.setCurrentStep(GT._T("Templates"));
 
     // Check the existence of TemplateData blocks for every template
-    CheckArticleElement element = step.setCurrentElement(GT._("Existence of {0} blocks", "TemplateData"));
+    CheckArticleElement element = step.setCurrentElement(GT._T("Existence of {0} blocks", "TemplateData"));
     Map<String, TemplateData> templateDataMap = new HashMap<String, TemplateData>();
     Map<String, TemplateData> backupTemplateDataMap = new HashMap<String, TemplateData>();
     for (PageElementTemplate template : templates) {
@@ -113,7 +113,7 @@ public class CheckArticleTools {
         TemplateData templateData = retrieveTemplateData(template);
         templateDataMap.put(templateName, templateData);
         if (templateData == null) {
-          String message = GT._(
+          String message = GT._T(
               "Template \"{0}\" has no {1} block defined.",
               new Object[] { template.getTemplateName(), "TemplateData" });
           element.addWarning(message);
@@ -146,7 +146,7 @@ public class CheckArticleTools {
    * 
    * @param template Template.
    * @return TemplateData.
-   * @throws APIException
+   * @throws APIException Exception thrown by the API.
    */
   private TemplateData retrieveTemplateData(
       PageElementTemplate template) throws APIException {
@@ -164,7 +164,7 @@ public class CheckArticleTools {
    * 
    * @param template Template.
    * @return TemplateData.
-   * @throws APIException
+   * @throws APIException Exception thrown by the API.
    */
   private TemplateData computeTemplateData(
       PageElementTemplate template) throws APIException {
@@ -191,14 +191,14 @@ public class CheckArticleTools {
       TemplateData templateData, boolean generated) {
 
     String templateName = template.getTemplateName();
-    String message = GT._(
+    String message = GT._T(
         "Template \"{0}\" ({1}-{2})",
         new Object[] { templateName, template.getBeginIndex(), template.getEndIndex() });
     CheckArticleElement element = step.setCurrentElement(message);
 
     // Check TemplateData
     if (templateData == null) {
-      String warning = GT._(
+      String warning = GT._T(
           "Template \"{0}\" has no {1} block defined.",
           new Object[] { template.getTemplateName(), "TemplateData" });
       element.addWarning(warning);
@@ -222,11 +222,11 @@ public class CheckArticleTools {
             if (!enumType.isCompatible(parameter.getStrippedValue())) {
               String value = parameter.getValue();
               if (aliases != null) {
-                element.addWarning(GT._(
+                element.addWarning(GT._T(
                     "Parameter defined as \"{0}\" (aliases {1}) in {2} should be of type \"{3}\", but actual value is \"{4}\".",
                     new Object[] { param.getName(), aliases, "TemplateData", enumType.toString(), value }));
               } else {
-                element.addWarning(GT._(
+                element.addWarning(GT._T(
                     "Parameter defined as \"{0}\" in {1} should be of type \"{2}\", but actual value is \"{3}\".",
                     new Object[] { param.getName(), "TemplateData", enumType.toString(), value }));
               }
@@ -237,11 +237,11 @@ public class CheckArticleTools {
           if (param.isDeprecated()) {
             String value = parameter.getValue();
             if (aliases != null) {
-              message = GT._(
+              message = GT._T(
                   "Parameter defined as \"{0}\" (aliases {1}) in {2} is deprecated, but still present with value \"{3}\".",
                   new Object[] { param.getName(), aliases, "TemplateData", value });
             } else {
-              message = GT._(
+              message = GT._T(
                   "Parameter defined as \"{0}\" in {1} is deprecated, but still present with value \"{2}\".",
                   new Object[] { param.getName(), "TemplateData", value });
             }
@@ -256,11 +256,11 @@ public class CheckArticleTools {
       // Check mandatory parameters
       if (param.isRequired() && parameters.isEmpty()) {
         if (aliases != null) {
-          element.addWarning(GT._(
+          element.addWarning(GT._T(
               "Parameter defined as \"{0}\" (aliases {1}) in {2} is required, but is missing.",
               new Object[] { param.getName(), aliases, "TemplateData" }));
         } else {
-          element.addWarning(GT._(
+          element.addWarning(GT._T(
               "Parameter defined as \"{0}\" in {1} is required, but is missing.",
               new Object[] { param.getName(), "TemplateData" }));
         }
@@ -276,11 +276,11 @@ public class CheckArticleTools {
           buffer.append(parameter.getComputedName());
         }
         if (aliases != null) {
-          element.addWarning(GT._(
+          element.addWarning(GT._T(
               "Parameter defined as \"{0}\" (aliases {1}) in {2} is present several times: {3}.",
               new Object[] { param.getName(), aliases, "TemplateData", buffer.toString() }));
         } else {
-          element.addWarning(GT._(
+          element.addWarning(GT._T(
               "Parameter defined as \"{0}\" in {1} is present several times: {2}.",
               new Object[] { param.getName(), "TemplateData", buffer.toString() }));
         }
@@ -293,7 +293,7 @@ public class CheckArticleTools {
         PageElementTemplate.Parameter parameter = template.getParameter(i);
         TemplateData.Parameter param = templateData.getParameter(parameter.getComputedName());
         if (param == null) {
-          element.addWarning(GT._(
+          element.addWarning(GT._T(
               "Parameter \"{0}\" is not defined in {1}.",
               new Object[] { parameter.getComputedName(), "TemplateData" }));
         }
@@ -365,7 +365,7 @@ public class CheckArticleTools {
       }
 
       if (!report.hasWarnings()) {
-        result.append(GT._("No problem has been detected."));
+        result.append(GT._T("No problem has been detected."));
         result.append("\n\n");
       } else {
         // Detail each step
@@ -383,7 +383,7 @@ public class CheckArticleTools {
           }
 
           if (!step.hasWarnings()) {
-            result.append(GT._("No problem has been detected."));
+            result.append(GT._T("No problem has been detected."));
             result.append("\n\n");
           } else {
             // Detail each element
@@ -401,7 +401,7 @@ public class CheckArticleTools {
               }
 
               if (!element.hasWarnings()) {
-                result.append(GT._("No problem has been detected."));
+                result.append(GT._T("No problem has been detected."));
                 result.append("\n\n");
               } else {
                 List<String> warnings = element.getWarnings();

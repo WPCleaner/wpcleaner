@@ -51,7 +51,7 @@ public class ReplaceAllLinksAction implements ActionListener {
   @Override
   public void actionPerformed(@SuppressWarnings("unused") ActionEvent e) {
     if ((warning != null) && (warning.trim().length() > 0)) {
-      String message = warning + "\n" + GT._("Do you want to proceed with the replacement ?");
+      String message = warning + "\n" + GT._T("Do you want to proceed with the replacement ?");
       int answer = Utilities.displayYesNoWarning(textPane.getParent(), message);
       if (answer != JOptionPane.YES_OPTION) {
         return;

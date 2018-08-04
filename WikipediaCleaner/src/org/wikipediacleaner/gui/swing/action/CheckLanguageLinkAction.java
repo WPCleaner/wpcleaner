@@ -46,8 +46,8 @@ public class CheckLanguageLinkAction extends TextAction {
    * @param toWiki Wiki to which the check has to be made.
    * @param title Title of the article.
    * @param text Text of the link.
-   * @param element
-   * @param textPane
+   * @param element Swing element.
+   * @param textPane Text pane.
    */
   public CheckLanguageLinkAction(
       EnumWikipedia fromWiki,
@@ -81,7 +81,7 @@ public class CheckLanguageLinkAction extends TextAction {
           message.append("\n");
         }
         if (languageLink != null) {
-          message.append(GT._(
+          message.append(GT._T(
               "The page {0} in \"{1}\" has a language link to \"{2}\": {3}.",
               new Object[] { title, fromWiki.toString(), toWiki.toString(), languageLink } ));
           String value = PageElementInternalLink.createInternalLink(languageLink, text);
@@ -97,7 +97,7 @@ public class CheckLanguageLinkAction extends TextAction {
             values.add(value);
           }
         } else {
-          message.append(GT._(
+          message.append(GT._T(
               "The page {0} in \"{1}\" doesn''t have a language link to \"{2}\".",
               new Object[] { title, fromWiki.toString(), toWiki.toString() } ));
         }
@@ -111,11 +111,11 @@ public class CheckLanguageLinkAction extends TextAction {
           message.append("\n");
         }
         if (Boolean.FALSE.equals(page.isExisting())) {
-          message.append(GT._(
+          message.append(GT._T(
               "The page {0} doesn''t exist in \"{1}\".",
               new Object[] { title, toWiki.toString() } ));
         } else {
-          message.append(GT._(
+          message.append(GT._T(
               "The page {0} exists in \"{1}\".",
               new Object[] { title, toWiki.toString() } ));
           String value = PageElementInternalLink.createInternalLink(title, text);
@@ -135,7 +135,7 @@ public class CheckLanguageLinkAction extends TextAction {
             textPane.getParent(), message.toString());
       } else {
         message.append("\n");
-        message.append(GT._("What replacement do you want to use?"));
+        message.append(GT._T("What replacement do you want to use?"));
         Object result = Utilities.askForValue(
             textPane.getParent(), message.toString(),
             values.toArray(), values.get(0));

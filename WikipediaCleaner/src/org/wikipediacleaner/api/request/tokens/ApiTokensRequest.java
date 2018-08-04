@@ -101,6 +101,8 @@ public class ApiTokensRequest extends ApiRequest {
 
   /**
    * Retrieve tokens.
+   * 
+   * @throws APIException Exception thrown by the API.
    */
   public void retrieveTokens() throws APIException {
     Map<String, String> properties = getProperties(ACTION_TOKENS, result.getFormat());

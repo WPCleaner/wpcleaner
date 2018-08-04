@@ -27,7 +27,7 @@ public class CheckErrorAlgorithm076 extends CheckErrorAlgorithmBase {
    * Possible global fixes.
    */
   private final static String[] globalFixes = new String[] {
-    GT._("Replace all %20 by space character"),
+    GT._T("Replace all %20 by space character"),
   };
 
   public CheckErrorAlgorithm076() {
@@ -65,7 +65,7 @@ public class CheckErrorAlgorithm076 extends CheckErrorAlgorithmBase {
             PageElementInternalLink.createInternalLink(
                 link.getFullLink().replaceAll("\\%20", " "),
                 link.getText()),
-            GT._("Replace %20 by space character"));
+            GT._T("Replace %20 by space character"));
         errors.add(errorResult);
       }
     }

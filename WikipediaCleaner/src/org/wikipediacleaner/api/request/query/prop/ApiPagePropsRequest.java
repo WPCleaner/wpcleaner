@@ -56,6 +56,7 @@ public class ApiPagePropsRequest extends ApiPropertiesRequest {
    * Set disambiguation status of a list of pages.
    * 
    * @param pages List of pages.
+   * @throws APIException Exception thrown by the API.
    */
   public void setDisambiguationStatus(Collection<Page> pages) throws APIException {
 

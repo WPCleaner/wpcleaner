@@ -75,7 +75,7 @@ public class CheckErrorAlgorithm005 extends CheckErrorAlgorithmBase {
                 analysis, currentIndex, possibleEndIndex + 2);
             errorResult.addReplacement(
                 contents.substring(currentIndex, possibleEndIndex) + "-->",
-                GT._("Properly end the comment"));
+                GT._T("Properly end the comment"));
           } else if (previousStartIndex > 0) {
             int tmpIndex = previousStartIndex;
             while ((tmpIndex > 0) &&
@@ -91,17 +91,17 @@ public class CheckErrorAlgorithm005 extends CheckErrorAlgorithmBase {
                 analysis, currentIndex, endIndex);
             errorResult.addReplacement(
                 contents.substring(currentIndex, tmpIndex) + "-->" + contents.substring(tmpIndex, endIndex),
-                GT._("Properly end the comment"));
+                GT._T("Properly end the comment"));
             errorResult.addReplacement(
                 contents.substring(currentIndex, previousStartIndex),
-                GT._("Merge comments"));
+                GT._T("Merge comments"));
             errorResult.addReplacement(
                 contents.substring(nextIndex, endIndex),
-                GT._("Uncomment"));
+                GT._T("Uncomment"));
           } else {
             errorResult = createCheckErrorResult(
                 analysis, currentIndex, nextIndex);
-            errorResult.addReplacement("", GT._("Uncomment"));
+            errorResult.addReplacement("", GT._T("Uncomment"));
           }
           errors.add(errorResult);
         }

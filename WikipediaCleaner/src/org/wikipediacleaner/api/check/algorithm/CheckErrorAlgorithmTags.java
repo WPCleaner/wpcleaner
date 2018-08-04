@@ -21,7 +21,7 @@ import org.wikipediacleaner.api.data.PageElementTag;
 public abstract class CheckErrorAlgorithmTags extends CheckErrorAlgorithmBase {
 
   /**
-   * @param name
+   * @param name Name of error.
    */
   public CheckErrorAlgorithmTags(String name) {
     super(name);

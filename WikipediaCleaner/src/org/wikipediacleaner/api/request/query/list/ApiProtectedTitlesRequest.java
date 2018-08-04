@@ -118,6 +118,7 @@ public class ApiProtectedTitlesRequest extends ApiListRequest {
    * @param namespaces List of name spaces to restrict result.
    * @param limit Flag indicating if the number of results should be limited.
    * @return List of protected titles.
+   * @throws APIException Exception thrown by the API.
    */
   public List<Page> loadProtectedTitles(
       List<Integer> namespaces,

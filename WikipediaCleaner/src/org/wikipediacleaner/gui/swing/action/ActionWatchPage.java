@@ -42,7 +42,7 @@ public class ActionWatchPage implements ActionListener {
     return Utilities.createJButton(
         showIcon ? "gnome-logviewer-add.png" : null,
         EnumImageSize.NORMAL,
-        GT._("Add to local watchlist"), !showIcon,
+        GT._T("Add to local watchlist"), !showIcon,
         useShortcut ? ConfigurationValueShortcut.ADD_TO_WATCH_LIST : null);
   }
 

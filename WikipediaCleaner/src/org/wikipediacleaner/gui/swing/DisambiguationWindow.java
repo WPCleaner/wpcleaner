@@ -134,7 +134,7 @@ public class DisambiguationWindow extends OnePageWindow {
    */
   @Override
   public String getTitle() {
-    return GT._("Disambiguation - {0}", getPageName());
+    return GT._T("Disambiguation - {0}", getPageName());
   }
 
   /**
@@ -288,7 +288,7 @@ public class DisambiguationWindow extends OnePageWindow {
     constraints.weighty = 0;
 
     // Select next links button
-    buttonSelectNextLinks = Utilities.createJButton(GT._("Select &next links"), null);
+    buttonSelectNextLinks = Utilities.createJButton(GT._T("Select &next links"), null);
     buttonSelectNextLinks.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionSelectNextLinks"));
     constraints.fill = GridBagConstraints.HORIZONTAL;
@@ -297,7 +297,7 @@ public class DisambiguationWindow extends OnePageWindow {
     constraints.gridy++;
 
     // Automatic fixing
-    buttonAutomaticFixing = Utilities.createJButton(GT._("Automatic fixing"), null);
+    buttonAutomaticFixing = Utilities.createJButton(GT._T("Automatic fixing"), null);
     buttonAutomaticFixing.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionRunAutomaticFixing"));
     panel.add(buttonAutomaticFixing, constraints);
@@ -313,20 +313,20 @@ public class DisambiguationWindow extends OnePageWindow {
         getParentComponent(), toolbar, getWikipedia(), listLinks, true, true);
     buttonMarkNormal = Utilities.createJButton(
         "wpc-mark-normal.png", EnumImageSize.NORMAL,
-        GT._("Mark backlink as normal"), false, null);
+        GT._T("Mark backlink as normal"), false, null);
     buttonMarkNormal.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionMarkBacklinkNormal"));
     toolbar.add(buttonMarkNormal);
     buttonMarkNeedHelp = Utilities.createJButton(
         "wpc-mark-need-help.png", EnumImageSize.NORMAL,
-        GT._("Mark backlink as needing help"), false, null);
+        GT._T("Mark backlink as needing help"), false, null);
     buttonMarkNeedHelp.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionMarkBacklinkHelpNeeded"));
     toolbar.add(buttonMarkNeedHelp);
     buttonViewLink = ActionExternalViewer.addButton(
         toolbar, getWikipedia(), listLinks, false, true, true);
     toolbar.addSeparator();
-    linkCount = new JLabel(GT._("Link count"));
+    linkCount = new JLabel(GT._T("Link count"));
     toolbar.add(linkCount);
     constraints.fill = GridBagConstraints.HORIZONTAL;
     constraints.weightx = 1;
@@ -374,7 +374,7 @@ public class DisambiguationWindow extends OnePageWindow {
    */
   private JMenu createFilterMenu() {
     if (menuFilter == null) {
-      menuFilter = Utilities.createJMenu(GT._("Filter namespaces"));
+      menuFilter = Utilities.createJMenu(GT._T("Filter namespaces"));
     } else {
       menuFilter.removeAll();
     }
@@ -442,7 +442,7 @@ public class DisambiguationWindow extends OnePageWindow {
    * @return Sort menu.
    */
   private JMenu createSortMenu() {
-    JMenu menu = Utilities.createJMenu(GT._("Sort"));
+    JMenu menu = Utilities.createJMenu(GT._T("Sort"));
     List<CompositeComparator<Page>> comparators = PageComparator.getComparators();
     for (CompositeComparator<Page> comparator : comparators) {
       JMenuItem menuItem = Utilities.createJMenuItem(comparator.getName(), true);
@@ -540,7 +540,7 @@ public class DisambiguationWindow extends OnePageWindow {
     if ((values == null) || (values.size() == 0)) {
       Utilities.displayWarning(
           getParentComponent(),
-          GT._("You must select pages on which running automatic fixing."));
+          GT._T("You must select pages on which running automatic fixing."));
       return;
     }
     Controller.runAutomaticFixing(values, getPage(), getWikipedia());

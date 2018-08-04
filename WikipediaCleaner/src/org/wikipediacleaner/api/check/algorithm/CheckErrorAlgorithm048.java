@@ -33,8 +33,8 @@ public class CheckErrorAlgorithm048 extends CheckErrorAlgorithmBase {
    * Possible global fixes.
    */
   private final static String[] globalFixes = new String[] {
-    GT._("Remove all links to title (first in bold)"),
-    GT._("Remove all links to title"),
+    GT._T("Remove all links to title (first in bold)"),
+    GT._T("Remove all links to title"),
   };
 
   public CheckErrorAlgorithm048() {
@@ -111,7 +111,7 @@ public class CheckErrorAlgorithm048 extends CheckErrorAlgorithmBase {
               analysis, previousCR, nextCR);
           if ((previousCR > tagImagemap.getEndIndex()) &&
               (contents.charAt(nextCR) == '\n')) {
-            errorResult.addReplacement("", GT._("Delete"));
+            errorResult.addReplacement("", GT._T("Delete"));
           }
           errors.add(errorResult);
         } else {
@@ -305,13 +305,13 @@ public class CheckErrorAlgorithm048 extends CheckErrorAlgorithmBase {
   }
 
   /**
-   * @return Map of parameters (Name -> description).
+   * @return Map of parameters (key=name, value=description).
    * @see org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase#getParameters()
    */
   @Override
   public Map<String, String> getParameters() {
     Map<String, String> parameters = super.getParameters();
-    parameters.put("imagemap", GT._("Set to true to report also links in <imagemap>"));
+    parameters.put("imagemap", GT._T("Set to true to report also links in <imagemap>"));
     return parameters;
   }
 }

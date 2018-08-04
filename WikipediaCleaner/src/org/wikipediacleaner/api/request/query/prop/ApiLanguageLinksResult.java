@@ -23,7 +23,7 @@ public interface ApiLanguageLinksResult extends ApiPropertiesResult {
    * @param properties Properties defining request.
    * @param languageLinks Map of language links to be set.
    * @return True if request should be continued.
-   * @throws APIException
+   * @throws APIException Exception thrown by the API.
    */
   public boolean getLanguageLinks(
       Map<String, String> properties,

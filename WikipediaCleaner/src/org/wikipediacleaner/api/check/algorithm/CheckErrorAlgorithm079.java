@@ -100,22 +100,22 @@ public class CheckErrorAlgorithm079 extends CheckErrorAlgorithmBase {
           CheckErrorResult errorResult = createCheckErrorResult(
               analysis, link.getBeginIndex(), endIndex);
           errorResult.addPossibleAction(
-              GT._("Add a description..."),
+              GT._T("Add a description..."),
               new AddTextActionProvider(
                   "[" + url + " ", "]" + suffix,
                   new TextProviderUrlTitle(url),
-                  GT._("What description would you like to use for the external link ?"),
+                  GT._T("What description would you like to use for the external link ?"),
                   descriptionChecker));
           if (refTag == null) {
             errorResult.addReplacement(
                 "<ref>" + url + "</ref>",
-                GT._("Convert into <ref> tag"));
+                GT._T("Convert into <ref> tag"));
             errorResult.addPossibleAction(
-                GT._("Add a description and convert into <ref> tag"),
+                GT._T("Add a description and convert into <ref> tag"),
                 new AddTextActionProvider(
                     "<ref>[" + url + " ", "]</ref>",
                     new TextProviderUrlTitle(url),
-                    GT._("What description would you like to use for the external link ?"),
+                    GT._T("What description would you like to use for the external link ?"),
                     descriptionChecker));
           } else {
             if (suffix.length() > 0) {
@@ -130,7 +130,7 @@ public class CheckErrorAlgorithm079 extends CheckErrorAlgorithmBase {
             }
           }
           errorResult.addPossibleAction(
-              new SimpleAction(GT._("External viewer"),
+              new SimpleAction(GT._T("External viewer"),
                   new ActionExternalViewer(url)));
           errors.add(errorResult);
         }

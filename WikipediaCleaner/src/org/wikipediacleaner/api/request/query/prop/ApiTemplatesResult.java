@@ -27,7 +27,7 @@ public interface ApiTemplatesResult extends ApiPropertiesResult {
    * @param page Page.
    * @param list List to be filled with templates.
    * @return True if request should be continued.
-   * @throws APIException
+   * @throws APIException Exception thrown by the API.
    */
   public boolean executeTemplates(
       Map<String, String> properties,
@@ -40,7 +40,7 @@ public interface ApiTemplatesResult extends ApiPropertiesResult {
    * @param properties Properties defining request.
    * @param list List of pages for which disambiguation status needs to be set.
    * @return True if request should be continued.
-   * @throws APIException
+   * @throws APIException Exception thrown by the API.
    */
   public boolean setDiambiguationStatus(
       Map<String, String> properties,

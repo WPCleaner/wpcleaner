@@ -187,6 +187,7 @@ public class ApiCategoryMembersRequest extends ApiListRequest {
    * @param depth Depth of lookup for sub-categories.
    * @param limit Flag indicating if the number of results should be limited.
    * @param max Absolute maximum number of results
+   * @throws APIException Exception thrown by the API.
    */
   public void loadCategoryMembers(
       Page category,

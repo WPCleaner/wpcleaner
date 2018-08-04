@@ -26,7 +26,7 @@ public interface ApiAbuseFiltersResult extends ApiResult {
    * @param properties Properties defining request.
    * @param list List to be filled with abuse filters.
    * @return True if request should be continued.
-   * @throws APIException
+   * @throws APIException Exception thrown by the API.
    */
   public boolean executeAbuseFilters(
       Map<String, String> properties,

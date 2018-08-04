@@ -73,7 +73,7 @@ public class UpdateDuplicateArgsWarningWorker extends UpdateWarningWorker {
 
         // Ask for confirmation
         if (getWindow() != null) {
-          int answer = getWindow().displayYesNoWarning(GT._(
+          int answer = getWindow().displayYesNoWarning(GT._T(
               "Analysis found {0} articles to check for duplicate arguments errors.\n" +
               "Do you want to update the warnings ?",
               Integer.valueOf(warningPages.size()).toString() ));
@@ -113,7 +113,7 @@ public class UpdateDuplicateArgsWarningWorker extends UpdateWarningWorker {
             tools.updateWarning(sublist, null, null, stats);
           } catch (APIException e) {
             if (getWindow() != null) {
-              int answer = getWindow().displayYesNoWarning(GT._(
+              int answer = getWindow().displayYesNoWarning(GT._T(
                   "An error occurred when updating duplicate arguments warnings. Do you want to continue ?\n\n" +
                   "Error: {0}", e.getMessage()));
               if (answer != JOptionPane.YES_OPTION) {
@@ -160,7 +160,7 @@ public class UpdateDuplicateArgsWarningWorker extends UpdateWarningWorker {
    * Generate the list of warning pages.
    * 
    * @param tools Update warning tools.
-   * @throws APIException
+   * @throws APIException Exception thrown by the API.
    */
   @Override
   protected void listWarningPages(UpdateWarningTools tools) throws APIException {

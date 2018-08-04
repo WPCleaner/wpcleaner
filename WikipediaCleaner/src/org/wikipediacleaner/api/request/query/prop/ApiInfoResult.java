@@ -25,7 +25,7 @@ public interface ApiInfoResult extends ApiPropertiesResult {
    * @param properties Properties defining request.
    * @param pages Pages to be filled with informations.
    * @return True if request should be continued.
-   * @throws APIException
+   * @throws APIException Exception thrown by the API.
    */
   public boolean executeInformations(
       Map<String, String> properties,

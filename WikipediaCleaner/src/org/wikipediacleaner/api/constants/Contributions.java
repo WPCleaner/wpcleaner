@@ -39,7 +39,7 @@ public class Contributions {
     // Check if contributions have been made.
     boolean contributions = false;
     StringBuilder buffer = new StringBuilder();
-    buffer.append(GT._("You have done the following contributions on \"{0}\":", wikipedia.toString()));
+    buffer.append(GT._T("You have done the following contributions on \"{0}\":", wikipedia.toString()));
     buffer.append("\n<br/>");
     if (pages > 0) {
       contributions = true;
@@ -79,7 +79,7 @@ public class Contributions {
       return buffer.toString();
     }
 
-    return GT._("You haven''t done any contribution on \"{0}\"", wikipedia.toString());
+    return GT._T("You haven''t done any contribution on \"{0}\"", wikipedia.toString());
   }
 
   /**

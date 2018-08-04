@@ -124,7 +124,7 @@ public class CheckErrorAlgorithm527 extends CheckErrorAlgorithmBase {
                   content.substring(namedRef.getCompleteBeginIndex(), namedRef.getValueBeginIndex()) +
                   value.trim() +
                   content.substring(namedRef.getValueEndIndex(), namedRef.getCompleteEndIndex());
-              errorResult.addReplacement(replacement, GT._("Trim text"), true);
+              errorResult.addReplacement(replacement, GT._T("Trim text"), true);
             } else {
               errorResult.addText(value);
               List<String> others = new ArrayList<>();
@@ -239,13 +239,13 @@ public class CheckErrorAlgorithm527 extends CheckErrorAlgorithmBase {
   }
 
   /**
-   * @return Map of parameters (Name -> description).
+   * @return Map of parameters (key=name, value=description).
    * @see org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase#getParameters()
    */
   @Override
   public Map<String, String> getParameters() {
     Map<String, String> parameters = super.getParameters();
-    parameters.put("category", GT._("A category containing the list of pages in error"));
+    parameters.put("category", GT._T("A category containing the list of pages in error"));
     return parameters;
   }
 }

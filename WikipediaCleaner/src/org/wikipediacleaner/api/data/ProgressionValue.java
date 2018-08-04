@@ -20,6 +20,7 @@ public class ProgressionValue implements Comparable<ProgressionValue> {
   /**
    * @param current Current value.
    * @param goal Goal value.
+   * @param displayZero True if a value of zero should be displayed.
    */
   public ProgressionValue(Integer current, Integer goal, boolean displayZero) {
     this.currentValue = current;

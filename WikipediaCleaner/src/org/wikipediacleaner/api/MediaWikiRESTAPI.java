@@ -39,7 +39,7 @@ public class MediaWikiRESTAPI {
    * @param title Page title.
    * @param text Wiki text to analyze.
    * @return List of errors found in the wiki text.
-   * @throws APIException
+   * @throws APIException Exception thrown by the API.
    * @see <a href="https://fr.wikipedia.org/api/rest_v1/#!/Transforms/post_transform_wikitext_to_lint_title_revision">REST API</a>
    */
   public List<LinterError> transformWikitextToLint(EnumWikipedia wiki, String title, String text) throws APIException {

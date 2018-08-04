@@ -627,7 +627,7 @@ public class CheckErrorAlgorithm112 extends CheckErrorAlgorithmBase {
                             replacement.append(PageElementTemplate.createTemplate(columns2Template[1]));
                             errorResult.addReplacement(
                                 replacement.toString(),
-                                GT._("Use {0} and {1}", new Object[] {
+                                GT._T("Use {0} and {1}", new Object[] {
                                     PageElementTemplate.createTemplate(columns2Template[0]),
                                     PageElementTemplate.createTemplate(columns2Template[1]) }));
                           }
@@ -650,7 +650,7 @@ public class CheckErrorAlgorithm112 extends CheckErrorAlgorithmBase {
                             replacement.append("}}");
                             errorResult.addReplacement(
                                 replacement.toString(),
-                                GT._("Use {0}", PageElementTemplate.createTemplate(columnsTemplate[0])));
+                                GT._T("Use {0}", PageElementTemplate.createTemplate(columnsTemplate[0])));
                           }
                         }
                       }
@@ -694,14 +694,14 @@ public class CheckErrorAlgorithm112 extends CheckErrorAlgorithmBase {
   }
 
   /**
-   * @return Map of parameters (Name -> description).
+   * @return Map of parameters (key=name, value=description).
    * @see org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase#getParameters()
    */
   @Override
   public Map<String, String> getParameters() {
     Map<String, String> parameters = super.getParameters();
     //parameters.put("references_templates", GT._("A list of templates resulting in the inclusion of {0}", "&lt;references/&gt;"));
-    parameters.put("templates", GT._("A list of templates resulting in the inclusion of {0}", "&lt;references/&gt;"));
+    parameters.put("templates", GT._T("A list of templates resulting in the inclusion of {0}", "&lt;references/&gt;"));
     return parameters;
   }
 }

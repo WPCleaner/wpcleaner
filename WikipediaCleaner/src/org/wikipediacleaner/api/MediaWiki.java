@@ -64,7 +64,8 @@ public class MediaWiki extends MediaWikiController {
   /**
    * Block until all tasks are finished. 
    * 
-   * @throws APIException
+   * @param block True if method should block until tasks are finished.
+   * @throws APIException Exception thrown by the API.
    */
   public void block(boolean block) throws APIException {
     if (block) {
@@ -87,7 +88,7 @@ public class MediaWiki extends MediaWikiController {
    * @param usePageId True if page identifiers should be used.
    * @param withRedirects Flag indicating if redirects information should be retrieved.
    * @param doAnalysis True if page analysis should be done.
-   * @throws APIException
+   * @throws APIException Exception thrown by the API.
    */
   public void retrieveContents(
       EnumWikipedia wikipedia, Page page,
@@ -115,7 +116,7 @@ public class MediaWiki extends MediaWikiController {
    * @param usePageId True if page identifiers should be used.
    * @param withRedirects Flag indicating if redirects information should be retrieved.
    * @param doAnalysis True if page analysis should be done.
-   * @throws APIException
+   * @throws APIException Exception thrown by the API.
    */
   public void retrieveContents(
       EnumWikipedia wikipedia, Collection<Page> pages,
@@ -142,7 +143,7 @@ public class MediaWiki extends MediaWikiController {
    * @param pages Pages.
    * @param section Section.
    * @param block Flag indicating if the call should block until completed.
-   * @throws APIException
+   * @throws APIException Exception thrown by the API.
    */
   public void retrieveSectionContents(
       EnumWikipedia wikipedia, Collection<Page> pages,
@@ -174,11 +175,12 @@ public class MediaWiki extends MediaWikiController {
    * @param automaticCW Lit of CW fixing that should be done.
    * @param forceCW List of CW fixing that should be done even if no automatic replacement was done.
    * @param save True if modification should be saved.
+   * @param updateDabWarning True to update disambiguation warning.
    * @param minor True if the modification should be tagged as minor.
    * @param pauseAfterEachEdit True to pause after each edit.
    * @param parent Parent window.
    * @return Count of modified pages.
-   * @throws APIException
+   * @throws APIException Exception thrown by the API.
    */
   public int replaceText(
       Page[] pages, Map<String, List<AutomaticFixing>> replacements,
@@ -295,7 +297,7 @@ public class MediaWiki extends MediaWikiController {
             }
 
             // Save page
-            setText(GT._("Updating page {0}", page.getTitle()));
+            setText(GT._T("Updating page {0}", page.getTitle()));
             count++;
             if (save && !stopRequested) {
               try {
@@ -309,8 +311,8 @@ public class MediaWiki extends MediaWikiController {
                 if (pauseAfterEachEdit) {
                   int answer = Utilities.displayYesNoAllWarning(
                       parent,
-                      GT._("The page {0} has been modified.", page.getTitle()) + "\n" +
-                      GT._("Do yo want to continue?"));
+                      GT._T("The page {0} has been modified.", page.getTitle()) + "\n" +
+                      GT._T("Do yo want to continue?"));
                   switch (answer) {
                   case JOptionPane.YES_OPTION:
                     break;
@@ -347,7 +349,8 @@ public class MediaWiki extends MediaWikiController {
    * @param wikipedia Wikipedia.
    * @param title Title of the page.
    * @param text Text of the page.
-   * @throws APIException
+   * @return Expanded text.
+   * @throws APIException Exception thrown by the API.
    */
   public String expandTemplates(EnumWikipedia wikipedia, String title, String text) throws APIException {
     if (text == null) {
@@ -371,7 +374,8 @@ public class MediaWiki extends MediaWikiController {
    * @param wikipedia Wikipedia.
    * @param title Title of the page.
    * @param text Text of the page.
-   * @throws APIException
+   * @return Parsed text.
+   * @throws APIException Exception thrown by the API.
    */
   public String parseText(
       EnumWikipedia wikipedia,
@@ -396,7 +400,7 @@ public class MediaWiki extends MediaWikiController {
    * 
    * @param wikipedia Wikipedia.
    * @param page Page.
-   * @throws APIException
+   * @throws APIException Exception thrown by the API.
    */
   public void retrieveSimilarPages(
       EnumWikipedia wikipedia,
@@ -417,7 +421,7 @@ public class MediaWiki extends MediaWikiController {
    * @param knownPages Already known pages.
    * @param disambigNeeded True if disambiguation information is needed.
    * @param block Flag indicating if the call should block until completed.
-   * @throws APIException
+   * @throws APIException Exception thrown by the API.
    */
   public void retrieveAllLinks(
       EnumWikipedia wikipedia,
@@ -439,7 +443,7 @@ public class MediaWiki extends MediaWikiController {
    * @param wikipedia Wikipedia.
    * @param page Page.
    * @param block Flag indicating if the call should block until completed.
-   * @throws APIException
+   * @throws APIException Exception thrown by the API.
    */
   public void retrieveAllTemplates(
       EnumWikipedia wikipedia,
@@ -459,7 +463,7 @@ public class MediaWiki extends MediaWikiController {
    * @param wikipedia Wikipedia.
    * @param page Page.
    * @param block Flag indicating if the call should block until completed.
-   * @throws APIException
+   * @throws APIException Exception thrown by the API.
    */
   public void retrieveAllLinksToPage(
       EnumWikipedia wikipedia,
@@ -476,7 +480,7 @@ public class MediaWiki extends MediaWikiController {
    * @param wikipedia Wikipedia.
    * @param pageList List of pages.
    * @param block Flag indicating if the call should block until completed.
-   * @throws APIException
+   * @throws APIException Exception thrown by the API.
    */
   public void retrieveAllLinksToPages(
       EnumWikipedia wikipedia,
@@ -498,7 +502,8 @@ public class MediaWiki extends MediaWikiController {
    * @param pageList List of pages.
    * @param namespaces List of name spaces to look into.
    * @param limit Flag indicating if the number of results should be limited.
-   * @throws APIException
+   * @throws APIException Exception thrown by the API.
+   * @return Pages.
    */
   @SuppressWarnings("unchecked")
   public List<Page> retrieveAllEmbeddedIn(
@@ -546,7 +551,7 @@ public class MediaWiki extends MediaWikiController {
    * @param disambiguations Flag indicating if possible disambiguations should be retrieved.
    * @param forceApiCall True if API call should be forced even if the list of disambiguation pages is loaded.
    * @param block Flag indicating if the call should block until completed.
-   * @throws APIException
+   * @throws APIException Exception thrown by the API.
    */
   public void retrieveDisambiguationInformation(
       EnumWikipedia wikipedia,

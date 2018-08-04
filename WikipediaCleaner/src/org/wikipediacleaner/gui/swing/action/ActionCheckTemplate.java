@@ -38,7 +38,7 @@ public class ActionCheckTemplate implements ActionListener {
   public static JMenuItem createMenuItem(
       Component parent,
       EnumWikipedia wiki, PageElementTemplate template) {
-    JMenuItem menuItem = Utilities.createJMenuItem(GT._("Check template"), true);
+    JMenuItem menuItem = Utilities.createJMenuItem(GT._T("Check template"), true);
     menuItem.addActionListener(new ActionCheckTemplate(parent, wiki, template));
     return menuItem;
   }

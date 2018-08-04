@@ -57,7 +57,7 @@ public class Bot implements BasicWorkerListener {
   private final static Log log = LogFactory.getLog(Bot.class);
 
   /**
-   * @param args
+   * @param args Command line arguments.
    */
   public static void main(String[] args) {
     log.info("Running as bot");
@@ -401,7 +401,7 @@ public class Bot implements BasicWorkerListener {
   }
 
   /**
-   * @param worker
+   * @param worker Worker.
    * @see org.wikipediacleaner.gui.swing.basic.BasicWorkerListener#beforeStart(org.wikipediacleaner.gui.swing.basic.BasicWorker)
    */
   @Override
@@ -410,7 +410,7 @@ public class Bot implements BasicWorkerListener {
   }
 
   /**
-   * @param worker
+   * @param worker Worker.
    * @see org.wikipediacleaner.gui.swing.basic.BasicWorkerListener#afterStart(org.wikipediacleaner.gui.swing.basic.BasicWorker)
    */
   @Override
@@ -419,7 +419,7 @@ public class Bot implements BasicWorkerListener {
   }
 
   /**
-   * @param worker
+   * @param worker Worker.
    * @see org.wikipediacleaner.gui.swing.basic.BasicWorkerListener#beforeFinished(org.wikipediacleaner.gui.swing.basic.BasicWorker)
    */
   @Override
@@ -428,8 +428,8 @@ public class Bot implements BasicWorkerListener {
   }
 
   /**
-   * @param worker
-   * @param ok
+   * @param worker Worker.
+   * @param ok True if it finished OK.
    * @see org.wikipediacleaner.gui.swing.basic.BasicWorkerListener#afterFinished(org.wikipediacleaner.gui.swing.basic.BasicWorker, boolean)
    */
   @Override

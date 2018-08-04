@@ -38,6 +38,7 @@ public interface API {
    * 
    * @param wikipedia Wikipedia.
    * @param userName User name.
+   * @throws APIException Exception thrown by the API.
    */
   public void loadConfiguration(
       EnumWikipedia wikipedia,
@@ -49,7 +50,7 @@ public interface API {
    * @param wikipedia Wikipedia.
    * @param page Page.
    * @param section Section number.
-   * @throws APIException
+   * @throws APIException Exception thrown by the API.
    */
   public void retrieveSectionContents(EnumWikipedia wikipedia, Page page, int section) throws APIException;
 
@@ -64,7 +65,7 @@ public interface API {
    * @param automatic True if the modification is automatic.
    * @param forceWatch Force watching the page.
    * @return Result of the command.
-   * @throws APIException
+   * @throws APIException Exception thrown by the API.
    */
   public QueryResult updatePage(
       EnumWikipedia wikipedia, Page page,
@@ -82,7 +83,7 @@ public interface API {
    * @param automatic True if the modification is automatic.
    * @param forceWatch Force watching the page.
    * @return Result of the command.
-   * @throws APIException
+   * @throws APIException Exception thrown by the API.
    */
   public QueryResult addNewSection(
       EnumWikipedia wikipedia,
@@ -102,7 +103,7 @@ public interface API {
    * @param automatic True if the modification is automatic.
    * @param forceWatch Force watching the page.
    * @return Result of the command.
-   * @throws APIException
+   * @throws APIException Exception thrown by the API.
    */
   public QueryResult updateSection(
       EnumWikipedia wikipedia,
@@ -115,7 +116,7 @@ public interface API {
    * 
    * @param wikipedia Wikipedia.
    * @param page The page.
-   * @throws APIException
+   * @throws APIException Exception thrown by the API.
    */
   public void retrieveTemplates(EnumWikipedia wikipedia, Page page) throws APIException;
 
@@ -124,7 +125,7 @@ public interface API {
    * 
    * @param wiki Wiki.
    * @param pages List of pages.
-   * @throws APIException
+   * @throws APIException Exception thrown by the API.
    */
   public void initializeRedirect(EnumWikipedia wiki, List<Page> pages) throws APIException;
 
@@ -141,7 +142,7 @@ public interface API {
    * @param password Password.
    * @param login Flag indicating if login should be done.
    * @return Login status.
-   * @throws APIException
+   * @throws APIException Exception thrown by the API.
    * @see <a href="http://www.mediawiki.org/wiki/API:Login">API:Login</a>
    */
   public LoginResult login(
@@ -164,7 +165,7 @@ public interface API {
    * (<code>action=tokens</code>).
    * 
    * @param wiki Wiki.
-   * @throws APIException
+   * @throws APIException Exception thrown by the API.
    */
   public void retrieveTokens(EnumWikipedia wiki) throws APIException;
 
@@ -183,7 +184,7 @@ public interface API {
    * @param wiki Wiki.
    * @param messageName Message name.
    * @return Message.
-   * @throws APIException
+   * @throws APIException Exception thrown by the API.
    * @see <a href="https://www.mediawiki.org/wiki/API:Allmessages">API:Allmessages</a>
    */
   public String loadMessage(EnumWikipedia wiki, String messageName) throws APIException;
@@ -195,7 +196,7 @@ public interface API {
    * @param wiki Wiki.
    * @param messageNames Message names.
    * @return Messages.
-   * @throws APIException
+   * @throws APIException Exception thrown by the API.
    * @see <a href="https://www.mediawiki.org/wiki/API:Allmessages">API:Allmessages</a>
    */
   public Map<String, String> loadMessages(EnumWikipedia wiki, List<String> messageNames) throws APIException;
@@ -210,7 +211,7 @@ public interface API {
    * 
    * @param wiki Wiki.
    * @param page Page.
-   * @throws APIException
+   * @throws APIException Exception thrown by the API.
    * @see <a href="https://www.mediawiki.org/wiki/API:Categories">API:Categories</a>
    */
   public void retrieveCategories(
@@ -223,7 +224,7 @@ public interface API {
    * 
    * @param wiki Wiki.
    * @param pages List of pages.
-   * @throws APIException
+   * @throws APIException Exception thrown by the API.
    * @see <a href="https://www.mediawiki.org/wiki/API:Info">API:Info</a>
    */
   public void retrieveInfo(
@@ -238,7 +239,7 @@ public interface API {
    * @param pages List of pages.
    * @param usePageId True if page identifiers should be used.
    * @param withRedirects Flag indicating if redirects information should be retrieved.
-   * @throws APIException
+   * @throws APIException Exception thrown by the API.
    * @see <a href="http://www.mediawiki.org/wiki/API:Properties#revisions_.2F_rv">API:Properties#revisions</a>
    */
   public void retrieveContents(
@@ -254,7 +255,7 @@ public interface API {
    * @param wiki Wiki.
    * @param pages List of pages.
    * @param forceApiCall True if API call should be forced even if the list of disambiguation pages is loaded.
-   * @throws APIException
+   * @throws APIException Exception thrown by the API.
    * @see <a href="http://www.mediawiki.org/wiki/API:Properties#categories_.2F_cl">API:Properties#categories</a>
    * @see <a href="http://www.mediawiki.org/wiki/API:Properties#templates_.2F_tl">API:Properties#templates</a>
    */
@@ -267,7 +268,7 @@ public interface API {
    * 
    * @param wiki Wiki.
    * @param pages List of pages.
-   * @throws APIException
+   * @throws APIException Exception thrown by the API.
    * @see <a href="http://www.mediawiki.org/wiki/API:Properties#links_.2F_pl">API:Properties#links</a>
    */
   public void retrieveLinks(
@@ -280,7 +281,7 @@ public interface API {
    * @param wiki Wiki.
    * @param page The page.
    * @param redirects True if it should also retrieve links through redirects.
-   * @throws APIException
+   * @throws APIException Exception thrown by the API.
    * @see <a href="http://www.mediawiki.org/wiki/API:Linkshere">API:Linkshere</a>
    */
   public void retrieveLinksHere(
@@ -298,7 +299,7 @@ public interface API {
    * @param knownPages Already known pages.
    * @param redirects True if redirects are requested.
    * @param disambigNeeded True if disambiguation information is needed.
-   * @throws APIException
+   * @throws APIException Exception thrown by the API.
    * @see <a href="http://www.mediawiki.org/wiki/API:Properties#links_.2F_pl">API:Properties#links</a>
    */
   public void retrieveLinks(
@@ -314,7 +315,7 @@ public interface API {
    * @param to Wiki to which the link is searched.
    * @param title Page title.
    * @return Page title in the destination wiki.
-   * @throws APIException
+   * @throws APIException Exception thrown by the API.
    * @see <a href="http://www.mediawiki.org/wiki/API:Properties#langlinks_.2F_ll">API:Properties#langlinks</a>
    */
   public String getLanguageLink(
@@ -329,7 +330,8 @@ public interface API {
    * (<code>action=query</code>, <code>list=abusefilters</code>).
    * 
    * @param wiki Wiki.
-   * @throws APIException
+   * @return Abuse filters
+   * @throws APIException Exception thrown by the API.
    * @see <a href="http://www.mediawiki.org/wiki/API:Abusefilters">API:Abusefilters</a>
    */
   public List<AbuseFilter> retrieveAbuseFilters(
@@ -342,7 +344,8 @@ public interface API {
    * @param wiki Wiki.
    * @param filterId Filter identifier.
    * @param maxDuration Maximum number of days.
-   * @throws APIException
+   * @return Pages in  the abuse log.
+   * @throws APIException Exception thrown by the API.
    * @see <a href="http://www.mediawiki.org/wiki/API:Abuselog">API:Abuselog</a>
    */
   public List<Page> retrieveAbuseLog(
@@ -356,7 +359,7 @@ public interface API {
    * @param wiki Wiki.
    * @param page The page.
    * @param redirects True if it should also retrieve links through redirects.
-   * @throws APIException
+   * @throws APIException Exception thrown by the API.
    * @see <a href="http://www.mediawiki.org/wiki/API:Backlinks">API:Backlinks</a>
    */
   /* @Deprecated
@@ -373,7 +376,7 @@ public interface API {
    * @param depth Depth of lookup for sub-categories.
    * @param limit Flag indicating if the number of results should be limited.
    * @param max Absolute maximum number of results
-   * @throws APIException
+   * @throws APIException Exception thrown by the API.
    * @see <a href="http://www.mediawiki.org/wiki/API:Categorymembers">API:Categorymembers</a>
    */
   public void retrieveCategoryMembers(
@@ -388,7 +391,7 @@ public interface API {
    * @param page Page.
    * @param namespaces Limit to some namespaces.
    * @param limit Flag indicating if the number of results should be limited.
-   * @throws APIException
+   * @throws APIException Exception thrown by the API.
    * @see <a href="http://www.mediawiki.org/wiki/API:Embeddedin">API:Embeddedin</a>
    */
   public void retrieveEmbeddedIn(
@@ -403,8 +406,10 @@ public interface API {
    * @param category Category.
    * @param namespace Optional name space.
    * @param withTemplates True to retrieve also templates causing the error.
+   * @param limit True to apply a limit.
+   * @param max Maximum number of pages.
    * @return List of pages in the given category.
-   * @throws APIException
+   * @throws APIException Exception thrown by the API.
    */
   public List<Page> retrieveLinterCategory(
       EnumWikipedia wiki, String category, Integer namespace, boolean withTemplates,
@@ -417,7 +422,8 @@ public interface API {
    * @param wiki Wiki.
    * @param property Property name.
    * @param limit Flag indicating if the number of results should be limited.
-   * @throws APIException
+   * @return Pages with a given property.
+   * @throws APIException Exception thrown by the API.
    * @see <a href="http://www.mediawiki.org/wiki/API:Pageswithprop">API:Pageswithprop</a>
    */
   public List<Page> retrievePagesWithProp(
@@ -431,7 +437,8 @@ public interface API {
    * @param wiki Wiki.
    * @param namespaces Limit to some namespaces.
    * @param limit Flag indicating if the number of results should be limited.
-   * @throws APIException
+   * @return Protected pages.
+   * @throws APIException Exception thrown by the API.
    * @see <a href="http://www.mediawiki.org/wiki/API:Protectedtitles">API:Protectedtitles</a>
    */
   public List<Page> getProtectedTitles(
@@ -445,7 +452,7 @@ public interface API {
    * @param wiki Wiki.
    * @param query Type of list.
    * @return List of pages depending on the query.
-   * @throws APIException
+   * @throws APIException Exception thrown by the API.
    * @see <a href="http://www.mediawiki.org/wiki/API:Querypage">API:Querypage</a>
    */
   public List<Page> getQueryPages(
@@ -458,7 +465,8 @@ public interface API {
    * @param wiki Wiki.
    * @param count Number of random pages.
    * @param redirects True if redirect pages are requested.
-   * @throws APIException
+   * @return Random pages.
+   * @throws APIException Exception thrown by the API.
    * @see <a href="http://www.mediawiki.org/wiki/API:Random">API:Random</a>
    */
   public List<Page> getRandomPages(
@@ -473,7 +481,7 @@ public interface API {
    * @param start The timestamp to start listing from.
    * @param recentChanges The list of recent changes to be filled.
    * @return The timestamp to use as a starting point for the next call.
-   * @throws APIException
+   * @throws APIException Exception thrown by the API.
    * @see <a href="http://www.mediawiki.org/wiki/API:Recentchanges">API:Recentchanges</a>
    */
   public String getRecentChanges(
@@ -487,7 +495,7 @@ public interface API {
    * @param wiki Wiki.
    * @param page The page.
    * @param limit Flag indicating if the number of results should be limited.
-   * @throws APIException
+   * @throws APIException Exception thrown by the API.
    * @see <a href="http://www.mediawiki.org/wiki/API:Search">API:Search</a>
    */
   public void retrieveSimilarPages(
@@ -500,7 +508,8 @@ public interface API {
    * 
    * @param wiki Wiki.
    * @param name User name.
-   * @throws APIException
+   * @return User.
+   * @throws APIException Exception thrown by the API.
    * @see <a href="http://www.mediawiki.org/wiki/API:Users">API:Users</a>
    */
   public User retrieveUser(
@@ -511,7 +520,8 @@ public interface API {
    * (<code>action=query</code>, <code>list=watchlistraw</code>).
    * 
    * @param wiki Wiki.
-   * @throws APIException
+   * @return Watch list.
+   * @throws APIException Exception thrown by the API.
    * @see <a href="http://www.mediawiki.org/wiki/API:Watchlistraw">API:Watchlistraw</a>
    */
   public List<Page> retrieveRawWatchlist(
@@ -529,7 +539,7 @@ public interface API {
    * @param title The title to use (for example in {{PAGENAME}}).
    * @param text The text with templates in it.
    * @return Text with templates expanded.
-   * @throws APIException
+   * @throws APIException Exception thrown by the API.
    * @see <a href="http://www.mediawiki.org/wiki/API:Parsing_wikitext#expandtemplates">API:Parsing wikitext</a>
    */
   public String expandTemplates(
@@ -544,7 +554,7 @@ public interface API {
    * @param text The text with templates in it.
    * @param full True to do a full parsing.
    * @return Parsed text.
-   * @throws APIException
+   * @throws APIException Exception thrown by the API.
    * @see <a href="http://www.mediawiki.org/wiki/API:Parsing_wikitext#parse">API:Parsing wikitext</a>
    */
   public String parseText(
@@ -557,7 +567,7 @@ public interface API {
    * @param wiki Wiki.
    * @param page Page.
    * @return List of sections.
-   * @throws APIException
+   * @throws APIException Exception thrown by the API.
    * @see <a href="http://www.mediawiki.org/wiki/API:Parsing_wikitext#parse">API:Parsing wikitext</a>
    */
   public List<Section> retrieveSections(
@@ -573,7 +583,7 @@ public interface API {
    * 
    * @param wiki Wiki.
    * @param page The page.
-   * @throws APIException
+   * @throws APIException Exception thrown by the API.
    * @see <a href="http://www.mediawiki.org/wiki/API:Purge">API:Purge</a>
    */
   public void purgePageCache(
@@ -595,7 +605,7 @@ public interface API {
    * @param page The page.
    * @param reason Reason for deleting the page.
    * @param automatic True if the modification is automatic.
-   * @throws APIException
+   * @throws APIException Exception thrown by the API.
    * @see <a href="http://www.mediawiki.org/wiki/API:Delete">API:Delete</a>
    */
   public void deletePage(
@@ -613,7 +623,7 @@ public interface API {
    * @param wiki Wiki.
    * @param page The page.
    * @return TemplateData for the page.
-   * @throws APIException
+   * @throws APIException Exception thrown by the API.
    * @see <a href="http://www.mediawiki.org/wiki/API:Delete">API:Delete</a>
    */
   public TemplateData retrieveTemplateData(

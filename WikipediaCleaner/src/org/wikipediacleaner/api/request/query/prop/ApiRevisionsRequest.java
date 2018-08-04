@@ -192,6 +192,7 @@ public class ApiRevisionsRequest extends ApiPropertiesRequest {
    * @param pages Pages for which content is requested.
    * @param usePageId True if page identifiers should be used.
    * @param withRedirects Flag indicating if redirects information should be retrieved.
+   * @throws APIException Exception thrown by the API.
    */
   public void loadContent(
       Collection<Page> pages, boolean usePageId,

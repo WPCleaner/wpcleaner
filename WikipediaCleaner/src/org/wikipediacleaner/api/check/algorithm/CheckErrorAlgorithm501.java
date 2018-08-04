@@ -174,20 +174,20 @@ public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
           multiples.add(replacement.getReplacement());
         }
       }
-      error.addReplacement(group.getText(), GT._("Restore original text"));
+      error.addReplacement(group.getText(), GT._T("Restore original text"));
 
       // Multiple replacements
       if (!multiples.isEmpty()) {
         if (multiples.size() == 1) {
           error.addPossibleAction(new SimpleAction(
-              GT._("Replace each time with {0}", multiples.get(0)),
+              GT._T("Replace each time with {0}", multiples.get(0)),
               new MWPaneReplaceAllAction(group.getText(), multiples.get(0))));
         } else {
           List<Actionnable> actions = new ArrayList<Actionnable>();
           for (String multiple : multiples) {
             actions.add(new SimpleAction(multiple, new MWPaneReplaceAllAction(group.getText(), multiple)));
           }
-          error.addPossibleAction(new CompositeAction(GT._("Replace each time with"), actions));
+          error.addPossibleAction(new CompositeAction(GT._T("Replace each time with"), actions));
         }
       }
       errors.add(error);

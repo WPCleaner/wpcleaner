@@ -288,7 +288,7 @@ public class CWConfigurationError {
    * 
    * @param p1 Priority 1.
    * @param p2 Priority 2.
-   * @return 0 if priorities are equal, -1 if p1 < p2, 1 if p1 > p2.
+   * @return 0 if priorities are equal, -1 if p1 &lt; p2, 1 if p1 &gt; p2.
    */
   public static int comparePriority(int p1, int p2) {
     if (p1 == p2) {
@@ -316,17 +316,17 @@ public class CWConfigurationError {
   public static String getPriorityString(int priority) {
     switch (priority) {
     case PRIORITY_DEACTIVATED:
-      return GT._("Deactivated");
+      return GT._T("Deactivated");
     case PRIORITY_LOWEST:
-      return GT._("Low priority");
+      return GT._T("Low priority");
     case PRIORITY_MIDDLE:
-      return GT._("Middle priority");
+      return GT._T("Middle priority");
     case PRIORITY_TOP:
-      return GT._("Top priority");
+      return GT._T("Top priority");
     case PRIORITY_BOT_ONLY:
-      return GT._("For Bot");
+      return GT._T("For Bot");
     default:
-      return GT._("Priority unknown");
+      return GT._T("Priority unknown");
     }
   }
 

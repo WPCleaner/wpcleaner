@@ -61,7 +61,7 @@ public class OptionsWindow
    */
   @Override
   public String getTitle() {
-    return GT._("Options");
+    return GT._T("Options");
   }
 
   /**
@@ -85,28 +85,28 @@ public class OptionsWindow
     // Create tabbed pane
     JTabbedPane pane = new JTabbedPane();
     GeneralOptionsPanel generalOptions = new GeneralOptionsPanel();
-    pane.addTab(GT._("General"), generalOptions);
+    pane.addTab(GT._T("General"), generalOptions);
     panels.add(generalOptions);
     LimitOptionsPanel limitOptions = new LimitOptionsPanel();
-    pane.addTab(GT._("Limits"), limitOptions);
+    pane.addTab(GT._T("Limits"), limitOptions);
     panels.add(limitOptions);
     AnalysisOptionsPanel analysisOptions = new AnalysisOptionsPanel();
-    pane.addTab(GT._("Full analysis"), analysisOptions);
+    pane.addTab(GT._T("Full analysis"), analysisOptions);
     panels.add(analysisOptions);
     SortingOptionsPanel sortingOptions = new SortingOptionsPanel();
-    pane.addTab(GT._("Sorting"), sortingOptions);
+    pane.addTab(GT._T("Sorting"), sortingOptions);
     panels.add(sortingOptions);
     FormattingOptionsPanel formattingOptions = new FormattingOptionsPanel();
-    pane.addTab(GT._("Formatting"), formattingOptions);
+    pane.addTab(GT._T("Formatting"), formattingOptions);
     panels.add(formattingOptions);
     ShortcutOptionsPanel shortcutOptions = new ShortcutOptionsPanel();
-    pane.addTab(GT._("Shortcuts"), shortcutOptions);
+    pane.addTab(GT._T("Shortcuts"), shortcutOptions);
     panels.add(shortcutOptions);
     DebugOptionsPanel debugOptions = new DebugOptionsPanel();
-    pane.addTab(GT._("Debug"), debugOptions);
+    pane.addTab(GT._T("Debug"), debugOptions);
     panels.add(debugOptions);
     TranslationOptionsPanel translationOptions = new TranslationOptionsPanel();
-    pane.addTab(GT._("Translation"), translationOptions);
+    pane.addTab(GT._T("Translation"), translationOptions);
     panels.add(translationOptions);
     panel.add(pane);
 
@@ -121,7 +121,7 @@ public class OptionsWindow
 
     // Apply button
     buttonApply = Utilities.createJButton(
-        GT._("Apply"),
+        GT._T("Apply"),
         ConfigurationValueShortcut.APPLY);
     buttonApply.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionApply"));
@@ -129,7 +129,7 @@ public class OptionsWindow
 
     // Validate button
     buttonValidate = Utilities.createJButton(
-        GT._("Validate"),
+        GT._T("Validate"),
         ConfigurationValueShortcut.VALIDATE);
     buttonValidate.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionValidate"));
@@ -141,7 +141,7 @@ public class OptionsWindow
 
     // Restore defaults button
     buttonDefault = Utilities.createJButton(
-        GT._("Restore defaults"),
+        GT._T("Restore defaults"),
         ConfigurationValueShortcut.RESTORE_DEFAULTS);
     buttonDefault.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionDefault"));

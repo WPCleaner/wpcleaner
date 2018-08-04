@@ -30,7 +30,7 @@ public class CheckErrorAlgorithm016 extends CheckErrorAlgorithmBase {
    * Possible global fixes.
    */
   private final static String[] globalFixes = new String[] {
-    GT._("Remove all control characters"),
+    GT._T("Remove all control characters"),
   };
 
   public CheckErrorAlgorithm016() {
@@ -135,7 +135,7 @@ public class CheckErrorAlgorithm016 extends CheckErrorAlgorithmBase {
           ControlCharacter found = getControlCharacter(controlFound.intValue());
           if (found != null) {
             errorResult.addText(
-                Integer.toHexString(controlFound.intValue()) + " - " + GT._(found.description));
+                Integer.toHexString(controlFound.intValue()) + " - " + GT._T(found.description));
           }
         }
         StringBuilder replacementB = new StringBuilder();
@@ -201,7 +201,7 @@ public class CheckErrorAlgorithm016 extends CheckErrorAlgorithmBase {
         if (!replacement.equals(original)) {
           errorResult.addReplacement(
               replacement,
-              GT._("Remove all control characters"),
+              GT._T("Remove all control characters"),
               automatic);
         }
         for (String otherReplacement : otherReplacements) {
@@ -281,13 +281,13 @@ public class CheckErrorAlgorithm016 extends CheckErrorAlgorithmBase {
   }
 
   /**
-   * @return Map of parameters (Name -> description).
+   * @return Map of parameters (key=name, value=description).
    * @see org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase#getParameters()
    */
   @Override
   public Map<String, String> getParameters() {
     Map<String, String> parameters = super.getParameters();
-    parameters.put("only_templates", GT._("To report control characters only in templates"));
+    parameters.put("only_templates", GT._T("To report control characters only in templates"));
     return parameters;
   }
 

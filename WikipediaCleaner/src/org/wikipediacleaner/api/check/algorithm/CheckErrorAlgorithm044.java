@@ -29,7 +29,7 @@ public class CheckErrorAlgorithm044 extends CheckErrorAlgorithmBase {
    * Possible global fixes.
    */
   private final static String[] globalFixes = new String[] {
-    GT._("Fix all bold headlines"),
+    GT._T("Fix all bold headlines"),
   };
 
   public CheckErrorAlgorithm044() {

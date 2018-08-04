@@ -91,7 +91,7 @@ public class DataManager {
    * 
    * @param date Date in ISO 8601 format.
    * @return Date.
-   * @throws ParseException
+   * @throws ParseException Exception due to the date format.
    */
   public static Date convertIso8601DateTime(String date) throws ParseException {
     synchronized (iso8601DateTime) {

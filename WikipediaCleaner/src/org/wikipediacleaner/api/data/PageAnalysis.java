@@ -147,6 +147,8 @@ public class PageAnalysis {
 
   /**
    * Perform page analysis.
+   * 
+   * @param perf Performance analysis.
    */
   public void performFullPageAnalysis(AnalysisPerformance perf) {
     long time0 = System.nanoTime();

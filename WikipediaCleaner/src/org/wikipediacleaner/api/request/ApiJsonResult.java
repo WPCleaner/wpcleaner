@@ -91,8 +91,7 @@ public abstract class ApiJsonResult extends BasicApiResult {
    * @param properties Properties defining the request.
    * @param maxTry Maximum number of tries.
    * @return Answer of MediaWiki API.
-   * @throws JDOMParseException
-   * @throws APIException
+   * @throws APIException Exception thrown by the API.
    */
   protected JsonNode getRoot(
       Map<String, String> properties,
@@ -188,7 +187,7 @@ public abstract class ApiJsonResult extends BasicApiResult {
    * Check for errors reported by the API.
    * 
    * @param root Document root.
-   * @throws APIException
+   * @throws APIException Exception thrown by the API.
    */
   protected void checkForError(JsonNode root) throws APIException {
     if (root == null) {

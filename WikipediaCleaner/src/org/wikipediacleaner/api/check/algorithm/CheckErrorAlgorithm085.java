@@ -224,7 +224,7 @@ public class CheckErrorAlgorithm085 extends CheckErrorAlgorithmBase {
                         replacement.append("}}");
                         errorResult.addReplacement(
                             replacement.toString(),
-                            GT._("Use {0}", PageElementTemplate.createTemplate(template[0])));
+                            GT._T("Use {0}", PageElementTemplate.createTemplate(template[0])));
                       }
                     }
                   }
@@ -254,13 +254,13 @@ public class CheckErrorAlgorithm085 extends CheckErrorAlgorithmBase {
   }
 
   /**
-   * @return Map of parameters (Name -> description).
+   * @return Map of parameters (key=name, value=description).
    * @see org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase#getParameters()
    */
   @Override
   public Map<String, String> getParameters() {
     Map<String, String> parameters = super.getParameters();
-    parameters.put("center_templates", GT._("A list of templates that can be used to replace &lt;center&gt; tags"));
+    parameters.put("center_templates", GT._T("A list of templates that can be used to replace &lt;center&gt; tags"));
     return parameters;
   }
 }

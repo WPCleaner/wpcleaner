@@ -243,28 +243,28 @@ public class CheckErrorAlgorithm518 extends CheckErrorAlgorithmBase {
   /**
    * Return the parameters used to configure the algorithm.
    * 
-   * @return Map of parameters (Name -> description).
+   * @return Map of parameters (key=name, value=description).
    */
   @Override
   public Map<String, String> getParameters() {
     Map<String, String> parameters = super.getParameters();
     parameters.put(
         "abuse_filter",
-        GT._(
+        GT._T(
             "An identifier of an abuse filter that is triggered by {0} tags.",
             PageElementTag.TAG_WIKI_NOWIKI));
     parameters.put(
         "apostrophe_template",
-        GT._("A template that can be used instead of an apostrophe."));
+        GT._T("A template that can be used instead of an apostrophe."));
     parameters.put(
         "asterisk_template",
-        GT._("A template that can be used instead of an asterisk."));
+        GT._T("A template that can be used instead of an asterisk."));
     parameters.put(
         "close_sb_template",
-        GT._("A template that can be used instead of a closing square bracket."));
+        GT._T("A template that can be used instead of a closing square bracket."));
     parameters.put(
         "open_sb_template",
-        GT._("A template that can be used instead of an opening square bracket."));
+        GT._T("A template that can be used instead of an opening square bracket."));
     return parameters;
   }
 }

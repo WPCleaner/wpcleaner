@@ -189,7 +189,7 @@ public class LanguageSelectionPanel extends JPanel {
     }
 
     // Language
-    buttonLanguage = Utilities.createJButton(GT._("Language"), null);
+    buttonLanguage = Utilities.createJButton(GT._T("Language"), null);
     buttonLanguage.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionLanguage"));
     constraints.gridx = 0;
@@ -203,7 +203,7 @@ public class LanguageSelectionPanel extends JPanel {
     constraints.gridy++;
 
     // Script
-    buttonScript = Utilities.createJButton(GT._("Script"), null);
+    buttonScript = Utilities.createJButton(GT._T("Script"), null);
     buttonScript.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionScript"));
     buttonScript.setEnabled(false);
@@ -218,7 +218,7 @@ public class LanguageSelectionPanel extends JPanel {
     constraints.gridy++;
 
     // Region
-    buttonRegion = Utilities.createJButton(GT._("Region"), null);
+    buttonRegion = Utilities.createJButton(GT._T("Region"), null);
     buttonRegion.addActionListener(
         EventHandler.create(ActionListener.class, this, "actionRegion"));
     buttonRegion.setEnabled(false);
@@ -237,7 +237,7 @@ public class LanguageSelectionPanel extends JPanel {
     txtVariant = new Vector<JTextField>(NB_VARIANTS);
     variant = new Vector<LanguageRegistry.Variant>(NB_VARIANTS);
     for (int i = 0; i < NB_VARIANTS; i++) {
-      JButton tmpButton = Utilities.createJButton(GT._("Variant n°{0}", Integer.toString(i + 1)), null);
+      JButton tmpButton = Utilities.createJButton(GT._T("Variant n°{0}", Integer.toString(i + 1)), null);
       tmpButton.setActionCommand(Integer.toString(i));
       tmpButton.addActionListener(EventHandler.create(
           ActionListener.class, this, "actionVariant", "actionCommand"));

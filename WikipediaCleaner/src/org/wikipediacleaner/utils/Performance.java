@@ -237,6 +237,8 @@ public class Performance {
 
   /**
    * Print an end message.
+   * 
+   * @param message Message.
    */
   public void printEnd(String message) {
     long time = currentTime();
@@ -247,6 +249,9 @@ public class Performance {
 
   /**
    * Print an end message.
+   * 
+   * @param message Message.
+   * @param message2 Second part of the message.
    */
   public void printEnd(String message, String message2) {
     long time = currentTime();
@@ -255,6 +260,11 @@ public class Performance {
     }
   }
 
+  /**
+   * Print detail.
+   * 
+   * @param message Messgae. 
+   */
   private void printDetail(String message) {
     printMessage(message);
     if (parts != null) {

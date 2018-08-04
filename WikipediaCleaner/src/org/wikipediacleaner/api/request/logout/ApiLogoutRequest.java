@@ -40,6 +40,8 @@ public class ApiLogoutRequest extends ApiRequest {
 
   /**
    * Logout.
+   * 
+   * @throws APIException Exception thrown by the API.
    */
   public void logout() throws APIException {
     Map<String, String> properties = getProperties(ACTION_LOGOUT, result.getFormat());

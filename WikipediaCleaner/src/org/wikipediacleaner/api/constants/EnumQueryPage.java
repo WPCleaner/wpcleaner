@@ -88,6 +88,6 @@ public enum EnumQueryPage {
    * @return Name of the special page.
    */
   public String getName() {
-    return GT._(name);
+    return GT._T(name);
   }
 }

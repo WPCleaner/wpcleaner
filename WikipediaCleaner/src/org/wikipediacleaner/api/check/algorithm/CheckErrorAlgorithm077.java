@@ -90,7 +90,7 @@ public class CheckErrorAlgorithm077 extends CheckErrorAlgorithmBase {
             }
             errorResult.addReplacement(
                 image.getDescriptionReplacement(replacement.toString()),
-                GT._("Remove {0} tags", "<small>"));
+                GT._T("Remove {0} tags", "<small>"));
             errors.add(errorResult);
           }
         }

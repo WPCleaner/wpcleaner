@@ -85,7 +85,7 @@ public class UpdateDabWarningWorker extends UpdateWarningWorker {
     long startTime = System.currentTimeMillis();
     EnumWikipedia wikipedia = getWikipedia();
     WPCConfiguration configuration = wikipedia.getConfiguration();
-    setText(GT._("Retrieving MediaWiki API"));
+    setText(GT._T("Retrieving MediaWiki API"));
     int lastCount = 0;
 
     Stats stats = new Stats();
@@ -96,7 +96,7 @@ public class UpdateDabWarningWorker extends UpdateWarningWorker {
 
         // Ask for confirmation
         if (getWindow() != null) {
-          int answer = getWindow().displayYesNoWarning(GT._(
+          int answer = getWindow().displayYesNoWarning(GT._T(
               "Analysis found {0} articles with disambiguation warning {1}.\n" +
               "Do you want to update the disambiguation warnings ?",
               new Object[] {
@@ -122,7 +122,7 @@ public class UpdateDabWarningWorker extends UpdateWarningWorker {
       tools.setLinksAvailable(linksAvailable);
       tools.setDabInformationAvailable(dabInformationAvailable);
       if (!useList) {
-        setText(GT._("Retrieving disambiguation pages"));
+        setText(GT._T("Retrieving disambiguation pages"));
         tools.preloadDabPages();
       }
       String lastTitle = null;
@@ -145,7 +145,7 @@ public class UpdateDabWarningWorker extends UpdateWarningWorker {
             tools.updateWarning(sublist, null, null, stats);
           } catch (APIException e) {
             if (getWindow() != null) {
-              int answer = getWindow().displayYesNoWarning(GT._(
+              int answer = getWindow().displayYesNoWarning(GT._T(
                   "An error occurred when updating disambiguation warnings. Do you want to continue ?\n\n" +
                   "Error: {0}", e.getMessage()));
               if (answer != JOptionPane.YES_OPTION) {
@@ -195,7 +195,7 @@ public class UpdateDabWarningWorker extends UpdateWarningWorker {
    * Generate the list of warning pages.
    * 
    * @param tools Update warning tools.
-   * @throws APIException
+   * @throws APIException Exception thrown by the API.
    */
   @Override
   protected void listWarningPages(UpdateWarningTools tools) throws APIException {

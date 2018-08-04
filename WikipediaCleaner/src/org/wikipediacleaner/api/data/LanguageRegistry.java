@@ -141,6 +141,7 @@ public class LanguageRegistry {
   }
 
   /**
+   * @param prefix Optional prefix.
    * @return List of all variants.
    */
   public List<LanguageRegistry.Variant> getVariants(String prefix) {

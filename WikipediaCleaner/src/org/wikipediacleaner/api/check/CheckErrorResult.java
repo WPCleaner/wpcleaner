@@ -64,6 +64,7 @@ public class CheckErrorResult implements Comparable<CheckErrorResult> {
    * Constructor.
    * 
    * @param algorithm Type of error.
+   * @param page Page.
    * @param startPosition Start of the error.
    * @param endPosition End of the error.
    * @param errorLevel Error level.
@@ -86,6 +87,7 @@ public class CheckErrorResult implements Comparable<CheckErrorResult> {
    * Constructor.
    * 
    * @param algorithm Type of error.
+   * @param page Page.
    * @param startPosition Start of the error.
    * @param endPosition End of the error.
    */
@@ -173,8 +175,8 @@ public class CheckErrorResult implements Comparable<CheckErrorResult> {
     addReplacement(
         replacement,
         (replacement.length() > 0) ?
-            GT._("Replace with {0}", replacement.replaceAll("\\n", "\u21b5")) :
-            GT._("Delete"),
+            GT._T("Replace with {0}", replacement.replaceAll("\\n", "\u21b5")) :
+            GT._T("Delete"),
         automatic, automaticBot);
   }
 
@@ -297,10 +299,12 @@ public class CheckErrorResult implements Comparable<CheckErrorResult> {
 
   /**
    * Add an action for editing the table of contents.
+   * 
+   * @param title Title to select by default when opening the table of contents.
    */
   public void addEditTocAction(PageElementTitle title) {
     addPossibleAction(
-        new SimpleAction(GT._("Edit table of contents"),
+        new SimpleAction(GT._T("Edit table of contents"),
         new MWPaneEditTocAction(title)));
   }
 

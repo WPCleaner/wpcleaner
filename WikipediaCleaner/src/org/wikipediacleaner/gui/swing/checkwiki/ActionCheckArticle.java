@@ -47,7 +47,7 @@ public class ActionCheckArticle extends AbstractAction implements ActionListener
     return Utilities.createJButton(
         showIcon ? "commons-nuvola-web-broom.png" : null,
         EnumImageSize.NORMAL,
-        GT._("Check article with CheckWiki"), !showIcon,
+        GT._T("Check article with CheckWiki"), !showIcon,
         null);
   }
 
@@ -134,19 +134,19 @@ public class ActionCheckArticle extends AbstractAction implements ActionListener
     if (detections == null) {
       Utilities.displayWarning(
           parent,
-          GT._("Unable to retrieve analysis from CheckWiki."));
+          GT._T("Unable to retrieve analysis from CheckWiki."));
       return;
     }
     if (detections.isEmpty()) {
       Utilities.displayInformationMessage(
           parent,
-          GT._("No errors are currently detected by CheckWiki."));
+          GT._T("No errors are currently detected by CheckWiki."));
       return;
     }
     DetectionPanel panel = new DetectionPanel(
         detections, textPane);
     JOptionPane.showMessageDialog(
-        parent, panel, GT._("Detections"),
+        parent, panel, GT._T("Detections"),
         JOptionPane.INFORMATION_MESSAGE);
   }
 }

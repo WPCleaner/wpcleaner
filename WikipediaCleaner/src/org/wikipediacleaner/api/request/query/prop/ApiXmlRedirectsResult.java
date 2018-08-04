@@ -47,7 +47,7 @@ public class ApiXmlRedirectsResult extends ApiXmlResult implements ApiRedirectsR
    * @param page Page.
    * @param list List to be filled with redirects to the page.
    * @return True if request should be continued.
-   * @throws APIException
+   * @throws APIException Exception thrown by the API.
    */
   @Override
   public boolean executeRedirects(

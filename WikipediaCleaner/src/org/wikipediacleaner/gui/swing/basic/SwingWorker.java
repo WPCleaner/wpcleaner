@@ -35,6 +35,8 @@ public abstract class SwingWorker {
   /** 
    * Get the value produced by the worker thread, or null if it 
    * hasn't been constructed yet.
+   * 
+   * @return Value produced by the worker thread, or null.
    */
   protected synchronized Object getValue() { 
     return value; 
@@ -49,6 +51,8 @@ public abstract class SwingWorker {
 
   /** 
    * Compute the value to be returned by the <code>get</code> method. 
+   * 
+   * @return Result of the worker.
    */
   public abstract Object construct();
 

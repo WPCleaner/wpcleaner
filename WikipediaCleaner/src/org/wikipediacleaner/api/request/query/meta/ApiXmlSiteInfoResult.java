@@ -53,7 +53,7 @@ public class ApiXmlSiteInfoResult extends ApiXmlResult implements ApiSiteInfoRes
    * Execute site information request.
    * 
    * @param properties Properties defining request.
-   * @throws APIException
+   * @throws APIException Exception thrown by the API.
    */
   @Override
   public void executeSiteInformation(

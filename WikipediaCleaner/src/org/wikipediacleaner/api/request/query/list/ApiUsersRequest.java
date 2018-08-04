@@ -100,6 +100,10 @@ public class ApiUsersRequest extends ApiListRequest {
 
   /**
    * Retrieve User information.
+   * 
+   * @param username User name.
+   * @return User.
+   * @throws APIException Exception thrown by the API.
    */
   public User retrieveUser(String username) throws APIException {
     Map<String, String> properties = getProperties(ACTION_QUERY, result.getFormat());

@@ -111,7 +111,7 @@ public class CWToolsPanel extends BotToolsPanel {
     constraints.weighty = 0;
 
     // Label
-    JLabel labelCW = Utilities.createJLabel(GT._("Automatic fixing for Check Wiki"));
+    JLabel labelCW = Utilities.createJLabel(GT._T("Automatic fixing for Check Wiki"));
     add(labelCW, constraints);
     constraints.gridy++;
 
@@ -133,10 +133,10 @@ public class CWToolsPanel extends BotToolsPanel {
 
     // Explanation
     String txtExplanation =
-      GT._("To use Check Wiki bot tools:") + "\n" +
-      "  - " + GT._("Select algorithms for which automatic fixing will be applied") + "\n" +
-      "  - " + GT._("Select algorithms that will be used to create a list of pages to work on") + "\n" +
-      "  - " + GT._("Run the tools below");
+      GT._T("To use Check Wiki bot tools:") + "\n" +
+      "  - " + GT._T("Select algorithms for which automatic fixing will be applied") + "\n" +
+      "  - " + GT._T("Select algorithms that will be used to create a list of pages to work on") + "\n" +
+      "  - " + GT._T("Run the tools below");
     JTextArea lblExplanation = new JTextArea(txtExplanation);
     lblExplanation.setEditable(false);
     lblExplanation.setBackground(getBackground());
@@ -145,14 +145,14 @@ public class CWToolsPanel extends BotToolsPanel {
 
     // Check box to decide if pages should be analyzed if not fixed
     chkCWAnalyze = Utilities.createJCheckBox(
-        GT._("Analyze pages that couldn't be fixed by bot"),
+        GT._T("Analyze pages that couldn't be fixed by bot"),
         config.getBoolean(null, ConfigurationValueBoolean.CHECK_BOT_ANALYZE));
     add(chkCWAnalyze, constraints);
     constraints.gridy++;
 
     // No limit for number of errors
     chkNoLimit = Utilities.createJCheckBox(
-        GT._("Ignore limit for errors not on Labs"), false);
+        GT._T("Ignore limit for errors not on Labs"), false);
     add(chkNoLimit, constraints);
     constraints.gridy++;
 
@@ -160,7 +160,7 @@ public class CWToolsPanel extends BotToolsPanel {
     modelNbPages = new SpinnerNumberModel(
         config.getInt(null, ConfigurationValueInteger.CHECK_BOT_NB_PAGES), 1, 10000, 1);
     JSpinner spinNbPages = new JSpinner(modelNbPages);
-    JLabel labelNbPages = Utilities.createJLabel(GT._("Number of pages:"));
+    JLabel labelNbPages = Utilities.createJLabel(GT._T("Number of pages:"));
     labelNbPages.setLabelFor(spinNbPages);
     constraints.gridwidth = 2;
     constraints.weightx = 1;
@@ -174,7 +174,7 @@ public class CWToolsPanel extends BotToolsPanel {
 
     // Comment
     txtComment = Utilities.createJTextField("", 40);
-    JLabel labelComment = Utilities.createJLabel(GT._("Comment:"));
+    JLabel labelComment = Utilities.createJLabel(GT._T("Comment:"));
     labelComment.setLabelFor(txtComment);
     constraints.gridwidth = 1;
     constraints.weightx = 0;
@@ -193,7 +193,7 @@ public class CWToolsPanel extends BotToolsPanel {
     // Button for running the automatic fixing
     JButton buttonCWAutomaticFixing = Utilities.createJButton(
         "commons-nuvola-web-broom.png", EnumImageSize.NORMAL,
-        GT._("Automatic fixing for Check Wiki"), false, null);
+        GT._T("Automatic fixing for Check Wiki"), false, null);
     buttonCWAutomaticFixing.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionCWAutomaticFixing"));
     toolbarButtons.add(buttonCWAutomaticFixing);
@@ -201,7 +201,7 @@ public class CWToolsPanel extends BotToolsPanel {
     // Button for marking errors already fixed
     JButton buttonCWAutomaticMarking = Utilities.createJButton(
         "gnome-dialog-apply.png", EnumImageSize.NORMAL,
-        GT._("Mark errors already fixed"), false, null);
+        GT._T("Mark errors already fixed"), false, null);
     buttonCWAutomaticMarking.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionCWAutomaticMarking"));
     toolbarButtons.add(buttonCWAutomaticMarking);
@@ -209,7 +209,7 @@ public class CWToolsPanel extends BotToolsPanel {
     // Button for checking white lists
     JButton buttonCWCheckWhiteLists = Utilities.createJButton(
         "gnome-edit-find.png", EnumImageSize.NORMAL,
-        GT._("Check whitelists"), false, null);
+        GT._T("Check whitelists"), false, null);
     buttonCWCheckWhiteLists.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionCWCheckWhiteLists"));
     toolbarButtons.add(buttonCWCheckWhiteLists);
@@ -217,7 +217,7 @@ public class CWToolsPanel extends BotToolsPanel {
     // Button for listing errors from dump file
     JButton buttonListCW = Utilities.createJButton(
         "gnome-logviewer.png", EnumImageSize.NORMAL,
-        GT._("Analyze dump file"), false, null);
+        GT._T("Analyze dump file"), false, null);
     buttonListCW.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionCWLists"));
     toolbarButtons.add(buttonListCW);
@@ -225,7 +225,7 @@ public class CWToolsPanel extends BotToolsPanel {
     // Button for saving selection
     JButton buttonSaveSelection = Utilities.createJButton(
         "gnome-document-save.png", EnumImageSize.NORMAL,
-        GT._("Save selection"), false, null);
+        GT._T("Save selection"), false, null);
     buttonSaveSelection.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionSaveSelection"));
     toolbarButtons.add(buttonSaveSelection);
@@ -233,7 +233,7 @@ public class CWToolsPanel extends BotToolsPanel {
     // Button for loading selection
     buttonLoadSelection = Utilities.createJButton(
         "gnome-drive-harddisk.png", EnumImageSize.NORMAL,
-        GT._("Load selection"), false, null);
+        GT._T("Load selection"), false, null);
     buttonLoadSelection.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionLoadSelection"));
     toolbarButtons.add(buttonLoadSelection);
@@ -274,12 +274,12 @@ public class CWToolsPanel extends BotToolsPanel {
     }
     List<CheckErrorAlgorithm> fixAlgorithms = modelCWAutomaticFixing.getFixAlgorithms();
     if ((fixAlgorithms == null) || fixAlgorithms.isEmpty()) {
-      window.displayWarning(GT._("You must select at least one algorithm for fixing errors"));
+      window.displayWarning(GT._T("You must select at least one algorithm for fixing errors"));
       return;
     }
     List<CheckErrorAlgorithm> listAlgorithms = modelCWAutomaticFixing.getListAlgorithms();
     if ((listAlgorithms == null) || listAlgorithms.isEmpty()) {
-      window.displayWarning(GT._("You must select at least one algorithm for listing errors"));
+      window.displayWarning(GT._T("You must select at least one algorithm for listing errors"));
       return;
     }
     int answer = window.displayYesNoWarning(BasicWindow.experimentalMessage);
@@ -329,7 +329,7 @@ public class CWToolsPanel extends BotToolsPanel {
     }
     List<CheckErrorAlgorithm> listAlgorithms = modelCWAutomaticFixing.getListAlgorithms();
     if ((listAlgorithms == null) || listAlgorithms.isEmpty()) {
-      window.displayWarning(GT._("You must select at least one algorithm for listing errors"));
+      window.displayWarning(GT._T("You must select at least one algorithm for listing errors"));
       return;
     }
     int answer = window.displayYesNoWarning(BasicWindow.experimentalMessage);
@@ -346,7 +346,7 @@ public class CWToolsPanel extends BotToolsPanel {
     while (!done) {
       ListCWPanel panel = new ListCWPanel(wiki);
       int result = JOptionPane.showConfirmDialog(
-          window.getParentComponent(), panel, GT._("Analyze dump file"),
+          window.getParentComponent(), panel, GT._T("Analyze dump file"),
           JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
       if (result != JOptionPane.OK_OPTION) {
         return;
@@ -382,7 +382,7 @@ public class CWToolsPanel extends BotToolsPanel {
    */
   public void actionSaveSelection() {
     // Retrieve configuration name
-    String name = window.askForValue(GT._("What is the name of the selection?"), null, null);
+    String name = window.askForValue(GT._T("What is the name of the selection?"), null, null);
     if ((name == null) || (name.isEmpty())) {
       return;
     }

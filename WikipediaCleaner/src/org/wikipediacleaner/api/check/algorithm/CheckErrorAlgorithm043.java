@@ -147,7 +147,7 @@ public class CheckErrorAlgorithm043 extends CheckErrorAlgorithmBase {
         if (!errorReported) {
           CheckErrorResult errorResult = createCheckErrorResult(
               analysis, currentIndex, currentIndex + 2);
-          errorResult.addReplacement("", GT._("Delete"));
+          errorResult.addReplacement("", GT._T("Delete"));
           errors.add(errorResult);
           result = true;
         }

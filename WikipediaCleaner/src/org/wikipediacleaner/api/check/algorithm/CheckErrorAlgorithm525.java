@@ -123,7 +123,7 @@ public class CheckErrorAlgorithm525 extends CheckErrorAlgorithmBase {
           }
           errorResult.addReplacement(
               replacement,
-              GT._("Remove {0} tags", PageElementTag.TAG_HTML_SPAN),
+              GT._T("Remove {0} tags", PageElementTag.TAG_HTML_SPAN),
               onlyUselessParameter);
         }
         errors.add(errorResult);

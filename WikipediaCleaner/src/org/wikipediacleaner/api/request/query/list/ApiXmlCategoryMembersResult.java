@@ -49,7 +49,7 @@ public class ApiXmlCategoryMembersResult extends ApiXmlResult implements ApiCate
    * @param categories Map of categories to be analyzed with their depth.
    * @param depth Current depth of the analysis.
    * @return True if request should be continued.
-   * @throws APIException
+   * @throws APIException Exception thrown by the API.
    */
   @Override
   public boolean executeCategoryMembers(

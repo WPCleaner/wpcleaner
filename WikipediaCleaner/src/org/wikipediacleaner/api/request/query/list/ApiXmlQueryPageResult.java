@@ -46,7 +46,7 @@ public class ApiXmlQueryPageResult extends ApiXmlResult implements ApiQueryPageR
    * @param properties Properties defining request.
    * @param list List to be filled with query pages.
    * @return True if request should be continued.
-   * @throws APIException
+   * @throws APIException Exception thrown by the API.
    */
   @Override
   public boolean executeQueryPage(

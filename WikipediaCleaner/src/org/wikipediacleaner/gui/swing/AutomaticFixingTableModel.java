@@ -179,11 +179,11 @@ class AutomaticFixingTableModel extends AbstractTableModel {
   public String getColumnName(int column) {
     switch (column) {
     case COLUMN_FROM:
-      return GT._("Original text");
+      return GT._T("Original text");
     case COLUMN_TO:
-      return GT._("Replacement text");
+      return GT._T("Replacement text");
     case COLUMN_REGEX:
-      return GT._("regex");
+      return GT._T("regex");
     }
     return super.getColumnName(column);
   }

@@ -81,7 +81,7 @@ public class UpdateISSNWarningWorker extends UpdateWarningWorker {
 
         // Ask for confirmation
         if (getWindow() != null) {
-          int answer = getWindow().displayYesNoWarning(GT._(
+          int answer = getWindow().displayYesNoWarning(GT._T(
               "Analysis found {0} articles to check for {1} errors.\n" +
               "Do you want to update the warnings ?",
               new Object[] { Integer.valueOf(warningPages.size()).toString(), "ISSN" } ));
@@ -122,7 +122,7 @@ public class UpdateISSNWarningWorker extends UpdateWarningWorker {
             tools.updateWarning(sublist, null, null, stats);
           } catch (APIException e) {
             if (getWindow() != null) {
-              int answer = getWindow().displayYesNoWarning(GT._(
+              int answer = getWindow().displayYesNoWarning(GT._T(
                   "An error occurred when updating {1} warnings. Do you want to continue ?\n\n" +
                   "Error: {0}",
                   new Object[] { e.getMessage(), "ISSN" }));
@@ -171,7 +171,7 @@ public class UpdateISSNWarningWorker extends UpdateWarningWorker {
    * Generate the list of warning pages.
    * 
    * @param tools Update warning tools.
-   * @throws APIException
+   * @throws APIException Exception thrown by the API.
    */
   @Override
   protected void listWarningPages(UpdateWarningTools tools) throws APIException {
@@ -275,7 +275,7 @@ public class UpdateISSNWarningWorker extends UpdateWarningWorker {
         if (simulation && (getWindow() != null)) {
           int answer = Utilities.displayYesNoWarning(
               getWindow().getParentComponent(),
-              GT._("Do you want to update {0}?", pageName));
+              GT._T("Do you want to update {0}?", pageName));
           if (answer == JOptionPane.YES_OPTION) {
             updatePage = true;
           }

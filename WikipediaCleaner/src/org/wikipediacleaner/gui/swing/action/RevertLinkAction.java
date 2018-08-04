@@ -16,7 +16,7 @@ import javax.swing.text.Element;
 
 
 /**
- * An action listener for reverting internal links ([[xx|yy]] -> [[yy|xx]]).
+ * An action listener for reverting internal links ([[xx|yy]] gives [[yy|xx]]).
  */
 public class RevertLinkAction implements ActionListener {
 

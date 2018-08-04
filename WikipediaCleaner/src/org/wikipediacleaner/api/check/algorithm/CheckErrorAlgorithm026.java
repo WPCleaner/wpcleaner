@@ -96,18 +96,18 @@ public class CheckErrorAlgorithm026 extends CheckErrorAlgorithmBase {
             }
             error.addReplacement(
                 "'''" + text + "'''",
-                GT._("Replace with {0}", "'''" + visibleText + "'''"));
+                GT._T("Replace with {0}", "'''" + visibleText + "'''"));
             error.addReplacement(
                 text,
-                GT._("Replace with {0}", visibleText));
+                GT._T("Replace with {0}", visibleText));
           } else {
-            error.addReplacement("", GT._("Delete"));
+            error.addReplacement("", GT._T("Delete"));
           }
           errors.add(error);
         } else {
           CheckErrorResult error = createCheckErrorResult(
               analysis, bTag.getBeginIndex(), bTag.getEndIndex());
-          error.addReplacement("", GT._("Delete"));
+          error.addReplacement("", GT._T("Delete"));
           errors.add(error);
         }
       }

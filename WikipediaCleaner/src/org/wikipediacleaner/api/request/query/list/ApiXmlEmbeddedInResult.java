@@ -46,7 +46,7 @@ public class ApiXmlEmbeddedInResult extends ApiXmlResult implements ApiEmbeddedI
    * @param properties Properties defining request.
    * @param list List to be filled with embedding pages.
    * @return True if request should be continued.
-   * @throws APIException
+   * @throws APIException Exception thrown by the API.
    */
   @Override
   public boolean executeEmbeddedIn(

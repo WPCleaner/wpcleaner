@@ -48,7 +48,7 @@ public class ApiXmlLintErrorsResult extends ApiXmlResult implements ApiLintError
    * @param category Linter category.
    * @param withTemplates Includes templates causing the error.
    * @return True if request should be continued.
-   * @throws APIException
+   * @throws APIException Exception thrown by the API.
    */
   @Override
   public boolean executeLinterCategory(

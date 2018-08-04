@@ -50,7 +50,7 @@ public class ApiXmlLinksHereResult extends ApiXmlResult implements ApiLinksHereR
    * @param page Main page.
    * @param lists Lists to be filled with links to the page.
    * @return True if request should be continued.
-   * @throws APIException
+   * @throws APIException Exception thrown by the API.
    */
   @Override
   public boolean executeLinksHere(

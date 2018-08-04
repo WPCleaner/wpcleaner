@@ -65,6 +65,7 @@ public class PreviewWindow
    * @param text Page text.
    * @param showExpand True if text with expanded templates should be displayed.
    * @param showPreview True if preview should be displayed.
+   * @param wikipedia Wiki.
    */
   public static void createExpandTemplatesWindow(
       final String page,
@@ -109,11 +110,11 @@ public class PreviewWindow
   public String getTitle() {
     return showPreview ?
         (showExpand ?
-            GT._("Expand Templates and Preview - {0}", pageTitle) :
-            GT._("Preview - {0}", pageTitle))
+            GT._T("Expand Templates and Preview - {0}", pageTitle) :
+            GT._T("Preview - {0}", pageTitle))
         :
         (showExpand ?
-            GT._("Expand Templates - {0}", pageTitle) :
+            GT._T("Expand Templates - {0}", pageTitle) :
             "?");
   }
 
@@ -139,7 +140,7 @@ public class PreviewWindow
 
     // Discussion title
     textTitle = new JTextField(60);
-    JLabel labelTitle = Utilities.createJLabel(GT._("&Title"));
+    JLabel labelTitle = Utilities.createJLabel(GT._T("&Title"));
     labelTitle.setLabelFor(textTitle);
     labelTitle.setHorizontalAlignment(SwingConstants.TRAILING);
     constraints.gridx = 0;
@@ -201,7 +202,7 @@ public class PreviewWindow
 
     // Buttons
     JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-    buttonUpdate = Utilities.createJButton(GT._("&Update"), null);
+    buttonUpdate = Utilities.createJButton(GT._T("&Update"), null);
     buttonUpdate.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionUpdate"));
     buttonPanel.add(buttonUpdate);

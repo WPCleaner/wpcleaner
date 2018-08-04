@@ -36,7 +36,7 @@ public class ApiXmlDeleteResult extends ApiXmlResult implements ApiDeleteResult 
    * Execute delete request.
    * 
    * @param properties Properties defining request.
-   * @throws APIException
+   * @throws APIException Exception thrown by the API.
    */
   @Override
   public void executeDelete(

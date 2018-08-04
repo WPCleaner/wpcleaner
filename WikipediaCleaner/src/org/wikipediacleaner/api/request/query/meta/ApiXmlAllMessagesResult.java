@@ -43,7 +43,7 @@ public class ApiXmlAllMessagesResult extends ApiXmlResult implements ApiAllMessa
    * 
    * @param properties Properties defining request.
    * @return Message.
-   * @throws APIException
+   * @throws APIException Exception thrown by the API.
    */
   @Override
   public String executeMessage(
@@ -73,7 +73,7 @@ public class ApiXmlAllMessagesResult extends ApiXmlResult implements ApiAllMessa
    * @param properties Properties defining request.
    * @param messages Map of messages to be filled with the results.
    * @return True if request should be continued.
-   * @throws APIException
+   * @throws APIException Exception thrown by the API.
    */
   @Override
   public boolean executeMessages(

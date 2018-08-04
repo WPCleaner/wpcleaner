@@ -163,6 +163,9 @@ public class ApiAbuseFiltersRequest extends ApiListRequest {
 
   /**
    * Load list of abuse filters.
+   * 
+   * @return List of abuse filters.
+   * @throws APIException Exception thrown by the API.
    */
   public List<AbuseFilter> loadAbuseFilters() throws APIException {
     Map<String, String> properties = getProperties(ACTION_QUERY, result.getFormat());

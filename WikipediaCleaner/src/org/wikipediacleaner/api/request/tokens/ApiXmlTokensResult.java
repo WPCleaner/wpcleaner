@@ -42,7 +42,7 @@ public class ApiXmlTokensResult extends ApiXmlResult implements ApiTokensResult 
    * Execute tokens request.
    * 
    * @param properties Properties defining request.
-   * @throws APIException
+   * @throws APIException Exception thrown by the API.
    */
   @Override
   public void executeTokens(

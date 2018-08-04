@@ -27,7 +27,7 @@ public interface ApiBacklinksResult extends ApiResult {
    * @param page Page.
    * @param list List to be filled with back links.
    * @return True if request should be continued.
-   * @throws APIException
+   * @throws APIException Exception thrown by the API.
    */
   public boolean executeBacklinks(
       Map<String, String> properties,

@@ -43,7 +43,7 @@ public class ApiXmlLanguageLinksResult extends ApiXmlPropertiesResult implements
    * @param properties Properties defining request.
    * @param languageLinks Map of language links to be set.
    * @return True if request should be continued.
-   * @throws APIException
+   * @throws APIException Exception thrown by the API.
    */
   @Override
   public boolean getLanguageLinks(

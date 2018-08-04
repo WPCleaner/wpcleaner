@@ -87,7 +87,7 @@ public class CheckErrorAlgorithm515 extends CheckErrorAlgorithmBase {
               analysis, previousCR, nextCR);
           if ((previousCR > tagImagemap.getEndIndex()) &&
               (contents.charAt(nextCR) == '\n')) {
-            errorResult.addReplacement("", GT._("Delete"));
+            errorResult.addReplacement("", GT._T("Delete"));
           }
           errors.add(errorResult);
         } else {

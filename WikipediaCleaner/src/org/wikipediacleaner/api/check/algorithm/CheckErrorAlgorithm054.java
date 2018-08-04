@@ -33,7 +33,7 @@ public class CheckErrorAlgorithm054 extends CheckErrorAlgorithmBase {
    * Possible global fixes.
    */
   private final static String[] globalFixes = new String[] {
-    GT._("Remove breaks in list"),
+    GT._T("Remove breaks in list"),
   };
 
   public CheckErrorAlgorithm054() {

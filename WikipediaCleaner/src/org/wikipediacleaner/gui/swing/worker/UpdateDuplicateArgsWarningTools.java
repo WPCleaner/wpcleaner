@@ -79,7 +79,7 @@ public class UpdateDuplicateArgsWarningTools extends UpdateWarningTools {
    * 
    * @param pages List of pages.
    * @return True if information was retrieved.
-   * @throws APIException
+   * @throws APIException Exception thrown by the API.
    */
   @Override
   protected boolean retrievePageInformation(
@@ -228,7 +228,7 @@ public class UpdateDuplicateArgsWarningTools extends UpdateWarningTools {
    */
   @Override
   protected String getMessageRemoveWarning(String title) {
-    return GT._("Removing duplicate arguments warning - {0}", title);
+    return GT._T("Removing duplicate arguments warning - {0}", title);
   }
 
   /**
@@ -237,6 +237,6 @@ public class UpdateDuplicateArgsWarningTools extends UpdateWarningTools {
    */
   @Override
   protected String getMessageUpdateWarning(String title) {
-    return GT._("Updating duplicate arguments warning - {0}", title);
+    return GT._T("Updating duplicate arguments warning - {0}", title);
   }
 }

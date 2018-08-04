@@ -32,7 +32,7 @@ public class CheckErrorAlgorithm045 extends CheckErrorAlgorithmBase {
    * Possible global fixes.
    */
   private final static String[] globalFixes = new String[] {
-    GT._("Delete all"),
+    GT._T("Delete all"),
   };
 
   public CheckErrorAlgorithm045() {
@@ -127,7 +127,7 @@ public class CheckErrorAlgorithm045 extends CheckErrorAlgorithmBase {
           }
           CheckErrorResult errorResult = createCheckErrorResult(
               analysis, beginIndex, endIndex);
-          errorResult.addReplacement("", GT._("Delete"));
+          errorResult.addReplacement("", GT._T("Delete"));
           errors.add(errorResult);
         }
       }

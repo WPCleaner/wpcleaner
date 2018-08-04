@@ -32,7 +32,7 @@ public class CheckErrorAlgorithm064 extends CheckErrorAlgorithmBase {
 
   /** Possible global fixes */
   private final static String[] globalFixes = new String[] {
-    GT._("Modify all internal links"),
+    GT._T("Modify all internal links"),
   };
 
   /** Possible quotes before text */

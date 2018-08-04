@@ -99,7 +99,7 @@ public class ApiInfoRequest extends ApiPropertiesRequest {
    * Load informations of a list of pages.
    * 
    * @param pages List of pages.
-   * @throws APIException
+   * @throws APIException Exception thrown by the API.
    */
   public void loadInformations(Collection<Page> pages) throws APIException {
     Map<String, String> properties = getProperties(ACTION_QUERY, result.getFormat());

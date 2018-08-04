@@ -92,7 +92,7 @@ public class PageCommentsWindow extends BasicWindow {
    */
   @Override
   public String getTitle() {
-    return GT._("Page comments - {0}", page.getTitle());
+    return GT._T("Page comments - {0}", page.getTitle());
   }
 
   /**
@@ -113,7 +113,7 @@ public class PageCommentsWindow extends BasicWindow {
   private Component createCommentsComponents() {
     JPanel panel = new JPanel(new GridBagLayout());
     panel.setBorder(BorderFactory.createTitledBorder(
-        BorderFactory.createEtchedBorder(), GT._("Comments")));
+        BorderFactory.createEtchedBorder(), GT._T("Comments")));
 
     // Initialize constraints
     GridBagConstraints constraints = new GridBagConstraints();
@@ -133,7 +133,7 @@ public class PageCommentsWindow extends BasicWindow {
     if ((page != null) && (page.getComment() != null)) {
       txtComments.setText(page.getComment().getComment());
     }
-    JLabel labelComments = Utilities.createJLabel(GT._("Comments :"));
+    JLabel labelComments = Utilities.createJLabel(GT._T("Comments :"));
     labelComments.setLabelFor(txtComments);
     labelComments.setHorizontalAlignment(SwingConstants.TRAILING);
     constraints.gridx = 0;
@@ -155,7 +155,7 @@ public class PageCommentsWindow extends BasicWindow {
         (page.getComment().getMaxMainArticles() != null)) {
       txtMaxMain.setValue(page.getComment().getMaxMainArticles());
     }
-    JLabel labelMaxMain = Utilities.createJLabel(GT._("Max backlinks in Main :"));
+    JLabel labelMaxMain = Utilities.createJLabel(GT._T("Max backlinks in Main :"));
     labelMaxMain.setLabelFor(txtMaxMain);
     labelMaxMain.setHorizontalAlignment(SwingConstants.TRAILING);
     countMain = (page != null) ? page.getBacklinksCountInMainNamespace() : null;
@@ -187,7 +187,7 @@ public class PageCommentsWindow extends BasicWindow {
         (page.getComment().getMaxTemplateArticles() != null)) {
       txtMaxTemplate.setValue(page.getComment().getMaxTemplateArticles());
     }
-    JLabel labelMaxTemplate = Utilities.createJLabel(GT._("Max backlinks in Template :"));
+    JLabel labelMaxTemplate = Utilities.createJLabel(GT._T("Max backlinks in Template :"));
     labelMaxTemplate.setLabelFor(txtMaxTemplate);
     labelMaxTemplate.setHorizontalAlignment(SwingConstants.TRAILING);
     countTemplate = (page != null) ? page.getBacklinksCountInTemplateNamespace() : null;
@@ -219,7 +219,7 @@ public class PageCommentsWindow extends BasicWindow {
         (page.getComment().getMaxOtherArticles() != null)) {
       txtMaxOther.setValue(page.getComment().getMaxOtherArticles());
     }
-    JLabel labelMaxOther = Utilities.createJLabel(GT._("Max backlinks in other namespaces :"));
+    JLabel labelMaxOther = Utilities.createJLabel(GT._T("Max backlinks in other namespaces :"));
     labelMaxOther.setLabelFor(txtMaxOther);
     labelMaxOther.setHorizontalAlignment(SwingConstants.TRAILING);
     if (page.getBacklinksCount() != null) {
@@ -277,13 +277,13 @@ public class PageCommentsWindow extends BasicWindow {
     panel.setBorder(BorderFactory.createEtchedBorder());
 
     // Ok button
-    buttonOk = Utilities.createJButton(GT._("&OK"), null);
+    buttonOk = Utilities.createJButton(GT._T("&OK"), null);
     buttonOk.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionOk"));
     panel.add(buttonOk);
 
     // Validate button
-    buttonRemove = Utilities.createJButton(GT._("&Remove page comments"), null);
+    buttonRemove = Utilities.createJButton(GT._T("&Remove page comments"), null);
     buttonRemove.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionRemove"));
     panel.add(buttonRemove);

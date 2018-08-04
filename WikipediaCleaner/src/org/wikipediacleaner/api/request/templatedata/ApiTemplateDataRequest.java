@@ -60,6 +60,7 @@ public class ApiTemplateDataRequest extends ApiRequest {
    * 
    * @param page Page for which TemplateData is requested.
    * @return TemplateData for the page.
+   * @throws APIException Exception thrown by the API.
    */
   public TemplateData retrieveTemplateData(Page page) throws APIException {
     Map<String, String> properties = getProperties(ACTION_TEMPLATE_DATA, result.getFormat());

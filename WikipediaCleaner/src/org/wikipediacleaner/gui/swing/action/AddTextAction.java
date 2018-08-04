@@ -39,6 +39,18 @@ public class AddTextAction extends TextAction {
   private final Element element;
   private final JTextPane textPane;
 
+  /**
+   * Constructor.
+   * 
+   * @param prefix Prefix.
+   * @param suffix Suffix.
+   * @param textProvider Text provider.
+   * @param question Question.
+   * @param defaultValue Default value.
+   * @param checker Checker.
+   * @param element Element.
+   * @param textPane Text pane.
+   */
   public AddTextAction(
       String prefix,
       String suffix,
@@ -54,6 +66,20 @@ public class AddTextAction extends TextAction {
         checker, element, textPane);
   }
 
+  /**
+   * Constructor.
+   * 
+   * @param prefix Prefix.
+   * @param suffix Suffix.
+   * @param textProvider Text provider.
+   * @param question Question.
+   * @param possibleValues List of possible values.
+   * @param onlyList True to restrict values to the list.
+   * @param defaultValue Default value.
+   * @param checker Checker.
+   * @param element Element.
+   * @param textPane Text pane.
+   */
   public AddTextAction(
       String prefix,
       String suffix,
@@ -137,7 +163,11 @@ public class AddTextAction extends TextAction {
   }
 
   /**
-   * Replace text. 
+   * Replace text.
+   * 
+   * @param localNewText New text.
+   * @param localElement Element.
+   * @param localTextPane Text Pane.
    */
   private void replace(
       String localNewText,

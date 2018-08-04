@@ -714,12 +714,12 @@ public class CheckErrorAlgorithm090 extends CheckErrorAlgorithmBase {
     // Link without text
     CheckErrorResult errorResult = createCheckErrorResult(
         info.analysis, info.beginIndex, info.endIndex);
-    String question = GT._("What text should be displayed by the link?");
+    String question = GT._T("What text should be displayed by the link?");
     AddInternalLinkActionProvider action = new AddInternalLinkActionProvider(
         info.article, info.articleUrl.getFragment(), null, null, null,
         question, info.articleUrl.getTitleAndFragment().replaceAll("\\_", " "), checker);
     errorResult.addPossibleAction(
-        GT._("Convert into an internal link"),
+        GT._T("Convert into an internal link"),
         action);
     info.errors.add(errorResult);
     return true;
@@ -799,16 +799,16 @@ public class CheckErrorAlgorithm090 extends CheckErrorAlgorithmBase {
   }
 
   /**
-   * @return Map of parameters (Name -> description).
+   * @return Map of parameters (key=name, value=description).
    * @see org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase#getParameters()
    */
   @Override
   public Map<String, String> getParameters() {
     Map<String, String> parameters = super.getParameters();
-    parameters.put("history_templates", GT._("Templates to be used for linking to the history of an article"));
-    parameters.put("link_templates", GT._("Templates using external links"));
-    parameters.put("oldid_templates", GT._("Templates to be used for linking to an old version of an article"));
-    parameters.put("prefix_index_templates", GT._("Templates to be used instead of Special:PrefixIndex"));
+    parameters.put("history_templates", GT._T("Templates to be used for linking to the history of an article"));
+    parameters.put("link_templates", GT._T("Templates using external links"));
+    parameters.put("oldid_templates", GT._T("Templates to be used for linking to an old version of an article"));
+    parameters.put("prefix_index_templates", GT._T("Templates to be used instead of Special:PrefixIndex"));
     return parameters;
   }
 

@@ -45,7 +45,7 @@ public class ApiXmlRecentChangesResult extends ApiXmlResult implements ApiRecent
    * @param properties Properties defining request.
    * @param recentChanges The list of recent changes to be filled.
    * @return The timestamp to use as a starting point for the next call.
-   * @throws APIException
+   * @throws APIException Exception thrown by the API.
    */
   @Override
   public String executeRecentChanges(

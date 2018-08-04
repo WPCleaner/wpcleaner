@@ -42,7 +42,7 @@ public class ExpandTemplatesCallable extends MediaWikiCallable<String> {
    */
   @Override
   public String call() throws APIException {
-    setText(GT._("Expanding templates") + " - " + title);
+    setText(GT._T("Expanding templates") + " - " + title);
     return api.expandTemplates(getWikipedia(), title, text);
   }
 

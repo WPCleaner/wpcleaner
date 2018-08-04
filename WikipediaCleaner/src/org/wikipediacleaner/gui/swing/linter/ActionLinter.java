@@ -48,7 +48,7 @@ public class ActionLinter extends AbstractAction implements ActionListener {
     return Utilities.createJButton(
         showIcon ? "Linter_logo_v2.png" : null,
         EnumImageSize.NORMAL,
-        GT._("Check article with Linter"), !showIcon,
+        GT._T("Check article with Linter"), !showIcon,
         null);
   }
 
@@ -134,7 +134,7 @@ public class ActionLinter extends AbstractAction implements ActionListener {
       if (errors == null) {
         Utilities.displayWarning(
             parent,
-            GT._("Unable to retrieve analysis from Linter."));
+            GT._T("Unable to retrieve analysis from Linter."));
         return;
       }
       Iterator<LinterError> itErrors = errors.iterator();
@@ -156,12 +156,12 @@ public class ActionLinter extends AbstractAction implements ActionListener {
       if (errors.isEmpty()) {
         Utilities.displayInformationMessage(
             parent,
-            GT._("No errors are currently detected by Linter."));
+            GT._T("No errors are currently detected by Linter."));
         return;
       }
       LinterErrorPanel panel = new LinterErrorPanel(wiki.getWikiConfiguration(), errors, textPane);
       JOptionPane.showMessageDialog(
-          parent, panel, GT._("Errors"),
+          parent, panel, GT._T("Errors"),
           JOptionPane.INFORMATION_MESSAGE);
     } catch (APIException exception) {
       Utilities.displayError(parent, exception);

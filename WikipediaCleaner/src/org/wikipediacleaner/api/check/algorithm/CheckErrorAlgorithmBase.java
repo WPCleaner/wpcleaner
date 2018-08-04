@@ -269,15 +269,15 @@ public abstract class CheckErrorAlgorithmBase implements CheckErrorAlgorithm {
   /**
    * Return the parameters used to configure the algorithm.
    * 
-   * @return Map of parameters (Name -> description).
+   * @return Map of parameters (key=name, value=description).
    */
   @Override
   public Map<String, String> getParameters() {
     Map<String, String> parameters = new Hashtable<String, String>();
-    parameters.put("link", GT._("Title of the article describing this type of error"));
-    parameters.put("noauto", GT._("Set to true to prevent automatic modifications for this type of error"));
-    parameters.put("whitelist", GT._("List of false positives for this type of error"));
-    parameters.put("whitelistpage", GT._("Page containing the list of false positives for this type of error"));
+    parameters.put("link", GT._T("Title of the article describing this type of error"));
+    parameters.put("noauto", GT._T("Set to true to prevent automatic modifications for this type of error"));
+    parameters.put("whitelist", GT._T("List of false positives for this type of error"));
+    parameters.put("whitelistpage", GT._T("Page containing the list of false positives for this type of error"));
     return parameters;
   }
 

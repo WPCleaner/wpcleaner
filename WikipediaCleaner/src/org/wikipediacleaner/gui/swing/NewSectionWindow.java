@@ -102,7 +102,7 @@ public class NewSectionWindow extends BasicWindow {
    */
   @Override
   public String getTitle() {
-    return GT._("New section in {0}", page.getTitle());
+    return GT._T("New section in {0}", page.getTitle());
   }
 
   /**
@@ -112,7 +112,7 @@ public class NewSectionWindow extends BasicWindow {
   protected Component createComponents() {
     JPanel panel = new JPanel(new GridBagLayout());
     JPanel panelComment = new JPanel(new GridBagLayout());
-    panelComment.setBorder(new TitledBorder(GT._("Comment")));
+    panelComment.setBorder(new TitledBorder(GT._T("Comment")));
 
     // Initialize constraints
     GridBagConstraints constraints = new GridBagConstraints();
@@ -129,7 +129,7 @@ public class NewSectionWindow extends BasicWindow {
 
     // Discussion title
     textTitle = new JTextField(60);
-    JLabel labelTitle = Utilities.createJLabel(GT._("&Title"));
+    JLabel labelTitle = Utilities.createJLabel(GT._T("&Title"));
     labelTitle.setLabelFor(textTitle);
     labelTitle.setHorizontalAlignment(SwingConstants.TRAILING);
     constraints.gridx = 0;
@@ -141,14 +141,14 @@ public class NewSectionWindow extends BasicWindow {
     constraints.gridy++;
 
     // Force watching and signature
-    buttonSignature = Utilities.createJButton(GT._("&Signature"), null);
+    buttonSignature = Utilities.createJButton(GT._T("&Signature"), null);
     buttonSignature.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionSignature"));
     constraints.gridx = 0;
     constraints.weightx = 0;
     panelComment.add(buttonSignature, constraints);
     chkForceWatch = Utilities.createJCheckBox(
-        GT._("&Force watching page"), false);
+        GT._T("&Force watching page"), false);
     constraints.gridx++;
     constraints.weightx = 1;
     panelComment.add(chkForceWatch, constraints);
@@ -191,7 +191,7 @@ public class NewSectionWindow extends BasicWindow {
       scrollText.setPreferredSize(new Dimension(1000, 300));
       scrollText.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
       JPanel panelText = new JPanel(new BorderLayout());
-      panelText.setBorder(new TitledBorder(GT._("Article contents")));
+      panelText.setBorder(new TitledBorder(GT._T("Article contents")));
       panelText.add(scrollText);
       panel.add(panelText, constraints);
       constraints.gridy++;
@@ -199,11 +199,11 @@ public class NewSectionWindow extends BasicWindow {
 
     // Buttons
     JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-    buttonValidate = Utilities.createJButton(GT._("&Validate"), null);
+    buttonValidate = Utilities.createJButton(GT._T("&Validate"), null);
     buttonValidate.addActionListener(
         EventHandler.create(ActionListener.class, this, "actionValidate"));
     buttonPanel.add(buttonValidate);
-    buttonCancel = Utilities.createJButton(GT._("&Cancel"), null);
+    buttonCancel = Utilities.createJButton(GT._T("&Cancel"), null);
     buttonCancel.addActionListener(EventHandler.create(
         ActionListener.class, this, "dispose"));
     buttonPanel.add(buttonCancel);

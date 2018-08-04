@@ -25,7 +25,7 @@ public interface ApiPagePropsResult extends ApiPropertiesResult {
    * @param properties Properties defining request.
    * @param list List of pages for which disambiguation status needs to be set.
    * @return True if request should be continued.
-   * @throws APIException
+   * @throws APIException Exception thrown by the API.
    */
   public boolean setDiambiguationStatus(
       Map<String, String> properties,

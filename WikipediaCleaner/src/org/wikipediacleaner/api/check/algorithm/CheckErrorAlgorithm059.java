@@ -34,7 +34,7 @@ public class CheckErrorAlgorithm059 extends CheckErrorAlgorithmBase {
    * Possible global fixes.
    */
   private final static String[] globalFixes = new String[] {
-    GT._("Delete all"),
+    GT._T("Delete all"),
   };
 
   public CheckErrorAlgorithm059() {
@@ -163,14 +163,14 @@ public class CheckErrorAlgorithm059 extends CheckErrorAlgorithmBase {
   /**
    * Return the parameters used to configure the algorithm.
    * 
-   * @return Map of parameters (Name -> description).
+   * @return Map of parameters (key=name, value=description).
    */
   @Override
   public Map<String, String> getParameters() {
     Map<String, String> parameters = super.getParameters();
     parameters.put(
         "templates",
-        GT._("A list of templates that should be ignored"));
+        GT._T("A list of templates that should be ignored"));
     return parameters;
   }
 

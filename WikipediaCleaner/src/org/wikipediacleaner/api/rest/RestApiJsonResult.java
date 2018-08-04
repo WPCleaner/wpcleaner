@@ -17,7 +17,6 @@ import org.apache.commons.httpclient.Header;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpMethod;
 import org.apache.commons.httpclient.HttpStatus;
-import org.jdom2.input.JDOMParseException;
 import org.wikipediacleaner.api.APIException;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.utils.Configuration;
@@ -75,8 +74,7 @@ public abstract class RestApiJsonResult extends BasicRestApiResult {
    * @param param Parametere for REST API method.
    * @param maxTry Maximum number of tries.
    * @return Answer of MediaWiki API.
-   * @throws JDOMParseException
-   * @throws APIException
+   * @throws APIException Exception thrown by the API.
    */
   protected JsonNode getRoot(
       Map<String, String> properties,
@@ -173,7 +171,7 @@ public abstract class RestApiJsonResult extends BasicRestApiResult {
    * Check for errors reported by the API.
    * 
    * @param root Document root.
-   * @throws APIException
+   * @throws APIException Exception thrown by the API.
    */
   protected void checkForError(JsonNode root) throws APIException {
     if (root == null) {

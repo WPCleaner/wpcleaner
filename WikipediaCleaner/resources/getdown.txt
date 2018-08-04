@@ -1,0 +1,42 @@
+# Configuration file for running WPCleaner through getdown
+
+# General configuration
+appbase = https://tools.wmflabs.org/wpcleaner/wpcleaner/
+
+# Configure the update UI
+# ui.name = WPCleaner
+# ui.icon = 
+# ui.error_background =
+# ui.progress_bar =
+# ui.progress_text =
+# ui.status =
+# ui.status_text =
+# ui.install_error =
+
+# Code
+code = WikipediaCleaner.jar
+
+# Resources
+resource = commons-nuvola-web-broom.png
+resource = commons-nuvola-web-broom-64px.gif
+
+# Requirements on Java
+java_min_version = 1080000
+# java_location = [windows] /java_vm/java_windows.jar
+# java_location = [linux] /java_vm/java_linux.jar
+
+# Parameters passed to the JVM
+jvmargs = -Xmx4096M
+
+# The main Java class
+class = org.wikipediacleaner.WikipediaCleaner
+
+# Lets us pass "client" as the app id and use the rest of the command line as app arguments
+client.class = org.wikipediacleaner.WikipediaCleaner
+
+# Lets us pass "bot" as the app id and use the rest of the command line as app arguments
+bot.class = org.wikipediacleaner.Bot
+
+# We don't pass any argument
+# apparg =
+

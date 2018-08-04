@@ -26,7 +26,7 @@ public interface ApiParseResult extends ApiResult {
    * 
    * @param properties Properties defining request.
    * @return Expanded text.
-   * @throws APIException
+   * @throws APIException Exception thrown by the API.
    */
   public String executeParse(Map<String, String> properties) throws APIException;
 
@@ -36,7 +36,7 @@ public interface ApiParseResult extends ApiResult {
    * @param page Page.
    * @param properties Properties defining request.
    * @return List of sections.
-   * @throws APIException
+   * @throws APIException Exception thrown by the API.
    */
   public List<Section> executeSections(Page page, Map<String, String> properties) throws APIException;
 }

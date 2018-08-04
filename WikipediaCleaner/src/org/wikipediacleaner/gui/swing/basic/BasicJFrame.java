@@ -24,30 +24,30 @@ public class BasicJFrame extends JFrame implements Versionned {
   private Integer version;
 
   /**
-   * @throws HeadlessException
+   * @throws HeadlessException Exception thrown in case of missing display.
    */
   public BasicJFrame() throws HeadlessException {
     super();
   }
 
   /**
-   * @param gc
+   * @param gc Graphics configuration.
    */
   public BasicJFrame(GraphicsConfiguration gc) {
     super(gc);
   }
 
   /**
-   * @param title
-   * @param gc
+   * @param title JFrame title.
+   * @param gc Graphics configuration.
    */
   public BasicJFrame(String title, GraphicsConfiguration gc) {
     super(title, gc);
   }
 
   /**
-   * @param title
-   * @throws HeadlessException
+   * @param title JFrame title.
+   * @throws HeadlessException Exception thrown in case of missing display.
    */
   public BasicJFrame(String title) throws HeadlessException {
     super(title);

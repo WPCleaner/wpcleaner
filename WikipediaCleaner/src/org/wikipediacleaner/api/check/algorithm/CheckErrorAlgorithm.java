@@ -132,7 +132,7 @@ public interface CheckErrorAlgorithm {
   /**
    * Return the parameters used to configure the algorithm.
    * 
-   * @return Map of parameters (Name -> description).
+   * @return Map of parameters (key=name, value=description).
    */
   public Map<String, String> getParameters();
 

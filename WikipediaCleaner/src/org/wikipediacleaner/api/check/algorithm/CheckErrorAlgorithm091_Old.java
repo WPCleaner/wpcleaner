@@ -95,7 +95,7 @@ public class CheckErrorAlgorithm091_Old extends CheckErrorAlgorithmBase {
     String replacement =
         createDefaultSort(analysis) + "\n" +
     analysis.getContents().substring(category.getBeginIndex(), category.getEndIndex());
-    errorResult.addReplacement(replacement, GT._("Add DEFAULTSORT"));
+    errorResult.addReplacement(replacement, GT._T("Add DEFAULTSORT"));
     errors.add(errorResult);
     return true;
   }

@@ -24,7 +24,7 @@ public interface ApiTemplateDataResult extends ApiResult {
    * 
    * @param properties Properties defining request.
    * @return TemplateData for the page.
-   * @throws APIException
+   * @throws APIException Exception thrown by the API.
    */
   public TemplateData executeTemplateData(Map<String, String> properties) throws APIException;
 }

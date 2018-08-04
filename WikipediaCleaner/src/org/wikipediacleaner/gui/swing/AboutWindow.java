@@ -58,7 +58,7 @@ public class AboutWindow extends BasicWindow {
    */
   @Override
   public String getTitle() {
-    return GT._("About") + " - " + Version.PROGRAM; 
+    return GT._T("About") + " - " + Version.PROGRAM; 
   }
 
   /**

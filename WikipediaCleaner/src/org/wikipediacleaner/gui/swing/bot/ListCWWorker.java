@@ -613,7 +613,7 @@ public class ListCWWorker extends BasicWorker {
         reportProgress();
       }
       if (countAnalyzed % 1000 == 0) {
-        setText(GT._("{0} pages processed", Integer.toString(countAnalyzed)));
+        setText(GT._T("{0} pages processed", Integer.toString(countAnalyzed)));
       }
       return page;
     }

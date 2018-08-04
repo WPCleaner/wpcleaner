@@ -90,6 +90,7 @@ public class ApiTokensRequest extends ApiMetaRequest {
    * Load one token.
    * 
    * @param tokenName Name of the token to retrieve.
+   * @throws APIException Exception thrown by the API.
    */
   public void retrieveToken(
       String tokenName) throws APIException {

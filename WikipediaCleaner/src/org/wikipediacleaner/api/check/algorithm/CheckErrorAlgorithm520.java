@@ -129,14 +129,14 @@ public class CheckErrorAlgorithm520 extends CheckErrorAlgorithmBase {
   /**
    * Return the parameters used to configure the algorithm.
    * 
-   * @return Map of parameters (Name -> description).
+   * @return Map of parameters (key=name, value=description).
    */
   @Override
   public Map<String, String> getParameters() {
     Map<String, String> parameters = super.getParameters();
     parameters.put(
         "abuse_filter",
-        GT._("An identifier of an abuse filter that is triggered by weird characters."));
+        GT._T("An identifier of an abuse filter that is triggered by weird characters."));
     return parameters;
   }
 }

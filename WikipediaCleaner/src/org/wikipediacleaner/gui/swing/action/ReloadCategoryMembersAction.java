@@ -54,11 +54,11 @@ public class ReloadCategoryMembersAction implements ActionListener {
     try {
       if (progressPanel != null) {
         progressPanel.start();
-        progressPanel.setText(GT._("Retrieving MediaWiki API"));
+        progressPanel.setText(GT._T("Retrieving MediaWiki API"));
       }
       API api = APIFactory.getAPI();
       if (progressPanel != null) {
-        progressPanel.setText(GT._("Retrieving members of a category"));
+        progressPanel.setText(GT._T("Retrieving members of a category"));
       }
       api.retrieveCategoryMembers(wiki, category, 0, true, Integer.MAX_VALUE);
     } catch (APIException ex) {

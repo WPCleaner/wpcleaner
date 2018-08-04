@@ -51,7 +51,7 @@ public class WikipediaCleaner {
   private final static boolean SYSTEM_LF = true;
 
   /**
-   * @param args
+   * @param args Command line arguments.
    */
   public static void main(String[] args) {
 

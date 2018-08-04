@@ -40,7 +40,7 @@ public class GT {
    * @param msg Original text.
    * @return Translated text.
    */
-  public static String _(String msg) {
+  public static String _T(String msg) {
     return getTextWrapper().getString(msg);
   }
 
@@ -49,7 +49,7 @@ public class GT {
    * @param variable Variable value.
    * @return Translated text.
    */
-  public static String _(String msg, String variable) {
+  public static String _T(String msg, String variable) {
     return getTextWrapper().getString(msg, new Object[] { variable });
   }
 
@@ -69,7 +69,7 @@ public class GT {
    * @param objects Variables values.
    * @return Translated text.
    */
-  public static String _(String msg, Object[] objects) {
+  public static String _T(String msg, Object[] objects) {
     return getTextWrapper().getString(msg, objects);
   }
 

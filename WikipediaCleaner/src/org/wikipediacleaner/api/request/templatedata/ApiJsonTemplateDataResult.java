@@ -46,7 +46,7 @@ public class ApiJsonTemplateDataResult extends ApiJsonResult implements ApiTempl
    * 
    * @param properties Properties defining request.
    * @return TemplateData for the page.
-   * @throws APIException
+   * @throws APIException Exception thrown by the API.
    */
   @Override
   public TemplateData executeTemplateData(Map<String, String> properties)

@@ -22,7 +22,7 @@ public interface ApiDeleteResult extends ApiResult {
    * Execute delete request.
    * 
    * @param properties Properties defining request.
-   * @throws APIException
+   * @throws APIException Exception thrown by the API.
    */
   public void executeDelete(Map<String, String> properties) throws APIException;
 }

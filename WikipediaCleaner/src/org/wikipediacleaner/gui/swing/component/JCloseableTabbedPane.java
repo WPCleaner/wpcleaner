@@ -119,7 +119,7 @@ public class JCloseableTabbedPane
   }
 
   /**
-   * @param e
+   * @param e Event.
    * @see java.awt.event.KeyListener#keyTyped(java.awt.event.KeyEvent)
    */
   @Override
@@ -128,7 +128,7 @@ public class JCloseableTabbedPane
   }
 
   /**
-   * @param e
+   * @param e Event.
    * @see java.awt.event.KeyListener#keyPressed(java.awt.event.KeyEvent)
    */
   @Override
@@ -140,7 +140,7 @@ public class JCloseableTabbedPane
   }
 
   /**
-   * @param e
+   * @param e Event.
    * @see java.awt.event.KeyListener#keyReleased(java.awt.event.KeyEvent)
    */
   @Override

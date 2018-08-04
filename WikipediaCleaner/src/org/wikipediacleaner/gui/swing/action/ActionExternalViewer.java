@@ -52,13 +52,13 @@ public class ActionExternalViewer extends AbstractAction implements ActionListen
       return Utilities.createJButton(
           showIcon ? "gnome-emblem-documents.png" : null,
           EnumImageSize.NORMAL,
-          GT._("History"), !showIcon,
+          GT._T("History"), !showIcon,
           useShortcut ? ConfigurationValueShortcut.HISTORY : null);
     }
     return Utilities.createJButton(
         showIcon ? "gnome-emblem-web.png" : null,
         EnumImageSize.NORMAL,
-        GT._("External Viewer"), !showIcon,
+        GT._T("External Viewer"), !showIcon,
         useShortcut ? ConfigurationValueShortcut.EXTERNAL_VIEWER : null);
   }
 

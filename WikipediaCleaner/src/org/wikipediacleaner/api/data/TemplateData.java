@@ -309,6 +309,8 @@ public class TemplateData {
 
     /**
      * Default constructor.
+     * 
+     * @param name Name.
      */
     public Parameter(String name) {
       this.name = name;

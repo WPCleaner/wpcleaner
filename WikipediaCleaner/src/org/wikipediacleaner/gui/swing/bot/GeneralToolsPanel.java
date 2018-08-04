@@ -114,7 +114,7 @@ public class GeneralToolsPanel extends BotToolsPanel {
     // Automatic disambiguation fixing
     buttonAutomaticFixing = Utilities.createJButton(
         "commons-disambig-colour.png", EnumImageSize.NORMAL,
-        GT._("Semi-automatic disambiguation fixing"), true, null);
+        GT._T("Semi-automatic disambiguation fixing"), true, null);
     buttonAutomaticFixing.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionAutomaticFixing"));
     add(buttonAutomaticFixing, constraints);
@@ -123,7 +123,7 @@ public class GeneralToolsPanel extends BotToolsPanel {
     // Update disambiguation warning
     buttonUpdateDabWarning = Utilities.createJButton(
         "commons-disambig-colour.png", EnumImageSize.NORMAL,
-        GT._("Update existing disambiguation warning messages"), true, null);
+        GT._T("Update existing disambiguation warning messages"), true, null);
     buttonUpdateDabWarning.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionUpdateDabWarning"));
     add(buttonUpdateDabWarning, constraints);
@@ -132,7 +132,7 @@ public class GeneralToolsPanel extends BotToolsPanel {
     // Update ISBN warning
     buttonUpdateISBNWarning = Utilities.createJButton(
         "commons-nuvola-web-broom.png", EnumImageSize.NORMAL,
-        GT._("Update {0} warning messages", "ISBN"), true, null);
+        GT._T("Update {0} warning messages", "ISBN"), true, null);
     buttonUpdateISBNWarning.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionUpdateISBNWarning"));
     add(buttonUpdateISBNWarning, constraints);
@@ -141,7 +141,7 @@ public class GeneralToolsPanel extends BotToolsPanel {
     // List ISBN errors
     buttonListISBNError = Utilities.createJButton(
         "commons-nuvola-web-broom.png", EnumImageSize.NORMAL,
-        GT._("List {0} errors", "ISBN"), true, null);
+        GT._T("List {0} errors", "ISBN"), true, null);
     buttonListISBNError.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionListISBNErrors"));
     add(buttonListISBNError, constraints);
@@ -150,7 +150,7 @@ public class GeneralToolsPanel extends BotToolsPanel {
     // Update ISSN warning
     buttonUpdateISSNWarning = Utilities.createJButton(
         "commons-nuvola-web-broom.png", EnumImageSize.NORMAL,
-        GT._("Update {0} warning messages", "ISSN"), true, null);
+        GT._T("Update {0} warning messages", "ISSN"), true, null);
     buttonUpdateISSNWarning.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionUpdateISSNWarning"));
     add(buttonUpdateISSNWarning, constraints);
@@ -159,7 +159,7 @@ public class GeneralToolsPanel extends BotToolsPanel {
     // List ISSN errors
     buttonListISSNError = Utilities.createJButton(
         "commons-nuvola-web-broom.png", EnumImageSize.NORMAL,
-        GT._("List {0} errors", "ISSN"), true, null);
+        GT._T("List {0} errors", "ISSN"), true, null);
     buttonListISSNError.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionListISSNErrors"));
     add(buttonListISSNError, constraints);
@@ -168,7 +168,7 @@ public class GeneralToolsPanel extends BotToolsPanel {
     // Update duplicate arguments warning
     buttonUpdateDuplicateArgsWarning = Utilities.createJButton(
         "commons-nuvola-web-broom.png", EnumImageSize.NORMAL,
-        GT._("Update duplicate argument warning messages"), true, null);
+        GT._T("Update duplicate argument warning messages"), true, null);
     buttonUpdateDuplicateArgsWarning.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionUpdateDuplicateArgsWarning"));
     add(buttonUpdateDuplicateArgsWarning, constraints);
@@ -177,7 +177,7 @@ public class GeneralToolsPanel extends BotToolsPanel {
     // Monitor recent changes
     buttonMonitorRC = Utilities.createJButton(
         "commons-nuvola-apps-kcmsystem.png", EnumImageSize.NORMAL,
-        GT._("Monitor recent changes"), true, null);
+        GT._T("Monitor recent changes"), true, null);
     buttonMonitorRC.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionMonitorRC"));
     add(buttonMonitorRC, constraints);
@@ -222,7 +222,7 @@ public class GeneralToolsPanel extends BotToolsPanel {
       return;
     }
     String start = window.askForValue(
-        GT._("At what page do you wish to start updating the warnings ?"),
+        GT._T("At what page do you wish to start updating the warnings ?"),
         config.getString(null, ConfigurationValueString.LAST_DAB_WARNING), null);
     if (start == null) {
       return;

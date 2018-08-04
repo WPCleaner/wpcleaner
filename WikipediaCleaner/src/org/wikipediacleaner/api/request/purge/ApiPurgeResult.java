@@ -22,7 +22,7 @@ public interface ApiPurgeResult extends ApiResult {
    * Execute purge request.
    * 
    * @param properties Properties defining request.
-   * @throws APIException
+   * @throws APIException Exception thrown by the API.
    */
   public void executePurge(Map<String, String> properties) throws APIException;
 }

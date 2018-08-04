@@ -81,6 +81,7 @@ public class ApiDeleteRequest extends ApiRequest {
    * @param page Page to be deleted.
    * @param reason Reason for deletion.
    * @param automatic True if the modification is automatic.
+   * @throws APIException Exception thrown by the API.
    */
   public void deletePage(
       Page page, String reason,

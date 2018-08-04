@@ -48,27 +48,27 @@ public class ActionOccurrence implements ActionListener {
       boolean showIcon, boolean useShortcut) {
     ConfigurationValueShortcut shortcut = ConfigurationValueShortcut.OCCURRENCE_NEXT;
     String iconName = "gnome-go-next.png";
-    String label = GT._("Next occurrence");
+    String label = GT._T("Next occurrence");
     switch (occurrence) {
     case FIRST:
       shortcut = ConfigurationValueShortcut.OCCURRENCE_FIRST;
       iconName = "gnome-go-first.png";
-      label = GT._("First occurrence");
+      label = GT._T("First occurrence");
       break;
     case LAST:
       shortcut = ConfigurationValueShortcut.OCCURRENCE_LAST;
       iconName = "gnome-go-last.png";
-      label = GT._("Last occurrence");
+      label = GT._T("Last occurrence");
       break;
     case NEXT:
       shortcut = ConfigurationValueShortcut.OCCURRENCE_NEXT;
       iconName = "gnome-go-next.png";
-      label = GT._("Next occurrence");
+      label = GT._T("Next occurrence");
       break;
     case PREVIOUS:
       shortcut = ConfigurationValueShortcut.OCCURRENCE_PREVIOUS;
       iconName = "gnome-go-previous.png";
-      label = GT._("Previous occurrence");
+      label = GT._T("Previous occurrence");
       break;
     }
     return Utilities.createJButton(

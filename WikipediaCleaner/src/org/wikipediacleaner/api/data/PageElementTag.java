@@ -644,6 +644,7 @@ public class PageElementTag extends PageElement {
    * Find the main reference tag in a list of reference tags.
    * 
    * @param refs List of reference tags.
+   * @param references List of references tags.
    * @param analysis Page analysis.
    * @return Main reference tag in the list.
    */

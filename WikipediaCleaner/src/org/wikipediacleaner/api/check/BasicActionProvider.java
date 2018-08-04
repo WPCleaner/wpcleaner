@@ -21,6 +21,8 @@ public class BasicActionProvider implements ActionProvider {
 
   /**
    * Constructor.
+   * 
+   * @param action Action.
    */
   public BasicActionProvider(Action action) {
     this.action = action;

@@ -84,12 +84,12 @@ public class PageListWorker extends BasicWorker {
     DAB_WATCH,
     DIRECT,
     EMBEDDED_IN,
-    INTERNAL_LINKS_ALL(GT._("All articles")),
-    INTERNAL_LINKS_MAIN(GT._("Articles in main namespace")),
-    INTERNAL_LINKS_TALKPAGES_CONVERTED(GT._("Articles associated to talk pages")),
-    LINTER_CATEGORY(GT._("Linter extension category")),
-    MISSING_TEMPLATES(GT._("Pages with missing templates")),
-    PROTECTED_TITLES(GT._("Protected titles with links from articles")),
+    INTERNAL_LINKS_ALL(GT._T("All articles")),
+    INTERNAL_LINKS_MAIN(GT._T("Articles in main namespace")),
+    INTERNAL_LINKS_TALKPAGES_CONVERTED(GT._T("Articles associated to talk pages")),
+    LINTER_CATEGORY(GT._T("Linter extension category")),
+    MISSING_TEMPLATES(GT._T("Pages with missing templates")),
+    PROTECTED_TITLES(GT._T("Protected titles with links from articles")),
     QUERY_PAGE,
     SEARCH_TITLES,
     WATCH_LIST;
@@ -131,8 +131,10 @@ public class PageListWorker extends BasicWorker {
   /**
    * @param wikipedia Wikipedia.
    * @param window Window.
+   * @param referencePage Reference page.
    * @param elementNames List of elements (page names, ...).
    * @param mode Mode for determining the list of pages.
+   * @param watchList True if it's the watch list.
    * @param message Window title.
    */
   public PageListWorker(
@@ -165,7 +167,7 @@ public class PageListWorker extends BasicWorker {
         getWikipedia().setDisambiguationPages(set);
         int answer = Utilities.displayYesNoWarning(
             (getWindow() != null) ? getWindow().getParentComponent() : null,
-            GT._(
+            GT._T(
                 "You have loaded the list of all disambiguation pages to speed up page analysis.\n" +
                 "Do you want to display the list of all disambiguation pages ?"));
         if (answer != JOptionPane.YES_OPTION) {
@@ -490,12 +492,12 @@ public class PageListWorker extends BasicWorker {
   private void constructMissingTemplates(List<Page> pages) throws APIException {
     final API api = APIFactory.getAPI();
     EnumWikipedia wiki = getWikipedia();
-    setText(GT._("Retrieving list of missing templates"));
+    setText(GT._T("Retrieving list of missing templates"));
     List<Page> tmpPages = api.getQueryPages(wiki, EnumQueryPage.WANTED_TEMPLATES);
     if (tmpPages == null) {
       return;
     }
-    setText(GT._("Checking that the templates are still missing"));
+    setText(GT._T("Checking that the templates are still missing"));
     api.retrieveInfo(wiki, tmpPages);
     List<Page> tmpPages2 = new ArrayList<Page>();
     for (Page tmpPage : tmpPages) {
@@ -521,13 +523,13 @@ public class PageListWorker extends BasicWorker {
   private void constructProtectedTitles(List<Page> pages) throws APIException {
     final API api = APIFactory.getAPI();
     EnumWikipedia wiki = getWikipedia();
-    setText(GT._("Retrieving list of protected titles"));
+    setText(GT._T("Retrieving list of protected titles"));
     List<Page> tmpPages = api.getProtectedTitles(
         wiki, Collections.singletonList(Namespace.MAIN), false);
     if ((tmpPages == null) || (tmpPages.isEmpty())) {
       return;
     }
-    setText(GT._("Checking that protected titles have backlinks"));
+    setText(GT._T("Checking that protected titles have backlinks"));
     MediaWiki mw = MediaWiki.getMediaWikiAccess(this);
     mw.retrieveAllLinksToPages(wiki, tmpPages, true);
     for (Page page : tmpPages) {

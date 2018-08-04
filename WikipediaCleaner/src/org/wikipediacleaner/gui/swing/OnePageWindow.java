@@ -313,7 +313,7 @@ public abstract class OnePageWindow
   protected void addTextPageName(JPanel panel) {
     if (textPagename == null) {
       textPagename = new JLabel(getPageName());
-      JLabel labelPagename = Utilities.createJLabel(GT._("&Page :"));
+      JLabel labelPagename = Utilities.createJLabel(GT._T("&Page :"));
       labelPagename.setLabelFor(textPagename);
       labelPagename.setHorizontalAlignment(SwingConstants.TRAILING);
       panel.add(labelPagename);
@@ -332,9 +332,9 @@ public abstract class OnePageWindow
       if (icon) {
         buttonDisambiguation = Utilities.createJButton(
             "commons-disambig-colour.png", EnumImageSize.NORMAL,
-            GT._("Disambiguation"), false, null);
+            GT._T("Disambiguation"), false, null);
       } else {
-        buttonDisambiguation = Utilities.createJButton(GT._("Disambiguation"), null);
+        buttonDisambiguation = Utilities.createJButton(GT._T("Disambiguation"), null);
       }
       buttonDisambiguation.addActionListener(EventHandler.create(
           ActionListener.class, this, "actionDisambiguation"));
@@ -364,7 +364,7 @@ public abstract class OnePageWindow
   protected void addButtonRedirect(JComponent panel) {
     buttonAnalysisRedirect = Utilities.createJButton(
         "commons-redirect-arrow-without-text.png", EnumImageSize.NORMAL,
-        GT._("Redirect"), false, null);
+        GT._T("Redirect"), false, null);
     buttonAnalysisRedirect.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionAnalysisRedir"));
     panel.add(buttonAnalysisRedirect);
@@ -395,9 +395,9 @@ public abstract class OnePageWindow
     if (icon) {
       button = Utilities.createJButton(
           "gnome-view-refresh.png", EnumImageSize.NORMAL,
-          GT._("Reload (Alt + &R)"), false, null);
+          GT._T("Reload (Alt + &R)"), false, null);
     } else {
-      button = Utilities.createJButton(GT._("&Reload"), null);
+      button = Utilities.createJButton(GT._T("&Reload"), null);
     }
     button.setActionCommand(ACTION_RELOAD);
     button.addActionListener(listener);
@@ -428,7 +428,7 @@ public abstract class OnePageWindow
     JButton button = Utilities.createJButton(
         icon ? "gnome-document-send.png" : null,
         EnumImageSize.NORMAL,
-        GT._("Send"), !icon,
+        GT._T("Send"), !icon,
         ConfigurationValueShortcut.SEND);
     button.setActionCommand(ACTION_SEND);
     button.addActionListener(listener);
@@ -445,17 +445,17 @@ public abstract class OnePageWindow
     if (icon) {
       buttonUndo = Utilities.createJButton(
           "gnome-edit-undo.png", EnumImageSize.NORMAL,
-          GT._("Undo"), false, null);
+          GT._T("Undo"), false, null);
     } else {
-      buttonUndo = Utilities.createJButton(GT._("Undo"), null);
+      buttonUndo = Utilities.createJButton(GT._T("Undo"), null);
     }
     panel.add(buttonUndo);
     if (icon) {
       buttonRedo = Utilities.createJButton(
           "gnome-edit-redo.png", EnumImageSize.NORMAL,
-          GT._("Redo"), false, null);
+          GT._T("Redo"), false, null);
     } else {
-      buttonRedo = Utilities.createJButton(GT._("Redo"), null);
+      buttonRedo = Utilities.createJButton(GT._T("Redo"), null);
     }
     panel.add(buttonRedo);
     if (textContents != null) {
@@ -476,9 +476,9 @@ public abstract class OnePageWindow
     if (icon) {
       button = Utilities.createJButton(
           "gnome-format-indent-more.png", EnumImageSize.NORMAL,
-          GT._("Table of Contents"), false, null);
+          GT._T("Table of Contents"), false, null);
     } else {
-      button = Utilities.createJButton(GT._("Table of Contents"), null);
+      button = Utilities.createJButton(GT._T("Table of Contents"), null);
     }
     button.setActionCommand(ACTION_TOC);
     button.addActionListener(listener);
@@ -496,7 +496,7 @@ public abstract class OnePageWindow
     JButton button = Utilities.createJButton(
         icon ? "commons-approve-icon.png" : null,
         EnumImageSize.NORMAL,
-        GT._("Validate"), !icon,
+        GT._T("Validate"), !icon,
         ConfigurationValueShortcut.VALIDATE);
     button.setActionCommand(ACTION_VALIDATE);
     button.addActionListener(listener);
@@ -525,7 +525,7 @@ public abstract class OnePageWindow
    * @param constraints constraints.
    */
   protected void addComment(JPanel panel, GridBagConstraints constraints) {
-    JLabel label = Utilities.createJLabel(GT._("Comment"));
+    JLabel label = Utilities.createJLabel(GT._T("Comment"));
     constraints.fill = GridBagConstraints.HORIZONTAL;
     constraints.gridwidth = 1;
     constraints.weightx = 0;
@@ -538,12 +538,13 @@ public abstract class OnePageWindow
 
   /**
    * Create a Automatic Comment checkbox.
-   * 
+   *
+   * @param checked True if the checkbox should be checked.
    * @param listener Action listener.
    * @return Automatic Comment checkbox.
    */
   public JCheckBox createChkAutomaticComment(boolean checked, ItemListener listener) {
-    JCheckBox checkbox = Utilities.createJCheckBox(GT._("Automatic comment"), checked);
+    JCheckBox checkbox = Utilities.createJCheckBox(GT._T("Automatic comment"), checked);
     checkbox.addItemListener(listener);
     return checkbox;
   }
@@ -558,9 +559,9 @@ public abstract class OnePageWindow
     if (icon) {
       buttonOptions = Utilities.createJButton(
           "gnome-preferences-other.png", EnumImageSize.NORMAL,
-          GT._("Options"), false, null);
+          GT._T("Options"), false, null);
     } else {
-      buttonOptions = Utilities.createJButton(GT._("Options"), null);
+      buttonOptions = Utilities.createJButton(GT._T("Options"), null);
     }
     buttonOptions.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionOptions"));
@@ -569,28 +570,28 @@ public abstract class OnePageWindow
     Configuration config = Configuration.getConfiguration();
     menuOptions = new JPopupMenu();
     chkMarkEditMinor = Utilities.createJCheckBoxMenuItm(
-        GT._("Mark edit as minor"),
+        GT._T("Mark edit as minor"),
         config.getBoolean(
             null,
             ConfigurationValueBoolean.MARK_EDIT_MINOR));
     menuOptions.add(chkMarkEditMinor);
     chkCloseAfterSend = Utilities.createJCheckBoxMenuItm(
-        GT._("&Close after sending"),
+        GT._T("&Close after sending"),
         config.getBoolean(
             null,
             ConfigurationValueBoolean.CLOSE_FULL));
     menuOptions.add(chkCloseAfterSend);
     chkEditTalkPage = Utilities.createJCheckBoxMenuItm(
-        GT._("&Add a note on talk page"), false);
+        GT._T("&Add a note on talk page"), false);
     getTextContents().setCheckBoxAddNote(chkEditTalkPage);
     menuOptions.add(chkEditTalkPage);
     chkUpdateDabWarning = Utilities.createJCheckBoxMenuItm(
-        GT._("Update disambiguation warning on talk page"),
+        GT._T("Update disambiguation warning on talk page"),
         false);
     getTextContents().setCheckBoxUpdateDabWarning(chkUpdateDabWarning);
     menuOptions.add(chkUpdateDabWarning);
     chkCreateDabWarning = Utilities.createJCheckBoxMenuItm(
-        GT._("Create disambiguation warning on talk page"),
+        GT._T("Create disambiguation warning on talk page"),
         false);
     getTextContents().setCheckBoxCreateDabWarning(chkCreateDabWarning);
     menuOptions.add(chkCreateDabWarning);
@@ -614,9 +615,9 @@ public abstract class OnePageWindow
     if (icon) {
       chkSpelling = Utilities.createJToggleButton(
           "gnome-tools-check-spelling.png", EnumImageSize.NORMAL,
-          GT._("Check spelling and typography"), false);
+          GT._T("Check spelling and typography"), false);
     } else {
-      chkSpelling = Utilities.createJToggleButton(GT._("Spelling"));
+      chkSpelling = Utilities.createJToggleButton(GT._T("Spelling"));
     }
     chkSpelling.setSelected(checked);
     panel.add(chkSpelling);
@@ -651,7 +652,7 @@ public abstract class OnePageWindow
    */
   protected void addLblEditProtectionLevel(JComponent panel) {
     lblEditProtectionLevel = Utilities.createJLabel(" ");
-    lblEditProtectionLevel.setToolTipText(GT._("Protection level for editing the page"));
+    lblEditProtectionLevel.setToolTipText(GT._T("Protection level for editing the page"));
     panel.add(lblEditProtectionLevel);
   }
 
@@ -739,7 +740,7 @@ public abstract class OnePageWindow
           if (duration != null) {
             long minutes = duration.longValue() / 60 + 1;
             if (minutes > 60) {
-              lblLastModified.setToolTipText(GT._(
+              lblLastModified.setToolTipText(GT._T(
                   "Last modified at {0}", page.getContentsTimestamp()));
             } else {
               if (minutes <= 5) {
@@ -794,7 +795,7 @@ public abstract class OnePageWindow
    */
   protected JMenu createFixRedirectsMenu() {
     if (menuFixRedirects == null) {
-      menuFixRedirects = Utilities.createJMenu(GT._("Fix &redirects"));
+      menuFixRedirects = Utilities.createJMenu(GT._T("Fix &redirects"));
     } else {
       menuFixRedirects.removeAll();
     }
@@ -802,7 +803,7 @@ public abstract class OnePageWindow
       for (Page p : page.getLinks()) {
         if (p.isRedirect() && !Boolean.TRUE.equals(p.isDisambiguationPage())) {
           String newTitle = p.getRedirectDestination();
-          String text = GT._(
+          String text = GT._T(
               "Link \"{0}\" to \"{1}\"", new Object[] { p.getTitle(), newTitle });
           JMenuItem menuItem = new JMenuItem(text);
           String warning = getConfiguration().getString(
@@ -820,21 +821,21 @@ public abstract class OnePageWindow
    * @return Tools menu.
    */
   protected JMenu createToolsMenu() {
-    JMenu menu = Utilities.createJMenu(GT._("&Tools"));
+    JMenu menu = Utilities.createJMenu(GT._T("&Tools"));
     JMenuItem menuItem = null;
     menu.add(createFixRedirectsMenu());
 
-    menuItem = Utilities.createJMenuItem(GT._("&Preview"), false);
+    menuItem = Utilities.createJMenuItem(GT._T("&Preview"), false);
     menuItem.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionPreview"));
     menu.add(menuItem);
 
-    menuItem = Utilities.createJMenuItem(GT._("&Expand templates"), false);
+    menuItem = Utilities.createJMenuItem(GT._T("&Expand templates"), false);
     menuItem.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionExpandTemplates"));
     menu.add(menuItem);
 
-    menuItem = Utilities.createJMenuItem(GT._("Expand templates &and Preview"), false);
+    menuItem = Utilities.createJMenuItem(GT._T("Expand templates &and Preview"), false);
     menuItem.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionExpandTemplatesPreview"));
     menu.add(menuItem);
@@ -929,13 +930,13 @@ public abstract class OnePageWindow
   public void actionAnalysisRedir() {
     JPopupMenu menu = new JPopupMenu();
     JMenuItem item = new JMenuItem(
-        GT._("Full analysis"),
+        GT._T("Full analysis"),
         Utilities.getImageIcon("gnome-system-run.png", EnumImageSize.NORMAL));
     item.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionFullAnalysisRedir"));
     menu.add(item);
     item = new JMenuItem(
-        GT._("Disambiguation analysis"),
+        GT._T("Disambiguation analysis"),
         Utilities.getImageIcon("commons-disambig-colour.png", EnumImageSize.NORMAL));
     item.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionDisambiguationRedir"));
@@ -1021,7 +1022,7 @@ public abstract class OnePageWindow
     // Check that a comment is available
     if ((textComment != null) &&
         (textComment.getText().trim().length() == 0)) {
-      Utilities.displayWarning(getParentComponent(), GT._(
+      Utilities.displayWarning(getParentComponent(), GT._T(
           "A comment is required for sending the page."));
       return;
     }
@@ -1076,7 +1077,7 @@ public abstract class OnePageWindow
     if (hideWindow) {
       getParentComponent().setExtendedState(Frame.ICONIFIED);
     }
-    getParentComponent().setTitle(GT._("Sending {0}", page.getTitle()));
+    getParentComponent().setTitle(GT._T("Sending {0}", page.getTitle()));
     SendWorker sendWorker = new SendWorker.Builder().
         allowDabWarning(updateDabWarning, createDabWarning).
         allowISBNWarning(updateISBNWarning, createISBNWarning).

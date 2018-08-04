@@ -132,11 +132,11 @@ public class CheckErrorAlgorithm541 extends CheckErrorAlgorithmBase {
     replaceTag(
         analysis, errorResult,
         tag, PageElementTag.TAG_HTML_DEL, null,
-        GT._("for marking an edit"), false);
+        GT._T("for marking an edit"), false);
     replaceTag(
         analysis, errorResult,
         tag, PageElementTag.TAG_HTML_S, null,
-        GT._("for anything else"), false);
+        GT._T("for anything else"), false);
     return errorResult;
   }
 
@@ -152,23 +152,23 @@ public class CheckErrorAlgorithm541 extends CheckErrorAlgorithmBase {
     replaceTag(
         analysis, errorResult,
         tag, PageElementTag.TAG_HTML_CODE, null,
-        GT._("preferred for source code"), false);
+        GT._T("preferred for source code"), false);
     replaceTag(
         analysis, errorResult,
         tag, PageElementTag.TAG_HTML_KBD, null,
-        GT._("preferred for user input"), false);
+        GT._T("preferred for user input"), false);
     replaceTag(
         analysis, errorResult,
         tag, PageElementTag.TAG_HTML_VAR, null,
-        GT._("preferred for variables"), false);
+        GT._T("preferred for variables"), false);
     replaceTag(
         analysis, errorResult,
         tag, PageElementTag.TAG_HTML_SAMP, null,
-        GT._("preferred for output, function and tag names, etc."), false);
+        GT._T("preferred for output, function and tag names, etc."), false);
     replaceTag(
         analysis, errorResult,
         tag, PageElementTag.TAG_HTML_SPAN, "style=\"font-family: monospace;\"",
-        GT._("preferred for everything else"), false);
+        GT._T("preferred for everything else"), false);
     return errorResult;
   }
 

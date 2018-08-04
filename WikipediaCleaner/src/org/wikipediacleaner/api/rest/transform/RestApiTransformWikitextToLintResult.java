@@ -43,7 +43,7 @@ public class RestApiTransformWikitextToLintResult extends RestApiJsonResult {
    * @param title Page title.
    * @param properties Properties.
    * @return List of errors detected by Linter.
-   * @throws APIException
+   * @throws APIException Exception thrown by the API.
    */
   public List<LinterError> transform(String title, Map<String, String> properties) throws APIException {
     List<LinterError> result = new ArrayList<>();

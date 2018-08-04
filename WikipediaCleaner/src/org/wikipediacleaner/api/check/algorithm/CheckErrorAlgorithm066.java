@@ -28,7 +28,7 @@ public class CheckErrorAlgorithm066 extends CheckErrorAlgorithmBase {
    * Possible global fixes.
    */
   private final static String[] globalFixes = new String[] {
-    GT._("Remove all <small> tags"),
+    GT._T("Remove all <small> tags"),
   };
 
   public CheckErrorAlgorithm066() {
@@ -90,7 +90,7 @@ public class CheckErrorAlgorithm066 extends CheckErrorAlgorithmBase {
                 analysis, image.getBeginIndex(), image.getEndIndex());
             errorResult.addReplacement(
                 image.getDescriptionReplacement(innerText.toString()),
-                GT._("Remove {0} tags", "<small>"));
+                GT._T("Remove {0} tags", "<small>"));
             errors.add(errorResult);
           }
         }

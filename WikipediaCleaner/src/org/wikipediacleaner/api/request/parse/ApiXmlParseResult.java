@@ -47,7 +47,7 @@ public class ApiXmlParseResult extends ApiXmlResult implements ApiParseResult {
    * 
    * @param properties Properties defining request.
    * @return Parsed text.
-   * @throws APIException
+   * @throws APIException Exception thrown by the API.
    */
   @Override
   public String executeParse(
@@ -71,7 +71,7 @@ public class ApiXmlParseResult extends ApiXmlResult implements ApiParseResult {
    * @param page Page.
    * @param properties Properties defining request.
    * @return List of sections.
-   * @throws APIException
+   * @throws APIException Exception thrown by the API.
    */
   @Override
   public List<Section> executeSections(

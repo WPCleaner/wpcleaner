@@ -127,14 +127,14 @@ public class CheckErrorAlgorithm101 extends CheckErrorAlgorithmBase {
   }
 
   /**
-   * @return Map of parameters (Name -> description).
+   * @return Map of parameters (key=name, value=description).
    * @see org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase#getParameters()
    */
   @Override
   public Map<String, String> getParameters() {
     Map<String, String> parameters = super.getParameters();
-    parameters.put("templates", GT._("List of ordinal suffixes"));
-    parameters.put("replacements", GT._("List of possible replacements"));
+    parameters.put("templates", GT._T("List of ordinal suffixes"));
+    parameters.put("replacements", GT._T("List of possible replacements"));
     return parameters;
   }
 }

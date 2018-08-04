@@ -72,7 +72,7 @@ public class CheckErrorAlgorithm021 extends CheckErrorAlgorithmBase {
         CheckErrorResult errorResult = createCheckErrorResult(
             analysis, category.getBeginIndex(), category.getEndIndex());
         errorResult.addPossibleAction(
-            GT._("Check category"),
+            GT._T("Check category"),
             new CheckCategoryLinkActionProvider(
                 EnumWikipedia.EN, analysis.getWikipedia(),
                 category.getName(), category.getSort()));
@@ -98,7 +98,7 @@ public class CheckErrorAlgorithm021 extends CheckErrorAlgorithmBase {
         }
         errorResult.addReplacement(
             "<!-- " + contents.substring(category.getBeginIndex(), category.getEndIndex()) + " -->",
-            GT._("Comment category out"));
+            GT._T("Comment category out"));
         errors.add(errorResult);
       }
     }

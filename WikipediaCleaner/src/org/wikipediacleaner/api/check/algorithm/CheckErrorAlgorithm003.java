@@ -123,7 +123,7 @@ public class CheckErrorAlgorithm003 extends CheckErrorAlgorithmBase {
           if (referencesTags.size() == 1) {
             errorResult.addReplacement(
                 PageElementTag.createTag(PageElementTag.TAG_WIKI_REFERENCES, true, true),
-                GT._("Close tag"));
+                GT._T("Close tag"));
           }
           errors.add(errorResult);
         }
@@ -172,14 +172,14 @@ public class CheckErrorAlgorithm003 extends CheckErrorAlgorithmBase {
   }
 
   /**
-   * @return Map of parameters (Name -> description).
+   * @return Map of parameters (key=name, value=description).
    * @see org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase#getParameters()
    */
   @Override
   public Map<String, String> getParameters() {
     Map<String, String> parameters = super.getParameters();
-    parameters.put("references_templates", GT._("A list of templates resulting in the inclusion of {0}", "&lt;references/&gt;"));
-    parameters.put("templates", GT._("A list of templates resulting in the inclusion of {0}", "&lt;references/&gt;"));
+    parameters.put("references_templates", GT._T("A list of templates resulting in the inclusion of {0}", "&lt;references/&gt;"));
+    parameters.put("templates", GT._T("A list of templates resulting in the inclusion of {0}", "&lt;references/&gt;"));
     return parameters;
   }
 }

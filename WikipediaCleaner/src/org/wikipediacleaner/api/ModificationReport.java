@@ -73,7 +73,7 @@ public class ModificationReport {
           "<a href=\"" + wiki.getSettings().getURL(title, false, secured) + "\">" +
           title + "</a>";
       result.append(
-          GT._("Page {0}:", formattedTitle));
+          GT._T("Page {0}:", formattedTitle));
       result.append("\n");
       result.append("<ul>\n");
 
@@ -91,7 +91,7 @@ public class ModificationReport {
     if (errors.size() > 0) {
       result.append("\n\n");
       result.append("<font color=red>");
-      result.append(GT._("The following errors have occurred:"));
+      result.append(GT._T("The following errors have occurred:"));
       result.append("</font>\n");
       result.append("<ul>\n");
       for (Error error: errors) {
@@ -101,7 +101,7 @@ public class ModificationReport {
             "<a href=\"" + wiki.getSettings().getURL(title, false, secured) + "\">" +
             title + "</a>";
         result.append(
-            GT._("Page {0}:", formattedTitle));
+            GT._T("Page {0}:", formattedTitle));
         result.append(" ");
         result.append(error.getError().getCode());
         result.append("</li>\n");

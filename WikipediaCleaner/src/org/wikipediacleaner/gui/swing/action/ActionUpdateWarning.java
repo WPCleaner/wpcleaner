@@ -57,7 +57,7 @@ public class ActionUpdateWarning implements ActionListener {
     return Utilities.createJButton(
         showIcon ? "gnome-dialog-warning.png" : null,
         EnumImageSize.NORMAL,
-        GT._("Add warnings on talk page"), showText,
+        GT._T("Add warnings on talk page"), showText,
         null);
   }
 
@@ -254,21 +254,21 @@ public class ActionUpdateWarning implements ActionListener {
     // Display menu
     JPopupMenu menuWarning = new JPopupMenu();
     JMenuItem menuItem = Utilities.createJMenuItem(
-        GT._("Add a warning about links to disambiguation pages"),
+        GT._T("Add a warning about links to disambiguation pages"),
         true);
     menuItem.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionDisambiguationWarning"));
     menuWarning.add(menuItem);
 
     menuItem = Utilities.createJMenuItem(
-        GT._("Add a warning about ISBN errors"),
+        GT._T("Add a warning about ISBN errors"),
         true);
     menuItem.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionISBNWarning"));
     menuWarning.add(menuItem);
 
     menuItem = Utilities.createJMenuItem(
-        GT._("Add a warning about duplicate arguments errors"),
+        GT._T("Add a warning about duplicate arguments errors"),
         true);
     menuItem.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionDuplicateArgsWarning"));
@@ -308,7 +308,7 @@ public class ActionUpdateWarning implements ActionListener {
     // Ask for confirmation
     int answer = Utilities.displayYesNoWarning(
         parent,
-        GT._("Do you want to update the disambiguation warning on talk page?"));
+        GT._T("Do you want to update the disambiguation warning on talk page?"));
     if (answer != JOptionPane.YES_OPTION) {
       return;
     }
@@ -351,7 +351,7 @@ public class ActionUpdateWarning implements ActionListener {
     // Ask for confirmation
     int answer = Utilities.displayYesNoWarning(
         parent,
-        GT._("Do you want to update the ISBN warning on talk page?"));
+        GT._T("Do you want to update the ISBN warning on talk page?"));
     if (answer != JOptionPane.YES_OPTION) {
       return;
     }
@@ -394,7 +394,7 @@ public class ActionUpdateWarning implements ActionListener {
     // Ask for confirmation
     int answer = Utilities.displayYesNoWarning(
         parent,
-        GT._("Do you want to update the duplicate arguments warning on talk page?"));
+        GT._T("Do you want to update the duplicate arguments warning on talk page?"));
     if (answer != JOptionPane.YES_OPTION) {
       return;
     }
@@ -439,7 +439,7 @@ public class ActionUpdateWarning implements ActionListener {
       if ((tmp == null) || (tmp.trim().length() == 0)) {
         Utilities.displayWarning(
             parent,
-            GT._("You must input a page name for updating warnings"),
+            GT._T("You must input a page name for updating warnings"),
             (text != null) ? text : combo);
         return null;
       }

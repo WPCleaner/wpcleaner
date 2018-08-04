@@ -58,7 +58,7 @@ public abstract class BasicWindow implements ActionListener, PageProvider {
    * Constructor.
    */
   protected BasicWindow() {
-    this.glassPane = new ProgressPanel(GT._("{0} is working...", Version.PROGRAM));
+    this.glassPane = new ProgressPanel(GT._T("{0} is working...", Version.PROGRAM));
   }
 
   /**
@@ -312,7 +312,7 @@ public abstract class BasicWindow implements ActionListener, PageProvider {
   }
 
   /**
-   * @param state
+   * @param state State of the frame.
    * @see Frame#setExtendedState(int)
    */
   public void setExtendedState(int state) {

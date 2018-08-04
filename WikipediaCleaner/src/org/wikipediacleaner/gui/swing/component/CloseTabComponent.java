@@ -76,7 +76,7 @@ public class CloseTabComponent extends JPanel {
     public TabButton() {
       int size = 17;
       setPreferredSize(new Dimension(size, size));
-      setToolTipText(GT._("Close this tab"));
+      setToolTipText(GT._T("Close this tab"));
       setUI(new BasicButtonUI());
       setContentAreaFilled(false);
       setFocusable(false);

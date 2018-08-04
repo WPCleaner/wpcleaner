@@ -25,7 +25,7 @@ public class CheckErrorAlgorithm538 extends CheckErrorAlgorithmBase {
 
   /** Possible global fixes */
   private final static String[] globalFixes = new String[] {
-    GT._("Remove whitespace characters"),
+    GT._T("Remove whitespace characters"),
   };
 
   public CheckErrorAlgorithm538() {

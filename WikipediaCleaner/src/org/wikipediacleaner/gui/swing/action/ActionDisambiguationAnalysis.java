@@ -45,7 +45,7 @@ public class ActionDisambiguationAnalysis implements ActionListener {
     return Utilities.createJButton(
         showIcon ? "commons-disambig-colour.png" : null,
         EnumImageSize.NORMAL,
-        GT._("Disambiguation"), showText,
+        GT._T("Disambiguation"), showText,
         useShortcut ? ConfigurationValueShortcut.DAB_ANALYSIS : null);
   }
 
@@ -247,7 +247,7 @@ public class ActionDisambiguationAnalysis implements ActionListener {
       if ((tmp == null) || (tmp.trim().length() == 0)) {
         Utilities.displayWarning(
             parent,
-            GT._("You must input a page name for running a disambiguation analysis"),
+            GT._T("You must input a page name for running a disambiguation analysis"),
             (text != null) ? text : combo);
         return;
       }

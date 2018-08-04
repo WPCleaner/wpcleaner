@@ -31,10 +31,10 @@ public class ExpandTemplatesWorker extends BasicWorker {
   /**
    * @param wikipedia Wikipedia.
    * @param window Window.
-   * @param title
-   * @param textOriginal
-   * @param textExpanded
-   * @param htmlPreview
+   * @param title Title.
+   * @param textOriginal Component for the original text.
+   * @param textExpanded Component for the expand text.
+   * @param htmlPreview Component for the HTML preview.
    */
   public ExpandTemplatesWorker(
       EnumWikipedia wikipedia, BasicWindow window, String title,

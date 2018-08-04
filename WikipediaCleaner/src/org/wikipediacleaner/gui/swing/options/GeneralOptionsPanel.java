@@ -56,7 +56,7 @@ public class GeneralOptionsPanel extends OptionsPanel {
    */
   private void initialize() {
     setBorder(BorderFactory.createTitledBorder(
-        BorderFactory.createEtchedBorder(), GT._("General options")));
+        BorderFactory.createEtchedBorder(), GT._T("General options")));
     JCheckBox chk = null;
     JTextField txt = null;
 
@@ -77,7 +77,7 @@ public class GeneralOptionsPanel extends OptionsPanel {
 
     // Use HTTP for API instead of HTTPS
     chk = createJCheckBox(
-        GT._("Use HTTP for MediaWiki API calls (less secure)"),
+        GT._T("Use HTTP for MediaWiki API calls (less secure)"),
         ConfigurationValueBoolean.FORCE_HTTP_API);
     constraints.gridx = 0;
     constraints.weightx = 0;
@@ -86,7 +86,7 @@ public class GeneralOptionsPanel extends OptionsPanel {
 
     // Use secure URL in external viewer
     chk = createJCheckBox(
-        GT._("Use secure URL in external viewer (https)"),
+        GT._T("Use secure URL in external viewer (https)"),
         ConfigurationValueBoolean.SECURE_URL);
     constraints.gridx = 0;
     constraints.weightx = 0;
@@ -95,7 +95,7 @@ public class GeneralOptionsPanel extends OptionsPanel {
 
     // Mark edits as minor
     chk = createJCheckBox(
-        GT._("Mark edits as minor"),
+        GT._T("Mark edits as minor"),
         ConfigurationValueBoolean.MARK_EDIT_MINOR);
     constraints.gridx = 0;
     constraints.weightx = 0;
@@ -104,7 +104,7 @@ public class GeneralOptionsPanel extends OptionsPanel {
 
     // Close disambiguation window after sending
     chk = createJCheckBox(
-        GT._("Close disambiguation window after sending"),
+        GT._T("Close disambiguation window after sending"),
         ConfigurationValueBoolean.CLOSE_DISAMBIG);
     constraints.gridx = 0;
     constraints.weightx = 0;
@@ -113,7 +113,7 @@ public class GeneralOptionsPanel extends OptionsPanel {
 
     // Add a note on talk page when requesting help
     chk = createJCheckBox(
-        GT._("Add a note on talk page when requesting help"),
+        GT._T("Add a note on talk page when requesting help"),
         ConfigurationValueBoolean.ADD_NOTE_FOR_HELP);
     constraints.gridx = 0;
     constraints.weightx = 0;
@@ -122,7 +122,7 @@ public class GeneralOptionsPanel extends OptionsPanel {
 
     // Ignore disambiguation links from User NS
     chk = createJCheckBox(
-        GT._("Ignore disambiguation links from User namespace"),
+        GT._T("Ignore disambiguation links from User namespace"),
         ConfigurationValueBoolean.IGNORE_DAB_USER_NS);
     constraints.gridx = 0;
     constraints.weightx = 0;
@@ -131,7 +131,7 @@ public class GeneralOptionsPanel extends OptionsPanel {
 
     // Restore window position
     chk = createJCheckBox(
-        GT._("Restore window position"),
+        GT._T("Restore window position"),
         ConfigurationValueBoolean.RESTORE_WINDOW);
     constraints.gridx = 0;
     constraints.weightx = 0;
@@ -140,7 +140,7 @@ public class GeneralOptionsPanel extends OptionsPanel {
 
     // Save window position
     chk = createJCheckBox(
-        GT._("Save window position"),
+        GT._T("Save window position"),
         ConfigurationValueBoolean.SAVE_WINDOW);
     constraints.gridx = 0;
     constraints.weightx = 0;
@@ -149,7 +149,7 @@ public class GeneralOptionsPanel extends OptionsPanel {
 
     // Use short notation
     chk = createJCheckBox(
-        GT._("Use short notation [[Xxxxx (yyy)|]]"),
+        GT._T("Use short notation [[Xxxxx (yyy)|]]"),
         ConfigurationValueBoolean.SHORT_NOTATION);
     constraints.gridx = 0;
     constraints.weightx = 0;
@@ -158,7 +158,7 @@ public class GeneralOptionsPanel extends OptionsPanel {
 
     // Use advanced features
     chk = createJCheckBox(
-        GT._("Use advanced features (experimental)"),
+        GT._T("Use advanced features (experimental)"),
         ConfigurationValueBoolean.ADVANCED_FEATURES);
     constraints.gridx = 0;
     constraints.weightx = 0;
@@ -167,7 +167,7 @@ public class GeneralOptionsPanel extends OptionsPanel {
 
     // Display "WPCleaner" in the update comments
     chk = createJCheckBox(
-        GT._("Display {0} link in update comments", Version.PROGRAM),
+        GT._T("Display {0} link in update comments", Version.PROGRAM),
         ConfigurationValueBoolean.WIKICLEANER_COMMENT);
     constraints.gridx = 0;
     constraints.weightx = 0;
@@ -176,7 +176,7 @@ public class GeneralOptionsPanel extends OptionsPanel {
 
     // Show 0 errors in Check Wiki
     chk = createJCheckBox(
-        GT._("Show errors with no detection found"),
+        GT._T("Show errors with no detection found"),
         ConfigurationValueBoolean.CHECK_SHOW_0_ERRORS);
     constraints.gridx = 0;
     constraints.weightx = 0;
@@ -185,7 +185,7 @@ public class GeneralOptionsPanel extends OptionsPanel {
 
     // Link to error description in comment for Check Wiki
     chk = createJCheckBox(
-        GT._("Add link to error description in comments"),
+        GT._T("Add link to error description in comments"),
         ConfigurationValueBoolean.CHECK_LINK_ERRORS);
     constraints.gridx = 0;
     constraints.weightx = 0;
@@ -194,7 +194,7 @@ public class GeneralOptionsPanel extends OptionsPanel {
 
     // Force watching pages that have been edited
     chk = createJCheckBox(
-        GT._("Watch all edited pages"),
+        GT._T("Watch all edited pages"),
         ConfigurationValueBoolean.FORCE_WATCH);
     constraints.gridx = 0;
     constraints.weightx = 0;
@@ -203,7 +203,7 @@ public class GeneralOptionsPanel extends OptionsPanel {
 
     // Check spelling
     chk = createJCheckBox(
-        GT._("Check spelling and typography"),
+        GT._T("Check spelling and typography"),
         ConfigurationValueBoolean.SPELLING);
     constraints.gridx = 0;
     constraints.weightx = 0;
@@ -212,7 +212,7 @@ public class GeneralOptionsPanel extends OptionsPanel {
 
     // Signature
     txt = createJTextField(ConfigurationValueString.SIGNATURE, 15);
-    JLabel labelSignature = Utilities.createJLabel(GT._("Signature :"));
+    JLabel labelSignature = Utilities.createJLabel(GT._T("Signature :"));
     labelSignature.setLabelFor(txt);
     labelSignature.setHorizontalAlignment(SwingConstants.TRAILING);
     constraints.gridwidth = 1;
@@ -228,21 +228,21 @@ public class GeneralOptionsPanel extends OptionsPanel {
     // Look and Feel
     JPanel plafPanel = new JPanel();
     plafPanel.setBorder(BorderFactory.createTitledBorder(
-        BorderFactory.createEtchedBorder(), GT._("Look & Feel")));
+        BorderFactory.createEtchedBorder(), GT._T("Look & Feel")));
     plafPanel.setLayout(new BoxLayout(plafPanel, BoxLayout.PAGE_AXIS));
     ButtonGroup plafGroup = new ButtonGroup();
     JRadioButton radPlafWPCleaner = Utilities.createJRadioButton(
-        GT._("Let {0} choose the Look && Feel", Version.PROGRAM),
+        GT._T("Let {0} choose the Look && Feel", Version.PROGRAM),
         false);
     plafPanel.add(radPlafWPCleaner);
     plafGroup.add(radPlafWPCleaner);
     JRadioButton radPlafSystem = Utilities.createJRadioButton(
-        GT._("Use System Look && Feel"),
+        GT._T("Use System Look && Feel"),
         false);
     plafPanel.add(radPlafSystem);
     plafGroup.add(radPlafSystem);
     JRadioButton radPlafUser = Utilities.createJRadioButton(
-        GT._("Choose Look && Feel"),
+        GT._T("Choose Look && Feel"),
         false);
     plafPanel.add(radPlafUser);
     plafGroup.add(radPlafUser);

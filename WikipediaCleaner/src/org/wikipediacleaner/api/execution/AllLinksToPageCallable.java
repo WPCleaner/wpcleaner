@@ -40,7 +40,7 @@ public class AllLinksToPageCallable extends MediaWikiCallable<Page> {
    */
   @Override
   public Page call() throws APIException {
-    setText(GT._("Retrieving all links to page") + " - " + page.getTitle());
+    setText(GT._T("Retrieving all links to page") + " - " + page.getTitle());
     api.retrieveLinksHere(getWikipedia(), page, true);
     return page;
   }

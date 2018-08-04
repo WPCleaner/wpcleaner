@@ -38,7 +38,7 @@ public class ApiJsonTokensResult extends ApiJsonResult implements ApiTokensResul
    * Execute token request.
    * 
    * @param properties Properties defining request.
-   * @throws APIException
+   * @throws APIException Exception thrown by the API.
    */
   @Override
   public void executeTokens(Map<String, String> properties)

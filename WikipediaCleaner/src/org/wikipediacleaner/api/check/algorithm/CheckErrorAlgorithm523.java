@@ -179,13 +179,13 @@ public class CheckErrorAlgorithm523 extends CheckErrorAlgorithmBase {
   }
 
   /**
-   * @return Map of parameters (Name -> description).
+   * @return Map of parameters (key=name, value=description).
    * @see org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase#getParameters()
    */
   @Override
   public Map<String, String> getParameters() {
     Map<String, String> parameters = super.getParameters();
-    parameters.put("min_size", GT._("The size below which images are not reported as duplicates"));
+    parameters.put("min_size", GT._T("The size below which images are not reported as duplicates"));
     return parameters;
   }
 

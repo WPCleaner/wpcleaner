@@ -23,7 +23,8 @@ public interface ApiUsersResult extends ApiResult {
    * Execute user request.
    * 
    * @param properties Properties defining request.
-   * @throws APIException
+   * @return User.
+   * @throws APIException Exception thrown by the API.
    */
   public User executeUser(Map<String, String> properties) throws APIException;
 }

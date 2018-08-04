@@ -29,7 +29,7 @@ public abstract class CheckErrorAlgorithmHtmlNamedEntities extends CheckErrorAlg
    * Possible global fixes.
    */
   private final static String[] globalFixes = new String[] {
-    GT._("Replace all"),
+    GT._T("Replace all"),
   };
 
   /**

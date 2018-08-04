@@ -60,7 +60,7 @@ public class ContentsCallable extends MediaWikiCallable<Page> {
    */
   @Override
   public Page call() throws APIException {
-    setText(GT._("Retrieving contents") + " - " + page.getTitle());
+    setText(GT._T("Retrieving contents") + " - " + page.getTitle());
     if (section == null) {
       api.retrieveContents(
           getWikipedia(),

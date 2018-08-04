@@ -27,7 +27,7 @@ public class CheckErrorAlgorithm057 extends CheckErrorAlgorithmBase {
    * Possible global fixes.
    */
   private final static String[] globalFixes = new String[] {
-    GT._("Fix all titles"),
+    GT._T("Fix all titles"),
   };
 
   public CheckErrorAlgorithm057() {

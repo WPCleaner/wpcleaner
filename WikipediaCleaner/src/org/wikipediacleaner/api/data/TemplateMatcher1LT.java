@@ -17,7 +17,7 @@ import org.wikipediacleaner.i18n.GT;
 
 /**
  * A class for describing a matcher for template creating internal links directly from parameter value.
- * {{templateName|parameterName=parameterValue}} => [[parameterValue]]
+ * {{templateName|parameterName=parameterValue}} gives [[parameterValue]]
  */
 public class TemplateMatcher1LT extends TemplateMatcher {
 
@@ -74,7 +74,7 @@ public class TemplateMatcher1LT extends TemplateMatcher {
   public List<String> getReplacements(Page page, PageElementTemplate template) {
     List<String> replacements = new ArrayList<String>();
     if (!isGood()) {
-      replacements.add(GT._(
+      replacements.add(GT._T(
           "Replace parameter {0} with {1}",
           new Object[] {
               parameterName,
@@ -82,7 +82,7 @@ public class TemplateMatcher1LT extends TemplateMatcher {
       String value = getParameterValue(page, template);
       if ((value != null) && (value.trim().length() > 0)) {
         String pipeTemplate = getWikipedia().getConfiguration().getString(WPCConfigurationString.PIPE_TEMPLATE);
-        replacements.add(GT._(
+        replacements.add(GT._T(
             "Replace parameter {0} with {1}",
             new Object[] {
                 parameterName,

@@ -195,7 +195,7 @@ public abstract class PageComparator implements NamedComparator<Page>, Externali
 
     @Override
     public String toString() {
-      return GT._("Namespace");
+      return GT._T("Namespace");
     }
   }
 
@@ -238,7 +238,7 @@ public abstract class PageComparator implements NamedComparator<Page>, Externali
 
     @Override
     public String toString() {
-      return GT._("Title");
+      return GT._T("Title");
     }
   }
 
@@ -281,7 +281,7 @@ public abstract class PageComparator implements NamedComparator<Page>, Externali
 
     @Override
     public String toString() {
-      return GT._("Revision Id");
+      return GT._T("Revision Id");
     }
   }
 
@@ -324,7 +324,7 @@ public abstract class PageComparator implements NamedComparator<Page>, Externali
 
     @Override
     public String toString() {
-      return GT._("Page Id");
+      return GT._T("Page Id");
     }
   }
 
@@ -376,7 +376,7 @@ public abstract class PageComparator implements NamedComparator<Page>, Externali
 
     @Override
     public String toString() {
-      return GT._("Template");
+      return GT._T("Template");
     }
   }
 
@@ -416,7 +416,7 @@ public abstract class PageComparator implements NamedComparator<Page>, Externali
 
     @Override
     public String toString() {
-      return GT._("Redirect");
+      return GT._T("Redirect");
     }
   }
 }

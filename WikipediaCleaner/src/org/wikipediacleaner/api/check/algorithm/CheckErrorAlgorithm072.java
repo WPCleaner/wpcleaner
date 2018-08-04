@@ -63,16 +63,16 @@ public class CheckErrorAlgorithm072 extends CheckErrorAlgorithmISBN {
         String message = null;
         if ((check != computedCheck) &&
             (Character.isDigit(computedCheck) || (computedCheck == 'X'))) {
-          message = GT._(
+          message = GT._T(
               "The checksum is {0} instead of {1}",
               new Object[] { check, computedCheck } );
         } else {
           ISBNInformation isbnInfo = ISBNRange.getInformation(number);
           if (isbnInfo != null) {
             if (isbnInfo.isInUnknownRange()) {
-              message = GT._("There's no existing range for this ISBN");
+              message = GT._T("There's no existing range for this ISBN");
             } else if (isbnInfo.isInReservedRange()) {
-              message = GT._("This ISBN is inside a reserved range");
+              message = GT._T("This ISBN is inside a reserved range");
             }
           }
         }
@@ -97,10 +97,10 @@ public class CheckErrorAlgorithm072 extends CheckErrorAlgorithmISBN {
           }
 
           // Add search for other identifiers
-          errorResult.addPossibleAction(new SimpleAction(GT._(
+          errorResult.addPossibleAction(new SimpleAction(GT._T(
               "Search as OCLC"),
               new ActionExternalViewer(MessageFormat.format("http://worldcat.org/oclc/{0}", number))));
-          errorResult.addPossibleAction(new SimpleAction(GT._(
+          errorResult.addPossibleAction(new SimpleAction(GT._T(
               "Search as LCCN"),
               new ActionExternalViewer(MessageFormat.format("http://lccn.loc.gov/{0}", number))));
 
@@ -151,7 +151,7 @@ public class CheckErrorAlgorithm072 extends CheckErrorAlgorithmISBN {
           // Add direct search engines
           addSearchEngines(
               analysis, errorResult, searchISBN,
-              GT._("Similar ISBN"));
+              GT._T("Similar ISBN"));
 
           errors.add(errorResult);
         }
@@ -227,17 +227,17 @@ public class CheckErrorAlgorithm072 extends CheckErrorAlgorithmISBN {
   /**
    * Return the parameters used to configure the algorithm.
    * 
-   * @return Map of parameters (Name -> description).
+   * @return Map of parameters (key=name, value=description).
    */
   @Override
   public Map<String, String> getParameters() {
     Map<String, String> parameters = super.getParameters();
     parameters.put(
-        "reason_checksum", GT._("An explanation of the problem (incorrect checksum)"));
+        "reason_checksum", GT._T("An explanation of the problem (incorrect checksum)"));
     parameters.put(
-        "reason_no_range", GT._("An explanation of the problem (non-existing range of ISBN numbers)"));
+        "reason_no_range", GT._T("An explanation of the problem (non-existing range of ISBN numbers)"));
     parameters.put(
-        "reason_reserved", GT._("An explanation of the problem (reserved range of ISBN numbers)"));
+        "reason_reserved", GT._T("An explanation of the problem (reserved range of ISBN numbers)"));
     return parameters;
   }
 }

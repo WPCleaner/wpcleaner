@@ -93,6 +93,7 @@ public class ApiPagesWithPropRequest extends ApiListRequest {
    * @param property Property name.
    * @param limit Flag indicating if the number of results should be limited.
    * @return List of protected titles.
+   * @throws APIException Exception thrown by the API.
    */
   public List<Page> loadPagesWithProp(
       String property,

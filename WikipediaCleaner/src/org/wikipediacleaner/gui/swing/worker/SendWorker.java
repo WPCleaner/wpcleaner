@@ -115,6 +115,7 @@ public class SendWorker extends BasicWorker {
      * @param forceWatch Force watching the page.
      * @param contributions Contributions.
      * @param errorsFixed Errors fixed by this update.
+     * @return Worker.
      */
     public SendWorker createWorker(
         EnumWikipedia wiki, BasicWindow window,
@@ -172,13 +173,13 @@ public class SendWorker extends BasicWorker {
    */
   @Override
   public Object construct() {
-    setText(GT._("Retrieving MediaWiki API"));
+    setText(GT._T("Retrieving MediaWiki API"));
     API api = APIFactory.getAPI();
 
     // Updating page contents
     QueryResult queryResult = null;
     try {
-      setText(GT._("Updating page contents"));
+      setText(GT._T("Updating page contents"));
       queryResult = api.updatePage(
           getWikipedia(), page, text,
           comment,

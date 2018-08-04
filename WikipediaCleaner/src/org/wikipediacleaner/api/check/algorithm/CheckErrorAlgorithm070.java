@@ -95,7 +95,7 @@ public class CheckErrorAlgorithm070 extends CheckErrorAlgorithmISBN {
           result = true;
           CheckErrorResult errorResult = createCheckErrorResult(analysis, isbn, true);
           errorResult.addText(
-              GT._(
+              GT._T(
                   "Length of ISBN is {0} instead of 10 or 13",
                   Integer.toString(length) ));
           addSuggestions(analysis, errorResult, isbn);
@@ -112,10 +112,10 @@ public class CheckErrorAlgorithm070 extends CheckErrorAlgorithmISBN {
           }
 
           // Add search for other identifiers
-          errorResult.addPossibleAction(new SimpleAction(GT._(
+          errorResult.addPossibleAction(new SimpleAction(GT._T(
               "Search as OCLC"),
               new ActionExternalViewer(MessageFormat.format("http://worldcat.org/oclc/{0}", isbnNumber))));
-          errorResult.addPossibleAction(new SimpleAction(GT._(
+          errorResult.addPossibleAction(new SimpleAction(GT._T(
               "Search as LCCN"),
               new ActionExternalViewer(MessageFormat.format("http://lccn.loc.gov/{0}", isbnNumber))));
 
@@ -190,7 +190,7 @@ public class CheckErrorAlgorithm070 extends CheckErrorAlgorithmISBN {
           // Add direct search engines
           addSearchEngines(
               analysis, errorResult, searchISBN,
-              GT._("Similar ISBN"));
+              GT._T("Similar ISBN"));
 
           errors.add(errorResult);
         }
@@ -254,13 +254,13 @@ public class CheckErrorAlgorithm070 extends CheckErrorAlgorithmISBN {
   /**
    * Return the parameters used to configure the algorithm.
    * 
-   * @return Map of parameters (Name -> description).
+   * @return Map of parameters (key=name, value=description).
    */
   @Override
   public Map<String, String> getParameters() {
     Map<String, String> parameters = super.getParameters();
     parameters.put(
-        "reason", GT._("An explanation of the problem"));
+        "reason", GT._T("An explanation of the problem"));
     return parameters;
   }
 }

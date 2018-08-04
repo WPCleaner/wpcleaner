@@ -41,7 +41,7 @@ public class ApiXmlExpandResult extends ApiXmlResult implements ApiExpandResult 
    * 
    * @param properties Properties defining request.
    * @return Expanded text.
-   * @throws APIException
+   * @throws APIException Exception thrown by the API.
    */
   @Override
   public String executeExpandTemplates(

@@ -99,7 +99,7 @@ public abstract class UpdateWarningWorker extends BasicWorker {
    * Generate the list of warning pages.
    * 
    * @param tools Update warning tools.
-   * @throws APIException
+   * @throws APIException Exception thrown by the API.
    */
   protected abstract void listWarningPages(UpdateWarningTools tools) throws APIException;
 
@@ -108,7 +108,7 @@ public abstract class UpdateWarningWorker extends BasicWorker {
    * 
    * @param templateNameProperty Property for the name of the warning template.
    * @param pages Map of (title,page) to complete.
-   * @throws APIException
+   * @throws APIException Exception thrown by the API.
    */
   protected void retrieveArticlesWithWarning(
       WPCConfigurationString templateNameProperty,
@@ -121,7 +121,7 @@ public abstract class UpdateWarningWorker extends BasicWorker {
     // Retrieve talk pages including a warning
     String warningTemplateName = configuration.getString(templateNameProperty);
     if (warningTemplateName != null) {
-      setText(GT._("Retrieving talk pages including {0}", "{{" + warningTemplateName + "}}"));
+      setText(GT._T("Retrieving talk pages including {0}", "{{" + warningTemplateName + "}}"));
       String templateTitle = wikiConfiguration.getPageTitle(
           Namespace.TEMPLATE,
           warningTemplateName);
@@ -133,7 +133,7 @@ public abstract class UpdateWarningWorker extends BasicWorker {
           false);
 
       // Convert them to article pages
-      setText(GT._("Constructing list of articles with warning"));
+      setText(GT._T("Constructing list of articles with warning"));
       List<Page> talkPages = warningTemplate.getRelatedPages(Page.RelatedPages.EMBEDDED_IN);
       if (talkPages != null) {
         for (Page talkPage : talkPages) {
@@ -203,7 +203,7 @@ public abstract class UpdateWarningWorker extends BasicWorker {
    * 
    * @param categoryNamesProperty Property for the name of the categories.
    * @param pages Map of (title,page) to complete.
-   * @throws APIException
+   * @throws APIException Exception thrown by the API.
    */
   protected void retrieveCategoryMembers(
       WPCConfigurationStringList categoryNamesProperty,
@@ -234,7 +234,7 @@ public abstract class UpdateWarningWorker extends BasicWorker {
    * 
    * @param pageNameProperty Property for the name of the page.
    * @param pages Map of (title,page) to complete.
-   * @throws APIException
+   * @throws APIException Exception thrown by the API.
    */
   protected void retrieveInternalLinks(
       WPCConfigurationString pageNameProperty,
@@ -260,7 +260,7 @@ public abstract class UpdateWarningWorker extends BasicWorker {
    * 
    * @param pageNameProperty Property for the name of the page.
    * @param pages Map of (title,page) to complete.
-   * @throws APIException
+   * @throws APIException Exception thrown by the API.
    */
   protected void retrieveInternalLinks(
       WPCConfigurationStringList pageNameProperty,

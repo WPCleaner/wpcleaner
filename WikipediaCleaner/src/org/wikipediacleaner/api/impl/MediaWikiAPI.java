@@ -273,7 +273,7 @@ public class MediaWikiAPI implements API {
    * @param wikipedia Wikipedia.
    * @param page Page.
    * @param section Section number.
-   * @throws APIException
+   * @throws APIException Exception thrown by the API.
    */
   @Override
   public void retrieveSectionContents(EnumWikipedia wikipedia, Page page, int section)
@@ -310,7 +310,7 @@ public class MediaWikiAPI implements API {
   /**
    * @param wikipedia Wikipedia.
    * @param pages List of pages.
-   * @throws APIException
+   * @throws APIException Exception thrown by the API.
    */
   public void retrieveContentsWithoutRedirects(EnumWikipedia wikipedia, List<Page> pages)
       throws APIException {
@@ -353,7 +353,7 @@ public class MediaWikiAPI implements API {
    * @param automatic True if the modification is automatic.
    * @param forceWatch Force watching the page.
    * @return Result of the command.
-   * @throws APIException
+   * @throws APIException Exception thrown by the API.
    */
   @Override
   public QueryResult updatePage(
@@ -464,7 +464,7 @@ public class MediaWikiAPI implements API {
    * @param automatic True if the modification is automatic.
    * @param forceWatch Force watching the page.
    * @return Result of the command.
-   * @throws APIException
+   * @throws APIException Exception thrown by the API.
    */
   @Override
   public QueryResult addNewSection(
@@ -486,7 +486,7 @@ public class MediaWikiAPI implements API {
    * @param automatic True if the modification is automatic.
    * @param forceWatch Force watching the page.
    * @return Result of the command.
-   * @throws APIException
+   * @throws APIException Exception thrown by the API.
    */
   @Override
   public QueryResult updateSection(
@@ -509,7 +509,7 @@ public class MediaWikiAPI implements API {
    * @param forceWatch Force watching the page.
    * @param automatic True if the modification is automatic.
    * @return Result of the command.
-   * @throws APIException
+   * @throws APIException Exception thrown by the API.
    */
   private QueryResult updateSection(
       EnumWikipedia wikipedia,
@@ -602,7 +602,7 @@ public class MediaWikiAPI implements API {
    * 
    * @param wiki Wiki.
    * @param pages List of pages.
-   * @throws APIException
+   * @throws APIException Exception thrown by the API.
    */
   @Override
   public void initializeRedirect(
@@ -639,7 +639,7 @@ public class MediaWikiAPI implements API {
    * 
    * @param query Path to the answer.
    * @return Result of the query.
-   * @throws APIException
+   * @throws APIException Exception thrown by the API.
    * @throws CaptchaException Captcha.
    */
   private QueryResult constructEdit(Element root, String query)
@@ -685,7 +685,7 @@ public class MediaWikiAPI implements API {
         }
         String spamBlacklist = node.getAttributeValue("spamblacklist");
         if (spamBlacklist != null) {
-          throw new APIException(GT._("URL {0} is blacklisted", spamBlacklist));
+          throw new APIException(GT._T("URL {0} is blacklisted", spamBlacklist));
         }
         throw new APIException(xmlOutputter.outputString(node));
       }
@@ -700,7 +700,7 @@ public class MediaWikiAPI implements API {
    * @param page Page.
    * @param root Root element.
    * @param query XPath query to retrieve the contents 
-   * @throws JDOMException
+   * @throws APIException Exception thrown by the API.
    */
   private boolean constructContents(Page page, Element root, String query)
       throws APIException {
@@ -750,7 +750,7 @@ public class MediaWikiAPI implements API {
    * @param pages Pages.
    * @param root Root element.
    * @param query XPath query to retrieve the contents 
-   * @throws APIException
+   * @throws APIException Exception thrown by the API.
    */
   private void constructContents(List<Page> pages, Element root, String query)
       throws APIException {
@@ -787,7 +787,7 @@ public class MediaWikiAPI implements API {
    * @param wiki Wiki.
    * @param pages List of pages.
    * @param root Root element.
-   * @throws APIException
+   * @throws APIException Exception thrown by the API.
    */
   private void updateRedirectStatus(
       EnumWikipedia wiki,
@@ -816,7 +816,7 @@ public class MediaWikiAPI implements API {
    * @param password Password.
    * @param login Flag indicating if login should be done.
    * @return Login status.
-   * @throws APIException
+   * @throws APIException Exception thrown by the API.
    * @see <a href="http://www.mediawiki.org/wiki/API:Login">API:Login</a>
    */
   @Override
@@ -866,7 +866,7 @@ public class MediaWikiAPI implements API {
    * (<code>action=tokens</code>).
    * 
    * @param wiki Wiki.
-   * @throws APIException
+   * @throws APIException Exception thrown by the API.
    */
   @Override
   public void retrieveTokens(EnumWikipedia wiki) throws APIException {
@@ -884,7 +884,7 @@ public class MediaWikiAPI implements API {
    * (<code>action=query</code>, <code>meta=siteinfo</code>).
    * 
    * @param wiki Wiki.
-   * @throws APIException
+   * @throws APIException Exception thrown by the API.
    * @see <a href="http://www.mediawiki.org/wiki/API:Meta#siteinfo_.2F_si">API:Meta</a>
    */
   private void loadSiteInfo(EnumWikipedia wiki) throws APIException {
@@ -904,7 +904,7 @@ public class MediaWikiAPI implements API {
    * @param wiki Wiki.
    * @param messageName Message name.
    * @return Message.
-   * @throws APIException
+   * @throws APIException Exception thrown by the API.
    * @see <a href="https://www.mediawiki.org/wiki/API:Allmessages">API:Allmessages</a>
    */
   @Override
@@ -921,7 +921,7 @@ public class MediaWikiAPI implements API {
    * @param wiki Wiki.
    * @param messageNames Message name.
    * @return Messages.
-   * @throws APIException
+   * @throws APIException Exception thrown by the API.
    * @see <a href="https://www.mediawiki.org/wiki/API:Allmessages">API:Allmessages</a>
    */
   @Override
@@ -941,7 +941,7 @@ public class MediaWikiAPI implements API {
    * 
    * @param wiki Wiki.
    * @param page Page.
-   * @throws APIException
+   * @throws APIException Exception thrown by the API.
    * @see <a href="https://www.mediawiki.org/wiki/API:Categories">API:Categories</a>
    */
   @Override
@@ -959,7 +959,7 @@ public class MediaWikiAPI implements API {
    * 
    * @param wiki Wiki.
    * @param pages List of pages.
-   * @throws APIException
+   * @throws APIException Exception thrown by the API.
    * @see <a href="http://www.mediawiki.org/wiki/API:Properties#info_.2F_in">API:Properties#info</a>
    */
   @Override
@@ -979,7 +979,7 @@ public class MediaWikiAPI implements API {
    * @param pages List of pages.
    * @param usePageId True if page identifiers should be used.
    * @param withRedirects Flag indicating if redirects information should be retrieved.
-   * @throws APIException
+   * @throws APIException Exception thrown by the API.
    * @see <a href="http://www.mediawiki.org/wiki/API:Properties#revisions_.2F_rv">API:Properties#revisions</a>
    */
   @Override
@@ -1015,7 +1015,7 @@ public class MediaWikiAPI implements API {
    * @param wiki Wiki.
    * @param pages List of pages.
    * @param forceApiCall True if API call should be forced even if the list of disambiguation pages is loaded.
-   * @throws APIException
+   * @throws APIException Exception thrown by the API.
    * @see <a href="http://www.mediawiki.org/wiki/API:Properties#categories_.2F_cl">API:Properties#categories</a>
    * @see <a href="http://www.mediawiki.org/wiki/API:Properties#templates_.2F_tl">API:Properties#templates</a>
    */
@@ -1070,7 +1070,7 @@ public class MediaWikiAPI implements API {
    * 
    * @param wiki Wiki.
    * @param pages List of pages.
-   * @throws APIException
+   * @throws APIException Exception thrown by the API.
    * @see <a href="http://www.mediawiki.org/wiki/API:Properties#links_.2F_pl">API:Properties#links</a>
    */
   @Override
@@ -1091,7 +1091,7 @@ public class MediaWikiAPI implements API {
    * @param knownPages Already known pages.
    * @param redirects True if redirects are requested.
    * @param disambigNeeded True if disambiguation information is needed.
-   * @throws APIException
+   * @throws APIException Exception thrown by the API.
    * @see <a href="http://www.mediawiki.org/wiki/API:Properties#links_.2F_pl">API:Properties#links</a>
    */
   @Override
@@ -1126,7 +1126,7 @@ public class MediaWikiAPI implements API {
    * @param wiki Wiki.
    * @param page The page.
    * @param redirects True if it should also retrieve links through redirects.
-   * @throws APIException
+   * @throws APIException Exception thrown by the API.
    * @see <a href="http://www.mediawiki.org/wiki/API:Linkshere">API:Linkshere</a>
    */
   @Override
@@ -1151,7 +1151,7 @@ public class MediaWikiAPI implements API {
    * @param to Wiki to which the link is searched.
    * @param title Page title.
    * @return Page title in the destination wiki.
-   * @throws APIException
+   * @throws APIException Exception thrown by the API.
    * @see <a href="http://www.mediawiki.org/wiki/API:Properties#langlinks_.2F_ll">API:Properties#langlinks</a>
    */
   @Override
@@ -1171,7 +1171,7 @@ public class MediaWikiAPI implements API {
    * (<code>action=query</code>, <code>list=abusefilters</code>).
    * 
    * @param wiki Wiki.
-   * @throws APIException
+   * @throws APIException Exception thrown by the API.
    * @see <a href="http://www.mediawiki.org/wiki/API:Abusefilters">API:Abusefilters</a>
    */
   @Override
@@ -1189,7 +1189,7 @@ public class MediaWikiAPI implements API {
    * @param wiki Wiki.
    * @param filterId Filter identifier.
    * @param maxDuration Maximum number of days.
-   * @throws APIException
+   * @throws APIException Exception thrown by the API.
    * @see <a href="http://www.mediawiki.org/wiki/API:Abuselog">API:Abuselog</a>
    */
   @Override
@@ -1209,7 +1209,7 @@ public class MediaWikiAPI implements API {
    * @param wiki Wiki.
    * @param page The page.
    * @param redirects True if it should also retrieve links through redirects.
-   * @throws APIException
+   * @throws APIException Exception thrown by the API.
    * @see <a href="http://www.mediawiki.org/wiki/API:Backlinks">API:Backlinks</a>
    */
   /* @Override
@@ -1231,7 +1231,7 @@ public class MediaWikiAPI implements API {
    * @param depth Depth of lookup for sub-categories.
    * @param limit Flag indicating if the number of results should be limited.
    * @param max Absolute maximum number of results
-   * @throws APIException
+   * @throws APIException Exception thrown by the API.
    * @see <a href="http://www.mediawiki.org/wiki/API:Categorymembers">API:Categorymembers</a>
    */
   @Override
@@ -1251,7 +1251,7 @@ public class MediaWikiAPI implements API {
    * @param page Page.
    * @param namespaces Limit to some name spaces.
    * @param limit Flag indicating if the number of results should be limited.
-   * @throws APIException
+   * @throws APIException Exception thrown by the API.
    * @see <a href="http://www.mediawiki.org/wiki/API:Embeddedin">API:Embeddedin</a>
    */
   @Override
@@ -1274,7 +1274,7 @@ public class MediaWikiAPI implements API {
    * @param limit Flag indicating if the number of results should be limited.
    * @param max Absolute maximum number of results
    * @return List of pages in the given category.
-   * @throws APIException
+   * @throws APIException Exception thrown by the API.
    */
   @Override
   public List<Page> retrieveLinterCategory(
@@ -1292,7 +1292,7 @@ public class MediaWikiAPI implements API {
    * @param wiki Wiki.
    * @param property Property name.
    * @param limit Flag indicating if the number of results should be limited.
-   * @throws APIException
+   * @throws APIException Exception thrown by the API.
    * @see <a href="http://www.mediawiki.org/wiki/API:Pageswithprop">API:Pageswithprop</a>
    */
   @Override
@@ -1311,7 +1311,7 @@ public class MediaWikiAPI implements API {
    * @param wiki Wiki.
    * @param namespaces Limit to some namespaces.
    * @param limit Flag indicating if the number of results should be limited.
-   * @throws APIException
+   * @throws APIException Exception thrown by the API.
    * @see <a href="http://www.mediawiki.org/wiki/API:Protectedtitles">API:Protectedtitles</a>
    */
   @Override
@@ -1330,7 +1330,7 @@ public class MediaWikiAPI implements API {
    * @param wiki Wiki.
    * @param query Type of list.
    * @return List of pages depending on the query.
-   * @throws APIException
+   * @throws APIException Exception thrown by the API.
    * @see <a href="http://www.mediawiki.org/wiki/API:Querypage">API:Querypage</a>
    */
   @Override
@@ -1348,7 +1348,7 @@ public class MediaWikiAPI implements API {
    * @param wiki Wiki.
    * @param count Number of random pages.
    * @param redirects True if redirect pages are requested.
-   * @throws APIException
+   * @throws APIException Exception thrown by the API.
    * @see <a href="http://www.mediawiki.org/wiki/API:Random">API:Random</a>
    */
   @Override
@@ -1368,7 +1368,7 @@ public class MediaWikiAPI implements API {
    * @param start The timestamp to start listing from.
    * @param recentChanges The list of recent changes to be filled.
    * @return The timestamp to use as a starting point for the next call.
-   * @throws APIException
+   * @throws APIException Exception thrown by the API.
    * @see <a href="http://www.mediawiki.org/wiki/API:Recentchanges">API:Recentchanges</a>
    */
   @Override
@@ -1387,7 +1387,7 @@ public class MediaWikiAPI implements API {
    * @param wiki Wiki.
    * @param page The page.
    * @param limit Flag indicating if the number of results should be limited.
-   * @throws APIException
+   * @throws APIException Exception thrown by the API.
    * @see <a href="http://www.mediawiki.org/wiki/API:Search">API:Search</a>
    */
   @Override
@@ -1405,7 +1405,7 @@ public class MediaWikiAPI implements API {
    * 
    * @param wiki Wiki.
    * @param name User name.
-   * @throws APIException
+   * @throws APIException Exception thrown by the API.
    * @see <a href="http://www.mediawiki.org/wiki/API:Users">API:Users</a>
    */
   @Override
@@ -1421,7 +1421,7 @@ public class MediaWikiAPI implements API {
    * (<code>action=query</code>, <code>list=watchlistraw</code>).
    * 
    * @param wiki Wiki.
-   * @throws APIException
+   * @throws APIException Exception thrown by the API.
    * @see <a href="http://www.mediawiki.org/wiki/API:Watchlistraw">API:Watchlistraw</a>
    */
   @Override
@@ -1445,7 +1445,7 @@ public class MediaWikiAPI implements API {
    * @param title The title to use (for example in {{PAGENAME}}).
    * @param text The text with templates in it.
    * @return Text with templates expanded.
-   * @throws APIException
+   * @throws APIException Exception thrown by the API.
    * @see <a href="http://www.mediawiki.org/wiki/API:Parsing_wikitext#expandtemplates">API:Parsing wikitext</a>
    */
   @Override
@@ -1465,7 +1465,7 @@ public class MediaWikiAPI implements API {
    * @param text The text with templates in it.
    * @param full True to do a full parsing.
    * @return Parsed text.
-   * @throws APIException
+   * @throws APIException Exception thrown by the API.
    * @see <a href="http://www.mediawiki.org/wiki/API:Parsing_wikitext#parse">API:Parsing wikitext</a>
    */
   @Override
@@ -1491,7 +1491,7 @@ public class MediaWikiAPI implements API {
    * @param wiki Wiki.
    * @param page Page.
    * @return List of sections.
-   * @throws APIException
+   * @throws APIException Exception thrown by the API.
    * @see <a href="http://www.mediawiki.org/wiki/API:Parsing_wikitext#parse">API:Parsing wikitext</a>
    */
   @Override
@@ -1512,7 +1512,7 @@ public class MediaWikiAPI implements API {
    * 
    * @param wiki Wiki.
    * @param page The page.
-   * @throws APIException
+   * @throws APIException Exception thrown by the API.
    * @see <a href="http://www.mediawiki.org/wiki/API:Purge">API:Purge</a>
    */
   @Override
@@ -1535,7 +1535,7 @@ public class MediaWikiAPI implements API {
    * @param page The page.
    * @param reason Reason for deleting the page.
    * @param automatic True if the modification is automatic.
-   * @throws APIException
+   * @throws APIException Exception thrown by the API.
    * @see <a href="http://www.mediawiki.org/wiki/API:Delete">API:Delete</a>
    */
   @Override
@@ -1559,7 +1559,7 @@ public class MediaWikiAPI implements API {
    * @param wiki Wiki.
    * @param page The page.
    * @return TemplateData for the page.
-   * @throws APIException
+   * @throws APIException Exception thrown by the API.
    * @see <a href="http://www.mediawiki.org/wiki/API:Delete">API:Delete</a>
    */
   @Override
@@ -1641,7 +1641,8 @@ public class MediaWikiAPI implements API {
    * @param properties Properties to drive the API.
    * @param maxTry Maximum number of tries.
    * @return Root element.
-   * @throws APIException
+   * @throws JDOMParseException Exception thrown due to the DOM.
+   * @throws APIException Exception thrown by the API.
    */
   private Element getRoot(
       EnumWikipedia       wikipedia,
@@ -1823,7 +1824,7 @@ public class MediaWikiAPI implements API {
    * Check for errors reported by the API.
    * 
    * @param root Document root.
-   * @throws APIException
+   * @throws APIException Exception thrown by the API.
    */
   private void checkForError(Element root) throws APIException {
     if (root == null) {
@@ -1874,14 +1875,14 @@ public class MediaWikiAPI implements API {
     if ((captcha.getQuestion() != null) && (captcha.getQuestion().trim().length() > 0)) {
       return Utilities.askForValue(
           null,
-          GT._("This action is protected by a CAPTCHA.\nWhat is the answer to the following question ?") + "\n" + captcha.getQuestion(),
+          GT._T("This action is protected by a CAPTCHA.\nWhat is the answer to the following question ?") + "\n" + captcha.getQuestion(),
           "", null);
     }
     if ((captcha.getURL() != null) && (captcha.getURL().trim().length() > 0)) {
       Utilities.browseURL(wikipedia.getSettings().getHostURL(false) + captcha.getURL());
       return Utilities.askForValue(
           null,
-          GT._("This action is protected by a CAPTCHA.\nWhat is the answer to the question displayed in your browser ?"),
+          GT._T("This action is protected by a CAPTCHA.\nWhat is the answer to the question displayed in your browser ?"),
           "", null);
     }
     return null;

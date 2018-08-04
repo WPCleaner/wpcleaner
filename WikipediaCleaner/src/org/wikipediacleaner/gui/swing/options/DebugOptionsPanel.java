@@ -44,7 +44,7 @@ public class DebugOptionsPanel extends OptionsPanel {
    */
   private void initialize() {
     setBorder(BorderFactory.createTitledBorder(
-        BorderFactory.createEtchedBorder(), GT._("Debug options")));
+        BorderFactory.createEtchedBorder(), GT._T("Debug options")));
     JCheckBox chk = null;
 
     // Initialize constraints
@@ -64,35 +64,35 @@ public class DebugOptionsPanel extends OptionsPanel {
 
     // Debug URL
     chk = createJCheckBox(
-        GT._("Log all URLs called by {0}", Version.PROGRAM),
+        GT._T("Log all URLs called by {0}", Version.PROGRAM),
         ConfigurationValueBoolean.DEBUG_URL);
     add(chk, constraints);
     constraints.gridy++;
 
     // Debug API
     chk = createJCheckBox(
-        GT._("Log all answers to MediaWiki API calls"),
+        GT._T("Log all answers to MediaWiki API calls"),
         ConfigurationValueBoolean.DEBUG_API);
     add(chk, constraints);
     constraints.gridy++;
 
     // Debug time
     chk = createJCheckBox(
-        GT._("Add a timestamp to logs"),
+        GT._T("Add a timestamp to logs"),
         ConfigurationValueBoolean.DEBUG_TIME);
     add(chk, constraints);
     constraints.gridy++;
 
     // Create log file
     chk = createJCheckBox(
-        GT._("Use a log file"),
+        GT._T("Use a log file"),
         ConfigurationValueBoolean.DEBUG_FILE);
     add(chk, constraints);
     constraints.gridy++;
 
     // Detailed debugging
     chk = createJCheckBox(
-        GT._("Detailed debugging"),
+        GT._T("Detailed debugging"),
         ConfigurationValueBoolean.DEBUG_DETAILS);
     add(chk, constraints);
     constraints.gridy++;

@@ -87,6 +87,7 @@ public class ApiBacklinksRequest extends ApiListRequest {
    * 
    * @param page Page for which back links are requested.
    * @param redirects True if it should also retrieve links through redirects.
+   * @throws APIException Exception thrown by the API.
    */
   public void loadBacklinks(Page page, boolean redirects) throws APIException {
     Map<String, String> properties = getProperties(ACTION_QUERY, result.getFormat());

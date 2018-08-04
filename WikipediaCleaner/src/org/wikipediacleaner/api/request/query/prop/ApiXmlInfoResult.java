@@ -40,7 +40,7 @@ public class ApiXmlInfoResult extends ApiXmlPropertiesResult implements ApiInfoR
    * @param properties Properties defining request.
    * @param pages Pages to be filled with informations.
    * @return True if request should be continued.
-   * @throws APIException
+   * @throws APIException Exception thrown by the API.
    */
   @Override
   public boolean executeInformations(

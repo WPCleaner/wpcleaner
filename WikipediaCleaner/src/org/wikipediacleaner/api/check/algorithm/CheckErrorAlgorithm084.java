@@ -114,10 +114,10 @@ public class CheckErrorAlgorithm084 extends CheckErrorAlgorithmBase {
               String replacement =
                   contents.substring(title.getBeginIndex(), title.getEndIndex()) + "\n" +
                   text + "\n\n";
-              errorResult.addReplacement(replacement, GT._("Add {0}", text));
+              errorResult.addReplacement(replacement, GT._T("Add {0}", text));
             }
           }
-          errorResult.addReplacement("", GT._("Delete section"));
+          errorResult.addReplacement("", GT._T("Delete section"));
           if ((nextTitle != null) && (nextTitle.getLevel() == title.getLevel())) {
             errorResult.addEditTocAction(title);
           }
@@ -129,14 +129,14 @@ public class CheckErrorAlgorithm084 extends CheckErrorAlgorithmBase {
   }
 
   /**
-   * @return Map of parameters (Name -> description).
+   * @return Map of parameters (key=name, value=description).
    * @see org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase#getParameters()
    */
   @Override
   public Map<String, String> getParameters() {
     Map<String, String> parameters = super.getParameters();
-    parameters.put("texts", GT._("A list of texts that can be added to sections without content"));
-    parameters.put("level", GT._("Restrict verification to titles with a higher level"));
+    parameters.put("texts", GT._T("A list of texts that can be added to sections without content"));
+    parameters.put("level", GT._T("Restrict verification to titles with a higher level"));
     return parameters;
   }
 }

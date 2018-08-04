@@ -88,7 +88,7 @@ public class CheckErrorAlgorithm001 extends CheckErrorAlgorithmBase {
           colonIndex = fullTemplate.indexOf(':');
           error.addReplacement(
               "{{" + fullTemplate.substring(colonIndex + 1).trim(),
-              GT._("Remove {0} namespace from template name", namespace),
+              GT._T("Remove {0} namespace from template name", namespace),
               true);
           errors.add(error);
         }

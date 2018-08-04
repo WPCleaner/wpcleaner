@@ -89,7 +89,7 @@ public class TemplateListWindow extends BasicWindow {
    */
   @Override
   public String getTitle() {
-    return GT._("Templates in {0}", link.getTitle());
+    return GT._T("Templates in {0}", link.getTitle());
   }
 
   /**
@@ -113,7 +113,7 @@ public class TemplateListWindow extends BasicWindow {
     constraints.weighty = 0;
 
     // Label
-    JLabel label = Utilities.createJLabel(GT._(
+    JLabel label = Utilities.createJLabel(GT._T(
         "Templates used in {0}, linking to {1}",
         new Object[] { page.getTitle(), link.getTitle() }));
     panel.add(label, constraints);
@@ -209,13 +209,13 @@ public class TemplateListWindow extends BasicWindow {
     @Override
     public Object construct() {
       try {
-        setText(GT._("Retrieving MediaWiki API"));
+        setText(GT._T("Retrieving MediaWiki API"));
         API api = APIFactory.getAPI();
-        setText(GT._("Retrieving templates"));
+        setText(GT._T("Retrieving templates"));
         api.retrieveTemplates(getWikipedia(), page1);
-        setText(GT._("Retrieving links in templates"));
+        setText(GT._T("Retrieving links in templates"));
         api.retrieveLinks(getWikipedia(), page1.getTemplates());
-        setText(GT._("Displaying templates found"));
+        setText(GT._T("Displaying templates found"));
         for (Page p : page1.getTemplates()) {
           boolean found = false;
           for (Page l : p.getLinks()) {

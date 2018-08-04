@@ -56,10 +56,10 @@ public class StringCheckerReferenceName implements StringChecker {
       }
     }
     if (ok && onlyDigits) {
-      return new Result(false, buffer.toString(), GT._(
+      return new Result(false, buffer.toString(), GT._T(
           "A reference name cannot be a numeric key"));
     }
-    return new Result(ok, buffer.toString(), GT._(
+    return new Result(ok, buffer.toString(), GT._T(
         "A reference name cannot contain any of these characters: {0}", unauthorized));
   }
 

@@ -42,6 +42,20 @@ public class AddInternalLinkAction extends TextAction {
   private final Element element;
   private final JTextPane textPane;
 
+  /**
+   * Constructor.
+   * 
+   * @param article Article.
+   * @param anchor Anchor.
+   * @param prefix Prefix.
+   * @param suffix Suffix.
+   * @param textProvider Text provider.
+   * @param question Question.
+   * @param defaultValue Default value.
+   * @param checker Checker.
+   * @param element Element.
+   * @param textPane Text pane.
+   */
   public AddInternalLinkAction(
       String article,
       String anchor,
@@ -59,6 +73,22 @@ public class AddInternalLinkAction extends TextAction {
         checker, element, textPane);
   }
 
+  /**
+   * Constructor.
+   * 
+   * @param article Article.
+   * @param anchor Anchor.
+   * @param prefix Prefix.
+   * @param suffix Suffix.
+   * @param textProvider Text provider.
+   * @param question Question.
+   * @param possibleValues List of possible values.
+   * @param onlyList True if values can only be from the list.
+   * @param defaultValue Default value.
+   * @param checker Checker.
+   * @param element Element.
+   * @param textPane Text pane.
+   */
   public AddInternalLinkAction(
       String article,
       String anchor,
@@ -146,7 +176,11 @@ public class AddInternalLinkAction extends TextAction {
   }
 
   /**
-   * Replace text. 
+   * Replace text.
+   * 
+   * @param localNewText New text.
+   * @param localElement Element.
+   * @param localTextPane Text pane.
    */
   private void replace(
       String localNewText,

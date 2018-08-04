@@ -83,8 +83,8 @@ public class BasicMenuCreator extends AbstractMenuCreator {
         int fixedEndView = 0;
         int fixedBeginHistory = 0;
         int fixedEndHistory = 0;
-        JMenu submenuView = new JMenu(GT._("External Viewer"));
-        JMenu submenuHistory = new JMenu(GT._("History"));
+        JMenu submenuView = new JMenu(GT._T("External Viewer"));
+        JMenu submenuHistory = new JMenu(GT._T("History"));
         Iterator<Page> iter = page.getRedirectIteratorWithPage();
         while (iter.hasNext()) {
           Page pageTmp = iter.next();
@@ -149,18 +149,18 @@ public class BasicMenuCreator extends AbstractMenuCreator {
         String title = null;
         if ((page.getNamespace() != null) &&
             (page.getNamespace().intValue() == Namespace.TEMPLATE)) {
-          title = GT._("Template External Viewer");
+          title = GT._T("Template External Viewer");
         } else {
-          title = GT._("External Viewer");
+          title = GT._T("External Viewer");
         }
         addItem(
             popup, page, title, true,
             new ActionExternalViewer(wiki, page.getTitle()));
         if ((page.getNamespace() != null) &&
             (page.getNamespace().intValue() == Namespace.TEMPLATE)) {
-          title = GT._("Template history");
+          title = GT._T("Template history");
         } else {
-          title = GT._("History");
+          title = GT._T("History");
         }
         addItem(
             popup, page, title, true,
@@ -192,7 +192,7 @@ public class BasicMenuCreator extends AbstractMenuCreator {
     if (((links != null) && (links.size() > 0)) || page.isRedirect()) {
       int fixedBegin = 0;
       int fixedEnd = 0;
-      JMenu submenuAnalyze = new JMenu(GT._("Analyze"));
+      JMenu submenuAnalyze = new JMenu(GT._T("Analyze"));
       Iterator<Page> iter = page.getRedirectIteratorWithPage();
       while (iter.hasNext()) {
         Page pageTmp = iter.next();
@@ -231,9 +231,9 @@ public class BasicMenuCreator extends AbstractMenuCreator {
     } else {
       if ((page.getNamespace() != null) &&
           (page.getNamespace().intValue() == Namespace.TEMPLATE)) {
-        menuItem = new JMenuItem(GT._("Analyze template"));
+        menuItem = new JMenuItem(GT._T("Analyze template"));
       } else {
-        menuItem = new JMenuItem(GT._("Analyze page"));
+        menuItem = new JMenuItem(GT._T("Analyze page"));
       }
       action = new ActionFullAnalysis(wiki, page.getTitle());
       menuItem.addActionListener(action);
@@ -259,12 +259,12 @@ public class BasicMenuCreator extends AbstractMenuCreator {
     }
     if (Boolean.TRUE.equals(page.isDisambiguationPage())) {
       if (!page.isRedirect()) {
-        JMenuItem menuItem = new JMenuItem(GT._("Disambiguation analysis"));
+        JMenuItem menuItem = new JMenuItem(GT._T("Disambiguation analysis"));
         ActionListener action = new ActionDisambiguationAnalysis(wiki, page.getTitle());
         menuItem.addActionListener(action);
         popup.add(menuItem);
       } else {
-        JMenu submenuView = new JMenu(GT._("Disambiguation analysis"));
+        JMenu submenuView = new JMenu(GT._T("Disambiguation analysis"));
         Iterator<Page> iter = page.getRedirectIteratorWithPage();
         while (iter.hasNext()) {
           Page pageTmp = iter.next();
@@ -299,7 +299,7 @@ public class BasicMenuCreator extends AbstractMenuCreator {
     Collection<PageElementTitle> chapters =
         PageAnalysisUtils.getCurrentTitles(pageAnalysis, position);
     if ((chapters != null) && !chapters.isEmpty()) {
-      JMenu submenu = new JMenu(GT._("Current chapter"));
+      JMenu submenu = new JMenu(GT._T("Current chapter"));
       for (PageElementTitle chapter : chapters) {
         addDisabledText(submenu, chapter.toString());
       }
@@ -325,7 +325,7 @@ public class BasicMenuCreator extends AbstractMenuCreator {
       MWPane textPane, int startOffset, int endOffset) {
     if (text != null) {
       addItem(
-          popup, null, GT._("Remove link"), true,
+          popup, null, GT._T("Remove link"), true,
           new RemoveLinkAction(text, textPane, startOffset, endOffset));
     }
   }
@@ -339,7 +339,7 @@ public class BasicMenuCreator extends AbstractMenuCreator {
    */
   public void addItemView(
       EnumWikipedia wiki, JPopupMenu popup, String url) {
-    addItemView(wiki, popup, url, GT._("External Viewer"));
+    addItemView(wiki, popup, url, GT._T("External Viewer"));
   }
 
   /**
@@ -384,7 +384,7 @@ public class BasicMenuCreator extends AbstractMenuCreator {
       EnumWikipedia wiki, JPopupMenu popup, Page page, BasicWindow window) {
     if (page != null) {
       addItem(
-          popup, null, GT._("Purge cache"), true,
+          popup, null, GT._T("Purge cache"), true,
           new PurgeCacheAction(wiki, page, window));
     }
   }
@@ -403,7 +403,7 @@ public class BasicMenuCreator extends AbstractMenuCreator {
       return;
     }
     addItem(
-        popup, null, GT._("Reload links"), true,
+        popup, null, GT._T("Reload links"), true,
         new ReloadLinksAction(wiki, page, window));
   }
 

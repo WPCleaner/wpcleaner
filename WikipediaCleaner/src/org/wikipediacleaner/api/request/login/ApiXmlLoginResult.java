@@ -42,7 +42,7 @@ public class ApiXmlLoginResult extends ApiXmlResult implements ApiLoginResult {
    * 
    * @param properties Properties defining request.
    * @return Login result.
-   * @throws APIException
+   * @throws APIException Exception thrown by the API.
    */
   @Override
   public LoginResult executeLogin(
@@ -66,7 +66,7 @@ public class ApiXmlLoginResult extends ApiXmlResult implements ApiLoginResult {
    * 
    * @param root Root element in MediaWiki answer.
    * @return Result of the login.
-   * @throws APIException
+   * @throws APIException Exception thrown by the API.
    */
   private LoginResult constructLogin(Element root)
       throws APIException {

@@ -63,7 +63,7 @@ public class HttpServer {
    * @param path Path on the tool server.
    * @param properties Request properties.
    * @param manager Response manager.
-   * @throws APIException
+   * @throws APIException Exception thrown by the API.
    */
   public void sendPost(
       String              path,
@@ -137,7 +137,7 @@ public class HttpServer {
    * 
    * @param path Path on the tool server.
    * @param manager Response manager.
-   * @throws APIException
+   * @throws APIException Exception thrown by the API.
    */
   public void sendGet(
       String          path,

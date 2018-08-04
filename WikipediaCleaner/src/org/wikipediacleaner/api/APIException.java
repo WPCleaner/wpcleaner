@@ -63,6 +63,7 @@ public class APIException extends Exception {
 
   /**
    * @param message Exception message.
+   * @param httpStatus HTTP status.
    */
   public APIException(String message, int httpStatus) {
     super(message);

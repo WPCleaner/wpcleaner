@@ -96,7 +96,7 @@ public class CheckErrorPageListPopupListener extends MouseAdapter {
 
     // Menu name
     BasicMenuCreator menu = new BasicMenuCreator();
-    JPopupMenu popup = menu.createPopupMenu(GT._("Error n°{0}", algorithm.getErrorNumberString()));
+    JPopupMenu popup = menu.createPopupMenu(GT._T("Error n°{0}", algorithm.getErrorNumberString()));
 
     // Global fixes
     JMenuItem menuItem = null;
@@ -114,11 +114,11 @@ public class CheckErrorPageListPopupListener extends MouseAdapter {
 
     // Create sub menus
     menu.addSeparator(popup);
-    menu.addItemView(wiki, popup, algorithm.getLink(), GT._("Detail"));
+    menu.addItemView(wiki, popup, algorithm.getLink(), GT._T("Detail"));
     CheckWiki checkWiki = APIFactory.getCheckWiki();
     String toolserverUrl = checkWiki.getUrlDescription(wiki, algorithm);
-    menu.addItemView(null, popup, toolserverUrl, GT._("List on {0}", CheckWiki.getServerName(wiki)));
-    menu.addItemView(wiki, popup, algorithm.getWhiteListPageName(), GT._("View or edit whitelist"));
+    menu.addItemView(null, popup, toolserverUrl, GT._T("List on {0}", CheckWiki.getServerName(wiki)));
+    menu.addItemView(wiki, popup, algorithm.getWhiteListPageName(), GT._T("View or edit whitelist"));
 
     popup.show(e.getComponent(), e.getX(), e.getY());
   }

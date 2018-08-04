@@ -129,7 +129,7 @@ public class CheckErrorAlgorithm530 extends CheckErrorAlgorithmBase {
 
         // Suggest to view the RFC
         errorResult.addPossibleAction(new SimpleAction(
-            GT._("View RFC"),
+            GT._T("View RFC"),
             new ActionExternalViewer(rfc.getURL())));
 
         errors.add(errorResult);
@@ -207,13 +207,13 @@ public class CheckErrorAlgorithm530 extends CheckErrorAlgorithmBase {
   }
 
   /**
-   * @return Map of parameters (Name -> description).
+   * @return Map of parameters (key=name, value=description).
    * @see org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase#getParameters()
    */
   @Override
   public Map<String, String> getParameters() {
     Map<String, String> parameters = super.getParameters();
-    parameters.put("category", GT._("A category containing the list of pages in error"));
+    parameters.put("category", GT._T("A category containing the list of pages in error"));
     return parameters;
   }
 }

@@ -70,6 +70,10 @@ public class ReplaceTextAction extends TextAction {
 
   /**
    * Replace text. 
+   * 
+   * @param localNewText New text.
+   * @param localElement Element.
+   * @param localTextPane Text pane.
    */
   private void replace(
       String localNewText,

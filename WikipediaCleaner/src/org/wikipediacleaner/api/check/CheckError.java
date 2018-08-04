@@ -404,12 +404,12 @@ public class CheckError {
   public String toString() {
     String count = Integer.toString(errors.size());
     int priority = CWConfigurationError.PRIORITY_UNKOWN;
-    String description = GT._("No available description");
+    String description = GT._T("No available description");
     if (algorithm != null) {
       priority = algorithm.getPriority();
       description = algorithm.getShortDescriptionReplaced();
     }
-    return GT._("Error n°{0} ({1} - {2}) - {3}", new Object[] {
+    return GT._T("Error n°{0} ({1} - {2}) - {3}", new Object[] {
         Integer.valueOf(errorNumber),
         count,
         CWConfigurationError.getPriorityString(priority),

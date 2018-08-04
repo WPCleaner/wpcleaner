@@ -90,6 +90,7 @@ public class ApiRedirectsRequest extends ApiPropertiesRequest {
    * Load redirects.
    * 
    * @param page Page for which redirects to it are requested.
+   * @throws APIException Exception thrown by the API.
    */
   public void loadRedirects(Page page) throws APIException {
     Map<String, String> properties = getProperties(ACTION_QUERY, result.getFormat());

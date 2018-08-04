@@ -22,7 +22,7 @@ public interface ApiTokensResult extends ApiResult {
    * Execute token request.
    * 
    * @param properties Properties defining request.
-   * @throws APIException
+   * @throws APIException Exception thrown by the API.
    */
   public void executeTokens(Map<String, String> properties) throws APIException;
 }

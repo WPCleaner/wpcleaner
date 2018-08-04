@@ -78,7 +78,7 @@ public class LinterErrorPanel extends JPanel {
         new Insets(0, 0, 0, 0), 0, 0);
 
     // Text
-    String message = GT._("The following errors are currently detected by Linter:");
+    String message = GT._T("The following errors are currently detected by Linter:");
     labelMessage = new JLabel(message);
     add(labelMessage, constraints);
     constraints.gridy++;

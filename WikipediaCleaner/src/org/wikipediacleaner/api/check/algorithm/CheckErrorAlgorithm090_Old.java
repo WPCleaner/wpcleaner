@@ -27,7 +27,7 @@ public class CheckErrorAlgorithm090_Old extends CheckErrorAlgorithmBase {
    * Possible global fixes.
    */
   private final static String[] globalFixes = new String[] {
-    GT._("Fix DEFAULTSORT"),
+    GT._T("Fix DEFAULTSORT"),
   };
 
   public CheckErrorAlgorithm090_Old() {

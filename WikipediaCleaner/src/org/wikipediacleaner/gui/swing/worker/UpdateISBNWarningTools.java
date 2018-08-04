@@ -77,7 +77,7 @@ public class UpdateISBNWarningTools extends UpdateWarningTools {
    * 
    * @param pages List of pages.
    * @return True if information was retrieved.
-   * @throws APIException
+   * @throws APIException Exception thrown by the API.
    */
   @Override
   protected boolean retrievePageInformation(
@@ -255,7 +255,7 @@ public class UpdateISBNWarningTools extends UpdateWarningTools {
    */
   @Override
   protected String getMessageRemoveWarning(String title) {
-    return GT._("Removing {1} warning - {0}", new Object[] { title, "ISBN" });
+    return GT._T("Removing {1} warning - {0}", new Object[] { title, "ISBN" });
   }
 
   /**
@@ -264,6 +264,6 @@ public class UpdateISBNWarningTools extends UpdateWarningTools {
    */
   @Override
   protected String getMessageUpdateWarning(String title) {
-    return GT._("Updating {1} warning - {0}", new Object[] { title, "ISBN" });
+    return GT._T("Updating {1} warning - {0}", new Object[] { title, "ISBN" });
   }
 }

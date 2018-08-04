@@ -67,6 +67,7 @@ public class LinterError {
   }
 
   /**
+   * @param config Wiki configuration.
    * @return Error type.
    */
   public String getTypeName(WikiConfiguration config) {

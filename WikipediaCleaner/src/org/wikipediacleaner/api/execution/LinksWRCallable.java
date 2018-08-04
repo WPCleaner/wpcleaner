@@ -52,7 +52,7 @@ public class LinksWRCallable extends MediaWikiCallable<Page> {
    */
   @Override
   public Page call() throws APIException {
-    setText(GT._("Retrieving page links") + " - " + page.getTitle());
+    setText(GT._T("Retrieving page links") + " - " + page.getTitle());
     api.retrieveLinks(getWikipedia(), page, namespace, knownPages, true, disambigNeeded);
     return page;
   }

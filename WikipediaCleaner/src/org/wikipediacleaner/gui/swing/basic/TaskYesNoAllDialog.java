@@ -49,10 +49,10 @@ public class TaskYesNoAllDialog implements Runnable {
   @Override
   public void run() {
     Object[] options = new Object[] {
-        GT._("Yes"),
-        GT._("Yes to all"),
-        GT._("No"),
-        GT._("No to all"),
+        GT._T("Yes"),
+        GT._T("Yes to all"),
+        GT._T("No"),
+        GT._T("No to all"),
     }; 
     JOptionPane pane = new JOptionPane(
         message, JOptionPane.WARNING_MESSAGE,

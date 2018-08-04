@@ -54,7 +54,7 @@ public class ActionInsertPredefinedText implements ActionListener {
   private static JButton createInternalButton(
       boolean showIcon) {
     String iconName = "gnome-insert-text.png";
-    String label = GT._("Insert text");
+    String label = GT._T("Insert text");
     return Utilities.createJButton(
         showIcon ? iconName : null,
         EnumImageSize.NORMAL,

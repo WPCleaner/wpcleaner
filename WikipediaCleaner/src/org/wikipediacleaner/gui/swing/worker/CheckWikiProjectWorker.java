@@ -73,7 +73,7 @@ public class CheckWikiProjectWorker extends BasicWorker {
               (algorithm.getPriority() != CWConfigurationError.PRIORITY_BOT_ONLY)) {
             // Retrieving list of pages for the error number
             setText(
-                GT._("Checking for errors n°{0}", Integer.toString(algorithm.getErrorNumber())) +
+                GT._T("Checking for errors n°{0}", Integer.toString(algorithm.getErrorNumber())) +
                 " - " + algorithm.getShortDescriptionReplaced());
             APIFactory.getCheckWiki().retrievePages(algorithm, errorLimit, getWikipedia(), errors);
             errorLoaded = true;
@@ -88,7 +88,7 @@ public class CheckWikiProjectWorker extends BasicWorker {
     }
 
     // Sorting errors by priority
-    setText(GT._("Sorting errors by priority"));
+    setText(GT._T("Sorting errors by priority"));
     Collections.sort(errors, new CheckErrorComparator());
 
     return null;

@@ -93,7 +93,7 @@ public class ApiCategoriesRequest extends ApiPropertiesRequest {
    * Retrieve the categories of a page.
    * 
    * @param page Page.
-   * @throws APIException
+   * @throws APIException Exception thrown by the API.
    */
   public void retrieveCategories(Page page) throws APIException {
     Map<String, String> properties = getProperties(ACTION_QUERY, result.getFormat());
@@ -113,6 +113,7 @@ public class ApiCategoriesRequest extends ApiPropertiesRequest {
    * Set disambiguation status of a list of pages.
    * 
    * @param pages List of pages.
+   * @throws APIException Exception thrown by the API.
    */
   public void setDisambiguationStatus(Collection<Page> pages) throws APIException {
 

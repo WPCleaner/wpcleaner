@@ -145,7 +145,7 @@ public class CheckWikiWindow extends OnePageWindow implements CheckWikiListener 
    */
   @Override
   public String getTitle() {
-    return GT._("Check Wikipedia");
+    return GT._T("Check Wikipedia");
   }
 
   /**
@@ -218,10 +218,10 @@ public class CheckWikiWindow extends OnePageWindow implements CheckWikiListener 
    */
   private String getLoadMessage() {
     if ((allAlgorithms == null) || (allAlgorithms.isEmpty())) {
-      return GT._("No errors available");
+      return GT._T("No errors available");
     }
     if ((selectedAlgorithms == null) || (selectedAlgorithms.isEmpty())) {
-      return GT._("No errors selected");
+      return GT._T("No errors selected");
     }
 
     // Check algorithms selected
@@ -280,47 +280,47 @@ public class CheckWikiWindow extends OnePageWindow implements CheckWikiListener 
 
     // Get message depending on algorithms selected
     if (allErrorsSelected) {
-      return GT._("Load all errors");
+      return GT._T("Load all errors");
     } else if (allTopPrioritySelected &&
                noMiddlePrioritySelected &&
                noLowestPrioritySelected &&
                noBotOnlyPrioritySelected) {
-      return GT._("Load all high priority errors");
+      return GT._T("Load all high priority errors");
     } else if (allTopPrioritySelected &&
                allMiddlePrioritySelected &&
                noLowestPrioritySelected &&
                noBotOnlyPrioritySelected) {
-      return GT._("Load all high and middle priority errors");
+      return GT._T("Load all high and middle priority errors");
     } else if (noTopPrioritySelected &&
                allMiddlePrioritySelected &&
                noLowestPrioritySelected &&
                noBotOnlyPrioritySelected) {
-      return GT._("Load all middle priority errors");
+      return GT._T("Load all middle priority errors");
     } else if (allTopPrioritySelected &&
                allMiddlePrioritySelected &&
                allLowestPrioritySelected &&
                noBotOnlyPrioritySelected) {
-      return GT._("Load all high, middle and lowest priority errors");
+      return GT._T("Load all high, middle and lowest priority errors");
     } else if (allTopPrioritySelected &&
                noMiddlePrioritySelected &&
                allLowestPrioritySelected &&
                noBotOnlyPrioritySelected) {
-      return GT._("Load all high and lowest priority errors");
+      return GT._T("Load all high and lowest priority errors");
     } else if (noTopPrioritySelected &&
                allMiddlePrioritySelected &&
                allLowestPrioritySelected &&
                noBotOnlyPrioritySelected) {
-      return GT._("Load all middle and lowest priority errors");
+      return GT._T("Load all middle and lowest priority errors");
     } else if (noTopPrioritySelected &&
                noMiddlePrioritySelected &&
                allLowestPrioritySelected &&
                noBotOnlyPrioritySelected) {
-      return GT._("Load all lowest priority errors");
+      return GT._T("Load all lowest priority errors");
     } else if (noTopPrioritySelected &&
                noMiddlePrioritySelected &&
                noLowestPrioritySelected &&
                allBotOnlyPrioritySelected) {
-      return GT._("Load all errors for bots");
+      return GT._T("Load all errors for bots");
     }
 
     // Message with an explicit list of errors
@@ -343,43 +343,43 @@ public class CheckWikiWindow extends OnePageWindow implements CheckWikiListener 
         msg.append(selectedAlgorithms.get(i).getErrorNumber());
       }
     }
-    return GT._("Load errors {0}", msg.toString());
+    return GT._T("Load errors {0}", msg.toString());
   }
 
   /**
    * Create popup menu for selecting errors.
    */
   private void createPopupSelectErrors() {
-    popupSelectErrors = new JPopupMenu(GT._("Select errors"));
+    popupSelectErrors = new JPopupMenu(GT._T("Select errors"));
     menuItemAlgorithms = new ArrayList<JMenuItem>();
     JMenuItem menuItem = null;
 
-    menuItem = new JMenuItem(GT._("Select all errors"));
+    menuItem = new JMenuItem(GT._T("Select all errors"));
     menuItem.setActionCommand(ACTION_SELECT_ERRORS + "*");
     menuItem.addActionListener(this);
     popupSelectErrors.add(menuItem);
 
-    menuItem = new JMenuItem(GT._("Select high priority errors"));
+    menuItem = new JMenuItem(GT._T("Select high priority errors"));
     menuItem.setActionCommand(ACTION_SELECT_ERRORS + "P1");
     menuItem.addActionListener(this);
     popupSelectErrors.add(menuItem);
 
-    menuItem = new JMenuItem(GT._("Select middle priority (and above) errors"));
+    menuItem = new JMenuItem(GT._T("Select middle priority (and above) errors"));
     menuItem.setActionCommand(ACTION_SELECT_ERRORS + "P1,P2");
     menuItem.addActionListener(this);
     popupSelectErrors.add(menuItem);
 
-    menuItem = new JMenuItem(GT._("Select middle priority errors"));
+    menuItem = new JMenuItem(GT._T("Select middle priority errors"));
     menuItem.setActionCommand(ACTION_SELECT_ERRORS + "P2");
     menuItem.addActionListener(this);
     popupSelectErrors.add(menuItem);
 
-    menuItem = new JMenuItem(GT._("Select lowest priority (and above) errors"));
+    menuItem = new JMenuItem(GT._T("Select lowest priority (and above) errors"));
     menuItem.setActionCommand(ACTION_SELECT_ERRORS + "P1,P2,P3");
     menuItem.addActionListener(this);
     popupSelectErrors.add(menuItem);
 
-    menuItem = new JMenuItem(GT._("Select lowest priority errors"));
+    menuItem = new JMenuItem(GT._T("Select lowest priority errors"));
     menuItem.setActionCommand(ACTION_SELECT_ERRORS + "P3");
     menuItem.addActionListener(this);
     popupSelectErrors.add(menuItem);
@@ -406,7 +406,7 @@ public class CheckWikiWindow extends OnePageWindow implements CheckWikiListener 
           if ((subMenu == null) || (part > lastPart)) {
             int from = (part * PART_SIZE) + 1;
             int to = (part + 1) * PART_SIZE;
-            subMenu = new JMenu(GT._(
+            subMenu = new JMenu(GT._T(
                 "Errors from {0} to {1}",
                 new Object[] { Integer.valueOf(from), Integer.valueOf(to) }));
             popupSelectErrors.add(subMenu);
@@ -460,8 +460,8 @@ public class CheckWikiWindow extends OnePageWindow implements CheckWikiListener 
             int from = (part * PART_SIZE) + 1;
             int to = (part + 1) * PART_SIZE;
             subMenu = new JMenu(
-                GT._("Select only") + " - " +
-                GT._(
+                GT._T("Select only") + " - " +
+                GT._T(
                     "Errors from {0} to {1}",
                     new Object[] { Integer.valueOf(from), Integer.valueOf(to) }));
             popupSelectErrors.add(subMenu);
@@ -490,13 +490,13 @@ public class CheckWikiWindow extends OnePageWindow implements CheckWikiListener 
 
     // Saved selections
     popupSelectErrors.addSeparator();
-    menuItem = new JMenuItem(GT._("Save current selection"));
+    menuItem = new JMenuItem(GT._T("Save current selection"));
     menuItem.setActionCommand(ACTION_SELECT_ERRORS + "S");
     menuItem.addActionListener(this);
     popupSelectErrors.add(menuItem);
-    menuUseSelection = new JMenu(GT._("Use selection"));
+    menuUseSelection = new JMenu(GT._T("Use selection"));
     popupSelectErrors.add(menuUseSelection);
-    menuDeleteSelection = new JMenu(GT._("Delete selection"));
+    menuDeleteSelection = new JMenu(GT._T("Delete selection"));
     popupSelectErrors.add(menuDeleteSelection);
     updateSavedSelections();
   }
@@ -594,7 +594,7 @@ public class CheckWikiWindow extends OnePageWindow implements CheckWikiListener 
     spinMaxErrors.setPreferredSize(new Dimension(80, 25));
     spinMaxErrors.setMaximumSize(new Dimension(80, 25));
     JLabel labelMaxErrors = Utilities.createJLabel(
-        GT._("Maximum number of errors for Check Wiki :"));
+        GT._T("Maximum number of errors for Check Wiki :"));
     labelMaxErrors.setLabelFor(spinMaxErrors);
     labelMaxErrors.setHorizontalAlignment(SwingConstants.TRAILING);
     toolbarLoad.add(labelMaxErrors);
@@ -604,7 +604,7 @@ public class CheckWikiWindow extends OnePageWindow implements CheckWikiListener 
 
     buttonSelectErrors = Utilities.createJButton(
         "gnome-preferences-desktop.png", EnumImageSize.NORMAL,
-        GT._("Select errors"), true, null);
+        GT._T("Select errors"), true, null);
     buttonSelectErrors.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionChooseErrors"));
     toolbarLoad.add(buttonSelectErrors);
@@ -616,7 +616,7 @@ public class CheckWikiWindow extends OnePageWindow implements CheckWikiListener 
     buttonLoadErrors.setPreferredSize(new Dimension(800, 20));
     buttonLoadErrors.setHorizontalAlignment(SwingConstants.LEADING);
     buttonLoadErrors.setComponentPopupMenu(popupSelectErrors);
-    buttonLoadErrors.setToolTipText(GT._("Right click to select errors"));
+    buttonLoadErrors.setToolTipText(GT._T("Right click to select errors"));
     toolbarLoad.add(buttonLoadErrors);
 
     constraints.fill = GridBagConstraints.BOTH;
@@ -628,7 +628,7 @@ public class CheckWikiWindow extends OnePageWindow implements CheckWikiListener 
     constraints.gridy++;
 
     // List of errors managed by the project
-    JLabel labelErrors = Utilities.createJLabel(GT._("List of errors detected :"));
+    JLabel labelErrors = Utilities.createJLabel(GT._T("List of errors detected :"));
     constraints.fill = GridBagConstraints.HORIZONTAL;
     constraints.gridwidth = 1;
     constraints.gridx = 0;
@@ -650,27 +650,27 @@ public class CheckWikiWindow extends OnePageWindow implements CheckWikiListener 
     toolbar.setFloatable(false);
     buttonReloadError = Utilities.createJButton(
         "gnome-view-refresh.png", EnumImageSize.NORMAL,
-        GT._("Reload error"), false, null);
+        GT._T("Reload error"), false, null);
     buttonReloadError.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionReloadError"));
     toolbar.add(buttonReloadError);
     buttonErrorDetail = Utilities.createJButton(
         "tango-help-browser.png", EnumImageSize.NORMAL,
-        GT._("Detail"), false, null);
+        GT._T("Detail"), false, null);
     buttonErrorDetail.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionErrorDetail"));
     buttonErrorDetail.setEnabled(false);
     toolbar.add(buttonErrorDetail);
     buttonErrorList = Utilities.createJButton(
         "gnome-web-browser.png", EnumImageSize.NORMAL,
-        GT._("List on {0}", CheckWiki.getServerName(getWikipedia())), false, null);
+        GT._T("List on {0}", CheckWiki.getServerName(getWikipedia())), false, null);
     buttonErrorList.addActionListener(
         EventHandler.create(ActionListener.class, this, "actionErrorList"));
     buttonErrorList.setEnabled(false);
     toolbar.add(buttonErrorList);
     buttonWhiteList = Utilities.createJButton(
         "gnome-accessories-text-editor.png", EnumImageSize.NORMAL,
-        GT._("View or edit whitelist"), false, null);
+        GT._T("View or edit whitelist"), false, null);
     buttonWhiteList.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionErrorWhiteList"));
     buttonWhiteList.setEnabled(false);
@@ -719,7 +719,7 @@ public class CheckWikiWindow extends OnePageWindow implements CheckWikiListener 
   private Component createPageListComponents() {
     JPanel panel = new JPanel(new GridBagLayout());
     panel.setBorder(BorderFactory.createTitledBorder(
-        BorderFactory.createEtchedBorder(), GT._("Pages")));
+        BorderFactory.createEtchedBorder(), GT._T("Pages")));
 
     modelPages = new DefaultListModel<CheckErrorPage>();
     listPages = new JList<CheckErrorPage>(modelPages);
@@ -740,7 +740,7 @@ public class CheckWikiWindow extends OnePageWindow implements CheckWikiListener 
     // Load pages
     JToolBar toolbarButtons = new JToolBar(SwingConstants.HORIZONTAL);
     toolbarButtons.setFloatable(false);
-    JButton buttonLoad = Utilities.createJButton(GT._("&Load pages"), null);
+    JButton buttonLoad = Utilities.createJButton(GT._T("&Load pages"), null);
     buttonLoad.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionLoadPages"));
     toolbarButtons.add(buttonLoad);
@@ -839,7 +839,7 @@ public class CheckWikiWindow extends OnePageWindow implements CheckWikiListener 
           }
         }
         if (!getPagesWithSeveralErrors().isEmpty()) {
-          modelAllErrors.insertElementAt(GT._("Pages with several errors"), 0);
+          modelAllErrors.insertElementAt(GT._T("Pages with several errors"), 0);
           if (selectedIndex > 0) {
             selectedIndex++;
           }
@@ -1013,7 +1013,7 @@ public class CheckWikiWindow extends OnePageWindow implements CheckWikiListener 
           WPCConfigurationString.CW_TRANSLATION_PAGE);
       String url = wiki.getSettings().getURL(translationPage, true, secured);
       StringBuilder parametersDescription = new StringBuilder();
-      parametersDescription.append(GT._(
+      parametersDescription.append(GT._T(
           "The error n°{0} can be configured with the following parameters in the <a href=\"{1}\">translation file</a> :",
           new Object[] { Integer.toString(errorNumber), url }));
       parametersDescription.append("\n<ul>");
@@ -1084,7 +1084,7 @@ public class CheckWikiWindow extends OnePageWindow implements CheckWikiListener 
     // Save current selection
     } else if (command.equals("S")) {
       // Retrieve configuration name
-      String name = askForValue(GT._("What is the name of the selection?"), null, null);
+      String name = askForValue(GT._T("What is the name of the selection?"), null, null);
       if ((name == null) || (name.isEmpty())) {
         return;
       }
@@ -1205,7 +1205,7 @@ public class CheckWikiWindow extends OnePageWindow implements CheckWikiListener 
             wiki.getSettings().getCodeCheckWiki();
         String translationPage = wiki.getConfiguration().getString(
             WPCConfigurationString.CW_TRANSLATION_PAGE);
-        Utilities.displayInformationMessage(getParentComponent(), GT._(
+        Utilities.displayInformationMessage(getParentComponent(), GT._T(
             "There''s no page defined for this error type.\n" +
             "If you want to define a page you need to add :\n" +
             "  {0} = <page name> END\n" +
@@ -1250,7 +1250,7 @@ public class CheckWikiWindow extends OnePageWindow implements CheckWikiListener 
             wiki.getSettings().getCodeCheckWiki();
         String translationPage = wiki.getConfiguration().getString(
             WPCConfigurationString.CW_TRANSLATION_PAGE);
-        Utilities.displayInformationMessage(getParentComponent(), GT._(
+        Utilities.displayInformationMessage(getParentComponent(), GT._T(
             "There''s no whitelist defined for this error type.\n" +
             "If you want to define a whitelist, you need to add:\n" +
             "  {0} = <page name> END\n" +
@@ -1381,8 +1381,8 @@ public class CheckWikiWindow extends OnePageWindow implements CheckWikiListener 
   }
 
   /**
-   * @param page
-   * @param errorNumber
+   * @param page Page.
+   * @param errorNumber Error number.
    * @see org.wikipediacleaner.api.check.CheckWikiListener#pageFixed(org.wikipediacleaner.api.data.Page, int)
    */
   @Override

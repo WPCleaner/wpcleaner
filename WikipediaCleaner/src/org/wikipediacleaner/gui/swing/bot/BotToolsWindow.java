@@ -58,7 +58,7 @@ public class BotToolsWindow
    */
   @Override
   public String getTitle() {
-    return GT._("Bot tools");
+    return GT._T("Bot tools");
   }
 
   /**
@@ -83,11 +83,11 @@ public class BotToolsWindow
 
     // Warning
     String txtWarning =
-      GT._("!!! WARNING !!!") + "\n" +
-      GT._("Functions available here are considered as bot tools.") + "\n" +
-      GT._("They may modify a lot of pages in a short period of time.") + "\n" +
-      GT._("On some Wikipedia projects, you may need the bot status for doing this.") + "\n" +
-      GT._("Please, check if you need the bot status by reading the rules of Wikipedia.");
+      GT._T("!!! WARNING !!!") + "\n" +
+      GT._T("Functions available here are considered as bot tools.") + "\n" +
+      GT._T("They may modify a lot of pages in a short period of time.") + "\n" +
+      GT._T("On some Wikipedia projects, you may need the bot status for doing this.") + "\n" +
+      GT._T("Please, check if you need the bot status by reading the rules of Wikipedia.");
     JTextArea lblWarning = new JTextArea(txtWarning);
     lblWarning.setEditable(false);
     lblWarning.setBackground(getParentComponent().getBackground());
@@ -98,10 +98,10 @@ public class BotToolsWindow
     // Tabs
     JTabbedPane pane = new JTabbedPane();
     GeneralToolsPanel generalTools = new GeneralToolsPanel(this);
-    pane.addTab(GT._("General"), generalTools);
+    pane.addTab(GT._T("General"), generalTools);
     panels.add(generalTools);
     CWToolsPanel cwTools = new CWToolsPanel(this);
-    pane.addTab(GT._("Check Wiki"), cwTools);
+    pane.addTab(GT._T("Check Wiki"), cwTools);
     panels.add(cwTools);
     constraints.weighty = 1;
     panel.add(pane, constraints);

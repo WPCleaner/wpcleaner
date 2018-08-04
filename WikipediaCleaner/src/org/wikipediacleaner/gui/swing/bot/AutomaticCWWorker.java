@@ -136,7 +136,7 @@ public class AutomaticCWWorker extends BasicWorker {
 
     // Configuration
     setText(
-        GT._("Checking for errors n°{0}", Integer.toString(algorithm.getErrorNumber())) +
+        GT._T("Checking for errors n°{0}", Integer.toString(algorithm.getErrorNumber())) +
         " - " + algorithm.getShortDescriptionReplaced());
     int maxSize = max;
     if (noLimit && algorithm.hasSpecialList()) {
@@ -179,7 +179,7 @@ public class AutomaticCWWorker extends BasicWorker {
       CheckErrorAlgorithm algorithm,
       String prefix) throws APIException {
 
-    setText(prefix + " - " + GT._("Analyzing page {0}", page.getTitle()));
+    setText(prefix + " - " + GT._T("Analyzing page {0}", page.getTitle()));
 
     // Retrieve page content 
     API api = APIFactory.getAPI();
@@ -243,7 +243,7 @@ public class AutomaticCWWorker extends BasicWorker {
           comment.append(" - ");
         }
         comment.append(getWikipedia().getCWConfiguration().getComment(errorsFixed));
-        setText(prefix + " - " + GT._("Fixing page {0}", page.getTitle()));
+        setText(prefix + " - " + GT._T("Fixing page {0}", page.getTitle()));
         api.updatePage(
             getWikipedia(), page, newContents,
             comment.toString(),

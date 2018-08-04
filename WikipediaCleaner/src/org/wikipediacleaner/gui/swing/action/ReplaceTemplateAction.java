@@ -91,6 +91,11 @@ public class ReplaceTemplateAction extends TextAction {
 
   /**
    * Replace template. 
+   * 
+   * @param localOldTitle Old title.
+   * @param localNewTitle New title.
+   * @param localElement Element.
+   * @param localTextPane Text pane.
    */
   private void replace(
       String localOldTitle,

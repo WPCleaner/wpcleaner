@@ -26,7 +26,7 @@ public interface ApiEmbeddedInResult extends ApiResult {
    * @param properties Properties defining request.
    * @param list List to be filled with embedding pages.
    * @return True if request should be continued.
-   * @throws APIException
+   * @throws APIException Exception thrown by the API.
    */
   public boolean executeEmbeddedIn(
       Map<String, String> properties,

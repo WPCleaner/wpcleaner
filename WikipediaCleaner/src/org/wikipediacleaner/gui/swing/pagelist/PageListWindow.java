@@ -88,6 +88,7 @@ public class PageListWindow extends BasicWindow {
    * Create and display a PageListWindow.
    * 
    * @param title Window title.
+   * @param referencePage Reference page.
    * @param pages Pages.
    * @param wikipedia Wikipedia.
    * @param watchList Flag indicating if pages can be removed.
@@ -166,7 +167,7 @@ public class PageListWindow extends BasicWindow {
     constraints.gridy++;
 
     // Links count
-    labelLinksCount = Utilities.createJLabel(GT._("Backlinks"));
+    labelLinksCount = Utilities.createJLabel(GT._T("Backlinks"));
     updateBacklinksCount();
     constraints.fill = GridBagConstraints.HORIZONTAL;
     constraints.weightx = 1;
@@ -180,7 +181,7 @@ public class PageListWindow extends BasicWindow {
     toolbar.setBorderPainted(false);
     buttonFullAnalysis = Utilities.createJButton(
         "gnome-system-run.png", EnumImageSize.NORMAL,
-        GT._("Full analysis"), false,
+        GT._T("Full analysis"), false,
         ConfigurationValueShortcut.FULL_ANALYSIS);
     buttonFullAnalysis.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionFullAnalysis"));
@@ -188,7 +189,7 @@ public class PageListWindow extends BasicWindow {
 
     buttonDisambiguation = Utilities.createJButton(
         "commons-disambig-colour.png", EnumImageSize.NORMAL,
-        GT._("Disambiguation"), false,
+        GT._T("Disambiguation"), false,
         ConfigurationValueShortcut.DAB_ANALYSIS);
     buttonDisambiguation.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionDisambiguation"));
@@ -202,7 +203,7 @@ public class PageListWindow extends BasicWindow {
 
     buttonSelectDab = Utilities.createJButton(
         "wpc-select-disambig.png", EnumImageSize.NORMAL,
-        GT._("Select disambiguation pages with too many backlinks"),
+        GT._T("Select disambiguation pages with too many backlinks"),
         false, null);
     buttonSelectDab.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionSelectDisambiguation"));
@@ -210,7 +211,7 @@ public class PageListWindow extends BasicWindow {
 
     buttonDisambiguationWatch = Utilities.createJButton(
         "commons-disambig-colour-plus.png", EnumImageSize.NORMAL,
-        GT._("Analyze pages with links to disambiguation pages"),
+        GT._T("Analyze pages with links to disambiguation pages"),
         false, null);
     buttonDisambiguationWatch.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionDisambiguationWatch"));
@@ -221,21 +222,21 @@ public class PageListWindow extends BasicWindow {
 
     buttonUpdateInfo = Utilities.createJButton(
         "gnome-view-refresh.png", EnumImageSize.NORMAL,
-        GT._("Update page information (Alt + &U)"), false, null);
+        GT._T("Update page information (Alt + &U)"), false, null);
     buttonUpdateInfo.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionUpdateInfo"));
     toolbar.add(buttonUpdateInfo);
 
     buttonComments = Utilities.createJButton(
         "tango-internet-group-chat.png", EnumImageSize.NORMAL,
-        GT._("Set page comments (Alt + &C)"), false, null);
+        GT._T("Set page comments (Alt + &C)"), false, null);
     buttonComments.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionSetComments"));
     toolbar.add(buttonComments);
 
     buttonView = Utilities.createJButton(
         "gnome-emblem-web.png", EnumImageSize.NORMAL,
-        GT._("External Viewer"), false,
+        GT._T("External Viewer"), false,
         ConfigurationValueShortcut.EXTERNAL_VIEWER);
     buttonView.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionView"));
@@ -243,7 +244,7 @@ public class PageListWindow extends BasicWindow {
 
     buttonViewHistory = Utilities.createJButton(
         "gnome-emblem-documents.png", EnumImageSize.NORMAL,
-        GT._("History"), false,
+        GT._T("History"), false,
         ConfigurationValueShortcut.HISTORY);
     buttonViewHistory.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionViewHistory"));
@@ -251,12 +252,12 @@ public class PageListWindow extends BasicWindow {
 
     buttonSave = Utilities.createJButton(
         "gnome-document-save.png", EnumImageSize.NORMAL,
-        GT._("Save list"), false, null);
+        GT._T("Save list"), false, null);
     buttonSave.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionSave"));
     toolbar.add(buttonSave);
 
-    buttonAutomaticFixing = Utilities.createJButton(GT._("Automatic fixing"), null);
+    buttonAutomaticFixing = Utilities.createJButton(GT._T("Automatic fixing"), null);
     buttonAutomaticFixing.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionRunAutomaticFixing"));
     toolbar.add(buttonAutomaticFixing);
@@ -264,14 +265,14 @@ public class PageListWindow extends BasicWindow {
     if (watchList) {
       buttonRemove = Utilities.createJButton(
           "gnome-list-remove.png", EnumImageSize.NORMAL,
-          GT._("Remove page"), false,
+          GT._T("Remove page"), false,
           ConfigurationValueShortcut.LIST_REMOVE);
       buttonRemove.addActionListener(EventHandler.create(
           ActionListener.class, this, "actionRemove"));
       toolbar.add(buttonRemove);
       buttonAdd = Utilities.createJButton(
           "gnome-list-add.png", EnumImageSize.NORMAL,
-          GT._("Add page"), false,
+          GT._T("Add page"), false,
           ConfigurationValueShortcut.LIST_ADD);
       buttonAdd.addActionListener(EventHandler.create(
           ActionListener.class, this, "actionAdd"));
@@ -347,14 +348,14 @@ public class PageListWindow extends BasicWindow {
         getWikipedia(), this, null,
         pageNames,
         PageListWorker.Mode.DAB_WATCH, false,
-        GT._("Articles with links to disambiguation pages")).start();
+        GT._T("Articles with links to disambiguation pages")).start();
   }
 
   /**
    * Action called when Remove button is pressed.
    */
   public void actionRemove() {
-    if (displayYesNoWarning(GT._(
+    if (displayYesNoWarning(GT._T(
         "You are about to remove the pages from your local watchlist.\n" +
         "Are you sure?")) != JOptionPane.YES_OPTION) {
       return;
@@ -379,7 +380,7 @@ public class PageListWindow extends BasicWindow {
    */
   public void actionAdd() {
     String value = askForValue(
-        GT._("Enter the page title you want to add to your local watchlist"),
+        GT._T("Enter the page title you want to add to your local watchlist"),
         "", null);
     if (value != null) {
       Page page = DataManager.getPage(getWikipedia(), value, null, null, null);
@@ -472,7 +473,7 @@ public class PageListWindow extends BasicWindow {
   public void actionSave() {
     JFileChooser fileChooser = new JFileChooser();
     fileChooser.setCurrentDirectory(new File("."));
-    fileChooser.setDialogTitle(GT._("Save list"));
+    fileChooser.setDialogTitle(GT._T("Save list"));
     int answer = fileChooser.showSaveDialog(this.getParentComponent());
     if (answer != JFileChooser.APPROVE_OPTION) {
       return;
@@ -508,7 +509,7 @@ public class PageListWindow extends BasicWindow {
     if ((selectedPages == null) || (selectedPages.size() == 0)) {
       Utilities.displayWarning(
           getParentComponent(),
-          GT._("You must select pages on which running automatic fixing."));
+          GT._T("You must select pages on which running automatic fixing."));
       return;
     }
     Controller.runAutomaticFixing(selectedPages, referencePage, getWikipedia());
@@ -560,7 +561,7 @@ public class PageListWindow extends BasicWindow {
     labelLinksCount.setText(
         GT.__("{0} page", "{0} pages", pages.size(), Integer.toString(pages.size())) +
         ", " +
-        GT._(
+        GT._T(
             "Backlinks - Main namespace: {0}, All namespaces: {1}",
             new Object[] { txtMain, txtAll }));
   }

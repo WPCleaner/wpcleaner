@@ -114,17 +114,17 @@ public class Utilities {
     if (exception != null) {
       if (exception instanceof APIException) {
         displayMessage(
-            parent, GT._("An error occurred: {0}", exception.getMessage()),
+            parent, GT._T("An error occurred: {0}", exception.getMessage()),
             null, JOptionPane.ERROR_MESSAGE);
       } else {
         displayMessage(
             parent,
-            GT._("An error occurred: {0}", exception.getMessage() + " - " + exception.getClass().getName()),
+            GT._T("An error occurred: {0}", exception.getMessage() + " - " + exception.getClass().getName()),
             null, JOptionPane.ERROR_MESSAGE);
       }
     } else {
       displayMessage(
-          parent, GT._("An unknown error occurred"),
+          parent, GT._T("An unknown error occurred"),
           null, JOptionPane.ERROR_MESSAGE);
     }
   }
@@ -184,7 +184,7 @@ public class Utilities {
   public static void displayMessageForMissingConfiguration(Component parent, String parameterName) {
     displayMissingConfiguration(
         parent,
-        GT._("You need to define the ''{0}'' property in WPCleaner configuration.", parameterName));
+        GT._T("You need to define the ''{0}'' property in WPCleaner configuration.", parameterName));
   }
 
   /**
@@ -212,7 +212,7 @@ public class Utilities {
     }
     displayMissingConfiguration(
         parent,
-        GT._("You need to define the {0} properties in WPCleaner configuration.", sb.toString()));
+        GT._T("You need to define the {0} properties in WPCleaner configuration.", sb.toString()));
   }
 
   /**
@@ -222,14 +222,14 @@ public class Utilities {
    * @param message Message.
    */
   public static void displayMissingConfiguration(Component parent, String message) {
-    String fullMessage = GT._("This function requires some configuration.");
+    String fullMessage = GT._T("This function requires some configuration.");
     if ((message != null) && (message.trim().length() > 0)) {
       fullMessage += "\n" + message;
     }
     if (Utilities.isDesktopSupported()) {
       int answer = displayYesNoWarning(
           parent,
-          fullMessage + "\n" + GT._("Do you want to display help on configuring WPCleaner ?"));
+          fullMessage + "\n" + GT._T("Do you want to display help on configuring WPCleaner ?"));
       if (answer == JOptionPane.YES_OPTION) {
         Utilities.browseURL(URL_CONFIGURATION_HELP);
       }
@@ -324,7 +324,7 @@ public class Utilities {
       return askForValue(parent, message, value, checker);
     }
     String defaultValue = value;
-    String other = GT._("Other...");
+    String other = GT._T("Other...");
     Object[] possibles = possibleValues;
     if (!onlyList) {
       possibles = Arrays.copyOf(possibleValues, possibleValues.length + 1);

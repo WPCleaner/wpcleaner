@@ -32,7 +32,7 @@ public class CheckErrorAlgorithm532 extends CheckErrorAlgorithmBase {
 
   /** Possible global fixes */
   private final static String[] globalFixes = new String[] {
-    GT._("Fix tags"),
+    GT._T("Fix tags"),
   };
 
   public CheckErrorAlgorithm532() {

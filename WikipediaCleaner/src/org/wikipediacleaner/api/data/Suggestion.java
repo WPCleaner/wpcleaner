@@ -233,6 +233,8 @@ public class Suggestion implements Comparable<Suggestion> {
 
   /**
    * @param initialText Initial text.
+   * @param begin Begin index.
+   * @param end End index.
    * @return Possible replacements.
    */
   public List<ElementarySuggestion> getReplacements(
@@ -347,7 +349,7 @@ public class Suggestion implements Comparable<Suggestion> {
    * Construct a list of chapters containing suggestions.
    * 
    * @param suggestions List of suggestions.
-   * @return List of chapters containing suggestions (Page => Chapters).
+   * @return List of chapters containing suggestions (key=Page, value=Chapters).
    */
   public static Map<String, List<String>> getChapters(Collection<Suggestion> suggestions) {
     Map<String, List<String>> chapters = new HashMap<String, List<String>>();

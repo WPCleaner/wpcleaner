@@ -159,6 +159,7 @@ abstract class OptionsPanel extends JPanel {
 
   /**
    * @param property Integer property.
+   * @param group Button group.
    */
   protected void setButtonGroup(
       ConfigurationValueInteger property,

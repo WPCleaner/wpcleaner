@@ -46,7 +46,7 @@ public class DisambiguationStatusCallable extends MediaWikiCallable<List<Page>> 
    */
   @Override
   public List<Page> call() throws APIException {
-    setText(GT._("Retrieving disambiguation information"));
+    setText(GT._T("Retrieving disambiguation information"));
     api.initializeDisambiguationStatus(getWikipedia(), pages, forceApiCall);
     return pages;
   }

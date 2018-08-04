@@ -38,6 +38,7 @@ public class ProgramCommentDecorator implements CommentDecorator {
    * @param version Program version.
    * @param showProgram True if program name should be added in the comments.
    * @param link Optional link.
+   * @param tag Optional tag.
    */
   public ProgramCommentDecorator(
       String program, String version,

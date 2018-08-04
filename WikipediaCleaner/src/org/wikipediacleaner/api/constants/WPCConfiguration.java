@@ -74,6 +74,7 @@ public class WPCConfiguration {
 
   /**
    * @param input Reader for general WPCleaner configuration.
+   * @throws APIException Exception thrown by the API.
    */
   public void setGeneralConfiguration(Reader input) throws APIException {
     cleanConfiguration();
@@ -110,6 +111,7 @@ public class WPCConfiguration {
 
   /**
    * @param input Reader for user WPCleaner configuration.
+   * @throws APIException Exception thrown by the API.
    */
   public void setUserConfiguration(Reader input) throws APIException {
     BufferedReader reader = new BufferedReader(input);
@@ -366,13 +368,13 @@ public class WPCConfiguration {
         if (booleanAttribute.isGeneralAttribute()) {
           generalBooleanValues.put(booleanAttribute, booleanValue);
         } else {
-          log.warn(GT._("Attribute {0} can''t be set in general configuration", name));
+          log.warn(GT._T("Attribute {0} can''t be set in general configuration", name));
         }
       } else {
         if (booleanAttribute.isUserAttribute()) {
           userBooleanValues.put(booleanAttribute, booleanValue);
         } else {
-          log.warn(GT._("Attribute {0} can''t be set in user configuration", name));
+          log.warn(GT._T("Attribute {0} can''t be set in user configuration", name));
         }
       }
       return;
@@ -385,13 +387,13 @@ public class WPCConfiguration {
         if (stringAttribute.isGeneralAttribute()) {
           generalStringValues.put(stringAttribute, value);
         } else {
-          log.warn(GT._("Attribute {0} can''t be set in general configuration", name));
+          log.warn(GT._T("Attribute {0} can''t be set in general configuration", name));
         }
       } else {
         if (stringAttribute.isUserAttribute()) {
           userStringValues.put(stringAttribute, value);
         } else {
-          log.warn(GT._("Attribute {0} can''t be set in user configuration", name));
+          log.warn(GT._T("Attribute {0} can''t be set in user configuration", name));
         }
       }
       return;
@@ -405,13 +407,13 @@ public class WPCConfiguration {
         if (listAttribute.isGeneralAttribute()) {
           generalStringListValues.put(listAttribute, listValue);
         } else {
-          log.warn(GT._("Attribute {0} can''t be set in general configuration", name));
+          log.warn(GT._T("Attribute {0} can''t be set in general configuration", name));
         }
       } else {
         if (listAttribute.isUserAttribute()) {
           userStringListValues.put(listAttribute, listValue);
         } else {
-          log.warn(GT._("Attribute {0} can''t be set in user configuration", name));
+          log.warn(GT._T("Attribute {0} can''t be set in user configuration", name));
         }
       }
       return;
@@ -426,17 +428,17 @@ public class WPCConfiguration {
           if (longAttribute.isGeneralAttribute()) {
             generalLongValues.put(longAttribute, longValue);
           } else {
-            log.warn(GT._("Attribute {0} can''t be set in general configuration", name));
+            log.warn(GT._T("Attribute {0} can''t be set in general configuration", name));
           }
         } else {
           if (longAttribute.isUserAttribute()) {
             userLongValues.put(longAttribute, longValue);
           } else {
-            log.warn(GT._("Attribute {0} can''t be set in user configuration", name));
+            log.warn(GT._T("Attribute {0} can''t be set in user configuration", name));
           }
         }
       } catch (NumberFormatException e) {
-        log.warn(GT._("Attribute {0} should be integer value", name));
+        log.warn(GT._T("Attribute {0} should be integer value", name));
       }
       return;
     }
@@ -446,7 +448,7 @@ public class WPCConfiguration {
       wiki.getCWConfiguration().setUserConfiguration(name, value);
       return;
     } else if (!general) {
-      log.warn(GT._("Attribute {0} can''t be set in user configuration", name));
+      log.warn(GT._T("Attribute {0} can''t be set in user configuration", name));
       return;
     }
 
@@ -474,7 +476,7 @@ public class WPCConfiguration {
     } else if (name.equals("wikt_templates")) {
       setWiktionaryMatches(value);
     } else {
-      log.warn(GT._("Attribute {0} can''t be set in general configuration", name));
+      log.warn(GT._T("Attribute {0} can''t be set in general configuration", name));
     }
   }
 
@@ -580,7 +582,8 @@ public class WPCConfiguration {
   /**
    * Initialize suggestions for text replacements.
    * 
-   * @param api
+   * @param api API
+   * @param forceInit True to force initialisation of suggestions.
    */
   public void initSuggestions(API api, boolean forceInit) {
     if ((suggestions == null) || forceInit) {
@@ -933,6 +936,7 @@ public class WPCConfiguration {
   }
 
   /**
+   * @param templateName Template name.
    * @return Matchers for templates creating direct internal links from parameter value.
    */
   public List<TemplateMatcher> getTemplateMatchers(String templateName) {
@@ -1406,6 +1410,7 @@ public class WPCConfiguration {
    * Convert a property on multiple lines to a string list.
    * 
    * @param property Property.
+   * @param keepEmpty True to keep empty lines. 
    * @return String list.
    */
   public static List<String> convertPropertyToStringList(String property, boolean keepEmpty) {

@@ -124,7 +124,7 @@ public class AutomaticListCWWorker extends BasicWorker {
    */
   private void analyzePage(Page page) throws APIException {
 
-    setText(GT._("Analyzing page {0}", page.getTitle()));
+    setText(GT._T("Analyzing page {0}", page.getTitle()));
 
     // Retrieve page content 
     API api = APIFactory.getAPI();
@@ -190,7 +190,7 @@ public class AutomaticListCWWorker extends BasicWorker {
           comment.append(" - ");
         }
         comment.append(getWikipedia().getCWConfiguration().getComment(errorsFixed));
-        setText(GT._("Fixing page {0}", page.getTitle()));
+        setText(GT._T("Fixing page {0}", page.getTitle()));
         api.updatePage(
             getWikipedia(), page, newContents,
             comment.toString(),

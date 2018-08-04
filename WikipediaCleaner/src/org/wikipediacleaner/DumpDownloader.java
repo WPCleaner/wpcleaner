@@ -43,7 +43,7 @@ public class DumpDownloader {
   private final static int CODE_ERROR = 2;
 
   /**
-   * @param args
+   * @param args Command line arguments.
    */
   public static void main(String[] args) {
     log.info("Running dump downloader");

@@ -160,7 +160,7 @@ public class ISBNRange {
       String suffix = isbn.substring(cleanPrefix.length());
       Rule rule = registrationGroup.getRule(suffix);
       if (rule == null) {
-        isbnInfo.texts.add(GT._("No range found for ISBN"));
+        isbnInfo.texts.add(GT._T("No range found for ISBN"));
         isbnInfo.unknownRange = true;
       } else {
         int nextLength = rule.getLength();
@@ -170,19 +170,19 @@ public class ISBNRange {
                 suffix.substring(0, nextLength) + "-" +
                 suffix.substring(nextLength, suffix.length() - 1) + "-" +
                 suffix.substring(suffix.length() - 1);
-            isbnInfo.texts.add(GT._("Suggested format: {0}", suggestedISBN));
+            isbnInfo.texts.add(GT._T("Suggested format: {0}", suggestedISBN));
           } else {
-            isbnInfo.texts.add(GT._("ISBN length incoherent with range found"));
+            isbnInfo.texts.add(GT._T("ISBN length incoherent with range found"));
           }
         } else {
-          isbnInfo.texts.add(GT._(
+          isbnInfo.texts.add(GT._T(
               "ISBN is in a reserved range {0}",
               prefix + "-(" + rule.getFrom() + "-" + rule.getTo() + ")"));
           isbnInfo.reservedRange = true;
         }
       }
     } else {
-      isbnInfo.texts.add(GT._("No range found for ISBN"));
+      isbnInfo.texts.add(GT._T("No range found for ISBN"));
       isbnInfo.unknownRange = true;
     }
 

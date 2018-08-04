@@ -150,6 +150,7 @@ public class ApiAbuseLogRequest extends ApiListRequest {
    * @param filterId Filter identifier.
    * @param maxDuration Maximum number of days.
    * @return List of pages that triggered that filter.
+   * @throws APIException Exception thrown by the API.
    */
   public List<Page> loadAbuseLog(
       Integer filterId, Integer maxDuration) throws APIException {

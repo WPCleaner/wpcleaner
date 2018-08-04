@@ -49,7 +49,7 @@ public class ApiXmlCategoriesResult extends ApiXmlPropertiesResult implements Ap
    * @param page Page.
    * @param list List to be filled with categories.
    * @return True if request should be continued.
-   * @throws APIException
+   * @throws APIException Exception thrown by the API.
    */
   @Override
   public boolean executeCategories(
@@ -97,7 +97,7 @@ public class ApiXmlCategoriesResult extends ApiXmlPropertiesResult implements Ap
    * @param properties Properties defining request.
    * @param pages List of pages for which disambiguation status needs to be set.
    * @return True if request should be continued.
-   * @throws APIException
+   * @throws APIException Exception thrown by the API.
    */
   @Override
   public boolean setDiambiguationStatus(

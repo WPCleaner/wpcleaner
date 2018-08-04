@@ -60,7 +60,7 @@ public class FindTextAction extends TextAction {
     }
     currentSearch = JOptionPane.showInputDialog(
         text.getParent(),
-        GT._("String to find"),
+        GT._T("String to find"),
         currentSearch);
     if ((currentSearch == null) || ("".equals(currentSearch.trim()))) {
       return;

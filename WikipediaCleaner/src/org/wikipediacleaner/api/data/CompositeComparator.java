@@ -20,7 +20,7 @@ import java.util.List;
  * 
  * A list of several simple comparators are used one after
  * an other until a meaningful result is obtained.
- * @param <T>
+ * @param <T> Type of classes.
  */
 public class CompositeComparator<T> implements NamedComparator<T>, Cloneable, Externalizable {
 

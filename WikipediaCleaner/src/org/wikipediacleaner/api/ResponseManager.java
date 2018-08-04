@@ -21,6 +21,7 @@ public interface ResponseManager {
    * 
    * @param stream Response.
    * @throws IOException I/O exception.
+   * @throws APIException Exception thrown by the API.
    */
   void manageResponse(InputStream stream) throws IOException, APIException;
 }

@@ -54,6 +54,8 @@ public class ApiLanguageLinksRequest extends ApiPropertiesRequest {
    * 
    * @param page Page.
    * @param toWiki Destination wiki.
+   * @throws APIException Exception thrown by the API.
+   * @return Language link.
    */
   public String getLanguageLink(Page page, EnumWikipedia toWiki) throws APIException {
 

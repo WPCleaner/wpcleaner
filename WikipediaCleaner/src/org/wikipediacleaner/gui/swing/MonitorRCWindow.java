@@ -106,7 +106,7 @@ public class MonitorRCWindow extends BasicWindow implements RecentChangesListene
    */
   @Override
   public String getTitle() {
-    return GT._("Recent changes monitoring");
+    return GT._T("Recent changes monitoring");
   }
 
   /**

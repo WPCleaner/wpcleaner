@@ -57,24 +57,24 @@ public class ReloadLinksAction implements ActionListener {
     try {
       if (progressPanel != null) {
         progressPanel.start();
-        progressPanel.setText(GT._("Retrieving MediaWiki API"));
+        progressPanel.setText(GT._T("Retrieving MediaWiki API"));
       }
       API api = APIFactory.getAPI();
       if (progressPanel != null) {
-        progressPanel.setText(GT._("Analyzing links for redirect pages"));
+        progressPanel.setText(GT._T("Analyzing links for redirect pages"));
       }
       ArrayList<Page> pages = new ArrayList<Page>();
       pages.add(page);
       api.initializeRedirect(wikipedia, pages);
       if (progressPanel != null) {
-        progressPanel.setText(GT._("Analyzing links for disambiguation pages"));
+        progressPanel.setText(GT._T("Analyzing links for disambiguation pages"));
       }
       api.initializeDisambiguationStatus(wikipedia, pages, false);
       Iterator<Page> iter = page.getRedirectIteratorWithPage();
       while (iter.hasNext()) {
         Page tmp = iter.next();
         if (progressPanel != null) {
-          progressPanel.setText(GT._(
+          progressPanel.setText(GT._T(
               "Retrieving possible disambiguations for {0}",
               new Object[] { tmp.getTitle() } ));
         }

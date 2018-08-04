@@ -37,6 +37,9 @@ public class BooleanIconCellRenderer extends DefaultTableCellRenderer {
 
   /**
    * Constructor.
+   * 
+   * @param trueName Name of the icon corresponding to true.
+   * @param falseName Name of the icon corresponding to false.
    */
   public BooleanIconCellRenderer(String trueName, String falseName) {
     super();

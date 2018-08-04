@@ -250,13 +250,13 @@ public class RecentChangesTableModel extends AbstractTableModel {
     case COLUMN_FLAGS:
       return "Nmb";
     case COLUMN_RC_ID:
-      return GT._("Id");
+      return GT._T("Id");
     case COLUMN_TIMESTAMP:
       return "Time";
     case COLUMN_TITLE:
-      return GT._("Title");
+      return GT._T("Title");
     case COLUMN_USER:
-      return GT._("User");
+      return GT._T("User");
     }
     return super.getColumnName(column);
   }

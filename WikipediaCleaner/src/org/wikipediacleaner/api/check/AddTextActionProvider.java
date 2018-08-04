@@ -66,6 +66,8 @@ public class AddTextActionProvider implements ActionProvider {
    * @param suffix Suffix.
    * @param textProvider Optional text provider.
    * @param question Question asked to the user.
+   * @param possibleValues List of possible values.
+   * @param onlyList True if only the values in the list should be used.
    * @param defaultValue Value used by default.
    * @param checker String checker to verify the value.
    */

@@ -67,7 +67,7 @@ public class ApiTemplatesRequest extends ApiPropertiesRequest {
    * Load list of templates.
    * 
    * @param page Page for which templates are requested.
-   * @throws APIException
+   * @throws APIException Exception thrown by the API.
    */
   public void loadTemplates(Page page) throws APIException {
     Map<String, String> properties = getProperties(ACTION_QUERY, result.getFormat());
@@ -88,6 +88,7 @@ public class ApiTemplatesRequest extends ApiPropertiesRequest {
    * Set disambiguation status of a list of pages.
    * 
    * @param pages List of pages.
+   * @throws APIException Exception thrown by the API.
    */
   public void setDisambiguationStatus(Collection<Page> pages) throws APIException {
 

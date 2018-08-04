@@ -114,6 +114,7 @@ public class ApiAllMessagesRequest extends ApiMetaRequest {
    * 
    * @param messageName Name of the message.
    * @return Message.
+   * @throws APIException Exception thrown by the API.
    */
   public String loadMessage(
       String messageName) throws APIException {
@@ -131,6 +132,7 @@ public class ApiAllMessagesRequest extends ApiMetaRequest {
    * 
    * @param messageNames Names of the messages.
    * @return Messages.
+   * @throws APIException Exception thrown by the API.
    */
   public Map<String, String> loadMessages(
       List<String> messageNames) throws APIException {

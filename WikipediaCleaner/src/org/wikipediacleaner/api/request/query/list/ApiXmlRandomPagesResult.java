@@ -46,7 +46,7 @@ public class ApiXmlRandomPagesResult extends ApiXmlResult implements ApiRandomPa
    * 
    * @param properties Properties defining request.
    * @param list List to be filled with random pages.
-   * @throws APIException
+   * @throws APIException Exception thrown by the API.
    */
   @Override
   public void executeRandomList(

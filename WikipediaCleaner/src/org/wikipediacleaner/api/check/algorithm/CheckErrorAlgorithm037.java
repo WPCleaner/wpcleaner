@@ -172,7 +172,7 @@ public class CheckErrorAlgorithm037 extends CheckErrorAlgorithmBase {
 
     CheckErrorResult errorResult = createCheckErrorResult(
         analysis, beginIndex, endIndex, errorLevel);
-    errorResult.addReplacement(replacement, GT._("Add DEFAULTSORT"), automatic);
+    errorResult.addReplacement(replacement, GT._T("Add DEFAULTSORT"), automatic);
     errors.add(errorResult);
     return true;
   }
@@ -191,17 +191,17 @@ public class CheckErrorAlgorithm037 extends CheckErrorAlgorithmBase {
   /**
    * Return the parameters used to configure the algorithm.
    * 
-   * @return Map of parameters (Name -> description).
+   * @return Map of parameters (key=name, value=description).
    */
   @Override
   public Map<String, String> getParameters() {
     Map<String, String> parameters = super.getParameters();
     parameters.put(
         "first_characters",
-        GT._("Restrict the detection to the first characters"));
+        GT._T("Restrict the detection to the first characters"));
     parameters.put(
         "templates",
-        GT._("List of templates that prevent automatic fixing of this error"));
+        GT._T("List of templates that prevent automatic fixing of this error"));
     return parameters;
   }
 }

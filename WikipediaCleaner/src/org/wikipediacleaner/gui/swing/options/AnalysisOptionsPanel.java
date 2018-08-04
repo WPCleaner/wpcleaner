@@ -48,7 +48,7 @@ public class AnalysisOptionsPanel extends OptionsPanel {
    */
   private void initialize() {
     setBorder(BorderFactory.createTitledBorder(
-        BorderFactory.createEtchedBorder(), GT._("Full Analysis window options")));
+        BorderFactory.createEtchedBorder(), GT._T("Full Analysis window options")));
     JCheckBox chk = null;
     JSpinner spin = null;
 
@@ -69,126 +69,126 @@ public class AnalysisOptionsPanel extends OptionsPanel {
 
     // Close full analysis window after sending
     chk = createJCheckBox(
-        GT._("Close full analysis window after sending"),
+        GT._T("Close full analysis window after sending"),
         ConfigurationValueBoolean.CLOSE_FULL);
     add(chk, constraints);
     constraints.gridy++;
 
     // Create disambiguation warning in main namespace
     chk = createJCheckBox(
-        GT._("Create disambiguation warning on talk page (in main namespace)"),
+        GT._T("Create disambiguation warning on talk page (in main namespace)"),
         ConfigurationValueBoolean.CREATE_DAB_WARNING);
     add(chk, constraints);
     constraints.gridy++;
 
     // Create disambiguation warning in encyclopedic namespaces
     chk = createJCheckBox(
-        GT._("Create disambiguation warning on talk page (in encyclopedic namespaces)"),
+        GT._T("Create disambiguation warning on talk page (in encyclopedic namespaces)"),
         ConfigurationValueBoolean.CREATE_DAB_WARNING_ENCY);
     add(chk, constraints);
     constraints.gridy++;
 
     // Create disambiguation warning in other namespace
     chk = createJCheckBox(
-        GT._("Create disambiguation warning on talk page (in other namespaces)"),
+        GT._T("Create disambiguation warning on talk page (in other namespaces)"),
         ConfigurationValueBoolean.CREATE_DAB_WARNING_ALL);
     add(chk, constraints);
     constraints.gridy++;
 
     // Update disambiguation warning in main namespace
     chk = createJCheckBox(
-        GT._("Update disambiguation warning on talk page (in main namespace)"),
+        GT._T("Update disambiguation warning on talk page (in main namespace)"),
         ConfigurationValueBoolean.UPDATE_DAB_WARNING);
     add(chk, constraints);
     constraints.gridy++;
 
     // Update disambiguation warning in encyclopedic namespaces
     chk = createJCheckBox(
-        GT._("Update disambiguation warning on talk page (in encyclopedic namespaces)"),
+        GT._T("Update disambiguation warning on talk page (in encyclopedic namespaces)"),
         ConfigurationValueBoolean.UPDATE_DAB_WARNING_ENCY);
     add(chk, constraints);
     constraints.gridy++;
 
     // Update disambiguation warning in other namespace
     chk = createJCheckBox(
-        GT._("Update disambiguation warning on talk page (in other namespaces)"),
+        GT._T("Update disambiguation warning on talk page (in other namespaces)"),
         ConfigurationValueBoolean.UPDATE_DAB_WARNING_ALL);
     add(chk, constraints);
     constraints.gridy++;
 
     // Show Disambiguation pages
     chk = createJCheckBox(
-        GT._("Show disambiguation pages"),
+        GT._T("Show disambiguation pages"),
         ConfigurationValueBoolean.ANALYSIS_DISAMBIG_PAGES);
     add(chk, constraints);
     constraints.gridy++;
 
     // Show Missing pages
     chk = createJCheckBox(
-        GT._("Show missing pages"),
+        GT._T("Show missing pages"),
         ConfigurationValueBoolean.ANALYSIS_MISSING_PAGES);
     add(chk, constraints);
     constraints.gridy++;
 
     // Show Redirect pages
     chk = createJCheckBox(
-        GT._("Show redirect pages"),
+        GT._T("Show redirect pages"),
         ConfigurationValueBoolean.ANALYSIS_REDIRECT_PAGES);
     add(chk, constraints);
     constraints.gridy++;
 
     // Show Other pages
     chk = createJCheckBox(
-        GT._("Show other pages"),
+        GT._T("Show other pages"),
         ConfigurationValueBoolean.ANALYSIS_OTHER_PAGES);
     add(chk, constraints);
     constraints.gridy++;
 
     // Count Disambiguation pages
     chk = createJCheckBox(
-        GT._("Count disambiguation pages"),
+        GT._T("Count disambiguation pages"),
         ConfigurationValueBoolean.ANALYSIS_COUNT_DISAMBIG);
     add(chk, constraints);
     constraints.gridy++;
 
     // Count Missing pages
     chk = createJCheckBox(
-        GT._("Count missing pages"),
+        GT._T("Count missing pages"),
         ConfigurationValueBoolean.ANALYSIS_COUNT_MISSING);
     add(chk, constraints);
     constraints.gridy++;
 
     // Count Redirect pages
     chk = createJCheckBox(
-        GT._("Count redirect pages"),
+        GT._T("Count redirect pages"),
         ConfigurationValueBoolean.ANALYSIS_COUNT_REDIRECT);
     add(chk, constraints);
     constraints.gridy++;
 
     // Count Other pages
     chk = createJCheckBox(
-        GT._("Count other pages"),
+        GT._T("Count other pages"),
         ConfigurationValueBoolean.ANALYSIS_COUNT_OTHER);
     add(chk, constraints);
     constraints.gridy++;
 
     // Hide when sending
     chk = createJCheckBox(
-        GT._("Hide window when sending"),
+        GT._T("Hide window when sending"),
         ConfigurationValueBoolean.ANALYSIS_HIDE_SENDING);
     add(chk, constraints);
     constraints.gridy++;
 
     // Save last replacement
     chk = createJCheckBox(
-        GT._("Save last replacement used"),
+        GT._T("Save last replacement used"),
         ConfigurationValueBoolean.SAVE_LAST_REPLACEMENT);
     add(chk, constraints);
     constraints.gridy++;
 
     // Remember last page
     chk = createJCheckBox(
-        GT._("Remember last edited page"),
+        GT._T("Remember last edited page"),
         ConfigurationValueBoolean.REMEMBER_LAST_PAGE);
     add(chk, constraints);
     constraints.gridy++;
@@ -197,7 +197,7 @@ public class AnalysisOptionsPanel extends OptionsPanel {
     spin = createJSpinner(
         ConfigurationValueInteger.ANALYSIS_NB_PAGES,
         1, 99, 1);
-    JLabel labelNbPages = Utilities.createJLabel(GT._("Number of links selected :"));
+    JLabel labelNbPages = Utilities.createJLabel(GT._T("Number of links selected :"));
     labelNbPages.setLabelFor(spin);
     labelNbPages.setHorizontalAlignment(SwingConstants.TRAILING);
     constraints.gridwidth = 2;
@@ -214,7 +214,7 @@ public class AnalysisOptionsPanel extends OptionsPanel {
     spin = createJSpinner(
         ConfigurationValueInteger.ANALYSIS_UNDO_LVL,
         0, 99, 1);
-    JLabel labelUndoLevels = Utilities.createJLabel(GT._("Undo levels :"));
+    JLabel labelUndoLevels = Utilities.createJLabel(GT._T("Undo levels :"));
     labelUndoLevels.setLabelFor(spin);
     labelUndoLevels.setHorizontalAlignment(SwingConstants.TRAILING);
     constraints.gridwidth = 2;

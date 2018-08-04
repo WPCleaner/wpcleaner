@@ -46,7 +46,7 @@ public class ApiXmlPagePropsResult extends ApiXmlPropertiesResult implements Api
    * @param properties Properties defining request.
    * @param pages List of pages for which disambiguation status needs to be set.
    * @return True if request should be continued.
-   * @throws APIException
+   * @throws APIException Exception thrown by the API.
    */
   @Override
   public boolean setDiambiguationStatus(

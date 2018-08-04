@@ -49,7 +49,7 @@ public class ApiXmlBacklinksResult extends ApiXmlResult implements ApiBacklinksR
    * @param page Page.
    * @param list List of pages to be filled with the back links.
    * @return True if request should be continued.
-   * @throws APIException
+   * @throws APIException Exception thrown by the API.
    */
   @Override
   public boolean executeBacklinks(

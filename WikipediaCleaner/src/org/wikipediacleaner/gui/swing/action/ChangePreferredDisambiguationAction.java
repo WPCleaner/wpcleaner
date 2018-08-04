@@ -35,6 +35,14 @@ public class ChangePreferredDisambiguationAction extends TextAction {
   private final String defaultValue;
   private final StringChecker checker;
 
+  /**
+   * Constructor.
+   * 
+   * @param wikipedia Wiki.
+   * @param page Page.
+   * @param preferred Preferred disambiguation action.
+   * @param add True for adding preferred disambiguation.
+   */
   public ChangePreferredDisambiguationAction(
       EnumWikipedia wikipedia,
       String page,
@@ -51,6 +59,16 @@ public class ChangePreferredDisambiguationAction extends TextAction {
     this.checker = null;
   }
 
+  /**
+   * Constructor.
+   * 
+   * @param wikipedia Wiki.
+   * @param page Page.
+   * @param parent Parent component.
+   * @param message Message.
+   * @param defaultValue Default value.
+   * @param checker Checker.
+   */
   public ChangePreferredDisambiguationAction(
       EnumWikipedia wikipedia,
       String page,

@@ -59,9 +59,9 @@ public class NewSectionWorker extends BasicWorker {
   @Override
   public Object construct() {
     try {
-      setText(GT._("Retrieving MediaWiki API"));
+      setText(GT._T("Retrieving MediaWiki API"));
       API api = APIFactory.getAPI();
-      setText(GT._("Adding comment"));
+      setText(GT._T("Adding comment"));
       api.addNewSection(getWikipedia(), page, section, text, true, false, forceWatch);
     } catch (APIException e) {
       return e;

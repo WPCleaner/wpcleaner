@@ -24,9 +24,9 @@ public interface ApiLinksResult extends ApiPropertiesResult {
    * 
    * @param properties Properties defining request.
    * @param lists Map of lists to be filled with links.
-   * @param normalization Map containing information about title normalization (From => To).
+   * @param normalization Map containing information about title normalization (key=From, value=To).
    * @return True if request should be continued.
-   * @throws APIException
+   * @throws APIException Exception thrown by the API.
    */
   public boolean executeLinks(
       Map<String, String> properties,
@@ -39,11 +39,11 @@ public interface ApiLinksResult extends ApiPropertiesResult {
    * @param properties Properties defining request.
    * @param links List to be filled with links.
    * @param knownPages Already known pages.
-   * @param normalization Map containing information about title normalization (From => To).
+   * @param normalization Map containing information about title normalization (key=From, value=To).
    * @param redirects List of redirects filled by the method.
    * @param useDisambig Flag indicating if disambiguation property should be used.
    * @return True if request should be continued.
-   * @throws APIException
+   * @throws APIException Exception thrown by the API.
    */
   public boolean executeLinks(
       Map<String, String> properties,

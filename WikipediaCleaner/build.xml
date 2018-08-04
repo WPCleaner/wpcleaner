@@ -6,12 +6,18 @@
   <property name="WPCleaner.build.dir"                    value="build" />
   <property name="WPCleaner.classes.dir"                  value="${WPCleaner.build.dir}/classes" />
   <property name="WPCleaner.dist.dir"                     value="${WPCleaner.build.dir}/dist" />
-  <property name="WPCleaner.jnlp.dir"                     value="${WPCleaner.dist.dir}/jnlp" />
+  <property name="WPCleaner.tmp.dir"                      value="${WPCleaner.build.dir}/tmp" />
+  <property name="WPCleaner.getdown.dir"                  value="${WPCleaner.dist.dir}/getdown" />
   <property name="WPCleaner.full.dir"                     value="${WPCleaner.dist.dir}/full" />
+  <property name="WPCleaner.jnlp.dir"                     value="${WPCleaner.dist.dir}/jnlp" />
   <property name="WPCleaner.javadoc.dir"                  value="${WPCleaner.dist.dir}/javadoc" />
   <property name="WPCleaner.libs.dir"                     value="libs" />
   <property name="WPCleaner.res.dir"                      value="resources" />
   <property name="WPCleaner.po.dir"                       value="${WPCleaner.src.dir}/org/wikipediacleaner/translation" />
+
+  <property name="WPCleaner.libs.getdown.version"         value="1.7.1" />
+  <property name="WPCleaner.libs.getdown.dir"             value="libs/getdown-${WPCleaner.libs.getdown.version}" />
+  <property name="WPCleaner.libs.getdown.jar"             value="getdown-${WPCleaner.libs.getdown.version}.jar" />
 
   <property name="WPCleaner.libs.codec.version"           value="1.6" />
   <property name="WPCleaner.libs.codec.dir"               value="libs/commons-codec-${WPCleaner.libs.codec.version}" />
@@ -115,9 +121,14 @@
     <input message="Please enter Password for keystore:" addproperty="WPCleaner.keystore.password" />
     <mkdir dir="${WPCleaner.build.dir}" />
     <mkdir dir="${WPCleaner.classes.dir}" />
+    <mkdir dir="${WPCleaner.tmp.dir}" />
     <mkdir dir="${WPCleaner.dist.dir}" />
     <mkdir dir="${WPCleaner.jnlp.dir}" />
     <mkdir dir="${WPCleaner.full.dir}" />
+
+    <!-- ============================================================================================================== -->
+    <!-- Preparation work in ${WPCleaner.classes.dir} : copy files, compile Java                                        -->
+    <!-- ============================================================================================================== -->
 
     <!-- Extract libraries -->
     <unzip src="${WPCleaner.libs.codec.dir}/${WPCleaner.libs.codec.jar}"                 dest="${WPCleaner.classes.dir}" />
@@ -139,19 +150,11 @@
     <!-- Java compilation -->
   	<javac srcdir="${WPCleaner.src.dir}"
            destdir="${WPCleaner.classes.dir}"
-           optimize="on" encoding="UTF-8" target="7" source="7">
+           optimize="on" encoding="UTF-8" target="8" source="8">
       <classpath refid="WPCleaner.class.path" />
     </javac>
 
-    <!-- Copy various files for JNLP release -->
-    <copy file="${WPCleaner.res.dir}/.htaccess"
-          todir="${WPCleaner.jnlp.dir}" />
-    <copy file="${WPCleaner.res.dir}/WikiCleaner.jnlp"
-          todir="${WPCleaner.jnlp.dir}" />
-    <copy file="${WPCleaner.res.dir}/commons-nuvola-web-broom.png"
-          todir="${WPCleaner.jnlp.dir}" />
-    <copy file="${WPCleaner.res.dir}/commons-nuvola-web-broom-64px.gif"
-          todir="${WPCleaner.jnlp.dir}" />
+    <!-- Copy various files for including them in the jar -->
     <copy file="${WPCleaner.libs.codec.dir}/${WPCleaner.libs.codec.lic}"
           tofile="${WPCleaner.classes.dir}/LICENSE_commons-codec.txt" />
     <copy file="${WPCleaner.libs.codec.dir}/${WPCleaner.libs.codec.not}"
@@ -182,8 +185,6 @@
           tofile="${WPCleaner.classes.dir}/NOTICE_xerces.txt" />
     <copy file="LICENSE.txt" todir="${WPCleaner.classes.dir}" />
     <copy file="README.txt" todir="${WPCleaner.classes.dir}" />
-
-  	<!-- Copy images and other files -->
     <copy todir="${WPCleaner.classes.dir}">
       <fileset dir="${WPCleaner.src.dir}">
         <include name="**/*.png"/>
@@ -192,8 +193,12 @@
       </fileset>
     </copy>
 
+    <!-- ============================================================================================================== -->
+    <!-- Build work in ${WPCleaner.tmp.dir} : create jar                                                                -->
+    <!-- ============================================================================================================== -->
+
     <!-- Create manifest file -->
-    <manifest file="${WPCleaner.build.dir}/manifest.txt">
+    <manifest file="${WPCleaner.tmp.dir}/manifest.txt">
       <attribute name="Application-Library-Allowable-Classes" value="*" />
       <attribute name="Application-Name"                      value="WPCleaner" />
       <attribute name="Caller-Allowable-Codebase"             value="*" />
@@ -206,39 +211,39 @@
       <attribute name="Trusted-Only"                          value="false" />
     </manifest>
 
-  	<!-- Create jar for JNLP release -->
-    <jar destfile="${WPCleaner.build.dir}/WikipediaCleanerUnsigned.jar"
-         manifest="${WPCleaner.build.dir}/manifest.txt">
+    <!-- Create complete jar -->
+    <jar destfile="${WPCleaner.tmp.dir}/WikipediaCleanerUnsigned.jar"
+         manifest="${WPCleaner.tmp.dir}/manifest.txt">
       <fileset dir="${WPCleaner.classes.dir}">
         <include name="**/*" />
       </fileset>
     </jar>
 
-    <!-- Sign jars for JNLP -->
+    <!-- Sign jars -->
     <if>
       <available file="${WPCleaner.res.dir}/certificate/WPCleaner.p12" />
       <then>
-        <signjar jar="${WPCleaner.build.dir}/WikipediaCleanerUnsigned.jar"
-                 signedjar="${WPCleaner.jnlp.dir}/WikipediaCleaner.jar"
+        <signjar jar="${WPCleaner.tmp.dir}/WikipediaCleanerUnsigned.jar"
+                 signedjar="${WPCleaner.tmp.dir}/WikipediaCleaner.jar"
                  keystore="${WPCleaner.res.dir}/certificate/WPCleaner.p12"
                  storetype="pkcs12"
                  storepass="${WPCleaner.p12.password}"
                  alias="wpcleaner-sign"
                  keypass="${WPCleaner.p12key.password}"
                  tsaurl="http://time.certum.pl/">
-        	<!-- Time Stamping Servers:
-        	     http://time.certum.pl/
-        	     http://dse200.ncipher.com/TSS/HttpTspServer
-        	     http://tsa.safecreative.org/
-        	     http://zeitstempel.dfn.de/
-        	     http://tsa.tecxoft.com/
-        	     http://services.fourit.eu/tsp/tspservice.cgi
-        	-->
+            <!-- Time Stamping Servers:
+                 http://time.certum.pl/
+                 http://dse200.ncipher.com/TSS/HttpTspServer
+                 http://tsa.safecreative.org/
+                 http://zeitstempel.dfn.de/
+                 http://tsa.tecxoft.com/
+                 http://services.fourit.eu/tsp/tspservice.cgi
+            -->
         </signjar>
       </then>
       <else>
-        <signjar jar="${WPCleaner.build.dir}/WikipediaCleanerUnsigned.jar"
-                 signedjar="${WPCleaner.jnlp.dir}/WikipediaCleaner.jar"
+        <signjar jar="${WPCleaner.tmp.dir}/WikipediaCleanerUnsigned.jar"
+                 signedjar="${WPCleaner.tmp.dir}/WikipediaCleaner.jar"
                  keystore="${WPCleaner.res.dir}/certificate/WikipediaCleanerKeystore"
                  storepass="${WPCleaner.keystore.password}"
                  alias="wikipediacleaner" >
@@ -246,8 +251,41 @@
       </else>
     </if>
 
-    <!-- Create jar for full release -->
-    <copy file="${WPCleaner.jnlp.dir}/WikipediaCleaner.jar" todir="${WPCleaner.full.dir}" />
+    <!-- ============================================================================================================== -->
+    <!-- Packaging work for getdown release in ${WPCleaner.full.dir} : copy files, generate digest                      -->
+    <!-- ============================================================================================================== -->
+
+    <!-- Copy various files -->
+    <copy file="${WPCleaner.res.dir}/commons-nuvola-web-broom.png"      todir="${WPCleaner.getdown.dir}" />
+    <copy file="${WPCleaner.res.dir}/commons-nuvola-web-broom-64px.gif" todir="${WPCleaner.getdown.dir}" />
+    <copy file="${WPCleaner.res.dir}/getdown.txt"                       todir="${WPCleaner.getdown.dir}" />
+    <copy file="${WPCleaner.tmp.dir}/WikipediaCleaner.jar"              todir="${WPCleaner.getdown.dir}" />
+    <java classname="com.threerings.getdown.tools.Digester">
+      <arg value="${WPCleaner.getdown.dir}" />
+      <classpath>
+        <pathelement location="${WPCleaner.libs.getdown.dir}/${WPCleaner.libs.getdown.jar}" />
+      </classpath>
+    </java>
+
+    <!-- ============================================================================================================== -->
+    <!-- Packaging work for JNLP release in ${WPCleaner.jnlp.dir} : copy files                                          -->
+    <!--                                                                                                                -->
+    <!-- NOTE: This release is not supported anymore, as it requires a valid code signing certificate to work correctly -->
+    <!-- ============================================================================================================== -->
+
+    <!-- Copy various files -->
+    <copy file="${WPCleaner.res.dir}/.htaccess"                         todir="${WPCleaner.jnlp.dir}" />
+    <copy file="${WPCleaner.res.dir}/WikiCleaner.jnlp"                  todir="${WPCleaner.jnlp.dir}" />
+    <copy file="${WPCleaner.res.dir}/commons-nuvola-web-broom.png"      todir="${WPCleaner.jnlp.dir}" />
+    <copy file="${WPCleaner.res.dir}/commons-nuvola-web-broom-64px.gif" todir="${WPCleaner.jnlp.dir}" />
+    <copy file="${WPCleaner.tmp.dir}/WikipediaCleaner.jar"              todir="${WPCleaner.jnlp.dir}" />
+
+    <!-- ============================================================================================================== -->
+    <!-- Packaging work for basic release in ${WPCleaner.full.dir} : copy files                                         -->
+    <!-- ============================================================================================================== -->
+
+    <!-- Copy various files -->
+    <copy file="${WPCleaner.tmp.dir}/WikipediaCleaner.jar" todir="${WPCleaner.full.dir}" />
   </target>
 
   <!-- Initialize build -->
@@ -304,7 +342,7 @@
         <echo file="${WPCleaner.po.dir}/tmp/files.txt">${WPCleaner.java.files.converted}</echo>
         <apply executable="${gettext.xgettext}" dir="${basedir}/${WPCleaner.src.dir}" parallel="true"
                verbose="true" relative="true" forwardslash="true" addsourcefile="false">
-          <arg value="-kGT._" />
+          <arg value="-kGT._T" />
           <arg value="-kGT._No" />
           <arg value="-kGT.__:1,2" />
           <arg value="--from-code=utf-8" />

@@ -46,7 +46,7 @@ public class ApiXmlRawWatchlistResult extends ApiXmlResult implements ApiRawWatc
    * @param properties Properties defining request.
    * @param watchlist List of pages to be filled with the watch list.
    * @return True if request should be continued.
-   * @throws APIException
+   * @throws APIException Exception thrown by the API.
    */
   @Override
   public boolean executeWatchlistRaw(

@@ -69,7 +69,7 @@ public class CheckWiki {
    * @param errorLimit Maximum number of pages.
    * @param wiki Wiki.
    * @param errors List of errors.
-   * @throws APIException
+   * @throws APIException Exception thrown by the API.
    */
   public void retrievePages(
       final CheckErrorAlgorithm algorithm, int errorLimit,
@@ -268,7 +268,7 @@ public class CheckWiki {
    * 
    * @param wiki Wiki.
    * @param listener Listener for messages.
-   * @throws APIException
+   * @throws APIException Exception thrown by the API.
    */
   public void retrieveConfiguration(
       EnumWikipedia wiki,

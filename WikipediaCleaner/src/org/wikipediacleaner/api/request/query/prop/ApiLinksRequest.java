@@ -57,6 +57,7 @@ public class ApiLinksRequest extends ApiPropertiesRequest {
    * Load list of links.
    * 
    * @param pages List of pages for which links are requested.
+   * @throws APIException Exception thrown by the API.
    */
   public void loadLinks(Collection<Page> pages) throws APIException {
     List<Collection<Page>> splitPagesList = splitListPages(pages, MAX_PAGES_PER_QUERY);
@@ -93,6 +94,7 @@ public class ApiLinksRequest extends ApiPropertiesRequest {
    * @param knownPages Already known pages.
    * @param redirects List of redirects filled by the method.
    * @param disambig True if disambiguation information is requested.
+   * @throws APIException Exception thrown by the API.
    */
   public void loadLinks(
       Page page, Integer namespace,

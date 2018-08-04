@@ -24,7 +24,7 @@ public interface ApiLoginResult extends ApiResult {
    * 
    * @param properties Properties defining request.
    * @return Login result.
-   * @throws APIException
+   * @throws APIException Exception thrown by the API.
    */
   public LoginResult executeLogin(Map<String, String> properties) throws APIException;
 }

@@ -207,7 +207,7 @@ public class CheckWikiContentPanel
     }
     buttonMarkAsFixed = Utilities.createJButton(
         "gnome-dialog-apply.png", EnumImageSize.NORMAL,
-        GT._("Mark as already fixed"), false, null); // Mark as fixed
+        GT._T("Mark as already fixed"), false, null); // Mark as fixed
     buttonMarkAsFixed.setEnabled(true);
     buttonMarkAsFixed.setActionCommand(ACTION_MARK_AS_FIXED);
     buttonMarkAsFixed.addActionListener(this);
@@ -309,7 +309,7 @@ public class CheckWikiContentPanel
 
     // Deleted page
     if (Boolean.FALSE.equals(page.isExisting())) {
-      String message = GT._("The page {0} doesn''t exist on Wikipedia", page.getTitle());
+      String message = GT._T("The page {0} doesn''t exist on Wikipedia", page.getTitle());
       if (messages != null) {
         messages.add(message);
       } else {
@@ -409,7 +409,7 @@ public class CheckWikiContentPanel
           if (!config.getBoolean(
               null,
               ConfigurationValueBoolean.CHECK_MARK_AS_FIXED)) {
-            answer = window.displayYesNoAllWarning(GT._(
+            answer = window.displayYesNoAllWarning(GT._T(
                 "The error n°{0} hasn''t been found on the page {1}.\n" +
                 "Do you want to mark it as fixed?",
                 new Object[] { txtErrors, page.getTitle() }));
@@ -419,7 +419,7 @@ public class CheckWikiContentPanel
 
         // Inform user if Check Wiki still detects the error
         DetectionPanel panel = new DetectionPanel(detections, null);
-        panel.setMessage(GT._(
+        panel.setMessage(GT._T(
             "The error n°{0} hasn''t been detected in page {1}, but CheckWiki still reports it.",
             new Object[] { txtErrors, page.getTitle() }));
         JOptionPane.showMessageDialog(
@@ -428,7 +428,7 @@ public class CheckWikiContentPanel
       } else {
 
         // Inform user if Check Wiki doesn't detect the error anymore
-        String message = GT._(
+        String message = GT._T(
             "The error n°{0} has already been fixed in page {1}.",
             new Object[] { txtErrors, page.getTitle() });
         if (messages != null) {
@@ -574,7 +574,7 @@ public class CheckWikiContentPanel
     }
 
     // Ask for confirmation
-    if (window.displayYesNoWarning(GT._(
+    if (window.displayYesNoWarning(GT._T(
         "Do you want to mark {0} as fixed for error n°{1}?",
         new Object[] { page.getTitle(), algorithm.getErrorNumberString() })) != JOptionPane.YES_OPTION) {
       return;
@@ -593,12 +593,12 @@ public class CheckWikiContentPanel
               errorPage.getResults().size(),
               new Object[] { algorithm.getErrorNumberString(), errorPage.getResults().size() }) +
           "\n" +
-          GT._("Are you really sure that you want to mark it as fixed ?");
+          GT._T("Are you really sure that you want to mark it as fixed ?");
       if (window.displayYesNoWarning(message) != JOptionPane.YES_OPTION) {
         return;
       }
     } else if (errorPage.getErrorFound()) {
-      if (window.displayYesNoWarning(GT._(
+      if (window.displayYesNoWarning(GT._T(
           "The error n°{0} is still found on the page.\n" +
           "Are you really sure that you want to mark it as fixed ?",
           algorithm.getErrorNumberString())) != JOptionPane.YES_OPTION) {
@@ -610,7 +610,7 @@ public class CheckWikiContentPanel
         if (modelErrors.elementAt(i) != null) {
           CheckErrorPage tmp = modelErrors.elementAt(i);
           if (tmp.getAlgorithm() == algorithm) {
-            window.displayWarning(GT._(
+            window.displayWarning(GT._T(
                 "You have already fixed this error by modifying the page.\n" +
                 "You should send your modifications, the page will be marked as fixed."));
             return;
@@ -663,7 +663,7 @@ public class CheckWikiContentPanel
 
     // Check that a comment is available
     if (textComment.getText().trim().length() == 0) {
-      Utilities.displayWarning(getParent(), GT._(
+      Utilities.displayWarning(getParent(), GT._T(
           "A comment is required for sending the page."));
       return;
     }

@@ -92,13 +92,13 @@ public abstract class CheckErrorAlgorithmTOC extends CheckErrorAlgorithmBase {
   }
 
   /**
-   * @return Map of parameters (Name -> description).
+   * @return Map of parameters (key=name, value=description).
    * @see org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase#getParameters()
    */
   @Override
   public Map<String, String> getParameters() {
     Map<String, String> parameters = super.getParameters();
-    parameters.put("templates", GT._("A list of templates resulting in the inclusion of a table of contents"));
+    parameters.put("templates", GT._T("A list of templates resulting in the inclusion of a table of contents"));
     return parameters;
   }
 }

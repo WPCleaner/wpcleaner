@@ -27,7 +27,7 @@ public class CheckErrorAlgorithm509 extends CheckErrorAlgorithmBase {
    * Possible global fixes.
    */
   private final static String[] globalFixes = new String[] {
-    GT._("Compact links"),
+    GT._T("Compact links"),
   };
 
   public CheckErrorAlgorithm509() {
@@ -71,7 +71,7 @@ public class CheckErrorAlgorithm509 extends CheckErrorAlgorithmBase {
           String replacement = PageElementInternalLink.createInternalLink(
               link.getLinkNotNormalized(), link.getAnchor(),
               link.getDisplayedTextNotTrimmed() + contents.substring(link.getEndIndex(), endIndex));
-          errorResult.addReplacement(replacement, GT._("Compact link"));
+          errorResult.addReplacement(replacement, GT._T("Compact link"));
           errors.add(errorResult);
         }
       }

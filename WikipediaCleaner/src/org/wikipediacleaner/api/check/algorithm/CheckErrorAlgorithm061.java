@@ -232,10 +232,10 @@ public class CheckErrorAlgorithm061 extends CheckErrorAlgorithmBase {
     Map<String, String> parameters = super.getParameters();
     parameters.put(
         "separator",
-        GT._("Used as a separator between consecutive {0} tags", "&lt;ref&gt;"));
+        GT._T("Used as a separator between consecutive {0} tags", "&lt;ref&gt;"));
     parameters.put(
         "templates",
-        GT._("Templates that can be used to replace {0} tags", "&lt;ref&gt;"));
+        GT._T("Templates that can be used to replace {0} tags", "&lt;ref&gt;"));
     return parameters;
   }
 }

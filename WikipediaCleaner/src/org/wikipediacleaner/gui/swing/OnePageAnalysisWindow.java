@@ -160,7 +160,7 @@ public class OnePageAnalysisWindow
   /**
    * Create and display a AnalysisWindow.
    * 
-   * @param pageNAme Page name.
+   * @param pageName Page name.
    * @param knownPages Pages already loaded.
    * @param wikipedia Wikipedia.
    */
@@ -239,7 +239,7 @@ public class OnePageAnalysisWindow
    */
   @Override
   public String getTitle() {
-    return GT._("Analysis - {0}", getPageName());
+    return GT._T("Analysis - {0}", getPageName());
   }
 
   /**
@@ -252,7 +252,7 @@ public class OnePageAnalysisWindow
     menuBar.add(createOptionsMenu());
     menuBar.add(createSortMenu());
     menuBar.add(Box.createHorizontalGlue());
-    JLabel linkCount = new JLabel(GT._("Link count"));
+    JLabel linkCount = new JLabel(GT._T("Link count"));
     modelLinks.setLinkCountLabel(linkCount);
     menuBar.add(linkCount);
     return menuBar;
@@ -447,13 +447,13 @@ public class OnePageAnalysisWindow
       langTemplateName = elements[0];
     }
     buttonOtherLanguage = Utilities.createJButton("<html><b>{{" + langTemplateName + "}}</b></html>", null);
-    buttonOtherLanguage.setToolTipText(GT._("Mark the selected text as being in a foreign language"));
+    buttonOtherLanguage.setToolTipText(GT._T("Mark the selected text as being in a foreign language"));
     buttonOtherLanguage.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionOtherLanguage"));
     toolbarButtons.add(buttonOtherLanguage);
     buttonTranslation = Utilities.createJButton(
         "<html><b>(??)</b> \u21d2 <b>(" + getWikipedia().getSettings().getLanguage() + ")</b></html>", null);
-    buttonTranslation.setToolTipText(GT._("Translation of an article copied from an other wiki"));
+    buttonTranslation.setToolTipText(GT._T("Translation of an article copied from an other wiki"));
     buttonTranslation.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionTranslate"));
     toolbarButtons.add(buttonTranslation);
@@ -487,7 +487,7 @@ public class OnePageAnalysisWindow
    * @return Sort menu.
    */
   private JMenu createSortMenu() {
-    JMenu menu = Utilities.createJMenu(GT._("Sort"));
+    JMenu menu = Utilities.createJMenu(GT._T("Sort"));
     List<CompositeComparator<Page>> comparators = PageComparator.getComparators();
     for (CompositeComparator<Page> comparator : comparators) {
       JMenuItem menuItem = Utilities.createJMenuItem(comparator.getName(), true);
@@ -501,38 +501,38 @@ public class OnePageAnalysisWindow
    * @return Options menu.
    */
   private JMenu createOptionsMenu() {
-    JMenu menu = Utilities.createJMenu(GT._("&Options"));
+    JMenu menu = Utilities.createJMenu(GT._T("&Options"));
     menuItemShowDisambiguation = Utilities.createJCheckBoxMenuItm(
-        GT._("Show &disambiguation pages"), modelLinks.getShowDisambiguation());
+        GT._T("Show &disambiguation pages"), modelLinks.getShowDisambiguation());
     menuItemShowDisambiguation.addItemListener(this);
     menu.add(menuItemShowDisambiguation);
     menuItemShowMissing = Utilities.createJCheckBoxMenuItm(
-        GT._("Show &missing pages"), modelLinks.getShowMissing());
+        GT._T("Show &missing pages"), modelLinks.getShowMissing());
     menuItemShowMissing.addItemListener(this);
     menu.add(menuItemShowMissing);
     menuItemShowRedirect = Utilities.createJCheckBoxMenuItm(
-        GT._("Show &redirect pages"), modelLinks.getShowRedirect());
+        GT._T("Show &redirect pages"), modelLinks.getShowRedirect());
     menuItemShowRedirect.addItemListener(this);
     menu.add(menuItemShowRedirect);
     menuItemShowOther = Utilities.createJCheckBoxMenuItm(
-        GT._("Show &other pages"), modelLinks.getShowOther());
+        GT._T("Show &other pages"), modelLinks.getShowOther());
     menuItemShowOther.addItemListener(this);
     menu.add(menuItemShowOther);
     menu.add(new JSeparator());
     menuItemCountDisambiguation = Utilities.createJCheckBoxMenuItm(
-        GT._("Count disambiguation pages"), modelLinks.getCountDisambiguation());
+        GT._T("Count disambiguation pages"), modelLinks.getCountDisambiguation());
     menuItemCountDisambiguation.addItemListener(this);
     menu.add(menuItemCountDisambiguation);
     menuItemCountMissing = Utilities.createJCheckBoxMenuItm(
-        GT._("Count missing pages"), modelLinks.getCountMissing());
+        GT._T("Count missing pages"), modelLinks.getCountMissing());
     menuItemCountMissing.addItemListener(this);
     menu.add(menuItemCountMissing);
     menuItemCountRedirect = Utilities.createJCheckBoxMenuItm(
-        GT._("Count redirect pages"), modelLinks.getCountRedirect());
+        GT._T("Count redirect pages"), modelLinks.getCountRedirect());
     menuItemCountRedirect.addItemListener(this);
     menu.add(menuItemCountRedirect);
     menuItemCountOther = Utilities.createJCheckBoxMenuItm(
-        GT._("Count other pages"), modelLinks.getCountOther());
+        GT._T("Count other pages"), modelLinks.getCountOther());
     menuItemCountOther.addItemListener(this);
     menu.add(menuItemCountOther);
     return menu;
@@ -569,7 +569,7 @@ public class OnePageAnalysisWindow
         getParentComponent(), toolbar, getWikipedia(), listLinks, true, true);
     buttonRemoveLinks = Utilities.createJButton(
         "wpc-remove-link.png", EnumImageSize.NORMAL,
-        GT._("Remove all links"), false, null);
+        GT._T("Remove all links"), false, null);
     buttonRemoveLinks.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionRemoveAllLinks"));
     toolbar.add(buttonRemoveLinks);
@@ -631,7 +631,7 @@ public class OnePageAnalysisWindow
     }
 
     // Title
-    JLabel labelErrors = Utilities.createJLabel(GT._("Check Wikipedia"));
+    JLabel labelErrors = Utilities.createJLabel(GT._T("Check Wikipedia"));
     constraints.fill = GridBagConstraints.HORIZONTAL;
     constraints.weightx = 1;
     constraints.weighty = 0;
@@ -858,7 +858,7 @@ public class OnePageAnalysisWindow
         if ((similarPages != null) && (similarPages.size() > 0)) {
           String answer = Utilities.askForValue(
               getParentComponent(),
-              GT._(
+              GT._T(
                   "Page {0} doesn''t exist, do you want to load a similar page ?",
                   pageLoaded.getTitle()),
               similarPages.toArray(), true,
@@ -871,7 +871,7 @@ public class OnePageAnalysisWindow
         }
         int answer = Utilities.displayYesNoWarning(
             getParentComponent(),
-            GT._(
+            GT._T(
                 "Page {0} doesn''t exist, do you still want to analyze it ?",
                 pageLoaded.getTitle()));
         if (answer != JOptionPane.YES_OPTION) {
@@ -922,7 +922,7 @@ public class OnePageAnalysisWindow
     List<String[]> warningTemplates = wpcConfig.getStringArrayList(
         WPCConfigurationStringList.EDIT_WARNING_TEMPLATES);
     if ((warningTemplates != null) && (!warningTemplates.isEmpty())) {
-      StringBuilder tmp = new StringBuilder(GT._(
+      StringBuilder tmp = new StringBuilder(GT._T(
           "\"{0}\" has been tagged with the following templates, be careful when editing:",
           getPage().getTitle()));
       boolean found = false;
@@ -945,7 +945,7 @@ public class OnePageAnalysisWindow
       }
       if (found) {
         tmp.append("\n");
-        tmp.append(GT._("Do you want to apply the automatic modifications?"));
+        tmp.append(GT._T("Do you want to apply the automatic modifications?"));
         int answer = displayYesNoWarning(tmp.toString());
         if (answer != JOptionPane.YES_OPTION) {
           automaticFix = false;
@@ -1079,7 +1079,7 @@ public class OnePageAnalysisWindow
     if (end <= start) {
       JOptionPane.showMessageDialog(
           getParentComponent(),
-          GT._("You must select the text that is written in a foreign language"),
+          GT._T("You must select the text that is written in a foreign language"),
           Version.PROGRAM, JOptionPane.WARNING_MESSAGE);
       return;
     }
@@ -1088,7 +1088,7 @@ public class OnePageAnalysisWindow
     LanguageSelectionPanel panel = new LanguageSelectionPanel(
         getWikipedia(), text.substring(start, end));
     int result = JOptionPane.showConfirmDialog(
-        getParentComponent(), panel, GT._("Foreign language"),
+        getParentComponent(), panel, GT._T("Foreign language"),
         JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
     if (result != JOptionPane.OK_OPTION) {
       return;
@@ -1132,7 +1132,7 @@ public class OnePageAnalysisWindow
   public void actionTranslate() {
     Object from = Utilities.askForValue(
         getParentComponent(),
-        GT._("From which Wikipedia is this text coming ?"),
+        GT._T("From which Wikipedia is this text coming ?"),
         EnumWikipedia.values(), getWikipedia());
     if ((from == null) || (from == getWikipedia())) {
       return;
@@ -1231,7 +1231,7 @@ public class OnePageAnalysisWindow
       if ((text != null) && (text.trim().length() > 0)) {
         return text;
       }
-      return GT._("Translation");
+      return GT._T("Translation");
     }
 
     contributions = new Contributions(getWikipedia());

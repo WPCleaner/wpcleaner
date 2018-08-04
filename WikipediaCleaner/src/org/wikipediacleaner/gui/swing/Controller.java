@@ -236,12 +236,12 @@ public class Controller {
         ConfigurationValueInteger.MAXIMUM_PAGES);
     if (pagesCount > maxPagesCount) {
       Object[] options = new Object[] {
-          GT._("Yes, {0} pages", Integer.toString(pagesCount)),
-          GT._("No, {0} pages", Integer.toString(maxPagesCount)),
-          GT._("Cancel")
+          GT._T("Yes, {0} pages", Integer.toString(pagesCount)),
+          GT._T("No, {0} pages", Integer.toString(maxPagesCount)),
+          GT._T("Cancel")
       };
       int answer = Utilities.displayQuestion(
-          parentComponent, GT._(
+          parentComponent, GT._T(
               "You have selected {0} pages.\n" +
               "Would you like to analyze more than {1} pages ?",
               new Object[]{ pagesCount, maxPagesCount }),

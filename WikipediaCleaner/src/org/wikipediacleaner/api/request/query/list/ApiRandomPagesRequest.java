@@ -62,6 +62,7 @@ public class ApiRandomPagesRequest extends ApiListRequest {
    * @param count Maximum number of pages to get.
    * @param redirects True if redirect pages are requested.
    * @return List of random pages.
+   * @throws APIException Exception thrown by the API.
    */
   public List<Page> loadRandomList(int count, boolean redirects) throws APIException {
     Map<String, String> properties = getProperties(ACTION_QUERY, result.getFormat());

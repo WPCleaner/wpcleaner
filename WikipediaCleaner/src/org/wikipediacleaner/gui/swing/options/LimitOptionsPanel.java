@@ -46,7 +46,7 @@ public class LimitOptionsPanel extends OptionsPanel {
    */
   private void initialize() {
     setBorder(BorderFactory.createTitledBorder(
-        BorderFactory.createEtchedBorder(), GT._("Limits")));
+        BorderFactory.createEtchedBorder(), GT._T("Limits")));
     JSpinner spin = null;
 
     // Initialize constraints
@@ -66,7 +66,7 @@ public class LimitOptionsPanel extends OptionsPanel {
     spin = createJSpinner(
         ConfigurationValueInteger.MENU_SIZE,
         2, 999, 1);
-    JLabel labelMenuSize = Utilities.createJLabel(GT._("Maximum number of items in a menu :"));
+    JLabel labelMenuSize = Utilities.createJLabel(GT._T("Maximum number of items in a menu :"));
     labelMenuSize.setLabelFor(spin);
     labelMenuSize.setHorizontalAlignment(SwingConstants.TRAILING);
     constraints.gridwidth = 2;
@@ -83,7 +83,7 @@ public class LimitOptionsPanel extends OptionsPanel {
     spin = createJSpinner(
         ConfigurationValueInteger.MAXIMUM_PAGES,
         1, 99, 1);
-    JLabel labelMaxPages = Utilities.createJLabel(GT._("Maximum number of simultaneous analyses :"));
+    JLabel labelMaxPages = Utilities.createJLabel(GT._T("Maximum number of simultaneous analyses :"));
     labelMaxPages.setLabelFor(spin);
     labelMaxPages.setHorizontalAlignment(SwingConstants.TRAILING);
     constraints.gridwidth = 2;
@@ -101,7 +101,7 @@ public class LimitOptionsPanel extends OptionsPanel {
         ConfigurationValueInteger.CHECK_NB_ERRORS,
         10, 1000, 5);
     JLabel labelMaxErrorsCheckWiki = Utilities.createJLabel(
-        GT._("Maximum number of errors for Check Wiki :"));
+        GT._T("Maximum number of errors for Check Wiki :"));
     labelMaxErrorsCheckWiki.setLabelFor(spin);
     labelMaxErrorsCheckWiki.setHorizontalAlignment(SwingConstants.TRAILING);
     constraints.gridwidth = 2;
@@ -119,7 +119,7 @@ public class LimitOptionsPanel extends OptionsPanel {
         ConfigurationValueInteger.MAX_LINT_ERRORS,
         1000, 100000, 1000);
     JLabel labelMaxErrorsLinter = Utilities.createJLabel(
-        GT._("Maximum number of errors for Linter :"));
+        GT._T("Maximum number of errors for Linter :"));
     labelMaxErrorsLinter.setLabelFor(spin);
     labelMaxErrorsLinter.setHorizontalAlignment(SwingConstants.TRAILING);
     constraints.gridwidth = 2;
@@ -136,7 +136,7 @@ public class LimitOptionsPanel extends OptionsPanel {
     spin = createJSpinner(
         ConfigurationValueInteger.TIME_BETWEEN_EDIT,
         0, 120, 1);
-    JLabel labelTime = Utilities.createJLabel(GT._("Minimum time between consecutive edits :"));
+    JLabel labelTime = Utilities.createJLabel(GT._T("Minimum time between consecutive edits :"));
     labelTime.setLabelFor(spin);
     labelTime.setHorizontalAlignment(SwingConstants.TRAILING);
     constraints.gridwidth = 2;
@@ -153,7 +153,7 @@ public class LimitOptionsPanel extends OptionsPanel {
     spin = createJSpinner(
         ConfigurationValueInteger.MAX_EDITS_PER_MINUTE,
         0, 60, 1);
-    JLabel labelEdits = Utilities.createJLabel(GT._("Maximum number of edits per minute :"));
+    JLabel labelEdits = Utilities.createJLabel(GT._T("Maximum number of edits per minute :"));
     labelEdits.setLabelFor(spin);
     labelEdits.setHorizontalAlignment(SwingConstants.TRAILING);
     constraints.gridwidth = 2;
@@ -170,7 +170,7 @@ public class LimitOptionsPanel extends OptionsPanel {
     spin = createJSpinner(
         ConfigurationValueInteger.INTERROG_THREAD,
         1, 99, 1);
-    JLabel labelThreads = Utilities.createJLabel(GT._("Maximum number of interrogation threads :"));
+    JLabel labelThreads = Utilities.createJLabel(GT._T("Maximum number of interrogation threads :"));
     labelThreads.setLabelFor(spin);
     labelThreads.setHorizontalAlignment(SwingConstants.TRAILING);
     constraints.gridwidth = 2;
@@ -187,7 +187,7 @@ public class LimitOptionsPanel extends OptionsPanel {
     spin = createJSpinner(
         ConfigurationValueInteger.SYNTAX_HIGHLIGHTING_LIMIT,
         0, 1000000, 10000);
-    JLabel labelHighlight = Utilities.createJLabel(GT._("Size limit for syntax highlighting"));
+    JLabel labelHighlight = Utilities.createJLabel(GT._T("Size limit for syntax highlighting"));
     labelHighlight.setLabelFor(spin);
     labelHighlight.setHorizontalAlignment(SwingConstants.TRAILING);
     constraints.gridwidth = 2;
@@ -204,7 +204,7 @@ public class LimitOptionsPanel extends OptionsPanel {
     spin = createJSpinner(
         ConfigurationValueInteger.SLOW_REGEXP,
         0, 1000000, 1000);
-    JLabel labelRegexp = Utilities.createJLabel(GT._("Threshold for slow regular expressions (ms)"));
+    JLabel labelRegexp = Utilities.createJLabel(GT._T("Threshold for slow regular expressions (ms)"));
     labelRegexp.setLabelFor(spin);
     labelRegexp.setHorizontalAlignment(SwingConstants.TRAILING);
     constraints.gridwidth = 2;
@@ -221,7 +221,7 @@ public class LimitOptionsPanel extends OptionsPanel {
     spin = createJSpinner(
         ConfigurationValueInteger.MAX_CATEGORY_MEMBERS,
         100, 1000000, 1000);
-    JLabel labelCategory = Utilities.createJLabel(GT._("Maximum number of category members :"));
+    JLabel labelCategory = Utilities.createJLabel(GT._T("Maximum number of category members :"));
     labelCategory.setLabelFor(spin);
     labelCategory.setHorizontalAlignment(SwingConstants.TRAILING);
     constraints.gridwidth = 2;
@@ -238,7 +238,7 @@ public class LimitOptionsPanel extends OptionsPanel {
     spin = createJSpinner(
         ConfigurationValueInteger.MAX_DAYS_ABUSE_LOG,
         1, 365, 1);
-    JLabel labelAbuseLog = Utilities.createJLabel(GT._("Maximum duration for abuse logs :"));
+    JLabel labelAbuseLog = Utilities.createJLabel(GT._T("Maximum duration for abuse logs :"));
     labelAbuseLog.setLabelFor(spin);
     labelAbuseLog.setHorizontalAlignment(SwingConstants.TRAILING);
     constraints.gridwidth = 2;
@@ -255,7 +255,7 @@ public class LimitOptionsPanel extends OptionsPanel {
     spin = createJSpinner(
         ConfigurationValueInteger.MAX_EMBEDDED_IN,
         100, 1000000, 1000);
-    JLabel labelEmbedded = Utilities.createJLabel(GT._("Maximum number of embedding pages :"));
+    JLabel labelEmbedded = Utilities.createJLabel(GT._T("Maximum number of embedding pages :"));
     labelEmbedded.setLabelFor(spin);
     labelEmbedded.setHorizontalAlignment(SwingConstants.TRAILING);
     constraints.gridwidth = 2;
@@ -272,7 +272,7 @@ public class LimitOptionsPanel extends OptionsPanel {
     spin = createJSpinner(
         ConfigurationValueInteger.MAX_SEARCH,
         100, 1000000, 1000);
-    JLabel labelSearch = Utilities.createJLabel(GT._("Maximum number of search results :"));
+    JLabel labelSearch = Utilities.createJLabel(GT._T("Maximum number of search results :"));
     labelSearch.setLabelFor(spin);
     labelSearch.setHorizontalAlignment(SwingConstants.TRAILING);
     constraints.gridwidth = 2;

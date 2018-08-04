@@ -93,7 +93,7 @@ public class CheckErrorAlgorithm107 extends CheckErrorAlgorithmISSN {
           result = true;
           CheckErrorResult errorResult = createCheckErrorResult(analysis, issn, true);
           errorResult.addText(
-              GT._(
+              GT._T(
                   "Length of ISSN is {0} instead of 8",
                   Integer.toString(length) ));
           addSuggestions(analysis, errorResult, issn);
@@ -116,10 +116,10 @@ public class CheckErrorAlgorithm107 extends CheckErrorAlgorithmISSN {
           }
 
           // Add search for other identifiers
-          errorResult.addPossibleAction(new SimpleAction(GT._(
+          errorResult.addPossibleAction(new SimpleAction(GT._T(
               "Search as OCLC"),
               new ActionExternalViewer(MessageFormat.format("http://worldcat.org/oclc/{0}", originalValue))));
-          errorResult.addPossibleAction(new SimpleAction(GT._(
+          errorResult.addPossibleAction(new SimpleAction(GT._T(
               "Search as LCCN"),
               new ActionExternalViewer(MessageFormat.format("http://lccn.loc.gov/{0}", originalValue))));
 
@@ -170,7 +170,7 @@ public class CheckErrorAlgorithm107 extends CheckErrorAlgorithmISSN {
           // Add direct search engines
           addSearchEngines(
               analysis, errorResult, searchISSN,
-              GT._("Similar ISSN"));
+              GT._T("Similar ISSN"));
 
           errors.add(errorResult);
         }
@@ -218,13 +218,13 @@ public class CheckErrorAlgorithm107 extends CheckErrorAlgorithmISSN {
   /**
    * Return the parameters used to configure the algorithm.
    * 
-   * @return Map of parameters (Name -> description).
+   * @return Map of parameters (key=name, value=description).
    */
   @Override
   public Map<String, String> getParameters() {
     Map<String, String> parameters = super.getParameters();
     parameters.put(
-        "reason", GT._("An explanation of the problem"));
+        "reason", GT._T("An explanation of the problem"));
     return parameters;
   }
 }

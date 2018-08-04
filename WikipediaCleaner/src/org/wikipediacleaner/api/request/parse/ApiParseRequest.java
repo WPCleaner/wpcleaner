@@ -118,7 +118,7 @@ public class ApiParseRequest extends ApiRequest {
    * @param text Page contents.
    * @param full True to do a full parsing.
    * @return Parsed text.
-   * @throws APIException
+   * @throws APIException Exception thrown by the API.
    */
   public String parseText(String title, String text, boolean full) throws APIException {
     Map<String, String> properties = getProperties(ACTION_PARSE, result.getFormat());
@@ -136,7 +136,7 @@ public class ApiParseRequest extends ApiRequest {
    * 
    * @param page Page (Revision Id is update on output).
    * @return List of sections in the page.
-   * @throws APIException
+   * @throws APIException Exception thrown by the API.
    */
   public List<Section> retrieveSections(Page page) throws APIException {
     Map<String, String> properties = getProperties(ACTION_PARSE, result.getFormat());

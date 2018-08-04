@@ -70,7 +70,7 @@ public class FormattingOptionsPanel extends OptionsPanel {
    */
   private void initialize() {
     setBorder(BorderFactory.createTitledBorder(
-        BorderFactory.createEtchedBorder(), GT._("Formatting options (restart needed)")));
+        BorderFactory.createEtchedBorder(), GT._T("Formatting options (restart needed)")));
 
     styles = new Vector<ConfigurationValueStyle>();
 
@@ -109,7 +109,7 @@ public class FormattingOptionsPanel extends OptionsPanel {
       fonts.addElement(font.getName());
     }
     JComboBox<String> cmbFontName = createJComboBox(ConfigurationValueString.EDITOR_FONT_NAME, fonts);
-    JLabel lblFontName = Utilities.createJLabel(GT._("Select editor font name"));
+    JLabel lblFontName = Utilities.createJLabel(GT._T("Select editor font name"));
     lblFontName.setLabelFor(cmbFontName);
     lblFontName.setHorizontalAlignment(SwingConstants.TRAILING);
     constraints.gridx = 0;
@@ -125,7 +125,7 @@ public class FormattingOptionsPanel extends OptionsPanel {
 
     // Add font size
     JSpinner spinFontSize = createJSpinner(ConfigurationValueInteger.EDITOR_FONT_SIZE, 8, 72, 1);
-    JLabel lblFontSize = Utilities.createJLabel(GT._("Select editor font size"));
+    JLabel lblFontSize = Utilities.createJLabel(GT._T("Select editor font size"));
     lblFontSize.setLabelFor(spinFontSize);
     lblFontSize.setHorizontalAlignment(SwingConstants.TRAILING);
     constraints.gridx = 0;
@@ -140,7 +140,7 @@ public class FormattingOptionsPanel extends OptionsPanel {
 
     // Add font size increase
     JSpinner spinFontIncrease = createJSpinner(ConfigurationValueInteger.FONT_SIZE, 0, 20, 1);
-    JLabel lblFontIncrease = Utilities.createJLabel(GT._("Increase font size"));
+    JLabel lblFontIncrease = Utilities.createJLabel(GT._T("Increase font size"));
     lblFontIncrease.setLabelFor(spinFontIncrease);
     lblFontIncrease.setHorizontalAlignment(SwingConstants.TRAILING);
     constraints.gridx = 0;
@@ -164,163 +164,163 @@ public class FormattingOptionsPanel extends OptionsPanel {
 
     // Add line for comments style
     addLine(
-        panel, constraints, true, GT._("Comments"),
+        panel, constraints, true, GT._T("Comments"),
         true, true, true, true, true, true,
         ConfigurationValueStyle.COMMENTS);
 
     // Add line for internal link style
     addLine(
-        panel, constraints, true, GT._("Internal link"),
+        panel, constraints, true, GT._T("Internal link"),
         true, true, true, true, true, true,
         ConfigurationValueStyle.INTERNAL_LINK);
 
     // Add line for internal link style (for redirect link)
     addLine(
-        panel, constraints, true, GT._("Redirect link"),
+        panel, constraints, true, GT._T("Redirect link"),
         true, true, true, true, true, true,
         ConfigurationValueStyle.INTERNAL_LINK_DEFAULT_REDIRECT);
 
     // Add line for internal link style (for missing link)
     addLine(
-        panel, constraints, true, GT._("Missing link"),
+        panel, constraints, true, GT._T("Missing link"),
         true, true, true, true, true, true,
         ConfigurationValueStyle.INTERNAL_LINK_DEFAULT_MISSING);
 
     // Add line for template style
     addLine(
-        panel, constraints, true, GT._("Template"),
+        panel, constraints, true, GT._T("Template"),
         true, true, true, true, true, true,
         ConfigurationValueStyle.TEMPLATE);
 
     // Add line for title style
     addLine(
-        panel, constraints, true, GT._("Title"),
+        panel, constraints, true, GT._T("Title"),
         true, true, true, true, true, true,
         ConfigurationValueStyle.TITLE);
 
     // Add line for image style
     addLine(
-        panel, constraints, true, GT._("Image"),
+        panel, constraints, true, GT._T("Image"),
         true, true, true, true, true, true,
         ConfigurationValueStyle.IMAGE);
 
     // Add line for category style
     addLine(
-        panel, constraints, true, GT._("Category"),
+        panel, constraints, true, GT._T("Category"),
         true, true, true, true, true, true,
         ConfigurationValueStyle.CATEGORY);
 
     // Add line for DEFAULTSORT style
     addLine(
-        panel, constraints, true, GT._("Default sort"),
+        panel, constraints, true, GT._T("Default sort"),
         true, true, true, true, true, true,
         ConfigurationValueStyle.DEFAULTSORT);
 
     // Add line for language link style
     addLine(
-        panel, constraints, true, GT._("Language link"),
+        panel, constraints, true, GT._T("Language link"),
         true, true, true, true, true, true,
         ConfigurationValueStyle.LANGUAGE_LINK);
 
     // Add line for external link style
     addLine(
-        panel, constraints, true, GT._("External link"),
+        panel, constraints, true, GT._T("External link"),
         true, true, true, true, true, true,
         ConfigurationValueStyle.EXTERNAL_LINK);
 
     // Add line for interwiki link style
     addLine(
-        panel, constraints, true, GT._("Interwiki link"),
+        panel, constraints, true, GT._T("Interwiki link"),
         true, true, true, true, true, true,
         ConfigurationValueStyle.INTERWIKI_LINK);
 
     // Add line for tag style
     addLine(
-        panel, constraints, true, GT._("Tag"),
+        panel, constraints, true, GT._T("Tag"),
         true, true, true, true, true, true,
         ConfigurationValueStyle.TAG);
 
     // Add line for list items style
     addLine(
-        panel, constraints, true, GT._("List items"),
+        panel, constraints, true, GT._T("List items"),
         true, true, true, true, true, true,
         ConfigurationValueStyle.LIST_ITEM);
 
     // Add line for table style
     addLine(
-        panel, constraints, true, GT._("Table"),
+        panel, constraints, true, GT._T("Table"),
         true, true, true, true, true, true,
         ConfigurationValueStyle.TABLE);
 
     // Add line for reference style
     addLine(
-        panel, constraints, true, GT._("Reference"),
+        panel, constraints, true, GT._T("Reference"),
         true, true, true, true, true, true,
         ConfigurationValueStyle.REFERENCE);
 
     // Add line for programming elements style
     addLine(
-        panel, constraints, true, GT._("Programming elements"), 
+        panel, constraints, true, GT._T("Programming elements"), 
         true, true, true, true, true, true,
         ConfigurationValueStyle.PROGRAMMING);
 
     // Add line for disambiguation link style
     addLine(
-        panel, constraints, false, GT._("Disambiguation link"),
+        panel, constraints, false, GT._T("Disambiguation link"),
         true, true, true, true, true, true,
         ConfigurationValueStyle.INTERNAL_LINK_DAB);
 
     // Add line for normal internal link style
     addLine(
-        panel, constraints, false, GT._("Normal internal link"),
+        panel, constraints, false, GT._T("Normal internal link"),
         true, true, true, true, true, true,
         ConfigurationValueStyle.INTERNAL_LINK_NORMAL);
 
     // Add line for redirect link style
     addLine(
-        panel, constraints, false, GT._("Redirect link"),
+        panel, constraints, false, GT._T("Redirect link"),
         true, true, true, true, true, true,
         ConfigurationValueStyle.INTERNAL_LINK_REDIRECT);
 
     // Add line for missing link style
     addLine(
-        panel, constraints, false, GT._("Missing link"),
+        panel, constraints, false, GT._T("Missing link"),
         true, true, true, true, true, true,
         ConfigurationValueStyle.INTERNAL_LINK_MISSING);
 
     // Add line for disambiguation template style
     addLine(
-        panel, constraints, false, GT._("Disambiguation template"),
+        panel, constraints, false, GT._T("Disambiguation template"),
         true, true, true, true, true, true,
         ConfigurationValueStyle.TEMPLATE_DAB);
 
     // Add line for normal template style
     addLine(
-        panel, constraints, false, GT._("Normal template"),
+        panel, constraints, false, GT._T("Normal template"),
         true, true, true, true, true, true,
         ConfigurationValueStyle.TEMPLATE_NORMAL);
 
     // Add line for help requested style
     addLine(
-        panel, constraints, false, GT._("Help requested"),
+        panel, constraints, false, GT._T("Help requested"),
         true, true, true, true, true, true,
         ConfigurationValueStyle.HELP_REQUESTED);
 
     // Add line for check wiki error style
     addLine(
-        panel, constraints, false, GT._("Check wiki error"),
+        panel, constraints, false, GT._T("Check wiki error"),
         true, true, true, true, true, true,
         ConfigurationValueStyle.CHECK_WIKI_ERROR);
 
     // Add line for check wiki warning style
     addLine(
-        panel, constraints, false, GT._("Check wiki warning"),
+        panel, constraints, false, GT._T("Check wiki warning"),
         true, true, true, true, true, true,
         ConfigurationValueStyle.CHECK_WIKI_WARNING);
 
     // Add line for check wiki ok style
     addLine(
-        panel, constraints, false, GT._("Check wiki OK"),
+        panel, constraints, false, GT._T("Check wiki OK"),
         true, true, true, true, true, true,
         ConfigurationValueStyle.CHECK_WIKI_OK);
 
@@ -431,7 +431,7 @@ public class FormattingOptionsPanel extends OptionsPanel {
     // Italic check box
     toggle = Utilities.createJToggleButton(
         "gnome-format-text-italic.png", EnumImageSize.SMALL,
-        GT._("Italic"), false);
+        GT._T("Italic"), false);
     toggle.setEnabled(italic);
     chkItalic.add(toggle);
     toolbar.add(toggle);
@@ -439,7 +439,7 @@ public class FormattingOptionsPanel extends OptionsPanel {
     // Bold check box
     toggle = Utilities.createJToggleButton(
         "gnome-format-text-bold.png", EnumImageSize.SMALL,
-        GT._("Bold"), false);
+        GT._T("Bold"), false);
     toggle.setEnabled(bold);
     chkBold.add(toggle);
     toolbar.add(toggle);
@@ -447,7 +447,7 @@ public class FormattingOptionsPanel extends OptionsPanel {
     // Underline check box
     toggle = Utilities.createJToggleButton(
         "gnome-format-text-underline.png", EnumImageSize.SMALL,
-        GT._("Underline"), false);
+        GT._T("Underline"), false);
     toggle.setEnabled(underline);
     chkUnderline.add(toggle);
     toolbar.add(toggle);
@@ -455,7 +455,7 @@ public class FormattingOptionsPanel extends OptionsPanel {
     // Strike through check box
     toggle = Utilities.createJToggleButton(
         "gnome-format-text-strikethrough.png", EnumImageSize.SMALL,
-        GT._("Strike through"), false);
+        GT._T("Strike through"), false);
     toggle.setEnabled(strike);
     chkStrike.add(toggle);
     toolbar.add(toggle);
@@ -463,12 +463,12 @@ public class FormattingOptionsPanel extends OptionsPanel {
     // Foreground color check box and button
     toolbar.add(new JSeparator());
     chk = Utilities.createJCheckBox("", true);
-    chk.setToolTipText(GT._("Foreground color"));
+    chk.setToolTipText(GT._T("Foreground color"));
     chk.setEnabled(foreground);
     chkForeground.add(chk);
     toolbar.add(chk);
-    button = new ColorButton(Color.BLACK, GT._("Choose foreground color"));
-    button.setToolTipText(GT._("Foreground color"));
+    button = new ColorButton(Color.BLACK, GT._T("Choose foreground color"));
+    button.setToolTipText(GT._T("Foreground color"));
     button.setEnabled(foreground && chk.isSelected());
     btnForeground.add(button);
     toolbar.add(button);
@@ -476,12 +476,12 @@ public class FormattingOptionsPanel extends OptionsPanel {
     // Background color check box and button
     toolbar.add(new JSeparator());
     chk = Utilities.createJCheckBox("", true);
-    chk.setToolTipText(GT._("Background color"));
+    chk.setToolTipText(GT._T("Background color"));
     chk.setEnabled(background);
     chkBackground.add(chk);
     toolbar.add(chk);
-    button = new ColorButton(Color.WHITE, GT._("Choose background color"));
-    button.setToolTipText(GT._("Background color"));
+    button = new ColorButton(Color.WHITE, GT._T("Choose background color"));
+    button.setToolTipText(GT._T("Background color"));
     button.setEnabled(background && chk.isEnabled());
     btnBackground.add(button);
     toolbar.add(button);

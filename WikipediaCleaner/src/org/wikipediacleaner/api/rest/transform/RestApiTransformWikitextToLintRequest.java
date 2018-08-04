@@ -51,7 +51,7 @@ public class RestApiTransformWikitextToLintRequest extends RestApiRequest {
    * @param title Page title.
    * @param text Wiki text.
    * @return List of linter errors for the text.
-   * @throws APIException
+   * @throws APIException Exception thrown by the API.
    */
   public List<LinterError> transform(String title, String text) throws APIException {
     Map<String, String> properties = getProperties();

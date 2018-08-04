@@ -53,6 +53,17 @@ public class LoginWorker extends BasicWorker {
   private final boolean reloadOnly;
   private boolean logged;
 
+  /**
+   * @param wikipedia Wiki.
+   * @param window Window.
+   * @param focusComponent Component with the focus.
+   * @param language Language.
+   * @param username User name.
+   * @param password Password.
+   * @param saveUser True if user should be memorized.
+   * @param login True if login is requested.
+   * @param reloadOnly True if only a reload is requested.
+   */
   public LoginWorker(
       EnumWikipedia wikipedia,
       BasicWindow window, Component focusComponent,
@@ -95,13 +106,13 @@ public class LoginWorker extends BasicWorker {
   @Override
   public Object construct() {
     try {
-      setText(GT._("Retrieving MediaWiki API"));
+      setText(GT._T("Retrieving MediaWiki API"));
       API api = APIFactory.getAPI();
       EnumWikipedia wiki = getWikipedia();
 
       // Login
       if (!reloadOnly) {
-        setText(GT._("Login"));
+        setText(GT._T("Login"));
         LoginResult result = api.login(wiki, username, new String(password), login);
         if (login) {
           if ((result == null) || (!result.isLoginSuccessful())) {
@@ -116,7 +127,7 @@ public class LoginWorker extends BasicWorker {
       }
 
       // Load configuration
-      setText(GT._("Loading configuration"));
+      setText(GT._T("Loading configuration"));
       api.loadConfiguration(wiki, username);
 
       // Saving settings
@@ -146,16 +157,16 @@ public class LoginWorker extends BasicWorker {
       // Retrieving disambiguation templates
       boolean useDisambig = wpcConfig.getBoolean(WPCConfigurationBoolean.DAB_USE_DISAMBIG_MAGIC_WORD);
       if (!useDisambig) {
-        setText(GT._("Retrieving disambiguation templates"));
+        setText(GT._T("Retrieving disambiguation templates"));
         wiki.initDisambiguationTemplates(api);
       }
 
       // Retrieving suggestions for text replacements
-      setText(GT._("Retrieving suggestions for text replacements"));
+      setText(GT._T("Retrieving suggestions for text replacements"));
       wpcConfig.initSuggestions(api, reloadOnly);
 
       // Retrieving Check Wiki configuration
-      setText(GT._("Retrieving Check Wiki configuration"));
+      setText(GT._T("Retrieving Check Wiki configuration"));
       APIFactory.getCheckWiki().retrieveConfiguration(wiki, this);
 
       // Retrieving special configuration

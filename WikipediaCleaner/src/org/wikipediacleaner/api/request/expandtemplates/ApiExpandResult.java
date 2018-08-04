@@ -23,7 +23,7 @@ public interface ApiExpandResult extends ApiResult {
    * 
    * @param properties Properties defining request.
    * @return Expanded text.
-   * @throws APIException
+   * @throws APIException Exception thrown by the API.
    */
   public String executeExpandTemplates(Map<String, String> properties) throws APIException;
 }

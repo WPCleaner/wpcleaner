@@ -63,6 +63,7 @@ public class ApiQueryPageRequest extends ApiListRequest {
    * 
    * @param query Type of list.
    * @return Special list of pages.
+   * @throws APIException Exception thrown by the API.
    */
   public List<Page> loadQueryPage(
       EnumQueryPage query) throws APIException {
