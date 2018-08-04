@@ -19,7 +19,9 @@ import java.awt.event.ActionListener;
 import java.awt.font.TextAttribute;
 import java.beans.EventHandler;
 import java.io.File;
-import java.io.FileReader;
+import java.io.FileInputStream;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -825,7 +827,7 @@ public class AutomaticFixingWindow extends OnePageWindow {
         File file = fc.getSelectedFile();
         JAXBContext context = JAXBContext.newInstance(AutomaticFixingList.class);
         Unmarshaller um = context.createUnmarshaller();
-        AutomaticFixingList list = (AutomaticFixingList) um.unmarshal(new FileReader(file));
+        AutomaticFixingList list = (AutomaticFixingList) um.unmarshal(new InputStreamReader(new FileInputStream(file), StandardCharsets.UTF_8));
         for (AutomaticFixing element : list.getReplacements()) {
           modelAutomaticFixing.addAutomaticFixing(element);
         }
@@ -837,6 +839,7 @@ public class AutomaticFixingWindow extends OnePageWindow {
         forceCWAlgorithms.addAll(CheckErrorAlgorithms.convertToAlgorithmList(
             list.getForceAlgorithms(), getWiki()));
         updateComponentState();
+        config.setString(getWiki(), ConfigurationValueString.LAST_REPLACEMENTS_DIRECTORY, file.getParent());
       }
     } catch (Exception e) {
       Utilities.displayError(getParentComponent(), e);
