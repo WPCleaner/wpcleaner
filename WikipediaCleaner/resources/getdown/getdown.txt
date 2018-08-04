@@ -2,16 +2,19 @@
 
 # General configuration
 appbase = https://tools.wmflabs.org/wpcleaner/wpcleaner/
+allow_offline = true
 
 # Configure the update UI
-# ui.name = WPCleaner
-# ui.icon = 
+ui.name = WPCleaner
+ui.icon = commons-nuvola-web-broom-64px.png
+ui.icon = commons-nuvola-web-broom.png
 # ui.error_background =
 # ui.progress_bar =
 # ui.progress_text =
 # ui.status =
 # ui.status_text =
-# ui.install_error =
+ui.install_error = https://tools.wmflabs.org/wpcleaner/
+ui.hide_decorations = true
 
 # Code
 code = WikipediaCleaner.jar
@@ -19,6 +22,9 @@ code = WikipediaCleaner.jar
 # Resources
 resource = commons-nuvola-web-broom.png
 resource = commons-nuvola-web-broom-64px.gif
+resource = commons-nuvola-web-broom-64px.png
+resource = [windows] Bot.bat
+resource = [windows] WPCleaner.bat
 
 # Requirements on Java
 java_min_version = 1080000

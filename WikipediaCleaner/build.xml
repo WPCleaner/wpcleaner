@@ -258,7 +258,12 @@
     <!-- Copy various files -->
     <copy file="${WPCleaner.res.dir}/commons-nuvola-web-broom.png"      todir="${WPCleaner.getdown.dir}" />
     <copy file="${WPCleaner.res.dir}/commons-nuvola-web-broom-64px.gif" todir="${WPCleaner.getdown.dir}" />
-    <copy file="${WPCleaner.res.dir}/getdown.txt"                       todir="${WPCleaner.getdown.dir}" />
+    <copy file="${WPCleaner.res.dir}/commons-nuvola-web-broom-64px.png" todir="${WPCleaner.getdown.dir}" />
+    <copy todir="${WPCleaner.getdown.dir}">
+      <fileset dir="${WPCleaner.res.dir}/getdown">
+        <include name="**/*"/>
+      </fileset>
+    </copy>
     <copy file="${WPCleaner.tmp.dir}/WikipediaCleaner.jar"              todir="${WPCleaner.getdown.dir}" />
     <java classname="com.threerings.getdown.tools.Digester">
       <arg value="${WPCleaner.getdown.dir}" />

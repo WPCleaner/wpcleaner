@@ -11,8 +11,11 @@ import java.awt.Font;
 import java.awt.Toolkit;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.HashSet;
 import java.util.Locale;
+import java.util.Properties;
 import java.util.Set;
 import java.util.logging.FileHandler;
 import java.util.logging.Handler;
@@ -144,6 +147,13 @@ public class WikipediaCleaner {
     // Analyze command line arguments
     int currentArg = 0;
 
+    // Credentials
+    String credentials = null;
+    if ((args.length > currentArg + 1) && ("-credentials".equals(args[currentArg]))) {
+      credentials = args [currentArg + 1];
+      currentArg += 2;
+    }
+
     // Retrieve wiki
     EnumWikipedia wiki = null;
     if (args.length > currentArg) {
@@ -152,19 +162,29 @@ public class WikipediaCleaner {
     }
     currentArg++;
 
-    // Retrieve user name
+    // Retrieve user name and password
     String userName = null;
-    if (args.length > currentArg) {
-      userName = args[currentArg];
-    }
-    currentArg++;
-
-    // Retrieve password
     String password = null;
-    if (args.length > currentArg) {
-      password = args[currentArg];
+    if (credentials != null) {
+      Properties properties = new Properties();
+      try {
+        properties.load(new FileReader(credentials));
+      } catch (IOException e) {
+        // Doing nothing
+      }
+      userName = properties.getProperty("user");
+      password = properties.getProperty("password");
+    } else {
+      if (args.length > currentArg) {
+        userName = args[currentArg];
+      }
+      currentArg++;
+      // Retrieve password
+      if (args.length > currentArg) {
+        password = args[currentArg];
+      }
+      currentArg++;
     }
-    currentArg++;
 
     // Running
     MainWindow.createMainWindow(wiki, userName, password);
