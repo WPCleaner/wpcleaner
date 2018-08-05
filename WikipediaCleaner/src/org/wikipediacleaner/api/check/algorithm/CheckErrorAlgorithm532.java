@@ -498,7 +498,10 @@ public class CheckErrorAlgorithm532 extends CheckErrorAlgorithmBase {
           if ((currentIndex != tag.getBeginIndex()) &&
               !otherTag.isComplete() &&
               !otherTag.mayBeUnclosed()) {
-            automatic = false;
+            if (otherTag.getNormalizedName().equals(tag.getNormalizedName()) &&
+                otherTag.isEndTag()) {
+              automatic = false;
+            }
           }
         }
       }
