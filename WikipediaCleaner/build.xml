@@ -305,6 +305,7 @@
     <copy file="${WPCleaner.res.dir}/commons-nuvola-web-broom.png"                       todir="${WPCleaner.getdown.dir}" />
     <copy file="${WPCleaner.res.dir}/commons-nuvola-web-broom-64px.gif"                  todir="${WPCleaner.getdown.dir}" />
     <copy file="${WPCleaner.res.dir}/commons-nuvola-web-broom-64px.png"                  todir="${WPCleaner.getdown.dir}" />
+    <copy file="${WPCleaner.res.dir}/WPCleaner.ico"                                      todir="${WPCleaner.getdown.dir}" />
     <copy file="${WPCleaner.tmp.dir}/WPCleaner.jar"                                      todir="${WPCleaner.getdown.dir}" />
     <copy file="${WPCleaner.libs.codec.dir}/${WPCleaner.libs.codec.jar}"                 tofile="${WPCleaner.getdown.dir}/libs/commons-codec.jar" />
     <copy file="${WPCleaner.libs.compress.dir}/${WPCleaner.libs.compress.jar}"           tofile="${WPCleaner.getdown.dir}/libs/commons-compress.jar" />
@@ -358,6 +359,7 @@
     <copy file="${WPCleaner.res.dir}/WikiCleaner.jnlp"                  todir="${WPCleaner.jnlp.dir}" />
     <copy file="${WPCleaner.res.dir}/commons-nuvola-web-broom.png"      todir="${WPCleaner.jnlp.dir}" />
     <copy file="${WPCleaner.res.dir}/commons-nuvola-web-broom-64px.gif" todir="${WPCleaner.jnlp.dir}" />
+    <copy file="${WPCleaner.res.dir}/WPCleaner.ico"                     todir="${WPCleaner.jnlp.dir}" />
     <copy file="${WPCleaner.tmp.dir}/WikipediaCleaner.jar"              todir="${WPCleaner.jnlp.dir}" />
 
     <!-- ============================================================================================================== -->

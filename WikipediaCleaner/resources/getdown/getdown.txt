@@ -39,6 +39,7 @@ code = logback.xml
 resource = commons-nuvola-web-broom.png
 resource = commons-nuvola-web-broom-64px.gif
 resource = commons-nuvola-web-broom-64px.png
+resource = WPCleaner.ico
 resource = [windows] Bot.bat
 resource = [windows] WPCleaner.bat
 resource = libs/LICENSE_commons-codec.txt
