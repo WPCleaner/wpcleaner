@@ -319,7 +319,7 @@ public class CheckErrorAlgorithm532 extends CheckErrorAlgorithmBase {
 
     // Report tag
     CheckErrorResult errorResult = analyzeArea(
-        analysis, tag, beginIndex, endIndex, true, false);
+        analysis, tag, beginIndex, endIndex, true, true);
     if (errorResult != null) {
       errors.add(errorResult);
       return true;
