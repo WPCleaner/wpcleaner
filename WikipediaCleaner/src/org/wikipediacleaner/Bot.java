@@ -286,7 +286,7 @@ public class Bot implements BasicWorkerListener {
       }
     }
     if (worker != null) {
-      System.out.println("Running task " + action);
+      log.info("Running task " + action);
       worker.setListener(this);
       worker.setTimeLimit(timeLimit);
       worker.start();

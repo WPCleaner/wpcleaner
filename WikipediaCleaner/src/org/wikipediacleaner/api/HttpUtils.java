@@ -24,6 +24,8 @@ import org.apache.commons.httpclient.HttpMethod;
 import org.apache.commons.httpclient.NameValuePair;
 import org.apache.commons.httpclient.methods.GetMethod;
 import org.apache.commons.httpclient.methods.PostMethod;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.wikipediacleaner.api.request.login.ApiLoginRequest;
 import org.wikipediacleaner.utils.Configuration;
 import org.wikipediacleaner.utils.ConfigurationValueBoolean;
@@ -33,6 +35,9 @@ import org.wikipediacleaner.utils.ConfigurationValueBoolean;
  * Utilities class for HTTP requests.
  */
 public class HttpUtils {
+
+  /** Logger */
+  private final static Logger log = LoggerFactory.getLogger("API");
 
   // ==========================================================================
   // Configuration
@@ -208,9 +213,9 @@ public class HttpUtils {
    */
   private static void debugText(String text) {
     if (DEBUG_TIME) {
-      System.out.println("" + System.currentTimeMillis() + ": " + text);
+      log.info("" + System.currentTimeMillis() + ": " + text);
     } else {
-      System.out.println(text);
+      log.info(text);
     }
   }
 

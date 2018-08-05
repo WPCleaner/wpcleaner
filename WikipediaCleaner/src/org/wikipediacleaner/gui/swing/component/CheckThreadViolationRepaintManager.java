@@ -25,6 +25,9 @@ import javax.swing.JFrame;
 import javax.swing.RepaintManager;
 import javax.swing.SwingUtilities;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * <p>This class is used to detect Event Dispatch Thread rule violations<br>
  * See <a href="http://java.sun.com/docs/books/tutorial/uiswing/misc/threads.html">How to Use Threads</a>
@@ -41,6 +44,10 @@ import javax.swing.SwingUtilities;
  * https://swinghelper.dev.java.net/
  */
 public class CheckThreadViolationRepaintManager extends RepaintManager {
+
+    /** Logger */
+    private final static Logger log = LoggerFactory.getLogger(CheckThreadViolationRepaintManager.class);
+
     // it is recommended to pass the complete check  
     private boolean completeCheck = true;
     private WeakReference<JComponent> lastComponent;
@@ -113,12 +120,12 @@ public class CheckThreadViolationRepaintManager extends RepaintManager {
     }
 
     protected void violationFound(JComponent c, StackTraceElement[] stackTrace) {
-        System.out.println();
-        System.out.println("EDT violation detected");
-        System.out.println(c);
+      StringBuilder buffer = new StringBuilder();
+        buffer.append("EDT violation detected on " + c.toString());
         for (StackTraceElement st : stackTrace) {
-            System.out.println("\tat " + st);
+            buffer.append("\tat " + st);
         }
+        log.error(buffer.toString());
     }
 
     public static void main(String[] args) throws Exception {
@@ -131,9 +138,9 @@ public class CheckThreadViolationRepaintManager extends RepaintManager {
                 test();
             }
         });
-        System.out.println("Valid code passed...");
+        log.info("Valid code passed...");
         repaintTest();
-        System.out.println("Repaint test - correct code");
+        log.info("Repaint test - correct code");
         //Invalid code (stack trace expected) 
         test();
     }

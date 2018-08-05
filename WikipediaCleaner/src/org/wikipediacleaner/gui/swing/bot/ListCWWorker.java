@@ -22,6 +22,8 @@ import java.util.Map;
 import java.util.concurrent.Callable;
 import java.util.concurrent.Future;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.wikipediacleaner.api.API;
 import org.wikipediacleaner.api.APIException;
 import org.wikipediacleaner.api.APIFactory;
@@ -50,6 +52,9 @@ import org.wikipediacleaner.i18n.GT;
  * SwingWorker for listing Check Wiki errors from a dump.
  */
 public class ListCWWorker extends BasicWorker {
+
+  /** Logger */
+  private final static Logger log = LoggerFactory.getLogger(ListCWWorker.class);
 
   /** File containing the dump */
   private final File dumpFile;
@@ -202,15 +207,17 @@ public class ListCWWorker extends BasicWorker {
    * Report progress.
    */
   void reportProgress() {
-    System.out.println(
-        "Pages processed: " + countAnalyzed +
-        " / errors detected: " + countDetections);
-    System.out.println(" Analysis: " + analysisTime.toString());
+    StringBuilder buffer = new StringBuilder();
+    buffer.append("\n");
+    buffer.append("Pages processed: " + countAnalyzed);
+    buffer.append(" / errors detected: " + countDetections);
+    buffer.append(" Analysis: " + analysisTime.toString());
     for (AlgorithmInformation algorithm : selectedAlgorithms) {
-      System.out.println(
+      buffer.append(
           " Algorithm " + algorithm.algorithm.getErrorNumberString() +
           ": " + (algorithm.getTimeSpent() / 1000000000));
     }
+    log.info(buffer.toString());
   }
 
   /**

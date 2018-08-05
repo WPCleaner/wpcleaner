@@ -60,7 +60,7 @@ public class TextProviderUrlTitle implements TextProvider {
         log.fine("new HttpClient()");
         HttpClient httpClient = new HttpClient();
         method = new GetMethod(url);
-        System.out.println(url);
+        //System.out.println(url);
         int statusCode = httpClient.executeMethod(method);
         if (statusCode == HttpStatus.SC_OK) {
           log.fine("HttpStatus.SC_OK");
