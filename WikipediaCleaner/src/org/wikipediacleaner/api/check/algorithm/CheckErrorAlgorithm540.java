@@ -534,7 +534,7 @@ public class CheckErrorAlgorithm540 extends CheckErrorAlgorithmBase {
     int completeBeginIndex = beginIndex;
     int completeEndIndex = endIndex;
     String contents = analysis.getContents();
-    PageElement closeElement = getElementAfter(analysis, element);
+    PageElement closeElement = getElementAfter(analysis, element, false);
     if (closeElement != null) {
       completeEndIndex = Math.max(completeEndIndex, closeElement.getEndIndex());
     }
@@ -574,14 +574,25 @@ public class CheckErrorAlgorithm540 extends CheckErrorAlgorithmBase {
   /**
    * @param analysis Page analysis.
    * @param element Formatting element.
+   * @param skipWhitespace True to skip whitespace after the formatting element.
    * @return Element just after the formatting element.
    */
   private PageElement getElementAfter(
-      PageAnalysis analysis, PageElementFormatting element) {
+      PageAnalysis analysis,
+      PageElementFormatting element,
+      boolean skipWhitespace) {
     String contents = analysis.getContents();
     int elementEndIndex = element.getIndex() + element.getLength();
     if (elementEndIndex >= contents.length()) {
       return null;
+    }
+
+    // Skip whitespace
+    if (skipWhitespace) {
+      while ((elementEndIndex < contents.length() - 1) &&
+             Character.isWhitespace(contents.charAt(elementEndIndex))) {
+        elementEndIndex++;
+      }
     }
 
     // Find a potential element
@@ -762,7 +773,7 @@ public class CheckErrorAlgorithm540 extends CheckErrorAlgorithmBase {
     }
 
     // Analyze element after
-    PageElement elementAfter = getElementAfter(analysis, element);
+    PageElement elementAfter = getElementAfter(analysis, element, true);
 
     // Report with only one formatting element
     PageElementFormattingAnalysis formatting = PageElementFormattingAnalysis.analyzeArea(
