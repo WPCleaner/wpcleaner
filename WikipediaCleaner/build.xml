@@ -302,9 +302,7 @@
     <!-- ============================================================================================================== -->
 
     <!-- Copy various files -->
-    <copy file="${WPCleaner.res.dir}/commons-nuvola-web-broom.png"                       todir="${WPCleaner.getdown.dir}" />
-    <copy file="${WPCleaner.res.dir}/commons-nuvola-web-broom-64px.gif"                  todir="${WPCleaner.getdown.dir}" />
-    <copy file="${WPCleaner.res.dir}/commons-nuvola-web-broom-64px.png"                  todir="${WPCleaner.getdown.dir}" />
+    <copy file="${WPCleaner.res.dir}/commons-nuvola-web-broom-64px.png"                  tofile="${WPCleaner.getdown.dir}/WPCleaner.png" />
     <copy file="${WPCleaner.res.dir}/WPCleaner.ico"                                      todir="${WPCleaner.getdown.dir}" />
     <copy file="${WPCleaner.tmp.dir}/WPCleaner.jar"                                      todir="${WPCleaner.getdown.dir}" />
     <copy file="${WPCleaner.libs.codec.dir}/${WPCleaner.libs.codec.jar}"                 tofile="${WPCleaner.getdown.dir}/libs/commons-codec.jar" />

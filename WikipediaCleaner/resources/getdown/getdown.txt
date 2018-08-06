@@ -36,12 +36,12 @@ code = libs/slf4j-api.jar
 code = logback.xml
 
 # Resources
-resource = commons-nuvola-web-broom.png
-resource = commons-nuvola-web-broom-64px.gif
-resource = commons-nuvola-web-broom-64px.png
+resource = WPCleaner.png
 resource = WPCleaner.ico
 resource = [windows] Bot.bat
 resource = [windows] WPCleaner.bat
+resource = [linux] Bot.sh
+resource = [linux] WPCleaner.sh
 resource = libs/LICENSE_commons-codec.txt
 resource = libs/NOTICE_commons-codec.txt
 resource = libs/LICENSE_commons-compress.txt
