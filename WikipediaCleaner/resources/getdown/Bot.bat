@@ -5,8 +5,8 @@ REM Script to run WPCleaner in bot mode.
 REM 
 REM You need to execute this script with parameters that will be passed to WPCleaner.
 REM 
-REM ===== AUTHENTICATION =====
-REM The first part of the parameters consists in authentication information.
+REM ===== CONNECTION =====
+REM The first part of the parameters consists in connection information.
 REM You can use the following syntax:
 REM Bot.bat en <username> <password> ...
 REM 
@@ -22,5 +22,10 @@ REM For example, if you want to update disambiguation warnings, you can use the 
 REM Bot.bat ... UpdateDabWarnings
 REM Or if you want to execute a set of tasks described in a task file, you can use the following syntax:
 REM Bot.bat ... DoTasks <task file>
+REM
+REM ===== NOTE =====
+REM If you want to pass extra arguments to the JVM, like increasing the memory available to Java,
+REM you can create an extra.txt file in the same folder with one parameter per line.
+REM For example, to allow 8G of RAM, the line will be: -Xmx=8192M
 
 java -jar getdown.jar . bot %*

@@ -63,7 +63,8 @@ java_min_version = 1080000
 # java_location = [linux] /java_vm/java_linux.jar
 
 # Parameters passed to the JVM
-jvmarg = -Xmx4096M
+jvmarg = -Xmx1024M
+optimum_jvmargs = -Xmx4096M
 jvmarg = -Dlogback.configurationFile=logback.xml
 
 # The main Java class
@@ -77,4 +78,3 @@ bot.class = org.wikipediacleaner.Bot
 
 # We don't pass any argument
 # apparg =
-
