@@ -19,8 +19,8 @@ import org.wikipediacleaner.i18n.GT;
  */
 public final class Version {
 
-  public final static String VERSION = "2.0 beta";
-  public final static Date   DATE = new GregorianCalendar(2018, Calendar.AUGUST, 4).getTime();
+  public final static String VERSION = "2.0";
+  public final static Date   DATE = new GregorianCalendar(2018, Calendar.AUGUST, 6).getTime();
 
   public final static String PROGRAM = "WPCleaner";
 
