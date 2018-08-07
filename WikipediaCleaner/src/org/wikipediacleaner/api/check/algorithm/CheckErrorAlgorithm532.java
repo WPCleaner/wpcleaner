@@ -41,6 +41,7 @@ public class CheckErrorAlgorithm532 extends CheckErrorAlgorithmBase {
 
   /** List of tags to be verified. */
   private final static String[] tagNames = {
+    PageElementTag.TAG_HTML_ABBR,
     PageElementTag.TAG_HTML_B,
     PageElementTag.TAG_HTML_BIG,
     PageElementTag.TAG_HTML_BLOCKQUOTE,
@@ -420,7 +421,8 @@ public class CheckErrorAlgorithm532 extends CheckErrorAlgorithmBase {
       Collection<CheckErrorResult> errors) {
 
     // Check type of tag
-    if (!PageElementTag.TAG_HTML_BIG.equals(tag.getNormalizedName()) &&
+    if (!PageElementTag.TAG_HTML_ABBR.equals(tag.getNormalizedName()) &&
+        !PageElementTag.TAG_HTML_BIG.equals(tag.getNormalizedName()) &&
         !PageElementTag.TAG_HTML_CENTER.equals(tag.getNormalizedName()) &&
         !PageElementTag.TAG_HTML_CODE.equals(tag.getNormalizedName()) &&
         !PageElementTag.TAG_HTML_DIV.equals(tag.getNormalizedName()) &&
