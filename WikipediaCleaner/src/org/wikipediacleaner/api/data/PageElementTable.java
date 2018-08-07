@@ -100,9 +100,25 @@ public class PageElementTable extends PageElement {
       if ((tmpIndex < endIndex) &&
           (contents.charAt(tmpIndex) == '+')) {
         tmpIndex = getTrueIndex(analysis, null, tmpIndex  + 1);
-        while ((tmpIndex < endIndex) &&
-               (contents.charAt(tmpIndex) != '\n')) {
-          tmpIndex = getTrueIndex(analysis, null, tmpIndex + 1);
+        boolean endFound = false;
+        while (!endFound) {
+          while ((tmpIndex < endIndex) &&
+                 (contents.charAt(tmpIndex) != '\n')) {
+            tmpIndex = getTrueIndex(analysis, null, tmpIndex + 1);
+          }
+          int tmpIndex2 = getTrueIndex(analysis, null, tmpIndex + 1);
+          while ((tmpIndex2 < endIndex) &&
+                 (contents.charAt(tmpIndex2) == ' ')) {
+            tmpIndex2 = getTrueIndex(analysis, null, tmpIndex2 + 1);
+          }
+          if (tmpIndex2 >= endIndex) {
+            return null;
+          }
+          if ("|!".indexOf(contents.charAt(tmpIndex2)) >= 0) {
+            endFound = true;
+          } else {
+            tmpIndex = tmpIndex2;
+          }
         }
         if ((tmpIndex >= endIndex) ||
             (contents.charAt(tmpIndex) != '\n')) {
@@ -366,7 +382,11 @@ public class PageElementTable extends PageElement {
    */
   private static int getTrueIndex(
       PageAnalysis analysis, List<PageElementTable> tables, int index) {
-    char currentChar = analysis.getContents().charAt(index);
+    String contents = analysis.getContents();
+    if (index >= contents.length()) {
+      return index;
+    }
+    char currentChar = contents.charAt(index);
     if (currentChar == '<') {
       ContentsComment comment = analysis.isInComment(index);
       if ((comment != null) && (comment.getBeginIndex() == index)) {
