@@ -32,6 +32,7 @@ public class PageElementFunction extends PageElement {
    */
   private static class Parameter {
     final int separatorIndex;
+    final String fullText;
     final String name;
     final int nameStartIndex;
     final String valueNotTrimmed;
@@ -40,16 +41,18 @@ public class PageElementFunction extends PageElement {
 
     /**
      * @param separatorIndex Index of the separator in page contents.
+     * @param fullText Full text of the parameter.
      * @param name Parameter name.
      * @param nameStartIndex Index of parameter name in page contents.
      * @param value Parameter value.
      * @param valueStartIndex Index of parameter value in page contents.
      */
     public Parameter(
-        int separatorIndex,
+        int separatorIndex, String fullText,
         String name, int nameStartIndex,
         String value, int valueStartIndex) {
       this.separatorIndex = separatorIndex;
+      this.fullText = fullText;
       this.name = (name != null) ? name.trim() : null;
       this.nameStartIndex = nameStartIndex;
       this.valueNotTrimmed = value;
@@ -392,7 +395,8 @@ public class PageElementFunction extends PageElement {
         spaces++;
       }
       parameters.add(new Parameter(
-          separatorIndex, "", offset + spaces, parameter, offset + spaces));
+          separatorIndex, parameter,
+          "", offset + spaces, parameter, offset + spaces));
     } else {
       int spacesName = 0;
       while ((spacesName < equalIndex) && (Character.isWhitespace(parameter.charAt(spacesName)))) {
@@ -403,7 +407,7 @@ public class PageElementFunction extends PageElement {
         spacesValue++;
       }
       parameters.add(new Parameter(
-          separatorIndex,
+          separatorIndex, parameter,
           parameter.substring(0, equalIndex), offset + spacesName,
           parameter.substring(equalIndex + 1), offset + spacesValue));
     }
@@ -446,6 +450,19 @@ public class PageElementFunction extends PageElement {
       return parameters.get(index).separatorIndex;
     }
     return 0;
+  }
+
+  /**
+   * Retrieve parameter full text.
+   * 
+   * @param index Parameter index.
+   * @return Parameter full text.
+   */
+  public String getParameterFullText(int index) {
+    if ((index >= 0) && (index < parameters.size())) {
+      return parameters.get(index).fullText;
+    }
+    return null;
   }
 
   /**

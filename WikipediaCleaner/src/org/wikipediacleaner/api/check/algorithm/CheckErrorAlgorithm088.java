@@ -58,7 +58,7 @@ public class CheckErrorAlgorithm088 extends CheckErrorAlgorithmBase {
     boolean result = false;
     for (PageElementFunction defaultSort : defaultSorts) {
       String text = (defaultSort.getParameterCount() > 0) ?
-          defaultSort.getParameterValueNotTrimmed(0) : "";
+          defaultSort.getParameterFullText(0) : "";
       if ((text != null) && (text.startsWith(" "))) {
         if (errors == null) {
           return true;
