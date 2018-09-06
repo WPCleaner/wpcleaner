@@ -255,8 +255,26 @@ public class CheckErrorAlgorithm534 extends CheckErrorAlgorithmBase {
         }
       }
 
+      // Special handling for all digits values
+      boolean allNumeric = true;
+      for (int pos = 0; pos < initialText.length(); pos++) {
+        allNumeric &= Character.isDigit(initialText.charAt(pos));
+      }
+      if (allNumeric) {
+        MagicWord magicWord = config.getMagicWordByName(MagicWord.IMG_WIDTH);
+        if ((magicWord != null) && (magicWord.getAliases() != null)) {
+          for (String alias : magicWord.getAliases()) {
+            int variablePos = alias.indexOf("$1");
+            if (variablePos >= 0) {
+              String newText = alias.substring(0, variablePos) + initialText + alias.substring(variablePos + 2);
+              return new AutomaticReplacement(initialText, MagicWord.IMG_WIDTH, newText, false);
+            }
+          }
+        }
+      }
+
       // Find other suggestions
-      AutomaticReplacement possible = findOtherSuggestion(config, initialText, true);
+      AutomaticReplacement possible = findOtherSuggestion(config, initialText, true, true);
       if (possible != null) {
         return possible;
       }
@@ -277,7 +295,7 @@ public class CheckErrorAlgorithm534 extends CheckErrorAlgorithmBase {
           if (letterIndex < initialText.length()) {
             modified.append(initialText.substring(letterIndex));
           }
-          possible = findOtherSuggestion(config, modified.toString(), false);
+          possible = findOtherSuggestion(config, modified.toString(), false, false);
           if (possible != null) {
             return possible;
           }
@@ -293,7 +311,7 @@ public class CheckErrorAlgorithm534 extends CheckErrorAlgorithmBase {
           if (letterIndex < initialText.length()) {
             modified.append(initialText.substring(letterIndex + 1));
           }
-          possible = findOtherSuggestion(config, modified.toString(), false);
+          possible = findOtherSuggestion(config, modified.toString(), false, false);
           if (possible != null) {
             return possible;
           }
@@ -308,7 +326,7 @@ public class CheckErrorAlgorithm534 extends CheckErrorAlgorithmBase {
           if (letterIndex + 1 < initialText.length()) {
             modified.append(initialText.substring(letterIndex + 1));
           }
-          possible = findOtherSuggestion(config, modified.toString(), false);
+          possible = findOtherSuggestion(config, modified.toString(), false, false);
           if (possible != null) {
             return possible;
           }
@@ -324,12 +342,14 @@ public class CheckErrorAlgorithm534 extends CheckErrorAlgorithmBase {
      * @param config Wiki configuration.
      * @param initialText Initial text.
      * @param automatic True if replacement can be automatic.
+     * @param complex True if complex replacements can be suggested.
      * @return Replacement for the initial text.
      */
     private static AutomaticReplacement findOtherSuggestion(
         WikiConfiguration config,
         String initialText,
-        boolean automatic) {
+        boolean automatic,
+        boolean complex) {
       for (String mwName : mwOptions) {
         MagicWord mw = config.getMagicWordByName(mwName);
         if ((mw != null) && (mw.getAliases() != null)) {
@@ -387,7 +407,7 @@ public class CheckErrorAlgorithm534 extends CheckErrorAlgorithmBase {
                   boolean suffixOk = false;
                   if (initialSuffix.equalsIgnoreCase(aliasSuffix)) {
                     suffixOk = true;
-                  } else if (aliasSuffix.equals("px")) {
+                  } else if (aliasSuffix.equals("px") && complex) {
                     int lastDigit = 0;
                     while (((lastDigit) < initialText.length()) &&
                            (Character.isDigit(initialText.charAt(lastDigit)))) {
@@ -396,6 +416,12 @@ public class CheckErrorAlgorithm534 extends CheckErrorAlgorithmBase {
                     if (lastDigit > 0) {
                       String currentSuffix = initialText.substring(lastDigit);
                       if (currentSuffix.equalsIgnoreCase("p") ||
+                          currentSuffix.equalsIgnoreCase("x") ||
+                          currentSuffix.equalsIgnoreCase("px") ||
+                          currentSuffix.equalsIgnoreCase("xp")) {
+                        suffixOk = true;
+                        newSuffixLength = currentSuffix.length();
+                      } else if (currentSuffix.equalsIgnoreCase("p") ||
                           currentSuffix.equalsIgnoreCase("x") ||
                           currentSuffix.equalsIgnoreCase("px") ||
                           currentSuffix.equalsIgnoreCase("xp")) {
