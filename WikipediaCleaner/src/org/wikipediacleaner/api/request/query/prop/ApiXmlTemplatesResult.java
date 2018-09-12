@@ -132,7 +132,7 @@ public class ApiXmlTemplatesResult extends ApiXmlPropertiesResult implements Api
               List<Element> listTemplates = xpaTemplates.evaluate(currentNode);
               boolean hasTemplate = false;
               for (Element template : listTemplates) {
-                if (!hasTemplate && ("" + Namespace.TEMPLATE).equals(template.getAttribute("ns"))) {
+                if (!hasTemplate && ("" + Namespace.TEMPLATE).equals(template.getAttribute("ns").getValue())) {
                   hasTemplate = true;
                 }
               }

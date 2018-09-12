@@ -131,7 +131,7 @@ public class ApiXmlCategoriesResult extends ApiXmlPropertiesResult implements Ap
               List<Element> listCategories = xpaCategory.evaluate(currentNode);
               boolean dab = false;
               for (Element category : listCategories) {
-                if (!dab && (category.getAttribute("ns").equals("" + Namespace.CATEGORY))) {
+                if (!dab && (category.getAttribute("ns").getValue().equals("" + Namespace.CATEGORY))) {
                   dab = true;
                 }
               }
