@@ -58,7 +58,7 @@ resource = libs/LICENSE_xerces.txt
 resource = libs/NOTICE_xerces.txt
 
 # Requirements on Java
-java_min_version = 1080000
+java_min_version = 1070000
 # java_location = [windows] /java_vm/java_windows.jar
 # java_location = [linux] /java_vm/java_linux.jar
 
