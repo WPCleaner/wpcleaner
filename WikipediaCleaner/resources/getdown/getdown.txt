@@ -65,7 +65,7 @@ java_min_version = 1070000
 # Parameters passed to the JVM
 jvmarg = -Xmx1024M
 optimum_jvmargs = -Xmx4096M
-jvmarg = -Dlogback.configurationFile=logback.xml
+# jvmarg = -Dlogback.configurationFile=logback.xml
 
 # The main Java class
 class = org.wikipediacleaner.WikipediaCleaner

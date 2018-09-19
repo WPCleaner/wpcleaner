@@ -24,7 +24,7 @@
   <!-- Configuring loggers -->
   <logger name="org.wikipediacleaner" level="INFO" />
   <logger name="org.lobobrowser" level="WARN" />
-  <logger name="" level="WARN" />
+  <logger name="org" level="WARN" />
 
   <!-- Root -->
   <root level="DEBUG">
