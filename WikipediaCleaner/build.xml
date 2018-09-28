@@ -144,7 +144,7 @@
     <!-- Java compilation -->
     <javac srcdir="${WPCleaner.src.dir}"
            destdir="${WPCleaner.classes_small.dir}"
-           optimize="on" encoding="UTF-8" target="8" source="8"
+           optimize="on" encoding="UTF-8" target="7" source="7"
            includeantruntime="false">
       <classpath refid="WPCleaner.class.path" />
     </javac>
@@ -386,7 +386,7 @@
              sourcepath="${WPCleaner.src.dir}"
              packagenames="org.wikipediacleaner.*" encoding="UTF-8">
       <classpath refid="WPCleaner.class.path" />
-      <link href="http://java.sun.com/javase/6/docs/api/" />
+      <link href="http://java.sun.com/javase/7/docs/api/" />
     </javadoc>
   </target>
 
