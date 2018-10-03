@@ -528,6 +528,22 @@ public class AutomaticFixingWindow extends OnePageWindow {
   }
 
   /**
+   * @return Currently selected automatic fixing expressions.
+   */
+  protected Collection<AutomaticFixing> getSelectedAutomaticFixings() {
+    List<AutomaticFixing> result = new ArrayList<>();
+    int[] rows = tableAutomaticFixing.getSelectedRows();
+    for (int row : rows) {
+      if (row < 0) {
+        return null;
+      }
+      result.add(modelAutomaticFixing.getAutomaticFixing(
+          Utilities.convertRowIndexToModel(tableAutomaticFixing, row)));
+    }
+    return result;
+  }
+
+  /**
    * Action called when Reload button is pressed. 
    */
   @Override
@@ -665,9 +681,18 @@ public class AutomaticFixingWindow extends OnePageWindow {
    * Action called when Remove Automatic Fixing button is pressed.
    */
   public void ActionRmvAutomaticFixing() {
-    AutomaticFixing fixing = getSelectedAutomaticFixing();
-    if (fixing != null) {
-      modelAutomaticFixing.removeAutomaticFixing(fixing);
+    Collection<AutomaticFixing> fixings = getSelectedAutomaticFixings();
+    int selectedRow = tableAutomaticFixing.getSelectedRow();
+    if (fixings != null) {
+      for (AutomaticFixing fixing : fixings) {
+        modelAutomaticFixing.removeAutomaticFixing(fixing);
+      }
+    }
+    if (selectedRow >= tableAutomaticFixing.getRowCount()) {
+      selectedRow = tableAutomaticFixing.getRowCount() - 1;
+    }
+    if (selectedRow >= 0) {
+      tableAutomaticFixing.setRowSelectionInterval(selectedRow, selectedRow);
     }
   }
 
