@@ -35,6 +35,13 @@ public class CheckErrorAlgorithm532 extends CheckErrorAlgorithmBase {
     GT._T("Fix tags"),
   };
 
+  /** Possible actions when a tag is alone. */
+  private static enum ActionAlone {
+    ALONE_DELETE,
+    ALONE_CLOSE,
+    ALONE_NOTHING;
+  }
+
   public CheckErrorAlgorithm532() {
     super("Missing end tag");
   }
@@ -276,7 +283,7 @@ public class CheckErrorAlgorithm532 extends CheckErrorAlgorithmBase {
     // Report tag
     CheckErrorResult errorResult = analyzeArea(
         analysis, tag, tag.getBeginIndex(), link.getEndIndex() - 2,
-        true, false);
+        true, ActionAlone.ALONE_NOTHING);
     if (errorResult != null) {
       errors.add(errorResult);
       return true;
@@ -320,7 +327,7 @@ public class CheckErrorAlgorithm532 extends CheckErrorAlgorithmBase {
 
     // Report tag
     CheckErrorResult errorResult = analyzeArea(
-        analysis, tag, beginIndex, endIndex, true, true);
+        analysis, tag, beginIndex, endIndex, true, ActionAlone.ALONE_DELETE);
     if (errorResult != null) {
       errors.add(errorResult);
       return true;
@@ -402,7 +409,7 @@ public class CheckErrorAlgorithm532 extends CheckErrorAlgorithmBase {
 
     // Report tag
     CheckErrorResult errorResult = analyzeArea(
-        analysis, tag, beginIndex, endIndex, oneLine, true);
+        analysis, tag, beginIndex, endIndex, oneLine, ActionAlone.ALONE_DELETE);
     if (errorResult != null) {
       errors.add(errorResult);
       return true;
@@ -448,9 +455,14 @@ public class CheckErrorAlgorithm532 extends CheckErrorAlgorithmBase {
     }
 
     // Report tag
+    ActionAlone action = ActionAlone.ALONE_DELETE;
+    if (CheckErrorAlgorithms.isAlgorithmActive(analysis.getWikipedia(), 541) &&
+        PageElementTag.TAG_HTML_CENTER.equals(tag.getNormalizedName())) {
+      action = ActionAlone.ALONE_CLOSE;
+    }
     CheckErrorResult errorResult = analyzeArea(
         analysis, tag,
-        cell.getEndOptionsIndex(), cell.getEndIndex(), true, true);
+        cell.getEndOptionsIndex(), cell.getEndIndex(), true, action);
     if (errorResult != null) {
       errors.add(errorResult);
       return true;
@@ -514,7 +526,7 @@ public class CheckErrorAlgorithm532 extends CheckErrorAlgorithmBase {
     int beginIndex = param.getValueStartIndex();
     int endIndex = param.getEndIndex();
     CheckErrorResult errorResult = analyzeArea(
-        analysis, tag, beginIndex, endIndex, automatic, false);
+        analysis, tag, beginIndex, endIndex, automatic, ActionAlone.ALONE_NOTHING);
     if (errorResult != null) {
       errors.add(errorResult);
       return true;
@@ -563,7 +575,7 @@ public class CheckErrorAlgorithm532 extends CheckErrorAlgorithmBase {
 
     // Report tag
     CheckErrorResult errorResult = analyzeArea(
-        analysis, tag, tag.getBeginIndex(), currentIndex, false, false); 
+        analysis, tag, tag.getBeginIndex(), currentIndex, false, ActionAlone.ALONE_NOTHING); 
     if (errorResult != null) {
       errors.add(errorResult);
       return true;
@@ -661,7 +673,7 @@ public class CheckErrorAlgorithm532 extends CheckErrorAlgorithmBase {
 
     // Report tag
     CheckErrorResult errorResult = analyzeArea(
-        analysis, tag, lineBegin, lineEnd, true, false);
+        analysis, tag, lineBegin, lineEnd, true, ActionAlone.ALONE_NOTHING);
     if (errorResult != null) {
       errors.add(errorResult);
       return true;
@@ -721,7 +733,7 @@ public class CheckErrorAlgorithm532 extends CheckErrorAlgorithmBase {
     CheckErrorResult errorResult = analyzeArea(
         analysis, tag,
         surroundingTag.getValueBeginIndex(), surroundingTag.getValueEndIndex(),
-        true, false);
+        true, ActionAlone.ALONE_NOTHING);
     if (errorResult != null) {
       errors.add(errorResult);
       return true;
@@ -792,7 +804,7 @@ public class CheckErrorAlgorithm532 extends CheckErrorAlgorithmBase {
     CheckErrorResult errorResult = analyzeArea(
         analysis, tag,
         previousTag.getBeginIndex(), tag.getEndIndex(),
-        true, false);
+        true, ActionAlone.ALONE_NOTHING);
     if (errorResult != null) {
       errors.add(errorResult);
       return true;
@@ -888,7 +900,7 @@ public class CheckErrorAlgorithm532 extends CheckErrorAlgorithmBase {
     if (lastTag != null) {
       CheckErrorResult errorResult = analyzeArea(
           analysis, tag, lastTag.getBeginIndex(), tag.getEndIndex(),
-          !hasOtherTagBefore, false); 
+          !hasOtherTagBefore, ActionAlone.ALONE_NOTHING); 
       if (errorResult != null) {
         errors.add(errorResult);
         return true;
@@ -896,7 +908,7 @@ public class CheckErrorAlgorithm532 extends CheckErrorAlgorithmBase {
     } else {
       CheckErrorResult errorResult = analyzeArea(
           analysis, tag, tag.getBeginIndex(), lastIndex,
-          !hasOtherTagBefore, false); 
+          !hasOtherTagBefore, ActionAlone.ALONE_NOTHING); 
       if (errorResult != null) {
         errors.add(errorResult);
         return true;
@@ -913,13 +925,14 @@ public class CheckErrorAlgorithm532 extends CheckErrorAlgorithmBase {
    * @param beginIndex Begin index of the area.
    * @param endIndex End index of the area.
    * @param automatic True if automatic modifications can be done.
-   * @param deleteIfAlone True if it can be deleted if alone in the area.
+   * @param aloneAction Action to do if alone in the area.
    * @return Error result if the error can be reported.
    */
   private CheckErrorResult analyzeArea(
       PageAnalysis analysis,
       PageElementTag tag, int beginIndex, int endIndex,
-      boolean automatic, boolean deleteIfAlone) {
+      boolean automatic,
+      ActionAlone aloneAction) {
 
     // Check parameters
     if ((analysis == null) || (tag == null)) {
@@ -1047,11 +1060,23 @@ public class CheckErrorAlgorithm532 extends CheckErrorAlgorithmBase {
       // If no previous tag, delete or close the tag
       if (previousTag == null) {
         CheckErrorResult errorResult = createCheckErrorResult(analysis, tagBeginIndex, tagEndIndex);
-        errorResult.addReplacement(
-            "", automatic && deleteIfAlone && (tagBeginIndex == beginIndex));
-        errorResult.addReplacement(
-            contents.substring(tagBeginIndex, tagEndIndex) + PageElementTag.createTag(tag.getName(), true, false),
-            false);
+        if (tagBeginIndex == beginIndex) {
+          switch (aloneAction) {
+          case ALONE_DELETE:
+            errorResult.addReplacement("", automatic);
+            break;
+          case ALONE_CLOSE:
+            errorResult.addReplacement(
+                contents.substring(tagBeginIndex, tagEndIndex) + PageElementTag.createTag(tag.getName(), true, false),
+                automatic);
+            break;
+          }
+        } else {
+          errorResult.addReplacement("", false);
+          errorResult.addReplacement(
+              contents.substring(tagBeginIndex, tagEndIndex) + PageElementTag.createTag(tag.getName(), true, false),
+              false);
+        }
         return errorResult;
       }
 
