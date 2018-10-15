@@ -12,6 +12,7 @@ import java.util.List;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.data.PageAnalysis;
+import org.wikipediacleaner.api.data.PageElementTable;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.i18n.GT;
 
@@ -85,7 +86,6 @@ public class CheckErrorAlgorithm541 extends CheckErrorAlgorithmBase {
       // Report complete tags
       if (tag.isComplete() && !tag.isEndTag()) {
         CheckErrorResult errorResult = null;
-        // TODO: Suggest fixes depending on the tag name
         if (PageElementTag.TAG_HTML_CENTER.equals(tag.getNormalizedName())) {
           errorResult = analyzeCenterTag(analysis, tag);
         } else if (PageElementTag.TAG_HTML_STRIKE.equals(tag.getNormalizedName())) {
@@ -111,6 +111,73 @@ public class CheckErrorAlgorithm541 extends CheckErrorAlgorithmBase {
    */
   private CheckErrorResult analyzeCenterTag(
       PageAnalysis analysis, PageElementTag tag) {
+    String contents = analysis.getContents();
+
+    // Check for center tag inside a table cell
+    if (tag.isComplete() && !tag.isFullTag()) {
+      int beginIndex = tag.getCompleteBeginIndex();
+      int endIndex = tag.getCompleteEndIndex();
+      PageElementTable.TableCell tableCell = null;
+      PageElementTable table = analysis.isInTable(beginIndex);
+      if (table != null) {
+        tableCell = table.getCellAtIndex(beginIndex);
+      }
+      if (tableCell != null) {
+        boolean useCell = false;
+        if (tableCell.getEndOptionsIndex() <= tableCell.getBeginIndex() + 1) {
+          useCell = true;
+        } else if (tableCell.getEndOptionsIndex() == tableCell.getBeginIndex() + 2) {
+          if (contents.charAt(tableCell.getBeginIndex() + 1) == '|') {
+            useCell = true;
+          }
+        } else {
+          // TODO: Handle cell options in TableCell
+          if (!contents.substring(tableCell.getBeginIndex(), tableCell.getEndOptionsIndex()).contains("align")) {
+            useCell = true;
+          }
+        }
+        if (!useCell) {
+          tableCell = null;
+        }
+      }
+      if (tableCell != null) {
+        int cellBeginIndex = tableCell.getEndOptionsIndex();
+        while ((cellBeginIndex < contents.length()) &&
+               (Character.isWhitespace(contents.charAt(cellBeginIndex)))) {
+          cellBeginIndex++;
+        }
+        int cellEndIndex = tableCell.getEndIndex();
+        while ((cellEndIndex > 0) &&
+               (Character.isWhitespace(contents.charAt(cellEndIndex - 1)))) {
+          cellEndIndex--;
+        }
+        if ((cellBeginIndex == beginIndex) && (cellEndIndex == endIndex)) {
+          StringBuilder start = new StringBuilder();
+          if (tableCell.getEndOptionsIndex() > tableCell.getBeginIndex() + 2) {
+            start.append(contents.substring(tableCell.getBeginIndex(), tableCell.getEndOptionsIndex() - 1));
+            if (start.charAt(start.length() - 1) != ' ') {
+              start.append(' ');
+            }
+            start.append("align=\"center\" ");
+            start.append(contents.charAt(tableCell.getEndOptionsIndex() - 1));
+          } else {
+            start.append(contents.substring(tableCell.getBeginIndex(), tableCell.getEndOptionsIndex()));
+            start.append(" align=\"center\" |");
+          }
+          String text = start + "...";
+          String replacement =
+              start +
+              contents.substring(tableCell.getEndOptionsIndex(), tag.getCompleteBeginIndex()) +
+              contents.substring(tag.getValueBeginIndex(), tag.getValueEndIndex());
+          CheckErrorResult errorResult = createCheckErrorResult(
+              analysis, tableCell.getBeginIndex(), tag.getCompleteEndIndex());
+          errorResult.addReplacement(replacement, text, true);
+          return errorResult;
+        }
+      }
+    }
+
+    // Default replacement: use div tag with style
     CheckErrorResult errorResult = createCheckErrorResult(
         analysis, tag.getCompleteBeginIndex(), tag.getCompleteEndIndex());
     replaceTag(
