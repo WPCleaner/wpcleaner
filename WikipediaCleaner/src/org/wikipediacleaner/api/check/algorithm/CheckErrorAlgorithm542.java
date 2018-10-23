@@ -119,6 +119,9 @@ public class CheckErrorAlgorithm542 extends CheckErrorAlgorithmBase {
     if (!tag.isComplete()) {
       return false;
     }
+    if (tag.getParametersCount() > 0) {
+      return false;
+    }
     for (int index = tag.getValueBeginIndex(); index < tag.getValueEndIndex(); index++) {
       if (contents.charAt(index) != ' ') {
         return false;
