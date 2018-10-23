@@ -35,7 +35,6 @@ public class CheckErrorAlgorithm085 extends CheckErrorAlgorithmBase {
     PageElementTag.TAG_WIKI_INCLUDEONLY,
     PageElementTag.TAG_WIKI_GALLERY,
     PageElementTag.TAG_WIKI_NOINCLUDE,
-    PageElementTag.TAG_WIKI_REF,
   };
 
   private final static String[] ignoredTags = {
