@@ -113,13 +113,13 @@ public class CheckErrorAlgorithm542 extends CheckErrorAlgorithmBase {
     if ((tag == null) || (contents == null)) {
       return false;
     }
+    if (tag.getParametersCount() > 0) {
+      return false;
+    }
     if (tag.isFullTag()) {
       return true;
     }
     if (!tag.isComplete()) {
-      return false;
-    }
-    if (tag.getParametersCount() > 0) {
       return false;
     }
     for (int index = tag.getValueBeginIndex(); index < tag.getValueEndIndex(); index++) {
