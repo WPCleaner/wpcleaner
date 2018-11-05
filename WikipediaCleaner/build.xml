@@ -283,6 +283,7 @@
         -->
       </then>
       <else>
+        <!-- Do not sign, just copy the files
         <signjar jar="${WPCleaner.tmp.dir}/WikipediaCleanerUnsigned.jar"
                  signedjar="${WPCleaner.tmp.dir}/WikipediaCleaner.jar"
                  keystore="${WPCleaner.res.dir}/certificate/WikipediaCleanerKeystore"
@@ -295,6 +296,9 @@
                  storepass="${WPCleaner.keystore.password}"
                  alias="wikipediacleaner" >
         </signjar>
+        -->
+        <copy file="${WPCleaner.tmp.dir}/WikipediaCleanerUnsigned.jar" tofile="${WPCleaner.tmp.dir}/WikipediaCleaner.jar" />
+        <copy file="${WPCleaner.tmp.dir}/WPCleanerUnsigned.jar" tofile="${WPCleaner.tmp.dir}/WPCleaner.jar" />
       </else>
     </if>
 

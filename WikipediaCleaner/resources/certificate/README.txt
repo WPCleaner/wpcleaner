@@ -1,6 +1,10 @@
-Make a copy of the previous WPCleaner.p12 file
+How to configure Code Signing for WPCleaner
+===========================================
+
+Make a copy of the previous WPCleaner.p12 file it it already exists.
 
 == Obtaining a Code Signing Certificate ==
+Note: this description is obsolete...
 
 You can get a cheap Open Source Code Signing Certificate from certum.pl, for example.
 Once you have received the mail confirming that the certificate has been created, follow the link to the certificate in your account.
