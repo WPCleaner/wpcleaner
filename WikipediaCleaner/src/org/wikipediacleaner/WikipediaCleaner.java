@@ -11,8 +11,10 @@ import java.awt.Font;
 import java.awt.Toolkit;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
-import java.io.FileReader;
+import java.io.BufferedReader;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.HashSet;
 import java.util.Locale;
 import java.util.Properties;
@@ -167,8 +169,8 @@ public class WikipediaCleaner {
     String password = null;
     if (credentials != null) {
       Properties properties = new Properties();
-      try {
-        properties.load(new FileReader(credentials));
+      try (BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(credentials), "UTF8"))) {
+        properties.load(reader);
       } catch (IOException e) {
         // Doing nothing
       }

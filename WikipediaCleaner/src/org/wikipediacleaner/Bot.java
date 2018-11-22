@@ -9,9 +9,11 @@ package org.wikipediacleaner;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.FilenameFilter;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -125,11 +127,10 @@ public class Bot implements BasicWorkerListener {
     String password = null;
     if (credentials != null) {
       Properties properties = new Properties();
-      try {
-        properties.load(new FileReader(credentials));
+      try (BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(credentials), "UTF8"))) {
+        properties.load(reader);
       } catch (IOException e) {
         log.warn("Unable to load credentials file " + credentials);
-        return;
       }
       userName = properties.getProperty("user");
       password = properties.getProperty("password");
