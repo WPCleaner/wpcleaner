@@ -41,6 +41,7 @@ public enum EnumLanguage {
   IT   (Locale.ITALIAN        , "Italian"),
   JA   (Locale.JAPANESE       , "Japanese"),
   KO   (Locale.KOREAN         , "Korean"),
+  MR   (new Locale("mr")      , "Marathi"),
   MS   (new Locale("ms")      , "Malay"),
   NB   (new Locale("nb")      , "Norwegian Bokmal"),
   NL   (new Locale("nl")      , "Dutch"),
