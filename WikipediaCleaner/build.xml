@@ -9,6 +9,7 @@
   <property name="WPCleaner.dist.dir"                     value="${WPCleaner.build.dir}/dist" />
   <property name="WPCleaner.tmp.dir"                      value="${WPCleaner.build.dir}/tmp" />
   <property name="WPCleaner.getdown.dir"                  value="${WPCleaner.dist.dir}/getdown" />
+  <property name="WPCleaner.getdown.test.dir"             value="${WPCleaner.dist.dir}/getdown-test" />
   <property name="WPCleaner.full.dir"                     value="${WPCleaner.dist.dir}/full" />
   <property name="WPCleaner.jnlp.dir"                     value="${WPCleaner.dist.dir}/jnlp" />
   <property name="WPCleaner.javadoc.dir"                  value="${WPCleaner.dist.dir}/javadoc" />
@@ -303,7 +304,7 @@
     </if>
 
     <!-- ============================================================================================================== -->
-    <!-- Packaging work for getdown release in ${WPCleaner.full.dir} : copy files, generate digest                      -->
+    <!-- Packaging work for getdown release in ${WPCleaner.getdown.dir} : copy files, generate digest                   -->
     <!-- ============================================================================================================== -->
 
     <!-- Copy various files -->
@@ -346,6 +347,24 @@
     </copy>
     <java classname="com.threerings.getdown.tools.Digester">
       <arg value="${WPCleaner.getdown.dir}" />
+      <classpath>
+        <pathelement location="${WPCleaner.libs.getdown.dir}/${WPCleaner.libs.getdown.jar}" />
+      </classpath>
+    </java>
+
+    <!-- ============================================================================================================== -->
+    <!-- Packaging work for getdown-test release in ${WPCleaner.getdown.test.dir} : copy files, generate digest         -->
+    <!-- ============================================================================================================== -->
+    <copy todir="${WPCleaner.getdown.test.dir}">
+      <fileset dir="${WPCleaner.getdown.dir}">
+        <include name="**/*"/>
+      </fileset>
+    </copy>
+    <replace file="${WPCleaner.getdown.test.dir}/getdown.txt"
+             token="https://tools.wmflabs.org/wpcleaner/wpcleaner/"
+             value="https://tools.wmflabs.org/wpcleaner/wpcleaner-test/" />
+    <java classname="com.threerings.getdown.tools.Digester">
+      <arg value="${WPCleaner.getdown.test.dir}" />
       <classpath>
         <pathelement location="${WPCleaner.libs.getdown.dir}/${WPCleaner.libs.getdown.jar}" />
       </classpath>
