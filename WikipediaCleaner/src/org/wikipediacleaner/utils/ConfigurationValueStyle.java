@@ -80,7 +80,7 @@ public enum ConfigurationValueStyle {
   INTERNAL_LINK_DEFAULT_REDIRECT("InternalLinkDefaultRedirect", new StyleProperties(
       false,
       false, Color.BLACK,
-      true, new Color(204, 255, 255),
+      true, new Color(0, 0, 255),
       true, false, false, false)),
   INTERNAL_LINK_MISSING("InternalLinkMissing", new StyleProperties(
       true,
