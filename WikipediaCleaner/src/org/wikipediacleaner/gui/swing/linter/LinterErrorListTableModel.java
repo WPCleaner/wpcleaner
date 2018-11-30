@@ -19,6 +19,7 @@ import javax.swing.text.JTextComponent;
 import org.wikipediacleaner.api.check.CheckWikiDetection;
 import org.wikipediacleaner.api.constants.WikiConfiguration;
 import org.wikipediacleaner.api.linter.LinterError;
+import org.wikipediacleaner.gui.swing.component.CopyCellRenderer;
 import org.wikipediacleaner.i18n.GT;
 
 
@@ -43,7 +44,8 @@ public class LinterErrorListTableModel extends AbstractTableModel {
   public final static int COLUMN_END = COLUMN_START + 1;
   public final static int COLUMN_TYPE = COLUMN_END + 1;
   public final static int COLUMN_PARAMETERS = COLUMN_TYPE + 1;
-  public final static int COLUMN_TEMPLATE = COLUMN_PARAMETERS + 1;
+  public final static int COLUMN_COPY = COLUMN_PARAMETERS + 1;
+  public final static int COLUMN_TEMPLATE = COLUMN_COPY + 1;
   public final static int COLUMN_GOTO = COLUMN_TEMPLATE + 1;
 
   public final static int NB_COLUMNS_WITHOUT_GOTO = COLUMN_GOTO;
@@ -71,6 +73,14 @@ public class LinterErrorListTableModel extends AbstractTableModel {
   public void configureColumnModel(TableColumnModel model) {
     TableColumn column;
 
+    column = model.getColumn(COLUMN_COPY);
+    column.setMinWidth(30);
+    column.setPreferredWidth(30);
+    column.setMaxWidth(30);
+    CopyCellRenderer copyRenderer = new CopyCellRenderer(COLUMN_PARAMETERS);
+    column.setCellEditor(copyRenderer);
+    column.setCellRenderer(copyRenderer);
+    
     column = model.getColumn(COLUMN_END);
     column.setMinWidth(60);
     column.setPreferredWidth(60);
@@ -136,6 +146,8 @@ public class LinterErrorListTableModel extends AbstractTableModel {
     if ((errors != null) && (rowIndex >= 0) && (rowIndex < errors.size())) {
       LinterError error = errors.get(rowIndex);
       switch (columnIndex) {
+      case COLUMN_COPY:
+        return error;
       case COLUMN_END:
         return error.getEndOffset();
       case COLUMN_GOTO:
@@ -184,6 +196,9 @@ public class LinterErrorListTableModel extends AbstractTableModel {
     if (columnIndex == COLUMN_GOTO) {
       return (textPane != null);
     }
+    if (columnIndex == COLUMN_COPY) {
+      return true;
+    }
     return super.isCellEditable(rowIndex, columnIndex);
   }
 
@@ -195,6 +210,8 @@ public class LinterErrorListTableModel extends AbstractTableModel {
   @Override
   public String getColumnName(int column) {
     switch (column) {
+    case COLUMN_COPY:
+      return "";
     case COLUMN_END:
       return GT._T("End");
     case COLUMN_GOTO:
@@ -219,6 +236,8 @@ public class LinterErrorListTableModel extends AbstractTableModel {
   @Override
   public Class<?> getColumnClass(int columnIndex) {
     switch (columnIndex) {
+    case COLUMN_COPY:
+      return CheckWikiDetection.class;
     case COLUMN_END:
       return Integer.class;
     case COLUMN_GOTO:
