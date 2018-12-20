@@ -13,6 +13,7 @@ package org.wikipediacleaner.api.constants;
  */
 public enum EnumLoginResult {
 
+  ABORTED          ("Aborted",         "Login aborted"),
   EMPTY_PASS       ("EmptyPass",       "Empty password"),
   ILLEGAL          ("Illegal",         "Illegal"),
   NEED_TOKEN       ("NeedToken",       "Need token"),

@@ -85,8 +85,12 @@ public class ApiXmlLoginResult extends ApiXmlResult implements ApiLoginResult {
         } else if (EnumLoginResult.NEED_TOKEN.getCode().equalsIgnoreCase(result)) {
           return LoginResult.createNeedTokenLogin(node.getAttributeValue("token"));
         }
+        String details = node.getAttributeValue("details");
+        if (details == null) {
+          details = node.getAttributeValue("reason");
+        }
         return LoginResult.createErrorLogin(
-            result, node.getAttributeValue("details"), node.getAttributeValue("wait"));
+            result, details, node.getAttributeValue("wait"));
       }
 //    } catch (JDOMException e) {
 //      log.error("Error login", e);
