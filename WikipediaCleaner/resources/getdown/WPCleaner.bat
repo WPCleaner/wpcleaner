@@ -20,4 +20,4 @@ REM If you want to pass extra arguments to the JVM, like increasing the memory a
 REM you can create an extra.txt file in the same folder with one parameter per line.
 REM For example, to allow 8G of RAM, the line will be: -Xmx=8192M
 
-java -jar getdown.jar . client %*
+java -jar libs/getdown-launcher.jar . client %*

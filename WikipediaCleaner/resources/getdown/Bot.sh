@@ -29,4 +29,4 @@
 # you can create an extra.txt file in the same folder with one parameter per line.
 # For example, to allow 8G of RAM, the line will be: -Xmx=8192M
 
-java -jar getdown.jar . bot "$@"
+java -jar libs/getdown-launcher.jar . bot "$@"
