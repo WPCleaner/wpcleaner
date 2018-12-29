@@ -70,7 +70,7 @@ public class CheckErrorAlgorithm535 extends CheckErrorAlgorithmBase {
 
         // Quick check of what inside the font tag
         boolean couldReport = false;
-        boolean automatic = false;
+        boolean automatic = true;
         if ((valueBeginIndex < valueEndIndex) &&
             (contents.charAt(valueBeginIndex) == '[') &&
             (contents.charAt(valueEndIndex - 1) == ']')) {
@@ -85,11 +85,8 @@ public class CheckErrorAlgorithm535 extends CheckErrorAlgorithmBase {
             String paramName = param.getName();
             if (paramName.equalsIgnoreCase("color")) {
               couldReport = true;
-            } else if (paramName.equalsIgnoreCase("style")) {
-              // couldReport = true;
-              // automatic = false;
-            } else if (paramName.equalsIgnoreCase("face")) {
-              // Nothing to do
+            } else {
+              automatic = false;
             }
           }
         }
