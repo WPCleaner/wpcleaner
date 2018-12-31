@@ -35,6 +35,57 @@ public class CheckErrorAlgorithm002 extends CheckErrorAlgorithmBase {
     GT._T("Fix all incorrect tags"),
   };
 
+  /**
+   * List of non self closing tags that should be verified.
+   * 
+   * Valid HTML tags are only: area, base, br, col, embed, hr, img, input, keygen, link, meta, param, source, track, wbr
+   */
+  private final static String[] nonSelfClosingTags = new String[] {
+      PageElementTag.TAG_HTML_ABBR,
+      PageElementTag.TAG_HTML_B,
+      PageElementTag.TAG_HTML_BIG,
+      PageElementTag.TAG_HTML_BLOCKQUOTE,
+      PageElementTag.TAG_HTML_CENTER,
+      PageElementTag.TAG_HTML_CITE,
+      PageElementTag.TAG_HTML_CODE,
+      PageElementTag.TAG_HTML_DEL,
+      PageElementTag.TAG_HTML_DFN,
+      PageElementTag.TAG_HTML_DIV,
+      PageElementTag.TAG_HTML_EM,
+      PageElementTag.TAG_HTML_FONT,
+      PageElementTag.TAG_HTML_H1,
+      PageElementTag.TAG_HTML_H2,
+      PageElementTag.TAG_HTML_H3,
+      PageElementTag.TAG_HTML_H4,
+      PageElementTag.TAG_HTML_H5,
+      PageElementTag.TAG_HTML_H6,
+      PageElementTag.TAG_HTML_H7,
+      PageElementTag.TAG_HTML_H8,
+      PageElementTag.TAG_HTML_H9,
+      PageElementTag.TAG_HTML_I,
+      PageElementTag.TAG_HTML_P,
+      PageElementTag.TAG_HTML_S,
+      PageElementTag.TAG_HTML_SMALL,
+      PageElementTag.TAG_HTML_SPAN,
+      PageElementTag.TAG_HTML_STRIKE,
+      PageElementTag.TAG_HTML_SUB,
+      PageElementTag.TAG_HTML_SUP,
+      PageElementTag.TAG_HTML_TABLE,
+      PageElementTag.TAG_HTML_TD,
+      PageElementTag.TAG_HTML_TH,
+      PageElementTag.TAG_HTML_TR,
+      PageElementTag.TAG_HTML_TT,
+      PageElementTag.TAG_HTML_U,
+      PageElementTag.TAG_HTML_UL,
+  };
+
+  /**
+   * Knwon errorneous tags that can be replaced automatically.
+   */
+  private final static String[] errorneousTags = new String[] {
+      "</br>",
+  };
+
   public CheckErrorAlgorithm002() {
     super("Article with incorrect tags");
   }
@@ -61,51 +112,12 @@ public class CheckErrorAlgorithm002 extends CheckErrorAlgorithmBase {
     result |= analyzeSelfClosingTags(analysis, errors, PageElementTag.TAG_HTML_HR);
 
     // Check for tags that should not be self closing
-    // Valid HTML tags are only: area, base, br, col, embed, hr, img, input, keygen, link, meta, param, source, track, wbr
-    String[] listTags = new String[] {
-        PageElementTag.TAG_HTML_ABBR,
-        PageElementTag.TAG_HTML_B,
-        PageElementTag.TAG_HTML_BIG,
-        PageElementTag.TAG_HTML_BLOCKQUOTE,
-        PageElementTag.TAG_HTML_CENTER,
-        PageElementTag.TAG_HTML_CITE,
-        PageElementTag.TAG_HTML_CODE,
-        PageElementTag.TAG_HTML_DEL,
-        PageElementTag.TAG_HTML_DFN,
-        PageElementTag.TAG_HTML_DIV,
-        PageElementTag.TAG_HTML_EM,
-        PageElementTag.TAG_HTML_FONT,
-        PageElementTag.TAG_HTML_H1,
-        PageElementTag.TAG_HTML_H2,
-        PageElementTag.TAG_HTML_H3,
-        PageElementTag.TAG_HTML_H4,
-        PageElementTag.TAG_HTML_H5,
-        PageElementTag.TAG_HTML_H6,
-        PageElementTag.TAG_HTML_H7,
-        PageElementTag.TAG_HTML_H8,
-        PageElementTag.TAG_HTML_H9,
-        PageElementTag.TAG_HTML_I,
-        PageElementTag.TAG_HTML_P,
-        PageElementTag.TAG_HTML_S,
-        PageElementTag.TAG_HTML_SMALL,
-        PageElementTag.TAG_HTML_SPAN,
-        PageElementTag.TAG_HTML_STRIKE,
-        PageElementTag.TAG_HTML_SUB,
-        PageElementTag.TAG_HTML_SUP,
-        PageElementTag.TAG_HTML_TABLE,
-        PageElementTag.TAG_HTML_TD,
-        PageElementTag.TAG_HTML_TH,
-        PageElementTag.TAG_HTML_TR,
-        PageElementTag.TAG_HTML_TT,
-        PageElementTag.TAG_HTML_U,
-        PageElementTag.TAG_HTML_UL,
-    };
-    for (String tagName : listTags) {
+    for (String tagName : nonSelfClosingTags) {
       result |= analyzeNonFullTags(analysis, errors, tagName);
     }
 
     // Check for incorrectly written tags
-    result |= analyzeIncorrectTags(analysis, errors, listTags);
+    result |= analyzeIncorrectTags(analysis, errors, nonSelfClosingTags);
 
     // Check for <cite> tags inside <ref> tags
     result |= analyzeCiteTags(analysis, errors);
@@ -518,16 +530,22 @@ public class CheckErrorAlgorithm002 extends CheckErrorAlgorithmBase {
               if (endsWithGT) {
                 tmpIndex++;
               }
+              boolean automatic = endsWithGT && incorrectChar && analysis.getPage().isArticle();
+              if (!automatic) {
+                String text = contents.substring(currentIndex, tmpIndex);
+                for (String tmp : errorneousTags) {
+                  if (tmp.equals(text)) {
+                    automatic = true;
+                  }
+                }
+              }
               boolean close = analysis.getWPCConfiguration().getBoolean(
                   WPCConfigurationBoolean.CLOSE_SELF_CLOSING_TAGS);
               CheckErrorResult errorResult = createCheckErrorResult(
                   analysis, currentIndex, tmpIndex);
               errorResult.addReplacement(
                   PageElementTag.createTag(tagName, false, close),
-                  endsWithGT && incorrectChar);
-              errorResult.addReplacement(
-                  PageElementTag.createTag(tagName, false, close),
-                  false);
+                  automatic);
               errors.add(errorResult);
               nextIndex = tmpIndex;
             }
@@ -571,7 +589,8 @@ public class CheckErrorAlgorithm002 extends CheckErrorAlgorithmBase {
           if (clearValue != null) {
             String clearReplacement = getClearReplacement(clearValue);
             if (clearReplacement != null) {
-              errorResult.addReplacement(clearReplacement, !clearReplacement.isEmpty());
+              boolean automatic = !clearReplacement.isEmpty() && analysis.getPage().isArticle();
+              errorResult.addReplacement(clearReplacement, automatic);
             }
           }
           if (extra || (tag.getParametersCount() > 0)) {
@@ -654,9 +673,6 @@ public class CheckErrorAlgorithm002 extends CheckErrorAlgorithmBase {
    */
   @Override
   protected String internalAutomaticFix(PageAnalysis analysis) {
-    if (!analysis.getPage().isArticle()) {
-      return analysis.getContents();
-    }
     return fix(globalFixes[0], analysis, null);
   }
 
