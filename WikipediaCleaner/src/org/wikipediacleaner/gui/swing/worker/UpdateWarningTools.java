@@ -640,7 +640,7 @@ public abstract class UpdateWarningTools {
       }
       tmp.append("{{");
       tmp.append(todoTemplates.get(0));
-      tmp.append("|* ");
+      tmp.append("|\n* ");
       addWarning(tmp, pageRevId, elements);
       tmp.append("}}");
       if (indexStart < contents.length()) {
