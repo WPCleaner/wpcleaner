@@ -16,7 +16,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 
-import org.wikipediacleaner.Version;
 import org.wikipediacleaner.api.API;
 import org.wikipediacleaner.api.APIException;
 import org.wikipediacleaner.api.constants.wiki.AbstractWikiSettings;
@@ -33,10 +32,6 @@ import org.wikipediacleaner.api.constants.wiki.Wiktionary;
 import org.wikipediacleaner.api.data.DataManager;
 import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.Page;
-import org.wikipediacleaner.api.impl.CommentDecorator;
-import org.wikipediacleaner.api.impl.ProgramCommentDecorator;
-import org.wikipediacleaner.utils.Configuration;
-import org.wikipediacleaner.utils.ConfigurationValueBoolean;
 
 
 /**
@@ -308,21 +303,6 @@ public enum EnumWikipedia {
       comment.append(details);
     }
     return comment.toString();
-  }
-
-  /**
-   * @return Comment decorator.
-   */
-  public CommentDecorator getCommentDecorator() {
-    Configuration config = Configuration.getConfiguration();
-    boolean showProgram = config.getBoolean(
-        null,
-        ConfigurationValueBoolean.WIKICLEANER_COMMENT);
-    String link = WPCConfiguration.getString(WPCConfigurationString.HELP_PAGE);
-    String tag = WPCConfiguration.getString(WPCConfigurationString.TAG);
-    return new ProgramCommentDecorator(
-        Version.PROGRAM, Version.VERSION,
-        showProgram, link, tag);
   }
 
   // =========================================================================

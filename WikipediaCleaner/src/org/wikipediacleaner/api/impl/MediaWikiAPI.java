@@ -398,10 +398,7 @@ public class MediaWikiAPI implements API {
         properties.put("token", wikipedia.getConnection().getEditToken());
       }
       properties.put("watchlist", forceWatch ? "watch" : "nochange");
-      CommentDecorator commentDecorator = wikipedia.getCommentDecorator();
-      if (commentDecorator != null) {
-        commentDecorator.manageComment(properties, "summary", "tags", automatic);
-      }
+      CommentManager.manageComment(wikipedia.getConfiguration(), properties, "summary", "tags", automatic);
       checkTimeForEdit(wikipedia.getConnection().getUser(), page.getNamespace());
       try {
         boolean hasCaptcha = false;
@@ -556,10 +553,7 @@ public class MediaWikiAPI implements API {
       properties.put("title", page.getTitle());
       properties.put("token", wikipedia.getConnection().getEditToken());
       properties.put("watchlist", forceWatch ? "watch" : "nochange");
-      CommentDecorator commentDecorator = wikipedia.getCommentDecorator();
-      if (commentDecorator != null) {
-        commentDecorator.manageComment(properties, "summary", "tags", automatic);
-      }
+      CommentManager.manageComment(wikipedia.getConfiguration(), properties, "summary", "tags", automatic);
       checkTimeForEdit(wikipedia.getConnection().getUser(), page.getNamespace());
       try {
         boolean hasCaptcha = false;

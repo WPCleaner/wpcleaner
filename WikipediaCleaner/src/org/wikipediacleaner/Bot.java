@@ -29,6 +29,7 @@ import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.DataManager;
 import org.wikipediacleaner.api.data.ISBNRange;
 import org.wikipediacleaner.api.data.Page;
+import org.wikipediacleaner.api.impl.CommentManager;
 import org.wikipediacleaner.gui.swing.basic.BasicWorker;
 import org.wikipediacleaner.gui.swing.basic.BasicWorkerListener;
 import org.wikipediacleaner.gui.swing.bot.AutomaticCWWorker;
@@ -95,6 +96,7 @@ public class Bot implements BasicWorkerListener {
     boolean done = false;
     timeLimit = null;
     String credentials = null;
+    String prefix = null;
     while (!done) {
       if (args.length > currentArg) {
         String arg = args[currentArg];
@@ -103,12 +105,25 @@ public class Bot implements BasicWorkerListener {
           timeLimit = Integer.valueOf(args[currentArg + 1]);
           currentArg += 2;
         } else if ("-credentials".equals(arg)) {
+          if (args.length <= currentArg + 1) {
+            log.warn("When using parameter '-credentials', you must specify the file containing the credentials");
+            return;
+          }
           credentials = args[currentArg + 1];
           currentArg += 2;
+        } else if ("-prefix".equals(arg)) {
+          if (args.length <= currentArg + 1) {
+            log.warn("When using parameter '-prefix', you must specify the prefix used for the comments");
+            return;
+          }
+          prefix = args[currentArg + 1];
         } else {
           done = true;
         }
       }
+    }
+    if (prefix != null) {
+      CommentManager.addExtraText(prefix);
     }
 
     // Retrieve wiki

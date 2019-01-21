@@ -12,7 +12,7 @@ import java.util.Map;
 import org.wikipediacleaner.api.APIException;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.Page;
-import org.wikipediacleaner.api.impl.CommentDecorator;
+import org.wikipediacleaner.api.impl.CommentManager;
 import org.wikipediacleaner.api.request.ApiRequest;
 
 
@@ -92,10 +92,7 @@ public class ApiDeleteRequest extends ApiRequest {
     }
     properties.put(PROPERTY_TITLE, page.getTitle());
     properties.put(PROPERTY_TOKEN, getWiki().getConnection().getDeleteToken());
-    CommentDecorator decorator = getWiki().getCommentDecorator();
-    if (decorator != null) {
-      decorator.manageComment(properties, PROPERTY_REASON, "tags", automatic);
-    }
+    CommentManager.manageComment(getWiki().getConfiguration(), properties, PROPERTY_REASON, "tags", automatic);
     result.executeDelete(properties);
   }
 }
