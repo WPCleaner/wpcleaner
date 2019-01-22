@@ -82,6 +82,8 @@ public enum EnumLanguage {
       // Shouldn't happen, but same consequence as ClassNotFoundException
     } catch (InstantiationException e) {
       // Shouldn't happen, but same consequence as ClassNotFoundException
+    } catch (UnsupportedClassVersionError e) {
+      // May happen if messages compiled with a more recent Java, but same consequence as ClassNotFoundException
     }
     bundle = tmpBundle;
   }
