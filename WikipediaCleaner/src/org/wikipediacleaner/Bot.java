@@ -117,6 +117,7 @@ public class Bot implements BasicWorkerListener {
             return;
           }
           prefix = args[currentArg + 1];
+          currentArg += 2;
         } else {
           done = true;
         }
