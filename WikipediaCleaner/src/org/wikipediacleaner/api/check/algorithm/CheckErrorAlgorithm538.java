@@ -28,6 +28,9 @@ public class CheckErrorAlgorithm538 extends CheckErrorAlgorithmBase {
     GT._T("Remove whitespace characters"),
   };
 
+  /** Whitespace characters to check */
+  private final static String WHITESPACE = " \t";
+
   public CheckErrorAlgorithm538() {
     super("Whitespace characters after heading");
   }
@@ -57,7 +60,7 @@ public class CheckErrorAlgorithm538 extends CheckErrorAlgorithmBase {
       // Check if error is present
       int beginIndex = title.getEndIndex();
       if ((beginIndex < contents.length()) &&
-          (contents.charAt(beginIndex) == ' ')) {
+          (WHITESPACE.indexOf(contents.charAt(beginIndex)) >= 0)) {
         if (errors == null) {
           return true;
         }
@@ -66,7 +69,7 @@ public class CheckErrorAlgorithm538 extends CheckErrorAlgorithmBase {
         // Determine area
         int endIndex = beginIndex + 1;
         while ((endIndex < contents.length()) &&
-               (contents.charAt(endIndex) == ' ')) {
+               (WHITESPACE.indexOf(contents.charAt(endIndex)) >= 0)) {
           endIndex++;
         }
 

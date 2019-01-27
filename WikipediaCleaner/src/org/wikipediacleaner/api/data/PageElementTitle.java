@@ -149,7 +149,7 @@ public class PageElementTitle extends PageElement {
 
     // Remove extra spaces at the end of the title
     while ((endIndex > beginIndex) &&
-           (contents.charAt(endIndex - 1) == ' ')) {
+           (" \t".indexOf(contents.charAt(endIndex - 1)) >= 0)) {
       endIndex--;
     }
 
