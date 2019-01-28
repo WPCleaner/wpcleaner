@@ -136,6 +136,74 @@
     </classpath>
   </taskdef>
 
+  <!-- Deploy WPCleaner on Tools -->
+  <target name="deploy" description="Deploy WPCleaner on Tools">
+    <input message="Please enter Password for private key for Tools:" addproperty="WPCleaner.deploy.password" />
+    <property name="WPCleaner.deploy.keyfile" value="${basedir}/resources/wmflabs/id_rsa" />
+    <property name="WPCleaner.deploy.knownhosts" value="${basedir}/resources/wmflabs/known_hosts" />
+    <property name="WPCleaner.deploy.host" value="login.tools.wmflabs.org" />
+    <property name="WPCleaner.deploy.user" value="nicov" />
+    <property name="WPCleaner.deploy.tmp.directory" value="/data/project/wpcleaner/tools/tmp" />
+    <property name="WPCleaner.deploy.tmp.wpcleaner.directory" value="${WPCleaner.deploy.tmp.directory}/wpcleaner" />
+    <property name="WPCleaner.deploy.tmp.wpcleaner.test.directory" value="${WPCleaner.deploy.tmp.directory}/wpcleaner-test" />
+    <property name="WPCleaner.deploy.directory" value="/data/project/wpcleaner/public_html" />
+    <property name="WPCleaner.deploy.wpcleaner.directory" value="${WPCleaner.deploy.directory}/wpcleaner" />
+    <property name="WPCleaner.deploy.wpcleaner.test.directory" value="${WPCleaner.deploy.directory}/wpcleaner-test" />
+
+    <!-- Copy new test version in temporary folder on Labs -->
+    <sshexec host="${WPCleaner.deploy.host}"
+             username="${WPCleaner.deploy.user}"
+             keyfile="${WPCleaner.deploy.keyfile}"
+             passphrase="${WPCleaner.deploy.password}"
+             command="rm -Rf ${WPCleaner.deploy.tmp.wpcleaner.test.directory}; mkdir ${WPCleaner.deploy.tmp.wpcleaner.test.directory}"
+             knownhosts="${WPCleaner.deploy.knownhosts}" />
+    <scp todir="${WPCleaner.deploy.user}@${WPCleaner.deploy.host}:${WPCleaner.deploy.tmp.wpcleaner.test.directory}"
+         keyfile="${WPCleaner.deploy.keyfile}"
+         passphrase="${WPCleaner.deploy.password}"
+         knownhosts="${WPCleaner.deploy.knownhosts}">
+      <fileset dir="${WPCleaner.getdown.test.dir}" />
+    </scp>
+
+    <!-- Copy new version in temporary folder on Labs -->
+    <sshexec host="${WPCleaner.deploy.host}"
+             username="${WPCleaner.deploy.user}"
+             keyfile="${WPCleaner.deploy.keyfile}"
+             passphrase="${WPCleaner.deploy.password}"
+             command="rm -Rf ${WPCleaner.deploy.tmp.wpcleaner.directory}; mkdir ${WPCleaner.deploy.tmp.wpcleaner.directory}"
+             knownhosts="${WPCleaner.deploy.knownhosts}" />
+    <scp todir="${WPCleaner.deploy.user}@${WPCleaner.deploy.host}:${WPCleaner.deploy.tmp.wpcleaner.directory}"
+         keyfile="${WPCleaner.deploy.keyfile}"
+         passphrase="${WPCleaner.deploy.password}"
+         knownhosts="${WPCleaner.deploy.knownhosts}">
+      <fileset dir="${WPCleaner.getdown.dir}" />
+    </scp>
+
+    <!-- Activate new test version on Labs -->
+    <sshexec host="${WPCleaner.deploy.host}"
+             username="${WPCleaner.deploy.user}"
+             keyfile="${WPCleaner.deploy.keyfile}"
+             passphrase="${WPCleaner.deploy.password}"
+             command="rm -Rf ${WPCleaner.deploy.wpcleaner.test.directory}; mv ${WPCleaner.deploy.tmp.wpcleaner.test.directory} ${WPCleaner.deploy.wpcleaner.test.directory}"
+             knownhosts="${WPCleaner.deploy.knownhosts}" />
+
+    <!-- Activate new version on Labs -->
+    <input message="Do you want to deploy WPCleaner?"
+           addproperty="do.deploy"
+           defaultvalue="no"
+           validargs="yes,no" />
+    <if>
+      <istrue value="${do.deploy}" />
+      <then>
+        <sshexec host="${WPCleaner.deploy.host}"
+                 username="${WPCleaner.deploy.user}"
+                 keyfile="${WPCleaner.deploy.keyfile}"
+                 passphrase="${WPCleaner.deploy.password}"
+                 command="rm -Rf ${WPCleaner.deploy.wpcleaner.directory}; mv ${WPCleaner.deploy.tmp.wpcleaner.directory} ${WPCleaner.deploy.wpcleaner.directory}"
+                 knownhosts="${WPCleaner.deploy.knownhosts}" />
+      </then>
+    </if>
+  </target>
+
   <!-- Build WPCleaner -->
   <target name="main" description="Build WPCleaner" depends="init,clean,main-i18n,javadoc">
 
