@@ -54,6 +54,7 @@ public class CheckErrorAlgorithm104 extends CheckErrorAlgorithmBase {
       if (contents.charAt(currentIndex) == '<') {
         shouldReport = true;
       }
+
       if (shouldReport) {
         // Ignore tags correctly detected
         PageElementTag tag = analysis.isInTag(currentIndex);
@@ -79,12 +80,14 @@ public class CheckErrorAlgorithm104 extends CheckErrorAlgorithmBase {
           }
         }
       }
+
       if (shouldReport) {
         // Ignore comments
         if (analysis.isInComment(currentIndex) != null) {
           shouldReport = false;
         }
       }
+
       if (shouldReport) {
         // Ignore some tags
         if ((analysis.getSurroundingTag(PageElementTag.TAG_HTML_CODE, currentIndex) != null) ||
@@ -203,19 +206,33 @@ public class CheckErrorAlgorithm104 extends CheckErrorAlgorithmBase {
           }
           if (tmpIndex == fullEnd - 1) {
             String replacement = null;
+            boolean automatic = false;
             if (endName > startName) {
+              String name = contents.substring(startName, endName);
+              if ((equalSign > 0) && (contents.charAt(equalSign + 1) == '"')) {
+                automatic = true;
+                for (int charIndex = 0; charIndex < name.length(); charIndex++) {
+                  if (!Character.isLetterOrDigit(name.charAt(charIndex))) {
+                    automatic = false;
+                  }
+                }
+              }
               replacement =
                   contents.substring(currentIndex, endIndex) +
-                  "=\"" +
-                  contents.substring(startName, endName) +
-                  "\"" +
-                  (closing ? " /" : "") +
-                  ">";
+                  "=\"" + name + "\"" +
+                  (closing ? " /" : "") + ">";
             } else {
               replacement = "<ref>";
+              String original = contents.substring(currentIndex, fullEnd);
+              if ("<ref name>".equals(original) ||
+                  "<ref name=>".equals(original) ||
+                  "<ref name >".equals(original)) {
+                automatic = true;
+              }
             }
             if (!replacements.contains(replacement)) {
               replacements.add(replacement);
+              errorResult.addReplacement(replacement, automatic);
             }
           } else if (equalSign > 0) {
             tmpIndex = fullEnd - 1;
@@ -251,22 +268,9 @@ public class CheckErrorAlgorithm104 extends CheckErrorAlgorithmBase {
                 replacement.append(" /");
               }
               replacement.append(">");
-              replacements.add(replacement.toString());
+              errorResult.addReplacement(replacement.toString(), false);
             }
           }
-        }
-
-        for (String tmp : replacements) {
-          boolean automatic = false;
-          if ("<ref>".equals(tmp)) {
-            String original = contents.substring(currentIndex, fullEnd);
-            if ("<ref name>".equals(original) ||
-                "<ref name=>".equals(original) ||
-                "<ref name >".equals(original)) {
-              automatic = true;
-            }
-          }
-          errorResult.addReplacement(tmp, automatic);
         }
         errors.add(errorResult);
       }
