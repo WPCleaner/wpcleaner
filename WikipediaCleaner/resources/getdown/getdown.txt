@@ -38,10 +38,10 @@ code = logback.xml
 # Resources
 resource = WPCleaner.png
 resource = WPCleaner.ico
-resource = [windows] Bot.bat
-resource = [windows] WPCleaner.bat
-resource = [linux] Bot.sh
-resource = [linux] WPCleaner.sh
+resource = Bot.bat
+resource = WPCleaner.bat
+resource = Bot.sh
+resource = WPCleaner.sh
 resource = libs/LICENSE_commons-codec.txt
 resource = libs/NOTICE_commons-codec.txt
 resource = libs/LICENSE_commons-compress.txt

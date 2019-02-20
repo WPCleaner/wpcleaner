@@ -148,20 +148,32 @@ public class WikipediaCleaner {
 
     // Analyze command line arguments
     int currentArg = 0;
-
-    // Credentials
+    int previousArg = currentArg - 1;
     String credentials = null;
-    if ((args.length > currentArg + 1) && ("-credentials".equals(args[currentArg]))) {
-      credentials = args [currentArg + 1];
-      currentArg += 2;
+    String wikiCode = null;
+    while (previousArg < currentArg) {
+      previousArg = currentArg;
+
+      // Credentials
+      if ((args.length > currentArg + 1) &&
+          ("-credentials".equalsIgnoreCase(args[currentArg]))) {
+        credentials = args[currentArg + 1];
+        currentArg += 2;
+      }
+
+      // Wiki
+      if ((args.length > currentArg + 1) &&
+          ("-wiki".equalsIgnoreCase(args[currentArg]))) {
+        wikiCode = args[currentArg + 1];
+        currentArg += 2;
+      }
     }
 
     // Retrieve wiki
-    EnumWikipedia wiki = null;
-    if (args.length > currentArg) {
-      String wikiCode = args[currentArg];
-      wiki = EnumWikipedia.getWikipedia(wikiCode);
+    if ((wikiCode == null) && (args.length > currentArg)) {
+      wikiCode = args[currentArg];
     }
+    EnumWikipedia wiki = (wikiCode != null) ? EnumWikipedia.getWikipedia(wikiCode) : null;
     currentArg++;
 
     // Retrieve user name and password

@@ -4,15 +4,17 @@
   <!-- Properties -->
   <property name="WPCleaner.src.dir"                      value="src" />
   <property name="WPCleaner.build.dir"                    value="build" />
-  <property name="WPCleaner.classes_small.dir"            value="${WPCleaner.build.dir}/classes_small" />
   <property name="WPCleaner.classes_full.dir"             value="${WPCleaner.build.dir}/classes_full" />
+  <property name="WPCleaner.classes_install.dir"          value="${WPCleaner.build.dir}/classes_install" />
+  <property name="WPCleaner.classes_small.dir"            value="${WPCleaner.build.dir}/classes_small" />
   <property name="WPCleaner.dist.dir"                     value="${WPCleaner.build.dir}/dist" />
   <property name="WPCleaner.tmp.dir"                      value="${WPCleaner.build.dir}/tmp" />
+  <property name="WPCleaner.full.dir"                     value="${WPCleaner.dist.dir}/full" />
   <property name="WPCleaner.getdown.dir"                  value="${WPCleaner.dist.dir}/getdown" />
   <property name="WPCleaner.getdown.test.dir"             value="${WPCleaner.dist.dir}/getdown-test" />
-  <property name="WPCleaner.full.dir"                     value="${WPCleaner.dist.dir}/full" />
-  <property name="WPCleaner.jnlp.dir"                     value="${WPCleaner.dist.dir}/jnlp" />
+  <property name="WPCleaner.install.dir"                  value="${WPCleaner.dist.dir}/install" />
   <property name="WPCleaner.javadoc.dir"                  value="${WPCleaner.dist.dir}/javadoc" />
+  <property name="WPCleaner.jnlp.dir"                     value="${WPCleaner.dist.dir}/jnlp" />
   <property name="WPCleaner.libs.dir"                     value="libs" />
   <property name="WPCleaner.res.dir"                      value="resources" />
   <property name="WPCleaner.po.dir"                       value="${WPCleaner.src.dir}/org/wikipediacleaner/translation" />
@@ -47,6 +49,18 @@
   <property name="WPCleaner.libs.httpclient.lic"          value="LICENSE.txt" />
   <property name="WPCleaner.libs.httpclient.not"          value="NOTICE.txt" />
 
+  <property name="WPCleaner.libs.lang3.version"           value="3.8.1" />
+  <property name="WPCleaner.libs.lang3.dir"               value="libs/commons-lang3-${WPCleaner.libs.lang3.version}" />
+  <property name="WPCleaner.libs.lang3.jar"               value="commons-lang3-${WPCleaner.libs.lang3.version}.jar" />
+  <property name="WPCleaner.libs.lang3.lic"               value="LICENSE.txt" />
+  <property name="WPCleaner.libs.lang3.not"               value="NOTICE.txt" />
+
+  <property name="WPCleaner.libs.io.version"              value="2.6" />
+  <property name="WPCleaner.libs.io.dir"                  value="libs/commons-io-${WPCleaner.libs.io.version}" />
+  <property name="WPCleaner.libs.io.jar"                  value="commons-io-${WPCleaner.libs.io.version}.jar" />
+  <property name="WPCleaner.libs.io.lic"                  value="LICENSE.txt" />
+  <property name="WPCleaner.libs.io.not"                  value="NOTICE.txt" />
+
   <property name="WPCleaner.libs.jackson.version"         value="2.5.2" />
   <property name="WPCleaner.libs.jackson.dir"             value="libs/jackson-${WPCleaner.libs.jackson.version}" />
   <property name="WPCleaner.libs.jackson-annotations.jar" value="jackson-annotations-${WPCleaner.libs.jackson.version}.jar" />
@@ -73,6 +87,11 @@
   <property name="WPCleaner.libs.logback.dir"             value="libs/logback-${WPCleaner.libs.logback.version}" />
   <property name="WPCleaner.libs.logback.classic.jar"     value="logback-classic-${WPCleaner.libs.logback.version}.jar" />
   <property name="WPCleaner.libs.logback.core.jar"        value="logback-core-${WPCleaner.libs.logback.version}.jar" />
+
+  <property name="WPCleaner.libs.mslinks.version"         value="1.0.5" />
+  <property name="WPCleaner.libs.mslinks.dir"             value="libs/mslinks-${WPCleaner.libs.mslinks.version}" />
+  <property name="WPCleaner.libs.mslinks.jar"             value="mslinks.jar" />
+  <property name="WPCleaner.libs.mslinks.lic"             value="LICENSE.txt" />
 
   <property name="WPCleaner.libs.slf4j.version"           value="1.7.25" />
   <property name="WPCleaner.libs.slf4j.dir"               value="libs/slf4j-${WPCleaner.libs.slf4j.version}" />
@@ -144,11 +163,27 @@
     <property name="WPCleaner.deploy.host" value="login.tools.wmflabs.org" />
     <property name="WPCleaner.deploy.user" value="nicov" />
     <property name="WPCleaner.deploy.tmp.directory" value="/data/project/wpcleaner/tools/tmp" />
+    <property name="WPCleaner.deploy.tmp.install.directory" value="${WPCleaner.deploy.tmp.directory}/install" />
     <property name="WPCleaner.deploy.tmp.wpcleaner.directory" value="${WPCleaner.deploy.tmp.directory}/wpcleaner" />
     <property name="WPCleaner.deploy.tmp.wpcleaner.test.directory" value="${WPCleaner.deploy.tmp.directory}/wpcleaner-test" />
     <property name="WPCleaner.deploy.directory" value="/data/project/wpcleaner/public_html" />
+    <property name="WPCleaner.deploy.install.directory" value="${WPCleaner.deploy.directory}/install" />
     <property name="WPCleaner.deploy.wpcleaner.directory" value="${WPCleaner.deploy.directory}/wpcleaner" />
     <property name="WPCleaner.deploy.wpcleaner.test.directory" value="${WPCleaner.deploy.directory}/wpcleaner-test" />
+
+    <!-- Copy new installer in temporary folder on Labs -->
+    <sshexec host="${WPCleaner.deploy.host}"
+             username="${WPCleaner.deploy.user}"
+             keyfile="${WPCleaner.deploy.keyfile}"
+             passphrase="${WPCleaner.deploy.password}"
+             command="rm -Rf ${WPCleaner.deploy.tmp.install.directory}; mkdir ${WPCleaner.deploy.tmp.install.directory}"
+             knownhosts="${WPCleaner.deploy.knownhosts}" />
+    <scp todir="${WPCleaner.deploy.user}@${WPCleaner.deploy.host}:${WPCleaner.deploy.tmp.install.directory}"
+         keyfile="${WPCleaner.deploy.keyfile}"
+         passphrase="${WPCleaner.deploy.password}"
+         knownhosts="${WPCleaner.deploy.knownhosts}">
+      <fileset dir="${WPCleaner.install.dir}" />
+    </scp>
 
     <!-- Copy new test version in temporary folder on Labs -->
     <sshexec host="${WPCleaner.deploy.host}"
@@ -186,6 +221,23 @@
              command="rm -Rf ${WPCleaner.deploy.wpcleaner.test.directory}; mv ${WPCleaner.deploy.tmp.wpcleaner.test.directory} ${WPCleaner.deploy.wpcleaner.test.directory}"
              knownhosts="${WPCleaner.deploy.knownhosts}" />
 
+    <!-- Activate new installer on Labs -->
+    <input message="Do you want to deploy the installer?"
+           addproperty="do.deploy.installer"
+           defaultvalue="no"
+           validargs="yes,no" />
+    <if>
+      <istrue value="${do.deploy.installer}" />
+      <then>
+        <sshexec host="${WPCleaner.deploy.host}"
+                 username="${WPCleaner.deploy.user}"
+                 keyfile="${WPCleaner.deploy.keyfile}"
+                 passphrase="${WPCleaner.deploy.password}"
+                 command="cp -f ${WPCleaner.deploy.tmp.install.directory}/* ${WPCleaner.deploy.install.directory}"
+                 knownhosts="${WPCleaner.deploy.knownhosts}" />
+      </then>
+    </if>
+
     <!-- Activate new version on Labs -->
     <input message="Do you want to deploy WPCleaner?"
            addproperty="do.deploy"
@@ -210,8 +262,9 @@
     <!-- Initialize -->
     <input message="Please enter Password for keystore:" addproperty="WPCleaner.keystore.password" />
     <mkdir dir="${WPCleaner.build.dir}" />
-    <mkdir dir="${WPCleaner.classes_small.dir}" />
     <mkdir dir="${WPCleaner.classes_full.dir}" />
+    <mkdir dir="${WPCleaner.classes_install.dir}" />
+    <mkdir dir="${WPCleaner.classes_small.dir}" />
     <mkdir dir="${WPCleaner.tmp.dir}" />
     <mkdir dir="${WPCleaner.dist.dir}" />
     <mkdir dir="${WPCleaner.jnlp.dir}" />
@@ -246,6 +299,8 @@
     <unzip src="${WPCleaner.libs.codec.dir}/${WPCleaner.libs.codec.jar}"                 dest="${WPCleaner.classes_full.dir}" />
     <unzip src="${WPCleaner.libs.compress.dir}/${WPCleaner.libs.compress.jar}"           dest="${WPCleaner.classes_full.dir}" />
     <unzip src="${WPCleaner.libs.httpclient.dir}/${WPCleaner.libs.httpclient.jar}"       dest="${WPCleaner.classes_full.dir}" />
+    <unzip src="${WPCleaner.libs.io.dir}/${WPCleaner.libs.io.jar}"                       dest="${WPCleaner.classes_full.dir}" />
+    <unzip src="${WPCleaner.libs.lang3.dir}/${WPCleaner.libs.lang3.jar}"                 dest="${WPCleaner.classes_full.dir}" />
     <unzip src="${WPCleaner.libs.logging.dir}/${WPCleaner.libs.logging.jar}"             dest="${WPCleaner.classes_full.dir}" />
     <unzip src="${WPCleaner.libs.logback.dir}/${WPCleaner.libs.logback.classic.jar}"     dest="${WPCleaner.classes_full.dir}" />
     <unzip src="${WPCleaner.libs.logback.dir}/${WPCleaner.libs.logback.core.jar}"        dest="${WPCleaner.classes_full.dir}" />
@@ -275,6 +330,14 @@
           tofile="${WPCleaner.classes_full.dir}/LICENSE_commons-httpclient.txt" />
     <copy file="${WPCleaner.libs.httpclient.dir}/${WPCleaner.libs.httpclient.not}"
           tofile="${WPCleaner.classes_full.dir}/NOTICE_commons-httpclient.txt" />
+    <copy file="${WPCleaner.libs.io.dir}/${WPCleaner.libs.io.lic}"
+          tofile="${WPCleaner.classes_full.dir}/LICENSE_commons-io.txt" />
+    <copy file="${WPCleaner.libs.io.dir}/${WPCleaner.libs.io.not}"
+          tofile="${WPCleaner.classes_full.dir}/NOTICE_commons-io.txt" />
+    <copy file="${WPCleaner.libs.lang3.dir}/${WPCleaner.libs.lang3.lic}"
+          tofile="${WPCleaner.classes_full.dir}/LICENSE_commons-lang3.txt" />
+    <copy file="${WPCleaner.libs.lang3.dir}/${WPCleaner.libs.lang3.not}"
+          tofile="${WPCleaner.classes_full.dir}/NOTICE_commons-lang3.txt" />
     <copy file="${WPCleaner.libs.logging.dir}/${WPCleaner.libs.logging.lic}"
   	      tofile="${WPCleaner.classes_full.dir}/LICENSE_commons-logging.txt" />
     <copy file="${WPCleaner.libs.logging.dir}/${WPCleaner.libs.logging.not}"
@@ -298,16 +361,63 @@
     </copy>
 
     <!-- ============================================================================================================== -->
+    <!-- Preparation work in ${WPCleaner.classes_install.dir} : copy files, compile Java                                   -->
+    <!-- ============================================================================================================== -->
+
+    <!-- Extract libraries -->
+    <unzip src="${WPCleaner.libs.io.dir}/${WPCleaner.libs.io.jar}"                       dest="${WPCleaner.classes_install.dir}" />
+    <unzip src="${WPCleaner.libs.lang3.dir}/${WPCleaner.libs.lang3.jar}"                 dest="${WPCleaner.classes_install.dir}" />
+    <unzip src="${WPCleaner.libs.logback.dir}/${WPCleaner.libs.logback.classic.jar}"     dest="${WPCleaner.classes_install.dir}" />
+    <unzip src="${WPCleaner.libs.logback.dir}/${WPCleaner.libs.logback.core.jar}"        dest="${WPCleaner.classes_install.dir}" />
+    <unzip src="${WPCleaner.libs.mslinks.dir}/${WPCleaner.libs.mslinks.jar}"             dest="${WPCleaner.classes_install.dir}" />
+    <unzip src="${WPCleaner.libs.slf4j.dir}/${WPCleaner.libs.slf4j.api.jar}"             dest="${WPCleaner.classes_install.dir}" />
+    <unzip src="${WPCleaner.libs.gettext.dir}/${WPCleaner.libs.gettext.jar}"             dest="${WPCleaner.classes_install.dir}" />
+    <delete includeemptydirs="true">
+      <fileset dir="${WPCleaner.classes_install.dir}/META-INF" includes="**/*.txt" />
+    </delete>
+
+    <!-- Copy various files for including them in the jar -->
+    <copy file="${WPCleaner.libs.io.dir}/${WPCleaner.libs.io.lic}"
+          tofile="${WPCleaner.classes_full.dir}/LICENSE_commons-io.txt" />
+    <copy file="${WPCleaner.libs.io.dir}/${WPCleaner.libs.io.not}"
+          tofile="${WPCleaner.classes_full.dir}/NOTICE_commons-io.txt" />
+    <copy file="${WPCleaner.libs.lang3.dir}/${WPCleaner.libs.lang3.lic}"
+          tofile="${WPCleaner.classes_full.dir}/LICENSE_commons-lang3.txt" />
+    <copy file="${WPCleaner.libs.lang3.dir}/${WPCleaner.libs.lang3.not}"
+          tofile="${WPCleaner.classes_full.dir}/NOTICE_commons-lang3.txt" />
+    <copy file="${WPCleaner.libs.mslinks.dir}/${WPCleaner.libs.mslinks.lic}"
+          tofile="${WPCleaner.classes_full.dir}/LICENSE_mslinks.txt" />
+    <copy file="${WPCleaner.libs.gettext.dir}/${WPCleaner.libs.gettext.lic}"
+          tofile="${WPCleaner.classes_install.dir}/LICENSE_gettext-commons.txt" />
+    <copy todir="${WPCleaner.classes_install.dir}">
+      <fileset dir="${WPCleaner.classes_small.dir}">
+        <include name="**/*"/>
+      </fileset>
+    </copy>
+
+    <!-- ============================================================================================================== -->
     <!-- Build work in ${WPCleaner.tmp.dir} : create jar                                                                -->
     <!-- ============================================================================================================== -->
 
-    <!-- Create manifest file -->
+    <!-- Create manifest files -->
     <manifest file="${WPCleaner.tmp.dir}/manifest.txt">
       <attribute name="Application-Library-Allowable-Classes" value="*" />
       <attribute name="Application-Name"                      value="WPCleaner" />
       <attribute name="Caller-Allowable-Codebase"             value="*" />
       <attribute name="Codebase"                              value="*.wmflabs.org" />
       <attribute name="Main-Class"                            value="org.wikipediacleaner.WikipediaCleaner" />
+      <attribute name="Permissions"                           value="all-permissions" />
+      <attribute name="Specification-Title"                   value="WPCleaner" />
+      <attribute name="Specification-Vendor"                  value="NicoV" />
+      <attribute name="Trusted-Library"                       value="true" />
+      <attribute name="Trusted-Only"                          value="false" />
+    </manifest>
+    <manifest file="${WPCleaner.tmp.dir}/manifest_install.txt">
+      <attribute name="Application-Library-Allowable-Classes" value="*" />
+      <attribute name="Application-Name"                      value="WPCleaner" />
+      <attribute name="Caller-Allowable-Codebase"             value="*" />
+      <attribute name="Codebase"                              value="*.wmflabs.org" />
+      <attribute name="Main-Class"                            value="org.wikipediacleaner.Installer" />
       <attribute name="Permissions"                           value="all-permissions" />
       <attribute name="Specification-Title"                   value="WPCleaner" />
       <attribute name="Specification-Vendor"                  value="NicoV" />
@@ -331,6 +441,14 @@
       </fileset>
     </jar>
 
+    <!-- Create installer jar -->
+    <jar destfile="${WPCleaner.tmp.dir}/WPCleanerInstallerUnsigned.jar"
+         manifest="${WPCleaner.tmp.dir}/manifest_install.txt">
+      <fileset dir="${WPCleaner.classes_install.dir}">
+        <include name="**/*" />
+      </fileset>
+    </jar>
+
     <!-- Sign jars -->
     <if>
       <available file="${WPCleaner.res.dir}/certificate/WPCleaner.p12" />
@@ -346,6 +464,15 @@
         </signjar>
         <signjar jar="${WPCleaner.tmp.dir}/WPCleanerUnsigned.jar"
                  signedjar="${WPCleaner.tmp.dir}/WPCleaner.jar"
+                 keystore="${WPCleaner.res.dir}/certificate/WPCleaner.p12"
+                 storetype="pkcs12"
+                 storepass="${WPCleaner.p12.password}"
+                 alias="wpcleaner-sign"
+                 keypass="${WPCleaner.p12key.password}"
+                 tsaurl="http://time.certum.pl/">
+        </signjar>
+        <signjar jar="${WPCleaner.tmp.dir}/WPCleanerInstallerUnsigned.jar"
+                 signedjar="${WPCleaner.tmp.dir}/WPCleanerInstaller.jar"
                  keystore="${WPCleaner.res.dir}/certificate/WPCleaner.p12"
                  storetype="pkcs12"
                  storepass="${WPCleaner.p12.password}"
@@ -376,9 +503,16 @@
                  storepass="${WPCleaner.keystore.password}"
                  alias="wikipediacleaner" >
         </signjar>
+        <signjar jar="${WPCleaner.tmp.dir}/WPCleanerInstallerUnsigned.jar"
+                 signedjar="${WPCleaner.tmp.dir}/WPCleanerInstaller.jar"
+                 keystore="${WPCleaner.res.dir}/certificate/WikipediaCleanerKeystore"
+                 storepass="${WPCleaner.keystore.password}"
+                 alias="wikipediacleaner" >
+        </signjar>
         -->
         <copy file="${WPCleaner.tmp.dir}/WikipediaCleanerUnsigned.jar" tofile="${WPCleaner.tmp.dir}/WikipediaCleaner.jar" />
         <copy file="${WPCleaner.tmp.dir}/WPCleanerUnsigned.jar" tofile="${WPCleaner.tmp.dir}/WPCleaner.jar" />
+        <copy file="${WPCleaner.tmp.dir}/WPCleanerInstallerUnsigned.jar" tofile="${WPCleaner.tmp.dir}/WPCleanerInstaller.jar" />
       </else>
     </if>
 
@@ -394,6 +528,7 @@
     <copy file="${WPCleaner.libs.codec.dir}/${WPCleaner.libs.codec.jar}"                 tofile="${WPCleaner.getdown.dir}/libs/commons-codec.jar" />
     <copy file="${WPCleaner.libs.compress.dir}/${WPCleaner.libs.compress.jar}"           tofile="${WPCleaner.getdown.dir}/libs/commons-compress.jar" />
     <copy file="${WPCleaner.libs.httpclient.dir}/${WPCleaner.libs.httpclient.jar}"       tofile="${WPCleaner.getdown.dir}/libs/commons-httpclient.jar" />
+    <copy file="${WPCleaner.libs.io.dir}/${WPCleaner.libs.io.jar}"                       tofile="${WPCleaner.getdown.dir}/libs/commons-io.jar" />
     <copy file="${WPCleaner.libs.logging.dir}/${WPCleaner.libs.logging.jar}"             tofile="${WPCleaner.getdown.dir}/libs/commons-logging.jar" />
     <copy file="${WPCleaner.libs.logback.dir}/${WPCleaner.libs.logback.classic.jar}"     tofile="${WPCleaner.getdown.dir}/libs/logback-classic.jar" />
     <copy file="${WPCleaner.libs.logback.dir}/${WPCleaner.libs.logback.core.jar}"        tofile="${WPCleaner.getdown.dir}/libs/logback-core.jar" />
@@ -412,6 +547,8 @@
     <copy file="${WPCleaner.libs.compress.dir}/${WPCleaner.libs.compress.not}"           tofile="${WPCleaner.getdown.dir}/libs/NOTICE_commons-compress.txt" />
     <copy file="${WPCleaner.libs.httpclient.dir}/${WPCleaner.libs.httpclient.lic}"       tofile="${WPCleaner.getdown.dir}/libs/LICENSE_commons-httpclient.txt" />
     <copy file="${WPCleaner.libs.httpclient.dir}/${WPCleaner.libs.httpclient.not}"       tofile="${WPCleaner.getdown.dir}/libs/NOTICE_commons-httpclient.txt" />
+    <copy file="${WPCleaner.libs.io.dir}/${WPCleaner.libs.io.lic}"                       tofile="${WPCleaner.getdown.dir}/libs/LICENSE_commons-io.txt" />
+    <copy file="${WPCleaner.libs.io.dir}/${WPCleaner.libs.io.not}"                       tofile="${WPCleaner.getdown.dir}/libs/NOTICE_commons-io.txt" />
     <copy file="${WPCleaner.libs.logging.dir}/${WPCleaner.libs.logging.lic}"             tofile="${WPCleaner.getdown.dir}/libs/LICENSE_commons-logging.txt" />
     <copy file="${WPCleaner.libs.logging.dir}/${WPCleaner.libs.logging.not}"             tofile="${WPCleaner.getdown.dir}/libs/NOTICE_commons-logging.txt" />
     <copy file="${WPCleaner.libs.gettext.dir}/${WPCleaner.libs.gettext.lic}"             tofile="${WPCleaner.getdown.dir}/libs/LICENSE_gettext-commons.txt" />
@@ -454,6 +591,11 @@
              token="https://tools.wmflabs.org/wpcleaner/wpcleaner/"
              value="https://tools.wmflabs.org/wpcleaner/wpcleaner-test/" />
     <digest appdir="${WPCleaner.getdown.test.dir}"/>
+
+    <!-- ============================================================================================================== -->
+    <!-- Packaging work for installer in ${WPCleaner.install.dir} : copy files, generate digest                         -->
+    <!-- ============================================================================================================== -->
+    <copy file="${WPCleaner.tmp.dir}/WPCleanerInstaller.jar" todir="${WPCleaner.install.dir}" />
 
     <!-- ============================================================================================================== -->
     <!-- Packaging work for JNLP release in ${WPCleaner.jnlp.dir} : copy files                                          -->

@@ -394,7 +394,7 @@ public abstract class BasicWindow implements ActionListener, PageProvider {
    * @param url URL.
    */
   protected void displayUrlMessage(String message, String url) {
-    // TODO: Let users copy / paste the url
+    // TODO: Let users copy / paste the URL
     displayInformationMessage(message + "\n" + url);
   }
 

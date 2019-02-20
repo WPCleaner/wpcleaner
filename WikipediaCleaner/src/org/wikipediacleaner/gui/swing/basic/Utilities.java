@@ -266,6 +266,18 @@ public class Utilities {
   }
 
   /**
+   * Display an URL message.
+   * 
+   * @param parent Parent component.
+   * @param message Message.
+   * @param url URL.
+   */
+  public static void displayUrlMessage(Component parent, String message, String url) {
+    // TODO: Let users copy / paste the url
+    displayInformationMessage(parent, message + "\n" + url);
+  }
+
+  /**
    * Display a message to request a value.
    * 
    * @param parent Parent component.

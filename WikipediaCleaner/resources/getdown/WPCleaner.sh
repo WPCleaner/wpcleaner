@@ -21,4 +21,8 @@
 # you can create an extra.txt file in the same folder with one parameter per line.
 # For example, to allow 8G of RAM, the line will be: -Xmx=8192M
 
-java -jar libs/getdown-launcher.jar . client "$@"
+if [ -f credentials.txt ]; then
+  java -jar libs/getdown-launcher.jar . client -credentials credentials.txt "$@"
+else
+  java -jar libs/getdown-launcher.jar . client "$@"
+fi

@@ -15,7 +15,6 @@ import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.event.ActionListener;
-import java.awt.event.ItemListener;
 import java.beans.EventHandler;
 import java.io.BufferedReader;
 import java.io.File;
@@ -27,7 +26,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.Properties;
 
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
@@ -36,12 +34,10 @@ import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JPasswordField;
 import javax.swing.JPopupMenu;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
@@ -59,7 +55,6 @@ import org.wikipediacleaner.api.constants.EnumLanguage;
 import org.wikipediacleaner.api.constants.EnumQueryPage;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.constants.WPCConfiguration;
-import org.wikipediacleaner.api.constants.WPCConfigurationString;
 import org.wikipediacleaner.api.constants.WPCConfigurationStringList;
 import org.wikipediacleaner.api.constants.WikiConfiguration;
 import org.wikipediacleaner.api.data.AbuseFilter;
@@ -80,6 +75,12 @@ import org.wikipediacleaner.gui.swing.basic.BasicWorker;
 import org.wikipediacleaner.gui.swing.basic.BasicWorkerListener;
 import org.wikipediacleaner.gui.swing.basic.Utilities;
 import org.wikipediacleaner.gui.swing.component.HTMLPane;
+import org.wikipediacleaner.gui.swing.component.simple.HelpButton;
+import org.wikipediacleaner.gui.swing.component.simple.IdeaButton;
+import org.wikipediacleaner.gui.swing.component.simple.LanguageSelector;
+import org.wikipediacleaner.gui.swing.component.simple.PasswordInput;
+import org.wikipediacleaner.gui.swing.component.simple.UserNameSelector;
+import org.wikipediacleaner.gui.swing.component.simple.WikiSelector;
 import org.wikipediacleaner.gui.swing.pagelist.PageListWorker;
 import org.wikipediacleaner.gui.swing.worker.LoginWorker;
 import org.wikipediacleaner.gui.swing.worker.RandomPageWorker;
@@ -102,15 +103,10 @@ public class MainWindow
 
   public final static Integer WINDOW_VERSION = Integer.valueOf(6);
 
-  private final static String URL_OTHER_LANGUAGE  = "http://en.wikipedia.org/wiki/Wikipedia:WPCleaner/Languages";
-  private final static String URL_OTHER_WIKIPEDIA = "http://en.wikipedia.org/wiki/Wikipedia:WPCleaner/Wikis";
-  private final static String URL_TALK_PAGE       = "http://fr.wikipedia.org/wiki/Discussion_Wikipédia:WPCleaner";
-
-  JComboBox<EnumWikipedia> comboWikipedia;
-  private JComboBox<EnumLanguage> comboLanguage;
-  JComboBox<Object> comboUser;
-  JPasswordField textPassword;
-  private char echoPassword = '*';
+  WikiSelector wikiSelector;
+  LanguageSelector languageSelector;
+  UserNameSelector userNameSelector;
+  PasswordInput passwordInput;
   private ButtonGroup groupSaveUsernamePassword;
   private JRadioButton radSavePassword;
   private JRadioButton radSaveUsername;
@@ -119,7 +115,6 @@ public class MainWindow
   private JButton buttonDemo;
   private JButton buttonLogout;
   private JButton buttonDisconnect;
-  private JButton buttonHelp;
 
   private JButton buttonAbuseFilters;
   private JButton buttonAllDab;
@@ -154,7 +149,6 @@ public class MainWindow
   private JButton buttonOptionsSystem;
   private JButton buttonReloadOptions;
   private JButton buttonCheckSpelling;
-  private JButton buttonIdea;
   private JButton buttonAbout;
 
   boolean logged = false;
@@ -196,15 +190,17 @@ public class MainWindow
 
       MainWindow mainWindow = (MainWindow) window;
       if (wiki != null) {
-        mainWindow.comboWikipedia.setSelectedItem(wiki);
+        mainWindow.wikiSelector.getSelector().setSelectedItem(wiki);
       }
       if (userName != null) {
-        mainWindow.comboUser.setSelectedItem(userName);
+        mainWindow.userNameSelector.getSelector().setSelectedItem(userName);
       }
       if (password != null) {
-        mainWindow.textPassword.setText(password);
+        mainWindow.passwordInput.getField().setText(password);
       }
-      if ((wiki != null) && (userName != null) && (password != null)) {
+      if ((wiki != null) &&
+          (userName != null) && (userName.length() > 0) &&
+          (password != null) && (password.length() > 0)) {
         mainWindow.actionLogin();
       }
     }
@@ -292,11 +288,11 @@ public class MainWindow
    */
   @Override
   protected void updateComponentState() {
-    comboWikipedia.setEnabled(!logged);
-    comboLanguage.setEnabled(!logged);
-    comboUser.setEnabled(!logged);
-    textPassword.setEnabled(!logged);
-    textPassword.setEchoChar(logged ? ' ' : echoPassword);
+    wikiSelector.getSelector().setEnabled(!logged);
+    languageSelector.getSelector().setEnabled(!logged);
+    userNameSelector.getSelector().setEnabled(!logged);
+    passwordInput.getField().setEnabled(!logged);
+    passwordInput.getField().setEchoChar(logged ? ' ' : passwordInput.getEchoChar());
     buttonLogin.setEnabled(!logged);
     buttonDemo.setEnabled(!logged);
     buttonLogout.setEnabled(logged);
@@ -378,94 +374,52 @@ public class MainWindow
     constraints.weightx = 0;
     constraints.weighty = 0;
 
-    // Wikipedia
-    EnumWikipedia defaultWikipedia = configuration.getWikipedia();
-    comboWikipedia = new JComboBox<EnumWikipedia>(EnumWikipedia.getList().toArray(new EnumWikipedia[0]));
-    comboWikipedia.setEditable(false);
-    comboWikipedia.setSelectedItem(defaultWikipedia);
-    comboWikipedia.addItemListener(EventHandler.create(
-        ItemListener.class, this, "actionChangeWiki"));
-    JLabel labelWikipedia = Utilities.createJLabel(GT._T("Wiki"));
-    labelWikipedia.setLabelFor(comboWikipedia);
-    labelWikipedia.setHorizontalAlignment(SwingConstants.TRAILING);
-    JToolBar toolbarWikipedia = new JToolBar(SwingConstants.HORIZONTAL);
-    toolbarWikipedia.setFloatable(false);
-    toolbarWikipedia.setBorderPainted(false);
-    JButton buttonWikipediaInfo = Utilities.createJButton(
-        "tango-help-browser.png", EnumImageSize.SMALL,
-        GT._T("Other Wikipedia"), false, null);
-    buttonWikipediaInfo.addActionListener(EventHandler.create(
-        ActionListener.class, this, "actionOtherWikipedia"));
-    toolbarWikipedia.add(buttonWikipediaInfo);
+    // Wiki
+    wikiSelector = new WikiSelector(getParentComponent());
     constraints.gridx = 0;
     constraints.weightx = 0;
-    panel.add(labelWikipedia, constraints);
+    panel.add(wikiSelector.getLabel(), constraints);
     constraints.gridx = 1;
     constraints.weightx = 1;
-    panel.add(comboWikipedia, constraints);
+    panel.add(wikiSelector.getSelector(), constraints);
     constraints.gridx = 2;
     constraints.weightx = 0;
-    panel.add(toolbarWikipedia, constraints);
+    panel.add(wikiSelector.getTools(), constraints);
     constraints.gridy++;
 
     // Language
-    comboLanguage = new JComboBox<EnumLanguage>(EnumLanguage.getList().toArray(new EnumLanguage[0]));
-    comboLanguage.setEditable(false);
-    comboLanguage.setSelectedItem(configuration.getLanguage());
-    comboLanguage.addItemListener(EventHandler.create(
-        ItemListener.class, this, "actionChangeLanguage"));
-    JLabel labelLanguage = Utilities.createJLabel(GT._T("Language"));
-    labelLanguage.setLabelFor(comboLanguage);
-    labelLanguage.setHorizontalAlignment(SwingConstants.TRAILING);
-    JToolBar toolbarLanguage = new JToolBar(SwingConstants.HORIZONTAL);
-    toolbarLanguage.setFloatable(false);
-    toolbarLanguage.setBorderPainted(false);
-    JButton buttonLanguageInfo = Utilities.createJButton(
-        "tango-help-browser.png", EnumImageSize.SMALL,
-        GT._T("Other Language"), false, null);
-    buttonLanguageInfo.addActionListener(EventHandler.create(
-        ActionListener.class, this, "actionOtherLanguage"));
-    toolbarLanguage.add(buttonLanguageInfo);
+    languageSelector = new LanguageSelector(getParentComponent());
     constraints.gridx = 0;
     constraints.weightx = 0;
-    panel.add(labelLanguage, constraints);
+    panel.add(languageSelector.getLabel(), constraints);
     constraints.gridx = 1;
     constraints.weightx = 1;
-    panel.add(comboLanguage, constraints);
+    panel.add(languageSelector.getSelector(), constraints);
     constraints.gridx = 2;
     constraints.weightx = 0;
-    panel.add(toolbarLanguage, constraints);
+    panel.add(languageSelector.getTools(), constraints);
     constraints.gridy++;
 
     // User name
-    comboUser = new JComboBox<Object>();
-    comboUser.setEditable(true);
-    comboUser.addItemListener(EventHandler.create(
-        ItemListener.class, this, "actionChangeUser"));
-    JLabel labelUsername = Utilities.createJLabel(GT._T("Username:"));
-    labelUsername.setLabelFor(comboUser);
-    labelUsername.setHorizontalAlignment(SwingConstants.TRAILING);
+    userNameSelector = new UserNameSelector(getParentComponent());
+    wikiSelector.addChangeListener(userNameSelector);
     constraints.gridx = 0;
     constraints.weightx = 0;
-    panel.add(labelUsername, constraints);
+    panel.add(userNameSelector.getLabel(), constraints);
     constraints.gridx = 1;
     constraints.weightx = 1;
-    panel.add(comboUser, constraints);
+    panel.add(userNameSelector.getSelector(), constraints);
     constraints.gridy++;
 
     // Password
-    textPassword = new JPasswordField();
-    textPassword.setText("");
-    echoPassword = textPassword.getEchoChar();
-    JLabel labelPassword = Utilities.createJLabel(GT._T("Password :"));
-    labelPassword.setLabelFor(textPassword);
-    labelPassword.setHorizontalAlignment(SwingConstants.TRAILING);
+    passwordInput = new PasswordInput(getParentComponent(), wikiSelector);
+    userNameSelector.addChangeListener(passwordInput);
     constraints.gridx = 0;
     constraints.weightx = 0;
-    panel.add(labelPassword, constraints);
+    panel.add(passwordInput.getLabel(), constraints);
     constraints.gridx = 1;
     constraints.weightx = 1;
-    panel.add(textPassword, constraints);
+    panel.add(passwordInput.getField(), constraints);
     constraints.gridy++;
 
     // Login/Demo/Logout buttons
@@ -507,13 +461,8 @@ public class MainWindow
     buttonToolbar = new JToolBar(SwingConstants.HORIZONTAL);
     buttonToolbar.setFloatable(false);
     buttonToolbar.setBorderPainted(false);
-    buttonHelp = Utilities.createJButton(
-        "tango-help-browser.png", EnumImageSize.NORMAL,
-        GT._T("Help"), false,
-        ConfigurationValueShortcut.HELP);
-    buttonHelp.addActionListener(EventHandler.create(
-        ActionListener.class, this, "actionHelp"));
-    buttonToolbar.add(buttonHelp);
+    HelpButton help = new HelpButton(getParentComponent(), this);
+    buttonToolbar.add(help.getButton());
     buttonOptions = Utilities.createJButton(
         "gnome-preferences-other.png", EnumImageSize.NORMAL,
         GT._T("Options"), false,
@@ -541,12 +490,8 @@ public class MainWindow
         ActionListener.class, this, "actionCheckSpelling"));
     buttonToolbar.add(buttonCheckSpelling);
     buttonToolbar.addSeparator();
-    buttonIdea = Utilities.createJButton(
-        GT._T("Idea? Bug?"),
-        ConfigurationValueShortcut.BUG_REPORT);
-    buttonIdea.addActionListener(EventHandler.create(
-        ActionListener.class, this, "actionIdea"));
-    buttonToolbar.add(buttonIdea);
+    IdeaButton idea = new IdeaButton(getParentComponent());
+    buttonToolbar.add(idea.getButton());
     buttonToolbar.addSeparator();
     buttonAbout = Utilities.createJButton(GT._T("About"), null);
     buttonAbout.addActionListener(EventHandler.create(
@@ -608,7 +553,7 @@ public class MainWindow
     panel.add(emptyPanel, constraints);
     constraints.gridy++;
 
-    actionChangeWiki();
+    wikiSelector.notifyWikiChange();
 
     return panel;
   }
@@ -716,7 +661,7 @@ public class MainWindow
     panel.add(buttonInternalLinks, constraints);
     constraints.gridy++;
 
-    // Backlinks
+    // Back links
     buttonBackLinks = Utilities.createJButton(
         "wpc-internal-link.png", EnumImageSize.NORMAL,
         GT._T("What links here"), true, null);
@@ -967,34 +912,6 @@ public class MainWindow
   }
 
   /**
-   * Action called when Other Wikipedia button is pressed.
-   */
-  public void actionOtherWikipedia() {
-    String url = URL_OTHER_WIKIPEDIA;
-    if (Utilities.isDesktopSupported()) {
-      Utilities.browseURL(url);
-    } else {
-      displayUrlMessage(
-          GT._T("You can learn how to add other Wikipedia at the following URL:"),
-          url);
-    }
-  }
-
-  /**
-   * Action called when Other Language button is pressed. 
-   */
-  public void actionOtherLanguage() {
-    String url = URL_OTHER_LANGUAGE;
-    if (Utilities.isDesktopSupported()) {
-      Utilities.browseURL(url);
-    } else {
-      displayUrlMessage(
-          GT._T("You can learn how to add other languages at the following URL:"),
-          url);
-    }
-  }
-
-  /**
    * Action called when Login or Demo button is pressed.
    * 
    * @param login Flag indicating if login is required.
@@ -1002,49 +919,49 @@ public class MainWindow
   private void actionLoginDemo(final boolean login) {
 
     // Check that correct values are entered in Wikipedia combo
-    if ((comboWikipedia == null) || (comboWikipedia.getSelectedIndex() == -1)) {
+    EnumWikipedia selectedWiki = wikiSelector.getWiki();
+    if (selectedWiki == null) {
       displayWarning(
           GT._T("You must select which Wikipedia you want to work on before login"),
-          comboWikipedia);
+          wikiSelector.getSelector());
       return;
     }
-    setWikipedia((EnumWikipedia) comboWikipedia.getSelectedItem());
+    setWikipedia(selectedWiki);
 
     // Check that correct values are entered in Language combo
-    if ((comboLanguage == null) || (comboLanguage.getSelectedIndex() == -1)) {
+    EnumLanguage language = languageSelector.getLanguage();
+    if (language == null) {
       displayWarning(
           GT._T("You must select a language before login"),
-          comboLanguage);
+          languageSelector.getSelector());
       return;
     }
-    EnumLanguage language = (EnumLanguage) comboLanguage.getSelectedItem();
     GT.setCurrentLanguage(language);
 
     // Check that correct values are entered for user name
     if (login) {
-      if ((comboUser == null) ||
-          (comboUser.getSelectedItem() == null) ||
-          ("".equals(comboUser.getSelectedItem().toString().trim()))) {
+      String userName = userNameSelector.getUserName();
+      if ((userName == null) ||
+          ("".equals(userName.trim()))) {
         displayWarning(
             GT._T("You must input your username before login"),
-            comboUser);
+            userNameSelector.getSelector());
         return;
       }
     }
 
     // Check that correct values are entered for password
     if (login) {
-      if ((textPassword == null) ||
-          (textPassword.getPassword() == null) ||
-          (textPassword.getPassword().length == 0)) {
+      char[] password = passwordInput.getPassword();
+      if ((password == null) ||
+          (password.length == 0)) {
           displayWarning(
               GT._T("You must input your password before login"),
-              textPassword);
+              passwordInput.getField());
           return;       
       }
 
-      // If password is Ok... continue with validation
-      char[] password = textPassword.getPassword();
+      // If password is OK... continue with validation
       for (int i = 0; i < password.length; i++) {
         password[i] = '\0';
       }
@@ -1061,9 +978,9 @@ public class MainWindow
     // Login
     LoginWorker loginWorker = new LoginWorker(
         getWikipedia(), this, comboPagename,
-        (EnumLanguage) comboLanguage.getSelectedItem(),
-        comboUser.getSelectedItem().toString(),
-        textPassword.getPassword(),
+        languageSelector.getLanguage(),
+        userNameSelector.getUserName(),
+        passwordInput.getPassword(),
         radSavePassword.isSelected() ?
             ConfigurationConstants.VALUE_SAVE_USER_BOTH :
             radSaveUsername.isSelected() ?
@@ -1145,13 +1062,14 @@ public class MainWindow
    * Action called when System Options button is pressed.
    */
   public void actionOptionsSystem() {
+    EnumWikipedia wiki = getWikipedia();
+    String configPage = wiki.getConfigurationPage();
     if (Utilities.isDesktopSupported()) {
-      EnumWikipedia wikipedia = getWikipedia();
-      Utilities.browseURL(wikipedia, wikipedia.getConfigurationPage(), true);
+      Utilities.browseURL(wiki, configPage, true);
     } else {
       displayUrlMessage(
           GT._T("You can learn how to configure {0} at the following URL:", Version.PROGRAM),
-          URL_OTHER_WIKIPEDIA);
+          wiki.getSettings().getURL(configPage, false, true));
     }
   }
 
@@ -1161,9 +1079,9 @@ public class MainWindow
   public void actionReloadOptions() {
     new LoginWorker(
         getWikipedia(), this, comboPagename,
-        (EnumLanguage) comboLanguage.getSelectedItem(),
-        comboUser.getSelectedItem().toString(),
-        textPassword.getPassword(),
+        languageSelector.getLanguage(),
+        userNameSelector.getUserName(),
+        passwordInput.getPassword(),
         radSavePassword.isSelected() ?
             ConfigurationConstants.VALUE_SAVE_USER_BOTH :
             radSaveUsername.isSelected() ?
@@ -1290,39 +1208,6 @@ public class MainWindow
    */
   public void actionCheckSpellingDeactivateChapter(String chapter) {
     Suggestion.activateChapters(null, Collections.singletonList(chapter), false);
-  }
-
-  /**
-   * Action called when Help button is pressed.
-   */
-  public void actionHelp() {
-    EnumWikipedia wikipedia = getWikipedia();
-    WPCConfigurationString attributeHelpURL = WPCConfigurationString.HELP_URL;
-    String url = EnumWikipedia.EN.getConfiguration().getString(attributeHelpURL);
-    if ((wikipedia != null) && (wikipedia.getConfiguration().getString(attributeHelpURL) != null)) {
-      url = wikipedia.getConfiguration().getString(attributeHelpURL);
-    }
-    if (Utilities.isDesktopSupported()) {
-      Utilities.browseURL(url);
-    } else {
-      displayUrlMessage(
-          GT._T("You can read the help on {0} at the following URL:", Version.PROGRAM),
-          url);
-    }
-  }
-
-  /**
-   * Action called when Idea button is pressed.
-   */
-  public void actionIdea() {
-    String url = URL_TALK_PAGE;
-    if (Utilities.isDesktopSupported()) {
-      Utilities.browseURL(url);
-    } else {
-      displayUrlMessage(
-          GT._T("You can submit bug reports or feature requests at the following URL:"),
-          url);
-    }
   }
 
   /**
@@ -2122,61 +2007,6 @@ public class MainWindow
     } catch (APIException e) {
       displayError(e);
       return;
-    }
-  }
-
-  /**
-   * Action called when Language is changed.
-   */
-  public void actionChangeLanguage() {
-    if (comboLanguage.getSelectedItem() instanceof EnumLanguage) {
-      EnumLanguage language = (EnumLanguage) comboLanguage.getSelectedItem();
-      GT.setCurrentLanguage(language);
-    }
-  }
-
-  /**
-   * Action called when Wiki is changed.
-   * 
-   * Reset users list based on current wikipedia.
-   */
-  public void actionChangeWiki() {
-    comboUser.removeAllItems();
-    comboUser.setSelectedItem("");
-    if (comboWikipedia.getSelectedItem() instanceof EnumWikipedia) {
-      EnumWikipedia wikipedia = (EnumWikipedia) comboWikipedia.getSelectedItem();
-      Configuration configuration = Configuration.getConfiguration();
-      Properties users = configuration.getProperties(wikipedia, Configuration.PROPERTIES_USERS);
-      for (Object user : users.keySet()) {
-        comboUser.addItem(user);
-      }
-      if (comboUser.getItemCount() > 0) {
-        comboUser.setSelectedIndex(0);
-      }
-      String lastUser = configuration.getString(wikipedia, ConfigurationValueString.LAST_USER);
-      if (lastUser != null) {
-        comboUser.setSelectedItem(lastUser);
-      }
-    }
-    actionChangeUser();
-  }
-
-  /**
-   * Action called when User is changed.
-   * 
-   * Reset password based on current wikipedia and user.
-   */
-  public void actionChangeUser() {
-    textPassword.setText("");
-    if ((comboWikipedia.getSelectedItem() instanceof EnumWikipedia) &&
-        (comboUser.getSelectedItem() instanceof String)) {
-      EnumWikipedia wikipedia = (EnumWikipedia) comboWikipedia.getSelectedItem();
-      Configuration configuration = Configuration.getConfiguration();
-      Properties users = configuration.getProperties(wikipedia, Configuration.PROPERTIES_USERS);
-      String password = users.getProperty(comboUser.getSelectedItem().toString());
-      if (password != null) {
-        textPassword.setText(password);
-      }
     }
   }
 

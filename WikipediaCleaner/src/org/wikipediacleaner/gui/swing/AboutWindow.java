@@ -105,6 +105,8 @@ public class AboutWindow extends BasicWindow {
     pane.addTab("Commons Codec", createCommonsCodecTab());
     pane.addTab("Commons Compress", createCommonsCompressTab());
     pane.addTab("Commons HttpClient", createCommonsHttpClientTab());
+    pane.addTab("Commons IO", createCommonsIOTab());
+    pane.addTab("Commons Lang3", createCommonsLang3Tab());
     pane.addTab("Commons Logging", createCommonsLoggingTab());
     pane.addTab("Gettext Commons", createGettextCommonsTab());
     pane.addTab("JDOM", createJDomTab());
@@ -309,6 +311,42 @@ public class AboutWindow extends BasicWindow {
         "</html>");
     addFile(panel, constraints, "NOTICE_commons-httpclient.txt");
     addFile(panel, constraints, "LICENSE_commons-httpclient.txt");
+    return createScrollPane(panel);
+  }
+
+  /**
+   * @return Apache Commons IO tab.
+   */
+  private Component createCommonsIOTab() {
+    JPanel panel = new JPanel(new GridBagLayout());
+    GridBagConstraints constraints = initializeGridBagConstraints();
+    addPresentation(
+        panel, constraints,
+        "<html>" +
+        "<b>Commons IO</b> is an Apache project." +
+        "<br>" +
+        "See <a href='https://commons.apache.org/proper/commons-io/'>https://commons.apache.org/proper/commons-io/</a> for more information." +
+        "</html>");
+    addFile(panel, constraints, "NOTICE_commons-io.txt");
+    addFile(panel, constraints, "LICENSE_commons-io.txt");
+    return createScrollPane(panel);
+  }
+
+  /**
+   * @return Apache Commons Lang3 tab.
+   */
+  private Component createCommonsLang3Tab() {
+    JPanel panel = new JPanel(new GridBagLayout());
+    GridBagConstraints constraints = initializeGridBagConstraints();
+    addPresentation(
+        panel, constraints,
+        "<html>" +
+        "<b>Commons Lang</b> is an Apache project." +
+        "<br>" +
+        "See <a href='http://commons.apache.org/proper/commons-lang/'>http://commons.apache.org/proper/commons-lang/</a> for more information." +
+        "</html>");
+    addFile(panel, constraints, "NOTICE_commons-lang3.txt");
+    addFile(panel, constraints, "LICENSE_commons-lang3.txt");
     return createScrollPane(panel);
   }
 
