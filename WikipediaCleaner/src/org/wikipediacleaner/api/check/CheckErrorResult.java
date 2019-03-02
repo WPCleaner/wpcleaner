@@ -13,6 +13,7 @@ import java.util.List;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithm;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageElementTitle;
+import org.wikipediacleaner.api.data.Replacement;
 import org.wikipediacleaner.gui.swing.component.MWPaneEditTocAction;
 import org.wikipediacleaner.i18n.GT;
 
@@ -141,6 +142,26 @@ public class CheckErrorResult implements Comparable<CheckErrorResult> {
    */
   public ErrorLevel getErrorLevel() {
     return errorLevel;
+  }
+
+  /**
+   * Add a possible replacement for the error.
+   * 
+   * @param replacement Possible replacement.
+   */
+  public void addReplacement(Replacement replacement) {
+    if (replacement == null) {
+      return;
+    }
+    if (replacement.text == null) {
+      addReplacement(
+          replacement.replacement,
+          replacement.automatic, replacement.automaticBot);
+    } else {
+      addReplacement(
+          replacement.replacement, replacement.text,
+          replacement.automatic, replacement.automaticBot);
+    }
   }
 
   /**

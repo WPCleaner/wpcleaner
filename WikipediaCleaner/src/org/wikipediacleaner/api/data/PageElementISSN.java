@@ -53,6 +53,7 @@ public class PageElementISSN extends PageElement {
     // Configuration
     WPCConfiguration config = analysis.getWPCConfiguration();
     List<String[]> issnIgnoreTemplates = config.getStringArrayList(WPCConfigurationStringList.ISSN_IGNORE_TEMPLATES); 
+    List<String[]> issnAutoDashTemplates = config.getStringArrayList(WPCConfigurationStringList.ISSN_AUTO_DASH_TEMPLATES);
 
     // Search for ISSN templates
     List<String[]> issnTemplates = config.getStringArrayList(WPCConfigurationStringList.ISSN_TEMPLATES);
@@ -73,7 +74,8 @@ public class PageElementISSN extends PageElement {
               for (String param : params) {
                 if ((param != null) && (param.length() > 0)) {
                   analyzeTemplateParams(
-                      analysis, issns, issnIgnoreTemplates,
+                      analysis, issns,
+                      issnIgnoreTemplates, issnAutoDashTemplates,
                       template, param,
                       false, false, true, false);
                 }
@@ -93,7 +95,8 @@ public class PageElementISSN extends PageElement {
           if (templates != null) {
             for (PageElementTemplate template : templates) {
               analyzeTemplateParams(
-                  analysis, issns, issnIgnoreTemplates,
+                  analysis, issns,
+                  issnIgnoreTemplates, issnAutoDashTemplates,
                   template,
                   ((issnTemplate.length > 1) && (issnTemplate[1].length() > 0)) ? issnTemplate[1] : "1",
                   false, false, false, true);
@@ -107,7 +110,8 @@ public class PageElementISSN extends PageElement {
     List<PageElementTemplate> templates = analysis.getTemplates();
     for (PageElementTemplate template : templates) {
       analyzeTemplateParams(
-          analysis, issns, issnIgnoreTemplates,
+          analysis, issns,
+          issnIgnoreTemplates, issnAutoDashTemplates,
           template, "ISSN", true, true, true, false);
     }
 
@@ -236,12 +240,14 @@ public class PageElementISSN extends PageElement {
       }
     }
     boolean isValid = true;
-    PageElementExternalLink link = analysis.isInExternalLink(index);
-    if (link != null) {
-      if (!link.hasSquare() ||
-          (index < link.getBeginIndex() + link.getTextOffset()) ||
-          (link.getText() == null)) {
-        isValid = false;
+    if (isValid) {
+      PageElementExternalLink eLink = analysis.isInExternalLink(index);
+      if (eLink != null) {
+        if (!eLink.hasSquare() ||
+            (index < eLink.getBeginIndex() + eLink.getTextOffset()) ||
+            (eLink.getText() == null)) {
+          isValid = false;
+        }
       }
     }
 
@@ -262,7 +268,6 @@ public class PageElementISSN extends PageElement {
     if (!parameter) {
       if (beginIndex >= 2) {
         if (contents.startsWith("[[", beginIndex - 2)) {
-          isCorrect = false;
           beginIndex -= 2;
           if ((index + 2 < contents.length()) && contents.startsWith("]]", index)) {
             index += 2;
@@ -349,13 +354,32 @@ public class PageElementISSN extends PageElement {
                    contents.startsWith("]]", endNumber)) {
           endNumber += 2;
         }
+        if (isCorrect && contents.startsWith("[[", beginIndex)) {
+          iLink = analysis.isInInternalLink(beginIndex);
+          if ((iLink == null) ||
+              (iLink.getBeginIndex() != beginIndex) ||
+              (iLink.getEndIndex() <= endNumber)) {
+            isCorrect = false;
+          } else {
+            isCorrect = false;
+            // NOTE: can't be tested against the existence of the link
+            // because the list of links is not necessarily loaded.
+            /*Page link = DataManager.getExistingPage(
+                analysis.getWikipedia(), iLink.getLink(), null,
+                analysis.getPage().getLinks());
+            if ((link == null) ||
+                !Boolean.TRUE.equals(link.isExisting())) {
+              isCorrect = false;
+            }*/
+          }
+        }
         issns.add(new PageElementISSN(
             beginIndex, endNumber, analysis, number,
             isValid, isCorrect, false, null));
         index = endNumber;
       } else {
         if (contents.startsWith(prefix, index) &&
-            !contents.startsWith("[[ISBN#", beginIndex)) {
+            !contents.startsWith("[[ISSN#", beginIndex)) {
           issns.add(new PageElementISSN(
               beginIndex, index, analysis, "",
               isValid, false, false, null));
@@ -372,6 +396,7 @@ public class PageElementISSN extends PageElement {
    * @param analysis Page analysis.
    * @param issns Current list of ISSN.
    * @param ignoreTemplates List of templates (with parameter and value) to ignore.
+   * @param autoDashTemplates List of templates (with parameter) that automatically add the dash if it is missing.
    * @param template Template.
    * @param argumentName Template parameter name.
    * @param ignoreCase True if parameter name should compared ignoring case.
@@ -381,7 +406,7 @@ public class PageElementISSN extends PageElement {
    */
   private static void analyzeTemplateParams(
       PageAnalysis analysis, List<PageElementISSN> issns,
-      List<String[]> ignoreTemplates,
+      List<String[]> ignoreTemplates, List<String[]> autoDashTemplates,
       PageElementTemplate template,
       String argumentName,
       boolean ignoreCase, boolean acceptNumbers,
@@ -444,6 +469,19 @@ public class PageElementISSN extends PageElement {
         }
       }
 
+      // Parameter can be automatically formatted
+      boolean autoDash = false;
+      if (autoDashTemplates != null) {
+        for (String[] autoDashTemplate : autoDashTemplates) {
+          if ((autoDashTemplate != null) &&
+              (autoDashTemplate.length > 1) &&
+              (Page.areSameTitle(autoDashTemplate[0], template.getTemplateName())) &&
+              (paramName.equals(autoDashTemplate[1]))) {
+            autoDash = true;
+          }
+        }
+      }
+      
       // Parameter is for an ISSN, analyze its value
       if (nameOk) {
         String paramValue = param.getValue();
@@ -515,7 +553,10 @@ public class PageElementISSN extends PageElement {
           ok = false;
         }
         if (digitCount == 8) {
-          if (!hasSeparator || hasExtraSeparator) {
+          if (!hasSeparator && !autoDash) {
+            correct = false;
+          }
+          if (hasExtraSeparator) {
             correct = false;
           }
         }
@@ -634,22 +675,32 @@ public class PageElementISSN extends PageElement {
   }
 
   /**
-   * @return List of possible ISSN.
+   * @return List of possible replacements for a correct ISSN.
    */
-  public List<String> getCorrectISSN() {
-    List<String> result = new ArrayList<String>();
+  public List<Replacement> getCorrectISSN() {
+    List<Replacement> result = new ArrayList<>();
     String prefix = isTemplateParameter() ? "" : "ISSN ";
 
     // Prefix outside the template
     if ((template != null) &&
         (getBeginIndex() < template.getBeginIndex())) {
       if (fullText != null) {
-        result.add(fullText.substring(template.getBeginIndex() - getBeginIndex()));
+        result.add(new Replacement(fullText.substring(template.getBeginIndex() - getBeginIndex())));
       }
       return result;
     }
 
     // Construct a basic ISSN number
+    boolean automatic = !isCorrect() && isValid();
+    if (automatic && !isTemplateParameter()) {
+      if (fullText.startsWith(ISSN_PREFIX)) {
+        if (!fullText.substring(ISSN_PREFIX.length()).trim().equals(issnNotTrimmed)) {
+          automatic = false;
+        }
+      } else {
+        automatic = false;
+      }
+    }
     String tmpISSN = issnNotTrimmed.trim();
     if (tmpISSN.startsWith(ISSN_PREFIX)) {
       tmpISSN = tmpISSN.substring(ISSN_PREFIX.length()).trim();
@@ -670,22 +721,28 @@ public class PageElementISSN extends PageElement {
         // Nothing to add
       } else {
         buffer.append(currentChar);
+        automatic = false;
       }
     }
     if (buffer.length() == 8) {
       buffer.insert(4, '-');
+    } else {
+      automatic = false;
     }
+    /*if (isTemplateParameter()) {
+      automatic = false; // TODO: Can be removed when templates which automatically add the hyphen are handled. 
+    }*/
     String cleanedISSN = buffer.toString().trim();
 
     // Basic replacement
-    addCorrectISSN(result, prefix, cleanedISSN);
+    addCorrectISSN(result, prefix, cleanedISSN, automatic);
 
     // Common mistyped characters
     cleanedISSN = cleanedISSN.replaceAll("x", "X");
     cleanedISSN = cleanedISSN.replaceAll("O", "0");
     cleanedISSN = cleanedISSN.replaceAll("I", "1");
     cleanedISSN = cleanedISSN.replaceAll("B", "8");
-    addCorrectISSN(result, prefix, cleanedISSN);
+    addCorrectISSN(result, prefix, cleanedISSN, false);
 
     return result;
   }
@@ -694,12 +751,16 @@ public class PageElementISSN extends PageElement {
    * @param result List of possible replacements.
    * @param prefix ISSN prefix.
    * @param cleanedISSN Cleaned up ISSN.
+   * @param automatic True if replacement can be automatic.
    */
-  private void addCorrectISSN(List<String> result, String prefix, String cleanedISSN) {
+  private void addCorrectISSN(
+      List<Replacement> result,
+      String prefix, String cleanedISSN,
+      boolean automatic) {
     if (computeChecksum(cleanedISSN) != cleanedISSN.charAt(cleanedISSN.length() - 1)) {
       return;
     }
-    addCorrectISSN(result, prefix + cleanedISSN);
+    addCorrectISSN(result, prefix + cleanedISSN, automatic);
     if (!isTemplateParameter()) {
       List<String[]> issnTemplates = wpcConfiguration.getStringArrayList(
           WPCConfigurationStringList.ISSN_TEMPLATES);
@@ -719,7 +780,7 @@ public class PageElementISSN extends PageElement {
               }
               buffer.append(cleanedISSN);
               buffer.append("}}");
-              addCorrectISSN(result, buffer.toString());
+              addCorrectISSN(result, buffer.toString(), false);
             }
           }
         }
@@ -730,13 +791,18 @@ public class PageElementISSN extends PageElement {
   /**
    * @param result List of possible replacements.
    * @param correctISSN Possible replacement.
+   * @param automatic True if the replacement can be automatic.
    */
-  private void addCorrectISSN(List<String> result, String correctISSN) {
+  private void addCorrectISSN(
+      List<Replacement> result,
+      String correctISSN,
+      boolean automatic) {
     if ((result == null) || (correctISSN == null)) {
       return;
     }
-    if (!result.contains(correctISSN)) {
-      result.add(correctISSN);
+    Replacement replacement = new Replacement(correctISSN, automatic);
+    if (!result.contains(replacement)) {
+      result.add(replacement);
     }
   }
 

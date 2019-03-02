@@ -55,6 +55,8 @@ public enum WPCConfigurationStringList {
   ISBN_SPECIAL_VALUES("isbn_special_values", true, true, true),
   // Templates for ISBN
   ISBN_TEMPLATES("general_isbn_templates", true, true, true, new String[] { "ISBN|1" } ),
+  // Templates that automatically add the dash to the ISSN if required
+  ISSN_AUTO_DASH_TEMPLATES("issn_auto_dash_templates", true, true, true),
   // Categories for ISSN errors
   ISSN_ERRORS_CATEGORIES("issn_errors_categories", true, true, true),
   // Lists for ISSN errors

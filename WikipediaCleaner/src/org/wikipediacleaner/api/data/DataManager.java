@@ -22,7 +22,39 @@ import org.wikipediacleaner.utils.Configuration;
 public class DataManager {
 
   /**
-   * @param wikipedia Wikipedia.
+   * @param wiki Wiki.
+   * @param title Page title.
+   * @param revisionId Revision id.
+   * @param knownPages Already known pages.
+   * @return The requested page if it exists in the known pages.
+   */
+  public static Page getExistingPage(
+      EnumWikipedia wiki,
+      String title, String revisionId,
+      List<Page> knownPages) {
+
+    // Check parameters
+    if ((knownPages == null) ||
+        (wiki == null) ||
+        (title == null)) {
+      return null;
+    }
+
+    // Check in the known pages
+    for (Page page : knownPages) {
+      if ((page != null) &&
+          (page.getWikipedia() == wiki) &&
+          (Page.areSameTitle(page.getTitle(), title)) &&
+          ((revisionId == null) || (revisionId.equals(page.getRevisionId().toString())))) {
+        return page;
+      }
+    }
+
+    return null;
+  }
+
+  /**
+   * @param wiki Wiki.
    * @param title Page title.
    * @param pageId Page id.
    * @param revisionId Revision id.
@@ -30,24 +62,18 @@ public class DataManager {
    * @return The requested page.
    */
   public static Page getPage(
-      EnumWikipedia wikipedia,
+      EnumWikipedia wiki,
       String title, Integer pageId, String revisionId,
       List<Page> knownPages) {
 
     // Check in the known pages
-    if (knownPages != null) {
-      for (Page page : knownPages) {
-        if ((page != null) &&
-            (page.getWikipedia() == wikipedia) &&
-            (Page.areSameTitle(page.getTitle(), title)) &&
-            ((revisionId == null) || (revisionId.equals(page.getRevisionId().toString())))) {
-          return page;
-        }
-      }
+    Page page = getExistingPage(wiki, title, revisionId, knownPages);
+    if (page != null) {
+      return page;
     }
 
     // Retrieve page
-    Page page = new Page(wikipedia, title);
+    page = new Page(wiki, title);
     page.setPageId(pageId);
     page.setRevisionId(revisionId);
 
@@ -56,7 +82,7 @@ public class DataManager {
       int colonIndex = page.getTitle().indexOf(':');
       if (colonIndex > 0) {
         String namespaceText = page.getTitle().substring(0, colonIndex);
-        List<Namespace> namespaces = wikipedia.getWikiConfiguration().getNamespaces();
+        List<Namespace> namespaces = wiki.getWikiConfiguration().getNamespaces();
         if (namespaces != null) {
           for (Namespace namespace : namespaces) {
             if (namespace.isPossibleName(namespaceText)) {
@@ -73,7 +99,7 @@ public class DataManager {
     // Manage comments
     Configuration config = Configuration.getConfiguration();
     Object comment = config.getPojo(
-        wikipedia, Configuration.POJO_PAGE_COMMENTS, page.getTitle(), PageComment.class);
+        wiki, Configuration.POJO_PAGE_COMMENTS, page.getTitle(), PageComment.class);
     if (comment instanceof PageComment) {
       page.setComment((PageComment) comment);
     }

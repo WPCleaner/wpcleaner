@@ -21,6 +21,7 @@ import org.wikipediacleaner.api.data.PageElementFunction;
 import org.wikipediacleaner.api.data.PageElementISSN;
 import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.PageElementTemplate.Parameter;
+import org.wikipediacleaner.api.data.Replacement;
 import org.wikipediacleaner.i18n.GT;
 
 
@@ -117,10 +118,12 @@ public class CheckErrorAlgorithm106 extends CheckErrorAlgorithmISSN {
         CheckErrorResult errorResult = createCheckErrorResult(analysis, issn, false);
         addSuggestions(analysis, errorResult, issn);
         errors.add(errorResult);
-        List<String> replacements = issn.getCorrectISSN();
+        List<Replacement> replacements = issn.getCorrectISSN();
         if (replacements != null) {
-          for (String replacement : replacements) {
-            if (!replacement.equals(analysis.getContents().substring(issn.getBeginIndex(), issn.getEndIndex()))) {
+          for (Replacement replacement : replacements) {
+            String newText = replacement.replacement;
+            if ((newText != null) &&
+                !newText.equals(analysis.getContents().substring(issn.getBeginIndex(), issn.getEndIndex()))) {
               errorResult.addReplacement(replacement);
             }
           }
@@ -158,5 +161,19 @@ public class CheckErrorAlgorithm106 extends CheckErrorAlgorithmISSN {
     parameters.put(
         "reason", GT._T("An explanation of the problem"));
     return parameters;
+  }
+
+  /**
+   * Automatic fixing of all the errors in the page.
+   * 
+   * @param analysis Page analysis.
+   * @return Page contents after fix.
+   */
+  @Override
+  protected String internalAutomaticFix(PageAnalysis analysis) {
+    if (!analysis.getPage().isArticle()) {
+      return analysis.getContents();
+    }
+    return fixUsingAutomaticReplacement(analysis);
   }
 }
