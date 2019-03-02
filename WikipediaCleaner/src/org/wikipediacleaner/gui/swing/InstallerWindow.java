@@ -38,6 +38,8 @@ import javax.swing.JTextField;
 import javax.swing.JToolBar;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingConstants;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.SystemUtils;
@@ -52,6 +54,7 @@ import org.wikipediacleaner.gui.swing.component.simple.IdeaButton;
 import org.wikipediacleaner.gui.swing.component.simple.LanguageSelector;
 import org.wikipediacleaner.gui.swing.component.simple.PasswordInput;
 import org.wikipediacleaner.gui.swing.component.simple.UserNameSelector;
+import org.wikipediacleaner.gui.swing.component.simple.WikiChangeListener;
 import org.wikipediacleaner.gui.swing.component.simple.WikiSelector;
 import org.wikipediacleaner.i18n.GT;
 import org.wikipediacleaner.images.EnumImageSize;
@@ -63,7 +66,7 @@ import mslinks.ShellLink;
  */
 public class InstallerWindow
   extends BasicWindow
-  implements ActionListener {
+  implements ActionListener, WikiChangeListener {
 
   public final static Integer WINDOW_VERSION = Integer.valueOf(1);
 
@@ -183,6 +186,51 @@ public class InstallerWindow
     // Base directory
     File defaultBaseDirectory = new File(SystemUtils.getUserHome(), Version.PROGRAM);
     textBaseDirectory = Utilities.createJTextField(defaultBaseDirectory.getAbsolutePath(), 60);
+    textBaseDirectory.getDocument().addDocumentListener(new DocumentListener() {
+
+      /**
+       * Gives notification that a portion of the document has been
+       * removed.  The range is given in terms of what the view last
+       * saw (that is, before updating sticky positions).
+       *
+       * @param e the document event
+       * @see DocumentListener#removeUpdate(DocumentEvent)
+       */
+      @Override
+      public void removeUpdate(DocumentEvent e) {
+        changeText();
+      }
+
+      /**
+       * Gives notification that there was an insert into the document.  The
+       * range given by the DocumentEvent bounds the freshly inserted region.
+       *
+       * @param e the document event
+       * @see DocumentListener#insertUpdate(DocumentEvent)
+       */
+      @Override
+      public void insertUpdate(DocumentEvent e) {
+        changeText();
+      }
+
+      /**
+       * Gives notification that an attribute or set of attributes changed.
+       *
+       * @param e the document event
+       * @see DocumentListener#changeUpdate(DocumentEvent)
+       */
+      @Override
+      public void changedUpdate(DocumentEvent e) {
+        changeText();
+      }
+
+      /**
+       * Called for each modification of the text.
+       */
+      private void changeText() {
+        updateExplanations();
+      }
+    });
     JLabel labelBaseDirectory = Utilities.createJLabel(GT._T("Installation folder"));
     labelBaseDirectory.setLabelFor(textBaseDirectory);
     labelBaseDirectory.setHorizontalAlignment(SwingConstants.TRAILING);
@@ -208,6 +256,7 @@ public class InstallerWindow
 
     // Wiki
     wikiSelector = new WikiSelector(getParentComponent());
+    wikiSelector.addChangeListener(this);
     constraints.gridx = 0;
     constraints.weightx = 0;
     panel.add(wikiSelector.getLabel(), constraints);
@@ -285,6 +334,15 @@ public class InstallerWindow
     constraints.gridy++;
 
     return panel;
+  }
+
+  /**
+   * Update explanations.
+   */
+  public void updateExplanations() {
+    if (textExplanations != null) {
+      textExplanations.setText(getExplanations());
+    }
   }
 
   /**
@@ -390,6 +448,17 @@ public class InstallerWindow
       }
       textBaseDirectory.setText(chooser.getSelectedFile().getAbsolutePath());
     }
+  }
+
+  /**
+   * Action called when wiki is changed.
+   * 
+   * @param wiki Current wiki.
+   * @see org.wikipediacleaner.gui.swing.component.simple.WikiChangeListener#changeWiki(org.wikipediacleaner.api.constants.EnumWikipedia)
+   */
+  @Override
+  public void changeWiki(EnumWikipedia wiki) {
+    updateExplanations();
   }
 
   /**
