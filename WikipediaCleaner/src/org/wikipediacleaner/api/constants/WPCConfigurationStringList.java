@@ -40,6 +40,8 @@ public enum WPCConfigurationStringList {
   ISBN_HELP_NEEDED_TEMPLATES("general_isbn_help_needed_templates", true, true, true),
   // Templates to ignore for ISBN
   ISBN_IGNORE_TEMPLATES("isbn_ignore_templates", true, true, true),
+  // Templates to ignore invalid ISBN
+  ISBN_IGNORE_INCORRECT_TEMPLATES("isbn_ignore_incorrect_templates", true, true, true),
   // Interwikis for ISBN
   ISBN_INTERWIKIS("general_isbn_interwikis", true, true, true, null ),
   // ISBN search engines

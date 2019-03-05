@@ -54,6 +54,7 @@ public class PageElementISBN extends PageElement {
     // Configuration
     WPCConfiguration config = analysis.getWPCConfiguration();
     List<String[]> isbnIgnoreTemplates = config.getStringArrayList(WPCConfigurationStringList.ISBN_IGNORE_TEMPLATES); 
+    List<String[]> isbnIgnoreIncorrect = config.getStringArrayList(WPCConfigurationStringList.ISBN_IGNORE_INCORRECT_TEMPLATES);
 
     // Search for ISBN templates
     List<String[]> isbnTemplates = config.getStringArrayList(WPCConfigurationStringList.ISBN_TEMPLATES);
@@ -113,7 +114,7 @@ public class PageElementISBN extends PageElement {
     }
 
     // Search for ISBN in plain texts
-    analyzePlainText(analysis, isbns);
+    analyzePlainText(analysis, isbns, isbnIgnoreIncorrect);
 
     return isbns;
   }
@@ -140,9 +141,11 @@ public class PageElementISBN extends PageElement {
    * 
    * @param analysis Page analysis.
    * @param isbns Current list of ISBN.
+   * @param ignoreIncorrect List of template parameters to ignore when ISBN is incorrect.
    */
   private static void analyzePlainText(
-      PageAnalysis analysis, List<PageElementISBN> isbns) {
+      PageAnalysis analysis, List<PageElementISBN> isbns,
+      List<String[]> ignoreIncorrect) {
     String contents = analysis.getContents();
     if (contents == null) {
       return;
@@ -150,7 +153,7 @@ public class PageElementISBN extends PageElement {
     int index = 0;
     int maxIndex = contents.length() - 1;
     while (index < maxIndex) {
-      index = checkPlainText(analysis, contents, index, isbns);
+      index = checkPlainText(analysis, contents, index, isbns, ignoreIncorrect);
     }
   }
 
@@ -161,10 +164,12 @@ public class PageElementISBN extends PageElement {
    * @param contents Page contents.
    * @param index Current index in the page.
    * @param isbns Current list of ISBN.
+   * @param ignoreIncorrect List of template parameters to ignore when ISBN is incorrect.
    * @return Next index to check.
    */
   private static int checkPlainText(
-      PageAnalysis analysis, String contents, int index, List<PageElementISBN> isbns) {
+      PageAnalysis analysis, String contents, int index, List<PageElementISBN> isbns,
+      List<String[]> ignoreIncorrect) {
 
     // Check special places
     if (contents.charAt(index) == '<') {
@@ -243,12 +248,13 @@ public class PageElementISBN extends PageElement {
     }
 
     // Check if it's a template parameter
-    boolean parameter = false;
+    Parameter parameter = null;
     if (template != null) {
+      parameter = template.getParameterAtIndex(index);
       for (int paramNum = 0; paramNum < template.getParameterCount(); paramNum++) {
         if ((template.getParameterPipeIndex(paramNum) < index) &&
             (template.getParameterValueStartIndex(paramNum) > index)) {
-          parameter = true;
+          parameter = template.getParameter(paramNum);
         }
       }
     }
@@ -256,7 +262,8 @@ public class PageElementISBN extends PageElement {
     int beginIndex = index;
     index += prefix.length();
     boolean isCorrect = correct;
-    if (!parameter) {
+    if ((parameter == null) ||
+        (parameter.getValueStartIndex() < beginIndex)) {
       if (beginIndex >= 2) {
         if (contents.startsWith("[[", beginIndex - 2)) {
           isCorrect = false;
@@ -353,9 +360,28 @@ public class PageElementISBN extends PageElement {
                    contents.startsWith("]]", endNumber)) {
           endNumber += 2;
         }
-        isbns.add(new PageElementISBN(
-            beginIndex, endNumber, analysis, number,
-            isValid, isCorrect, false, null));
+
+        // Ignore special parameters
+        boolean done = false;
+        if ((template != null) &&
+            (parameter != null) &&
+            (isCorrect == false) &&
+            (ignoreIncorrect != null)) {
+          for (String[] ignore : ignoreIncorrect) {
+            if ((ignore.length > 1) &&
+                (Page.areSameTitle(ignore[0], template.getTemplateName())) &&
+                (ignore[1].equals(parameter.getComputedName()))) {
+              done = true;
+            }
+          }
+        }
+
+        // Default definition
+        if (!done) {
+          isbns.add(new PageElementISBN(
+              beginIndex, endNumber, analysis, number,
+              isValid, isCorrect, false, null));
+        }
         index = endNumber;
       } else {
         if (contents.startsWith(prefix, index) &&
