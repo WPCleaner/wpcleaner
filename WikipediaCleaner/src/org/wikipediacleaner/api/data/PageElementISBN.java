@@ -53,7 +53,7 @@ public class PageElementISBN extends PageElement {
 
     // Configuration
     WPCConfiguration config = analysis.getWPCConfiguration();
-    List<String[]> isbnIgnoreTemplates = config.getStringArrayList(WPCConfigurationStringList.ISBN_IGNORE_TEMPLATES); 
+    List<String[]> isbnIgnoreTemplates = config.getStringArrayList(WPCConfigurationStringList.ISBN_IGNORE_TEMPLATES);
     List<String[]> isbnIgnoreIncorrect = config.getStringArrayList(WPCConfigurationStringList.ISBN_IGNORE_INCORRECT_TEMPLATES);
 
     // Search for ISBN templates
@@ -251,12 +251,6 @@ public class PageElementISBN extends PageElement {
     Parameter parameter = null;
     if (template != null) {
       parameter = template.getParameterAtIndex(index);
-      for (int paramNum = 0; paramNum < template.getParameterCount(); paramNum++) {
-        if ((template.getParameterPipeIndex(paramNum) < index) &&
-            (template.getParameterValueStartIndex(paramNum) > index)) {
-          parameter = template.getParameter(paramNum);
-        }
-      }
     }
 
     int beginIndex = index;

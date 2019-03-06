@@ -52,7 +52,8 @@ public class PageElementISSN extends PageElement {
 
     // Configuration
     WPCConfiguration config = analysis.getWPCConfiguration();
-    List<String[]> issnIgnoreTemplates = config.getStringArrayList(WPCConfigurationStringList.ISSN_IGNORE_TEMPLATES); 
+    List<String[]> issnIgnoreTemplates = config.getStringArrayList(WPCConfigurationStringList.ISSN_IGNORE_TEMPLATES);
+    List<String[]> issnIgnoreIncorrect = config.getStringArrayList(WPCConfigurationStringList.ISSN_IGNORE_INCORRECT_TEMPLATES);
     List<String[]> issnAutoDashTemplates = config.getStringArrayList(WPCConfigurationStringList.ISSN_AUTO_DASH_TEMPLATES);
 
     // Search for ISSN templates
@@ -116,7 +117,7 @@ public class PageElementISSN extends PageElement {
     }
 
     // Search for ISBN in plain texts
-    analyzePlainText(analysis, issns);
+    analyzePlainText(analysis, issns, issnIgnoreIncorrect);
 
     return issns;
   }
@@ -143,9 +144,11 @@ public class PageElementISSN extends PageElement {
    * 
    * @param analysis Page analysis.
    * @param issns Current list of ISSN.
+   * @param ignoreIncorrect List of template parameters to ignore when ISSN is incorrect.
    */
   private static void analyzePlainText(
-      PageAnalysis analysis, List<PageElementISSN> issns) {
+      PageAnalysis analysis, List<PageElementISSN> issns,
+      List<String[]> ignoreIncorrect) {
     String contents = analysis.getContents();
     if (contents == null) {
       return;
@@ -153,7 +156,7 @@ public class PageElementISSN extends PageElement {
     int index = 0;
     int maxIndex = contents.length() - 1;
     while (index < maxIndex) {
-      index = checkPlainText(analysis, contents, index, issns);
+      index = checkPlainText(analysis, contents, index, issns, ignoreIncorrect);
     }
   }
 
@@ -164,10 +167,12 @@ public class PageElementISSN extends PageElement {
    * @param contents Page contents.
    * @param index Current index in the page.
    * @param issns Current list of ISSN.
+   * @param ignoreIncorrect List of template parameters to ignore when ISSN is incorrect.
    * @return Next index to check.
    */
   private static int checkPlainText(
-      PageAnalysis analysis, String contents, int index, List<PageElementISSN> issns) {
+      PageAnalysis analysis, String contents, int index, List<PageElementISSN> issns,
+      List<String[]> ignoreIncorrect) {
 
     // Check special places
     if (contents.charAt(index) == '<') {
@@ -252,20 +257,16 @@ public class PageElementISSN extends PageElement {
     }
 
     // Check if it's a template parameter
-    boolean parameter = false;
+    Parameter parameter = null;
     if (template != null) {
-      for (int paramNum = 0; paramNum < template.getParameterCount(); paramNum++) {
-        if ((template.getParameterPipeIndex(paramNum) < index) &&
-            (template.getParameterValueStartIndex(paramNum) > index)) {
-          parameter = true;
-        }
-      }
+      parameter = template.getParameterAtIndex(index);
     }
 
     int beginIndex = index;
     index += prefix.length();
     boolean isCorrect = correct;
-    if (!parameter) {
+    if ((parameter == null) ||
+        (parameter.getValueStartIndex() < beginIndex)) {
       if (beginIndex >= 2) {
         if (contents.startsWith("[[", beginIndex - 2)) {
           beginIndex -= 2;
@@ -354,6 +355,7 @@ public class PageElementISSN extends PageElement {
                    contents.startsWith("]]", endNumber)) {
           endNumber += 2;
         }
+
         if (isCorrect && contents.startsWith("[[", beginIndex)) {
           iLink = analysis.isInInternalLink(beginIndex);
           if ((iLink == null) ||
@@ -373,9 +375,27 @@ public class PageElementISSN extends PageElement {
             }*/
           }
         }
-        issns.add(new PageElementISSN(
-            beginIndex, endNumber, analysis, number,
-            isValid, isCorrect, false, null));
+
+        // Ignore special parameters
+        boolean done = false;
+        if ((template != null) &&
+            (parameter != null) &&
+            (isCorrect == false) &&
+            (ignoreIncorrect != null)) {
+          for (String[] ignore : ignoreIncorrect) {
+            if ((ignore.length > 1) &&
+                (Page.areSameTitle(ignore[0], template.getTemplateName())) &&
+                (ignore[1].equals(parameter.getComputedName()))) {
+              done = true;
+            }
+          }
+        }
+
+        if (!done) {
+          issns.add(new PageElementISSN(
+              beginIndex, endNumber, analysis, number,
+              isValid, isCorrect, false, null));
+        }
         index = endNumber;
       } else {
         if (contents.startsWith(prefix, index) &&

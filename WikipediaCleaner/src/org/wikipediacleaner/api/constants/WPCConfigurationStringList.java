@@ -67,6 +67,8 @@ public enum WPCConfigurationStringList {
   ISSN_HELP_NEEDED_TEMPLATES("general_issn_help_needed_templates", true, true, true),
   // Templates to ignore for ISSN
   ISSN_IGNORE_TEMPLATES("issn_ignore_templates", true, true, true),
+  // Templates to ignore invalid ISSN
+  ISSN_IGNORE_INCORRECT_TEMPLATES("issn_ignore_incorrect_templates", true, true, true),
   // Interwikis for ISSN
   ISSN_INTERWIKIS("general_issn_interwikis", true, true, true, null ),
   // ISSN search engines
