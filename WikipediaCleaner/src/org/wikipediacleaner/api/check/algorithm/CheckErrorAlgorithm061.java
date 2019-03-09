@@ -102,7 +102,7 @@ public class CheckErrorAlgorithm061 extends CheckErrorAlgorithmBase {
       }
 
       // Check if next character is a punctuation
-      boolean punctuationFound = false;
+      int firstPunctuationIndex = -1;
       char punctuation = ' ';
       if (tmpIndex < contents.length()) {
         punctuation = contents.charAt(tmpIndex);
@@ -111,23 +111,37 @@ public class CheckErrorAlgorithm061 extends CheckErrorAlgorithmBase {
           if ((punctuation != '!') ||
               (tmpIndex + 1 >= contents.length()) ||
               (contents.charAt(tmpIndex + 1) != punctuation)) {
-            punctuationFound = true;
+            firstPunctuationIndex = tmpIndex;
+
+            // Check if the punctuation after is multiple
+            while ((tmpIndex < contents.length()) &&
+                   (contents.charAt(tmpIndex) == punctuation)) {
+              tmpIndex++;
+            }
           }
         }
       }
 
-      // Punctuation found
-      if (punctuationFound) {
+      // Check if error should be reported
+      boolean report = false;
+      if (firstPunctuationIndex >= 0) {
+        if (tmpIndex >= contents.length()) {
+          report = true;
+        } else {
+          char nextChar = contents.charAt(tmpIndex);
+          if (Character.isWhitespace(nextChar)) {
+            report = true;
+          }
+        }
+      }
+
+      // Error found
+      if (report) {
         if (errors == null) {
           return true;
         }
         result = true;
 
-        // Check if the punctuation after is multiple
-        int firstPunctuationIndex = tmpIndex;
-        while ((tmpIndex < contents.length()) && (contents.charAt(tmpIndex) == punctuation)) {
-          tmpIndex++;
-        }
         int beginIndex = firstRef.getBeginIndex();
         int endIndex = tmpIndex;
         String allPunctuations = contents.substring(firstPunctuationIndex, endIndex);
