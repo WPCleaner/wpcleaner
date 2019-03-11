@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2019-02-20 18:49+0100\n"
+"POT-Creation-Date: 2019-03-11 20:55+0100\n"
 "PO-Revision-Date: 2014-09-10 23:22+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Hebrew <he@li.org>\n"
@@ -189,7 +189,7 @@ msgstr ""
 msgid "Error n°{0} ({1} - {2}) - {3}"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/CheckErrorResult.java:178
+#: org/wikipediacleaner/api/check/CheckErrorResult.java:199
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm026.java:99
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm026.java:102
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm038.java:98
@@ -198,7 +198,7 @@ msgstr ""
 msgid "Replace with {0}"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/CheckErrorResult.java:179
+#: org/wikipediacleaner/api/check/CheckErrorResult.java:200
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm010.java:179
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:298
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm017.java:165
@@ -217,7 +217,7 @@ msgstr ""
 msgid "Delete"
 msgstr "מחק"
 
-#: org/wikipediacleaner/api/check/CheckErrorResult.java:307
+#: org/wikipediacleaner/api/check/CheckErrorResult.java:328
 msgid "Edit table of contents"
 msgstr ""
 
@@ -334,34 +334,42 @@ msgid "Left-to-right mark"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:308
-msgid "Line separator"
+msgid "Right-to-left mark"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:309
-msgid "Left-to-right embedding"
+msgid "Line separator"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:310
-msgid "Pop directional formatting"
+msgid "Left-to-right embedding"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:311
-msgid "Byte order mark"
+msgid "Right-to-left embedding"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:312
-msgid "Object replacement character"
+msgid "Pop directional formatting"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:313
-msgid "Private use area"
+msgid "Byte order mark"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:314
-msgid "Private use area A"
+msgid "Object replacement character"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:315
+msgid "Private use area"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:316
+msgid "Private use area A"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:317
 msgid "Private use area B"
 msgstr ""
 
@@ -415,7 +423,7 @@ msgid "View image"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm033.java:120
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm061.java:238
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm061.java:252
 #, java-format
 msgid "Templates that can be used to replace {0} tags"
 msgstr ""
@@ -461,7 +469,7 @@ msgstr ""
 msgid "A list of templates that should be ignored"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm061.java:235
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm061.java:249
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm067.java:322
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm542.java:146
 #, java-format
@@ -564,7 +572,7 @@ msgstr ""
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm069.java:570
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm070.java:263
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm071.java:135
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm106.java:159
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm106.java:162
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm107.java:227
 msgid "An explanation of the problem"
 msgstr ""
@@ -1544,182 +1552,182 @@ msgstr ""
 msgid "Information"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:112
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:115
 msgid "WPCleaner installer"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:168
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:171
 msgid "Configuration"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:186
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:234
 msgid "Installation folder"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:194
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:242
 msgid "Select installation folder"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:258
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:307
 msgid "Create a desktop shortcut"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:266
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:315
 msgid "Install beta version (only for experienced users)"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:299
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:357
 msgid ""
 "A desktop shortcut can be created automatically under Windows and some Linux "
 "flavors."
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:302
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:360
 msgid ""
 "If the desktop shortcut is not created automatically, you can still create "
 "it manually."
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:304
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:362
 #, java-format
 msgid ""
 "The working directory for the shortcut MUST be the installation folder ({0})."
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:306
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:364
 msgid ""
 "The command itself is dependent on the operating system you're using (see "
 "below)."
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:308
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:366
 msgid ""
 "Note: avoid having whitespace characters in the installation folder path, or "
 "you will need to adapt the commands."
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:311
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:369
 msgid ""
 "If you want to run WPCleaner manually, open a terminal/command prompt/... "
 "and change the current directory to the installation folder."
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:316
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:374
 msgid ""
 "And then execute the command dependent on the operating system you're using "
 "(see below)."
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:319
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:377
 msgid "Under Windows, the command can be:"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:325
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:383
 msgid ""
 "Under Linux (or other systems working with .sh scripts), the command can be:"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:331
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:389
 msgid "On any operating system, the command can be:"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:350
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:408
 msgid "Install"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:404
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:473
 #, fuzzy
 msgid "You must select an installation folder."
 msgstr "עליך לבחור שפה לפני ההתחברות"
 
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:411
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:480
 #, java-format
 msgid "The path {0} already exists but is not a folder."
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:419
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:488
 #, java-format
 msgid "The folder {0} already exists, do you want to install WPCleaner there?"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:421
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:490
 msgid "Existing files may be deleted by the installation process."
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:429
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:498
 #, java-format
 msgid "Unable to create folder {0}"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:445
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:514
 msgid "Desktop shortcut is only supported for the following operating systems:"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:506
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:575
 msgid "Installation was successful"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:523
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:538
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:592
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:607
 #, fuzzy, java-format
 msgid "Downloading {0}"
 msgstr "שולח את {0}"
 
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:533
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:602
 #, java-format
 msgid "Unable to download file {0}."
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:534
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:546
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:560
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:585
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:633
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:651
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:603
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:615
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:629
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:654
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:702
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:720
 #, java-format
 msgid "Error: {0}"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:545
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:614
 #, java-format
 msgid "Unable to download file {0}"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:553
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:622
 #, fuzzy, java-format
 msgid "Creating {0}"
 msgstr "שולח את {0}"
 
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:559
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:628
 #, java-format
 msgid "Unable to create file {0}"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:567
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:636
 #, fuzzy, java-format
 msgid "Installing {0}"
 msgstr "שולח את {0}"
 
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:579
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:648
 msgid "Problem running getdown installer"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:580
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:649
 #, java-format
 msgid "Exit code: {0}"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:584
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:650
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:653
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:719
 #, fuzzy, java-format
 msgid "Problem running {0}"
 msgstr "שולח את {0}"
 
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:632
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:701
 msgid "Problem creating desktop file"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:638
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:707
 #, fuzzy, java-format
 msgid "Running {0}"
 msgstr "שולח את {0}"
