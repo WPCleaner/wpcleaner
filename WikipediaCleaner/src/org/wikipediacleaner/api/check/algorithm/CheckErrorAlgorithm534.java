@@ -9,6 +9,7 @@ package org.wikipediacleaner.api.check.algorithm;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
@@ -18,6 +19,7 @@ import org.wikipediacleaner.api.data.MagicWord;
 import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementImage;
 import org.wikipediacleaner.api.data.PageElementImage.Parameter;
+import org.wikipediacleaner.api.data.PageElementTemplate;
 
 
 /**
@@ -531,6 +533,7 @@ public class CheckErrorAlgorithm534 extends CheckErrorAlgorithmBase {
     ArrayList<Parameter> paramsFormat = new ArrayList<>();
     ArrayList<Parameter> paramsHAlign = new ArrayList<>();
     ArrayList<Parameter> paramsVAlign = new ArrayList<>();
+    HashMap<String, ArrayList<Parameter>> paramsOther = new HashMap<>();
     for (PageElementImage image : images) {
 
       // Analyze all parameters of the image
@@ -538,6 +541,7 @@ public class CheckErrorAlgorithm534 extends CheckErrorAlgorithmBase {
       paramsFormat.clear();
       paramsHAlign.clear();
       paramsVAlign.clear();
+      paramsOther.clear();
       Collection<Parameter> imageParameters = image.getParameters();
       if (imageParameters != null) {
         for (Parameter param : imageParameters) {
@@ -582,6 +586,13 @@ public class CheckErrorAlgorithm534 extends CheckErrorAlgorithmBase {
                   MagicWord.IMG_TEXT_TOP.equals(mwName) ||
                   MagicWord.IMG_TOP.equals(mwName)) {
                 paramsVAlign.add(param);
+              } else {
+                ArrayList<Parameter> tmpList = paramsOther.get(mwName);
+                if (tmpList == null) {
+                  tmpList = new ArrayList<>();
+                  paramsOther.put(mwName, tmpList);
+                }
+                tmpList.add(param);
               }
             }
           }
@@ -596,6 +607,26 @@ public class CheckErrorAlgorithm534 extends CheckErrorAlgorithmBase {
         }
         boolean reported = false;
 
+        // Analyze if there's a risk of error
+        boolean safe = true;
+        String imageText = contents.substring(image.getBeginIndex(), image.getEndIndex());
+        for (int index = 0; index < imageText.length() - 1; index++) {
+          if (imageText.charAt(index) == '{') {
+            char nextChar = imageText.charAt(index + 1);
+            if (nextChar == '|') {
+              safe = false;
+            } else if (nextChar == '{') {
+              // TODO: analyze templates/functions/...
+              PageElementTemplate template = analysis.isInTemplate(image.getBeginIndex() + index);
+              if (template != null) {
+                safe = false;
+              } else {
+                safe = false;
+              }
+            }
+          }
+        }
+
         // Case when last parameter is empty
         if (!reported) {
           Parameter param = params.get(params.size() - 1);
@@ -609,7 +640,8 @@ public class CheckErrorAlgorithm534 extends CheckErrorAlgorithmBase {
           }
           if (!hasContents) {
             CheckErrorResult errorResult = createCheckErrorResult(
-                analysis, beginIndex - 1, endIndex);
+                analysis, beginIndex - 1, endIndex,
+                safe ? ErrorLevel.ERROR : ErrorLevel.WARNING);
             errorResult.addReplacement("", false);
             errors.add(errorResult);
             reported = true;
@@ -644,9 +676,9 @@ public class CheckErrorAlgorithm534 extends CheckErrorAlgorithmBase {
                 if (replacement != null) {
                   String text = replacement.targetText;
                   if ((text != null) && !text.isEmpty()) {
-                    errorResult.addReplacement("|" + replacement.targetText, replacement.automatic);
+                    errorResult.addReplacement("|" + replacement.targetText, safe && replacement.automatic);
                   } else {
-                    errorResult.addReplacement("", replacement.automatic);
+                    errorResult.addReplacement("", safe && replacement.automatic);
                   }
                 }
               }
@@ -660,6 +692,9 @@ public class CheckErrorAlgorithm534 extends CheckErrorAlgorithmBase {
       result |= reportMultipleParameters(analysis, errors, image, paramsFormat);
       result |= reportMultipleParameters(analysis, errors, image, paramsHAlign);
       result |= reportMultipleParameters(analysis, errors, image, paramsVAlign);
+      for (ArrayList<Parameter> paramOther : paramsOther.values()) {
+        result |= reportMultipleParameters(analysis, errors, image, paramOther);
+      }
     }
 
     return result;
