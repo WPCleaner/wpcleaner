@@ -293,14 +293,26 @@ public class ListCWWorker extends BasicWorker {
             case '\u200E': // Replace control characters by visible text
               line.append("[LRM]");
               break;
+            case '\u200F': // Replace control characters by visible text
+              line.append("[RLM]");
+              break;
             case '\u2028': // Replace control characters by visible text
               line.append("[LS]");
               break;
             case '\u202A': // Replace control characters by visible text
               line.append("[LRE]");
               break;
+            case '\u202B': // Replace control characters by visible text
+              line.append("[RLE]");
+              break;
             case '\u202C': // Replace control characters by visible text
               line.append("[POPD]");
+              break;
+            case '\u202D': // Replace control characters by visible text
+              line.append("[LRO]");
+              break;
+            case '\u202E': // Replace control characters by visible text
+              line.append("[RLO]");
               break;
             case '\uFEFF': // Replace control characters by visible text
               line.append("[BOM]");

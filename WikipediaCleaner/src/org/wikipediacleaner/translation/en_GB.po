@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2019-03-11 20:55+0100\n"
+"POT-Creation-Date: 2019-03-26 22:13+0100\n"
 "PO-Revision-Date: 2018-01-01 01:34+0000\n"
 "Last-Translator: Andi Chandler <Unknown>\n"
 "Language-Team: English (United Kingdom) <en_GB@li.org>\n"
@@ -377,22 +377,32 @@ msgid "Pop directional formatting"
 msgstr "Pop directional formatting"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:313
+#, fuzzy
+msgid "Left-to-right override"
+msgstr "Left-to-right mark"
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:314
+#, fuzzy
+msgid "Right-to-left override"
+msgstr "Left-to-right mark"
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:315
 msgid "Byte order mark"
 msgstr "Byte order mark"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:314
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:316
 msgid "Object replacement character"
 msgstr "Object replacement character"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:315
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:317
 msgid "Private use area"
 msgstr "Private use area"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:316
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:318
 msgid "Private use area A"
 msgstr "Private use area A"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:317
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:319
 msgid "Private use area B"
 msgstr "Private use area B"
 

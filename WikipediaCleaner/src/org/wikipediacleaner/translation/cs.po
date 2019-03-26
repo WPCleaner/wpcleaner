@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2019-03-11 20:55+0100\n"
+"POT-Creation-Date: 2019-03-26 22:13+0100\n"
 "PO-Revision-Date: 2017-03-03 19:31+0000\n"
 "Last-Translator: Matěj S. <matejsuchanek97@gmail.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
@@ -367,22 +367,32 @@ msgid "Pop directional formatting"
 msgstr "Vyrušení obousměrného textu"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:313
+#, fuzzy
+msgid "Left-to-right override"
+msgstr "Řídicí znak zprava doleva"
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:314
+#, fuzzy
+msgid "Right-to-left override"
+msgstr "Řídicí znak zprava doleva"
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:315
 msgid "Byte order mark"
 msgstr "Označení pořadí bajtů"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:314
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:316
 msgid "Object replacement character"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:315
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:317
 msgid "Private use area"
 msgstr "Rozsah soukromě užívaných znaků"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:316
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:318
 msgid "Private use area A"
 msgstr "Rozsah soukromě užívaných znaků A"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:317
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:319
 msgid "Private use area B"
 msgstr "Rozsah soukromě užívaných znaků B"
 
