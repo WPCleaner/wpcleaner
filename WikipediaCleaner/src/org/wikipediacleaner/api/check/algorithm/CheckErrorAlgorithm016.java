@@ -310,6 +310,8 @@ public class CheckErrorAlgorithm016 extends CheckErrorAlgorithmBase {
     LEFT_TO_RIGHT_EMBEDDING(0x202A, 0x202A, true, false, GT._No("Left-to-right embedding")),
     RIGHT_TO_LEFT_EMBEDDING(0x202B, 0x202B, true, false, GT._No("Right-to-left embedding")),
     POP_DIRECTIONAL_FORMATTING(0x202C, 0x202C, true, false, GT._No("Pop directional formatting")),
+    LEFT_TO_RIGHT_OVERRIDE(0x202D, 0x202D, true, false, GT._No("Left-to-right override")),
+    RIGHT_TO_LEFT_OVERRIDE(0x202E, 0x202E, true, false, GT._No("Right-to-left override")),
     BYTE_ORDER_MARK(0xFEFF, 0xFEFF, true, false, GT._No("Byte order mark")),
     OBJECT_REPLACEMENT_CHARACTER(0xFFFC, 0xFFFC, true, false, GT._No("Object replacement character")),
     PUA(0xE000, 0xF8FF, false, false, GT._No("Private use area")),
