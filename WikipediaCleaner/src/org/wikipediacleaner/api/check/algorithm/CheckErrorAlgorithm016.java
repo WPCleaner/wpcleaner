@@ -15,6 +15,7 @@ import java.util.Map;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.HtmlCharacters;
 import org.wikipediacleaner.api.data.PageAnalysis;
+import org.wikipediacleaner.api.data.PageElementCategory;
 import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.gui.swing.component.MWPane;
 import org.wikipediacleaner.i18n.GT;
@@ -195,7 +196,13 @@ public class CheckErrorAlgorithm016 extends CheckErrorAlgorithmBase {
           }
           i += Character.charCount(codePoint);
         }
-        boolean automatic = (!unsafeCharacter || !checkUnsafe) && !analysis.getPage().isRedirect();
+        boolean automatic = (!unsafeCharacter || !checkUnsafe);
+        if (analysis.getPage().isRedirect()) {
+          PageElementCategory category = analysis.isInCategory(index);
+          if (category == null) {
+            automatic = false;
+          }
+        }
         String original = contents.substring(begin, end);
         String replacement = replacementB.toString();
         if (!replacement.equals(original)) {
@@ -227,10 +234,10 @@ public class CheckErrorAlgorithm016 extends CheckErrorAlgorithmBase {
   private final static String automaticChars =
       "ABCDEFGHIJKLMNOPQRSTUVWXYZ" +
       "abcdefghijklmnopqrstuvwxyz" +
-      "áàâäåãÀ" + "éèêëÉ" + "íìîïĩ" + "óôöōŌ" + "úùûü" + "ý" +
-      "ćč" + "ńň" + "š" + "ź" +
       "0123456789" +
-      " []|(){}<>,.!?;:--–=+*#/%'\"«»\n\t→";
+      "áàâäåãÀ" + "éèêëÉ" + "íìîïĩ" + "óôöōŌ" + "úùûü" + "ý" +
+      "ćč" + "ńň" + "š" + "ź" + "Ø" +
+      " []|(){}<>,.!¡?;:--–—=+*#/%'\"«»\n\t→‘﻿’°@&​";
 
   /**
    * @param codePoint Code point.
