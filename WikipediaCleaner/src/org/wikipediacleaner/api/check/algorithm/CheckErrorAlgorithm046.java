@@ -179,9 +179,20 @@ public class CheckErrorAlgorithm046 extends CheckErrorAlgorithmBase {
 
         // Default
         if (!errorReported) {
+          boolean automatic = false;
+          if ((currentIndex >= 2) && (contents.startsWith("]]", currentIndex - 2))) {
+            PageElementCategory category = analysis.isInCategory(currentIndex - 2);
+            if ((category != null) && (category.getEndIndex() == currentIndex)) {
+              automatic = true;
+            }
+            PageElementInternalLink link = analysis.isInInternalLink(currentIndex - 2);
+            if ((link != null) && (link.getEndIndex() == currentIndex)) {
+              automatic = true;
+            }
+          }
           CheckErrorResult errorResult = createCheckErrorResult(
               analysis, currentIndex, currentIndex + 2);
-          errorResult.addReplacement("", GT._T("Delete"));
+          errorResult.addReplacement("", GT._T("Delete"), automatic);
           errors.add(errorResult);
         }
       }
