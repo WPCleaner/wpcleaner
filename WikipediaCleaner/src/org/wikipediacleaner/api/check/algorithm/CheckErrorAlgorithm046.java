@@ -119,9 +119,13 @@ public class CheckErrorAlgorithm046 extends CheckErrorAlgorithmBase {
               return true;
             }
             result = true;
+            boolean automatic = true;
+            if (contents.substring(link.getBeginIndex() + 1, currentIndex).indexOf('[') >= 0) {
+              automatic = false;
+            }
             CheckErrorResult errorResult = createCheckErrorResult(
                 analysis, currentIndex, currentIndex + 2);
-            errorResult.addReplacement("]");
+            errorResult.addReplacement("]", automatic);
             errors.add(errorResult);
           }
           shouldCount = false;
@@ -185,5 +189,19 @@ public class CheckErrorAlgorithm046 extends CheckErrorAlgorithmBase {
     }
 
     return result;
+  }
+
+  /**
+   * Automatic fixing of all the errors in the page.
+   * 
+   * @param analysis Page analysis.
+   * @return Page contents after fix.
+   */
+  @Override
+  protected String internalAutomaticFix(PageAnalysis analysis) {
+    if (!analysis.getPage().isArticle()) {
+      return analysis.getContents();
+    }
+    return fixUsingAutomaticReplacement(analysis);
   }
 }
