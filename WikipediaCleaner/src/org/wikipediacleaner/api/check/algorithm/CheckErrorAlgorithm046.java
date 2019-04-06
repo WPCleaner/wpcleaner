@@ -123,6 +123,19 @@ public class CheckErrorAlgorithm046 extends CheckErrorAlgorithmBase {
             if (contents.substring(link.getBeginIndex() + 1, currentIndex).indexOf('[') >= 0) {
               automatic = false;
             }
+            if (automatic) {
+              int tmpIndex = link.getBeginIndex();
+              while ((tmpIndex > 0) && (contents.charAt(tmpIndex - 1) != '\n')) {
+                tmpIndex--;
+                if (contents.charAt(tmpIndex) == '[') {
+                  PageElementExternalLink eLinkTmp = analysis.isInExternalLink(tmpIndex);
+                  PageElementInternalLink iLinkTmp = analysis.isInInternalLink(tmpIndex);
+                  if ((eLinkTmp == null) && (iLinkTmp == null)) {
+                    automatic = false;
+                  }
+                }
+              }
+            }
             CheckErrorResult errorResult = createCheckErrorResult(
                 analysis, currentIndex, currentIndex + 2);
             errorResult.addReplacement("]", automatic);
