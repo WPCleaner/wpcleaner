@@ -36,8 +36,11 @@ public class PageElementISSN extends PageElement {
   /** ISSN possible extraneous characters */
   private final static String EXTRA_CHARACTERS = "-";
 
+  /** Dashes other than the normal dash */
+  private final static String OTHER_DASHES = "‐—–";
+
   /** ISSN incorrect characters */
-  private final static String INCORRECT_CHARACTERS = ":‐\t—=–#  ";
+  private final static String INCORRECT_CHARACTERS = OTHER_DASHES + ":\t=#  ";
 
   /** ISSN incorrect characters at the beginning */
   private final static String INCORRECT_BEGIN_CHARACTERS = ":;‐\t—=–#";
@@ -55,6 +58,7 @@ public class PageElementISSN extends PageElement {
     List<String[]> issnIgnoreTemplates = config.getStringArrayList(WPCConfigurationStringList.ISSN_IGNORE_TEMPLATES);
     List<String[]> issnIgnoreIncorrect = config.getStringArrayList(WPCConfigurationStringList.ISSN_IGNORE_INCORRECT_TEMPLATES);
     List<String[]> issnAutoDashTemplates = config.getStringArrayList(WPCConfigurationStringList.ISSN_AUTO_DASH_TEMPLATES);
+    List<String[]> issnAutoFormatTemplates = config.getStringArrayList(WPCConfigurationStringList.ISSN_AUTO_FORMAT_TEMPLATES);
 
     // Search for ISSN templates
     List<String[]> issnTemplates = config.getStringArrayList(WPCConfigurationStringList.ISSN_TEMPLATES);
@@ -76,7 +80,9 @@ public class PageElementISSN extends PageElement {
                 if ((param != null) && (param.length() > 0)) {
                   analyzeTemplateParams(
                       analysis, issns,
-                      issnIgnoreTemplates, issnAutoDashTemplates,
+                      issnIgnoreTemplates,
+                      issnAutoDashTemplates,
+                      issnAutoFormatTemplates,
                       template, param,
                       false, false, true, false);
                 }
@@ -97,7 +103,9 @@ public class PageElementISSN extends PageElement {
             for (PageElementTemplate template : templates) {
               analyzeTemplateParams(
                   analysis, issns,
-                  issnIgnoreTemplates, issnAutoDashTemplates,
+                  issnIgnoreTemplates,
+                  issnAutoDashTemplates,
+                  issnAutoFormatTemplates,
                   template,
                   ((issnTemplate.length > 1) && (issnTemplate[1].length() > 0)) ? issnTemplate[1] : "1",
                   false, false, false, true);
@@ -112,7 +120,9 @@ public class PageElementISSN extends PageElement {
     for (PageElementTemplate template : templates) {
       analyzeTemplateParams(
           analysis, issns,
-          issnIgnoreTemplates, issnAutoDashTemplates,
+          issnIgnoreTemplates,
+          issnAutoDashTemplates,
+          issnAutoFormatTemplates,
           template, "ISSN", true, true, true, false);
     }
 
@@ -417,6 +427,7 @@ public class PageElementISSN extends PageElement {
    * @param issns Current list of ISSN.
    * @param ignoreTemplates List of templates (with parameter and value) to ignore.
    * @param autoDashTemplates List of templates (with parameter) that automatically add the dash if it is missing.
+   * @param autoFormatTemplates List of templates (with parameter) that automatically formats the ISSN.
    * @param template Template.
    * @param argumentName Template parameter name.
    * @param ignoreCase True if parameter name should compared ignoring case.
@@ -426,7 +437,9 @@ public class PageElementISSN extends PageElement {
    */
   private static void analyzeTemplateParams(
       PageAnalysis analysis, List<PageElementISSN> issns,
-      List<String[]> ignoreTemplates, List<String[]> autoDashTemplates,
+      List<String[]> ignoreTemplates,
+      List<String[]> autoDashTemplates,
+      List<String[]> autoFormatTemplates,
       PageElementTemplate template,
       String argumentName,
       boolean ignoreCase, boolean acceptNumbers,
@@ -490,7 +503,19 @@ public class PageElementISSN extends PageElement {
       }
 
       // Parameter can be automatically formatted
+      boolean autoFormat = false;
       boolean autoDash = false;
+      if (autoFormatTemplates != null) {
+        for (String[] autoFormatTemplate : autoFormatTemplates) {
+          if ((autoFormatTemplate != null) &&
+              (autoFormatTemplate.length > 1) &&
+              (Page.areSameTitle(autoFormatTemplate[0], template.getTemplateName())) &&
+              (paramName.equalsIgnoreCase(autoFormatTemplate[1]))) {
+            autoFormat = true;
+            autoDash = true;
+          }
+        }
+      }
       if (autoDashTemplates != null) {
         for (String[] autoDashTemplate : autoDashTemplates) {
           if ((autoDashTemplate != null) &&
@@ -518,6 +543,9 @@ public class PageElementISSN extends PageElement {
         boolean isEmpty = true;
         while (ok && (i < paramValue.length())) {
           char currentChar = paramValue.charAt(i);
+          if (autoDash && (OTHER_DASHES.indexOf(currentChar) >= 0)) {
+            currentChar = '-';
+          }
           if (currentChar == '<') {
             ContentsComment comment = analysis.isInComment(delta + i + 1);
             if ((comment != null) && (comment.getBeginIndex() == delta + i)) {
@@ -534,7 +562,7 @@ public class PageElementISSN extends PageElement {
             }
           } else if (POSSIBLE_CHARACTERS.indexOf(currentChar) >= 0) {
             isEmpty = false;
-            if (hasExtraCharacters) {
+            if (hasExtraCharacters && !autoFormat) {
               correct = false;
             }
             if (Character.isDigit(currentChar)) {
