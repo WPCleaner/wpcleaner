@@ -342,7 +342,11 @@ public class UpdateISBNWarningWorker extends UpdateWarningWorker {
               }
             }
           } catch (APIException e) {
-            // Nothing
+            if (getWindow() != null) {
+              getWindow().displayWarning(
+                  "Error updating list of ISBN errors: " + e.getMessage() +
+                  " (" + e.getErrorCode() + ")");
+            }
           }
         }
       }
