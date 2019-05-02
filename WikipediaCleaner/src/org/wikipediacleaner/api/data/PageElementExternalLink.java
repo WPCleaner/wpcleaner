@@ -21,6 +21,8 @@ public class PageElementExternalLink extends PageElement {
 
   private final String linkNotTrimmed;
   private final String link;
+  private final int    linkBeginIndex;
+  private final int    linkEndIndex;
   private final String textNotTrimmed;
   private final String text;
   private final int    textOffset;
@@ -116,14 +118,14 @@ public class PageElementExternalLink extends PageElement {
         (UNACCEPTABLE.indexOf(contents.charAt(endUrlIndex)) >= 0)) {
       return new PageElementExternalLink(
           beginUrlIndex, endUrlIndex,
-          contents.substring(beginUrlIndex, endUrlIndex),
+          contents.substring(beginUrlIndex, endUrlIndex), beginUrlIndex, endUrlIndex,
           null, -1, false, false);
     }
     if ((endUrlIndex < maxLength) &&
         (contents.charAt(endUrlIndex) == ']')) {
       return new PageElementExternalLink(
           index, endUrlIndex + 1,
-          contents.substring(beginUrlIndex, endUrlIndex),
+          contents.substring(beginUrlIndex, endUrlIndex), beginUrlIndex, endUrlIndex,
           null, -1, true, true);
     }
 
@@ -161,19 +163,19 @@ public class PageElementExternalLink extends PageElement {
         if (prematureEndIndex < 0) {
           return new PageElementExternalLink(
               index, endTextIndex + 1,
-              contents.substring(beginUrlIndex, endUrlIndex),
+              contents.substring(beginUrlIndex, endUrlIndex), beginUrlIndex, endUrlIndex,
               contents.substring(beginTextIndex, endTextIndex),
               beginTextIndex - index, true, true);
         }
         return new PageElementExternalLink(
             index, prematureEndIndex,
-            contents.substring(beginUrlIndex, endUrlIndex),
+            contents.substring(beginUrlIndex, endUrlIndex), beginUrlIndex, endUrlIndex,
             contents.substring(beginTextIndex, prematureEndIndex),
             beginTextIndex - index, true, false);
       } else if (UNACCEPTABLE.indexOf(contents.charAt(endTextIndex)) >= 0) {
         return new PageElementExternalLink(
             beginUrlIndex, endUrlIndex,
-            contents.substring(beginUrlIndex, endUrlIndex),
+            contents.substring(beginUrlIndex, endUrlIndex), beginUrlIndex, endUrlIndex,
             null, -1, false, false);
       } else {
         ContentsComment comment = null;
@@ -195,7 +197,7 @@ public class PageElementExternalLink extends PageElement {
     // No end found
     return new PageElementExternalLink(
         beginUrlIndex, endUrlIndex,
-        contents.substring(beginUrlIndex, endUrlIndex),
+        contents.substring(beginUrlIndex, endUrlIndex), beginUrlIndex, endUrlIndex,
         null, -1, false, false);
   }
 
@@ -229,6 +231,20 @@ public class PageElementExternalLink extends PageElement {
    */
   public String getLink() {
     return link;
+  }
+
+  /**
+   * @return Begin index of the external link.
+   */
+  public int getLinkBeginIndex() {
+    return linkBeginIndex;
+  }
+
+  /**
+   * @return End index of the external link.
+   */
+  public int getLinkEndIndex() {
+    return linkEndIndex;
   }
 
   /**
@@ -276,9 +292,23 @@ public class PageElementExternalLink extends PageElement {
     return hasSecondSquare;
   }
 
+  /**
+   * Constructor.
+   * 
+   * @param beginIndex Begin index of the entire external link.
+   * @param endIndex End index of the entire external link.
+   * @param link Target of the link.
+   * @param linkBeginIndex Begin index of the target of the link.
+   * @param linkEndIndex End index of the target of the link.
+   * @param text Text of the link.
+   * @param textOffset Offset of the text.
+   * @param hasSquare True if there's an open square bracket.
+   * @param hasSecondSquare True if there's also an close square bracket.
+   */
   private PageElementExternalLink(
       int beginIndex, int endIndex,
-      String link, String text, int textOffset,
+      String link, int linkBeginIndex, int linkEndIndex,
+      String text, int textOffset,
       boolean hasSquare, boolean hasSecondSquare) {
     super(beginIndex, endIndex);
     this.linkNotTrimmed = link;
@@ -287,6 +317,8 @@ public class PageElementExternalLink extends PageElement {
       tmpLink = "http:" + tmpLink;
     }
     this.link = tmpLink;
+    this.linkBeginIndex = linkBeginIndex;
+    this.linkEndIndex = linkEndIndex;
     if ((text != null) && (text.trim().length() > 0)) {
       this.textNotTrimmed = text;
       this.text = text.trim();

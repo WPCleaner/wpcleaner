@@ -55,14 +55,42 @@ public class CheckErrorAlgorithm543 extends CheckErrorAlgorithmBase {
       String target = link.getLink();
       int pipeIndex = target.indexOf('|');
       if (pipeIndex > 0) {
-        hasPipe = true;
+        pipeIndex += link.getLinkBeginIndex();
       }
 
       // Check if the link target has a pipe just after
       if (!hasPipe && link.hasSquare()) {
-        int index = link.getBeginIndex() + 1 + target.length();
+        int index = link.getLinkEndIndex();
         if ((index < contents.length()) && (contents.charAt(index) == '|')) {
+          pipeIndex = index;
+        }
+      }
+
+      // Final verification
+      int newStartIndex = pipeIndex;
+      if ((pipeIndex > 0) && (pipeIndex + 1 < link.getEndIndex())) {
+        int tmpIndex = pipeIndex + 1;
+        if (contents.charAt(tmpIndex) == ' ') {
           hasPipe = true;
+          newStartIndex = tmpIndex + 1;
+        }
+        if ("{[".indexOf(contents.charAt(tmpIndex)) >= 0) {
+          hasPipe = true;
+          newStartIndex = tmpIndex;
+        } else {
+          while ((tmpIndex < link.getEndIndex()) &&
+                 (Character.isLetterOrDigit(contents.charAt(tmpIndex)))) {
+            tmpIndex++;
+          }
+          String prefix = contents.substring(pipeIndex + 1, tmpIndex);
+          while ((tmpIndex < link.getEndIndex()) && (contents.charAt(tmpIndex) == ' ')) {
+            tmpIndex++;
+          }
+          if ((prefix.length() > 0) &&
+              (contents.startsWith(prefix, tmpIndex))) {
+            hasPipe = true;
+            newStartIndex = tmpIndex;
+          }
         }
       }
 
@@ -76,6 +104,8 @@ public class CheckErrorAlgorithm543 extends CheckErrorAlgorithmBase {
         int beginIndex = link.getBeginIndex();
         int endIndex = link.getEndIndex();
         CheckErrorResult error = createCheckErrorResult(analysis, beginIndex, endIndex);
+        error.addReplacement(
+            contents.substring(beginIndex, pipeIndex) + ' ' + contents.substring(newStartIndex, endIndex));
         errors.add(error);
       }
     }
