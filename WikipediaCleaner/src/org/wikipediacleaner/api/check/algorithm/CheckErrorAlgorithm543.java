@@ -68,11 +68,13 @@ public class CheckErrorAlgorithm543 extends CheckErrorAlgorithmBase {
 
       // Final verification
       int newStartIndex = pipeIndex;
+      boolean automatic = false;
       if ((pipeIndex > 0) && (pipeIndex + 1 < link.getEndIndex())) {
         int tmpIndex = pipeIndex + 1;
         if (contents.charAt(tmpIndex) == ' ') {
           hasPipe = true;
           newStartIndex = tmpIndex + 1;
+          automatic = true;
         }
         if ("{[".indexOf(contents.charAt(tmpIndex)) >= 0) {
           hasPipe = true;
@@ -101,11 +103,18 @@ public class CheckErrorAlgorithm543 extends CheckErrorAlgorithmBase {
         }
         result = true;
 
+        // Check for automatic modifications
+        if (!link.hasSquare() || !link.hasSecondSquare()) {
+          automatic = false;
+        }
+
+        // Report error
         int beginIndex = link.getBeginIndex();
         int endIndex = link.getEndIndex();
         CheckErrorResult error = createCheckErrorResult(analysis, beginIndex, endIndex);
         error.addReplacement(
-            contents.substring(beginIndex, pipeIndex) + ' ' + contents.substring(newStartIndex, endIndex));
+            contents.substring(beginIndex, pipeIndex) + ' ' + contents.substring(newStartIndex, endIndex),
+            automatic);
         errors.add(error);
       }
     }
