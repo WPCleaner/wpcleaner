@@ -44,15 +44,14 @@ import org.wikipediacleaner.i18n.GT;
  */
 public class WPCConfiguration {
 
-  /**
-   * Logger.
-   */
+  /** Logger */
   private final static Logger log = LoggerFactory.getLogger(WPCConfiguration.class);
 
-  /**
-   * Wiki.
-   */
+  /** Wiki */
   private final EnumWikipedia wiki;
+
+  /** Version of the configuration */
+  private int version;
 
   /**
    * Constructor for WPCleaner configuration.
@@ -61,6 +60,7 @@ public class WPCConfiguration {
    */
   public WPCConfiguration(EnumWikipedia wiki) {
     this.wiki = wiki;
+    this.version = 0;
     generalBooleanValues = new HashMap<WPCConfigurationBoolean, Boolean>();
     userBooleanValues = new HashMap<WPCConfigurationBoolean, Boolean>();
     generalStringValues = new HashMap<WPCConfigurationString, String>();
@@ -73,10 +73,32 @@ public class WPCConfiguration {
   }
 
   /**
+   * @return Wiki.
+   */
+  public EnumWikipedia getWiki() {
+    return wiki;
+  }
+
+  /**
+   * Set the configuration.
+   * 
+   * @param inputGeneral Reader for general WPCleaner configuration.
+   * @param inputUser Reader for user WPCleaner configuration.
+   * @throws APIException Exception thrown by the API.
+   */
+  public void setConfiguration(Reader inputGeneral, Reader inputUser) throws APIException {
+    setGeneralConfiguration(inputGeneral);
+    if (inputUser != null) {
+      setUserConfiguration(inputUser);
+    }
+    version++;
+  }
+
+  /**
    * @param input Reader for general WPCleaner configuration.
    * @throws APIException Exception thrown by the API.
    */
-  public void setGeneralConfiguration(Reader input) throws APIException {
+  private void setGeneralConfiguration(Reader input) throws APIException {
     cleanConfiguration();
     BufferedReader reader = new BufferedReader(input);
     while (setNextParameter(reader, true)) {
@@ -113,7 +135,7 @@ public class WPCConfiguration {
    * @param input Reader for user WPCleaner configuration.
    * @throws APIException Exception thrown by the API.
    */
-  public void setUserConfiguration(Reader input) throws APIException {
+  private void setUserConfiguration(Reader input) throws APIException {
     BufferedReader reader = new BufferedReader(input);
     while (setNextParameter(reader, false)) {
       //
@@ -123,6 +145,13 @@ public class WPCConfiguration {
     } catch (IOException e) {
       // Nothing
     }
+  }
+
+  /**
+   * @return Version of the configuration.
+   */
+  public int getVersion() {
+    return version;
   }
 
   /**

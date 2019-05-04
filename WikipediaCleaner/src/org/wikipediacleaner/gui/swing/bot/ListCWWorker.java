@@ -56,6 +56,9 @@ public class ListCWWorker extends BasicWorker {
   /** Logger */
   private final static Logger log = LoggerFactory.getLogger(ListCWWorker.class);
 
+  /** Logger CW */
+  final static Logger logCW = LoggerFactory.getLogger("DumpAnalysis");
+
   /** File containing the dump */
   private final File dumpFile;
 
@@ -218,6 +221,7 @@ public class ListCWWorker extends BasicWorker {
           ": " + (algorithm.getTimeSpent() / 1000000000));
     }
     log.info(buffer.toString());
+    System.exit(0);
   }
 
   /**
@@ -618,7 +622,7 @@ public class ListCWWorker extends BasicWorker {
 
           // Memorize detection
           if (detectionConfirmed) {
-            System.out.println(
+            logCW.info(
                 "Detection confirmed for " + page.getTitle() +
                 ": " + algorithm.algorithm.getErrorNumberString() +
                 " - " + algorithm.algorithm.getShortDescription());

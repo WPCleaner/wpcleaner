@@ -53,7 +53,7 @@ public class PageElementISBN extends PageElement {
 
     // Configuration
     WPCConfiguration config = analysis.getWPCConfiguration();
-    List<String[]> isbnIgnoreTemplates = config.getStringArrayList(WPCConfigurationStringList.ISBN_IGNORE_TEMPLATES);
+    PageElementISBNConfiguration isbnConfig = new PageElementISBNConfiguration(config);
     List<String[]> isbnIgnoreIncorrect = config.getStringArrayList(WPCConfigurationStringList.ISBN_IGNORE_INCORRECT_TEMPLATES);
 
     // Search for ISBN templates
@@ -75,7 +75,7 @@ public class PageElementISBN extends PageElement {
               for (String param : params) {
                 if ((param != null) && (param.length() > 0)) {
                   analyzeTemplateParams(
-                      analysis, isbns, isbnIgnoreTemplates,
+                      analysis, isbns, isbnConfig,
                       template, param,
                       false, false, true, false);
                 }
@@ -95,7 +95,7 @@ public class PageElementISBN extends PageElement {
           if (templates != null) {
             for (PageElementTemplate template : templates) {
               analyzeTemplateParams(
-                  analysis, isbns, isbnIgnoreTemplates,
+                  analysis, isbns, isbnConfig,
                   template,
                   ((isbnTemplate.length > 1) && (isbnTemplate[1].length() > 0)) ? isbnTemplate[1] : "1",
                   false, false, false, true);
@@ -109,7 +109,7 @@ public class PageElementISBN extends PageElement {
     List<PageElementTemplate> templates = analysis.getTemplates();
     for (PageElementTemplate template : templates) {
       analyzeTemplateParams(
-          analysis, isbns, isbnIgnoreTemplates,
+          analysis, isbns, isbnConfig,
           template, "ISBN", true, true, true, false);
     }
 
@@ -395,7 +395,7 @@ public class PageElementISBN extends PageElement {
    * 
    * @param analysis Page analysis.
    * @param isbns Current list of ISBN.
-   * @param ignoreTemplates List of templates (with parameter and value) to ignore.
+   * @param isbnConfig Configuration for ISBN.
    * @param template Template.
    * @param argumentName Template parameter name.
    * @param ignoreCase True if parameter name should compared ignoring case.
@@ -405,35 +405,15 @@ public class PageElementISBN extends PageElement {
    */
   private static void analyzeTemplateParams(
       PageAnalysis analysis, List<PageElementISBN> isbns,
-      List<String[]> ignoreTemplates,
+      PageElementISBNConfiguration isbnConfig,
       PageElementTemplate template,
       String argumentName,
       boolean ignoreCase, boolean acceptNumbers,
       boolean acceptAllValues, boolean helpRequested) {
 
     // Check if template should be ignored
-    if (ignoreTemplates != null) {
-      for (String[] ignoreTemplate : ignoreTemplates) {
-        if ((ignoreTemplate != null) &&
-            (ignoreTemplate.length > 0) &&
-            (Page.areSameTitle(ignoreTemplate[0], template.getTemplateName()))) {
-          if (ignoreTemplate.length > 1) {
-            String paramValue = template.getParameterValue(ignoreTemplate[1]);
-            if (ignoreTemplate.length > 2) {
-              if ((paramValue != null) &&
-                  (paramValue.trim().equals(ignoreTemplate[2].trim()))) {
-                return; // Ignore all templates with this name and parameter set to a given value
-              }
-            } else {
-              if (paramValue != null) {
-                return; // Ignore all templates with this name and parameter present
-              }
-            }
-          } else {
-            return; // Ignore all templates with this name
-          }
-        }
-      }
+    if (isbnConfig.shouldIgnoreTemplate(template)) {
+      return;
     }
 
     for (int paramNum = 0; paramNum < template.getParameterCount(); paramNum++) {

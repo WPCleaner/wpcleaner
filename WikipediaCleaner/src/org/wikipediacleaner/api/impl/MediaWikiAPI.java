@@ -256,14 +256,11 @@ public class MediaWikiAPI implements API {
       retrieveContents(wiki, pages, false, false);
 
       // Set configuration
-      wiki.getConfiguration().setGeneralConfiguration(
-          new StringReader(page.getContents()));
-      if (userConfigPage != null) {
-        if (Boolean.TRUE.equals(userConfigPage.isExisting())) {
-          wiki.getConfiguration().setUserConfiguration(
-              new StringReader(userConfigPage.getContents()));
-        }
-      }
+      wiki.getConfiguration().setConfiguration(
+          new StringReader(page.getContents()),
+          (userConfigPage != null) && Boolean.TRUE.equals(userConfigPage.isExisting()) ?
+              new StringReader(userConfigPage.getContents()) :
+              null);
     }
   }
 

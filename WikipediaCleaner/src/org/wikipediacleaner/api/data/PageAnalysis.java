@@ -160,7 +160,13 @@ public class PageAnalysis {
     long time3 = System.nanoTime();
     level4Analysis();
     long time4 = System.nanoTime();
-    level5Analysis();
+    level5AnalysisISBN();
+    long time4a = System.nanoTime();
+    level5AnalysisISSN();
+    long time4b = System.nanoTime();
+    level5AnalysisPMID();
+    long time4c = System.nanoTime();
+    level5AnalysisRFC();
     long time5 = System.nanoTime();
     level6Analysis();
     long time6 = System.nanoTime();
@@ -170,6 +176,10 @@ public class PageAnalysis {
       perf.level3 += (time3 - time2);
       perf.level4 += (time4 - time3);
       perf.level5 += (time5 - time4);
+      perf.level5_ISBN += (time4a - time4);
+      perf.level5_ISSN += (time4b - time4a);
+      perf.level5_PMID += (time4c - time4b);
+      perf.level5_RFC += (time5 - time4c);
       perf.level6 += (time6 - time5);
     }
   }
@@ -183,6 +193,10 @@ public class PageAnalysis {
     long level3;
     long level4;
     long level5;
+    long level5_ISBN;
+    long level5_ISSN;
+    long level5_PMID;
+    long level5_RFC;
     long level6;
 
     public AnalysisPerformance() {
@@ -191,6 +205,10 @@ public class PageAnalysis {
       level3 = 0;
       level4 = 0;
       level5 = 0;
+      level5_ISBN = 0;
+      level5_ISSN = 0;
+      level5_PMID = 0;
+      level5_RFC = 0;
       level6 = 0;
     }
 
@@ -205,6 +223,10 @@ public class PageAnalysis {
       long time3 = level3 / 1000000000;
       long time4 = level4 / 1000000000;
       long time5 = level5 / 1000000000;
+      long time5_ISBN = level5_ISBN / 1000000000;
+      long time5_ISSN = level5_ISSN / 1000000000;
+      long time5_PMID = level5_PMID / 1000000000;
+      long time5_RFC = level5_RFC / 1000000000;
       long time6 = level6 / 1000000000;
       StringBuilder result = new StringBuilder();
       result.append(time1 + time2 + time3 + time4 + time5 + time6);
@@ -218,6 +240,16 @@ public class PageAnalysis {
       result.append(time4);
       result.append(" + ");
       result.append(time5);
+      if (time5_ISBN + time5_ISSN + time5_PMID + time5_RFC > 0) {
+        result.append("=");
+        result.append(time5_ISBN);
+        result.append("+");
+        result.append(time5_ISSN);
+        result.append("+");
+        result.append(time5_PMID);
+        result.append("+");
+        result.append(time5_RFC);
+      }
       result.append(" + ");
       result.append(time6);
       result.append(")");
@@ -884,6 +916,110 @@ public class PageAnalysis {
       areas.addISSN(issns);
       pmids = PageElementPMID.analyzePage(this);
       areas.addPMID(pmids);
+      rfcs = PageElementRFC.analyzePage(this);
+      areas.addRFC(rfcs);
+
+      if (perf != null) {
+        perf.printEnd();
+        perf.release();
+      }
+    }
+  }
+
+  /**
+   * Perform a level 5 analysis of the page for ISBN.
+   */
+  private void level5AnalysisISBN() {
+    synchronized (level5Lock) {
+      if (isbns != null) {
+        return;
+      }
+      level4Analysis();
+
+      Performance perf = null;
+      if (traceTime) {
+        perf = Performance.getInstance(
+            "PageAnalysis.level5AnalysisISBN", TRACE_THRESHOLD);
+      }
+
+      isbns = PageElementISBN.analyzePage(this);
+      areas.addISBN(isbns);
+
+      if (perf != null) {
+        perf.printEnd();
+        perf.release();
+      }
+    }
+  }
+
+  /**
+   * Perform a level 5 analysis of the page for ISSN.
+   */
+  private void level5AnalysisISSN() {
+    synchronized (level5Lock) {
+      if (issns != null) {
+        return;
+      }
+      level4Analysis();
+
+      Performance perf = null;
+      if (traceTime) {
+        perf = Performance.getInstance(
+            "PageAnalysis.level5AnalysisISSN", TRACE_THRESHOLD);
+      }
+
+      issns = PageElementISSN.analyzePage(this);
+      areas.addISSN(issns);
+
+      if (perf != null) {
+        perf.printEnd();
+        perf.release();
+      }
+    }
+  }
+
+  /**
+   * Perform a level 5 analysis of the page for PMID.
+   */
+  private void level5AnalysisPMID() {
+    synchronized (level5Lock) {
+      if (pmids != null) {
+        return;
+      }
+      level4Analysis();
+
+      Performance perf = null;
+      if (traceTime) {
+        perf = Performance.getInstance(
+            "PageAnalysis.level5AnalysisPMID", TRACE_THRESHOLD);
+      }
+
+      pmids = PageElementPMID.analyzePage(this);
+      areas.addPMID(pmids);
+
+      if (perf != null) {
+        perf.printEnd();
+        perf.release();
+      }
+    }
+  }
+
+  /**
+   * Perform a level 5 analysis of the page for RFC.
+   */
+  private void level5AnalysisRFC() {
+    synchronized (level5Lock) {
+      if (rfcs != null) {
+        return;
+      }
+      level4Analysis();
+
+      Performance perf = null;
+      if (traceTime) {
+        perf = Performance.getInstance(
+            "PageAnalysis.level5AnalysisRFC", TRACE_THRESHOLD);
+      }
+
       rfcs = PageElementRFC.analyzePage(this);
       areas.addRFC(rfcs);
 

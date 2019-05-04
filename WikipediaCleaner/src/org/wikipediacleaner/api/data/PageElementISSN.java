@@ -55,10 +55,8 @@ public class PageElementISSN extends PageElement {
 
     // Configuration
     WPCConfiguration config = analysis.getWPCConfiguration();
-    List<String[]> issnIgnoreTemplates = config.getStringArrayList(WPCConfigurationStringList.ISSN_IGNORE_TEMPLATES);
+    PageElementISSNConfiguration issnConfig = new PageElementISSNConfiguration(config);
     List<String[]> issnIgnoreIncorrect = config.getStringArrayList(WPCConfigurationStringList.ISSN_IGNORE_INCORRECT_TEMPLATES);
-    List<String[]> issnAutoDashTemplates = config.getStringArrayList(WPCConfigurationStringList.ISSN_AUTO_DASH_TEMPLATES);
-    List<String[]> issnAutoFormatTemplates = config.getStringArrayList(WPCConfigurationStringList.ISSN_AUTO_FORMAT_TEMPLATES);
 
     // Search for ISSN templates
     List<String[]> issnTemplates = config.getStringArrayList(WPCConfigurationStringList.ISSN_TEMPLATES);
@@ -80,9 +78,7 @@ public class PageElementISSN extends PageElement {
                 if ((param != null) && (param.length() > 0)) {
                   analyzeTemplateParams(
                       analysis, issns,
-                      issnIgnoreTemplates,
-                      issnAutoDashTemplates,
-                      issnAutoFormatTemplates,
+                      issnConfig,
                       template, param,
                       false, false, true, false);
                 }
@@ -103,9 +99,7 @@ public class PageElementISSN extends PageElement {
             for (PageElementTemplate template : templates) {
               analyzeTemplateParams(
                   analysis, issns,
-                  issnIgnoreTemplates,
-                  issnAutoDashTemplates,
-                  issnAutoFormatTemplates,
+                  issnConfig,
                   template,
                   ((issnTemplate.length > 1) && (issnTemplate[1].length() > 0)) ? issnTemplate[1] : "1",
                   false, false, false, true);
@@ -120,9 +114,7 @@ public class PageElementISSN extends PageElement {
     for (PageElementTemplate template : templates) {
       analyzeTemplateParams(
           analysis, issns,
-          issnIgnoreTemplates,
-          issnAutoDashTemplates,
-          issnAutoFormatTemplates,
+          issnConfig,
           template, "ISSN", true, true, true, false);
     }
 
@@ -436,9 +428,7 @@ public class PageElementISSN extends PageElement {
    * 
    * @param analysis Page analysis.
    * @param issns Current list of ISSN.
-   * @param ignoreTemplates List of templates (with parameter and value) to ignore.
-   * @param autoDashTemplates List of templates (with parameter) that automatically add the dash if it is missing.
-   * @param autoFormatTemplates List of templates (with parameter) that automatically formats the ISSN.
+   * @param issnConfig Configuration for ISSN.
    * @param template Template.
    * @param argumentName Template parameter name.
    * @param ignoreCase True if parameter name should compared ignoring case.
@@ -448,37 +438,15 @@ public class PageElementISSN extends PageElement {
    */
   private static void analyzeTemplateParams(
       PageAnalysis analysis, List<PageElementISSN> issns,
-      List<String[]> ignoreTemplates,
-      List<String[]> autoDashTemplates,
-      List<String[]> autoFormatTemplates,
+      PageElementISSNConfiguration issnConfig,
       PageElementTemplate template,
       String argumentName,
       boolean ignoreCase, boolean acceptNumbers,
       boolean acceptAllValues, boolean helpRequested) {
 
     // Check if template should be ignored
-    if (ignoreTemplates != null) {
-      for (String[] ignoreTemplate : ignoreTemplates) {
-        if ((ignoreTemplate != null) &&
-            (ignoreTemplate.length > 0) &&
-            (Page.areSameTitle(ignoreTemplate[0], template.getTemplateName()))) {
-          if (ignoreTemplate.length > 1) {
-            String paramValue = template.getParameterValue(ignoreTemplate[1]);
-            if (ignoreTemplate.length > 2) {
-              if ((paramValue != null) &&
-                  (paramValue.trim().equals(ignoreTemplate[2].trim()))) {
-                return; // Ignore all templates with this name and parameter set to a given value
-              }
-            } else {
-              if (paramValue != null) {
-                return; // Ignore all templates with this name and parameter present
-              }
-            }
-          } else {
-            return; // Ignore all templates with this name
-          }
-        }
-      }
+    if (issnConfig.shouldIgnoreTemplate(template)) {
+      return;
     }
 
     for (int paramNum = 0; paramNum < template.getParameterCount(); paramNum++) {
@@ -513,31 +481,6 @@ public class PageElementISSN extends PageElement {
         }
       }
 
-      // Parameter can be automatically formatted
-      boolean autoFormat = false;
-      boolean autoDash = false;
-      if (autoFormatTemplates != null) {
-        for (String[] autoFormatTemplate : autoFormatTemplates) {
-          if ((autoFormatTemplate != null) &&
-              (autoFormatTemplate.length > 1) &&
-              (Page.areSameTitle(autoFormatTemplate[0], template.getTemplateName())) &&
-              (paramName.equalsIgnoreCase(autoFormatTemplate[1]))) {
-            autoFormat = true;
-            autoDash = true;
-          }
-        }
-      }
-      if (autoDashTemplates != null) {
-        for (String[] autoDashTemplate : autoDashTemplates) {
-          if ((autoDashTemplate != null) &&
-              (autoDashTemplate.length > 1) &&
-              (Page.areSameTitle(autoDashTemplate[0], template.getTemplateName())) &&
-              (paramName.equals(autoDashTemplate[1]))) {
-            autoDash = true;
-          }
-        }
-      }
-      
       // Parameter is for an ISSN, analyze its value
       if (nameOk) {
         String paramValue = param.getValue();
@@ -554,7 +497,8 @@ public class PageElementISSN extends PageElement {
         boolean isEmpty = true;
         while (ok && (i < paramValue.length())) {
           char currentChar = paramValue.charAt(i);
-          if (autoDash && (OTHER_DASHES.indexOf(currentChar) >= 0)) {
+          if ((OTHER_DASHES.indexOf(currentChar) >= 0) &&
+              issnConfig.isAutoDashTemplate(template.getTemplateName(), paramName)) {
             currentChar = '-';
           }
           if (currentChar == '<') {
@@ -573,7 +517,8 @@ public class PageElementISSN extends PageElement {
             }
           } else if (POSSIBLE_CHARACTERS.indexOf(currentChar) >= 0) {
             isEmpty = false;
-            if (hasExtraCharacters && !autoFormat) {
+            if (hasExtraCharacters && 
+                !issnConfig.isAutoFormatTemplate(template.getTemplateName(), paramName)) {
               correct = false;
             }
             if (Character.isDigit(currentChar)) {
@@ -612,10 +557,12 @@ public class PageElementISSN extends PageElement {
           ok = false;
         }
         if (digitCount == 8) {
-          if (!hasSeparator && !autoDash) {
+          if (!hasSeparator &&
+              !issnConfig.isAutoDashTemplate(template.getTemplateName(), paramName)) {
             correct = false;
           }
-          if (hasExtraSeparator && !autoFormat) {
+          if (hasExtraSeparator &&
+              !issnConfig.isAutoFormatTemplate(template.getTemplateName(), paramName)) {
             correct = false;
           }
         }
