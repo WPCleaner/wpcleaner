@@ -221,7 +221,6 @@ public class ListCWWorker extends BasicWorker {
           ": " + (algorithm.getTimeSpent() / 1000000000));
     }
     log.info(buffer.toString());
-    System.exit(0);
   }
 
   /**
