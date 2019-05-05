@@ -363,6 +363,7 @@ public class ListCWWorker extends BasicWorker {
     }
 
     // Prepare result
+    logCW.info("Preparing results of dump analysis for error" + algorithm.getErrorNumberString());
     List<Detection> tmpPages = new ArrayList<>(pages);
     Collections.sort(tmpPages);
     int nbPages = tmpPages.size();
@@ -370,6 +371,7 @@ public class ListCWWorker extends BasicWorker {
 
     // Output to file
     if (output != null) {
+      logCW.info("Writing dump analysis results for error " + algorithm.getErrorNumberString() + " to file");
       File outputFile = null;
       if (!output.getName().contains("{0}")) {
         outputFile = new File(
@@ -397,6 +399,7 @@ public class ListCWWorker extends BasicWorker {
 
     // Output to a page
     if (pageName != null) {
+      logCW.info("Writing dump analysis results for error " + algorithm.getErrorNumberString() + " to page");
       boolean finished = false;
       while (!finished) {
         try {
