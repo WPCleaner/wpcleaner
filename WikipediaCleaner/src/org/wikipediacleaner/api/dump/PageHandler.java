@@ -8,6 +8,8 @@
 
 package org.wikipediacleaner.api.dump;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.wikipediacleaner.api.data.DataManager;
 import org.wikipediacleaner.api.data.Page;
 import org.xml.sax.Attributes;
@@ -19,6 +21,12 @@ import org.xml.sax.helpers.DefaultHandler;
  * SAX handler for page elements.
  */
 public class PageHandler extends DefaultHandler {
+
+  /** Logger */
+  private final Logger log = LoggerFactory.getLogger(PageHandler.class);
+
+  /** Number of pages processed */
+  private long pageCount;
 
   /** True when parsing a page */
   private boolean isInPage;
@@ -63,6 +71,7 @@ public class PageHandler extends DefaultHandler {
    * Constructor.
    */
   public PageHandler() {
+    pageCount = 0;
     isInPage = false;
     title = new StringBuilder();
     namespace = new StringBuilder();
@@ -151,6 +160,10 @@ public class PageHandler extends DefaultHandler {
       if (qName.equalsIgnoreCase("page")) {
         if (processor != null) {
           try {
+            pageCount++;
+            if (pageCount % 100000 == 0) {
+              log.info("Count of handled pages=" + pageCount);
+            }
             Page page = DataManager.getPage(
                 processor.getWiki(), title.toString(),
                 Integer.valueOf(pageId.toString(), 10), revisionId.toString(),

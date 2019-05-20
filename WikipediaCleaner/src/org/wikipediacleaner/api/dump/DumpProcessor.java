@@ -56,6 +56,7 @@ public class DumpProcessor {
     BufferedInputStream bis = null;
     BZip2CompressorInputStream bzis = null;
     try {
+      log.info("Starting dump processing for " + file.getName());
       SAXParserFactory factory = SAXParserFactory.newInstance();
       SAXParser parser = factory.newSAXParser();
       fis = new FileInputStream(file);
@@ -66,9 +67,11 @@ public class DumpProcessor {
       DumpHandler dh = new DumpHandler();
       dh.setPageProcessor(pageProcessor);
       parser.parse(is, dh);
+      log.info("Finishing dump processing for " + file.getName());
     } catch (Exception e) {
       log.error("Error processing dump file", e);
     } finally {
+      log.info("Closing dump file " + file.getName());
       try {
         if (bzis != null) {
           bzis.close();
@@ -82,6 +85,7 @@ public class DumpProcessor {
       } catch (Exception e) {
         log.error("Error closing dump file", e);
       }
+      log.info("Finished closing dump file " + file.getName());
     }
   }
 }
