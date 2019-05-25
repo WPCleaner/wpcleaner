@@ -363,7 +363,7 @@ public class ListCWWorker extends BasicWorker {
     }
 
     // Prepare result
-    logCW.info("Preparing results of dump analysis for error" + algorithm.getErrorNumberString());
+    logCW.info("Preparing results of dump analysis for error " + algorithm.getErrorNumberString());
     List<Detection> tmpPages = new ArrayList<>(pages);
     Collections.sort(tmpPages);
     int nbPages = tmpPages.size();
@@ -371,7 +371,6 @@ public class ListCWWorker extends BasicWorker {
 
     // Output to file
     if (output != null) {
-      logCW.info("Writing dump analysis results for error " + algorithm.getErrorNumberString() + " to file");
       File outputFile = null;
       if (!output.getName().contains("{0}")) {
         outputFile = new File(
@@ -380,6 +379,7 @@ public class ListCWWorker extends BasicWorker {
       } else {
         outputFile = new File(MessageFormat.format(output.getAbsolutePath(), algorithm.getErrorNumberString()));
       }
+      logCW.info("Writing dump analysis results for error " + algorithm.getErrorNumberString() + " to file " + outputFile.getName());
       BufferedWriter writer = null;
       try {
         writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(outputFile, false), "UTF8"));
@@ -399,12 +399,12 @@ public class ListCWWorker extends BasicWorker {
 
     // Output to a page
     if (pageName != null) {
-      logCW.info("Writing dump analysis results for error " + algorithm.getErrorNumberString() + " to page");
+      String truePageName = MessageFormat.format(pageName, algorithm.getErrorNumberString());
+      logCW.info("Writing dump analysis results for error " + algorithm.getErrorNumberString() + " to page " + truePageName);
       boolean finished = false;
       while (!finished) {
         try {
           finished = true;
-          String truePageName = MessageFormat.format(pageName, algorithm.getErrorNumberString());
           Page page = DataManager.getPage(getWikipedia(), truePageName, null, null, null);
           API api = APIFactory.getAPI();
           api.retrieveContents(getWikipedia(), Collections.singletonList(page), false, false);

@@ -162,7 +162,7 @@ public class PageHandler extends DefaultHandler {
           try {
             pageCount++;
             if (pageCount % 100000 == 0) {
-              log.info("Count of handled pages=" + pageCount);
+              log.info("Dump parser has gone through " + pageCount + " pages");
             }
             Page page = DataManager.getPage(
                 processor.getWiki(), title.toString(),
@@ -172,7 +172,7 @@ public class PageHandler extends DefaultHandler {
             page.setContents(revisionText.toString());
             processor.processPage(page);
           } catch (NumberFormatException e) {
-            System.err.println("Problem in endElement: " + e.getMessage());
+            log.error("Problem in endElement: " + e.getMessage());
           }
         }
         isInPage = false;
