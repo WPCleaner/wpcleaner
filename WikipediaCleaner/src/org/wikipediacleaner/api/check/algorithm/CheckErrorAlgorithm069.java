@@ -8,9 +8,14 @@
 package org.wikipediacleaner.api.check.algorithm;
 
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
+import org.apache.commons.lang3.tuple.ImmutablePair;
+import org.apache.commons.lang3.tuple.Pair;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.CheckErrorResult.ErrorLevel;
 import org.wikipediacleaner.api.constants.WPCConfiguration;
@@ -60,6 +65,46 @@ public class CheckErrorAlgorithm069 extends CheckErrorAlgorithmISBN {
     "&#x20;",
   };
 
+  /** Names of special page BookSources depending on the wiki */
+  private final static Map<String, Pair<Set<String>, Set<String>>> BOOK_SOURCES = new HashMap<>();
+
+  static {
+    Pair<Set<String>, Set<String>> wiki = null;
+    Set<String> namespaceNames = null;
+    Set<String> pageNames = null;
+
+    // DE
+    namespaceNames = new HashSet<>();
+    namespaceNames.add("Spezial");
+    pageNames = new HashSet<>();
+    pageNames.add("ISBN-Suche");
+    wiki = new ImmutablePair<Set<String>, Set<String>>(namespaceNames, pageNames);
+    BOOK_SOURCES.put("de", wiki);
+
+    // FR
+    namespaceNames = new HashSet<>();
+    namespaceNames.add("Spécial");
+    pageNames = new HashSet<>();
+    pageNames.add("Ouvrages de référence");
+    pageNames.add("Ouvrages de reference");
+    pageNames.add("Ouvragesderéférence");
+    pageNames.add("Ouvragesdereference");
+    pageNames.add("Recherche ISBN");
+    pageNames.add("Recherche isbn");
+    pageNames.add("RechercheISBN");
+    pageNames.add("Rechercheisbn");
+    wiki = new ImmutablePair<Set<String>, Set<String>>(namespaceNames, pageNames);
+    BOOK_SOURCES.put("fr", wiki);
+
+    // IT
+    namespaceNames = new HashSet<>();
+    namespaceNames.add("Speciale");
+    pageNames = new HashSet<>();
+    pageNames.add("RicercaISBN");
+    wiki = new ImmutablePair<Set<String>, Set<String>>(namespaceNames, pageNames);
+    BOOK_SOURCES.put("it", wiki);
+  }
+
   /**
    * Analyze a page to check if errors are present.
    * 
@@ -77,6 +122,32 @@ public class CheckErrorAlgorithm069 extends CheckErrorAlgorithmISBN {
     }
 
     // Analyze each ISBN
+    boolean result = false;
+    result |= analyzeISBN(analysis, errors);
+
+    // Report also ISBN like [[International Standard Book Number|ISBN]]&nbsp;978-0321637734
+    result |= analyzeInternalLinks(analysis, errors);
+
+    // Report also ISBN inside <nowiki> tags
+    result |= analyzeNowikiTags(analysis, errors);
+
+    // Report also ISBN in interwiki links
+    result |= analyzeInterwikiLinks(analysis, errors);
+
+    return result;
+  }
+
+  /**
+   * Analyze ISBN to check if an ISBN error is present.
+   * 
+   * @param analysis Page analysis.
+   * @param errors Errors found in the page.
+   * @return Flag indicating if the error was found.
+   */
+  public boolean analyzeISBN(
+      PageAnalysis analysis,
+      Collection<CheckErrorResult> errors) {
+
     boolean result = false;
     List<PageElementISBN> isbns = analysis.getISBNs();
     for (PageElementISBN isbn : isbns) {
@@ -312,201 +383,286 @@ public class CheckErrorAlgorithm069 extends CheckErrorAlgorithmISBN {
       }
     }
 
-    // Report also ISBN like [[International Standard Book Number|ISBN]]&nbsp;978-0321637734
+    return result;
+  }
+
+  /**
+   * Analyze internal links to check if an ISBN error is present.
+   * 
+   * @param analysis Page analysis.
+   * @param errors Errors found in the page.
+   * @return Flag indicating if the error was found.
+   */
+  public boolean analyzeInternalLinks(
+      PageAnalysis analysis,
+      Collection<CheckErrorResult> errors) {
+
     List<PageElementInternalLink> links = analysis.getInternalLinks();
-    if (links != null) {
-      for (PageElementInternalLink link : links) {
-        if (PageElementISBN.ISBN_PREFIX.equals(link.getDisplayedText().trim())) {
-          int tmpIndex = link.getEndIndex();
-          String contents = analysis.getContents();
-          boolean shouldContinue = true;
-          while (shouldContinue) {
-            shouldContinue = false;
-            if (tmpIndex < contents.length()) {
-              if (" \u00A0".indexOf(contents.charAt(tmpIndex)) >= 0) {
-                tmpIndex++;
-                shouldContinue = true;
-              } else {
-                for (String separator : FIRST_SEPARATOR) {
-                  if (contents.startsWith(separator, tmpIndex)) {
-                    tmpIndex += separator.length();
-                    shouldContinue = true;
-                  }
+    if (links == null) {
+      return false;
+    }
+
+    boolean result = false;
+    for (PageElementInternalLink link : links) {
+      if (PageElementISBN.ISBN_PREFIX.equals(link.getDisplayedText().trim())) {
+        int tmpIndex = link.getEndIndex();
+        String contents = analysis.getContents();
+        boolean shouldContinue = true;
+        while (shouldContinue) {
+          shouldContinue = false;
+          if (tmpIndex < contents.length()) {
+            if (" \u00A0".indexOf(contents.charAt(tmpIndex)) >= 0) {
+              tmpIndex++;
+              shouldContinue = true;
+            } else {
+              for (String separator : FIRST_SEPARATOR) {
+                if (contents.startsWith(separator, tmpIndex)) {
+                  tmpIndex += separator.length();
+                  shouldContinue = true;
                 }
               }
             }
           }
-          boolean isbnFound = false;
-          int beginISBN = tmpIndex;
-          String suffix = null;
-          if (tmpIndex < contents.length()) {
-            PageElementInternalLink nextLink = null;
-            PageElementExternalLink nextLinkE = null;
-            if (contents.charAt(tmpIndex) == '[') {
-              nextLink = analysis.isInInternalLink(tmpIndex);
-              if (nextLink != null) {
-                tmpIndex += 2;
-                int offset = nextLink.getTextOffset();
+        }
+        boolean isbnFound = false;
+        int beginISBN = tmpIndex;
+        String suffix = null;
+        if (tmpIndex < contents.length()) {
+          PageElementInternalLink nextLink = null;
+          PageElementExternalLink nextLinkE = null;
+          if (contents.charAt(tmpIndex) == '[') {
+            nextLink = analysis.isInInternalLink(tmpIndex);
+            if (nextLink != null) {
+              tmpIndex += 2;
+              int offset = nextLink.getTextOffset();
+              if (offset > 0) {
+                tmpIndex += offset;
+              }
+            } else {
+              nextLinkE = analysis.isInExternalLink(tmpIndex);
+              if (nextLinkE != null) {
+                tmpIndex += 1;
+                int offset = nextLinkE.getTextOffset();
                 if (offset > 0) {
                   tmpIndex += offset;
                 }
-              } else {
-                nextLinkE = analysis.isInExternalLink(tmpIndex);
-                if (nextLinkE != null) {
-                  tmpIndex += 1;
-                  int offset = nextLinkE.getTextOffset();
-                  if (offset > 0) {
-                    tmpIndex += offset;
+              }
+            }
+          }
+          if ((tmpIndex < contents.length()) &&
+              (PageElementISBN.POSSIBLE_CHARACTERS.indexOf(contents.charAt(tmpIndex)) >= 0)) {
+            isbnFound = true;
+          }
+          if (nextLink != null) {
+            suffix = nextLink.getDisplayedText();
+            tmpIndex = nextLink.getEndIndex();
+          } else if (nextLinkE != null) {
+            suffix = nextLinkE.getDisplayedText();
+            tmpIndex = nextLinkE.getEndIndex();
+          } else {
+            while ((tmpIndex < contents.length()) &&
+                   ((PageElementISBN.POSSIBLE_CHARACTERS.indexOf(contents.charAt(tmpIndex)) >= 0) ||
+                    (PageElementISBN.EXTRA_CHARACTERS.indexOf(contents.charAt(tmpIndex)) >= 0 ))) {
+              tmpIndex++;
+            }
+            suffix = contents.substring(beginISBN, tmpIndex);
+          }
+        }
+
+        // Report error
+        if (isbnFound) {
+          if (errors == null) {
+            return true;
+          }
+          result = true;
+          CheckErrorResult errorResult = createCheckErrorResult(
+              analysis, link.getBeginIndex(), tmpIndex);
+          errorResult.addReplacement(
+              PageElementISBN.ISBN_PREFIX + " " + suffix);
+          errors.add(errorResult);
+        }
+      }
+    }
+
+    return result;
+  }
+
+  /**
+   * Analyze nowiki tags to check if an ISBN is present.
+   * 
+   * @param analysis Page analysis.
+   * @param errors Errors found in the page.
+   * @return Flag indicating if the error was found.
+   */
+  public boolean analyzeNowikiTags(
+      PageAnalysis analysis,
+      Collection<CheckErrorResult> errors) {
+
+    List<PageElementTag> nowikiTags = analysis.getCompleteTags(PageElementTag.TAG_WIKI_NOWIKI);
+    if (nowikiTags == null) {
+      return false;
+    }
+
+    boolean result = false;
+    String contents = analysis.getContents();
+    for (PageElementTag nowikiTag : nowikiTags) {
+      if (!nowikiTag.isFullTag() && nowikiTag.isComplete()) {
+        String nowikiContent = contents.substring(
+            nowikiTag.getValueBeginIndex(), nowikiTag.getValueEndIndex());
+        int index = 0;
+        while (index < nowikiContent.length()) {
+          if (nowikiContent.startsWith(PageElementISBN.ISBN_PREFIX, index)) {
+            int tmpIndex = index + PageElementISBN.ISBN_PREFIX.length();
+            boolean hasSeparator = false;
+            while ((tmpIndex < nowikiContent.length()) && 
+                   (PageElementISBN.EXTRA_CHARACTERS.indexOf(nowikiContent.charAt(tmpIndex)) >= 0)) {
+              hasSeparator = true;
+              tmpIndex++;
+            }
+            boolean hasCharacter = false;
+            int indexCharacter = tmpIndex;
+            boolean shouldContinue = true;
+            while (shouldContinue) {
+              int tmpIndex2 = tmpIndex;
+              shouldContinue = false;
+              while ((tmpIndex2 < nowikiContent.length()) &&
+                     (PageElementISBN.EXTRA_CHARACTERS.indexOf(nowikiContent.charAt(tmpIndex2)) >= 0)) {
+                tmpIndex2++;
+              }
+              while ((tmpIndex2 < nowikiContent.length()) &&
+                     (PageElementISBN.POSSIBLE_CHARACTERS.indexOf(nowikiContent.charAt(tmpIndex2)) >= 0)) {
+                hasCharacter = true;
+                shouldContinue = true;
+                tmpIndex2++;
+              }
+              if (shouldContinue) {
+                tmpIndex = tmpIndex2;
+              }
+            }
+            if (hasSeparator && hasCharacter) {
+              if (errors == null) {
+                return true;
+              }
+              result = true;
+
+              // Try to extend area
+              int beginIndex = nowikiTag.getValueBeginIndex() + index;
+              boolean extensionFound = false;
+              do {
+                extensionFound = false;
+                for (String before : EXTEND_BEFORE_NOWIKI) {
+                  if ((beginIndex >= before.length()) &&
+                      (contents.startsWith(before, beginIndex - before.length()))) {
+                    extensionFound = true;
+                    beginIndex -= before.length();
+                  }
+                }
+              } while (extensionFound);
+              int endIndex = nowikiTag.getValueBeginIndex() + tmpIndex;
+              do {
+                extensionFound = false;
+                for (String after : EXTEND_AFTER_NOWIKI) {
+                  if ((endIndex < contents.length()) &&
+                      (contents.startsWith(after, endIndex))) {
+                    extensionFound = true;
+                    endIndex += after.length();
+                  }
+                }
+              } while (extensionFound);
+
+              // Report error
+              CheckErrorResult errorResult = createCheckErrorResult(
+                  analysis, beginIndex, endIndex);
+              if ((beginIndex <= nowikiTag.getCompleteBeginIndex()) &&
+                  (endIndex >= nowikiTag.getCompleteEndIndex())) {
+                errorResult.addReplacement(contents.substring(
+                    nowikiTag.getValueBeginIndex() + index,
+                    nowikiTag.getValueBeginIndex() + tmpIndex));
+                List<String[]> isbnTemplates = analysis.getWPCConfiguration().getStringArrayList(
+                    WPCConfigurationStringList.ISBN_TEMPLATES);
+                if (isbnTemplates != null) {
+                  for (String[] isbnTemplate : isbnTemplates) {
+                    if (isbnTemplate.length > 2) {
+                      String templateName = isbnTemplate[0];
+                      String[] params = isbnTemplate[1].split(",");
+                      Boolean suggested = Boolean.valueOf(isbnTemplate[2]);
+                      if ((params.length > 0) && (Boolean.TRUE.equals(suggested))) {
+                        StringBuilder replacement = new StringBuilder();
+                        replacement.append("{{");
+                        replacement.append(templateName);
+                        replacement.append("|");
+                        if (!"1".equals(params[0])) {
+                          replacement.append(params[0]);
+                          replacement.append("=");
+                        }
+                        replacement.append(nowikiContent.substring(indexCharacter, tmpIndex));
+                        replacement.append("}}");
+                        errorResult.addReplacement(replacement.toString());
+                      }
+                    }
                   }
                 }
               }
-            }
-            if ((tmpIndex < contents.length()) &&
-                (PageElementISBN.POSSIBLE_CHARACTERS.indexOf(contents.charAt(tmpIndex)) >= 0)) {
-              isbnFound = true;
-            }
-            if (nextLink != null) {
-              suffix = nextLink.getDisplayedText();
-              tmpIndex = nextLink.getEndIndex();
-            } else if (nextLinkE != null) {
-              suffix = nextLinkE.getDisplayedText();
-              tmpIndex = nextLinkE.getEndIndex();
+              errors.add(errorResult);
+              index = tmpIndex;
             } else {
-              while ((tmpIndex < contents.length()) &&
-                     ((PageElementISBN.POSSIBLE_CHARACTERS.indexOf(contents.charAt(tmpIndex)) >= 0) ||
-                      (PageElementISBN.EXTRA_CHARACTERS.indexOf(contents.charAt(tmpIndex)) >= 0 ))) {
-                tmpIndex++;
-              }
-              suffix = contents.substring(beginISBN, tmpIndex);
+              index += PageElementISBN.ISBN_PREFIX.length();
             }
-          }
-
-          // Report error
-          if (isbnFound) {
-            if (errors == null) {
-              return true;
-            }
-            result = true;
-            CheckErrorResult errorResult = createCheckErrorResult(
-                analysis, link.getBeginIndex(), tmpIndex);
-            errorResult.addReplacement(
-                PageElementISBN.ISBN_PREFIX + " " + suffix);
-            errors.add(errorResult);
+          } else {
+            index++;
           }
         }
       }
     }
 
-    // Report also ISBN inside <nowiki> tags
-    List<PageElementTag> nowikiTags = analysis.getCompleteTags(PageElementTag.TAG_WIKI_NOWIKI);
-    if (nowikiTags != null) {
-      String contents = analysis.getContents();
-      for (PageElementTag nowikiTag : nowikiTags) {
-        if (!nowikiTag.isFullTag() && nowikiTag.isComplete()) {
-          String nowikiContent = contents.substring(
-              nowikiTag.getValueBeginIndex(), nowikiTag.getValueEndIndex());
-          int index = 0;
-          while (index < nowikiContent.length()) {
-            if (nowikiContent.startsWith(PageElementISBN.ISBN_PREFIX, index)) {
-              int tmpIndex = index + PageElementISBN.ISBN_PREFIX.length();
-              boolean hasSeparator = false;
-              while ((tmpIndex < nowikiContent.length()) && 
-                     (PageElementISBN.EXTRA_CHARACTERS.indexOf(nowikiContent.charAt(tmpIndex)) >= 0)) {
-                hasSeparator = true;
-                tmpIndex++;
-              }
-              boolean hasCharacter = false;
-              int indexCharacter = tmpIndex;
-              boolean shouldContinue = true;
-              while (shouldContinue) {
-                int tmpIndex2 = tmpIndex;
-                shouldContinue = false;
-                while ((tmpIndex2 < nowikiContent.length()) &&
-                       (PageElementISBN.EXTRA_CHARACTERS.indexOf(nowikiContent.charAt(tmpIndex2)) >= 0)) {
-                  tmpIndex2++;
-                }
-                while ((tmpIndex2 < nowikiContent.length()) &&
-                       (PageElementISBN.POSSIBLE_CHARACTERS.indexOf(nowikiContent.charAt(tmpIndex2)) >= 0)) {
-                  hasCharacter = true;
-                  shouldContinue = true;
-                  tmpIndex2++;
-                }
-                if (shouldContinue) {
-                  tmpIndex = tmpIndex2;
-                }
-              }
-              if (hasSeparator && hasCharacter) {
-                if (errors == null) {
-                  return true;
-                }
-                result = true;
+    return result;
+  }
 
-                // Try to extend area
-                int beginIndex = nowikiTag.getValueBeginIndex() + index;
-                boolean extensionFound = false;
-                do {
-                  extensionFound = false;
-                  for (String before : EXTEND_BEFORE_NOWIKI) {
-                    if ((beginIndex >= before.length()) &&
-                        (contents.startsWith(before, beginIndex - before.length()))) {
-                      extensionFound = true;
-                      beginIndex -= before.length();
-                    }
-                  }
-                } while (extensionFound);
-                int endIndex = nowikiTag.getValueBeginIndex() + tmpIndex;
-                do {
-                  extensionFound = false;
-                  for (String after : EXTEND_AFTER_NOWIKI) {
-                    if ((endIndex < contents.length()) &&
-                        (contents.startsWith(after, endIndex))) {
-                      extensionFound = true;
-                      endIndex += after.length();
-                    }
-                  }
-                } while (extensionFound);
+  /**
+   * Analyze interwiki links to check if an ISBN is present.
+   * 
+   * @param analysis Page analysis.
+   * @param errors Errors found in the page.
+   * @return Flag indicating if the error was found.
+   */
+  public boolean analyzeInterwikiLinks(
+      PageAnalysis analysis,
+      Collection<CheckErrorResult> errors) {
 
-                // Report error
-                CheckErrorResult errorResult = createCheckErrorResult(
-                    analysis, beginIndex, endIndex);
-                if ((beginIndex <= nowikiTag.getCompleteBeginIndex()) &&
-                    (endIndex >= nowikiTag.getCompleteEndIndex())) {
-                  errorResult.addReplacement(contents.substring(
-                      nowikiTag.getValueBeginIndex() + index,
-                      nowikiTag.getValueBeginIndex() + tmpIndex));
-                  List<String[]> isbnTemplates = analysis.getWPCConfiguration().getStringArrayList(
-                      WPCConfigurationStringList.ISBN_TEMPLATES);
-                  if (isbnTemplates != null) {
-                    for (String[] isbnTemplate : isbnTemplates) {
-                      if (isbnTemplate.length > 2) {
-                        String templateName = isbnTemplate[0];
-                        String[] params = isbnTemplate[1].split(",");
-                        Boolean suggested = Boolean.valueOf(isbnTemplate[2]);
-                        if ((params.length > 0) && (Boolean.TRUE.equals(suggested))) {
-                          StringBuilder replacement = new StringBuilder();
-                          replacement.append("{{");
-                          replacement.append(templateName);
-                          replacement.append("|");
-                          if (!"1".equals(params[0])) {
-                            replacement.append(params[0]);
-                            replacement.append("=");
-                          }
-                          replacement.append(nowikiContent.substring(indexCharacter, tmpIndex));
-                          replacement.append("}}");
-                          errorResult.addReplacement(replacement.toString());
-                        }
-                      }
-                    }
-                  }
-                }
-                errors.add(errorResult);
-                index = tmpIndex;
-              } else {
-                index += PageElementISBN.ISBN_PREFIX.length();
-              }
-            } else {
-              index++;
+    List<PageElementInterwikiLink> iwLinks = analysis.getInterwikiLinks();
+    if (iwLinks == null) {
+      return false;
+    }
+
+    boolean result = false;
+    for (PageElementInterwikiLink iwLink : iwLinks) {
+      String link = iwLink.getLink();
+      int anchorIndex = link.indexOf(':');
+      if (anchorIndex > 0) {
+        String namespace = link.substring(0, anchorIndex);
+        String iwText = iwLink.getInterwikiText();
+        Pair<Set<String>, Set<String>> wiki = BOOK_SOURCES.get(iwText);
+        if ("Special".equals(namespace) ||
+            ((wiki != null) &&
+             (wiki.getLeft() != null) &&
+             wiki.getLeft().contains(namespace))) {
+          String target = link.substring(anchorIndex + 1);
+          int slashIndex = target.indexOf('/');
+          if (slashIndex > 0) {
+            target = target.substring(0, slashIndex);
+          }
+          target.replaceAll("_", " ");
+          if ("BookSources".equals(target) ||
+              ((wiki != null) &&
+               (wiki.getRight() != null) &&
+               (wiki.getRight().contains(target)))) {
+            if (errors == null) {
+              return true;
             }
+            result = true;
+            CheckErrorResult errorResult = createCheckErrorResult(
+                analysis, iwLink.getBeginIndex(), iwLink.getEndIndex());
+            errors.add(errorResult);
           }
         }
       }
