@@ -308,6 +308,7 @@ public class Bot implements BasicWorkerListener {
       worker.setTimeLimit(timeLimit);
       worker.start();
     } else if (!actions.isEmpty()) {
+      log.warn("Unknown task " + action);
       executeAction(actions.remove(0));
     }
   }
