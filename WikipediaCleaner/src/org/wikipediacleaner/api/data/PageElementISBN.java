@@ -307,6 +307,12 @@ public class PageElementISBN extends PageElement {
                   }
                 }
               }
+            } else if (currentChar == '<') {
+              PageElementTag tag = analysis.isInTag(index);
+              if ((tag != null) && (tag.getBeginIndex() == index)) {
+                isCorrect = false;
+                index = tag.getEndIndex();
+              }
             } else if (INCORRECT_BEGIN_CHARACTERS.indexOf(currentChar) >= 0) {
               index++;
               isCorrect = false;

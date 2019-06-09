@@ -442,19 +442,32 @@ public class CheckErrorAlgorithm069 extends CheckErrorAlgorithmISBN {
           if (contents.charAt(tmpIndex) == '[') {
             nextLink = analysis.isInInternalLink(tmpIndex);
             if (nextLink != null) {
-              tmpIndex += 2;
               int offset = nextLink.getTextOffset();
               if (offset > 0) {
                 tmpIndex += offset;
+              } else {
+                tmpIndex += 2;
               }
             } else {
               nextLinkE = analysis.isInExternalLink(tmpIndex);
               if (nextLinkE != null) {
-                tmpIndex += 1;
                 int offset = nextLinkE.getTextOffset();
                 if (offset > 0) {
                   tmpIndex += offset;
+                } else {
+                  tmpIndex += 1;
                 }
+              }
+            }
+          }
+          boolean endFound = false;
+          while (!endFound) {
+            endFound = true;
+            if ((tmpIndex < contents.length()) && (contents.charAt(tmpIndex) == '<')) {
+              PageElementTag tag = analysis.isInTag(tmpIndex);
+              if ((tag != null) && (tag.getBeginIndex() == tmpIndex)) {
+                tmpIndex = tag.getEndIndex();
+                endFound = false;
               }
             }
           }
