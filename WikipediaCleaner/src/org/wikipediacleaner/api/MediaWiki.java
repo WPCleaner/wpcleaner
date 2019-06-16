@@ -178,6 +178,7 @@ public class MediaWiki extends MediaWikiController {
    * @param updateDabWarning True to update disambiguation warning.
    * @param minor True if the modification should be tagged as minor.
    * @param pauseAfterEachEdit True to pause after each edit.
+   * @param botFix True to apply bot fixes.
    * @param parent Parent window.
    * @return Count of modified pages.
    * @throws APIException Exception thrown by the API.
@@ -188,7 +189,7 @@ public class MediaWiki extends MediaWikiController {
       ModificationReport report,
       Collection<CheckErrorAlgorithm> automaticCW, Collection<CheckErrorAlgorithm> forceCW,
       boolean save, boolean updateDabWarning, boolean minor,
-      boolean pauseAfterEachEdit, Component parent) throws APIException {
+      boolean pauseAfterEachEdit, boolean botFix, Component parent) throws APIException {
     if ((pages == null) || (replacements == null) || (replacements.size() == 0)) {
       return 0;
     }
@@ -262,7 +263,7 @@ public class MediaWiki extends MediaWikiController {
             // Apply fixing
             List<CheckError.Progress> usedAlgorithms = new ArrayList<>();
             String tmpContents = AutomaticFormatter.tidyArticle(
-                page, newContents, automaticCW, false, usedAlgorithms);
+                page, newContents, automaticCW, botFix, usedAlgorithms);
 
             // Decide if modifications should be kept
             boolean shouldKeep = (!oldContents.equals(newContents));

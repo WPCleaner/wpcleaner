@@ -57,6 +57,9 @@ public class AutomaticFixingWorker extends BasicWorker {
   /** True to pause after each edit */
   private final boolean pauseAfterEachEdit;
 
+  /** True to apply also bot fixes */
+  private final boolean botFix;
+
   /** Parent window */
   private final Component parent;
 
@@ -71,6 +74,7 @@ public class AutomaticFixingWorker extends BasicWorker {
    * @param forceCW List of CW fixing that should be done even if no automatic replacement was done.
    * @param save True if modifications should be saved.
    * @param pauseAfterEachEdit True to pause after each edit.
+   * @param botFix True to apply bot fixes.
    * @param parent Parent window.
    */
   public AutomaticFixingWorker(
@@ -78,7 +82,8 @@ public class AutomaticFixingWorker extends BasicWorker {
       Page[] pages, Map<String, List<AutomaticFixing>> replacements,
       String comment, boolean showDescription,
       Collection<CheckErrorAlgorithm> automaticCW, Collection<CheckErrorAlgorithm> forceCW,
-      boolean save, boolean pauseAfterEachEdit, Component parent) {
+      boolean save, boolean pauseAfterEachEdit, boolean botFix,
+      Component parent) {
     super(wiki, window);
     this.pages = pages;
     this.replacements = replacements;
@@ -89,6 +94,7 @@ public class AutomaticFixingWorker extends BasicWorker {
     this.forceCW = forceCW;
     this.save = save;
     this.pauseAfterEachEdit = pauseAfterEachEdit;
+    this.botFix = botFix;
     this.parent = parent;
   }
 
@@ -111,7 +117,7 @@ public class AutomaticFixingWorker extends BasicWorker {
       Integer count = Integer.valueOf(mw.replaceText(
           tmpPages, replacements, getWikipedia(),
           comment, report, automaticCW, forceCW,
-          save, true, true, pauseAfterEachEdit, parent));
+          save, true, true, pauseAfterEachEdit, botFix, parent));
       if (showDescription && (count > 0)) {
         InformationWindow.createInformationWindow(
             GT.__(
