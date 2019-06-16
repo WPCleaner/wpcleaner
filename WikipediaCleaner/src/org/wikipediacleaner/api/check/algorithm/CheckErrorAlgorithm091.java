@@ -300,7 +300,7 @@ public class CheckErrorAlgorithm091 extends CheckErrorAlgorithmBase {
                 boolean first = (errorResult.getPossibleActions() == null) || (errorResult.getPossibleActions().isEmpty());
                 errorResult.addReplacement(
                     "[[:" + prefix + ":" + article + "|" + (text != null ? text : article) + "]]",
-                    first && fullLink);
+                    first && fullLink && link.hasSquare() && link.hasSecondSquare() && (text != null));
               }
             }
           }
@@ -348,7 +348,18 @@ public class CheckErrorAlgorithm091 extends CheckErrorAlgorithmBase {
    */
   @Override
   protected String internalBotFix(PageAnalysis analysis) {
-    return fix(globalFixes[0], analysis, null);
+    return fixUsingAutomaticBotReplacement(analysis);
+  }
+
+  /**
+   * Automatic fixing of all the errors in the page.
+   * 
+   * @param analysis Page analysis.
+   * @return Page contents after fix.
+   */
+  @Override
+  protected String internalAutomaticFix(PageAnalysis analysis) {
+    return fixUsingAutomaticReplacement(analysis);
   }
 
   /**
