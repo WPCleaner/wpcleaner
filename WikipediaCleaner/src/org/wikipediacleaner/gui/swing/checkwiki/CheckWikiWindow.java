@@ -72,6 +72,7 @@ import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.constants.WPCConfigurationString;
 import org.wikipediacleaner.api.data.DataManager;
 import org.wikipediacleaner.api.data.Page;
+import org.wikipediacleaner.gui.swing.Controller;
 import org.wikipediacleaner.gui.swing.OnePageWindow;
 import org.wikipediacleaner.gui.swing.action.ActionFullAnalysis;
 import org.wikipediacleaner.gui.swing.basic.BasicWorker;
@@ -746,6 +747,12 @@ public class CheckWikiWindow extends OnePageWindow implements CheckWikiListener 
     toolbarButtons.add(buttonLoad);
     ActionFullAnalysis.addButton(
         getParentComponent(), toolbarButtons, getWikipedia(), listPages, null, true, true);
+    JButton buttonAutomaticFixing = Utilities.createJButton(
+        "gnome-view-sort-descending.png", EnumImageSize.NORMAL,
+        GT._T("Automatic fixing"), false, null);
+    buttonAutomaticFixing.addActionListener(EventHandler.create(
+        ActionListener.class, this, "actionRunAutomaticFixing"));
+    toolbarButtons.add(buttonAutomaticFixing);
     constraints.fill = GridBagConstraints.HORIZONTAL;
     constraints.gridx = 0;
     constraints.weightx = 0;
@@ -1345,6 +1352,26 @@ public class CheckWikiWindow extends OnePageWindow implements CheckWikiListener 
     } else {
       updateComponentState();
     }
+  }
+
+  /**
+   * Action called when Run Automatic Fixing button is pressed. 
+   */
+  public void actionRunAutomaticFixing() {
+    final List<CheckErrorPage> selection = listPages.getSelectedValuesList();
+    final List<Page> pages = new ArrayList<Page>();
+    if (selection != null) {
+      for (CheckErrorPage errorPage : selection) {
+        pages.add(errorPage.getPage());
+      }
+    }
+    if (pages.size() == 0) {
+      Utilities.displayWarning(
+          getParentComponent(),
+          GT._T("You must select pages on which running automatic fixing."));
+      return;
+    }
+    Controller.runAutomaticFixing(pages, null, getWikipedia());
   }
 
   /**

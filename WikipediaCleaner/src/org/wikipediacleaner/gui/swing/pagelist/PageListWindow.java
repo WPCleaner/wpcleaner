@@ -257,7 +257,9 @@ public class PageListWindow extends BasicWindow {
         ActionListener.class, this, "actionSave"));
     toolbar.add(buttonSave);
 
-    buttonAutomaticFixing = Utilities.createJButton(GT._T("Automatic fixing"), null);
+    buttonAutomaticFixing = Utilities.createJButton(
+        "gnome-view-sort-descending.png", EnumImageSize.NORMAL,
+        GT._T("Automatic fixing"), false, null);
     buttonAutomaticFixing.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionRunAutomaticFixing"));
     toolbar.add(buttonAutomaticFixing);
