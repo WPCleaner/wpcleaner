@@ -86,6 +86,7 @@ public class CheckErrorAlgorithm085 extends CheckErrorAlgorithmBase {
           // Check if text is found inside the tag
           boolean textFound = false;
           boolean ignoredText = false;
+          boolean isEmpty = true;
           int currentIndex = tag.getValueBeginIndex();
           int lastIndex = tag.getValueEndIndex();
           StringBuilder replacementText = new StringBuilder();
@@ -97,6 +98,7 @@ public class CheckErrorAlgorithm085 extends CheckErrorAlgorithmBase {
               replacementText.append(currentChar);
               currentIndex++;
             } else if (currentChar == '<') {
+              isEmpty = false;
               boolean ok = false;
               if (!ok) {
                 PageElementTag internalTag = analysis.isInTag(currentIndex);
@@ -196,10 +198,10 @@ public class CheckErrorAlgorithm085 extends CheckErrorAlgorithmBase {
               if (tag.getValueEndIndex() > tag.getValueBeginIndex()) {
                 errorResult.addReplacement(
                     contents.substring(tag.getValueBeginIndex(), tag.getValueEndIndex()),
-                    !hasUnsafeArguments);
+                    !hasUnsafeArguments && isEmpty);
                 errorResult.addReplacement("");
               } else {
-                errorResult.addReplacement("", !hasUnsafeArguments);
+                errorResult.addReplacement("", !hasUnsafeArguments && isEmpty);
               }
             } else {
               if (useReplacement) {
