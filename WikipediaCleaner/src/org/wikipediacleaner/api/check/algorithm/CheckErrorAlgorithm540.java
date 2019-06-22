@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElement;
@@ -500,7 +501,7 @@ public class CheckErrorAlgorithm540 extends CheckErrorAlgorithmBase {
             analysis, elements, element, errors,
             templateParam.getValueStartIndex(), templateParam.getEndIndex(),
             templateParam.getValueStartIndex(), templateParam.getEndIndex(),
-            true, false, true, true)) {
+            !StringUtils.isEmpty(templateParam.getName()), false, true, true)) {
           return;
         }
       }
