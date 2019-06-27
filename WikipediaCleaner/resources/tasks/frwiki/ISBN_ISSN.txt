@@ -1,2 +1,3 @@
+Set Prefix [[Utilisateur:WikiCleanerBot#T5|T5]]
 UpdateISBNWarnings
 UpdateISSNWarnings

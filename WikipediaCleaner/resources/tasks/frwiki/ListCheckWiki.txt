@@ -1,3 +1,4 @@
+Set Prefix [[Utilisateur:WikiCleanerBot#T3|T3]]
 FixCheckWiki 1   +1 +2 +9 +16 +17 +18 +22 +46 +48 +64 +85 +88 +90 +91 +104 +106 +524 +526 +532 +533 +534 +537 +538 +539 +540 +541 +542 +543
 FixCheckWiki 2   +1 +2 +9 +16 +17 +18 +22 +46 +48 +64 +85 +88 +90 +91 +104 +106 +524 +526 +532 +533 +534 +537 +538 +539 +540 +541 +542 +543
 FixCheckWiki 9   +1 +2 +9 +16 +17 +18 +22 +46 +48 +64 +85 +88 +90 +91 +104 +106 +524 +526 +532 +533 +534 +537 +538 +539 +540 +541 +542 +543
@@ -64,5 +65,6 @@ FixListCheckWiki Projet:Correction_syntaxique/Analyse_090 90  +1 +2 +9 +16 +17 +
 FixListCheckWiki Projet:Correction_syntaxique/Analyse_104 104 +1 +2 +9 +16 +17 +18 +22 +46 +48 +64 +85 +88 +90 +91 +104 +106 +524 +526 +532 +533 +534 +537 +538 +539 +540 +541 +542 +543
 FixListCheckWiki Projet:Correction_syntaxique/Analyse_106 106 +1 +2 +9 +16 +17 +18 +22 +46 +48 +64 +85 +88 +90 +91 +104 +106 +524 +526 +532 +533 +534 +537 +538 +539 +540 +541 +542 +543
 FixListCheckWiki Projet:Correction_syntaxique/Analyse_543 543 +1 +2 +9 +16 +17 +18 +22 +46 +48 +64 +85 +88 +90 +91 +104 +106 +524 +526 +532 +533 +534 +537 +538 +539 +540 +541 +542 +543
+Set Prefix [[Utilisateur:WikiCleanerBot#T5|T5]]
 ListISBNWarnings
 ListISSNWarnings

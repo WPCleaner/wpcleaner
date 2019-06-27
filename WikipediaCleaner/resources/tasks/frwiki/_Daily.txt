@@ -1,3 +1,4 @@
+Set Prefix [[Utilisateur:WikiCleanerBot#T1|T1]]
 FixCheckWiki 16  +1 +2 +9 +16 +17 +18 +22 +48 +64 +88 +524 +526
 FixCheckWiki 524 +1 +2 +9 +16 +17 +18 +22 +48 +64 +88 +524 +526
 UpdateDuplicateArgsWarnings

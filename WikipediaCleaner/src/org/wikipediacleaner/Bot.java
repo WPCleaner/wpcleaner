@@ -205,7 +205,9 @@ public class Bot implements BasicWorkerListener {
 
     // Execute action depending on the parameters
     BasicWorker worker = null;
+    boolean actionDone = false;
     if ("DoTasks".equalsIgnoreCase(action)) {
+      actionDone = true;
       if (args.length > currentArg) {
         File tasks = new File(args[currentArg]);
         try (BufferedReader reader = new BufferedReader(new FileReader(tasks))) {
@@ -301,6 +303,14 @@ public class Bot implements BasicWorkerListener {
               algorithms, check);
         }
       }
+    } else if ("Set".equalsIgnoreCase(action)) {
+      if (args.length > currentArg + 1) {
+        String parameter = args[currentArg];
+        String value = args[currentArg + 1];
+        if ("Prefix".equalsIgnoreCase(parameter)) {
+          CommentManager.addExtraText(value);
+        }
+      }
     }
     if (worker != null) {
       log.info("Running task " + action);
@@ -308,7 +318,9 @@ public class Bot implements BasicWorkerListener {
       worker.setTimeLimit(timeLimit);
       worker.start();
     } else if (!actions.isEmpty()) {
-      log.warn("Unknown task " + action);
+      if (!actionDone) {
+        log.warn("Unknown task " + action);
+      }
       executeAction(actions.remove(0));
     }
   }
