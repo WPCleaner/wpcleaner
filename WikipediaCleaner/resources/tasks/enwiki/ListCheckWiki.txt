@@ -1,12 +1,12 @@
 Set Prefix [[User:WikiCleanerBot#T3|T3]]
-FixCheckWiki 46  +46 +106 +543
+FixCheckWiki 46  +1 +46 +106 +543
 Set Prefix [[User:WikiCleanerBot#T1|T1]]
 ListCheckWiki C:\Users\Nicolas\Downloads\enwiki-$-pages-articles.xml.bz2 wiki:Wikipedia:CHECKWIKI/WPC_{0}_dump 1 2 3 4 5 7 8 9 13 14 15 17 19 20 23 24 25 26 28 29 38 42 48
 ListCheckWiki C:\Users\Nicolas\Downloads\enwiki-$-pages-articles.xml.bz2 wiki:Wikipedia:CHECKWIKI/WPC_{0}_dump 54 55 64 69 70 71 72 73 83 98 99 100 101 102 103 104 105 106 107 108 109 111 543
 Set Prefix [[User:WikiCleanerBot#T2|T2]]
-FixListCheckWiki Wikipedia:CHECKWIKI/WPC_106_dump 106 +46 +106 +543
+FixListCheckWiki Wikipedia:CHECKWIKI/WPC_106_dump 106 +1 +46 +106 +543
 Set Prefix [[User:WikiCleanerBot#T3|T4]]
-FixListCheckWiki Wikipedia:CHECKWIKI/WPC_543_dump 543 +46 +106 +543
+FixListCheckWiki Wikipedia:CHECKWIKI/WPC_543_dump 543 +1 +46 +106 +543
 Set Prefix [[User:WikiCleanerBot#T1|T1]]
 ListISBNWarnings
 ListISSNWarnings
