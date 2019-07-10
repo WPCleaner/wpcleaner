@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2019-06-16 14:28+0200\n"
+"POT-Creation-Date: 2019-07-10 07:51+0200\n"
 "PO-Revision-Date: 2017-03-03 19:32+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Russian <ru@li.org>\n"
@@ -542,9 +542,9 @@ msgstr "Заменить с помощью шаблона {0}"
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm081.java:269
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm091.java:310
 #: org/wikipediacleaner/gui/swing/action/ActionExternalViewer.java:61
-#: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:86
-#: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:154
-#: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:342
+#: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:88
+#: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:156
+#: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:358
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:135
 #: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:239
 msgid "External Viewer"
@@ -728,13 +728,13 @@ msgstr ""
 msgid "Restrict verification to titles with a higher level"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm085.java:226
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm085.java:228
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm112.java:653
 #, java-format
 msgid "Use {0}"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm085.java:262
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm085.java:264
 msgid "A list of templates that can be used to replace &lt;center&gt; tags"
 msgstr ""
 
@@ -751,7 +751,7 @@ msgid "Templates to be used for linking to the history of an article"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm090.java:809
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm091.java:382
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm091.java:393
 msgid "Templates using external links"
 msgstr ""
 
@@ -767,11 +767,11 @@ msgstr ""
 msgid "Convert them to internal links"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm091.java:383
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm091.java:394
 msgid "To report only links to other languages"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm091.java:384
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm091.java:395
 msgid "To report only links to local wikis"
 msgstr ""
 
@@ -917,7 +917,7 @@ msgstr "Исправить категории"
 msgid "Remove whitespace characters"
 msgstr "Удалить все управляющие символы"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm540.java:43
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm540.java:44
 #, fuzzy
 msgid "Fix bold and italic"
 msgstr "Исправить все заголовки с полужирным выделением"
@@ -2395,8 +2395,8 @@ msgid "Full analysis"
 msgstr "Полный анализ"
 
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:939
-#: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:262
-#: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:267
+#: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:264
+#: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:269
 msgid "Disambiguation analysis"
 msgstr "Анализ значений"
 
@@ -2521,6 +2521,10 @@ msgstr ""
 msgid "Check template"
 msgstr ""
 
+#: org/wikipediacleaner/gui/swing/action/ActionCopyText.java:38
+msgid "Copy"
+msgstr ""
+
 #: org/wikipediacleaner/gui/swing/action/ActionDeletePage.java:41
 msgid "Delete page"
 msgstr ""
@@ -2541,8 +2545,8 @@ msgid "Close"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/action/ActionExternalViewer.java:55
-#: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:87
-#: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:163
+#: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:89
+#: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:165
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:150
 #: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:247
 msgid "History"
@@ -2572,6 +2576,11 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:215
 msgid "Previous occurrence"
 msgstr ""
+
+#: org/wikipediacleaner/gui/swing/action/ActionPasteText.java:40
+#, fuzzy
+msgid "Paste"
+msgstr "Страница"
 
 #: org/wikipediacleaner/gui/swing/action/ActionUpdateWarning.java:60
 msgid "Add warnings on talk page"
@@ -3466,39 +3475,39 @@ msgstr "Поиск в шаблонах"
 msgid "Link to"
 msgstr "Ссылка на"
 
-#: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:152
+#: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:154
 msgid "Template External Viewer"
 msgstr "Внешний просмотрщик шаблонов"
 
-#: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:161
+#: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:163
 msgid "Template history"
 msgstr "История шаблонов"
 
-#: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:195
+#: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:197
 msgid "Analyze"
 msgstr "Анализ"
 
-#: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:234
+#: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:236
 msgid "Analyze template"
 msgstr "Анализ шаблона"
 
-#: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:236
+#: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:238
 msgid "Analyze page"
 msgstr "Анализ страницы"
 
-#: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:302
+#: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:304
 msgid "Current chapter"
 msgstr "Текущая глава"
 
-#: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:328
+#: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:344
 msgid "Remove link"
 msgstr "Удалить ссылку"
 
-#: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:387
+#: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:403
 msgid "Purge cache"
 msgstr "Очистка кэша"
 
-#: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:406
+#: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:422
 msgid "Reload links"
 msgstr "Обновить ссылки"
 
