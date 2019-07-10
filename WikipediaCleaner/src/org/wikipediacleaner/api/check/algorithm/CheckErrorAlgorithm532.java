@@ -1121,6 +1121,7 @@ public class CheckErrorAlgorithm532 extends CheckErrorAlgorithmBase {
     int countBold = 0;
     int countItalic = 0;
     boolean hasContentsAfter = false;
+    boolean hasSameTag = false;
     PageElementTag selfClosedTag = null;
     while (currentIndex < endIndex) {
       char currentChar = contents.charAt(currentIndex);
@@ -1134,10 +1135,11 @@ public class CheckErrorAlgorithm532 extends CheckErrorAlgorithmBase {
               !currentTag.mayBeUnclosed()) {
             return null;
           }
-          if ((selfClosedTag == null) &&
-              currentTag.isFullTag() &&
-              currentTag.getNormalizedName().equals(tag.getNormalizedName())) {
-            selfClosedTag = currentTag;
+          if (currentTag.getNormalizedName().equals(tag.getNormalizedName())) {
+            if ((selfClosedTag == null) && currentTag.isFullTag()) {
+              selfClosedTag = currentTag;
+            }
+            hasSameTag = true;
           }
         }
       } else if (currentChar == '\'') {
@@ -1211,7 +1213,7 @@ public class CheckErrorAlgorithm532 extends CheckErrorAlgorithmBase {
         contents.substring(beginIndex, tag.getEndIndex()) +
         "..." +
         PageElementTag.createTag(tag.getName(), true, false);
-    errorResult.addReplacement(replacement, text, automatic);
+    errorResult.addReplacement(replacement, text, automatic && !hasSameTag);
     if ((countBold % 2 != 0) || (countItalic % 2 != 0)) {
       int contentBegin = tag.getEndIndex();
       int countApostrophe = 0;
