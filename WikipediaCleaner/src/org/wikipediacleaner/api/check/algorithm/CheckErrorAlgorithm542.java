@@ -70,7 +70,12 @@ public class CheckErrorAlgorithm542 extends CheckErrorAlgorithmBase {
       int currentTagIndex = firstTagIndex;
       while (currentTagIndex <= lastTagIndex) {
         PageElementTag tmpTag = tags.get(currentTagIndex);
-        if (isEmpty(contents, tmpTag)) {
+        boolean ignoreTag = false;
+        if (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_NOWIKI, tmpTag.getBeginIndex()) != null) {
+          ignoreTag = true;
+        }
+
+        if (!ignoreTag && isEmpty(contents, tmpTag)) {
           if (errors == null) {
             return true;
           }
