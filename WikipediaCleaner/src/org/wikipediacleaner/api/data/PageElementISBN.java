@@ -13,6 +13,7 @@ import java.util.List;
 
 import org.wikipediacleaner.api.constants.WPCConfiguration;
 import org.wikipediacleaner.api.constants.WPCConfigurationStringList;
+import org.wikipediacleaner.api.data.ISBNRange.ISBNInformation;
 import org.wikipediacleaner.api.data.PageElementTemplate.Parameter;
 import org.wikipediacleaner.api.data.contents.ContentsComment;
 
@@ -29,6 +30,13 @@ public class PageElementISBN extends PageElement {
   private final static String[] ISBN_INCORRECT_PREFIX = {
     "ISNB",
     "isbn"
+  };
+
+  /** EAN prefixes */
+  private final static String[] EAN_PREFIX = {
+    "EAN-13",
+    "EAN13",
+    "EAN",
   };
 
   /** ISBN possible meaningful characters */
@@ -198,17 +206,28 @@ public class PageElementISBN extends PageElement {
 
     // Check if it's a potential ISBN
     String prefix = null;
-    boolean correct = false;
+    boolean correctPrefix = false;
+    boolean reportOnlyIfCorrect = false;
     if (contents.startsWith(ISBN_PREFIX, index)) {
       prefix = ISBN_PREFIX;
-      correct = true;
+      correctPrefix = true;
     }
     for (String tmpPrefix : ISBN_INCORRECT_PREFIX) {
       if ((prefix == null) && (contents.length() >= index + tmpPrefix.length())) {
         String nextChars = contents.substring(index, index + tmpPrefix.length());
         if (tmpPrefix.equalsIgnoreCase(nextChars)) {
           prefix = tmpPrefix;
-          correct = false;
+          correctPrefix = false;
+        }
+      }
+    }
+    for (String tmpPrefix : EAN_PREFIX) {
+      if ((prefix == null) && (contents.length() >= index + tmpPrefix.length())) {
+        String nextChars = contents.substring(index, index + tmpPrefix.length());
+        if (tmpPrefix.equalsIgnoreCase(nextChars)) {
+          prefix = tmpPrefix;
+          reportOnlyIfCorrect = true;
+          correctPrefix = false;
         }
       }
     }
@@ -255,7 +274,7 @@ public class PageElementISBN extends PageElement {
 
     int beginIndex = index;
     index += prefix.length();
-    boolean isCorrect = correct;
+    boolean isCorrect = true;
     if ((parameter == null) ||
         (parameter.getValueStartIndex() < beginIndex)) {
       if (beginIndex >= 2) {
@@ -352,6 +371,22 @@ public class PageElementISBN extends PageElement {
       }
       if (endNumber > beginNumber) {
         String number = contents.substring(beginNumber, endNumber);
+        if (reportOnlyIfCorrect) {
+          if (!isCorrect || !isValid(number)) {
+            return endNumber;
+          }
+          ISBNInformation isbnInfo = ISBNRange.getInformation(number);
+          if (isbnInfo == null) {
+            return endNumber;
+          }
+          if (isbnInfo.isInReservedRange() || isbnInfo.isInUnknownRange()) {
+            return endNumber;
+          }
+
+          if (ISBNRange.getEANPrefix(number) == null) {
+            return endNumber;
+          }
+        }
         if ((iLink != null) && (endNumber + 2 == iLink.getEndIndex())) {
           endNumber = iLink.getEndIndex();
         } else if ((eLink != null) && (endNumber + 1 == eLink.getEndIndex())) {
@@ -362,6 +397,7 @@ public class PageElementISBN extends PageElement {
         }
 
         // Ignore special parameters
+        isCorrect &= correctPrefix;
         boolean done = false;
         if ((template != null) &&
             (parameter != null) &&
@@ -385,7 +421,8 @@ public class PageElementISBN extends PageElement {
         index = endNumber;
       } else {
         if (contents.startsWith(prefix, index) &&
-            !contents.startsWith("[[ISBN#", beginIndex)) {
+            !contents.startsWith("[[ISBN#", beginIndex) &&
+            !reportOnlyIfCorrect) {
           isbns.add(new PageElementISBN(
               beginIndex, index, analysis, "",
               isValid, false, false, null));
