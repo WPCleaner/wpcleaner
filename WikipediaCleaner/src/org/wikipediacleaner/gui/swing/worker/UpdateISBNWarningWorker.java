@@ -253,8 +253,9 @@ public class UpdateISBNWarningWorker extends UpdateWarningWorker {
           buffer.append(values.size());
           buffer.append(" x ");
         }
-        buffer.append("ISBN ");
+        buffer.append("<nowiki>ISBN ");
         buffer.append(key);
+        buffer.append("</nowiki>");
         if (issnUrl != null) {
           String clean = key.replaceAll("\\&\\#x3D\\;", "=");
           clean = PageElementISBN.cleanISBN(clean);
