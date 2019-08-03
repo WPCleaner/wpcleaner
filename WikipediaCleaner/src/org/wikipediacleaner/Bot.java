@@ -307,8 +307,11 @@ public class Bot implements BasicWorkerListener {
       if (args.length > currentArg + 1) {
         String parameter = args[currentArg];
         String value = args[currentArg + 1];
+        actionDone = true;
         if ("Prefix".equalsIgnoreCase(parameter)) {
           CommentManager.addExtraText(value);
+        } else {
+          actionDone = false;
         }
       }
     }
