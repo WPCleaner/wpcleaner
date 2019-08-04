@@ -11,9 +11,12 @@ import java.util.Collection;
 import java.util.List;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
+import org.wikipediacleaner.api.check.SimpleAction;
 import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementExternalLink;
 import org.wikipediacleaner.api.data.PageElementInternalLink;
+import org.wikipediacleaner.gui.swing.action.ActionExternalViewer;
+import org.wikipediacleaner.i18n.GT;
 
 
 /**
@@ -65,6 +68,9 @@ public class CheckErrorAlgorithm513 extends CheckErrorAlgorithmBase {
           errorResult.addReplacement(
               contents.substring(link.getBeginIndex(), internalLink.getBeginIndex()) +
               internalLink.getDisplayedTextNotTrimmed());
+          errorResult.addPossibleAction(new SimpleAction(
+              GT._T("External Viewer"),
+              new ActionExternalViewer(link.getLink())));
           errors.add(errorResult);
         }
       }
