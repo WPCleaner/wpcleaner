@@ -124,7 +124,7 @@ public class Page implements Comparable<Page> {
     result = result.replaceAll("_", " ");
     result = result.replaceAll(" +", " ");
     result = result.trim();
-    result = Page.getStringUcFirst(result);
+    result = CharacterUtils.ucFirst(result);
     return result;
   }
 
@@ -205,22 +205,12 @@ public class Page implements Comparable<Page> {
     }
     return title;
   }
-  /**
-   * @param text Original text.
-   * @return Same text with the first letter in upper case.
-   */
-  public static String getStringUcFirst(String text) {
-    if ((text != null) && (text.length() > 0) && (Character.isLowerCase(text.charAt(0)))) {
-      return "" + Character.toUpperCase(text.charAt(0)) + text.substring(1);
-    }
-    return text;
-  }
 
   /**
    * @return Title with first letter as upper case
    */
   public String getTitleUcFirst() {
-    return getStringUcFirst(title);
+    return CharacterUtils.ucFirst(title);
   }
 
   /**

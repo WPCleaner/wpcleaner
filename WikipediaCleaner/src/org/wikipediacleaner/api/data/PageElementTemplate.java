@@ -689,7 +689,7 @@ public class PageElementTemplate extends PageElement {
       List<Parameter> parameters) {
     super(beginIndex, endIndex);
     this.templateNameNotTrimmed = templateName;
-    this.templateName = (templateName != null) ? Page.getStringUcFirst(templateName.trim()) : null;
+    this.templateName = (templateName != null) ? CharacterUtils.ucFirst(templateName.trim()) : null;
     this.parameters = parameters;
     /*System.err.println("Template: " + this.templateName);
     if (parameters != null) {

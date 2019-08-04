@@ -11,8 +11,8 @@ import java.util.Collection;
 import java.util.List;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
+import org.wikipediacleaner.api.data.CharacterUtils;
 import org.wikipediacleaner.api.data.Namespace;
-import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementCategory;
 import org.wikipediacleaner.gui.swing.component.MWPane;
@@ -108,7 +108,7 @@ public class CheckErrorAlgorithm022 extends CheckErrorAlgorithmBase {
           return true;
         }
         result = true;
-        nameSimple = Page.getStringUcFirst(nameSimple);
+        nameSimple = CharacterUtils.ucFirst(nameSimple);
         String namespace = category.getCategoryNotTrimmed().trim();
         CheckErrorResult errorResult = createCheckErrorResult(
             analysis,

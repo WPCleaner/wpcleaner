@@ -29,6 +29,7 @@ import org.wikipediacleaner.api.constants.wiki.Wikisource;
 import org.wikipediacleaner.api.constants.wiki.Wikiversity;
 import org.wikipediacleaner.api.constants.wiki.Wikivoyage;
 import org.wikipediacleaner.api.constants.wiki.Wiktionary;
+import org.wikipediacleaner.api.data.CharacterUtils;
 import org.wikipediacleaner.api.data.DataManager;
 import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.Page;
@@ -193,7 +194,7 @@ public enum EnumWikipedia {
     result = result.replaceAll("_", " ");
     result = result.replaceAll(" +", " ");
     result = result.trim();
-    result = Page.getStringUcFirst(result);
+    result = CharacterUtils.ucFirst(result);
     return result;
   }
 

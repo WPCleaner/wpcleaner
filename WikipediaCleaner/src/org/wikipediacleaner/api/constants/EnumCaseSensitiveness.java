@@ -7,7 +7,7 @@
 
 package org.wikipediacleaner.api.constants;
 
-import org.wikipediacleaner.api.data.Page;
+import org.wikipediacleaner.api.data.CharacterUtils;
 
 
 /**
@@ -61,10 +61,8 @@ public enum EnumCaseSensitiveness {
     result = result.replaceAll("_", " ");
     result = result.replaceAll(" +", " ");
     result = result.trim();
-    if ((this == FIRST_LETTER) &&
-        (result.length() > 0) &&
-        (Character.isLowerCase(result.charAt(0)))) {
-      result = Page.getStringUcFirst(result);
+    if (this == FIRST_LETTER) {
+      CharacterUtils.ucFirst(result);
     }
     return result;
   }

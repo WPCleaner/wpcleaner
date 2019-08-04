@@ -121,7 +121,7 @@ public class Namespace implements Comparable<Namespace> {
     if (alias == null) {
       return;
     }
-    alias = Page.getStringUcFirst(alias);
+    alias = CharacterUtils.ucFirst(alias);
     if (!aliases.contains(alias)) {
       aliases.add(alias);
     }
@@ -135,7 +135,7 @@ public class Namespace implements Comparable<Namespace> {
     if (name == null) {
       return false;
     }
-    name = Page.getStringUcFirst(name.trim());
+    name = CharacterUtils.ucFirst(name.trim());
     for (String alias : aliases) {
       if (name.equals(alias)) {
         return true;

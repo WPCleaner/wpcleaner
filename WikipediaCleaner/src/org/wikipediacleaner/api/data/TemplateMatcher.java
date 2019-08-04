@@ -35,7 +35,7 @@ public abstract class TemplateMatcher {
       String templateName, String explanation,
       boolean isGood, boolean helpNeeded) {
     this.wikipedia = wikipedia;
-    this.templateName = (templateName != null) ? Page.getStringUcFirst(templateName) : null;
+    this.templateName = (templateName != null) ? CharacterUtils.ucFirst(templateName) : null;
     this.explanation = explanation;
     this.good = isGood;
     this.helpNeeded = helpNeeded;
