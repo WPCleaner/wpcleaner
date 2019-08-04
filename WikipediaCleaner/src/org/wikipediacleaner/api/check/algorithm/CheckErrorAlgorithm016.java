@@ -197,7 +197,7 @@ public class CheckErrorAlgorithm016 extends CheckErrorAlgorithmBase {
           i += Character.charCount(codePoint);
         }
         boolean automatic = (!unsafeCharacter || !checkUnsafe);
-        if (analysis.getPage().isRedirect()) {
+        if (analysis.getPage().getRedirects().isRedirect()) {
           PageElementCategory category = analysis.isInCategory(index);
           if (category == null) {
             automatic = false;

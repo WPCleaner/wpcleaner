@@ -40,6 +40,7 @@ import org.wikipediacleaner.api.data.CompositeComparator;
 import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageComparator;
+import org.wikipediacleaner.api.data.PageRedirect;
 import org.wikipediacleaner.gui.swing.action.ActionDisambiguationAnalysis;
 import org.wikipediacleaner.gui.swing.action.ActionExternalViewer;
 import org.wikipediacleaner.gui.swing.action.ActionFullAnalysis;
@@ -510,9 +511,10 @@ public class DisambiguationWindow extends OnePageWindow {
       knownPages = new ArrayList<Page>(1);
       knownPages.add(getPage());
       for (Page backLink : getPage().getAllLinksToPage()) {
-        if ((backLink != null) &&
-            (backLink.isRedirect()) &&
-            (Page.areSameTitle(getPage().getTitle(), backLink.getRedirectDestination()))) {
+        PageRedirect redirects = backLink.getRedirects();
+        if ((redirects != null) &&
+            (redirects.isRedirect()) &&
+            (Page.areSameTitle(getPage().getTitle(), redirects.getTitle()))) {
           knownPages.add(backLink);
         }
       }

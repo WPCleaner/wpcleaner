@@ -123,7 +123,7 @@ public class ApiXmlTemplatesResult extends ApiXmlPropertiesResult implements Api
         String title = currentNode.getAttributeValue("title");
         for (Page p : pages) {
           tmpPages.clear();
-          Iterator<Page> it = p.getRedirectIteratorWithPage();
+          Iterator<Page> it = p.getRedirects().getIteratorWithPage();
           while (it.hasNext()) {
             Page p2 = it.next();
             tmpPages.add(p2);

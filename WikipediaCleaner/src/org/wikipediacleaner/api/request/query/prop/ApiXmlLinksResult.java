@@ -129,7 +129,7 @@ public class ApiXmlLinksResult extends ApiXmlPropertiesResult implements ApiLink
       while (itLinks.hasNext()) {
         Element linkNode = itLinks.next();
         Page link = getPage(getWiki(), linkNode, knownPages, useDisambig);
-        if ((redirects != null) && (link.isRedirect())) {
+        if ((redirects != null) && (link.getRedirects().isRedirect())) {
           redirects.add(link);
         }
         links.add(link);

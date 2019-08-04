@@ -253,7 +253,7 @@ public class MWPaneDisambiguationMenuCreator extends BasicMenuCreator {
     // Disambiguation page
     if (Boolean.TRUE.equals(page.isDisambiguationPage())) {
       Map<Page, List<String>> anchorsMap = new HashMap<Page, List<String>>();
-      List<Page> links = page.getLinksWithRedirect(anchorsMap);
+      List<Page> links = page.getRedirects().getLinks(anchorsMap);
       JMenu submenuLink = new JMenu(GT._T("Link to"));
       JMenu submenuReplace = new JMenu(GT._T("Replace with"));
       JMenu submenuAddPreferred = new JMenu(GT._T("Add to preferred disambiguations"));
@@ -341,14 +341,14 @@ public class MWPaneDisambiguationMenuCreator extends BasicMenuCreator {
       // Possible links
       if ((links != null) && (links.size() > 0)) {
         for (Page p : links) {
-          if (p.isRedirect()) {
+          if (p.getRedirects().isRedirect()) {
             JMenu submenu1 = new JMenu(p.getTitle());
             JMenu submenu2 = new JMenu(p.getTitle());
             JMenu submenu3 = new JMenu(p.getTitle());
             Map<Page, List<String>> anchorsRedirectMap = new HashMap<Page, List<String>>();
-            p.getLinksWithRedirect(anchorsRedirectMap);
+            p.getRedirects().getLinks(anchorsRedirectMap);
             
-            Iterator<Page> iter = p.getRedirectIteratorWithPage();
+            Iterator<Page> iter = p.getRedirects().getIteratorWithPage();
             while (iter.hasNext()) {
               Page pageTmp = iter.next();
               List<String> anchors = anchorsRedirectMap.get(pageTmp);
@@ -526,16 +526,27 @@ public class MWPaneDisambiguationMenuCreator extends BasicMenuCreator {
       }
 
     // Redirect page
-    } else if (page.isRedirect()) {
-      String title = page.getRedirectTitle();
+    } else if (page.getRedirects().isRedirect()) {
+      String destination = page.getRedirects().getDestination();
+      String title = page.getRedirects().getTitle();
 
       addItem(
-          popup, null, GT._T("&Link to {0}", title), false,
-          new ReplaceLinkAction(page.getTitle(), title, text, element, textPane, false));
+          popup, null, GT._T("&Link to {0}", destination), false,
+          new ReplaceLinkAction(page.getTitle(), destination, text, element, textPane, false));
+      if (!title.equals(destination)) {
+        addItem(
+            popup, null, GT._T("&Link to {0}", title), false,
+            new ReplaceLinkAction(page.getTitle(), title, text, element, textPane, false));
+      }
 
       addItem(
-          popup, null, GT._T("&Replace with {0}", title), false,
-          new ReplaceLinkAction(page.getTitle(), title, text, element, textPane, true));
+          popup, null, GT._T("&Replace with {0}", destination), false,
+          new ReplaceLinkAction(page.getTitle(), destination, text, element, textPane, true));
+      if (!title.equals(destination)) {
+        addItem(
+            popup, null, GT._T("&Replace with {0}", title), false,
+            new ReplaceLinkAction(page.getTitle(), title, text, element, textPane, true));
+      }
 
       if (!Page.areSameTitle(text, page.getTitle())) {
         String newLink = PageElementInternalLink.createInternalLink(text, page.getTitle());
@@ -598,7 +609,7 @@ public class MWPaneDisambiguationMenuCreator extends BasicMenuCreator {
     // Retrieve various information
     List<String> wiktionary = disambigPage.getWiktionaryLinks();
     Map<Page, List<String>> anchorsMap = new HashMap<Page, List<String>>();
-    List<Page> links = disambigPage.getLinksWithRedirect(anchorsMap);
+    List<Page> links = disambigPage.getRedirects().getLinks(anchorsMap);
 
     // Checking all possible replacements
     for (int indexReplacement = 0; indexReplacement < replacements.size(); indexReplacement++) {
@@ -657,12 +668,12 @@ public class MWPaneDisambiguationMenuCreator extends BasicMenuCreator {
             separators = true;
           }
           for (Page p : links) {
-            if (p.isRedirect()) {
+            if (p.getRedirects().isRedirect()) {
               JMenu submenu1 = new JMenu(p.getTitle());
               Map<Page, List<String>> anchorsRedirectMap = new HashMap<Page, List<String>>();
-              p.getLinksWithRedirect(anchorsRedirectMap);
+              p.getRedirects().getLinks(anchorsRedirectMap);
               
-              Iterator<Page> iter = p.getRedirectIteratorWithPage();
+              Iterator<Page> iter = p.getRedirects().getIteratorWithPage();
               while (iter.hasNext()) {
                 Page pageTmp = iter.next();
                 List<String> anchors = anchorsRedirectMap.get(pageTmp);

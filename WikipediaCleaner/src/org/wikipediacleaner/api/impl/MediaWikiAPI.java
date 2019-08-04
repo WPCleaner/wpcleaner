@@ -53,6 +53,7 @@ import org.wikipediacleaner.api.data.AbuseFilter;
 import org.wikipediacleaner.api.data.DataManager;
 import org.wikipediacleaner.api.data.LoginResult;
 import org.wikipediacleaner.api.data.Page;
+import org.wikipediacleaner.api.data.PageRedirect;
 import org.wikipediacleaner.api.data.QueryResult;
 import org.wikipediacleaner.api.data.RecentChange;
 import org.wikipediacleaner.api.data.Section;
@@ -707,7 +708,7 @@ public class MediaWikiAPI implements API {
       page.setNamespace(node.getAttributeValue("ns"));
       if (node.getAttribute("redirect") != null) {
         redirect = true;
-        page.isRedirect(true);
+        page.getRedirects().isRedirect(true);
       }
       if (node.getAttribute("missing") != null) {
         page.setExisting(Boolean.FALSE);
@@ -1021,8 +1022,9 @@ public class MediaWikiAPI implements API {
     if (wiki.isDisambiguationPagesLoaded() && !forceApiCall) {
       for (Page page : pages) {
         page.setDisambiguationPage(wiki.isDisambiguationPage(page));
-        if (page.isRedirect()) {
-          for (Page page2 : page.getRedirects()) {
+        PageRedirect redirects = page.getRedirects();
+        if (redirects.isRedirect() && (redirects.getPageList() != null)) {
+          for (Page page2 : redirects.getPageList()) {
             page2.setDisambiguationPage(wiki.isDisambiguationPage(page2));
           }
         }

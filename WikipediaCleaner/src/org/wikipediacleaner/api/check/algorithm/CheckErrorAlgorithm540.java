@@ -368,7 +368,7 @@ public class CheckErrorAlgorithm540 extends CheckErrorAlgorithmBase {
 
     // Report inside redirects
     if ((analysis.getPage() != null) &&
-        (analysis.getPage().isRedirect()) &&
+        (analysis.getPage().getRedirects().isRedirect()) &&
         (elements.size() == 1)) {
       if (reportFormattingElement(
           analysis, elements, element, errors,

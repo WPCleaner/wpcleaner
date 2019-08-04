@@ -133,7 +133,7 @@ public class ApiCategoriesRequest extends ApiPropertiesRequest {
     List<Collection<Page>> splitPagesList = splitListPages(pages, MAX_PAGES_PER_QUERY);
     for (Collection<Page> splitPages : splitPagesList) {
       for (Page page : splitPages) {
-        Iterator<Page> itPage = page.getRedirectIteratorWithPage();
+        Iterator<Page> itPage = page.getRedirects().getIteratorWithPage();
         while (itPage.hasNext()) {
           itPage.next().setDisambiguationPage(null);
         }
@@ -157,7 +157,7 @@ public class ApiCategoriesRequest extends ApiPropertiesRequest {
         }
       }
       for (Page page : splitPages) {
-        Iterator<Page> itPage = page.getRedirectIteratorWithPage();
+        Iterator<Page> itPage = page.getRedirects().getIteratorWithPage();
         while (itPage.hasNext()) {
           Page tmpPage = itPage.next();
           if (tmpPage.isDisambiguationPage() == null) {

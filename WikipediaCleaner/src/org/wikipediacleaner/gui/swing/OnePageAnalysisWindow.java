@@ -1180,7 +1180,7 @@ public class OnePageAnalysisWindow
             if (forceDisambiguation || modelLinks.getCountDisambiguation()) {
               count = true;
             }
-          } else if (link.isRedirect()) {
+          } else if (link.getRedirects().isRedirect()) {
             if (modelLinks.getCountRedirect()) {
               count = true;
             }

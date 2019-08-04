@@ -71,8 +71,8 @@ public class CheckErrorAlgorithm515 extends CheckErrorAlgorithmBase {
 
       // Check if the link is circular
       if ((linkedPage != null) &&
-          linkedPage.isRedirect() &&
-          Page.areSameTitle(pageTitle, linkedPage.getRedirectTitle())) {
+          linkedPage.getRedirects().isRedirect() &&
+          Page.areSameTitle(pageTitle, linkedPage.getRedirects().getTitle())) {
         if (errors == null) {
           return true;
         }

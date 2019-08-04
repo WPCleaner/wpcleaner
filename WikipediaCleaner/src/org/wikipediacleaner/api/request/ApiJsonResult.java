@@ -287,7 +287,7 @@ public abstract class ApiJsonResult extends BasicApiResult {
       page.setExisting(Boolean.TRUE);
     }
     if (pageNode.getAttribute("redirect") != null) {
-      page.isRedirect(true);
+      page.getRedirects().isRedirect(true);
     }
     if (useDisambig) {
       Element pageProps = pageNode.getChild("pageprops");

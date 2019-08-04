@@ -320,7 +320,7 @@ public abstract class AbstractMenuCreator {
     if ((menuItem == null) || (page == null)) {
       return;
     }
-    if (page.isRedirect()) {
+    if (page.getRedirects().isRedirect()) {
       menuItem.setFont(menuItem.getFont().deriveFont(redirectAttributes));
     }
     if (Boolean.TRUE.equals(page.isDisambiguationPage())) {

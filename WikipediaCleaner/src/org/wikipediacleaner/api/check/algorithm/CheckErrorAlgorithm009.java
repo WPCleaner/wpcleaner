@@ -111,7 +111,7 @@ public class CheckErrorAlgorithm009 extends CheckErrorAlgorithmBase {
             }
             replacement.append("\n");
             beginIndex = tmpIndex;
-          } else if (analysis.getPage().isRedirect() && (nbCr == 0)) {
+          } else if (analysis.getPage().getRedirects().isRedirect() && (nbCr == 0)) {
             int crIndex = contents.indexOf('\n');
             if ((crIndex < 0) || (crIndex > tmpIndex)) {
               replacement.append("\n\n");

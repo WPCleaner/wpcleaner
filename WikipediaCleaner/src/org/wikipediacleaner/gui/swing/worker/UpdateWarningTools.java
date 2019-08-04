@@ -625,7 +625,7 @@ public abstract class UpdateWarningTools {
         }
       }
       int indexStart = (templatePrevious != null) ? templatePrevious.getEndIndex() : 0;
-      if ((indexStart == 0) && (talkPage.isRedirect())) {
+      if ((indexStart == 0) && (talkPage.getRedirects().isRedirect())) {
         indexStart = contents.length();
       }
 

@@ -45,7 +45,7 @@ public class DisambiguationAnalysisWorker extends BasicWorker {
       ArrayList<Page> pageAndRedirects = new ArrayList<Page>();
       pageAndRedirects.add(page);
       for (Page backlink : page.getAllLinksToPage()) {
-        if ((backlink != null) && (backlink.isRedirect())) {
+        if ((backlink != null) && (backlink.getRedirects().isRedirect())) {
           pageAndRedirects.add(backlink);
           mw.retrieveContents(getWikipedia(), backlink, false, false, false, false, false);
         }

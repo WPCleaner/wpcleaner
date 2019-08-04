@@ -304,15 +304,15 @@ public class TranslateWorker extends BasicWorker {
     Page original = DataManager.getPage(from, pageName, null, null, null);
     //api.retrieveLinksWithRedirects(from, original, null, null);
     api.initializeRedirect(from, Collections.singletonList(original));
-    if (!original.isRedirect()) {
+    if (!original.getRedirects().isRedirect()) {
       return link;
     }
     api.retrieveContents(from, Collections.singletonList(original), false, true);
-    link = api.getLanguageLink(from, getWikipedia(), original.getRedirectTitle());
+    link = api.getLanguageLink(from, getWikipedia(), original.getRedirects().getTitle());
     if (link == null) {
       return null;
     }
-    String destination = original.getRedirectDestination();
+    String destination = original.getRedirects().getDestination();
     int anchorPos = destination.indexOf('#');
     if (anchorPos < 0) {
       return link;

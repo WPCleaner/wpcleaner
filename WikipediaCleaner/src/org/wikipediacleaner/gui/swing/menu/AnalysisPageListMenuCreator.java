@@ -86,7 +86,7 @@ public class AnalysisPageListMenuCreator extends BasicMenuCreator {
    */
   public void addReplaceAllLinks(
       JPopupMenu popup, Page page, MWPane textPane) {
-    List<Page> links = page.getLinksWithRedirect();
+    List<Page> links = page.getRedirects().getLinks();
     if ((links != null) && (links.size() > 0)) {
       JMenu submenuLink = new JMenu(GT._T("Link to"));
 
@@ -101,10 +101,10 @@ public class AnalysisPageListMenuCreator extends BasicMenuCreator {
       }
 
       for (Page p : links) {
-        if (p.isRedirect()) {
+        if (p.getRedirects().isRedirect()) {
           JMenu submenu1 = new JMenu(p.getTitle());
           
-          Iterator<Page> iter = p.getRedirectIteratorWithPage();
+          Iterator<Page> iter = p.getRedirects().getIteratorWithPage();
           while (iter.hasNext()) {
             Page pageTmp = iter.next();
             addItem(

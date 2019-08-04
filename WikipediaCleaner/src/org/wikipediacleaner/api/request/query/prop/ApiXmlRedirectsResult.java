@@ -69,7 +69,7 @@ public class ApiXmlRedirectsResult extends ApiXmlResult implements ApiRedirectsR
             getWiki(), currentRedirect.getAttributeValue("title"), null, null, null);
         link.setNamespace(currentRedirect.getAttributeValue("ns"));
         link.setPageId(currentRedirect.getAttributeValue("pageid"));
-        link.addRedirect(page);
+        link.getRedirects().add(page, null); // TODO: Check if fragment is available
         if (!list.contains(link)) {
           list.add(link);
         }

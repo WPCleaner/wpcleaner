@@ -77,10 +77,10 @@ public class FullAnalysisWorker extends BasicWorker {
       // Retrieve more information on disambiguation pages
       for (Page link : page.getLinks()) {
         if (Boolean.TRUE.equals(link.isDisambiguationPage())) {
-          Iterator<Page> itLink = link.getRedirectIteratorWithPage();
+          Iterator<Page> itLink = link.getRedirects().getIteratorWithPage();
           while (itLink.hasNext()) {
             Page link2 = itLink.next();
-            if (!link2.isRedirect()) {
+            if (!link2.getRedirects().isRedirect()) {
               mw.retrieveAllLinks(wiki, link2, null, knownPages, false, false);
             }
             if (link.hasWiktionaryTemplate() &&

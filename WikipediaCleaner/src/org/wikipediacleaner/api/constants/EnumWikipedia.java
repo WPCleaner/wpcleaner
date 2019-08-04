@@ -33,6 +33,7 @@ import org.wikipediacleaner.api.data.CharacterUtils;
 import org.wikipediacleaner.api.data.DataManager;
 import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.Page;
+import org.wikipediacleaner.api.data.PageRedirect;
 
 
 /**
@@ -436,10 +437,11 @@ public enum EnumWikipedia {
     if (disambiguationPages.contains(page.getTitle())) {
       return Boolean.TRUE;
     }
-    if (page.isRedirect()) {
-      List<Page> redirects = page.getRedirects();
-      if (redirects != null) {
-        for (Page redirect : redirects) {
+    PageRedirect redirects = page.getRedirects();
+    if (redirects.isRedirect()) {
+      List<Page> listRedirects = redirects.getPageList();
+      if (listRedirects != null) {
+        for (Page redirect : listRedirects) {
           if ((redirect != null) &&
               (disambiguationPages.contains(redirect.getTitle()))) {
             return Boolean.TRUE;

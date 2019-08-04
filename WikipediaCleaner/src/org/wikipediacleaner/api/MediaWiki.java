@@ -588,11 +588,11 @@ public class MediaWiki extends MediaWikiController {
     // Retrieving possible disambiguations
     if (disambiguations) {
       for (Page p : pageList) {
-        Iterator<Page> iter = p.getRedirectIteratorWithPage();
+        Iterator<Page> iter = p.getRedirects().getIteratorWithPage();
         while (iter.hasNext()) {
           p = iter.next();
           if ((Boolean.TRUE.equals(p.isDisambiguationPage())) &&
-              (!p.isRedirect())) {
+              (!p.getRedirects().isRedirect())) {
             List<Page> links = p.getLinks();
             if ((links == null) || (links.size() == 0)) {
               addTask(new LinksWRCallable(wikipedia, this, api, p, null, null, false));

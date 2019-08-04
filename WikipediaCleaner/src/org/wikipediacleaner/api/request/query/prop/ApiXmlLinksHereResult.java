@@ -86,7 +86,7 @@ public class ApiXmlLinksHereResult extends ApiXmlResult implements ApiLinksHereR
           link.setNamespace(currentLink.getAttributeValue("ns"));
           link.setPageId(currentLink.getAttributeValue("pageid"));
           if (currentLink.getAttribute("redirect") != null) {
-            link.isRedirect(true);
+            link.getRedirects().isRedirect(true);
           }
           if (!list.contains(link)) {
             list.add(link);

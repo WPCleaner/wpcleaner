@@ -72,6 +72,7 @@ import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.constants.WPCConfigurationString;
 import org.wikipediacleaner.api.data.DataManager;
 import org.wikipediacleaner.api.data.Page;
+import org.wikipediacleaner.api.data.PageRedirect;
 import org.wikipediacleaner.gui.swing.Controller;
 import org.wikipediacleaner.gui.swing.OnePageWindow;
 import org.wikipediacleaner.gui.swing.action.ActionFullAnalysis;
@@ -1317,10 +1318,11 @@ public class CheckWikiWindow extends OnePageWindow implements CheckWikiListener 
               contentPane.add(contentPanel);
               contentPane.setSelectedComponent(contentPanel);
               contentPanels.add(contentPanel);
-              if (page.isRedirect()) {
-                List<Page> redirects = page.getRedirects();
-                if ((redirects != null) && (redirects.size() > 0)) {
-                  page = redirects.get(0);
+              PageRedirect redirects = page.getRedirects();
+              if (redirects.isRedirect()) {
+                List<Page> listRedirects = redirects.getPageList();
+                if ((listRedirects != null) && (listRedirects.size() > 0)) {
+                  page = listRedirects.get(0);
                 } else {
                   page = null;
                 }

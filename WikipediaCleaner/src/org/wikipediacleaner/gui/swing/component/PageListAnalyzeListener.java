@@ -15,6 +15,7 @@ import javax.swing.JList;
 
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.Page;
+import org.wikipediacleaner.api.data.PageRedirect;
 import org.wikipediacleaner.gui.swing.OnePageAnalysisWindow;
 import org.wikipediacleaner.gui.swing.OnePageWindow;
 
@@ -62,9 +63,10 @@ public class PageListAnalyzeListener extends MouseAdapter {
       knownPages = new ArrayList<Page>(1);
       knownPages.add(basePage);
       for (Page backLink : basePage.getAllLinksToPage()) {
-        if ((backLink != null) &&
-            (backLink.isRedirect()) &&
-            (Page.areSameTitle(basePage.getTitle(), backLink.getRedirectDestination()))) {
+        PageRedirect redirects = backLink.getRedirects();
+        if ((redirects != null) &&
+            (redirects.isRedirect()) &&
+            (Page.areSameTitle(basePage.getTitle(), redirects.getTitle()))) {
           knownPages.add(backLink);
         }
       }

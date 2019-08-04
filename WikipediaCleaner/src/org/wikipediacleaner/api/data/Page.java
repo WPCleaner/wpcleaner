@@ -12,7 +12,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.Hashtable;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -78,6 +77,7 @@ public class Page implements Comparable<Page> {
     }
     this.title = title;
     this.relatedPages = new Hashtable<Page.RelatedPages, List<Page>>();
+    this.redirects = new PageRedirect(this);
     setContents("");
   }
 
@@ -340,12 +340,9 @@ public class Page implements Comparable<Page> {
     if (Boolean.TRUE.equals(disambiguation)) {
       return Boolean.TRUE;
     }
-    if (redirects != null) {
-      for (int i = 0; i < redirects.size(); i++) {
-        if (Boolean.TRUE.equals(redirects.get(i).isDisambiguationPage())) {
-          return Boolean.TRUE;
-        }
-      }
+    Boolean redirectResult = redirects.isDisambiguationPage();
+    if (redirectResult != null) {
+      return redirectResult;
     }
     return disambiguation;
   }
@@ -568,58 +565,6 @@ public class Page implements Comparable<Page> {
   }
 
   /**
-   * @return Links from the page (working if the page is a redirection).
-   */
-  public List<Page> getLinksWithRedirect() {
-    if (redirects != null) {
-      for (int i = 0; i < redirects.size(); i++) {
-        List<Page> redirectLinks = redirects.get(i).links;
-        if ((redirectLinks != null) && (!redirectLinks.isEmpty())) {
-          return redirectLinks;
-        }
-      }
-    }
-    return links;
-  }
-
-  /**
-   * @param anchors Anchors among the link (OUT).
-   * @return Links from the page (working if the page is a redirection).
-   */
-  public List<Page> getLinksWithRedirect(Map<Page, List<String>> anchors) {
-    PageAnalysis pageAnalysis = getAnalysis(contents, false);
-    if (redirects != null) {
-      for (int i = 0; i < redirects.size(); i++) {
-        Page page = redirects.get(i);
-        List<Page> redirectLinks = page.links;
-        if ((redirectLinks != null) && (!redirectLinks.isEmpty())) {
-          PageAnalysisUtils.getAnchors(pageAnalysis, redirectLinks, anchors);
-          return redirectLinks;
-        }
-      }
-    }
-    if (links != null) {
-      PageAnalysisUtils.getAnchors(pageAnalysis, links, anchors);
-    } else if (redirects != null) {
-      PageAnalysisUtils.getAnchors(pageAnalysis, redirects, anchors);
-    }
-    return links;
-  }
-
-  /**
-   * @return Iterator for the page + redirects
-   */
-  public Iterator<Page> getRedirectIteratorWithPage() {
-    List<Page> list = new ArrayList<Page>(
-        (redirects != null) ? redirects.size() + 1 : 1);
-    list.add(this);
-    if (redirects != null) {
-      list.addAll(redirects);
-    }
-    return list.iterator();
-  }
-
-  /**
    * @param links Links from the page.
    */
   public void setLinks(List<Page> links) {
@@ -834,141 +779,14 @@ public class Page implements Comparable<Page> {
   // Redirects
   // ==========================================================================
 
-  /**
-   * Flag indicating if the page is a redirect.
-   */
-  private boolean isRedirect;
+  /** Handler for information about redirects */
+  private final PageRedirect redirects;
 
   /**
-   * List of pages the page is redirecting to.
+   * @return Handler for information about redirects.
    */
-  private List<Page> redirects;
-
-  /**
-   * Indicates if the page is a redirection to an other page.
-   * 
-   * @return <code>true</code> if the page is a redirection.
-   */
-  public boolean isRedirect() {
-    return isRedirect;
-  }
-
-  /**
-   * Indicates if the page is a redirection to an other page.
-   * 
-   * @param redirect Indicates if the page is a redirection.
-   */
-  public void isRedirect(boolean redirect) {
-    isRedirect = redirect;
-  }
-
-  /**
-   * @return Redirection.
-   */
-  public List<Page> getRedirects() {
+  public PageRedirect getRedirects() {
     return redirects;
-  }
-  
-  /**
-   * @param redirect Redirection.
-   */
-  public void setRedirects(List<Page> redirect) {
-    this.redirects = redirect;
-    if (redirects != null) {
-      isRedirect(true);
-    }
-  }
-
-  /**
-   * @param redirect Redirection.
-   */
-  public void addRedirect(Page redirect) {
-    if (redirects == null) {
-      redirects = new ArrayList<Page>(); 
-    }
-    redirects.add(redirect);
-    isRedirect(true);
-  }
-
-  /**
-   * @return The title of the page when redirects are followed.
-   */
-  public String getRedirectTitle() {
-    if ((redirects != null) && (redirects.size() > 0)) {
-      return redirects.get(redirects.size() - 1).getTitle();
-    }
-    return getTitle();
-  }
-
-  /**
-   * @return Redirection destination.
-   */
-  public String getRedirectDestination() {
-    if ((redirects == null) || (redirects.isEmpty())) {
-      return getTitle();
-    }
-    Page to = redirects.get(redirects.size() - 1);
-    String toTitle = to.getTitle();
-    String pageContents = contents;
-    if ((pageContents != null) && (pageContents.length() > 0)) {
-      boolean redirectFound = false;
-      int startIndex = 0;
-      while ((!redirectFound) && (startIndex < pageContents.length())) {
-        boolean ok = true;
-        int endIndex = pageContents.indexOf('\n', startIndex);
-        if (endIndex < 0) {
-          endIndex = pageContents.length();
-        }
-        // Removing white spaces
-        if (ok) {
-          while ((startIndex < endIndex) &&
-                 Character.isWhitespace(pageContents.charAt(startIndex))) {
-            startIndex++;
-          }
-        }
-        // Removing REDIRECT
-        if (ok) {
-          ok = false;
-          MagicWord magicRedirect = wikipedia.getWikiConfiguration().getMagicWordByName(MagicWord.REDIRECT);
-          if ((magicRedirect != null) && (magicRedirect.getAliases() != null)) {
-            int length = 0;
-            for (String magic : magicRedirect.getAliases()) {
-              if ((pageContents.length() > startIndex + magic.length()) &&
-                  (magic.length() > length)) {
-                if (magic.equalsIgnoreCase(pageContents.substring(startIndex, startIndex + magic.length()))) {
-                  ok = true;
-                  length = magic.length();
-                }
-              }
-            }
-            startIndex += length;
-          }
-        }
-        // Removing white spaces
-        if (ok) {
-          while ((startIndex < endIndex) &&
-                 Character.isWhitespace(pageContents.charAt(startIndex))) {
-            startIndex++;
-          }
-        }
-        if (ok && pageContents.startsWith("[[", startIndex)) {
-          redirectFound = true;
-          startIndex += "[[".length();
-          int endRedirect = pageContents.indexOf("]]", startIndex);
-          int sharp = pageContents.indexOf("#", startIndex);
-          if ((endRedirect > 0) && (sharp > 0) && (sharp < endRedirect)) {
-            toTitle += pageContents.substring(sharp, endRedirect);
-          }
-        }
-        startIndex = endIndex + 1;
-      }
-    }
-    if ((to.getNamespace() != null) &&
-        (to.getNamespace() == Namespace.CATEGORY) &&
-        (!toTitle.startsWith(":"))) {
-      toTitle = ":" + toTitle;
-    }
-    return toTitle;
   }
 
   // ==========================================================================

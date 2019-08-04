@@ -405,10 +405,10 @@ public abstract class PageComparator implements NamedComparator<Page>, Externali
      */
     @Override
     public int compare(Page o1, Page o2) {
-      if (o1.isRedirect() == o2.isRedirect()) {
+      if (o1.getRedirects().isRedirect() == o2.getRedirects().isRedirect()) {
         return 0; 
       }
-      if (o1.isRedirect()) {
+      if (o1.getRedirects().isRedirect()) {
         return -1;
       }
       return 1;

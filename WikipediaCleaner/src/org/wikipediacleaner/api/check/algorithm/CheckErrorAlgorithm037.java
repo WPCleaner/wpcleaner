@@ -126,7 +126,7 @@ public class CheckErrorAlgorithm037 extends CheckErrorAlgorithmBase {
       if ((index > 0) && (contents.charAt(index - 1) != '\n')) {
         automatic = false;
       }
-      if (analysis.getPage().isRedirect() && !automatic) {
+      if (analysis.getPage().getRedirects().isRedirect() && !automatic) {
         automatic = true;
         replacement = "\n\n" + replacement;
       }

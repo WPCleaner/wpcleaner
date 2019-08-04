@@ -199,12 +199,12 @@ public class PageListModel extends AbstractListModel<Page> {
     if (!Boolean.TRUE.equals(page.isExisting()) && showMissing) {
       return true;
     }
-    if (!Boolean.FALSE.equals(page.isRedirect()) && showRedirect) {
+    if (!Boolean.FALSE.equals(page.getRedirects().isRedirect()) && showRedirect) {
       return true;
     }
     if (!Boolean.TRUE.equals(page.isDisambiguationPage()) &&
         !Boolean.FALSE.equals(page.isExisting()) &&
-        !Boolean.TRUE.equals(page.isRedirect()) &&
+        !Boolean.TRUE.equals(page.getRedirects().isRedirect()) &&
         showOther) {
       return true;
     }

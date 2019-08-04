@@ -77,17 +77,17 @@ public class BasicMenuCreator extends AbstractMenuCreator {
       return;
     }
 
-    List<Page> links = page.getLinksWithRedirect();
+    List<Page> links = page.getRedirects().getLinks();
     if (Utilities.isDesktopSupported()) {
       if (((links != null) && (links.size() > 0) && showLinks) ||
-          page.isRedirect()) {
+          page.getRedirects().isRedirect()) {
         int fixedBeginView = 0;
         int fixedEndView = 0;
         int fixedBeginHistory = 0;
         int fixedEndHistory = 0;
         JMenu submenuView = new JMenu(GT._T("External Viewer"));
         JMenu submenuHistory = new JMenu(GT._T("History"));
-        Iterator<Page> iter = page.getRedirectIteratorWithPage();
+        Iterator<Page> iter = page.getRedirects().getIteratorWithPage();
         while (iter.hasNext()) {
           Page pageTmp = iter.next();
           fixedBeginView += addItem(
@@ -103,10 +103,10 @@ public class BasicMenuCreator extends AbstractMenuCreator {
           fixedBeginHistory += addSeparator(submenuHistory);
     
           for (Page p : links) {
-            if (p.isRedirect()) {
+            if (p.getRedirects().isRedirect()) {
               JMenu submenuRedirectView = new JMenu(p.getTitle());
               JMenu submenuRedirectHistory = new JMenu(p.getTitle());
-              Iterator<Page> itPage = p.getRedirectIteratorWithPage();
+              Iterator<Page> itPage = p.getRedirects().getIteratorWithPage();
               while (itPage.hasNext()) {
                 Page redirect = itPage.next();
                 addItem(
@@ -133,7 +133,7 @@ public class BasicMenuCreator extends AbstractMenuCreator {
           fixedEndView += addSeparator(submenuView);
           fixedEndHistory += addSeparator(submenuHistory);
 
-          iter = page.getRedirectIteratorWithPage();
+          iter = page.getRedirects().getIteratorWithPage();
           while (iter.hasNext()) {
             Page pageTmp = iter.next();
             fixedEndView += addItem(
@@ -190,12 +190,12 @@ public class BasicMenuCreator extends AbstractMenuCreator {
     }
     JMenuItem menuItem = null;
     ActionListener action = null;
-    List<Page> links = page.getLinksWithRedirect();
-    if (((links != null) && (links.size() > 0)) || page.isRedirect()) {
+    List<Page> links = page.getRedirects().getLinks();
+    if (((links != null) && (links.size() > 0)) || page.getRedirects().isRedirect()) {
       int fixedBegin = 0;
       int fixedEnd = 0;
       JMenu submenuAnalyze = new JMenu(GT._T("Analyze"));
-      Iterator<Page> iter = page.getRedirectIteratorWithPage();
+      Iterator<Page> iter = page.getRedirects().getIteratorWithPage();
       while (iter.hasNext()) {
         Page pageTmp = iter.next();
         menuItem = new JMenuItem(pageTmp.getTitle());
@@ -218,7 +218,7 @@ public class BasicMenuCreator extends AbstractMenuCreator {
 
         fixedEnd += addSeparator(submenuAnalyze);
 
-        iter = page.getRedirectIteratorWithPage();
+        iter = page.getRedirects().getIteratorWithPage();
         while (iter.hasNext()) {
           Page pageTmp = iter.next();
           menuItem = new JMenuItem(pageTmp.getTitle());
@@ -260,14 +260,14 @@ public class BasicMenuCreator extends AbstractMenuCreator {
       return;
     }
     if (Boolean.TRUE.equals(page.isDisambiguationPage())) {
-      if (!page.isRedirect()) {
+      if (!page.getRedirects().isRedirect()) {
         JMenuItem menuItem = new JMenuItem(GT._T("Disambiguation analysis"));
         ActionListener action = new ActionDisambiguationAnalysis(wiki, page.getTitle());
         menuItem.addActionListener(action);
         popup.add(menuItem);
       } else {
         JMenu submenuView = new JMenu(GT._T("Disambiguation analysis"));
-        Iterator<Page> iter = page.getRedirectIteratorWithPage();
+        Iterator<Page> iter = page.getRedirects().getIteratorWithPage();
         while (iter.hasNext()) {
           Page pageTmp = iter.next();
           JMenuItem menuItem = new JMenuItem(pageTmp.getTitle());

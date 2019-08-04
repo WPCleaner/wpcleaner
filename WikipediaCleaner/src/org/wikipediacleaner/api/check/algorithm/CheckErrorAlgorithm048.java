@@ -58,7 +58,7 @@ public class CheckErrorAlgorithm048 extends CheckErrorAlgorithmBase {
     }
 
     // Do not report redirects
-    if (analysis.getPage().isRedirect()) {
+    if (analysis.getPage().getRedirects().isRedirect()) {
       return false;
     }
 

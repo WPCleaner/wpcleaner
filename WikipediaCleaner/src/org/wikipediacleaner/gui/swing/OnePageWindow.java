@@ -48,6 +48,7 @@ import org.wikipediacleaner.api.constants.WPCConfigurationStringList;
 import org.wikipediacleaner.api.data.DataManager;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageAnalysis;
+import org.wikipediacleaner.api.data.PageRedirect;
 import org.wikipediacleaner.gui.swing.action.ActionFullAnalysis;
 import org.wikipediacleaner.gui.swing.action.ReplaceAllLinksAction;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
@@ -275,7 +276,7 @@ public abstract class OnePageWindow
    */
   @Override
   protected void updateComponentState() {
-    boolean redirect = (page != null) && (page.isRedirect());
+    boolean redirect = (page != null) && (page.getRedirects().isRedirect());
     boolean article = (page != null) && (page.isArticle());
     boolean dabWarning =
         article &&
@@ -801,8 +802,9 @@ public abstract class OnePageWindow
     }
     if ((page != null) && (page.getLinks() != null)) {
       for (Page p : page.getLinks()) {
-        if (p.isRedirect() && !Boolean.TRUE.equals(p.isDisambiguationPage())) {
-          String newTitle = p.getRedirectDestination();
+        PageRedirect redirects = p.getRedirects();
+        if (redirects.isRedirect() && !Boolean.TRUE.equals(p.isDisambiguationPage())) {
+          String newTitle = redirects.getDestination();
           String text = GT._T(
               "Link \"{0}\" to \"{1}\"", new Object[] { p.getTitle(), newTitle });
           JMenuItem menuItem = new JMenuItem(text);
@@ -953,7 +955,7 @@ public abstract class OnePageWindow
   public void actionDisambiguationRedir() {
     if (page != null) {
       Controller.runDisambiguationAnalysis(
-          page.getRedirectTitle(), getWikipedia());
+          page.getRedirects().getTitle(), getWikipedia());
     }
   }
 
@@ -992,7 +994,7 @@ public abstract class OnePageWindow
   public void actionFullAnalysisRedir() {
     if (page != null) {
       Controller.runFullAnalysis(
-          page.getRedirectTitle(), null,
+          page.getRedirects().getTitle(), null,
           getWikipedia());
     }
   }

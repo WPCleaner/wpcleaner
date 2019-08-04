@@ -364,7 +364,7 @@ public abstract class MWPaneFormatter {
 
       // Specific styles
       if (target != null) {
-        if (target.isRedirect()) {
+        if (target.getRedirects().isRedirect()) {
           style = doc.getStyle(ConfigurationValueStyle.INTERNAL_LINK_DEFAULT_REDIRECT.getName());
         } else if (Boolean.FALSE.equals(target.isExisting())) {
           style = doc.getStyle(ConfigurationValueStyle.INTERNAL_LINK_DEFAULT_MISSING.getName());

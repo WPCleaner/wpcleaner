@@ -15,6 +15,7 @@ import org.wikipediacleaner.api.MediaWikiListener;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageAnalysis;
+import org.wikipediacleaner.api.data.PageRedirect;
 import org.wikipediacleaner.i18n.GT;
 
 
@@ -66,10 +67,12 @@ public class ContentsCallable extends MediaWikiCallable<Page> {
           getWikipedia(),
           Collections.singletonList(page), 
           usePageId, withRedirects);
+      PageRedirect redirects = page.getRedirects();
       if (withRedirects &&
-          page.isRedirect() &&
-          (page.getRedirects().size() > 0)) {
-        api.retrieveContents(getWikipedia(), page.getRedirects(), false, false);
+          redirects.isRedirect() &&
+          (redirects.getPageList() != null) &&
+          (!redirects.getPageList().isEmpty())) {
+        api.retrieveContents(getWikipedia(), redirects.getPageList(), false, false);
       }
     } else {
       api.retrieveSectionContents(getWikipedia(), page, section.intValue());

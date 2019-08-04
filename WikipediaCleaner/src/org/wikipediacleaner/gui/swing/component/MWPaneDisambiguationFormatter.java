@@ -173,7 +173,7 @@ public class MWPaneDisambiguationFormatter extends
           }
         }
       }
-    } else if (link.isRedirect()) {
+    } else if (link.getRedirects().isRedirect()) {
       styleType = ConfigurationValueStyle.INTERNAL_LINK_REDIRECT;
     } else if (Boolean.TRUE.equals(link.isExisting())) {
       styleType = ConfigurationValueStyle.INTERNAL_LINK_NORMAL;

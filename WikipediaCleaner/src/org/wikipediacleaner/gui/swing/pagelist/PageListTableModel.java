@@ -208,7 +208,7 @@ public class PageListTableModel extends AbstractTableModel {
       case COLUMN_PAGE:
         return page.getTitle();
       case COLUMN_REDIRECT:
-        return page.isRedirect();
+        return page.getRedirects().isRedirect();
       case COLUMN_WATCHED:
         return watchedPages.contains(page.getTitle());
       }

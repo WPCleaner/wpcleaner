@@ -74,7 +74,7 @@ public class ApiXmlBacklinksResult extends ApiXmlResult implements ApiBacklinksR
         link.setNamespace(currentBacklink.getAttributeValue("ns"));
         link.setPageId(currentBacklink.getAttributeValue("pageid"));
         if (currentBacklink.getAttribute("redirect") != null) {
-          link.addRedirect(page);
+          link.getRedirects().add(page, null); // TODO: Check if fragment is available
         }
         if (!list.contains(link)) {
           list.add(link);

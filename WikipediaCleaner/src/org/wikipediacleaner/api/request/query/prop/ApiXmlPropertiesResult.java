@@ -64,7 +64,7 @@ public class ApiXmlPropertiesResult extends ApiXmlResult implements ApiPropertie
     page.setStartTimestamp(node.getAttributeValue("starttimestamp"));
     Attribute attrRedirect = node.getAttribute("redirect");
     if (attrRedirect != null) {
-      page.isRedirect(true);
+      page.getRedirects().isRedirect(true);
     }
     Attribute attrMissing = node.getAttribute("missing");
     if (attrMissing != null) {
@@ -181,11 +181,12 @@ public class ApiXmlPropertiesResult extends ApiXmlResult implements ApiPropertie
       Element currentRedirect = itRedirect.next();
       String fromPage = currentRedirect.getAttributeValue("from");
       String toPage = currentRedirect.getAttributeValue("to");
+      String toFragement = currentRedirect.getAttributeValue("tofragment");
       for (Page p : pages) {
 
         // Find if the redirect is already taken into account
         boolean exists = false;
-        Iterator<Page> itPage = p.getRedirectIteratorWithPage();
+        Iterator<Page> itPage = p.getRedirects().getIteratorWithPage();
         while (itPage.hasNext()) {
           Page tmp = itPage.next();
           String title = getNormalizedTitle(tmp.getTitle(), normalization);
@@ -195,7 +196,7 @@ public class ApiXmlPropertiesResult extends ApiXmlResult implements ApiPropertie
         }
 
         // Add the redirect if needed
-        itPage = p.getRedirectIteratorWithPage();
+        itPage = p.getRedirects().getIteratorWithPage();
         while (itPage.hasNext()) {
           Page tmp = itPage.next();
           String title = getNormalizedTitle(tmp.getTitle(), normalization);
@@ -212,7 +213,7 @@ public class ApiXmlPropertiesResult extends ApiXmlResult implements ApiPropertie
                   p.getWikipedia(), to.getAttributeValue("title"), null, null, null);
               pageTo.setNamespace(to.getAttributeValue("ns"));
               pageTo.setPageId(to.getAttributeValue("pageid"));
-              p.addRedirect(pageTo);
+              p.getRedirects().add(pageTo, toFragement);
             }
           }
         }
@@ -221,7 +222,7 @@ public class ApiXmlPropertiesResult extends ApiXmlResult implements ApiPropertie
 
     // Analyzing missing pages
     for (Page p : pages) {
-      Iterator<Page> itPage = p.getRedirectIteratorWithPage();
+      Iterator<Page> itPage = p.getRedirects().getIteratorWithPage();
       while (itPage.hasNext()) {
         Page tmp = itPage.next();
         String title = getNormalizedTitle(tmp.getTitle(), normalization);

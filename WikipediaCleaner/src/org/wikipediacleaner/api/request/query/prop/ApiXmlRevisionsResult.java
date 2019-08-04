@@ -81,7 +81,7 @@ public class ApiXmlRevisionsResult extends ApiXmlPropertiesResult implements Api
         }
         String namespace = pageNode.getAttributeValue("ns");
         for (Page tmpPage : pages) {
-          Iterator<Page> itPage = tmpPage.getRedirectIteratorWithPage();
+          Iterator<Page> itPage = tmpPage.getRedirects().getIteratorWithPage();
           while (itPage.hasNext()) {
             Page page = itPage.next();
             boolean samePage = false;

@@ -148,7 +148,7 @@ public class ActionInsertPredefinedText implements ActionListener {
 
     // Check current page
     boolean article = (page.isArticle());
-    boolean redirect = article && page.isRedirect();
+    boolean redirect = article && page.getRedirects().isRedirect();
 
     // Check configuration
     WPCConfiguration wpcConfig = page.getWikipedia().getConfiguration();
