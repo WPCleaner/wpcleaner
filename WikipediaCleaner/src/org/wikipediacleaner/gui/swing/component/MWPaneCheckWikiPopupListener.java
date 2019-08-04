@@ -58,6 +58,8 @@ public class MWPaneCheckWikiPopupListener extends MWPanePopupListener {
     MWPaneCheckWikiMenuCreator menu = new MWPaneCheckWikiMenuCreator();
     JPopupMenu popup = menu.createPopupMenu(null);
     menu.addInfo(popup, element, textPane, info);
+    menu.addSeparator(popup);
+    menu.addItemCopyPaste(popup, textPane);
     return popup;
   }
 }

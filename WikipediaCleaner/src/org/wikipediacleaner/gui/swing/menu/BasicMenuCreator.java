@@ -25,9 +25,11 @@ import org.wikipediacleaner.api.data.PageAnalysisUtils;
 import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.PageElementTitle;
 import org.wikipediacleaner.gui.swing.action.ActionCheckTemplate;
+import org.wikipediacleaner.gui.swing.action.ActionCopyText;
 import org.wikipediacleaner.gui.swing.action.ActionDisambiguationAnalysis;
 import org.wikipediacleaner.gui.swing.action.ActionExternalViewer;
 import org.wikipediacleaner.gui.swing.action.ActionFullAnalysis;
+import org.wikipediacleaner.gui.swing.action.ActionPasteText;
 import org.wikipediacleaner.gui.swing.action.PurgeCacheAction;
 import org.wikipediacleaner.gui.swing.action.ReloadLinksAction;
 import org.wikipediacleaner.gui.swing.action.RemoveLinkAction;
@@ -310,6 +312,23 @@ public class BasicMenuCreator extends AbstractMenuCreator {
   // ==========================================================================
   // Basic actions
   // ==========================================================================
+
+  /**
+   * Add items for copying/pasting text.
+   * 
+   * @param popup Popup menu.
+   * @param textPane Text pane.
+   */
+  public void addItemCopyPaste(
+      JPopupMenu popup, MWPane textPane) {
+    if (textPane != null) {
+      popup.add(ActionCopyText.createMenuItem(textPane));
+      JMenuItem menuItemPaste = ActionPasteText.createMenuItem(textPane);
+      if (menuItemPaste != null) {
+        popup.add(menuItemPaste);
+      }
+    }
+  }
 
   /**
    * Add item for removing link.
