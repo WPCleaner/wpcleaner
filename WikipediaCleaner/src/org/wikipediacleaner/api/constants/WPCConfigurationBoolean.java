@@ -33,6 +33,8 @@ public enum WPCConfigurationBoolean {
   DAB_WARNING_SECTION_0("dab_warning_section_0", true, true, false),
   // Allow duplicate arguments warning outside section 0 of talk page
   DUPLICATE_ARGS_WARNING_SECTION_0("duplicate_args_warning_section_0", true, true, false),
+  // Check is EAN are ISBN
+  ISBN_CHECK_EAN("isbn_check_ean", true, true, true),
   // Allow ISBN warning outside section 0 of talk page
   ISBN_WARNING_SECTION_0("isbn_warning_section_0", true, true, false),
   // Allow ISSN warning outside section 0 of talk page

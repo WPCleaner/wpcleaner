@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.wikipediacleaner.api.constants.WPCConfiguration;
+import org.wikipediacleaner.api.constants.WPCConfigurationBoolean;
 import org.wikipediacleaner.api.constants.WPCConfigurationStringList;
 import org.wikipediacleaner.api.data.ISBNRange.ISBNInformation;
 import org.wikipediacleaner.api.data.PageElementTemplate.Parameter;
@@ -122,7 +123,8 @@ public class PageElementISBN extends PageElement {
     }
 
     // Search for ISBN in plain texts
-    analyzePlainText(analysis, isbns, isbnIgnoreIncorrect);
+    boolean checkEAN = config.getBoolean(WPCConfigurationBoolean.ISBN_CHECK_EAN);
+    analyzePlainText(analysis, isbns, isbnIgnoreIncorrect, checkEAN);
 
     return isbns;
   }
@@ -150,10 +152,12 @@ public class PageElementISBN extends PageElement {
    * @param analysis Page analysis.
    * @param isbns Current list of ISBN.
    * @param ignoreIncorrect List of template parameters to ignore when ISBN is incorrect.
+   * @param checkEAN True if EAN should be checked for potential ISBN.
    */
   private static void analyzePlainText(
       PageAnalysis analysis, List<PageElementISBN> isbns,
-      List<String[]> ignoreIncorrect) {
+      List<String[]> ignoreIncorrect,
+      boolean checkEAN) {
     String contents = analysis.getContents();
     if (contents == null) {
       return;
@@ -161,7 +165,7 @@ public class PageElementISBN extends PageElement {
     int index = 0;
     int maxIndex = contents.length() - 1;
     while (index < maxIndex) {
-      index = checkPlainText(analysis, contents, index, isbns, ignoreIncorrect);
+      index = checkPlainText(analysis, contents, index, isbns, ignoreIncorrect, checkEAN);
     }
   }
 
@@ -173,11 +177,12 @@ public class PageElementISBN extends PageElement {
    * @param index Current index in the page.
    * @param isbns Current list of ISBN.
    * @param ignoreIncorrect List of template parameters to ignore when ISBN is incorrect.
+   * @param checkEAN True if EAN should be checked for potential ISBN.
    * @return Next index to check.
    */
   private static int checkPlainText(
       PageAnalysis analysis, String contents, int index, List<PageElementISBN> isbns,
-      List<String[]> ignoreIncorrect) {
+      List<String[]> ignoreIncorrect, boolean checkEAN) {
 
     // Check special places
     if (contents.charAt(index) == '<') {
@@ -221,13 +226,17 @@ public class PageElementISBN extends PageElement {
         }
       }
     }
-    for (String tmpPrefix : EAN_PREFIX) {
-      if ((prefix == null) && (contents.length() >= index + tmpPrefix.length())) {
-        String nextChars = contents.substring(index, index + tmpPrefix.length());
-        if (tmpPrefix.equalsIgnoreCase(nextChars)) {
-          prefix = tmpPrefix;
-          reportOnlyIfCorrect = true;
-          correctPrefix = false;
+    if (checkEAN) {
+      if ((index == 0) || (!Character.isLetter(contents.charAt(index - 1)))) {
+        for (String tmpPrefix : EAN_PREFIX) {
+          if ((prefix == null) && (contents.length() >= index + tmpPrefix.length())) {
+            String nextChars = contents.substring(index, index + tmpPrefix.length());
+            if (tmpPrefix.equalsIgnoreCase(nextChars)) {
+              prefix = tmpPrefix;
+              reportOnlyIfCorrect = true;
+              correctPrefix = false;
+            }
+          }
         }
       }
     }
@@ -372,9 +381,9 @@ public class PageElementISBN extends PageElement {
       if (endNumber > beginNumber) {
         String number = contents.substring(beginNumber, endNumber);
         if (reportOnlyIfCorrect) {
-          if (!isCorrect || !isValid(number)) {
-            return endNumber;
-          }
+//          if (!isCorrect || !isValid(number)) {
+//            return endNumber;
+//          }
           ISBNInformation isbnInfo = ISBNRange.getInformation(number);
           if (isbnInfo == null) {
             return endNumber;
