@@ -111,8 +111,10 @@ public class HttpServer {
           //
         }
       } catch (HttpException e) {
+        log.warn("IOException: " + e.getMessage());
         throw new APIException("HttpException: " + e.getMessage());
       } catch (IOException e) {
+        log.warn("IOException: " + e.getMessage());
         throw new APIException("IOException: " + e.getMessage());
       } finally {
         if (inputStream != null) {
