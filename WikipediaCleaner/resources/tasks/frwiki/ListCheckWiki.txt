@@ -1,70 +1,71 @@
+Set AdditionalAlgorithms 1 2 9 16 17 18 22 46 48 64 85 88 90 91 104 106 524 526 532 533 534 537 538 539 540 541 542 543
 Set Prefix [[Utilisateur:WikiCleanerBot#T3|T3]]
-FixCheckWiki 1   +1 +2 +9 +16 +17 +18 +22 +46 +48 +64 +85 +88 +90 +91 +104 +106 +524 +526 +532 +533 +534 +537 +538 +539 +540 +541 +542 +543
-FixCheckWiki 2   +1 +2 +9 +16 +17 +18 +22 +46 +48 +64 +85 +88 +90 +91 +104 +106 +524 +526 +532 +533 +534 +537 +538 +539 +540 +541 +542 +543
-FixCheckWiki 9   +1 +2 +9 +16 +17 +18 +22 +46 +48 +64 +85 +88 +90 +91 +104 +106 +524 +526 +532 +533 +534 +537 +538 +539 +540 +541 +542 +543
-FixCheckWiki 16  +1 +2 +9 +16 +17 +18 +22 +46 +48 +64 +85 +88 +90 +91 +104 +106 +524 +526 +532 +533 +534 +537 +538 +539 +540 +541 +542 +543
-FixCheckWiki 17  +1 +2 +9 +16 +17 +18 +22 +46 +48 +64 +85 +88 +90 +91 +104 +106 +524 +526 +532 +533 +534 +537 +538 +539 +540 +541 +542 +543
-FixCheckWiki 18  +1 +2 +9 +16 +17 +18 +22 +46 +48 +64 +85 +88 +90 +91 +104 +106 +524 +526 +532 +533 +534 +537 +538 +539 +540 +541 +542 +543
-FixCheckWiki 22  +1 +2 +9 +16 +17 +18 +22 +46 +48 +64 +85 +88 +90 +91 +104 +106 +524 +526 +532 +533 +534 +537 +538 +539 +540 +541 +542 +543
-FixCheckWiki 46  +1 +2 +9 +16 +17 +18 +22 +46 +48 +64 +85 +88 +90 +91 +104 +106 +524 +526 +532 +533 +534 +537 +538 +539 +540 +541 +542 +543
-FixCheckWiki 55  +1 +2 +9 +16 +17 +18 +22 +46 +48 +64 +85 +88 +90 +91 +104 +106 +524 +526 +532 +533 +534 +537 +538 +539 +540 +541 +542 +543
-FixCheckWiki 85  +1 +2 +9 +16 +17 +18 +22 +46 +48 +64 +85 +88 +90 +91 +104 +106 +524 +526 +532 +533 +534 +537 +538 +539 +540 +541 +542 +543
-FixCheckWiki 88  +1 +2 +9 +16 +17 +18 +22 +46 +48 +64 +85 +88 +90 +91 +104 +106 +524 +526 +532 +533 +534 +537 +538 +539 +540 +541 +542 +543
-FixCheckWiki 90  +1 +2 +9 +16 +17 +18 +22 +46 +48 +64 +85 +88 +90 +91 +104 +106 +524 +526 +532 +533 +534 +537 +538 +539 +540 +541 +542 +543
-FixCheckWiki 91  +1 +2 +9 +16 +17 +18 +22 +46 +48 +64 +85 +88 +90 +91 +104 +106 +524 +526 +532 +533 +534 +537 +538 +539 +540 +541 +542 +543
-FixCheckWiki 104 +1 +2 +9 +16 +17 +18 +22 +46 +48 +64 +85 +88 +90 +91 +104 +106 +524 +526 +532 +533 +534 +537 +538 +539 +540 +541 +542 +543
-FixCheckWiki 106 +1 +2 +9 +16 +17 +18 +22 +46 +48 +64 +85 +88 +90 +91 +104 +106 +524 +526 +532 +533 +534 +537 +538 +539 +540 +541 +542 +543
-FixCheckWiki 524 +1 +2 +9 +16 +17 +18 +22 +46 +48 +64 +85 +88 +90 +91 +104 +106 +524 +526 +532 +533 +534 +537 +538 +539 +540 +541 +542 +543
-FixCheckWiki 526 +1 +2 +9 +16 +17 +18 +22 +46 +48 +64 +85 +88 +90 +91 +104 +106 +524 +526 +532 +533 +534 +537 +538 +539 +540 +541 +542 +543
-FixListCheckWiki Projet:Correction_syntaxique/Analyse_001 1   +1 +2 +9 +16 +17 +18 +22 +46 +48 +64 +85 +88 +90 +91 +104 +106 +524 +526 +532 +533 +534 +537 +538 +539 +540 +541 +542 +543
-FixListCheckWiki Projet:Correction_syntaxique/Analyse_002 2   +1 +2 +9 +16 +17 +18 +22 +46 +48 +64 +85 +88 +90 +91 +104 +106 +524 +526 +532 +533 +534 +537 +538 +539 +540 +541 +542 +543
-FixListCheckWiki Projet:Correction_syntaxique/Analyse_009 9   +1 +2 +9 +16 +17 +18 +22 +46 +48 +64 +85 +88 +90 +91 +104 +106 +524 +526 +532 +533 +534 +537 +538 +539 +540 +541 +542 +543
-FixListCheckWiki Projet:Correction_syntaxique/Analyse_016 16  +1 +2 +9 +16 +17 +18 +22 +46 +48 +64 +85 +88 +90 +91 +104 +106 +524 +526 +532 +533 +534 +537 +538 +539 +540 +541 +542 +543
-FixListCheckWiki Projet:Correction_syntaxique/Analyse_017 17  +1 +2 +9 +16 +17 +18 +22 +46 +48 +64 +85 +88 +90 +91 +104 +106 +524 +526 +532 +533 +534 +537 +538 +539 +540 +541 +542 +543
-FixListCheckWiki Projet:Correction_syntaxique/Analyse_018 18  +1 +2 +9 +16 +17 +18 +22 +46 +48 +64 +85 +88 +90 +91 +104 +106 +524 +526 +532 +533 +534 +537 +538 +539 +540 +541 +542 +543
-FixListCheckWiki Projet:Correction_syntaxique/Analyse_022 22  +1 +2 +9 +16 +17 +18 +22 +46 +48 +64 +85 +88 +90 +91 +104 +106 +524 +526 +532 +533 +534 +537 +538 +539 +540 +541 +542 +543
-FixListCheckWiki Projet:Correction_syntaxique/Analyse_046 46  +1 +2 +9 +16 +17 +18 +22 +46 +48 +64 +85 +88 +90 +91 +104 +106 +524 +526 +532 +533 +534 +537 +538 +539 +540 +541 +542 +543
-FixListCheckWiki Projet:Correction_syntaxique/Analyse_055 532 +1 +2 +9 +16 +17 +18 +22 +46 +48 +64 +85 +88 +90 +91 +104 +106 +524 +526 +532 +533 +534 +537 +538 +539 +540 +541 +542 +543
-FixListCheckWiki Projet:Correction_syntaxique/Analyse_064 64  +1 +2 +9 +16 +17 +18 +22 +46 +48 +64 +85 +88 +90 +91 +104 +106 +524 +526 +532 +533 +534 +537 +538 +539 +540 +541 +542 +543
-FixListCheckWiki Projet:Correction_syntaxique/Analyse_088 88  +1 +2 +9 +16 +17 +18 +22 +46 +48 +64 +85 +88 +90 +91 +104 +106 +524 +526 +532 +533 +534 +537 +538 +539 +540 +541 +542 +543
-FixListCheckWiki Projet:Correction_syntaxique/Analyse_090 90  +1 +2 +9 +16 +17 +18 +22 +46 +48 +64 +85 +88 +90 +91 +104 +106 +524 +526 +532 +533 +534 +537 +538 +539 +540 +541 +542 +543
-FixListCheckWiki Projet:Correction_syntaxique/Analyse_104 104 +1 +2 +9 +16 +17 +18 +22 +46 +48 +64 +85 +88 +90 +91 +104 +106 +524 +526 +532 +533 +534 +537 +538 +539 +540 +541 +542 +543
-FixListCheckWiki Projet:Correction_syntaxique/Analyse_106 106 +1 +2 +9 +16 +17 +18 +22 +46 +48 +64 +85 +88 +90 +91 +104 +106 +524 +526 +532 +533 +534 +537 +538 +539 +540 +541 +542 +543
-FixListCheckWiki Projet:Correction_syntaxique/Analyse_543 543 +1 +2 +9 +16 +17 +18 +22 +46 +48 +64 +85 +88 +90 +91 +104 +106 +524 +526 +532 +533 +534 +537 +538 +539 +540 +541 +542 +543
+FixCheckWiki 1
+FixCheckWiki 2
+FixCheckWiki 9
+FixCheckWiki 16
+FixCheckWiki 17
+FixCheckWiki 18
+FixCheckWiki 22
+FixCheckWiki 46
+FixCheckWiki 55
+FixCheckWiki 85
+FixCheckWiki 88
+FixCheckWiki 90
+FixCheckWiki 91
+FixCheckWiki 104
+FixCheckWiki 106
+FixCheckWiki 524
+FixCheckWiki 526
+FixListCheckWiki Projet:Correction_syntaxique/Analyse_001 1
+FixListCheckWiki Projet:Correction_syntaxique/Analyse_002 2
+FixListCheckWiki Projet:Correction_syntaxique/Analyse_009 9
+FixListCheckWiki Projet:Correction_syntaxique/Analyse_016 16
+FixListCheckWiki Projet:Correction_syntaxique/Analyse_017 17
+FixListCheckWiki Projet:Correction_syntaxique/Analyse_018 18
+FixListCheckWiki Projet:Correction_syntaxique/Analyse_022 22
+FixListCheckWiki Projet:Correction_syntaxique/Analyse_046 46
+FixListCheckWiki Projet:Correction_syntaxique/Analyse_055 532
+FixListCheckWiki Projet:Correction_syntaxique/Analyse_064 64
+FixListCheckWiki Projet:Correction_syntaxique/Analyse_088 88
+FixListCheckWiki Projet:Correction_syntaxique/Analyse_090 90
+FixListCheckWiki Projet:Correction_syntaxique/Analyse_104 104
+FixListCheckWiki Projet:Correction_syntaxique/Analyse_106 106
+FixListCheckWiki Projet:Correction_syntaxique/Analyse_543 543
 ListCheckWiki C:\Users\Nicolas\Downloads\frwiki-$-pages-articles.xml.bz2 wiki:Projet:Correction_syntaxique/Analyse_{0} 1 2 3 4 5 7 8 9 13 14 15 16 17 18 19 20 21 22 23 24 25 26 28 38 42 48 51 52 54 55 64 69 70 71 72 73 83 88 90 98 99 102 104 105 106 107 108 109 111 112 526 542 543
-FixCheckWiki 1   +1 +2 +9 +16 +17 +18 +22 +46 +48 +64 +85 +88 +90 +91 +104 +106 +524 +526 +532 +533 +534 +537 +538 +539 +540 +541 +542 +543
-FixCheckWiki 2   +1 +2 +9 +16 +17 +18 +22 +46 +48 +64 +85 +88 +90 +91 +104 +106 +524 +526 +532 +533 +534 +537 +538 +539 +540 +541 +542 +543
-FixCheckWiki 9   +1 +2 +9 +16 +17 +18 +22 +46 +48 +64 +85 +88 +90 +91 +104 +106 +524 +526 +532 +533 +534 +537 +538 +539 +540 +541 +542 +543
-FixCheckWiki 16  +1 +2 +9 +16 +17 +18 +22 +46 +48 +64 +85 +88 +90 +91 +104 +106 +524 +526 +532 +533 +534 +537 +538 +539 +540 +541 +542 +543
-FixCheckWiki 17  +1 +2 +9 +16 +17 +18 +22 +46 +48 +64 +85 +88 +90 +91 +104 +106 +524 +526 +532 +533 +534 +537 +538 +539 +540 +541 +542 +543
-FixCheckWiki 18  +1 +2 +9 +16 +17 +18 +22 +46 +48 +64 +85 +88 +90 +91 +104 +106 +524 +526 +532 +533 +534 +537 +538 +539 +540 +541 +542 +543
-FixCheckWiki 22  +1 +2 +9 +16 +17 +18 +22 +46 +48 +64 +85 +88 +90 +91 +104 +106 +524 +526 +532 +533 +534 +537 +538 +539 +540 +541 +542 +543
-FixCheckWiki 46  +1 +2 +9 +16 +17 +18 +22 +46 +48 +64 +85 +88 +90 +91 +104 +106 +524 +526 +532 +533 +534 +537 +538 +539 +540 +541 +542 +543
-FixCheckWiki 55  +1 +2 +9 +16 +17 +18 +22 +46 +48 +64 +85 +88 +90 +91 +104 +106 +524 +526 +532 +533 +534 +537 +538 +539 +540 +541 +542 +543
-FixCheckWiki 85  +1 +2 +9 +16 +17 +18 +22 +46 +48 +64 +85 +88 +90 +91 +104 +106 +524 +526 +532 +533 +534 +537 +538 +539 +540 +541 +542 +543
-FixCheckWiki 88  +1 +2 +9 +16 +17 +18 +22 +46 +48 +64 +85 +88 +90 +91 +104 +106 +524 +526 +532 +533 +534 +537 +538 +539 +540 +541 +542 +543
-FixCheckWiki 90  +1 +2 +9 +16 +17 +18 +22 +46 +48 +64 +85 +88 +90 +91 +104 +106 +524 +526 +532 +533 +534 +537 +538 +539 +540 +541 +542 +543
-FixCheckWiki 91  +1 +2 +9 +16 +17 +18 +22 +46 +48 +64 +85 +88 +90 +91 +104 +106 +524 +526 +532 +533 +534 +537 +538 +539 +540 +541 +542 +543
-FixCheckWiki 104 +1 +2 +9 +16 +17 +18 +22 +46 +48 +64 +85 +88 +90 +91 +104 +106 +524 +526 +532 +533 +534 +537 +538 +539 +540 +541 +542 +543
-FixCheckWiki 106 +1 +2 +9 +16 +17 +18 +22 +46 +48 +64 +85 +88 +90 +91 +104 +106 +524 +526 +532 +533 +534 +537 +538 +539 +540 +541 +542 +543
-FixCheckWiki 524 +1 +2 +9 +16 +17 +18 +22 +46 +48 +64 +85 +88 +90 +91 +104 +106 +524 +526 +532 +533 +534 +537 +538 +539 +540 +541 +542 +543
+FixCheckWiki 1
+FixCheckWiki 2
+FixCheckWiki 9
+FixCheckWiki 16
+FixCheckWiki 17
+FixCheckWiki 18
+FixCheckWiki 22
+FixCheckWiki 46
+FixCheckWiki 55
+FixCheckWiki 85
+FixCheckWiki 88
+FixCheckWiki 90
+FixCheckWiki 91
+FixCheckWiki 104
+FixCheckWiki 106
+FixCheckWiki 524
 UpdateDuplicateArgsWarnings
-FixCheckWiki 526 +1 +2 +9 +16 +17 +18 +22 +46 +48 +64 +85 +88 +90 +91 +104 +106 +524 +526 +532 +533 +534 +537 +538 +539 +540 +541 +542 +543
-FixListCheckWiki Projet:Correction_syntaxique/Analyse_001 1   +1 +2 +9 +16 +17 +18 +22 +46 +48 +64 +85 +88 +90 +91 +104 +106 +524 +526 +532 +533 +534 +537 +538 +539 +540 +541 +542 +543
-FixListCheckWiki Projet:Correction_syntaxique/Analyse_002 2   +1 +2 +9 +16 +17 +18 +22 +46 +48 +64 +85 +88 +90 +91 +104 +106 +524 +526 +532 +533 +534 +537 +538 +539 +540 +541 +542 +543
-FixListCheckWiki Projet:Correction_syntaxique/Analyse_009 9   +1 +2 +9 +16 +17 +18 +22 +46 +48 +64 +85 +88 +90 +91 +104 +106 +524 +526 +532 +533 +534 +537 +538 +539 +540 +541 +542 +543
-FixListCheckWiki Projet:Correction_syntaxique/Analyse_016 16  +1 +2 +9 +16 +17 +18 +22 +46 +48 +64 +85 +88 +90 +91 +104 +106 +524 +526 +532 +533 +534 +537 +538 +539 +540 +541 +542 +543
-FixListCheckWiki Projet:Correction_syntaxique/Analyse_017 17  +1 +2 +9 +16 +17 +18 +22 +46 +48 +64 +85 +88 +90 +91 +104 +106 +524 +526 +532 +533 +534 +537 +538 +539 +540 +541 +542 +543
-FixListCheckWiki Projet:Correction_syntaxique/Analyse_018 18  +1 +2 +9 +16 +17 +18 +22 +46 +48 +64 +85 +88 +90 +91 +104 +106 +524 +526 +532 +533 +534 +537 +538 +539 +540 +541 +542 +543
-FixListCheckWiki Projet:Correction_syntaxique/Analyse_022 22  +1 +2 +9 +16 +17 +18 +22 +46 +48 +64 +85 +88 +90 +91 +104 +106 +524 +526 +532 +533 +534 +537 +538 +539 +540 +541 +542 +543
-FixListCheckWiki Projet:Correction_syntaxique/Analyse_046 46  +1 +2 +9 +16 +17 +18 +22 +46 +48 +64 +85 +88 +90 +91 +104 +106 +524 +526 +532 +533 +534 +537 +538 +539 +540 +541 +542 +543
-FixListCheckWiki Projet:Correction_syntaxique/Analyse_055 532 +1 +2 +9 +16 +17 +18 +22 +46 +48 +64 +85 +88 +90 +91 +104 +106 +524 +526 +532 +533 +534 +537 +538 +539 +540 +541 +542 +543
-FixListCheckWiki Projet:Correction_syntaxique/Analyse_064 64  +1 +2 +9 +16 +17 +18 +22 +46 +48 +64 +85 +88 +90 +91 +104 +106 +524 +526 +532 +533 +534 +537 +538 +539 +540 +541 +542 +543
-FixListCheckWiki Projet:Correction_syntaxique/Analyse_088 88  +1 +2 +9 +16 +17 +18 +22 +46 +48 +64 +85 +88 +90 +91 +104 +106 +524 +526 +532 +533 +534 +537 +538 +539 +540 +541 +542 +543
-FixListCheckWiki Projet:Correction_syntaxique/Analyse_090 90  +1 +2 +9 +16 +17 +18 +22 +46 +48 +64 +85 +88 +90 +91 +104 +106 +524 +526 +532 +533 +534 +537 +538 +539 +540 +541 +542 +543
-FixListCheckWiki Projet:Correction_syntaxique/Analyse_104 104 +1 +2 +9 +16 +17 +18 +22 +46 +48 +64 +85 +88 +90 +91 +104 +106 +524 +526 +532 +533 +534 +537 +538 +539 +540 +541 +542 +543
-FixListCheckWiki Projet:Correction_syntaxique/Analyse_106 106 +1 +2 +9 +16 +17 +18 +22 +46 +48 +64 +85 +88 +90 +91 +104 +106 +524 +526 +532 +533 +534 +537 +538 +539 +540 +541 +542 +543
-FixListCheckWiki Projet:Correction_syntaxique/Analyse_543 543 +1 +2 +9 +16 +17 +18 +22 +46 +48 +64 +85 +88 +90 +91 +104 +106 +524 +526 +532 +533 +534 +537 +538 +539 +540 +541 +542 +543
+FixCheckWiki 526
+FixListCheckWiki Projet:Correction_syntaxique/Analyse_001 1
+FixListCheckWiki Projet:Correction_syntaxique/Analyse_002 2
+FixListCheckWiki Projet:Correction_syntaxique/Analyse_009 9
+FixListCheckWiki Projet:Correction_syntaxique/Analyse_016 16
+FixListCheckWiki Projet:Correction_syntaxique/Analyse_017 17
+FixListCheckWiki Projet:Correction_syntaxique/Analyse_018 18
+FixListCheckWiki Projet:Correction_syntaxique/Analyse_022 22
+FixListCheckWiki Projet:Correction_syntaxique/Analyse_046 46
+FixListCheckWiki Projet:Correction_syntaxique/Analyse_055 532
+FixListCheckWiki Projet:Correction_syntaxique/Analyse_064 64
+FixListCheckWiki Projet:Correction_syntaxique/Analyse_088 88
+FixListCheckWiki Projet:Correction_syntaxique/Analyse_090 90
+FixListCheckWiki Projet:Correction_syntaxique/Analyse_104 104
+FixListCheckWiki Projet:Correction_syntaxique/Analyse_106 106
+FixListCheckWiki Projet:Correction_syntaxique/Analyse_543 543
 Set Prefix [[Utilisateur:WikiCleanerBot#T5|T5]]
 ListISBNWarnings
 ListISSNWarnings

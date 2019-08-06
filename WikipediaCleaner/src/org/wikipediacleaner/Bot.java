@@ -84,6 +84,8 @@ public class Bot implements BasicWorkerListener {
   /** Actions to be executed */
   private List<String[]> actions;
 
+  private List<CheckErrorAlgorithm> additionalAlgorithms;
+
   /**
    * @param args Command line arguments
    */
@@ -177,6 +179,9 @@ public class Bot implements BasicWorkerListener {
       log.warn("Some parameters are incorrect");
       return;
     }
+
+    // Initialization
+    additionalAlgorithms = new ArrayList<>();
 
     // Login
     loginDone = false;
@@ -304,12 +309,18 @@ public class Bot implements BasicWorkerListener {
         }
       }
     } else if ("Set".equalsIgnoreCase(action)) {
-      if (args.length > currentArg + 1) {
+      if (args.length > currentArg) {
         String parameter = args[currentArg];
-        String value = args[currentArg + 1];
         actionDone = true;
         if ("Prefix".equalsIgnoreCase(parameter)) {
-          CommentManager.addExtraText(value);
+          if (args.length > currentArg + 1) {
+            CommentManager.addExtraText(args[currentArg + 1]);
+          }
+        } else if ("AdditionalAlgorithms".equalsIgnoreCase(parameter)) {
+          additionalAlgorithms.clear();
+          if (args.length > currentArg + 1) {
+            extractAlgorithms(additionalAlgorithms, null, args, currentArg + 1);
+          }
         } else {
           actionDone = false;
         }
@@ -338,6 +349,8 @@ public class Bot implements BasicWorkerListener {
       List<CheckErrorAlgorithm> algorithms,
       List<CheckErrorAlgorithm> allAlgorithms,
       String[] args, int startIndex) {
+
+    // Create list based on arguments
     for (int i = startIndex; i < args.length; i++) {
       boolean addition = false;
       String algorithmNumber = args[i];
@@ -351,10 +364,12 @@ public class Bot implements BasicWorkerListener {
         List<CheckErrorAlgorithm> possibleAlgorithms = CheckErrorAlgorithms.getAlgorithms(wiki);
         for (CheckErrorAlgorithm algorithm : possibleAlgorithms) {
           if ((algorithm != null) && algorithm.isAvailable()) {
-            if (!addition) {
+            if (!addition &&
+                !algorithms.contains(algorithm)) {
               algorithms.add(algorithm);
             }
-            if (allAlgorithms != null) {
+            if ((allAlgorithms != null)  &&
+                !allAlgorithms.contains(algorithm)) {
               allAlgorithms.add(algorithm);
             }
           }
@@ -362,12 +377,23 @@ public class Bot implements BasicWorkerListener {
       } else {
         CheckErrorAlgorithm algorithm = CheckErrorAlgorithms.getAlgorithm(wiki, Integer.parseInt(algorithmNumber));
         if (algorithm != null) {
-          if (!addition) {
+          if (!addition &&
+              !algorithms.contains(algorithm)) {
             algorithms.add(algorithm);
           }
-          if (allAlgorithms != null) {
+          if ((allAlgorithms != null) &&
+              !allAlgorithms.contains(algorithm)) {
             allAlgorithms.add(algorithm);
           }
+        }
+      }
+    }
+
+    // Add additional algorithms
+    if (allAlgorithms != null) {
+      for (CheckErrorAlgorithm algorithm : additionalAlgorithms) {
+        if (!allAlgorithms.contains(algorithm)) {
+          allAlgorithms.add(algorithm);
         }
       }
     }
