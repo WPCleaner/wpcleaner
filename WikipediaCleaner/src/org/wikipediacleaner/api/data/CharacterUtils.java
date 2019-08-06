@@ -634,6 +634,9 @@ public class CharacterUtils {
     // UPPERCASE_CONVERSION.put('𞥂', '𞥂');
     // UPPERCASE_CONVERSION.put('𞥃', '𞥃');
 
+    // Extra conversion
+    UPPERCASE_CONVERSION.put('ⅷ', 'ⅷ');
+
     // Compute boundaries
     int lower = Integer.MAX_VALUE;
     int upper = Integer.MIN_VALUE;
