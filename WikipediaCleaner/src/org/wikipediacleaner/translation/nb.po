@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2019-08-04 21:00+0200\n"
+"POT-Creation-Date: 2019-08-07 01:03+0200\n"
 "PO-Revision-Date: 2014-09-07 19:59+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Norwegian Bokmal <nb@li.org>\n"
@@ -530,6 +530,7 @@ msgstr ""
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:167
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm081.java:269
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm091.java:310
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm513.java:72
 #: org/wikipediacleaner/gui/swing/action/ActionExternalViewer.java:61
 #: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:88
 #: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:156
