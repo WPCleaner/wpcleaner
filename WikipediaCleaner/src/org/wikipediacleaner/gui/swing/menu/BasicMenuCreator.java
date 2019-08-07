@@ -37,6 +37,8 @@ import org.wikipediacleaner.gui.swing.basic.BasicWindow;
 import org.wikipediacleaner.gui.swing.basic.Utilities;
 import org.wikipediacleaner.gui.swing.component.MWPane;
 import org.wikipediacleaner.i18n.GT;
+import org.wikipediacleaner.utils.Configuration;
+import org.wikipediacleaner.utils.ConfigurationValueBoolean;
 
 
 /**
@@ -321,7 +323,8 @@ public class BasicMenuCreator extends AbstractMenuCreator {
    */
   public void addItemCopyPaste(
       JPopupMenu popup, MWPane textPane) {
-    if (textPane != null) {
+    if ((textPane != null) &&
+        (Configuration.getConfiguration().getBoolean(null, ConfigurationValueBoolean.COPY_PASTE))) {
       popup.add(ActionCopyText.createMenuItem(textPane));
       JMenuItem menuItemPaste = ActionPasteText.createMenuItem(textPane);
       if (menuItemPaste != null) {

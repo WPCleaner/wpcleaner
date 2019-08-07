@@ -32,6 +32,7 @@ public enum ConfigurationValueBoolean {
   CHECK_MARK_AS_FIXED("CheckMarkAsFixed", false),
   CLOSE_DISAMBIG("CloseDisambiguation", false),
   CLOSE_FULL("CloseFullAnalysis", true),
+  COPY_PASTE("CopyPaste", false),
   CREATE_DAB_WARNING("CreateDabWarning", true),
   CREATE_DAB_WARNING_ALL("CreateDabWarningAll", false),
   CREATE_DAB_WARNING_ENCY("CreateDabWarningEncyclo", true),

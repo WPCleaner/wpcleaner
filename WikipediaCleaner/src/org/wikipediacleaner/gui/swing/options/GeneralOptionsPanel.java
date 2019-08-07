@@ -210,6 +210,15 @@ public class GeneralOptionsPanel extends OptionsPanel {
     add(chk, constraints);
     constraints.gridy++;
 
+    // Copy/paste option
+    chk = createJCheckBox(
+        GT._T("Copy/paste in popup menu"),
+        ConfigurationValueBoolean.COPY_PASTE);
+    constraints.gridx = 0;
+    constraints.weightx = 0;
+    add(chk, constraints);
+    constraints.gridy++;
+
     // Signature
     txt = createJTextField(ConfigurationValueString.SIGNATURE, 15);
     JLabel labelSignature = Utilities.createJLabel(GT._T("Signature :"));
