@@ -194,8 +194,10 @@ public class CheckErrorAlgorithm085 extends CheckErrorAlgorithmBase {
             // Define the extension of the replacement
             int beginIndex = tag.getCompleteBeginIndex();
             int endIndex = tag.getCompleteEndIndex();
+            String internalValue = contents.substring(tag.getValueBeginIndex(), tag.getValueEndIndex());
             if (!ignoredText) {
-              if ((endIndex < contents.length()) && (contents.charAt(endIndex) == '\n')) {
+              if ((endIndex == contents.length()) ||
+                  (contents.charAt(endIndex) == '\n')) {
                 int tmpBeginIndex = beginIndex;
                 while ((tmpBeginIndex > 0) && (contents.charAt(tmpBeginIndex - 1) == '\n')) {
                   tmpBeginIndex--;
@@ -211,6 +213,28 @@ public class CheckErrorAlgorithm085 extends CheckErrorAlgorithmBase {
                 if (tmpEndIndex == contents.length()) {
                   countCR++;
                 }
+                if (countCR > 1) {
+                  while ((internalValue.length() > 0) &&
+                         (Character.isWhitespace(internalValue.charAt(0)))) {
+                    internalValue = internalValue.substring(1);
+                  }
+                  while ((internalValue.length() > 0) &&
+                         (Character.isWhitespace(internalValue.charAt(internalValue.length() - 1)))) {
+                    internalValue = internalValue.substring(0, internalValue.length() - 1);
+                  }
+                }
+                /*if (countCR == 1) {
+                  while ((internalValue.length() > 1) &&
+                         (Character.isWhitespace(internalValue.charAt(0))) &&
+                         (Character.isWhitespace(internalValue.charAt(1)))) {
+                    internalValue = internalValue.substring(1);
+                  }
+                  while ((internalValue.length() > 1) &&
+                         (Character.isWhitespace(internalValue.charAt(internalValue.length() - 1))) &&
+                         (Character.isWhitespace(internalValue.charAt(internalValue.length() - 2)))) {
+                    internalValue = internalValue.substring(0, internalValue.length() - 1);
+                  }
+                }*/
                 if (countCR > 2) {
                   int delta = Math.min(countCR - 2, beginIndex - tmpBeginIndex);
                   beginIndex -= delta;
@@ -226,10 +250,8 @@ public class CheckErrorAlgorithm085 extends CheckErrorAlgorithmBase {
 
             // Suggest replacements
             if (!ignoredText) {
-              if (tag.getValueEndIndex() > tag.getValueBeginIndex()) {
-                errorResult.addReplacement(
-                    contents.substring(tag.getValueBeginIndex(), tag.getValueEndIndex()),
-                    !hasUnsafeArguments && isEmpty);
+              if (internalValue.length() > 0) {
+                errorResult.addReplacement(internalValue, !hasUnsafeArguments && isEmpty);
                 errorResult.addReplacement("");
               } else {
                 errorResult.addReplacement("", !hasUnsafeArguments && isEmpty);
