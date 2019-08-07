@@ -23,6 +23,7 @@ import javax.swing.text.BadLocationException;
 import org.wikipediacleaner.gui.swing.basic.Utilities;
 import org.wikipediacleaner.gui.swing.component.MWPane;
 import org.wikipediacleaner.i18n.GT;
+import org.wikipediacleaner.images.EnumImageSize;
 
 
 /**
@@ -41,7 +42,8 @@ public class ActionPasteText implements ActionListener {
     if ((clipboard == null) || (clipboard.isEmpty())) {
       return null;
     }
-    JMenuItem menuItem = Utilities.createJMenuItem(GT._T("Paste"), true);
+    JMenuItem menuItem = Utilities.createJMenuItem(
+        GT._T("Paste"), true, "gnome-edit-paste.png", EnumImageSize.SMALL);
     menuItem.addActionListener(new ActionPasteText(textPane));
     return menuItem;
   }

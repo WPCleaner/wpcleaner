@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2019-08-07 01:03+0200\n"
+"POT-Creation-Date: 2019-08-07 22:34+0200\n"
 "PO-Revision-Date: 2017-03-03 19:31+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Polish <pl@li.org>\n"
@@ -552,9 +552,9 @@ msgstr "Zastąp szablonem {0}"
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm091.java:310
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm513.java:72
 #: org/wikipediacleaner/gui/swing/action/ActionExternalViewer.java:61
-#: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:88
-#: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:156
-#: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:361
+#: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:90
+#: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:158
+#: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:364
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:135
 #: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:239
 msgid "External Viewer"
@@ -743,13 +743,13 @@ msgstr "Wykaz tekstów, które mogą być wstawione do sekcji bez zawartości"
 msgid "Restrict verification to titles with a higher level"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm085.java:228
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm085.java:259
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm112.java:653
 #, java-format
 msgid "Use {0}"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm085.java:264
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm085.java:295
 msgid "A list of templates that can be used to replace &lt;center&gt; tags"
 msgstr ""
 
@@ -2425,8 +2425,8 @@ msgid "Full analysis"
 msgstr "Pełna analiza"
 
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:941
-#: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:264
-#: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:269
+#: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:266
+#: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:271
 msgid "Disambiguation analysis"
 msgstr "Analiza ujednoznaczniająca"
 
@@ -2580,8 +2580,8 @@ msgid "Close"
 msgstr "Zamknij"
 
 #: org/wikipediacleaner/gui/swing/action/ActionExternalViewer.java:55
-#: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:89
-#: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:165
+#: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:91
+#: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:167
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:150
 #: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:247
 msgid "History"
@@ -3532,39 +3532,39 @@ msgstr "Szukaj w szablonach"
 msgid "Link to"
 msgstr "Popraw link na"
 
-#: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:154
+#: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:156
 msgid "Template External Viewer"
 msgstr "Zewnętrzny podgląd szablonu"
 
-#: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:163
+#: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:165
 msgid "Template history"
 msgstr "Historia edycji szablonu"
 
-#: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:197
+#: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:199
 msgid "Analyze"
 msgstr "Analizuj"
 
-#: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:236
+#: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:238
 msgid "Analyze template"
 msgstr "Analizuj szablon"
 
-#: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:238
+#: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:240
 msgid "Analyze page"
 msgstr "Analizuj"
 
-#: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:304
+#: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:306
 msgid "Current chapter"
 msgstr "Aktualny rozdział"
 
-#: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:347
+#: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:350
 msgid "Remove link"
 msgstr "Odlinkuj"
 
-#: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:406
+#: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:409
 msgid "Purge cache"
 msgstr "Wyczyść cache"
 
-#: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:425
+#: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:428
 msgid "Reload links"
 msgstr "Odśwież linki"
 
@@ -3954,23 +3954,27 @@ msgid "Watch all edited pages"
 msgstr "Obserwuj wszystkie edytowane strony"
 
 #: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:215
+msgid "Copy/paste in popup menu"
+msgstr ""
+
+#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:224
 msgid "Signature :"
 msgstr "Podpis"
 
-#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:231
+#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:240
 msgid "Look & Feel"
 msgstr "Wygląd"
 
-#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:235
+#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:244
 #, java-format
 msgid "Let {0} choose the Look && Feel"
 msgstr "Niech {0} wybierze Look && Feel"
 
-#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:240
+#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:249
 msgid "Use System Look && Feel"
 msgstr "Użyj systemowego Look && Feel"
 
-#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:245
+#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:254
 msgid "Choose Look && Feel"
 msgstr "Wybierz Look && Feel"
 

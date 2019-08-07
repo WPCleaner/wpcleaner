@@ -829,14 +829,34 @@ public class Utilities {
   }
 
   /**
-  * Create a JMenuItem.
-  * 
-  * @param message Label text with optional mnemonic inside.
-  * @param asIs True if the message should be used as is (no mnemonic).
-  * @return Menu item initialized with text and mnemonic.
+   * Create a JMenuItem.
+   * 
+   * @param message Label text with optional mnemonic inside.
+   * @param asIs True if the message should be used as is (no mnemonic).
+   * @return Menu item initialized with text and mnemonic.
   */
   public static JMenuItem createJMenuItem(String message, boolean asIs) {
     JMenuItem menuItem = new JMenuItem(asIs ? message : getLabelWithoutMnemonic(message));
+    if (!asIs) {
+      setShortcut(menuItem, null, message);
+    }
+    return menuItem;
+  }
+
+  /**
+   * Create a JMenuItem.
+   * 
+   * @param message Label text with optional mnemonic inside.
+   * @param asIs True if the message should be used as is (no mnemonic).
+   * @param iconName Icon name.
+   * @param size Icon size.
+   * @return Menu item initialized with text and mnemonic.
+  */
+  public static JMenuItem createJMenuItem(
+      String message, boolean asIs,
+      String iconName, EnumImageSize size) {
+    ImageIcon icon =getImageIcon(iconName, size);
+    JMenuItem menuItem = new JMenuItem(asIs ? message : getLabelWithoutMnemonic(message), icon);
     if (!asIs) {
       setShortcut(menuItem, null, message);
     }

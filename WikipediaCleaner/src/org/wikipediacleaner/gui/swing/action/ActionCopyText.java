@@ -21,6 +21,7 @@ import javax.swing.JMenuItem;
 import org.wikipediacleaner.gui.swing.basic.Utilities;
 import org.wikipediacleaner.gui.swing.component.MWPane;
 import org.wikipediacleaner.i18n.GT;
+import org.wikipediacleaner.images.EnumImageSize;
 
 
 /**
@@ -35,7 +36,8 @@ public class ActionCopyText implements ActionListener, ClipboardOwner {
    * @return Menu item.
    */
   public static JMenuItem createMenuItem(MWPane textPane) {
-    JMenuItem menuItem = Utilities.createJMenuItem(GT._T("Copy selected text"), true);
+    JMenuItem menuItem = Utilities.createJMenuItem(
+        GT._T("Copy selected text"), true, "gnome-edit-copy.png", EnumImageSize.SMALL);
     menuItem.addActionListener(new ActionCopyText(textPane));
     return menuItem;
   }
