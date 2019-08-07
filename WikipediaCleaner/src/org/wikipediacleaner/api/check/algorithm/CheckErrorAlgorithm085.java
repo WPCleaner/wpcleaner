@@ -184,16 +184,47 @@ public class CheckErrorAlgorithm085 extends CheckErrorAlgorithmBase {
             }
           }
 
+          // Report error
           if (shouldReport) {
             if (errors == null) {
               return true;
             }
             result = true;
-            CheckErrorResult errorResult = createCheckErrorResult(
-                analysis,
-                tag.getCompleteBeginIndex(),
-                tag.getCompleteEndIndex(),
-                errorLevel);
+
+            // Define the extension of the replacement
+            int beginIndex = tag.getCompleteBeginIndex();
+            int endIndex = tag.getCompleteEndIndex();
+            if (!ignoredText) {
+              if ((endIndex < contents.length()) && (contents.charAt(endIndex) == '\n')) {
+                int tmpBeginIndex = beginIndex;
+                while ((tmpBeginIndex > 0) && (contents.charAt(tmpBeginIndex - 1) == '\n')) {
+                  tmpBeginIndex--;
+                }
+                int tmpEndIndex = endIndex;
+                while ((tmpEndIndex < contents.length()) && (contents.charAt(tmpEndIndex) == '\n')) {
+                  tmpEndIndex++;
+                }
+                int countCR = (beginIndex - tmpBeginIndex) + (tmpEndIndex - endIndex);
+                if (tmpBeginIndex == 0) {
+                  countCR += 2;
+                }
+                if (tmpEndIndex == contents.length()) {
+                  countCR++;
+                }
+                if (countCR > 2) {
+                  int delta = Math.min(countCR - 2, beginIndex - tmpBeginIndex);
+                  beginIndex -= delta;
+                  countCR -= delta;
+                }
+                if (countCR > 2) {
+                  int delta = Math.min(countCR - 2, tmpEndIndex - endIndex);
+                  endIndex += delta;
+                }
+              }
+            }
+            CheckErrorResult errorResult = createCheckErrorResult(analysis, beginIndex, endIndex, errorLevel);
+
+            // Suggest replacements
             if (!ignoredText) {
               if (tag.getValueEndIndex() > tag.getValueBeginIndex()) {
                 errorResult.addReplacement(
