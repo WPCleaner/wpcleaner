@@ -12,6 +12,7 @@ import java.util.Collection;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.data.MagicWord;
 import org.wikipediacleaner.api.data.PageAnalysis;
+import org.wikipediacleaner.api.data.PageElementCategory;
 import org.wikipediacleaner.api.data.PageElementInternalLink;
 
 
@@ -82,6 +83,12 @@ public class CheckErrorAlgorithm036 extends CheckErrorAlgorithmBase {
           PageElementInternalLink link = analysis.isInInternalLink(tmpIndex);
           if ((link != null) && (link.getBeginIndex() == tmpIndex)) {
             linkFound = true;
+          }
+          if (!linkFound) {
+            PageElementCategory category = analysis.isInCategory(tmpIndex);
+            if ((category != null) && (category.getBeginIndex() == tmpIndex)) {
+              linkFound = true;
+            }
           }
         }
       }
