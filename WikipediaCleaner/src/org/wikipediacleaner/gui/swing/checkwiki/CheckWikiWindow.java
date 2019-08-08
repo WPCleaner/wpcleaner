@@ -587,11 +587,12 @@ public class CheckWikiWindow extends OnePageWindow implements CheckWikiListener 
     JToolBar toolbarLoad = new JToolBar(SwingConstants.HORIZONTAL);
     toolbarLoad.setFloatable(false);
 
+    boolean isBot = getWikipedia().getConnection().getUser().isMemberOf("bot");
     modelMaxErrors = new SpinnerNumberModel(
         configuration.getInt(
             null,
             ConfigurationValueInteger.CHECK_NB_ERRORS),
-        10, 1000, 5);
+        10, isBot ? 10000 : 1000, 5);
     JSpinner spinMaxErrors = new JSpinner(modelMaxErrors);
     spinMaxErrors.setPreferredSize(new Dimension(80, 25));
     spinMaxErrors.setMaximumSize(new Dimension(80, 25));
