@@ -864,8 +864,10 @@ public class AutomaticFixingWindow extends OnePageWindow {
         JAXBContext context = JAXBContext.newInstance(AutomaticFixingList.class);
         Unmarshaller um = context.createUnmarshaller();
         AutomaticFixingList list = (AutomaticFixingList) um.unmarshal(new InputStreamReader(new FileInputStream(file), StandardCharsets.UTF_8));
-        for (AutomaticFixing element : list.getReplacements()) {
-          modelAutomaticFixing.addAutomaticFixing(element);
+        if (list.getReplacements() != null) {
+          for (AutomaticFixing element : list.getReplacements()) {
+            modelAutomaticFixing.addAutomaticFixing(element);
+          }
         }
         setComment(list.getComment());
         automaticCWAlgorithms.clear();
