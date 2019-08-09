@@ -94,7 +94,7 @@ public enum ConfigurationValueStyle {
       false, true, false, false)),
   INTERNAL_LINK_REDIRECT("InternalLinkRedirect", new StyleProperties(
       true,
-      true, Color.CYAN,
+      true, Color.BLUE,
       false, Color.WHITE,
       true, true, false, false)),
   INTERWIKI_LINK("InterwikiLink", new StyleProperties(

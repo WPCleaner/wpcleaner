@@ -30,6 +30,7 @@ import org.wikipediacleaner.api.constants.EnumLanguage;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.impl.MediaWikiAPI;
 import org.wikipediacleaner.i18n.GT;
+import org.wikipediacleaner.utils.ConfigurationValueStyle.StyleProperties;
 
 
 /**
@@ -62,7 +63,8 @@ public class Configuration implements WindowListener {
   //   1 : Initial version
   //   2 : Configuration for each wikipedia
   //   3 : Multiple users
-  public  final static int     CURRENT_CONFIG_VERSION    = 3;
+  //   4 : Change default color for redirect links
+  public  final static int     CURRENT_CONFIG_VERSION    = 4;
 
   // Properties
   public  final static String  PROPERTIES_BACKLINKS      = "Backlinks";
@@ -182,6 +184,23 @@ public class Configuration implements WindowListener {
               null,
               ConfigurationValueInteger.CONFIG_VERSION,
               CURRENT_CONFIG_VERSION);
+        }
+
+        // Update from version 3 to 4 : Default color for redirect links
+        if (ok && (version < 4)) {
+          StyleProperties style = getStyle(ConfigurationValueStyle.INTERNAL_LINK_REDIRECT);
+          if (Color.CYAN.equals(style.getForegroundColor())) {
+            StyleProperties newStyle = new StyleProperties(
+                style.getEnabled(),
+                style.getForeground(), Color.BLUE,
+                style.getBackground(), style.getBackgroundColor(),
+                style.getItalic(), style.getBold(),
+                style.getUnderline(), style.getStrikeThrough());
+            ConfigurationValueStyle.setValue(
+                getPreferences(),
+                ConfigurationValueStyle.INTERNAL_LINK_REDIRECT,
+                newStyle);
+          }
         }
       }
     } catch (BackingStoreException e) {
