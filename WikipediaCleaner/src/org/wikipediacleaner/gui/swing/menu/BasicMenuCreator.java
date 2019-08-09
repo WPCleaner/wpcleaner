@@ -325,6 +325,7 @@ public class BasicMenuCreator extends AbstractMenuCreator {
       JPopupMenu popup, MWPane textPane) {
     if ((textPane != null) &&
         (Configuration.getConfiguration().getBoolean(null, ConfigurationValueBoolean.COPY_PASTE))) {
+      addSeparator(popup);
       popup.add(ActionCopyText.createMenuItem(textPane));
       JMenuItem menuItemPaste = ActionPasteText.createMenuItem(textPane);
       if (menuItemPaste != null) {
