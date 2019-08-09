@@ -56,6 +56,12 @@ public class CheckErrorAlgorithm017 extends CheckErrorAlgorithmBase {
       return false;
     }
 
+    // Ignore redirect pages
+    if (analysis.getPage().getRedirects().isRedirect()) {
+      // TODO: Be more subtle, remove only the first category if it's the target of the redirection
+      return false;
+    }
+
     // Case sensitiveness
     Namespace namespace = analysis.getWikiConfiguration().getNamespace(Namespace.CATEGORY);
     EnumCaseSensitiveness sensitive = EnumCaseSensitiveness.UNKNOWN;
@@ -90,8 +96,12 @@ public class CheckErrorAlgorithm017 extends CheckErrorAlgorithmBase {
     boolean result = false;
     String contents = analysis.getContents();
     for (PageElementCategory category : categories) {
+      
+      // Group categories
       String name = sensitive.normalize(category.getName());
       List<PageElementCategory> groupCategory = groupedCategories.get(name);
+
+      // Report error if more than one category in the group
       if ((groupCategory != null) && (groupCategory.size() > 1)) {
         if (errors == null) {
           return true;
