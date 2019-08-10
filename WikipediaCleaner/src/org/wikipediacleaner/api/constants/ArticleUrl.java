@@ -129,6 +129,16 @@ public class ArticleUrl {
     while (url.endsWith("|")) {
       url = url.substring(0, url.length() - 1);
     }
+    int colonIndex = url.indexOf(':');
+    if (colonIndex >= 0) {
+      int endSlash = colonIndex + 1;
+      while ((endSlash < url.length()) && (url.charAt(endSlash) == '/')) {
+        endSlash++;
+      }
+      if (endSlash > colonIndex + 3) {
+        url = url.substring(0, colonIndex + 3) + url.substring(endSlash);
+      }
+    }
 
     // Create URI
     URI uri = getURI(url);
