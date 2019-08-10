@@ -80,9 +80,9 @@ public class CheckErrorAlgorithm002 extends CheckErrorAlgorithmBase {
   };
 
   /**
-   * Knwon errorneous tags that can be replaced automatically.
+   * Known erroneous tags that can be replaced automatically.
    */
-  private final static String[] errorneousTags = new String[] {
+  private final static String[] erroneousTags = new String[] {
       "</br>",
   };
 
@@ -533,7 +533,7 @@ public class CheckErrorAlgorithm002 extends CheckErrorAlgorithmBase {
               boolean automatic = endsWithGT && incorrectChar && analysis.getPage().isArticle();
               if (!automatic) {
                 String text = contents.substring(currentIndex, tmpIndex);
-                for (String tmp : errorneousTags) {
+                for (String tmp : erroneousTags) {
                   if (tmp.equals(text)) {
                     automatic = true;
                   }
