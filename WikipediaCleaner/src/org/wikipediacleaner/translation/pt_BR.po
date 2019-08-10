@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2019-08-10 14:55+0200\n"
+"POT-Creation-Date: 2019-08-10 16:33+0200\n"
 "PO-Revision-Date: 2017-03-03 19:32+0000\n"
 "Last-Translator: Felipe L. <felipe.idj@hotmail.com>\n"
 "Language-Team: Brazilian Portuguese <pt_BR@li.org>\n"
@@ -3514,26 +3514,20 @@ msgstr "Outra Wikipédia"
 msgid "You can learn how to add other Wikipedia at the following URL:"
 msgstr "Você pode aprender como adicionar outra Wikipédia pela seguinte URL:"
 
-#: org/wikipediacleaner/gui/swing/linter/ActionLinter.java:54
+#: org/wikipediacleaner/gui/swing/linter/ActionLinter.java:53
 #, fuzzy
 msgid "Check article with Linter"
 msgstr "Verificar o artigo com o Check Wiki"
 
-#: org/wikipediacleaner/gui/swing/linter/ActionLinter.java:209
+#: org/wikipediacleaner/gui/swing/linter/ActionLinter.java:208
 #, fuzzy
 msgid "Unable to retrieve analysis from Linter."
 msgstr "Não foi possível recuperar a análise do Check Wiki."
 
-#: org/wikipediacleaner/gui/swing/linter/ActionLinter.java:215
+#: org/wikipediacleaner/gui/swing/linter/ActionLinter.java:214
 #, fuzzy
 msgid "No errors are currently detected by Linter."
 msgstr "Nenhum erro foi detectado atualmente pelo Check Wiki."
-
-#: org/wikipediacleaner/gui/swing/linter/ActionLinter.java:220
-#: org/wikipediacleaner/gui/swing/linter/LinterWorker.java:64
-#, fuzzy
-msgid "Errors"
-msgstr "Erro"
 
 #: org/wikipediacleaner/gui/swing/linter/LinterErrorListTableModel.java:185
 #, fuzzy
@@ -3558,17 +3552,22 @@ msgstr "Classificar"
 msgid "Type"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/linter/LinterErrorPanel.java:81
+#: org/wikipediacleaner/gui/swing/linter/LinterErrorPanel.java:86
 #, fuzzy
 msgid "The following errors are currently detected by Linter:"
 msgstr "Os seguintes erros foram detectados pelo Check Wiki:"
 
-#: org/wikipediacleaner/gui/swing/linter/LinterWorker.java:79
+#: org/wikipediacleaner/gui/swing/linter/LinterErrorWindow.java:90
+#, fuzzy
+msgid "Errors"
+msgstr "Erro"
+
+#: org/wikipediacleaner/gui/swing/linter/LinterWorker.java:73
 #, fuzzy
 msgid "Retrieving page contents"
 msgstr "Recuperando conteúdo da página - {0}"
 
-#: org/wikipediacleaner/gui/swing/linter/LinterWorker.java:82
+#: org/wikipediacleaner/gui/swing/linter/LinterWorker.java:76
 #, fuzzy, java-format
 msgid "Analyzing {0}"
 msgstr "Analisando página {0}"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2019-08-10 14:55+0200\n"
+"POT-Creation-Date: 2019-08-10 16:33+0200\n"
 "PO-Revision-Date: 2017-03-03 19:31+0000\n"
 "Last-Translator: Matěj S. <matejsuchanek97@gmail.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
@@ -3480,26 +3480,20 @@ msgstr "Ostatní Wikipedie"
 msgid "You can learn how to add other Wikipedia at the following URL:"
 msgstr "Informace o přidání jiné Wikipedie naleznete na této adrese:"
 
-#: org/wikipediacleaner/gui/swing/linter/ActionLinter.java:54
+#: org/wikipediacleaner/gui/swing/linter/ActionLinter.java:53
 #, fuzzy
 msgid "Check article with Linter"
 msgstr "Zkontrolovat článek pomocí CheckWiki"
 
-#: org/wikipediacleaner/gui/swing/linter/ActionLinter.java:209
+#: org/wikipediacleaner/gui/swing/linter/ActionLinter.java:208
 #, fuzzy
 msgid "Unable to retrieve analysis from Linter."
 msgstr "Nebylo možné využít k analýze CheckWiki."
 
-#: org/wikipediacleaner/gui/swing/linter/ActionLinter.java:215
+#: org/wikipediacleaner/gui/swing/linter/ActionLinter.java:214
 #, fuzzy
 msgid "No errors are currently detected by Linter."
 msgstr "CheckWiki nyní nenašlo žádné chyby."
-
-#: org/wikipediacleaner/gui/swing/linter/ActionLinter.java:220
-#: org/wikipediacleaner/gui/swing/linter/LinterWorker.java:64
-#, fuzzy
-msgid "Errors"
-msgstr "Chyba"
 
 #: org/wikipediacleaner/gui/swing/linter/LinterErrorListTableModel.java:185
 #, fuzzy
@@ -3524,17 +3518,22 @@ msgstr "Řadit"
 msgid "Type"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/linter/LinterErrorPanel.java:81
+#: org/wikipediacleaner/gui/swing/linter/LinterErrorPanel.java:86
 #, fuzzy
 msgid "The following errors are currently detected by Linter:"
 msgstr "CheckWiki v současné době detekuje následující chyby:"
 
-#: org/wikipediacleaner/gui/swing/linter/LinterWorker.java:79
+#: org/wikipediacleaner/gui/swing/linter/LinterErrorWindow.java:90
+#, fuzzy
+msgid "Errors"
+msgstr "Chyba"
+
+#: org/wikipediacleaner/gui/swing/linter/LinterWorker.java:73
 #, fuzzy
 msgid "Retrieving page contents"
 msgstr "Načítám obsah stránky - {0}"
 
-#: org/wikipediacleaner/gui/swing/linter/LinterWorker.java:82
+#: org/wikipediacleaner/gui/swing/linter/LinterWorker.java:76
 #, fuzzy, java-format
 msgid "Analyzing {0}"
 msgstr "Analyzuji stránku {0}"

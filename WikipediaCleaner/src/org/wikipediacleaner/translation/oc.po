@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2019-08-10 14:55+0200\n"
+"POT-Creation-Date: 2019-08-10 16:33+0200\n"
 "PO-Revision-Date: 2014-09-07 20:13+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Occitan (post 1500) <oc@li.org>\n"
@@ -3390,22 +3390,17 @@ msgstr "Autra Wikipèdia"
 msgid "You can learn how to add other Wikipedia at the following URL:"
 msgstr "Podètz saber cossí apondre d'autras Wikipèdia a l'adreça seguenta :"
 
-#: org/wikipediacleaner/gui/swing/linter/ActionLinter.java:54
+#: org/wikipediacleaner/gui/swing/linter/ActionLinter.java:53
 #, fuzzy
 msgid "Check article with Linter"
 msgstr "Modèl"
 
-#: org/wikipediacleaner/gui/swing/linter/ActionLinter.java:209
+#: org/wikipediacleaner/gui/swing/linter/ActionLinter.java:208
 msgid "Unable to retrieve analysis from Linter."
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/linter/ActionLinter.java:215
+#: org/wikipediacleaner/gui/swing/linter/ActionLinter.java:214
 msgid "No errors are currently detected by Linter."
-msgstr ""
-
-#: org/wikipediacleaner/gui/swing/linter/ActionLinter.java:220
-#: org/wikipediacleaner/gui/swing/linter/LinterWorker.java:64
-msgid "Errors"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/linter/LinterErrorListTableModel.java:185
@@ -3430,16 +3425,20 @@ msgstr "Triar"
 msgid "Type"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/linter/LinterErrorPanel.java:81
+#: org/wikipediacleaner/gui/swing/linter/LinterErrorPanel.java:86
 msgid "The following errors are currently detected by Linter:"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/linter/LinterWorker.java:79
+#: org/wikipediacleaner/gui/swing/linter/LinterErrorWindow.java:90
+msgid "Errors"
+msgstr ""
+
+#: org/wikipediacleaner/gui/swing/linter/LinterWorker.java:73
 #, fuzzy
 msgid "Retrieving page contents"
 msgstr "Recuperacion del contengut"
 
-#: org/wikipediacleaner/gui/swing/linter/LinterWorker.java:82
+#: org/wikipediacleaner/gui/swing/linter/LinterWorker.java:76
 #, fuzzy, java-format
 msgid "Analyzing {0}"
 msgstr "Analisi - {0}"

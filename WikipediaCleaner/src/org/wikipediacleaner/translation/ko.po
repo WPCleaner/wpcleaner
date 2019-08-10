@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2019-08-10 14:55+0200\n"
+"POT-Creation-Date: 2019-08-10 16:33+0200\n"
 "PO-Revision-Date: 2014-09-07 20:03+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Korean <ko@li.org>\n"
@@ -3374,22 +3374,17 @@ msgstr "다른 Wikipedia"
 msgid "You can learn how to add other Wikipedia at the following URL:"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/linter/ActionLinter.java:54
+#: org/wikipediacleaner/gui/swing/linter/ActionLinter.java:53
 #, fuzzy
 msgid "Check article with Linter"
 msgstr "틀"
 
-#: org/wikipediacleaner/gui/swing/linter/ActionLinter.java:209
+#: org/wikipediacleaner/gui/swing/linter/ActionLinter.java:208
 msgid "Unable to retrieve analysis from Linter."
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/linter/ActionLinter.java:215
+#: org/wikipediacleaner/gui/swing/linter/ActionLinter.java:214
 msgid "No errors are currently detected by Linter."
-msgstr ""
-
-#: org/wikipediacleaner/gui/swing/linter/ActionLinter.java:220
-#: org/wikipediacleaner/gui/swing/linter/LinterWorker.java:64
-msgid "Errors"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/linter/LinterErrorListTableModel.java:185
@@ -3414,16 +3409,20 @@ msgstr "정렬"
 msgid "Type"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/linter/LinterErrorPanel.java:81
+#: org/wikipediacleaner/gui/swing/linter/LinterErrorPanel.java:86
 msgid "The following errors are currently detected by Linter:"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/linter/LinterWorker.java:79
+#: org/wikipediacleaner/gui/swing/linter/LinterErrorWindow.java:90
+msgid "Errors"
+msgstr ""
+
+#: org/wikipediacleaner/gui/swing/linter/LinterWorker.java:73
 #, fuzzy
 msgid "Retrieving page contents"
 msgstr "콘텐츠를 검색 중"
 
-#: org/wikipediacleaner/gui/swing/linter/LinterWorker.java:82
+#: org/wikipediacleaner/gui/swing/linter/LinterWorker.java:76
 #, fuzzy, java-format
 msgid "Analyzing {0}"
 msgstr "분석 - {0}"

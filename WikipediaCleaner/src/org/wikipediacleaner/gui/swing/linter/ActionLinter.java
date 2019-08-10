@@ -16,7 +16,6 @@ import java.util.List;
 
 import javax.swing.AbstractAction;
 import javax.swing.JButton;
-import javax.swing.JOptionPane;
 import javax.swing.JToolBar;
 import javax.swing.text.JTextComponent;
 
@@ -215,10 +214,7 @@ public class ActionLinter extends AbstractAction implements ActionListener {
               GT._T("No errors are currently detected by Linter."));
           return;
         }
-        LinterErrorPanel panel = new LinterErrorPanel(wiki.getWikiConfiguration(), errors, textPane);
-        JOptionPane.showMessageDialog(
-            parent, panel, GT._T("Errors"),
-            JOptionPane.INFORMATION_MESSAGE);
+        LinterErrorWindow.createLinterErrorWindow(wiki, errors, textPane);
       } catch (APIException exception) {
         Utilities.displayError(parent, exception);
         return;

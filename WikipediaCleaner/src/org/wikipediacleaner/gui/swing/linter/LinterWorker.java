@@ -12,8 +12,6 @@ import java.awt.Component;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.JOptionPane;
-
 import org.wikipediacleaner.api.API;
 import org.wikipediacleaner.api.APIException;
 import org.wikipediacleaner.api.APIFactory;
@@ -58,11 +56,7 @@ public class LinterWorker extends BasicWorker {
     Object result = get();
     Component parent = (getWindow() != null) ? getWindow().getParentComponent() : null;
     if (!(result instanceof Throwable)) {
-      LinterErrorPanel panel = new LinterErrorPanel(
-          getWikipedia().getWikiConfiguration(), errors, null);
-      JOptionPane.showMessageDialog(
-          parent, panel, GT._T("Errors"),
-          JOptionPane.INFORMATION_MESSAGE);
+      LinterErrorWindow.createLinterErrorWindow(getWikipedia(), errors, null);
     } else {
       Utilities.displayError(parent, (Throwable) result);
     }

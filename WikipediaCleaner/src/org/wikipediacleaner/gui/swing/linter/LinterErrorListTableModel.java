@@ -17,6 +17,7 @@ import javax.swing.table.TableColumnModel;
 import javax.swing.text.JTextComponent;
 
 import org.wikipediacleaner.api.check.CheckWikiDetection;
+import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.constants.WikiConfiguration;
 import org.wikipediacleaner.api.linter.LinterError;
 import org.wikipediacleaner.gui.swing.component.CopyCellRenderer;
@@ -30,6 +31,9 @@ public class LinterErrorListTableModel extends AbstractTableModel {
 
   /** Serialization */
   private static final long serialVersionUID = 6291117363909928449L;
+
+  /** Wiki */
+  private final EnumWikipedia wiki;
 
   /** Wiki configuration */
   private final WikiConfiguration config;
@@ -49,8 +53,7 @@ public class LinterErrorListTableModel extends AbstractTableModel {
   public final static int COLUMN_TEMPLATE = COLUMN_COPY + 1;
   public final static int COLUMN_GOTO = COLUMN_TEMPLATE + 1;
 
-  public final static int NB_COLUMNS_WITHOUT_GOTO = COLUMN_GOTO;
-  public final static int NB_COLUMNS_WITH_GOTO = COLUMN_GOTO + 1;
+  public final static int NB_COLUMNS = COLUMN_GOTO + 1;
 
   /**
    * @param config Wiki configuration.
@@ -58,9 +61,11 @@ public class LinterErrorListTableModel extends AbstractTableModel {
    * @param textPane Text area.
    */
   public LinterErrorListTableModel(
+      EnumWikipedia wiki,
       WikiConfiguration config,
       List<LinterError> errors,
       JTextComponent textPane) {
+    this.wiki = wiki;
     this.config = config;
     this.errors = errors;
     this.textPane = textPane;
@@ -87,15 +92,13 @@ public class LinterErrorListTableModel extends AbstractTableModel {
     column.setPreferredWidth(60);
     column.setMaxWidth(100);
 
-    if (textPane != null) {
-      column = model.getColumn(COLUMN_GOTO);
-      column.setMinWidth(30);
-      column.setPreferredWidth(30);
-      column.setMaxWidth(30);
-      LinterErrorRenderer detectionRenderer = new LinterErrorRenderer(textPane);
-      column.setCellEditor(detectionRenderer);
-      column.setCellRenderer(detectionRenderer);
-    }
+    column = model.getColumn(COLUMN_GOTO);
+    column.setMinWidth(30);
+    column.setPreferredWidth(30);
+    column.setMaxWidth(30);
+    LinterErrorRenderer detectionRenderer = new LinterErrorRenderer(textPane, wiki);
+    column.setCellEditor(detectionRenderer);
+    column.setCellRenderer(detectionRenderer);
 
     column = model.getColumn(COLUMN_PAGE);
     column.setMinWidth(100);
@@ -125,10 +128,7 @@ public class LinterErrorListTableModel extends AbstractTableModel {
    */
   @Override
   public int getColumnCount() {
-    if (textPane != null) {
-      return NB_COLUMNS_WITH_GOTO;
-    }
-    return NB_COLUMNS_WITHOUT_GOTO;
+    return NB_COLUMNS;
   }
 
   /**
@@ -201,7 +201,7 @@ public class LinterErrorListTableModel extends AbstractTableModel {
   @Override
   public boolean isCellEditable(int rowIndex, int columnIndex) {
     if (columnIndex == COLUMN_GOTO) {
-      return (textPane != null);
+      return true;
     }
     if (columnIndex == COLUMN_COPY) {
       return true;

@@ -20,7 +20,9 @@ import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.text.JTextComponent;
 
+import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.linter.LinterError;
+import org.wikipediacleaner.gui.swing.Controller;
 import org.wikipediacleaner.gui.swing.basic.Utilities;
 import org.wikipediacleaner.images.EnumImageSize;
 
@@ -40,12 +42,17 @@ public class LinterErrorRenderer extends AbstractCellEditor implements
   /** Text pane where the text is. */
   private final JTextComponent textPane;
 
+  /** Wiki */
+  private final EnumWikipedia wiki;
+
   /**
    * @param textPane Text pane where the text is.
+   * @param wiki Wiki.
    */
-  public LinterErrorRenderer(JTextComponent textPane) {
+  public LinterErrorRenderer(JTextComponent textPane, EnumWikipedia wiki) {
     buttons = new HashMap<Object, JButton>();
     this.textPane = textPane;
+    this.wiki = wiki;
   }
 
   /**
@@ -67,7 +74,8 @@ public class LinterErrorRenderer extends AbstractCellEditor implements
    * @see javax.swing.table.TableCellEditor#getTableCellEditorComponent(javax.swing.JTable, java.lang.Object, boolean, int, int)
    */
   @Override
-  public Component getTableCellEditorComponent(JTable table, Object value,
+  public Component getTableCellEditorComponent(
+      JTable table, Object value,
       boolean isSelected, int row, int column) {
     return getButton(value);
   }
@@ -83,7 +91,8 @@ public class LinterErrorRenderer extends AbstractCellEditor implements
    * @see javax.swing.table.TableCellRenderer#getTableCellRendererComponent(javax.swing.JTable, java.lang.Object, boolean, boolean, int, int)
    */
   @Override
-  public Component getTableCellRendererComponent(JTable table, Object value,
+  public Component getTableCellRendererComponent(
+      JTable table, Object value,
       boolean isSelected, boolean hasFocus, int row, int column) {
     return getButton(value);
   }
@@ -103,11 +112,15 @@ public class LinterErrorRenderer extends AbstractCellEditor implements
     }
     LinterError error = (LinterError) value;
     JButton button = new JButton(Utilities.getImageIcon(
-        "gnome-edit-find.png", EnumImageSize.SMALL));
+        (textPane != null) ? "gnome-edit-find.png" : "gnome-system-run.png",
+        EnumImageSize.SMALL));
     button.setBorderPainted(false);
     button.setContentAreaFilled(false);
-    button.setActionCommand(Integer.toString(error.getStartOffset()) + ";" + Integer.toString(error.getEndOffset()));
-    button.setEnabled(textPane != null);
+    button.setActionCommand(
+        (textPane != null) ?
+            Integer.toString(error.getStartOffset()) + ";" + Integer.toString(error.getEndOffset()) :
+            error.getPage());
+    button.setEnabled(true);
     button.addActionListener(EventHandler.create(
         ActionListener.class, this, "goToError", "actionCommand"));
     buttons.put(value, button);
@@ -138,6 +151,8 @@ public class LinterErrorRenderer extends AbstractCellEditor implements
       } catch (NumberFormatException e) {
         //
       }
+    } else {
+      Controller.runFullAnalysis(location, null, wiki);
     }
   }
 }
