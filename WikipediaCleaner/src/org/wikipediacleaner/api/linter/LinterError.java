@@ -20,6 +20,9 @@ import org.wikipediacleaner.api.constants.WikiConfiguration;
  */
 public class LinterError {
 
+  /** Page title */
+  private final String page;
+
   /** Error type */
   private final String type;
 
@@ -37,6 +40,9 @@ public class LinterError {
   private final String templateName;
 
   /**
+   * Constructor.
+   * 
+   * @param page Page title.
    * @param type Error type.
    * @param parameters Parameters.
    * @param startOffset Start of the error.
@@ -45,18 +51,27 @@ public class LinterError {
    * @param templateName Name of the template if the problem comes from a template.
    */
   public LinterError(
+      String page,
       String type,
       Map<String, String> parameters,
       int startOffset,
       int endOffset,
       boolean multiPartTemplateBlock,
       String templateName) {
+    this.page = page;
     this.type = type;
     this.parameters = (parameters != null) ? new HashMap<String, String>(parameters) : null;
     this.startOffset = startOffset;
     this.endOffset = endOffset;
     this.multiPartTemplateBlock = multiPartTemplateBlock;
     this.templateName = templateName;
+  }
+
+  /**
+   * @return Page title.
+   */
+  public String getPage() {
+    return page;
   }
 
   /**

@@ -116,7 +116,9 @@ public class RestApiTransformWikitextToLintResult extends RestApiJsonResult {
 
         // Create error
         if (ok) {
-          result.add(new LinterError(type, params, start, end, multiPartTemplateBlock, templateName));
+          result.add(new LinterError(
+              title, type, params, start, end,
+              multiPartTemplateBlock, templateName));
         }
       }
     }

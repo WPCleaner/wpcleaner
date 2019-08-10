@@ -55,7 +55,9 @@ public class RestApiTransformWikitextToLintRequest extends RestApiRequest {
    */
   public List<LinterError> transform(String title, String text) throws APIException {
     Map<String, String> properties = getProperties();
-    properties.put(PROPERTY_WIKITEXT, text);
+    if (text != null) {
+      properties.put(PROPERTY_WIKITEXT, text);
+    }
     return result.transform(title, properties);
   }
 }

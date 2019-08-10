@@ -46,6 +46,7 @@ import org.wikipediacleaner.gui.swing.basic.BasicWorker;
 import org.wikipediacleaner.gui.swing.basic.DefaultBasicWindowListener;
 import org.wikipediacleaner.gui.swing.basic.DefaultBasicWorkerListener;
 import org.wikipediacleaner.gui.swing.basic.Utilities;
+import org.wikipediacleaner.gui.swing.linter.ActionLinter;
 import org.wikipediacleaner.gui.swing.worker.CheckArticleWorker;
 import org.wikipediacleaner.gui.swing.worker.UpdateInfoWorker;
 import org.wikipediacleaner.i18n.GT;
@@ -263,6 +264,11 @@ public class PageListWindow extends BasicWindow {
     buttonAutomaticFixing.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionRunAutomaticFixing"));
     toolbar.add(buttonAutomaticFixing);
+
+    ActionLinter.addButton(
+        this, toolbar,
+        getWiki(), new PageListTableSelectedPages(tablePages),
+        true);
 
     if (watchList) {
       buttonRemove = Utilities.createJButton(

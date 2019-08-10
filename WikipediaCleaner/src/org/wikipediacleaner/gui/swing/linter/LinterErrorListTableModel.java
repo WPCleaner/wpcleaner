@@ -40,7 +40,8 @@ public class LinterErrorListTableModel extends AbstractTableModel {
   /** Text area */
   private final JTextComponent textPane;
 
-  public final static int COLUMN_START = 0;
+  public final static int COLUMN_PAGE = 0;
+  public final static int COLUMN_START = COLUMN_PAGE + 1;
   public final static int COLUMN_END = COLUMN_START + 1;
   public final static int COLUMN_TYPE = COLUMN_END + 1;
   public final static int COLUMN_PARAMETERS = COLUMN_TYPE + 1;
@@ -95,6 +96,10 @@ public class LinterErrorListTableModel extends AbstractTableModel {
       column.setCellEditor(detectionRenderer);
       column.setCellRenderer(detectionRenderer);
     }
+
+    column = model.getColumn(COLUMN_PAGE);
+    column.setMinWidth(100);
+    column.setPreferredWidth(300);
 
     column = model.getColumn(COLUMN_PARAMETERS);
     column.setMinWidth(100);
@@ -152,6 +157,8 @@ public class LinterErrorListTableModel extends AbstractTableModel {
         return error.getEndOffset();
       case COLUMN_GOTO:
         return error;
+      case COLUMN_PAGE:
+        return error.getPage();
       case COLUMN_PARAMETERS:
       {
         StringBuilder tmp = new StringBuilder();
@@ -216,6 +223,8 @@ public class LinterErrorListTableModel extends AbstractTableModel {
       return GT._T("End");
     case COLUMN_GOTO:
       return "";
+    case COLUMN_PAGE:
+      return GT._T("Page");
     case COLUMN_PARAMETERS:
       return GT._T("Parameters");
     case COLUMN_START:
