@@ -18,7 +18,6 @@ import javax.swing.text.JTextComponent;
 
 import org.wikipediacleaner.api.check.CheckWikiDetection;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
-import org.wikipediacleaner.api.constants.WikiConfiguration;
 import org.wikipediacleaner.api.linter.LinterError;
 import org.wikipediacleaner.gui.swing.component.CopyCellRenderer;
 import org.wikipediacleaner.i18n.GT;
@@ -34,9 +33,6 @@ public class LinterErrorListTableModel extends AbstractTableModel {
 
   /** Wiki */
   private final EnumWikipedia wiki;
-
-  /** Wiki configuration */
-  private final WikiConfiguration config;
 
   /** List of errors */
   private final List<LinterError> errors;
@@ -56,17 +52,15 @@ public class LinterErrorListTableModel extends AbstractTableModel {
   public final static int NB_COLUMNS = COLUMN_GOTO + 1;
 
   /**
-   * @param config Wiki configuration.
+   * @param wiki Wiki.
    * @param errors List of Linter errors.
    * @param textPane Text area.
    */
   public LinterErrorListTableModel(
       EnumWikipedia wiki,
-      WikiConfiguration config,
       List<LinterError> errors,
       JTextComponent textPane) {
     this.wiki = wiki;
-    this.config = config;
     this.errors = errors;
     this.textPane = textPane;
   }
@@ -186,7 +180,7 @@ public class LinterErrorListTableModel extends AbstractTableModel {
         }
         return "";
       case COLUMN_TYPE:
-        return error.getTypeName(config);
+        return error.getTypeName(wiki.getWikiConfiguration());
       }
     }
     return null;

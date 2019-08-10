@@ -26,7 +26,7 @@ public class PageListTableSelectedPages implements PageListProvider {
   /**
    * Constructor.
    * 
-   * @table Actual table.
+   * @param table Actual table.
    */
   public PageListTableSelectedPages(PageListTable table) {
     this.table = table;

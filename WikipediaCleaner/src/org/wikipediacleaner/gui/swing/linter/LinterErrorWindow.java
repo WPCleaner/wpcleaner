@@ -44,6 +44,7 @@ public class LinterErrorWindow extends BasicWindow {
   /**
    * Create and display an LinterErrorWindow.
    * 
+   * @param wiki Wiki.
    * @param errors List of Linter errors.
    * @param textPane Text pane.
    */

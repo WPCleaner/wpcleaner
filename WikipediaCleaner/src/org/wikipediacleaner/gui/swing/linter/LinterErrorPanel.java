@@ -22,7 +22,6 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.text.JTextComponent;
 
 import org.wikipediacleaner.api.constants.EnumWikipedia;
-import org.wikipediacleaner.api.constants.WikiConfiguration;
 import org.wikipediacleaner.api.linter.LinterError;
 import org.wikipediacleaner.i18n.GT;
 
@@ -37,9 +36,6 @@ public class LinterErrorPanel extends JPanel {
 
   /** Wiki */
   private final EnumWikipedia wiki;
-
-  /** Wiki configuration */
-  private final WikiConfiguration config;
 
   /** List of errors. */
   private final List<LinterError> errors;
@@ -61,7 +57,6 @@ public class LinterErrorPanel extends JPanel {
       JTextComponent textPane) {
     super(new GridBagLayout(), true);
     this.wiki = wiki;
-    this.config = wiki.getWikiConfiguration();
     this.errors = errors;
     this.textPane = textPane;
     constructContents();
@@ -90,7 +85,7 @@ public class LinterErrorPanel extends JPanel {
 
     // List of detections
     LinterErrorListTableModel modelErrors =
-        new LinterErrorListTableModel(wiki, config, errors, textPane);
+        new LinterErrorListTableModel(wiki, errors, textPane);
     JTable tableErrors = new JTable(modelErrors);
     modelErrors.configureColumnModel(tableErrors.getColumnModel());
     JScrollPane scrollErrors = new JScrollPane(tableErrors);
