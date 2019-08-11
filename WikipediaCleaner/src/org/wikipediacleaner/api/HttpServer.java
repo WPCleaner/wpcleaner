@@ -101,6 +101,16 @@ public class HttpServer {
           }
         } else {
           log.warn("Error accessing url: " + statusCode + "-" + HttpStatus.getStatusText(statusCode));
+          for (Header header : method.getResponseHeaders()) {
+            log.warn("  Header " + header.getName() + ": " + header.getValue());
+          }
+          if ((statusCode == HttpStatus.SC_MOVED_TEMPORARILY) ||
+              (statusCode == HttpStatus.SC_TEMPORARY_REDIRECT)) {
+            Header location = method.getResponseHeader("Location");
+            if (location != null) {
+              url = location.getValue();
+            }
+          }
           waitBeforeRetrying(count);
         }
         try {
