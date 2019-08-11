@@ -148,7 +148,7 @@ public class LinterErrorListTableModel extends AbstractTableModel {
       case COLUMN_COPY:
         return error;
       case COLUMN_END:
-        return error.getEndOffset();
+        return error.getEndIndex();
       case COLUMN_GOTO:
         return error;
       case COLUMN_PAGE:
@@ -170,7 +170,7 @@ public class LinterErrorListTableModel extends AbstractTableModel {
         return tmp.toString();
       }
       case COLUMN_START:
-        return error.getStartOffset();
+        return error.getBeginIndex();
       case COLUMN_TEMPLATE:
         if (error.getTemplateName() != null) {
           return error.getTemplateName();

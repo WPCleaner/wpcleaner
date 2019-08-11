@@ -13,12 +13,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.wikipediacleaner.api.constants.WikiConfiguration;
+import org.wikipediacleaner.api.data.contents.Interval;
 
 
 /**
  * Bean representing a Linter error.
  */
-public class LinterError {
+public class LinterError implements Interval {
 
   /** Page title */
   private final String page;
@@ -29,11 +30,11 @@ public class LinterError {
   /** Parameters */
   private final Map<String, String> parameters;
 
-  /** Start offset of the error */
-  private final int startOffset;
+  /** Begin index of the error */
+  private final int beginIndex;
 
-  /** End offset of the error */
-  private final int endOffset;
+  /** End index of the error */
+  private final int endIndex;
 
   private final boolean multiPartTemplateBlock;
 
@@ -45,8 +46,8 @@ public class LinterError {
    * @param page Page title.
    * @param type Error type.
    * @param parameters Parameters.
-   * @param startOffset Start of the error.
-   * @param endOffset End of the error.
+   * @param beginIndex Begin index of the error.
+   * @param endIndex End index of the error.
    * @param multiPartTemplateBlock True if the problem comes from multiple templates.
    * @param templateName Name of the template if the problem comes from a template.
    */
@@ -54,15 +55,14 @@ public class LinterError {
       String page,
       String type,
       Map<String, String> parameters,
-      int startOffset,
-      int endOffset,
+      int beginIndex, int endIndex,
       boolean multiPartTemplateBlock,
       String templateName) {
     this.page = page;
     this.type = type;
     this.parameters = (parameters != null) ? new HashMap<String, String>(parameters) : null;
-    this.startOffset = startOffset;
-    this.endOffset = endOffset;
+    this.beginIndex = beginIndex;
+    this.endIndex = endIndex;
     this.multiPartTemplateBlock = multiPartTemplateBlock;
     this.templateName = templateName;
   }
@@ -103,17 +103,31 @@ public class LinterError {
   }
 
   /**
-   * @return Start offset of the error.
+   * @return Begin index of the error.
+   * @see org.wikipediacleaner.api.data.contents.Interval#getBeginIndex()
    */
-  public int getStartOffset() {
-    return startOffset;
+  @Override
+  public int getBeginIndex() {
+    return beginIndex;
   }
 
   /**
-   * @return End offset of the error.
+   * @return End index of the error.
+   * @see org.wikipediacleaner.api.data.contents.Interval#getEndIndex()
    */
-  public int getEndOffset() {
-    return endOffset;
+  @Override
+  public int getEndIndex() {
+    return endIndex;
+  }
+
+  /**
+   * @param index
+   * @return
+   * @see org.wikipediacleaner.api.data.contents.Interval#containsIndex(int)
+   */
+  @Override
+  public boolean containsIndex(int index) {
+    return ((index >= beginIndex) && (index < endIndex));
   }
 
   /**

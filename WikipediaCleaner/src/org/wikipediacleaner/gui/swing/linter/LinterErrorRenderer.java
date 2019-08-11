@@ -118,7 +118,7 @@ public class LinterErrorRenderer extends AbstractCellEditor implements
     button.setContentAreaFilled(false);
     button.setActionCommand(
         (textPane != null) ?
-            Integer.toString(error.getStartOffset()) + ";" + Integer.toString(error.getEndOffset()) :
+            Integer.toString(error.getBeginIndex()) + ";" + Integer.toString(error.getEndIndex()) :
             error.getPage());
     button.setEnabled(true);
     button.addActionListener(EventHandler.create(
