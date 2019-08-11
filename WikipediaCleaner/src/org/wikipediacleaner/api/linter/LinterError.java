@@ -13,13 +13,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.wikipediacleaner.api.constants.WikiConfiguration;
-import org.wikipediacleaner.api.data.contents.Interval;
+import org.wikipediacleaner.api.data.contents.ContentsInterval;
 
 
 /**
  * Bean representing a Linter error.
  */
-public class LinterError implements Interval {
+public class LinterError extends ContentsInterval {
 
   /** Page title */
   private final String page;
@@ -29,12 +29,6 @@ public class LinterError implements Interval {
 
   /** Parameters */
   private final Map<String, String> parameters;
-
-  /** Begin index of the error */
-  private final int beginIndex;
-
-  /** End index of the error */
-  private final int endIndex;
 
   private final boolean multiPartTemplateBlock;
 
@@ -58,11 +52,10 @@ public class LinterError implements Interval {
       int beginIndex, int endIndex,
       boolean multiPartTemplateBlock,
       String templateName) {
+    super(beginIndex, endIndex);
     this.page = page;
     this.type = type;
     this.parameters = (parameters != null) ? new HashMap<String, String>(parameters) : null;
-    this.beginIndex = beginIndex;
-    this.endIndex = endIndex;
     this.multiPartTemplateBlock = multiPartTemplateBlock;
     this.templateName = templateName;
   }
@@ -100,34 +93,6 @@ public class LinterError implements Interval {
    */
   public Map<String, String> getParameters() {
     return (parameters != null) ? Collections.unmodifiableMap(parameters) : null;
-  }
-
-  /**
-   * @return Begin index of the error.
-   * @see org.wikipediacleaner.api.data.contents.Interval#getBeginIndex()
-   */
-  @Override
-  public int getBeginIndex() {
-    return beginIndex;
-  }
-
-  /**
-   * @return End index of the error.
-   * @see org.wikipediacleaner.api.data.contents.Interval#getEndIndex()
-   */
-  @Override
-  public int getEndIndex() {
-    return endIndex;
-  }
-
-  /**
-   * @param index
-   * @return
-   * @see org.wikipediacleaner.api.data.contents.Interval#containsIndex(int)
-   */
-  @Override
-  public boolean containsIndex(int index) {
-    return ((index >= beginIndex) && (index < endIndex));
   }
 
   /**
