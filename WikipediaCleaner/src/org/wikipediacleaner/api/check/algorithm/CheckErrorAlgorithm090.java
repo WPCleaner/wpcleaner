@@ -784,6 +784,9 @@ public class CheckErrorAlgorithm090 extends CheckErrorAlgorithmBase {
    */
   @Override
   protected String internalAutomaticFix(PageAnalysis analysis) {
+    if (analysis.getPage().isInUserNamespace()) {
+      return analysis.getContents();
+    }
     return fixUsingAutomaticReplacement(analysis);
   }
 
@@ -795,6 +798,9 @@ public class CheckErrorAlgorithm090 extends CheckErrorAlgorithmBase {
    */
   @Override
   protected String internalBotFix(PageAnalysis analysis) {
+    if (analysis.getPage().isInUserNamespace()) {
+      return analysis.getContents();
+    }
     return fixUsingAutomaticBotReplacement(analysis);
   }
 
