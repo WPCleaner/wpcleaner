@@ -16,6 +16,7 @@ import org.wikipediacleaner.api.APIException;
 import org.wikipediacleaner.api.APIFactory;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
+import org.wikipediacleaner.api.constants.WPCConfiguration;
 import org.wikipediacleaner.api.constants.WPCConfigurationStringList;
 import org.wikipediacleaner.api.data.DataManager;
 import org.wikipediacleaner.api.data.Namespace;
@@ -88,94 +89,151 @@ public class CheckErrorAlgorithm529 extends CheckErrorAlgorithmBase {
         }
         result = true;
 
-        // Try to extend area
+        // Initialize
         int isbnBeginIndex = isbn.getBeginIndex();
         int isbnEndIndex = isbn.getEndIndex();
-        int beginIndex = isbnBeginIndex;
-        boolean extensionFound = false;
-        do {
-          extensionFound = false;
-          for (String before : EXTEND_BEFORE_ISBN) {
-            if ((beginIndex >= before.length()) &&
-                (contents.startsWith(before, beginIndex - before.length()))) {
-              extensionFound = true;
-              beginIndex -= before.length();
-            }
-          }
-        } while (extensionFound);
-        int endIndex = isbnEndIndex;
-        do {
-          extensionFound = false;
-          for (String after : EXTEND_AFTER_ISBN) {
-            if ((endIndex < contents.length()) &&
-                (contents.startsWith(after, endIndex))) {
-              extensionFound = true;
-              endIndex += after.length();
-            }
-          }
-        } while (extensionFound);
-        String prefix = contents.substring(beginIndex, isbnBeginIndex);
-        String suffix = contents.substring(isbnEndIndex, endIndex);
+        boolean reported = false;
 
-        CheckErrorResult errorResult = createCheckErrorResult(
-            analysis, beginIndex, endIndex);
-
-        // Suggest replacement with templates
+        // Try automatic replacements
+        String property = getSpecificProperty("automatic", true, true, true);
+        List<String[]> automaticReplacements = WPCConfiguration.convertPropertyToStringArrayList(property);
         List<String[]> isbnTemplates = analysis.getWPCConfiguration().getStringArrayList(
             WPCConfigurationStringList.ISBN_TEMPLATES);
-        if (isbnTemplates != null) {
-          for (String[] isbnTemplate : isbnTemplates) {
-            if (isbnTemplate.length > 2) {
-              String templateName = isbnTemplate[0];
-              String[] params = isbnTemplate[1].split(",");
-              Boolean suggested = Boolean.valueOf(isbnTemplate[2]);
-              if ((params.length > 0) && (Boolean.TRUE.equals(suggested))) {
-                StringBuilder replacement = new StringBuilder();
-                replacement.append("{{");
-                replacement.append(templateName);
-                replacement.append("|");
-                if (!"1".equals(params[0])) {
-                  replacement.append(params[0]);
-                  replacement.append("=");
+        if ((automaticReplacements != null) && (isbnTemplates != null)) {
+          for (String[] automaticReplacement : automaticReplacements) {
+            if ((automaticReplacement != null) &&
+                (automaticReplacement.length > 2) &&
+                !reported) {
+              String template = automaticReplacement[0];
+              String prefix = automaticReplacement[1];
+              String suffix = automaticReplacement[2];
+              if ((isbnBeginIndex >= prefix.length()) &&
+                  (contents.startsWith(prefix, isbnBeginIndex - prefix.length())) &&
+                  (contents.startsWith(suffix, isbnEndIndex))) {
+                CheckErrorResult errorResult = createCheckErrorResult(
+                    analysis,
+                    isbnBeginIndex - prefix.length(),
+                    isbnEndIndex + suffix.length());
+                for (String[] isbnTemplate : isbnTemplates) {
+                  if ((isbnTemplate != null) &&
+                      (isbnTemplate.length > 0) &&
+                      (template.equals(isbnTemplate[0]))) {
+                    addTemplateReplacement(errorResult, isbnTemplate, isbn, null, null, true);
+                  }
                 }
-                replacement.append(isbn.getISBNNotTrimmed());
-                replacement.append("}}");
-                errorResult.addReplacement(replacement.toString());
-                if (!prefix.isEmpty() || !suffix.isEmpty()) {
-                  errorResult.addReplacement(prefix + replacement.toString() + suffix);
-                }
+                errors.add(errorResult);
+                reported = true;
               }
             }
           }
         }
 
-        // Suggest replacement with interwikis
-        List<String[]> isbnInterwikis = analysis.getWPCConfiguration().getStringArrayList(
-            WPCConfigurationStringList.ISBN_INTERWIKIS);
-        if (isbnInterwikis != null) {
-          for (String[] isbnInterwiki : isbnInterwikis) {
-            if (isbnInterwiki.length > 0) {
-              String isbnCode = isbnInterwiki[0];
-              StringBuilder replacement = new StringBuilder();
-              replacement.append("[[:");
-              replacement.append(isbnCode);
-              replacement.append(":");
-              replacement.append(isbn.getISBN());
-              replacement.append("|");
-              replacement.append(PageElementISBN.ISBN_PREFIX);
-              replacement.append(" ");
-              replacement.append(isbn.getISBN());
-              replacement.append("]]");
-              errorResult.addReplacement(replacement.toString());
+        if (!reported) {
+          // Try to extend area
+          int beginIndex = isbnBeginIndex;
+          boolean extensionFound = false;
+          do {
+            extensionFound = false;
+            for (String before : EXTEND_BEFORE_ISBN) {
+              if ((beginIndex >= before.length()) &&
+                  (contents.startsWith(before, beginIndex - before.length()))) {
+                extensionFound = true;
+                beginIndex -= before.length();
+              }
+            }
+          } while (extensionFound);
+          int endIndex = isbnEndIndex;
+          do {
+            extensionFound = false;
+            for (String after : EXTEND_AFTER_ISBN) {
+              if ((endIndex < contents.length()) &&
+                  (contents.startsWith(after, endIndex))) {
+                extensionFound = true;
+                endIndex += after.length();
+              }
+            }
+          } while (extensionFound);
+          String prefix = contents.substring(beginIndex, isbnBeginIndex);
+          String suffix = contents.substring(isbnEndIndex, endIndex);
+  
+          CheckErrorResult errorResult = createCheckErrorResult(
+              analysis, beginIndex, endIndex);
+  
+          // Suggest replacement with templates
+          if (isbnTemplates != null) {
+            for (String[] isbnTemplate : isbnTemplates) {
+              addTemplateReplacement(errorResult, isbnTemplate, isbn, prefix, suffix, false);
             }
           }
+  
+          // Suggest replacement with interwikis
+          List<String[]> isbnInterwikis = analysis.getWPCConfiguration().getStringArrayList(
+              WPCConfigurationStringList.ISBN_INTERWIKIS);
+          if (isbnInterwikis != null) {
+            for (String[] isbnInterwiki : isbnInterwikis) {
+              if (isbnInterwiki.length > 0) {
+                String isbnCode = isbnInterwiki[0];
+                StringBuilder replacement = new StringBuilder();
+                replacement.append("[[:");
+                replacement.append(isbnCode);
+                replacement.append(":");
+                replacement.append(isbn.getISBN());
+                replacement.append("|");
+                replacement.append(PageElementISBN.ISBN_PREFIX);
+                replacement.append(" ");
+                replacement.append(isbn.getISBN());
+                replacement.append("]]");
+                errorResult.addReplacement(replacement.toString());
+              }
+            }
+          }
+  
+          errors.add(errorResult);
         }
-
-        errors.add(errorResult);
       }
     }
 
     return result;
+  }
+
+  /**
+   * Add a suggestion for replacement with a template.
+   * 
+   * @param errorResult Error result.
+   * @param isbnTemplate Definition of the template.
+   * @param isbn ISBN.
+   * @param prefix Optional prefix.
+   * @param suffix Optional suffix.
+   * @param automatic True if automatic replacement can be performed.
+   */
+  private void addTemplateReplacement(
+      CheckErrorResult errorResult, String[] isbnTemplate,
+      PageElementISBN isbn, String prefix, String suffix,
+      boolean automatic) {
+    if ((isbnTemplate == null) || (isbnTemplate.length <= 2)) {
+      return;
+    }
+    String templateName = isbnTemplate[0];
+    String[] params = isbnTemplate[1].split(",");
+    Boolean suggested = Boolean.valueOf(isbnTemplate[2]);
+    if ((params.length > 0) && (Boolean.TRUE.equals(suggested))) {
+      StringBuilder replacement = new StringBuilder();
+      replacement.append("{{");
+      replacement.append(templateName);
+      replacement.append("|");
+      if (!"1".equals(params[0])) {
+        replacement.append(params[0]);
+        replacement.append("=");
+      }
+      replacement.append(isbn.getISBNNotTrimmed());
+      replacement.append("}}");
+      errorResult.addReplacement(replacement.toString(), automatic);
+      if (((prefix != null) && !prefix.isEmpty()) ||
+          ((suffix != null) && !suffix.isEmpty())) {
+        errorResult.addReplacement(
+            (prefix != null ? prefix : "") + replacement.toString() + (suffix != null ? suffix : ""));
+      }
+    }
   }
 
   /**
