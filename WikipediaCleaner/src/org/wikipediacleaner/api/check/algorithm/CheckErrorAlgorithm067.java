@@ -331,7 +331,8 @@ public class CheckErrorAlgorithm067 extends CheckErrorAlgorithmBase {
    */
   @Override
   protected String internalAutomaticFix(PageAnalysis analysis) {
-    if (!analysis.getPage().isArticle()) {
+    if (!analysis.getPage().isArticle() ||
+        analysis.getPage().isInUserNamespace()) {
       return analysis.getContents();
     }
     return fixUsingAutomaticReplacement(analysis);

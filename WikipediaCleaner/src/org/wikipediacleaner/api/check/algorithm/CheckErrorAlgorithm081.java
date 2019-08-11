@@ -412,7 +412,9 @@ public class CheckErrorAlgorithm081 extends CheckErrorAlgorithmBase {
   protected String internalAutomaticFix(PageAnalysis analysis) {
     List<String[]> refTemplates = analysis.getWPCConfiguration().getStringArrayList(
         WPCConfigurationStringList.REFERENCES_TEMPLATES);
-    if ((refTemplates == null) || (refTemplates.isEmpty())) {
+    if ((refTemplates == null) ||
+        (refTemplates.isEmpty()) ||
+        analysis.getPage().isInUserNamespace()) {
       return analysis.getContents();
     }
     return fixUsingAutomaticReplacement(analysis);
