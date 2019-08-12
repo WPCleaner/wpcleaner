@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2019-08-12 08:07+0200\n"
+"POT-Creation-Date: 2019-08-12 22:26+0200\n"
 "PO-Revision-Date: 2017-03-03 19:31+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Polish <pl@li.org>\n"
@@ -1270,7 +1270,7 @@ msgid "Page Id"
 msgstr "ID strony"
 
 #: org/wikipediacleaner/api/data/PageComparator.java:379
-#: org/wikipediacleaner/gui/swing/linter/LinterErrorListTableModel.java:227
+#: org/wikipediacleaner/gui/swing/linter/LinterErrorListTableModel.java:226
 #: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:191
 msgid "Template"
 msgstr "Szablon"
@@ -1870,8 +1870,8 @@ msgid "Save none of them"
 msgstr "Nie zapamiętuj żadnego z nich"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:567
-#: org/wikipediacleaner/gui/swing/deadlink/DeadLinkListTableModel.java:183
-#: org/wikipediacleaner/gui/swing/linter/LinterErrorListTableModel.java:221
+#: org/wikipediacleaner/gui/swing/deadlink/DeadLinkListTableModel.java:199
+#: org/wikipediacleaner/gui/swing/linter/LinterErrorListTableModel.java:218
 #: org/wikipediacleaner/gui/swing/pagelist/PageListTableModel.java:236
 msgid "Page"
 msgstr "Strona"
@@ -3478,28 +3478,37 @@ msgstr "Inna Wikipedia"
 msgid "You can learn how to add other Wikipedia at the following URL:"
 msgstr "Dowiedz się, jak dodać inną Wikipedię, pod adresem:"
 
-#: org/wikipediacleaner/gui/swing/deadlink/ActionDeadLink.java:47
+#: org/wikipediacleaner/gui/swing/deadlink/ActionDeadLink.java:48
 #, fuzzy
 msgid "Check dead links"
 msgstr "Sprawdź wszystkie linki do innego języka"
 
-#: org/wikipediacleaner/gui/swing/deadlink/DeadLinkListTableModel.java:177
-#: org/wikipediacleaner/gui/swing/linter/LinterErrorListTableModel.java:217
+#: org/wikipediacleaner/gui/swing/deadlink/ActionDeadLink.java:203
+msgid "You need to select pages to check for dead links"
+msgstr ""
+
+#: org/wikipediacleaner/gui/swing/deadlink/ActionDeadLink.java:206
+#, fuzzy
+msgid "Do you want to check for dead links?"
+msgstr "Kontynuować?"
+
+#: org/wikipediacleaner/gui/swing/deadlink/DeadLinkListTableModel.java:191
+#: org/wikipediacleaner/gui/swing/linter/LinterErrorListTableModel.java:214
 msgid "End"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/deadlink/DeadLinkListTableModel.java:181
+#: org/wikipediacleaner/gui/swing/deadlink/DeadLinkListTableModel.java:195
 #, fuzzy
 msgid "Link"
 msgstr "Popraw link na"
 
-#: org/wikipediacleaner/gui/swing/deadlink/DeadLinkListTableModel.java:185
-#: org/wikipediacleaner/gui/swing/linter/LinterErrorListTableModel.java:225
+#: org/wikipediacleaner/gui/swing/deadlink/DeadLinkListTableModel.java:201
+#: org/wikipediacleaner/gui/swing/linter/LinterErrorListTableModel.java:224
 #, fuzzy
 msgid "Start"
 msgstr "Sortuj"
 
-#: org/wikipediacleaner/gui/swing/deadlink/DeadLinkListTableModel.java:189
+#: org/wikipediacleaner/gui/swing/deadlink/DeadLinkListTableModel.java:205
 #, fuzzy
 msgid "Status"
 msgstr "Sortuj"
@@ -3514,18 +3523,18 @@ msgstr "Dokonano następujących zmian:"
 msgid "Dead links"
 msgstr "Odśwież linki"
 
-#: org/wikipediacleaner/gui/swing/deadlink/DeadLinkWorker.java:80
+#: org/wikipediacleaner/gui/swing/deadlink/DeadLinkWorker.java:82
 msgid "No dead links were found."
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/deadlink/DeadLinkWorker.java:96
+#: org/wikipediacleaner/gui/swing/deadlink/DeadLinkWorker.java:98
 #: org/wikipediacleaner/gui/swing/linter/LinterWorker.java:73
 #, fuzzy
 msgid "Retrieving page contents"
 msgstr "Pobieranie zawartości strony – {0}"
 
-#: org/wikipediacleaner/gui/swing/deadlink/DeadLinkWorker.java:106
 #: org/wikipediacleaner/gui/swing/deadlink/DeadLinkWorker.java:111
+#: org/wikipediacleaner/gui/swing/deadlink/DeadLinkWorker.java:116
 #: org/wikipediacleaner/gui/swing/linter/LinterWorker.java:76
 #, fuzzy, java-format
 msgid "Analyzing {0}"
@@ -3543,17 +3552,17 @@ msgstr ""
 msgid "No errors are currently detected by Linter."
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/linter/LinterErrorListTableModel.java:179
+#: org/wikipediacleaner/gui/swing/linter/LinterErrorListTableModel.java:178
 #, fuzzy
 msgid "Multiple templates"
 msgstr "Nieużywane szablony"
 
-#: org/wikipediacleaner/gui/swing/linter/LinterErrorListTableModel.java:223
+#: org/wikipediacleaner/gui/swing/linter/LinterErrorListTableModel.java:220
 #, fuzzy
 msgid "Parameters"
 msgstr "Parametr: {0}"
 
-#: org/wikipediacleaner/gui/swing/linter/LinterErrorListTableModel.java:229
+#: org/wikipediacleaner/gui/swing/linter/LinterErrorListTableModel.java:228
 msgid "Type"
 msgstr ""
 

@@ -15,6 +15,7 @@ import javax.swing.table.TableColumnModel;
 import javax.swing.text.JTextComponent;
 
 import org.wikipediacleaner.api.constants.EnumWikipedia;
+import org.wikipediacleaner.gui.swing.component.CopyCellRenderer;
 import org.wikipediacleaner.i18n.GT;
 
 
@@ -39,7 +40,8 @@ public class DeadLinkListTableModel extends AbstractTableModel {
   public final static int COLUMN_START = COLUMN_PAGE + 1;
   public final static int COLUMN_END = COLUMN_START + 1;
   public final static int COLUMN_LINK = COLUMN_END + 1;
-  public final static int COLUMN_STATUS = COLUMN_LINK + 1;
+  public final static int COLUMN_LINK_COPY = COLUMN_LINK + 1;
+  public final static int COLUMN_STATUS = COLUMN_LINK_COPY + 1;
   public final static int COLUMN_STATUS_TEXT = COLUMN_STATUS + 1;
   public final static int COLUMN_GOTO = COLUMN_STATUS_TEXT + 1;
 
@@ -66,7 +68,7 @@ public class DeadLinkListTableModel extends AbstractTableModel {
    */
   public void configureColumnModel(TableColumnModel model) {
     TableColumn column;
-    
+
     column = model.getColumn(COLUMN_END);
     column.setMinWidth(60);
     column.setPreferredWidth(60);
@@ -83,6 +85,14 @@ public class DeadLinkListTableModel extends AbstractTableModel {
     column = model.getColumn(COLUMN_LINK);
     column.setMinWidth(100);
     column.setPreferredWidth(300);
+
+    column = model.getColumn(COLUMN_LINK_COPY);
+    column.setMinWidth(30);
+    column.setPreferredWidth(30);
+    column.setMaxWidth(30);
+    CopyCellRenderer copyRenderer = new CopyCellRenderer(COLUMN_LINK);
+    column.setCellEditor(copyRenderer);
+    column.setCellRenderer(copyRenderer);
 
     column = model.getColumn(COLUMN_PAGE);
     column.setMinWidth(100);
@@ -137,6 +147,7 @@ public class DeadLinkListTableModel extends AbstractTableModel {
       case COLUMN_GOTO:
         return error;
       case COLUMN_LINK:
+      case COLUMN_LINK_COPY:
         return (error != null) ? error.getLink().getLink() : null;
       case COLUMN_PAGE:
         return (error != null) ? error.getPage() : null;
@@ -162,6 +173,9 @@ public class DeadLinkListTableModel extends AbstractTableModel {
     if (columnIndex == COLUMN_GOTO) {
       return true;
     }
+    if (columnIndex == COLUMN_LINK_COPY) {
+      return true;
+    }
     return super.isCellEditable(rowIndex, columnIndex);
   }
 
@@ -179,6 +193,8 @@ public class DeadLinkListTableModel extends AbstractTableModel {
       return "";
     case COLUMN_LINK:
       return GT._T("Link");
+    case COLUMN_LINK_COPY:
+      return "";
     case COLUMN_PAGE:
       return GT._T("Page");
     case COLUMN_START:
@@ -204,6 +220,7 @@ public class DeadLinkListTableModel extends AbstractTableModel {
     case COLUMN_GOTO:
       return DeadLink.class;
     case COLUMN_LINK:
+    case COLUMN_LINK_COPY:
       return String.class;
     case COLUMN_START:
       return Integer.class;

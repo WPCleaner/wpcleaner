@@ -435,7 +435,7 @@ public class OnePageAnalysisWindow
         getParentComponent(), toolbarButtons, getWikipedia(),
         getPageName(), getTextContents(), true);
     buttonDeadLink = ActionDeadLink.addButton(
-        toolbarButtons, getWikipedia(),
+        this, toolbarButtons, getWikipedia(),
         getPageName(), getTextContents(), true);
     buttonView = ActionExternalViewer.addButton(
         toolbarButtons, getWikipedia(), getPageName(), false, true, false);

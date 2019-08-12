@@ -10,6 +10,7 @@ package org.wikipediacleaner.gui.swing.deadlink;
 
 import java.awt.Component;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -104,6 +105,9 @@ public class DeadLinkWorker extends BasicWorker {
       HttpConnectionManager manager = new MultiThreadedHttpConnectionManager();
       HttpClient client = new HttpClient(manager);
       for (Page page : pages) {
+        if (!shouldContinue()) {
+          return errors;
+        }
         setText(GT._T("Analyzing {0}", page.getTitle()));
         List<PageElementExternalLink> links = page.getAnalysis(page.getContents(), false).getExternalLinks();
         if (links != null) {
@@ -111,12 +115,14 @@ public class DeadLinkWorker extends BasicWorker {
             String url = link.getLink();
             setText(GT._T("Analyzing {0}", url));
             DeadLink deadLink = null;
+            HttpMethod method = null;
             try {
-              HttpMethod method = HttpUtils.createHttpMethod(url, null, true);
+              method = HttpUtils.createHttpMethod(url, null, true);
               int questionIndex = url.indexOf('?');
               if (questionIndex > 0) {
                 method.setQueryString(url.substring(questionIndex + 1));
               }
+              method.getParams().setSoTimeout(30000);
               method.setRequestHeader("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3");
               method.setRequestHeader("Accept-Encoding", "gzip, deflate");
               method.setRequestHeader("Accept-Language", "en-US,en");
@@ -130,9 +136,17 @@ public class DeadLinkWorker extends BasicWorker {
               if (statusCode != HttpStatus.SC_OK) {
                 deadLink = new DeadLink(page.getTitle(), link, statusCode);
               }
+              InputStream stream = method.getResponseBodyAsStream();
+              while (stream.read() != -1) {
+                // Nothing to do
+              }
             } catch (IOException e) {
               log.error("Exception when accessing " + url + ": " + e.getMessage());
               deadLink = new DeadLink(page.getTitle(), link, e.getMessage());
+            } finally {
+              if (method != null) {
+                method.releaseConnection();
+              }
             }
             if (deadLink != null) {
               errors.add(deadLink);

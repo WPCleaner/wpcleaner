@@ -8,6 +8,7 @@
 
 package org.wikipediacleaner.gui.swing.deadlink;
 
+import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
@@ -51,6 +52,7 @@ public class ActionDeadLink extends AbstractAction implements ActionListener {
   /**
    * Create a button for checking an article.
    * 
+   * @param window Window.
    * @param wiki Wiki.
    * @param title Page title.
    * @param textPane Text pane where the text is.
@@ -58,11 +60,11 @@ public class ActionDeadLink extends AbstractAction implements ActionListener {
    * @return Button.
    */
   public static JButton createButton(
-      EnumWikipedia wiki,
+      BasicWindow window, EnumWikipedia wiki,
       String title, JTextComponent textPane,
       boolean showIcon) {
     JButton button = createInternalButton(showIcon);
-    button.addActionListener(new ActionDeadLink(wiki, title, textPane));
+    button.addActionListener(new ActionDeadLink(window, wiki, title, textPane));
     return button;
   }
 
@@ -87,6 +89,7 @@ public class ActionDeadLink extends AbstractAction implements ActionListener {
   /**
    * Add a button for checking an article.
    * 
+   * @param window Window.
    * @param toolbar Tool bar.
    * @param wiki Wiki.
    * @param title Page title.
@@ -95,11 +98,11 @@ public class ActionDeadLink extends AbstractAction implements ActionListener {
    * @return Button.
    */
   public static JButton addButton(
-      JToolBar toolbar,
+      BasicWindow window, JToolBar toolbar,
       EnumWikipedia wiki,
       String title, JTextComponent textPane,
       boolean showIcon) {
-    JButton button = createButton(wiki, title, textPane, showIcon);
+    JButton button = createButton(window, wiki, title, textPane, showIcon);
     if ((button != null) && (toolbar != null)) {
       toolbar.add(button);
     }
@@ -143,22 +146,24 @@ public class ActionDeadLink extends AbstractAction implements ActionListener {
   /**
    * Constructor for checking one article.
    * 
+   * @param parent Parent component.
    * @param wiki Wiki.
    * @param title Page title.
    * @param textPane Text pane where the text is.
    */
   private ActionDeadLink(
-      EnumWikipedia wiki,
+      BasicWindow window, EnumWikipedia wiki,
       String title, JTextComponent textPane) {
     this.wiki = wiki;
     this.textPane = textPane;
-    this.window = null;
+    this.window = window;
     this.pageListProvider = new StaticPageListProvider(wiki, title);
   }
 
   /**
    * Constructor for checking a list of articles.
    * 
+   * @param parent Parent component.
    * @param window Window.
    * @param wiki Wiki.
    * @param pageListProvider Page list provider.
@@ -191,9 +196,14 @@ public class ActionDeadLink extends AbstractAction implements ActionListener {
       return;
     }
     List<Page> pages = pageListProvider.getPages();
+    Component parent = (window != null) ? window.getParentComponent() : null;
     if ((pages == null) || (pages.isEmpty())) {
+      Utilities.displayError(
+          parent,
+          GT._T("You need to select pages to check for dead links"));
       return;
     }
+    Utilities.displayYesNoWarning(parent, GT._T("Do you want to check for dead links?"));
     DeadLinkWorker worker = new DeadLinkWorker(wiki, window, pages, textPane);
     worker.start();
   }

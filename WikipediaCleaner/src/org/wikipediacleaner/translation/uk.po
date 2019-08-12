@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2019-08-12 08:07+0200\n"
+"POT-Creation-Date: 2019-08-12 22:26+0200\n"
 "PO-Revision-Date: 2014-09-10 23:22+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Ukrainian <uk@li.org>\n"
@@ -1250,7 +1250,7 @@ msgid "Page Id"
 msgstr "Ідентифікатор сторінки"
 
 #: org/wikipediacleaner/api/data/PageComparator.java:379
-#: org/wikipediacleaner/gui/swing/linter/LinterErrorListTableModel.java:227
+#: org/wikipediacleaner/gui/swing/linter/LinterErrorListTableModel.java:226
 #: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:191
 msgid "Template"
 msgstr "Шаблон"
@@ -1844,8 +1844,8 @@ msgid "Save none of them"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:567
-#: org/wikipediacleaner/gui/swing/deadlink/DeadLinkListTableModel.java:183
-#: org/wikipediacleaner/gui/swing/linter/LinterErrorListTableModel.java:221
+#: org/wikipediacleaner/gui/swing/deadlink/DeadLinkListTableModel.java:199
+#: org/wikipediacleaner/gui/swing/linter/LinterErrorListTableModel.java:218
 #: org/wikipediacleaner/gui/swing/pagelist/PageListTableModel.java:236
 msgid "Page"
 msgstr "Сторінка"
@@ -3440,28 +3440,37 @@ msgstr "Інша Вікіпедія"
 msgid "You can learn how to add other Wikipedia at the following URL:"
 msgstr "Як додавати інші Вікіпедії, можна взнати за цією адресою:"
 
-#: org/wikipediacleaner/gui/swing/deadlink/ActionDeadLink.java:47
+#: org/wikipediacleaner/gui/swing/deadlink/ActionDeadLink.java:48
 #, fuzzy
 msgid "Check dead links"
 msgstr "Перевірити мовні посилання"
 
-#: org/wikipediacleaner/gui/swing/deadlink/DeadLinkListTableModel.java:177
-#: org/wikipediacleaner/gui/swing/linter/LinterErrorListTableModel.java:217
+#: org/wikipediacleaner/gui/swing/deadlink/ActionDeadLink.java:203
+msgid "You need to select pages to check for dead links"
+msgstr ""
+
+#: org/wikipediacleaner/gui/swing/deadlink/ActionDeadLink.java:206
+#, fuzzy
+msgid "Do you want to check for dead links?"
+msgstr "Хочете продовжити ?"
+
+#: org/wikipediacleaner/gui/swing/deadlink/DeadLinkListTableModel.java:191
+#: org/wikipediacleaner/gui/swing/linter/LinterErrorListTableModel.java:214
 msgid "End"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/deadlink/DeadLinkListTableModel.java:181
+#: org/wikipediacleaner/gui/swing/deadlink/DeadLinkListTableModel.java:195
 #, fuzzy
 msgid "Link"
 msgstr "Посилання на"
 
-#: org/wikipediacleaner/gui/swing/deadlink/DeadLinkListTableModel.java:185
-#: org/wikipediacleaner/gui/swing/linter/LinterErrorListTableModel.java:225
+#: org/wikipediacleaner/gui/swing/deadlink/DeadLinkListTableModel.java:201
+#: org/wikipediacleaner/gui/swing/linter/LinterErrorListTableModel.java:224
 #, fuzzy
 msgid "Start"
 msgstr "Сортування"
 
-#: org/wikipediacleaner/gui/swing/deadlink/DeadLinkListTableModel.java:189
+#: org/wikipediacleaner/gui/swing/deadlink/DeadLinkListTableModel.java:205
 #, fuzzy
 msgid "Status"
 msgstr "Сортування"
@@ -3476,18 +3485,18 @@ msgstr "Виникла невідома помилка"
 msgid "Dead links"
 msgstr "Оновити посилання"
 
-#: org/wikipediacleaner/gui/swing/deadlink/DeadLinkWorker.java:80
+#: org/wikipediacleaner/gui/swing/deadlink/DeadLinkWorker.java:82
 msgid "No dead links were found."
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/deadlink/DeadLinkWorker.java:96
+#: org/wikipediacleaner/gui/swing/deadlink/DeadLinkWorker.java:98
 #: org/wikipediacleaner/gui/swing/linter/LinterWorker.java:73
 #, fuzzy
 msgid "Retrieving page contents"
 msgstr "Отримання вмісту сторінки - {0}"
 
-#: org/wikipediacleaner/gui/swing/deadlink/DeadLinkWorker.java:106
 #: org/wikipediacleaner/gui/swing/deadlink/DeadLinkWorker.java:111
+#: org/wikipediacleaner/gui/swing/deadlink/DeadLinkWorker.java:116
 #: org/wikipediacleaner/gui/swing/linter/LinterWorker.java:76
 #, fuzzy, java-format
 msgid "Analyzing {0}"
@@ -3506,16 +3515,16 @@ msgstr ""
 msgid "No errors are currently detected by Linter."
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/linter/LinterErrorListTableModel.java:179
+#: org/wikipediacleaner/gui/swing/linter/LinterErrorListTableModel.java:178
 #, fuzzy
 msgid "Multiple templates"
 msgstr "Отримання шаблонів"
 
-#: org/wikipediacleaner/gui/swing/linter/LinterErrorListTableModel.java:223
+#: org/wikipediacleaner/gui/swing/linter/LinterErrorListTableModel.java:220
 msgid "Parameters"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/linter/LinterErrorListTableModel.java:229
+#: org/wikipediacleaner/gui/swing/linter/LinterErrorListTableModel.java:228
 msgid "Type"
 msgstr ""
 
