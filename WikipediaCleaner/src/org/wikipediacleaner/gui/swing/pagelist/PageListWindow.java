@@ -46,6 +46,7 @@ import org.wikipediacleaner.gui.swing.basic.BasicWorker;
 import org.wikipediacleaner.gui.swing.basic.DefaultBasicWindowListener;
 import org.wikipediacleaner.gui.swing.basic.DefaultBasicWorkerListener;
 import org.wikipediacleaner.gui.swing.basic.Utilities;
+import org.wikipediacleaner.gui.swing.deadlink.ActionDeadLink;
 import org.wikipediacleaner.gui.swing.linter.ActionLinter;
 import org.wikipediacleaner.gui.swing.worker.CheckArticleWorker;
 import org.wikipediacleaner.gui.swing.worker.UpdateInfoWorker;
@@ -266,6 +267,10 @@ public class PageListWindow extends BasicWindow {
     toolbar.add(buttonAutomaticFixing);
 
     ActionLinter.addButton(
+        this, toolbar,
+        getWiki(), new PageListTableSelectedPages(tablePages),
+        true);
+    ActionDeadLink.addButton(
         this, toolbar,
         getWiki(), new PageListTableSelectedPages(tablePages),
         true);

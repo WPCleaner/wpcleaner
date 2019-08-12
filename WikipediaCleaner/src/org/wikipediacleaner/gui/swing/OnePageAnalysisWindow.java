@@ -96,6 +96,7 @@ import org.wikipediacleaner.gui.swing.component.MWPanePopupListener;
 import org.wikipediacleaner.gui.swing.component.PageListAnalyzeListener;
 import org.wikipediacleaner.gui.swing.component.PageListCellRenderer;
 import org.wikipediacleaner.gui.swing.component.PageListModel;
+import org.wikipediacleaner.gui.swing.deadlink.ActionDeadLink;
 import org.wikipediacleaner.gui.swing.component.MWPaneFormatter;
 import org.wikipediacleaner.gui.swing.linter.ActionLinter;
 import org.wikipediacleaner.gui.swing.worker.FullAnalysisWorker;
@@ -124,6 +125,7 @@ public class OnePageAnalysisWindow
   private JButton buttonValidate;
   private JButton buttonCheckArticle;
   private JButton buttonLinter;
+  private JButton buttonDeadLink;
   private JButton buttonView;
   private JButton buttonViewHistory;
   private JButton buttonWatch;
@@ -278,6 +280,7 @@ public class OnePageAnalysisWindow
     setEnabledStatus(buttonValidate, isPageLoaded());
     setEnabledStatus(buttonCheckArticle, isPageLoaded());
     setEnabledStatus(buttonLinter, isPageLoaded());
+    setEnabledStatus(buttonDeadLink, isPageLoaded());
     setEnabledStatus(buttonView, isPageLoaded());
     setEnabledStatus(buttonViewHistory, isPageLoaded());
     setEnabledStatus(buttonWatch, isPageLoaded());
@@ -430,6 +433,9 @@ public class OnePageAnalysisWindow
         getPageName(), getTextContents(), true);
     buttonLinter = ActionLinter.addButton(
         getParentComponent(), toolbarButtons, getWikipedia(),
+        getPageName(), getTextContents(), true);
+    buttonDeadLink = ActionDeadLink.addButton(
+        toolbarButtons, getWikipedia(),
         getPageName(), getTextContents(), true);
     buttonView = ActionExternalViewer.addButton(
         toolbarButtons, getWikipedia(), getPageName(), false, true, false);
