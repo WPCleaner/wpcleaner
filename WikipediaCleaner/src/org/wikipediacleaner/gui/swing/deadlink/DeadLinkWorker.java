@@ -56,6 +56,7 @@ public class DeadLinkWorker extends BasicWorker {
    * @param wiki Wiki.
    * @param window Window
    * @param pages List of pages to check.
+   * @param textPane Text pane.
    */
   public DeadLinkWorker(
       EnumWikipedia wiki, BasicWindow window,
