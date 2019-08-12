@@ -42,6 +42,7 @@ public abstract class PanelWindow extends BasicWindow {
    * 
    * @param name Window name.
    * @param wiki Wiki.
+   * @param windowClass Class of the window.
    * @param title Title of the window.
    * @param panel JPanel to use inside the window.
    */
