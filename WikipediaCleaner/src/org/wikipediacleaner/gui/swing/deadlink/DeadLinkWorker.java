@@ -8,9 +8,8 @@
 
 package org.wikipediacleaner.gui.swing.deadlink;
 
-import java.awt.Component;
 import java.io.IOException;
-import java.io.InputStream;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,7 +31,6 @@ import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageElementExternalLink;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
 import org.wikipediacleaner.gui.swing.basic.BasicWorker;
-import org.wikipediacleaner.gui.swing.basic.Utilities;
 import org.wikipediacleaner.i18n.GT;
 
 
@@ -74,15 +72,14 @@ public class DeadLinkWorker extends BasicWorker {
   public void finished() {
     super.finished();
     Object result = get();
-    Component parent = (getWindow() != null) ? getWindow().getParentComponent() : null;
     if (!(result instanceof Throwable)) {
       if ((errors != null) && !errors.isEmpty()) {
         DeadLinkWindow.createDeadLinkWindow(getWikipedia(), errors, textPane);
       } else {
-        Utilities.displayInformationMessage(parent, GT._T("No dead links were found."));
+        if (getWindow() != null) {
+          getWindow().displayWarning(GT._T("No dead links were found."));
+        }
       }
-    } else {
-      Utilities.displayError(parent, (Throwable) result);
     }
   }
 
@@ -117,7 +114,7 @@ public class DeadLinkWorker extends BasicWorker {
             DeadLink deadLink = null;
             HttpMethod method = null;
             try {
-              method = HttpUtils.createHttpMethod(url, null, true);
+              method = HttpUtils.createHttpHeadMethod(url, null);
               int questionIndex = url.indexOf('?');
               if (questionIndex > 0) {
                 method.setQueryString(url.substring(questionIndex + 1));
@@ -136,13 +133,13 @@ public class DeadLinkWorker extends BasicWorker {
               if (statusCode != HttpStatus.SC_OK) {
                 deadLink = new DeadLink(page.getTitle(), link, statusCode);
               }
-              InputStream stream = method.getResponseBodyAsStream();
-              while (stream.read() != -1) {
-                // Nothing to do
-              }
             } catch (IOException e) {
-              log.error("Exception when accessing " + url + ": " + e.getMessage());
-              deadLink = new DeadLink(page.getTitle(), link, e.getMessage());
+              log.error("{} when accessing {}: {}", e.getClass().getSimpleName(), url, e.getMessage());
+              if (e instanceof UnknownHostException) {
+                deadLink = new DeadLink(page.getTitle(), link, GT._T("Unknown host {0}", e.getMessage()));
+              } else {
+                deadLink = new DeadLink(page.getTitle(), link, e.getClass().getSimpleName() + ": " + e.getMessage());
+              }
             } finally {
               if (method != null) {
                 method.releaseConnection();

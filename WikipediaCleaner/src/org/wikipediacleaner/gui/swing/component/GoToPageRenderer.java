@@ -6,7 +6,7 @@
  */
 
 
-package org.wikipediacleaner.gui.swing.deadlink;
+package org.wikipediacleaner.gui.swing.component;
 
 import java.awt.Component;
 import java.awt.event.ActionListener;
@@ -18,40 +18,34 @@ import javax.swing.JButton;
 import javax.swing.JTable;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableCellRenderer;
-import javax.swing.text.JTextComponent;
 
 import org.wikipediacleaner.api.constants.EnumWikipedia;
-import org.wikipediacleaner.api.data.PageElementExternalLink;
+import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.gui.swing.Controller;
 import org.wikipediacleaner.gui.swing.basic.Utilities;
 import org.wikipediacleaner.images.EnumImageSize;
 
 
 /**
- * Cell renderer and editor for a dead link.
+ * Cell renderer and editor for a go to button for a page.
  */
-public class DeadLinkRenderer extends AbstractCellEditor implements
+public class GoToPageRenderer extends AbstractCellEditor implements
     TableCellRenderer, TableCellEditor {
 
   /** Serialization */
-  private static final long serialVersionUID = 2053852173119703420L;
+  private static final long serialVersionUID = 9192058472932969543L;
 
   /** Maps of all the buttons. */
   private HashMap<Object, JButton> buttons;
-
-  /** Text pane where the text is. */
-  private final JTextComponent textPane;
 
   /** Wiki */
   private final EnumWikipedia wiki;
 
   /**
-   * @param textPane Text pane where the text is.
    * @param wiki Wiki.
    */
-  public DeadLinkRenderer(JTextComponent textPane, EnumWikipedia wiki) {
+  public GoToPageRenderer(EnumWikipedia wiki) {
     buttons = new HashMap<Object, JButton>();
-    this.textPane = textPane;
     this.wiki = wiki;
   }
 
@@ -107,23 +101,24 @@ public class DeadLinkRenderer extends AbstractCellEditor implements
     if (buttons.containsKey(value)) {
       return buttons.get(value);
     }
-    if ((value == null) || !(value instanceof DeadLink)) {
+    String pageName = null;
+    if (value instanceof String) {
+      pageName = Page.normalizeTitle((String) value);
+    } else if (value instanceof Page) {
+      pageName = ((Page) value).getTitle();
+    }
+    if (pageName == null) {
       return null;
     }
-    DeadLink deadLink = (DeadLink) value;
     JButton button = new JButton(Utilities.getImageIcon(
-        (textPane != null) ? "gnome-edit-find.png" : "gnome-system-run.png",
+        "gnome-system-run.png",
         EnumImageSize.SMALL));
     button.setBorderPainted(false);
     button.setContentAreaFilled(false);
-    PageElementExternalLink link = deadLink.getLink();
-    button.setActionCommand(
-        (textPane != null) ?
-            Integer.toString(link.getBeginIndex()) + ";" + Integer.toString(link.getEndIndex()) :
-            deadLink.getPage());
+    button.setActionCommand(pageName);
     button.setEnabled(true);
     button.addActionListener(EventHandler.create(
-        ActionListener.class, this, "goToError", "actionCommand"));
+        ActionListener.class, this, "goTo", "actionCommand"));
     buttons.put(value, button);
     return button;
   }
@@ -131,28 +126,8 @@ public class DeadLinkRenderer extends AbstractCellEditor implements
   /**
    * @param location Location to go.
    */
-  public void goToError(String location) {
-    if (textPane != null) {
-      try {
-        String[] locations = location.split(";");
-        if (locations.length > 0) {
-          int startValue = Integer.valueOf(locations[0]);
-          if ((startValue >= 0) && (startValue < textPane.getText().length())) {
-            textPane.setCaretPosition(startValue);
-            textPane.moveCaretPosition(startValue);
-            if (locations.length > 1) {
-              int endValue = Integer.valueOf(locations[1]);
-              if ((endValue >= 0) && (endValue <= textPane.getText().length())) {
-                textPane.moveCaretPosition(endValue);
-              }
-            }
-            textPane.requestFocusInWindow();
-          }
-        }
-      } catch (NumberFormatException e) {
-        //
-      }
-    } else {
+  public void goTo(String location) {
+    if (location != null) {
       Controller.runFullAnalysis(location, null, wiki);
     }
   }

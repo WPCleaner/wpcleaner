@@ -15,7 +15,11 @@ import javax.swing.table.TableColumnModel;
 import javax.swing.text.JTextComponent;
 
 import org.wikipediacleaner.api.constants.EnumWikipedia;
+import org.wikipediacleaner.api.data.contents.Interval;
 import org.wikipediacleaner.gui.swing.component.CopyCellRenderer;
+import org.wikipediacleaner.gui.swing.component.GoToExternalRenderer;
+import org.wikipediacleaner.gui.swing.component.GoToIntervalRenderer;
+import org.wikipediacleaner.gui.swing.component.GoToPageRenderer;
 import org.wikipediacleaner.i18n.GT;
 
 
@@ -41,7 +45,8 @@ public class DeadLinkListTableModel extends AbstractTableModel {
   public final static int COLUMN_END = COLUMN_START + 1;
   public final static int COLUMN_LINK = COLUMN_END + 1;
   public final static int COLUMN_LINK_COPY = COLUMN_LINK + 1;
-  public final static int COLUMN_STATUS = COLUMN_LINK_COPY + 1;
+  public final static int COLUMN_LINK_VIEW = COLUMN_LINK_COPY + 1;
+  public final static int COLUMN_STATUS = COLUMN_LINK_VIEW + 1;
   public final static int COLUMN_STATUS_TEXT = COLUMN_STATUS + 1;
   public final static int COLUMN_GOTO = COLUMN_STATUS_TEXT + 1;
 
@@ -78,9 +83,15 @@ public class DeadLinkListTableModel extends AbstractTableModel {
     column.setMinWidth(30);
     column.setPreferredWidth(30);
     column.setMaxWidth(30);
-    DeadLinkRenderer detectionRenderer = new DeadLinkRenderer(textPane, wiki);
-    column.setCellEditor(detectionRenderer);
-    column.setCellRenderer(detectionRenderer);
+    if (textPane != null) {
+      GoToIntervalRenderer renderer = new GoToIntervalRenderer(textPane);
+      column.setCellEditor(renderer);
+      column.setCellRenderer(renderer);
+    } else {
+      GoToPageRenderer renderer = new GoToPageRenderer(wiki);
+      column.setCellEditor(renderer);
+      column.setCellRenderer(renderer);
+    }
 
     column = model.getColumn(COLUMN_LINK);
     column.setMinWidth(100);
@@ -93,6 +104,14 @@ public class DeadLinkListTableModel extends AbstractTableModel {
     CopyCellRenderer copyRenderer = new CopyCellRenderer(COLUMN_LINK);
     column.setCellEditor(copyRenderer);
     column.setCellRenderer(copyRenderer);
+
+    column = model.getColumn(COLUMN_LINK_VIEW);
+    column.setMinWidth(30);
+    column.setPreferredWidth(30);
+    column.setMaxWidth(30);
+    GoToExternalRenderer viewRenderer = new GoToExternalRenderer();
+    column.setCellEditor(viewRenderer);
+    column.setCellRenderer(viewRenderer);
 
     column = model.getColumn(COLUMN_PAGE);
     column.setMinWidth(100);
@@ -145,9 +164,10 @@ public class DeadLinkListTableModel extends AbstractTableModel {
       case COLUMN_END:
         return (error != null) ? error.getEndIndex() : null;
       case COLUMN_GOTO:
-        return error;
+        return (textPane != null) ? error : (error != null) ? error.getPage() : null;
       case COLUMN_LINK:
       case COLUMN_LINK_COPY:
+      case COLUMN_LINK_VIEW:
         return (error != null) ? error.getLink().getLink() : null;
       case COLUMN_PAGE:
         return (error != null) ? error.getPage() : null;
@@ -170,10 +190,9 @@ public class DeadLinkListTableModel extends AbstractTableModel {
    */
   @Override
   public boolean isCellEditable(int rowIndex, int columnIndex) {
-    if (columnIndex == COLUMN_GOTO) {
-      return true;
-    }
-    if (columnIndex == COLUMN_LINK_COPY) {
+    if ((columnIndex == COLUMN_GOTO) ||
+        (columnIndex == COLUMN_LINK_COPY) ||
+        (columnIndex == COLUMN_LINK_VIEW)) {
       return true;
     }
     return super.isCellEditable(rowIndex, columnIndex);
@@ -194,6 +213,7 @@ public class DeadLinkListTableModel extends AbstractTableModel {
     case COLUMN_LINK:
       return GT._T("Link");
     case COLUMN_LINK_COPY:
+    case COLUMN_LINK_VIEW:
       return "";
     case COLUMN_PAGE:
       return GT._T("Page");
@@ -218,9 +238,10 @@ public class DeadLinkListTableModel extends AbstractTableModel {
     case COLUMN_END:
       return Integer.class;
     case COLUMN_GOTO:
-      return DeadLink.class;
+      return (textPane != null) ? Interval.class : String.class;
     case COLUMN_LINK:
     case COLUMN_LINK_COPY:
+    case COLUMN_LINK_VIEW:
       return String.class;
     case COLUMN_START:
       return Integer.class;

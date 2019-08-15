@@ -11,22 +11,18 @@ package org.wikipediacleaner.gui.swing.linter;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Iterator;
 import java.util.List;
 
 import javax.swing.AbstractAction;
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 import javax.swing.JToolBar;
 import javax.swing.text.JTextComponent;
 
-import org.wikipediacleaner.api.APIException;
-import org.wikipediacleaner.api.APIFactory;
-import org.wikipediacleaner.api.MediaWikiRESTAPI;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
-import org.wikipediacleaner.api.data.LinterCategory;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.dataaccess.PageListProvider;
-import org.wikipediacleaner.api.linter.LinterError;
+import org.wikipediacleaner.api.dataaccess.StaticPageListProvider;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
 import org.wikipediacleaner.gui.swing.basic.Utilities;
 import org.wikipediacleaner.i18n.GT;
@@ -57,7 +53,7 @@ public class ActionLinter extends AbstractAction implements ActionListener {
   /**
    * Create a button for checking an article.
    * 
-   * @param parent Parent component.
+   * @param window Window.
    * @param wiki Wiki.
    * @param title Page title.
    * @param textPane Text pane where the text is.
@@ -65,11 +61,11 @@ public class ActionLinter extends AbstractAction implements ActionListener {
    * @return Button.
    */
   public static JButton createButton(
-      Component parent, EnumWikipedia wiki,
+      BasicWindow window, EnumWikipedia wiki,
       String title, JTextComponent textPane,
       boolean showIcon) {
     JButton button = createInternalButton(showIcon);
-    button.addActionListener(new ActionLinter(parent, wiki, title, textPane));
+    button.addActionListener(new ActionLinter(window, wiki, title, textPane));
     return button;
   }
 
@@ -94,7 +90,7 @@ public class ActionLinter extends AbstractAction implements ActionListener {
   /**
    * Add a button for checking an article.
    * 
-   * @param parent Parent component.
+   * @param window Window.
    * @param toolbar Tool bar.
    * @param wiki Wiki.
    * @param title Page title.
@@ -103,11 +99,11 @@ public class ActionLinter extends AbstractAction implements ActionListener {
    * @return Button.
    */
   public static JButton addButton(
-      Component parent, JToolBar toolbar,
+      BasicWindow window, JToolBar toolbar,
       EnumWikipedia wiki,
       String title, JTextComponent textPane,
       boolean showIcon) {
-    JButton button = createButton(parent, wiki, title, textPane, showIcon);
+    JButton button = createButton(window, wiki, title, textPane, showIcon);
     if ((button != null) && (toolbar != null)) {
       toolbar.add(button);
     }
@@ -136,14 +132,8 @@ public class ActionLinter extends AbstractAction implements ActionListener {
     return button;
   }
 
-  /** Parent component */
-  private final Component parent;
-
   /** Wiki */
   private final EnumWikipedia wiki;
-
-  /** Page title */
-  private final String title;
 
   /** Text pane where the text is */
   private final JTextComponent textPane;
@@ -157,20 +147,18 @@ public class ActionLinter extends AbstractAction implements ActionListener {
   /**
    * Constructor for checking one article.
    * 
-   * @param parent Parent component.
+   * @param window Window.
    * @param wiki Wiki.
    * @param title Title of the page.
    * @param textPane Text pane where the text is.
    */
   private ActionLinter(
-      Component parent, EnumWikipedia wiki,
+      BasicWindow window, EnumWikipedia wiki,
       String title, JTextComponent textPane) {
-    this.parent = parent;
     this.wiki = wiki;
-    this.title = title;
     this.textPane = textPane;
-    this.window = null;
-    this.pageListProvider = null;
+    this.window = window;
+    this.pageListProvider = new StaticPageListProvider(wiki, title);
   }
 
   /**
@@ -183,9 +171,7 @@ public class ActionLinter extends AbstractAction implements ActionListener {
   private ActionLinter(
       BasicWindow window, EnumWikipedia wiki,
       PageListProvider pageListProvider) {
-    this.parent = null;
     this.wiki = wiki;
-    this.title = null;
     this.textPane = null;
     this.window = window;
     this.pageListProvider = pageListProvider;
@@ -199,42 +185,7 @@ public class ActionLinter extends AbstractAction implements ActionListener {
    */
   @Override
   public void actionPerformed(ActionEvent e) {
-    if (title != null) {
-      try {
-        List<LinterError> errors = processOnePage();
-        if (errors == null) {
-          Utilities.displayWarning(
-              parent,
-              GT._T("Unable to retrieve analysis from Linter."));
-          return;
-        }
-        if (errors.isEmpty()) {
-          Utilities.displayInformationMessage(
-              parent,
-              GT._T("No errors are currently detected by Linter."));
-          return;
-        }
-        LinterErrorWindow.createLinterErrorWindow(wiki, errors, textPane);
-      } catch (APIException exception) {
-        Utilities.displayError(parent, exception);
-        return;
-      }
-    } else if (pageListProvider != null) {
-      processPageList();
-    }
-  }
-
-  /**
-   * Check one page.
-   * 
-   * @return List of Linter errors.
-   * @throws APIException In cas of problem with the API.
-   */
-  private List<LinterError> processOnePage() throws APIException {
-    if (title == null) {
-      return null;
-    }
-    return retrieveLinterErrors(wiki, title, textPane.getText());
+    processPageList();
   }
 
   /**
@@ -245,51 +196,17 @@ public class ActionLinter extends AbstractAction implements ActionListener {
       return;
     }
     List<Page> pages = pageListProvider.getPages();
+    Component parent = (window != null) ? window.getParentComponent() : null;
     if ((pages == null) || (pages.isEmpty())) {
+      Utilities.displayError(
+          parent,
+          GT._T("You need to select pages to check for linter errors"));
       return;
     }
-    LinterWorker worker = new LinterWorker(wiki, window, pages);
-    worker.start();
-  }
-
-  /**
-   * Retrieve linter errors for a page.
-   * 
-   * @param wiki Wiki.
-   * @param pageTitle Title of the page.
-   * @param pageText Optional text content of the page.
-   * @return List of linter errors in the page.
-   * @throws APIException
-   */
-  static List<LinterError> retrieveLinterErrors(
-      EnumWikipedia wiki,
-      String pageTitle, String pageText) throws APIException {
-
-    // Retrieve list of errors by calling Linter API
-    MediaWikiRESTAPI api = APIFactory.getRESTAPI();
-    List<LinterError> errors = api.transformWikitextToLint(wiki, pageTitle, pageText);
-    if (errors == null) {
-      return null;
+    int answer = Utilities.displayYesNoWarning(parent, GT._T("Do you want to check for linter errors?"));
+    if (answer == JOptionPane.YES_OPTION) {
+      LinterWorker worker = new LinterWorker(wiki, window, pages, textPane);
+      worker.start();
     }
-
-    // Clean up errors
-    Iterator<LinterError> itErrors = errors.iterator();
-    while (itErrors.hasNext()) {
-      LinterError error = itErrors.next();
-      boolean found = false;
-      List<LinterCategory> categories = wiki.getWikiConfiguration().getLinterCategories();
-      if (categories != null) {
-        for (LinterCategory category : wiki.getWikiConfiguration().getLinterCategories()) {
-          if (category.getCategory().equals(error.getType())) {
-            found = true;
-          }
-        }
-      }
-      if (!found) {
-        itErrors.remove();
-      }
-    }
-
-    return errors;
   }
 }

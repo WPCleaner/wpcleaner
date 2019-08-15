@@ -432,7 +432,7 @@ public class OnePageAnalysisWindow
         getParentComponent(), toolbarButtons, getWikipedia(),
         getPageName(), getTextContents(), true);
     buttonLinter = ActionLinter.addButton(
-        getParentComponent(), toolbarButtons, getWikipedia(),
+        this, toolbarButtons, getWikipedia(),
         getPageName(), getTextContents(), true);
     buttonDeadLink = ActionDeadLink.addButton(
         this, toolbarButtons, getWikipedia(),

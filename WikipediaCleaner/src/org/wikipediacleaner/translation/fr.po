@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2019-08-12 22:26+0200\n"
+"POT-Creation-Date: 2019-08-15 12:58+0200\n"
 "PO-Revision-Date: 2018-01-31 07:52+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: French <fr@li.org>\n"
@@ -1305,7 +1305,7 @@ msgid "Page Id"
 msgstr "Identifiant de page"
 
 #: org/wikipediacleaner/api/data/PageComparator.java:379
-#: org/wikipediacleaner/gui/swing/linter/LinterErrorListTableModel.java:226
+#: org/wikipediacleaner/gui/swing/linter/LinterErrorListTableModel.java:234
 #: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:191
 msgid "Template"
 msgstr "Modèle"
@@ -1913,8 +1913,8 @@ msgid "Save none of them"
 msgstr "Ne mémoriser aucun des deux"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:567
-#: org/wikipediacleaner/gui/swing/deadlink/DeadLinkListTableModel.java:199
-#: org/wikipediacleaner/gui/swing/linter/LinterErrorListTableModel.java:218
+#: org/wikipediacleaner/gui/swing/deadlink/DeadLinkListTableModel.java:219
+#: org/wikipediacleaner/gui/swing/linter/LinterErrorListTableModel.java:226
 #: org/wikipediacleaner/gui/swing/pagelist/PageListTableModel.java:236
 msgid "Page"
 msgstr "Article"
@@ -2471,7 +2471,7 @@ msgid "Disambiguation analysis"
 msgstr "Analyse des homonymies"
 
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:1028
-#: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiContentPanel.java:667
+#: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiContentPanel.java:671
 msgid "A comment is required for sending the page."
 msgstr "Un commentaire est requis pour envoyer cette page."
 
@@ -2958,7 +2958,7 @@ msgid "Checking whitelist for error {0}"
 msgstr "Vérification de la liste de blanche pour l’erreur {0}"
 
 #: org/wikipediacleaner/gui/swing/bot/CWCheckWhiteListsWorker.java:92
-#: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiContentPanel.java:312
+#: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiContentPanel.java:316
 #, java-format
 msgid "The page {0} doesn''t exist on Wikipedia"
 msgstr "La page {0} n’existe pas sur Wikipédia"
@@ -3160,11 +3160,11 @@ msgstr "Aucune erreur n’est actuellement détectée par CheckWiki."
 msgid "Detections"
 msgstr "Détections"
 
-#: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiContentPanel.java:210
+#: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiContentPanel.java:211
 msgid "Mark as already fixed"
 msgstr "Marquer les erreurs comme déjà corrigées"
 
-#: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiContentPanel.java:413
+#: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiContentPanel.java:417
 #, java-format
 msgid ""
 "The error n°{0} hasn''t been found on the page {1}.\n"
@@ -3173,7 +3173,7 @@ msgstr ""
 "L’erreur n°{0} n’a pas été détectée dans la page {1}.\n"
 "Voulez-vous la marquer comme corrigée ?"
 
-#: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiContentPanel.java:423
+#: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiContentPanel.java:427
 #, java-format
 msgid ""
 "The error n°{0} hasn''t been detected in page {1}, but CheckWiki still "
@@ -3182,28 +3182,28 @@ msgstr ""
 "L’erreur n°{0} n’ pas été détectée dans la page {1}, mais CheckWiki la "
 "détecte toujours."
 
-#: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiContentPanel.java:432
+#: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiContentPanel.java:436
 #, java-format
 msgid "The error n°{0} has already been fixed in page {1}."
 msgstr "L’erreur n°{0} a déjà été corrigée dans la page {1}."
 
-#: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiContentPanel.java:578
+#: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiContentPanel.java:582
 #, java-format
 msgid "Do you want to mark {0} as fixed for error n°{1}?"
 msgstr "Marquer l’erreur n° {1} de l’article {0} comme corrigée ?"
 
-#: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiContentPanel.java:591
+#: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiContentPanel.java:595
 #, java-format
 msgid "The error n°{0} is still found {1} time on the page."
 msgid_plural "The error n°{0} is still found {1} times on the page."
 msgstr[0] "L’erreur n° {0} est toujours présente {1} fois dans la page."
 msgstr[1] "L’erreur n° {0} est toujours présente {1} fois dans la page."
 
-#: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiContentPanel.java:596
+#: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiContentPanel.java:600
 msgid "Are you really sure that you want to mark it as fixed ?"
 msgstr "Êtes-vous certain de vouloir la marquer comme corrigée ?"
 
-#: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiContentPanel.java:602
+#: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiContentPanel.java:606
 #, java-format
 msgid ""
 "The error n°{0} is still found on the page.\n"
@@ -3212,7 +3212,7 @@ msgstr ""
 "L’erreur n° {0} est toujours présente dans la page.\n"
 "Êtes-vous certain de vouloir la marquer comme corrigée ?"
 
-#: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiContentPanel.java:614
+#: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiContentPanel.java:618
 msgid ""
 "You have already fixed this error by modifying the page.\n"
 "You should send your modifications, the page will be marked as fixed."
@@ -3537,36 +3537,36 @@ msgstr ""
 "Vous pouvez apprendre comment ajouter d’autres Wikipédia à l’adresse "
 "suivante :"
 
-#: org/wikipediacleaner/gui/swing/deadlink/ActionDeadLink.java:48
+#: org/wikipediacleaner/gui/swing/deadlink/ActionDeadLink.java:49
 #, fuzzy
 msgid "Check dead links"
 msgstr "Vérifier les liens inter-langues"
 
-#: org/wikipediacleaner/gui/swing/deadlink/ActionDeadLink.java:203
+#: org/wikipediacleaner/gui/swing/deadlink/ActionDeadLink.java:204
 msgid "You need to select pages to check for dead links"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/deadlink/ActionDeadLink.java:206
+#: org/wikipediacleaner/gui/swing/deadlink/ActionDeadLink.java:207
 #, fuzzy
 msgid "Do you want to check for dead links?"
 msgstr "Voulez-vous continuer ?"
 
-#: org/wikipediacleaner/gui/swing/deadlink/DeadLinkListTableModel.java:191
-#: org/wikipediacleaner/gui/swing/linter/LinterErrorListTableModel.java:214
+#: org/wikipediacleaner/gui/swing/deadlink/DeadLinkListTableModel.java:210
+#: org/wikipediacleaner/gui/swing/linter/LinterErrorListTableModel.java:222
 msgid "End"
 msgstr "Fin"
 
-#: org/wikipediacleaner/gui/swing/deadlink/DeadLinkListTableModel.java:195
+#: org/wikipediacleaner/gui/swing/deadlink/DeadLinkListTableModel.java:214
 #, fuzzy
 msgid "Link"
 msgstr "Lier à"
 
-#: org/wikipediacleaner/gui/swing/deadlink/DeadLinkListTableModel.java:201
-#: org/wikipediacleaner/gui/swing/linter/LinterErrorListTableModel.java:224
+#: org/wikipediacleaner/gui/swing/deadlink/DeadLinkListTableModel.java:221
+#: org/wikipediacleaner/gui/swing/linter/LinterErrorListTableModel.java:232
 msgid "Start"
 msgstr "Début"
 
-#: org/wikipediacleaner/gui/swing/deadlink/DeadLinkListTableModel.java:205
+#: org/wikipediacleaner/gui/swing/deadlink/DeadLinkListTableModel.java:225
 #, fuzzy
 msgid "Status"
 msgstr "Début"
@@ -3581,44 +3581,53 @@ msgstr "Le problème suivant a été détecté :"
 msgid "Dead links"
 msgstr "Recharger les liens"
 
-#: org/wikipediacleaner/gui/swing/deadlink/DeadLinkWorker.java:82
+#: org/wikipediacleaner/gui/swing/deadlink/DeadLinkWorker.java:80
 msgid "No dead links were found."
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/deadlink/DeadLinkWorker.java:98
-#: org/wikipediacleaner/gui/swing/linter/LinterWorker.java:73
+#: org/wikipediacleaner/gui/swing/deadlink/DeadLinkWorker.java:95
+#: org/wikipediacleaner/gui/swing/linter/LinterWorker.java:85
 #, fuzzy
 msgid "Retrieving page contents"
 msgstr "Récupération du contenu de la page - {0}"
 
-#: org/wikipediacleaner/gui/swing/deadlink/DeadLinkWorker.java:111
-#: org/wikipediacleaner/gui/swing/deadlink/DeadLinkWorker.java:116
-#: org/wikipediacleaner/gui/swing/linter/LinterWorker.java:76
+#: org/wikipediacleaner/gui/swing/deadlink/DeadLinkWorker.java:108
+#: org/wikipediacleaner/gui/swing/deadlink/DeadLinkWorker.java:113
+#: org/wikipediacleaner/gui/swing/linter/LinterWorker.java:93
 #, fuzzy, java-format
 msgid "Analyzing {0}"
 msgstr "Analyse de la page {0}"
 
-#: org/wikipediacleaner/gui/swing/linter/ActionLinter.java:53
+#: org/wikipediacleaner/gui/swing/deadlink/DeadLinkWorker.java:139
+#, java-format
+msgid "Unknown host {0}"
+msgstr ""
+
+#: org/wikipediacleaner/gui/swing/linter/ActionLinter.java:49
 msgid "Check article with Linter"
 msgstr "Vérifier l’article avec Linter"
 
-#: org/wikipediacleaner/gui/swing/linter/ActionLinter.java:208
-msgid "Unable to retrieve analysis from Linter."
-msgstr "Impossible de récupérer l’analyse de Linter"
+#: org/wikipediacleaner/gui/swing/linter/ActionLinter.java:203
+#, fuzzy
+msgid "You need to select pages to check for linter errors"
+msgstr ""
+"Vous devez sélectionner au moins un algorithme pour générer une liste de "
+"pages"
 
-#: org/wikipediacleaner/gui/swing/linter/ActionLinter.java:214
-msgid "No errors are currently detected by Linter."
-msgstr "Aucune erreur détectée par Linter"
+#: org/wikipediacleaner/gui/swing/linter/ActionLinter.java:206
+#, fuzzy
+msgid "Do you want to check for linter errors?"
+msgstr "Voulez-vous continuer ?"
 
-#: org/wikipediacleaner/gui/swing/linter/LinterErrorListTableModel.java:178
+#: org/wikipediacleaner/gui/swing/linter/LinterErrorListTableModel.java:186
 msgid "Multiple templates"
 msgstr "Plusieurs modèles"
 
-#: org/wikipediacleaner/gui/swing/linter/LinterErrorListTableModel.java:220
+#: org/wikipediacleaner/gui/swing/linter/LinterErrorListTableModel.java:228
 msgid "Parameters"
 msgstr "Paramètres"
 
-#: org/wikipediacleaner/gui/swing/linter/LinterErrorListTableModel.java:228
+#: org/wikipediacleaner/gui/swing/linter/LinterErrorListTableModel.java:236
 msgid "Type"
 msgstr "Type"
 
@@ -3629,6 +3638,10 @@ msgstr "Les erreurs suivantes ont été détectées par Linter :"
 #: org/wikipediacleaner/gui/swing/linter/LinterErrorWindow.java:38
 msgid "Errors"
 msgstr "Erreurs"
+
+#: org/wikipediacleaner/gui/swing/linter/LinterWorker.java:70
+msgid "No linter errors were found."
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/menu/AnalysisPageListMenuCreator.java:44
 msgid "Find text"
@@ -4681,6 +4694,12 @@ msgstr "Un nom de référence ne peut pas contenir les caractères suivants : {0
 #, java-format
 msgid "The value cannot contain any of these characters: {0}"
 msgstr "Une valeur ne peut pas contenir les caractères suivants : {0}"
+
+#~ msgid "Unable to retrieve analysis from Linter."
+#~ msgstr "Impossible de récupérer l’analyse de Linter"
+
+#~ msgid "No errors are currently detected by Linter."
+#~ msgstr "Aucune erreur détectée par Linter"
 
 #~ msgid "Retrieving page back links"
 #~ msgstr "Récupération des pages liées"

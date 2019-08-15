@@ -15,6 +15,7 @@ import java.util.List;
 
 import javax.swing.AbstractAction;
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 import javax.swing.JToolBar;
 import javax.swing.text.JTextComponent;
 
@@ -203,8 +204,10 @@ public class ActionDeadLink extends AbstractAction implements ActionListener {
           GT._T("You need to select pages to check for dead links"));
       return;
     }
-    Utilities.displayYesNoWarning(parent, GT._T("Do you want to check for dead links?"));
-    DeadLinkWorker worker = new DeadLinkWorker(wiki, window, pages, textPane);
-    worker.start();
+    int answer = Utilities.displayYesNoWarning(parent, GT._T("Do you want to check for dead links?"));
+    if (answer == JOptionPane.YES_OPTION) {
+      DeadLinkWorker worker = new DeadLinkWorker(wiki, window, pages, textPane);
+      worker.start();
+    }
   }
 }

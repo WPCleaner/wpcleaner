@@ -6,7 +6,7 @@
  */
 
 
-package org.wikipediacleaner.gui.swing.linter;
+package org.wikipediacleaner.gui.swing.component;
 
 import java.awt.Component;
 import java.awt.event.ActionListener;
@@ -21,26 +21,25 @@ import javax.swing.table.TableCellRenderer;
 import javax.swing.text.JTextComponent;
 
 import org.wikipediacleaner.api.constants.EnumWikipedia;
-import org.wikipediacleaner.api.linter.LinterError;
 import org.wikipediacleaner.gui.swing.Controller;
 import org.wikipediacleaner.gui.swing.basic.Utilities;
 import org.wikipediacleaner.images.EnumImageSize;
 
 
 /**
- * Cell renderer and editor for a Linter error.
+ * Cell renderer and editor for a go to button.
  */
-public class LinterErrorRenderer extends AbstractCellEditor implements
+public abstract class GoToRenderer extends AbstractCellEditor implements
     TableCellRenderer, TableCellEditor {
 
   /** Serialization */
-  private static final long serialVersionUID = 2053852173119703420L;
+  private static final long serialVersionUID = -7425915853836707658L;
 
   /** Maps of all the buttons. */
   private HashMap<Object, JButton> buttons;
 
   /** Text pane where the text is. */
-  private final JTextComponent textPane;
+  protected final JTextComponent textPane;
 
   /** Wiki */
   private final EnumWikipedia wiki;
@@ -49,7 +48,7 @@ public class LinterErrorRenderer extends AbstractCellEditor implements
    * @param textPane Text pane where the text is.
    * @param wiki Wiki.
    */
-  public LinterErrorRenderer(JTextComponent textPane, EnumWikipedia wiki) {
+  public GoToRenderer(JTextComponent textPane, EnumWikipedia wiki) {
     buttons = new HashMap<Object, JButton>();
     this.textPane = textPane;
     this.wiki = wiki;
@@ -107,30 +106,35 @@ public class LinterErrorRenderer extends AbstractCellEditor implements
     if (buttons.containsKey(value)) {
       return buttons.get(value);
     }
-    if ((value == null) || !(value instanceof LinterError)) {
+    String actionCommand = constructActionCommand(value);
+    if (actionCommand == null) {
       return null;
     }
-    LinterError error = (LinterError) value;
     JButton button = new JButton(Utilities.getImageIcon(
         (textPane != null) ? "gnome-edit-find.png" : "gnome-system-run.png",
         EnumImageSize.SMALL));
     button.setBorderPainted(false);
     button.setContentAreaFilled(false);
-    button.setActionCommand(
-        (textPane != null) ?
-            Integer.toString(error.getBeginIndex()) + ";" + Integer.toString(error.getEndIndex()) :
-            error.getPage());
+    button.setActionCommand(actionCommand);
     button.setEnabled(true);
     button.addActionListener(EventHandler.create(
-        ActionListener.class, this, "goToError", "actionCommand"));
+        ActionListener.class, this, "goTo", "actionCommand"));
     buttons.put(value, button);
     return button;
   }
 
   /**
+   * Construct the action command.
+   * 
+   * @param value Object.
+   * @return Action command, either begin;end or page name.
+   */
+  protected abstract String constructActionCommand(Object value);
+
+  /**
    * @param location Location to go.
    */
-  public void goToError(String location) {
+  public void goTo(String location) {
     if (textPane != null) {
       try {
         String[] locations = location.split(";");

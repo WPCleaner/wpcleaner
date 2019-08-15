@@ -16,10 +16,12 @@ import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 import javax.swing.text.JTextComponent;
 
-import org.wikipediacleaner.api.check.CheckWikiDetection;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
+import org.wikipediacleaner.api.data.contents.Interval;
 import org.wikipediacleaner.api.linter.LinterError;
 import org.wikipediacleaner.gui.swing.component.CopyCellRenderer;
+import org.wikipediacleaner.gui.swing.component.GoToIntervalRenderer;
+import org.wikipediacleaner.gui.swing.component.GoToPageRenderer;
 import org.wikipediacleaner.i18n.GT;
 
 
@@ -82,9 +84,15 @@ public class LinterErrorListTableModel extends AbstractTableModel {
     column.setMinWidth(30);
     column.setPreferredWidth(30);
     column.setMaxWidth(30);
-    LinterErrorRenderer detectionRenderer = new LinterErrorRenderer(textPane, wiki);
-    column.setCellEditor(detectionRenderer);
-    column.setCellRenderer(detectionRenderer);
+    if (textPane != null) {
+      GoToIntervalRenderer renderer = new GoToIntervalRenderer(textPane);
+      column.setCellEditor(renderer);
+      column.setCellRenderer(renderer);
+    } else {
+      GoToPageRenderer renderer = new GoToPageRenderer(wiki);
+      column.setCellEditor(renderer);
+      column.setCellRenderer(renderer);
+    }
 
     column = model.getColumn(COLUMN_PAGE);
     column.setMinWidth(100);
@@ -148,7 +156,7 @@ public class LinterErrorListTableModel extends AbstractTableModel {
       case COLUMN_END:
         return error.getEndIndex();
       case COLUMN_GOTO:
-        return error;
+        return (textPane != null) ? error : (error != null) ? error.getPage() : null;
       case COLUMN_PAGE:
         return error.getPage();
       case COLUMN_PARAMETERS:
@@ -241,7 +249,7 @@ public class LinterErrorListTableModel extends AbstractTableModel {
     case COLUMN_END:
       return Integer.class;
     case COLUMN_GOTO:
-      return CheckWikiDetection.class;
+      return (textPane != null) ? Interval.class : String.class;
     case COLUMN_PARAMETERS:
     case COLUMN_PARAMETERS_COPY:
       return String.class;
