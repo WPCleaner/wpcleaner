@@ -1,4 +1,4 @@
-Set AdditionalAlgorithms 1 2 46 48 64 106 532 540 543
+Set AdditionalAlgorithms 1 2 46 48 64 106 532 539 540 543
 Set Prefix [[User:WikiCleanerBot#T5|T5_CW#2]]
 FixCheckWiki 2
 Set Prefix [[User:WikiCleanerBot#T5|T5_CW#16]]
