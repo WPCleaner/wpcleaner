@@ -71,7 +71,7 @@ public abstract class RestApiJsonResult extends BasicRestApiResult {
    * 
    * @param properties Properties defining the request.
    * @param path Path to REST API method.
-   * @param param Parametere for REST API method.
+   * @param param Parameter for REST API method.
    * @param maxTry Maximum number of tries.
    * @return Answer of MediaWiki API.
    * @throws APIException Exception thrown by the API.
