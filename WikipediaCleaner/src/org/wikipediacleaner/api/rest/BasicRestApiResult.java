@@ -7,8 +7,6 @@
 
 package org.wikipediacleaner.api.rest;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.util.Map;
 
 import org.apache.commons.httpclient.HttpClient;
@@ -75,18 +73,20 @@ public abstract class BasicRestApiResult implements RestApiResult {
    * 
    * @param properties Properties to drive the API.
    * @param path Path to REST API method.
-   * @param param Parametere for REST API method.
+   * @param param Parameter for REST API method.
    * @return HttpMethod.
    */
   protected HttpMethod createHttpMethod(
       Map<String, String> properties, String path, String param) {
     String encodedPath = path;
-    if (param != null) {
-      try {
+    if ((param != null) && !param.isEmpty()) {
+      encodedPath += "/" + param;
+      // NOTE: Do not encode, doesn't work with titles like Sergueï Chakourov
+      /*try {
         encodedPath += "/" + URLEncoder.encode(param, "UTF8");
       } catch (UnsupportedEncodingException e) {
         // Nothing
-      }
+      }*/
     }
     return HttpUtils.createHttpMethod(
         getWiki().getSettings().getHostURL(true) + "/" + encodedPath,
