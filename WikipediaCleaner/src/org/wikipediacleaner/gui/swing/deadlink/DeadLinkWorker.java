@@ -11,7 +11,9 @@ package org.wikipediacleaner.gui.swing.deadlink;
 import java.io.IOException;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.swing.text.JTextComponent;
 
@@ -101,6 +103,7 @@ public class DeadLinkWorker extends BasicWorker {
       }
       HttpConnectionManager manager = new MultiThreadedHttpConnectionManager();
       HttpClient client = new HttpClient(manager);
+      Map<String, DeadLink> checkedLinks = new HashMap<>();
       for (Page page : pages) {
         if (!shouldContinue()) {
           return errors;
@@ -110,43 +113,53 @@ public class DeadLinkWorker extends BasicWorker {
         if (links != null) {
           for (PageElementExternalLink link : links) {
             String url = link.getLink();
-            setText(GT._T("Analyzing {0}", url));
             DeadLink deadLink = null;
-            HttpMethod method = null;
-            try {
-              method = HttpUtils.createHttpHeadMethod(url, null);
-              int questionIndex = url.indexOf('?');
-              if (questionIndex > 0) {
-                method.setQueryString(url.substring(questionIndex + 1));
+            if (checkedLinks.containsKey(url)) {
+              deadLink = checkedLinks.get(url);
+              if (deadLink != null) {
+                deadLink = new DeadLink(page.getTitle(), link, deadLink.getStatus());
               }
-              method.getParams().setSoTimeout(30000);
-              method.setRequestHeader("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3");
-              method.setRequestHeader("Accept-Encoding", "gzip, deflate");
-              method.setRequestHeader("Accept-Language", "en-US,en");
-              method.setRequestHeader("Cache-Control", "no-cache");
-              method.setRequestHeader("Connection", "keep-alive");
-              method.setRequestHeader("Pragma", "no-cache");
-              method.setRequestHeader("Upgrade-Insecure-Requests", "1");
-              //method.setRequestHeader("Content-Type", "text/html");
-              method.setRequestHeader("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.100 Safari/537.36");
-              int statusCode = client.executeMethod(method);
-              if (statusCode != HttpStatus.SC_OK) {
-                deadLink = new DeadLink(page.getTitle(), link, statusCode);
-              }
-            } catch (IOException e) {
-              log.error("{} when accessing {}: {}", e.getClass().getSimpleName(), url, e.getMessage());
-              if (e instanceof UnknownHostException) {
-                deadLink = new DeadLink(page.getTitle(), link, GT._T("Unknown host {0}", e.getMessage()));
-              } else {
-                deadLink = new DeadLink(page.getTitle(), link, e.getClass().getSimpleName() + ": " + e.getMessage());
-              }
-            } finally {
-              if (method != null) {
-                method.releaseConnection();
+            } else {
+              setText(GT._T("Analyzing {0}", url));
+              HttpMethod method = null;
+              try {
+                method = HttpUtils.createHttpHeadMethod(url, null);
+                int questionIndex = url.indexOf('?');
+                if (questionIndex > 0) {
+                  method.setQueryString(url.substring(questionIndex + 1));
+                }
+                method.getParams().setSoTimeout(30000);
+                method.setRequestHeader("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3");
+                method.setRequestHeader("Accept-Encoding", "gzip, deflate");
+                method.setRequestHeader("Accept-Language", "en-US,en");
+                method.setRequestHeader("Cache-Control", "no-cache");
+                method.setRequestHeader("Connection", "keep-alive");
+                method.setRequestHeader("Pragma", "no-cache");
+                method.setRequestHeader("Upgrade-Insecure-Requests", "1");
+                //method.setRequestHeader("Content-Type", "text/html");
+                method.setRequestHeader("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.100 Safari/537.36");
+                int statusCode = client.executeMethod(method);
+                if (statusCode != HttpStatus.SC_OK) {
+                  deadLink = new DeadLink(page.getTitle(), link, statusCode);
+                }
+              } catch (IOException e) {
+                log.error("{} when accessing {}: {}", e.getClass().getSimpleName(), url, e.getMessage());
+                if (e instanceof UnknownHostException) {
+                  deadLink = new DeadLink(page.getTitle(), link, GT._T("Unknown host {0}", e.getMessage()));
+                } else {
+                  deadLink = new DeadLink(page.getTitle(), link, e.getClass().getSimpleName() + ": " + e.getMessage());
+                }
+              } finally {
+                if (method != null) {
+                  method.releaseConnection();
+                }
               }
             }
             if (deadLink != null) {
               errors.add(deadLink);
+            }
+            if (!checkedLinks.containsKey(url)) {
+              checkedLinks.put(url, deadLink);
             }
           }
         }

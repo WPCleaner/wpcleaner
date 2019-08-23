@@ -126,9 +126,9 @@ public class HttpUtils {
         method.addParameter(key, value);
         first = fillDebugUrl(debugUrl, first, key, value);
       }
-      if (DEBUG_URL && (debugUrl != null)) {
-        debugText(debugUrl.toString());
-      }
+    }
+    if (DEBUG_URL && (debugUrl != null)) {
+      debugText(debugUrl.toString());
     }
     return method;
   }
@@ -166,9 +166,9 @@ public class HttpUtils {
         params.add(new NameValuePair(key, value));
         first = fillDebugUrl(debugUrl, first, key, value);
       }
-      if (DEBUG_URL && (debugUrl != null)) {
-        debugText(debugUrl.toString());
-      }
+    }
+    if (DEBUG_URL && (debugUrl != null)) {
+      debugText(debugUrl.toString());
     }
     NameValuePair[] tmpParams = new NameValuePair[params.size()];
     method.setQueryString(params.toArray(tmpParams));
@@ -197,7 +197,7 @@ public class HttpUtils {
     method.setRequestHeader("Accept-Encoding", "gzip");
 
     // Manager query string
-    StringBuilder debugUrl = (DEBUG_URL) ? new StringBuilder("GET  " + url) : null;
+    StringBuilder debugUrl = (DEBUG_URL) ? new StringBuilder("HEAD " + url) : null;
     List<NameValuePair> params = new ArrayList<NameValuePair>();
     if (properties != null) {
       boolean first = true;
@@ -209,9 +209,9 @@ public class HttpUtils {
         params.add(new NameValuePair(key, value));
         first = fillDebugUrl(debugUrl, first, key, value);
       }
-      if (DEBUG_URL && (debugUrl != null)) {
-        debugText(debugUrl.toString());
-      }
+    }
+    if (DEBUG_URL && (debugUrl != null)) {
+      debugText(debugUrl.toString());
     }
     NameValuePair[] tmpParams = new NameValuePair[params.size()];
     method.setQueryString(params.toArray(tmpParams));
