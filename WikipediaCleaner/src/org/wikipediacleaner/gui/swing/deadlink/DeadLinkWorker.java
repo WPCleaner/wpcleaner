@@ -143,12 +143,15 @@ public class DeadLinkWorker extends BasicWorker {
                   deadLink = new DeadLink(page.getTitle(), link, statusCode);
                 }
               } catch (IOException e) {
-                log.error("{} when accessing {}: {}", e.getClass().getSimpleName(), url, e.getMessage());
                 if (e instanceof UnknownHostException) {
                   deadLink = new DeadLink(page.getTitle(), link, GT._T("Unknown host {0}", e.getMessage()));
                 } else {
+                  log.error("{} when accessing {}: {}", e.getClass().getSimpleName(), url, e.getMessage());
                   deadLink = new DeadLink(page.getTitle(), link, e.getClass().getSimpleName() + ": " + e.getMessage());
                 }
+              } catch (IllegalStateException e) {
+                log.error("{} when accessing {}: {}", e.getClass().getSimpleName(), url, e.getMessage());
+                deadLink = new DeadLink(page.getTitle(), link, e.getClass().getSimpleName() + ": " + e.getMessage());
               } finally {
                 if (method != null) {
                   method.releaseConnection();
