@@ -189,7 +189,12 @@ public class HttpUtils {
       Map<String, String> properties) throws URIException {
 
     // Initialize HEAD Method
-    org.apache.commons.httpclient.URI uri = new org.apache.commons.httpclient.URI(url, false, "UTF8");
+    org.apache.commons.httpclient.URI uri = null;
+    try {
+      uri = new org.apache.commons.httpclient.URI(url, true, "UTF8");
+    } catch (URIException e) {
+      uri = new org.apache.commons.httpclient.URI(url, false, "UTF8");
+    }
     HeadMethod method = new HeadMethod();
     method.setURI(uri);
     method.getParams().setSoTimeout(60000);
