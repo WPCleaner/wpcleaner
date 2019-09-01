@@ -9,6 +9,7 @@
 package org.wikipediacleaner.gui.swing.deadlink;
 
 import java.io.IOException;
+import java.net.SocketException;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -121,40 +122,51 @@ public class DeadLinkWorker extends BasicWorker {
               }
             } else {
               setText(GT._T("Analyzing {0}", url));
-              HttpMethod method = null;
-              try {
-                method = HttpUtils.createHttpHeadMethod(url, null);
-                int questionIndex = url.indexOf('?');
-                if (questionIndex > 0) {
-                  method.setQueryString(url.substring(questionIndex + 1));
-                }
-                method.getParams().setSoTimeout(30000);
-                method.setRequestHeader("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3");
-                method.setRequestHeader("Accept-Encoding", "gzip, deflate");
-                method.setRequestHeader("Accept-Language", "en-US,en");
-                method.setRequestHeader("Cache-Control", "no-cache");
-                method.setRequestHeader("Connection", "keep-alive");
-                method.setRequestHeader("Pragma", "no-cache");
-                method.setRequestHeader("Upgrade-Insecure-Requests", "1");
-                //method.setRequestHeader("Content-Type", "text/html");
-                method.setRequestHeader("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.100 Safari/537.36");
-                int statusCode = client.executeMethod(method);
-                if (statusCode != HttpStatus.SC_OK) {
-                  deadLink = new DeadLink(page.getTitle(), link, statusCode);
-                }
-              } catch (IOException e) {
-                if (e instanceof UnknownHostException) {
-                  deadLink = new DeadLink(page.getTitle(), link, GT._T("Unknown host {0}", e.getMessage()));
-                } else {
+              int count = 0;
+              boolean retry = true;
+              while (retry && (count < 3)) {
+                retry = false;
+                deadLink = null;
+                HttpMethod method = null;
+                try {
+                  method = HttpUtils.createHttpHeadMethod(url, null);
+                  int questionIndex = url.indexOf('?');
+                  if (questionIndex > 0) {
+                    method.setQueryString(url.substring(questionIndex + 1));
+                  }
+                  method.getParams().setSoTimeout(30000);
+                  method.setRequestHeader("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3");
+                  method.setRequestHeader("Accept-Encoding", "gzip, deflate");
+                  method.setRequestHeader("Accept-Language", "en-US,en");
+                  method.setRequestHeader("Cache-Control", "no-cache");
+                  method.setRequestHeader("Connection", "keep-alive");
+                  method.setRequestHeader("Pragma", "no-cache");
+                  method.setRequestHeader("Upgrade-Insecure-Requests", "1");
+                  //method.setRequestHeader("Content-Type", "text/html");
+                  method.setRequestHeader("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.100 Safari/537.36");
+                  int statusCode = client.executeMethod(method);
+                  if (statusCode != HttpStatus.SC_OK) {
+                    deadLink = new DeadLink(page.getTitle(), link, statusCode);
+                  }
+                } catch (IOException e) {
+                  if (e instanceof UnknownHostException) {
+                    deadLink = new DeadLink(page.getTitle(), link, GT._T("Unknown host {0}", e.getMessage()));
+                  } else if (e instanceof SocketException) {
+                    log.warn("{} when accessing {}: {}", e.getClass().getSimpleName(), url, e.getMessage());
+                    deadLink = new DeadLink(page.getTitle(), link, e.getClass().getSimpleName() + ": " + e.getMessage());
+                    retry = true;
+                    count++;
+                  } else {
+                    log.error("{} when accessing {}: {}", e.getClass().getSimpleName(), url, e.getMessage());
+                    deadLink = new DeadLink(page.getTitle(), link, e.getClass().getSimpleName() + ": " + e.getMessage());
+                  }
+                } catch (IllegalStateException e) {
                   log.error("{} when accessing {}: {}", e.getClass().getSimpleName(), url, e.getMessage());
-                  deadLink = new DeadLink(page.getTitle(), link, e.getClass().getSimpleName() + ": " + e.getMessage());
-                }
-              } catch (IllegalStateException e) {
-                log.error("{} when accessing {}: {}", e.getClass().getSimpleName(), url, e.getMessage());
-                deadLink = new DeadLink(page.getTitle(), link, e.getClass().getSimpleName() + ": " + e.getMessage());
-              } finally {
-                if (method != null) {
-                  method.releaseConnection();
+                  deadLink = new DeadLink(page.getTitle(), link, e.getMessage());
+                } finally {
+                  if (method != null) {
+                    method.releaseConnection();
+                  }
                 }
               }
             }
