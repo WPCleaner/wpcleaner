@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2019-09-01 16:27+0200\n"
+"POT-Creation-Date: 2019-09-01 16:49+0200\n"
 "PO-Revision-Date: 2016-08-13 08:51+0000\n"
 "Last-Translator: Crazy1880 <Unknown>\n"
 "Language-Team: German <de@li.org>\n"
@@ -3498,8 +3498,9 @@ msgid "The following errors are currently detected by Linter:"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/linter/LinterErrorWindow.java:38
-msgid "Errors"
-msgstr ""
+#, fuzzy
+msgid "Linter errors"
+msgstr "Kategorien reparieren"
 
 #: org/wikipediacleaner/gui/swing/linter/LinterWorker.java:70
 msgid "No linter errors were found."

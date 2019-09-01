@@ -35,6 +35,6 @@ public class LinterErrorWindow extends PanelWindow {
       final List<LinterError> errors,
       final JTextComponent textPane) {
     JPanel panel = new LinterErrorPanel(wiki, errors, textPane);
-    createPanelWindow("LinterWindow", wiki, LinterErrorWindow.class, GT._T("Errors"), panel);
+    createPanelWindow("LinterWindow", wiki, LinterErrorWindow.class, GT._T("Linter errors"), panel);
   }
 }
