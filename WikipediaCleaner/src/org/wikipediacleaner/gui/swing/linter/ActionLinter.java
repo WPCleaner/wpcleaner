@@ -203,7 +203,7 @@ public class ActionLinter extends AbstractAction implements ActionListener {
           GT._T("You need to select pages to check for linter errors"));
       return;
     }
-    int answer = Utilities.displayYesNoWarning(parent, GT._T("Do you want to check for linter errors?"));
+    int answer = JOptionPane.YES_OPTION; //Utilities.displayYesNoWarning(parent, GT._T("Do you want to check for linter errors?"));
     if (answer == JOptionPane.YES_OPTION) {
       LinterWorker worker = new LinterWorker(wiki, window, pages, textPane);
       worker.start();

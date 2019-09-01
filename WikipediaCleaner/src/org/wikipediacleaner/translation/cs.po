@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2019-08-15 12:58+0200\n"
+"POT-Creation-Date: 2019-09-01 16:27+0200\n"
 "PO-Revision-Date: 2017-03-03 19:31+0000\n"
 "Last-Translator: Matěj S. <matejsuchanek97@gmail.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
@@ -3526,24 +3526,24 @@ msgstr "Byl nalezen následující problém:"
 msgid "Dead links"
 msgstr "Obnovit odkazy"
 
-#: org/wikipediacleaner/gui/swing/deadlink/DeadLinkWorker.java:80
+#: org/wikipediacleaner/gui/swing/deadlink/DeadLinkWorker.java:83
 msgid "No dead links were found."
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/deadlink/DeadLinkWorker.java:95
+#: org/wikipediacleaner/gui/swing/deadlink/DeadLinkWorker.java:98
 #: org/wikipediacleaner/gui/swing/linter/LinterWorker.java:85
 #, fuzzy
 msgid "Retrieving page contents"
 msgstr "Načítám obsah stránky - {0}"
 
-#: org/wikipediacleaner/gui/swing/deadlink/DeadLinkWorker.java:108
-#: org/wikipediacleaner/gui/swing/deadlink/DeadLinkWorker.java:113
+#: org/wikipediacleaner/gui/swing/deadlink/DeadLinkWorker.java:112
+#: org/wikipediacleaner/gui/swing/deadlink/DeadLinkWorker.java:124
 #: org/wikipediacleaner/gui/swing/linter/LinterWorker.java:93
 #, fuzzy, java-format
 msgid "Analyzing {0}"
 msgstr "Analyzuji stránku {0}"
 
-#: org/wikipediacleaner/gui/swing/deadlink/DeadLinkWorker.java:139
+#: org/wikipediacleaner/gui/swing/deadlink/DeadLinkWorker.java:153
 #, java-format
 msgid "Unknown host {0}"
 msgstr ""
@@ -3557,11 +3557,6 @@ msgstr "Zkontrolovat článek pomocí CheckWiki"
 #, fuzzy
 msgid "You need to select pages to check for linter errors"
 msgstr "Musíte vybrat alespoň jeden algoritmus pro vytvoření seznamu"
-
-#: org/wikipediacleaner/gui/swing/linter/ActionLinter.java:206
-#, fuzzy
-msgid "Do you want to check for linter errors?"
-msgstr "Chcete pokračovat?"
 
 #: org/wikipediacleaner/gui/swing/linter/LinterErrorListTableModel.java:186
 #, fuzzy
@@ -4651,6 +4646,10 @@ msgstr "Název reference nemůže obsahovat tyto znaky: {0}"
 #, java-format
 msgid "The value cannot contain any of these characters: {0}"
 msgstr "Hodnota nemůže obsahovat žádný ze znaků: {0}"
+
+#, fuzzy
+#~ msgid "Do you want to check for linter errors?"
+#~ msgstr "Chcete pokračovat?"
 
 #, fuzzy
 #~ msgid "Unable to retrieve analysis from Linter."

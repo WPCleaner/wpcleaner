@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2019-08-15 12:58+0200\n"
+"POT-Creation-Date: 2019-09-01 16:27+0200\n"
 "PO-Revision-Date: 2017-03-03 19:29+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Chinese (Simplified) <zh_CN@li.org>\n"
@@ -3427,24 +3427,24 @@ msgstr "发生了一个未知错误"
 msgid "Dead links"
 msgstr "重新加载链接"
 
-#: org/wikipediacleaner/gui/swing/deadlink/DeadLinkWorker.java:80
+#: org/wikipediacleaner/gui/swing/deadlink/DeadLinkWorker.java:83
 msgid "No dead links were found."
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/deadlink/DeadLinkWorker.java:95
+#: org/wikipediacleaner/gui/swing/deadlink/DeadLinkWorker.java:98
 #: org/wikipediacleaner/gui/swing/linter/LinterWorker.java:85
 #, fuzzy
 msgid "Retrieving page contents"
 msgstr "正在检索内容"
 
-#: org/wikipediacleaner/gui/swing/deadlink/DeadLinkWorker.java:108
-#: org/wikipediacleaner/gui/swing/deadlink/DeadLinkWorker.java:113
+#: org/wikipediacleaner/gui/swing/deadlink/DeadLinkWorker.java:112
+#: org/wikipediacleaner/gui/swing/deadlink/DeadLinkWorker.java:124
 #: org/wikipediacleaner/gui/swing/linter/LinterWorker.java:93
 #, fuzzy, java-format
 msgid "Analyzing {0}"
 msgstr "正在使用{0}"
 
-#: org/wikipediacleaner/gui/swing/deadlink/DeadLinkWorker.java:139
+#: org/wikipediacleaner/gui/swing/deadlink/DeadLinkWorker.java:153
 #, java-format
 msgid "Unknown host {0}"
 msgstr ""
@@ -3456,11 +3456,6 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/linter/ActionLinter.java:203
 msgid "You need to select pages to check for linter errors"
 msgstr ""
-
-#: org/wikipediacleaner/gui/swing/linter/ActionLinter.java:206
-#, fuzzy
-msgid "Do you want to check for linter errors?"
-msgstr "您想为#{1}标记已修复{0}吗"
 
 #: org/wikipediacleaner/gui/swing/linter/LinterErrorListTableModel.java:186
 #, fuzzy
@@ -4480,6 +4475,10 @@ msgstr ""
 #, java-format
 msgid "The value cannot contain any of these characters: {0}"
 msgstr ""
+
+#, fuzzy
+#~ msgid "Do you want to check for linter errors?"
+#~ msgstr "您想为#{1}标记已修复{0}吗"
 
 #, fuzzy
 #~ msgid "Remove formatting element"
