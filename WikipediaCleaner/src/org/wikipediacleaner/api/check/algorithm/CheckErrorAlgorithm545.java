@@ -1,0 +1,92 @@
+/*
+ *  WPCleaner: A tool to help on Wikipedia maintenance tasks.
+ *  Copyright (C) 2013  Nicolas Vervelle
+ *
+ *  See README.txt file for licensing information.
+ */
+
+package org.wikipediacleaner.api.check.algorithm;
+
+import java.util.Collection;
+import java.util.List;
+
+import org.apache.commons.lang3.StringUtils;
+import org.wikipediacleaner.api.check.CheckErrorResult;
+import org.wikipediacleaner.api.constants.WPCConfiguration;
+import org.wikipediacleaner.api.data.PageAnalysis;
+import org.wikipediacleaner.api.data.PageElementTemplate;
+import org.wikipediacleaner.api.data.PageElementTemplate.Parameter;
+
+
+/**
+ * Algorithm for analyzing error 545 of check wikipedia project.
+ * Error 545: Template with deprecated parameter.
+ */
+public class CheckErrorAlgorithm545 extends CheckErrorAlgorithmBase {
+
+  public CheckErrorAlgorithm545() {
+    super("Template with deprecated parameter");
+  }
+
+  /**
+   * Analyze a page to check if errors are present.
+   * 
+   * @param analysis Page analysis.
+   * @param errors Errors found in the page.
+   * @param onlyAutomatic True if analysis could be restricted to errors automatically fixed.
+   * @return Flag indicating if the error was found.
+   */
+  @Override
+  public boolean analyze(
+      PageAnalysis analysis,
+      Collection<CheckErrorResult> errors, boolean onlyAutomatic) {
+    if (analysis == null) {
+      return false;
+    }
+
+    // Retrieve configuration
+    String tmp = getSpecificProperty("templates", true, true, false);
+    if ((tmp == null) || tmp.isEmpty()) {
+      return false;
+    }
+    List<String[]> deprecatedParameters = WPCConfiguration.convertPropertyToStringArrayList(tmp);
+    if ((deprecatedParameters == null) || (deprecatedParameters.isEmpty())) {
+      return false;
+    }
+    
+    // Analyze each template
+    boolean result = false;
+    for (String[] deprecatedParameter : deprecatedParameters) {
+      if ((deprecatedParameter != null) && (deprecatedParameter.length > 1)) {
+  
+        // Retrieve templates
+        String templateName = deprecatedParameter[0];
+        List<PageElementTemplate> templates = analysis.getTemplates(templateName);
+        if ((templates != null) && !templates.isEmpty()) {
+          String parameterName = deprecatedParameter[1];
+          String explanation = (deprecatedParameter.length > 2) ? deprecatedParameter[2] : null;
+          for (PageElementTemplate template : templates) {
+            int paramIndex = template.getParameterIndex(parameterName);
+            if (paramIndex >= 0) {
+              result = true;
+              if (errors == null) {
+                return true;
+              }
+              Parameter param = template.getParameter(paramIndex);
+              if (param != null) {
+                CheckErrorResult errorResult = createCheckErrorResult(analysis, param.getBeginIndex(), param.getEndIndex());
+                if (!StringUtils.isEmpty(explanation)) {
+                  errorResult.addText(explanation);
+                }
+                errorResult.addReplacement("");
+                errors.add(errorResult);
+              }
+            }
+          }
+        }
+      }
+    }
+
+    return result;
+  }
+}
