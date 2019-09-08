@@ -7,14 +7,23 @@
 
 package org.wikipediacleaner.api.check.algorithm;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
+import org.wikipediacleaner.api.API;
+import org.wikipediacleaner.api.APIException;
+import org.wikipediacleaner.api.APIFactory;
 import org.wikipediacleaner.api.check.CheckErrorResult;
+import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.constants.WPCConfiguration;
+import org.wikipediacleaner.api.data.DataManager;
+import org.wikipediacleaner.api.data.Namespace;
+import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementTemplate;
+import org.wikipediacleaner.api.data.Page.RelatedPages;
 import org.wikipediacleaner.api.data.PageElementTemplate.Parameter;
 
 
@@ -87,6 +96,57 @@ public class CheckErrorAlgorithm545 extends CheckErrorAlgorithmBase {
       }
     }
 
+    return result;
+  }
+
+  /**
+   * @return True if the error has a special list of pages.
+   */
+  @Override
+  public boolean hasSpecialList() {
+    List<String> categories = getTrackingCategories();
+    return ((categories != null) && (!categories.isEmpty()));
+  }
+
+  /**
+   * @return Tracking categories.
+   */
+  private List<String> getTrackingCategories() {
+    String tmp = getSpecificProperty("categories", true, true, false);
+    if ((tmp == null) || tmp.isEmpty()) {
+      return null;
+    }
+    return WPCConfiguration.convertPropertyToStringList(tmp, false);
+  }
+
+  /**
+   * Retrieve the list of pages in error.
+   * 
+   * @param wiki Wiki.
+   * @param limit Maximum number of pages to retrieve.
+   * @return List of pages in error.
+   */
+  @Override
+  public List<Page> getSpecialList(EnumWikipedia wiki, int limit) {
+    List<String> categoriesName = getTrackingCategories();
+    if ((categoriesName == null) || (categoriesName.isEmpty())) {
+      return null;
+    }
+    List<Page> result = new ArrayList<>();
+    API api = APIFactory.getAPI();
+    for (String categoryName : categoriesName) {
+      String title = wiki.getWikiConfiguration().getPageTitle(Namespace.CATEGORY, categoryName);
+      Page category = DataManager.getPage(wiki, title, null, null, null);
+      try {
+        api.retrieveCategoryMembers(wiki, category, 0, false, limit);
+        List<Page> tmp = category.getRelatedPages(RelatedPages.CATEGORY_MEMBERS);
+        if (tmp != null) {
+          result.addAll(tmp);
+        }
+      } catch (APIException e) {
+        //
+      }
+    }
     return result;
   }
 }
