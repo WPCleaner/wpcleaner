@@ -12,6 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.wikipediacleaner.api.data.DataManager;
 import org.wikipediacleaner.api.data.Page;
+import org.wikipediacleaner.api.data.PageRedirect;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
@@ -49,6 +50,9 @@ public class PageHandler extends DefaultHandler {
   /** Page id */
   private StringBuilder pageId;
 
+  /** Redirect */
+  private StringBuilder redirect;
+
   /** True when parsing a revision */
   private boolean isInRevision;
 
@@ -76,6 +80,7 @@ public class PageHandler extends DefaultHandler {
     title = new StringBuilder();
     namespace = new StringBuilder();
     pageId = new StringBuilder();
+    redirect = new StringBuilder();
     revisionId = new StringBuilder();
     revisionText = new StringBuilder();
     cleanPageInformation();
@@ -126,6 +131,12 @@ public class PageHandler extends DefaultHandler {
       } else if (qName.equalsIgnoreCase("id")) {
         isInPageId = true;
         pageId.setLength(0);
+      } else if (qName.equalsIgnoreCase("redirect")) {
+        redirect.setLength(0);
+        String tmp = attributes.getValue("title");
+        if (tmp != null) {
+          redirect.append(tmp);
+        }
       } else if (qName.equalsIgnoreCase("revision")) {
         isInRevision = true;
         isInRevisionId = false;
@@ -170,6 +181,11 @@ public class PageHandler extends DefaultHandler {
                 null);
             page.setNamespace(namespace.toString());
             page.setContents(revisionText.toString());
+            if (redirect.length() > 0) {
+              PageRedirect redirects = page.getRedirects();
+              redirects.isRedirect(true);
+              redirects.add(DataManager.getPage(processor.getWiki(), redirect.toString(), null, null, null), null);
+            }
             processor.processPage(page);
           } catch (NumberFormatException e) {
             log.error("Problem in endElement: " + e.getMessage());
@@ -236,6 +252,7 @@ public class PageHandler extends DefaultHandler {
     namespace.setLength(0);
     isInPageId = false;
     pageId.setLength(0);
+    redirect.setLength(0);
     isInRevision = false;
     isInRevisionId = false;
     revisionId.setLength(0);
