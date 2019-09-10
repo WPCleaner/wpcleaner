@@ -37,7 +37,7 @@ public class DeadLink extends IntervalDecorator {
    * @param link External link.
    * @param status HTTP status.
    */
-  public DeadLink(String page, PageElementExternalLink link, int status) {
+  public DeadLink(String page, PageElementExternalLink link, Integer status) {
     super(link);
     this.page = page;
     this.link = link;
