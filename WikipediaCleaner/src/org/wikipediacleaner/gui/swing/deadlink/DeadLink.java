@@ -42,7 +42,7 @@ public class DeadLink extends IntervalDecorator {
     this.page = page;
     this.link = link;
     this.status = status;
-    this.statusText = HttpStatus.getStatusText(status);
+    this.statusText = (status != null) ? HttpStatus.getStatusText(status) : null;
   }
 
   /**
