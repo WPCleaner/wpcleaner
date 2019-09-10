@@ -8,35 +8,41 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2019-09-01 16:49+0200\n"
-"PO-Revision-Date: 2014-09-14 18:17+0000\n"
-"Last-Translator: Nicolas Vervelle <Unknown>\n"
+"PO-Revision-Date: 2019-09-09 17:10+0000\n"
+"Last-Translator: iwean <iwan.novirion@gmail.com>\n"
 "Language-Team: Indonesian <id@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Launchpad-Export-Date: 2014-09-21 06:01+0000\n"
-"X-Generator: Launchpad (build 17196)\n"
+"X-Launchpad-Export-Date: 2019-09-09 19:40+0000\n"
+"X-Generator: Launchpad (build 19044)\n"
 "Language: id\n"
 
 #: org/wikipediacleaner/Version.java:31
 #, java-format
 msgid "{0} extension is now available on all WikiMedia wikis."
-msgstr ""
+msgstr "{0} ekstensi sekarang tersedia di semua wikiMedia wiki."
 
 #: org/wikipediacleaner/Version.java:32
 msgid "It identifies wikitext patterns that must or can be fixed in pages."
 msgstr ""
+"Ini mengidentifikasi pola wikitext yang harus atau dapat diperbaiki di "
+"halaman."
 
 #: org/wikipediacleaner/Version.java:33
 msgid ""
 "It also provides some guidance about what the issues are with those patterns "
 "and how to fix them."
 msgstr ""
+"Ini juga memberikan beberapa panduan tentang apa masalahnya dengan pola-pola "
+"itu dan bagaimana cara memperbaikinya."
 
 #: org/wikipediacleaner/Version.java:35
 msgid "You can help by fixing problems identified by the Linter extension."
 msgstr ""
+"Anda dapat membantu dengan memperbaiki masalah yang diidentifikasi oleh "
+"ekstensi Linter."
 
 #: org/wikipediacleaner/Version.java:36
 #, java-format
@@ -167,14 +173,13 @@ msgid "Updating page {0}"
 msgstr "Pembaharuan halaman {0}"
 
 #: org/wikipediacleaner/api/MediaWiki.java:315
-#, fuzzy, java-format
+#, java-format
 msgid "The page {0} has been modified."
-msgstr "Artikel {0} tidak ada di Wikipedia"
+msgstr ""
 
 #: org/wikipediacleaner/api/MediaWiki.java:316
-#, fuzzy
 msgid "Do yo want to continue?"
-msgstr "Anda ingin lanjutkan ?"
+msgstr ""
 
 #: org/wikipediacleaner/api/ModificationReport.java:76
 #: org/wikipediacleaner/api/ModificationReport.java:104
@@ -183,9 +188,8 @@ msgid "Page {0}:"
 msgstr "Halaman {0}:"
 
 #: org/wikipediacleaner/api/ModificationReport.java:94
-#, fuzzy
 msgid "The following errors have occurred:"
-msgstr "Galat tak dikenal ditemukan"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/CheckError.java:407
 msgid "No available description"
@@ -234,9 +238,8 @@ msgid "Remove {0} namespace from template name"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm002.java:35
-#, fuzzy
 msgid "Fix all incorrect tags"
-msgstr "Perbaiki semua <br/> tag"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm002.java:207
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm002.java:231
@@ -324,14 +327,12 @@ msgid "Six-per-em space"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:311
-#, fuzzy
 msgid "Figure space"
-msgstr "Bersihkan kas"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:312
-#, fuzzy
 msgid "Punctuation space"
-msgstr "Jumlah halaman disambiguasi"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:313
 msgid "Zero-width space"
@@ -374,9 +375,8 @@ msgid "Byte order mark"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:323
-#, fuzzy
 msgid "Object replacement character"
-msgstr "Tidak dapat mengganti karakter [{0}]"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:324
 msgid "Private use area"
@@ -605,18 +605,16 @@ msgstr ""
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm073.java:101
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm107.java:120
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm108.java:91
-#, fuzzy
 msgid "Search as OCLC"
-msgstr "Cari"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm070.java:119
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm072.java:104
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm073.java:104
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm107.java:123
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm108.java:94
-#, fuzzy
 msgid "Search as LCCN"
-msgstr "Cari"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm070.java:193
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm072.java:154
@@ -732,9 +730,9 @@ msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm085.java:281
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm112.java:653
-#, fuzzy, java-format
+#, java-format
 msgid "Use {0}"
-msgstr "Halaman {0}:"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm085.java:317
 msgid "A list of templates that can be used to replace &lt;center&gt; tags"
@@ -786,9 +784,8 @@ msgid "List of possible replacements"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm103.java:30
-#, fuzzy
 msgid "Replace all pipe templates"
-msgstr "Cari pada templat"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm107.java:97
 #, java-format
@@ -801,9 +798,9 @@ msgid "Similar ISSN"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm112.java:630
-#, fuzzy, java-format
+#, java-format
 msgid "Use {0} and {1}"
-msgstr "Halaman {0}:"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm501.java:177
 msgid "Restore original text"
@@ -827,9 +824,8 @@ msgid "Compact link"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm514.java:144
-#, fuzzy
 msgid "References defined by templates."
-msgstr "Cari pada templat"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm518.java:254
 #, java-format
@@ -900,9 +896,8 @@ msgid "A page containing a dump analysis for this error."
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm527.java:127
-#, fuzzy
 msgid "Trim text"
-msgstr "Temukan teks"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm530.java:132
 msgid "View RFC"
@@ -913,14 +908,12 @@ msgid "A list of templates that can't be used inside a reference"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm532.java:35
-#, fuzzy
 msgid "Fix tags"
-msgstr "Perbaiki kategori"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm538.java:28
-#, fuzzy
 msgid "Remove whitespace characters"
-msgstr "Ganti semua karakter kontrol"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm540.java:44
 msgid "Fix bold and italic"
@@ -1274,9 +1267,8 @@ msgid "Link parameter {0} to"
 msgstr "Parameter pranala {0} pada"
 
 #: org/wikipediacleaner/api/execution/AllLinksToPageCallable.java:43
-#, fuzzy
 msgid "Retrieving all links to page"
-msgstr "Kembalikan pranala pada templat"
+msgstr ""
 
 #: org/wikipediacleaner/api/execution/ContentsCallable.java:64
 msgid "Retrieving contents"
@@ -1400,14 +1392,12 @@ msgid "Test automatic replacements"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:295
-#, fuzzy
 msgid "Load replacements"
-msgstr "Simpan perubahan terakhir"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:301
-#, fuzzy
 msgid "Save replacements"
-msgstr "Simpan perubahan terakhir"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:314
 #: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:114
@@ -1512,9 +1502,8 @@ msgid "Select all errors"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:991
-#, fuzzy
 msgid "Select no errors"
-msgstr "Muat ulang galat"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:1016
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiWindow.java:412
@@ -1929,9 +1918,8 @@ msgid "Special lists"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:816
-#, fuzzy
 msgid "Linter categories"
-msgstr "Perbaiki kategori"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:825
 msgid "Generate lists"
@@ -2068,19 +2056,16 @@ msgid "Hits for filter {0}"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1583
-#, fuzzy
 msgid "Without templates"
-msgstr "Kembalikan templat"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1586
-#, fuzzy
 msgid "With templates"
-msgstr "Cari pada templat"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1604
-#, fuzzy
 msgid "All namespaces"
-msgstr "Ruangnama"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1620
 #: org/wikipediacleaner/gui/swing/pagelist/PageListTableModel.java:226
@@ -2500,9 +2485,8 @@ msgid "Displaying templates found"
 msgstr "Tunjukan templat yang ditemukan"
 
 #: org/wikipediacleaner/gui/swing/action/ActionCheckArticle.java:51
-#, fuzzy
 msgid "Check article"
-msgstr "Cari pada templat"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/action/ActionCheckArticle.java:262
 #: org/wikipediacleaner/gui/swing/action/ActionFullAnalysis.java:276
@@ -2512,14 +2496,12 @@ msgstr "Ketik judul artikel untuk melakukan analisa lengkap"
 #: org/wikipediacleaner/gui/swing/action/ActionCheckArticle.java:293
 #: org/wikipediacleaner/gui/swing/action/ActionCheckArticle.java:309
 #: org/wikipediacleaner/gui/swing/worker/CheckArticleWorker.java:52
-#, fuzzy
 msgid "Analysis"
-msgstr "Analisa - {0}"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/action/ActionCheckTemplate.java:41
-#, fuzzy
 msgid "Check template"
-msgstr "Cari pada templat"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/action/ActionCopyText.java:40
 #, fuzzy
@@ -2612,9 +2594,8 @@ msgid "Do you want to update the duplicate arguments warning on talk page?"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/action/ActionUpdateWarning.java:442
-#, fuzzy
 msgid "You must input a page name for updating warnings"
-msgstr "Ketik judul artikel untuk melakukan analisa lengkap"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/action/ActionWatchPage.java:45
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:105
@@ -2931,9 +2912,8 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:220
 #: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:349
-#, fuzzy
 msgid "Analyze dump file"
-msgstr "Periksa artikel"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:228
 msgid "Save selection"
@@ -2944,15 +2924,13 @@ msgid "Load selection"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:277
-#, fuzzy
 msgid "You must select at least one algorithm for fixing errors"
-msgstr "Pilih bahasa sebelum masuk log"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:282
 #: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:332
-#, fuzzy
 msgid "You must select at least one algorithm for listing errors"
-msgstr "Pilih bahasa sebelum masuk log"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:385
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiWindow.java:1096
@@ -2975,9 +2953,9 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/bot/GeneralToolsPanel.java:144
 #: org/wikipediacleaner/gui/swing/bot/GeneralToolsPanel.java:162
-#, fuzzy, java-format
+#, java-format
 msgid "List {0} errors"
-msgstr "Daftar galat yang ditemukan :"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/bot/GeneralToolsPanel.java:171
 msgid "Update duplicate argument warning messages"
@@ -3026,12 +3004,14 @@ msgstr ""
 msgid "{0} page has been analyzed"
 msgid_plural "{0} pages have been analyzed"
 msgstr[0] ""
+msgstr[1] ""
 
 #: org/wikipediacleaner/gui/swing/bot/ListCWWorker.java:498
 #, java-format
 msgid "{0} page has been detected for algorithm {1}"
 msgid_plural "{0} pages have been detected for algorithm {1}"
 msgstr[0] ""
+msgstr[1] ""
 
 #: org/wikipediacleaner/gui/swing/bot/ListCWWorker.java:641
 #, java-format
@@ -3440,19 +3420,16 @@ msgstr "Pranala ke"
 
 #: org/wikipediacleaner/gui/swing/deadlink/DeadLinkListTableModel.java:221
 #: org/wikipediacleaner/gui/swing/linter/LinterErrorListTableModel.java:232
-#, fuzzy
 msgid "Start"
-msgstr "Urutkan"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/deadlink/DeadLinkListTableModel.java:225
-#, fuzzy
 msgid "Status"
-msgstr "Urutkan"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/deadlink/DeadLinkPanel.java:80
-#, fuzzy
 msgid "The following links seem to be dead:"
-msgstr "Galat tak dikenal ditemukan"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/deadlink/DeadLinkWindow.java:37
 #, fuzzy
@@ -3482,19 +3459,16 @@ msgid "Unknown host {0}"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/linter/ActionLinter.java:49
-#, fuzzy
 msgid "Check article with Linter"
-msgstr "Cari pada templat"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/linter/ActionLinter.java:203
-#, fuzzy
 msgid "You need to select pages to check for linter errors"
-msgstr "Pilih bahasa sebelum masuk log"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/linter/LinterErrorListTableModel.java:186
-#, fuzzy
 msgid "Multiple templates"
-msgstr "Kembalikan templat"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/linter/LinterErrorListTableModel.java:228
 msgid "Parameters"
@@ -3509,9 +3483,8 @@ msgid "The following errors are currently detected by Linter:"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/linter/LinterErrorWindow.java:38
-#, fuzzy
 msgid "Linter errors"
-msgstr "Perbaiki kategori"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/linter/LinterWorker.java:70
 msgid "No linter errors were found."
@@ -3805,9 +3778,8 @@ msgid "List items"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:251
-#, fuzzy
 msgid "Table"
-msgstr "Judul"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:257
 msgid "Reference"
@@ -3983,9 +3955,8 @@ msgid "Maximum number of simultaneous analyses :"
 msgstr "Jumlah maksimum analisa serempak :"
 
 #: org/wikipediacleaner/gui/swing/options/LimitOptionsPanel.java:122
-#, fuzzy
 msgid "Maximum number of errors for Linter :"
-msgstr "Jumlah maksimum galat untuk Cek Wikipedia :"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/LimitOptionsPanel.java:139
 msgid "Minimum time between consecutive edits :"
@@ -4168,9 +4139,8 @@ msgid "Backlinks - Main namespace: {0}, All namespaces: {1}"
 msgstr "Pranala - Ruangnama utama: {0}, Semua ruangnama: {1}"
 
 #: org/wikipediacleaner/gui/swing/pagelist/PageListWorker.java:87
-#, fuzzy
 msgid "All articles"
-msgstr "Cari pada templat"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/pagelist/PageListWorker.java:88
 msgid "Articles in main namespace"
@@ -4223,9 +4193,8 @@ msgstr[0] ""
 msgstr[1] ""
 
 #: org/wikipediacleaner/gui/swing/worker/CheckArticleTools.java:104
-#, fuzzy
 msgid "Templates"
-msgstr "Templat"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/worker/CheckArticleTools.java:107
 #, java-format
@@ -4239,9 +4208,9 @@ msgid "Template \"{0}\" has no {1} block defined."
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/worker/CheckArticleTools.java:195
-#, fuzzy, java-format
+#, java-format
 msgid "Template \"{0}\" ({1}-{2})"
-msgstr "Templat dalam {0}"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/worker/CheckArticleTools.java:226
 #, java-format
@@ -4310,6 +4279,7 @@ msgstr ""
 msgid "The following problem has been detected:"
 msgid_plural "The following problems have been detected:"
 msgstr[0] ""
+msgstr[1] ""
 
 #: org/wikipediacleaner/gui/swing/worker/CheckWikiProjectWorker.java:91
 msgid "Sorting errors by priority"
@@ -4408,15 +4378,15 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/worker/UpdateISBNWarningTools.java:259
 #: org/wikipediacleaner/gui/swing/worker/UpdateISSNWarningTools.java:256
-#, fuzzy, java-format
+#, java-format
 msgid "Removing {1} warning - {0}"
-msgstr "Pembaharuan halaman {0}"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/worker/UpdateISBNWarningTools.java:268
 #: org/wikipediacleaner/gui/swing/worker/UpdateISSNWarningTools.java:265
-#, fuzzy, java-format
+#, java-format
 msgid "Updating {1} warning - {0}"
-msgstr "Pembaharuan halaman {0}"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/worker/UpdateISBNWarningWorker.java:88
 #: org/wikipediacleaner/gui/swing/worker/UpdateISSNWarningWorker.java:85
@@ -4515,25 +4485,8 @@ msgstr ""
 msgid "The value cannot contain any of these characters: {0}"
 msgstr ""
 
-#, fuzzy
-#~ msgid "Do you want to check for linter errors?"
-#~ msgstr "Anda ingin lanjutkan ?"
-
-#, fuzzy
-#~ msgid "Remove formatting element"
-#~ msgstr "&Hapus ringkasan halaman"
-
-#~ msgid "Remove <small> tag"
-#~ msgstr "Buang <small> tag"
-
 #~ msgid "Retrieving page back links"
 #~ msgstr "Kembalikan pranala balik"
-
-#~ msgid "Full analysis of redirect"
-#~ msgstr "Analisa lengkap dari pengalihan"
-
-#~ msgid "Disambiguation analysis of redirect"
-#~ msgstr "Analisa disambiguasi dari pengalihan"
 
 #~ msgid "&Close"
 #~ msgstr "&Tutup"
@@ -4639,6 +4592,9 @@ msgstr ""
 #~ msgid "&Next occurrence"
 #~ msgstr "&Selanjutnya ditemukan"
 
+#~ msgid "Disambiguation analysis of redirect"
+#~ msgstr "Analisa disambiguasi dari pengalihan"
+
 #~ msgid "&Send"
 #~ msgstr "&Kirim"
 
@@ -4660,6 +4616,9 @@ msgstr ""
 
 #~ msgid "Possible pages"
 #~ msgstr "Halaman yang mungkin"
+
+#~ msgid "Search"
+#~ msgstr "Cari"
 
 #~ msgid "&Apply only to {0}"
 #~ msgstr "&Terapkan hanya pada {0}"
@@ -4694,6 +4653,9 @@ msgstr ""
 #~ msgid "Mark as Fixed"
 #~ msgstr "Tandai sudah diperbaiki"
 
+#~ msgid "The page {0} doesn't exist on Wikipedia"
+#~ msgstr "Artikel {0} tidak ada di Wikipedia"
+
 #~ msgid ""
 #~ "The error n°{0} is still found in the page.\n"
 #~ "Are you really sure that you want to mark it as fixed ?"
@@ -4714,8 +4676,14 @@ msgstr ""
 #~ msgid "You can read the help on Wikipedia Cleaner at the following URL:"
 #~ msgstr "Silahkan baca bantuan WikiCleaner pada pranala berikut ini :"
 
+#~ msgid "Full analysis of redirect"
+#~ msgstr "Analisa lengkap dari pengalihan"
+
 #~ msgid "Would you like to add this page on your local Watch list ?"
 #~ msgstr "Tambahkan halaman ini pada daftar pantauan lokal anda ?"
+
+#~ msgid "An unknown error occured"
+#~ msgstr "Galat tak dikenal ditemukan"
 
 #~ msgid "An error occured: {0}"
 #~ msgstr "Sebuah galat ditemukan: {0}"
@@ -4768,8 +4736,14 @@ msgstr ""
 #~ msgid "Error {0} detected: Waiting and retrying"
 #~ msgstr "Galat {0} terdeteksi: Tunggu dan coba lagi"
 
+#~ msgid "Fix all <br/> tags"
+#~ msgstr "Perbaiki semua <br/> tag"
+
 #~ msgid "What alternate description would like to use for the image ?"
 #~ msgstr "Deskripsi alternatif apa yang akan digunakan untuk berkas ?"
 
 #~ msgid "What description would like to use for the image ?"
 #~ msgstr "Deskripsi apa yang akan digunakan untuk berkas ?"
+
+#~ msgid "Remove <small> tag"
+#~ msgstr "Buang <small> tag"
