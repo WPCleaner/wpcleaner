@@ -1,0 +1,83 @@
+### Project-specific patterns ###
+WikipediaCleaner/build
+WikipediaCleaner/bin/
+WikipediaCleaner/resources/credentials.txt
+WikipediaCleaner/resources/certificate/WPCleaner.p12
+WikipediaCleaner/resources/certificate/WPCleaner_old.p12
+WikipediaCleaner/resources/wmflabs/id_rsa
+WikipediaCleaner/src/org/wikipediacleaner/translation/tstamp.*.po_
+WikipediaCleaner/src/org/wikipediacleaner/translation/WikiCleaner.tgz
+WikipediaCleaner/src/org/wikipediacleaner/translation/tstamp.WikiCleaner.pot_
+
+### GPG secret keyring (!!!) ###
+secring.*
+
+### Java-related patterns (generic) ###
+# Compiled class file
+*.class
+
+# Log file
+*.log
+
+# BlueJ files
+*.ctxt
+
+# Mobile Tools for Java (J2ME)
+.mtj.tmp/
+
+# Package Files
+*.jar
+*.war
+*.nar
+*.ear
+*.zip
+*.tar.gz
+*.rar
+
+# Virtual machine crash logs (see http://www.java.com/en/download/help/error_hotspot.xml)
+hs_err_pid*
+
+### Local patterns (files from popular IDEs and text editors) ###
+## CudaText
+# Project files
+*.cuda-proj
+
+## Kate
+# Swap files
+.*.kate-swp
+.swp.*
+
+## Sublime Text
+# Caches
+*.tmlanguage.cache
+*.tmPreferences.cache
+*.stTheme.cache
+
+# Workspaces
+*.sublime-workspace
+
+# SFTP configurations/credentials
+sftp-config.json
+
+# Package Control
+Package Control.last-run
+Package Control.ca-list
+Package Control.ca-bundle
+Package Control.system-ca-bundle
+Package Control.cache/
+Package Control.ca-certs/
+Package Control.merged-ca-bundle
+Package Control.user-ca-bundle
+oscrypto-ca-bundle.crt
+bh_unicode_properties.cache
+
+# Sublime-GitHub package (stores user's GitHub token here)
+GitHub.sublime-settings
+
+## Visual Studio Code
+# All but four files are installation-specific
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
