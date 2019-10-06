@@ -64,7 +64,7 @@ public class LinterWorker extends BasicWorker {
     Object result = get();
     if (!(result instanceof Throwable)) {
       if ((errors != null) && !errors.isEmpty()) {
-        LinterErrorWindow.createLinterErrorWindow(getWikipedia(), errors, null);
+        LinterErrorWindow.createLinterErrorWindow(getWikipedia(), errors, textPane);
       } else {
         if (getWindow() != null) {
           getWindow().displayWarning(GT._T("No linter errors were found."));
