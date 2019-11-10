@@ -578,8 +578,8 @@
              token="libs/getdown-launcher.jar"
              value="libs/${WPCleaner.libs.getdown-launcher.jar}" />
     <replace file="${WPCleaner.getdown.dir}/WPCleaner.sh"
-             token="libs/getdown-launcher.jar"
-             value="libs/${WPCleaner.libs.getdown-launcher.jar}" />
+             token="/getdown-launcher.jar"
+             value="/${WPCleaner.libs.getdown-launcher.jar}" />
     <digest appdir="${WPCleaner.getdown.dir}"/>
 
     <!-- ============================================================================================================== -->
