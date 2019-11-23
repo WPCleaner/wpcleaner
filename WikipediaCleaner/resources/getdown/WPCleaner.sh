@@ -54,8 +54,8 @@ if [ -f credentials.txt ]; then
 fi
 
 case $# in
-  0) java "${JAVA_PARAMS}"
+  0) java ${JAVA_PARAMS}
   ;;
-  *) java "${JAVA_PARAMS}" "$@"
+  *) java ${JAVA_PARAMS} $@
   ;;
 esac
