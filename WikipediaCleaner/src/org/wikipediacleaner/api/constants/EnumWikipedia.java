@@ -112,6 +112,7 @@ public enum EnumWikipedia {
   WIKTIONARY_SV(new Wiktionary("sv", "Swedish Wiktionary")),
 
   WIKIQUOTE_CA(new Wikiquote("ca", "Viquidites")),
+  WIKIQUOTE_FR(new Wikiquote("fr", "Wikiquote en français")),
 
   WIKISOURCE_ES(new Wikisource("es", "Wikisource en español")),
   WIKISOURCE_FR(new Wikisource("fr", "Wikisource en français")),
