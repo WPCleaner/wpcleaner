@@ -13,8 +13,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.lang3.tuple.ImmutablePair;
-import org.apache.commons.lang3.tuple.Pair;
+import org.apache.commons.lang3.StringUtils;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.constants.WPCConfiguration;
 import org.wikipediacleaner.api.constants.WPCConfigurationStringList;
@@ -50,33 +49,54 @@ public class PageElementISBNConfiguration {
     }
 
     // Check if the template should be ignored
-    Map<String, List<Pair<String, String>>> ignoreTemplates = version.getIgnoreTemplates();
+    Map<String, List<IgnoreTemplates>> ignoreTemplates = version.getIgnoreTemplates();
     String templateName = Page.normalizeTitle(template.getTemplateName());
-    List<Pair<String, String>> listParams = ignoreTemplates.get(templateName);
+    List<IgnoreTemplates> listParams = ignoreTemplates.get(templateName);
     if (listParams == null) {
       return false;
     }
-    for (Pair<String, String> param : listParams) {
-      if (param.getLeft() != null) {
-        String paramValue = template.getParameterValue(param.getLeft());
-        if (param.getRight() != null) {
-          if ((paramValue != null) &&
-              (paramValue.trim().equals(param.getRight()))) {
-            return true; // Ignore all templates with this name and parameter set to a given value
-          }
-        } else {
-          if (paramValue != null) {
-            return true; // Ignore all templates with this name and parameter present
-          }
-        }
-      } else {
-        return true; // Ignore all templates with this name
+    for (IgnoreTemplates param : listParams) {
+      if (param.shouldIgnoreTemplate(template)) {
+        return true;
       }
     }
 
     return false;
   }
 
+  /**
+   * Tell if a template parameter should be ignored for ISBN.
+   * 
+   * @param template Template to be checked.
+   * @param paramName Parameter name to be checked.
+   * @return True if the template parameter should be ignored.
+   */
+  public boolean shouldIgnoreTemplateParam(PageElementTemplate template, String paramName) {
+
+    // Check parameters
+    if (template == null) {
+      return false;
+    }
+
+    // Check if the template should be ignored
+    Map<String, List<IgnoreTemplates>> ignoreTemplates = version.getIgnoreTemplates();
+    String templateName = Page.normalizeTitle(template.getTemplateName());
+    List<IgnoreTemplates> listParams = ignoreTemplates.get(templateName);
+    if (listParams == null) {
+      return false;
+    }
+    for (IgnoreTemplates param : listParams) {
+      if (param.shouldIgnoreTemplateParam(template, paramName)) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+  /**
+   * Manage configuration.
+   */
   private static class ConfigurationVersion {
 
     /** All versions of configuration */
@@ -86,8 +106,14 @@ public class PageElementISBNConfiguration {
     private final WPCConfiguration config;
 
     /** Templates to be ignored */
-    private final Map<String, List<Pair<String, String>>> ignoreTemplates;
+    private final Map<String, List<IgnoreTemplates>> ignoreTemplates;
 
+    /**
+     * Retrieve configuration for a given version.
+     * 
+     * @param config Configuration.
+     * @return
+     */
     public static ConfigurationVersion getConfigurationVersion(WPCConfiguration config) {
       if ((config == null) || (config.getVersion() < 0)) {
         return null;
@@ -135,12 +161,13 @@ public class PageElementISBNConfiguration {
           String templateName = Page.normalizeTitle(ignoreTemplate[0]);
           String paramName = (ignoreTemplate.length > 1) ? ignoreTemplate[1].trim() : null;
           String paramValue = (ignoreTemplate.length > 2) ? ignoreTemplate[2].trim() : null;
-          List<Pair<String, String>> listParams = ignoreTemplates.get(templateName);
+          String ignoredParam = (ignoreTemplate.length > 3) ? ignoreTemplate[3].trim() : null;
+          List<IgnoreTemplates> listParams = ignoreTemplates.get(templateName);
           if (listParams == null) {
             listParams = new ArrayList<>();
             ignoreTemplates.put(templateName, listParams);
           }
-          listParams.add(new ImmutablePair<String, String>(paramName, paramValue));
+          listParams.add(new IgnoreTemplates(paramName, paramValue, ignoredParam));
         }
       }
     }
@@ -148,8 +175,106 @@ public class PageElementISBNConfiguration {
     /**
      * @return Templates to be ignored.
      */
-    public Map<String, List<Pair<String, String>>> getIgnoreTemplates() {
+    public Map<String, List<IgnoreTemplates>> getIgnoreTemplates() {
       return ignoreTemplates;
+    }
+  }
+
+  /**
+   * Handle templates to be ignored.
+   */
+  private static class IgnoreTemplates {
+
+    /** Parameter name for ignoring template */
+    private final String paramName;
+
+    /** Parameter value for ignoring template */
+    private final String paramValue;
+
+    /** Parameter ignored if the template is not entirely ignored */
+    private final String ignoredParam;
+
+    /**
+     * @param paramName Parameter name for ignoring template.
+     * @param paramValue Parameter value for ignoring template.
+     */
+    public IgnoreTemplates(
+        String paramName,
+        String paramValue,
+        String ignoredParam) {
+      this.paramName = paramName;
+      this.paramValue = paramValue;
+      this.ignoredParam = StringUtils.isNotEmpty(ignoredParam) ? ignoredParam : null;
+    }
+
+    /**
+     * @param template Template to analyze.
+     * @return True if the template should be entirely ignored.
+     */
+    public boolean shouldIgnoreTemplate(PageElementTemplate template) {
+      // Do not ignore the template if only a parameter should be ignored
+      if (ignoredParam != null) {
+        return false;
+      }
+
+      // Ignore all templates with this name if no parameter name is given
+      if (paramName == null) {
+        return true;
+      }
+
+      // Ignore template based on the parameter value
+      String value = template.getParameterValue(paramName);
+      if (paramValue != null) {
+        // Ignore all templates with this name and parameter set to a given value
+        if ((value != null) && (value.trim().equals(paramValue))) {
+          return true;
+        }
+      } else {
+        // Ignore all templates with this name and parameter present
+        if (value != null) {
+          return true;
+        }
+      }
+
+      return false;
+    }
+
+    /**
+     * @param template Template to analyze.
+     * @param name Parameter name to check
+     * @return True if the template should be entirely ignored.
+     */
+    public boolean shouldIgnoreTemplateParam(PageElementTemplate template, String name) {
+      // If the ignored parameter is not set, check only the template
+      if (ignoredParam == null) {
+        return shouldIgnoreTemplate(template);
+      }
+
+      // Check the the ignored parameter is the one to check
+      if (!ignoredParam.equals(name)) {
+        return false;
+      }
+
+      // Ignore all templates with this name if no parameter name is given
+      if (paramName == null) {
+        return true;
+      }
+
+      // Ignore template based on the parameter value
+      String value = template.getParameterValue(paramName);
+      if (paramValue != null) {
+        // Ignore all templates with this name and parameter set to a given value
+        if ((value != null) && (value.trim().equals(paramValue))) {
+          return true;
+        }
+      } else {
+        // Ignore all templates with this name and parameter present
+        if (value != null) {
+          return true;
+        }
+      }
+
+      return false;
     }
   }
 }

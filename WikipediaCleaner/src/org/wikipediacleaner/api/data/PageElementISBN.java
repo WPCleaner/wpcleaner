@@ -502,7 +502,7 @@ public class PageElementISBN extends PageElement {
       }
 
       // Parameter is for an ISBN, analyze its value
-      if (nameOk) {
+      if (nameOk && !isbnConfig.shouldIgnoreTemplateParam(template, paramName)) {
         String paramValue = param.getStrippedValue();
         boolean ok = true;
         boolean hasDigit = false;
