@@ -280,6 +280,12 @@ public class CheckErrorAlgorithm002 extends CheckErrorAlgorithmBase {
           shouldReport = false;
         }
       }
+      if (shouldReport) {
+        if (!PageElementTag.TAG_WIKI_NOWIKI.equals(tagName) &&
+            (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_NOWIKI, beginIndex) != null)) {
+          shouldReport = false;
+        }
+      }
 
       if (shouldReport) {
         if (errors == null) {
