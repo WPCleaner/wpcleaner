@@ -56,6 +56,12 @@ public class CheckErrorAlgorithm546 extends CheckErrorAlgorithmBase {
       return false;
     }
 
+    // Do not report redirections
+    if ((analysis.getPage().getRedirects() != null) &&
+        (analysis.getPage().getRedirects().isRedirect())) {
+      return false;
+    }
+
     // Retrieve configuration
     String tmp = getSpecificProperty("templates", true, true, false);
     if ((tmp != null) && !tmp.isEmpty()) {
