@@ -65,12 +65,30 @@ public class CheckErrorAlgorithm546 extends CheckErrorAlgorithmBase {
     // Retrieve configuration
     String tmp = getSpecificProperty("templates", true, true, false);
     if ((tmp != null) && !tmp.isEmpty()) {
-      List<String> categorizingTemplates = WPCConfiguration.convertPropertyToStringList(tmp);
+      List<String[]> categorizingTemplates = WPCConfiguration.convertPropertyToStringArrayList(tmp);
       if (categorizingTemplates != null) {
-        for (String categorizingTemplate : categorizingTemplates) {
-          List<PageElementTemplate> templates = analysis.getTemplates(categorizingTemplate);
-          if ((templates != null) && !templates.isEmpty()) {
-            return false;
+        for (String[] categorizingTemplate : categorizingTemplates) {
+          if (categorizingTemplate.length > 0) {
+            String templateName = categorizingTemplate[0];
+            List<PageElementTemplate> templates = analysis.getTemplates(templateName);
+            if ((templates != null) && !templates.isEmpty()) {
+              if (categorizingTemplate.length < 2) {
+                return false;
+              }
+              String paramName = categorizingTemplate[1];
+              String paramValue = (categorizingTemplate.length > 2) ? categorizingTemplate[2] : null;
+              for (PageElementTemplate template : templates) {
+                int paramIndex = template.getParameterIndex(paramName);
+                if (paramIndex >= 0) {
+                  if (paramValue == null) {
+                    return false;
+                  }
+                  if (paramValue.equals(template.getParameterValue(paramIndex))) {
+                    return false;
+                  }
+                }
+              }
+            }
           }
         }
       }
