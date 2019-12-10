@@ -247,13 +247,10 @@ public class ListCWWorker extends BasicWorker {
       line.append("* ");
       line.append(PageElementInternalLink.createInternalLink(
           detection.pageName, null));
-      line.append(": ");
       if (detection.notices != null) {
         boolean first = true;
         for (String notice : detection.notices) {
-          if (!first) {
-            line.append(", ");
-          }
+          line.append(first ? ": " : ", ");
           first = false;
           line.append("<nowiki>");
           int index = 0;
