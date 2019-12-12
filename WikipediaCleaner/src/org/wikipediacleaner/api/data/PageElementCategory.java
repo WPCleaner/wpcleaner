@@ -138,11 +138,11 @@ public class PageElementCategory extends PageElement {
       String sort) {
     super(beginIndex, endIndex);
     this.categoryNotTrimmed = category;
-    this.category = (category != null) ? caseSensitive.normalize(category.trim()) : null;
+    this.category = caseSensitive.normalize(CharacterUtils.trim(category));
     this.nameNotTrimmed = name;
-    this.name = (name != null) ? name.trim() : null;
+    this.name = CharacterUtils.trim(name);
     this.sortNotTrimmed = sort;
-    this.sort = (sort != null) ? sort.trim() : null;
+    this.sort = CharacterUtils.trim(sort);
   }
 
   /* (non-Javadoc)

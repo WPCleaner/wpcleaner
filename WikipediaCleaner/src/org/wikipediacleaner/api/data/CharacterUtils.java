@@ -52,6 +52,32 @@ public class CharacterUtils {
     return "" + firstChar + text.substring(1);
   }
 
+  /** Whitespace characters */
+  private final static String WHITESPACE = " \u00A0";
+
+  /**
+   * Trim text with whitespace characters used by MediaWiki.
+   * 
+   * @param text Original text.
+   * @return Trimmed text.
+   */
+  public static String trim(String text) {
+    if ((text == null) || (text.isEmpty())) {
+      return text;
+    }
+    int beginIndex = 0;
+    int endIndex = text.length();
+    while ((beginIndex < endIndex) &&
+           (WHITESPACE.indexOf(text.charAt(beginIndex)) >= 0)) {
+      beginIndex++;
+    }
+    while ((endIndex > beginIndex) &&
+           (WHITESPACE.indexOf(text.charAt(endIndex - 1)) >= 0)) {
+      endIndex--;
+    }
+    return text.substring(beginIndex, endIndex);
+  }
+
   /**
    * Private constructor.
    */

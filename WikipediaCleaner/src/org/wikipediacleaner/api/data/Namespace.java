@@ -135,7 +135,7 @@ public class Namespace implements Comparable<Namespace> {
     if (name == null) {
       return false;
     }
-    name = CharacterUtils.ucFirst(name.trim());
+    name = CharacterUtils.ucFirst(CharacterUtils.trim(name));
     for (String alias : aliases) {
       if (name.equals(alias)) {
         return true;

@@ -109,7 +109,7 @@ public class CheckErrorAlgorithm022 extends CheckErrorAlgorithmBase {
         }
         result = true;
         nameSimple = CharacterUtils.ucFirst(nameSimple);
-        String namespace = category.getCategoryNotTrimmed().trim();
+        String namespace = CharacterUtils.trim(category.getCategoryNotTrimmed());
         CheckErrorResult errorResult = createCheckErrorResult(
             analysis,
             category.getBeginIndex(), category.getEndIndex());
