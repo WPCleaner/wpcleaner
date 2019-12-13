@@ -600,7 +600,9 @@ public class ListCWWorker extends BasicWorker {
                   currentAnalysis.performFullPageAnalysis(analysisTime);
                 }
               }
-              if (currentAnalysis == analysis) {
+              if (Boolean.FALSE.equals(currentPage.isExisting())) {
+                detectionConfirmed = false;
+              } else if (currentAnalysis == analysis) {
                 detectionConfirmed = true;
               } else {
                 errors.clear();
