@@ -99,6 +99,7 @@ public enum EnumWikipedia {
   SQ(new Wikipedia("sq", "Albanian Wikipedia")),
   SV(new Wikipedia("sv", "Swedish Wikipedia")),
   TA(new Wikipedia("ta", "தமிழ் விக்கிப்பீடியா")),
+  TE(new Wikipedia("te", "తెలుగు వికీపీడియా")),
   TR(new Wikipedia("tr", "Turkish Wikipedia")),
   UK(new Wikipedia("uk", "Ukrainian Wikipedia")),
   UR(new Wikipedia("ur", "Urdu Wikipedia", ComponentOrientation.RIGHT_TO_LEFT)),
