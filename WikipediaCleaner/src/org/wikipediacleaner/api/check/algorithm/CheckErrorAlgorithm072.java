@@ -55,7 +55,7 @@ public class CheckErrorAlgorithm072 extends CheckErrorAlgorithmISBN {
     List<PageElementISBN> isbns = analysis.getISBNs();
     for (PageElementISBN isbn : isbns) {
       String number = isbn.getISBN();
-      if ((number != null) && (number.length() == 10)) {
+      if ((number != null) && (number.length() == 10) && isbn.isValid()) {
         char check = Character.toUpperCase(number.charAt(9));
         char computedCheck = Character.toUpperCase(
             PageElementISBN.computeChecksum(number));
