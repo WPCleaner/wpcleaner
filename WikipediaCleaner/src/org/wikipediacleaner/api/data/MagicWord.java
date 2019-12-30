@@ -7,8 +7,10 @@
 
 package org.wikipediacleaner.api.data;
 
-import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 
 /**
@@ -16,21 +18,25 @@ import java.util.List;
  */
 public class MagicWord implements Comparable<MagicWord> {
 
-  /**
-   * Magic word name.
-   */
+  /** Magic word name. */
   private final String name;
 
-  /**
-   * List of magic word aliases.
-   */
+  /** List of magic word aliases. */
   private final List<String> aliases;
 
-  /**
-   * Flag indicating if the name is case sensitive.
-   */
-  private boolean caseSensitive;
+  /** Flag indicating if the name is case sensitive. */
+  private final boolean caseSensitive;
 
+  /** Flag indicating if the magic word is for a function. */
+  private final boolean isFunction;
+
+  /** Flag indicating if the magic word is for a function but change nothing in PST mode (PreSave Transform). */
+  private final boolean isFunctionNotPST;
+
+  /** Flag indicating if the magic word if for an image. */
+  private final boolean isImage;
+
+  // List of known magic words
   public final static String ABBREVIATE                  = "abbreviate";
   public final static String ARTICLE_PATH                = "articlepath";
   public final static String ANCHOR_ENCODE               = "anchorencode";
@@ -242,10 +248,8 @@ public class MagicWord implements Comparable<MagicWord> {
   public final static String USE_LIQUID_THREADS          = "useliquidthreads";
   public final static String USER_TEST_WIKI              = "usertestwiki";
 
-  /**
-   * List of magic words that can be used as variables / functions.
-   */
-  private final static String[] functionMagicWords = {
+  /** List of magic words that can be used as variables / functions. */
+  private final static Set<String> functionMagicWords = new HashSet<>(Arrays.asList(
     MagicWord.ANCHOR_ENCODE,
     MagicWord.BASE_PAGE_NAME,
     MagicWord.BASE_PAGE_NAME_E,
@@ -366,13 +370,14 @@ public class MagicWord implements Comparable<MagicWord> {
     MagicWord.UC,
     MagicWord.UC_FIRST,
     MagicWord.URL_DECODE,
-    MagicWord.URL_ENCODE,
-  };
+    MagicWord.URL_ENCODE));
 
-  /**
-   * List of magic words that can be used in images.
-   */
-  private final static String[] imgMagicWords = {
+  /** List of magic words that can be used as variables / functions but change nothing when parsing in PST mode (PreSave Transform). */
+  private final static Set<String> functionNotPSTMagicWords = new HashSet<>(Arrays.asList(
+      MagicWord.FORMAT_NUM));
+
+  /** List of magic words that can be used in images. */
+  private final static Set<String> imgMagicWords = new HashSet<>(Arrays.asList(
     MagicWord.IMG_ALT,
     MagicWord.IMG_BASELINE,
     MagicWord.IMG_BORDER,
@@ -404,8 +409,7 @@ public class MagicWord implements Comparable<MagicWord> {
     MagicWord.TIMED_MEDIA_NOICON,
     MagicWord.TIMED_MEDIA_NOPLAYER,
     MagicWord.TIMED_MEDIA_STARTTIME,
-    MagicWord.TIMED_MEDIA_THUMBTIME,
-  };
+    MagicWord.TIMED_MEDIA_THUMBTIME));
 
   /**
    * List of magic words that need a # to be used.
@@ -444,6 +448,9 @@ public class MagicWord implements Comparable<MagicWord> {
     this.name = name;
     this.aliases = aliases;
     this.caseSensitive = caseSensitive;
+    this.isFunction = functionMagicWords.contains(name);
+    this.isFunctionNotPST = functionNotPSTMagicWords.contains(name) && functionMagicWords.contains(name);
+    this.isImage = imgMagicWords.contains(name);
   }
 
   /**
@@ -503,25 +510,24 @@ public class MagicWord implements Comparable<MagicWord> {
   }
 
   /**
-   * @return List of magic words that can be used as functions.
+   * @return True if the magic word is for a function.
    */
-  public static List<String> getFunctionMagicWords() {
-    List<String> result = new ArrayList<String>(functionMagicWords.length);
-    for (String magicWord : functionMagicWords) {
-      result.add(magicWord);
-    }
-    return result;
+  public boolean isFunctionMagicWord() {
+    return isFunction;
   }
 
   /**
-   * @return List of magic words that can be used in images.
+   * @return True if the magic word is for a function but change nothing in PST mode (PreSave Transform).
    */
-  public static List<String> getImgMagicWords() {
-    List<String> result = new ArrayList<String>(imgMagicWords.length);
-    for (String magicWord : imgMagicWords) {
-      result.add(magicWord);
-    }
-    return result;
+  public boolean isFunctionNotPSTMagicWord() {
+    return isFunctionNotPST;
+  }
+
+  /**
+   * @return True if the magic word is for an image.
+   */
+  public boolean isImageMagicWord() {
+    return isImage;
   }
 
   /* (non-Javadoc)

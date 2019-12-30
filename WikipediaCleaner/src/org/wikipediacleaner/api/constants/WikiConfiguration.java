@@ -281,11 +281,9 @@ public class WikiConfiguration {
    * @return Matching Magic Word if the text is an alias for a Function Magic Word.
    */
   public MagicWord getFunctionMagicWord(String text, boolean colon) {
-    List<String> functionMagicWords = MagicWord.getFunctionMagicWords();
     String colonText = text + ":";
-    for (String functionMagicWord : functionMagicWords) {
-      MagicWord magicWord = getMagicWordByName(functionMagicWord);
-      if (magicWord != null) {
+    for (MagicWord magicWord : magicWords.values()) {
+      if ((magicWord != null) && (magicWord.isFunctionMagicWord())) {
         if (magicWord.isPossibleAlias(text)) {
           return magicWord;
         }
@@ -302,11 +300,11 @@ public class WikiConfiguration {
    * @return Matching Magic Word if the text is an alias for a Image Magic Word.
    */
   public MagicWord getImgMagicWord(String text) {
-    List<String> imgMagicWords = MagicWord.getImgMagicWords();
-    for (String imgMagicWord : imgMagicWords) {
-      MagicWord magicWord = getMagicWordByName(imgMagicWord);
-      if ((magicWord != null) && magicWord.isPossibleAlias(text)) {
-        return magicWord;
+    for (MagicWord magicWord : magicWords.values()) {
+      if ((magicWord != null) && (magicWord.isImageMagicWord())) {
+        if (magicWord.isPossibleAlias(text)) {
+          return magicWord;
+        }
       }
     }
     return null;

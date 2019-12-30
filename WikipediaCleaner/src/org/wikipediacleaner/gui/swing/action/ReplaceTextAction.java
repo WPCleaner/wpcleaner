@@ -90,7 +90,17 @@ public class ReplaceTextAction extends TextAction {
       try {
         PageAnalysis analysis = page.getAnalysis(localNewText, false);
         List<PageElementFunction> functions = analysis.getFunctions();
-        if ((functions != null) && (!functions.isEmpty())) {
+        boolean parseNeeded = false;
+        if (functions != null) {
+          for (PageElementFunction function : functions) {
+            if (function.getMagicWord() == null) {
+              parseNeeded = true;
+            } else if (!function.getMagicWord().isFunctionNotPSTMagicWord()) {
+              parseNeeded = true;
+            }
+          }
+        }
+        if (parseNeeded) {
           API api = APIFactory.getAPI();
           localNewText = api.parseText(page.getWikipedia(), page.getTitle(), localNewText, false);
         }
