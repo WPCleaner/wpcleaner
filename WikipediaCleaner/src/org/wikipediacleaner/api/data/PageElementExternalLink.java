@@ -31,7 +31,7 @@ public class PageElementExternalLink extends PageElement {
 
   private final static String SEPARATORS_EXCLUDED = " \t\"";
 
-  private final static String SEPARATORS_INCLUDED = "<>|'";
+  private final static String SEPARATORS_INCLUDED = "<>|";
 
   private final static String UNACCEPTABLE = "\n";
 
@@ -108,7 +108,8 @@ public class PageElementExternalLink extends PageElement {
     // Find destination of external link
     int endUrlIndex = beginUrlIndex;
     while ((endUrlIndex < maxLength) &&
-           (fullSeparators.indexOf(contents.charAt(endUrlIndex)) < 0)) {
+           (fullSeparators.indexOf(contents.charAt(endUrlIndex)) < 0) &&
+           (!contents.startsWith("''", endUrlIndex))) {
       endUrlIndex++;
     }
 
