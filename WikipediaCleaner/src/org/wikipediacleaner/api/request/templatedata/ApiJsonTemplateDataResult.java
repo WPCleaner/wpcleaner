@@ -82,7 +82,11 @@ public class ApiJsonTemplateDataResult extends ApiJsonResult implements ApiTempl
     while (itParams.hasNext()) {
       Entry<String, JsonNode> jsonParam = itParams.next();
       JsonNode paramNode = jsonParam.getValue();
-      Parameter param = new Parameter(jsonParam.getKey());
+      String key = jsonParam.getKey();
+      if (key != null) {
+        key = key.trim();
+      }
+      Parameter param = new Parameter(key);
       param.setLabel(createInterfaceText(paramNode.path("label")));
       param.setDescription(createInterfaceText(paramNode.path("description")));
       param.setType(paramNode.path("type").asText());
