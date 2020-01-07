@@ -37,6 +37,13 @@ public class CheckError {
   private static boolean traceTime = false;
 
   /**
+   * @param trace True to force tracing time spent in analysis.
+   */
+  public static void setTraceTime(boolean trace) {
+    traceTime = trace;
+  }
+
+  /**
    * Analyze a page to find error types.
    * 
    * @param algorithms Possible algorithms.

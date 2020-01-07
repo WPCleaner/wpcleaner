@@ -63,6 +63,13 @@ public class PageAnalysis {
   }
 
   /**
+   * @param trace True to force tracing time spent in analysis.
+   */
+  public static void setTraceTime(boolean trace) {
+    traceTime = trace;
+  }
+
+  /**
    * @return Page.
    */
   public Page getPage() {
@@ -631,13 +638,14 @@ public class PageAnalysis {
       if (traceTime) {
         perf = Performance.getInstance(
             "PageAnalysis.level1Analysis", TRACE_THRESHOLD);
+        perf.printStart();
       }
 
       // Update areas of non wiki text
       areas.addComments(getComments());
 
       if (perf != null) {
-        perf.printEnd();
+        perf.printEndAlways();
         perf.release();
       }
     }
@@ -657,6 +665,7 @@ public class PageAnalysis {
       if (traceTime) {
         perf = Performance.getInstance(
             "PageAnalysis.level2Analysis", TRACE_THRESHOLD);
+        perf.printStart();
       }
 
       // Initialize
@@ -712,7 +721,7 @@ public class PageAnalysis {
       areas.addTags(tags);
 
       if (perf != null) {
-        perf.printEnd();
+        perf.printEndAlways();
         perf.release();
       }
     }
@@ -732,6 +741,7 @@ public class PageAnalysis {
       if (traceTime) {
         perf = Performance.getInstance(
             "PageAnalysis.level3Analysis", TRACE_THRESHOLD);
+        perf.printStart();
         perf.startPart();
       }
 
@@ -823,7 +833,7 @@ public class PageAnalysis {
 
       if (perf != null) {
         perf.stopPart("addAreas");
-        perf.printEnd();
+        perf.printEndAlways();
         perf.release();
       }
     }
@@ -843,6 +853,7 @@ public class PageAnalysis {
       if (traceTime) {
         perf = Performance.getInstance(
             "PageAnalysis.level4Analysis", TRACE_THRESHOLD);
+        perf.printStart();
       }
 
       // Go through all the text of the page
@@ -888,7 +899,7 @@ public class PageAnalysis {
       areas.addExternalLinks(externalLinks);
 
       if (perf != null) {
-        perf.printEnd();
+        perf.printEndAlways();
         perf.release();
       }
     }
@@ -908,6 +919,7 @@ public class PageAnalysis {
       if (traceTime) {
         perf = Performance.getInstance(
             "PageAnalysis.level5Analysis", TRACE_THRESHOLD);
+        perf.printStart();
       }
 
       isbns = PageElementISBN.analyzePage(this);
@@ -920,7 +932,7 @@ public class PageAnalysis {
       areas.addRFC(rfcs);
 
       if (perf != null) {
-        perf.printEnd();
+        perf.printEndAlways();
         perf.release();
       }
     }
@@ -940,13 +952,14 @@ public class PageAnalysis {
       if (traceTime) {
         perf = Performance.getInstance(
             "PageAnalysis.level5AnalysisISBN", TRACE_THRESHOLD);
+        perf.printStart();
       }
 
       isbns = PageElementISBN.analyzePage(this);
       areas.addISBN(isbns);
 
       if (perf != null) {
-        perf.printEnd();
+        perf.printEndAlways();
         perf.release();
       }
     }
@@ -966,13 +979,14 @@ public class PageAnalysis {
       if (traceTime) {
         perf = Performance.getInstance(
             "PageAnalysis.level5AnalysisISSN", TRACE_THRESHOLD);
+        perf.printStart();
       }
 
       issns = PageElementISSN.analyzePage(this);
       areas.addISSN(issns);
 
       if (perf != null) {
-        perf.printEnd();
+        perf.printEndAlways();
         perf.release();
       }
     }
@@ -992,13 +1006,14 @@ public class PageAnalysis {
       if (traceTime) {
         perf = Performance.getInstance(
             "PageAnalysis.level5AnalysisPMID", TRACE_THRESHOLD);
+        perf.printStart();
       }
 
       pmids = PageElementPMID.analyzePage(this);
       areas.addPMID(pmids);
 
       if (perf != null) {
-        perf.printEnd();
+        perf.printEndAlways();
         perf.release();
       }
     }
@@ -1018,13 +1033,14 @@ public class PageAnalysis {
       if (traceTime) {
         perf = Performance.getInstance(
             "PageAnalysis.level5AnalysisRFC", TRACE_THRESHOLD);
+        perf.printStart();
       }
 
       rfcs = PageElementRFC.analyzePage(this);
       areas.addRFC(rfcs);
 
       if (perf != null) {
-        perf.printEnd();
+        perf.printEndAlways();
         perf.release();
       }
     }
@@ -1044,6 +1060,7 @@ public class PageAnalysis {
       if (traceTime) {
         perf = Performance.getInstance(
             "PageAnalysis.level6Analysis", TRACE_THRESHOLD);
+        perf.printStart();
       }
 
       tables = PageElementTable.analyzePage(this);
@@ -1054,7 +1071,7 @@ public class PageAnalysis {
       // TODO: areas.addParagraph(paragraphs);
 
       if (perf != null) {
-        perf.printEnd();
+        perf.printEndAlways();
         perf.release();
       }
     }

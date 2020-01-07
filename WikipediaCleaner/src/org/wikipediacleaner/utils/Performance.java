@@ -7,12 +7,14 @@
 
 package org.wikipediacleaner.utils;
 
-import java.io.PrintStream;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 /**
@@ -20,8 +22,8 @@ import java.util.Map.Entry;
  */
 public class Performance {
 
-  /** Stream to write performance information to */
-  private final static PrintStream output = System.err;
+  /** Logger */
+  private final static Logger log = LoggerFactory.getLogger("PERF");
 
   /** Global flag for printing */
   private final static boolean print = true;
@@ -145,13 +147,13 @@ public class Performance {
    */
   private void printMessage(String message) {
     if (print) {
-      output.print(method);
+      StringBuilder text = new StringBuilder();
+      text.append(method);
       if (message != null) {
-        output.print(": ");
-        output.print(message);
+        text.append(": ");
+        text.append(message);
       }
-      output.println();
-      output.flush();
+      log.info(text.toString());
     }
   }
 
@@ -164,15 +166,15 @@ public class Performance {
   @SuppressWarnings("unused")
   private void printTimedMessage(long time, String message) {
     if (print) {
-      output.print(time);
-      output.print(" - ");
-      output.print(method);
+      StringBuilder text = new StringBuilder();
+      text.append(time);
+      text.append(" - ");
+      text.append(method);
       if (message != null) {
-        output.print(": ");
-        output.print(message);
+        text.append(": ");
+        text.append(message);
       }
-      output.println();
-      output.flush();
+      log.info(text.toString());
     }
   }
 
@@ -182,7 +184,7 @@ public class Performance {
   public void printStart() {
     initialTime = currentTime();
     lastTime = initialTime;
-    printMessage(null);
+    printMessage("Begin");
   }
 
   /**
@@ -231,8 +233,16 @@ public class Performance {
   public void printEnd() {
     long time = currentTime();
     if (time > initialTime + threshold) {
-      printDetail("(" + (time - initialTime) + unit + ")");
+      printDetail("End (" + (time - initialTime) + unit + ")");
     }
+  }
+
+  /**
+   * Always print an end message.
+   */
+  public void printEndAlways() {
+    long time = currentTime();
+    printDetail("End (" + (time - initialTime) + unit + ")");
   }
 
   /**
