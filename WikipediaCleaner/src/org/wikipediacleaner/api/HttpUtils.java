@@ -231,13 +231,14 @@ public class HttpUtils {
    * @param first True if it's the first parameter.
    * @param key Name of the parameter.
    * @param value Value of the parameter.
+   * @return True if it's still the first parameter.
    */
   private static boolean fillDebugUrl(StringBuilder debugUrl, boolean first, String key, String value) {
     if (!DEBUG_URL || (debugUrl == null)) {
-      return false;
+      return first;
     }
     if (!DEBUG_SECRET_KEYS && isSecretKey(key)) {
-      return false;
+      return first;
     }
     int start = 0;
     while ((start < value.length()) && Character.isWhitespace(value.charAt(start))) {
@@ -250,7 +251,7 @@ public class HttpUtils {
     debugUrl.append(key);
     debugUrl.append('=');
     debugUrl.append(isSecretKey(key) ? "XXXXX" : value);
-    return true;
+    return false;
   }
 
   /**
