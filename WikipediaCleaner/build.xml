@@ -18,6 +18,7 @@
   <property name="WPCleaner.libs.dir"                     value="libs" />
   <property name="WPCleaner.res.dir"                      value="resources" />
   <property name="WPCleaner.po.dir"                       value="${WPCleaner.src.dir}/org/wikipediacleaner/translation" />
+  <property name="WPCleaner.tasks.dir"                    value="${WPCleaner.res.dir}/tasks" />
 
   <property name="WPCleaner.libs.getdown.version"         value="1.8.2" />
   <property name="WPCleaner.libs.getdown.dir"             value="libs/getdown-${WPCleaner.libs.getdown.version}" />
@@ -522,6 +523,8 @@
 
     <!-- Copy various files -->
     <copy file="${WPCleaner.res.dir}/commons-nuvola-web-broom-64px.png"                  tofile="${WPCleaner.getdown.dir}/WPCleaner.png" />
+    <copy file="${WPCleaner.res.dir}/commons-nuvola-web-broom-64px.png"                  tofile="${WPCleaner.getdown.dir}/commons-nuvola-web-broom-64px.png" />
+    <copy file="${WPCleaner.res.dir}/commons-nuvola-web-broom.png"                       tofile="${WPCleaner.getdown.dir}/commons-nuvola-web-broom.png" />
     <copy file="${WPCleaner.res.dir}/WPCleaner.ico"                                      todir="${WPCleaner.getdown.dir}" />
     <copy file="${WPCleaner.tmp.dir}/WPCleaner.jar"                                      todir="${WPCleaner.getdown.dir}" />
     <copy file="${WPCleaner.libs.getdown.dir}/${WPCleaner.libs.getdown-launcher.jar}"    tofile="${WPCleaner.getdown.dir}/libs/${WPCleaner.libs.getdown-launcher.jar}" />
@@ -562,6 +565,11 @@
     <copy file="${WPCleaner.libs.jdom.dir}/${WPCleaner.libs.xerces.not}"                 tofile="${WPCleaner.getdown.dir}/libs/NOTICE_xerces.txt" />
     <copy todir="${WPCleaner.getdown.dir}">
       <fileset dir="${WPCleaner.res.dir}/getdown">
+        <include name="**/*"/>
+      </fileset>
+    </copy>
+    <copy todir="${WPCleaner.getdown.dir}/tasks">
+      <fileset dir="${WPCleaner.tasks.dir}">
         <include name="**/*"/>
       </fileset>
     </copy>
