@@ -38,6 +38,8 @@ code = logback.xml
 
 # Resources
 resource = WPCleaner.png
+resource = commons-nuvola-web-broom-64px.png
+resource = commons-nuvola-web-broom.png
 resource = WPCleaner.ico
 resource = Bot.bat
 resource = WPCleaner.bat
@@ -60,6 +62,15 @@ resource = libs/LICENSE_jaxen.txt
 resource = libs/LICENSE_xerces.txt
 resource = libs/NOTICE_xerces.txt
 resource = libs/getdown-launcher.jar
+resource = tasks/cswiki/_Weekly.txt
+resource = tasks/enwiki/_Weekly.txt
+resource = tasks/enwiki/ISBN_ISSN.txt
+resource = tasks/enwiki/ListCheckWiki.txt
+resource = tasks/frwiki/_Daily.txt
+resource = tasks/frwiki/_Weekly.txt
+resource = tasks/frwiki/ISBN_ISSN.txt
+resource = tasks/frwiki/ListCheckWiki.txt
+resource = tasks/frwiki/UpdateCheckWiki.txt
 
 # Requirements on Java
 java_min_version = 1070000
