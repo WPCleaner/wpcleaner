@@ -34,6 +34,7 @@ import javax.swing.UIManager.LookAndFeelInfo;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.text.DefaultEditorKit;
 
+import org.slf4j.LoggerFactory;
 import org.wikipediacleaner.api.check.CheckError;
 import org.wikipediacleaner.api.constants.EnumLanguage;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
@@ -54,6 +55,9 @@ import org.wikipediacleaner.utils.ConfigurationValueString;
  */
 public class WikipediaCleaner {
 
+  /** Logger */
+  private final static org.slf4j.Logger log = LoggerFactory.getLogger(WikipediaCleaner.class);
+
   private final static boolean CHECK_EDT = true;
   private final static boolean SYSTEM_LF = true;
 
@@ -61,14 +65,44 @@ public class WikipediaCleaner {
    * @param args Command line arguments.
    */
   public static void main(String[] args) {
+    try {
+      internalMain(args);
+    } catch (Throwable t) {
+      log.error("Error running WPCleaner", t);
+    }
+  }
+
+  /**
+   * @param args Command line arguments
+   */
+  private static void internalMain(String[] args) {
 
     // Log levels
     Logger.getLogger("org.lobobrowser").setLevel(Level.WARNING);
     Logger.getLogger("").setLevel(Level.WARNING);
+    Logger.getLogger("org.wikipediacleaner").setLevel(Level.INFO);
+
+    log.info("Starting WPCleaner");
 
     Configuration config = Configuration.getConfiguration();
     EnumLanguage language = EnumLanguage.getDefaultLanguage();
     Locale.setDefault(language.getLocale());
+
+    // Debugging
+    if (config.getBoolean(null, ConfigurationValueBoolean.DEBUG_DETAILS)) {
+      Logger.getLogger("org.wikipediacleaner").setLevel(Level.FINE);
+      PageAnalysis.setTraceTime(true);
+      CheckError.setTraceTime(true);
+    }
+    if (config.getBoolean(null, ConfigurationValueBoolean.DEBUG_FILE)) {
+      try {
+        Handler fh = new FileHandler("%t/WPCleaner.log");
+        fh.setFormatter(new SimpleFormatter());
+        Logger.getLogger("").addHandler(fh);
+      } catch (Exception e) {
+        // Nothing to do
+      }
+    }
 
     // Check that calls are made in the Event Dispatch Thread
     if (CHECK_EDT) {
@@ -125,22 +159,6 @@ public class WikipediaCleaner {
         im.put(KeyStroke.getKeyStroke(KeyEvent.VK_C, menuShortcut), DefaultEditorKit.copyAction);
         im.put(KeyStroke.getKeyStroke(KeyEvent.VK_V, menuShortcut), DefaultEditorKit.pasteAction);
         im.put(KeyStroke.getKeyStroke(KeyEvent.VK_X, menuShortcut), DefaultEditorKit.cutAction);
-      }
-    }
-
-    // Debugging
-    if (config.getBoolean(null, ConfigurationValueBoolean.DEBUG_DETAILS)) {
-      Logger.getLogger("org.wikipediacleaner").setLevel(Level.FINE);
-      PageAnalysis.setTraceTime(true);
-      CheckError.setTraceTime(true);
-    }
-    if (config.getBoolean(null, ConfigurationValueBoolean.DEBUG_FILE)) {
-      try {
-        Handler fh = new FileHandler("%t/WPCleaner.log");
-        fh.setFormatter(new SimpleFormatter());
-        Logger.getLogger("").addHandler(fh);
-      } catch (Exception e) {
-        // Nothing to do
       }
     }
 
@@ -205,6 +223,7 @@ public class WikipediaCleaner {
     }
 
     // Running
+    log.info("Display main window");
     MainWindow.createMainWindow(wiki, userName, password);
   }
 

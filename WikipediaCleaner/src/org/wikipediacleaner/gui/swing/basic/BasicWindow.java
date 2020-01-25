@@ -38,6 +38,9 @@ import org.wikipediacleaner.utils.StringChecker;
  */
 public abstract class BasicWindow implements ActionListener, PageProvider {
 
+  /** Logger */
+  final static Logger static_log = LoggerFactory.getLogger(BasicWindow.class);
+
   static private ImageIcon icon;
   private JFrame parentComponent;
   private ProgressPanel glassPane;
@@ -81,9 +84,13 @@ public abstract class BasicWindow implements ActionListener, PageProvider {
     SwingUtilities.invokeLater(new Runnable() {
       @Override
       public void run() {
-        internalCreateWindow(
-            name, wikipedia,
-            closeOperation, windowClass, creation);
+        try {
+          internalCreateWindow(
+              name, wikipedia,
+              closeOperation, windowClass, creation);
+        } catch (Throwable t) {
+          static_log.error("Error displaying window " + name, t);
+        }
       }
     });
   }
