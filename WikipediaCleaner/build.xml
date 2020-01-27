@@ -20,7 +20,7 @@
   <property name="WPCleaner.po.dir"                       value="${WPCleaner.src.dir}/org/wikipediacleaner/translation" />
   <property name="WPCleaner.tasks.dir"                    value="${WPCleaner.res.dir}/tasks" />
 
-  <property name="WPCleaner.libs.getdown.version"         value="1.8.2" />
+  <property name="WPCleaner.libs.getdown.version"         value="1.8.6" />
   <property name="WPCleaner.libs.getdown.dir"             value="libs/getdown-${WPCleaner.libs.getdown.version}" />
   <property name="WPCleaner.libs.getdown.jar"             value="getdown-${WPCleaner.libs.getdown.version}.jar" />
   <property name="WPCleaner.libs.getdown-ant.jar"         value="getdown-ant-${WPCleaner.libs.getdown.version}.jar" />

@@ -29,11 +29,11 @@ code = libs/jackson-core.jar
 code = libs/jackson-databind.jar
 code = libs/jaxen.jar
 code = libs/jdom.jar
-code = libs/xercesImpl.jar
-code = libs/xml-apis.jar
 code = libs/logback-classic.jar
 code = libs/logback-core.jar
 code = libs/slf4j-api.jar
+code = libs/xercesImpl.jar
+code = libs/xml-apis.jar
 code = logback.xml
 
 # Resources
@@ -51,6 +51,8 @@ resource = libs/LICENSE_commons-compress.txt
 resource = libs/NOTICE_commons-compress.txt
 resource = libs/LICENSE_commons-httpclient.txt
 resource = libs/NOTICE_commons-httpclient.txt
+resource = libs/LICENSE_commons-io.txt
+resource = libs/NOTICE_commons-io.txt
 resource = libs/LICENSE_commons-lang3.txt
 resource = libs/NOTICE_commons-lang3.txt
 resource = libs/LICENSE_commons-logging.txt
