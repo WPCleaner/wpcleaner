@@ -97,6 +97,7 @@ public enum EnumWikipedia {
   SK(new Wikipedia("sk", "Slovak Wikipedia")),
   SL(new Wikipedia("sl", "Slovenska Wikipedija")),
   SQ(new Wikipedia("sq", "Albanian Wikipedia")),
+  SR(new Wikipedia("sr", "Википедија на српском језику")),
   SV(new Wikipedia("sv", "Swedish Wikipedia")),
   TA(new Wikipedia("ta", "தமிழ் விக்கிப்பீடியா")),
   TE(new Wikipedia("te", "తెలుగు వికీపీడియా")),
