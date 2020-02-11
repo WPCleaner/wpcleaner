@@ -413,100 +413,176 @@ public class CheckErrorAlgorithm069 extends CheckErrorAlgorithmISBN {
 
     boolean result = false;
     for (PageElementInternalLink link : links) {
-      if (PageElementISBN.ISBN_PREFIX.equals(link.getDisplayedText().trim())) {
-        int tmpIndex = link.getEndIndex();
-        String contents = analysis.getContents();
-        boolean shouldContinue = true;
-        while (shouldContinue) {
-          shouldContinue = false;
-          if (tmpIndex < contents.length()) {
-            if (" \u00A0".indexOf(contents.charAt(tmpIndex)) >= 0) {
-              tmpIndex++;
-              shouldContinue = true;
-            } else {
-              for (String separator : FIRST_SEPARATOR) {
-                if (contents.startsWith(separator, tmpIndex)) {
-                  tmpIndex += separator.length();
-                  shouldContinue = true;
-                }
-              }
-            }
-          }
-        }
-        boolean isbnFound = false;
-        int beginISBN = tmpIndex;
-        String suffix = null;
-        if (tmpIndex < contents.length()) {
-          PageElementInternalLink nextLink = null;
-          PageElementExternalLink nextLinkE = null;
-          if (contents.charAt(tmpIndex) == '[') {
-            nextLink = analysis.isInInternalLink(tmpIndex);
-            if (nextLink != null) {
-              int offset = nextLink.getTextOffset();
-              if (offset > 0) {
-                tmpIndex += offset;
-              } else {
-                tmpIndex += 2;
-              }
-            } else {
-              nextLinkE = analysis.isInExternalLink(tmpIndex);
-              if (nextLinkE != null) {
-                int offset = nextLinkE.getTextOffset();
-                if (offset > 0) {
-                  tmpIndex += offset;
-                } else {
-                  tmpIndex += 1;
-                }
-              }
-            }
-          }
-          boolean endFound = false;
-          while (!endFound) {
-            endFound = true;
-            if ((tmpIndex < contents.length()) && (contents.charAt(tmpIndex) == '<')) {
-              PageElementTag tag = analysis.isInTag(tmpIndex);
-              if ((tag != null) && (tag.getBeginIndex() == tmpIndex)) {
-                tmpIndex = tag.getEndIndex();
-                endFound = false;
-              }
-            }
-          }
-          if ((tmpIndex < contents.length()) &&
-              (PageElementISBN.POSSIBLE_CHARACTERS.indexOf(contents.charAt(tmpIndex)) >= 0)) {
-            isbnFound = true;
-          }
-          if (nextLink != null) {
-            suffix = nextLink.getDisplayedText();
-            tmpIndex = nextLink.getEndIndex();
-          } else if (nextLinkE != null) {
-            suffix = nextLinkE.getDisplayedText();
-            tmpIndex = nextLinkE.getEndIndex();
-          } else {
-            while ((tmpIndex < contents.length()) &&
-                   ((PageElementISBN.POSSIBLE_CHARACTERS.indexOf(contents.charAt(tmpIndex)) >= 0) ||
-                    (PageElementISBN.EXTRA_CHARACTERS.indexOf(contents.charAt(tmpIndex)) >= 0 ))) {
-              tmpIndex++;
-            }
-            suffix = contents.substring(beginISBN, tmpIndex);
-          }
-        }
-
-        // Report error
-        if (isbnFound) {
-          if (errors == null) {
-            return true;
-          }
-          result = true;
-          CheckErrorResult errorResult = createCheckErrorResult(
-              analysis, link.getBeginIndex(), tmpIndex);
-          errorResult.addReplacement(
-              PageElementISBN.ISBN_PREFIX + " " + suffix);
-          errors.add(errorResult);
-        }
+      if (analyzeInternalLinkPrefix(analysis, errors, link)) {
+        result = true;
+      } else {
+        result |= analyzeInternalLinkInterwiki(analysis, errors, link);
       }
     }
 
     return result;
+  }
+
+  /**
+   * Analyze an internal link to check if an ISBN error is present due to ISBN prefix.
+   * 
+   * @param analysis Page analysis.
+   * @param errors Errors found in the page.
+   * @param link Internal link to be checked.
+   * @return Flag indicating if the error was found.
+   */
+  private boolean analyzeInternalLinkPrefix(
+      PageAnalysis analysis,
+      Collection<CheckErrorResult> errors,
+      PageElementInternalLink link) {
+
+    // Check for the presence of the ISBN prefix
+    if (!PageElementISBN.ISBN_PREFIX.equals(link.getDisplayedText().trim())) {
+      return false;
+    }
+
+    // Move to the beginning of the potential ISBN value
+    int tmpIndex = link.getEndIndex();
+    String contents = analysis.getContents();
+    boolean shouldContinue = true;
+    while (shouldContinue) {
+      shouldContinue = false;
+      if (tmpIndex < contents.length()) {
+        if (" \u00A0".indexOf(contents.charAt(tmpIndex)) >= 0) {
+          tmpIndex++;
+          shouldContinue = true;
+        } else {
+          for (String separator : FIRST_SEPARATOR) {
+            if (contents.startsWith(separator, tmpIndex)) {
+              tmpIndex += separator.length();
+              shouldContinue = true;
+            }
+          }
+        }
+      }
+    }
+
+    // Analyze if there's an ISBN value
+    boolean isbnFound = false;
+    int beginISBN = tmpIndex;
+    String suffix = null;
+    if (tmpIndex < contents.length()) {
+      PageElementInternalLink nextLink = null;
+      PageElementExternalLink nextLinkE = null;
+      if (contents.charAt(tmpIndex) == '[') {
+        nextLink = analysis.isInInternalLink(tmpIndex);
+        if (nextLink != null) {
+          int offset = nextLink.getTextOffset();
+          if (offset > 0) {
+            tmpIndex += offset;
+          } else {
+            tmpIndex += 2;
+          }
+        } else {
+          nextLinkE = analysis.isInExternalLink(tmpIndex);
+          if (nextLinkE != null) {
+            int offset = nextLinkE.getTextOffset();
+            if (offset > 0) {
+              tmpIndex += offset;
+            } else {
+              tmpIndex += 1;
+            }
+          }
+        }
+      }
+      boolean endFound = false;
+      while (!endFound) {
+        endFound = true;
+        if ((tmpIndex < contents.length()) && (contents.charAt(tmpIndex) == '<')) {
+          PageElementTag tag = analysis.isInTag(tmpIndex);
+          if ((tag != null) && (tag.getBeginIndex() == tmpIndex)) {
+            tmpIndex = tag.getEndIndex();
+            endFound = false;
+          }
+        }
+      }
+      if ((tmpIndex < contents.length()) &&
+          (PageElementISBN.POSSIBLE_CHARACTERS.indexOf(contents.charAt(tmpIndex)) >= 0)) {
+        isbnFound = true;
+      }
+      if (nextLink != null) {
+        suffix = nextLink.getDisplayedText();
+        tmpIndex = nextLink.getEndIndex();
+      } else if (nextLinkE != null) {
+        suffix = nextLinkE.getDisplayedText();
+        tmpIndex = nextLinkE.getEndIndex();
+      } else {
+        while ((tmpIndex < contents.length()) &&
+               ((PageElementISBN.POSSIBLE_CHARACTERS.indexOf(contents.charAt(tmpIndex)) >= 0) ||
+                (PageElementISBN.EXTRA_CHARACTERS.indexOf(contents.charAt(tmpIndex)) >= 0 ))) {
+          tmpIndex++;
+        }
+        suffix = contents.substring(beginISBN, tmpIndex);
+      }
+    }
+    if (!isbnFound) {
+      return false;
+    }
+
+    // Report error
+    if (errors == null) {
+      return true;
+    }
+    CheckErrorResult errorResult = createCheckErrorResult(
+        analysis, link.getBeginIndex(), tmpIndex);
+    errorResult.addReplacement(
+        PageElementISBN.ISBN_PREFIX + " " + suffix);
+    errors.add(errorResult);
+    return true;
+  }
+
+  /**
+   * Analyze an internal link to check if an ISBN error is present due to similarity with an interwiki link.
+   * 
+   * @param analysis Page analysis.
+   * @param errors Errors found in the page.
+   * @param link Internal link to be checked.
+   * @return Flag indicating if the error was found.
+   */
+  private boolean analyzeInternalLinkInterwiki(
+      PageAnalysis analysis,
+      Collection<CheckErrorResult> errors,
+      PageElementInternalLink link) {
+
+    // Check that the target of the links contains a name space separator.
+    String target = link.getLink();
+    int colonIndex = target.indexOf(':');
+    if (colonIndex < 0) {
+      return false;
+    }
+
+    // Check each pair Special/Book sources to see if it matches
+    String prefix = target.substring(0, colonIndex);
+    String suffix = target.substring(colonIndex + 1);
+    int slashIndex = suffix.indexOf('/');
+    String suffix2 = (slashIndex > 0) ? suffix.substring(0, slashIndex) : suffix;
+    for (Pair<Set<String>, Set<String>> bookSource : BOOK_SOURCES.values()) {
+      boolean prefixFound = false;
+      for (String possiblePrefix : bookSource.getLeft()) {
+        prefixFound |= Page.areSameTitle(prefix, possiblePrefix);
+      }
+      if (prefixFound) {
+        for (String possibleSuffix : bookSource.getRight()) {
+          if (Page.areSameTitle(suffix, possibleSuffix) ||
+              Page.areSameTitle(suffix2, possibleSuffix)) {
+            if (errors == null) {
+              return true;
+            }
+            CheckErrorResult errorResult  = createCheckErrorResult(analysis, link.getBeginIndex(), link.getEndIndex());
+            errorResult.addReplacement(link.getDisplayedText());
+            errors.add(errorResult);
+            return true;
+          }
+        }
+      }
+    }
+
+    return false;
   }
 
   /**
@@ -684,6 +760,9 @@ public class CheckErrorAlgorithm069 extends CheckErrorAlgorithmISBN {
             result = true;
             CheckErrorResult errorResult = createCheckErrorResult(
                 analysis, iwLink.getBeginIndex(), iwLink.getEndIndex());
+            if (iwLink.getText() != null) {
+              errorResult.addReplacement(iwLink.getText());
+            }
             errors.add(errorResult);
           }
         }
