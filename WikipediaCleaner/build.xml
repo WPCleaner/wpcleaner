@@ -112,7 +112,7 @@
   <property name="WPCleaner.libs.jars"
             value="${WPCleaner.libs.various.jars} ${WPCleaner.libs.jdom.jars}" />
 
-  <property name="all.languages" value="ast,az,bn,cs,da,de,el,en_GB,eo,es,fa,fr,gl,he,hu,id,is,it,ja,ko,mr,ms,nb,nl,oc,pl,ps,pt_BR,ru,sv,tr,uk,ur,zh_CN" />
+  <property name="all.languages" value="ast,az,bn,ckb,cs,da,de,el,en_GB,eo,es,fa,fr,gl,he,hu,id,is,it,ja,ko,mr,ms,nb,nl,oc,pl,ps,pt_BR,ru,sv,tr,uk,ur,zh_CN" />
 
   <!-- NOTE:
        gettext.path can be used if gettext tools are not in the path

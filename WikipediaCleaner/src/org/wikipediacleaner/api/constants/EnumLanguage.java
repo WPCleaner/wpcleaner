@@ -23,6 +23,7 @@ public enum EnumLanguage {
   AST  (new Locale("ast")     , "Asturian"),
   AZ   (new Locale("az")      , "Azerbaijani"),
   BN   (new Locale("bn")      , "Bengali"),
+  CKB  (new Locale("ckb")     , "Kurdish (Sorani)"),
   CS   (new Locale("cs")      , "Czech"),
   DA   (new Locale("da")      , "Danish"),
   DE   (Locale.GERMAN         , "German"),
