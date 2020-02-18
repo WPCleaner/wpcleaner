@@ -54,6 +54,7 @@ public enum EnumWikipedia {
   BG(new Wikipedia("bg", "Българоезична Уикипедия")),
   BN(new Wikipedia("bn", "Bengali Wikipedia")),
   CA(new Wikipedia("ca", "Viquipèdia en català")),
+  CKB(new Wikipedia("ckb", "Kurdish Sorani Wikipedia")),
   CS(new Wikipedia("cs", "Czech Wikipedia")),
   CY(new Wikipedia("cy", "Welsh Wikipedia")),
   DA(new Wikipedia("da", "Danish Wikipedia")),
