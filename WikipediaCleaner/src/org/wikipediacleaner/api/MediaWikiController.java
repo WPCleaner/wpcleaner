@@ -146,6 +146,24 @@ public abstract class MediaWikiController implements MediaWikiListener {
   }
 
   /**
+   * @return The result of the first remaining tasks if it is completed.
+   */
+  protected Future<?> getFirstResultIfDone() {
+    if (hasRemainingTask()) {
+      synchronized (results) {
+        if (!results.isEmpty()) {
+          Future<?> result = results.get(0);
+          if (result.isDone()) {
+            results.remove(result);
+            return result;
+          }
+        }
+      }
+    }
+    return null;
+  }
+
+  /**
    * @return The result of one of the completed remaining tasks.
    */
   protected Future<?> getNextDoneResult() {

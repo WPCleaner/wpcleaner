@@ -194,6 +194,7 @@ public class ListCWWorker extends BasicWorker {
         // Nothing to do
       }
     }
+    logCW.info("Beginning of result output");
     for (AlgorithmInformation algorithm : selectedAlgorithms) {
       Map<String, Detection> pages = algorithm.getDetections();
       if (pages == null) {
@@ -201,6 +202,7 @@ public class ListCWWorker extends BasicWorker {
       }
       outputResult(algorithm.algorithm, pages.values());
     }
+    logCW.info("End of result output");
     reportProgress();
 
     return null;
@@ -521,15 +523,18 @@ public class ListCWWorker extends BasicWorker {
      */
     @Override
     public void addTask(Callable<?> task) {
-      hasFinished(); // To clean up done tasks
+      // hasFinished(); // To clean up done tasks
       super.addTask(task);
+      while (getFirstResultIfDone() != null) {
+        // Do nothing, done result is simply removed from the list of tasks to clean up done tasks
+      }
     }
 
     /**
      * @return True if all tasks are completed.
      */
     public boolean hasFinished() {
-      if (hasRemainingTask()) {
+      while (hasRemainingTask()) {
         Future<?> result = getNextDoneResult();
         if (result == null) {
           return false;
