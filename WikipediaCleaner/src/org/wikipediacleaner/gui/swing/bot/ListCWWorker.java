@@ -535,7 +535,7 @@ public class ListCWWorker extends BasicWorker {
      */
     public boolean hasFinished() {
       while (hasRemainingTask()) {
-        Future<?> result = getNextDoneResult();
+        Future<?> result = getFirstResultIfDone();
         if (result == null) {
           return false;
         }

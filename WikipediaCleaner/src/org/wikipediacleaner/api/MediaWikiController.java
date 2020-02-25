@@ -15,6 +15,8 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
@@ -29,6 +31,7 @@ import org.wikipediacleaner.utils.NamedThreadFactory;
 public abstract class MediaWikiController implements MediaWikiListener {
 
   static private ExecutorService staticExecutor;
+  static private int maxTasks = Integer.MAX_VALUE;
 
   private final MediaWikiListener listener;
   private final ExecutorService executor;
@@ -54,11 +57,21 @@ public abstract class MediaWikiController implements MediaWikiListener {
       int nThreads = config.getInt(
           null,
           ConfigurationValueInteger.INTERROG_THREAD);
-      staticExecutor = Executors.newFixedThreadPool(
-          nThreads,
+      staticExecutor = new ThreadPoolExecutor(
+          nThreads, nThreads,
+          0L, TimeUnit.MILLISECONDS,
+          new LinkedBlockingQueue<Runnable>(maxTasks),
           new NamedThreadFactory(Executors.defaultThreadFactory(), "MW-{0}"));
     }
     return staticExecutor;
+  }
+
+  /**
+   * @param maxTasks Maximum number of tasks waiting in the executor.
+   *                 If this maximum is reached, adding new tasks blocks until previous tasks are finished.
+   */
+  static public void setMaxTasks(int maxTasks) {
+    MediaWikiController.maxTasks = maxTasks;
   }
 
   /**
