@@ -31,7 +31,6 @@ import org.wikipediacleaner.utils.NamedThreadFactory;
 public abstract class MediaWikiController implements MediaWikiListener {
 
   static private ExecutorService staticExecutor;
-  static private int maxTasks = Integer.MAX_VALUE;
 
   private final MediaWikiListener listener;
   private final ExecutorService executor;
@@ -60,18 +59,10 @@ public abstract class MediaWikiController implements MediaWikiListener {
       staticExecutor = new ThreadPoolExecutor(
           nThreads, nThreads,
           0L, TimeUnit.MILLISECONDS,
-          new LinkedBlockingQueue<Runnable>(maxTasks),
+          new LinkedBlockingQueue<Runnable>(Integer.MAX_VALUE),
           new NamedThreadFactory(Executors.defaultThreadFactory(), "MW-{0}"));
     }
     return staticExecutor;
-  }
-
-  /**
-   * @param maxTasks Maximum number of tasks waiting in the executor.
-   *                 If this maximum is reached, adding new tasks blocks until previous tasks are finished.
-   */
-  static public void setMaxTasks(int maxTasks) {
-    MediaWikiController.maxTasks = maxTasks;
   }
 
   /**

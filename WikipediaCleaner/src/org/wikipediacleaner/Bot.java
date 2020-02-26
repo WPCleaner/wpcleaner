@@ -22,7 +22,6 @@ import java.util.Properties;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.wikipediacleaner.api.MediaWikiController;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithm;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithms;
 import org.wikipediacleaner.api.constants.EnumLanguage;
@@ -60,7 +59,6 @@ public class Bot implements BasicWorkerListener {
   public static void main(String[] args) {
     log.info("Running as bot");
 
-    MediaWikiController.setMaxTasks(500);
     Configuration config = Configuration.getConfiguration();
     EnumLanguage language = config.getLanguage();
     Locale.setDefault(language.getLocale());
