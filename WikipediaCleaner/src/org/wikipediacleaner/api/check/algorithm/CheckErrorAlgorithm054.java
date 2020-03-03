@@ -83,7 +83,9 @@ public class CheckErrorAlgorithm054 extends CheckErrorAlgorithmBase {
       if (isList) {
 
         // Search for <br /> at the end of the line
+        System.out.println("Analyzing " + contents.substring(beginLineIndex, endLineIndex));
         boolean breakFound = false;
+        boolean imageFound = false;
         boolean tagAfter = false;
         int currentPos = endLineIndex - 1;
         int beginError = endLineIndex;
@@ -102,7 +104,10 @@ public class CheckErrorAlgorithm054 extends CheckErrorAlgorithmBase {
             if (tag != null) {
               String name = tag.getNormalizedName();
               if (PageElementTag.TAG_HTML_BR.equals(name)) {
-                breakFound = true;
+                // Limit error if image as been found.
+                if (!imageFound) {
+                  breakFound = true;
+                }
                 shouldStop = false;
                 beginError = tag.getBeginIndex();
                 currentPos = beginError - 1;
@@ -128,6 +133,17 @@ public class CheckErrorAlgorithm054 extends CheckErrorAlgorithmBase {
                 automaticBot = false;
                 suffix.insert(0, "]]");
                 linkFound = true;
+              }
+            }
+            if (!linkFound) {
+              PageElementImage image = analysis.isInImage(currentPos);
+              if ((image != null) && (image.getEndIndex() == currentPos + 1)) {
+                currentPos -= 2;
+                shouldStop = false;
+                automaticBot = false;
+                suffix.insert(0, "]]");
+                linkFound = true;
+                imageFound = true;
               }
             }
             if (!linkFound) {
@@ -160,14 +176,6 @@ public class CheckErrorAlgorithm054 extends CheckErrorAlgorithmBase {
                 linkFound = true;
               }
             }
-          }
-        }
-
-        // Limit error
-        if (breakFound) {
-          PageElementImage image = analysis.isInImage(currentPos);
-          if (image != null) {
-            breakFound = false;
           }
         }
 
