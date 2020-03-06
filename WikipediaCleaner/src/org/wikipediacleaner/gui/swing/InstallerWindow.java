@@ -22,6 +22,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.net.URL;
+import java.security.cert.CertificateException;
 import java.util.Properties;
 
 import javax.swing.BorderFactory;
@@ -598,9 +599,7 @@ public class InstallerWindow
             new File (directory, "getdown.txt"),
             CONNECTION_TIMEOUT, READ_TIMEOUT);
       } catch (IOException e) {
-        warningMessage = 
-            GT._T("Unable to download file {0}.", "getdown.txt") + "\n" +
-            GT._T("Error: {0}", e.getLocalizedMessage());
+        handleDownloadError(e, "getdown.txt");
         return Boolean.FALSE;
       }
       try {
@@ -610,9 +609,7 @@ public class InstallerWindow
             new File (directory, "getdown.jar"),
             CONNECTION_TIMEOUT, READ_TIMEOUT);
       } catch (IOException e) {
-        warningMessage =
-            GT._T("Unable to download file {0}", "getdown.jar") + "\n" +
-            GT._T("Error: {0}",  e.getLocalizedMessage());
+        handleDownloadError(e, "getdown.jar");
         return Boolean.FALSE;
       }
 
@@ -722,6 +719,30 @@ public class InstallerWindow
       }
 
       return Boolean.TRUE;
+    }
+
+    /**
+     * Handle download error.
+     * 
+     * @param e Exception thrown by the download.
+     * @param file File which failed to download.
+     */
+    private void handleDownloadError(IOException e, String file) {
+      if (e == null) {
+        return;
+      }
+      StringBuilder message = new StringBuilder();
+      message.append(GT._T("Unable to download file {0}.", file));
+      Throwable cause = e.getCause();
+      if (cause instanceof CertificateException) {
+        message.append("\n\n");
+        message.append(GT._T("Certificate exception: old versions of Java may fail to validate recent certificates, try upgrading Java"));
+        message.append("\n");
+        message.append(GT._T("Java version: {}", System.getProperty("java.version")));
+      }
+      message.append("\n\n");
+      message.append(GT._T("Error: {0}", e.getLocalizedMessage()));
+      warningMessage = message.toString();
     }
 
     /**
