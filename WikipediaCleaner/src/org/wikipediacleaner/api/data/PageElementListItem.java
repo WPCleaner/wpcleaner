@@ -20,6 +20,14 @@ public class PageElementListItem extends PageElement {
   public final static String LIST_INDICATORS = "*:#;";
 
   /**
+   * @param character Character to be tested.
+   * @return True if the character is a list indicator.
+   */
+  public static boolean isListIndicator(char character) {
+    return LIST_INDICATORS.indexOf(character) >= 0;
+  }
+
+  /**
    * @param analysis Page analysis.
    * @return List of tables.
    */
@@ -32,11 +40,11 @@ public class PageElementListItem extends PageElement {
     String contents = analysis.getContents();
     while (index < contents.length()) {
       char currentChar = contents.charAt(index);
-      if ((LIST_INDICATORS.indexOf(currentChar) >= 0) &&
+      if (isListIndicator(currentChar) &&
           ((index == 0) || (contents.charAt(index - 1) == '\n'))) {
         int beginIndex = index;
         while ((index < contents.length()) &&
-               (LIST_INDICATORS.indexOf(contents.charAt(index)) >= 0)) {
+               isListIndicator(contents.charAt(index))) {
           index++;
         }
         int depth = index - beginIndex;

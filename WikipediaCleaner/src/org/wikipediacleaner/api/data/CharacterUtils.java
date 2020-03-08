@@ -56,6 +56,14 @@ public class CharacterUtils {
   private final static String WHITESPACE = " \u00A0";
 
   /**
+   * @param character Character to be tested.
+   * @return True if the character should be considered as a whitespace.
+   */
+  public static boolean isWhitespace(char character) {
+    return (WHITESPACE.indexOf(character) >= 0);
+  }
+
+  /**
    * Trim text with whitespace characters used by MediaWiki.
    * 
    * @param text Original text.
@@ -67,12 +75,10 @@ public class CharacterUtils {
     }
     int beginIndex = 0;
     int endIndex = text.length();
-    while ((beginIndex < endIndex) &&
-           (WHITESPACE.indexOf(text.charAt(beginIndex)) >= 0)) {
+    while ((beginIndex < endIndex) && isWhitespace(text.charAt(beginIndex))) {
       beginIndex++;
     }
-    while ((endIndex > beginIndex) &&
-           (WHITESPACE.indexOf(text.charAt(endIndex - 1)) >= 0)) {
+    while ((endIndex > beginIndex) && isWhitespace(text.charAt(endIndex - 1))) {
       endIndex--;
     }
     return text.substring(beginIndex, endIndex);

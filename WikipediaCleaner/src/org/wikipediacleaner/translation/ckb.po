@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2019-09-01 16:49+0200\n"
-"PO-Revision-Date: 2020-02-15 09:38+0000\n"
+"POT-Creation-Date: 2020-03-06 21:02+0100\n"
+"PO-Revision-Date: 2020-03-06 21:36+0300\n"
 "Last-Translator: Aram <Unknown>\n"
 "Language-Team: Kurdish (Sorani) <ckb@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -16,12 +16,13 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Launchpad-Export-Date: 2020-02-18 11:00+0000\n"
-"X-Generator: Launchpad (build 19413b719a8df7423ab1390528edadce9e0e4aca)\n"
+"X-Generator: Poedit 2.3\n"
+"Language: ckb\n"
 
 #: org/wikipediacleaner/Version.java:31
 #, java-format
 msgid "{0} extension is now available on all WikiMedia wikis."
-msgstr "زیادکراوەی {0} ئێستا لەسەر ھەموو ویکییەکانی ویکیمیدیا بەردەستە"
+msgstr "زیادکراوەی {0} ئێستا لەسەر ھەموو ویکییەکانی ویکیمیدیا بەردەستە."
 
 #: org/wikipediacleaner/Version.java:32
 msgid "It identifies wikitext patterns that must or can be fixed in pages."
@@ -166,7 +167,7 @@ msgstr ""
 
 #: org/wikipediacleaner/api/MediaWiki.java:316
 msgid "Do yo want to continue?"
-msgstr ""
+msgstr "دەتەوێت بەردەوام بیت؟"
 
 #: org/wikipediacleaner/api/ModificationReport.java:76
 #: org/wikipediacleaner/api/ModificationReport.java:104
@@ -178,11 +179,11 @@ msgstr "پەڕەی {0}:"
 msgid "The following errors have occurred:"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/CheckError.java:407
+#: org/wikipediacleaner/api/check/CheckError.java:414
 msgid "No available description"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/CheckError.java:412
+#: org/wikipediacleaner/api/check/CheckError.java:419
 #, java-format
 msgid "Error n°{0} ({1} - {2}) - {3}"
 msgstr ""
@@ -213,11 +214,11 @@ msgstr ""
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm515.java:90
 #: org/wikipediacleaner/gui/swing/options/SortingOptionsPanel.java:115
 msgid "Delete"
-msgstr ""
+msgstr "بسڕەوە"
 
 #: org/wikipediacleaner/api/check/CheckErrorResult.java:328
 msgid "Edit table of contents"
-msgstr ""
+msgstr "دەستکاریی پێڕستەکان بکە"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm001.java:91
 #, java-format
@@ -226,7 +227,7 @@ msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm002.java:35
 msgid "Fix all incorrect tags"
-msgstr ""
+msgstr "ھەموو تاگە نادروستەکان چاک بکەوە"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm002.java:207
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm002.java:231
@@ -238,10 +239,10 @@ msgstr ""
 msgid "Remove {0} tags"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm002.java:707
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm002.java:708
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm002.java:709
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm002.java:710
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm002.java:713
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm002.java:714
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm002.java:715
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm002.java:716
 #, java-format
 msgid "A replacement for {0}"
 msgstr ""
@@ -277,7 +278,7 @@ msgstr ""
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm089_Old.java:30
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm090_Old.java:30
 msgid "Fix DEFAULTSORT"
-msgstr ""
+msgstr " DEFAULTSORT چاک بکەوە"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm006.java:100
 #, java-format
@@ -381,16 +382,16 @@ msgstr ""
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm045.java:35
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm059.java:37
 msgid "Delete all"
-msgstr ""
+msgstr "ھەموو بسڕەوە"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm018.java:30
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm022.java:32
 msgid "Fix categories"
-msgstr ""
+msgstr "پۆلەکان چاک بکەوە"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm021.java:75
 msgid "Check category"
-msgstr ""
+msgstr "پۆل بپشکنە"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm021.java:101
 msgid "Comment category out"
@@ -424,7 +425,7 @@ msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm030.java:112
 msgid "View image"
-msgstr ""
+msgstr "وێنە ببینە"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm033.java:120
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm061.java:252
@@ -447,7 +448,7 @@ msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm044.java:32
 msgid "Fix all bold headlines"
-msgstr ""
+msgstr "ھەموو سەردێڕە تۆخەکانی ئاستەکان چاک بکەوە"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm048.java:36
 msgid "Remove all links to title (first in bold)"
@@ -537,7 +538,7 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:135
 #: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:241
 msgid "External Viewer"
-msgstr ""
+msgstr "بینەری دەرەکی"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:272
 msgid ""
@@ -549,13 +550,13 @@ msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:355
 msgid "Do not replace"
-msgstr ""
+msgstr "جێگۆڕ مەکە"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:356
 #: org/wikipediacleaner/gui/swing/Controller.java:241
 #: org/wikipediacleaner/gui/swing/action/ActionDispose.java:37
 msgid "Cancel"
-msgstr ""
+msgstr "ھەڵ بوەشێنەوە"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:360
 #, java-format
@@ -574,7 +575,7 @@ msgstr ""
 msgid "You can replace the link using template {0}."
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm069.java:748
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm069.java:827
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm070.java:263
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm071.java:135
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm106.java:162
@@ -855,7 +856,7 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/NewSectionWindow.java:115
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:529
 msgid "Comment"
-msgstr ""
+msgstr "کورتەی دەستکاری"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm524.java:332
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm527.java:248
@@ -896,7 +897,7 @@ msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm532.java:35
 msgid "Fix tags"
-msgstr ""
+msgstr "تاگەکان چاک بکە"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm538.java:28
 msgid "Remove whitespace characters"
@@ -904,7 +905,7 @@ msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm540.java:44
 msgid "Fix bold and italic"
-msgstr ""
+msgstr "تۆخ و لار چاک بکەوە"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm541.java:202
 msgid "for marking an edit"
@@ -912,7 +913,7 @@ msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm541.java:206
 msgid "for anything else"
-msgstr ""
+msgstr "بۆ ھەرشتێکی تر"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm541.java:222
 msgid "preferred for source code"
@@ -959,7 +960,7 @@ msgstr ""
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISBN.java:337
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISSN.java:306
 msgid "Add a comment"
-msgstr ""
+msgstr "کورتەیەکی دەستکاری زیاد بکە"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISBN.java:386
 msgid "Search all ISBN"
@@ -1060,7 +1061,7 @@ msgstr ""
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:19
 msgid "Broken redirects"
-msgstr ""
+msgstr "ڕەوانەکەرە شکاوەکان"
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:20
 msgid "Dead-end pages"
@@ -1080,15 +1081,15 @@ msgstr ""
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:24
 msgid "Redirects"
-msgstr ""
+msgstr "ڕەوانەکەرەکان"
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:25
 msgid "Orphaned pages"
-msgstr ""
+msgstr "پەڕە ھەتیوەکان"
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:26
 msgid "Long pages"
-msgstr ""
+msgstr "پەڕە درێژەکان"
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:27
 msgid "Pages with the most categories"
@@ -1116,51 +1117,51 @@ msgstr ""
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:33
 msgid "Short pages"
-msgstr ""
+msgstr "پەڕە کورتەکان"
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:34
 msgid "Uncategorized categories"
-msgstr ""
+msgstr "پۆلە پۆلێن نەکراوەکان"
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:35
 msgid "Uncategorized files"
-msgstr ""
+msgstr "پەڕگە پۆلێن نەکراوەکان"
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:36
 msgid "Uncategorized pages"
-msgstr ""
+msgstr "پەڕە پۆلێن نەکراوەکان"
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:37
 msgid "Uncategorized templates"
-msgstr ""
+msgstr "داڕێژە پۆلێن نەکراوەکان"
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:38
 msgid "Unused categories"
-msgstr ""
+msgstr "پۆلە بەکارنەھێندراوەکان"
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:39
 msgid "Unused files"
-msgstr ""
+msgstr "پەڕگە بەکارنەھێندراوەکان"
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:40
 msgid "Unused templates"
-msgstr ""
+msgstr "داڕێژە بەکارنەھێندراوەکان"
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:41
 msgid "Wanted categories"
-msgstr ""
+msgstr "پۆلە داواکراوەکان"
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:42
 msgid "Wanted files"
-msgstr ""
+msgstr "پەڕگە داواکراوەکان"
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:43
 msgid "Wanted pages"
-msgstr ""
+msgstr "پەڕە داواکراوەکان"
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:44
 msgid "Wanted templates"
-msgstr ""
+msgstr "داڕێژە داواکراوەکان"
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:45
 msgid "Unwatched pages"
@@ -1214,7 +1215,7 @@ msgstr ""
 
 #: org/wikipediacleaner/api/data/PageComparator.java:198
 msgid "Namespace"
-msgstr ""
+msgstr "بۆشاییناو"
 
 #: org/wikipediacleaner/api/data/PageComparator.java:241
 #: org/wikipediacleaner/gui/swing/RecentChangesTableModel.java:257
@@ -1234,12 +1235,12 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/linter/LinterErrorListTableModel.java:234
 #: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:191
 msgid "Template"
-msgstr ""
+msgstr "داڕێژە"
 
 #: org/wikipediacleaner/api/data/PageComparator.java:419
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:368
 msgid "Redirect"
-msgstr ""
+msgstr "ڕەوانەکەر"
 
 #: org/wikipediacleaner/api/data/TemplateMatcher1L.java:77
 #: org/wikipediacleaner/api/data/TemplateMatcher1LT.java:78
@@ -1306,7 +1307,7 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/AboutWindow.java:61
 #: org/wikipediacleaner/gui/swing/MainWindow.java:496
 msgid "About"
-msgstr ""
+msgstr "سەبارەت"
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingTableModel.java:182
 msgid "Original text"
@@ -1318,7 +1319,7 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingTableModel.java:186
 msgid "regex"
-msgstr ""
+msgstr "ڕێگیولر ئیکسپرێشن"
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:168
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:170
@@ -1327,7 +1328,7 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiWindow.java:754
 #: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:264
 msgid "Automatic fixing"
-msgstr ""
+msgstr "چاککردنەوەی خۆگەڕانە"
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:234
 msgid "This feature may modify a lot of pages in a short period of time."
@@ -1349,23 +1350,23 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:252
 #: org/wikipediacleaner/gui/swing/options/SortingOptionsPanel.java:110
 msgid "Add"
-msgstr ""
+msgstr "زیاد بکە"
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:258
 msgid "Remove"
-msgstr ""
+msgstr "لا ببە"
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:264
 msgid "Modify"
-msgstr ""
+msgstr "بگۆڕە"
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:270
 msgid "Clear"
-msgstr ""
+msgstr "خاوێن بکەوە"
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:276
 msgid "Save"
-msgstr ""
+msgstr "پاشەکەوت بکە"
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:283
 msgid "Fix selected pages"
@@ -1434,7 +1435,7 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:763
 #: org/wikipediacleaner/gui/swing/bot/BotToolsWindow.java:86
 msgid "!!! WARNING !!!"
-msgstr ""
+msgstr "!!! ئاگاداری !!!"
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:764
 msgid "This function will carry out all replacements on all selected pages."
@@ -1468,7 +1469,7 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:853
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:893
 msgid "XML files"
-msgstr ""
+msgstr "پەڕگەکانی XML"
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:908
 msgid "This file exists, do you want to overwrite it?"
@@ -1478,16 +1479,16 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiWindow.java:355
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiWindow.java:610
 msgid "Select errors"
-msgstr ""
+msgstr "ھەڵەکان دیاری بکە"
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:984
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiWindow.java:359
 msgid "Select all errors"
-msgstr ""
+msgstr "ھەموو ھەڵەکان دیاری بکە"
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:991
 msgid "Select no errors"
-msgstr ""
+msgstr "ھیچ ھەڵەیەک دیاری مەکە"
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:1016
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiWindow.java:412
@@ -1556,189 +1557,193 @@ msgstr ""
 msgid "Information"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:115
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:116
 msgid "WPCleaner installer"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:171
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:172
 msgid "Configuration"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:234
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:235
 msgid "Installation folder"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:242
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:243
 msgid "Select installation folder"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:307
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:308
 msgid "Create a desktop shortcut"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:315
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:316
 msgid "Install beta version (only for experienced users)"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:357
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:358
 msgid ""
 "A desktop shortcut can be created automatically under Windows and some Linux "
 "flavors."
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:360
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:361
 msgid ""
 "If the desktop shortcut is not created automatically, you can still create "
 "it manually."
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:362
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:363
 #, java-format
 msgid ""
 "The working directory for the shortcut MUST be the installation folder ({0})."
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:364
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:365
 msgid ""
 "The command itself is dependent on the operating system you're using (see "
 "below)."
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:366
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:367
 msgid ""
 "Note: avoid having whitespace characters in the installation folder path, or "
 "you will need to adapt the commands."
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:369
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:370
 msgid ""
 "If you want to run WPCleaner manually, open a terminal/command prompt/... "
 "and change the current directory to the installation folder."
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:374
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:375
 msgid ""
 "And then execute the command dependent on the operating system you're using "
 "(see below)."
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:377
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:378
 msgid "Under Windows, the command can be:"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:383
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:384
 msgid ""
 "Under Linux (or other systems working with .sh scripts), the command can be:"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:389
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:390
 msgid "On any operating system, the command can be:"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:408
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:409
 msgid "Install"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:473
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:474
 msgid "You must select an installation folder."
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:480
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:481
 #, java-format
 msgid "The path {0} already exists but is not a folder."
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:488
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:489
 #, java-format
 msgid "The folder {0} already exists, do you want to install WPCleaner there?"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:490
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:491
 msgid "Existing files may be deleted by the installation process."
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:498
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:499
 #, java-format
 msgid "Unable to create folder {0}"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:514
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:515
 msgid "Desktop shortcut is only supported for the following operating systems:"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:575
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:576
 msgid "Installation was successful"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:592
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:607
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:593
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:606
 #, java-format
 msgid "Downloading {0}"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:602
-#, java-format
-msgid "Unable to download file {0}."
-msgstr ""
-
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:603
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:615
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:629
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:654
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:702
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:720
-#, java-format
-msgid "Error: {0}"
-msgstr ""
-
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:614
-#, java-format
-msgid "Unable to download file {0}"
-msgstr ""
-
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:622
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:619
 #, java-format
 msgid "Creating {0}"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:628
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:625
 #, java-format
 msgid "Unable to create file {0}"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:636
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:626
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:651
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:699
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:717
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:744
+#, java-format
+msgid "Error: {0}"
+msgstr ""
+
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:633
 #, java-format
 msgid "Installing {0}"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:648
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:645
 msgid "Problem running getdown installer"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:649
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:646
 #, java-format
 msgid "Exit code: {0}"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:653
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:719
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:650
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:716
 #, java-format
 msgid "Problem running {0}"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:701
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:698
 msgid "Problem creating desktop file"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:707
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:704
 #, java-format
 msgid "Running {0}"
+msgstr ""
+
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:735
+#, java-format
+msgid "Unable to download file {0}."
+msgstr ""
+
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:739
+msgid ""
+"Certificate exception: old versions of Java may fail to validate recent "
+"certificates, try upgrading Java"
+msgstr ""
+
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:741
+msgid "Java version: {}"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/LanguageSelectionPanel.java:192
 #: org/wikipediacleaner/gui/swing/component/simple/LanguageSelector.java:73
 msgid "Language"
-msgstr ""
+msgstr "زمان"
 
 #: org/wikipediacleaner/gui/swing/LanguageSelectionPanel.java:206
 msgid "Script"
@@ -1760,14 +1765,14 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:343
 msgid "Message"
-msgstr ""
+msgstr "پەیام"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:361
 #: org/wikipediacleaner/gui/swing/MainWindow.java:430
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:155
 #: org/wikipediacleaner/gui/swing/worker/LoginWorker.java:115
 msgid "Login"
-msgstr ""
+msgstr "بچۆ ژوورەوە"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:436
 msgid "Demo"
@@ -1787,12 +1792,12 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/options/OptionsWindow.java:64
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:165
 msgid "Options"
-msgstr ""
+msgstr "ھەڵبژاردەکان"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:475
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:185
 msgid "System options"
-msgstr ""
+msgstr "ھەڵبژاردەکانی سیستم"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:482
 msgid "Reload system options"
@@ -1804,27 +1809,27 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:510
 msgid "Save username and password"
-msgstr ""
+msgstr "ناوی بەکارھێنەر و تێپەڕەوشە پاشەکەوت بکە"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:522
 msgid "Save username only"
-msgstr ""
+msgstr "تەنیا ناوی بەکارھێنەر پاشەکەوت بکە"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:532
 msgid "Save none of them"
-msgstr ""
+msgstr "ھیچ کامیان پاشەکەوت مەکە"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:567
 #: org/wikipediacleaner/gui/swing/deadlink/DeadLinkListTableModel.java:219
 #: org/wikipediacleaner/gui/swing/linter/LinterErrorListTableModel.java:226
 #: org/wikipediacleaner/gui/swing/pagelist/PageListTableModel.java:236
 msgid "Page"
-msgstr ""
+msgstr "پەڕە"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:609
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:170
 msgid "Random page"
-msgstr ""
+msgstr "پەڕەی ھەڕەمەکی"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:616
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:200
@@ -1842,7 +1847,7 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:658
 msgid "Internal links"
-msgstr ""
+msgstr "بەستەرە ناوەکییەکان"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:667
 msgid "What links here"
@@ -1850,7 +1855,7 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:676
 msgid "Category members"
-msgstr ""
+msgstr "ئەندامەکانی پۆل"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:685
 msgid "Embedded in"
@@ -1863,11 +1868,11 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/MainWindow.java:720
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1220
 msgid "Your contributions"
-msgstr ""
+msgstr "بەشدارییەکانت"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:734
 msgid "Projects"
-msgstr ""
+msgstr "پرۆژەکان"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:752
 msgid "Preload disambiguations pages"
@@ -1877,7 +1882,7 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1428
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:125
 msgid "Current disambiguation list"
-msgstr ""
+msgstr "پێڕستی ڕوونکردنەوەی ھەنووکە"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:771
 msgid "With many disambiguation links"
@@ -1916,18 +1921,18 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:844
 msgid "Watchlist"
-msgstr ""
+msgstr "پێڕستی چاودێری"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:853
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1941
 #: org/wikipediacleaner/gui/swing/MainWindow.java:2006
 msgid "Random pages"
-msgstr ""
+msgstr "پەڕە ھەڕەمەکییەکان"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:862
 #: org/wikipediacleaner/gui/swing/bot/BotToolsWindow.java:61
 msgid "Bot tools"
-msgstr ""
+msgstr "ئامرازەکانی بۆت"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:906
 msgid ""
@@ -2034,24 +2039,24 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1583
 msgid "Without templates"
-msgstr ""
+msgstr "بەبێ داڕێژەکان"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1586
 msgid "With templates"
-msgstr ""
+msgstr "بە داڕێژەکان"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1604
 msgid "All namespaces"
-msgstr ""
+msgstr "ھەموو بۆشاییناوەکان"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1620
 #: org/wikipediacleaner/gui/swing/pagelist/PageListTableModel.java:226
 msgid "Main"
-msgstr ""
+msgstr "سەرەکی"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1676
 msgid "All disambiguations pages"
-msgstr ""
+msgstr "ھەموو پەڕە ڕوونکردنەوەکان"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1832
 msgid "Watch list"
@@ -2075,7 +2080,7 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1922
 msgid "List"
-msgstr ""
+msgstr "پێڕست"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1945
 msgid "Random redirect pages"
@@ -2114,7 +2119,7 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/NewSectionWindow.java:194
 msgid "Article contents"
-msgstr ""
+msgstr "ناوەڕۆکەکانی وتار"
 
 #: org/wikipediacleaner/gui/swing/NewSectionWindow.java:202
 msgid "&Validate"
@@ -2160,27 +2165,27 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:529
 #: org/wikipediacleaner/gui/swing/options/AnalysisOptionsPanel.java:149
 msgid "Count disambiguation pages"
-msgstr ""
+msgstr "پەڕە ڕوونکردنەوەکان بژمێرە"
 
 #: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:533
 #: org/wikipediacleaner/gui/swing/options/AnalysisOptionsPanel.java:156
 msgid "Count missing pages"
-msgstr ""
+msgstr "پەڕە ونەکان بژمێرە"
 
 #: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:537
 #: org/wikipediacleaner/gui/swing/options/AnalysisOptionsPanel.java:163
 msgid "Count redirect pages"
-msgstr ""
+msgstr "پەڕە ڕەوانەکەرەکان بژمێرە"
 
 #: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:541
 #: org/wikipediacleaner/gui/swing/options/AnalysisOptionsPanel.java:170
 msgid "Count other pages"
-msgstr ""
+msgstr "پەڕەکانی تر بژمێرە"
 
 #: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:578
 #: org/wikipediacleaner/gui/swing/menu/AnalysisPageListMenuCreator.java:76
 msgid "Remove all links"
-msgstr ""
+msgstr "ھەموو بەستەرەکان لا ببە"
 
 #: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:640
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiWindow.java:150
@@ -2214,7 +2219,7 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:1097
 msgid "Foreign language"
-msgstr ""
+msgstr "زمانی بیانی"
 
 #: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:1141
 msgid "From which Wikipedia is this text coming ?"
@@ -2223,7 +2228,7 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:1240
 #: org/wikipediacleaner/gui/swing/options/OptionsWindow.java:109
 msgid "Translation"
-msgstr ""
+msgstr "وەرگێڕان"
 
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:317
 msgid "&Page :"
@@ -2235,7 +2240,7 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:130
 #: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:194
 msgid "Disambiguation"
-msgstr ""
+msgstr "ڕوونکردنەوە"
 
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:399
 msgid "Reload (Alt + &R)"
@@ -2248,12 +2253,12 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:432
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:180
 msgid "Send"
-msgstr ""
+msgstr "بنێرە"
 
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:449
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:451
 msgid "Undo"
-msgstr ""
+msgstr "ھەڵ بوەشێنەوە"
 
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:457
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:459
@@ -2263,7 +2268,7 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:480
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:482
 msgid "Table of Contents"
-msgstr ""
+msgstr "پێڕستەکان"
 
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:500
 #: org/wikipediacleaner/gui/swing/options/OptionsWindow.java:132
@@ -2273,11 +2278,11 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:548
 msgid "Automatic comment"
-msgstr ""
+msgstr "کورتەی دەستکاریی خۆگەڕ"
 
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:574
 msgid "Mark edit as minor"
-msgstr ""
+msgstr "دەستکارییەکە بە بچووک دیاری بکە"
 
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:580
 msgid "&Close after sending"
@@ -2302,7 +2307,7 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:621
 msgid "Spelling"
-msgstr ""
+msgstr "حونجەکردن"
 
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:656
 msgid "Protection level for editing the page"
@@ -2378,11 +2383,11 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:167
 #: org/wikipediacleaner/gui/swing/pagelist/PageListTableModel.java:232
 msgid "Comments"
-msgstr ""
+msgstr "کورتەی دەستکارییەکان"
 
 #: org/wikipediacleaner/gui/swing/PageCommentsWindow.java:136
 msgid "Comments :"
-msgstr ""
+msgstr "کورتەی دەستکارییەکان:"
 
 #: org/wikipediacleaner/gui/swing/PageCommentsWindow.java:158
 msgid "Max backlinks in Main :"
@@ -2429,7 +2434,7 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/RecentChangesTableModel.java:259
 msgid "User"
-msgstr ""
+msgstr "بەکارھێنەر"
 
 #: org/wikipediacleaner/gui/swing/TemplateListWindow.java:92
 #, java-format
@@ -2482,11 +2487,11 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/action/ActionCopyText.java:40
 msgid "Copy selected text"
-msgstr ""
+msgstr "دەقە دیاریکراوەکە لەبەر بگرەوە"
 
 #: org/wikipediacleaner/gui/swing/action/ActionDeletePage.java:41
 msgid "Delete page"
-msgstr ""
+msgstr "پەڕە بسڕەوە"
 
 #: org/wikipediacleaner/gui/swing/action/ActionDeletePage.java:130
 msgid ""
@@ -2501,7 +2506,7 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/action/ActionDispose.java:37
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:120
 msgid "Close"
-msgstr ""
+msgstr "دای بخە"
 
 #: org/wikipediacleaner/gui/swing/action/ActionExternalViewer.java:55
 #: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:91
@@ -2509,7 +2514,7 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:150
 #: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:249
 msgid "History"
-msgstr ""
+msgstr "مێژوو"
 
 #: org/wikipediacleaner/gui/swing/action/ActionInsertPredefinedText.java:57
 msgid "Insert text"
@@ -2671,14 +2676,14 @@ msgid ""
 "Would you like to extend the link to \"{0}\"?"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/basic/BasicWindow.java:61
+#: org/wikipediacleaner/gui/swing/basic/BasicWindow.java:64
 #, java-format
 msgid "{0} is working..."
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/basic/TaskYesNoAllDialog.java:52
 msgid "Yes"
-msgstr ""
+msgstr "بەڵێ"
 
 #: org/wikipediacleaner/gui/swing/basic/TaskYesNoAllDialog.java:53
 msgid "Yes to all"
@@ -2686,7 +2691,7 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/basic/TaskYesNoAllDialog.java:54
 msgid "No"
-msgstr ""
+msgstr "نەخێر"
 
 #: org/wikipediacleaner/gui/swing/basic/TaskYesNoAllDialog.java:55
 msgid "No to all"
@@ -2722,7 +2727,7 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/basic/Utilities.java:339
 msgid "Other..."
-msgstr ""
+msgstr "ھی تر..."
 
 #: org/wikipediacleaner/gui/swing/bot/AutomaticCWWorker.java:139
 #: org/wikipediacleaner/gui/swing/worker/CheckWikiProjectWorker.java:76
@@ -2975,21 +2980,21 @@ msgstr ""
 msgid "Only check articles previously reported"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/bot/ListCWWorker.java:490
+#: org/wikipediacleaner/gui/swing/bot/ListCWWorker.java:489
 #, java-format
 msgid "{0} page has been analyzed"
 msgid_plural "{0} pages have been analyzed"
 msgstr[0] ""
 msgstr[1] ""
 
-#: org/wikipediacleaner/gui/swing/bot/ListCWWorker.java:498
+#: org/wikipediacleaner/gui/swing/bot/ListCWWorker.java:497
 #, java-format
 msgid "{0} page has been detected for algorithm {1}"
 msgid_plural "{0} pages have been detected for algorithm {1}"
 msgstr[0] ""
 msgstr[1] ""
 
-#: org/wikipediacleaner/gui/swing/bot/ListCWWorker.java:641
+#: org/wikipediacleaner/gui/swing/bot/ListCWWorker.java:645
 #, java-format
 msgid "{0} pages processed"
 msgstr ""
@@ -3178,7 +3183,7 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiWindow.java:725
 msgid "Pages"
-msgstr ""
+msgstr "پەڕەکان"
 
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiWindow.java:746
 msgid "&Load pages"
@@ -3215,7 +3220,7 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/checkwiki/DetectionListTableModel.java:155
 msgid "Error"
-msgstr ""
+msgstr "ھەڵە"
 
 #: org/wikipediacleaner/gui/swing/checkwiki/DetectionListTableModel.java:159
 msgid "Location"
@@ -3236,13 +3241,13 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/component/CloseTabComponent.java:79
 msgid "Close this tab"
-msgstr ""
+msgstr "ئەم تابە داخە"
 
 #: org/wikipediacleaner/gui/swing/component/MWPanePopupListener.java:251
 #: org/wikipediacleaner/gui/swing/component/MWPanePopupListener.java:282
 #, java-format
 msgid "Page: {0}"
-msgstr ""
+msgstr "پەڕە: {0}"
 
 #: org/wikipediacleaner/gui/swing/component/MWPanePopupListener.java:317
 #, java-format
@@ -3252,32 +3257,32 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/component/MWPanePopupListener.java:388
 #, java-format
 msgid "Image: {0}"
-msgstr ""
+msgstr "وێنە: {0}"
 
 #: org/wikipediacleaner/gui/swing/component/MWPanePopupListener.java:424
 #, java-format
 msgid "Category: {0}"
-msgstr ""
+msgstr "پۆل: {0}"
 
 #: org/wikipediacleaner/gui/swing/component/MWPanePopupListener.java:452
 #, java-format
 msgid "External link: {0}"
-msgstr ""
+msgstr "بەستەری دەرەکی: {0}"
 
 #: org/wikipediacleaner/gui/swing/component/MWPanePopupListener.java:485
 #, java-format
 msgid "Template: {0}"
-msgstr ""
+msgstr "داڕێژە: {0}"
 
 #: org/wikipediacleaner/gui/swing/component/MWPanePopupListener.java:532
 #, java-format
 msgid "Parameter: {0}"
-msgstr ""
+msgstr "پارامەتر: {0}"
 
 #: org/wikipediacleaner/gui/swing/component/MWPanePopupListener.java:557
 #, java-format
 msgid "Function: {0}"
-msgstr ""
+msgstr "فانکشن: {0}"
 
 #: org/wikipediacleaner/gui/swing/component/MWPanePopupListener.java:582
 #, java-format
@@ -3318,7 +3323,7 @@ msgstr[1] ""
 #: org/wikipediacleaner/gui/swing/component/simple/HelpButton.java:54
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:145
 msgid "Help"
-msgstr ""
+msgstr "یارمەتی"
 
 #: org/wikipediacleaner/gui/swing/component/simple/HelpButton.java:86
 #, java-format
@@ -3328,7 +3333,7 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/component/simple/IdeaButton.java:46
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:115
 msgid "Idea? Bug?"
-msgstr ""
+msgstr "بیرۆکە؟ کێشە؟"
 
 #: org/wikipediacleaner/gui/swing/component/simple/IdeaButton.java:69
 msgid "You can submit bug reports or feature requests at the following URL:"
@@ -3336,85 +3341,88 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/component/simple/LanguageSelector.java:83
 msgid "Other Language"
-msgstr ""
+msgstr "زمانی تر"
 
 #: org/wikipediacleaner/gui/swing/component/simple/LanguageSelector.java:144
 msgid "You can learn how to add other languages at the following URL:"
-msgstr ""
+msgstr "لەم URLەی خوارەوە دەتوانیت فێری چۆنیەتیی زیادکردنی زمانەکانی تر بیت:"
 
 #: org/wikipediacleaner/gui/swing/component/simple/PasswordInput.java:61
 msgid "Password:"
-msgstr ""
+msgstr "تێپەڕەوشە:"
 
 #: org/wikipediacleaner/gui/swing/component/simple/UserNameSelector.java:62
 msgid "Username:"
-msgstr ""
+msgstr "ناوی بەکارھێنەر:"
 
 #: org/wikipediacleaner/gui/swing/component/simple/WikiSelector.java:74
 msgid "Wiki"
-msgstr ""
+msgstr "ویکی"
 
 #: org/wikipediacleaner/gui/swing/component/simple/WikiSelector.java:84
 msgid "Other Wiki"
-msgstr ""
+msgstr "ویکیی تر"
 
 #: org/wikipediacleaner/gui/swing/component/simple/WikiSelector.java:142
 msgid "You can learn how to add other Wikipedia at the following URL:"
 msgstr ""
+"لەم URLەی خوارەوە دەتوانیت فێری چۆنیەتیی زیادکردنی ویکیپیدیایەکی تر بیت:"
 
 #: org/wikipediacleaner/gui/swing/deadlink/ActionDeadLink.java:49
 msgid "Check dead links"
-msgstr ""
+msgstr "بەستەرە مردووەکان بپشکنە"
 
 #: org/wikipediacleaner/gui/swing/deadlink/ActionDeadLink.java:204
 msgid "You need to select pages to check for dead links"
 msgstr ""
+"پێویستە ئەو پەڕانە دیاری بکەیت کە دەتەوێت پشکنین بۆ بەستەرە مردووەکانیان "
+"بکەیت"
 
 #: org/wikipediacleaner/gui/swing/deadlink/ActionDeadLink.java:207
 msgid "Do you want to check for dead links?"
-msgstr ""
+msgstr "دەتەوێت پشکنین بۆ بەستەرە مردووەکان بکەیت؟"
 
 #: org/wikipediacleaner/gui/swing/deadlink/DeadLinkListTableModel.java:210
 #: org/wikipediacleaner/gui/swing/linter/LinterErrorListTableModel.java:222
 msgid "End"
-msgstr ""
+msgstr "کۆتایی"
 
 #: org/wikipediacleaner/gui/swing/deadlink/DeadLinkListTableModel.java:214
 msgid "Link"
-msgstr ""
+msgstr "بەستەر"
 
 #: org/wikipediacleaner/gui/swing/deadlink/DeadLinkListTableModel.java:221
 #: org/wikipediacleaner/gui/swing/linter/LinterErrorListTableModel.java:232
 msgid "Start"
-msgstr ""
+msgstr "دەستپێکردن"
 
 #: org/wikipediacleaner/gui/swing/deadlink/DeadLinkListTableModel.java:225
 msgid "Status"
-msgstr ""
+msgstr "ڕەوش"
 
 #: org/wikipediacleaner/gui/swing/deadlink/DeadLinkPanel.java:80
 msgid "The following links seem to be dead:"
-msgstr ""
+msgstr "وادیارە بەستەرەکانی خوارەوە مردبن:"
 
 #: org/wikipediacleaner/gui/swing/deadlink/DeadLinkWindow.java:37
 msgid "Dead links"
-msgstr ""
+msgstr "بەستەرە مردووەکان"
 
 #: org/wikipediacleaner/gui/swing/deadlink/DeadLinkWorker.java:83
 msgid "No dead links were found."
-msgstr ""
+msgstr "ھیچ بەستەرێکی مردوو نەدۆزرایەوە."
 
 #: org/wikipediacleaner/gui/swing/deadlink/DeadLinkWorker.java:98
 #: org/wikipediacleaner/gui/swing/linter/LinterWorker.java:85
 msgid "Retrieving page contents"
-msgstr ""
+msgstr "ھێنانەوەی ناوەڕۆکەکانی پەڕە"
 
 #: org/wikipediacleaner/gui/swing/deadlink/DeadLinkWorker.java:112
 #: org/wikipediacleaner/gui/swing/deadlink/DeadLinkWorker.java:124
 #: org/wikipediacleaner/gui/swing/linter/LinterWorker.java:93
 #, java-format
 msgid "Analyzing {0}"
-msgstr ""
+msgstr "شیکردنەوەی {0}"
 
 #: org/wikipediacleaner/gui/swing/deadlink/DeadLinkWorker.java:153
 #, java-format
@@ -3431,15 +3439,15 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/linter/LinterErrorListTableModel.java:186
 msgid "Multiple templates"
-msgstr ""
+msgstr "فرە داڕێژەکان"
 
 #: org/wikipediacleaner/gui/swing/linter/LinterErrorListTableModel.java:228
 msgid "Parameters"
-msgstr ""
+msgstr "پارامەترەکان"
 
 #: org/wikipediacleaner/gui/swing/linter/LinterErrorListTableModel.java:236
 msgid "Type"
-msgstr ""
+msgstr "چەشن"
 
 #: org/wikipediacleaner/gui/swing/linter/LinterErrorPanel.java:81
 msgid "The following errors are currently detected by Linter:"
@@ -3455,11 +3463,11 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/menu/AnalysisPageListMenuCreator.java:44
 msgid "Find text"
-msgstr ""
+msgstr "دەق بدۆزەوە"
 
 #: org/wikipediacleaner/gui/swing/menu/AnalysisPageListMenuCreator.java:61
 msgid "Search in templates"
-msgstr ""
+msgstr "بەناو داڕێژەکان دا بگەڕێ"
 
 #: org/wikipediacleaner/gui/swing/menu/AnalysisPageListMenuCreator.java:91
 #: org/wikipediacleaner/gui/swing/menu/MWPaneDisambiguationMenuCreator.java:257
@@ -3468,39 +3476,39 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:156
 msgid "Template External Viewer"
-msgstr ""
+msgstr "بینەری دەرەکیی داڕێژە"
 
 #: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:165
 msgid "Template history"
-msgstr ""
+msgstr "مێژووی داڕێژە"
 
 #: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:199
 msgid "Analyze"
-msgstr ""
+msgstr "شی بکەوە"
 
 #: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:238
 msgid "Analyze template"
-msgstr ""
+msgstr "داڕێژە شی بکەوە"
 
 #: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:240
 msgid "Analyze page"
-msgstr ""
+msgstr "پەڕە شی بکەوە"
 
 #: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:306
 msgid "Current chapter"
-msgstr ""
+msgstr "بەشی ھەنووکە"
 
 #: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:351
 msgid "Remove link"
-msgstr ""
+msgstr "بەستەر لاببە"
 
 #: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:410
 msgid "Purge cache"
-msgstr ""
+msgstr "پاکسازیی کاش بکە"
 
 #: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:429
 msgid "Reload links"
-msgstr ""
+msgstr "بەستەرەکان بار بکەوە"
 
 #: org/wikipediacleaner/gui/swing/menu/DisambiguationPageListMenuCreator.java:56
 msgid "Remove mark on backlink"
@@ -3509,7 +3517,7 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/menu/MWPaneDisambiguationMenuCreator.java:72
 #: org/wikipediacleaner/gui/swing/menu/MWPaneDisambiguationMenuCreator.java:97
 msgid "Mark as normal link"
-msgstr ""
+msgstr "بە بەستەری ئاسایی دیاری بکە"
 
 #: org/wikipediacleaner/gui/swing/menu/MWPaneDisambiguationMenuCreator.java:75
 #: org/wikipediacleaner/gui/swing/menu/MWPaneDisambiguationMenuCreator.java:103
@@ -3518,7 +3526,7 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/menu/MWPaneDisambiguationMenuCreator.java:218
 #, java-format
 msgid "Using {0}"
-msgstr ""
+msgstr "بەکارھێنانی {0}"
 
 #: org/wikipediacleaner/gui/swing/menu/MWPaneDisambiguationMenuCreator.java:87
 msgid "Mark as normal link using template"
@@ -3619,23 +3627,23 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/AnalysisOptionsPanel.java:121
 msgid "Show disambiguation pages"
-msgstr ""
+msgstr "پەڕە ڕوونکردنەوەکان نیشان بدە"
 
 #: org/wikipediacleaner/gui/swing/options/AnalysisOptionsPanel.java:128
 msgid "Show missing pages"
-msgstr ""
+msgstr "پەڕە ونەکان نیشان بدە"
 
 #: org/wikipediacleaner/gui/swing/options/AnalysisOptionsPanel.java:135
 msgid "Show redirect pages"
-msgstr ""
+msgstr "پەڕە ڕەوانەکەرەکان نیشان بدە"
 
 #: org/wikipediacleaner/gui/swing/options/AnalysisOptionsPanel.java:142
 msgid "Show other pages"
-msgstr ""
+msgstr "پەڕەکانی تر نیشان بدە"
 
 #: org/wikipediacleaner/gui/swing/options/AnalysisOptionsPanel.java:177
 msgid "Hide window when sending"
-msgstr ""
+msgstr "لەکاتی ناردن پەنجەرەکە بشارەوە"
 
 #: org/wikipediacleaner/gui/swing/options/AnalysisOptionsPanel.java:184
 msgid "Save last replacement used"
@@ -3692,41 +3700,41 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:143
 msgid "Increase font size"
-msgstr ""
+msgstr "قەبارەی جۆرەپیت زیاد بکە"
 
 #: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:173
 msgid "Internal link"
-msgstr ""
+msgstr "بەستەری ناوەکی"
 
 #: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:179
 #: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:281
 msgid "Redirect link"
-msgstr ""
+msgstr "بەستەری ڕەوانەکەر"
 
 #: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:185
 #: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:287
 msgid "Missing link"
-msgstr ""
+msgstr "بەستەری ون"
 
 #: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:203
 msgid "Image"
-msgstr ""
+msgstr "وێنە"
 
 #: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:209
 msgid "Category"
-msgstr ""
+msgstr "پۆل"
 
 #: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:215
 msgid "Default sort"
-msgstr ""
+msgstr "ڕیزکردنی دیفاڵت"
 
 #: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:221
 msgid "Language link"
-msgstr ""
+msgstr "بەستەری زمان"
 
 #: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:227
 msgid "External link"
-msgstr ""
+msgstr "بەستەری دەرەکی"
 
 #: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:233
 msgid "Interwiki link"
@@ -3734,19 +3742,19 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:239
 msgid "Tag"
-msgstr ""
+msgstr "تاگ"
 
 #: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:245
 msgid "List items"
-msgstr ""
+msgstr "ئەندامەکانی پێڕست"
 
 #: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:251
 msgid "Table"
-msgstr ""
+msgstr "خشتە"
 
 #: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:257
 msgid "Reference"
-msgstr ""
+msgstr "سەرچاوە"
 
 #: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:263
 msgid "Programming elements"
@@ -3754,19 +3762,19 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:269
 msgid "Disambiguation link"
-msgstr ""
+msgstr "بەستەری ڕوونکردنەوە"
 
 #: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:275
 msgid "Normal internal link"
-msgstr ""
+msgstr "بەستەری ناوەکیی ئاسایی"
 
 #: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:293
 msgid "Disambiguation template"
-msgstr ""
+msgstr "داڕێژەی ڕوونکردنەوە"
 
 #: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:299
 msgid "Normal template"
-msgstr ""
+msgstr "داڕێژەی ئاسایی"
 
 #: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:305
 msgid "Help requested"
@@ -3786,41 +3794,41 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:434
 msgid "Italic"
-msgstr ""
+msgstr "لار بکە"
 
 #: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:442
 msgid "Bold"
-msgstr ""
+msgstr "تۆخ بکە"
 
 #: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:450
 msgid "Underline"
-msgstr ""
+msgstr "ھێڵ بەژێردا بھێنە"
 
 #: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:458
 msgid "Strike through"
-msgstr ""
+msgstr "ھێڵ بەناودا بھێنە"
 
 #: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:466
 #: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:471
 msgid "Foreground color"
-msgstr ""
+msgstr "ڕەنگی پێشەوە"
 
 #: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:470
 msgid "Choose foreground color"
-msgstr ""
+msgstr "ڕەنگی پێشەوە ھەڵبژێرە"
 
 #: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:479
 #: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:484
 msgid "Background color"
-msgstr ""
+msgstr "ڕەنگی پشتەوە"
 
 #: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:483
 msgid "Choose background color"
-msgstr ""
+msgstr "ڕەنگی پشتەوە ھەڵبژێرە"
 
 #: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:59
 msgid "General options"
-msgstr ""
+msgstr "ھەڵبژاردە گشتییەکان"
 
 #: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:80
 msgid "Use HTTP for MediaWiki API calls (less secure)"
@@ -3832,7 +3840,7 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:98
 msgid "Mark edits as minor"
-msgstr ""
+msgstr "دەستکارییەکان بە بچووک دیاری بکە"
 
 #: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:107
 msgid "Close disambiguation window after sending"
@@ -3877,7 +3885,7 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:197
 msgid "Watch all edited pages"
-msgstr ""
+msgstr "چاودێریی ھەموو پەڕە دەستکاریکراوەکان بکە"
 
 #: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:215
 msgid "Copy/paste in popup menu"
@@ -3959,7 +3967,7 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/OptionsWindow.java:97
 msgid "Sorting"
-msgstr ""
+msgstr "ڕیزکردن"
 
 #: org/wikipediacleaner/gui/swing/options/OptionsWindow.java:100
 msgid "Formatting"
@@ -3967,7 +3975,7 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/OptionsWindow.java:103
 msgid "Shortcuts"
-msgstr ""
+msgstr "ناوبڕەکان"
 
 #: org/wikipediacleaner/gui/swing/options/OptionsWindow.java:106
 msgid "Debug"
@@ -3976,20 +3984,20 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/options/OptionsWindow.java:124
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:110
 msgid "Apply"
-msgstr ""
+msgstr "جێبەجێ بکە"
 
 #: org/wikipediacleaner/gui/swing/options/OptionsWindow.java:144
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:175
 msgid "Restore defaults"
-msgstr ""
+msgstr "دیفاڵتەکان بگەڕێنەرەوە"
 
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:73
 msgid "Shortcut options (restart needed)"
-msgstr ""
+msgstr "ھەڵبژاردەکانی ناوبڕ (ڕیستارت پێویستە)"
 
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:160
 msgid "Logout"
-msgstr ""
+msgstr "بچۆ دەرەوە"
 
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:229
 msgid "Press key for shortcut or ESC to cancel"
@@ -4001,15 +4009,15 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/SortingOptionsPanel.java:128
 msgid "Details"
-msgstr ""
+msgstr "وردەکارییەکان"
 
 #: org/wikipediacleaner/gui/swing/options/SortingOptionsPanel.java:144
 msgid "Up"
-msgstr ""
+msgstr "سەرەوە"
 
 #: org/wikipediacleaner/gui/swing/options/SortingOptionsPanel.java:149
 msgid "Down"
-msgstr ""
+msgstr "خوارەوە"
 
 #: org/wikipediacleaner/gui/swing/options/TranslationOptionsPanel.java:46
 msgid "Translation options"
@@ -4025,11 +4033,11 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/TranslationOptionsPanel.java:80
 msgid "Translate categories"
-msgstr ""
+msgstr "پۆلەکان وەربگێڕە"
 
 #: org/wikipediacleaner/gui/swing/options/TranslationOptionsPanel.java:87
 msgid "Translate templates names"
-msgstr ""
+msgstr "ناوی داڕێژەکان وەربگێڕە"
 
 #: org/wikipediacleaner/gui/swing/options/TranslationOptionsPanel.java:94
 msgid "Translate templates without parameters"
@@ -4037,7 +4045,7 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/pagelist/PageListTableModel.java:230
 msgid "Other"
-msgstr ""
+msgstr "ھی تر"
 
 #: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:172
 msgid "Backlinks"
@@ -4062,15 +4070,15 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:257
 #: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:489
 msgid "Save list"
-msgstr ""
+msgstr "پێڕست پاشەکەوت بکە"
 
 #: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:281
 msgid "Remove page"
-msgstr ""
+msgstr "پەڕە لا ببە"
 
 #: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:288
 msgid "Add page"
-msgstr ""
+msgstr "پەڕە زیاد بکە"
 
 #: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:364
 msgid "Articles with links to disambiguation pages"
@@ -4100,11 +4108,11 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/pagelist/PageListWorker.java:87
 msgid "All articles"
-msgstr ""
+msgstr "ھەموو وتارەکان"
 
 #: org/wikipediacleaner/gui/swing/pagelist/PageListWorker.java:88
 msgid "Articles in main namespace"
-msgstr ""
+msgstr "وتارەکان لە بۆشاییناوی سەرەکی"
 
 #: org/wikipediacleaner/gui/swing/pagelist/PageListWorker.java:89
 msgid "Articles associated to talk pages"
@@ -4154,7 +4162,7 @@ msgstr[1] ""
 
 #: org/wikipediacleaner/gui/swing/worker/CheckArticleTools.java:104
 msgid "Templates"
-msgstr ""
+msgstr "داڕێژەکان"
 
 #: org/wikipediacleaner/gui/swing/worker/CheckArticleTools.java:107
 #, java-format
@@ -4263,7 +4271,7 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/worker/NewSectionWorker.java:64
 msgid "Adding comment"
-msgstr ""
+msgstr "زیادکردنی کورتەی دەستکاری"
 
 #: org/wikipediacleaner/gui/swing/worker/RandomPageWorker.java:51
 msgid "Getting random page"
