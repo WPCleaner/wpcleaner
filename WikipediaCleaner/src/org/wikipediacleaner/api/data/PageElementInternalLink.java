@@ -334,6 +334,9 @@ public class PageElementInternalLink extends PageElement {
           ((link != null) ? link.trim() : "") +
           ((anchor != null) ? ("#" + anchor.trim()) : "");
     }
+    if ((fullLink != null) && (fullLink.startsWith("/"))) {
+      fullLink = ":" + fullLink;
+    }
     if (text != null) {
       if ((fullLink != null) && (!Page.areSameTitle(fullLink, text))) {
         sb.append(fullLink);
