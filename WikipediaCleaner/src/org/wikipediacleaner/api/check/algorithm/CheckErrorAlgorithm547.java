@@ -86,30 +86,43 @@ public class CheckErrorAlgorithm547 extends CheckErrorAlgorithmBase {
           return result;
         }
 
-        // Check if fix can be automatic
-        boolean automatic = true;
-        if (automatic &&
-            (analysis.isInImage(index) != null)) {
-          automatic = false;
-        }
-
         // Determine boundaries
+        boolean automatic = false;
         int begin = listItem.getBeginIndex();
         int end = listItem.getEndIndex();
         boolean extended = false;
         if (end + 1 < contents.length()) {
           char nextChar = contents.charAt(end + 1);
-          if ((nextChar == '\n') || PageElementListItem.isListIndicator(nextChar)) {
+          if (nextChar == '\n') {
+            automatic = true;
             end++;
             extended = true;
+          } else if (PageElementListItem.isListIndicator(nextChar)) {
+            end++;
+            extended = true;
+          } else {
+            automatic = true;
           }
+        } else {
+          automatic = true;
         }
-        if (!extended && (begin > 1)) {
+        if (begin > 1) {
           if ((contents.charAt(begin - 1) == '\n') &&
               (contents.charAt(begin - 2) == '\n')) {
-            begin--;
-            extended = true;
+            if (!extended) {
+              begin--;
+              extended = true;
+            }
+            automatic = true;
           }
+        } else {
+          automatic = true;
+        }
+
+        // Specific check if fix can be automatic
+        if (automatic &&
+            (analysis.isInImage(index) != null)) {
+          automatic = false;
         }
 
         // Report error
