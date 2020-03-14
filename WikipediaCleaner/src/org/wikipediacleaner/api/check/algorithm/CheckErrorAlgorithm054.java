@@ -83,7 +83,6 @@ public class CheckErrorAlgorithm054 extends CheckErrorAlgorithmBase {
       if (isList) {
 
         // Search for <br /> at the end of the line
-        System.out.println("Analyzing " + contents.substring(beginLineIndex, endLineIndex));
         boolean breakFound = false;
         boolean imageFound = false;
         boolean tagAfter = false;
