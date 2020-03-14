@@ -211,7 +211,9 @@ public class Bot implements BasicWorkerListener {
     // Execute action depending on the parameters
     BasicWorker worker = null;
     boolean actionDone = false;
-    if ("DoTasks".equalsIgnoreCase(action)) {
+    if (action.startsWith("#")) {
+      actionDone = true;
+    } else if ("DoTasks".equalsIgnoreCase(action)) {
       actionDone = true;
       if (args.length > currentArg) {
         File tasks = new File(args[currentArg]);

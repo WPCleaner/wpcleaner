@@ -259,6 +259,9 @@ public class ListCWWorker extends BasicWorker {
           while (index < notice.length()) {
             int codePoint = notice.codePointAt(index);
             switch (codePoint) {
+            case '&': // Replace "&" by its HTML element
+              line.append("&amp;");
+              break;
             case '\n': // Replace \n by a visual character
               line.append('\u21b5');
               break;
