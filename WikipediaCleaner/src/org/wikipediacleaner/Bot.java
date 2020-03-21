@@ -118,7 +118,7 @@ public class Bot implements BasicWorkerListener {
             log.warn("When using parameter '-prefix', you must specify the prefix used for the comments");
             return;
           }
-          prefix = args[currentArg + 1];
+          prefix = args[currentArg + 1].replaceAll("_", " ");
           currentArg += 2;
         } else {
           done = true;
@@ -316,7 +316,7 @@ public class Bot implements BasicWorkerListener {
         actionDone = true;
         if ("Prefix".equalsIgnoreCase(parameter)) {
           if (args.length > currentArg + 1) {
-            CommentManager.addExtraText(args[currentArg + 1]);
+            CommentManager.addExtraText(args[currentArg + 1].replaceAll("_", " "));
           }
         } else if ("AdditionalAlgorithms".equalsIgnoreCase(parameter)) {
           additionalAlgorithms.clear();
