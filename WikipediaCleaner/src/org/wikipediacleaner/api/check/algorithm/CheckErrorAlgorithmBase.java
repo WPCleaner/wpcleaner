@@ -114,6 +114,14 @@ public abstract class CheckErrorAlgorithmBase implements CheckErrorAlgorithm {
   @Override
   public void setConfiguration(CWConfigurationError configuration) {
     this.configuration = configuration;
+    initializeSettings();
+  }
+
+  /**
+   * Initialize settings for the algorithm.
+   */
+  protected void initializeSettings() {
+    // Nothing to do for base class
   }
 
   /**

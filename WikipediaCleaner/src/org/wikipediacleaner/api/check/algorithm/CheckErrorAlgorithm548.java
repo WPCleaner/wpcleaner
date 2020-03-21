@@ -8,9 +8,13 @@
 package org.wikipediacleaner.api.check.algorithm;
 
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
+import org.wikipediacleaner.api.constants.WPCConfiguration;
 import org.wikipediacleaner.api.data.CharacterUtils;
 import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.PageAnalysis;
@@ -18,6 +22,7 @@ import org.wikipediacleaner.api.data.PageElement;
 import org.wikipediacleaner.api.data.PageElementExternalLink;
 import org.wikipediacleaner.api.data.PageElementInternalLink;
 import org.wikipediacleaner.api.data.PageElementInterwikiLink;
+import org.wikipediacleaner.i18n.GT;
 
 
 /**
@@ -30,7 +35,31 @@ public class CheckErrorAlgorithm548 extends CheckErrorAlgorithmBase {
     super("Punctuation in link");
   }
 
+  /** Characters recognized as punctuation */
   private static final String PUNCTUATIONS = ",;"; // Avoid ":" and "."
+
+  /** List of links to be ignored */
+  private static final String PARAMETER_IGNORE_LINKS = "ignore_links";
+
+  /**
+   * Initialize settings for the algorithm.
+   * 
+   * @see org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase#initializeSettings()
+   */
+  @Override
+  protected void initializeSettings() {
+    String tmp = getSpecificProperty(PARAMETER_IGNORE_LINKS, true, true, true);
+    ignoreLinks.clear();
+    if (tmp != null) {
+      List<String> tmpList = WPCConfiguration.convertPropertyToStringList(tmp);
+      if (tmpList != null) {
+        ignoreLinks.addAll(tmpList);
+      }
+    }
+  }
+
+  /** Links to ignore */
+  private final Set<String> ignoreLinks = new HashSet<>();
 
   /**
    * Analyze a page to check if errors are present.
@@ -83,7 +112,7 @@ public class CheckErrorAlgorithm548 extends CheckErrorAlgorithmBase {
       if (link.getText() != null) {
         int beginText = link.getBeginIndex() + link.getTextOffset();
         int endText = link.getEndIndex() - 2;
-        result |= analyzeLink(analysis, errors, link, beginText, endText);
+        result |= analyzeLink(analysis, errors, link, link.getLink(), ignoreLinks, beginText, endText);
       }
     }
     return result;
@@ -109,7 +138,7 @@ public class CheckErrorAlgorithm548 extends CheckErrorAlgorithmBase {
       if (link.getText() != null) {
         int beginText = link.getBeginIndex() + link.getTextOffset();
         int endText = link.getEndIndex() - 1;
-        result |= analyzeLink(analysis, errors, link, beginText, endText);
+        result |= analyzeLink(analysis, errors, link, null, null, beginText, endText);
       }
     }
     return result;
@@ -135,7 +164,7 @@ public class CheckErrorAlgorithm548 extends CheckErrorAlgorithmBase {
       if (link.getText() != null) {
         int beginText = link.getBeginIndex() + link.getTextOffset();
         int endText = link.getEndIndex() - 2;
-        result |= analyzeLink(analysis, errors, link, beginText, endText);
+        result |= analyzeLink(analysis, errors, link, null, null, beginText, endText);
       }
     }
     return result;
@@ -147,6 +176,8 @@ public class CheckErrorAlgorithm548 extends CheckErrorAlgorithmBase {
    * @param analysis Page analysis.
    * @param errors Errors found in the page.
    * @param link Link to analyze.
+   * @param linkTarget Target of the link (needed for filtering)
+   * @param linksToIgnore Links to be filtered out.
    * @param beginText Beginning of the text to analyze.
    * @param endText End of the text to analyze.
    * @return Flag indicating if the error was found.
@@ -154,7 +185,8 @@ public class CheckErrorAlgorithm548 extends CheckErrorAlgorithmBase {
   private boolean analyzeLink(
       PageAnalysis analysis,
       Collection<CheckErrorResult> errors,
-      PageElement link, int beginText, int endText) {
+      PageElement link, String linkTarget, Set<String> linksToIgnore,
+      int beginText, int endText) {
 
     // Analyze text
     String contents = analysis.getContents();
@@ -164,6 +196,13 @@ public class CheckErrorAlgorithm548 extends CheckErrorAlgorithmBase {
     }
     // Note: special trick to avoid modifying incorrectly parsed links (a link should finish by a ])
     if ((endText + 1 >= contents.length()) || (contents.charAt(endText) != ']')) {
+      return false;
+    }
+
+    // Check ignore cases
+    if ((linkTarget != null) &&
+        (linksToIgnore != null) &&
+        (linksToIgnore.contains(linkTarget))) {
       return false;
     }
 
@@ -250,5 +289,16 @@ public class CheckErrorAlgorithm548 extends CheckErrorAlgorithmBase {
       return analysis.getContents();
     }
     return fixUsingAutomaticReplacement(analysis);
+  }
+
+  /**
+   * @return Map of parameters (key=name, value=description).
+   * @see org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase#getParameters()
+   */
+  @Override
+  public Map<String, String> getParameters() {
+    Map<String, String> parameters = super.getParameters();
+    parameters.put(PARAMETER_IGNORE_LINKS, GT._T("Links to ignore"));
+    return parameters;
   }
 }
