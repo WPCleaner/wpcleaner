@@ -365,6 +365,7 @@ public class ListCWWorker extends BasicWorker {
     }
 
     // Prepare result
+    Long maxSize = getWikipedia().getWikiConfiguration().getMaxArticleSize();
     logCW.info("Preparing results of dump analysis for error " + algorithm.getErrorNumberString());
     List<Detection> tmpPages = new ArrayList<>(pages);
     Collections.sort(tmpPages);
@@ -401,6 +402,10 @@ public class ListCWWorker extends BasicWorker {
 
     // Output to a page
     if (pageName != null) {
+      if ((maxSize != null) && (result.length() >= maxSize)) {
+        logCW.info("Trimming results of dump analysis for error " + algorithm.getErrorNumberString());
+        result = generateResult(tmpPages, maxSize);
+      }
       String truePageName = MessageFormat.format(pageName, algorithm.getErrorNumberString());
       logCW.info("Writing dump analysis results for error " + algorithm.getErrorNumberString() + " to page " + truePageName);
       boolean finished = false;
