@@ -156,9 +156,11 @@ public class CheckErrorAlgorithm549 extends CheckErrorAlgorithmBase {
             otherChar = true;
           }
           boolean textEquals = text.equals(buffer.toString());
-          if (textEquals) {
+          boolean textEqualsCase = text.equalsIgnoreCase(buffer.toString());
+          if (textEqualsCase) {
             automatic = false;
-          } else if (!nowiki || otherChar || punctuation) {
+          }
+          if (!textEquals && (!nowiki || otherChar || punctuation)) {
             if (text.startsWith("'") &&
                 buffer.toString().endsWith("'")) {
               automatic = false;
@@ -169,7 +171,7 @@ public class CheckErrorAlgorithm549 extends CheckErrorAlgorithmBase {
             }
             if (punctuation && !otherChar) {
               automatic = false;
-            }
+            } 
           }
         }
         if (buffer.length() == 0) {
