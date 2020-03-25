@@ -12,6 +12,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
+import java.net.SocketTimeoutException;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -21,6 +22,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Callable;
 import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -373,32 +375,7 @@ public class ListCWWorker extends BasicWorker {
     String result = generateResult(tmpPages, null);
 
     // Output to file
-    if (output != null) {
-      File outputFile = null;
-      if (!output.getName().contains("{0}")) {
-        outputFile = new File(
-            output,
-            "CW_" + getWikipedia().getSettings().getCodeCheckWiki() + "_" + algorithm.getErrorNumberString() + ".txt");
-      } else {
-        outputFile = new File(MessageFormat.format(output.getAbsolutePath(), algorithm.getErrorNumberString()));
-      }
-      logCW.info("Writing dump analysis results for error " + algorithm.getErrorNumberString() + " to file " + outputFile.getName());
-      BufferedWriter writer = null;
-      try {
-        writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(outputFile, false), "UTF8"));
-        writer.write(result);
-      } catch (IOException e) {
-        // Nothing to do
-      } finally {
-        if (writer != null) {
-          try {
-            writer.close();
-          } catch (IOException e) {
-            // Nothing to do
-          }
-        }
-      }
-    }
+    outputResultToFile(output, algorithm, result);
 
     // Output to a page
     if (pageName != null) {
@@ -455,7 +432,18 @@ public class ListCWWorker extends BasicWorker {
                     "Dump analysis for error n°" + algorithm.getErrorNumberString() + " (" + nbPages + " pages)",
                     true, true, false);
               } catch (APIException e) {
+                // Check if it can be due to a page too big
+                boolean tooBig = false;
                 if (EnumQueryResult.CONTENT_TOO_BIG.equals(e.getQueryResult())) {
+                  tooBig = true;
+                }
+                if ((e.getCause() != null) &&
+                    (e.getCause() instanceof SocketTimeoutException)) {
+                  tooBig = true;
+                }
+
+                // Try reducing the result if it's too big
+                if (tooBig) {
                   for (int i = 0; i < 100; i++) {
                     if (!tmpPages.isEmpty()) {
                       finished = false;
@@ -472,7 +460,51 @@ public class ListCWWorker extends BasicWorker {
             }
           }
         } catch (APIException e) {
-          // Nothing
+          // Try to save the result in a file
+          File outputDir = new File(System.getProperty("user.home"));
+          outputResultToFile(outputDir, algorithm, result);
+        }
+      }
+    }
+  }
+
+  /**
+   * Output result of the analysis to a file.
+   * 
+   * @param outputPath Output directory (or file if it contains a {0}).
+   * @param algorithm Algorithm.
+   * @param result Formatted result.
+   */
+  private void outputResultToFile(
+      File outputPath, CheckErrorAlgorithm algorithm, String result) {
+
+    // Determine file to which the error should be written
+    if (outputPath == null) {
+      return;
+    }
+    File outputFile = null;
+    if (!outputPath.getName().contains("{0}")) {
+      outputFile = new File(
+          outputPath,
+          "CW_" + getWikipedia().getSettings().getCodeCheckWiki() + "_" + algorithm.getErrorNumberString() + ".txt");
+    } else {
+      outputFile = new File(MessageFormat.format(output.getAbsolutePath(), algorithm.getErrorNumberString()));
+    }
+
+    // Write the file
+    logCW.info("Writing dump analysis results for error " + algorithm.getErrorNumberString() + " to file " + outputFile.getName());
+    BufferedWriter writer = null;
+    try {
+      writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(outputFile, false), "UTF8"));
+      writer.write(result);
+    } catch (IOException e) {
+      // Nothing to do
+    } finally {
+      if (writer != null) {
+        try {
+          writer.close();
+        } catch (IOException e) {
+          // Nothing to do
         }
       }
     }
@@ -491,23 +523,30 @@ public class ListCWWorker extends BasicWorker {
   @Override
   public void finished() {
     super.finished();
-    if (getWindow() != null) {
-      StringBuilder message = new StringBuilder();
+
+    // Build final message
+    StringBuilder message = new StringBuilder();
+    message.append(GT.__(
+        "{0} page has been analyzed",
+        "{0} pages have been analyzed",
+        countAnalyzed, Integer.toString(countAnalyzed)));
+    for (AlgorithmInformation algorithmInfo : selectedAlgorithms) {
+      CheckErrorAlgorithm algorithm = algorithmInfo.algorithm;
+      Map<String, Detection> pages = algorithmInfo.getDetections();
+      message.append("\n");
       message.append(GT.__(
-          "{0} page has been analyzed",
-          "{0} pages have been analyzed",
-          countAnalyzed, Integer.toString(countAnalyzed)));
-      for (AlgorithmInformation algorithmInfo : selectedAlgorithms) {
-        CheckErrorAlgorithm algorithm = algorithmInfo.algorithm;
-        Map<String, Detection> pages = algorithmInfo.getDetections();
-        message.append("\n");
-        message.append(GT.__(
-            "{0} page has been detected for algorithm {1}",
-            "{0} pages have been detected for algorithm {1}",
-            pages.size(), new Object[] {
-              pages.size(),
-              algorithm.getErrorNumberString() + " - " + algorithm.getShortDescription()}));
-      }
+          "{0} page has been detected for algorithm {1}",
+          "{0} pages have been detected for algorithm {1}",
+          pages.size(), new Object[] {
+            pages.size(),
+            algorithm.getErrorNumberString() + " - " + algorithm.getShortDescription()}));
+    }
+
+    // Log final message
+    logCW.info(message.toString());
+
+    // Display final message
+    if (getWindow() != null) {
       Utilities.displayInformationMessage(
           getWindow().getParentComponent(), message.toString());
     }
@@ -532,7 +571,23 @@ public class ListCWWorker extends BasicWorker {
     @Override
     public void addTask(Callable<?> task) {
       // hasFinished(); // To clean up done tasks
+      while (getRemainingTasksCount() > 10000) {
+        try {
+          // logCW.info("Too many tasks remaining, waiting a bit");
+          TimeUnit.MILLISECONDS.sleep(1000);
+        } catch (InterruptedException e) {
+          // Do nothing
+        }
+        cleanUpDone();
+      }
       super.addTask(task);
+      cleanUpDone();
+    }
+
+    /**
+     * Clean up tasks that are done and finished.
+     */
+    private void cleanUpDone() {
       while (getFirstResultIfDone() != null) {
         // Do nothing, done result is simply removed from the list of tasks to clean up done tasks
       }
