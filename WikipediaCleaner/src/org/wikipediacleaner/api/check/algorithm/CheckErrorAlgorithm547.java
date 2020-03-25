@@ -78,6 +78,11 @@ public class CheckErrorAlgorithm547 extends CheckErrorAlgorithmBase {
           shouldReport = false;
         }
       }
+      if (shouldReport) {
+        if (analysis.isInComment(index) != null) {
+          shouldReport = false;
+        }
+      }
 
       // Report error
       if (shouldReport) {
