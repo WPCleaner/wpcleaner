@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2020-03-06 21:02+0100\n"
+"POT-Creation-Date: 2020-03-25 08:31+0100\n"
 "PO-Revision-Date: 2018-01-31 07:52+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: French <fr@li.org>\n"
@@ -1004,21 +1004,26 @@ msgstr "à privilégier pour les sortis, noms de fonctions et de balise, etc."
 msgid "preferred for everything else"
 msgstr "à privilégier pour tout le reste"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmBase.java:277
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm548.java:301
+#, fuzzy
+msgid "Links to ignore"
+msgstr "Liens vers {0}"
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmBase.java:285
 msgid "Title of the article describing this type of error"
 msgstr "titre de la page d’aide décrivant l’erreur"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmBase.java:278
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmBase.java:286
 msgid "Set to true to prevent automatic modifications for this type of error"
 msgstr ""
 "Configurer à true pour empêcher les modifications automatiques pour ce type "
 "d’erreur"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmBase.java:279
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmBase.java:287
 msgid "List of false positives for this type of error"
 msgstr "liste des faux positifs (en vert dans l’interface)"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmBase.java:280
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmBase.java:288
 msgid "Page containing the list of false positives for this type of error"
 msgstr "Page contenant la liste des faux positifs pour ce type d'erreur"
 
@@ -3129,21 +3134,21 @@ msgstr "Vérifier la dernière version de l’article avant de signaler une erre
 msgid "Only check articles previously reported"
 msgstr "Vérifier seulement les articles précédemment signalés"
 
-#: org/wikipediacleaner/gui/swing/bot/ListCWWorker.java:489
+#: org/wikipediacleaner/gui/swing/bot/ListCWWorker.java:530
 #, java-format
 msgid "{0} page has been analyzed"
 msgid_plural "{0} pages have been analyzed"
 msgstr[0] "{0} page a été analysée"
 msgstr[1] "{0} pages ont été analysées"
 
-#: org/wikipediacleaner/gui/swing/bot/ListCWWorker.java:497
+#: org/wikipediacleaner/gui/swing/bot/ListCWWorker.java:538
 #, java-format
 msgid "{0} page has been detected for algorithm {1}"
 msgid_plural "{0} pages have been detected for algorithm {1}"
 msgstr[0] "{0} page a été détectée pour l’algorithme {1}"
 msgstr[1] "{0} pages ont été détectées pour l’algorithme {1}"
 
-#: org/wikipediacleaner/gui/swing/bot/ListCWWorker.java:645
+#: org/wikipediacleaner/gui/swing/bot/ListCWWorker.java:708
 #, java-format
 msgid "{0} pages processed"
 msgstr "{0} pages analysées"
