@@ -18,6 +18,7 @@ import org.wikipediacleaner.api.check.CheckError;
 import org.wikipediacleaner.api.check.CheckErrorPage;
 import org.wikipediacleaner.api.check.CheckWiki;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithm;
+import org.wikipediacleaner.api.constants.EnumQueryResult;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.constants.WPCConfiguration;
 import org.wikipediacleaner.api.constants.WPCConfigurationStringList;
@@ -108,7 +109,20 @@ public class AutomaticListCWWorker extends BasicWorker {
         if (!shouldContinue()) {
           return null;
         }
-        analyzePage(page);
+        try {
+          analyzePage(page);
+        } catch (APIException e) {
+          boolean ignoreException = false;
+          EnumQueryResult result = e.getQueryResult();
+          if (result != null) {
+            if (EnumQueryResult.PROTECTED_PAGE.equals(result)) {
+              ignoreException = true;
+            }
+          }
+          if (!ignoreException) {
+            throw e;
+          }
+        }
       }
     } catch (APIException e) {
       return e;
