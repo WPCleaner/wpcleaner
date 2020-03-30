@@ -14,8 +14,11 @@ import java.util.Map;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.HtmlCharacters;
+import org.wikipediacleaner.api.data.CharacterUtils;
+import org.wikipediacleaner.api.data.MagicWord;
 import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementCategory;
+import org.wikipediacleaner.api.data.PageElementInternalLink;
 import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.gui.swing.component.MWPane;
 import org.wikipediacleaner.i18n.GT;
@@ -143,6 +146,7 @@ public class CheckErrorAlgorithm016 extends CheckErrorAlgorithmBase {
         List<String> otherReplacements = new ArrayList<String>();
         boolean unsafeCharacter = false;
         boolean checkUnsafe = false;
+        boolean unsafeInRedirect = false;
         int i = begin;
         while (i < end) {
           codePoint = contents.codePointAt(i);
@@ -151,6 +155,7 @@ public class CheckErrorAlgorithm016 extends CheckErrorAlgorithmBase {
             replacementB.appendCodePoint(codePoint);
             unsafeCharacter |= (automaticChars.indexOf(codePoint) < 0);
           } else {
+            unsafeInRedirect |= !control.safeInRedirect;
             if (!control.removable) {
               int replaceBy = 0;
               if (control == ControlCharacter.NON_BREAKING_SPACE) {
@@ -197,12 +202,38 @@ public class CheckErrorAlgorithm016 extends CheckErrorAlgorithmBase {
           i += Character.charCount(codePoint);
         }
         boolean automatic = (!unsafeCharacter || !checkUnsafe);
-        if (analysis.getPage().getRedirects().isRedirect()) {
+
+        // Special handling for redirects
+        if (analysis.getPage().getRedirects().isRedirect() && automatic) {
+          boolean okInRedirect = false;
+
+          // Categories can be fixed in redirects
           PageElementCategory category = analysis.isInCategory(index);
-          if (category == null) {
+          if (category != null) {
+            okInRedirect = true;
+          }
+
+          // Redirects themselves can be fixed depending on the control character
+          if (!unsafeInRedirect) {
+            PageElementInternalLink iLink = analysis.isInInternalLink(index);
+            if (iLink != null) {
+              int tmpIndex = iLink.getBeginIndex();
+              while ((tmpIndex > 0) && CharacterUtils.isWhitespace(contents.charAt(tmpIndex - 1))) {
+                tmpIndex--;
+              }
+              MagicWord magicWord = analysis.getWikiConfiguration().getMagicWordByName(MagicWord.REDIRECT);
+              if (magicWord.isPossibleAlias(contents.substring(0, tmpIndex).trim())) {
+                okInRedirect = true;
+              }
+            }
+          }
+
+          // Disable automatic fixing for some redirects
+          if (!okInRedirect) {
             automatic = false;
           }
         }
+
         String original = contents.substring(begin, end);
         String replacement = replacementB.toString();
         if (!replacement.equals(original)) {
@@ -302,33 +333,34 @@ public class CheckErrorAlgorithm016 extends CheckErrorAlgorithmBase {
    * Control characters characteristics.
    */
   private enum ControlCharacter {
-    DELETE(0x007F, 0x007F, true, false, GT._No("Delete")),
-    NON_BREAKING_SPACE(0x00A0, 0x00A0, false, true, GT._No("Non-breaking space")),
-    SOFT_HYPHEN(0x00AD, 0x00AD, true, false, GT._No("Soft hyphen")),
-    THREE_PER_EM_SPACE(0x2004, 0x2004, false, false, GT._No("Thee-per-em space")),
-    FOUR_PER_EM_SPACE(0x2005, 0x2005, false, false, GT._No("Four-per-em space")),
-    SIX_PER_EM_SPACE(0x2006, 0x2006, false, false, GT._No("Six-per-em space")),
-    FIGURE_SPACE(0x2007, 0x2007, false, false, GT._No("Figure space")),
-    PUNCTUATION_SPACE(0x2008, 0x2008, false, false, GT._No("Punctuation space")),
-    ZERO_WIDTH_SPACE(0x200B, 0x200B, true, false, GT._No("Zero-width space")),
-    LEFT_TO_RIGHT_MARK(0x200E, 0x200E, true, false, GT._No("Left-to-right mark")),
-    RIGHT_TO_LEFT_MARK(0x200F, 0x200F, true, false, GT._No("Right-to-left mark")),
-    LINE_SEPARATOR(0x2028, 0x2028, true, false, GT._No("Line separator")),
-    LEFT_TO_RIGHT_EMBEDDING(0x202A, 0x202A, true, false, GT._No("Left-to-right embedding")),
-    RIGHT_TO_LEFT_EMBEDDING(0x202B, 0x202B, true, false, GT._No("Right-to-left embedding")),
-    POP_DIRECTIONAL_FORMATTING(0x202C, 0x202C, true, false, GT._No("Pop directional formatting")),
-    LEFT_TO_RIGHT_OVERRIDE(0x202D, 0x202D, true, false, GT._No("Left-to-right override")),
-    RIGHT_TO_LEFT_OVERRIDE(0x202E, 0x202E, true, false, GT._No("Right-to-left override")),
-    BYTE_ORDER_MARK(0xFEFF, 0xFEFF, true, false, GT._No("Byte order mark")),
-    OBJECT_REPLACEMENT_CHARACTER(0xFFFC, 0xFFFC, true, false, GT._No("Object replacement character")),
-    PUA(0xE000, 0xF8FF, false, false, GT._No("Private use area")),
-    PUA_A(0XF0000, 0xFFFFD, false, false, GT._No("Private use area A")),
-    PUA_B(0x100000, 0x10FFFD, false, false, GT._No("Private use area B"));
+    DELETE                      (0x007F,   0x007F,   true,  false, null,          GT._No("Delete")),
+    NON_BREAKING_SPACE          (0x00A0,   0x00A0,   false, true,  null,          GT._No("Non-breaking space")),
+    SOFT_HYPHEN                 (0x00AD,   0x00AD,   true,  false, Boolean.FALSE, GT._No("Soft hyphen")),
+    THREE_PER_EM_SPACE          (0x2004,   0x2004,   false, false, null,          GT._No("Thee-per-em space")),
+    FOUR_PER_EM_SPACE           (0x2005,   0x2005,   false, false, null,          GT._No("Four-per-em space")),
+    SIX_PER_EM_SPACE            (0x2006,   0x2006,   false, false, null,          GT._No("Six-per-em space")),
+    FIGURE_SPACE                (0x2007,   0x2007,   false, false, null,          GT._No("Figure space")),
+    PUNCTUATION_SPACE           (0x2008,   0x2008,   false, false, null,          GT._No("Punctuation space")),
+    ZERO_WIDTH_SPACE            (0x200B,   0x200B,   true,  false, null,          GT._No("Zero-width space")),
+    LEFT_TO_RIGHT_MARK          (0x200E,   0x200E,   true,  false, Boolean.TRUE,  GT._No("Left-to-right mark")),
+    RIGHT_TO_LEFT_MARK          (0x200F,   0x200F,   true,  false, Boolean.TRUE,  GT._No("Right-to-left mark")),
+    LINE_SEPARATOR              (0x2028,   0x2028,   true,  false, null,          GT._No("Line separator")),
+    LEFT_TO_RIGHT_EMBEDDING     (0x202A,   0x202A,   true,  false, null,          GT._No("Left-to-right embedding")),
+    RIGHT_TO_LEFT_EMBEDDING     (0x202B,   0x202B,   true,  false, null,          GT._No("Right-to-left embedding")),
+    POP_DIRECTIONAL_FORMATTING  (0x202C,   0x202C,   true,  false, null,          GT._No("Pop directional formatting")),
+    LEFT_TO_RIGHT_OVERRIDE      (0x202D,   0x202D,   true,  false, null,          GT._No("Left-to-right override")),
+    RIGHT_TO_LEFT_OVERRIDE      (0x202E,   0x202E,   true,  false, null,          GT._No("Right-to-left override")),
+    BYTE_ORDER_MARK             (0xFEFF,   0xFEFF,   true,  false, null,          GT._No("Byte order mark")),
+    OBJECT_REPLACEMENT_CHARACTER(0xFFFC,   0xFFFC,   true,  false, null,          GT._No("Object replacement character")),
+    PUA                         (0xE000,   0xF8FF,   false, false, null,          GT._No("Private use area")),
+    PUA_A                       (0XF0000,  0xFFFFD,  false, false, null,          GT._No("Private use area A")),
+    PUA_B                       (0x100000, 0x10FFFD, false, false, null,          GT._No("Private use area B"));
 
     public final int begin;
     public final int end;
     public final boolean removable;
     public final boolean safe;
+    public final boolean safeInRedirect;
     public final String description;
 
     /**
@@ -340,12 +372,13 @@ public class CheckErrorAlgorithm016 extends CheckErrorAlgorithmBase {
      */
     private ControlCharacter(
         int begin, int end,
-        boolean removable, boolean safe,
+        boolean removable, boolean safe, Boolean safeInRedirect,
         String description) {
       this.begin = begin;
       this.end = end;
       this.removable = removable;
       this.safe = safe;
+      this.safeInRedirect = (safeInRedirect != null) ? safeInRedirect : false;
       this.description = description;
     }
 
