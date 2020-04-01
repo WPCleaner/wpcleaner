@@ -366,104 +366,142 @@ public class ListCWWorker extends BasicWorker {
       return;
     }
 
-    // Prepare result
-    Long maxSize = getWikipedia().getWikiConfiguration().getMaxArticleSize();
-    logCW.info("Preparing results of dump analysis for error " + algorithm.getErrorNumberString());
+    // Prepare list of pages
     List<Detection> tmpPages = new ArrayList<>(pages);
     Collections.sort(tmpPages);
-    int nbPages = tmpPages.size();
-    String result = generateResult(tmpPages, null);
 
     // Output to file
-    outputResultToFile(output, algorithm, result);
+    outputResultToFile(algorithm, tmpPages, output);
 
     // Output to a page
-    if (pageName != null) {
-      if ((maxSize != null) && (result.length() >= maxSize)) {
-        logCW.info("Trimming results of dump analysis for error " + algorithm.getErrorNumberString());
-        result = generateResult(tmpPages, maxSize);
-      }
-      String truePageName = MessageFormat.format(pageName, algorithm.getErrorNumberString());
-      logCW.info("Writing dump analysis results for error " + algorithm.getErrorNumberString() + " to page " + truePageName);
-      boolean finished = false;
-      while (!finished) {
-        try {
-          finished = true;
-          Page page = DataManager.getPage(getWikipedia(), truePageName, null, null, null);
-          API api = APIFactory.getAPI();
-          api.retrieveContents(getWikipedia(), Collections.singletonList(page), false, false);
-          String contents = page.getContents();
-          if (contents != null) {
-            int begin = -1;
-            int end = -1;
-            for (ContentsComment comment : page.getAnalysis(contents, true).getComments()) {
-              String value = comment.getComment().trim();
-              if ("BOT BEGIN".equals(value)) {
-                if (begin < 0) {
-                  begin = comment.getEndIndex();
-                }
-              } else if ("BOT END".equals(value)) {
-                end = comment.getBeginIndex();
-              }
-            }
-            if ((begin >= 0) && (end > begin)) {
-              String text = null;
-              finished = false;
-              while (!finished) {
-                StringBuilder newText = new StringBuilder();
-                newText.append(contents.substring(0, begin));
-                newText.append("\n");
-                newText.append(result);
-                newText.append(contents.substring(end));
-                text = newText.toString();
-                if (!getWikipedia().getWikiConfiguration().isArticleTooLong(text) ||
-                    tmpPages.isEmpty()) {
-                  finished = true; 
-                } else {
-                  tmpPages.remove(tmpPages.size() - 1);
-                  result = generateResult(
-                      tmpPages,
-                      getWikipedia().getWikiConfiguration().getMaxArticleSize());
-                }
-              }
-              try {
-                api.updatePage(
-                    getWikipedia(), page, text,
-                    "Dump analysis for error n°" + algorithm.getErrorNumberString() + " (" + nbPages + " pages)",
-                    true, true, false);
-              } catch (APIException e) {
-                // Check if it can be due to a page too big
-                boolean tooBig = false;
-                if (EnumQueryResult.CONTENT_TOO_BIG.equals(e.getQueryResult())) {
-                  tooBig = true;
-                }
-                if ((e.getCause() != null) &&
-                    (e.getCause() instanceof SocketTimeoutException)) {
-                  tooBig = true;
-                }
+    try {
+      outputResultToPage(algorithm, tmpPages, pageName);
+    } catch (APIException e) {
+      // Try to save the result in a file
+      File outputDir = new File(System.getProperty("user.home"));
+      outputResultToFile(algorithm, tmpPages, outputDir);
+    }
+  }
 
-                // Try reducing the result if it's too big
-                if (tooBig) {
-                  for (int i = 0; i < 100; i++) {
-                    if (!tmpPages.isEmpty()) {
-                      finished = false;
-                      tmpPages.remove(tmpPages.size() - 1);
-                    }
-                  }
-                  result = generateResult(
-                      tmpPages,
-                      getWikipedia().getWikiConfiguration().getMaxArticleSize());
-                } else {
-                  throw e;
-                }
-              }
-            }
+  /**
+   * Output result of the analysis to a file.
+   * 
+   * @param algorithm Algorithm.
+   * @param pages List of detections to put in the result.
+   * @param outputPage Page name.
+   * @throws APIException Error with MediaWiki API.
+   */
+  private void outputResultToPage(
+      CheckErrorAlgorithm algorithm, List<Detection> pages,
+      String outputPage) throws APIException {
+
+    // Determine page to which the error should be written
+    if (outputPage == null) {
+      return;
+    }
+    String truePageName = MessageFormat.format(pageName, algorithm.getErrorNumberString());
+    logCW.info("Writing dump analysis results for error " + algorithm.getErrorNumberString() + " to page " + truePageName);
+
+    // Retrieve page information
+    Page page = DataManager.getPage(getWikipedia(), truePageName, null, null, null);
+    API api = APIFactory.getAPI();
+    api.retrieveContents(getWikipedia(), Collections.singletonList(page), false, false);
+    String initialContents = page.getContents();
+    Integer initialRevisionId = page.getRevisionId();
+    if ((initialContents == null) ||
+        (initialRevisionId == null)) {
+      throw new APIException("Unable to read page " + truePageName);
+    }
+
+    // Generate result
+    logCW.info("Preparing results of dump analysis for error " + algorithm.getErrorNumberString());
+    int nbPages = pages.size();
+    Long maxSize = getWikipedia().getWikiConfiguration().getMaxArticleSize();
+    List<Detection> tmpPages = new ArrayList<>(pages);
+
+    // Loop
+    int attemptCount = 0;
+    while (attemptCount < 10) {
+      attemptCount++;
+
+      // Check that page hasn't been modified
+      api.retrieveContents(getWikipedia(), Collections.singletonList(page), false, false);
+      String contents = page.getContents();
+      if (!initialRevisionId.equals(page.getRevisionId()) ||
+          !initialContents.equals(contents)) {
+        logCW.info("Page " + truePageName + " has been modified");
+        throw new APIException("Page " + truePageName + " has been modified");
+      }
+
+      // Find place holders in the page
+      int begin = -1;
+      int end = -1;
+      for (ContentsComment comment : page.getAnalysis(contents, true).getComments()) {
+        String value = comment.getComment().trim();
+        if ("BOT BEGIN".equals(value)) {
+          if (begin < 0) {
+            begin = comment.getEndIndex();
           }
-        } catch (APIException e) {
-          // Try to save the result in a file
-          File outputDir = new File(System.getProperty("user.home"));
-          outputResultToFile(outputDir, algorithm, result);
+        } else if ("BOT END".equals(value)) {
+          end = comment.getBeginIndex();
         }
+      }
+      if ((begin < 0) || (end < 0) || (end < begin)) {
+        throw new APIException("Page " + truePageName + " doesn't have place holders for the result");
+      }
+
+      // Build new text for the page
+      String text = "";
+      boolean finished = false;
+      while (!finished && !tmpPages.isEmpty()) {
+        StringBuilder newText = new StringBuilder();
+        newText.append(contents.substring(0, begin));
+        newText.append("\n");
+        newText.append(generateResult(tmpPages, maxSize - begin - contents.length() + end));
+        newText.append(contents.substring(end));
+        text = newText.toString();
+        if (getWikipedia().getWikiConfiguration().isArticleTooLong(text)) {
+          tmpPages.remove(tmpPages.size() - 1);
+        } else {
+          finished = true;
+        }
+      }
+
+      // Update page
+      try {
+        if (!text.equals(contents)) {
+          api.updatePage(
+              getWikipedia(), page, text,
+              "Dump analysis for error n°" + algorithm.getErrorNumberString() + " (" + nbPages + " pages)",
+              true, true, false);
+        }
+        return;
+      } catch (APIException e) {
+        // Check if it can be due to a page too big
+        boolean tooBig = false;
+        if (EnumQueryResult.CONTENT_TOO_BIG.equals(e.getQueryResult())) {
+          tooBig = true;
+        }
+        if ((e.getCause() != null) &&
+            (e.getCause() instanceof SocketTimeoutException)) {
+          tooBig = true;
+          try {
+            TimeUnit.MINUTES.sleep(15);
+          } catch (InterruptedException ie) {
+            // Nothing to do
+          }
+        }
+
+        // Try reducing the result if it's too big
+        if (!tooBig) {
+          throw e;
+        }
+        for (int i = 0; i < 100; i++) {
+          if (!tmpPages.isEmpty()) {
+            tmpPages.remove(tmpPages.size() - 1);
+          }
+        }
+        logCW.info("Trying with smaller list (" + tmpPages.size() + ")");
       }
     }
   }
@@ -471,14 +509,15 @@ public class ListCWWorker extends BasicWorker {
   /**
    * Output result of the analysis to a file.
    * 
-   * @param outputPath Output directory (or file if it contains a {0}).
    * @param algorithm Algorithm.
-   * @param result Formatted result.
+   * @param pages List of detections to put in the result.
+   * @param outputPath Output directory (or file if it contains a {0}).
    */
   private void outputResultToFile(
-      File outputPath, CheckErrorAlgorithm algorithm, String result) {
+      CheckErrorAlgorithm algorithm, List<Detection> pages,
+      File outputPath) {
 
-    // Determine file to which the error should be written
+    // Determine file to which the error list should be written
     if (outputPath == null) {
       return;
     }
@@ -491,22 +530,18 @@ public class ListCWWorker extends BasicWorker {
       outputFile = new File(MessageFormat.format(output.getAbsolutePath(), algorithm.getErrorNumberString()));
     }
 
+    // Generate result
+    logCW.info("Preparing results of dump analysis for error " + algorithm.getErrorNumberString());
+    String result = generateResult(pages, null);
+
     // Write the file
     logCW.info("Writing dump analysis results for error " + algorithm.getErrorNumberString() + " to file " + outputFile.getName());
-    BufferedWriter writer = null;
-    try {
-      writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(outputFile, false), "UTF8"));
+    try (FileOutputStream fo = new FileOutputStream(outputFile, false);
+         OutputStreamWriter osw = new OutputStreamWriter(fo, "UTF8");
+         BufferedWriter writer = new BufferedWriter(osw)) {
       writer.write(result);
     } catch (IOException e) {
       // Nothing to do
-    } finally {
-      if (writer != null) {
-        try {
-          writer.close();
-        } catch (IOException e) {
-          // Nothing to do
-        }
-      }
     }
   }
 
