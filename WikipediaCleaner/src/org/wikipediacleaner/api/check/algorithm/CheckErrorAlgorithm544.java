@@ -10,6 +10,7 @@ package org.wikipediacleaner.api.check.algorithm;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.CheckErrorResult.ErrorLevel;
@@ -19,6 +20,7 @@ import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.contents.IntervalComparator;
+import org.wikipediacleaner.i18n.GT;
 
 
 /**
@@ -166,5 +168,16 @@ public class CheckErrorAlgorithm544 extends CheckErrorAlgorithmBase {
       }
     }
     return true;
+  }
+
+  /**
+   * @return Map of parameters (key=name, value=description).
+   * @see org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase#getParameters()
+   */
+  @Override
+  public Map<String, String> getParameters() {
+    Map<String, String> parameters = super.getParameters();
+    parameters.put(PARAMETER_PAIR_TEMPLATES, GT._T("Pairs of templates: for each opening template, all possible closing templates"));
+    return parameters;
   }
 }

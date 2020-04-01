@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2020-04-01 10:50+0200\n"
+"POT-Creation-Date: 2020-04-01 15:37+0200\n"
 "PO-Revision-Date: 2018-01-31 07:52+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: French <fr@li.org>\n"
@@ -1003,6 +1003,11 @@ msgstr "à privilégier pour les sortis, noms de fonctions et de balise, etc."
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm541.java:238
 msgid "preferred for everything else"
 msgstr "à privilégier pour tout le reste"
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm544.java:180
+msgid ""
+"Pairs of templates: for each opening template, all possible closing templates"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm548.java:301
 #, fuzzy
