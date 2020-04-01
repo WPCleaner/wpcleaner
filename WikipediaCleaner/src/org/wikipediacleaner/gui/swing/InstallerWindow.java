@@ -43,7 +43,11 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.SystemUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.wikipediacleaner.Installer;
 import org.wikipediacleaner.Version;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
@@ -69,7 +73,10 @@ public class InstallerWindow
   extends BasicWindow
   implements ActionListener, WikiChangeListener {
 
-  public final static Integer WINDOW_VERSION = Integer.valueOf(1);
+  /** Logger */
+  static final Logger log = LoggerFactory.getLogger(Installer.class);
+
+  public static final Integer WINDOW_VERSION = Integer.valueOf(1);
 
   /** Text field for the base directory for installation */
   private JTextField textBaseDirectory;
@@ -153,6 +160,9 @@ public class InstallerWindow
     constraints.gridx = 0;
     constraints.weighty = 1;
     panel.add(createConfigurationComponents(), constraints);
+    constraints.gridy++;
+    constraints.weighty = 0;
+    panel.add(createSystemInfoComponents(), constraints);
     constraints.gridy++;
     constraints.weighty = 0;
     panel.add(createCommandComponents(), constraints);
@@ -430,6 +440,226 @@ public class InstallerWindow
   }
 
   /**
+   * @return System information components.
+   */
+  private Component createSystemInfoComponents() {
+    // Retrieve information about operating system
+    StringBuilder sysInfo = new StringBuilder();
+    sysInfo.append(GT._T("Operating system"));
+    if (StringUtils.isNotBlank(SystemUtils.OS_NAME)) {
+      sysInfo.append(" - ");
+      sysInfo.append(SystemUtils.OS_NAME);
+    }
+    if (StringUtils.isNotBlank(SystemUtils.OS_VERSION)) {
+      sysInfo.append(" - ");
+      sysInfo.append(SystemUtils.OS_VERSION);
+    }
+    if (StringUtils.isNotBlank(SystemUtils.OS_ARCH)) {
+      sysInfo.append(" - ");
+      sysInfo.append(SystemUtils.OS_ARCH);
+    }
+
+    // Retrieve information about Java
+    sysInfo.append('\n');
+    sysInfo.append("Java");
+    if (StringUtils.isNotBlank(SystemUtils.JAVA_VENDOR)) {
+      sysInfo.append(" - ");
+      sysInfo.append(SystemUtils.JAVA_VENDOR);
+    }
+    if (StringUtils.isNotBlank(SystemUtils.JAVA_VERSION)) {
+      sysInfo.append(" - ");
+      sysInfo.append(SystemUtils.JAVA_VERSION);
+    }
+    if (StringUtils.isNotBlank(SystemUtils.JAVA_CLASS_VERSION)) {
+      sysInfo.append(" - ");
+      sysInfo.append(SystemUtils.JAVA_CLASS_VERSION);
+    }
+    if (StringUtils.isNotBlank(SystemUtils.JAVA_COMPILER)) {
+      sysInfo.append(" - ");
+      sysInfo.append(SystemUtils.JAVA_COMPILER);
+    }
+    /*if (StringUtils.isNotBlank(SystemUtils.JAVA_VENDOR_URL)) {
+      sysInfo.append(" - ");
+      sysInfo.append(SystemUtils.JAVA_VENDOR_URL);
+    }*/
+
+    // Retrieve information about Java Virtual Machine
+    sysInfo.append('\n');
+    sysInfo.append("Java VM");
+    if (StringUtils.isNotBlank(SystemUtils.JAVA_VM_NAME)) {
+      sysInfo.append(" - ");
+      sysInfo.append(SystemUtils.JAVA_VM_NAME);
+    }
+    if (StringUtils.isNotBlank(SystemUtils.JAVA_VM_VERSION)) {
+      sysInfo.append(" - ");
+      sysInfo.append(SystemUtils.JAVA_VM_VERSION);
+    }
+    if (StringUtils.isNotBlank(SystemUtils.JAVA_VM_VENDOR)) {
+      sysInfo.append(" - ");
+      sysInfo.append(SystemUtils.JAVA_VM_VENDOR);
+    }
+    if (StringUtils.isNotBlank(SystemUtils.JAVA_VM_INFO)) {
+      sysInfo.append(" - ");
+      sysInfo.append(SystemUtils.JAVA_VM_INFO);
+    }
+
+    // Retrieve information about Java installation
+    if (StringUtils.isNotBlank(SystemUtils.JAVA_HOME)) {
+      sysInfo.append('\n');
+      sysInfo.append("Java home=");
+      sysInfo.append(SystemUtils.JAVA_HOME);
+    }
+    /*if (StringUtils.isNotBlank(SystemUtils.JAVA_CLASS_PATH)) {
+      sysInfo.append('\n');
+      sysInfo.append("Java class path=");
+      sysInfo.append(SystemUtils.JAVA_CLASS_PATH);
+    }*/
+    /*if (StringUtils.isNotBlank(SystemUtils.JAVA_LIBRARY_PATH)) {
+      sysInfo.append('\n');
+      sysInfo.append("Java library path=");
+      sysInfo.append(SystemUtils.JAVA_LIBRARY_PATH);
+    }*/
+    /*if (StringUtils.isNotBlank(SystemUtils.JAVA_ENDORSED_DIRS)) {
+      sysInfo.append('\n');
+      sysInfo.append("Java endorsed dirs=");
+      sysInfo.append(SystemUtils.JAVA_ENDORSED_DIRS);
+    }*/
+    /*if (StringUtils.isNotBlank(SystemUtils.JAVA_EXT_DIRS)) {
+      sysInfo.append('\n');
+      sysInfo.append("Java ext dirs=");
+      sysInfo.append(SystemUtils.JAVA_EXT_DIRS);
+    }*/
+    /*if (StringUtils.isNotBlank(SystemUtils.JAVA_IO_TMPDIR)) {
+      sysInfo.append('\n');
+      sysInfo.append("Java IO temporary dir=");
+      sysInfo.append(SystemUtils.JAVA_IO_TMPDIR);
+    }*/
+
+    // Retrieve information about Java runtime
+    sysInfo.append('\n');
+    sysInfo.append("Java runtime");
+    if (StringUtils.isNotBlank(SystemUtils.JAVA_RUNTIME_NAME)) {
+      sysInfo.append(" - ");
+      sysInfo.append(SystemUtils.JAVA_RUNTIME_NAME);
+    }
+    if (StringUtils.isNotBlank(SystemUtils.JAVA_RUNTIME_VERSION)) {
+      sysInfo.append(" - ");
+      sysInfo.append(SystemUtils.JAVA_RUNTIME_VERSION);
+    }
+
+    // Retrieve information about Java specification
+    /*sysInfo.append('\n');
+    sysInfo.append("Java specification");
+    if (StringUtils.isNotBlank(SystemUtils.JAVA_SPECIFICATION_NAME)) {
+      sysInfo.append(" - ");
+      sysInfo.append(SystemUtils.JAVA_SPECIFICATION_NAME);
+    }
+    if (StringUtils.isNotBlank(SystemUtils.JAVA_SPECIFICATION_VERSION)) {
+      sysInfo.append(" - ");
+      sysInfo.append(SystemUtils.JAVA_SPECIFICATION_VERSION);
+    }
+    if (StringUtils.isNotBlank(SystemUtils.JAVA_SPECIFICATION_VENDOR)) {
+      sysInfo.append(" - ");
+      sysInfo.append(SystemUtils.JAVA_SPECIFICATION_VENDOR);
+    }*/
+
+    // Retrieve information about Java VM specification
+    /*sysInfo.append('\n');
+    sysInfo.append("Java VM specification");
+    if (StringUtils.isNotBlank(SystemUtils.JAVA_VM_SPECIFICATION_NAME)) {
+      sysInfo.append(" - ");
+      sysInfo.append(SystemUtils.JAVA_VM_SPECIFICATION_NAME);
+    }
+    if (StringUtils.isNotBlank(SystemUtils.JAVA_VM_SPECIFICATION_VERSION)) {
+      sysInfo.append(" - ");
+      sysInfo.append(SystemUtils.JAVA_VM_SPECIFICATION_VERSION);
+    }
+    if (StringUtils.isNotBlank(SystemUtils.JAVA_VM_SPECIFICATION_VENDOR)) {
+      sysInfo.append(" - ");
+      sysInfo.append(SystemUtils.JAVA_VM_SPECIFICATION_VENDOR);
+    }*/
+
+    // Retrieve various information about AWT
+    /*if (StringUtils.isNotBlank(SystemUtils.AWT_TOOLKIT)) {
+      sysInfo.append('\n');
+      sysInfo.append("AWT toolkit:");
+      sysInfo.append(SystemUtils.AWT_TOOLKIT);
+    }*/
+    /*if (StringUtils.isNotBlank(SystemUtils.JAVA_AWT_FONTS)) {
+      sysInfo.append('\n');
+      sysInfo.append("Java AWT fonts:");
+      sysInfo.append(SystemUtils.JAVA_AWT_FONTS);
+    }*/
+    /*if (StringUtils.isNotBlank(SystemUtils.JAVA_AWT_GRAPHICSENV)) {
+      sysInfo.append('\n');
+      sysInfo.append("Java AWT graphics environment:");
+      sysInfo.append(SystemUtils.JAVA_AWT_GRAPHICSENV);
+    }*/
+    /*if (StringUtils.isNotBlank(SystemUtils.JAVA_AWT_HEADLESS)) {
+      sysInfo.append('\n');
+      sysInfo.append("Java AWT headless:");
+      sysInfo.append(SystemUtils.JAVA_AWT_HEADLESS);
+    }*/
+    /*if (StringUtils.isNotBlank(SystemUtils.JAVA_AWT_PRINTERJOB)) {
+      sysInfo.append('\n');
+      sysInfo.append("Java AWT printer job:");
+      sysInfo.append(SystemUtils.JAVA_AWT_PRINTERJOB);
+    }*/
+
+    // Retrieve various information about user
+    /*sysInfo.append('\n');
+    sysInfo.append("User");
+    if (StringUtils.isNotBlank(SystemUtils.USER_NAME)) {
+      sysInfo.append(" - ");
+      sysInfo.append(SystemUtils.USER_NAME);
+    }
+    if (StringUtils.isNotBlank(SystemUtils.USER_COUNTRY)) {
+      sysInfo.append(" - ");
+      sysInfo.append(SystemUtils.USER_COUNTRY);
+    }
+    if (StringUtils.isNotBlank(SystemUtils.USER_LANGUAGE)) {
+      sysInfo.append(" - ");
+      sysInfo.append(SystemUtils.USER_LANGUAGE);
+    }
+    if (StringUtils.isNotBlank(SystemUtils.USER_TIMEZONE)) {
+      sysInfo.append(" - ");
+      sysInfo.append(SystemUtils.USER_TIMEZONE);
+    }
+    if (StringUtils.isNotBlank(SystemUtils.USER_DIR)) {
+      sysInfo.append(" - ");
+      sysInfo.append(SystemUtils.USER_DIR);
+    }
+    if (StringUtils.isNotBlank(SystemUtils.USER_HOME)) {
+      sysInfo.append(" - ");
+      sysInfo.append(SystemUtils.USER_HOME);
+    }*/
+
+    // Retrieve various information
+    /*if (StringUtils.isNotBlank(SystemUtils.FILE_ENCODING)) {
+      sysInfo.append('\n');
+      sysInfo.append("File encoding:");
+      sysInfo.append(SystemUtils.FILE_ENCODING);
+    }*/
+    /*if (StringUtils.isNotBlank(SystemUtils.JAVA_UTIL_PREFS_PREFERENCES_FACTORY)) {
+      sysInfo.append('\n');
+      sysInfo.append("Java utils prefs preferences factoryu:");
+      sysInfo.append(SystemUtils.JAVA_UTIL_PREFS_PREFERENCES_FACTORY);
+    }*/
+
+    // Log the information
+    log.info(sysInfo.toString());
+
+    // Display the information
+    JPanel panel = new JPanel(new BorderLayout());
+    panel.setBorder(BorderFactory.createTitledBorder(
+        BorderFactory.createEtchedBorder(), GT._T("System information")));
+    JTextArea textArea = new JTextArea(sysInfo.toString());
+    textArea.setEditable(false);
+    panel.add(textArea, BorderLayout.CENTER);
+    return panel;
+  }
+
+  /**
    * Action called when Directory button is pressed.
    */
   public void actionBaseDirectory() {
@@ -590,6 +820,7 @@ public class InstallerWindow
       final int CONNECTION_TIMEOUT = 60000;
       final int READ_TIMEOUT = 60000;
       try {
+        log.info("Downloading getdown.txt");
         setText(GT._T("Downloading {0}", "getdown.txt"));
         String remoteFolder = beta ?
             "https://tools.wmflabs.org/wpcleaner/wpcleaner-test" :
@@ -598,16 +829,19 @@ public class InstallerWindow
             new URL(remoteFolder + "/getdown.txt"),
             new File (directory, "getdown.txt"),
             CONNECTION_TIMEOUT, READ_TIMEOUT);
+        log.info("Downloaded getdown.txt");
       } catch (IOException e) {
         handleDownloadError(e, "getdown.txt");
         return Boolean.FALSE;
       }
       try {
+        log.info("Downloading getdown.jar");
         setText(GT._T("Downloading {0}", "getdown.jar"));
         FileUtils.copyURLToFile(
             new URL("https://tools.wmflabs.org/wpcleaner/install/getdown.jar"),
             new File (directory, "getdown.jar"),
             CONNECTION_TIMEOUT, READ_TIMEOUT);
+        log.info("Downloaded getdown.jar");
       } catch (IOException e) {
         handleDownloadError(e, "getdown.jar");
         return Boolean.FALSE;
@@ -615,21 +849,25 @@ public class InstallerWindow
 
       // Create credentials.txt file
       if (credentials != null) {
+        log.info("Creating credentials.txt");
         try (OutputStream os = new FileOutputStream(new File(directory, "credentials.txt"))) {
           setText(GT._T("Creating {0}", "credentials.txt"));
           credentials.store(
               os,
               "Credentials for automatic login of WPCleaner");
+          log.info("Created credentials.txt");
         } catch (IOException e) {
           warningMessage =
               GT._T("Unable to create file {0}", "credentials.txt") + "\n" +
               GT._T("Error: {0}", e.getLocalizedMessage());
+          log.error("Error while creating credentials.txt: " + e.getMessage());
           return Boolean.FALSE;
         }
       }
 
       // Install WPCleaner
       try {
+        log.info("Installing");
         setText(GT._T("Installing {0}", Version.PROGRAM));
         ProcessBuilder pb = new ProcessBuilder(
             "java",
@@ -638,17 +876,22 @@ public class InstallerWindow
             "-jar", new File(directory, "getdown.jar").getAbsolutePath(),
             directory.getAbsolutePath());
         pb.directory(directory);
+        log.info("Starting installation");
         Process process = pb.start();
+        log.info("Installation started");
         int result = process.waitFor();
+        log.info("Installation finished");
         if (result != 0) {
           warningMessage =
               GT._T("Problem running getdown installer") + "\n" +
               GT._T("Exit code: {0}", Integer.toString(result));
+          log.error("Error running getdown installer (" + result + ")");
         }
       } catch (InterruptedException | IOException e) {
         warningMessage =
             GT._T("Problem running {0}", "getdown") + "\n" +
             GT._T("Error: {0}", e.getLocalizedMessage());
+        log.error("Error running getdown installer: " + e.getMessage());
         return Boolean.FALSE;
       }
 
@@ -660,25 +903,30 @@ public class InstallerWindow
         if (SystemUtils.IS_OS_LINUX) {
 
           // Copy desktop file to normal location
+          log.info("Copying desktop file to normal location");
           File normalDesktopFile = new File(
               new File(SystemUtils.getUserDir(), ".local/share/applications"),
               desktopFile.getName());
           FileUtils.copyFile(desktopFile, normalDesktopFile);
+          log.info("Copied desktop file to normal location");
 
           // Copy desktop file to old GNOME location
           File applicationsFolder = new File(SystemUtils.getUserDir(), ".gnomev2/vfolders/applications");
           if (applicationsFolder.exists() && applicationsFolder.isDirectory()) {
+            log.info("Copying desktop file to old GNOME location");
             FileUtils.copyFile(desktopFile, new File(applicationsFolder, desktopFile.getName()));
+            log.info("Copyied desktop file to old GNOME location");
           }
         }
 
         // Windows
         if (SystemUtils.IS_OS_WINDOWS) {
+          log.info("Creating shell link to WPCleaner.bat");
           ShellLink sl = ShellLink.createLink(new File(directory, "WPCleaner.bat").getAbsolutePath())
               .setWorkingDir(directory.getAbsolutePath())
               .setIconLocation(new File(directory, "WPCleaner.ico").getAbsolutePath())
               .setCMDArgs("-wiki " + getWikipedia().getSettings().getCode());
-          File desktopFolder = new File(System.getProperty("user.home"), "Desktop");
+          File desktopFolder = new File(SystemUtils.USER_HOME, "Desktop");
           if (!desktopFolder.exists() || !desktopFolder.isDirectory()) {
             desktopFolder = directory;
           }
@@ -692,15 +940,18 @@ public class InstallerWindow
             } while (shortcutFile.exists());
           }
           sl.saveTo(shortcutFile.getAbsolutePath());
+          log.info("Created shell link to WPCleaner.bat");
         }
       } catch (IOException e) {
         warningMessage =
             GT._T("Problem creating desktop file") + "\n" +
             GT._T("Error: {0}", e.getLocalizedMessage());
+        log.error("Error creating shortcut: " + e.getMessage());
       }
 
       // Run WPCleaner
       try {
+        log.info("Running");
         setText(GT._T("Running {0}", Version.PROGRAM));
         ProcessBuilder pb = new ProcessBuilder(
             "java",
@@ -711,10 +962,12 @@ public class InstallerWindow
             "-wiki", getWikipedia().getSettings().getCode());
         pb.directory(directory);
         pb.start();
+        log.info("Started");
       } catch (IOException e) {
         warningMessage =
             GT._T("Problem running {0}", Version.PROGRAM) + "\n" +
             GT._T("Error: {0}", e.getLocalizedMessage());
+        log.error("Error running: " + e.getMessage());
         return Boolean.FALSE;
       }
 
@@ -743,6 +996,7 @@ public class InstallerWindow
       message.append("\n\n");
       message.append(GT._T("Error: {0}", e.getLocalizedMessage()));
       warningMessage = message.toString();
+      log.error(warningMessage);
     }
 
     /**
@@ -752,6 +1006,7 @@ public class InstallerWindow
      * @throws IOException In case of a problem writing the desktop file.
      */
     private File createDesktopFile() throws IOException {
+      log.info("Creating WPCleaner.desktop");
       File desktopFile = new File(directory, "WPCleaner.desktop");
       try (FileOutputStream fos = new FileOutputStream(desktopFile);
            OutputStreamWriter osw = new OutputStreamWriter(fos, "UTF8");
@@ -768,6 +1023,7 @@ public class InstallerWindow
         writer.write("Keywords=Wikipedia\n");
         writer.write("StartupNotify=false\n");
       }
+      log.info("Created WPCleaner.desktop");
       return desktopFile;
     }
   }

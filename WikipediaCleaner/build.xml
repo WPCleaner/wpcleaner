@@ -390,6 +390,8 @@
           tofile="${WPCleaner.classes_full.dir}/LICENSE_mslinks.txt" />
     <copy file="${WPCleaner.libs.gettext.dir}/${WPCleaner.libs.gettext.lic}"
           tofile="${WPCleaner.classes_install.dir}/LICENSE_gettext-commons.txt" />
+    <copy file="${WPCleaner.res.dir}/getdown/logback.xml"
+          tofile="${WPCleaner.classes_install.dir}/logback.xml" />
     <copy todir="${WPCleaner.classes_install.dir}">
       <fileset dir="${WPCleaner.classes_small.dir}">
         <include name="**/*"/>
