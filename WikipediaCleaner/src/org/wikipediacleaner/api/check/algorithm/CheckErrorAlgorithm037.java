@@ -7,6 +7,7 @@
 
 package org.wikipediacleaner.api.check.algorithm;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -48,17 +49,6 @@ public class CheckErrorAlgorithm037 extends CheckErrorAlgorithmBase {
       Collection<CheckErrorResult> errors, boolean onlyAutomatic) {
     if (analysis == null) {
       return false;
-    }
-
-    // Retrieve configuration
-    int limit = 5;
-    String firstCharaters = getSpecificProperty("first_characters", true, false, false);
-    if (firstCharaters != null) {
-      try {
-        limit = Integer.valueOf(firstCharaters);
-      } catch (NumberFormatException e) {
-        //
-      }
     }
 
     // Analyzing title to find special characters
@@ -135,14 +125,11 @@ public class CheckErrorAlgorithm037 extends CheckErrorAlgorithmBase {
     if (automatic) {
       String templates = getSpecificProperty("templates", true, false, false);
       if (templates != null) {
-        List<String> templatesList = WPCConfiguration.convertPropertyToStringList(templates);
-        if (templatesList != null) {
-          for (String template : templatesList) {
-            List<PageElementTemplate> foundTemplates = analysis.getTemplates(template);
-            if ((foundTemplates != null) && (foundTemplates.size() > 0)) {
-              automatic = false;
-              errorLevel = ErrorLevel.WARNING;
-            }
+        for (String template : templatesList) {
+          List<PageElementTemplate> foundTemplates = analysis.getTemplates(template);
+          if ((foundTemplates != null) && (foundTemplates.size() > 0)) {
+            automatic = false;
+            errorLevel = ErrorLevel.WARNING;
           }
         }
       }
@@ -188,6 +175,49 @@ public class CheckErrorAlgorithm037 extends CheckErrorAlgorithmBase {
     return fixUsingAutomaticReplacement(analysis);
   }
 
+  /* ====================================================================== */
+  /* PARAMETERS                                                             */
+  /* ====================================================================== */
+
+  /** Number of characters to check */
+  private static final String PARAMETER_FIRST_CHARACTERS = "first_characters";
+
+  /** Templates that prevent automatic fixing */
+  private static final String PARAMETER_TEMPLATES = "templates";
+
+  /**
+   * Initialize settings for the algorithm.
+   * 
+   * @see org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase#initializeSettings()
+   */
+  @Override
+  protected void initializeSettings() {
+    String tmp = getSpecificProperty(PARAMETER_FIRST_CHARACTERS, true, false, false);
+    limit = 5;
+    if (tmp != null) {
+      try {
+        limit = Integer.valueOf(tmp);
+      } catch (NumberFormatException e) {
+        //
+      }
+    }
+
+    tmp = getSpecificProperty("templates", true, false, false);
+    templatesList.clear();
+    if (tmp != null) {
+      List<String> tmpList = WPCConfiguration.convertPropertyToStringList(tmp);
+      if (tmpList != null) {
+        templatesList.addAll(tmpList);
+      }
+    }
+  }
+
+  /** Number of characters to check */
+  private int limit = 5;
+
+  /** Templates that prevent automatic fixing */
+  private static final List<String> templatesList = new ArrayList<>();
+
   /**
    * Return the parameters used to configure the algorithm.
    * 
@@ -197,10 +227,10 @@ public class CheckErrorAlgorithm037 extends CheckErrorAlgorithmBase {
   public Map<String, String> getParameters() {
     Map<String, String> parameters = super.getParameters();
     parameters.put(
-        "first_characters",
+        PARAMETER_FIRST_CHARACTERS,
         GT._T("Restrict the detection to the first characters"));
     parameters.put(
-        "templates",
+        PARAMETER_TEMPLATES,
         GT._T("List of templates that prevent automatic fixing of this error"));
     return parameters;
   }

@@ -7,6 +7,7 @@
 
 package org.wikipediacleaner.api.check.algorithm;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -45,13 +46,6 @@ public class CheckErrorAlgorithm033 extends CheckErrorAlgorithmBase {
     }
     if (!analysis.getPage().isArticle()) {
       return false;
-    }
-
-    // List of templates for replacement
-    List<String> replacements = null;
-    String tmp = getSpecificProperty("templates", true, true, false);
-    if (tmp != null) {
-      replacements = WPCConfiguration.convertPropertyToStringList(tmp);
     }
 
     // Analyze each tag
@@ -107,6 +101,33 @@ public class CheckErrorAlgorithm033 extends CheckErrorAlgorithmBase {
     return result;
   }
 
+  /* ====================================================================== */
+  /* PARAMETERS                                                             */
+  /* ====================================================================== */
+
+  /** Templates that can replace a &lt;u&gt; tag */
+  private static final String PARAMETER_TEMPLATES = "templates";
+
+  /**
+   * Initialize settings for the algorithm.
+   * 
+   * @see org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase#initializeSettings()
+   */
+  @Override
+  protected void initializeSettings() {
+    String tmp = getSpecificProperty(PARAMETER_TEMPLATES, true, true, false);
+    replacements.clear();
+    if (tmp != null) {
+      List<String> tmpList = WPCConfiguration.convertPropertyToStringList(tmp);
+      if (tmpList != null) {
+        replacements.addAll(tmpList);
+      }
+    }
+  }
+
+  /** Templates that can replace a &lt;u&gt; tag */
+  private final List<String> replacements = new ArrayList<>();
+
   /**
    * Return the parameters used to configure the algorithm.
    * 
@@ -116,7 +137,7 @@ public class CheckErrorAlgorithm033 extends CheckErrorAlgorithmBase {
   public Map<String, String> getParameters() {
     Map<String, String> parameters = super.getParameters();
     parameters.put(
-        "templates",
+        PARAMETER_TEMPLATES,
         GT._T("Templates that can be used to replace {0} tags", "&lt;u&gt;"));
     return parameters;
   }

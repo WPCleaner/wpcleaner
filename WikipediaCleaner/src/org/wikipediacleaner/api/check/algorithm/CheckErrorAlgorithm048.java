@@ -92,7 +92,7 @@ public class CheckErrorAlgorithm048 extends CheckErrorAlgorithmBase {
       if (errorFound) {
         tagImagemap = analysis.getSurroundingTag(
             PageElementTag.TAG_WIKI_IMAGEMAP, link.getBeginIndex());
-        if ((tagImagemap != null) && !reportInImagemap()) {
+        if ((tagImagemap != null) && !imagemap) {
           errorFound = false;
         }
       }
@@ -296,13 +296,26 @@ public class CheckErrorAlgorithm048 extends CheckErrorAlgorithmBase {
     return tmpIndex;
   }
 
+  /* ====================================================================== */
+  /* PARAMETERS                                                             */
+  /* ====================================================================== */
+
+  /** Flag to report also in image maps */
+  private static final String PARAMETER_IMAGEMAP = "imagemap";
+
   /**
-   * @return True if error should be reported in <imagemap>.
+   * Initialize settings for the algorithm.
+   * 
+   * @see org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase#initializeSettings()
    */
-  private boolean reportInImagemap() {
-    return Boolean.parseBoolean(
-        getSpecificProperty("imagemap", true, true, false));
+  @Override
+  protected void initializeSettings() {
+    imagemap = Boolean.parseBoolean(
+        getSpecificProperty(PARAMETER_IMAGEMAP, true, true, false));
   }
+
+  /** Flag to report also in image maps */
+  private boolean imagemap = false;
 
   /**
    * @return Map of parameters (key=name, value=description).
@@ -311,7 +324,9 @@ public class CheckErrorAlgorithm048 extends CheckErrorAlgorithmBase {
   @Override
   public Map<String, String> getParameters() {
     Map<String, String> parameters = super.getParameters();
-    parameters.put("imagemap", GT._T("Set to true to report also links in <imagemap>"));
+    parameters.put(
+        PARAMETER_IMAGEMAP,
+        GT._T("Set to true to report also links in <imagemap>"));
     return parameters;
   }
 }

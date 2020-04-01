@@ -38,29 +38,6 @@ public class CheckErrorAlgorithm548 extends CheckErrorAlgorithmBase {
   /** Characters recognized as punctuation */
   private static final String PUNCTUATIONS = ",;"; // Avoid ":" and "."
 
-  /** List of links to be ignored */
-  private static final String PARAMETER_IGNORE_LINKS = "ignore_links";
-
-  /**
-   * Initialize settings for the algorithm.
-   * 
-   * @see org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase#initializeSettings()
-   */
-  @Override
-  protected void initializeSettings() {
-    String tmp = getSpecificProperty(PARAMETER_IGNORE_LINKS, true, true, true);
-    ignoreLinks.clear();
-    if (tmp != null) {
-      List<String> tmpList = WPCConfiguration.convertPropertyToStringList(tmp);
-      if (tmpList != null) {
-        ignoreLinks.addAll(tmpList);
-      }
-    }
-  }
-
-  /** Links to ignore */
-  private final Set<String> ignoreLinks = new HashSet<>();
-
   /**
    * Analyze a page to check if errors are present.
    * 
@@ -290,6 +267,33 @@ public class CheckErrorAlgorithm548 extends CheckErrorAlgorithmBase {
     }
     return fixUsingAutomaticReplacement(analysis);
   }
+
+  /* ====================================================================== */
+  /* PARAMETERS                                                             */
+  /* ====================================================================== */
+
+  /** List of links to be ignored */
+  private static final String PARAMETER_IGNORE_LINKS = "ignore_links";
+
+  /**
+   * Initialize settings for the algorithm.
+   * 
+   * @see org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase#initializeSettings()
+   */
+  @Override
+  protected void initializeSettings() {
+    String tmp = getSpecificProperty(PARAMETER_IGNORE_LINKS, true, true, true);
+    ignoreLinks.clear();
+    if (tmp != null) {
+      List<String> tmpList = WPCConfiguration.convertPropertyToStringList(tmp);
+      if (tmpList != null) {
+        ignoreLinks.addAll(tmpList);
+      }
+    }
+  }
+
+  /** Links to ignore */
+  private final Set<String> ignoreLinks = new HashSet<>();
 
   /**
    * @return Map of parameters (key=name, value=description).

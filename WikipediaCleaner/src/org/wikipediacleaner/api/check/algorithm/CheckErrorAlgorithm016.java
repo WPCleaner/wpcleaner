@@ -57,9 +57,6 @@ public class CheckErrorAlgorithm016 extends CheckErrorAlgorithmBase {
       return false;
     }
 
-    // Retrieve configuration
-    boolean onlyTemplates = Boolean.valueOf(getSpecificProperty("only_templates", true, true, false));
-
     boolean result = false;
     String contents = analysis.getContents();
 
@@ -318,6 +315,27 @@ public class CheckErrorAlgorithm016 extends CheckErrorAlgorithmBase {
     return fixUsingAutomaticReplacement(analysis);
   }
 
+  /* ====================================================================== */
+  /* PARAMETERS                                                             */
+  /* ====================================================================== */
+
+  /** Flag to report errors only in templates */
+  private static final String PARAMETER_ONLY_TEMPLATES = "only_templates";
+
+  /**
+   * Initialize settings for the algorithm.
+   * 
+   * @see org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase#initializeSettings()
+   */
+  @Override
+  protected void initializeSettings() {
+    onlyTemplates = Boolean.valueOf(getSpecificProperty(
+        PARAMETER_ONLY_TEMPLATES, true, true, false));
+  }
+
+  /** Links to ignore */
+  private boolean onlyTemplates = false;
+
   /**
    * @return Map of parameters (key=name, value=description).
    * @see org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase#getParameters()
@@ -325,7 +343,7 @@ public class CheckErrorAlgorithm016 extends CheckErrorAlgorithmBase {
   @Override
   public Map<String, String> getParameters() {
     Map<String, String> parameters = super.getParameters();
-    parameters.put("only_templates", GT._T("To report control characters only in templates"));
+    parameters.put(PARAMETER_ONLY_TEMPLATES, GT._T("To report control characters only in templates"));
     return parameters;
   }
 

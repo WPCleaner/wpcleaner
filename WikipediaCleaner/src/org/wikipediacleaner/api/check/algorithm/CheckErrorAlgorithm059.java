@@ -7,6 +7,7 @@
 
 package org.wikipediacleaner.api.check.algorithm;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -61,13 +62,6 @@ public class CheckErrorAlgorithm059 extends CheckErrorAlgorithmBase {
     List<PageElementTag> brTags = analysis.getTags(PageElementTag.TAG_HTML_BR);
     if ((brTags == null) || (brTags.isEmpty())) {
       return false;
-    }
-
-    // List of templates to be ignored
-    List<String> ignoredTemplates = null;
-    String tmp = getSpecificProperty("templates", true, true, false);
-    if (tmp != null) {
-      ignoredTemplates = WPCConfiguration.convertPropertyToStringList(tmp);
     }
 
     // Analyzing each template
@@ -161,20 +155,6 @@ public class CheckErrorAlgorithm059 extends CheckErrorAlgorithmBase {
   }
 
   /**
-   * Return the parameters used to configure the algorithm.
-   * 
-   * @return Map of parameters (key=name, value=description).
-   */
-  @Override
-  public Map<String, String> getParameters() {
-    Map<String, String> parameters = super.getParameters();
-    parameters.put(
-        "templates",
-        GT._T("A list of templates that should be ignored"));
-    return parameters;
-  }
-
-  /**
    * Bot fixing of all the errors in the page.
    * 
    * @param analysis Page analysis.
@@ -204,5 +184,46 @@ public class CheckErrorAlgorithm059 extends CheckErrorAlgorithmBase {
   @Override
   public String fix(String fixName, PageAnalysis analysis, MWPane textPane) {
     return fixUsingFirstReplacement(fixName, analysis);
+  }
+
+  /* ====================================================================== */
+  /* PARAMETERS                                                             */
+  /* ====================================================================== */
+
+  /** Templates to be ignored */
+  private static final String PARAMETER_TEMPLATES = "templates";
+
+  /**
+   * Initialize settings for the algorithm.
+   * 
+   * @see org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase#initializeSettings()
+   */
+  @Override
+  protected void initializeSettings() {
+    String tmp = getSpecificProperty(PARAMETER_TEMPLATES, true, true, false);
+    ignoredTemplates.clear();
+    if (tmp != null) {
+      List<String> tmpList = WPCConfiguration.convertPropertyToStringList(tmp);
+      if (tmpList != null) {
+        ignoredTemplates.addAll(tmpList);
+      }
+    }
+  }
+
+  /** Templates to be ignored */
+  private final List<String> ignoredTemplates = new ArrayList<>();
+
+  /**
+   * Return the parameters used to configure the algorithm.
+   * 
+   * @return Map of parameters (key=name, value=description).
+   */
+  @Override
+  public Map<String, String> getParameters() {
+    Map<String, String> parameters = super.getParameters();
+    parameters.put(
+        PARAMETER_TEMPLATES,
+        GT._T("A list of templates that should be ignored"));
+    return parameters;
   }
 }

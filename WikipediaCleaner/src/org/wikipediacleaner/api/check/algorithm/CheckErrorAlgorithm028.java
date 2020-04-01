@@ -15,6 +15,7 @@ import java.util.Map;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.CheckErrorResult.ErrorLevel;
+import org.wikipediacleaner.api.constants.WPCConfiguration;
 import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.PageElementTemplate;
@@ -160,23 +161,10 @@ public class CheckErrorAlgorithm028 extends CheckErrorAlgorithmBase {
     }
 
     // Find tables ending by a template
-    String templateNames = getSpecificProperty("templates", true, true, true);
-    if ((templateNames != null) && (templateNames.trim().length() > 0)) {
-      String[] templatesList = templateNames.split("\n");
-      for (String templateName : templatesList) {
-        templateName = templateName.trim();
-        if (templateName.startsWith("{{")) {
-          templateName = templateName.substring(2);
-          if (templateName.endsWith("}}")) {
-            templateName = templateName.substring(0, templateName.length() - 2);
-          }
-        }
-        if (templateName.length() > 0) {
-          List<PageElementTemplate> templates = analysis.getTemplates(templateName.trim());
-          for (PageElementTemplate template : templates) {
-            list.add(new TableElement(template.getBeginIndex(), template.getEndIndex(), false));
-          }
-        }
+    for (String templateName : templateNames) {
+      List<PageElementTemplate> templates = analysis.getTemplates(templateName);
+      for (PageElementTemplate template : templates) {
+        list.add(new TableElement(template.getBeginIndex(), template.getEndIndex(), false));
       }
     }
 
@@ -206,6 +194,45 @@ public class CheckErrorAlgorithm028 extends CheckErrorAlgorithmBase {
     return true;
   }
 
+  /* ====================================================================== */
+  /* PARAMETERS                                                             */
+  /* ====================================================================== */
+
+  /** Templates that can replace the end of a table */
+  private static final String PARAMETER_TEMPLATES = "templates";
+
+  /**
+   * Initialize settings for the algorithm.
+   * 
+   * @see org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase#initializeSettings()
+   */
+  @Override
+  protected void initializeSettings() {
+    String tmp = getSpecificProperty(PARAMETER_TEMPLATES, true, true, true);
+    templateNames.clear();
+    if (tmp != null) {
+      List<String> tmpList = WPCConfiguration.convertPropertyToStringList(tmp);
+      if (tmpList != null) {
+        for (String tmpName : tmpList) {
+          tmpName = tmpName.trim();
+          if (tmpName.startsWith("{{")) {
+            tmpName = tmpName.substring(2);
+            if (tmpName.endsWith("}}")) {
+              tmpName = tmpName.substring(0,  tmpName.length() - 2);
+            }
+          }
+          tmpName = tmpName.trim();
+          if (tmpName.length() > 0) {
+            templateNames.add(tmpName);
+          }
+        }
+      }
+    }
+  }
+
+  /** Templates that can replace the end of a table */
+  private final List<String> templateNames = new ArrayList<>();
+
   /**
    * Return the parameters used to configure the algorithm.
    * 
@@ -215,7 +242,7 @@ public class CheckErrorAlgorithm028 extends CheckErrorAlgorithmBase {
   public Map<String, String> getParameters() {
     Map<String, String> parameters = super.getParameters();
     parameters.put(
-        "templates", GT._T("Templates that can replace the end of a table"));
+        PARAMETER_TEMPLATES, GT._T("Templates that can replace the end of a table"));
     return parameters;
   }
 

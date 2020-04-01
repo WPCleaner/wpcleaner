@@ -33,29 +33,6 @@ public class CheckErrorAlgorithm544 extends CheckErrorAlgorithmBase {
     super("Missing end model of a pair");
   }
 
-  /** List of links to be ignored */
-  private static final String PARAMETER_PAIR_TEMPLATES = "pair_templates";
-
-  /**
-   * Initialize settings for the algorithm.
-   * 
-   * @see org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase#initializeSettings()
-   */
-  @Override
-  protected void initializeSettings() {
-    String tmp = getSpecificProperty(PARAMETER_PAIR_TEMPLATES, true, true, false);
-    pairs.clear();
-    if (tmp != null) {
-      List<String[]> tmpPairs = WPCConfiguration.convertPropertyToStringArrayList(tmp);
-      if (tmpPairs != null) {
-        pairs.addAll(tmpPairs);
-      }
-    }
-  }
-
-  /** Links to ignore */
-  private final List<String[]> pairs = new ArrayList<>();
-
   /**
    * Analyze a page to check if errors are present.
    * 
@@ -169,6 +146,33 @@ public class CheckErrorAlgorithm544 extends CheckErrorAlgorithmBase {
     }
     return true;
   }
+
+  /* ====================================================================== */
+  /* PARAMETERS                                                             */
+  /* ====================================================================== */
+
+  /** List of templates working in pair */
+  private static final String PARAMETER_PAIR_TEMPLATES = "pair_templates";
+
+  /**
+   * Initialize settings for the algorithm.
+   * 
+   * @see org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase#initializeSettings()
+   */
+  @Override
+  protected void initializeSettings() {
+    String tmp = getSpecificProperty(PARAMETER_PAIR_TEMPLATES, true, true, false);
+    pairs.clear();
+    if (tmp != null) {
+      List<String[]> tmpPairs = WPCConfiguration.convertPropertyToStringArrayList(tmp);
+      if (tmpPairs != null) {
+        pairs.addAll(tmpPairs);
+      }
+    }
+  }
+
+  /** Links to ignore */
+  private final List<String[]> pairs = new ArrayList<>();
 
   /**
    * @return Map of parameters (key=name, value=description).

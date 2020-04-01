@@ -7,6 +7,7 @@
 
 package org.wikipediacleaner.api.check.algorithm;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -253,14 +254,11 @@ public class CheckErrorAlgorithm002 extends CheckErrorAlgorithmBase {
       String tagName) {
 
     // Retrieve configuration
-    List<String[]> anchorTemplates = null;
+    List<String[]> tmpAnchorTemplates = null;
     if (PageElementTag.TAG_HTML_CITE.equals(tagName) ||
         PageElementTag.TAG_HTML_DIV.equals(tagName) ||
         PageElementTag.TAG_HTML_SPAN.equals(tagName)) {
-      String anchorProperty = getSpecificProperty("anchor_templates", true, true, false);
-      if (anchorProperty != null) {
-        anchorTemplates = WPCConfiguration.convertPropertyToStringArrayList(anchorProperty);
-      }
+      tmpAnchorTemplates = anchorTemplates;
     }
 
     // Check for tags
@@ -314,8 +312,8 @@ public class CheckErrorAlgorithm002 extends CheckErrorAlgorithmBase {
         }
 
         // Check for id tags (<span id="..."/> or <div id="..."/>)
-        if ((anchorTemplates != null) &&
-            !anchorTemplates.isEmpty() &&
+        if ((tmpAnchorTemplates != null) &&
+            !tmpAnchorTemplates.isEmpty() &&
             (tag.isComplete() || !tag.isEndTag())) {
           String idAttribute = null;
           boolean hasOtherAttribute = false;
@@ -333,7 +331,7 @@ public class CheckErrorAlgorithm002 extends CheckErrorAlgorithmBase {
             }
           }
           if ((idAttribute != null) && (idAttribute.length() > 0) && !hasOtherAttribute) {
-            for (String[] anchorTemplate : anchorTemplates) {
+            for (String[] anchorTemplate : tmpAnchorTemplates) {
               if ((anchorTemplate.length > 0) && (anchorTemplate[0].length() > 0)) {
                 StringBuilder replacement = new StringBuilder();
                 replacement.append("{{");
@@ -658,17 +656,16 @@ public class CheckErrorAlgorithm002 extends CheckErrorAlgorithmBase {
    * @return Replacement for this value of clear attribute.
    */
   protected String getClearReplacement(String clearValue) {
-    String clearReplacementName = null;
     if ("all".equalsIgnoreCase(clearValue) || "both".equalsIgnoreCase(clearValue)) {
-      clearReplacementName = "clear_all";
-    } else if ("left".equalsIgnoreCase(clearValue)) {
-      clearReplacementName = "clear_left";
-    } else if ("right".equalsIgnoreCase(clearValue)) {
-      clearReplacementName = "clear_right";
-    } else {
-      return null;
+      return clearAll;
     }
-    return getSpecificProperty(clearReplacementName, true, true, false);
+    if ("left".equalsIgnoreCase(clearValue)) {
+      return clearLeft;
+    }
+    if ("right".equalsIgnoreCase(clearValue)) {
+      return clearRight;
+    }
+    return null;
   }
 
   /**
@@ -703,6 +700,54 @@ public class CheckErrorAlgorithm002 extends CheckErrorAlgorithmBase {
     return fixUsingAutomaticReplacement(analysis);
   }
 
+  /* ====================================================================== */
+  /* PARAMETERS                                                             */
+  /* ====================================================================== */
+
+  /** Replacements for anchors */
+  private static final String PARAMETER_ANCHOR_TEMPLATES = "anchor_templates";
+
+  /** Replacement for clear all */
+  private static final String PARAMETER_CLEAR_ALL = "clear_all";
+
+  /** Replacement for clear left */
+  private static final String PARAMETER_CLEAR_LEFT = "clear_left";
+
+  /** Replacement for clear right */
+  private static final String PARAMETER_CLEAR_RIGHT = "clear_right";
+
+  /**
+   * Initialize settings for the algorithm.
+   * 
+   * @see org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase#initializeSettings()
+   */
+  @Override
+  protected void initializeSettings() {
+    String tmp = getSpecificProperty(PARAMETER_ANCHOR_TEMPLATES, true, true, false);
+    anchorTemplates.clear();
+    if (tmp != null) {
+      List<String[]> tmpList = WPCConfiguration.convertPropertyToStringArrayList(tmp);
+      if (tmpList != null) {
+        anchorTemplates.addAll(tmpList);
+      }
+    }
+    clearAll = getSpecificProperty(PARAMETER_CLEAR_ALL, true, true, false);
+    clearLeft = getSpecificProperty(PARAMETER_CLEAR_LEFT, true, true, false);
+    clearRight = getSpecificProperty(PARAMETER_CLEAR_RIGHT, true, true, false);
+  }
+
+  /** Replacements for anchors */
+  private final List<String[]> anchorTemplates = new ArrayList<>();
+
+  /** Replacement for clear all */
+  private String clearAll = null;
+
+  /** Replacement for clear left */
+  private String clearLeft = null;
+
+  /** Replacement for clear right */
+  private String clearRight = null;
+
   /**
    * @return Map of parameters (key=name, value=description).
    * @see org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase#getParameters()
@@ -710,10 +755,18 @@ public class CheckErrorAlgorithm002 extends CheckErrorAlgorithmBase {
   @Override
   public Map<String, String> getParameters() {
     Map<String, String> parameters = super.getParameters();
-    parameters.put("anchor_templates", GT._T("A replacement for {0}", "&lt;span id=\"xxx\"/&gt;"));
-    parameters.put("clear_all", GT._T("A replacement for {0}", "&lt;br clear=\"all\"/&gt;"));
-    parameters.put("clear_left", GT._T("A replacement for {0}", "&lt;br clear=\"left\"/&gt;"));
-    parameters.put("clear_right", GT._T("A replacement for {0}", "&lt;br clear=\"right\"/&gt;"));
+    parameters.put(
+        PARAMETER_ANCHOR_TEMPLATES,
+        GT._T("A replacement for {0}", "&lt;span id=\"xxx\"/&gt;"));
+    parameters.put(
+        PARAMETER_CLEAR_ALL,
+        GT._T("A replacement for {0}", "&lt;br clear=\"all\"/&gt;"));
+    parameters.put(
+        PARAMETER_CLEAR_LEFT,
+        GT._T("A replacement for {0}", "&lt;br clear=\"left\"/&gt;"));
+    parameters.put(
+        PARAMETER_CLEAR_RIGHT,
+        GT._T("A replacement for {0}", "&lt;br clear=\"right\"/&gt;"));
     return parameters;
   }
 }
