@@ -17,11 +17,13 @@ import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.constants.WPCConfiguration;
 import org.wikipediacleaner.api.data.CharacterUtils;
 import org.wikipediacleaner.api.data.Namespace;
+import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElement;
 import org.wikipediacleaner.api.data.PageElementExternalLink;
 import org.wikipediacleaner.api.data.PageElementInternalLink;
 import org.wikipediacleaner.api.data.PageElementInterwikiLink;
+import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.i18n.GT;
 
 
@@ -37,6 +39,9 @@ public class CheckErrorAlgorithm548 extends CheckErrorAlgorithmBase {
 
   /** Characters recognized as punctuation */
   private static final String PUNCTUATIONS = ",;"; // Avoid ":" and "."
+
+  /** Characters that can be replaced when they are alone */
+  private static final String PUNCTUATIONS_ALONE = PUNCTUATIONS;
 
   /**
    * Analyze a page to check if errors are present.
@@ -201,7 +206,48 @@ public class CheckErrorAlgorithm548 extends CheckErrorAlgorithmBase {
       }
       errorResult.addReplacement(replacement, automatic);
     } else {
-      errorResult.addReplacement(punctuationText, false);
+      boolean automatic = false;
+
+      // For some punctuation characters check what is before
+      if ((PUNCTUATIONS_ALONE.indexOf(punctuationText.trim()) >= 0) &&
+          (linkTarget != null)) {
+
+        // Ignore some elements before
+        int tmpIndex = link.getBeginIndex();
+        boolean finished = false;
+        while ((tmpIndex > 0) && !finished) {
+          finished = true;
+          tmpIndex--;
+          char previousChar = contents.charAt(tmpIndex);
+          if (previousChar == '>') {
+            PageElementTag tag = analysis.isInTag(tmpIndex);
+            if ((tag != null) &&
+                PageElementTag.TAG_WIKI_REF.equals(tag.getNormalizedName()) &&
+                tag.isComplete()) {
+              if (tag.isFullTag() || tag.isEndTag()) {
+                tmpIndex = tag.getCompleteBeginIndex();
+                finished = false;
+              }
+            }
+          } else if (previousChar == '\'') {
+            while ((tmpIndex >= 0) && (contents.charAt(tmpIndex) == '\'')) {
+              tmpIndex--;
+              finished = false;
+            }
+          }
+        }
+
+        // Check if there's another link before
+        if ((tmpIndex > 0) && (contents.charAt(tmpIndex) == ']')) {
+          if (link instanceof PageElementInternalLink) {
+            PageElementInternalLink previousLink = analysis.isInInternalLink(tmpIndex);
+            if (Page.areSameTitle(linkTarget, previousLink.getFullLink())) {
+              automatic = true;
+            }
+          }
+        }
+      }
+      errorResult.addReplacement(punctuationText, automatic);
     }
     errors.add(errorResult);
     return true;
