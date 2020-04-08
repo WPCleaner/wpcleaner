@@ -25,7 +25,7 @@ import org.wikipediacleaner.api.data.PageElementTag;
 public class CheckErrorAlgorithm549 extends CheckErrorAlgorithmBase {
 
   public CheckErrorAlgorithm549() {
-    super("Splitted link");
+    super("Split link");
   }
 
   /**
@@ -73,11 +73,15 @@ public class CheckErrorAlgorithm549 extends CheckErrorAlgorithmBase {
     int linkNum = 0;
     List<PageElementInternalLink> tmpLinks = new ArrayList<>();
     tmpLinks.add(null);
+    List<String> tmpBetweenList = new ArrayList<>();
+    StringBuilder tmpBetween = new StringBuilder();
     while (linkNum < links.size()) {
 
       // Check for consecutive links with the same target
       PageElementInternalLink firstLink = links.get(linkNum);
       tmpLinks.set(0, firstLink);
+      tmpBetweenList.clear();
+      tmpBetween.setLength(0);
       String fullLink = firstLink.getFullLink();
       int endIndex = firstLink.getEndIndex();
       linkNum++;
@@ -97,6 +101,9 @@ public class CheckErrorAlgorithm549 extends CheckErrorAlgorithmBase {
             } else {
               finished = true;
             }
+          } else if (CharacterUtils.isWhitespace(tmpChar)) {
+            tmpBetween.append(tmpChar);
+            tmpIndex++;
           } else {
             finished = true;
           }
@@ -106,6 +113,7 @@ public class CheckErrorAlgorithm549 extends CheckErrorAlgorithmBase {
         finished = false;
         if ((links.get(linkNum).getBeginIndex() == tmpIndex) &&
             (fullLink.equals(links.get(linkNum).getFullLink()))) {
+          tmpBetweenList.add(tmpBetween.toString());
           PageElementInternalLink lastLink = links.get(linkNum);
           tmpLinks.add(lastLink);
           endIndex = lastLink.getEndIndex();
@@ -125,7 +133,8 @@ public class CheckErrorAlgorithm549 extends CheckErrorAlgorithmBase {
         // Construct possible replacement
         StringBuilder buffer = new StringBuilder();
         boolean automatic = true;
-        for (PageElementInternalLink link : tmpLinks) {
+        for (int tmpLinkNum = 0; tmpLinkNum < tmpLinks.size(); tmpLinkNum++) {
+          PageElementInternalLink link = tmpLinks.get(tmpLinkNum);
           String text = link.getDisplayedTextNotTrimmed();
           boolean nowiki = false;
           boolean punctuation = false;
@@ -159,6 +168,12 @@ public class CheckErrorAlgorithm549 extends CheckErrorAlgorithmBase {
           boolean textEqualsCase = text.equalsIgnoreCase(buffer.toString());
           if (textEqualsCase) {
             automatic = false;
+          }
+          if (tmpLinkNum > 0) {
+            String between = tmpBetweenList.get(tmpLinkNum - 1);
+            if (!between.isEmpty()) {
+              buffer.append(between);
+            }
           }
           if (!textEquals && (!nowiki || otherChar || punctuation)) {
             if (text.startsWith("'") &&
