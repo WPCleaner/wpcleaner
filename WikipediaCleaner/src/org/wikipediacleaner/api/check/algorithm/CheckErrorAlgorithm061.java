@@ -15,6 +15,7 @@ import java.util.Map;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.SpecialCharacters;
+import org.wikipediacleaner.api.constants.WPCConfiguration;
 import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElement;
 import org.wikipediacleaner.api.data.PageElementFullTag;
@@ -49,14 +50,6 @@ public class CheckErrorAlgorithm061 extends CheckErrorAlgorithmBase {
     if (analysis == null) {
       return false;
     }
-
-    // Retrieve separator between several <ref> tags
-    String separator = getSpecificProperty(
-        "separator", true, false, false);
-    if (separator == null) {
-      separator = "";
-    }
-
 
     // Analyze from the beginning
     List<PageElement> refs = getRefs(analysis);
@@ -205,14 +198,10 @@ public class CheckErrorAlgorithm061 extends CheckErrorAlgorithmBase {
     }
 
     // Retrieve references defined by templates
-    String templatesProp = getSpecificProperty("templates", true, true, false);
-    if (templatesProp != null) {
-      String[] templatesName = templatesProp.split("\n");
-      for (String templateName : templatesName) {
-        List<PageElementTemplate> templates = analysis.getTemplates(templateName.trim());
-        if (templates != null) {
-          refs.addAll(templates);
-        }
+    for (String templateName : templatesName) {
+      List<PageElementTemplate> templates = analysis.getTemplates(templateName.trim());
+      if (templates != null) {
+        refs.addAll(templates);
       }
     }
 
@@ -238,17 +227,56 @@ public class CheckErrorAlgorithm061 extends CheckErrorAlgorithmBase {
     return "<ref>...</ref>";
   }
 
-  /* (non-Javadoc)
+  /* ====================================================================== */
+  /* PARAMETERS                                                             */
+  /* ====================================================================== */
+
+  /** Separator between consecutive tags */
+  private static final String PARAMETER_SEPARATOR = "separator";
+
+  /** Templates that can replace a tag */
+  private static final String PARAMETER_TEMPLATES = "templates";
+
+  /**
+   * Initialize settings for the algorithm.
+   * 
+   * @see org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase#initializeSettings()
+   */
+  @Override
+  protected void initializeSettings() {
+    separator = getSpecificProperty(PARAMETER_SEPARATOR, true, false, false);
+    if (separator == null) {
+      separator = "";
+    }
+
+    String tmp = getSpecificProperty(PARAMETER_TEMPLATES, true, true, false);
+    templatesName.clear();
+    if (tmp != null) {
+      List<String> tmpList = WPCConfiguration.convertPropertyToStringList(tmp);
+      if (tmpList != null) {
+        templatesName.addAll(tmpList);
+      }
+    }
+  }
+
+  /** Separator between consecutive tags */
+  private String separator = "";
+
+  /** Templates that can replace a tag */
+  private final List<String> templatesName = new ArrayList<>();
+
+  /**
+   * @return Map of parameters (key=name, value=description).
    * @see org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase#getParameters()
    */
   @Override
   public Map<String, String> getParameters() {
     Map<String, String> parameters = super.getParameters();
     parameters.put(
-        "separator",
+        PARAMETER_SEPARATOR,
         GT._T("Used as a separator between consecutive {0} tags", "&lt;ref&gt;"));
     parameters.put(
-        "templates",
+        PARAMETER_TEMPLATES,
         GT._T("Templates that can be used to replace {0} tags", "&lt;ref&gt;"));
     return parameters;
   }

@@ -92,39 +92,20 @@ public class CheckErrorAlgorithm078 extends CheckErrorAlgorithmBase {
     }
 
     // Manage templates
-    String templatesString = getSpecificProperty("templates", true, true, false);
-    List<String> templates = WPCConfiguration.convertPropertyToStringList(templatesString);
-    if ((templates != null) && !templates.isEmpty()) {
-      String contents = analysis.getContents();
-      for (String templateRegexp : templates) {
-        String patternText = null;
-        try {
-          if (templateRegexp.length() > 0) {
-            char firstLetter = templateRegexp.charAt(0);
-            if (Character.isUpperCase(firstLetter) || Character.isLowerCase(firstLetter)) {
-              templateRegexp =
-                  "[" + Character.toUpperCase(firstLetter) + Character.toLowerCase(firstLetter) + "]" +
-                  templateRegexp.substring(1);
-            }
+    String contents = analysis.getContents();
+    for (Pattern pattern : patterns) {
+      Matcher matcher = pattern.matcher(contents);
+      while (matcher.find()) {
+        int beginIndex = matcher.start();
+        PageElementTemplate template = analysis.isInTemplate(beginIndex);
+        if (template != null) {
+          String groupName = "";
+          List<PageElement> existingReferences = referencesByGroup.get(groupName);
+          if (existingReferences == null) {
+            existingReferences = new ArrayList<>();
+            referencesByGroup.put(groupName, existingReferences);
           }
-          patternText = "\\{\\{" + templateRegexp;
-          Pattern pattern = Pattern.compile(patternText);
-          Matcher matcher = pattern.matcher(contents);
-          while (matcher.find()) {
-            int beginIndex = matcher.start();
-            PageElementTemplate template = analysis.isInTemplate(beginIndex);
-            if (template != null) {
-              String groupName = "";
-              List<PageElement> existingReferences = referencesByGroup.get(groupName);
-              if (existingReferences == null) {
-                existingReferences = new ArrayList<>();
-                referencesByGroup.put(groupName, existingReferences);
-              }
-              existingReferences.add(template);
-            }
-          }
-        } catch (PatternSyntaxException e) {
-          log.warn(e.getMessage() + " (" + patternText + ")");
+          existingReferences.add(template);
         }
       }
     }
@@ -163,6 +144,49 @@ public class CheckErrorAlgorithm078 extends CheckErrorAlgorithmBase {
     return result;
   }
 
+  /* ====================================================================== */
+  /* PARAMETERS                                                             */
+  /* ====================================================================== */
+
+  /** Regular expression to find templates replacing tags */
+  private static final String PARAMETER_TEMPLATES = "templates";
+
+  /**
+   * Initialize settings for the algorithm.
+   * 
+   * @see org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase#initializeSettings()
+   */
+  @Override
+  protected void initializeSettings() {
+    String tmp = getSpecificProperty(PARAMETER_TEMPLATES, true, true, false);
+    patterns.clear();
+    if (tmp != null) {
+      List<String> tmpList = WPCConfiguration.convertPropertyToStringList(tmp);
+      if (tmpList != null) {
+        for (String templateRegexp : tmpList) {
+          String patternText = null;
+          try {
+            if (templateRegexp.length() > 0) {
+              char firstLetter = templateRegexp.charAt(0);
+              if (Character.isUpperCase(firstLetter) || Character.isLowerCase(firstLetter)) {
+                templateRegexp =
+                    "[" + Character.toUpperCase(firstLetter) + Character.toLowerCase(firstLetter) + "]" +
+                    templateRegexp.substring(1);
+              }
+            }
+            patternText = "\\{\\{" + templateRegexp;
+            patterns.add(Pattern.compile(patternText));
+          } catch (PatternSyntaxException e) {
+            log.warn(e.getMessage() + " (" + patternText + ")");
+          }
+        }
+      }
+    }
+  }
+
+  /** Links to ignore */
+  private final List<Pattern> patterns = new ArrayList<>();
+
   /**
    * @return Map of parameters (key=name, value=description).
    * @see org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase#getParameters()
@@ -170,7 +194,9 @@ public class CheckErrorAlgorithm078 extends CheckErrorAlgorithmBase {
   @Override
   public Map<String, String> getParameters() {
     Map<String, String> parameters = super.getParameters();
-    parameters.put("templates", GT._T("A list of regular expressions to find templates replacing <references> tags"));
+    parameters.put(
+        PARAMETER_TEMPLATES,
+        GT._T("A list of regular expressions to find templates replacing <references> tags"));
     return parameters;
   }
 }

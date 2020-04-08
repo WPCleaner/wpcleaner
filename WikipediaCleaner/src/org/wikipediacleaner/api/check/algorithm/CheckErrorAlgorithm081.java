@@ -410,6 +410,7 @@ public class CheckErrorAlgorithm081 extends CheckErrorAlgorithmBase {
    */
   @Override
   protected String internalAutomaticFix(PageAnalysis analysis) {
+    // TODO: move to initializeSettings()
     List<String[]> refTemplates = analysis.getWPCConfiguration().getStringArrayList(
         WPCConfigurationStringList.REFERENCES_TEMPLATES);
     if ((refTemplates == null) ||

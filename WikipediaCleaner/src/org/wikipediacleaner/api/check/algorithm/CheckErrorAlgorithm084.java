@@ -7,6 +7,7 @@
 
 package org.wikipediacleaner.api.check.algorithm;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -50,24 +51,6 @@ public class CheckErrorAlgorithm084 extends CheckErrorAlgorithmBase {
     List<PageElementTitle> titles = analysis.getTitles();
     if (titles == null) {
       return false;
-    }
-
-    // Retrieve texts that can be added to sections without content
-    String allTexts = getSpecificProperty("texts", true, true, false);
-    List<String> texts = null;
-    if (allTexts != null) {
-      texts = WPCConfiguration.convertPropertyToStringList(allTexts);
-    }
-
-    // Retrieve maximum level to be checked
-    int maxLevel = 2;
-    String maxLevelString = getSpecificProperty("level", true, true, false);
-    if (maxLevelString != null) {
-      try {
-        maxLevel = Integer.parseInt(maxLevelString);
-      } catch (NumberFormatException e) {
-        // Nothing to do
-      }
     }
 
     // Analyzing titles
@@ -128,6 +111,49 @@ public class CheckErrorAlgorithm084 extends CheckErrorAlgorithmBase {
     return result;
   }
 
+  /* ====================================================================== */
+  /* PARAMETERS                                                             */
+  /* ====================================================================== */
+
+  /** Texts that can be added */
+  private static final String PARAMETER_TEXTS = "texts";
+
+  /** Restrict checks to some levels for the titles */
+  private static final String PARAMETER_LEVEL = "level";
+
+  /**
+   * Initialize settings for the algorithm.
+   * 
+   * @see org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase#initializeSettings()
+   */
+  @Override
+  protected void initializeSettings() {
+    String tmp = getSpecificProperty(PARAMETER_TEXTS, true, true, false);
+    texts.clear();
+    if (tmp != null) {
+      List<String> tmpList = WPCConfiguration.convertPropertyToStringList(tmp);
+      if (tmpList != null) {
+        texts.addAll(tmpList);
+      }
+    }
+
+    maxLevel = 2;
+    tmp = getSpecificProperty(PARAMETER_LEVEL, true, true, false);
+    if (tmp != null) {
+      try {
+        maxLevel = Integer.parseInt(tmp);
+      } catch (NumberFormatException e) {
+        // Nothing to do
+      }
+    }
+  }
+
+  /** Texts that can be added */
+  private final List<String> texts = new ArrayList<>();
+
+  /** Restrict checks to some levels for the titles */
+  private int maxLevel = 2;
+
   /**
    * @return Map of parameters (key=name, value=description).
    * @see org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase#getParameters()
@@ -135,8 +161,12 @@ public class CheckErrorAlgorithm084 extends CheckErrorAlgorithmBase {
   @Override
   public Map<String, String> getParameters() {
     Map<String, String> parameters = super.getParameters();
-    parameters.put("texts", GT._T("A list of texts that can be added to sections without content"));
-    parameters.put("level", GT._T("Restrict verification to titles with a higher level"));
+    parameters.put(
+        PARAMETER_TEXTS,
+        GT._T("A list of texts that can be added to sections without content"));
+    parameters.put(
+        PARAMETER_LEVEL,
+        GT._T("Restrict verification to titles with a higher level"));
     return parameters;
   }
 }

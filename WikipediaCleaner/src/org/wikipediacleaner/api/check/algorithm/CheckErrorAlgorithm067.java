@@ -50,12 +50,7 @@ public class CheckErrorAlgorithm067 extends CheckErrorAlgorithmBase {
     }
 
     // Retrieve possible abbreviations before <ref> tag
-    String abbreviations = getSpecificProperty(
-        "abbreviations", true, false, false);
-    List<String> abbreviationsList = null;
-    if (abbreviations != null) {
-      abbreviationsList = WPCConfiguration.convertPropertyToStringList(abbreviations);
-    }
+    // TODO: move it to initializeSettings()
     WPCConfiguration config = analysis.getWPCConfiguration();
     List<String[]> generalAbbreviations = null;
     List<String> tmpGeneralAbbreviations = config.getStringList(WPCConfigurationStringList.ABBREVIATIONS);
@@ -74,13 +69,6 @@ public class CheckErrorAlgorithm067 extends CheckErrorAlgorithmBase {
           }
         }
       }
-    }
-
-    // Retrieve separator between several <ref> tags
-    String separator = getSpecificProperty(
-        "separator", true, false, false);
-    if (separator == null) {
-      separator = "";
     }
 
     // Analyze from the beginning
@@ -307,23 +295,6 @@ public class CheckErrorAlgorithm067 extends CheckErrorAlgorithmBase {
   }
 
   /**
-   * Return the parameters used to configure the algorithm.
-   * 
-   * @return Map of parameters (key=name, value=description).
-   */
-  @Override
-  public Map<String, String> getParameters() {
-    Map<String, String> parameters = super.getParameters();
-    parameters.put(
-        "abbreviations",
-        GT._T("A list of abbreviations that generate false positives when placed before {0}", "&lt;ref&gt;"));
-    parameters.put(
-        "separator",
-        GT._T("Used as a separator between consecutive {0} tags", "&lt;ref&gt;"));
-    return parameters;
-  }
-
-  /**
    * Automatic fixing of all the errors in the page.
    * 
    * @param analysis Page analysis.
@@ -336,5 +307,60 @@ public class CheckErrorAlgorithm067 extends CheckErrorAlgorithmBase {
       return analysis.getContents();
     }
     return fixUsingAutomaticReplacement(analysis);
+  }
+
+  /* ====================================================================== */
+  /* PARAMETERS                                                             */
+  /* ====================================================================== */
+
+  /** Abbreviations that can create false positives */
+  private static final String PARAMETER_ABBREVIATIONS = "abbreviations";
+
+  /** Separator between consecutive tags */
+  private static final String PARAMETER_SEPARATOR = "separator";
+
+  /**
+   * Initialize settings for the algorithm.
+   * 
+   * @see org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase#initializeSettings()
+   */
+  @Override
+  protected void initializeSettings() {
+    String tmp = getSpecificProperty(PARAMETER_ABBREVIATIONS, true, false, false);
+    abbreviationsList.clear();
+    if (tmp != null) {
+      List<String> tmpList = WPCConfiguration.convertPropertyToStringList(tmp);
+      if (tmpList != null) {
+        abbreviationsList.addAll(tmpList);
+      }
+    }
+    separator = getSpecificProperty(PARAMETER_SEPARATOR, true, false, false);
+    if (separator == null) {
+      separator = "";
+    }
+  }
+
+  /** Abbreviations that can create false positives */
+  private final List<String> abbreviationsList = new ArrayList<>();
+
+  /** Separator between consecutive tags */
+  private String separator = "";
+
+  /**
+   * Return the parameters used to configure the algorithm.
+   * 
+   * @return Map of parameters (key=name, value=description).
+   * @see org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase#getParameters()
+   */
+  @Override
+  public Map<String, String> getParameters() {
+    Map<String, String> parameters = super.getParameters();
+    parameters.put(
+        PARAMETER_ABBREVIATIONS,
+        GT._T("A list of abbreviations that generate false positives when placed before {0}", "&lt;ref&gt;"));
+    parameters.put(
+        PARAMETER_SEPARATOR,
+        GT._T("Used as a separator between consecutive {0} tags", "&lt;ref&gt;"));
+    return parameters;
   }
 }

@@ -57,19 +57,6 @@ public class CheckErrorAlgorithm068 extends CheckErrorAlgorithmBase {
   }
 
   /**
-   * @return Possible templates to replace the link to an other language.
-   */
-  private List<String> getTemplatesList() {
-    String templatesParam = getSpecificProperty(
-        "template", true, false, false);
-    List<String> templatesList = null;
-    if (templatesParam != null) {
-      templatesList = WPCConfiguration.convertPropertyToStringList(templatesParam);
-    }
-    return templatesList;
-  }
-
-  /**
    * @param link Interwiki link.
    * @param wiki Current wiki.
    * @return True if the interwiki link is a link to an other language.
@@ -114,9 +101,6 @@ public class CheckErrorAlgorithm068 extends CheckErrorAlgorithmBase {
       return false;
     }
 
-    // Retrieve possible templates to replace the link to other language
-    List<String> templatesList = getTemplatesList();
-
     // Analyzing the text from the beginning
     boolean result = false;
     EnumWikipedia toWiki = analysis.getWikipedia();
@@ -138,30 +122,25 @@ public class CheckErrorAlgorithm068 extends CheckErrorAlgorithmBase {
               new CheckLanguageLinkActionProvider(
                   fromWiki, toWiki,
                   pageTitle, link.getText()));
-          if ((templatesList != null) && (templatesList.size() > 0)) {
-            for (String template : templatesList) {
-              String[] templateArgs = template.split("\\|");
-              if (templateArgs.length >= 5) {
-                StringBuilder prefix = new StringBuilder();
-                StringBuilder suffix = new StringBuilder();
-                buildReplacementTemplate(templateArgs, link, prefix, suffix);
-                String question = GT._T("What is the title of the page on this wiki ?");
-                AddTextActionProvider action = null;
-                if ((link.getText() != null) && (!link.getText().equals(pageTitle))) {
-                  String[] possibleValues = { null, pageTitle, link.getText() };
-                  action = new AddTextActionProvider(
-                      prefix.toString(), suffix.toString(), null, question,
-                      possibleValues, false, null, checker);
-                } else {
-                  action = new AddTextActionProvider(
-                      prefix.toString(), suffix.toString(), null, question,
-                      pageTitle, checker);
-                }
-                errorResult.addPossibleAction(
-                    GT._T("Replace using template {0}", "{{" + templateArgs[0] + "}}"),
-                    action);
-              }
+          for (String[] templateArgs : templatesArgs) {
+            StringBuilder prefix = new StringBuilder();
+            StringBuilder suffix = new StringBuilder();
+            buildReplacementTemplate(templateArgs, link, prefix, suffix);
+            String question = GT._T("What is the title of the page on this wiki ?");
+            AddTextActionProvider action = null;
+            if ((link.getText() != null) && (!link.getText().equals(pageTitle))) {
+              String[] possibleValues = { null, pageTitle, link.getText() };
+              action = new AddTextActionProvider(
+                  prefix.toString(), suffix.toString(), null, question,
+                  possibleValues, false, null, checker);
+            } else {
+              action = new AddTextActionProvider(
+                  prefix.toString(), suffix.toString(), null, question,
+                  pageTitle, checker);
             }
+            errorResult.addPossibleAction(
+                GT._T("Replace using template {0}", "{{" + templateArgs[0] + "}}"),
+                action);
           }
           errorResult.addPossibleAction(
               GT._T("External Viewer"),
@@ -261,25 +240,6 @@ public class CheckErrorAlgorithm068 extends CheckErrorAlgorithmBase {
   }
 
   /**
-   * Return the parameters used to configure the algorithm.
-   * 
-   * @return Map of parameters (key=name, value=description).
-   */
-  @Override
-  public Map<String, String> getParameters() {
-    Map<String, String> parameters = super.getParameters();
-    parameters.put("template", GT._T(
-        "A template that can be used instead of the link to an other language. " +
-        "It must be specified as: " +
-          "<template name>|" +
-          "<param name for local page name>|" +
-          "<param name for code of other language>|" +
-          "<param name for page name in other language>|" +
-          "<param name for displayed text>").replaceAll("\\<", "&lt;").replaceAll("\\>", "&gt;"));
-    return parameters;
-  }
-
-  /**
    * @return List of possible global fixes.
    */
   @Override
@@ -304,14 +264,7 @@ public class CheckErrorAlgorithm068 extends CheckErrorAlgorithmBase {
     int currentIndex = 0;
 
     // Manage templates that can be used to replace a link to an other language
-    List<String> templatesList = getTemplatesList();
-    String[] templateArgs = null;
-    if ((templatesList != null) && (templatesList.size() > 0)) {
-      String[] tmp = templatesList.get(0).split("\\|");
-      if (tmp.length >= 5) {
-        templateArgs = tmp;
-      }
-    }
+    String[] templateArgs = templatesArgs.isEmpty() ? null : templatesArgs.get(0);
 
     // Check all internal links
     Object highlight = null;
@@ -417,5 +370,56 @@ public class CheckErrorAlgorithm068 extends CheckErrorAlgorithmBase {
       tmpContents.append(contents.substring(currentIndex));
     }
     return tmpContents.toString();
+  }
+
+  /* ====================================================================== */
+  /* PARAMETERS                                                             */
+  /* ====================================================================== */
+
+  /** Templates used instead of the link */
+  private static final String PARAMETER_TEMPLATE = "template";
+
+  /**
+   * Initialize settings for the algorithm.
+   * 
+   * @see org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase#initializeSettings()
+   */
+  @Override
+  protected void initializeSettings() {
+    String tmp = getSpecificProperty(PARAMETER_TEMPLATE, true, false, false);
+    templatesArgs.clear();
+    if (tmp != null) {
+      List<String[]> tmpList = WPCConfiguration.convertPropertyToStringArrayList(tmp);
+      if (tmpList != null) {
+        for (String[] tmpItem : tmpList) {
+          if (tmpItem.length >= 5) {
+            templatesArgs.add(tmpItem);
+          }
+        }
+      }
+    }
+  }
+
+  /** Templates used instead of the link */
+  private final List<String[]> templatesArgs = new ArrayList<>();
+
+  /**
+   * Return the parameters used to configure the algorithm.
+   * 
+   * @return Map of parameters (key=name, value=description).
+   * @see org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase#getParameters()
+   */
+  @Override
+  public Map<String, String> getParameters() {
+    Map<String, String> parameters = super.getParameters();
+    parameters.put(PARAMETER_TEMPLATE, GT._T(
+        "A template that can be used instead of the link to an other language. " +
+        "It must be specified as: " +
+          "<template name>|" +
+          "<param name for local page name>|" +
+          "<param name for code of other language>|" +
+          "<param name for page name in other language>|" +
+          "<param name for displayed text>").replaceAll("\\<", "&lt;").replaceAll("\\>", "&gt;"));
+    return parameters;
   }
 }

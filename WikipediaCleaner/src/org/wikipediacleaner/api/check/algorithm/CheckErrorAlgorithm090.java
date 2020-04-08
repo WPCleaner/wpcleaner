@@ -7,6 +7,7 @@
 
 package org.wikipediacleaner.api.check.algorithm;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -88,28 +89,6 @@ public class CheckErrorAlgorithm090 extends CheckErrorAlgorithmBase {
       PageAnalysis analysis,
       Collection<CheckErrorResult> errors, boolean onlyAutomatic) {
 
-    // Configuration
-    String templates = getSpecificProperty("link_templates", true, true, false);
-    List<String> linkTemplates = null;
-    if (templates != null) {
-      linkTemplates = WPCConfiguration.convertPropertyToStringList(templates);
-    }
-    templates = getSpecificProperty("oldid_templates", true, true, false);
-    List<String[]> oldidTemplates = null;
-    if (templates != null) {
-      oldidTemplates = WPCConfiguration.convertPropertyToStringArrayList(templates);
-    }
-    templates = getSpecificProperty("history_templates", true, true, false);
-    List<String[]> historyTemplates = null;
-    if (templates != null) {
-      historyTemplates = WPCConfiguration.convertPropertyToStringArrayList(templates);
-    }
-    templates = getSpecificProperty("prefix_index_templates", true, true, false);
-    List<String[]> prefixIndexTemplates = null;
-    if (templates != null) {
-      prefixIndexTemplates = WPCConfiguration.convertPropertyToStringArrayList(templates);
-    }
-
     // Analyze each external link
     boolean result = false;
     List<PageElementExternalLink> links = analysis.getExternalLinks();
@@ -162,15 +141,15 @@ public class CheckErrorAlgorithm090 extends CheckErrorAlgorithmBase {
 
         // Check links to special pages
         if (!errorReported) {
-          errorReported = checkSpecialPrefixIndexLink(info, prefixIndexTemplates);
+          errorReported = checkSpecialPrefixIndexLink(info);
         }
 
         // Check special kinds of links
         if (!errorReported) {
-          errorReported = checkOldidLink(info, oldidTemplates);
+          errorReported = checkOldidLink(info);
         }
         if (!errorReported) {
-          errorReported = checkHistoryLink(info, historyTemplates);
+          errorReported = checkHistoryLink(info);
         }
 
         // Link with text
@@ -405,11 +384,9 @@ public class CheckErrorAlgorithm090 extends CheckErrorAlgorithmBase {
    * Analyze cases of links with Special:PrefixIndex.
    * 
    * @param info Analysis information.
-   * @param prefixIndexTemplates Templates that can be used for links with Special:PrefixIndex.
    * @return True if error has been reported.
    */
-  private boolean checkSpecialPrefixIndexLink(
-      AnalysisInformation info, List<String[]> prefixIndexTemplates) {
+  private boolean checkSpecialPrefixIndexLink(AnalysisInformation info) {
 
     // Check if templates are defined
     if ((prefixIndexTemplates == null) || (prefixIndexTemplates.size() == 0)) {
@@ -501,11 +478,9 @@ public class CheckErrorAlgorithm090 extends CheckErrorAlgorithmBase {
    * Analyze cases of links with oldid=xxx.
    * 
    * @param info Analysis information.
-   * @param oldidTemplates Templates that can be used for links with oldid.
    * @return True if error has been reported.
    */
-  private boolean checkOldidLink(
-      AnalysisInformation info, List<String[]> oldidTemplates) {
+  private boolean checkOldidLink(AnalysisInformation info) {
 
     // Check if old id templates are defined
     if ((oldidTemplates == null) || (oldidTemplates.size() == 0)) {
@@ -588,11 +563,9 @@ public class CheckErrorAlgorithm090 extends CheckErrorAlgorithmBase {
    * Analyze cases of links with action=history.
    * 
    * @param info Analysis information.
-   * @param historyTemplates Templates that can be used for links with action=history.
    * @return True if error has been reported.
    */
-  private boolean checkHistoryLink(
-      AnalysisInformation info, List<String[]> historyTemplates) {
+  private boolean checkHistoryLink(AnalysisInformation info) {
 
     // Check if history templates are defined
     if ((historyTemplates == null) || (historyTemplates.size() == 0)) {
@@ -805,20 +778,6 @@ public class CheckErrorAlgorithm090 extends CheckErrorAlgorithmBase {
   }
 
   /**
-   * @return Map of parameters (key=name, value=description).
-   * @see org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase#getParameters()
-   */
-  @Override
-  public Map<String, String> getParameters() {
-    Map<String, String> parameters = super.getParameters();
-    parameters.put("history_templates", GT._T("Templates to be used for linking to the history of an article"));
-    parameters.put("link_templates", GT._T("Templates using external links"));
-    parameters.put("oldid_templates", GT._T("Templates to be used for linking to an old version of an article"));
-    parameters.put("prefix_index_templates", GT._T("Templates to be used instead of Special:PrefixIndex"));
-    return parameters;
-  }
-
-  /**
    * Bean for holding analysis information.
    */
   private static class AnalysisInformation {
@@ -962,5 +921,99 @@ public class CheckErrorAlgorithm090 extends CheckErrorAlgorithmBase {
         }
       }
     }
+  }
+
+  /* ====================================================================== */
+  /* PARAMETERS                                                             */
+  /* ====================================================================== */
+
+  /** Templates for linking to the history of an article */
+  private static final String PARAMETER_HISTORY_TEMPLATES = "history_templates";
+
+  /** Templates using external links */
+  private static final String PARAMETER_LINK_TEMPLATES = "link_templates";
+
+  /** Templates for linking to an old version of an article */
+  private static final String PARAMETER_OLDID_TEMPLATES = "oldid_templates";
+
+  /** Templates for using instead of Special:PrefixIndex */
+  private static final String PARAMETER_PREFIX_INDEX_TEMPLATES = "prefix_index_templates";
+
+  /**
+   * Initialize settings for the algorithm.
+   * 
+   * @see org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase#initializeSettings()
+   */
+  @Override
+  protected void initializeSettings() {
+    String tmp = getSpecificProperty(PARAMETER_HISTORY_TEMPLATES, true, true, false);
+    historyTemplates.clear();
+    if (tmp != null) {
+      List<String[]> tmpList = WPCConfiguration.convertPropertyToStringArrayList(tmp);
+      if (tmpList != null) {
+        historyTemplates.addAll(tmpList);
+      }
+    }
+
+    tmp = getSpecificProperty(PARAMETER_LINK_TEMPLATES, true, true, false);
+    linkTemplates.clear();
+    if (tmp != null) {
+      List<String> tmpList = WPCConfiguration.convertPropertyToStringList(tmp);
+      if (tmpList != null) {
+        linkTemplates.addAll(tmpList);
+      }
+    }
+
+    tmp = getSpecificProperty(PARAMETER_OLDID_TEMPLATES, true, true, false);
+    oldidTemplates.clear();
+    if (tmp != null) {
+      List<String[]> tmpList = WPCConfiguration.convertPropertyToStringArrayList(tmp);
+      if (tmpList != null) {
+        oldidTemplates.addAll(tmpList);
+      }
+    }
+
+    tmp = getSpecificProperty(PARAMETER_PREFIX_INDEX_TEMPLATES, true, true, false);
+    prefixIndexTemplates.clear();
+    if (tmp != null) {
+      List<String[]> tmpList = WPCConfiguration.convertPropertyToStringArrayList(tmp);
+      if (tmpList != null) {
+        prefixIndexTemplates.addAll(tmpList);
+      }
+    }
+  }
+
+  /** Templates for linking to the history of an article */
+  private final List<String[]> historyTemplates = new ArrayList<>();
+
+  /** Templates using external links */
+  private final List<String> linkTemplates = new ArrayList<>();
+
+  /** Templates for linking to an old version of an article */
+  private final List<String[]> oldidTemplates = new ArrayList<>();
+
+  /** Templates for using instead of Special:PrefixIndex */
+  private final List<String[]> prefixIndexTemplates = new ArrayList<>();
+
+  /**
+   * @return Map of parameters (key=name, value=description).
+   * @see org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase#getParameters()
+   */
+  @Override
+  public Map<String, String> getParameters() {
+    Map<String, String> parameters = super.getParameters();
+    parameters.put(
+        PARAMETER_HISTORY_TEMPLATES,
+        GT._T("Templates to be used for linking to the history of an article"));
+    parameters.put(
+        PARAMETER_LINK_TEMPLATES,
+        GT._T("Templates using external links"));
+    parameters.put(
+        PARAMETER_OLDID_TEMPLATES,
+        GT._T("Templates to be used for linking to an old version of an article"));
+    parameters.put(
+        PARAMETER_PREFIX_INDEX_TEMPLATES,
+        GT._T("Templates to be used instead of Special:PrefixIndex"));
+    return parameters;
   }
 }

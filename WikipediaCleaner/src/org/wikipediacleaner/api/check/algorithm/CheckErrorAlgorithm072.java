@@ -191,53 +191,85 @@ public class CheckErrorAlgorithm072 extends CheckErrorAlgorithmISBN {
     char check = Character.toUpperCase(number.charAt(9));
     char computedCheck = Character.toUpperCase(PageElementISBN.computeChecksum(number));
     if (check != computedCheck) {
-      String reasonTemplate = getSpecificProperty("reason_checksum", true, true, false);
-      if (reasonTemplate == null) {
-        reasonTemplate = getSpecificProperty("reason", true, true, false);
-      }
-      if (reasonTemplate == null) {
+      if (reasonChecksum == null) {
         return null;
       }
-      return MessageFormat.format(reasonTemplate, computedCheck, check);
+      return MessageFormat.format(reasonChecksum, computedCheck, check);
     }
 
     // Retrieve information about ISBN number
     ISBNInformation isbnInfo = ISBNRange.getInformation(number);
     if (isbnInfo != null) {
       if (isbnInfo.isInUnknownRange()) {
-        String reasonTemplate = getSpecificProperty("reason_no_range", true, true, false);
-        if (reasonTemplate == null) {
-          return null;
-        }
-        return reasonTemplate;
+        return reasonNoRange;
       }
 
       if (isbnInfo.isInReservedRange()) {
-        String reasonTemplate = getSpecificProperty("reason_reserved", true, true, false);
-        if (reasonTemplate == null) {
-          return null;
-        }
-        return reasonTemplate;
+        return reasonReserved;
       }
     }
 
     return null;
   }
 
+  /* ====================================================================== */
+  /* PARAMETERS                                                             */
+  /* ====================================================================== */
+
+  /** Reason of the error */
+  private static final String PARAMETER_REASON = "reason";
+
+  /** Reason of the error: checksum */
+  private static final String PARAMETER_REASON_CHECKSUM = "reason_checksum";
+
+  /** Reason of the error: no range */
+  private static final String PARAMETER_REASON_NO_RANGE = "reason_no_range";
+
+  /** Reason of the error: reserved range */
+  private static final String PARAMETER_REASON_RESERVED = "reason_reserved";
+
+  /**
+   * Initialize settings for the algorithm.
+   * 
+   * @see org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase#initializeSettings()
+   */
+  @Override
+  protected void initializeSettings() {
+    reasonChecksum = getSpecificProperty(PARAMETER_REASON_CHECKSUM, true, true, false);
+    if (reasonChecksum == null) {
+      reasonChecksum = getSpecificProperty(PARAMETER_REASON, true, true, false);
+    }
+    reasonNoRange = getSpecificProperty(PARAMETER_REASON_NO_RANGE, true, true, false);
+    reasonReserved = getSpecificProperty(PARAMETER_REASON_RESERVED, true, true, false);
+  }
+
+  /** Reason of the error: checksum */
+  private String reasonChecksum = null;
+
+  /** Reason of the error: no range */
+  private String reasonNoRange = null;
+
+  /** Reason of the error: reserved range */
+  private String reasonReserved = null;
+
   /**
    * Return the parameters used to configure the algorithm.
    * 
    * @return Map of parameters (key=name, value=description).
+   * @see org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase#getParameters()
    */
   @Override
   public Map<String, String> getParameters() {
     Map<String, String> parameters = super.getParameters();
     parameters.put(
-        "reason_checksum", GT._T("An explanation of the problem (incorrect checksum)"));
+        PARAMETER_REASON_CHECKSUM,
+        GT._T("An explanation of the problem (incorrect checksum)"));
     parameters.put(
-        "reason_no_range", GT._T("An explanation of the problem (non-existing range of ISBN numbers)"));
+        PARAMETER_REASON_NO_RANGE,
+        GT._T("An explanation of the problem (non-existing range of ISBN numbers)"));
     parameters.put(
-        "reason_reserved", GT._T("An explanation of the problem (reserved range of ISBN numbers)"));
+        PARAMETER_REASON_RESERVED,
+        GT._T("An explanation of the problem (reserved range of ISBN numbers)"));
     return parameters;
   }
 }

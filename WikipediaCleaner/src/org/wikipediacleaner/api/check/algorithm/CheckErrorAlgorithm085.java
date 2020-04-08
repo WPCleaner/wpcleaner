@@ -7,6 +7,7 @@
 
 package org.wikipediacleaner.api.check.algorithm;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -261,26 +262,20 @@ public class CheckErrorAlgorithm085 extends CheckErrorAlgorithmBase {
                 errorResult.addReplacement(replacementText.toString());
               }
               if (PageElementTag.TAG_HTML_CENTER.equals(tag.getName())) {
-                String templatesProp = getSpecificProperty("center_templates", true, true, false);
-                if (templatesProp != null) {
-                  List<String[]> templates = WPCConfiguration.convertPropertyToStringArrayList(templatesProp);
-                  if (templates != null) {
-                    for (String[] template : templates) {
-                      if (template.length > 1) {
-                        StringBuilder replacement = new StringBuilder();
-                        replacement.append("{{");
-                        replacement.append(template[0]);
-                        replacement.append("|");
-                        replacement.append(template[1]);
-                        replacement.append("=");
-                        replacement.append(contents.substring(
-                            tag.getValueBeginIndex(), tag.getValueEndIndex()));
-                        replacement.append("}}");
-                        errorResult.addReplacement(
-                            replacement.toString(),
-                            GT._T("Use {0}", PageElementTemplate.createTemplate(template[0])));
-                      }
-                    }
+                for (String[] template : centerTemplates) {
+                  if (template.length > 1) {
+                    StringBuilder replacement = new StringBuilder();
+                    replacement.append("{{");
+                    replacement.append(template[0]);
+                    replacement.append("|");
+                    replacement.append(template[1]);
+                    replacement.append("=");
+                    replacement.append(contents.substring(
+                        tag.getValueBeginIndex(), tag.getValueEndIndex()));
+                    replacement.append("}}");
+                    errorResult.addReplacement(
+                        replacement.toString(),
+                        GT._T("Use {0}", PageElementTemplate.createTemplate(template[0])));
                   }
                 }
               }
@@ -307,6 +302,33 @@ public class CheckErrorAlgorithm085 extends CheckErrorAlgorithmBase {
     return fixUsingAutomaticReplacement(analysis);
   }
 
+  /* ====================================================================== */
+  /* PARAMETERS                                                             */
+  /* ====================================================================== */
+
+  /** Templates that can replace center tags */
+  private static final String PARAMETER_CENTER_TEMPLATES = "center_templates";
+
+  /**
+   * Initialize settings for the algorithm.
+   * 
+   * @see org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase#initializeSettings()
+   */
+  @Override
+  protected void initializeSettings() {
+    String tmp = getSpecificProperty(PARAMETER_CENTER_TEMPLATES, true, true, false);
+    centerTemplates.clear();
+    if (tmp != null) {
+      List<String[]> tmpList = WPCConfiguration.convertPropertyToStringArrayList(tmp);
+      if (tmpList != null) {
+        centerTemplates.addAll(tmpList);
+      }
+    }
+  }
+
+  /** Templates that can replace center tags */
+  private final List<String[]> centerTemplates = new ArrayList<>();
+
   /**
    * @return Map of parameters (key=name, value=description).
    * @see org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase#getParameters()
@@ -314,7 +336,9 @@ public class CheckErrorAlgorithm085 extends CheckErrorAlgorithmBase {
   @Override
   public Map<String, String> getParameters() {
     Map<String, String> parameters = super.getParameters();
-    parameters.put("center_templates", GT._T("A list of templates that can be used to replace &lt;center&gt; tags"));
+    parameters.put(
+        PARAMETER_CENTER_TEMPLATES,
+        GT._T("A list of templates that can be used to replace &lt;center&gt; tags"));
     return parameters;
   }
 }
