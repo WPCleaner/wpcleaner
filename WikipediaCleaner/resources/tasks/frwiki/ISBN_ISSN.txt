@@ -1,3 +1,4 @@
+DoTasks _Common.txt
 Set Prefix [[Utilisateur:WikiCleanerBot#T5|Bot_T5]]
 UpdateISBNWarnings
 UpdateISSNWarnings

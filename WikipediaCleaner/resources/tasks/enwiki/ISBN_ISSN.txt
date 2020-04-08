@@ -1,2 +1,4 @@
+DoTasks _Common.txt
+Set Prefix [[User:WikiCleanerBot#T1|Bot_T1]]
 ListISBNWarnings
 ListISSNWarnings

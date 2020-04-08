@@ -1,2 +1,3 @@
+DoTasks _Common.txt
 Set Prefix [[User:WikiCleanerBot#T3|T3]]
 FixCheckWiki 46  +46

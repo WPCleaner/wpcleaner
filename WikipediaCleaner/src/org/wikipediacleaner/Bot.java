@@ -82,7 +82,7 @@ public class Bot implements BasicWorkerListener {
   private boolean loginDone;
 
   /** Actions to be executed */
-  private List<String[]> actions;
+  private List<Action> actions;
 
   private List<CheckErrorAlgorithm> additionalAlgorithms;
 
@@ -166,7 +166,7 @@ public class Bot implements BasicWorkerListener {
     // Retrieve action
     actions = new ArrayList<>();
     if (args.length > currentArg) {
-      actions.add(Arrays.copyOfRange(args, currentArg, args.length));
+      actions.add(new Action(Arrays.copyOfRange(args, currentArg, args.length), null));
     }
     currentArg++;
 
@@ -174,8 +174,8 @@ public class Bot implements BasicWorkerListener {
     if ((wiki == null) ||
         (userName == null) ||
         (password == null) ||
-        (actions.isEmpty()) ||
-        (actions.get(0).length == 0)) {
+        actions.isEmpty() ||
+        !actions.get(0).isOk()) {
       log.warn("Some parameters are incorrect");
       return;
     }
@@ -196,11 +196,12 @@ public class Bot implements BasicWorkerListener {
   /**
    * Execute an action.
    * 
-   * @param args Action and arguments.
+   * @param actionConfig Action and its configuration.
    */
-  void executeAction(String[] args) {
+  void executeAction(Action actionConfig) {
 
     // Retrieve action
+    String[] args = actionConfig.args;
     int currentArg = 0;
     if (currentArg >= args.length) {
       return;
@@ -216,13 +217,17 @@ public class Bot implements BasicWorkerListener {
     } else if ("DoTasks".equalsIgnoreCase(action)) {
       actionDone = true;
       if (args.length > currentArg) {
-        File tasks = new File(args[currentArg]);
+        File tasks = (actionConfig.baseDir != null) ?
+            new File(actionConfig.baseDir, args[currentArg]) :
+            new File(args[currentArg]);
+        int actionNum = 0;
         try (BufferedReader reader = new BufferedReader(new FileReader(tasks))) {
           String line = null;
           while ((line = reader.readLine()) != null) {
             String[] tmpArgs = line.split(" +");
             if ((tmpArgs != null) && (tmpArgs.length > 0)) {
-              actions.add(tmpArgs);
+              actions.add(actionNum, new Action(tmpArgs, tasks.getParentFile()));
+              actionNum++;
             }
           }
         } catch (IOException e) {
@@ -480,7 +485,37 @@ public class Bot implements BasicWorkerListener {
     if (actions.isEmpty()) {
       System.exit(0);
     }
-    String[] currentAction = actions.remove(0);
+    Action currentAction = actions.remove(0);
     executeAction(currentAction);
+  }
+
+  /**
+   * Bean for an action.
+   */
+  private static class Action {
+
+    /** List of arguments for the action */
+    public final String[] args;
+
+    /** Base directory */
+    public final File baseDir;
+
+    /**
+     * Constructor.
+     * 
+     * @param args List of arguments for the action.
+     * @param baseDir Base directory.
+     */
+    public Action(String[] args, File baseDir) {
+      this.args = args;
+      this.baseDir = baseDir;
+    }
+
+    /**
+     * @return True if the action is OK.
+     */
+    public boolean isOk() {
+      return (args != null) && (args.length > 0);
+    }
   }
 }

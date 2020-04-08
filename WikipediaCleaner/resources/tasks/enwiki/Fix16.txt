@@ -1,4 +1,4 @@
-Set AdditionalAlgorithms 1 2 16 17 46 48 64 85 88 90 91 106 532 539 540 543 548
+DoTasks _Common.txt
 Set Prefix [[User:WikiCleanerBot#T5|Bot_T5_CW#16]]
 FixListCheckWiki Wikipedia:CHECKWIKI/WPC_016_dump 16
 FixCheckWiki 16

@@ -1,4 +1,4 @@
-Set AdditionalAlgorithms 1 2 16 17 46 48 64 85 88 90 91 106 532 539 540 543
+DoTasks _Common.txt
 Set Prefix [[User:WikiCleanerBot#T5|Bot_T5_CW#2]]
 FixCheckWiki 2
 Set Prefix [[User:WikiCleanerBot#T5|Bot_T5_CW#16]]
@@ -28,6 +28,4 @@ Set Prefix [[User:WikiCleanerBot#T2|Bot_T2_CW#106]]
 FixListCheckWiki Wikipedia:CHECKWIKI/WPC_106_dump 106
 Set Prefix [[User:WikiCleanerBot#T3|Bot_T4_CW#543]]
 FixListCheckWiki Wikipedia:CHECKWIKI/WPC_543_dump 543
-Set Prefix [[User:WikiCleanerBot#T1|Bot_T1]]
-ListISBNWarnings
-ListISSNWarnings
+DoTasks ISBN_ISSN.txt

@@ -1,0 +1,3 @@
+# DoTasks _Common.txt
+Set Prefix [[Wikipedia:Bots/Requests_for_approval/WikiCleanerBot_11|Bot_Test_T11]]
+FixListCheckWiki Wikipedia:CHECKWIKI/WPC_547_dump 547

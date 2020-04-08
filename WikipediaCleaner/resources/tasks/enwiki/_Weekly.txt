@@ -1,2 +1,2 @@
-ListISBNWarnings
-ListISSNWarnings
+DoTasks _Common.txt
+DoTasks ISBN_ISSN.txt
