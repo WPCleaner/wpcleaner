@@ -1,2 +1,4 @@
 DoTasks _Common.txt
 DoTasks ISBN_ISSN.txt
+FixCheckWiki 524
+UpdateDuplicateArgsWarnings
