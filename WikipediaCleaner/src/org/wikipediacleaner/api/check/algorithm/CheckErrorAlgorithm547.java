@@ -16,6 +16,7 @@ import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementListItem;
 import org.wikipediacleaner.api.data.PageElementTag;
+import org.wikipediacleaner.api.data.PageElementTitle;
 
 
 /**
@@ -112,13 +113,21 @@ public class CheckErrorAlgorithm547 extends CheckErrorAlgorithmBase {
           automatic = true;
         }
         if (begin > 1) {
-          if ((contents.charAt(begin - 1) == '\n') &&
-              (contents.charAt(begin - 2) == '\n')) {
-            if (!extended) {
-              begin--;
-              extended = true;
+          char previousChar = contents.charAt(begin - 1);
+          if (previousChar == '\n') {
+            char previousChar2 = contents.charAt(begin - 2);
+            if (previousChar2 == '\n') {
+              if (!extended) {
+                begin--;
+                extended = true;
+              }
+              automatic = true;
+            } else if (previousChar2 == '=') {
+              PageElementTitle title = analysis.isInTitle(begin - 2);
+              if (title != null) {
+                automatic = true;
+              }
             }
-            automatic = true;
           }
         } else {
           automatic = true;
