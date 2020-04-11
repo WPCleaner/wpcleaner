@@ -23,6 +23,7 @@ import javax.swing.text.Highlighter.HighlightPainter;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.CheckErrorResult.ErrorLevel;
 import org.wikipediacleaner.api.check.SpecialCharacters;
+import org.wikipediacleaner.api.constants.CWConfiguration;
 import org.wikipediacleaner.api.constants.CWConfigurationError;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.constants.WPCConfigurationString;
@@ -39,9 +40,14 @@ import org.wikipediacleaner.i18n.GT;
 public abstract class CheckErrorAlgorithmBase implements CheckErrorAlgorithm {
 
   /**
+   * Configuration.
+   */
+  private CWConfiguration configuration;
+
+  /**
    * Configuration of the error.
    */
-  private CWConfigurationError configuration;
+  private CWConfigurationError errorConfiguration;
 
   private final String name;
 
@@ -108,12 +114,13 @@ public abstract class CheckErrorAlgorithmBase implements CheckErrorAlgorithm {
   }
 
   /**
-   * @param configuration Configuration of the error.
-   * @see org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithm#setConfiguration(org.wikipediacleaner.api.constants.CWConfigurationError)
+   * @param configuration Configuration.
+   * @see org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithm#setConfiguration(org.wikipediacleaner.api.constants.CWConfiguration)
    */
   @Override
-  public void setConfiguration(CWConfigurationError configuration) {
+  public void setConfiguration(CWConfiguration configuration) {
     this.configuration = configuration;
+    this.errorConfiguration = configuration.getErrorConfiguration(getErrorNumber());
     initializeSettings();
   }
 
@@ -130,7 +137,7 @@ public abstract class CheckErrorAlgorithmBase implements CheckErrorAlgorithm {
    */
   @Override
   public String getShortDescription() {
-    return configuration.getShortDescription();
+    return (errorConfiguration != null) ? errorConfiguration.getShortDescription() : null;
   }
 
   /**
@@ -138,7 +145,7 @@ public abstract class CheckErrorAlgorithmBase implements CheckErrorAlgorithm {
    */
   @Override
   public String getShortDescriptionReplaced() {
-    return configuration.getShortDescriptionReplaced();
+    return (errorConfiguration != null) ? errorConfiguration.getShortDescriptionReplaced() : null;
   }
 
   /**
@@ -147,7 +154,7 @@ public abstract class CheckErrorAlgorithmBase implements CheckErrorAlgorithm {
    */
   @Override
   public String getLongDescription() {
-    return configuration.getLongDescription();
+    return (errorConfiguration != null) ? errorConfiguration.getLongDescription() : null;
   }
 
   /**
@@ -155,7 +162,7 @@ public abstract class CheckErrorAlgorithmBase implements CheckErrorAlgorithm {
    */
   @Override
   public String getLink() {
-    return configuration.getLink();
+    return (errorConfiguration != null) ? errorConfiguration.getLink() : null;
   }
 
   /**
@@ -166,7 +173,7 @@ public abstract class CheckErrorAlgorithmBase implements CheckErrorAlgorithm {
    */
   @Override
   public boolean isInWhiteList(String title) {
-    return configuration.isInWhiteList(title);
+    return (errorConfiguration != null) ? errorConfiguration.isInWhiteList(title) : false;
   }
 
   /**
@@ -174,7 +181,7 @@ public abstract class CheckErrorAlgorithmBase implements CheckErrorAlgorithm {
    */
   @Override
   public String getWhiteListPageName() {
-    return configuration.getWhiteListPageName();
+    return (errorConfiguration != null) ? errorConfiguration.getWhiteListPageName() : null;
   }
 
   /**
@@ -226,7 +233,7 @@ public abstract class CheckErrorAlgorithmBase implements CheckErrorAlgorithm {
    */
   @Override
   public int getPriority() {
-    return configuration.getPriority();
+    return (errorConfiguration != null) ? errorConfiguration.getPriority() : CWConfigurationError.PRIORITY_UNKOWN;
   }
 
   /**
@@ -259,7 +266,6 @@ public abstract class CheckErrorAlgorithmBase implements CheckErrorAlgorithm {
     return errorNumber;
   }
 
-
   /**
    * @param property Property name.
    * @param useWiki Flag indicating if wiki configuration can be used.
@@ -271,7 +277,32 @@ public abstract class CheckErrorAlgorithmBase implements CheckErrorAlgorithm {
   public String getSpecificProperty(
       String property,
       boolean useWiki, boolean useGeneral, boolean acceptEmpty) {
-    return configuration.getSpecificProperty(property, useWiki, useGeneral, useWiki, acceptEmpty);
+    if (errorConfiguration == null) {
+      return null;
+    }
+    return errorConfiguration.getSpecificProperty(property, useWiki, useGeneral, useWiki, acceptEmpty);
+  }
+
+  /**
+   * @param errorNumber Error number.
+   * @param property Property name.
+   * @param useWiki Flag indicating if wiki configuration can be used.
+   * @param useGeneral Flag indicating if general configuration can be used.
+   * @param acceptEmpty Flag indicating if empty strings are accepted.
+   * @return Property value.
+   */
+  @Override
+  public String getSpecificProperty(
+      int errorNumber, String property,
+      boolean useWiki, boolean useGeneral, boolean acceptEmpty) {
+    if (configuration == null) {
+      return null;
+    }
+    CWConfigurationError tmpConfig = configuration.getErrorConfiguration(errorNumber);
+    if (tmpConfig == null) {
+      return null;
+    }
+    return tmpConfig.getSpecificProperty(property, useWiki, useGeneral, useWiki, acceptEmpty);
   }
 
   /**
@@ -297,7 +328,7 @@ public abstract class CheckErrorAlgorithmBase implements CheckErrorAlgorithm {
    */
   @Override
   public final String automaticFix(PageAnalysis analysis) {
-    if (configuration.getNoAuto()) {
+    if ((errorConfiguration == null) || (errorConfiguration.getNoAuto())) {
       return analysis.getContents();
     }
     return internalAutomaticFix(analysis);
@@ -321,7 +352,7 @@ public abstract class CheckErrorAlgorithmBase implements CheckErrorAlgorithm {
    */
   @Override
   public final String botFix(PageAnalysis analysis) {
-    if (configuration.getNoAuto()) {
+    if ((errorConfiguration == null) || (errorConfiguration.getNoAuto())) {
       return analysis.getContents();
     }
     return internalBotFix(analysis);

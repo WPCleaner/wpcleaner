@@ -38,7 +38,7 @@ public class CheckErrorAlgorithm548 extends CheckErrorAlgorithmBase {
   }
 
   /** Characters recognized as punctuation */
-  private static final String PUNCTUATIONS = ",;"; // Avoid ":" and "."
+  private static final String PUNCTUATIONS = ",;("; // Avoid ":" and "."
 
   /** Characters that can be replaced when they are alone */
   private static final String PUNCTUATIONS_ALONE = PUNCTUATIONS;

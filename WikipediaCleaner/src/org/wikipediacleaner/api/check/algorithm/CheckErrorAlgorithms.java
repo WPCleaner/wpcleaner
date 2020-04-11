@@ -27,23 +27,23 @@ public final class CheckErrorAlgorithms {
     new HashMap<EnumWikipedia, List<CheckErrorAlgorithm>>();
 
   /**
-   * Initializes algorithms for a Wikipedia.
+   * Initializes algorithms for a Wiki.
    * 
-   * @param wikipedia Wikipedia.
+   * @param wiki Wiki.
    */
-  public static synchronized void initializeAlgorithms(EnumWikipedia wikipedia) {
+  public static synchronized void initializeAlgorithms(EnumWikipedia wiki) {
     List<CheckErrorAlgorithm> algorithms = new ArrayList<CheckErrorAlgorithm>(CWConfiguration.MAX_ERROR_NUMBER);
     DecimalFormat errorNumberFormat = new DecimalFormat("000");
     for (int i = 0; i < CWConfiguration.MAX_ERROR_NUMBER; i++) {
       int errorNumber = i + 1;
-      CWConfigurationError error = wikipedia.getCWConfiguration().getErrorConfiguration(errorNumber);
+      CWConfigurationError error = wiki.getCWConfiguration().getErrorConfiguration(errorNumber);
       if (error != null) {
         String className = CheckErrorAlgorithm.class.getName() + errorNumberFormat.format(errorNumber);
         CheckErrorAlgorithm algorithm = null;
         try {
           Class algorithmClass = Class.forName(className);
           algorithm = (CheckErrorAlgorithm) algorithmClass.newInstance();
-          algorithm.setConfiguration(error);
+          algorithm.setConfiguration(wiki.getCWConfiguration());
         } catch (ClassNotFoundException e) {
           // Not found: error not yet available in WikiCleaner.
         } catch (InstantiationException e) {
@@ -60,7 +60,7 @@ public final class CheckErrorAlgorithms {
         }
       }
     }
-    algorithmsMap.put(wikipedia, algorithms);
+    algorithmsMap.put(wiki, algorithms);
   }
 
   /**

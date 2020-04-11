@@ -143,24 +143,7 @@ public class CheckErrorAlgorithm106 extends CheckErrorAlgorithmISSN {
     if (issn == null) {
       return null;
     }
-    String reasonTemplate = getSpecificProperty("reason", true, true, false);
-    if (reasonTemplate == null) {
-      return null;
-    }
     return reasonTemplate;
-  }
-
-  /**
-   * Return the parameters used to configure the algorithm.
-   * 
-   * @return Map of parameters (key=name, value=description).
-   */
-  @Override
-  public Map<String, String> getParameters() {
-    Map<String, String> parameters = super.getParameters();
-    parameters.put(
-        "reason", GT._T("An explanation of the problem"));
-    return parameters;
   }
 
   /**
@@ -175,5 +158,40 @@ public class CheckErrorAlgorithm106 extends CheckErrorAlgorithmISSN {
       return analysis.getContents();
     }
     return fixUsingAutomaticReplacement(analysis);
+  }
+
+  /* ====================================================================== */
+  /* PARAMETERS                                                             */
+  /* ====================================================================== */
+
+  /** Explanation of the problem */
+  private static final String PARAMETER_REASON = "reason";
+
+  /**
+   * Initialize settings for the algorithm.
+   * 
+   * @see org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase#initializeSettings()
+   */
+  @Override
+  protected void initializeSettings() {
+    reasonTemplate = getSpecificProperty(PARAMETER_REASON, true, true, false);
+  }
+
+  /** Explanation of the problem */
+  private String reasonTemplate = null;
+
+  /**
+   * Return the parameters used to configure the algorithm.
+   * 
+   * @return Map of parameters (key=name, value=description).
+   * @see org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase#getParameters()
+   */
+  @Override
+  public Map<String, String> getParameters() {
+    Map<String, String> parameters = super.getParameters();
+    parameters.put(
+        PARAMETER_REASON,
+        GT._T("An explanation of the problem"));
+    return parameters;
   }
 }

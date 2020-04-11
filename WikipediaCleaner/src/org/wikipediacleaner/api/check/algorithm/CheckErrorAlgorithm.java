@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
-import org.wikipediacleaner.api.constants.CWConfigurationError;
+import org.wikipediacleaner.api.constants.CWConfiguration;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageAnalysis;
@@ -32,9 +32,9 @@ public interface CheckErrorAlgorithm {
   public boolean isAvailable();
 
   /**
-   * @param configuration Configuration of the error.
+   * @param configuration Configuration.
    */
-  public void setConfiguration(CWConfigurationError configuration);
+  public void setConfiguration(CWConfiguration configuration);
 
   /**
    * @return Short description of the error.
@@ -117,6 +117,18 @@ public interface CheckErrorAlgorithm {
    */
   public String getSpecificProperty(
       String name,
+      boolean useWiki, boolean useGeneral, boolean acceptEmpty);
+
+  /**
+   * @param errorNumber Error number.
+   * @param name Property name.
+   * @param useWiki Flag indicating if wiki configuration can be used.
+   * @param useGeneral Flag indicating if general configuration can be used.
+   * @param acceptEmpty Flag indicating if empty strings are accepted.
+   * @return Property value.
+   */
+  public String getSpecificProperty(
+      int errorNumber, String name,
       boolean useWiki, boolean useGeneral, boolean acceptEmpty);
 
   /**

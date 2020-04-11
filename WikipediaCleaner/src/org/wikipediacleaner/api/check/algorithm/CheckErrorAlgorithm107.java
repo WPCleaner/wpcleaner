@@ -200,11 +200,7 @@ public class CheckErrorAlgorithm107 extends CheckErrorAlgorithmISSN {
    */
   @Override
   public String getReason(PageElementISSN issn) {
-    if (issn == null) {
-      return null;
-    }
-    String reasonTemplate = getSpecificProperty("reason", true, true, false);
-    if (reasonTemplate == null) {
+    if ((issn == null) || (reasonTemplate == null)) {
       return null;
     }
     String number = issn.getISSN();
@@ -215,16 +211,38 @@ public class CheckErrorAlgorithm107 extends CheckErrorAlgorithmISSN {
     return MessageFormat.format(reasonTemplate, Integer.toString(length));
   }
 
+  /* ====================================================================== */
+  /* PARAMETERS                                                             */
+  /* ====================================================================== */
+
+  /** Explanation of the problem */
+  private static final String PARAMETER_REASON = "reason";
+
+  /**
+   * Initialize settings for the algorithm.
+   * 
+   * @see org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase#initializeSettings()
+   */
+  @Override
+  protected void initializeSettings() {
+    reasonTemplate = getSpecificProperty(PARAMETER_REASON, true, true, false);
+  }
+
+  /** Explanation of the problem */
+  private String reasonTemplate = null;
+
   /**
    * Return the parameters used to configure the algorithm.
    * 
    * @return Map of parameters (key=name, value=description).
+   * @see org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase#getParameters()
    */
   @Override
   public Map<String, String> getParameters() {
     Map<String, String> parameters = super.getParameters();
     parameters.put(
-        "reason", GT._T("An explanation of the problem"));
+        PARAMETER_REASON,
+        GT._T("An explanation of the problem"));
     return parameters;
   }
 }

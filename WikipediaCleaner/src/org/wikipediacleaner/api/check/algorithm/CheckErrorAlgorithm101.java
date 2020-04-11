@@ -46,34 +46,6 @@ public class CheckErrorAlgorithm101 extends CheckErrorAlgorithmBase {
       return false;
     }
 
-    // Retrieve configuration
-    String suffixes = getSpecificProperty("templates", true, true, false);
-    List<String> listSuffixes = null;
-    if (suffixes != null) {
-      listSuffixes = WPCConfiguration.convertPropertyToStringList(suffixes);
-    } else {
-      listSuffixes = new ArrayList<String>();
-    }
-    listSuffixes.add("nd");
-    listSuffixes.add("rd");
-    listSuffixes.add("st");
-    listSuffixes.add("th");
-    Map<String, String> replacements = null;
-    String tmpReplacements = getSpecificProperty("replacements", true, true, false);
-    if (tmpReplacements != null) {
-      List<String> tmpList = WPCConfiguration.convertPropertyToStringList(tmpReplacements);
-      if (tmpList != null) {
-        replacements = new HashMap<String, String>();
-        for (String tmp : tmpList) {
-          int equalIndex = tmp.indexOf('=');
-          if ((equalIndex > 0) && (equalIndex < tmp.length() - 1)) {
-            replacements.put(tmp.substring(0, equalIndex), tmp.substring(equalIndex + 1));
-          }
-        }
-      }
-    }
-    
-
     // Check every <sup> tag
     List<PageElementTag> supTags = analysis.getCompleteTags(PageElementTag.TAG_HTML_SUP);
     String contents = analysis.getContents();
@@ -126,6 +98,57 @@ public class CheckErrorAlgorithm101 extends CheckErrorAlgorithmBase {
     return result;
   }
 
+  /* ====================================================================== */
+  /* PARAMETERS                                                             */
+  /* ====================================================================== */
+
+  /** List of ordinal suffixes */
+  private static final String PARAMETER_TEMPLATES = "templates";
+
+  /** List of possible replacements */
+  private static final String PARAMETER_REPLACEMENTS = "replacements";
+
+  /**
+   * Initialize settings for the algorithm.
+   * 
+   * @see org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase#initializeSettings()
+   */
+  @Override
+  protected void initializeSettings() {
+    String tmp = getSpecificProperty(PARAMETER_TEMPLATES, true, true, false);
+    listSuffixes.clear();
+    if (tmp != null) {
+      List<String> tmpList = WPCConfiguration.convertPropertyToStringList(tmp);
+      if (tmpList != null) {
+        listSuffixes.addAll(tmpList);
+      }
+    }
+    listSuffixes.add("nd");
+    listSuffixes.add("rd");
+    listSuffixes.add("st");
+    listSuffixes.add("th");
+
+    tmp = getSpecificProperty(PARAMETER_REPLACEMENTS, true, true, false);
+    replacements.clear();
+    if (tmp != null) {
+      List<String> tmpList = WPCConfiguration.convertPropertyToStringList(tmp);
+      if (tmpList != null) {
+        for (String tmpItem : tmpList) {
+          int equalIndex = tmpItem.indexOf('=');
+          if ((equalIndex > 0) && (equalIndex < tmpItem.length() - 1)) {
+            replacements.put(tmpItem.substring(0, equalIndex), tmpItem.substring(equalIndex + 1));
+          }
+        }
+      }
+    }
+  }
+
+  /** List of ordinal suffixes */
+  private final List<String> listSuffixes = new ArrayList<>();
+
+  /** List of possible replacements */
+  private final Map<String, String> replacements = new HashMap<>();
+
   /**
    * @return Map of parameters (key=name, value=description).
    * @see org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase#getParameters()
@@ -133,8 +156,12 @@ public class CheckErrorAlgorithm101 extends CheckErrorAlgorithmBase {
   @Override
   public Map<String, String> getParameters() {
     Map<String, String> parameters = super.getParameters();
-    parameters.put("templates", GT._T("List of ordinal suffixes"));
-    parameters.put("replacements", GT._T("List of possible replacements"));
+    parameters.put(
+        PARAMETER_TEMPLATES,
+        GT._T("List of ordinal suffixes"));
+    parameters.put(
+        PARAMETER_REPLACEMENTS,
+        GT._T("List of possible replacements"));
     return parameters;
   }
 }

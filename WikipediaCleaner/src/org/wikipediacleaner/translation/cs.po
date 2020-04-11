@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2020-04-08 18:42+0200\n"
+"POT-Creation-Date: 2020-04-11 20:22+0200\n"
 "PO-Revision-Date: 2017-03-03 19:31+0000\n"
 "Last-Translator: Matěj S. <matejsuchanek97@gmail.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
@@ -267,8 +267,7 @@ msgstr "Uzavřít tag"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm003.java:207
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm003.java:210
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm111.java:146
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm112.java:704
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm111.java:174
 #, java-format
 msgid "A list of templates resulting in the inclusion of {0}"
 msgstr "Seznam šablon s vloženou {0}"
@@ -531,25 +530,25 @@ msgid "Check all links to other language"
 msgstr "Zkontrolovat všechny odkazy do jiného jazyka"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:121
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm091.java:222
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm091.java:203
 msgid "Check language links"
 msgstr "Zkontrolovat jazykové odkazy"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:129
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:330
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm091.java:265
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm091.java:246
 msgid "What is the title of the page on this wiki ?"
 msgstr "Jaký je název stránky na této wiki?"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:142
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm091.java:278
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm091.java:259
 #, java-format
 msgid "Replace using template {0}"
 msgstr "Nahradit za použití šablony {0}"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:146
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm081.java:269
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm091.java:310
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm091.java:291
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm513.java:72
 #: org/wikipediacleaner/gui/swing/action/ActionExternalViewer.java:61
 #: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:90
@@ -605,8 +604,9 @@ msgstr ""
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm069.java:845
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm070.java:281
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm071.java:153
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm106.java:162
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm107.java:227
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm106.java:194
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm107.java:245
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm108.java:227
 msgid "An explanation of the problem"
 msgstr "Vysvětlení problému"
 
@@ -656,7 +656,6 @@ msgstr "Toto ISBN je v rezervovaném rozsahu."
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm072.java:266
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm073.java:301
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm108.java:203
 msgid "An explanation of the problem (incorrect checksum)"
 msgstr "Vysvěltení problému (nesprávný kontrolní součet)"
 
@@ -768,7 +767,7 @@ msgid "Templates to be used for linking to the history of an article"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm090.java:1010
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm091.java:393
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm091.java:433
 msgid "Templates using external links"
 msgstr "Šablony používající externí odkazy"
 
@@ -784,19 +783,19 @@ msgstr ""
 msgid "Convert them to internal links"
 msgstr "Změnit je na interní odkazy"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm091.java:394
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm091.java:436
 msgid "To report only links to other languages"
 msgstr "Hlásit pouze odkazy do jiného jazyka"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm091.java:395
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm091.java:439
 msgid "To report only links to local wikis"
 msgstr "Hlásit pouze odkazy do místních wiki"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm101.java:136
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm101.java:161
 msgid "List of ordinal suffixes"
 msgstr "Seznam řadových přípon"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm101.java:137
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm101.java:164
 msgid "List of possible replacements"
 msgstr "Seznam možných náhrad"
 
@@ -979,19 +978,19 @@ msgstr ""
 msgid "Links to ignore"
 msgstr "Odkazuje na {0}"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmBase.java:285
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmBase.java:316
 msgid "Title of the article describing this type of error"
 msgstr "Název článku popisující tento typ chyby"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmBase.java:286
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmBase.java:317
 msgid "Set to true to prevent automatic modifications for this type of error"
 msgstr "Pro zamezení automatickým opravám této chyby změňte na true"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmBase.java:287
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmBase.java:318
 msgid "List of false positives for this type of error"
 msgstr "Seznam falešně pozitivních výsledků pro tento typ chyby"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmBase.java:288
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmBase.java:319
 msgid "Page containing the list of false positives for this type of error"
 msgstr ""
 "Stránka obsahující seznam falešně pozitivních výsledků pro tento typ chyby"

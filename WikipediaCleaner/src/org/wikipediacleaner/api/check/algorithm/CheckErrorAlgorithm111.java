@@ -7,6 +7,7 @@
 
 package org.wikipediacleaner.api.check.algorithm;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -80,17 +81,7 @@ public class CheckErrorAlgorithm111 extends CheckErrorAlgorithmBase {
     }
 
     // Search for templates like {{References}}
-    String templates = getSpecificProperty(
-        "templates", true, true, false);
-    if (templates == null) {
-      templates = getSpecificProperty(
-          "references_templates", true, true, false);
-    }
-    List<String> referencesTemplates = null;
-    if (templates != null) {
-      referencesTemplates = WPCConfiguration.convertPropertyToStringList(templates);
-    }
-    if (referencesTemplates != null) {
+    if (!referencesTemplates.isEmpty()) {
       List<PageElementTemplate> allTemplates = analysis.getTemplates();
       int templateNum = allTemplates.size();
       while (templateNum > 0) {
@@ -135,6 +126,39 @@ public class CheckErrorAlgorithm111 extends CheckErrorAlgorithmBase {
     return fixUsingAutomaticReplacement(analysis);
   }
 
+  /* ====================================================================== */
+  /* PARAMETERS                                                             */
+  /* ====================================================================== */
+
+  /** List of templates */
+  private static final String PARAMETER_TEMPLATES = "templates";
+
+  /** List of templates */
+  private static final String PARAMETER_REFERENCES_TEMPLATES = "references_templates";
+
+  /**
+   * Initialize settings for the algorithm.
+   * 
+   * @see org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase#initializeSettings()
+   */
+  @Override
+  protected void initializeSettings() {
+    String tmp = getSpecificProperty(PARAMETER_TEMPLATES, true, true, true);
+    if (tmp == null) {
+      tmp = getSpecificProperty(PARAMETER_REFERENCES_TEMPLATES, true, true, true);
+    }
+    referencesTemplates.clear();
+    if (tmp != null) {
+      List<String> tmpList = WPCConfiguration.convertPropertyToStringList(tmp);
+      if (tmpList != null) {
+        referencesTemplates.addAll(tmpList);
+      }
+    }
+  }
+
+  /** List of templates */
+  private final List<String> referencesTemplates = new ArrayList<>();
+
   /**
    * @return Map of parameters (key=name, value=description).
    * @see org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase#getParameters()
@@ -142,8 +166,12 @@ public class CheckErrorAlgorithm111 extends CheckErrorAlgorithmBase {
   @Override
   public Map<String, String> getParameters() {
     Map<String, String> parameters = super.getParameters();
-    //parameters.put("references_templates", GT._("A list of templates resulting in the inclusion of {0}", "&lt;references/&gt;"));
-    parameters.put("templates", GT._T("A list of templates resulting in the inclusion of {0}", "&lt;references/&gt;"));
+    //parameters.put(
+    //    PARAMETER_REFERENCES_TEMPLATES,
+    //    GT._T("A list of templates resulting in the inclusion of {0}", "&lt;references/&gt;"));
+    parameters.put(
+        PARAMETER_TEMPLATES,
+        GT._T("A list of templates resulting in the inclusion of {0}", "&lt;references/&gt;"));
     return parameters;
   }
 }

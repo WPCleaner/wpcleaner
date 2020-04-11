@@ -9,6 +9,7 @@ package org.wikipediacleaner.api.check.algorithm;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -18,7 +19,6 @@ import org.wikipediacleaner.api.check.BasicActionProvider;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.CheckLanguageLinkActionProvider;
 import org.wikipediacleaner.api.check.CheckErrorResult.ErrorLevel;
-import org.wikipediacleaner.api.constants.CWConfigurationError;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.constants.WPCConfiguration;
 import org.wikipediacleaner.api.data.Interwiki;
@@ -80,26 +80,6 @@ public class CheckErrorAlgorithm091 extends CheckErrorAlgorithmBase {
       return false;
     }
 
-    // Retrieve configuration
-    EnumWikipedia wiki = analysis.getWikipedia();
-    CWConfigurationError error68 = wiki.getCWConfiguration().getErrorConfiguration(68);
-    List<String> templatesList = null;
-    if (error68 != null) {
-      String templatesParam = error68.getSpecificProperty("template", true, false, false, false);
-      if (templatesParam != null) {
-        templatesList = WPCConfiguration.convertPropertyToStringList(templatesParam);
-      }
-    }
-    String strOnlyLanguage = getSpecificProperty("only_language", true, false, false);
-    boolean onlyLanguage = (strOnlyLanguage != null) ? Boolean.valueOf(strOnlyLanguage) : true;
-    String strOnlyLocal = getSpecificProperty("only_local", true, false, false);
-    boolean onlyLocal = (strOnlyLocal != null) ? Boolean.valueOf(strOnlyLocal) : true;
-    String templates = getSpecificProperty("link_templates", true, true, false);
-    List<String> linkTemplates = null;
-    if (templates != null) {
-      linkTemplates = WPCConfiguration.convertPropertyToStringList(templates);
-    }
-
     // Analyze each external link
     boolean result = false;
     List<PageElementExternalLink> links = analysis.getExternalLinks();
@@ -107,6 +87,7 @@ public class CheckErrorAlgorithm091 extends CheckErrorAlgorithmBase {
       return result;
     }
     String contents = analysis.getContents();
+    EnumWikipedia wiki = analysis.getWikipedia();
     for (PageElementExternalLink link : links) {
 
       // Check if this is a external link to an other wiki
@@ -383,6 +364,63 @@ public class CheckErrorAlgorithm091 extends CheckErrorAlgorithmBase {
     return fixUsingAutomaticReplacement(analysis);
   }
 
+  /* ====================================================================== */
+  /* PARAMETERS                                                             */
+  /* ====================================================================== */
+
+  /** Parameter to report only links to other languages */
+  private static final String PARAMETER_ONLY_LANGUAGE = "only_language";
+
+  /** Parameter to report only links to local wikis */
+  private static final String PARAMETER_ONLY_LOCAL = "only_local";
+
+  /** Parameter for templates using external links */
+  private static final String PARAMETER_LINK_TEMPLATES = "link_templates";
+
+  /**
+   * Initialize settings for the algorithm.
+   * 
+   * @see org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase#initializeSettings()
+   */
+  @Override
+  protected void initializeSettings() {
+    String tmp = getSpecificProperty(PARAMETER_ONLY_LANGUAGE, true, true, false);
+    onlyLanguage = (tmp != null) ? Boolean.valueOf(tmp) : true;
+
+    tmp = getSpecificProperty(PARAMETER_ONLY_LOCAL, true, false, false);
+    onlyLocal = (tmp != null) ? Boolean.valueOf(tmp) : true;
+
+    tmp = getSpecificProperty(PARAMETER_LINK_TEMPLATES, true,  true,  false);
+    linkTemplates.clear();
+    if (tmp != null) {
+      List<String> tmpList = WPCConfiguration.convertPropertyToStringList(tmp);
+      if (tmpList != null) {
+        linkTemplates.addAll(tmpList);
+      }
+    }
+
+    tmp = getSpecificProperty(68, CheckErrorAlgorithm068.PARAMETER_TEMPLATE, true, false, false);
+    templatesList.clear();
+    if (tmp != null) {
+      List<String> tmpList = WPCConfiguration.convertPropertyToStringList(tmp);
+      if (tmpList != null) {
+        templatesList.addAll(tmpList);
+      }
+    }
+  }
+
+  /** True to report only links to other languages */
+  private boolean onlyLanguage = true;
+
+  /** True to report only links to local wikis */
+  private boolean onlyLocal = true;
+
+  /** Templates using external links */
+  private final List<String> linkTemplates = new ArrayList<>();
+
+  /** Templates */
+  private final List<String> templatesList = new ArrayList<>();
+
   /**
    * @return Map of parameters (key=name, value=description).
    * @see org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase#getParameters()
@@ -390,9 +428,15 @@ public class CheckErrorAlgorithm091 extends CheckErrorAlgorithmBase {
   @Override
   public Map<String, String> getParameters() {
     Map<String, String> parameters = super.getParameters();
-    parameters.put("link_templates", GT._T("Templates using external links"));
-    parameters.put("only_language", GT._T("To report only links to other languages"));
-    parameters.put("only_local", GT._T("To report only links to local wikis"));
+    parameters.put(
+        PARAMETER_LINK_TEMPLATES,
+        GT._T("Templates using external links"));
+    parameters.put(
+        PARAMETER_ONLY_LANGUAGE,
+        GT._T("To report only links to other languages"));
+    parameters.put(
+        PARAMETER_ONLY_LOCAL,
+        GT._T("To report only links to local wikis"));
     return parameters;
   }
 }

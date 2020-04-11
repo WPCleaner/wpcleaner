@@ -377,7 +377,7 @@ public class CheckErrorAlgorithm068 extends CheckErrorAlgorithmBase {
   /* ====================================================================== */
 
   /** Templates used instead of the link */
-  private static final String PARAMETER_TEMPLATE = "template";
+  public static final String PARAMETER_TEMPLATE = "template";
 
   /**
    * Initialize settings for the algorithm.

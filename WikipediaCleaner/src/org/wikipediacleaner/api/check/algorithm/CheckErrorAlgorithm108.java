@@ -178,10 +178,6 @@ public class CheckErrorAlgorithm108 extends CheckErrorAlgorithmISSN {
     char check = Character.toUpperCase(number.charAt(7));
     char computedCheck = Character.toUpperCase(PageElementISSN.computeChecksum(number));
     if (check != computedCheck) {
-      String reasonTemplate = getSpecificProperty("reason_checksum", true, true, false);
-      if (reasonTemplate == null) {
-        reasonTemplate = getSpecificProperty("reason", true, true, false);
-      }
       if (reasonTemplate == null) {
         return null;
       }
@@ -191,16 +187,44 @@ public class CheckErrorAlgorithm108 extends CheckErrorAlgorithmISSN {
     return null;
   }
 
+  /* ====================================================================== */
+  /* PARAMETERS                                                             */
+  /* ====================================================================== */
+
+  /** Explanation of the problem */
+  private static final String PARAMETER_REASON = "reason";
+
+  /** Explanation of the problem */
+  private static final String PARAMETER_REASON_CHECKSUM = "reason_checksum";
+
+  /**
+   * Initialize settings for the algorithm.
+   * 
+   * @see org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase#initializeSettings()
+   */
+  @Override
+  protected void initializeSettings() {
+    reasonTemplate = getSpecificProperty(PARAMETER_REASON_CHECKSUM, true, true, false);
+    if (reasonTemplate == null) {
+      reasonTemplate = getSpecificProperty(PARAMETER_REASON, true, true, false);
+    }
+  }
+
+  /** Explanation of the problem */
+  private String reasonTemplate = null;
+
   /**
    * Return the parameters used to configure the algorithm.
    * 
    * @return Map of parameters (key=name, value=description).
+   * @see org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase#getParameters()
    */
   @Override
   public Map<String, String> getParameters() {
     Map<String, String> parameters = super.getParameters();
     parameters.put(
-        "reason_checksum", GT._T("An explanation of the problem (incorrect checksum)"));
+        PARAMETER_REASON,
+        GT._T("An explanation of the problem"));
     return parameters;
   }
 }
