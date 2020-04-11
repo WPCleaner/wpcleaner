@@ -132,6 +132,7 @@ public class CheckErrorAlgorithm549 extends CheckErrorAlgorithmBase {
 
         // Construct possible replacement
         StringBuilder buffer = new StringBuilder();
+        String previousText = "";
         boolean automatic = true;
         for (int tmpLinkNum = 0; tmpLinkNum < tmpLinks.size(); tmpLinkNum++) {
           PageElementInternalLink link = tmpLinks.get(tmpLinkNum);
@@ -164,8 +165,9 @@ public class CheckErrorAlgorithm549 extends CheckErrorAlgorithmBase {
           } else {
             otherChar = true;
           }
-          boolean textEquals = text.equals(buffer.toString());
-          boolean textEqualsCase = text.equalsIgnoreCase(buffer.toString());
+          boolean textEquals = text.equals(previousText);
+          boolean textEqualsCase = text.equalsIgnoreCase(previousText);
+          previousText = text;
           if (textEqualsCase) {
             automatic = false;
           }
