@@ -81,7 +81,6 @@ public class CheckErrorAlgorithm549 extends CheckErrorAlgorithmBase {
       PageElementInternalLink firstLink = links.get(linkNum);
       tmpLinks.set(0, firstLink);
       tmpBetweenList.clear();
-      tmpBetween.setLength(0);
       String fullLink = firstLink.getFullLink();
       int endIndex = firstLink.getEndIndex();
       linkNum++;
@@ -89,6 +88,7 @@ public class CheckErrorAlgorithm549 extends CheckErrorAlgorithmBase {
       while (!finished && (linkNum < links.size())) {
 
         // Ignore special characters after the link
+        tmpBetween.setLength(0);
         int tmpIndex = endIndex;
         while (!finished && (tmpIndex < contents.length())) {
           char tmpChar = contents.charAt(tmpIndex);
