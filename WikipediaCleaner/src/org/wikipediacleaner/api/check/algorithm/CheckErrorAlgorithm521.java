@@ -7,6 +7,7 @@
 
 package org.wikipediacleaner.api.check.algorithm;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -47,20 +48,6 @@ public class CheckErrorAlgorithm521 extends CheckErrorAlgorithmBase {
       return false;
     }
 
-    // Initialization
-    String templatesProp = getSpecificProperty("templates", true, true, false);
-    if (templatesProp == null) {
-      return false;
-    }
-    List<String> checks = WPCConfiguration.convertPropertyToStringList(templatesProp, true);
-    if ((checks == null) || (checks.isEmpty())) {
-      return false;
-    }
-    String monthsProp = getSpecificProperty("months", true, true, false);
-    List<String> months = (monthsProp != null) ?
-        WPCConfiguration.convertPropertyToStringList(monthsProp) :
-        null;
-
     // Search for incorrect formatting
     boolean result = false;
     for (String check : checks) {
@@ -76,7 +63,7 @@ public class CheckErrorAlgorithm521 extends CheckErrorAlgorithmBase {
               for (int i = 2; i < elements.length; i++) {
                 formatOK |= checkFormat(
                     analysis, template.getParameterValueStartIndex(paramIndex),
-                    value, elements[i], months);
+                    value, elements[i]);
               }
   
               // Report error
@@ -111,13 +98,11 @@ public class CheckErrorAlgorithm521 extends CheckErrorAlgorithmBase {
    * @param offset Offset of the value in the page.
    * @param value Parameter value.
    * @param format Expected format.
-   * @param months Possible values for months.
    * @return True if the value matches the format.
    */
   private boolean checkFormat(
       PageAnalysis analysis, int offset,
-      String value, String format,
-      List<String> months) {
+      String value, String format) {
     if ((value == null) || (format == null)) {
       return false;
     }
@@ -351,6 +336,47 @@ public class CheckErrorAlgorithm521 extends CheckErrorAlgorithmBase {
     return true;
   }
 
+  /* ====================================================================== */
+  /* PARAMETERS                                                             */
+  /* ====================================================================== */
+
+  /** Templates to check for date formats */
+  private static final String PARAMETER_TEMPLATES = "templates";
+
+  /** Months names */
+  private static final String PARAMETER_MONTHS = "months";
+
+  /**
+   * Initialize settings for the algorithm.
+   * 
+   * @see org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase#initializeSettings()
+   */
+  @Override
+  protected void initializeSettings() {
+    String tmp = getSpecificProperty(PARAMETER_TEMPLATES, true, true, false);
+    checks.clear();
+    if (tmp != null) {
+      List<String> tmpList = WPCConfiguration.convertPropertyToStringList(tmp);
+      if (tmpList != null) {
+        checks.addAll(tmpList);
+      }
+    }
+    tmp = getSpecificProperty(PARAMETER_MONTHS, true, true, false);
+    months.clear();
+    if (tmp != null) {
+      List<String> tmpList = WPCConfiguration.convertPropertyToStringList(tmp);
+      if (tmpList != null) {
+        months.addAll(tmpList);
+      }
+    }
+  }
+
+  /** Templates to check */
+  private final List<String> checks = new ArrayList<>();
+
+  /** Months names */
+  private final List<String> months = new ArrayList<>();
+
   /**
    * @return Map of parameters (key=name, value=description).
    * @see org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase#getParameters()
@@ -358,8 +384,12 @@ public class CheckErrorAlgorithm521 extends CheckErrorAlgorithmBase {
   @Override
   public Map<String, String> getParameters() {
     Map<String, String> parameters = super.getParameters();
-    parameters.put("templates", GT._T("A list of templates and parameters in which format should be checked"));
-    parameters.put("months", GT._T("A list of text values for months"));
+    parameters.put(
+        PARAMETER_TEMPLATES,
+        GT._T("A list of templates and parameters in which format should be checked"));
+    parameters.put(
+        PARAMETER_MONTHS,
+        GT._T("A list of text values for months"));
     return parameters;
   }
 }

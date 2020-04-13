@@ -83,23 +83,7 @@ public class CheckErrorAlgorithm520 extends CheckErrorAlgorithmBase {
    */
   @Override
   public boolean hasSpecialList() {
-    return (getAbuseFilter() != null);
-  }
-
-  /**
-   * @return Abuse filter.
-   */
-  private Integer getAbuseFilter() {
-    String abuseFilter = getSpecificProperty("abuse_filter", true, true, false);
-    if ((abuseFilter != null) &&
-        (abuseFilter.trim().length() > 0)) {
-      try {
-        return Integer.valueOf(abuseFilter);
-      } catch (NumberFormatException e) {
-        // Nothing to do
-      }
-    }
-    return null;
+    return (abuseFilter != null);
   }
 
   /**
@@ -111,31 +95,59 @@ public class CheckErrorAlgorithm520 extends CheckErrorAlgorithmBase {
    */
   @Override
   public List<Page> getSpecialList(EnumWikipedia wiki, int limit) {
-    List<Page> result = null;
-    Integer abuseFilter = getAbuseFilter();
-    if (abuseFilter != null) {
-      API api = APIFactory.getAPI();
-      Configuration config = Configuration.getConfiguration();
-      int maxDays = config.getInt(wiki, ConfigurationValueInteger.MAX_DAYS_ABUSE_LOG);
+    if (abuseFilter == null) {
+      return null;
+    }
+    API api = APIFactory.getAPI();
+    Configuration config = Configuration.getConfiguration();
+    int maxDays = config.getInt(wiki, ConfigurationValueInteger.MAX_DAYS_ABUSE_LOG);
+    try {
+      return api.retrieveAbuseLog(wiki, abuseFilter, maxDays);
+    } catch (APIException e) {
+      //
+    }
+    return null;
+  }
+
+  /* ====================================================================== */
+  /* PARAMETERS                                                             */
+  /* ====================================================================== */
+
+  /** Identifier of abuse filter */
+  private static final String PARAMETER_ABUSE_FILTER = "abuse_filter";
+
+  /**
+   * Initialize settings for the algorithm.
+   * 
+   * @see org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase#initializeSettings()
+   */
+  @Override
+  protected void initializeSettings() {
+    String tmp = getSpecificProperty(PARAMETER_ABUSE_FILTER, true, true, false);
+    abuseFilter = null;
+    if ((tmp != null) && (tmp.trim().length() > 0)) {
       try {
-        result = api.retrieveAbuseLog(wiki, abuseFilter, maxDays);
-      } catch (APIException e) {
-        //
+        abuseFilter = Integer.valueOf(tmp);
+      } catch (NumberFormatException e) {
+        // Nothing to do
       }
     }
-    return result;
   }
+
+  /** Identifier of abuse filter */
+  private Integer abuseFilter = null;
 
   /**
    * Return the parameters used to configure the algorithm.
    * 
    * @return Map of parameters (key=name, value=description).
+   * @see org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase#getParameters()
    */
   @Override
   public Map<String, String> getParameters() {
     Map<String, String> parameters = super.getParameters();
     parameters.put(
-        "abuse_filter",
+        PARAMETER_ABUSE_FILTER,
         GT._T("An identifier of an abuse filter that is triggered by weird characters."));
     return parameters;
   }

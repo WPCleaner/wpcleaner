@@ -26,6 +26,7 @@ import org.wikipediacleaner.api.check.SpecialCharacters;
 import org.wikipediacleaner.api.constants.CWConfiguration;
 import org.wikipediacleaner.api.constants.CWConfigurationError;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
+import org.wikipediacleaner.api.constants.WPCConfiguration;
 import org.wikipediacleaner.api.constants.WPCConfigurationString;
 import org.wikipediacleaner.api.data.MagicWord;
 import org.wikipediacleaner.api.data.Page;
@@ -39,14 +40,13 @@ import org.wikipediacleaner.i18n.GT;
  */
 public abstract class CheckErrorAlgorithmBase implements CheckErrorAlgorithm {
 
-  /**
-   * Configuration.
-   */
-  private CWConfiguration configuration;
+  /** Configuration for WPCleaner. */
+  private WPCConfiguration wpcConfiguration;
 
-  /**
-   * Configuration of the error.
-   */
+  /** Configuration for Check Wiki. */
+  private CWConfiguration cwConfiguration;
+
+  /** Configuration of the error. */
   private CWConfigurationError errorConfiguration;
 
   private final String name;
@@ -114,13 +114,15 @@ public abstract class CheckErrorAlgorithmBase implements CheckErrorAlgorithm {
   }
 
   /**
-   * @param configuration Configuration.
-   * @see org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithm#setConfiguration(org.wikipediacleaner.api.constants.CWConfiguration)
+   * @param cwConfiguration Configuration for Check Wiki.
+   * @param wpcConfiguration Configuration for WPCleaner.
+   * @see org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithm#setConfiguration(org.wikipediacleaner.api.constants.CWConfiguration, org.wikipediacleaner.api.constants.WPCConfiguration)
    */
   @Override
-  public void setConfiguration(CWConfiguration configuration) {
-    this.configuration = configuration;
-    this.errorConfiguration = configuration.getErrorConfiguration(getErrorNumber());
+  public void setConfiguration(CWConfiguration cwConfiguration, WPCConfiguration wpcConfiguration) {
+    this.wpcConfiguration = wpcConfiguration;
+    this.cwConfiguration = cwConfiguration;
+    this.errorConfiguration = cwConfiguration.getErrorConfiguration(getErrorNumber());
     initializeSettings();
   }
 
@@ -185,6 +187,20 @@ public abstract class CheckErrorAlgorithmBase implements CheckErrorAlgorithm {
   }
 
   /**
+   * @return Configuration for WPCleaner.
+   */
+  protected WPCConfiguration getWPCConfiguration() {
+    return wpcConfiguration;
+  }
+
+  /**
+   * @return Configuration for Check Wiki.
+   */
+  protected CWConfiguration getCWConfiguration() {
+    return cwConfiguration;
+  }
+
+  /**
    * Create a CheckErrorResult object.
    * 
    * @param analysis Page analysis
@@ -192,7 +208,7 @@ public abstract class CheckErrorAlgorithmBase implements CheckErrorAlgorithm {
    * @param endPosition End of the error.
    * @return new CheckErrorResult object.
    */
-  public CheckErrorResult createCheckErrorResult(
+  protected CheckErrorResult createCheckErrorResult(
       PageAnalysis analysis,
       int startPosition, int endPosition) {
     return createCheckErrorResult(
@@ -211,7 +227,7 @@ public abstract class CheckErrorAlgorithmBase implements CheckErrorAlgorithm {
    * @param errorLevel Error level.
    * @return new CheckErrorResult object.
    */
-  public CheckErrorResult createCheckErrorResult(
+  protected CheckErrorResult createCheckErrorResult(
       PageAnalysis analysis,
       int startPosition, int endPosition,
       ErrorLevel errorLevel) {
@@ -295,10 +311,10 @@ public abstract class CheckErrorAlgorithmBase implements CheckErrorAlgorithm {
   public String getSpecificProperty(
       int errorNumber, String property,
       boolean useWiki, boolean useGeneral, boolean acceptEmpty) {
-    if (configuration == null) {
+    if (cwConfiguration == null) {
       return null;
     }
-    CWConfigurationError tmpConfig = configuration.getErrorConfiguration(errorNumber);
+    CWConfigurationError tmpConfig = cwConfiguration.getErrorConfiguration(errorNumber);
     if (tmpConfig == null) {
       return null;
     }

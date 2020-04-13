@@ -62,10 +62,6 @@ public class CheckErrorAlgorithm524 extends CheckErrorAlgorithmBase {
       return false;
     }
 
-    // Retrieve configuration
-    String ignoreString = getSpecificProperty("ignore", true, true, false);
-    List<String[]> ignore = WPCConfiguration.convertPropertyToStringArrayList(ignoreString);
-
     // Analyze each template
     List<PageElementTemplate> templates = analysis.getTemplates();
     if ((templates == null) || templates.isEmpty()) {
@@ -274,9 +270,7 @@ public class CheckErrorAlgorithm524 extends CheckErrorAlgorithmBase {
    * @return Tracking category.
    */
   private String getTrackingCategory() {
-    String categoryName = getSpecificProperty("category", true, true, false);
-    if ((categoryName != null) &&
-        (categoryName.trim().length() > 0)) {
+    if (categoryName != null) {
       return categoryName;
     }
     if ((trackingCategory != null) &&
@@ -296,14 +290,14 @@ public class CheckErrorAlgorithm524 extends CheckErrorAlgorithmBase {
   @Override
   public List<Page> getSpecialList(EnumWikipedia wiki, int limit) {
     List<Page> result = null;
-    String categoryName = getTrackingCategory();
-    if (categoryName != null) {
+    String category = getTrackingCategory();
+    if (category != null) {
       API api = APIFactory.getAPI();
-      String title = wiki.getWikiConfiguration().getPageTitle(Namespace.CATEGORY, categoryName);
-      Page category = DataManager.getPage(wiki, title, null, null, null);
+      String title = wiki.getWikiConfiguration().getPageTitle(Namespace.CATEGORY, category);
+      Page categoryPage = DataManager.getPage(wiki, title, null, null, null);
       try {
-        api.retrieveCategoryMembers(wiki, category, 0, false, limit);
-        result = category.getRelatedPages(RelatedPages.CATEGORY_MEMBERS);
+        api.retrieveCategoryMembers(wiki, categoryPage, 0, false, limit);
+        result = categoryPage.getRelatedPages(RelatedPages.CATEGORY_MEMBERS);
       } catch (APIException e) {
         //
       }
@@ -323,18 +317,6 @@ public class CheckErrorAlgorithm524 extends CheckErrorAlgorithmBase {
   }
 
   /**
-   * @return Map of parameters (key=name, value=description).
-   * @see org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase#getParameters()
-   */
-  @Override
-  public Map<String, String> getParameters() {
-    Map<String, String> parameters = super.getParameters();
-    parameters.put("category", GT._T("A category containing the list of pages in error"));
-    parameters.put("ignore", GT._T("Values that can be safely ignored for a given template and argument"));
-    return parameters;
-  }
-
-  /**
    * Bean for holding information about a parameter
    */
   private static class ParameterInfo {
@@ -344,5 +326,60 @@ public class CheckErrorAlgorithm524 extends CheckErrorAlgorithmBase {
       this.numParam = numParam;
       this.param = param;
     }
+  }
+
+  /* ====================================================================== */
+  /* PARAMETERS                                                             */
+  /* ====================================================================== */
+
+  /** Category containing the list of pages in error */
+  private static final String PARAMETER_CATEGORY = "category";
+
+  /** Values that can be safely ignored */
+  private static final String PARAMETER_IGNORE = "ignore";
+
+  /**
+   * Initialize settings for the algorithm.
+   * 
+   * @see org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase#initializeSettings()
+   */
+  @Override
+  protected void initializeSettings() {
+    String tmp = getSpecificProperty(PARAMETER_IGNORE, true, true, false);
+    ignore.clear();
+    if (tmp != null) {
+      List<String[]> tmpList = WPCConfiguration.convertPropertyToStringArrayList(tmp);
+      if (tmpList != null) {
+        ignore.addAll(tmpList);
+      }
+    }
+    tmp = getSpecificProperty(PARAMETER_CATEGORY, true, true, false);
+    categoryName = null;
+    if ((tmp != null) &&
+        (tmp.trim().length() > 0)) {
+      categoryName = tmp.trim();
+    }
+  }
+
+  /** Category containing the list of pages in error */
+  private String categoryName = null;
+
+  /** Values that can be safely ignored */
+  private final List<String[]> ignore = new ArrayList<>();
+
+  /**
+   * @return Map of parameters (key=name, value=description).
+   * @see org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase#getParameters()
+   */
+  @Override
+  public Map<String, String> getParameters() {
+    Map<String, String> parameters = super.getParameters();
+    parameters.put(
+        PARAMETER_CATEGORY,
+        GT._T("A category containing the list of pages in error"));
+    parameters.put(
+        PARAMETER_IGNORE,
+        GT._T("Values that can be safely ignored for a given template and argument"));
+    return parameters;
   }
 }

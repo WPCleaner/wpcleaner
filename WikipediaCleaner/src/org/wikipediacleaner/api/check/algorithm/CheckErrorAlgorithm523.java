@@ -49,17 +49,6 @@ public class CheckErrorAlgorithm523 extends CheckErrorAlgorithmBase {
       return false;
     }
 
-    // Configuration
-    int minSize = 64;
-    String minSizeText = getSpecificProperty("min_size", true, true, false);
-    if (minSizeText != null) {
-      try {
-        minSize = Integer.parseInt(minSizeText, 10);
-      } catch (NumberFormatException e) {
-        // Nothing to do
-      }
-    }
-
     // Memorize where each single image is
     Map<String, List<Element>> imagesMap = new HashMap<String, List<Element>>();
     List<PageElementImage> images = analysis.getImages();
@@ -179,17 +168,6 @@ public class CheckErrorAlgorithm523 extends CheckErrorAlgorithmBase {
   }
 
   /**
-   * @return Map of parameters (key=name, value=description).
-   * @see org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase#getParameters()
-   */
-  @Override
-  public Map<String, String> getParameters() {
-    Map<String, String> parameters = super.getParameters();
-    parameters.put("min_size", GT._T("The size below which images are not reported as duplicates"));
-    return parameters;
-  }
-
-  /**
    * Bean for holding information about an image element.
    */
   private static class Element {
@@ -200,5 +178,44 @@ public class CheckErrorAlgorithm523 extends CheckErrorAlgorithmBase {
       this.beginIndex = beginIndex;
       this.endIndex = endIndex;
     }
+  }
+
+  /* ====================================================================== */
+  /* PARAMETERS                                                             */
+  /* ====================================================================== */
+
+  /** Minimum size of the image */
+  private static final String PARAMETER_MIN_SIZE = "min_size";
+
+  /**
+   * Initialize settings for the algorithm.
+   * 
+   * @see org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase#initializeSettings()
+   */
+  @Override
+  protected void initializeSettings() {
+    String tmp = getSpecificProperty(PARAMETER_MIN_SIZE, true, true, false);
+    minSize = 64;
+    if (tmp != null) {
+      try {
+        minSize = Integer.parseInt(tmp, 10);
+      } catch (NumberFormatException e) {
+        // Nothing to do
+      }
+    }
+  }
+
+  /** Minimum size of the image */
+  private int minSize = 64;
+
+  /**
+   * @return Map of parameters (key=name, value=description).
+   * @see org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase#getParameters()
+   */
+  @Override
+  public Map<String, String> getParameters() {
+    Map<String, String> parameters = super.getParameters();
+    parameters.put("min_size", GT._T("The size below which images are not reported as duplicates"));
+    return parameters;
   }
 }

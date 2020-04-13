@@ -57,12 +57,6 @@ public class CheckErrorAlgorithm518 extends CheckErrorAlgorithmBase {
       return false;
     }
 
-    // Retrieve configuration
-    String apostropheTemplate = getSpecificProperty("apostrophe_template", true, false, false);
-    String asteriskTemplate = getSpecificProperty("asterisk_template", true, false, false);
-    String openSBTemplate = getSpecificProperty("open_sb_template", true, false, false);
-    String closeSBTemplate = getSpecificProperty("close_sb_template", true, false, false);
-
     // Check each tag
     List<PageElementTag> tags = analysis.getCompleteTags(PageElementTag.TAG_WIKI_NOWIKI);
     if ((tags == null) || (tags.isEmpty())) {
@@ -197,23 +191,7 @@ public class CheckErrorAlgorithm518 extends CheckErrorAlgorithmBase {
    */
   @Override
   public boolean hasSpecialList() {
-    return (getAbuseFilter() != null);
-  }
-
-  /**
-   * @return Abuse filter.
-   */
-  private Integer getAbuseFilter() {
-    String abuseFilter = getSpecificProperty("abuse_filter", true, true, false);
-    if ((abuseFilter != null) &&
-        (abuseFilter.trim().length() > 0)) {
-      try {
-        return Integer.valueOf(abuseFilter);
-      } catch (NumberFormatException e) {
-        // Nothing to do
-      }
-    }
-    return null;
+    return (abuseFilter != null);
   }
 
   /**
@@ -225,45 +203,102 @@ public class CheckErrorAlgorithm518 extends CheckErrorAlgorithmBase {
    */
   @Override
   public List<Page> getSpecialList(EnumWikipedia wiki, int limit) {
-    List<Page> result = null;
-    Integer abuseFilter = getAbuseFilter();
-    if (abuseFilter != null) {
-      API api = APIFactory.getAPI();
-      Configuration config = Configuration.getConfiguration();
-      int maxDays = config.getInt(wiki, ConfigurationValueInteger.MAX_DAYS_ABUSE_LOG);
+    if (abuseFilter == null) {
+      return null;
+    }
+    API api = APIFactory.getAPI();
+    Configuration config = Configuration.getConfiguration();
+    int maxDays = config.getInt(wiki, ConfigurationValueInteger.MAX_DAYS_ABUSE_LOG);
+    try {
+      return api.retrieveAbuseLog(wiki, abuseFilter, maxDays);
+    } catch (APIException e) {
+      //
+    }
+    return null;
+  }
+
+  /* ====================================================================== */
+  /* PARAMETERS                                                             */
+  /* ====================================================================== */
+
+  /** Template replacing an apostrophe */
+  private static final String PARAMETER_APOSTROPHE_TEMPLATE = "apostrophe_template";
+
+  /** Template replacing an asterisk */
+  private static final String PARAMETER_ASTERISK_TEMPLATE = "asterisk_template";
+
+  /** Template replacing an opening square bracket */
+  private static final String PARAMETER_OPEN_SB_TEMPLATE = "open_sb_template";
+
+  /** Template replacing a closing square bracket */
+  private static final String PARAMETER_CLOSE_SB_TEMPLATE = "close_sb_template";
+
+  /** Identifier of abuse filter */
+  private static final String PARAMETER_ABUSE_FILTER = "abuse_filter";
+
+  /**
+   * Initialize settings for the algorithm.
+   * 
+   * @see org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase#initializeSettings()
+   */
+  @Override
+  protected void initializeSettings() {
+    apostropheTemplate = getSpecificProperty(PARAMETER_APOSTROPHE_TEMPLATE, true, false, false);
+    asteriskTemplate = getSpecificProperty(PARAMETER_ASTERISK_TEMPLATE, true, false, false);
+    openSBTemplate = getSpecificProperty(PARAMETER_OPEN_SB_TEMPLATE, true, false, false);
+    closeSBTemplate = getSpecificProperty(PARAMETER_CLOSE_SB_TEMPLATE, true, false, false);
+
+    String tmp = getSpecificProperty(PARAMETER_ABUSE_FILTER, true, true, false);
+    abuseFilter = null;
+    if ((tmp != null) && (tmp.trim().length() > 0)) {
       try {
-        result = api.retrieveAbuseLog(wiki, abuseFilter, maxDays);
-      } catch (APIException e) {
-        //
+        abuseFilter = Integer.valueOf(tmp);
+      } catch (NumberFormatException e) {
+        // Nothing to do
       }
     }
-    return result;
   }
+
+  /** Template replacing an apostrophe */
+  private String apostropheTemplate = null;
+
+  /** Template replacing an asterisk */
+  private String asteriskTemplate = null;
+
+  /** Template replacing an opening square bracket */
+  private String openSBTemplate = null;
+
+  /** Template replacing a closing square bracket */
+  private String closeSBTemplate = null;
+
+  /** Identifier of abuse filter */
+  private Integer abuseFilter = null;
 
   /**
    * Return the parameters used to configure the algorithm.
    * 
    * @return Map of parameters (key=name, value=description).
+   * @see org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase#getParameters()
    */
   @Override
   public Map<String, String> getParameters() {
     Map<String, String> parameters = super.getParameters();
     parameters.put(
-        "abuse_filter",
+        PARAMETER_ABUSE_FILTER,
         GT._T(
             "An identifier of an abuse filter that is triggered by {0} tags.",
             PageElementTag.TAG_WIKI_NOWIKI));
     parameters.put(
-        "apostrophe_template",
+        PARAMETER_APOSTROPHE_TEMPLATE,
         GT._T("A template that can be used instead of an apostrophe."));
     parameters.put(
-        "asterisk_template",
+        PARAMETER_ASTERISK_TEMPLATE,
         GT._T("A template that can be used instead of an asterisk."));
     parameters.put(
-        "close_sb_template",
+        PARAMETER_CLOSE_SB_TEMPLATE,
         GT._T("A template that can be used instead of a closing square bracket."));
     parameters.put(
-        "open_sb_template",
+        PARAMETER_OPEN_SB_TEMPLATE,
         GT._T("A template that can be used instead of an opening square bracket."));
     return parameters;
   }

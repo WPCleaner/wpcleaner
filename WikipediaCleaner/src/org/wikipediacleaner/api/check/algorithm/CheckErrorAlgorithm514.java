@@ -97,19 +97,16 @@ public class CheckErrorAlgorithm514 extends CheckErrorAlgorithmBase {
           if (set != null) {
             found = set.contains(nameValue);
           }
-          if (!found && (groupValue == null)) {
-            String refByTemplate = getSpecificProperty("ref_by_template", true, true, false);
-            if (refByTemplate != null) {
-              List<String> refByTemplateList = WPCConfiguration.convertPropertyToStringList(refByTemplate);
-              if (refByTemplateList != null) {
-                for (String refByTemplateElement : refByTemplateList) {
-                  String[] elements = refByTemplateElement.split("\\|");
-                  for (int numElement = 1; numElement < elements.length; numElement++) {
-                    if (elements[numElement].equals(nameValue)) {
-                      List<PageElementTemplate> templates = analysis.getTemplates(elements[0]);
-                      if ((templates != null) && !templates.isEmpty()) {
-                        found = true;
-                      }
+          if (!found && (groupValue == null) && (refByTemplate != null)) {
+            List<String> refByTemplateList = WPCConfiguration.convertPropertyToStringList(refByTemplate);
+            if (refByTemplateList != null) {
+              for (String refByTemplateElement : refByTemplateList) {
+                String[] elements = refByTemplateElement.split("\\|");
+                for (int numElement = 1; numElement < elements.length; numElement++) {
+                  if (elements[numElement].equals(nameValue)) {
+                    List<PageElementTemplate> templates = analysis.getTemplates(elements[0]);
+                    if ((templates != null) && !templates.isEmpty()) {
+                      found = true;
                     }
                   }
                 }
@@ -131,16 +128,37 @@ public class CheckErrorAlgorithm514 extends CheckErrorAlgorithmBase {
     return result;
   }
 
+  /* ====================================================================== */
+  /* PARAMETERS                                                             */
+  /* ====================================================================== */
+
+  /** Template defining references */
+  private static final String PARAMETER_REF_BY_TEMPLATE = "ref_by_template";
+
+  /**
+   * Initialize settings for the algorithm.
+   * 
+   * @see org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase#initializeSettings()
+   */
+  @Override
+  protected void initializeSettings() {
+    refByTemplate = getSpecificProperty(PARAMETER_REF_BY_TEMPLATE, true, true, false);
+  }
+
+  /** Template defining references */
+  private String refByTemplate = null;
+
   /**
    * Return the parameters used to configure the algorithm.
    * 
    * @return Map of parameters (key=name, value=description).
+   * @see org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase#getParameters()
    */
   @Override
   public Map<String, String> getParameters() {
     Map<String, String> parameters = super.getParameters();
     parameters.put(
-        "ref_by_template",
+        PARAMETER_REF_BY_TEMPLATE,
         GT._T("References defined by templates."));
     return parameters;
   }

@@ -14,6 +14,7 @@ import java.util.Map;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.constants.CWConfiguration;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
+import org.wikipediacleaner.api.constants.WPCConfiguration;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.gui.swing.component.MWPane;
@@ -32,9 +33,10 @@ public interface CheckErrorAlgorithm {
   public boolean isAvailable();
 
   /**
-   * @param configuration Configuration.
+   * @param cwConfiguration Configuration for Check Wiki.
+   * @param wpcConfiguration Configuration for WPCleaner.
    */
-  public void setConfiguration(CWConfiguration configuration);
+  public void setConfiguration(CWConfiguration cwConfiguration, WPCConfiguration wpcConfiguration);
 
   /**
    * @return Short description of the error.

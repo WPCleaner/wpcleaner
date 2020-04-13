@@ -67,23 +67,10 @@ public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
     }
 
     // Initialize active suggestions
-    Map<String, Suggestion> suggestions = analysis.getWPCConfiguration().getSuggestions();
-    if ((suggestions == null) || (suggestions.isEmpty())) {
-      return result;
-    }
-    List<Suggestion> activeSuggestions = new LinkedList<Suggestion>();
-    for (Suggestion suggestion : suggestions.values()) {
-      if (suggestion.isActive()) {
-        if (!onlyAutomatic || suggestion.hasAutomaticReplacements()) {
-          activeSuggestions.add(suggestion);
-        }
-      }
-    }
+    List<Suggestion> activeSuggestions = onlyAutomatic ? automaticActiveSuggestions : allActiveSuggestions;
     if (activeSuggestions.isEmpty()) {
-      return result;
+      return false;
     }
-    Configuration config = Configuration.getConfiguration();
-    int slowRegexp = config.getInt(null, ConfigurationValueInteger.SLOW_REGEXP);
 
     // Check spelling in templates
     List<Replacement> replacements = new ArrayList<Replacement>();
@@ -103,12 +90,12 @@ public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
 
     // Check spelling in normal text with non native regular expressions
     if ((result == false) || (errors != null)) {
-      result |= analyzeNonNativeText(analysis, activeSuggestions, replacements, slowRegexp);
+      result |= analyzeNonNativeText(analysis, activeSuggestions, replacements);
     }
 
     // Check spelling in normal text with native regular expressions
     if ((result == false) || (errors != null)) {
-      result |= analyzeNativeText(analysis, activeSuggestions, replacements, slowRegexp);
+      result |= analyzeNativeText(analysis, activeSuggestions, replacements);
     }
 
     if (errors == null) {
@@ -202,12 +189,11 @@ public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
    * @param analysis Page analysis.
    * @param suggestions Active suggestions.
    * @param replacements List of possible replacements.
-   * @param slowRegexp Threshold for slow regular expression.
    * @return True if an error has been found.
    */
   private boolean analyzeNativeText(
       PageAnalysis analysis, List<Suggestion> suggestions,
-      List<Replacement> replacements, int slowRegexp) {
+      List<Replacement> replacements) {
     boolean result = false;
 
     // Check every suggestion
@@ -275,12 +261,11 @@ public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
    * @param analysis Page analysis.
    * @param suggestions Active suggestions.
    * @param replacements List of possible replacements.
-   * @param slowRegexp Threshold for slow regular expression.
    * @return True if an error has been found.
    */
   private boolean analyzeNonNativeText(
       PageAnalysis analysis, List<Suggestion> suggestions,
-      List<Replacement> replacements, int slowRegexp) {
+      List<Replacement> replacements) {
     boolean result = false;
 
     // Check every suggestion
@@ -986,4 +971,44 @@ public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
       return group;
     }
   }
+
+  /* ====================================================================== */
+  /* PARAMETERS                                                             */
+  /* ====================================================================== */
+
+  /**
+   * Initialize settings for the algorithm.
+   * 
+   * @see org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase#initializeSettings()
+   */
+  @Override
+  protected void initializeSettings() {
+    // Initialize active suggestions
+    allActiveSuggestions.clear();
+    automaticActiveSuggestions.clear();
+    Map<String, Suggestion> suggestions = getWPCConfiguration().getSuggestions();
+    if (suggestions != null) {
+      for (Suggestion suggestion : suggestions.values()) {
+        if (suggestion.isActive()) {
+          allActiveSuggestions.add(suggestion);
+          if (suggestion.hasAutomaticReplacements()) {
+            automaticActiveSuggestions.add(suggestion);
+          }
+        }
+      }
+    }
+
+    // Initialize limit for slow regular expressions
+    Configuration config = Configuration.getConfiguration();
+    slowRegexp = config.getInt(null, ConfigurationValueInteger.SLOW_REGEXP);
+  }
+
+  /** Active suggestions */
+  private final List<Suggestion> allActiveSuggestions = new LinkedList<>();
+
+  /** Active suggestions with automatic replacements */
+  private final List<Suggestion> automaticActiveSuggestions = new LinkedList<>();
+
+  /** Limit for reporting a regular expression as being slow */
+  private int slowRegexp = 1000;
 }
