@@ -67,10 +67,11 @@ public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
     }
 
     // Initialize active suggestions
-    List<Suggestion> activeSuggestions = onlyAutomatic ? automaticActiveSuggestions : allActiveSuggestions;
-    if (activeSuggestions.isEmpty()) {
+    List<Suggestion> tmpSuggestions = onlyAutomatic ? automaticActiveSuggestions : allActiveSuggestions;
+    if (tmpSuggestions.isEmpty()) {
       return false;
     }
+    List<Suggestion> activeSuggestions = new ArrayList<>(tmpSuggestions);
 
     // Check spelling in templates
     List<Replacement> replacements = new ArrayList<Replacement>();
