@@ -142,39 +142,35 @@ public class CheckErrorAlgorithm526 extends CheckErrorAlgorithmBase {
             analysis, link.getBeginIndex(), link.getEndIndex(), errorLevel);
         errorResult.addReplacement(PageElementInternalLink.createInternalLink(target, target));
         errorResult.addReplacement(PageElementInternalLink.createInternalLink(text, text));
-        String askHelp = getSpecificProperty("ask_help", true, true, false);
-        if (askHelp != null) {
-          List<String> askHelpList = WPCConfiguration.convertPropertyToStringList(askHelp, false);
-          if (askHelpList != null) {
-            boolean firstReplacement = true;
-            for (String askHelpElement : askHelpList) {
-              int pipeIndex = askHelpElement.indexOf('|');
-              if ((pipeIndex > 0) && (pipeIndex < askHelpElement.length())) {
-                String suffix = askHelpElement.substring(pipeIndex + 1);
-                boolean botReplace = false;
-                Page page = analysis.getPage();
-                if (page.isArticle() && page.isInMainNamespace() &&
-                    suffix.startsWith("{{") &&
-                    (link.getEndIndex() < contents.length())) {
-                  char nextChar = contents.charAt(link.getEndIndex());
-                  if (nextChar != '{') {
-                    if ((target != null) &&
-                        (target.indexOf('#') < 0) &&
-                        (target.indexOf('(') < 0) &&
-                        (target.indexOf(')') < 0)) {
-                      botReplace = true;
-                    }
+        if (!askHelpList.isEmpty()) {
+          boolean firstReplacement = true;
+          for (String askHelpElement : askHelpList) {
+            int pipeIndex = askHelpElement.indexOf('|');
+            if ((pipeIndex > 0) && (pipeIndex < askHelpElement.length())) {
+              String suffix = askHelpElement.substring(pipeIndex + 1);
+              boolean botReplace = false;
+              Page page = analysis.getPage();
+              if (page.isArticle() && page.isInMainNamespace() &&
+                  suffix.startsWith("{{") &&
+                  (link.getEndIndex() < contents.length())) {
+                char nextChar = contents.charAt(link.getEndIndex());
+                if (nextChar != '{') {
+                  if ((target != null) &&
+                      (target.indexOf('#') < 0) &&
+                      (target.indexOf('(') < 0) &&
+                      (target.indexOf(')') < 0)) {
+                    botReplace = true;
                   }
                 }
-                String replacement =
-                    analysis.getContents().substring(link.getBeginIndex(), link.getEndIndex()) +
-                    suffix;
-                errorResult.addReplacement(
-                    replacement,
-                    askHelpElement.substring(0, pipeIndex),
-                    false, firstReplacement && botReplace);
-                firstReplacement = false;
               }
+              String replacement =
+                  analysis.getContents().substring(link.getBeginIndex(), link.getEndIndex()) +
+                  suffix;
+              errorResult.addReplacement(
+                  replacement,
+                  askHelpElement.substring(0, pipeIndex),
+                  false, firstReplacement && botReplace);
+              firstReplacement = false;
             }
           }
         }
@@ -190,30 +186,7 @@ public class CheckErrorAlgorithm526 extends CheckErrorAlgorithmBase {
    */
   @Override
   public boolean hasSpecialList() {
-    return (getAbuseFilter() != null) || (getDumpAnalysis() != null);
-  }
-
-  /**
-   * @return Abuse filter.
-   */
-  private Integer getAbuseFilter() {
-    String abuseFilter = getSpecificProperty("abuse_filter", true, true, false);
-    if ((abuseFilter != null) &&
-        (abuseFilter.trim().length() > 0)) {
-      try {
-        return Integer.valueOf(abuseFilter);
-      } catch (NumberFormatException e) {
-        // Nothing to do
-      }
-    }
-    return null;
-  }
-
-  /**
-   * @return Page name containing a dump analysis for this error.
-   */
-  private String getDumpAnalysis() {
-    return getSpecificProperty("dump_analysis", true, true, false);
+    return (abuseFilter != null) || (dumpAnalysis != null);
   }
 
   /**
@@ -228,7 +201,6 @@ public class CheckErrorAlgorithm526 extends CheckErrorAlgorithmBase {
     List<Page> result = new ArrayList<>();
 
     // Use abuse filter
-    Integer abuseFilter = getAbuseFilter();
     if (abuseFilter != null) {
       API api = APIFactory.getAPI();
       Configuration config = Configuration.getConfiguration();
@@ -244,7 +216,6 @@ public class CheckErrorAlgorithm526 extends CheckErrorAlgorithmBase {
     }
 
     // Use internal links
-    String dumpAnalysis = getDumpAnalysis();
     if (dumpAnalysis != null) {
       API api = APIFactory.getAPI();
       Page page = DataManager.getPage(wiki, dumpAnalysis, null, null, null);
@@ -269,26 +240,6 @@ public class CheckErrorAlgorithm526 extends CheckErrorAlgorithmBase {
   }
 
   /**
-   * Return the parameters used to configure the algorithm.
-   * 
-   * @return Map of parameters (key=name, value=description).
-   */
-  @Override
-  public Map<String, String> getParameters() {
-    Map<String, String> parameters = super.getParameters();
-    parameters.put(
-        "abuse_filter",
-        GT._T("An identifier of an abuse filter that is triggered by incorrect year links."));
-    parameters.put(
-        "ask_help",
-        GT._T("Text added after the link to ask for help."));
-    parameters.put(
-        "dump_analysis",
-        GT._T("A page containing a dump analysis for this error."));
-    return parameters;
-  }
-
-  /**
    * @param analysis Page analysis
    * @return Modified page content after bot fixing.
    * @see org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase#internalBotFix(org.wikipediacleaner.api.data.PageAnalysis)
@@ -296,5 +247,77 @@ public class CheckErrorAlgorithm526 extends CheckErrorAlgorithmBase {
   @Override
   protected String internalBotFix(PageAnalysis analysis) {
     return fixUsingAutomaticBotReplacement(analysis);
+  }
+
+  /* ====================================================================== */
+  /* PARAMETERS                                                             */
+  /* ====================================================================== */
+
+  /** Identifier of abuse filter */
+  private static final String PARAMETER_ABUSE_FILTER = "abuse_filter";
+
+  /** Text to ask for help */
+  private static final String PARAMETER_ASK_HELP = "ask_help";
+
+  /** Page containing a dump analysis of the error */
+  private static final String PARAMETER_DUMP_ANALYSIS = "dump_analysis";
+
+  /**
+   * Initialize settings for the algorithm.
+   * 
+   * @see org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase#initializeSettings()
+   */
+  @Override
+  protected void initializeSettings() {
+    String tmp = getSpecificProperty(PARAMETER_ABUSE_FILTER, true, true, false);
+    abuseFilter = null;
+    if ((tmp != null) && (tmp.trim().length() > 0)) {
+      try {
+        abuseFilter = Integer.valueOf(tmp);
+      } catch (NumberFormatException e) {
+        // Nothing to do
+      }
+    }
+
+    tmp = getSpecificProperty(PARAMETER_ASK_HELP, true, true, false);
+    askHelpList.clear();
+    if (tmp != null) {
+      List<String> tmpList = WPCConfiguration.convertPropertyToStringList(tmp);
+      if (tmpList != null) {
+        askHelpList.addAll(tmpList);
+      }
+    }
+
+    dumpAnalysis = getSpecificProperty(PARAMETER_DUMP_ANALYSIS, true, true, false);
+  }
+
+  /** Identifier of abuse filter */
+  private Integer abuseFilter = null;
+
+  /** Texts to ask for help */
+  private final List<String> askHelpList = new ArrayList<>();
+
+  /** Page containing a dump analysis */
+  private String dumpAnalysis = null;
+
+  /**
+   * Return the parameters used to configure the algorithm.
+   * 
+   * @return Map of parameters (key=name, value=description).
+   * @see org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase#getParameters()
+   */
+  @Override
+  public Map<String, String> getParameters() {
+    Map<String, String> parameters = super.getParameters();
+    parameters.put(
+        PARAMETER_ABUSE_FILTER,
+        GT._T("An identifier of an abuse filter that is triggered by incorrect year links."));
+    parameters.put(
+        PARAMETER_ASK_HELP,
+        GT._T("Text added after the link to ask for help."));
+    parameters.put(
+        PARAMETER_DUMP_ANALYSIS,
+        GT._T("A page containing a dump analysis for this error."));
+    return parameters;
   }
 }

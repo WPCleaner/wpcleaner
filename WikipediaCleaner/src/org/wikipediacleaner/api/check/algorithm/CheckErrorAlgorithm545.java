@@ -10,6 +10,7 @@ package org.wikipediacleaner.api.check.algorithm;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
 import org.wikipediacleaner.api.API;
@@ -25,6 +26,7 @@ import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.Page.RelatedPages;
 import org.wikipediacleaner.api.data.PageElementTemplate.Parameter;
+import org.wikipediacleaner.i18n.GT;
 
 
 /**
@@ -53,16 +55,6 @@ public class CheckErrorAlgorithm545 extends CheckErrorAlgorithmBase {
       return false;
     }
 
-    // Retrieve configuration
-    String tmp = getSpecificProperty("templates", true, true, false);
-    if ((tmp == null) || tmp.isEmpty()) {
-      return false;
-    }
-    List<String[]> deprecatedParameters = WPCConfiguration.convertPropertyToStringArrayList(tmp);
-    if ((deprecatedParameters == null) || (deprecatedParameters.isEmpty())) {
-      return false;
-    }
-    
     // Analyze each template
     boolean result = false;
     for (String[] deprecatedParameter : deprecatedParameters) {
@@ -148,5 +140,45 @@ public class CheckErrorAlgorithm545 extends CheckErrorAlgorithmBase {
       }
     }
     return result;
+  }
+
+  /* ====================================================================== */
+  /* PARAMETERS                                                             */
+  /* ====================================================================== */
+
+  /** Deprecated parameters for templates */
+  private static final String PARAMETER_TEMPLATES = "templates";
+
+  /**
+   * Initialize settings for the algorithm.
+   * 
+   * @see org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase#initializeSettings()
+   */
+  @Override
+  protected void initializeSettings() {
+    String tmp = getSpecificProperty(PARAMETER_TEMPLATES, true, true, false);
+    deprecatedParameters.clear();
+    if (tmp != null) {
+      List<String[]> tmpList = WPCConfiguration.convertPropertyToStringArrayList(tmp);
+      if (tmpList != null) {
+        deprecatedParameters.addAll(tmpList);
+      }
+    }
+  }
+
+  /** Deprecated parameters for templates */
+  private final List<String[]> deprecatedParameters = new ArrayList<>();
+
+  /**
+   * @return Map of parameters (key=name, value=description).
+   * @see org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase#getParameters()
+   */
+  @Override
+  public Map<String, String> getParameters() {
+    Map<String, String> parameters = super.getParameters();
+    parameters.put(
+        PARAMETER_TEMPLATES,
+        GT._T("Templates with deprecated parameters"));
+    return parameters;
   }
 }

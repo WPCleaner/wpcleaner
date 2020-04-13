@@ -7,6 +7,7 @@
 
 package org.wikipediacleaner.api.check.algorithm;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -80,50 +81,42 @@ public class CheckErrorAlgorithm530 extends CheckErrorAlgorithmBase {
             analysis, rfc.getBeginIndex(), rfc.getEndIndex());
 
         // Suggest replacement with templates
-        List<String[]> rfcTemplates = analysis.getWPCConfiguration().getStringArrayList(
-            WPCConfigurationStringList.RFC_TEMPLATES);
-        if (rfcTemplates != null) {
-          for (String[] rfcTemplate : rfcTemplates) {
-            if (rfcTemplate.length > 2) {
-              String templateName = rfcTemplate[0];
-              String[] params = rfcTemplate[1].split(",");
-              Boolean suggested = Boolean.valueOf(rfcTemplate[2]);
-              if ((params.length > 0) && (Boolean.TRUE.equals(suggested))) {
-                StringBuilder replacement = new StringBuilder();
-                replacement.append("{{");
-                replacement.append(templateName);
-                replacement.append("|");
-                if (!"1".equals(params[0])) {
-                  replacement.append(params[0]);
-                  replacement.append("=");
-                }
-                replacement.append(rfc.getRFC());
-                replacement.append("}}");
-                errorResult.addReplacement(replacement.toString());
+        for (String[] rfcTemplate : rfcTemplates) {
+          if (rfcTemplate.length > 2) {
+            String templateName = rfcTemplate[0];
+            String[] params = rfcTemplate[1].split(",");
+            Boolean suggested = Boolean.valueOf(rfcTemplate[2]);
+            if ((params.length > 0) && (Boolean.TRUE.equals(suggested))) {
+              StringBuilder replacement = new StringBuilder();
+              replacement.append("{{");
+              replacement.append(templateName);
+              replacement.append("|");
+              if (!"1".equals(params[0])) {
+                replacement.append(params[0]);
+                replacement.append("=");
               }
+              replacement.append(rfc.getRFC());
+              replacement.append("}}");
+              errorResult.addReplacement(replacement.toString());
             }
           }
         }
 
         // Suggest replacement with interwikis
-        List<String[]> rfcInterwikis = analysis.getWPCConfiguration().getStringArrayList(
-            WPCConfigurationStringList.RFC_INTERWIKIS);
-        if (rfcInterwikis != null) {
-          for (String[] rfcInterwiki : rfcInterwikis) {
-            if (rfcInterwiki.length > 0) {
-              String rfcCode = rfcInterwiki[0];
-              StringBuilder replacement = new StringBuilder();
-              replacement.append("[[:");
-              replacement.append(rfcCode);
-              replacement.append(":");
-              replacement.append(rfc.getRFC());
-              replacement.append("|");
-              replacement.append(PageElementRFC.RFC_PREFIX);
-              replacement.append(" ");
-              replacement.append(rfc.getRFC());
-              replacement.append("]]");
-              errorResult.addReplacement(replacement.toString());
-            }
+        for (String[] rfcInterwiki : rfcInterwikis) {
+          if (rfcInterwiki.length > 0) {
+            String rfcCode = rfcInterwiki[0];
+            StringBuilder replacement = new StringBuilder();
+            replacement.append("[[:");
+            replacement.append(rfcCode);
+            replacement.append(":");
+            replacement.append(rfc.getRFC());
+            replacement.append("|");
+            replacement.append(PageElementRFC.RFC_PREFIX);
+            replacement.append(" ");
+            replacement.append(rfc.getRFC());
+            replacement.append("]]");
+            errorResult.addReplacement(replacement.toString());
           }
         }
 
@@ -158,9 +151,7 @@ public class CheckErrorAlgorithm530 extends CheckErrorAlgorithmBase {
    * @return Tracking category.
    */
   private String getTrackingCategory() {
-    String categoryName = getSpecificProperty("category", true, true, false);
-    if ((categoryName != null) &&
-        (categoryName.trim().length() > 0)) {
+    if (categoryName != null) {
       return categoryName;
     }
     if ((trackingCategory != null) &&
@@ -180,14 +171,14 @@ public class CheckErrorAlgorithm530 extends CheckErrorAlgorithmBase {
   @Override
   public List<Page> getSpecialList(EnumWikipedia wiki, int limit) {
     List<Page> result = null;
-    String categoryName = getTrackingCategory();
-    if (categoryName != null) {
+    String category = getTrackingCategory();
+    if (category != null) {
       API api = APIFactory.getAPI();
-      String title = wiki.getWikiConfiguration().getPageTitle(Namespace.CATEGORY, categoryName);
-      Page category = DataManager.getPage(wiki, title, null, null, null);
+      String title = wiki.getWikiConfiguration().getPageTitle(Namespace.CATEGORY, category);
+      Page categoryPage = DataManager.getPage(wiki, title, null, null, null);
       try {
-        api.retrieveCategoryMembers(wiki, category, 0, false, limit);
-        result = category.getRelatedPages(RelatedPages.CATEGORY_MEMBERS);
+        api.retrieveCategoryMembers(wiki, categoryPage, 0, false, limit);
+        result = categoryPage.getRelatedPages(RelatedPages.CATEGORY_MEMBERS);
       } catch (APIException e) {
         //
       }
@@ -206,6 +197,59 @@ public class CheckErrorAlgorithm530 extends CheckErrorAlgorithmBase {
     return fixUsingAutomaticReplacement(analysis);
   }
 
+  /* ====================================================================== */
+  /* PARAMETERS                                                             */
+  /* ====================================================================== */
+
+  /** Category containing the list of pages in error */
+  private static final String PARAMETER_CATEGORY = "category";
+
+  /**
+   * Initialize settings for the algorithm.
+   * 
+   * @see org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase#initializeSettings()
+   */
+  @Override
+  protected void initializeSettings() {
+    String tmp = getSpecificProperty(PARAMETER_CATEGORY, true, true, false);
+    categoryName = null;
+    if ((tmp != null) &&
+        (tmp.trim().length() > 0)) {
+      categoryName = tmp.trim();
+    }
+
+    List<String[]> tmpList = getWPCConfiguration().getStringArrayList(
+        WPCConfigurationStringList.RFC_TEMPLATES);
+    rfcTemplates.clear();
+    if (tmpList != null) {
+      for (String[] rfcTemplate : tmpList) {
+        if (rfcTemplate.length > 2) {
+          rfcTemplates.add(rfcTemplate);
+        }
+      }
+    }
+
+    tmpList = getWPCConfiguration().getStringArrayList(
+        WPCConfigurationStringList.RFC_INTERWIKIS);
+    rfcInterwikis.clear();
+    if (tmpList != null) {
+      for (String[] rfcInterwiki : tmpList) {
+        if (rfcInterwiki.length > 0) {
+          rfcInterwikis.add(rfcInterwiki);
+        }
+      }
+    }
+  }
+
+  /** Category containing the list of pages in error */
+  private String categoryName = null;
+
+  /** Templates for RFC */
+  private List<String[]> rfcTemplates = new ArrayList<>();
+
+  /** Interwikis for RFC */
+  private List<String[]> rfcInterwikis = new ArrayList<>();
+
   /**
    * @return Map of parameters (key=name, value=description).
    * @see org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase#getParameters()
@@ -213,7 +257,9 @@ public class CheckErrorAlgorithm530 extends CheckErrorAlgorithmBase {
   @Override
   public Map<String, String> getParameters() {
     Map<String, String> parameters = super.getParameters();
-    parameters.put("category", GT._T("A category containing the list of pages in error"));
+    parameters.put(
+        PARAMETER_CATEGORY,
+        GT._T("A category containing the list of pages in error"));
     return parameters;
   }
 }

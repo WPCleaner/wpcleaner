@@ -7,6 +7,7 @@
 
 package org.wikipediacleaner.api.check.algorithm;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -95,11 +96,7 @@ public class CheckErrorAlgorithm529 extends CheckErrorAlgorithmBase {
         boolean reported = false;
 
         // Try automatic replacements
-        String property = getSpecificProperty("automatic", true, true, true);
-        List<String[]> automaticReplacements = WPCConfiguration.convertPropertyToStringArrayList(property);
-        List<String[]> isbnTemplates = analysis.getWPCConfiguration().getStringArrayList(
-            WPCConfigurationStringList.ISBN_TEMPLATES);
-        if ((automaticReplacements != null) && (isbnTemplates != null)) {
+        if (!automaticReplacements.isEmpty() && !isbnTemplates.isEmpty()) {
           for (String[] automaticReplacement : automaticReplacements) {
             if ((automaticReplacement != null) &&
                 (automaticReplacement.length > 2) &&
@@ -167,24 +164,20 @@ public class CheckErrorAlgorithm529 extends CheckErrorAlgorithmBase {
           }
   
           // Suggest replacement with interwikis
-          List<String[]> isbnInterwikis = analysis.getWPCConfiguration().getStringArrayList(
-              WPCConfigurationStringList.ISBN_INTERWIKIS);
-          if (isbnInterwikis != null) {
-            for (String[] isbnInterwiki : isbnInterwikis) {
-              if (isbnInterwiki.length > 0) {
-                String isbnCode = isbnInterwiki[0];
-                StringBuilder replacement = new StringBuilder();
-                replacement.append("[[:");
-                replacement.append(isbnCode);
-                replacement.append(":");
-                replacement.append(isbn.getISBN());
-                replacement.append("|");
-                replacement.append(PageElementISBN.ISBN_PREFIX);
-                replacement.append(" ");
-                replacement.append(isbn.getISBN());
-                replacement.append("]]");
-                errorResult.addReplacement(replacement.toString());
-              }
+          for (String[] isbnInterwiki : isbnInterwikis) {
+            if (isbnInterwiki.length > 0) {
+              String isbnCode = isbnInterwiki[0];
+              StringBuilder replacement = new StringBuilder();
+              replacement.append("[[:");
+              replacement.append(isbnCode);
+              replacement.append(":");
+              replacement.append(isbn.getISBN());
+              replacement.append("|");
+              replacement.append(PageElementISBN.ISBN_PREFIX);
+              replacement.append(" ");
+              replacement.append(isbn.getISBN());
+              replacement.append("]]");
+              errorResult.addReplacement(replacement.toString());
             }
           }
   
@@ -255,9 +248,7 @@ public class CheckErrorAlgorithm529 extends CheckErrorAlgorithmBase {
    * @return Tracking category.
    */
   private String getTrackingCategory() {
-    String categoryName = getSpecificProperty("category", true, true, false);
-    if ((categoryName != null) &&
-        (categoryName.trim().length() > 0)) {
+    if (categoryName != null) {
       return categoryName;
     }
     if ((trackingCategory != null) &&
@@ -277,14 +268,14 @@ public class CheckErrorAlgorithm529 extends CheckErrorAlgorithmBase {
   @Override
   public List<Page> getSpecialList(EnumWikipedia wiki, int limit) {
     List<Page> result = null;
-    String categoryName = getTrackingCategory();
-    if (categoryName != null) {
+    String category = getTrackingCategory();
+    if (category != null) {
       API api = APIFactory.getAPI();
-      String title = wiki.getWikiConfiguration().getPageTitle(Namespace.CATEGORY, categoryName);
-      Page category = DataManager.getPage(wiki, title, null, null, null);
+      String title = wiki.getWikiConfiguration().getPageTitle(Namespace.CATEGORY, category);
+      Page categoryPage = DataManager.getPage(wiki, title, null, null, null);
       try {
-        api.retrieveCategoryMembers(wiki, category, 0, false, limit);
-        result = category.getRelatedPages(RelatedPages.CATEGORY_MEMBERS);
+        api.retrieveCategoryMembers(wiki, categoryPage, 0, false, limit);
+        result = categoryPage.getRelatedPages(RelatedPages.CATEGORY_MEMBERS);
       } catch (APIException e) {
         //
       }
@@ -303,6 +294,78 @@ public class CheckErrorAlgorithm529 extends CheckErrorAlgorithmBase {
     return fixUsingAutomaticReplacement(analysis);
   }
 
+  /* ====================================================================== */
+  /* PARAMETERS                                                             */
+  /* ====================================================================== */
+
+  /** Automatic replacements */
+  private static final String PARAMETER_AUTOMATIC = "automatic";
+
+  /** Category containing the list of pages in error */
+  private static final String PARAMETER_CATEGORY = "category";
+
+  /**
+   * Initialize settings for the algorithm.
+   * 
+   * @see org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase#initializeSettings()
+   */
+  @Override
+  protected void initializeSettings() {
+    String tmp = getSpecificProperty(PARAMETER_CATEGORY, true, true, false);
+    categoryName = null;
+    if ((tmp != null) &&
+        (tmp.trim().length() > 0)) {
+      categoryName = tmp.trim();
+    }
+
+    tmp = getSpecificProperty(PARAMETER_AUTOMATIC, true, true, true);
+    automaticReplacements.clear();
+    if (tmp != null) {
+      List<String[]> tmpList = WPCConfiguration.convertPropertyToStringArrayList(tmp);
+      if (tmpList != null) {
+        for (String[] tmpItem : tmpList) {
+          if (tmpItem.length > 2) {
+            automaticReplacements.add(tmpItem);
+          }
+        }
+      }
+    }
+
+    List<String[]> tmpList = getWPCConfiguration().getStringArrayList(
+        WPCConfigurationStringList.ISBN_TEMPLATES);
+    isbnTemplates.clear();
+    if (tmpList != null) {
+      for (String[] isbnTemplate : tmpList) {
+        if (isbnTemplate.length > 2) {
+          isbnTemplates.add(isbnTemplate);
+        }
+      }
+    }
+
+    tmpList = getWPCConfiguration().getStringArrayList(
+        WPCConfigurationStringList.ISBN_INTERWIKIS);
+    isbnInterwikis.clear();
+    if (tmpList != null) {
+      for (String[] isbnInterwiki : tmpList) {
+        if (isbnInterwiki.length > 0) {
+          isbnInterwikis.add(isbnInterwiki);
+        }
+      }
+    }
+  }
+
+  /** Category containing the list of pages in error */
+  private String categoryName = null;
+
+  /** Templates for ISBN */
+  private List<String[]> isbnTemplates = new ArrayList<>();
+
+  /** Interwikis for ISBN */
+  private List<String[]> isbnInterwikis = new ArrayList<>();
+
+  /** Automatic replacements for ISBN */
+  private List<String[]> automaticReplacements = new ArrayList<>();
+
   /**
    * @return Map of parameters (key=name, value=description).
    * @see org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase#getParameters()
@@ -310,7 +373,12 @@ public class CheckErrorAlgorithm529 extends CheckErrorAlgorithmBase {
   @Override
   public Map<String, String> getParameters() {
     Map<String, String> parameters = super.getParameters();
-    parameters.put("category", GT._T("A category containing the list of pages in error"));
+    parameters.put(
+        PARAMETER_AUTOMATIC,
+        GT._T("Automatic replacements of ISBN"));
+    parameters.put(
+        PARAMETER_CATEGORY,
+        GT._T("A category containing the list of pages in error"));
     return parameters;
   }
 }

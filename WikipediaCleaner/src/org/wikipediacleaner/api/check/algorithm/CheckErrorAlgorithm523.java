@@ -215,7 +215,9 @@ public class CheckErrorAlgorithm523 extends CheckErrorAlgorithmBase {
   @Override
   public Map<String, String> getParameters() {
     Map<String, String> parameters = super.getParameters();
-    parameters.put("min_size", GT._T("The size below which images are not reported as duplicates"));
+    parameters.put(
+        PARAMETER_MIN_SIZE,
+        GT._T("The size below which images are not reported as duplicates"));
     return parameters;
   }
 }

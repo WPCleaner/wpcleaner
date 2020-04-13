@@ -7,6 +7,7 @@
 
 package org.wikipediacleaner.api.check.algorithm;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -68,25 +69,18 @@ public class CheckErrorAlgorithm531 extends CheckErrorAlgorithmBase {
     }
 
     // Check for prohibited templates inside reference tag
-    String templatesProperty = getSpecificProperty("templates", true, true, false);
-    List<String[]> prohibitedTemplates = null;
-    if (templatesProperty != null) {
-      prohibitedTemplates = WPCConfiguration.convertPropertyToStringArrayList(templatesProperty);
-    }
-    if ((prohibitedTemplates != null) && !prohibitedTemplates.isEmpty()) {
-      for (String[] prohibitedTemplate : prohibitedTemplates) {
-        if (prohibitedTemplate.length > 0) {
-          List<PageElementTemplate> templates = analysis.getTemplates(prohibitedTemplate[0]);
-          for (PageElementTemplate template : templates) {
-            if (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_REF, template.getBeginIndex()) != null) {
-              if (errors == null) {
-                return true;
-              }
-              result = true;
-              CheckErrorResult errorResult = createCheckErrorResult(
-                  analysis, template.getBeginIndex(), template.getEndIndex());
-              errors.add(errorResult);
+    for (String[] prohibitedTemplate : prohibitedTemplates) {
+      if (prohibitedTemplate.length > 0) {
+        List<PageElementTemplate> templates = analysis.getTemplates(prohibitedTemplate[0]);
+        for (PageElementTemplate template : templates) {
+          if (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_REF, template.getBeginIndex()) != null) {
+            if (errors == null) {
+              return true;
             }
+            result = true;
+            CheckErrorResult errorResult = createCheckErrorResult(
+                analysis, template.getBeginIndex(), template.getEndIndex());
+            errors.add(errorResult);
           }
         }
       }
@@ -96,6 +90,33 @@ public class CheckErrorAlgorithm531 extends CheckErrorAlgorithmBase {
   }
 
 
+  /* ====================================================================== */
+  /* PARAMETERS                                                             */
+  /* ====================================================================== */
+
+  /** Templates that can't be used inside a reference */
+  private static final String PARAMETER_TEMPLATES = "templates";
+
+  /**
+   * Initialize settings for the algorithm.
+   * 
+   * @see org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase#initializeSettings()
+   */
+  @Override
+  protected void initializeSettings() {
+    String tmp = getSpecificProperty(PARAMETER_TEMPLATES, true, true, false);
+    prohibitedTemplates.clear();
+    if (tmp != null) {
+      List<String[]> tmpList = WPCConfiguration.convertPropertyToStringArrayList(tmp);
+      if (tmpList != null) {
+        prohibitedTemplates.addAll(tmpList);
+      }
+    }
+  }
+
+  /** Templates that can't be used inside a reference */
+  private final List<String[]> prohibitedTemplates = new ArrayList<>();
+
   /**
    * @return Map of parameters (key=name, value=description).
    * @see org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase#getParameters()
@@ -103,7 +124,9 @@ public class CheckErrorAlgorithm531 extends CheckErrorAlgorithmBase {
   @Override
   public Map<String, String> getParameters() {
     Map<String, String> parameters = super.getParameters();
-    parameters.put("templates", GT._T("A list of templates that can't be used inside a reference"));
+    parameters.put(
+        PARAMETER_TEMPLATES,
+        GT._T("A list of templates that can't be used inside a reference"));
     return parameters;
   }
 }

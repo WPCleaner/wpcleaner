@@ -43,13 +43,6 @@ public class CheckErrorAlgorithm542 extends CheckErrorAlgorithmBase {
       return false;
     }
 
-    // Retrieve separator between several <ref> tags
-    String separator = getSpecificProperty(
-        "separator", true, false, false);
-    if (separator == null) {
-      separator = "";
-    }
-
     // Analyze from the beginning
     List<PageElementTag> tags = analysis.getTags(PageElementTag.TAG_WIKI_REF);
     if (tags == null) {
@@ -139,20 +132,6 @@ public class CheckErrorAlgorithm542 extends CheckErrorAlgorithmBase {
   }
 
   /**
-   * Return the parameters used to configure the algorithm.
-   * 
-   * @return Map of parameters (key=name, value=description).
-   */
-  @Override
-  public Map<String, String> getParameters() {
-    Map<String, String> parameters = super.getParameters();
-    parameters.put(
-        "separator",
-        GT._T("Used as a separator between consecutive {0} tags", "&lt;ref&gt;"));
-    return parameters;
-  }
-
-  /**
    * Automatic fixing of all the errors in the page.
    * 
    * @param analysis Page analysis.
@@ -164,5 +143,44 @@ public class CheckErrorAlgorithm542 extends CheckErrorAlgorithmBase {
       return analysis.getContents();
     }
     return fixUsingAutomaticReplacement(analysis);
+  }
+
+  /* ====================================================================== */
+  /* PARAMETERS                                                             */
+  /* ====================================================================== */
+
+  /** Separator between consecutive tags */
+  private static final String PARAMETER_SEPARATOR = "separator";
+
+  /**
+   * Initialize settings for the algorithm.
+   * 
+   * @see org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase#initializeSettings()
+   */
+  @Override
+  protected void initializeSettings() {
+    String tmp = getSpecificProperty(PARAMETER_SEPARATOR, true, false, false);
+    separator = "";
+    if (tmp != null) {
+      separator = tmp;
+    }
+  }
+
+  /** Separator between consecutive tags */
+  private String separator = "";
+
+  /**
+   * Return the parameters used to configure the algorithm.
+   * 
+   * @return Map of parameters (key=name, value=description).
+   * @see org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase#getParameters()
+   */
+  @Override
+  public Map<String, String> getParameters() {
+    Map<String, String> parameters = super.getParameters();
+    parameters.put(
+        PARAMETER_SEPARATOR,
+        GT._T("Used as a separator between consecutive {0} tags", "&lt;ref&gt;"));
+    return parameters;
   }
 }

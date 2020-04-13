@@ -7,8 +7,10 @@
 
 package org.wikipediacleaner.api.check.algorithm;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.constants.WPCConfiguration;
@@ -16,6 +18,7 @@ import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementCategory;
 import org.wikipediacleaner.api.data.PageElementTemplate;
+import org.wikipediacleaner.i18n.GT;
 
 
 /**
@@ -63,30 +66,24 @@ public class CheckErrorAlgorithm546 extends CheckErrorAlgorithmBase {
     }
 
     // Retrieve configuration
-    String tmp = getSpecificProperty("templates", true, true, false);
-    if ((tmp != null) && !tmp.isEmpty()) {
-      List<String[]> categorizingTemplates = WPCConfiguration.convertPropertyToStringArrayList(tmp);
-      if (categorizingTemplates != null) {
-        for (String[] categorizingTemplate : categorizingTemplates) {
-          if (categorizingTemplate.length > 0) {
-            String templateName = categorizingTemplate[0];
-            List<PageElementTemplate> templates = analysis.getTemplates(templateName);
-            if ((templates != null) && !templates.isEmpty()) {
-              if (categorizingTemplate.length < 2) {
+    for (String[] categorizingTemplate : categorizingTemplates) {
+      if (categorizingTemplate.length > 0) {
+        String templateName = categorizingTemplate[0];
+        List<PageElementTemplate> templates = analysis.getTemplates(templateName);
+        if ((templates != null) && !templates.isEmpty()) {
+          if (categorizingTemplate.length < 2) {
+            return false;
+          }
+          String paramName = categorizingTemplate[1];
+          String paramValue = (categorizingTemplate.length > 2) ? categorizingTemplate[2] : null;
+          for (PageElementTemplate template : templates) {
+            int paramIndex = template.getParameterIndex(paramName);
+            if (paramIndex >= 0) {
+              if (paramValue == null) {
                 return false;
               }
-              String paramName = categorizingTemplate[1];
-              String paramValue = (categorizingTemplate.length > 2) ? categorizingTemplate[2] : null;
-              for (PageElementTemplate template : templates) {
-                int paramIndex = template.getParameterIndex(paramName);
-                if (paramIndex >= 0) {
-                  if (paramValue == null) {
-                    return false;
-                  }
-                  if (paramValue.equals(template.getParameterValue(paramIndex))) {
-                    return false;
-                  }
-                }
+              if (paramValue.equals(template.getParameterValue(paramIndex))) {
+                return false;
               }
             }
           }
@@ -96,5 +93,45 @@ public class CheckErrorAlgorithm546 extends CheckErrorAlgorithmBase {
 
     // No categories found
     return true;
+  }
+
+  /* ====================================================================== */
+  /* PARAMETERS                                                             */
+  /* ====================================================================== */
+
+  /** Deprecated parameters for templates */
+  private static final String PARAMETER_TEMPLATES = "templates";
+
+  /**
+   * Initialize settings for the algorithm.
+   * 
+   * @see org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase#initializeSettings()
+   */
+  @Override
+  protected void initializeSettings() {
+    String tmp = getSpecificProperty(PARAMETER_TEMPLATES, true, true, false);
+    categorizingTemplates.clear();
+    if (tmp != null) {
+      List<String[]> tmpList = WPCConfiguration.convertPropertyToStringArrayList(tmp);
+      if (tmpList != null) {
+        categorizingTemplates.addAll(tmpList);
+      }
+    }
+  }
+
+  /** Categorizing templates */
+  private final List<String[]> categorizingTemplates = new ArrayList<>();
+
+  /**
+   * @return Map of parameters (key=name, value=description).
+   * @see org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase#getParameters()
+   */
+  @Override
+  public Map<String, String> getParameters() {
+    Map<String, String> parameters = super.getParameters();
+    parameters.put(
+        PARAMETER_TEMPLATES,
+        GT._T("List of categorizing templates"));
+    return parameters;
   }
 }

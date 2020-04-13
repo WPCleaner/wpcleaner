@@ -190,9 +190,7 @@ public class CheckErrorAlgorithm527 extends CheckErrorAlgorithmBase {
    * @return Tracking category.
    */
   private String getTrackingCategory() {
-    String categoryName = getSpecificProperty("category", true, true, false);
-    if ((categoryName != null) &&
-        (categoryName.trim().length() > 0)) {
+    if (categoryName != null) {
       return categoryName;
     }
     if ((trackingCategory != null) &&
@@ -212,14 +210,14 @@ public class CheckErrorAlgorithm527 extends CheckErrorAlgorithmBase {
   @Override
   public List<Page> getSpecialList(EnumWikipedia wiki, int limit) {
     List<Page> result = null;
-    String categoryName = getTrackingCategory();
-    if (categoryName != null) {
+    String category = getTrackingCategory();
+    if (category != null) {
       API api = APIFactory.getAPI();
-      String title = wiki.getWikiConfiguration().getPageTitle(Namespace.CATEGORY, categoryName);
-      Page category = DataManager.getPage(wiki, title, null, null, null);
+      String title = wiki.getWikiConfiguration().getPageTitle(Namespace.CATEGORY, category);
+      Page categoryPage = DataManager.getPage(wiki, title, null, null, null);
       try {
-        api.retrieveCategoryMembers(wiki, category, 0, false, limit);
-        result = category.getRelatedPages(RelatedPages.CATEGORY_MEMBERS);
+        api.retrieveCategoryMembers(wiki, categoryPage, 0, false, limit);
+        result = categoryPage.getRelatedPages(RelatedPages.CATEGORY_MEMBERS);
       } catch (APIException e) {
         //
       }
@@ -238,6 +236,31 @@ public class CheckErrorAlgorithm527 extends CheckErrorAlgorithmBase {
     return fixUsingAutomaticReplacement(analysis);
   }
 
+  /* ====================================================================== */
+  /* PARAMETERS                                                             */
+  /* ====================================================================== */
+
+  /** Category containing the list of pages in error */
+  private static final String PARAMETER_CATEGORY = "category";
+
+  /**
+   * Initialize settings for the algorithm.
+   * 
+   * @see org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase#initializeSettings()
+   */
+  @Override
+  protected void initializeSettings() {
+    String tmp = getSpecificProperty(PARAMETER_CATEGORY, true, true, false);
+    categoryName = null;
+    if ((tmp != null) &&
+        (tmp.trim().length() > 0)) {
+      categoryName = tmp.trim();
+    }
+  }
+
+  /** Category containing the list of pages in error */
+  private String categoryName = null;
+
   /**
    * @return Map of parameters (key=name, value=description).
    * @see org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase#getParameters()
@@ -245,7 +268,9 @@ public class CheckErrorAlgorithm527 extends CheckErrorAlgorithmBase {
   @Override
   public Map<String, String> getParameters() {
     Map<String, String> parameters = super.getParameters();
-    parameters.put("category", GT._T("A category containing the list of pages in error"));
+    parameters.put(
+        PARAMETER_CATEGORY,
+        GT._T("A category containing the list of pages in error"));
     return parameters;
   }
 }
