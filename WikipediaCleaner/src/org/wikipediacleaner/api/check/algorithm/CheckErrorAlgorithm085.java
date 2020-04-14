@@ -33,6 +33,7 @@ public class CheckErrorAlgorithm085 extends CheckErrorAlgorithmBase {
     PageElementTag.TAG_HTML_CENTER,
     PageElementTag.TAG_HTML_DIV,
     PageElementTag.TAG_HTML_SPAN,
+    PageElementTag.TAG_HTML_SUP,
     PageElementTag.TAG_WIKI_INCLUDEONLY,
     PageElementTag.TAG_WIKI_GALLERY,
     PageElementTag.TAG_WIKI_NOINCLUDE,
