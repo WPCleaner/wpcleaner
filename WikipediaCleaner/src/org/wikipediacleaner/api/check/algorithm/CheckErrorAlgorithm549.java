@@ -101,7 +101,8 @@ public class CheckErrorAlgorithm549 extends CheckErrorAlgorithmBase {
             } else {
               finished = true;
             }
-          } else if (CharacterUtils.isWhitespace(tmpChar)) {
+          } else if (CharacterUtils.isWhitespace(tmpChar) ||
+                     (tmpChar == '\'')) {
             tmpBetween.append(tmpChar);
             tmpIndex++;
           } else {
@@ -175,6 +176,9 @@ public class CheckErrorAlgorithm549 extends CheckErrorAlgorithmBase {
             String between = tmpBetweenList.get(tmpLinkNum - 1);
             if (!between.isEmpty()) {
               buffer.append(between);
+              if (between.startsWith("'") || between.endsWith("'")) {
+                automatic = false;
+              }
             }
           }
           if (!textEquals && (!nowiki || otherChar || punctuation)) {
