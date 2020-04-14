@@ -8,13 +8,18 @@
 package org.wikipediacleaner.api.check.algorithm;
 
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
+import org.wikipediacleaner.api.constants.WPCConfiguration;
 import org.wikipediacleaner.api.data.CharacterUtils;
 import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementInternalLink;
 import org.wikipediacleaner.api.data.PageElementTag;
+import org.wikipediacleaner.i18n.GT;
 
 
 /**
@@ -55,7 +60,8 @@ public class CheckErrorAlgorithm550 extends CheckErrorAlgorithmBase {
       String target = link.getFullLink();
       String text = link.getDisplayedTextNotTrimmed();
       boolean shouldReport = false;
-      boolean automatic = false; // TODO: test with true
+      boolean automatic = true;
+      boolean hasSpace = false;
       if ((target != null) && (!target.isEmpty())) {
         if ((text != null) && !text.isEmpty()) {
           shouldReport = true;
@@ -73,10 +79,16 @@ public class CheckErrorAlgorithm550 extends CheckErrorAlgorithmBase {
             } else if (CharacterUtils.isWhitespace(currentChar)) {
               index++;
               automatic = false;
+              hasSpace = true;
             } else {
               shouldReport = false;
             }
           }
+        }
+      }
+      if (shouldReport) {
+        if (ignoreLinks.contains(link.getLink())) {
+          shouldReport = false;
         }
       }
 
@@ -86,9 +98,36 @@ public class CheckErrorAlgorithm550 extends CheckErrorAlgorithmBase {
           return true;
         }
         result = true;
-        CheckErrorResult errorResult = createCheckErrorResult(
-            analysis, link.getBeginIndex(), link.getEndIndex());
+
+        // Check if modification can be automatic
+        int beginIndex = link.getBeginIndex();
+        int endIndex = link.getEndIndex();
+        if (automatic) {
+          String contents = analysis.getContents();
+          if ((beginIndex > 0) && (contents.charAt(beginIndex - 1) == '\'') &&
+              (endIndex < contents.length()) && (contents.charAt(endIndex) == '\'')) {
+            automatic = false;
+          }
+        }
+
+        // Report error
+        CheckErrorResult errorResult = createCheckErrorResult(analysis, beginIndex, endIndex);
         errorResult.addReplacement("", automatic);
+        if (hasSpace) {
+          String contents = analysis.getContents();
+          boolean otherSpace = false;
+          if ((beginIndex > 0) &&
+              CharacterUtils.isWhitespace(contents.charAt(beginIndex - 1))) {
+            otherSpace = true;
+          }
+          if ((endIndex < contents.length()) &&
+              CharacterUtils.isWhitespace(contents.charAt(endIndex))) {
+            otherSpace = true;
+          }
+          if (!otherSpace) {
+            errorResult.addReplacement(" ");
+          }
+        }
         errors.add(errorResult);
       }
     }
@@ -109,5 +148,43 @@ public class CheckErrorAlgorithm550 extends CheckErrorAlgorithmBase {
       return analysis.getContents();
     }
     return fixUsingAutomaticReplacement(analysis);
+  }
+
+  /* ====================================================================== */
+  /* PARAMETERS                                                             */
+  /* ====================================================================== */
+
+  /** List of links to be ignored */
+  private static final String PARAMETER_IGNORE_LINKS = "ignore_links";
+
+  /**
+   * Initialize settings for the algorithm.
+   * 
+   * @see org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase#initializeSettings()
+   */
+  @Override
+  protected void initializeSettings() {
+    String tmp = getSpecificProperty(PARAMETER_IGNORE_LINKS, true, true, true);
+    ignoreLinks.clear();
+    if (tmp != null) {
+      List<String> tmpList = WPCConfiguration.convertPropertyToStringList(tmp);
+      if (tmpList != null) {
+        ignoreLinks.addAll(tmpList);
+      }
+    }
+  }
+
+  /** Links to ignore */
+  private final Set<String> ignoreLinks = new HashSet<>();
+
+  /**
+   * @return Map of parameters (key=name, value=description).
+   * @see org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase#getParameters()
+   */
+  @Override
+  public Map<String, String> getParameters() {
+    Map<String, String> parameters = super.getParameters();
+    parameters.put(PARAMETER_IGNORE_LINKS, GT._T("Links to ignore"));
+    return parameters;
   }
 }
