@@ -33,7 +33,7 @@
   <property name="WPCleaner.libs.codec.lic"               value="LICENSE.txt" />
   <property name="WPCleaner.libs.codec.not"               value="NOTICE.txt" />
 
-  <property name="WPCleaner.libs.compress.version"        value="1.10" />
+  <property name="WPCleaner.libs.compress.version"        value="1.20" />
   <property name="WPCleaner.libs.compress.dir"            value="libs/commons-compress-${WPCleaner.libs.compress.version}" />
   <property name="WPCleaner.libs.compress.jar"            value="commons-compress-${WPCleaner.libs.compress.version}.jar" />
   <property name="WPCleaner.libs.compress.lic"            value="LICENSE.txt" />

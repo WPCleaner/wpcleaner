@@ -9,7 +9,6 @@
 	<classpathentry kind="lib" path="libs/jackson-2.5.2/jackson-databind-2.5.2.jar"/>
 	<classpathentry kind="lib" path="libs/jackson-2.5.2/jackson-core-2.5.2.jar"/>
 	<classpathentry kind="lib" path="libs/jackson-2.5.2/jackson-annotations-2.5.2.jar"/>
-	<classpathentry kind="lib" path="libs/commons-compress-1.10/commons-compress-1.10.jar"/>
 	<classpathentry kind="lib" path="libs/jdom-2.0.6/jaxen-1.1.6.jar"/>
 	<classpathentry kind="lib" path="libs/jdom-2.0.6/jdom-2.0.6.jar"/>
 	<classpathentry kind="lib" path="libs/jdom-2.0.6/xercesImpl.jar"/>
@@ -23,5 +22,6 @@
 	<classpathentry kind="lib" path="libs/mslinks-1.0.5/mslinks.jar"/>
 	<classpathentry kind="lib" path="libs/commons-codec-1.14/commons-codec-1.14.jar"/>
 	<classpathentry kind="lib" path="libs/commons-logging-1.2/commons-logging-1.2.jar"/>
+	<classpathentry kind="lib" path="libs/commons-compress-1.20/commons-compress-1.20.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
