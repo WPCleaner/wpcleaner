@@ -239,10 +239,15 @@ public class CheckErrorAlgorithm524 extends CheckErrorAlgorithmBase {
           if (paramInfo.numParam + 1 < template.getParameterCount()) {
             endIndex = template.getParameter(paramInfo.numParam + 1).getPipeIndex();
           }
+          String value = paramInfo.param.getValue();
+          boolean empty = (value == null) || value.isEmpty();
           CheckErrorResult errorResult = createCheckErrorResult(
               analysis,
               paramInfo.param.getPipeIndex(), endIndex,
-              ErrorLevel.CORRECT);
+              empty ? ErrorLevel.WARNING : ErrorLevel.CORRECT);
+          if (empty) {
+            errorResult.addReplacement("");
+          }
           errors.add(errorResult);
         }
       }
