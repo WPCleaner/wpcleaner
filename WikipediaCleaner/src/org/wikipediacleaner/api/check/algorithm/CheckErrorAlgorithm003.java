@@ -19,6 +19,7 @@ import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.PageElementTemplate;
+import org.wikipediacleaner.api.data.PageElementTitle;
 import org.wikipediacleaner.i18n.GT;
 
 /**
@@ -104,7 +105,7 @@ public class CheckErrorAlgorithm003 extends CheckErrorAlgorithmBase {
         referencesFound ? ErrorLevel.WARNING : ErrorLevel.ERROR);
     errors.add(errorResult);
 
-    // Try to make some suggestions
+    // Suggestion to close tag if references tags are unclosed
     String contents = analysis.getContents();
     if (referencesTags != null) {
       for (PageElementTag referencesTag : referencesTags) {
@@ -119,32 +120,60 @@ public class CheckErrorAlgorithm003 extends CheckErrorAlgorithmBase {
           errors.add(errorResult);
         }
       }
-      if (referencesTags.size() == 1) {
-        int index = referencesTags.get(0).getEndIndex();
-        boolean ok = true;
-        while (ok && (index < contents.length())) {
-          char currentChar = contents.charAt(index);
-          if (Character.isWhitespace(currentChar)) {
-            index++;
-          } else if (currentChar == '<') {
-            PageElementTag tag = analysis.isInTag(index);
-            if ((tag != null) &&
-                (tag.getBeginIndex() == index) &&
-                (PageElementTag.TAG_WIKI_REF.equals(tag.getNormalizedName()))) {
-              index = tag.getCompleteEndIndex();
-            } else {
-              if (contents.startsWith("</references/>", index)) {
-                errorResult = createCheckErrorResult(analysis, index, index + 14);
-                errorResult.addReplacement(PageElementTag.createTag(
-                    PageElementTag.TAG_WIKI_REFERENCES, true, false), true);
-                errors.add(errorResult);
-              }
-              ok = false;
-            }
+    }
+
+    // Suggestion when there's one references tag
+    if ((referencesTags != null) && (referencesTags.size() == 1)) {
+      int index = referencesTags.get(0).getEndIndex();
+      boolean ok = true;
+      while (ok && (index < contents.length())) {
+        char currentChar = contents.charAt(index);
+        if (Character.isWhitespace(currentChar)) {
+          index++;
+        } else if (currentChar == '<') {
+          PageElementTag tag = analysis.isInTag(index);
+          if ((tag != null) &&
+              (tag.getBeginIndex() == index) &&
+              (PageElementTag.TAG_WIKI_REF.equals(tag.getNormalizedName()))) {
+            index = tag.getCompleteEndIndex();
           } else {
+            if (contents.startsWith("</references/>", index)) {
+              errorResult = createCheckErrorResult(analysis, index, index + 14);
+              errorResult.addReplacement(PageElementTag.createTag(
+                  PageElementTag.TAG_WIKI_REFERENCES, true, false), true);
+              errors.add(errorResult);
+            }
             ok = false;
           }
+        } else {
+          ok = false;
         }
+      }
+    }
+
+    // Suggestion when there's no references tags
+    if (((referencesTags == null) || referencesTags.isEmpty()) &&
+        (insert != null) && !titles.isEmpty()) {
+      List<PageElementTitle> tmpTitles = analysis.getTitles();
+      PageElementTitle sameTitle = null;
+      boolean multipleTitles = false;
+      for (PageElementTitle tmpTitle : tmpTitles) {
+        String titleText = tmpTitle.getTitle();
+        if ((titleText != null) && titles.contains(titleText)) {
+          if (sameTitle != null) {
+            multipleTitles = true;
+          }
+          sameTitle = tmpTitle;
+        }
+      }
+      if (sameTitle != null) {
+        int beginIndex = sameTitle.getBeginIndex();
+        int endIndex = sameTitle.getEndIndex();
+        errorResult = createCheckErrorResult(
+            analysis, beginIndex, endIndex, ErrorLevel.WARNING);
+        String replacement = contents.substring(beginIndex, endIndex) + "\n" + insert;
+        errorResult.addReplacement(replacement, !multipleTitles);
+        errors.add(errorResult);
       }
     }
 
@@ -166,11 +195,17 @@ public class CheckErrorAlgorithm003 extends CheckErrorAlgorithmBase {
   /* PARAMETERS                                                             */
   /* ====================================================================== */
 
-  /** List of templates including references tag */
-  private static final String PARAMETER_TEMPLATES = "templates";
+  /** Text to insert for references */
+  private static final String PARAMETER_INSERT = "insert";
 
   /** List of templates including references tag */
   private static final String PARAMETER_REFERENCES_TEMPLATES = "references_templates";
+
+  /** List of templates including references tag */
+  private static final String PARAMETER_TEMPLATES = "templates";
+
+  /** Section titles where references can be inserted */
+  private static final String PARAMETER_TITLES = "titles";
 
   /**
    * Initialize settings for the algorithm.
@@ -190,10 +225,31 @@ public class CheckErrorAlgorithm003 extends CheckErrorAlgorithmBase {
         referencesTemplates.addAll(tmpList);
       }
     }
+
+    tmp = getSpecificProperty(PARAMETER_INSERT, true, true, false);
+    insert = null;
+    if ((tmp != null) && !tmp.trim().isEmpty()) {
+      insert = tmp.trim();
+    }
+
+    tmp = getSpecificProperty(PARAMETER_TITLES, true, true, false);
+    titles.clear();
+    if (tmp != null) {
+      List<String> tmpList = WPCConfiguration.convertPropertyToStringList(tmp, false);
+      if (tmpList != null) {
+        titles.addAll(tmpList);
+      }
+    }
   }
 
   /** List of templates including references tag */
   private final List<String> referencesTemplates = new ArrayList<>();
+
+  /** Text to insert for references */
+  private String insert = null;
+
+  /** Section titles where references can be inserted */
+  private final List<String> titles = new ArrayList<>();
 
   /**
    * @return Map of parameters (key=name, value=description).
