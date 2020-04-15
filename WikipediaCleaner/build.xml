@@ -94,7 +94,7 @@
   <property name="WPCleaner.libs.mslinks.jar"             value="mslinks.jar" />
   <property name="WPCleaner.libs.mslinks.lic"             value="LICENSE.txt" />
 
-  <property name="WPCleaner.libs.slf4j.version"           value="1.7.25" />
+  <property name="WPCleaner.libs.slf4j.version"           value="1.7.30" />
   <property name="WPCleaner.libs.slf4j.dir"               value="libs/slf4j-${WPCleaner.libs.slf4j.version}" />
   <property name="WPCleaner.libs.slf4j.api.jar"           value="slf4j-api-${WPCleaner.libs.slf4j.version}.jar" />
 
