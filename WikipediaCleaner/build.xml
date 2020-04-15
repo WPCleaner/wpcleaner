@@ -27,7 +27,7 @@
   <property name="WPCleaner.libs.getdown-core.jar"        value="getdown-core-${WPCleaner.libs.getdown.version}.jar" />
   <property name="WPCleaner.libs.getdown-launcher.jar"    value="getdown-launcher-${WPCleaner.libs.getdown.version}.jar" />
 
-  <property name="WPCleaner.libs.codec.version"           value="1.6" />
+  <property name="WPCleaner.libs.codec.version"           value="1.14" />
   <property name="WPCleaner.libs.codec.dir"               value="libs/commons-codec-${WPCleaner.libs.codec.version}" />
   <property name="WPCleaner.libs.codec.jar"               value="commons-codec-${WPCleaner.libs.codec.version}.jar" />
   <property name="WPCleaner.libs.codec.lic"               value="LICENSE.txt" />

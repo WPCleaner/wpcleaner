@@ -6,7 +6,6 @@
 	<classpathentry kind="lib" path="libs/commons-httpclient-3.1/commons-httpclient-3.1.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry kind="lib" path="libs/gettext-commons-0.9.6/gettext-commons-0.9.6.jar"/>
-	<classpathentry kind="lib" path="libs/commons-codec-1.6/commons-codec-1.6.jar"/>
 	<classpathentry kind="lib" path="libs/jackson-2.5.2/jackson-databind-2.5.2.jar"/>
 	<classpathentry kind="lib" path="libs/jackson-2.5.2/jackson-core-2.5.2.jar"/>
 	<classpathentry kind="lib" path="libs/jackson-2.5.2/jackson-annotations-2.5.2.jar"/>
@@ -23,5 +22,6 @@
 	<classpathentry kind="lib" path="libs/commons-io-2.6/commons-io-2.6.jar"/>
 	<classpathentry kind="lib" path="libs/commons-lang3-3.8.1/commons-lang3-3.8.1.jar"/>
 	<classpathentry kind="lib" path="libs/mslinks-1.0.5/mslinks.jar"/>
+	<classpathentry kind="lib" path="libs/commons-codec-1.14/commons-codec-1.14.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
