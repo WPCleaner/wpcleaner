@@ -62,7 +62,7 @@
   <property name="WPCleaner.libs.io.lic"                  value="LICENSE.txt" />
   <property name="WPCleaner.libs.io.not"                  value="NOTICE.txt" />
 
-  <property name="WPCleaner.libs.jackson.version"         value="2.5.2" />
+  <property name="WPCleaner.libs.jackson.version"         value="2.10.3" />
   <property name="WPCleaner.libs.jackson.dir"             value="libs/jackson-${WPCleaner.libs.jackson.version}" />
   <property name="WPCleaner.libs.jackson-annotations.jar" value="jackson-annotations-${WPCleaner.libs.jackson.version}.jar" />
   <property name="WPCleaner.libs.jackson-core.jar"        value="jackson-core-${WPCleaner.libs.jackson.version}.jar" />
