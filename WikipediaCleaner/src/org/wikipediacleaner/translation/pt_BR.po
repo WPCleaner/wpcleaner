@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2020-04-13 16:30+0200\n"
+"POT-Creation-Date: 2020-04-14 21:32+0200\n"
 "PO-Revision-Date: 2017-03-03 19:32+0000\n"
 "Last-Translator: Felipe L. <felipe.idj@hotmail.com>\n"
 "Language-Team: Brazilian Portuguese <pt_BR@li.org>\n"
@@ -754,13 +754,13 @@ msgstr "Uma lista de textos que podem ser adicionados às secções sem conteúd
 msgid "Restrict verification to titles with a higher level"
 msgstr "Restringir a verificação para títulos com um nível mais elevado"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm085.java:278
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm085.java:279
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm112.java:653
 #, java-format
 msgid "Use {0}"
 msgstr "Use {0}"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm085.java:341
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm085.java:342
 msgid "A list of templates that can be used to replace &lt;center&gt; tags"
 msgstr ""
 "Uma lista de predefinições que podem ser utilizadas para substituir a tag "
@@ -830,16 +830,16 @@ msgstr "ISSN semelhante"
 msgid "Use {0} and {1}"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm501.java:164
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm501.java:165
 msgid "Restore original text"
 msgstr "Restaurar texto original"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm501.java:170
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm501.java:171
 #, java-format
 msgid "Replace each time with {0}"
 msgstr "Substituir cada vez com {0}"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm501.java:177
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm501.java:178
 msgid "Replace each time with"
 msgstr "Substituir cada vez com"
 
@@ -1009,6 +1009,7 @@ msgid "List of categorizing templates"
 msgstr "Predefinições não categorizadas"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm548.java:351
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm550.java:187
 #, fuzzy
 msgid "Links to ignore"
 msgstr "Links para {0}"

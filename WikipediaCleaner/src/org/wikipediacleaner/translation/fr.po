@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2020-04-13 16:30+0200\n"
+"POT-Creation-Date: 2020-04-14 21:32+0200\n"
 "PO-Revision-Date: 2018-01-31 07:52+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: French <fr@li.org>\n"
@@ -772,13 +772,13 @@ msgstr "Une liste de textes qui peuvent être ajoutés à une section vide"
 msgid "Restrict verification to titles with a higher level"
 msgstr "Restreindre la vérification aux niveaux de titre supérieurs"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm085.java:278
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm085.java:279
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm112.java:653
 #, java-format
 msgid "Use {0}"
 msgstr "Utiliser {0}"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm085.java:341
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm085.java:342
 msgid "A list of templates that can be used to replace &lt;center&gt; tags"
 msgstr ""
 "Une liste de modèles pouvant être utilisés pour remplacer les balises "
@@ -848,16 +848,16 @@ msgstr "ISSN similaires"
 msgid "Use {0} and {1}"
 msgstr "Utiliser {0} et {1}"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm501.java:164
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm501.java:165
 msgid "Restore original text"
 msgstr "Remettre le texte d’origine"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm501.java:170
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm501.java:171
 #, java-format
 msgid "Replace each time with {0}"
 msgstr "Remplacer à chaque fois par {0}"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm501.java:177
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm501.java:178
 msgid "Replace each time with"
 msgstr "Remplacer à chaque fois par"
 
@@ -1024,6 +1024,7 @@ msgid "List of categorizing templates"
 msgstr "Modèles sans catégories"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm548.java:351
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm550.java:187
 #, fuzzy
 msgid "Links to ignore"
 msgstr "Liens vers {0}"

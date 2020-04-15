@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2020-04-13 16:30+0200\n"
+"POT-Creation-Date: 2020-04-14 21:32+0200\n"
 "PO-Revision-Date: 2015-02-26 20:30+0000\n"
 "Last-Translator: Xosé <Unknown>\n"
 "Language-Team: Galician <gl@li.org>\n"
@@ -736,13 +736,13 @@ msgstr ""
 msgid "Restrict verification to titles with a higher level"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm085.java:278
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm085.java:279
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm112.java:653
 #, fuzzy, java-format
 msgid "Use {0}"
 msgstr "Páxina {0}:"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm085.java:341
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm085.java:342
 msgid "A list of templates that can be used to replace &lt;center&gt; tags"
 msgstr ""
 
@@ -810,16 +810,16 @@ msgstr ""
 msgid "Use {0} and {1}"
 msgstr "Páxina {0}:"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm501.java:164
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm501.java:165
 msgid "Restore original text"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm501.java:170
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm501.java:171
 #, java-format
 msgid "Replace each time with {0}"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm501.java:177
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm501.java:178
 msgid "Replace each time with"
 msgstr ""
 
@@ -976,6 +976,7 @@ msgid "List of categorizing templates"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm548.java:351
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm550.java:187
 msgid "Links to ignore"
 msgstr ""
 
