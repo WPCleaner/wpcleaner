@@ -16,6 +16,7 @@ import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.CheckErrorResult.ErrorLevel;
 import org.wikipediacleaner.api.constants.WPCConfiguration;
 import org.wikipediacleaner.api.constants.WPCConfigurationBoolean;
+import org.wikipediacleaner.api.constants.WPCConfigurationStringList;
 import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.PageElementTag.Parameter;
@@ -727,6 +728,12 @@ public class CheckErrorAlgorithm002 extends CheckErrorAlgorithmBase {
     anchorTemplates.clear();
     if (tmp != null) {
       List<String[]> tmpList = WPCConfiguration.convertPropertyToStringArrayList(tmp);
+      if (tmpList != null) {
+        anchorTemplates.addAll(tmpList);
+      }
+    } else {
+      List<String[]> tmpList = getWPCConfiguration().getStringArrayList(
+          WPCConfigurationStringList.ANCHOR_TEMPLATES);
       if (tmpList != null) {
         anchorTemplates.addAll(tmpList);
       }

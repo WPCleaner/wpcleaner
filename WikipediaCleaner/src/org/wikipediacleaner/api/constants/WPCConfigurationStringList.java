@@ -18,6 +18,8 @@ public enum WPCConfigurationStringList {
 
   // Possible replacements for abbreviations
   ABBREVIATIONS("general_abbreviations", true, true, true),
+  // Templates for anchor
+  ANCHOR_TEMPLATES("general_anchor_templates", true, true, true, null ),
   // Templates for columns
   COLUMNS_TEMPLATES("general_columns_templates", true, true, true, null ),
   // Templates for columns

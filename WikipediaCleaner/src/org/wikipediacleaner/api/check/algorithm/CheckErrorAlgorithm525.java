@@ -8,11 +8,15 @@
 package org.wikipediacleaner.api.check.algorithm;
 
 import java.awt.ComponentOrientation;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.CheckErrorResult.ErrorLevel;
+import org.wikipediacleaner.api.constants.WPCConfiguration;
+import org.wikipediacleaner.api.constants.WPCConfigurationStringList;
 import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.PageElementTag.Parameter;
@@ -61,6 +65,7 @@ public class CheckErrorAlgorithm525 extends CheckErrorAlgorithmBase {
       boolean isUseless = true;
       boolean onlyUselessParameter = true;
       ErrorLevel level = ErrorLevel.ERROR;
+      String idParam = null;
       for (int numParam = 0; numParam < tag.getParametersCount(); numParam++) {
         Parameter param = tag.getParameter(numParam);
         boolean isParameterUseless = false;
@@ -86,8 +91,10 @@ public class CheckErrorAlgorithm525 extends CheckErrorAlgorithmBase {
           } else if ("contenteditable".equals(param.getName())) {
             // useless: Content Translation tool garbage
             isParameterUseless = true;
-          } else if ("class".equals(param.getName()) ||
-                     "id".equals(param.getName())) {
+          } else if ("id".equals(param.getName())) {
+            level = ErrorLevel.WARNING;
+            idParam = param.getTrimmedValue();
+          } else if ("class".equals(param.getName())) {
             level = ErrorLevel.WARNING;
           } else {
             isUseless = false;
@@ -114,15 +121,41 @@ public class CheckErrorAlgorithm525 extends CheckErrorAlgorithmBase {
         if (tag.isFullTag() || !tag.isComplete()) {
           errorResult.addReplacement("");
         } else {
-          String replacement = contents.substring(
+
+          String internal = contents.substring(
               tag.getValueBeginIndex(), tag.getValueEndIndex());
+
+          // Suggestion for anchors
+          if ((idParam != null) && !idParam.isEmpty()) {
+            if (anchorTemplates.isEmpty()) {
+              errorResult.addText(GT._T("Use an anchor template?"));
+            }
+            for (String[] anchorTemplate : anchorTemplates) {
+              if ((anchorTemplate.length > 0) && (anchorTemplate[0].length() > 0)) {
+                StringBuilder replacement = new StringBuilder();
+                replacement.append("{{");
+                replacement.append(anchorTemplate[0]);
+                replacement.append("|");
+                if ((anchorTemplate.length > 1) && !"1".equals(anchorTemplate[1])) {
+                  replacement.append(anchorTemplate[1]);
+                  replacement.append("=");
+                }
+                replacement.append(idParam);
+                replacement.append("}}");
+                replacement.append(internal);
+                errorResult.addReplacement(replacement.toString());
+              }
+            }
+          }
+
+          // Suggestion to remove the tag
           PageElementTag refTag = analysis.isInTag(
               tag.getCompleteEndIndex(), PageElementTag.TAG_WIKI_REF);
           if ((refTag != null) && (refTag.isEndTag())) {
-            replacement = replacement.trim();
+            internal = internal.trim();
           }
           errorResult.addReplacement(
-              replacement,
+              internal,
               GT._T("Remove {0} tags", PageElementTag.TAG_HTML_SPAN),
               onlyUselessParameter);
         }
@@ -142,5 +175,51 @@ public class CheckErrorAlgorithm525 extends CheckErrorAlgorithmBase {
   @Override
   protected String internalAutomaticFix(PageAnalysis analysis) {
     return fixUsingAutomaticReplacement(analysis);
+  }
+
+  /* ====================================================================== */
+  /* PARAMETERS                                                             */
+  /* ====================================================================== */
+
+  /** Replacements for anchors */
+  private static final String PARAMETER_ANCHOR_TEMPLATES = "anchor_templates";
+
+  /**
+   * Initialize settings for the algorithm.
+   * 
+   * @see org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase#initializeSettings()
+   */
+  @Override
+  protected void initializeSettings() {
+    String tmp = getSpecificProperty(PARAMETER_ANCHOR_TEMPLATES, true, true, false);
+    anchorTemplates.clear();
+    if (tmp != null) {
+      List<String[]> tmpList = WPCConfiguration.convertPropertyToStringArrayList(tmp);
+      if (tmpList != null) {
+        anchorTemplates.addAll(tmpList);
+      }
+    } else {
+      List<String[]> tmpList = getWPCConfiguration().getStringArrayList(
+          WPCConfigurationStringList.ANCHOR_TEMPLATES);
+      if (tmpList != null) {
+        anchorTemplates.addAll(tmpList);
+      }
+    }
+  }
+
+  /** Replacements for anchors */
+  private final List<String[]> anchorTemplates = new ArrayList<>();
+
+  /**
+   * @return Map of parameters (key=name, value=description).
+   * @see org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase#getParameters()
+   */
+  @Override
+  public Map<String, String> getParameters() {
+    Map<String, String> parameters = super.getParameters();
+    parameters.put(
+        PARAMETER_ANCHOR_TEMPLATES,
+        GT._T("A replacement for {0}", "&lt;span id=\"xxx\"/&gt;"));
+    return parameters;
   }
 }
