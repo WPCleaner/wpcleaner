@@ -325,6 +325,9 @@ public class CheckErrorAlgorithm524 extends CheckErrorAlgorithmBase {
    */
   @Override
   protected String internalAutomaticFix(PageAnalysis analysis) {
+    if (isInWhiteList(analysis.getPage().getTitle())) {
+      return analysis.getContents();
+    }
     return fixUsingAutomaticReplacement(analysis);
   }
 
