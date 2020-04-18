@@ -126,7 +126,11 @@ public class CheckErrorAlgorithm524 extends CheckErrorAlgorithmBase {
             String value = param.getValue();
 
             // Display the value of the existing parameter
-            errorResult.addText(GT._T("Other value: {0}", value));
+            if (value.equals(existingValue)) {
+              errorResult.addText(GT._T("Both values are equal"));
+            } else {
+              errorResult.addText(GT._T("Other value: {0}", value));
+            }
 
             boolean automatic = true;
             if (automatic) {

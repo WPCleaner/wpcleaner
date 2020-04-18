@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2020-04-14 21:32+0200\n"
+"POT-Creation-Date: 2020-04-18 14:14+0200\n"
 "PO-Revision-Date: 2017-03-03 19:32+0000\n"
 "Last-Translator: Felipe L. <felipe.idj@hotmail.com>\n"
 "Language-Team: Brazilian Portuguese <pt_BR@li.org>\n"
@@ -247,34 +247,35 @@ msgstr "Editar tabela de conteúdos"
 msgid "Remove {0} namespace from template name"
 msgstr "Remover domínio {0} do nome da predefinição"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm002.java:36
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm002.java:37
 msgid "Fix all incorrect tags"
 msgstr "Corrigir todas as tags incorretas"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm002.java:208
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm002.java:232
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm002.java:209
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm002.java:233
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm055.java:167
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm066.java:93
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm077.java:93
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm525.java:126
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm525.java:159
 #, java-format
 msgid "Remove {0} tags"
 msgstr "Remover as tags {0}"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm002.java:760
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm002.java:763
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm002.java:766
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm002.java:769
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm002.java:767
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm002.java:770
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm002.java:773
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm002.java:776
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm525.java:222
 #, java-format
 msgid "A replacement for {0}"
 msgstr "Uma substituição para {0}"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm003.java:117
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm003.java:118
 msgid "Close tag"
 msgstr "Fechar tag"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm003.java:207
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm003.java:210
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm003.java:263
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm003.java:266
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm111.java:174
 #, java-format
 msgid "A list of templates resulting in the inclusion of {0}"
@@ -897,13 +898,22 @@ msgstr "Uma lista de valores de texto por mês"
 msgid "The size below which images are not reported as duplicates"
 msgstr "O tamanho abaixo do qual as imagens não são relatadas como duplicadas"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm524.java:228
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm524.java:130
+msgid "Both values are equal"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm524.java:132
+#, fuzzy, java-format
+msgid "Other value: {0}"
+msgstr "Outro idioma"
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm524.java:235
 #: org/wikipediacleaner/gui/swing/NewSectionWindow.java:115
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:529
 msgid "Comment"
 msgstr "Comentário"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm524.java:379
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm524.java:391
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm527.java:273
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm528.java:255
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm529.java:381
@@ -911,11 +921,16 @@ msgstr "Comentário"
 msgid "A category containing the list of pages in error"
 msgstr "Uma categoria que contém a lista de páginas com erro"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm524.java:382
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm524.java:394
 msgid "Values that can be safely ignored for a given template and argument"
 msgstr ""
 "Valores que podem ser ignorados com segurança para uma determinada "
 "predefinição e argumento"
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm525.java:131
+#, fuzzy
+msgid "Use an anchor template?"
+msgstr "Procurar em predefinições"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm526.java:314
 msgid ""

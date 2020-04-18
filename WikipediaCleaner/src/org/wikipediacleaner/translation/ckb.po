@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2020-04-14 21:32+0200\n"
+"POT-Creation-Date: 2020-04-18 14:14+0200\n"
 "PO-Revision-Date: 2020-03-06 21:36+0300\n"
 "Last-Translator: Aram <Unknown>\n"
 "Language-Team: Kurdish (Sorani) <ckb@li.org>\n"
@@ -225,34 +225,35 @@ msgstr "دەستکاریی پێڕستەکان بکە"
 msgid "Remove {0} namespace from template name"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm002.java:36
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm002.java:37
 msgid "Fix all incorrect tags"
 msgstr "ھەموو تاگە نادروستەکان چاک بکەوە"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm002.java:208
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm002.java:232
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm002.java:209
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm002.java:233
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm055.java:167
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm066.java:93
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm077.java:93
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm525.java:126
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm525.java:159
 #, java-format
 msgid "Remove {0} tags"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm002.java:760
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm002.java:763
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm002.java:766
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm002.java:769
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm002.java:767
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm002.java:770
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm002.java:773
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm002.java:776
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm525.java:222
 #, java-format
 msgid "A replacement for {0}"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm003.java:117
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm003.java:118
 msgid "Close tag"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm003.java:207
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm003.java:210
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm003.java:263
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm003.java:266
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm111.java:174
 #, java-format
 msgid "A list of templates resulting in the inclusion of {0}"
@@ -851,13 +852,22 @@ msgstr ""
 msgid "The size below which images are not reported as duplicates"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm524.java:228
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm524.java:130
+msgid "Both values are equal"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm524.java:132
+#, fuzzy, java-format
+msgid "Other value: {0}"
+msgstr "زمانی تر"
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm524.java:235
 #: org/wikipediacleaner/gui/swing/NewSectionWindow.java:115
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:529
 msgid "Comment"
 msgstr "کورتەی دەستکاری"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm524.java:379
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm524.java:391
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm527.java:273
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm528.java:255
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm529.java:381
@@ -865,9 +875,14 @@ msgstr "کورتەی دەستکاری"
 msgid "A category containing the list of pages in error"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm524.java:382
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm524.java:394
 msgid "Values that can be safely ignored for a given template and argument"
 msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm525.java:131
+#, fuzzy
+msgid "Use an anchor template?"
+msgstr "بەناو داڕێژەکان دا بگەڕێ"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm526.java:314
 msgid ""
