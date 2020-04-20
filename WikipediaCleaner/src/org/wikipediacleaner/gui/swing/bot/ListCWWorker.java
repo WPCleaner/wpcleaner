@@ -453,7 +453,7 @@ public class ListCWWorker extends BasicWorker {
       // Build new text for the page
       String text = "";
       boolean finished = false;
-      while (!finished && !tmpPages.isEmpty()) {
+      do {
         StringBuilder newText = new StringBuilder();
         newText.append(contents.substring(0, begin));
         newText.append("\n");
@@ -461,11 +461,13 @@ public class ListCWWorker extends BasicWorker {
         newText.append(contents.substring(end));
         text = newText.toString();
         if (getWikipedia().getWikiConfiguration().isArticleTooLong(text)) {
-          tmpPages.remove(tmpPages.size() - 1);
+          if (!tmpPages.isEmpty()) {
+            tmpPages.remove(tmpPages.size() - 1);
+          }
         } else {
           finished = true;
         }
-      }
+      } while (!finished && !tmpPages.isEmpty());
 
       // Update page
       try {
