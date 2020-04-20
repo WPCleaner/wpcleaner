@@ -16,6 +16,8 @@ import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementListItem;
 import org.wikipediacleaner.api.data.PageElementTag;
+import org.wikipediacleaner.api.data.PageElementTemplate;
+import org.wikipediacleaner.api.data.PageElementTemplate.Parameter;
 import org.wikipediacleaner.api.data.PageElementTitle;
 
 
@@ -137,6 +139,17 @@ public class CheckErrorAlgorithm547 extends CheckErrorAlgorithmBase {
         if (automatic &&
             (analysis.isInImage(index) != null)) {
           automatic = false;
+        }
+        if (automatic) {
+          // Note: due to badly written templates that requires a parameter not to be empty...
+          PageElementTemplate template = analysis.isInTemplate(index);
+          if (template != null) {
+            Parameter param = template.getParameterAtIndex(index);
+            if (param != null) {
+              // TODO: be less restrictive, only if list item is alone?
+              automatic = false;
+            }
+          }
         }
 
         // Report error
