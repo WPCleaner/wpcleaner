@@ -54,6 +54,7 @@ public class CheckErrorAlgorithm550 extends CheckErrorAlgorithmBase {
     if (links == null) {
       return false;
     }
+    PageElementInternalLink previousLink = null;
     for (PageElementInternalLink link : links) {
 
       // Analyze link
@@ -104,11 +105,16 @@ public class CheckErrorAlgorithm550 extends CheckErrorAlgorithmBase {
         int endIndex = link.getEndIndex();
         if (automatic) {
           String contents = analysis.getContents();
-          if ((beginIndex > 0) && (contents.charAt(beginIndex - 1) == '\'') &&
-              (endIndex < contents.length()) && (contents.charAt(endIndex) == '\'')) {
-            automatic = false;
+          if ((endIndex < contents.length()) && (contents.charAt(endIndex) == '\'')) {
+            if ((endIndex < contents.length()) && (contents.charAt(endIndex) == '\'')) {
+              automatic = false;
+            }
+            if ((previousLink != null) && (previousLink.getEndIndex() == beginIndex)) {
+              automatic = false;
+            }
           }
         }
+        previousLink = link;
 
         // Report error
         CheckErrorResult errorResult = createCheckErrorResult(analysis, beginIndex, endIndex);
