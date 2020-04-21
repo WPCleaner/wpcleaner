@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2020-04-18 14:14+0200\n"
+"POT-Creation-Date: 2020-04-20 22:20+0200\n"
 "PO-Revision-Date: 2017-03-03 19:31+0000\n"
 "Last-Translator: Matěj S. <matejsuchanek97@gmail.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
@@ -896,7 +896,7 @@ msgstr "Jiný jazyk"
 msgid "Comment"
 msgstr "Shrnutí"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm524.java:391
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm524.java:394
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm527.java:273
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm528.java:255
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm529.java:381
@@ -904,7 +904,7 @@ msgstr "Shrnutí"
 msgid "A category containing the list of pages in error"
 msgstr "Kategorie obsahující seznam stránek s chybou"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm524.java:394
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm524.java:397
 msgid "Values that can be safely ignored for a given template and argument"
 msgstr "Hodnoty, které je možné pro danou šablonu a parametr ignorovat"
 
@@ -1004,7 +1004,8 @@ msgid "List of categorizing templates"
 msgstr "Nekategorizované šablony"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm548.java:351
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm550.java:187
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm550.java:193
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm551.java:183
 #, fuzzy
 msgid "Links to ignore"
 msgstr "Odkazuje na {0}"
@@ -3121,7 +3122,7 @@ msgstr ""
 msgid "Only check articles previously reported"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/bot/ListCWWorker.java:565
+#: org/wikipediacleaner/gui/swing/bot/ListCWWorker.java:567
 #, java-format
 msgid "{0} page has been analyzed"
 msgid_plural "{0} pages have been analyzed"
@@ -3129,7 +3130,7 @@ msgstr[0] "Byla analyzována {0} stránka"
 msgstr[1] "Byly analyzovány {0} stránky"
 msgstr[2] "Bylo analyzováno {0} stránek"
 
-#: org/wikipediacleaner/gui/swing/bot/ListCWWorker.java:573
+#: org/wikipediacleaner/gui/swing/bot/ListCWWorker.java:575
 #, java-format
 msgid "{0} page has been detected for algorithm {1}"
 msgid_plural "{0} pages have been detected for algorithm {1}"
@@ -3137,7 +3138,7 @@ msgstr[0] "Algoritmem {1} byla detekována {0} stránka"
 msgstr[1] "Algoritmem {1} byly detekovány {0} stránky"
 msgstr[2] "Algoritmem {1} bylo detekováno {0} stránek"
 
-#: org/wikipediacleaner/gui/swing/bot/ListCWWorker.java:743
+#: org/wikipediacleaner/gui/swing/bot/ListCWWorker.java:745
 #, java-format
 msgid "{0} pages processed"
 msgstr ""

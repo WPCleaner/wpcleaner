@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2020-04-18 14:14+0200\n"
+"POT-Creation-Date: 2020-04-20 22:20+0200\n"
 "PO-Revision-Date: 2020-03-06 21:36+0300\n"
 "Last-Translator: Aram <Unknown>\n"
 "Language-Team: Kurdish (Sorani) <ckb@li.org>\n"
@@ -867,7 +867,7 @@ msgstr "زمانی تر"
 msgid "Comment"
 msgstr "کورتەی دەستکاری"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm524.java:391
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm524.java:394
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm527.java:273
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm528.java:255
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm529.java:381
@@ -875,7 +875,7 @@ msgstr "کورتەی دەستکاری"
 msgid "A category containing the list of pages in error"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm524.java:394
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm524.java:397
 msgid "Values that can be safely ignored for a given template and argument"
 msgstr ""
 
@@ -969,7 +969,8 @@ msgid "List of categorizing templates"
 msgstr "داڕێژە پۆلێن نەکراوەکان"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm548.java:351
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm550.java:187
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm550.java:193
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm551.java:183
 msgid "Links to ignore"
 msgstr ""
 
@@ -3027,21 +3028,21 @@ msgstr ""
 msgid "Only check articles previously reported"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/bot/ListCWWorker.java:565
+#: org/wikipediacleaner/gui/swing/bot/ListCWWorker.java:567
 #, java-format
 msgid "{0} page has been analyzed"
 msgid_plural "{0} pages have been analyzed"
 msgstr[0] ""
 msgstr[1] ""
 
-#: org/wikipediacleaner/gui/swing/bot/ListCWWorker.java:573
+#: org/wikipediacleaner/gui/swing/bot/ListCWWorker.java:575
 #, java-format
 msgid "{0} page has been detected for algorithm {1}"
 msgid_plural "{0} pages have been detected for algorithm {1}"
 msgstr[0] ""
 msgstr[1] ""
 
-#: org/wikipediacleaner/gui/swing/bot/ListCWWorker.java:743
+#: org/wikipediacleaner/gui/swing/bot/ListCWWorker.java:745
 #, java-format
 msgid "{0} pages processed"
 msgstr ""
