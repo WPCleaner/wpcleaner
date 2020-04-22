@@ -41,7 +41,6 @@ import org.slf4j.LoggerFactory;
 import org.wikipediacleaner.api.API;
 import org.wikipediacleaner.api.APIException;
 import org.wikipediacleaner.api.CaptchaException;
-import org.wikipediacleaner.api.HttpUtils;
 import org.wikipediacleaner.api.RecentChangesListener;
 import org.wikipediacleaner.api.constants.ConnectionInformation;
 import org.wikipediacleaner.api.constants.EnumQueryPage;
@@ -59,6 +58,8 @@ import org.wikipediacleaner.api.data.RecentChange;
 import org.wikipediacleaner.api.data.Section;
 import org.wikipediacleaner.api.data.TemplateData;
 import org.wikipediacleaner.api.data.User;
+import org.wikipediacleaner.api.http.HttpUtils;
+import org.wikipediacleaner.api.http.hc3.Hc3HttpUtils;
 import org.wikipediacleaner.api.request.ApiRequest;
 import org.wikipediacleaner.api.request.ApiXmlResult;
 import org.wikipediacleaner.api.request.delete.ApiDeleteRequest;
@@ -1789,7 +1790,7 @@ public class MediaWikiAPI implements API {
     boolean getMethod = canUseGetMethod(properties);
     Configuration config = Configuration.getConfiguration();
     boolean useHttps = !config.getBoolean(null, ConfigurationValueBoolean.FORCE_HTTP_API);
-    return HttpUtils.createHttpMethod(
+    return Hc3HttpUtils.createHttpMethod(
         wikipedia.getSettings().getApiURL(useHttps),
         properties,
         getMethod);

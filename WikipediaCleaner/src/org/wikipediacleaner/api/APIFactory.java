@@ -12,6 +12,8 @@ import org.apache.commons.httpclient.HttpConnectionManager;
 import org.apache.commons.httpclient.MultiThreadedHttpConnectionManager;
 import org.apache.commons.httpclient.params.HttpMethodParams;
 import org.wikipediacleaner.api.check.CheckWiki;
+import org.wikipediacleaner.api.http.HttpServer;
+import org.wikipediacleaner.api.http.hc3.Hc3HttpServer;
 import org.wikipediacleaner.api.impl.MediaWikiAPI;
 
 
@@ -45,9 +47,14 @@ public class APIFactory {
     restApi = new MediaWikiRESTAPI(httpClient);
 
     // Initialize WMF Labs access
+    /* HttpComponents 5
+    PoolingHttpClientConnectionManager connManager = new PoolingHttpClientConnectionManager();
+    connManager.setMaxTotal(200);
+    connManager.setDefaultMaxPerRoute(50);
+    HttpServer labs = new Hc5HttpServer(createHttpClient(connManager), "https://tools.wmflabs.org/"); */
     connectionManager = new MultiThreadedHttpConnectionManager();
     httpClient = createHttpClient(connectionManager);
-    HttpServer labs = new HttpServer(httpClient, "https://tools.wmflabs.org/");
+    HttpServer labs = new Hc3HttpServer(httpClient, "https://tools.wmflabs.org/");
 
     // Initialize Check Wiki project
     checkWiki = new CheckWiki(labs);
@@ -86,4 +93,17 @@ public class APIFactory {
         "WPCleaner (+http://en.wikipedia.org/wiki/User:NicoV/Wikipedia_Cleaner/Documentation)");
     return client;
   }
+
+  /**
+   * Create an HTTP client.
+   * 
+   * @param manager Connection manager.
+   * @return HTTP client.
+   */
+  /*private static CloseableHttpClient createHttpClient(HttpClientConnectionManager manager) {
+    return HttpClients.custom().
+        setConnectionManager(manager).
+        setUserAgent("WPCleaner (+http://en.wikipedia.org/wiki/User:NicoV/Wikipedia_Cleaner/Documentation)").
+        build();
+  }*/
 }

@@ -13,8 +13,8 @@ import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpMethod;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.wikipediacleaner.api.HttpUtils;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
+import org.wikipediacleaner.api.http.hc3.Hc3HttpUtils;
 
 
 /**
@@ -88,7 +88,7 @@ public abstract class BasicRestApiResult implements RestApiResult {
         // Nothing
       }*/
     }
-    return HttpUtils.createHttpMethod(
+    return Hc3HttpUtils.createHttpMethod(
         getWiki().getSettings().getHostURL(true) + "/" + encodedPath,
         properties, false);
   }

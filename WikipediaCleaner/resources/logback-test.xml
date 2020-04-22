@@ -23,6 +23,7 @@
 
   <!-- Configuring loggers -->
   <logger name="org.wikipediacleaner" level="INFO" />
+  <logger name="org.apache.hc.client5.http.wire" level="INFO" />
   <logger name="org.lobobrowser" level="WARN" />
   <logger name="org" level="WARN" />
 

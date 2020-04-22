@@ -13,9 +13,9 @@ import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpMethod;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.wikipediacleaner.api.HttpUtils;
 import org.wikipediacleaner.api.constants.ConnectionInformation;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
+import org.wikipediacleaner.api.http.hc3.Hc3HttpUtils;
 import org.wikipediacleaner.api.request.login.ApiLoginRequest;
 import org.wikipediacleaner.utils.Configuration;
 import org.wikipediacleaner.utils.ConfigurationValueBoolean;
@@ -101,7 +101,7 @@ public abstract class BasicApiResult implements ApiResult {
     boolean getMethod = canUseGetMethod(properties);
     Configuration config = Configuration.getConfiguration();
     boolean useHttps = !config.getBoolean(null, ConfigurationValueBoolean.FORCE_HTTP_API);
-    return HttpUtils.createHttpMethod(
+    return Hc3HttpUtils.createHttpMethod(
         getWiki().getSettings().getApiURL(useHttps),
         properties,
         getMethod);

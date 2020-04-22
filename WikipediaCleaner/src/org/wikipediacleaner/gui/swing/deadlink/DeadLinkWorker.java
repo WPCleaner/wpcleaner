@@ -28,10 +28,10 @@ import org.slf4j.LoggerFactory;
 import org.wikipediacleaner.api.API;
 import org.wikipediacleaner.api.APIException;
 import org.wikipediacleaner.api.APIFactory;
-import org.wikipediacleaner.api.HttpUtils;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageElementExternalLink;
+import org.wikipediacleaner.api.http.hc3.Hc3HttpUtils;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
 import org.wikipediacleaner.gui.swing.basic.BasicWorker;
 import org.wikipediacleaner.i18n.GT;
@@ -129,7 +129,7 @@ public class DeadLinkWorker extends BasicWorker {
                 deadLink = null;
                 HttpMethod method = null;
                 try {
-                  method = HttpUtils.createHttpHeadMethod(url, null);
+                  method = Hc3HttpUtils.createHttpHeadMethod(url, null);
                   int questionIndex = url.indexOf('?');
                   if (questionIndex > 0) {
                     method.setQueryString(url.substring(questionIndex + 1));

@@ -7,7 +7,7 @@
 
 package org.wikipediacleaner.api.data;
 
-import org.wikipediacleaner.api.HttpUtils;
+import org.wikipediacleaner.api.http.HttpUtils;
 
 
 /**

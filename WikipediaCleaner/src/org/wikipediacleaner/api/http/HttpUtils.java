@@ -5,7 +5,7 @@
  *  See README.txt file for licensing information.
  */
 
-package org.wikipediacleaner.api;
+package org.wikipediacleaner.api.http;
 
 import java.io.ByteArrayOutputStream;
 import java.io.UnsupportedEncodingException;
@@ -15,17 +15,7 @@ import java.nio.ByteBuffer;
 import java.nio.charset.CharacterCodingException;
 import java.nio.charset.Charset;
 import java.nio.charset.CodingErrorAction;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
 
-import org.apache.commons.httpclient.HttpMethod;
-import org.apache.commons.httpclient.NameValuePair;
-import org.apache.commons.httpclient.URIException;
-import org.apache.commons.httpclient.methods.GetMethod;
-import org.apache.commons.httpclient.methods.HeadMethod;
-import org.apache.commons.httpclient.methods.PostMethod;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.wikipediacleaner.api.request.login.ApiLoginRequest;
@@ -39,7 +29,7 @@ import org.wikipediacleaner.utils.ConfigurationValueBoolean;
 public class HttpUtils {
 
   /** Logger */
-  private final static Logger log = LoggerFactory.getLogger("API");
+  protected final static Logger log = LoggerFactory.getLogger("API");
 
   // ==========================================================================
   // Configuration
@@ -48,17 +38,17 @@ public class HttpUtils {
   /**
    * Flag for tracing secret keys.
    */
-  private static boolean DEBUG_SECRET_KEYS = false;
+  protected static boolean DEBUG_SECRET_KEYS = false;
 
   /**
    * Flag for tracing time.
    */
-  private static boolean DEBUG_TIME = false;
+  protected static boolean DEBUG_TIME = false;
 
   /**
    * Flag for tracing URL.
    */
-  private static boolean DEBUG_URL = true;
+  protected static boolean DEBUG_URL = true;
 
   /**
    * Update configuration.
@@ -72,157 +62,8 @@ public class HttpUtils {
   }
 
   // ==========================================================================
-  // HTTP methods
+  // Debug URL
   // ==========================================================================
-
-  /**
-   * Create an HttpMethod.
-   * 
-   * @param url URL of the request.
-   * @param properties Properties to add to the request.
-   * @param canUseGetMethod Flag indicating if a GET method can be used.
-   * @return HttpMethod.
-   */
-  public static HttpMethod createHttpMethod(
-      String url,
-      Map<String, String> properties,
-      boolean canUseGetMethod) {
-    try {
-      if (canUseGetMethod) {
-        return createHttpGetMethod(url, properties);
-      }
-      return createHttpPostMethod(url, properties);
-    } catch (URIException e) {
-      log.error("Invalid URL {}: {}", url, e.getMessage());
-      return null;
-    }
-  }
-
-  /**
-   * Create an HTTP POST Method.
-   * 
-   * @param url URL of the request.
-   * @param properties Properties to drive the API.
-   * @return POST Method
-   * @throws URIException Exception if the URL is not correct.
-   */
-  private static PostMethod createHttpPostMethod(
-      String url,
-      Map<String, String> properties) throws URIException {
-    StringBuilder debugUrl = (DEBUG_URL) ? new StringBuilder("POST " + url) : null;
-    org.apache.commons.httpclient.URI uri = new org.apache.commons.httpclient.URI(url, false, "UTF8");
-    PostMethod method = new PostMethod();
-    method.setURI(uri);
-    method.getParams().setSoTimeout(60000);
-    method.getParams().setContentCharset("UTF-8");
-    method.setRequestHeader("Accept-Encoding", "gzip");
-    if (properties != null) {
-      boolean first = true;
-      Iterator<Map.Entry<String, String>> iter = properties.entrySet().iterator();
-      while (iter.hasNext()) {
-        Map.Entry<String, String> property = iter.next();
-        String key = property.getKey();
-        String value = property.getValue();
-        method.addParameter(key, value);
-        first = fillDebugUrl(debugUrl, first, key, value);
-      }
-    }
-    if (DEBUG_URL && (debugUrl != null)) {
-      debugText(debugUrl.toString());
-    }
-    return method;
-  }
-
-  /**
-   * Create an HTTP GET Method.
-   * 
-   * @param url URL of the request.
-   * @param properties Properties to drive the API.
-   * @return GET Method
-   * @throws URIException Exception if the URL is not correct.
-   */
-  private static GetMethod createHttpGetMethod(
-      String url,
-      Map<String, String> properties) throws URIException {
-
-    // Initialize GET Method
-    org.apache.commons.httpclient.URI uri = new org.apache.commons.httpclient.URI(url, false, "UTF8");
-    GetMethod method = new GetMethod();
-    method.setURI(uri);
-    method.getParams().setSoTimeout(60000);
-    method.getParams().setContentCharset("UTF-8");
-    method.setRequestHeader("Accept-Encoding", "gzip");
-
-    // Manager query string
-    StringBuilder debugUrl = (DEBUG_URL) ? new StringBuilder("GET  " + url) : null;
-    List<NameValuePair> params = new ArrayList<NameValuePair>();
-    if (properties != null) {
-      boolean first = true;
-      Iterator<Map.Entry<String, String>> iter = properties.entrySet().iterator();
-      while (iter.hasNext()) {
-        Map.Entry<String, String> property = iter.next();
-        String key = property.getKey();
-        String value = property.getValue();
-        params.add(new NameValuePair(key, value));
-        first = fillDebugUrl(debugUrl, first, key, value);
-      }
-    }
-    if (DEBUG_URL && (debugUrl != null)) {
-      debugText(debugUrl.toString());
-    }
-    NameValuePair[] tmpParams = new NameValuePair[params.size()];
-    method.setQueryString(params.toArray(tmpParams));
-
-    return method;
-  }
-
-  /**
-   * Create an HTTP HEAD Method.
-   * 
-   * @param url URL of the request.
-   * @param properties Properties to drive the API.
-   * @return HEAD Method
-   * @throws URIException Exception if the URL is not correct.
-   */
-  public static HeadMethod createHttpHeadMethod(
-      String url,
-      Map<String, String> properties) throws URIException {
-
-    // Initialize HEAD Method
-    org.apache.commons.httpclient.URI uri = null;
-    try {
-      uri = new org.apache.commons.httpclient.URI(url, true, "UTF8");
-    } catch (URIException e) {
-      uri = new org.apache.commons.httpclient.URI(url, false, "UTF8");
-    }
-    HeadMethod method = new HeadMethod();
-    method.setURI(uri);
-    method.getParams().setSoTimeout(60000);
-    method.getParams().setContentCharset("UTF-8");
-    method.setRequestHeader("Accept-Encoding", "gzip");
-
-    // Manager query string
-    StringBuilder debugUrl = (DEBUG_URL) ? new StringBuilder("HEAD " + url) : null;
-    List<NameValuePair> params = new ArrayList<NameValuePair>();
-    if (properties != null) {
-      boolean first = true;
-      Iterator<Map.Entry<String, String>> iter = properties.entrySet().iterator();
-      while (iter.hasNext()) {
-        Map.Entry<String, String> property = iter.next();
-        String key = property.getKey();
-        String value = property.getValue();
-        params.add(new NameValuePair(key, value));
-        first = fillDebugUrl(debugUrl, first, key, value);
-      }
-    }
-    if (DEBUG_URL && (debugUrl != null)) {
-      debugText(debugUrl.toString());
-    }
-    NameValuePair[] tmpParams = new NameValuePair[params.size()];
-    method.setQueryString(params.toArray(tmpParams));
-
-    return method;
-  }
 
   /**
    * Add a parameter to the debug URL.
@@ -233,7 +74,7 @@ public class HttpUtils {
    * @param value Value of the parameter.
    * @return True if it's still the first parameter.
    */
-  private static boolean fillDebugUrl(StringBuilder debugUrl, boolean first, String key, String value) {
+  protected static boolean fillDebugUrl(StringBuilder debugUrl, boolean first, String key, String value) {
     if (!DEBUG_URL || (debugUrl == null)) {
       return first;
     }
@@ -272,7 +113,7 @@ public class HttpUtils {
    * 
    * @param text Text to add to debug.
    */
-  private static void debugText(String text) {
+  protected static void debugText(String text) {
     if (DEBUG_TIME) {
       log.info("" + System.currentTimeMillis() + ": " + text);
     } else {

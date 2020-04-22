@@ -23,5 +23,7 @@
 	<classpathentry kind="lib" path="libs/jackson-2.10.3/jackson-annotations-2.10.3.jar"/>
 	<classpathentry kind="lib" path="libs/jackson-2.10.3/jackson-core-2.10.3.jar"/>
 	<classpathentry kind="lib" path="libs/jackson-2.10.3/jackson-databind-2.10.3.jar"/>
+	<classpathentry kind="lib" path="libs/httpcomponents-client-5.0/httpclient5-5.0.jar"/>
+	<classpathentry kind="lib" path="libs/httpcomponents-client-5.0/httpcore5-5.0.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
