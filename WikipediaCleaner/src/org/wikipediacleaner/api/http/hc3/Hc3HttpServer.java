@@ -54,6 +54,7 @@ public class Hc3HttpServer implements HttpServer {
    * Create an HttpServer object.
    * 
    * @param httpClient HTTP client.
+   * @param baseUrl Base URL.
    */
   public Hc3HttpServer(HttpClient httpClient, String baseUrl) {
     this.httpClient = httpClient;

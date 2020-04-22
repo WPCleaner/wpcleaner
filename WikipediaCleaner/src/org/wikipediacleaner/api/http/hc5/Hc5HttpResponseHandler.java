@@ -22,13 +22,13 @@ import org.apache.hc.core5.http.io.entity.EntityUtils;
 
 
 /**
- * 
+ * Response handler for HTTP requests.
  */
 public class Hc5HttpResponseHandler
     implements HttpClientResponseHandler<Hc5HttpResponse> {
 
   /**
-   * 
+   * Default constructor.
    */
   public Hc5HttpResponseHandler() {
   }
@@ -36,8 +36,8 @@ public class Hc5HttpResponseHandler
   /**
    * @param response HTTP response.
    * @return HTTP response.
-   * @throws HttpException
-   * @throws IOException
+   * @throws HttpException Exception.
+   * @throws IOException Exception.
    * @see org.apache.hc.core5.http.io.HttpClientResponseHandler#handleResponse(org.apache.hc.core5.http.ClassicHttpResponse)
    */
   @Override
