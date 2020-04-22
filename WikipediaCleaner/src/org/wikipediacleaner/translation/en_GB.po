@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2020-04-20 22:20+0200\n"
+"POT-Creation-Date: 2020-04-22 19:54+0200\n"
 "PO-Revision-Date: 2018-01-01 01:34+0000\n"
 "Last-Translator: Andi Chandler <Unknown>\n"
 "Language-Team: English (United Kingdom) <en_GB@li.org>\n"
@@ -895,17 +895,22 @@ msgid "Both values are equal"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm524.java:132
+#, fuzzy
+msgid "Other value is empty"
+msgstr "Other Language"
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm524.java:134
 #, fuzzy, java-format
 msgid "Other value: {0}"
 msgstr "Other Language"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm524.java:235
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm524.java:237
 #: org/wikipediacleaner/gui/swing/NewSectionWindow.java:115
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:529
 msgid "Comment"
 msgstr "Comment"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm524.java:394
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm524.java:396
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm527.java:273
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm528.java:255
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm529.java:381
@@ -913,7 +918,7 @@ msgstr "Comment"
 msgid "A category containing the list of pages in error"
 msgstr "A category containing the list of pages in error"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm524.java:397
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm524.java:399
 msgid "Values that can be safely ignored for a given template and argument"
 msgstr "Values that can be safely ignored for a given template and argument"
 
@@ -1368,12 +1373,12 @@ msgstr "Parsing text"
 msgid "Retrieving templates"
 msgstr "Retrieving templates"
 
-#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:680
+#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:681
 #, java-format
 msgid "URL {0} is blacklisted"
 msgstr "URL {0} is blacklisted"
 
-#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:1871
+#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:1872
 msgid ""
 "This action is protected by a CAPTCHA.\n"
 "What is the answer to the following question ?"
@@ -1381,7 +1386,7 @@ msgstr ""
 "This action is protected by a CAPTCHA.\n"
 "What is the answer to the following question ?"
 
-#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:1878
+#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:1879
 msgid ""
 "This action is protected by a CAPTCHA.\n"
 "What is the answer to the question displayed in your browser ?"
