@@ -56,6 +56,8 @@ public class CheckErrorAlgorithm551 extends CheckErrorAlgorithmBase {
       boolean something = false;
       int countItalic = 0;
       int countBold = 0;
+      int endTag = beginLine;
+      boolean unclosedTags = false;
       while (emptyLine && (currentIndex < contents.length())) {
         char currentChar = contents.charAt(currentIndex);
         if (currentChar == '<') {
@@ -64,7 +66,12 @@ public class CheckErrorAlgorithm551 extends CheckErrorAlgorithmBase {
               (tag.getBeginIndex() == currentIndex) &&
               (PageElementTag.TAG_WIKI_NOWIKI.equals(tag.getNormalizedName()))) {
             currentIndex = tag.getEndIndex();
+            endTag = Math.max(endTag, tag.getCompleteEndIndex());
             something = true;
+            unclosedTags |= !tag.isComplete();
+            if (tag.getCompleteBeginIndex() < beginLine) {
+              emptyLine = false;
+            }
           } else {
             emptyLine = false;
           }
@@ -109,14 +116,14 @@ public class CheckErrorAlgorithm551 extends CheckErrorAlgorithmBase {
       }
 
       // Report error if needed
-      if (emptyLine && something) {
+      if (emptyLine && something && (endTag <= currentIndex)) {
         if (errors == null) {
           return true;
         }
         result = true;
 
         // Decide if it can be automatic
-        boolean automatic = false; // TODO: Test with true
+        boolean automatic = !unclosedTags;
         if ((countItalic % 2 != 0) || (countBold % 2 != 0)) {
           automatic = false;
         }

@@ -16,7 +16,7 @@ FixCheckWiki 90
 Set Prefix [[User:WikiCleanerBot#T5|Bot_T5_CW#91]]
 FixCheckWiki 91
 Set Prefix [[User:WikiCleanerBot#T1|Bot_T1]]
-ListCheckWiki C:\Users\Nicolas\Downloads\enwiki-$-pages-articles.xml.bz2 wiki:Wikipedia:CHECKWIKI/WPC_{0}_dump  1  2  3  4  5  7  8  9 13  14  15  17  19  20  23  24  25  26  28  29  38  42  48  54  55  64
+ListCheckWiki C:\Users\Nicolas\Downloads\enwiki-$-pages-articles.xml.bz2 wiki:Wikipedia:CHECKWIKI/WPC_{0}_dump  1  2  3  4  5  7  8  9 13  14  15  16  17  19  20  23  24  25  26  28  29  38  42  48  54  55  64
 ListCheckWiki C:\Users\Nicolas\Downloads\enwiki-$-pages-articles.xml.bz2 wiki:Wikipedia:CHECKWIKI/WPC_{0}_dump 69 70 71 72 73 83 92 98 99 100 101 102 103 104 105 106 107 108 109 111 504 543 547 548 549 550 551
 Set Prefix [[User:WikiCleanerBot#T5|Bot_T5_CW#2]]
 FixListCheckWiki Wikipedia:CHECKWIKI/WPC_002_dump 2
