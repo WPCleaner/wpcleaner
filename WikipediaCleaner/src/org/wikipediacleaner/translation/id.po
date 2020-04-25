@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2020-04-22 19:54+0200\n"
+"POT-Creation-Date: 2020-04-25 18:56+0200\n"
 "PO-Revision-Date: 2019-09-09 17:10+0000\n"
 "Last-Translator: iwean <iwan.novirion@gmail.com>\n"
 "Language-Team: Indonesian <id@li.org>\n"
@@ -775,6 +775,14 @@ msgstr ""
 msgid "To report only links to local wikis"
 msgstr ""
 
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm092.java:242
+msgid "Maximum level of titles to report"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm092.java:245
+msgid "To report only consecutive titles"
+msgstr ""
+
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm101.java:161
 msgid "List of ordinal suffixes"
 msgstr ""
@@ -987,7 +995,7 @@ msgstr "Kembalikan templat"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm548.java:351
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm550.java:193
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm551.java:183
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm551.java:190
 #, fuzzy
 msgid "Links to ignore"
 msgstr "Pranala ke"

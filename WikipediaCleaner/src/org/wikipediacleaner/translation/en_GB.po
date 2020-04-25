@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2020-04-22 19:54+0200\n"
+"POT-Creation-Date: 2020-04-25 18:56+0200\n"
 "PO-Revision-Date: 2018-01-01 01:34+0000\n"
 "Last-Translator: Andi Chandler <Unknown>\n"
 "Language-Team: English (United Kingdom) <en_GB@li.org>\n"
@@ -800,6 +800,15 @@ msgstr "To report only links to other languages"
 msgid "To report only links to local wikis"
 msgstr "To report only links to local wikis"
 
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm092.java:242
+msgid "Maximum level of titles to report"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm092.java:245
+#, fuzzy
+msgid "To report only consecutive titles"
+msgstr "To report only links to other languages"
+
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm101.java:161
 msgid "List of ordinal suffixes"
 msgstr "List of ordinal suffixes"
@@ -1016,7 +1025,7 @@ msgstr "Uncategorised templates"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm548.java:351
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm550.java:193
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm551.java:183
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm551.java:190
 #, fuzzy
 msgid "Links to ignore"
 msgstr "Links to {0}"
