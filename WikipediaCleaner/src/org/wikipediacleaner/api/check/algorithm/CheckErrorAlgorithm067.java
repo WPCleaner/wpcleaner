@@ -49,28 +49,6 @@ public class CheckErrorAlgorithm067 extends CheckErrorAlgorithmBase {
       return false;
     }
 
-    // Retrieve possible abbreviations before <ref> tag
-    // TODO: move it to initializeSettings()
-    WPCConfiguration config = analysis.getWPCConfiguration();
-    List<String[]> generalAbbreviations = null;
-    List<String> tmpGeneralAbbreviations = config.getStringList(WPCConfigurationStringList.ABBREVIATIONS);
-    if ((tmpGeneralAbbreviations != null) && (tmpGeneralAbbreviations.size() > 0)) {
-      generalAbbreviations = new ArrayList<String[]>();
-      for (String tmp : tmpGeneralAbbreviations) {
-        int pipeIndex1 = tmp.indexOf('|');
-        if (pipeIndex1 > 0) {
-          int pipeIndex2 = tmp.indexOf('|', pipeIndex1 + 1);
-          if (pipeIndex2 > 0) {
-            String[] abbreviation = new String[3];
-            abbreviation[0] = tmp.substring(0, pipeIndex1).trim();
-            abbreviation[1] = tmp.substring(pipeIndex1 + 1, pipeIndex2).trim();
-            abbreviation[2] = tmp.substring(pipeIndex2 + 1).trim();
-            generalAbbreviations.add(abbreviation);
-          }
-        }
-      }
-    }
-
     // Analyze from the beginning
     List<PageElementTag> tags = analysis.getTags(PageElementTag.TAG_WIKI_REF);
     if (tags == null) {
@@ -334,9 +312,29 @@ public class CheckErrorAlgorithm067 extends CheckErrorAlgorithmBase {
         abbreviationsList.addAll(tmpList);
       }
     }
+
     separator = getSpecificProperty(PARAMETER_SEPARATOR, true, false, false);
     if (separator == null) {
       separator = "";
+    }
+
+    generalAbbreviations.clear();
+    List<String> tmpGeneralAbbreviations = getWPCConfiguration().getStringList(
+        WPCConfigurationStringList.ABBREVIATIONS);
+    if ((tmpGeneralAbbreviations != null) && (tmpGeneralAbbreviations.size() > 0)) {
+      for (String tmpAbbr : tmpGeneralAbbreviations) {
+        int pipeIndex1 = tmpAbbr.indexOf('|');
+        if (pipeIndex1 > 0) {
+          int pipeIndex2 = tmpAbbr.indexOf('|', pipeIndex1 + 1);
+          if (pipeIndex2 > 0) {
+            String[] abbreviation = new String[3];
+            abbreviation[0] = tmpAbbr.substring(0, pipeIndex1).trim();
+            abbreviation[1] = tmpAbbr.substring(pipeIndex1 + 1, pipeIndex2).trim();
+            abbreviation[2] = tmpAbbr.substring(pipeIndex2 + 1).trim();
+            generalAbbreviations.add(abbreviation);
+          }
+        }
+      }
     }
   }
 
@@ -345,6 +343,9 @@ public class CheckErrorAlgorithm067 extends CheckErrorAlgorithmBase {
 
   /** Separator between consecutive tags */
   private String separator = "";
+
+  /** Abbreviations that can create false positives */
+  private final List<String[]> generalAbbreviations = new ArrayList<>();
 
   /**
    * Return the parameters used to configure the algorithm.
