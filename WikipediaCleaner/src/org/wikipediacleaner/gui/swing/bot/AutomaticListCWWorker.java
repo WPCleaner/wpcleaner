@@ -8,8 +8,11 @@
 package org.wikipediacleaner.gui.swing.bot;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.wikipediacleaner.api.API;
 import org.wikipediacleaner.api.APIException;
@@ -23,6 +26,7 @@ import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.constants.WPCConfiguration;
 import org.wikipediacleaner.api.constants.WPCConfigurationStringList;
 import org.wikipediacleaner.api.data.AutomaticFormatter;
+import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementTemplate;
@@ -46,6 +50,9 @@ public class AutomaticListCWWorker extends BasicWorker {
 
   /** List of potential algorithms to fix. */
   private final List<CheckErrorAlgorithm> allAlgorithms;
+
+  /** Namespaces in which to fix pages */
+  final Set<Integer> selectedNamespaces;
 
   /** Extra comment. */
   private final String extraComment;
@@ -71,6 +78,7 @@ public class AutomaticListCWWorker extends BasicWorker {
    * @param list Page containing the list of pages to fix.
    * @param selectedAlgorithms List of selected algorithms.
    * @param allAlgorithms List of possible algorithms.
+   * @param selectedNamespaces List of selected namespaces.
    * @param extraComment Extra comment.
    * @param saveModifications True if modifications should be saved.
    * @param analyzeNonFixed True if pages that couldn't be fixed should be analyzed.
@@ -80,12 +88,19 @@ public class AutomaticListCWWorker extends BasicWorker {
       Page list,
       List<CheckErrorAlgorithm> selectedAlgorithms,
       List<CheckErrorAlgorithm> allAlgorithms,
+      Collection<Integer> selectedNamespaces,
       String extraComment,
       boolean saveModifications, boolean analyzeNonFixed) {
     super(wiki, window);
     this.list = list;
     this.selectedAlgorithms = selectedAlgorithms;
     this.allAlgorithms = allAlgorithms;
+    this.selectedNamespaces = new HashSet<>();
+    if (selectedNamespaces != null) {
+      this.selectedNamespaces.addAll(selectedNamespaces);
+    } else {
+      this.selectedNamespaces.add(Namespace.MAIN);
+    }
     this.extraComment = extraComment;
     this.saveModifications = saveModifications;
     this.analyzeNonFixed = analyzeNonFixed;
@@ -137,6 +152,10 @@ public class AutomaticListCWWorker extends BasicWorker {
    * @throws APIException
    */
   private void analyzePage(Page page) throws APIException {
+
+    if (!selectedNamespaces.contains(page.getNamespace())) {
+      return;
+    }
 
     setText(GT._T("Analyzing page {0}", page.getTitle()));
 

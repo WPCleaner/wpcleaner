@@ -18,8 +18,10 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.Callable;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
@@ -37,6 +39,7 @@ import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithm;
 import org.wikipediacleaner.api.constants.EnumQueryResult;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.DataManager;
+import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementInternalLink;
@@ -73,6 +76,9 @@ public class ListCWWorker extends BasicWorker {
   /** Algorithms for which to analyze pages */
   final List<AlgorithmInformation> selectedAlgorithms;
 
+  /** Namespaces for which to analyze pages */
+  final Set<Integer> selectedNamespaces;
+
   /** True if article should be checked on wiki */
   final boolean checkWiki;
 
@@ -94,18 +100,26 @@ public class ListCWWorker extends BasicWorker {
    * @param dumpFile File containing the dump to be analyzed.
    * @param output Directory (or file with place holder for error number) in which the output is written.
    * @param selectedAlgorithms List of selected algorithms.
+   * @param selectedNamespaces List of selected namespaces.
    * @param checkWiki True if last version of articles should be checked on wiki.
    */
   public ListCWWorker(
       EnumWikipedia wiki, BasicWindow window,
       File dumpFile, File output,
       List<CheckErrorAlgorithm> selectedAlgorithms,
+      Collection<Integer> selectedNamespaces,
       boolean checkWiki) {
     super(wiki, window);
     this.dumpFile = dumpFile;
     this.output = output;
     this.pageName = null;
     this.selectedAlgorithms = AlgorithmInformation.createList(selectedAlgorithms);
+    this.selectedNamespaces = new HashSet<>();
+    if (selectedNamespaces != null) {
+      this.selectedNamespaces.addAll(selectedNamespaces);
+    } else {
+      this.selectedNamespaces.add(Namespace.MAIN);
+    }
     this.analysisTime = new PageAnalysis.AnalysisPerformance();
     this.countAnalyzed = 0;
     this.countDetections = 0;
@@ -119,6 +133,7 @@ public class ListCWWorker extends BasicWorker {
    * @param dumpFile File containing the dump to be analyzed.
    * @param pageName Page name (with place holder for error number) in which the output is written.
    * @param selectedAlgorithms List of selected algorithms.
+   * @param selectedNamespaces List of selected namespaces.
    * @param checkWiki True if last version of articles should be checked on wiki.
    * @param onlyRecheck True to just check the pages that have been previously reported.
    */
@@ -126,12 +141,19 @@ public class ListCWWorker extends BasicWorker {
       EnumWikipedia wiki, BasicWindow window,
       File dumpFile, String pageName,
       List<CheckErrorAlgorithm> selectedAlgorithms,
+      Collection<Integer> selectedNamespaces,
       boolean checkWiki, boolean onlyRecheck) {
     super(wiki, window);
     this.dumpFile = dumpFile;
     this.output = null;
     this.pageName = pageName;
     this.selectedAlgorithms = AlgorithmInformation.createList(selectedAlgorithms);
+    this.selectedNamespaces = new HashSet<>();
+    if (selectedNamespaces != null) {
+      this.selectedNamespaces.addAll(selectedNamespaces);
+    } else {
+      this.selectedNamespaces.add(Namespace.MAIN);
+    }
     this.analysisTime = new PageAnalysis.AnalysisPerformance();
     this.countAnalyzed = 0;
     this.countDetections = 0;
@@ -164,7 +186,7 @@ public class ListCWWorker extends BasicWorker {
     if ((selectedAlgorithms == null) || selectedAlgorithms.isEmpty()) {
       return null;
     }
-    CWPageProcessor pageProcessor = new CWPageProcessor(getWikipedia(), this);
+    CWPageProcessor pageProcessor = new CWPageProcessor(getWikipedia(), this, selectedNamespaces);
     if (onlyRecheck) {
       try {
         List<Page> outputPages = new ArrayList<>();
@@ -250,6 +272,7 @@ public class ListCWWorker extends BasicWorker {
       }
       line.append("* ");
       line.append(PageElementInternalLink.createInternalLink(
+          Namespace.isColonNeeded(detection.namespace),
           detection.pageName, null));
       if (detection.notices != null) {
         boolean first = true;
@@ -759,6 +782,9 @@ public class ListCWWorker extends BasicWorker {
     /** Listener */
     private final MediaWikiListener listener;
 
+    /** Namespaces to be analyzed */
+    private final Set<Integer> namespaces;
+
     /** Controller for background tasks */
     private final CWController controller;
 
@@ -771,10 +797,18 @@ public class ListCWWorker extends BasicWorker {
     /**
      * @param wiki Wiki.
      * @param listener Listener.
+     * @param namespaces Namespaces to be analyzed.
      */
-    public CWPageProcessor(EnumWikipedia wiki, MediaWikiListener listener) {
+    public CWPageProcessor(
+        EnumWikipedia wiki,
+        MediaWikiListener listener,
+        Set<Integer> namespaces) {
       this.wiki = wiki;
       this.listener = listener;
+      this.namespaces = new HashSet<>();
+      if (namespaces != null) {
+        this.namespaces.addAll(namespaces);
+      }
       this.controller = new CWController(null);
       this.api = APIFactory.getAPI();
     }
@@ -812,10 +846,11 @@ public class ListCWWorker extends BasicWorker {
      */
     @Override
     public void processPage(Page page) {
-      if ((page != null) && page.isInMainNamespace()) {
-        if ((pagesList == null) || pagesList.contains(page.getTitle())) {
-          controller.addTask(new CWPageCallable(wiki, listener, api, page));
-        }
+      if ((page == null) || !namespaces.contains(page.getNamespace())) {
+        return;
+      }
+      if ((pagesList == null) || pagesList.contains(page.getTitle())) {
+        controller.addTask(new CWPageCallable(wiki, listener, api, page));
       }
     }
 
@@ -832,6 +867,9 @@ public class ListCWWorker extends BasicWorker {
    */
   static class Detection implements Comparable<Detection> {
 
+    /** Namespace */
+    public final Integer namespace;
+
     /** Page name */
     public final String pageName;
 
@@ -846,6 +884,7 @@ public class ListCWWorker extends BasicWorker {
      * @param errors List of errors.
      */
     public Detection(Page page, List<CheckErrorResult> errors) {
+      this.namespace = page.getNamespace();
       this.pageName = page.getTitle();
       this.notices = new ArrayList<>();
       ErrorLevel tmpLevel = ErrorLevel.CORRECT;
@@ -882,6 +921,19 @@ public class ListCWWorker extends BasicWorker {
           return -1;
         }
         return 1;
+      }
+
+      // Compare namespaces
+      if (namespace == null) {
+        if (o.namespace != null) {
+          return 1;
+        }
+      }
+      if (o.namespace == null) {
+        return -1;
+      }
+      if (!namespace.equals(o.namespace)) {
+        return namespace.compareTo(o.namespace);
       }
 
       // Compare pages

@@ -40,6 +40,7 @@ import javax.swing.SwingConstants;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithm;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithms;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
+import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
 import org.wikipediacleaner.gui.swing.basic.Utilities;
 import org.wikipediacleaner.i18n.GT;
@@ -368,11 +369,14 @@ public class CWToolsPanel extends BotToolsPanel {
     if (exportWiki) {
       worker = new ListCWWorker(
           wiki, window, dumpFile, exportPage,
-          listAlgorithms, checkWiki, onlyRecheck);
+          listAlgorithms,
+          Collections.singleton(Namespace.MAIN),
+          checkWiki, onlyRecheck);
     } else {
       worker = new ListCWWorker(
           wiki, window, dumpFile, outputDir,
-          listAlgorithms, checkWiki);
+          listAlgorithms, Collections.singleton(Namespace.MAIN),
+          checkWiki);
     }
     worker.start();
   }

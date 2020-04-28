@@ -73,6 +73,38 @@ public class Namespace implements Comparable<Namespace> {
   }
 
   /**
+   * Tells if CW handles this namespace.
+   * 
+   * @param namespace Namespace.
+   * @return True if CW handles this namespace.
+   */
+  public static boolean isHandledByCW(Integer namespace) {
+    if (namespace == null) {
+      return false;
+    }
+    if (namespace == MAIN) {
+      return true;
+    }
+    return false;
+  }
+
+  /**
+   * Tells if colons are required for internal links.
+   * 
+   * @param namespace Namespace.
+   * @return True if colons are required for this namespace.
+   */
+  public static boolean isColonNeeded(Integer namespace) {
+    if (namespace == null) {
+      return true;
+    }
+    if ((namespace == IMAGE) || (namespace == CATEGORY)) {
+      return true;
+    }
+    return false;
+  }
+
+  /**
    * @return Namespace id.
    */
   public Integer getId() {

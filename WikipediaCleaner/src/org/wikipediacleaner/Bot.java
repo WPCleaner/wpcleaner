@@ -16,9 +16,12 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Properties;
+import java.util.Set;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,6 +31,7 @@ import org.wikipediacleaner.api.constants.EnumLanguage;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.DataManager;
 import org.wikipediacleaner.api.data.ISBNRange;
+import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.impl.CommentManager;
 import org.wikipediacleaner.gui.swing.basic.BasicWorker;
@@ -84,7 +88,11 @@ public class Bot implements BasicWorkerListener {
   /** Actions to be executed */
   private List<Action> actions;
 
+  /** List of additional algorithms */
   private List<CheckErrorAlgorithm> additionalAlgorithms;
+
+  /** List of namespaces */
+  private Set<Integer> namespaces;
 
   /**
    * @param args Command line arguments
@@ -182,6 +190,7 @@ public class Bot implements BasicWorkerListener {
 
     // Initialization
     additionalAlgorithms = new ArrayList<>();
+    namespaces = Collections.singleton(Namespace.MAIN);
 
     // Login
     loginDone = false;
@@ -275,7 +284,9 @@ public class Bot implements BasicWorkerListener {
         extractAlgorithms(algorithms, allAlgorithms, args, currentArg);
       }
       worker = new AutomaticListCWWorker(
-          wiki, null, page, algorithms, allAlgorithms, null, true, false);
+          wiki, null, page,
+          algorithms, allAlgorithms, namespaces,
+          null, true, false);
     } else if ("MarkCheckWiki".equalsIgnoreCase(action)) {
       List<CheckErrorAlgorithm> algorithms = new ArrayList<CheckErrorAlgorithm>();
       List<CheckErrorAlgorithm> allAlgorithms = new ArrayList<CheckErrorAlgorithm>();
@@ -307,12 +318,12 @@ public class Bot implements BasicWorkerListener {
           String pageName = args[currentArg + 1].substring(5);
           worker = new ListCWWorker(
               wiki, null, dumpFile, pageName,
-              algorithms, check, onlyRecheck);
+              algorithms, namespaces, check, onlyRecheck);
         } else {
           File output = new File(args[currentArg + 1]);
           worker = new ListCWWorker(
               wiki, null, dumpFile, output,
-              algorithms, check);
+              algorithms, namespaces, check);
         }
       }
     } else if ("Set".equalsIgnoreCase(action)) {
@@ -327,6 +338,17 @@ public class Bot implements BasicWorkerListener {
           additionalAlgorithms.clear();
           if (args.length > currentArg + 1) {
             extractAlgorithms(additionalAlgorithms, null, args, currentArg + 1);
+          }
+        } else if ("Namespaces".equalsIgnoreCase(parameter)) {
+          namespaces = new HashSet<>();
+          currentArg++;
+          while (currentArg < args.length) {
+            try {
+              namespaces.add(Integer.valueOf(args[currentArg]));
+            } catch (NumberFormatException e) {
+              log.warn("Incorrect namespace " + args[currentArg]);
+            }
+            currentArg++;
           }
         } else {
           actionDone = false;

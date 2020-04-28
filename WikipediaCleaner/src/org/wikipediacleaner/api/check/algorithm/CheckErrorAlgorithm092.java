@@ -112,7 +112,7 @@ public class CheckErrorAlgorithm092 extends CheckErrorAlgorithmBase {
   protected String internalAutomaticFix(PageAnalysis analysis) {
     String contents = analysis.getContents();
     if ((!analysis.getPage().isArticle()) ||
-        (!analysis.getPage().isInMainNamespace()) ||
+        (!analysis.getWPCConfiguration().isEncyclopedicNamespace(analysis.getPage().getNamespace())) ||
         (!analysis.areTitlesReliable())) {
       return contents;
     }

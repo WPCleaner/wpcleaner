@@ -30,6 +30,7 @@ import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.constants.WPCConfiguration;
 import org.wikipediacleaner.api.constants.WPCConfigurationString;
 import org.wikipediacleaner.api.data.DataManager;
+import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.http.HttpServer;
 
@@ -116,6 +117,10 @@ public class CheckWiki {
    * @return True if it has been done.
    */
   public boolean markAsFixed(Page page, String errorNumber) {
+    if (!Namespace.isHandledByCW(page.getNamespace())) {
+      return false;
+    }
+
     try {
       int error = Integer.parseInt(errorNumber);
       notifyPageFixed(page, error);

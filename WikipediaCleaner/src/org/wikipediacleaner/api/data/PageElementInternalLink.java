@@ -320,12 +320,40 @@ public class PageElementInternalLink extends PageElement {
   /**
    * Create an internal link.
    * 
+   * @param colon True to add a colon at the beginning.
+   * @param link Link.
+   * @param text Displayed text.
+   * @return Internal link.
+   */
+  public static String createInternalLink(
+      boolean colon, String link, String text) {
+    return createInternalLink(colon, link, null, text);
+  }
+
+  /**
+   * Create an internal link.
+   * 
    * @param link Link.
    * @param anchor Anchor
    * @param text Displayed text.
    * @return Internal link.
    */
   public static String createInternalLink(String link, String anchor, String text) {
+    return createInternalLink(false, link, anchor, text);
+  }
+
+  /**
+   * Create an internal link.
+   * 
+   * @param colon True to add a colon at the beginning.
+   * @param link Link.
+   * @param anchor Anchor
+   * @param text Displayed text.
+   * @return Internal link.
+   */
+  public static String createInternalLink(
+      boolean colon, String link, String anchor,
+      String text) {
     StringBuilder sb = new StringBuilder();
     sb.append("[[");
     String fullLink = null;
@@ -335,6 +363,9 @@ public class PageElementInternalLink extends PageElement {
           ((anchor != null) ? ("#" + anchor.trim()) : "");
     }
     if ((fullLink != null) && (fullLink.startsWith("/"))) {
+      colon = true;
+    }
+    if (colon) {
       fullLink = ":" + fullLink;
     }
     if (text != null) {
