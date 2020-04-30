@@ -142,7 +142,7 @@ public class Bot implements BasicWorkerListener {
       String wikiCode = args[currentArg];
       wiki = EnumWikipedia.getWikipedia(wikiCode);
       if ((wiki == null) || !wikiCode.equals(wiki.getSettings().getCode())) {
-        log.warn("Unable to find wiki " + wikiCode);
+        log.warn("Unable to find wiki {}", wikiCode);
         return;
       }
     }
@@ -156,7 +156,7 @@ public class Bot implements BasicWorkerListener {
       try (BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(credentials), "UTF8"))) {
         properties.load(reader);
       } catch (IOException e) {
-        log.warn("Unable to load credentials file " + credentials);
+        log.warn("Unable to load credentials file {}", credentials);
       }
       userName = properties.getProperty("user");
       password = properties.getProperty("password");
@@ -346,7 +346,7 @@ public class Bot implements BasicWorkerListener {
             try {
               namespaces.add(Integer.valueOf(args[currentArg]));
             } catch (NumberFormatException e) {
-              log.warn("Incorrect namespace " + args[currentArg]);
+              log.warn("Incorrect namespace {}", args[currentArg]);
             }
             currentArg++;
           }
@@ -356,13 +356,13 @@ public class Bot implements BasicWorkerListener {
       }
     }
     if (worker != null) {
-      log.info("Running task " + action);
+      log.info("Running task {}", action);
       worker.setListener(this);
       worker.setTimeLimit(timeLimit);
       worker.start();
     } else if (!actions.isEmpty()) {
       if (!actionDone) {
-        log.warn("Unknown task " + action);
+        log.warn("Unknown task {}", action);
       }
       executeAction(actions.remove(0));
     }
@@ -499,6 +499,7 @@ public class Bot implements BasicWorkerListener {
   @Override
   public void afterFinished(BasicWorker worker, boolean ok) {
     if (!ok) {
+      log.error("Task finished in error, exiting");
       System.exit(1);
     }
     if (!loginDone) {
