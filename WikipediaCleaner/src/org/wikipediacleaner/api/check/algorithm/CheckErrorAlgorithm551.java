@@ -115,8 +115,20 @@ public class CheckErrorAlgorithm551 extends CheckErrorAlgorithmBase {
         currentIndex++;
       }
 
-      // Report error if needed
+      // Test if error should be reported
+      boolean shouldReport = false;
       if (emptyLine && something && (endTag <= currentIndex)) {
+        shouldReport = true;
+      }
+      if (shouldReport) {
+        if ((analysis.getSurroundingTag(PageElementTag.TAG_WIKI_SOURCE, beginLine) != null) ||
+            (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_SYNTAXHIGHLIGHT, beginLine) != null)) {
+          shouldReport = false;
+        }
+      }
+
+      // Report error if needed
+      if (shouldReport) {
         if (errors == null) {
           return true;
         }
