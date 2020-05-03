@@ -121,6 +121,7 @@ public enum EnumWikipedia {
   WIKISOURCE_FR(new Wikisource("fr", "Wikisource en français")),
 
   WIKIVERSITY_FR(new Wikiversity("fr", "Wikiversité en français")),
+  WIKIVERSITY_IT(new Wikiversity("it", "Wikiversità")),
 
   WIKIVOYAGE_FR(new Wikivoyage("fr", "Wikivoyage en français")),
   
