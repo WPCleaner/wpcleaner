@@ -28,6 +28,9 @@ public class CheckErrorAlgorithm549 extends CheckErrorAlgorithmBase {
     super("Split link");
   }
 
+  /** Punctuation characters */
+  private static final String PUNCTUATIONS = ".,;:()";
+
   /**
    * Analyze a page to check if errors are present.
    * 
@@ -156,7 +159,7 @@ public class CheckErrorAlgorithm549 extends CheckErrorAlgorithmBase {
                 } else {
                   otherChar = true;
                 }
-              } else if (".,;:".indexOf(currentChar) >= 0) {
+              } else if (PUNCTUATIONS.indexOf(currentChar) >= 0) {
                 punctuation = true;
               } else if (!CharacterUtils.isWhitespace(currentChar)) {
                 otherChar = true;
@@ -199,10 +202,30 @@ public class CheckErrorAlgorithm549 extends CheckErrorAlgorithmBase {
           automatic = false;
         }
 
+        // Check if the last link is only punctuation
+        boolean lastPunctuationOnly = false;
+        PageElementInternalLink lastLink = tmpLinks.get(tmpLinks.size() - 1);
+        String lastText = lastLink.getText();
+        if (lastText != null) {
+          lastPunctuationOnly = true;
+          for (int charIndex = 0; charIndex < lastText.length(); charIndex++) {
+            if (PUNCTUATIONS.indexOf(lastText.charAt(charIndex)) < 0) {
+              lastPunctuationOnly = false;
+            }
+          }
+        }
+
         // Report error
         CheckErrorResult errorResult = createCheckErrorResult(
             analysis, firstLink.getBeginIndex(), endIndex);
-        errorResult.addReplacement(PageElementInternalLink.createInternalLink(fullLink, buffer.toString()), automatic);
+        errorResult.addReplacement(
+            PageElementInternalLink.createInternalLink(fullLink, buffer.toString()),
+            automatic);
+        if (lastPunctuationOnly) {
+          errorResult.addReplacement(
+              contents.substring(firstLink.getBeginIndex(), lastLink.getBeginIndex()) + lastText,
+              !automatic && !fullLink.endsWith(lastText));
+        }
         errors.add(errorResult);
 
         // Restore the temporary list to one element
