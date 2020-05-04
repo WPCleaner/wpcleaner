@@ -11,6 +11,7 @@ import java.util.Collection;
 import java.util.List;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
+import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.i18n.GT;
@@ -42,6 +43,9 @@ public class CheckErrorAlgorithm026 extends CheckErrorAlgorithmBase {
       return false;
     }
     if (!analysis.getPage().isArticle()) {
+      return false;
+    }
+    if (Namespace.IMAGE == analysis.getPage().getNamespace()) {
       return false;
     }
 
