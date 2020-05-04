@@ -122,7 +122,7 @@ public class CheckErrorAlgorithm022 extends CheckErrorAlgorithmBase {
           }
         } else {
           errorResult.addReplacement(
-              "[[" + namespace + ":" + nameSimple + "|" + sortSimple + "]]");
+              "[[" + namespace + ":" + nameSimple + "|" + sortSimple + "]]", true);
           if (!namespace.equals(preferredCategory)) {
             errorResult.addReplacement(
                 "[[" + preferredCategory + ":" + nameSimple + "|" + sortSimple + "]]");
