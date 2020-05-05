@@ -202,10 +202,21 @@ public class CheckErrorAlgorithm549 extends CheckErrorAlgorithmBase {
           automatic = false;
         }
 
-        // Check if the last link is only punctuation
-        boolean lastPunctuationOnly = false;
+        // Report error
         PageElementInternalLink lastLink = tmpLinks.get(tmpLinks.size() - 1);
-        String lastText = lastLink.getText();
+        int beginIndex = firstLink.getBeginIndex();
+        endIndex = lastLink.getEndIndex();
+        CheckErrorResult errorResult = createCheckErrorResult(
+            analysis, beginIndex, endIndex);
+
+        // Suggestion to group the links
+        errorResult.addReplacement(
+            PageElementInternalLink.createInternalLink(fullLink, buffer.toString()),
+            automatic);
+
+        // Suggestion to keep only the text for the last link
+        boolean lastPunctuationOnly = false;
+        String lastText = lastLink.getDisplayedText();
         if (lastText != null) {
           lastPunctuationOnly = true;
           for (int charIndex = 0; charIndex < lastText.length(); charIndex++) {
@@ -214,22 +225,25 @@ public class CheckErrorAlgorithm549 extends CheckErrorAlgorithmBase {
             }
           }
         }
-
-        // Report error
-        CheckErrorResult errorResult = createCheckErrorResult(
-            analysis, firstLink.getBeginIndex(), endIndex);
         errorResult.addReplacement(
-            PageElementInternalLink.createInternalLink(fullLink, buffer.toString()),
-            automatic);
-        boolean removeLastLink = false;
-        if ((lastPunctuationOnly) || (tmpLinks.size() == 2)) {
-          removeLastLink = true;
-        }
-        if (removeLastLink) {
-          errorResult.addReplacement(
-              contents.substring(firstLink.getBeginIndex(), lastLink.getBeginIndex()) + lastText,
-              !automatic && !fullLink.endsWith(lastText) && lastPunctuationOnly);
-        }
+            contents.substring(beginIndex, lastLink.getBeginIndex()) + lastText,
+            !automatic && lastPunctuationOnly && !fullLink.endsWith(lastText));
+
+        // Suggestion to keep only the text for the first link
+        errorResult.addReplacement(
+            firstLink.getDisplayedText() + contents.substring(firstLink.getEndIndex(), endIndex),
+            false);
+
+        // Suggestion to remove the last link entirely
+        errorResult.addReplacement(
+            contents.substring(beginIndex, lastLink.getBeginIndex()),
+            false);
+
+        // Suggestion to remove the first link entirely
+        errorResult.addReplacement(
+            contents.substring(firstLink.getEndIndex(), endIndex),
+            false);
+
         errors.add(errorResult);
 
         // Restore the temporary list to one element
