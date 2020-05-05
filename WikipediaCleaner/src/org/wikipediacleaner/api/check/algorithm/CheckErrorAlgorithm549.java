@@ -221,10 +221,14 @@ public class CheckErrorAlgorithm549 extends CheckErrorAlgorithmBase {
         errorResult.addReplacement(
             PageElementInternalLink.createInternalLink(fullLink, buffer.toString()),
             automatic);
-        if (lastPunctuationOnly) {
+        boolean removeLastLink = false;
+        if ((lastPunctuationOnly) || (tmpLinks.size() == 2)) {
+          removeLastLink = true;
+        }
+        if (removeLastLink) {
           errorResult.addReplacement(
               contents.substring(firstLink.getBeginIndex(), lastLink.getBeginIndex()) + lastText,
-              !automatic && !fullLink.endsWith(lastText));
+              !automatic && !fullLink.endsWith(lastText) && lastPunctuationOnly);
         }
         errors.add(errorResult);
 
