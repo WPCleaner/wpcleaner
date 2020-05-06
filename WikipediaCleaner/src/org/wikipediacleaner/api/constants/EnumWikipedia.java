@@ -116,6 +116,7 @@ public enum EnumWikipedia {
 
   WIKIQUOTE_CA(new Wikiquote("ca", "Viquidites")),
   WIKIQUOTE_FR(new Wikiquote("fr", "Wikiquote en français")),
+  WIKIQUOTE_IT(new Wikiquote("it", "Wikiquote")),
 
   WIKISOURCE_ES(new Wikisource("es", "Wikisource en español")),
   WIKISOURCE_FR(new Wikisource("fr", "Wikisource en français")),
