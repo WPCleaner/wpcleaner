@@ -7,6 +7,7 @@
 
 package org.wikipediacleaner.api.data;
 
+import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.http.HttpUtils;
 
 
@@ -34,6 +35,17 @@ public class Interwiki implements Comparable<Interwiki> {
     this.url = url;
     int colonIndex = (url != null) ? url.indexOf(':') : -1;
     this.urlWithoutProtocol = ((colonIndex < 0) || (url == null)) ? null : url.substring(colonIndex + 1);
+  }
+
+  /**
+   * @param wiki Wiki to test.
+   * @return True if the interwiki is for the wiki.
+   */
+  public boolean isForWiki(EnumWikipedia wiki) {
+    if (urlWithoutProtocol.startsWith(wiki.getWikiConfiguration().getServer())) {
+      return true;
+    }
+    return false;
   }
 
   /**

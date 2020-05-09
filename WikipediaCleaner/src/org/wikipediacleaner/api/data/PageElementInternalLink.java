@@ -196,7 +196,9 @@ public class PageElementInternalLink extends PageElement {
       // Is it a language link ?
       if (Language.isLanguageCode(
           wiki.getWikiConfiguration().getLanguages(), namespaceName)) {
-        return null;
+        if (!namespaceName.equals(wiki.getSettings().getLanguage())) {
+          return null;
+        }
       }
     }
 
@@ -217,7 +219,8 @@ public class PageElementInternalLink extends PageElement {
           (wiki.getWikiConfiguration() != null) &&
           (wiki.getWikiConfiguration().getInterwikis() != null)) {
         for (Interwiki iw : wiki.getWikiConfiguration().getInterwikis()) {
-          if (iw.getPrefix().equals(namespaceName)) {
+          if (iw.getPrefix().equals(namespaceName) &&
+              !iw.isForWiki(wiki)) {
             return null;
           }
         }
