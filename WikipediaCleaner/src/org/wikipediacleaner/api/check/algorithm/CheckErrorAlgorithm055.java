@@ -12,8 +12,10 @@ import java.util.List;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.CheckErrorResult.ErrorLevel;
+import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementFunction;
+import org.wikipediacleaner.api.data.PageElementInternalLink;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.PageElementTemplate.Parameter;
@@ -101,7 +103,7 @@ public class CheckErrorAlgorithm055 extends CheckErrorAlgorithmBase {
       } else {
         if (level == 0) {
           level0Tag = tag;
-        } else if (level > 0) {
+        } else if ((level > 0) && shouldReport(analysis, tag)) {
           if (errors == null) {
             return true;
           }
@@ -183,6 +185,29 @@ public class CheckErrorAlgorithm055 extends CheckErrorAlgorithmBase {
     }
 
     return result;
+  }
+
+  private boolean shouldReport(
+      PageAnalysis analysis,
+      PageElementTag tag) {
+
+    // All problems are reported in namespaces where signatures are not expected
+    if (analysis.getPage().isArticle() &&
+        (Namespace.IMAGE != analysis.getPage().getNamespace())) {
+      return true;
+    }
+
+    // Do not report if tag is in a link to user namespace
+    PageElementInternalLink link = analysis.isInInternalLink(tag.getBeginIndex());
+    if (link != null) {
+      int namespace = link.getNamespace(analysis.getWikipedia());
+      if ((Namespace.USER == namespace) ||
+          (Namespace.USER_TALK == namespace)) {
+        return false;
+      }
+    }
+
+    return true;
   }
 
   /**

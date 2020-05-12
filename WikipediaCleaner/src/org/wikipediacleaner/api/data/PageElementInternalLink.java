@@ -239,6 +239,25 @@ public class PageElementInternalLink extends PageElement {
         link, anchor, text, textOffset);
   }
 
+  /**
+   * Compute namespace based on the link.
+   * 
+   * @param wiki Wiki.
+   * @return Namespace identifier.
+   */
+  public int getNamespace(EnumWikipedia wiki) {
+    if ((wiki == null) || (link == null)) {
+      return Namespace.MAIN;
+    }
+    int colonIndex = link.indexOf(':');
+    if (colonIndex <= 0) {
+      return Namespace.MAIN;
+    }
+    return Namespace.getNamespace(
+        wiki.getWikiConfiguration().getNamespaces(),
+        link.substring(0, colonIndex));
+  }
+
   public String getLink() {
     return link;
   }

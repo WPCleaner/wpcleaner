@@ -7,6 +7,7 @@
 
 package org.wikipediacleaner.api.data;
 
+import java.util.Collection;
 import java.util.LinkedList;
 
 import org.wikipediacleaner.api.constants.EnumCaseSensitiveness;
@@ -102,6 +103,25 @@ public class Namespace implements Comparable<Namespace> {
       return true;
     }
     return false;
+  }
+
+  /**
+   * Find the namespace corresponding with a prefix.
+   * 
+   * @param namespaces List of namespaces.
+   * @param prefix Prefix.
+   * @return Namespace identifier corresponding with the prefix.
+   */
+  public static int getNamespace(Collection<Namespace> namespaces, String prefix) {
+    if ((namespaces == null) || (prefix == null)) {
+      return MAIN;
+    }
+    for (Namespace namespace : namespaces) {
+      if (namespace.isPossibleName(prefix)) {
+        return namespace.getId();
+      }
+    }
+    return MAIN;
   }
 
   /**
