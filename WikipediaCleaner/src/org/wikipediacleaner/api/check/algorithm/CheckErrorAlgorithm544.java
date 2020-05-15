@@ -13,13 +13,17 @@ import java.util.List;
 import java.util.Map;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
+import org.wikipediacleaner.api.check.SimpleAction;
 import org.wikipediacleaner.api.check.CheckErrorResult.ErrorLevel;
+import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.constants.WPCConfiguration;
 import org.wikipediacleaner.api.data.CharacterUtils;
+import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.contents.IntervalComparator;
+import org.wikipediacleaner.gui.swing.action.ActionExternalViewer;
 import org.wikipediacleaner.i18n.GT;
 
 
@@ -106,6 +110,7 @@ public class CheckErrorAlgorithm544 extends CheckErrorAlgorithmBase {
     if (errors == null) {
       return true;
     }
+    EnumWikipedia wiki = analysis.getWikipedia();
     for (PageElementTemplate openTemplate : openTemplates) {
       int beginIndex = openTemplate.getBeginIndex();
       int endIndex = openTemplate.getEndIndex();
@@ -143,6 +148,13 @@ public class CheckErrorAlgorithm544 extends CheckErrorAlgorithmBase {
           errors.add(errorResult);
         }
       }
+
+      // General actions
+      errorResult.addPossibleAction(new SimpleAction(
+          GT._T("External Viewer"),
+          new ActionExternalViewer(
+              wiki,
+              wiki.getWikiConfiguration().getNamespace(Namespace.TEMPLATE).getCanonicalTitle() + ":" + openTemplate.getTemplateName())));
     }
     return true;
   }
