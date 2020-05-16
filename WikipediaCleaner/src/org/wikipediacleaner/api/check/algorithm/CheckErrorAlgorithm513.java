@@ -11,7 +11,12 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import java.util.regex.PatternSyntaxException;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.SimpleAction;
 import org.wikipediacleaner.api.constants.WPCConfiguration;
@@ -28,6 +33,9 @@ import org.wikipediacleaner.i18n.GT;
  * Error 513: Internal link inside external link
  */
 public class CheckErrorAlgorithm513 extends CheckErrorAlgorithmBase {
+
+  /** Logs */
+  private final Logger log = LoggerFactory.getLogger(CheckErrorAlgorithm513.class);
 
   public CheckErrorAlgorithm513() {
     super("Internal link inside external link");
@@ -140,6 +148,12 @@ public class CheckErrorAlgorithm513 extends CheckErrorAlgorithmBase {
     if (beginExtra <= link.getBeginIndex() + link.getTextOffset()) {
       automatic = false;
     }
+    for (Pattern pattern : patternsAfter) {
+      Matcher matcher = pattern.matcher(contents.substring(endExtra));
+      if (matcher.lookingAt()) {
+        endExtra += matcher.end();
+      }
+    }
 
     // Check for extra bracket at the end
     boolean closeBracket = false;
@@ -221,11 +235,17 @@ public class CheckErrorAlgorithm513 extends CheckErrorAlgorithmBase {
   @Override
   protected void initializeSettings() {
     String tmp = getSpecificProperty(PARAMETER_TEXTS_AFTER, true, true, false);
-    textsAfter.clear();
+    patternsAfter.clear();
     if (tmp != null) {
       List<String> tmpList = WPCConfiguration.convertPropertyToStringList(tmp);
       if (tmpList != null) {
-        textsAfter.addAll(tmpList);
+        for (String element : tmpList) {
+          try {
+            patternsAfter.add(Pattern.compile(element));
+          } catch (PatternSyntaxException e) {
+            log.warn("Incorrect pattern in {} for error #518: {}", PARAMETER_TEXTS_AFTER, element);
+          }
+        }
       }
     }
 
@@ -240,7 +260,7 @@ public class CheckErrorAlgorithm513 extends CheckErrorAlgorithmBase {
   }
 
   /** Texts after the internal link */
-  private final List<String> textsAfter = new ArrayList<>();
+  private final List<Pattern> patternsAfter = new ArrayList<>();
 
   /** Texts before the internal link */
   private final List<String> textsBefore = new ArrayList<>();
