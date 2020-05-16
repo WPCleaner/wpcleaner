@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2020-04-25 18:56+0200\n"
+"POT-Creation-Date: 2020-05-16 14:40+0200\n"
 "PO-Revision-Date: 2013-06-14 16:35+0000\n"
 "Last-Translator: abuyop <Unknown>\n"
 "Language-Team: Malay <ms@li.org>\n"
@@ -189,10 +189,10 @@ msgid "Error n°{0} ({1} - {2}) - {3}"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/CheckErrorResult.java:199
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm026.java:99
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm026.java:102
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm038.java:98
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm038.java:101
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm026.java:103
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm026.java:106
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm038.java:102
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm038.java:105
 #, java-format
 msgid "Replace with {0}"
 msgstr ""
@@ -201,10 +201,10 @@ msgstr ""
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm010.java:179
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:354
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm017.java:175
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm026.java:104
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm026.java:110
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm038.java:103
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm038.java:109
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm026.java:108
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm026.java:114
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm038.java:107
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm038.java:113
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm042_Old.java:62
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm043.java:150
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm045.java:130
@@ -231,7 +231,7 @@ msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm002.java:209
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm002.java:233
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm055.java:167
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm055.java:169
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm066.java:93
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm077.java:93
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm525.java:159
@@ -475,7 +475,7 @@ msgid "A list of templates that should be ignored"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm061.java:277
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm067.java:363
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm067.java:364
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm542.java:183
 #, java-format
 msgid "Used as a separator between consecutive {0} tags"
@@ -500,7 +500,7 @@ msgstr ""
 msgid "Remove all <small> tags"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm067.java:360
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm067.java:361
 #, java-format
 msgid ""
 "A list of abbreviations that generate false positives when placed before {0}"
@@ -530,7 +530,8 @@ msgstr ""
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:146
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm081.java:269
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm091.java:291
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm513.java:72
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm513.java:185
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm544.java:154
 #: org/wikipediacleaner/gui/swing/action/ActionExternalViewer.java:61
 #: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:90
 #: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:158
@@ -575,7 +576,7 @@ msgid ""
 "language>|<param name for displayed text>"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm069.java:845
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm069.java:853
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm070.java:281
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm071.java:153
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm106.java:194
@@ -819,6 +820,10 @@ msgstr ""
 msgid "Compact link"
 msgstr ""
 
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm513.java:257
+msgid "A list of texts that can be before the internal link"
+msgstr ""
+
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm514.java:162
 msgid "References defined by templates."
 msgstr ""
@@ -964,7 +969,7 @@ msgstr ""
 msgid "preferred for everything else"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm544.java:184
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm544.java:196
 msgid ""
 "Pairs of templates: for each opening template, all possible closing templates"
 msgstr ""
@@ -979,7 +984,7 @@ msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm548.java:351
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm550.java:193
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm551.java:190
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm551.java:202
 msgid "Links to ignore"
 msgstr ""
 
@@ -1434,8 +1439,8 @@ msgid "Save replacements"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:314
-#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:114
-#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:196
+#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:115
+#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:197
 msgid "Automatic fixing for Check Wiki"
 msgstr ""
 
@@ -2792,19 +2797,19 @@ msgid "Checking for errors n°{0}"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/bot/AutomaticCWWorker.java:182
-#: org/wikipediacleaner/gui/swing/bot/AutomaticListCWWorker.java:141
+#: org/wikipediacleaner/gui/swing/bot/AutomaticListCWWorker.java:160
 #, java-format
 msgid "Analyzing page {0}"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/bot/AutomaticCWWorker.java:246
-#: org/wikipediacleaner/gui/swing/bot/AutomaticListCWWorker.java:207
+#: org/wikipediacleaner/gui/swing/bot/AutomaticListCWWorker.java:226
 #, java-format
 msgid "Fixing page {0}"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/bot/AutomaticCWWorker.java:289
-#: org/wikipediacleaner/gui/swing/bot/AutomaticListCWWorker.java:243
+#: org/wikipediacleaner/gui/swing/bot/AutomaticListCWWorker.java:262
 #, java-format
 msgid "{0} page has been modified"
 msgid_plural "{0} pages have been modified"
@@ -2812,7 +2817,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #: org/wikipediacleaner/gui/swing/bot/AutomaticCWWorker.java:294
-#: org/wikipediacleaner/gui/swing/bot/AutomaticListCWWorker.java:248
+#: org/wikipediacleaner/gui/swing/bot/AutomaticListCWWorker.java:267
 #, java-format
 msgid "{0} page has been marked as fixed for the selected algorithms"
 msgid_plural "{0} pages have been marked as fixed for the selected algorithms"
@@ -2820,7 +2825,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #: org/wikipediacleaner/gui/swing/bot/AutomaticCWWorker.java:299
-#: org/wikipediacleaner/gui/swing/bot/AutomaticListCWWorker.java:253
+#: org/wikipediacleaner/gui/swing/bot/AutomaticListCWWorker.java:272
 #, java-format
 msgid "{0} page has been marked as fixed for other algorithms"
 msgid_plural "{0} pages have been marked as fixed for other algorithms"
@@ -2906,70 +2911,70 @@ msgstr ""
 msgid "Whitelists"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:136
+#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:137
 msgid "To use Check Wiki bot tools:"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:137
+#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:138
 msgid "Select algorithms for which automatic fixing will be applied"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:138
+#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:139
 msgid ""
 "Select algorithms that will be used to create a list of pages to work on"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:139
+#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:140
 msgid "Run the tools below"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:148
+#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:149
 msgid "Analyze pages that couldn't be fixed by bot"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:155
+#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:156
 msgid "Ignore limit for errors not on Labs"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:163
+#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:164
 msgid "Number of pages:"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:177
+#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:178
 msgid "Comment:"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:204
+#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:205
 msgid "Mark errors already fixed"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:212
+#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:213
 msgid "Check whitelists"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:220
-#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:349
+#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:221
+#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:350
 msgid "Analyze dump file"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:228
+#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:229
 msgid "Save selection"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:236
+#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:237
 msgid "Load selection"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:277
+#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:278
 msgid "You must select at least one algorithm for fixing errors"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:282
-#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:332
+#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:283
+#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:333
 msgid "You must select at least one algorithm for listing errors"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:385
+#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:389
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiWindow.java:1096
 msgid "What is the name of the selection?"
 msgstr ""
@@ -3036,21 +3041,21 @@ msgstr ""
 msgid "Only check articles previously reported"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/bot/ListCWWorker.java:567
+#: org/wikipediacleaner/gui/swing/bot/ListCWWorker.java:590
 #, java-format
 msgid "{0} page has been analyzed"
 msgid_plural "{0} pages have been analyzed"
 msgstr[0] ""
 msgstr[1] ""
 
-#: org/wikipediacleaner/gui/swing/bot/ListCWWorker.java:575
+#: org/wikipediacleaner/gui/swing/bot/ListCWWorker.java:598
 #, java-format
 msgid "{0} page has been detected for algorithm {1}"
 msgid_plural "{0} pages have been detected for algorithm {1}"
 msgstr[0] ""
 msgstr[1] ""
 
-#: org/wikipediacleaner/gui/swing/bot/ListCWWorker.java:745
+#: org/wikipediacleaner/gui/swing/bot/ListCWWorker.java:768
 #, java-format
 msgid "{0} pages processed"
 msgstr ""
@@ -4397,13 +4402,13 @@ msgid ""
 "Error: {0}"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/worker/UpdateISBNWarningTools.java:259
+#: org/wikipediacleaner/gui/swing/worker/UpdateISBNWarningTools.java:263
 #: org/wikipediacleaner/gui/swing/worker/UpdateISSNWarningTools.java:256
 #, java-format
 msgid "Removing {1} warning - {0}"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/worker/UpdateISBNWarningTools.java:268
+#: org/wikipediacleaner/gui/swing/worker/UpdateISBNWarningTools.java:272
 #: org/wikipediacleaner/gui/swing/worker/UpdateISSNWarningTools.java:265
 #, java-format
 msgid "Updating {1} warning - {0}"
