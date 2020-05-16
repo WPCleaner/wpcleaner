@@ -82,17 +82,41 @@ public class CheckErrorAlgorithm111 extends CheckErrorAlgorithmBase {
 
     // Search for templates like {{References}}
     if (!referencesTemplates.isEmpty()) {
+      PageElementTag openTag = null;
+      if (lastRefTag.isFullTag() || !lastRefTag.isEndTag()) {
+        openTag = lastRefTag;
+      } else {
+        openTag = lastRefTag.getMatchingTag();
+      }
+      String groupName = null;
+      if (openTag != null) {
+        PageElementTag.Parameter paramGroupName = openTag.getParameter("group");
+        if (paramGroupName != null) {
+          groupName = paramGroupName.getValue();
+        }
+      }
       List<PageElementTemplate> allTemplates = analysis.getTemplates();
       int templateNum = allTemplates.size();
       while (templateNum > 0) {
         templateNum--;
         PageElementTemplate template = allTemplates.get(templateNum);
-        for (String referencesTemplate : referencesTemplates) {
-          if (Page.areSameTitle(template.getTemplateName(), referencesTemplate)) {
-            if (template.getEndIndex() > lastRefTag.getCompleteEndIndex()) {
-              return false;
+        for (String[] referencesTemplate : referencesTemplates) {
+          if (Page.areSameTitle(template.getTemplateName(), referencesTemplate[0])) {
+            boolean shouldCount = false;
+            if (referencesTemplate.length > 1) {
+              if ((groupName != null) &&
+                  (groupName.equals(referencesTemplate[1]))) {
+                shouldCount = true;
+              }
+            } else {
+              shouldCount = true;
             }
-            referencesFound = true;
+            if (shouldCount) {
+              if (template.getEndIndex() > lastRefTag.getCompleteEndIndex()) {
+                return false;
+              }
+              referencesFound = true;
+            }
           }
         }
       }
@@ -149,7 +173,7 @@ public class CheckErrorAlgorithm111 extends CheckErrorAlgorithmBase {
     }
     referencesTemplates.clear();
     if (tmp != null) {
-      List<String> tmpList = WPCConfiguration.convertPropertyToStringList(tmp);
+      List<String[]> tmpList = WPCConfiguration.convertPropertyToStringArrayList(tmp);
       if (tmpList != null) {
         referencesTemplates.addAll(tmpList);
       }
@@ -157,7 +181,7 @@ public class CheckErrorAlgorithm111 extends CheckErrorAlgorithmBase {
   }
 
   /** List of templates */
-  private final List<String> referencesTemplates = new ArrayList<>();
+  private final List<String[]> referencesTemplates = new ArrayList<>();
 
   /**
    * @return Map of parameters (key=name, value=description).
