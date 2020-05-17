@@ -41,7 +41,7 @@ public class CheckErrorAlgorithm513 extends CheckErrorAlgorithmBase {
     super("Internal link inside external link");
   }
 
-  private static final String PUNCTUATION = ",-:";
+  private static final String PUNCTUATION = ",-:(";
 
   /**
    * Analyze a page to check if errors are present.
