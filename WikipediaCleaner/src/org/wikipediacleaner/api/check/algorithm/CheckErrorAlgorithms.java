@@ -43,7 +43,10 @@ public final class CheckErrorAlgorithms {
         try {
           Class algorithmClass = Class.forName(className);
           algorithm = (CheckErrorAlgorithm) algorithmClass.newInstance();
-          algorithm.setConfiguration(wiki.getCWConfiguration(), wiki.getConfiguration());
+          algorithm.setConfiguration(
+              wiki.getWikiConfiguration(),
+              wiki.getCWConfiguration(),
+              wiki.getConfiguration());
         } catch (ClassNotFoundException e) {
           // Not found: error not yet available in WikiCleaner.
         } catch (InstantiationException e) {

@@ -28,6 +28,7 @@ import org.wikipediacleaner.api.constants.CWConfigurationError;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.constants.WPCConfiguration;
 import org.wikipediacleaner.api.constants.WPCConfigurationString;
+import org.wikipediacleaner.api.constants.WikiConfiguration;
 import org.wikipediacleaner.api.data.MagicWord;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageAnalysis;
@@ -39,6 +40,9 @@ import org.wikipediacleaner.i18n.GT;
  * Abstract base class for analyzing errors.
  */
 public abstract class CheckErrorAlgorithmBase implements CheckErrorAlgorithm {
+
+  /** Configuration for the wiki. */
+  private WikiConfiguration wikiConfiguration;
 
   /** Configuration for WPCleaner. */
   private WPCConfiguration wpcConfiguration;
@@ -114,12 +118,20 @@ public abstract class CheckErrorAlgorithmBase implements CheckErrorAlgorithm {
   }
 
   /**
+   * @param wikiConfiguration Configuration for the wiki.
    * @param cwConfiguration Configuration for Check Wiki.
    * @param wpcConfiguration Configuration for WPCleaner.
-   * @see org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithm#setConfiguration(org.wikipediacleaner.api.constants.CWConfiguration, org.wikipediacleaner.api.constants.WPCConfiguration)
+   * @see org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithm#setConfiguration(
+   *         org.wikipediacleaner.api.constants.WikiConfiguration,
+   *         org.wikipediacleaner.api.constants.CWConfiguration,
+   *         org.wikipediacleaner.api.constants.WPCConfiguration)
    */
   @Override
-  public void setConfiguration(CWConfiguration cwConfiguration, WPCConfiguration wpcConfiguration) {
+  public void setConfiguration(
+      WikiConfiguration wikiConfiguration,
+      CWConfiguration cwConfiguration,
+      WPCConfiguration wpcConfiguration) {
+    this.wikiConfiguration = wikiConfiguration;
     this.wpcConfiguration = wpcConfiguration;
     this.cwConfiguration = cwConfiguration;
     this.errorConfiguration = cwConfiguration.getErrorConfiguration(getErrorNumber());
@@ -184,6 +196,13 @@ public abstract class CheckErrorAlgorithmBase implements CheckErrorAlgorithm {
   @Override
   public String getWhiteListPageName() {
     return (errorConfiguration != null) ? errorConfiguration.getWhiteListPageName() : null;
+  }
+
+  /**
+   * @return Configuration for the wiki.
+   */
+  protected WikiConfiguration getWikiConfiguration() {
+    return wikiConfiguration;
   }
 
   /**

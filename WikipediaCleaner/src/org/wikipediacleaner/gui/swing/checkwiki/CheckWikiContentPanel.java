@@ -400,16 +400,18 @@ public class CheckWikiContentPanel
       }
 
       // Inform user
-      if (detections == null) {
+      if (!shouldCheck) {
+        answer = JOptionPane.NO_OPTION;
+      } else if (detections == null) {
 
         // Ask user if no information from Check Wiki
-        Configuration config = Configuration.getConfiguration();
         answer = JOptionPane.YES_OPTION;
         if (window.yesAll) {
           answer = Utilities.YES_ALL_OPTION;
         } else if (window.noAll) {
           answer = Utilities.NO_ALL_OPTION;
         } else {
+          Configuration config = Configuration.getConfiguration();
           if (!config.getBoolean(
               null,
               ConfigurationValueBoolean.CHECK_MARK_AS_FIXED)) {

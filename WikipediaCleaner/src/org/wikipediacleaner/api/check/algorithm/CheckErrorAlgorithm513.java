@@ -18,10 +18,17 @@ import java.util.regex.PatternSyntaxException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.wikipediacleaner.api.API;
+import org.wikipediacleaner.api.APIException;
+import org.wikipediacleaner.api.APIFactory;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.SimpleAction;
+import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.constants.WPCConfiguration;
 import org.wikipediacleaner.api.data.CharacterUtils;
+import org.wikipediacleaner.api.data.LinterCategory;
+import org.wikipediacleaner.api.data.Namespace;
+import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementExternalLink;
 import org.wikipediacleaner.api.data.PageElementInternalLink;
@@ -327,6 +334,37 @@ public class CheckErrorAlgorithm513 extends CheckErrorAlgorithmBase {
     return fixUsingAutomaticReplacement(analysis);
   }
 
+  /**
+   * @return True if the error has a special list of pages.
+   */
+  @Override
+  public boolean hasSpecialList() {
+    return (linterCategory != null);
+  }
+
+  /**
+   * Retrieve the list of pages in error.
+   * 
+   * @param wiki Wiki.
+   * @param limit Maximum number of pages to retrieve.
+   * @return List of pages in error.
+   */
+  @Override
+  public List<Page> getSpecialList(EnumWikipedia wiki, int limit) {
+    List<Page> result = null;
+    if (linterCategory != null) {
+      API api = APIFactory.getAPI();
+      try {
+        result = api.retrieveLinterCategory(
+            wiki, linterCategory.getCategory(),
+            Namespace.MAIN, false, true, limit);
+      } catch (APIException e) {
+        //
+      }
+    }
+    return result;
+  }
+
   /* ====================================================================== */
   /* PARAMETERS                                                             */
   /* ====================================================================== */
@@ -402,6 +440,15 @@ public class CheckErrorAlgorithm513 extends CheckErrorAlgorithmBase {
         }
       }
     }
+
+    List<LinterCategory> categories = getWikiConfiguration().getLinterCategories();
+    if (categories != null) {
+      for (LinterCategory category : categories) {
+        if ("wikilink-in-extlink".equals(category.getCategory())) {
+          linterCategory = category;
+        }
+      }
+    }
   }
 
   /** Texts after the internal link */
@@ -415,6 +462,9 @@ public class CheckErrorAlgorithm513 extends CheckErrorAlgorithmBase {
 
   /** Template parameters that create an external link */
   private final Map<String, List<String[]>> templateParams = new HashMap<>();
+
+  /** Linter category */
+  private LinterCategory linterCategory = null;
 
   /**
    * @return Map of parameters (key=name, value=description).
