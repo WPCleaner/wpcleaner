@@ -9,6 +9,7 @@ package org.wikipediacleaner.api.check.algorithm;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -24,6 +25,7 @@ import org.wikipediacleaner.api.data.CharacterUtils;
 import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementExternalLink;
 import org.wikipediacleaner.api.data.PageElementInternalLink;
+import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.gui.swing.action.ActionExternalViewer;
 import org.wikipediacleaner.i18n.GT;
 
@@ -55,18 +57,83 @@ public class CheckErrorAlgorithm513 extends CheckErrorAlgorithmBase {
   public boolean analyze(
       PageAnalysis analysis,
       Collection<CheckErrorResult> errors, boolean onlyAutomatic) {
-    if ((analysis == null) || (analysis.getInternalLinks() == null)) {
+    if (analysis == null) {
       return false;
     }
 
     // Analyze each external link
     boolean result = false;
     List<PageElementExternalLink> links = analysis.getExternalLinks();
-    if (links == null) {
-      return result;
+    List<PageElementInternalLink> iLinks = analysis.getInternalLinks();
+    if ((links != null) && !links.isEmpty() &&
+        (iLinks != null) && !iLinks.isEmpty()) {
+      for (PageElementExternalLink link : links) {
+        result |= analyzeExternalLink(link, analysis, errors);
+      }
     }
-    for (PageElementExternalLink link : links) {
-      result |= analyzeExternalLink(link, analysis, errors);
+
+    // Analyze each template
+    List<PageElementTemplate> templates = analysis.getTemplates();
+    if ((templates != null) &&
+        ((iLinks != null) && !iLinks.isEmpty())) {
+      for (PageElementTemplate template : templates) {
+        result |= analyzeTemplate(template, analysis, errors);
+      }
+    }
+    return result;
+  }
+
+  /**
+   * Analyze one template.
+   * 
+   * @param template Template to analyze.
+   * @param analysis Page analysis.
+   * @param errors Errors found in the page.
+   * @return Flag indicating if an error was found in the external link.
+   */
+  private boolean analyzeTemplate(
+      PageElementTemplate template,
+      PageAnalysis analysis,
+      Collection<CheckErrorResult> errors) {
+
+    // Check if there's a configuration for the template
+    List<String[]> paramsConfig = templateParams.get(template.getTemplateName());
+    if ((paramsConfig == null) || paramsConfig.isEmpty()) {
+      return false;
+    }
+
+    // Check each configuration
+    boolean result = false;
+    for (String[] paramConfig : paramsConfig) {
+      int paramIndex = template.getParameterIndex(paramConfig[1]);
+      if (paramIndex >= 0) {
+        PageElementTemplate.Parameter param = template.getParameter(paramIndex);
+        if (param != null) {
+          String contents = analysis.getContents();
+          int squareBracket = contents.indexOf("[[", param.getBeginIndex());
+          boolean reported = false;
+          while (!reported && (squareBracket > 0) &&
+                 (squareBracket < param.getEndIndex())) {
+            PageElementInternalLink link = analysis.isInInternalLink(squareBracket);
+            if (link != null) {
+              if (errors == null) {
+                return true;
+              }
+              reported = true;
+              result = true;
+              CheckErrorResult errorResult = createCheckErrorResult(
+                  analysis, param.getBeginIndex(), param.getEndIndex());
+              String replacement =
+                  contents.substring(param.getBeginIndex(), link.getBeginIndex()) +
+                  link.getDisplayedTextNotTrimmed() +
+                  contents.substring(link.getEndIndex(), param.getEndIndex());
+              errorResult.addReplacement(replacement);
+              errors.add(errorResult);
+            }
+            squareBracket++;
+          }
+        }
+      }
     }
 
     return result;
@@ -227,6 +294,9 @@ public class CheckErrorAlgorithm513 extends CheckErrorAlgorithmBase {
   /** List of potential texts that can be used before the internal link */
   private static final String PARAMETER_TEXTS_BEFORE = "texts_before";
 
+  /** List of template parameters that create an external link */
+  private static final String PARAMETER_TEMPLATE_PARAMS = "template_params";
+
   /**
    * Initialize settings for the algorithm.
    * 
@@ -257,6 +327,22 @@ public class CheckErrorAlgorithm513 extends CheckErrorAlgorithmBase {
         textsBefore.addAll(tmpList);
       }
     }
+
+    tmp = getSpecificProperty(PARAMETER_TEMPLATE_PARAMS, true, true, false);
+    templateParams.clear();
+    if (tmp != null) {
+      List<String[]> tmpList = WPCConfiguration.convertPropertyToStringArrayList(tmp);
+      for (String[] tmpElement : tmpList) {
+        if ((tmpElement != null) && (tmpElement.length > 1)) {
+          List<String[]> values = templateParams.get(tmpElement[0]);
+          if (values == null) {
+            values = new ArrayList<>();
+            templateParams.put(tmpElement[0], values);
+          }
+          values.add(tmpElement);
+        }
+      }
+    }
   }
 
   /** Texts after the internal link */
@@ -265,6 +351,9 @@ public class CheckErrorAlgorithm513 extends CheckErrorAlgorithmBase {
   /** Texts before the internal link */
   private final List<String> textsBefore = new ArrayList<>();
 
+  /** Template parameters that create an external link */
+  private final Map<String, List<String[]>> templateParams = new HashMap<>();
+
   /**
    * @return Map of parameters (key=name, value=description).
    * @see org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase#getParameters()
@@ -272,6 +361,12 @@ public class CheckErrorAlgorithm513 extends CheckErrorAlgorithmBase {
   @Override
   public Map<String, String> getParameters() {
     Map<String, String> parameters = super.getParameters();
+    parameters.put(
+        PARAMETER_TEMPLATE_PARAMS,
+        GT._T("A list of template parameters that produce an external link"));
+    parameters.put(
+        PARAMETER_TEXTS_AFTER,
+        GT._T("A list of texts (regular expressions) that can be after the internal link"));
     parameters.put(
         PARAMETER_TEXTS_BEFORE,
         GT._T("A list of texts that can be before the internal link"));

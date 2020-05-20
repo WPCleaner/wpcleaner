@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2020-05-16 14:40+0200\n"
+"POT-Creation-Date: 2020-05-20 14:04+0200\n"
 "PO-Revision-Date: 2013-07-06 19:08+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Esperanto <eo@li.org>\n"
@@ -253,7 +253,7 @@ msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm003.java:263
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm003.java:266
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm111.java:174
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm111.java:198
 #, java-format
 msgid "A list of templates resulting in the inclusion of {0}"
 msgstr ""
@@ -529,7 +529,7 @@ msgstr ""
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:146
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm081.java:269
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm091.java:291
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm513.java:185
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm513.java:266
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm544.java:154
 #: org/wikipediacleaner/gui/swing/action/ActionExternalViewer.java:61
 #: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:90
@@ -819,7 +819,16 @@ msgstr ""
 msgid "Compact link"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm513.java:257
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm513.java:366
+msgid "A list of template parameters that produce an external link"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm513.java:369
+msgid ""
+"A list of texts (regular expressions) that can be after the internal link"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm513.java:372
 msgid "A list of texts that can be before the internal link"
 msgstr ""
 

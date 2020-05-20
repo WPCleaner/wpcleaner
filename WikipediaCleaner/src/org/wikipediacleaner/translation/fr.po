@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2020-05-16 14:40+0200\n"
-"PO-Revision-Date: 2020-05-16 16:18+0200\n"
+"POT-Creation-Date: 2020-05-20 14:04+0200\n"
+"PO-Revision-Date: 2020-05-20 14:08+0200\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: French <fr@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -293,7 +293,7 @@ msgstr "Fermer la balise"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm003.java:263
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm003.java:266
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm111.java:174
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm111.java:198
 #, java-format
 msgid "A list of templates resulting in the inclusion of {0}"
 msgstr "Modèles incluants {0}"
@@ -572,7 +572,7 @@ msgstr "Remplacer en utilisant le modèle {0}"
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:146
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm081.java:269
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm091.java:291
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm513.java:185
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm513.java:266
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm544.java:154
 #: org/wikipediacleaner/gui/swing/action/ActionExternalViewer.java:61
 #: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:90
@@ -875,7 +875,18 @@ msgstr "Compacter tous les liens"
 msgid "Compact link"
 msgstr "Compacter le lien"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm513.java:257
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm513.java:366
+msgid "A list of template parameters that produce an external link"
+msgstr "Une liste de paramètres de modèles qui produisent un lien externe"
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm513.java:369
+msgid ""
+"A list of texts (regular expressions) that can be after the internal link"
+msgstr ""
+"Une liste de textes (expression régulières) qui peuvent être après le lien "
+"interne"
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm513.java:372
 msgid "A list of texts that can be before the internal link"
 msgstr "Une liste de textes qui peuvent être avant le lien interne"
 
@@ -2072,7 +2083,7 @@ msgstr "Projet Correction Syntaxique"
 #: org/wikipediacleaner/gui/swing/MainWindow.java:789
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1481
 msgid "Help requested on..."
-msgstr "Aide requise sur…"
+msgstr "Aide demandée sur…"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:798
 msgid "Abuse filters"
