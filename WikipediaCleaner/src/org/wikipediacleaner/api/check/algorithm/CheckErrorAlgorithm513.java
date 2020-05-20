@@ -26,6 +26,7 @@ import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementExternalLink;
 import org.wikipediacleaner.api.data.PageElementInternalLink;
 import org.wikipediacleaner.api.data.PageElementTemplate;
+import org.wikipediacleaner.api.data.contents.ContentsElement;
 import org.wikipediacleaner.gui.swing.action.ActionExternalViewer;
 import org.wikipediacleaner.i18n.GT;
 
@@ -73,10 +74,10 @@ public class CheckErrorAlgorithm513 extends CheckErrorAlgorithmBase {
     }
 
     // Analyze each template
-    List<PageElementTemplate> templates = analysis.getTemplates();
-    if ((templates != null) &&
+    List<PageElementTemplate> articleTemplates = analysis.getTemplates();
+    if ((articleTemplates != null) &&
         ((iLinks != null) && !iLinks.isEmpty())) {
-      for (PageElementTemplate template : templates) {
+      for (PageElementTemplate template : articleTemplates) {
         result |= analyzeTemplate(template, analysis, errors);
       }
     }
@@ -153,16 +154,57 @@ public class CheckErrorAlgorithm513 extends CheckErrorAlgorithmBase {
       Collection<CheckErrorResult> errors) {
 
     // Criteria on the external link itself
-    if (!link.hasSquare() ||
-        (link.getText() == null) ||
-        link.hasSecondSquare()) {
+    if (!link.hasSquare()) {
       return false;
     }
 
     // Criteria on the internal link inside the external link
-    PageElementInternalLink internalLink = analysis.isInInternalLink(link.getEndIndex());
-    if ((internalLink == null) ||
-        (internalLink.getBeginIndex() != link.getEndIndex())) {
+    ContentsElement internalLink = null;
+    String internalLinkText = null;
+    if (!link.hasSecondSquare()) {
+      PageElementInternalLink tmp = analysis.isInInternalLink(link.getEndIndex());
+      if ((tmp != null) &&
+          (tmp.getBeginIndex() == link.getEndIndex())) {
+        internalLink = tmp;
+        internalLinkText = tmp.getDisplayedTextNotTrimmed();
+      }
+    }
+    String contents = analysis.getContents();
+    if ((internalLink == null) && !templates.isEmpty()) {
+      int tmpIndex = link.getBeginIndex() + link.getTextOffset();
+      while ((internalLink == null) && (tmpIndex < link.getEndIndex())) {
+        if (contents.startsWith("{{", tmpIndex)) {
+          PageElementTemplate template = analysis.isInTemplate(tmpIndex);
+          if (template != null) {
+            String[] config = templates.get(template.getTemplateName());
+            if (config != null) {
+              internalLink = template;
+              if (config.length > 1) {
+                if (errors == null) {
+                  return true;
+                }
+                CheckErrorResult errorResult = createCheckErrorResult(
+                    analysis, link.getBeginIndex(), link.getEndIndex());
+                int endTemplateName = (template.getParameterCount() > 0) ?
+                    template.getParameterPipeIndex(0) :
+                    template.getEndIndex() - 2;
+                String replacement =
+                    contents.substring(link.getBeginIndex(), template.getBeginIndex()) +
+                    "{{" + config[1] +
+                    contents.substring(endTemplateName, link.getEndIndex());
+                boolean automatic = (config.length > 2) ?
+                    Boolean.valueOf(config[2]) : false;
+                errorResult.addReplacement(replacement, automatic);
+                errors.add(errorResult);
+                return true;
+              }
+            }
+          }
+        }
+        tmpIndex++;
+      }
+    }
+    if (internalLink == null) {
       return false;
     }
 
@@ -172,7 +214,6 @@ public class CheckErrorAlgorithm513 extends CheckErrorAlgorithmBase {
     }
 
     // Analyze contents for potential replacements
-    String contents = analysis.getContents();
     int beginExtra = internalLink.getBeginIndex();
     int endExtra = internalLink.getEndIndex();
     boolean automatic = false;
@@ -258,10 +299,12 @@ public class CheckErrorAlgorithm513 extends CheckErrorAlgorithmBase {
           contents.substring(beginExtra, endError - 1);
       errorResult.addReplacement(replacement, automatic);
     }
-    errorResult.addReplacement(
-        contents.substring(beginError, internalLink.getBeginIndex()) +
-        internalLink.getDisplayedTextNotTrimmed() +
-        contents.substring(internalLink.getEndIndex(), endError));
+    if (internalLinkText != null) {
+      errorResult.addReplacement(
+          contents.substring(beginError, internalLink.getBeginIndex()) +
+          internalLinkText +
+          contents.substring(internalLink.getEndIndex(), endError));
+    }
     errorResult.addPossibleAction(new SimpleAction(
         GT._T("External Viewer"),
         new ActionExternalViewer(link.getLink())));
@@ -293,6 +336,9 @@ public class CheckErrorAlgorithm513 extends CheckErrorAlgorithmBase {
 
   /** List of potential texts that can be used before the internal link */
   private static final String PARAMETER_TEXTS_BEFORE = "texts_before";
+
+  /** List of templates that create an external link */
+  private static final String PARAMETER_TEMPLATES = "templates";
 
   /** List of template parameters that create an external link */
   private static final String PARAMETER_TEMPLATE_PARAMS = "template_params";
@@ -328,18 +374,31 @@ public class CheckErrorAlgorithm513 extends CheckErrorAlgorithmBase {
       }
     }
 
+    tmp = getSpecificProperty(PARAMETER_TEMPLATES, true, true, false);
+    templates.clear();
+    if (tmp != null) {
+      List<String[]> tmpList = WPCConfiguration.convertPropertyToStringArrayList(tmp);
+      if (tmpList != null) {
+        for (String[] tmpElement : tmpList) {
+          templates.put(tmpElement[0], tmpElement);
+        }
+      }
+    }
+
     tmp = getSpecificProperty(PARAMETER_TEMPLATE_PARAMS, true, true, false);
     templateParams.clear();
     if (tmp != null) {
       List<String[]> tmpList = WPCConfiguration.convertPropertyToStringArrayList(tmp);
-      for (String[] tmpElement : tmpList) {
-        if ((tmpElement != null) && (tmpElement.length > 1)) {
-          List<String[]> values = templateParams.get(tmpElement[0]);
-          if (values == null) {
-            values = new ArrayList<>();
-            templateParams.put(tmpElement[0], values);
+      if (tmpList != null) {
+        for (String[] tmpElement : tmpList) {
+          if ((tmpElement != null) && (tmpElement.length > 1)) {
+            List<String[]> values = templateParams.get(tmpElement[0]);
+            if (values == null) {
+              values = new ArrayList<>();
+              templateParams.put(tmpElement[0], values);
+            }
+            values.add(tmpElement);
           }
-          values.add(tmpElement);
         }
       }
     }
@@ -350,6 +409,9 @@ public class CheckErrorAlgorithm513 extends CheckErrorAlgorithmBase {
 
   /** Texts before the internal link */
   private final List<String> textsBefore = new ArrayList<>();
+
+  /** Templates that create an external link */
+  private final Map<String, String[]> templates = new HashMap<>();
 
   /** Template parameters that create an external link */
   private final Map<String, List<String[]>> templateParams = new HashMap<>();
@@ -362,8 +424,11 @@ public class CheckErrorAlgorithm513 extends CheckErrorAlgorithmBase {
   public Map<String, String> getParameters() {
     Map<String, String> parameters = super.getParameters();
     parameters.put(
+        PARAMETER_TEMPLATES,
+        GT._T("A list of templates that create an internal link"));
+    parameters.put(
         PARAMETER_TEMPLATE_PARAMS,
-        GT._T("A list of template parameters that produce an external link"));
+        GT._T("A list of template parameters that create the text of an external link"));
     parameters.put(
         PARAMETER_TEXTS_AFTER,
         GT._T("A list of texts (regular expressions) that can be after the internal link"));

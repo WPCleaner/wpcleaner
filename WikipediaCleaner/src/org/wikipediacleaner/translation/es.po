@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2020-05-20 14:04+0200\n"
+"POT-Creation-Date: 2020-05-20 16:58+0200\n"
 "PO-Revision-Date: 2017-03-03 19:29+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Spanish\n"
@@ -559,7 +559,7 @@ msgstr "Reemplazar usando plantilla {0}"
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:146
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm081.java:269
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm091.java:291
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm513.java:266
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm513.java:309
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm544.java:154
 #: org/wikipediacleaner/gui/swing/action/ActionExternalViewer.java:61
 #: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:90
@@ -860,18 +860,23 @@ msgstr "Enlaces compactos"
 msgid "Compact link"
 msgstr "Enlace compacto"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm513.java:366
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm513.java:428
 #, fuzzy
-msgid "A list of template parameters that produce an external link"
+msgid "A list of templates that create an internal link"
 msgstr "Una lista de textos que se pueden añadir a las secciones sin contenido"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm513.java:369
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm513.java:431
+#, fuzzy
+msgid "A list of template parameters that create the text of an external link"
+msgstr "Una lista de textos que se pueden añadir a las secciones sin contenido"
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm513.java:434
 #, fuzzy
 msgid ""
 "A list of texts (regular expressions) that can be after the internal link"
 msgstr "Una lista de textos que se pueden añadir a las secciones sin contenido"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm513.java:372
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm513.java:437
 #, fuzzy
 msgid "A list of texts that can be before the internal link"
 msgstr "Una lista de textos que se pueden añadir a las secciones sin contenido"
