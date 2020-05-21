@@ -12,10 +12,17 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 
+import org.wikipediacleaner.api.API;
+import org.wikipediacleaner.api.APIException;
+import org.wikipediacleaner.api.APIFactory;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.CheckErrorResult.ErrorLevel;
+import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.constants.WikiConfiguration;
+import org.wikipediacleaner.api.data.LinterCategory;
 import org.wikipediacleaner.api.data.MagicWord;
+import org.wikipediacleaner.api.data.Namespace;
+import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementImage;
 import org.wikipediacleaner.api.data.PageElementImage.Parameter;
@@ -740,4 +747,59 @@ public class CheckErrorAlgorithm534 extends CheckErrorAlgorithmBase {
   protected String internalAutomaticFix(PageAnalysis analysis) {
     return fixUsingAutomaticReplacement(analysis);
   }
+
+  /**
+   * @return True if the error has a special list of pages.
+   */
+  @Override
+  public boolean hasSpecialList() {
+    return (linterCategory != null);
+  }
+
+  /**
+   * Retrieve the list of pages in error.
+   * 
+   * @param wiki Wiki.
+   * @param limit Maximum number of pages to retrieve.
+   * @return List of pages in error.
+   */
+  @Override
+  public List<Page> getSpecialList(EnumWikipedia wiki, int limit) {
+    List<Page> result = null;
+    if (linterCategory != null) {
+      API api = APIFactory.getAPI();
+      try {
+        result = api.retrieveLinterCategory(
+            wiki, linterCategory.getCategory(),
+            Namespace.MAIN, false, true, limit);
+      } catch (APIException e) {
+        //
+      }
+    }
+    return result;
+  }
+
+  /* ====================================================================== */
+  /* PARAMETERS                                                             */
+  /* ====================================================================== */
+
+  /**
+   * Initialize settings for the algorithm.
+   * 
+   * @see org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase#initializeSettings()
+   */
+  @Override
+  protected void initializeSettings() {
+    List<LinterCategory> categories = getWikiConfiguration().getLinterCategories();
+    if (categories != null) {
+      for (LinterCategory category : categories) {
+        if ("bogus-image-options".equals(category.getCategory())) {
+          linterCategory = category;
+        }
+      }
+    }
+  }
+
+  /** Linter category */
+  private LinterCategory linterCategory = null;
 }
