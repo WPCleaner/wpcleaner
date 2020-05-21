@@ -257,10 +257,15 @@ public class CheckErrorAlgorithm513 extends CheckErrorAlgorithmBase {
       checkTexts = false;
       for (String[] text : textsBefore) {
         if (prefix.endsWith(text[0])) {
-          beginExtra -= text[0].length();
-          automatic |= text.length > 1 && Boolean.parseBoolean(text[1]);
-          checkTexts = true;
-          continue;
+          int tmpIndex = beginExtra - text[0].length();
+          if ((tmpIndex <= link.getLinkEndIndex()) ||
+              CharacterUtils.isWhitespace(contents.charAt(tmpIndex - 1)) ||
+              (PUNCTUATION.indexOf(contents.charAt(tmpIndex - 1)) >= 0)) {
+            beginExtra = tmpIndex;
+            automatic |= text.length > 1 && Boolean.parseBoolean(text[1]);
+            checkTexts = true;
+            continue;
+          }
         }
       }
       while ((beginExtra > 0) &&
@@ -323,10 +328,13 @@ public class CheckErrorAlgorithm513 extends CheckErrorAlgorithmBase {
       String replacement =
           contents.substring(beginError, beginExtra) +
           replacementEnd;
-      String description = 
-          "[..." +
-          contents.substring(link.getLinkEndIndex(), beginExtra) +
-          replacementEnd;
+      String description = replacement;
+      if (link.getLinkEndIndex() < beginExtra) {
+        description =
+            "[..." +
+            contents.substring(link.getLinkEndIndex(), beginExtra) +
+            replacementEnd;
+      }
       errorResult.addReplacement(replacement, description, automatic);
     }
     if (internalLinkText != null) {
