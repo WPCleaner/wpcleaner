@@ -195,13 +195,19 @@ public class CheckErrorAlgorithm513 extends CheckErrorAlgorithmBase {
                 int endTemplateName = (template.getParameterCount() > 0) ?
                     template.getParameterPipeIndex(0) :
                     template.getEndIndex() - 2;
-                String replacement =
-                    contents.substring(link.getBeginIndex(), template.getBeginIndex()) +
+                String replacementEnd = 
                     "{{" + config[1] +
                     contents.substring(endTemplateName, link.getEndIndex());
+                String replacement =
+                    contents.substring(link.getBeginIndex(), template.getBeginIndex()) +
+                    replacementEnd;
+                String description =
+                    "[..." +
+                    contents.substring(link.getLinkEndIndex(), template.getBeginIndex()) +
+                    replacementEnd;
                 boolean automatic = (config.length > 2) ?
                     Boolean.valueOf(config[2]) : false;
-                errorResult.addReplacement(replacement, automatic);
+                errorResult.addReplacement(replacement, description, automatic);
                 errors.add(errorResult);
                 return true;
               }
@@ -245,28 +251,39 @@ public class CheckErrorAlgorithm513 extends CheckErrorAlgorithmBase {
         CharacterUtils.isWhitespace(contents.charAt(beginExtra - 1))) {
       beginExtra--;
     }
-    String prefix = contents.substring(link.getBeginIndex(), beginExtra);
-    for (String text : textsBefore) {
-      if (prefix.endsWith(text)) {
-        beginExtra -= text.length();
-        automatic = true;
+    boolean checkTexts = true;
+    while (checkTexts) {
+      String prefix = contents.substring(link.getBeginIndex(), beginExtra);
+      checkTexts = false;
+      for (String[] text : textsBefore) {
+        if (prefix.endsWith(text[0])) {
+          beginExtra -= text[0].length();
+          automatic |= text.length > 1 && Boolean.parseBoolean(text[1]);
+          checkTexts = true;
+          continue;
+        }
       }
-    }
-    while ((beginExtra > 0) &&
-        (CharacterUtils.isWhitespace(contents.charAt(beginExtra - 1)) ||
-         (PUNCTUATION.indexOf(contents.charAt(beginExtra - 1)) >= 0))) {
-      if (PUNCTUATION.indexOf(contents.charAt(beginExtra - 1)) >= 0) {
-        automatic = true;
+      while ((beginExtra > 0) &&
+          (CharacterUtils.isWhitespace(contents.charAt(beginExtra - 1)) ||
+           (PUNCTUATION.indexOf(contents.charAt(beginExtra - 1)) >= 0))) {
+        if (PUNCTUATION.indexOf(contents.charAt(beginExtra - 1)) >= 0) {
+          automatic = true;
+        }
+        beginExtra--;
       }
-      beginExtra--;
     }
     if (beginExtra <= link.getBeginIndex() + link.getTextOffset()) {
       automatic = false;
     }
-    for (Pattern pattern : patternsAfter) {
-      Matcher matcher = pattern.matcher(contents.substring(endExtra));
-      if (matcher.lookingAt()) {
-        endExtra += matcher.end();
+    checkTexts = true;
+    while (checkTexts) {
+      checkTexts = false;
+      for (Pattern pattern : patternsAfter) {
+        Matcher matcher = pattern.matcher(contents.substring(endExtra));
+        if (matcher.lookingAt()) {
+          endExtra += matcher.end();
+          checkTexts = true;
+        }
       }
     }
 
@@ -300,17 +317,30 @@ public class CheckErrorAlgorithm513 extends CheckErrorAlgorithmBase {
     CheckErrorResult errorResult = createCheckErrorResult(
         analysis, beginError, endError);
     if (closeBracket) {
-      String replacement =
-          contents.substring(beginError, beginExtra) +
+      String replacementEnd =
           "]" +
           contents.substring(beginExtra, endError - 1);
-      errorResult.addReplacement(replacement, automatic);
+      String replacement =
+          contents.substring(beginError, beginExtra) +
+          replacementEnd;
+      String description = 
+          "[..." +
+          contents.substring(link.getLinkEndIndex(), beginExtra) +
+          replacementEnd;
+      errorResult.addReplacement(replacement, description, automatic);
     }
     if (internalLinkText != null) {
-      errorResult.addReplacement(
-          contents.substring(beginError, internalLink.getBeginIndex()) +
+      String replacementEnd = 
           internalLinkText +
-          contents.substring(internalLink.getEndIndex(), endError));
+          contents.substring(internalLink.getEndIndex(), endError);
+      String replacement =
+          contents.substring(beginError, internalLink.getBeginIndex()) +
+          replacementEnd;
+      String description =
+          "[..." +
+          contents.substring(link.getLinkEndIndex(), internalLink.getBeginIndex()) +
+          replacementEnd;
+      errorResult.addReplacement(replacement, description);
     }
     errorResult.addPossibleAction(new SimpleAction(
         GT._T("External Viewer"),
@@ -406,7 +436,7 @@ public class CheckErrorAlgorithm513 extends CheckErrorAlgorithmBase {
     tmp = getSpecificProperty(PARAMETER_TEXTS_BEFORE, true, true, false);
     textsBefore.clear();
     if (tmp != null) {
-      List<String> tmpList = WPCConfiguration.convertPropertyToStringList(tmp);
+      List<String[]> tmpList = WPCConfiguration.convertPropertyToStringArrayList(tmp);
       if (tmpList != null) {
         textsBefore.addAll(tmpList);
       }
@@ -455,7 +485,7 @@ public class CheckErrorAlgorithm513 extends CheckErrorAlgorithmBase {
   private final List<Pattern> patternsAfter = new ArrayList<>();
 
   /** Texts before the internal link */
-  private final List<String> textsBefore = new ArrayList<>();
+  private final List<String[]> textsBefore = new ArrayList<>();
 
   /** Templates that create an external link */
   private final Map<String, String[]> templates = new HashMap<>();
