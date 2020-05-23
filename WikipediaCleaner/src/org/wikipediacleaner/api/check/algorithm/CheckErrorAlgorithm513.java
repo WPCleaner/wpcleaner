@@ -51,7 +51,8 @@ public class CheckErrorAlgorithm513 extends CheckErrorAlgorithmBase {
     super("Internal link inside external link");
   }
 
-  private static final String PUNCTUATION = ",-:(";
+  /** Punctuation characters before the internal link that trigger automatic replacement */
+  private static final String AUTOMATIC_PUNCTUATION_BEFORE = ",-–:(";
 
   /**
    * Analyze a page to check if errors are present.
@@ -113,38 +114,101 @@ public class CheckErrorAlgorithm513 extends CheckErrorAlgorithmBase {
     // Check each configuration
     boolean result = false;
     for (String[] paramConfig : paramsConfig) {
-      int paramIndex = template.getParameterIndex(paramConfig[1]);
-      if (paramIndex >= 0) {
-        PageElementTemplate.Parameter param = template.getParameter(paramIndex);
-        if (param != null) {
-          String contents = analysis.getContents();
-          int squareBracket = contents.indexOf("[[", param.getBeginIndex());
-          boolean reported = false;
-          while (!reported && (squareBracket > 0) &&
-                 (squareBracket < param.getEndIndex())) {
-            PageElementInternalLink link = analysis.isInInternalLink(squareBracket);
-            if (link != null) {
-              if (errors == null) {
-                return true;
-              }
-              reported = true;
-              result = true;
-              CheckErrorResult errorResult = createCheckErrorResult(
-                  analysis, param.getBeginIndex(), param.getEndIndex());
-              String replacement =
-                  contents.substring(param.getBeginIndex(), link.getBeginIndex()) +
-                  link.getDisplayedTextNotTrimmed() +
-                  contents.substring(link.getEndIndex(), param.getEndIndex());
-              errorResult.addReplacement(replacement);
-              errors.add(errorResult);
-            }
-            squareBracket++;
-          }
-        }
-      }
+      result |= analyzeTemplateParam(template, paramConfig, analysis, errors);
     }
 
     return result;
+  }
+
+  /**
+   * Analyze one template.
+   * 
+   * @param template Template to analyze.
+   * @param analysis Page analysis.
+   * @param errors Errors found in the page.
+   * @return Flag indicating if an error was found in the external link.
+   */
+  private boolean analyzeTemplateParam(
+      PageElementTemplate template,
+      String[] paramConfig,
+      PageAnalysis analysis,
+      Collection<CheckErrorResult> errors) {
+
+    // Extract template parameter
+    int paramIndex = template.getParameterIndex(paramConfig[1]);
+    if (paramIndex < 0) {
+      return false;
+    }
+    PageElementTemplate.Parameter param = template.getParameter(paramIndex);
+    if (param == null) {
+      return false;
+    }
+
+    // Analyze parameter content
+    int tmpIndex = param.getBeginIndex();
+    boolean closeBracket = false;
+    String contents = analysis.getContents();
+    while (tmpIndex < param.getEndIndex()) {
+      if (contents.charAt(tmpIndex) == ']') {
+        closeBracket = true;
+        // TODO: Stop analyzing or depending on template configuration?
+        return false;
+      } else if (contents.startsWith("[[", tmpIndex)) {
+
+        // Report internal link
+        PageElementInternalLink link = analysis.isInInternalLink(tmpIndex);
+        if (link != null) {
+          if (errors == null) {
+            return true;
+          }
+          CheckErrorResult errorResult = createCheckErrorResult(
+              analysis, param.getBeginIndex(), param.getEndIndex());
+          String replacement =
+              contents.substring(param.getBeginIndex(), link.getBeginIndex()) +
+              link.getDisplayedTextNotTrimmed() +
+              contents.substring(link.getEndIndex(), param.getEndIndex());
+          boolean automatic = (paramConfig.length > 2) ?
+              Boolean.valueOf(paramConfig[2]) : false;
+          errorResult.addReplacement(replacement, automatic && !closeBracket);
+          errors.add(errorResult);
+          return true;
+        }
+      } else if (contents.startsWith("{{", tmpIndex)) {
+
+        // Report template
+        PageElementTemplate tmpTemplate = analysis.isInTemplate(tmpIndex);
+        if ((tmpTemplate != null) &&
+            (tmpTemplate.getBeginIndex() == tmpIndex)) {
+          String[] config = templates.get(tmpTemplate.getTemplateName());
+          if (config != null) {
+            if (errors == null) {
+              return true;
+            }
+            CheckErrorResult errorResult = createCheckErrorResult(
+                analysis, param.getBeginIndex(), param.getEndIndex());
+            if (config.length > 1) {
+              int endTemplateName = (tmpTemplate.getParameterCount() > 0) ?
+                  tmpTemplate.getParameterPipeIndex(0) :
+                  tmpTemplate.getEndIndex() - 2;
+              String replacementEnd = 
+                  "{{" + config[1] +
+                  contents.substring(endTemplateName, param.getEndIndex());
+              String replacement =
+                  contents.substring(param.getBeginIndex(), tmpTemplate.getBeginIndex()) +
+                  replacementEnd;
+              boolean automatic = (config.length > 2) ?
+                  Boolean.valueOf(config[2]) : false;
+              errorResult.addReplacement(replacement, automatic && !closeBracket);
+            }
+            errors.add(errorResult);
+            return true;
+          }
+        }
+      }
+      tmpIndex++;
+    }
+
+    return false;
   }
 
   /**
@@ -258,9 +322,10 @@ public class CheckErrorAlgorithm513 extends CheckErrorAlgorithmBase {
       for (String[] text : textsBefore) {
         if (prefix.endsWith(text[0])) {
           int tmpIndex = beginExtra - text[0].length();
+          char charBefore = contents.charAt(tmpIndex - 1);
           if ((tmpIndex <= link.getLinkEndIndex()) ||
-              CharacterUtils.isWhitespace(contents.charAt(tmpIndex - 1)) ||
-              (PUNCTUATION.indexOf(contents.charAt(tmpIndex - 1)) >= 0)) {
+              CharacterUtils.isWhitespace(charBefore) ||
+              CharacterUtils.isPunctuation(charBefore)) {
             beginExtra = tmpIndex;
             automatic |= text.length > 1 && Boolean.parseBoolean(text[1]);
             checkTexts = true;
@@ -268,13 +333,16 @@ public class CheckErrorAlgorithm513 extends CheckErrorAlgorithmBase {
           }
         }
       }
-      while ((beginExtra > 0) &&
-          (CharacterUtils.isWhitespace(contents.charAt(beginExtra - 1)) ||
-           (PUNCTUATION.indexOf(contents.charAt(beginExtra - 1)) >= 0))) {
-        if (PUNCTUATION.indexOf(contents.charAt(beginExtra - 1)) >= 0) {
-          automatic = true;
+      if (!checkTexts) {
+        while ((beginExtra > 0) &&
+            (CharacterUtils.isWhitespace(contents.charAt(beginExtra - 1)) ||
+             CharacterUtils.isPunctuation(contents.charAt(beginExtra - 1)))) {
+          if (AUTOMATIC_PUNCTUATION_BEFORE.indexOf(contents.charAt(beginExtra - 1)) >= 0) {
+            automatic = true;
+          }
+          beginExtra--;
+          checkTexts = true;
         }
-        beginExtra--;
       }
     }
     if (beginExtra <= link.getBeginIndex() + link.getTextOffset()) {
@@ -287,6 +355,14 @@ public class CheckErrorAlgorithm513 extends CheckErrorAlgorithmBase {
         Matcher matcher = pattern.matcher(contents.substring(endExtra));
         if (matcher.lookingAt()) {
           endExtra += matcher.end();
+          checkTexts = true;
+        }
+      }
+      if (!checkTexts) {
+        while ((endExtra < contents.length()) &&
+            (CharacterUtils.isWhitespace(contents.charAt(endExtra)) ||
+             CharacterUtils.isPunctuation(contents.charAt(endExtra)))) {
+          endExtra++;
           checkTexts = true;
         }
       }
@@ -336,6 +412,23 @@ public class CheckErrorAlgorithm513 extends CheckErrorAlgorithmBase {
             replacementEnd;
       }
       errorResult.addReplacement(replacement, description, automatic);
+    }
+    if (link.getLinkEndIndex() >= beginExtra) {
+      int tmpBeginExtra = beginExtra;
+      while (CharacterUtils.isWhitespace(contents.charAt(tmpBeginExtra))) {
+        tmpBeginExtra++;
+      }
+      String replacementBegin = contents.substring(tmpBeginExtra, endExtra);
+      String replacementEnd = contents.substring(endExtra, endError);
+      String replacement =
+          replacementBegin +
+          contents.substring(beginError, tmpBeginExtra) +
+          replacementEnd;
+      String description =
+          replacementBegin +
+          "[..." + contents.substring(beginExtra, tmpBeginExtra) +
+          replacementEnd;
+      errorResult.addReplacement(replacement, description);
     }
     if (internalLinkText != null) {
       String replacementEnd = 

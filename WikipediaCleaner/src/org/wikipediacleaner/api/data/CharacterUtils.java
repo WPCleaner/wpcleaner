@@ -55,12 +55,23 @@ public class CharacterUtils {
   /** Whitespace characters */
   private final static String WHITESPACE = " \u00A0";
 
+  /** Punctuation characters */
+  private static final String PUNCTUATION = ",.;:()\"-–";
+
   /**
    * @param character Character to be tested.
    * @return True if the character should be considered as a whitespace.
    */
   public static boolean isWhitespace(char character) {
     return (WHITESPACE.indexOf(character) >= 0);
+  }
+
+  /**
+   * @param character Character to be tested.
+   * @return True if the character should be considered as a punctuation.
+   */
+  public static boolean isPunctuation(char character) {
+    return (PUNCTUATION.indexOf(character) >= 0);
   }
 
   /**
