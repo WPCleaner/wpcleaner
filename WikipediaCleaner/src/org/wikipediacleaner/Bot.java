@@ -240,7 +240,7 @@ public class Bot implements BasicWorkerListener {
             }
           }
         } catch (IOException e) {
-          log.error("Unable to process tasks", e);
+          log.error("Unable to process task {}: {}", action, e.getMessage());
         }
       }
     } else if ("UpdateDabWarnings".equalsIgnoreCase(action)) {
