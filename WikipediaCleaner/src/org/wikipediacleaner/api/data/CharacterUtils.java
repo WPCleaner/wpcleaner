@@ -75,6 +75,15 @@ public class CharacterUtils {
   }
 
   /**
+   * @param character Character to be tested.
+   * @param text Text to be tested.
+   * @return True if the character is found in the text.
+   */
+  public static boolean isInText(char character, String text) {
+    return (text != null) && (text.indexOf(character) >= 0);
+  }
+
+  /**
    * Trim text with whitespace characters used by MediaWiki.
    * 
    * @param text Original text.

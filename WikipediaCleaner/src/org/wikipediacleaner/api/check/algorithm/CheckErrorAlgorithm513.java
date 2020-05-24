@@ -54,6 +54,12 @@ public class CheckErrorAlgorithm513 extends CheckErrorAlgorithmBase {
   /** Punctuation characters before the internal link that trigger automatic replacement */
   private static final String AUTOMATIC_PUNCTUATION_BEFORE = ",-–:(";
 
+  /** Punctuation characters before the internal link */
+  private static final String PUNCTUATION_BEFORE = "" + AUTOMATIC_PUNCTUATION_BEFORE;
+
+  /** Punctuation characters after the internal link */
+  private static final String PUNCTUATION_AFTER = ",-–:)";
+
   /**
    * Analyze a page to check if errors are present.
    * 
@@ -325,7 +331,7 @@ public class CheckErrorAlgorithm513 extends CheckErrorAlgorithmBase {
           char charBefore = contents.charAt(tmpIndex - 1);
           if ((tmpIndex <= link.getLinkEndIndex()) ||
               CharacterUtils.isWhitespace(charBefore) ||
-              CharacterUtils.isPunctuation(charBefore)) {
+              CharacterUtils.isInText(charBefore, PUNCTUATION_BEFORE)) {
             beginExtra = tmpIndex;
             automatic |= text.length > 1 && Boolean.parseBoolean(text[1]);
             checkTexts = true;
@@ -336,8 +342,8 @@ public class CheckErrorAlgorithm513 extends CheckErrorAlgorithmBase {
       if (!checkTexts) {
         while ((beginExtra > 0) &&
             (CharacterUtils.isWhitespace(contents.charAt(beginExtra - 1)) ||
-             CharacterUtils.isPunctuation(contents.charAt(beginExtra - 1)))) {
-          if (AUTOMATIC_PUNCTUATION_BEFORE.indexOf(contents.charAt(beginExtra - 1)) >= 0) {
+             CharacterUtils.isInText(contents.charAt(beginExtra - 1), PUNCTUATION_BEFORE))) {
+          if (CharacterUtils.isInText(contents.charAt(beginExtra - 1), AUTOMATIC_PUNCTUATION_BEFORE)) {
             automatic = true;
           }
           beginExtra--;
@@ -361,7 +367,7 @@ public class CheckErrorAlgorithm513 extends CheckErrorAlgorithmBase {
       if (!checkTexts) {
         while ((endExtra < contents.length()) &&
             (CharacterUtils.isWhitespace(contents.charAt(endExtra)) ||
-             CharacterUtils.isPunctuation(contents.charAt(endExtra)))) {
+             CharacterUtils.isInText(contents.charAt(endExtra), PUNCTUATION_AFTER))) {
           endExtra++;
           checkTexts = true;
         }
