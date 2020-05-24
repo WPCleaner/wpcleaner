@@ -1,0 +1,3 @@
+DoTasks _Common.txt
+Set Prefix [[User:WikiCleanerBot#T16|Bot_T16]]
+FixListCheckWiki Wikipedia:CHECKWIKI/WPC_092_dump 92
