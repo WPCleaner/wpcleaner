@@ -22,6 +22,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Properties;
 import java.util.Set;
+import java.util.StringJoiner;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -210,13 +211,10 @@ public class Bot implements BasicWorkerListener {
   void executeAction(Action actionConfig) {
 
     // Retrieve action
-    String[] args = actionConfig.args;
-    int currentArg = 0;
-    if (currentArg >= args.length) {
+    String action = actionConfig.action;
+    if (action == null) {
       return;
     }
-    String action = args[currentArg];
-    currentArg++;
 
     // Execute action depending on the parameters
     BasicWorker worker = null;
@@ -224,36 +222,9 @@ public class Bot implements BasicWorkerListener {
     if (action.startsWith("#")) {
       actionDone = true;
     } else if ("DoTasks".equalsIgnoreCase(action)) {
-      actionDone = true;
-      if (args.length > currentArg) {
-        File tasks = (actionConfig.baseDir != null) ?
-            new File(actionConfig.baseDir, args[currentArg]) :
-            new File(args[currentArg]);
-        int actionNum = 0;
-        try (BufferedReader reader = new BufferedReader(new FileReader(tasks))) {
-          String line = null;
-          while ((line = reader.readLine()) != null) {
-            String[] tmpArgs = line.split(" +");
-            if ((tmpArgs != null) && (tmpArgs.length > 0)) {
-              actions.add(actionNum, new Action(tmpArgs, tasks.getParentFile()));
-              actionNum++;
-            }
-          }
-        } catch (IOException e) {
-          log.error("Unable to process task {}: {}", action, e.getMessage());
-        }
-      }
+      actionDone = executeDoTasks(actionConfig);
     } else if ("UpdateDabWarnings".equalsIgnoreCase(action)) {
-      Configuration config = Configuration.getConfiguration();
-      String start = config.getString(null, ConfigurationValueString.LAST_DAB_WARNING);
-      if (args.length > currentArg) {
-        if (args[currentArg].equals("*")) {
-          start = null;
-        } else {
-          start = args[currentArg];
-        }
-      }
-      worker = new UpdateDabWarningWorker(wiki, null, start);
+      worker = executeUpdateDabWarning(actionConfig);
     } else if ("UpdateISBNWarnings".equalsIgnoreCase(action)) {
       worker = new UpdateISBNWarningWorker(wiki, null, false);
     } else if ("ListISBNWarnings".equalsIgnoreCase(action)) {
@@ -265,107 +236,235 @@ public class Bot implements BasicWorkerListener {
     } else if ("UpdateDuplicateArgsWarnings".equalsIgnoreCase(action)) {
       worker = new UpdateDuplicateArgsWarningWorker(wiki, null, false);
     } else if ("FixCheckWiki".equalsIgnoreCase(action)) {
-      List<CheckErrorAlgorithm> algorithms = new ArrayList<CheckErrorAlgorithm>();
-      List<CheckErrorAlgorithm> allAlgorithms = new ArrayList<CheckErrorAlgorithm>();
-      if (args.length > currentArg) {
-        extractAlgorithms(algorithms, allAlgorithms, args, currentArg);
-      }
-      worker = new AutomaticCWWorker(
-          wiki, null, algorithms, 10000, true, allAlgorithms, null, true, false);
+      worker = executeFixCheckWiki(actionConfig);
     } else if ("FixListCheckWiki".equalsIgnoreCase(action)) {
-      Page page = null;
-      if (args.length > currentArg) {
-        page = DataManager.getPage(wiki, args[currentArg], null, null, null);
-        currentArg++;
-      }
-      List<CheckErrorAlgorithm> algorithms = new ArrayList<CheckErrorAlgorithm>();
-      List<CheckErrorAlgorithm> allAlgorithms = new ArrayList<CheckErrorAlgorithm>();
-      if (args.length > currentArg) {
-        extractAlgorithms(algorithms, allAlgorithms, args, currentArg);
-      }
-      worker = new AutomaticListCWWorker(
-          wiki, null, page,
-          algorithms, allAlgorithms, namespaces,
-          null, true, false);
+      worker = executeFixListCheckWiki(actionConfig);
     } else if ("MarkCheckWiki".equalsIgnoreCase(action)) {
-      List<CheckErrorAlgorithm> algorithms = new ArrayList<CheckErrorAlgorithm>();
-      List<CheckErrorAlgorithm> allAlgorithms = new ArrayList<CheckErrorAlgorithm>();
-      if (args.length > currentArg) {
-        extractAlgorithms(algorithms, allAlgorithms, args, currentArg);
-      }
-      worker = new AutomaticCWWorker(
-          wiki, null, algorithms, 10000, true, allAlgorithms, null, false, false);
+      worker = executeMarkCheckWiki(actionConfig);
     } else if ("ListCheckWiki".equalsIgnoreCase(action)) {
-      boolean check = true;
-      boolean onlyRecheck = false;
-      boolean optionsFinished = false;
-      while (!optionsFinished && (args.length > currentArg)) {
-        if ("-nocheck".equalsIgnoreCase(args[currentArg])) {
-          check = false;
-          currentArg++;
-        } else if ("-onlyRecheck".equalsIgnoreCase(args[currentArg])) {
-          onlyRecheck = true;
-          currentArg++;
-        } else {
-          optionsFinished = true;
-        }
-      }
-      if (args.length > currentArg + 2) {
-        File dumpFile = getDumpFile(args[currentArg]);
-        List<CheckErrorAlgorithm> algorithms = new ArrayList<CheckErrorAlgorithm>();
-        extractAlgorithms(algorithms, null, args, currentArg + 2);
-        if (args[currentArg + 1].startsWith("wiki:")) {
-          String pageName = args[currentArg + 1].substring(5);
-          worker = new ListCWWorker(
-              wiki, null, dumpFile, pageName,
-              algorithms, namespaces, check, onlyRecheck);
-        } else {
-          File output = new File(args[currentArg + 1]);
-          worker = new ListCWWorker(
-              wiki, null, dumpFile, output,
-              algorithms, namespaces, check);
-        }
-      }
+      worker = executeListCheckWiki(actionConfig);
     } else if ("Set".equalsIgnoreCase(action)) {
-      if (args.length > currentArg) {
-        String parameter = args[currentArg];
-        actionDone = true;
-        if ("Prefix".equalsIgnoreCase(parameter)) {
-          if (args.length > currentArg + 1) {
-            CommentManager.addExtraText(args[currentArg + 1].replaceAll("_", " "));
-          }
-        } else if ("AdditionalAlgorithms".equalsIgnoreCase(parameter)) {
-          additionalAlgorithms.clear();
-          if (args.length > currentArg + 1) {
-            extractAlgorithms(additionalAlgorithms, null, args, currentArg + 1);
-          }
-        } else if ("Namespaces".equalsIgnoreCase(parameter)) {
-          namespaces = new HashSet<>();
-          currentArg++;
-          while (currentArg < args.length) {
-            try {
-              namespaces.add(Integer.valueOf(args[currentArg]));
-            } catch (NumberFormatException e) {
-              log.warn("Incorrect namespace {}", args[currentArg]);
-            }
-            currentArg++;
-          }
-        } else {
-          actionDone = false;
-        }
-      }
+      actionDone = executeSet(actionConfig);
     }
+
+    // Execute action
     if (worker != null) {
-      log.info("Running task {}", action);
+      log.info("Running task {}", actionConfig.fullAction);
       worker.setListener(this);
       worker.setTimeLimit(timeLimit);
       worker.start();
     } else if (!actions.isEmpty()) {
       if (!actionDone) {
-        log.warn("Unknown task {}", action);
+        log.warn("Unknown task {}", actionConfig.fullAction);
       }
       executeAction(actions.remove(0));
     }
+  }
+
+  /**
+   * Execute an action of type DoTasks.
+   * 
+   * @param actionConfig Parameters of the action.
+   * @return True if the action was executed.
+   */
+  public boolean executeDoTasks(Action actionConfig) {
+    if (actionConfig.actionArgs.length > 0) {
+      File tasks = (actionConfig.baseDir != null) ?
+          new File(actionConfig.baseDir, actionConfig.actionArgs[0]) :
+          new File(actionConfig.actionArgs[0]);
+      int actionNum = 0;
+      try (BufferedReader reader = new BufferedReader(new FileReader(tasks))) {
+        String line = null;
+        while ((line = reader.readLine()) != null) {
+          String[] tmpArgs = line.split(" +");
+          if ((tmpArgs != null) && (tmpArgs.length > 0)) {
+            actions.add(actionNum, new Action(tmpArgs, tasks.getParentFile()));
+            actionNum++;
+          }
+        }
+      } catch (IOException e) {
+        log.error("Unable to process task {}: {}",
+            actionConfig.fullAction, e.getMessage());
+      }
+    }
+
+    return true;
+  }
+
+  /**
+   * Execute an action of type UpdateDabWarning.
+   * 
+   * @param actionConfig Parameters of the action.
+   * @return True if the action was executed.
+   */
+  public BasicWorker executeUpdateDabWarning(Action actionConfig) {
+    Configuration config = Configuration.getConfiguration();
+    String start = config.getString(null, ConfigurationValueString.LAST_DAB_WARNING);
+    if (actionConfig.actionArgs.length > 0) {
+      if (actionConfig.actionArgs[0].equals("*")) {
+        start = null;
+      } else {
+        start = actionConfig.actionArgs[0];
+      }
+    }
+    return new UpdateDabWarningWorker(wiki, null, start);
+  }
+
+  /**
+   * Execute an action of type FixCheckWiki.
+   * 
+   * @param actionConfig Parameters of the action.
+   * @return True if the action was executed.
+   */
+  public BasicWorker executeFixCheckWiki(Action actionConfig) {
+    List<CheckErrorAlgorithm> algorithms = new ArrayList<CheckErrorAlgorithm>();
+    List<CheckErrorAlgorithm> allAlgorithms = new ArrayList<CheckErrorAlgorithm>();
+    if (actionConfig.actionArgs.length > 0) {
+      extractAlgorithms(algorithms, allAlgorithms, actionConfig.actionArgs, 0);
+    }
+    return new AutomaticCWWorker(
+        wiki, null, algorithms, 10000, true, allAlgorithms, null, true, false);
+  }
+
+  /**
+   * Execute an action of type FixListCheckWiki.
+   * 
+   * @param actionConfig Parameters of the action.
+   * @return True if the action was executed.
+   */
+  public BasicWorker executeFixListCheckWiki(Action actionConfig) {
+    Page page = null;
+    if (actionConfig.actionArgs.length > 0) {
+      page = DataManager.getPage(wiki, actionConfig.actionArgs[0], null, null, null);
+    }
+    List<CheckErrorAlgorithm> algorithms = new ArrayList<CheckErrorAlgorithm>();
+    List<CheckErrorAlgorithm> allAlgorithms = new ArrayList<CheckErrorAlgorithm>();
+    if (actionConfig.actionArgs.length > 1) {
+      extractAlgorithms(algorithms, allAlgorithms, actionConfig.actionArgs, 1);
+    }
+    return new AutomaticListCWWorker(
+        wiki, null, page,
+        algorithms, allAlgorithms, namespaces,
+        null, true, false);
+  }
+
+  /**
+   * Execute an action of type MarkCheckWiki.
+   * 
+   * @param actionConfig Parameters of the action.
+   * @return True if the action was executed.
+   */
+  public BasicWorker executeMarkCheckWiki(Action actionConfig) {
+    List<CheckErrorAlgorithm> algorithms = new ArrayList<CheckErrorAlgorithm>();
+    List<CheckErrorAlgorithm> allAlgorithms = new ArrayList<CheckErrorAlgorithm>();
+    if (actionConfig.actionArgs.length > 0) {
+      extractAlgorithms(algorithms, allAlgorithms, actionConfig.actionArgs, 0);
+    }
+    return new AutomaticCWWorker(
+        wiki, null, algorithms, 10000, true, allAlgorithms, null, false, false);
+  }
+
+  /**
+   * Execute an action of type ListCheckWiki.
+   * 
+   * @param actionConfig Parameters of the action.
+   * @return True if the action was executed.
+   */
+  public BasicWorker executeListCheckWiki(Action actionConfig) {
+
+    // Check for global parameters
+    String[] actionArgs = actionConfig.actionArgs;
+    int currentArg = 0;
+    boolean check = true;
+    boolean onlyRecheck = false;
+    boolean optionsFinished = false;
+    while (!optionsFinished && (actionArgs.length > currentArg)) {
+      if ("-nocheck".equalsIgnoreCase(actionArgs[currentArg])) {
+        check = false;
+        currentArg++;
+      } else if ("-onlyRecheck".equalsIgnoreCase(actionArgs[currentArg])) {
+        onlyRecheck = true;
+        currentArg++;
+      } else {
+        optionsFinished = true;
+      }
+    }
+
+    // Check for parameters
+    if (actionArgs.length > currentArg + 2) {
+      File dumpFile = getDumpFile(actionArgs[currentArg]);
+      List<CheckErrorAlgorithm> algorithms = new ArrayList<CheckErrorAlgorithm>();
+      extractAlgorithms(algorithms, null, actionArgs, currentArg + 2);
+      if (actionArgs[currentArg + 1].startsWith("wiki:")) {
+        String pageName = actionArgs[currentArg + 1].substring(5);
+        return new ListCWWorker(
+            wiki, null, dumpFile, pageName,
+            algorithms, namespaces, check, onlyRecheck);
+      }
+      File output = new File(actionArgs[currentArg + 1]);
+      return new ListCWWorker(
+          wiki, null, dumpFile, output,
+          algorithms, namespaces, check);
+    }
+
+    return null;
+  }
+
+  /**
+   * Execute an action of type Set.
+   * 
+   * @param actionConfig Parameters of the action.
+   * @return True if the action was executed.
+   */
+  public boolean executeSet(Action actionConfig) {
+    String[] actionArgs = actionConfig.actionArgs;
+    if (actionArgs.length < 1) {
+      return false;
+    }
+    String parameter = actionArgs[0];
+
+    // Set AdditionalAlgorithms
+    if ("AdditionalAlgorithms".equalsIgnoreCase(parameter)) {
+      additionalAlgorithms.clear();
+      if (actionArgs.length > 1) {
+        extractAlgorithms(additionalAlgorithms, null, actionArgs, 1);
+      }
+      return true;
+    }
+
+    // Set Configuration
+    if ("Configuration".equalsIgnoreCase(parameter)) {
+      if (actionArgs.length > 2) {
+        Configuration config = Configuration.getConfiguration();
+        config.forceValue(actionArgs[1], actionArgs[2]);
+      }
+      return true;
+    }
+
+    // Set Namespaces
+    if ("Namespaces".equalsIgnoreCase(parameter)) {
+      namespaces = new HashSet<>();
+      int currentArg = 1;
+      while (currentArg < actionArgs.length) {
+        try {
+          namespaces.add(Integer.valueOf(actionArgs[currentArg]));
+        } catch (NumberFormatException e) {
+          log.warn("Incorrect namespace {}", actionArgs[currentArg]);
+        }
+        currentArg++;
+      }
+      return true;
+    }
+
+    // Set Prefix
+    if ("Prefix".equalsIgnoreCase(parameter)) {
+      if (actionArgs.length > 1) {
+        CommentManager.addExtraText(actionArgs[1].replaceAll("_", " "));
+      }
+      return true;
+    }
+
+    return false;
   }
 
   /**
@@ -517,8 +616,14 @@ public class Bot implements BasicWorkerListener {
    */
   private static class Action {
 
+    /** Action itself */
+    public final String action;
+
     /** List of arguments for the action */
-    public final String[] args;
+    public final String[] actionArgs;
+
+    /** Full action (with its arguments) */
+    public final String fullAction;
 
     /** Base directory */
     public final File baseDir;
@@ -530,7 +635,17 @@ public class Bot implements BasicWorkerListener {
      * @param baseDir Base directory.
      */
     public Action(String[] args, File baseDir) {
-      this.args = args;
+      this.action = (args != null) && (args.length > 0) ?
+          args[0] : null;
+      this.actionArgs = (args != null) && (args.length > 1) ?
+          Arrays.copyOfRange(args, 1, args.length) : new String[0];
+      StringJoiner fullActionJoiner = new StringJoiner(" ");
+      if (args != null) {
+        for (String arg : args) {
+          fullActionJoiner.add(arg);
+        }
+      }
+      this.fullAction = fullActionJoiner.toString();
       this.baseDir = baseDir;
     }
 
@@ -538,7 +653,7 @@ public class Bot implements BasicWorkerListener {
      * @return True if the action is OK.
      */
     public boolean isOk() {
-      return (args != null) && (args.length > 0);
+      return (action != null);
     }
   }
 }

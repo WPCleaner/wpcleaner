@@ -16,6 +16,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
@@ -96,7 +97,7 @@ public class Configuration implements WindowListener {
   }
 
   /**
-   * Contructor.
+   * Constructor.
    */
   private Configuration() {
     preferences = Preferences.userNodeForPackage(WikipediaCleaner.class);
@@ -327,6 +328,21 @@ public class Configuration implements WindowListener {
     MediaWikiAPI.updateConfiguration();
   }
 
+  /** Forced values */
+  private final Map<String, String> forcedValues = new HashMap<>();
+
+  /**
+   * Force a value (override the configured value).
+   * 
+   * @param identifier Identifier of the value.
+   * @param value Value itself.
+   */
+  public void forceValue(String identifier, String value) {
+    if (identifier != null) {
+      forcedValues.put(identifier, value);
+    }
+  }
+
   // ==========================================================================
   // String management
   // ==========================================================================
@@ -338,6 +354,10 @@ public class Configuration implements WindowListener {
    */
   public String getString(
       EnumWikipedia wikipedia, ConfigurationValueString property) {
+    String forcedValue = forcedValues.get(property.getName());
+    if (forcedValue != null) {
+      return forcedValue;
+    }
     return ConfigurationValueString.getValue(getPreferences(wikipedia), property);
   }
 
@@ -980,6 +1000,14 @@ public class Configuration implements WindowListener {
    * @return Property value.
    */
   public int getInt(EnumWikipedia wikipedia, ConfigurationValueInteger property) {
+    String forcedValue = forcedValues.get(property.getName());
+    if (forcedValue != null) {
+      try {
+        return Integer.parseInt(forcedValue);
+      } catch (NumberFormatException e) {
+        // Nothing to do
+      }
+    }
     return ConfigurationValueInteger.getValue(getPreferences(wikipedia), property);
   }
 
@@ -1032,6 +1060,14 @@ public class Configuration implements WindowListener {
    * @return Property value.
    */
   public boolean getBoolean(EnumWikipedia wikipedia, ConfigurationValueBoolean property) {
+    String forcedValue = forcedValues.get(property.getName());
+    if (forcedValue != null) {
+      try {
+        return Boolean.parseBoolean(forcedValue);
+      } catch (NumberFormatException e) {
+        // Nothing to do
+      }
+    }
     return ConfigurationValueBoolean.getValue(getPreferences(wikipedia), property);
   }
 
