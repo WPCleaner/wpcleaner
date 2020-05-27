@@ -41,7 +41,7 @@ import javax.swing.event.ListSelectionListener;
 
 import org.wikipediacleaner.Version;
 import org.wikipediacleaner.api.APIFactory;
-import org.wikipediacleaner.api.check.CheckError;
+import org.wikipediacleaner.api.algorithm.AlgorithmError;
 import org.wikipediacleaner.api.check.CheckErrorPage;
 import org.wikipediacleaner.api.check.CheckWiki;
 import org.wikipediacleaner.api.check.CheckWikiDetection;
@@ -93,7 +93,7 @@ public class CheckWikiContentPanel
   final CheckWikiWindow window;
   final JTabbedPane pane;
   final Page page;
-  private final List<CheckError> errors;
+  private final List<AlgorithmError> errors;
 
   private JList<CheckErrorPage> listErrors;
   private DefaultListModel<CheckErrorPage> modelErrors;
@@ -112,7 +112,7 @@ public class CheckWikiContentPanel
    */
   CheckWikiContentPanel(
       CheckWikiWindow window, JTabbedPane pane,
-      Page page, List<CheckError> errors) {
+      Page page, List<AlgorithmError> errors) {
     super(new GridBagLayout());
     this.window = window;
     this.pane = pane;
@@ -320,13 +320,13 @@ public class CheckWikiContentPanel
         window.displayWarning(message);
       }
       if (errors != null) {
-        for (CheckError error : errors) {
+        for (AlgorithmError error : errors) {
           error.remove(page);
         }
       }
       pane.remove(this);
       if (errors != null) {
-        for (CheckError error : errors) {
+        for (AlgorithmError error : errors) {
           OnePageWindow.markPageAsFixed(error.getAlgorithm().getErrorNumberString(), page);
         }
       }
@@ -338,7 +338,7 @@ public class CheckWikiContentPanel
     textPage.setText(page.getContents());
     textPage.setModified(false);
     PageAnalysis pageAnalysis = page.getAnalysis(textPage.getText(), true);
-    List<CheckErrorPage> errorsFound = CheckError.analyzeErrors(
+    List<CheckErrorPage> errorsFound = AlgorithmError.analyzeErrors(
         window.allAlgorithms, pageAnalysis, false);
     modelErrors.clear();
     initialErrors = new ArrayList<CheckErrorPage>();
@@ -349,7 +349,7 @@ public class CheckWikiContentPanel
         modelErrors.addElement(tmpError);
         initialErrors.add(tmpError);
         errorCount++;
-        for (CheckError error : errors) {
+        for (AlgorithmError error : errors) {
           CheckErrorAlgorithm algorithm = error.getAlgorithm();
           if ((algorithm != null) &&
               (algorithm.getErrorNumber()== tmpError.getAlgorithm().getErrorNumber())) {
@@ -368,7 +368,7 @@ public class CheckWikiContentPanel
       // Ask Check Wiki what errors are still detected
       List<CheckWikiDetection> detections = null;
       boolean shouldCheck = false;
-      for (CheckError error : errors) {
+      for (AlgorithmError error : errors) {
         if (error.getErrorNumber() < CheckErrorAlgorithm.MAX_ERROR_NUMBER_WITH_LIST) {
           shouldCheck = true;
         }
@@ -382,7 +382,7 @@ public class CheckWikiContentPanel
       boolean errorDetected = false;
       if (detections != null) {
         for (CheckWikiDetection detection : detections) {
-          for (CheckError error : errors) {
+          for (AlgorithmError error : errors) {
             if (detection.getErrorNumber() == error.getErrorNumber()) {
               errorDetected = true;
             }
@@ -392,7 +392,7 @@ public class CheckWikiContentPanel
 
       // Construct a list of errors
       StringBuilder txtErrors = new StringBuilder();
-      for (CheckError error : errors) {
+      for (AlgorithmError error : errors) {
         if (txtErrors.length() > 0) {
           txtErrors.append("-");
         }
@@ -462,10 +462,10 @@ public class CheckWikiContentPanel
         if (errorCount == 0) {
           pane.remove(this);
         }
-        for (CheckError error : errors) {
+        for (AlgorithmError error : errors) {
           error.remove(page);
         }
-        for (CheckError error : errors) {
+        for (AlgorithmError error : errors) {
           OnePageWindow.markPageAsFixed(
               error.getAlgorithm().getErrorNumberString(), page);
         }
@@ -570,7 +570,7 @@ public class CheckWikiContentPanel
 
     // Unique algorithm
     CheckErrorAlgorithm algorithm = null;
-    CheckError error = null;
+    AlgorithmError error = null;
     if ((errors != null) && (errors.size() == 1)) {
       error = errors.get(0);
       algorithm = error.getAlgorithm();
@@ -588,7 +588,7 @@ public class CheckWikiContentPanel
 
     // Check if error is still present
     PageAnalysis pageAnalysis = page.getAnalysis(textPage.getText(), true);
-    CheckErrorPage errorPage = CheckError.analyzeError(
+    CheckErrorPage errorPage = AlgorithmError.analyzeError(
         algorithm, pageAnalysis);
     if ((errorPage.getResults() != null) &&
         (!errorPage.getResults().isEmpty())) {
@@ -648,15 +648,15 @@ public class CheckWikiContentPanel
    * @param errorsFixed Errors fixed
    * @return Comment.
    */
-  private String getComment(List<CheckError.Progress> errorsFixed) {
+  private String getComment(List<AlgorithmError.Progress> errorsFixed) {
     return getWiki().getCWConfiguration().getComment(errorsFixed);
   }
 
   /**
    * @return Errors fixed.
    */
-  private List<CheckError.Progress> computeErrorsFixed() {
-    return CheckError.computeErrorsFixed(initialErrors, textPage.getText(), false);
+  private List<AlgorithmError.Progress> computeErrorsFixed() {
+    return AlgorithmError.computeErrorsFixed(initialErrors, textPage.getText(), false);
   }
 
   /**
@@ -664,7 +664,7 @@ public class CheckWikiContentPanel
    */
   private void actionSend() {
     // Check page text to see what errors are still present
-    final List<CheckError.Progress> errorsFixed = computeErrorsFixed();
+    final List<AlgorithmError.Progress> errorsFixed = computeErrorsFixed();
     updateComment(errorsFixed);
 
     // Check that a comment is available
@@ -677,7 +677,7 @@ public class CheckWikiContentPanel
     // Count contributions
     Contributions contributions = new Contributions(getWiki());
     contributions.increasePages(1);
-    for (CheckError.Progress errorFixed : errorsFixed) {
+    for (AlgorithmError.Progress errorFixed : errorsFixed) {
       CheckErrorAlgorithm algorithm = errorFixed.algorithm;
       contributions.increaseCheckWikiError(algorithm.getErrorNumber(), 1);
     }
@@ -689,7 +689,7 @@ public class CheckWikiContentPanel
     boolean createISSNWarning = false;
     boolean updateDuplicateArgsWarning = false;
     boolean createDuplicateArgsWarning = false;
-    for (CheckError.Progress errorFixed : errorsFixed) {
+    for (AlgorithmError.Progress errorFixed : errorsFixed) {
       CheckErrorAlgorithm algorithm = errorFixed.algorithm;
       int errorNumber = algorithm.getErrorNumber();
       if ((errorNumber == 69) ||
@@ -740,19 +740,19 @@ public class CheckWikiContentPanel
    * @param errorsFixed
    * @param ok
    */
-  void afterSendingFinished(List<CheckError.Progress> errorsFixed, boolean ok) {
+  void afterSendingFinished(List<AlgorithmError.Progress> errorsFixed, boolean ok) {
     if (ok) {
       // Close pane
       pane.remove(this);
 
       // Remove errors fixed
-      List<CheckError> errorsToBeRemoved = new ArrayList<CheckError>();
-      for (CheckError.Progress errorFixed : errorsFixed) {
+      List<AlgorithmError> errorsToBeRemoved = new ArrayList<AlgorithmError>();
+      for (AlgorithmError.Progress errorFixed : errorsFixed) {
         CheckErrorAlgorithm algoFixed = errorFixed.algorithm;
         for (int posError = 0; posError < window.modelAllErrors.getSize(); posError++) {
           Object element = window.modelAllErrors.getElementAt(posError);
-          if (element instanceof CheckError) {
-            final CheckError tmpError = (CheckError) element;
+          if (element instanceof AlgorithmError) {
+            final AlgorithmError tmpError = (AlgorithmError) element;
             if (tmpError.getAlgorithm().getErrorNumberString().equals(algoFixed.getErrorNumberString()) &&
                 errorFixed.full) {
               tmpError.remove(page);
@@ -767,7 +767,7 @@ public class CheckWikiContentPanel
       if (!configuration.getBoolean(
           null,
           ConfigurationValueBoolean.CHECK_SHOW_0_ERRORS)) {
-        for (CheckError tmpError : errorsToBeRemoved) {
+        for (AlgorithmError tmpError : errorsToBeRemoved) {
           window.listAllErrors.removeItem(tmpError);
         }
       }
@@ -788,7 +788,7 @@ public class CheckWikiContentPanel
   private void actionValidate() {
     // Check for new errors
     PageAnalysis pageAnalysis = page.getAnalysis(textPage.getText(), true);
-    List<CheckErrorPage> errorsFound = CheckError.analyzeErrors(
+    List<CheckErrorPage> errorsFound = AlgorithmError.analyzeErrors(
         window.allAlgorithms, pageAnalysis, false);
     if (errorsFound != null) {
       for (CheckErrorPage tmpError : errorsFound) {
@@ -834,7 +834,7 @@ public class CheckWikiContentPanel
    * 
    * @param errorsFixed Errors.
    */
-  private void updateComment(List<CheckError.Progress> errorsFixed) {
+  private void updateComment(List<AlgorithmError.Progress> errorsFixed) {
     if ((chkAutomaticComment != null) &&
         (textComment != null)) {
       textComment.setEditable(!chkAutomaticComment.isSelected());

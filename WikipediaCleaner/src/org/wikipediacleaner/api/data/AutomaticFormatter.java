@@ -13,7 +13,7 @@ import java.util.Collection;
 import java.util.List;
 
 import org.apache.commons.codec.digest.DigestUtils;
-import org.wikipediacleaner.api.check.CheckError;
+import org.wikipediacleaner.api.algorithm.AlgorithmError;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithm;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithms;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
@@ -40,7 +40,7 @@ public class AutomaticFormatter {
   public static String tidyArticle(
       Page page, String contents,
       Collection<CheckErrorAlgorithm> algorithms, boolean botFix,
-      List<CheckError.Progress> usedAlgorithms) {
+      List<AlgorithmError.Progress> usedAlgorithms) {
     if ((page == null) || (contents == null)) {
       return contents;
     }
@@ -79,13 +79,13 @@ public class AutomaticFormatter {
               finished = false;
               if (usedAlgorithms != null) {
                 boolean shouldAdd = true;
-                for (CheckError.Progress progress : usedAlgorithms) {
+                for (AlgorithmError.Progress progress : usedAlgorithms) {
                   if (progress.algorithm == algorithm) {
                     shouldAdd = false;
                   }
                 }
                 if (shouldAdd) {
-                  usedAlgorithms.add(new CheckError.Progress(algorithm, true));
+                  usedAlgorithms.add(new AlgorithmError.Progress(algorithm, true));
                   // TODO: compute if fix is complete ?
                 }
               }

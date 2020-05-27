@@ -13,6 +13,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.wikipediacleaner.api.algorithm.AlgorithmParameter;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.constants.WPCConfiguration;
 import org.wikipediacleaner.api.data.PageAnalysis;
@@ -150,18 +151,16 @@ public class CheckErrorAlgorithm101 extends CheckErrorAlgorithmBase {
   private final Map<String, String> replacements = new HashMap<>();
 
   /**
-   * @return Map of parameters (key=name, value=description).
-   * @see org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase#getParameters()
+   * Build the list of parameters for this algorithm.
    */
   @Override
-  public Map<String, String> getParameters() {
-    Map<String, String> parameters = super.getParameters();
-    parameters.put(
+  protected void addParameters() {
+    super.addParameters();
+    addParameter(new AlgorithmParameter(
         PARAMETER_TEMPLATES,
-        GT._T("List of ordinal suffixes"));
-    parameters.put(
+        GT._T("List of ordinal suffixes")));
+    addParameter(new AlgorithmParameter(
         PARAMETER_REPLACEMENTS,
-        GT._T("List of possible replacements"));
-    return parameters;
+        GT._T("List of possible replacements")));
   }
 }

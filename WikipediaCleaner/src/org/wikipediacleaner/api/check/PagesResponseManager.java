@@ -14,6 +14,7 @@ import java.util.List;
 
 import org.wikipediacleaner.api.APIException;
 import org.wikipediacleaner.api.ResponseManager;
+import org.wikipediacleaner.api.algorithm.AlgorithmError;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithm;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 
@@ -40,7 +41,7 @@ class PagesResponseManager implements ResponseManager {
   /**
    * List of errors.
    */
-  private final List<CheckError> errors;
+  private final List<AlgorithmError> errors;
 
   /**
    * @param classic True if classic interface should be used.
@@ -52,7 +53,7 @@ class PagesResponseManager implements ResponseManager {
       boolean classic,
       CheckErrorAlgorithm algorithm,
       EnumWikipedia wiki,
-      List<CheckError> errors) {
+      List<AlgorithmError> errors) {
     this.classic = classic;
     Integer tmp = null;
     try {
@@ -75,11 +76,11 @@ class PagesResponseManager implements ResponseManager {
   public void manageResponse(InputStream stream) throws IOException,
       APIException {
     if (classic) {
-      CheckError.addCheckErrorClassic(
+      AlgorithmError.addCheckErrorClassic(
           errors, wiki,
           errorNumber, stream);
     } else {
-      CheckError.addCheckErrorBots(
+      AlgorithmError.addCheckErrorBots(
           errors, wiki,
           errorNumber, stream);
     }

@@ -11,11 +11,11 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 
 import org.wikipediacleaner.api.API;
 import org.wikipediacleaner.api.APIException;
 import org.wikipediacleaner.api.APIFactory;
+import org.wikipediacleaner.api.algorithm.AlgorithmParameter;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.CheckErrorResult.ErrorLevel;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
@@ -301,23 +301,19 @@ public class CheckErrorAlgorithm526 extends CheckErrorAlgorithmBase {
   private String dumpAnalysis = null;
 
   /**
-   * Return the parameters used to configure the algorithm.
-   * 
-   * @return Map of parameters (key=name, value=description).
-   * @see org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase#getParameters()
+   * Build the list of parameters for this algorithm.
    */
   @Override
-  public Map<String, String> getParameters() {
-    Map<String, String> parameters = super.getParameters();
-    parameters.put(
+  protected void addParameters() {
+    super.addParameters();
+    addParameter(new AlgorithmParameter(
         PARAMETER_ABUSE_FILTER,
-        GT._T("An identifier of an abuse filter that is triggered by incorrect year links."));
-    parameters.put(
+        GT._T("An identifier of an abuse filter that is triggered by incorrect year links.")));
+    addParameter(new AlgorithmParameter(
         PARAMETER_ASK_HELP,
-        GT._T("Text added after the link to ask for help."));
-    parameters.put(
+        GT._T("Text added after the link to ask for help.")));
+    addParameter(new AlgorithmParameter(
         PARAMETER_DUMP_ANALYSIS,
-        GT._T("A page containing a dump analysis for this error."));
-    return parameters;
+        GT._T("A page containing a dump analysis for this error.")));
   }
 }

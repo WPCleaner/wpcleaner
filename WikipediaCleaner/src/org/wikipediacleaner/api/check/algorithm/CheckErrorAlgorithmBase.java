@@ -11,18 +11,19 @@ import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Hashtable;
 import java.util.List;
-import java.util.Map;
 
 import javax.swing.JTextPane;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.DefaultHighlighter;
 import javax.swing.text.Highlighter.HighlightPainter;
 
+import org.wikipediacleaner.api.algorithm.AlgorithmBase;
+import org.wikipediacleaner.api.algorithm.AlgorithmParameter;
+import org.wikipediacleaner.api.algorithm.AlgorithmParameterElement;
 import org.wikipediacleaner.api.check.CheckErrorResult;
-import org.wikipediacleaner.api.check.CheckErrorResult.ErrorLevel;
 import org.wikipediacleaner.api.check.SpecialCharacters;
+import org.wikipediacleaner.api.check.CheckErrorResult.ErrorLevel;
 import org.wikipediacleaner.api.constants.CWConfiguration;
 import org.wikipediacleaner.api.constants.CWConfigurationError;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
@@ -39,34 +40,16 @@ import org.wikipediacleaner.i18n.GT;
 /**
  * Abstract base class for analyzing errors.
  */
-public abstract class CheckErrorAlgorithmBase implements CheckErrorAlgorithm {
-
-  /** Configuration for the wiki. */
-  private WikiConfiguration wikiConfiguration;
-
-  /** Configuration for WPCleaner. */
-  private WPCConfiguration wpcConfiguration;
-
-  /** Configuration for Check Wiki. */
-  private CWConfiguration cwConfiguration;
+public abstract class CheckErrorAlgorithmBase extends AlgorithmBase implements CheckErrorAlgorithm {
 
   /** Configuration of the error. */
   private CWConfigurationError errorConfiguration;
-
-  private final String name;
 
   /**
    * @param name Name of the error.
    */
   public CheckErrorAlgorithmBase(String name) {
-    this.name = name;
-  }
-
-  /**
-   * @return Name of the error.
-   */
-  public String getName() {
-    return name;
+    super(name);
   }
 
   /**
@@ -76,14 +59,6 @@ public abstract class CheckErrorAlgorithmBase implements CheckErrorAlgorithm {
   @Override
   public String toString() {
     return getShortDescriptionReplaced();
-  }
-
-  /**
-   * @return Flag indicating if this algorithm is available.
-   */
-  @Override
-  public boolean isAvailable() {
-    return true;
   }
 
   /**
@@ -131,18 +106,8 @@ public abstract class CheckErrorAlgorithmBase implements CheckErrorAlgorithm {
       WikiConfiguration wikiConfiguration,
       CWConfiguration cwConfiguration,
       WPCConfiguration wpcConfiguration) {
-    this.wikiConfiguration = wikiConfiguration;
-    this.wpcConfiguration = wpcConfiguration;
-    this.cwConfiguration = cwConfiguration;
     this.errorConfiguration = cwConfiguration.getErrorConfiguration(getErrorNumber());
-    initializeSettings();
-  }
-
-  /**
-   * Initialize settings for the algorithm.
-   */
-  protected void initializeSettings() {
-    // Nothing to do for base class
+    super.setConfiguration(wikiConfiguration, cwConfiguration, wpcConfiguration);
   }
 
   /**
@@ -196,27 +161,6 @@ public abstract class CheckErrorAlgorithmBase implements CheckErrorAlgorithm {
   @Override
   public String getWhiteListPageName() {
     return (errorConfiguration != null) ? errorConfiguration.getWhiteListPageName() : null;
-  }
-
-  /**
-   * @return Configuration for the wiki.
-   */
-  protected WikiConfiguration getWikiConfiguration() {
-    return wikiConfiguration;
-  }
-
-  /**
-   * @return Configuration for WPCleaner.
-   */
-  protected WPCConfiguration getWPCConfiguration() {
-    return wpcConfiguration;
-  }
-
-  /**
-   * @return Configuration for Check Wiki.
-   */
-  protected CWConfiguration getCWConfiguration() {
-    return cwConfiguration;
   }
 
   /**
@@ -330,10 +274,10 @@ public abstract class CheckErrorAlgorithmBase implements CheckErrorAlgorithm {
   public String getSpecificProperty(
       int errorNumber, String property,
       boolean useWiki, boolean useGeneral, boolean acceptEmpty) {
-    if (cwConfiguration == null) {
+    if (getCWConfiguration() == null) {
       return null;
     }
-    CWConfigurationError tmpConfig = cwConfiguration.getErrorConfiguration(errorNumber);
+    CWConfigurationError tmpConfig = getCWConfiguration().getErrorConfiguration(errorNumber);
     if (tmpConfig == null) {
       return null;
     }
@@ -341,18 +285,36 @@ public abstract class CheckErrorAlgorithmBase implements CheckErrorAlgorithm {
   }
 
   /**
-   * Return the parameters used to configure the algorithm.
-   * 
-   * @return Map of parameters (key=name, value=description).
+   * Build the list of parameters for this algorithm.
    */
   @Override
-  public Map<String, String> getParameters() {
-    Map<String, String> parameters = new Hashtable<String, String>();
-    parameters.put("link", GT._T("Title of the article describing this type of error"));
-    parameters.put("noauto", GT._T("Set to true to prevent automatic modifications for this type of error"));
-    parameters.put("whitelist", GT._T("List of false positives for this type of error"));
-    parameters.put("whitelistpage", GT._T("Page containing the list of false positives for this type of error"));
-    return parameters;
+  protected void addParameters() {
+    super.addParameters();
+    addParameter(new AlgorithmParameter(
+        "link",
+        GT._T("Title of the article describing this type of error"),
+        new AlgorithmParameterElement(
+            "page name",
+            GT._T("Title of the article describing this type of error"))));
+    addParameter(new AlgorithmParameter(
+        "noauto",
+        GT._T("Set to true to prevent automatic modifications for this type of error"),
+        new AlgorithmParameterElement(
+            "true/false",
+            GT._T("Set to true to prevent automatic modifications for this type of error"))));
+    addParameter(new AlgorithmParameter(
+        "whitelist",
+        GT._T("List of false positives for this type of error"),
+        new AlgorithmParameterElement(
+            "page name",
+            GT._T("Page containing a false positive for this type of error")),
+        true));
+    addParameter(new AlgorithmParameter(
+        "whitelistpage",
+        GT._T("Page containing the list of false positives for this type of error"),
+        new AlgorithmParameterElement(
+            "page name",
+            GT._T("Page containing the list of false positives for this type of error"))));
   }
 
   /**

@@ -11,8 +11,9 @@ import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.Map;
 
+import org.wikipediacleaner.api.algorithm.AlgorithmParameter;
+import org.wikipediacleaner.api.algorithm.AlgorithmParameterElement;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.SimpleAction;
 import org.wikipediacleaner.api.data.ISBNRange;
@@ -288,23 +289,28 @@ public class CheckErrorAlgorithm073 extends CheckErrorAlgorithmISBN {
   private String reasonReserved = null;
 
   /**
-   * Return the parameters used to configure the algorithm.
-   * 
-   * @return Map of parameters (key=name, value=description).
-   * @see org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase#getParameters()
+   * Build the list of parameters for this algorithm.
    */
   @Override
-  public Map<String, String> getParameters() {
-    Map<String, String> parameters = super.getParameters();
-    parameters.put(
+  protected void addParameters() {
+    super.addParameters();
+    addParameter(new AlgorithmParameter(
         PARAMETER_REASON_CHECKSUM,
-        GT._T("An explanation of the problem (incorrect checksum)"));
-    parameters.put(
+        GT._T("An explanation of the problem (incorrect checksum)"),
+        new AlgorithmParameterElement(
+            "text",
+            GT._T("An explanation of the problem"))));
+    addParameter(new AlgorithmParameter(
         PARAMETER_REASON_NO_RANGE,
-        GT._T("An explanation of the problem (non-existing range of ISBN numbers)"));
-    parameters.put(
+        GT._T("An explanation of the problem (non-existing range of ISBN numbers)"),
+        new AlgorithmParameterElement(
+            "text",
+            GT._T("An explanation of the problem"))));
+    addParameter(new AlgorithmParameter(
         PARAMETER_REASON_RESERVED,
-        GT._T("An explanation of the problem (reserved range of ISBN numbers)"));
-    return parameters;
+        GT._T("An explanation of the problem (reserved range of ISBN numbers)"),
+        new AlgorithmParameterElement(
+            "text",
+            GT._T("An explanation of the problem"))));
   }
 }

@@ -14,9 +14,10 @@ import java.util.List;
 
 import org.wikipediacleaner.api.APIException;
 import org.wikipediacleaner.api.MediaWiki;
-import org.wikipediacleaner.api.check.CheckError;
-import org.wikipediacleaner.api.check.CheckErrorPage;
+import org.wikipediacleaner.api.algorithm.Algorithm;
+import org.wikipediacleaner.api.algorithm.AlgorithmError;
 import org.wikipediacleaner.api.check.CheckErrorResult;
+import org.wikipediacleaner.api.check.CheckErrorPage;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithm;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmISBN;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithms;
@@ -122,7 +123,7 @@ public class UpdateISBNWarningTools extends UpdateWarningTools {
       int errorNumber = algorithm.getErrorNumber();
       if (CheckErrorAlgorithms.isAlgorithmActive(wiki, errorNumber) &&
           !algorithm.isInWhiteList(analysis.getPage().getTitle())) {
-        CheckErrorPage errorPage = CheckError.analyzeError(algorithm, analysis);
+        CheckErrorPage errorPage = AlgorithmError.analyzeError(algorithm, analysis);
         List<CheckErrorResult> results = errorPage.getResults();
         if (results != null) {
           errorResults.addAll(results);
@@ -157,7 +158,7 @@ public class UpdateISBNWarningTools extends UpdateWarningTools {
       StringBuilder comment = new StringBuilder();
       while (pos < next) {
         errorResult = errorResults.get(pos);
-        CheckErrorAlgorithm algorithm = errorResult.getAlgorithm();
+        Algorithm algorithm = errorResult.getAlgorithm();
         PageElementISBN isbn = analysis.isInISBN(beginIndex);
         if (isbn != null) {
           if ((algorithm != null) &&

@@ -5,7 +5,7 @@
  *  See README.txt file for licensing information.
  */
 
-package org.wikipediacleaner.api.check;
+package org.wikipediacleaner.api.algorithm;
 
 import java.util.Comparator;
 
@@ -16,13 +16,13 @@ import org.wikipediacleaner.api.constants.CWConfigurationError;
 /**
  * A comparator for CheckError objects by priority.
  */
-public class CheckErrorComparator implements Comparator<CheckError> {
+public class AlgorithmErrorComparator implements Comparator<AlgorithmError> {
 
   /* (non-Javadoc)
    * @see java.util.Comparator#compare(java.lang.Object, java.lang.Object)
    */
   @Override
-  public int compare(CheckError o1, CheckError o2) {
+  public int compare(AlgorithmError o1, AlgorithmError o2) {
 
     // Check on null values
     if (o1 == null) {

@@ -12,8 +12,8 @@ import java.util.List;
 
 import org.wikipediacleaner.api.APIException;
 import org.wikipediacleaner.api.APIFactory;
-import org.wikipediacleaner.api.check.CheckError;
-import org.wikipediacleaner.api.check.CheckErrorComparator;
+import org.wikipediacleaner.api.algorithm.AlgorithmError;
+import org.wikipediacleaner.api.algorithm.AlgorithmErrorComparator;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithm;
 import org.wikipediacleaner.api.constants.CWConfigurationError;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
@@ -26,7 +26,7 @@ import org.wikipediacleaner.i18n.GT;
  */
 public class CheckWikiProjectWorker extends BasicWorker {
 
-  final List<CheckError> errors;
+  final List<AlgorithmError> errors;
   private final List<CheckErrorAlgorithm> selectedAlgorithms;
   private final int errorLimit;
 
@@ -42,7 +42,7 @@ public class CheckWikiProjectWorker extends BasicWorker {
    */
   public CheckWikiProjectWorker(
       EnumWikipedia wikipedia, BasicWindow window,
-      List<CheckError> errors,
+      List<AlgorithmError> errors,
       List<CheckErrorAlgorithm> selectedAlgorithms,
       boolean otherErrors,
       int errorLimit) {
@@ -89,7 +89,7 @@ public class CheckWikiProjectWorker extends BasicWorker {
 
     // Sorting errors by priority
     setText(GT._T("Sorting errors by priority"));
-    Collections.sort(errors, new CheckErrorComparator());
+    Collections.sort(errors, new AlgorithmErrorComparator());
 
     return null;
   }

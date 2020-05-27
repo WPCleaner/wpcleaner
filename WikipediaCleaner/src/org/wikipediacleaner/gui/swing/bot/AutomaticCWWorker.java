@@ -14,7 +14,7 @@ import java.util.List;
 import org.wikipediacleaner.api.API;
 import org.wikipediacleaner.api.APIException;
 import org.wikipediacleaner.api.APIFactory;
-import org.wikipediacleaner.api.check.CheckError;
+import org.wikipediacleaner.api.algorithm.AlgorithmError;
 import org.wikipediacleaner.api.check.CheckErrorPage;
 import org.wikipediacleaner.api.check.CheckWiki;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithm;
@@ -144,11 +144,11 @@ public class AutomaticCWWorker extends BasicWorker {
     }
 
     // Analysis
-    List<CheckError> errors = new ArrayList<>();
+    List<AlgorithmError> errors = new ArrayList<>();
     CheckWiki checkWiki = APIFactory.getCheckWiki();
     checkWiki.retrievePages(algorithm, maxSize, getWikipedia(), errors);
     while (!errors.isEmpty()) {
-      CheckError error = errors.remove(0);
+      AlgorithmError error = errors.remove(0);
       int maxErrors = error.getPageCount();
       for (int numPage = 0;
           (error.getPageCount() > 0) && shouldContinue();
@@ -204,7 +204,7 @@ public class AutomaticCWWorker extends BasicWorker {
     }
 
     // Analyze page to check if an error has been found
-    CheckErrorPage errorPage = CheckError.analyzeError(algorithm, analysis);
+    CheckErrorPage errorPage = AlgorithmError.analyzeError(algorithm, analysis);
     boolean found = false;
     if (errorPage != null) {
       if (errorPage.getErrorFound()) {
@@ -220,7 +220,7 @@ public class AutomaticCWWorker extends BasicWorker {
 
       // Fix all errors that can be fixed
       String newContents = page.getContents();
-      List<CheckError.Progress> errorsFixed = new ArrayList<>();
+      List<AlgorithmError.Progress> errorsFixed = new ArrayList<>();
       if (!preventBot) {
         newContents = AutomaticFormatter.tidyArticle(page, newContents, allAlgorithms, true, errorsFixed);
       }
@@ -228,7 +228,7 @@ public class AutomaticCWWorker extends BasicWorker {
       // Check if error has been fixed
       boolean isFixed = false;
       if (!newContents.equals(page.getContents())) {
-        for (CheckError.Progress errorFixed : errorsFixed) {
+        for (AlgorithmError.Progress errorFixed : errorsFixed) {
           if ((algorithm != null) && (algorithm.equals(errorFixed.algorithm))) {
             isFixed = true;
           }
@@ -249,9 +249,9 @@ public class AutomaticCWWorker extends BasicWorker {
             comment.toString(),
             true, true, false);
         countModified++;
-        for (CheckError.Progress errorFixed : errorsFixed) {
+        for (AlgorithmError.Progress errorFixed : errorsFixed) {
           CheckErrorAlgorithm usedAlgorithm = errorFixed.algorithm;
-          errorPage = CheckError.analyzeError(usedAlgorithm, page.getAnalysis(newContents, true));
+          errorPage = AlgorithmError.analyzeError(usedAlgorithm, page.getAnalysis(newContents, true));
           if ((errorPage != null) && (!errorPage.getErrorFound())) {
             checkWiki.markAsFixed(page, usedAlgorithm.getErrorNumberString());
             if (selectedAlgorithms.contains(usedAlgorithm)) {

@@ -12,6 +12,8 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
+import org.wikipediacleaner.api.algorithm.AlgorithmParameter;
+import org.wikipediacleaner.api.algorithm.AlgorithmParameterElement;
 import org.wikipediacleaner.api.check.AddInternalLinkActionProvider;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.constants.ArticleUrl;
@@ -619,7 +621,7 @@ public class CheckErrorAlgorithm090 extends CheckErrorAlgorithmBase {
         }
         if ((textParam != null) ||
             ((info.text != null) && (info.text.contains("=")))) {
-          replacement.append((textParam != null) ? textParam : "3");
+          replacement.append((textParam != null) ? textParam : "2");
           replacement.append("=");
         }
         if (info.text != null) {
@@ -876,14 +878,13 @@ public class CheckErrorAlgorithm090 extends CheckErrorAlgorithmBase {
      * 
      * @param linkTemplates List of link templates.
      */
-    public void computeIsInTemplate(List<String> linkTemplates) {
+    public void computeIsInTemplate(List<String[]> linkTemplates) {
       
       isInTemplate = Boolean.FALSE;
       if (linkTemplates != null) {
         PageElementTemplate template = analysis.isInTemplate(beginIndex);
         if (template != null) {
-          for (String linkTemplate : linkTemplates) {
-            String[] elements = linkTemplate.split("\\|");
+          for (String[] elements : linkTemplates) {
             if ((elements.length > 2) &&
                 Page.areSameTitle(elements[0], template.getTemplateName()) &&
                 link.getLink().trim().equals(template.getParameterValue(elements[1]))) {
@@ -958,7 +959,7 @@ public class CheckErrorAlgorithm090 extends CheckErrorAlgorithmBase {
     tmp = getSpecificProperty(PARAMETER_LINK_TEMPLATES, true, true, false);
     linkTemplates.clear();
     if (tmp != null) {
-      List<String> tmpList = WPCConfiguration.convertPropertyToStringList(tmp);
+      List<String[]> tmpList = WPCConfiguration.convertPropertyToStringArrayList(tmp);
       if (tmpList != null) {
         linkTemplates.addAll(tmpList);
       }
@@ -987,7 +988,7 @@ public class CheckErrorAlgorithm090 extends CheckErrorAlgorithmBase {
   private final List<String[]> historyTemplates = new ArrayList<>();
 
   /** Templates using external links */
-  private final List<String> linkTemplates = new ArrayList<>();
+  private final List<String[]> linkTemplates = new ArrayList<>();
 
   /** Templates for linking to an old version of an article */
   private final List<String[]> oldidTemplates = new ArrayList<>();
@@ -996,24 +997,77 @@ public class CheckErrorAlgorithm090 extends CheckErrorAlgorithmBase {
   private final List<String[]> prefixIndexTemplates = new ArrayList<>();
 
   /**
-   * @return Map of parameters (key=name, value=description).
-   * @see org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase#getParameters()
+   * Build the list of parameters for this algorithm.
    */
   @Override
-  public Map<String, String> getParameters() {
-    Map<String, String> parameters = super.getParameters();
-    parameters.put(
+  protected void addParameters() {
+    super.addParameters();
+    addParameter(new AlgorithmParameter(
         PARAMETER_HISTORY_TEMPLATES,
-        GT._T("Templates to be used for linking to the history of an article"));
-    parameters.put(
+        GT._T("Templates to be used for linking to the history of an article"),
+        new AlgorithmParameterElement[] {
+            new AlgorithmParameterElement(
+                "template name",
+                GT._T("Template to be used for linking to the history of an article")),
+            new AlgorithmParameterElement(
+                "article param",
+                GT._T("Parameter to be used for the article name"),
+                true),
+            new AlgorithmParameterElement(
+                "text param",
+                GT._T("Parameter to be used for the text"),
+                true)
+        },
+        true));
+    addParameter(new AlgorithmParameter(
         PARAMETER_LINK_TEMPLATES,
-        GT._T("Templates using external links"));
-    parameters.put(
+        GT._T("Templates using external links"),
+        new AlgorithmParameterElement[] {
+            new AlgorithmParameterElement(
+                "template name",
+                null),
+            new AlgorithmParameterElement(
+                "parameter name",
+                null)
+        },
+        true));
+    addParameter(new AlgorithmParameter(
         PARAMETER_OLDID_TEMPLATES,
-        GT._T("Templates to be used for linking to an old version of an article"));
-    parameters.put(
+        GT._T("Templates to be used for linking to an old version of an article"),
+        new AlgorithmParameterElement[] {
+            new AlgorithmParameterElement(
+                "template name",
+                GT._T("Template to be used for linking to the history of an article")),
+            new AlgorithmParameterElement(
+                "article param",
+                GT._T("Parameter to be used for the article name"),
+                true),
+            new AlgorithmParameterElement(
+                "oldid param",
+                GT._T("Parameter to be used for the identifier of the old version"),
+                true),
+            new AlgorithmParameterElement(
+                "text param",
+                GT._T("Parameter to be used for the text"),
+                true)
+        },
+        true));
+    addParameter(new AlgorithmParameter(
         PARAMETER_PREFIX_INDEX_TEMPLATES,
-        GT._T("Templates to be used instead of Special:PrefixIndex"));
-    return parameters;
+        GT._T("Templates to be used instead of Special:PrefixIndex"),
+        new AlgorithmParameterElement[] {
+            new AlgorithmParameterElement(
+                "template name",
+                GT._T("Template to be used for linking to the history of an article")),
+            new AlgorithmParameterElement(
+                "article param",
+                GT._T("Parameter to be used for the article name"),
+                true),
+            new AlgorithmParameterElement(
+                "text param",
+                GT._T("Parameter to be used for the text"),
+                true)
+        },
+        true));
   }
 }

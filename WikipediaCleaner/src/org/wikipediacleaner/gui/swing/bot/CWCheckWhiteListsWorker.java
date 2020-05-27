@@ -16,7 +16,7 @@ import org.wikipediacleaner.api.API;
 import org.wikipediacleaner.api.APIException;
 import org.wikipediacleaner.api.APIFactory;
 import org.wikipediacleaner.api.MediaWiki;
-import org.wikipediacleaner.api.check.CheckError;
+import org.wikipediacleaner.api.algorithm.AlgorithmError;
 import org.wikipediacleaner.api.check.CheckErrorPage;
 import org.wikipediacleaner.api.check.CheckWiki;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithm;
@@ -93,7 +93,7 @@ class CWCheckWhiteListsWorker extends BasicWorker {
                   details.append("</li>");
                   unnecessaryPages.add(page);
                 } else {
-                  CheckErrorPage errorPage = CheckError.analyzeError(
+                  CheckErrorPage errorPage = AlgorithmError.analyzeError(
                       algorithm, page.getAnalysis(page.getContents(), true));
                   if ((errorPage == null) || (!errorPage.getErrorFound())) {
                     details.append("<li>");

@@ -10,8 +10,8 @@ package org.wikipediacleaner.api.check.algorithm;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 
+import org.wikipediacleaner.api.algorithm.AlgorithmParameter;
 import org.wikipediacleaner.api.constants.WPCConfiguration;
 import org.wikipediacleaner.api.data.MagicWord;
 import org.wikipediacleaner.api.data.Page;
@@ -92,13 +92,13 @@ public abstract class CheckErrorAlgorithmTOC extends CheckErrorAlgorithmBase {
   }
 
   /**
-   * @return Map of parameters (key=name, value=description).
-   * @see org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase#getParameters()
+   * Build the list of parameters for this algorithm.
    */
   @Override
-  public Map<String, String> getParameters() {
-    Map<String, String> parameters = super.getParameters();
-    parameters.put("templates", GT._T("A list of templates resulting in the inclusion of a table of contents"));
-    return parameters;
+  protected void addParameters() {
+    super.addParameters();
+    addParameter(new AlgorithmParameter(
+        "templates",
+        GT._T("A list of templates resulting in the inclusion of a table of contents")));
   }
 }

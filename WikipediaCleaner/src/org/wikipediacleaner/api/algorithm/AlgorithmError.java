@@ -5,7 +5,7 @@
  *  See README.txt file for licensing information.
  */
 
-package org.wikipediacleaner.api.check;
+package org.wikipediacleaner.api.algorithm;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -17,6 +17,8 @@ import java.util.Collection;
 import java.util.List;
 import java.util.regex.Pattern;
 
+import org.wikipediacleaner.api.check.CheckErrorResult;
+import org.wikipediacleaner.api.check.CheckErrorPage;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithm;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithms;
 import org.wikipediacleaner.api.constants.CWConfigurationError;
@@ -31,7 +33,7 @@ import org.wikipediacleaner.utils.Performance;
 /**
  * Managing errors defined in the check wikipedia project.
  */
-public class CheckError {
+public class AlgorithmError {
 
   /** Flag to trace time spent in each analysis */
   private static boolean traceTime = false;
@@ -170,7 +172,7 @@ public class CheckError {
    * @param stream Stream containing list of pages for the error number.
    */
   public static void addCheckErrorClassic(
-      List<CheckError> errors,
+      List<AlgorithmError> errors,
       EnumWikipedia wikipedia, int errorNumber, InputStream stream) {
 
     // Analyze properties to find informations about error number
@@ -179,7 +181,7 @@ public class CheckError {
     }
 
     // Create error
-    CheckError error = new CheckError(wikipedia, errorNumber);
+    AlgorithmError error = new AlgorithmError(wikipedia, errorNumber);
     if (stream != null) {
       BufferedReader reader = null;
       try {
@@ -225,7 +227,7 @@ public class CheckError {
    * @param stream Stream containing list of pages for the error number.
    */
   public static void addCheckErrorBots(
-      List<CheckError> errors,
+      List<AlgorithmError> errors,
       EnumWikipedia wikipedia, int errorNumber, InputStream stream) {
 
     // Analyze properties to find informations about error number
@@ -234,7 +236,7 @@ public class CheckError {
     }
 
     // Create error
-    CheckError error = new CheckError(wikipedia, errorNumber);
+    AlgorithmError error = new AlgorithmError(wikipedia, errorNumber);
     if (stream != null) {
       BufferedReader reader = null;
       try {
@@ -311,7 +313,7 @@ public class CheckError {
    * @param pages List of pages in error.
    */
   public static void addCheckErrorPages(
-      List<CheckError> errors,
+      List<AlgorithmError> errors,
       EnumWikipedia wikipedia, int errorNumber,
       List<Page> pages) {
 
@@ -326,7 +328,7 @@ public class CheckError {
     }
 
     // Create error
-    CheckError error = new CheckError(wikipedia, errorNumber);
+    AlgorithmError error = new AlgorithmError(wikipedia, errorNumber);
     for (Page page : pages) {
       error.addPage(page.getTitle(), page.getPageId());
     }
@@ -351,7 +353,7 @@ public class CheckError {
    * @param wikipedia Wikipedia.
    * @param errorNumber Error number as defined in the check wikipedia project.
    */
-  private CheckError(
+  private AlgorithmError(
       EnumWikipedia wikipedia, int errorNumber) {
     this.wikipedia = wikipedia;
     this.algorithm = CheckErrorAlgorithms.getAlgorithm(wikipedia, errorNumber);

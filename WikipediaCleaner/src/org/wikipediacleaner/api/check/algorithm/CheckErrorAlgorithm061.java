@@ -11,8 +11,9 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 
+import org.wikipediacleaner.api.algorithm.AlgorithmParameter;
+import org.wikipediacleaner.api.algorithm.AlgorithmParameterElement;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.SpecialCharacters;
 import org.wikipediacleaner.api.constants.WPCConfiguration;
@@ -266,18 +267,23 @@ public class CheckErrorAlgorithm061 extends CheckErrorAlgorithmBase {
   private final List<String> templatesName = new ArrayList<>();
 
   /**
-   * @return Map of parameters (key=name, value=description).
-   * @see org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase#getParameters()
+   * Build the list of parameters for this algorithm.
    */
   @Override
-  public Map<String, String> getParameters() {
-    Map<String, String> parameters = super.getParameters();
-    parameters.put(
+  protected void addParameters() {
+    super.addParameters();
+    addParameter(new AlgorithmParameter(
         PARAMETER_SEPARATOR,
-        GT._T("Used as a separator between consecutive {0} tags", "&lt;ref&gt;"));
-    parameters.put(
+        GT._T("Used as a separator between consecutive {0} tags", "&lt;ref&gt;"),
+        new AlgorithmParameterElement(
+            "text",
+            GT._T("Used as a separator between consecutive {0} tags", "&lt;ref&gt;"))));
+    addParameter(new AlgorithmParameter(
         PARAMETER_TEMPLATES,
-        GT._T("Templates that can be used to replace {0} tags", "&lt;ref&gt;"));
-    return parameters;
+        GT._T("Templates that can be used to replace {0} tags", "&lt;ref&gt;"),
+        new AlgorithmParameterElement(
+            "template name",
+            GT._T("Template that can be used to replace {0} tags", "&lt;ref&gt;")),
+        true));
   }
 }

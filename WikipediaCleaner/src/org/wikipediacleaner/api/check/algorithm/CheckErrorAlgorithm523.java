@@ -13,6 +13,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.wikipediacleaner.api.algorithm.AlgorithmParameter;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.CheckErrorResult.ErrorLevel;
 import org.wikipediacleaner.api.data.MagicWord;
@@ -209,15 +210,13 @@ public class CheckErrorAlgorithm523 extends CheckErrorAlgorithmBase {
   private int minSize = 64;
 
   /**
-   * @return Map of parameters (key=name, value=description).
-   * @see org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase#getParameters()
+   * Build the list of parameters for this algorithm.
    */
   @Override
-  public Map<String, String> getParameters() {
-    Map<String, String> parameters = super.getParameters();
-    parameters.put(
+  protected void addParameters() {
+    super.addParameters();
+    addParameter(new AlgorithmParameter(
         PARAMETER_MIN_SIZE,
-        GT._T("The size below which images are not reported as duplicates"));
-    return parameters;
+        GT._T("The size below which images are not reported as duplicates")));
   }
 }

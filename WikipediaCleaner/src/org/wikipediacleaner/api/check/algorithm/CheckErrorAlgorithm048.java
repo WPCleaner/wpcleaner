@@ -9,8 +9,9 @@ package org.wikipediacleaner.api.check.algorithm;
 
 import java.util.Collection;
 import java.util.List;
-import java.util.Map;
 
+import org.wikipediacleaner.api.algorithm.AlgorithmParameter;
+import org.wikipediacleaner.api.algorithm.AlgorithmParameterElement;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.constants.WPCConfigurationString;
 import org.wikipediacleaner.api.data.Page;
@@ -318,15 +319,16 @@ public class CheckErrorAlgorithm048 extends CheckErrorAlgorithmBase {
   private boolean imagemap = false;
 
   /**
-   * @return Map of parameters (key=name, value=description).
-   * @see org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase#getParameters()
+   * Build the list of parameters for this algorithm.
    */
   @Override
-  public Map<String, String> getParameters() {
-    Map<String, String> parameters = super.getParameters();
-    parameters.put(
+  protected void addParameters() {
+    super.addParameters();
+    addParameter(new AlgorithmParameter(
         PARAMETER_IMAGEMAP,
-        GT._T("Set to true to report also links in <imagemap>"));
-    return parameters;
+        GT._T("Set to true to report also links in <imagemap>"),
+        new AlgorithmParameterElement(
+            "true/false",
+            GT._T("Set to true to report also links in <imagemap>"))));
   }
 }

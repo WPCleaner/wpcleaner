@@ -11,8 +11,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import org.wikipediacleaner.api.check.CheckCategoryLinkActionProvider;
 import org.wikipediacleaner.api.check.CheckErrorResult;
+import org.wikipediacleaner.api.check.CheckCategoryLinkActionProvider;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.PageAnalysis;

@@ -21,6 +21,7 @@ import org.slf4j.LoggerFactory;
 import org.wikipediacleaner.api.API;
 import org.wikipediacleaner.api.APIException;
 import org.wikipediacleaner.api.APIFactory;
+import org.wikipediacleaner.api.algorithm.AlgorithmParameter;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.SimpleAction;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
@@ -604,24 +605,22 @@ public class CheckErrorAlgorithm513 extends CheckErrorAlgorithmBase {
   private LinterCategory linterCategory = null;
 
   /**
-   * @return Map of parameters (key=name, value=description).
-   * @see org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase#getParameters()
+   * Build the list of parameters for this algorithm.
    */
   @Override
-  public Map<String, String> getParameters() {
-    Map<String, String> parameters = super.getParameters();
-    parameters.put(
+  protected void addParameters() {
+    super.addParameters();
+    addParameter(new AlgorithmParameter(
         PARAMETER_TEMPLATES,
-        GT._T("A list of templates that create an internal link"));
-    parameters.put(
+        GT._T("A list of templates that create an internal link")));
+    addParameter(new AlgorithmParameter(
         PARAMETER_TEMPLATE_PARAMS,
-        GT._T("A list of template parameters that create the text of an external link"));
-    parameters.put(
+        GT._T("A list of template parameters that create the text of an external link")));
+    addParameter(new AlgorithmParameter(
         PARAMETER_TEXTS_AFTER,
-        GT._T("A list of texts (regular expressions) that can be after the internal link"));
-    parameters.put(
+        GT._T("A list of texts (regular expressions) that can be after the internal link")));
+    addParameter(new AlgorithmParameter(
         PARAMETER_TEXTS_BEFORE,
-        GT._T("A list of texts that can be before the internal link"));
-    return parameters;
+        GT._T("A list of texts that can be before the internal link")));
   }
 }

@@ -10,8 +10,9 @@ package org.wikipediacleaner.api.check.algorithm;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.Map;
 
+import org.wikipediacleaner.api.algorithm.AlgorithmParameter;
+import org.wikipediacleaner.api.algorithm.AlgorithmParameterElement;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.CheckErrorResult.ErrorLevel;
 import org.wikipediacleaner.api.constants.WPCConfiguration;
@@ -214,16 +215,17 @@ public class CheckErrorAlgorithm059 extends CheckErrorAlgorithmBase {
   private final List<String> ignoredTemplates = new ArrayList<>();
 
   /**
-   * Return the parameters used to configure the algorithm.
-   * 
-   * @return Map of parameters (key=name, value=description).
+   * Build the list of parameters for this algorithm.
    */
   @Override
-  public Map<String, String> getParameters() {
-    Map<String, String> parameters = super.getParameters();
-    parameters.put(
+  protected void addParameters() {
+    super.addParameters();
+    addParameter(new AlgorithmParameter(
         PARAMETER_TEMPLATES,
-        GT._T("A list of templates that should be ignored"));
-    return parameters;
+        GT._T("A list of templates that should be ignored"),
+        new AlgorithmParameterElement(
+            "template name",
+            GT._T("A template that should be ignored")),
+        true));
   }
 }

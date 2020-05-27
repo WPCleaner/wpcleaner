@@ -9,13 +9,10 @@ package org.wikipediacleaner.api.check.algorithm;
 
 import java.util.Collection;
 import java.util.List;
-import java.util.Map;
 
+import org.wikipediacleaner.api.algorithm.Algorithm;
 import org.wikipediacleaner.api.check.CheckErrorResult;
-import org.wikipediacleaner.api.constants.CWConfiguration;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
-import org.wikipediacleaner.api.constants.WPCConfiguration;
-import org.wikipediacleaner.api.constants.WikiConfiguration;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.gui.swing.component.MWPane;
@@ -24,47 +21,9 @@ import org.wikipediacleaner.gui.swing.component.MWPane;
 /**
  * Interface implemented by all errors detected by the check wikipedia project.
  */
-public interface CheckErrorAlgorithm {
+public interface CheckErrorAlgorithm extends Algorithm {
 
   public final static int MAX_ERROR_NUMBER_WITH_LIST = 500;
-
-  /**
-   * @return Flag indicating if this algorithm is available.
-   */
-  public boolean isAvailable();
-
-  /**
-   * @param wikiConfiguration Configuration for the wiki.
-   * @param cwConfiguration Configuration for Check Wiki.
-   * @param wpcConfiguration Configuration for WPCleaner.
-   */
-  public void setConfiguration(
-      WikiConfiguration wikiConfiguration,
-      CWConfiguration cwConfiguration,
-      WPCConfiguration wpcConfiguration);
-
-  /**
-   * @return Short description of the error.
-   * (See Check Wikipedia project for the description of errors)
-   */
-  public String getShortDescription();
-
-  /**
-   * @return Short description of the error.
-   * (See Check Wikipedia project for the description of errors)
-   */
-  public String getShortDescriptionReplaced();
-
-  /**
-   * @return Long description of the error.
-   * (See Check Wikipedia project for the description of errors)
-   */
-  public String getLongDescription();
-
-  /**
-   * @return Link to error description.
-   */
-  public String getLink();
 
   /**
    * Tell if a page is among the white list.
@@ -147,13 +106,6 @@ public interface CheckErrorAlgorithm {
    * @return Flag indicating if the error was found.
    */
   public boolean analyze(PageAnalysis analysis, Collection<CheckErrorResult> errors, boolean onlyAutomatic);
-
-  /**
-   * Return the parameters used to configure the algorithm.
-   * 
-   * @return Map of parameters (key=name, value=description).
-   */
-  public Map<String, String> getParameters();
 
   /**
    * Automatic fixing of all the errors in the page.

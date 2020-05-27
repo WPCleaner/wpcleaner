@@ -22,6 +22,7 @@ import org.wikipediacleaner.api.API;
 import org.wikipediacleaner.api.APIException;
 import org.wikipediacleaner.api.APIFactory;
 import org.wikipediacleaner.api.MediaWikiListener;
+import org.wikipediacleaner.api.algorithm.AlgorithmError;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithm;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithms;
 import org.wikipediacleaner.api.constants.CWConfiguration;
@@ -75,13 +76,13 @@ public class CheckWiki {
   public void retrievePages(
       final CheckErrorAlgorithm algorithm, int errorLimit,
       final EnumWikipedia wiki,
-      final List<CheckError> errors) throws APIException {
+      final List<AlgorithmError> errors) throws APIException {
     if ((algorithm == null) || !algorithm.hasList()) {
       return;
     }
     if (algorithm.hasSpecialList()) {
       List<Page> pages = algorithm.getSpecialList(wiki, errorLimit);
-      CheckError.addCheckErrorPages(errors, wiki, algorithm.getErrorNumber(), pages);
+      AlgorithmError.addCheckErrorPages(errors, wiki, algorithm.getErrorNumber(), pages);
       return;
     }
 

@@ -14,9 +14,9 @@ import java.util.UUID;
 import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyledDocument;
 
-import org.wikipediacleaner.api.check.CheckError;
-import org.wikipediacleaner.api.check.CheckErrorPage;
+import org.wikipediacleaner.api.algorithm.AlgorithmError;
 import org.wikipediacleaner.api.check.CheckErrorResult;
+import org.wikipediacleaner.api.check.CheckErrorPage;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithm;
 import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.utils.ConfigurationValueStyle;
@@ -73,7 +73,7 @@ public class MWPaneCheckWikiFormatter extends MWPaneFormatter {
         (pageAnalysis == null) || (algorithm == null)) {
       return;
     }
-    CheckErrorPage errorPage = CheckError.analyzeError(algorithm, pageAnalysis);
+    CheckErrorPage errorPage = AlgorithmError.analyzeError(algorithm, pageAnalysis);
     if ((errorPage != null) && (errorPage.getResults() != null)) {
       int lastPosition = -1;
       List<CheckErrorResult> errorResults = errorPage.getResults();

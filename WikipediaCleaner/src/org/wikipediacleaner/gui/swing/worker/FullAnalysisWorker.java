@@ -16,7 +16,7 @@ import org.wikipediacleaner.api.API;
 import org.wikipediacleaner.api.APIException;
 import org.wikipediacleaner.api.APIFactory;
 import org.wikipediacleaner.api.MediaWiki;
-import org.wikipediacleaner.api.check.CheckError;
+import org.wikipediacleaner.api.algorithm.AlgorithmError;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithm;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithms;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
@@ -100,7 +100,7 @@ public class FullAnalysisWorker extends BasicWorker {
       }
       setText("Analyzing data");
       PageAnalysis analysis = page.getAnalysis(page.getContents(), true);
-      CheckError.analyzeErrors(algorithms, analysis, false);
+      AlgorithmError.analyzeErrors(algorithms, analysis, false);
     } catch (APIException e) {
       return e;
     }

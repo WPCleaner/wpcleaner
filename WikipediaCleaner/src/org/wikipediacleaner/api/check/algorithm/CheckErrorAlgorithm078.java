@@ -19,6 +19,8 @@ import java.util.regex.PatternSyntaxException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.wikipediacleaner.api.algorithm.AlgorithmParameter;
+import org.wikipediacleaner.api.algorithm.AlgorithmParameterElement;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.CheckErrorResult.ErrorLevel;
 import org.wikipediacleaner.api.constants.WPCConfiguration;
@@ -188,15 +190,17 @@ public class CheckErrorAlgorithm078 extends CheckErrorAlgorithmBase {
   private final List<Pattern> patterns = new ArrayList<>();
 
   /**
-   * @return Map of parameters (key=name, value=description).
-   * @see org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase#getParameters()
+   * Build the list of parameters for this algorithm.
    */
   @Override
-  public Map<String, String> getParameters() {
-    Map<String, String> parameters = super.getParameters();
-    parameters.put(
+  protected void addParameters() {
+    super.addParameters();
+    addParameter(new AlgorithmParameter(
         PARAMETER_TEMPLATES,
-        GT._T("A list of regular expressions to find templates replacing <references> tags"));
-    return parameters;
+        GT._T("A list of regular expressions to find templates replacing <references> tags"),
+        new AlgorithmParameterElement(
+            "regular expression",
+            GT._T("A regular expression to find templates replacing <references> tags")),
+        true));
   }
 }

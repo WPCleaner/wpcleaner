@@ -18,7 +18,7 @@ import java.util.Map.Entry;
 
 import javax.swing.JOptionPane;
 
-import org.wikipediacleaner.api.check.CheckError;
+import org.wikipediacleaner.api.algorithm.AlgorithmError;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithm;
 import org.wikipediacleaner.api.constants.EnumQueryResult;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
@@ -261,14 +261,14 @@ public class MediaWiki extends MediaWikiController {
           if (automaticCW != null) {
 
             // Apply fixing
-            List<CheckError.Progress> usedAlgorithms = new ArrayList<>();
+            List<AlgorithmError.Progress> usedAlgorithms = new ArrayList<>();
             String tmpContents = AutomaticFormatter.tidyArticle(
                 page, newContents, automaticCW, botFix, usedAlgorithms);
 
             // Decide if modifications should be kept
             boolean shouldKeep = (!oldContents.equals(newContents));
             if (forceCW != null) {
-              for (CheckError.Progress progress : usedAlgorithms) {
+              for (AlgorithmError.Progress progress : usedAlgorithms) {
                 if (forceCW.contains(progress.algorithm)) {
                   shouldKeep = true;
                 }
@@ -282,7 +282,7 @@ public class MediaWiki extends MediaWikiController {
                 fullComment.append(" / ");
                 fullComment.append(wiki.getCWConfiguration().getComment(usedAlgorithms));
                 if (modification != null) {
-                  for (CheckError.Progress progress : usedAlgorithms) {
+                  for (AlgorithmError.Progress progress : usedAlgorithms) {
                     CheckErrorAlgorithm algorithm = progress.algorithm;
                     modification.addModification(algorithm.getShortDescriptionReplaced());
                   }

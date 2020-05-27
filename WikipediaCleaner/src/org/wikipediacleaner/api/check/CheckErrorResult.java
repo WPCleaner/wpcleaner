@@ -10,6 +10,7 @@ package org.wikipediacleaner.api.check;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.wikipediacleaner.api.algorithm.Algorithm;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithm;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageElementTitle;
@@ -23,7 +24,7 @@ import org.wikipediacleaner.i18n.GT;
  */
 public class CheckErrorResult implements Comparable<CheckErrorResult> {
 
-  private final CheckErrorAlgorithm algorithm;
+  private final Algorithm algorithm;
   private final Page page;
   private final int startPosition;
   private final int endPosition;
@@ -102,7 +103,7 @@ public class CheckErrorResult implements Comparable<CheckErrorResult> {
   /**
    * @return Type of error.
    */
-  public CheckErrorAlgorithm getAlgorithm() {
+  public Algorithm getAlgorithm() {
     return this.algorithm;
   }
 

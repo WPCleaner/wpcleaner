@@ -12,7 +12,7 @@ import java.util.Collection;
 import org.wikipediacleaner.api.API;
 import org.wikipediacleaner.api.APIException;
 import org.wikipediacleaner.api.APIFactory;
-import org.wikipediacleaner.api.check.CheckError;
+import org.wikipediacleaner.api.algorithm.AlgorithmError;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithm;
 import org.wikipediacleaner.api.constants.CWConfigurationError;
 import org.wikipediacleaner.api.constants.Contributions;
@@ -122,7 +122,7 @@ public class SendWorker extends BasicWorker {
         Page page, String text, String comment,
         boolean minor, boolean forceWatch,
         Contributions contributions,
-        Collection<CheckError.Progress> errorsFixed) {
+        Collection<AlgorithmError.Progress> errorsFixed) {
       return new SendWorker(
           wiki, window, page, text, comment,
           minor, forceWatch, params, contributions, errorsFixed);
@@ -136,7 +136,7 @@ public class SendWorker extends BasicWorker {
   private final boolean forceWatch;
   private final Params params;
   private final Contributions contributions;
-  private final Collection<CheckError.Progress> errorsFixed;
+  private final Collection<AlgorithmError.Progress> errorsFixed;
 
   /**
    * @param wiki Wiki.
@@ -156,7 +156,7 @@ public class SendWorker extends BasicWorker {
       boolean minor, boolean forceWatch,
       Params params,
       Contributions contributions,
-      Collection<CheckError.Progress> errorsFixed) {
+      Collection<AlgorithmError.Progress> errorsFixed) {
     super(wiki, window);
     this.page = page;
     this.text = text;
@@ -252,7 +252,7 @@ public class SendWorker extends BasicWorker {
 
     // Mark errors fixed
     if (errorsFixed != null) {
-      for (CheckError.Progress error: errorsFixed) {
+      for (AlgorithmError.Progress error: errorsFixed) {
         CheckErrorAlgorithm algorithm = error.algorithm;
         if ((algorithm.getPriority() != CWConfigurationError.PRIORITY_BOT_ONLY) &&
             (error.full)) {

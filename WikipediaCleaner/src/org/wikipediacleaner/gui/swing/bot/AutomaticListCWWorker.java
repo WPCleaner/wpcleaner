@@ -17,7 +17,7 @@ import java.util.Set;
 import org.wikipediacleaner.api.API;
 import org.wikipediacleaner.api.APIException;
 import org.wikipediacleaner.api.APIFactory;
-import org.wikipediacleaner.api.check.CheckError;
+import org.wikipediacleaner.api.algorithm.AlgorithmError;
 import org.wikipediacleaner.api.check.CheckErrorPage;
 import org.wikipediacleaner.api.check.CheckWiki;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithm;
@@ -182,7 +182,7 @@ public class AutomaticListCWWorker extends BasicWorker {
     }
 
     // Analyze page to check if an error has been found
-    List<CheckErrorPage> errorPages = CheckError.analyzeErrors(selectedAlgorithms, analysis, true);
+    List<CheckErrorPage> errorPages = AlgorithmError.analyzeErrors(selectedAlgorithms, analysis, true);
     boolean found = false;
     if (errorPages != null) {
       for (CheckErrorPage errorPage : errorPages) {
@@ -200,7 +200,7 @@ public class AutomaticListCWWorker extends BasicWorker {
 
       // Fix all errors that can be fixed
       String newContents = page.getContents();
-      List<CheckError.Progress> errorsFixed = new ArrayList<>();
+      List<AlgorithmError.Progress> errorsFixed = new ArrayList<>();
       if (!preventBot) {
         newContents = AutomaticFormatter.tidyArticle(page, newContents, allAlgorithms, true, errorsFixed);
       }
@@ -208,7 +208,7 @@ public class AutomaticListCWWorker extends BasicWorker {
       // Check if error has been fixed
       boolean isFixed = false;
       if (!newContents.equals(page.getContents())) {
-        for (CheckError.Progress errorFixed : errorsFixed) {
+        for (AlgorithmError.Progress errorFixed : errorsFixed) {
           if (selectedAlgorithms.contains(errorFixed.algorithm)) {
             isFixed = true;
           }
@@ -229,9 +229,9 @@ public class AutomaticListCWWorker extends BasicWorker {
             comment.toString(),
             true, true, false);
         countModified++;
-        for (CheckError.Progress errorFixed : errorsFixed) {
+        for (AlgorithmError.Progress errorFixed : errorsFixed) {
           CheckErrorAlgorithm usedAlgorithm = errorFixed.algorithm;
-          CheckErrorPage errorPage = CheckError.analyzeError(usedAlgorithm, page.getAnalysis(newContents, true));
+          CheckErrorPage errorPage = AlgorithmError.analyzeError(usedAlgorithm, page.getAnalysis(newContents, true));
           if ((errorPage != null) && (!errorPage.getErrorFound())) {
             checkWiki.markAsFixed(page, usedAlgorithm.getErrorNumberString());
             if (selectedAlgorithms.contains(usedAlgorithm)) {

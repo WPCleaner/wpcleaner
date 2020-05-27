@@ -10,8 +10,9 @@ package org.wikipediacleaner.api.check.algorithm;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.Map;
 
+import org.wikipediacleaner.api.algorithm.AlgorithmParameter;
+import org.wikipediacleaner.api.algorithm.AlgorithmParameterElement;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.CheckErrorResult.ErrorLevel;
 import org.wikipediacleaner.api.constants.WPCConfiguration;
@@ -331,15 +332,23 @@ public class CheckErrorAlgorithm085 extends CheckErrorAlgorithmBase {
   private final List<String[]> centerTemplates = new ArrayList<>();
 
   /**
-   * @return Map of parameters (key=name, value=description).
-   * @see org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase#getParameters()
+   * Build the list of parameters for this algorithm.
    */
   @Override
-  public Map<String, String> getParameters() {
-    Map<String, String> parameters = super.getParameters();
-    parameters.put(
+  protected void addParameters() {
+    super.addParameters();
+    addParameter(new AlgorithmParameter(
         PARAMETER_CENTER_TEMPLATES,
-        GT._T("A list of templates that can be used to replace &lt;center&gt; tags"));
-    return parameters;
+        GT._T("A list of templates that can be used to replace &lt;center&gt; tags"),
+        new AlgorithmParameterElement[] {
+            new AlgorithmParameterElement(
+                "template name",
+                GT._T("Template that can be used to replace &lt;center&gt; tags")),
+            new AlgorithmParameterElement(
+                "parameter name",
+                GT._T("Name of the parameter to use"),
+                true)
+        },
+        true));
   }
 }

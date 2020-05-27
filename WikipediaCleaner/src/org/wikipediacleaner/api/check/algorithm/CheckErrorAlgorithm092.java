@@ -10,8 +10,8 @@ package org.wikipediacleaner.api.check.algorithm;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
+import org.wikipediacleaner.api.algorithm.AlgorithmParameter;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.CheckErrorResult.ErrorLevel;
 import org.wikipediacleaner.api.data.PageAnalysis;
@@ -231,18 +231,16 @@ public class CheckErrorAlgorithm092 extends CheckErrorAlgorithmBase {
   private boolean onlyConsecutive = false;
 
   /**
-   * @return Map of parameters (key=name, value=description).
-   * @see org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase#getParameters()
+   * Build the list of parameters for this algorithm.
    */
   @Override
-  public Map<String, String> getParameters() {
-    Map<String, String> parameters = super.getParameters();
-    parameters.put(
+  protected void addParameters() {
+    super.addParameters();
+    addParameter(new AlgorithmParameter(
         PARAMETER_MAX_LEVEL,
-        GT._T("Maximum level of titles to report"));
-    parameters.put(
+        GT._T("Maximum level of titles to report")));
+    addParameter(new AlgorithmParameter(
         PARAMETER_ONLY_CONSECUTIVE,
-        GT._T("To report only consecutive titles"));
-    return parameters;
+        GT._T("To report only consecutive titles")));
   }
 }

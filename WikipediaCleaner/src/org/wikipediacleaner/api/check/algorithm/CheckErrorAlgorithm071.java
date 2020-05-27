@@ -9,8 +9,9 @@ package org.wikipediacleaner.api.check.algorithm;
 
 import java.util.Collection;
 import java.util.List;
-import java.util.Map;
 
+import org.wikipediacleaner.api.algorithm.AlgorithmParameter;
+import org.wikipediacleaner.api.algorithm.AlgorithmParameterElement;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.PageAnalysis;
@@ -140,17 +141,16 @@ public class CheckErrorAlgorithm071 extends CheckErrorAlgorithmISBN {
   private String reason = null;
 
   /**
-   * Return the parameters used to configure the algorithm.
-   * 
-   * @return Map of parameters (key=name, value=description).
-   * @see org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase#getParameters()
+   * Build the list of parameters for this algorithm.
    */
   @Override
-  public Map<String, String> getParameters() {
-    Map<String, String> parameters = super.getParameters();
-    parameters.put(
+  protected void addParameters() {
+    super.addParameters();
+    addParameter(new AlgorithmParameter(
         PARAMETER_REASON,
-        GT._T("An explanation of the problem"));
-    return parameters;
+        GT._T("An explanation of the problem"),
+        new AlgorithmParameterElement(
+            "text",
+            GT._T("An explanation of the problem"))));
   }
 }

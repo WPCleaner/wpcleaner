@@ -10,8 +10,9 @@ package org.wikipediacleaner.api.check.algorithm;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.Map;
 
+import org.wikipediacleaner.api.algorithm.AlgorithmParameter;
+import org.wikipediacleaner.api.algorithm.AlgorithmParameterElement;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.HtmlCharacters;
 import org.wikipediacleaner.api.data.CharacterUtils;
@@ -322,6 +323,9 @@ public class CheckErrorAlgorithm016 extends CheckErrorAlgorithmBase {
   /** Flag to report errors only in templates */
   private static final String PARAMETER_ONLY_TEMPLATES = "only_templates";
 
+  /** Set of parameters to exclude some control characters (XX is the hexadecimal code of the control character) */
+  private static final String PARAMETER_USE_XX = "use_XX";
+
   /**
    * Initialize settings for the algorithm.
    * 
@@ -337,14 +341,23 @@ public class CheckErrorAlgorithm016 extends CheckErrorAlgorithmBase {
   private boolean onlyTemplates = false;
 
   /**
-   * @return Map of parameters (key=name, value=description).
-   * @see org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase#getParameters()
+   * Build the list of parameters for this algorithm.
    */
   @Override
-  public Map<String, String> getParameters() {
-    Map<String, String> parameters = super.getParameters();
-    parameters.put(PARAMETER_ONLY_TEMPLATES, GT._T("To report control characters only in templates"));
-    return parameters;
+  protected void addParameters() {
+    super.addParameters();
+    addParameter(new AlgorithmParameter(
+        PARAMETER_ONLY_TEMPLATES,
+        GT._T("To report control characters only in templates"),
+        new AlgorithmParameterElement(
+            "true/false",
+            GT._T("To report control characters only in templates"))));
+    addParameter(new AlgorithmParameter(
+        PARAMETER_USE_XX,
+        GT._T("To ignore some control characters"),
+        new AlgorithmParameterElement(
+            "true/false",
+            GT._T("To ignore control character with hexadecimal code equal to XX"))));
   }
 
   /**

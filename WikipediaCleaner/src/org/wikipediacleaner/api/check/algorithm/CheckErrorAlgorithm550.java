@@ -10,9 +10,9 @@ package org.wikipediacleaner.api.check.algorithm;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
+import org.wikipediacleaner.api.algorithm.AlgorithmParameter;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.constants.WPCConfiguration;
 import org.wikipediacleaner.api.data.CharacterUtils;
@@ -184,13 +184,13 @@ public class CheckErrorAlgorithm550 extends CheckErrorAlgorithmBase {
   private final Set<String> ignoreLinks = new HashSet<>();
 
   /**
-   * @return Map of parameters (key=name, value=description).
-   * @see org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase#getParameters()
+   * Build the list of parameters for this algorithm.
    */
   @Override
-  public Map<String, String> getParameters() {
-    Map<String, String> parameters = super.getParameters();
-    parameters.put(PARAMETER_IGNORE_LINKS, GT._T("Links to ignore"));
-    return parameters;
+  protected void addParameters() {
+    super.addParameters();
+    addParameter(new AlgorithmParameter(
+        PARAMETER_IGNORE_LINKS,
+        GT._T("Links to ignore")));
   }
 }

@@ -14,9 +14,9 @@ import java.util.List;
 
 import org.wikipediacleaner.api.APIException;
 import org.wikipediacleaner.api.MediaWiki;
-import org.wikipediacleaner.api.check.CheckError;
-import org.wikipediacleaner.api.check.CheckErrorPage;
+import org.wikipediacleaner.api.algorithm.AlgorithmError;
 import org.wikipediacleaner.api.check.CheckErrorResult;
+import org.wikipediacleaner.api.check.CheckErrorPage;
 import org.wikipediacleaner.api.check.CheckErrorResult.ErrorLevel;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithm;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithms;
@@ -118,7 +118,7 @@ public class UpdateDuplicateArgsWarningTools extends UpdateWarningTools {
     for (CheckErrorAlgorithm algorithm : algorithms) {
       int errorNumber = algorithm.getErrorNumber();
       if (CheckErrorAlgorithms.isAlgorithmActive(wiki, errorNumber)) {
-        CheckErrorPage errorPage = CheckError.analyzeError(algorithm, analysis);
+        CheckErrorPage errorPage = AlgorithmError.analyzeError(algorithm, analysis);
         List<CheckErrorResult> results = errorPage.getResults();
         if (results != null) {
           errorResults.addAll(results);

@@ -10,11 +10,12 @@ package org.wikipediacleaner.api.check.algorithm;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.Map;
 
+import org.wikipediacleaner.api.algorithm.AlgorithmParameter;
+import org.wikipediacleaner.api.algorithm.AlgorithmParameterElement;
 import org.wikipediacleaner.api.check.CheckErrorResult;
-import org.wikipediacleaner.api.check.CheckErrorResult.ErrorLevel;
 import org.wikipediacleaner.api.check.SpecialCharacters;
+import org.wikipediacleaner.api.check.CheckErrorResult.ErrorLevel;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.constants.WPCConfiguration;
 import org.wikipediacleaner.api.data.PageAnalysis;
@@ -219,19 +220,23 @@ public class CheckErrorAlgorithm037 extends CheckErrorAlgorithmBase {
   private static final List<String> templatesList = new ArrayList<>();
 
   /**
-   * Return the parameters used to configure the algorithm.
-   * 
-   * @return Map of parameters (key=name, value=description).
+   * Build the list of parameters for this algorithm.
    */
   @Override
-  public Map<String, String> getParameters() {
-    Map<String, String> parameters = super.getParameters();
-    parameters.put(
+  protected void addParameters() {
+    super.addParameters();
+    addParameter(new AlgorithmParameter(
         PARAMETER_FIRST_CHARACTERS,
-        GT._T("Restrict the detection to the first characters"));
-    parameters.put(
+        GT._T("Restrict the detection to the first characters"),
+        new AlgorithmParameterElement(
+            "number",
+            GT._T("Maximum number of characters to use for the detection"))));
+    addParameter(new AlgorithmParameter(
         PARAMETER_TEMPLATES,
-        GT._T("List of templates that prevent automatic fixing of this error"));
-    return parameters;
+        GT._T("List of templates that prevent automatic fixing of this error"),
+        new AlgorithmParameterElement(
+            "template name",
+            GT._T("Template that prevent automatic fixing of this error")),
+        true));
   }
 }

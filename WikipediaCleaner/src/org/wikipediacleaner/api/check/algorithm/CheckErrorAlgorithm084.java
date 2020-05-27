@@ -10,8 +10,9 @@ package org.wikipediacleaner.api.check.algorithm;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.Map;
 
+import org.wikipediacleaner.api.algorithm.AlgorithmParameter;
+import org.wikipediacleaner.api.algorithm.AlgorithmParameterElement;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.constants.WPCConfiguration;
 import org.wikipediacleaner.api.data.PageAnalysis;
@@ -155,18 +156,22 @@ public class CheckErrorAlgorithm084 extends CheckErrorAlgorithmBase {
   private int maxLevel = 2;
 
   /**
-   * @return Map of parameters (key=name, value=description).
-   * @see org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase#getParameters()
+   * Build the list of parameters for this algorithm.
    */
   @Override
-  public Map<String, String> getParameters() {
-    Map<String, String> parameters = super.getParameters();
-    parameters.put(
+  protected void addParameters() {
+    super.addParameters();
+    addParameter(new AlgorithmParameter(
         PARAMETER_TEXTS,
-        GT._T("A list of texts that can be added to sections without content"));
-    parameters.put(
+        GT._T("A list of texts that can be added to sections without content"),
+        new AlgorithmParameterElement(
+            "text",
+            GT._T("A text that can be added to sections without content"))));
+    addParameter(new AlgorithmParameter(
         PARAMETER_LEVEL,
-        GT._T("Restrict verification to titles with a higher level"));
-    return parameters;
+        GT._T("Restrict verification to titles with a higher level"),
+        new AlgorithmParameterElement(
+            "level",
+            GT._T("Maximum level of title to check"))));
   }
 }

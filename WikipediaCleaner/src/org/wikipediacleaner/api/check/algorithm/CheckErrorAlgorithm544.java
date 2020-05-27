@@ -10,8 +10,8 @@ package org.wikipediacleaner.api.check.algorithm;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.Map;
 
+import org.wikipediacleaner.api.algorithm.AlgorithmParameter;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.SimpleAction;
 import org.wikipediacleaner.api.check.CheckErrorResult.ErrorLevel;
@@ -187,13 +187,13 @@ public class CheckErrorAlgorithm544 extends CheckErrorAlgorithmBase {
   private final List<String[]> pairs = new ArrayList<>();
 
   /**
-   * @return Map of parameters (key=name, value=description).
-   * @see org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase#getParameters()
+   * Build the list of parameters for this algorithm.
    */
   @Override
-  public Map<String, String> getParameters() {
-    Map<String, String> parameters = super.getParameters();
-    parameters.put(PARAMETER_PAIR_TEMPLATES, GT._T("Pairs of templates: for each opening template, all possible closing templates"));
-    return parameters;
+  protected void addParameters() {
+    super.addParameters();
+    addParameter(new AlgorithmParameter(
+        PARAMETER_PAIR_TEMPLATES,
+        GT._T("Pairs of templates: for each opening template, all possible closing templates")));
   }
 }

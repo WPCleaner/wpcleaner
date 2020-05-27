@@ -10,8 +10,9 @@ package org.wikipediacleaner.api.check.algorithm;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.Map;
 
+import org.wikipediacleaner.api.algorithm.AlgorithmParameter;
+import org.wikipediacleaner.api.algorithm.AlgorithmParameterElement;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.CheckErrorResult.ErrorLevel;
 import org.wikipediacleaner.api.constants.WPCConfiguration;
@@ -756,24 +757,36 @@ public class CheckErrorAlgorithm002 extends CheckErrorAlgorithmBase {
   private String clearRight = null;
 
   /**
-   * @return Map of parameters (key=name, value=description).
-   * @see org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase#getParameters()
+   * Build the list of parameters for this algorithm.
    */
   @Override
-  public Map<String, String> getParameters() {
-    Map<String, String> parameters = super.getParameters();
-    parameters.put(
+  protected void addParameters() {
+    super.addParameters();
+    addParameter(new AlgorithmParameter(
         PARAMETER_ANCHOR_TEMPLATES,
-        GT._T("A replacement for {0}", "&lt;span id=\"xxx\"/&gt;"));
-    parameters.put(
+        GT._T("A replacement for {0}", "&lt;span id=\"xxx\"/&gt;"),
+        new AlgorithmParameterElement[] {
+            new AlgorithmParameterElement("template name", GT._T("Name of the template")),
+            new AlgorithmParameterElement("parameter name", GT._T("Name of the parameter"), true)
+        },
+        true));
+    addParameter(new AlgorithmParameter(
         PARAMETER_CLEAR_ALL,
-        GT._T("A replacement for {0}", "&lt;br clear=\"all\"/&gt;"));
-    parameters.put(
+        GT._T("A replacement for {0}", "&lt;br clear=\"all\"/&gt;"),
+        new AlgorithmParameterElement(
+            "replacement",
+            GT._T("A replacement for {0}", "&lt;br clear=\"all\"/&gt;"))));
+    addParameter(new AlgorithmParameter(
         PARAMETER_CLEAR_LEFT,
-        GT._T("A replacement for {0}", "&lt;br clear=\"left\"/&gt;"));
-    parameters.put(
+        GT._T("A replacement for {0}", "&lt;br clear=\"left\"/&gt;"),
+        new AlgorithmParameterElement(
+            "replacement",
+            GT._T("A replacement for {0}", "&lt;br clear=\"left\"/&gt;"))));
+    addParameter(new AlgorithmParameter(
         PARAMETER_CLEAR_RIGHT,
-        GT._T("A replacement for {0}", "&lt;br clear=\"right\"/&gt;"));
-    return parameters;
+        GT._T("A replacement for {0}", "&lt;br clear=\"right\"/&gt;"),
+        new AlgorithmParameterElement(
+            "replacement",
+            GT._T("A replacement for {0}", "&lt;br clear=\"right\"/&gt;"))));
   }
 }

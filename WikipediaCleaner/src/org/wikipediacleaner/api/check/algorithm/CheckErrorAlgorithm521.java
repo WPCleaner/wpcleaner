@@ -10,8 +10,8 @@ package org.wikipediacleaner.api.check.algorithm;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.Map;
 
+import org.wikipediacleaner.api.algorithm.AlgorithmParameter;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.constants.WPCConfiguration;
 import org.wikipediacleaner.api.data.Page;
@@ -378,18 +378,16 @@ public class CheckErrorAlgorithm521 extends CheckErrorAlgorithmBase {
   private final List<String> months = new ArrayList<>();
 
   /**
-   * @return Map of parameters (key=name, value=description).
-   * @see org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase#getParameters()
+   * Build the list of parameters for this algorithm.
    */
   @Override
-  public Map<String, String> getParameters() {
-    Map<String, String> parameters = super.getParameters();
-    parameters.put(
+  protected void addParameters() {
+    super.addParameters();
+    addParameter(new AlgorithmParameter(
         PARAMETER_TEMPLATES,
-        GT._T("A list of templates and parameters in which format should be checked"));
-    parameters.put(
+        GT._T("A list of templates and parameters in which format should be checked")));
+    addParameter(new AlgorithmParameter(
         PARAMETER_MONTHS,
-        GT._T("A list of text values for months"));
-    return parameters;
+        GT._T("A list of text values for months")));
   }
 }

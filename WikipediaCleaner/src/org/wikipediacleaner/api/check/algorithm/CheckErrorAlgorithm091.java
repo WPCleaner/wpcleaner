@@ -12,11 +12,11 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.Map;
 
+import org.wikipediacleaner.api.algorithm.AlgorithmParameter;
 import org.wikipediacleaner.api.check.AddTextActionProvider;
-import org.wikipediacleaner.api.check.BasicActionProvider;
 import org.wikipediacleaner.api.check.CheckErrorResult;
+import org.wikipediacleaner.api.check.BasicActionProvider;
 import org.wikipediacleaner.api.check.CheckLanguageLinkActionProvider;
 import org.wikipediacleaner.api.check.CheckErrorResult.ErrorLevel;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
@@ -422,21 +422,19 @@ public class CheckErrorAlgorithm091 extends CheckErrorAlgorithmBase {
   private final List<String> templatesList = new ArrayList<>();
 
   /**
-   * @return Map of parameters (key=name, value=description).
-   * @see org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase#getParameters()
+   * Build the list of parameters for this algorithm.
    */
   @Override
-  public Map<String, String> getParameters() {
-    Map<String, String> parameters = super.getParameters();
-    parameters.put(
+  protected void addParameters() {
+    super.addParameters();
+    addParameter(new AlgorithmParameter(
         PARAMETER_LINK_TEMPLATES,
-        GT._T("Templates using external links"));
-    parameters.put(
+        GT._T("Templates using external links")));
+    addParameter(new AlgorithmParameter(
         PARAMETER_ONLY_LANGUAGE,
-        GT._T("To report only links to other languages"));
-    parameters.put(
+        GT._T("To report only links to other languages")));
+    addParameter(new AlgorithmParameter(
         PARAMETER_ONLY_LOCAL,
-        GT._T("To report only links to local wikis"));
-    return parameters;
+        GT._T("To report only links to local wikis")));
   }
 }

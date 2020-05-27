@@ -17,9 +17,9 @@ import java.util.Map;
 
 import org.wikipediacleaner.api.check.Actionnable;
 import org.wikipediacleaner.api.check.CheckErrorResult;
-import org.wikipediacleaner.api.check.CheckErrorResult.ErrorLevel;
 import org.wikipediacleaner.api.check.CompositeAction;
 import org.wikipediacleaner.api.check.SimpleAction;
+import org.wikipediacleaner.api.check.CheckErrorResult.ErrorLevel;
 import org.wikipediacleaner.api.constants.WPCConfiguration;
 import org.wikipediacleaner.api.constants.WPCConfigurationString;
 import org.wikipediacleaner.api.constants.WPCConfigurationStringList;

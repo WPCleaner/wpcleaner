@@ -48,7 +48,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import org.wikipediacleaner.Version;
-import org.wikipediacleaner.api.check.CheckError;
+import org.wikipediacleaner.api.algorithm.AlgorithmError;
 import org.wikipediacleaner.api.check.CheckErrorPage;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithm;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithms;
@@ -1325,13 +1325,13 @@ public class OnePageAnalysisWindow
 
     // Comment for fixed Check Wiki errors
     if ((getInitialErrors() != null) && (getInitialErrors().size() > 0)) {
-      List<CheckError.Progress> errorsFixed = computeErrorsFixed();
+      List<AlgorithmError.Progress> errorsFixed = computeErrorsFixed();
       if ((errorsFixed != null) && (errorsFixed.size() > 0)) {
         if (comment.length() > 0) {
           comment.append(" / ");
         }
         comment.append(getWikipedia().getCWConfiguration().getComment(errorsFixed));
-        for (CheckError.Progress errorFixed : errorsFixed) {
+        for (AlgorithmError.Progress errorFixed : errorsFixed) {
           CheckErrorAlgorithm algorithm = errorFixed.algorithm;
           contributions.increaseCheckWikiError(algorithm.getErrorNumber(), 1);
         }
@@ -1410,7 +1410,7 @@ public class OnePageAnalysisWindow
 
     // Check for new errors
     analysis.shouldCheckSpelling(shouldCheckSpelling());
-    List<CheckErrorPage> errorsFound = CheckError.analyzeErrors(
+    List<CheckErrorPage> errorsFound = AlgorithmError.analyzeErrors(
         allAlgorithms, analysis, false);
     if (errorsFound != null) {
       for (CheckErrorPage tmpError : errorsFound) {

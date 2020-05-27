@@ -16,7 +16,7 @@ import java.util.Map;
 import org.wikipediacleaner.api.API;
 import org.wikipediacleaner.api.APIException;
 import org.wikipediacleaner.api.APIFactory;
-import org.wikipediacleaner.api.check.CheckError;
+import org.wikipediacleaner.api.algorithm.AlgorithmError;
 import org.wikipediacleaner.api.check.CheckWiki;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithm;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithms;
@@ -181,10 +181,10 @@ public abstract class UpdateWarningWorker extends BasicWorker {
     CheckWiki cw = APIFactory.getCheckWiki();
     EnumWikipedia wiki = getWikipedia();
     CheckErrorAlgorithm algorithm = CheckErrorAlgorithms.getAlgorithm(wiki, errorNumber);
-    List<CheckError> errors = new ArrayList<CheckError>();
+    List<AlgorithmError> errors = new ArrayList<AlgorithmError>();
     try {
       cw.retrievePages(algorithm, 10000, wiki, errors);
-      for (CheckError error: errors) {
+      for (AlgorithmError error: errors) {
         for (int pageNum = 0; pageNum < error.getPageCount(); pageNum++) {
           Page page = error.getPage(pageNum);
           addPage(page, pages);

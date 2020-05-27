@@ -10,11 +10,11 @@ package org.wikipediacleaner.api.check.algorithm;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.Map;
 
 import org.wikipediacleaner.api.API;
 import org.wikipediacleaner.api.APIException;
 import org.wikipediacleaner.api.APIFactory;
+import org.wikipediacleaner.api.algorithm.AlgorithmParameter;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.SimpleAction;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
@@ -251,15 +251,13 @@ public class CheckErrorAlgorithm530 extends CheckErrorAlgorithmBase {
   private List<String[]> rfcInterwikis = new ArrayList<>();
 
   /**
-   * @return Map of parameters (key=name, value=description).
-   * @see org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase#getParameters()
+   * Build the list of parameters for this algorithm.
    */
   @Override
-  public Map<String, String> getParameters() {
-    Map<String, String> parameters = super.getParameters();
-    parameters.put(
+  protected void addParameters() {
+    super.addParameters();
+    addParameter(new AlgorithmParameter(
         PARAMETER_CATEGORY,
-        GT._T("A category containing the list of pages in error"));
-    return parameters;
+        GT._T("A category containing the list of pages in error")));
   }
 }

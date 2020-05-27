@@ -10,8 +10,8 @@ package org.wikipediacleaner.api.check.algorithm;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.Map;
 
+import org.wikipediacleaner.api.algorithm.AlgorithmParameter;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.CheckErrorResult.ErrorLevel;
 import org.wikipediacleaner.api.constants.WPCConfiguration;
@@ -184,18 +184,16 @@ public class CheckErrorAlgorithm111 extends CheckErrorAlgorithmBase {
   private final List<String[]> referencesTemplates = new ArrayList<>();
 
   /**
-   * @return Map of parameters (key=name, value=description).
-   * @see org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase#getParameters()
+   * Build the list of parameters for this algorithm.
    */
   @Override
-  public Map<String, String> getParameters() {
-    Map<String, String> parameters = super.getParameters();
-    //parameters.put(
+  protected void addParameters() {
+    super.addParameters();
+    //addParameter(new AlgorithmParameter(
     //    PARAMETER_REFERENCES_TEMPLATES,
-    //    GT._T("A list of templates resulting in the inclusion of {0}", "&lt;references/&gt;"));
-    parameters.put(
+    //    GT._T("A list of templates resulting in the inclusion of {0}", "&lt;references/&gt;")));
+    addParameter(new AlgorithmParameter(
         PARAMETER_TEMPLATES,
-        GT._T("A list of templates resulting in the inclusion of {0}", "&lt;references/&gt;"));
-    return parameters;
+        GT._T("A list of templates resulting in the inclusion of {0}", "&lt;references/&gt;")));
   }
 }

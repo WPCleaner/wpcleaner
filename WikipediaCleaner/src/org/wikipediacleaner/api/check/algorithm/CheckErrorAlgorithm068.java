@@ -10,14 +10,15 @@ package org.wikipediacleaner.api.check.algorithm;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.Map;
 
 import org.wikipediacleaner.api.API;
 import org.wikipediacleaner.api.APIException;
 import org.wikipediacleaner.api.APIFactory;
+import org.wikipediacleaner.api.algorithm.AlgorithmParameter;
+import org.wikipediacleaner.api.algorithm.AlgorithmParameterElement;
 import org.wikipediacleaner.api.check.AddTextActionProvider;
-import org.wikipediacleaner.api.check.BasicActionProvider;
 import org.wikipediacleaner.api.check.CheckErrorResult;
+import org.wikipediacleaner.api.check.BasicActionProvider;
 import org.wikipediacleaner.api.check.CheckLanguageLinkActionProvider;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.constants.WPCConfiguration;
@@ -404,22 +405,31 @@ public class CheckErrorAlgorithm068 extends CheckErrorAlgorithmBase {
   private final List<String[]> templatesArgs = new ArrayList<>();
 
   /**
-   * Return the parameters used to configure the algorithm.
-   * 
-   * @return Map of parameters (key=name, value=description).
-   * @see org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase#getParameters()
+   * Build the list of parameters for this algorithm.
    */
   @Override
-  public Map<String, String> getParameters() {
-    Map<String, String> parameters = super.getParameters();
-    parameters.put(PARAMETER_TEMPLATE, GT._T(
-        "A template that can be used instead of the link to an other language. " +
-        "It must be specified as: " +
-          "<template name>|" +
-          "<param name for local page name>|" +
-          "<param name for code of other language>|" +
-          "<param name for page name in other language>|" +
-          "<param name for displayed text>").replaceAll("\\<", "&lt;").replaceAll("\\>", "&gt;"));
-    return parameters;
+  protected void addParameters() {
+    super.addParameters();
+    addParameter(new AlgorithmParameter(
+        PARAMETER_TEMPLATE,
+        GT._T("A template that can be used instead of the link to an other language."),
+        new AlgorithmParameterElement[] {
+            new AlgorithmParameterElement(
+                "template name",
+                GT._T("A template that can be used instead of the link to an other language.")),
+            new AlgorithmParameterElement(
+                "local page name",
+                GT._T("Parameter name for the local page name")),
+            new AlgorithmParameterElement(
+                "code of other language",
+                GT._T("Parameter name for the code of the other language")),
+            new AlgorithmParameterElement(
+                "page name in other language",
+                GT._T("Parameter name for the page name in the other language")),
+            new AlgorithmParameterElement(
+                "displayed text",
+                GT._T("Parameter name for the displayed text"))
+        },
+        false));
   }
 }

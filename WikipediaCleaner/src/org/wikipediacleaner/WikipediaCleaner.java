@@ -35,7 +35,7 @@ import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.text.DefaultEditorKit;
 
 import org.slf4j.LoggerFactory;
-import org.wikipediacleaner.api.check.CheckError;
+import org.wikipediacleaner.api.algorithm.AlgorithmError;
 import org.wikipediacleaner.api.constants.EnumLanguage;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.ISBNRange;
@@ -92,7 +92,7 @@ public class WikipediaCleaner {
     if (config.getBoolean(null, ConfigurationValueBoolean.DEBUG_DETAILS)) {
       Logger.getLogger("org.wikipediacleaner").setLevel(Level.FINE);
       PageAnalysis.setTraceTime(true);
-      CheckError.setTraceTime(true);
+      AlgorithmError.setTraceTime(true);
     }
     if (config.getBoolean(null, ConfigurationValueBoolean.DEBUG_FILE)) {
       try {

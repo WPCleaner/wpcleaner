@@ -38,7 +38,7 @@ import javax.swing.SwingUtilities;
 
 import org.wikipediacleaner.api.APIFactory;
 import org.wikipediacleaner.api.MediaWikiController;
-import org.wikipediacleaner.api.check.CheckError;
+import org.wikipediacleaner.api.algorithm.AlgorithmError;
 import org.wikipediacleaner.api.check.CheckErrorPage;
 import org.wikipediacleaner.api.check.CheckWiki;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithm;
@@ -1054,9 +1054,9 @@ public abstract class OnePageWindow
     boolean updateISSNWarning = false;
     final boolean createDuplicateArgsWarning = false;
     boolean updateDuplicateArgsWarning = false;
-    List<CheckError.Progress> errorsFixed = computeErrorsFixed();
+    List<AlgorithmError.Progress> errorsFixed = computeErrorsFixed();
     if (errorsFixed != null) {
-      for (CheckError.Progress errorFixed : errorsFixed) {
+      for (AlgorithmError.Progress errorFixed : errorsFixed) {
         CheckErrorAlgorithm algorithm = errorFixed.algorithm;
         int errorNumber = algorithm.getErrorNumber();
         if ((errorNumber == 69) ||
@@ -1151,7 +1151,7 @@ public abstract class OnePageWindow
     if (page != null) {
       PageAnalysis pageAnalysis = page.getAnalysis(page.getContents(), false);
       pageAnalysis.shouldCheckSpelling(shouldCheckSpelling());
-      List<CheckErrorPage> errorsFound = CheckError.analyzeErrors(
+      List<CheckErrorPage> errorsFound = AlgorithmError.analyzeErrors(
           algorithms, pageAnalysis, false);
       initialErrors = new ArrayList<CheckErrorPage>();
       if (errorsFound != null) {
@@ -1212,7 +1212,7 @@ public abstract class OnePageWindow
   /**
    * @return Errors fixed.
    */
-  protected List<CheckError.Progress> computeErrorsFixed() {
-    return CheckError.computeErrorsFixed(initialErrors, getTextContents().getText(), shouldCheckSpelling());
+  protected List<AlgorithmError.Progress> computeErrorsFixed() {
+    return AlgorithmError.computeErrorsFixed(initialErrors, getTextContents().getText(), shouldCheckSpelling());
   }
 }
