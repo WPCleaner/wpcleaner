@@ -328,9 +328,12 @@ public class CheckErrorAlgorithm513 extends CheckErrorAlgorithmBase {
     boolean checkTexts = true;
     while (checkTexts) {
       String prefix = contents.substring(link.getBeginIndex(), beginExtra);
+      int prefixLength = prefix.length();
       checkTexts = false;
       for (String[] text : textsBefore) {
-        if (prefix.endsWith(text[0])) {
+        int textLength = text[0].length();
+        if ((prefixLength >= textLength) &&
+            prefix.substring(prefixLength - textLength).equalsIgnoreCase(text[0])) {
           int tmpIndex = beginExtra - text[0].length();
           char charBefore = contents.charAt(tmpIndex - 1);
           if ((tmpIndex <= link.getLinkEndIndex()) ||
