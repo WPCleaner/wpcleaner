@@ -54,13 +54,13 @@ public class CheckErrorAlgorithm513 extends CheckErrorAlgorithmBase {
   }
 
   /** Punctuation characters before the internal link that trigger automatic replacement */
-  private static final String AUTOMATIC_PUNCTUATION_BEFORE = ",-–:(";
+  private static final String AUTOMATIC_PUNCTUATION_BEFORE = ",-–—:(";
 
   /** Punctuation characters before the internal link */
   private static final String PUNCTUATION_BEFORE = "" + AUTOMATIC_PUNCTUATION_BEFORE;
 
   /** Punctuation characters after the internal link */
-  private static final String PUNCTUATION_AFTER = ",-–:)";
+  private static final String PUNCTUATION_AFTER = ",-–—:)";
 
   /**
    * Analyze a page to check if errors are present.
@@ -240,12 +240,14 @@ public class CheckErrorAlgorithm513 extends CheckErrorAlgorithmBase {
     // Criteria on the internal link inside the external link
     ContentsElement internalLink = null;
     String internalLinkText = null;
+    boolean internalLinkFirst = false;
     if (!link.hasSecondSquare()) {
       PageElementInternalLink tmp = analysis.isInInternalLink(link.getEndIndex());
       if ((tmp != null) &&
           (tmp.getBeginIndex() == link.getEndIndex())) {
         internalLink = tmp;
         internalLinkText = tmp.getDisplayedTextNotTrimmed();
+        internalLinkFirst = linksFirst.contains(tmp.getLink());
       }
     }
     String contents = analysis.getContents();
@@ -436,7 +438,9 @@ public class CheckErrorAlgorithm513 extends CheckErrorAlgorithmBase {
           replacementBegin +
           "[..." + contents.substring(beginExtra, tmpBeginExtra) +
           replacementEnd;
-      errorResult.addReplacement(replacement, description);
+      errorResult.addReplacement(
+          replacement, description,
+          internalLinkFirst && (endExtra < endError - 1));
     }
     if (internalLinkText != null) {
       String replacementEnd = 
@@ -520,6 +524,9 @@ public class CheckErrorAlgorithm513 extends CheckErrorAlgorithmBase {
   /** List of template parameters that create an external link */
   private static final String PARAMETER_TEMPLATE_PARAMS = "template_params";
 
+  /** List of links that can be extracted when they are at the beginning */
+  private static final String PARAMETER_LINKS_FIRTS = "links_first";
+
   /**
    * Initialize settings for the algorithm.
    * 
@@ -580,6 +587,15 @@ public class CheckErrorAlgorithm513 extends CheckErrorAlgorithmBase {
       }
     }
 
+    tmp = getSpecificProperty(PARAMETER_LINKS_FIRTS, true, true, false);
+    linksFirst.clear();
+    if (tmp != null) {
+      List<String> tmpList = WPCConfiguration.convertPropertyToStringList(tmp);
+      if (tmpList != null) {
+        linksFirst.addAll(tmpList);
+      }
+    }
+
     List<LinterCategory> categories = getWikiConfiguration().getLinterCategories();
     if (categories != null) {
       for (LinterCategory category : categories) {
@@ -602,6 +618,9 @@ public class CheckErrorAlgorithm513 extends CheckErrorAlgorithmBase {
   /** Template parameters that create an external link */
   private final Map<String, List<String[]>> templateParams = new HashMap<>();
 
+  /** Internal links that can be extracted when at the beginning of the external link */
+  private final List<String> linksFirst = new ArrayList<>();
+
   /** Linter category */
   private LinterCategory linterCategory = null;
 
@@ -611,6 +630,13 @@ public class CheckErrorAlgorithm513 extends CheckErrorAlgorithmBase {
   @Override
   protected void addParameters() {
     super.addParameters();
+    addParameter(new AlgorithmParameter(
+        PARAMETER_LINKS_FIRTS,
+        GT._T("A list of links that can be extracted when at the beginning of the external link"),
+        new AlgorithmParameterElement(
+            "page name",
+            GT._T("An internal link that can be extracted when at the beginning of the external link")),
+        true));
     addParameter(new AlgorithmParameter(
         PARAMETER_TEMPLATES,
         GT._T("A list of templates that create an internal link"),

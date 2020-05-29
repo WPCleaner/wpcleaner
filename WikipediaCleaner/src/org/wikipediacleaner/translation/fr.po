@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2020-05-29 14:34+0200\n"
-"PO-Revision-Date: 2020-05-29 14:36+0200\n"
+"POT-Creation-Date: 2020-05-29 17:47+0200\n"
+"PO-Revision-Date: 2020-05-29 17:50+0200\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: French <fr@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -646,7 +646,7 @@ msgstr "Remplacer en utilisant le modèle {0}"
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:147
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm081.java:269
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm091.java:292
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm513.java:455
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm513.java:459
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm544.java:155
 #: org/wikipediacleaner/gui/swing/action/ActionExternalViewer.java:61
 #: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:90
@@ -1046,61 +1046,76 @@ msgstr "Compacter tous les liens"
 msgid "Compact link"
 msgstr "Compacter le lien"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm513.java:616
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm513.java:635
+msgid ""
+"A list of links that can be extracted when at the beginning of the external "
+"link"
+msgstr ""
+"Une liste de liens qui peuvent être extraits quand ils sont au début du lien "
+"externe"
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm513.java:638
+msgid ""
+"An internal link that can be extracted when at the beginning of the external "
+"link"
+msgstr ""
+"Un lien interne qui peut être extrait quand il est au début du lien externe"
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm513.java:642
 msgid "A list of templates that create an internal link"
 msgstr "Une liste de modèles qui créent un lien interne"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm513.java:620
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm513.java:646
 msgid "Name of a template that creates an internal link"
 msgstr "Nom d’un modèle qui crée un lien interne"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm513.java:623
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm513.java:649
 msgid "Name of a template that can be used as a replacement"
 msgstr "Nom d’un modèle qui peut être utilisé en remplacement"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm513.java:627
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm513.java:653
 msgid "True if the replacement can be automatic"
 msgstr "Si le remplacement peut être automatique"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm513.java:633
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm513.java:659
 msgid "A list of template parameters that create the text of an external link"
 msgstr ""
 "Une liste de paramètres de modèles qui créent le texte d’un lien externe"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm513.java:637
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm513.java:663
 msgid "Name of a template that creates an external link"
 msgstr "Nom d’un modèle qui crée un lien externe"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm513.java:640
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm513.java:666
 msgid ""
 "Name of a paramater that is used to create the text of the external link"
 msgstr "Nom d’un paramètre qui est utilisé pour créer le texte du lien externe"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm513.java:643
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm513.java:669
 msgid "True if removing internal links in the text can be automatic"
 msgstr ""
 "Si la suppression des liens internes dans le texte peut être automatique"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm513.java:649
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm513.java:675
 msgid ""
 "A list of texts (regular expressions) that can be after the internal link"
 msgstr ""
 "Une liste de textes (expressions régulières) qui peuvent être après le lien "
 "interne"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm513.java:652
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm513.java:678
 msgid "Regular expression that can be after the internal link"
 msgstr "Une expression régulière qui peut être après le lien interne"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm513.java:656
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm513.java:682
 msgid "A list of texts that can be before the internal link"
 msgstr "Une liste de textes qui peuvent être avant le lien interne"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm513.java:660
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm513.java:686
 msgid "Text that can be before the internal link"
 msgstr "Un texte qui peut être avant le lien interne"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm513.java:663
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm513.java:689
 msgid "True if finding this text means that the replacement can be automatic"
 msgstr ""
 "Si le fait de trouver ce texte veut dire que le remplacement peut être "
