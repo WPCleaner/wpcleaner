@@ -11,6 +11,7 @@ import java.util.Collection;
 import java.util.List;
 
 import org.wikipediacleaner.api.algorithm.AlgorithmParameter;
+import org.wikipediacleaner.api.algorithm.AlgorithmParameterElement;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementTag;
@@ -175,8 +176,13 @@ public class CheckErrorAlgorithm542 extends CheckErrorAlgorithmBase {
   @Override
   protected void addParameters() {
     super.addParameters();
+    String separatorText =
+        GT._T("Used as a separator between consecutive {0} tags", "&lt;ref&gt;");
     addParameter(new AlgorithmParameter(
         PARAMETER_SEPARATOR,
-        GT._T("Used as a separator between consecutive {0} tags", "&lt;ref&gt;")));
+        separatorText,
+        new AlgorithmParameterElement(
+            "separator",
+            separatorText)));
   }
 }

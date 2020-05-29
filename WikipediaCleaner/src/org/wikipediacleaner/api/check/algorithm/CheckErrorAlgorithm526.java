@@ -16,6 +16,7 @@ import org.wikipediacleaner.api.API;
 import org.wikipediacleaner.api.APIException;
 import org.wikipediacleaner.api.APIFactory;
 import org.wikipediacleaner.api.algorithm.AlgorithmParameter;
+import org.wikipediacleaner.api.algorithm.AlgorithmParameterElement;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.CheckErrorResult.ErrorLevel;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
@@ -308,12 +309,27 @@ public class CheckErrorAlgorithm526 extends CheckErrorAlgorithmBase {
     super.addParameters();
     addParameter(new AlgorithmParameter(
         PARAMETER_ABUSE_FILTER,
-        GT._T("An identifier of an abuse filter that is triggered by incorrect year links.")));
+        GT._T("An identifier of an abuse filter that is triggered by incorrect year links."),
+        new AlgorithmParameterElement(
+            "abuse filter identifier",
+            GT._T("An identifier of an abuse filter that is triggered by incorrect year links."))));
     addParameter(new AlgorithmParameter(
         PARAMETER_ASK_HELP,
-        GT._T("Text added after the link to ask for help.")));
+        GT._T("Text added after the link to ask for help."),
+        new AlgorithmParameterElement[] {
+            new AlgorithmParameterElement(
+                "explanation",
+                GT._T("Description of the action")),
+            new AlgorithmParameterElement(
+                "text",
+                GT._T("Text added after the link to ask for help."))
+        },
+        true));
     addParameter(new AlgorithmParameter(
         PARAMETER_DUMP_ANALYSIS,
-        GT._T("A page containing a dump analysis for this error.")));
+        GT._T("A page containing a dump analysis for this error."),
+        new AlgorithmParameterElement(
+            "page name",
+            GT._T("A page containing a dump analysis for this error."))));
   }
 }

@@ -13,6 +13,7 @@ import java.util.Collection;
 import java.util.List;
 
 import org.wikipediacleaner.api.algorithm.AlgorithmParameter;
+import org.wikipediacleaner.api.algorithm.AlgorithmParameterElement;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.CheckErrorResult.ErrorLevel;
 import org.wikipediacleaner.api.constants.WPCConfiguration;
@@ -218,6 +219,16 @@ public class CheckErrorAlgorithm525 extends CheckErrorAlgorithmBase {
     super.addParameters();
     addParameter(new AlgorithmParameter(
         PARAMETER_ANCHOR_TEMPLATES,
-        GT._T("A replacement for {0}", "&lt;span id=\"xxx\"/&gt;")));
+        GT._T("A replacement for {0}", "&lt;span id=\"xxx\"/&gt;"),
+        new AlgorithmParameterElement[] {
+            new AlgorithmParameterElement(
+                "template name",
+                GT._T("A template that can replace a {0}", "&lt;span id=\"xxx\"/&gt;")),
+            new AlgorithmParameterElement(
+                "parameter name",
+                GT._T("Name of the parameter to be used for the anchor identifier"),
+                true)
+        },
+        true));
   }
 }

@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.wikipediacleaner.api.algorithm.AlgorithmParameter;
+import org.wikipediacleaner.api.algorithm.AlgorithmParameterElement;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.constants.WPCConfiguration;
 import org.wikipediacleaner.api.data.PageAnalysis;
@@ -158,9 +159,17 @@ public class CheckErrorAlgorithm101 extends CheckErrorAlgorithmBase {
     super.addParameters();
     addParameter(new AlgorithmParameter(
         PARAMETER_TEMPLATES,
-        GT._T("List of ordinal suffixes")));
+        GT._T("List of ordinal suffixes"),
+        new AlgorithmParameterElement(
+            "suffix",
+            GT._T("Ordinal suffix")),
+        true));
     addParameter(new AlgorithmParameter(
         PARAMETER_REPLACEMENTS,
-        GT._T("List of possible replacements")));
+        GT._T("List of possible replacements"),
+        new AlgorithmParameterElement(
+            "suffix=replacement",
+            GT._T("A possible replacemement for one suffix")),
+        true));
   }
 }

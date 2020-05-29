@@ -16,6 +16,7 @@ import org.wikipediacleaner.api.API;
 import org.wikipediacleaner.api.APIException;
 import org.wikipediacleaner.api.APIFactory;
 import org.wikipediacleaner.api.algorithm.AlgorithmParameter;
+import org.wikipediacleaner.api.algorithm.AlgorithmParameterElement;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.CheckErrorResult.ErrorLevel;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
@@ -269,6 +270,9 @@ public class CheckErrorAlgorithm527 extends CheckErrorAlgorithmBase {
     super.addParameters();
     addParameter(new AlgorithmParameter(
         PARAMETER_CATEGORY,
-        GT._T("A category containing the list of pages in error")));
+        GT._T("A category containing the list of pages in error"),
+        new AlgorithmParameterElement(
+            "category name",
+            GT._T("A category containing the list of pages in error"))));
   }
 }

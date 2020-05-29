@@ -13,6 +13,7 @@ import java.util.Collection;
 import java.util.List;
 
 import org.wikipediacleaner.api.algorithm.AlgorithmParameter;
+import org.wikipediacleaner.api.algorithm.AlgorithmParameterElement;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.SimpleAction;
 import org.wikipediacleaner.api.data.Namespace;
@@ -239,6 +240,9 @@ public class CheckErrorAlgorithm107 extends CheckErrorAlgorithmISSN {
     super.addParameters();
     addParameter(new AlgorithmParameter(
         PARAMETER_REASON,
-        GT._T("An explanation of the problem")));
+        GT._T("An explanation of the problem"),
+        new AlgorithmParameterElement(
+            "text",
+            GT._T("An explanation of the problem"))));
   }
 }

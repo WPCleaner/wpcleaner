@@ -377,6 +377,9 @@ public class AlgorithmParametersDescriptor {
         result.append("|");
       }
       addTooltipText(result, element.getText(), element.getDescription());
+      if (element.canBeMultiple()) {
+        result.append("...");
+      }
       first = false;
     }
     for (int i = 0; i < optionalCount; i++) {

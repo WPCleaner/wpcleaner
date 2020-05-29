@@ -8,16 +8,10 @@
 package org.wikipediacleaner.api.check.algorithm;
 
 import java.util.Collection;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 
-import org.wikipediacleaner.api.algorithm.AlgorithmParameter;
 import org.wikipediacleaner.api.check.CheckErrorResult;
-import org.wikipediacleaner.api.constants.WPCConfiguration;
 import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementTag;
-import org.wikipediacleaner.i18n.GT;
 
 
 /**
@@ -163,43 +157,5 @@ public class CheckErrorAlgorithm551 extends CheckErrorAlgorithmBase {
       return analysis.getContents();
     }
     return fixUsingAutomaticReplacement(analysis);
-  }
-
-  /* ====================================================================== */
-  /* PARAMETERS                                                             */
-  /* ====================================================================== */
-
-  /** List of links to be ignored */
-  private static final String PARAMETER_IGNORE_LINKS = "ignore_links";
-
-  /**
-   * Initialize settings for the algorithm.
-   * 
-   * @see org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase#initializeSettings()
-   */
-  @Override
-  protected void initializeSettings() {
-    String tmp = getSpecificProperty(PARAMETER_IGNORE_LINKS, true, true, true);
-    ignoreLinks.clear();
-    if (tmp != null) {
-      List<String> tmpList = WPCConfiguration.convertPropertyToStringList(tmp);
-      if (tmpList != null) {
-        ignoreLinks.addAll(tmpList);
-      }
-    }
-  }
-
-  /** Links to ignore */
-  private final Set<String> ignoreLinks = new HashSet<>();
-
-  /**
-   * Build the list of parameters for this algorithm.
-   */
-  @Override
-  protected void addParameters() {
-    super.addParameters();
-    addParameter(new AlgorithmParameter(
-        PARAMETER_IGNORE_LINKS,
-        GT._T("Links to ignore")));
   }
 }

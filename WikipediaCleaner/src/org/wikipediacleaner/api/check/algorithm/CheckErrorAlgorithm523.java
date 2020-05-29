@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.wikipediacleaner.api.algorithm.AlgorithmParameter;
+import org.wikipediacleaner.api.algorithm.AlgorithmParameterElement;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.CheckErrorResult.ErrorLevel;
 import org.wikipediacleaner.api.data.MagicWord;
@@ -217,6 +218,9 @@ public class CheckErrorAlgorithm523 extends CheckErrorAlgorithmBase {
     super.addParameters();
     addParameter(new AlgorithmParameter(
         PARAMETER_MIN_SIZE,
-        GT._T("The size below which images are not reported as duplicates")));
+        GT._T("The size below which images are not reported as duplicates"),
+        new AlgorithmParameterElement(
+            "size",
+            GT._T("The size below which images are not reported as duplicates"))));
   }
 }

@@ -22,6 +22,7 @@ import org.wikipediacleaner.api.API;
 import org.wikipediacleaner.api.APIException;
 import org.wikipediacleaner.api.APIFactory;
 import org.wikipediacleaner.api.algorithm.AlgorithmParameter;
+import org.wikipediacleaner.api.algorithm.AlgorithmParameterElement;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.SimpleAction;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
@@ -612,15 +613,56 @@ public class CheckErrorAlgorithm513 extends CheckErrorAlgorithmBase {
     super.addParameters();
     addParameter(new AlgorithmParameter(
         PARAMETER_TEMPLATES,
-        GT._T("A list of templates that create an internal link")));
+        GT._T("A list of templates that create an internal link"),
+        new AlgorithmParameterElement[] {
+            new AlgorithmParameterElement(
+                "template name",
+                GT._T("Name of a template that creates an internal link")),
+            new AlgorithmParameterElement(
+                "replacement template",
+                GT._T("Name of a template that can be used as a replacement"),
+                true),
+            new AlgorithmParameterElement(
+                "true/false",
+                GT._T("True if the replacement can be automatic"),
+                true)
+        },
+        true));
     addParameter(new AlgorithmParameter(
         PARAMETER_TEMPLATE_PARAMS,
-        GT._T("A list of template parameters that create the text of an external link")));
+        GT._T("A list of template parameters that create the text of an external link"),
+        new AlgorithmParameterElement[] {
+            new AlgorithmParameterElement(
+                "template name",
+                GT._T("Name of a template that creates an external link")),
+            new AlgorithmParameterElement(
+                "text parameter",
+                GT._T("Name of a paramater that is used to create the text of the external link")),
+            new AlgorithmParameterElement(
+                "true/false",
+                GT._T("True if removing internal links in the text can be automatic"),
+                true)
+        },
+        true));
     addParameter(new AlgorithmParameter(
         PARAMETER_TEXTS_AFTER,
-        GT._T("A list of texts (regular expressions) that can be after the internal link")));
+        GT._T("A list of texts (regular expressions) that can be after the internal link"),
+        new AlgorithmParameterElement(
+            "pattern",
+            GT._T("Regular expression that can be after the internal link")),
+        true));
     addParameter(new AlgorithmParameter(
         PARAMETER_TEXTS_BEFORE,
-        GT._T("A list of texts that can be before the internal link")));
+        GT._T("A list of texts that can be before the internal link"),
+        new AlgorithmParameterElement[] {
+            new AlgorithmParameterElement(
+                "text",
+                GT._T("Text that can be before the internal link")),
+            new AlgorithmParameterElement(
+                "true/false",
+                GT._T("True if finding this text means that the replacement can be automatic"),
+                true)
+        },
+        true));
   }
 }

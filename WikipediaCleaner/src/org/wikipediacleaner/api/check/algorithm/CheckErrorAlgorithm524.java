@@ -16,6 +16,7 @@ import org.wikipediacleaner.api.API;
 import org.wikipediacleaner.api.APIException;
 import org.wikipediacleaner.api.APIFactory;
 import org.wikipediacleaner.api.algorithm.AlgorithmParameter;
+import org.wikipediacleaner.api.algorithm.AlgorithmParameterElement;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.CheckErrorResult.ErrorLevel;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
@@ -168,18 +169,16 @@ public class CheckErrorAlgorithm524 extends CheckErrorAlgorithmBase {
               }
             }
 
+            // Manage some parameters safe to replace
             boolean ignored = false;
-            if ((ignore != null) && !ignore.isEmpty()) {
-              // Manage some parameters safe to replace
-              for (String[] ignoreElement : ignore) {
-                if ((ignoreElement.length > 1) &&
-                    Page.areSameTitle(template.getTemplateName(), ignoreElement[0]) &&
-                    ignoreElement[1].equals(paramName)) {
-                  if (ignoreElement.length > 2) {
-                    for (int pos = 2; pos < ignoreElement.length; pos++) {
-                      if (ignoreElement[pos].equals(existingValue)) {
-                        ignored = true;
-                      }
+            for (String[] ignoreElement : ignore) {
+              if ((ignoreElement.length > 1) &&
+                  Page.areSameTitle(template.getTemplateName(), ignoreElement[0]) &&
+                  ignoreElement[1].equals(paramName)) {
+                if (ignoreElement.length > 2) {
+                  for (int pos = 2; pos < ignoreElement.length; pos++) {
+                    if (ignoreElement[pos].equals(existingValue)) {
+                      ignored = true;
                     }
                   }
                 }
@@ -392,9 +391,26 @@ public class CheckErrorAlgorithm524 extends CheckErrorAlgorithmBase {
     super.addParameters();
     addParameter(new AlgorithmParameter(
         PARAMETER_CATEGORY,
-        GT._T("A category containing the list of pages in error")));
+        GT._T("A category containing the list of pages in error"),
+        new AlgorithmParameterElement(
+            "category name",
+            GT._T("A category containing the list of pages in error"))));
     addParameter(new AlgorithmParameter(
         PARAMETER_IGNORE,
-        GT._T("Values that can be safely ignored for a given template and argument")));
+        GT._T("Values that can be safely ignored for a given template and argument"),
+        new AlgorithmParameterElement[] {
+            new AlgorithmParameterElement(
+                "template name",
+                GT._T("Name of the template in which some values can be safely ignored")),
+            new AlgorithmParameterElement(
+                "parameter name",
+                GT._T("Name of the parameter for which some values can be safely ignored")),
+            new AlgorithmParameterElement(
+                "value",
+                GT._T("Value of the paramter which can be safely ignored"),
+                false,
+                true),
+        },
+        true));
   }
 }

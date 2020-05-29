@@ -12,6 +12,7 @@ import java.util.Collection;
 import java.util.List;
 
 import org.wikipediacleaner.api.algorithm.AlgorithmParameter;
+import org.wikipediacleaner.api.algorithm.AlgorithmParameterElement;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.CheckErrorResult.ErrorLevel;
 import org.wikipediacleaner.api.constants.WPCConfiguration;
@@ -194,6 +195,16 @@ public class CheckErrorAlgorithm111 extends CheckErrorAlgorithmBase {
     //    GT._T("A list of templates resulting in the inclusion of {0}", "&lt;references/&gt;")));
     addParameter(new AlgorithmParameter(
         PARAMETER_TEMPLATES,
-        GT._T("A list of templates resulting in the inclusion of {0}", "&lt;references/&gt;")));
+        GT._T("A list of templates resulting in the inclusion of {0}", "&lt;references/&gt;"),
+        new AlgorithmParameterElement[] {
+            new AlgorithmParameterElement(
+                "template name",
+                GT._T("Template name")),
+            new AlgorithmParameterElement(
+                "group parameter",
+                GT._T("Parameter for the name of the group"),
+                true)
+        },
+        true));
   }
 }

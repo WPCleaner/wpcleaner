@@ -23,6 +23,9 @@ public class AlgorithmParameterElement {
   /** True if the parameter is optional */
   private final boolean optional;
 
+  /** True if the parameter can be set multiple times */
+  private final boolean multiple;
+
   /**
    * Constructor.
    * 
@@ -46,9 +49,26 @@ public class AlgorithmParameterElement {
       String text,
       String description,
       boolean optional) {
+    this(text, description, optional, false);
+  }
+
+  /**
+   * Constructor.
+   * 
+   * @param text Text used to display the element.
+   * @param description Description of the element.
+   * @param optional True if the parameter is optional.
+   * @param multiple True if the parameter can be set multiple times.
+   */
+  public AlgorithmParameterElement(
+      String text,
+      String description,
+      boolean optional,
+      boolean multiple) {
     this.text = text;
     this.description = description;
     this.optional = optional;
+    this.multiple = multiple;
   }
 
   /**
@@ -70,5 +90,12 @@ public class AlgorithmParameterElement {
    */
   public boolean isOptional() {
     return optional;
+  }
+
+  /**
+   * @return True if the parameter can be set multiple times.
+   */
+  public boolean canBeMultiple() {
+    return multiple;
   }
 }

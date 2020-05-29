@@ -12,6 +12,7 @@ import java.util.Collection;
 import java.util.List;
 
 import org.wikipediacleaner.api.algorithm.AlgorithmParameter;
+import org.wikipediacleaner.api.algorithm.AlgorithmParameterElement;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.constants.WPCConfiguration;
 import org.wikipediacleaner.api.data.PageAnalysis;
@@ -125,6 +126,12 @@ public class CheckErrorAlgorithm531 extends CheckErrorAlgorithmBase {
     super.addParameters();
     addParameter(new AlgorithmParameter(
         PARAMETER_TEMPLATES,
-        GT._T("A list of templates that can't be used inside a reference")));
+        GT._T("A list of templates that can't be used inside a reference"),
+        new AlgorithmParameterElement[] {
+            new AlgorithmParameterElement(
+                "template name",
+                GT._T("Name of a template that can't be used inside a reference"))
+        },
+        true));
   }
 }

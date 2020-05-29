@@ -16,6 +16,7 @@ import org.wikipediacleaner.api.API;
 import org.wikipediacleaner.api.APIException;
 import org.wikipediacleaner.api.APIFactory;
 import org.wikipediacleaner.api.algorithm.AlgorithmParameter;
+import org.wikipediacleaner.api.algorithm.AlgorithmParameterElement;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.constants.WPCConfiguration;
@@ -96,7 +97,6 @@ public class CheckErrorAlgorithm545 extends CheckErrorAlgorithmBase {
    */
   @Override
   public boolean hasSpecialList() {
-    List<String> categories = getTrackingCategories();
     return ((categories != null) && (!categories.isEmpty()));
   }
 
@@ -104,11 +104,7 @@ public class CheckErrorAlgorithm545 extends CheckErrorAlgorithmBase {
    * @return Tracking categories.
    */
   private List<String> getTrackingCategories() {
-    String tmp = getSpecificProperty("categories", true, true, false);
-    if ((tmp == null) || tmp.isEmpty()) {
-      return null;
-    }
-    return WPCConfiguration.convertPropertyToStringList(tmp, false);
+    return categories;
   }
 
   /**
@@ -146,6 +142,9 @@ public class CheckErrorAlgorithm545 extends CheckErrorAlgorithmBase {
   /* PARAMETERS                                                             */
   /* ====================================================================== */
 
+  /** Categories listing pages for this error */
+  private static final String PARAMETER_CATEGORIES = "categories";
+
   /** Deprecated parameters for templates */
   private static final String PARAMETER_TEMPLATES = "templates";
 
@@ -164,7 +163,19 @@ public class CheckErrorAlgorithm545 extends CheckErrorAlgorithmBase {
         deprecatedParameters.addAll(tmpList);
       }
     }
+
+    tmp = getSpecificProperty(PARAMETER_CATEGORIES, true, true, false);
+    categories.clear();
+    if (tmp != null) {
+      List<String> tmpList = WPCConfiguration.convertPropertyToStringList(tmp);
+      if (tmpList != null) {
+        categories.addAll(tmpList);
+      }
+    }
   }
+
+  /** Categories listing pages for this error */
+  private final List<String> categories = new ArrayList<>();
 
   /** Deprecated parameters for templates */
   private final List<String[]> deprecatedParameters = new ArrayList<>();
@@ -176,7 +187,27 @@ public class CheckErrorAlgorithm545 extends CheckErrorAlgorithmBase {
   protected void addParameters() {
     super.addParameters();
     addParameter(new AlgorithmParameter(
+        PARAMETER_CATEGORIES,
+        GT._T("Categories listing pages using templates with deprecated parameters"),
+        new AlgorithmParameterElement(
+            "category name",
+            GT._T("Name of a category listing pages using templates with deprecated parameters")),
+        true));
+    addParameter(new AlgorithmParameter(
         PARAMETER_TEMPLATES,
-        GT._T("Templates with deprecated parameters")));
+        GT._T("Templates with deprecated parameters"),
+        new AlgorithmParameterElement[] {
+            new AlgorithmParameterElement(
+                "template name",
+                GT._T("Name of a template with deprecated parameter")),
+            new AlgorithmParameterElement(
+                "parameter name",
+                GT._T("Name a of a deprecated parameter")),
+            new AlgorithmParameterElement(
+                "explanation",
+                GT._T("Textual explanation about the deprecated parameter"),
+                true)
+        },
+        true));
   }
 }

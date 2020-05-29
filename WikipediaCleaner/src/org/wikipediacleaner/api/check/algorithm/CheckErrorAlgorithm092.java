@@ -12,6 +12,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import org.wikipediacleaner.api.algorithm.AlgorithmParameter;
+import org.wikipediacleaner.api.algorithm.AlgorithmParameterElement;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.CheckErrorResult.ErrorLevel;
 import org.wikipediacleaner.api.data.PageAnalysis;
@@ -238,9 +239,15 @@ public class CheckErrorAlgorithm092 extends CheckErrorAlgorithmBase {
     super.addParameters();
     addParameter(new AlgorithmParameter(
         PARAMETER_MAX_LEVEL,
-        GT._T("Maximum level of titles to report")));
+        GT._T("Maximum level of titles to report"),
+        new AlgorithmParameterElement(
+            "level",
+            GT._T("Maximum level of titles to report"))));
     addParameter(new AlgorithmParameter(
         PARAMETER_ONLY_CONSECUTIVE,
-        GT._T("To report only consecutive titles")));
+        GT._T("To report only consecutive titles"),
+        new AlgorithmParameterElement(
+            "true/false",
+            GT._T("To report only consecutive titles"))));
   }
 }

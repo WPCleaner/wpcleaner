@@ -14,6 +14,7 @@ import org.wikipediacleaner.api.API;
 import org.wikipediacleaner.api.APIException;
 import org.wikipediacleaner.api.APIFactory;
 import org.wikipediacleaner.api.algorithm.AlgorithmParameter;
+import org.wikipediacleaner.api.algorithm.AlgorithmParameterElement;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.Namespace;
@@ -145,6 +146,9 @@ public class CheckErrorAlgorithm520 extends CheckErrorAlgorithmBase {
     super.addParameters();
     addParameter(new AlgorithmParameter(
         PARAMETER_ABUSE_FILTER,
-        GT._T("An identifier of an abuse filter that is triggered by weird characters.")));
+        GT._T("An identifier of an abuse filter that is triggered by weird characters."),
+        new AlgorithmParameterElement(
+            "abuse filter identifier",
+            GT._T("An identifier of an abuse filter that is triggered by weird characters."))));
   }
 }

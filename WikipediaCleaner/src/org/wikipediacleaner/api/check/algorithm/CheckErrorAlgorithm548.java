@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.wikipediacleaner.api.algorithm.AlgorithmParameter;
+import org.wikipediacleaner.api.algorithm.AlgorithmParameterElement;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.constants.WPCConfiguration;
 import org.wikipediacleaner.api.data.CharacterUtils;
@@ -349,6 +350,10 @@ public class CheckErrorAlgorithm548 extends CheckErrorAlgorithmBase {
     super.addParameters();
     addParameter(new AlgorithmParameter(
         PARAMETER_IGNORE_LINKS,
-        GT._T("Links to ignore")));
+        GT._T("Links to ignore"),
+        new AlgorithmParameterElement(
+            "article name",
+            GT._T("Link to ignore")),
+        true));
   }
 }

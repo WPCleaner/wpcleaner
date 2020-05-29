@@ -12,6 +12,7 @@ import java.util.Collection;
 import java.util.List;
 
 import org.wikipediacleaner.api.algorithm.AlgorithmParameter;
+import org.wikipediacleaner.api.algorithm.AlgorithmParameterElement;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.constants.WPCConfiguration;
 import org.wikipediacleaner.api.data.Page;
@@ -50,8 +51,7 @@ public class CheckErrorAlgorithm521 extends CheckErrorAlgorithmBase {
 
     // Search for incorrect formatting
     boolean result = false;
-    for (String check : checks) {
-      String[] elements = check.split("\\|");
+    for (String[] elements : checks) {
       if ((elements != null) && (elements.length > 2)) {
         List<PageElementTemplate> templates = analysis.getTemplates(elements[0]);
         for (PageElementTemplate template : templates) {
@@ -356,7 +356,7 @@ public class CheckErrorAlgorithm521 extends CheckErrorAlgorithmBase {
     String tmp = getSpecificProperty(PARAMETER_TEMPLATES, true, true, false);
     checks.clear();
     if (tmp != null) {
-      List<String> tmpList = WPCConfiguration.convertPropertyToStringList(tmp);
+      List<String[]> tmpList = WPCConfiguration.convertPropertyToStringArrayList(tmp);
       if (tmpList != null) {
         checks.addAll(tmpList);
       }
@@ -372,7 +372,7 @@ public class CheckErrorAlgorithm521 extends CheckErrorAlgorithmBase {
   }
 
   /** Templates to check */
-  private final List<String> checks = new ArrayList<>();
+  private final List<String[]> checks = new ArrayList<>();
 
   /** Months names */
   private final List<String> months = new ArrayList<>();
@@ -385,9 +385,26 @@ public class CheckErrorAlgorithm521 extends CheckErrorAlgorithmBase {
     super.addParameters();
     addParameter(new AlgorithmParameter(
         PARAMETER_TEMPLATES,
-        GT._T("A list of templates and parameters in which format should be checked")));
+        GT._T("A list of templates and parameters in which format should be checked"),
+        new AlgorithmParameterElement[] {
+            new AlgorithmParameterElement(
+                "template name",
+                GT._T("The name of a template in which format should be checked")),
+            new AlgorithmParameterElement(
+                "parameter name",
+                GT._T("The name of a parameter in which format should be checked")),
+            new AlgorithmParameterElement(
+                "date format",
+                GT._T("A correct format for the date"),
+                false, true)
+        },
+        true));
     addParameter(new AlgorithmParameter(
         PARAMETER_MONTHS,
-        GT._T("A list of text values for months")));
+        GT._T("A list of text values for months"),
+        new AlgorithmParameterElement(
+            "month name",
+            GT._T("A text value for a month")),
+        true));
   }
 }

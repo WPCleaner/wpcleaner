@@ -14,6 +14,7 @@ import org.wikipediacleaner.api.API;
 import org.wikipediacleaner.api.APIException;
 import org.wikipediacleaner.api.APIFactory;
 import org.wikipediacleaner.api.algorithm.AlgorithmParameter;
+import org.wikipediacleaner.api.algorithm.AlgorithmParameterElement;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.Namespace;
@@ -280,22 +281,38 @@ public class CheckErrorAlgorithm518 extends CheckErrorAlgorithmBase {
   @Override
   protected void addParameters() {
     super.addParameters();
+    String textAbuseFilter = GT._T(
+        "An identifier of an abuse filter that is triggered by {0} tags.",
+        PageElementTag.TAG_WIKI_NOWIKI);
     addParameter(new AlgorithmParameter(
         PARAMETER_ABUSE_FILTER,
-        GT._T(
-            "An identifier of an abuse filter that is triggered by {0} tags.",
-            PageElementTag.TAG_WIKI_NOWIKI)));
+        textAbuseFilter,
+        new AlgorithmParameterElement(
+            "abuse filter identifier",
+            textAbuseFilter)));
     addParameter(new AlgorithmParameter(
         PARAMETER_APOSTROPHE_TEMPLATE,
-        GT._T("A template that can be used instead of an apostrophe.")));
+        GT._T("A template that can be used instead of an apostrophe."),
+        new AlgorithmParameterElement(
+            "template name",
+            GT._T("A template that can be used instead of an apostrophe."))));
     addParameter(new AlgorithmParameter(
         PARAMETER_ASTERISK_TEMPLATE,
-        GT._T("A template that can be used instead of an asterisk.")));
+        GT._T("A template that can be used instead of an asterisk."),
+        new AlgorithmParameterElement(
+            "template name",
+            GT._T("A template that can be used instead of an asterisk."))));
     addParameter(new AlgorithmParameter(
         PARAMETER_CLOSE_SB_TEMPLATE,
-        GT._T("A template that can be used instead of a closing square bracket.")));
+        GT._T("A template that can be used instead of a closing square bracket."),
+        new AlgorithmParameterElement(
+            "template name",
+            GT._T("A template that can be used instead of a closing square bracket."))));
     addParameter(new AlgorithmParameter(
         PARAMETER_OPEN_SB_TEMPLATE,
-        GT._T("A template that can be used instead of an opening square bracket.")));
+        GT._T("A template that can be used instead of an opening square bracket."),
+        new AlgorithmParameterElement(
+            "template name",
+            GT._T("A template that can be used instead of an opening square bracket."))));
   }
 }

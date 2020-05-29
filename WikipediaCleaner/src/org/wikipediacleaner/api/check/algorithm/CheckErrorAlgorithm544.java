@@ -12,6 +12,7 @@ import java.util.Collection;
 import java.util.List;
 
 import org.wikipediacleaner.api.algorithm.AlgorithmParameter;
+import org.wikipediacleaner.api.algorithm.AlgorithmParameterElement;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.SimpleAction;
 import org.wikipediacleaner.api.check.CheckErrorResult.ErrorLevel;
@@ -194,6 +195,16 @@ public class CheckErrorAlgorithm544 extends CheckErrorAlgorithmBase {
     super.addParameters();
     addParameter(new AlgorithmParameter(
         PARAMETER_PAIR_TEMPLATES,
-        GT._T("Pairs of templates: for each opening template, all possible closing templates")));
+        GT._T("Pairs of templates: for each opening template, all possible closing templates"),
+        new AlgorithmParameterElement[] {
+            new AlgorithmParameterElement(
+                "opening template name",
+                GT._T("Name of the opening template in the pair")),
+            new AlgorithmParameterElement(
+                "closing template name",
+                GT._T("Name of a closing template in the pair"),
+                false, true)
+        },
+        true));
   }
 }

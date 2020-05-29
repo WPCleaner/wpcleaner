@@ -152,6 +152,9 @@ public class AlgorithmParameter implements Comparable<AlgorithmParameter> {
         buffer.append("|");
       }
       buffer.append(element.getText());
+      if (element.canBeMultiple()) {
+        buffer.append("...");
+      }
     }
     for (int i = 0; i < optionalCount; i++) {
       buffer.append("]");

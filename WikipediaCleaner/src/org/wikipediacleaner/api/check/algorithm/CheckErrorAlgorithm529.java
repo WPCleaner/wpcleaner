@@ -15,6 +15,7 @@ import org.wikipediacleaner.api.API;
 import org.wikipediacleaner.api.APIException;
 import org.wikipediacleaner.api.APIFactory;
 import org.wikipediacleaner.api.algorithm.AlgorithmParameter;
+import org.wikipediacleaner.api.algorithm.AlgorithmParameterElement;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.constants.WPCConfiguration;
@@ -374,9 +375,24 @@ public class CheckErrorAlgorithm529 extends CheckErrorAlgorithmBase {
     super.addParameters();
     addParameter(new AlgorithmParameter(
         PARAMETER_AUTOMATIC,
-        GT._T("Automatic replacements of ISBN")));
+        GT._T("Automatic replacements of ISBN"),
+        new AlgorithmParameterElement[] {
+            new AlgorithmParameterElement(
+                "template name",
+                GT._T("Name of the template to use for ISBN")),
+            new AlgorithmParameterElement(
+                "prefix",
+                GT._T("Text before the ISBN to be removed in the replacement")),
+            new AlgorithmParameterElement(
+                "suffix",
+                GT._T("Text after the ISBN to be removed in the replacement"))
+        },
+        true));
     addParameter(new AlgorithmParameter(
         PARAMETER_CATEGORY,
-        GT._T("A category containing the list of pages in error")));
+        GT._T("A category containing the list of pages in error"),
+        new AlgorithmParameterElement(
+            "category name",
+            GT._T("A category containing the list of pages in error"))));
   }
 }

@@ -7,6 +7,7 @@
 
 package org.wikipediacleaner.api.check.algorithm;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -15,6 +16,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.wikipediacleaner.api.algorithm.AlgorithmParameter;
+import org.wikipediacleaner.api.algorithm.AlgorithmParameterElement;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.constants.WPCConfiguration;
 import org.wikipediacleaner.api.data.PageAnalysis;
@@ -98,17 +100,13 @@ public class CheckErrorAlgorithm514 extends CheckErrorAlgorithmBase {
           if (set != null) {
             found = set.contains(nameValue);
           }
-          if (!found && (groupValue == null) && (refByTemplate != null)) {
-            List<String> refByTemplateList = WPCConfiguration.convertPropertyToStringList(refByTemplate);
-            if (refByTemplateList != null) {
-              for (String refByTemplateElement : refByTemplateList) {
-                String[] elements = refByTemplateElement.split("\\|");
-                for (int numElement = 1; numElement < elements.length; numElement++) {
-                  if (elements[numElement].equals(nameValue)) {
-                    List<PageElementTemplate> templates = analysis.getTemplates(elements[0]);
-                    if ((templates != null) && !templates.isEmpty()) {
-                      found = true;
-                    }
+          if (!found && (groupValue == null)) {
+            for (String[] elements : refByTemplate) {
+              for (int numElement = 1; numElement < elements.length; numElement++) {
+                if (elements[numElement].equals(nameValue)) {
+                  List<PageElementTemplate> templates = analysis.getTemplates(elements[0]);
+                  if ((templates != null) && !templates.isEmpty()) {
+                    found = true;
                   }
                 }
               }
@@ -143,11 +141,18 @@ public class CheckErrorAlgorithm514 extends CheckErrorAlgorithmBase {
    */
   @Override
   protected void initializeSettings() {
-    refByTemplate = getSpecificProperty(PARAMETER_REF_BY_TEMPLATE, true, true, false);
+    String tmp = getSpecificProperty(PARAMETER_REF_BY_TEMPLATE, true, true, false);
+    refByTemplate.clear();
+    if (tmp != null) {
+      List<String[]> tmpList = WPCConfiguration.convertPropertyToStringArrayList(tmp);
+      if (tmpList != null) {
+        refByTemplate.addAll(tmpList);
+      }
+    }
   }
 
   /** Template defining references */
-  private String refByTemplate = null;
+  private final List<String[]> refByTemplate = new ArrayList<>();
 
   /**
    * Build the list of parameters for this algorithm.
@@ -157,6 +162,16 @@ public class CheckErrorAlgorithm514 extends CheckErrorAlgorithmBase {
     super.addParameters();
     addParameter(new AlgorithmParameter(
         PARAMETER_REF_BY_TEMPLATE,
-        GT._T("References defined by templates.")));
+        GT._T("References defined by templates."),
+        new AlgorithmParameterElement[] {
+            new AlgorithmParameterElement(
+                "template name",
+                GT._T("Name of a template which defines references")),
+            new AlgorithmParameterElement(
+                "reference name",
+                GT._T("Name of the reference defined by the template"),
+                false, true),
+        },
+        true));
   }
 }

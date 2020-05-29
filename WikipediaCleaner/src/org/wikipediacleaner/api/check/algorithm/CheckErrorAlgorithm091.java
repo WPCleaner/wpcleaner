@@ -14,6 +14,7 @@ import java.util.Collection;
 import java.util.List;
 
 import org.wikipediacleaner.api.algorithm.AlgorithmParameter;
+import org.wikipediacleaner.api.algorithm.AlgorithmParameterElement;
 import org.wikipediacleaner.api.check.AddTextActionProvider;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.BasicActionProvider;
@@ -429,12 +430,32 @@ public class CheckErrorAlgorithm091 extends CheckErrorAlgorithmBase {
     super.addParameters();
     addParameter(new AlgorithmParameter(
         PARAMETER_LINK_TEMPLATES,
-        GT._T("Templates using external links")));
+        GT._T("Templates using external links"),
+        new AlgorithmParameterElement[] {
+            new AlgorithmParameterElement(
+                "template name",
+                GT._T("Template")),
+            new AlgorithmParameterElement(
+                "link param",
+                GT._T("Parameter to be used for the link"),
+                true),
+            new AlgorithmParameterElement(
+                "text param",
+                GT._T("Parameter to be used for the text"),
+                true)
+        },
+        true));
     addParameter(new AlgorithmParameter(
         PARAMETER_ONLY_LANGUAGE,
-        GT._T("To report only links to other languages")));
+        GT._T("To report only links to other languages"),
+        new AlgorithmParameterElement(
+            "true/false",
+            GT._T("To report only links to other languages"))));
     addParameter(new AlgorithmParameter(
         PARAMETER_ONLY_LOCAL,
-        GT._T("To report only links to local wikis")));
+        GT._T("To report only links to local wikis"),
+        new AlgorithmParameterElement(
+            "true/false",
+            GT._T("To report only links to local wikis"))));
   }
 }
