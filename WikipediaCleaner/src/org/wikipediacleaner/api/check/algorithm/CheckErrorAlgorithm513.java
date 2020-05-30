@@ -187,26 +187,31 @@ public class CheckErrorAlgorithm513 extends CheckErrorAlgorithmBase {
         PageElementTemplate tmpTemplate = analysis.isInTemplate(tmpIndex);
         if ((tmpTemplate != null) &&
             (tmpTemplate.getBeginIndex() == tmpIndex)) {
-          String[] config = templates.get(tmpTemplate.getTemplateName());
+          TemplateReplacement config = templates.get(tmpTemplate.getTemplateName());
           if (config != null) {
             if (errors == null) {
               return true;
             }
             CheckErrorResult errorResult = createCheckErrorResult(
                 analysis, param.getBeginIndex(), param.getEndIndex());
-            if (config.length > 1) {
-              int endTemplateName = (tmpTemplate.getParameterCount() > 0) ?
-                  tmpTemplate.getParameterPipeIndex(0) :
-                  tmpTemplate.getEndIndex() - 2;
-              String replacementEnd = 
-                  "{{" + config[1] +
-                  contents.substring(endTemplateName, param.getEndIndex());
+            if (config.replacement != null) {
+              String replacementEnd = null;
+              if (config.fullReplacement) {
+                replacementEnd =
+                    config.replacement +
+                    contents.substring(tmpTemplate.getEndIndex(), param.getEndIndex());
+              } else {
+                int endTemplateName = (tmpTemplate.getParameterCount() > 0) ?
+                    tmpTemplate.getParameterPipeIndex(0) :
+                    tmpTemplate.getEndIndex() - 2;
+                replacementEnd = 
+                    "{{" + config.replacement +
+                    contents.substring(endTemplateName, param.getEndIndex());
+              }
               String replacement =
                   contents.substring(param.getBeginIndex(), tmpTemplate.getBeginIndex()) +
                   replacementEnd;
-              boolean automatic = (config.length > 2) ?
-                  Boolean.valueOf(config[2]) : false;
-              errorResult.addReplacement(replacement, automatic && !closeBracket);
+              errorResult.addReplacement(replacement, config.automatic && !closeBracket);
             }
             errors.add(errorResult);
             return true;
@@ -257,21 +262,28 @@ public class CheckErrorAlgorithm513 extends CheckErrorAlgorithmBase {
         if (contents.startsWith("{{", tmpIndex)) {
           PageElementTemplate template = analysis.isInTemplate(tmpIndex);
           if (template != null) {
-            String[] config = templates.get(template.getTemplateName());
+            TemplateReplacement config = templates.get(template.getTemplateName());
             if (config != null) {
               internalLink = template;
-              if (config.length > 1) {
+              if (config.replacement != null) {
                 if (errors == null) {
                   return true;
                 }
                 CheckErrorResult errorResult = createCheckErrorResult(
                     analysis, link.getBeginIndex(), link.getEndIndex());
-                int endTemplateName = (template.getParameterCount() > 0) ?
-                    template.getParameterPipeIndex(0) :
-                    template.getEndIndex() - 2;
-                String replacementEnd = 
-                    "{{" + config[1] +
-                    contents.substring(endTemplateName, link.getEndIndex());
+                String replacementEnd = null;
+                if (config.fullReplacement) {
+                  replacementEnd =
+                      config.replacement +
+                      contents.substring(template.getEndIndex(), link.getEndIndex());
+                } else {
+                  int endTemplateName = (template.getParameterCount() > 0) ?
+                      template.getParameterPipeIndex(0) :
+                      template.getEndIndex() - 2;
+                  replacementEnd = 
+                      "{{" + config.replacement +
+                      contents.substring(endTemplateName, link.getEndIndex());
+                }
                 String replacement =
                     contents.substring(link.getBeginIndex(), template.getBeginIndex()) +
                     replacementEnd;
@@ -279,9 +291,7 @@ public class CheckErrorAlgorithm513 extends CheckErrorAlgorithmBase {
                     "[..." +
                     contents.substring(link.getLinkEndIndex(), template.getBeginIndex()) +
                     replacementEnd;
-                boolean automatic = (config.length > 2) ?
-                    Boolean.valueOf(config[2]) : false;
-                errorResult.addReplacement(replacement, description, automatic);
+                errorResult.addReplacement(replacement, description, config.automatic);
                 errors.add(errorResult);
                 return true;
               }
@@ -567,7 +577,10 @@ public class CheckErrorAlgorithm513 extends CheckErrorAlgorithmBase {
       List<String[]> tmpList = WPCConfiguration.convertPropertyToStringArrayList(tmp);
       if (tmpList != null) {
         for (String[] tmpElement : tmpList) {
-          templates.put(tmpElement[0], tmpElement);
+          TemplateReplacement replacement = TemplateReplacement.build(tmpElement);
+          if (replacement != null) {
+            templates.put(replacement.templateName, replacement);
+          }
         }
       }
     }
@@ -616,7 +629,7 @@ public class CheckErrorAlgorithm513 extends CheckErrorAlgorithmBase {
   private final List<String[]> textsBefore = new ArrayList<>();
 
   /** Templates that create an external link */
-  private final Map<String, String[]> templates = new HashMap<>();
+  private final Map<String, TemplateReplacement> templates = new HashMap<>();
 
   /** Template parameters that create an external link */
   private final Map<String, List<String[]>> templateParams = new HashMap<>();
@@ -626,6 +639,49 @@ public class CheckErrorAlgorithm513 extends CheckErrorAlgorithmBase {
 
   /** Linter category */
   private LinterCategory linterCategory = null;
+
+  /** Bean holding configuration for template replacement */
+  private static class TemplateReplacement {
+
+    /** Name of the template */
+    public final String templateName;
+
+    /** True if the replacement should be full or only the template name */
+    public final boolean fullReplacement;
+
+    /** Replacement */
+    public final String replacement;
+
+    /** True if replacement can be automatic */
+    public final boolean automatic;
+
+    public static TemplateReplacement build(String[] data) {
+      if ((data == null) || (data.length == 0)) {
+        return null;
+      }
+      String name = data[0];
+      boolean full = false;
+      if (name.startsWith("{{") && name.endsWith("}}")) {
+        name = name.substring(2, name.length() - 2);
+        full = true;
+      }
+      return new TemplateReplacement(
+          name, full,
+          data.length > 1 ? data[1] : null,
+          data.length > 2 ? Boolean.parseBoolean(data[2]) : false);
+    }
+
+    private TemplateReplacement(
+        String templateName,
+        boolean fullReplacement,
+        String replacement,
+        boolean automatic) {
+      this.templateName = templateName;
+      this.fullReplacement = fullReplacement;
+      this.replacement = replacement;
+      this.automatic = automatic;
+    }
+  }
 
   /**
    * Build the list of parameters for this algorithm.

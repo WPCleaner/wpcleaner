@@ -1473,7 +1473,11 @@ public class WPCConfiguration {
     List<String[]> result = new ArrayList<String[]>();
     for (String tmpResult : tmpResults) {
       if (tmpResult != null) {
-        result.add(tmpResult.split("\\|"));
+        String[] tmp = tmpResult.split("(?<!\\\\)\\|");
+        for (int i = 0; i < tmp.length; i++) {
+          tmp[i] = tmp[i].replaceAll("\\\\\\|", "|");
+        }
+        result.add(tmp);
       }
     }
     return result;
