@@ -82,10 +82,18 @@ public class CheckErrorAlgorithm513 extends CheckErrorAlgorithmBase {
     boolean result = false;
     List<PageElementExternalLink> links = analysis.getExternalLinks();
     List<PageElementInternalLink> iLinks = analysis.getInternalLinks();
-    if ((links != null) && !links.isEmpty() &&
-        (iLinks != null) && !iLinks.isEmpty()) {
-      for (PageElementExternalLink link : links) {
-        result |= analyzeExternalLink(link, analysis, errors);
+    if ((links != null) && !links.isEmpty()) {
+      boolean analyzeLinks = false;
+      if ((iLinks != null) && !iLinks.isEmpty()) {
+        analyzeLinks = true;
+      }
+      if (!templates.isEmpty()) {
+        analyzeLinks = true;
+      }
+      if (analyzeLinks) {
+        for (PageElementExternalLink link : links) {
+          result |= analyzeExternalLink(link, analysis, errors);
+        }
       }
     }
 
