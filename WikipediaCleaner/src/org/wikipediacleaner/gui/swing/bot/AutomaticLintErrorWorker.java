@@ -69,10 +69,11 @@ public class AutomaticLintErrorWorker extends AutomaticFixWorker {
         List<Page> pages = api.retrieveLinterCategory(
             getWikipedia(), category.getCategory(), namespace,
             false, false, Integer.MAX_VALUE);
-        for (Page page : pages) {
+        while (!pages.isEmpty()) {
           if (!shouldContinue()) {
             return null;
           }
+          Page page = pages.remove(0);
           try {
             analyzePage(page, selectedAlgorithms, null);
           } catch (APIException e) {
