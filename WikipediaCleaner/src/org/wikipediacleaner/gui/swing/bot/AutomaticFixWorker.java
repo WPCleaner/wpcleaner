@@ -127,9 +127,9 @@ public abstract class AutomaticFixWorker extends BasicWorker {
    * Analyze and fix a page.
    * 
    * @param page Page.
-   * @param algorithm Main algorithm.
+   * @param algorithms List of algorithms.
    * @param prefix Prefix for the message
-   * @throws APIException
+   * @throws APIException API errors.
    */
   protected void analyzePage(
       Page page,
