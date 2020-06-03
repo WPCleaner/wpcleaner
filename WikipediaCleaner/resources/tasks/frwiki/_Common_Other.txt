@@ -1,0 +1,3 @@
+Set AdditionalAlgorithms 1 2 9 16 17 18 22 46 48 52 55 64 85 88 92 104 106 513 524 526 532 533 534 537 538 539 540 541 542 543 547 548 549 550 551
+Set Configuration TimeBetweenEdit 5
+Set Configuration MaxEditsPerMinute 10

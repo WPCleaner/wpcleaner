@@ -16,22 +16,23 @@ import org.wikipediacleaner.api.APIFactory;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithm;
 import org.wikipediacleaner.api.constants.EnumQueryResult;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
+import org.wikipediacleaner.api.data.LinterCategory;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
 
 
 /**
- * SwingWorker for automatic Check Wiki fixing on a list of pages.
+ * SwingWorker for automatic Linter fixing on a category.
  */
-public class AutomaticListCWWorker extends AutomaticFixWorker {
+public class AutomaticLintErrorWorker extends AutomaticFixWorker {
 
-  /** Page containing the list of pages to fix. */
-  private final Page list;
+  /** Linter category to fix. */
+  private final LinterCategory category;
 
   /**
    * @param wiki Wiki.
    * @param window Window.
-   * @param list Page containing the list of pages to fix.
+   * @param category Linter category.
    * @param selectedAlgorithms List of selected algorithms.
    * @param allAlgorithms List of possible algorithms.
    * @param selectedNamespaces List of selected namespaces.
@@ -39,9 +40,9 @@ public class AutomaticListCWWorker extends AutomaticFixWorker {
    * @param saveModifications True if modifications should be saved.
    * @param analyzeNonFixed True if pages that couldn't be fixed should be analyzed.
    */
-  public AutomaticListCWWorker(
+  public AutomaticLintErrorWorker(
       EnumWikipedia wiki, BasicWindow window,
-      Page list,
+      LinterCategory category,
       List<CheckErrorAlgorithm> selectedAlgorithms,
       List<CheckErrorAlgorithm> allAlgorithms,
       Collection<Integer> selectedNamespaces,
@@ -51,7 +52,7 @@ public class AutomaticListCWWorker extends AutomaticFixWorker {
         wiki, window,
         selectedAlgorithms, allAlgorithms, selectedNamespaces,
         extraComment, saveModifications, analyzeNonFixed);
-    this.list = list;
+    this.category = category;
   }
 
   /** 
@@ -64,23 +65,27 @@ public class AutomaticListCWWorker extends AutomaticFixWorker {
   public Object construct() {
     try {
       API api = APIFactory.getAPI();
-      api.retrieveLinks(getWikipedia(), list, null, null, false, false);
-      for (Page page : list.getLinks()) {
-        if (!shouldContinue()) {
-          return null;
-        }
-        try {
-          analyzePage(page, selectedAlgorithms, null);
-        } catch (APIException e) {
-          boolean ignoreException = false;
-          EnumQueryResult result = e.getQueryResult();
-          if (result != null) {
-            if (EnumQueryResult.PROTECTED_PAGE.equals(result)) {
-              ignoreException = true;
-            }
+      for (Integer namespace : selectedNamespaces) {
+        List<Page> pages = api.retrieveLinterCategory(
+            getWikipedia(), category.getCategory(), namespace,
+            false, false, Integer.MAX_VALUE);
+        for (Page page : pages) {
+          if (!shouldContinue()) {
+            return null;
           }
-          if (!ignoreException) {
-            throw e;
+          try {
+            analyzePage(page, selectedAlgorithms, null);
+          } catch (APIException e) {
+            boolean ignoreException = false;
+            EnumQueryResult result = e.getQueryResult();
+            if (result != null) {
+              if (EnumQueryResult.PROTECTED_PAGE.equals(result)) {
+                ignoreException = true;
+              }
+            }
+            if (!ignoreException) {
+              throw e;
+            }
           }
         }
       }

@@ -1,4 +1,18 @@
 DoTasks _Common.txt
 Set Namespaces 0 6
 # FixListCheckWiki Projet:Correction_syntaxique/Analyse_534 534
-FixCheckWiki 534
+# FixCheckWiki 534
+
+Set Prefix [[Spécial:LintErrors/bogus-image-options]]
+Set Configuration MaxLintErrors 100000
+DoTasks _Common.txt
+Set Namespaces 0
+# FixLintError bogus-image-options 534
+
+DoTasks _Common_Other.txt
+Set Namespaces 4 6 12 14 100 102 104
+FixLintError bogus-image-options 534
+
+DoTasks _Common_Talk.txt
+Set Namespaces 1 3 5 7 9 11 13 15 101 103 105 829 2301 2303
+FixLintError bogus-image-options 534

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2020-05-29 17:47+0200\n"
+"POT-Creation-Date: 2020-06-03 08:31+0200\n"
 "PO-Revision-Date: 2017-03-03 19:31+0000\n"
 "Last-Translator: Matěj S. <matejsuchanek97@gmail.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
@@ -630,7 +630,7 @@ msgstr "Nahradit za použití šablony {0}"
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:147
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm081.java:269
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm091.java:292
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm513.java:459
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm513.java:487
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm544.java:155
 #: org/wikipediacleaner/gui/swing/action/ActionExternalViewer.java:61
 #: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:90
@@ -1036,80 +1036,80 @@ msgstr "Uspořádat odkazy"
 msgid "Compact link"
 msgstr "Uspořádat odkaz"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm513.java:635
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm513.java:709
 #, fuzzy
 msgid ""
 "A list of links that can be extracted when at the beginning of the external "
 "link"
 msgstr "Seznam textových řetězců, které mohou být vloženy do sekcí bez obsahu"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm513.java:638
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm513.java:712
 msgid ""
 "An internal link that can be extracted when at the beginning of the external "
 "link"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm513.java:642
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm513.java:716
 #, fuzzy
 msgid "A list of templates that create an internal link"
 msgstr "Seznam textových řetězců, které mohou být vloženy do sekcí bez obsahu"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm513.java:646
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm513.java:720
 #, fuzzy
 msgid "Name of a template that creates an internal link"
 msgstr "Seznam textových řetězců, které mohou být vloženy do sekcí bez obsahu"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm513.java:649
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm513.java:723
 #, fuzzy
 msgid "Name of a template that can be used as a replacement"
 msgstr "Šablony, které mohou nahradit tagy {0}"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm513.java:653
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm513.java:727
 msgid "True if the replacement can be automatic"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm513.java:659
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm513.java:733
 #, fuzzy
 msgid "A list of template parameters that create the text of an external link"
 msgstr "Seznam textových řetězců, které mohou být vloženy do sekcí bez obsahu"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm513.java:663
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm513.java:737
 #, fuzzy
 msgid "Name of a template that creates an external link"
 msgstr "Seznam textových řetězců, které mohou být vloženy do sekcí bez obsahu"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm513.java:666
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm513.java:740
 #, fuzzy
 msgid ""
 "Name of a paramater that is used to create the text of the external link"
 msgstr "Seznam textových řetězců, které mohou být vloženy do sekcí bez obsahu"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm513.java:669
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm513.java:743
 msgid "True if removing internal links in the text can be automatic"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm513.java:675
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm513.java:749
 #, fuzzy
 msgid ""
 "A list of texts (regular expressions) that can be after the internal link"
 msgstr "Seznam textových řetězců, které mohou být vloženy do sekcí bez obsahu"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm513.java:678
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm513.java:752
 #, fuzzy
 msgid "Regular expression that can be after the internal link"
 msgstr "Seznam textových řetězců, které mohou být vloženy do sekcí bez obsahu"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm513.java:682
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm513.java:756
 #, fuzzy
 msgid "A list of texts that can be before the internal link"
 msgstr "Seznam textových řetězců, které mohou být vloženy do sekcí bez obsahu"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm513.java:686
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm513.java:760
 #, fuzzy
 msgid "Text that can be before the internal link"
 msgstr "Seznam textových řetězců, které mohou být vloženy do sekcí bez obsahu"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm513.java:689
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm513.java:763
 msgid "True if finding this text means that the replacement can be automatic"
 msgstr ""
 
@@ -3290,26 +3290,23 @@ msgstr "Chcete zobrazit pomoc o konfiguraci WPCleaneru?"
 msgid "Other..."
 msgstr "Ostatní…"
 
-#: org/wikipediacleaner/gui/swing/bot/AutomaticCWWorker.java:139
+#: org/wikipediacleaner/gui/swing/bot/AutomaticCWWorker.java:100
 #: org/wikipediacleaner/gui/swing/worker/CheckWikiProjectWorker.java:76
 #, java-format
 msgid "Checking for errors n°{0}"
 msgstr "Ověřuji chybu číslo {0}"
 
-#: org/wikipediacleaner/gui/swing/bot/AutomaticCWWorker.java:182
-#: org/wikipediacleaner/gui/swing/bot/AutomaticListCWWorker.java:160
+#: org/wikipediacleaner/gui/swing/bot/AutomaticFixWorker.java:175
 #, java-format
 msgid "Analyzing page {0}"
 msgstr "Analyzuji stránku {0}"
 
-#: org/wikipediacleaner/gui/swing/bot/AutomaticCWWorker.java:246
-#: org/wikipediacleaner/gui/swing/bot/AutomaticListCWWorker.java:226
+#: org/wikipediacleaner/gui/swing/bot/AutomaticFixWorker.java:228
 #, java-format
 msgid "Fixing page {0}"
 msgstr "Opravuji stránku „{0}“"
 
-#: org/wikipediacleaner/gui/swing/bot/AutomaticCWWorker.java:289
-#: org/wikipediacleaner/gui/swing/bot/AutomaticListCWWorker.java:262
+#: org/wikipediacleaner/gui/swing/bot/AutomaticFixWorker.java:300
 #, java-format
 msgid "{0} page has been modified"
 msgid_plural "{0} pages have been modified"
@@ -3317,8 +3314,7 @@ msgstr[0] "Byla upravena {0} stránka"
 msgstr[1] "Byly upraveny {0} stránky"
 msgstr[2] "Bylo upraveno {0} stránek"
 
-#: org/wikipediacleaner/gui/swing/bot/AutomaticCWWorker.java:294
-#: org/wikipediacleaner/gui/swing/bot/AutomaticListCWWorker.java:267
+#: org/wikipediacleaner/gui/swing/bot/AutomaticFixWorker.java:305
 #, java-format
 msgid "{0} page has been marked as fixed for the selected algorithms"
 msgid_plural "{0} pages have been marked as fixed for the selected algorithms"
@@ -3326,8 +3322,7 @@ msgstr[0] "Jako opravená byla pro vybrané algoritmy označena {0} stránka"
 msgstr[1] "Jako opravené byly pro vybrané algoritmy označeny {0} stránky"
 msgstr[2] "Jako opravených bylo pro vybrané algoritmy označeno {0} stránek"
 
-#: org/wikipediacleaner/gui/swing/bot/AutomaticCWWorker.java:299
-#: org/wikipediacleaner/gui/swing/bot/AutomaticListCWWorker.java:272
+#: org/wikipediacleaner/gui/swing/bot/AutomaticFixWorker.java:310
 #, java-format
 msgid "{0} page has been marked as fixed for other algorithms"
 msgid_plural "{0} pages have been marked as fixed for other algorithms"

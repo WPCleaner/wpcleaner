@@ -32,12 +32,14 @@ import org.wikipediacleaner.api.constants.EnumLanguage;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.DataManager;
 import org.wikipediacleaner.api.data.ISBNRange;
+import org.wikipediacleaner.api.data.LinterCategory;
 import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.impl.CommentManager;
 import org.wikipediacleaner.gui.swing.basic.BasicWorker;
 import org.wikipediacleaner.gui.swing.basic.BasicWorkerListener;
 import org.wikipediacleaner.gui.swing.bot.AutomaticCWWorker;
+import org.wikipediacleaner.gui.swing.bot.AutomaticLintErrorWorker;
 import org.wikipediacleaner.gui.swing.bot.AutomaticListCWWorker;
 import org.wikipediacleaner.gui.swing.bot.ListCWWorker;
 import org.wikipediacleaner.gui.swing.worker.LoginWorker;
@@ -239,6 +241,8 @@ public class Bot implements BasicWorkerListener {
       worker = executeFixCheckWiki(actionConfig);
     } else if ("FixListCheckWiki".equalsIgnoreCase(action)) {
       worker = executeFixListCheckWiki(actionConfig);
+    } else if ("FixLintError".equalsIgnoreCase(action)) {
+      worker = executeFixLintError(actionConfig);
     } else if ("MarkCheckWiki".equalsIgnoreCase(action)) {
       worker = executeMarkCheckWiki(actionConfig);
     } else if ("ListCheckWiki".equalsIgnoreCase(action)) {
@@ -276,10 +280,12 @@ public class Bot implements BasicWorkerListener {
       try (BufferedReader reader = new BufferedReader(new FileReader(tasks))) {
         String line = null;
         while ((line = reader.readLine()) != null) {
-          String[] tmpArgs = line.split(" +");
-          if ((tmpArgs != null) && (tmpArgs.length > 0)) {
-            actions.add(actionNum, new Action(tmpArgs, tasks.getParentFile()));
-            actionNum++;
+          if (line.trim().length() > 0) {
+            String[] tmpArgs = line.split(" +");
+            if ((tmpArgs != null) && (tmpArgs.length > 0)) {
+              actions.add(actionNum, new Action(tmpArgs, tasks.getParentFile()));
+              actionNum++;
+            }
           }
         }
       } catch (IOException e) {
@@ -344,6 +350,41 @@ public class Bot implements BasicWorkerListener {
     }
     return new AutomaticListCWWorker(
         wiki, null, page,
+        algorithms, allAlgorithms, namespaces,
+        null, true, false);
+  }
+
+  /**
+   * Execute an action of type FixLintError.
+   * 
+   * @param actionConfig Parameters of the action.
+   * @return True if the action was executed.
+   */
+  public BasicWorker executeFixLintError(Action actionConfig) {
+    if (actionConfig.actionArgs.length == 0) {
+      return null;
+    }
+    String categoryName = actionConfig.actionArgs[0];
+    List<LinterCategory> categories = wiki.getWikiConfiguration().getLinterCategories();
+    if (categories == null) {
+      return null;
+    }
+    LinterCategory category = null;
+    for (LinterCategory tmpCategory : categories) {
+      if (tmpCategory.getCategory().equalsIgnoreCase(categoryName)) {
+        category = tmpCategory;
+      }
+    }
+    if (category == null) {
+      return null;
+    }
+    List<CheckErrorAlgorithm> algorithms = new ArrayList<CheckErrorAlgorithm>();
+    List<CheckErrorAlgorithm> allAlgorithms = new ArrayList<CheckErrorAlgorithm>();
+    if (actionConfig.actionArgs.length > 1) {
+      extractAlgorithms(algorithms, allAlgorithms, actionConfig.actionArgs, 1);
+    }
+    return new AutomaticLintErrorWorker(
+        wiki, null, category,
         algorithms, allAlgorithms, namespaces,
         null, true, false);
   }
@@ -654,6 +695,15 @@ public class Bot implements BasicWorkerListener {
      */
     public boolean isOk() {
       return (action != null);
+    }
+
+    /**
+     * @return Textual description.
+     * @see java.lang.Object#toString()
+     */
+    @Override
+    public String toString() {
+      return fullAction;
     }
   }
 }
