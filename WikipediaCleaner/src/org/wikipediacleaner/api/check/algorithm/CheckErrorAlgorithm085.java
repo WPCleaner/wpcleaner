@@ -47,6 +47,8 @@ public class CheckErrorAlgorithm085 extends CheckErrorAlgorithmBase {
     PageElementTag.TAG_WIKI_SCORE,
   };
 
+  private final static String HTML_SPACE = "&#x20;";
+
   public CheckErrorAlgorithm085() {
     super("Tag without content");
   }
@@ -100,6 +102,10 @@ public class CheckErrorAlgorithm085 extends CheckErrorAlgorithmBase {
             if (Character.isWhitespace(currentChar) || (' ' == currentChar)) {
               replacementText.append(currentChar);
               currentIndex++;
+            } else if ((currentChar == '&') &&
+                contents.startsWith(HTML_SPACE, currentIndex)) {
+              replacementText.append(HTML_SPACE);
+              currentIndex += HTML_SPACE.length();
             } else if (currentChar == '<') {
               isEmpty = false;
               boolean ok = false;
