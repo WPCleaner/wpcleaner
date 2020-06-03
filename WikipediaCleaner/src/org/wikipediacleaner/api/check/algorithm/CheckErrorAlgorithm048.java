@@ -67,114 +67,138 @@ public class CheckErrorAlgorithm048 extends CheckErrorAlgorithmBase {
     boolean result = false;
     Collection<PageElementInternalLink> links = analysis.getInternalLinks();
     String pageTitle = analysis.getPage().getTitle();
-    String contents = analysis.getContents();
     for (PageElementInternalLink link : links) {
-      // Check if it is an error
-      boolean errorFound = Page.areSameTitle(pageTitle, link.getFullLink());
-      if (errorFound) {
-        PageElementTag tagIncludeOnly = analysis.getSurroundingTag(
-            PageElementTag.TAG_WIKI_INCLUDEONLY, link.getBeginIndex());
-        if (tagIncludeOnly != null) {
-          errorFound = false;
-        }
+      result |= analyzeInternalLink(link, pageTitle, analysis, errors);
+    }
+
+    return result;
+  }
+
+  /**
+   * Analyze an internal link to check if errors are present.
+   * 
+   * @param link Internal link to be checked.
+   * @param pageTitle Page title.
+   * @param analysis Page analysis.
+   * @param errors Errors found in the page.
+   * @return Flag indicating if the error was found.
+   */
+  private boolean analyzeInternalLink(
+      PageElementInternalLink link, String pageTitle,
+      PageAnalysis analysis,
+      Collection<CheckErrorResult> errors) {
+
+    // Check if there's a potential error
+    boolean errorFoundFull = Page.areSameTitle(pageTitle, link.getFullLink());
+    boolean errorFoundAnchor = !errorFoundFull && Page.areSameTitle(pageTitle, link.getLink());
+    if (!errorFoundFull && !errorFoundAnchor) {
+      return false;
+    }
+
+    // Ignore if the link is inside some tags
+    if ((analysis.getSurroundingTag(PageElementTag.TAG_WIKI_INCLUDEONLY, link.getBeginIndex()) != null) ||
+        (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_MAPFRAME, link.getBeginIndex()) != null) ||
+        (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_NOWIKI, link.getBeginIndex()) != null) ||
+        (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_ONLYINCLUDE, link.getBeginIndex()) != null) ||
+        (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_TIMELINE, link.getBeginIndex()) != null)) {
+      return false;
+    }
+
+    // Ignore if the link is in an image map tag
+    PageElementTag tagImageMap = analysis.getSurroundingTag(PageElementTag.TAG_WIKI_IMAGEMAP, link.getBeginIndex()); 
+    if (!imagemap && (tagImageMap != null)) {
+      return false;
+    }
+
+    // Report error
+    if (errors == null) {
+      return true;
+    }
+    String contents = analysis.getContents();
+    int beginIndex = link.getBeginIndex();
+    int endIndex = link.getEndIndex();
+
+    // Report in image map tag
+    if (tagImageMap != null) {
+      int previousCR = getPreviousCR(contents, beginIndex);
+      int nextCR = getNextCR(contents, endIndex);
+      nextCR = Math.min(nextCR, tagImageMap.getMatchingTag().getBeginIndex());
+      CheckErrorResult errorResult = createCheckErrorResult(
+          analysis, previousCR, nextCR);
+      if ((previousCR > tagImageMap.getEndIndex()) &&
+          (contents.charAt(nextCR) == '\n')) {
+        errorResult.addReplacement("", GT._T("Delete"));
       }
+      errors.add(errorResult);
+      return true;
+    }
 
-      // Check if is in some tags
-      if (errorFound) {
-        if ((analysis.getSurroundingTag(PageElementTag.TAG_WIKI_INCLUDEONLY, link.getBeginIndex()) != null) ||
-            (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_MAPFRAME, link.getBeginIndex()) != null) ||
-            (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_TIMELINE, link.getBeginIndex()) != null)) {
-          errorFound = false;
-        }
-      }
-
-      // Check if it is in an <imagemap> tag
-      PageElementTag tagImagemap = null;
-      if (errorFound) {
-        tagImagemap = analysis.getSurroundingTag(
-            PageElementTag.TAG_WIKI_IMAGEMAP, link.getBeginIndex());
-        if ((tagImagemap != null) && !imagemap) {
-          errorFound = false;
-        }
-      }
-
-      // Report error
-      if (errorFound) {
-        if (errors == null) {
-          return true;
-        }
-        result = true;
-        if (tagImagemap != null) {
-          int previousCR = getPreviousCR(contents, link.getBeginIndex());
-          int nextCR = getNextCR(contents, link.getEndIndex());
-          nextCR = Math.min(nextCR, tagImagemap.getMatchingTag().getBeginIndex());
-          CheckErrorResult errorResult = createCheckErrorResult(
-              analysis, previousCR, nextCR);
-          if ((previousCR > tagImagemap.getEndIndex()) &&
-              (contents.charAt(nextCR) == '\n')) {
-            errorResult.addReplacement("", GT._T("Delete"));
-          }
-          errors.add(errorResult);
-        } else {
-          int beginIndex = link.getBeginIndex();
-          int endIndex = link.getEndIndex();
-
-          // Analysis regarding titles
-          boolean beforeFirstTitle = true;
-          List<PageElementTitle> titles = analysis.getTitles();
-          if ((titles != null) && !titles.isEmpty()) {
-            PageElementTitle title = titles.get(0);
-            if (title.getBeginIndex() < endIndex) {
-              beforeFirstTitle = false;
-            }
-          }
-
-          // Analysis regarding bold
-          boolean inBold = true;
-          if ((beginIndex < 3) || !contents.startsWith("'''", beginIndex - 3)) {
-            inBold = false;
-          } else if ((beginIndex > 3) && (contents.charAt(beginIndex - 4) == '\'')) {
-            inBold = false;
-          }
-          if (!contents.startsWith("'''", endIndex)) {
-            inBold = false;
-          } else if ((contents.length() > endIndex + 4) && (contents.charAt(endIndex + 4) == '\'')) {
-            inBold = false;
-          }
-
-          // Apostrophe before
-          String prefix = "";
-          boolean apostropheBefore = false;
-          if ((beginIndex > 1) &&
-              (contents.charAt(beginIndex - 1) == '\'') &&
-              (contents.charAt(beginIndex - 2) != '\'')) {
-            apostropheBefore = true;
-            prefix = "'";
-            beginIndex--;
-          }
-
-          // Suggestions
-          CheckErrorResult errorResult = createCheckErrorResult(
-              analysis, beginIndex, endIndex);
-          errorResult.addReplacement(prefix + link.getDisplayedText(), beforeFirstTitle && inBold);
-          if (!inBold) {
-            if (apostropheBefore) {
-              String apostropheTemplate = analysis.getWPCConfiguration().getString(
-                  WPCConfigurationString.APOSTROPHE_TEMPLATE);
-              if (apostropheTemplate != null) {
-                errorResult.addReplacement(
-                    PageElementTemplate.createTemplate(apostropheTemplate) +
-                    "'''" + link.getDisplayedText() + "'''");
-              }
-            }
-            errorResult.addReplacement(prefix + "'''" + link.getDisplayedText() + "'''");
-          }
-
-          errors.add(errorResult);
-        }
+    // Analysis regarding titles
+    boolean beforeFirstTitle = true;
+    List<PageElementTitle> titles = analysis.getTitles();
+    if ((titles != null) && !titles.isEmpty()) {
+      PageElementTitle title = titles.get(0);
+      if (title.getBeginIndex() < endIndex) {
+        beforeFirstTitle = false;
       }
     }
-    return result;
+
+    // Report anchored tag
+    if (errorFoundAnchor) {
+      CheckErrorResult errorResult = createCheckErrorResult(analysis, beginIndex, endIndex);
+      String anchor = link.getAnchor();
+      if ((anchor != null) && (anchor.trim().length() > 0)) {
+        errorResult.addReplacement(PageElementInternalLink.createInternalLink(
+            "#" + anchor,
+            link.getDisplayedTextNotTrimmed()));
+      }
+      errors.add(errorResult);
+      return true;
+    }
+
+    // Analysis regarding bold
+    boolean inBold = true;
+    if ((beginIndex < 3) || !contents.startsWith("'''", beginIndex - 3)) {
+      inBold = false;
+    } else if ((beginIndex > 3) && (contents.charAt(beginIndex - 4) == '\'')) {
+      inBold = false;
+    }
+    if (!contents.startsWith("'''", endIndex)) {
+      inBold = false;
+    } else if ((contents.length() > endIndex + 4) && (contents.charAt(endIndex + 4) == '\'')) {
+      inBold = false;
+    }
+
+    // Apostrophe before
+    String prefix = "";
+    boolean apostropheBefore = false;
+    if ((beginIndex > 1) &&
+        (contents.charAt(beginIndex - 1) == '\'') &&
+        (contents.charAt(beginIndex - 2) != '\'')) {
+      apostropheBefore = true;
+      prefix = "'";
+      beginIndex--;
+    }
+
+    // Suggestions
+    CheckErrorResult errorResult = createCheckErrorResult(
+        analysis, beginIndex, endIndex);
+    errorResult.addReplacement(prefix + link.getDisplayedText(), beforeFirstTitle && inBold);
+    if (!inBold) {
+      if (apostropheBefore) {
+        String apostropheTemplate = analysis.getWPCConfiguration().getString(
+            WPCConfigurationString.APOSTROPHE_TEMPLATE);
+        if (apostropheTemplate != null) {
+          errorResult.addReplacement(
+              PageElementTemplate.createTemplate(apostropheTemplate) +
+              "'''" + link.getDisplayedText() + "'''");
+        }
+      }
+      errorResult.addReplacement(prefix + "'''" + link.getDisplayedText() + "'''");
+    }
+    errors.add(errorResult);
+
+    return true;
   }
 
   /**
