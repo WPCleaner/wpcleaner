@@ -1,7 +1,6 @@
 DoTasks _Common.txt
 Set Namespaces 0
-Set Configuration TimeBetweenEdit 30
-Set Configuration MaxEditsPerMinute 2
-Set Prefix [[Wikipedia:Bots/Requests_for_approval/WikiCleanerBot_17|Bot_Test_T17]]
-FixListCheckWiki Wikipedia:CHECKWIKI/WPC_513_dump 513
+Set Configuration MaxLintErrors 100000
+Set Prefix [[User:WikiCleanerBot#T17|Bot_T17]]
 FixCheckWiki 513
+FixListCheckWiki Wikipedia:CHECKWIKI/WPC_513_dump 513

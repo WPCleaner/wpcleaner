@@ -321,6 +321,7 @@ public class CheckErrorAlgorithm513 extends CheckErrorAlgorithmBase {
     // Analyze contents for potential replacements
     int beginExtra = internalLink.getBeginIndex();
     int endExtra = internalLink.getEndIndex();
+    int endExtraShort = endExtra;
     boolean automatic = false;
     if ((endExtra < contents.length()) &&
         contents.startsWith("''", endExtra)) {
@@ -336,6 +337,7 @@ public class CheckErrorAlgorithm513 extends CheckErrorAlgorithmBase {
             contents.substring(0, beginExtra).endsWith(contents.substring(endExtra, endExtra + countQuote))) {
           beginExtra -= countQuote;
           endExtra += countQuote;
+          endExtraShort = endExtra;
         }
       }
     }
@@ -393,6 +395,9 @@ public class CheckErrorAlgorithm513 extends CheckErrorAlgorithmBase {
         while ((endExtra < contents.length()) &&
             (CharacterUtils.isWhitespace(contents.charAt(endExtra)) ||
              CharacterUtils.isInText(contents.charAt(endExtra), PUNCTUATION_AFTER))) {
+          if (endExtraShort == endExtra) {
+            endExtraShort++;
+          }
           endExtra++;
           checkTexts = true;
         }
@@ -449,19 +454,21 @@ public class CheckErrorAlgorithm513 extends CheckErrorAlgorithmBase {
       while (CharacterUtils.isWhitespace(contents.charAt(tmpBeginExtra))) {
         tmpBeginExtra++;
       }
-      String replacementBegin = contents.substring(tmpBeginExtra, endExtra);
-      String replacementEnd = contents.substring(endExtra, endError);
-      String replacement =
-          replacementBegin +
-          contents.substring(beginError, tmpBeginExtra) +
-          replacementEnd;
-      String description =
-          replacementBegin +
-          "[..." + contents.substring(beginExtra, tmpBeginExtra) +
-          replacementEnd;
+      String replacementBeginShort = contents.substring(tmpBeginExtra, endExtraShort);
+      String replacementEndShort = contents.substring(endExtraShort, endError);
+      String replacement = contents.substring(beginError, tmpBeginExtra);
+      String description = "[..." + contents.substring(beginExtra, tmpBeginExtra);
       errorResult.addReplacement(
-          replacement, description,
-          internalLinkFirst && (endExtra < endError - 1));
+          replacementBeginShort + replacement + replacementEndShort,
+          replacementBeginShort + description + replacementEndShort,
+          internalLinkFirst && (endExtraShort < endError - 1));
+      if (endExtra != endExtraShort) {
+        String replacementBegin = contents.substring(tmpBeginExtra, endExtra);
+        String replacementEnd = contents.substring(endExtra, endError);
+        errorResult.addReplacement(
+            replacementBegin + replacement + replacementEnd,
+            replacementBegin + description + replacementEnd);
+      }
     }
     if (internalLinkText != null) {
       String replacementEnd = 
