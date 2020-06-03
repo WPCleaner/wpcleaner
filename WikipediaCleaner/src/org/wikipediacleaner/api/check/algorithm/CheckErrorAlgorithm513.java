@@ -35,6 +35,7 @@ import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementExternalLink;
 import org.wikipediacleaner.api.data.PageElementInternalLink;
 import org.wikipediacleaner.api.data.PageElementTemplate;
+import org.wikipediacleaner.api.data.PageRedirect;
 import org.wikipediacleaner.api.data.contents.ContentsElement;
 import org.wikipediacleaner.gui.swing.action.ActionExternalViewer;
 import org.wikipediacleaner.i18n.GT;
@@ -254,13 +255,17 @@ public class CheckErrorAlgorithm513 extends CheckErrorAlgorithmBase {
     ContentsElement internalLink = null;
     String internalLinkText = null;
     boolean internalLinkFirst = false;
+    boolean internalLinkLast = false;
+    boolean internalLinkFull = false;
     if (!link.hasSecondSquare()) {
       PageElementInternalLink tmp = analysis.isInInternalLink(link.getEndIndex());
       if ((tmp != null) &&
           (tmp.getBeginIndex() == link.getEndIndex())) {
         internalLink = tmp;
         internalLinkText = tmp.getDisplayedTextNotTrimmed();
-        internalLinkFirst = linksFirst.contains(tmp.getLink());
+        internalLinkFirst = isInList(tmp, linksFirst, analysis, link);
+        internalLinkLast = isInList(tmp, linksLast, analysis, link);
+        internalLinkFull = isInList(tmp, linksFull, analysis, link);
       }
     }
     String contents = analysis.getContents();
@@ -433,7 +438,21 @@ public class CheckErrorAlgorithm513 extends CheckErrorAlgorithmBase {
     // Report error
     CheckErrorResult errorResult = createCheckErrorResult(
         analysis, beginError, endError);
-    if (closeBracket) {
+
+    // Internal link reaching both the beginning and the end of the external link
+    if (closeBracket &&
+        (link.getLinkEndIndex() >= beginExtra) &&
+        (endExtra >= endError - 1)) {
+      String replacement =
+          contents.substring(internalLink.getBeginIndex(), internalLink.getEndIndex());
+      errorResult.addReplacement(
+          replacement,
+          internalLinkFull && (endError == endExtra + 1));
+    }
+
+    // Internal link reaching the end of the external link, and text before
+    if (closeBracket &&
+        (link.getLinkEndIndex() < beginExtra - 1)) {
       String replacementEnd =
           "]" +
           contents.substring(beginExtra, endError - 1);
@@ -447,8 +466,12 @@ public class CheckErrorAlgorithm513 extends CheckErrorAlgorithmBase {
             contents.substring(link.getLinkEndIndex(), beginExtra) +
             replacementEnd;
       }
-      errorResult.addReplacement(replacement, description, automatic);
+      errorResult.addReplacement(
+          replacement, description,
+          automatic || (internalLinkLast && endError <= endExtra + 1));
     }
+
+    // Internal link reaching the beginning of the external link
     if (link.getLinkEndIndex() >= beginExtra) {
       int tmpBeginExtra = beginExtra;
       while (CharacterUtils.isWhitespace(contents.charAt(tmpBeginExtra))) {
@@ -470,6 +493,8 @@ public class CheckErrorAlgorithm513 extends CheckErrorAlgorithmBase {
             replacementBegin + description + replacementEnd);
       }
     }
+
+    // Replacing the internal link by its text
     if (internalLinkText != null) {
       String replacementEnd = 
           internalLinkText +
@@ -483,6 +508,7 @@ public class CheckErrorAlgorithm513 extends CheckErrorAlgorithmBase {
           replacementEnd;
       errorResult.addReplacement(replacement, description);
     }
+
     errorResult.addPossibleAction(new SimpleAction(
         GT._T("External Viewer"),
         new ActionExternalViewer(link.getLink())));
@@ -536,6 +562,57 @@ public class CheckErrorAlgorithm513 extends CheckErrorAlgorithmBase {
     return result;
   }
 
+  /**
+   * @param link Link to be checked.
+   * @param list List of page names (and potential URL restrictions).
+   * @param analysis Page analysis to check through redirects.
+   * @param externalLink External link.
+   * @return True if the link points to a page in the list.
+   */
+  private boolean isInList(
+      PageElementInternalLink link,
+      Map<String, List<String>> list,
+      PageAnalysis analysis,
+      PageElementExternalLink externalLink) {
+    if ((link == null) || (list == null)) {
+      return false;
+    }
+    String pageName = link.getLink();
+    List<String> listUrl = null;
+    boolean listFound = false;
+    if (list.containsKey(pageName)) {
+      listUrl = list.get(pageName);
+      listFound = true;
+    } else {
+      if ((analysis != null) &&
+          (analysis.getPage() != null) &&
+          (analysis.getPage().getLinks() != null)) {
+        List<Page> links = analysis.getPage().getLinks();
+        for (Page tmp : links) {
+          if (Page.areSameTitle(pageName, tmp.getTitle()) ) {
+            PageRedirect redirect = tmp.getRedirects();
+            if ((redirect != null) &&
+                (redirect.getLastPage() != null) &&
+                list.containsKey(redirect.getLastPage().getTitle())) {
+              listUrl = list.get(redirect.getLastPage().getTitle());
+              listFound = true;
+            }
+          }
+        }
+      }
+    }
+    if (!listFound) {
+      return false;
+    }
+    if ((listUrl == null) || listUrl.isEmpty()) {
+      return true;
+    }
+    if (externalLink == null) {
+      return false;
+    }
+    return listUrl.contains(externalLink.getLink());
+  }
+
   /* ====================================================================== */
   /* PARAMETERS                                                             */
   /* ====================================================================== */
@@ -553,7 +630,13 @@ public class CheckErrorAlgorithm513 extends CheckErrorAlgorithmBase {
   private static final String PARAMETER_TEMPLATE_PARAMS = "template_params";
 
   /** List of links that can be extracted when they are at the beginning */
-  private static final String PARAMETER_LINKS_FIRTS = "links_first";
+  private static final String PARAMETER_LINKS_FIRST = "links_first";
+
+  /** List of links that can be extracted when they are at the end */
+  private static final String PARAMETER_LINKS_LAST = "links_last";
+
+  /** List of links that can be extracted when they are at the only thing in the link */
+  private static final String PARAMETER_LINKS_FULL = "links_full";
 
   /**
    * Initialize settings for the algorithm.
@@ -618,12 +701,46 @@ public class CheckErrorAlgorithm513 extends CheckErrorAlgorithmBase {
       }
     }
 
-    tmp = getSpecificProperty(PARAMETER_LINKS_FIRTS, true, true, false);
+    tmp = getSpecificProperty(PARAMETER_LINKS_FIRST, true, true, false);
     linksFirst.clear();
     if (tmp != null) {
       List<String> tmpList = WPCConfiguration.convertPropertyToStringList(tmp);
       if (tmpList != null) {
-        linksFirst.addAll(tmpList);
+        for (String tmpElement : tmpList) {
+          linksFirst.put(tmpElement, null);
+        }
+      }
+    }
+
+    tmp = getSpecificProperty(PARAMETER_LINKS_LAST, true, true, false);
+    linksLast.clear();
+    if (tmp != null) {
+      List<String> tmpList = WPCConfiguration.convertPropertyToStringList(tmp);
+      if (tmpList != null) {
+        for (String tmpElement : tmpList) {
+          linksLast.put(tmpElement, null);
+        }
+      }
+    }
+
+    tmp = getSpecificProperty(PARAMETER_LINKS_FULL, true, true, false);
+    linksFull.clear();
+    if (tmp != null) {
+      List<String[]> tmpList = WPCConfiguration.convertPropertyToStringArrayList(tmp);
+      if ((tmpList != null) && !tmpList.isEmpty()) {
+        for (String[] tmpElement : tmpList) {
+          if (tmpElement.length > 0) {
+            String pageName = tmpElement[0];
+            List<String> internalList = linksFull.get(pageName);
+            if (internalList == null) {
+              internalList = new ArrayList<>();
+              linksFull.put(pageName, internalList);
+            }
+            if (tmpElement.length > 1) {
+              internalList.add(tmpElement[1]);
+            }
+          }
+        }
       }
     }
 
@@ -650,7 +767,13 @@ public class CheckErrorAlgorithm513 extends CheckErrorAlgorithmBase {
   private final Map<String, List<String[]>> templateParams = new HashMap<>();
 
   /** Internal links that can be extracted when at the beginning of the external link */
-  private final List<String> linksFirst = new ArrayList<>();
+  private final Map<String, List<String>> linksFirst = new HashMap<>();
+
+  /** Internal links that can be extracted when at the end of the external link */
+  private final Map<String, List<String>> linksLast = new HashMap<>();
+
+  /** Internal links that can be extracted when they are the only thing in the external link */
+  private final Map<String, List<String>> linksFull = new HashMap<>();
 
   /** Linter category */
   private LinterCategory linterCategory = null;
@@ -705,11 +828,31 @@ public class CheckErrorAlgorithm513 extends CheckErrorAlgorithmBase {
   protected void addParameters() {
     super.addParameters();
     addParameter(new AlgorithmParameter(
-        PARAMETER_LINKS_FIRTS,
+        PARAMETER_LINKS_FIRST,
         GT._T("A list of links that can be extracted when at the beginning of the external link"),
         new AlgorithmParameterElement(
             "page name",
             GT._T("An internal link that can be extracted when at the beginning of the external link")),
+        true));
+    addParameter(new AlgorithmParameter(
+        PARAMETER_LINKS_LAST,
+        GT._T("A list of links that can be extracted when at the end of the external link"),
+        new AlgorithmParameterElement(
+            "page name",
+            GT._T("An internal link that can be extracted when at the end of the external link")),
+        true));
+    addParameter(new AlgorithmParameter(
+        PARAMETER_LINKS_FULL,
+        GT._T("A list of links for which the external link can be removed it it takes all the text"),
+        new AlgorithmParameterElement[] {
+          new AlgorithmParameterElement(
+              "page name",
+              GT._T("An internal link for which the external link can be removed it it takes all the text")),
+          new AlgorithmParameterElement(
+              "url",
+              GT._T("Value of the URL to remove the external link"),
+              true)
+        },
         true));
     addParameter(new AlgorithmParameter(
         PARAMETER_TEMPLATES,
