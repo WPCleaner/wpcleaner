@@ -1,0 +1,8 @@
+DoTasks _Common.txt
+Set Namespaces 0 6
+
+Set Prefix [[User:WikiCleanerBot#T7|Special:LintError/missing-end-tag]]
+Set Configuration MaxLintErrors 100000
+DoTasks _Common.txt
+Set Namespaces 0
+FixLintError missing-end-tag 532 540
