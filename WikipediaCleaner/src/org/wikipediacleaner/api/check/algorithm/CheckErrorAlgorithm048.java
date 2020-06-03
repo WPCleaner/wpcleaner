@@ -14,6 +14,7 @@ import org.wikipediacleaner.api.algorithm.AlgorithmParameter;
 import org.wikipediacleaner.api.algorithm.AlgorithmParameterElement;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.constants.WPCConfigurationString;
+import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementInternalLink;
@@ -93,6 +94,12 @@ public class CheckErrorAlgorithm048 extends CheckErrorAlgorithmBase {
     boolean errorFoundAnchor = !errorFoundFull && Page.areSameTitle(pageTitle, link.getLink());
     if (!errorFoundFull && !errorFoundAnchor) {
       return false;
+    }
+    if (errorFoundAnchor) {
+      Integer namespace = analysis.getPage().getNamespace();
+      if ((namespace == null) || (Namespace.MAIN != namespace)) {
+        return false;
+      }
     }
 
     // Ignore if the link is inside some tags
