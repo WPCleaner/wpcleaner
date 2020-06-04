@@ -1,11 +1,8 @@
-DoTasks _Common.txt
-Set Namespaces 0 6
-
 Set Prefix [[Spécial:LintErrors/missing-end-tag]]
 Set Configuration MaxLintErrors 100000
 DoTasks _Common.txt
 Set Namespaces 0
-# FixLintError missing-end-tag 532 540
+FixLintError missing-end-tag 532 540
 
 DoTasks _Common_Other.txt
 Set Namespaces 4 6 12 14 100 102 104
