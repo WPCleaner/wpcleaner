@@ -78,6 +78,7 @@ import org.wikipediacleaner.i18n.GT;
 import org.wikipediacleaner.images.EnumImageSize;
 import org.wikipediacleaner.utils.Configuration;
 import org.wikipediacleaner.utils.ConfigurationValueBoolean;
+import org.wikipediacleaner.utils.ConfigurationValueString;
 
 /**
  * Component for working on a page in the CheckWiki project.
@@ -649,7 +650,18 @@ public class CheckWikiContentPanel
    * @return Comment.
    */
   private String getComment(List<AlgorithmError.Progress> errorsFixed) {
-    return getWiki().getCWConfiguration().getComment(errorsFixed);
+    String comment = getWiki().getCWConfiguration().getComment(errorsFixed);
+    if ((comment != null) && (comment.length() > 0)) {
+      Configuration config = Configuration.getConfiguration();
+      String userComment = config.getString(getWiki(), ConfigurationValueString.COMMENT);
+      if ((userComment == null) || (userComment.trim().length() == 0)) {
+        userComment = config.getString(null, ConfigurationValueString.COMMENT);
+      }
+      if ((userComment != null) && (userComment.trim().length() > 0)) {
+        comment = userComment.trim() + " - " + comment;
+      }
+    }
+    return comment;
   }
 
   /**
