@@ -23,6 +23,7 @@ import org.wikipediacleaner.api.constants.wiki.Waze;
 import org.wikipediacleaner.api.constants.wiki.WazeopediaUSA;
 import org.wikipediacleaner.api.constants.wiki.WikiSkripta;
 import org.wikipediacleaner.api.constants.wiki.WikimediaCommons;
+import org.wikipediacleaner.api.constants.wiki.WikimediaMeta;
 import org.wikipediacleaner.api.constants.wiki.Wikipedia;
 import org.wikipediacleaner.api.constants.wiki.Wikiquote;
 import org.wikipediacleaner.api.constants.wiki.Wikisource;
@@ -108,7 +109,9 @@ public enum EnumWikipedia {
   VI(new Wikipedia("vi", "Vietnamese Wikipedia")),
   YI(new Wikipedia("yi", "Yiddish Wikipedia", ComponentOrientation.RIGHT_TO_LEFT)),
   ZH(new Wikipedia("zh", "维基百科")),
+
   COMMONS(new WikimediaCommons()),
+  META(new WikimediaMeta()),
 
   WIKTIONARY_EN(new Wiktionary("en", "English Wiktionary")),
   WIKTIONARY_FR(new Wiktionary("fr", "Wiktionnaire en français")),
