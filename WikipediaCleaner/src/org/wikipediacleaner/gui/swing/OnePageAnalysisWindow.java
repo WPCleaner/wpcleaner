@@ -1391,6 +1391,19 @@ public class OnePageAnalysisWindow
       }
     }
 
+    // User defined comment
+    if (comment.length() > 0) {
+      Configuration config = Configuration.getConfiguration();
+      String userComment = config.getString(getWiki(), ConfigurationValueString.COMMENT);
+      if ((userComment == null) || (userComment.trim().length() == 0)) {
+        userComment = config.getString(null, ConfigurationValueString.COMMENT);
+      }
+      if ((userComment != null) && (userComment.trim().length() > 0)) {
+        comment.insert(0, " - ");
+        comment.insert(0, userComment.trim());
+      }
+    }
+
     return comment.toString();
   }
 

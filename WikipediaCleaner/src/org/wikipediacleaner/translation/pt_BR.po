@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2020-06-03 16:30+0200\n"
+"POT-Creation-Date: 2020-06-04 15:42+0200\n"
 "PO-Revision-Date: 2017-03-03 19:32+0000\n"
 "Last-Translator: Felipe L. <felipe.idj@hotmail.com>\n"
 "Language-Team: Brazilian Portuguese <pt_BR@li.org>\n"
@@ -232,7 +232,7 @@ msgstr "Substituir com {0}"
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm045.java:130
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm046.java:208
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm047.java:151
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm048.java:115
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm048.java:137
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm515.java:90
 #: org/wikipediacleaner/gui/swing/options/SortingOptionsPanel.java:115
 msgid "Delete"
@@ -541,16 +541,16 @@ msgstr "Lista de predefinições que impedem a correção automática desse erro
 msgid "Fix all bold headlines"
 msgstr "Corrigir todos os títulos em negrito"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm048.java:37
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm048.java:38
 msgid "Remove all links to title (first in bold)"
 msgstr "Remover todos os links para títulos (primeiro em negrito)"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm048.java:38
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm048.java:39
 msgid "Remove all links to title"
 msgstr "Remover todas as ligações para o título"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm048.java:329
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm048.java:332
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm048.java:360
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm048.java:363
 msgid "Set to true to report also links in <imagemap>"
 msgstr ""
 
@@ -874,26 +874,26 @@ msgstr "Restringir a verificação para títulos com um nível mais elevado"
 msgid "Maximum level of title to check"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm085.java:280
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm085.java:286
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm112.java:653
 #, java-format
 msgid "Use {0}"
 msgstr "Use {0}"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm085.java:342
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm085.java:348
 msgid "A list of templates that can be used to replace &lt;center&gt; tags"
 msgstr ""
 "Uma lista de predefinições que podem ser utilizadas para substituir a tag "
 "&lt;center&gt;"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm085.java:346
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm085.java:352
 #, fuzzy
 msgid "Template that can be used to replace &lt;center&gt; tags"
 msgstr ""
 "Uma lista de predefinições que podem ser utilizadas para substituir a tag "
 "&lt;center&gt;"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm085.java:349
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm085.java:355
 #, fuzzy
 msgid "Name of the parameter to use"
 msgstr "Predefinições pedidas"
@@ -3510,6 +3510,7 @@ msgid "Number of pages:"
 msgstr "Número de páginas:"
 
 #: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:178
+#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:239
 msgid "Comment:"
 msgstr "Comentário:"
 
@@ -4567,23 +4568,24 @@ msgid "Copy/paste in popup menu"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:224
-msgid "Signature :"
+#, fuzzy
+msgid "Signature:"
 msgstr "Assinatura:"
 
-#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:240
+#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:255
 msgid "Look & Feel"
 msgstr "Aparência e comportamento"
 
-#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:244
+#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:259
 #, java-format
 msgid "Let {0} choose the Look && Feel"
 msgstr "Deixar o {0} escolher a aparência && comportamento"
 
-#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:249
+#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:264
 msgid "Use System Look && Feel"
 msgstr "Usar a aparência && comportamento do sistema"
 
-#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:254
+#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:269
 msgid "Choose Look && Feel"
 msgstr "Escolha aparência && comportamento"
 
@@ -5175,6 +5177,10 @@ msgstr ""
 #, java-format
 msgid "The value cannot contain any of these characters: {0}"
 msgstr "O valor não pode conter nenhum dos seguintes caracteres: {0}"
+
+#, fuzzy
+#~ msgid "Comment :"
+#~ msgstr "Comentários:"
 
 #, fuzzy
 #~ msgid ""

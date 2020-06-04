@@ -221,13 +221,28 @@ public class GeneralOptionsPanel extends OptionsPanel {
 
     // Signature
     txt = createJTextField(ConfigurationValueString.SIGNATURE, 15);
-    JLabel labelSignature = Utilities.createJLabel(GT._T("Signature :"));
+    JLabel labelSignature = Utilities.createJLabel(GT._T("Signature:"));
     labelSignature.setLabelFor(txt);
     labelSignature.setHorizontalAlignment(SwingConstants.TRAILING);
     constraints.gridwidth = 1;
     constraints.gridx = 0;
     constraints.weightx = 0;
     add(labelSignature, constraints);
+    constraints.gridwidth = 2;
+    constraints.gridx++;
+    constraints.weightx = 1;
+    add(txt, constraints);
+    constraints.gridy++;
+
+    // Comment
+    txt = createJTextField(ConfigurationValueString.COMMENT, 15);
+    JLabel labelComment = Utilities.createJLabel(GT._T("Comment:"));
+    labelComment.setLabelFor(txt);
+    labelComment.setHorizontalAlignment(SwingConstants.TRAILING);
+    constraints.gridwidth = 1;
+    constraints.gridx = 0;
+    constraints.weightx = 0;
+    add(labelComment, constraints);
     constraints.gridwidth = 2;
     constraints.gridx++;
     constraints.weightx = 1;
