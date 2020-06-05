@@ -68,9 +68,12 @@ public class CheckErrorAlgorithm552 extends CheckErrorAlgorithmBase {
             return true;
           }
           result = true;
+          int beginIndex = template.getBeginIndex();
           CheckErrorResult errorResult = createCheckErrorResult(
-              analysis, endIndex, endIndex + 1);
-          errorResult.addReplacement("");
+              analysis, beginIndex, endIndex + 1);
+          errorResult.addReplacement(
+              contents.substring(beginIndex, endIndex),
+              "{{...}}");
           errors.add(errorResult);
         }
       }
