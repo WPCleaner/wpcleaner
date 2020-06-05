@@ -352,7 +352,7 @@ public class CheckErrorAlgorithm513 extends CheckErrorAlgorithmBase {
     }
     boolean checkTexts = true;
     while (checkTexts) {
-      String prefix = contents.substring(link.getBeginIndex(), beginExtra);
+      String prefix = contents.substring(link.getLinkEndIndex(), beginExtra);
       int prefixLength = prefix.length();
       checkTexts = false;
       for (String[] text : textsBefore) {
