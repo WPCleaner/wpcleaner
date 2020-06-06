@@ -1,0 +1,5 @@
+Set Prefix [[Special:LintErrors/multiple-unclosed-formatting-tags]]
+Set Configuration MaxLintErrors 100000
+DoTasks _Common.txt
+Set Namespaces 0
+FixLintError multiple-unclosed-formatting-tags 532 540
