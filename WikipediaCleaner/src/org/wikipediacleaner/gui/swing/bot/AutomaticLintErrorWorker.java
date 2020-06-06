@@ -14,7 +14,6 @@ import org.wikipediacleaner.api.API;
 import org.wikipediacleaner.api.APIException;
 import org.wikipediacleaner.api.APIFactory;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithm;
-import org.wikipediacleaner.api.constants.EnumQueryResult;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.LinterCategory;
 import org.wikipediacleaner.api.data.Page;
@@ -74,20 +73,7 @@ public class AutomaticLintErrorWorker extends AutomaticFixWorker {
             return null;
           }
           Page page = pages.remove(0);
-          try {
-            analyzePage(page, selectedAlgorithms, null);
-          } catch (APIException e) {
-            boolean ignoreException = false;
-            EnumQueryResult result = e.getQueryResult();
-            if (result != null) {
-              if (EnumQueryResult.PROTECTED_PAGE.equals(result)) {
-                ignoreException = true;
-              }
-            }
-            if (!ignoreException) {
-              throw e;
-            }
-          }
+          analyzePage(page, selectedAlgorithms, null);
         }
       }
     } catch (APIException e) {

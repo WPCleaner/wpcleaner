@@ -115,15 +115,11 @@ public class AutomaticCWWorker extends AutomaticFixWorker {
       for (int numPage = 0;
           (error.getPageCount() > 0) && shouldContinue();
           numPage++) {
-        try {
-          Page page = error.getPage(0);
-          error.remove(page);
-          analyzePage(
-              page, algorithms,
-              algorithm.getErrorNumberString() + " - " + (numPage + 1) + "/" + maxErrors);
-        } catch (APIException e) {
-          //
-        }
+        Page page = error.getPage(0);
+        error.remove(page);
+        analyzePage(
+            page, algorithms,
+            algorithm.getErrorNumberString() + " - " + (numPage + 1) + "/" + maxErrors);
       }
     }
   }

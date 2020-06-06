@@ -433,16 +433,20 @@ public class MediaWikiAPI implements API {
           }
         }
         if (attemptNumber > 1) {
-          log.warn("Error updating page " + page.getTitle());
+          log.warn("Error updating page {}", page.getTitle());
           throw e;
         }
-        if (e.getQueryResult() == EnumQueryResult.BAD_TOKEN) {
+        EnumQueryResult queryResult = e.getQueryResult();
+        if (queryResult == EnumQueryResult.BAD_TOKEN) {
           waitBeforeRetrying();
           log.warn("Retrieving tokens after a BAD_TOKEN answer");
           retrieveTokens(wikipedia);
+        } else if ((queryResult != null) && (!queryResult.shouldRetry())) {
+          log.warn("Error updating page {}", page.getTitle());
+          throw e;
         }
       } catch (JDOMParseException e) {
-        log.error("Error updating page: " + e.getMessage());
+        log.error("Error updating page: {}", e.getMessage());
         throw new APIException("Error parsing XML", e);
       }
     } while (result == null);

@@ -22,6 +22,7 @@ import org.wikipediacleaner.api.algorithm.AlgorithmError;
 import org.wikipediacleaner.api.check.CheckErrorPage;
 import org.wikipediacleaner.api.check.CheckWiki;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithm;
+import org.wikipediacleaner.api.constants.EnumQueryResult;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.constants.WPCConfiguration;
 import org.wikipediacleaner.api.constants.WPCConfigurationStringList;
@@ -155,7 +156,7 @@ public abstract class AutomaticFixWorker extends BasicWorker {
 
     // Handle depending on whether errors were found
     if (found) {
-      handleFound(algorithms, page, analysis, prefix);
+      handleFoundFiltered(algorithms, page, analysis, prefix);
     } else {
       handleNotFound(algorithms, page);
     }
@@ -182,11 +183,50 @@ public abstract class AutomaticFixWorker extends BasicWorker {
 
   /**
    * Handle when errors are found in a page.
+   * Some exceptions are filtered if they shouldn't stop the worker.
    * 
    * @param algorithms Algorithms that were supposed to be found.
    * @param page Page.
    * @param analysis Page analysis.
    * @param prefix Optional prefix for information.
+   * @throws APIException Problem with API.
+   */
+  private void handleFoundFiltered(
+      List<CheckErrorAlgorithm> algorithms,
+      Page page, PageAnalysis analysis,
+      String prefix) throws APIException {
+    try {
+      handleFound(algorithms, page, analysis, prefix);
+    } catch (APIException e) {
+      if (!ignoreException(e.getQueryResult())) {
+        throw e;
+      }
+    }
+  }
+
+  /**
+   * @param queryResult Result of the query.
+   * @return True if exception should be ignored.
+   */
+  protected boolean ignoreException(EnumQueryResult queryResult) {
+    if (queryResult == null) {
+      return false;
+    }
+    if ((queryResult == EnumQueryResult.ABUSEFILTER_DISALLOWED) ||
+        (queryResult == EnumQueryResult.PROTECTED_PAGE) ||
+        (queryResult == EnumQueryResult.TPT_TARGET_PAGE)) {
+      return true;
+    }
+    return false;
+  }
+  /**
+   * Handle when errors are found in a page.
+   * 
+   * @param algorithms Algorithms that were supposed to be found.
+   * @param page Page.
+   * @param analysis Page analysis.
+   * @param prefix Optional prefix for information.
+   * @throws APIException Problem with API.
    */
   private void handleFound(
       List<CheckErrorAlgorithm> algorithms,
