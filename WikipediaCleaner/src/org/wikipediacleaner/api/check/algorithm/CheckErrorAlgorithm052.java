@@ -179,13 +179,14 @@ public class CheckErrorAlgorithm052 extends CheckErrorAlgorithmBase {
       int categoryBeginIndex = category.getBeginIndex();
       int categoryEndIndex = category.getEndIndex();
       if (categoryBeginIndex < title.getBeginIndex()) {
-        if ((categoryBeginIndex <= 0) ||
-            (contents.charAt(categoryBeginIndex - 1) == '\n')) {
-          shouldMove = true;
+        shouldMove = true;
+        if ((categoryBeginIndex > 0) &&
+            (contents.charAt(categoryBeginIndex - 1) != '\n')) {
+          shouldMove = false;
         }
-        if ((categoryEndIndex >= contents.length()) ||
-            (contents.charAt(categoryEndIndex) == '\n')) {
-          shouldMove = true;
+        if ((categoryEndIndex < contents.length()) &&
+            (contents.charAt(categoryEndIndex) != '\n')) {
+          shouldMove = false;
         }
       }
 
