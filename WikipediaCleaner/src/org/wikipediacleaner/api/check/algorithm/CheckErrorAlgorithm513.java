@@ -351,7 +351,7 @@ public class CheckErrorAlgorithm513 extends CheckErrorAlgorithmBase {
       beginExtra--;
     }
     boolean checkTexts = true;
-    while (checkTexts) {
+    while ((checkTexts) && (link.getLinkEndIndex() <= beginExtra)) {
       String prefix = contents.substring(link.getLinkEndIndex(), beginExtra);
       int prefixLength = prefix.length();
       checkTexts = false;
