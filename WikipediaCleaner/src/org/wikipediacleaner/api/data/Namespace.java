@@ -189,7 +189,8 @@ public class Namespace implements Comparable<Namespace> {
     }
     name = CharacterUtils.ucFirst(CharacterUtils.trim(name));
     for (String alias : aliases) {
-      if (name.equals(alias)) {
+      // Apparently FILE: is detected as File: by MW 
+      if (name.equalsIgnoreCase(alias)) {
         return true;
       }
     }
