@@ -160,7 +160,7 @@ public class CheckErrorAlgorithm003 extends CheckErrorAlgorithmBase {
       boolean multipleTitles = false;
       for (PageElementTitle tmpTitle : tmpTitles) {
         String titleText = tmpTitle.getTitle();
-        if ((titleText != null) && titles.contains(titleText)) {
+        if ((titleText != null) && titles.contains(titleText.toUpperCase())) {
           if (sameTitle != null) {
             multipleTitles = true;
           }
@@ -238,7 +238,9 @@ public class CheckErrorAlgorithm003 extends CheckErrorAlgorithmBase {
     if (tmp != null) {
       List<String> tmpList = WPCConfiguration.convertPropertyToStringList(tmp, false);
       if (tmpList != null) {
-        titles.addAll(tmpList);
+        for (String title : tmpList) {
+          titles.add(title.toUpperCase());
+        }
       }
     }
   }
