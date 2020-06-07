@@ -19,7 +19,6 @@ import org.wikipediacleaner.api.data.PageElementInterwikiLink;
 import org.wikipediacleaner.api.data.PageElementLanguageLink;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.PageElementTemplate;
-import org.wikipediacleaner.i18n.GT;
 
 
 /**
@@ -174,9 +173,19 @@ public class CheckErrorAlgorithm010 extends CheckErrorAlgorithmBase {
 
         // Default
         if (!errorReported) {
+
+          // Check if there's an internal link just after
+          boolean beforeLink = false;
+          if (contents.startsWith("[[", currentIndex + 2)) {
+            PageElementInternalLink nextLink = analysis.isInInternalLink(currentIndex + 2);
+            if ((nextLink != null) && (nextLink.getBeginIndex() == currentIndex + 2)) {
+              beforeLink = true;
+            }
+          }
+
           CheckErrorResult errorResult = createCheckErrorResult(
               analysis, currentIndex, currentIndex + 2);
-          errorResult.addReplacement("", GT._T("Delete"));
+          errorResult.addReplacement("", beforeLink);
           errors.add(errorResult);
         }
       }
@@ -299,5 +308,19 @@ public class CheckErrorAlgorithm010 extends CheckErrorAlgorithmBase {
       }
     }
     return (sb != null) ? sb.toString() : null;
+  }
+
+  /**
+   * Automatic fixing of all the errors in the page.
+   * 
+   * @param analysis Page analysis.
+   * @return Page contents after fix.
+   */
+  @Override
+  protected String internalAutomaticFix(PageAnalysis analysis) {
+    if (!analysis.getPage().isArticle()) {
+      return analysis.getContents();
+    }
+    return fixUsingAutomaticReplacement(analysis);
   }
 }

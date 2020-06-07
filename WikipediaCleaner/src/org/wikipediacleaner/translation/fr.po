@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2020-06-04 15:42+0200\n"
+"POT-Creation-Date: 2020-06-07 10:47+0200\n"
 "PO-Revision-Date: 2020-06-04 15:50+0200\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: French <fr@li.org>\n"
@@ -97,8 +97,8 @@ msgstr "J’espère que vous apprécierez {0}."
 #: org/wikipediacleaner/Version.java:50
 #, java-format
 msgid ""
-"I try to keep {0} up to date with Check Wiki, but if you find any "
-"discrepancy(ies) in the detections, please let me know."
+"I try to keep {0} up to date with Check Wiki, but if you find any discrepancy"
+"(ies) in the detections, please let me know."
 msgstr ""
 "J’essaye de mettre à jour {0} avec Check Wiki, mais n’hésitez pas à "
 "m’informer si vous découvrez des incohérences."
@@ -237,7 +237,6 @@ msgid "Replace with {0}"
 msgstr "Remplacer par {0}"
 
 #: org/wikipediacleaner/api/check/CheckErrorResult.java:201
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm010.java:179
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:367
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm017.java:175
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm026.java:108
@@ -302,31 +301,31 @@ msgstr "Nom du paramètre"
 msgid "Close tag"
 msgstr "Fermer la balise"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm003.java:263
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm003.java:266
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm003.java:265
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm003.java:268
 #, java-format
 msgid "Text to insert for adding {0}"
 msgstr "Texte à insérer pour ajouter {0}"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm003.java:269
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm003.java:276
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm003.java:271
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm003.java:278
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm111.java:198
 #, java-format
 msgid "A list of templates resulting in the inclusion of {0}"
 msgstr "Modèles incluant {0}"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm003.java:272
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm003.java:279
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm003.java:274
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm003.java:281
 #, java-format
 msgid "Template resulting in the inclusion of {0}"
 msgstr "Modèles résultant en l’inclusion de {0}"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm003.java:283
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm003.java:285
 #, java-format
 msgid "Section headings where a {0} can be added"
 msgstr "Titres des sections où {0} peut être ajouté"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm003.java:286
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm003.java:288
 #, java-format
 msgid "Section heading where a {0} can be added"
 msgstr "Titre d’une section où {0} peut être ajouté"
@@ -1819,12 +1818,12 @@ msgstr "Analyse du texte"
 msgid "Retrieving templates"
 msgstr "Récupération des modèles"
 
-#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:681
+#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:685
 #, java-format
 msgid "URL {0} is blacklisted"
 msgstr "L’URL {0} est en liste noire"
 
-#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:1872
+#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:1876
 msgid ""
 "This action is protected by a CAPTCHA.\n"
 "What is the answer to the following question ?"
@@ -1832,7 +1831,7 @@ msgstr ""
 "Cette action est protégée par un CAPTCHA.\n"
 "Quelle est la réponse à la question suivante ?"
 
-#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:1879
+#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:1883
 msgid ""
 "This action is protected by a CAPTCHA.\n"
 "What is the answer to the question displayed in your browser ?"
@@ -2963,7 +2962,7 @@ msgid "Disambiguation analysis"
 msgstr "Analyse des homonymies"
 
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:1028
-#: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiContentPanel.java:673
+#: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiContentPanel.java:685
 msgid "A comment is required for sending the page."
 msgstr "Un commentaire est requis pour envoyer cette page."
 
@@ -3356,24 +3355,24 @@ msgid "Checking for errors n°{0}"
 msgstr ""
 "Chargement de la liste des articles contenant l’erreur syntaxique n° {0}"
 
-#: org/wikipediacleaner/gui/swing/bot/AutomaticFixWorker.java:175
+#: org/wikipediacleaner/gui/swing/bot/AutomaticFixWorker.java:176
 #, java-format
 msgid "Analyzing page {0}"
 msgstr "Analyse de la page {0}"
 
-#: org/wikipediacleaner/gui/swing/bot/AutomaticFixWorker.java:228
+#: org/wikipediacleaner/gui/swing/bot/AutomaticFixWorker.java:268
 #, java-format
 msgid "Fixing page {0}"
 msgstr "Correction de la page « {0} »"
 
-#: org/wikipediacleaner/gui/swing/bot/AutomaticFixWorker.java:300
+#: org/wikipediacleaner/gui/swing/bot/AutomaticFixWorker.java:340
 #, java-format
 msgid "{0} page has been modified"
 msgid_plural "{0} pages have been modified"
 msgstr[0] "{0} page a été modifiée"
 msgstr[1] "{0} page ont été modifiées"
 
-#: org/wikipediacleaner/gui/swing/bot/AutomaticFixWorker.java:305
+#: org/wikipediacleaner/gui/swing/bot/AutomaticFixWorker.java:345
 #, java-format
 msgid "{0} page has been marked as fixed for the selected algorithms"
 msgid_plural "{0} pages have been marked as fixed for the selected algorithms"
@@ -3382,7 +3381,7 @@ msgstr[0] ""
 msgstr[1] ""
 "{0} pages ont été marquées comme corrigées pour les algorithmes sélectionnés"
 
-#: org/wikipediacleaner/gui/swing/bot/AutomaticFixWorker.java:310
+#: org/wikipediacleaner/gui/swing/bot/AutomaticFixWorker.java:350
 #, java-format
 msgid "{0} page has been marked as fixed for other algorithms"
 msgid_plural "{0} pages have been marked as fixed for other algorithms"
@@ -3443,7 +3442,7 @@ msgid "Checking whitelist for error {0}"
 msgstr "Vérification de la liste de blanche pour l’erreur {0}"
 
 #: org/wikipediacleaner/gui/swing/bot/CWCheckWhiteListsWorker.java:92
-#: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiContentPanel.java:316
+#: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiContentPanel.java:317
 #, java-format
 msgid "The page {0} doesn''t exist on Wikipedia"
 msgstr "La page {0} n’existe pas sur Wikipédia"
@@ -3646,11 +3645,11 @@ msgstr "Aucune erreur n’est actuellement détectée par CheckWiki."
 msgid "Detections"
 msgstr "Détections"
 
-#: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiContentPanel.java:211
+#: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiContentPanel.java:212
 msgid "Mark as already fixed"
 msgstr "Marquer les erreurs comme déjà corrigées"
 
-#: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiContentPanel.java:419
+#: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiContentPanel.java:420
 #, java-format
 msgid ""
 "The error n°{0} hasn''t been found on the page {1}.\n"
@@ -3659,7 +3658,7 @@ msgstr ""
 "L’erreur n°{0} n’a pas été détectée dans la page {1}.\n"
 "Voulez-vous la marquer comme corrigée ?"
 
-#: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiContentPanel.java:429
+#: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiContentPanel.java:430
 #, java-format
 msgid ""
 "The error n°{0} hasn''t been detected in page {1}, but CheckWiki still "
@@ -3668,28 +3667,28 @@ msgstr ""
 "L’erreur n°{0} n’ pas été détectée dans la page {1}, mais CheckWiki la "
 "détecte toujours."
 
-#: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiContentPanel.java:438
+#: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiContentPanel.java:439
 #, java-format
 msgid "The error n°{0} has already been fixed in page {1}."
 msgstr "L’erreur n°{0} a déjà été corrigée dans la page {1}."
 
-#: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiContentPanel.java:584
+#: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiContentPanel.java:585
 #, java-format
 msgid "Do you want to mark {0} as fixed for error n°{1}?"
 msgstr "Marquer l’erreur n° {1} de l’article {0} comme corrigée ?"
 
-#: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiContentPanel.java:597
+#: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiContentPanel.java:598
 #, java-format
 msgid "The error n°{0} is still found {1} time on the page."
 msgid_plural "The error n°{0} is still found {1} times on the page."
 msgstr[0] "L’erreur n° {0} est toujours présente {1} fois dans la page."
 msgstr[1] "L’erreur n° {0} est toujours présente {1} fois dans la page."
 
-#: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiContentPanel.java:602
+#: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiContentPanel.java:603
 msgid "Are you really sure that you want to mark it as fixed ?"
 msgstr "Êtes-vous certain de vouloir la marquer comme corrigée ?"
 
-#: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiContentPanel.java:608
+#: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiContentPanel.java:609
 #, java-format
 msgid ""
 "The error n°{0} is still found on the page.\n"
@@ -3698,7 +3697,7 @@ msgstr ""
 "L’erreur n° {0} est toujours présente dans la page.\n"
 "Êtes-vous certain de vouloir la marquer comme corrigée ?"
 
-#: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiContentPanel.java:620
+#: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiContentPanel.java:621
 msgid ""
 "You have already fixed this error by modifying the page.\n"
 "You should send your modifications, the page will be marked as fixed."
