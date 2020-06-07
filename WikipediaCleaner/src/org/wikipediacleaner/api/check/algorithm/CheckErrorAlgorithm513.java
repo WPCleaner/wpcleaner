@@ -654,7 +654,7 @@ public class CheckErrorAlgorithm513 extends CheckErrorAlgorithmBase {
           try {
             patternsAfter.add(Pattern.compile(element));
           } catch (PatternSyntaxException e) {
-            log.warn("Incorrect pattern in {} for error #518: {}", PARAMETER_TEXTS_AFTER, element);
+            log.warn("Incorrect pattern in {} for error #513: {}", PARAMETER_TEXTS_AFTER, element);
           }
         }
       }
