@@ -69,12 +69,18 @@ resource = tasks/enwiki/_Common.txt
 resource = tasks/enwiki/_Weekly.txt
 resource = tasks/enwiki/ISBN_ISSN.txt
 resource = tasks/enwiki/ListCheckWiki.txt
+resource = tasks/enwiki/MarkCheckWiki.txt
 resource = tasks/frwiki/_Common.txt
+resource = tasks/frwiki/_Common_Other.txt
+resource = tasks/frwiki/_Common_Talk.txt
 resource = tasks/frwiki/_Daily.txt
 resource = tasks/frwiki/_Weekly.txt
 resource = tasks/frwiki/ISBN_ISSN.txt
 resource = tasks/frwiki/ListCheckWiki.txt
+resource = tasks/frwiki/MarkCheckWiki.txt
 resource = tasks/frwiki/UpdateCheckWiki.txt
+resource = tasks/meta/_Common.txt
+resource = tasks/meta/ListCheckWiki.txt
 
 # Requirements on Java
 java_min_version = 1070000

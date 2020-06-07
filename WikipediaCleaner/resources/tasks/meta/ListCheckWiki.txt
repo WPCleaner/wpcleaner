@@ -1,0 +1,4 @@
+DoTasks _Common.txt
+# Set Prefix [[User:WikiCleanerBot|Bot]]
+Set Namespaces 0
+ListCheckWiki C:\Users\Nicolas\Downloads\metawiki-$-pages-articles.xml.bz2 wiki:User:NicoV/WCW/WPC_{0}_dump 551
