@@ -154,10 +154,23 @@ public class CheckErrorAlgorithm048 extends CheckErrorAlgorithmBase {
     if (errorFoundAnchor) {
       CheckErrorResult errorResult = createCheckErrorResult(analysis, beginIndex, endIndex);
       String anchor = link.getAnchor();
-      if ((anchor != null) && (anchor.trim().length() > 0)) {
-        errorResult.addReplacement(PageElementInternalLink.createInternalLink(
+      if ((anchor != null) &&
+          (anchor.trim().length() > 0)) {
+        boolean automatic = true;
+        if (anchor.trim().startsWith("cite") ||
+            anchor.trim().startsWith("fn") ||
+            anchor.trim().startsWith("ftn") ||
+            anchor.trim().startsWith("sdfootnote")) {
+          automatic = false;
+        }
+        if ((link.getText() == null) ||
+            (link.getText().trim().length() == 0)) {
+          automatic = false;
+        }
+        String replacement = PageElementInternalLink.createInternalLink(
             "#" + anchor,
-            link.getDisplayedTextNotTrimmed()));
+            link.getDisplayedTextNotTrimmed());
+        errorResult.addReplacement(replacement, automatic);
       }
       errors.add(errorResult);
       return true;
