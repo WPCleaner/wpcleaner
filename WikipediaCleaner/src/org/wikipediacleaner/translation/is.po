@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2020-06-07 10:47+0200\n"
+"POT-Creation-Date: 2020-06-07 13:30+0200\n"
 "PO-Revision-Date: 2015-11-05 04:57+0000\n"
 "Last-Translator: Stefán Örvar Sigmundsson <stefan.orvar.sigmundsson@emi.is>\n"
 "Language-Team: Icelandic <is@li.org>\n"
@@ -1395,6 +1395,16 @@ msgstr "Tengir í"
 #, fuzzy
 msgid "Link to ignore"
 msgstr "Tengir í"
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm552.java:233
+#, fuzzy
+msgid "Templates to ignore"
+msgstr "Snið"
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm552.java:236
+#, fuzzy
+msgid "Template to ignore"
+msgstr "Snið"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmBase.java:295
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmBase.java:298

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2020-06-07 10:47+0200\n"
+"POT-Creation-Date: 2020-06-07 13:30+0200\n"
 "PO-Revision-Date: 2017-03-03 19:29+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Chinese (Simplified) <zh_CN@li.org>\n"
@@ -1402,6 +1402,16 @@ msgstr "链接到{0}"
 #, fuzzy
 msgid "Link to ignore"
 msgstr "链接到{0}"
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm552.java:233
+#, fuzzy
+msgid "Templates to ignore"
+msgstr "模板"
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm552.java:236
+#, fuzzy
+msgid "Template to ignore"
+msgstr "模板"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmBase.java:295
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmBase.java:298

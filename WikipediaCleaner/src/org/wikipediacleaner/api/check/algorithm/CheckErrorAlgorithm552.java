@@ -8,11 +8,18 @@
 package org.wikipediacleaner.api.check.algorithm;
 
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
+import org.wikipediacleaner.api.algorithm.AlgorithmParameter;
+import org.wikipediacleaner.api.algorithm.AlgorithmParameterElement;
 import org.wikipediacleaner.api.check.CheckErrorResult;
+import org.wikipediacleaner.api.constants.WPCConfiguration;
 import org.wikipediacleaner.api.data.PageAnalysis;
+import org.wikipediacleaner.api.data.PageElementFunction;
 import org.wikipediacleaner.api.data.PageElementTemplate;
+import org.wikipediacleaner.i18n.GT;
 
 
 /**
@@ -41,11 +48,30 @@ public class CheckErrorAlgorithm552 extends CheckErrorAlgorithmBase {
       return false;
     }
 
-    // Check each template
+    // Check each kind of element
+    boolean result = false;
+    result |= analyzeTemplates(analysis, errors);
+    result |= analyzeFunctions(analysis, errors);
+    return result;
+  }
+
+  /**
+   * Analyze a page to check if errors are present in templates.
+   * 
+   * @param analysis Page analysis.
+   * @param errors Errors found in the page.
+   * @return Flag indicating if the error was found.
+   */
+  public boolean analyzeTemplates(
+      PageAnalysis analysis,
+      Collection<CheckErrorResult> errors) {
+
     List<PageElementTemplate> templates = analysis.getTemplates();
     if (templates == null) {
       return false;
     }
+
+    // Check each template
     String contents = analysis.getContents();
     boolean result = false;
     for (PageElementTemplate template : templates) {
@@ -60,6 +86,16 @@ public class CheckErrorAlgorithm552 extends CheckErrorAlgorithmBase {
               (otherTemplate.getEndIndex() == endIndex + 2)) {
             foundReason = true;
           }
+        }
+        if (!foundReason) {
+          PageElementFunction function = analysis.isInFunction(endIndex);
+          if ((function != null) &&
+              (function.getEndIndex() == endIndex + 2)) {
+            foundReason = true;
+          }
+        }
+        if (!foundReason) {
+          foundReason = ignoreTemplates.contains(template.getTemplateName());
         }
 
         // Report error
@@ -78,6 +114,69 @@ public class CheckErrorAlgorithm552 extends CheckErrorAlgorithmBase {
         }
       }
     }
+
+    return result;
+  }
+
+  /**
+   * Analyze a page to check if errors are present in functions.
+   * 
+   * @param analysis Page analysis.
+   * @param errors Errors found in the page.
+   * @return Flag indicating if the error was found.
+   */
+  public boolean analyzeFunctions(
+      PageAnalysis analysis,
+      Collection<CheckErrorResult> errors) {
+
+    List<PageElementFunction> functions = analysis.getFunctions();
+    if (functions == null) {
+      return false;
+    }
+
+    // Check each function
+    String contents = analysis.getContents();
+    boolean result = false;
+    for (PageElementFunction function : functions) {
+      int endIndex = function.getEndIndex();
+      if ((endIndex < contents.length()) &&
+          (contents.charAt(endIndex) == '}') &&
+          (contents.startsWith("{{", function.getBeginIndex()))) {
+
+        // Check if there's something explaining this extra bracket
+        boolean foundReason = false;
+        if (!foundReason) {
+          PageElementTemplate otherTemplate = analysis.isInTemplate(endIndex);
+          if ((otherTemplate != null) &&
+              (otherTemplate.getEndIndex() == endIndex + 2)) {
+            foundReason = true;
+          }
+        }
+        if (!foundReason) {
+          PageElementFunction otherFunction = analysis.isInFunction(endIndex);
+          if ((otherFunction != null) &&
+              (otherFunction.getEndIndex() == endIndex + 2)) {
+            foundReason = true;
+          }
+        }
+
+        // Report error
+        if (!foundReason) {
+          if (errors == null) {
+            return true;
+          }
+          result = true;
+          int beginIndex = function.getBeginIndex();
+          CheckErrorResult errorResult = createCheckErrorResult(
+              analysis, beginIndex, endIndex + 1);
+          errorResult.addReplacement(
+              contents.substring(beginIndex, endIndex),
+              "{{...}}");
+          errors.add(errorResult);
+        }
+      }
+    }
+
     return result;
   }
 
@@ -94,5 +193,47 @@ public class CheckErrorAlgorithm552 extends CheckErrorAlgorithmBase {
       return analysis.getContents();
     }
     return fixUsingAutomaticReplacement(analysis);
+  }
+
+  /* ====================================================================== */
+  /* PARAMETERS                                                             */
+  /* ====================================================================== */
+
+  /** List of templates to be ignored */
+  private static final String PARAMETER_IGNORE_TEMPLATES = "ignore_templates";
+
+  /**
+   * Initialize settings for the algorithm.
+   * 
+   * @see org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase#initializeSettings()
+   */
+  @Override
+  protected void initializeSettings() {
+    String tmp = getSpecificProperty(PARAMETER_IGNORE_TEMPLATES, true, true, true);
+    ignoreTemplates.clear();
+    if (tmp != null) {
+      List<String> tmpList = WPCConfiguration.convertPropertyToStringList(tmp);
+      if (tmpList != null) {
+        ignoreTemplates.addAll(tmpList);
+      }
+    }
+  }
+
+  /** Templates to ignore */
+  private final Set<String> ignoreTemplates = new HashSet<>();
+
+  /**
+   * Build the list of parameters for this algorithm.
+   */
+  @Override
+  protected void addParameters() {
+    super.addParameters();
+    addParameter(new AlgorithmParameter(
+        PARAMETER_IGNORE_TEMPLATES,
+        GT._T("Templates to ignore"),
+        new AlgorithmParameterElement(
+            "template name",
+            GT._T("Template to ignore")),
+        true));
   }
 }
