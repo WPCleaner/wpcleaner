@@ -12,6 +12,8 @@ import java.io.IOException;
 import java.io.Reader;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.wikipediacleaner.api.APIException;
 import org.wikipediacleaner.api.algorithm.AlgorithmError;
@@ -92,24 +94,30 @@ public class CWConfiguration {
     // Build part of the comment for the errors that were fixed
     StringBuilder algorithmsComment = new StringBuilder();
     Configuration config = Configuration.getConfiguration();
+    Set<String> textsAdded = new HashSet<>();
     for (AlgorithmError.Progress progress : algorithms) {
+
+      // Compute text for the algorithm
+      String text = null;
       CheckErrorAlgorithm algorithm = progress.algorithm;
-      if (algorithmsComment.length() > 0) {
-        algorithmsComment.append(" - ");
-      }
       String link = algorithm.getLink();
       if ((link != null) &&
           (config != null) &&
           (config.getBoolean(
               null,
               ConfigurationValueBoolean.CHECK_LINK_ERRORS))) {
-        algorithmsComment.append("[[");
-        algorithmsComment.append(link);
-        algorithmsComment.append("|");
-        algorithmsComment.append(algorithm.getShortDescriptionReplaced());
-        algorithmsComment.append("]]");
+        text = "[[" + link + "|" + algorithm.getShortDescriptionReplaced() + "]]";
       } else {
-        algorithmsComment.append(algorithm.getShortDescriptionReplaced());
+        text = algorithm.getShortDescriptionReplaced();
+      }
+
+      // Add text
+      if (!textsAdded.contains(text)) {
+        if (algorithmsComment.length() > 0) {
+          algorithmsComment.append(" - ");
+        }
+        algorithmsComment.append(text);
+        textsAdded.add(text);
       }
     }
 

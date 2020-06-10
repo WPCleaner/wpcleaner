@@ -66,124 +66,187 @@ public class CheckErrorAlgorithm518 extends CheckErrorAlgorithmBase {
     if (errors == null) {
       return true;
     }
-    String contents = analysis.getContents();
+    boolean result = false;
     for (PageElementTag tag : tags) {
-      CheckErrorResult errorResult = null;
       if (tag.isFullTag()) {
-
-        // Full tag <nowiki/>
-        int beginIndex = tag.getBeginIndex();
-        int endIndex = tag.getEndIndex();
-
-        // Check for <nowiki/> just after an internal link
-        PageElementInternalLink link = analysis.isInInternalLink(beginIndex - 1);
-        if ((link != null) && (link.getEndIndex() == beginIndex)) {
-          beginIndex = link.getBeginIndex();
-          while ((endIndex < contents.length()) &&
-                 (Character.isLetter(contents.charAt(endIndex)))) {
-            endIndex++;
-          }
-        } else {
-          // Check for <nowiki/> inside an internal link
-          link = analysis.isInInternalLink(beginIndex);
-          if (link != null) {
-            int index = beginIndex;
-            while ((index > link.getBeginIndex() + link.getTextOffset()) &&
-                   (contents.charAt(index - 1) == ' ')) {
-              index--;
-            }
-            if (index == link.getBeginIndex() + link.getTextOffset()) {
-              index = endIndex;
-              while ((index + 2 < link.getEndIndex()) &&
-                     (contents.charAt(index) == ' ')) {
-                index++;
-              }
-              if (index + 2 == link.getEndIndex()) {
-                errorResult = createCheckErrorResult(
-                    analysis, link.getBeginIndex(), link.getEndIndex());
-                errorResult.addReplacement("");
-              }
-            }
-          }
-        }
-        if (errorResult == null) {
-          String textBefore = contents.substring(beginIndex, tag.getBeginIndex());
-          String textAfter = contents.substring(tag.getEndIndex(), endIndex);
-          errorResult = createCheckErrorResult(
-              analysis, beginIndex, endIndex);
-          if (link != null) {
-            String displayed = link.getDisplayedTextNotTrimmed();
-            if (displayed.endsWith(" ")) {
-              errorResult.addReplacement(PageElementInternalLink.createInternalLink(
-                  link.getFullLink(), displayed.trim()) + " " + textAfter);
-            }
-            errorResult.addReplacement(PageElementInternalLink.createInternalLink(
-                link.getFullLink(), displayed + textAfter));
-          }
-          errorResult.addReplacement(textBefore + " " + textAfter);
-          errorResult.addReplacement(textBefore + textAfter);
-        }
+        result |= analyzeFullTag(analysis, errors, tag);
       } else if (tag.isComplete()) {
-        // Complete tag <nowiki> ... </nowiki>
-        errorResult = createCheckErrorResult(
-            analysis, tag.getCompleteBeginIndex(), tag.getCompleteEndIndex());
-        String internalText = contents.substring(
-            tag.getValueBeginIndex(), tag.getValueEndIndex());
-
-        // Check for specific characters
-        StringBuilder replacement = new StringBuilder();
-        for (int i = 0; i < internalText.length(); i++) {
-          char currentChar = internalText.charAt(i);
-          if ((apostropheTemplate != null) && (currentChar == '\'')) {
-            replacement.append(PageElementTemplate.createTemplate(apostropheTemplate));
-          } else if ((asteriskTemplate != null) && (currentChar == '*')) {
-            replacement.append(PageElementTemplate.createTemplate(asteriskTemplate));
-          } else if ((openSBTemplate != null) && (currentChar == '[')) {
-              replacement.append(PageElementTemplate.createTemplate(openSBTemplate));
-          } else if ((closeSBTemplate != null) && (currentChar == ']')) {
-            replacement.append(PageElementTemplate.createTemplate(closeSBTemplate));
-          } else {
-            replacement.append(currentChar);
-          }
-        }
-        if (!internalText.equals(replacement.toString())) {
-          errorResult.addReplacement(replacement.toString());
-        }
-
-        // Check for <nowiki><tag></nowiki>
-        if (internalText.startsWith("<") && internalText.endsWith(">")) {
-          boolean otherFound = false;
-          for (int i = 1; i < internalText.length() - 1; i++) {
-            char currentChar = internalText.charAt(i);
-            if ((currentChar == '<') || (currentChar == '>')) {
-              otherFound = true;
-            }
-          }
-          if (!otherFound) {
-            errorResult.addReplacement("&lt;" + internalText.substring(1, internalText.length() - 1) + "&gt;");
-          }
-        }
-
-        // Check for <nowiki> </nowiki> at the beginning of a line
-        int begin = tag.getBeginIndex();
-        if ((begin > 0) && (contents.charAt(begin - 1) == '\n')) {
-          int index = 0;
-          while ((index < internalText.length()) && (internalText.charAt(index) == ' ')) {
-            index++;
-          }
-          if (index > 0) {
-            internalText = internalText.substring(index);
-          }
-        }
-        errorResult.addReplacement(internalText);
+        result |= analyzeCompleteTag(analysis, errors, tag);
       } else {
-        errorResult = createCheckErrorResult(
-            analysis, tag.getCompleteBeginIndex(), tag.getCompleteEndIndex());
-        errorResult.addReplacement("");
+        result |= analyzePartialTag(analysis, errors, tag);
       }
-      errors.add(errorResult);
     }
 
+    return result;
+  }
+
+  /**
+   * Analyze a partial tag to check if errors are present.
+   * 
+   * @param analysis Page analysis.
+   * @param errors Errors found in the page.
+   * @param tag Partial tag to be checked.
+   * @return Flag indicating if the error was found.
+   */
+  public boolean analyzePartialTag(
+      PageAnalysis analysis,
+      Collection<CheckErrorResult> errors,
+      PageElementTag tag) {
+
+    if (errors == null) {
+      return true;
+    }
+
+    CheckErrorResult errorResult = createCheckErrorResult(
+        analysis, tag.getCompleteBeginIndex(), tag.getCompleteEndIndex());
+    errorResult.addReplacement("");
+    errors.add(errorResult);
+    return true;
+  }
+
+  /**
+   * Analyze a complete tag to check if errors are present.
+   * 
+   * @param analysis Page analysis.
+   * @param errors Errors found in the page.
+   * @param tag Complete tag to be checked.
+   * @return Flag indicating if the error was found.
+   */
+  public boolean analyzeCompleteTag(
+      PageAnalysis analysis,
+      Collection<CheckErrorResult> errors,
+      PageElementTag tag) {
+
+    if (errors == null) {
+      return true;
+    }
+
+    // Complete tag <nowiki> ... </nowiki>
+    String contents = analysis.getContents();
+    CheckErrorResult errorResult = createCheckErrorResult(
+        analysis, tag.getCompleteBeginIndex(), tag.getCompleteEndIndex());
+    String internalText = contents.substring(
+        tag.getValueBeginIndex(), tag.getValueEndIndex());
+
+    // Check for specific characters
+    StringBuilder replacement = new StringBuilder();
+    for (int i = 0; i < internalText.length(); i++) {
+      char currentChar = internalText.charAt(i);
+      if ((apostropheTemplate != null) && (currentChar == '\'')) {
+        replacement.append(PageElementTemplate.createTemplate(apostropheTemplate));
+      } else if ((asteriskTemplate != null) && (currentChar == '*')) {
+        replacement.append(PageElementTemplate.createTemplate(asteriskTemplate));
+      } else if ((openSBTemplate != null) && (currentChar == '[')) {
+          replacement.append(PageElementTemplate.createTemplate(openSBTemplate));
+      } else if ((closeSBTemplate != null) && (currentChar == ']')) {
+        replacement.append(PageElementTemplate.createTemplate(closeSBTemplate));
+      } else {
+        replacement.append(currentChar);
+      }
+    }
+    if (!internalText.equals(replacement.toString())) {
+      errorResult.addReplacement(replacement.toString());
+    }
+
+    // Check for <nowiki><tag></nowiki>
+    if (internalText.startsWith("<") && internalText.endsWith(">")) {
+      boolean otherFound = false;
+      for (int i = 1; i < internalText.length() - 1; i++) {
+        char currentChar = internalText.charAt(i);
+        if ((currentChar == '<') || (currentChar == '>')) {
+          otherFound = true;
+        }
+      }
+      if (!otherFound) {
+        errorResult.addReplacement("&lt;" + internalText.substring(1, internalText.length() - 1) + "&gt;");
+      }
+    }
+
+    // Check for <nowiki> </nowiki> at the beginning of a line
+    int begin = tag.getBeginIndex();
+    if ((begin > 0) && (contents.charAt(begin - 1) == '\n')) {
+      int index = 0;
+      while ((index < internalText.length()) && (internalText.charAt(index) == ' ')) {
+        index++;
+      }
+      if (index > 0) {
+        internalText = internalText.substring(index);
+      }
+    }
+    errorResult.addReplacement(internalText);
+
+    errors.add(errorResult);
+    return true;
+  }
+
+  /**
+   * Analyze a full tag to check if errors are present.
+   * 
+   * @param analysis Page analysis.
+   * @param errors Errors found in the page.
+   * @param tag Full tag to be checked.
+   * @return Flag indicating if the error was found.
+   */
+  public boolean analyzeFullTag(
+      PageAnalysis analysis,
+      Collection<CheckErrorResult> errors,
+      PageElementTag tag) {
+
+    // Full tag <nowiki/>
+    int beginIndex = tag.getBeginIndex();
+    int endIndex = tag.getEndIndex();
+
+    // Ignore <nowiki/> just after an internal link: see #553
+    PageElementInternalLink link = analysis.isInInternalLink(beginIndex - 1);
+    if ((link != null) && (link.getEndIndex() == beginIndex)) {
+      return false;
+    }
+    if (errors == null) {
+      return true;
+    }
+
+    // Check for <nowiki/> inside an internal link
+    String contents = analysis.getContents();
+    link = analysis.isInInternalLink(beginIndex);
+    if (link != null) {
+      int index = beginIndex;
+      while ((index > link.getBeginIndex() + link.getTextOffset()) &&
+             (contents.charAt(index - 1) == ' ')) {
+        index--;
+      }
+      if (index == link.getBeginIndex() + link.getTextOffset()) {
+        index = endIndex;
+        while ((index + 2 < link.getEndIndex()) &&
+               (contents.charAt(index) == ' ')) {
+          index++;
+        }
+        if (index + 2 == link.getEndIndex()) {
+          CheckErrorResult errorResult = createCheckErrorResult(
+              analysis, link.getBeginIndex(), link.getEndIndex());
+          errorResult.addReplacement("");
+          errors.add(errorResult);
+          return true;
+        }
+      }
+    }
+
+    // Other cases
+    String textBefore = contents.substring(beginIndex, tag.getBeginIndex());
+    String textAfter = contents.substring(tag.getEndIndex(), endIndex);
+    CheckErrorResult errorResult = createCheckErrorResult(
+        analysis, beginIndex, endIndex);
+    if (link != null) {
+      String displayed = link.getDisplayedTextNotTrimmed();
+      if (displayed.endsWith(" ")) {
+        errorResult.addReplacement(PageElementInternalLink.createInternalLink(
+            link.getFullLink(), displayed.trim()) + " " + textAfter);
+      }
+      errorResult.addReplacement(PageElementInternalLink.createInternalLink(
+          link.getFullLink(), displayed + textAfter));
+    }
+    errorResult.addReplacement(textBefore + " " + textAfter);
+    errorResult.addReplacement(textBefore + textAfter);
+    errors.add(errorResult);
     return true;
   }
 
