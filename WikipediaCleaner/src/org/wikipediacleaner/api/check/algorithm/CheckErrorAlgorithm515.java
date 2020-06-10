@@ -15,6 +15,7 @@ import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementInternalLink;
 import org.wikipediacleaner.api.data.PageElementTag;
+import org.wikipediacleaner.api.data.contents.ContentsUtil;
 import org.wikipediacleaner.i18n.GT;
 
 
@@ -80,8 +81,8 @@ public class CheckErrorAlgorithm515 extends CheckErrorAlgorithmBase {
         PageElementTag tagImagemap = analysis.getSurroundingTag(
             PageElementTag.TAG_WIKI_IMAGEMAP, link.getBeginIndex());
         if (tagImagemap != null) {
-          int previousCR = getPreviousCR(contents, link.getBeginIndex());
-          int nextCR = getNextCR(contents, link.getEndIndex());
+          int previousCR = ContentsUtil.getLineBeginIndex(contents, link.getBeginIndex());
+          int nextCR = ContentsUtil.getLineEndIndex(contents, link.getEndIndex());
           nextCR = Math.min(nextCR, tagImagemap.getMatchingTag().getBeginIndex());
           CheckErrorResult errorResult = createCheckErrorResult(
               analysis, previousCR, nextCR);
@@ -102,42 +103,5 @@ public class CheckErrorAlgorithm515 extends CheckErrorAlgorithmBase {
       }
     }
     return result;
-  }
-
-  /**
-   * Find position of previous carriage return.
-   * 
-   * @param contents Page contents.
-   * @param currentIndex Current index.
-   * @return Index of previous carriage return.
-   */
-  private int getPreviousCR(String contents, int currentIndex) {
-    if (contents == null) {
-      return 0;
-    }
-    int tmpIndex = currentIndex - 1;
-    while ((tmpIndex >= 0) && (contents.charAt(tmpIndex) != '\n')) {
-      tmpIndex--;
-    }
-    return Math.max(0, tmpIndex);
-  }
-
-  /**
-   * Find position of next carriage return.
-   * 
-   * @param contents Page contents.
-   * @param currentIndex Current index.
-   * @return Index of next carriage return.
-   */
-  private int getNextCR(String contents, int currentIndex) {
-    if (contents == null) {
-      return -1;
-    }
-    int tmpIndex = currentIndex;
-    while ((tmpIndex < contents.length()) &&
-           (contents.charAt(tmpIndex) != '\n')) {
-      tmpIndex++;
-    }
-    return tmpIndex;
   }
 }

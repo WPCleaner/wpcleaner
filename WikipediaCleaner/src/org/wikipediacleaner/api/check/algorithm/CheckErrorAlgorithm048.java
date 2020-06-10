@@ -21,6 +21,7 @@ import org.wikipediacleaner.api.data.PageElementInternalLink;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.PageElementTitle;
+import org.wikipediacleaner.api.data.contents.ContentsUtil;
 import org.wikipediacleaner.gui.swing.component.MWPane;
 import org.wikipediacleaner.i18n.GT;
 
@@ -127,8 +128,8 @@ public class CheckErrorAlgorithm048 extends CheckErrorAlgorithmBase {
 
     // Report in image map tag
     if (tagImageMap != null) {
-      int previousCR = getPreviousCR(contents, beginIndex);
-      int nextCR = getNextCR(contents, endIndex);
+      int previousCR = ContentsUtil.getLineBeginIndex(contents, beginIndex);
+      int nextCR = ContentsUtil.getLineEndIndex(contents, endIndex);
       nextCR = Math.min(nextCR, tagImageMap.getMatchingTag().getBeginIndex());
       CheckErrorResult errorResult = createCheckErrorResult(
           analysis, previousCR, nextCR);
@@ -273,8 +274,8 @@ public class CheckErrorAlgorithm048 extends CheckErrorAlgorithmBase {
         PageElementTag tagImagemap = analysis.getSurroundingTag(
             PageElementTag.TAG_WIKI_IMAGEMAP, link.getBeginIndex());
         if (tagImagemap != null) {
-          int previousCR = getPreviousCR(contents, link.getBeginIndex());
-          int nextCR = getNextCR(contents, link.getEndIndex());
+          int previousCR = ContentsUtil.getLineBeginIndex(contents, link.getBeginIndex());
+          int nextCR = ContentsUtil.getLineEndIndex(contents, link.getEndIndex());
           nextCR = Math.min(nextCR, tagImagemap.getMatchingTag().getBeginIndex());
           if ((previousCR > tagImagemap.getEndIndex()) &&
               (contents.charAt(nextCR) == '\n')) {
@@ -302,43 +303,6 @@ public class CheckErrorAlgorithm048 extends CheckErrorAlgorithmBase {
       newContents.append(contents.substring(currentIndex));
     }
     return newContents.toString();
-  }
-
-  /**
-   * Find position of previous carriage return.
-   * 
-   * @param contents Page contents.
-   * @param currentIndex Current index.
-   * @return Index of previous carriage return.
-   */
-  private int getPreviousCR(String contents, int currentIndex) {
-    if (contents == null) {
-      return 0;
-    }
-    int tmpIndex = currentIndex - 1;
-    while ((tmpIndex >= 0) && (contents.charAt(tmpIndex) != '\n')) {
-      tmpIndex--;
-    }
-    return Math.max(0, tmpIndex);
-  }
-
-  /**
-   * Find position of next carriage return.
-   * 
-   * @param contents Page contents.
-   * @param currentIndex Current index.
-   * @return Index of next carriage return.
-   */
-  private int getNextCR(String contents, int currentIndex) {
-    if (contents == null) {
-      return -1;
-    }
-    int tmpIndex = currentIndex;
-    while ((tmpIndex < contents.length()) &&
-           (contents.charAt(tmpIndex) != '\n')) {
-      tmpIndex++;
-    }
-    return tmpIndex;
   }
 
   /* ====================================================================== */
