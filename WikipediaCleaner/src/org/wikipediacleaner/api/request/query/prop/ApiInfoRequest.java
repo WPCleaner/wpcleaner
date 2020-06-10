@@ -61,23 +61,57 @@ public class ApiInfoRequest extends ApiPropertiesRequest {
   public final static String PROPERTY_PROPERTIES_WATCHED = "watched";
 
   /**
+   * Property for Testing actions.
+   */
+  public final static String PROPERTY_TEST_ACTIONS = "intestactions";
+
+  /**
+   * Property value for Testing actions / Edit.
+   */
+  public final static String PROPERTY_TEST_ACTIONS_EDIT = "edit";
+
+  /**
+   * Property for Testing actions details.
+   */
+  public final static String PROPERTY_TEST_ACTIONS_DETAIL = "intestactionsdetail";
+
+  /**
+   * Property value for Testing actions details / Boolean.
+   */
+  public final static String PROPERTY_TEST_ACTIONS_DETAIL_BOOLEAN = "boolean";
+
+  /**
+   * Property value for Testing actions details / Full.
+   */
+  public final static String PROPERTY_TEST_ACTIONS_DETAIL_FULL = "full";
+
+  /**
+   * Property value for Testing actions details / Quick.
+   */
+  public final static String PROPERTY_TEST_ACTIONS_DETAIL_QUICK = "quick";
+
+  /**
    * Property for Token.
    */
+  @Deprecated
   public final static String PROPERTY_TOKEN = "intoken";
 
   /**
    * Property value for Token / Delete.
    */
+  @Deprecated
   public final static String PROPERTY_TOKEN_DELETE = "delete";
 
   /**
    * Property value for Token / Edit.
    */
+  @Deprecated
   public final static String PROPERTY_TOKEN_EDIT = "edit";
 
   /**
    * Property value for Token / Move.
    */
+  @Deprecated
   public final static String PROPERTY_TOKEN_MOVE = "move";
 
   // ==========================================================================
@@ -106,6 +140,14 @@ public class ApiInfoRequest extends ApiPropertiesRequest {
     properties.put(
         PROPERTY_PROP,
         PROPERTY_PROP_REVISIONS + "|" + PROPERTY_PROP_INFO);
+    if (getWiki().getWikiConfiguration().isTranslatable()) {
+      properties.put(
+          PROPERTY_TEST_ACTIONS,
+          PROPERTY_TEST_ACTIONS_EDIT);
+      properties.put(
+          PROPERTY_TEST_ACTIONS_DETAIL,
+          PROPERTY_TEST_ACTIONS_DETAIL_FULL);
+    }
     properties.put(PROPERTY_CONTINUE, PROPERTY_CONTINUE_DEFAULT);
     List<Collection<Page>> tmpPages = splitListPages(pages, MAX_PAGES_PER_QUERY);
     for (Collection<Page> tmpPages2 : tmpPages) {

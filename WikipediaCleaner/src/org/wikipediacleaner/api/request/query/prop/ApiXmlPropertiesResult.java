@@ -220,7 +220,9 @@ public class ApiXmlPropertiesResult extends ApiXmlResult implements ApiPropertie
       }
     }
 
-    // Analyzing missing pages
+    // Retrieve extra information about the pages
+    XPathExpression<Element> xpaEditErrors = XPathFactory.instance().compile(
+        "actions/edit/error", Filters.element());
     for (Page p : pages) {
       Iterator<Page> itPage = p.getRedirects().getIteratorWithPage();
       while (itPage.hasNext()) {
@@ -233,6 +235,8 @@ public class ApiXmlPropertiesResult extends ApiXmlResult implements ApiPropertie
           }
         }
         if (page != null) {
+
+          // Add information about missing pages
           if (page.getAttributeValue("pageid") != null) {
             tmp.setExisting(Boolean.TRUE);
           } else {
@@ -240,6 +244,12 @@ public class ApiXmlPropertiesResult extends ApiXmlResult implements ApiPropertie
             if (attrMissing != null) {
               tmp.setExisting(Boolean.FALSE);
             }
+          }
+
+          // Add information about translated pages
+          List<Element> errorNodes = xpaEditErrors.evaluate(page);
+          if ((errorNodes != null) && !errorNodes.isEmpty()) {
+            tmp.setEditProhibition(true);
           }
         }
       }

@@ -218,6 +218,14 @@ public class ApiRevisionsRequest extends ApiPropertiesRequest {
     properties.put(
         ApiInfoRequest.PROPERTY_PROPERTIES,
         ApiInfoRequest.PROPERTY_PROPERTIES_PROTECTION);
+    if (getWiki().getWikiConfiguration().isTranslatable()) {
+      properties.put(
+          ApiInfoRequest.PROPERTY_TEST_ACTIONS,
+          ApiInfoRequest.PROPERTY_TEST_ACTIONS_EDIT);
+      properties.put(
+          ApiInfoRequest.PROPERTY_TEST_ACTIONS_DETAIL,
+          ApiInfoRequest.PROPERTY_TEST_ACTIONS_DETAIL_FULL);
+    }
     properties.put(PROPERTY_CONTINUE, PROPERTY_CONTINUE_DEFAULT);
     properties.put(PROPERTY_SLOTS, PROPERTY_SLOTS_MAIN);
     if (usePageId) {

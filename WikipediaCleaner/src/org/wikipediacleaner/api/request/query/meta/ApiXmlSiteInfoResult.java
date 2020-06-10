@@ -208,6 +208,19 @@ public class ApiXmlSiteInfoResult extends ApiXmlResult implements ApiSiteInfoRes
         }
       }
       wikiConfiguration.setLinterCategories(linterCategories);
+
+      // Retrieve extensions
+      xpa = XPathFactory.instance().compile(
+          "/api/query/extensions/ext", Filters.element());
+      results = xpa.evaluate(root);
+      iter = results.iterator();
+      while (iter.hasNext()) {
+        Element currentNode = iter.next();
+        String name = currentNode.getAttributeValue("name");
+        if ((name != null) && (name.equals("Translate"))) {
+          wikiConfiguration.setTranslatable(true);
+        }
+      }
     } catch (JDOMException e) {
       log.error("Error loading namespaces", e);
       throw new APIException("Error parsing XML", e);

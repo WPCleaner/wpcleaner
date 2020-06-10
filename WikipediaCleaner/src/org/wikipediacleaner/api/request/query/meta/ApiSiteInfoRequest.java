@@ -30,6 +30,11 @@ public class ApiSiteInfoRequest extends ApiMetaRequest {
   public final static String PROPERTY_PROP = "siprop";
 
   /**
+   * Property for Properties / Extensions.
+   */
+  public final static String PROPERTY_PROP_EXTENSIONS = "extensions";
+
+  /**
    * Property for Properties / General.
    */
   public final static String PROPERTY_PROP_GENERAL = "general";
@@ -55,14 +60,14 @@ public class ApiSiteInfoRequest extends ApiMetaRequest {
   public final static String PROPERTY_PROP_NAMESPACE_ALIASES = "namespacealiases";
 
   /**
-   * Property for Properties / Special page aliases.
-   */
-  public final static String PROPERTY_PROP_SPECIAL_PAGE_ALIASES = "specialpagealiases";
-
-  /**
    * Property for Properties / Name spaces.
    */
   public final static String PROPERTY_PROP_NAMESPACES = "namespaces";
+
+  /**
+   * Property for Properties / Special page aliases.
+   */
+  public final static String PROPERTY_PROP_SPECIAL_PAGE_ALIASES = "specialpagealiases";
 
   /**
    * Property for Properties / Statistics.
@@ -94,13 +99,15 @@ public class ApiSiteInfoRequest extends ApiMetaRequest {
    * @param interwikiMap True if information about interwiki map are requested.
    * @param magicWords True if information about magic words are requested.
    * @param specialPageAliases True if information about special page aliases are requested.
+   * @param extensions True if information about extensions are requested.
    * @throws APIException Exception thrown by the API.
    */
   public void loadSiteInformation(
       boolean general,
       boolean namespaces, boolean namespaceAliases,
       boolean languages, boolean interwikiMap,
-      boolean magicWords, boolean specialPageAliases) throws APIException {
+      boolean magicWords, boolean specialPageAliases,
+      boolean extensions) throws APIException {
     Map<String, String> properties = getProperties(ACTION_QUERY, result.getFormat());
     properties.put(
         PROPERTY_META,
@@ -127,6 +134,9 @@ public class ApiSiteInfoRequest extends ApiMetaRequest {
     }
     if (specialPageAliases) {
       information.add(PROPERTY_PROP_SPECIAL_PAGE_ALIASES);
+    }
+    if (extensions) {
+      information.add(PROPERTY_PROP_EXTENSIONS);
     }
     properties.put(
         PROPERTY_PROP,

@@ -15,6 +15,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.wikipediacleaner.api.API;
 import org.wikipediacleaner.api.APIException;
 import org.wikipediacleaner.api.APIFactory;
@@ -42,6 +44,9 @@ import org.wikipediacleaner.i18n.GT;
  * SwingWorker for automatic fixing.
  */
 public abstract class AutomaticFixWorker extends BasicWorker {
+
+  /** Logger */
+  private final Logger log = LoggerFactory.getLogger(AutomaticFixWorker.class);
 
   /** Algorithms for which to fix pages. */
   protected final List<CheckErrorAlgorithm> selectedAlgorithms;
@@ -172,12 +177,19 @@ public abstract class AutomaticFixWorker extends BasicWorker {
     if (!selectedNamespaces.contains(page.getNamespace())) {
       return null;
     }
+    if (page.getEditProhibition()) {
+      log.info("Page {} is ignored because edit is prohibited on it", page.getTitle());
+      return null;
+    }
 
     setText(GT._T("Analyzing page {0}", page.getTitle()));
 
     // Retrieve page content 
     API api = APIFactory.getAPI();
     api.retrieveContents(getWikipedia(), Collections.singletonList(page), true, false);
+    if (page.getEditProhibition()) {
+      return null;
+    }
     return page.getAnalysis(page.getContents(), true);
   }
 

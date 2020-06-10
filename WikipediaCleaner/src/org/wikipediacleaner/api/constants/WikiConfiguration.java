@@ -41,6 +41,9 @@ public class WikiConfiguration {
   /** Max article size */
   private Long maxArticleSize;
 
+  /** True if article is translatable */
+  private boolean translatable;
+
   /**
    * @param server Server URL (without protocol).
    */
@@ -118,6 +121,20 @@ public class WikiConfiguration {
       // Nothing to do
     }
     return false;
+  }
+
+  /**
+   * @param translatable True if wiki is translatable.
+   */
+  public void setTranslatable(boolean translatable) {
+    this.translatable = translatable;
+  }
+
+  /**
+   * @return True if wiki is translatable.
+   */
+  public boolean isTranslatable() {
+    return translatable;
   }
 
   // ==========================================================================

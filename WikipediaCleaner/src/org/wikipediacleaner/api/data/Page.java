@@ -48,6 +48,7 @@ public class Page implements Comparable<Page> {
   private Integer revisionId;
   private String  contentsTimestamp;
   private String  startTimestamp;
+  private boolean editProhibition;
   private String  editProtectionLevel;
   private Boolean disambiguation;
   private Boolean wiktionaryLink;
@@ -316,6 +317,20 @@ public class Page implements Comparable<Page> {
    */
   public void setStartTimestamp(String timestamp) {
     this.startTimestamp = timestamp;
+  }
+
+  /**
+   * @return True if edit is prohibited.
+   */
+  public boolean getEditProhibition() {
+    return editProhibition;
+  }
+
+  /**
+   * @param prohibition True if edit is prohibited.
+   */
+  public void setEditProhibition(boolean prohibition) {
+    editProhibition = prohibition;
   }
 
   /**

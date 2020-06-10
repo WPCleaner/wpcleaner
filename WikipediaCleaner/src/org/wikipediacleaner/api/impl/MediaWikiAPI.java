@@ -887,7 +887,7 @@ public class MediaWikiAPI implements API {
   private void loadSiteInfo(EnumWikipedia wiki) throws APIException {
     ApiSiteInfoResult result = new ApiXmlSiteInfoResult(wiki, httpClient);
     ApiSiteInfoRequest request = new ApiSiteInfoRequest(wiki, result);
-    request.loadSiteInformation(true, true, true, true, true, true, true);
+    request.loadSiteInformation(true, true, true, true, true, true, true, true);
   }
 
   // ==========================================================================

@@ -7,6 +7,7 @@
 
 package org.wikipediacleaner.gui.swing.bot;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -17,6 +18,7 @@ import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithm;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.LinterCategory;
 import org.wikipediacleaner.api.data.Page;
+import org.wikipediacleaner.api.request.ApiRequest;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
 
 
@@ -69,11 +71,21 @@ public class AutomaticLintErrorWorker extends AutomaticFixWorker {
             getWikipedia(), category.getCategory(), namespace,
             false, false, Integer.MAX_VALUE);
         while (!pages.isEmpty()) {
+          List<Page> tmpPages = new ArrayList<>();
+          while (!pages.isEmpty() && (tmpPages.size() < ApiRequest.MAX_PAGES_PER_QUERY)) {
+            Page page = pages.remove(0);
+            tmpPages.add(page);
+          }
           if (!shouldContinue()) {
             return null;
           }
-          Page page = pages.remove(0);
-          analyzePage(page, selectedAlgorithms, null);
+          if (getWikipedia().getWikiConfiguration().isTranslatable()) {
+            api.retrieveInfo(getWikipedia(), tmpPages);
+          }
+          while (!tmpPages.isEmpty()) {
+            Page page = tmpPages.remove(0);
+            analyzePage(page, selectedAlgorithms, null);
+          }
         }
       }
     } catch (APIException e) {
