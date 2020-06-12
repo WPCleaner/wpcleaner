@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2020-06-07 13:30+0200\n"
+"POT-Creation-Date: 2020-06-10 21:37+0200\n"
 "PO-Revision-Date: 2018-11-22 21:13+0000\n"
 "Last-Translator: Suresh Khole <Unknown>\n"
 "Language-Team: Marathi <mr@li.org>\n"
@@ -216,8 +216,8 @@ msgstr ""
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm045.java:130
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm046.java:208
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm047.java:151
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm048.java:137
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm515.java:90
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm048.java:138
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm515.java:91
 #: org/wikipediacleaner/gui/swing/options/SortingOptionsPanel.java:115
 msgid "Delete"
 msgstr ""
@@ -516,16 +516,16 @@ msgstr ""
 msgid "Fix all bold headlines"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm048.java:38
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm048.java:39
 msgid "Remove all links to title (first in bold)"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm048.java:39
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm048.java:40
 msgid "Remove all links to title"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm048.java:360
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm048.java:363
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm048.java:337
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm048.java:340
 msgid "Set to true to report also links in <imagemap>"
 msgstr ""
 
@@ -1101,28 +1101,28 @@ msgstr ""
 msgid "Name of the reference defined by the template"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm518.java:285
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm518.java:348
 #, java-format
 msgid "An identifier of an abuse filter that is triggered by {0} tags."
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm518.java:295
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm518.java:298
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm518.java:358
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm518.java:361
 msgid "A template that can be used instead of an apostrophe."
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm518.java:301
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm518.java:304
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm518.java:364
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm518.java:367
 msgid "A template that can be used instead of an asterisk."
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm518.java:307
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm518.java:310
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm518.java:370
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm518.java:373
 msgid "A template that can be used instead of a closing square bracket."
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm518.java:313
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm518.java:316
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm518.java:376
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm518.java:379
 msgid "A template that can be used instead of an opening square bracket."
 msgstr ""
 
@@ -1377,12 +1377,20 @@ msgstr ""
 msgid "Link to ignore"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm552.java:233
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm552.java:265
 msgid "Templates to ignore"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm552.java:236
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm552.java:268
 msgid "Template to ignore"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm553.java:218
+msgid "Acceptable suffixes"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm553.java:221
+msgid "Acceptable suffix"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmBase.java:295
@@ -1452,7 +1460,7 @@ msgstr ""
 msgid "A list of templates resulting in the inclusion of a table of contents"
 msgstr ""
 
-#: org/wikipediacleaner/api/constants/CWConfiguration.java:80
+#: org/wikipediacleaner/api/constants/CWConfiguration.java:82
 #, java-format
 msgid "Fixed using {0}"
 msgstr ""
@@ -3194,31 +3202,31 @@ msgstr ""
 msgid "Checking for errors n°{0}"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/bot/AutomaticFixWorker.java:176
+#: org/wikipediacleaner/gui/swing/bot/AutomaticFixWorker.java:185
 #, java-format
 msgid "Analyzing page {0}"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/bot/AutomaticFixWorker.java:268
+#: org/wikipediacleaner/gui/swing/bot/AutomaticFixWorker.java:280
 #, java-format
 msgid "Fixing page {0}"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/bot/AutomaticFixWorker.java:340
+#: org/wikipediacleaner/gui/swing/bot/AutomaticFixWorker.java:352
 #, java-format
 msgid "{0} page has been modified"
 msgid_plural "{0} pages have been modified"
 msgstr[0] ""
 msgstr[1] ""
 
-#: org/wikipediacleaner/gui/swing/bot/AutomaticFixWorker.java:345
+#: org/wikipediacleaner/gui/swing/bot/AutomaticFixWorker.java:357
 #, java-format
 msgid "{0} page has been marked as fixed for the selected algorithms"
 msgid_plural "{0} pages have been marked as fixed for the selected algorithms"
 msgstr[0] ""
 msgstr[1] ""
 
-#: org/wikipediacleaner/gui/swing/bot/AutomaticFixWorker.java:350
+#: org/wikipediacleaner/gui/swing/bot/AutomaticFixWorker.java:362
 #, java-format
 msgid "{0} page has been marked as fixed for other algorithms"
 msgid_plural "{0} pages have been marked as fixed for other algorithms"

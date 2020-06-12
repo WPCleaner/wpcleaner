@@ -89,7 +89,7 @@ public class CheckErrorAlgorithm553 extends CheckErrorAlgorithmBase {
     if ((endText <= 0) || (contents.charAt(endText - 1) !=  ']')) {
       return false;
     }
-    PageElementInternalLink link = analysis.isInInternalLink(endText);
+    PageElementInternalLink link = analysis.isInInternalLink(endText - 1);
     if ((link == null) || (link.getEndIndex() != endText)) {
       return false;
     }
