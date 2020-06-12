@@ -83,6 +83,11 @@ public class CheckErrorAlgorithm085 extends CheckErrorAlgorithmBase {
             interesting = true;
           }
         }
+        if (interesting) {
+          if (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_NOWIKI, tag.getBeginIndex()) != null) {
+            interesting = false;
+          }
+        }
   
         // Check tag
         if (interesting) {
