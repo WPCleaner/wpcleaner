@@ -88,6 +88,7 @@ public class CheckErrorAlgorithm069 extends CheckErrorAlgorithmISBN {
     namespaceNames = new HashSet<>();
     namespaceNames.add("Spezial");
     pageNames = new HashSet<>();
+    pageNames.add("ISBN Suche");
     pageNames.add("ISBN-Suche");
     wiki = new ImmutablePair<Set<String>, Set<String>>(namespaceNames, pageNames);
     BOOK_SOURCES.put("de", wiki);
