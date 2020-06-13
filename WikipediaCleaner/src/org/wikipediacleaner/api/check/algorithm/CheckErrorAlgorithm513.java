@@ -174,7 +174,7 @@ public class CheckErrorAlgorithm513 extends CheckErrorAlgorithmBase {
 
         // Report internal link
         PageElementInternalLink link = analysis.isInInternalLink(tmpIndex);
-        if (link != null) {
+        if ((link != null) && (link.getBeginIndex() == tmpIndex)) {
           if (errors == null) {
             return true;
           }
@@ -186,6 +186,7 @@ public class CheckErrorAlgorithm513 extends CheckErrorAlgorithmBase {
               contents.substring(link.getEndIndex(), param.getEndIndex());
           boolean automatic = (paramConfig.length > 2) ?
               Boolean.valueOf(paramConfig[2]) : false;
+          automatic &= (template == analysis.isInTemplate(tmpIndex));
           errorResult.addReplacement(replacement, automatic && !closeBracket);
           errors.add(errorResult);
           return true;
