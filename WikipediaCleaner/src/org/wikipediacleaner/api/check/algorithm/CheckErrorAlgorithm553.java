@@ -141,9 +141,9 @@ public class CheckErrorAlgorithm553 extends CheckErrorAlgorithmBase {
         String replacement =
             PageElementInternalLink.createInternalLink(fullLink, text) +
             contents.substring(endText, endIndex);
-        automatic |= Page.areSameTitle(fullLink, text);
-        errorResult.addReplacement(replacement, automatic);
-        if (!automatic) {
+        boolean safeLink = isSafeLink(fullLink, text);
+        errorResult.addReplacement(replacement, automatic || safeLink);
+        if (!automatic && !safeLink) {
           errorResult.addReplacement(text + contents.substring(endText, endIndex));
         }
       }
@@ -163,6 +163,35 @@ public class CheckErrorAlgorithm553 extends CheckErrorAlgorithmBase {
     }
     errors.add(errorResult);
     return true;
+  }
+
+  /**
+   * Tells if it is safe to make a link.
+   * 
+   * @param fullLink Link target.
+   * @param text Text of the link.
+   * @return True if it is safe to make a link.
+   */
+  private boolean isSafeLink(String fullLink, String text) {
+    if (Page.areSameTitle(fullLink, text)) {
+      return true;
+    }
+    if ((fullLink == null) || (text == null)) {
+      return false;
+    }
+    if (Page.areSameTitle(fullLink.toUpperCase(), text.toUpperCase())) {
+      return true;
+    }
+    int parenthesis = fullLink.indexOf('(');
+    if (parenthesis > 0) {
+      if (Page.areSameTitle(fullLink.substring(0, parenthesis), text)) {
+        return true;
+      }
+      if (Page.areSameTitle(fullLink.substring(0, parenthesis).toUpperCase(), text.toUpperCase())) {
+        return true;
+      }
+    }
+    return false;
   }
 
   /**
