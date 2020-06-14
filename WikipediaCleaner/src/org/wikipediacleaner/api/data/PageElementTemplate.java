@@ -13,6 +13,7 @@ import java.util.List;
 
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.contents.ContentsComment;
+import org.wikipediacleaner.api.data.contents.ContentsUtil;
 
 
 /**
@@ -199,13 +200,8 @@ public class PageElementTemplate extends PageElement {
     int startTemplateName = tmpIndex;
 
     // Retrieve template name
-    while (tmpIndex < contents.length()) {
-      char currentChar = contents.charAt(tmpIndex);
-      if (templateNameUnauthorizedCharacters.indexOf(currentChar) >= 0) {
-        break;
-      }
-      tmpIndex++;
-    }
+    tmpIndex = ContentsUtil.moveIndexForwardWhileNotFound(
+        contents, tmpIndex, templateNameUnauthorizedCharacters);
     if (tmpIndex >= contents.length()) {
       return null;
     }

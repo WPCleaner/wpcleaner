@@ -8,6 +8,7 @@
 
 package org.wikipediacleaner.api.data.contents;
 
+import org.wikipediacleaner.api.data.CharacterUtils;
 
 /**
  * Utility class for contents.
@@ -42,119 +43,79 @@ public class ContentsUtil {
   }
 
   // ==========================================================================
-  // Search characters in text
+  // Search characters in text - Forward
   // ==========================================================================
 
   /**
-   * Find the last character from a set which is before a given index in a text.
+   * Move forward the index in the text while the character at the index is from the given set.
    * 
-   * @param contents Text to search into.
-   * @param startIndex Start index to search in the text.
-   * @param characters Set of characters to look for.
-   * @return Maximum index in the text before the start index for a character in the given set.
-   *         If no character is found, -1 is returned.
+   * @param contents Text to analyze.
+   * @param startIndex Start index.
+   * @param set Set of characters to look for.
+   * @return Minimum value of index (≥ startIndex) with a character not from the given set.
+   *         If all characters after startIndex are from the given set, returns contents.length().
    */
-  public static int getLastIndexInSetBefore(String contents, int startIndex, String characters) {
-    if ((contents == null) ||
-        (characters == null) ||
-        (characters.isEmpty())) {
+  public static int moveIndexForwardWhileFound(
+      String contents,
+      int startIndex,
+      String set) {
+    if ((contents == null) || (startIndex < 0)) {
       return -1;
     }
-    int tmpIndex = startIndex - 1;
-    while (tmpIndex >= 0) {
-      if (characters.indexOf(contents.charAt(tmpIndex)) >= 0) {
-        return tmpIndex;
-      }
-      tmpIndex--;
-    }
-    return -1;
-  }
-
-  /**
-   * Find the last character not from a set which is before a given index in a text.
-   * 
-   * @param contents Text to search into.
-   * @param startIndex Start index to search in the text.
-   * @param characters Set of characters to avoid.
-   * @return Maximum index in the text before the start index for a character not in the given set.
-   *         If no character is found, -1 is returned.
-   */
-  public static int getLastIndexNotInSetBefore(String contents, int startIndex, String characters) {
-    if ((contents == null) ||
-        (characters == null) ||
-        (characters.isEmpty())) {
-      return -1;
-    }
-    int tmpIndex = startIndex - 1;
-    while (tmpIndex >= 0) {
-      if (characters.indexOf(contents.charAt(tmpIndex)) < 0) {
-        return tmpIndex;
-      }
-      tmpIndex--;
-    }
-    return -1;
-  }
-
-  /**
-   * Find the first character from a set which is after a given index in a text.
-   * 
-   * @param contents Text to search into.
-   * @param startIndex Start index to search in the text.
-   * @param characters Set of characters to look for.
-   * @return Minimum index in the text after the start index for a character in the given set.
-   *         If no character is found, -1 is returned.
-   */
-  public static int getFirstIndexInSetAfter(String contents, int startIndex, String characters) {
-    if ((contents == null) ||
-        (characters == null) ||
-        (characters.isEmpty())) {
-      return -1;
+    if ((set == null) || set.isEmpty()) {
+      return startIndex;
     }
     int tmpIndex = startIndex;
     while (tmpIndex < contents.length()) {
-      if (characters.indexOf(contents.charAt(tmpIndex)) >= 0) {
+      if (set.indexOf(contents.charAt(tmpIndex)) < 0) {
         return tmpIndex;
       }
       tmpIndex++;
     }
-    return -1;
+    return tmpIndex;
   }
 
   /**
-   * Find the first character not from a set which is after a given index in a text.
+   * Move forward the index in the text while the character at the index is not from the given set.
    * 
-   * @param contents Text to search into.
-   * @param startIndex Start index to search in the text.
-   * @param characters Set of characters to avoid.
-   * @return Minimum index in the text after the start index for a character not in the given set.
-   *         If no character is found, -1 is returned.
+   * @param contents Text to analyze.
+   * @param startIndex Start index.
+   * @param set Set of characters to look for.
+   * @return Minimum value of index (≥ startIndex) after all characters from the given set.
+   *         If all characters after startIndex are not from the given set, returns contents.length().
    */
-  public static int getFirstIndexNotInSetAfter(String contents, int startIndex, String characters) {
-    if ((contents == null) ||
-        (characters == null) ||
-        (characters.isEmpty())) {
+  public static int moveIndexForwardWhileNotFound(
+      String contents,
+      int startIndex,
+      String set) {
+    if ((contents == null) || (startIndex < 0)) {
       return -1;
+    }
+    if ((set == null) || set.isEmpty()) {
+      return contents.length();
     }
     int tmpIndex = startIndex;
     while (tmpIndex < contents.length()) {
-      if (characters.indexOf(contents.charAt(tmpIndex)) < 0) {
+      if (set.indexOf(contents.charAt(tmpIndex)) >= 0) {
         return tmpIndex;
       }
       tmpIndex++;
     }
-    return -1;
+    return tmpIndex;
   }
 
   /**
-   * Find the beginning of a line containing a given index in a text.
+   * Move forward the index in the text while the character is a whitespace.
    * 
-   * @param contents Text to search into.
-   * @param index Index for which we want the beginning of the line.
-   * @return Beginning of the line containing the index.
+   * @param contents Text to analyze.
+   * @param startIndex Start index.
+   * @return Minimum value of index (≥ startIndex) after whitespace characters.
+   *         If all characters after startIndex are whitespace, returns contents.length().
    */
-  public static int getLineBeginIndex(String contents, int index) {
-    int tmpIndex = getLastIndexInSetBefore(contents, index, "\n");
-    return tmpIndex + 1;
+  public static int moveIndexAfterWhitespace(
+      String contents,
+      int startIndex) {
+    return moveIndexForwardWhileFound(contents, startIndex, CharacterUtils.WHITESPACE);
   }
 
   /**
@@ -165,12 +126,99 @@ public class ContentsUtil {
    * @return End of the line containing the index.
    */
   public static int getLineEndIndex(String contents, int index) {
-    int tmpIndex = getFirstIndexInSetAfter(contents, index, "\n");
-    if ((tmpIndex < 0) && (contents != null)) {
-      return contents.length();
+    return moveIndexForwardWhileNotFound(contents, index, "\n");
+  }
+
+  // ==========================================================================
+  // Search characters in text - Backward
+  // ==========================================================================
+
+  /**
+   * Move backward the index in the text while the character at the index is from the given set.
+   * 
+   * @param contents Text to analyze.
+   * @param startIndex Start index.
+   * @param set Set of characters to look for.
+   * @return Maximum value of index (≤ startIndex) with a character not from the given set.
+   *         If all characters before startIndex are from the given set, returns -1.
+   */
+  public static int moveIndexBackwardWhileFound(
+      String contents,
+      int startIndex,
+      String set) {
+    if ((contents == null) || (startIndex < 0)) {
+      return -1;
+    }
+    if ((set == null) || set.isEmpty()) {
+      return startIndex;
+    }
+    int tmpIndex = startIndex;
+    while (tmpIndex >= 0) {
+      if (set.indexOf(contents.charAt(tmpIndex)) < 0) {
+        return tmpIndex;
+      }
+      tmpIndex--;
     }
     return tmpIndex;
   }
+
+  /**
+   * Move backward the index in the text while the character at the index is not from the given set.
+   * 
+   * @param contents Text to analyze.
+   * @param startIndex Start index.
+   * @param set Set of characters to look for.
+   * @return Maximum value of index (≤ startIndex) before all characters from the given set.
+   *         If all characters before startIndex are not from the given set, returns -1.
+   */
+  public static int moveIndexBackwardWhileNotFound(
+      String contents,
+      int startIndex,
+      String set) {
+    if ((contents == null) || (startIndex < 0)) {
+      return -1;
+    }
+    if ((set == null) || set.isEmpty()) {
+      return -1;
+    }
+    int tmpIndex = startIndex;
+    while (tmpIndex >= 0) {
+      if (set.indexOf(contents.charAt(tmpIndex)) >= 0) {
+        return tmpIndex;
+      }
+      tmpIndex--;
+    }
+    return tmpIndex;
+  }
+
+  /**
+   * Move backward the index in the text while the character is a whitespace.
+   * 
+   * @param contents Text to analyze.
+   * @param startIndex Start index.
+   * @return Maximum value of index (≤ startIndex) before whitespace characters.
+   *         If all characters before startIndex are whitespace, returns -1.
+   */
+  public static int moveIndexBeforeWhitespace(
+      String contents,
+      int startIndex) {
+    return moveIndexBackwardWhileFound(contents, startIndex, CharacterUtils.WHITESPACE);
+  }
+
+  /**
+   * Find the beginning of a line containing a given index in a text.
+   * 
+   * @param contents Text to search into.
+   * @param index Index for which we want the beginning of the line.
+   * @return Beginning of the line containing the index.
+   */
+  public static int getLineBeginIndex(String contents, int index) {
+    return moveIndexBackwardWhileNotFound(contents, index, "\n") + 1;
+  }
+
+  // ==========================================================================
+  // Characters management
+  // ==========================================================================
 
   /**
    * Count characters in a text.

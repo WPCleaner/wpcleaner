@@ -9,6 +9,7 @@ package org.wikipediacleaner.api.data;
 
 import org.wikipediacleaner.api.constants.EnumCaseSensitiveness;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
+import org.wikipediacleaner.api.data.contents.ContentsUtil;
 
 
 /**
@@ -50,18 +51,10 @@ public class PageElementCategory extends PageElement {
     int beginIndex = tmpIndex;
 
     // Possible white spaces characters
-    while ((tmpIndex < contents.length()) && (contents.charAt(tmpIndex) == ' ')) {
-      tmpIndex++;
-    }
+    tmpIndex = ContentsUtil.moveIndexAfterWhitespace(contents, tmpIndex);
 
     // Search for :
-    while ((tmpIndex < contents.length()) &&
-           (contents.charAt(tmpIndex) != ':') &&
-           (contents.charAt(tmpIndex) != '|') &&
-           (contents.charAt(tmpIndex) != ']') &&
-           (contents.charAt(tmpIndex) != '[')) {
-      tmpIndex++;
-    }
+    tmpIndex = ContentsUtil.moveIndexForwardWhileNotFound(contents, tmpIndex, ":|][");
     if ((tmpIndex >= contents.length()) || (contents.charAt(tmpIndex) != ':')) {
       return null;
     }
@@ -74,11 +67,7 @@ public class PageElementCategory extends PageElement {
     }
 
     // Search for |
-    while ((tmpIndex < contents.length()) &&
-           (contents.charAt(tmpIndex) != '|') &&
-           (contents.charAt(tmpIndex) != ']')) {
-      tmpIndex++;
-    }
+    tmpIndex = ContentsUtil.moveIndexForwardWhileNotFound(contents, tmpIndex, "|]");
     if (tmpIndex >= contents.length()) {
       return null;
     }

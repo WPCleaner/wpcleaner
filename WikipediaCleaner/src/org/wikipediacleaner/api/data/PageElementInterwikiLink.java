@@ -10,6 +10,7 @@ package org.wikipediacleaner.api.data;
 import java.util.List;
 
 import org.wikipediacleaner.api.constants.EnumWikipedia;
+import org.wikipediacleaner.api.data.contents.ContentsUtil;
 
 
 /**
@@ -53,9 +54,7 @@ public class PageElementInterwikiLink extends PageElement {
     int beginIndex = tmpIndex;
 
     // Possible whitespace characters
-    while ((tmpIndex < contents.length()) && (contents.charAt(tmpIndex) == ' ')) {
-      tmpIndex++;
-    }
+    tmpIndex = ContentsUtil.moveIndexAfterWhitespace(contents, tmpIndex);
 
     // Possible colon at the beginning
     boolean beginWithColon = false;
@@ -63,9 +62,7 @@ public class PageElementInterwikiLink extends PageElement {
       beginWithColon = true;
       tmpIndex++;
       beginIndex = tmpIndex;
-      while ((tmpIndex < contents.length()) && (contents.charAt(tmpIndex) == ' ')) {
-        tmpIndex++;
-      }
+      tmpIndex = ContentsUtil.moveIndexAfterWhitespace(contents, tmpIndex);
     }
     
     // Find elements of interwiki link

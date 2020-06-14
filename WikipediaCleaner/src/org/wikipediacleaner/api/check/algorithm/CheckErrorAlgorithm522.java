@@ -14,6 +14,7 @@ import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.PageElementTitle;
 import org.wikipediacleaner.api.data.contents.ContentsComment;
+import org.wikipediacleaner.api.data.contents.ContentsUtil;
 
 
 /**
@@ -58,7 +59,7 @@ public class CheckErrorAlgorithm522 extends CheckErrorAlgorithmBase {
       while (!textFound &&
              (currentIndex < lastIndex) &&
              (contents.charAt(currentIndex) != '=')) {
-        currentIndex = getFirstIndexAfterSpace(contents, currentIndex);
+        currentIndex = ContentsUtil.moveIndexAfterWhitespace(contents, currentIndex);
         if (currentIndex < lastIndex) {
           ContentsComment comment = null;
           PageElementTag tag = null;

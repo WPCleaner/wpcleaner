@@ -29,6 +29,7 @@ import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.Page.RelatedPages;
 import org.wikipediacleaner.api.data.PageElementTemplate.Parameter;
+import org.wikipediacleaner.api.data.contents.ContentsUtil;
 import org.wikipediacleaner.i18n.GT;
 
 
@@ -107,12 +108,12 @@ public class CheckErrorAlgorithm524 extends CheckErrorAlgorithmBase {
             Parameter nextParam = template.getParameter(existingParam.numParam + 1);
             int paramEnd = nextParam.getPipeIndex();
             boolean existingStartNewLine = false;
-            int tmpIndex = getLastIndexBeforeSpace(contents, paramBegin - 1);
+            int tmpIndex = ContentsUtil.moveIndexBeforeWhitespace(contents, paramBegin - 1);
             if ((tmpIndex >= 0) && (contents.charAt(tmpIndex) == '\n')) {
               existingStartNewLine = true;
             }
             boolean existingEndNewLine = false;
-            tmpIndex = getLastIndexBeforeSpace(contents, paramEnd - 1);
+            tmpIndex = ContentsUtil.moveIndexBeforeWhitespace(contents, paramEnd - 1);
             if ((tmpIndex >= 0) && (contents.charAt(tmpIndex) == '\n')) {
               existingEndNewLine = true;
             }

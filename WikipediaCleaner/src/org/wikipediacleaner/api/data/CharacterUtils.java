@@ -53,10 +53,10 @@ public class CharacterUtils {
   }
 
   /** Whitespace characters */
-  private final static String WHITESPACE = " \u00A0";
+  public final static String WHITESPACE = " \u00A0";
 
   /** Punctuation characters */
-  private static final String PUNCTUATION = ",.;:()\"-–";
+  public static final String PUNCTUATION = ",.;:()\"-–";
 
   /**
    * @param character Character to be tested.

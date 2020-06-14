@@ -12,6 +12,7 @@ import java.util.List;
 
 import org.wikipediacleaner.api.constants.WPCConfiguration;
 import org.wikipediacleaner.api.constants.WPCConfigurationStringList;
+import org.wikipediacleaner.api.data.contents.ContentsUtil;
 
 
 /**
@@ -172,10 +173,7 @@ public class PageElementTag extends PageElement {
     if (contents.charAt(tmpIndex) == '/') {
       endTag = true;
       tmpIndex++;
-      while ((tmpIndex < maxLength) &&
-             (contents.charAt(tmpIndex) == ' ')) {
-        tmpIndex++;
-      }
+      tmpIndex = ContentsUtil.moveIndexAfterWhitespace(contents, tmpIndex);
     }
     int beginIndex = tmpIndex;
 
@@ -195,10 +193,7 @@ public class PageElementTag extends PageElement {
     String name = contents.substring(beginIndex, tmpIndex);
 
     // Possible whitespace characters
-    while ((tmpIndex < maxLength) &&
-           (SEP_CHARS_AFTER_TAG_NAME.indexOf(contents.charAt(tmpIndex)) >= 0)) {
-      tmpIndex++;
-    }
+    tmpIndex = ContentsUtil.moveIndexForwardWhileFound(contents, tmpIndex, SEP_CHARS_AFTER_TAG_NAME);
 
     // Find end of tag
     int endIndex = contents.indexOf('>', tmpIndex);
@@ -283,11 +278,7 @@ public class PageElementTag extends PageElement {
     String name = paramString.substring(startNameIndex, endNameIndex);
 
     // Find equal sign
-    int equalIndex = endNameIndex;
-    while ((equalIndex < maxLength) &&
-           (paramString.charAt(equalIndex) == ' ')) {
-      equalIndex++;
-    }
+    int equalIndex = ContentsUtil.moveIndexAfterWhitespace(paramString, endNameIndex);
     if (equalIndex >= maxLength) {
       Parameter param = new Parameter(
           name, offset + startNameIndex, offset + endNameIndex);
@@ -302,11 +293,7 @@ public class PageElementTag extends PageElement {
     }
 
     // Find beginning of parameter value
-    int startValueIndex = equalIndex + 1;
-    while ((startValueIndex < maxLength) &&
-           (paramString.charAt(startValueIndex) == ' ')) {
-      startValueIndex++;
-    }
+    int startValueIndex = ContentsUtil.moveIndexAfterWhitespace(paramString, equalIndex + 1);
     if (startValueIndex >= maxLength) {
       Parameter param = new Parameter(name, startNameIndex, endNameIndex);
       parameters.add(param);

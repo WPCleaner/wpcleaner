@@ -22,6 +22,7 @@ import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.PageElementTag.Parameter;
 import org.wikipediacleaner.api.data.contents.ContentsComment;
+import org.wikipediacleaner.api.data.contents.ContentsUtil;
 import org.wikipediacleaner.gui.swing.component.MWPane;
 import org.wikipediacleaner.i18n.GT;
 
@@ -386,7 +387,7 @@ public class CheckErrorAlgorithm002 extends CheckErrorAlgorithmBase {
         boolean ok = true;
         currentIndex++;
         if (ok) {
-          currentIndex = getFirstIndexAfterSpace(contents, currentIndex);
+          currentIndex = ContentsUtil.moveIndexAfterWhitespace(contents, currentIndex);
           if ((currentIndex < contents.length()) &&
               contents.charAt(currentIndex) == '/') {
             currentIndex++;
@@ -396,7 +397,7 @@ public class CheckErrorAlgorithm002 extends CheckErrorAlgorithmBase {
         }
         if (ok &&
             (currentIndex < contents.length())) {
-          currentIndex = getFirstIndexAfterSpace(contents, currentIndex);
+          currentIndex = ContentsUtil.moveIndexAfterWhitespace(contents, currentIndex);
         }
         if (ok) {
           for (String tagName : tagNames) {
@@ -414,7 +415,7 @@ public class CheckErrorAlgorithm002 extends CheckErrorAlgorithmBase {
           }
         }
         if (ok) {
-          currentIndex = getFirstIndexAfterSpace(contents, currentIndex);
+          currentIndex = ContentsUtil.moveIndexAfterWhitespace(contents, currentIndex);
           if ((currentIndex < contents.length()) &&
               contents.charAt(currentIndex) == '/') {
             currentIndex++;
@@ -423,7 +424,7 @@ public class CheckErrorAlgorithm002 extends CheckErrorAlgorithmBase {
           }
         }
         if (ok) {
-          currentIndex = getFirstIndexAfterSpace(contents, currentIndex);
+          currentIndex = ContentsUtil.moveIndexAfterWhitespace(contents, currentIndex);
           if ((currentIndex < contents.length()) &&
               contents.charAt(currentIndex) == '>') {
             currentIndex++;
@@ -479,7 +480,7 @@ public class CheckErrorAlgorithm002 extends CheckErrorAlgorithmBase {
 
       // Check if this is a self closing tag for the given name
       if ((shouldCheck) && (contents.charAt(currentIndex) == '<')) {
-        int tmpIndex = getFirstIndexAfterSpace(contents, currentIndex + 1);
+        int tmpIndex = ContentsUtil.moveIndexAfterWhitespace(contents, currentIndex + 1);
         boolean incorrectChar = false;
         while ((tmpIndex < maxSize) &&
                (" \\.,:?/\n|+&)(".indexOf(contents.charAt(tmpIndex)) >= 0)) {
@@ -499,17 +500,17 @@ public class CheckErrorAlgorithm002 extends CheckErrorAlgorithmBase {
           selfClosingTag = !Character.isUpperCase(tmpChar) && !Character.isLowerCase(tmpChar);
         }
         if ((tmpIndex < maxSize) && selfClosingTag) {
-          tmpIndex = getFirstIndexAfter(contents, tmpIndex, " \n");
+          tmpIndex = ContentsUtil.moveIndexForwardWhileFound(contents, tmpIndex, " \n");
           while ((tmpIndex < maxSize) &&
                  (" \\.,:?\n|+&)(`".indexOf(contents.charAt(tmpIndex)) >= 0)) {
             tmpIndex++;
             incorrectChar = true;
           }
-          tmpIndex = getFirstIndexAfter(contents, tmpIndex, " \n");
+          tmpIndex = ContentsUtil.moveIndexForwardWhileFound(contents, tmpIndex, " \n");
           if ((tmpIndex < maxSize) && (contents.charAt(tmpIndex) == '/')) {
             tmpIndex++;
           }
-          tmpIndex = getFirstIndexAfter(contents, tmpIndex, " \n");
+          tmpIndex = ContentsUtil.moveIndexForwardWhileFound(contents, tmpIndex, " \n");
           while ((tmpIndex < maxSize) &&
                  (" \\.,:?/\n|+&)(`".indexOf(contents.charAt(tmpIndex)) >= 0)) {
             tmpIndex++;

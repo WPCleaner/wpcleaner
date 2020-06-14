@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.wikipediacleaner.api.data.contents.ContentsComment;
+import org.wikipediacleaner.api.data.contents.ContentsUtil;
 
 
 /**
@@ -29,7 +30,7 @@ public class PageElementParagraph extends PageElement {
     // Analyze the page to find paragraphs
     int paragraphBegin = 0;
     String contents = analysis.getContents();
-    int maxLen = contents.length();
+    final int maxLen = contents.length();
     while (paragraphBegin < maxLen) {
 
       // Move paragraph beginning
@@ -49,11 +50,7 @@ public class PageElementParagraph extends PageElement {
             (contents.charAt(paragraphBegin) == '=')) {
           PageElementTitle title = analysis.isInTitle(paragraphBegin);
           if ((title != null) && (title.getBeginIndex() == paragraphBegin)) {
-            paragraphBegin = title.getEndIndex();
-            while ((paragraphBegin < maxLen) &&
-                   (contents.charAt(paragraphBegin) == ' ')) {
-              paragraphBegin++;
-            }
+            paragraphBegin = ContentsUtil.moveIndexAfterWhitespace(contents, title.getEndIndex());
             tryMoving = true;
           }
         }

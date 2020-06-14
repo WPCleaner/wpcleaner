@@ -11,6 +11,8 @@ package org.wikipediacleaner.api.data;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.wikipediacleaner.api.data.contents.ContentsUtil;
+
 
 /**
  * Class containing information about a list item.
@@ -43,15 +45,9 @@ public class PageElementListItem extends PageElement {
       if (isListIndicator(currentChar) &&
           ((index == 0) || (contents.charAt(index - 1) == '\n'))) {
         int beginIndex = index;
-        while ((index < contents.length()) &&
-               isListIndicator(contents.charAt(index))) {
-          index++;
-        }
+        index = ContentsUtil.moveIndexForwardWhileFound(contents, index, LIST_INDICATORS);
         int depth = index - beginIndex;
-        while ((index < contents.length()) &&
-               (contents.charAt(index) != '\n')) {
-          index++;
-        }
+        index = ContentsUtil.moveIndexForwardWhileNotFound(contents, index, "\n");
         items.add(new PageElementListItem(beginIndex, index, depth));
       } else {
         index++;

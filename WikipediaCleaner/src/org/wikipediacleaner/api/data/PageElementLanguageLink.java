@@ -10,6 +10,7 @@ package org.wikipediacleaner.api.data;
 import java.util.List;
 
 import org.wikipediacleaner.api.constants.EnumWikipedia;
+import org.wikipediacleaner.api.data.contents.ContentsUtil;
 
 
 /**
@@ -48,19 +49,11 @@ public class PageElementLanguageLink extends PageElement {
     tmpIndex += 2;
     int beginIndex = tmpIndex;
 
-    // Possible whitespaces characters
-    while ((tmpIndex < contents.length()) && (contents.charAt(tmpIndex) == ' ')) {
-      tmpIndex++;
-    }
+    // Possible whitespace characters
+    tmpIndex = ContentsUtil.moveIndexAfterWhitespace(contents, tmpIndex);
 
     // Search for :
-    while ((tmpIndex < contents.length()) &&
-           (contents.charAt(tmpIndex) != ':') &&
-           (contents.charAt(tmpIndex) != '|') &&
-           (contents.charAt(tmpIndex) != ']') &&
-           (contents.charAt(tmpIndex) != '[')) {
-      tmpIndex++;
-    }
+    tmpIndex = ContentsUtil.moveIndexForwardWhileNotFound(contents, tmpIndex, ":|]|");
     if ((tmpIndex >= contents.length()) || (contents.charAt(tmpIndex) != ':')) {
       return null;
     }
@@ -77,11 +70,7 @@ public class PageElementLanguageLink extends PageElement {
     }
 
     // Search for |
-    while ((tmpIndex < contents.length()) &&
-           (contents.charAt(tmpIndex) != '|') &&
-           (contents.charAt(tmpIndex) != ']')) {
-      tmpIndex++;
-    }
+    tmpIndex = ContentsUtil.moveIndexForwardWhileNotFound(contents, tmpIndex, "|]");
     if (tmpIndex >= contents.length()) {
       return null;
     }

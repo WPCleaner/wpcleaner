@@ -12,6 +12,7 @@ import java.util.List;
 
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.contents.ContentsComment;
+import org.wikipediacleaner.api.data.contents.ContentsUtil;
 
 
 /**
@@ -78,10 +79,7 @@ public class PageElementExternalLink extends PageElement {
 
     // Possible white spaces characters
     if (hasSquare) {
-      while ((tmpIndex < maxLength) &&
-             (contents.charAt(tmpIndex) == ' ')) {
-        tmpIndex++;
-      }
+      tmpIndex = ContentsUtil.moveIndexAfterWhitespace(contents, tmpIndex);
     }
 
     // Check for protocol
