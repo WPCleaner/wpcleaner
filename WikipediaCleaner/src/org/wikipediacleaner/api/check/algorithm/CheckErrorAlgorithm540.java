@@ -153,10 +153,12 @@ public class CheckErrorAlgorithm540 extends CheckErrorAlgorithmBase {
         } else {
           beginIndex = endIndex;
         }
-        shouldContinue |= analyzeCorrectArea(
-            elements, reportElements,
-            beginIndex, endIndex,
-            eLink.getBeginIndex(), eLink.getEndIndex());
+        if (eLink.hasSquare() && eLink.hasSecondSquare()) {
+          shouldContinue |= analyzeCorrectArea(
+              elements, reportElements,
+              beginIndex, endIndex,
+              eLink.getBeginIndex(), eLink.getEndIndex());
+        }
       }
 
       // Check titles
@@ -428,12 +430,14 @@ public class CheckErrorAlgorithm540 extends CheckErrorAlgorithmBase {
       // Report inside an external link
       if (surroundingElement instanceof PageElementExternalLink) {
         PageElementExternalLink eLink = (PageElementExternalLink) surroundingElement;
-        if (reportFormattingElement(
-            analysis, elements, element, errors,
-            eLink.getBeginIndex() + eLink.getTextOffset(), eLink.getEndIndex() - 1,
-            eLink.getBeginIndex(), eLink.getEndIndex(),
-            false, false, true, true)) {
-          return;
+        if (eLink.hasSquare() && eLink.hasSecondSquare()) {
+          if (reportFormattingElement(
+              analysis, elements, element, errors,
+              eLink.getBeginIndex() + eLink.getTextOffset(), eLink.getEndIndex() - 1,
+              eLink.getBeginIndex(), eLink.getEndIndex(),
+              false, false, true, true)) {
+            return;
+          }
         }
       }
 
