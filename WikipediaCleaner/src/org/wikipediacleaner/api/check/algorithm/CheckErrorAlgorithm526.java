@@ -21,6 +21,7 @@ import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.CheckErrorResult.ErrorLevel;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.constants.WPCConfiguration;
+import org.wikipediacleaner.api.data.CharacterUtils;
 import org.wikipediacleaner.api.data.DataManager;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageAnalysis;
@@ -68,118 +69,152 @@ public class CheckErrorAlgorithm526 extends CheckErrorAlgorithmBase {
       return false;
     }
     boolean result = false;
-    String contents = analysis.getContents();
     for (PageElementInternalLink link : links) {
-
-      // Decide if link is an error
-      String target = link.getFullLink();
-      String text = link.getText();
-      boolean isProblematic = false;
-      if ((target != null) &&
-          (text != null) &&
-          !Page.areSameTitle(target, text)) {
-
-        // Check text first (only digits)
-        int yearDisplayed = -1;
-        if ((text.length() >= MIN_LENGTH) &&
-            (text.length() <= MAX_LENGTH)) {
-          boolean onlyDigits = true;
-          for (int pos = 0; pos < text.length(); pos++) {
-            if (!Character.isDigit(text.charAt(pos))) {
-              onlyDigits = false;
-            }
-          }
-          if (onlyDigits) {
-            yearDisplayed = Integer.valueOf(text);
-          }
-        }
-
-        // Check link if needed
-        if (yearDisplayed > 0) {
-          int nbDigits = 0;
-          while ((nbDigits < target.length()) &&
-                 (Character.isDigit(target.charAt(nbDigits)))) {
-            nbDigits++;
-          }
-          int yearLinked = -1;
-          if ((nbDigits >= MIN_LENGTH) &&
-              (nbDigits <= MAX_LENGTH)) {
-            yearLinked = Integer.valueOf(target.substring(0, nbDigits));
-          }
-          if ((yearLinked > 0) && (yearLinked != yearDisplayed)) {
-            if (target.length() == nbDigits) {
-              isProblematic = true;
-            } else {
-              if (target.charAt(nbDigits) == ' ') {
-                boolean incorrectCharacter = false;
-                for (int pos = nbDigits + 1; pos < target.length(); pos++) {
-                  if (Character.isDigit(target.charAt(pos))) {
-                    incorrectCharacter = true;
-                  }
-                }
-                if (!incorrectCharacter) {
-                  isProblematic = true;
-                }
-              }
-            }
-          }
-        }
-      }
-
-      // Report error
-      if (isProblematic) {
-        if (errors == null) {
-          return true;
-        }
-        result = true;
-
-        // Create error
-        ErrorLevel errorLevel = ErrorLevel.ERROR;
-        if ((link.getEndIndex() < contents.length()) &&
-            (contents.charAt(link.getEndIndex()) == '{')) {
-          errorLevel = ErrorLevel.WARNING;
-        }
-        CheckErrorResult errorResult = createCheckErrorResult(
-            analysis, link.getBeginIndex(), link.getEndIndex(), errorLevel);
-        errorResult.addReplacement(PageElementInternalLink.createInternalLink(target, target));
-        errorResult.addReplacement(PageElementInternalLink.createInternalLink(text, text));
-        if (!askHelpList.isEmpty()) {
-          boolean firstReplacement = true;
-          for (String askHelpElement : askHelpList) {
-            int pipeIndex = askHelpElement.indexOf('|');
-            if ((pipeIndex > 0) && (pipeIndex < askHelpElement.length())) {
-              String suffix = askHelpElement.substring(pipeIndex + 1);
-              boolean botReplace = false;
-              Page page = analysis.getPage();
-              if (page.isArticle() && page.isInMainNamespace() &&
-                  suffix.startsWith("{{") &&
-                  (link.getEndIndex() < contents.length())) {
-                char nextChar = contents.charAt(link.getEndIndex());
-                if (nextChar != '{') {
-                  if ((target != null) &&
-                      (target.indexOf('#') < 0) &&
-                      (target.indexOf('(') < 0) &&
-                      (target.indexOf(')') < 0)) {
-                    botReplace = true;
-                  }
-                }
-              }
-              String replacement =
-                  analysis.getContents().substring(link.getBeginIndex(), link.getEndIndex()) +
-                  suffix;
-              errorResult.addReplacement(
-                  replacement,
-                  askHelpElement.substring(0, pipeIndex),
-                  false, firstReplacement && botReplace);
-              firstReplacement = false;
-            }
-          }
-        }
-        errors.add(errorResult);
-      }
+      result |= analyzeInternalLink(analysis, errors, link);
     }
 
     return result;
+  }
+
+  /**
+   * Analyze a page to check if errors are present.
+   * 
+   * @param analysis Page analysis.
+   * @param errors Errors found in the page.
+   * @param onlyAutomatic True if analysis could be restricted to errors automatically fixed.
+   * @return Flag indicating if the error was found.
+   */
+  private boolean analyzeInternalLink(
+      PageAnalysis analysis,
+      Collection<CheckErrorResult> errors,
+      PageElementInternalLink link) {
+
+    // Basic check on the link
+    String target = link.getFullLink();
+    String text = link.getText();
+    if ((target == null) ||
+        (text == null) ||
+        Page.areSameTitle(target, text)) {
+      return false;
+    }
+    if ((text.length() < MIN_LENGTH) ||
+        (text.length() > MAX_LENGTH)) {
+      return false;
+    }
+
+    // Check text first (only digits)
+    for (int pos = 0; pos < text.length(); pos++) {
+      if (!Character.isDigit(text.charAt(pos))) {
+        return false;
+      }
+    }
+    int yearDisplayed = Integer.parseInt(text);
+    if (yearDisplayed <= 0) {
+      return false;
+    }
+
+    // Check link
+    int nbDigits = 0;
+    while ((nbDigits < target.length()) &&
+           (Character.isDigit(target.charAt(nbDigits)))) {
+      nbDigits++;
+    }
+    if ((nbDigits < MIN_LENGTH) ||
+        (nbDigits > MAX_LENGTH)) {
+      return false;
+    }
+
+    // Compare values
+    int yearLinked = Integer.parseInt(target.substring(0, nbDigits));
+    if ((yearLinked <= 0) || (yearLinked == yearDisplayed)) {
+      return false;
+    }
+
+    // Check extra characters in the link
+    if (target.length() > nbDigits) {
+      if (!CharacterUtils.isWhitespace(target.charAt(nbDigits))) {
+        return false;
+      }
+      for (int pos = nbDigits + 1; pos < target.length(); pos++) {
+        if (Character.isDigit(target.charAt(pos))) {
+          return false;
+        }
+      }
+    }
+
+    // Report error
+    if (errors == null) {
+      return true;
+    }
+
+    // Extend link with extra text
+    String contents = analysis.getContents();
+    int endIndex = link.getEndIndex();
+    while ((endIndex < contents.length()) &&
+        Character.isLetterOrDigit(contents.charAt(endIndex))) {
+      endIndex++;
+    }
+    String extraText = contents.substring(link.getEndIndex(), endIndex);
+
+    // Create error
+    ErrorLevel errorLevel = ErrorLevel.ERROR;
+    if ((link.getEndIndex() < contents.length()) &&
+        (contents.charAt(link.getEndIndex()) == '{')) {
+      errorLevel = ErrorLevel.WARNING;
+    }
+    CheckErrorResult errorResult = createCheckErrorResult(
+        analysis, link.getBeginIndex(), endIndex, errorLevel);
+    if (!extraText.isEmpty()) {
+      try {
+        int yearCorrected = Integer.parseInt(text + extraText);
+        if (yearLinked == yearCorrected) {
+          errorResult.addReplacement(
+              PageElementInternalLink.createInternalLink(target, text + extraText),
+              true);
+        }
+      } catch (NumberFormatException e) {
+        // Nothing to do, it's just not an integer
+      }
+    }
+    errorResult.addReplacement(
+        PageElementInternalLink.createInternalLink(target, target) + extraText);
+    errorResult.addReplacement(
+        PageElementInternalLink.createInternalLink(text, text) + extraText);
+    if (!askHelpList.isEmpty()) {
+      boolean firstReplacement = true;
+      for (String askHelpElement : askHelpList) {
+        int pipeIndex = askHelpElement.indexOf('|');
+        if ((pipeIndex > 0) && (pipeIndex < askHelpElement.length())) {
+          String suffix = askHelpElement.substring(pipeIndex + 1);
+          boolean botReplace = false;
+          Page page = analysis.getPage();
+          if (page.isArticle() && page.isInMainNamespace() &&
+              suffix.startsWith("{{") &&
+              (link.getEndIndex() < contents.length())) {
+            char nextChar = contents.charAt(endIndex);
+            if (nextChar != '{') {
+              if ((target.indexOf('#') < 0) &&
+                  (target.indexOf('(') < 0) &&
+                  (target.indexOf(')') < 0) &&
+                  (extraText.isEmpty())) {
+                botReplace = true;
+              }
+            }
+          }
+          String replacement =
+              analysis.getContents().substring(link.getBeginIndex(), endIndex) +
+              suffix;
+          errorResult.addReplacement(
+              replacement,
+              askHelpElement.substring(0, pipeIndex),
+              false, firstReplacement && botReplace);
+          firstReplacement = false;
+        }
+      }
+    }
+    errors.add(errorResult);
+
+    return true;
   }
 
   /**
