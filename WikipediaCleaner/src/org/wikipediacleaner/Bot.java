@@ -97,6 +97,12 @@ public class Bot implements BasicWorkerListener {
   /** List of namespaces */
   private Set<Integer> namespaces;
 
+  /** To work only on pages with titles after the beginning of the range */
+  private String rangeBegin;
+
+  /** To work only on pages with titles before the end of the range */
+  private String rangeEnd;
+
   /**
    * @param args Command line arguments
    */
@@ -328,9 +334,11 @@ public class Bot implements BasicWorkerListener {
     if (actionConfig.actionArgs.length > 0) {
       extractAlgorithms(algorithms, allAlgorithms, actionConfig.actionArgs, 0);
     }
-    return new AutomaticCWWorker(
+    AutomaticCWWorker worker = new AutomaticCWWorker(
         wiki, null, algorithms, 10000, true, allAlgorithms, null, true, false);
-  }
+    worker.setRange(rangeBegin, rangeEnd);
+    return worker;
+ }
 
   /**
    * Execute an action of type FixListCheckWiki.
@@ -348,10 +356,12 @@ public class Bot implements BasicWorkerListener {
     if (actionConfig.actionArgs.length > 1) {
       extractAlgorithms(algorithms, allAlgorithms, actionConfig.actionArgs, 1);
     }
-    return new AutomaticListCWWorker(
+    AutomaticListCWWorker worker = new AutomaticListCWWorker(
         wiki, null, page,
         algorithms, allAlgorithms, namespaces,
         null, true, false);
+    worker.setRange(rangeBegin, rangeEnd);
+    return worker;
   }
 
   /**
@@ -383,10 +393,12 @@ public class Bot implements BasicWorkerListener {
     if (actionConfig.actionArgs.length > 1) {
       extractAlgorithms(algorithms, allAlgorithms, actionConfig.actionArgs, 1);
     }
-    return new AutomaticLintErrorWorker(
+    AutomaticLintErrorWorker worker = new AutomaticLintErrorWorker(
         wiki, null, category,
         algorithms, allAlgorithms, namespaces,
         null, true, false);
+    worker.setRange(rangeBegin, rangeEnd);
+    return worker;
   }
 
   /**
@@ -401,8 +413,9 @@ public class Bot implements BasicWorkerListener {
     if (actionConfig.actionArgs.length > 0) {
       extractAlgorithms(algorithms, allAlgorithms, actionConfig.actionArgs, 0);
     }
-    return new AutomaticCWWorker(
+    AutomaticCWWorker worker = new AutomaticCWWorker(
         wiki, null, algorithms, 10000, true, allAlgorithms, null, false, false);
+    return worker;
   }
 
   /**
@@ -503,6 +516,20 @@ public class Bot implements BasicWorkerListener {
         CommentManager.addExtraText(actionArgs[1].replaceAll("_", " "));
       }
       return true;
+    }
+
+    // Ranger
+    if ("RangeBegin".equalsIgnoreCase(parameter)) {
+      rangeBegin = null;
+      if (actionArgs.length > 1) {
+        rangeBegin = actionArgs[1];
+      }
+    }
+    if ("RangeEnd".equalsIgnoreCase(parameter)) {
+      rangeEnd = null;
+      if (actionArgs.length > 1) {
+        rangeEnd = actionArgs[1];
+      }
     }
 
     return false;

@@ -66,6 +66,12 @@ public abstract class AutomaticFixWorker extends BasicWorker {
   /** True if pages that couldn't be fixed should be analyzed. */
   private final boolean analyzeNonFixed;
 
+  /** Only work on pages with titles after the beginning of the range */
+  private String rangeBegin;
+
+  /** Only work on pages with titles before the end of the range */
+  private String rangeEnd;
+
   /**
    * @param wiki Wiki.
    * @param window Window.
@@ -106,6 +112,17 @@ public abstract class AutomaticFixWorker extends BasicWorker {
     this.countModified = 0;
     this.countMarked = 0;
     this.countMarkedOther = 0;
+  }
+
+  /**
+   * Restrict the range of pages to work on.
+   * 
+   * @param begin Beginning of the range.
+   * @param end End of the range.
+   */
+  public void setRange(String begin, String end) {
+    this.rangeBegin = begin;
+    this.rangeEnd = end;
   }
 
   /**
@@ -174,7 +191,16 @@ public abstract class AutomaticFixWorker extends BasicWorker {
    */
   private PageAnalysis getPageAnalysis(Page page) throws APIException {
 
+    // Check if page should be ignored
     if (!selectedNamespaces.contains(page.getNamespace())) {
+      return null;
+    }
+    if ((rangeBegin != null) &&
+        (rangeBegin.compareTo(page.getArticlePageName()) > 0)) {
+      return null;
+    }
+    if ((rangeEnd != null) &&
+        (rangeEnd.compareTo(page.getArticlePageName()) < 0)) {
       return null;
     }
     if (page.getEditProhibition()) {
