@@ -110,7 +110,10 @@ public class CheckErrorAlgorithm553 extends CheckErrorAlgorithmBase {
     int endIndex = endText;
     boolean safeEnd = false;
     if (endIndex < contents.length()) {
-      if (CharacterUtils.isWhitespace(contents.charAt(endIndex))) {
+      char lastChar = contents.charAt(endIndex);
+      if (CharacterUtils.isWhitespace(lastChar) ||
+          CharacterUtils.isPunctuation(lastChar) ||
+          ("'".indexOf(lastChar) >= 0)) {
         safeEnd = true;
       } else {
         endIndex++;
@@ -141,7 +144,7 @@ public class CheckErrorAlgorithm553 extends CheckErrorAlgorithmBase {
         String replacement =
             PageElementInternalLink.createInternalLink(fullLink, text) +
             contents.substring(endText, endIndex);
-        boolean safeLink = isSafeLink(fullLink, text);
+        boolean safeLink = isSafeLink(link, text);
         errorResult.addReplacement(replacement, automatic || safeLink);
         if (!automatic && !safeLink) {
           errorResult.addReplacement(text + contents.substring(endText, endIndex));
@@ -149,7 +152,8 @@ public class CheckErrorAlgorithm553 extends CheckErrorAlgorithmBase {
       }
       if (!automatic) {
         String linkText = contents.substring(beginIndex, nowikiTag.getBeginIndex());
-        if (contents.charAt(link.getEndIndex() - 3) == ' ') {
+        char lastChar = contents.charAt(link.getEndIndex() - 3);
+        if (" \u00A0;".indexOf(lastChar) >= 0) {
           linkText =
               contents.substring(beginIndex, link.getEndIndex() - 3) +
               contents.substring(link.getEndIndex() - 2, nowikiTag.getBeginIndex());
@@ -168,28 +172,48 @@ public class CheckErrorAlgorithm553 extends CheckErrorAlgorithmBase {
   /**
    * Tells if it is safe to make a link.
    * 
-   * @param fullLink Link target.
-   * @param text Text of the link.
+   * @param link Link.
+   * @param text Suggested text for the link.
    * @return True if it is safe to make a link.
    */
-  private boolean isSafeLink(String fullLink, String text) {
-    if (Page.areSameTitle(fullLink, text)) {
+  private boolean isSafeLink(PageElementInternalLink link, String text) {
+    if (isSafeLink(link.getFullLink(), text)) {
       return true;
     }
-    if ((fullLink == null) || (text == null)) {
+    if (link.getAnchor() != null) {
+      if (isSafeLink(link.getLink(), text)) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  /**
+   * Tells if it is safe to make a link.
+   * 
+   * @param link Link target.
+   * @param text Suggested text for the link.
+   * @return True if it is safe to make a link.
+   */
+  private boolean isSafeLink(String link, String text) {
+    if ((link == null) || (text == null)) {
       return false;
     }
-    if (Page.areSameTitle(fullLink.toUpperCase(), text.toUpperCase())) {
+    if (Page.areSameTitle(link, text)) {
       return true;
     }
-    int parenthesis = fullLink.indexOf('(');
-    if (parenthesis > 0) {
-      if (Page.areSameTitle(fullLink.substring(0, parenthesis), text)) {
-        return true;
-      }
-      if (Page.areSameTitle(fullLink.substring(0, parenthesis).toUpperCase(), text.toUpperCase())) {
-        return true;
-      }
+    if (Page.areSameTitle(
+        link.toUpperCase().replaceAll("-", " "),
+        text.toUpperCase().replaceAll("-", " "))) {
+      return true;
+    }
+    int parenthesis = link.indexOf('(');
+    if ((parenthesis > 0) && (isSafeLink(link.substring(0, parenthesis), text))) {
+      return true;
+    }
+    int comma = link.indexOf(',');
+    if ((comma > 0) && (isSafeLink(link.substring(0, comma), text))) {
+      return true;
     }
     return false;
   }
