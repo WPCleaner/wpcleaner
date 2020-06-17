@@ -29,7 +29,7 @@ public enum EnumLanguage {
   DE   (Locale.GERMAN         , "German"),
   EL   (new Locale("el")      , "Greek"),
   EN   (Locale.ENGLISH        , "English"),
-  EN_GB(new Locale("en_GB")   , "English (United Kingdom)"),
+  EN_GB(Locale.UK             , "English (United Kingdom)"),
   EO   (new Locale("eo")      , "Esperanto"),
   ES   (new Locale("es")      , "Spanish"),
   FA   (new Locale("fa")      , "Persian"),
@@ -55,7 +55,7 @@ public enum EnumLanguage {
   TR   (new Locale("tr")      , "Turkish"),
   UK   (new Locale("uk")      , "Ukrainian"),
   UR   (new Locale("ur")      , "Urdu"),
-  ZH_CN(new Locale("zh", "CN"), "Chinese (Simplified)");
+  ZH_CN(Locale.SIMPLIFIED_CHINESE, "Chinese (Simplified)");
 
   private final String code;
   private final Locale locale;
