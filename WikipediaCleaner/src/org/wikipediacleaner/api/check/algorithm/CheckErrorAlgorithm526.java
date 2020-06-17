@@ -41,12 +41,6 @@ public class CheckErrorAlgorithm526 extends CheckErrorAlgorithmBase {
     super("Incorrect date link");
   }
 
-  /** Minimum length of the year */
-  private static final int MIN_LENGTH = 3;
-
-  /** Maximum length of the year */
-  private static final int MAX_LENGTH = 4;
-
   /**
    * Analyze a page to check if errors are present.
    * 
@@ -97,8 +91,8 @@ public class CheckErrorAlgorithm526 extends CheckErrorAlgorithmBase {
         Page.areSameTitle(target, text)) {
       return false;
     }
-    if ((text.length() < MIN_LENGTH) ||
-        (text.length() > MAX_LENGTH)) {
+    if ((text.length() < minLength) ||
+        (text.length() > maxLength)) {
       return false;
     }
 
@@ -119,14 +113,18 @@ public class CheckErrorAlgorithm526 extends CheckErrorAlgorithmBase {
            (Character.isDigit(target.charAt(nbDigits)))) {
       nbDigits++;
     }
-    if ((nbDigits < MIN_LENGTH) ||
-        (nbDigits > MAX_LENGTH)) {
+    if ((nbDigits < minLength) ||
+        (nbDigits > maxLength)) {
       return false;
     }
 
     // Compare values
     int yearLinked = Integer.parseInt(target.substring(0, nbDigits));
-    if ((yearLinked <= 0) || (yearLinked == yearDisplayed)) {
+    if (yearLinked <= 0) {
+      return false;
+    }
+    if ((yearDisplayed < yearLinked + minAbove) &&
+        (yearDisplayed > yearLinked - minBelow)) {
       return false;
     }
 
@@ -298,6 +296,18 @@ public class CheckErrorAlgorithm526 extends CheckErrorAlgorithmBase {
   /** Page containing a dump analysis of the error */
   private static final String PARAMETER_DUMP_ANALYSIS = "dump_analysis";
 
+  /** Minimum length of the number to be reported */
+  private static final String PARAMETER_MIN_LENGTH = "min_length";
+
+  /** Maximum length of the number to be reported */
+  private static final String PARAMETER_MAX_LENGTH = "max_length";
+
+  /** Minimum difference below to report the link  */
+  private static final String PARAMETER_MIN_BELOW = "min_below";
+
+  /** Minimum difference above to report the link */
+  private static final String PARAMETER_MIN_ABOVE = "min_above";
+
   /**
    * Initialize settings for the algorithm.
    * 
@@ -325,6 +335,46 @@ public class CheckErrorAlgorithm526 extends CheckErrorAlgorithmBase {
     }
 
     dumpAnalysis = getSpecificProperty(PARAMETER_DUMP_ANALYSIS, true, true, false);
+
+    minLength = 3;
+    try {
+      tmp = getSpecificProperty(PARAMETER_MIN_LENGTH, true, true, false);
+      if (tmp != null) {
+        minLength = Integer.parseInt(tmp);
+      }
+    } catch (NumberFormatException e) {
+      //
+    }
+
+    maxLength = 4;
+    try {
+      tmp = getSpecificProperty(PARAMETER_MAX_LENGTH, true, true, false);
+      if (tmp != null) {
+        maxLength = Integer.parseInt(tmp);
+      }
+    } catch (NumberFormatException e) {
+      //
+    }
+
+    minBelow = 1;
+    try {
+      tmp = getSpecificProperty(PARAMETER_MIN_BELOW, true, true, false);
+      if (tmp != null) {
+        minBelow = Integer.parseInt(tmp);
+      }
+    } catch (NumberFormatException e) {
+      //
+    }
+
+    minAbove = 1;
+    try {
+      tmp = getSpecificProperty(PARAMETER_MIN_ABOVE, true, true, false);
+      if (tmp != null) {
+        minAbove = Integer.parseInt(tmp);
+      }
+    } catch (NumberFormatException e) {
+      //
+    }
   }
 
   /** Identifier of abuse filter */
@@ -335,6 +385,18 @@ public class CheckErrorAlgorithm526 extends CheckErrorAlgorithmBase {
 
   /** Page containing a dump analysis */
   private String dumpAnalysis = null;
+
+  /** Minimum length of the number to be reported */
+  private int minLength = 3;
+
+  /** Maximum length of the number to be reported */
+  private int maxLength = 4;
+
+  /** Minimum difference below to report the link  */
+  private int minBelow = 1;
+
+  /** Minimum difference above to report the link */
+  private int minAbove = 1;
 
   /**
    * Build the list of parameters for this algorithm.
@@ -366,5 +428,29 @@ public class CheckErrorAlgorithm526 extends CheckErrorAlgorithmBase {
         new AlgorithmParameterElement(
             "page name",
             GT._T("A page containing a dump analysis for this error."))));
+    addParameter(new AlgorithmParameter(
+        PARAMETER_MIN_LENGTH,
+        GT._T("Minimum number of digits for the year"),
+        new AlgorithmParameterElement(
+            "length",
+            GT._T("Minimum number of digits for the year"))));
+    addParameter(new AlgorithmParameter(
+        PARAMETER_MAX_LENGTH,
+        GT._T("Maximum number of digits for the year"),
+        new AlgorithmParameterElement(
+            "length",
+            GT._T("Maximum number of digits for the year"))));
+    addParameter(new AlgorithmParameter(
+        PARAMETER_MIN_BELOW,
+        GT._T("Minimum difference between the year displayed and the year linked"),
+        new AlgorithmParameterElement(
+            "difference",
+            GT._T("Minimum difference between the year displayed and the year linked"))));
+    addParameter(new AlgorithmParameter(
+        PARAMETER_MIN_ABOVE,
+        GT._T("Minimum difference between the year linked and the year displayed"),
+        new AlgorithmParameterElement(
+            "length",
+            GT._T("Minimum difference between the year linked and the year displayed"))));
   }
 }
