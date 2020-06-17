@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2020-06-17 12:01+0200\n"
+"POT-Creation-Date: 2020-06-17 13:30+0200\n"
 "PO-Revision-Date: 2017-03-03 19:32+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Russian <ru@li.org>\n"
@@ -242,7 +242,7 @@ msgstr ""
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm055.java:169
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm066.java:93
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm077.java:93
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm525.java:160
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm525.java:166
 #, java-format
 msgid "Remove {0} tags"
 msgstr "Удалено {0} тэгов"
@@ -254,7 +254,7 @@ msgstr "Удалено {0} тэгов"
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm002.java:785
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm002.java:788
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm002.java:791
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm525.java:222
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm525.java:228
 #, java-format
 msgid "A replacement for {0}"
 msgstr ""
@@ -1241,15 +1241,22 @@ msgstr ""
 msgid "Use an anchor template?"
 msgstr "Поиск в шаблонах"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm525.java:226
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm525.java:232
 #, java-format
 msgid "A template that can replace a {0}"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm525.java:229
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm525.java:235
 #, fuzzy
 msgid "Name of the parameter to be used for the anchor identifier"
 msgstr "Получение шаблонов"
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm525.java:239
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm541.java:457
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm541.java:478
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm541.java:499
+msgid "If replacement can be automatic"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm526.java:409
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm526.java:412
@@ -1389,12 +1396,6 @@ msgstr "Шаблоны в {0}"
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm541.java:474
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm541.java:495
 msgid "Parameter to use in the template for the text"
-msgstr ""
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm541.java:457
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm541.java:478
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm541.java:499
-msgid "If replacement can be automatic"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm541.java:461

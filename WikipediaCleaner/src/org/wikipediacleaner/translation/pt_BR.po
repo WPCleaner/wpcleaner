@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2020-06-17 12:01+0200\n"
+"POT-Creation-Date: 2020-06-17 13:30+0200\n"
 "PO-Revision-Date: 2017-03-03 19:32+0000\n"
 "Last-Translator: Felipe L. <felipe.idj@hotmail.com>\n"
 "Language-Team: Brazilian Portuguese <pt_BR@li.org>\n"
@@ -255,7 +255,7 @@ msgstr "Corrigir todas as tags incorretas"
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm055.java:169
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm066.java:93
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm077.java:93
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm525.java:160
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm525.java:166
 #, java-format
 msgid "Remove {0} tags"
 msgstr "Remover as tags {0}"
@@ -267,7 +267,7 @@ msgstr "Remover as tags {0}"
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm002.java:785
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm002.java:788
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm002.java:791
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm525.java:222
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm525.java:228
 #, java-format
 msgid "A replacement for {0}"
 msgstr "Uma substituição para {0}"
@@ -1293,15 +1293,23 @@ msgstr ""
 msgid "Use an anchor template?"
 msgstr "Procurar em predefinições"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm525.java:226
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm525.java:232
 #, fuzzy, java-format
 msgid "A template that can replace a {0}"
 msgstr "Predefinições que podem ser usadas para substituir tags {0}"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm525.java:229
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm525.java:235
 #, fuzzy
 msgid "Name of the parameter to be used for the anchor identifier"
 msgstr "Predefinições pedidas"
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm525.java:239
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm541.java:457
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm541.java:478
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm541.java:499
+#, fuzzy
+msgid "If replacement can be automatic"
+msgstr "As seguintes substituições foram feitas:"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm526.java:409
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm526.java:412
@@ -1449,13 +1457,6 @@ msgstr "Predefinições que podem ser usadas para substituir tags {0}"
 #, fuzzy
 msgid "Parameter to use in the template for the text"
 msgstr "Qual é o nome desta seleção?"
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm541.java:457
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm541.java:478
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm541.java:499
-#, fuzzy
-msgid "If replacement can be automatic"
-msgstr "As seguintes substituições foram feitas:"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm541.java:461
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm541.java:482

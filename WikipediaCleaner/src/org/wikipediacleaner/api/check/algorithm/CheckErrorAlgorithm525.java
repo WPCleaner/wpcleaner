@@ -144,7 +144,13 @@ public class CheckErrorAlgorithm525 extends CheckErrorAlgorithmBase {
                 replacement.append(idParam);
                 replacement.append("}}");
                 replacement.append(internal);
-                errorResult.addReplacement(replacement.toString());
+                boolean automatic =
+                    (tag.getParametersCount() == 1) &&
+                    (anchorTemplate.length > 1) &&
+                    Boolean.parseBoolean(anchorTemplate[2]) &&
+                    !idParam.startsWith("mw") &&
+                    !idParam.startsWith("cite");
+                errorResult.addReplacement(replacement.toString(), automatic);
               }
             }
           }
@@ -227,6 +233,10 @@ public class CheckErrorAlgorithm525 extends CheckErrorAlgorithmBase {
             new AlgorithmParameterElement(
                 "parameter name",
                 GT._T("Name of the parameter to be used for the anchor identifier"),
+                true),
+            new AlgorithmParameterElement(
+                "true/false",
+                GT._T("If replacement can be automatic"),
                 true)
         },
         true));
