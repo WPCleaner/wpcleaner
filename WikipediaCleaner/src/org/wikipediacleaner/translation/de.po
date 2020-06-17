@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2020-06-17 08:31+0200\n"
+"POT-Creation-Date: 2020-06-17 12:01+0200\n"
 "PO-Revision-Date: 2016-08-13 08:51+0000\n"
 "Last-Translator: Crazy1880 <Unknown>\n"
 "Language-Team: German <de@li.org>\n"
@@ -1325,34 +1325,67 @@ msgstr "Alle Steuerzeichen entfernen"
 msgid "Fix bold and italic"
 msgstr "Korrigiere Überschriften in Fettdruck"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm541.java:209
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm541.java:216
 msgid "for marking an edit"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm541.java:213
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm541.java:220
 msgid "for anything else"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm541.java:229
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm541.java:239
 msgid "preferred for source code"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm541.java:233
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm541.java:243
 msgid "preferred for user input"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm541.java:237
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm541.java:247
 #, fuzzy
 msgid "preferred for variables"
 msgstr "Keine Fehler verfügbar"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm541.java:241
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm541.java:251
 msgid "preferred for output, function and tag names, etc."
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm541.java:245
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm541.java:258
 msgid "preferred for everything else"
 msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm541.java:446
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm541.java:467
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm541.java:488
+#, java-format
+msgid "Possible replacements for {0} tags"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm541.java:450
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm541.java:471
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm541.java:492
+#, java-format
+msgid "Template for replacing {0} tag"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm541.java:453
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm541.java:474
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm541.java:495
+msgid "Parameter to use in the template for the text"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm541.java:457
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm541.java:478
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm541.java:499
+msgid "If replacement can be automatic"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm541.java:461
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm541.java:482
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm541.java:503
+#, fuzzy
+msgid "Description of the template"
+msgstr "Vorlagen &erweitern"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm544.java:198
 msgid ""
@@ -1433,11 +1466,11 @@ msgstr "Vorlage"
 msgid "Template to ignore"
 msgstr "Vorlage"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm553.java:247
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm553.java:271
 msgid "Acceptable suffixes"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm553.java:250
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm553.java:274
 msgid "Acceptable suffix"
 msgstr ""
 

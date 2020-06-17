@@ -7,14 +7,18 @@
 
 package org.wikipediacleaner.api.check.algorithm;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
 import org.wikipediacleaner.api.API;
 import org.wikipediacleaner.api.APIException;
 import org.wikipediacleaner.api.APIFactory;
+import org.wikipediacleaner.api.algorithm.AlgorithmParameter;
+import org.wikipediacleaner.api.algorithm.AlgorithmParameterElement;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
+import org.wikipediacleaner.api.constants.WPCConfiguration;
 import org.wikipediacleaner.api.data.LinterCategory;
 import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.Page;
@@ -187,6 +191,9 @@ public class CheckErrorAlgorithm541 extends CheckErrorAlgorithmBase {
     // Default replacement: use div tag with style
     CheckErrorResult errorResult = createCheckErrorResult(
         analysis, tag.getCompleteBeginIndex(), tag.getCompleteEndIndex());
+    for (String[] template : centerTemplates) {
+      replaceTag(analysis, errorResult, tag, template);
+    }
     replaceTag(
         analysis, errorResult,
         tag, PageElementTag.TAG_HTML_DIV, "style=\"text-align: center;\"",
@@ -211,6 +218,9 @@ public class CheckErrorAlgorithm541 extends CheckErrorAlgorithmBase {
         analysis, errorResult,
         tag, PageElementTag.TAG_HTML_S, null,
         GT._T("for anything else"), false);
+    for (String[] template : strikeTemplates) {
+      replaceTag(analysis, errorResult, tag, template);
+    }
     return errorResult;
   }
 
@@ -239,6 +249,9 @@ public class CheckErrorAlgorithm541 extends CheckErrorAlgorithmBase {
         analysis, errorResult,
         tag, PageElementTag.TAG_HTML_SAMP, null,
         GT._T("preferred for output, function and tag names, etc."), false);
+    for (String[] template : ttTemplates) {
+      replaceTag(analysis, errorResult, tag, template);
+    }
     replaceTag(
         analysis, errorResult,
         tag, PageElementTag.TAG_HTML_SPAN, "style=\"font-family: monospace;\"",
@@ -247,6 +260,8 @@ public class CheckErrorAlgorithm541 extends CheckErrorAlgorithmBase {
   }
 
   /**
+   * Handle the replacement of a tag by another tag.
+   * 
    * @param analysis Page analysis.
    * @param errorResult Error.
    * @param tag Initial tag.
@@ -270,6 +285,37 @@ public class CheckErrorAlgorithm541 extends CheckErrorAlgorithmBase {
     String text = openTag + "..." + closeTag;
     if (comment != null) {
       text += " (" + comment + ")";
+    }
+    errorResult.addReplacement(replacement, text, automatic);
+  }
+
+  /**
+   * Handle the replacement of a template.
+   * 
+   * @param analysis Page analysis.
+   * @param errorResult Error.
+   * @param tag Initial tag.
+   * @param config Configuration for the replacement.
+   */
+  private void replaceTag(
+      PageAnalysis analysis,
+      CheckErrorResult errorResult,
+      PageElementTag tag,
+      String[] config) {
+    if ((config == null) || (config.length == 0)) {
+      return;
+    }
+    String internalText = analysis.getContents().substring(tag.getValueBeginIndex(), tag.getValueEndIndex());
+    boolean hasEqual = (internalText.indexOf('=') >= 0);
+    String openTemplate =
+        "{{" + config[0] +
+        "|" + (config.length > 1 ? config[1] : (hasEqual ? "1=" : ""));
+    String closeTemplate = "}}";
+    String replacement = openTemplate + internalText + closeTemplate;
+    String text = openTemplate + "..." + closeTemplate;
+    boolean automatic = (config.length > 2) ? Boolean.parseBoolean(config[2]) : false;
+    if ((config.length > 3) && !config[3].isEmpty()) {
+      text += " (" + config[3] + ")";
     }
     errorResult.addReplacement(replacement, text, automatic);
   }
@@ -324,6 +370,15 @@ public class CheckErrorAlgorithm541 extends CheckErrorAlgorithmBase {
   /* PARAMETERS                                                             */
   /* ====================================================================== */
 
+  /** List of templates for replacing &lt;center&gt;...&lt;/center&gt; tags */
+  private static final String PARAMETER_CENTER_TEMPLATES = "center_templates";
+
+  /** List of templates for replacing &lt;strike&gt;...&lt;/strike&gt; tags */
+  private static final String PARAMETER_STRIKE_TEMPLATES = "strike_templates";
+
+  /** List of templates for replacing &lt;tt&gt;...&lt;/tt&gt; tags */
+  private static final String PARAMETER_TT_TEMPLATES = "tt_templates";
+
   /**
    * Initialize settings for the algorithm.
    * 
@@ -339,8 +394,115 @@ public class CheckErrorAlgorithm541 extends CheckErrorAlgorithmBase {
         }
       }
     }
+
+    String tmp = getSpecificProperty(PARAMETER_CENTER_TEMPLATES, true, true, false);
+    centerTemplates.clear();
+    if (tmp != null) {
+      List<String[]> tmpList = WPCConfiguration.convertPropertyToStringArrayList(tmp);
+      if (tmpList != null) {
+        centerTemplates.addAll(tmpList);
+      }
+    }
+
+    tmp = getSpecificProperty(PARAMETER_STRIKE_TEMPLATES, true, true, false);
+    strikeTemplates.clear();
+    if (tmp != null) {
+      List<String[]> tmpList = WPCConfiguration.convertPropertyToStringArrayList(tmp);
+      if (tmpList != null) {
+        strikeTemplates.addAll(tmpList);
+      }
+    }
+
+    tmp = getSpecificProperty(PARAMETER_TT_TEMPLATES, true, true, false);
+    ttTemplates.clear();
+    if (tmp != null) {
+      List<String[]> tmpList = WPCConfiguration.convertPropertyToStringArrayList(tmp);
+      if (tmpList != null) {
+        ttTemplates.addAll(tmpList);
+      }
+    }
   }
 
   /** Linter category */
   private LinterCategory linterCategory = null;
+
+  /** List of templates for replacing &lt;center&gt;...&lt;/center&gt; tags */
+  private final List<String[]> centerTemplates = new ArrayList<>();
+
+  /** List of templates for replacing &lt;strike&gt;...&lt;/strike&gt; tags */
+  private final List<String[]> strikeTemplates = new ArrayList<>();
+
+  /** List of templates for replacing &lt;tt&gt;...&lt;/tt&gt; tags */
+  private final List<String[]> ttTemplates = new ArrayList<>();
+
+  /**
+   * Build the list of parameters for this algorithm.
+   */
+  @Override
+  protected void addParameters() {
+    super.addParameters();
+    addParameter(new AlgorithmParameter(
+        PARAMETER_CENTER_TEMPLATES,
+        GT._T("Possible replacements for {0} tags", "<center>...</center>"),
+        new AlgorithmParameterElement[] {
+          new AlgorithmParameterElement(
+              "template name",
+              GT._T("Template for replacing {0} tag", "<center>...</center>")),
+          new AlgorithmParameterElement(
+              "parameter name",
+              GT._T("Parameter to use in the template for the text"),
+              true),
+          new AlgorithmParameterElement(
+              "true/false",
+              GT._T("If replacement can be automatic"),
+              true),
+          new AlgorithmParameterElement(
+              "explanation",
+              GT._T("Description of the template"),
+              true)
+        },
+        true));
+    addParameter(new AlgorithmParameter(
+        PARAMETER_STRIKE_TEMPLATES,
+        GT._T("Possible replacements for {0} tags", "<strike>...</strike>"),
+        new AlgorithmParameterElement[] {
+          new AlgorithmParameterElement(
+              "template name",
+              GT._T("Template for replacing {0} tag", "<strike>...</strike>")),
+          new AlgorithmParameterElement(
+              "parameter name",
+              GT._T("Parameter to use in the template for the text"),
+              true),
+          new AlgorithmParameterElement(
+              "true/false",
+              GT._T("If replacement can be automatic"),
+              true),
+          new AlgorithmParameterElement(
+              "explanation",
+              GT._T("Description of the template"),
+              true)
+        },
+        true));
+    addParameter(new AlgorithmParameter(
+        PARAMETER_TT_TEMPLATES,
+        GT._T("Possible replacements for {0} tags", "<tt>...</tt>"),
+        new AlgorithmParameterElement[] {
+          new AlgorithmParameterElement(
+              "template name",
+              GT._T("Template for replacing {0} tag", "<tt>...</tt>")),
+          new AlgorithmParameterElement(
+              "parameter name",
+              GT._T("Parameter to use in the template for the text"),
+              true),
+          new AlgorithmParameterElement(
+              "true/false",
+              GT._T("If replacement can be automatic"),
+              true),
+          new AlgorithmParameterElement(
+              "explanation",
+              GT._T("Description of the template"),
+              true)
+        },
+        true));
+  }
 }

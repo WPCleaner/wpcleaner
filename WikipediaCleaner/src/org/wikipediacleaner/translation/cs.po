@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2020-06-17 08:31+0200\n"
+"POT-Creation-Date: 2020-06-17 12:01+0200\n"
 "PO-Revision-Date: 2017-03-03 19:31+0000\n"
 "Last-Translator: Matěj S. <matejsuchanek97@gmail.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
@@ -1376,34 +1376,69 @@ msgstr "Odstranit všechny řídící znaky"
 msgid "Fix bold and italic"
 msgstr "Opravit všechny ztučněné nadpisy"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm541.java:209
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm541.java:216
 msgid "for marking an edit"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm541.java:213
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm541.java:220
 msgid "for anything else"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm541.java:229
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm541.java:239
 msgid "preferred for source code"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm541.java:233
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm541.java:243
 msgid "preferred for user input"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm541.java:237
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm541.java:247
 #, fuzzy
 msgid "preferred for variables"
 msgstr "Žádné chyby k dispozici"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm541.java:241
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm541.java:251
 msgid "preferred for output, function and tag names, etc."
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm541.java:245
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm541.java:258
 msgid "preferred for everything else"
 msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm541.java:446
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm541.java:467
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm541.java:488
+#, fuzzy, java-format
+msgid "Possible replacements for {0} tags"
+msgstr "Náhrada za {0}"
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm541.java:450
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm541.java:471
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm541.java:492
+#, fuzzy, java-format
+msgid "Template for replacing {0} tag"
+msgstr "Šablony, které mohou nahradit tagy {0}"
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm541.java:453
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm541.java:474
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm541.java:495
+#, fuzzy
+msgid "Parameter to use in the template for the text"
+msgstr "Jaké je jméno výběru?"
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm541.java:457
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm541.java:478
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm541.java:499
+#, fuzzy
+msgid "If replacement can be automatic"
+msgstr "Následující nahrazení byla provedena:"
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm541.java:461
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm541.java:482
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm541.java:503
+#, fuzzy
+msgid "Description of the template"
+msgstr "Popis"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm544.java:198
 msgid ""
@@ -1490,11 +1525,11 @@ msgstr "Šablona"
 msgid "Template to ignore"
 msgstr "Šablona"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm553.java:247
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm553.java:271
 msgid "Acceptable suffixes"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm553.java:250
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm553.java:274
 msgid "Acceptable suffix"
 msgstr ""
 
