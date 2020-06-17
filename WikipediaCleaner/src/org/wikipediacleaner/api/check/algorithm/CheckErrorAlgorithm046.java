@@ -91,6 +91,7 @@ public class CheckErrorAlgorithm046 extends CheckErrorAlgorithmBase {
       if (shouldCount &&
           (analysis.isInComment(currentIndex) != null) ||
           (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_NOWIKI, currentIndex) != null) ||
+          (analysis.getSurroundingTag(PageElementTag.TAG_HTML_CODE, currentIndex) != null) ||
           (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_MAPFRAME, currentIndex) != null) ||
           (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_MATH, currentIndex) != null) ||
           (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_MATH_CHEM, currentIndex) != null) ||
