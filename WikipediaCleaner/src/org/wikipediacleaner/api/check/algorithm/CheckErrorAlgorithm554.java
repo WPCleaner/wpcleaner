@@ -100,7 +100,7 @@ public class CheckErrorAlgorithm554 extends CheckErrorAlgorithmBase {
           nowikiTag.getValueEndIndex());
       if ((contents.charAt(nowikiTag.getBeginIndex() - 1) == '|') &&
           (internalText.trim().length() == 0)) {
-        errorResult.addReplacement("");
+        errorResult.addReplacement("", true);
       }
     }
     errors.add(errorResult);
