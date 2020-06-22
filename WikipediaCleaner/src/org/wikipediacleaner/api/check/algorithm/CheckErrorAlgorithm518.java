@@ -66,6 +66,7 @@ public class CheckErrorAlgorithm518 extends CheckErrorAlgorithmBase {
     boolean result = false;
     CheckErrorAlgorithm553 algo553 = (CheckErrorAlgorithm553) CheckErrorAlgorithms.getAlgorithm(analysis.getWikipedia(), 553);
     CheckErrorAlgorithm554 algo554 = (CheckErrorAlgorithm554) CheckErrorAlgorithms.getAlgorithm(analysis.getWikipedia(), 554);
+    CheckErrorAlgorithm555 algo555 = (CheckErrorAlgorithm555) CheckErrorAlgorithms.getAlgorithm(analysis.getWikipedia(), 555);
     for (PageElementTag tag : tags) {
 
       // Check if the tag is already detected by another algorithm
@@ -75,6 +76,9 @@ public class CheckErrorAlgorithm518 extends CheckErrorAlgorithmBase {
       }
       if ((algo554 != null) && !ignore) {
         ignore |= algo554.analyzeTag(analysis, null, tag);
+      }
+      if ((algo555 != null) && !ignore) {
+        ignore |= algo555.analyzeTag(analysis, null, tag);
       }
 
       // Report the tag if needed
