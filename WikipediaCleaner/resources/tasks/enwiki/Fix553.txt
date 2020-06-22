@@ -1,4 +1,3 @@
 DoTasks _Common.txt
 Set Prefix [[User:WikiCleanerBot#T18|Bot_T18]]
-# Set Prefix [[Wikipedia:Bots/Requests_for_approval/WikiCleanerBot_18|Test_Bot_T18]]
 FixListCheckWiki Wikipedia:CHECKWIKI/WPC_553_dump 553
