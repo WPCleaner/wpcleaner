@@ -691,6 +691,7 @@
           <arg value="-kGT.__:1,2" />
           <arg value="--from-code=utf-8" />
           <arg value="--language=Java" />
+          <arg value="--no-wrap" />
           <arg value="--msgid-bugs-address=nicove@users.sourceforge.net"/>
           <arg value="--output-dir=${basedir}/${WPCleaner.po.dir}/tmp" />
           <arg value="--output=WikiCleaner.pot" />
@@ -781,7 +782,7 @@
     <echo message="Updating wikicleaner-${WPCleaner_lang_value}.po gettext file for WPCleaner ..." level="info"/>
     <delete file="${WPCleaner.po.dir}/tstamp.${WPCleaner_lang_value}.po_"/>
     <exec executable="${gettext.msgmerge}" dir="${basedir}/${WPCleaner.po.dir}">
-      <arg line="-U ${WPCleaner_lang_value}.po WikiCleaner.pot"/>
+      <arg line="-U --no-wrap ${WPCleaner_lang_value}.po WikiCleaner.pot"/>
     </exec>
     <touch file="${WPCleaner.po.dir}/tstamp.${WPCleaner_lang_value}.po_"/>
     <delete file="${WPCleaner.po.dir}/${WPCleaner_lang_value}.po~"/>
