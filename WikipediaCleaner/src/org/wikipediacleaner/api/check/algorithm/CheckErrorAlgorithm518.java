@@ -63,17 +63,29 @@ public class CheckErrorAlgorithm518 extends CheckErrorAlgorithmBase {
     if ((tags == null) || (tags.isEmpty())) {
       return false;
     }
-    if (errors == null) {
-      return true;
-    }
     boolean result = false;
+    CheckErrorAlgorithm553 algo553 = (CheckErrorAlgorithm553) CheckErrorAlgorithms.getAlgorithm(analysis.getWikipedia(), 553);
+    CheckErrorAlgorithm554 algo554 = (CheckErrorAlgorithm554) CheckErrorAlgorithms.getAlgorithm(analysis.getWikipedia(), 554);
     for (PageElementTag tag : tags) {
-      if (tag.isFullTag()) {
-        result |= analyzeFullTag(analysis, errors, tag);
-      } else if (tag.isComplete()) {
-        result |= analyzeCompleteTag(analysis, errors, tag);
-      } else {
-        result |= analyzePartialTag(analysis, errors, tag);
+
+      // Check if the tag is already detected by another algorithm
+      boolean ignore = false;
+      if ((algo553 != null) && !ignore) {
+        ignore |= algo553.analyzeTag(analysis, null, tag);
+      }
+      if ((algo554 != null) && !ignore) {
+        ignore |= algo554.analyzeTag(analysis, null, tag);
+      }
+
+      // Report the tag if needed
+      if (!ignore) {
+        if (tag.isFullTag()) {
+          result |= analyzeFullTag(analysis, errors, tag);
+        } else if (tag.isComplete()) {
+          result |= analyzeCompleteTag(analysis, errors, tag);
+        } else {
+          result |= analyzePartialTag(analysis, errors, tag);
+        }
       }
     }
 
@@ -196,18 +208,9 @@ public class CheckErrorAlgorithm518 extends CheckErrorAlgorithmBase {
     int beginIndex = tag.getBeginIndex();
     int endIndex = tag.getEndIndex();
 
-    // Ignore <nowiki/> just after an internal link: see #553
-    PageElementInternalLink link = analysis.isInInternalLink(beginIndex - 1);
-    if ((link != null) && (link.getEndIndex() == beginIndex)) {
-      return false;
-    }
-    if (errors == null) {
-      return true;
-    }
-
     // Check for <nowiki/> inside an internal link
     String contents = analysis.getContents();
-    link = analysis.isInInternalLink(beginIndex);
+    PageElementInternalLink link = analysis.isInInternalLink(beginIndex);
     if (link != null) {
       int index = beginIndex;
       while ((index > link.getBeginIndex() + link.getTextOffset()) &&
