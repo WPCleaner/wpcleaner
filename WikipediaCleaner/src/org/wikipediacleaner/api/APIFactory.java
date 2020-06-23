@@ -51,13 +51,13 @@ public class APIFactory {
     PoolingHttpClientConnectionManager connManager = new PoolingHttpClientConnectionManager();
     connManager.setMaxTotal(200);
     connManager.setDefaultMaxPerRoute(50);
-    HttpServer labs = new Hc5HttpServer(createHttpClient(connManager), "https://tools.wmflabs.org/"); */
+    HttpServer labs = new Hc5HttpServer(createHttpClient(connManager), "https://checkwiki.toolforge.org/"); */
     connectionManager = new MultiThreadedHttpConnectionManager();
     httpClient = createHttpClient(connectionManager);
-    HttpServer labs = new Hc3HttpServer(httpClient, "https://tools.wmflabs.org/");
+    HttpServer labs = new Hc3HttpServer(httpClient, "https://checkwiki.toolforge.org/");
 
     // Initialize Check Wiki project
-    checkWiki = new CheckWiki(labs);
+    checkWiki = new CheckWiki(labs, "");
   }
 
   /**

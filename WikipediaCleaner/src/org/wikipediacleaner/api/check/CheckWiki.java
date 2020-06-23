@@ -52,6 +52,11 @@ public class CheckWiki {
   private final HttpServer labs;
 
   /**
+   * Root path on WMF labs.
+   */
+  private final String rootPath;
+
+  /**
    * List of listeners for Check Wiki events.
    */
   private final List<WeakReference<CheckWikiListener>> listeners;
@@ -59,8 +64,9 @@ public class CheckWiki {
   /**
    * @param labs WMF Labs
    */
-  public CheckWiki(HttpServer labs) {
+  public CheckWiki(HttpServer labs, String rootPath) {
     this.labs = labs;
+    this.rootPath = ((rootPath != null) && !rootPath.isEmpty()) ? rootPath + "/" : "";
     this.listeners = new ArrayList<WeakReference<CheckWikiListener>>();
   }
 
@@ -95,14 +101,14 @@ public class CheckWiki {
     properties.put("project", code);
     if (!useBotList) {
       properties.put("view", "bots");
-      String url = "checkwiki/cgi-bin/checkwiki.cgi";
+      String url = rootPath + "cgi-bin/checkwiki.cgi";
       HttpServer server = labs;
       server.sendPost(
           url, properties,
           new PagesResponseManager(true, algorithm, wiki, errors));
     } else {
       properties.put("action", "list");
-      String url = "checkwiki/cgi-bin/checkwiki_bots.cgi";
+      String url = rootPath + "cgi-bin/checkwiki_bots.cgi";
       HttpServer server = labs;
       server.sendPost(
           url, properties,
@@ -138,10 +144,10 @@ public class CheckWiki {
       properties.put("title", page.getTitle());
       if (!useBotList) {
         properties.put("view", "only");
-        labs.sendPost("checkwiki/cgi-bin/checkwiki.cgi", properties, null);
+        labs.sendPost(rootPath + "cgi-bin/checkwiki.cgi", properties, null);
       } else {
         properties.put("action", "mark");
-        labs.sendPost("checkwiki/cgi-bin/checkwiki_bots.cgi", properties, null);
+        labs.sendPost(rootPath + "cgi-bin/checkwiki_bots.cgi", properties, null);
       }
 
     } catch (NumberFormatException e) {
@@ -168,7 +174,7 @@ public class CheckWiki {
       properties.put("article", page.getTitle());
       detections = new ArrayList<CheckWikiDetection>();
       labs.sendPost(
-          "checkwiki/cgi-bin/checkarticle.cgi", properties,
+          rootPath + "cgi-bin/checkarticle.cgi", properties,
           new CheckResponseManager(detections));
       return detections;
     } catch (APIException e) {
@@ -251,7 +257,7 @@ public class CheckWiki {
   public String getUrlDescription(
       final EnumWikipedia wiki,
       final CheckErrorAlgorithm algorithm) {
-    String path = "checkwiki/cgi-bin/checkwiki.cgi";
+    String path = rootPath + "cgi-bin/checkwiki.cgi";
     HttpServer server = labs;
     String url =
         server.getBaseUrl() + path +

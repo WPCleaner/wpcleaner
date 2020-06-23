@@ -823,8 +823,8 @@ public class InstallerWindow
         log.info("Downloading getdown.txt");
         setText(GT._T("Downloading {0}", "getdown.txt"));
         String remoteFolder = beta ?
-            "https://tools.wmflabs.org/wpcleaner/wpcleaner-test" :
-            "https://tools.wmflabs.org/wpcleaner/wpcleaner";
+            "https://wpcleaner.toolforge.org/wpcleaner-test" :
+            "https://wpcleaner.toolforge.org/wpcleaner";
         FileUtils.copyURLToFile(
             new URL(remoteFolder + "/getdown.txt"),
             new File (directory, "getdown.txt"),
@@ -838,7 +838,7 @@ public class InstallerWindow
         log.info("Downloading getdown.jar");
         setText(GT._T("Downloading {0}", "getdown.jar"));
         FileUtils.copyURLToFile(
-            new URL("https://tools.wmflabs.org/wpcleaner/install/getdown.jar"),
+            new URL("https://wpcleaner.toolforge.org/install/getdown.jar"),
             new File (directory, "getdown.jar"),
             CONNECTION_TIMEOUT, READ_TIMEOUT);
         log.info("Downloaded getdown.jar");
