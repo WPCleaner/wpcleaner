@@ -1,23 +1,26 @@
-# French translation for wikicleaner
-# Copyright (c) 2012 Rosetta Contributors and Canonical Ltd 2012
+# Translation of WPCleaner to French (français)
+# Exported from translatewiki.net
+#
+# --
 # This file is distributed under the same license as the wikicleaner package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2012.
 #
 msgid ""
 msgstr ""
+""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2020-06-22 19:54+0200\n"
-"PO-Revision-Date: 2020-06-17 12:06+0200\n"
+"PO-Revision-Date: 2020-06-23 09:55:38+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: French <fr@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=n > 1;\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Launchpad-Export-Date: 2018-01-31 07:53+0000\n"
-"X-Generator: Poedit 2.3.1\n"
+"X-Generator: MediaWiki 1.35.0-alpha; Translate 2020-04-20\n"
 "Language: fr\n"
+"X-POT-Import-Date: 2020-06-22 14:35:54+0000\n"
 
 #: org/wikipediacleaner/Version.java:31
 #, java-format
@@ -599,12 +602,8 @@ msgstr "Annuler"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:314
 #, java-format
-msgid ""
-"The page \"{0}\" in \"{1}\" has a language link to \"{2}\": {3}.\n"
-"With what text do you want to replace the link ?"
-msgstr ""
-"La page « {0} » de « {1} » a un lien interlangue vers « {2} » : {3}.\n"
-"Par quel texte voulez-vous remplacer ce lien ?"
+msgid "The page \"{0}\" in \"{1}\" has a language link to \"{2}\": {3}.\nWith what text do you want to replace the link ?"
+msgstr "La page « {0} » de « {1} » a un lien interlangue vers « {2} » : {3}.\nPar quel texte voulez-vous remplacer ce lien ?"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:327
 #, java-format
@@ -1758,20 +1757,12 @@ msgid "URL {0} is blacklisted"
 msgstr "L’URL {0} est en liste noire"
 
 #: org/wikipediacleaner/api/impl/MediaWikiAPI.java:1876
-msgid ""
-"This action is protected by a CAPTCHA.\n"
-"What is the answer to the following question ?"
-msgstr ""
-"Cette action est protégée par un CAPTCHA.\n"
-"Quelle est la réponse à la question suivante ?"
+msgid "This action is protected by a CAPTCHA.\nWhat is the answer to the following question ?"
+msgstr "Cette action est protégée par un CAPTCHA.\nQuelle est la réponse à la question suivante ?"
 
 #: org/wikipediacleaner/api/impl/MediaWikiAPI.java:1883
-msgid ""
-"This action is protected by a CAPTCHA.\n"
-"What is the answer to the question displayed in your browser ?"
-msgstr ""
-"Cette action est protégée par un CAPTCHA.\n"
-"Quelle est la réponse à la question affichée dans votre navigateur ?"
+msgid "This action is protected by a CAPTCHA.\nWhat is the answer to the question displayed in your browser ?"
+msgstr "Cette action est protégée par un CAPTCHA.\nQuelle est la réponse à la question affichée dans votre navigateur ?"
 
 #: org/wikipediacleaner/gui/swing/AboutWindow.java:61
 #: org/wikipediacleaner/gui/swing/MainWindow.java:496
@@ -1976,12 +1967,8 @@ msgstr "Non, {0} pages"
 
 #: org/wikipediacleaner/gui/swing/Controller.java:245
 #, java-format
-msgid ""
-"You have selected {0} pages.\n"
-"Would you like to analyze more than {1} pages ?"
-msgstr ""
-"Vous avez sélectionné {0} pages.\n"
-"Voulez-vous analyser plus de {1} pages ?"
+msgid "You have selected {0} pages.\nWould you like to analyze more than {1} pages ?"
+msgstr "Vous avez sélectionné {0} pages.\nVoulez-vous analyser plus de {1} pages ?"
 
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:138
 #, java-format
@@ -2396,14 +2383,8 @@ msgid "Bot tools"
 msgstr "Outils pour robot"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:906
-msgid ""
-"Demo mode is only available for testing WPCleaner.\n"
-"You won't be able to modify pages on Wikipedia in Demo mode.\n"
-"Do you want to continue ?"
-msgstr ""
-"Le mode Démo est disponible uniquement pour tester WPCleaner.\n"
-"Vous ne pourrez pas modifier les pages de Wikipédia en mode Démo.\n"
-"Voulez-vous continuer ?"
+msgid "Demo mode is only available for testing WPCleaner.\nYou won't be able to modify pages on Wikipedia in Demo mode.\nDo you want to continue ?"
+msgstr "Le mode Démo est disponible uniquement pour tester WPCleaner.\nVous ne pourrez pas modifier les pages de Wikipédia en mode Démo.\nVoulez-vous continuer ?"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:925
 msgid "You must select which Wikipedia you want to work on before login"
@@ -2435,9 +2416,7 @@ msgid "Deactivate all"
 msgstr "Tout désactiver"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1232
-msgid ""
-"The password will be saved on your disk, so anyone having access to your computer may be able to get it.\n"
-"Are you sure that you want to save it ?"
+msgid "The password will be saved on your disk, so anyone having access to your computer may be able to get it.\nAre you sure that you want to save it ?"
 msgstr "Sauvegarder le mot de passe de votre compte Wikipédia sur cet ordinateur ?"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1299
@@ -2953,12 +2932,8 @@ msgid "Delete page"
 msgstr "Supprimer cette page"
 
 #: org/wikipediacleaner/gui/swing/action/ActionDeletePage.java:130
-msgid ""
-"Do you want to delete this page on Wikipedia ?\n"
-"Please, enter the reason for deleting the page"
-msgstr ""
-"Voulez-vous supprimer cette page sur Wikipédia ?\n"
-"Merci de saisir la raison de la suppression de cette page"
+msgid "Do you want to delete this page on Wikipedia ?\nPlease, enter the reason for deleting the page"
+msgstr "Voulez-vous supprimer cette page sur Wikipédia ?\nMerci de saisir la raison de la suppression de cette page"
 
 #: org/wikipediacleaner/gui/swing/action/ActionDisambiguationAnalysis.java:250
 msgid "You must input a page name for running a disambiguation analysis"
@@ -3056,32 +3031,18 @@ msgstr "Impossible de trouver si la catégorie {0} existe dans \"{1}\"."
 
 #: org/wikipediacleaner/gui/swing/action/CheckCategoryLinkAction.java:98
 #, java-format
-msgid ""
-"The category {0} exists in \"{1}\".\n"
-"Do you want to replace the category by [[{2}]] ?"
-msgstr ""
-"La catégorie {0} existe dans \"{1}\".\n"
-"Voulez-vous remplacer la catégorie par [[{2}]] ?"
+msgid "The category {0} exists in \"{1}\".\nDo you want to replace the category by [[{2}]] ?"
+msgstr "La catégorie {0} existe dans \"{1}\".\nVoulez-vous remplacer la catégorie par [[{2}]] ?"
 
 #: org/wikipediacleaner/gui/swing/action/CheckCategoryLinkAction.java:120
 #, java-format
-msgid ""
-"The category {0} in the {1} Wikipedia doesn''t have a language link to the {2} Wikipedia.\n"
-"It doesn''t exist either in the {2} Wikipedia."
-msgstr ""
-"La catégorie {0} sur {1}wiki n’a pas de lien inter-langue vers {2}wiki.\n"
-"Elle n’existe pas non plus sur {2}wiki."
+msgid "The category {0} in the {1} Wikipedia doesn''t have a language link to the {2} Wikipedia.\nIt doesn''t exist either in the {2} Wikipedia."
+msgstr "La catégorie {0} sur {1}wiki n’a pas de lien inter-langue vers {2}wiki.\nElle n’existe pas non plus sur {2}wiki."
 
 #: org/wikipediacleaner/gui/swing/action/CheckCategoryLinkAction.java:129
 #, java-format
-msgid ""
-"The category {0} doesn''t exist in the {2} Wikipedia.\n"
-"In the {1} Wikipedia, it has a language link to the {2} Wikipedia: {3}.\n"
-"Do you want to replace the category by [[{3}]] ?"
-msgstr ""
-"La catégorie {0} n’existe pas sur {2}wiki.\n"
-"Sur {1}wiki, il existe un lien interlangue vers {2}wiki : {3}.\n"
-"Voulez-vous remplacer cette catégorie par [[{3}]] ?"
+msgid "The category {0} doesn''t exist in the {2} Wikipedia.\nIn the {1} Wikipedia, it has a language link to the {2} Wikipedia: {3}.\nDo you want to replace the category by [[{3}]] ?"
+msgstr "La catégorie {0} n’existe pas sur {2}wiki.\nSur {1}wiki, il existe un lien interlangue vers {2}wiki : {3}.\nVoulez-vous remplacer cette catégorie par [[{3}]] ?"
 
 #: org/wikipediacleaner/gui/swing/action/CheckLanguageLinkAction.java:85
 #, java-format
@@ -3138,12 +3099,8 @@ msgstr "Voulez-vous quand-même effectuer la modification ?"
 
 #: org/wikipediacleaner/gui/swing/action/ReplaceLinkAction.java:233
 #, java-format
-msgid ""
-"The link can be extended to include text before or after the current link.\n"
-"Would you like to extend the link to \"{0}\"?"
-msgstr ""
-"Le lien peut être étendu pour inclure le texte avant ou après le lien actuel.\n"
-"Voulez-vous étendre le lien en « {0} » ?"
+msgid "The link can be extended to include text before or after the current link.\nWould you like to extend the link to \"{0}\"?"
+msgstr "Le lien peut être étendu pour inclure le texte avant ou après le lien actuel.\nVoulez-vous étendre le lien en « {0} » ?"
 
 #: org/wikipediacleaner/gui/swing/basic/BasicWindow.java:64
 #, java-format
@@ -3453,9 +3410,9 @@ msgstr[1] "{0} pages ont été analysées"
 
 #: org/wikipediacleaner/gui/swing/bot/ListCWWorker.java:616
 #, java-format
-msgid "{0} page has been detected for algorithm {1}"
+msgid "{0} page has been detected for algorithm {1}}"
 msgid_plural "{0} pages have been detected for algorithm {1}"
-msgstr[0] "{0} page a été détectée pour l’algorithme {1}"
+msgstr[0] "{0} page a été détectée pour l’algorithme {1}}"
 msgstr[1] "{0} pages ont été détectées pour l’algorithme {1}"
 
 #: org/wikipediacleaner/gui/swing/bot/ListCWWorker.java:786
@@ -3485,12 +3442,8 @@ msgstr "Marquer les erreurs comme déjà corrigées"
 
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiContentPanel.java:420
 #, java-format
-msgid ""
-"The error n°{0} hasn''t been found on the page {1}.\n"
-"Do you want to mark it as fixed?"
-msgstr ""
-"L’erreur n°{0} n’a pas été détectée dans la page {1}.\n"
-"Voulez-vous la marquer comme corrigée ?"
+msgid "The error n°{0} hasn''t been found on the page {1}.\nDo you want to mark it as fixed?"
+msgstr "L’erreur n°{0} n’a pas été détectée dans la page {1}.\nVoulez-vous la marquer comme corrigée ?"
 
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiContentPanel.java:430
 #, java-format
@@ -3520,20 +3473,12 @@ msgstr "Êtes-vous certain de vouloir la marquer comme corrigée ?"
 
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiContentPanel.java:609
 #, java-format
-msgid ""
-"The error n°{0} is still found on the page.\n"
-"Are you really sure that you want to mark it as fixed ?"
-msgstr ""
-"L’erreur n° {0} est toujours présente dans la page.\n"
-"Êtes-vous certain de vouloir la marquer comme corrigée ?"
+msgid "The error n°{0} is still found on the page.\nAre you really sure that you want to mark it as fixed ?"
+msgstr "L’erreur n° {0} est toujours présente dans la page.\nÊtes-vous certain de vouloir la marquer comme corrigée ?"
 
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiContentPanel.java:621
-msgid ""
-"You have already fixed this error by modifying the page.\n"
-"You should send your modifications, the page will be marked as fixed."
-msgstr ""
-"Vous avez déjà corrigé cette erreur en modifiant la page.\n"
-"Vous devriez envoyer vos modifications, la page sera marquée comme corrigée."
+msgid "You have already fixed this error by modifying the page.\nYou should send your modifications, the page will be marked as fixed."
+msgstr "Vous avez déjà corrigé cette erreur en modifiant la page.\nVous devriez envoyer vos modifications, la page sera marquée comme corrigée."
 
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiWindow.java:222
 msgid "No errors available"
@@ -3668,29 +3613,13 @@ msgstr "L’erreur n° {0} peut être configurée sur la <a href=\"{1}\">page d
 
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiWindow.java:1221
 #, java-format
-msgid ""
-"There''s no page defined for this error type.\n"
-"If you want to define a page you need to add :\n"
-"  {0} = <page name> END\n"
-"to the translation page ({1}) on \"{2}\""
-msgstr ""
-"Il n’y a pas de page définie pour cette erreur.\n"
-"Si vous voulez définir une page, vous devez ajouter :\n"
-"  {0} = <nom de page> END\n"
-"à la page de traduction ({1}) sur \"{2}\""
+msgid "There''s no page defined for this error type.\nIf you want to define a page you need to add :\n  {0} = <page name> END\nto the translation page ({1}) on \"{2}\""
+msgstr "Il n’y a pas de page définie pour cette erreur.\nSi vous voulez définir une page, vous devez ajouter :\n  {0} = <nom de page> END\nà la page de traduction ({1}) sur \"{2}\""
 
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiWindow.java:1266
 #, java-format
-msgid ""
-"There''s no whitelist defined for this error type.\n"
-"If you want to define a whitelist, you need to add:\n"
-"  {0} = <page name> END\n"
-"to the translation page ({1}) on \"{2}\""
-msgstr ""
-"Il n’y a pas de liste blanche définie pour cette erreur.\n"
-"Si vous voulez définir une liste blanche, vous devez ajouter :\n"
-"  {0} = <nom de page> END\n"
-"à la page de traduction ({1}) sur \"{2}\""
+msgid "There''s no whitelist defined for this error type.\nIf you want to define a whitelist, you need to add:\n  {0} = <page name> END\nto the translation page ({1}) on \"{2}\""
+msgstr "Il n’y a pas de liste blanche définie pour cette erreur.\nSi vous voulez définir une liste blanche, vous devez ajouter :\n  {0} = <nom de page> END\nà la page de traduction ({1}) sur \"{2}\""
 
 #: org/wikipediacleaner/gui/swing/checkwiki/DetectionListTableModel.java:155
 msgid "Error"
@@ -4556,9 +4485,7 @@ msgid "Articles with links to disambiguation pages"
 msgstr "Articles avec des liens vers les pages d’homonymie"
 
 #: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:372
-msgid ""
-"You are about to remove the pages from your local watchlist.\n"
-"Are you sure?"
+msgid "You are about to remove the pages from your local watchlist.\nAre you sure?"
 msgstr "Êtes-vous sûr de vouloir supprimer ces pages de votre liste de suivi locale ?"
 
 #: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:396
@@ -4602,12 +4529,8 @@ msgid "Protected titles with links from articles"
 msgstr "Titres protégés ayant des pages liées"
 
 #: org/wikipediacleaner/gui/swing/pagelist/PageListWorker.java:171
-msgid ""
-"You have loaded the list of all disambiguation pages to speed up page analysis.\n"
-"Do you want to display the list of all disambiguation pages ?"
-msgstr ""
-"Vous avez récupéré la liste complète des pages d’homonymie, ce qui permet d’accélérer l’analyse d’articles.\n"
-"Voulez-vous afficher la liste de toutes les pages d’homonymie ?"
+msgid "You have loaded the list of all disambiguation pages to speed up page analysis.\nDo you want to display the list of all disambiguation pages ?"
+msgstr "Vous avez récupéré la liste complète des pages d’homonymie, ce qui permet d’accélérer l’analyse d’articles.\nVoulez-vous afficher la liste de toutes les pages d’homonymie ?"
 
 #: org/wikipediacleaner/gui/swing/pagelist/PageListWorker.java:495
 msgid "Retrieving list of missing templates"
@@ -4760,12 +4683,8 @@ msgstr "Mise à jour de l’avertissement d’homonymie - {0}"
 
 #: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:100
 #, java-format
-msgid ""
-"Analysis found {0} articles with disambiguation warning {1}.\n"
-"Do you want to update the disambiguation warnings ?"
-msgstr ""
-"L’analyse a trouvé {0} articles avec un avertissement d’homonymie {1}.\n"
-"Voulez-vous mettre à jour cet avertissement ?"
+msgid "Analysis found {0} articles with disambiguation warning {1}.\nDo you want to update the disambiguation warnings ?"
+msgstr "L’analyse a trouvé {0} articles avec un avertissement d’homonymie {1}.\nVoulez-vous mettre à jour cet avertissement ?"
 
 #: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:125
 msgid "Retrieving disambiguation pages"
@@ -4773,14 +4692,8 @@ msgstr "Récupération des pages d’homonymie"
 
 #: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:149
 #, java-format
-msgid ""
-"An error occurred when updating disambiguation warnings. Do you want to continue ?\n"
-"\n"
-"Error: {0}"
-msgstr ""
-"Une erreur est survenue lors de la mise à jour des avertissements d’homonymie. Voulez-vous continuer ?\n"
-"\n"
-"Erreur : {0}"
+msgid "An error occurred when updating disambiguation warnings. Do you want to continue ?\n\nError: {0}"
+msgstr "Une erreur est survenue lors de la mise à jour des avertissements d’homonymie. Voulez-vous continuer ?\n\nErreur : {0}"
 
 #: org/wikipediacleaner/gui/swing/worker/UpdateDuplicateArgsWarningTools.java:231
 #, java-format
@@ -4794,23 +4707,13 @@ msgstr "Mise à jour de l’avertissement des arguments dupliqués - {0}"
 
 #: org/wikipediacleaner/gui/swing/worker/UpdateDuplicateArgsWarningWorker.java:77
 #, java-format
-msgid ""
-"Analysis found {0} articles to check for duplicate arguments errors.\n"
-"Do you want to update the warnings ?"
-msgstr ""
-"L’analyse a trouvé {0} articles à vérifier pour les problèmes d’arguments dupliqués.\n"
-"Voulez-vous mettre à jour les avertissements ?"
+msgid "Analysis found {0} articles to check for duplicate arguments errors.\nDo you want to update the warnings ?"
+msgstr "L’analyse a trouvé {0} articles à vérifier pour les problèmes d’arguments dupliqués.\nVoulez-vous mettre à jour les avertissements ?"
 
 #: org/wikipediacleaner/gui/swing/worker/UpdateDuplicateArgsWarningWorker.java:117
 #, java-format
-msgid ""
-"An error occurred when updating duplicate arguments warnings. Do you want to continue ?\n"
-"\n"
-"Error: {0}"
-msgstr ""
-"Une erreur est survenue pendant la mise à jour des avertissements des arguments dupliqués. Voulez-vous continuer ?\n"
-"\n"
-"Erreur : {0}"
+msgid "An error occurred when updating duplicate arguments warnings. Do you want to continue ?\n\nError: {0}"
+msgstr "Une erreur est survenue pendant la mise à jour des avertissements des arguments dupliqués. Voulez-vous continuer ?\n\nErreur : {0}"
 
 #: org/wikipediacleaner/gui/swing/worker/UpdateISBNWarningTools.java:264
 #: org/wikipediacleaner/gui/swing/worker/UpdateISSNWarningTools.java:257
@@ -4827,24 +4730,14 @@ msgstr "Mise à jour de l’avertissement {1} - {0}"
 #: org/wikipediacleaner/gui/swing/worker/UpdateISBNWarningWorker.java:88
 #: org/wikipediacleaner/gui/swing/worker/UpdateISSNWarningWorker.java:85
 #, java-format
-msgid ""
-"Analysis found {0} articles to check for {1} errors.\n"
-"Do you want to update the warnings ?"
-msgstr ""
-"L’analyse a trouvé {0} articles avec un avertissement {1}.\n"
-"Voulez-vous mettre à jour cet avertissement ?"
+msgid "Analysis found {0} articles to check for {1} errors.\nDo you want to update the warnings ?"
+msgstr "L’analyse a trouvé {0} articles avec un avertissement {1}.\nVoulez-vous mettre à jour cet avertissement ?"
 
 #: org/wikipediacleaner/gui/swing/worker/UpdateISBNWarningWorker.java:129
 #: org/wikipediacleaner/gui/swing/worker/UpdateISSNWarningWorker.java:126
 #, java-format
-msgid ""
-"An error occurred when updating {1} warnings. Do you want to continue ?\n"
-"\n"
-"Error: {0}"
-msgstr ""
-"Une erreur est survenue pendant la mise à jour des avertissements sur les {1}. Voulez-vous continuer ?\n"
-"\n"
-"Erreur : {0}"
+msgid "An error occurred when updating {1} warnings. Do you want to continue ?\n\nError: {0}"
+msgstr "Une erreur est survenue pendant la mise à jour des avertissements sur les {1}. Voulez-vous continuer ?\n\nErreur : {0}"
 
 #: org/wikipediacleaner/gui/swing/worker/UpdateISBNWarningWorker.java:305
 #: org/wikipediacleaner/gui/swing/worker/UpdateISSNWarningWorker.java:278
@@ -4903,16 +4796,8 @@ msgid "Constructing list of articles with warning"
 msgstr "Construction de la liste des articles avec un message d’avertissement"
 
 #: org/wikipediacleaner/utils/Configuration.java:299
-msgid ""
-"Wikipedia Cleaner options have changed to allow different settings for each Wikipedia.\n"
-"Previously, options were global for every Wikipedia.\n"
-"The current options will be saved as the options for your preferred Wikipedia.\n"
-"What is your preferred Wikipedia ?"
-msgstr ""
-"Le fonctionnement des options a été modifié pour permettre des réglages pour chaque Wikipédia.\n"
-"Avant, les options étaient globales à tous les Wikipédia.\n"
-"Les options actuelles seront enregistrées en tant qu’options pour votre Wikipédia préféré.\n"
-"Quel est votre Wikipédia préféré ?"
+msgid "Wikipedia Cleaner options have changed to allow different settings for each Wikipedia.\nPreviously, options were global for every Wikipedia.\nThe current options will be saved as the options for your preferred Wikipedia.\nWhat is your preferred Wikipedia ?"
+msgstr "Le fonctionnement des options a été modifié pour permettre des réglages pour chaque Wikipédia.\nAvant, les options étaient globales à tous les Wikipédia.\nLes options actuelles seront enregistrées en tant qu’options pour votre Wikipédia préféré.\nQuel est votre Wikipédia préféré ?"
 
 #: org/wikipediacleaner/utils/StringCheckerReferenceName.java:60
 msgid "A reference name cannot be a numeric key"
@@ -4928,467 +4813,3 @@ msgstr "Un nom de référence ne peut pas contenir les caractères suivants : {0
 msgid "The value cannot contain any of these characters: {0}"
 msgstr "Une valeur ne peut pas contenir les caractères suivants : {0}"
 
-#, fuzzy
-#~ msgid "Comment :"
-#~ msgstr "Commentaires :"
-
-#~ msgid "A template that can be used instead of the link to an other language. "
-#~ msgstr "Un modèle qui peut être utilisé à la place d’un lien vers une autre langue. "
-
-#~ msgid "A template that can be used instead of the link to an other language. It must be specified as: <template name>|<param name for local page name>|<param name for code of other language>|<param name for page name in other language>|<param name for displayed text>"
-#~ msgstr "Un modèle qui peut être utilisé à la place du lien vers une autre langue. Il doit être spécifié sous la forme : <nom du modèle>|<nom du paramètre pour le nom local de l’article>|<nom du paramètre pour le code de l’autre langue>|<nom du paramètre pour le nom de l’article dans l’autre langue>|<nom du paramètre pour le texte affiché>"
-
-#~ msgid "Errors"
-#~ msgstr "Erreurs"
-
-#, fuzzy
-#~ msgid "Do you want to check for linter errors?"
-#~ msgstr "Voulez-vous continuer ?"
-
-#~ msgid "Unable to retrieve analysis from Linter."
-#~ msgstr "Impossible de récupérer l’analyse de Linter"
-
-#~ msgid "No errors are currently detected by Linter."
-#~ msgstr "Aucune erreur détectée par Linter"
-
-#~ msgid "Retrieving page back links"
-#~ msgstr "Récupération des pages liées"
-
-#~ msgid "&Close"
-#~ msgstr "&Fermer"
-
-#~ msgid "&Send"
-#~ msgstr "&Envoyer"
-
-#~ msgid "&Full analysis"
-#~ msgstr "Analyse &complète"
-
-#~ msgid "Would you like to add this page on your local Watch list ?"
-#~ msgstr "Voulez-vous ajouter cette page à votre liste de suivi locale ?"
-
-#~ msgid "&Wikipedia"
-#~ msgstr "&Wikipédia"
-
-#~ msgid "Lan&guage"
-#~ msgstr "Lan&gue"
-
-#~ msgid "&Password :"
-#~ msgstr "&Mot de passe :"
-
-#~ msgid "&Idea ? Bug ?"
-#~ msgstr "&Idée ? Bug ?"
-
-#~ msgid "Maximum number of simultaneous analysis :"
-#~ msgstr "Nombre maximum d'analyses simultanées :"
-
-#~ msgid "&Apply"
-#~ msgstr "&Appliquer"
-
-#~ msgid "An unknown error occured"
-#~ msgstr "Une erreur inconnue est survenue"
-
-#~ msgid "Would you like to add these pages on your local Watch list ?"
-#~ msgstr "Voulez-vous ajouter ces pages à votre liste de suivi locale ?"
-
-#~ msgid "Count &other pages"
-#~ msgstr "Compter les autres pages"
-
-#~ msgid "Count &redirect pages"
-#~ msgstr "Compter les pages de redirections"
-
-#~ msgid "Count &missing pages"
-#~ msgstr "Compter les pages manquantes"
-
-#~ msgid "Search"
-#~ msgstr "Rechercher"
-
-#~ msgid "An error occured: {0}"
-#~ msgstr "Une erreur est survenue : {0}"
-
-#~ msgid "&External Viewer"
-#~ msgstr "Affichage externe"
-
-#~ msgid "&Disambiguation"
-#~ msgstr "&Homonymie"
-
-#~ msgid "Re&place"
-#~ msgstr "Remplacer"
-
-#~ msgid "Pages concerned"
-#~ msgstr "Pages concernées"
-
-#~ msgid "&Begins with"
-#~ msgstr "Commence par"
-
-#~ msgid "&Contains"
-#~ msgstr "Contient"
-
-#~ msgid "&Ends with"
-#~ msgstr "Se termine par"
-
-#~ msgid "Reverse to [[{0}|{1}]]"
-#~ msgstr "Remplacer par [[{0}|{1}]]"
-
-#~ msgid "Error unkown from WikiCleaner"
-#~ msgstr "Erreur inconnue de WikiCleaner"
-
-#~ msgid "Red links analysis"
-#~ msgstr "Analyse des liens rouges"
-
-#~ msgid "&Demo"
-#~ msgstr "&Démo"
-
-#~ msgid "This function will do all the replacements in all selected pages."
-#~ msgstr "Cette fonction effectuera tous les remplacements dans toutes les pages sélectionnées"
-
-#~ msgid "Also, verify again the texts you have inputed before running this function."
-#~ msgstr "Ainsi, vérifier à nouveau le texte que vous avez entré avant de lancer cette fonction."
-
-#~ msgid "&Restore defaults"
-#~ msgstr "&Restaurer les paramètres par défaut"
-
-#~ msgid "Possible pages"
-#~ msgstr "Pages possibles"
-
-#~ msgid "&Apply only to {0}"
-#~ msgstr "&Appliquer seulement à {0}"
-
-#~ msgid "Project check wikipedia"
-#~ msgstr "Projet Correction syntaxique"
-
-#~ msgid "The following modifications have been done ({0} pages):"
-#~ msgstr "Les modifications suivantes ont été effectuées ({0} pages) :"
-
-#~ msgid "Local &Watch list"
-#~ msgstr "Liste de suivi locale"
-
-#~ msgid "&Next occurrence"
-#~ msgstr "Occurence suiva&nte"
-
-#~ msgid "Full analysis of redirect"
-#~ msgstr "Analyse complète des redirections"
-
-#~ msgid "Enter the page title you want to add to your local watch list"
-#~ msgstr "Entrer le titre de l’article que vous souhaitez ajouter à votre liste de suivi locale."
-
-#~ msgid ""
-#~ "You are about to remove the pages from your local Watch list.\n"
-#~ "Are you sure ?"
-#~ msgstr "Êtes-vous sûr de vouloir supprimer ces pages de votre liste de suivi locale ?"
-
-#~ msgid "Add to &Watch list"
-#~ msgstr "Ajouter à la liste de suivi locale"
-
-#~ msgid "Red links Analysis - {0}"
-#~ msgstr "Analyse des liens rouges – {0}"
-
-#~ msgid "&Reload page list"
-#~ msgstr "&Recharger la liste des pages"
-
-#~ msgid "&Search for possible pages"
-#~ msgstr "Rechercher les pages possibles"
-
-#~ msgid "Do you want to mark {0} as fixed for error n°{1}"
-#~ msgstr "Marquer l’erreur n° {1} de l’article {0} comme corrigée ?"
-
-#~ msgid "&History"
-#~ msgstr "&Historique"
-
-#~ msgid "List on toolserver"
-#~ msgstr "Liste sur toolserver"
-
-#~ msgid ""
-#~ "The error n°{0} is still found in the page.\n"
-#~ "Are you really sure that you want to mark it as fixed ?"
-#~ msgstr ""
-#~ "L’erreur n° {0} est toujours présente dans la page.\n"
-#~ "Êtes-vous certain de vouloir la marquer comme corrigée ?"
-
-#~ msgid "&First occurrence"
-#~ msgstr "&Première occurence"
-
-#~ msgid "&Last occurrence"
-#~ msgstr "&Dernière occurence"
-
-#~ msgid "&Previous occurrence"
-#~ msgstr "&Occurence précédente"
-
-#~ msgid "The page {0} doesn't exist on Wikipedia"
-#~ msgstr "L’article {0} n’existe pas sur Wikipédia."
-
-#~ msgid "{0} links in Main Namespace / {1} total links"
-#~ msgstr "{0} dans l’espace principal / {1} lien(s) au total"
-
-#~ msgid ""
-#~ "The error n°{0} is still found {1} times in the page.\n"
-#~ "Are you really sure that you want to mark it as fixed ?"
-#~ msgstr ""
-#~ "L’erreur n° {0} est toujours {1} fois dans la page.\n"
-#~ "Êtes-vous certains de vouloir la marquer comme corrigée ?"
-
-#~ msgid "Previous occurrence (Alt + &P)"
-#~ msgstr "Occurence précédente (Alt + &D)"
-
-#~ msgid "History (Alt + &H)"
-#~ msgstr "Historique (Alt + &H)"
-
-#~ msgid "Next occurrence (Alt + &N)"
-#~ msgstr "Prochaine occurence (Alt + &F)"
-
-#~ msgid "Last occurrence (Alt + &L)"
-#~ msgstr "Dernière occurence (Alt + &S)"
-
-#~ msgid "First occurrence (Alt + &F)"
-#~ msgstr "Première occurence (Alt + &Q)"
-
-#~ msgid "Options (Alt + &O)"
-#~ msgstr "Options (Alt + &O)"
-
-#~ msgid "Validate (Alt + &V)"
-#~ msgstr "Valider (Alt + &V)"
-
-#~ msgid "External Viewer (Alt + &E)"
-#~ msgstr "Navigateur externe (Alt + &W)"
-
-#~ msgid "Send (Alt + &S)"
-#~ msgstr "Envoyer (Alt + &E)"
-
-#~ msgid "What name would like to use for the <ref> tag ?"
-#~ msgstr "Quel nom souhaitez-vous utiliser pour la balise <ref> ?"
-
-#~ msgid "Remove <small> tag"
-#~ msgstr "Retirer la balise <small>"
-
-#~ msgid "You need to define the 'dab_warning_template' property in WikiCleaner configuration."
-#~ msgstr "Vous devez définir la propriété « dab_warning_template » dans la configuration WikiCleaner."
-
-#~ msgid ""
-#~ "The error n°{0} hasn''t been found in the page {1}.\n"
-#~ "Do you want to mark it as fixed ?"
-#~ msgstr ""
-#~ "L’erreur n°{0} n’a pas été trouvée dans la page {1}.\n"
-#~ "Voulez-vous la marquer comme corrigée ?"
-
-#~ msgid "Random page (Alt + &R)"
-#~ msgstr "Page aléatoire (Alt + &R)"
-
-#~ msgid "Full analysis (Alt + &F)"
-#~ msgstr "Analyse complète (Alt + &F)"
-
-#~ msgid "Add to Watch list (Alt + &W)"
-#~ msgstr "Ajouter à la liste de suivi (Alt + &W)"
-
-#~ msgid "Remove page (Alt + &R)"
-#~ msgstr "Enlever la page (Alt + &R)"
-
-#~ msgid "Disambiguation (Alt + &D)"
-#~ msgstr "Homonymie (Alt + &D)"
-
-#~ msgid "{0} pages"
-#~ msgstr "{0} pages"
-
-#~ msgid "Add page (Alt + &A)"
-#~ msgstr "Ajouter une page (Alt + &A)"
-
-#~ msgid "Help (Alt + &H)"
-#~ msgstr "Aide (Alt + &H)"
-
-#~ msgid "System Options (Alt + &Y)"
-#~ msgstr "Options système (Alt + &Y)"
-
-#~ msgid ""
-#~ "Demo mode is only available for testing WikiCleaner.\n"
-#~ "You won't be able to modify pages on Wikipedia in Demo mode.\n"
-#~ "Do you want to continue ?"
-#~ msgstr ""
-#~ "Le mode Démo est disponible uniquement pour tester WikiCleaner.\n"
-#~ "Vous ne pourrez pas modifier les pages de Wikipédia en mode Démo.\n"
-#~ "Voulez-vous continuer ?"
-
-#~ msgid ""
-#~ "There's no known list of disambiguation pages for this Wikipedia.\n"
-#~ "You can learn how to configure WikiCleaner at the following URL:"
-#~ msgstr ""
-#~ "Il n’y a pas de liste de pages d’homonymie sur ce Wikipédia.\n"
-#~ "Vous pouvez apprendre comment configurer WikiCleaner à cette adresse :"
-
-#~ msgid ""
-#~ "There's no known Check Wikipedia Project for this Wikipedia.\n"
-#~ "You can learn how to configure WikiCleaner at the following URL:"
-#~ msgstr ""
-#~ "Il n’y a pas de projet Check Wikipedia (correction syntaxique) connu sur ce Wikipédia.\n"
-#~ "Vous pouvez apprendre comment configurer WikiCleaner à cette adresse :"
-
-#~ msgid "Disambiguation analysis of redirect"
-#~ msgstr "Analyse homonymique des redirections"
-
-#~ msgid "Last modified at {0}. It was modified less than {1} minutes ago."
-#~ msgstr "Dernière modification à {0}. Modifié il y a moins d’{1} minute(s)…"
-
-#~ msgid "Constructing list of articles with disambiguation warning"
-#~ msgstr "Construction de la liste des articles avec un message d’avertissement"
-
-#~ msgid ""
-#~ "An error occured when updating disambiguation warnings. Do you want to continue ?\n"
-#~ "\n"
-#~ "Error: {0}"
-#~ msgstr ""
-#~ "Une erreur est survenue lors de la mise à jour des avertissements d’homonymie. Voulez-vous continuer ?\n"
-#~ "\n"
-#~ "Erreur : {0}"
-
-#~ msgid "Add a warning on the talk page about the links to disambiguation pages"
-#~ msgstr "Ajouter un avertissement sur la page de discussion à propos des liens vers les pages d’homonymies"
-
-#~ msgid "At what page do you wish to start updating the disambiguation warning ?"
-#~ msgstr "A quelle page voulez-vous débuter la mise à jour du message d’avertissement ?"
-
-#~ msgid "&User name :"
-#~ msgstr "Nom d’&utilisateur :"
-
-#~ msgid "Save user name only"
-#~ msgstr "Mémoriser uniquement le nom d’utilisateur"
-
-#~ msgid "Save user name and password"
-#~ msgstr "Mémoriser le nom d’utilisateur et le mot de passe"
-
-#~ msgid "Update disambiguation warning"
-#~ msgstr "Mettre à jour le message d’avertissement"
-
-#~ msgid "&Current Disambiguation List"
-#~ msgstr "Liste d’homonymies à traiter"
-
-#~ msgid "You must input a page name for updating the disambiguation warning"
-#~ msgstr "Vous devez entrer le nom d’une page pour mettre à jour le message d’avertissement"
-
-#~ msgid "You can learn how to configure WikiCleaner at the following URL:"
-#~ msgstr "Vous pouvez apprendre comment configurer WikiCleaner à l’adresse :"
-
-#~ msgid "You must input your user name before login"
-#~ msgstr "Vous devez saisir votre nom d’utilisateur avant de vous connecter"
-
-#~ msgid "You can read the help on Wikipedia Cleaner at the following URL:"
-#~ msgstr "Vous pouvez lire l'aide de Wikipédia Cleaner à l’adresse suivante :"
-
-#~ msgid ""
-#~ "There's no known template for requesting help for the Wikipedia.\n"
-#~ "You can learn how to configure WikiCleaner at the following URL:"
-#~ msgstr ""
-#~ "Il n’y a pas de modèle connu pour demander de l’aide sur ce Wikipédia.\n"
-#~ "Vous pouvez apprendre comment configurer WikiCleaner à cette adresse :"
-
-#~ msgid "Count &disambiguation pages"
-#~ msgstr "Compter les pages d’homonymies"
-
-#~ msgid "&Hide window when sending"
-#~ msgstr "Cacher la fenêtre pendant l’envoi"
-
-#~ msgid ""
-#~ "Disambiguation links have been analyzed in {0} pages.\n"
-#~ "The disambiguation warning has been updated in {1} pages.\n"
-#~ "It took {2} seconds."
-#~ msgstr ""
-#~ "Les liens vers les pages d’homonymie ont été analysés dans {0} articles.\n"
-#~ "L’avertissement d’homonymie a été mis à jour dans {1} articles.\n"
-#~ "Ceci a pris {2} secondes."
-
-#~ msgid "Error {0} detected: Waiting and retrying"
-#~ msgstr "Erreur {0} détectée: Attente et nouvelle tentative"
-
-#~ msgid "Fixing orthograph or typography based on a list of suggestions."
-#~ msgstr "Corriger l’orthographe et la typographie en se basant sur une liste de suggestions"
-
-#~ msgid "Check orthograph and typography"
-#~ msgstr "Vérifier l'orthographe et la typographie"
-
-#~ msgid "Orthograph"
-#~ msgstr "Orthographe"
-
-#~ msgid "Fixed using [[{0}]]"
-#~ msgstr "Corrigé avec [[{0}]]"
-
-#~ msgid ""
-#~ "There's no known list of pages containing many disambiguation links for this Wikipedia.\n"
-#~ "You can learn how to configure WikiCleaner at the following URL:"
-#~ msgstr ""
-#~ "Il n’y a pas de liste de pages contenant beaucoup d’homonymie sur ce Wikipédia.\n"
-#~ "Vous pouvez apprendre comment configurer WikiCleaner à cette adresse :"
-
-#~ msgid "The value can't contain any of these characters: {0}"
-#~ msgstr "Une valeur ne peut pas contenir les caractères suivants : {0}"
-
-#~ msgid "What description would like to use for the external link ?"
-#~ msgstr "Quelle description voulez-vous utiliser pour le lien externe ?"
-
-#~ msgid "What alternate description would like to use for the image ?"
-#~ msgstr "Quelle description alternative souhaitez-vous utiliser pour l’image ?"
-
-#~ msgid "What description would like to use for the image ?"
-#~ msgstr "Quelle description souhaitez-vous utiliser pour l’image ?"
-
-#~ msgid "&Login"
-#~ msgstr "Connexion"
-
-#~ msgid "L&ogout"
-#~ msgstr "Déconnexion"
-
-#~ msgid "Mark as Fixed"
-#~ msgstr "Marquer comme corrigé"
-
-#~ msgid ""
-#~ "The page {0} in \"{1}\" has a language link to \"{2}\": {3}.\n"
-#~ "Do you want to replace the link by [[{3}]] ?"
-#~ msgstr ""
-#~ "La page {0} dans \"{1}\" a un lien inter-langue vers \"{2}\" : {3}.\n"
-#~ "Voulez-vous remplacer le lien par [[{3}]] ?"
-
-#~ msgid "View or edit white list"
-#~ msgstr "Voir ou éditer la liste blanche"
-
-#~ msgid ""
-#~ "There''s no white list defined for this error type.\n"
-#~ "If you want to define a white list you need to add :\n"
-#~ "  {0} = <page name> END\n"
-#~ "to the translation page ({1}) on \"{2}\""
-#~ msgstr ""
-#~ "Il n’y a pas de liste blanche définie pour cette erreur.\n"
-#~ "Si vous voulez définir une liste blanche, vous devez ajouter :\n"
-#~ "  {0} = <nom de page> END\n"
-#~ "à la page de traduction ({1}) sur \"{2}\""
-
-#~ msgid "A comment is required for automatix fixing."
-#~ msgstr "Un commentaire est requis pour la correction automatique."
-
-#~ msgid "You have edited {0} page(s)."
-#~ msgstr "Vous avez édité {0} article(s)."
-
-#~ msgid "You have fixed {0} link(s) to disambiguation pages."
-#~ msgstr "Vous avez corrigé {0} lien(s) vers des pages d’homonymie"
-
-#~ msgid "You have fixed {0} error(s) \"{1}\"."
-#~ msgstr "Vous avez corrigé {0} erreur(s) « {1} »"
-
-#~ msgid "You must input a page name for retrieving the list of page it is embedded in"
-#~ msgstr "Vous devez saisir un nom de page pour obtenir la liste des pages dans lesquelles elle est incluse"
-
-#~ msgid "Local watch list"
-#~ msgstr "Liste de suivi locale"
-
-#~ msgid ""
-#~ "The page \"{0}\" in \"{1}\" has a language link to \"{2}\": {3}.\n"
-#~ "By what text do you want to replace the link ?"
-#~ msgstr ""
-#~ "La page « {0} » de « {1} » a un lien interlangue vers « {2} » : {3}.\n"
-#~ "Par quel texte voulez-vous remplacer ce lien ?"
-
-#~ msgid "I hope you'll like WPCleaner."
-#~ msgstr "J’espère que vous apprécierez WPCleaner"
-
-#~ msgid "Log all URL called by {0}"
-#~ msgstr "Tracer toutes les URL appelées par {0}"
-
-#~ msgid "Fix all <br/> tags"
-#~ msgstr "Corriger toutes les balises <br/>"
-
-#~ msgid "Do you want to update the disambiguation warning in talk page ?"
-#~ msgstr "Voulez-vous mettre à jour le message d’avertissement d’homonymie en page de discussion ?"
