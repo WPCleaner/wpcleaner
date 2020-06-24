@@ -12,7 +12,11 @@ import java.util.List;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.data.PageAnalysis;
+import org.wikipediacleaner.api.data.PageElementExternalLink;
 import org.wikipediacleaner.api.data.PageElementTag;
+import org.wikipediacleaner.api.data.PageElementTemplate;
+import org.wikipediacleaner.api.data.PageElementTemplate.Parameter;
+import org.wikipediacleaner.api.data.contents.ContentsUtil;
 
 
 /**
@@ -20,6 +24,14 @@ import org.wikipediacleaner.api.data.PageElementTag;
  * Error 554: nowiki in text.
  */
 public class CheckErrorAlgorithm555 extends CheckErrorAlgorithmBase {
+
+  /** Special texts for which replacement should not be automatic */
+  private static final String[] SPECIAL_TEXTS = {
+      "ISBN",
+      "ISSN",
+      "PMID",
+      "RFC"
+  };
 
   public CheckErrorAlgorithm555() {
     super("nowiki in text");
@@ -84,6 +96,7 @@ public class CheckErrorAlgorithm555 extends CheckErrorAlgorithmBase {
       if (!isAcceptable(contents.charAt(beginIndex - 1))) {
         return false;
       }
+      beginIndex--;
     }
 
     // Check character after the tag
@@ -92,6 +105,7 @@ public class CheckErrorAlgorithm555 extends CheckErrorAlgorithmBase {
       if (!isAcceptable(contents.charAt(endIndex))) {
         return false;
       }
+      endIndex++;
     }
 
     // Check content inside the tag
@@ -103,19 +117,67 @@ public class CheckErrorAlgorithm555 extends CheckErrorAlgorithmBase {
       }
     }
 
+    // Check if replacement can be automatic
+    String internalText = "";
+    if (!nowikiTag.isFullTag()) {
+      internalText = contents.substring(nowikiTag.getValueBeginIndex(), nowikiTag.getValueEndIndex());
+    }
+    boolean automatic = true;
+    if (endIndex < contents.length()) {
+      // Prevent if there's an external link just after
+      PageElementExternalLink eLink = analysis.isInExternalLink(endIndex);
+      if ((eLink != null) &&
+          (eLink.getBeginIndex() == nowikiTag.getCompleteEndIndex())) {
+        automatic = false;
+      }
+    }
+    if (beginIndex > 0) {
+      // Prevent if there's an external link just before
+      PageElementExternalLink eLink = analysis.isInExternalLink(beginIndex);
+      if (eLink != null) {
+        if ((eLink.getEndIndex() == nowikiTag.getCompleteBeginIndex()) ||
+            (eLink.getBeginIndex() + eLink.getTextOffset() >= nowikiTag.getCompleteBeginIndex())) {
+          automatic = false;
+        }
+      }
+    }
+    if (beginIndex > 0) {
+      // Prevent if the nowiki tag is at the beginning of a template parameter
+      PageElementTemplate template = analysis.isInTemplate(beginIndex);
+      if (template != null) {
+        Parameter param = template.getParameterAtIndex(beginIndex);
+        if ((param != null) &&
+            (param.getValueStartIndex() >= beginIndex)) {
+          automatic = false;
+        }
+      }
+    }
+    for (String specialText : SPECIAL_TEXTS) {
+      // Prevent for some special texts
+      if (internalText.contains(specialText)) {
+        automatic = false;
+      }
+      int tmpIndex = ContentsUtil.moveIndexBeforeWhitespace(contents, beginIndex);
+      if (contents.substring(0, tmpIndex + 1).endsWith(specialText)) {
+        automatic = false;
+      }
+    }
+    if (internalText.startsWith(" ") || internalText.startsWith("*")) {
+      // Prevent if a special character would end up at the beginning of a line
+      if ((contents.charAt(beginIndex) == '\n') ||
+          (nowikiTag.getCompleteBeginIndex() == 0)) {
+        automatic = false;
+      }
+    }
+
     // Report error
     if (errors == null) {
       return true;
     }
-    CheckErrorResult errorResult = createCheckErrorResult(
-        analysis, nowikiTag.getCompleteBeginIndex(), nowikiTag.getCompleteEndIndex());
-    if (nowikiTag.isFullTag()) {
-      errorResult.addReplacement("");
-    } else {
-      errorResult.addReplacement(contents.substring(
-          nowikiTag.getValueBeginIndex(),
-          nowikiTag.getValueEndIndex()));
-    }
+    CheckErrorResult errorResult = createCheckErrorResult(analysis, beginIndex, endIndex);
+    String prefix = contents.substring(beginIndex, nowikiTag.getCompleteBeginIndex());
+    String suffix = contents.substring(nowikiTag.getCompleteEndIndex(), endIndex);
+    errorResult.addReplacement(prefix + internalText + suffix, automatic);
     errors.add(errorResult);
     return true;
   }
@@ -128,7 +190,8 @@ public class CheckErrorAlgorithm555 extends CheckErrorAlgorithmBase {
     return
         Character.isAlphabetic(character) ||
         Character.isDigit(character) ||
-        Character.isWhitespace(character);
+        Character.isWhitespace(character) ||
+        (".,;:*()".indexOf(character) >= 0);
   }
 
   /**

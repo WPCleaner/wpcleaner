@@ -58,5 +58,6 @@ FixListCheckWiki Projet:Correction_syntaxique/Analyse_550 550
 FixListCheckWiki Projet:Correction_syntaxique/Analyse_551 551
 FixListCheckWiki Projet:Correction_syntaxique/Analyse_553 553
 FixListCheckWiki Projet:Correction_syntaxique/Analyse_554 554
+FixListCheckWiki Projet:Correction_syntaxique/Analyse_555 555
 
 DoTasks ISBN_ISSN.txt
