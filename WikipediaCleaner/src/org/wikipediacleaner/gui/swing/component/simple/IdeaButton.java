@@ -25,7 +25,7 @@ import org.wikipediacleaner.utils.ConfigurationValueShortcut;
 public class IdeaButton {
 
   /** Talk page for submitting ideas or bug reports */
-  private final static String URL_TALK_PAGE       = "https://en.wikipedia.org/wiki/Wikipedia_talk:WPCleaner";
+  private final static String URL_TALK_PAGE = "https://phabricator.wikimedia.org/maniphest/task/edit/form/1/?projects=WPCleaner";
 
   /** Parent component */
   private final Component parentComponent;
