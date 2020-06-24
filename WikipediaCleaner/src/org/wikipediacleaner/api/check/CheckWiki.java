@@ -62,7 +62,8 @@ public class CheckWiki {
   private final List<WeakReference<CheckWikiListener>> listeners;
 
   /**
-   * @param labs WMF Labs
+   * @param labs WMF Labs.
+   * @param rootPath Root path to use.
    */
   public CheckWiki(HttpServer labs, String rootPath) {
     this.labs = labs;
