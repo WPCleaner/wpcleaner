@@ -10,7 +10,7 @@ package org.wikipediacleaner.gui.swing.component;
 import javax.swing.JPopupMenu;
 
 import org.wikipediacleaner.api.constants.EnumWikipedia;
-import org.wikipediacleaner.api.data.PageAnalysis;
+import org.wikipediacleaner.api.data.analysis.PageAnalysis;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
 
 

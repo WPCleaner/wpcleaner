@@ -24,7 +24,6 @@ import org.wikipediacleaner.api.constants.WPCConfiguration;
 import org.wikipediacleaner.api.constants.WPCConfigurationStringList;
 import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.Page;
-import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElement;
 import org.wikipediacleaner.api.data.PageElementExternalLink;
 import org.wikipediacleaner.api.data.PageElementFunction;
@@ -34,6 +33,7 @@ import org.wikipediacleaner.api.data.PageElementInterwikiLink;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.PageElementTemplate.Parameter;
+import org.wikipediacleaner.api.data.analysis.PageAnalysis;
 import org.wikipediacleaner.i18n.GT;
 
 

@@ -21,6 +21,8 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
+import org.wikipediacleaner.api.data.analysis.InternalLinkCount;
+import org.wikipediacleaner.api.data.analysis.PageAnalysis;
 
 
 /**

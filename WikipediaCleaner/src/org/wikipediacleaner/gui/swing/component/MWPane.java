@@ -29,8 +29,8 @@ import javax.swing.text.StyledDocument;
 
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.Page;
-import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementTitle;
+import org.wikipediacleaner.api.data.analysis.PageAnalysis;
 import org.wikipediacleaner.gui.swing.action.FindTextAction;
 import org.wikipediacleaner.gui.swing.action.ReplaceLinkAction;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;

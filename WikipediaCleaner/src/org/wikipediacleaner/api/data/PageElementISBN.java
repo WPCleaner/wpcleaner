@@ -16,6 +16,7 @@ import org.wikipediacleaner.api.constants.WPCConfigurationBoolean;
 import org.wikipediacleaner.api.constants.WPCConfigurationStringList;
 import org.wikipediacleaner.api.data.ISBNRange.ISBNInformation;
 import org.wikipediacleaner.api.data.PageElementTemplate.Parameter;
+import org.wikipediacleaner.api.data.analysis.PageAnalysis;
 import org.wikipediacleaner.api.data.contents.ContentsComment;
 
 

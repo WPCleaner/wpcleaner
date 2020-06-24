@@ -18,8 +18,8 @@ import org.wikipediacleaner.api.check.HtmlCharacters;
 import org.wikipediacleaner.api.check.SpecialCharacters;
 import org.wikipediacleaner.api.constants.WPCConfiguration;
 import org.wikipediacleaner.api.constants.WPCConfigurationStringList;
-import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementTag;
+import org.wikipediacleaner.api.data.analysis.PageAnalysis;
 import org.wikipediacleaner.api.data.contents.ContentsComment;
 import org.wikipediacleaner.i18n.GT;
 

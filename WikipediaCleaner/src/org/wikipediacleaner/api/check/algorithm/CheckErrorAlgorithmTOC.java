@@ -15,10 +15,10 @@ import org.wikipediacleaner.api.algorithm.AlgorithmParameter;
 import org.wikipediacleaner.api.constants.WPCConfiguration;
 import org.wikipediacleaner.api.data.MagicWord;
 import org.wikipediacleaner.api.data.Page;
-import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElement;
 import org.wikipediacleaner.api.data.PageElementMagicWord;
 import org.wikipediacleaner.api.data.PageElementTemplate;
+import org.wikipediacleaner.api.data.analysis.PageAnalysis;
 import org.wikipediacleaner.api.data.contents.IntervalComparator;
 import org.wikipediacleaner.i18n.GT;
 

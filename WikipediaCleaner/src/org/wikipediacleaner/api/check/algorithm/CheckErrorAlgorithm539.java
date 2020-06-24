@@ -19,13 +19,13 @@ import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.LinterCategory;
 import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.Page;
-import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElement;
 import org.wikipediacleaner.api.data.PageElementExternalLink;
 import org.wikipediacleaner.api.data.PageElementFormatting;
 import org.wikipediacleaner.api.data.PageElementFormattingAnalysis;
 import org.wikipediacleaner.api.data.PageElementInternalLink;
 import org.wikipediacleaner.api.data.PageElementTag;
+import org.wikipediacleaner.api.data.analysis.PageAnalysis;
 
 
 /**

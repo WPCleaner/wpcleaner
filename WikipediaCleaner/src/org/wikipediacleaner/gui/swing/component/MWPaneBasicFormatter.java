@@ -9,7 +9,7 @@ package org.wikipediacleaner.gui.swing.component;
 
 import javax.swing.text.StyledDocument;
 
-import org.wikipediacleaner.api.data.PageAnalysis;
+import org.wikipediacleaner.api.data.analysis.PageAnalysis;
 
 
 /**

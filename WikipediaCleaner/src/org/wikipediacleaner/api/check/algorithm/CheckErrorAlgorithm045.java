@@ -14,10 +14,10 @@ import java.util.List;
 import java.util.Map;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
-import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementCategory;
 import org.wikipediacleaner.api.data.PageElementLanguageLink;
 import org.wikipediacleaner.api.data.PageElementTitle;
+import org.wikipediacleaner.api.data.analysis.PageAnalysis;
 import org.wikipediacleaner.gui.swing.component.MWPane;
 import org.wikipediacleaner.i18n.GT;
 

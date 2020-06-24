@@ -24,8 +24,8 @@ import org.wikipediacleaner.api.constants.WPCConfiguration;
 import org.wikipediacleaner.api.data.CharacterUtils;
 import org.wikipediacleaner.api.data.DataManager;
 import org.wikipediacleaner.api.data.Page;
-import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementInternalLink;
+import org.wikipediacleaner.api.data.analysis.PageAnalysis;
 import org.wikipediacleaner.i18n.GT;
 import org.wikipediacleaner.utils.Configuration;
 import org.wikipediacleaner.utils.ConfigurationValueInteger;
@@ -276,7 +276,7 @@ public class CheckErrorAlgorithm526 extends CheckErrorAlgorithmBase {
   /**
    * @param analysis Page analysis
    * @return Modified page content after bot fixing.
-   * @see org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase#internalBotFix(org.wikipediacleaner.api.data.PageAnalysis)
+   * @see org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase#internalBotFix(org.wikipediacleaner.api.data.analysis.PageAnalysis)
    */
   @Override
   protected String internalBotFix(PageAnalysis analysis) {

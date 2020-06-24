@@ -14,13 +14,13 @@ import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.CheckErrorResult.ErrorLevel;
 import org.wikipediacleaner.api.constants.WPCConfigurationStringList;
 import org.wikipediacleaner.api.data.Namespace;
-import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementExternalLink;
 import org.wikipediacleaner.api.data.PageElementFunction;
 import org.wikipediacleaner.api.data.PageElementPMID;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.PageElementTemplate.Parameter;
+import org.wikipediacleaner.api.data.analysis.PageAnalysis;
 import org.wikipediacleaner.api.data.contents.ContentsComment;
 
 

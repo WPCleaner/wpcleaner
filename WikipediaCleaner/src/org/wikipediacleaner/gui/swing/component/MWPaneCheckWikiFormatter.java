@@ -18,7 +18,7 @@ import org.wikipediacleaner.api.algorithm.AlgorithmError;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.CheckErrorPage;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithm;
-import org.wikipediacleaner.api.data.PageAnalysis;
+import org.wikipediacleaner.api.data.analysis.PageAnalysis;
 import org.wikipediacleaner.utils.ConfigurationValueStyle;
 
 

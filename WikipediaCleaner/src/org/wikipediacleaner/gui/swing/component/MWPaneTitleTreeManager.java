@@ -31,8 +31,8 @@ import javax.swing.tree.TreeNode;
 import javax.swing.tree.TreePath;
 import javax.swing.tree.TreeSelectionModel;
 
-import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementTitle;
+import org.wikipediacleaner.api.data.analysis.PageAnalysis;
 import org.wikipediacleaner.gui.swing.basic.Utilities;
 import org.wikipediacleaner.i18n.GT;
 import org.wikipediacleaner.images.EnumImageSize;

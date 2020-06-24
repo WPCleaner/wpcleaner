@@ -15,6 +15,7 @@ import java.util.Map;
 
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
+import org.wikipediacleaner.api.data.analysis.PageAnalysis;
 
 /**
  * Utility class to handle redirect status and data for a page.

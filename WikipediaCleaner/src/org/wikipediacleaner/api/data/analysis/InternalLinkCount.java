@@ -5,7 +5,7 @@
  *  See README.txt file for licensing information.
  */
 
-package org.wikipediacleaner.api.data;
+package org.wikipediacleaner.api.data.analysis;
 
 
 /**

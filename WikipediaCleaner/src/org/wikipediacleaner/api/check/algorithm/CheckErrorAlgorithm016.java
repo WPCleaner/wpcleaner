@@ -17,10 +17,10 @@ import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.HtmlCharacters;
 import org.wikipediacleaner.api.data.CharacterUtils;
 import org.wikipediacleaner.api.data.MagicWord;
-import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementCategory;
 import org.wikipediacleaner.api.data.PageElementInternalLink;
 import org.wikipediacleaner.api.data.PageElementTemplate;
+import org.wikipediacleaner.api.data.analysis.PageAnalysis;
 import org.wikipediacleaner.gui.swing.component.MWPane;
 import org.wikipediacleaner.i18n.GT;
 

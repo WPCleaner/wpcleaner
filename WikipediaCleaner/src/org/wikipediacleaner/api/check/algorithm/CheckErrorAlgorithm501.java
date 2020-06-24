@@ -23,14 +23,14 @@ import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.CompositeAction;
 import org.wikipediacleaner.api.check.SimpleAction;
 import org.wikipediacleaner.api.data.Namespace;
-import org.wikipediacleaner.api.data.PageAnalysis;
-import org.wikipediacleaner.api.data.PageElementAreas;
 import org.wikipediacleaner.api.data.PageElementFunction;
 import org.wikipediacleaner.api.data.PageElementInternalLink;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.Suggestion;
 import org.wikipediacleaner.api.data.Suggestion.ElementarySuggestion;
+import org.wikipediacleaner.api.data.analysis.PageAnalysis;
+import org.wikipediacleaner.api.data.analysis.Areas;
 import org.wikipediacleaner.gui.swing.component.MWPaneReplaceAllAction;
 import org.wikipediacleaner.i18n.GT;
 import org.wikipediacleaner.utils.Configuration;
@@ -601,8 +601,8 @@ public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
 
     // Remove areas
     if (!nativeRegexp) {
-      PageElementAreas areas = analysis.getAreas();
-      for (PageElementAreas.Area area : areas.getAreas()) {
+      Areas areas = analysis.getAreas();
+      for (Areas.Area area : areas.getAreas()) {
         removeArea(chunks, area.getBeginIndex(), area.getEndIndex());
       }
     }

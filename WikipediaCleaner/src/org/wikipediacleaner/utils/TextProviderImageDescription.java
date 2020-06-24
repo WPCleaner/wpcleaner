@@ -17,9 +17,9 @@ import org.wikipediacleaner.api.APIFactory;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.DataManager;
 import org.wikipediacleaner.api.data.Page;
-import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementImage;
 import org.wikipediacleaner.api.data.PageElementTemplate;
+import org.wikipediacleaner.api.data.analysis.PageAnalysis;
 
 
 /**

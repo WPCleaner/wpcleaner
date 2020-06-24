@@ -56,4 +56,13 @@ public class ContentsInterval implements Interval {
     }
     return false;
   }
+
+  /**
+   * @return
+   * @see java.lang.Object#toString()
+   */
+  @Override
+  public String toString() {
+    return this.getClass().getSimpleName() + ": " + beginIndex + "->" + endIndex;
+  }
 }

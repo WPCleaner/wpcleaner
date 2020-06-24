@@ -20,6 +20,7 @@ import java.util.regex.Pattern;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.constants.WPCConfiguration;
 import org.wikipediacleaner.api.constants.WikiConfiguration;
+import org.wikipediacleaner.api.data.analysis.PageAnalysis;
 
 
 /**

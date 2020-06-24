@@ -5,7 +5,7 @@
  *  See README.txt file for licensing information.
  */
 
-package org.wikipediacleaner.api.data;
+package org.wikipediacleaner.api.data.analysis;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -18,6 +18,28 @@ import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.constants.WPCConfiguration;
 import org.wikipediacleaner.api.constants.WikiConfiguration;
 import org.wikipediacleaner.api.constants.wiki.AbstractWikiSettings;
+import org.wikipediacleaner.api.data.MagicWord;
+import org.wikipediacleaner.api.data.Page;
+import org.wikipediacleaner.api.data.PageAnalysisUtils;
+import org.wikipediacleaner.api.data.PageElementCategory;
+import org.wikipediacleaner.api.data.PageElementExternalLink;
+import org.wikipediacleaner.api.data.PageElementFunction;
+import org.wikipediacleaner.api.data.PageElementISBN;
+import org.wikipediacleaner.api.data.PageElementISSN;
+import org.wikipediacleaner.api.data.PageElementImage;
+import org.wikipediacleaner.api.data.PageElementInternalLink;
+import org.wikipediacleaner.api.data.PageElementInterwikiLink;
+import org.wikipediacleaner.api.data.PageElementLanguageLink;
+import org.wikipediacleaner.api.data.PageElementListItem;
+import org.wikipediacleaner.api.data.PageElementMagicWord;
+import org.wikipediacleaner.api.data.PageElementPMID;
+import org.wikipediacleaner.api.data.PageElementParagraph;
+import org.wikipediacleaner.api.data.PageElementParameter;
+import org.wikipediacleaner.api.data.PageElementRFC;
+import org.wikipediacleaner.api.data.PageElementTable;
+import org.wikipediacleaner.api.data.PageElementTag;
+import org.wikipediacleaner.api.data.PageElementTemplate;
+import org.wikipediacleaner.api.data.PageElementTitle;
 import org.wikipediacleaner.api.data.contents.Contents;
 import org.wikipediacleaner.api.data.contents.ContentsComment;
 import org.wikipediacleaner.api.data.contents.ContentsElement;
@@ -51,10 +73,10 @@ public class PageAnalysis {
    * @param page Page.
    * @param contents Page contents (may differ from page.getContents()).
    */
-  PageAnalysis(Page page, String contents) {
+  public PageAnalysis(Page page, String contents) {
     this.page = page;
     this.contents = Contents.createContents((contents != null) ? contents : page.getContents());
-    this.areas = new PageElementAreas();
+    this.areas = new Areas();
 
     // Default configuration
     Configuration config = Configuration.getConfiguration();
@@ -272,12 +294,12 @@ public class PageAnalysis {
   /**
    * Management of non wiki text areas.
    */
-  private final PageElementAreas areas;
+  private final Areas areas;
 
   /**
    * @return List of non wiki text areas.
    */
-  public PageElementAreas getAreas() {
+  public Areas getAreas() {
     level6Analysis();
     return areas;
   }
@@ -701,6 +723,7 @@ public class PageAnalysis {
                         level--;
                         if (level < 0) {
                           found = true;
+                          // TODO: Refactor to avoid this method being public
                           tmpTag.setMatchingTag(tag);
                         }
                       }
@@ -764,14 +787,14 @@ public class PageAnalysis {
       String text = contents.getText();
       int currentIndex = 0;
       int areaIndex = 0;
-      List<PageElementAreas.Area> tmpAeras = areas.getAreas();
+      List<Areas.Area> tmpAeras = areas.getAreas();
       while (currentIndex < maxIndex) {
 
         // Checking if the current index is in wiki text area.
         boolean areaFound = false;
         int nextIndex = currentIndex;
         while ((areaIndex < tmpAeras.size()) && !areaFound) {
-          PageElementAreas.Area area = tmpAeras.get(areaIndex);
+          Areas.Area area = tmpAeras.get(areaIndex);
           if (area.beginIndex > currentIndex) {
             areaFound = true;
           } else if (area.endIndex > currentIndex) {
@@ -862,14 +885,14 @@ public class PageAnalysis {
       String text = contents.getText();
       int currentIndex = 0;
       int areaIndex = 0;
-      List<PageElementAreas.Area> tmpAeras = areas.getAreas();
+      List<Areas.Area> tmpAeras = areas.getAreas();
       while (currentIndex < maxIndex) {
 
         // Checking if the current index is in wiki text area.
         boolean areaFound = false;
         int nextIndex = currentIndex;
         while ((areaIndex < tmpAeras.size()) && !areaFound) {
-          PageElementAreas.Area area = tmpAeras.get(areaIndex);
+          Areas.Area area = tmpAeras.get(areaIndex);
           if (area.beginIndex > currentIndex) {
             areaFound = true;
           } else if (area.endIndex > currentIndex) {

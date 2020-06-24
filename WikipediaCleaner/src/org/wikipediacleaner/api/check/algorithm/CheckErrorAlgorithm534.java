@@ -23,9 +23,9 @@ import org.wikipediacleaner.api.data.LinterCategory;
 import org.wikipediacleaner.api.data.MagicWord;
 import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.Page;
-import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementImage;
 import org.wikipediacleaner.api.data.PageElementImage.Parameter;
+import org.wikipediacleaner.api.data.analysis.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementTemplate;
 
 

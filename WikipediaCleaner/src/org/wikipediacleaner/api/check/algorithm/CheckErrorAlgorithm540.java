@@ -13,7 +13,6 @@ import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
 import org.wikipediacleaner.api.check.CheckErrorResult;
-import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElement;
 import org.wikipediacleaner.api.data.PageElementExternalLink;
 import org.wikipediacleaner.api.data.PageElementFormatting;
@@ -26,6 +25,7 @@ import org.wikipediacleaner.api.data.PageElementInternalLink;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.PageElementTemplate.Parameter;
+import org.wikipediacleaner.api.data.analysis.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementTitle;
 import org.wikipediacleaner.api.data.contents.ContentsComment;
 import org.wikipediacleaner.api.data.contents.ContentsElement;

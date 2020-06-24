@@ -12,6 +12,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import org.wikipediacleaner.api.data.analysis.PageAnalysis;
+
 
 /**
  * Bean for holding TemplateData information.

@@ -39,7 +39,7 @@ import org.wikipediacleaner.api.algorithm.AlgorithmError;
 import org.wikipediacleaner.api.constants.EnumLanguage;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.ISBNRange;
-import org.wikipediacleaner.api.data.PageAnalysis;
+import org.wikipediacleaner.api.data.analysis.PageAnalysis;
 import org.wikipediacleaner.gui.swing.MainWindow;
 import org.wikipediacleaner.gui.swing.component.CheckThreadViolationRepaintManager;
 import org.wikipediacleaner.i18n.GT;

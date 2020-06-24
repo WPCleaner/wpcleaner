@@ -16,10 +16,10 @@ import javax.swing.AbstractListModel;
 import javax.swing.JLabel;
 
 import org.wikipediacleaner.api.data.CompositeComparator;
-import org.wikipediacleaner.api.data.InternalLinkCount;
 import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.Page;
-import org.wikipediacleaner.api.data.PageAnalysis;
+import org.wikipediacleaner.api.data.analysis.InternalLinkCount;
+import org.wikipediacleaner.api.data.analysis.PageAnalysis;
 import org.wikipediacleaner.i18n.GT;
 
 

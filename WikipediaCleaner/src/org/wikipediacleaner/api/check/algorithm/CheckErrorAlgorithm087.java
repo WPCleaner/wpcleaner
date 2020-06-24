@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.wikipediacleaner.api.check.HtmlCharacters;
-import org.wikipediacleaner.api.data.PageAnalysis;
+import org.wikipediacleaner.api.data.analysis.PageAnalysis;
 
 
 /**

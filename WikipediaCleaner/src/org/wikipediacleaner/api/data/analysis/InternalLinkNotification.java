@@ -5,8 +5,12 @@
  *  See README.txt file for licensing information.
  */
 
-package org.wikipediacleaner.api.data;
+package org.wikipediacleaner.api.data.analysis;
 
+import org.wikipediacleaner.api.data.Page;
+import org.wikipediacleaner.api.data.PageElementInternalLink;
+import org.wikipediacleaner.api.data.PageElementTemplate;
+import org.wikipediacleaner.api.data.TemplateMatcher;
 
 /**
  * An interface for notification when internal links are found.

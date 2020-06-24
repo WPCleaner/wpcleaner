@@ -18,8 +18,8 @@ import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.LinterCategory;
 import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.Page;
-import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementInternalLink;
+import org.wikipediacleaner.api.data.analysis.PageAnalysis;
 
 
 /**

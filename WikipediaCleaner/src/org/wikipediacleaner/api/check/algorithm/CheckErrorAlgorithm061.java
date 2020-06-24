@@ -17,11 +17,11 @@ import org.wikipediacleaner.api.algorithm.AlgorithmParameterElement;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.SpecialCharacters;
 import org.wikipediacleaner.api.constants.WPCConfiguration;
-import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElement;
 import org.wikipediacleaner.api.data.PageElementFullTag;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.PageElementTemplate;
+import org.wikipediacleaner.api.data.analysis.PageAnalysis;
 import org.wikipediacleaner.api.data.contents.IntervalComparator;
 import org.wikipediacleaner.i18n.GT;
 

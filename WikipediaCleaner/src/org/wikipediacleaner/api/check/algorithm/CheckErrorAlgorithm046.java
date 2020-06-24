@@ -10,7 +10,6 @@ package org.wikipediacleaner.api.check.algorithm;
 import java.util.Collection;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
-import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementCategory;
 import org.wikipediacleaner.api.data.PageElementExternalLink;
 import org.wikipediacleaner.api.data.PageElementImage;
@@ -19,6 +18,7 @@ import org.wikipediacleaner.api.data.PageElementInterwikiLink;
 import org.wikipediacleaner.api.data.PageElementLanguageLink;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.PageElementTemplate;
+import org.wikipediacleaner.api.data.analysis.PageAnalysis;
 import org.wikipediacleaner.i18n.GT;
 
 

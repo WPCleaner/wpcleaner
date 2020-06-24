@@ -5,10 +5,15 @@
  *  See README.txt file for licensing information.
  */
 
-package org.wikipediacleaner.api.data;
+package org.wikipediacleaner.api.data.analysis;
 
 import java.util.List;
 import java.util.Map;
+
+import org.wikipediacleaner.api.data.Page;
+import org.wikipediacleaner.api.data.PageElementInternalLink;
+import org.wikipediacleaner.api.data.PageElementTemplate;
+import org.wikipediacleaner.api.data.TemplateMatcher;
 
 
 /**

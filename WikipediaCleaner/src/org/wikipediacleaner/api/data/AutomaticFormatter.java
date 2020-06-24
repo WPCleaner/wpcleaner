@@ -20,6 +20,7 @@ import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.constants.WPCConfiguration;
 import org.wikipediacleaner.api.constants.WPCConfigurationBoolean;
 import org.wikipediacleaner.api.constants.WPCConfigurationString;
+import org.wikipediacleaner.api.data.analysis.PageAnalysis;
 
 
 /**

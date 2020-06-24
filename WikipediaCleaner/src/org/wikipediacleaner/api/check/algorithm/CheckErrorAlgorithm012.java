@@ -7,8 +7,8 @@
 
 package org.wikipediacleaner.api.check.algorithm;
 
-import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementTag;
+import org.wikipediacleaner.api.data.analysis.PageAnalysis;
 
 
 /**

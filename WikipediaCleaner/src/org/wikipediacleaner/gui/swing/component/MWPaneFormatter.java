@@ -18,7 +18,6 @@ import javax.swing.text.StyleContext;
 import javax.swing.text.StyledDocument;
 
 import org.wikipediacleaner.api.data.Page;
-import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementCategory;
 import org.wikipediacleaner.api.data.PageElementExternalLink;
 import org.wikipediacleaner.api.data.PageElementFunction;
@@ -33,7 +32,8 @@ import org.wikipediacleaner.api.data.PageElementTable;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.PageElementTitle;
-import org.wikipediacleaner.api.data.PageElementAreas.Area;
+import org.wikipediacleaner.api.data.analysis.PageAnalysis;
+import org.wikipediacleaner.api.data.analysis.Areas.Area;
 import org.wikipediacleaner.api.data.contents.ContentsComment;
 import org.wikipediacleaner.api.data.contents.ContentsElement;
 import org.wikipediacleaner.utils.Configuration;

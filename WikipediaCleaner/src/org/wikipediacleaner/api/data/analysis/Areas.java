@@ -5,13 +5,30 @@
  *  See README.txt file for licensing information.
  */
 
-package org.wikipediacleaner.api.data;
+package org.wikipediacleaner.api.data.analysis;
 
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.wikipediacleaner.api.data.MagicWord;
+import org.wikipediacleaner.api.data.PageElementCategory;
+import org.wikipediacleaner.api.data.PageElementExternalLink;
+import org.wikipediacleaner.api.data.PageElementFunction;
+import org.wikipediacleaner.api.data.PageElementISBN;
+import org.wikipediacleaner.api.data.PageElementISSN;
+import org.wikipediacleaner.api.data.PageElementImage;
+import org.wikipediacleaner.api.data.PageElementInternalLink;
+import org.wikipediacleaner.api.data.PageElementInterwikiLink;
+import org.wikipediacleaner.api.data.PageElementLanguageLink;
+import org.wikipediacleaner.api.data.PageElementMagicWord;
+import org.wikipediacleaner.api.data.PageElementPMID;
+import org.wikipediacleaner.api.data.PageElementParameter;
+import org.wikipediacleaner.api.data.PageElementRFC;
+import org.wikipediacleaner.api.data.PageElementTag;
+import org.wikipediacleaner.api.data.PageElementTemplate;
+import org.wikipediacleaner.api.data.PageElementTitle;
 import org.wikipediacleaner.api.data.contents.ContentsComment;
 import org.wikipediacleaner.api.data.contents.ContentsElement;
 
@@ -19,7 +36,7 @@ import org.wikipediacleaner.api.data.contents.ContentsElement;
 /**
  * Management of non wiki text areas.
  */
-public class PageElementAreas {
+public class Areas {
 
   /** Flag to activate areas checking */
   private static boolean CHECK_AREAS = false;
@@ -30,8 +47,8 @@ public class PageElementAreas {
   /**
    * Initialize areas.
    */
-  public PageElementAreas() {
-    areas = new LinkedList<PageElementAreas.Area>();
+  public Areas() {
+    areas = new LinkedList<Areas.Area>();
   }
 
   /**
@@ -363,7 +380,7 @@ public class PageElementAreas {
    * @param endIndex End index.
    */
   private void addArea(int beginIndex, int endIndex) {
-    Iterator<PageElementAreas.Area> itArea = areas.iterator();
+    Iterator<Areas.Area> itArea = areas.iterator();
     int currentIndex = 0;
     while (itArea.hasNext()) {
       Area area = itArea.next();
@@ -409,7 +426,7 @@ public class PageElementAreas {
    */
   public void checkAreas() {
     int previousEnd = -1;
-    for (PageElementAreas.Area area : areas) {
+    for (Areas.Area area : areas) {
       if (area.beginIndex >= area.endIndex) {
         System.err.println("Error " + area);
       }

@@ -11,9 +11,9 @@ import java.util.Collection;
 import java.util.List;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
-import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.PageElementTitle;
+import org.wikipediacleaner.api.data.analysis.PageAnalysis;
 
 
 /**

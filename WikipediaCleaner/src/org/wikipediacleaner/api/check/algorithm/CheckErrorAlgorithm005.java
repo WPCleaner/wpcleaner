@@ -10,7 +10,7 @@ package org.wikipediacleaner.api.check.algorithm;
 import java.util.Collection;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
-import org.wikipediacleaner.api.data.PageAnalysis;
+import org.wikipediacleaner.api.data.analysis.PageAnalysis;
 import org.wikipediacleaner.i18n.GT;
 
 

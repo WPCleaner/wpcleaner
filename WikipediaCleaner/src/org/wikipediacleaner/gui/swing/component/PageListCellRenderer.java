@@ -19,9 +19,9 @@ import javax.swing.JList;
 import javax.swing.ListCellRenderer;
 import javax.swing.border.EmptyBorder;
 
-import org.wikipediacleaner.api.data.InternalLinkCount;
 import org.wikipediacleaner.api.data.Page;
-import org.wikipediacleaner.api.data.PageAnalysis;
+import org.wikipediacleaner.api.data.analysis.InternalLinkCount;
+import org.wikipediacleaner.api.data.analysis.PageAnalysis;
 import org.wikipediacleaner.utils.Configuration;
 
 
