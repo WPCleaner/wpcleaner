@@ -100,6 +100,14 @@ public class CheckErrorAlgorithm006 extends CheckErrorAlgorithmBase {
                 GT._T("Unable to replace the characters [{0}]", unknownCharacters));
           }
           errors.add(errorResult);
+        } else if (tag.getParameterCount() > 1) {
+          if (errors == null) {
+            return true;
+          }
+          result = true;
+          int separatorIndex = tag.getParameterSeparatorOffset(1);
+          CheckErrorResult errorResult = createCheckErrorResult(analysis, separatorIndex, separatorIndex + 1);
+          errors.add(errorResult);
         }
       }
     }
