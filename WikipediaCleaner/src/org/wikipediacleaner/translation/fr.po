@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2020-06-22 19:54+0200\n"
-"PO-Revision-Date: 2020-06-24 10:57+0200\n"
+"POT-Creation-Date: 2020-06-24 11:10+0200\n"
+"PO-Revision-Date: 2020-06-24 11:17+0200\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: French <fr@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -24,7 +24,7 @@ msgstr ""
 #: org/wikipediacleaner/Version.java:31
 #, java-format
 msgid "{0} extension is now available on all WikiMedia wikis."
-msgstr "L’extension {0} est disponibles sur tous les wikis de WikiMedia."
+msgstr "L’extension {0} est disponible sur tous les wikis de WikiMedia."
 
 #: org/wikipediacleaner/Version.java:32
 msgid "It identifies wikitext patterns that must or can be fixed in pages."
@@ -110,7 +110,7 @@ msgstr "Une action peut être nécessaire pour votre wiki :"
 #: org/wikipediacleaner/Version.java:60
 #, java-format
 msgid "You can check if {0} is used on your wiki by opening an existing disambiguation page (like \"Smith\"). Then, click on \"Page information\" in the menu on the left. Finally, search for {0} in the information page."
-msgstr "Vous pouvez vérifier si {0} est utilisé sur votre wiki en ouvrant une page d’homonymie existante (comme \"Smith\"). Puis, cliquer sur  \"Information sur la page\" dans le menu sur la gauche. Enfin, rechercher {0} dans la page d’information."
+msgstr "Vous pouvez vérifier si {0} est utilisé sur votre wiki en ouvrant une page d’homonymie existante (comme \"Smith\"). Puis, cliquer sur \"Information sur la page\" dans le menu sur la gauche. Enfin, rechercher {0} dans la page d’information."
 
 #: org/wikipediacleaner/Version.java:64
 #, java-format
@@ -155,7 +155,7 @@ msgstr "Page {0} :"
 
 #: org/wikipediacleaner/api/ModificationReport.java:94
 msgid "The following errors have occurred:"
-msgstr "L’erreur suivante s’est produite :"
+msgstr "Les erreurs suivantes se sont produite :"
 
 #: org/wikipediacleaner/api/algorithm/AlgorithmError.java:416
 msgid "No available description"
@@ -1020,7 +1020,7 @@ msgid "Name of a template that creates an external link"
 msgstr "Nom d’un modèle qui crée un lien externe"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm513.java:884
-msgid "Name of a paramater that is used to create the text of the external link"
+msgid "Name of a parameter that is used to create the text of the external link"
 msgstr "Nom d’un paramètre qui est utilisé pour créer le texte du lien externe"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm513.java:887

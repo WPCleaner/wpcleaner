@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2020-06-22 19:54+0200\n"
+"POT-Creation-Date: 2020-06-24 11:10+0200\n"
 "PO-Revision-Date: 2018-11-22 21:13+0000\n"
 "Last-Translator: Suresh Khole <Unknown>\n"
 "Language-Team: Marathi <mr@li.org>\n"
@@ -1015,7 +1015,7 @@ msgid "Name of a template that creates an external link"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm513.java:884
-msgid "Name of a paramater that is used to create the text of the external link"
+msgid "Name of a parameter that is used to create the text of the external link"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm513.java:887

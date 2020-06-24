@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2020-06-22 19:54+0200\n"
+"POT-Creation-Date: 2020-06-24 11:10+0200\n"
 "PO-Revision-Date: 2020-06-23 09:55:37+0000\n"
 "Last-Translator: Matěj S. <matejsuchanek97@gmail.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
@@ -1055,7 +1055,7 @@ msgstr "Seznam textových řetězců, které mohou být vloženy do sekcí bez o
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm513.java:884
 #, fuzzy
-msgid "Name of a paramater that is used to create the text of the external link"
+msgid "Name of a parameter that is used to create the text of the external link"
 msgstr "Seznam textových řetězců, které mohou být vloženy do sekcí bez obsahu"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm513.java:887

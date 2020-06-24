@@ -881,7 +881,7 @@ public class CheckErrorAlgorithm513 extends CheckErrorAlgorithmBase {
                 GT._T("Name of a template that creates an external link")),
             new AlgorithmParameterElement(
                 "text parameter",
-                GT._T("Name of a paramater that is used to create the text of the external link")),
+                GT._T("Name of a parameter that is used to create the text of the external link")),
             new AlgorithmParameterElement(
                 "true/false",
                 GT._T("True if removing internal links in the text can be automatic"),

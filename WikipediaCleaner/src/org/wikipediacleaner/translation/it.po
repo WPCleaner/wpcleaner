@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2020-06-22 19:54+0200\n"
+"POT-Creation-Date: 2020-06-24 11:10+0200\n"
 "PO-Revision-Date: 2020-06-23 09:55:38+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Italian <it@li.org>\n"
@@ -1038,7 +1038,7 @@ msgstr "Una lista di testi che possono essere aggiunti alla sezione senza conten
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm513.java:884
 #, fuzzy
-msgid "Name of a paramater that is used to create the text of the external link"
+msgid "Name of a parameter that is used to create the text of the external link"
 msgstr "Una lista di testi che possono essere aggiunti alla sezione senza contenuto"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm513.java:887
