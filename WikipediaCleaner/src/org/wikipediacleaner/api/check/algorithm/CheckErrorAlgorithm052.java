@@ -224,9 +224,8 @@ public class CheckErrorAlgorithm052 extends CheckErrorAlgorithmBase {
         }
         if ((tmpIndex < contents.length()) &&
             (contents.charAt(tmpIndex) == '<')) {
-          ContentsComment comment = analysis.isInComment(tmpIndex);
-          if ((comment != null) &&
-              (comment.getBeginIndex() == tmpIndex)) {
+          ContentsComment comment = analysis.comments().getBeginsAt(tmpIndex);
+          if (comment != null) {
             categoryEndIndex = comment.getEndIndex();
           }
         }

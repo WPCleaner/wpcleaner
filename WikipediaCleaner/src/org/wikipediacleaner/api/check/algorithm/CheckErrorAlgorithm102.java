@@ -21,7 +21,6 @@ import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.PageElementTemplate.Parameter;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
-import org.wikipediacleaner.api.data.contents.ContentsComment;
 
 
 /**
@@ -348,8 +347,7 @@ public class CheckErrorAlgorithm102 extends CheckErrorAlgorithmBase {
         index++;
       }
       if ((index < contents.length()) && (contents.charAt(index) == '<')) {
-        ContentsComment comment = analysis.isInComment(index);
-        if (comment != null) {
+        if (analysis.comments().isAt(index)) {
           level = ErrorLevel.WARNING;
         }
       }

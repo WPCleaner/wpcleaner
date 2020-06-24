@@ -6,17 +6,19 @@
  */
 
 
-package org.wikipediacleaner.api.data.contents;
+package org.wikipediacleaner.api.data.analysis;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import org.wikipediacleaner.api.data.contents.ContentsElement;
+
 
 /**
  * Analyzer for the page contents.
  */
-public class ContentsAnalyzer {
+public class AnalyzerContents {
 
   /** Contents */
   private final Contents contents;
@@ -25,18 +27,18 @@ public class ContentsAnalyzer {
   private final Object lock = new Object();
 
   /** List of analyzers that have not been run yet */
-  private final List<ContentsElementAnalyzer> analyzersToDo;
+  private final List<AnalyzerElement> analyzersToDo;
 
   /** List of analyzers that have already been run */
-  private final List<ContentsElementAnalyzer> analyzersDone;
+  private final List<AnalyzerElement> analyzersDone;
 
   /**
    * @param contents Contents.
    */
-  ContentsAnalyzer(Contents contents) {
+  AnalyzerContents(Contents contents) {
     this.contents = contents;
     analyzersToDo = new ArrayList<>();
-    analyzersToDo.add(new ContentsCommentAnalyzer());
+    analyzersToDo.add(new AnalyzerComment());
     analyzersDone = new ArrayList<>();
   }
 
@@ -47,7 +49,7 @@ public class ContentsAnalyzer {
 
     synchronized (lock) {
       // Check if the analysis has already been done
-      for (ContentsElementAnalyzer analyzer : analyzersDone) {
+      for (AnalyzerElement analyzer : analyzersDone) {
         if (analyzer.handleAnalysis(elementsClass)) {
           return;
         }
@@ -55,7 +57,7 @@ public class ContentsAnalyzer {
   
       // Check that the analysis can be done
       boolean handled = false;
-      for (ContentsElementAnalyzer analyzer : analyzersToDo) {
+      for (AnalyzerElement analyzer : analyzersToDo) {
         if (analyzer.handleAnalysis(elementsClass)) {
           handled = true;
         }
@@ -65,9 +67,9 @@ public class ContentsAnalyzer {
       }
   
       // Do the analysis
-      Iterator<? extends ContentsElementAnalyzer> itAnalyzer = analyzersToDo.iterator();
+      Iterator<? extends AnalyzerElement> itAnalyzer = analyzersToDo.iterator();
       while (itAnalyzer.hasNext()) {
-        ContentsElementAnalyzer analyzer = itAnalyzer.next();
+        AnalyzerElement analyzer = itAnalyzer.next();
         handled = analyzer.handleAnalysis(elementsClass);
         analyzer.analyze(contents);
         analyzersDone.add(analyzer);

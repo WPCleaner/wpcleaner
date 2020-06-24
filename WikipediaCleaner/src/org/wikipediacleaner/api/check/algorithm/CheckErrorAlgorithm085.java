@@ -134,7 +134,7 @@ public class CheckErrorAlgorithm085 extends CheckErrorAlgorithmBase {
                     }
                   }
                 } else {
-                  ContentsComment comment = analysis.isInComment(currentIndex);
+                  ContentsComment comment = analysis.comments().getAt(currentIndex);
                   if (comment != null) {
                     ok = true;
                     replacementText.append(contents.substring(currentIndex, comment.getEndIndex()));

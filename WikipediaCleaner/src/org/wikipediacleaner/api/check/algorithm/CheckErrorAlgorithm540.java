@@ -981,8 +981,8 @@ public class CheckErrorAlgorithm540 extends CheckErrorAlgorithmBase {
 
       // Ignore comments at the beginning
       if ((beginIndex < endIndex) && (contents.charAt(beginIndex) == '<')) {
-        ContentsComment comment = analysis.isInComment(beginIndex);
-        if ((comment != null) && (comment.getBeginIndex() == beginIndex)) {
+        ContentsComment comment = analysis.comments().getBeginsAt(beginIndex);
+        if (comment != null) {
           beginIndex = comment.getEndIndex();
           tryAgain = true;
         }
@@ -1013,8 +1013,8 @@ public class CheckErrorAlgorithm540 extends CheckErrorAlgorithmBase {
 
       // Ignore comments at the end
       if ((endIndex > beginIndex) && (contents.charAt(endIndex - 1) == '>')) {
-        ContentsComment comment = analysis.isInComment(endIndex - 1);
-        if ((comment != null) && (comment.getEndIndex() == endIndex)) {
+        ContentsComment comment = analysis.comments().getEndsAt(endIndex);
+        if (comment != null) {
           endIndex = comment.getBeginIndex();
           tryAgain = true;
         }

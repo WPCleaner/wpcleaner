@@ -69,11 +69,12 @@ public abstract class CheckErrorAlgorithmHtmlNamedEntities extends CheckErrorAlg
 
       // Check if we should look for a match at this position
       boolean shouldMatch = true;
-      if (shouldMatch &&
-          ((analysis.isInComment(ampersandIndex) != null) ||
-           (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_SOURCE, ampersandIndex) != null) ||
-           (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_SYNTAXHIGHLIGHT, ampersandIndex) != null))) {
-        shouldMatch = false;
+      if (shouldMatch) {
+        if (analysis.comments().isAt(ampersandIndex) ||
+            (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_SOURCE, ampersandIndex) != null) ||
+            (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_SYNTAXHIGHLIGHT, ampersandIndex) != null)) {
+          shouldMatch = false;
+        }
       }
       if (shouldMatch) {
         PageElementExternalLink link = analysis.isInExternalLink(ampersandIndex);

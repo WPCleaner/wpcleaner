@@ -473,7 +473,7 @@ public class ListCWWorker extends BasicWorker {
       // Find place holders in the page
       int begin = -1;
       int end = -1;
-      for (ContentsComment comment : page.getAnalysis(contents, true).getComments()) {
+      for (ContentsComment comment : page.getAnalysis(contents, true).comments().getAll()) {
         String value = comment.getComment().trim();
         if ("BOT BEGIN".equals(value)) {
           if (begin < 0) {

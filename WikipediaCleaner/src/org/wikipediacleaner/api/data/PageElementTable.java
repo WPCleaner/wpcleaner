@@ -366,9 +366,8 @@ public class PageElementTable extends PageElement {
     }
     char currentChar = contents.charAt(index);
     if (currentChar == '<') {
-      ContentsComment comment = analysis.isInComment(index);
-      if ((comment != null) &&
-          (comment.getBeginIndex() == index)) {
+      ContentsComment comment = analysis.comments().getBeginsAt(index);
+      if (comment != null) {
         return getMeaningfulIndex(analysis, comment.getEndIndex());
       }
     }
@@ -389,8 +388,8 @@ public class PageElementTable extends PageElement {
     }
     char currentChar = contents.charAt(index);
     if (currentChar == '<') {
-      ContentsComment comment = analysis.isInComment(index);
-      if ((comment != null) && (comment.getBeginIndex() == index)) {
+      ContentsComment comment = analysis.comments().getBeginsAt(index);
+      if (comment != null) {
         return getTrueIndex(analysis, tables, comment.getEndIndex());
       }
       PageElementTag tag = analysis.isInTag(index);

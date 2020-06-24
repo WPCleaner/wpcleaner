@@ -65,7 +65,7 @@ public class CheckErrorAlgorithm522 extends CheckErrorAlgorithmBase {
           PageElementTag tag = null;
           char currentChar = contents.charAt(currentIndex);
           if (currentChar == '<') {
-            comment = analysis.isInComment(currentIndex);
+            comment = analysis.comments().getAt(currentIndex);
             tag = analysis.isInTag(currentIndex, PageElementTag.TAG_WIKI_NOWIKI);
           }
           if (comment != null) {

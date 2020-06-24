@@ -189,7 +189,7 @@ public class CheckErrorAlgorithm028 extends CheckErrorAlgorithmBase {
         (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_SYNTAXHIGHLIGHT, index) != null)) {
       return false;
     }
-    if (analysis.isInComment(index) != null) {
+    if (analysis.comments().isAt(index)) {
       return false;
     }
     return true;

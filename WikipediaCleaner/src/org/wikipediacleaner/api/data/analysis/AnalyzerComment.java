@@ -6,28 +6,32 @@
  */
 
 
-package org.wikipediacleaner.api.data.contents;
+package org.wikipediacleaner.api.data.analysis;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.wikipediacleaner.api.data.contents.ContentsComment;
+import org.wikipediacleaner.api.data.contents.ContainerComment;
+import org.wikipediacleaner.api.data.contents.ContentsInterval;
+
 
 /**
  * Analyzer for comments.
  */
-public class ContentsCommentAnalyzer extends ContentsElementAnalyzer {
+public class AnalyzerComment extends AnalyzerElement {
 
   /**
    * Analyzer for comments.
    */
-  public ContentsCommentAnalyzer() {
+  public AnalyzerComment() {
     super(Arrays.asList(new Class[] { ContentsComment.class }));
   }
 
   /**
    * @param contents
-   * @see org.wikipediacleaner.api.data.contents.ContentsElementAnalyzer#analyze(org.wikipediacleaner.api.data.contents.Contents)
+   * @see org.wikipediacleaner.api.data.analysis.AnalyzerElement#analyze(org.wikipediacleaner.api.data.analysis.Contents)
    */
   @Override
   void analyze(Contents contents) {
@@ -55,6 +59,6 @@ public class ContentsCommentAnalyzer extends ContentsElementAnalyzer {
         done = true;
       }
     } while (!done);
-    contents.comments = new ContentsCommentContainer(comments);
+    contents.comments = new ContainerComment(comments);
   }
 }

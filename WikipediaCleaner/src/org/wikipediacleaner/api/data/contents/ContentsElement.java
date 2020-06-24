@@ -8,6 +8,7 @@
 
 package org.wikipediacleaner.api.data.contents;
 
+import org.wikipediacleaner.api.data.analysis.Contents;
 
 /**
  * Structured element inside contents.

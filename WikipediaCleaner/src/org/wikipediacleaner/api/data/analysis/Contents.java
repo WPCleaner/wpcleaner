@@ -6,8 +6,11 @@
  */
 
 
-package org.wikipediacleaner.api.data.contents;
+package org.wikipediacleaner.api.data.analysis;
 
+import org.wikipediacleaner.api.data.contents.ContentsComment;
+import org.wikipediacleaner.api.data.contents.ContainerComment;
+import org.wikipediacleaner.api.data.contents.ContentsInterval;
 
 /**
  * Management of page contents (text, analysis into elements)
@@ -26,14 +29,14 @@ public class Contents {
   private final String text;
 
   /** Contents analyzer */
-  private final ContentsAnalyzer analyzer;
+  private final AnalyzerContents analyzer;
 
   /**
    * @param text Text of the page.
    */
   private Contents(String text) {
     this.text = (text != null) ? text : "";
-    this.analyzer = new ContentsAnalyzer(this);
+    this.analyzer = new AnalyzerContents(this);
   }
 
   // ==============================================================================================
@@ -76,12 +79,12 @@ public class Contents {
   // ==============================================================================================
 
   /** Container for the comments */
-  ContentsCommentContainer comments = null;
+  ContainerComment comments = null;
 
   /**
    * @return Comments container.
    */
-  public ContentsCommentContainer getComments() {
+  public ContainerComment comments() {
     if (comments == null) {
       analyzer.analyze(ContentsComment.class);
     }

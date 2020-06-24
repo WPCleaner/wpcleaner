@@ -90,8 +90,8 @@ public class CheckErrorAlgorithm067 extends CheckErrorAlgorithmBase {
                   testIndex--;
                   done = false;
                 } else  if ((testChar == '>')) {
-                  ContentsComment comment = analysis.isInComment(testIndex);
-                  if ((comment != null) && (comment.getEndIndex() == testIndex + 1)) {
+                  ContentsComment comment = analysis.comments().getEndsAt(testIndex + 1);
+                  if (comment != null) {
                     if (currentTagIndex == firstTagIndex) {
                       previousComment += contents.substring(comment.getBeginIndex(), comment.getEndIndex());
                     }

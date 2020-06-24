@@ -83,7 +83,7 @@ public class CheckErrorAlgorithm104 extends CheckErrorAlgorithmBase {
 
       if (shouldReport) {
         // Ignore comments
-        if (analysis.isInComment(currentIndex) != null) {
+        if (analysis.comments().isAt(currentIndex)) {
           shouldReport = false;
         }
       }

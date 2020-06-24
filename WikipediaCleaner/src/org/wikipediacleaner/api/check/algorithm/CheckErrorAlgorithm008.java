@@ -52,7 +52,7 @@ public class CheckErrorAlgorithm008 extends CheckErrorAlgorithmBase {
         // Check that it is indeed an error
         boolean errorFound = true;
         if (errorFound) {
-          if (analysis.isInComment(currentIndex) != null) {
+          if (analysis.comments().isAt(currentIndex)) {
             errorFound = false;
           }
         }

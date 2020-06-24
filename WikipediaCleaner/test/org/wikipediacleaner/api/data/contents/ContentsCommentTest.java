@@ -10,6 +10,7 @@ package org.wikipediacleaner.api.data.contents;
 import static org.junit.Assert.*;
 
 import org.junit.Test;
+import org.wikipediacleaner.api.data.analysis.Contents;
 
 
 /**
@@ -36,16 +37,16 @@ public class ContentsCommentTest {
         text, contents.getText());
 
     // Check comments container
-    ContentsCommentContainer container = contents.getComments();
+    ContainerComment container = contents.comments();
     assertNotNull(
         "Comments container is null",
         container);
     assertNotNull(
         "List of comments is null",
-        container.getElements());
+        container.getAll());
     assertEquals(
         "List of comments is not empty",
-        0, container.getElements().size());
+        0, container.getAll().size());
   }
 
   /**
@@ -70,19 +71,19 @@ public class ContentsCommentTest {
         text, contents.getText());
 
     // Check comments container
-    ContentsCommentContainer container = contents.getComments();
+    ContainerComment container = contents.comments();
     assertNotNull(
         "Comments container is null",
         container);
     assertNotNull(
         "List of comments is null",
-        container.getElements());
+        container.getAll());
     assertEquals(
         "List of comments is not a singleton",
-        1, container.getElements().size());
+        1, container.getAll().size());
 
     // Check comment
-    ContentsComment comment = container.getElements().get(0);
+    ContentsComment comment = container.getAll().get(0);
     assertNotNull(
         "Comment is null",
         comment);
@@ -127,19 +128,19 @@ public class ContentsCommentTest {
         text, contents.getText());
 
     // Check comments container
-    ContentsCommentContainer container = contents.getComments();
+    ContainerComment container = contents.comments();
     assertNotNull(
         "Comments container is null",
         container);
     assertNotNull(
         "List of comments is null",
-        container.getElements());
+        container.getAll());
     assertEquals(
         "List of comments is not with 2 elements",
-        2, container.getElements().size());
+        2, container.getAll().size());
 
     // Check first comment
-    ContentsComment comment = container.getElements().get(0);
+    ContentsComment comment = container.getAll().get(0);
     assertNotNull(
         "Comment is null",
         comment);
@@ -159,7 +160,7 @@ public class ContentsCommentTest {
         text2b, comment.getComment());
 
     // Check second comment
-    comment = container.getElements().get(1);
+    comment = container.getAll().get(1);
     assertNotNull(
         "Comment is null",
         comment);

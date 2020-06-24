@@ -70,7 +70,7 @@ public class CheckErrorAlgorithm084 extends CheckErrorAlgorithmBase {
           if (Character.isWhitespace(currentChar)) {
             pos++;
           } else if (currentChar == '<') {
-            ContentsComment comment = analysis.isInComment(pos);
+            ContentsComment comment = analysis.comments().getAt(pos);
             if (comment != null) {
               pos = comment.getEndIndex();
               if (commentFound == null) {

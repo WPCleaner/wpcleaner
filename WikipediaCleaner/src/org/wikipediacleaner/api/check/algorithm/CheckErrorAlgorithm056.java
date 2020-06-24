@@ -130,7 +130,7 @@ public class CheckErrorAlgorithm056 extends CheckErrorAlgorithmBase {
 
       // Check if inside a comment
       if (shouldCheck) {
-        ContentsComment comment = analysis.isInComment(currentIndex);
+        ContentsComment comment = analysis.comments().getAt(currentIndex);
         if (comment != null) {
           nextIndex = comment.getEndIndex();
           shouldCheck = false;

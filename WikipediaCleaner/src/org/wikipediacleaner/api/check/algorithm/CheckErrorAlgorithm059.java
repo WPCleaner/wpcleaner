@@ -122,7 +122,7 @@ public class CheckErrorAlgorithm059 extends CheckErrorAlgorithmBase {
                   }
                 }
               } else {
-                ContentsComment comment = analysis.isInComment(paramValueStartIndex + currentValuePos);
+                ContentsComment comment = analysis.comments().getAt(paramValueStartIndex + currentValuePos);
                 if (comment != null) {
                   if (endError > 0) {
                     replacement += analysis.getContents().substring(comment.getBeginIndex(), comment.getEndIndex());

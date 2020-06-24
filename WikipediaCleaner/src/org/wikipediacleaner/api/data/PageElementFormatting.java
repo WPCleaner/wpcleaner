@@ -518,7 +518,7 @@ public class PageElementFormatting {
     } while (index >= 0);
 
     // Exclude comments
-    List<ContentsComment> comments = analysis.getComments();
+    List<ContentsComment> comments = analysis.comments().getAll();
     for (ContentsComment comment : comments) {
       PageElementFormatting.excludeArea(
           elements, comment.getBeginIndex(), comment.getEndIndex());

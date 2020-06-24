@@ -6,16 +6,18 @@
  */
 
 
-package org.wikipediacleaner.api.data.contents;
+package org.wikipediacleaner.api.data.analysis;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import org.wikipediacleaner.api.data.contents.ContentsElement;
 
 
 /**
  * Base class for analyzing contents for a given type of element.
  */
-abstract class ContentsElementAnalyzer {
+abstract class AnalyzerElement {
 
   /** Types of elements managed by the analyzer */
   private final List<Class> managedClasses;
@@ -23,7 +25,7 @@ abstract class ContentsElementAnalyzer {
   /**
    * Creation of a content analyzer.
    */
-  ContentsElementAnalyzer(List<Class> managedClasses) {
+  AnalyzerElement(List<Class> managedClasses) {
     this.managedClasses = (managedClasses != null) ? managedClasses : new ArrayList<Class>();
   }
 

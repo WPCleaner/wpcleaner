@@ -15,7 +15,6 @@ import org.wikipediacleaner.api.data.PageElementExternalLink;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
-import org.wikipediacleaner.api.data.contents.ContentsComment;
 import org.wikipediacleaner.i18n.GT;
 
 
@@ -104,8 +103,7 @@ public class CheckErrorAlgorithm062 extends CheckErrorAlgorithmBase {
           }
           if (shouldCount) {
             // Check for comment
-            ContentsComment comment = analysis.isInComment(currentIndex);
-            if (comment != null) {
+            if (analysis.comments().isAt(currentIndex)) {
               shouldCount = false;
             }
           }

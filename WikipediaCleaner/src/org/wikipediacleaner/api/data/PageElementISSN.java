@@ -179,7 +179,7 @@ public class PageElementISSN extends PageElement {
 
     // Check special places
     if (contents.charAt(index) == '<') {
-      ContentsComment comment = analysis.isInComment(index);
+      ContentsComment comment = analysis.comments().getAt(index);
       if (comment != null) {
         return comment.getEndIndex();
       }
@@ -281,7 +281,7 @@ public class PageElementISSN extends PageElement {
       boolean spaceFound = false;
       PageElementInternalLink iLink = null;
       PageElementExternalLink eLink = null;
-      if (analysis.isInComment(index) == null) {
+      if (!analysis.comments().isAt(index)) {
         boolean done = false;
         while (!done) {
           done = true;
@@ -503,8 +503,8 @@ public class PageElementISSN extends PageElement {
             currentChar = '-';
           }
           if (currentChar == '<') {
-            ContentsComment comment = analysis.isInComment(delta + i + 1);
-            if ((comment != null) && (comment.getBeginIndex() == delta + i)) {
+            ContentsComment comment = analysis.comments().getBeginsAt(delta + i);
+            if (comment != null) {
               i += comment.getEndIndex() - comment.getBeginIndex();
             } else {
               ok = false;
@@ -902,8 +902,8 @@ public class PageElementISSN extends PageElement {
     while (i < issn.length()) {
       char current = Character.toUpperCase(issn.charAt(i));
       if (current == '<') {
-        ContentsComment comment = analysis.isInComment(i);
-        if ((comment != null) && (comment.getBeginIndex() == i)) {
+        ContentsComment comment = analysis.comments().getBeginsAt(i);
+        if (comment != null) {
           i = comment.getEndIndex() - 1;
         } else {
           PageElementTag refTag = analysis.isInTag(i, PageElementTag.TAG_WIKI_REF);

@@ -965,16 +965,16 @@ public class CheckErrorAlgorithm532 extends CheckErrorAlgorithmBase {
       // Remove comments
       if ((beginIndex < tagBeginIndex) &&
           (contents.charAt(beginIndex) == '<')) {
-        ContentsComment comment = analysis.isInComment(beginIndex);
-        if ((comment != null) && (comment.getBeginIndex() == beginIndex)) {
+        ContentsComment comment = analysis.comments().getBeginsAt(beginIndex);
+        if (comment != null) {
           beginIndex = comment.getEndIndex();
           tryReducing = true;
         }
       }
       if ((endIndex > tagEndIndex) &&
           (contents.charAt(endIndex - 1) == '>')) {
-        ContentsComment comment = analysis.isInComment(endIndex - 1);
-        if ((comment != null) && (comment.getEndIndex() == endIndex)) {
+        ContentsComment comment = analysis.comments().getEndsAt(endIndex);
+        if (comment != null) {
           endIndex = comment.getBeginIndex();
           tryReducing = true;
         }

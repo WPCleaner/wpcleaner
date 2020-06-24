@@ -181,7 +181,7 @@ public class PageElementExternalLink extends PageElement {
         ContentsComment comment = null;
         PageElementTag tagNowiki = null;
         if ((contents.charAt(endTextIndex) == '<') && (analysis != null)) {
-          comment = analysis.isInComment(endTextIndex);
+          comment = analysis.comments().getAt(endTextIndex);
           tagNowiki = analysis.isInTag(endTextIndex, PageElementTag.TAG_WIKI_NOWIKI);
         }
         if (comment != null) {

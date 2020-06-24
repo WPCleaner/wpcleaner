@@ -40,7 +40,7 @@ import org.wikipediacleaner.api.data.PageElementTable;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.PageElementTitle;
-import org.wikipediacleaner.api.data.contents.Contents;
+import org.wikipediacleaner.api.data.contents.ContainerComment;
 import org.wikipediacleaner.api.data.contents.ContentsComment;
 import org.wikipediacleaner.api.data.contents.ContentsElement;
 import org.wikipediacleaner.api.data.contents.ContentsElementComparator;
@@ -336,7 +336,7 @@ public class PageAnalysis {
       elements.addAll(getCategories());
     }
     if (withComments) {
-      elements.addAll(getComments());
+      elements.addAll(comments().getAll());
     }
     if (withExternalLinks) {
       elements.addAll(getExternalLinks());
@@ -388,7 +388,7 @@ public class PageAnalysis {
   public ContentsElement isInElement(int currentIndex) {
 
     // Check if in comment
-    ContentsElement element = isInComment(currentIndex);
+    ContentsElement element = comments().getSmallestAt(currentIndex);
     if (element != null) {
       return element;
     }
@@ -664,7 +664,7 @@ public class PageAnalysis {
       }
 
       // Update areas of non wiki text
-      areas.addComments(getComments());
+      areas.addComments(comments().getAll());
 
       if (perf != null) {
         perf.printEndAlways();
@@ -1236,7 +1236,7 @@ public class PageAnalysis {
     // Check if this is a parameter
     String text = contents.getText();
     PageElementParameter parameter = PageElementParameter.analyzeBlock(
-        getWikipedia(), text, currentIndex, getComments(), tags);
+        getWikipedia(), text, currentIndex, comments(), tags);
     if (parameter != null) {
       parameters.add(parameter);
       return currentIndex + 3;
@@ -1257,7 +1257,7 @@ public class PageAnalysis {
 
     // Check if this is a function
     PageElementFunction function = PageElementFunction.analyzeBlock(
-        getWikipedia(), text, currentIndex, getComments(), tags);
+        getWikipedia(), text, currentIndex, comments(), tags);
     if (function != null) {
       functions.add(function);
       if (function.getParameterCount() == 0) {
@@ -1268,7 +1268,7 @@ public class PageAnalysis {
 
     // Check if this is a template
     PageElementTemplate template = PageElementTemplate.analyzeBlock(
-        getWikipedia(), text, currentIndex, getComments(), tags);
+        getWikipedia(), text, currentIndex, comments(), tags);
     if (template != null) {
       templates.add(template);
       if (template.getParameterCount() == 0) {
@@ -1299,12 +1299,7 @@ public class PageAnalysis {
       } else if (text.charAt(tmpIndex) == '\n') {
         hasNewLine = true;
       } else if (text.charAt(tmpIndex) == '>') {
-        ContentsComment comment = null;
-        for (ContentsComment tmpComment : getComments()) {
-          if (tmpComment.getEndIndex() == tmpIndex + 1) {
-            comment = tmpComment;
-          }
-        }
+        ContentsComment comment = comments().getEndsAt(tmpIndex + 1);
         if (comment == null) {
           return currentIndex + 1;
         }
@@ -1336,7 +1331,7 @@ public class PageAnalysis {
 
     // Check if this is a title
     PageElementTitle title = PageElementTitle.analyzeBlock(
-        getWikipedia(), text, currentIndex, getComments(), tags);
+        getWikipedia(), text, currentIndex, comments(), tags);
     if (title != null) {
       titles.add(title);
       return title.getBeginIndex() + title.getFirstLevel();
@@ -1346,22 +1341,14 @@ public class PageAnalysis {
   }
 
   // ==========================================================================
-  // Comments management
+  // Management of the various elements
   // ==========================================================================
 
   /**
-   * @return All comments in the page.
+   * @return Container for comments.
    */
-  public List<ContentsComment> getComments() {
-    return contents.getComments().getElements();
-  }
-
-  /**
-   * @param currentIndex Current index.
-   * @return Comment if the current index is inside a comment.
-   */
-  public ContentsComment isInComment(int currentIndex) {
-    return contents.getComments().getSmallestElementAtIndex(currentIndex);
+  public ContainerComment comments() {
+    return contents.comments();
   }
 
   // ==========================================================================

@@ -88,19 +88,20 @@ public class CheckErrorAlgorithm046 extends CheckErrorAlgorithmBase {
           shouldCount = false;
         }
       }
-      if (shouldCount &&
-          (analysis.isInComment(currentIndex) != null) ||
-          (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_NOWIKI, currentIndex) != null) ||
-          (analysis.getSurroundingTag(PageElementTag.TAG_HTML_CODE, currentIndex) != null) ||
-          (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_MAPFRAME, currentIndex) != null) ||
-          (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_MATH, currentIndex) != null) ||
-          (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_MATH_CHEM, currentIndex) != null) ||
-          (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_PRE, currentIndex) != null) ||
-          (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_SCORE, currentIndex) != null) ||
-          (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_SOURCE, currentIndex) != null) ||
-          (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_SYNTAXHIGHLIGHT, currentIndex) != null) ||
-          (analysis.isInTag(currentIndex) != null)) {
-        shouldCount = false;
+      if (shouldCount) {
+        if (analysis.comments().isAt(currentIndex) ||
+            (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_NOWIKI, currentIndex) != null) ||
+            (analysis.getSurroundingTag(PageElementTag.TAG_HTML_CODE, currentIndex) != null) ||
+            (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_MAPFRAME, currentIndex) != null) ||
+            (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_MATH, currentIndex) != null) ||
+            (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_MATH_CHEM, currentIndex) != null) ||
+            (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_PRE, currentIndex) != null) ||
+            (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_SCORE, currentIndex) != null) ||
+            (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_SOURCE, currentIndex) != null) ||
+            (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_SYNTAXHIGHLIGHT, currentIndex) != null) ||
+            (analysis.isInTag(currentIndex) != null)) {
+          shouldCount = false;
+        }
       }
       if (shouldCount) {
         PageElementTemplate template = analysis.isInTemplate(currentIndex - 1);

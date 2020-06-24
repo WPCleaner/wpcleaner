@@ -52,7 +52,7 @@ public class CheckErrorAlgorithm047 extends CheckErrorAlgorithmBase {
     boolean result = false;
     while (currentIndex >= 0) {
       boolean shouldCount = true;
-      if ((analysis.isInComment(currentIndex) != null) ||
+      if (analysis.comments().isAt(currentIndex) ||
           (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_NOWIKI, currentIndex) != null) ||
           (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_GRAPH, currentIndex) != null) ||
           (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_MAPFRAME, currentIndex) != null) ||

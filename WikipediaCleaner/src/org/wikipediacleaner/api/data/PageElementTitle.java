@@ -10,6 +10,7 @@ package org.wikipediacleaner.api.data;
 import java.util.List;
 
 import org.wikipediacleaner.api.constants.EnumWikipedia;
+import org.wikipediacleaner.api.data.contents.ContainerComment;
 import org.wikipediacleaner.api.data.contents.ContentsComment;
 
 
@@ -37,7 +38,7 @@ public class PageElementTitle extends PageElement {
    */
   public static PageElementTitle analyzeBlock(
       EnumWikipedia wikipedia, String contents, int index,
-      List<ContentsComment> comments,
+      ContainerComment comments,
       List<PageElementTag> tags) {
     // Verify arguments
     if (contents == null) {
@@ -55,12 +56,7 @@ public class PageElementTitle extends PageElement {
       } else if (contents.charAt(index) == '\n') {
         hasNewLine = true;
       } else if (contents.charAt(index) == '>') {
-        ContentsComment comment = null;
-        for (ContentsComment tmpComment : comments) {
-          if (tmpComment.getEndIndex() == index + 1) {
-            comment = tmpComment;
-          }
-        }
+        ContentsComment comment = comments.getEndsAt(index + 1);
         if (comment == null) {
           return null;
         }
@@ -103,12 +99,7 @@ public class PageElementTitle extends PageElement {
         secondLevel++;
         lastEqualIndex = index;
       } else if (currentChar == '<') {
-        ContentsComment comment = null;
-        for (ContentsComment tmpComment : comments) {
-          if (tmpComment.getBeginIndex() == index) {
-            comment = tmpComment;
-          }
-        }
+        ContentsComment comment = comments.getBeginsAt(index);
         if (comment == null) {
           PageElementTag ref = null;
           for (PageElementTag tmpTag : tags) {

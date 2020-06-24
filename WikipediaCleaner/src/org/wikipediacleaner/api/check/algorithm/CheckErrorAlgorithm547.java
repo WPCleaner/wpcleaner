@@ -82,7 +82,7 @@ public class CheckErrorAlgorithm547 extends CheckErrorAlgorithmBase {
         }
       }
       if (shouldReport) {
-        if (analysis.isInComment(index) != null) {
+        if (analysis.comments().isAt(index)) {
           shouldReport = false;
         }
       }

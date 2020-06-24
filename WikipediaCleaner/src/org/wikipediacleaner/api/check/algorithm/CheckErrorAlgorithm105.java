@@ -66,7 +66,7 @@ public class CheckErrorAlgorithm105 extends CheckErrorAlgorithmBase {
 
       // Ignore in comments
       if (errorFound) {
-        if (analysis.isInComment(currentIndex) != null) {
+        if (analysis.comments().isAt(currentIndex)) {
           errorFound = false;
         }
       }

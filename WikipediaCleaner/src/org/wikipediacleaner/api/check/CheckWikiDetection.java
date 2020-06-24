@@ -145,8 +145,8 @@ public class CheckWikiDetection {
              (currentCount < location)) {
         boolean moved = false;
         if (!moved) {
-          ContentsComment comment = analysis.isInComment(currentIndex);
-          if ((comment != null) && (comment.getBeginIndex() == currentIndex)) {
+          ContentsComment comment = analysis.comments().getBeginsAt(currentIndex);
+          if (comment != null) {
             moved = true;
             currentIndex = comment.getEndIndex();
           }

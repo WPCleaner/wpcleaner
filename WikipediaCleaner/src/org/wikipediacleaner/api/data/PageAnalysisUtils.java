@@ -38,7 +38,7 @@ public class PageAnalysisUtils {
     if (pageAnalysis == null) {
       return currentIndex;
     }
-    List<ContentsComment> comments = pageAnalysis.getComments();
+    List<ContentsComment> comments = pageAnalysis.comments().getAll();
     for (ContentsComment comment : comments) {
       if (currentIndex < comment.getEndIndex()) {
         if (currentIndex >= comment.getBeginIndex()) {
@@ -110,7 +110,7 @@ public class PageAnalysisUtils {
           // Check if link is marked as normal
           boolean good = false;
           if ((currentPos < maxSize) && (contents.charAt(currentPos) == '<')) {
-            ContentsComment nextComment = pageAnalysis.isInComment(currentPos);
+            ContentsComment nextComment = pageAnalysis.comments().getAt(currentPos);
             if ((nextComment != null) && (nextComment.getComment() != null)) {
               if (commentsAfter != null) {
                 for (String commentAfter : commentsAfter) {

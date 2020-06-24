@@ -114,8 +114,8 @@ public class CheckErrorAlgorithm521 extends CheckErrorAlgorithmBase {
 
       // If current value position is the beginning of a comment, skip it
       if ((valueChar == '<') &&
-          (analysis.isInComment(offset + valueIndex) != null)) {
-        ContentsComment comment = analysis.isInComment(offset + valueIndex);
+          analysis.comments().isAt(offset + valueIndex)) {
+        ContentsComment comment = analysis.comments().getAt(offset + valueIndex);
         formatOk = true;
         valueIndex = comment.getEndIndex() - offset;
 

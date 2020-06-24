@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.wikipediacleaner.api.constants.EnumWikipedia;
+import org.wikipediacleaner.api.data.contents.ContainerComment;
 import org.wikipediacleaner.api.data.contents.ContentsComment;
 import org.wikipediacleaner.api.data.contents.ContentsUtil;
 
@@ -150,7 +151,7 @@ public class PageElementTemplate extends PageElement {
   public static PageElementTemplate analyzeBlock(
       EnumWikipedia wiki,
       String contents, int index,
-      List<ContentsComment> comments,
+      ContainerComment comments,
       List<PageElementTag> tags) {
     // Verify arguments
     if (contents == null) {
@@ -181,14 +182,7 @@ public class PageElementTemplate extends PageElement {
   
       // Possible comment
       if ((tmpIndex < contents.length()) && (contents.charAt(tmpIndex) == '<')) {
-        ContentsComment comment = null;
-        if (comments != null) {
-          for (ContentsComment tmpComment : comments) {
-            if (tmpComment.getBeginIndex() == tmpIndex) {
-              comment = tmpComment;
-            }
-          }
-        }
+        ContentsComment comment = comments.getBeginsAt(tmpIndex);
         if (comment == null) {
           return null;
         }
@@ -227,14 +221,7 @@ public class PageElementTemplate extends PageElement {
 
       // Possible comment
       if ((tmpIndex < contents.length()) && (contents.charAt(tmpIndex) == '<')) {
-        ContentsComment comment = null;
-        if (comments != null) {
-          for (ContentsComment tmpComment : comments) {
-            if (tmpComment.getBeginIndex() == tmpIndex) {
-              comment = tmpComment;
-            }
-          }
-        }
+        ContentsComment comment = comments.getBeginsAt(tmpIndex);
         if (comment == null) {
           return null;
         }
@@ -294,7 +281,7 @@ public class PageElementTemplate extends PageElement {
       EnumWikipedia wiki, String contents,
       int templateBeginIndex, int pipeIndex, int parametersBeginIndex,
       List<Parameter> parameters,
-      List<ContentsComment> comments,
+      ContainerComment comments,
       List<PageElementTag> tags) {
     if (contents == null) {
       return -1;
@@ -384,14 +371,7 @@ public class PageElementTemplate extends PageElement {
           }
         } else {
           // Possible start of a comment
-          ContentsComment comment = null;
-          if (comments != null) {
-            for (ContentsComment tmpComment : comments) {
-              if (tmpComment.getBeginIndex() == tmpIndex) {
-                comment = tmpComment;
-              }
-            }
-          }
+          ContentsComment comment = comments.getBeginsAt(tmpIndex);
           if (comment != null) {
             tmpIndex = comment.getEndIndex();
           } else {
@@ -464,7 +444,7 @@ public class PageElementTemplate extends PageElement {
       List<Parameter> parameters,
       int pipeIndex, int endIndex, String parameter,
       int equalIndex, int offset,
-      List<ContentsComment> comments) {
+      ContainerComment comments) {
 
     // Check if the "=" is meaningful
     if (equalIndex >= 0) {
@@ -492,7 +472,7 @@ public class PageElementTemplate extends PageElement {
           paramNum++;
         }
       }
-      String strippedValue = ContentsComment.stripComments(comments, parameter, offset);
+      String strippedValue = ContentsComment.stripComments(comments.getAll(), parameter, offset);
       parameters.add(new Parameter(
           pipeIndex, endIndex,
           "", Integer.toString(paramNum), offset + spaces,
@@ -507,7 +487,7 @@ public class PageElementTemplate extends PageElement {
         spacesValue++;
       }
       String value = parameter.substring(equalIndex + 1);
-      String strippedValue = ContentsComment.stripComments(comments, value, offset + equalIndex + 1);
+      String strippedValue = ContentsComment.stripComments(comments.getAll(), value, offset + equalIndex + 1);
       parameters.add(new Parameter(
           pipeIndex, endIndex,
           parameter.substring(0, equalIndex), null, offset + spacesName,

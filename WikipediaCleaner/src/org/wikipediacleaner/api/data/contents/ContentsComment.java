@@ -10,6 +10,8 @@ package org.wikipediacleaner.api.data.contents;
 
 import java.util.List;
 
+import org.wikipediacleaner.api.data.analysis.Contents;
+
 
 /**
  * Element of type Comment.
@@ -29,7 +31,7 @@ public class ContentsComment extends ContentsElement {
    * @param contents Contents of the page.
    * @param interval Interval on which the element is spanning.
    */
-  ContentsComment(Contents contents, ContentsInterval interval) {
+  public ContentsComment(Contents contents, ContentsInterval interval) {
     super(contents, interval);
     this.comment = ContentsUtil.trimWhitespace(contents.substring(
         interval.getBeginIndex() + START.length(),

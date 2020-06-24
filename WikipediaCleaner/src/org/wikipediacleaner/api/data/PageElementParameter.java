@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.wikipediacleaner.api.constants.EnumWikipedia;
+import org.wikipediacleaner.api.data.contents.ContainerComment;
 import org.wikipediacleaner.api.data.contents.ContentsComment;
 
 
@@ -79,7 +80,7 @@ public class PageElementParameter extends PageElement {
   public static PageElementParameter analyzeBlock(
       EnumWikipedia wiki,
       String contents, int index,
-      List<ContentsComment> comments,
+      ContainerComment comments,
       List<PageElementTag> tags) {
     // Verify arguments
     if (contents == null) {
@@ -111,14 +112,7 @@ public class PageElementParameter extends PageElement {
   
       // Possible comment
       if ((tmpIndex < contents.length()) && (contents.charAt(tmpIndex) == '<')) {
-        ContentsComment comment = null;
-        if (comments != null) {
-          for (ContentsComment tmpComment : comments) {
-            if (tmpComment.getBeginIndex() == tmpIndex) {
-              comment = tmpComment;
-            }
-          }
-        }
+        ContentsComment comment = comments.getBeginsAt(tmpIndex);
         if (comment == null) {
           return null;
         }
@@ -150,14 +144,7 @@ public class PageElementParameter extends PageElement {
 
       // Possible comment
       if ((tmpIndex < contents.length()) && (contents.charAt(tmpIndex) == '<')) {
-        ContentsComment comment = null;
-        if (comments != null) {
-          for (ContentsComment tmpComment : comments) {
-            if (tmpComment.getBeginIndex() == tmpIndex) {
-              comment = tmpComment;
-            }
-          }
-        }
+        ContentsComment comment = comments.getBeginsAt(tmpIndex);
         if (comment == null) {
           return null;
         }
@@ -217,7 +204,7 @@ public class PageElementParameter extends PageElement {
       EnumWikipedia wiki, String contents,
       int beginIndex, int pipeIndex, int parametersBeginIndex,
       List<Parameter> parameters,
-      List<ContentsComment> comments,
+      ContainerComment comments,
       List<PageElementTag> tags) {
     if (contents == null) {
       return -1;
@@ -326,14 +313,7 @@ public class PageElementParameter extends PageElement {
           tmpIndex = tag.getEndIndex();
         } else {
           // Possible start of a comment
-          ContentsComment comment = null;
-          if (comments != null) {
-            for (ContentsComment tmpComment : comments) {
-              if (tmpComment.getBeginIndex() == tmpIndex) {
-                comment = tmpComment;
-              }
-            }
-          }
+          ContentsComment comment = comments.getBeginsAt(tmpIndex);
           if (comment != null) {
             tmpIndex = comment.getEndIndex();
           } else {

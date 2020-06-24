@@ -30,7 +30,6 @@ import org.wikipediacleaner.api.data.SearchEngine;
 import org.wikipediacleaner.api.data.ISBNRange.ISBNInformation;
 import org.wikipediacleaner.api.data.PageElementTemplate.Parameter;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
-import org.wikipediacleaner.api.data.contents.ContentsComment;
 import org.wikipediacleaner.gui.swing.action.ActionExternalViewer;
 import org.wikipediacleaner.gui.swing.action.ActionMultiple;
 import org.wikipediacleaner.i18n.GT;
@@ -66,8 +65,7 @@ public abstract class CheckErrorAlgorithmISBN extends CheckErrorAlgorithmBase {
         index++;
       }
       if ((index < contents.length()) && (contents.charAt(index) == '<')) {
-        ContentsComment comment = analysis.isInComment(index);
-        if (comment != null) {
+        if (analysis.comments().isAt(index)) {
           level = ErrorLevel.WARNING;
         }
       }

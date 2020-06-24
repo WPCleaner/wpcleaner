@@ -59,8 +59,8 @@ public class PageElementParagraph extends PageElement {
         // Ignore comments
         if ((paragraphBegin < maxLen) &&
             (contents.charAt(paragraphBegin) == '<')) {
-          ContentsComment comment = analysis.isInComment(paragraphBegin);
-          if ((comment != null) && (comment.getBeginIndex() == paragraphBegin)) {
+          ContentsComment comment = analysis.comments().getBeginsAt(paragraphBegin);
+          if (comment != null) {
             paragraphBegin = comment.getEndIndex();
             tryMoving = true;
           }

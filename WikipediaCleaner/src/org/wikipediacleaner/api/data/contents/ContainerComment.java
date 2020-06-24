@@ -14,13 +14,13 @@ import java.util.List;
 /**
  * Container for comments elements.
  */
-public class ContentsCommentContainer extends
-    ContentsContainer<ContentsComment> {
+public class ContainerComment extends
+    ContainerContents<ContentsComment> {
 
   /**
    * @param comments List of comments.
    */
-  public ContentsCommentContainer(List<ContentsComment> comments) {
+  public ContainerComment(List<ContentsComment> comments) {
     super(comments);
   }
 }

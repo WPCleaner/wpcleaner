@@ -93,7 +93,7 @@ public class CheckErrorAlgorithm010 extends CheckErrorAlgorithmBase {
         }
       }
       if (shouldCount) {
-        if ((analysis.isInComment(currentIndex) != null) ||
+        if (analysis.comments().isAt(currentIndex) ||
             (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_NOWIKI, currentIndex) != null) ||
             (analysis.getSurroundingTag(PageElementTag.TAG_HTML_CODE, currentIndex) != null) ||
             (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_MAPFRAME, currentIndex) != null) ||

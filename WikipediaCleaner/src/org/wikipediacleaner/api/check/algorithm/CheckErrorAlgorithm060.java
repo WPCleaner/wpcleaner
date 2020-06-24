@@ -54,7 +54,7 @@ public class CheckErrorAlgorithm060 extends CheckErrorAlgorithmBase {
             switch (paramValue.charAt(currentPos)) {
             case '<':
               int tmpIndex = paramValueStartIndex + currentPos;
-              ContentsComment comment = analysis.isInComment(tmpIndex);
+              ContentsComment comment = analysis.comments().getAt(tmpIndex);
               if (comment != null) {
                 currentPos = comment.getEndIndex() - 1 - paramValueStartIndex;
               } else {

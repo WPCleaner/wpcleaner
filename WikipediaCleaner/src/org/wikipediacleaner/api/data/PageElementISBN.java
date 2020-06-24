@@ -187,7 +187,7 @@ public class PageElementISBN extends PageElement {
 
     // Check special places
     if (contents.charAt(index) == '<') {
-      ContentsComment comment = analysis.isInComment(index);
+      ContentsComment comment = analysis.comments().getAt(index);
       if (comment != null) {
         return comment.getEndIndex();
       }
@@ -306,7 +306,7 @@ public class PageElementISBN extends PageElement {
       boolean spaceFound = false;
       PageElementInternalLink iLink = null;
       PageElementExternalLink eLink = null;
-      if (analysis.isInComment(index) == null) {
+      if (!analysis.comments().isAt(index)) {
         boolean done = false;
         while (!done) {
           done = true;
@@ -537,15 +537,14 @@ public class PageElementISBN extends PageElement {
           ok = false;
         } else {
           if (!ok && hasDigit && (paramValue.charAt(i) == '<')) {
-            ContentsComment comment = analysis.isInComment(beginIndex + i);
-            if ((comment != null) &&
-                (comment.getBeginIndex() == beginIndex + i)) {
+            ContentsComment comment = analysis.comments().getBeginsAt(beginIndex + i);
+            if (comment != null) {
               ok = true;
               i += comment.getEndIndex() - comment.getBeginIndex();
               while (ok && (i < paramValue.length())) {
                 char currentChar = paramValue.charAt(i);
                 if (currentChar == '<') {
-                  comment = analysis.isInComment(beginIndex + i);
+                  comment = analysis.comments().getAt(beginIndex + i);
                   if (comment != null) {
                     i += comment.getEndIndex() - comment.getBeginIndex();
                   } else {
@@ -952,8 +951,8 @@ public class PageElementISBN extends PageElement {
     while (i < isbn.length()) {
       char current = Character.toUpperCase(isbn.charAt(i));
       if (current == '<') {
-        ContentsComment comment = analysis.isInComment(i);
-        if ((comment != null) && (comment.getBeginIndex() == i)) {
+        ContentsComment comment = analysis.comments().getBeginsAt(i);
+        if (comment != null) {
           i = comment.getEndIndex() - 1;
         } else {
           PageElementTag refTag = analysis.isInTag(i, PageElementTag.TAG_WIKI_REF);

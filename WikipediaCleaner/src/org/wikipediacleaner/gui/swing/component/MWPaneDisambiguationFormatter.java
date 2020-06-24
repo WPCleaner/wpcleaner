@@ -158,7 +158,7 @@ public class MWPaneDisambiguationFormatter extends
           currentPos++;
         }
         if ((currentPos < maxSize) && (contents.charAt(currentPos) == '<')) {
-          ContentsComment comment = pageAnalysis.isInComment(currentPos);
+          ContentsComment comment = pageAnalysis.comments().getAt(currentPos);
           if (comment != null) {
             for (String commentAfter : commentsAfter) {
               String comment2 = comment.getComment();
