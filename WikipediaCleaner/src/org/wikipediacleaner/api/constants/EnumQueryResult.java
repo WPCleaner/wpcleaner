@@ -19,6 +19,12 @@ public enum EnumQueryResult {
   ARTICLE_EXISTS(
       "ArticleExists",
       "The article you tried to create has been created already"),
+  ASSERT_BOT_FAILED(
+      "AssertBotFailed",
+      "Logged in user is not a bot"),
+  ASSERT_USER_FAILED(
+      "AssertUserFailed",
+      "You are no longer logged in, so the action could not be completed"),
   AUTO_BLOCKED(
       "AutoBlocked",
       "Your IP address has been blocked automatically, because it was used by a blocked user"),
