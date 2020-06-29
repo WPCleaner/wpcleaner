@@ -39,6 +39,7 @@ import org.wikipediacleaner.api.impl.CommentManager;
 import org.wikipediacleaner.gui.swing.basic.BasicWorker;
 import org.wikipediacleaner.gui.swing.basic.BasicWorkerListener;
 import org.wikipediacleaner.gui.swing.bot.AutomaticCWWorker;
+import org.wikipediacleaner.gui.swing.bot.AutomaticFileCWWorker;
 import org.wikipediacleaner.gui.swing.bot.AutomaticLintErrorWorker;
 import org.wikipediacleaner.gui.swing.bot.AutomaticListCWWorker;
 import org.wikipediacleaner.gui.swing.bot.ListCWWorker;
@@ -247,6 +248,8 @@ public class Bot implements BasicWorkerListener {
       worker = executeFixCheckWiki(actionConfig);
     } else if ("FixListCheckWiki".equalsIgnoreCase(action)) {
       worker = executeFixListCheckWiki(actionConfig);
+    } else if ("FixFileCheckWiki".equalsIgnoreCase(action)) {
+      worker = executeFixFileCheckWiki(actionConfig);
     } else if ("FixLintError".equalsIgnoreCase(action)) {
       worker = executeFixLintError(actionConfig);
     } else if ("MarkCheckWiki".equalsIgnoreCase(action)) {
@@ -277,7 +280,7 @@ public class Bot implements BasicWorkerListener {
    * @param actionConfig Parameters of the action.
    * @return True if the action was executed.
    */
-  public boolean executeDoTasks(Action actionConfig) {
+  private boolean executeDoTasks(Action actionConfig) {
     if (actionConfig.actionArgs.length > 0) {
       File tasks = (actionConfig.baseDir != null) ?
           new File(actionConfig.baseDir, actionConfig.actionArgs[0]) :
@@ -309,7 +312,7 @@ public class Bot implements BasicWorkerListener {
    * @param actionConfig Parameters of the action.
    * @return True if the action was executed.
    */
-  public BasicWorker executeUpdateDabWarning(Action actionConfig) {
+  private BasicWorker executeUpdateDabWarning(Action actionConfig) {
     Configuration config = Configuration.getConfiguration();
     String start = config.getString(null, ConfigurationValueString.LAST_DAB_WARNING);
     if (actionConfig.actionArgs.length > 0) {
@@ -328,7 +331,7 @@ public class Bot implements BasicWorkerListener {
    * @param actionConfig Parameters of the action.
    * @return True if the action was executed.
    */
-  public BasicWorker executeFixCheckWiki(Action actionConfig) {
+  private BasicWorker executeFixCheckWiki(Action actionConfig) {
     List<CheckErrorAlgorithm> algorithms = new ArrayList<CheckErrorAlgorithm>();
     List<CheckErrorAlgorithm> allAlgorithms = new ArrayList<CheckErrorAlgorithm>();
     if (actionConfig.actionArgs.length > 0) {
@@ -346,7 +349,7 @@ public class Bot implements BasicWorkerListener {
    * @param actionConfig Parameters of the action.
    * @return True if the action was executed.
    */
-  public BasicWorker executeFixListCheckWiki(Action actionConfig) {
+  private BasicWorker executeFixListCheckWiki(Action actionConfig) {
     Page page = null;
     if (actionConfig.actionArgs.length > 0) {
       page = DataManager.getPage(wiki, actionConfig.actionArgs[0], null, null, null);
@@ -365,12 +368,36 @@ public class Bot implements BasicWorkerListener {
   }
 
   /**
+   * Execute an action of type FixFileCheckWiki.
+   * 
+   * @param actionConfig Parameters of the action.
+   * @return True if the action was executed.
+   */
+  private BasicWorker executeFixFileCheckWiki(Action actionConfig) {
+    String path = null;
+    if (actionConfig.actionArgs.length > 0) {
+      path = actionConfig.actionArgs[0];
+    }
+    List<CheckErrorAlgorithm> algorithms = new ArrayList<CheckErrorAlgorithm>();
+    List<CheckErrorAlgorithm> allAlgorithms = new ArrayList<CheckErrorAlgorithm>();
+    if (actionConfig.actionArgs.length > 1) {
+      extractAlgorithms(algorithms, allAlgorithms, actionConfig.actionArgs, 1);
+    }
+    AutomaticFileCWWorker worker = new AutomaticFileCWWorker(
+        wiki, null, path,
+        algorithms, allAlgorithms, namespaces,
+        null, true, false);
+    worker.setRange(rangeBegin, rangeEnd);
+    return worker;
+  }
+
+  /**
    * Execute an action of type FixLintError.
    * 
    * @param actionConfig Parameters of the action.
    * @return True if the action was executed.
    */
-  public BasicWorker executeFixLintError(Action actionConfig) {
+  private BasicWorker executeFixLintError(Action actionConfig) {
     if (actionConfig.actionArgs.length == 0) {
       return null;
     }
@@ -407,7 +434,7 @@ public class Bot implements BasicWorkerListener {
    * @param actionConfig Parameters of the action.
    * @return True if the action was executed.
    */
-  public BasicWorker executeMarkCheckWiki(Action actionConfig) {
+  private BasicWorker executeMarkCheckWiki(Action actionConfig) {
     List<CheckErrorAlgorithm> algorithms = new ArrayList<CheckErrorAlgorithm>();
     List<CheckErrorAlgorithm> allAlgorithms = new ArrayList<CheckErrorAlgorithm>();
     if (actionConfig.actionArgs.length > 0) {
@@ -424,7 +451,7 @@ public class Bot implements BasicWorkerListener {
    * @param actionConfig Parameters of the action.
    * @return True if the action was executed.
    */
-  public BasicWorker executeListCheckWiki(Action actionConfig) {
+  private BasicWorker executeListCheckWiki(Action actionConfig) {
 
     // Check for global parameters
     String[] actionArgs = actionConfig.actionArgs;
@@ -470,7 +497,7 @@ public class Bot implements BasicWorkerListener {
    * @param actionConfig Parameters of the action.
    * @return True if the action was executed.
    */
-  public boolean executeSet(Action actionConfig) {
+  private boolean executeSet(Action actionConfig) {
     String[] actionArgs = actionConfig.actionArgs;
     if (actionArgs.length < 1) {
       return false;
