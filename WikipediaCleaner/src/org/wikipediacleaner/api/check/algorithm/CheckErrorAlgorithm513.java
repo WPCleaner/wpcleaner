@@ -61,7 +61,7 @@ public class CheckErrorAlgorithm513 extends CheckErrorAlgorithmBase {
   private static final String PUNCTUATION_BEFORE = "" + AUTOMATIC_PUNCTUATION_BEFORE;
 
   /** Punctuation characters after the internal link */
-  private static final String PUNCTUATION_AFTER = ",-–—:)";
+  private static final String PUNCTUATION_AFTER = ",-–—:).";
 
   /**
    * Analyze a page to check if errors are present.
