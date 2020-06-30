@@ -12,6 +12,7 @@ import java.util.List;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.data.PageElementExternalLink;
+import org.wikipediacleaner.api.data.PageElementListItem;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.PageElementTemplate.Parameter;
@@ -21,7 +22,7 @@ import org.wikipediacleaner.api.data.contents.ContentsUtil;
 
 /**
  * Algorithm for analyzing error 555 of check wikipedia project.
- * Error 554: nowiki in text.
+ * Error 555: nowiki in text.
  */
 public class CheckErrorAlgorithm555 extends CheckErrorAlgorithmBase {
 
@@ -166,6 +167,13 @@ public class CheckErrorAlgorithm555 extends CheckErrorAlgorithmBase {
       // Prevent if a special character would end up at the beginning of a line
       if ((contents.charAt(beginIndex) == '\n') ||
           (nowikiTag.getCompleteBeginIndex() == 0)) {
+        automatic = false;
+      }
+    }
+    if (internalText.indexOf(':') >= 0) {
+      PageElementListItem listItem = analysis.isInListItem(beginIndex);
+      if (listItem != null) {
+        // TODO: Restrict to list items starting with ";"
         automatic = false;
       }
     }
