@@ -913,9 +913,9 @@ public class CheckErrorAlgorithm090 extends CheckErrorAlgorithmBase {
               automatic = false;
             }
           } else if ("action".equals(key)) {
-            if (!"edit".equals(attribute.getValue())) {
+            //if (!"edit".equals(attribute.getValue())) {
               automatic = false;
-            }
+            //}
           } else if (!"redlink".equals(key)) {
             automatic = false;
           }
