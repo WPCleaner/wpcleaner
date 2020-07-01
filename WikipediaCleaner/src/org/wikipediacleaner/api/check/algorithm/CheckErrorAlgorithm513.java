@@ -60,8 +60,14 @@ public class CheckErrorAlgorithm513 extends CheckErrorAlgorithmBase {
   /** Punctuation characters before the internal link */
   private static final String PUNCTUATION_BEFORE = "" + AUTOMATIC_PUNCTUATION_BEFORE;
 
+  /** Punctuation characters before the internal link that are excluded but trigger automatic replacement */
+  private static final String PUNCTUATION_BEFORE_EXCLUDED = "\".;";
+
   /** Punctuation characters after the internal link */
   private static final String PUNCTUATION_AFTER = ",-–—:).";
+
+  /** Punctuation characters around the internal link */
+  private static final String PUNCTUATION_AROUND = "\"";
 
   /**
    * Analyze a page to check if errors are present.
@@ -329,22 +335,35 @@ public class CheckErrorAlgorithm513 extends CheckErrorAlgorithmBase {
     int endExtra = internalLink.getEndIndex();
     int endExtraShort = endExtra;
     boolean automatic = false;
-    if ((endExtra < contents.length()) &&
-        contents.startsWith("''", endExtra)) {
-      int countQuote = 2;
-      while ((endExtra + countQuote < contents.length()) &&
-          (contents.charAt(endExtra + countQuote) == '\'')) {
-        countQuote++;
-      }
-      if ((countQuote == 2) ||
-          (countQuote == 3) ||
-          (countQuote == 5)) {
-        if ((beginExtra > countQuote) &&
-            contents.substring(0, beginExtra).endsWith(contents.substring(endExtra, endExtra + countQuote))) {
-          beginExtra -= countQuote;
-          endExtra += countQuote;
-          endExtraShort = endExtra;
+    boolean aroundDone = false;
+    while (!aroundDone) {
+      aroundDone = true;
+      if ((endExtra < contents.length()) &&
+          contents.startsWith("''", endExtra)) {
+        int countQuote = 2;
+        while ((endExtra + countQuote < contents.length()) &&
+            (contents.charAt(endExtra + countQuote) == '\'')) {
+          countQuote++;
         }
+        if ((countQuote == 2) ||
+            (countQuote == 3) ||
+            (countQuote == 5)) {
+          if ((beginExtra > countQuote) &&
+              contents.substring(0, beginExtra).endsWith(contents.substring(endExtra, endExtra + countQuote))) {
+            beginExtra -= countQuote;
+            endExtra += countQuote;
+            endExtraShort = endExtra;
+            aroundDone = false;
+          }
+        }
+      }
+      if ((beginExtra > 0) &&
+          (endExtra < contents.length()) &&
+          (contents.charAt(beginExtra - 1) == contents.charAt(endExtra)) &&
+          (PUNCTUATION_AROUND.indexOf(contents.charAt(beginExtra - 1)) >= 0)) {
+        beginExtra--;
+        endExtra++;
+        aroundDone = false;
       }
     }
     while ((beginExtra > 0) &&
@@ -352,8 +371,8 @@ public class CheckErrorAlgorithm513 extends CheckErrorAlgorithmBase {
       beginExtra--;
     }
     boolean checkTexts = true;
-    while ((checkTexts) && (link.getLinkEndIndex() <= beginExtra)) {
-      String prefix = contents.substring(link.getLinkEndIndex(), beginExtra);
+    while ((checkTexts) && (link.getLinkEndIndex() < beginExtra)) {
+      String prefix = contents.substring(link.getLinkEndIndex() + 1, beginExtra);
       int prefixLength = prefix.length();
       checkTexts = false;
       for (String[] text : textsBefore) {
@@ -381,6 +400,14 @@ public class CheckErrorAlgorithm513 extends CheckErrorAlgorithmBase {
           }
           beginExtra--;
           checkTexts = true;
+        }
+      }
+      if (!checkTexts &&
+          (beginExtra > 0) &&
+          (CharacterUtils.isInText(contents.charAt(beginExtra - 1), PUNCTUATION_BEFORE_EXCLUDED))) {
+        if ((endExtra < contents.length()) &&
+            (contents.charAt(beginExtra - 1) != contents.charAt(endExtra))) {
+          automatic = true;
         }
       }
     }
@@ -525,10 +552,12 @@ public class CheckErrorAlgorithm513 extends CheckErrorAlgorithmBase {
    */
   @Override
   protected String internalAutomaticFix(PageAnalysis analysis) {
-    if (!analysis.getPage().isArticle() ||
-        !analysis.getPage().isInMainNamespace()) {
+    /*if (!analysis.getPage().isArticle()) {
       return analysis.getContents();
-    }
+    }*/
+    /*if (!analysis.getPage().isInMainNamespace()) {
+      return analysis.getContents();
+    }*/
     return fixUsingAutomaticReplacement(analysis);
   }
 
