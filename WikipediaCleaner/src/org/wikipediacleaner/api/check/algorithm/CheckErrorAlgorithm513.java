@@ -64,7 +64,7 @@ public class CheckErrorAlgorithm513 extends CheckErrorAlgorithmBase {
   private static final String PUNCTUATION_BEFORE_EXCLUDED = "\".;";
 
   /** Punctuation characters after the internal link */
-  private static final String PUNCTUATION_AFTER = ",-–—:).";
+  private static final String PUNCTUATION_AFTER = ",-–—:).;";
 
   /** Punctuation characters around the internal link */
   private static final String PUNCTUATION_AROUND = "\"";
@@ -377,7 +377,8 @@ public class CheckErrorAlgorithm513 extends CheckErrorAlgorithmBase {
       checkTexts = false;
       for (String[] text : textsBefore) {
         int textLength = text[0].length();
-        if ((prefixLength >= textLength) &&
+        if (!checkTexts &&
+            (prefixLength >= textLength) &&
             prefix.substring(prefixLength - textLength).equalsIgnoreCase(text[0])) {
           int tmpIndex = beginExtra - text[0].length();
           char charBefore = contents.charAt(tmpIndex - 1);
@@ -457,9 +458,10 @@ public class CheckErrorAlgorithm513 extends CheckErrorAlgorithmBase {
       endError = tmpEnd;
       automatic = false;
     }
-    if ((endError < contents.length()) &&
-        (contents.charAt(endError) == ']')) {
-      closeBracket = true;
+    if (endError < contents.length()) {
+      if (contents.charAt(endError) == ']') {
+        closeBracket = true;
+      }
       endError++;
     }
 
