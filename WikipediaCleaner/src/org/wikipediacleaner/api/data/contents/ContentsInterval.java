@@ -58,7 +58,7 @@ public class ContentsInterval implements Interval {
   }
 
   /**
-   * @return
+   * @return Textual description.
    * @see java.lang.Object#toString()
    */
   @Override
