@@ -8,7 +8,7 @@
 msgid ""
 msgstr ""
 ""
-"PO-Revision-Date: 2020-06-29 14:35:45+0000\n"
+"PO-Revision-Date: 2020-07-02 16:05:11+0000\n"
 "X-POT-Import-Date: 2020-06-25 07:08:03+0000\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -3395,7 +3395,7 @@ msgstr[0] ""
 
 #: org/wikipediacleaner/gui/swing/bot/ListCWWorker.java:616
 #, java-format
-msgid "{0} page has been detected for algorithm {1}}"
+msgid "{0} page has been detected for algorithm {1}"
 msgid_plural "{0} pages have been detected for algorithm {1}"
 msgstr[0] ""
 
