@@ -510,6 +510,10 @@ public class CheckErrorAlgorithm513 extends CheckErrorAlgorithmBase {
       String replacementBeginShort = contents.substring(tmpBeginExtra, endExtraShort);
       String replacementEndShort = contents.substring(endExtraShort, endError);
       String replacement = contents.substring(beginError, tmpBeginExtra);
+      if (!replacementEndShort.startsWith(" ") &&
+          !replacement.endsWith(" ")) {
+        replacementEndShort = " " + replacementEndShort;
+      }
       String description = "[..." + contents.substring(beginExtra, tmpBeginExtra);
       errorResult.addReplacement(
           replacementBeginShort + replacement + replacementEndShort,
@@ -518,6 +522,10 @@ public class CheckErrorAlgorithm513 extends CheckErrorAlgorithmBase {
       if (endExtra != endExtraShort) {
         String replacementBegin = contents.substring(tmpBeginExtra, endExtra);
         String replacementEnd = contents.substring(endExtra, endError);
+        if (!replacementEnd.startsWith(" ") &&
+            !replacement.endsWith(" ")) {
+          replacementEnd = " " + replacementEnd;
+        }
         errorResult.addReplacement(
             replacementBegin + replacement + replacementEnd,
             replacementBegin + description + replacementEnd);
