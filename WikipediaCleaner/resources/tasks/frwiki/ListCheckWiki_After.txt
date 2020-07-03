@@ -1,0 +1,36 @@
+DoTasks _Common.txt
+
+Set Namespaces 0
+FixCheckWiki 524
+UpdateDuplicateArgsWarnings
+FixCheckWiki 526
+FixListCheckWiki Projet:Correction_syntaxique/Analyse_001 1
+FixListCheckWiki Projet:Correction_syntaxique/Analyse_002 2
+FixListCheckWiki Projet:Correction_syntaxique/Analyse_009 9
+FixListCheckWiki Projet:Correction_syntaxique/Analyse_010 10
+FixListCheckWiki Projet:Correction_syntaxique/Analyse_016 16
+FixListCheckWiki Projet:Correction_syntaxique/Analyse_017 17
+FixListCheckWiki Projet:Correction_syntaxique/Analyse_018 18
+FixListCheckWiki Projet:Correction_syntaxique/Analyse_022 22
+FixListCheckWiki Projet:Correction_syntaxique/Analyse_046 46
+FixListCheckWiki Projet:Correction_syntaxique/Analyse_052 52
+FixListCheckWiki Projet:Correction_syntaxique/Analyse_055 532
+FixListCheckWiki Projet:Correction_syntaxique/Analyse_064 64
+FixListCheckWiki Projet:Correction_syntaxique/Analyse_085 85
+FixListCheckWiki Projet:Correction_syntaxique/Analyse_088 88
+FixListCheckWiki Projet:Correction_syntaxique/Analyse_090 90
+FixListCheckWiki Projet:Correction_syntaxique/Analyse_092 92
+FixListCheckWiki Projet:Correction_syntaxique/Analyse_104 104
+FixListCheckWiki Projet:Correction_syntaxique/Analyse_106 106
+FixListCheckWiki Projet:Correction_syntaxique/Analyse_513 513
+FixListCheckWiki Projet:Correction_syntaxique/Analyse_543 543
+FixListCheckWiki Projet:Correction_syntaxique/Analyse_547 547
+FixListCheckWiki Projet:Correction_syntaxique/Analyse_548 548
+FixListCheckWiki Projet:Correction_syntaxique/Analyse_549 549
+FixListCheckWiki Projet:Correction_syntaxique/Analyse_550 550
+FixListCheckWiki Projet:Correction_syntaxique/Analyse_551 551
+FixListCheckWiki Projet:Correction_syntaxique/Analyse_553 553
+FixListCheckWiki Projet:Correction_syntaxique/Analyse_554 554
+FixListCheckWiki Projet:Correction_syntaxique/Analyse_555 555
+
+DoTasks ISBN_ISSN.txt

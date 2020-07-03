@@ -1,0 +1,39 @@
+DoTasks _Common.txt
+
+Set Prefix [[User:WikiCleanerBot#T5|Bot_T5_CW#2]]
+FixListCheckWiki Wikipedia:CHECKWIKI/WPC_002_dump 2
+
+Set Prefix [[User:WikiCleanerBot#T5|Bot_T5_CW#16]]
+FixListCheckWiki Wikipedia:CHECKWIKI/WPC_016_dump 16
+
+Set Prefix [[User:WikiCleanerBot#T5|Bot_T5_CW#17]]
+FixListCheckWiki Wikipedia:CHECKWIKI/WPC_017_dump 17
+
+Set Prefix [[User:WikiCleanerBot#T16|Bot_T16_CW#92]]
+FixListCheckWiki Wikipedia:CHECKWIKI/WPC_092_dump 92
+
+Set Prefix [[User:WikiCleanerBot#T2|Bot_T2_CW#106]]
+FixListCheckWiki Wikipedia:CHECKWIKI/WPC_106_dump 106
+
+Set Prefix [[User:WikiCleanerBot#T15|Bot_T17_CW#513]]
+FixListCheckWiki Wikipedia:CHECKWIKI/WPC_513_dump 513
+
+Set Prefix [[User:WikiCleanerBot#T4|Bot_T4_CW#543]]
+FixListCheckWiki Wikipedia:CHECKWIKI/WPC_543_dump 543
+
+Set Prefix [[User:WikiCleanerBot#T12|Bot_T12_CW#548]]
+FixListCheckWiki Wikipedia:CHECKWIKI/WPC_548_dump 548
+
+Set Prefix [[User:WikiCleanerBot#T13|Bot_T13_CW#549]]
+FixListCheckWiki Wikipedia:CHECKWIKI/WPC_549_dump 549
+
+Set Prefix [[User:WikiCleanerBot#T14|Bot_T14_CW#550]]
+FixListCheckWiki Wikipedia:CHECKWIKI/WPC_550_dump 550
+
+Set Prefix [[User:WikiCleanerBot#T15|Bot_T15_CW#551]]
+FixListCheckWiki Wikipedia:CHECKWIKI/WPC_551_dump 551
+
+Set Prefix [[User:WikiCleanerBot#T15|Bot_T18_CW#553]]
+FixListCheckWiki Wikipedia:CHECKWIKI/WPC_553_dump 553
+
+DoTasks ISBN_ISSN.txt
