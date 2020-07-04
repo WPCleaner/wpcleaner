@@ -49,7 +49,8 @@ public class CheckErrorAlgorithm025 extends CheckErrorAlgorithmBase {
     List<PageElementTitle> titles = analysis.getTitles();
     boolean result = false;
     int previousTitleLevel = -1;
-    for (PageElementTitle title : titles) {
+    for (int titleIndex = 0; titleIndex < titles.size(); titleIndex++) {
+      PageElementTitle title = titles.get(titleIndex);
       if ((previousTitleLevel > 0) &&
           (title.getLevel() > previousTitleLevel + 1)) {
         if (errors == null) {
@@ -58,6 +59,10 @@ public class CheckErrorAlgorithm025 extends CheckErrorAlgorithmBase {
         result = true;
         CheckErrorResult errorResult = createCheckErrorResult(
             analysis, title.getBeginIndex(), title.getEndIndex());
+        if ((titleIndex + 1 >= titles.size()) ||
+            (titles.get(titleIndex + 1).getLevel() <= previousTitleLevel + 1)) {
+          errorResult.addReplacement(PageElementTitle.createTitle(previousTitleLevel + 1, title.getTitle(), title.getAfterTitle()));
+        }
         errorResult.addEditTocAction(title);
         errors.add(errorResult);
       }
