@@ -266,7 +266,7 @@ public class CheckErrorAlgorithm534 extends CheckErrorAlgorithmBase {
 
       // Special handling for all digits values
       boolean allNumeric = true;
-      for (int pos = 0; pos < initialText.length(); pos++) {
+      for (int pos = 0; (pos < initialText.length()) && allNumeric; pos++) {
         allNumeric &= Character.isDigit(initialText.charAt(pos));
       }
       if (allNumeric) {
@@ -455,7 +455,7 @@ public class CheckErrorAlgorithm534 extends CheckErrorAlgorithmBase {
 
               // Check special cases
               if (ok && MagicWord.IMG_WIDTH.equals(mw.getName())) {
-                for (int index = newPrefixLength; index < initialText.length() - newSuffixLength; index++) {
+                for (int index = newPrefixLength; (index < initialText.length() - newSuffixLength) && ok; index++) {
                   if (!Character.isDigit(initialText.charAt(index))) {
                     ok = false;
                   }
@@ -616,16 +616,19 @@ public class CheckErrorAlgorithm534 extends CheckErrorAlgorithmBase {
 
         // Analyze if there's a risk of error
         boolean safe = true;
+        boolean safeEmpty = true;
         String imageText = contents.substring(image.getBeginIndex(), image.getEndIndex());
-        for (int index = 0; index < imageText.length() - 1; index++) {
+        for (int index = 0; (index < imageText.length() - 1) && safeEmpty; index++) {
           if (imageText.charAt(index) == '{') {
             char nextChar = imageText.charAt(index + 1);
             if (nextChar == '|') {
               safe = false;
-            } else if (nextChar == '{') {
+              safeEmpty = false;
+            } else if (safe && (nextChar == '{')) {
               // TODO: analyze templates/functions/...
               PageElementTemplate template = analysis.isInTemplate(image.getBeginIndex() + index);
               if (template != null) {
+                index++;
                 safe = false;
               } else {
                 safe = false;
@@ -640,7 +643,7 @@ public class CheckErrorAlgorithm534 extends CheckErrorAlgorithmBase {
           int beginIndex = image.getBeginIndex() + param.getBeginOffset();
           int endIndex = image.getBeginIndex() + param.getEndOffset();
           boolean hasContents = false;
-          for (int index = beginIndex; index < endIndex; index++) {
+          for (int index = beginIndex; (index < endIndex) && !hasContents; index++) {
             if (contents.charAt(index) != ' ') {
               hasContents = true;
             }
@@ -667,7 +670,7 @@ public class CheckErrorAlgorithm534 extends CheckErrorAlgorithmBase {
               errors.add(errorResult);
             } else {
               boolean hasContents = false;
-              for (int index = beginIndex; index < endIndex; index++) {
+              for (int index = beginIndex; (index < endIndex) && !hasContents; index++) {
                 if (contents.charAt(index) != ' ') {
                   hasContents = true;
                 }
@@ -675,7 +678,7 @@ public class CheckErrorAlgorithm534 extends CheckErrorAlgorithmBase {
               CheckErrorResult errorResult = createCheckErrorResult(
                   analysis, beginIndex - 1, endIndex);
               if (!hasContents) {
-                errorResult.addReplacement("", true);
+                errorResult.addReplacement("", safeEmpty);
               } else {
                 AutomaticReplacement replacement = AutomaticReplacement.suggestReplacement(
                     automaticReplacements, analysis.getWikiConfiguration(),
