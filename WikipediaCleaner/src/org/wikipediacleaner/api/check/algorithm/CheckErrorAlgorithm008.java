@@ -13,6 +13,7 @@ import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.PageElementTitle;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
+import org.wikipediacleaner.api.data.contents.ContentsUtil;
 
 
 /**
@@ -44,82 +45,116 @@ public class CheckErrorAlgorithm008 extends CheckErrorAlgorithmBase {
     // Check every "=" at the beginning of a line
     boolean result = false;
     String contents = analysis.getContents();
-    int maxLen = contents.length();
-    for (int currentIndex = 0; currentIndex < maxLen; currentIndex++) {
-      if ((contents.charAt(currentIndex) == '=') &&
-          ((currentIndex == 0) || (contents.charAt(currentIndex - 1) == '\n'))) {
-
-        // Check that it is indeed an error
-        boolean errorFound = true;
-        if (errorFound) {
-          if (analysis.comments().isAt(currentIndex)) {
-            errorFound = false;
-          }
-        }
-        if (errorFound) {
-          PageElementTitle title = analysis.isInTitle(currentIndex);
-          if ((title != null)  && (title.getSecondLevel() >= title.getFirstLevel())) {
-            errorFound = false;
-          }
-        }
-        if (errorFound) {
-          if ((analysis.getSurroundingTag(PageElementTag.TAG_HTML_CODE, currentIndex) != null) ||
-              (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_MATH, currentIndex) != null) ||
-              (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_MATH_CHEM, currentIndex) != null) ||
-              (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_NOWIKI, currentIndex) != null) ||
-              (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_PRE, currentIndex) != null) ||
-              (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_SCORE, currentIndex) != null) ||
-              (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_SOURCE, currentIndex) != null) ||
-              (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_SYNTAXHIGHLIGHT, currentIndex) != null)) {
-            errorFound = false;
-          }
-        }
-
-        // Signal error
-        if (errorFound) {
-          if (errors == null) {
-            return true;
-          }
-          result = true;
-
-          // Find end of a line and potential "=" sign
-          int equalIndex = -1;
-          int endLineIndex = currentIndex;
-          int equalsCount = 0;
-          while ((endLineIndex < maxLen) && (contents.charAt(endLineIndex) == '=')) {
-            endLineIndex++;
-            equalsCount++;
-          }
-          while ((endLineIndex < maxLen) && (contents.charAt(endLineIndex) != '\n')) {
-            if ((equalIndex < 0) && (contents.charAt(endLineIndex) == '=')) {
-              equalIndex = endLineIndex;
-            }
-            endLineIndex++;
-          }
-
-          // Create error
-          CheckErrorResult errorResult = createCheckErrorResult(
-              analysis, currentIndex, endLineIndex);
-          errorResult.addReplacement(PageElementTitle.createTitle(
-              equalsCount,
-              contents.substring(currentIndex + equalsCount, endLineIndex),
-              null));
-          if (equalIndex > 0) {
-            String firstPart = contents.substring(currentIndex + equalsCount, equalIndex); 
-            errorResult.addReplacement(PageElementTitle.createTitle(
-                equalsCount, firstPart, null));
-            while ((equalIndex < endLineIndex) && (contents.charAt(equalIndex) == '=')) {
-              equalIndex++;
-            }
-            errorResult.addReplacement(
-                PageElementTitle.createTitle(equalsCount, firstPart, null) + "\n" +
-                contents.substring(equalIndex, endLineIndex));
-          }
-          errors.add(errorResult);
-        }
-      }
-    }
+    int currentIndex = 0;
+    do {
+      result |= analyzeLine(analysis, errors, contents, currentIndex);
+      currentIndex =  ContentsUtil.getLineEndIndex(contents, currentIndex) + 1;
+    } while (currentIndex < contents.length());
 
     return result;
+  }
+
+  /**
+   * Analyze a line of text to see if there's an error.
+   * 
+   * @param analysis Page analysis.
+   * @param errors Errors found in the page.
+   * @param contents Page contents.
+   * @param lineBeginIndex Index of the beginning of the line.
+   * @return Flag indicating if the error was found.
+   */
+  private boolean analyzeLine(
+      PageAnalysis analysis,
+      Collection<CheckErrorResult> errors,
+      String contents,
+      int lineBeginIndex) {
+
+    // Check that the line begins with a "="
+    if (contents.charAt(lineBeginIndex) != '=') {
+      return false;
+    }
+
+    // Check that's indeed an error
+    if (analysis.comments().isAt(lineBeginIndex)) {
+      return false;
+    }
+    PageElementTitle title = analysis.isInTitle(lineBeginIndex);
+    if ((title != null) && (title.getSecondLevel() >= title.getFirstLevel())) {
+      String after = title.getAfterTitle();
+      if ((after == null) || (after.trim().isEmpty())) {
+        return false;
+      }
+      int afterTitleIndex = title.getAfterTitleIndex();
+      int beginIndex = title.getBeginIndex();
+      int endIndex = title.getEndIndex();
+      CheckErrorResult errorResult = createCheckErrorResult(
+          analysis, beginIndex, endIndex);
+      String replacement =
+          contents.substring(beginIndex, afterTitleIndex) +
+          "\n" +
+          contents.substring(afterTitleIndex, endIndex);
+      errorResult.addReplacement(replacement);
+      replacement =
+          contents.substring(beginIndex, afterTitleIndex - title.getSecondLevel()) +
+          contents.substring(afterTitleIndex, endIndex) +
+          contents.substring(afterTitleIndex - title.getSecondLevel(), afterTitleIndex);
+      errorResult.addReplacement(replacement);
+      errors.add(errorResult);
+      return true;
+    }
+    if ((analysis.getSurroundingTag(PageElementTag.TAG_HTML_CODE, lineBeginIndex) != null) ||
+        (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_MATH, lineBeginIndex) != null) ||
+        (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_MATH_CHEM, lineBeginIndex) != null) ||
+        (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_NOWIKI, lineBeginIndex) != null) ||
+        (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_PRE, lineBeginIndex) != null) ||
+        (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_SCORE, lineBeginIndex) != null) ||
+        (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_SOURCE, lineBeginIndex) != null) ||
+        (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_SYNTAXHIGHLIGHT, lineBeginIndex) != null)) {
+      return false;
+    }
+
+    // Report the error
+    if (errors == null) {
+      return true;
+    }
+
+    // Find end of a line and potential "=" sign
+    int equalIndex = -1;
+    int endLineIndex = lineBeginIndex;
+    int equalsCount = 0;
+    while ((endLineIndex < contents.length()) &&
+        (contents.charAt(endLineIndex) == '=')) {
+      endLineIndex++;
+      equalsCount++;
+    }
+    while ((endLineIndex < contents.length()) &&
+        (contents.charAt(endLineIndex) != '\n')) {
+      if ((equalIndex < 0) &&
+          (contents.charAt(endLineIndex) == '=')) {
+        equalIndex = endLineIndex;
+      }
+      endLineIndex++;
+    }
+
+    // Create error
+    CheckErrorResult errorResult = createCheckErrorResult(
+        analysis, lineBeginIndex, endLineIndex);
+    errorResult.addReplacement(PageElementTitle.createTitle(
+        equalsCount,
+        contents.substring(lineBeginIndex + equalsCount, endLineIndex),
+        null));
+    if (equalIndex > 0) {
+      String firstPart = contents.substring(lineBeginIndex + equalsCount, equalIndex); 
+      errorResult.addReplacement(PageElementTitle.createTitle(
+          equalsCount, firstPart, null));
+      while ((equalIndex < endLineIndex) && (contents.charAt(equalIndex) == '=')) {
+        equalIndex++;
+      }
+      errorResult.addReplacement(
+          PageElementTitle.createTitle(equalsCount, firstPart, null) + "\n" +
+          contents.substring(equalIndex, endLineIndex));
+    }
+    errors.add(errorResult);
+    return true;
   }
 }

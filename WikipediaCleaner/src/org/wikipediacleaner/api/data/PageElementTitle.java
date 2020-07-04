@@ -24,6 +24,7 @@ public class PageElementTitle extends PageElement {
   private final String titleNotTrimmed;
   private final String title;
   private final String afterTitleNotTrimmed;
+  private final int afterTitleIndex;
   private final boolean multiline;
 
   /**
@@ -149,6 +150,7 @@ public class PageElementTitle extends PageElement {
         firstLevel, secondLevel,
         contents.substring(beginTitleIndex, endTitleIndex),
         contents.substring(lastEqualIndex + 1, endIndex),
+        lastEqualIndex + 1,
         multiline);
   }
 
@@ -202,6 +204,13 @@ public class PageElementTitle extends PageElement {
   }
 
   /**
+   * @return Index of text after title.
+   */
+  public int getAfterTitleIndex() {
+    return afterTitleIndex;
+  }
+
+  /**
    * @return True if title spans on several lines.
    */
   public boolean isMultiline() {
@@ -220,7 +229,8 @@ public class PageElementTitle extends PageElement {
   private PageElementTitle(
       int beginIndex, int endIndex,
       int firstLevel, int secondLevel,
-      String title, String afterTitle,
+      String title,
+      String afterTitle, int afterTitleIndex,
       boolean multiline) {
     super(beginIndex, endIndex);
     this.firstLevel = firstLevel;
@@ -228,6 +238,7 @@ public class PageElementTitle extends PageElement {
     this.titleNotTrimmed = title;
     this.title = (title != null) ? title.trim() : null;
     this.afterTitleNotTrimmed = afterTitle;
+    this.afterTitleIndex = afterTitleIndex;
     this.multiline = multiline;
   }
 
