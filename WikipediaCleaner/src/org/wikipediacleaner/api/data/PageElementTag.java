@@ -197,8 +197,22 @@ public class PageElementTag extends PageElement {
     tmpIndex = ContentsUtil.moveIndexForwardWhileFound(contents, tmpIndex, SEP_CHARS_AFTER_TAG_NAME);
 
     // Find end of tag
-    int endIndex = contents.indexOf('>', tmpIndex);
-    if (endIndex < 0) {
+    int endIndex = tmpIndex;
+    boolean inQuotes = false;
+    while (endIndex < contents.length()) {
+      if ((contents.charAt(endIndex) == '>') && !inQuotes) {
+        break;
+      }
+      if (contents.charAt(endIndex) == '"') {
+        if (inQuotes) {
+          inQuotes = false;
+        } else if (contents.charAt(endIndex - 1) == '=') {
+          inQuotes = true;
+        }
+      }
+      endIndex++;
+    }
+    if (endIndex >= contents.length()) {
       return null;
     }
 
