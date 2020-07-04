@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2020-07-02 20:11+0200\n"
+"POT-Creation-Date: 2020-07-04 16:07+0200\n"
 "PO-Revision-Date: 2016-07-07 19:35+0000\n"
 "Last-Translator: reza <reza.energy@gmail.com>\n"
 "Language-Team: Persian <fa@li.org>\n"
@@ -267,17 +267,24 @@ msgstr ""
 msgid "Section heading where a {0} can be added"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm005.java:78
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm005.java:94
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm005.java:79
 msgid "Properly end the comment"
 msgstr "پایان مناسب توضیحات"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm005.java:97
+msgid "End the comment at the end of the line"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm005.java:101
+msgid "End the comment just before the next one begins"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm005.java:104
 msgid "Merge comments"
 msgstr "ادغام نظرات"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm005.java:100
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm005.java:104
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm005.java:107
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm005.java:111
 msgid "Uncomment"
 msgstr "برداشتن دیدگاه"
 
@@ -577,8 +584,8 @@ msgstr ""
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:147
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm081.java:269
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm091.java:292
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm513.java:543
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm544.java:155
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm513.java:551
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm544.java:162
 #: org/wikipediacleaner/gui/swing/action/ActionExternalViewer.java:61
 #: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:90
 #: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:158
@@ -966,93 +973,93 @@ msgstr ""
 msgid "Compact link"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm513.java:864
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm513.java:872
 #, fuzzy
 msgid "A list of links that can be extracted when at the beginning of the external link"
 msgstr "لیست قالبهایی که باعث گنجاندن {0} می شوند."
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm513.java:867
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm513.java:875
 msgid "An internal link that can be extracted when at the beginning of the external link"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm513.java:871
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm513.java:879
 #, fuzzy
 msgid "A list of links that can be extracted when at the end of the external link"
 msgstr "لیست قالبهایی که باعث گنجاندن {0} می شوند."
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm513.java:874
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm513.java:882
 #, fuzzy
 msgid "An internal link that can be extracted when at the end of the external link"
 msgstr "لیست قالبهایی که باعث گنجاندن {0} می شوند."
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm513.java:878
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm513.java:886
 msgid "A list of links for which the external link can be removed it it takes all the text"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm513.java:882
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm513.java:890
 msgid "An internal link for which the external link can be removed it it takes all the text"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm513.java:885
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm513.java:893
 #, fuzzy
 msgid "Value of the URL to remove the external link"
 msgstr "لیست قالبهایی که باعث گنجاندن {0} می شوند."
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm513.java:891
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm513.java:899
 #, fuzzy
 msgid "A list of templates that create an internal link"
 msgstr "لیست قالبهایی که باعث گنجاندن {0} می شوند."
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm513.java:895
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm513.java:903
 #, fuzzy
 msgid "Name of a template that creates an internal link"
 msgstr "لیست قالبهایی که باعث گنجاندن {0} می شوند."
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm513.java:898
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm513.java:906
 msgid "Name of a template that can be used as a replacement"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm513.java:902
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm513.java:910
 msgid "True if the replacement can be automatic"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm513.java:908
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm513.java:916
 msgid "A list of template parameters that create the text of an external link"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm513.java:912
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm513.java:920
 #, fuzzy
 msgid "Name of a template that creates an external link"
 msgstr "لیست قالبهایی که باعث گنجاندن {0} می شوند."
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm513.java:915
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm513.java:923
 #, fuzzy
 msgid "Name of a parameter that is used to create the text of the external link"
 msgstr "لیست قالبهایی که باعث گنجاندن {0} می شوند."
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm513.java:918
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm513.java:926
 msgid "True if removing internal links in the text can be automatic"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm513.java:924
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm513.java:932
 msgid "A list of texts (regular expressions) that can be after the internal link"
-msgstr ""
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm513.java:927
-#, fuzzy
-msgid "Regular expression that can be after the internal link"
-msgstr "لیست قالبهایی که باعث گنجاندن {0} می شوند."
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm513.java:931
-msgid "A list of texts that can be before the internal link"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm513.java:935
 #, fuzzy
+msgid "Regular expression that can be after the internal link"
+msgstr "لیست قالبهایی که باعث گنجاندن {0} می شوند."
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm513.java:939
+msgid "A list of texts that can be before the internal link"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm513.java:943
+#, fuzzy
 msgid "Text that can be before the internal link"
 msgstr "لیست قالبهایی که باعث گنجاندن {0} می شوند."
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm513.java:938
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm513.java:946
 msgid "True if finding this text means that the replacement can be automatic"
 msgstr ""
 
@@ -1335,15 +1342,15 @@ msgstr ""
 msgid "Description of the template"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm544.java:198
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm544.java:213
 msgid "Pairs of templates: for each opening template, all possible closing templates"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm544.java:202
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm544.java:217
 msgid "Name of the opening template in the pair"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm544.java:205
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm544.java:220
 msgid "Name of a closing template in the pair"
 msgstr ""
 

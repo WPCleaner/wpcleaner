@@ -11,6 +11,7 @@ import java.util.Collection;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
+import org.wikipediacleaner.api.data.contents.ContentsUtil;
 import org.wikipediacleaner.i18n.GT;
 
 
@@ -89,9 +90,15 @@ public class CheckErrorAlgorithm005 extends CheckErrorAlgorithmBase {
             int endIndex = previousStartIndex + 4;
             errorResult = createCheckErrorResult(
                 analysis, currentIndex, endIndex);
+            int lineEndIndex = ContentsUtil.getLineEndIndex(contents, currentIndex);
+            if ((lineEndIndex < tmpIndex) && (lineEndIndex > currentIndex + 4)) {
+              errorResult.addReplacement(
+                  contents.substring(currentIndex, lineEndIndex) + "-->" + contents.substring(lineEndIndex, endIndex),
+                  GT._T("End the comment at the end of the line"));
+            }
             errorResult.addReplacement(
                 contents.substring(currentIndex, tmpIndex) + "-->" + contents.substring(tmpIndex, endIndex),
-                GT._T("Properly end the comment"));
+                GT._T("End the comment just before the next one begins"));
             errorResult.addReplacement(
                 contents.substring(currentIndex, previousStartIndex),
                 GT._T("Merge comments"));
