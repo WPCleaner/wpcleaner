@@ -7,10 +7,17 @@
 
 package org.wikipediacleaner.api.check.algorithm;
 
-import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
+import org.apache.commons.lang3.tuple.ImmutablePair;
+import org.apache.commons.lang3.tuple.Pair;
 import org.wikipediacleaner.api.algorithm.AlgorithmParameter;
 import org.wikipediacleaner.api.algorithm.AlgorithmParameterElement;
 import org.wikipediacleaner.api.check.CheckErrorResult;
@@ -20,10 +27,10 @@ import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.constants.WPCConfiguration;
 import org.wikipediacleaner.api.data.CharacterUtils;
 import org.wikipediacleaner.api.data.Namespace;
+import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
-import org.wikipediacleaner.api.data.contents.IntervalComparator;
 import org.wikipediacleaner.gui.swing.action.ActionExternalViewer;
 import org.wikipediacleaner.i18n.GT;
 
@@ -55,109 +62,107 @@ public class CheckErrorAlgorithm544 extends CheckErrorAlgorithmBase {
     }
 
     // Check configuration
-    if (pairs.isEmpty()) {
+    if (pairsMap.isEmpty()) {
       return false;
     }
     
-    // Analyze each pair
-    boolean result = false;
-    for (String[] pair : pairs) {
-      result |= analyzePair(analysis, errors, pair);
+    // Analyze each template
+    List<PageElementTemplate> templates = analysis.getTemplates();
+    if ((templates == null) || (templates.isEmpty())) {
+      return false;
     }
+    LinkedList<Pair<PageElementTemplate, PairInformation>> openingTemplates = new LinkedList<>();
+    for (PageElementTemplate template : templates) {
+      String templateName = Page.normalizeTitle(template.getTemplateName());
 
-    return result;
-  }
+      // Check if it's an opening template, and memorize it
+      PairInformation pairInfo = pairsMap.get(templateName);
+      if (pairInfo != null) {
+        openingTemplates.addLast(new ImmutablePair<>(template, pairInfo));
+      }
 
-  private boolean analyzePair(
-      PageAnalysis analysis,
-      Collection<CheckErrorResult> errors,
-      String[] pair) {
-    if ((pair == null) || (pair.length < 2)) {
-      return false;
-    }
-    
-    // Retrieve open templates
-    List<PageElementTemplate> openTemplates = analysis.getTemplates(pair[0]);
-    if ((openTemplates == null) || (openTemplates.isEmpty())) {
-      return false;
-    }
-    
-    // Retrieve close templates
-    List<PageElementTemplate> closeTemplates = new ArrayList<>();
-    for (int i = 1; i < pair.length; i++) {
-      String closeTemplate = pair[i];
-      List<PageElementTemplate> tmpTemplates = analysis.getTemplates(closeTemplate);
-      if (tmpTemplates != null) {
-        closeTemplates.addAll(tmpTemplates);
+      // Check if it's a closing template, and pair it with the opening template
+      if (!openingTemplates.isEmpty()) {
+        boolean match = false;
+        Iterator<Pair<PageElementTemplate, PairInformation>> itOpeningTemplates = openingTemplates.descendingIterator();
+        while (!match && itOpeningTemplates.hasNext()) {
+          Pair<PageElementTemplate, PairInformation> openingTemplate = itOpeningTemplates.next();
+          if (openingTemplate.getRight().isACloseTemplate(templateName)) {
+            match = true;
+            itOpeningTemplates.remove();
+          }
+        }
       }
-    }
-    closeTemplates.sort(new IntervalComparator());
-    
-    // Match templates together
-    for (int i = openTemplates.size(); i > 0; i--) {
-      PageElementTemplate openTemplate = openTemplates.get(i - 1);
-      PageElementTemplate closeTemplate = closeTemplates.isEmpty() ? null : closeTemplates.get(closeTemplates.size() - 1);
-      if ((closeTemplate != null) &&
-          (closeTemplate.getBeginIndex() >= openTemplate.getEndIndex())) {
-        closeTemplates.remove(closeTemplates.size() - 1);
-        openTemplates.remove(i - 1);
-      }
-    }
-    if (openTemplates.isEmpty()) {
-      return false;
     }
 
     // Report errors
-    if (errors == null) {
-      return true;
+    if (openingTemplates.isEmpty()) {
+      return false;
     }
-    EnumWikipedia wiki = analysis.getWikipedia();
-    for (PageElementTemplate openTemplate : openTemplates) {
-      int beginIndex = openTemplate.getBeginIndex();
-      int endIndex = openTemplate.getEndIndex();
-      CheckErrorResult errorResult = createCheckErrorResult(
-          analysis, beginIndex, endIndex);
-      errors.add(errorResult);
-
-      // Check if the open template is just after a tag of some sort
-      String contents = analysis.getContents();
-      while ((beginIndex > 0) &&
-             ((contents.charAt(beginIndex - 1) == '\n') ||
-              (CharacterUtils.isWhitespace(contents.charAt(beginIndex - 1))))) {
-        beginIndex--;
-      }
-      if ((beginIndex >0) && (contents.charAt(beginIndex - 1) == '>')) {
-        PageElementTag tag = analysis.isInTag(beginIndex - 1);
-        PageElementTag endTag = null;
-        if ((tag != null) && tag.isComplete() && !tag.isFullTag() && !tag.isEndTag()) {
-          if (PageElementTag.TAG_HTML_CENTER.equals(tag.getNormalizedName())) {
-            endTag = tag.getMatchingTag();
-          }
-        }
-        if (endTag != null) {
-          beginIndex = endTag.getBeginIndex();
-          endIndex = endTag.getEndIndex();
-          boolean newLine = (contents.charAt(beginIndex - 1) == '\n');
-          errorResult = createCheckErrorResult(analysis, beginIndex, endIndex, ErrorLevel.WARNING);
-          StringBuilder replacement = new StringBuilder();
-          replacement.append(PageElementTemplate.createTemplate(pair[1]));
-          if (newLine) {
-            replacement.append('\n');
-          }
-          replacement.append(contents.substring(beginIndex, endIndex));
-          errorResult.addReplacement(replacement.toString());
-          errors.add(errorResult);
-        }
-      }
-
-      // General actions
-      errorResult.addPossibleAction(new SimpleAction(
-          GT._T("External Viewer"),
-          new ActionExternalViewer(
-              wiki,
-              wiki.getWikiConfiguration().getNamespace(Namespace.TEMPLATE).getCanonicalTitle() + ":" + openTemplate.getTemplateName())));
+    for (Pair<PageElementTemplate, PairInformation> openingTemplate : openingTemplates) {
+      reportError(analysis, errors, openingTemplate.getLeft(), openingTemplate.getRight().getReplacement());
     }
+
     return true;
+  }
+
+  /**
+   * Report an error for an opening template.
+   * 
+   * @param analysis Page analysis.
+   * @param errors Errors found in the page.
+   * @param openTemplate Opening template for which the error should be reported.
+   * @param closeTemplate Name of a closing template.
+   */
+  private void reportError(
+      PageAnalysis analysis,
+      Collection<CheckErrorResult> errors,
+      PageElementTemplate openTemplate,
+      String closeTemplate) {
+    int beginIndex = openTemplate.getBeginIndex();
+    int endIndex = openTemplate.getEndIndex();
+    CheckErrorResult errorResult = createCheckErrorResult(
+        analysis, beginIndex, endIndex);
+    errors.add(errorResult);
+
+    // Check if the open template is just after a tag of some sort
+    String contents = analysis.getContents();
+    while ((beginIndex > 0) &&
+           ((contents.charAt(beginIndex - 1) == '\n') ||
+            (CharacterUtils.isWhitespace(contents.charAt(beginIndex - 1))))) {
+      beginIndex--;
+    }
+    if ((beginIndex >0) && (contents.charAt(beginIndex - 1) == '>')) {
+      PageElementTag tag = analysis.isInTag(beginIndex - 1);
+      PageElementTag endTag = null;
+      if ((tag != null) && tag.isComplete() && !tag.isFullTag() && !tag.isEndTag()) {
+        if (PageElementTag.TAG_HTML_CENTER.equals(tag.getNormalizedName())) {
+          endTag = tag.getMatchingTag();
+        }
+      }
+      if (endTag != null) {
+        beginIndex = endTag.getBeginIndex();
+        endIndex = endTag.getEndIndex();
+        boolean newLine = (contents.charAt(beginIndex - 1) == '\n');
+        errorResult = createCheckErrorResult(analysis, beginIndex, endIndex, ErrorLevel.WARNING);
+        StringBuilder replacement = new StringBuilder();
+        replacement.append(PageElementTemplate.createTemplate(closeTemplate));
+        if (newLine) {
+          replacement.append('\n');
+        }
+        replacement.append(contents.substring(beginIndex, endIndex));
+        errorResult.addReplacement(replacement.toString());
+        errors.add(errorResult);
+      }
+    }
+
+    // General actions
+    EnumWikipedia wiki = analysis.getWikipedia();
+    errorResult.addPossibleAction(new SimpleAction(
+        GT._T("External Viewer"),
+        new ActionExternalViewer(
+            wiki,
+            wiki.getWikiConfiguration().getNamespace(Namespace.TEMPLATE).getCanonicalTitle() + ":" + openTemplate.getTemplateName())));
   }
 
   /* ====================================================================== */
@@ -175,17 +180,27 @@ public class CheckErrorAlgorithm544 extends CheckErrorAlgorithmBase {
   @Override
   protected void initializeSettings() {
     String tmp = getSpecificProperty(PARAMETER_PAIR_TEMPLATES, true, true, false);
-    pairs.clear();
+    pairsMap.clear();
     if (tmp != null) {
       List<String[]> tmpPairs = WPCConfiguration.convertPropertyToStringArrayList(tmp);
       if (tmpPairs != null) {
-        pairs.addAll(tmpPairs);
+        for (String[] tmpPair : tmpPairs) {
+          if (tmpPair.length > 1) {
+            String openTemplateName = Page.normalizeTitle(tmpPair[0]);
+            PairInformation pairInfo = pairsMap.get(openTemplateName);
+            if (pairInfo == null) {
+              pairInfo = new PairInformation();
+              pairsMap.put(openTemplateName, pairInfo);
+            }
+            pairInfo.addCloseTemplates(tmpPair);
+          }
+        }
       }
     }
   }
 
   /** Links to ignore */
-  private final List<String[]> pairs = new ArrayList<>();
+  private final Map<String, PairInformation> pairsMap = new HashMap<>();
 
   /**
    * Build the list of parameters for this algorithm.
@@ -206,5 +221,34 @@ public class CheckErrorAlgorithm544 extends CheckErrorAlgorithmBase {
                 false, true)
         },
         true));
+  }
+
+  /**
+   * Bean for holding information about a pair of templates.
+   */
+  private static class PairInformation {
+    private Set<String> closeTemplates;
+    private String replacement;
+
+    public PairInformation() {
+      this.closeTemplates = new HashSet<>();
+    }
+
+    public void addCloseTemplates(String[] close) {
+      for (int index = 1; index < close.length; index++) {
+        if (replacement == null) {
+          replacement = close[index];
+        }
+        closeTemplates.add(close[index]);
+      }
+    }
+
+    public String getReplacement() {
+      return replacement;
+    }
+
+    public boolean isACloseTemplate(String templateName) {
+      return closeTemplates.contains(Page.normalizeTitle(templateName));
+    }
   }
 }
