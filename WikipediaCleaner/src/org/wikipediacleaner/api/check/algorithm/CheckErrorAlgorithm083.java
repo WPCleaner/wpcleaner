@@ -46,27 +46,52 @@ public class CheckErrorAlgorithm083 extends CheckErrorAlgorithmBase {
     if (titles.size() == 0) {
       return false;
     }
-    int firstTitle = titles.get(0).getLevel();
-    if (firstTitle < 3) {
+    PageElementTitle firstTitle = titles.get(0);
+    if (firstTitle.getLevel() < 3) {
       return false;
     }
 
     // Check every title
     boolean result = false;
-    for (PageElementTitle title : titles) {
-      if (title.getLevel() < firstTitle) {
+    for (int titleIndex = 1; titleIndex < titles.size(); titleIndex++) {
+      PageElementTitle title = titles.get(titleIndex);
+      if (title.getLevel() < firstTitle.getLevel()) {
         if (errors == null) {
           return true;
         }
         result = true;
+        if (titleIndex == 1) {
+          CheckErrorResult errorResult = createCheckErrorResult(analysis, firstTitle.getBeginIndex(), firstTitle.getEndIndex());
+          errorResult.addReplacement(
+              PageElementTitle.createTitle(title.getLevel(), firstTitle.getTitle(), firstTitle.getAfterTitle()),
+              true);
+          errors.add(errorResult);
+          break;
+        }
         CheckErrorResult errorResult = createCheckErrorResult(
             analysis,
             title.getBeginIndex(), title.getEndIndex());
         errorResult.addEditTocAction(title);
         errors.add(errorResult);
+        break;
       }
     }
 
     return result;
+  }
+
+  /**
+   * Automatic fixing of all the errors in the page.
+   * 
+   * @param analysis Page analysis.
+   * @return Page contents after fix.
+   */
+  @Override
+  protected String internalAutomaticFix(PageAnalysis analysis) {
+    if (!analysis.getPage().isArticle() ||
+        !analysis.getPage().isInMainNamespace()) {
+      return analysis.getContents();
+    }
+    return fixUsingAutomaticReplacement(analysis);
   }
 }
