@@ -55,14 +55,16 @@ public class CheckErrorAlgorithm007 extends CheckErrorAlgorithmBase {
     if (errors == null) {
       return true;
     }
+    PageElementTitle firstTitle = titles.get(0);
     CheckErrorResult errorResult = createCheckErrorResult(
         analysis,
-        titles.get(0).getBeginIndex(), titles.get(0).getEndIndex());
+        firstTitle.getBeginIndex(), firstTitle.getEndIndex());
     if (titles.size() == 1) {
-      errorResult.addReplacement(PageElementTitle.createTitle(
-          2, titles.get(0).getTitle(), titles.get(0).getAfterTitle()));
+      errorResult.addReplacement(
+          PageElementTitle.createTitle(2, firstTitle.getTitle(), firstTitle.getAfterTitle()),
+          true);
     }
-    errorResult.addEditTocAction(titles.get(0));
+    errorResult.addEditTocAction(firstTitle);
     errors.add(errorResult);
     return true;
   }

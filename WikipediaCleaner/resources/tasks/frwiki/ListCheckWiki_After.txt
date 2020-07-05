@@ -6,6 +6,7 @@ UpdateDuplicateArgsWarnings
 FixCheckWiki 526
 FixListCheckWiki Projet:Correction_syntaxique/Analyse_001 1
 FixListCheckWiki Projet:Correction_syntaxique/Analyse_002 2
+FixListCheckWiki Projet:Correction_syntaxique/Analyse_007 7
 FixListCheckWiki Projet:Correction_syntaxique/Analyse_009 9
 FixListCheckWiki Projet:Correction_syntaxique/Analyse_010 10
 FixListCheckWiki Projet:Correction_syntaxique/Analyse_016 16

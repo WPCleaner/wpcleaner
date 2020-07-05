@@ -4,6 +4,7 @@ Set Prefix [[Utilisateur:WikiCleanerBot#T3|Bot_T3]]
 Set Namespaces 0
 FixCheckWiki 1
 FixCheckWiki 2
+FixCheckWiki 7
 FixCheckWiki 9
 FixCheckWiki 10
 FixCheckWiki 16
