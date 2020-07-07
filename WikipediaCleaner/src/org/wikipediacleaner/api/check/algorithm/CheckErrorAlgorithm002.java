@@ -9,7 +9,9 @@ package org.wikipediacleaner.api.check.algorithm;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.wikipediacleaner.api.algorithm.AlgorithmParameter;
 import org.wikipediacleaner.api.algorithm.AlgorithmParameterElement;
@@ -44,51 +46,53 @@ public class CheckErrorAlgorithm002 extends CheckErrorAlgorithmBase {
    * 
    * Valid HTML tags are only: area, base, br, col, embed, hr, img, input, keygen, link, meta, param, source, track, wbr
    */
-  private final static String[] nonSelfClosingTags = new String[] {
-      PageElementTag.TAG_HTML_ABBR,
-      PageElementTag.TAG_HTML_B,
-      PageElementTag.TAG_HTML_BIG,
-      PageElementTag.TAG_HTML_BLOCKQUOTE,
-      PageElementTag.TAG_HTML_CENTER,
-      PageElementTag.TAG_HTML_CITE,
-      PageElementTag.TAG_HTML_CODE,
-      PageElementTag.TAG_HTML_DEL,
-      PageElementTag.TAG_HTML_DFN,
-      PageElementTag.TAG_HTML_DIV,
-      PageElementTag.TAG_HTML_EM,
-      PageElementTag.TAG_HTML_FONT,
-      PageElementTag.TAG_HTML_H1,
-      PageElementTag.TAG_HTML_H2,
-      PageElementTag.TAG_HTML_H3,
-      PageElementTag.TAG_HTML_H4,
-      PageElementTag.TAG_HTML_H5,
-      PageElementTag.TAG_HTML_H6,
-      PageElementTag.TAG_HTML_H7,
-      PageElementTag.TAG_HTML_H8,
-      PageElementTag.TAG_HTML_H9,
-      PageElementTag.TAG_HTML_I,
-      PageElementTag.TAG_HTML_P,
-      PageElementTag.TAG_HTML_S,
-      PageElementTag.TAG_HTML_SMALL,
-      PageElementTag.TAG_HTML_SPAN,
-      PageElementTag.TAG_HTML_STRIKE,
-      PageElementTag.TAG_HTML_SUB,
-      PageElementTag.TAG_HTML_SUP,
-      PageElementTag.TAG_HTML_TABLE,
-      PageElementTag.TAG_HTML_TD,
-      PageElementTag.TAG_HTML_TH,
-      PageElementTag.TAG_HTML_TR,
-      PageElementTag.TAG_HTML_TT,
-      PageElementTag.TAG_HTML_U,
-      PageElementTag.TAG_HTML_UL,
-  };
+  private final static Set<String> nonSelfClosingTags = new HashSet<>();
 
   /**
    * Known erroneous tags that can be replaced automatically.
    */
-  private final static String[] erroneousTags = new String[] {
-      "</br>",
-  };
+  private final static Set<String> erroneousTags = new HashSet<>();
+
+  static {
+      nonSelfClosingTags.add(PageElementTag.TAG_HTML_ABBR);
+      nonSelfClosingTags.add(PageElementTag.TAG_HTML_B);
+      nonSelfClosingTags.add(PageElementTag.TAG_HTML_BIG);
+      nonSelfClosingTags.add(PageElementTag.TAG_HTML_BLOCKQUOTE);
+      nonSelfClosingTags.add(PageElementTag.TAG_HTML_CENTER);
+      nonSelfClosingTags.add(PageElementTag.TAG_HTML_CITE);
+      nonSelfClosingTags.add(PageElementTag.TAG_HTML_CODE);
+      nonSelfClosingTags.add(PageElementTag.TAG_HTML_DEL);
+      nonSelfClosingTags.add(PageElementTag.TAG_HTML_DFN);
+      nonSelfClosingTags.add(PageElementTag.TAG_HTML_DIV);
+      nonSelfClosingTags.add(PageElementTag.TAG_HTML_EM);
+      nonSelfClosingTags.add(PageElementTag.TAG_HTML_FONT);
+      nonSelfClosingTags.add(PageElementTag.TAG_HTML_H1);
+      nonSelfClosingTags.add(PageElementTag.TAG_HTML_H2);
+      nonSelfClosingTags.add(PageElementTag.TAG_HTML_H3);
+      nonSelfClosingTags.add(PageElementTag.TAG_HTML_H4);
+      nonSelfClosingTags.add(PageElementTag.TAG_HTML_H5);
+      nonSelfClosingTags.add(PageElementTag.TAG_HTML_H6);
+      nonSelfClosingTags.add(PageElementTag.TAG_HTML_H7);
+      nonSelfClosingTags.add(PageElementTag.TAG_HTML_H8);
+      nonSelfClosingTags.add(PageElementTag.TAG_HTML_H9);
+      nonSelfClosingTags.add(PageElementTag.TAG_HTML_I);
+      nonSelfClosingTags.add(PageElementTag.TAG_HTML_P);
+      nonSelfClosingTags.add(PageElementTag.TAG_HTML_S);
+      nonSelfClosingTags.add(PageElementTag.TAG_HTML_SMALL);
+      nonSelfClosingTags.add(PageElementTag.TAG_HTML_SPAN);
+      nonSelfClosingTags.add(PageElementTag.TAG_HTML_STRIKE);
+      nonSelfClosingTags.add(PageElementTag.TAG_HTML_SUB);
+      nonSelfClosingTags.add(PageElementTag.TAG_HTML_SUP);
+      nonSelfClosingTags.add(PageElementTag.TAG_HTML_TABLE);
+      nonSelfClosingTags.add(PageElementTag.TAG_HTML_TD);
+      nonSelfClosingTags.add(PageElementTag.TAG_HTML_TH);
+      nonSelfClosingTags.add(PageElementTag.TAG_HTML_TR);
+      nonSelfClosingTags.add(PageElementTag.TAG_HTML_TT);
+      nonSelfClosingTags.add(PageElementTag.TAG_HTML_U);
+      nonSelfClosingTags.add(PageElementTag.TAG_HTML_UL);
+
+      erroneousTags.add("</br>");
+  }
 
   public CheckErrorAlgorithm002() {
     super("Article with incorrect tags");
@@ -116,9 +120,7 @@ public class CheckErrorAlgorithm002 extends CheckErrorAlgorithmBase {
     result |= analyzeSelfClosingTags(analysis, errors, PageElementTag.TAG_HTML_HR);
 
     // Check for tags that should not be self closing
-    for (String tagName : nonSelfClosingTags) {
-      result |= analyzeNonFullTags(analysis, errors, tagName);
-    }
+    result |= analyzeNonFullTags(analysis, errors);
 
     // Check for incorrectly written tags
     result |= analyzeIncorrectTags(analysis, errors, nonSelfClosingTags);
@@ -253,8 +255,53 @@ public class CheckErrorAlgorithm002 extends CheckErrorAlgorithmBase {
    */
   private boolean analyzeNonFullTags(
       PageAnalysis analysis,
+      Collection<CheckErrorResult> errors) {
+
+    // Analyze each tag
+    boolean result = false;
+    for (PageElementTag tag : analysis.getTags()) {
+      result |= analyzeNonFullTag(analysis, errors, tag);
+    }
+    return result;
+  }
+
+  /**
+   * Analyze tag to check if it's a full.
+   * 
+   * @param analysis Page analysis.
+   * @param errors Errors found in the page.
+   * @param tagName Tag name.
+   * @return Flag indicating if the error was found.
+   */
+  private boolean analyzeNonFullTag(
+      PageAnalysis analysis,
       Collection<CheckErrorResult> errors,
-      String tagName) {
+      PageElementTag tag) {
+
+    // Keep only full tags for configured tags
+    if (!tag.isFullTag()) {
+      return false;
+    }
+    String tagName = tag.getNormalizedName();
+    if (!nonSelfClosingTags.contains(tagName)) {
+      return false;
+    }
+
+    // Ignore some situations
+    int beginIndex = tag.getBeginIndex();
+    if ((analysis.getSurroundingTag(PageElementTag.TAG_WIKI_SOURCE, beginIndex) != null) ||
+        (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_SYNTAXHIGHLIGHT, beginIndex) != null)) {
+      return false;
+    }
+    if (!PageElementTag.TAG_WIKI_NOWIKI.equals(tagName) &&
+        (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_NOWIKI, beginIndex) != null)) {
+      return false;
+    }
+
+    // Report error
+    if (errors == null) {
+      return true;
+    }
 
     // Retrieve configuration
     List<String[]> tmpAnchorTemplates = null;
@@ -264,101 +311,78 @@ public class CheckErrorAlgorithm002 extends CheckErrorAlgorithmBase {
       tmpAnchorTemplates = anchorTemplates;
     }
 
-    // Check for tags
-    boolean result = false;
-    List<PageElementTag> tags = analysis.getTags(tagName);
+    // Create error
+    CheckErrorResult errorResult =
+        createCheckErrorResult(analysis, beginIndex, tag.getEndIndex());
+
+    // Check for consecutive opening tags without matching closing tags
     PageElementTag previousTag = null;
-    for (PageElementTag tag : tags) {
-
-      boolean shouldReport = false;
-      int beginIndex = tag.getBeginIndex();
-      if (tag.isFullTag()) {
-        shouldReport = true;
-      }
-      if (shouldReport) {
-        if ((analysis.getSurroundingTag(PageElementTag.TAG_WIKI_SOURCE, beginIndex) != null) ||
-            (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_SYNTAXHIGHLIGHT, beginIndex) != null)) {
-          shouldReport = false;
+    List<PageElementTag> otherTags = analysis.getTags(tagName);
+    if (otherTags != null) {
+      for (PageElementTag otherTag : otherTags) {
+        if (otherTag.getEndIndex() <= tag.getBeginIndex()) {
+          previousTag = otherTag;
         }
       }
-      if (shouldReport) {
-        if (!PageElementTag.TAG_WIKI_NOWIKI.equals(tagName) &&
-            (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_NOWIKI, beginIndex) != null)) {
-          shouldReport = false;
-        }
-      }
-
-      if (shouldReport) {
-        if (errors == null) {
-          return true;
-        }
-        result = true;
-        CheckErrorResult errorResult =
-            createCheckErrorResult(analysis, beginIndex, tag.getEndIndex());
-
-        // Check for consecutive opening tags without matching closing tags
-        if ((previousTag != null) &&
-            !previousTag.isComplete() &&
-            !previousTag.isEndTag()) {
-          errorResult.addReplacement(PageElementTag.createTag(tagName, true, false));
-        }
-
-        // Check for clear tags (<div clear="..."/>)
-        if (PageElementTag.TAG_HTML_DIV.equals(tagName)) {
-          String clearValue = getClearValue(tag);
-          if (clearValue != null) {
-            String clearReplacement = getClearReplacement(clearValue);
-            if (clearReplacement != null) {
-              errorResult.addReplacement(clearReplacement, false);
-            }
-          }
-        }
-
-        // Check for id tags (<span id="..."/> or <div id="..."/>)
-        if ((tmpAnchorTemplates != null) &&
-            !tmpAnchorTemplates.isEmpty() &&
-            (tag.isComplete() || !tag.isEndTag())) {
-          String idAttribute = null;
-          boolean hasOtherAttribute = false;
-          for (int numAttribute = 0; numAttribute < tag.getParametersCount(); numAttribute++) {
-            Parameter param = tag.getParameter(numAttribute);
-            if ((param != null) && (param.getName() != null)) {
-              if ("id".equals(param.getName())) {
-                if ((param.getTrimmedValue() != null) &&
-                    !"".equals(param.getTrimmedValue())) {
-                  idAttribute = param.getTrimmedValue();
-                }
-              } else {
-                hasOtherAttribute = true;
-              }
-            }
-          }
-          if ((idAttribute != null) && (idAttribute.length() > 0) && !hasOtherAttribute) {
-            for (String[] anchorTemplate : tmpAnchorTemplates) {
-              if ((anchorTemplate.length > 0) && (anchorTemplate[0].length() > 0)) {
-                StringBuilder replacement = new StringBuilder();
-                replacement.append("{{");
-                replacement.append(anchorTemplate[0]);
-                replacement.append("|");
-                if ((anchorTemplate.length > 1) && !"1".equals(anchorTemplate[1])) {
-                  replacement.append(anchorTemplate[1]);
-                  replacement.append("=");
-                }
-                replacement.append(idAttribute);
-                replacement.append("}}");
-                errorResult.addReplacement(replacement.toString());
-              }
-            }
-          }
-        }
-
-        errorResult.addReplacement("");
-        errors.add(errorResult);
-      }
-      previousTag = tag;
+    }
+    if ((previousTag != null) &&
+        !previousTag.isComplete() &&
+        !previousTag.isEndTag()) {
+      errorResult.addReplacement(PageElementTag.createTag(tagName, true, false));
     }
 
-    return result;
+    // Check for clear tags (<div clear="..."/>)
+    if (PageElementTag.TAG_HTML_DIV.equals(tagName)) {
+      String clearValue = getClearValue(tag);
+      if (clearValue != null) {
+        String clearReplacement = getClearReplacement(clearValue);
+        if (clearReplacement != null) {
+          errorResult.addReplacement(clearReplacement, false);
+        }
+      }
+    }
+
+    // Check for id tags (<span id="..."/> or <div id="..."/>)
+    if ((tmpAnchorTemplates != null) &&
+        !tmpAnchorTemplates.isEmpty()) {
+      String idAttribute = null;
+      boolean hasOtherAttribute = false;
+      for (int numAttribute = 0; numAttribute < tag.getParametersCount(); numAttribute++) {
+        Parameter param = tag.getParameter(numAttribute);
+        if ((param != null) && (param.getName() != null)) {
+          if ("id".equals(param.getName())) {
+            if ((param.getTrimmedValue() != null) &&
+                !"".equals(param.getTrimmedValue())) {
+              idAttribute = param.getTrimmedValue();
+            }
+          } else {
+            hasOtherAttribute = true;
+          }
+        }
+      }
+      if ((idAttribute != null) && (idAttribute.length() > 0) && !hasOtherAttribute) {
+        for (String[] anchorTemplate : tmpAnchorTemplates) {
+          if ((anchorTemplate.length > 0) && (anchorTemplate[0].length() > 0)) {
+            StringBuilder replacement = new StringBuilder();
+            replacement.append("{{");
+            replacement.append(anchorTemplate[0]);
+            replacement.append("|");
+            if ((anchorTemplate.length > 1) && !"1".equals(anchorTemplate[1])) {
+              replacement.append(anchorTemplate[1]);
+              replacement.append("=");
+            }
+            replacement.append(idAttribute);
+            replacement.append("}}");
+            errorResult.addReplacement(replacement.toString());
+          }
+        }
+      }
+    }
+
+    errorResult.addReplacement("");
+    errors.add(errorResult);
+
+    return true;
   }
 
   /**
@@ -372,7 +396,7 @@ public class CheckErrorAlgorithm002 extends CheckErrorAlgorithmBase {
   private boolean analyzeIncorrectTags(
       PageAnalysis analysis,
       Collection<CheckErrorResult> errors,
-      String[] tagNames) {
+      Set<String> tagNames) {
 
     boolean result = false;
 
@@ -540,11 +564,7 @@ public class CheckErrorAlgorithm002 extends CheckErrorAlgorithmBase {
               boolean automatic = endsWithGT && incorrectChar && analysis.getPage().isArticle();
               if (!automatic) {
                 String text = contents.substring(currentIndex, tmpIndex);
-                for (String tmp : erroneousTags) {
-                  if (tmp.equals(text)) {
-                    automatic = true;
-                  }
-                }
+                automatic |= erroneousTags.contains(text);
               }
               boolean close = analysis.getWPCConfiguration().getBoolean(
                   WPCConfigurationBoolean.CLOSE_SELF_CLOSING_TAGS);
