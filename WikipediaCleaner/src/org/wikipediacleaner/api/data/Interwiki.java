@@ -67,6 +67,9 @@ public class Interwiki implements Comparable<Interwiki> {
       return null;
     }
     String cleanTest = HttpUtils.getCleanUrlForArticle(test);
+    if (cleanTest == null) {
+      return null;
+    }
     Interwiki result = null;
     for (Interwiki interwiki : interwikis) {
       String tmp = HttpUtils.getArticleFromCleanUrl(
