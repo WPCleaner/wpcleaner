@@ -128,7 +128,7 @@
 
   <!-- Properties that can be useful to change the build -->
   <property name="do.create.pot" value="true" />
-  <property name="do.create.po"  value="true" />
+  <property name="do.create.po"  value="false" />
 
   <!-- Paths and FileSets -->
   <path id="WPCleaner.class.path">
