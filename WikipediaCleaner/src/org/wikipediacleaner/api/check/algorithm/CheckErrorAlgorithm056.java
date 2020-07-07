@@ -78,6 +78,7 @@ public class CheckErrorAlgorithm056 extends CheckErrorAlgorithmBase {
   private final static String[] exceptTags = {
     PageElementTag.TAG_HTML_TT,
     PageElementTag.TAG_HTML_CODE,
+    PageElementTag.TAG_WIKI_CHEM,
     PageElementTag.TAG_WIKI_HIERO,
     PageElementTag.TAG_WIKI_MATH,
     PageElementTag.TAG_WIKI_MATH_CHEM,
