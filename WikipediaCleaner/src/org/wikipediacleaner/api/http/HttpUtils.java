@@ -212,14 +212,13 @@ public class HttpUtils {
   }
 
   /**
-   * Find if a given URL is for an article.
+   * Try to convert a given URL into a clean URL.
    * 
    * @param url URL.
-   * @param base Base URL.
-   * @return Article name or null if it doesn't match an article.
+   * @return Cleaned URL.
    */
-  public static String getArticleFromUrl(String url, String base) {
-    if ((url == null) || (base == null)) {
+  public static String getCleanUrlForArticle(String url) {
+    if (url == null) {
       return null;
     }
 
@@ -270,24 +269,53 @@ public class HttpUtils {
       details.append(uri.getFragment());
     }
 
-    // Check that URL starts correctly
-    int paramIndex = base.indexOf("$1");
-    if (paramIndex < 0) {
+    return details.toString();
+  }
+
+  /**
+   * Find if a given URL is for an article.
+   * 
+   * @param url URL.
+   * @param base_prefix Prefix of the base URL.
+   * @param base_suffix Suffix of the base URL.
+   * @return Article name or null if it doesn't match an article.
+   */
+  public static String getArticleFromUrl(String url, String base_prefix, String base_suffix) {
+    if (url == null) {
       return null;
     }
-    String detailsStr = details.toString();
-    if (!detailsStr.startsWith(base.substring(0, paramIndex))) {
+    return getArticleFromCleanUrl(
+        getCleanUrlForArticle(url),
+        base_prefix,
+        base_suffix);
+  }
+
+  /**
+   * Find if a given URL is for an article.
+   * 
+   * @param url Clean URL.
+   * @param base_prefix Prefix of the base URL.
+   * @param base_suffix Suffix of the base URL.
+   * @return Article name or null if it doesn't match an article.
+   */
+  public static String getArticleFromCleanUrl(String url, String base_prefix, String base_suffix) {
+
+    // Check that URL starts correctly
+    if (base_prefix == null) {
+      return null;
+    }
+    if (!url.startsWith(base_prefix)) {
       return null;
     }
 
     // Check that URL ends correctly
     String result = null;
-    if (paramIndex + 2 >= base.length()) {
-      result = detailsStr.substring(paramIndex);
-    } else if (!detailsStr.endsWith(base.substring(paramIndex + 2))) {
+    if ((base_suffix == null) || (base_suffix.length() == 0)) {
+      result = url.substring(base_prefix.length());
+    } else if (!url.endsWith(base_suffix)) {
       return null;
     } else {
-      result = detailsStr.substring(paramIndex, details.length() - base.length() + 2 + paramIndex);
+      result = url.substring(base_prefix.length(), url.length() - base_suffix.length());
     }
     if (result != null) {
       result = result.replaceAll("\\_", " ");
@@ -296,5 +324,6 @@ public class HttpUtils {
       }
     }
     return result;
+    
   }
 }

@@ -7,6 +7,8 @@
 
 package org.wikipediacleaner.api.data;
 
+import java.util.List;
+
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.http.HttpUtils;
 
@@ -21,6 +23,8 @@ public class Interwiki implements Comparable<Interwiki> {
   private final String language;
   private final String url;
   private final String urlWithoutProtocol;
+  private final String urlWithoutProtocolPrefix;
+  private final String urlWithoutProtocolSuffix;
 
   /**
    * @param prefix Interwiki prefix.
@@ -35,6 +39,9 @@ public class Interwiki implements Comparable<Interwiki> {
     this.url = url;
     int colonIndex = (url != null) ? url.indexOf(':') : -1;
     this.urlWithoutProtocol = ((colonIndex < 0) || (url == null)) ? null : url.substring(colonIndex + 1);
+    int paramIndex = (this.urlWithoutProtocol != null) ? this.urlWithoutProtocol.indexOf("$1") : -1;
+    this.urlWithoutProtocolPrefix = (paramIndex > 0) ? this.urlWithoutProtocol.substring(0, paramIndex) : this.urlWithoutProtocol;
+    this.urlWithoutProtocolSuffix = (paramIndex > 0) ? this.urlWithoutProtocol.substring(paramIndex + 2) : null;
   }
 
   /**
@@ -48,6 +55,31 @@ public class Interwiki implements Comparable<Interwiki> {
     return false;
   }
 
+
+  /**
+   * Test if an URL matches an article in an interwiki.
+   * 
+   * @param test URL to be tested.
+   * @return Article if the URL matches an article.
+   */
+  public static Interwiki isInterwikiUrl(List<Interwiki> interwikis, String test) {
+    if (interwikis == null) {
+      return null;
+    }
+    String cleanTest = HttpUtils.getCleanUrlForArticle(test);
+    Interwiki result = null;
+    for (Interwiki interwiki : interwikis) {
+      String tmp = HttpUtils.getArticleFromCleanUrl(
+          cleanTest, interwiki.urlWithoutProtocolPrefix, interwiki.urlWithoutProtocolSuffix);
+      if (tmp != null) {
+        if ((result == null) || (interwiki.getLanguage() != null)) {
+          result = interwiki;
+        }
+      }
+    }
+    return result;
+  }
+
   /**
    * Test if an URL matches an article.
    * 
@@ -59,7 +91,8 @@ public class Interwiki implements Comparable<Interwiki> {
       return null;
     }
 
-    String result = HttpUtils.getArticleFromUrl(test, urlWithoutProtocol);
+    String result = HttpUtils.getArticleFromUrl(
+        test, urlWithoutProtocolPrefix, urlWithoutProtocolSuffix);
     if (result != null) {
       return result;
     }

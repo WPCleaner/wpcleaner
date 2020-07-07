@@ -307,19 +307,7 @@ public class CheckErrorAlgorithm091 extends CheckErrorAlgorithmBase {
    * @return Interwiki matching the external link if it exists.
    */
   private Interwiki getInterwiki(EnumWikipedia wiki, String link) {
-    Interwiki result = null;
-    List<Interwiki> interwikis = wiki.getWikiConfiguration().getInterwikis();
-    if (interwikis != null) {
-      for (Interwiki interwiki : interwikis) {
-        String tmp = interwiki.isArticleUrl(link);
-        if (tmp != null) {
-          if ((result == null) || (interwiki.getLanguage() != null)) {
-            result = interwiki;
-          }
-        }
-      }
-    }
-    return result;
+    return Interwiki.isInterwikiUrl(wiki.getWikiConfiguration().getInterwikis(), link);
   }
 
   /**
