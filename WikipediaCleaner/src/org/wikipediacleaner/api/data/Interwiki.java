@@ -59,6 +59,7 @@ public class Interwiki implements Comparable<Interwiki> {
   /**
    * Test if an URL matches an article in an interwiki.
    * 
+   * @param interwikis List of interwikis.
    * @param test URL to be tested.
    * @return Article if the URL matches an article.
    */
