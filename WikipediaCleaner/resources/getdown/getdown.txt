@@ -1,7 +1,7 @@
 # Configuration file for running WPCleaner through getdown
 
 # General configuration
-appbase = https://wpcleaner.toolforge.org/wpcleaner/wpcleaner/
+appbase = https://wpcleaner.toolforge.org/wpcleaner/
 allow_offline = true
 
 # Configure the update UI
