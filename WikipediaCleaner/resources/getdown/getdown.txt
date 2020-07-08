@@ -1,7 +1,7 @@
 # Configuration file for running WPCleaner through getdown
 
 # General configuration
-appbase = https://tools.wmflabs.org/wpcleaner/wpcleaner/
+appbase = https://wpcleaner.toolforge.org/wpcleaner/wpcleaner/
 allow_offline = true
 
 # Configure the update UI
@@ -13,7 +13,7 @@ ui.icon = commons-nuvola-web-broom.png
 # ui.progress_text =
 # ui.status =
 # ui.status_text =
-ui.install_error = https://tools.wmflabs.org/wpcleaner/
+ui.install_error = https://wpcleaner.toolforge.org/
 ui.hide_decorations = true
 
 # Code
