@@ -13,6 +13,7 @@ import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.PageElementTitle;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
+import org.wikipediacleaner.api.data.contents.ContentsComment;
 import org.wikipediacleaner.api.data.contents.ContentsUtil;
 
 
@@ -87,6 +88,12 @@ public class CheckErrorAlgorithm008 extends CheckErrorAlgorithmBase {
       int afterTitleIndex = title.getAfterTitleIndex();
       int beginIndex = title.getBeginIndex();
       int endIndex = title.getEndIndex();
+      if ((afterTitleIndex < endIndex) && (contents.charAt(afterTitleIndex) == '<')) {
+        ContentsComment comment = analysis.comments().getAt(afterTitleIndex);
+        if ((comment != null) && (comment.getEndIndex() >= endIndex)) {
+          return false;
+        }
+      }
       CheckErrorResult errorResult = createCheckErrorResult(
           analysis, beginIndex, endIndex);
       String replacement =
