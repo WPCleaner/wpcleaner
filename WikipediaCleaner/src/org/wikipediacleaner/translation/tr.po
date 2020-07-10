@@ -16,7 +16,7 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2020-07-06 16:58:08+0000\n"
+"PO-Revision-Date: 2020-07-10 09:46:21+0000\n"
 "Last-Translator: volkan <volkanyeke@gmail.com>\n"
 "Language-Team: Turkish <tr@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -3090,25 +3090,25 @@ msgstr "Bir kategorinin üyelerini alma"
 
 #: org/wikipediacleaner/gui/swing/action/ReloadLinksAction.java:64
 msgid "Analyzing links for redirect pages"
-msgstr ""
+msgstr "Yönlendirme sayfaları için bağlantıları analiz etme"
 
 #: org/wikipediacleaner/gui/swing/action/ReloadLinksAction.java:70
 msgid "Analyzing links for disambiguation pages"
-msgstr ""
+msgstr "Anlam ayrımı sayfaları için bağlantıları analiz etme"
 
 #: org/wikipediacleaner/gui/swing/action/ReloadLinksAction.java:78
 #, java-format
 msgid "Retrieving possible disambiguations for {0}"
-msgstr ""
+msgstr "{0} için olası anlam ayrımları geri alınması"
 
 #: org/wikipediacleaner/gui/swing/action/ReplaceAllLinksAction.java:54
 msgid "Do you want to proceed with the replacement ?"
-msgstr ""
+msgstr "Değiştirme işlemine devam etmek istiyor musunuz?"
 
 #: org/wikipediacleaner/gui/swing/action/ReplaceLinkAction.java:233
 #, java-format
 msgid "The link can be extended to include text before or after the current link.\nWould you like to extend the link to \"{0}\"?"
-msgstr ""
+msgstr "Bağlantı, geçerli bağlantıdan önce veya sonra metin içerecek şekilde genişletilebilir.\nBağlantıyı \"{0}\" olarak genişletmek ister misiniz?"
 
 #: org/wikipediacleaner/gui/swing/basic/BasicWindow.java:64
 #, java-format
@@ -3117,51 +3117,51 @@ msgstr "{0} çalışıyor..."
 
 #: org/wikipediacleaner/gui/swing/basic/TaskYesNoAllDialog.java:52
 msgid "Yes"
-msgstr ""
+msgstr "Evet"
 
 #: org/wikipediacleaner/gui/swing/basic/TaskYesNoAllDialog.java:53
 msgid "Yes to all"
-msgstr ""
+msgstr "Hepsine evet"
 
 #: org/wikipediacleaner/gui/swing/basic/TaskYesNoAllDialog.java:54
 msgid "No"
-msgstr ""
+msgstr "Hayır"
 
 #: org/wikipediacleaner/gui/swing/basic/TaskYesNoAllDialog.java:55
 msgid "No to all"
-msgstr ""
+msgstr "Hepsine hayır"
 
 #: org/wikipediacleaner/gui/swing/basic/Utilities.java:117
 #: org/wikipediacleaner/gui/swing/basic/Utilities.java:122
 #, java-format
 msgid "An error occurred: {0}"
-msgstr ""
+msgstr "Bir hata oluştu: {0}"
 
 #: org/wikipediacleaner/gui/swing/basic/Utilities.java:127
 msgid "An unknown error occurred"
-msgstr ""
+msgstr "Bilinmeyen bir hata oluştu"
 
 #: org/wikipediacleaner/gui/swing/basic/Utilities.java:187
 #, java-format
 msgid "You need to define the ''{0}'' property in WPCleaner configuration."
-msgstr ""
+msgstr "WPCleaner yapılandırmasında ''{0}'' özelliğini tanımlamanız gerekir."
 
 #: org/wikipediacleaner/gui/swing/basic/Utilities.java:215
 #, java-format
 msgid "You need to define the {0} properties in WPCleaner configuration."
-msgstr ""
+msgstr "WPCleaner yapılandırmasında {0} özelliklerini tanımlamanız gerekir."
 
 #: org/wikipediacleaner/gui/swing/basic/Utilities.java:225
 msgid "This function requires some configuration."
-msgstr ""
+msgstr "Bu işlev bir yapılandırma gerektirir."
 
 #: org/wikipediacleaner/gui/swing/basic/Utilities.java:232
 msgid "Do you want to display help on configuring WPCleaner ?"
-msgstr ""
+msgstr "WPCleaner'ı yapılandırma konusunda yardım görüntülemek istiyor musunuz?"
 
 #: org/wikipediacleaner/gui/swing/basic/Utilities.java:339
 msgid "Other..."
-msgstr ""
+msgstr "Diğer..."
 
 #: org/wikipediacleaner/gui/swing/bot/AutomaticCWWorker.java:100
 #: org/wikipediacleaner/gui/swing/worker/CheckWikiProjectWorker.java:76

@@ -8,7 +8,7 @@
 msgid ""
 msgstr ""
 ""
-"PO-Revision-Date: 2020-07-06 16:58:08+0000\n"
+"PO-Revision-Date: 2020-07-10 09:46:21+0000\n"
 "X-POT-Import-Date: 2020-07-04 14:31:48+0000\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -1435,32 +1435,32 @@ msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISBN.java:384
 msgid "Search all ISBN"
-msgstr ""
+msgstr "Пребарај ги сите ISBN-ови"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISBN.java:402
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISBN.java:432
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISSN.java:431
 #, java-format
 msgid "Search ISBN {0}"
-msgstr ""
+msgstr "Пребарај ISBN {0}"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISBN.java:462
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISSN.java:371
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISSN.java:401
 #, java-format
 msgid "Search ISSN {0}"
-msgstr ""
+msgstr "Пребарај ISSN {0}"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISBN.java:495
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISSN.java:464
 #: org/wikipediacleaner/gui/swing/component/MWPanePopupListener.java:497
 #, java-format
 msgid "Search using {0}"
-msgstr ""
+msgstr "Пребарај користејќи {0}"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISSN.java:353
 msgid "Search all ISSN"
-msgstr ""
+msgstr "Пребарај ги сите ISSN-ови"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmTOC.java:102
 msgid "A list of templates resulting in the inclusion of a table of contents"
