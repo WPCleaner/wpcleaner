@@ -1,0 +1,5 @@
+DoTasks _Common.txt
+Set Configuration TimeBetweenEdit 30
+Set Prefix [[Wikipedia:Bots/Requests_for_approval/WikiCleanerBot_19|Bot_Test_T19_CW#19]]
+FixCheckWiki 19
+FixListCheckWiki Wikipedia:CHECKWIKI/WPC_019_dump 19
