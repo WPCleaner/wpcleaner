@@ -11,6 +11,7 @@ import java.util.Collection;
 import java.util.List;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
+import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageElementTitle;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
 
@@ -58,10 +59,15 @@ public class CheckErrorAlgorithm019 extends CheckErrorAlgorithmBase {
         CheckErrorResult errorResult = createCheckErrorResult(
             analysis,
             title.getBeginIndex(), title.getEndIndex());
-        if ((firstDetection) && (titleIndex == titles.size() - 1)) {
-          errorResult.addReplacement(
-              PageElementTitle.createTitle(2, title.getTitle(), title.getAfterTitle()),
-              true);
+        if (firstDetection) {
+          if (titleIndex == titles.size() - 1) {
+            errorResult.addReplacement(
+                PageElementTitle.createTitle(2, title.getTitle(), title.getAfterTitle()),
+                true);
+          } else if ((titleIndex == 0) &&
+              Page.areSameTitle(analysis.getPage().getTitle(), title.getTitle())) {
+            errorResult.addReplacement(title.getAfterTitle(), true);
+          }
         }
         errorResult.addEditTocAction(title);
         errors.add(errorResult);
@@ -82,6 +88,10 @@ public class CheckErrorAlgorithm019 extends CheckErrorAlgorithmBase {
     if (!analysis.areTitlesReliable()) {
       return contents;
     }
+    if (!analysis.getPage().isInMainNamespace() ||
+        !analysis.getPage().isArticle()) {
+      return contents;
+    }
 
     // Compute minimum title level
     List<PageElementTitle> titles = analysis.getTitles();
@@ -93,13 +103,20 @@ public class CheckErrorAlgorithm019 extends CheckErrorAlgorithmBase {
       return contents;
     }
     int minTitle = Integer.MAX_VALUE;
+    int minTitleCount = 0;
     for (PageElementTitle title : titles) {
       if (title.getLevel() < minTitle) {
         minTitle = title.getLevel();
+        minTitleCount = 1;
+      } else if (title.getLevel() == minTitle) {
+        minTitleCount++;
       }
     }
     if (minTitle > 1) {
       return contents;
+    }
+    if ((minTitleCount == 1) && (titles.size() > 1)) {
+      return fixUsingAutomaticReplacement(analysis);
     }
 
     // Replace titles
