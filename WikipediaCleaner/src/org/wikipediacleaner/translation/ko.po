@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2020-07-10 09:46:21+0000\n"
+"PO-Revision-Date: 2020-07-14 08:29:45+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Korean <ko@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -177,7 +177,7 @@ msgstr "오류 n°{0} ({1} - {2}) - {3}"
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm038.java:105
 #, java-format
 msgid "Replace with {0}"
-msgstr ""
+msgstr "{0} (으)로 바꾸기"
 
 #: org/wikipediacleaner/api/check/CheckErrorResult.java:201
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:367
@@ -545,7 +545,7 @@ msgstr ""
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm062.java:151
 #, java-format
 msgid "Remove {0}"
-msgstr ""
+msgstr "{0} 제거"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm064.java:35
 msgid "Modify all internal links"
@@ -3568,7 +3568,7 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiWindow.java:500
 msgid "Delete selection"
-msgstr ""
+msgstr "선택 항목 삭제"
 
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiWindow.java:599
 #: org/wikipediacleaner/gui/swing/options/LimitOptionsPanel.java:104
@@ -4445,7 +4445,7 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/TranslationOptionsPanel.java:87
 msgid "Translate templates names"
-msgstr ""
+msgstr "틀 이름 번역"
 
 #: org/wikipediacleaner/gui/swing/options/TranslationOptionsPanel.java:94
 msgid "Translate templates without parameters"
