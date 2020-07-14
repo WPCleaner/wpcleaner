@@ -8,7 +8,7 @@
 msgid ""
 msgstr ""
 ""
-"PO-Revision-Date: 2020-07-10 09:46:21+0000\n"
+"PO-Revision-Date: 2020-07-14 08:29:45+0000\n"
 "X-POT-Import-Date: 2020-07-04 14:31:48+0000\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -487,15 +487,15 @@ msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm044.java:32
 msgid "Fix all bold headlines"
-msgstr ""
+msgstr "Исправи ги сите задебелени заглавија"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm048.java:39
 msgid "Remove all links to title (first in bold)"
-msgstr ""
+msgstr "Отстрани ги сите врски до наслов (прво задебелени)"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm048.java:40
 msgid "Remove all links to title"
-msgstr ""
+msgstr "Отстрани ги сите врски до насловот"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm048.java:337
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm048.java:340
