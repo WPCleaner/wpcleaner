@@ -63,7 +63,7 @@ msgstr ""
 
 #: org/wikipediacleaner/Version.java:49
 #, java-format
-msgid "I hope you''ll like {0}."
+msgid "I hope you'll like {0}."
 msgstr ""
 
 #: org/wikipediacleaner/Version.java:50
@@ -611,7 +611,7 @@ msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:327
 #, java-format
-msgid "The page \"{0}\" in \"{1}\" doesn''t have a language link to \"{2}\"."
+msgid "The page \"{0}\" in \"{1}\" doesn't have a language link to \"{2}\"."
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:329
@@ -1526,7 +1526,7 @@ msgstr[1] ""
 
 #: org/wikipediacleaner/api/constants/Contributions.java:82
 #, java-format
-msgid "You haven''t done any contribution on \"{0}\""
+msgid "You haven't done any contribution on \"{0}\""
 msgstr ""
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:18
@@ -1651,7 +1651,7 @@ msgstr ""
 #: org/wikipediacleaner/api/constants/WPCConfiguration.java:460
 #: org/wikipediacleaner/api/constants/WPCConfiguration.java:508
 #, java-format
-msgid "Attribute {0} can''t be set in general configuration"
+msgid "Attribute {0} can't be set in general configuration"
 msgstr ""
 
 #: org/wikipediacleaner/api/constants/WPCConfiguration.java:406
@@ -1660,7 +1660,7 @@ msgstr ""
 #: org/wikipediacleaner/api/constants/WPCConfiguration.java:466
 #: org/wikipediacleaner/api/constants/WPCConfiguration.java:480
 #, java-format
-msgid "Attribute {0} can''t be set in user configuration"
+msgid "Attribute {0} can't be set in user configuration"
 msgstr ""
 
 #: org/wikipediacleaner/api/constants/WPCConfiguration.java:470
@@ -2649,12 +2649,12 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:868
 #, java-format
-msgid "Page {0} doesn''t exist, do you want to load a similar page ?"
+msgid "Page {0} doesn't exist, do you want to load a similar page ?"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:881
 #, java-format
-msgid "Page {0} doesn''t exist, do you still want to analyze it ?"
+msgid "Page {0} doesn't exist, do you still want to analyze it ?"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:932
@@ -3056,14 +3056,14 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/action/CheckCategoryLinkAction.java:120
 #, java-format
 msgid ""
-"The category {0} in the {1} Wikipedia doesn''t have a language link to the {2} Wikipedia.\n"
-"It doesn''t exist either in the {2} Wikipedia."
+"The category {0} in the {1} Wikipedia doesn't have a language link to the {2} Wikipedia.\n"
+"It doesn't exist either in the {2} Wikipedia."
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/action/CheckCategoryLinkAction.java:129
 #, java-format
 msgid ""
-"The category {0} doesn''t exist in the {2} Wikipedia.\n"
+"The category {0} doesn't exist in the {2} Wikipedia.\n"
 "In the {1} Wikipedia, it has a language link to the {2} Wikipedia: {3}.\n"
 "Do you want to replace the category by [[{3}]] ?"
 msgstr ""
@@ -3075,12 +3075,12 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/action/CheckLanguageLinkAction.java:101
 #, java-format
-msgid "The page {0} in \"{1}\" doesn''t have a language link to \"{2}\"."
+msgid "The page {0} in \"{1}\" doesn't have a language link to \"{2}\"."
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/action/CheckLanguageLinkAction.java:115
 #, java-format
-msgid "The page {0} doesn''t exist in \"{1}\"."
+msgid "The page {0} doesn't exist in \"{1}\"."
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/action/CheckLanguageLinkAction.java:119
@@ -3272,12 +3272,12 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/bot/CWCheckWhiteListsWorker.java:92
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiContentPanel.java:317
 #, java-format
-msgid "The page {0} doesn''t exist on Wikipedia"
+msgid "The page {0} doesn't exist on Wikipedia"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/bot/CWCheckWhiteListsWorker.java:106
 #, java-format
-msgid "The error hasn''t been detected in page {0}."
+msgid "The error hasn't been detected in page {0}."
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/bot/CWCheckWhiteListsWorker.java:111
@@ -3469,13 +3469,13 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiContentPanel.java:420
 #, java-format
 msgid ""
-"The error n°{0} hasn''t been found on the page {1}.\n"
+"The error n°{0} hasn't been found on the page {1}.\n"
 "Do you want to mark it as fixed?"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiContentPanel.java:430
 #, java-format
-msgid "The error n°{0} hasn''t been detected in page {1}, but CheckWiki still reports it."
+msgid "The error n°{0} hasn't been detected in page {1}, but CheckWiki still reports it."
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiContentPanel.java:439
@@ -3646,7 +3646,7 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiWindow.java:1221
 #, java-format
 msgid ""
-"There''s no page defined for this error type.\n"
+"There's no page defined for this error type.\n"
 "If you want to define a page you need to add :\n"
 "  {0} = <page name> END\n"
 "to the translation page ({1}) on \"{2}\""
@@ -3655,7 +3655,7 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiWindow.java:1266
 #, java-format
 msgid ""
-"There''s no whitelist defined for this error type.\n"
+"There's no whitelist defined for this error type.\n"
 "If you want to define a whitelist, you need to add:\n"
 "  {0} = <page name> END\n"
 "to the translation page ({1}) on \"{2}\""
