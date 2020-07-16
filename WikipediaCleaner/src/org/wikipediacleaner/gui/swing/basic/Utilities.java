@@ -184,7 +184,7 @@ public class Utilities {
   public static void displayMessageForMissingConfiguration(Component parent, String parameterName) {
     displayMissingConfiguration(
         parent,
-        GT._T("You need to define the ''{0}'' property in WPCleaner configuration.", parameterName));
+        GT._T("You need to define the {0} property in WPCleaner configuration.", parameterName));
   }
 
   /**
