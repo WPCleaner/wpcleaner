@@ -313,7 +313,7 @@ public class MediaWiki extends MediaWikiController {
                   int answer = Utilities.displayYesNoAllWarning(
                       parent,
                       GT._T("The page {0} has been modified.", page.getTitle()) + "\n" +
-                      GT._T("Do yo want to continue?"));
+                      GT._T("Do you want to continue?"));
                   switch (answer) {
                   case JOptionPane.YES_OPTION:
                     break;
