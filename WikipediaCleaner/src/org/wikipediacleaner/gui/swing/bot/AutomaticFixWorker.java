@@ -308,7 +308,7 @@ public abstract class AutomaticFixWorker extends BasicWorker {
       api.updatePage(
           getWikipedia(), page, newContents,
           comment.toString(),
-          true, true, false);
+          true, true, true, false);
       incrementModified();
       for (AlgorithmError.Progress errorFixed : errorsFixed) {
         CheckErrorAlgorithm usedAlgorithm = errorFixed.algorithm;

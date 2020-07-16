@@ -520,7 +520,7 @@ public abstract class UpdateWarningTools {
       updatePage(
           todoSubpage, tmp.toString(),
           getWarningComment(elements),
-          false);
+          false, false);
 
       // Inform creator and modifiers of the page
       informContributors(analysis, elements, creator, modifiers);
@@ -553,7 +553,7 @@ public abstract class UpdateWarningTools {
       api.updatePage(
           wiki, todoSubpage, tmp.toString(),
           getWarningComment(elements),
-          true, automaticEdit, false);
+          false, true, automaticEdit, false);
 
       return true;
     }
@@ -651,7 +651,7 @@ public abstract class UpdateWarningTools {
         tmp.append(contents.substring(indexStart));
       }
       String comment = getWarningComment(elements);
-      updateTalkPage(talkPage, tmp.toString(), comment);
+      updateTalkPage(talkPage, tmp.toString(), comment, false);
 
       // Inform creator and modifiers of the page
       informContributors(analysis, elements, creator, modifiers);
@@ -693,7 +693,7 @@ public abstract class UpdateWarningTools {
         tmp.append(contents.substring(indexEnd));
       }
       String comment = getWarningComment(elements);
-      updateTalkPage(talkPage, tmp.toString(), comment);
+      updateTalkPage(talkPage, tmp.toString(), comment, false);
       return true;
     }
 
@@ -715,7 +715,7 @@ public abstract class UpdateWarningTools {
         tmp.append(contents.substring(templateTodo.getEndIndex()));
       }
       String comment = getWarningComment(elements);
-      updateTalkPage(talkPage, tmp.toString(), comment);
+      updateTalkPage(talkPage, tmp.toString(), comment, false);
       return true;
     }
 
@@ -781,7 +781,7 @@ public abstract class UpdateWarningTools {
           newContents = delete;
         }
       }
-      updatePage(todoSubpage, newContents, reason, false);
+      updatePage(todoSubpage, newContents, reason, true, false);
     }
 
     return true;
@@ -808,7 +808,7 @@ public abstract class UpdateWarningTools {
     if (Boolean.FALSE.equals(talkPage.isExisting())) {
       String comment = getWarningComment(elements);
       String newContents = "{{" + todoTemplates.get(0) + "}}";
-      updateTalkPage(talkPage, newContents, comment);
+      updateTalkPage(talkPage, newContents, comment, true);
       return true;
     }
 
@@ -872,7 +872,7 @@ public abstract class UpdateWarningTools {
         tmp.append(contents.substring(indexStart));
       }
       String comment = getWarningComment(elements);
-      updateTalkPage(talkPage, tmp.toString(), comment);
+      updateTalkPage(talkPage, tmp.toString(), comment, true);
       return true;
     }
     if (templateTodo.getParameterValue("1") == null) {
@@ -940,7 +940,7 @@ public abstract class UpdateWarningTools {
         tmp.append(contents.substring(templateTodo.getEndIndex()));
       }
       String comment = getWarningComment(elements);
-      updateTalkPage(talkPage, tmp.toString(), comment);
+      updateTalkPage(talkPage, tmp.toString(), comment, true);
       return true;
     }
 
@@ -1017,7 +1017,7 @@ public abstract class UpdateWarningTools {
           tmp.append(contents.substring(templateTodo.getEndIndex()));
         }
         String comment = getWarningCommentDone();
-        updateTalkPage(talkPage, tmp.toString(), comment);
+        updateTalkPage(talkPage, tmp.toString(), comment, true);
         return true;
       }
     }
@@ -1378,7 +1378,8 @@ public abstract class UpdateWarningTools {
           fullMessage.append(message);
           api.addNewSection(
               wiki, userTalkPage, globalTitle,
-              fullMessage.toString(), true, automaticEdit, false);
+              fullMessage.toString(),
+              true, true, automaticEdit, false);
         } else {
           // Add the message in the existing title
           Integer revisionId = userTalkPage.getRevisionId();
@@ -1392,7 +1393,7 @@ public abstract class UpdateWarningTools {
             fullMessage.append(message);
             api.updateSection(
                 wiki, userTalkPage, globalTitle, section.getIndex(),
-                fullMessage.toString(), true, automaticEdit, false);
+                fullMessage.toString(), true, true, automaticEdit, false);
           } else {
             System.err.println("Page " + userTalk + " has been modified between two requests");
           }
@@ -1401,7 +1402,7 @@ public abstract class UpdateWarningTools {
         if (title != null) {
           api.addNewSection(
               wiki, userTalkPage, title,
-              message, true, automaticEdit, false);
+              message, true, true, automaticEdit, false);
         } else {
           // TODO: No global title, no title => Should append the message at the end
           log.warn("Should add " + message + " in " + userTalk);
@@ -1468,16 +1469,17 @@ public abstract class UpdateWarningTools {
    * @param page Page.
    * @param newContents New contents to use.
    * @param comment Comment.
+   * @param bot True if the edit should be flagged as bot.
    * @return Result of the command.
    * @throws APIException Exception thrown by the API.
    */
   protected QueryResult updateTalkPage(
       Page page, String newContents,
-      String comment) throws APIException {
+      String comment, boolean bot) throws APIException {
     if (section0) {
-      return updateSection(page, comment, 0, newContents, false);
+      return updateSection(page, comment, 0, newContents, bot, false);
     }
-    return updatePage(page, newContents, comment, false);
+    return updatePage(page, newContents, comment, bot, false);
   }
 
   /**
@@ -1486,6 +1488,7 @@ public abstract class UpdateWarningTools {
    * @param page Page.
    * @param newContents New contents to use.
    * @param comment Comment.
+   * @param bot True if the edit should be flagged as bot.
    * @param forceWatch Force watching the page.
    * @return Result of the command.
    * @throws APIException Exception thrown by the API.
@@ -1493,10 +1496,10 @@ public abstract class UpdateWarningTools {
   protected QueryResult updatePage(
       Page page,
       String newContents, String comment,
-      boolean forceWatch) throws APIException {
+      boolean bot, boolean forceWatch) throws APIException {
     return api.updatePage(
-        wiki, page, newContents,
-        comment, true, automaticEdit, forceWatch);
+        wiki, page, newContents, comment,
+        bot, true, automaticEdit, forceWatch);
   }
 
   /**
@@ -1506,16 +1509,17 @@ public abstract class UpdateWarningTools {
    * @param title Title of the new section.
    * @param section Section. 
    * @param contents Contents.
+   * @param bot True if the edit should be flagged as bot.
    * @param forceWatch Force watching the page.
    * @return Result of the command.
    * @throws APIException Exception thrown by the API.
    */
   protected QueryResult updateSection(
       Page page, String title, int section,
-      String contents, boolean forceWatch) throws APIException {
+      String contents, boolean bot, boolean forceWatch) throws APIException {
     return api.updateSection(
-        wiki, page, title, section,
-        contents, true, automaticEdit, forceWatch);
+        wiki, page, title, section, contents,
+        bot, true, automaticEdit, forceWatch);
   }
 
   /**

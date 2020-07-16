@@ -179,7 +179,9 @@ class CWCheckWhiteListsWorker extends BasicWorker {
                   }
                 }
                 if (!contents.equals(initialContents)) {
-                  api.updatePage(wiki, whiteListPage, contents, comment, true, true, false);
+                  api.updatePage(
+                      wiki, whiteListPage, contents, comment,
+                      true, true, true, false);
                 }
               }
             }

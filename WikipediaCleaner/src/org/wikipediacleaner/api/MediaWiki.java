@@ -303,7 +303,8 @@ public class MediaWiki extends MediaWikiController {
             if (save && !stopRequested) {
               try {
                 api.updatePage(
-                    wiki, page, newContents, fullComment.toString(), minor, false, false);
+                    wiki, page, newContents, fullComment.toString(),
+                    true, minor, false, false);
                 if (updateDabWarning) {
                   List<Page> tmpList = new ArrayList<>(1);
                   tmpList.add(page);

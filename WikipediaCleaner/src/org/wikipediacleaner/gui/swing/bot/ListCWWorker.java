@@ -512,7 +512,7 @@ public class ListCWWorker extends BasicWorker {
           api.updatePage(
               getWikipedia(), page, text,
               "Dump analysis for error n°" + algorithm.getErrorNumberString() + " (" + nbPages + " pages)",
-              true, true, false);
+              false, true, true, false);
         }
         return fullySaved;
       } catch (APIException e) {

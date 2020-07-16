@@ -111,6 +111,7 @@ public class SendWorker extends BasicWorker {
      * @param page Page.
      * @param text Page contents.
      * @param comment Comment.
+     * @param bot True if the edit should be flagged as bot.
      * @param minor True if the modification should be tagged as minor.
      * @param forceWatch Force watching the page.
      * @param contributions Contributions.
@@ -120,18 +121,20 @@ public class SendWorker extends BasicWorker {
     public SendWorker createWorker(
         EnumWikipedia wiki, BasicWindow window,
         Page page, String text, String comment,
-        boolean minor, boolean forceWatch,
+        boolean bot, boolean minor, boolean forceWatch,
         Contributions contributions,
         Collection<AlgorithmError.Progress> errorsFixed) {
       return new SendWorker(
           wiki, window, page, text, comment,
-          minor, forceWatch, params, contributions, errorsFixed);
+          bot, minor, forceWatch,
+          params, contributions, errorsFixed);
     }
   }
 
   private final Page page;
   private final String text;
   private final String comment;
+  private final boolean bot;
   private final boolean minor;
   private final boolean forceWatch;
   private final Params params;
@@ -144,6 +147,7 @@ public class SendWorker extends BasicWorker {
    * @param page Page.
    * @param text Page contents.
    * @param comment Comment.
+   * @param bot True if the edit should be flagged as bot.
    * @param minor True if the modification should be tagged as minor.
    * @param forceWatch Force watching the page.
    * @param params Parameters.
@@ -153,7 +157,7 @@ public class SendWorker extends BasicWorker {
   SendWorker(
       EnumWikipedia wiki, BasicWindow window,
       Page page, String text, String comment,
-      boolean minor, boolean forceWatch,
+      boolean bot, boolean minor, boolean forceWatch,
       Params params,
       Contributions contributions,
       Collection<AlgorithmError.Progress> errorsFixed) {
@@ -161,6 +165,7 @@ public class SendWorker extends BasicWorker {
     this.page = page;
     this.text = text;
     this.comment = comment;
+    this.bot = bot;
     this.minor = minor;
     this.forceWatch = forceWatch;
     this.params = params;
@@ -181,9 +186,8 @@ public class SendWorker extends BasicWorker {
     try {
       setText(GT._T("Updating page contents"));
       queryResult = api.updatePage(
-          getWikipedia(), page, text,
-          comment,
-          minor, false, forceWatch);
+          getWikipedia(), page, text, comment,
+          bot, minor, false, forceWatch);
     } catch (APIException e) {
       return e;
     }

@@ -266,6 +266,7 @@ public abstract class OnePageWindow
   JMenuItem chkCloseAfterSend;
   private JMenuItem chkEditTalkPage;
   private JMenuItem chkMarkEditMinor;
+  private JMenuItem chkRemoveBotFlag;
   JMenuItem chkUpdateDabWarning;
   JMenuItem chkCreateDabWarning;
 
@@ -300,6 +301,7 @@ public abstract class OnePageWindow
         (chkUpdateDabWarning.isSelected()));
     setEnabledStatus(chkEditTalkPage, pageLoaded && article);
     setEnabledStatus(chkMarkEditMinor, pageLoaded);
+    setEnabledStatus(chkRemoveBotFlag, pageLoaded);
     setEnabledStatus(chkSpelling, pageLoaded);
     setEnabledStatus(chkUpdateDabWarning, pageLoaded && dabWarning);
 
@@ -576,6 +578,10 @@ public abstract class OnePageWindow
             null,
             ConfigurationValueBoolean.MARK_EDIT_MINOR));
     menuOptions.add(chkMarkEditMinor);
+    chkRemoveBotFlag = Utilities.createJCheckBoxMenuItm(
+        GT._T("Disable bot flag for this edit"),
+        false);
+    menuOptions.add(chkRemoveBotFlag);
     chkCloseAfterSend = Utilities.createJCheckBoxMenuItm(
         GT._T("&Close after sending"),
         config.getBoolean(
@@ -1045,6 +1051,7 @@ public abstract class OnePageWindow
         null,
         ConfigurationValueBoolean.FORCE_WATCH);
     final boolean minor = (chkMarkEditMinor == null) || (chkMarkEditMinor.isSelected());
+    final boolean bot = (chkRemoveBotFlag == null) || (!chkRemoveBotFlag.isSelected());
     final int oldState = getParentComponent().getExtendedState();
     final boolean updateDabWarning = (chkUpdateDabWarning != null) && (chkUpdateDabWarning.isSelected());
     final boolean createDabWarning = (chkCreateDabWarning != null) && (chkCreateDabWarning.isSelected());
@@ -1090,7 +1097,7 @@ public abstract class OnePageWindow
           (textComment != null) ?
               textComment.getText() :
               getWikipedia().getConfiguration().getUpdatePageMessage(),
-          minor, forceWatch,
+          bot, minor, forceWatch,
           getContributions(), errorsFixed);
     sendWorker.setListener(new DefaultBasicWorkerListener() {
       @Override

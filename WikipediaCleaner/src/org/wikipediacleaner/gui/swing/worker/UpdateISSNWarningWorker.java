@@ -311,7 +311,7 @@ public class UpdateISSNWarningWorker extends UpdateWarningWorker {
                 api.updatePage(
                     wiki, page, newText.toString(),
                     config.getString(WPCConfigurationString.ISSN_ERRORS_PAGE_COMMENT),
-                    true, true, false);
+                    false, true, true, false);
                 saved = true;
               }
             }

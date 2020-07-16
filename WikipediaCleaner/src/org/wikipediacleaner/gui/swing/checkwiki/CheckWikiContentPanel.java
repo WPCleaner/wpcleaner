@@ -730,6 +730,7 @@ public class CheckWikiContentPanel
         createWorker(
           getWiki(), window,
           page, textPage.getText(), textComment.getText(),
+          true, // TODO: BOT
           configuration.getBoolean(
               null,
               ConfigurationValueBoolean.MARK_EDIT_MINOR),
