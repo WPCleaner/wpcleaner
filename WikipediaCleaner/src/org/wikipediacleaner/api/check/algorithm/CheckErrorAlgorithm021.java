@@ -17,6 +17,7 @@ import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.PageElementCategory;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
+import org.wikipediacleaner.api.data.contents.ContentsCommentBuilder;
 import org.wikipediacleaner.i18n.GT;
 
 
@@ -97,7 +98,7 @@ public class CheckErrorAlgorithm021 extends CheckErrorAlgorithmBase {
           }
         }
         errorResult.addReplacement(
-            "<!-- " + contents.substring(category.getBeginIndex(), category.getEndIndex()) + " -->",
+            ContentsCommentBuilder.from(contents.substring(category.getBeginIndex(), category.getEndIndex())).toString(),
             GT._T("Comment category out"));
         errors.add(errorResult);
       }

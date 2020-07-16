@@ -44,6 +44,7 @@ import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageElementInternalLink;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
 import org.wikipediacleaner.api.data.contents.ContentsComment;
+import org.wikipediacleaner.api.data.contents.ContentsCommentBuilder;
 import org.wikipediacleaner.api.dump.DumpProcessor;
 import org.wikipediacleaner.api.dump.PageProcessor;
 import org.wikipediacleaner.api.execution.MediaWikiCallable;
@@ -260,9 +261,8 @@ public class ListCWWorker extends BasicWorker {
       StringBuilder result) {
     boolean full = true;
     StringBuilder buffer = new StringBuilder();
-    buffer.append("<!-- Generated using ");
-    buffer.append(dumpFile.getName());
-    buffer.append(" -->\n");
+    buffer.append(ContentsCommentBuilder.from("Generated using " + dumpFile.getName()).toString());
+    buffer.append("\n");
     ErrorLevel lastLevel = null;
     StringBuilder line = new StringBuilder();
     List<Detection> pagesToRemove = new ArrayList<>();
@@ -271,9 +271,8 @@ public class ListCWWorker extends BasicWorker {
       if ((detection.maxLevel != null) &&
           !detection.maxLevel.equals(lastLevel)) {
         lastLevel = detection.maxLevel;
-        line.append("<!-- ");
-        line.append(lastLevel.toString());
-        line.append(" -->\n");
+        line.append(ContentsCommentBuilder.from(lastLevel.toString()).toString());
+        line.append("\n");
       }
       line.append("* ");
       line.append(PageElementInternalLink.createInternalLink(

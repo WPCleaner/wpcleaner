@@ -16,6 +16,7 @@ import org.wikipediacleaner.api.constants.WPCConfigurationStringList;
 import org.wikipediacleaner.api.data.PageElementTemplate.Parameter;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
 import org.wikipediacleaner.api.data.contents.ContentsComment;
+import org.wikipediacleaner.api.data.contents.ContentsCommentBuilder;
 
 
 /**
@@ -765,14 +766,12 @@ public class PageElementRFC extends PageElement {
       return null;
     }
     StringBuilder replacement = new StringBuilder();
-    replacement.append("<!-- ");
     replacement.append(comment);
     if ((reason != null) && (reason.trim().length() > 0)) {
       replacement.append(" - ");
       replacement.append(reason);
     }
-    replacement.append(" -->");
-    return replacement.toString();
+    return ContentsCommentBuilder.from(replacement.toString()).toString();
   }
 
   /**

@@ -98,7 +98,7 @@ public class MWPaneDisambiguationMenuCreator extends BasicMenuCreator {
           for (String comment : comments) {
             String replacement =
                 PageElementInternalLink.createInternalLink(page.getTitle(), text) +
-                ContentsCommentBuilder.create(comment);
+                ContentsCommentBuilder.from(comment).toString();
             addItem(
                 submenu, null, GT._T("Using {0}", comment), true,
                 new ReplaceTextAction(page, replacement, element, textPane));
@@ -107,7 +107,7 @@ public class MWPaneDisambiguationMenuCreator extends BasicMenuCreator {
         } else {
           String replacement =
               PageElementInternalLink.createInternalLink(page.getTitle(), text) +
-              ContentsCommentBuilder.create(comments.get(0));
+              ContentsCommentBuilder.from(comments.get(0)).toString();
           addItem(
               popup, null, GT._T("Mark as normal link using comment"), true,
               new ReplaceTextAction(page, replacement, element, textPane));

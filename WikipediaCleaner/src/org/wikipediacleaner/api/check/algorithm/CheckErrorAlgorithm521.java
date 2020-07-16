@@ -318,9 +318,9 @@ public class CheckErrorAlgorithm521 extends CheckErrorAlgorithmBase {
     while ((valueIndex < value.length()) && Character.isWhitespace(value.charAt(valueIndex))) {
       valueIndex++;
     }
-    if ((valueIndex < value.length()) && value.startsWith("<!--", valueIndex)) {
+    if ((valueIndex < value.length()) && value.startsWith(ContentsComment.START, valueIndex)) {
       valueIndex += 2;
-      while ((valueIndex < value.length() && !value.startsWith("-->", valueIndex))) {
+      while ((valueIndex < value.length() && !value.startsWith(ContentsComment.END, valueIndex))) {
         valueIndex++;
       }
       if (valueIndex < value.length()) {

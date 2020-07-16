@@ -29,6 +29,7 @@ import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.Page.RelatedPages;
 import org.wikipediacleaner.api.data.PageElementTemplate.Parameter;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
+import org.wikipediacleaner.api.data.contents.ContentsCommentBuilder;
 import org.wikipediacleaner.api.data.contents.ContentsUtil;
 import org.wikipediacleaner.i18n.GT;
 
@@ -223,14 +224,12 @@ public class CheckErrorAlgorithm524 extends CheckErrorAlgorithmBase {
                 if (paramBegin < pipeBefore) {
                   replacement.append(contents.substring(paramBegin, pipeBefore));
                 }
-                replacement.append("<!--");
                 tmpIndex = paramEnd;
                 while ((tmpIndex > pipeBefore) &&
                        Character.isWhitespace(contents.charAt(tmpIndex - 1))) {
                   tmpIndex--;
                 }
-                replacement.append(contents.substring(pipeBefore, tmpIndex));
-                replacement.append("-->");
+                replacement.append(ContentsCommentBuilder.from(contents.substring(pipeBefore, tmpIndex)).toString());
                 if (paramEnd > tmpIndex) {
                   replacement.append(contents.substring(tmpIndex, paramEnd));
                 }

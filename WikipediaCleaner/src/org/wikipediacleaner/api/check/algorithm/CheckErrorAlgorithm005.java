@@ -11,6 +11,7 @@ import java.util.Collection;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
+import org.wikipediacleaner.api.data.contents.ContentsComment;
 import org.wikipediacleaner.api.data.contents.ContentsUtil;
 import org.wikipediacleaner.i18n.GT;
 
@@ -22,7 +23,7 @@ import org.wikipediacleaner.i18n.GT;
 public class CheckErrorAlgorithm005 extends CheckErrorAlgorithmBase {
 
   public CheckErrorAlgorithm005() {
-    super("Found a comment \"<!--\" with no \"-->\" end.");
+    super("Found a comment \"" + ContentsComment.START + "\" with no \"" + ContentsComment.END + "\" end.");
   }
 
   /**
@@ -50,14 +51,14 @@ public class CheckErrorAlgorithm005 extends CheckErrorAlgorithmBase {
     int currentIndex = contents.length();
     while (currentIndex > 0) {
       currentIndex--;
-      if (contents.startsWith("-->", currentIndex)) {
+      if (contents.startsWith(ContentsComment.END, currentIndex)) {
         inComment = true;
         possibleEndIndex = -1;
         previousStartIndex = -1;
         currentIndex -= 3;
       } else if (contents.startsWith("->", currentIndex)) {
         possibleEndIndex = currentIndex;
-      } else if (contents.startsWith("<!--", currentIndex)) {
+      } else if (contents.startsWith(ContentsComment.START, currentIndex)) {
         if (inComment) {
           inComment = false;
         } else {
@@ -75,7 +76,7 @@ public class CheckErrorAlgorithm005 extends CheckErrorAlgorithmBase {
             errorResult = createCheckErrorResult(
                 analysis, currentIndex, possibleEndIndex + 2);
             errorResult.addReplacement(
-                contents.substring(currentIndex, possibleEndIndex) + "-->",
+                contents.substring(currentIndex, possibleEndIndex) + ContentsComment.END,
                 GT._T("Properly end the comment"));
           } else if (previousStartIndex > 0) {
             int tmpIndex = previousStartIndex;
@@ -93,11 +94,11 @@ public class CheckErrorAlgorithm005 extends CheckErrorAlgorithmBase {
             int lineEndIndex = ContentsUtil.getLineEndIndex(contents, currentIndex);
             if ((lineEndIndex < tmpIndex) && (lineEndIndex > currentIndex + 4)) {
               errorResult.addReplacement(
-                  contents.substring(currentIndex, lineEndIndex) + "-->" + contents.substring(lineEndIndex, endIndex),
+                  contents.substring(currentIndex, lineEndIndex) + ContentsComment.END + contents.substring(lineEndIndex, endIndex),
                   GT._T("End the comment at the end of the line"));
             }
             errorResult.addReplacement(
-                contents.substring(currentIndex, tmpIndex) + "-->" + contents.substring(tmpIndex, endIndex),
+                contents.substring(currentIndex, tmpIndex) + ContentsComment.END + contents.substring(tmpIndex, endIndex),
                 GT._T("End the comment just before the next one begins"));
             errorResult.addReplacement(
                 contents.substring(currentIndex, previousStartIndex),
