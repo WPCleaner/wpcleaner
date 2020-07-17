@@ -85,7 +85,7 @@ public class CheckErrorAlgorithm008 extends CheckErrorAlgorithmBase {
       if ((after == null) || (after.trim().isEmpty())) {
         return false;
       }
-      int afterTitleIndex = title.getAfterTitleIndex();
+      int afterTitleIndex = ContentsUtil.moveIndexAfterWhitespace(contents, title.getAfterTitleIndex());
       int beginIndex = title.getBeginIndex();
       int endIndex = title.getEndIndex();
       if ((afterTitleIndex < endIndex) && (contents.charAt(afterTitleIndex) == '<')) {
