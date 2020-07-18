@@ -692,7 +692,7 @@
           <arg value="--from-code=utf-8" />
           <arg value="--language=Java" />
           <arg value="--no-wrap" />
-          <arg value="--msgid-bugs-address=nicove@users.sourceforge.net"/>
+          <arg value="--msgid-bugs-address=https://phabricator.wikimedia.org/project/board/4842/"/>
           <arg value="--output-dir=${basedir}/${WPCleaner.po.dir}/tmp" />
           <arg value="--output=WikiCleaner.pot" />
           <arg value="--files-from=${basedir}/${WPCleaner.po.dir}/tmp/files.txt" />
