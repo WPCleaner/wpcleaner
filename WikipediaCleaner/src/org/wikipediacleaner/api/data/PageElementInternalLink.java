@@ -8,6 +8,7 @@
 package org.wikipediacleaner.api.data;
 
 import org.wikipediacleaner.api.constants.EnumWikipedia;
+import org.wikipediacleaner.api.data.contents.ContentsUtil;
 
 
 /**
@@ -71,6 +72,13 @@ public class PageElementInternalLink extends PageElement {
         if (contents.startsWith("{{{", tmpIndex)) {
           level3CurlyBrackets++;
           tmpIndex += 2;
+        } else if (contents.startsWith("{{", tmpIndex)) {
+          int tmpEndIndex = ContentsUtil.moveIndexForwardWhileNotFound(contents, tmpIndex + 2, "\n}]{[");
+          MagicWord magicWord = wiki.getWikiConfiguration().getFunctionMagicWord(contents.substring(tmpIndex + 2, tmpEndIndex), false);
+          if ((magicWord == null) || !contents.startsWith("}}", tmpEndIndex)) {
+            return null;
+          }
+          tmpIndex = tmpEndIndex + 1;
         } else {
           return null;
         }
