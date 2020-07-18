@@ -19,6 +19,7 @@ import org.wikipediacleaner.api.data.PageElementLanguageLink;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
+import org.wikipediacleaner.api.data.contents.ContentsUtil;
 
 
 /**
@@ -194,23 +195,7 @@ public class CheckErrorAlgorithm010 extends CheckErrorAlgorithmBase {
     }
 
     // Analyze each internal link to see if it contains a [
-    for (PageElementInternalLink link : analysis.getInternalLinks()) {
-      String text = link.getText();
-      if (text != null) {
-        text = cleanText(text);
-        if (text != null) {
-          if (errors == null) {
-            return true;
-          }
-          result = true;
-          CheckErrorResult errorResult = createCheckErrorResult(
-              analysis, link.getBeginIndex(), link.getEndIndex());
-          errorResult.addReplacement(PageElementInternalLink.createInternalLink(
-              link.getLink(), link.getAnchor(), text));
-          errors.add(errorResult);
-        }
-      }
-    }
+    result |= analyzeInternalLinks(analysis, errors);
 
     // Analyze each image to see if it contains a [
     for (PageElementImage image : analysis.getImages()) {
@@ -252,6 +237,68 @@ public class CheckErrorAlgorithm010 extends CheckErrorAlgorithmBase {
       }
     }
 
+    return result;
+  }
+
+  /**
+   * Analyze internal links to check if errors are present.
+   * 
+   * @param analysis Page analysis.
+   * @param errors Errors found in the page.
+   * @return Flag indicating if the error was found.
+   */
+  private boolean analyzeInternalLinks(
+      PageAnalysis analysis,
+      Collection<CheckErrorResult> errors) {
+    boolean result = false;
+    String contents = analysis.getContents();
+    for (PageElementInternalLink link : analysis.getInternalLinks()) {
+      if (link.getText() != null) {
+        int singleBracketsCount = 0;
+        int firstOpeningBracket = -1;
+        int extraClosingBracket = -1;
+        int currentIndex = link.getBeginIndex() + link.getTextOffset() - 1;
+        while (true) {
+          currentIndex = ContentsUtil.moveIndexForwardWhileNotFound(contents, currentIndex + 1, "[]<");
+          if (currentIndex >= link.getEndIndex() - 2) {
+            break;
+          }
+          char currentChar = contents.charAt(currentIndex);
+          if (currentChar == '[') {
+            if (singleBracketsCount == 0) {
+              firstOpeningBracket = currentIndex;
+            }
+            singleBracketsCount++;
+          } else if (currentChar == ']') {
+            if (singleBracketsCount > 0) {
+              singleBracketsCount--;
+            } else {
+              extraClosingBracket = currentIndex;
+            }
+          } else if (currentChar == '<') {
+            PageElementTag tag = analysis.isInTag(currentIndex, PageElementTag.TAG_WIKI_NOWIKI);
+            if ((tag != null) && (tag.getBeginIndex() == currentIndex) &&
+                (tag.isComplete()) &&
+                (tag.isFullTag() || !tag.isEndTag())) {
+              currentIndex = tag.getCompleteEndIndex() - 1;
+            }
+          }
+        }
+        if ((singleBracketsCount > 0) || (extraClosingBracket >= 0)) {
+          if (errors == null) {
+            return true;
+          }
+          result = true;
+          int remove = (singleBracketsCount > 0) ? firstOpeningBracket : extraClosingBracket;
+          CheckErrorResult errorResult = createCheckErrorResult(analysis, link.getBeginIndex(), link.getEndIndex());
+          String text =
+              contents.substring(link.getBeginIndex() + link.getTextOffset(), remove) +
+              contents.substring(remove, link.getEndIndex() - 2);
+          errorResult.addReplacement(PageElementInternalLink.createInternalLink(link.getLink(), link.getAnchor(), text));
+          errors.add(errorResult);
+        }
+      }
+    }
     return result;
   }
 
