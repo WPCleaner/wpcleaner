@@ -219,6 +219,21 @@ public class GeneralOptionsPanel extends OptionsPanel {
     add(chk, constraints);
     constraints.gridy++;
 
+    // Act as user
+    txt = createJTextField(ConfigurationValueString.ACT_AS_USER, 15);
+    JLabel labelActAsUser = Utilities.createJLabel(GT._T("Act as user:"));
+    labelActAsUser.setLabelFor(txt);
+    labelActAsUser.setHorizontalAlignment(SwingConstants.TRAILING);
+    constraints.gridwidth = 1;
+    constraints.gridx = 0;
+    constraints.weightx = 0;
+    add(labelActAsUser, constraints);
+    constraints.gridwidth = 2;
+    constraints.gridx++;
+    constraints.weightx = 1;
+    add(txt, constraints);
+    constraints.gridy++;
+
     // Signature
     txt = createJTextField(ConfigurationValueString.SIGNATURE, 15);
     JLabel labelSignature = Utilities.createJLabel(GT._T("Signature:"));

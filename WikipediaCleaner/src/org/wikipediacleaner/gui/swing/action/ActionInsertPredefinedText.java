@@ -40,6 +40,8 @@ import org.wikipediacleaner.gui.swing.component.MWPane;
 import org.wikipediacleaner.gui.swing.menu.BasicMenuCreator;
 import org.wikipediacleaner.i18n.GT;
 import org.wikipediacleaner.images.EnumImageSize;
+import org.wikipediacleaner.utils.Configuration;
+import org.wikipediacleaner.utils.ConfigurationValueString;
 
 
 /**
@@ -182,6 +184,12 @@ public class ActionInsertPredefinedText implements ActionListener {
     // Create menu
     List<JMenuItem> items = new ArrayList<JMenuItem>();
     if (texts != null) {
+      Configuration config = Configuration.getConfiguration();
+      String userName = config.getString(null, ConfigurationValueString.ACT_AS_USER);
+      if (userName == null) {
+        userName = "";
+      }
+
       for (String text : texts) {
         int pipeIndex = text.indexOf('|');
         JMenu themeMenu = null;
@@ -201,8 +209,10 @@ public class ActionInsertPredefinedText implements ActionListener {
           label = text.substring(0, pipeIndex);
           text = text.substring(pipeIndex + 1);
         }
+        text = text.replaceAll("\\\\n", "\n");
+        text = text.replaceAll("\\{\\{USERNAME\\}\\}", userName);
         JMenuItem item = new JMenuItem((label != null) ? label : text);
-        item.setActionCommand(text.replaceAll("\\\\n", "\n"));
+        item.setActionCommand(text);
         item.addActionListener(EventHandler.create(
             ActionListener.class, this, "actionAddText", "actionCommand"));
         if (themeMenu == null) {
