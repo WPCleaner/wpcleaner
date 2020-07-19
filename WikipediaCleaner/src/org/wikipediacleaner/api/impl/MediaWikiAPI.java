@@ -409,7 +409,7 @@ public class MediaWikiAPI implements API {
           hasCaptcha = false;
           try {
             result = constructEdit(
-                getRoot(wikipedia, properties, 1),
+                getRoot(wikipedia, properties, 3),
                 "/api/edit");
           } catch (CaptchaException e) {
             String captchaAnswer = getCaptchaAnswer(wikipedia, e);
