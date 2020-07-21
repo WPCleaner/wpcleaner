@@ -115,6 +115,15 @@ public class CheckErrorAlgorithm555 extends CheckErrorAlgorithmBase {
         if (!isAcceptable(contents.charAt(index))) {
           return false;
         }
+
+        // Ignore list items
+        if ((index == nowikiTag.getValueBeginIndex()) &&
+            (contents.charAt(index) == '*')) {
+          if ((beginIndex == 0) ||
+              (contents.charAt(beginIndex) == '\n')) {
+            return false;
+          }
+        }
       }
     }
 
