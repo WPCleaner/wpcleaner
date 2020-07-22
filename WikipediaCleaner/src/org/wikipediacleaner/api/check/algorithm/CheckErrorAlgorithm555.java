@@ -93,17 +93,23 @@ public class CheckErrorAlgorithm555 extends CheckErrorAlgorithmBase {
     // Check character before the tag
     String contents = analysis.getContents();
     int beginIndex = nowikiTag.getCompleteBeginIndex();
+    boolean newLineBefore = false;
     if (beginIndex > 0) {
-      if (!isAcceptable(contents.charAt(beginIndex - 1))) {
+      beginIndex--;
+      if (!isAcceptableOutside(contents.charAt(beginIndex))) {
         return false;
       }
-      beginIndex--;
+      if (contents.charAt(beginIndex) == '\n') {
+        newLineBefore = true;
+      }
+    } else {
+      newLineBefore = true;
     }
 
     // Check character after the tag
     int endIndex = nowikiTag.getCompleteEndIndex();
     if (endIndex < contents.length()) {
-      if (!isAcceptable(contents.charAt(endIndex))) {
+      if (!isAcceptableOutside(contents.charAt(endIndex))) {
         return false;
       }
       endIndex++;
@@ -112,17 +118,15 @@ public class CheckErrorAlgorithm555 extends CheckErrorAlgorithmBase {
     // Check content inside the tag
     if (!nowikiTag.isFullTag()) {
       for (int index = nowikiTag.getValueBeginIndex(); index < nowikiTag.getValueEndIndex(); index++) {
-        if (!isAcceptable(contents.charAt(index))) {
+        if (!isAcceptableInside(contents.charAt(index))) {
           return false;
         }
 
         // Ignore list items
         if ((index == nowikiTag.getValueBeginIndex()) &&
-            (contents.charAt(index) == '*')) {
-          if ((beginIndex == 0) ||
-              (contents.charAt(beginIndex) == '\n')) {
-            return false;
-          }
+            (contents.charAt(index) == '*') &&
+            newLineBefore) {
+          return false;
         }
       }
     }
@@ -131,6 +135,9 @@ public class CheckErrorAlgorithm555 extends CheckErrorAlgorithmBase {
     String internalText = "";
     if (!nowikiTag.isFullTag()) {
       internalText = contents.substring(nowikiTag.getValueBeginIndex(), nowikiTag.getValueEndIndex());
+      if (newLineBefore && internalText.trim().isEmpty()) {
+        internalText = "";
+      }
     }
     boolean automatic = true;
     if (endIndex < contents.length()) {
@@ -172,10 +179,17 @@ public class CheckErrorAlgorithm555 extends CheckErrorAlgorithmBase {
         automatic = false;
       }
     }
-    if (internalText.startsWith(" ") || internalText.startsWith("*")) {
+    if (newLineBefore) {
       // Prevent if a special character would end up at the beginning of a line
-      if ((contents.charAt(beginIndex) == '\n') ||
-          (nowikiTag.getCompleteBeginIndex() == 0)) {
+      char firstChar = 0;
+      if (internalText.isEmpty()) {
+        if (nowikiTag.getCompleteEndIndex() < contents.length()) {
+          firstChar = contents.charAt(nowikiTag.getCompleteEndIndex());
+        }
+      } else {
+        firstChar = internalText.charAt(0);
+      }
+      if (" *".indexOf(firstChar) >= 0) {
         automatic = false;
       }
     }
@@ -201,14 +215,24 @@ public class CheckErrorAlgorithm555 extends CheckErrorAlgorithmBase {
 
   /**
    * @param character Character to be tested.
-   * @return True if the character is acceptable for this error.
+   * @return True if the character is acceptable for this error inside the nowiki tag.
    */
-  private boolean isAcceptable(char character) {
+  private boolean isAcceptableInside(char character) {
     return
         Character.isAlphabetic(character) ||
         Character.isDigit(character) ||
         Character.isWhitespace(character) ||
-        (".,;:*()".indexOf(character) >= 0);
+        (".,()".indexOf(character) >= 0);
+  }
+
+  /**
+   * @param character Character to be tested.
+   * @return True if the character is acceptable for this error.
+   */
+  private boolean isAcceptableOutside(char character) {
+    return
+        isAcceptableInside(character) ||
+        (";:*".indexOf(character) >= 0);
   }
 
   /**
