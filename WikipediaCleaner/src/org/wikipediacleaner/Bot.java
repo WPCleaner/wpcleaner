@@ -42,6 +42,7 @@ import org.wikipediacleaner.gui.swing.bot.AutomaticCWWorker;
 import org.wikipediacleaner.gui.swing.bot.AutomaticFileCWWorker;
 import org.wikipediacleaner.gui.swing.bot.AutomaticLintErrorWorker;
 import org.wikipediacleaner.gui.swing.bot.AutomaticListCWWorker;
+import org.wikipediacleaner.gui.swing.bot.FixDumpWorker;
 import org.wikipediacleaner.gui.swing.bot.ListCWWorker;
 import org.wikipediacleaner.gui.swing.worker.LoginWorker;
 import org.wikipediacleaner.gui.swing.worker.UpdateDabWarningWorker;
@@ -256,6 +257,8 @@ public class Bot implements BasicWorkerListener {
       worker = executeMarkCheckWiki(actionConfig);
     } else if ("ListCheckWiki".equalsIgnoreCase(action)) {
       worker = executeListCheckWiki(actionConfig);
+    } else if ("FixDump".equalsIgnoreCase(action)) {
+      worker = executeFixDump(actionConfig);
     } else if ("Set".equalsIgnoreCase(action)) {
       actionDone = executeSet(actionConfig);
     }
@@ -486,6 +489,33 @@ public class Bot implements BasicWorkerListener {
       return new ListCWWorker(
           wiki, null, dumpFile, output,
           algorithms, namespaces, check);
+    }
+
+    return null;
+  }
+
+  /**
+   * Execute an action of type FixDump.
+   * 
+   * @param actionConfig Parameters of the action.
+   * @return True if the action was executed.
+   */
+  private BasicWorker executeFixDump(Action actionConfig) {
+
+    // Check for global parameters
+    String[] actionArgs = actionConfig.actionArgs;
+    int currentArg = 0;
+
+    // Check for parameters
+    if (actionArgs.length > currentArg + 1) {
+      File dumpFile = getDumpFile(actionArgs[currentArg]);
+      List<CheckErrorAlgorithm> algorithms = new ArrayList<CheckErrorAlgorithm>();
+      List<CheckErrorAlgorithm> allAlgorithms = new ArrayList<CheckErrorAlgorithm>();
+      extractAlgorithms(algorithms, allAlgorithms, actionArgs, currentArg + 1);
+      return new FixDumpWorker(
+          wiki, null, dumpFile,
+          algorithms, allAlgorithms,
+          namespaces);
     }
 
     return null;

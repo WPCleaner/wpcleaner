@@ -63,6 +63,9 @@ public abstract class AutomaticFixWorker extends BasicWorker {
   /** True if modifications should be saved. */
   protected final boolean saveModifications;
 
+  /** True to verify if error is not found. */
+  private final boolean checkNotFound;
+
   /** True if pages that couldn't be fixed should be analyzed. */
   private final boolean analyzeNonFixed;
 
@@ -80,6 +83,7 @@ public abstract class AutomaticFixWorker extends BasicWorker {
    * @param selectedNamespaces List of selected namespaces.
    * @param extraComment Extra comment.
    * @param saveModifications True if modifications should be saved.
+   * @param checkNotFound True to verify if error is not found.
    * @param analyzeNonFixed True if pages that couldn't be fixed should be analyzed.
    */
   public AutomaticFixWorker(
@@ -88,7 +92,8 @@ public abstract class AutomaticFixWorker extends BasicWorker {
       List<CheckErrorAlgorithm> allAlgorithms,
       Collection<Integer> selectedNamespaces,
       String extraComment,
-      boolean saveModifications, boolean analyzeNonFixed) {
+      boolean saveModifications, boolean checkNotFound,
+      boolean analyzeNonFixed) {
     super(wiki, window);
     if (selectedAlgorithms != null) {
       this.selectedAlgorithms = Collections.unmodifiableList(selectedAlgorithms);
@@ -108,6 +113,7 @@ public abstract class AutomaticFixWorker extends BasicWorker {
     }
     this.extraComment = extraComment;
     this.saveModifications = saveModifications;
+    this.checkNotFound = checkNotFound;
     this.analyzeNonFixed = analyzeNonFixed;
     this.countModified = 0;
     this.countMarked = 0;
@@ -151,7 +157,7 @@ public abstract class AutomaticFixWorker extends BasicWorker {
    * 
    * @param page Page.
    * @param algorithms List of algorithms.
-   * @param prefix Prefix for the message
+   * @param prefix Prefix for the message.
    * @throws APIException API errors.
    */
   protected void analyzePage(
@@ -264,6 +270,7 @@ public abstract class AutomaticFixWorker extends BasicWorker {
    * @param page Page.
    * @param analysis Page analysis.
    * @param prefix Optional prefix for information.
+   * @param markFixed True to mark articles as fixed in Check Wiki.
    * @throws APIException Problem with API.
    */
   private void handleFound(
@@ -351,7 +358,8 @@ public abstract class AutomaticFixWorker extends BasicWorker {
    */
   private void handleNotFound(CheckErrorAlgorithm algorithm, Page page) {
     if ((algorithm == null) ||
-        (algorithm.getErrorNumber() >= CheckErrorAlgorithm.MAX_ERROR_NUMBER_WITH_LIST)) {
+        (algorithm.getErrorNumber() >= CheckErrorAlgorithm.MAX_ERROR_NUMBER_WITH_LIST) ||
+        !checkNotFound) {
       return;
     }
     CheckWiki checkWiki = APIFactory.getCheckWiki();

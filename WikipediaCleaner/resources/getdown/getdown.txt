@@ -77,6 +77,7 @@ resource = tasks/frwiki/_Common_Other.txt
 resource = tasks/frwiki/_Common_Talk.txt
 resource = tasks/frwiki/_Daily.txt
 resource = tasks/frwiki/_Weekly.txt
+resource = tasks/frwiki/FixDump.txt
 resource = tasks/frwiki/ISBN_ISSN.txt
 resource = tasks/frwiki/ListCheckWiki.txt
 resource = tasks/frwiki/ListCheckWiki_After.txt

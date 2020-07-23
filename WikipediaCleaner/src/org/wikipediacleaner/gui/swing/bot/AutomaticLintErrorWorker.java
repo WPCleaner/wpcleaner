@@ -52,7 +52,7 @@ public class AutomaticLintErrorWorker extends AutomaticFixWorker {
     super(
         wiki, window,
         selectedAlgorithms, allAlgorithms, selectedNamespaces,
-        extraComment, saveModifications, analyzeNonFixed);
+        extraComment, saveModifications, true, analyzeNonFixed);
     this.category = category;
   }
 

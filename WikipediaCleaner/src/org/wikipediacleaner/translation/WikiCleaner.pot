@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://phabricator.wikimedia.org/project/board/4842/\n"
-"POT-Creation-Date: 2020-07-19 15:49+0200\n"
+"POT-Creation-Date: 2020-07-23 22:02+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -3191,31 +3191,31 @@ msgstr ""
 msgid "Checking for errors n°{0}"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/bot/AutomaticFixWorker.java:211
+#: org/wikipediacleaner/gui/swing/bot/AutomaticFixWorker.java:217
 #, java-format
 msgid "Analyzing page {0}"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/bot/AutomaticFixWorker.java:306
+#: org/wikipediacleaner/gui/swing/bot/AutomaticFixWorker.java:313
 #, java-format
 msgid "Fixing page {0}"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/bot/AutomaticFixWorker.java:378
+#: org/wikipediacleaner/gui/swing/bot/AutomaticFixWorker.java:386
 #, java-format
 msgid "{0} page has been modified"
 msgid_plural "{0} pages have been modified"
 msgstr[0] ""
 msgstr[1] ""
 
-#: org/wikipediacleaner/gui/swing/bot/AutomaticFixWorker.java:383
+#: org/wikipediacleaner/gui/swing/bot/AutomaticFixWorker.java:391
 #, java-format
 msgid "{0} page has been marked as fixed for the selected algorithms"
 msgid_plural "{0} pages have been marked as fixed for the selected algorithms"
 msgstr[0] ""
 msgstr[1] ""
 
-#: org/wikipediacleaner/gui/swing/bot/AutomaticFixWorker.java:388
+#: org/wikipediacleaner/gui/swing/bot/AutomaticFixWorker.java:396
 #, java-format
 msgid "{0} page has been marked as fixed for other algorithms"
 msgid_plural "{0} pages have been marked as fixed for other algorithms"
@@ -3369,6 +3369,20 @@ msgstr ""
 msgid "What is the name of the selection?"
 msgstr ""
 
+#: org/wikipediacleaner/gui/swing/bot/FixDumpWorker.java:142
+#: org/wikipediacleaner/gui/swing/bot/ListCWWorker.java:608
+#, java-format
+msgid "{0} page has been analyzed"
+msgid_plural "{0} pages have been analyzed"
+msgstr[0] ""
+msgstr[1] ""
+
+#: org/wikipediacleaner/gui/swing/bot/FixDumpWorker.java:265
+#: org/wikipediacleaner/gui/swing/bot/ListCWWorker.java:786
+#, java-format
+msgid "{0} pages processed"
+msgstr ""
+
 #: org/wikipediacleaner/gui/swing/bot/GeneralToolsPanel.java:117
 msgid "Semi-automatic disambiguation fixing"
 msgstr ""
@@ -3431,24 +3445,12 @@ msgstr ""
 msgid "Only check articles previously reported"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/bot/ListCWWorker.java:607
-#, java-format
-msgid "{0} page has been analyzed"
-msgid_plural "{0} pages have been analyzed"
-msgstr[0] ""
-msgstr[1] ""
-
-#: org/wikipediacleaner/gui/swing/bot/ListCWWorker.java:615
+#: org/wikipediacleaner/gui/swing/bot/ListCWWorker.java:616
 #, java-format
 msgid "{0} page has been detected for algorithm {1}"
 msgid_plural "{0} pages have been detected for algorithm {1}"
 msgstr[0] ""
 msgstr[1] ""
-
-#: org/wikipediacleaner/gui/swing/bot/ListCWWorker.java:785
-#, java-format
-msgid "{0} pages processed"
-msgstr ""
 
 #: org/wikipediacleaner/gui/swing/checkwiki/ActionCheckArticle.java:50
 msgid "Check article with CheckWiki"

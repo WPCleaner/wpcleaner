@@ -1,0 +1,5 @@
+DoTasks _Common.txt
+
+Set Prefix [[Utilisateur:WikiCleanerBot#T3|Bot_T3]]
+Set Namespaces 0
+FixDump C:\Users\Nicolas\Downloads\frwiki-$-pages-articles.xml.bz2 1 2 7 9 10 16 17 18 19 22 46 52 55 64 83 85 88 90 91 92 104 106 513 524 526 532 543 547 548 549 550 551 553 554 555

@@ -54,7 +54,7 @@ public class AutomaticCWWorker extends AutomaticFixWorker {
     super(
         wiki, window,
         selectedAlgorithms, allAlgorithms, null,
-        extraComment, saveModifications, analyzeNonFixed);
+        extraComment, saveModifications, true, analyzeNonFixed);
     this.max = max;
     this.noLimit = noLimit;
   }
