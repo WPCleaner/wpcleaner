@@ -174,7 +174,7 @@ public class PageAnalysisTest {
     List<PageElementParagraph> paragraphs = analysis.getParagraphs();
     assertEquals(
         "List of paragraphs doesn't have 0 paragraphs",
-        1, paragraphs.size());
+        3, paragraphs.size());
   }
 
   /**
@@ -304,7 +304,7 @@ public class PageAnalysisTest {
     List<PageElementParagraph> paragraphs = analysis.getParagraphs();
     assertEquals(
         "List of paragraphs doesn't have 0 paragraphs",
-        64, paragraphs.size());
+        51, paragraphs.size());
   }
 
   /**
