@@ -42,6 +42,7 @@ import org.wikipediacleaner.api.data.DataManager;
 import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageElementInternalLink;
+import org.wikipediacleaner.api.data.analysis.AnalysisPerformance;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
 import org.wikipediacleaner.api.data.contents.ContentsComment;
 import org.wikipediacleaner.api.data.contents.ContentsCommentBuilder;
@@ -87,7 +88,7 @@ public class ListCWWorker extends BasicWorker {
   final boolean onlyRecheck;
 
   /** Time spent in analysis. */
-  PageAnalysis.AnalysisPerformance analysisTime;
+  AnalysisPerformance analysisTime;
 
   /** Count of pages analyzed */
   int countAnalyzed;
@@ -121,7 +122,7 @@ public class ListCWWorker extends BasicWorker {
     } else {
       this.selectedNamespaces.add(Namespace.MAIN);
     }
-    this.analysisTime = new PageAnalysis.AnalysisPerformance();
+    this.analysisTime = new AnalysisPerformance();
     this.countAnalyzed = 0;
     this.countDetections = 0;
     this.checkWiki = checkWiki;
@@ -155,7 +156,7 @@ public class ListCWWorker extends BasicWorker {
     } else {
       this.selectedNamespaces.add(Namespace.MAIN);
     }
-    this.analysisTime = new PageAnalysis.AnalysisPerformance();
+    this.analysisTime = new AnalysisPerformance();
     this.countAnalyzed = 0;
     this.countDetections = 0;
     this.checkWiki = checkWiki;

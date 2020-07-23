@@ -1,0 +1,8 @@
+Simple page for testing each kind of element
+
+Comment:
+<!-- This is a comment -->
+
+Internal link:
+[[This is an internal link without text]]
+[[This is an internal link with text|and this is the text]]

@@ -9,6 +9,7 @@ package org.wikipediacleaner.api.constants;
 
 import java.io.UnsupportedEncodingException;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -263,7 +264,7 @@ public class WikiConfiguration {
   /**
    * Magic words.
    */
-  private Map<String, MagicWord> magicWords;
+  private Map<String, MagicWord> magicWords = new HashMap<>();
 
   /**
    * @param name Magic word name.

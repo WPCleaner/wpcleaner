@@ -65,7 +65,8 @@ public class PageElementImage extends PageElement {
     // Check that namespace is Image
     int colonIndex = tmpIndex;
     Namespace imageNamespace = wikipedia.getWikiConfiguration().getNamespace(Namespace.IMAGE);
-    if (!imageNamespace.isPossibleName(contents.substring(beginIndex, colonIndex).trim())) {
+    if ((imageNamespace != null) &&
+        !imageNamespace.isPossibleName(contents.substring(beginIndex, colonIndex).trim())) {
       return null;
     }
 
