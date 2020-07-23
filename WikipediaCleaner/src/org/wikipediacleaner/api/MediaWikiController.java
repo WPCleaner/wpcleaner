@@ -13,16 +13,15 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.CancellationException;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
+import org.apache.commons.lang3.concurrent.BasicThreadFactory;
 import org.wikipediacleaner.utils.Configuration;
 import org.wikipediacleaner.utils.ConfigurationValueInteger;
-import org.wikipediacleaner.utils.NamedThreadFactory;
 
 
 /**
@@ -60,7 +59,7 @@ public abstract class MediaWikiController implements MediaWikiListener {
           nThreads, nThreads,
           0L, TimeUnit.MILLISECONDS,
           new LinkedBlockingQueue<Runnable>(Integer.MAX_VALUE),
-          new NamedThreadFactory(Executors.defaultThreadFactory(), "MW-{0}"));
+          new BasicThreadFactory.Builder().namingPattern("MW-%d").build());
     }
     return staticExecutor;
   }
