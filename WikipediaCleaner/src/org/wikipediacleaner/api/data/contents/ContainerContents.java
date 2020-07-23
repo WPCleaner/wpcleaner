@@ -20,11 +20,33 @@ abstract class ContainerContents<T extends ContentsElement> {
   /** List of elements */
   private final List<T> elements;
 
+  /** Finder for smallest elements */
+  private final ContentsFinder<T> smallestFinder;
+
+  /** Finder for largest elements */
+  private final ContentsFinder<T> largestFinder;
+
   /**
    * @param elements List of elements.
    */
-  ContainerContents(List<T> elements) {
+  ContainerContents(List<T> elements, ContainerBehavior behavior) {
     this.elements = (elements != null) ? elements : new ArrayList<T>();
+    ContentsFinderBuilder<T> finderBuilder = new ContentsFinderBuilder<>();
+    finderBuilder.addAll(elements);
+    switch (behavior) {
+    case SMALLEST_ONLY:
+      this.smallestFinder = new ContentsFinder<>(finderBuilder, true);
+      this.largestFinder = this.smallestFinder;
+      break;
+    case LARGEST_ONLY:
+      this.largestFinder = new ContentsFinder<>(finderBuilder, false);
+      this.smallestFinder = this.largestFinder;
+      break;
+    default:
+      this.smallestFinder = new ContentsFinder<>(finderBuilder, true);
+      this.largestFinder = new ContentsFinder<>(finderBuilder, false);
+      break;
+    }
   }
 
   /**
@@ -39,12 +61,7 @@ abstract class ContainerContents<T extends ContentsElement> {
    * @return True if there's an element containing the provided index.
    */
   public boolean isAt(int index) {
-    for (T element : this.elements) {
-      if (element.containsIndex(index)) {
-        return true;
-      }
-    }
-    return false;
+    return (largestFinder.findAt(index) != null);
   }
 
   /**
@@ -52,7 +69,7 @@ abstract class ContainerContents<T extends ContentsElement> {
    * @return Smallest element containing the provided index.
    */
   public T getAt(int index) {
-    return getSmallestAt(index);
+    return smallestFinder.findAt(index);
   }
 
   /**
@@ -60,20 +77,7 @@ abstract class ContainerContents<T extends ContentsElement> {
    * @return Smallest element containing the provided index.
    */
   public T getSmallestAt(int index) {
-    T result = null;
-    for (T element : this.elements) {
-      if (element.containsIndex(index)) {
-        if (result == null) {
-          result = element;
-        } else if (element.getBeginIndex() > result.getBeginIndex()) {
-          result = element;
-        } else if ((element.getBeginIndex() == result.getBeginIndex()) &&
-                   (element.getEndIndex() < result.getEndIndex())) {
-          result = element;
-        }
-      }
-    }
-    return result;
+    return smallestFinder.findAt(index);
   }
 
   /**
@@ -81,20 +85,7 @@ abstract class ContainerContents<T extends ContentsElement> {
    * @return Largest element containing the provided index.
    */
   public T getLargestAt(int index) {
-    T result = null;
-    for (T element : this.elements) {
-      if (element.containsIndex(index)) {
-        if (result == null) {
-          result = element;
-        } else if (element.getBeginIndex() < result.getBeginIndex()) {
-          result = element;
-        } else if ((element.getBeginIndex() == result.getBeginIndex()) &&
-                   (element.getEndIndex() > result.getEndIndex())) {
-          result = element;
-        }
-      }
-    }
-    return result;
+    return largestFinder.findAt(index);
   }
 
   /**
@@ -102,10 +93,9 @@ abstract class ContainerContents<T extends ContentsElement> {
    * @return Element beginning at the provided index.
    */
   public T getBeginsAt(int index) {
-    for (T element : this.elements) {
-      if (element.getBeginIndex() == index) {
-        return element;
-      }
+    T element = smallestFinder.findAt(index);
+    if ((element != null) && (element.getBeginIndex() == index)) {
+      return element;
     }
     return null;
   }
@@ -115,10 +105,9 @@ abstract class ContainerContents<T extends ContentsElement> {
    * @return Element ending at the provided index.
    */
   public T getEndsAt(int index) {
-    for (T element : this.elements) {
-      if (element.getEndIndex() == index) {
-        return element;
-      }
+    T element = smallestFinder.findAt(index - 1);
+    if ((element != null) && (element.getEndIndex() == index)) {
+      return element;
     }
     return null;
   }

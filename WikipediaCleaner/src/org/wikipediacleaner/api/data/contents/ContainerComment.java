@@ -21,6 +21,6 @@ public class ContainerComment extends
    * @param comments List of comments.
    */
   public ContainerComment(List<ContentsComment> comments) {
-    super(comments);
+    super(comments, ContainerBehavior.LARGEST_ONLY);
   }
 }
