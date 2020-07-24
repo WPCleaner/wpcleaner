@@ -24,26 +24,9 @@ import org.wikipediacleaner.api.data.DataManager;
 import org.wikipediacleaner.api.data.Interwiki;
 import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.Page;
-import org.wikipediacleaner.api.data.PageElementCategory;
-import org.wikipediacleaner.api.data.PageElementExternalLink;
-import org.wikipediacleaner.api.data.PageElementFunction;
-import org.wikipediacleaner.api.data.PageElementISBN;
-import org.wikipediacleaner.api.data.PageElementISSN;
-import org.wikipediacleaner.api.data.PageElementImage;
-import org.wikipediacleaner.api.data.PageElementInternalLink;
-import org.wikipediacleaner.api.data.PageElementInterwikiLink;
-import org.wikipediacleaner.api.data.PageElementLanguageLink;
-import org.wikipediacleaner.api.data.PageElementListItem;
-import org.wikipediacleaner.api.data.PageElementMagicWord;
-import org.wikipediacleaner.api.data.PageElementPMID;
-import org.wikipediacleaner.api.data.PageElementParagraph;
-import org.wikipediacleaner.api.data.PageElementParameter;
-import org.wikipediacleaner.api.data.PageElementRFC;
-import org.wikipediacleaner.api.data.PageElementTable;
 import org.wikipediacleaner.api.data.PageElementTag;
-import org.wikipediacleaner.api.data.PageElementTemplate;
-import org.wikipediacleaner.api.data.PageElementTitle;
 import org.wikipediacleaner.api.data.contents.ContainerComment;
+import org.wikipediacleaner.api.data.contents.ContentsElement;
 
 
 /**
@@ -60,125 +43,29 @@ public class PageAnalysisTest {
     // Create contents and analysis
     PageAnalysis analysis = analyzeAndTestPage("PageAnalysisTest_1");
 
-    // Check comments
-    ContainerComment commentContainer = analysis.comments();
-    assertEquals(
-        "List of comments doesn't have 1 comment",
-        1, commentContainer.getAll().size());
-
-    // Check tags
-    List<PageElementTag> tags = analysis.getTags();
-    assertEquals(
-        "List of tags doesn't have 5 tags",
-        5, tags.size());
-
-    // Check internal links
-    List<PageElementInternalLink> internalLinks = analysis.getInternalLinks();
-    assertEquals(
-        "List of internal links doesn't have 2 internal links",
-        2, internalLinks.size());
-
-    // Check images
-    List<PageElementImage> images = analysis.getImages();
-    assertEquals(
-        "List of images doesn't have 2 images",
-        2, images.size());
-
-    // Check categories
-    List<PageElementCategory> categories = analysis.getCategories();
-    assertEquals(
-        "List of categories doesn't have 2 categories",
-        2, categories.size());
-
-    // Check interwiki links
-    List<PageElementInterwikiLink> iwLinks = analysis.getInterwikiLinks();
-    assertEquals(
-        "List of interwiki links doesn't have 2 interwiki links",
-        2, iwLinks.size());
-
-    // Check language links
-    List<PageElementLanguageLink> langLinks = analysis.getLanguageLinks();
-    assertEquals(
-        "List of language links doesn't have 0 language links",
-        0, langLinks.size());
-
-    // Check functions
-    List<PageElementFunction> functions = analysis.getFunctions();
-    assertEquals(
-        "List of functions doesn't have 0 functions",
-        0, functions.size());
-
-    // Check magic words
-    List<PageElementMagicWord> magicWords = analysis.getMagicWords();
-    assertEquals(
-        "List of magic words doesn't have 0 magic words",
-        0, magicWords.size());
-
-    // Check templates
-    List<PageElementTemplate> templates = analysis.getTemplates();
-    assertEquals(
-        "List of templates doesn't have 0 templates",
-        0, templates.size());
-
-    // Check parameters
-    List<PageElementParameter> parameters = analysis.getParameters();
-    assertEquals(
-        "List of parameters doesn't have 0 parameters",
-        0, parameters.size());
-
-    // Check titles
-    List<PageElementTitle> titles = analysis.getTitles();
-    assertEquals(
-        "List of titles doesn't have 0 titles",
-        0, titles.size());
-
-    // Check external links
-    List<PageElementExternalLink> eLinks = analysis.getExternalLinks();
-    assertEquals(
-        "List of external links doesn't have 0 external links",
-        0, eLinks.size());
-
-    // Check ISBN
-    List<PageElementISBN> isbns = analysis.getISBNs();
-    assertEquals(
-        "List of ISBN doesn't have 0 ISBN",
-        0, isbns.size());
-
-    // Check ISSN
-    List<PageElementISSN> issns = analysis.getISSNs();
-    assertEquals(
-        "List of ISSN doesn't have 0 ISSN",
-        0, issns.size());
-
-    // Check PMID
-    List<PageElementPMID> pmids = analysis.getPMIDs();
-    assertEquals(
-        "List of PMID doesn't have 0 PMID",
-        0, pmids.size());
-
-    // Check RFC
-    List<PageElementRFC> rfcs = analysis.getRFCs();
-    assertEquals(
-        "List of RFC doesn't have 0 RFC",
-        0, rfcs.size());
-
-    // Check tables
-    List<PageElementTable> tables = analysis.getTables();
-    assertEquals(
-        "List of tables doesn't have 0 tables",
-        0, tables.size());
-
-    // Check list items
-    List<PageElementListItem> listItems = analysis.getListItems();
-    assertEquals(
-        "List of list items doesn't have 0 list items",
-        0, listItems.size());
-
-    // Check paragraphs
-    List<PageElementParagraph> paragraphs = analysis.getParagraphs();
-    assertEquals(
-        "List of paragraphs doesn't have 8 paragraphs",
-        8, paragraphs.size());
+    // Check elements
+    checkComments(analysis, 1);
+    checkTags(analysis, 5);
+    checkTags(analysis, PageElementTag.TAG_HTML_DIV, 2);
+    checkTags(analysis, PageElementTag.TAG_WIKI_NOWIKI, 3);
+    checkInternalLinks(analysis, 2);
+    checkImages(analysis, 2);
+    checkCategories(analysis, 2);
+    checkInterwikiLinks(analysis, 2);
+    checkLanguageLinks(analysis, 0);
+    checkFunctions(analysis, 0);
+    checkMagicWords(analysis, 0);
+    checkTemplates(analysis, 0);
+    checkParameters(analysis, 0);
+    checkTitles(analysis, 0);
+    checkExternalLinks(analysis, 0);
+    checkISBN(analysis, 0);
+    checkISSN(analysis, 0);
+    checkPMID(analysis, 0);
+    checkRFC(analysis, 0);
+    checkTables(analysis, 0);
+    checkListItems(analysis, 0);
+    checkParagraphs(analysis, 8);
   }
 
   /**
@@ -190,125 +77,28 @@ public class PageAnalysisTest {
     // Create contents and analysis
     PageAnalysis analysis = analyzeAndTestPage("PageAnalysisTest_en_2020_in_science");
 
-    // Check comments
-    ContainerComment commentContainer = analysis.comments();
-    assertEquals(
-        "List of comments doesn't have 5 comments",
-        5, commentContainer.getAll().size());
-
-    // Check tags
-    List<PageElementTag> tags = analysis.getTags();
-    assertEquals(
-        "List of tags doesn't have 1958 tags",
-        1958, tags.size());
-
-    // Check internal links
-    List<PageElementInternalLink> internalLinks = analysis.getInternalLinks();
-    assertEquals(
-        "List of internal links doesn't have 1899 internal links",
-        1899, internalLinks.size());
-
-    // Check images
-    List<PageElementImage> images = analysis.getImages();
-    assertEquals(
-        "List of images doesn't have 53 images",
-        53, images.size());
-
-    // Check categories
-    List<PageElementCategory> categories = analysis.getCategories();
-    assertEquals(
-        "List of categories doesn't have 6 categories",
-        6, categories.size());
-
-    // Check interwiki links
-    List<PageElementInterwikiLink> iwLinks = analysis.getInterwikiLinks();
-    assertEquals(
-        "List of interwiki links doesn't have 0 interwiki links",
-        0, iwLinks.size());
-
-    // Check language links
-    List<PageElementLanguageLink> langLinks = analysis.getLanguageLinks();
-    assertEquals(
-        "List of language links doesn't have 0 language links",
-        0, langLinks.size());
-
-    // Check functions
-    List<PageElementFunction> functions = analysis.getFunctions();
-    assertEquals(
-        "List of functions doesn't have 0 functions",
-        0, functions.size());
-
-    // Check magic words
-    List<PageElementMagicWord> magicWords = analysis.getMagicWords();
-    assertEquals(
-        "List of magic words doesn't have 0 magic words",
-        0, magicWords.size());
-
-    // Check templates
-    List<PageElementTemplate> templates = analysis.getTemplates();
-    assertEquals(
-        "List of templates doesn't have 0 templates",
-        1013, templates.size());
-
-    // Check parameters
-    List<PageElementParameter> parameters = analysis.getParameters();
-    assertEquals(
-        "List of parameters doesn't have 0 parameters",
-        0, parameters.size());
-
-    // Check titles
-    List<PageElementTitle> titles = analysis.getTitles();
-    assertEquals(
-        "List of titles doesn't have 0 titles",
-        15, titles.size());
-
-    // Check external links
-    List<PageElementExternalLink> eLinks = analysis.getExternalLinks();
-    assertEquals(
-        "List of external links doesn't have 0 external links",
-        702, eLinks.size());
-
-    // Check ISBN
-    List<PageElementISBN> isbns = analysis.getISBNs();
-    assertEquals(
-        "List of ISBN doesn't have 0 ISBN",
-        0, isbns.size());
-
-    // Check ISSN
-    List<PageElementISSN> issns = analysis.getISSNs();
-    assertEquals(
-        "List of ISSN doesn't have 0 ISSN",
-        76, issns.size());
-
-    // Check PMID
-    List<PageElementPMID> pmids = analysis.getPMIDs();
-    assertEquals(
-        "List of PMID doesn't have 0 PMID",
-        106, pmids.size());
-
-    // Check RFC
-    List<PageElementRFC> rfcs = analysis.getRFCs();
-    assertEquals(
-        "List of RFC doesn't have 0 RFC",
-        0, rfcs.size());
-
-    // Check tables
-    List<PageElementTable> tables = analysis.getTables();
-    assertEquals(
-        "List of tables doesn't have 0 tables",
-        0, tables.size());
-
-    // Check list items
-    List<PageElementListItem> listItems = analysis.getListItems();
-    assertEquals(
-        "List of list items doesn't have 0 list items",
-        779, listItems.size());
-
-    // Check paragraphs
-    List<PageElementParagraph> paragraphs = analysis.getParagraphs();
-    assertEquals(
-        "List of paragraphs doesn't have 0 paragraphs",
-        51, paragraphs.size());
+    // Check elements
+    checkComments(analysis, 5);
+    checkTags(analysis, 1958);
+    checkTags(analysis, PageElementTag.TAG_HTML_SMALL, 40);
+    checkInternalLinks(analysis, 1899);
+    checkImages(analysis, 53);
+    checkCategories(analysis, 6);
+    checkInterwikiLinks(analysis, 0);
+    checkLanguageLinks(analysis, 0);
+    checkFunctions(analysis, 0);
+    checkMagicWords(analysis, 0);
+    checkTemplates(analysis, 1013);
+    checkParameters(analysis, 0);
+    checkTitles(analysis, 15);
+    checkExternalLinks(analysis, 702);
+    checkISBN(analysis, 0);
+    checkISSN(analysis, 76);
+    checkPMID(analysis, 106);
+    checkRFC(analysis, 0);
+    checkTables(analysis, 0);
+    checkListItems(analysis, 779);
+    checkParagraphs(analysis, 51);
   }
 
   /**
@@ -342,136 +132,245 @@ public class PageAnalysisTest {
     PageAnalysis analysis = new PageAnalysis(testPage, text);
     AnalysisPerformance perf = new AnalysisPerformance();
     analysis.performFullPageAnalysis(perf);
-    long beginTime = System.nanoTime();
-
-    // Check comments
-    ContainerComment commentContainer = analysis.comments();
-    assertNotNull(
-        "Comments container is null",
-        commentContainer);
-    assertNotNull(
-        "List of comments is null",
-        commentContainer.getAll());
-
-    // Check tags
-    List<PageElementTag> tags = analysis.getTags();
-    assertNotNull(
-        "List of tags is null",
-        tags);
-
-    // Check internal links
-    List<PageElementInternalLink> internalLinks = analysis.getInternalLinks();
-    assertNotNull(
-        "List of internal links is null",
-        internalLinks);
-
-    // Check images
-    List<PageElementImage> images = analysis.getImages();
-    assertNotNull(
-        "List of images is null",
-        images);
-
-    // Check categories
-    List<PageElementCategory> categories = analysis.getCategories();
-    assertNotNull(
-        "List of categories is null",
-        categories);
-
-    // Check interwiki links
-    List<PageElementInterwikiLink> iwLinks = analysis.getInterwikiLinks();
-    assertNotNull(
-        "List of interwiki links is null",
-        iwLinks);
-
-    // Check language links
-    List<PageElementLanguageLink> langLinks = analysis.getLanguageLinks();
-    assertNotNull(
-        "List of language links is null",
-        langLinks);
-
-    // Check functions
-    List<PageElementFunction> functions = analysis.getFunctions();
-    assertNotNull(
-        "List of functions is null",
-        functions);
-
-    // Check magic words
-    List<PageElementMagicWord> magicWords = analysis.getMagicWords();
-    assertNotNull(
-        "List of magic words is null",
-        magicWords);
-
-    // Check templates
-    List<PageElementTemplate> templates = analysis.getTemplates();
-    assertNotNull(
-        "List of templates is null",
-        templates);
-
-    // Check parameters
-    List<PageElementParameter> parameters = analysis.getParameters();
-    assertNotNull(
-        "List of parameters is null",
-        parameters);
-
-    // Check titles
-    List<PageElementTitle> titles = analysis.getTitles();
-    assertNotNull(
-        "List of titles is null",
-        titles);
-
-    // Check external links
-    List<PageElementExternalLink> eLinks = analysis.getExternalLinks();
-    assertNotNull(
-        "List of external links is null",
-        eLinks);
-
-    // Check ISBN
-    List<PageElementISBN> isbns = analysis.getISBNs();
-    assertNotNull(
-        "List of ISBN is null",
-        isbns);
-
-    // Check ISSN
-    List<PageElementISSN> issns = analysis.getISSNs();
-    assertNotNull(
-        "List of ISSN is null",
-        issns);
-
-    // Check PMID
-    List<PageElementPMID> pmids = analysis.getPMIDs();
-    assertNotNull(
-        "List of PMID is null",
-        pmids);
-
-    // Check RFC
-    List<PageElementRFC> rfcs = analysis.getRFCs();
-    assertNotNull(
-        "List of RFC is null",
-        rfcs);
-
-    // Check tables
-    List<PageElementTable> tables = analysis.getTables();
-    assertNotNull(
-        "List of tables is null",
-        tables);
-
-    // Check list items
-    List<PageElementListItem> listItems = analysis.getListItems();
-    assertNotNull(
-        "List of list items is null",
-        listItems);
-
-    // Check paragraphs
-    List<PageElementParagraph> paragraphs = analysis.getParagraphs();
-    assertNotNull(
-        "List of paragraphs is null",
-        paragraphs);
 
     // Display performance
-    long endTime = System.nanoTime();
-    System.out.println(fileName + ": " + perf.toMilliSeconds() + "\n  Reading: " + ((endTime - beginTime) / 1000000));
+    System.out.println(fileName + ": " + perf.toMilliSeconds());
 
     return analysis;
+  }
+
+  /**
+   * Check comments.
+   * 
+   * @param analysis Page analysis.
+   * @param expectedCount Expected number of elements.
+   */
+  private void checkComments(PageAnalysis analysis, int expectedCount) {
+    ContainerComment commentsContainer = analysis.comments();
+    assertNotNull(
+        "Comments container is null",
+        commentsContainer);
+    checkList(commentsContainer.getAll(), "comments", expectedCount);
+  }
+
+  /**
+   * Check tags.
+   * 
+   * @param analysis Page analysis.
+   * @param expectedCount Expected number of elements.
+   */
+  private void checkTags(PageAnalysis analysis, int expectedCount) {
+    checkList(analysis.getTags(), "tags", expectedCount);
+  }
+
+  /**
+   * Check tags.
+   * 
+   * @param analysis Page analysis.
+   * @param tagName Name of the tag.
+   * @param expectedCount Expected number of elements.
+   */
+  private void checkTags(PageAnalysis analysis, String tagName, int expectedCount) {
+    checkList(analysis.getTags(tagName), "tags " + tagName, expectedCount);
+  }
+
+  /**
+   * Check internal links.
+   * 
+   * @param analysis Page analysis.
+   * @param expectedCount Expected number of elements.
+   */
+  private void checkInternalLinks(PageAnalysis analysis, int expectedCount) {
+    checkList(analysis.getInternalLinks(), "internal links", expectedCount);
+  }
+
+  /**
+   * Check images.
+   * 
+   * @param analysis Page analysis.
+   * @param expectedCount Expected number of elements.
+   */
+  private void checkImages(PageAnalysis analysis, int expectedCount) {
+    checkList(analysis.getImages(), "images", expectedCount);
+  }
+
+  /**
+   * Check categories.
+   * 
+   * @param analysis Page analysis.
+   * @param expectedCount Expected number of elements.
+   */
+  private void checkCategories(PageAnalysis analysis, int expectedCount) {
+    checkList(analysis.getCategories(), "categories", expectedCount);
+  }
+
+  /**
+   * Check interwiki links.
+   * 
+   * @param analysis Page analysis.
+   * @param expectedCount Expected number of elements.
+   */
+  private void checkInterwikiLinks(PageAnalysis analysis, int expectedCount) {
+    checkList(analysis.getInterwikiLinks(), "interwiki links", expectedCount);
+  }
+
+  /**
+   * Check language links.
+   * 
+   * @param analysis Page analysis.
+   * @param expectedCount Expected number of elements.
+   */
+  private void checkLanguageLinks(PageAnalysis analysis, int expectedCount) {
+    checkList(analysis.getLanguageLinks(), "language links", expectedCount);
+  }
+
+  /**
+   * Check functions.
+   * 
+   * @param analysis Page analysis.
+   * @param expectedCount Expected number of elements.
+   */
+  private void checkFunctions(PageAnalysis analysis, int expectedCount) {
+    checkList(analysis.getFunctions(), "functions", expectedCount);
+  }
+
+  /**
+   * Check magic words.
+   * 
+   * @param analysis Page analysis.
+   * @param expectedCount Expected number of elements.
+   */
+  private void checkMagicWords(PageAnalysis analysis, int expectedCount) {
+    checkList(analysis.getMagicWords(), "magic words", expectedCount);
+  }
+
+  /**
+   * Check templates.
+   * 
+   * @param analysis Page analysis.
+   * @param expectedCount Expected number of elements.
+   */
+  private void checkTemplates(PageAnalysis analysis, int expectedCount) {
+    checkList(analysis.getTemplates(), "templates", expectedCount);
+  }
+
+  /**
+   * Check parameters.
+   * 
+   * @param analysis Page analysis.
+   * @param expectedCount Expected number of elements.
+   */
+  private void checkParameters(PageAnalysis analysis, int expectedCount) {
+    checkList(analysis.getParameters(), "parameters", expectedCount);
+  }
+
+  /**
+   * Check titles.
+   * 
+   * @param analysis Page analysis.
+   * @param expectedCount Expected number of elements.
+   */
+  private void checkTitles(PageAnalysis analysis, int expectedCount) {
+    checkList(analysis.getTitles(), "titles", expectedCount);
+  }
+
+  /**
+   * Check external links.
+   * 
+   * @param analysis Page analysis.
+   * @param expectedCount Expected number of elements.
+   */
+  private void checkExternalLinks(PageAnalysis analysis, int expectedCount) {
+    checkList(analysis.getExternalLinks(), "external links", expectedCount);
+  }
+
+  /**
+   * Check ISBN.
+   * 
+   * @param analysis Page analysis.
+   * @param expectedCount Expected number of elements.
+   */
+  private void checkISBN(PageAnalysis analysis, int expectedCount) {
+    checkList(analysis.getISBNs(), "ISBNs", expectedCount);
+  }
+
+  /**
+   * Check ISSN.
+   * 
+   * @param analysis Page analysis.
+   * @param expectedCount Expected number of elements.
+   */
+  private void checkISSN(PageAnalysis analysis, int expectedCount) {
+    checkList(analysis.getISSNs(), "ISSNs", expectedCount);
+  }
+
+  /**
+   * Check PMID.
+   * 
+   * @param analysis Page analysis.
+   * @param expectedCount Expected number of elements.
+   */
+  private void checkPMID(PageAnalysis analysis, int expectedCount) {
+    checkList(analysis.getPMIDs(), "PMIDs", expectedCount);
+  }
+
+  /**
+   * Check RFC.
+   * 
+   * @param analysis Page analysis.
+   * @param expectedCount Expected number of elements.
+   */
+  private void checkRFC(PageAnalysis analysis, int expectedCount) {
+    checkList(analysis.getRFCs(), "RFCs", expectedCount);
+  }
+
+  /**
+   * Check tables.
+   * 
+   * @param analysis Page analysis.
+   * @param expectedCount Expected number of elements.
+   */
+  private void checkTables(PageAnalysis analysis, int expectedCount) {
+    checkList(analysis.getTables(), "tables", expectedCount);
+  }
+
+  /**
+   * Check list items.
+   * 
+   * @param analysis Page analysis.
+   * @param expectedCount Expected number of elements.
+   */
+  private void checkListItems(PageAnalysis analysis, int expectedCount) {
+    checkList(analysis.getListItems(), "list items", expectedCount);
+  }
+
+  /**
+   * Check paragraphs.
+   * 
+   * @param analysis Page analysis.
+   * @param expectedCount Expected number of elements.
+   */
+  private void checkParagraphs(PageAnalysis analysis, int expectedCount) {
+    checkList(analysis.getParagraphs(), "paragraphs", expectedCount);
+  }
+
+  /**
+   * Check a type of elements.
+   * 
+   * @param list List of elements.
+   * @param name Name of the type of elements.
+   * @param expectedCount Expected number of elements.
+   */
+  private void checkList(
+      List<? extends ContentsElement> list,
+      String name,
+      int expectedCount) {
+    assertNotNull(
+        "List of " + name + " is null",
+        list);
+    assertEquals(
+        "List of " + name + " doesn't have" + expectedCount + " " + name,
+        expectedCount, list.size());
   }
 
   /**
