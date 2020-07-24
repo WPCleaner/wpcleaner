@@ -3,6 +3,26 @@ Simple page for testing each kind of element
 Comment:
 <!-- This is a comment -->
 
+Tags:
+<nowiki/>
+<nowiki>This is the content inside a tag</nowiki>
+<div style="test">This is the content inside a tag with attributes</div>
+
 Internal link:
 [[This is an internal link without text]]
 [[This is an internal link with text|and this is the text]]
+
+File:
+[[File:This is a file.jpg]]
+[[File:This is a file.jpd|and this is its description]]
+
+Categories:
+[[Category:This is a category]]
+[[Category:This is a category|and this is its sort key]]
+
+Interwiki links:
+[[:en:This is an interwiki link]]
+[[:en:This is an interwiki link|and this is its text]]
+
+Language links:
+[[en:This is a language link]]

@@ -13,12 +13,16 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.io.FileUtils;
 import org.junit.Test;
+import org.wikipediacleaner.api.constants.EnumCaseSensitiveness;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.DataManager;
+import org.wikipediacleaner.api.data.Interwiki;
+import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageElementCategory;
 import org.wikipediacleaner.api.data.PageElementExternalLink;
@@ -65,8 +69,8 @@ public class PageAnalysisTest {
     // Check tags
     List<PageElementTag> tags = analysis.getTags();
     assertEquals(
-        "List of tags doesn't have 0 tags",
-        0, tags.size());
+        "List of tags doesn't have 5 tags",
+        5, tags.size());
 
     // Check internal links
     List<PageElementInternalLink> internalLinks = analysis.getInternalLinks();
@@ -77,20 +81,20 @@ public class PageAnalysisTest {
     // Check images
     List<PageElementImage> images = analysis.getImages();
     assertEquals(
-        "List of images doesn't have 0 images",
-        0, images.size());
+        "List of images doesn't have 2 images",
+        2, images.size());
 
     // Check categories
     List<PageElementCategory> categories = analysis.getCategories();
     assertEquals(
-        "List of categories doesn't have 0 categories",
-        0, categories.size());
+        "List of categories doesn't have 2 categories",
+        2, categories.size());
 
     // Check interwiki links
     List<PageElementInterwikiLink> iwLinks = analysis.getInterwikiLinks();
     assertEquals(
-        "List of interwiki links doesn't have 0 interwiki links",
-        0, iwLinks.size());
+        "List of interwiki links doesn't have 2 interwiki links",
+        2, iwLinks.size());
 
     // Check language links
     List<PageElementLanguageLink> langLinks = analysis.getLanguageLinks();
@@ -173,8 +177,8 @@ public class PageAnalysisTest {
     // Check paragraphs
     List<PageElementParagraph> paragraphs = analysis.getParagraphs();
     assertEquals(
-        "List of paragraphs doesn't have 0 paragraphs",
-        3, paragraphs.size());
+        "List of paragraphs doesn't have 8 paragraphs",
+        8, paragraphs.size());
   }
 
   /**
@@ -195,26 +199,26 @@ public class PageAnalysisTest {
     // Check tags
     List<PageElementTag> tags = analysis.getTags();
     assertEquals(
-        "List of tags doesn't have 0 tags",
+        "List of tags doesn't have 1958 tags",
         1958, tags.size());
 
     // Check internal links
     List<PageElementInternalLink> internalLinks = analysis.getInternalLinks();
     assertEquals(
-        "List of internal links doesn't have 1914 internal links",
-        1914, internalLinks.size());
+        "List of internal links doesn't have 1899 internal links",
+        1899, internalLinks.size());
 
     // Check images
     List<PageElementImage> images = analysis.getImages();
     assertEquals(
-        "List of images doesn't have 0 images",
-        44, images.size());
+        "List of images doesn't have 53 images",
+        53, images.size());
 
     // Check categories
     List<PageElementCategory> categories = analysis.getCategories();
     assertEquals(
-        "List of categories doesn't have 0 categories",
-        0, categories.size());
+        "List of categories doesn't have 6 categories",
+        6, categories.size());
 
     // Check interwiki links
     List<PageElementInterwikiLink> iwLinks = analysis.getInterwikiLinks();
@@ -315,9 +319,26 @@ public class PageAnalysisTest {
    */
   private PageAnalysis analyzeAndTestPage(String fileName) {
 
+    // Configure wiki
+    EnumWikipedia wiki = EnumWikipedia.EN;
+    List<Namespace> namespaces = new ArrayList<>();
+    namespaces.add(new Namespace(
+        Integer.toString(Namespace.CATEGORY),
+        "Category", "Category",
+        EnumCaseSensitiveness.FIRST_LETTER, true));
+    namespaces.add(new Namespace(
+        Integer.toString(Namespace.IMAGE),
+        "File", "File",
+        EnumCaseSensitiveness.FIRST_LETTER, true));
+    wiki.getWikiConfiguration().setNamespaces(namespaces);
+    List<Interwiki> interwikis = new ArrayList<>();
+    interwikis.add(new Interwiki("en", true, "en", "https://en.wikipedia.org"));
+    interwikis.add(new Interwiki("fr", true, "fr", "https://fr.wikipedia.org"));
+    wiki.getWikiConfiguration().setInterwikis(interwikis);
+
     // Create contents and analysis
     String text = readFile(fileName + ".txt");
-    Page testPage = DataManager.getPage(EnumWikipedia.EN, fileName, null, null, null);
+    Page testPage = DataManager.getPage(wiki, fileName, null, null, null);
     PageAnalysis analysis = new PageAnalysis(testPage, text);
     AnalysisPerformance perf = new AnalysisPerformance();
     analysis.performFullPageAnalysis(perf);

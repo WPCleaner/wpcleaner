@@ -49,7 +49,8 @@ public class Interwiki implements Comparable<Interwiki> {
    * @return True if the interwiki is for the wiki.
    */
   public boolean isForWiki(EnumWikipedia wiki) {
-    if (urlWithoutProtocol.startsWith(wiki.getWikiConfiguration().getServer())) {
+    if ((wiki.getWikiConfiguration().getServer() != null) &&
+        urlWithoutProtocol.startsWith(wiki.getWikiConfiguration().getServer())) {
       return true;
     }
     return false;
