@@ -266,7 +266,7 @@ public class Performance {
   public void printEnd(String message, String message2) {
     long time = currentTime();
     if (time > initialTime + threshold) {
-      printDetail(message + ":" + message2 + "(" + (time - initialTime) + unit + ")");
+      printDetail(message + "(" + (time - initialTime) + unit + "):" + message2);
     }
   }
 
