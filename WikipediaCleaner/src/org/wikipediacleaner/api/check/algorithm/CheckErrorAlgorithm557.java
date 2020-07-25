@@ -83,6 +83,7 @@ public class CheckErrorAlgorithm557 extends CheckErrorAlgorithmBase {
     if (errors == null) {
       return true;
     }
+    beginIndex--;
     int endIndex = link.getEndIndex();
     CheckErrorResult errorResult = createCheckErrorResult(analysis, beginIndex, endIndex);
     errors.add(errorResult);
