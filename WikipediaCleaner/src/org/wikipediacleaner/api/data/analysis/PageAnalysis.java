@@ -713,14 +713,15 @@ public class PageAnalysis {
       String text = contents.getText();
       int currentIndex = 0;
       int areaIndex = 0;
-      List<Areas.Area> tmpAeras = areas.getAreas();
+      List<Areas.Area> tmpAreas = new ArrayList<>();
+      tmpAreas.addAll(areas.getAreas());
       while (currentIndex < maxIndex) {
 
         // Checking if the current index is in wiki text area.
         boolean areaFound = false;
         int nextIndex = currentIndex;
-        while ((areaIndex < tmpAeras.size()) && !areaFound) {
-          Areas.Area area = tmpAeras.get(areaIndex);
+        while ((areaIndex < tmpAreas.size()) && !areaFound) {
+          Areas.Area area = tmpAreas.get(areaIndex);
           if (area.beginIndex > currentIndex) {
             areaFound = true;
           } else if (area.endIndex > currentIndex) {
@@ -811,14 +812,15 @@ public class PageAnalysis {
       String text = contents.getText();
       int currentIndex = 0;
       int areaIndex = 0;
-      List<Areas.Area> tmpAeras = areas.getAreas();
+      List<Areas.Area> tmpAreas = new ArrayList<>();
+      tmpAreas.addAll(areas.getAreas());
       while (currentIndex < maxIndex) {
 
         // Checking if the current index is in wiki text area.
         boolean areaFound = false;
         int nextIndex = currentIndex;
-        while ((areaIndex < tmpAeras.size()) && !areaFound) {
-          Areas.Area area = tmpAeras.get(areaIndex);
+        while ((areaIndex < tmpAreas.size()) && !areaFound) {
+          Areas.Area area = tmpAreas.get(areaIndex);
           if (area.beginIndex > currentIndex) {
             areaFound = true;
           } else if (area.endIndex > currentIndex) {

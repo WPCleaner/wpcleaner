@@ -66,12 +66,12 @@ public class PageElementExternalLink extends PageElement {
       return null;
     }
     int maxLength = contents.length();
+    if (index >= maxLength) {
+      return null;
+    }
 
     // Look for '['
     int tmpIndex = index;
-    if (tmpIndex >= maxLength) {
-      return null;
-    }
     boolean hasSquare = false;
     if (contents.startsWith("[", tmpIndex)) {
       hasSquare = true;
