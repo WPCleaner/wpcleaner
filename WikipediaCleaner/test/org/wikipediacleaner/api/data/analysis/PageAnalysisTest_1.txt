@@ -21,8 +21,53 @@ Categories:
 [[Category:This is a category|and this is its sort key]]
 
 Interwiki links:
-[[:en:This is an interwiki link]]
-[[:en:This is an interwiki link|and this is its text]]
+[[:fr:This is an interwiki link]]
+[[:fr:This is an interwiki link|and this is its text]]
 
 Language links:
-[[en:This is a language link]]
+[[fr:This is a language link]]
+
+Functions:
+{{PAGENAME}}
+
+Magic words:
+__TOC__
+
+Templates:
+{{Template without parameter}}
+{{Template with unnamed parameters|parameter 1|parameter 2}}
+{{Template with names parameters|name 1=value 1|name 2=value 2}}
+
+Parameters:
+{{{Parameter without default value}}}
+{{{Parameter with default value|default value}}}
+
+Titles:
+== First title ==
+=== Second title ===
+
+External links:
+https://test.com/test
+[https://test.com/test Text of the external link]
+
+Identifiers:
+ISBN 123456789X
+ISSN 0000-000X
+PMID 12345678
+RFC 1234
+
+Tables:
+{|
+|+
+|-
+| First row, first column
+| First row, second column
+|-
+| Second row, first column || Second row, second column
+|}
+
+Lists:
+This is a list
+* This is the first item
+: This is the second item
+; This is the third item
