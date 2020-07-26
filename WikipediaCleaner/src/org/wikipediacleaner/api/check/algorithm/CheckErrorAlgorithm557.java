@@ -74,7 +74,8 @@ public class CheckErrorAlgorithm557 extends CheckErrorAlgorithmBase {
     if (beginIndex == 0) {
       return false;
     }
-    char previousChar = analysis.getContents().charAt(beginIndex - 1);
+    String contents = analysis.getContents();
+    char previousChar = contents.charAt(beginIndex - 1);
     if (!Character.isLetter(previousChar)) {
       return false;
     }
@@ -83,9 +84,25 @@ public class CheckErrorAlgorithm557 extends CheckErrorAlgorithmBase {
     if (errors == null) {
       return true;
     }
-    beginIndex--;
+    while ((beginIndex > 0) &&
+        Character.isLetter(contents.charAt(beginIndex - 1))) {
+      beginIndex--;
+    }
     int endIndex = link.getEndIndex();
     CheckErrorResult errorResult = createCheckErrorResult(analysis, beginIndex, endIndex);
+    String replacement =
+        contents.substring(beginIndex, link.getBeginIndex()) +
+        " " +
+            contents.substring(link.getBeginIndex(), link.getEndIndex());
+    errorResult.addReplacement(replacement);
+    if ((beginIndex <= 0) ||
+        Character.isWhitespace(contents.charAt(beginIndex - 1))) {
+      replacement = PageElementInternalLink.createInternalLink(
+          link.getLink(),
+          link.getAnchor(),
+          contents.substring(beginIndex, link.getBeginIndex()) + link.getDisplayedText());
+      errorResult.addReplacement(replacement);
+    }
     errors.add(errorResult);
     return true;
   }
