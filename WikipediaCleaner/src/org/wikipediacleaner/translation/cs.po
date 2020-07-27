@@ -16,7 +16,7 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2020-07-20 18:00:23+0000\n"
+"PO-Revision-Date: 2020-07-27 16:37:01+0000\n"
 "Last-Translator: Matěj S. <matejsuchanek97@gmail.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -24,9 +24,9 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n == 1) ? 0 : ( (n >= 2 && n <= 4) ? 1 : 2 );\n"
 "X-Launchpad-Export-Date: 2017-03-22 17:48+0000\n"
-"X-Generator: MediaWiki 1.36.0-alpha; Translate 2020-04-20\n"
+"X-Generator: MediaWiki 1.36.0-alpha; Translate 2020-07-20\n"
 "Language: cs\n"
-"X-POT-Import-Date: 2020-07-20 10:31:47+0000\n"
+"X-POT-Import-Date: 2020-07-24 08:31:43+0000\n"
 
 #: org/wikipediacleaner/Version.java:31
 #, java-format
@@ -1480,6 +1480,31 @@ msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm553.java:274
 msgid "Acceptable suffix"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm556.java:135
+#, java-format
+msgid "Add inside a {0} tag"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm556.java:192
+msgid "Templates in which external links are normal"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm556.java:196
+msgid "Template in which external links are normal"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm556.java:199
+msgid "Parameter in which external links are normal"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm556.java:204
+msgid "Sections in which external links are normal"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm556.java:207
+msgid "Section in which external links are normal"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmBase.java:295
@@ -3270,17 +3295,17 @@ msgstr "Ostatní…"
 msgid "Checking for errors n°{0}"
 msgstr "Ověřuji chybu číslo {0}"
 
-#: org/wikipediacleaner/gui/swing/bot/AutomaticFixWorker.java:211
+#: org/wikipediacleaner/gui/swing/bot/AutomaticFixWorker.java:217
 #, java-format
 msgid "Analyzing page {0}"
 msgstr "Analyzuji stránku {0}"
 
-#: org/wikipediacleaner/gui/swing/bot/AutomaticFixWorker.java:306
+#: org/wikipediacleaner/gui/swing/bot/AutomaticFixWorker.java:313
 #, java-format
 msgid "Fixing page {0}"
 msgstr "Opravuji stránku „{0}“"
 
-#: org/wikipediacleaner/gui/swing/bot/AutomaticFixWorker.java:378
+#: org/wikipediacleaner/gui/swing/bot/AutomaticFixWorker.java:386
 #, java-format
 msgid "{0} page has been modified"
 msgid_plural "{0} pages have been modified"
@@ -3288,7 +3313,7 @@ msgstr[0] "Byla upravena {0} stránka"
 msgstr[1] "Byly upraveny {0} stránky"
 msgstr[2] "Bylo upraveno {0} stránek"
 
-#: org/wikipediacleaner/gui/swing/bot/AutomaticFixWorker.java:383
+#: org/wikipediacleaner/gui/swing/bot/AutomaticFixWorker.java:391
 #, java-format
 msgid "{0} page has been marked as fixed for the selected algorithms"
 msgid_plural "{0} pages have been marked as fixed for the selected algorithms"
@@ -3296,7 +3321,7 @@ msgstr[0] "Jako opravená byla pro vybrané algoritmy označena {0} stránka"
 msgstr[1] "Jako opravené byly pro vybrané algoritmy označeny {0} stránky"
 msgstr[2] "Jako opravených bylo pro vybrané algoritmy označeno {0} stránek"
 
-#: org/wikipediacleaner/gui/swing/bot/AutomaticFixWorker.java:388
+#: org/wikipediacleaner/gui/swing/bot/AutomaticFixWorker.java:396
 #, java-format
 msgid "{0} page has been marked as fixed for other algorithms"
 msgid_plural "{0} pages have been marked as fixed for other algorithms"
@@ -3451,6 +3476,21 @@ msgstr "Musíte vybrat alespoň jeden algoritmus pro vytvoření seznamu"
 msgid "What is the name of the selection?"
 msgstr "Jaké je jméno výběru?"
 
+#: org/wikipediacleaner/gui/swing/bot/FixDumpWorker.java:142
+#: org/wikipediacleaner/gui/swing/bot/ListCWWorker.java:608
+#, java-format
+msgid "{0} page has been analyzed"
+msgid_plural "{0} pages have been analyzed"
+msgstr[0] "Byla analyzována {0} stránka"
+msgstr[1] "Byly analyzovány {0} stránky"
+msgstr[2] "Bylo analyzováno {0} stránek"
+
+#: org/wikipediacleaner/gui/swing/bot/FixDumpWorker.java:265
+#: org/wikipediacleaner/gui/swing/bot/ListCWWorker.java:786
+#, java-format
+msgid "{0} pages processed"
+msgstr ""
+
 #: org/wikipediacleaner/gui/swing/bot/GeneralToolsPanel.java:117
 msgid "Semi-automatic disambiguation fixing"
 msgstr "Poloautomatické řešení odkazů na rozcestníky"
@@ -3513,26 +3553,13 @@ msgstr ""
 msgid "Only check articles previously reported"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/bot/ListCWWorker.java:607
-#, java-format
-msgid "{0} page has been analyzed"
-msgid_plural "{0} pages have been analyzed"
-msgstr[0] "Byla analyzována {0} stránka"
-msgstr[1] "Byly analyzovány {0} stránky"
-msgstr[2] "Bylo analyzováno {0} stránek"
-
-#: org/wikipediacleaner/gui/swing/bot/ListCWWorker.java:615
+#: org/wikipediacleaner/gui/swing/bot/ListCWWorker.java:616
 #, java-format
 msgid "{0} page has been detected for algorithm {1}"
 msgid_plural "{0} pages have been detected for algorithm {1}"
 msgstr[0] "Algoritmem {1} byla detekována {0} stránka"
 msgstr[1] "Algoritmem {1} byly detekovány {0} stránky"
 msgstr[2] "Algoritmem {1} bylo detekováno {0} stránek"
-
-#: org/wikipediacleaner/gui/swing/bot/ListCWWorker.java:785
-#, java-format
-msgid "{0} pages processed"
-msgstr ""
 
 #: org/wikipediacleaner/gui/swing/checkwiki/ActionCheckArticle.java:50
 msgid "Check article with CheckWiki"
