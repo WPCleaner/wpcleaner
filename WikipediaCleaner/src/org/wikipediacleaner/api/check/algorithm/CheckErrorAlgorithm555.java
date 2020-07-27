@@ -140,14 +140,17 @@ public class CheckErrorAlgorithm555 extends CheckErrorAlgorithmBase {
       }
     }
     boolean automatic = true;
+    boolean eLinkAfter = false;
     if (endIndex < contents.length()) {
       // Prevent if there's an external link just after
       PageElementExternalLink eLink = analysis.isInExternalLink(endIndex);
       if ((eLink != null) &&
           (eLink.getBeginIndex() == nowikiTag.getCompleteEndIndex())) {
         automatic = false;
+        eLinkAfter = true;
       }
     }
+    boolean eLinkBefore = false;
     if (beginIndex > 0) {
       // Prevent if there's an external link just before
       PageElementExternalLink eLink = analysis.isInExternalLink(beginIndex);
@@ -155,6 +158,7 @@ public class CheckErrorAlgorithm555 extends CheckErrorAlgorithmBase {
         if ((eLink.getEndIndex() == nowikiTag.getCompleteBeginIndex()) ||
             (eLink.getBeginIndex() + eLink.getTextOffset() >= nowikiTag.getCompleteBeginIndex())) {
           automatic = false;
+          eLinkBefore = true;
         }
       }
     }
@@ -208,6 +212,9 @@ public class CheckErrorAlgorithm555 extends CheckErrorAlgorithmBase {
     CheckErrorResult errorResult = createCheckErrorResult(analysis, beginIndex, endIndex);
     String prefix = contents.substring(beginIndex, nowikiTag.getCompleteBeginIndex());
     String suffix = contents.substring(nowikiTag.getCompleteEndIndex(), endIndex);
+    if (eLinkBefore || eLinkAfter) {
+      errorResult.addReplacement(prefix + ' ' + internalText + suffix);
+    }
     errorResult.addReplacement(prefix + internalText + suffix, automatic);
     errors.add(errorResult);
     return true;
