@@ -17,6 +17,7 @@ import org.wikipediacleaner.api.data.PageElementTemplate.Parameter;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
 import org.wikipediacleaner.api.data.contents.ContentsComment;
 import org.wikipediacleaner.api.data.contents.ContentsCommentBuilder;
+import org.wikipediacleaner.api.data.contents.ContentsUtil;
 
 
 /**
@@ -31,6 +32,9 @@ public class PageElementPMID extends PageElement {
   private final static String[] PMID_INCORRECT_PREFIX = {
     "pmid"
   };
+
+  /** Possible first characters for the prefix */
+  private final static String POSSIBLE_FIRST_CHARACTERS_PREFIX = "Pp";
 
   /** PMID possible meaningful characters */
   public final static String POSSIBLE_CHARACTERS = "0123456789";
@@ -168,7 +172,8 @@ public class PageElementPMID extends PageElement {
       PageAnalysis analysis, String contents, int index, List<PageElementPMID> pmids) {
 
     // Check special places
-    if (contents.charAt(index) == '<') {
+    char currentChar = contents.charAt(index);
+    if (currentChar == '<') {
       ContentsComment comment = analysis.comments().getAt(index);
       if (comment != null) {
         return comment.getEndIndex();
@@ -185,7 +190,7 @@ public class PageElementPMID extends PageElement {
         return tag.getEndIndex();
       }
     }
-    if (contents.charAt(index) == '[') {
+    if (currentChar == '[') {
       PageElementInterwikiLink iwLink = analysis.isInInterwikiLink(index);
       if ((iwLink != null) && (iwLink.getBeginIndex() == index)) {
         return iwLink.getEndIndex();
@@ -193,6 +198,9 @@ public class PageElementPMID extends PageElement {
     }
 
     // Check if it's a potential PMID
+    if (POSSIBLE_FIRST_CHARACTERS_PREFIX.indexOf(currentChar) < 0) {
+      return index + 1;
+    }
     String prefix = null;
     boolean correct = false;
     if (contents.startsWith(PMID_PREFIX, index)) {
@@ -200,12 +208,11 @@ public class PageElementPMID extends PageElement {
       correct = true;
     }
     for (String tmpPrefix : PMID_INCORRECT_PREFIX) {
-      if ((prefix == null) && (contents.length() >= index + tmpPrefix.length())) {
-        String nextChars = contents.substring(index, index + tmpPrefix.length());
-        if (tmpPrefix.equalsIgnoreCase(nextChars)) {
-          prefix = tmpPrefix;
-          correct = false;
-        }
+      if ((prefix == null) &&
+          (contents.length() >= index + tmpPrefix.length()) &&
+          ContentsUtil.startsWithIgnoreCase(contents, tmpPrefix, index)) {
+        prefix = tmpPrefix;
+        correct = false;
       }
     }
     if (prefix == null) {
@@ -275,7 +282,7 @@ public class PageElementPMID extends PageElement {
         while (!done) {
           done = true;
           if (index < contents.length()) {
-            char currentChar = contents.charAt(index);
+            currentChar = contents.charAt(index);
             if (currentChar == ' ') {
               index++;
               spaceFound = true;
@@ -314,7 +321,7 @@ public class PageElementPMID extends PageElement {
       isCorrect &= spaceFound;
       boolean nextCorrect = isCorrect;
       while (!finished && (index < contents.length())) {
-        char currentChar = contents.charAt(index);
+        currentChar = contents.charAt(index);
         if (POSSIBLE_CHARACTERS.indexOf(currentChar) >= 0) {
           if (beginNumber < 0) {
             beginNumber = index;
