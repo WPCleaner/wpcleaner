@@ -17,6 +17,7 @@ import org.wikipediacleaner.api.data.PageElementTemplate.Parameter;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
 import org.wikipediacleaner.api.data.contents.ContentsComment;
 import org.wikipediacleaner.api.data.contents.ContentsCommentBuilder;
+import org.wikipediacleaner.api.data.contents.ContentsUtil;
 
 
 /**
@@ -31,6 +32,9 @@ public class PageElementISSN extends PageElement {
   private final static String[] ISSN_INCORRECT_PREFIX = {
     "issn"
   };
+
+  /** Possible first characters for the prefix */
+  private final static String POSSIBLE_FIRST_CHARACTERS_PREFIX = "Ii";
 
   /** ISSN possible meaningful characters */
   private final static String POSSIBLE_CHARACTERS = "0123456789Xx";
@@ -179,7 +183,8 @@ public class PageElementISSN extends PageElement {
       List<String[]> ignoreIncorrect) {
 
     // Check special places
-    if (contents.charAt(index) == '<') {
+    char currentChar = contents.charAt(index);
+    if (currentChar == '<') {
       ContentsComment comment = analysis.comments().getAt(index);
       if (comment != null) {
         return comment.getEndIndex();
@@ -196,7 +201,7 @@ public class PageElementISSN extends PageElement {
         return tag.getEndIndex();
       }
     }
-    if (contents.charAt(index) == '[') {
+    if (currentChar == '[') {
       PageElementInterwikiLink iwLink = analysis.isInInterwikiLink(index);
       if ((iwLink != null) && (iwLink.getBeginIndex() == index)) {
         return iwLink.getEndIndex();
@@ -204,6 +209,9 @@ public class PageElementISSN extends PageElement {
     }
 
     // Check if it's a potential ISSN
+    if (POSSIBLE_FIRST_CHARACTERS_PREFIX.indexOf(currentChar) < 0) {
+      return index + 1;
+    }
     String prefix = null;
     boolean correct = false;
     if (contents.startsWith(ISSN_PREFIX, index)) {
@@ -211,15 +219,14 @@ public class PageElementISSN extends PageElement {
       correct = true;
     }
     for (String tmpPrefix : ISSN_INCORRECT_PREFIX) {
-      if ((prefix == null) && (contents.length() >= index + tmpPrefix.length())) {
-        String nextChars = contents.substring(index, index + tmpPrefix.length());
-        if (tmpPrefix.equalsIgnoreCase(nextChars)) {
-          if ((contents.length() == index + tmpPrefix.length()) ||
-              // to avoid DOI like doi:10.5547/issn0195-6574-ej-vol10-no1-14
-              !Character.isDigit(contents.charAt(index + tmpPrefix.length()))) {
-            prefix = tmpPrefix;
-            correct = false;
-          }
+      if ((prefix == null) &&
+          (contents.length() >= index + tmpPrefix.length()) &&
+          ContentsUtil.startsWithIgnoreCase(contents, tmpPrefix, index)) {
+        if ((contents.length() == index + tmpPrefix.length()) ||
+            // to avoid DOI like doi:10.5547/issn0195-6574-ej-vol10-no1-14
+            !Character.isDigit(contents.charAt(index + tmpPrefix.length()))) {
+          prefix = tmpPrefix;
+          correct = false;
         }
       }
     }
@@ -287,7 +294,7 @@ public class PageElementISSN extends PageElement {
         while (!done) {
           done = true;
           if (index < contents.length()) {
-            char currentChar = contents.charAt(index);
+            currentChar = contents.charAt(index);
             if (currentChar == ' ') {
               index++;
               spaceFound = true;
@@ -328,7 +335,7 @@ public class PageElementISSN extends PageElement {
       int possibleCharactersFound = 0;
       boolean hasSeparator = false;
       while (!finished && (index < contents.length())) {
-        char currentChar = contents.charAt(index);
+        currentChar = contents.charAt(index);
         if (POSSIBLE_CHARACTERS.indexOf(currentChar) >= 0) {
           if (beginNumber < 0) {
             beginNumber = index;
