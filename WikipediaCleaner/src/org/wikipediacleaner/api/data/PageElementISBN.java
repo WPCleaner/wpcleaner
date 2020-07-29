@@ -19,6 +19,7 @@ import org.wikipediacleaner.api.data.PageElementTemplate.Parameter;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
 import org.wikipediacleaner.api.data.contents.ContentsComment;
 import org.wikipediacleaner.api.data.contents.ContentsCommentBuilder;
+import org.wikipediacleaner.api.data.contents.ContentsUtil;
 
 
 /**
@@ -41,6 +42,9 @@ public class PageElementISBN extends PageElement {
     "EAN13",
     "EAN",
   };
+
+  /** Possible first characters for the prefix */
+  private final static String POSSIBLE_FIRST_CHARACTERS_PREFIX = "IiEe";
 
   /** ISBN possible meaningful characters */
   public final static String POSSIBLE_CHARACTERS = "0123456789X";
@@ -187,7 +191,8 @@ public class PageElementISBN extends PageElement {
       List<String[]> ignoreIncorrect, boolean checkEAN) {
 
     // Check special places
-    if (contents.charAt(index) == '<') {
+    char currentChar = contents.charAt(index);
+    if (currentChar == '<') {
       ContentsComment comment = analysis.comments().getAt(index);
       if (comment != null) {
         return comment.getEndIndex();
@@ -204,7 +209,7 @@ public class PageElementISBN extends PageElement {
         return tag.getEndIndex();
       }
     }
-    if (contents.charAt(index) == '[') {
+    if (currentChar == '[') {
       PageElementInterwikiLink iwLink = analysis.isInInterwikiLink(index);
       if ((iwLink != null) && (iwLink.getBeginIndex() == index)) {
         return iwLink.getEndIndex();
@@ -212,6 +217,9 @@ public class PageElementISBN extends PageElement {
     }
 
     // Check if it's a potential ISBN
+    if (POSSIBLE_FIRST_CHARACTERS_PREFIX.indexOf(currentChar) < 0) {
+      return index + 1;
+    }
     String prefix = null;
     boolean correctPrefix = false;
     boolean reportOnlyIfCorrect = false;
@@ -220,24 +228,22 @@ public class PageElementISBN extends PageElement {
       correctPrefix = true;
     }
     for (String tmpPrefix : ISBN_INCORRECT_PREFIX) {
-      if ((prefix == null) && (contents.length() >= index + tmpPrefix.length())) {
-        String nextChars = contents.substring(index, index + tmpPrefix.length());
-        if (tmpPrefix.equalsIgnoreCase(nextChars)) {
-          prefix = tmpPrefix;
-          correctPrefix = false;
-        }
+      if ((prefix == null) &&
+          (contents.length() >= index + tmpPrefix.length()) &&
+          ContentsUtil.startsWithIgnoreCase(contents, tmpPrefix, index)) {
+        prefix = tmpPrefix;
+        correctPrefix = false;
       }
     }
     if (checkEAN) {
       if ((index == 0) || (!Character.isLetter(contents.charAt(index - 1)))) {
         for (String tmpPrefix : EAN_PREFIX) {
-          if ((prefix == null) && (contents.length() >= index + tmpPrefix.length())) {
-            String nextChars = contents.substring(index, index + tmpPrefix.length());
-            if (tmpPrefix.equalsIgnoreCase(nextChars)) {
-              prefix = tmpPrefix;
-              reportOnlyIfCorrect = true;
-              correctPrefix = false;
-            }
+          if ((prefix == null) &&
+              (contents.length() >= index + tmpPrefix.length()) &&
+              ContentsUtil.startsWithIgnoreCase(contents, tmpPrefix, index)) {
+            prefix = tmpPrefix;
+            reportOnlyIfCorrect = true;
+            correctPrefix = false;
           }
         }
       }
@@ -312,7 +318,7 @@ public class PageElementISBN extends PageElement {
         while (!done) {
           done = true;
           if (index < contents.length()) {
-            char currentChar = contents.charAt(index);
+            currentChar = contents.charAt(index);
             if (currentChar == ' ') {
               index++;
               spaceFound = true;
@@ -357,7 +363,7 @@ public class PageElementISBN extends PageElement {
       isCorrect &= spaceFound;
       boolean nextCorrect = isCorrect;
       while (!finished && (index < contents.length())) {
-        char currentChar = contents.charAt(index);
+        currentChar = contents.charAt(index);
         if (POSSIBLE_CHARACTERS.indexOf(currentChar) >= 0) {
           if (beginNumber < 0) {
             beginNumber = index;

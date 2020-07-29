@@ -241,4 +241,20 @@ public class ContentsUtil {
     }
     return count;
   }
+
+  // ==========================================================================
+  // String comparison
+  // ==========================================================================
+
+  public static boolean startsWithIgnoreCase(String str, String prefix, int offset) {
+    if (offset + prefix.length() > str.length()) {
+      return false;
+    }
+    for (int index = 0; index < prefix.length(); index++) {
+      if (Character.toLowerCase(str.charAt(offset + index)) != Character.toLowerCase(prefix.charAt(index))) {
+        return false;
+      }
+    }
+    return true;
+  }
 }
