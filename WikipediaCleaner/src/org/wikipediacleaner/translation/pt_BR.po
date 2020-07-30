@@ -16,7 +16,7 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2020-07-27 16:37:03+0000\n"
+"PO-Revision-Date: 2020-07-30 13:42:19+0000\n"
 "Last-Translator: Felipe L. <felipe.idj@hotmail.com>\n"
 "Language-Team: Brazilian Portuguese <pt_BR@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -1415,27 +1415,27 @@ msgstr "Sufixo aceitável"
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm556.java:135
 #, java-format
 msgid "Add inside a {0} tag"
-msgstr ""
+msgstr "Adicionar dentro de uma etiqueta {0}"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm556.java:192
 msgid "Templates in which external links are normal"
-msgstr ""
+msgstr "Predefinições nos quais links externos são normais"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm556.java:196
 msgid "Template in which external links are normal"
-msgstr ""
+msgstr "Predefinição no qual links externos são normais"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm556.java:199
 msgid "Parameter in which external links are normal"
-msgstr ""
+msgstr "Parâmetro em que links externos são normais"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm556.java:204
 msgid "Sections in which external links are normal"
-msgstr ""
+msgstr "Seções nas quais links externos são normais"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm556.java:207
 msgid "Section in which external links are normal"
-msgstr ""
+msgstr "Seção na qual links externos são normais"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmBase.java:295
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmBase.java:298
