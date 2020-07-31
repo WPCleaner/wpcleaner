@@ -49,6 +49,9 @@ public class PageElementExternalLink extends PageElement {
     privateProtocols.add("ftp://");
   }
 
+  /** Possible first characters for the protocol */
+  private final static String POSSIBLE_FIRST_CHARACTERS_PROTOCOL = "hHfF";
+
   /**
    * Analyze contents to check if it matches an external link.
    * 
@@ -207,19 +210,12 @@ public class PageElementExternalLink extends PageElement {
    * @return True if the offset in the text is a possible protocol.
    */
   public static boolean isPossibleProtocol(String text, int offset) {
+    if ((text.length() <= offset) ||
+        POSSIBLE_FIRST_CHARACTERS_PROTOCOL.indexOf(text.charAt(offset)) < 0) {
+      return false;
+    }
     for (String protocol : privateProtocols) {
-      int pos = 0;
-      boolean same = true;
-      while (same && (pos < protocol.length())) {
-        if (offset + pos >= text.length()) {
-          same = false;
-        } else if (protocol.charAt(pos) != Character.toLowerCase(text.charAt(offset + pos))) {
-          same = false;
-        } else {
-          pos++;
-        }
-      }
-      if (same) {
+      if (ContentsUtil.startsWithIgnoreCase(text, protocol, offset)) {
         return true;
       }
     }
