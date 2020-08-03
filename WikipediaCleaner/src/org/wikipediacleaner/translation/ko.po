@@ -14,7 +14,7 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2020-07-27 16:37:02+0000\n"
+"PO-Revision-Date: 2020-08-03 17:55:26+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Korean <ko@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -1419,7 +1419,7 @@ msgstr ""
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm556.java:135
 #, java-format
 msgid "Add inside a {0} tag"
-msgstr ""
+msgstr "{0} 태그 안에 추가"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm556.java:192
 msgid "Templates in which external links are normal"
