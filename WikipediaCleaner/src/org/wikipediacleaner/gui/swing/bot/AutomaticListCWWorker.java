@@ -49,7 +49,7 @@ public class AutomaticListCWWorker extends AutomaticFixWorker {
     super(
         wiki, window,
         selectedAlgorithms, allAlgorithms, selectedNamespaces,
-        extraComment, saveModifications, true, analyzeNonFixed);
+        extraComment, saveModifications, false, analyzeNonFixed);
     this.list = list;
   }
 
