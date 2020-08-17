@@ -64,7 +64,7 @@ public class CheckErrorAlgorithm083 extends CheckErrorAlgorithmBase {
           CheckErrorResult errorResult = createCheckErrorResult(analysis, firstTitle.getBeginIndex(), firstTitle.getEndIndex());
           errorResult.addReplacement(
               PageElementTitle.createTitle(title.getLevel(), firstTitle.getTitle(), firstTitle.getAfterTitle()),
-              true);
+              firstTitle.isCoherent() && title.isCoherent());
           errors.add(errorResult);
           break;
         }
@@ -88,10 +88,57 @@ public class CheckErrorAlgorithm083 extends CheckErrorAlgorithmBase {
    */
   @Override
   protected String internalAutomaticFix(PageAnalysis analysis) {
+    String defaultContents = analysis.getContents();
     if (!analysis.getPage().isArticle() ||
         !analysis.getPage().isInMainNamespace()) {
-      return analysis.getContents();
+      return defaultContents;
     }
-    return fixUsingAutomaticReplacement(analysis);
+
+    // Check first title
+    List<PageElementTitle> titles = analysis.getTitles();
+    if (titles.size() < 2) {
+      return defaultContents;
+    }
+    PageElementTitle firstTitle = titles.get(0);
+    if ((firstTitle.getLevel() < 3) || !firstTitle.isCoherent()) {
+      return defaultContents;
+    }
+
+    // Find first title with smaller level
+    int correctTitleIndex = -1;
+    int delta = 0;
+    for (int titleIndex = 1; (titleIndex < titles.size()) && (correctTitleIndex < 0); titleIndex++) {
+      PageElementTitle title = titles.get(titleIndex);
+      if (title.getLevel() < firstTitle.getLevel()) {
+        if (!title.isCoherent()) {
+          return defaultContents;
+        }
+        correctTitleIndex = titleIndex;
+        delta = firstTitle.getLevel() - title.getLevel();
+      }
+    }
+    if (correctTitleIndex < 0) {
+      return defaultContents;
+    }
+
+    // Construct result
+    int lastIndex = 0;
+    StringBuilder newContents = new StringBuilder();
+    for (int titleIndex = 0; titleIndex < correctTitleIndex; titleIndex++) {
+      PageElementTitle title = titles.get(titleIndex);
+      if (lastIndex < title.getBeginIndex()) {
+        newContents.append(defaultContents.substring(lastIndex, title.getBeginIndex()));
+      }
+      newContents.append(PageElementTitle.createTitle(
+          title.getLevel() - delta,
+          title.getTitle(),
+          title.getAfterTitle()));
+      lastIndex = title.getEndIndex();
+    }
+    if (lastIndex < defaultContents.length()) {
+      newContents.append(defaultContents.substring(lastIndex));
+    }
+
+    return newContents.toString();
   }
 }
