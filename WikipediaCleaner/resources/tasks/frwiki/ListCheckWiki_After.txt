@@ -14,6 +14,7 @@ FixListCheckWiki Projet:Correction_syntaxique/Analyse_017 17
 FixListCheckWiki Projet:Correction_syntaxique/Analyse_018 18
 FixListCheckWiki Projet:Correction_syntaxique/Analyse_019 19
 FixListCheckWiki Projet:Correction_syntaxique/Analyse_022 22
+FixListCheckWiki Projet:Correction_syntaxique/Analyse_025 25
 FixListCheckWiki Projet:Correction_syntaxique/Analyse_046 46
 FixListCheckWiki Projet:Correction_syntaxique/Analyse_052 52
 FixListCheckWiki Projet:Correction_syntaxique/Analyse_055 532
