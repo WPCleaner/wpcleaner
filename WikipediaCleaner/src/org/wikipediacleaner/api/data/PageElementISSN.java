@@ -772,7 +772,8 @@ public class PageElementISSN extends PageElement {
       List<Replacement> result,
       String prefix, String cleanedISSN,
       boolean automatic) {
-    if (computeChecksum(cleanedISSN) != cleanedISSN.charAt(cleanedISSN.length() - 1)) {
+    if (cleanedISSN.isEmpty() ||
+        (computeChecksum(cleanedISSN) != cleanedISSN.charAt(cleanedISSN.length() - 1))) {
       return;
     }
     addCorrectISSN(result, prefix + cleanedISSN, automatic);
