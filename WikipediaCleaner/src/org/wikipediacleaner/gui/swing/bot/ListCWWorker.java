@@ -707,14 +707,31 @@ public class ListCWWorker extends BasicWorker {
       this.page = page;
     }
 
+    /**
+     * Perform a full analysis of a given page.
+     * 
+     * @param analyzedPage Given page.
+     * @return Analysis.
+     */
+    private PageAnalysis performFullPageAnalysis(Page analyzedPage) {
+      PageAnalysis analysis = null;
+      try {
+        analysis = analyzedPage.getAnalysis(analyzedPage.getContents(), false);
+        analysis.performFullPageAnalysis(analysisTime);
+      } catch (Exception e) {
+        logCW.error("Error analyzing page {}: {}", analyzedPage.getTitle(), e.getMessage(), e);
+        throw e;
+      }
+      return analysis;
+    }
+
     /* (non-Javadoc)
      * @see java.util.concurrent.Callable#call()
      */
     @Override
     public Page call() throws APIException {
       EnumWikipedia wiki = getWikipedia();
-      PageAnalysis analysis = page.getAnalysis(page.getContents(), false);
-      analysis.performFullPageAnalysis(analysisTime);
+      PageAnalysis analysis = performFullPageAnalysis(page);
       Page currentPage = null;
       PageAnalysis currentAnalysis = null; 
       for (AlgorithmInformation algorithm : selectedAlgorithms) {
@@ -742,8 +759,7 @@ public class ListCWWorker extends BasicWorker {
                 if (currentPage.getContents().equals(page.getContents())) {
                   currentAnalysis = analysis; 
                 } else {
-                  currentAnalysis = currentPage.getAnalysis(currentPage.getContents(), false);
-                  currentAnalysis.performFullPageAnalysis(analysisTime);
+                  currentAnalysis = performFullPageAnalysis(currentPage);
                 }
               }
               if (Boolean.FALSE.equals(currentPage.isExisting())) {
