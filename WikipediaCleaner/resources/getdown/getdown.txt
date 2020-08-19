@@ -66,6 +66,7 @@ resource = libs/NOTICE_xerces.txt
 resource = libs/getdown-launcher.jar
 resource = tasks/cswiki/_Weekly.txt
 resource = tasks/enwiki/_Common.txt
+resource = tasks/enwiki/_Common_Other.txt
 resource = tasks/enwiki/_Weekly.txt
 resource = tasks/enwiki/ISBN_ISSN.txt
 resource = tasks/enwiki/ListCheckWiki.txt

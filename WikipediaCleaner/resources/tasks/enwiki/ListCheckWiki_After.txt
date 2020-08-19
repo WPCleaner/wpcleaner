@@ -1,3 +1,4 @@
+# Main namespace
 DoTasks _Common.txt
 Set Namespaces 0
 
@@ -46,4 +47,12 @@ FixListCheckWiki Wikipedia:CHECKWIKI/WPC_551_dump 551
 Set Prefix [[User:WikiCleanerBot#T15|Bot_T18_CW#553]]
 FixListCheckWiki Wikipedia:CHECKWIKI/WPC_553_dump 553
 
+# File namespace
+DoTasks _Common_Other.txt
+Set Namespaces 6
+
+Set Prefix [[User:WikiCleanerBot#T16|Bot_T16_CW#92]]
+FixListCheckWiki Wikipedia:CHECKWIKI/WPC_092_dump 92
+
+# Other tasks
 DoTasks ISBN_ISSN.txt
