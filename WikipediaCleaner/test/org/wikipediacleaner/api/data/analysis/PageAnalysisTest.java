@@ -9,33 +9,17 @@ package org.wikipediacleaner.api.data.analysis;
 
 import static org.junit.Assert.*;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-import org.apache.commons.io.FileUtils;
 import org.junit.Test;
-import org.wikipediacleaner.api.constants.EnumCaseSensitiveness;
-import org.wikipediacleaner.api.constants.EnumWikipedia;
-import org.wikipediacleaner.api.data.DataManager;
-import org.wikipediacleaner.api.data.Interwiki;
-import org.wikipediacleaner.api.data.Language;
-import org.wikipediacleaner.api.data.MagicWord;
-import org.wikipediacleaner.api.data.Namespace;
-import org.wikipediacleaner.api.data.Page;
+import org.wikipediacleaner.api.constants.EnumWikipediaUtils;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.contents.ContainerComment;
 import org.wikipediacleaner.api.data.contents.ContentsElement;
 
 
 /**
- * Test class for comments inside contents.
+ * Test class for page analysis.
  */
 public class PageAnalysisTest {
 
@@ -46,7 +30,8 @@ public class PageAnalysisTest {
   public void testSimplePage() {
 
     // Create contents and analysis
-    PageAnalysis analysis = analyzeAndTestPage("PageAnalysisTest_1");
+    PageAnalysis analysis = PageAnalysisUtils.analyzeAndTestPage(
+        EnumWikipediaUtils.getEN(), "PageAnalysisTest_1");
 
     // Check elements
     checkComments(analysis, 1);
@@ -77,10 +62,11 @@ public class PageAnalysisTest {
    * Test on a big page from English wikipedia.
    */
   @Test
-  public void testBigPageEn() {
+  public void testEn_2020_in_science() {
 
     // Create contents and analysis
-    PageAnalysis analysis = analyzeAndTestPage("PageAnalysisTest_en_2020_in_science");
+    PageAnalysis analysis = PageAnalysisUtils.analyzeAndTestPage(
+        EnumWikipediaUtils.getEN(), "PageAnalysisTest_en_2020_in_science");
 
     // Check elements
     checkComments(analysis, 5);
@@ -107,61 +93,37 @@ public class PageAnalysisTest {
   }
 
   /**
-   * Perform an analysis and some global tests.
-   * 
-   * @param fileName File name.
-   * @return Page analysis.
+   * Test on a big page from English wikipedia.
    */
-  private PageAnalysis analyzeAndTestPage(String fileName) {
-
-    // Configure wiki
-    EnumWikipedia wiki = EnumWikipedia.EN;
-
-    List<Namespace> namespaces = new ArrayList<>();
-    Namespace categoryNS = new Namespace(
-        Integer.toString(Namespace.CATEGORY),
-        "Category", "Category",
-        EnumCaseSensitiveness.FIRST_LETTER, true);
-    namespaces.add(categoryNS);
-    Namespace fileNS = new Namespace(
-        Integer.toString(Namespace.IMAGE),
-        "File", "File",
-        EnumCaseSensitiveness.FIRST_LETTER, true);
-    fileNS.addAlias("Image");
-    namespaces.add(fileNS);
-    wiki.getWikiConfiguration().setNamespaces(namespaces);
-
-    List<Interwiki> interwikis = new ArrayList<>();
-    interwikis.add(new Interwiki("en", true, "English", "https://en.wikipedia.org/wiki/$1"));
-    interwikis.add(new Interwiki("fr", true, "français", "https://fr.wikipedia.org/wiki/$1"));
-    wiki.getWikiConfiguration().setInterwikis(interwikis);
-
-    List<Language> languages = new ArrayList<>();
-    languages.add(new Language("en", "English"));
-    languages.add(new Language("fr", "français"));
-    wiki.getWikiConfiguration().setLanguages(languages);
-
-    Map<String, MagicWord> magicWords = new HashMap<>();
-    magicWords.put(MagicWord.PAGE_NAME, new MagicWord(MagicWord.PAGE_NAME, Collections.singletonList("PAGENAME"), true));
-    magicWords.put(MagicWord.REDIRECT, new MagicWord(MagicWord.REDIRECT, Collections.singletonList("#REDIRECT"), false));
-    List<String> thumbAliases = new ArrayList<>();
-    thumbAliases.add("thumb");
-    thumbAliases.add("thumbnail");
-    magicWords.put(MagicWord.IMG_THUMBNAIL, new MagicWord(MagicWord.IMG_THUMBNAIL, thumbAliases, true));
-    magicWords.put(MagicWord.TOC,  new MagicWord(MagicWord.TOC, Collections.singletonList("__TOC__"), false));
-    wiki.getWikiConfiguration().setMagicWords(magicWords);
+  @Test
+  public void testEn_Windows_10_version_history() {
 
     // Create contents and analysis
-    String text = readFile(fileName + ".txt");
-    Page testPage = DataManager.getPage(wiki, fileName, null, null, null);
-    PageAnalysis analysis = new PageAnalysis(testPage, text);
-    AnalysisPerformance perf = new AnalysisPerformance();
-    analysis.performFullPageAnalysis(perf);
+    PageAnalysis analysis = PageAnalysisUtils.analyzeAndTestPage(
+        EnumWikipediaUtils.getEN(), "PageAnalysisTest_en_Windows_10_version_history");
 
-    // Display performance
-    System.out.println(fileName + ": " + perf.toMilliSeconds());
-
-    return analysis;
+    // Check elements
+    checkComments(analysis, 1);
+    checkTags(analysis, 3801);
+    checkTags(analysis, PageElementTag.TAG_HTML_SMALL, 4);
+    checkInternalLinks(analysis, 649);
+    checkImages(analysis, 0);
+    checkCategories(analysis, 4);
+    checkInterwikiLinks(analysis, 0);
+    checkLanguageLinks(analysis, 0);
+    checkFunctions(analysis, 0);
+    checkMagicWords(analysis, 0);
+    checkTemplates(analysis, 1120);
+    checkParameters(analysis, 0);
+    checkTitles(analysis, 18);
+    checkExternalLinks(analysis, 1437);
+    checkISBN(analysis, 0);
+    checkISSN(analysis, 0);
+    checkPMID(analysis, 0);
+    checkRFC(analysis, 0);
+    checkTables(analysis, 23);
+    checkListItems(analysis, 594);
+    checkParagraphs(analysis, 205);
   }
 
   /**
@@ -396,23 +358,5 @@ public class PageAnalysisTest {
     assertEquals(
         "List of " + name + " doesn't have " + expectedCount + " " + name,
         expectedCount, list.size());
-  }
-
-  /**
-   * Read a test file.
-   * 
-   * @param fileName File name.
-   * @return Contents of the test file.
-   */
-  private String readFile(String fileName) {
-    File testFile = new File("test/org/wikipediacleaner/api/data/analysis/" + fileName);
-    try {
-      return FileUtils.readFileToString(testFile, StandardCharsets.UTF_8);
-    } catch (FileNotFoundException e) {
-      fail("Unable to open test file: " + testFile.getAbsolutePath());
-    } catch (IOException e) {
-      fail("Error reading file: " + testFile + "\n" + e.getMessage());
-    }
-    return null;
   }
 }
