@@ -10,7 +10,9 @@ package org.wikipediacleaner.api.check.algorithm;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.wikipediacleaner.api.algorithm.AlgorithmParameter;
 import org.wikipediacleaner.api.algorithm.AlgorithmParameterElement;
@@ -162,10 +164,12 @@ public class CheckErrorAlgorithm028 extends CheckErrorAlgorithmBase {
     }
 
     // Find tables ending by a template
-    for (String templateName : templateNames) {
-      List<PageElementTemplate> templates = analysis.getTemplates(templateName);
+    if (!templateNames.isEmpty()) {
+      List<PageElementTemplate> templates = analysis.getTemplates();
       for (PageElementTemplate template : templates) {
-        list.add(new TableElement(template.getBeginIndex(), template.getEndIndex(), false));
+        if (templateNames.contains(template.getTemplateName())) {
+          list.add(new TableElement(template.getBeginIndex(), template.getEndIndex(), false));
+        }
       }
     }
 
@@ -232,7 +236,7 @@ public class CheckErrorAlgorithm028 extends CheckErrorAlgorithmBase {
   }
 
   /** Templates that can replace the end of a table */
-  private final List<String> templateNames = new ArrayList<>();
+  private final Set<String> templateNames = new HashSet<>();
 
   /**
    * Build the list of parameters for this algorithm.

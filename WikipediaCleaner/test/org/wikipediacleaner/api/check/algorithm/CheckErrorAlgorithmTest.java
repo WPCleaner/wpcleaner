@@ -48,7 +48,7 @@ public class CheckErrorAlgorithmTest {
     }
     timeSpent /= 1000000;
     System.out.println("Algorithm " + algorithmNumber + " on " + fileName + "(x" + times + "): " + timeSpent + " ms");
-    assertTrue("Algorithm " + algorithmNumber + " needs performance improvements", timeSpent <= max);
+    assertTrue("Algorithm " + algorithmNumber + " needs performance improvements (" + timeSpent + "ms)", timeSpent <= max);
   }
 
 }
