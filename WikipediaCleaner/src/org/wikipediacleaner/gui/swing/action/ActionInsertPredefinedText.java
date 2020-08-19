@@ -377,8 +377,7 @@ public class ActionInsertPredefinedText implements ActionListener {
     PageAnalysis analysis = page.getAnalysis(contents, false);
 
     // Check that the template isn't already applied
-    List<PageElementTemplate> templates = analysis.getTemplates(templateName);
-    if ((templates != null) && (!templates.isEmpty())) {
+    if (analysis.hasTemplate(templateName) != null) {
       return;
     }
 
@@ -386,7 +385,7 @@ public class ActionInsertPredefinedText implements ActionListener {
     int crBefore = 0;
     int crAfter = 2;
     int index = contents.length();
-    templates = analysis.getTemplates();
+    List<PageElementTemplate> templates = analysis.getTemplates();
     if ((templates != null) && (!templates.isEmpty())) {
       index = templates.get(0).getBeginIndex();
       crAfter = 1;

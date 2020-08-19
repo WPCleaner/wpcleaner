@@ -20,7 +20,6 @@ import org.wikipediacleaner.api.algorithm.AlgorithmParameterElement;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.constants.WPCConfiguration;
 import org.wikipediacleaner.api.data.PageElementTag;
-import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
 import org.wikipediacleaner.i18n.GT;
 
@@ -104,8 +103,7 @@ public class CheckErrorAlgorithm514 extends CheckErrorAlgorithmBase {
             for (String[] elements : refByTemplate) {
               for (int numElement = 1; numElement < elements.length; numElement++) {
                 if (elements[numElement].equals(nameValue)) {
-                  List<PageElementTemplate> templates = analysis.getTemplates(elements[0]);
-                  if ((templates != null) && !templates.isEmpty()) {
+                  if (analysis.hasTemplate(elements[0]) != null) {
                     found = true;
                   }
                 }

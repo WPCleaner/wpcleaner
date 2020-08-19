@@ -1562,6 +1562,25 @@ public class PageAnalysis {
   }
 
   /**
+   * @param name Template name.
+   * @return First template with this name in the page analysis (or null if no such template).
+   */
+  public PageElementTemplate hasTemplate(String name) {
+    if (name == null) {
+      return null;
+    }
+    List<PageElementTemplate> tmpTemplates = getTemplates();
+    if (tmpTemplates != null) {
+      for (PageElementTemplate template : tmpTemplates) {
+        if (Page.areSameTitle(name, template.getTemplateName())) {
+          return template;
+        }
+      }
+    }
+    return null;
+  }
+
+  /**
    * @param currentIndex Current index.
    * @return Next template.
    */

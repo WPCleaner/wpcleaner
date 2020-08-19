@@ -31,7 +31,6 @@ import org.wikipediacleaner.api.constants.WPCConfigurationStringList;
 import org.wikipediacleaner.api.data.AutomaticFormatter;
 import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.Page;
-import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
 import org.wikipediacleaner.gui.swing.Controller;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
@@ -144,8 +143,7 @@ public abstract class AutomaticFixWorker extends BasicWorker {
     }
     for (String[] nobotTemplate : nobotTemplates) {
       String templateName = nobotTemplate[0];
-      List<PageElementTemplate> templates = analysis.getTemplates(templateName);
-      if ((templates != null) && (!templates.isEmpty())) {
+      if (analysis.hasTemplate(templateName) != null) {
         return true;
       }
     }

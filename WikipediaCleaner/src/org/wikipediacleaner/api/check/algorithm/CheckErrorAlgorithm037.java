@@ -20,7 +20,6 @@ import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.constants.WPCConfiguration;
 import org.wikipediacleaner.api.data.PageElementCategory;
 import org.wikipediacleaner.api.data.PageElementFunction;
-import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.PageElementTitle;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
 import org.wikipediacleaner.i18n.GT;
@@ -127,8 +126,7 @@ public class CheckErrorAlgorithm037 extends CheckErrorAlgorithmBase {
       String templates = getSpecificProperty("templates", true, false, false);
       if (templates != null) {
         for (String template : templatesList) {
-          List<PageElementTemplate> foundTemplates = analysis.getTemplates(template);
-          if ((foundTemplates != null) && (foundTemplates.size() > 0)) {
+          if (analysis.hasTemplate(template) != null) {
             automatic = false;
             errorLevel = ErrorLevel.WARNING;
           }

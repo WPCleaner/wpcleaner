@@ -594,9 +594,7 @@ public abstract class UpdateWarningTools {
       return false;
     }
     for (String todoTemplate : todoTemplates) {
-      List<PageElementTemplate> templates = talkAnalysis.getTemplates(todoTemplate);
-      PageElementTemplate templateTmp = (templates != null) && (templates.size() > 0) ?
-          templates.get(0) : null;
+      PageElementTemplate templateTmp = talkAnalysis.hasTemplate(todoTemplate);
       if (templateTmp != null) {
         if ((templateTodo == null) || (templateTmp.getBeginIndex() < templateTodo.getBeginIndex())) {
           templateTodo = templateTmp;
@@ -821,9 +819,9 @@ public abstract class UpdateWarningTools {
     // Search "To do" in the talk page
     PageElementTemplate templateTodo = null;
     for (String templateName : todoTemplates) {
-      List<PageElementTemplate> templates = analysis.getTemplates(templateName);
-      if ((templates != null) && (templates.size() > 0)) {
-        templateTodo = templates.get(0);
+      PageElementTemplate template = analysis.hasTemplate(templateName);
+      if (template != null) {
+        templateTodo = template;
       }
     }
 
@@ -971,9 +969,9 @@ public abstract class UpdateWarningTools {
     List<String> todoTemplates = configuration.getStringList(WPCConfigurationStringList.TODO_TEMPLATES);
     if (todoTemplates != null) {
       for (String templateName : todoTemplates) {
-        List<PageElementTemplate> templates = analysis.getTemplates(templateName);
-        if ((templates != null) && (templates.size() > 0)) {
-          templateTodo = templates.get(0);
+        PageElementTemplate template = analysis.hasTemplate(templateName);
+        if (template != null) {
+          templateTodo = template;
         }
       }
     }
@@ -1142,9 +1140,9 @@ public abstract class UpdateWarningTools {
     if (todoLinkTemplates != null) {
       PageAnalysis analysis = talkPage.getAnalysis(contents, true);
       for (String todoLink : todoLinkTemplates) {
-        List<PageElementTemplate> templates = analysis.getTemplates(todoLink);
-        if ((templates != null) && (templates.size() > 0)) {
-          templateTodoLink = templates.get(0);
+        PageElementTemplate template = analysis.hasTemplate(todoLink);
+        if (template != null) {
+          templateTodoLink = template;
         }
       }
     }
@@ -1156,15 +1154,10 @@ public abstract class UpdateWarningTools {
    * @return First warning template in the page.
    */
   private final PageElementTemplate getFirstWarningTemplate(PageAnalysis analysis) {
-    PageElementTemplate template = null;
-    if (analysis != null) {
-      List<PageElementTemplate> templates = analysis.getTemplates(
-          configuration.getString(getWarningTemplate()));
-      if ((templates != null) && (!templates.isEmpty())) {
-        template = templates.get(0);
-      }
+    if (analysis == null) {
+      return null;
     }
-    return template;
+    return analysis.hasTemplate(configuration.getString(getWarningTemplate()));
   }
 
   // ==========================================================================
