@@ -10,7 +10,9 @@ package org.wikipediacleaner.api.check.algorithm;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.wikipediacleaner.api.algorithm.AlgorithmParameter;
 import org.wikipediacleaner.api.algorithm.AlgorithmParameterElement;
@@ -199,10 +201,12 @@ public class CheckErrorAlgorithm061 extends CheckErrorAlgorithmBase {
     }
 
     // Retrieve references defined by templates
-    for (String templateName : templatesName) {
-      List<PageElementTemplate> templates = analysis.getTemplates(templateName.trim());
-      if (templates != null) {
-        refs.addAll(templates);
+    if (!templatesName.isEmpty()) {
+      List<PageElementTemplate> templates = analysis.getTemplates();
+      for (PageElementTemplate template : templates) {
+        if (templatesName.contains(template.getTemplateName())) {
+          refs.add(template);
+        }
       }
     }
 
@@ -264,7 +268,7 @@ public class CheckErrorAlgorithm061 extends CheckErrorAlgorithmBase {
   private String separator = "";
 
   /** Templates that can replace a tag */
-  private final List<String> templatesName = new ArrayList<>();
+  private final Set<String> templatesName = new HashSet<>();
 
   /**
    * Build the list of parameters for this algorithm.
