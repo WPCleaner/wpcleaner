@@ -17,7 +17,7 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2020-07-27 16:37:04+0000\n"
+"PO-Revision-Date: 2020-08-24 13:38:18+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Chinese (Simplified) <zh_CN@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -321,9 +321,8 @@ msgid "To report control characters only in templates"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:357
-#, fuzzy
 msgid "To ignore some control characters"
-msgstr "删除所有的控制字符"
+msgstr "忽略部分的控制字符"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:360
 msgid "To ignore control character with hexadecimal code equal to XX"
@@ -529,9 +528,8 @@ msgid "A list of templates that should be ignored"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm059.java:228
-#, fuzzy
 msgid "A template that should be ignored"
-msgstr "应该被替换的文字"
+msgstr "应该被忽略的模板"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm061.java:277
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm061.java:280
@@ -633,9 +631,8 @@ msgstr "您可以用模板{0}来替换链接。"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:415
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:419
-#, fuzzy
 msgid "A template that can be used instead of the link to an other language."
-msgstr "可以用来代替星号的模板。"
+msgstr "可以用来代替其他语言链接的模板。"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:422
 msgid "Parameter name for the local page name"
@@ -827,14 +824,12 @@ msgid "A list of templates that can be used to replace &lt;center&gt; tags"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm085.java:357
-#, fuzzy
 msgid "Template that can be used to replace &lt;center&gt; tags"
-msgstr "可以用来代替{0}标签的模板"
+msgstr "可以用来代替 &lt;center&gt; 标签的模板"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm085.java:360
-#, fuzzy
 msgid "Name of the parameter to use"
-msgstr "监视模板"
+msgstr "要使用的参数的名称"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm090.java:692
 msgid "What text should be displayed by the link?"
@@ -992,14 +987,12 @@ msgid "An internal link that can be extracted when at the beginning of the exter
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm513.java:879
-#, fuzzy
 msgid "A list of links that can be extracted when at the end of the external link"
-msgstr "监视模板"
+msgstr "可以在外部链接结束时提取的链接列表"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm513.java:882
-#, fuzzy
 msgid "An internal link that can be extracted when at the end of the external link"
-msgstr "监视模板"
+msgstr "在外部链接结束时可以提取的内部链接"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm513.java:886
 msgid "A list of links for which the external link can be removed it it takes all the text"
@@ -1010,9 +1003,8 @@ msgid "An internal link for which the external link can be removed it it takes a
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm513.java:893
-#, fuzzy
 msgid "Value of the URL to remove the external link"
-msgstr "将它们转换为内部链接"
+msgstr "用于删除外部链接的 URL 的值"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm513.java:899
 msgid "A list of templates that create an internal link"
@@ -1060,9 +1052,8 @@ msgid "A list of texts that can be before the internal link"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm513.java:943
-#, fuzzy
 msgid "Text that can be before the internal link"
-msgstr "将它们转换为内部链接"
+msgstr "可以在内部链接之前的文本"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm513.java:946
 msgid "True if finding this text means that the replacement can be automatic"
@@ -1144,9 +1135,8 @@ msgid "Both values are equal"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm524.java:135
-#, fuzzy
 msgid "Other value is empty"
-msgstr "其它语言"
+msgstr "其它值为空"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm524.java:137
 #, java-format
@@ -1189,19 +1179,17 @@ msgid "Value of the paramter which can be safely ignored"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm525.java:132
-#, fuzzy
 msgid "Use an anchor template?"
-msgstr "未使用的模板"
+msgstr "使用锚点模板？"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm525.java:232
-#, fuzzy, java-format
+#, java-format
 msgid "A template that can replace a {0}"
 msgstr "可以用来代替{0}标签的模板"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm525.java:235
-#, fuzzy
 msgid "Name of the parameter to be used for the anchor identifier"
-msgstr "监视模板"
+msgstr "要用于锚点标识符的参数的名称"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm525.java:239
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm541.java:457
@@ -1221,9 +1209,8 @@ msgid "Text added after the link to ask for help."
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm526.java:419
-#, fuzzy
 msgid "Description of the action"
-msgstr "描述"
+msgstr "动作描述"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm526.java:427
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm526.java:430
@@ -1259,9 +1246,8 @@ msgid "Automatic replacements of ISBN"
 msgstr "对于ISBN的自动替换"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm529.java:382
-#, fuzzy
 msgid "Name of the template to use for ISBN"
-msgstr "监视模板"
+msgstr "用于 ISBN 的模板的名称"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm529.java:385
 msgid "Text before the ISBN to be removed in the replacement"
@@ -1280,19 +1266,16 @@ msgid "A list of templates that can't be used inside a reference"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm531.java:133
-#, fuzzy
 msgid "Name of a template that can't be used inside a reference"
-msgstr "可以用来代替星号的模板。"
+msgstr "在引用中不能使用的模板的名称"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm532.java:35
-#, fuzzy
 msgid "Fix tags"
 msgstr "修复分类"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm538.java:28
-#, fuzzy
 msgid "Remove whitespace characters"
-msgstr "删除所有的控制字符"
+msgstr "删除空白字符"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm540.java:44
 msgid "Fix bold and italic"
@@ -1315,9 +1298,8 @@ msgid "preferred for user input"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm541.java:247
-#, fuzzy
 msgid "preferred for variables"
-msgstr "无可用错误"
+msgstr "变量的首选"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm541.java:251
 msgid "preferred for output, function and tag names, etc."
@@ -1337,9 +1319,9 @@ msgstr ""
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm541.java:450
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm541.java:471
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm541.java:492
-#, fuzzy, java-format
+#, java-format
 msgid "Template for replacing {0} tag"
-msgstr "可以用来代替{0}标签的模板"
+msgstr "用来代替{0}标签的模板"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm541.java:453
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm541.java:474
@@ -1350,18 +1332,16 @@ msgstr ""
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm541.java:461
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm541.java:482
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm541.java:503
-#, fuzzy
 msgid "Description of the template"
-msgstr "描述"
+msgstr "模板描述"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm544.java:213
 msgid "Pairs of templates: for each opening template, all possible closing templates"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm544.java:217
-#, fuzzy
 msgid "Name of the opening template in the pair"
-msgstr "监视模板"
+msgstr "对中打开模板的名称"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm544.java:220
 msgid "Name of a closing template in the pair"
@@ -1384,27 +1364,24 @@ msgid "Name of a template with deprecated parameter"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm545.java:205
-#, fuzzy
 msgid "Name a of a deprecated parameter"
-msgstr "监视模板"
+msgstr "命名已弃用参数的 a"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm545.java:208
 msgid "Textual explanation about the deprecated parameter"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm546.java:134
-#, fuzzy
 msgid "List of categorizing templates"
-msgstr "未分类模板"
+msgstr "分类模板列表"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm546.java:138
 msgid "Name of a template that categorizes articles"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm546.java:141
-#, fuzzy
 msgid "Name of the parameter that triggers the categorization"
-msgstr "监视模板"
+msgstr "触发分类的参数的名称"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm546.java:145
 msgid "Value of the parameter that triggers the categorization"
@@ -1417,9 +1394,8 @@ msgstr "要忽略的链接"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm548.java:356
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm550.java:198
-#, fuzzy
 msgid "Link to ignore"
-msgstr "链接到{0}"
+msgstr "要忽略的链接"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm552.java:265
 msgid "Templates to ignore"
@@ -2079,9 +2055,8 @@ msgid "WPCleaner installer"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:182
-#, fuzzy
 msgid "Configuration"
-msgstr "正在加载配置"
+msgstr "配置"
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:245
 msgid "Installation folder"
@@ -2195,9 +2170,9 @@ msgid "Creating {0}"
 msgstr "正在创建{0}"
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:861
-#, fuzzy, java-format
+#, java-format
 msgid "Unable to create file {0}"
-msgstr "无法替换字符[{0}]"
+msgstr "无法创建文件{0}"
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:862
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:893
@@ -2209,9 +2184,9 @@ msgid "Error: {0}"
 msgstr "错误：{0}"
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:871
-#, fuzzy, java-format
+#, java-format
 msgid "Installing {0}"
-msgstr "正在使用{0}"
+msgstr "安装{0}"
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:886
 msgid "Problem running getdown installer"
@@ -2416,9 +2391,8 @@ msgid "Special lists"
 msgstr "特殊列表"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:816
-#, fuzzy
 msgid "Linter categories"
-msgstr "监视分类"
+msgstr "Linter 分类"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:825
 msgid "Generate lists"
@@ -3873,9 +3847,8 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/deadlink/DeadLinkWorker.java:98
 #: org/wikipediacleaner/gui/swing/linter/LinterWorker.java:85
-#, fuzzy
 msgid "Retrieving page contents"
-msgstr "正在检索内容"
+msgstr "正在检索页面内容"
 
 #: org/wikipediacleaner/gui/swing/deadlink/DeadLinkWorker.java:112
 #: org/wikipediacleaner/gui/swing/deadlink/DeadLinkWorker.java:124
@@ -4209,9 +4182,8 @@ msgid "List items"
 msgstr "列举项目"
 
 #: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:251
-#, fuzzy
 msgid "Table"
-msgstr "標題"
+msgstr "表格"
 
 #: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:257
 msgid "Reference"
@@ -4357,9 +4329,8 @@ msgid "Act as user:"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:239
-#, fuzzy
 msgid "Signature:"
-msgstr "&签名"
+msgstr "签名："
 
 #: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:270
 msgid "Look & Feel"
