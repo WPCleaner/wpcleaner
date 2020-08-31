@@ -26,7 +26,7 @@ FixListCheckWiki Wikipedia:CHECKWIKI/WPC_092_dump 92
 Set Prefix [[User:WikiCleanerBot#T2|Bot_T2_CW#106]]
 FixListCheckWiki Wikipedia:CHECKWIKI/WPC_106_dump 106
 
-Set Prefix [[User:WikiCleanerBot#T15|Bot_T17_CW#513]]
+Set Prefix [[User:WikiCleanerBot#T17|Bot_T17_CW#513]]
 FixListCheckWiki Wikipedia:CHECKWIKI/WPC_513_dump 513
 
 Set Prefix [[User:WikiCleanerBot#T4|Bot_T4_CW#543]]
@@ -44,7 +44,7 @@ FixListCheckWiki Wikipedia:CHECKWIKI/WPC_550_dump 550
 Set Prefix [[User:WikiCleanerBot#T15|Bot_T15_CW#551]]
 FixListCheckWiki Wikipedia:CHECKWIKI/WPC_551_dump 551
 
-Set Prefix [[User:WikiCleanerBot#T15|Bot_T18_CW#553]]
+Set Prefix [[User:WikiCleanerBot#T18|Bot_T18_CW#553]]
 FixListCheckWiki Wikipedia:CHECKWIKI/WPC_553_dump 553
 
 # File namespace
