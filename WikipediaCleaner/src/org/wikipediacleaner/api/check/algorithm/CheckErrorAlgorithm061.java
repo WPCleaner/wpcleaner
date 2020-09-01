@@ -17,8 +17,8 @@ import java.util.Set;
 import org.wikipediacleaner.api.algorithm.AlgorithmParameter;
 import org.wikipediacleaner.api.algorithm.AlgorithmParameterElement;
 import org.wikipediacleaner.api.check.CheckErrorResult;
-import org.wikipediacleaner.api.check.SpecialCharacters;
 import org.wikipediacleaner.api.constants.WPCConfiguration;
+import org.wikipediacleaner.api.data.CharacterUtils;
 import org.wikipediacleaner.api.data.PageElement;
 import org.wikipediacleaner.api.data.PageElementFullTag;
 import org.wikipediacleaner.api.data.PageElementTag;
@@ -33,6 +33,9 @@ import org.wikipediacleaner.i18n.GT;
  * Error 61: Reference with punctuation
  */
 public class CheckErrorAlgorithm061 extends CheckErrorAlgorithmBase {
+
+  /** Punctuation characters looked for by the analysis */
+  private static final String PUNCTUATION = ",.;";
 
   public CheckErrorAlgorithm061() {
     super("Reference before punctuation");
@@ -66,123 +69,154 @@ public class CheckErrorAlgorithm061 extends CheckErrorAlgorithmBase {
     while (refIndex < maxRefs) {
 
       // Group references separated only by punctuation characters
-      int firstRefIndex = refIndex;
-      PageElement firstRef = refs.get(firstRefIndex);
-      int lastRefIndex = PageElement.groupElements(refs, firstRefIndex, contents, ",;.\'", separator);
-      PageElement lastRef = refs.get(lastRefIndex);
+      int lastRefIndex = PageElement.groupElements(refs, refIndex, contents, ",;.\'", separator);
+      result |= analyzeGroupOfTags(analysis, contents, errors, refs, refIndex, lastRefIndex);
       refIndex = lastRefIndex + 1;
-
-      // Remove possible whitespace characters after last reference
-      int tmpIndex = lastRef.getEndIndex();
-      boolean finished = false;
-      while (!finished) {
-        if (tmpIndex >= contents.length()) {
-          finished = true;
-        } else if (contents.charAt(tmpIndex) == '\n') {
-          if ((tmpIndex + 1 < contents.length()) &&
-              ((Character.isWhitespace(contents.charAt(tmpIndex + 1))) ||
-               (contents.charAt(tmpIndex + 1) == '*') || // List
-               (contents.charAt(tmpIndex + 1) == '#') || // List
-               (contents.charAt(tmpIndex + 1) == ';') || // Definition
-               (contents.charAt(tmpIndex + 1) == ':') || // Definition
-               (contents.charAt(tmpIndex + 1) == '!'))) { // Table heading
-            finished = true;
-          } else {
-            tmpIndex++;
-          }
-        } else if (Character.isWhitespace(contents.charAt(tmpIndex))) {
-          tmpIndex++;
-        } else {
-          finished = true;
-        }
-      }
-
-      // Check if next character is a punctuation
-      int firstPunctuationIndex = -1;
-      char punctuation = ' ';
-      if (tmpIndex < contents.length()) {
-        punctuation = contents.charAt(tmpIndex);
-        if (SpecialCharacters.isPunctuation(punctuation)) {
-          // TODO: Once tables are managed by parser, remove the this trick that prevent detection before "!!"
-          if ((punctuation != '!') ||
-              (tmpIndex + 1 >= contents.length()) ||
-              (contents.charAt(tmpIndex + 1) != punctuation)) {
-            firstPunctuationIndex = tmpIndex;
-
-            // Check if the punctuation after is multiple
-            while ((tmpIndex < contents.length()) &&
-                   (contents.charAt(tmpIndex) == punctuation)) {
-              tmpIndex++;
-            }
-          }
-        }
-      }
-
-      // Check if error should be reported
-      boolean report = false;
-      if (firstPunctuationIndex >= 0) {
-        if (tmpIndex >= contents.length()) {
-          report = true;
-        } else {
-          char nextChar = contents.charAt(tmpIndex);
-          if (Character.isWhitespace(nextChar)) {
-            report = true;
-          }
-        }
-      }
-
-      // Error found
-      if (report) {
-        if (errors == null) {
-          return true;
-        }
-        result = true;
-
-        int beginIndex = firstRef.getBeginIndex();
-        int endIndex = tmpIndex;
-        String allPunctuations = contents.substring(firstPunctuationIndex, endIndex);
-
-        // Construct list of tags
-        String replace = PageElement.createListOfElements(
-            refs, firstRefIndex, lastRefIndex, contents, separator);
-        String textReplace = createReducedListOfRefs(
-            lastRefIndex - firstRefIndex + 1, separator);
-
-        // Check for possible punctuation before tags
-        tmpIndex = beginIndex - 1;
-        while ((tmpIndex >= 0) &&
-               (contents.charAt(tmpIndex) == ' ')) {
-          tmpIndex--;
-        }
-        beginIndex = tmpIndex + 1;
-        boolean punctuationFoundBefore = false;
-        int punctuationBeforeIndex = tmpIndex;
-        while ((tmpIndex >= 0) &&
-               SpecialCharacters.isPunctuation(contents.charAt(tmpIndex))) {
-          punctuationFoundBefore = true;
-          tmpIndex--;
-        }
-        String punctuationBefore = contents.substring(tmpIndex + 1, punctuationBeforeIndex + 1);
-        if (punctuationFoundBefore) {
-          beginIndex = tmpIndex + 1;
-        }
-
-        // Create error
-        CheckErrorResult errorResult = createCheckErrorResult(
-            analysis, beginIndex, endIndex);
-        errorResult.addReplacement(
-            allPunctuations + replace,
-            allPunctuations + textReplace);
-        if (punctuationFoundBefore &&
-            !allPunctuations.equals(punctuationBefore)) {
-          errorResult.addReplacement(
-              punctuationBefore + replace,
-              punctuationBefore + textReplace);
-        }
-        errors.add(errorResult);
-      }
     }
     return result;
+  }
+
+  /**
+   * Analyze a group of tags.
+   * 
+   * @param analysis Page analysis.
+   * @param contents Page contents.
+   * @param errors Errors found in the page.
+   * @param refs List of references.
+   * @param firstRefIndex Index of the first reference of the group.
+   * @param lastRefIndex Index of the last reference of the group.
+   * @return True if the error was found in the group of tags.
+   */
+  private boolean analyzeGroupOfTags(
+      PageAnalysis analysis, String contents,
+      Collection<CheckErrorResult> errors,
+      List<PageElement> refs,
+      int firstRefIndex, int lastRefIndex) {
+
+    // Remove possible whitespace characters after last reference
+    PageElement lastRef = refs.get(lastRefIndex);
+    int tmpIndex = lastRef.getEndIndex();
+    while (tmpIndex < contents.length()) {
+      if (contents.charAt(tmpIndex) == '\n') {
+        if ((tmpIndex + 1 < contents.length()) &&
+            ((Character.isWhitespace(contents.charAt(tmpIndex + 1))) ||
+             (contents.charAt(tmpIndex + 1) == '*') || // List
+             (contents.charAt(tmpIndex + 1) == '#') || // List
+             (contents.charAt(tmpIndex + 1) == ';') || // Definition
+             (contents.charAt(tmpIndex + 1) == ':') || // Definition
+             (contents.charAt(tmpIndex + 1) == '!'))) { // Table heading
+          break;
+        }
+        tmpIndex++;
+      } else if (Character.isWhitespace(contents.charAt(tmpIndex))) {
+        tmpIndex++;
+      } else {
+        break;
+      }
+    }
+
+    // Check if next character is a punctuation
+    if (tmpIndex >= contents.length()) {
+      return false;
+    }
+    char punctuation = ' ';
+    punctuation = contents.charAt(tmpIndex);
+    if (PUNCTUATION.indexOf(punctuation) < 0) {
+      return false;
+    }
+    // TODO: Once tables are managed by parser, remove the this trick that prevent detection before "!!"
+    if ((punctuation == '!') &&
+        (tmpIndex + 1 < contents.length()) &&
+        (contents.charAt(tmpIndex + 1) == punctuation)) {
+      return false;
+    }
+    int firstPunctuationIndex = tmpIndex;
+
+    // Check if the punctuation after is multiple
+    tmpIndex++;
+    while ((tmpIndex < contents.length()) &&
+           (contents.charAt(tmpIndex) == punctuation)) {
+      tmpIndex++;
+    }
+
+    // Check if error should be reported
+    if (tmpIndex < contents.length()) {
+      char nextChar = contents.charAt(tmpIndex);
+      if (!Character.isWhitespace(nextChar)) {
+        return false;
+      }
+    }
+    PageElement firstRef = refs.get(firstRefIndex);
+    int beginIndex = firstRef.getBeginIndex();
+    int endIndex = tmpIndex;
+    if (analysis.comments().isAt(beginIndex) ||
+        (analysis.isInTag(beginIndex, PageElementTag.TAG_WIKI_CHEM) != null) ||
+        (analysis.isInTag(beginIndex, PageElementTag.TAG_WIKI_MATH) != null) ||
+        (analysis.isInTag(beginIndex, PageElementTag.TAG_WIKI_MATH_CHEM) != null) ||
+        (analysis.isInTag(beginIndex, PageElementTag.TAG_WIKI_NOWIKI) != null) ||
+        (analysis.isInTag(beginIndex, PageElementTag.TAG_WIKI_SCORE) != null) ||
+        (analysis.isInTag(beginIndex, PageElementTag.TAG_WIKI_SOURCE) != null) ||
+        (analysis.isInTag(beginIndex, PageElementTag.TAG_WIKI_SYNTAXHIGHLIGHT) != null)) {
+      return false;
+    }
+
+    // Error found
+    if (errors == null) {
+      return true;
+    }
+
+    String allPunctuations = contents.substring(firstPunctuationIndex, endIndex);
+
+    // Construct list of tags
+    String replace = PageElement.createListOfElements(
+        refs, firstRefIndex, lastRefIndex, contents, separator);
+    String textReplace = createReducedListOfRefs(
+        lastRefIndex - firstRefIndex + 1, separator);
+
+    // Check for possible punctuation before tags
+    tmpIndex = beginIndex - 1;
+    while ((tmpIndex >= 0) &&
+           (contents.charAt(tmpIndex) == ' ')) {
+      tmpIndex--;
+    }
+    beginIndex = tmpIndex + 1;
+    boolean punctuationFoundBefore = false;
+    int punctuationBeforeIndex = tmpIndex;
+    while ((tmpIndex >= 0) &&
+           CharacterUtils.isPunctuation(contents.charAt(tmpIndex))) {
+      punctuationFoundBefore = true;
+      tmpIndex--;
+    }
+    String punctuationBefore = contents.substring(tmpIndex + 1, punctuationBeforeIndex + 1);
+    if (punctuationFoundBefore) {
+      beginIndex = tmpIndex + 1;
+    }
+
+    // Decide if automatic modifications can be applied
+    boolean automatic = true;
+    if (allPunctuations.length() > 1) {
+      automatic = false;
+    }
+    if (punctuationFoundBefore) {
+      automatic = false;
+    }
+
+    // Create error
+    CheckErrorResult errorResult = createCheckErrorResult(
+        analysis, beginIndex, endIndex);
+    errorResult.addReplacement(
+        allPunctuations + replace,
+        allPunctuations + textReplace,
+        automatic);
+    if (punctuationFoundBefore &&
+        !allPunctuations.equals(punctuationBefore)) {
+      errorResult.addReplacement(
+          punctuationBefore + replace,
+          punctuationBefore + textReplace);
+    }
+    errors.add(errorResult);
+
+    return true;
   }
 
   /**
@@ -230,6 +264,21 @@ public class CheckErrorAlgorithm061 extends CheckErrorAlgorithmBase {
       return "<ref>...</ref>" + separator + "<ref>...</ref>";
     }
     return "<ref>...</ref>";
+  }
+
+  /**
+   * Automatic fixing of all the errors in the page.
+   * 
+   * @param analysis Page analysis.
+   * @return Page contents after fix.
+   */
+  @Override
+  protected String internalAutomaticFix(PageAnalysis analysis) {
+    if (!analysis.getPage().isArticle() ||
+        !analysis.getPage().isInMainNamespace()) {
+      return analysis.getContents();
+    }
+    return fixUsingAutomaticReplacement(analysis);
   }
 
   /* ====================================================================== */

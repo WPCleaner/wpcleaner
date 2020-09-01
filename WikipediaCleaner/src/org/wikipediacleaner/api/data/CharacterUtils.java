@@ -55,8 +55,17 @@ public class CharacterUtils {
   /** Whitespace characters */
   public final static String WHITESPACE = " \u00A0";
 
+  /** En dash character */
+  public static char EN_DASH = '\u2013';
+
+  /** Em dash character */
+  public static char EM_DASH = '\u2014';
+
+  /** Dash characters */
+  public static final String DASHES = "-" + EN_DASH + EM_DASH;
+
   /** Punctuation characters */
-  public static final String PUNCTUATION = ",.;:()\"-–";
+  public static final String PUNCTUATION = ",.;:!?()\"" + DASHES;
 
   /**
    * @param character Character to be tested.
@@ -72,6 +81,14 @@ public class CharacterUtils {
    */
   public static boolean isPunctuation(char character) {
     return (PUNCTUATION.indexOf(character) >= 0);
+  }
+
+  /**
+   * @param character Character to be tested.
+   * @return True if the character should be considered as a dash.
+   */
+  public static boolean isDash(char character) {
+    return (DASHES.indexOf(character) >= 0);
   }
 
   /**
