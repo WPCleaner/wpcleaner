@@ -406,6 +406,9 @@ public class CheckErrorAlgorithm002 extends CheckErrorAlgorithmBase {
     while ((currentIndex >= 0) && (currentIndex < contents.length())) {
       currentIndex = contents.indexOf('<', currentIndex);
       String selectedTagName = null;
+      if (currentIndex < 0) {
+        return result;
+      }
       if (currentIndex >= 0) {
         int beginIndex = currentIndex;
         boolean ok = true;
@@ -428,7 +431,7 @@ public class CheckErrorAlgorithm002 extends CheckErrorAlgorithmBase {
             int length = tagName.length();
             if ((selectedTagName == null) &&
                 (currentIndex + length < contents.length()) &&
-                tagName.equalsIgnoreCase(contents.substring(currentIndex, currentIndex + length)) &&
+                ContentsUtil.startsWithIgnoreCase(contents, tagName, currentIndex) &&
                 !Character.isLetterOrDigit(contents.charAt(currentIndex + length))) {
               currentIndex += length;
               selectedTagName = tagName;
@@ -493,17 +496,13 @@ public class CheckErrorAlgorithm002 extends CheckErrorAlgorithmBase {
       int nextIndex = currentIndex + 1;
       boolean shouldCheck = true;
 
-      // Check if we are in a comment
-      if (shouldCheck) {
-        ContentsComment comment = analysis.comments().getLargestAt(currentIndex);
-        if (comment != null) {
-          shouldCheck = false;
-          nextIndex = comment.getEndIndex();
-        }
+      // Check if the current character can be the beginning of a tag
+      if (shouldCheck && (contents.charAt(currentIndex) != '<')) {
+        shouldCheck = false;
       }
 
       // Check if this is a self closing tag for the given name
-      if ((shouldCheck) && (contents.charAt(currentIndex) == '<')) {
+      if (shouldCheck) {
         int tmpIndex = ContentsUtil.moveIndexAfterWhitespace(contents, currentIndex + 1);
         boolean incorrectChar = false;
         while ((tmpIndex < maxSize) &&
@@ -511,13 +510,9 @@ public class CheckErrorAlgorithm002 extends CheckErrorAlgorithmBase {
           tmpIndex++;
           incorrectChar = true;
         }
-        boolean selfClosingTag = true;
-        for (int i = 0; i < tagName.length(); i++) {
-          if ((tmpIndex >= maxSize) ||
-              (Character.toUpperCase(contents.charAt(tmpIndex)) != Character.toUpperCase(tagName.charAt(i)))) {
-            selfClosingTag = false;
-          }
-          tmpIndex++;
+        boolean selfClosingTag = ContentsUtil.startsWithIgnoreCase(contents, tagName, tmpIndex);
+        if (selfClosingTag) {
+          tmpIndex += tagName.length();
         }
         if ((tmpIndex < maxSize) && selfClosingTag) {
           char tmpChar = contents.charAt(tmpIndex);
@@ -552,6 +547,17 @@ public class CheckErrorAlgorithm002 extends CheckErrorAlgorithmBase {
                 }
               }
             }
+
+            // Check if we are in a comment
+            if (shouldReport) {
+              ContentsComment comment = analysis.comments().getLargestAt(currentIndex);
+              if (comment != null) {
+                shouldReport = false;
+                nextIndex = comment.getEndIndex();
+              }
+            }
+
+            //
             if (shouldReport) {
               if (errors == null) {
                 return true;

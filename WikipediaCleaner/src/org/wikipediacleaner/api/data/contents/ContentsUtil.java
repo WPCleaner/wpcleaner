@@ -246,6 +246,14 @@ public class ContentsUtil {
   // String comparison
   // ==========================================================================
 
+  /**
+   * Check if a string starts with a given prefix (ignoring case) at a given offset.
+   * 
+   * @param str String to check.
+   * @param prefix Prefix to check.
+   * @param offset Offset in the string.
+   * @return True if the string starts with the prefix ignoring case at the offset.
+   */
   public static boolean startsWithIgnoreCase(String str, String prefix, int offset) {
     if (offset + prefix.length() > str.length()) {
       return false;
