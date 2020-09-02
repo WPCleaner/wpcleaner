@@ -68,7 +68,7 @@ public class CheckErrorAlgorithm048 extends CheckErrorAlgorithmBase {
     // Analyze each internal link
     boolean result = false;
     Collection<PageElementInternalLink> links = analysis.getInternalLinks();
-    String pageTitle = analysis.getPage().getTitle();
+    String pageTitle = Page.normalizeTitle(analysis.getPage().getTitle());
     for (PageElementInternalLink link : links) {
       result |= analyzeInternalLink(link, pageTitle, analysis, errors);
     }
@@ -91,8 +91,8 @@ public class CheckErrorAlgorithm048 extends CheckErrorAlgorithmBase {
       Collection<CheckErrorResult> errors) {
 
     // Check if there's a potential error
-    boolean errorFoundFull = Page.areSameTitle(pageTitle, link.getFullLink());
-    boolean errorFoundAnchor = !errorFoundFull && Page.areSameTitle(pageTitle, link.getLink());
+    boolean errorFoundFull = Page.areSameTitle(pageTitle, true, link.getFullLink(), false);
+    boolean errorFoundAnchor = !errorFoundFull && Page.areSameTitle(pageTitle, true, link.getLink(), false);
     if (!errorFoundFull && !errorFoundAnchor) {
       return false;
     }

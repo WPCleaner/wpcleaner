@@ -100,12 +100,29 @@ public class Page implements Comparable<Page> {
    * @return Indicates if <code>title1</code> and <code>title2</code> are the same title.
    */
   public static boolean areSameTitle(String title1, String title2) {
+    return areSameTitle(title1, false, title2, false);
+  }
+
+  /**
+   * @param title1 Title 1.
+   * @param normalized1 True if title 1 is already normalized.
+   * @param title2 Title 2.
+   * @param normalized2 True if title 2 is already normalized.
+   * @return Indicates if <code>title1</code> and <code>title2</code> are the same title.
+   */
+  public static boolean areSameTitle(
+      String title1, boolean normalized1,
+      String title2, boolean normalized2) {
     // TODO: should be by Wiki (capitalization of first letter)
     if ((title1 == null) || (title2 == null)) {
       return false;
     }
-    title1 = normalizeTitle(title1);
-    title2 = normalizeTitle(title2);
+    if (!normalized1) {
+      title1 = normalizeTitle(title1);
+    }
+    if (!normalized2) {
+      title2 = normalizeTitle(title2);
+    }
     return title1.equals(title2);
   }
 
@@ -119,12 +136,13 @@ public class Page implements Comparable<Page> {
       return null;
     }
     String result = pageTitle.trim();
-    result = result.replaceAll(" ", " ");
+    result = result.replaceAll("[\u00A0_ ]+", " ");
+    // result = result.replaceAll(" ", " ");
     while ((result.length() > 0) && (result.charAt(result.length() - 1) == 0x200E)) {
       result = result.substring(0, result.length() - 1);
     }
-    result = result.replaceAll("_", " ");
-    result = result.replaceAll(" +", " ");
+    // result = result.replaceAll("_", " ");
+    // result = result.replaceAll(" +", " ");
     result = result.trim();
     result = CharacterUtils.ucFirst(result);
     return result;
