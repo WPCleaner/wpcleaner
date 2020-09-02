@@ -19,6 +19,7 @@ import org.wikipediacleaner.api.algorithm.AlgorithmParameterElement;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.constants.WPCConfiguration;
 import org.wikipediacleaner.api.data.CharacterUtils;
+import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageElement;
 import org.wikipediacleaner.api.data.PageElementFullTag;
 import org.wikipediacleaner.api.data.PageElementTag;
@@ -35,7 +36,7 @@ import org.wikipediacleaner.i18n.GT;
 public class CheckErrorAlgorithm061 extends CheckErrorAlgorithmBase {
 
   /** Punctuation characters looked for by the analysis */
-  private static final String PUNCTUATION = ",.;";
+  private static final String PUNCTUATION = ",.;:";
 
   public CheckErrorAlgorithm061() {
     super("Reference before punctuation");
@@ -307,8 +308,8 @@ public class CheckErrorAlgorithm061 extends CheckErrorAlgorithmBase {
     templatesName.clear();
     if (tmp != null) {
       List<String> tmpList = WPCConfiguration.convertPropertyToStringList(tmp);
-      if (tmpList != null) {
-        templatesName.addAll(tmpList);
+      for (String tmpElement : tmpList) {
+        templatesName.add(Page.normalizeTitle(tmpElement));
       }
     }
   }
