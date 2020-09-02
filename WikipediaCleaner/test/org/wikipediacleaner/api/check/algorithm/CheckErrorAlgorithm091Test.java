@@ -16,7 +16,7 @@ import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.constants.EnumWikipediaUtils;
 
 /**
- * Test class for CW algorithm 28.
+ * Test class for CW algorithm 91.
  */
 public class CheckErrorAlgorithm091Test extends CheckErrorAlgorithmTest {
 

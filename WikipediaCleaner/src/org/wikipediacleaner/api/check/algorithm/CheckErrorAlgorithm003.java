@@ -9,7 +9,9 @@ package org.wikipediacleaner.api.check.algorithm;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.wikipediacleaner.api.algorithm.AlgorithmParameter;
 import org.wikipediacleaner.api.algorithm.AlgorithmParameterElement;
@@ -87,10 +89,8 @@ public class CheckErrorAlgorithm003 extends CheckErrorAlgorithmBase {
       while (templateNum > 0) {
         templateNum--;
         PageElementTemplate template = allTemplates.get(templateNum);
-        for (String referencesTemplate : referencesTemplates) {
-          if (Page.areSameTitle(template.getTemplateName(), referencesTemplate)) {
-            return false;
-          }
+        if (referencesTemplates.contains(Page.normalizeTitle(template.getTemplateName()))) {
+          return false;
         }
       }
     }
@@ -223,7 +223,9 @@ public class CheckErrorAlgorithm003 extends CheckErrorAlgorithmBase {
     if (tmp != null) {
       List<String> tmpList = WPCConfiguration.convertPropertyToStringList(tmp);
       if (tmpList != null) {
-        referencesTemplates.addAll(tmpList);
+        for (String tmpElement : tmpList) {
+          referencesTemplates.add(Page.normalizeTitle(tmpElement));
+        }
       }
     }
 
@@ -246,7 +248,7 @@ public class CheckErrorAlgorithm003 extends CheckErrorAlgorithmBase {
   }
 
   /** List of templates including references tag */
-  private final List<String> referencesTemplates = new ArrayList<>();
+  private final Set<String> referencesTemplates = new HashSet<>();
 
   /** Text to insert for references */
   private String insert = null;
