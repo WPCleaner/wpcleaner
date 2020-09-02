@@ -109,7 +109,7 @@ public class AutomaticCWWorker extends AutomaticFixWorker {
     CheckWiki checkWiki = APIFactory.getCheckWiki();
     checkWiki.retrievePages(algorithm, maxSize, getWikipedia(), errors);
     List<CheckErrorAlgorithm> algorithms = Collections.singletonList(algorithm);
-    while (!errors.isEmpty()) {
+    while (!errors.isEmpty() && shouldContinue()) {
       AlgorithmError error = errors.remove(0);
       int maxErrors = error.getPageCount();
       for (int numPage = 0;

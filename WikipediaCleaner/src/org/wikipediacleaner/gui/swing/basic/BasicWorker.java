@@ -19,8 +19,7 @@ public class BasicWorker extends SwingWorker implements MediaWikiListener {
   private final EnumWikipedia wikipedia;
   private final BasicWindow window;
   private BasicWorkerListener listener;
-  private Integer timeLimit;
-  private long startTime;
+  private Long timeLimit;
 
   /**
    * @param wikipedia Wikipedia.
@@ -31,7 +30,6 @@ public class BasicWorker extends SwingWorker implements MediaWikiListener {
     this.wikipedia = wikipedia;
     this.window = window;
     this.timeLimit = null;
-    this.startTime = System.currentTimeMillis();
   }
 
   /**
@@ -56,9 +54,8 @@ public class BasicWorker extends SwingWorker implements MediaWikiListener {
   /**
    * @param limit Time limit for execution.
    */
-  public void setTimeLimit(Integer limit) {
+  public void setTimeLimit(Long limit) {
     this.timeLimit = limit;
-    this.startTime = System.currentTimeMillis();
   }
 
   /**
@@ -74,8 +71,7 @@ public class BasicWorker extends SwingWorker implements MediaWikiListener {
    */
   public boolean shouldContinue() {
     if (timeLimit != null) {
-      long currentTime = System.currentTimeMillis();
-      if ((currentTime - startTime) / 1000 > timeLimit.intValue()) {
+      if (System.currentTimeMillis() > timeLimit.longValue()) {
         return false;
       }
     }
@@ -100,7 +96,6 @@ public class BasicWorker extends SwingWorker implements MediaWikiListener {
     if (listener != null) {
       listener.beforeStart(this);
     }
-    startTime = System.currentTimeMillis();
     super.start();
     if (listener != null) {
       listener.afterStart(this);

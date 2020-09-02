@@ -82,7 +82,7 @@ public class Bot implements BasicWorkerListener {
   }
 
   /** Time limit for bot execution. */
-  private Integer timeLimit;
+  private Long timeLimit;
 
   /** Wiki */
   private EnumWikipedia wiki;
@@ -123,7 +123,7 @@ public class Bot implements BasicWorkerListener {
         String arg = args[currentArg];
 
         if ("-timelimit".equals(arg)) {
-          timeLimit = Integer.valueOf(args[currentArg + 1]);
+          timeLimit = Long.valueOf(System.currentTimeMillis() + 1000 * Integer.parseInt(args[currentArg + 1]));
           currentArg += 2;
         } else if ("-credentials".equals(arg)) {
           if (args.length <= currentArg + 1) {
@@ -575,20 +575,33 @@ public class Bot implements BasicWorkerListener {
       return true;
     }
 
-    // Ranger
+    // Set Range
     if ("RangeBegin".equalsIgnoreCase(parameter)) {
       rangeBegin = null;
       if (actionArgs.length > 1) {
         rangeBegin = actionArgs[1];
       }
+      return true;
     }
     if ("RangeEnd".equalsIgnoreCase(parameter)) {
       rangeEnd = null;
       if (actionArgs.length > 1) {
         rangeEnd = actionArgs[1];
       }
+      return true;
     }
 
+    // Set Time limit
+    if ("TimeLimit".equalsIgnoreCase(parameter) &&
+        (actionArgs.length > 1)) {
+      try {
+        timeLimit = System.currentTimeMillis() + 1000 * Long.parseLong(actionArgs[1]);
+      } catch (NumberFormatException e) {
+        log.warn("Incorrect time limi {}", actionArgs[1]);
+      }
+      return true;
+    }
+    
     return false;
   }
 

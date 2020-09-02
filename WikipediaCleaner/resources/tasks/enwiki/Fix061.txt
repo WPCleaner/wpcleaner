@@ -1,5 +1,6 @@
 DoTasks _Common.txt
 Set Configuration TimeBetweenEdit 30
 Set Prefix [[Wikipedia:Bots/Requests_for_approval/WikiCleanerBot_20|Bot_Test_T20_CW#61]]
+Set TimeLimit 120
 FixCheckWiki 61
 # FixListCheckWiki Wikipedia:CHECKWIKI/WPC_061_dump 61
