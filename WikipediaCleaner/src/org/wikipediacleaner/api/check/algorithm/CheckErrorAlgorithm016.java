@@ -394,6 +394,10 @@ public class CheckErrorAlgorithm016 extends CheckErrorAlgorithmBase {
     public final boolean safeInRedirect;
     public final String description;
 
+    // For optimization, we record minimum and maximum control character
+    private static int minControlCharacter = Integer.MAX_VALUE;
+    private static int maxControlCharacter = Integer.MIN_VALUE;
+
     /**
      * @param begin Begin of the range of control characters.
      * @param end End of the range of control characters.
@@ -413,11 +417,26 @@ public class CheckErrorAlgorithm016 extends CheckErrorAlgorithmBase {
       this.description = description;
     }
 
+    static {
+      for (ControlCharacter control : values()) {
+        if (control.begin < minControlCharacter) {
+          minControlCharacter = control.begin;
+        }
+        if (control.end > maxControlCharacter) {
+          maxControlCharacter = control.end;
+        }
+      }
+    }
+
     /**
      * @param codePoint Code point.
      * @return Control character for the given code point.
      */
     public static ControlCharacter getControlCharacter(int codePoint) {
+      if ((codePoint < minControlCharacter) ||
+          (codePoint > maxControlCharacter)) {
+        return null;
+      }
       for (ControlCharacter control : values()) {
         if ((codePoint >= control.begin) && (codePoint <= control.end)) {
           return control;
