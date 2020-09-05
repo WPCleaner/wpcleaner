@@ -47,6 +47,8 @@ import javax.swing.SwingConstants;
 import javax.swing.border.TitledBorder;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+import org.apache.commons.lang3.JavaVersion;
+import org.apache.commons.lang3.SystemUtils;
 import org.wikipediacleaner.Version;
 import org.wikipediacleaner.api.API;
 import org.wikipediacleaner.api.APIException;
@@ -187,6 +189,22 @@ public class MainWindow
     public void displayWindow(BasicWindow window) {
       Configuration config = Configuration.getConfiguration();
       config.checkVersion(window.getParentComponent());
+
+      // Check Java version
+      if (!SystemUtils.isJavaVersionAtLeast(JavaVersion.JAVA_1_8)) {
+        JOptionPane.showMessageDialog(
+            window.getParentComponent(),
+            GT._T(
+                "In the near future, WPCleaner will require Java {0} or above, but you''re currently using an older version ({1}).",
+                new Object[] {
+                    "8",
+                    System.getProperty("java.version")
+                }) +
+            "\n" +
+            GT._T("Please, upgrade to a newer version of Java"),
+            GT._T("Obsolete Java version"),
+            JOptionPane.WARNING_MESSAGE);
+      }
 
       MainWindow mainWindow = (MainWindow) window;
       if (wiki != null) {
