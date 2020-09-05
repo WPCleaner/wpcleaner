@@ -47,10 +47,10 @@ public class CheckErrorAlgorithm008 extends CheckErrorAlgorithmBase {
     boolean result = false;
     String contents = analysis.getContents();
     int currentIndex = 0;
-    do {
+    while (currentIndex < contents.length()) {
       result |= analyzeLine(analysis, errors, contents, currentIndex);
       currentIndex =  ContentsUtil.getLineEndIndex(contents, currentIndex) + 1;
-    } while (currentIndex < contents.length());
+    }
 
     return result;
   }
