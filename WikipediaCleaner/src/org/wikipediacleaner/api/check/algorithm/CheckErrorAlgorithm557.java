@@ -8,11 +8,17 @@
 package org.wikipediacleaner.api.check.algorithm;
 
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
+import org.wikipediacleaner.api.algorithm.AlgorithmParameter;
+import org.wikipediacleaner.api.algorithm.AlgorithmParameterElement;
 import org.wikipediacleaner.api.check.CheckErrorResult;
+import org.wikipediacleaner.api.constants.WPCConfiguration;
 import org.wikipediacleaner.api.data.PageElementInternalLink;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
+import org.wikipediacleaner.i18n.GT;
 
 
 /**
@@ -44,6 +50,10 @@ public class CheckErrorAlgorithm557 extends CheckErrorAlgorithmBase {
     // Global verification
     List<PageElementInternalLink> links = analysis.getInternalLinks();
     if ((links == null) || (links.isEmpty())) {
+      return false;
+    }
+    if ((analysis.getPage().getRedirects() != null) &&
+        analysis.getPage().getRedirects().isRedirect()) {
       return false;
     }
 
@@ -80,6 +90,18 @@ public class CheckErrorAlgorithm557 extends CheckErrorAlgorithmBase {
       return false;
     }
 
+    // Check if this is an accepted prefix
+    if (!prefixes.isEmpty()) {
+      int tmpIndex = beginIndex - 1;
+      while ((tmpIndex > 0) &&
+          Character.isLetter(contents.charAt(tmpIndex - 1))) {
+        tmpIndex--;
+      }
+      if (prefixes.contains(contents.substring(tmpIndex, beginIndex).toUpperCase())) {
+        return false;
+      }
+    }
+
     // Report error
     if (errors == null) {
       return true;
@@ -105,5 +127,51 @@ public class CheckErrorAlgorithm557 extends CheckErrorAlgorithmBase {
     }
     errors.add(errorResult);
     return true;
+  }
+
+  /* ====================================================================== */
+  /* PARAMETERS                                                             */
+  /* ====================================================================== */
+
+  /** List of possible prefixes */
+  private static final String PARAMETER_PREFIXES = "prefixes";
+
+  /**
+   * Initialize settings for the algorithm.
+   * 
+   * @see org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase#initializeSettings()
+   */
+  @Override
+  protected void initializeSettings() {
+    String tmp = getSpecificProperty(PARAMETER_PREFIXES, true, true, true);
+    prefixes.clear();
+    if (tmp != null) {
+      List<String> tmpList = WPCConfiguration.convertPropertyToStringList(tmp);
+      if (tmpList != null) {
+        for (String tmpElement : tmpList) {
+          prefixes.add(tmpElement.toUpperCase());
+        }
+      }
+    }
+  }
+
+  /** Prefixes that can be before an internal link */
+  private final Set<String> prefixes = new HashSet<>();
+
+  /**
+   * Build the list of parameters for this algorithm.
+   */
+  @Override
+  protected void addParameters() {
+    super.addParameters();
+    addParameter(new AlgorithmParameter(
+        PARAMETER_PREFIXES,
+        GT._T("Prefixes which can be before an internal link"),
+        new AlgorithmParameterElement[] {
+          new AlgorithmParameterElement(
+              "prefix",
+              GT._T("Prefix which can be before an internal link"))
+        },
+        true));
   }
 }
