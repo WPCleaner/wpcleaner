@@ -16,6 +16,7 @@ import org.wikipediacleaner.api.algorithm.AlgorithmParameter;
 import org.wikipediacleaner.api.algorithm.AlgorithmParameterElement;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.constants.WPCConfiguration;
+import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageElementInternalLink;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
 import org.wikipediacleaner.i18n.GT;
@@ -111,22 +112,79 @@ public class CheckErrorAlgorithm557 extends CheckErrorAlgorithmBase {
       beginIndex--;
     }
     int endIndex = link.getEndIndex();
+    String displayedText = link.getDisplayedTextNotTrimmed();
     CheckErrorResult errorResult = createCheckErrorResult(analysis, beginIndex, endIndex);
-    String replacement =
-        contents.substring(beginIndex, link.getBeginIndex()) +
-        " " +
-            contents.substring(link.getBeginIndex(), link.getEndIndex());
-    errorResult.addReplacement(replacement);
-    if ((beginIndex <= 0) ||
-        Character.isWhitespace(contents.charAt(beginIndex - 1))) {
-      replacement = PageElementInternalLink.createInternalLink(
-          link.getLink(),
-          link.getAnchor(),
-          contents.substring(beginIndex, link.getBeginIndex()) + link.getDisplayedText());
+
+    String replacement = null;
+    if ((displayedText.length() > 0) &&
+        (" '".indexOf(displayedText.charAt(0)) >= 0)) {
+
+      if (displayedText.length() > 1) {
+        // Move the white space or apostrophe before the internal link
+        replacement =
+            contents.substring(beginIndex, link.getBeginIndex()) +
+            displayedText.charAt(0) +
+            PageElementInternalLink.createInternalLink(
+                link.getLink(),
+                link.getAnchor(),
+                displayedText.substring(1));
+        boolean automatic = true;
+        if (displayedText.charAt(0) == '\'') {
+          if (displayedText.startsWith("'",  1)) {
+            automatic = false;
+          }
+          if (!link.getLink().isEmpty() &&
+              link.getLink().startsWith("'")) {
+            automatic = false;
+          }
+        }
+        errorResult.addReplacement(replacement, automatic);
+      } else {
+        replacement =
+            contents.substring(beginIndex, link.getBeginIndex()) +
+            displayedText;
+        errorResult.addReplacement(replacement);
+      }
+
+    } else {
+
+      // Add a white space before the internal link
+      replacement =
+          contents.substring(beginIndex, link.getBeginIndex()) +
+          " " +
+          contents.substring(link.getBeginIndex(), link.getEndIndex());
       errorResult.addReplacement(replacement);
+
+      // Include the text before the internal link
+      if ((beginIndex <= 0) ||
+          Character.isWhitespace(contents.charAt(beginIndex - 1)) ||
+          ("'".indexOf(contents.charAt(beginIndex - 1)) >= 0)) {
+        String text = contents.substring(beginIndex, link.getBeginIndex()) + displayedText;
+        replacement = PageElementInternalLink.createInternalLink(
+            link.getLink(),
+            link.getAnchor(),
+            text);
+        errorResult.addReplacement(replacement, Page.areSameTitle(link.getLink().toUpperCase(), text.toUpperCase()));
+      }
     }
+
     errors.add(errorResult);
     return true;
+  }
+
+  /**
+   * Automatic fixing of all the errors in the page.
+   * 
+   * @param analysis Page analysis.
+   * @return Page contents after fix.
+   */
+  @Override
+  protected String internalAutomaticFix(PageAnalysis analysis) {
+    if (!analysis.getPage().isArticle() ||
+        !analysis.getPage().isInMainNamespace()) {
+      return analysis.getContents();
+    }
+    return fixUsingAutomaticReplacement(analysis);
   }
 
   /* ====================================================================== */
