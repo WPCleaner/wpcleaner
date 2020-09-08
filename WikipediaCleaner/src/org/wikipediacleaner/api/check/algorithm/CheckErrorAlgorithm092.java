@@ -15,6 +15,7 @@ import org.wikipediacleaner.api.algorithm.AlgorithmParameter;
 import org.wikipediacleaner.api.algorithm.AlgorithmParameterElement;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.CheckErrorResult.ErrorLevel;
+import org.wikipediacleaner.api.data.PageElementCategory;
 import org.wikipediacleaner.api.data.PageElementTitle;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
 import org.wikipediacleaner.i18n.GT;
@@ -133,8 +134,12 @@ public class CheckErrorAlgorithm092 extends CheckErrorAlgorithmBase {
           (previousTitle.getTitle().equals(currentTitle.getTitle()))) {
 
         // Analyze if first title can be removed
+        int previousSectionEndIndex = getSectionEndIndex(
+            previousTitle.getEndIndex(),
+            currentTitle.getBeginIndex(),
+            analysis, contents);
         String betweenTitles = contents.substring(
-            previousTitle.getEndIndex(), currentTitle.getBeginIndex()).trim();
+            previousTitle.getEndIndex(), previousSectionEndIndex).trim();
         boolean shouldRemove = false;
         if (betweenTitles.length() == 0) {
           shouldRemove = true;
@@ -154,14 +159,16 @@ public class CheckErrorAlgorithm092 extends CheckErrorAlgorithmBase {
             buffer.append(contents.substring(lastIndex, previousTitle.getBeginIndex()));
             lastIndex = previousTitle.getBeginIndex();
           }
-          lastIndex = currentTitle.getBeginIndex();
+          lastIndex = previousSectionEndIndex;
         } else {
 
           // Analyze if second title can be removed
           PageElementTitle nextTitle = (i + 1 < titles.size()) ? titles.get(i + 1) : null;
-          String afterTitle = contents.substring(
+          int currentSectionEndIndex = getSectionEndIndex(
               currentTitle.getEndIndex(),
-              (nextTitle != null) ? nextTitle.getBeginIndex() : contents.length()).trim();
+              (nextTitle != null) ? nextTitle.getBeginIndex() : contents.length(),
+              analysis, contents);
+          String afterTitle = contents.substring(currentTitle.getEndIndex(), currentSectionEndIndex).trim();
           if (afterTitle.length() == 0) {
             shouldRemove = true;
           } else {
@@ -180,7 +187,7 @@ public class CheckErrorAlgorithm092 extends CheckErrorAlgorithmBase {
               buffer.append(contents.substring(lastIndex, currentTitle.getBeginIndex()));
               lastIndex = currentTitle.getBeginIndex();
             }
-            lastIndex = (nextTitle != null) ? nextTitle.getBeginIndex() : contents.length();
+            lastIndex = currentSectionEndIndex;
           }
         }
       }
@@ -192,6 +199,38 @@ public class CheckErrorAlgorithm092 extends CheckErrorAlgorithmBase {
       buffer.append(contents.substring(lastIndex));
     }
     return buffer.toString();
+  }
+
+  /**
+   * Analyze section to find the real end index of the section content.
+   * 
+   * @param beginIndex Begin index of the section content.
+   * @param endIndex End index of the section content.
+   * @param analysis Page analysis.
+   * @param contents Page contents.
+   * @return Real end index of the section content (categories removed).
+   */
+  private int getSectionEndIndex(
+      int beginIndex, int endIndex,
+      PageAnalysis analysis, String contents) {
+    int tmpEndIndex = endIndex;
+    while (tmpEndIndex > beginIndex) {
+      if (Character.isWhitespace(contents.charAt(tmpEndIndex - 1))) {
+        tmpEndIndex--;
+      } else if (contents.charAt(tmpEndIndex - 1) == ']') {
+        PageElementCategory category = analysis.isInCategory(tmpEndIndex - 1);
+        if ((category != null) &&
+            (category.getEndIndex() == tmpEndIndex)) {
+          endIndex = category.getBeginIndex();
+          tmpEndIndex = endIndex;
+        } else {
+          break;
+        }
+      } else {
+        break;
+      }
+    }
+    return endIndex;
   }
 
   /* ====================================================================== */
