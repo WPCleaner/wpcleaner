@@ -24,6 +24,8 @@ import java.util.Properties;
 import java.util.Set;
 import java.util.StringJoiner;
 
+import org.apache.commons.lang3.JavaVersion;
+import org.apache.commons.lang3.SystemUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithm;
@@ -77,6 +79,18 @@ public class Bot implements BasicWorkerListener {
 
     // Various initializations
     ISBNRange.initialize();
+
+    // Check Java version
+    if (!SystemUtils.isJavaVersionAtLeast(JavaVersion.JAVA_1_8)) {
+      log.error(
+          "In the near future, WPCleaner will require Java {} or above, but you're currently using an older version ({}).",
+          "8", System.getProperty("java.version"));
+      try {
+        Thread.sleep(30000);
+      } catch (InterruptedException e) {
+        // Nothing to do
+      }
+    }
 
     new Bot(args);
   }
