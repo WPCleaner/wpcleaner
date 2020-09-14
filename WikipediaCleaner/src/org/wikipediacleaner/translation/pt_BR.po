@@ -16,7 +16,7 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2020-09-07 14:58:11+0000\n"
+"PO-Revision-Date: 2020-09-14 15:17:44+0000\n"
 "Last-Translator: Felipe L. <felipe.idj@hotmail.com>\n"
 "Language-Team: Brazilian Portuguese <pt_BR@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -26,7 +26,7 @@ msgstr ""
 "X-Launchpad-Export-Date: 2017-03-22 17:48+0000\n"
 "X-Generator: MediaWiki 1.36.0-alpha; Translate 2020-07-20\n"
 "Language: pt_br\n"
-"X-POT-Import-Date: 2020-09-05 20:31:40+0000\n"
+"X-POT-Import-Date: 2020-09-12 12:31:40+0000\n"
 
 #: org/wikipediacleaner/Version.java:31
 #, java-format
@@ -236,10 +236,12 @@ msgid "A replacement for {0}"
 msgstr "Uma substituição para {0}"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm002.java:796
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm060.java:196
 msgid "Name of the template"
 msgstr "Nome da predefinição"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm002.java:797
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm060.java:199
 msgid "Name of the parameter"
 msgstr "Nome do parâmetro"
 
@@ -529,6 +531,10 @@ msgstr "Lista de predefinições que devem ser ignoradas"
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm059.java:228
 msgid "A template that should be ignored"
 msgstr "Uma predefinição que deve ser ignorado"
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm060.java:192
+msgid "Templates to be ignored"
+msgstr "Predefinições a serem ignoradas"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm061.java:331
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm061.java:334
@@ -903,13 +909,13 @@ msgstr "Para reportar apenas links para outras línguas"
 msgid "To report only links to local wikis"
 msgstr "Para reportar links apenas para a wiki local"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm092.java:242
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm092.java:245
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm092.java:281
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm092.java:284
 msgid "Maximum level of titles to report"
 msgstr "Nível máximo de títulos a serem relatados"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm092.java:248
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm092.java:251
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm092.java:287
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm092.java:290
 msgid "To report only consecutive titles"
 msgstr "Para relatar apenas títulos consecutivos"
 
@@ -1437,11 +1443,11 @@ msgstr "Seções nas quais links externos são normais"
 msgid "Section in which external links are normal"
 msgstr "Seção na qual links externos são normais"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm557.java:169
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm557.java:227
 msgid "Prefixes which can be before an internal link"
 msgstr "Prefixos que podem estar antes de um link interno"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm557.java:173
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm557.java:231
 msgid "Prefix which can be before an internal link"
 msgstr "Prefixo que pode estar antes de um link interno"
 
