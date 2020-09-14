@@ -1,6 +1,7 @@
 # Translation of WPCleaner to Spanish (español)
 # Exported from translatewiki.net
 #
+# Author: AVIADOR71
 # Author: Abijeet Patro
 # Author: Abijeet Patro
 # Author: Arelilm
@@ -15,7 +16,7 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2020-09-07 14:58:09+0000\n"
+"PO-Revision-Date: 2020-09-14 15:17:42+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Spanish\n"
 "MIME-Version: 1.0\n"
@@ -25,7 +26,7 @@ msgstr ""
 "X-Launchpad-Export-Date: 2017-03-22 17:48+0000\n"
 "X-Generator: MediaWiki 1.36.0-alpha; Translate 2020-07-20\n"
 "Language: es\n"
-"X-POT-Import-Date: 2020-09-05 20:31:40+0000\n"
+"X-POT-Import-Date: 2020-09-12 12:31:40+0000\n"
 
 #: org/wikipediacleaner/Version.java:31
 #, java-format
@@ -236,10 +237,12 @@ msgid "A replacement for {0}"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm002.java:796
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm060.java:196
 msgid "Name of the template"
 msgstr "Nombre de la plantilla"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm002.java:797
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm060.java:199
 msgid "Name of the parameter"
 msgstr ""
 
@@ -509,7 +512,7 @@ msgstr "Eliminar todos los enlaces a la propia página (poner en negritas la pri
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm048.java:40
 msgid "Remove all links to title"
-msgstr "Eliminar todos los enlaces al artículo"
+msgstr "Eliminar todos los enlaces a la propia página"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm048.java:337
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm048.java:340
@@ -531,6 +534,10 @@ msgstr "Una lista de plantillas que han de ignorarse"
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm059.java:228
 msgid "A template that should be ignored"
 msgstr "Una plantilla que ha de ignorarse"
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm060.java:192
+msgid "Templates to be ignored"
+msgstr "Plantillas que ignorar"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm061.java:331
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm061.java:334
@@ -909,13 +916,13 @@ msgstr "Para dar aviso solo de enlaces a un idioma distinto"
 msgid "To report only links to local wikis"
 msgstr "Para dar aviso solo de enlaces a wikis locales"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm092.java:242
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm092.java:245
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm092.java:281
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm092.java:284
 msgid "Maximum level of titles to report"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm092.java:248
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm092.java:251
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm092.java:287
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm092.java:290
 #, fuzzy
 msgid "To report only consecutive titles"
 msgstr "Para dar aviso solo de enlaces a un idioma distinto"
@@ -1483,11 +1490,11 @@ msgstr ""
 msgid "Section in which external links are normal"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm557.java:169
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm557.java:227
 msgid "Prefixes which can be before an internal link"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm557.java:173
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm557.java:231
 msgid "Prefix which can be before an internal link"
 msgstr ""
 
