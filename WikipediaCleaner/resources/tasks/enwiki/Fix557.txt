@@ -1,0 +1,6 @@
+DoTasks _Common.txt
+
+Set Configuration TimeBetweenEdit 20
+Set Prefix [[Wikipedia:Bots/Requests_for_approval/WikiCleanerBot_21|Bot_Test_T21]]
+# FixListCheckWiki Wikipedia:CHECKWIKI/WPC_557_dump 557
+FixDump C:\Users\Nicolas\Downloads\enwiki-$-pages-articles.xml.bz2 557
