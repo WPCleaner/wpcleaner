@@ -1,5 +1,5 @@
 DoTasks _Common.txt
 Set Prefix [[User:WikiCleanerBot#T20|Bot_T20_CW#61]]
-Set TimeLimit 3600
+Set TimeLimit 7200
 FixCheckWiki 61
 # FixListCheckWiki Wikipedia:CHECKWIKI/WPC_061_dump 61
