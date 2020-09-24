@@ -163,28 +163,33 @@ public abstract class AutomaticFixWorker extends BasicWorker {
       List<CheckErrorAlgorithm> algorithms,
       String prefix) throws APIException {
 
-    // Retrieve page analysis 
-    PageAnalysis analysis = getPageAnalysis(page);
-    if (analysis == null) {
-      return;
-    }
-
-    // Analyze page to check if an error has been found
-    List<CheckErrorPage> errorPages = AlgorithmError.analyzeErrors(algorithms, analysis, true);
-    boolean found = false;
-    if (errorPages != null) {
-      for (CheckErrorPage errorPage : errorPages) {
-        if (errorPage.getErrorFound()) {
-          found = true;
+    try {
+      // Retrieve page analysis 
+      PageAnalysis analysis = getPageAnalysis(page);
+      if (analysis == null) {
+        return;
+      }
+  
+      // Analyze page to check if an error has been found
+      List<CheckErrorPage> errorPages = AlgorithmError.analyzeErrors(algorithms, analysis, true);
+      boolean found = false;
+      if (errorPages != null) {
+        for (CheckErrorPage errorPage : errorPages) {
+          if (errorPage.getErrorFound()) {
+            found = true;
+          }
         }
       }
-    }
-
-    // Handle depending on whether errors were found
-    if (found) {
-      handleFoundFiltered(algorithms, page, analysis, prefix);
-    } else {
-      handleNotFound(algorithms, page);
+  
+      // Handle depending on whether errors were found
+      if (found) {
+        handleFoundFiltered(algorithms, page, analysis, prefix);
+      } else {
+        handleNotFound(algorithms, page);
+      }
+    } catch (RuntimeException e) {
+      log.error("Error analyzing page {}", page.getTitle(), e);
+      throw e;
     }
   }
 

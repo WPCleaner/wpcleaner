@@ -242,7 +242,8 @@ public class CheckErrorAlgorithm548 extends CheckErrorAlgorithmBase {
         if ((tmpIndex > 0) && (contents.charAt(tmpIndex) == ']')) {
           if (link instanceof PageElementInternalLink) {
             PageElementInternalLink previousLink = analysis.isInInternalLink(tmpIndex);
-            if (Page.areSameTitle(linkTarget, previousLink.getFullLink())) {
+            if ((previousLink != null) &&
+                Page.areSameTitle(linkTarget, previousLink.getFullLink())) {
               automatic = true;
             }
           }
