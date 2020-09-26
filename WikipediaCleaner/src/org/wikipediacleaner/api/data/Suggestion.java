@@ -112,6 +112,11 @@ public class Suggestion implements Comparable<Suggestion> {
   public static Suggestion createSuggestion(
       String patternText, boolean other,
       String chapter) {
+    log.debug(
+        "Parsing {} pattern syntax {}:\n  [{}]",
+        other ? "AWB" : "WPC",
+        chapter != null ? "in " + chapter : "",
+        patternText);
     try {
       if ((patternText.startsWith(TAG_NOWIKI_1)) &&
           (patternText.endsWith(TAG_NOWIKI_2))) {
@@ -122,7 +127,11 @@ public class Suggestion implements Comparable<Suggestion> {
       Pattern pattern = Pattern.compile(patternText);
       return new Suggestion(pattern, other, chapter);
     } catch (PatternSyntaxException e) {
-      log.warn("Incorrect pattern syntax for [" + patternText + "]: " + e.getMessage());
+      log.warn(
+          "Incorrect {} pattern syntax {}:\n  {}",
+          other ? "AWB" : "WPC",
+          chapter != null ? "in " + chapter : "",
+          e.getMessage());
     }
     return null;
   }
