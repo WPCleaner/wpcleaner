@@ -47,6 +47,9 @@ FixListCheckWiki Wikipedia:CHECKWIKI/WPC_551_dump 551
 Set Prefix [[User:WikiCleanerBot#T18|Bot_T18_CW#553]]
 FixListCheckWiki Wikipedia:CHECKWIKI/WPC_553_dump 553
 
+Set Prefix [[User:WikiCleanerBot#T21|Bot_T21_CW#557]]
+FixListCheckWiki Wikipedia:CHECKWIKI/WPC_557_dump 557
+
 # File namespace
 DoTasks _Common_Other.txt
 Set Namespaces 6

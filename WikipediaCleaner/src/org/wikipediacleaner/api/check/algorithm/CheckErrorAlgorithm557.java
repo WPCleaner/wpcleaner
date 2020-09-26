@@ -137,6 +137,10 @@ public class CheckErrorAlgorithm557 extends CheckErrorAlgorithmBase {
               link.getLink().startsWith("'")) {
             automatic = false;
           }
+          // Ignore "'s "
+          if (displayedText.startsWith("s ", 1)) {
+            automatic = false;
+          }
         }
         errorResult.addReplacement(replacement, automatic);
       } else {
