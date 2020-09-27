@@ -1,8 +1,7 @@
 DoTasks _Common.txt
-Set Namespaces 0 6
+Set Namespaces 0
 
 Set Prefix [[User:WikiCleanerBot#T7|Special:LintError/missing-end-tag]]
 Set Configuration MaxLintErrors 100000
-DoTasks _Common.txt
-Set Namespaces 0
+# FixDump C:\Users\Nicolas\Downloads\enwiki-$-pages-articles.xml.bz2 532 540
 FixLintError missing-end-tag 532 540

@@ -112,11 +112,11 @@ public class Suggestion implements Comparable<Suggestion> {
   public static Suggestion createSuggestion(
       String patternText, boolean other,
       String chapter) {
-    log.debug(
+    /*log.debug(
         "Parsing {} pattern syntax {}:\n  [{}]",
         other ? "AWB" : "WPC",
         chapter != null ? "in " + chapter : "",
-        patternText);
+        patternText);*/
     try {
       if ((patternText.startsWith(TAG_NOWIKI_1)) &&
           (patternText.endsWith(TAG_NOWIKI_2))) {
