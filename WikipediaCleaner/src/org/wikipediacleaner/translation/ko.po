@@ -14,7 +14,7 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2020-09-14 15:17:43+0000\n"
+"PO-Revision-Date: 2020-09-28 15:31:13+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Korean <ko@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -532,7 +532,7 @@ msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm060.java:192
 msgid "Templates to be ignored"
-msgstr ""
+msgstr "무시할 틀"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm061.java:331
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm061.java:334
@@ -2268,11 +2268,11 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:204
 msgid "Please, upgrade to a newer version of Java"
-msgstr ""
+msgstr "새 버전의 자바로 업그레이드해 주십시오"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:205
 msgid "Obsolete Java version"
-msgstr ""
+msgstr "구식 자바 버전"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:251
 #, java-format

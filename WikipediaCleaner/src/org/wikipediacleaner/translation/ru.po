@@ -16,7 +16,7 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2020-09-14 15:17:44+0000\n"
+"PO-Revision-Date: 2020-09-28 15:31:14+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Russian <ru@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -261,13 +261,13 @@ msgstr ""
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm111.java:198
 #, java-format
 msgid "A list of templates resulting in the inclusion of {0}"
-msgstr "Список шаблонов влечёт включение {0}"
+msgstr "Список шаблонов, вызывающих включение {0}"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm003.java:276
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm003.java:283
-#, fuzzy, java-format
+#, java-format
 msgid "Template resulting in the inclusion of {0}"
-msgstr "Список шаблонов влечёт включение {0}"
+msgstr "Шаблон, вызывающий включение {0}"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm003.java:287
 #, java-format
@@ -4200,11 +4200,11 @@ msgstr "Настройки оформления (требуется переза
 
 #: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:112
 msgid "Select editor font name"
-msgstr ""
+msgstr "Выберите название шрифта редактора"
 
 #: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:128
 msgid "Select editor font size"
-msgstr ""
+msgstr "Выберите размер шрифта редактора"
 
 #: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:143
 msgid "Increase font size"
