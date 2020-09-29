@@ -15,7 +15,7 @@ import java.util.Set;
 import org.wikipediacleaner.api.algorithm.AlgorithmParameter;
 import org.wikipediacleaner.api.algorithm.AlgorithmParameterElement;
 import org.wikipediacleaner.api.check.CheckErrorResult;
-import org.wikipediacleaner.api.constants.WPCConfiguration;
+import org.wikipediacleaner.api.configuration.WPCConfiguration;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageElementInternalLink;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;

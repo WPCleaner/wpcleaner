@@ -15,7 +15,7 @@ import org.wikipediacleaner.api.algorithm.AlgorithmParameter;
 import org.wikipediacleaner.api.algorithm.AlgorithmParameterElement;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.CheckErrorResult.ErrorLevel;
-import org.wikipediacleaner.api.constants.WPCConfiguration;
+import org.wikipediacleaner.api.configuration.WPCConfiguration;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.PageElementTag.Parameter;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;

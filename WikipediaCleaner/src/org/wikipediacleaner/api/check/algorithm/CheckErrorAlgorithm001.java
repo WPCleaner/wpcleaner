@@ -10,7 +10,7 @@ package org.wikipediacleaner.api.check.algorithm;
 import java.util.Collection;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
-import org.wikipediacleaner.api.constants.WikiConfiguration;
+import org.wikipediacleaner.api.configuration.WikiConfiguration;
 import org.wikipediacleaner.api.data.MagicWord;
 import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.PageElementTemplate;

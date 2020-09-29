@@ -13,8 +13,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.wikipediacleaner.api.constants.CWConfiguration;
-import org.wikipediacleaner.api.constants.CWConfigurationError;
+import org.wikipediacleaner.api.configuration.CWConfiguration;
+import org.wikipediacleaner.api.configuration.CWConfigurationError;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 
 

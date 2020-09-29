@@ -5,7 +5,7 @@
  *  See README.txt file for licensing information.
  */
 
-package org.wikipediacleaner.api.constants;
+package org.wikipediacleaner.api.configuration;
 
 import java.util.Collections;
 import java.util.HashSet;
@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Properties;
 import java.util.Set;
 
-import org.wikipediacleaner.api.constants.CWConfiguration.Origin;
+import org.wikipediacleaner.api.configuration.CWConfiguration.Origin;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.i18n.GT;
 

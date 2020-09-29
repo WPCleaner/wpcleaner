@@ -13,8 +13,8 @@ import java.util.UUID;
 import javax.swing.text.Style;
 import javax.swing.text.StyledDocument;
 
+import org.wikipediacleaner.api.configuration.WPCConfigurationStringList;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
-import org.wikipediacleaner.api.constants.WPCConfigurationStringList;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageElementInternalLink;
 import org.wikipediacleaner.api.data.PageElementTemplate;

@@ -10,9 +10,9 @@ package org.wikipediacleaner.api.algorithm;
 
 import java.util.Map;
 
-import org.wikipediacleaner.api.constants.CWConfiguration;
-import org.wikipediacleaner.api.constants.WPCConfiguration;
-import org.wikipediacleaner.api.constants.WikiConfiguration;
+import org.wikipediacleaner.api.configuration.CWConfiguration;
+import org.wikipediacleaner.api.configuration.WPCConfiguration;
+import org.wikipediacleaner.api.configuration.WikiConfiguration;
 
 /**
  * Interface implemented by all detection of errors.

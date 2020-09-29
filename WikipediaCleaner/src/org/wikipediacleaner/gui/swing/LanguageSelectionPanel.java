@@ -24,9 +24,9 @@ import javax.swing.JPopupMenu;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
+import org.wikipediacleaner.api.configuration.WPCConfiguration;
+import org.wikipediacleaner.api.configuration.WPCConfigurationStringList;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
-import org.wikipediacleaner.api.constants.WPCConfiguration;
-import org.wikipediacleaner.api.constants.WPCConfigurationStringList;
 import org.wikipediacleaner.api.data.LanguageRegistry;
 import org.wikipediacleaner.gui.swing.basic.Utilities;
 import org.wikipediacleaner.i18n.GT;

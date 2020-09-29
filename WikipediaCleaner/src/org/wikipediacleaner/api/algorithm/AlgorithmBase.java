@@ -10,9 +10,9 @@ package org.wikipediacleaner.api.algorithm;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.wikipediacleaner.api.constants.CWConfiguration;
-import org.wikipediacleaner.api.constants.WPCConfiguration;
-import org.wikipediacleaner.api.constants.WikiConfiguration;
+import org.wikipediacleaner.api.configuration.CWConfiguration;
+import org.wikipediacleaner.api.configuration.WPCConfiguration;
+import org.wikipediacleaner.api.configuration.WikiConfiguration;
 
 /**
  * Abstract base class for analyzing errors.
@@ -103,9 +103,9 @@ public abstract class AlgorithmBase implements Algorithm {
    * @param cwConfiguration Configuration for Check Wiki.
    * @param wpcConfiguration Configuration for WPCleaner.
    * @see org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithm#setConfiguration(
-   *         org.wikipediacleaner.api.constants.WikiConfiguration,
-   *         org.wikipediacleaner.api.constants.CWConfiguration,
-   *         org.wikipediacleaner.api.constants.WPCConfiguration)
+   *         org.wikipediacleaner.api.configuration.WikiConfiguration,
+   *         org.wikipediacleaner.api.configuration.CWConfiguration,
+   *         org.wikipediacleaner.api.configuration.WPCConfiguration)
    */
   @Override
   public void setConfiguration(

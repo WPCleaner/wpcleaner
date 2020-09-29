@@ -15,9 +15,9 @@ import java.util.Map;
 
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
+import org.wikipediacleaner.api.configuration.WPCConfiguration;
+import org.wikipediacleaner.api.configuration.WPCConfigurationStringList;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
-import org.wikipediacleaner.api.constants.WPCConfiguration;
-import org.wikipediacleaner.api.constants.WPCConfigurationStringList;
 
 /**
  * Class to handle configuration about ISSN.

@@ -12,7 +12,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.wikipediacleaner.api.constants.WikiConfiguration;
+import org.wikipediacleaner.api.configuration.WikiConfiguration;
 import org.wikipediacleaner.api.data.contents.ContentsInterval;
 
 

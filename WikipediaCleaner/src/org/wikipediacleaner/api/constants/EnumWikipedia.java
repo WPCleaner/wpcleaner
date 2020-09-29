@@ -18,6 +18,11 @@ import java.util.Set;
 
 import org.wikipediacleaner.api.API;
 import org.wikipediacleaner.api.APIException;
+import org.wikipediacleaner.api.configuration.CWConfiguration;
+import org.wikipediacleaner.api.configuration.FullConfiguration;
+import org.wikipediacleaner.api.configuration.WPCConfiguration;
+import org.wikipediacleaner.api.configuration.WPCConfigurationBoolean;
+import org.wikipediacleaner.api.configuration.WikiConfiguration;
 import org.wikipediacleaner.api.constants.wiki.AbstractWikiSettings;
 import org.wikipediacleaner.api.constants.wiki.Waze;
 import org.wikipediacleaner.api.constants.wiki.WazeopediaUSA;
@@ -140,19 +145,12 @@ public enum EnumWikipedia {
   private List<Page> disambiguationTemplates;
 
   /**
-   * Configuration for Check Wiki project.
-   */
-  private final CWConfiguration CWConfiguration;
-
-  /**
    * @param settigs Wiki settings.
    */
   EnumWikipedia(AbstractWikiSettings settings) {
     this.settings = settings;
     this.configPage = settings.getConfigurationPage();
-    this.wikiConfiguration = new WikiConfiguration();
-    this.WPCConfiguration = new WPCConfiguration(this);
-    this.CWConfiguration = new CWConfiguration(settings.getCodeCheckWiki(), this);
+    this.configuration = new FullConfiguration(this);
   }
 
   /**
@@ -220,11 +218,8 @@ public enum EnumWikipedia {
   /** Configuration page name */
   private final String configPage;
 
-  /** Wiki configuration */
-  private final WikiConfiguration wikiConfiguration;
-
-  /** WPCleaner configuration */
-  private final WPCConfiguration WPCConfiguration;
+  /** Configuration */
+  private final FullConfiguration configuration;
 
   /**
    * @return Wiki settings.
@@ -237,21 +232,21 @@ public enum EnumWikipedia {
    * @return Wiki configuration.
    */
   public WikiConfiguration getWikiConfiguration() {
-    return wikiConfiguration;
+    return configuration.wiki();
   }
 
   /**
    * @return WPCleaner configuration.
    */
   public WPCConfiguration getConfiguration() {
-    return WPCConfiguration;
+    return configuration.wpc();
   }
 
   /**
    * @return Check Wiki project configuration.
    */
   public CWConfiguration getCWConfiguration() {
-    return CWConfiguration;
+    return configuration.cw();
   }
 
   /**
@@ -266,7 +261,7 @@ public enum EnumWikipedia {
    * @return Configuration page.
    */
   public String getUserConfigurationPage(String userName) {
-    Namespace userNamespace = wikiConfiguration.getNamespace(Namespace.USER);
+    Namespace userNamespace = configuration.wiki().getNamespace(Namespace.USER);
     String userPrefix = (userNamespace != null) ? userNamespace.getTitle() : "User";
     return userPrefix + ":" + userName + "/" + configPage;
   }

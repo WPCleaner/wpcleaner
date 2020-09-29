@@ -8,7 +8,7 @@
 
 package org.wikipediacleaner.api.data;
 
-import org.wikipediacleaner.api.constants.WikiConfiguration;
+import org.wikipediacleaner.api.configuration.WikiConfiguration;
 
 
 /**

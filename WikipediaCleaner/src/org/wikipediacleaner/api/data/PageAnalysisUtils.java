@@ -11,8 +11,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import org.wikipediacleaner.api.constants.WPCConfiguration;
-import org.wikipediacleaner.api.constants.WPCConfigurationStringList;
+import org.wikipediacleaner.api.configuration.WPCConfiguration;
+import org.wikipediacleaner.api.configuration.WPCConfigurationStringList;
 import org.wikipediacleaner.api.data.PageElementTemplate.Parameter;
 import org.wikipediacleaner.api.data.analysis.InternalLinkNotification;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;

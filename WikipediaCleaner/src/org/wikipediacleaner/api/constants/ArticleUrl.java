@@ -15,6 +15,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.wikipediacleaner.api.configuration.WikiConfiguration;
 import org.wikipediacleaner.api.constants.wiki.AbstractWikiSettings;
 import org.wikipediacleaner.api.http.HttpUtils;
 

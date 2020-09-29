@@ -11,9 +11,9 @@ package org.wikipediacleaner.api.data;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.wikipediacleaner.api.constants.WPCConfiguration;
-import org.wikipediacleaner.api.constants.WPCConfigurationBoolean;
-import org.wikipediacleaner.api.constants.WPCConfigurationStringList;
+import org.wikipediacleaner.api.configuration.WPCConfiguration;
+import org.wikipediacleaner.api.configuration.WPCConfigurationBoolean;
+import org.wikipediacleaner.api.configuration.WPCConfigurationStringList;
 import org.wikipediacleaner.api.data.ISBNRange.ISBNInformation;
 import org.wikipediacleaner.api.data.PageElementTemplate.Parameter;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;

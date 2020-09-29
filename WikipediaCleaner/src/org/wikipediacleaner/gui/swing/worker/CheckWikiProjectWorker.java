@@ -15,7 +15,7 @@ import org.wikipediacleaner.api.APIFactory;
 import org.wikipediacleaner.api.algorithm.AlgorithmError;
 import org.wikipediacleaner.api.algorithm.AlgorithmErrorComparator;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithm;
-import org.wikipediacleaner.api.constants.CWConfigurationError;
+import org.wikipediacleaner.api.configuration.CWConfigurationError;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
 import org.wikipediacleaner.gui.swing.basic.BasicWorker;

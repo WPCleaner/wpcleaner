@@ -10,7 +10,7 @@ package org.wikipediacleaner.api.algorithm;
 import java.util.Comparator;
 
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithm;
-import org.wikipediacleaner.api.constants.CWConfigurationError;
+import org.wikipediacleaner.api.configuration.CWConfigurationError;
 
 
 /**

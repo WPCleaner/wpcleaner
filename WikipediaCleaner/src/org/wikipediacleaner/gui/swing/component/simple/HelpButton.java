@@ -16,8 +16,8 @@ import javax.swing.JButton;
 import javax.swing.JComponent;
 
 import org.wikipediacleaner.Version;
+import org.wikipediacleaner.api.configuration.WPCConfigurationString;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
-import org.wikipediacleaner.api.constants.WPCConfigurationString;
 import org.wikipediacleaner.api.dataaccess.WikiProvider;
 import org.wikipediacleaner.gui.swing.basic.Utilities;
 import org.wikipediacleaner.i18n.GT;

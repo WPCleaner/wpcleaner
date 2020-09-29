@@ -5,7 +5,7 @@
  *  See README.txt file for licensing information.
  */
 
-package org.wikipediacleaner.api.constants;
+package org.wikipediacleaner.api.configuration;
 
 import java.io.UnsupportedEncodingException;
 import java.util.Collections;

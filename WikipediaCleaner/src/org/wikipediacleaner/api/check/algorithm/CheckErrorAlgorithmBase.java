@@ -24,12 +24,12 @@ import org.wikipediacleaner.api.algorithm.AlgorithmParameterElement;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.SpecialCharacters;
 import org.wikipediacleaner.api.check.CheckErrorResult.ErrorLevel;
-import org.wikipediacleaner.api.constants.CWConfiguration;
-import org.wikipediacleaner.api.constants.CWConfigurationError;
+import org.wikipediacleaner.api.configuration.CWConfiguration;
+import org.wikipediacleaner.api.configuration.CWConfigurationError;
+import org.wikipediacleaner.api.configuration.WPCConfiguration;
+import org.wikipediacleaner.api.configuration.WPCConfigurationString;
+import org.wikipediacleaner.api.configuration.WikiConfiguration;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
-import org.wikipediacleaner.api.constants.WPCConfiguration;
-import org.wikipediacleaner.api.constants.WPCConfigurationString;
-import org.wikipediacleaner.api.constants.WikiConfiguration;
 import org.wikipediacleaner.api.data.MagicWord;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
@@ -97,9 +97,9 @@ public abstract class CheckErrorAlgorithmBase extends AlgorithmBase implements C
    * @param cwConfiguration Configuration for Check Wiki.
    * @param wpcConfiguration Configuration for WPCleaner.
    * @see org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithm#setConfiguration(
-   *         org.wikipediacleaner.api.constants.WikiConfiguration,
-   *         org.wikipediacleaner.api.constants.CWConfiguration,
-   *         org.wikipediacleaner.api.constants.WPCConfiguration)
+   *         org.wikipediacleaner.api.configuration.WikiConfiguration,
+   *         org.wikipediacleaner.api.configuration.CWConfiguration,
+   *         org.wikipediacleaner.api.configuration.WPCConfiguration)
    */
   @Override
   public void setConfiguration(

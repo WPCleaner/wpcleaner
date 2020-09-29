@@ -11,8 +11,8 @@ package org.wikipediacleaner.api.impl;
 import java.util.Map;
 
 import org.wikipediacleaner.Version;
-import org.wikipediacleaner.api.constants.WPCConfiguration;
-import org.wikipediacleaner.api.constants.WPCConfigurationString;
+import org.wikipediacleaner.api.configuration.WPCConfiguration;
+import org.wikipediacleaner.api.configuration.WPCConfigurationString;
 import org.wikipediacleaner.api.data.PageElementInternalLink;
 
 /**

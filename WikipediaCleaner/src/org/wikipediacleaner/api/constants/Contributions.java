@@ -7,6 +7,8 @@
 
 package org.wikipediacleaner.api.constants;
 
+import org.wikipediacleaner.api.configuration.CWConfiguration;
+import org.wikipediacleaner.api.configuration.CWConfigurationError;
 import org.wikipediacleaner.i18n.GT;
 
 

@@ -62,7 +62,7 @@ import javax.xml.bind.Unmarshaller;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithm;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmComparator;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithms;
-import org.wikipediacleaner.api.constants.CWConfigurationError;
+import org.wikipediacleaner.api.configuration.CWConfigurationError;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.AutomaticFixing;
 import org.wikipediacleaner.api.data.AutomaticFixingList;

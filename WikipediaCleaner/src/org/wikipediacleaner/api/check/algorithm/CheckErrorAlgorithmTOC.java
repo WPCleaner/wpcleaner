@@ -12,7 +12,7 @@ import java.util.Collections;
 import java.util.List;
 
 import org.wikipediacleaner.api.algorithm.AlgorithmParameter;
-import org.wikipediacleaner.api.constants.WPCConfiguration;
+import org.wikipediacleaner.api.configuration.WPCConfiguration;
 import org.wikipediacleaner.api.data.MagicWord;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageElement;

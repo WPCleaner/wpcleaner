@@ -15,8 +15,8 @@ import java.util.Map;
 import javax.swing.JOptionPane;
 
 import org.wikipediacleaner.api.APIException;
+import org.wikipediacleaner.api.configuration.WPCConfigurationString;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
-import org.wikipediacleaner.api.constants.WPCConfigurationString;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageComparator;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;

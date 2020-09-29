@@ -11,7 +11,7 @@ import java.util.Collection;
 import java.util.List;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
-import org.wikipediacleaner.api.constants.WPCConfigurationString;
+import org.wikipediacleaner.api.configuration.WPCConfigurationString;
 import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.PageElementTitle;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;

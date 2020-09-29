@@ -5,7 +5,7 @@
  *  See README.txt file for licensing information.
  */
 
-package org.wikipediacleaner.api.constants;
+package org.wikipediacleaner.api.configuration;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -18,6 +18,7 @@ import java.util.Set;
 import org.wikipediacleaner.api.APIException;
 import org.wikipediacleaner.api.algorithm.AlgorithmError;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithm;
+import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.i18n.GT;
 import org.wikipediacleaner.utils.Configuration;
 import org.wikipediacleaner.utils.ConfigurationValueBoolean;
