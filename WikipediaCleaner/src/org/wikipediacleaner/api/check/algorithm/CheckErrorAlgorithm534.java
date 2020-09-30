@@ -484,36 +484,65 @@ public class CheckErrorAlgorithm534 extends CheckErrorAlgorithmBase {
   /** List of automatic replacements */
   private static AutomaticReplacement[] automaticReplacements = {
     // Non existing options
-    new AutomaticReplacement("nothumb", null, null, true),
+    new AutomaticReplacement("nothumb",  null, null, true),
+    new AutomaticReplacement("vertical", null, null, true),
 
     // IMG_BORDER
     new AutomaticReplacement("rand", MagicWord.IMG_BORDER, "border", false), // de
 
+    // IMG_FRAMELESS
+    new AutomaticReplacement("rahmenlos", MagicWord.IMG_FRAMELESS, "frameless", true),
+
     // IMG_LEFT
-    new AutomaticReplacement("leftt", MagicWord.IMG_LEFT, "left", true),
+    new AutomaticReplacement("esquerra",  MagicWord.IMG_LEFT, "left", true),
+    new AutomaticReplacement("gauche",    MagicWord.IMG_LEFT, "left", true),
+    new AutomaticReplacement("izquierda", MagicWord.IMG_LEFT, "left", true),
+    new AutomaticReplacement("leftt",     MagicWord.IMG_LEFT, "left", true),
+    new AutomaticReplacement("ліворуч",   MagicWord.IMG_LEFT, "left", true),
+    new AutomaticReplacement("שמאל",      MagicWord.IMG_LEFT, "left", true),
 
     // IMG_RIGHT
-    new AutomaticReplacement("richt",  MagicWord.IMG_RIGHT, "right", true),
-    new AutomaticReplacement("righ",   MagicWord.IMG_RIGHT, "right", true),
-    new AutomaticReplacement("rightt", MagicWord.IMG_RIGHT, "right", true),
-    new AutomaticReplacement("rigt",   MagicWord.IMG_RIGHT, "right", true),
-    new AutomaticReplacement("rigth",  MagicWord.IMG_RIGHT, "right", true),
-    new AutomaticReplacement("rigtht", MagicWord.IMG_RIGHT, "right", true),
+    new AutomaticReplacement("derecha",  MagicWord.IMG_RIGHT, "right", true),
+    new AutomaticReplacement("desno",    MagicWord.IMG_RIGHT, "right", true),
+    new AutomaticReplacement("destra",   MagicWord.IMG_RIGHT, "right", true),
+    new AutomaticReplacement("direita",  MagicWord.IMG_RIGHT, "right", true),
+    new AutomaticReplacement("dreta",    MagicWord.IMG_RIGHT, "right", true),
+    new AutomaticReplacement("ight",     MagicWord.IMG_RIGHT, "right", true),
+    new AutomaticReplacement("rechts",   MagicWord.IMG_RIGHT, "right", true),
+    new AutomaticReplacement("richt",    MagicWord.IMG_RIGHT, "right", true),
+    new AutomaticReplacement("righ",     MagicWord.IMG_RIGHT, "right", true),
+    new AutomaticReplacement("rightt",   MagicWord.IMG_RIGHT, "right", true),
+    new AutomaticReplacement("rigt",     MagicWord.IMG_RIGHT, "right", true),
+    new AutomaticReplacement("rigth",    MagicWord.IMG_RIGHT, "right", true),
+    new AutomaticReplacement("rigtht",   MagicWord.IMG_RIGHT, "right", true),
+    new AutomaticReplacement("roght",    MagicWord.IMG_RIGHT, "right", true),
+    new AutomaticReplacement("rught",    MagicWord.IMG_RIGHT, "rigth", true),
+    new AutomaticReplacement("праворуч", MagicWord.IMG_RIGHT, "right", true),
+    new AutomaticReplacement("дясно",    MagicWord.IMG_RIGHT, "right", true),
+    new AutomaticReplacement("справа",   MagicWord.IMG_RIGHT, "right", true),
 
     // IMG_THUMBNAIL
-    new AutomaticReplacement("mini",     MagicWord.IMG_THUMBNAIL, "thumb", true), // de
-    new AutomaticReplacement("miniatur", MagicWord.IMG_THUMBNAIL, "thumb", true), // de
-    new AutomaticReplacement("thum",     MagicWord.IMG_THUMBNAIL, "thumb", true),
-    new AutomaticReplacement("thump",    MagicWord.IMG_THUMBNAIL, "thumb", true),
-    new AutomaticReplacement("tuhmb",    MagicWord.IMG_THUMBNAIL, "thumb", true),
-    new AutomaticReplacement("tumb",     MagicWord.IMG_THUMBNAIL, "thumb", true),
+    new AutomaticReplacement("mini",              MagicWord.IMG_THUMBNAIL, "thumb", true), // de
+    new AutomaticReplacement("miniatur",          MagicWord.IMG_THUMBNAIL, "thumb", true), // de
+    new AutomaticReplacement("miniatura",         MagicWord.IMG_THUMBNAIL, "thumb", true),
+    new AutomaticReplacement("miniaturadeimagen", MagicWord.IMG_THUMBNAIL, "thumb", true),
+    new AutomaticReplacement("miniature",         MagicWord.IMG_THUMBNAIL, "thumb", true),
+    new AutomaticReplacement("miniatyr",          MagicWord.IMG_THUMBNAIL, "thumb", true),
+    new AutomaticReplacement("thum",              MagicWord.IMG_THUMBNAIL, "thumb", true),
+    new AutomaticReplacement("thump",             MagicWord.IMG_THUMBNAIL, "thumb", true),
+    new AutomaticReplacement("tuhmb",             MagicWord.IMG_THUMBNAIL, "thumb", true),
+    new AutomaticReplacement("tumb",              MagicWord.IMG_THUMBNAIL, "thumb", true),
+    new AutomaticReplacement("мини",              MagicWord.IMG_THUMBNAIL, "thumb", true),
+    new AutomaticReplacement("ממוזער",              MagicWord.IMG_THUMBNAIL, "thumb", true),
 
     // IMG_UPRIGHT
     new AutomaticReplacement("hochkant", MagicWord.IMG_UPRIGHT, "upright", true), // de
+    new AutomaticReplacement("uoright",  MagicWord.IMG_UPRIGHT, "upright", true),
     new AutomaticReplacement("upleft",   MagicWord.IMG_UPRIGHT, "upright", true),
     new AutomaticReplacement("uprighht", MagicWord.IMG_UPRIGHT, "upright", true),
     new AutomaticReplacement("uprigt",   MagicWord.IMG_UPRIGHT, "upright", true),
     new AutomaticReplacement("uprigth",  MagicWord.IMG_UPRIGHT, "upright", true),
+    new AutomaticReplacement("uptight",  MagicWord.IMG_UPRIGHT, "upright", true),
   };
 
   /**
