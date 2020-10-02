@@ -16,7 +16,7 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2020-09-14 15:17:44+0000\n"
+"PO-Revision-Date: 2020-10-02 07:22:38+0000\n"
 "Last-Translator: Felipe L. <felipe.idj@hotmail.com>\n"
 "Language-Team: Brazilian Portuguese <pt_BR@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -183,7 +183,7 @@ msgid "Replace with {0}"
 msgstr "Substituir com {0}"
 
 #: org/wikipediacleaner/api/check/CheckErrorResult.java:201
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:367
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:378
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm017.java:175
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm026.java:108
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm026.java:114
@@ -312,104 +312,104 @@ msgid "Unable to replace the characters [{0}]"
 msgstr "Não é possível substituir os caracteres [{0}]"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:38
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:240
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:251
 msgid "Remove all control characters"
 msgstr "Remover todos os caracteres de controle"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:351
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:354
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:362
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:365
 msgid "To report control characters only in templates"
 msgstr "Para relatar caracteres de controle apenas em predefinições"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:357
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:368
 msgid "To ignore some control characters"
 msgstr "Para ignorar alguns caracteres de controle"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:360
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:371
 msgid "To ignore control character with hexadecimal code equal to XX"
 msgstr "Para ignorar o caractere de controle com código hexadecimal igual a XX"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:368
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:379
 msgid "Non-breaking space"
 msgstr "Espaço não-separável"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:369
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:380
 msgid "Soft hyphen"
 msgstr "Hífen"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:370
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:381
 msgid "Thee-per-em space"
 msgstr "Espaço quatro por em"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:371
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:382
 msgid "Four-per-em space"
 msgstr "Espaço quatro por em"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:372
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:383
 msgid "Six-per-em space"
 msgstr "Espaço seis por em"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:373
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:384
 msgid "Figure space"
 msgstr "Espaço de imagem"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:374
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:385
 msgid "Punctuation space"
 msgstr "Espaço de pontuação"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:375
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:386
 msgid "Zero-width space"
 msgstr "Largura zero"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:376
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:387
 msgid "Left-to-right mark"
 msgstr "Marca da esquerda para a direita"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:377
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:388
 msgid "Right-to-left mark"
 msgstr "Marca da direita para a esquerda"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:378
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:389
 msgid "Line separator"
 msgstr "Separador de linha"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:379
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:390
 msgid "Left-to-right embedding"
 msgstr "Incorporação da esquerda para a direita"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:380
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:391
 msgid "Right-to-left embedding"
 msgstr "Incorporação da direita para a esquerda"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:381
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:392
 msgid "Pop directional formatting"
 msgstr "Formatação direcional pop"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:382
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:393
 msgid "Left-to-right override"
 msgstr "Substituição da esquerda para a direita"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:383
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:394
 msgid "Right-to-left override"
 msgstr "Substituição da direita para a esquerda"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:384
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:395
 msgid "Byte order mark"
 msgstr "Byte order mark"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:385
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:396
 msgid "Object replacement character"
 msgstr "ObjecCaractere de substituição de objetot replacement character"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:386
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:397
 msgid "Private use area"
 msgstr "Área de uso privado"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:387
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:398
 msgid "Private use area A"
 msgstr "Área de uso privado A"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:388
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:399
 msgid "Private use area B"
 msgstr "Área de uso privado B"
 
@@ -1392,12 +1392,12 @@ msgstr "Nome do parâmetro que aciona a categorização"
 msgid "Value of the parameter that triggers the categorization"
 msgstr "Valor do parâmetro que aciona a categorização"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm548.java:353
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm548.java:354
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm550.java:195
 msgid "Links to ignore"
 msgstr "Links para ignorar"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm548.java:356
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm548.java:357
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm550.java:198
 msgid "Link to ignore"
 msgstr "Link para ignorar"
@@ -1443,11 +1443,11 @@ msgstr "Seções nas quais links externos são normais"
 msgid "Section in which external links are normal"
 msgstr "Seção na qual links externos são normais"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm557.java:227
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm557.java:231
 msgid "Prefixes which can be before an internal link"
 msgstr "Prefixos que podem estar antes de um link interno"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm557.java:231
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm557.java:235
 msgid "Prefix which can be before an internal link"
 msgstr "Prefixo que pode estar antes de um link interno"
 
@@ -1518,62 +1518,85 @@ msgstr "Procurar todos os ISSN"
 msgid "A list of templates resulting in the inclusion of a table of contents"
 msgstr "Uma lista de predefinições resultantes da inclusão de uma tabela de conteúdos"
 
-#: org/wikipediacleaner/api/constants/CWConfiguration.java:82
+#: org/wikipediacleaner/api/configuration/CWConfiguration.java:83
 #, java-format
 msgid "Fixed using {0}"
 msgstr "Corrigido usando {0}"
 
-#: org/wikipediacleaner/api/constants/CWConfigurationError.java:319
+#: org/wikipediacleaner/api/configuration/CWConfigurationError.java:319
 msgid "Deactivated"
 msgstr "Desativado"
 
-#: org/wikipediacleaner/api/constants/CWConfigurationError.java:321
+#: org/wikipediacleaner/api/configuration/CWConfigurationError.java:321
 msgid "Low priority"
 msgstr "Prioridade baixa"
 
-#: org/wikipediacleaner/api/constants/CWConfigurationError.java:323
+#: org/wikipediacleaner/api/configuration/CWConfigurationError.java:323
 msgid "Middle priority"
 msgstr "Prioridade média"
 
-#: org/wikipediacleaner/api/constants/CWConfigurationError.java:325
+#: org/wikipediacleaner/api/configuration/CWConfigurationError.java:325
 msgid "Top priority"
 msgstr "Alta prioridade"
 
-#: org/wikipediacleaner/api/constants/CWConfigurationError.java:327
+#: org/wikipediacleaner/api/configuration/CWConfigurationError.java:327
 msgid "For Bot"
 msgstr "Para bot"
 
-#: org/wikipediacleaner/api/constants/CWConfigurationError.java:329
+#: org/wikipediacleaner/api/configuration/CWConfigurationError.java:329
 msgid "Priority unknown"
 msgstr "Prioridade desconhecida"
 
-#: org/wikipediacleaner/api/constants/Contributions.java:42
+#: org/wikipediacleaner/api/configuration/WPCConfiguration.java:401
+#: org/wikipediacleaner/api/configuration/WPCConfiguration.java:420
+#: org/wikipediacleaner/api/configuration/WPCConfiguration.java:440
+#: org/wikipediacleaner/api/configuration/WPCConfiguration.java:461
+#: org/wikipediacleaner/api/configuration/WPCConfiguration.java:509
+#, java-format
+msgid "Attribute {0} can''t be set in general configuration"
+msgstr "Atributo {0} não pode ser definido na configuração geral"
+
+#: org/wikipediacleaner/api/configuration/WPCConfiguration.java:407
+#: org/wikipediacleaner/api/configuration/WPCConfiguration.java:426
+#: org/wikipediacleaner/api/configuration/WPCConfiguration.java:446
+#: org/wikipediacleaner/api/configuration/WPCConfiguration.java:467
+#: org/wikipediacleaner/api/configuration/WPCConfiguration.java:481
+#, java-format
+msgid "Attribute {0} can''t be set in user configuration"
+msgstr "Atributo {0} não pode ser definido na configuração do usuário"
+
+#: org/wikipediacleaner/api/configuration/WPCConfiguration.java:471
+#, java-format
+msgid "Attribute {0} should be integer value"
+msgstr "Atributo {0} deve ser um valor inteiro"
+
+#: org/wikipediacleaner/api/constants/Contributions.java:44
 #, java-format
 msgid "You have done the following contributions on \"{0}\":"
 msgstr "Você fez as seguintes contribuições em \"{0}\":"
 
-#: org/wikipediacleaner/api/constants/Contributions.java:48
+#: org/wikipediacleaner/api/constants/Contributions.java:50
 #, java-format
 msgid "You have edited {0} page."
 msgid_plural "You have edited {0} pages."
 msgstr[0] "Você editou {0} página."
 msgstr[1] "Você editou {0} páginas."
 
-#: org/wikipediacleaner/api/constants/Contributions.java:57
+#: org/wikipediacleaner/api/constants/Contributions.java:59
 #, java-format
 msgid "You have fixed {0} link to disambiguation pages."
 msgid_plural "You have fixed {0} links to disambiguation pages."
 msgstr[0] "Você corrigiu {0} link para páginas de desambiguação."
 msgstr[1] "Você corrigiu {0} links para páginas de desambiguação."
 
-#: org/wikipediacleaner/api/constants/Contributions.java:69
+#: org/wikipediacleaner/api/constants/Contributions.java:71
 #, java-format
 msgid "You have fixed {0} error \"{1}\"."
 msgid_plural "You have fixed {0} errors \"{1}\"."
 msgstr[0] "Você corrigiu {0} erro \"{1}\"."
 msgstr[1] "Você corrigiu {0} erros \"{1}\"."
 
-#: org/wikipediacleaner/api/constants/Contributions.java:82
+#: org/wikipediacleaner/api/constants/Contributions.java:84
 #, java-format
 msgid "You haven''t done any contribution on \"{0}\""
 msgstr "Você não realizou nenhuma contribuição em \"{0}\""
@@ -1693,29 +1716,6 @@ msgstr "Páginas não vigiadas"
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:46
 msgid "Pages without language links"
 msgstr "Páginas sem links de linguagem"
-
-#: org/wikipediacleaner/api/constants/WPCConfiguration.java:400
-#: org/wikipediacleaner/api/constants/WPCConfiguration.java:419
-#: org/wikipediacleaner/api/constants/WPCConfiguration.java:439
-#: org/wikipediacleaner/api/constants/WPCConfiguration.java:460
-#: org/wikipediacleaner/api/constants/WPCConfiguration.java:508
-#, java-format
-msgid "Attribute {0} can''t be set in general configuration"
-msgstr "Atributo {0} não pode ser definido na configuração geral"
-
-#: org/wikipediacleaner/api/constants/WPCConfiguration.java:406
-#: org/wikipediacleaner/api/constants/WPCConfiguration.java:425
-#: org/wikipediacleaner/api/constants/WPCConfiguration.java:445
-#: org/wikipediacleaner/api/constants/WPCConfiguration.java:466
-#: org/wikipediacleaner/api/constants/WPCConfiguration.java:480
-#, java-format
-msgid "Attribute {0} can''t be set in user configuration"
-msgstr "Atributo {0} não pode ser definido na configuração do usuário"
-
-#: org/wikipediacleaner/api/constants/WPCConfiguration.java:470
-#, java-format
-msgid "Attribute {0} should be integer value"
-msgstr "Atributo {0} deve ser um valor inteiro"
 
 #: org/wikipediacleaner/api/data/ISBNRange.java:163
 #: org/wikipediacleaner/api/data/ISBNRange.java:185
@@ -3231,31 +3231,31 @@ msgstr "Outro..."
 msgid "Checking for errors n°{0}"
 msgstr "Verificando erro nº{0}"
 
-#: org/wikipediacleaner/gui/swing/bot/AutomaticFixWorker.java:215
+#: org/wikipediacleaner/gui/swing/bot/AutomaticFixWorker.java:220
 #, java-format
 msgid "Analyzing page {0}"
 msgstr "Analisando página {0}"
 
-#: org/wikipediacleaner/gui/swing/bot/AutomaticFixWorker.java:311
+#: org/wikipediacleaner/gui/swing/bot/AutomaticFixWorker.java:316
 #, java-format
 msgid "Fixing page {0}"
 msgstr "Corrigindo página {0}"
 
-#: org/wikipediacleaner/gui/swing/bot/AutomaticFixWorker.java:384
+#: org/wikipediacleaner/gui/swing/bot/AutomaticFixWorker.java:389
 #, java-format
 msgid "{0} page has been modified"
 msgid_plural "{0} pages have been modified"
 msgstr[0] "{0} página foi modificada"
 msgstr[1] "{0} páginas foram modificadas"
 
-#: org/wikipediacleaner/gui/swing/bot/AutomaticFixWorker.java:389
+#: org/wikipediacleaner/gui/swing/bot/AutomaticFixWorker.java:394
 #, java-format
 msgid "{0} page has been marked as fixed for the selected algorithms"
 msgid_plural "{0} pages have been marked as fixed for the selected algorithms"
 msgstr[0] "{0} página foi marcada como corrigida com os algoritmos selecionados"
 msgstr[1] "{0} páginas foram marcadas como corrigidas com os algoritmos selecionados"
 
-#: org/wikipediacleaner/gui/swing/bot/AutomaticFixWorker.java:394
+#: org/wikipediacleaner/gui/swing/bot/AutomaticFixWorker.java:399
 #, java-format
 msgid "{0} page has been marked as fixed for other algorithms"
 msgid_plural "{0} pages have been marked as fixed for other algorithms"
