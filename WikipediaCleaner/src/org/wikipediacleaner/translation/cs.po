@@ -16,7 +16,7 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2020-09-14 15:17:42+0000\n"
+"PO-Revision-Date: 2020-10-02 07:22:36+0000\n"
 "Last-Translator: Matěj S. <matejsuchanek97@gmail.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -185,7 +185,7 @@ msgid "Replace with {0}"
 msgstr "Nahradit řetězcem {0}"
 
 #: org/wikipediacleaner/api/check/CheckErrorResult.java:201
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:367
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:378
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm017.java:175
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm026.java:108
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm026.java:114
@@ -315,109 +315,109 @@ msgid "Unable to replace the characters [{0}]"
 msgstr "Nelze nahradit znaky [{0}]"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:38
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:240
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:251
 msgid "Remove all control characters"
 msgstr "Odstranit všechny řídící znaky"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:351
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:354
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:362
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:365
 msgid "To report control characters only in templates"
 msgstr "Hlásit řídicí znaky pouze v šablonách"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:357
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:368
 #, fuzzy
 msgid "To ignore some control characters"
 msgstr "Odstranit všechny řídící znaky"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:360
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:371
 msgid "To ignore control character with hexadecimal code equal to XX"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:368
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:379
 msgid "Non-breaking space"
 msgstr "Nezlomitelná mezera"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:369
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:380
 msgid "Soft hyphen"
 msgstr "Neviditelný spojovník"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:370
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:381
 msgid "Thee-per-em space"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:371
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:382
 msgid "Four-per-em space"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:372
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:383
 msgid "Six-per-em space"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:373
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:384
 msgid "Figure space"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:374
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:385
 msgid "Punctuation space"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:375
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:386
 msgid "Zero-width space"
 msgstr "Nulová mezera"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:376
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:387
 msgid "Left-to-right mark"
 msgstr "Řídicí znak zprava doleva"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:377
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:388
 #, fuzzy
 msgid "Right-to-left mark"
 msgstr "Řídicí znak zprava doleva"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:378
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:389
 msgid "Line separator"
 msgstr "Oddělovač řádku"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:379
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:390
 msgid "Left-to-right embedding"
 msgstr "Ukotvení řídícího znaku zprava doleva"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:380
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:391
 #, fuzzy
 msgid "Right-to-left embedding"
 msgstr "Ukotvení řídícího znaku zprava doleva"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:381
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:392
 msgid "Pop directional formatting"
 msgstr "Vyrušení obousměrného textu"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:382
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:393
 #, fuzzy
 msgid "Left-to-right override"
 msgstr "Řídicí znak zprava doleva"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:383
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:394
 #, fuzzy
 msgid "Right-to-left override"
 msgstr "Řídicí znak zprava doleva"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:384
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:395
 msgid "Byte order mark"
 msgstr "Označení pořadí bajtů"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:385
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:396
 msgid "Object replacement character"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:386
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:397
 msgid "Private use area"
 msgstr "Rozsah soukromě užívaných znaků"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:387
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:398
 msgid "Private use area A"
 msgstr "Rozsah soukromě užívaných znaků A"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:388
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:399
 msgid "Private use area B"
 msgstr "Rozsah soukromě užívaných znaků B"
 
@@ -1458,13 +1458,13 @@ msgstr "Chybějící šablony"
 msgid "Value of the parameter that triggers the categorization"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm548.java:353
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm548.java:354
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm550.java:195
 #, fuzzy
 msgid "Links to ignore"
 msgstr "Odkazuje na {0}"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm548.java:356
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm548.java:357
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm550.java:198
 #, fuzzy
 msgid "Link to ignore"
@@ -1513,11 +1513,11 @@ msgstr ""
 msgid "Section in which external links are normal"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm557.java:227
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm557.java:231
 msgid "Prefixes which can be before an internal link"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm557.java:231
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm557.java:235
 msgid "Prefix which can be before an internal link"
 msgstr ""
 
@@ -1589,41 +1589,64 @@ msgstr "Hledat všechna ISSN"
 msgid "A list of templates resulting in the inclusion of a table of contents"
 msgstr "Seznam šablon obsahujících obsah stránky."
 
-#: org/wikipediacleaner/api/constants/CWConfiguration.java:82
+#: org/wikipediacleaner/api/configuration/CWConfiguration.java:83
 #, java-format
 msgid "Fixed using {0}"
 msgstr "Opraveno pomocí {0}"
 
-#: org/wikipediacleaner/api/constants/CWConfigurationError.java:319
+#: org/wikipediacleaner/api/configuration/CWConfigurationError.java:319
 msgid "Deactivated"
 msgstr "Deaktivováno"
 
-#: org/wikipediacleaner/api/constants/CWConfigurationError.java:321
+#: org/wikipediacleaner/api/configuration/CWConfigurationError.java:321
 msgid "Low priority"
 msgstr "Nízká priorita"
 
-#: org/wikipediacleaner/api/constants/CWConfigurationError.java:323
+#: org/wikipediacleaner/api/configuration/CWConfigurationError.java:323
 msgid "Middle priority"
 msgstr "Střední priorita"
 
-#: org/wikipediacleaner/api/constants/CWConfigurationError.java:325
+#: org/wikipediacleaner/api/configuration/CWConfigurationError.java:325
 msgid "Top priority"
 msgstr "Vysoká priorita"
 
-#: org/wikipediacleaner/api/constants/CWConfigurationError.java:327
+#: org/wikipediacleaner/api/configuration/CWConfigurationError.java:327
 msgid "For Bot"
 msgstr "Pro bota"
 
-#: org/wikipediacleaner/api/constants/CWConfigurationError.java:329
+#: org/wikipediacleaner/api/configuration/CWConfigurationError.java:329
 msgid "Priority unknown"
 msgstr "Neznámá priorita"
 
-#: org/wikipediacleaner/api/constants/Contributions.java:42
+#: org/wikipediacleaner/api/configuration/WPCConfiguration.java:401
+#: org/wikipediacleaner/api/configuration/WPCConfiguration.java:420
+#: org/wikipediacleaner/api/configuration/WPCConfiguration.java:440
+#: org/wikipediacleaner/api/configuration/WPCConfiguration.java:461
+#: org/wikipediacleaner/api/configuration/WPCConfiguration.java:509
+#, java-format
+msgid "Attribute {0} can''t be set in general configuration"
+msgstr "Atribut „{0}“ nemůže být nastaven v hlavní konfiguraci."
+
+#: org/wikipediacleaner/api/configuration/WPCConfiguration.java:407
+#: org/wikipediacleaner/api/configuration/WPCConfiguration.java:426
+#: org/wikipediacleaner/api/configuration/WPCConfiguration.java:446
+#: org/wikipediacleaner/api/configuration/WPCConfiguration.java:467
+#: org/wikipediacleaner/api/configuration/WPCConfiguration.java:481
+#, java-format
+msgid "Attribute {0} can''t be set in user configuration"
+msgstr "Atribut „{0}“ nemůže být nastaven v uživatelské konfiguraci"
+
+#: org/wikipediacleaner/api/configuration/WPCConfiguration.java:471
+#, java-format
+msgid "Attribute {0} should be integer value"
+msgstr "Atribut „{0}“ by měl být celé číslo"
+
+#: org/wikipediacleaner/api/constants/Contributions.java:44
 #, java-format
 msgid "You have done the following contributions on \"{0}\":"
 msgstr "Na „{0}“ jste provedl(a) následující úpravy:"
 
-#: org/wikipediacleaner/api/constants/Contributions.java:48
+#: org/wikipediacleaner/api/constants/Contributions.java:50
 #, java-format
 msgid "You have edited {0} page."
 msgid_plural "You have edited {0} pages."
@@ -1631,7 +1654,7 @@ msgstr[0] "Editoval jste {0} stránku."
 msgstr[1] "Editoval jste {0} stránky."
 msgstr[2] "Editoval jste {0} stránek."
 
-#: org/wikipediacleaner/api/constants/Contributions.java:57
+#: org/wikipediacleaner/api/constants/Contributions.java:59
 #, java-format
 msgid "You have fixed {0} link to disambiguation pages."
 msgid_plural "You have fixed {0} links to disambiguation pages."
@@ -1639,7 +1662,7 @@ msgstr[0] "Opravil jste {0} odkaz na rozcestník."
 msgstr[1] "Opravil jste {0} odkazy na rozcestníky."
 msgstr[2] "Opravil jste {0} odkazů na rozcestníky."
 
-#: org/wikipediacleaner/api/constants/Contributions.java:69
+#: org/wikipediacleaner/api/constants/Contributions.java:71
 #, java-format
 msgid "You have fixed {0} error \"{1}\"."
 msgid_plural "You have fixed {0} errors \"{1}\"."
@@ -1647,7 +1670,7 @@ msgstr[0] "Opravil jste {0} chybu „{1}“."
 msgstr[1] "Opravil jste {0} chyby „{1}“."
 msgstr[2] "Opravil jste {0} chyb „{1}“."
 
-#: org/wikipediacleaner/api/constants/Contributions.java:82
+#: org/wikipediacleaner/api/constants/Contributions.java:84
 #, java-format
 msgid "You haven''t done any contribution on \"{0}\""
 msgstr "{0} jste needitoval"
@@ -1767,29 +1790,6 @@ msgstr "Nesledované stránky"
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:46
 msgid "Pages without language links"
 msgstr "Stránky bez mezijazykových odkazů"
-
-#: org/wikipediacleaner/api/constants/WPCConfiguration.java:400
-#: org/wikipediacleaner/api/constants/WPCConfiguration.java:419
-#: org/wikipediacleaner/api/constants/WPCConfiguration.java:439
-#: org/wikipediacleaner/api/constants/WPCConfiguration.java:460
-#: org/wikipediacleaner/api/constants/WPCConfiguration.java:508
-#, java-format
-msgid "Attribute {0} can''t be set in general configuration"
-msgstr "Atribut „{0}“ nemůže být nastaven v hlavní konfiguraci."
-
-#: org/wikipediacleaner/api/constants/WPCConfiguration.java:406
-#: org/wikipediacleaner/api/constants/WPCConfiguration.java:425
-#: org/wikipediacleaner/api/constants/WPCConfiguration.java:445
-#: org/wikipediacleaner/api/constants/WPCConfiguration.java:466
-#: org/wikipediacleaner/api/constants/WPCConfiguration.java:480
-#, java-format
-msgid "Attribute {0} can''t be set in user configuration"
-msgstr "Atribut „{0}“ nemůže být nastaven v uživatelské konfiguraci"
-
-#: org/wikipediacleaner/api/constants/WPCConfiguration.java:470
-#, java-format
-msgid "Attribute {0} should be integer value"
-msgstr "Atribut „{0}“ by měl být celé číslo"
 
 #: org/wikipediacleaner/api/data/ISBNRange.java:163
 #: org/wikipediacleaner/api/data/ISBNRange.java:185
@@ -3322,17 +3322,17 @@ msgstr "Ostatní…"
 msgid "Checking for errors n°{0}"
 msgstr "Ověřuji chybu číslo {0}"
 
-#: org/wikipediacleaner/gui/swing/bot/AutomaticFixWorker.java:215
+#: org/wikipediacleaner/gui/swing/bot/AutomaticFixWorker.java:220
 #, java-format
 msgid "Analyzing page {0}"
 msgstr "Analyzuji stránku {0}"
 
-#: org/wikipediacleaner/gui/swing/bot/AutomaticFixWorker.java:311
+#: org/wikipediacleaner/gui/swing/bot/AutomaticFixWorker.java:316
 #, java-format
 msgid "Fixing page {0}"
 msgstr "Opravuji stránku „{0}“"
 
-#: org/wikipediacleaner/gui/swing/bot/AutomaticFixWorker.java:384
+#: org/wikipediacleaner/gui/swing/bot/AutomaticFixWorker.java:389
 #, java-format
 msgid "{0} page has been modified"
 msgid_plural "{0} pages have been modified"
@@ -3340,7 +3340,7 @@ msgstr[0] "Byla upravena {0} stránka"
 msgstr[1] "Byly upraveny {0} stránky"
 msgstr[2] "Bylo upraveno {0} stránek"
 
-#: org/wikipediacleaner/gui/swing/bot/AutomaticFixWorker.java:389
+#: org/wikipediacleaner/gui/swing/bot/AutomaticFixWorker.java:394
 #, java-format
 msgid "{0} page has been marked as fixed for the selected algorithms"
 msgid_plural "{0} pages have been marked as fixed for the selected algorithms"
@@ -3348,7 +3348,7 @@ msgstr[0] "Jako opravená byla pro vybrané algoritmy označena {0} stránka"
 msgstr[1] "Jako opravené byly pro vybrané algoritmy označeny {0} stránky"
 msgstr[2] "Jako opravených bylo pro vybrané algoritmy označeno {0} stránek"
 
-#: org/wikipediacleaner/gui/swing/bot/AutomaticFixWorker.java:394
+#: org/wikipediacleaner/gui/swing/bot/AutomaticFixWorker.java:399
 #, java-format
 msgid "{0} page has been marked as fixed for other algorithms"
 msgid_plural "{0} pages have been marked as fixed for other algorithms"
