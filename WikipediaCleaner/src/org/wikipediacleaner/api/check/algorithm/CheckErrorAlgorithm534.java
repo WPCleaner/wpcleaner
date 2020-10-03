@@ -161,7 +161,7 @@ public class CheckErrorAlgorithm534 extends CheckErrorAlgorithmBase {
       }
 
       // Check that the suggestion can be applied
-      if (replacement.targetMagicWord != null){
+      if (replacement.targetMagicWord != null) {
         String mwName = replacement.targetMagicWord;
         boolean paramFound = false;
         for (Parameter paramTmp : params) {
@@ -603,7 +603,12 @@ public class CheckErrorAlgorithm534 extends CheckErrorAlgorithmBase {
               } else
               if (MagicWord.IMG_FRAMED.equals(mwName) ||
                   MagicWord.IMG_THUMBNAIL.equals(mwName)) {
-                paramsFormat.add(param);
+                if (paramsFormat.isEmpty() ||
+                    !MagicWord.IMG_BORDER.equals(paramsFormat.get(paramsFormat.size() - 1).getMagicWord().getName())) {
+                  paramsFormat.add(param);
+                } else {
+                  paramsFormat.add(paramsFormat.size() - 1, param);
+                }
               } else
               // Horizontal alignment option: one of left, right, center, none
               if (MagicWord.IMG_CENTER.equals(mwName) ||
