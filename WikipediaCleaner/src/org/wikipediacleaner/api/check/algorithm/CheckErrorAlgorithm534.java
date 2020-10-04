@@ -12,6 +12,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.wikipediacleaner.api.API;
 import org.wikipediacleaner.api.APIException;
 import org.wikipediacleaner.api.APIFactory;
@@ -25,6 +26,7 @@ import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageElementImage;
 import org.wikipediacleaner.api.data.PageElementImage.Parameter;
+import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementTemplate;
 
@@ -653,7 +655,8 @@ public class CheckErrorAlgorithm534 extends CheckErrorAlgorithmBase {
         boolean safeEmpty = true;
         String imageText = contents.substring(image.getBeginIndex(), image.getEndIndex());
         for (int index = 0; (index < imageText.length() - 1) && safeEmpty; index++) {
-          if (imageText.charAt(index) == '{') {
+          char currentChar = imageText.charAt(index);
+          if (currentChar == '{') {
             char nextChar = imageText.charAt(index + 1);
             if (nextChar == '|') {
               safe = false;
@@ -665,6 +668,21 @@ public class CheckErrorAlgorithm534 extends CheckErrorAlgorithmBase {
                 index++;
                 safe = false;
               } else {
+                safe = false;
+              }
+            }
+          } else if (currentChar == '<') {
+            PageElementTag tag = analysis.isInTag(image.getBeginIndex() + index);
+            if (tag != null) {
+              String tagName = tag.getNormalizedName();
+              if (StringUtils.equals(PageElementTag.TAG_WIKI_CHEM, tagName) ||
+                  StringUtils.equals(PageElementTag.TAG_WIKI_HIERO, tagName) ||
+                  StringUtils.equals(PageElementTag.TAG_WIKI_MATH, tagName) ||
+                  StringUtils.equals(PageElementTag.TAG_WIKI_MATH_CHEM, tagName) ||
+                  StringUtils.equals(PageElementTag.TAG_WIKI_NOWIKI, tagName) ||
+                  StringUtils.equals(PageElementTag.TAG_WIKI_SCORE, tagName) ||
+                  StringUtils.equals(PageElementTag.TAG_WIKI_SOURCE, tagName) ||
+                  StringUtils.equals(PageElementTag.TAG_WIKI_SYNTAXHIGHLIGHT, tagName)) {
                 safe = false;
               }
             }
