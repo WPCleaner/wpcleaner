@@ -24,6 +24,7 @@ import org.wikipediacleaner.api.data.LinterCategory;
 import org.wikipediacleaner.api.data.MagicWord;
 import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.Page;
+import org.wikipediacleaner.api.data.PageElementFunction;
 import org.wikipediacleaner.api.data.PageElementImage;
 import org.wikipediacleaner.api.data.PageElementImage.Parameter;
 import org.wikipediacleaner.api.data.PageElementTag;
@@ -664,7 +665,8 @@ public class CheckErrorAlgorithm534 extends CheckErrorAlgorithmBase {
             } else if (safe && (nextChar == '{')) {
               // TODO: analyze templates/functions/...
               PageElementTemplate template = analysis.isInTemplate(image.getBeginIndex() + index);
-              if (template != null) {
+              PageElementFunction function = analysis.isInFunction(image.getBeginIndex() + index);
+              if ((template != null) || (function != null)) {
                 index++;
                 safe = false;
               } else {
@@ -684,6 +686,7 @@ public class CheckErrorAlgorithm534 extends CheckErrorAlgorithmBase {
                   StringUtils.equals(PageElementTag.TAG_WIKI_SOURCE, tagName) ||
                   StringUtils.equals(PageElementTag.TAG_WIKI_SYNTAXHIGHLIGHT, tagName)) {
                 safe = false;
+                safeEmpty = false;
               }
             }
           }
@@ -784,9 +787,18 @@ public class CheckErrorAlgorithm534 extends CheckErrorAlgorithmBase {
       Parameter param = params.get(numParam);
       int beginIndex = image.getBeginIndex() + param.getBeginOffset();
       int endIndex = image.getBeginIndex() + param.getEndOffset();
+
+      // Check if modifications can be automatic
+      boolean automatic = true;
+      PageElementFunction function = analysis.isInFunction(beginIndex);
+      if (function != null) {
+        automatic = false;
+      }
+
+      // Add error
       CheckErrorResult errorResult = createCheckErrorResult(
           analysis, beginIndex - 1, endIndex);
-      errorResult.addReplacement("", true);
+      errorResult.addReplacement("", automatic);
       errors.add(errorResult);
     }
     return true;
