@@ -1,6 +1,7 @@
+# Main namespace
 DoTasks _Common.txt
-
 Set Namespaces 0
+
 FixCheckWiki 524
 UpdateDuplicateArgsWarnings
 FixCheckWiki 526
@@ -37,4 +38,15 @@ FixListCheckWiki Projet:Correction_syntaxique/Analyse_553 553
 FixListCheckWiki Projet:Correction_syntaxique/Analyse_554 554
 FixListCheckWiki Projet:Correction_syntaxique/Analyse_555 555
 
+# File namespace
+DoTasks _Common_Other.txt
+Set Namespaces 6
+
+FixListCheckWiki Projet:Correction_syntaxique/Analyse_002 2
+FixListCheckWiki Projet:Correction_syntaxique/Analyse_016 16
+FixListCheckWiki Projet:Correction_syntaxique/Analyse_022 22
+FixListCheckWiki Projet:Correction_syntaxique/Analyse_052 52
+FixListCheckWiki Projet:Correction_syntaxique/Analyse_090 90
+
+# Other tasks
 DoTasks ISBN_ISSN.txt

@@ -1,3 +1,9 @@
+# Main namespace
 DoTasks _Common.txt
-Set Namespaces 0 6
+Set Namespaces 0
+FixListCheckWiki Projet:Correction_syntaxique/Analyse_002 2
+
+# File namespace
+DoTasks _Common_Other.txt
+Set Namespaces 6
 FixListCheckWiki Projet:Correction_syntaxique/Analyse_002 2
