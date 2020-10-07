@@ -200,6 +200,16 @@ public class CheckErrorAlgorithm061 extends CheckErrorAlgorithmBase {
     }
     if (punctuationFoundBefore) {
       automatic = false;
+
+      // Special cases where automatic modification can be kept
+      if ((endIndex >= contents.length()) ||
+          (" \n".indexOf(contents.charAt(endIndex)) >= 0)) {
+        if (".".equals(allPunctuations)) {
+          if (".".equals(punctuationBefore)) {
+            automatic = true;
+          }
+        }
+      }
     }
 
     // Create error
