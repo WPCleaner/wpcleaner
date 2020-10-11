@@ -29,6 +29,7 @@ import org.wikipediacleaner.api.data.PageElementImage;
 import org.wikipediacleaner.api.data.PageElementImage.Parameter;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
+import org.wikipediacleaner.api.data.contents.ContentsCommentBuilder;
 import org.wikipediacleaner.api.data.PageElementTemplate;
 
 
@@ -682,6 +683,7 @@ public class CheckErrorAlgorithm534 extends CheckErrorAlgorithmBase {
                   StringUtils.equals(PageElementTag.TAG_WIKI_MATH, tagName) ||
                   StringUtils.equals(PageElementTag.TAG_WIKI_MATH_CHEM, tagName) ||
                   StringUtils.equals(PageElementTag.TAG_WIKI_NOWIKI, tagName) ||
+                  StringUtils.equals(PageElementTag.TAG_WIKI_REF, tagName) ||
                   StringUtils.equals(PageElementTag.TAG_WIKI_SCORE, tagName) ||
                   StringUtils.equals(PageElementTag.TAG_WIKI_SOURCE, tagName) ||
                   StringUtils.equals(PageElementTag.TAG_WIKI_SYNTAXHIGHLIGHT, tagName)) {
@@ -783,23 +785,64 @@ public class CheckErrorAlgorithm534 extends CheckErrorAlgorithmBase {
     if (errors == null) {
       return true;
     }
+    boolean keepFirst = true;
+    boolean useComments = false;
+    Parameter paramKeep = params.get(0);
+    if (paramKeep.getMagicWord() != null) {
+      if (StringUtils.equals(MagicWord.IMG_ALT, paramKeep.getMagicWord().getName())) {
+        keepFirst = false;
+        useComments = true;
+        paramKeep = params.get(params.size() - 1);
+      }
+    }
+    int beginIndexKeep = image.getBeginIndex() + paramKeep.getBeginOffset();
+    int endIndexKeep = image.getBeginIndex() + paramKeep.getEndOffset();
     for (int numParam = 1; numParam < params.size(); numParam++) {
-      Parameter param = params.get(numParam);
+      Parameter param = params.get(keepFirst ? numParam : numParam - 1);
       int beginIndex = image.getBeginIndex() + param.getBeginOffset();
       int endIndex = image.getBeginIndex() + param.getEndOffset();
 
       // Check if modifications can be automatic
       boolean automatic = true;
-      PageElementFunction function = analysis.isInFunction(beginIndex);
-      if (function != null) {
+      if (analysis.isInFunction(beginIndex) != null) {
+        automatic = false;
+      }
+      ErrorLevel errorLevel = ErrorLevel.ERROR;
+      if (!paramKeep.getCorrect()) {
+        if ((numParam == 1) && param.getCorrect()) {
+          CheckErrorResult errorResult = createCheckErrorResult(
+              analysis, beginIndexKeep - 1, endIndexKeep);
+          errorResult.addReplacement("", automatic);
+          errors.add(errorResult);
+          errorLevel = ErrorLevel.WARNING;
+        }
         automatic = false;
       }
 
       // Add error
       CheckErrorResult errorResult = createCheckErrorResult(
-          analysis, beginIndex - 1, endIndex);
+          analysis, beginIndex - 1, endIndex, errorLevel);
       errorResult.addReplacement("", automatic);
       errors.add(errorResult);
+
+      // Handle comments
+      if (useComments) {
+        if (!param.getCorrect()) {
+          useComments = false;
+        }
+        if (StringUtils.equals(param.getContents(), paramKeep.getContents())) {
+          useComments = false;
+        }
+      }
+      if (useComments) {
+        errorResult = createCheckErrorResult(analysis, beginIndexKeep - 1, endIndexKeep);
+        String contents = analysis.getContents();
+        String replacement =
+            contents.substring(beginIndexKeep - 1, endIndexKeep) +
+            ContentsCommentBuilder.from(contents.substring(beginIndex, endIndex)).toString();
+        errorResult.addReplacement(replacement, automatic);
+        errors.add(errorResult);
+      }
     }
     return true;
   }

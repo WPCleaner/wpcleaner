@@ -13,6 +13,7 @@ import java.util.Collection;
 import java.util.List;
 
 import org.apache.commons.codec.digest.DigestUtils;
+import org.slf4j.LoggerFactory;
 import org.wikipediacleaner.api.algorithm.AlgorithmError;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithm;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithms;
@@ -27,6 +28,9 @@ import org.wikipediacleaner.api.data.analysis.PageAnalysis;
  * An utility class for automatic formatting of articles.
  */
 public class AutomaticFormatter {
+
+  /** Logger */
+  private final static org.slf4j.Logger log = LoggerFactory.getLogger(AutomaticFormatter.class);
 
   /**
    * Tidy up an article.
@@ -47,6 +51,7 @@ public class AutomaticFormatter {
     }
     EnumWikipedia wiki = page.getWikipedia();
     WPCConfiguration config = wiki.getConfiguration();
+    final String initialContents = contents;
 
     // Fix Check Wiki errors
     if (algorithms != null) {
@@ -67,15 +72,15 @@ public class AutomaticFormatter {
               contents = botFix ? algorithm.botFix(analysis) : algorithm.automaticFix(analysis);
               if (!contents.equals(currentContents)) {
                 String md5 = DigestUtils.md5Hex(contents);
-                if (md5List.contains(md5)) {
-                  contents = currentContents;
-                } else {
-                  modified = true;
-                  modificationsCount++;
-                  md5List.add(md5);
+                if (md5List.contains(md5) || (modificationsCount >= 1000)) {
+                  log.error("Loop detected on automatic modifications for {}", analysis.getPage().getTitle());
+                  return initialContents;
                 }
+                modified = true;
+                modificationsCount++;
+                md5List.add(md5);
               }
-            } while (!contents.equals(currentContents) && (modificationsCount < 1000));
+            } while (!contents.equals(currentContents));
             if (modified) {
               finished = false;
               if (usedAlgorithms != null) {

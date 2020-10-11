@@ -388,29 +388,23 @@ public class PageElementImage extends PageElement {
     return getDescriptionReplacement(param != null ? param.getContents() : null);
   }
 
-  /**
-   * Bean for holding informations about a parameter.
-   */
+  /** Bean for holding informations about a parameter. */
   public static class Parameter {
-    /**
-     * Begin offset.
-     */
+
+    /** Begin offset. */
     private final int beginOffset;
 
-    /**
-     * End offset.
-     */
+    /** End offset. */
     private final int endOffset;
 
-    /**
-     * Contents.
-     */
+    /** Contents. */
     private final String contents;
 
-    /**
-     * Magic word.
-     */
+    /** Magic word. */
     private final MagicWord magicWord;
+
+    /** True if parameter seems correct */
+    private final boolean correct;
 
     public Parameter(
         int beginOffset, int endOffset,
@@ -419,6 +413,18 @@ public class PageElementImage extends PageElement {
       this.endOffset = endOffset;
       this.contents = contents;
       this.magicWord = magicWord;
+      boolean tmpCorrect = true;
+      if ((contents != null) && (magicWord != null)) {
+        if (magicWord.isPossibleAlias(contents, ".*")) {
+          if (MagicWord.IMG_ALT.equals(magicWord.getName()) ||
+              MagicWord.IMG_WIDTH.equals(magicWord.getName())) {
+            if (!magicWord.isPossibleAlias(contents, ".+")) {
+              tmpCorrect = false;
+            }
+          }
+        }
+      }
+      this.correct = tmpCorrect;
     }
 
     /**
@@ -447,6 +453,13 @@ public class PageElementImage extends PageElement {
      */
     public MagicWord getMagicWord() {
       return magicWord;
+    }
+
+    /**
+     * @return True if the parameter seems correct.
+     */
+    public boolean getCorrect() {
+      return correct;
     }
   }
 }

@@ -45,7 +45,10 @@ public class ContentsCommentBuilder {
     StringBuilder sb = new StringBuilder();
     sb.append(ContentsComment.START);
     sb.append(' ');
-    sb.append(ContentsUtil.trimWhitespace(comment));
+    sb.append(ContentsUtil
+        .trimWhitespace(comment)
+        .replaceAll(ContentsComment.START, "< !--")
+        .replaceAll(ContentsComment.END, "-- >"));
     sb.append(' ');
     sb.append(ContentsComment.END);
     return sb.toString();
