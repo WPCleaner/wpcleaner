@@ -8,6 +8,7 @@
 # Author: Evrifaessa
 # Author: Incelemeelemani
 # Author: MuratTheTurkish
+# Author: Sezgin İbiş
 # Author: Vesely35
 # Author: Vesely35
 # --
@@ -19,7 +20,7 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2020-10-02 07:22:38+0000\n"
+"PO-Revision-Date: 2020-10-12 14:09:08+0000\n"
 "Last-Translator: volkan <volkanyeke@gmail.com>\n"
 "Language-Team: Turkish <tr@li.org>\n"
 "MIME-Version: 1.0\n"
