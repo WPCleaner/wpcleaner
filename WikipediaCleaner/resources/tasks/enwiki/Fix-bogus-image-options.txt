@@ -1,7 +1,7 @@
 DoTasks _Common.txt
 Set Namespaces 0
 
-Set Prefix [[User:WikiCleanerBot#T22|Bot_22_bogus-image-options]]
+Set Prefix [[User:WikiCleanerBot#T22|Bot_T22_bogus-image-options]]
 Set Configuration MaxLintErrors 100000
 FixDump C:\Users\Nicolas\Downloads\enwiki-$-pages-articles.xml.bz2 534
 FixLintError bogus-image-options 534
