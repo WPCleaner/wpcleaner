@@ -28,3 +28,4 @@ FixCheckWiki 106
 FixLintError wikilink-in-extlink 513
 FixCheckWiki 524
 FixCheckWiki 526
+FixLintError bogus-image-options 534
