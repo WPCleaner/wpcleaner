@@ -166,7 +166,7 @@ public class CheckErrorAlgorithm061 extends CheckErrorAlgorithmBase {
       return true;
     }
 
-    String allPunctuations = contents.substring(firstPunctuationIndex, endIndex);
+    String punctuationAfter = contents.substring(firstPunctuationIndex, endIndex);
 
     // Construct list of tags
     String replace = PageElement.createListOfElements(
@@ -195,18 +195,26 @@ public class CheckErrorAlgorithm061 extends CheckErrorAlgorithmBase {
 
     // Decide if automatic modifications can be applied
     boolean automatic = true;
-    if (allPunctuations.length() > 1) {
+    if (punctuationAfter.length() > 1) {
       automatic = false;
     }
+    String allPunctutation = punctuationAfter;
     if (punctuationFoundBefore) {
       automatic = false;
 
       // Special cases where automatic modification can be kept
       if ((endIndex >= contents.length()) ||
           (" \n".indexOf(contents.charAt(endIndex)) >= 0)) {
-        if (".".equals(allPunctuations)) {
-          if (".".equals(punctuationBefore)) {
+        if (".".equals(punctuationAfter) ||
+            ",".equals(punctuationAfter)) {
+          if (punctuationAfter.equals(punctuationBefore)) {
             automatic = true;
+          }
+          if (")".equals(punctuationBefore) ||
+              "\"".equals(punctuationBefore) ||
+              "\")".equals(punctuationBefore)) {
+            automatic = true;
+            allPunctutation = punctuationBefore + punctuationAfter;
           }
         }
       }
@@ -216,11 +224,16 @@ public class CheckErrorAlgorithm061 extends CheckErrorAlgorithmBase {
     CheckErrorResult errorResult = createCheckErrorResult(
         analysis, beginIndex, endIndex);
     errorResult.addReplacement(
-        allPunctuations + replace,
-        allPunctuations + textReplace,
+        allPunctutation + replace,
+        allPunctutation + textReplace,
         automatic);
+    if (!punctuationAfter.equals(allPunctutation)) {
+      errorResult.addReplacement(
+          punctuationAfter + replace,
+          punctuationAfter + textReplace);
+    }
     if (punctuationFoundBefore &&
-        !allPunctuations.equals(punctuationBefore)) {
+        !punctuationAfter.equals(punctuationBefore)) {
       errorResult.addReplacement(
           punctuationBefore + replace,
           punctuationBefore + textReplace);
