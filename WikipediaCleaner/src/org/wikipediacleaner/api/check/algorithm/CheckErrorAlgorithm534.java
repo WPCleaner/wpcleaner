@@ -27,6 +27,7 @@ import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageElementFunction;
 import org.wikipediacleaner.api.data.PageElementImage;
 import org.wikipediacleaner.api.data.PageElementImage.Parameter;
+import org.wikipediacleaner.api.data.PageElementParameter;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
 import org.wikipediacleaner.api.data.contents.ContentsCommentBuilder;
@@ -713,7 +714,8 @@ public class CheckErrorAlgorithm534 extends CheckErrorAlgorithmBase {
               // TODO: analyze templates/functions/...
               PageElementTemplate template = analysis.isInTemplate(image.getBeginIndex() + index);
               PageElementFunction function = analysis.isInFunction(image.getBeginIndex() + index);
-              if ((template != null) || (function != null)) {
+              PageElementParameter parameter = analysis.isInParameter(image.getBeginIndex() + index);
+              if ((template != null) || (function != null) || (parameter != null)) {
                 index++;
                 safe = false;
               } else {
@@ -781,6 +783,14 @@ public class CheckErrorAlgorithm534 extends CheckErrorAlgorithmBase {
               CheckErrorResult errorResult = createCheckErrorResult(
                   analysis, beginIndex - 1, endIndex);
               if (!hasContents) {
+                PageElementTemplate template = analysis.isInTemplate(beginIndex);
+                if ((template != null) && (template.getBeginIndex() > image.getBeginIndex())) {
+                  safeEmpty = false;
+                }
+                PageElementParameter parameter = analysis.isInParameter(beginIndex);
+                if ((parameter != null) && (parameter.getBeginIndex() > image.getBeginIndex())) {
+                  safeEmpty = false;
+                }
                 errorResult.addReplacement("", safeEmpty);
               } else {
                 AutomaticReplacement replacement = AutomaticReplacement.suggestReplacement(
@@ -863,6 +873,11 @@ public class CheckErrorAlgorithm534 extends CheckErrorAlgorithmBase {
           errorLevel = ErrorLevel.WARNING;
         }
         if (param.getCorrect()) {
+          automatic = false;
+        }
+      }
+      if (automatic) {
+        if (analysis.isInParameter(beginIndex) != null) {
           automatic = false;
         }
       }
