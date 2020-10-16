@@ -23,6 +23,14 @@ public interface PageProcessor {
   public EnumWikipedia getWiki();
 
   /**
+   * Tells if the processor should work on a namespace.
+   * 
+   * @param namespace Namespace.
+   * @return True if the processor should work on the namespace.
+   */
+  public boolean isForNamespace(Integer namespace);
+
+  /**
    * Process a page.
    * 
    * @param page Page to be processed.

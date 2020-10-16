@@ -317,12 +317,24 @@ public class FixDumpWorker extends AutomaticFixWorker {
     }
 
     /**
+     * Tells if the processor should work on a namespace.
+     * 
+     * @param namespace Namespace.
+     * @return True if the processor should work on the namespace.
+     * @see org.wikipediacleaner.api.dump.PageProcessor#isForNamespace(Integer)
+     */
+    @Override
+    public boolean isForNamespace(Integer namespace) {
+      return namespaces.contains(namespace);
+    }
+
+    /**
      * @param page Page.
      * @see org.wikipediacleaner.api.dump.PageProcessor#processPage(org.wikipediacleaner.api.data.Page)
      */
     @Override
     public void processPage(Page page) {
-      if ((page == null) || !namespaces.contains(page.getNamespace())) {
+      if (page == null) {
         return;
       }
       controller.addTask(new CWPageCallable(wiki, listener, api, page));

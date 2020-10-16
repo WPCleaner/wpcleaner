@@ -167,19 +167,30 @@ public class PageHandler extends DefaultHandler {
    */
   @Override
   public void endElement(String uri, String localName, String qName) throws SAXException {
-    if (isInPage) {
-      if (qName.equalsIgnoreCase("page")) {
-        if (processor != null) {
-          try {
-            pageCount++;
-            if (pageCount % 100000 == 0) {
-              log.info("Dump parser has gone through " + pageCount + " pages");
-            }
+    if (!isInPage) {
+      return;
+    }
+
+    if (isInRevision) {
+      if (qName.equalsIgnoreCase("revision")) {
+        isInRevision = false;
+        isInRevisionId = false;
+      } else if (qName.equalsIgnoreCase("id")) {
+        isInRevisionId = false;
+      } else if (qName.equalsIgnoreCase("text")) {
+        isInRevisionText = false;
+      }
+    } else if (qName.equalsIgnoreCase("page")) {
+      if (processor != null) {
+        increasePageCount();
+        try {
+          Integer namespaceNum = Integer.valueOf(namespace.toString());
+          if (processor.isForNamespace(namespaceNum)) {
             Page page = DataManager.getPage(
                 processor.getWiki(), title.toString(),
                 Integer.valueOf(pageId.toString(), 10), revisionId.toString(),
                 null);
-            page.setNamespace(namespace.toString());
+            page.setNamespace(namespaceNum);
             page.setContents(revisionText.toString());
             if (redirect.length() > 0) {
               PageRedirect redirects = page.getRedirects();
@@ -187,28 +198,41 @@ public class PageHandler extends DefaultHandler {
               redirects.add(DataManager.getPage(processor.getWiki(), redirect.toString(), null, null, null), null);
             }
             processor.processPage(page);
-          } catch (NumberFormatException e) {
-            log.error("Problem in endElement: " + e.getMessage());
           }
+        } catch (NumberFormatException e) {
+          log.error("Problem in endElement: " + e.getMessage());
         }
-        isInPage = false;
-        cleanPageInformation();
-      } else if (isInRevision) {
-        if (qName.equalsIgnoreCase("revision")) {
-          isInRevision = false;
-          isInRevisionId = false;
-        } else if (qName.equalsIgnoreCase("id")) {
-          isInRevisionId = false;
-        } else if (qName.equalsIgnoreCase("text")) {
-          isInRevisionText = false;
-        }
-      } else if (qName.equalsIgnoreCase("title")) {
-        isInTitle = false;
-      } else if (qName.equalsIgnoreCase("ns")) {
-        isInNamespace = false;
-      } else if (qName.equalsIgnoreCase("id")) {
-        isInPageId = false;
       }
+      isInPage = false;
+      cleanPageInformation();
+    } else if (qName.equalsIgnoreCase("title")) {
+      isInTitle = false;
+    } else if (qName.equalsIgnoreCase("ns")) {
+      isInNamespace = false;
+      if (processor != null) {
+        try {
+          Integer namespaceNum = Integer.valueOf(namespace.toString());
+          if (!processor.isForNamespace(namespaceNum)) {
+            increasePageCount();
+            isInPage = false;
+            cleanPageInformation();
+          }
+        } catch (NumberFormatException e) {
+          log.error("Incorrect namespace {} for page {}", namespace, title);
+        }
+      }
+    } else if (qName.equalsIgnoreCase("id")) {
+      isInPageId = false;
+    }
+  }
+
+  /**
+   * Increase page count.
+   */
+  private void increasePageCount() {
+    pageCount++;
+    if (pageCount % 100000 == 0) {
+      log.info("Dump parser has gone through {} pages", pageCount);
     }
   }
 
