@@ -39,6 +39,7 @@ public class PageElementFunction extends PageElement {
     final String valueNotTrimmed;
     final String value;
     final int valueStartIndex;
+    final boolean correct;
 
     /**
      * @param separatorIndex Index of the separator in page contents.
@@ -47,11 +48,13 @@ public class PageElementFunction extends PageElement {
      * @param nameStartIndex Index of parameter name in page contents.
      * @param value Parameter value.
      * @param valueStartIndex Index of parameter value in page contents.
+     * @param correct True if parameter seems correct.
      */
     public Parameter(
         int separatorIndex, String fullText,
         String name, int nameStartIndex,
-        String value, int valueStartIndex) {
+        String value, int valueStartIndex,
+        boolean correct) {
       this.separatorIndex = separatorIndex;
       this.fullText = fullText;
       this.name = (name != null) ? name.trim() : null;
@@ -59,6 +62,7 @@ public class PageElementFunction extends PageElement {
       this.valueNotTrimmed = value;
       this.value = (value != null) ? value.trim() : null;
       this.valueStartIndex = valueStartIndex;
+      this.correct = correct;
     }
 
     /* (non-Javadoc)
@@ -230,6 +234,7 @@ public class PageElementFunction extends PageElement {
     int depthTagRef = 0;
     int parameterBeginIndex = parametersBeginIndex;
     int equalIndex = -1;
+    boolean parameterCorrect = true;
     while (tmpIndex < maxLength) {
       if (contents.startsWith("{{{", tmpIndex)) {
         // Possible start of a parameter
@@ -262,7 +267,8 @@ public class PageElementFunction extends PageElement {
                   parameters, separatorIndex,
                   contents.substring(parameterBeginIndex, tmpIndex - 2),
                   equalIndex - parameterBeginIndex,
-                  parameterBeginIndex);
+                  parameterBeginIndex,
+                  parameterCorrect);
               return tmpIndex;
             }
           }
@@ -280,7 +286,7 @@ public class PageElementFunction extends PageElement {
           if (depth2SquareBrackets > 0) {
             depth2SquareBrackets--;
           } else {
-            return -1;
+            parameterCorrect = false;
           }
         }
       } else if (contents.startsWith("<", tmpIndex)) {
@@ -339,10 +345,12 @@ public class PageElementFunction extends PageElement {
                 parameters, separatorIndex,
                 contents.substring(parameterBeginIndex, tmpIndex),
                 equalIndex - parameterBeginIndex,
-                parameterBeginIndex);
+                parameterBeginIndex,
+                parameterCorrect);
             separatorIndex = tmpIndex;
             tmpIndex++;
             parameterBeginIndex = tmpIndex;
+            parameterCorrect = true;
             equalIndex = -1;
           } else if ((currentChar == '=') && (equalIndex < 0)) {
             equalIndex = tmpIndex;
@@ -364,11 +372,13 @@ public class PageElementFunction extends PageElement {
    * @param parameter New parameter (name=value or value).
    * @param equalIndex Index of "=" in the parameter or < 0 if doesn't exist.
    * @param offset Offset of parameter start index in page contents.
+   * @param correct True if parameter seems correct.
    */
   private static void addParameter(
       List<Parameter> parameters,
       int separatorIndex, String parameter,
-      int equalIndex, int offset) {
+      int equalIndex, int offset,
+      boolean correct) {
     if (equalIndex < 0) {
       int spaces = 0;
       while ((spaces < parameter.length()) && (Character.isWhitespace(parameter.charAt(spaces)))) {
@@ -376,7 +386,7 @@ public class PageElementFunction extends PageElement {
       }
       parameters.add(new Parameter(
           separatorIndex, parameter,
-          "", offset + spaces, parameter, offset + spaces));
+          "", offset + spaces, parameter, offset + spaces, correct));
     } else {
       int spacesName = 0;
       while ((spacesName < equalIndex) && (Character.isWhitespace(parameter.charAt(spacesName)))) {
@@ -389,7 +399,8 @@ public class PageElementFunction extends PageElement {
       parameters.add(new Parameter(
           separatorIndex, parameter,
           parameter.substring(0, equalIndex), offset + spacesName,
-          parameter.substring(equalIndex + 1), offset + spacesValue));
+          parameter.substring(equalIndex + 1), offset + spacesValue,
+          correct));
     }
   }
 
@@ -536,6 +547,19 @@ public class PageElementFunction extends PageElement {
       index++;
     }
     return null;
+  }
+  
+  /**
+   * Retrieve if parameter is correct
+   * 
+   * @param index Parameter index.
+   * @return True if the parameter seems correct.
+   */
+  public boolean isParameterCorrect(int index) {
+    if ((index >= 0) && (index < parameters.size())) {
+      return parameters.get(index).correct;
+    }
+    return false;
   }
 
   private PageElementFunction(

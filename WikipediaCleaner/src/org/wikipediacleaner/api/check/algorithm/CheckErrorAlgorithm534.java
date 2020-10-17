@@ -812,11 +812,11 @@ public class CheckErrorAlgorithm534 extends CheckErrorAlgorithmBase {
       }
 
       // Report multiple options for several group of options
-      result |= reportMultipleParameters(analysis, errors, image, paramsFormat);
-      result |= reportMultipleParameters(analysis, errors, image, paramsHAlign);
-      result |= reportMultipleParameters(analysis, errors, image, paramsVAlign);
+      result |= reportMultipleParameters(analysis, errors, image, paramsFormat, false);
+      result |= reportMultipleParameters(analysis, errors, image, paramsHAlign, false);
+      result |= reportMultipleParameters(analysis, errors, image, paramsVAlign, false);
       for (ArrayList<Parameter> paramOther : paramsOther.values()) {
-        result |= reportMultipleParameters(analysis, errors, image, paramOther);
+        result |= reportMultipleParameters(analysis, errors, image, paramOther, params.isEmpty());
       }
     }
 
@@ -834,8 +834,12 @@ public class CheckErrorAlgorithm534 extends CheckErrorAlgorithmBase {
    */
   private boolean reportMultipleParameters(
       PageAnalysis analysis, Collection<CheckErrorResult> errors,
-      PageElementImage image, ArrayList<Parameter> params) {
+      PageElementImage image, ArrayList<Parameter> params,
+      boolean mayRemoveOne) {
     if ((params == null) || (params.size() < 2)) {
+      return false;
+    }
+    if (mayRemoveOne && (params.size() < 3)) {
       return false;
     }
     if (errors == null) {
@@ -877,7 +881,8 @@ public class CheckErrorAlgorithm534 extends CheckErrorAlgorithmBase {
         }
       }
       if (automatic) {
-        if (analysis.isInParameter(beginIndex) != null) {
+        if ((analysis.isInParameter(beginIndex) != null) ||
+            (analysis.isInFunction(beginIndex) != null)) {
           automatic = false;
         }
       }
