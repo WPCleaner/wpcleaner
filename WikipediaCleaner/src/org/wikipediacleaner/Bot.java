@@ -120,7 +120,6 @@ public class Bot implements BasicWorkerListener {
     timeLimit = null;
     String credentials = null;
     String prefix = null;
-    boolean allowJava7 = false;
     while (!done) {
       if (args.length > currentArg) {
         String arg = args[currentArg];
@@ -142,9 +141,6 @@ public class Bot implements BasicWorkerListener {
           }
           prefix = args[currentArg + 1].replaceAll("_", " ");
           currentArg += 2;
-        } else if ("-allowJava7".equals(arg) ) {
-          allowJava7 = true;
-          currentArg++;
         } else {
           done = true;
         }
@@ -212,17 +208,14 @@ public class Bot implements BasicWorkerListener {
     // Check Java version
     if (!SystemUtils.isJavaVersionAtLeast(JavaVersion.JAVA_1_8)) {
       log.error(
-          "In the near future, WPCleaner will require Java {} or above, but you're currently using an older version ({}).",
+          "WPCleaner requires Java {} or above, but you're currently using an older version ({}).",
           "8", System.getProperty("java.version"));
       try {
         Thread.sleep(30000);
       } catch (InterruptedException e) {
         // Nothing to do
       }
-      if (!allowJava7) {
-        log.error("Temporarily you can still run it with Java 7 by adding the -allowJava7 parameter on the command line.");
-        System.exit(1);
-      }
+      System.exit(1);
     }
 
     // Login
