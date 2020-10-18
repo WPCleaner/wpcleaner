@@ -853,6 +853,8 @@ public class CheckErrorAlgorithm534 extends CheckErrorAlgorithmBase {
         keepFirst = false;
         useComments = true;
         paramKeep = params.get(params.size() - 1);
+      } else if (StringUtils.equals(MagicWord.IMG_UPRIGHT, paramKeep.getMagicWord().getName())) {
+        keepFirst = false; // Due to MW processing upright parameters in a different order: T216003
       }
     }
     int beginIndexKeep = image.getBeginIndex() + paramKeep.getBeginOffset();
