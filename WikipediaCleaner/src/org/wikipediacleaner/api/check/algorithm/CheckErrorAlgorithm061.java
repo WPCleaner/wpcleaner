@@ -8,6 +8,7 @@
 package org.wikipediacleaner.api.check.algorithm;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
@@ -205,14 +206,11 @@ public class CheckErrorAlgorithm061 extends CheckErrorAlgorithmBase {
       // Special cases where automatic modification can be kept
       if ((endIndex >= contents.length()) ||
           (" \n".indexOf(contents.charAt(endIndex)) >= 0)) {
-        if (".".equals(punctuationAfter) ||
-            ",".equals(punctuationAfter)) {
+        if (safeAfter.contains(punctuationAfter)) {
           if (punctuationAfter.equals(punctuationBefore)) {
             automatic = true;
-          }
-          if (")".equals(punctuationBefore) ||
-              "\"".equals(punctuationBefore) ||
-              "\")".equals(punctuationBefore)) {
+          } else if (!punctuationBefore.contains(punctuationAfter) &&
+                     keepBeforeIfDifferent.contains(punctuationBefore)) {
             automatic = true;
             allPunctutation = punctuationBefore + punctuationAfter;
           }
@@ -243,6 +241,12 @@ public class CheckErrorAlgorithm061 extends CheckErrorAlgorithmBase {
     return true;
   }
 
+  /** List of punctuation after the reference that are safe to move */
+  private final static Set<String> safeAfter = new HashSet<>(Arrays.asList(".", ",", ":", ";"));
+
+  /** List of punctuation before the reference that should be kept if they don't contain the punctuation after */
+  private final static Set<String> keepBeforeIfDifferent = new HashSet<>(Arrays.asList(")", "\"", "\")", ")\"", "?\""));
+  
   /**
    * @param analysis Page analysis.
    * @return List of references (tags, templates, ...).
