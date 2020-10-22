@@ -6,6 +6,7 @@
 # Author: Beta16
 # Author: Beta16
 # Author: Gianfranco
+# Author: Luca.favorido
 # --
 # This file is distributed under the same license as the wikicleaner package.
 #
@@ -15,7 +16,7 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2020-10-02 07:22:37+0000\n"
+"PO-Revision-Date: 2020-10-22 11:17:34+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Italian <it@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -74,7 +75,7 @@ msgstr "Per favore, segnalami ogni altro problema che dovessi incontrare."
 #: org/wikipediacleaner/Version.java:49
 #, java-format
 msgid "I hope you''ll like {0}."
-msgstr ""
+msgstr "Spero che ti piaccia {0}"
 
 #: org/wikipediacleaner/Version.java:50
 #, java-format
@@ -111,7 +112,7 @@ msgstr ""
 
 #: org/wikipediacleaner/Version.java:58
 msgid "An action may be required on your wiki:"
-msgstr ""
+msgstr "Potrebbe essere richiesta un'azione sul tuo wiki:"
 
 #: org/wikipediacleaner/Version.java:60
 #, java-format
@@ -151,7 +152,7 @@ msgstr "La pagina {0} è stata modificata"
 
 #: org/wikipediacleaner/api/MediaWiki.java:317
 msgid "Do you want to continue?"
-msgstr ""
+msgstr "Vuoi continuare?"
 
 #: org/wikipediacleaner/api/ModificationReport.java:76
 #: org/wikipediacleaner/api/ModificationReport.java:104
@@ -201,7 +202,7 @@ msgstr "Elimina"
 
 #: org/wikipediacleaner/api/check/CheckErrorResult.java:329
 msgid "Edit table of contents"
-msgstr ""
+msgstr "Modifica indice"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm001.java:91
 #, java-format
@@ -242,11 +243,11 @@ msgstr "Nome del template"
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm002.java:797
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm060.java:199
 msgid "Name of the parameter"
-msgstr ""
+msgstr "Nome del parametro"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm003.java:119
 msgid "Close tag"
-msgstr ""
+msgstr "Tag di chiusura"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm003.java:267
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm003.java:270
