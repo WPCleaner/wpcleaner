@@ -92,13 +92,13 @@ public class CheckErrorAlgorithm557 extends CheckErrorAlgorithmBase {
     }
 
     // Check if this is an accepted prefix
-    if (!prefixes.isEmpty()) {
+    if (!prefixes_ok.isEmpty()) {
       int tmpIndex = beginIndex - 1;
       while ((tmpIndex > 0) &&
           Character.isLetter(contents.charAt(tmpIndex - 1))) {
         tmpIndex--;
       }
-      if (prefixes.contains(contents.substring(tmpIndex, beginIndex).toUpperCase())) {
+      if (prefixes_ok.contains(contents.substring(tmpIndex, beginIndex).toUpperCase())) {
         return false;
       }
     }
@@ -113,23 +113,29 @@ public class CheckErrorAlgorithm557 extends CheckErrorAlgorithmBase {
     }
     int endIndex = link.getEndIndex();
     String displayedText = link.getDisplayedTextNotTrimmed();
+    String prefix = contents.substring(beginIndex, link.getBeginIndex());
     CheckErrorResult errorResult = createCheckErrorResult(analysis, beginIndex, endIndex);
 
     String replacement = null;
     if ((displayedText.length() > 0) &&
-        (" '".indexOf(displayedText.charAt(0)) >= 0)) {
+        (" \u00A0;'’".indexOf(displayedText.charAt(0)) >= 0)) {
+
+      // Decide which first char should be used
+      char firstChar = displayedText.charAt(0);
+      if (firstChar == 0xA0) {
+        firstChar = ' ';
+      }
 
       if (displayedText.length() > 1) {
         // Move the white space or apostrophe before the internal link
         replacement =
-            contents.substring(beginIndex, link.getBeginIndex()) +
-            displayedText.charAt(0) +
+            prefix + firstChar +
             PageElementInternalLink.createInternalLink(
                 link.getLink(),
                 link.getAnchor(),
                 displayedText.substring(1));
         boolean automatic = true;
-        if (displayedText.charAt(0) == '\'') {
+        if (firstChar == '\'') {
           if (displayedText.startsWith("'",  1)) {
             automatic = false;
           }
@@ -137,6 +143,8 @@ public class CheckErrorAlgorithm557 extends CheckErrorAlgorithmBase {
               link.getLink().startsWith("'")) {
             automatic = false;
           }
+        }
+        if ((firstChar == '\'') || (firstChar == '’')) {
           // Ignore "'s "
           if (displayedText.startsWith("s ", 1)) {
             automatic = false;
@@ -144,9 +152,7 @@ public class CheckErrorAlgorithm557 extends CheckErrorAlgorithmBase {
         }
         errorResult.addReplacement(replacement, automatic);
       } else {
-        replacement =
-            contents.substring(beginIndex, link.getBeginIndex()) +
-            displayedText;
+        replacement = prefix + displayedText;
         errorResult.addReplacement(replacement);
       }
 
@@ -154,26 +160,45 @@ public class CheckErrorAlgorithm557 extends CheckErrorAlgorithmBase {
 
       // Add a white space before the internal link
       replacement =
-          contents.substring(beginIndex, link.getBeginIndex()) +
-          " " +
+          prefix + " " +
           contents.substring(link.getBeginIndex(), link.getEndIndex());
-      errorResult.addReplacement(replacement);
+      errorResult.addReplacement(replacement, prefixes_exclude.contains(prefix));
 
       // Include the text before the internal link
       if ((beginIndex <= 0) ||
           Character.isWhitespace(contents.charAt(beginIndex - 1)) ||
-          ("'".indexOf(contents.charAt(beginIndex - 1)) >= 0)) {
-        String text = contents.substring(beginIndex, link.getBeginIndex()) + displayedText;
+          ("'*(,".indexOf(contents.charAt(beginIndex - 1)) >= 0)) {
+        String text = prefix + displayedText;
         replacement = PageElementInternalLink.createInternalLink(
             link.getLink(),
             link.getAnchor(),
             text);
-        errorResult.addReplacement(replacement, Page.areSameTitle(link.getLink().toUpperCase(), text.toUpperCase()));
+        errorResult.addReplacement(replacement, areIdentical(link.getLink(), text));
       }
     }
 
     errors.add(errorResult);
     return true;
+  }
+
+  /**
+   * @param link Link target.
+   * @param text Text.
+   * @return True if link and text can be considered identical.
+   */
+  private boolean areIdentical(String link, String text) {
+    link = link.trim().toUpperCase();
+    text = text.trim().toUpperCase();
+    if (Page.areSameTitle(link, text)) {
+      return true;
+    }
+    if (link.endsWith(")")) {
+      int openParenthesis = link.lastIndexOf('(');
+      if (openParenthesis > 0) {
+        return areIdentical(link.substring(0,  openParenthesis), text);
+      }
+    }
+    return false;
   }
 
   /**
@@ -196,7 +221,10 @@ public class CheckErrorAlgorithm557 extends CheckErrorAlgorithmBase {
   /* ====================================================================== */
 
   /** List of possible prefixes */
-  private static final String PARAMETER_PREFIXES = "prefixes";
+  private static final String PARAMETER_PREFIXES_OK = "prefixes_ok";
+
+  /** List of prefixes to exclude from the link */
+  private static final String PARAMETER_PREFIXES_EXCLUDE = "prefixes_exclude";
 
   /**
    * Initialize settings for the algorithm.
@@ -205,20 +233,32 @@ public class CheckErrorAlgorithm557 extends CheckErrorAlgorithmBase {
    */
   @Override
   protected void initializeSettings() {
-    String tmp = getSpecificProperty(PARAMETER_PREFIXES, true, true, true);
-    prefixes.clear();
+    String tmp = getSpecificProperty(PARAMETER_PREFIXES_OK, true, true, true);
+    prefixes_ok.clear();
     if (tmp != null) {
       List<String> tmpList = WPCConfiguration.convertPropertyToStringList(tmp);
       if (tmpList != null) {
         for (String tmpElement : tmpList) {
-          prefixes.add(tmpElement.toUpperCase());
+          prefixes_ok.add(tmpElement.toUpperCase());
         }
+      }
+    }
+
+    tmp = getSpecificProperty(PARAMETER_PREFIXES_EXCLUDE, true, true, true);
+    prefixes_exclude.clear();
+    if (tmp != null) {
+      List<String> tmpList = WPCConfiguration.convertPropertyToStringList(tmp);
+      if (tmpList != null) {
+        prefixes_exclude.addAll(tmpList);
       }
     }
   }
 
   /** Prefixes that can be before an internal link */
-  private final Set<String> prefixes = new HashSet<>();
+  private final Set<String> prefixes_ok = new HashSet<>();
+
+  /** Prefixes that should be excluded from the internal link */
+  private final Set<String> prefixes_exclude = new HashSet<>();
 
   /**
    * Build the list of parameters for this algorithm.
@@ -227,12 +267,21 @@ public class CheckErrorAlgorithm557 extends CheckErrorAlgorithmBase {
   protected void addParameters() {
     super.addParameters();
     addParameter(new AlgorithmParameter(
-        PARAMETER_PREFIXES,
+        PARAMETER_PREFIXES_OK,
         GT._T("Prefixes which can be before an internal link"),
         new AlgorithmParameterElement[] {
           new AlgorithmParameterElement(
               "prefix",
               GT._T("Prefix which can be before an internal link"))
+        },
+        true));
+    addParameter(new AlgorithmParameter(
+        PARAMETER_PREFIXES_EXCLUDE,
+        GT._T("Prefixes which should be excluded from the internal link"),
+        new AlgorithmParameterElement[] {
+          new AlgorithmParameterElement(
+              "prefix",
+              GT._T("Prefix which should be excluded from the internal link"))
         },
         true));
   }
