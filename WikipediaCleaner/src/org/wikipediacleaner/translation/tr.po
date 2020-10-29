@@ -20,7 +20,7 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2020-10-12 14:09:08+0000\n"
+"PO-Revision-Date: 2020-10-29 12:35:40+0000\n"
 "Last-Translator: volkan <volkanyeke@gmail.com>\n"
 "Language-Team: Turkish <tr@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -28,9 +28,9 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 "X-Launchpad-Export-Date: 2018-01-31 07:41+0000\n"
-"X-Generator: MediaWiki 1.36.0-alpha; Translate 2020-07-20\n"
+"X-Generator: MediaWiki 1.36.0-alpha; Translate 2020-10-28\n"
 "Language: tr\n"
-"X-POT-Import-Date: 2020-09-12 12:31:40+0000\n"
+"X-POT-Import-Date: 2020-10-26 21:31:56+0000\n"
 
 #: org/wikipediacleaner/Version.java:31
 #, java-format
@@ -471,13 +471,13 @@ msgid "View image"
 msgstr "Resmi görüntüle"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm033.java:140
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm061.java:337
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm061.java:364
 #, java-format
 msgid "Templates that can be used to replace {0} tags"
 msgstr "Şablonlar {0} adet etiketi değiştirmek için kullanılabilir"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm033.java:143
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm061.java:340
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm061.java:367
 #, java-format
 msgid "Template that can be used to replace {0} tags"
 msgstr "{0} etiketlerini değiştirmek için kullanılabilecek şablon"
@@ -540,8 +540,8 @@ msgstr "Yok sayılması gereken şablon"
 msgid "Templates to be ignored"
 msgstr "Yoksayılacak şablonlar"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm061.java:331
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm061.java:334
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm061.java:358
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm061.java:361
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm067.java:366
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm067.java:369
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm542.java:180
@@ -1446,13 +1446,21 @@ msgstr "Harici bağlantıların normal olduğu bölümler"
 msgid "Section in which external links are normal"
 msgstr "Harici bağlantıların normal olduğu bölüm"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm557.java:231
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm557.java:271
 msgid "Prefixes which can be before an internal link"
 msgstr "Dahili bir bağlantıdan önce olabilecek ön ekler"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm557.java:235
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm557.java:275
 msgid "Prefix which can be before an internal link"
 msgstr "Dahili bir bağlantıdan önce olabilen önek"
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm557.java:280
+msgid "Prefixes which should be excluded from the internal link"
+msgstr "Dahili bağlantıdan çıkarılması gereken önekler"
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm557.java:284
+msgid "Prefix which should be excluded from the internal link"
+msgstr "Dahili bağlantıdan çıkarılması gereken önek"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmBase.java:295
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmBase.java:298

@@ -14,7 +14,7 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2020-10-02 07:22:38+0000\n"
+"PO-Revision-Date: 2020-10-29 12:35:40+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Polish <pl@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -22,9 +22,9 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n == 1) ? 0 : ( (n%10 >= 2 && n%10 <= 4 && (n%100 < 10 || n%100 >= 20)) ? 1 : 2 );\n"
 "X-Launchpad-Export-Date: 2017-03-22 17:48+0000\n"
-"X-Generator: MediaWiki 1.36.0-alpha; Translate 2020-07-20\n"
+"X-Generator: MediaWiki 1.36.0-alpha; Translate 2020-10-28\n"
 "Language: pl\n"
-"X-POT-Import-Date: 2020-09-12 12:31:40+0000\n"
+"X-POT-Import-Date: 2020-10-26 21:31:56+0000\n"
 
 #: org/wikipediacleaner/Version.java:31
 #, java-format
@@ -474,13 +474,13 @@ msgid "View image"
 msgstr "Pokaż obraz"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm033.java:140
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm061.java:337
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm061.java:364
 #, java-format
 msgid "Templates that can be used to replace {0} tags"
 msgstr "Szablony, które mogą zastąpić znaczniki {0}"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm033.java:143
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm061.java:340
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm061.java:367
 #, fuzzy, java-format
 msgid "Template that can be used to replace {0} tags"
 msgstr "Szablony, które mogą zastąpić znaczniki {0}"
@@ -546,8 +546,8 @@ msgstr "Szablony, które należy zignorować"
 msgid "Templates to be ignored"
 msgstr "Ignorowane szablony"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm061.java:331
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm061.java:334
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm061.java:358
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm061.java:361
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm067.java:366
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm067.java:369
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm542.java:180
@@ -1504,12 +1504,20 @@ msgstr "Sekcje w których linki zewnętrzne są normalne"
 msgid "Section in which external links are normal"
 msgstr "Sekcja w której linki zewnętrzne są normalne"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm557.java:231
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm557.java:271
 msgid "Prefixes which can be before an internal link"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm557.java:235
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm557.java:275
 msgid "Prefix which can be before an internal link"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm557.java:280
+msgid "Prefixes which should be excluded from the internal link"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm557.java:284
+msgid "Prefix which should be excluded from the internal link"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmBase.java:295
