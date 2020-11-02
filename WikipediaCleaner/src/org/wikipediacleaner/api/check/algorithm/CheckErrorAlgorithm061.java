@@ -26,6 +26,7 @@ import org.wikipediacleaner.api.data.PageElementFullTag;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
+import org.wikipediacleaner.api.data.contents.ContentsUtil;
 import org.wikipediacleaner.api.data.contents.IntervalComparator;
 import org.wikipediacleaner.i18n.GT;
 
@@ -95,6 +96,114 @@ public class CheckErrorAlgorithm061 extends CheckErrorAlgorithmBase {
       List<PageElement> refs,
       int firstRefIndex, int lastRefIndex) {
 
+    // Check for punctuation after the group of tags
+    if (analyzeGroupOfTagsPunctuationAfter(analysis, contents, errors, refs, firstRefIndex, lastRefIndex)) {
+      return true;
+    }
+    
+    // Check for punctuation in between the tags in the group of tags
+    return analyzeGroupOfTagsPunctuationBetween(analysis, contents, errors, refs, firstRefIndex, lastRefIndex);
+  }
+
+  /**
+   * Analyze a group of tags for punctuation between the tags.
+   * 
+   * @param analysis Page analysis.
+   * @param contents Page contents.
+   * @param errors Errors found in the page.
+   * @param refs List of references.
+   * @param firstRefIndex Index of the first reference of the group.
+   * @param lastRefIndex Index of the last reference of the group.
+   * @return True if the error was found in the group of tags.
+   */
+  private boolean analyzeGroupOfTagsPunctuationBetween(
+      PageAnalysis analysis, String contents,
+      Collection<CheckErrorResult> errors,
+      List<PageElement> refs,
+      int firstRefIndex, int lastRefIndex) {
+    if (lastRefIndex == firstRefIndex) {
+      return false;
+    }
+    boolean result = false;
+    for (int firstIndex = firstRefIndex; firstIndex < lastRefIndex; firstIndex++) {
+      result |= analyzePunctuationBetweenTags(
+          analysis, contents, errors,
+          refs.get(firstRefIndex),
+          refs.get(firstIndex), refs.get(firstIndex + 1));
+    }
+    return result;
+  }
+
+  /**
+   * Analyze between to tags for punctuation in between.
+   * 
+   * @param analysis Page analysis.
+   * @param contents Page contents.
+   * @param errors Errors found in the page.
+   * @param firstRef First tag.
+   * @param previousRef Previous tag.
+   * @param nextRef Next tag.
+   * @return True if the error was found in between the tags.
+   */
+  private boolean analyzePunctuationBetweenTags(
+      PageAnalysis analysis, String contents,
+      Collection<CheckErrorResult> errors,
+      PageElement firstRef,
+      PageElement previousRef, PageElement nextRef) {
+
+    // Check if error is found
+    boolean punctuationFound = false;
+    int tmpIndex = previousRef.getEndIndex();
+    boolean separatorFound = (separator.length() == 0);
+    while ((tmpIndex < nextRef.getBeginIndex()) && !punctuationFound) {
+      if (PUNCTUATION.indexOf(contents.charAt(tmpIndex)) >= 0) {
+        if (!separatorFound && contents.startsWith(separator, tmpIndex)) {
+          tmpIndex += separator.length();
+          separatorFound = true;
+        }
+        punctuationFound = true;
+      } else {
+        tmpIndex++;
+      }
+    }
+    if (!punctuationFound) {
+      return false;
+    }
+
+    // Report error
+    if (errors == null) {
+      return true;
+    }
+    boolean automatic = forceSeparator;
+    if (automatic) {
+      int firstIndex = ContentsUtil.moveIndexBeforeWhitespace(contents, firstRef.getBeginIndex() - 1);
+      if ((firstIndex < 0) || (PUNCTUATION.indexOf(contents.charAt(firstIndex)) < 0)) {
+        automatic = false;
+      }
+    }
+    CheckErrorResult errorResult = createCheckErrorResult(analysis, previousRef.getEndIndex(), nextRef.getBeginIndex());
+    errorResult.addReplacement(separator, automatic);
+    errors.add(errorResult);
+    return true;
+  }
+
+  /**
+   * Analyze a group of tags for punctuation after the tags.
+   * 
+   * @param analysis Page analysis.
+   * @param contents Page contents.
+   * @param errors Errors found in the page.
+   * @param refs List of references.
+   * @param firstRefIndex Index of the first reference of the group.
+   * @param lastRefIndex Index of the last reference of the group.
+   * @return True if the error was found in the group of tags.
+   */
+  private boolean analyzeGroupOfTagsPunctuationAfter(
+      PageAnalysis analysis, String contents,
+      Collection<CheckErrorResult> errors,
+      List<PageElement> refs,
+      int firstRefIndex, int lastRefIndex) {
+
     // Remove possible whitespace characters after last reference
     PageElement lastRef = refs.get(lastRefIndex);
     int tmpIndex = lastRef.getEndIndex();
@@ -121,12 +230,11 @@ public class CheckErrorAlgorithm061 extends CheckErrorAlgorithmBase {
     if (tmpIndex >= contents.length()) {
       return false;
     }
-    char punctuation = ' ';
-    punctuation = contents.charAt(tmpIndex);
+    char punctuation = contents.charAt(tmpIndex);
     if (PUNCTUATION.indexOf(punctuation) < 0) {
       return false;
     }
-    // TODO: Once tables are managed by parser, remove the this trick that prevent detection before "!!"
+    // Even with tables managed by parser, prevent detection before "!!"
     if ((punctuation == '!') &&
         (tmpIndex + 1 < contents.length()) &&
         (contents.charAt(tmpIndex + 1) == punctuation)) {
@@ -316,6 +424,9 @@ public class CheckErrorAlgorithm061 extends CheckErrorAlgorithmBase {
   /** Separator between consecutive tags */
   private static final String PARAMETER_SEPARATOR = "separator";
 
+  /** Force usage of separator between consecutive tags */
+  private static final String PARAMETER_FORCE_SEPARATOR = "force_separator";
+
   /** Templates that can replace a tag */
   private static final String PARAMETER_TEMPLATES = "templates";
 
@@ -339,10 +450,16 @@ public class CheckErrorAlgorithm061 extends CheckErrorAlgorithmBase {
         templatesName.add(Page.normalizeTitle(tmpElement));
       }
     }
+
+    tmp = getSpecificProperty(PARAMETER_FORCE_SEPARATOR, true, true, false);
+    forceSeparator = Boolean.valueOf(tmp);
   }
 
   /** Separator between consecutive tags */
   private String separator = "";
+
+  /** Force usage of separator between consecutive tags */
+  private boolean forceSeparator = false;
 
   /** Templates that can replace a tag */
   private final Set<String> templatesName = new HashSet<>();
