@@ -7,6 +7,7 @@
 
 package org.wikipediacleaner.api.data;
 
+import java.util.Collection;
 import java.util.List;
 
 import org.wikipediacleaner.api.data.contents.ContentsElement;
@@ -32,14 +33,14 @@ public abstract class PageElement extends ContentsElement {
    * @param firstIndex Index of first element in the list.
    * @param contents Page contents.
    * @param punctuation Possible punctuation between elements.
-   * @param separator Possible separator between elements.
+   * @param separator Possible separators between elements.
    * @return Index of last element in the group of consecutive elements.
    */
   public static int groupElements(
       List<PageElement> elements,
       int firstIndex,
       String contents,
-      String punctuation, String separator) {
+      String punctuation, Collection<String> separators) {
     if (elements == null) {
       return firstIndex;
     }
@@ -49,19 +50,28 @@ public abstract class PageElement extends ContentsElement {
       int currentIndex = elements.get(elementIndex).getEndIndex();
       boolean separatorFound = false;
       while (currentIndex < nextBeginIndex) {
-        if (!separatorFound &&
-            (separator != null) &&
-            contents.startsWith(separator, currentIndex)) {
-          separatorFound = true;
-          currentIndex += separator.length();
-        } else if (contents.startsWith("&nbsp;", currentIndex)) {
-          currentIndex += "&nbsp;".length();
-        } else if (!Character.isWhitespace(contents.charAt(currentIndex)) &&
-            ((punctuation == null) ||
-             (punctuation.indexOf(contents.charAt(currentIndex)) < 0))) {
-          return elementIndex;
-        } else {
-          currentIndex++;
+        
+        // Check for separators
+        if (separators != null) {
+          for (String separator : separators) {
+            if (!separatorFound && contents.startsWith(separator, currentIndex)) {
+              separatorFound = true;
+              currentIndex += separator.length();
+            }
+          }
+        }
+
+        // Check for other characters
+        if (currentIndex < nextBeginIndex) {
+          if (contents.startsWith("&nbsp;", currentIndex)) {
+            currentIndex += "&nbsp;".length();
+          } else if (!Character.isWhitespace(contents.charAt(currentIndex)) &&
+              ((punctuation == null) ||
+               (punctuation.indexOf(contents.charAt(currentIndex)) < 0))) {
+            return elementIndex;
+          } else {
+            currentIndex++;
+          }
         }
       }
       elementIndex++;

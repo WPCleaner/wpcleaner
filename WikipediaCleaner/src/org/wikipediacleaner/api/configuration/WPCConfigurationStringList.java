@@ -104,6 +104,8 @@ public enum WPCConfigurationStringList {
   REDIRECT_TEMPLATES("redirect_templates", true, true, true),
   // Templates that can be used instead of <references/>
   REFERENCES_TEMPLATES("general_references_templates", true, true, true),
+  // Other separators between consecutive <ref/> tags
+  REF_OTHER_SEPARATORS("general_ref_other_separators", true, true, true),
   // Templates to ask for help about RFC
   RFC_HELP_NEEDED_TEMPLATES("general_rfc_help_needed_templates", true, true, true),
   // Templates to ignore for RFC

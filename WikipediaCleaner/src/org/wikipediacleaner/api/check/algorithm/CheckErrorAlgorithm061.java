@@ -72,7 +72,7 @@ public class CheckErrorAlgorithm061 extends CheckErrorAlgorithmBase {
     while (refIndex < maxRefs) {
 
       // Group references separated only by punctuation characters
-      int lastRefIndex = PageElement.groupElements(refs, refIndex, contents, ",;.\'", separator);
+      int lastRefIndex = PageElement.groupElements(refs, refIndex, contents, ",;.\'", separators);
       result |= analyzeGroupOfTags(analysis, contents, errors, refs, refIndex, lastRefIndex);
       refIndex = lastRefIndex + 1;
     }
@@ -437,9 +437,12 @@ public class CheckErrorAlgorithm061 extends CheckErrorAlgorithmBase {
    */
   @Override
   protected void initializeSettings() {
+    separators.clear();
     separator = getSpecificProperty(PARAMETER_SEPARATOR, true, false, false);
     if (separator == null) {
       separator = "";
+    } else {
+      separators.add(separator);
     }
 
     String tmp = getSpecificProperty(PARAMETER_TEMPLATES, true, true, false);
@@ -455,8 +458,11 @@ public class CheckErrorAlgorithm061 extends CheckErrorAlgorithmBase {
     forceSeparator = Boolean.valueOf(tmp);
   }
 
-  /** Separator between consecutive tags */
+  /** Valid separator between consecutive tags */
   private String separator = "";
+
+  /** List of separators between consecutive tags */ 
+  private final List<String> separators = new ArrayList<>();
 
   /** Force usage of separator between consecutive tags */
   private boolean forceSeparator = false;
@@ -470,6 +476,12 @@ public class CheckErrorAlgorithm061 extends CheckErrorAlgorithmBase {
   @Override
   protected void addParameters() {
     super.addParameters();
+    addParameter(new AlgorithmParameter(
+        PARAMETER_FORCE_SEPARATOR,
+        GT._T("To force the usage of the separator between consecutive {0} tags", "l&t;ref;gt;"),
+        new AlgorithmParameterElement(
+            "true/false",
+            GT._T("To force the usage of the separator between consecutive {0} tags", "l&t;ref;gt;"))));
     addParameter(new AlgorithmParameter(
         PARAMETER_SEPARATOR,
         GT._T("Used as a separator between consecutive {0} tags", "&lt;ref&gt;"),

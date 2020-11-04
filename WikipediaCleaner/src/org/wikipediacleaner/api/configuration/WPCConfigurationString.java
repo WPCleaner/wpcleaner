@@ -131,6 +131,8 @@ public enum WPCConfigurationString {
   REDIRECT_TEMPLATES_COMMENT("redirect_templates_comment", null, false, true, true),
   // Warning when replacing links to redirect pages by direct links
   REDIRECT_WARNING_BEFORE_REPLACEMENT("redirect_warning_before_replacement", null, true, true, true),
+  // Preferred separator between consecutive <ref/> tags
+  REF_SEPARATOR("general_ref_separator", null, true, true, true),
   // WPCleaner tag for modifications
   TAG("general_wpcleaner_tag", null, false, true, true),
   // "To do" sub-page
