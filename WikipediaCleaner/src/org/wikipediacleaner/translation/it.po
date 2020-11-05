@@ -16,7 +16,7 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2020-10-29 12:35:39+0000\n"
+"PO-Revision-Date: 2020-11-05 12:37:37+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Italian <it@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -26,7 +26,7 @@ msgstr ""
 "X-Launchpad-Export-Date: 2017-03-22 17:48+0000\n"
 "X-Generator: MediaWiki 1.36.0-alpha; Translate 2020-10-28\n"
 "Language: it\n"
-"X-POT-Import-Date: 2020-10-26 21:31:56+0000\n"
+"X-POT-Import-Date: 2020-11-04 21:31:52+0000\n"
 
 #: org/wikipediacleaner/Version.java:31
 #, java-format
@@ -467,13 +467,15 @@ msgid "View image"
 msgstr "Guarda l'immagine"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm033.java:140
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm061.java:364
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm061.java:493
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm558.java:286
 #, java-format
 msgid "Templates that can be used to replace {0} tags"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm033.java:143
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm061.java:367
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm061.java:496
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm558.java:289
 #, java-format
 msgid "Template that can be used to replace {0} tags"
 msgstr ""
@@ -536,11 +538,19 @@ msgstr "Un template che dovrebbe essere ignorato"
 msgid "Templates to be ignored"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm061.java:358
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm061.java:361
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm061.java:481
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm061.java:484
+#, java-format
+msgid "To force the usage of the separator between consecutive {0} tags"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm061.java:487
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm061.java:490
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm067.java:366
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm067.java:369
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm542.java:180
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm558.java:280
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm558.java:283
 #, java-format
 msgid "Used as a separator between consecutive {0} tags"
 msgstr "Usato come separatore tra tag {0} consecutivi"
