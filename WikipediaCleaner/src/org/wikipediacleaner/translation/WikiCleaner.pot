@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://phabricator.wikimedia.org/project/board/4842/\n"
-"POT-Creation-Date: 2020-11-04 21:55+0100\n"
+"POT-Creation-Date: 2020-11-05 18:38+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -458,6 +458,7 @@ msgstr ""
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm033.java:140
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm061.java:493
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm558.java:286
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm559.java:284
 #, java-format
 msgid "Templates that can be used to replace {0} tags"
 msgstr ""
@@ -465,6 +466,7 @@ msgstr ""
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm033.java:143
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm061.java:496
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm558.java:289
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm559.java:287
 #, java-format
 msgid "Template that can be used to replace {0} tags"
 msgstr ""
@@ -540,6 +542,8 @@ msgstr ""
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm542.java:180
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm558.java:280
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm558.java:283
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm559.java:278
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm559.java:281
 #, java-format
 msgid "Used as a separator between consecutive {0} tags"
 msgstr ""
