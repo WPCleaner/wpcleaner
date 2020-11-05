@@ -99,7 +99,7 @@ public class CheckErrorAlgorithm558 extends CheckErrorAlgorithmBase {
     }
     for (int firstIndex = firstRefIndex; firstIndex < lastRefIndex; firstIndex++) {
       PageElement firstRef = refs.get(firstIndex);
-      PageElementTag firstRefTag = (firstRef instanceof PageElementTag) ? (PageElementTag) firstRef : null;
+      PageElementFullTag firstRefTag = (firstRef instanceof PageElementFullTag) ? (PageElementFullTag) firstRef : null;
       String firstContent = contents.substring(firstRef.getBeginIndex(), firstRef.getEndIndex());
       for (int secondIndex = firstIndex + 1; secondIndex <= lastRefIndex; secondIndex++) {
         PageElement secondRef = refs.get(secondIndex);
@@ -115,16 +115,16 @@ public class CheckErrorAlgorithm558 extends CheckErrorAlgorithmBase {
           errors.add(errorResult);
           return true;
         }
-        PageElementTag secondRefTag = null;
-        if ((firstRefTag != null) && (secondRef instanceof PageElementTag)) {
-          PageElementTag tmpTag = (PageElementTag) secondRef;
-          Parameter firstName = firstRefTag.getParameter("name");
-          Parameter secondName = tmpTag.getParameter("name");
+        PageElementFullTag secondRefTag = null;
+        if ((firstRefTag != null) && (secondRef instanceof PageElementFullTag)) {
+          PageElementFullTag tmpTag = (PageElementFullTag) secondRef;
+          Parameter firstName = firstRefTag.firstTag.getParameter("name");
+          Parameter secondName = tmpTag.firstTag.getParameter("name");
           if ((firstName != null) &&
               (secondName != null) &&
               StringUtils.equals(firstName.getValue(), secondName.getValue())) {
-            Parameter firstGroup = firstRefTag.getParameter("group");
-            Parameter secondGroup = tmpTag.getParameter("group");
+            Parameter firstGroup = firstRefTag.firstTag.getParameter("group");
+            Parameter secondGroup = tmpTag.firstTag.getParameter("group");
             if ((firstGroup != null) &&
                 (secondGroup != null) &&
                 StringUtils.equals(firstGroup.getValue(), secondGroup.getValue())) {
@@ -136,11 +136,11 @@ public class CheckErrorAlgorithm558 extends CheckErrorAlgorithmBase {
         }
         if ((firstRefTag != null) && (secondRefTag != null)) {
           CheckErrorResult errorResult = createCheckErrorResult(analysis, firstRef.getBeginIndex(), secondRef.getEndIndex());
-          if (secondRefTag.isFullTag()) {
+          if (secondRefTag.firstTag.isFullTag()) {
             errorResult.addReplacement(
                 contents.substring(firstRef.getBeginIndex(), refs.get(secondIndex - 1).getEndIndex()),
                 canRemoveBetween(contents, refs.get(secondIndex - 1), refs.get(secondIndex)));
-          } else if (firstRefTag.isFullTag()) {
+          } else if (firstRefTag.firstTag.isFullTag()) {
             errorResult.addReplacement(
                 contents.substring(refs.get(firstIndex + 1).getBeginIndex(), secondRef.getEndIndex()),
                 canRemoveBetween(contents, refs.get(firstIndex), refs.get(firstIndex + 1)));
