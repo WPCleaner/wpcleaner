@@ -33,7 +33,7 @@ public abstract class PageElement extends ContentsElement {
    * @param firstIndex Index of first element in the list.
    * @param contents Page contents.
    * @param punctuation Possible punctuation between elements.
-   * @param separator Possible separators between elements.
+   * @param separators Possible separators between elements.
    * @return Index of last element in the group of consecutive elements.
    */
   public static int groupElements(
