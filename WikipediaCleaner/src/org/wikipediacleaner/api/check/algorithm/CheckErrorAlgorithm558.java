@@ -160,7 +160,7 @@ public class CheckErrorAlgorithm558 extends CheckErrorAlgorithmBase {
    * @param contents Page contents.
    * @param previousRef Previous reference.
    * @param nextRef Next reference.
-   * @return True if the texte between the two references can be safely removed.
+   * @return True if the text between the two references can be safely removed.
    */
   private boolean canRemoveBetween(
       String contents,

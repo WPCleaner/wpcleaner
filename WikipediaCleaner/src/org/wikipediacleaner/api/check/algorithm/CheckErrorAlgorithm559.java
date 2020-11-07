@@ -107,6 +107,10 @@ public class CheckErrorAlgorithm559 extends CheckErrorAlgorithmBase {
       int endIndex = secondRef.getBeginIndex();
       String separatorText = contents.substring(beginIndex, endIndex).trim();
       boolean shouldReport = !StringUtils.equals(separator, separatorText);
+      if ((shouldReport) &&
+          (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_REFERENCES, beginIndex) != null)) {
+        shouldReport = false;
+      }
       if (shouldReport && !referencesTemplates.isEmpty()) {
         PageElementTemplate template = analysis.isInTemplate(beginIndex);
         if (template != null) {
@@ -131,9 +135,9 @@ public class CheckErrorAlgorithm559 extends CheckErrorAlgorithmBase {
         int beginSelection = Math.max(beginIndex - 2, 0);
         int endSelection = Math.min(endIndex + 2, contents.length());
         CheckErrorResult errorResult = createCheckErrorResult(analysis, beginSelection, endSelection);
-        boolean automatic = false;
+        boolean automatic = true;
         automatic &= canRemoveBetween(contents, firstRef, secondRef);
-        automatic &= (analysis.isInTemplate(beginIndex) != null);
+        automatic &= (analysis.isInTemplate(beginIndex) == null);
         String replacement =
             contents.substring(beginSelection, beginIndex) +
             separator +
@@ -153,7 +157,7 @@ public class CheckErrorAlgorithm559 extends CheckErrorAlgorithmBase {
    * @param contents Page contents.
    * @param previousRef Previous reference.
    * @param nextRef Next reference.
-   * @return True if the texte between the two references can be safely removed.
+   * @return True if the text between the two references can be safely removed.
    */
   private boolean canRemoveBetween(
       String contents,
