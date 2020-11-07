@@ -7,7 +7,6 @@
 
 package org.wikipediacleaner.api.check.algorithm;
 
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -33,37 +32,61 @@ public final class CheckErrorAlgorithms {
    */
   public static synchronized void initializeAlgorithms(EnumWikipedia wiki) {
     List<CheckErrorAlgorithm> algorithms = new ArrayList<CheckErrorAlgorithm>(CWConfiguration.MAX_ERROR_NUMBER);
-    DecimalFormat errorNumberFormat = new DecimalFormat("000");
     for (int i = 0; i < CWConfiguration.MAX_ERROR_NUMBER; i++) {
       int errorNumber = i + 1;
       CWConfigurationError error = wiki.getCWConfiguration().getErrorConfiguration(errorNumber);
       if (error != null) {
-        String className = CheckErrorAlgorithm.class.getName() + errorNumberFormat.format(errorNumber);
-        CheckErrorAlgorithm algorithm = null;
-        try {
-          Class algorithmClass = Class.forName(className);
-          algorithm = (CheckErrorAlgorithm) algorithmClass.newInstance();
+        CheckErrorAlgorithm algorithm = instantiateAlgorithm(errorNumber);
+        if (algorithm != null) {
           algorithm.setConfiguration(
               wiki.getWikiConfiguration(),
               wiki.getCWConfiguration(),
               wiki.getConfiguration());
-        } catch (ClassNotFoundException e) {
-          // Not found: error not yet available in WikiCleaner.
-        } catch (InstantiationException e) {
-          System.err.println("InstantiationException for " + className);
-        } catch (IllegalAccessException e) {
-          System.err.println("IllegalAccessException for " + className);
-        } catch (ClassCastException e) {
-          System.err.println(
-              "Class " + className +
-              " doesn't implement " + CheckErrorAlgorithm.class.getName());
-        }
-        if (algorithm != null) {
           algorithms.add(algorithm);
         }
       }
     }
     algorithmsMap.put(wiki, algorithms);
+  }
+
+  /**
+   * Instantiate an algorithm.
+   * 
+   * @param errorNumber Algorithm number.
+   * @return Algorithm or null if it doesn't exist.
+   */
+  private static CheckErrorAlgorithm instantiateAlgorithm(int errorNumber) {
+    String className = String.format(
+        "%s%03d",
+        CheckErrorAlgorithm.class.getName(),
+        errorNumber);
+    try {
+      Class algorithmClass = null;
+      try {
+        algorithmClass = Class.forName(className);
+      } catch (ClassNotFoundException e) {
+        className = String.format(
+            "%1$s.%3$01dxx.%4$02dx.%5$03d.%2$s%5$03d",
+            CheckErrorAlgorithm.class.getPackage().getName(),
+            CheckErrorAlgorithm.class.getSimpleName(),
+            errorNumber / 100,
+            errorNumber / 10,
+            errorNumber);
+        algorithmClass = Class.forName(className);
+      }
+      return (CheckErrorAlgorithm) algorithmClass.newInstance();
+    } catch (ClassNotFoundException e) {
+      // Not found: error not yet available in WikiCleaner.
+    } catch (InstantiationException e) {
+      System.err.println("InstantiationException for " + className);
+    } catch (IllegalAccessException e) {
+      System.err.println("IllegalAccessException for " + className);
+    } catch (ClassCastException e) {
+      System.err.println(
+          "Class " + className +
+          " doesn't implement " + CheckErrorAlgorithm.class.getName());
+    }
+    return null;
   }
 
   /**
