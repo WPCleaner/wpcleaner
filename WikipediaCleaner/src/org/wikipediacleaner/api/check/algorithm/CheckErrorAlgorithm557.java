@@ -7,18 +7,24 @@
 
 package org.wikipediacleaner.api.check.algorithm;
 
+import java.lang.Character.UnicodeBlock;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.apache.commons.lang3.StringUtils;
 import org.wikipediacleaner.api.algorithm.AlgorithmParameter;
 import org.wikipediacleaner.api.algorithm.AlgorithmParameterElement;
+import org.wikipediacleaner.api.check.BasicActionProvider;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.configuration.WPCConfiguration;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageElementInternalLink;
+import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
+import org.wikipediacleaner.gui.swing.action.ActionExternalViewer;
 import org.wikipediacleaner.i18n.GT;
 
 
@@ -90,6 +96,12 @@ public class CheckErrorAlgorithm557 extends CheckErrorAlgorithmBase {
     if (!Character.isLetter(previousChar)) {
       return false;
     }
+    UnicodeBlock unicodeBlock = UnicodeBlock.of(previousChar);
+    if (unicodeBlock != null) {
+      if (UnicodeBlock.CJK_UNIFIED_IDEOGRAPHS.equals(unicodeBlock)) {
+        return false;
+      }
+    }
 
     // Check if this is an accepted prefix
     if (!prefixes_ok.isEmpty()) {
@@ -101,6 +113,11 @@ public class CheckErrorAlgorithm557 extends CheckErrorAlgorithmBase {
       if (prefixes_ok.contains(contents.substring(tmpIndex, beginIndex).toUpperCase())) {
         return false;
       }
+    }
+
+    // Check if the error should be ignored
+    if (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_TIMELINE, beginIndex) != null) {
+      return false;
     }
 
     // Report error
@@ -127,6 +144,7 @@ public class CheckErrorAlgorithm557 extends CheckErrorAlgorithmBase {
       }
 
       if (displayedText.length() > 1) {
+
         // Move the white space or apostrophe before the internal link
         replacement =
             prefix + firstChar +
@@ -151,6 +169,14 @@ public class CheckErrorAlgorithm557 extends CheckErrorAlgorithmBase {
           }
         }
         errorResult.addReplacement(replacement, automatic);
+
+        // Add a white space before the internal link
+        if (!automatic) {
+          replacement =
+              prefix + " " +
+              contents.substring(link.getBeginIndex(), link.getEndIndex());
+          errorResult.addReplacement(replacement, prefixes_exclude.contains(prefix));
+        }
       } else {
         replacement = prefix + displayedText;
         errorResult.addReplacement(replacement);
@@ -158,24 +184,69 @@ public class CheckErrorAlgorithm557 extends CheckErrorAlgorithmBase {
 
     } else {
 
+      // Include the text before the internal link
+      replacement = PageElementInternalLink.createInternalLink(
+          link.getLink(),
+          link.getAnchor(),
+          prefix + displayedText);
+      errorResult.addReplacement(
+          replacement,
+          areIdentical(link.getLink(), prefix + displayedText, true));
+
+      // Extract the beginning of the internal link
+      int spaceIndex = displayedText.indexOf(' ');
+      while ((spaceIndex > 0) && (spaceIndex < displayedText.length() - 1)) {
+        String fullPrefix = prefix + displayedText.substring(0, spaceIndex + 1);
+        replacement =
+            fullPrefix +
+            PageElementInternalLink.createInternalLink(
+                link.getLink(),
+                link.getAnchor(),
+                displayedText.substring(spaceIndex + 1));
+        boolean automatic = areIdentical(link.getLink(), displayedText.substring(spaceIndex), true);
+        automatic &= (spaceIndex <= 2) || (prefixes_exclude.contains(fullPrefix.trim()));
+        errorResult.addReplacement(
+            replacement,
+            automatic);
+        spaceIndex = displayedText.indexOf(' ', spaceIndex + 1);
+      }
+
       // Add a white space before the internal link
       replacement =
           prefix + " " +
           contents.substring(link.getBeginIndex(), link.getEndIndex());
       errorResult.addReplacement(replacement, prefixes_exclude.contains(prefix));
 
-      // Include the text before the internal link
-      if ((beginIndex <= 0) ||
-          Character.isWhitespace(contents.charAt(beginIndex - 1)) ||
-          ("'*(,".indexOf(contents.charAt(beginIndex - 1)) >= 0)) {
-        String text = prefix + displayedText;
-        replacement = PageElementInternalLink.createInternalLink(
-            link.getLink(),
-            link.getAnchor(),
-            text);
-        errorResult.addReplacement(replacement, areIdentical(link.getLink(), text));
+      // Add other separators before the internal link
+      for (String separator : separators) {
+        replacement =
+            prefix + separator +
+            contents.substring(link.getBeginIndex(), link.getEndIndex());
+        errorResult.addReplacement(replacement);
       }
+
+      // Include the prefix in the link target
+      if (StringUtils.isEmpty(link.getText())) {
+        replacement = PageElementInternalLink.createInternalLink(
+            prefix + displayedText,
+            link.getAnchor(),
+            prefix + displayedText);
+        errorResult.addReplacement(replacement);
+      }
+
+      // Remove the prefix
+      replacement = contents.substring(link.getBeginIndex(), link.getEndIndex());
+      errorResult.addReplacement(replacement);
     }
+
+    // Remove internal link
+    errorResult.addReplacement(prefix + link.getDisplayedText());
+
+    // View internal link
+    errorResult.addPossibleAction(
+        GT._T("External Viewer"),
+        new BasicActionProvider(
+            new ActionExternalViewer(analysis.getWikipedia(), link.getLink())));
 
     errors.add(errorResult);
     return true;
@@ -186,16 +257,16 @@ public class CheckErrorAlgorithm557 extends CheckErrorAlgorithmBase {
    * @param text Text.
    * @return True if link and text can be considered identical.
    */
-  private boolean areIdentical(String link, String text) {
+  private boolean areIdentical(String link, String text, boolean extraTrim) {
     link = link.trim().toUpperCase();
     text = text.trim().toUpperCase();
     if (Page.areSameTitle(link, text)) {
       return true;
     }
-    if (link.endsWith(")")) {
+    if (link.endsWith(")") && extraTrim) {
       int openParenthesis = link.lastIndexOf('(');
       if (openParenthesis > 0) {
-        return areIdentical(link.substring(0,  openParenthesis), text);
+        return areIdentical(link.substring(0,  openParenthesis), text, extraTrim);
       }
     }
     return false;
@@ -226,6 +297,9 @@ public class CheckErrorAlgorithm557 extends CheckErrorAlgorithmBase {
   /** List of prefixes to exclude from the link */
   private static final String PARAMETER_PREFIXES_EXCLUDE = "prefixes_exclude";
 
+  /** List of potential separators between the text and the link */
+  private static final String PARAMETER_SEPARATORS = "separators";
+
   /**
    * Initialize settings for the algorithm.
    * 
@@ -252,6 +326,15 @@ public class CheckErrorAlgorithm557 extends CheckErrorAlgorithmBase {
         prefixes_exclude.addAll(tmpList);
       }
     }
+
+    tmp = getSpecificProperty(PARAMETER_SEPARATORS, true, true, true);
+    separators.clear();
+    if (tmp != null) {
+      List<String> tmpList = WPCConfiguration.convertPropertyToStringList(tmp);
+      if (tmpList != null) {
+        separators.addAll(tmpList);
+      }
+    }
   }
 
   /** Prefixes that can be before an internal link */
@@ -259,6 +342,9 @@ public class CheckErrorAlgorithm557 extends CheckErrorAlgorithmBase {
 
   /** Prefixes that should be excluded from the internal link */
   private final Set<String> prefixes_exclude = new HashSet<>();
+
+  /** List of potential separators between the text and the link */
+  private final List<String> separators = new ArrayList<>();
 
   /**
    * Build the list of parameters for this algorithm.
