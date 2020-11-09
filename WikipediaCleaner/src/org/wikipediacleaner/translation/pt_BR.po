@@ -16,7 +16,7 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2020-11-05 12:37:38+0000\n"
+"PO-Revision-Date: 2020-11-09 11:58:48+0000\n"
 "Last-Translator: Felipe L. <felipe.idj@hotmail.com>\n"
 "Language-Team: Brazilian Portuguese <pt_BR@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -469,6 +469,7 @@ msgstr "Ver imagem"
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm033.java:140
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm061.java:493
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm558.java:286
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm559.java:288
 #, java-format
 msgid "Templates that can be used to replace {0} tags"
 msgstr "Predefinições que podem ser usadas para substituir tags {0}"
@@ -476,6 +477,7 @@ msgstr "Predefinições que podem ser usadas para substituir tags {0}"
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm033.java:143
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm061.java:496
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm558.java:289
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm559.java:291
 #, java-format
 msgid "Template that can be used to replace {0} tags"
 msgstr "Predefinições que pode ser usado para substituir etiquetas {0}"
@@ -542,7 +544,7 @@ msgstr "Predefinições a serem ignoradas"
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm061.java:484
 #, java-format
 msgid "To force the usage of the separator between consecutive {0} tags"
-msgstr ""
+msgstr "Para forçar o uso do separador entre etiquetas {0} consecutivas"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm061.java:487
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm061.java:490
@@ -551,6 +553,8 @@ msgstr ""
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm542.java:180
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm558.java:280
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm558.java:283
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm559.java:282
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm559.java:285
 #, java-format
 msgid "Used as a separator between consecutive {0} tags"
 msgstr "Utilizado como um separador entre tags {0} consecutivas"
@@ -610,6 +614,7 @@ msgstr "Substituir usando predefinição {0}"
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm091.java:292
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm513.java:551
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm544.java:162
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm557.java:247
 #: org/wikipediacleaner/gui/swing/action/ActionExternalViewer.java:61
 #: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:90
 #: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:158
@@ -1453,19 +1458,19 @@ msgstr "Seções nas quais links externos são normais"
 msgid "Section in which external links are normal"
 msgstr "Seção na qual links externos são normais"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm557.java:271
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm557.java:357
 msgid "Prefixes which can be before an internal link"
 msgstr "Prefixos que podem estar antes de um link interno"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm557.java:275
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm557.java:361
 msgid "Prefix which can be before an internal link"
 msgstr "Prefixo que pode estar antes de um link interno"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm557.java:280
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm557.java:366
 msgid "Prefixes which should be excluded from the internal link"
 msgstr "Prefixos que devem ser excluídos do link interno"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm557.java:284
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm557.java:370
 msgid "Prefix which should be excluded from the internal link"
 msgstr "Prefixo que deve ser excluído do link interno"
 
