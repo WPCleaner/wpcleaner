@@ -25,7 +25,7 @@ public abstract class ContentsElement implements Interval {
    * @param contents Contents of the page.
    * @param interval Interval on which the element is spanning.
    */
-  ContentsElement(Contents contents, ContentsInterval interval) {
+  protected ContentsElement(Contents contents, ContentsInterval interval) {
     this.text = contents.substring(interval);
     this.interval = interval;
   }

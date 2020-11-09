@@ -17,7 +17,7 @@ import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.PageElementCategory;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
-import org.wikipediacleaner.api.data.contents.ContentsCommentBuilder;
+import org.wikipediacleaner.api.data.contents.comment.ContentsCommentBuilder;
 import org.wikipediacleaner.i18n.GT;
 
 

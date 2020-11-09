@@ -14,8 +14,8 @@ import java.util.List;
 import org.junit.Test;
 import org.wikipediacleaner.api.constants.EnumWikipediaUtils;
 import org.wikipediacleaner.api.data.PageElementTag;
-import org.wikipediacleaner.api.data.contents.ContainerComment;
 import org.wikipediacleaner.api.data.contents.ContentsElement;
+import org.wikipediacleaner.api.data.contents.comment.ContainerComment;
 
 
 /**

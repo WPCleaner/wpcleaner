@@ -12,9 +12,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import org.wikipediacleaner.api.data.contents.ContentsComment;
-import org.wikipediacleaner.api.data.contents.ContainerComment;
 import org.wikipediacleaner.api.data.contents.ContentsInterval;
+import org.wikipediacleaner.api.data.contents.comment.ContainerComment;
+import org.wikipediacleaner.api.data.contents.comment.ContentsComment;
 
 
 /**

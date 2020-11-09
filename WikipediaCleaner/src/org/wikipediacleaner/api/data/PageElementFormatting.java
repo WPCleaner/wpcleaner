@@ -14,9 +14,9 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
-import org.wikipediacleaner.api.data.contents.ContentsComment;
 import org.wikipediacleaner.api.data.contents.ContentsElement;
 import org.wikipediacleaner.api.data.contents.ContentsElementComparator;
+import org.wikipediacleaner.api.data.contents.comment.ContentsComment;
 
 
 /**

@@ -30,7 +30,7 @@ import org.wikipediacleaner.api.data.PageElementImage.Parameter;
 import org.wikipediacleaner.api.data.PageElementParameter;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
-import org.wikipediacleaner.api.data.contents.ContentsCommentBuilder;
+import org.wikipediacleaner.api.data.contents.comment.ContentsCommentBuilder;
 import org.wikipediacleaner.api.data.PageElementTemplate;
 
 

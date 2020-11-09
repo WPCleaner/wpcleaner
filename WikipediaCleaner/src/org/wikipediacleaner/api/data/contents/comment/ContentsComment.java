@@ -6,11 +6,14 @@
  */
 
 
-package org.wikipediacleaner.api.data.contents;
+package org.wikipediacleaner.api.data.contents.comment;
 
 import java.util.List;
 
 import org.wikipediacleaner.api.data.analysis.Contents;
+import org.wikipediacleaner.api.data.contents.ContentsElement;
+import org.wikipediacleaner.api.data.contents.ContentsInterval;
+import org.wikipediacleaner.api.data.contents.ContentsUtil;
 
 
 /**

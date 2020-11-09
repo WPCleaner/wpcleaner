@@ -16,7 +16,7 @@ import org.wikipediacleaner.api.data.PageElementFunction;
 import org.wikipediacleaner.api.data.PageElementLanguageLink;
 import org.wikipediacleaner.api.data.PageElementTitle;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
-import org.wikipediacleaner.api.data.contents.ContentsComment;
+import org.wikipediacleaner.api.data.contents.comment.ContentsComment;
 
 
 /**

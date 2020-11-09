@@ -39,7 +39,7 @@ import org.wikipediacleaner.api.data.QueryResult;
 import org.wikipediacleaner.api.data.Section;
 import org.wikipediacleaner.api.data.User;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
-import org.wikipediacleaner.api.data.contents.ContentsCommentBuilder;
+import org.wikipediacleaner.api.data.contents.comment.ContentsCommentBuilder;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
 import org.wikipediacleaner.gui.swing.basic.BasicWorker;
 import org.wikipediacleaner.gui.swing.basic.Utilities;

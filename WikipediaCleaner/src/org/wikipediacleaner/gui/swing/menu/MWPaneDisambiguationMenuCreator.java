@@ -28,7 +28,7 @@ import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageElementInternalLink;
 import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.TemplateMatcher;
-import org.wikipediacleaner.api.data.contents.ContentsCommentBuilder;
+import org.wikipediacleaner.api.data.contents.comment.ContentsCommentBuilder;
 import org.wikipediacleaner.gui.swing.action.ChangePreferredDisambiguationAction;
 import org.wikipediacleaner.gui.swing.action.MarkLinkAction;
 import org.wikipediacleaner.gui.swing.action.ReloadCategoryMembersAction;

@@ -8,9 +8,9 @@
 
 package org.wikipediacleaner.api.data.analysis;
 
-import org.wikipediacleaner.api.data.contents.ContentsComment;
-import org.wikipediacleaner.api.data.contents.ContainerComment;
 import org.wikipediacleaner.api.data.contents.ContentsInterval;
+import org.wikipediacleaner.api.data.contents.comment.ContainerComment;
+import org.wikipediacleaner.api.data.contents.comment.ContentsComment;
 
 /**
  * Management of page contents (text, analysis into elements)

@@ -20,7 +20,7 @@ import org.wikipediacleaner.api.configuration.WPCConfiguration;
 import org.wikipediacleaner.api.configuration.WPCConfigurationStringList;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
-import org.wikipediacleaner.api.data.contents.ContentsComment;
+import org.wikipediacleaner.api.data.contents.comment.ContentsComment;
 import org.wikipediacleaner.i18n.GT;
 
 

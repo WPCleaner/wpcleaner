@@ -17,9 +17,9 @@ import org.wikipediacleaner.api.configuration.WPCConfigurationStringList;
 import org.wikipediacleaner.api.data.ISBNRange.ISBNInformation;
 import org.wikipediacleaner.api.data.PageElementTemplate.Parameter;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
-import org.wikipediacleaner.api.data.contents.ContentsComment;
-import org.wikipediacleaner.api.data.contents.ContentsCommentBuilder;
 import org.wikipediacleaner.api.data.contents.ContentsUtil;
+import org.wikipediacleaner.api.data.contents.comment.ContentsComment;
+import org.wikipediacleaner.api.data.contents.comment.ContentsCommentBuilder;
 
 
 /**

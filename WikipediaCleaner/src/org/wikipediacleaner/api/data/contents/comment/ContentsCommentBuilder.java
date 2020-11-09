@@ -6,8 +6,9 @@
  */
 
 
-package org.wikipediacleaner.api.data.contents;
+package org.wikipediacleaner.api.data.contents.comment;
 
+import org.wikipediacleaner.api.data.contents.ContentsUtil;
 
 /**
  * Builder class.

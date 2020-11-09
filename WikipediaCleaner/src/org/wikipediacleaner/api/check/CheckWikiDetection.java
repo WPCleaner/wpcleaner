@@ -11,7 +11,7 @@ package org.wikipediacleaner.api.check;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
-import org.wikipediacleaner.api.data.contents.ContentsComment;
+import org.wikipediacleaner.api.data.contents.comment.ContentsComment;
 
 
 /**

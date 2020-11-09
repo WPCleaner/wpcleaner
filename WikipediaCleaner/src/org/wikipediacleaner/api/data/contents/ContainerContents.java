@@ -15,7 +15,7 @@ import java.util.List;
 /**
  * Container for a type of element.
  */
-abstract class ContainerContents<T extends ContentsElement> {
+public abstract class ContainerContents<T extends ContentsElement> {
 
   /** List of elements */
   private final List<T> elements;
@@ -29,7 +29,7 @@ abstract class ContainerContents<T extends ContentsElement> {
   /**
    * @param elements List of elements.
    */
-  ContainerContents(List<T> elements, ContainerBehavior behavior) {
+  protected ContainerContents(List<T> elements, ContainerBehavior behavior) {
     this.elements = (elements != null) ? elements : new ArrayList<T>();
     ContentsFinderBuilder<T> finderBuilder = new ContentsFinderBuilder<>();
     finderBuilder.addAll(elements);

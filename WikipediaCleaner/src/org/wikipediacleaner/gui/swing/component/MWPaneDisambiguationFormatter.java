@@ -20,7 +20,7 @@ import org.wikipediacleaner.api.data.PageElementInternalLink;
 import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.TemplateMatcher;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
-import org.wikipediacleaner.api.data.contents.ContentsComment;
+import org.wikipediacleaner.api.data.contents.comment.ContentsComment;
 import org.wikipediacleaner.utils.ConfigurationValueStyle;
 
 

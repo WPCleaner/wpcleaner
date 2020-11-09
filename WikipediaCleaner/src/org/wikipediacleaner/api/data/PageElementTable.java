@@ -13,7 +13,7 @@ import java.util.Collections;
 import java.util.List;
 
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
-import org.wikipediacleaner.api.data.contents.ContentsComment;
+import org.wikipediacleaner.api.data.contents.comment.ContentsComment;
 
 
 /**

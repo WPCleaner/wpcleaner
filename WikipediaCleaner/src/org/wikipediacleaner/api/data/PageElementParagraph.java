@@ -11,8 +11,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
-import org.wikipediacleaner.api.data.contents.ContentsComment;
 import org.wikipediacleaner.api.data.contents.ContentsUtil;
+import org.wikipediacleaner.api.data.contents.comment.ContentsComment;
 
 
 /**

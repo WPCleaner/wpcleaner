@@ -6,9 +6,12 @@
  */
 
 
-package org.wikipediacleaner.api.data.contents;
+package org.wikipediacleaner.api.data.contents.comment;
 
 import java.util.List;
+
+import org.wikipediacleaner.api.data.contents.ContainerBehavior;
+import org.wikipediacleaner.api.data.contents.ContainerContents;
 
 
 /**

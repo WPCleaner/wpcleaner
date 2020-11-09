@@ -29,8 +29,8 @@ import org.wikipediacleaner.api.data.PageElementRFC;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.PageElementTitle;
-import org.wikipediacleaner.api.data.contents.ContentsComment;
 import org.wikipediacleaner.api.data.contents.ContentsElement;
+import org.wikipediacleaner.api.data.contents.comment.ContentsComment;
 
 
 /**
