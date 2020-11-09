@@ -420,7 +420,8 @@ public class PageElementTag extends PageElement {
     if (parameters == null) {
       return null;
     }
-    for (PageElementTag.Parameter param : parameters) {
+    for (int index = parameters.size() - 1; index >= 0; index--) {
+      PageElementTag.Parameter param = parameters.get(index);
       if (param.getName().equals(parameterName)) {
         return param;
       }
