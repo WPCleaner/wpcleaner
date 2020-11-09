@@ -221,12 +221,22 @@ public abstract class CheckErrorAlgorithmBase extends AlgorithmBase implements C
    */
   @Override
   public String getErrorNumberString() {
-    String baseName = CheckErrorAlgorithm.class.getName();
-    String className = getClass().getName();
-    if (className.startsWith(baseName)) {
-      return className.substring(baseName.length());
+
+    // Check package
+    String basePackageName = CheckErrorAlgorithm.class.getPackage().getName();
+    String packageName = getClass().getPackage().getName();
+    if (!packageName.startsWith(basePackageName)) {
+      return "unknown";
     }
-    return "unknown";
+
+    // Check class name
+    String baseName = CheckErrorAlgorithm.class.getSimpleName();
+    String className = getClass().getSimpleName();
+    if (!className.startsWith(baseName)) {
+      return "unknown";
+    }
+
+    return className.substring(baseName.length());
   }
 
   /**

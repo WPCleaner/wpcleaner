@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://phabricator.wikimedia.org/project/board/4842/\n"
-"POT-Creation-Date: 2020-11-08 19:11+0100\n"
+"POT-Creation-Date: 2020-11-09 10:54+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -603,7 +603,7 @@ msgstr ""
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm091.java:292
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm513.java:551
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm544.java:162
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm557.java:247
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a557/CheckErrorAlgorithm557.java:250
 #: org/wikipediacleaner/gui/swing/action/ActionExternalViewer.java:61
 #: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:90
 #: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:158
@@ -1448,42 +1448,26 @@ msgstr ""
 msgid "Section in which external links are normal"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm557.java:357
-msgid "Prefixes which can be before an internal link"
-msgstr ""
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm557.java:361
-msgid "Prefix which can be before an internal link"
-msgstr ""
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm557.java:366
-msgid "Prefixes which should be excluded from the internal link"
-msgstr ""
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm557.java:370
-msgid "Prefix which should be excluded from the internal link"
-msgstr ""
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmBase.java:295
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmBase.java:298
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmBase.java:305
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmBase.java:308
 msgid "Title of the article describing this type of error"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmBase.java:301
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmBase.java:304
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmBase.java:311
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmBase.java:314
 msgid "Set to true to prevent automatic modifications for this type of error"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmBase.java:307
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmBase.java:317
 msgid "List of false positives for this type of error"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmBase.java:310
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmBase.java:320
 msgid "Page containing a false positive for this type of error"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmBase.java:314
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmBase.java:317
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmBase.java:324
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmBase.java:327
 msgid "Page containing the list of false positives for this type of error"
 msgstr ""
 
@@ -1529,6 +1513,30 @@ msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmTOC.java:102
 msgid "A list of templates resulting in the inclusion of a table of contents"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a557/CheckErrorAlgorithm557.java:360
+msgid "Prefixes which can be before an internal link"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a557/CheckErrorAlgorithm557.java:364
+msgid "Prefix which can be before an internal link"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a557/CheckErrorAlgorithm557.java:369
+msgid "Prefixes which should be excluded from the internal link"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a557/CheckErrorAlgorithm557.java:373
+msgid "Prefix which should be excluded from the internal link"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a557/CheckErrorAlgorithm557.java:378
+msgid "List of suggestions for separators between the text and the internal link"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a557/CheckErrorAlgorithm557.java:382
+msgid "Suggestion for a separator between the text and the internal link"
 msgstr ""
 
 #: org/wikipediacleaner/api/configuration/CWConfiguration.java:83

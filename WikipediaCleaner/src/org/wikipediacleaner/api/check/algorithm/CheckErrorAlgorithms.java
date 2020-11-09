@@ -66,7 +66,7 @@ public final class CheckErrorAlgorithms {
         algorithmClass = Class.forName(className);
       } catch (ClassNotFoundException e) {
         className = String.format(
-            "%1$s.%3$01dxx.%4$02dx.%5$03d.%2$s%5$03d",
+            "%1$s.a%3$01dxx.a%4$02dx.a%5$03d.%2$s%5$03d",
             CheckErrorAlgorithm.class.getPackage().getName(),
             CheckErrorAlgorithm.class.getSimpleName(),
             errorNumber / 100,

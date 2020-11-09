@@ -5,7 +5,7 @@
  *  See README.txt file for licensing information.
  */
 
-package org.wikipediacleaner.api.check.algorithm;
+package org.wikipediacleaner.api.check.algorithm.a5xx.a55x.a557;
 
 import java.lang.Character.UnicodeBlock;
 import java.util.ArrayList;
@@ -19,6 +19,7 @@ import org.wikipediacleaner.api.algorithm.AlgorithmParameter;
 import org.wikipediacleaner.api.algorithm.AlgorithmParameterElement;
 import org.wikipediacleaner.api.check.BasicActionProvider;
 import org.wikipediacleaner.api.check.CheckErrorResult;
+import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase;
 import org.wikipediacleaner.api.configuration.WPCConfiguration;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageElementInternalLink;
@@ -98,7 +99,9 @@ public class CheckErrorAlgorithm557 extends CheckErrorAlgorithmBase {
     }
     UnicodeBlock unicodeBlock = UnicodeBlock.of(previousChar);
     if (unicodeBlock != null) {
-      if (UnicodeBlock.CJK_UNIFIED_IDEOGRAPHS.equals(unicodeBlock)) {
+      if (UnicodeBlock.CJK_UNIFIED_IDEOGRAPHS.equals(unicodeBlock) ||
+          UnicodeBlock.GREEK.equals(unicodeBlock) ||
+          UnicodeBlock.HIRAGANA.equals(unicodeBlock)) {
         return false;
       }
     }
@@ -368,6 +371,15 @@ public class CheckErrorAlgorithm557 extends CheckErrorAlgorithmBase {
           new AlgorithmParameterElement(
               "prefix",
               GT._T("Prefix which should be excluded from the internal link"))
+        },
+        true));
+    addParameter(new AlgorithmParameter(
+        PARAMETER_SEPARATORS,
+        GT._T("List of suggestions for separators between the text and the internal link"),
+        new AlgorithmParameterElement[] {
+          new AlgorithmParameterElement(
+              "separators",
+              GT._T("Suggestion for a separator between the text and the internal link"))
         },
         true));
   }
