@@ -14,6 +14,7 @@ import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
+import org.wikipediacleaner.api.data.contents.tag.ContentsTagBuilder;
 
 
 /**
@@ -57,10 +58,10 @@ public class CheckErrorAlgorithm042 extends CheckErrorAlgorithmBase {
     for (PageElementTag tag : tags) {
       CheckErrorResult errorResult = createCheckErrorResult(
           analysis, tag.getBeginIndex(), tag.getEndIndex());
-      errorResult.addReplacement(PageElementTag.createTag(
-          PageElementTag.TAG_HTML_DEL, tag.isEndTag(), false));
-      errorResult.addReplacement(PageElementTag.createTag(
-          PageElementTag.TAG_HTML_S, tag.isEndTag(), tag.isFullTag()));
+      errorResult.addReplacement(ContentsTagBuilder.from(
+          PageElementTag.TAG_HTML_DEL, tag.isEndTag(), false).toString());
+      errorResult.addReplacement(ContentsTagBuilder.from(
+          PageElementTag.TAG_HTML_S, tag.isEndTag(), tag.isFullTag()).toString());
       errors.add(errorResult);
     }
 

@@ -25,6 +25,8 @@ import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageElementTable;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
+import org.wikipediacleaner.api.data.contents.tag.ContentsTagBuilder;
+import org.wikipediacleaner.api.data.contents.tag.ContentsTagFormat;
 import org.wikipediacleaner.i18n.GT;
 
 
@@ -196,7 +198,8 @@ public class CheckErrorAlgorithm541 extends CheckErrorAlgorithmBase {
     }
     replaceTag(
         analysis, errorResult,
-        tag, PageElementTag.TAG_HTML_DIV, "style=\"text-align: center;\"",
+        tag, PageElementTag.TAG_HTML_DIV,
+        "style", "text-align: center;",
         null, false);
     return errorResult;
   }
@@ -212,11 +215,13 @@ public class CheckErrorAlgorithm541 extends CheckErrorAlgorithmBase {
         analysis, tag.getCompleteBeginIndex(), tag.getCompleteEndIndex());
     replaceTag(
         analysis, errorResult,
-        tag, PageElementTag.TAG_HTML_DEL, null,
+        tag, PageElementTag.TAG_HTML_DEL,
+        null, null,
         GT._T("for marking an edit"), false);
     replaceTag(
         analysis, errorResult,
-        tag, PageElementTag.TAG_HTML_S, null,
+        tag, PageElementTag.TAG_HTML_S,
+        null, null,
         GT._T("for anything else"), false);
     for (String[] template : strikeTemplates) {
       replaceTag(analysis, errorResult, tag, template);
@@ -235,26 +240,31 @@ public class CheckErrorAlgorithm541 extends CheckErrorAlgorithmBase {
         analysis, tag.getCompleteBeginIndex(), tag.getCompleteEndIndex());
     replaceTag(
         analysis, errorResult,
-        tag, PageElementTag.TAG_HTML_CODE, null,
+        tag, PageElementTag.TAG_HTML_CODE,
+        null, null,
         GT._T("preferred for source code"), false);
     replaceTag(
         analysis, errorResult,
-        tag, PageElementTag.TAG_HTML_KBD, null,
+        tag, PageElementTag.TAG_HTML_KBD,
+        null, null,
         GT._T("preferred for user input"), false);
     replaceTag(
         analysis, errorResult,
-        tag, PageElementTag.TAG_HTML_VAR, null,
+        tag, PageElementTag.TAG_HTML_VAR,
+        null, null,
         GT._T("preferred for variables"), false);
     replaceTag(
         analysis, errorResult,
-        tag, PageElementTag.TAG_HTML_SAMP, null,
+        tag, PageElementTag.TAG_HTML_SAMP,
+        null, null,
         GT._T("preferred for output, function and tag names, etc."), false);
     for (String[] template : ttTemplates) {
       replaceTag(analysis, errorResult, tag, template);
     }
     replaceTag(
         analysis, errorResult,
-        tag, PageElementTag.TAG_HTML_SPAN, "style=\"font-family: monospace;\"",
+        tag, PageElementTag.TAG_HTML_SPAN,
+        "style", "font-family: monospace;",
         GT._T("preferred for everything else"), false);
     return errorResult;
   }
@@ -266,18 +276,24 @@ public class CheckErrorAlgorithm541 extends CheckErrorAlgorithmBase {
    * @param errorResult Error.
    * @param tag Initial tag.
    * @param tagName Replacement tag name.
-   * @param options Optional options for the tag.
+   * @param optionName Optional option name for the tag.
+   * @param optionValue Optional option value for the tag.
    * @param comment Optional comment.
    * @param automatic True if the replacement should be automatic.
    */
   private void replaceTag(
       PageAnalysis analysis,
       CheckErrorResult errorResult,
-      PageElementTag tag, String tagName, String options,
+      PageElementTag tag, String tagName,
+      String optionName, String optionValue,
       String comment, boolean automatic) {
-    String openTag = PageElementTag.createTag(
-        tagName + (options != null ? " " + options : ""), false, false);
-    String closeTag = PageElementTag.createTag(tagName, true, false);
+    // TODO: Modify to properly use builder from existing tag with modification ?
+    ContentsTagBuilder openTagBuilder = ContentsTagBuilder.from(tagName, ContentsTagFormat.OPEN);
+    if (optionName != null) {
+      openTagBuilder.addAttribute(optionName, optionValue);
+    }
+    String openTag = openTagBuilder.toString();
+    String closeTag = ContentsTagBuilder.from(tagName, ContentsTagFormat.CLOSE).toString();
     String replacement =
         openTag +
         analysis.getContents().substring(tag.getValueBeginIndex(), tag.getValueEndIndex()) +

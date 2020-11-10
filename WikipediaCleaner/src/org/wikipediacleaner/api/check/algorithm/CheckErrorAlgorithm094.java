@@ -14,6 +14,8 @@ import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.CheckErrorResult.ErrorLevel;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
+import org.wikipediacleaner.api.data.contents.tag.ContentsTagBuilder;
+import org.wikipediacleaner.api.data.contents.tag.ContentsTagFormat;
 
 
 /**
@@ -76,7 +78,7 @@ public class CheckErrorAlgorithm094 extends CheckErrorAlgorithmBase {
           CheckErrorResult errorResult = createCheckErrorResult(
               analysis, beginIndex, endIndex, ErrorLevel.WARNING);
           errorResult.addReplacement(
-              PageElementTag.createTag(PageElementTag.TAG_WIKI_REF, true, false),
+              ContentsTagBuilder.from(PageElementTag.TAG_WIKI_REF, ContentsTagFormat.CLOSE).toString(),
               true);
           errors.add(errorResult);
         }

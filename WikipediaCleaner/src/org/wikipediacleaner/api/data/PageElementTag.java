@@ -561,30 +561,6 @@ public class PageElementTag extends PageElement {
   }
 
   /**
-   * Create a tag.
-   * 
-   * @param name Tag name.
-   * @param closing True if it's a closing tag.
-   * @param full True if it's a full tag.
-   * @return Tag.
-   */
-  public static String createTag(String name, boolean closing, boolean full) {
-    StringBuilder sb = new StringBuilder();
-    sb.append("<");
-    if (closing && !full) {
-      sb.append("/");
-    }
-    if (name != null) {
-      sb.append(name);
-    }
-    if (full) {
-      sb.append("/");
-    }
-    sb.append(">");
-    return sb.toString();
-  }
-
-  /**
    * Retrieve the group name of a ref tag.
    * 
    * @param analysis Page analysis.

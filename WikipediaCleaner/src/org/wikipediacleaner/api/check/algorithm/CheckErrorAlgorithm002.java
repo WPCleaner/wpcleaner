@@ -25,6 +25,8 @@ import org.wikipediacleaner.api.data.PageElementTag.Parameter;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
 import org.wikipediacleaner.api.data.contents.ContentsUtil;
 import org.wikipediacleaner.api.data.contents.comment.ContentsComment;
+import org.wikipediacleaner.api.data.contents.tag.ContentsTagBuilder;
+import org.wikipediacleaner.api.data.contents.tag.ContentsTagFormat;
 import org.wikipediacleaner.gui.swing.component.MWPane;
 import org.wikipediacleaner.i18n.GT;
 
@@ -328,7 +330,8 @@ public class CheckErrorAlgorithm002 extends CheckErrorAlgorithmBase {
     if ((previousTag != null) &&
         !previousTag.isComplete() &&
         !previousTag.isEndTag()) {
-      errorResult.addReplacement(PageElementTag.createTag(tagName, true, false));
+      errorResult.addReplacement(
+          ContentsTagBuilder.from(tagName, ContentsTagFormat.CLOSE).toString());
     }
 
     // Check for clear tags (<div clear="..."/>)
@@ -465,7 +468,8 @@ public class CheckErrorAlgorithm002 extends CheckErrorAlgorithmBase {
           }
           result = true;
           CheckErrorResult errorResult = createCheckErrorResult(analysis, beginIndex, currentIndex);
-          errorResult.addReplacement(PageElementTag.createTag(selectedTagName, true, false));
+          errorResult.addReplacement(
+              ContentsTagBuilder.from(selectedTagName, ContentsTagFormat.CLOSE).toString());
           errors.add(errorResult);
         }
       }
@@ -577,7 +581,7 @@ public class CheckErrorAlgorithm002 extends CheckErrorAlgorithmBase {
               CheckErrorResult errorResult = createCheckErrorResult(
                   analysis, currentIndex, tmpIndex);
               errorResult.addReplacement(
-                  PageElementTag.createTag(tagName, false, close),
+                  ContentsTagBuilder.from(tagName, false, close).toString(),
                   automatic);
               errors.add(errorResult);
               nextIndex = tmpIndex;
@@ -628,10 +632,10 @@ public class CheckErrorAlgorithm002 extends CheckErrorAlgorithmBase {
           }
           if (extra || (tag.getParametersCount() > 0)) {
             errorResult.addReplacement(
-                PageElementTag.createTag(tagName, false, true),
+                ContentsTagBuilder.from(tagName, ContentsTagFormat.FULL).toString(),
                 false);
             errorResult.addReplacement(
-                PageElementTag.createTag(tagName, false, false),
+                ContentsTagBuilder.from(tagName, ContentsTagFormat.OPEN).toString(),
                 false);
           }
           errors.add(errorResult);

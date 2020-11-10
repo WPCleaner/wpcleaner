@@ -13,6 +13,8 @@ import java.util.List;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
+import org.wikipediacleaner.api.data.contents.tag.ContentsTagBuilder;
+import org.wikipediacleaner.api.data.contents.tag.ContentsTagFormat;
 
 
 /**
@@ -98,7 +100,7 @@ public class CheckErrorAlgorithm100 extends CheckErrorAlgorithmBase {
                     isListTag(nextTag)) {
                   replacement =
                       contents.substring(beginIndex, endIndex) +
-                      PageElementTag.createTag(tag.getName(), true, false);
+                      ContentsTagBuilder.from(tag.getName(), ContentsTagFormat.CLOSE).toString();
                   automatic = true;
                 }
               } else if (currentChar == '<') {

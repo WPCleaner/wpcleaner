@@ -9,10 +9,12 @@ package org.wikipediacleaner.api.check.algorithm;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 
 import org.wikipediacleaner.api.algorithm.AlgorithmParameter;
@@ -21,6 +23,8 @@ import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.configuration.WPCConfiguration;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
+import org.wikipediacleaner.api.data.contents.tag.ContentsTagBuilder;
+import org.wikipediacleaner.api.data.contents.tag.ContentsTagFormat;
 import org.wikipediacleaner.i18n.GT;
 
 
@@ -117,6 +121,25 @@ public class CheckErrorAlgorithm514 extends CheckErrorAlgorithmBase {
             result = true;
             CheckErrorResult errorResult = createCheckErrorResult(
                 analysis, tag.getCompleteBeginIndex(), tag.getCompleteEndIndex());
+            int count = 0;
+            for (Entry<String, Set<String>> group : names.entrySet()) {
+              List<String> tmpList = new ArrayList<>(group.getValue());
+              Collections.sort(tmpList);
+              for (String name : tmpList) {
+                if (count < 40) {
+                  ContentsTagBuilder builder = ContentsTagBuilder
+                      .from(PageElementTag.TAG_WIKI_REF, ContentsTagFormat.FULL);
+                  if (group.getKey() != null) {
+                    builder.addAttribute("group", group.getKey());
+                  }
+                  builder.addAttribute("name", name);
+                  errorResult.addReplacement(builder.toString());
+                } else if (count == 40) {
+                  errorResult.addText("...");
+                }
+                count++;
+              }
+            }
             errors.add(errorResult);
           }
         }
