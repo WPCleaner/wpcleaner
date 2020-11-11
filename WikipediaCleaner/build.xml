@@ -278,7 +278,7 @@
     <!-- Java compilation -->
     <javac srcdir="${WPCleaner.src.dir}"
            destdir="${WPCleaner.classes_small.dir}"
-           optimize="on" encoding="UTF-8" target="7" source="7"
+           optimize="on" encoding="UTF-8" target="8" source="8"
            includeantruntime="false">
       <classpath refid="WPCleaner.class.path" />
     </javac>
@@ -649,7 +649,7 @@
              sourcepath="${WPCleaner.src.dir}"
              packagenames="org.wikipediacleaner.*" encoding="UTF-8">
       <classpath refid="WPCleaner.class.path" />
-      <link href="http://java.sun.com/javase/7/docs/api/" />
+      <link href="https://docs.oracle.com/javase/8/docs/api/" />
     </javadoc>
   </target>
 
