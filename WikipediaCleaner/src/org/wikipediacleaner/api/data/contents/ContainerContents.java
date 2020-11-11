@@ -28,6 +28,7 @@ public abstract class ContainerContents<T extends ContentsElement> {
 
   /**
    * @param elements List of elements.
+   * @param behavior Behavior of the container (smallest only, largest only, both possible...)
    */
   protected ContainerContents(List<T> elements, ContainerBehavior behavior) {
     this.elements = (elements != null) ? elements : new ArrayList<T>();
