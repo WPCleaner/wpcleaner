@@ -85,7 +85,7 @@ public class ContentsTagBuilder {
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append('<');
-    if (ContentsTagFormat.OPEN == format) {
+    if (ContentsTagFormat.CLOSE == format) {
       sb.append('/');
     }
     sb.append(name);
