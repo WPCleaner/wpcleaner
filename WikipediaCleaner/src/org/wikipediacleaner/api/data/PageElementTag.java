@@ -301,7 +301,7 @@ public class PageElementTag extends PageElement {
       return true;
     }
     if (paramString.charAt(equalIndex) != '=') {
-      Parameter param = new Parameter(name, startNameIndex, endNameIndex);
+      Parameter param = new Parameter(name, offset + startNameIndex, offset + endNameIndex);
       parameters.add(param);
       return analyzeParameters(
           paramString.substring(equalIndex), offset + equalIndex, parameters);
@@ -310,7 +310,7 @@ public class PageElementTag extends PageElement {
     // Find beginning of parameter value
     int startValueIndex = ContentsUtil.moveIndexAfterWhitespace(paramString, equalIndex + 1);
     if (startValueIndex >= maxLength) {
-      Parameter param = new Parameter(name, startNameIndex, endNameIndex);
+      Parameter param = new Parameter(name, offset + startNameIndex, offset + endNameIndex);
       parameters.add(param);
       return analyzeParameters(
           paramString.substring(startValueIndex), offset + startValueIndex, parameters);
