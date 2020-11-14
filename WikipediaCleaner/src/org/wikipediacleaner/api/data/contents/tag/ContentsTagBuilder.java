@@ -11,6 +11,9 @@ package org.wikipediacleaner.api.data.contents.tag;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import org.apache.commons.lang3.tuple.ImmutablePair;
 
 /**
@@ -19,12 +22,15 @@ import org.apache.commons.lang3.tuple.ImmutablePair;
 public class ContentsTagBuilder {
 
   /** Name of the tag */
+  @Nonnull
   private final String name;
 
   /** Format of the tag */
+  @Nonnull
   private final ContentsTagFormat format;
 
   /** List of attributes */
+  @Nonnull
   private final List<ImmutablePair<String, String>> attributes;
 
   /**
@@ -33,7 +39,7 @@ public class ContentsTagBuilder {
    * @param tagName Name of the tag.
    * @param format Format of the tag.
    */
-  private ContentsTagBuilder(String name, ContentsTagFormat format) {
+  private ContentsTagBuilder(@Nonnull String name, @Nonnull ContentsTagFormat format) {
     this.name = name;
     this.format = format;
     this.attributes = new ArrayList<>();
@@ -46,7 +52,7 @@ public class ContentsTagBuilder {
    * @param format Format of the tag.
    * @return Builder initialized with the name and format of the tag.
    */
-  public static ContentsTagBuilder from(String tagName, ContentsTagFormat format) {
+  public static @Nonnull ContentsTagBuilder from(@Nonnull String tagName, @Nonnull ContentsTagFormat format) {
     ContentsTagBuilder builder = new ContentsTagBuilder(tagName, format);
     return builder;
   }
@@ -59,7 +65,7 @@ public class ContentsTagBuilder {
    * @param full True if it's a full tag.
    * @return Builder initialized with the name and format of the tag.
    */
-  public static ContentsTagBuilder from(String tagName, boolean closing, boolean full) {
+  public static @Nonnull ContentsTagBuilder from(@Nonnull String tagName, boolean closing, boolean full) {
     return from(
         tagName,
         full ? ContentsTagFormat.FULL : closing ? ContentsTagFormat.CLOSE : ContentsTagFormat.OPEN);
@@ -72,7 +78,7 @@ public class ContentsTagBuilder {
    * @param attributeValue Value of the attribute.
    * @return Builder with the added attribute.
    */
-  public ContentsTagBuilder addAttribute(String attributeName, String attributeValue) {
+  public @Nonnull ContentsTagBuilder addAttribute(@Nonnull String attributeName, @Nullable String attributeValue) {
     attributes.add(new ImmutablePair<>(attributeName, attributeValue));
     return this;
   }
@@ -89,13 +95,15 @@ public class ContentsTagBuilder {
       sb.append('/');
     }
     sb.append(name);
-    for (ImmutablePair<String, String> attribute : attributes) {
-      sb.append(' ');
-      sb.append(attribute.getLeft());
-      if (attribute.getValue() != null) {
-        sb.append("=\"");
-        sb.append(attribute.getRight());
-        sb.append("\"");
+    if (ContentsTagFormat.CLOSE != format) {
+      for (ImmutablePair<String, String> attribute : attributes) {
+        sb.append(' ');
+        sb.append(attribute.getLeft());
+        if (attribute.getValue() != null) {
+          sb.append("=\"");
+          sb.append(attribute.getRight());
+          sb.append("\"");
+        }
       }
     }
     if (ContentsTagFormat.FULL == format) {

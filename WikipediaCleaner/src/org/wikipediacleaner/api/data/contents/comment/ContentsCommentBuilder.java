@@ -8,6 +8,10 @@
 
 package org.wikipediacleaner.api.data.contents.comment;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
+import org.apache.commons.lang3.StringUtils;
 import org.wikipediacleaner.api.data.contents.ContentsUtil;
 
 /**
@@ -16,6 +20,7 @@ import org.wikipediacleaner.api.data.contents.ContentsUtil;
 public class ContentsCommentBuilder {
 
   /** Text of the comment */
+  @Nonnull
   private String comment;
 
   /**
@@ -31,9 +36,9 @@ public class ContentsCommentBuilder {
    * @param comment Text of the comment.
    * @return Builder initialized with the text of the comment.
    */
-  public static ContentsCommentBuilder from(String comment) {
+  public static @Nonnull ContentsCommentBuilder from(@Nullable String comment) {
     ContentsCommentBuilder builder = new ContentsCommentBuilder();
-    builder.comment = comment;
+    builder.comment = StringUtils.defaultIfEmpty(comment, StringUtils.EMPTY);
     return builder;
   }
 
@@ -50,7 +55,9 @@ public class ContentsCommentBuilder {
         .trimWhitespace(comment)
         .replaceAll(ContentsComment.START, "< !--")
         .replaceAll(ContentsComment.END, "-- >"));
-    sb.append(' ');
+    if (sb.charAt(sb.length() - 1) != ' ') {
+      sb.append(' ');
+    }
     sb.append(ContentsComment.END);
     return sb.toString();
   }

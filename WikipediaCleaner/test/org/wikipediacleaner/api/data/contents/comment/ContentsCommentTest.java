@@ -5,14 +5,12 @@
  *  See README.txt file for licensing information.
  */
 
-package org.wikipediacleaner.api.data.contents;
+package org.wikipediacleaner.api.data.contents.comment;
 
 import static org.junit.Assert.*;
 
 import org.junit.Test;
 import org.wikipediacleaner.api.data.analysis.Contents;
-import org.wikipediacleaner.api.data.contents.comment.ContainerComment;
-import org.wikipediacleaner.api.data.contents.comment.ContentsComment;
 
 
 /**

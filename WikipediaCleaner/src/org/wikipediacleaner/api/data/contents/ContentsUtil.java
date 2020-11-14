@@ -8,6 +8,10 @@
 
 package org.wikipediacleaner.api.data.contents;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
+import org.apache.commons.lang3.StringUtils;
 import org.wikipediacleaner.api.data.CharacterUtils;
 
 /**
@@ -22,9 +26,9 @@ public class ContentsUtil {
    * @param text Text to be trimmed.
    * @return Text trimmed for all its white space characters (more thorough than String.trim()).
    */
-  public static String trimWhitespace(String text) {
+  public static @Nonnull String trimWhitespace(@Nullable String text) {
     if (text == null) {
-      return "";
+      return StringUtils.EMPTY;
     }
     int endIndex = text.length();
     while ((endIndex > 0) &&
@@ -56,9 +60,9 @@ public class ContentsUtil {
    *         If all characters after startIndex are from the given set, returns contents.length().
    */
   public static int moveIndexForwardWhileFound(
-      String contents,
+      @Nullable String contents,
       int startIndex,
-      String set) {
+      @Nullable String set) {
     if ((contents == null) || (startIndex < 0)) {
       return -1;
     }
@@ -85,9 +89,9 @@ public class ContentsUtil {
    *         If all characters after startIndex are not from the given set, returns contents.length().
    */
   public static int moveIndexForwardWhileNotFound(
-      String contents,
+      @Nullable String contents,
       int startIndex,
-      String set) {
+      @Nullable String set) {
     if ((contents == null) || (startIndex < 0)) {
       return -1;
     }
@@ -113,7 +117,7 @@ public class ContentsUtil {
    *         If all characters after startIndex are whitespace, returns contents.length().
    */
   public static int moveIndexAfterWhitespace(
-      String contents,
+      @Nullable String contents,
       int startIndex) {
     return moveIndexForwardWhileFound(contents, startIndex, CharacterUtils.WHITESPACE);
   }
@@ -125,7 +129,7 @@ public class ContentsUtil {
    * @param index Index for which we want the end of the line.
    * @return End of the line containing the index.
    */
-  public static int getLineEndIndex(String contents, int index) {
+  public static int getLineEndIndex(@Nullable String contents, int index) {
     return moveIndexForwardWhileNotFound(contents, index, "\n");
   }
 
@@ -143,9 +147,9 @@ public class ContentsUtil {
    *         If all characters before startIndex are from the given set, returns -1.
    */
   public static int moveIndexBackwardWhileFound(
-      String contents,
+      @Nullable String contents,
       int startIndex,
-      String set) {
+      @Nullable String set) {
     if ((contents == null) || (startIndex < 0)) {
       return -1;
     }
@@ -172,9 +176,9 @@ public class ContentsUtil {
    *         If all characters before startIndex are not from the given set, returns -1.
    */
   public static int moveIndexBackwardWhileNotFound(
-      String contents,
+      @Nullable String contents,
       int startIndex,
-      String set) {
+      @Nullable String set) {
     if ((contents == null) || (startIndex < 0)) {
       return -1;
     }
@@ -200,7 +204,7 @@ public class ContentsUtil {
    *         If all characters before startIndex are whitespace, returns -1.
    */
   public static int moveIndexBeforeWhitespace(
-      String contents,
+      @Nullable String contents,
       int startIndex) {
     return moveIndexBackwardWhileFound(contents, startIndex, CharacterUtils.WHITESPACE);
   }
@@ -212,7 +216,7 @@ public class ContentsUtil {
    * @param index Index for which we want the beginning of the line.
    * @return Beginning of the line containing the index.
    */
-  public static int getLineBeginIndex(String contents, int index) {
+  public static int getLineBeginIndex(@Nullable String contents, int index) {
     return moveIndexBackwardWhileNotFound(contents, index, "\n") + 1;
   }
 
@@ -229,7 +233,10 @@ public class ContentsUtil {
    * @param characters Set of characters to look for.
    * @return Number of characters from the set in the area of text.
    */
-  public static int countCharacters(String contents, int beginIndex, int endIndex, String characters) {
+  public static int countCharacters(
+      @Nullable String contents,
+      int beginIndex, int endIndex,
+      @Nullable String characters) {
     if ((contents == null) || (characters == null)) {
       return 0;
     }
@@ -254,7 +261,10 @@ public class ContentsUtil {
    * @param offset Offset in the string.
    * @return True if the string starts with the prefix ignoring case at the offset.
    */
-  public static boolean startsWithIgnoreCase(String str, String prefix, int offset) {
+  public static boolean startsWithIgnoreCase(
+      @Nonnull String str,
+      @Nonnull String prefix,
+      int offset) {
     if (offset + prefix.length() > str.length()) {
       return false;
     }

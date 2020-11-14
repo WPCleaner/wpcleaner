@@ -50,6 +50,10 @@
   <property name="WPCleaner.libs.httpclient.lic"          value="LICENSE.txt" />
   <property name="WPCleaner.libs.httpclient.not"          value="NOTICE.txt" />
 
+  <property name="WPCleaner.libs.jsr305.version"          value="3.0.2" />
+  <property name="WPCleaner.libs.jsr305.dir"              value="libs/jsr305-${WPCleaner.libs.jsr305.version}" />
+  <property name="WPCleaner.libs.jsr305.jar"              value="jsr305-${WPCleaner.libs.jsr305.version}.jar" />
+
   <property name="WPCleaner.libs.lang3.version"           value="3.8.1" />
   <property name="WPCleaner.libs.lang3.dir"               value="libs/commons-lang3-${WPCleaner.libs.lang3.version}" />
   <property name="WPCleaner.libs.lang3.jar"               value="commons-lang3-${WPCleaner.libs.lang3.version}.jar" />
@@ -314,6 +318,7 @@
     <unzip src="${WPCleaner.libs.jdom.dir}/${WPCleaner.libs.jdom.jar}"                   dest="${WPCleaner.classes_full.dir}" />
     <unzip src="${WPCleaner.libs.jdom.dir}/${WPCleaner.libs.xerces-impl.jar}"            dest="${WPCleaner.classes_full.dir}" />
     <unzip src="${WPCleaner.libs.jdom.dir}/${WPCleaner.libs.xerces-xml-apis.jar}"        dest="${WPCleaner.classes_full.dir}" />
+    <unzip src="${WPCleaner.libs.jsr305.dir}/${WPCleaner.libs.jsr305.jar}"               dest="${WPCleaner.classes_full.dir}" />
     <delete includeemptydirs="true">
       <fileset dir="${WPCleaner.classes_full.dir}/META-INF" includes="**/*.txt" />
     </delete>
@@ -373,6 +378,7 @@
     <unzip src="${WPCleaner.libs.mslinks.dir}/${WPCleaner.libs.mslinks.jar}"             dest="${WPCleaner.classes_install.dir}" />
     <unzip src="${WPCleaner.libs.slf4j.dir}/${WPCleaner.libs.slf4j.api.jar}"             dest="${WPCleaner.classes_install.dir}" />
     <unzip src="${WPCleaner.libs.gettext.dir}/${WPCleaner.libs.gettext.jar}"             dest="${WPCleaner.classes_install.dir}" />
+    <unzip src="${WPCleaner.libs.jsr305.dir}/${WPCleaner.libs.jsr305.jar}"               dest="${WPCleaner.classes_install.dir}" />
     <delete includeemptydirs="true">
       <fileset dir="${WPCleaner.classes_install.dir}/META-INF" includes="**/*.txt" />
     </delete>
@@ -547,6 +553,7 @@
     <copy file="${WPCleaner.libs.jdom.dir}/${WPCleaner.libs.jdom.jar}"                   tofile="${WPCleaner.getdown.dir}/libs/jdom.jar" />
     <copy file="${WPCleaner.libs.jdom.dir}/${WPCleaner.libs.xerces-impl.jar}"            tofile="${WPCleaner.getdown.dir}/libs/xercesImpl.jar" />
     <copy file="${WPCleaner.libs.jdom.dir}/${WPCleaner.libs.xerces-xml-apis.jar}"        tofile="${WPCleaner.getdown.dir}/libs/xml-apis.jar" />
+    <copy file="${WPCleaner.libs.jsr305.dir}/${WPCleaner.libs.jsr305.jar}"               tofile="${WPCleaner.getdown.dir}/libs/jsr305.jar" />
     <copy file="${WPCleaner.libs.codec.dir}/${WPCleaner.libs.codec.lic}"                 tofile="${WPCleaner.getdown.dir}/libs/LICENSE_commons-codec.txt" />
     <copy file="${WPCleaner.libs.codec.dir}/${WPCleaner.libs.codec.not}"                 tofile="${WPCleaner.getdown.dir}/libs/NOTICE_commons-codec.txt" />
     <copy file="${WPCleaner.libs.compress.dir}/${WPCleaner.libs.compress.lic}"           tofile="${WPCleaner.getdown.dir}/libs/LICENSE_commons-compress.txt" />

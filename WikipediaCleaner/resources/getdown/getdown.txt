@@ -29,6 +29,7 @@ code = libs/jackson-core.jar
 code = libs/jackson-databind.jar
 code = libs/jaxen.jar
 code = libs/jdom.jar
+code = libs/jsr305.jar
 code = libs/logback-classic.jar
 code = libs/logback-core.jar
 code = libs/slf4j-api.jar

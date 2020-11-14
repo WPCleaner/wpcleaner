@@ -8,18 +8,26 @@
 
 package org.wikipediacleaner.api.data.contents.tag;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
+import org.apache.commons.lang3.StringUtils;
+
 /**
  * Builder class.
  */
 public class ContentsFullTagBuilder {
 
   /** Builder for the opening tag */
+  @Nonnull
   private final ContentsTagBuilder openingTagBuilder;
 
   /** Builder for the closing tag */
+  @Nonnull
   private final ContentsTagBuilder closingTagBuilder;
 
   /** Contents between the opening and closing tags */
+  @Nonnull
   private final String contents;
 
   /**
@@ -28,10 +36,10 @@ public class ContentsFullTagBuilder {
    * @param tagName Name of the tag.
    * @param contents Contents between the opening and closing tags.
    */
-  private ContentsFullTagBuilder(String name, String contents) {
+  private ContentsFullTagBuilder(@Nonnull String name, @Nullable String contents) {
     this.openingTagBuilder = ContentsTagBuilder.from(name, ContentsTagFormat.OPEN);
     this.closingTagBuilder = ContentsTagBuilder.from(name, ContentsTagFormat.CLOSE);
-    this.contents = contents;
+    this.contents = StringUtils.defaultIfEmpty(contents, "");
   }
 
   /**
@@ -41,7 +49,7 @@ public class ContentsFullTagBuilder {
    * @param contents Contents between the opening and closing tags.
    * @return Builder initialized with the name and format of the tag.
    */
-  public static ContentsFullTagBuilder from(String tagName, String contents) {
+  public static @Nonnull ContentsFullTagBuilder from(@Nonnull String tagName, @Nullable String contents) {
     ContentsFullTagBuilder builder = new ContentsFullTagBuilder(tagName, contents);
     return builder;
   }
@@ -53,7 +61,7 @@ public class ContentsFullTagBuilder {
    * @param attributeValue Value of the attribute.
    * @return Builder with the added attribute.
    */
-  public ContentsFullTagBuilder addAttribute(String attributeName, String attributeValue) {
+  public @Nonnull ContentsFullTagBuilder addAttribute(@Nonnull String attributeName, @Nullable String attributeValue) {
     openingTagBuilder.addAttribute(attributeName, attributeValue);
     return this;
   }
@@ -66,9 +74,7 @@ public class ContentsFullTagBuilder {
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append(openingTagBuilder.toString());
-    if (contents != null) {
-      sb.append(contents);
-    }
+    sb.append(contents);
     sb.append(closingTagBuilder.toString());
     return sb.toString();
   }
