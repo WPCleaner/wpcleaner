@@ -1,0 +1,5 @@
+DoTasks _Common.txt
+
+Set Prefix [[User:WikiCleanerBot#T23|Bot_T23]]
+FixListCheckWiki Wikipedia:CHECKWIKI/WPC_558_dump 558
+# FixDump C:\Users\Nicolas\Downloads\enwiki-$-pages-articles.xml.bz2 558
