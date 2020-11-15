@@ -25,6 +25,7 @@ import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageElementTable;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
+import org.wikipediacleaner.api.data.contents.tag.ContentsFullTagBuilder;
 import org.wikipediacleaner.api.data.contents.tag.ContentsTagBuilder;
 import org.wikipediacleaner.api.data.contents.tag.ContentsTagFormat;
 import org.wikipediacleaner.i18n.GT;
@@ -459,11 +460,11 @@ public class CheckErrorAlgorithm541 extends CheckErrorAlgorithmBase {
     super.addParameters();
     addParameter(new AlgorithmParameter(
         PARAMETER_CENTER_TEMPLATES,
-        GT._T("Possible replacements for {0} tags", "<center>...</center>"),
+        GT._T("Possible replacements for {0} tags", ContentsFullTagBuilder.CENTER),
         new AlgorithmParameterElement[] {
           new AlgorithmParameterElement(
               "template name",
-              GT._T("Template for replacing {0} tag", "<center>...</center>")),
+              GT._T("Template for replacing {0} tag", ContentsFullTagBuilder.CENTER)),
           new AlgorithmParameterElement(
               "parameter name",
               GT._T("Parameter to use in the template for the text"),
@@ -480,11 +481,11 @@ public class CheckErrorAlgorithm541 extends CheckErrorAlgorithmBase {
         true));
     addParameter(new AlgorithmParameter(
         PARAMETER_STRIKE_TEMPLATES,
-        GT._T("Possible replacements for {0} tags", "<strike>...</strike>"),
+        GT._T("Possible replacements for {0} tags", ContentsFullTagBuilder.STRIKE),
         new AlgorithmParameterElement[] {
           new AlgorithmParameterElement(
               "template name",
-              GT._T("Template for replacing {0} tag", "<strike>...</strike>")),
+              GT._T("Template for replacing {0} tag", ContentsFullTagBuilder.STRIKE)),
           new AlgorithmParameterElement(
               "parameter name",
               GT._T("Parameter to use in the template for the text"),
@@ -501,11 +502,11 @@ public class CheckErrorAlgorithm541 extends CheckErrorAlgorithmBase {
         true));
     addParameter(new AlgorithmParameter(
         PARAMETER_TT_TEMPLATES,
-        GT._T("Possible replacements for {0} tags", "<tt>...</tt>"),
+        GT._T("Possible replacements for {0} tags", ContentsFullTagBuilder.TT),
         new AlgorithmParameterElement[] {
           new AlgorithmParameterElement(
               "template name",
-              GT._T("Template for replacing {0} tag", "<tt>...</tt>")),
+              GT._T("Template for replacing {0} tag", ContentsFullTagBuilder.TT)),
           new AlgorithmParameterElement(
               "parameter name",
               GT._T("Parameter to use in the template for the text"),

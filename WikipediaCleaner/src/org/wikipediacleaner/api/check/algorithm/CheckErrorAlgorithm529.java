@@ -26,6 +26,7 @@ import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageElementISBN;
 import org.wikipediacleaner.api.data.Page.RelatedPages;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
+import org.wikipediacleaner.api.data.contents.tag.ContentsTagBuilder;
 import org.wikipediacleaner.i18n.GT;
 
 
@@ -41,13 +42,13 @@ public class CheckErrorAlgorithm529 extends CheckErrorAlgorithmBase {
 
   /** List of string that could be before an ISBN. */
   private final static String[] EXTEND_BEFORE_ISBN = {
-    "<small>",
+    ContentsTagBuilder.SMALL_OPEN,
     "(",
   };
 
   /** List of string that could be after an ISBN. */
   private final static String[] EXTEND_AFTER_ISBN = {
-    "</small>",
+    ContentsTagBuilder.SMALL_CLOSE,
     ")",
   };
 

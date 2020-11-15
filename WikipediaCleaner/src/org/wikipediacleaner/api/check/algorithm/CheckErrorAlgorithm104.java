@@ -15,6 +15,7 @@ import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.PageElementTag.Parameter;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
+import org.wikipediacleaner.api.data.contents.tag.ContentsTagBuilder;
 
 
 /**
@@ -222,7 +223,7 @@ public class CheckErrorAlgorithm104 extends CheckErrorAlgorithmBase {
                   "=\"" + name + "\"" +
                   (closing ? " /" : "") + ">";
             } else {
-              replacement = "<ref>";
+              replacement = ContentsTagBuilder.REF_OPEN;
               String original = contents.substring(currentIndex, fullEnd);
               if ("<ref name>".equals(original) ||
                   "<ref name=>".equals(original) ||

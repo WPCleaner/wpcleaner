@@ -15,11 +15,31 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import org.apache.commons.lang3.tuple.ImmutablePair;
+import org.wikipediacleaner.api.data.PageElementTag;
 
 /**
  * Builder class.
  */
 public class ContentsTagBuilder {
+
+  // Useful prepared tags
+  public static final String B_OPEN = from(PageElementTag.TAG_HTML_B, ContentsTagFormat.OPEN).toString();
+  public static final String B_CLOSE = from(PageElementTag.TAG_HTML_B, ContentsTagFormat.CLOSE).toString();
+
+  public static final String LI_OPEN = from(PageElementTag.TAG_HTML_LI, ContentsTagFormat.OPEN).toString();
+  public static final String LI_CLOSE = from(PageElementTag.TAG_HTML_LI, ContentsTagFormat.CLOSE).toString();
+
+  public static final String NOWIKI_OPEN = from(PageElementTag.TAG_WIKI_NOWIKI, ContentsTagFormat.OPEN).toString();
+  public static final String NOWIKI_CLOSE = from(PageElementTag.TAG_WIKI_NOWIKI, ContentsTagFormat.CLOSE).toString();
+
+  public static final String REF_OPEN = from(PageElementTag.TAG_WIKI_REF, ContentsTagFormat.OPEN).toString();
+  public static final String REF_CLOSE = from(PageElementTag.TAG_WIKI_REF, ContentsTagFormat.CLOSE).toString();
+
+  public static final String SMALL_OPEN = from(PageElementTag.TAG_HTML_SMALL, ContentsTagFormat.OPEN).toString();
+  public static final String SMALL_CLOSE = from(PageElementTag.TAG_HTML_SMALL, ContentsTagFormat.CLOSE).toString();
+
+  public static final String UL_OPEN = from(PageElementTag.TAG_HTML_UL, ContentsTagFormat.OPEN).toString();
+  public static final String UL_CLOSE = from(PageElementTag.TAG_HTML_UL, ContentsTagFormat.CLOSE).toString();
 
   /** Name of the tag */
   @Nonnull

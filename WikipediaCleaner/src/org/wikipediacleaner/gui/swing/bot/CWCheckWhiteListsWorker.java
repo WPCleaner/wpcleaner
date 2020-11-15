@@ -27,7 +27,10 @@ import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.DataManager;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageElementInternalLink;
+import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
+import org.wikipediacleaner.api.data.contents.tag.ContentsFullTagBuilder;
+import org.wikipediacleaner.api.data.contents.tag.ContentsTagBuilder;
 import org.wikipediacleaner.gui.swing.InformationWindow;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
 import org.wikipediacleaner.gui.swing.basic.BasicWorker;
@@ -88,21 +91,17 @@ class CWCheckWhiteListsWorker extends BasicWorker {
               // Check each page
               for (Page page : pages) {
                 if (Boolean.FALSE.equals(page.isExisting())) {
-                  details.append("<li>");
-                  details.append(GT._T("The page {0} doesn''t exist on Wikipedia", page.getTitle()));
-                  details.append("</li>");
+                  details.append(ContentsFullTagBuilder
+                      .from(PageElementTag.TAG_HTML_LI, GT._T("The page {0} doesn''t exist on Wikipedia", page.getTitle()))
+                      .toString());
                   unnecessaryPages.add(page);
                 } else {
                   CheckErrorPage errorPage = AlgorithmError.analyzeError(
                       algorithm, page.getAnalysis(page.getContents(), true));
                   if ((errorPage == null) || (!errorPage.getErrorFound())) {
-                    details.append("<li>");
-                    String pageLink =
-                        "<a href=\"" +
-                        wiki.getSettings().getURL(page.getTitle(), false, true) +
-                        "\">" +
-                        page.getTitle() +
-                        "</a>";
+                    details.append(ContentsTagBuilder.LI_OPEN);
+                    String pageLink = ContentsFullTagBuilder.from(PageElementTag.TAG_HTML_A, page.getTitle())
+                        .addAttribute("href", wiki.getSettings().getURL(page.getTitle(), false, true)).toString();
                     details.append(GT._T("The error hasn''t been detected in page {0}.", pageLink));
                     Boolean errorDetected = checkWiki.isErrorDetected(page, errorNumber);
                     if (errorDetected != null) {
@@ -114,7 +113,7 @@ class CWCheckWhiteListsWorker extends BasicWorker {
                         unnecessaryPages.add(page);
                       }
                     }
-                    details.append("</li>");
+                    details.append(ContentsTagBuilder.LI_CLOSE);
                   }
                 }
               }
@@ -127,19 +126,13 @@ class CWCheckWhiteListsWorker extends BasicWorker {
               String pageLink = String.valueOf(errorNumber);
               String whiteListPageName = cwConfig.getWhiteListPageName();
               if (whiteListPageName != null) {
-                pageLink =
-                    "<a href=\"" +
-                    wiki.getSettings().getURL(cwConfig.getWhiteListPageName(), false, true) +
-                    "\">" +
-                    String.valueOf(errorNumber) +
-                    "</a>";
+                pageLink = ContentsFullTagBuilder.from(PageElementTag.TAG_HTML_A, String.valueOf(errorNumber))
+                    .addAttribute("href", wiki.getSettings().getURL(cwConfig.getWhiteListPageName(), false, true)).toString();
               }
               result.append(GT._T(
                   "The following problems were detected on the whitelist for error {0}:",
                   pageLink));
-              result.append("<ul>");
-              result.append(details.toString());
-              result.append("</ul>");
+              result.append(ContentsFullTagBuilder.from(PageElementTag.TAG_HTML_UL, details.toString()).toString());
 
               // Update white list
               String comment = wiki.getConfiguration().getString(WPCConfigurationString.CW_WHITELISTE_COMMENT);

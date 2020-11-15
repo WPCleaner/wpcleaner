@@ -30,6 +30,21 @@ public class ContentsFullTagBuilderTest {
         tag);
     assertEquals(
         "Tag is incorrect",
+        "<TAG_NAME />", tag);
+  }
+
+  @Test
+  public void simpleTagWithNullContentAndForce() {
+
+    // Create comment
+    String tag = ContentsFullTagBuilder.from("TAG_NAME", null).withForceOpenCloseTags(true).toString();
+
+    // Check comment
+    assertNotNull(
+        "tag is null",
+        tag);
+    assertEquals(
+        "Tag is incorrect",
         "<TAG_NAME></TAG_NAME>", tag);
   }
 
@@ -38,6 +53,21 @@ public class ContentsFullTagBuilderTest {
 
     // Create comment
     String tag = ContentsFullTagBuilder.from("TAG_NAME", null).addAttribute("attr1", "value1").toString();
+
+    // Check comment
+    assertNotNull(
+        "tag is null",
+        tag);
+    assertEquals(
+        "Tag is incorrect",
+        "<TAG_NAME attr1=\"value1\" />", tag);
+  }
+
+  @Test
+  public void tagWithAttributesAndNullContentAndForce() {
+
+    // Create comment
+    String tag = ContentsFullTagBuilder.from("TAG_NAME", null).addAttribute("attr1", "value1").withForceOpenCloseTags(true).toString();
 
     // Check comment
     assertNotNull(
@@ -60,6 +90,21 @@ public class ContentsFullTagBuilderTest {
         tag);
     assertEquals(
         "Tag is incorrect",
+        "<TAG_NAME />", tag);
+  }
+
+  @Test
+  public void simpleTagWithEmptyContentAndForce() {
+
+    // Create comment
+    String tag = ContentsFullTagBuilder.from("TAG_NAME", StringUtils.EMPTY).withForceOpenCloseTags(true).toString();
+
+    // Check comment
+    assertNotNull(
+        "tag is null",
+        tag);
+    assertEquals(
+        "Tag is incorrect",
         "<TAG_NAME></TAG_NAME>", tag);
   }
 
@@ -68,6 +113,21 @@ public class ContentsFullTagBuilderTest {
 
     // Create comment
     String tag = ContentsFullTagBuilder.from("TAG_NAME", StringUtils.EMPTY).addAttribute("attr1", "value1").toString();
+
+    // Check comment
+    assertNotNull(
+        "tag is null",
+        tag);
+    assertEquals(
+        "Tag is incorrect",
+        "<TAG_NAME attr1=\"value1\" />", tag);
+  }
+
+  @Test
+  public void tagWithAttributesAndEmptyContentAndForce() {
+
+    // Create comment
+    String tag = ContentsFullTagBuilder.from("TAG_NAME", StringUtils.EMPTY).addAttribute("attr1", "value1").withForceOpenCloseTags(true).toString();
 
     // Check comment
     assertNotNull(

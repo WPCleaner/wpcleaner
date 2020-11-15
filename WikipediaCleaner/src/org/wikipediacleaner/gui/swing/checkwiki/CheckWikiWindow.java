@@ -71,7 +71,10 @@ import org.wikipediacleaner.api.configuration.WPCConfigurationString;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.DataManager;
 import org.wikipediacleaner.api.data.Page;
+import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.PageRedirect;
+import org.wikipediacleaner.api.data.contents.tag.ContentsTagBuilder;
+import org.wikipediacleaner.api.data.contents.tag.ContentsTagFormat;
 import org.wikipediacleaner.gui.swing.Controller;
 import org.wikipediacleaner.gui.swing.OnePageWindow;
 import org.wikipediacleaner.gui.swing.action.ActionFullAnalysis;
@@ -1023,21 +1026,23 @@ public class CheckWikiWindow extends OnePageWindow implements CheckWikiListener 
       AlgorithmParametersDescriptor descriptor = new AlgorithmParametersDescriptor();
       descriptor.setGlobalTexts(GT._T(
           "The error n°{0} can be configured with the following parameters in the <a href=\"{1}\">translation file</a> :",
-          new Object[] { Integer.toString(errorNumber), url }) + "\n<ul>",
-          "</ul>");
-      descriptor.setParameterTexts("<li>", "</li>\n");
-      descriptor.setParameterNameTexts("<b>", "</b>");
+          new Object[] { Integer.toString(errorNumber), url }) + "\n" + ContentsTagBuilder.UL_OPEN,
+          ContentsTagBuilder.UL_CLOSE);
+      descriptor.setParameterTexts(ContentsTagBuilder.LI_OPEN, ContentsTagBuilder.LI_CLOSE + "\n");
+      descriptor.setParameterNameTexts(ContentsTagBuilder.B_OPEN, ContentsTagBuilder.B_CLOSE);
       descriptor.setParameterDescriptionTexts(": ", null);
       descriptor.setDisplayDetails(true);
       descriptor.setDetailsTexts(
-          "<span style=\"font-family: monospace, monospace;\">",
-          "</span>");
+          ContentsTagBuilder.from(PageElementTag.TAG_HTML_SPAN, ContentsTagFormat.OPEN).addAttribute("style", "font-family: monospace, monospace;").toString(),
+          ContentsTagBuilder.from(PageElementTag.TAG_HTML_SPAN, ContentsTagFormat.CLOSE).toString());
       descriptor.setExampleTexts(
           "error_" + algorithm.getErrorNumberString() + "_",
           "_" + getWiki().getSettings().getCodeCheckWiki());
       descriptor.setDisplayTooltip(false); // Tooltip doesn't work
-      descriptor.setTooltipTexts("<abbr title=\"", "\">", "</abbr>");
-      descriptor.setLineSeparation("<br/>\n");
+      descriptor.setTooltipTexts(
+          "<abbr title=\"", "\">",
+          ContentsTagBuilder.from(PageElementTag.TAG_HTML_ABBR, ContentsTagFormat.CLOSE).toString());
+      descriptor.setLineSeparation(ContentsTagBuilder.from(PageElementTag.TAG_HTML_BR, ContentsTagFormat.FULL).toString() + "\n");
       descriptor.setLineTabulation("&nbsp;&nbsp;&nbsp;");
       textParameters.setText(descriptor.describe(algorithm));
     } else {

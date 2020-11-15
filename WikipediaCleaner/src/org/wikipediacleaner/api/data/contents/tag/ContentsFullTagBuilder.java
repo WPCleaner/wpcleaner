@@ -12,11 +12,22 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import org.apache.commons.lang3.StringUtils;
+import org.wikipediacleaner.api.data.PageElementTag;
 
 /**
  * Builder class.
  */
 public class ContentsFullTagBuilder {
+
+  private static final String ELLIPSIS = "...";
+
+  // Useful prepared tags
+  public static final String CENTER = from(PageElementTag.TAG_HTML_CENTER, ELLIPSIS).toString();
+  public static final String NOWIKI = from(PageElementTag.TAG_WIKI_NOWIKI, ELLIPSIS).toString();
+  public static final String REF = from(PageElementTag.TAG_WIKI_REF, ELLIPSIS).toString();
+  public static final String SMALL = from(PageElementTag.TAG_HTML_SMALL, ELLIPSIS).toString();
+  public static final String STRIKE = from(PageElementTag.TAG_HTML_STRIKE, ELLIPSIS).toString();
+  public static final String TT = from(PageElementTag.TAG_HTML_TT, ELLIPSIS).toString();
 
   /** Builder for the opening tag */
   @Nonnull
@@ -26,9 +37,16 @@ public class ContentsFullTagBuilder {
   @Nonnull
   private final ContentsTagBuilder closingTagBuilder;
 
+  /** Builder for the full tag */
+  @Nonnull
+  private final ContentsTagBuilder fullTagBuilder;
+
   /** Contents between the opening and closing tags */
   @Nonnull
   private final String contents;
+
+  /** True to force the creation of opening and closing tags even if contents is empty */
+  private boolean forceOpenCloseTags;
 
   /**
    * Private constructor.
@@ -39,6 +57,7 @@ public class ContentsFullTagBuilder {
   private ContentsFullTagBuilder(@Nonnull String name, @Nullable String contents) {
     this.openingTagBuilder = ContentsTagBuilder.from(name, ContentsTagFormat.OPEN);
     this.closingTagBuilder = ContentsTagBuilder.from(name, ContentsTagFormat.CLOSE);
+    this.fullTagBuilder = ContentsTagBuilder.from(name, ContentsTagFormat.FULL);
     this.contents = StringUtils.defaultIfEmpty(contents, "");
   }
 
@@ -63,6 +82,18 @@ public class ContentsFullTagBuilder {
    */
   public @Nonnull ContentsFullTagBuilder addAttribute(@Nonnull String attributeName, @Nullable String attributeValue) {
     openingTagBuilder.addAttribute(attributeName, attributeValue);
+    fullTagBuilder.addAttribute(attributeName, attributeValue);
+    return this;
+  }
+
+  /**
+   * Configure the builder for full tags with empty contents.
+   * 
+   * @param force True to force the generation of opening and closing tags even if contents is empty.
+   * @return Builder with the changed configuration.
+   */
+  public @Nonnull ContentsFullTagBuilder withForceOpenCloseTags(boolean force) {
+    this.forceOpenCloseTags = force;
     return this;
   }
 
@@ -72,6 +103,9 @@ public class ContentsFullTagBuilder {
    */
   @Override
   public String toString() {
+    if (!forceOpenCloseTags && StringUtils.isEmpty(contents)) {
+      return fullTagBuilder.toString();
+    }
     StringBuilder sb = new StringBuilder();
     sb.append(openingTagBuilder.toString());
     sb.append(contents);

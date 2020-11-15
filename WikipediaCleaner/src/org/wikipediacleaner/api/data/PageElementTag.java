@@ -14,6 +14,7 @@ import org.wikipediacleaner.api.configuration.WPCConfiguration;
 import org.wikipediacleaner.api.configuration.WPCConfigurationStringList;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
 import org.wikipediacleaner.api.data.contents.ContentsUtil;
+import org.wikipediacleaner.api.data.contents.tag.ContentsFullTagBuilder;
 
 
 /**
@@ -837,13 +838,14 @@ public class PageElementTag extends PageElement {
       tagIndex = getMatchingTagIndex(tags, tagIndex);
       tagIndex++;
     }
+    String refBlock = ContentsFullTagBuilder.REF;
     if (count > 2) {
-      return "<ref>...</ref>" + separator + "..." + separator + "<ref>...</ref>";
+      return refBlock + separator + "..." + separator + refBlock;
     }
     if (count > 1) {
-      return "<ref>...</ref>" + separator + "<ref>...</ref>";
+      return refBlock + separator + refBlock;
     }
-    return "<ref>...</ref>";
+    return refBlock;
   }
 
   /** Class for managing a parameter */

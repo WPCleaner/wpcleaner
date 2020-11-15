@@ -17,6 +17,7 @@ import java.util.Map.Entry;
 
 import javax.swing.JOptionPane;
 
+import org.apache.commons.lang3.StringUtils;
 import org.wikipediacleaner.api.check.AddTextActionProvider;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.SimpleAction;
@@ -25,6 +26,7 @@ import org.wikipediacleaner.api.data.PageElementExternalLink;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.PageElementTag.Parameter;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
+import org.wikipediacleaner.api.data.contents.tag.ContentsFullTagBuilder;
 import org.wikipediacleaner.gui.swing.action.ActionExternalViewer;
 import org.wikipediacleaner.gui.swing.basic.Utilities;
 import org.wikipediacleaner.gui.swing.component.MWPane;
@@ -135,26 +137,14 @@ public class CheckErrorAlgorithm081 extends CheckErrorAlgorithmBase {
    * @return Reference tag.
    */
   private String getClosedRefTag(String groupName, String tagName, String value) {
-    StringBuilder result = new StringBuilder();
-    result.append("<ref");
+    ContentsFullTagBuilder builder = ContentsFullTagBuilder.from(PageElementTag.TAG_WIKI_REF, StringUtils.trim(value));
     if ((groupName != null) && (groupName.trim().length() > 0)) {
-      result.append(" group=\"");
-      result.append(groupName.trim());
-      result.append("\"");
+      builder.addAttribute("group", groupName.trim());
     }
     if ((tagName != null) && (tagName.trim().length() > 0)) {
-      result.append(" name=\"");
-      result.append(tagName.trim());
-      result.append("\"");
+      builder.addAttribute("name", tagName.trim());
     }
-    if ((value != null) && (value.trim().length() > 0)) {
-      result.append(">");
-      result.append(value.trim());
-      result.append("</ref>");
-    } else {
-      result.append(" />");
-    }
-    return result.toString();
+    return builder.toString();
   }
 
   /**

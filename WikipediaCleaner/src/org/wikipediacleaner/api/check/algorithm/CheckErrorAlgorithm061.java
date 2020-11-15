@@ -28,6 +28,7 @@ import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
 import org.wikipediacleaner.api.data.contents.ContentsUtil;
 import org.wikipediacleaner.api.data.contents.IntervalComparator;
+import org.wikipediacleaner.api.data.contents.tag.ContentsFullTagBuilder;
 import org.wikipediacleaner.i18n.GT;
 
 
@@ -393,13 +394,14 @@ public class CheckErrorAlgorithm061 extends CheckErrorAlgorithmBase {
    */
   public static String createReducedListOfRefs(
       int count, String separator) {
+    String refBlock = ContentsFullTagBuilder.REF;
     if (count > 2) {
-      return "<ref>...</ref>" + separator + "..." + separator + "<ref>...</ref>";
+      return refBlock + separator + "..." + separator + refBlock;
     }
     if (count > 1) {
-      return "<ref>...</ref>" + separator + "<ref>...</ref>";
+      return refBlock + separator + refBlock;
     }
-    return "<ref>...</ref>";
+    return refBlock;
   }
 
   /**
