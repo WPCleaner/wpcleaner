@@ -23,6 +23,7 @@ import org.wikipediacleaner.api.data.PageElementInternalLink;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
+import org.wikipediacleaner.api.data.contents.ilink.ContentsInternalLinkBuilder;
 import org.wikipediacleaner.i18n.GT;
 import org.wikipediacleaner.utils.Configuration;
 import org.wikipediacleaner.utils.ConfigurationValueInteger;
@@ -245,11 +246,12 @@ public class CheckErrorAlgorithm518 extends CheckErrorAlgorithmBase {
     if (link != null) {
       String displayed = link.getDisplayedTextNotTrimmed();
       if (displayed.endsWith(" ")) {
-        errorResult.addReplacement(PageElementInternalLink.createInternalLink(
-            link.getFullLink(), displayed.trim()) + " " + textAfter);
+        errorResult.addReplacement(
+            ContentsInternalLinkBuilder.from(link.getFullLink()).withText(displayed.trim()).toString() +
+            " " + textAfter);
       }
-      errorResult.addReplacement(PageElementInternalLink.createInternalLink(
-          link.getFullLink(), displayed + textAfter));
+      errorResult.addReplacement(ContentsInternalLinkBuilder.from(link.getFullLink())
+          .withText(displayed + textAfter).toString());
     }
     errorResult.addReplacement(textBefore + " " + textAfter);
     errorResult.addReplacement(textBefore + textAfter);

@@ -14,9 +14,9 @@ import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.constants.ArticleUrl;
 import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.PageElementExternalLink;
-import org.wikipediacleaner.api.data.PageElementInternalLink;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
+import org.wikipediacleaner.api.data.contents.ilink.ContentsInternalLinkBuilder;
 
 
 /**
@@ -108,7 +108,7 @@ public class CheckErrorAlgorithm004 extends CheckErrorAlgorithmBase {
                   automatic = false;
                 }
                 errorResult.addReplacement(
-                    PageElementInternalLink.createInternalLink(article, internalText),
+                    ContentsInternalLinkBuilder.from(article).withText(internalText).toString(),
                     automatic);
               }
             }

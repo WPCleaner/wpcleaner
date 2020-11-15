@@ -23,6 +23,7 @@ import org.wikipediacleaner.api.data.PageElementInternalLink;
 import org.wikipediacleaner.api.data.PageElementInterwikiLink;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
+import org.wikipediacleaner.api.data.contents.ilink.ContentsInternalLinkBuilder;
 
 
 /**
@@ -127,9 +128,7 @@ public class CheckErrorAlgorithm535 extends CheckErrorAlgorithmBase {
               contents.substring(valueEndIndex, fontTag.getValueEndIndex());
             String text =
               contents.substring(fontTag.getValueBeginIndex(), valueBeginIndex) +
-              PageElementInternalLink.createInternalLink(
-                iLink.getLink(),
-                openFont + "..." + closeFont) +
+              ContentsInternalLinkBuilder.from(iLink.getLink()).withText(openFont + "..." + closeFont).toString() +
               contents.substring(valueEndIndex, fontTag.getValueEndIndex());
             errorResult.addReplacement(replacement, text, automatic);
             errors.add(errorResult);

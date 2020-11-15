@@ -16,6 +16,11 @@ import org.wikipediacleaner.api.data.contents.ContentsUtil;
  */
 public class PageElementInternalLink extends PageElement {
 
+  /** Characters included in the link when they follow the link */
+  public static final String EXTENSION_CHARACTERS =
+      "abcdefghijklmnopqrstuvwxyz" +
+      "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
   private final String linkNotTrimmed;
   private final String link;
   private final String anchorNotTrimmed;
@@ -334,17 +339,6 @@ public class PageElementInternalLink extends PageElement {
   @Override
   public String toString() {
     return createInternalLink(linkNotTrimmed, anchorNotTrimmed, textNotTrimmed);
-  }
-
-  /**
-   * Create an internal link.
-   * 
-   * @param link Link.
-   * @param text Displayed text.
-   * @return Internal link.
-   */
-  public static String createInternalLink(String link, String text) {
-    return createInternalLink(link, null, text);
   }
 
   /**

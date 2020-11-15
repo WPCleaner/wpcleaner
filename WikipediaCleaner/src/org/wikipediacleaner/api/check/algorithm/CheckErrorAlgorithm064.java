@@ -20,6 +20,7 @@ import org.wikipediacleaner.api.data.PageElementInternalLink;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
+import org.wikipediacleaner.api.data.contents.ilink.ContentsInternalLinkBuilder;
 import org.wikipediacleaner.gui.swing.component.MWPane;
 import org.wikipediacleaner.i18n.GT;
 
@@ -231,42 +232,42 @@ public class CheckErrorAlgorithm064 extends CheckErrorAlgorithmBase {
         if (!automatic) {
           addReplacement(
               config, errorResult, replacements,
-              paddingLeft + PageElementInternalLink.createInternalLink(text, null) + paddingRight + extraRight,
+              paddingLeft + ContentsInternalLinkBuilder.from(text).toString() + paddingRight + extraRight,
               prefix, suffix, false);
         }
         addReplacement(
             config, errorResult, replacements,
-            paddingLeft + PageElementInternalLink.createInternalLink(text, null) + paddingRight + extraFullRight,
+            paddingLeft + ContentsInternalLinkBuilder.from(text).toString() + paddingRight + extraFullRight,
             prefix, suffix, automatic);
         addReplacement(
             config, errorResult, replacements,
-            paddingLeft + PageElementInternalLink.createInternalLink(text, null) + paddingRight + extraRight,
+            paddingLeft + ContentsInternalLinkBuilder.from(text).toString() + paddingRight + extraRight,
             prefix, suffix, false);
         addReplacement(
             config, errorResult, replacements,
-            paddingLeft + PageElementInternalLink.createInternalLink(cleanedText, null) + paddingRight + extraFullRight,
+            paddingLeft + ContentsInternalLinkBuilder.from(cleanedText).toString() + paddingRight + extraFullRight,
             prefix, suffix, false);
         addReplacement(
             config, errorResult, replacements,
-            paddingLeft + PageElementInternalLink.createInternalLink(cleanedText, null) + paddingRight + extraRight,
+            paddingLeft + ContentsInternalLinkBuilder.from(cleanedText).toString() + paddingRight + extraRight,
             prefix, suffix, false);
         paddingLeft = paddingLeft.replaceAll("\'", "");
         paddingRight = paddingRight.replaceAll("\'", "");
         addReplacement(
             config, errorResult, replacements,
-            paddingLeft + PageElementInternalLink.createInternalLink(text, null) + paddingRight + extraFullRight,
+            paddingLeft + ContentsInternalLinkBuilder.from(text).toString() + paddingRight + extraFullRight,
             prefix, suffix, false);
         addReplacement(
             config, errorResult, replacements,
-            paddingLeft + PageElementInternalLink.createInternalLink(text, null) + paddingRight + extraRight,
+            paddingLeft + ContentsInternalLinkBuilder.from(text).toString() + paddingRight + extraRight,
             prefix, suffix, false);
         addReplacement(
             config, errorResult, replacements,
-            paddingLeft + PageElementInternalLink.createInternalLink(cleanedText, null) + paddingRight + extraFullRight,
+            paddingLeft + ContentsInternalLinkBuilder.from(cleanedText).toString() + paddingRight + extraFullRight,
             prefix, suffix, false);
         addReplacement(
             config, errorResult, replacements,
-            paddingLeft + PageElementInternalLink.createInternalLink(cleanedText, null) + paddingRight + extraRight,
+            paddingLeft + ContentsInternalLinkBuilder.from(cleanedText).toString() + paddingRight + extraRight,
             prefix, suffix, false);
         errors.add(errorResult);
       }

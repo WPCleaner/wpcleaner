@@ -26,6 +26,7 @@ import org.wikipediacleaner.api.data.DataManager;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageElementInternalLink;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
+import org.wikipediacleaner.api.data.contents.ilink.ContentsInternalLinkBuilder;
 import org.wikipediacleaner.i18n.GT;
 import org.wikipediacleaner.utils.Configuration;
 import org.wikipediacleaner.utils.ConfigurationValueInteger;
@@ -167,7 +168,7 @@ public class CheckErrorAlgorithm526 extends CheckErrorAlgorithmBase {
         int yearCorrected = Integer.parseInt(text + extraText);
         if (yearLinked == yearCorrected) {
           errorResult.addReplacement(
-              PageElementInternalLink.createInternalLink(target, text + extraText),
+              ContentsInternalLinkBuilder.from(target).withText(text + extraText).toString(),
               true);
         }
       } catch (NumberFormatException e) {
@@ -175,9 +176,11 @@ public class CheckErrorAlgorithm526 extends CheckErrorAlgorithmBase {
       }
     }
     errorResult.addReplacement(
-        PageElementInternalLink.createInternalLink(target, target) + extraText);
+        ContentsInternalLinkBuilder.from(target).withText(target).toString() +
+        extraText);
     errorResult.addReplacement(
-        PageElementInternalLink.createInternalLink(text, text) + extraText);
+        ContentsInternalLinkBuilder.from(text).withText(text).toString() +
+        extraText);
     if (!askHelpList.isEmpty()) {
       boolean firstReplacement = true;
       for (String askHelpElement : askHelpList) {

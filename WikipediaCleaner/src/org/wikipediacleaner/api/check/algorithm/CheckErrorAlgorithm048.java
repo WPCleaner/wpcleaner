@@ -22,6 +22,7 @@ import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.PageElementTitle;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
 import org.wikipediacleaner.api.data.contents.ContentsUtil;
+import org.wikipediacleaner.api.data.contents.ilink.ContentsInternalLinkBuilder;
 import org.wikipediacleaner.gui.swing.component.MWPane;
 import org.wikipediacleaner.i18n.GT;
 
@@ -168,9 +169,10 @@ public class CheckErrorAlgorithm048 extends CheckErrorAlgorithmBase {
             (link.getText().trim().length() == 0)) {
           automatic = false;
         }
-        String replacement = PageElementInternalLink.createInternalLink(
-            "#" + anchor,
-            link.getDisplayedTextNotTrimmed());
+        String replacement = ContentsInternalLinkBuilder.from(null)
+            .withAnchor(anchor)
+            .withText(link.getDisplayedTextNotTrimmed())
+            .toString();
         errorResult.addReplacement(replacement, automatic);
       }
       errors.add(errorResult);

@@ -25,10 +25,10 @@ import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.LinkReplacement;
 import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.Page;
-import org.wikipediacleaner.api.data.PageElementInternalLink;
 import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.TemplateMatcher;
 import org.wikipediacleaner.api.data.contents.comment.ContentsCommentBuilder;
+import org.wikipediacleaner.api.data.contents.ilink.ContentsInternalLinkBuilder;
 import org.wikipediacleaner.gui.swing.action.ChangePreferredDisambiguationAction;
 import org.wikipediacleaner.gui.swing.action.MarkLinkAction;
 import org.wikipediacleaner.gui.swing.action.ReloadCategoryMembersAction;
@@ -97,7 +97,7 @@ public class MWPaneDisambiguationMenuCreator extends BasicMenuCreator {
           JMenu submenu = new JMenu(GT._T("Mark as normal link"));
           for (String comment : comments) {
             String replacement =
-                PageElementInternalLink.createInternalLink(page.getTitle(), text) +
+                ContentsInternalLinkBuilder.from(page.getTitle()).withText(text).toString() +
                 ContentsCommentBuilder.from(comment).toString();
             addItem(
                 submenu, null, GT._T("Using {0}", comment), true,
@@ -106,7 +106,7 @@ public class MWPaneDisambiguationMenuCreator extends BasicMenuCreator {
           popup.add(submenu);
         } else {
           String replacement =
-              PageElementInternalLink.createInternalLink(page.getTitle(), text) +
+              ContentsInternalLinkBuilder.from(page.getTitle()).withText(text).toString() +
               ContentsCommentBuilder.from(comments.get(0)).toString();
           addItem(
               popup, null, GT._T("Mark as normal link using comment"), true,
@@ -519,7 +519,7 @@ public class MWPaneDisambiguationMenuCreator extends BasicMenuCreator {
       }
 
       if (!Page.areSameTitle(text, page.getTitle())) {
-        String newLink = PageElementInternalLink.createInternalLink(text, page.getTitle());
+        String newLink = ContentsInternalLinkBuilder.from(text).withText(page.getTitle()).toString();
         addItem(
             popup, null, GT._T("Reverse to {0}", newLink), true,
             new RevertLinkAction(page.getTitle(), text, element, textPane), null);
@@ -549,7 +549,7 @@ public class MWPaneDisambiguationMenuCreator extends BasicMenuCreator {
       }
 
       if (!Page.areSameTitle(text, page.getTitle())) {
-        String newLink = PageElementInternalLink.createInternalLink(text, page.getTitle());
+        String newLink = ContentsInternalLinkBuilder.from(text).withText(page.getTitle()).toString();
         addItem(
             popup, null, GT._T("Reverse to {0}", newLink), true,
             new RevertLinkAction(page.getTitle(), text, element, textPane));
@@ -558,7 +558,7 @@ public class MWPaneDisambiguationMenuCreator extends BasicMenuCreator {
     // Missing page
     } else if (Boolean.FALSE.equals(page.isExisting())) {
       if (!Page.areSameTitle(text, page.getTitle())) {
-        String newLink = PageElementInternalLink.createInternalLink(text, page.getTitle());
+        String newLink = ContentsInternalLinkBuilder.from(text).withText(page.getTitle()).toString();
         addItem(
             popup, null, GT._T("Reverse to {0}", newLink), true,
             new RevertLinkAction(page.getTitle(), text, element, textPane));
@@ -786,7 +786,7 @@ public class MWPaneDisambiguationMenuCreator extends BasicMenuCreator {
    */
   private String createTextForTemplateAfterLink(List<String> template, String pageTitle, String text) {
     StringBuilder newText = new StringBuilder();
-    newText.append(PageElementInternalLink.createInternalLink(pageTitle, text));
+    newText.append(ContentsInternalLinkBuilder.from(pageTitle).withText(text).toString());
     newText.append("{{");
     newText.append(template.get(0));
     for (int i = 1; i < template.size(); i++) {

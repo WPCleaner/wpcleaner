@@ -21,6 +21,7 @@ import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageElementInternalLink;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
+import org.wikipediacleaner.api.data.contents.ilink.ContentsInternalLinkBuilder;
 import org.wikipediacleaner.i18n.GT;
 
 
@@ -142,7 +143,7 @@ public class CheckErrorAlgorithm553 extends CheckErrorAlgorithmBase {
         String fullLink = link.getFullLink();
         String text = link.getDisplayedText() + extraText;
         String replacement =
-            PageElementInternalLink.createInternalLink(fullLink, text) +
+            ContentsInternalLinkBuilder.from(fullLink).withText(text).toString() +
             contents.substring(endText, endIndex);
         boolean safeLink = isSafeLink(link, text);
         errorResult.addReplacement(replacement, automatic || safeLink);

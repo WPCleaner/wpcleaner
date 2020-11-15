@@ -20,11 +20,11 @@ public class ContentsTagBuilderTest {
   @Test
   public void simpleOpeningTag() {
 
-    // Create comment
+    // Create tags
     String tag = ContentsTagBuilder.from("TAG_NAME", ContentsTagFormat.OPEN).toString();
     String tag2 = ContentsTagBuilder.from("TAG_NAME", false, false).toString();
 
-    // Check comment
+    // Check tags
     assertNotNull(
         "tag is null",
         tag);
@@ -42,14 +42,14 @@ public class ContentsTagBuilderTest {
   @Test
   public void openingTagWithAttributes() {
 
-    // Create comment
+    // Create tag
     String tag = ContentsTagBuilder
         .from("TAG_NAME", ContentsTagFormat.OPEN)
         .addAttribute("attr1", "value1")
         .addAttribute("attr2", null)
         .toString();
 
-    // Check comment
+    // Check tag
     assertNotNull(
         "tag is null",
         tag);
@@ -61,11 +61,11 @@ public class ContentsTagBuilderTest {
   @Test
   public void simpleClosingTag() {
 
-    // Create comment
+    // Create tags
     String tag = ContentsTagBuilder.from("TAG_NAME", ContentsTagFormat.CLOSE).toString();
     String tag2 = ContentsTagBuilder.from("TAG_NAME", true, false).toString();
 
-    // Check comment
+    // Check tags
     assertNotNull(
         "tag is null",
         tag);
@@ -83,14 +83,14 @@ public class ContentsTagBuilderTest {
   @Test
   public void closingTagWithAttributes() {
 
-    // Create comment
+    // Create tag
     String tag = ContentsTagBuilder
         .from("TAG_NAME", ContentsTagFormat.CLOSE)
         .addAttribute("attr1", "value1")
         .addAttribute("attr2", null)
         .toString();
 
-    // Check comment
+    // Check tag
     assertNotNull(
         "tag is null",
         tag);
@@ -102,11 +102,11 @@ public class ContentsTagBuilderTest {
   @Test
   public void simpleFullTag() {
 
-    // Create comment
+    // Create tags
     String tag = ContentsTagBuilder.from("TAG_NAME", ContentsTagFormat.FULL).toString();
     String tag2 = ContentsTagBuilder.from("TAG_NAME", true, true).toString();
 
-    // Check comment
+    // Check tags
     assertNotNull(
         "tag is null",
         tag);
@@ -124,14 +124,14 @@ public class ContentsTagBuilderTest {
   @Test
   public void fullTagWithAttributes() {
 
-    // Create comment
+    // Create tag
     String tag = ContentsTagBuilder
         .from("TAG_NAME", ContentsTagFormat.FULL)
         .addAttribute("attr1", "value1")
         .addAttribute("attr2", null)
         .toString();
 
-    // Check comment
+    // Check tag
     assertNotNull(
         "tag is null",
         tag);

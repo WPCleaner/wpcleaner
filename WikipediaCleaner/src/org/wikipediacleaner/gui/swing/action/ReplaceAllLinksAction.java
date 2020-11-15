@@ -17,6 +17,7 @@ import org.wikipediacleaner.api.data.LinkReplacement;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageElementInternalLink;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
+import org.wikipediacleaner.api.data.contents.ilink.ContentsInternalLinkBuilder;
 import org.wikipediacleaner.gui.swing.basic.Utilities;
 import org.wikipediacleaner.gui.swing.component.MWPane;
 import org.wikipediacleaner.i18n.GT;
@@ -66,7 +67,7 @@ public class ReplaceAllLinksAction implements ActionListener {
       if (Page.areSameTitle(from.getTitle(), link.getLink())) {
         buffer.append(originalText.substring(lastPosition, link.getBeginIndex()));
         lastPosition = link.getBeginIndex();
-        buffer.append(PageElementInternalLink.createInternalLink(to, link.getDisplayedText()));
+        buffer.append(ContentsInternalLinkBuilder.from(to).withText(link.getDisplayedText()).toString());
         lastPosition = link.getEndIndex();
       }
     }

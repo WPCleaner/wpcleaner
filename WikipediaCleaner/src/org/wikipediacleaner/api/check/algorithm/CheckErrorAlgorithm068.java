@@ -23,9 +23,9 @@ import org.wikipediacleaner.api.check.CheckLanguageLinkActionProvider;
 import org.wikipediacleaner.api.configuration.WPCConfiguration;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.Interwiki;
-import org.wikipediacleaner.api.data.PageElementInternalLink;
 import org.wikipediacleaner.api.data.PageElementInterwikiLink;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
+import org.wikipediacleaner.api.data.contents.ilink.ContentsInternalLinkBuilder;
 import org.wikipediacleaner.gui.swing.action.ActionExternalViewer;
 import org.wikipediacleaner.gui.swing.basic.Utilities;
 import org.wikipediacleaner.gui.swing.component.MWPane;
@@ -294,15 +294,15 @@ public class CheckErrorAlgorithm068 extends CheckErrorAlgorithmBase {
               // List possible replacements
               List<String> possibleValues = new ArrayList<String>();
               String possible = null;
-              possible = PageElementInternalLink.createInternalLink(toTitle, link.getText());
+              possible = ContentsInternalLinkBuilder.from(toTitle).withText(link.getText()).toString();
               if (!possibleValues.contains(possible)) {
                 possibleValues.add(possible);
               }
-              possible = PageElementInternalLink.createInternalLink(toTitle, link.getFullLink());
+              possible = ContentsInternalLinkBuilder.from(toTitle).withText(link.getFullLink()).toString();
               if (!possibleValues.contains(possible)) {
                 possibleValues.add(possible);
               }
-              possible = PageElementInternalLink.createInternalLink(toTitle, null);
+              possible = ContentsInternalLinkBuilder.from(toTitle).toString();
               if (!possibleValues.contains(possible)) {
                 possibleValues.add(possible);
               }

@@ -13,6 +13,7 @@ import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.data.PageElementExternalLink;
 import org.wikipediacleaner.api.data.PageElementInternalLink;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
+import org.wikipediacleaner.api.data.contents.ilink.ContentsInternalLinkBuilder;
 import org.wikipediacleaner.gui.swing.component.MWPane;
 import org.wikipediacleaner.i18n.GT;
 
@@ -62,9 +63,8 @@ public class CheckErrorAlgorithm076 extends CheckErrorAlgorithmBase {
         CheckErrorResult errorResult = createCheckErrorResult(
             analysis, link.getBeginIndex(), link.getEndIndex());
         errorResult.addReplacement(
-            PageElementInternalLink.createInternalLink(
-                link.getFullLink().replaceAll("\\%20", " "),
-                link.getText()),
+            ContentsInternalLinkBuilder.from(link.getFullLink().replaceAll("\\%20", " "))
+            .withText(link.getText()).toString(),
             GT._T("Replace %20 by space character"));
         errors.add(errorResult);
       }

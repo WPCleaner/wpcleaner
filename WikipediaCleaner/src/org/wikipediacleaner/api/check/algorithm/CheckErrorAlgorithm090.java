@@ -28,6 +28,7 @@ import org.wikipediacleaner.api.data.PageElementImage;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.PageElementImage.Parameter;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
+import org.wikipediacleaner.api.data.contents.ilink.ContentsInternalLinkBuilder;
 import org.wikipediacleaner.api.data.PageElementInternalLink;
 import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.SpecialPage;
@@ -678,8 +679,7 @@ public class CheckErrorAlgorithm090 extends CheckErrorAlgorithmBase {
         CheckErrorResult errorResult = createCheckErrorResult(
             info.analysis, tmpIndex - info.article.length(), info.endIndex);
         errorResult.addReplacement(
-            PageElementInternalLink.createInternalLink(
-                (info.needColon ? ":" : "") + info.articleUrl.getTitleAndFragment(), textBefore),
+            ContentsInternalLinkBuilder.from(info.articleUrl.getTitleAndFragment()).withColon(info.needColon).withText(textBefore).toString(),
             info.automatic);
         info.errors.add(errorResult);
         return true;
@@ -709,8 +709,7 @@ public class CheckErrorAlgorithm090 extends CheckErrorAlgorithmBase {
   private void addBasicReplacement(
       AnalysisInformation info, CheckErrorResult errorResult) {
     errorResult.addReplacement(
-        PageElementInternalLink.createInternalLink(
-            (info.needColon ? ":" : "") + info.articleUrl.getTitleAndFragment(), info.text),
+        ContentsInternalLinkBuilder.from(info.articleUrl.getTitleAndFragment()).withColon(info.needColon).withText(info.text).toString(),
         info.automatic);
     if (info.text != null) {
       errorResult.addReplacement(info.text);
