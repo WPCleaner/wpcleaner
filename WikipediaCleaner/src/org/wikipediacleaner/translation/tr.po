@@ -20,7 +20,7 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2020-11-09 11:58:49+0000\n"
+"PO-Revision-Date: 2020-11-16 14:34:39+0000\n"
 "Last-Translator: volkan <volkanyeke@gmail.com>\n"
 "Language-Team: Turkish <tr@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -30,7 +30,7 @@ msgstr ""
 "X-Launchpad-Export-Date: 2018-01-31 07:41+0000\n"
 "X-Generator: MediaWiki 1.36.0-alpha; Translate 2020-10-28\n"
 "Language: tr\n"
-"X-POT-Import-Date: 2020-11-04 21:31:52+0000\n"
+"X-POT-Import-Date: 2020-11-09 13:32:29+0000\n"
 
 #: org/wikipediacleaner/Version.java:31
 #, java-format
@@ -213,13 +213,13 @@ msgstr "İçindekiler tablosunu düzenle"
 msgid "Remove {0} namespace from template name"
 msgstr "{0} ad alanını şablon adından kaldırın"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm002.java:41
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm002.java:43
 msgid "Fix all incorrect tags"
 msgstr "Tüm yanlış etiketleri düzeltin"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm002.java:213
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm002.java:237
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm055.java:169
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm002.java:215
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm002.java:239
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm055.java:171
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm066.java:93
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm077.java:93
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm525.java:166
@@ -227,57 +227,57 @@ msgstr "Tüm yanlış etiketleri düzeltin"
 msgid "Remove {0} tags"
 msgstr "{0} etiketlerini kaldırın"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm002.java:794
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm002.java:802
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm002.java:805
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm002.java:808
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm002.java:811
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm002.java:814
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm002.java:817
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm002.java:798
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm002.java:806
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm002.java:809
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm002.java:812
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm002.java:815
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm002.java:818
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm002.java:821
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm525.java:228
 #, java-format
 msgid "A replacement for {0}"
 msgstr "{0} değiştirmesi"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm002.java:796
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm002.java:800
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm060.java:196
 msgid "Name of the template"
 msgstr "Şablonun adı"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm002.java:797
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm002.java:801
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm060.java:199
 msgid "Name of the parameter"
 msgstr "Parametrenin adı"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm003.java:119
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm003.java:121
 msgid "Close tag"
 msgstr "Etiketi kapat"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm003.java:267
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm003.java:270
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm003.java:273
 #, java-format
 msgid "Text to insert for adding {0}"
 msgstr "{0} eklemek için eklenecek metin"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm003.java:273
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm003.java:280
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm003.java:276
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm003.java:283
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm111.java:198
 #, java-format
 msgid "A list of templates resulting in the inclusion of {0}"
 msgstr "{0} ile sonuçlanan şablonların listesi"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm003.java:276
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm003.java:283
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm003.java:279
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm003.java:286
 #, java-format
 msgid "Template resulting in the inclusion of {0}"
 msgstr "{0} ile sonuçlanan şablon"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm003.java:287
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm003.java:290
 #, java-format
 msgid "Section headings where a {0} can be added"
 msgstr "{0} eklenebilecek bölüm başlıkları"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm003.java:290
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm003.java:293
 #, java-format
 msgid "Section heading where a {0} can be added"
 msgstr "{0} eklenebilecek bölüm başlığı"
@@ -618,7 +618,7 @@ msgstr "{0} şablonunu kullanarak değiştirin"
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm091.java:292
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm513.java:551
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm544.java:162
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm557.java:247
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a557/CheckErrorAlgorithm557.java:250
 #: org/wikipediacleaner/gui/swing/action/ActionExternalViewer.java:61
 #: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:90
 #: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:158
@@ -1082,15 +1082,15 @@ msgstr "Dahili bağlantıdan önce olabilecek metin"
 msgid "True if finding this text means that the replacement can be automatic"
 msgstr "Bu metni bulmak, değiştirmenin otomatik olabileceği anlamına gelirse true"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm514.java:163
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm514.java:186
 msgid "References defined by templates."
 msgstr "Kaynakça şablonlar tarafından tanımlanmıştır."
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm514.java:167
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm514.java:190
 msgid "Name of a template which defines references"
 msgstr "Kaynakçaya tanımlayan bir şablonun adı"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm514.java:170
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm514.java:193
 msgid "Name of the reference defined by the template"
 msgstr "Şablon tarafından tanımlanan kaynağın adı"
 
@@ -1215,9 +1215,9 @@ msgid "Name of the parameter to be used for the anchor identifier"
 msgstr "Bağlantı tanımlayıcısı için kullanılacak parametrenin adı"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm525.java:239
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm541.java:457
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm541.java:478
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm541.java:499
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm541.java:473
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm541.java:494
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm541.java:515
 msgid "If replacement can be automatic"
 msgstr "Değiştirme otomatik olabilirse"
 
@@ -1292,7 +1292,7 @@ msgstr "Bir kaynakta kullanılamayan şablonların listesi"
 msgid "Name of a template that can't be used inside a reference"
 msgstr "Kaynağın içinde kullanılamayan bir şablonun adı"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm532.java:35
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm532.java:37
 msgid "Fix tags"
 msgstr "Etiketleri düzelt"
 
@@ -1304,57 +1304,57 @@ msgstr "Boşluk karakterlerini kaldır"
 msgid "Fix bold and italic"
 msgstr "Kalın ve eğiki düzeltin"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm541.java:216
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm541.java:220
 msgid "for marking an edit"
 msgstr "düzenlemeyi işaretlemek için"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm541.java:220
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm541.java:225
 msgid "for anything else"
 msgstr "başka bir şey için"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm541.java:239
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm541.java:245
 msgid "preferred for source code"
 msgstr "kaynak kodu için tercih edilir"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm541.java:243
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm541.java:250
 msgid "preferred for user input"
 msgstr "kullanıcı girişi için tercih edilir"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm541.java:247
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm541.java:255
 msgid "preferred for variables"
 msgstr "değişkenler için tercih edilir"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm541.java:251
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm541.java:260
 msgid "preferred for output, function and tag names, etc."
 msgstr "çıkış, işlev ve etiket adları vb. için tercih edilir."
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm541.java:258
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm541.java:268
 msgid "preferred for everything else"
 msgstr "diğer her şey için tercih edildi"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm541.java:446
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm541.java:467
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm541.java:488
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm541.java:462
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm541.java:483
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm541.java:504
 #, java-format
 msgid "Possible replacements for {0} tags"
 msgstr "{0} etiketleri için olası değişiklikler"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm541.java:450
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm541.java:471
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm541.java:492
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm541.java:466
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm541.java:487
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm541.java:508
 #, java-format
 msgid "Template for replacing {0} tag"
 msgstr "{0} etiketini değiştirmek için şablon"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm541.java:453
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm541.java:474
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm541.java:495
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm541.java:469
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm541.java:490
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm541.java:511
 msgid "Parameter to use in the template for the text"
 msgstr "Metin şablonunda kullanılacak parametre"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm541.java:461
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm541.java:482
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm541.java:503
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm541.java:477
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm541.java:498
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm541.java:519
 msgid "Description of the template"
 msgstr "Şablon açıklaması"
 
@@ -1420,11 +1420,11 @@ msgstr "Yoksaymak için bağlantılar"
 msgid "Link to ignore"
 msgstr "Yoksaymak için bağlantı"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm552.java:265
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm552.java:267
 msgid "Templates to ignore"
 msgstr "Yok sayılacak şablonlar"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm552.java:268
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm552.java:270
 msgid "Template to ignore"
 msgstr "Yok sayılacak şablon"
 
@@ -1436,67 +1436,26 @@ msgstr "Kabul edilebilir son ekler"
 msgid "Acceptable suffix"
 msgstr "Kabul edilebilir son ek"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm556.java:135
-#, java-format
-msgid "Add inside a {0} tag"
-msgstr "{0} etiketinin içine ekleyin"
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm556.java:192
-msgid "Templates in which external links are normal"
-msgstr "Harici bağlantıların normal olduğu şablonlar"
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm556.java:196
-msgid "Template in which external links are normal"
-msgstr "Harici bağlantıların normal olduğu şablon"
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm556.java:199
-msgid "Parameter in which external links are normal"
-msgstr "Harici bağlantıların normal olduğu parametre"
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm556.java:204
-msgid "Sections in which external links are normal"
-msgstr "Harici bağlantıların normal olduğu bölümler"
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm556.java:207
-msgid "Section in which external links are normal"
-msgstr "Harici bağlantıların normal olduğu bölüm"
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm557.java:357
-msgid "Prefixes which can be before an internal link"
-msgstr "Dahili bir bağlantıdan önce olabilecek ön ekler"
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm557.java:361
-msgid "Prefix which can be before an internal link"
-msgstr "Dahili bir bağlantıdan önce olabilen önek"
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm557.java:366
-msgid "Prefixes which should be excluded from the internal link"
-msgstr "Dahili bağlantıdan çıkarılması gereken önekler"
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm557.java:370
-msgid "Prefix which should be excluded from the internal link"
-msgstr "Dahili bağlantıdan çıkarılması gereken önek"
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmBase.java:295
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmBase.java:298
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmBase.java:305
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmBase.java:308
 msgid "Title of the article describing this type of error"
 msgstr "Bu tür bir hatayı açıklayan maddenin başlığı"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmBase.java:301
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmBase.java:304
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmBase.java:311
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmBase.java:314
 msgid "Set to true to prevent automatic modifications for this type of error"
 msgstr "Bu tür hatalarda otomatik değişiklik yapılmasını önlemek için true olarak ayarlayın"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmBase.java:307
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmBase.java:317
 msgid "List of false positives for this type of error"
 msgstr "Bu tür hatalar için yanlış pozitiflerin listesi"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmBase.java:310
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmBase.java:320
 msgid "Page containing a false positive for this type of error"
 msgstr "Bu tür hatalar için yanlış pozitif içeren sayfa"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmBase.java:314
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmBase.java:317
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmBase.java:324
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmBase.java:327
 msgid "Page containing the list of false positives for this type of error"
 msgstr "Bu hata türü için yanlış pozitiflerin listesini içeren sayfa"
 
@@ -1543,6 +1502,55 @@ msgstr "Tüm ISSN'de ara"
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmTOC.java:102
 msgid "A list of templates resulting in the inclusion of a table of contents"
 msgstr "İçindekiler tablosunun eklenmesiyle sonuçlanan şablonların listesi"
+
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a556/CheckErrorAlgorithm556.java:139
+#, java-format
+msgid "Add inside a {0} tag"
+msgstr "{0} etiketinin içine ekleyin"
+
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a556/CheckErrorAlgorithm556.java:200
+msgid "Templates in which external links are normal"
+msgstr "Harici bağlantıların normal olduğu şablonlar"
+
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a556/CheckErrorAlgorithm556.java:204
+msgid "Template in which external links are normal"
+msgstr "Harici bağlantıların normal olduğu şablon"
+
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a556/CheckErrorAlgorithm556.java:207
+msgid "Parameter in which external links are normal"
+msgstr "Harici bağlantıların normal olduğu parametre"
+
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a556/CheckErrorAlgorithm556.java:212
+msgid "Sections in which external links are normal"
+msgstr "Harici bağlantıların normal olduğu bölümler"
+
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a556/CheckErrorAlgorithm556.java:215
+msgid "Section in which external links are normal"
+msgstr "Harici bağlantıların normal olduğu bölüm"
+
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a557/CheckErrorAlgorithm557.java:360
+msgid "Prefixes which can be before an internal link"
+msgstr "Dahili bir bağlantıdan önce olabilecek ön ekler"
+
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a557/CheckErrorAlgorithm557.java:364
+msgid "Prefix which can be before an internal link"
+msgstr "Dahili bir bağlantıdan önce olabilen önek"
+
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a557/CheckErrorAlgorithm557.java:369
+msgid "Prefixes which should be excluded from the internal link"
+msgstr "Dahili bağlantıdan çıkarılması gereken önekler"
+
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a557/CheckErrorAlgorithm557.java:373
+msgid "Prefix which should be excluded from the internal link"
+msgstr "Dahili bağlantıdan çıkarılması gereken önek"
+
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a557/CheckErrorAlgorithm557.java:378
+msgid "List of suggestions for separators between the text and the internal link"
+msgstr "Metin ve dahili bağlantı arasındaki ayırıcılar için öneriler listesi"
+
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a557/CheckErrorAlgorithm557.java:382
+msgid "Suggestion for a separator between the text and the internal link"
+msgstr "Metin ve dahili bağlantı arasında bir ayırıcı önerisi"
 
 #: org/wikipediacleaner/api/configuration/CWConfiguration.java:83
 #, java-format
@@ -3157,7 +3165,7 @@ msgstr "{0} sayfası \"{1}\" içinde mevcut."
 
 #: org/wikipediacleaner/gui/swing/action/CheckLanguageLinkAction.java:138
 msgid "What replacement do you want to use?"
-msgstr "Hangi yedek parçayı kullanmak istiyorsunuz?"
+msgstr "Hangi yedeği kullanmak istersiniz?"
 
 #: org/wikipediacleaner/gui/swing/action/FindTextAction.java:63
 msgid "String to find"
