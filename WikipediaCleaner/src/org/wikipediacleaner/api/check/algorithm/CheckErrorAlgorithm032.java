@@ -124,8 +124,11 @@ public class CheckErrorAlgorithm032 extends CheckErrorAlgorithmBase {
             int endText = (i < pipeIndex.size()) ? pipeIndex.get(i).intValue() : text.length();
             if ((beginText < endText) &&
                 (text.substring(beginText, endText).trim().length() > 0)) {
-              String replacement = PageElementInternalLink.createInternalLink(
-                  link.getLink(), link.getAnchor(), text.substring(beginText, endText));
+              String replacement = ContentsInternalLinkBuilder
+                  .from(link.getLink())
+                  .withAnchor(link.getAnchor())
+                  .withText(text.substring(beginText, endText))
+                  .toString();
               if (!replacements.contains(replacement)) {
                 replacements.add(replacement);
               }

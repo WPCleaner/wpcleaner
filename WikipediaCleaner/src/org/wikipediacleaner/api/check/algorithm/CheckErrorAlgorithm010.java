@@ -20,6 +20,7 @@ import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
 import org.wikipediacleaner.api.data.contents.ContentsUtil;
+import org.wikipediacleaner.api.data.contents.ilink.ContentsInternalLinkBuilder;
 
 
 /**
@@ -294,7 +295,11 @@ public class CheckErrorAlgorithm010 extends CheckErrorAlgorithmBase {
           String text =
               contents.substring(link.getBeginIndex() + link.getTextOffset(), remove) +
               contents.substring(remove, link.getEndIndex() - 2);
-          errorResult.addReplacement(PageElementInternalLink.createInternalLink(link.getLink(), link.getAnchor(), text));
+          errorResult.addReplacement(ContentsInternalLinkBuilder
+              .from(link.getLink())
+              .withAnchor(link.getAnchor())
+              .withText(text)
+              .toString());
           errors.add(errorResult);
         }
       }

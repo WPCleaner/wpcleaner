@@ -13,6 +13,7 @@ import java.util.List;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.data.PageElementInternalLink;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
+import org.wikipediacleaner.api.data.contents.ilink.ContentsInternalLinkBuilder;
 import org.wikipediacleaner.gui.swing.component.MWPane;
 import org.wikipediacleaner.i18n.GT;
 
@@ -68,9 +69,11 @@ public class CheckErrorAlgorithm509 extends CheckErrorAlgorithmBase {
           result = true;
           CheckErrorResult errorResult = createCheckErrorResult(
               analysis, link.getBeginIndex(), endIndex);
-          String replacement = PageElementInternalLink.createInternalLink(
-              link.getLinkNotNormalized(), link.getAnchor(),
-              link.getDisplayedTextNotTrimmed() + contents.substring(link.getEndIndex(), endIndex));
+          String replacement = ContentsInternalLinkBuilder
+              .from(link.getLinkNotNormalized())
+              .withAnchor(link.getAnchor())
+              .withText(link.getDisplayedTextNotTrimmed() + contents.substring(link.getEndIndex(), endIndex))
+              .toString();
           errorResult.addReplacement(replacement, GT._T("Compact link"));
           errors.add(errorResult);
         }

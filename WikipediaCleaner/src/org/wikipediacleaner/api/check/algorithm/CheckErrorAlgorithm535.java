@@ -122,9 +122,11 @@ public class CheckErrorAlgorithm535 extends CheckErrorAlgorithmBase {
                 analysis, fontTag.getCompleteBeginIndex(), fontTag.getCompleteEndIndex());
             String replacement =
               contents.substring(fontTag.getValueBeginIndex(), valueBeginIndex) +
-              PageElementInternalLink.createInternalLink(
-                iLink.getLink(), iLink.getAnchor(),
-                openFont + iLink.getDisplayedText() + closeFont) +
+              ContentsInternalLinkBuilder
+                .from(iLink.getLink())
+                .withAnchor(iLink.getAnchor())
+                .withText(openFont + iLink.getDisplayedText() + closeFont)
+                .toString() +
               contents.substring(valueEndIndex, fontTag.getValueEndIndex());
             String text =
               contents.substring(fontTag.getValueBeginIndex(), valueBeginIndex) +

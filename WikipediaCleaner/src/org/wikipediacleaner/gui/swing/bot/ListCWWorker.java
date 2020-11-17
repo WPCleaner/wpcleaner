@@ -41,11 +41,11 @@ import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.DataManager;
 import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.Page;
-import org.wikipediacleaner.api.data.PageElementInternalLink;
 import org.wikipediacleaner.api.data.analysis.AnalysisPerformance;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
 import org.wikipediacleaner.api.data.contents.comment.ContentsComment;
 import org.wikipediacleaner.api.data.contents.comment.ContentsCommentBuilder;
+import org.wikipediacleaner.api.data.contents.ilink.ContentsInternalLinkBuilder;
 import org.wikipediacleaner.api.data.contents.tag.ContentsTagBuilder;
 import org.wikipediacleaner.api.dump.DumpProcessor;
 import org.wikipediacleaner.api.dump.PageProcessor;
@@ -277,9 +277,10 @@ public class ListCWWorker extends BasicWorker {
         line.append("\n");
       }
       line.append("* ");
-      line.append(PageElementInternalLink.createInternalLink(
-          Namespace.isColonNeeded(detection.namespace),
-          detection.pageName, null));
+      line.append(ContentsInternalLinkBuilder
+          .from(detection.pageName)
+          .withColon(Namespace.isColonNeeded(detection.namespace))
+          .toString());
       if (detection.notices != null) {
         boolean first = true;
         for (String notice : detection.notices) {

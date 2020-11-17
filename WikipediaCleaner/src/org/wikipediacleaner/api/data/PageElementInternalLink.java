@@ -9,6 +9,7 @@ package org.wikipediacleaner.api.data;
 
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.contents.ContentsUtil;
+import org.wikipediacleaner.api.data.contents.ilink.ContentsInternalLinkBuilder;
 
 
 /**
@@ -338,70 +339,10 @@ public class PageElementInternalLink extends PageElement {
    */
   @Override
   public String toString() {
-    return createInternalLink(linkNotTrimmed, anchorNotTrimmed, textNotTrimmed);
-  }
-
-  /**
-   * Create an internal link.
-   * 
-   * @param colon True to add a colon at the beginning.
-   * @param link Link.
-   * @param text Displayed text.
-   * @return Internal link.
-   */
-  public static String createInternalLink(
-      boolean colon, String link, String text) {
-    return createInternalLink(colon, link, null, text);
-  }
-
-  /**
-   * Create an internal link.
-   * 
-   * @param link Link.
-   * @param anchor Anchor
-   * @param text Displayed text.
-   * @return Internal link.
-   */
-  public static String createInternalLink(String link, String anchor, String text) {
-    return createInternalLink(false, link, anchor, text);
-  }
-
-  /**
-   * Create an internal link.
-   * 
-   * @param colon True to add a colon at the beginning.
-   * @param link Link.
-   * @param anchor Anchor
-   * @param text Displayed text.
-   * @return Internal link.
-   */
-  public static String createInternalLink(
-      boolean colon, String link, String anchor,
-      String text) {
-    StringBuilder sb = new StringBuilder();
-    sb.append("[[");
-    String fullLink = null;
-    if ((link != null) || (anchor != null)) {
-      fullLink =
-          ((link != null) ? link.trim() : "") +
-          ((anchor != null) ? ("#" + anchor.trim()) : "");
-    }
-    if ((fullLink != null) && (fullLink.startsWith("/"))) {
-      colon = true;
-    }
-    if (colon) {
-      fullLink = ":" + fullLink;
-    }
-    if (text != null) {
-      if ((fullLink != null) && (!Page.areSameTitle(fullLink, text))) {
-        sb.append(fullLink);
-        sb.append("|");
-      }
-      sb.append(text.trim());
-    } else {
-      sb.append(fullLink);
-    }
-    sb.append("]]");
-    return sb.toString();
+    return ContentsInternalLinkBuilder
+        .from(linkNotTrimmed)
+        .withAnchor(anchorNotTrimmed)
+        .withText(textNotTrimmed)
+        .toString();
   }
 }

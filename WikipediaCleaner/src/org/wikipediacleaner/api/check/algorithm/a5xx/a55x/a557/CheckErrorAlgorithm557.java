@@ -25,6 +25,7 @@ import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageElementInternalLink;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
+import org.wikipediacleaner.api.data.contents.ilink.ContentsInternalLinkBuilder;
 import org.wikipediacleaner.gui.swing.action.ActionExternalViewer;
 import org.wikipediacleaner.i18n.GT;
 
@@ -151,10 +152,11 @@ public class CheckErrorAlgorithm557 extends CheckErrorAlgorithmBase {
         // Move the white space or apostrophe before the internal link
         replacement =
             prefix + firstChar +
-            PageElementInternalLink.createInternalLink(
-                link.getLink(),
-                link.getAnchor(),
-                displayedText.substring(1));
+            ContentsInternalLinkBuilder
+                .from(link.getLink())
+                .withAnchor(link.getAnchor())
+                .withText(displayedText.substring(1))
+                .toString();
         boolean automatic = true;
         if (firstChar == '\'') {
           if (displayedText.startsWith("'",  1)) {
@@ -188,10 +190,11 @@ public class CheckErrorAlgorithm557 extends CheckErrorAlgorithmBase {
     } else {
 
       // Include the text before the internal link
-      replacement = PageElementInternalLink.createInternalLink(
-          link.getLink(),
-          link.getAnchor(),
-          prefix + displayedText);
+      replacement = ContentsInternalLinkBuilder
+          .from(link.getLink())
+          .withAnchor(link.getAnchor())
+          .withText(prefix + displayedText)
+          .toString();
       errorResult.addReplacement(
           replacement,
           areIdentical(link.getLink(), prefix + displayedText, true));
@@ -202,10 +205,11 @@ public class CheckErrorAlgorithm557 extends CheckErrorAlgorithmBase {
         String fullPrefix = prefix + displayedText.substring(0, spaceIndex + 1);
         replacement =
             fullPrefix +
-            PageElementInternalLink.createInternalLink(
-                link.getLink(),
-                link.getAnchor(),
-                displayedText.substring(spaceIndex + 1));
+            ContentsInternalLinkBuilder
+                .from(link.getLink())
+                .withAnchor(link.getAnchor())
+                .withText(displayedText.substring(spaceIndex + 1))
+                .toString();
         boolean automatic = areIdentical(link.getLink(), displayedText.substring(spaceIndex), true);
         automatic &= (spaceIndex <= 2) || (prefixes_exclude.contains(fullPrefix.trim()));
         errorResult.addReplacement(
@@ -230,10 +234,11 @@ public class CheckErrorAlgorithm557 extends CheckErrorAlgorithmBase {
 
       // Include the prefix in the link target
       if (StringUtils.isEmpty(link.getText())) {
-        replacement = PageElementInternalLink.createInternalLink(
-            prefix + displayedText,
-            link.getAnchor(),
-            prefix + displayedText);
+        replacement = ContentsInternalLinkBuilder
+            .from(prefix + displayedText)
+            .withAnchor(link.getAnchor())
+            .withText(prefix + displayedText)
+            .toString();
         errorResult.addReplacement(replacement);
       }
 

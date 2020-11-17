@@ -306,8 +306,10 @@ public class CheckErrorAlgorithm090 extends CheckErrorAlgorithmBase {
           info.analysis, timelineBegin, timelineEnd);
       errorResult.addReplacement(
           "text:\"" +
-          PageElementInternalLink.createInternalLink(
-              info.article, info.articleUrl.getFragment(), displayedText) +
+          ContentsInternalLinkBuilder
+              .from(info.article)
+              .withAnchor(info.articleUrl.getFragment())
+              .withText(displayedText).toString() +
           "\"");
       info.errors.add(errorResult);
       return true;
@@ -372,8 +374,11 @@ public class CheckErrorAlgorithm090 extends CheckErrorAlgorithmBase {
         if (Page.areSameTitle(info.article, textBefore)) {
           CheckErrorResult errorResult = createCheckErrorResult(
               info.analysis, tmpIndex - info.article.length(), refTag.getCompleteEndIndex());
-          errorResult.addReplacement(
-              PageElementInternalLink.createInternalLink(info.article, info.articleUrl.getFragment(), textBefore));
+          errorResult.addReplacement(ContentsInternalLinkBuilder
+              .from(info.article)
+              .withAnchor(info.articleUrl.getFragment())
+              .withText(textBefore)
+              .toString());
           info.errors.add(errorResult);
           return true;
         }
