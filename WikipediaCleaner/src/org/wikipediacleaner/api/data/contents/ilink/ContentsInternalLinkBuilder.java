@@ -84,7 +84,7 @@ public class ContentsInternalLinkBuilder {
   }
 
   /**
-   * @return Textual representation of the comment.
+   * @return Textual representation of the link.
    * @see java.lang.Object#toString()
    */
   @Override

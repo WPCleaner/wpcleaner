@@ -13,6 +13,7 @@ import java.util.List;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.data.PageElementTitle;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
+import org.wikipediacleaner.api.data.contents.title.ContentsTitleBuilder;
 
 
 /**
@@ -63,7 +64,9 @@ public class CheckErrorAlgorithm083 extends CheckErrorAlgorithmBase {
         if (titleIndex == 1) {
           CheckErrorResult errorResult = createCheckErrorResult(analysis, firstTitle.getBeginIndex(), firstTitle.getEndIndex());
           errorResult.addReplacement(
-              PageElementTitle.createTitle(title.getLevel(), firstTitle.getTitle(), firstTitle.getAfterTitle()),
+              ContentsTitleBuilder
+                  .from(title.getLevel(), firstTitle.getTitle())
+                  .withAfter(firstTitle.getAfterTitle()).toString(),
               firstTitle.isCoherent() && title.isCoherent());
           errors.add(errorResult);
           break;
@@ -129,10 +132,9 @@ public class CheckErrorAlgorithm083 extends CheckErrorAlgorithmBase {
       if (lastIndex < title.getBeginIndex()) {
         newContents.append(defaultContents.substring(lastIndex, title.getBeginIndex()));
       }
-      newContents.append(PageElementTitle.createTitle(
-          title.getLevel() - delta,
-          title.getTitle(),
-          title.getAfterTitle()));
+      newContents.append(ContentsTitleBuilder
+          .from(title.getLevel() - delta, title.getTitle())
+          .withAfter(title.getAfterTitle()).toString());
       lastIndex = title.getEndIndex();
     }
     if (lastIndex < defaultContents.length()) {

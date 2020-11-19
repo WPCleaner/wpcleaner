@@ -22,6 +22,7 @@ import org.wikipediacleaner.api.configuration.WPCConfigurationBoolean;
 import org.wikipediacleaner.api.configuration.WPCConfigurationString;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
+import org.wikipediacleaner.api.data.contents.title.ContentsTitleBuilder;
 
 
 /**
@@ -677,7 +678,10 @@ public class AutomaticFormatter {
           for (int i = 0; i < nbSpaceAfter; i++) {
             newTitle.append(' ');
           }
-          sb.append(PageElementTitle.createUntrimmedTitle(title.getLevel(), newTitle.toString(), titleAfter));
+          sb.append(ContentsTitleBuilder
+              .from(title.getLevel(), newTitle.toString())
+              .withTrimTitle(false)
+              .withAfter(titleAfter).toString());
           lastIndex = title.getEndIndex();
         }
       }

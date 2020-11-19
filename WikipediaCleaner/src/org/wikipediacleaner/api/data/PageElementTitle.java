@@ -12,6 +12,7 @@ import java.util.List;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.contents.comment.ContainerComment;
 import org.wikipediacleaner.api.data.contents.comment.ContentsComment;
+import org.wikipediacleaner.api.data.contents.title.ContentsTitleBuilder;
 
 
 /**
@@ -247,67 +248,12 @@ public class PageElementTitle extends PageElement {
    */
   @Override
   public String toString() {
-    StringBuilder sb = new StringBuilder();
-    for (int i = 0; i < firstLevel; i++) {
-      sb.append('=');
-    }
-    sb.append(titleNotTrimmed);
-    for (int i = 0; i < secondLevel; i++) {
-      sb.append('=');
-    }
-    if (afterTitleNotTrimmed != null) {
-      sb.append(afterTitleNotTrimmed);
-    }
-    return sb.toString();
-  }
-
-  /**
-   * @param level Title level.
-   * @param title Title text.
-   * @param after Extra text after title.
-   * @return Textual representation of the title.
-   */
-  public static String createTitle(int level, String title, String after) {
-    StringBuilder sb = new StringBuilder();
-    for (int i = 0; i < level; i++) {
-      sb.append('=');
-    }
-    sb.append(' ');
-    if (title != null) {
-      sb.append(title.trim());
-      sb.append(' ');
-    }
-    for (int i = 0; i < level; i++) {
-      sb.append('=');
-    }
-    if ((after != null) && (after.trim().length() > 0)) {
-      sb.append(' ');
-      sb.append(after.trim());
-    }
-    return sb.toString();
-  }
-
-  /**
-   * @param level Title level.
-   * @param title Title text.
-   * @param after Extra text after title.
-   * @return Textual representation of the title.
-   */
-  public static String createUntrimmedTitle(int level, String title, String after) {
-    StringBuilder sb = new StringBuilder();
-    for (int i = 0; i < level; i++) {
-      sb.append('=');
-    }
-    if (title != null) {
-      sb.append(title);
-    }
-    for (int i = 0; i < level; i++) {
-      sb.append('=');
-    }
-    if ((after != null) && (after.trim().length() > 0)) {
-      sb.append(' ');
-      sb.append(after.trim());
-    }
-    return sb.toString();
+    return ContentsTitleBuilder
+        .from(firstLevel, titleNotTrimmed)
+        .withSecondLevel(secondLevel)
+        .withTrimTitle(false)
+        .withAfter(afterTitleNotTrimmed)
+        .withTrimAfter(false)
+        .toString();
   }
 }
