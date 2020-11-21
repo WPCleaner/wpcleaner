@@ -67,6 +67,7 @@ import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.User;
 import org.wikipediacleaner.api.data.analysis.InternalLinkCount;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
+import org.wikipediacleaner.api.data.contents.template.TemplateBuilder;
 import org.wikipediacleaner.gui.swing.action.ActionDeletePage;
 import org.wikipediacleaner.gui.swing.action.ActionDisambiguationAnalysis;
 import org.wikipediacleaner.gui.swing.action.ActionExternalViewer;
@@ -1111,21 +1112,14 @@ public class OnePageAnalysisWindow
     if (start > getTextContents().getSelectionStart()) {
       newText.append(text.substring(getTextContents().getSelectionStart(), start));
     }
-    newText.append("{{");
-    newText.append(elements[0]);
-    newText.append("|");
-    if ((elements.length > 1) && (elements[1] != null) && (elements[1].trim().length() > 0)) {
-      newText.append(elements[1]);
-      newText.append("=");
-    }
-    newText.append(language);
-    newText.append("|");
-    if ((elements.length > 2) && (elements[2] != null) && (elements[2].trim().length() > 0)) {
-      newText.append(elements[2]);
-      newText.append("=");
-    }
-    newText.append(text.substring(start, end));
-    newText.append("}}");
+    TemplateBuilder builder = TemplateBuilder.from(elements[0]);
+    builder.addParam(
+        (elements.length > 1) ? elements[1] : null,
+        language);
+    builder.addParam(
+        (elements.length > 2) ? elements[2] : null,
+            text.substring(start, end));
+    newText.append(builder.toString());
     if (getTextContents().getSelectionEnd() > end) {
       newText.append(text.substring(end, getTextContents().getSelectionEnd()));
     }

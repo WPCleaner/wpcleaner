@@ -25,6 +25,7 @@ import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageElementPMID;
 import org.wikipediacleaner.api.data.Page.RelatedPages;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
+import org.wikipediacleaner.api.data.contents.template.TemplateBuilder;
 import org.wikipediacleaner.i18n.GT;
 
 
@@ -86,17 +87,11 @@ public class CheckErrorAlgorithm528 extends CheckErrorAlgorithmBase {
             String[] params = pmidTemplate[1].split(",");
             Boolean suggested = Boolean.valueOf(pmidTemplate[2]);
             if ((params.length > 0) && (Boolean.TRUE.equals(suggested))) {
-              StringBuilder replacement = new StringBuilder();
-              replacement.append("{{");
-              replacement.append(templateName);
-              replacement.append("|");
-              if (!"1".equals(params[0])) {
-                replacement.append(params[0]);
-                replacement.append("=");
-              }
-              replacement.append(pmid.getPMID());
-              replacement.append("}}");
-              errorResult.addReplacement(replacement.toString());
+              TemplateBuilder builder = TemplateBuilder.from(templateName);
+              builder.addParam(
+                  !"1".equals(params[0]) ? params[0] : null,
+                  pmid.getPMID());
+              errorResult.addReplacement(builder.toString());
             }
           }
         }

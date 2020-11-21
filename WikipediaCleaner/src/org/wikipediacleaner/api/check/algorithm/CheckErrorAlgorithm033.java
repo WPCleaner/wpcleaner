@@ -17,6 +17,7 @@ import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.configuration.WPCConfiguration;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
+import org.wikipediacleaner.api.data.contents.template.TemplateBuilder;
 import org.wikipediacleaner.i18n.GT;
 
 
@@ -90,7 +91,7 @@ public class CheckErrorAlgorithm033 extends CheckErrorAlgorithmBase {
           errorResult.addReplacement(value);
           if (replacements != null) {
             for (String replacement : replacements) {
-              errorResult.addReplacement("{{" + replacement + "|" + value + "}}");
+              errorResult.addReplacement(TemplateBuilder.from(replacement).addParam(value).toString());
             }
           }
           errorResult.addReplacement("''" + value + "''");

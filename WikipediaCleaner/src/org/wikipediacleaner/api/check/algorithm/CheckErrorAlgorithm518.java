@@ -21,9 +21,9 @@ import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageElementInternalLink;
 import org.wikipediacleaner.api.data.PageElementTag;
-import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
 import org.wikipediacleaner.api.data.contents.ilink.ContentsInternalLinkBuilder;
+import org.wikipediacleaner.api.data.contents.template.TemplateBuilder;
 import org.wikipediacleaner.i18n.GT;
 import org.wikipediacleaner.utils.Configuration;
 import org.wikipediacleaner.utils.ConfigurationValueInteger;
@@ -150,13 +150,13 @@ public class CheckErrorAlgorithm518 extends CheckErrorAlgorithmBase {
     for (int i = 0; i < internalText.length(); i++) {
       char currentChar = internalText.charAt(i);
       if ((apostropheTemplate != null) && (currentChar == '\'')) {
-        replacement.append(PageElementTemplate.createTemplate(apostropheTemplate));
+        replacement.append(TemplateBuilder.from(apostropheTemplate).toString());
       } else if ((asteriskTemplate != null) && (currentChar == '*')) {
-        replacement.append(PageElementTemplate.createTemplate(asteriskTemplate));
+        replacement.append(TemplateBuilder.from(asteriskTemplate).toString());
       } else if ((openSBTemplate != null) && (currentChar == '[')) {
-          replacement.append(PageElementTemplate.createTemplate(openSBTemplate));
+        replacement.append(TemplateBuilder.from(openSBTemplate).toString());
       } else if ((closeSBTemplate != null) && (currentChar == ']')) {
-        replacement.append(PageElementTemplate.createTemplate(closeSBTemplate));
+        replacement.append(TemplateBuilder.from(closeSBTemplate).toString());
       } else {
         replacement.append(currentChar);
       }

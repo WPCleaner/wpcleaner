@@ -31,6 +31,7 @@ import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
+import org.wikipediacleaner.api.data.contents.template.TemplateBuilder;
 import org.wikipediacleaner.gui.swing.action.ActionExternalViewer;
 import org.wikipediacleaner.i18n.GT;
 
@@ -146,7 +147,7 @@ public class CheckErrorAlgorithm544 extends CheckErrorAlgorithmBase {
         boolean newLine = (contents.charAt(beginIndex - 1) == '\n');
         errorResult = createCheckErrorResult(analysis, beginIndex, endIndex, ErrorLevel.WARNING);
         StringBuilder replacement = new StringBuilder();
-        replacement.append(PageElementTemplate.createTemplate(closeTemplate));
+        replacement.append(TemplateBuilder.from(closeTemplate).toString());
         if (newLine) {
           replacement.append('\n');
         }

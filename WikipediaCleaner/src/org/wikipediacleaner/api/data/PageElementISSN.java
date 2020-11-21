@@ -18,6 +18,7 @@ import org.wikipediacleaner.api.data.analysis.PageAnalysis;
 import org.wikipediacleaner.api.data.contents.ContentsUtil;
 import org.wikipediacleaner.api.data.contents.comment.ContentsComment;
 import org.wikipediacleaner.api.data.contents.comment.ContentsCommentBuilder;
+import org.wikipediacleaner.api.data.contents.template.TemplateBuilder;
 
 
 /**
@@ -786,17 +787,11 @@ public class PageElementISSN extends PageElement {
             String[] params = issnTemplate[1].split(",");
             Boolean suggested = Boolean.valueOf(issnTemplate[2]);
             if ((params.length > 0) && (Boolean.TRUE.equals(suggested))) {
-              StringBuilder buffer = new StringBuilder();
-              buffer.append("{{");
-              buffer.append(issnTemplate[0]);
-              buffer.append("|");
-              if (!"1".equals(params[0])) {
-                buffer.append(params[0]);
-                buffer.append("=");
-              }
-              buffer.append(cleanedISSN);
-              buffer.append("}}");
-              addCorrectISSN(result, buffer.toString(), false);
+              TemplateBuilder builder = TemplateBuilder.from(issnTemplate[0]);
+              builder.addParam(
+                  !"1".equals(params[0]) ? params[0] : null,
+                  cleanedISSN);
+              addCorrectISSN(result, builder.toString(), false);
             }
           }
         }

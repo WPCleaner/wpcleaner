@@ -18,7 +18,7 @@ import org.wikipediacleaner.api.configuration.WPCConfigurationStringList;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.PageElementTag.Parameter;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
-import org.wikipediacleaner.api.data.PageElementTemplate;
+import org.wikipediacleaner.api.data.contents.template.TemplateBuilder;
 import org.wikipediacleaner.i18n.GT;
 
 /**
@@ -616,20 +616,16 @@ public class CheckErrorAlgorithm112 extends CheckErrorAlgorithmBase {
                         for (String[] columns2Template : columns2Templates) {
                           if (columns2Template.length > 2) {
                             replacement.setLength(0);
-                            replacement.append("{{");
-                            replacement.append(columns2Template[0]);
-                            replacement.append("|");
-                            replacement.append(columns2Template[2]);
-                            replacement.append("=");
-                            replacement.append(columnCount);
-                            replacement.append("}}");
+                            TemplateBuilder builder = TemplateBuilder.from(columns2Template[0]);
+                            builder.addParam(columns2Template[2], Integer.toString(columnCount));
+                            replacement.append(builder.toString());
                             replacement.append(inside);
-                            replacement.append(PageElementTemplate.createTemplate(columns2Template[1]));
+                            replacement.append(TemplateBuilder.from(columns2Template[1]).toString());
                             errorResult.addReplacement(
                                 replacement.toString(),
                                 GT._T("Use {0} and {1}", new Object[] {
-                                    PageElementTemplate.createTemplate(columns2Template[0]),
-                                    PageElementTemplate.createTemplate(columns2Template[1]) }));
+                                    TemplateBuilder.from(columns2Template[0]).toString(),
+                                    TemplateBuilder.from(columns2Template[1]).toString() }));
                           }
                         }
                       }
@@ -637,20 +633,13 @@ public class CheckErrorAlgorithm112 extends CheckErrorAlgorithmBase {
                         for (String[] columnsTemplate : columnsTemplates) {
                           if (columnsTemplate.length > 2) {
                             replacement.setLength(0);
-                            replacement.append("{{");
-                            replacement.append(columnsTemplate[0]);
-                            replacement.append("|");
-                            replacement.append(columnsTemplate[2]);
-                            replacement.append("=");
-                            replacement.append(columnCount);
-                            replacement.append("|");
-                            replacement.append(columnsTemplate[1]);
-                            replacement.append("=");
-                            replacement.append(inside);
-                            replacement.append("}}");
+                            TemplateBuilder builder = TemplateBuilder.from(columnsTemplate[0]);
+                            builder.addParam(columnsTemplate[2], Integer.toString(columnCount));
+                            builder.addParam(columnsTemplate[1], inside);
+                            replacement.append(builder.toString());
                             errorResult.addReplacement(
                                 replacement.toString(),
-                                GT._T("Use {0}", PageElementTemplate.createTemplate(columnsTemplate[0])));
+                                GT._T("Use {0}", TemplateBuilder.from(columnsTemplate[0]).toString()));
                           }
                         }
                       }

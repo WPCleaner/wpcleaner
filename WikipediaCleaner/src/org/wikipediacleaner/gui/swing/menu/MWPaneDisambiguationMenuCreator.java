@@ -29,6 +29,7 @@ import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.TemplateMatcher;
 import org.wikipediacleaner.api.data.contents.comment.ContentsCommentBuilder;
 import org.wikipediacleaner.api.data.contents.ilink.ContentsInternalLinkBuilder;
+import org.wikipediacleaner.api.data.contents.template.TemplateBuilder;
 import org.wikipediacleaner.gui.swing.action.ChangePreferredDisambiguationAction;
 import org.wikipediacleaner.gui.swing.action.MarkLinkAction;
 import org.wikipediacleaner.gui.swing.action.ReloadCategoryMembersAction;
@@ -72,7 +73,7 @@ public class MWPaneDisambiguationMenuCreator extends BasicMenuCreator {
           JMenu submenu = new JMenu(GT._T("Mark as normal link"));
           for (String[] template : templates) {
             String replacement = createTextForTemplate(template[0], page.getTitle(), text);
-            String message = GT._T("Using {0}", "{{" + template[0] + "}}");
+            String message = GT._T("Using {0}", TemplateBuilder.from(template[0]).toString());
             if ((template.length > 1) && (template[1].trim().length() > 0)) {
               message += " - " + template[1].trim();
             }
@@ -153,7 +154,7 @@ public class MWPaneDisambiguationMenuCreator extends BasicMenuCreator {
         if (templates != null) {
           for (String template : templates) {
             addItem(
-                submenu, null, GT._T("Using {0}", "{{" + template + "}}"), true,
+                submenu, null, GT._T("Using {0}", TemplateBuilder.from(template).toString()), true,
                 new MarkLinkAction(
                     page, element,
                     createTextForTemplate(template, page.getTitle(), text),
@@ -164,7 +165,7 @@ public class MWPaneDisambiguationMenuCreator extends BasicMenuCreator {
           for (List<String> template : templatesAfter) {
             String templateName = template.get(0);
             addItem(
-                submenu, null, GT._T("Using {0}", "[[…]]{{" + templateName + "}}"), true,
+                submenu, null, GT._T("Using {0}", "[[…]]" + TemplateBuilder.from(templateName).toString()), true,
                 new MarkLinkAction(
                     page, element,
                     createTextForTemplateAfterLink(template, page.getTitle(), text),
@@ -215,7 +216,7 @@ public class MWPaneDisambiguationMenuCreator extends BasicMenuCreator {
         JMenu submenu = new JMenu(GT._T("Link text"));
         for (String template : templates) {
           addItem(
-              submenu, null, GT._T("Using {0}", "{{" + template + "}}"), true,
+              submenu, null, GT._T("Using {0}", TemplateBuilder.from(template).toString()), true,
               new MarkLinkAction(
                   page, element,
                   createTextForTemplate(template, page.getTitle(), text),
@@ -763,17 +764,12 @@ public class MWPaneDisambiguationMenuCreator extends BasicMenuCreator {
    * @return Modified text.
    */
   private String createTextForTemplate(String template, String pageTitle, String text) {
-    StringBuilder newText = new StringBuilder();
-    newText.append("{{");
-    newText.append(template);
-    newText.append("|");
-    newText.append(pageTitle);
+    TemplateBuilder builder = TemplateBuilder.from(template);
+    builder.addParam(pageTitle);
     if ((text != null) && (!text.equals(pageTitle))) {
-      newText.append("|");
-      newText.append(text);
+      builder.addParam(text);
     }
-    newText.append("}}");
-    return newText.toString();
+    return builder.toString();
   }
 
   /**
@@ -787,13 +783,11 @@ public class MWPaneDisambiguationMenuCreator extends BasicMenuCreator {
   private String createTextForTemplateAfterLink(List<String> template, String pageTitle, String text) {
     StringBuilder newText = new StringBuilder();
     newText.append(ContentsInternalLinkBuilder.from(pageTitle).withText(text).toString());
-    newText.append("{{");
-    newText.append(template.get(0));
+    TemplateBuilder builder = TemplateBuilder.from(template.get(0));
     for (int i = 1; i < template.size(); i++) {
-      newText.append("|");
-      newText.append(template.get(i));
+      builder.addParam(template.get(i));
     }
-    newText.append("}}");
+    newText.append(builder.toString());
     return newText.toString();
   }
 }

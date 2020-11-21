@@ -15,6 +15,8 @@ import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.contents.ContentsUtil;
 import org.wikipediacleaner.api.data.contents.comment.ContainerComment;
 import org.wikipediacleaner.api.data.contents.comment.ContentsComment;
+import org.wikipediacleaner.api.data.contents.template.TemplateBuilder;
+import org.wikipediacleaner.api.data.contents.template.TemplateParamNameResolver;
 
 
 /**
@@ -503,6 +505,13 @@ public class PageElementTemplate extends PageElement {
   }
 
   /**
+   * @return Template name not trimmed.
+   */
+  public String getTemplateNameNotTrimmed() {
+    return templateNameNotTrimmed;
+  }
+
+  /**
    * Get parameter count.
    * 
    * @return Parameter count.
@@ -667,34 +676,6 @@ public class PageElementTemplate extends PageElement {
     this.templateNameNotTrimmed = templateName;
     this.templateName = (templateName != null) ? CharacterUtils.ucFirst(templateName.trim()) : null;
     this.parameters = parameters;
-    /*System.err.println("Template: " + this.templateName);
-    if (parameters != null) {
-      for (Parameter parameter : this.parameters) {
-        System.err.println(" Parameter: " + parameter.name);
-        System.err.println(" Value: " + parameter.value);
-      }
-    }*/
-  }
-
-  private void addPartBeforeParameters(StringBuilder sb) {
-    sb.append("{{");
-    sb.append(templateNameNotTrimmed);
-  }
-
-  private void addPartFromParameters(StringBuilder sb) {
-    for (Parameter parameter : parameters) {
-      addParameter(sb, parameter.name, parameter.value);
-    }
-    sb.append("}}");
-  }
-
-  private void addParameter(StringBuilder sb, String parameterName, String parameterValue) {
-    sb.append('|');
-    if ((parameterName != null) && (parameterName.trim().length() > 0)) {
-      sb.append(parameterName);
-      sb.append('=');
-    }
-    sb.append(parameterValue);
   }
 
   /**
@@ -715,24 +696,16 @@ public class PageElementTemplate extends PageElement {
         }
       }
     }
-    StringBuilder sb = new StringBuilder();
-    addPartBeforeParameters(sb);
+    TemplateBuilder builder = TemplateBuilder.from(templateNameNotTrimmed);
     boolean parameterAdded = false;
     String tmpParameterName = parameterName;
     String tmpParameterValue = parameterValue;
-    int paramNum = 1;
+    TemplateParamNameResolver nameResolver = new TemplateParamNameResolver();
     if (parameters != null) {
       for (Parameter parameter : parameters) {
   
         // Managing unnamed
-        String currentParameterName = parameter.name;
-        if ((currentParameterName == null) || (currentParameterName.length() == 0)) {
-          currentParameterName = Integer.toString(paramNum);
-        }
-        int tmpParamNum = paramNum;
-        if (currentParameterName.equals(Integer.toString(paramNum))) {
-          tmpParamNum++;
-        }
+        String currentParameterName = nameResolver.nextParameterWithoutRegister(parameter.name);
   
         // Manage whitespace characters before/after name/value
         tmpParameterName = parameterName;
@@ -784,31 +757,31 @@ public class PageElementTemplate extends PageElement {
         // Add parameter
         if (currentParameterName.equals(parameterName)) {
           if (tmpParameterValue != null) {
-            addParameter(sb, parameter.nameNotTrimmed, tmpParameterValue);
-            paramNum = tmpParamNum;
+            builder.addParam(parameter.nameNotTrimmed, tmpParameterValue);
+            nameResolver.nextParameter(parameter.nameNotTrimmed);
           }
           parameterAdded = true;
         } else if ((!parameterExist) &&
                    (currentParameterName.equals(previousParameter))) {
-          addParameter(sb, parameter.nameNotTrimmed, parameter.valueNotTrimmed);
-          addParameter(sb, tmpParameterName, tmpParameterValue);
-          paramNum = tmpParamNum;
+          builder.addParam(parameter.nameNotTrimmed, parameter.valueNotTrimmed);
+          nameResolver.nextParameter(parameter.nameNotTrimmed);
+          builder.addParam(tmpParameterName, tmpParameterValue);
+          nameResolver.nextParameter(tmpParameterName);
           parameterAdded = true;
         } else {
-          addParameter(sb, parameter.nameNotTrimmed, parameter.valueNotTrimmed);
-          paramNum = tmpParamNum;
+          builder.addParam(parameter.nameNotTrimmed, parameter.valueNotTrimmed);
+          nameResolver.nextParameter(parameter.nameNotTrimmed);
         }
       }
     }
     if (!parameterAdded) {
-      if (tmpParameterName.equals(Integer.toString(paramNum))) {
-        addParameter(sb, null, tmpParameterValue);
+      if (tmpParameterName.equals(nameResolver.getNextParameter())) {
+        builder.addParam(tmpParameterValue);
       } else {
-        addParameter(sb, tmpParameterName, tmpParameterValue);
+        builder.addParam(tmpParameterName, tmpParameterValue);
       }
     }
-    sb.append("}}");
-    return sb.toString();
+    return builder.toString();
   }
 
   /**
@@ -833,25 +806,18 @@ public class PageElementTemplate extends PageElement {
         parameterExist2 = true;
       }
     }
-    StringBuilder sb = new StringBuilder();
-    addPartBeforeParameters(sb);
+    TemplateBuilder builder = TemplateBuilder.from(templateNameNotTrimmed);
     boolean parameterAdded1 = false;
     boolean parameterAdded2 = false;
     String tmpParameterName1 = parameterName1;
     String tmpParameterValue1 = parameterValue1;
     String tmpParameterName2 = parameterName2;
     String tmpParameterValue2 = parameterValue2;
-    int paramNum = 1;
+    TemplateParamNameResolver nameResolver = new TemplateParamNameResolver();
     for (Parameter parameter : parameters) {
 
-      // Managing unname
-      String currentParameterName = parameter.name;
-      if ((currentParameterName == null) || (currentParameterName.length() == 0)) {
-        currentParameterName = Integer.toString(paramNum);
-      }
-      if (currentParameterName.equals(Integer.toString(paramNum))) {
-        paramNum++;
-      }
+      // Managing unnamed parameter
+      String currentParameterName = nameResolver.nextParameter(parameter.name);
 
       // Manage whitespace characters before/after name/value
       tmpParameterName1 = parameterName1;
@@ -906,31 +872,30 @@ public class PageElementTemplate extends PageElement {
 
       // Add parameter
       if (currentParameterName.equals(parameterName1)) {
-        addParameter(sb, parameter.nameNotTrimmed, tmpParameterValue1);
+        builder.addParam(parameter.nameNotTrimmed, tmpParameterValue1);
         parameterAdded1 = true;
         if (!parameterExist2) {
-          addParameter(sb, tmpParameterName2, tmpParameterValue2);
+          builder.addParam(tmpParameterName2, tmpParameterValue2);
           parameterAdded2 = true;
         }
       } else if (currentParameterName.equals(parameterName2)) {
         if (!parameterExist1) {
-          addParameter(sb, tmpParameterName1, tmpParameterValue1);
+          builder.addParam(tmpParameterName1, tmpParameterValue1);
           parameterAdded1 = true;
         }
-        addParameter(sb, parameter.nameNotTrimmed, tmpParameterValue2);
+        builder.addParam(parameter.nameNotTrimmed, tmpParameterValue2);
         parameterAdded2 = true;
       } else {
-        addParameter(sb, parameter.nameNotTrimmed, parameter.valueNotTrimmed);
+        builder.addParam(parameter.nameNotTrimmed, parameter.valueNotTrimmed);
       }
     }
     if (!parameterAdded1) {
-      addParameter(sb, tmpParameterName1, tmpParameterValue1);
+      builder.addParam(tmpParameterName1, tmpParameterValue1);
     }
     if (!parameterAdded2) {
-      addParameter(sb, tmpParameterName2, tmpParameterValue2);
+      builder.addParam(tmpParameterName2, tmpParameterValue2);
     }
-    sb.append("}}");
-    return sb.toString();
+    return builder.toString();
   }
 
   /* (non-Javadoc)
@@ -938,23 +903,6 @@ public class PageElementTemplate extends PageElement {
    */
   @Override
   public String toString() {
-    StringBuilder sb = new StringBuilder();
-    addPartBeforeParameters(sb);
-    addPartFromParameters(sb);
-    return sb.toString();
-  }
-
-  /**
-   * Create a template.
-   * 
-   * @param name Template name.
-   * @return Template.
-   */
-  public static String createTemplate(String name) {
-    StringBuilder sb = new StringBuilder();
-    sb.append("{{");
-    sb.append(name);
-    sb.append("}}");
-    return sb.toString();
+    return TemplateBuilder.from(this).toString();
   }
 }

@@ -27,6 +27,7 @@ import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageElementExternalLink;
 import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
+import org.wikipediacleaner.api.data.contents.template.TemplateBuilder;
 import org.wikipediacleaner.gui.swing.action.ActionExternalViewer;
 import org.wikipediacleaner.gui.swing.component.MWPane;
 import org.wikipediacleaner.i18n.GT;
@@ -257,7 +258,7 @@ public class CheckErrorAlgorithm091 extends CheckErrorAlgorithmBase {
                       articleName, checker);
                 }
                 errorResult.addPossibleAction(
-                    GT._T("Replace using template {0}", "{{" + templateArgs[0] + "}}"),
+                    GT._T("Replace using template {0}", TemplateBuilder.from(templateArgs[0]).toString()),
                     action);
               }
             }

@@ -28,6 +28,7 @@ import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.DataManager;
 import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.Page;
+import org.wikipediacleaner.api.data.contents.template.TemplateBuilder;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
 import org.wikipediacleaner.gui.swing.basic.BasicWorker;
 import org.wikipediacleaner.gui.swing.worker.UpdateWarningTools.Stats;
@@ -121,7 +122,7 @@ public abstract class UpdateWarningWorker extends BasicWorker {
     // Retrieve talk pages including a warning
     String warningTemplateName = configuration.getString(templateNameProperty);
     if (warningTemplateName != null) {
-      setText(GT._T("Retrieving talk pages including {0}", "{{" + warningTemplateName + "}}"));
+      setText(GT._T("Retrieving talk pages including {0}", TemplateBuilder.from(warningTemplateName).toString()));
       String templateTitle = wikiConfiguration.getPageTitle(
           Namespace.TEMPLATE,
           warningTemplateName);

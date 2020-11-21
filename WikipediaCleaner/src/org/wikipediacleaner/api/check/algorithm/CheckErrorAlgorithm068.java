@@ -26,6 +26,7 @@ import org.wikipediacleaner.api.data.Interwiki;
 import org.wikipediacleaner.api.data.PageElementInterwikiLink;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
 import org.wikipediacleaner.api.data.contents.ilink.ContentsInternalLinkBuilder;
+import org.wikipediacleaner.api.data.contents.template.TemplateBuilder;
 import org.wikipediacleaner.gui.swing.action.ActionExternalViewer;
 import org.wikipediacleaner.gui.swing.basic.Utilities;
 import org.wikipediacleaner.gui.swing.component.MWPane;
@@ -140,7 +141,7 @@ public class CheckErrorAlgorithm068 extends CheckErrorAlgorithmBase {
                   pageTitle, checker);
             }
             errorResult.addPossibleAction(
-                GT._T("Replace using template {0}", "{{" + templateArgs[0] + "}}"),
+                GT._T("Replace using template {0}", TemplateBuilder.from(templateArgs[0]).toString()),
                 action);
           }
           errorResult.addPossibleAction(
@@ -327,7 +328,7 @@ public class CheckErrorAlgorithm068 extends CheckErrorAlgorithmBase {
                   GT._T("The page \"{0}\" in \"{1}\" doesn''t have a language link to \"{2}\".",
                        new Object[] { pageTitle, fromWiki, toWiki }) +"\n" +
                   GT._T("You can replace the link using template {0}.",
-                       "{{" + templateArgs[0] + "}}") + "\n" +
+                       TemplateBuilder.from(templateArgs[0]).toString()) + "\n" +
                   GT._T("What is the title of the page on this wiki ?");
               if ((link.getText() != null) && (!link.getText().equals(pageTitle))) {
                 toTitle = Utilities.askForValue(

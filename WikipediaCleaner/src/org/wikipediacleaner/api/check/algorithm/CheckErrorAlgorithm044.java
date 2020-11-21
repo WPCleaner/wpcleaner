@@ -12,9 +12,9 @@ import java.util.List;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.configuration.WPCConfigurationString;
-import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.PageElementTitle;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
+import org.wikipediacleaner.api.data.contents.template.TemplateBuilder;
 import org.wikipediacleaner.api.data.contents.title.ContentsTitleBuilder;
 import org.wikipediacleaner.gui.swing.component.MWPane;
 import org.wikipediacleaner.i18n.GT;
@@ -95,7 +95,7 @@ public class CheckErrorAlgorithm044 extends CheckErrorAlgorithmBase {
             if (template != null) {
               String replacement = text.replaceFirst(
                   "'''",
-                  PageElementTemplate.createTemplate(template) + "''");
+                  TemplateBuilder.from(template).toString() + "''");
               errorResult.addReplacement(ContentsTitleBuilder
                   .from(title.getLevel(), replacement)
                   .withAfter(title.getAfterTitle()).toString());

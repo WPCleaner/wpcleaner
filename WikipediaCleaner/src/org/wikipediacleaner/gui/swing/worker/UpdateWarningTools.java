@@ -40,6 +40,7 @@ import org.wikipediacleaner.api.data.Section;
 import org.wikipediacleaner.api.data.User;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
 import org.wikipediacleaner.api.data.contents.comment.ContentsCommentBuilder;
+import org.wikipediacleaner.api.data.contents.template.TemplateBuilder;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
 import org.wikipediacleaner.gui.swing.basic.BasicWorker;
 import org.wikipediacleaner.gui.swing.basic.Utilities;
@@ -805,7 +806,7 @@ public abstract class UpdateWarningTools {
     }
     if (Boolean.FALSE.equals(talkPage.isExisting())) {
       String comment = getWarningComment(elements);
-      String newContents = "{{" + todoTemplates.get(0) + "}}";
+      String newContents = TemplateBuilder.from(todoTemplates.get(0)).toString();
       updateTalkPage(talkPage, newContents, comment, true);
       return true;
     }
@@ -860,9 +861,7 @@ public abstract class UpdateWarningTools {
           tmp.append("\n");
         }
       }
-      tmp.append("{{");
-      tmp.append(todoTemplates.get(0));
-      tmp.append("}}");
+      tmp.append(TemplateBuilder.from(todoTemplates.get(0)).toString());
       if (indexStart < contents.length()) {
         if (contents.charAt(indexStart) != '\n') {
           tmp.append("\n");
@@ -1069,17 +1068,15 @@ public abstract class UpdateWarningTools {
   private void addWarning(
       StringBuilder talkText,
       Integer pageRevId, Collection<String> params) {
-    talkText.append("{{ ");
-    talkText.append(configuration.getString(getWarningTemplate()));
+    TemplateBuilder builder = TemplateBuilder.from(" " + configuration.getString(getWarningTemplate()) + " ");
     if (pageRevId != null) {
-      talkText.append(" | revisionid=");
-      talkText.append(pageRevId);
+      builder.addParam(" revisionid", pageRevId.toString() + " ");
     }
     for (String param : params) {
-      talkText.append(" | ");
-      talkText.append(param);
+      builder.addParam(" " + param + " ");
     }
-    talkText.append(" }} -- ~~~~~");
+    talkText.append(builder.toString());
+    talkText.append(" -- ~~~~~");
     String comment = configuration.getString(getWarningTemplateComment());
     if (comment != null) {
       talkText.append(ContentsCommentBuilder.from(comment).toString());
@@ -1350,18 +1347,16 @@ public abstract class UpdateWarningTools {
           // Add the title
           StringBuilder fullMessage = new StringBuilder();
           if ((globalTemplate != null) && (globalTemplate.trim().length() > 0)) {
-            fullMessage.append("{{");
-            fullMessage.append(globalTemplate.trim());
-            fullMessage.append("}}\n");
+            fullMessage.append(TemplateBuilder.from(globalTemplate.trim()).toString());
+            fullMessage.append("\n");
             if ((signature != null) && (signature.trim().length() > 0)) {
               fullMessage.append(signature.trim());
               fullMessage.append("\n\n");
             }
           }
           if ((globalListTemplate != null) && (globalListTemplate.trim().length() > 0)) {
-            fullMessage.append("{{");
-            fullMessage.append(globalListTemplate.trim());
-            fullMessage.append("}}\n");
+            fullMessage.append(TemplateBuilder.from(globalListTemplate.trim()).toString());
+            fullMessage.append("\n");
           }
           if (title != null) {
             fullMessage.append("== ");
@@ -1424,32 +1419,22 @@ public abstract class UpdateWarningTools {
         (templateElements[0].trim().length() == 0)) {
       return null;
     }
-    StringBuilder message = new StringBuilder();
-    message.append("{{");
-    message.append(templateElements[0].trim());
+    TemplateBuilder builder = TemplateBuilder.from(templateElements[0].trim());
     if ((templateElements.length > 1) && (templateElements[1].trim().length() > 0)) {
-      message.append("|");
-      message.append(templateElements[1].trim());
-      message.append("=");
-      message.append(article);
+      builder.addParam(templateElements[1].trim(), article);
     }
     if ((templateElements.length > 2) && (templateElements[2].trim().length() > 0)) {
       String wpcUser = wpcConfig.getString(WPCConfigurationString.USER);
       if ((wpcUser != null) && (wpcUser.trim().length() > 0)) {
-        message.append("|");
-        message.append(templateElements[2].trim());
-        message.append("=");
-        message.append(wpcUser);
+        builder.addParam(templateElements[2].trim(), wpcUser);
       }
     }
     if (msgElements != null) {
       for (String msgElement : msgElements) {
-        message.append("|");
-        message.append(msgElement);
+        builder.addParam(msgElement);
       }
     }
-    message.append("}}");
-    return message.toString();
+    return builder.toString();
   }
 
   // ==========================================================================

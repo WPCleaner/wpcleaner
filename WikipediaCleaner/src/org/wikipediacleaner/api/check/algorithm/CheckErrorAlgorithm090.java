@@ -29,6 +29,7 @@ import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.PageElementImage.Parameter;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
 import org.wikipediacleaner.api.data.contents.ilink.ContentsInternalLinkBuilder;
+import org.wikipediacleaner.api.data.contents.template.TemplateBuilder;
 import org.wikipediacleaner.api.data.PageElementInternalLink;
 import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.SpecialPage;
@@ -442,38 +443,26 @@ public class CheckErrorAlgorithm090 extends CheckErrorAlgorithmBase {
         info.analysis, info.beginIndex, info.endIndex);
     for (String[] prefixIndexTemplate : prefixIndexTemplates) {
       if ((prefixIndexTemplate != null) && (prefixIndexTemplate.length > 0)) {
-        StringBuilder replacement = new StringBuilder();
-        replacement.append("{{");
-        replacement.append(prefixIndexTemplate[0]);
-        replacement.append("|");
+        TemplateBuilder builder = TemplateBuilder.from(prefixIndexTemplate[0]);
         String articleParam = null;
         if (prefixIndexTemplate.length > 1) {
           if ((prefixIndexTemplate[1].length() > 0) && !"1".equals(prefixIndexTemplate[1])) {
             articleParam = prefixIndexTemplate[1];
           }
         }
-        if ((articleParam != null) || (prefix.contains("="))) {
-          replacement.append((articleParam != null) ? articleParam : "1");
-          replacement.append("=");
-        }
-        replacement.append(prefix);
-        replacement.append("|");
+        builder.addParam(
+            (articleParam != null) ? articleParam : (prefix.contains("=") ? "1" : null),
+            prefix);
         String textParam = null;
         if (prefixIndexTemplate.length > 2) {
           if ((prefixIndexTemplate[2].length() > 0) && !"2".equals(prefixIndexTemplate[2])) {
             textParam = prefixIndexTemplate[2];
           }
         }
-        if ((textParam != null) ||
-            ((info.text != null) && (info.text.contains("=")))) {
-          replacement.append((textParam != null) ? textParam : "2");
-          replacement.append("=");
-        }
-        if (info.text != null) {
-          replacement.append(info.text);
-        }
-        replacement.append("}}");
-        errorResult.addReplacement(replacement.toString());
+        builder.addParam(
+            (textParam != null) ? textParam : ((info.text != null) && (info.text.contains("="))) ? "2" : null,
+            info.text);
+        errorResult.addReplacement(builder.toString());
 
         addBasicReplacement(info, errorResult);
       }
@@ -515,50 +504,35 @@ public class CheckErrorAlgorithm090 extends CheckErrorAlgorithmBase {
         info.analysis, info.beginIndex, info.endIndex);
     for (String[] oldidTemplate : oldidTemplates) {
       if ((oldidTemplate != null) && (oldidTemplate.length > 0)) {
-        StringBuilder replacement = new StringBuilder();
-        replacement.append("{{");
-        replacement.append(oldidTemplate[0]);
-        replacement.append("|");
+        TemplateBuilder builder = TemplateBuilder.from(oldidTemplate[0]);
         String articleParam = null;
         if (oldidTemplate.length > 1) {
           if ((oldidTemplate[1].length() > 0) && !"1".equals(oldidTemplate[1])) {
             articleParam = oldidTemplate[1];
           }
         }
-        if ((articleParam != null) || (info.article.contains("="))) {
-          replacement.append((articleParam != null) ? articleParam : "1");
-          replacement.append("=");
-        }
-        replacement.append(info.article);
-        replacement.append("|");
+        builder.addParam(
+            (articleParam != null) ? articleParam : info.article.contains("=") ? "1" : null,
+            info.article);
         String oldidParam = null;
         if (oldidTemplate.length > 2) {
           if ((oldidTemplate[2].length() > 0) && !"2".equals(oldidTemplate[2])) {
             oldidParam = oldidTemplate[2];
           }
         }
-        if ((oldidParam != null) || (oldid.contains("="))) {
-          replacement.append((oldidParam != null) ? oldidParam : "2");
-          replacement.append("=");
-        }
-        replacement.append(oldid);
-        replacement.append("|");
+        builder.addParam(
+            (oldidParam != null) ? oldidParam : oldid.contains("=") ? "2" : null,
+            oldid);
         String textParam = null;
         if (oldidTemplate.length > 3) {
           if ((oldidTemplate[3].length() > 0) && !"3".equals(oldidTemplate[3])) {
             textParam = oldidTemplate[3];
           }
         }
-        if ((textParam != null) ||
-            ((info.text != null) && (info.text.contains("=")))) {
-          replacement.append((textParam != null) ? textParam : "3");
-          replacement.append("=");
-        }
-        if (info.text != null) {
-          replacement.append(info.text);
-        }
-        replacement.append("}}");
-        errorResult.addReplacement(replacement.toString());
+        builder.addParam(
+            (textParam != null) ? textParam : info.text.contains("=") ? "3" : null,
+            info.text);
+        errorResult.addReplacement(builder.toString());
 
         addBasicReplacement(info, errorResult);
       }
@@ -603,38 +577,26 @@ public class CheckErrorAlgorithm090 extends CheckErrorAlgorithmBase {
         info.analysis, info.beginIndex, info.endIndex);
     for (String[] historyTemplate : historyTemplates) {
       if ((historyTemplate != null) && (historyTemplate.length > 0)) {
-        StringBuilder replacement = new StringBuilder();
-        replacement.append("{{");
-        replacement.append(historyTemplate[0]);
-        replacement.append("|");
+        TemplateBuilder builder = TemplateBuilder.from(historyTemplate[0]);
         String articleParam = null;
         if (historyTemplate.length > 1) {
           if ((historyTemplate[1].length() > 0) && !"1".equals(historyTemplate[1])) {
             articleParam = historyTemplate[1];
           }
         }
-        if ((articleParam != null) || (info.article.contains("="))) {
-          replacement.append((articleParam != null) ? articleParam : "1");
-          replacement.append("=");
-        }
-        replacement.append(info.article);
-        replacement.append("|");
+        builder.addParam(
+            (articleParam != null) ? articleParam : info.article.contains("=") ? "1" : null,
+            info.article);
         String textParam = null;
         if (historyTemplate.length > 2) {
           if ((historyTemplate[2].length() > 0) && !"2".equals(historyTemplate[2])) {
             textParam = historyTemplate[2];
           }
         }
-        if ((textParam != null) ||
-            ((info.text != null) && (info.text.contains("=")))) {
-          replacement.append((textParam != null) ? textParam : "2");
-          replacement.append("=");
-        }
-        if (info.text != null) {
-          replacement.append(info.text);
-        }
-        replacement.append("}}");
-        errorResult.addReplacement(replacement.toString());
+        builder.addParam(
+            (textParam != null) ? textParam : ((info.text != null) && info.text.contains("=")) ? "2" : null,
+            info.text);
+        errorResult.addReplacement(builder.toString());
 
         addBasicReplacement(info, errorResult);
       }

@@ -18,9 +18,9 @@ import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageElementInternalLink;
 import org.wikipediacleaner.api.data.PageElementTag;
-import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
 import org.wikipediacleaner.api.data.contents.ilink.ContentsInternalLinkBuilder;
+import org.wikipediacleaner.api.data.contents.template.TemplateBuilder;
 import org.wikipediacleaner.gui.swing.component.MWPane;
 import org.wikipediacleaner.i18n.GT;
 
@@ -298,8 +298,9 @@ public class CheckErrorAlgorithm064 extends CheckErrorAlgorithmBase {
     String apostropheTemplate = config.getString(
         WPCConfigurationString.APOSTROPHE_TEMPLATE);
     if ((apostropheTemplate != null) && (apostropheTemplate.length() > 0)) {
-      String replacedPrefix = prefix.replaceAll("\\'", PageElementTemplate.createTemplate(apostropheTemplate));
-      String replacedSuffix = suffix.replaceAll("\\'", PageElementTemplate.createTemplate(apostropheTemplate));
+      String apostropheText = TemplateBuilder.from(apostropheTemplate).toString();
+      String replacedPrefix = prefix.replaceAll("\\'", apostropheText);
+      String replacedSuffix = suffix.replaceAll("\\'", apostropheText);
       addReplacement(errorResult, replacements, replacedPrefix + replacement + replacedSuffix, false);
       addReplacement(errorResult, replacements, replacedPrefix + replacement + suffix, false);
       addReplacement(errorResult, replacements, prefix + replacement + replacedSuffix, false);

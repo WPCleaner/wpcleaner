@@ -24,6 +24,7 @@ import org.wikipediacleaner.api.data.PageElementInternalLink;
 import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
 import org.wikipediacleaner.api.data.contents.comment.ContentsCommentBuilder;
+import org.wikipediacleaner.api.data.contents.template.TemplateBuilder;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
 import org.wikipediacleaner.gui.swing.basic.BasicWorker;
 import org.wikipediacleaner.i18n.GT;
@@ -265,14 +266,8 @@ public class TranslateWorker extends BasicWorker {
           lastPosition = template.getBeginIndex();
         }
         if (translateWithoutParams && (template.getParameterCount() == 0)) {
-          newText.append("{{");
           int columnPos = translated.indexOf(':');
-          if (columnPos < 0) {
-            newText.append(translated);
-          } else {
-            newText.append(translated.substring(columnPos + 1));
-          }
-          newText.append("}}");
+          newText.append(TemplateBuilder.from(columnPos < 0 ? translated : translated.substring(columnPos + 1)).toString());
           lastPosition = template.getEndIndex();
         } else {
           newText.append(ContentsCommentBuilder.from(translated).toString());

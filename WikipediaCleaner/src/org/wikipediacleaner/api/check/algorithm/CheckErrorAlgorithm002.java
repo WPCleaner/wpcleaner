@@ -27,6 +27,7 @@ import org.wikipediacleaner.api.data.contents.ContentsUtil;
 import org.wikipediacleaner.api.data.contents.comment.ContentsComment;
 import org.wikipediacleaner.api.data.contents.tag.ContentsTagBuilder;
 import org.wikipediacleaner.api.data.contents.tag.ContentsTagFormat;
+import org.wikipediacleaner.api.data.contents.template.TemplateBuilder;
 import org.wikipediacleaner.gui.swing.component.MWPane;
 import org.wikipediacleaner.i18n.GT;
 
@@ -366,17 +367,11 @@ public class CheckErrorAlgorithm002 extends CheckErrorAlgorithmBase {
       if ((idAttribute != null) && (idAttribute.length() > 0) && !hasOtherAttribute) {
         for (String[] anchorTemplate : tmpAnchorTemplates) {
           if ((anchorTemplate.length > 0) && (anchorTemplate[0].length() > 0)) {
-            StringBuilder replacement = new StringBuilder();
-            replacement.append("{{");
-            replacement.append(anchorTemplate[0]);
-            replacement.append("|");
-            if ((anchorTemplate.length > 1) && !"1".equals(anchorTemplate[1])) {
-              replacement.append(anchorTemplate[1]);
-              replacement.append("=");
-            }
-            replacement.append(idAttribute);
-            replacement.append("}}");
-            errorResult.addReplacement(replacement.toString());
+            TemplateBuilder builder = TemplateBuilder.from(anchorTemplate[0]);
+            builder.addParam(
+                ((anchorTemplate.length > 1) && !"1".equals(anchorTemplate[1])) ? anchorTemplate[1] : null,
+                idAttribute);
+            errorResult.addReplacement(builder.toString());
           }
         }
       }

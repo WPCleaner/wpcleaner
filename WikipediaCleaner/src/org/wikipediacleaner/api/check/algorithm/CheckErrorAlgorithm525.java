@@ -21,6 +21,7 @@ import org.wikipediacleaner.api.configuration.WPCConfigurationStringList;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.PageElementTag.Parameter;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
+import org.wikipediacleaner.api.data.contents.template.TemplateBuilder;
 import org.wikipediacleaner.i18n.GT;
 
 
@@ -134,15 +135,11 @@ public class CheckErrorAlgorithm525 extends CheckErrorAlgorithmBase {
             for (String[] anchorTemplate : anchorTemplates) {
               if ((anchorTemplate.length > 0) && (anchorTemplate[0].length() > 0)) {
                 StringBuilder replacement = new StringBuilder();
-                replacement.append("{{");
-                replacement.append(anchorTemplate[0]);
-                replacement.append("|");
-                if ((anchorTemplate.length > 1) && !"1".equals(anchorTemplate[1])) {
-                  replacement.append(anchorTemplate[1]);
-                  replacement.append("=");
-                }
-                replacement.append(idParam);
-                replacement.append("}}");
+                TemplateBuilder builder = TemplateBuilder.from(anchorTemplate[0]);
+                builder.addParam(
+                    ((anchorTemplate.length > 1) && !"1".equals(anchorTemplate[1])) ? anchorTemplate[1] : null,
+                    idParam);
+                replacement.append(builder.toString());
                 replacement.append(internal);
                 boolean automatic =
                     (tag.getParametersCount() == 1) &&

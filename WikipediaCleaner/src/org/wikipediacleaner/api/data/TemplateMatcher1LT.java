@@ -12,6 +12,7 @@ import java.util.List;
 
 import org.wikipediacleaner.api.configuration.WPCConfigurationString;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
+import org.wikipediacleaner.api.data.contents.template.TemplateBuilder;
 import org.wikipediacleaner.i18n.GT;
 
 
@@ -110,9 +111,7 @@ public class TemplateMatcher1LT extends TemplateMatcher {
     case 1:
       parameterValue =
         text +
-        "{{" +
-        getWikipedia().getConfiguration().getString(WPCConfigurationString.PIPE_TEMPLATE) +
-        "}}" +
+        TemplateBuilder.from(getWikipedia().getConfiguration().getString(WPCConfigurationString.PIPE_TEMPLATE)).toString() +
         getParameterValue(page, template);
       break;
     }

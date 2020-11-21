@@ -20,7 +20,7 @@ import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.PageElementTag.Parameter;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
 import org.wikipediacleaner.api.data.contents.comment.ContentsComment;
-import org.wikipediacleaner.api.data.PageElementTemplate;
+import org.wikipediacleaner.api.data.contents.template.TemplateBuilder;
 import org.wikipediacleaner.i18n.GT;
 
 
@@ -277,18 +277,13 @@ public class CheckErrorAlgorithm085 extends CheckErrorAlgorithmBase {
               if (PageElementTag.TAG_HTML_CENTER.equals(tag.getName())) {
                 for (String[] template : centerTemplates) {
                   if (template.length > 1) {
-                    StringBuilder replacement = new StringBuilder();
-                    replacement.append("{{");
-                    replacement.append(template[0]);
-                    replacement.append("|");
-                    replacement.append(template[1]);
-                    replacement.append("=");
-                    replacement.append(contents.substring(
-                        tag.getValueBeginIndex(), tag.getValueEndIndex()));
-                    replacement.append("}}");
+                    TemplateBuilder builder = TemplateBuilder.from(template[0]);
+                    builder.addParam(
+                        template[1],
+                        contents.substring(tag.getValueBeginIndex(), tag.getValueEndIndex()));
                     errorResult.addReplacement(
-                        replacement.toString(),
-                        GT._T("Use {0}", PageElementTemplate.createTemplate(template[0])));
+                        builder.toString(),
+                        GT._T("Use {0}", TemplateBuilder.from(template[0]).toString()));
                   }
                 }
               }

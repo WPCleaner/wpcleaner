@@ -34,6 +34,7 @@ import org.wikipediacleaner.api.data.PageElementCategory;
 import org.wikipediacleaner.api.data.PageElementLanguageLink;
 import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
+import org.wikipediacleaner.api.data.contents.template.TemplateBuilder;
 import org.wikipediacleaner.api.dataaccess.PageProvider;
 import org.wikipediacleaner.gui.swing.basic.Utilities;
 import org.wikipediacleaner.gui.swing.component.MWPane;
@@ -261,7 +262,7 @@ public class ActionInsertPredefinedText implements ActionListener {
             items.add(themeMenu);
           }
         }
-        JMenuItem item = new JMenuItem("{{" + template + "}}");
+        JMenuItem item = new JMenuItem(TemplateBuilder.from(template).toString());
         item.setActionCommand(template);
         item.addActionListener(EventHandler.create(
             ActionListener.class, this, "actionAddTemplate", "actionCommand"));
@@ -420,9 +421,7 @@ public class ActionInsertPredefinedText implements ActionListener {
     for (int i = 0; i < crBefore; i++) {
       newContents.append("\n");
     }
-    newContents.append("{{");
-    newContents.append(templateName);
-    newContents.append("}}");
+    newContents.append(TemplateBuilder.from(templateName).toString());
     for (int i = 0; i < crAfter; i++) {
       newContents.append("\n");
     }

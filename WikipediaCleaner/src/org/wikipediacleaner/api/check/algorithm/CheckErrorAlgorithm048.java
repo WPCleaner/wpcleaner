@@ -18,11 +18,11 @@ import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageElementInternalLink;
 import org.wikipediacleaner.api.data.PageElementTag;
-import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.PageElementTitle;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
 import org.wikipediacleaner.api.data.contents.ContentsUtil;
 import org.wikipediacleaner.api.data.contents.ilink.ContentsInternalLinkBuilder;
+import org.wikipediacleaner.api.data.contents.template.TemplateBuilder;
 import org.wikipediacleaner.gui.swing.component.MWPane;
 import org.wikipediacleaner.i18n.GT;
 
@@ -213,7 +213,7 @@ public class CheckErrorAlgorithm048 extends CheckErrorAlgorithmBase {
             WPCConfigurationString.APOSTROPHE_TEMPLATE);
         if (apostropheTemplate != null) {
           errorResult.addReplacement(
-              PageElementTemplate.createTemplate(apostropheTemplate) +
+              TemplateBuilder.from(apostropheTemplate).toString() +
               "'''" + link.getDisplayedText() + "'''");
         }
       }

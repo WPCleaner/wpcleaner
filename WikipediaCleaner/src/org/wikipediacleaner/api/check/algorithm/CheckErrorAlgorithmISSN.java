@@ -28,6 +28,7 @@ import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.SearchEngine;
 import org.wikipediacleaner.api.data.PageElementTemplate.Parameter;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
+import org.wikipediacleaner.api.data.contents.template.TemplateBuilder;
 import org.wikipediacleaner.gui.swing.action.ActionExternalViewer;
 import org.wikipediacleaner.gui.swing.action.ActionMultiple;
 import org.wikipediacleaner.i18n.GT;
@@ -276,7 +277,7 @@ public abstract class CheckErrorAlgorithmISSN extends CheckErrorAlgorithmBase {
         if (replacement != null) {
           errorResult.addReplacement(
               replacement.toString(),
-              GT._T("Ask for help using {0}", "{{" + helpNeededTemplate[0] + "}}"));
+              GT._T("Ask for help using {0}", TemplateBuilder.from(helpNeededTemplate[0]).toString()));
         }
       }
     }

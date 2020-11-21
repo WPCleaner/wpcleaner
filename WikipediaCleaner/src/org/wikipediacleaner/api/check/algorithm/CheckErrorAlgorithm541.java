@@ -28,6 +28,7 @@ import org.wikipediacleaner.api.data.analysis.PageAnalysis;
 import org.wikipediacleaner.api.data.contents.tag.ContentsFullTagBuilder;
 import org.wikipediacleaner.api.data.contents.tag.ContentsTagBuilder;
 import org.wikipediacleaner.api.data.contents.tag.ContentsTagFormat;
+import org.wikipediacleaner.api.data.contents.template.TemplateBuilder;
 import org.wikipediacleaner.i18n.GT;
 
 
@@ -324,12 +325,9 @@ public class CheckErrorAlgorithm541 extends CheckErrorAlgorithmBase {
     }
     String internalText = analysis.getContents().substring(tag.getValueBeginIndex(), tag.getValueEndIndex());
     boolean hasEqual = (internalText.indexOf('=') >= 0);
-    String openTemplate =
-        "{{" + config[0] +
-        "|" + (config.length > 1 ? config[1] : (hasEqual ? "1=" : ""));
-    String closeTemplate = "}}";
-    String replacement = openTemplate + internalText + closeTemplate;
-    String text = openTemplate + "..." + closeTemplate;
+    String paramName = (config.length > 1 ? config[1] : (hasEqual ? "1=" : ""));
+    String replacement = TemplateBuilder.from(config[0]).addParam(paramName, internalText).toString();
+    String text = TemplateBuilder.from(config[0]).addParam(paramName, "...").toString();
     boolean automatic = (config.length > 2) ? Boolean.parseBoolean(config[2]) : false;
     if ((config.length > 3) && !config[3].isEmpty()) {
       text += " (" + config[3] + ")";

@@ -21,6 +21,7 @@ import org.wikipediacleaner.api.configuration.WPCConfigurationString;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageComparator;
+import org.wikipediacleaner.api.data.contents.template.TemplateBuilder;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
 import org.wikipediacleaner.gui.swing.worker.UpdateWarningTools.Stats;
 import org.wikipediacleaner.i18n.GT;
@@ -101,7 +102,7 @@ public class UpdateDabWarningWorker extends UpdateWarningWorker {
               "Do you want to update the disambiguation warnings ?",
               new Object[] {
                   Integer.valueOf(warningPages.size()),
-                  "{{" + configuration.getString(WPCConfigurationString.DAB_WARNING_TEMPLATE) + "}}" }));
+                  TemplateBuilder.from(configuration.getString(WPCConfigurationString.DAB_WARNING_TEMPLATE)).toString() }));
           if (answer != JOptionPane.YES_OPTION) {
             return Integer.valueOf(0);
           }

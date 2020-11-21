@@ -25,6 +25,7 @@ import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.Page.RelatedPages;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
+import org.wikipediacleaner.api.data.contents.template.TemplateBuilder;
 import org.wikipediacleaner.api.data.PageElementRFC;
 import org.wikipediacleaner.gui.swing.action.ActionExternalViewer;
 import org.wikipediacleaner.i18n.GT;
@@ -88,17 +89,11 @@ public class CheckErrorAlgorithm530 extends CheckErrorAlgorithmBase {
             String[] params = rfcTemplate[1].split(",");
             Boolean suggested = Boolean.valueOf(rfcTemplate[2]);
             if ((params.length > 0) && (Boolean.TRUE.equals(suggested))) {
-              StringBuilder replacement = new StringBuilder();
-              replacement.append("{{");
-              replacement.append(templateName);
-              replacement.append("|");
-              if (!"1".equals(params[0])) {
-                replacement.append(params[0]);
-                replacement.append("=");
-              }
-              replacement.append(rfc.getRFC());
-              replacement.append("}}");
-              errorResult.addReplacement(replacement.toString());
+              TemplateBuilder builder = TemplateBuilder.from(templateName);
+              builder.addParam(
+                  !"1".equals(params[0]) ? params[0] : null,
+                  rfc.getRFC());
+              errorResult.addReplacement(builder.toString());
             }
           }
         }

@@ -20,6 +20,7 @@ import org.wikipediacleaner.api.data.analysis.PageAnalysis;
 import org.wikipediacleaner.api.data.contents.ContentsUtil;
 import org.wikipediacleaner.api.data.contents.comment.ContentsComment;
 import org.wikipediacleaner.api.data.contents.comment.ContentsCommentBuilder;
+import org.wikipediacleaner.api.data.contents.template.TemplateBuilder;
 
 
 /**
@@ -837,17 +838,11 @@ public class PageElementISBN extends PageElement {
             String[] params = isbnTemplate[1].split(",");
             Boolean suggested = Boolean.valueOf(isbnTemplate[2]);
             if ((params.length > 0) && (Boolean.TRUE.equals(suggested))) {
-              StringBuilder buffer = new StringBuilder();
-              buffer.append("{{");
-              buffer.append(isbnTemplate[0]);
-              buffer.append("|");
-              if (!"1".equals(params[0])) {
-                buffer.append(params[0]);
-                buffer.append("=");
-              }
-              buffer.append(cleanedISBN);
-              buffer.append("}}");
-              addCorrectISBN(result, buffer.toString());
+              TemplateBuilder builder = TemplateBuilder.from(isbnTemplate[0]);
+              builder.addParam(
+                  !"1".equals(params[0]) ? params[0] : null,
+                  cleanedISBN);
+              addCorrectISBN(result, builder.toString());
             }
           }
         }
@@ -885,37 +880,26 @@ public class PageElementISBN extends PageElement {
     }
 
     // Template name
-    StringBuilder replacement = new StringBuilder();
-    replacement.append("{{");
-    replacement.append(helpNeededTemplate[0]);
+    TemplateBuilder builder = TemplateBuilder.from(helpNeededTemplate[0]);
 
     // ISBN
-    replacement.append("|");
-    if ((helpNeededTemplate.length > 1) &&
-        (helpNeededTemplate[1].length() > 0)) {
-      replacement.append(helpNeededTemplate[1]);
-      replacement.append("=");
-    }
-    replacement.append(getISBNNotTrimmed());
+    builder.addParam(
+        (helpNeededTemplate.length > 1) ? helpNeededTemplate[1] : null,
+        getISBNNotTrimmed());
 
     // Reason
     if ((reason != null) &&
         (helpNeededTemplate.length > 2) &&
         (helpNeededTemplate[2].length() > 0)) {
-      replacement.append("|");
-      replacement.append(helpNeededTemplate[2]);
-      replacement.append("=");
-      replacement.append(reason);
+      builder.addParam(helpNeededTemplate[2], reason);
     }
 
     // Extra parameters
     for (int i = 3; i < helpNeededTemplate.length; i++) {
-      replacement.append("|");
-      replacement.append(helpNeededTemplate[i]);
+      builder.addParam(helpNeededTemplate[i]);
     }
 
-    replacement.append("}}");
-    return replacement.toString();
+    return builder.toString();
   }
 
   /**

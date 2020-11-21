@@ -18,6 +18,7 @@ import org.wikipediacleaner.api.data.analysis.PageAnalysis;
 import org.wikipediacleaner.api.data.contents.ContentsUtil;
 import org.wikipediacleaner.api.data.contents.comment.ContentsComment;
 import org.wikipediacleaner.api.data.contents.comment.ContentsCommentBuilder;
+import org.wikipediacleaner.api.data.contents.template.TemplateBuilder;
 
 
 /**
@@ -672,25 +673,19 @@ public class PageElementRFC extends PageElement {
   private void addCorrectRFC(List<String> result, String prefix, String cleanedRFC) {
     addCorrectRFC(result, prefix + cleanedRFC);
     if (!isTemplateParameter()) {
-      List<String[]> isbnTemplates = wpcConfiguration.getStringArrayList(
+      List<String[]> rfcTemplates = wpcConfiguration.getStringArrayList(
           WPCConfigurationStringList.RFC_TEMPLATES);
-      if (isbnTemplates != null) {
-        for (String[] isbnTemplate : isbnTemplates) {
-          if (isbnTemplate.length > 2) {
-            String[] params = isbnTemplate[1].split(",");
-            Boolean suggested = Boolean.valueOf(isbnTemplate[2]);
+      if (rfcTemplates != null) {
+        for (String[] rfcTemplate : rfcTemplates) {
+          if (rfcTemplate.length > 2) {
+            String[] params = rfcTemplate[1].split(",");
+            Boolean suggested = Boolean.valueOf(rfcTemplate[2]);
             if ((params.length > 0) && (Boolean.TRUE.equals(suggested))) {
-              StringBuilder buffer = new StringBuilder();
-              buffer.append("{{");
-              buffer.append(isbnTemplate[0]);
-              buffer.append("|");
-              if (!"1".equals(params[0])) {
-                buffer.append(params[0]);
-                buffer.append("=");
-              }
-              buffer.append(cleanedRFC);
-              buffer.append("}}");
-              addCorrectRFC(result, buffer.toString());
+              TemplateBuilder builder = TemplateBuilder.from(rfcTemplate[0]);
+              builder.addParam(
+                  !"1".equals(params[0]) ? params[0] : null,
+                  cleanedRFC);
+              addCorrectRFC(result, builder.toString());
             }
           }
         }
@@ -728,37 +723,26 @@ public class PageElementRFC extends PageElement {
     }
 
     // Template name
-    StringBuilder replacement = new StringBuilder();
-    replacement.append("{{");
-    replacement.append(helpNeededTemplate[0]);
+    TemplateBuilder builder = TemplateBuilder.from(helpNeededTemplate[0]);
 
     // ISBN
-    replacement.append("|");
-    if ((helpNeededTemplate.length > 1) &&
-        (helpNeededTemplate[1].length() > 0)) {
-      replacement.append(helpNeededTemplate[1]);
-      replacement.append("=");
-    }
-    replacement.append(getRFCNotTrimmed());
+    builder.addParam(
+        (helpNeededTemplate.length > 1) ? helpNeededTemplate[1] : null,
+        getRFCNotTrimmed());
 
     // Reason
     if ((reason != null) &&
         (helpNeededTemplate.length > 2) &&
         (helpNeededTemplate[2].length() > 0)) {
-      replacement.append("|");
-      replacement.append(helpNeededTemplate[2]);
-      replacement.append("=");
-      replacement.append(reason);
+      builder.addParam(helpNeededTemplate[2], reason);
     }
 
     // Extra parameters
     for (int i = 3; i < helpNeededTemplate.length; i++) {
-      replacement.append("|");
-      replacement.append(helpNeededTemplate[i]);
+      builder.addParam(helpNeededTemplate[i]);
     }
 
-    replacement.append("}}");
-    return replacement.toString();
+    return builder.toString();
   }
 
   /**

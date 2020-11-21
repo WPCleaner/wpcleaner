@@ -20,6 +20,7 @@ import org.wikipediacleaner.api.data.LinkReplacement;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.TemplateParameter;
 import org.wikipediacleaner.api.data.TemplateReplacement;
+import org.wikipediacleaner.api.data.contents.template.TemplateBuilder;
 import org.wikipediacleaner.gui.swing.component.MWPaneFormatter;
 
 
@@ -108,9 +109,7 @@ public class ReplaceTemplateAction extends TextAction {
         (localNewTitle.length() > 0)) {
       localTextPane.setCaretPosition(localElement.getStartOffset());
       localTextPane.moveCaretPosition(localElement.getEndOffset());
-      StringBuilder newText = new StringBuilder();
-      newText.append("{{");
-      newText.append(template);
+      TemplateBuilder builder = TemplateBuilder.from(template);
       boolean notFound = false;
       int paramNumber = 0;
       List<String> parametersDone = new ArrayList<String>(parameters.size() + 1);
@@ -121,30 +120,23 @@ public class ReplaceTemplateAction extends TextAction {
           if (Integer.toString(paramNumber).equals(parameter.getName())) {
             parametersDone.add(parameter.getName());
             notFound = false;
-            newText.append("|");
             if (fullReplacement) {
               if (parameter.getName().equals(replacement.getOriginalParameter())) {
-                newText.append(localNewTitle);
+                builder.addParam(localNewTitle);
               } else {
-                newText.append(parameter.getValue());
+                builder.addParam(parameter.getValue());
               }
             } else {
               if (parameter.getName().equals(replacement.getLinkParameter())) {
-                newText.append(localNewTitle);
-                newText.append("|");
-                newText.append(replacement.getTextParameter());
+                builder.addParam(localNewTitle);
+                builder.addParam(replacement.getTextParameter(), parameter.getValue());
                 parametersDone.add(replacement.getTextParameter());
-                newText.append("=");
-                newText.append(parameter.getValue());
               } else if (parameter.getName().equals(replacement.getTextParameter())) {
-                newText.append(parameter.getValue());
-                newText.append("|");
-                newText.append(replacement.getLinkParameter());
+                builder.addParam(parameter.getValue());
+                builder.addParam(replacement.getLinkParameter(), localNewTitle);
                 parametersDone.add(replacement.getLinkParameter());
-                newText.append("=");
-                newText.append(localNewTitle);
               } else {
-                newText.append(parameter.getValue());
+                builder.addParam(parameter.getValue());
               }
             }
           }
@@ -152,15 +144,11 @@ public class ReplaceTemplateAction extends TextAction {
       }
       for (TemplateParameter parameter : parameters) {
         if (!parametersDone.contains(parameter.getName())) {
-          newText.append("|");
-          newText.append(parameter.getName());
+          builder.addParam(parameter.getName(), parameter.getValue());
           parametersDone.add(parameter.getName());
-          newText.append("=");
-          newText.append(parameter.getValue());
         }
       }
-      newText.append("}}");
-      localTextPane.replaceSelection(newText.toString());
+      localTextPane.replaceSelection(builder.toString());
       LinkReplacement.addLastReplacement(localOldTitle, localNewTitle);
     }
   }

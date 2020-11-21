@@ -35,6 +35,7 @@ import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.PageElementTemplate.Parameter;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
 import org.wikipediacleaner.api.data.contents.tag.ContentsTagBuilder;
+import org.wikipediacleaner.api.data.contents.template.TemplateBuilder;
 import org.wikipediacleaner.i18n.GT;
 
 
@@ -706,17 +707,11 @@ public class CheckErrorAlgorithm069 extends CheckErrorAlgorithmISBN {
                       String[] params = isbnTemplate[1].split(",");
                       Boolean suggested = Boolean.valueOf(isbnTemplate[2]);
                       if ((params.length > 0) && (Boolean.TRUE.equals(suggested))) {
-                        StringBuilder replacement = new StringBuilder();
-                        replacement.append("{{");
-                        replacement.append(templateName);
-                        replacement.append("|");
-                        if (!"1".equals(params[0])) {
-                          replacement.append(params[0]);
-                          replacement.append("=");
-                        }
-                        replacement.append(nowikiContent.substring(indexCharacter, tmpIndex));
-                        replacement.append("}}");
-                        errorResult.addReplacement(replacement.toString());
+                        TemplateBuilder builder = TemplateBuilder.from(templateName);
+                        builder.addParam(
+                            !"1".equals(params[0]) ? params[0] : null,
+                                nowikiContent.substring(indexCharacter, tmpIndex));
+                        errorResult.addReplacement(builder.toString());
                       }
                     }
                   }
