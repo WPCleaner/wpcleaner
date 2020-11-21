@@ -15,13 +15,13 @@ import org.junit.Test;
 /**
  * Test class for comments builder.
  */
-public class ContentsInternalLinkBuilderTest {
+public class InternalLinkBuilderTest {
 
   @Test
   public void simpleInternalLink() {
 
     // Create internal link
-    String link = ContentsInternalLinkBuilder.from("TARGET").toString();
+    String link = InternalLinkBuilder.from("TARGET").toString();
 
     // Check internal link
     assertNotNull(
@@ -36,7 +36,7 @@ public class ContentsInternalLinkBuilderTest {
   public void internalLinkWithText() {
 
     // Create internal link
-    String link = ContentsInternalLinkBuilder.from("TARGET").withText("TEXT").toString();
+    String link = InternalLinkBuilder.from("TARGET").withText("TEXT").toString();
 
     // Check internal link
     assertNotNull(
@@ -51,7 +51,7 @@ public class ContentsInternalLinkBuilderTest {
   public void allNull() {
 
     // Create internal link
-    String link = ContentsInternalLinkBuilder.from(null).toString();
+    String link = InternalLinkBuilder.from(null).toString();
 
     // Check internal link
     assertNotNull(
@@ -66,7 +66,7 @@ public class ContentsInternalLinkBuilderTest {
   public void nullLinkAndEmptyText() {
 
     // Create internal link
-    String link = ContentsInternalLinkBuilder.from(null).withText("").toString();
+    String link = InternalLinkBuilder.from(null).withText("").toString();
 
     // Check internal link
     assertNotNull(
@@ -81,7 +81,7 @@ public class ContentsInternalLinkBuilderTest {
   public void emptyLinkAndNullText() {
 
     // Create internal link
-    String link = ContentsInternalLinkBuilder.from("").withText(null).toString();
+    String link = InternalLinkBuilder.from("").withText(null).toString();
 
     // Check internal link
     assertNotNull(
@@ -96,7 +96,7 @@ public class ContentsInternalLinkBuilderTest {
   public void allEmpty() {
 
     // Create internal link
-    String link = ContentsInternalLinkBuilder.from("").withText("").toString();
+    String link = InternalLinkBuilder.from("").withText("").toString();
 
     // Check internal link
     assertNotNull(
@@ -111,7 +111,7 @@ public class ContentsInternalLinkBuilderTest {
   public void internalLinkWithAnchor() {
 
     // Create internal link
-    String link = ContentsInternalLinkBuilder.from("TARGET").withAnchor("ANCHOR").toString();
+    String link = InternalLinkBuilder.from("TARGET").withAnchor("ANCHOR").toString();
 
     // Check internal link
     assertNotNull(
@@ -126,7 +126,7 @@ public class ContentsInternalLinkBuilderTest {
   public void internalLinkWithColon() {
 
     // Create internal link
-    String link = ContentsInternalLinkBuilder.from("TARGET").withColon(true).toString();
+    String link = InternalLinkBuilder.from("TARGET").withColon(true).toString();
 
     // Check internal link
     assertNotNull(
@@ -141,7 +141,7 @@ public class ContentsInternalLinkBuilderTest {
   public void sameLinkAndText() {
 
     // Create internal link
-    String link = ContentsInternalLinkBuilder.from("TARGET").withText("TARGET").toString();
+    String link = InternalLinkBuilder.from("TARGET").withText("TARGET").toString();
 
     // Check internal link
     assertNotNull(
@@ -156,7 +156,7 @@ public class ContentsInternalLinkBuilderTest {
   public void compatibleLinkAndText() {
 
     // Create internal link
-    String link = ContentsInternalLinkBuilder.from("Target").withText("target").toString();
+    String link = InternalLinkBuilder.from("Target").withText("target").toString();
 
     // Check internal link
     assertNotNull(
@@ -171,7 +171,7 @@ public class ContentsInternalLinkBuilderTest {
   public void textLongerThanLink() {
 
     // Create internal link
-    String link = ContentsInternalLinkBuilder.from("TARGET").withText("TARGETBIS").toString();
+    String link = InternalLinkBuilder.from("TARGET").withText("TARGETBIS").toString();
 
     // Check internal link
     assertNotNull(
@@ -186,7 +186,7 @@ public class ContentsInternalLinkBuilderTest {
   public void textLongerThanLinkWithSpace() {
 
     // Create internal link
-    String link = ContentsInternalLinkBuilder.from("TARGET").withText("TARGETBIS TER").toString();
+    String link = InternalLinkBuilder.from("TARGET").withText("TARGETBIS TER").toString();
 
     // Check internal link
     assertNotNull(
@@ -201,7 +201,7 @@ public class ContentsInternalLinkBuilderTest {
   public void compatibleFullLinkAndText() {
 
     // Create internal link
-    String link = ContentsInternalLinkBuilder.from("Target").withAnchor("ANCHOR").withText("target#ANCHOR").toString();
+    String link = InternalLinkBuilder.from("Target").withAnchor("ANCHOR").withText("target#ANCHOR").toString();
 
     // Check internal link
     assertNotNull(
@@ -216,7 +216,7 @@ public class ContentsInternalLinkBuilderTest {
   public void completeAndCompatible() {
 
     // Create internal link
-    String link = ContentsInternalLinkBuilder.from("Target").withAnchor("ANCHOR").withColon(true).withText(":Target#ANCHORBIS").toString();
+    String link = InternalLinkBuilder.from("Target").withAnchor("ANCHOR").withColon(true).withText(":Target#ANCHORBIS").toString();
 
     // Check internal link
     assertNotNull(

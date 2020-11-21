@@ -16,7 +16,7 @@ import org.junit.Test;
 /**
  * Test class for comments builder.
  */
-public class ContentsCommentBuilderTest {
+public class CommentBuilderTest {
 
   /**
    * Null comment.
@@ -25,7 +25,7 @@ public class ContentsCommentBuilderTest {
   public void testWithNullComment() {
 
     // Create comment
-    String comment = ContentsCommentBuilder.from(null).toString();
+    String comment = CommentBuilder.from(null).toString();
 
     // Check comment
     assertNotNull(
@@ -43,7 +43,7 @@ public class ContentsCommentBuilderTest {
   public void testWithEmptyComment() {
 
     // Create comment
-    String comment = ContentsCommentBuilder.from(StringUtils.EMPTY).toString();
+    String comment = CommentBuilder.from(StringUtils.EMPTY).toString();
 
     // Check comment
     assertNotNull(
@@ -61,7 +61,7 @@ public class ContentsCommentBuilderTest {
   public void testWithNormalComment() {
 
     // Create comment
-    String comment = ContentsCommentBuilder.from("This is a comment").toString();
+    String comment = CommentBuilder.from("This is a comment").toString();
 
     // Check comment
     assertNotNull(

@@ -13,7 +13,7 @@ import java.util.Map;
 import org.wikipediacleaner.Version;
 import org.wikipediacleaner.api.configuration.WPCConfiguration;
 import org.wikipediacleaner.api.configuration.WPCConfigurationString;
-import org.wikipediacleaner.api.data.contents.ilink.ContentsInternalLinkBuilder;
+import org.wikipediacleaner.api.data.contents.ilink.InternalLinkBuilder;
 
 /**
  * Class to manage comments for edits.
@@ -60,7 +60,7 @@ public final class CommentManager {
     if (!tagUsed && (programName != null) && (programName.trim().length() > 0)) {
       String link = configuration.getString(WPCConfigurationString.HELP_PAGE);
       if ((link != null) && (link.trim().length() > 0)) {
-        updatedComment.append(ContentsInternalLinkBuilder.from(link.trim()).withText(programName.trim()).toString());
+        updatedComment.append(InternalLinkBuilder.from(link.trim()).withText(programName.trim()).toString());
       } else {
         updatedComment.append(programName.trim());
       }

@@ -22,7 +22,7 @@ import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageElementInternalLink;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
-import org.wikipediacleaner.api.data.contents.ilink.ContentsInternalLinkBuilder;
+import org.wikipediacleaner.api.data.contents.ilink.InternalLinkBuilder;
 import org.wikipediacleaner.api.data.contents.template.TemplateBuilder;
 import org.wikipediacleaner.i18n.GT;
 import org.wikipediacleaner.utils.Configuration;
@@ -247,10 +247,10 @@ public class CheckErrorAlgorithm518 extends CheckErrorAlgorithmBase {
       String displayed = link.getDisplayedTextNotTrimmed();
       if (displayed.endsWith(" ")) {
         errorResult.addReplacement(
-            ContentsInternalLinkBuilder.from(link.getFullLink()).withText(displayed.trim()).toString() +
+            InternalLinkBuilder.from(link.getFullLink()).withText(displayed.trim()).toString() +
             " " + textAfter);
       }
-      errorResult.addReplacement(ContentsInternalLinkBuilder.from(link.getFullLink())
+      errorResult.addReplacement(InternalLinkBuilder.from(link.getFullLink())
           .withText(displayed + textAfter).toString());
     }
     errorResult.addReplacement(textBefore + " " + textAfter);

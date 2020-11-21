@@ -15,7 +15,7 @@ import org.wikipediacleaner.api.configuration.WPCConfigurationString;
 import org.wikipediacleaner.api.data.PageElementTitle;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
 import org.wikipediacleaner.api.data.contents.template.TemplateBuilder;
-import org.wikipediacleaner.api.data.contents.title.ContentsTitleBuilder;
+import org.wikipediacleaner.api.data.contents.title.TitleBuilder;
 import org.wikipediacleaner.gui.swing.component.MWPane;
 import org.wikipediacleaner.i18n.GT;
 
@@ -96,13 +96,13 @@ public class CheckErrorAlgorithm044 extends CheckErrorAlgorithmBase {
               String replacement = text.replaceFirst(
                   "'''",
                   TemplateBuilder.from(template).toString() + "''");
-              errorResult.addReplacement(ContentsTitleBuilder
+              errorResult.addReplacement(TitleBuilder
                   .from(title.getLevel(), replacement)
                   .withAfter(title.getAfterTitle()).toString());
             }
           }
           if (countBold >= 2) {
-            errorResult.addReplacement(ContentsTitleBuilder
+            errorResult.addReplacement(TitleBuilder
                 .from(title.getLevel(), text.replaceAll("'''", ""))
                 .withAfter(title.getAfterTitle()).toString(),
                 false,

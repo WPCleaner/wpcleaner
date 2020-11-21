@@ -19,7 +19,7 @@ import java.util.regex.PatternSyntaxException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.wikipediacleaner.api.data.contents.tag.ContentsTagBuilder;
+import org.wikipediacleaner.api.data.contents.tag.TagBuilder;
 import org.wikipediacleaner.utils.Configuration;
 
 
@@ -30,8 +30,8 @@ public class Suggestion implements Comparable<Suggestion> {
 
   private final static Logger log = LoggerFactory.getLogger(Suggestion.class);
 
-  private final static String TAG_NOWIKI_1 = ContentsTagBuilder.NOWIKI_OPEN;
-  private final static String TAG_NOWIKI_2 = ContentsTagBuilder.NOWIKI_CLOSE;
+  private final static String TAG_NOWIKI_1 = TagBuilder.NOWIKI_OPEN;
+  private final static String TAG_NOWIKI_2 = TagBuilder.NOWIKI_CLOSE;
 
   /**
    * Page and chapter in which the suggestion is defined.

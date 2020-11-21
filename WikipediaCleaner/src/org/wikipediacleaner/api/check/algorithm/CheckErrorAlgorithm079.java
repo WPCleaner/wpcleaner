@@ -16,8 +16,8 @@ import org.wikipediacleaner.api.data.PageElementExternalLink;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
-import org.wikipediacleaner.api.data.contents.tag.ContentsFullTagBuilder;
-import org.wikipediacleaner.api.data.contents.tag.ContentsTagBuilder;
+import org.wikipediacleaner.api.data.contents.tag.FullTagBuilder;
+import org.wikipediacleaner.api.data.contents.tag.TagBuilder;
 import org.wikipediacleaner.gui.swing.action.ActionExternalViewer;
 import org.wikipediacleaner.i18n.GT;
 import org.wikipediacleaner.utils.StringChecker;
@@ -110,12 +110,12 @@ public class CheckErrorAlgorithm079 extends CheckErrorAlgorithmBase {
                   descriptionChecker));
           if (refTag == null) {
             errorResult.addReplacement(
-                ContentsFullTagBuilder.from(PageElementTag.TAG_WIKI_REF, url).toString(),
+                FullTagBuilder.from(PageElementTag.TAG_WIKI_REF, url).toString(),
                 GT._T("Convert into <ref> tag"));
             errorResult.addPossibleAction(
                 GT._T("Add a description and convert into <ref> tag"),
                 new AddTextActionProvider(
-                    ContentsTagBuilder.REF_OPEN + "[" + url + " ", "]" + ContentsTagBuilder.REF_CLOSE,
+                    TagBuilder.REF_OPEN + "[" + url + " ", "]" + TagBuilder.REF_CLOSE,
                     new TextProviderUrlTitle(url),
                     GT._T("What description would you like to use for the external link ?"),
                     descriptionChecker));

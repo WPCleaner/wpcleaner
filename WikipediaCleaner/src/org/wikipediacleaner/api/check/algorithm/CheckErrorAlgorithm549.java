@@ -16,7 +16,7 @@ import org.wikipediacleaner.api.data.CharacterUtils;
 import org.wikipediacleaner.api.data.PageElementInternalLink;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
-import org.wikipediacleaner.api.data.contents.ilink.ContentsInternalLinkBuilder;
+import org.wikipediacleaner.api.data.contents.ilink.InternalLinkBuilder;
 
 
 /**
@@ -212,7 +212,7 @@ public class CheckErrorAlgorithm549 extends CheckErrorAlgorithmBase {
 
         // Suggestion to group the links
         errorResult.addReplacement(
-            ContentsInternalLinkBuilder.from(fullLink).withText(buffer.toString()).toString(),
+            InternalLinkBuilder.from(fullLink).withText(buffer.toString()).toString(),
             automatic);
 
         // Suggestion to keep only the text for the last link

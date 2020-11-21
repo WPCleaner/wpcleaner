@@ -19,7 +19,7 @@ import org.wikipediacleaner.api.data.contents.ContentsUtil;
 /**
  * Builder class.
  */
-public class ContentsInternalLinkBuilder {
+public class InternalLinkBuilder {
 
   /** Target of the link */
   @Nonnull
@@ -41,7 +41,7 @@ public class ContentsInternalLinkBuilder {
    * 
    * @param target Target of the link.
    */
-  private ContentsInternalLinkBuilder(@Nonnull String target) {
+  private InternalLinkBuilder(@Nonnull String target) {
     this.target = target;
   }
 
@@ -51,8 +51,8 @@ public class ContentsInternalLinkBuilder {
    * @param target Target of the link.
    * @return Builder initialized with the target of the link.
    */
-  public static @Nonnull ContentsInternalLinkBuilder from(@Nonnull String target) {
-    ContentsInternalLinkBuilder builder = new ContentsInternalLinkBuilder(target);
+  public static @Nonnull InternalLinkBuilder from(@Nonnull String target) {
+    InternalLinkBuilder builder = new InternalLinkBuilder(target);
     return builder;
   }
 
@@ -60,7 +60,7 @@ public class ContentsInternalLinkBuilder {
    * @param withColon True if the colon is mandatory.
    * @return Builder.
    */
-  public ContentsInternalLinkBuilder withColon(boolean withColon) {
+  public InternalLinkBuilder withColon(boolean withColon) {
     this.colon = withColon;
     return this;
   }
@@ -69,7 +69,7 @@ public class ContentsInternalLinkBuilder {
    * @param withAnchor Anchor of the target. 
    * @return Builder.
    */
-  public ContentsInternalLinkBuilder withAnchor(@Nullable String withAnchor) {
+  public InternalLinkBuilder withAnchor(@Nullable String withAnchor) {
     this.anchor = (withAnchor != null) ? withAnchor.trim() : null;
     return this;
   }
@@ -78,7 +78,7 @@ public class ContentsInternalLinkBuilder {
    * @param withText Text of the link.
    * @return Builder.
    */
-  public ContentsInternalLinkBuilder withText(@Nullable String withText) {
+  public InternalLinkBuilder withText(@Nullable String withText) {
     this.text = (withText != null) ? withText.trim() : null;
     return this;
   }

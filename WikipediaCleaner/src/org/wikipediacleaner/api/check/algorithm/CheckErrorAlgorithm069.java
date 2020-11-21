@@ -34,7 +34,7 @@ import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.PageElementTemplate.Parameter;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
-import org.wikipediacleaner.api.data.contents.tag.ContentsTagBuilder;
+import org.wikipediacleaner.api.data.contents.tag.TagBuilder;
 import org.wikipediacleaner.api.data.contents.template.TemplateBuilder;
 import org.wikipediacleaner.i18n.GT;
 
@@ -51,15 +51,15 @@ public class CheckErrorAlgorithm069 extends CheckErrorAlgorithmISBN {
 
   /** List of strings that could be before an ISBN in <nowiki>. */
   private final static String[] EXTEND_BEFORE_NOWIKI = {
-    ContentsTagBuilder.NOWIKI_OPEN,
-    ContentsTagBuilder.SMALL_OPEN,
+    TagBuilder.NOWIKI_OPEN,
+    TagBuilder.SMALL_OPEN,
     "(",
   };
 
   /** List of strings that could be after an ISBN in <nowiki>. */
   private final static String[] EXTEND_AFTER_NOWIKI = {
-    ContentsTagBuilder.NOWIKI_CLOSE,
-    ContentsTagBuilder.SMALL_CLOSE,
+    TagBuilder.NOWIKI_CLOSE,
+    TagBuilder.SMALL_CLOSE,
     ")",
   };
 
@@ -69,8 +69,8 @@ public class CheckErrorAlgorithm069 extends CheckErrorAlgorithmISBN {
     "&#x20;",
   };
 
-  private static final String SMALL_CLOSE = ContentsTagBuilder.SMALL_CLOSE;
-  private static final String SMALL_OPEN = ContentsTagBuilder.SMALL_OPEN;
+  private static final String SMALL_CLOSE = TagBuilder.SMALL_CLOSE;
+  private static final String SMALL_OPEN = TagBuilder.SMALL_OPEN;
 
   /** Names of special page BookSources depending on the wiki */
   private final static Map<String, Pair<Set<String>, Set<String>>> BOOK_SOURCES = new HashMap<>();

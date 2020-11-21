@@ -15,7 +15,7 @@ import org.wikipediacleaner.api.data.PageElementTitle;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
 import org.wikipediacleaner.api.data.contents.ContentsUtil;
 import org.wikipediacleaner.api.data.contents.comment.ContentsComment;
-import org.wikipediacleaner.api.data.contents.title.ContentsTitleBuilder;
+import org.wikipediacleaner.api.data.contents.title.TitleBuilder;
 
 
 /**
@@ -147,18 +147,18 @@ public class CheckErrorAlgorithm008 extends CheckErrorAlgorithmBase {
     // Create error
     CheckErrorResult errorResult = createCheckErrorResult(
         analysis, lineBeginIndex, endLineIndex);
-    errorResult.addReplacement(ContentsTitleBuilder.from(
+    errorResult.addReplacement(TitleBuilder.from(
         equalsCount,
         contents.substring(lineBeginIndex + equalsCount, endLineIndex)).toString());
     if (equalIndex > 0) {
       String firstPart = contents.substring(lineBeginIndex + equalsCount, equalIndex); 
-      errorResult.addReplacement(ContentsTitleBuilder.from(
+      errorResult.addReplacement(TitleBuilder.from(
           equalsCount, firstPart).toString());
       while ((equalIndex < endLineIndex) && (contents.charAt(equalIndex) == '=')) {
         equalIndex++;
       }
       errorResult.addReplacement(
-          ContentsTitleBuilder.from(equalsCount, firstPart).toString() +
+          TitleBuilder.from(equalsCount, firstPart).toString() +
           "\n" +
           contents.substring(equalIndex, endLineIndex));
     }

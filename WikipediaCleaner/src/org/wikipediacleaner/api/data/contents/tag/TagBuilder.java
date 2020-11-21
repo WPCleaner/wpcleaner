@@ -20,26 +20,26 @@ import org.wikipediacleaner.api.data.PageElementTag;
 /**
  * Builder class.
  */
-public class ContentsTagBuilder {
+public class TagBuilder {
 
   // Useful prepared tags
-  public static final String B_OPEN = from(PageElementTag.TAG_HTML_B, ContentsTagFormat.OPEN).toString();
-  public static final String B_CLOSE = from(PageElementTag.TAG_HTML_B, ContentsTagFormat.CLOSE).toString();
+  public static final String B_OPEN = from(PageElementTag.TAG_HTML_B, TagFormat.OPEN).toString();
+  public static final String B_CLOSE = from(PageElementTag.TAG_HTML_B, TagFormat.CLOSE).toString();
 
-  public static final String LI_OPEN = from(PageElementTag.TAG_HTML_LI, ContentsTagFormat.OPEN).toString();
-  public static final String LI_CLOSE = from(PageElementTag.TAG_HTML_LI, ContentsTagFormat.CLOSE).toString();
+  public static final String LI_OPEN = from(PageElementTag.TAG_HTML_LI, TagFormat.OPEN).toString();
+  public static final String LI_CLOSE = from(PageElementTag.TAG_HTML_LI, TagFormat.CLOSE).toString();
 
-  public static final String NOWIKI_OPEN = from(PageElementTag.TAG_WIKI_NOWIKI, ContentsTagFormat.OPEN).toString();
-  public static final String NOWIKI_CLOSE = from(PageElementTag.TAG_WIKI_NOWIKI, ContentsTagFormat.CLOSE).toString();
+  public static final String NOWIKI_OPEN = from(PageElementTag.TAG_WIKI_NOWIKI, TagFormat.OPEN).toString();
+  public static final String NOWIKI_CLOSE = from(PageElementTag.TAG_WIKI_NOWIKI, TagFormat.CLOSE).toString();
 
-  public static final String REF_OPEN = from(PageElementTag.TAG_WIKI_REF, ContentsTagFormat.OPEN).toString();
-  public static final String REF_CLOSE = from(PageElementTag.TAG_WIKI_REF, ContentsTagFormat.CLOSE).toString();
+  public static final String REF_OPEN = from(PageElementTag.TAG_WIKI_REF, TagFormat.OPEN).toString();
+  public static final String REF_CLOSE = from(PageElementTag.TAG_WIKI_REF, TagFormat.CLOSE).toString();
 
-  public static final String SMALL_OPEN = from(PageElementTag.TAG_HTML_SMALL, ContentsTagFormat.OPEN).toString();
-  public static final String SMALL_CLOSE = from(PageElementTag.TAG_HTML_SMALL, ContentsTagFormat.CLOSE).toString();
+  public static final String SMALL_OPEN = from(PageElementTag.TAG_HTML_SMALL, TagFormat.OPEN).toString();
+  public static final String SMALL_CLOSE = from(PageElementTag.TAG_HTML_SMALL, TagFormat.CLOSE).toString();
 
-  public static final String UL_OPEN = from(PageElementTag.TAG_HTML_UL, ContentsTagFormat.OPEN).toString();
-  public static final String UL_CLOSE = from(PageElementTag.TAG_HTML_UL, ContentsTagFormat.CLOSE).toString();
+  public static final String UL_OPEN = from(PageElementTag.TAG_HTML_UL, TagFormat.OPEN).toString();
+  public static final String UL_CLOSE = from(PageElementTag.TAG_HTML_UL, TagFormat.CLOSE).toString();
 
   /** Name of the tag */
   @Nonnull
@@ -47,7 +47,7 @@ public class ContentsTagBuilder {
 
   /** Format of the tag */
   @Nonnull
-  private final ContentsTagFormat format;
+  private final TagFormat format;
 
   /** List of attributes */
   @Nonnull
@@ -59,7 +59,7 @@ public class ContentsTagBuilder {
    * @param tagName Name of the tag.
    * @param format Format of the tag.
    */
-  private ContentsTagBuilder(@Nonnull String name, @Nonnull ContentsTagFormat format) {
+  private TagBuilder(@Nonnull String name, @Nonnull TagFormat format) {
     this.name = name;
     this.format = format;
     this.attributes = new ArrayList<>();
@@ -72,8 +72,8 @@ public class ContentsTagBuilder {
    * @param format Format of the tag.
    * @return Builder initialized with the name and format of the tag.
    */
-  public static @Nonnull ContentsTagBuilder from(@Nonnull String tagName, @Nonnull ContentsTagFormat format) {
-    ContentsTagBuilder builder = new ContentsTagBuilder(tagName, format);
+  public static @Nonnull TagBuilder from(@Nonnull String tagName, @Nonnull TagFormat format) {
+    TagBuilder builder = new TagBuilder(tagName, format);
     return builder;
   }
 
@@ -85,10 +85,10 @@ public class ContentsTagBuilder {
    * @param full True if it's a full tag.
    * @return Builder initialized with the name and format of the tag.
    */
-  public static @Nonnull ContentsTagBuilder from(@Nonnull String tagName, boolean closing, boolean full) {
+  public static @Nonnull TagBuilder from(@Nonnull String tagName, boolean closing, boolean full) {
     return from(
         tagName,
-        full ? ContentsTagFormat.FULL : closing ? ContentsTagFormat.CLOSE : ContentsTagFormat.OPEN);
+        full ? TagFormat.FULL : closing ? TagFormat.CLOSE : TagFormat.OPEN);
   }
 
   /**
@@ -98,7 +98,7 @@ public class ContentsTagBuilder {
    * @param attributeValue Value of the attribute.
    * @return Builder with the added attribute.
    */
-  public @Nonnull ContentsTagBuilder addAttribute(@Nonnull String attributeName, @Nullable String attributeValue) {
+  public @Nonnull TagBuilder addAttribute(@Nonnull String attributeName, @Nullable String attributeValue) {
     attributes.add(new ImmutablePair<>(attributeName, attributeValue));
     return this;
   }
@@ -111,11 +111,11 @@ public class ContentsTagBuilder {
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append('<');
-    if (ContentsTagFormat.CLOSE == format) {
+    if (TagFormat.CLOSE == format) {
       sb.append('/');
     }
     sb.append(name);
-    if (ContentsTagFormat.CLOSE != format) {
+    if (TagFormat.CLOSE != format) {
       for (ImmutablePair<String, String> attribute : attributes) {
         sb.append(' ');
         sb.append(attribute.getLeft());
@@ -126,7 +126,7 @@ public class ContentsTagBuilder {
         }
       }
     }
-    if (ContentsTagFormat.FULL == format) {
+    if (TagFormat.FULL == format) {
       sb.append(" /");
     }
     sb.append('>');

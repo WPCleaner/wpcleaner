@@ -14,7 +14,7 @@ import org.wikipediacleaner.api.configuration.WPCConfiguration;
 import org.wikipediacleaner.api.configuration.WPCConfigurationStringList;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
 import org.wikipediacleaner.api.data.contents.ContentsUtil;
-import org.wikipediacleaner.api.data.contents.tag.ContentsFullTagBuilder;
+import org.wikipediacleaner.api.data.contents.tag.FullTagBuilder;
 
 
 /**
@@ -838,7 +838,7 @@ public class PageElementTag extends PageElement {
       tagIndex = getMatchingTagIndex(tags, tagIndex);
       tagIndex++;
     }
-    String refBlock = ContentsFullTagBuilder.REF;
+    String refBlock = FullTagBuilder.REF;
     if (count > 2) {
       return refBlock + separator + "..." + separator + refBlock;
     }

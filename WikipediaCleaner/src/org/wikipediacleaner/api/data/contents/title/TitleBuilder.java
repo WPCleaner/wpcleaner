@@ -16,7 +16,7 @@ import org.apache.commons.lang3.StringUtils;
 /**
  * Builder class.
  */
-public class ContentsTitleBuilder {
+public class TitleBuilder {
 
   /** Level of the title (number of equal signs) */
   private final int level;
@@ -44,7 +44,7 @@ public class ContentsTitleBuilder {
    * @param level Level of the title.
    * @param title Text of the title.
    */
-  private ContentsTitleBuilder(int level, @Nonnull String title) {
+  private TitleBuilder(int level, @Nonnull String title) {
     this.level = level;
     this.secondLevel = level;
     this.title = title;
@@ -58,8 +58,8 @@ public class ContentsTitleBuilder {
    * @param title Text of the title.
    * @return Builder initialized with the level and text of the title.
    */
-  public static @Nonnull ContentsTitleBuilder from(int level, @Nullable String title) {
-    ContentsTitleBuilder builder = new ContentsTitleBuilder(level, StringUtils.defaultIfEmpty(title, StringUtils.EMPTY));
+  public static @Nonnull TitleBuilder from(int level, @Nullable String title) {
+    TitleBuilder builder = new TitleBuilder(level, StringUtils.defaultIfEmpty(title, StringUtils.EMPTY));
     return builder;
   }
 
@@ -67,7 +67,7 @@ public class ContentsTitleBuilder {
    * @param withLevel Second level.
    * @return Builder.
    */
-  public ContentsTitleBuilder withSecondLevel(int withLevel) {
+  public TitleBuilder withSecondLevel(int withLevel) {
     this.secondLevel = withLevel;
     return this;
   }
@@ -76,7 +76,7 @@ public class ContentsTitleBuilder {
    * @param withTrim True if the text of the title should be trimmed.
    * @return Builder.
    */
-  public ContentsTitleBuilder withTrimTitle(boolean withTrim) {
+  public TitleBuilder withTrimTitle(boolean withTrim) {
     this.trimTitle = withTrim;
     return this;
   }
@@ -85,7 +85,7 @@ public class ContentsTitleBuilder {
    * @param withAfter Text after the link. 
    * @return Builder.
    */
-  public ContentsTitleBuilder withAfter(@Nullable String withAfter) {
+  public TitleBuilder withAfter(@Nullable String withAfter) {
     this.after = StringUtils.defaultIfEmpty(withAfter, StringUtils.EMPTY);
     return this;
   }
@@ -94,7 +94,7 @@ public class ContentsTitleBuilder {
    * @param withTrim True if the text after the title should be trimmed.
    * @return Builder.
    */
-  public ContentsTitleBuilder withTrimAfter(boolean withTrim) {
+  public TitleBuilder withTrimAfter(boolean withTrim) {
     this.trimAfter = withTrim;
     return this;
   }

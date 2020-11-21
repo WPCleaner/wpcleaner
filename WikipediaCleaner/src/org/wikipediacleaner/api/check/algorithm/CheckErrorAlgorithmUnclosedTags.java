@@ -14,8 +14,8 @@ import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.CheckErrorResult.ErrorLevel;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
-import org.wikipediacleaner.api.data.contents.tag.ContentsTagBuilder;
-import org.wikipediacleaner.api.data.contents.tag.ContentsTagFormat;
+import org.wikipediacleaner.api.data.contents.tag.TagBuilder;
+import org.wikipediacleaner.api.data.contents.tag.TagFormat;
 
 
 /**
@@ -96,7 +96,7 @@ public abstract class CheckErrorAlgorithmUnclosedTags extends CheckErrorAlgorith
             CheckErrorResult errorResult = createCheckErrorResult(
                 analysis, beginIndex, endIndex, ErrorLevel.WARNING);
             errorResult.addReplacement(
-                ContentsTagBuilder.from(tagName, ContentsTagFormat.CLOSE).toString(),
+                TagBuilder.from(tagName, TagFormat.CLOSE).toString(),
                 tag.getParametersCount() == 0);
             errors.add(errorResult);
           }
@@ -113,7 +113,7 @@ public abstract class CheckErrorAlgorithmUnclosedTags extends CheckErrorAlgorith
             CheckErrorResult errorResult = createCheckErrorResult(
                 analysis, beginIndex, endIndex, ErrorLevel.WARNING);
             errorResult.addReplacement(
-                ContentsTagBuilder.from(tagName, ContentsTagFormat.OPEN).toString(),
+                TagBuilder.from(tagName, TagFormat.OPEN).toString(),
                 tag.getParametersCount() == 0);
             errors.add(errorResult);
           }

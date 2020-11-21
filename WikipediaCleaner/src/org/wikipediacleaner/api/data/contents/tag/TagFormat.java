@@ -12,7 +12,7 @@ package org.wikipediacleaner.api.data.contents.tag;
 /**
  * Possible formats for tags.
  */
-public enum ContentsTagFormat {
+public enum TagFormat {
 
   OPEN,
   CLOSE,

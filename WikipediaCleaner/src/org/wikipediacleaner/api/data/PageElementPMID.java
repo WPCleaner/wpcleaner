@@ -17,7 +17,7 @@ import org.wikipediacleaner.api.data.PageElementTemplate.Parameter;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
 import org.wikipediacleaner.api.data.contents.ContentsUtil;
 import org.wikipediacleaner.api.data.contents.comment.ContentsComment;
-import org.wikipediacleaner.api.data.contents.comment.ContentsCommentBuilder;
+import org.wikipediacleaner.api.data.contents.comment.CommentBuilder;
 import org.wikipediacleaner.api.data.contents.template.TemplateBuilder;
 
 
@@ -751,7 +751,7 @@ public class PageElementPMID extends PageElement {
       replacement.append(" - ");
       replacement.append(reason);
     }
-    return ContentsCommentBuilder.from(replacement.toString()).toString();
+    return CommentBuilder.from(replacement.toString()).toString();
   }
 
   /**

@@ -25,9 +25,9 @@ import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageElementTable;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
-import org.wikipediacleaner.api.data.contents.tag.ContentsFullTagBuilder;
-import org.wikipediacleaner.api.data.contents.tag.ContentsTagBuilder;
-import org.wikipediacleaner.api.data.contents.tag.ContentsTagFormat;
+import org.wikipediacleaner.api.data.contents.tag.FullTagBuilder;
+import org.wikipediacleaner.api.data.contents.tag.TagBuilder;
+import org.wikipediacleaner.api.data.contents.tag.TagFormat;
 import org.wikipediacleaner.api.data.contents.template.TemplateBuilder;
 import org.wikipediacleaner.i18n.GT;
 
@@ -290,12 +290,12 @@ public class CheckErrorAlgorithm541 extends CheckErrorAlgorithmBase {
       String optionName, String optionValue,
       String comment, boolean automatic) {
     // TODO: Modify to properly use builder from existing tag with modification ?
-    ContentsTagBuilder openTagBuilder = ContentsTagBuilder.from(tagName, ContentsTagFormat.OPEN);
+    TagBuilder openTagBuilder = TagBuilder.from(tagName, TagFormat.OPEN);
     if (optionName != null) {
       openTagBuilder.addAttribute(optionName, optionValue);
     }
     String openTag = openTagBuilder.toString();
-    String closeTag = ContentsTagBuilder.from(tagName, ContentsTagFormat.CLOSE).toString();
+    String closeTag = TagBuilder.from(tagName, TagFormat.CLOSE).toString();
     String replacement =
         openTag +
         analysis.getContents().substring(tag.getValueBeginIndex(), tag.getValueEndIndex()) +
@@ -458,11 +458,11 @@ public class CheckErrorAlgorithm541 extends CheckErrorAlgorithmBase {
     super.addParameters();
     addParameter(new AlgorithmParameter(
         PARAMETER_CENTER_TEMPLATES,
-        GT._T("Possible replacements for {0} tags", ContentsFullTagBuilder.CENTER),
+        GT._T("Possible replacements for {0} tags", FullTagBuilder.CENTER),
         new AlgorithmParameterElement[] {
           new AlgorithmParameterElement(
               "template name",
-              GT._T("Template for replacing {0} tag", ContentsFullTagBuilder.CENTER)),
+              GT._T("Template for replacing {0} tag", FullTagBuilder.CENTER)),
           new AlgorithmParameterElement(
               "parameter name",
               GT._T("Parameter to use in the template for the text"),
@@ -479,11 +479,11 @@ public class CheckErrorAlgorithm541 extends CheckErrorAlgorithmBase {
         true));
     addParameter(new AlgorithmParameter(
         PARAMETER_STRIKE_TEMPLATES,
-        GT._T("Possible replacements for {0} tags", ContentsFullTagBuilder.STRIKE),
+        GT._T("Possible replacements for {0} tags", FullTagBuilder.STRIKE),
         new AlgorithmParameterElement[] {
           new AlgorithmParameterElement(
               "template name",
-              GT._T("Template for replacing {0} tag", ContentsFullTagBuilder.STRIKE)),
+              GT._T("Template for replacing {0} tag", FullTagBuilder.STRIKE)),
           new AlgorithmParameterElement(
               "parameter name",
               GT._T("Parameter to use in the template for the text"),
@@ -500,11 +500,11 @@ public class CheckErrorAlgorithm541 extends CheckErrorAlgorithmBase {
         true));
     addParameter(new AlgorithmParameter(
         PARAMETER_TT_TEMPLATES,
-        GT._T("Possible replacements for {0} tags", ContentsFullTagBuilder.TT),
+        GT._T("Possible replacements for {0} tags", FullTagBuilder.TT),
         new AlgorithmParameterElement[] {
           new AlgorithmParameterElement(
               "template name",
-              GT._T("Template for replacing {0} tag", ContentsFullTagBuilder.TT)),
+              GT._T("Template for replacing {0} tag", FullTagBuilder.TT)),
           new AlgorithmParameterElement(
               "parameter name",
               GT._T("Parameter to use in the template for the text"),

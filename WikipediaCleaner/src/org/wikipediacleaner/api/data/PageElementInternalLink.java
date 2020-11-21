@@ -9,7 +9,7 @@ package org.wikipediacleaner.api.data;
 
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.contents.ContentsUtil;
-import org.wikipediacleaner.api.data.contents.ilink.ContentsInternalLinkBuilder;
+import org.wikipediacleaner.api.data.contents.ilink.InternalLinkBuilder;
 
 
 /**
@@ -339,7 +339,7 @@ public class PageElementInternalLink extends PageElement {
    */
   @Override
   public String toString() {
-    return ContentsInternalLinkBuilder
+    return InternalLinkBuilder
         .from(linkNotTrimmed)
         .withAnchor(anchorNotTrimmed)
         .withText(textNotTrimmed)

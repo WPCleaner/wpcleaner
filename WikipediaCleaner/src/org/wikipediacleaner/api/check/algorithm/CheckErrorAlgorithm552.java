@@ -21,8 +21,8 @@ import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
 import org.wikipediacleaner.api.data.contents.ContentsUtil;
-import org.wikipediacleaner.api.data.contents.tag.ContentsTagBuilder;
-import org.wikipediacleaner.api.data.contents.tag.ContentsTagFormat;
+import org.wikipediacleaner.api.data.contents.tag.TagBuilder;
+import org.wikipediacleaner.api.data.contents.tag.TagFormat;
 import org.wikipediacleaner.i18n.GT;
 
 
@@ -130,14 +130,14 @@ public class CheckErrorAlgorithm552 extends CheckErrorAlgorithmBase {
           if (openingBracketsInside > closingBracketsInside) {
             String replacement =
                 contents.substring(beginIndex, endIndex - 1) +
-                ContentsTagBuilder.from(PageElementTag.TAG_WIKI_NOWIKI, ContentsTagFormat.FULL).toString() +
+                TagBuilder.from(PageElementTag.TAG_WIKI_NOWIKI, TagFormat.FULL).toString() +
                 contents.substring(endIndex - 1, endIndex + 1);
             errorResult.addReplacement(replacement, "{{...}<nowiki/>}}");
           }
           if (openingBrackets == closingBrackets) {
             String replacement =
                 contents.substring(beginIndex, endIndex) +
-                ContentsTagBuilder.from(PageElementTag.TAG_WIKI_NOWIKI, ContentsTagFormat.FULL).toString() +
+                TagBuilder.from(PageElementTag.TAG_WIKI_NOWIKI, TagFormat.FULL).toString() +
                 contents.substring(endIndex, endIndex + 1);
             errorResult.addReplacement(replacement, "{{...}}<nowiki/>}");
           }

@@ -23,8 +23,8 @@ import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.configuration.WPCConfiguration;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
-import org.wikipediacleaner.api.data.contents.tag.ContentsTagBuilder;
-import org.wikipediacleaner.api.data.contents.tag.ContentsTagFormat;
+import org.wikipediacleaner.api.data.contents.tag.TagBuilder;
+import org.wikipediacleaner.api.data.contents.tag.TagFormat;
 import org.wikipediacleaner.i18n.GT;
 
 
@@ -127,8 +127,8 @@ public class CheckErrorAlgorithm514 extends CheckErrorAlgorithmBase {
               Collections.sort(tmpList);
               for (String name : tmpList) {
                 if (count < 40) {
-                  ContentsTagBuilder builder = ContentsTagBuilder
-                      .from(PageElementTag.TAG_WIKI_REF, ContentsTagFormat.FULL);
+                  TagBuilder builder = TagBuilder
+                      .from(PageElementTag.TAG_WIKI_REF, TagFormat.FULL);
                   if (group.getKey() != null) {
                     builder.addAttribute("group", group.getKey());
                   }

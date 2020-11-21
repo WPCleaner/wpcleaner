@@ -44,9 +44,9 @@ import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.analysis.AnalysisPerformance;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
 import org.wikipediacleaner.api.data.contents.comment.ContentsComment;
-import org.wikipediacleaner.api.data.contents.comment.ContentsCommentBuilder;
-import org.wikipediacleaner.api.data.contents.ilink.ContentsInternalLinkBuilder;
-import org.wikipediacleaner.api.data.contents.tag.ContentsTagBuilder;
+import org.wikipediacleaner.api.data.contents.comment.CommentBuilder;
+import org.wikipediacleaner.api.data.contents.ilink.InternalLinkBuilder;
+import org.wikipediacleaner.api.data.contents.tag.TagBuilder;
 import org.wikipediacleaner.api.dump.DumpProcessor;
 import org.wikipediacleaner.api.dump.PageProcessor;
 import org.wikipediacleaner.api.execution.MediaWikiCallable;
@@ -263,7 +263,7 @@ public class ListCWWorker extends BasicWorker {
       StringBuilder result) {
     boolean full = true;
     StringBuilder buffer = new StringBuilder();
-    buffer.append(ContentsCommentBuilder.from("Generated using " + dumpFile.getName()).toString());
+    buffer.append(CommentBuilder.from("Generated using " + dumpFile.getName()).toString());
     buffer.append("\n");
     ErrorLevel lastLevel = null;
     StringBuilder line = new StringBuilder();
@@ -273,11 +273,11 @@ public class ListCWWorker extends BasicWorker {
       if ((detection.maxLevel != null) &&
           !detection.maxLevel.equals(lastLevel)) {
         lastLevel = detection.maxLevel;
-        line.append(ContentsCommentBuilder.from(lastLevel.toString()).toString());
+        line.append(CommentBuilder.from(lastLevel.toString()).toString());
         line.append("\n");
       }
       line.append("* ");
-      line.append(ContentsInternalLinkBuilder
+      line.append(InternalLinkBuilder
           .from(detection.pageName)
           .withColon(Namespace.isColonNeeded(detection.namespace))
           .toString());
@@ -286,7 +286,7 @@ public class ListCWWorker extends BasicWorker {
         for (String notice : detection.notices) {
           line.append(first ? ": " : ", ");
           first = false;
-          line.append(ContentsTagBuilder.NOWIKI_OPEN);
+          line.append(TagBuilder.NOWIKI_OPEN);
           int index = 0;
           while (index < notice.length()) {
             int codePoint = notice.codePointAt(index);
@@ -370,7 +370,7 @@ public class ListCWWorker extends BasicWorker {
             } 
             index = notice.offsetByCodePoints(index, 1);
           }
-          line.append(ContentsTagBuilder.NOWIKI_CLOSE);
+          line.append(TagBuilder.NOWIKI_CLOSE);
         }
       }
       line.append("\n");

@@ -25,8 +25,8 @@ import org.wikipediacleaner.api.data.PageElementTag.Parameter;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
 import org.wikipediacleaner.api.data.contents.ContentsUtil;
 import org.wikipediacleaner.api.data.contents.comment.ContentsComment;
-import org.wikipediacleaner.api.data.contents.tag.ContentsTagBuilder;
-import org.wikipediacleaner.api.data.contents.tag.ContentsTagFormat;
+import org.wikipediacleaner.api.data.contents.tag.TagBuilder;
+import org.wikipediacleaner.api.data.contents.tag.TagFormat;
 import org.wikipediacleaner.api.data.contents.template.TemplateBuilder;
 import org.wikipediacleaner.gui.swing.component.MWPane;
 import org.wikipediacleaner.i18n.GT;
@@ -332,7 +332,7 @@ public class CheckErrorAlgorithm002 extends CheckErrorAlgorithmBase {
         !previousTag.isComplete() &&
         !previousTag.isEndTag()) {
       errorResult.addReplacement(
-          ContentsTagBuilder.from(tagName, ContentsTagFormat.CLOSE).toString());
+          TagBuilder.from(tagName, TagFormat.CLOSE).toString());
     }
 
     // Check for clear tags (<div clear="..."/>)
@@ -464,7 +464,7 @@ public class CheckErrorAlgorithm002 extends CheckErrorAlgorithmBase {
           result = true;
           CheckErrorResult errorResult = createCheckErrorResult(analysis, beginIndex, currentIndex);
           errorResult.addReplacement(
-              ContentsTagBuilder.from(selectedTagName, ContentsTagFormat.CLOSE).toString());
+              TagBuilder.from(selectedTagName, TagFormat.CLOSE).toString());
           errors.add(errorResult);
         }
       }
@@ -576,7 +576,7 @@ public class CheckErrorAlgorithm002 extends CheckErrorAlgorithmBase {
               CheckErrorResult errorResult = createCheckErrorResult(
                   analysis, currentIndex, tmpIndex);
               errorResult.addReplacement(
-                  ContentsTagBuilder.from(tagName, false, close).toString(),
+                  TagBuilder.from(tagName, false, close).toString(),
                   automatic);
               errors.add(errorResult);
               nextIndex = tmpIndex;
@@ -627,10 +627,10 @@ public class CheckErrorAlgorithm002 extends CheckErrorAlgorithmBase {
           }
           if (extra || (tag.getParametersCount() > 0)) {
             errorResult.addReplacement(
-                ContentsTagBuilder.from(tagName, ContentsTagFormat.FULL).toString(),
+                TagBuilder.from(tagName, TagFormat.FULL).toString(),
                 false);
             errorResult.addReplacement(
-                ContentsTagBuilder.from(tagName, ContentsTagFormat.OPEN).toString(),
+                TagBuilder.from(tagName, TagFormat.OPEN).toString(),
                 false);
           }
           errors.add(errorResult);

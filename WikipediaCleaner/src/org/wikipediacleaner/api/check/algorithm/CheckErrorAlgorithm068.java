@@ -25,7 +25,7 @@ import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.Interwiki;
 import org.wikipediacleaner.api.data.PageElementInterwikiLink;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
-import org.wikipediacleaner.api.data.contents.ilink.ContentsInternalLinkBuilder;
+import org.wikipediacleaner.api.data.contents.ilink.InternalLinkBuilder;
 import org.wikipediacleaner.api.data.contents.template.TemplateBuilder;
 import org.wikipediacleaner.gui.swing.action.ActionExternalViewer;
 import org.wikipediacleaner.gui.swing.basic.Utilities;
@@ -295,15 +295,15 @@ public class CheckErrorAlgorithm068 extends CheckErrorAlgorithmBase {
               // List possible replacements
               List<String> possibleValues = new ArrayList<String>();
               String possible = null;
-              possible = ContentsInternalLinkBuilder.from(toTitle).withText(link.getText()).toString();
+              possible = InternalLinkBuilder.from(toTitle).withText(link.getText()).toString();
               if (!possibleValues.contains(possible)) {
                 possibleValues.add(possible);
               }
-              possible = ContentsInternalLinkBuilder.from(toTitle).withText(link.getFullLink()).toString();
+              possible = InternalLinkBuilder.from(toTitle).withText(link.getFullLink()).toString();
               if (!possibleValues.contains(possible)) {
                 possibleValues.add(possible);
               }
-              possible = ContentsInternalLinkBuilder.from(toTitle).toString();
+              possible = InternalLinkBuilder.from(toTitle).toString();
               if (!possibleValues.contains(possible)) {
                 possibleValues.add(possible);
               }

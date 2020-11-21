@@ -27,8 +27,8 @@ import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.TemplateMatcher;
-import org.wikipediacleaner.api.data.contents.comment.ContentsCommentBuilder;
-import org.wikipediacleaner.api.data.contents.ilink.ContentsInternalLinkBuilder;
+import org.wikipediacleaner.api.data.contents.comment.CommentBuilder;
+import org.wikipediacleaner.api.data.contents.ilink.InternalLinkBuilder;
 import org.wikipediacleaner.api.data.contents.template.TemplateBuilder;
 import org.wikipediacleaner.gui.swing.action.ChangePreferredDisambiguationAction;
 import org.wikipediacleaner.gui.swing.action.MarkLinkAction;
@@ -98,8 +98,8 @@ public class MWPaneDisambiguationMenuCreator extends BasicMenuCreator {
           JMenu submenu = new JMenu(GT._T("Mark as normal link"));
           for (String comment : comments) {
             String replacement =
-                ContentsInternalLinkBuilder.from(page.getTitle()).withText(text).toString() +
-                ContentsCommentBuilder.from(comment).toString();
+                InternalLinkBuilder.from(page.getTitle()).withText(text).toString() +
+                CommentBuilder.from(comment).toString();
             addItem(
                 submenu, null, GT._T("Using {0}", comment), true,
                 new ReplaceTextAction(page, replacement, element, textPane));
@@ -107,8 +107,8 @@ public class MWPaneDisambiguationMenuCreator extends BasicMenuCreator {
           popup.add(submenu);
         } else {
           String replacement =
-              ContentsInternalLinkBuilder.from(page.getTitle()).withText(text).toString() +
-              ContentsCommentBuilder.from(comments.get(0)).toString();
+              InternalLinkBuilder.from(page.getTitle()).withText(text).toString() +
+              CommentBuilder.from(comments.get(0)).toString();
           addItem(
               popup, null, GT._T("Mark as normal link using comment"), true,
               new ReplaceTextAction(page, replacement, element, textPane));
@@ -520,7 +520,7 @@ public class MWPaneDisambiguationMenuCreator extends BasicMenuCreator {
       }
 
       if (!Page.areSameTitle(text, page.getTitle())) {
-        String newLink = ContentsInternalLinkBuilder.from(text).withText(page.getTitle()).toString();
+        String newLink = InternalLinkBuilder.from(text).withText(page.getTitle()).toString();
         addItem(
             popup, null, GT._T("Reverse to {0}", newLink), true,
             new RevertLinkAction(page.getTitle(), text, element, textPane), null);
@@ -550,7 +550,7 @@ public class MWPaneDisambiguationMenuCreator extends BasicMenuCreator {
       }
 
       if (!Page.areSameTitle(text, page.getTitle())) {
-        String newLink = ContentsInternalLinkBuilder.from(text).withText(page.getTitle()).toString();
+        String newLink = InternalLinkBuilder.from(text).withText(page.getTitle()).toString();
         addItem(
             popup, null, GT._T("Reverse to {0}", newLink), true,
             new RevertLinkAction(page.getTitle(), text, element, textPane));
@@ -559,7 +559,7 @@ public class MWPaneDisambiguationMenuCreator extends BasicMenuCreator {
     // Missing page
     } else if (Boolean.FALSE.equals(page.isExisting())) {
       if (!Page.areSameTitle(text, page.getTitle())) {
-        String newLink = ContentsInternalLinkBuilder.from(text).withText(page.getTitle()).toString();
+        String newLink = InternalLinkBuilder.from(text).withText(page.getTitle()).toString();
         addItem(
             popup, null, GT._T("Reverse to {0}", newLink), true,
             new RevertLinkAction(page.getTitle(), text, element, textPane));
@@ -782,7 +782,7 @@ public class MWPaneDisambiguationMenuCreator extends BasicMenuCreator {
    */
   private String createTextForTemplateAfterLink(List<String> template, String pageTitle, String text) {
     StringBuilder newText = new StringBuilder();
-    newText.append(ContentsInternalLinkBuilder.from(pageTitle).withText(text).toString());
+    newText.append(InternalLinkBuilder.from(pageTitle).withText(text).toString());
     TemplateBuilder builder = TemplateBuilder.from(template.get(0));
     for (int i = 1; i < template.size(); i++) {
       builder.addParam(template.get(i));

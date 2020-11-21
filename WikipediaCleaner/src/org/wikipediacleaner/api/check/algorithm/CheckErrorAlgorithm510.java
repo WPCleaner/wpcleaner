@@ -14,7 +14,7 @@ import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.data.PageElementInternalLink;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
-import org.wikipediacleaner.api.data.contents.ilink.ContentsInternalLinkBuilder;
+import org.wikipediacleaner.api.data.contents.ilink.InternalLinkBuilder;
 
 
 /**
@@ -92,12 +92,12 @@ public class CheckErrorAlgorithm510 extends CheckErrorAlgorithmBase {
             }
             CheckErrorResult errorResult = createCheckErrorResult(
                 analysis, link.getBeginIndex(), link.getEndIndex());
-            String replacement = ContentsInternalLinkBuilder
+            String replacement = InternalLinkBuilder
                 .from(target)
                 .withText(target.substring(beginIndex, endIndex))
                 .toString();
             errorResult.addReplacement(replacement);
-            replacement = ContentsInternalLinkBuilder.from(target).toString();
+            replacement = InternalLinkBuilder.from(target).toString();
             errorResult.addReplacement(replacement);
             errors.add(errorResult);
           }
@@ -114,9 +114,9 @@ public class CheckErrorAlgorithm510 extends CheckErrorAlgorithmBase {
             errorFound = true;
             CheckErrorResult errorResult = createCheckErrorResult(
                 analysis, link.getBeginIndex(), link.getEndIndex());
-            String replacement = ContentsInternalLinkBuilder.from(target + "/").toString();
+            String replacement = InternalLinkBuilder.from(target + "/").toString();
             errorResult.addReplacement(replacement);
-            replacement = ContentsInternalLinkBuilder.from(target).toString();
+            replacement = InternalLinkBuilder.from(target).toString();
             errorResult.addReplacement(replacement);
             errors.add(errorResult);
           }
@@ -133,12 +133,12 @@ public class CheckErrorAlgorithm510 extends CheckErrorAlgorithmBase {
             errorFound = true;
             CheckErrorResult errorResult = createCheckErrorResult(
                 analysis, link.getBeginIndex(), link.getEndIndex());
-            String replacement = ContentsInternalLinkBuilder
+            String replacement = InternalLinkBuilder
                 .from(target)
                 .withText(target.substring(index + 1))
                 .toString();
             errorResult.addReplacement(replacement);
-            replacement = ContentsInternalLinkBuilder.from(target).toString();
+            replacement = InternalLinkBuilder.from(target).toString();
             errorResult.addReplacement(replacement);
             errors.add(errorResult);
           }

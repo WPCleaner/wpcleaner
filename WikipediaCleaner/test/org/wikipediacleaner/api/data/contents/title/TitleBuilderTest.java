@@ -15,13 +15,13 @@ import org.junit.Test;
 /**
  * Test class for comments builder.
  */
-public class ContentsTitleBuilderTest {
+public class TitleBuilderTest {
 
   @Test
   public void simpleTitle() {
 
     // Create title
-    String title = ContentsTitleBuilder.from(1, "TITLE").toString();
+    String title = TitleBuilder.from(1, "TITLE").toString();
 
     // Check title
     assertNotNull(
@@ -36,7 +36,7 @@ public class ContentsTitleBuilderTest {
   public void simpleTitleOtherLevel() {
 
     // Create title
-    String title = ContentsTitleBuilder.from(3, "TITLE").toString();
+    String title = TitleBuilder.from(3, "TITLE").toString();
 
     // Check title
     assertNotNull(
@@ -51,7 +51,7 @@ public class ContentsTitleBuilderTest {
   public void simpleTitleUnbalancedLevel() {
 
     // Create title
-    String title = ContentsTitleBuilder.from(3, "TITLE").withSecondLevel(2).toString();
+    String title = TitleBuilder.from(3, "TITLE").withSecondLevel(2).toString();
 
     // Check title
     assertNotNull(
@@ -66,7 +66,7 @@ public class ContentsTitleBuilderTest {
   public void simpleNoTrim() {
 
     // Create title
-    String title = ContentsTitleBuilder.from(3, "  TITLE").withTrimTitle(false).toString();
+    String title = TitleBuilder.from(3, "  TITLE").withTrimTitle(false).toString();
 
     // Check title
     assertNotNull(
@@ -81,7 +81,7 @@ public class ContentsTitleBuilderTest {
   public void nullTitle() {
 
     // Create title
-    String title = ContentsTitleBuilder.from(3, null).toString();
+    String title = TitleBuilder.from(3, null).toString();
 
     // Check title
     assertNotNull(
@@ -96,7 +96,7 @@ public class ContentsTitleBuilderTest {
   public void emptyAfter() {
 
     // Create title
-    String title = ContentsTitleBuilder.from(3, "TITLE").withAfter("").toString();
+    String title = TitleBuilder.from(3, "TITLE").withAfter("").toString();
 
     // Check title
     assertNotNull(
@@ -111,7 +111,7 @@ public class ContentsTitleBuilderTest {
   public void withAfter() {
 
     // Create title
-    String title = ContentsTitleBuilder.from(3, "TITLE").withAfter("AFTER").toString();
+    String title = TitleBuilder.from(3, "TITLE").withAfter("AFTER").toString();
 
     // Check title
     assertNotNull(
@@ -126,7 +126,7 @@ public class ContentsTitleBuilderTest {
   public void withAfterNoTrim() {
 
     // Create title
-    String title = ContentsTitleBuilder.from(3, "TITLE").withAfter("AFTER ").withTrimAfter(false).toString();
+    String title = TitleBuilder.from(3, "TITLE").withAfter("AFTER ").withTrimAfter(false).toString();
 
     // Check title
     assertNotNull(

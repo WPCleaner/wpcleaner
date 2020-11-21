@@ -17,7 +17,7 @@ import org.wikipediacleaner.api.data.contents.ContentsUtil;
 /**
  * Builder class.
  */
-public class ContentsCommentBuilder {
+public class CommentBuilder {
 
   /** Text of the comment */
   @Nonnull
@@ -26,7 +26,7 @@ public class ContentsCommentBuilder {
   /**
    * Private constructor.
    */
-  private ContentsCommentBuilder() {
+  private CommentBuilder() {
     // Nothing to do
   }
 
@@ -36,8 +36,8 @@ public class ContentsCommentBuilder {
    * @param comment Text of the comment.
    * @return Builder initialized with the text of the comment.
    */
-  public static @Nonnull ContentsCommentBuilder from(@Nullable String comment) {
-    ContentsCommentBuilder builder = new ContentsCommentBuilder();
+  public static @Nonnull CommentBuilder from(@Nullable String comment) {
+    CommentBuilder builder = new CommentBuilder();
     builder.comment = StringUtils.defaultIfEmpty(comment, StringUtils.EMPTY);
     return builder;
   }

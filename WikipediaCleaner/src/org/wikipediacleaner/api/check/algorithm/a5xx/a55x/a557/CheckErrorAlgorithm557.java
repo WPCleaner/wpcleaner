@@ -25,7 +25,7 @@ import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageElementInternalLink;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
-import org.wikipediacleaner.api.data.contents.ilink.ContentsInternalLinkBuilder;
+import org.wikipediacleaner.api.data.contents.ilink.InternalLinkBuilder;
 import org.wikipediacleaner.gui.swing.action.ActionExternalViewer;
 import org.wikipediacleaner.i18n.GT;
 
@@ -152,7 +152,7 @@ public class CheckErrorAlgorithm557 extends CheckErrorAlgorithmBase {
         // Move the white space or apostrophe before the internal link
         replacement =
             prefix + firstChar +
-            ContentsInternalLinkBuilder
+            InternalLinkBuilder
                 .from(link.getLink())
                 .withAnchor(link.getAnchor())
                 .withText(displayedText.substring(1))
@@ -190,7 +190,7 @@ public class CheckErrorAlgorithm557 extends CheckErrorAlgorithmBase {
     } else {
 
       // Include the text before the internal link
-      replacement = ContentsInternalLinkBuilder
+      replacement = InternalLinkBuilder
           .from(link.getLink())
           .withAnchor(link.getAnchor())
           .withText(prefix + displayedText)
@@ -205,7 +205,7 @@ public class CheckErrorAlgorithm557 extends CheckErrorAlgorithmBase {
         String fullPrefix = prefix + displayedText.substring(0, spaceIndex + 1);
         replacement =
             fullPrefix +
-            ContentsInternalLinkBuilder
+            InternalLinkBuilder
                 .from(link.getLink())
                 .withAnchor(link.getAnchor())
                 .withText(displayedText.substring(spaceIndex + 1))
@@ -234,7 +234,7 @@ public class CheckErrorAlgorithm557 extends CheckErrorAlgorithmBase {
 
       // Include the prefix in the link target
       if (StringUtils.isEmpty(link.getText())) {
-        replacement = ContentsInternalLinkBuilder
+        replacement = InternalLinkBuilder
             .from(prefix + displayedText)
             .withAnchor(link.getAnchor())
             .withText(prefix + displayedText)

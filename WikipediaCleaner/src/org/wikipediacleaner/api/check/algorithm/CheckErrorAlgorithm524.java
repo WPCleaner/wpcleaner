@@ -30,7 +30,7 @@ import org.wikipediacleaner.api.data.Page.RelatedPages;
 import org.wikipediacleaner.api.data.PageElementTemplate.Parameter;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
 import org.wikipediacleaner.api.data.contents.ContentsUtil;
-import org.wikipediacleaner.api.data.contents.comment.ContentsCommentBuilder;
+import org.wikipediacleaner.api.data.contents.comment.CommentBuilder;
 import org.wikipediacleaner.i18n.GT;
 
 
@@ -229,7 +229,7 @@ public class CheckErrorAlgorithm524 extends CheckErrorAlgorithmBase {
                        Character.isWhitespace(contents.charAt(tmpIndex - 1))) {
                   tmpIndex--;
                 }
-                replacement.append(ContentsCommentBuilder.from(contents.substring(pipeBefore, tmpIndex)).toString());
+                replacement.append(CommentBuilder.from(contents.substring(pipeBefore, tmpIndex)).toString());
                 if (paramEnd > tmpIndex) {
                   replacement.append(contents.substring(tmpIndex, paramEnd));
                 }

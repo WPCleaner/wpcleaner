@@ -39,7 +39,7 @@ import org.wikipediacleaner.api.data.QueryResult;
 import org.wikipediacleaner.api.data.Section;
 import org.wikipediacleaner.api.data.User;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
-import org.wikipediacleaner.api.data.contents.comment.ContentsCommentBuilder;
+import org.wikipediacleaner.api.data.contents.comment.CommentBuilder;
 import org.wikipediacleaner.api.data.contents.template.TemplateBuilder;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
 import org.wikipediacleaner.gui.swing.basic.BasicWorker;
@@ -1079,7 +1079,7 @@ public abstract class UpdateWarningTools {
     talkText.append(" -- ~~~~~");
     String comment = configuration.getString(getWarningTemplateComment());
     if (comment != null) {
-      talkText.append(ContentsCommentBuilder.from(comment).toString());
+      talkText.append(CommentBuilder.from(comment).toString());
     }
   }
 

@@ -16,7 +16,7 @@ import javax.swing.text.Element;
 import javax.swing.text.JTextComponent;
 import javax.swing.text.TextAction;
 
-import org.wikipediacleaner.api.data.contents.ilink.ContentsInternalLinkBuilder;
+import org.wikipediacleaner.api.data.contents.ilink.InternalLinkBuilder;
 import org.wikipediacleaner.gui.swing.basic.Utilities;
 import org.wikipediacleaner.gui.swing.component.MWPaneFormatter;
 import org.wikipediacleaner.utils.StringChecker;
@@ -167,7 +167,7 @@ public class AddInternalLinkAction extends TextAction {
       if (prefix != null) {
         newText.append(prefix);
       }
-      newText.append(ContentsInternalLinkBuilder
+      newText.append(InternalLinkBuilder
           .from(article)
           .withAnchor(anchor)
           .withText(value)

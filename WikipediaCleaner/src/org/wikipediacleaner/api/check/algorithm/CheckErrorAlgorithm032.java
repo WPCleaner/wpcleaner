@@ -15,7 +15,7 @@ import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.PageElementInternalLink;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
-import org.wikipediacleaner.api.data.contents.ilink.ContentsInternalLinkBuilder;
+import org.wikipediacleaner.api.data.contents.ilink.InternalLinkBuilder;
 
 
 /**
@@ -124,7 +124,7 @@ public class CheckErrorAlgorithm032 extends CheckErrorAlgorithmBase {
             int endText = (i < pipeIndex.size()) ? pipeIndex.get(i).intValue() : text.length();
             if ((beginText < endText) &&
                 (text.substring(beginText, endText).trim().length() > 0)) {
-              String replacement = ContentsInternalLinkBuilder
+              String replacement = InternalLinkBuilder
                   .from(link.getLink())
                   .withAnchor(link.getAnchor())
                   .withText(text.substring(beginText, endText))
@@ -140,7 +140,7 @@ public class CheckErrorAlgorithm032 extends CheckErrorAlgorithmBase {
               analysis, link.getBeginIndex(), link.getEndIndex());
           boolean emptyLink = false;
           if ((link.getFullLink() == null) || (link.getFullLink().trim().length() == 0)) {
-            errorResult.addReplacement(ContentsInternalLinkBuilder.from(link.getText()).toString());
+            errorResult.addReplacement(InternalLinkBuilder.from(link.getText()).toString());
             emptyLink = true;
           }
           for (String replacement : replacements) {

@@ -30,7 +30,7 @@ import org.wikipediacleaner.api.data.PageElementImage.Parameter;
 import org.wikipediacleaner.api.data.PageElementParameter;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
-import org.wikipediacleaner.api.data.contents.comment.ContentsCommentBuilder;
+import org.wikipediacleaner.api.data.contents.comment.CommentBuilder;
 import org.wikipediacleaner.api.data.PageElementTemplate;
 
 
@@ -911,7 +911,7 @@ public class CheckErrorAlgorithm534 extends CheckErrorAlgorithmBase {
         String contents = analysis.getContents();
         String replacement =
             contents.substring(beginIndexKeep - 1, endIndexKeep) +
-            ContentsCommentBuilder.from(contents.substring(beginIndex, endIndex)).toString();
+            CommentBuilder.from(contents.substring(beginIndex, endIndex)).toString();
         errorResult.addReplacement(replacement, automatic);
         errors.add(errorResult);
       }

@@ -21,7 +21,7 @@ import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.PageElementTemplate.Parameter;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
-import org.wikipediacleaner.api.data.contents.tag.ContentsTagBuilder;
+import org.wikipediacleaner.api.data.contents.tag.TagBuilder;
 import org.wikipediacleaner.api.data.contents.template.TemplateBuilder;
 
 
@@ -37,15 +37,15 @@ public class CheckErrorAlgorithm102 extends CheckErrorAlgorithmBase {
 
   /** List of strings that could be before a PMID in <nowiki>. */
   private final static String[] EXTEND_BEFORE_NOWIKI = {
-    ContentsTagBuilder.NOWIKI_OPEN,
-    ContentsTagBuilder.SMALL_OPEN,
+    TagBuilder.NOWIKI_OPEN,
+    TagBuilder.SMALL_OPEN,
     "(",
   };
 
   /** List of strings that could be after a PMID in <nowiki>. */
   private final static String[] EXTEND_AFTER_NOWIKI = {
-    ContentsTagBuilder.NOWIKI_CLOSE,
-    ContentsTagBuilder.SMALL_CLOSE,
+    TagBuilder.NOWIKI_CLOSE,
+    TagBuilder.SMALL_CLOSE,
     ")",
   };
 

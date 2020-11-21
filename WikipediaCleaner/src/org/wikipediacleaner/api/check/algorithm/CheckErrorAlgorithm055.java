@@ -19,8 +19,8 @@ import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.PageElementTemplate.Parameter;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
-import org.wikipediacleaner.api.data.contents.tag.ContentsFullTagBuilder;
-import org.wikipediacleaner.api.data.contents.tag.ContentsTagBuilder;
+import org.wikipediacleaner.api.data.contents.tag.FullTagBuilder;
+import org.wikipediacleaner.api.data.contents.tag.TagBuilder;
 import org.wikipediacleaner.i18n.GT;
 
 
@@ -79,7 +79,7 @@ public class CheckErrorAlgorithm055 extends CheckErrorAlgorithmBase {
               analysis,
               tag.getBeginIndex(), tag.getEndIndex());
           if (previousUnclosedTag) {
-            errorResult.addReplacement(ContentsTagBuilder.SMALL_CLOSE);
+            errorResult.addReplacement(TagBuilder.SMALL_CLOSE);
           }
           errorResult.addReplacement("");
           errors.add(errorResult);
@@ -127,8 +127,8 @@ public class CheckErrorAlgorithm055 extends CheckErrorAlgorithmBase {
                   level0Tag.getBeginIndex(), possibleEnd,
                   ErrorLevel.WARNING);
               errorResult.addReplacement(
-                  contents.substring(level0Tag.getBeginIndex(), possibleEnd) + ContentsTagBuilder.SMALL_CLOSE,
-                  ContentsFullTagBuilder.SMALL);
+                  contents.substring(level0Tag.getBeginIndex(), possibleEnd) + TagBuilder.SMALL_CLOSE,
+                  FullTagBuilder.SMALL);
               errors.add(errorResult);
             } else {
               CheckErrorResult errorResult = createCheckErrorResult(
@@ -154,8 +154,8 @@ public class CheckErrorAlgorithm055 extends CheckErrorAlgorithmBase {
             CheckErrorResult errorResult = createCheckErrorResult(
                 analysis, tag.getBeginIndex(), possibleEnd);
             errorResult.addReplacement(
-                contents.substring(tag.getBeginIndex(), possibleEnd) + ContentsTagBuilder.SMALL_CLOSE,
-                ContentsFullTagBuilder.SMALL);
+                contents.substring(tag.getBeginIndex(), possibleEnd) + TagBuilder.SMALL_CLOSE,
+                FullTagBuilder.SMALL);
             errors.add(errorResult);
           } else {
             CheckErrorResult errorResult = createCheckErrorResult(
@@ -168,7 +168,7 @@ public class CheckErrorAlgorithm055 extends CheckErrorAlgorithmBase {
                   GT._T("Remove {0} tags", PageElementTag.TAG_HTML_SMALL));
             }
             if (!tag.isComplete() && !tag.isFullTag() && !tag.isEndTag() && previousUnclosedTag) {
-              errorResult.addReplacement(ContentsTagBuilder.SMALL_CLOSE);
+              errorResult.addReplacement(TagBuilder.SMALL_CLOSE);
             }
             errors.add(errorResult);
             if (tag.isComplete()) {

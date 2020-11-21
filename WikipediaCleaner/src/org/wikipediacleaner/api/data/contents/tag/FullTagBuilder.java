@@ -17,7 +17,7 @@ import org.wikipediacleaner.api.data.PageElementTag;
 /**
  * Builder class.
  */
-public class ContentsFullTagBuilder {
+public class FullTagBuilder {
 
   private static final String ELLIPSIS = "...";
 
@@ -31,15 +31,15 @@ public class ContentsFullTagBuilder {
 
   /** Builder for the opening tag */
   @Nonnull
-  private final ContentsTagBuilder openingTagBuilder;
+  private final TagBuilder openingTagBuilder;
 
   /** Builder for the closing tag */
   @Nonnull
-  private final ContentsTagBuilder closingTagBuilder;
+  private final TagBuilder closingTagBuilder;
 
   /** Builder for the full tag */
   @Nonnull
-  private final ContentsTagBuilder fullTagBuilder;
+  private final TagBuilder fullTagBuilder;
 
   /** Contents between the opening and closing tags */
   @Nonnull
@@ -54,10 +54,10 @@ public class ContentsFullTagBuilder {
    * @param tagName Name of the tag.
    * @param contents Contents between the opening and closing tags.
    */
-  private ContentsFullTagBuilder(@Nonnull String name, @Nullable String contents) {
-    this.openingTagBuilder = ContentsTagBuilder.from(name, ContentsTagFormat.OPEN);
-    this.closingTagBuilder = ContentsTagBuilder.from(name, ContentsTagFormat.CLOSE);
-    this.fullTagBuilder = ContentsTagBuilder.from(name, ContentsTagFormat.FULL);
+  private FullTagBuilder(@Nonnull String name, @Nullable String contents) {
+    this.openingTagBuilder = TagBuilder.from(name, TagFormat.OPEN);
+    this.closingTagBuilder = TagBuilder.from(name, TagFormat.CLOSE);
+    this.fullTagBuilder = TagBuilder.from(name, TagFormat.FULL);
     this.contents = StringUtils.defaultIfEmpty(contents, "");
   }
 
@@ -68,8 +68,8 @@ public class ContentsFullTagBuilder {
    * @param contents Contents between the opening and closing tags.
    * @return Builder initialized with the name and format of the tag.
    */
-  public static @Nonnull ContentsFullTagBuilder from(@Nonnull String tagName, @Nullable String contents) {
-    ContentsFullTagBuilder builder = new ContentsFullTagBuilder(tagName, contents);
+  public static @Nonnull FullTagBuilder from(@Nonnull String tagName, @Nullable String contents) {
+    FullTagBuilder builder = new FullTagBuilder(tagName, contents);
     return builder;
   }
 
@@ -80,7 +80,7 @@ public class ContentsFullTagBuilder {
    * @param attributeValue Value of the attribute.
    * @return Builder with the added attribute.
    */
-  public @Nonnull ContentsFullTagBuilder addAttribute(@Nonnull String attributeName, @Nullable String attributeValue) {
+  public @Nonnull FullTagBuilder addAttribute(@Nonnull String attributeName, @Nullable String attributeValue) {
     openingTagBuilder.addAttribute(attributeName, attributeValue);
     fullTagBuilder.addAttribute(attributeName, attributeValue);
     return this;
@@ -92,7 +92,7 @@ public class ContentsFullTagBuilder {
    * @param force True to force the generation of opening and closing tags even if contents is empty.
    * @return Builder with the changed configuration.
    */
-  public @Nonnull ContentsFullTagBuilder withForceOpenCloseTags(boolean force) {
+  public @Nonnull FullTagBuilder withForceOpenCloseTags(boolean force) {
     this.forceOpenCloseTags = force;
     return this;
   }

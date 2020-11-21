@@ -23,7 +23,7 @@ import org.wikipediacleaner.api.APIFactory;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.DataManager;
 import org.wikipediacleaner.api.data.Page;
-import org.wikipediacleaner.api.data.contents.ilink.ContentsInternalLinkBuilder;
+import org.wikipediacleaner.api.data.contents.ilink.InternalLinkBuilder;
 import org.wikipediacleaner.gui.swing.basic.Utilities;
 import org.wikipediacleaner.i18n.GT;
 
@@ -84,15 +84,15 @@ public class CheckLanguageLinkAction extends TextAction {
           message.append(GT._T(
               "The page {0} in \"{1}\" has a language link to \"{2}\": {3}.",
               new Object[] { title, fromWiki.toString(), toWiki.toString(), languageLink } ));
-          String value = ContentsInternalLinkBuilder.from(languageLink).withText(text).toString();
+          String value = InternalLinkBuilder.from(languageLink).withText(text).toString();
           if (!values.contains(value)) {
             values.add(value);
           }
-          value = ContentsInternalLinkBuilder.from(languageLink).toString();
+          value = InternalLinkBuilder.from(languageLink).toString();
           if (!values.contains(value)) {
             values.add(value);
           }
-          value = ContentsInternalLinkBuilder.from(languageLink).withText(title).toString();
+          value = InternalLinkBuilder.from(languageLink).withText(title).toString();
           if (!values.contains(value)) {
             values.add(value);
           }
@@ -118,11 +118,11 @@ public class CheckLanguageLinkAction extends TextAction {
           message.append(GT._T(
               "The page {0} exists in \"{1}\".",
               new Object[] { title, toWiki.toString() } ));
-          String value = ContentsInternalLinkBuilder.from(title).withText(text).toString();
+          String value = InternalLinkBuilder.from(title).withText(text).toString();
           if (!values.contains(value)) {
             values.add(value);
           }
-          value = ContentsInternalLinkBuilder.from(title).toString();
+          value = InternalLinkBuilder.from(title).toString();
           if (!values.contains(value)) {
             values.add(value);
           }

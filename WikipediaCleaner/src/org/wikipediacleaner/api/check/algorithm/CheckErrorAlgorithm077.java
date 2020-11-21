@@ -14,7 +14,7 @@ import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.data.PageElementImage;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
-import org.wikipediacleaner.api.data.contents.tag.ContentsTagBuilder;
+import org.wikipediacleaner.api.data.contents.tag.TagBuilder;
 import org.wikipediacleaner.i18n.GT;
 
 
@@ -91,7 +91,7 @@ public class CheckErrorAlgorithm077 extends CheckErrorAlgorithmBase {
             }
             errorResult.addReplacement(
                 image.getDescriptionReplacement(replacement.toString()),
-                GT._T("Remove {0} tags", ContentsTagBuilder.SMALL_OPEN));
+                GT._T("Remove {0} tags", TagBuilder.SMALL_OPEN));
             errors.add(errorResult);
           }
         }

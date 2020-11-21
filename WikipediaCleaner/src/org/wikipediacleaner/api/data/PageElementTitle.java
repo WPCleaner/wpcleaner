@@ -12,7 +12,7 @@ import java.util.List;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.contents.comment.ContainerComment;
 import org.wikipediacleaner.api.data.contents.comment.ContentsComment;
-import org.wikipediacleaner.api.data.contents.title.ContentsTitleBuilder;
+import org.wikipediacleaner.api.data.contents.title.TitleBuilder;
 
 
 /**
@@ -248,7 +248,7 @@ public class PageElementTitle extends PageElement {
    */
   @Override
   public String toString() {
-    return ContentsTitleBuilder
+    return TitleBuilder
         .from(firstLevel, titleNotTrimmed)
         .withSecondLevel(secondLevel)
         .withTrimTitle(false)

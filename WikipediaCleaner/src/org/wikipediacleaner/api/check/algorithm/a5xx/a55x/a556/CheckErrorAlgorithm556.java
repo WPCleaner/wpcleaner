@@ -26,9 +26,9 @@ import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.PageElementTemplate.Parameter;
 import org.wikipediacleaner.api.data.PageElementTitle;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
-import org.wikipediacleaner.api.data.contents.tag.ContentsFullTagBuilder;
-import org.wikipediacleaner.api.data.contents.tag.ContentsTagBuilder;
-import org.wikipediacleaner.api.data.contents.tag.ContentsTagFormat;
+import org.wikipediacleaner.api.data.contents.tag.FullTagBuilder;
+import org.wikipediacleaner.api.data.contents.tag.TagBuilder;
+import org.wikipediacleaner.api.data.contents.tag.TagFormat;
 import org.wikipediacleaner.i18n.GT;
 
 
@@ -130,14 +130,14 @@ public class CheckErrorAlgorithm556 extends CheckErrorAlgorithmBase {
     }
     int endIndex = link.getEndIndex();
     CheckErrorResult errorResult = createCheckErrorResult(analysis, beginIndex, endIndex);
-    String replacement = ContentsFullTagBuilder.from(
+    String replacement = FullTagBuilder.from(
         PageElementTag.TAG_WIKI_REF,
         analysis.getContents().substring(beginIndex, endIndex)).toString();
     errorResult.addReplacement(
         replacement,
         GT._T(
             "Add inside a {0} tag",
-            ContentsTagBuilder.from(PageElementTag.TAG_WIKI_REF, ContentsTagFormat.FULL).toString()));
+            TagBuilder.from(PageElementTag.TAG_WIKI_REF, TagFormat.FULL).toString()));
     if (link.hasSquare() && link.hasSecondSquare()) {
       errorResult.addReplacement(link.getDisplayedText());
     }

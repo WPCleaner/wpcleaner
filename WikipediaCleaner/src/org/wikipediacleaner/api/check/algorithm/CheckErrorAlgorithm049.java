@@ -13,7 +13,7 @@ import java.util.List;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
-import org.wikipediacleaner.api.data.contents.title.ContentsTitleBuilder;
+import org.wikipediacleaner.api.data.contents.title.TitleBuilder;
 
 
 /**
@@ -87,7 +87,7 @@ public class CheckErrorAlgorithm049 extends CheckErrorAlgorithmBase {
             // Create error
             CheckErrorResult errorResult = createCheckErrorResult(
                 analysis, tag.getCompleteBeginIndex(), tag.getCompleteEndIndex());
-            errorResult.addReplacement(ContentsTitleBuilder.from(
+            errorResult.addReplacement(TitleBuilder.from(
                 level + 1, replacement).toString());
             errors.add(errorResult);
           }

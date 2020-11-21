@@ -23,7 +23,7 @@ import org.wikipediacleaner.api.data.PageElementInternalLink;
 import org.wikipediacleaner.api.data.PageElementInterwikiLink;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
-import org.wikipediacleaner.api.data.contents.ilink.ContentsInternalLinkBuilder;
+import org.wikipediacleaner.api.data.contents.ilink.InternalLinkBuilder;
 
 
 /**
@@ -122,7 +122,7 @@ public class CheckErrorAlgorithm535 extends CheckErrorAlgorithmBase {
                 analysis, fontTag.getCompleteBeginIndex(), fontTag.getCompleteEndIndex());
             String replacement =
               contents.substring(fontTag.getValueBeginIndex(), valueBeginIndex) +
-              ContentsInternalLinkBuilder
+              InternalLinkBuilder
                 .from(iLink.getLink())
                 .withAnchor(iLink.getAnchor())
                 .withText(openFont + iLink.getDisplayedText() + closeFont)
@@ -130,7 +130,7 @@ public class CheckErrorAlgorithm535 extends CheckErrorAlgorithmBase {
               contents.substring(valueEndIndex, fontTag.getValueEndIndex());
             String text =
               contents.substring(fontTag.getValueBeginIndex(), valueBeginIndex) +
-              ContentsInternalLinkBuilder.from(iLink.getLink()).withText(openFont + "..." + closeFont).toString() +
+              InternalLinkBuilder.from(iLink.getLink()).withText(openFont + "..." + closeFont).toString() +
               contents.substring(valueEndIndex, fontTag.getValueEndIndex());
             errorResult.addReplacement(replacement, text, automatic);
             errors.add(errorResult);

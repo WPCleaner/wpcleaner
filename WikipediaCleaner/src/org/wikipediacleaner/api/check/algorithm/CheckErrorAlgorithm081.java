@@ -26,7 +26,7 @@ import org.wikipediacleaner.api.data.PageElementExternalLink;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.PageElementTag.Parameter;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
-import org.wikipediacleaner.api.data.contents.tag.ContentsFullTagBuilder;
+import org.wikipediacleaner.api.data.contents.tag.FullTagBuilder;
 import org.wikipediacleaner.gui.swing.action.ActionExternalViewer;
 import org.wikipediacleaner.gui.swing.basic.Utilities;
 import org.wikipediacleaner.gui.swing.component.MWPane;
@@ -137,7 +137,7 @@ public class CheckErrorAlgorithm081 extends CheckErrorAlgorithmBase {
    * @return Reference tag.
    */
   private String getClosedRefTag(String groupName, String tagName, String value) {
-    ContentsFullTagBuilder builder = ContentsFullTagBuilder.from(PageElementTag.TAG_WIKI_REF, StringUtils.trim(value));
+    FullTagBuilder builder = FullTagBuilder.from(PageElementTag.TAG_WIKI_REF, StringUtils.trim(value));
     if ((groupName != null) && (groupName.trim().length() > 0)) {
       builder.addAttribute("group", groupName.trim());
     }

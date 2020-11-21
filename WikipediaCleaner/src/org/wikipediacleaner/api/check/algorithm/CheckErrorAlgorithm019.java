@@ -14,7 +14,7 @@ import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageElementTitle;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
-import org.wikipediacleaner.api.data.contents.title.ContentsTitleBuilder;
+import org.wikipediacleaner.api.data.contents.title.TitleBuilder;
 
 
 /**
@@ -63,7 +63,7 @@ public class CheckErrorAlgorithm019 extends CheckErrorAlgorithmBase {
         if (firstDetection) {
           if (titleIndex == titles.size() - 1) {
             errorResult.addReplacement(
-                ContentsTitleBuilder.from(2, title.getTitle()).withAfter(title.getAfterTitle()).toString(),
+                TitleBuilder.from(2, title.getTitle()).withAfter(title.getAfterTitle()).toString(),
                 true);
           } else if ((titleIndex == 0) &&
               Page.areSameTitle(analysis.getPage().getTitle(), title.getTitle())) {
@@ -133,7 +133,7 @@ public class CheckErrorAlgorithm019 extends CheckErrorAlgorithmBase {
           tmp.append(contents.substring(lastIndex, title.getBeginIndex()));
           lastIndex = title.getBeginIndex();
         }
-        tmp.append(ContentsTitleBuilder
+        tmp.append(TitleBuilder
             .from(title.getLevel() + 1, title.getTitle())
             .withAfter(title.getAfterTitle()).toString());
         if (title.getAfterTitle() != null) {

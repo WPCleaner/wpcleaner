@@ -26,7 +26,7 @@ import org.wikipediacleaner.api.data.DataManager;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageElementInternalLink;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
-import org.wikipediacleaner.api.data.contents.ilink.ContentsInternalLinkBuilder;
+import org.wikipediacleaner.api.data.contents.ilink.InternalLinkBuilder;
 import org.wikipediacleaner.i18n.GT;
 import org.wikipediacleaner.utils.Configuration;
 import org.wikipediacleaner.utils.ConfigurationValueInteger;
@@ -168,7 +168,7 @@ public class CheckErrorAlgorithm526 extends CheckErrorAlgorithmBase {
         int yearCorrected = Integer.parseInt(text + extraText);
         if (yearLinked == yearCorrected) {
           errorResult.addReplacement(
-              ContentsInternalLinkBuilder.from(target).withText(text + extraText).toString(),
+              InternalLinkBuilder.from(target).withText(text + extraText).toString(),
               true);
         }
       } catch (NumberFormatException e) {
@@ -176,10 +176,10 @@ public class CheckErrorAlgorithm526 extends CheckErrorAlgorithmBase {
       }
     }
     errorResult.addReplacement(
-        ContentsInternalLinkBuilder.from(target).withText(target).toString() +
+        InternalLinkBuilder.from(target).withText(target).toString() +
         extraText);
     errorResult.addReplacement(
-        ContentsInternalLinkBuilder.from(text).withText(text).toString() +
+        InternalLinkBuilder.from(text).withText(text).toString() +
         extraText);
     if (!askHelpList.isEmpty()) {
       boolean firstReplacement = true;

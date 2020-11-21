@@ -28,7 +28,7 @@ import org.wikipediacleaner.api.data.PageElementImage;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.PageElementImage.Parameter;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
-import org.wikipediacleaner.api.data.contents.ilink.ContentsInternalLinkBuilder;
+import org.wikipediacleaner.api.data.contents.ilink.InternalLinkBuilder;
 import org.wikipediacleaner.api.data.contents.template.TemplateBuilder;
 import org.wikipediacleaner.api.data.PageElementInternalLink;
 import org.wikipediacleaner.api.data.PageElementTemplate;
@@ -307,7 +307,7 @@ public class CheckErrorAlgorithm090 extends CheckErrorAlgorithmBase {
           info.analysis, timelineBegin, timelineEnd);
       errorResult.addReplacement(
           "text:\"" +
-          ContentsInternalLinkBuilder
+          InternalLinkBuilder
               .from(info.article)
               .withAnchor(info.articleUrl.getFragment())
               .withText(displayedText).toString() +
@@ -375,7 +375,7 @@ public class CheckErrorAlgorithm090 extends CheckErrorAlgorithmBase {
         if (Page.areSameTitle(info.article, textBefore)) {
           CheckErrorResult errorResult = createCheckErrorResult(
               info.analysis, tmpIndex - info.article.length(), refTag.getCompleteEndIndex());
-          errorResult.addReplacement(ContentsInternalLinkBuilder
+          errorResult.addReplacement(InternalLinkBuilder
               .from(info.article)
               .withAnchor(info.articleUrl.getFragment())
               .withText(textBefore)
@@ -646,7 +646,7 @@ public class CheckErrorAlgorithm090 extends CheckErrorAlgorithmBase {
         CheckErrorResult errorResult = createCheckErrorResult(
             info.analysis, tmpIndex - info.article.length(), info.endIndex);
         errorResult.addReplacement(
-            ContentsInternalLinkBuilder.from(info.articleUrl.getTitleAndFragment()).withColon(info.needColon).withText(textBefore).toString(),
+            InternalLinkBuilder.from(info.articleUrl.getTitleAndFragment()).withColon(info.needColon).withText(textBefore).toString(),
             info.automatic);
         info.errors.add(errorResult);
         return true;
@@ -676,7 +676,7 @@ public class CheckErrorAlgorithm090 extends CheckErrorAlgorithmBase {
   private void addBasicReplacement(
       AnalysisInformation info, CheckErrorResult errorResult) {
     errorResult.addReplacement(
-        ContentsInternalLinkBuilder.from(info.articleUrl.getTitleAndFragment()).withColon(info.needColon).withText(info.text).toString(),
+        InternalLinkBuilder.from(info.articleUrl.getTitleAndFragment()).withColon(info.needColon).withText(info.text).toString(),
         info.automatic);
     if (info.text != null) {
       errorResult.addReplacement(info.text);
