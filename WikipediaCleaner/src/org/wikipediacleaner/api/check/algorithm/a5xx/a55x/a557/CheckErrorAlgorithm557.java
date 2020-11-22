@@ -98,6 +98,14 @@ public class CheckErrorAlgorithm557 extends CheckErrorAlgorithmBase {
     if (!Character.isLetter(previousChar)) {
       return false;
     }
+    if ("ʼ".indexOf(previousChar) >= 0) {
+      return false;
+    }
+    if ((link.getText() == null) &&
+        (link.getLink() != null) &&
+        (link.getLink().startsWith("."))) {
+      return false;
+    }
     UnicodeBlock unicodeBlock = UnicodeBlock.of(previousChar);
     if (unicodeBlock != null) {
       if (UnicodeBlock.CJK_UNIFIED_IDEOGRAPHS.equals(unicodeBlock) ||
