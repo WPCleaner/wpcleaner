@@ -140,6 +140,11 @@ public class CheckErrorAlgorithm556 extends CheckErrorAlgorithmBase {
             TagBuilder.from(PageElementTag.TAG_WIKI_REF, TagFormat.FULL).toString()));
     if (link.hasSquare() && link.hasSecondSquare()) {
       errorResult.addReplacement(link.getDisplayedText());
+      errorResult.addReplacement(
+          link.getDisplayedText() + replacement,
+          GT._T(
+              "Keep text and add link inside a {0} tag",
+              TagBuilder.from(PageElementTag.TAG_WIKI_REF, TagFormat.FULL).toString()));
     }
     errors.add(errorResult);
     return true;
