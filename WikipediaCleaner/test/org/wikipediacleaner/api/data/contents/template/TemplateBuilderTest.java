@@ -65,4 +65,104 @@ public class TemplateBuilderTest {
         "Template is incorrect",
         "{{TEMPLATE|VALUE1| VALUE2 |NAME3=VALUE3| NAME4 = VALUE4 }}", template);
   }
+
+  @Test
+  public void templateWithSimpleBlockFormat() {
+
+    // Create template
+    String template = TemplateBuilder.from("TEMPLATE")
+        .addParam("VALUE1")
+        .addParam(" VALUE2 ")
+        .addParam("NAME3", "VALUE3")
+        .addParam(" LONGNAME4 ", " VALUE4 ")
+        .forceBlockFormat().toString();
+
+    // Check title
+    assertNotNull(
+        "template is null",
+        template);
+    assertEquals(
+        "Template is incorrect",
+        "{{TEMPLATE\n| VALUE1\n| VALUE2\n| NAME3     = VALUE3\n| LONGNAME4 = VALUE4\n}}", template);
+  }
+
+  @Test
+  public void templateWithBlockFormat() {
+
+    // Create template
+    String template = TemplateBuilder.from("TEMPLATE")
+        .addParam("VALUE1")
+        .addParam(" VALUE2 ")
+        .addParam("NAME3", "VALUE3")
+        .addParam(" LONGNAME4 ", " VALUE4 ")
+        .forceBlockFormat(2, 3, 4, false, 5).toString();
+
+    // Check title
+    assertNotNull(
+        "template is null",
+        template);
+    assertEquals(
+        "Template is incorrect",
+        "{{TEMPLATE\n  |     VALUE1\n  |     VALUE2\n  |   NAME3    =     VALUE3\n  |   LONGNAME4    =     VALUE4\n}}", template);
+  }
+
+  @Test
+  public void templateWithBlockFormatAligned() {
+
+    // Create template
+    String template = TemplateBuilder.from("TEMPLATE")
+        .addParam("VALUE1")
+        .addParam(" VALUE2 ")
+        .addParam("NAME3", "VALUE3")
+        .addParam(" LONGNAME4 ", " VALUE4 ")
+        .forceBlockFormat(2, 3, 4, true, 5).toString();
+
+    // Check title
+    assertNotNull(
+        "template is null",
+        template);
+    assertEquals(
+        "Template is incorrect",
+        "{{TEMPLATE\n  |     VALUE1\n  |     VALUE2\n  |   NAME3        =     VALUE3\n  |   LONGNAME4    =     VALUE4\n}}", template);
+  }
+
+  @Test
+  public void templateWithSimpleInlineFormat() {
+
+    // Create template
+    String template = TemplateBuilder.from("TEMPLATE")
+        .addParam("VALUE1")
+        .addParam(" VALUE2 ")
+        .addParam("NAME3", "VALUE3")
+        .addParam(" LONGNAME4 ", " VALUE4 ")
+        .forceInlineFormat().toString();
+
+    // Check title
+    assertNotNull(
+        "template is null",
+        template);
+    assertEquals(
+        "Template is incorrect",
+        "{{TEMPLATE |VALUE1 |VALUE2 |NAME3=VALUE3 |LONGNAME4=VALUE4 }}", template);
+  }
+
+  @Test
+  public void templateWithInlineFormat() {
+
+    // Create template
+    String template = TemplateBuilder.from("TEMPLATE")
+        .addParam("VALUE1")
+        .addParam(" VALUE2 ")
+        .addParam("NAME3", "VALUE3")
+        .addParam(" LONGNAME4 ", " VALUE4 ")
+        .forceInlineFormat(2, 3, 4, 5).toString();
+
+    // Check title
+    assertNotNull(
+        "template is null",
+        template);
+    assertEquals(
+        "Template is incorrect",
+        "{{TEMPLATE  |     VALUE1  |     VALUE2  |   NAME3    =     VALUE3  |   LONGNAME4    =     VALUE4  }}", template);
+  }
 }

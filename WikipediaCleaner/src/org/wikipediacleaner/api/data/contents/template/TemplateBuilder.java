@@ -24,7 +24,7 @@ public class TemplateBuilder {
 
   /** Template name */
   @Nonnull
-  private final String name;
+  private String name;
 
   /** Parameters */
   @Nonnull
@@ -89,6 +89,99 @@ public class TemplateBuilder {
   }
 
   /**
+   * Modify the existing parts of the builder to use a block format.
+   * 
+   * @return Builder.
+   */
+  public TemplateBuilder forceBlockFormat() {
+    return forceBlockFormat(0, 1, 1, true, 1);
+  }
+
+  /**
+   * Modify the existing parts of the builder to use a block format.
+   * 
+   * @param spaceBeforePipe Number of space characters before each pipe sign.
+   * @param spaceBeforeName Number of space characters before each parameter name.
+   * @param spaceBeforeEquals Number of space characters before each equal sign.
+   * @param alignEquals True to vertically align the equal signs.
+   * @param spaceBeforeValue Number of space characters before each parameter value.
+   * @return Builder.
+   */
+  public TemplateBuilder forceBlockFormat(
+      int spaceBeforePipe,
+      int spaceBeforeName,
+      int spaceBeforeEquals,
+      boolean alignEquals,
+      int spaceBeforeValue) {
+    String beforePipe = StringUtils.repeat(' ', spaceBeforePipe);
+    String beforeParamName = StringUtils.repeat(' ', spaceBeforeName);
+    String beforeParamValue = StringUtils.repeat(' ', spaceBeforeValue);
+    name = name.trim() + "\n" + (params.isEmpty() ? "" : beforePipe);
+    int maxParamNameLength = params.stream().mapToInt(param -> (param.name != null) ? param.name.trim().length() : 0).max().orElse(0);
+    for (int paramNum = 0; paramNum < params.size(); paramNum++) {
+      Parameter param = params.get(paramNum);
+      if (param.name != null) {
+        param.name =
+            beforeParamName +
+            param.name.trim() +
+            StringUtils.repeat(
+                ' ',
+                spaceBeforeEquals + (alignEquals ? maxParamNameLength - param.name.trim().length() : 0));
+      }
+      param.value =
+          beforeParamValue +
+          param.value.trim() +
+          "\n" +
+          ((paramNum + 1 < params.size()) ? beforePipe : "");
+    }
+    return this;
+  }
+
+  /**
+   * Modify the existing parts of the builder to use an inline format.
+   * 
+   * @return Builder.
+   */
+  public TemplateBuilder forceInlineFormat() {
+    return forceInlineFormat(1, 0, 0, 0);
+  }
+
+  /**
+   * Modify the existing parts of the builder to use an inline format.
+   * 
+   * @param spaceBeforePipe Number of space characters before each pipe sign.
+   * @param spaceBeforeName Number of space characters before each parameter name.
+   * @param spaceBeforeEquals Number of space characters before each equal sign.
+   * @param alignEquals True to vertically align the equal signs.
+   * @param spaceBeforeValue Number of space characters before each parameter value.
+   * @return Builder.
+   */
+  public TemplateBuilder forceInlineFormat(
+      int spaceBeforePipe,
+      int spaceBeforeName,
+      int spaceBeforeEquals,
+      int spaceBeforeValue) {
+    String beforePipe = StringUtils.repeat(' ', spaceBeforePipe);
+    String beforeParamName = StringUtils.repeat(' ', spaceBeforeName);
+    String beforeParamValue = StringUtils.repeat(' ', spaceBeforeValue);
+    name = name.trim() + (params.isEmpty() ? "" : beforePipe);
+    for (int paramNum = 0; paramNum < params.size(); paramNum++) {
+      Parameter param = params.get(paramNum);
+      if (param.name != null) {
+        param.name =
+            beforeParamName +
+            param.name.trim() +
+            StringUtils.repeat(' ', spaceBeforeEquals);
+      }
+      param.value =
+          beforeParamValue +
+          param.value.trim() +
+          beforePipe;
+    }
+    return this;
+  }
+
+  /**
    * @return Textual representation of the title.
    * @see java.lang.Object#toString()
    */
@@ -113,8 +206,8 @@ public class TemplateBuilder {
    * Bean for holding information about a parameter.
    */
   private static class Parameter {
-    final String name;
-    final String value;
+    String name;
+    String value;
     
     Parameter(String name, String value) {
       this.name = name;
