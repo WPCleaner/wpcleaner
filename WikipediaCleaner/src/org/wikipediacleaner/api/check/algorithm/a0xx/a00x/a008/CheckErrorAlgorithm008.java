@@ -5,11 +5,13 @@
  *  See README.txt file for licensing information.
  */
 
-package org.wikipediacleaner.api.check.algorithm;
+package org.wikipediacleaner.api.check.algorithm.a0xx.a00x.a008;
 
 import java.util.Collection;
 
+import org.apache.commons.lang3.StringUtils;
 import org.wikipediacleaner.api.check.CheckErrorResult;
+import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.PageElementTitle;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
@@ -147,20 +149,30 @@ public class CheckErrorAlgorithm008 extends CheckErrorAlgorithmBase {
     // Create error
     CheckErrorResult errorResult = createCheckErrorResult(
         analysis, lineBeginIndex, endLineIndex);
-    errorResult.addReplacement(TitleBuilder.from(
-        equalsCount,
-        contents.substring(lineBeginIndex + equalsCount, endLineIndex)).toString());
+    if (endLineIndex > lineBeginIndex + equalsCount) {
+      errorResult.addReplacement(TitleBuilder.from(
+          equalsCount,
+          contents.substring(lineBeginIndex + equalsCount, endLineIndex)).toString());
+    } else {
+      errorResult.addReplacement(StringUtils.EMPTY);
+    }
     if (equalIndex > 0) {
       String firstPart = contents.substring(lineBeginIndex + equalsCount, equalIndex); 
       errorResult.addReplacement(TitleBuilder.from(
           equalsCount, firstPart).toString());
+      int secondEqualsCount = 0;
       while ((equalIndex < endLineIndex) && (contents.charAt(equalIndex) == '=')) {
         equalIndex++;
+        secondEqualsCount++;
       }
-      errorResult.addReplacement(
-          TitleBuilder.from(equalsCount, firstPart).toString() +
-          "\n" +
-          contents.substring(equalIndex, endLineIndex));
+      errorResult.addReplacement(TitleBuilder.from(
+          secondEqualsCount, firstPart).toString());
+      if (equalIndex < endLineIndex) {
+        errorResult.addReplacement(
+            TitleBuilder.from(equalsCount, firstPart).toString() +
+            "\n" +
+            contents.substring(equalIndex, endLineIndex));
+      }
     }
     errors.add(errorResult);
     return true;
