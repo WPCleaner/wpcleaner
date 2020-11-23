@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://phabricator.wikimedia.org/project/board/4842/\n"
-"POT-Creation-Date: 2020-11-23 12:48+0100\n"
+"POT-Creation-Date: 2020-11-23 18:38+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -191,72 +191,6 @@ msgstr ""
 
 #: org/wikipediacleaner/api/check/CheckErrorResult.java:329
 msgid "Edit table of contents"
-msgstr ""
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm003.java:121
-msgid "Close tag"
-msgstr ""
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm003.java:270
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm003.java:273
-#, java-format
-msgid "Text to insert for adding {0}"
-msgstr ""
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm003.java:276
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm003.java:283
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm111.java:198
-#, java-format
-msgid "A list of templates resulting in the inclusion of {0}"
-msgstr ""
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm003.java:279
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm003.java:286
-#, java-format
-msgid "Template resulting in the inclusion of {0}"
-msgstr ""
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm003.java:290
-#, java-format
-msgid "Section headings where a {0} can be added"
-msgstr ""
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm003.java:293
-#, java-format
-msgid "Section heading where a {0} can be added"
-msgstr ""
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm005.java:80
-msgid "Properly end the comment"
-msgstr ""
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm005.java:98
-msgid "End the comment at the end of the line"
-msgstr ""
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm005.java:102
-msgid "End the comment just before the next one begins"
-msgstr ""
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm005.java:105
-msgid "Merge comments"
-msgstr ""
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm005.java:108
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm005.java:112
-msgid "Uncomment"
-msgstr ""
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm006.java:31
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm088.java:30
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm089_Old.java:30
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm090_Old.java:30
-msgid "Fix DEFAULTSORT"
-msgstr ""
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm006.java:100
-#, java-format
-msgid "Unable to replace the characters [{0}]"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:38
@@ -821,6 +755,13 @@ msgstr ""
 msgid "Name of the parameter to use"
 msgstr ""
 
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm088.java:30
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm089_Old.java:30
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm090_Old.java:30
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a006/CheckErrorAlgorithm006.java:32
+msgid "Fix DEFAULTSORT"
+msgstr ""
+
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm090.java:659
 msgid "What text should be displayed by the link?"
 msgstr ""
@@ -932,6 +873,13 @@ msgstr ""
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm107.java:174
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm108.java:142
 msgid "Similar ISSN"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm111.java:198
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a003/CheckErrorAlgorithm003.java:277
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a003/CheckErrorAlgorithm003.java:284
+#, java-format
+msgid "A list of templates resulting in the inclusion of {0}"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm111.java:202
@@ -1488,6 +1436,58 @@ msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a002/CheckErrorAlgorithm002.java:45
 msgid "Fix all incorrect tags"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a003/CheckErrorAlgorithm003.java:122
+msgid "Close tag"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a003/CheckErrorAlgorithm003.java:271
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a003/CheckErrorAlgorithm003.java:274
+#, java-format
+msgid "Text to insert for adding {0}"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a003/CheckErrorAlgorithm003.java:280
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a003/CheckErrorAlgorithm003.java:287
+#, java-format
+msgid "Template resulting in the inclusion of {0}"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a003/CheckErrorAlgorithm003.java:291
+#, java-format
+msgid "Section headings where a {0} can be added"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a003/CheckErrorAlgorithm003.java:294
+#, java-format
+msgid "Section heading where a {0} can be added"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a005/CheckErrorAlgorithm005.java:81
+msgid "Properly end the comment"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a005/CheckErrorAlgorithm005.java:99
+msgid "End the comment at the end of the line"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a005/CheckErrorAlgorithm005.java:103
+msgid "End the comment just before the next one begins"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a005/CheckErrorAlgorithm005.java:106
+msgid "Merge comments"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a005/CheckErrorAlgorithm005.java:109
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a005/CheckErrorAlgorithm005.java:113
+msgid "Uncomment"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a006/CheckErrorAlgorithm006.java:101
+#, java-format
+msgid "Unable to replace the characters [{0}]"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a556/CheckErrorAlgorithm556.java:139

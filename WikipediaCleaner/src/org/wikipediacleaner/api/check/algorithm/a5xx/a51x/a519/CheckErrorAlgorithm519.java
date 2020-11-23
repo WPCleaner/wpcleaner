@@ -5,8 +5,9 @@
  *  See README.txt file for licensing information.
  */
 
-package org.wikipediacleaner.api.check.algorithm;
+package org.wikipediacleaner.api.check.algorithm.a5xx.a51x.a519;
 
+import org.wikipediacleaner.api.check.algorithm.a0xx.a00x.a004.CheckErrorAlgorithm004;
 
 /**
  * Algorithm for analyzing error 519 of check wikipedia project.
