@@ -152,7 +152,6 @@ public class TemplateBuilder {
    * @param spaceBeforePipe Number of space characters before each pipe sign.
    * @param spaceBeforeName Number of space characters before each parameter name.
    * @param spaceBeforeEquals Number of space characters before each equal sign.
-   * @param alignEquals True to vertically align the equal signs.
    * @param spaceBeforeValue Number of space characters before each parameter value.
    * @return Builder.
    */

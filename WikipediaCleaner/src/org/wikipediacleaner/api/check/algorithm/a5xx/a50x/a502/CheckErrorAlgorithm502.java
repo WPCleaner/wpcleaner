@@ -5,8 +5,9 @@
  *  See README.txt file for licensing information.
  */
 
-package org.wikipediacleaner.api.check.algorithm;
+package org.wikipediacleaner.api.check.algorithm.a5xx.a50x.a502;
 
+import org.wikipediacleaner.api.check.algorithm.a0xx.a00x.a001.CheckErrorAlgorithm001;
 
 /**
  * Algorithm for analyzing error 502 of check wikipedia project.
