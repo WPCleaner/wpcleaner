@@ -106,15 +106,22 @@ public class CheckErrorAlgorithm556 extends CheckErrorAlgorithmBase {
     }
 
     // Check if the link is in some templates
-    if (!templates.isEmpty()) {
+    if (!templates.isEmpty() || !templatesParams.isEmpty()) {
       PageElementTemplate template = analysis.isInTemplate(beginIndex);
       if (template != null) {
+        // Check if the parameter name is allowed
+        Parameter param = template.getParameterAtIndex(beginIndex);
+        if ((param != null) &&
+            templatesParams.contains(param.getComputedName())) {
+          return false;
+        }
+
+        // Check if the template allows links in this parameter
         for (String[] possibleTemplate : templates) {
           if (Page.areSameTitle(possibleTemplate[0], template.getTemplateName())) {
             if (possibleTemplate.length < 2) {
               return false;
             }
-            Parameter param = template.getParameterAtIndex(beginIndex);
             if ((param != null) &&
                 possibleTemplate[1].equals(param.getComputedName())) {
               return false;
@@ -157,6 +164,9 @@ public class CheckErrorAlgorithm556 extends CheckErrorAlgorithmBase {
   /** List of templates where external links are normal */
   private static final String PARAMETER_TEMPLATES = "templates";
 
+  /** List of templates parameters where external links are normal */
+  private static final String PARAMETER_TEMPLATES_PARAMS = "templates_parameters";
+
   /** List of sections where external links are normal */
   private static final String PARAMETER_TITLES = "titles";
 
@@ -176,6 +186,15 @@ public class CheckErrorAlgorithm556 extends CheckErrorAlgorithmBase {
       }
     }
 
+    tmp = getSpecificProperty(PARAMETER_TEMPLATES_PARAMS, true, true, true);
+    templatesParams.clear();
+    if (tmp != null) {
+      List<String> tmpList = WPCConfiguration.convertPropertyToStringList(tmp);
+      if (tmpList != null) {
+        templatesParams.addAll(tmpList);
+      }
+    }
+
     tmp = getSpecificProperty(PARAMETER_TITLES, true, true, true);
     titles.clear();
     if (tmp != null) {
@@ -190,6 +209,9 @@ public class CheckErrorAlgorithm556 extends CheckErrorAlgorithmBase {
 
   /** Templates where external links are normal */
   private final List<String[]> templates = new ArrayList<>();
+
+  /** Templates parameters where external links are normal */
+  private final Set<String> templatesParams = new HashSet<>();
 
   /** Sections where external links are normal */
   private final Set<String> titles = new HashSet<>();
@@ -207,6 +229,15 @@ public class CheckErrorAlgorithm556 extends CheckErrorAlgorithmBase {
           new AlgorithmParameterElement(
               "template name",
               GT._T("Template in which external links are normal")),
+          new AlgorithmParameterElement(
+              "parameter name",
+              GT._T("Parameter in which external links are normal"))
+        },
+        true));
+    addParameter(new AlgorithmParameter(
+        PARAMETER_TEMPLATES_PARAMS,
+        GT._T("Template parameters in which external links are normal"),
+        new AlgorithmParameterElement[] {
           new AlgorithmParameterElement(
               "parameter name",
               GT._T("Parameter in which external links are normal"))
