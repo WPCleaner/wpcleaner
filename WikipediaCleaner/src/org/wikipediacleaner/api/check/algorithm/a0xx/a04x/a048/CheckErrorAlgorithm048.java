@@ -5,7 +5,7 @@
  *  See README.txt file for licensing information.
  */
 
-package org.wikipediacleaner.api.check.algorithm;
+package org.wikipediacleaner.api.check.algorithm.a0xx.a04x.a048;
 
 import java.util.Collection;
 import java.util.List;
@@ -13,6 +13,7 @@ import java.util.List;
 import org.wikipediacleaner.api.algorithm.AlgorithmParameter;
 import org.wikipediacleaner.api.algorithm.AlgorithmParameterElement;
 import org.wikipediacleaner.api.check.CheckErrorResult;
+import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase;
 import org.wikipediacleaner.api.configuration.WPCConfigurationString;
 import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.Page;
@@ -168,6 +169,11 @@ public class CheckErrorAlgorithm048 extends CheckErrorAlgorithmBase {
         if ((link.getText() == null) ||
             (link.getText().trim().length() == 0)) {
           automatic = false;
+          String replacement = InternalLinkBuilder.from(null)
+              .withAnchor(anchor)
+              .withText(anchor)
+              .toString();
+          errorResult.addReplacement(replacement);
         }
         String replacement = InternalLinkBuilder.from(null)
             .withAnchor(anchor)
