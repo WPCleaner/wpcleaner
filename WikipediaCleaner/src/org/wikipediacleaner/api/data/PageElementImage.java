@@ -38,7 +38,9 @@ public class PageElementImage extends PageElement {
    * @return Block details it there's a block.
    */
   public static PageElementImage analyzeBlock(
-      EnumWikipedia wikipedia, String contents, int index) {
+      EnumWikipedia wikipedia,
+      String contents, int index,
+      List<PageElementTag> tags) {
     // Verify arguments
     if (contents == null) {
       return null;
@@ -149,6 +151,19 @@ public class PageElementImage extends PageElement {
       } else if (contents.startsWith("}}", tmpIndex)) {
         templateCount--;
         tmpIndex++;
+      } else if (contents.startsWith("<", tmpIndex)) {
+        for (PageElementTag tag : tags) {
+          if (tag.getBeginIndex() == tmpIndex) {
+            if (tag.isComplete() &&
+                !tag.isEndTag() &&
+                (PageElementTag.TAG_WIKI_MATH.equalsIgnoreCase(tag.getNormalizedName()) ||
+                 PageElementTag.TAG_WIKI_NOWIKI.equalsIgnoreCase(tag.getNormalizedName()))) {
+              tmpIndex = tag.getCompleteEndIndex() - 1;
+            } else {
+              tmpIndex = tag.getEndIndex() - 1;
+            }
+          }
+        }
       }
       tmpIndex++;
     }

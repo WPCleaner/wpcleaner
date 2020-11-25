@@ -1051,7 +1051,7 @@ public class PageAnalysis {
 
     // Check if this is an image
     PageElementImage image = PageElementImage.analyzeBlock(
-        getWikipedia(), text, currentIndex);
+        getWikipedia(), text, currentIndex, tags);
     if (image != null) {
       images.add(image);
       return image.getBeginIndex() + 2 + image.getNamespace().length() + 1;

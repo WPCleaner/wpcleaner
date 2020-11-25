@@ -5,11 +5,16 @@
  *  See README.txt file for licensing information.
  */
 
-package org.wikipediacleaner.api.check.algorithm;
+package org.wikipediacleaner.api.check.algorithm.a0xx.a01x.a010;
 
 import java.util.Collection;
 
+import org.apache.commons.lang3.StringUtils;
 import org.wikipediacleaner.api.check.CheckErrorResult;
+import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase;
+import org.wikipediacleaner.api.data.MagicWord;
+import org.wikipediacleaner.api.data.Namespace;
+import org.wikipediacleaner.api.data.PageElement;
 import org.wikipediacleaner.api.data.PageElementCategory;
 import org.wikipediacleaner.api.data.PageElementExternalLink;
 import org.wikipediacleaner.api.data.PageElementImage;
@@ -151,7 +156,30 @@ public class CheckErrorAlgorithm010 extends CheckErrorAlgorithmBase {
               errorResult.addReplacement(contents.substring(currentIndex + 1, tmpIndex2 + 1));
             }
 
-            errorResult.addReplacement(contents.substring(currentIndex, tmpIndex + 1) + "]" + suffix);
+            boolean automatic = false;
+            int lineBeginIndex = ContentsUtil.getLineBeginIndex(contents, currentIndex);
+            int lineEndIndex = ContentsUtil.getLineEndIndex(contents, currentIndex);
+            if ((lineBeginIndex == currentIndex) &&
+                (lineEndIndex == tmpIndex2  + 1)) {
+              int colonIndex = contents.indexOf(':', currentIndex + 2);
+              if ((colonIndex > currentIndex + 2) && (colonIndex < lineEndIndex)) {
+                int namespace = Namespace.getNamespace(
+                    analysis.getWikiConfiguration().getNamespaces(),
+                    contents.substring(currentIndex + 2, colonIndex));
+                if (namespace == Namespace.CATEGORY) {
+                  int openBracketIndex = contents.indexOf('[', currentIndex + 2);
+                  int closeBracketIndex = contents.indexOf(']', currentIndex + 2);
+                  if ((closeBracketIndex == tmpIndex2) &&
+                      ((openBracketIndex < 0) || (openBracketIndex > lineEndIndex))) {
+                    automatic = true;
+                  }
+                }
+              }
+              // TODO: analyze if category at the beginning of a line
+            }
+            errorResult.addReplacement(
+                contents.substring(currentIndex, tmpIndex + 1) + "]" + suffix,
+                automatic && (suffix.length() == 0));
             if (suffix.length() > 0) {
               errorResult.addReplacement(contents.substring(currentIndex, tmpIndex) + suffix + "]");
             }
@@ -178,17 +206,24 @@ public class CheckErrorAlgorithm010 extends CheckErrorAlgorithmBase {
         if (!errorReported) {
 
           // Check if there's an internal link just after
-          boolean beforeLink = false;
-          if (contents.startsWith("[[", currentIndex + 2)) {
-            PageElementInternalLink nextLink = analysis.isInInternalLink(currentIndex + 2);
-            if ((nextLink != null) && (nextLink.getBeginIndex() == currentIndex + 2)) {
-              beforeLink = true;
+          int extraBrackets = 0;
+          if (contents.startsWith("[[", currentIndex + 1)) {
+            PageElement nextLink = analysis.isInInternalLink(currentIndex + 2);
+            if (nextLink == null) {
+              nextLink = analysis.isInCategory(currentIndex + 2);
+            }
+            if (nextLink != null) {
+              if (nextLink.getBeginIndex() == currentIndex + 2) {
+                extraBrackets = 2;
+              } else if (nextLink.getBeginIndex() == currentIndex + 1) {
+                extraBrackets = 1;
+              }
             }
           }
 
           CheckErrorResult errorResult = createCheckErrorResult(
-              analysis, currentIndex, currentIndex + 2);
-          errorResult.addReplacement("", beforeLink);
+              analysis, currentIndex, currentIndex + 2 + extraBrackets);
+          errorResult.addReplacement("[[", extraBrackets == 2);
           errors.add(errorResult);
         }
       }
@@ -200,10 +235,27 @@ public class CheckErrorAlgorithm010 extends CheckErrorAlgorithmBase {
 
     // Analyze each image to see if it contains a [
     for (PageElementImage image : analysis.getImages()) {
-      String text = image.getDescription();
-      String modifiedText = cleanText(text);
-      String alt = image.getAlternateDescription();
-      String modifiedAlt = cleanText(alt);
+      String modifiedText = null;
+      String text = StringUtils.EMPTY;
+      PageElementImage.Parameter descriptionParam = image.getDescriptionParameter();
+      if (descriptionParam != null) {
+        text = descriptionParam.getContents();
+        modifiedText = cleanImageText(
+            text, analysis,
+            image.getBeginIndex() + descriptionParam.getBeginOffset());
+      }
+      String modifiedAlt = null;
+      String alt = StringUtils.EMPTY;
+      PageElementImage.Parameter altParam = image.getParameter(MagicWord.IMG_ALT);
+      if (altParam != null) {
+        int equalIndex = altParam.getContents().indexOf('=');
+        if (equalIndex > 0) {
+          alt = altParam.getContents().substring(equalIndex + 1);
+          modifiedAlt = cleanImageText(
+              alt, analysis,
+              image.getBeginIndex() + altParam.getBeginOffset() + equalIndex + 1);
+        }
+      }
       if ((modifiedText != null) || (modifiedAlt != null)) {
         if (errors == null) {
           return true;
@@ -308,10 +360,12 @@ public class CheckErrorAlgorithm010 extends CheckErrorAlgorithmBase {
   }
 
   /**
-   * @param originalText Original text.
+   * @param originalText Original text to be cleaned.
+   * @param analysis Page analysis.
+   * @param offset Offset of the original text in the full text.
    * @return Cleaned up text (or null if no cleanup required).
    */
-  private String cleanText(String originalText) {
+  private String cleanImageText(String originalText, PageAnalysis analysis, int offset) {
     if (originalText == null) {
       return null;
     }
@@ -319,28 +373,68 @@ public class CheckErrorAlgorithm010 extends CheckErrorAlgorithmBase {
     int index = 0;
     int singleBracketsCount = 0;
     while (index < originalText.length()) {
-      boolean doubleBrackets = originalText.startsWith("[[", index);
-      if (doubleBrackets || !originalText.startsWith("[", index)) {
-        boolean  ok = true;
-        if (originalText.startsWith("]", index)) {
-          doubleBrackets = originalText.startsWith("]]", index);
-          if (!doubleBrackets) {
-            if (singleBracketsCount > 0) {
-              singleBracketsCount--;
-            } else {
-              ok = false;
-              if (sb == null) {
-                sb = new StringBuilder(originalText.substring(0, index));
-              }
+      boolean done = false;
+
+      // Handle templates inside the text
+      if (!done && originalText.startsWith("{{", index)) {
+        PageElementTemplate template = analysis.isInTemplate(offset + index);
+        if ((template != null) &&
+            (template.getBeginIndex() == offset + index) &&
+            (template.getEndIndex() - offset <= originalText.length())) {
+          index = template.getEndIndex() - offset;
+          done = true;
+        }
+      }
+
+      // Handle tags inside the text
+      if (!done && originalText.startsWith("<", index)) {
+        PageElementTag tag = analysis.isInTag(offset + index);
+        if ((tag != null) &&
+            (tag.getBeginIndex() == offset + index)) {
+          if (tag.isComplete() &&
+              (tag.getCompleteEndIndex() - offset <= originalText.length()) &&
+              (PageElementTag.TAG_WIKI_MATH.equals(tag.getNormalizedName()) ||
+               PageElementTag.TAG_WIKI_NOWIKI.equals(tag.getNormalizedName()))) {
+            index = tag.getCompleteEndIndex() - offset;
+            done = true;
+          } else {
+            if (tag.getEndIndex() - offset <= originalText.length()) {
+              index = tag.getEndIndex() - offset;
+              done = true;
             }
           }
         }
-        int count = doubleBrackets ? 2 : 1;
-        if (ok && (sb != null)) {
-          sb.append(originalText.substring(index, index + count));
+      }
+
+      // Handle double opening brackets or other situations except single opening bracket
+      if (!done) {
+        boolean doubleBrackets = originalText.startsWith("[[", index);
+        if (doubleBrackets || !originalText.startsWith("[", index)) {
+          boolean  ok = true;
+          if (originalText.startsWith("]", index)) {
+            doubleBrackets = originalText.startsWith("]]", index);
+            if (!doubleBrackets) {
+              if (singleBracketsCount > 0) {
+                singleBracketsCount--;
+              } else {
+                ok = false;
+                if (sb == null) {
+                  sb = new StringBuilder(originalText.substring(0, index));
+                }
+              }
+            }
+          }
+          int count = doubleBrackets ? 2 : 1;
+          if (ok && (sb != null)) {
+            sb.append(originalText.substring(index, index + count));
+          }
+          index += count;
+          done = true;
         }
-        index += count;
-      } else {
+      }
+
+      // Handle single opening bracket
+      if (!done) {
         singleBracketsCount++;
         boolean paired = false;
         int index2 = index + 1;

@@ -123,7 +123,9 @@ public class PageElementInternalLink extends PageElement {
           if (contents.startsWith("[[", tmpIndex)) {
             return null;
           }
-          level1Brackets++;
+          if (level2CurlyBrackets == 0) {
+            level1Brackets++;
+          }
           break;
         case ']':
           if (contents.startsWith("]]]", tmpIndex)) {
@@ -136,7 +138,7 @@ public class PageElementInternalLink extends PageElement {
           } else if (contents.startsWith("]]", tmpIndex)) {
             endIndex = tmpIndex;
             tmpIndex++;
-          } else if (level1Brackets > 0) {
+          } else if ((level1Brackets > 0) && (level2CurlyBrackets == 0)) {
             level1Brackets--;
           }
           break;
