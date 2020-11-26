@@ -16,7 +16,7 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2020-11-23 14:38:51+0000\n"
+"PO-Revision-Date: 2020-11-26 17:14:31+0000\n"
 "Last-Translator: Matěj S. <matejsuchanek97@gmail.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -26,7 +26,7 @@ msgstr ""
 "X-Launchpad-Export-Date: 2017-03-22 17:48+0000\n"
 "X-Generator: MediaWiki 1.36.0-alpha; Translate 2020-10-28\n"
 "Language: cs\n"
-"X-POT-Import-Date: 2020-11-22 11:31:51+0000\n"
+"X-POT-Import-Date: 2020-11-25 17:31:49+0000\n"
 
 #: org/wikipediacleaner/Version.java:31
 #, java-format
@@ -196,8 +196,8 @@ msgstr "Nahradit řetězcem {0}"
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm045.java:130
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm046.java:210
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm047.java:151
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm048.java:139
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm515.java:91
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a04x/a048/CheckErrorAlgorithm048.java:140
 #: org/wikipediacleaner/gui/swing/options/SortingOptionsPanel.java:115
 msgid "Delete"
 msgstr "Smazat"
@@ -205,72 +205,6 @@ msgstr "Smazat"
 #: org/wikipediacleaner/api/check/CheckErrorResult.java:329
 msgid "Edit table of contents"
 msgstr "Editovat obsah"
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm003.java:121
-msgid "Close tag"
-msgstr "Uzavřít tag"
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm003.java:270
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm003.java:273
-#, java-format
-msgid "Text to insert for adding {0}"
-msgstr ""
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm003.java:276
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm003.java:283
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm111.java:198
-#, java-format
-msgid "A list of templates resulting in the inclusion of {0}"
-msgstr "Seznam šablon s vloženou {0}"
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm003.java:279
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm003.java:286
-#, fuzzy, java-format
-msgid "Template resulting in the inclusion of {0}"
-msgstr "Seznam šablon s vloženou {0}"
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm003.java:290
-#, java-format
-msgid "Section headings where a {0} can be added"
-msgstr ""
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm003.java:293
-#, java-format
-msgid "Section heading where a {0} can be added"
-msgstr ""
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm005.java:80
-msgid "Properly end the comment"
-msgstr "Správně ukončit komentář"
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm005.java:98
-msgid "End the comment at the end of the line"
-msgstr ""
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm005.java:102
-msgid "End the comment just before the next one begins"
-msgstr ""
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm005.java:105
-msgid "Merge comments"
-msgstr "Sloučit komentáře"
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm005.java:108
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm005.java:112
-msgid "Uncomment"
-msgstr "Odkomentovat"
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm006.java:31
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm088.java:30
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm089_Old.java:30
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm090_Old.java:30
-msgid "Fix DEFAULTSORT"
-msgstr "Opravit DEFAULTSORT"
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm006.java:100
-#, java-format
-msgid "Unable to replace the characters [{0}]"
-msgstr "Nelze nahradit znaky [{0}]"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:38
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:251
@@ -475,19 +409,6 @@ msgstr "Seznam šablon, která zamezí automatické opravě této chyby"
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm044.java:33
 msgid "Fix all bold headlines"
 msgstr "Opravit všechny ztučněné nadpisy"
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm048.java:40
-msgid "Remove all links to title (first in bold)"
-msgstr "Odstranit všechny odkazy na článek (první ztučnit)"
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm048.java:41
-msgid "Remove all links to title"
-msgstr "Odstranit všechny odkazy na článek"
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm048.java:339
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm048.java:342
-msgid "Set to true to report also links in <imagemap>"
-msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm054.java:36
 msgid "Remove breaks in list"
@@ -847,6 +768,13 @@ msgstr "Seznam šablon, kterými je možné nahradit značky &lt;center&gt;"
 msgid "Name of the parameter to use"
 msgstr "Chybějící šablony"
 
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm088.java:30
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm089_Old.java:30
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm090_Old.java:30
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a006/CheckErrorAlgorithm006.java:32
+msgid "Fix DEFAULTSORT"
+msgstr "Opravit DEFAULTSORT"
+
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm090.java:659
 msgid "What text should be displayed by the link?"
 msgstr "Jaký text by se měl u odkazu zobrazit?"
@@ -962,6 +890,13 @@ msgstr "Délka ISSN je {0} místo 8"
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm108.java:142
 msgid "Similar ISSN"
 msgstr "Podobné ISSN"
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm111.java:198
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a003/CheckErrorAlgorithm003.java:277
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a003/CheckErrorAlgorithm003.java:284
+#, java-format
+msgid "A list of templates resulting in the inclusion of {0}"
+msgstr "Seznam šablon s vloženou {0}"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm111.java:202
 #, fuzzy
@@ -1571,33 +1506,103 @@ msgstr "Odstranit prefix „{0}“ z volání šablony"
 msgid "Fix all incorrect tags"
 msgstr "Opravit všechny chybné značky"
 
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a556/CheckErrorAlgorithm556.java:139
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a003/CheckErrorAlgorithm003.java:122
+msgid "Close tag"
+msgstr "Uzavřít tag"
+
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a003/CheckErrorAlgorithm003.java:271
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a003/CheckErrorAlgorithm003.java:274
 #, java-format
-msgid "Add inside a {0} tag"
+msgid "Text to insert for adding {0}"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a003/CheckErrorAlgorithm003.java:280
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a003/CheckErrorAlgorithm003.java:287
+#, fuzzy, java-format
+msgid "Template resulting in the inclusion of {0}"
+msgstr "Seznam šablon s vloženou {0}"
+
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a003/CheckErrorAlgorithm003.java:291
+#, java-format
+msgid "Section headings where a {0} can be added"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a003/CheckErrorAlgorithm003.java:294
+#, java-format
+msgid "Section heading where a {0} can be added"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a005/CheckErrorAlgorithm005.java:81
+msgid "Properly end the comment"
+msgstr "Správně ukončit komentář"
+
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a005/CheckErrorAlgorithm005.java:99
+msgid "End the comment at the end of the line"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a005/CheckErrorAlgorithm005.java:103
+msgid "End the comment just before the next one begins"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a005/CheckErrorAlgorithm005.java:106
+msgid "Merge comments"
+msgstr "Sloučit komentáře"
+
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a005/CheckErrorAlgorithm005.java:109
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a005/CheckErrorAlgorithm005.java:113
+msgid "Uncomment"
+msgstr "Odkomentovat"
+
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a006/CheckErrorAlgorithm006.java:101
+#, java-format
+msgid "Unable to replace the characters [{0}]"
+msgstr "Nelze nahradit znaky [{0}]"
+
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a04x/a048/CheckErrorAlgorithm048.java:41
+msgid "Remove all links to title (first in bold)"
+msgstr "Odstranit všechny odkazy na článek (první ztučnit)"
+
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a04x/a048/CheckErrorAlgorithm048.java:42
+msgid "Remove all links to title"
+msgstr "Odstranit všechny odkazy na článek"
+
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a04x/a048/CheckErrorAlgorithm048.java:345
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a04x/a048/CheckErrorAlgorithm048.java:348
+msgid "Set to true to report also links in <imagemap>"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a556/CheckErrorAlgorithm556.java:146
 #, java-format
+msgid "Add inside a {0} tag"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a556/CheckErrorAlgorithm556.java:153
+#, java-format
 msgid "Keep text and add link inside a {0} tag"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a556/CheckErrorAlgorithm556.java:205
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a556/CheckErrorAlgorithm556.java:227
 msgid "Templates in which external links are normal"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a556/CheckErrorAlgorithm556.java:209
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a556/CheckErrorAlgorithm556.java:231
 msgid "Template in which external links are normal"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a556/CheckErrorAlgorithm556.java:212
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a556/CheckErrorAlgorithm556.java:234
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a556/CheckErrorAlgorithm556.java:243
 msgid "Parameter in which external links are normal"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a556/CheckErrorAlgorithm556.java:217
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a556/CheckErrorAlgorithm556.java:239
+msgid "Template parameters in which external links are normal"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a556/CheckErrorAlgorithm556.java:248
 msgid "Sections in which external links are normal"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a556/CheckErrorAlgorithm556.java:220
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a556/CheckErrorAlgorithm556.java:251
 msgid "Section in which external links are normal"
 msgstr ""
 
