@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://phabricator.wikimedia.org/project/board/4842/\n"
-"POT-Creation-Date: 2020-11-25 18:30+0100\n"
+"POT-Creation-Date: 2020-11-26 18:06+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -724,24 +724,6 @@ msgstr ""
 msgid "Maximum level of title to check"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm085.java:286
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm112.java:642
-#, java-format
-msgid "Use {0}"
-msgstr ""
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm085.java:348
-msgid "A list of templates that can be used to replace &lt;center&gt; tags"
-msgstr ""
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm085.java:352
-msgid "Template that can be used to replace &lt;center&gt; tags"
-msgstr ""
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm085.java:355
-msgid "Name of the parameter to use"
-msgstr ""
-
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm088.java:30
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm089_Old.java:30
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm090_Old.java:30
@@ -880,6 +862,12 @@ msgstr ""
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm112.java:626
 #, java-format
 msgid "Use {0} and {1}"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm112.java:642
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a08x/a085/CheckErrorAlgorithm085.java:284
+#, java-format
+msgid "Use {0}"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm501.java:165
@@ -1488,6 +1476,18 @@ msgstr ""
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a04x/a048/CheckErrorAlgorithm048.java:345
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a04x/a048/CheckErrorAlgorithm048.java:348
 msgid "Set to true to report also links in <imagemap>"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a08x/a085/CheckErrorAlgorithm085.java:346
+msgid "A list of templates that can be used to replace &lt;center&gt; tags"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a08x/a085/CheckErrorAlgorithm085.java:350
+msgid "Template that can be used to replace &lt;center&gt; tags"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a08x/a085/CheckErrorAlgorithm085.java:353
+msgid "Name of the parameter to use"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a556/CheckErrorAlgorithm556.java:146

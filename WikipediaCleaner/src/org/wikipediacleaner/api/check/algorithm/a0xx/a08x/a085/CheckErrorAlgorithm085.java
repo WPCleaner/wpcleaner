@@ -5,16 +5,19 @@
  *  See README.txt file for licensing information.
  */
 
-package org.wikipediacleaner.api.check.algorithm;
+package org.wikipediacleaner.api.check.algorithm.a0xx.a08x.a085;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.wikipediacleaner.api.algorithm.AlgorithmParameter;
 import org.wikipediacleaner.api.algorithm.AlgorithmParameterElement;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.CheckErrorResult.ErrorLevel;
+import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase;
 import org.wikipediacleaner.api.configuration.WPCConfiguration;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.PageElementTag.Parameter;
@@ -30,24 +33,26 @@ import org.wikipediacleaner.i18n.GT;
  */
 public class CheckErrorAlgorithm085 extends CheckErrorAlgorithmBase {
 
-  private final static String[] interestingTags = {
-    PageElementTag.TAG_HTML_CENTER,
-    PageElementTag.TAG_HTML_DIV,
-    PageElementTag.TAG_HTML_SPAN,
-    PageElementTag.TAG_HTML_SUP,
-    PageElementTag.TAG_WIKI_INCLUDEONLY,
-    PageElementTag.TAG_WIKI_GALLERY,
-    PageElementTag.TAG_WIKI_NOINCLUDE,
-  };
+  private final static Set<String> interestingTags = new HashSet<>();
 
-  private final static String[] ignoredTags = {
-    PageElementTag.TAG_HTML_CODE,
-    PageElementTag.TAG_WIKI_NOWIKI,
-    PageElementTag.TAG_WIKI_PRE,
-    PageElementTag.TAG_WIKI_SCORE,
-  };
+  private final static Set<String> ignoredTags = new HashSet<>();
 
   private final static String HTML_SPACE = "&#x20;";
+
+  static {
+    interestingTags.add(PageElementTag.TAG_HTML_CENTER);
+    interestingTags.add(PageElementTag.TAG_HTML_DIV);
+    interestingTags.add(PageElementTag.TAG_HTML_SPAN);
+    interestingTags.add(PageElementTag.TAG_HTML_SUP);
+    interestingTags.add(PageElementTag.TAG_WIKI_INCLUDEONLY);
+    interestingTags.add(PageElementTag.TAG_WIKI_GALLERY);
+    interestingTags.add(PageElementTag.TAG_WIKI_NOINCLUDE);
+
+    // ignoredTags.add(PageElementTag.TAG_HTML_CODE);
+    // ignoredTags.add(PageElementTag.TAG_WIKI_NOWIKI);
+    // ignoredTags.add(PageElementTag.TAG_WIKI_PRE);
+    // ignoredTags.add(PageElementTag.TAG_WIKI_SCORE);
+  }
 
   public CheckErrorAlgorithm085() {
     super("Tag without content");
@@ -77,12 +82,7 @@ public class CheckErrorAlgorithm085 extends CheckErrorAlgorithmBase {
       if (!tag.isFullTag() && !tag.isEndTag() && tag.isComplete()) {
 
         // Check if tag can be of interest
-        boolean interesting = false;
-        for (String tagName : interestingTags) {
-          if (tagName.equals(tag.getName())) {
-            interesting = true;
-          }
-        }
+        boolean interesting = interestingTags.contains(tag.getName());
         if (interesting) {
           if (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_NOWIKI, tag.getBeginIndex()) != null) {
             interesting = false;
@@ -117,21 +117,19 @@ public class CheckErrorAlgorithm085 extends CheckErrorAlgorithmBase {
               if (!ok) {
                 PageElementTag internalTag = analysis.isInTag(currentIndex);
                 if (internalTag != null) {
-                  for (String ignoredTag : ignoredTags) {
-                    if (ignoredTag.equals(internalTag.getName())) {
-                      ok = true;
-                      ignoredText = true;
-                      errorLevel = ErrorLevel.WARNING;
-                      if (PageElementTag.TAG_WIKI_NOWIKI.equals(ignoredTag)) {
-                        replacementText.append(contents.substring(
-                            internalTag.getValueBeginIndex(), internalTag.getValueEndIndex()));
-                        useReplacement = true;
-                      } else {
-                        replacementText.append(contents.substring(
-                            currentIndex, internalTag.getCompleteEndIndex()));
-                      }
-                      currentIndex = internalTag.getCompleteEndIndex();
+                  if (ignoredTags.contains(internalTag.getName())) {
+                    ok = true;
+                    ignoredText = true;
+                    errorLevel = ErrorLevel.WARNING;
+                    if (PageElementTag.TAG_WIKI_NOWIKI.equals(internalTag.getName())) {
+                      replacementText.append(contents.substring(
+                          internalTag.getValueBeginIndex(), internalTag.getValueEndIndex()));
+                      useReplacement = true;
+                    } else {
+                      replacementText.append(contents.substring(
+                          currentIndex, internalTag.getCompleteEndIndex()));
                     }
+                    currentIndex = internalTag.getCompleteEndIndex();
                   }
                 } else {
                   ContentsComment comment = analysis.comments().getAt(currentIndex);
