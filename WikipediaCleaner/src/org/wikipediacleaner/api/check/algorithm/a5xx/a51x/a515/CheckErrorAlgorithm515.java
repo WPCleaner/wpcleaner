@@ -61,7 +61,8 @@ public class CheckErrorAlgorithm515 extends CheckErrorAlgorithmBase {
     List<Page> linkedRedirectPages = new ArrayList<>();
     for (Page linkedPage : page.getLinks()) {
       if ((linkedPage != null) &&
-          linkedPage.getRedirects().isRedirect()) {
+          linkedPage.getRedirects().isRedirect() &&
+          Page.areSameTitle(pageTitle, true, linkedPage.getRedirects().getTitle(), false)) {
         linkedRedirectPages.add(linkedPage);
       }
     }
@@ -83,9 +84,7 @@ public class CheckErrorAlgorithm515 extends CheckErrorAlgorithmBase {
       }
 
       // Check if the link is circular
-      if ((linkedPage != null) &&
-          linkedPage.getRedirects().isRedirect() &&
-          Page.areSameTitle(pageTitle, true, linkedPage.getRedirects().getTitle(), false)) {
+      if (linkedPage != null) {
         if (errors == null) {
           return true;
         }
