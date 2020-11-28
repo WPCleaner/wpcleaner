@@ -125,6 +125,39 @@ public class PageAnalysisTest {
     checkListItems(analysis, 594);
     checkParagraphs(analysis, 205);
   }
+  /**
+   * Test on a big page from French wikipedia.
+   */
+  @Test
+  public void testFr_Liste_des_noms_de_famille_basques() {
+
+    // Create contents and analysis
+    PageAnalysis analysis = PageAnalysisUtils.analyzeAndTestPage(
+        EnumWikipediaUtils.getFR(), "PageAnalysisTest_fr_Liste_des_noms_de_famille_basques");
+
+    // Check elements
+    checkComments(analysis, 2);
+    checkTags(analysis, 20);
+    checkTags(analysis, PageElementTag.TAG_HTML_SMALL, 2);
+    checkInternalLinks(analysis, 20941);
+    checkImages(analysis, 0);
+    checkCategories(analysis, 2);
+    checkInterwikiLinks(analysis, 0);
+    checkLanguageLinks(analysis, 0);
+    checkFunctions(analysis, 0);
+    checkMagicWords(analysis, 0);
+    checkTemplates(analysis, 604);
+    checkParameters(analysis, 0);
+    checkTitles(analysis, 24);
+    checkExternalLinks(analysis, 5);
+    checkISBN(analysis, 4);
+    checkISSN(analysis, 0);
+    checkPMID(analysis, 0);
+    checkRFC(analysis, 0);
+    checkTables(analysis, 0);
+    checkListItems(analysis, 10838);
+    checkParagraphs(analysis, 49);
+  }
 
   /**
    * Check comments.

@@ -5,12 +5,14 @@
  *  See README.txt file for licensing information.
  */
 
-package org.wikipediacleaner.api.check.algorithm;
+package org.wikipediacleaner.api.check.algorithm.a5xx.a51x.a515;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
+import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageElementInternalLink;
 import org.wikipediacleaner.api.data.PageElementTag;
@@ -47,14 +49,23 @@ public class CheckErrorAlgorithm515 extends CheckErrorAlgorithmBase {
 
     // Preliminary setup
     Page page = analysis.getPage();
-    String pageTitle = page.getTitle();
+    String pageTitle = Page.normalizeTitle(page.getTitle());
     String contents = analysis.getContents();
-    List<Page> linkedPages = page.getLinks();
-    if ((pageTitle == null) || (contents == null) || (linkedPages == null)) {
+    if ((pageTitle == null) || (contents == null) || (page.getLinks() == null)) {
       return false;
     }
     List<PageElementInternalLink> links = analysis.getInternalLinks();
     if (links == null) {
+      return false;
+    }
+    List<Page> linkedRedirectPages = new ArrayList<>();
+    for (Page linkedPage : page.getLinks()) {
+      if ((linkedPage != null) &&
+          linkedPage.getRedirects().isRedirect()) {
+        linkedRedirectPages.add(linkedPage);
+      }
+    }
+    if (linkedRedirectPages.isEmpty()) {
       return false;
     }
 
@@ -63,9 +74,10 @@ public class CheckErrorAlgorithm515 extends CheckErrorAlgorithmBase {
     for (PageElementInternalLink link : links) {
 
       // Find page matching the link
+      String fullLink = Page.normalizeTitle(link.getFullLink());
       Page linkedPage = null;
-      for (Page tmpPage : linkedPages) {
-        if (Page.areSameTitle(tmpPage.getTitle(), link.getFullLink())) {
+      for (Page tmpPage : linkedRedirectPages) {
+        if (Page.areSameTitle(tmpPage.getTitle(), false, fullLink, true)) {
           linkedPage = tmpPage;
         }
       }
@@ -73,7 +85,7 @@ public class CheckErrorAlgorithm515 extends CheckErrorAlgorithmBase {
       // Check if the link is circular
       if ((linkedPage != null) &&
           linkedPage.getRedirects().isRedirect() &&
-          Page.areSameTitle(pageTitle, linkedPage.getRedirects().getTitle())) {
+          Page.areSameTitle(pageTitle, true, linkedPage.getRedirects().getTitle(), false)) {
         if (errors == null) {
           return true;
         }

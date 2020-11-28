@@ -35,6 +35,7 @@ public class PageElementImage extends PageElement {
    * @param wikipedia Wikipedia.
    * @param contents Contents.
    * @param index Block start index.
+   * @param tags Existing tags in the page.
    * @return Block details it there's a block.
    */
   public static PageElementImage analyzeBlock(
