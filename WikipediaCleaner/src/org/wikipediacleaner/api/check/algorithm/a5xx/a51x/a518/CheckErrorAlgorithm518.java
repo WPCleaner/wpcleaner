@@ -5,7 +5,7 @@
  *  See README.txt file for licensing information.
  */
 
-package org.wikipediacleaner.api.check.algorithm;
+package org.wikipediacleaner.api.check.algorithm.a5xx.a51x.a518;
 
 import java.util.Collection;
 import java.util.List;
@@ -16,6 +16,11 @@ import org.wikipediacleaner.api.APIFactory;
 import org.wikipediacleaner.api.algorithm.AlgorithmParameter;
 import org.wikipediacleaner.api.algorithm.AlgorithmParameterElement;
 import org.wikipediacleaner.api.check.CheckErrorResult;
+import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithm553;
+import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithm554;
+import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase;
+import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithms;
+import org.wikipediacleaner.api.check.algorithm.a5xx.a55x.a555.CheckErrorAlgorithm555;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.Page;

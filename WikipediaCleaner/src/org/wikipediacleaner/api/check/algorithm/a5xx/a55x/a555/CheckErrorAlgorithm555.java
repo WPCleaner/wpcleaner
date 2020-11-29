@@ -5,12 +5,14 @@
  *  See README.txt file for licensing information.
  */
 
-package org.wikipediacleaner.api.check.algorithm;
+package org.wikipediacleaner.api.check.algorithm.a5xx.a55x.a555;
 
 import java.util.Collection;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.wikipediacleaner.api.check.CheckErrorResult;
+import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase;
 import org.wikipediacleaner.api.data.PageElementExternalLink;
 import org.wikipediacleaner.api.data.PageElementListItem;
 import org.wikipediacleaner.api.data.PageElementTag;
@@ -132,7 +134,7 @@ public class CheckErrorAlgorithm555 extends CheckErrorAlgorithmBase {
     }
 
     // Check if replacement can be automatic
-    String internalText = "";
+    String internalText = StringUtils.EMPTY;
     if (!nowikiTag.isFullTag()) {
       internalText = contents.substring(nowikiTag.getValueBeginIndex(), nowikiTag.getValueEndIndex());
       if (newLineBefore && internalText.trim().isEmpty()) {
@@ -140,6 +142,7 @@ public class CheckErrorAlgorithm555 extends CheckErrorAlgorithmBase {
       }
     }
     boolean automatic = true;
+    String extraPrefix = StringUtils.EMPTY;
     boolean eLinkAfter = false;
     if (endIndex < contents.length()) {
       // Prevent if there's an external link just after
@@ -157,8 +160,26 @@ public class CheckErrorAlgorithm555 extends CheckErrorAlgorithmBase {
       if (eLink != null) {
         if ((eLink.getEndIndex() == nowikiTag.getCompleteBeginIndex()) ||
             (eLink.getBeginIndex() + eLink.getTextOffset() >= nowikiTag.getCompleteBeginIndex())) {
-          automatic = false;
           eLinkBefore = true;
+          if (!eLink.hasSquare() &&
+              nowikiTag.isFullTag() &&
+              (eLink.getEndIndex() == nowikiTag.getCompleteBeginIndex())) {
+            int endTagIndex = nowikiTag.getCompleteEndIndex();
+            if ((endTagIndex >= contents.length()) ||
+                (contents.charAt(endTagIndex) == '\n')) {
+              // Nothing to do
+            } else {
+              char nextChar = contents.charAt(endTagIndex);
+              if (Character.isAlphabetic(nextChar) ||
+                  ("(".indexOf(nextChar) >= 0)) {
+                extraPrefix = " ";
+              } else {
+                automatic = false;
+              }
+            }
+          } else {
+            automatic = false;
+          }
         }
       }
     }
@@ -213,9 +234,11 @@ public class CheckErrorAlgorithm555 extends CheckErrorAlgorithmBase {
     String prefix = contents.substring(beginIndex, nowikiTag.getCompleteBeginIndex());
     String suffix = contents.substring(nowikiTag.getCompleteEndIndex(), endIndex);
     if (eLinkBefore || eLinkAfter) {
-      errorResult.addReplacement(prefix + ' ' + internalText + suffix);
+      if (!extraPrefix.equals(" ")) {
+        errorResult.addReplacement(prefix + ' ' + internalText + suffix);
+      }
     }
-    errorResult.addReplacement(prefix + internalText + suffix, automatic);
+    errorResult.addReplacement(prefix + extraPrefix + internalText + suffix, automatic);
     errors.add(errorResult);
     return true;
   }
@@ -239,7 +262,7 @@ public class CheckErrorAlgorithm555 extends CheckErrorAlgorithmBase {
   private boolean isAcceptableOutside(char character) {
     return
         isAcceptableInside(character) ||
-        (";:*".indexOf(character) >= 0);
+        (";:*/".indexOf(character) >= 0);
   }
 
   /**
