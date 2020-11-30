@@ -20,7 +20,7 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2020-11-26 17:14:33+0000\n"
+"PO-Revision-Date: 2020-11-30 16:21:22+0000\n"
 "Last-Translator: volkan <volkanyeke@gmail.com>\n"
 "Language-Team: Turkish <tr@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -198,8 +198,8 @@ msgstr "{0} ile değiştir"
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm045.java:130
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm046.java:210
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm047.java:151
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm515.java:91
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a04x/a048/CheckErrorAlgorithm048.java:140
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a515/CheckErrorAlgorithm515.java:102
 #: org/wikipediacleaner/gui/swing/options/SortingOptionsPanel.java:115
 msgid "Delete"
 msgstr "Sil"
@@ -737,24 +737,6 @@ msgstr "Doğrulamayı daha yüksek başlıklarla sınırla"
 msgid "Maximum level of title to check"
 msgstr "Kontrol edilecek maksimum başlık seviyesi"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm085.java:286
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm112.java:642
-#, java-format
-msgid "Use {0}"
-msgstr "{0} kullan"
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm085.java:348
-msgid "A list of templates that can be used to replace &lt;center&gt; tags"
-msgstr "&lt;center&gt; etiketlerini değiştirmek için kullanılabilecek şablonların listesi"
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm085.java:352
-msgid "Template that can be used to replace &lt;center&gt; tags"
-msgstr "&lt;center&gt; etiketlerinin yerine kullanılabilecek şablon"
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm085.java:355
-msgid "Name of the parameter to use"
-msgstr "Kullanılacak parametrenin adı"
-
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm088.java:30
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm089_Old.java:30
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm090_Old.java:30
@@ -895,6 +877,12 @@ msgstr "Grubun adı için parametre"
 msgid "Use {0} and {1}"
 msgstr "{0} ve {1} kullanın"
 
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm112.java:642
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a08x/a085/CheckErrorAlgorithm085.java:284
+#, java-format
+msgid "Use {0}"
+msgstr "{0} kullan"
+
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm501.java:165
 msgid "Restore original text"
 msgstr "Orijinal metni geri yükle"
@@ -1007,31 +995,6 @@ msgstr "Kaynakçaya tanımlayan bir şablonun adı"
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm514.java:193
 msgid "Name of the reference defined by the template"
 msgstr "Şablon tarafından tanımlanan kaynağın adı"
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm518.java:357
-#, java-format
-msgid "An identifier of an abuse filter that is triggered by {0} tags."
-msgstr "{0} etiketleri tarafından tetiklenen bir kötüye kullanım filtresinin tanımlayıcısı."
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm518.java:367
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm518.java:370
-msgid "A template that can be used instead of an apostrophe."
-msgstr "Kesme işareti yerine kullanılabilecek bir şablon."
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm518.java:373
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm518.java:376
-msgid "A template that can be used instead of an asterisk."
-msgstr "Yıldız işareti yerine kullanılabilecek bir şablon."
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm518.java:379
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm518.java:382
-msgid "A template that can be used instead of a closing square bracket."
-msgstr "Kapatma köşeli ayraç yerine kullanılabilecek bir şablon."
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm518.java:385
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm518.java:388
-msgid "A template that can be used instead of an opening square bracket."
-msgstr "Açılı köşeli ayraç yerine kullanılabilecek bir şablon."
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm520.java:149
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm520.java:152
@@ -1502,6 +1465,43 @@ msgstr "Başlıktaki tüm bağlantıları kaldır"
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a04x/a048/CheckErrorAlgorithm048.java:348
 msgid "Set to true to report also links in <imagemap>"
 msgstr "<imagemap> içindeki bağlantıları da bildirmek için true olarak ayarlayın"
+
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a08x/a085/CheckErrorAlgorithm085.java:346
+msgid "A list of templates that can be used to replace &lt;center&gt; tags"
+msgstr "&lt;center&gt; etiketlerini değiştirmek için kullanılabilecek şablonların listesi"
+
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a08x/a085/CheckErrorAlgorithm085.java:350
+msgid "Template that can be used to replace &lt;center&gt; tags"
+msgstr "&lt;center&gt; etiketlerinin yerine kullanılabilecek şablon"
+
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a08x/a085/CheckErrorAlgorithm085.java:353
+msgid "Name of the parameter to use"
+msgstr "Kullanılacak parametrenin adı"
+
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a518/CheckErrorAlgorithm518.java:362
+#, java-format
+msgid "An identifier of an abuse filter that is triggered by {0} tags."
+msgstr "{0} etiketleri tarafından tetiklenen bir kötüye kullanım filtresinin tanımlayıcısı."
+
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a518/CheckErrorAlgorithm518.java:372
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a518/CheckErrorAlgorithm518.java:375
+msgid "A template that can be used instead of an apostrophe."
+msgstr "Kesme işareti yerine kullanılabilecek bir şablon."
+
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a518/CheckErrorAlgorithm518.java:378
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a518/CheckErrorAlgorithm518.java:381
+msgid "A template that can be used instead of an asterisk."
+msgstr "Yıldız işareti yerine kullanılabilecek bir şablon."
+
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a518/CheckErrorAlgorithm518.java:384
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a518/CheckErrorAlgorithm518.java:387
+msgid "A template that can be used instead of a closing square bracket."
+msgstr "Kapatma köşeli ayraç yerine kullanılabilecek bir şablon."
+
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a518/CheckErrorAlgorithm518.java:390
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a518/CheckErrorAlgorithm518.java:393
+msgid "A template that can be used instead of an opening square bracket."
+msgstr "Açılı köşeli ayraç yerine kullanılabilecek bir şablon."
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a556/CheckErrorAlgorithm556.java:146
 #, java-format

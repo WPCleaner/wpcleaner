@@ -16,7 +16,7 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2020-11-26 17:14:31+0000\n"
+"PO-Revision-Date: 2020-11-30 16:21:21+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Spanish\n"
 "MIME-Version: 1.0\n"
@@ -195,8 +195,8 @@ msgstr "Reemplazar con {0}"
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm045.java:130
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm046.java:210
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm047.java:151
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm515.java:91
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a04x/a048/CheckErrorAlgorithm048.java:140
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a515/CheckErrorAlgorithm515.java:102
 #: org/wikipediacleaner/gui/swing/options/SortingOptionsPanel.java:115
 msgid "Delete"
 msgstr "Eliminar"
@@ -738,26 +738,6 @@ msgstr ""
 msgid "Maximum level of title to check"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm085.java:286
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm112.java:642
-#, java-format
-msgid "Use {0}"
-msgstr ""
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm085.java:348
-msgid "A list of templates that can be used to replace &lt;center&gt; tags"
-msgstr ""
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm085.java:352
-#, fuzzy
-msgid "Template that can be used to replace &lt;center&gt; tags"
-msgstr "Plantillas que pueden usarse para reemplazar etiquetas {0}"
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm085.java:355
-#, fuzzy
-msgid "Name of the parameter to use"
-msgstr "Plantillas solicitadas"
-
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm088.java:30
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm089_Old.java:30
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm090_Old.java:30
@@ -901,6 +881,12 @@ msgstr "¿Cuál es el nombre de la selección?"
 msgid "Use {0} and {1}"
 msgstr ""
 
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm112.java:642
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a08x/a085/CheckErrorAlgorithm085.java:284
+#, java-format
+msgid "Use {0}"
+msgstr ""
+
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm501.java:165
 msgid "Restore original text"
 msgstr "Restaurar el texto original"
@@ -1025,31 +1011,6 @@ msgstr ""
 #, fuzzy
 msgid "Name of the reference defined by the template"
 msgstr "Plantillas solicitadas"
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm518.java:357
-#, java-format
-msgid "An identifier of an abuse filter that is triggered by {0} tags."
-msgstr ""
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm518.java:367
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm518.java:370
-msgid "A template that can be used instead of an apostrophe."
-msgstr "Una plantilla que puede utilizarse en sustitución de un apóstrofo."
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm518.java:373
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm518.java:376
-msgid "A template that can be used instead of an asterisk."
-msgstr "Una plantilla que puede usarse en lugar de un asterisco."
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm518.java:379
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm518.java:382
-msgid "A template that can be used instead of a closing square bracket."
-msgstr ""
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm518.java:385
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm518.java:388
-msgid "A template that can be used instead of an opening square bracket."
-msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm520.java:149
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm520.java:152
@@ -1546,6 +1507,45 @@ msgstr "Eliminar todos los enlaces a la propia página"
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a04x/a048/CheckErrorAlgorithm048.java:345
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a04x/a048/CheckErrorAlgorithm048.java:348
 msgid "Set to true to report also links in <imagemap>"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a08x/a085/CheckErrorAlgorithm085.java:346
+msgid "A list of templates that can be used to replace &lt;center&gt; tags"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a08x/a085/CheckErrorAlgorithm085.java:350
+#, fuzzy
+msgid "Template that can be used to replace &lt;center&gt; tags"
+msgstr "Plantillas que pueden usarse para reemplazar etiquetas {0}"
+
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a08x/a085/CheckErrorAlgorithm085.java:353
+#, fuzzy
+msgid "Name of the parameter to use"
+msgstr "Plantillas solicitadas"
+
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a518/CheckErrorAlgorithm518.java:362
+#, java-format
+msgid "An identifier of an abuse filter that is triggered by {0} tags."
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a518/CheckErrorAlgorithm518.java:372
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a518/CheckErrorAlgorithm518.java:375
+msgid "A template that can be used instead of an apostrophe."
+msgstr "Una plantilla que puede utilizarse en sustitución de un apóstrofo."
+
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a518/CheckErrorAlgorithm518.java:378
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a518/CheckErrorAlgorithm518.java:381
+msgid "A template that can be used instead of an asterisk."
+msgstr "Una plantilla que puede usarse en lugar de un asterisco."
+
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a518/CheckErrorAlgorithm518.java:384
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a518/CheckErrorAlgorithm518.java:387
+msgid "A template that can be used instead of a closing square bracket."
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a518/CheckErrorAlgorithm518.java:390
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a518/CheckErrorAlgorithm518.java:393
+msgid "A template that can be used instead of an opening square bracket."
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a556/CheckErrorAlgorithm556.java:146
