@@ -5,7 +5,7 @@
  *  See README.txt file for licensing information.
  */
 
-package org.wikipediacleaner.api.check.algorithm;
+package org.wikipediacleaner.api.check.algorithm.a5xx.a55x.a559;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -18,6 +18,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.wikipediacleaner.api.algorithm.AlgorithmParameter;
 import org.wikipediacleaner.api.algorithm.AlgorithmParameterElement;
 import org.wikipediacleaner.api.check.CheckErrorResult;
+import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase;
 import org.wikipediacleaner.api.configuration.WPCConfiguration;
 import org.wikipediacleaner.api.configuration.WPCConfigurationString;
 import org.wikipediacleaner.api.configuration.WPCConfigurationStringList;
@@ -164,7 +165,30 @@ public class CheckErrorAlgorithm559 extends CheckErrorAlgorithmBase {
       PageElement previousRef,
       PageElement nextRef) {
     String text = contents.substring(previousRef.getEndIndex(), nextRef.getBeginIndex());
-    return !text.contains("''");
+    int currentIndex = 0;
+    int nbBold = 0;
+    int nbItalic = 0;
+    while (currentIndex < text.length()) {
+      if (text.startsWith("''''", currentIndex)) {
+        return false;
+      }
+      if (text.startsWith("'''", currentIndex)) {
+        if (nbItalic > 0) {
+          return false;
+        }
+        nbBold++;
+        currentIndex += 3;
+      } else if (text.startsWith("''", currentIndex)) {
+        if (nbBold > 0) {
+          return false;
+        }
+        nbItalic++;
+        currentIndex += 2;
+      } else {
+        currentIndex++;
+      }
+    }
+    return ((nbBold % 2) == 0) && ((nbItalic % 2) == 0);
   }
 
   /**
