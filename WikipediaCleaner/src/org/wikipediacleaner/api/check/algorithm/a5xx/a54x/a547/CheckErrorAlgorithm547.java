@@ -5,19 +5,26 @@
  *  See README.txt file for licensing information.
  */
 
-package org.wikipediacleaner.api.check.algorithm;
+package org.wikipediacleaner.api.check.algorithm.a5xx.a54x.a547;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import org.wikipediacleaner.api.algorithm.AlgorithmParameter;
+import org.wikipediacleaner.api.algorithm.AlgorithmParameterElement;
 import org.wikipediacleaner.api.check.CheckErrorResult;
+import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase;
+import org.wikipediacleaner.api.configuration.WPCConfiguration;
 import org.wikipediacleaner.api.data.CharacterUtils;
 import org.wikipediacleaner.api.data.Namespace;
+import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageElementListItem;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.PageElementTemplate.Parameter;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
+import org.wikipediacleaner.i18n.GT;
 import org.wikipediacleaner.api.data.PageElementTitle;
 
 
@@ -84,6 +91,27 @@ public class CheckErrorAlgorithm547 extends CheckErrorAlgorithmBase {
       if (shouldReport) {
         if (analysis.comments().isAt(index)) {
           shouldReport = false;
+        }
+      }
+      if (shouldReport && !templates.isEmpty()) {
+        PageElementTemplate template = analysis.isInTemplate(index);
+        if (template != null) {
+          for (String[] ignoredTemplate : templates) {
+            if (Page.areSameTitle(template.getTemplateName(), ignoredTemplate[0])) {
+              if (ignoredTemplate.length > 1) {
+                PageElementTemplate.Parameter param = template.getParameterAtIndex(index);
+                if (param != null) {
+                  for (int paramNum = 1; paramNum < ignoredTemplate.length; paramNum++) {
+                    if (param.getComputedName().equals(ignoredTemplate[paramNum])) {
+                      shouldReport = false;
+                    }
+                  }
+                }
+              } else {
+                shouldReport = false;
+              }
+            }
+          }
         }
       }
 
@@ -174,5 +202,55 @@ public class CheckErrorAlgorithm547 extends CheckErrorAlgorithmBase {
       return analysis.getContents();
     }
     return fixUsingAutomaticReplacement(analysis);
+  }
+
+  /* ====================================================================== */
+  /* PARAMETERS                                                             */
+  /* ====================================================================== */
+
+  /** Templates in which empty list items should be ignored */
+  private static final String PARAMETER_TEMPLATES = "templates";
+
+  /**
+   * Initialize settings for the algorithm.
+   * 
+   * @see org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase#initializeSettings()
+   */
+  @Override
+  protected void initializeSettings() {
+    String tmp = getSpecificProperty(PARAMETER_TEMPLATES, true, true, false);
+    templates.clear();
+    if (tmp != null) {
+      List<String[]> tmpList = WPCConfiguration.convertPropertyToStringArrayList(tmp);
+      for (String[] tmpElement : tmpList) {
+        if (tmpElement.length > 0) {
+          templates.add(tmpElement);
+        }
+      }
+    }
+  }
+
+  /** Templates in which empty list items should be ignored */
+  private final List<String[]> templates = new ArrayList<>();
+
+  /**
+   * Build the list of parameters for this algorithm.
+   */
+  @Override
+  protected void addParameters() {
+    super.addParameters();
+    addParameter(new AlgorithmParameter(
+        PARAMETER_TEMPLATES,
+        GT._T("Templates in which empty list items should be ignored"),
+        new AlgorithmParameterElement[] {
+          new AlgorithmParameterElement(
+              "template name",
+              GT._T("Template in which empty list items should be ignored")),
+          new AlgorithmParameterElement(
+              "parameter name",
+              GT._T("Template parameter in which empty list items should be ignored"),
+              true, true)
+        },
+        true));
   }
 }
