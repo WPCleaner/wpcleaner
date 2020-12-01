@@ -138,7 +138,7 @@ public class CheckErrorAlgorithm559 extends CheckErrorAlgorithmBase {
         CheckErrorResult errorResult = createCheckErrorResult(analysis, beginSelection, endSelection);
         boolean automatic = true;
         automatic &= canRemoveBetween(contents, firstRef, secondRef);
-        automatic &= (analysis.isInTemplate(beginIndex) == null);
+        automatic &= forceInTemplates || (analysis.isInTemplate(beginIndex) == null);
         String replacement =
             contents.substring(beginSelection, beginIndex) +
             separator +
@@ -245,6 +245,9 @@ public class CheckErrorAlgorithm559 extends CheckErrorAlgorithmBase {
   /** Templates that can replace a tag */
   private static final String PARAMETER_TEMPLATES = "templates";
 
+  /** Force replacement inside templates */
+  private static final String PARAMETER_FORCE_IN_TEMPLATES = "force_in_templates";
+
   /**
    * Initialize settings for the algorithm.
    * 
@@ -280,6 +283,12 @@ public class CheckErrorAlgorithm559 extends CheckErrorAlgorithmBase {
       }
     }
 
+    tmp = getSpecificProperty(PARAMETER_FORCE_IN_TEMPLATES, true, true, false);
+    forceInTemplates = false;
+    if (tmp != null) {
+      forceInTemplates = Boolean.valueOf(tmp);
+    }
+
     referencesTemplates = getWPCConfiguration().getStringArrayList(WPCConfigurationStringList.REFERENCES_TEMPLATES);
   }
 
@@ -292,6 +301,9 @@ public class CheckErrorAlgorithm559 extends CheckErrorAlgorithmBase {
   /** Templates that can replace a tag */
   private final Set<String> templatesName = new HashSet<>();
 
+  /** True to force automatic replacement even in templates */
+  private boolean forceInTemplates = false;
+
   /** Templates containing references */
   private List<String[]> referencesTemplates;
 
@@ -301,6 +313,12 @@ public class CheckErrorAlgorithm559 extends CheckErrorAlgorithmBase {
   @Override
   protected void addParameters() {
     super.addParameters();
+    addParameter(new AlgorithmParameter(
+        PARAMETER_FORCE_IN_TEMPLATES,
+        GT._T("Option to apply automatic replacement even in templates"),
+        new AlgorithmParameterElement(
+            "true/false",
+            GT._T("Option to apply automatic replacement even in templates"))));
     addParameter(new AlgorithmParameter(
         PARAMETER_SEPARATOR,
         GT._T("Used as a separator between consecutive {0} tags", "&lt;ref&gt;"),
