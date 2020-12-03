@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2020-11-30 16:21:23+0000\n"
+"PO-Revision-Date: 2020-12-03 15:01:13+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Ukrainian <uk@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -22,7 +22,7 @@ msgstr ""
 "X-Launchpad-Export-Date: 2014-09-21 06:01+0000\n"
 "X-Generator: MediaWiki 1.36.0-alpha; Translate 2020-10-28\n"
 "Language: uk\n"
-"X-POT-Import-Date: 2020-11-25 17:31:49+0000\n"
+"X-POT-Import-Date: 2020-12-01 21:31:52+0000\n"
 
 #: org/wikipediacleaner/Version.java:31
 #, java-format
@@ -364,7 +364,7 @@ msgstr "Переглянути зображення"
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm033.java:141
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm061.java:495
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm558.java:286
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm559.java:288
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a559/CheckErrorAlgorithm559.java:330
 #, java-format
 msgid "Templates that can be used to replace {0} tags"
 msgstr ""
@@ -372,7 +372,7 @@ msgstr ""
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm033.java:144
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm061.java:498
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm558.java:289
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm559.java:291
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a559/CheckErrorAlgorithm559.java:333
 #, java-format
 msgid "Template that can be used to replace {0} tags"
 msgstr ""
@@ -457,8 +457,8 @@ msgstr ""
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm542.java:180
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm558.java:280
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm558.java:283
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm559.java:282
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm559.java:285
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a559/CheckErrorAlgorithm559.java:324
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a559/CheckErrorAlgorithm559.java:327
 #, java-format
 msgid "Used as a separator between consecutive {0} tags"
 msgstr "Використовується як роздільник між послідовними {0} позначками"
@@ -1543,6 +1543,18 @@ msgstr ""
 msgid "A template that can be used instead of an opening square bracket."
 msgstr ""
 
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a547/CheckErrorAlgorithm547.java:244
+msgid "Templates in which empty list items should be ignored"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a547/CheckErrorAlgorithm547.java:248
+msgid "Template in which empty list items should be ignored"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a547/CheckErrorAlgorithm547.java:251
+msgid "Template parameter in which empty list items should be ignored"
+msgstr ""
+
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a556/CheckErrorAlgorithm556.java:146
 #, java-format
 msgid "Add inside a {0} tag"
@@ -1600,6 +1612,11 @@ msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a557/CheckErrorAlgorithm557.java:395
 msgid "Suggestion for a separator between the text and the internal link"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a559/CheckErrorAlgorithm559.java:318
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a559/CheckErrorAlgorithm559.java:321
+msgid "Option to apply automatic replacement even in templates"
 msgstr ""
 
 #: org/wikipediacleaner/api/configuration/CWConfiguration.java:83
