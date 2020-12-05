@@ -127,6 +127,10 @@ public class CheckErrorAlgorithm009 extends CheckErrorAlgorithmBase {
             beginIndex,
             categories.get(lastCategory).getEndIndex());
         boolean automatic = true;
+        if ((analysis.isInTemplate(beginIndex) != null) ||
+            (analysis.isInFunction(beginIndex) != null)) {
+          automatic = false;
+        }
         for (int i = currentCategory; i < lastCategory; i++) {
           int end = categories.get(i + 1).getBeginIndex();
           for (int index = categories.get(i).getEndIndex(); index < end; index++) {

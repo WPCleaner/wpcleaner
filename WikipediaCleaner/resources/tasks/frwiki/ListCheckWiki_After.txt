@@ -52,5 +52,30 @@ FixListCheckWiki Projet:Correction_syntaxique/Analyse_022 22
 FixListCheckWiki Projet:Correction_syntaxique/Analyse_052 52
 FixListCheckWiki Projet:Correction_syntaxique/Analyse_090 90
 
+# Category namespace
+DoTasks _Common_Other.txt
+Set Namespaces 14
+
+FixListCheckWiki Projet:Correction_syntaxique/Analyse_001 1
+FixListCheckWiki Projet:Correction_syntaxique/Analyse_002 2
+FixListCheckWiki Projet:Correction_syntaxique/Analyse_003 3
+FixListCheckWiki Projet:Correction_syntaxique/Analyse_007 7
+FixListCheckWiki Projet:Correction_syntaxique/Analyse_009 9
+FixListCheckWiki Projet:Correction_syntaxique/Analyse_010 10
+FixListCheckWiki Projet:Correction_syntaxique/Analyse_016 16
+FixListCheckWiki Projet:Correction_syntaxique/Analyse_017 17
+FixListCheckWiki Projet:Correction_syntaxique/Analyse_018 18
+FixListCheckWiki Projet:Correction_syntaxique/Analyse_019 19
+FixListCheckWiki Projet:Correction_syntaxique/Analyse_020 20
+FixListCheckWiki Projet:Correction_syntaxique/Analyse_022 22
+FixListCheckWiki Projet:Correction_syntaxique/Analyse_025 25
+FixListCheckWiki Projet:Correction_syntaxique/Analyse_046 46
+FixListCheckWiki Projet:Correction_syntaxique/Analyse_052 52
+FixListCheckWiki Projet:Correction_syntaxique/Analyse_054 54
+FixListCheckWiki Projet:Correction_syntaxique/Analyse_064 64
+FixListCheckWiki Projet:Correction_syntaxique/Analyse_085 85
+FixListCheckWiki Projet:Correction_syntaxique/Analyse_088 88
+FixListCheckWiki Projet:Correction_syntaxique/Analyse_090 90
+
 # Other tasks
 DoTasks ISBN_ISSN.txt
