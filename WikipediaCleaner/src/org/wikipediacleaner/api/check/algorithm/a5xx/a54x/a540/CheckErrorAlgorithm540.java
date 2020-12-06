@@ -5,7 +5,7 @@
  *  See README.txt file for licensing information.
  */
 
-package org.wikipediacleaner.api.check.algorithm;
+package org.wikipediacleaner.api.check.algorithm.a5xx.a54x.a540;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -13,6 +13,7 @@ import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
 import org.wikipediacleaner.api.check.CheckErrorResult;
+import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase;
 import org.wikipediacleaner.api.data.PageElement;
 import org.wikipediacleaner.api.data.PageElementExternalLink;
 import org.wikipediacleaner.api.data.PageElementFormatting;
@@ -501,10 +502,12 @@ public class CheckErrorAlgorithm540 extends CheckErrorAlgorithmBase {
       // Report inside a template
       if (surroundingElement instanceof PageElementTemplate.Parameter) {
         PageElementTemplate.Parameter templateParam = (PageElementTemplate.Parameter) surroundingElement;
+        PageElementTemplate template = analysis.isInTemplate(templateParam.getValueStartIndex());
+        // TODO: See if area can be reduced on the parameter value, but see problems with {{shy}} on enWP for example
         if (reportFormattingElement(
             analysis, elements, element, errors,
             templateParam.getValueStartIndex(), templateParam.getEndIndex(),
-            templateParam.getValueStartIndex(), templateParam.getEndIndex(),
+            template.getBeginIndex(), template.getEndIndex(),
             !StringUtils.isEmpty(templateParam.getName()), false, true, true)) {
           return;
         }
@@ -707,8 +710,14 @@ public class CheckErrorAlgorithm540 extends CheckErrorAlgorithmBase {
    * @param elements List of formatting elements.
    * @param element Formatting element to report.
    * @param errors List of errors.
-   * @param beginIndex Begin index of the area.
-   * @param endIndex End index of the are.
+   * @param beginIndex Begin index of the small area around the formatting element.
+   * @param endIndex End index of the small area around the formatting element.
+   * @param beginArea Begin index of the bigger area around the formatting element.
+   * @param endArea End index of the bigger area around the formatting element.
+   * @param deleteEmpty True if formatting element can be deleted if the area is empty.
+   * @param requiresText True if text is required.
+   * @param closeFull True if the formatting element can be closed at the end of the area.
+   * @param deleteEnd True if the formatting element can be deleted if at the end.
    * @return True if the error has been reported.
    */
   private boolean reportFormattingElement(
