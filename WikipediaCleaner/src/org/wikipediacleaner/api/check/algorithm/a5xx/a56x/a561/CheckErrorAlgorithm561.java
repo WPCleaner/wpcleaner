@@ -51,8 +51,12 @@ public class CheckErrorAlgorithm561 extends CheckErrorAlgorithmBase {
       return false;
     }
     Page page = analysis.getPage();
+    List<Page> pageLinks = page.getLinks();
+    if (pageLinks == null) {
+      return false;
+    }
     List<Page> linkedRedirectPages = new ArrayList<>();
-    for (Page linkedPage : page.getLinks()) {
+    for (Page linkedPage : pageLinks) {
       if ((linkedPage != null) &&
           linkedPage.getRedirects().isRedirect()) {
         linkedRedirectPages.add(linkedPage);
