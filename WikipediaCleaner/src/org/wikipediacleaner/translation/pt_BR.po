@@ -16,7 +16,7 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2020-12-03 15:01:12+0000\n"
+"PO-Revision-Date: 2020-12-07 15:09:30+0000\n"
 "Last-Translator: Felipe L. <felipe.idj@hotmail.com>\n"
 "Language-Team: Brazilian Portuguese <pt_BR@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -1186,10 +1186,6 @@ msgstr "Corrigir etiquetas"
 msgid "Remove whitespace characters"
 msgstr "Remover caracteres de espaço em branco"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm540.java:44
-msgid "Fix bold and italic"
-msgstr "Corrigir negrito e itálico"
-
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm541.java:222
 msgid "for marking an edit"
 msgstr "para marcar uma edição"
@@ -1500,17 +1496,21 @@ msgstr "Uma predefinição que pode ser usada em vez de um colchete de fechament
 msgid "A template that can be used instead of an opening square bracket."
 msgstr "Uma predefinição que pode ser usada em vez de um colchete de abertura."
 
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a540/CheckErrorAlgorithm540.java:45
+msgid "Fix bold and italic"
+msgstr "Corrigir negrito e itálico"
+
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a547/CheckErrorAlgorithm547.java:244
 msgid "Templates in which empty list items should be ignored"
-msgstr ""
+msgstr "Predefinições nos quais os itens da lista vazia devem ser ignorados"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a547/CheckErrorAlgorithm547.java:248
 msgid "Template in which empty list items should be ignored"
-msgstr ""
+msgstr "Predefinição no qual os itens da lista vazia devem ser ignorados"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a547/CheckErrorAlgorithm547.java:251
 msgid "Template parameter in which empty list items should be ignored"
-msgstr ""
+msgstr "Parâmetro da predefinição no qual os itens da lista vazia devem ser ignorados"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a556/CheckErrorAlgorithm556.java:146
 #, java-format
@@ -1574,7 +1574,7 @@ msgstr "Sugestão de separador entre o texto e o link interno"
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a559/CheckErrorAlgorithm559.java:318
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a559/CheckErrorAlgorithm559.java:321
 msgid "Option to apply automatic replacement even in templates"
-msgstr ""
+msgstr "Opção de aplicar substituição automática mesmo em predefinições"
 
 #: org/wikipediacleaner/api/configuration/CWConfiguration.java:83
 #, java-format

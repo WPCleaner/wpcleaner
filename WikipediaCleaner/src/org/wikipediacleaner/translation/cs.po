@@ -16,7 +16,7 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2020-12-03 15:01:11+0000\n"
+"PO-Revision-Date: 2020-12-07 15:09:28+0000\n"
 "Last-Translator: Matěj S. <matejsuchanek97@gmail.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -1237,11 +1237,6 @@ msgstr "Opravit kategorie"
 msgid "Remove whitespace characters"
 msgstr "Odstranit všechny řídící znaky"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm540.java:44
-#, fuzzy
-msgid "Fix bold and italic"
-msgstr "Opravit všechny ztučněné nadpisy"
-
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm541.java:222
 msgid "for marking an edit"
 msgstr ""
@@ -1570,6 +1565,11 @@ msgstr "Šablona použitelná místo pravé hranaté závorky."
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a518/CheckErrorAlgorithm518.java:393
 msgid "A template that can be used instead of an opening square bracket."
 msgstr "Šablona použitelná místo levé hranaté závorky."
+
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a540/CheckErrorAlgorithm540.java:45
+#, fuzzy
+msgid "Fix bold and italic"
+msgstr "Opravit všechny ztučněné nadpisy"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a547/CheckErrorAlgorithm547.java:244
 msgid "Templates in which empty list items should be ignored"

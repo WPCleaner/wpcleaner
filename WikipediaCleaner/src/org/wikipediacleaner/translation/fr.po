@@ -19,7 +19,7 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2020-12-03 15:01:11+0000\n"
+"PO-Revision-Date: 2020-12-07 15:09:29+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: French <fr@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -1188,10 +1188,6 @@ msgstr "Corriger les balises"
 msgid "Remove whitespace characters"
 msgstr "Enlever les caractères blancs"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm540.java:44
-msgid "Fix bold and italic"
-msgstr "Corriger le gras et l’italique"
-
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm541.java:222
 msgid "for marking an edit"
 msgstr "pour indiquer une modification"
@@ -1501,6 +1497,10 @@ msgstr "Un modèle pouvant être utilisé à la place d’un crochet fermant."
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a518/CheckErrorAlgorithm518.java:393
 msgid "A template that can be used instead of an opening square bracket."
 msgstr "Un modèle pouvant être utilisé à la place d’un crochet ouvrant."
+
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a540/CheckErrorAlgorithm540.java:45
+msgid "Fix bold and italic"
+msgstr "Corriger le gras et l’italique"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a547/CheckErrorAlgorithm547.java:244
 msgid "Templates in which empty list items should be ignored"

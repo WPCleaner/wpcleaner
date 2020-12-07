@@ -9,7 +9,7 @@
 msgid ""
 msgstr ""
 ""
-"PO-Revision-Date: 2020-12-03 15:01:12+0000\n"
+"PO-Revision-Date: 2020-12-07 15:09:30+0000\n"
 "X-POT-Import-Date: 2020-12-01 21:31:52+0000\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -1174,10 +1174,6 @@ msgstr "Исправи ознаки"
 msgid "Remove whitespace characters"
 msgstr "Отстрани белински знаци"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm540.java:44
-msgid "Fix bold and italic"
-msgstr "Исправи задебелени и закосени"
-
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm541.java:222
 msgid "for marking an edit"
 msgstr "за означување на уредување"
@@ -1487,6 +1483,10 @@ msgstr ""
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a518/CheckErrorAlgorithm518.java:393
 msgid "A template that can be used instead of an opening square bracket."
 msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a540/CheckErrorAlgorithm540.java:45
+msgid "Fix bold and italic"
+msgstr "Исправи задебелени и закосени"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a547/CheckErrorAlgorithm547.java:244
 msgid "Templates in which empty list items should be ignored"
