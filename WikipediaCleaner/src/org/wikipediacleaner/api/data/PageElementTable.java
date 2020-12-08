@@ -370,6 +370,13 @@ public class PageElementTable extends PageElement {
       if (comment != null) {
         return getMeaningfulIndex(analysis, comment.getEndIndex());
       }
+      PageElementTag tag = analysis.isInTag(index);
+      if ((tag != null)  &&
+          tag.isComplete() &&
+          (tag.getBeginIndex() == index) &&
+          PageElementTag.TAG_WIKI_NOWIKI.equals(tag.getNormalizedName())) {
+        return getMeaningfulIndex(analysis, tag.getCompleteEndIndex());
+      }
     }
     return index;
   }
@@ -394,7 +401,8 @@ public class PageElementTable extends PageElement {
       }
       PageElementTag tag = analysis.isInTag(index);
       if ((tag != null) && (tag.getBeginIndex() == index)) {
-        if (PageElementTag.TAG_WIKI_REF.equals(tag.getNormalizedName())) {
+        if (PageElementTag.TAG_WIKI_NOWIKI.equals(tag.getNormalizedName()) ||
+            PageElementTag.TAG_WIKI_REF.equals(tag.getNormalizedName())) {
           return getTrueIndex(analysis, tables, tag.getCompleteEndIndex());
         }
         return getTrueIndex(analysis, tables, tag.getEndIndex());

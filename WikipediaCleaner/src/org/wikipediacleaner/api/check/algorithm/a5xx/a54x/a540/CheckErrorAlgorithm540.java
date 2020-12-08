@@ -377,7 +377,7 @@ public class CheckErrorAlgorithm540 extends CheckErrorAlgorithmBase {
           analysis, elements, element, errors,
           element.getIndex(), element.getIndex() + element.getLength(),
           element.getIndex(), element.getIndex() + element.getLength(),
-          true, false, false, true)) {
+          true, false, false, false, true)) {
         return;
       }
     }
@@ -394,7 +394,7 @@ public class CheckErrorAlgorithm540 extends CheckErrorAlgorithmBase {
             analysis, elements, element, errors,
             listItem.getBeginIndex() + listItem.getDepth(), listItem.getEndIndex(),
             listItem.getBeginIndex(), listItem.getEndIndex(),
-            true, false, false, true)) {
+            true, true, false, false, true)) {
           return;
         }
       }
@@ -406,7 +406,7 @@ public class CheckErrorAlgorithm540 extends CheckErrorAlgorithmBase {
             analysis, elements, element, errors,
             iLink.getBeginIndex() + iLink.getTextOffset(), iLink.getEndIndex() - 2,
             iLink.getBeginIndex(), iLink.getEndIndex(),
-            false, false, true, true)) {
+            false, false, false, true, true)) {
           return;
         }
       }
@@ -422,7 +422,7 @@ public class CheckErrorAlgorithm540 extends CheckErrorAlgorithmBase {
               image.getBeginIndex() + paramDesc.getEndOffset(),
               image.getBeginIndex() + paramDesc.getBeginOffset() - 1,
               image.getBeginIndex() + paramDesc.getEndOffset(),
-              true, false, true, true)) {
+              true, true, false, true, true)) {
             return;
           }
         }
@@ -436,7 +436,7 @@ public class CheckErrorAlgorithm540 extends CheckErrorAlgorithmBase {
               analysis, elements, element, errors,
               eLink.getBeginIndex() + eLink.getTextOffset(), eLink.getEndIndex() - 1,
               eLink.getBeginIndex(), eLink.getEndIndex(),
-              false, false, true, true)) {
+              false, false, false, true, true)) {
             return;
           }
         }
@@ -450,7 +450,7 @@ public class CheckErrorAlgorithm540 extends CheckErrorAlgorithmBase {
             title.getBeginIndex() + title.getFirstLevel(),
             title.getEndIndex() - title.getSecondLevel(),
             title.getBeginIndex(), title.getEndIndex(),
-            true, false, true, true)) {
+            true, true, false, true, true)) {
           return;
         }
       }
@@ -463,7 +463,7 @@ public class CheckErrorAlgorithm540 extends CheckErrorAlgorithmBase {
               analysis, elements, element, errors,
               refTag.getValueBeginIndex(), refTag.getValueEndIndex(),
               refTag.getValueBeginIndex(), refTag.getValueEndIndex(),
-              false, true, false, true)) {
+              false, false, true, false, true)) {
             return;
           }
         }
@@ -476,7 +476,7 @@ public class CheckErrorAlgorithm540 extends CheckErrorAlgorithmBase {
             analysis, elements, element, errors,
             caption.getBeginIndex() + 2, caption.getEndIndex(),
             caption.getBeginIndex(), caption.getEndIndex(),
-            true, false, true, true)) {
+            true, true, false, true, true)) {
           return;
         }
       }
@@ -494,7 +494,7 @@ public class CheckErrorAlgorithm540 extends CheckErrorAlgorithmBase {
             analysis, elements, element, errors,
             cell.getEndOptionsIndex(), cell.getEndIndex(),
             cell.getEndOptionsIndex(), cell.getEndIndex(),
-            true, true, true, true)) {
+            true, false, true, true, true)) {
           return;
         }
       }
@@ -508,7 +508,7 @@ public class CheckErrorAlgorithm540 extends CheckErrorAlgorithmBase {
             analysis, elements, element, errors,
             templateParam.getValueStartIndex(), templateParam.getEndIndex(),
             template.getBeginIndex(), template.getEndIndex(),
-            !StringUtils.isEmpty(templateParam.getName()), false, true, true)) {
+            !StringUtils.isEmpty(templateParam.getName()), false, false, true, true)) {
           return;
         }
       }
@@ -574,6 +574,12 @@ public class CheckErrorAlgorithm540 extends CheckErrorAlgorithmBase {
           automatic = true;
         }
       }
+      if (automatic) {
+        // Mark as not automatic if the element is a template
+        if (closeElement instanceof PageElementTemplate) {
+          automatic = false;
+        }
+      }
       errorResult.addReplacement(replacement, text, automatic);
     }
     errors.add(errorResult);
@@ -611,6 +617,9 @@ public class CheckErrorAlgorithm540 extends CheckErrorAlgorithmBase {
       potentialCloseElement = analysis.isInInternalLink(elementEndIndex);
       if (potentialCloseElement == null) {
         potentialCloseElement = analysis.isInExternalLink(elementEndIndex);
+      }
+      if (potentialCloseElement == null) {
+        potentialCloseElement = analysis.isInInterwikiLink(elementEndIndex);
       }
     } else if (nextChar == '{') {
       // Check if it's a template
@@ -714,7 +723,8 @@ public class CheckErrorAlgorithm540 extends CheckErrorAlgorithmBase {
    * @param endIndex End index of the small area around the formatting element.
    * @param beginArea Begin index of the bigger area around the formatting element.
    * @param endArea End index of the bigger area around the formatting element.
-   * @param deleteEmpty True if formatting element can be deleted if the area is empty.
+   * @param deleteEmpty True if formatting element can be deleted if the small area is empty.
+   * @param deleteArea True if the bigger area should be deleted if the small area is empty. 
    * @param requiresText True if text is required.
    * @param closeFull True if the formatting element can be closed at the end of the area.
    * @param deleteEnd True if the formatting element can be deleted if at the end.
@@ -727,7 +737,7 @@ public class CheckErrorAlgorithm540 extends CheckErrorAlgorithmBase {
       Collection<CheckErrorResult> errors,
       int beginIndex, int endIndex,
       int beginArea, int endArea,
-      boolean deleteEmpty, boolean requiresText,
+      boolean deleteEmpty, boolean deleteArea, boolean requiresText,
       boolean closeFull, boolean deleteEnd) {
 
     // Reduce area
@@ -797,11 +807,12 @@ public class CheckErrorAlgorithm540 extends CheckErrorAlgorithmBase {
       // Report with only the formatting element
       if ((element.getIndex() == initialBeginIndex) &&
           (element.getIndex() + element.getLength() == endIndex)) {
-        CheckErrorResult errorResult = createCheckErrorResult(
-            analysis, beginArea, endArea);
+        int beginDelete = (deleteArea ? beginArea : beginIndex);
+        int endDelete = (deleteArea ? endArea : endIndex);
+        CheckErrorResult errorResult = createCheckErrorResult(analysis, beginDelete, endDelete);
         if (requiresText &&
-            ((beginArea == 0) || (contents.charAt(beginIndex - 1) != ' ')) &&
-            ((endArea >= contents.length()) || (contents.charAt(endIndex) !=  ' '))) {
+            ((beginDelete == 0) || (contents.charAt(beginIndex - 1) != ' ')) &&
+            ((endDelete >= contents.length()) || (contents.charAt(endIndex) !=  ' '))) {
           errorResult.addReplacement(" ", deleteEmpty);
         } else {
           errorResult.addReplacement("", deleteEmpty);
@@ -830,6 +841,7 @@ public class CheckErrorAlgorithm540 extends CheckErrorAlgorithmBase {
         // Check if there's a single element after the formatting element
         boolean hasSingleElement = false;
         boolean hasSingleElementWithoutSpace = true;
+        boolean preventCloseFull  = hasSingleQuote;
         int tmpEndIndex = endIndex;
         while ((tmpEndIndex > beginIndex) &&
                (" .:;,".indexOf(contents.charAt(tmpEndIndex - 1)) >= 0)) {
@@ -839,6 +851,13 @@ public class CheckErrorAlgorithm540 extends CheckErrorAlgorithmBase {
           if (elementAfter.getEndIndex() == tmpEndIndex) {
             hasSingleElement = true;
             endIndex = tmpEndIndex;
+          } else if (elementAfter.getEndIndex() < tmpEndIndex) {
+            endIndex = elementAfter.getEndIndex();
+            preventCloseFull = true;
+          }
+          if (elementAfter instanceof PageElementTemplate) {
+            // Prevent automatic closing to avoid incorrect modifications
+            preventCloseFull = true;
           }
         }
         if (!hasSingleElement) {
@@ -884,7 +903,6 @@ public class CheckErrorAlgorithm540 extends CheckErrorAlgorithmBase {
         }
 
         // Check if something can prevent closing
-        boolean preventCloseFull  = hasSingleQuote;
         preventCloseFull |= hasDoubleQuotes;
         preventCloseFull |= (contents.charAt(endIndex - 1) == '\'');
         if (!hasSingleElement || !hasSingleElementWithoutSpace) {
