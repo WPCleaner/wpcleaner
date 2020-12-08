@@ -373,12 +373,24 @@ public class CheckErrorAlgorithm540 extends CheckErrorAlgorithmBase {
     if ((analysis.getPage() != null) &&
         (analysis.getPage().getRedirects().isRedirect()) &&
         (elements.size() == 1)) {
-      if (reportFormattingElement(
-          analysis, elements, element, errors,
-          element.getIndex(), element.getIndex() + element.getLength(),
-          element.getIndex(), element.getIndex() + element.getLength(),
-          true, false, false, false, true)) {
-        return;
+      PageElementInternalLink iLink = analysis.isInInternalLink(element.getIndex());
+      boolean process = false;
+      if (iLink == null) {
+        process = true;
+      } else {
+        if ((iLink.getText() != null) &&
+            (element.getIndex() >= iLink.getBeginIndex() + iLink.getTextOffset())) {
+          process = true;
+        }
+      }
+      if (process) {
+        if (reportFormattingElement(
+            analysis, elements, element, errors,
+            element.getIndex(), element.getIndex() + element.getLength(),
+            element.getIndex(), element.getIndex() + element.getLength(),
+            true, false, false, false, true)) {
+          return;
+        }
       }
     }
 
@@ -402,12 +414,15 @@ public class CheckErrorAlgorithm540 extends CheckErrorAlgorithmBase {
       // Report inside an internal link
       if (surroundingElement instanceof PageElementInternalLink) {
         PageElementInternalLink iLink = (PageElementInternalLink) surroundingElement;
-        if (reportFormattingElement(
-            analysis, elements, element, errors,
-            iLink.getBeginIndex() + iLink.getTextOffset(), iLink.getEndIndex() - 2,
-            iLink.getBeginIndex(), iLink.getEndIndex(),
-            false, false, false, true, true)) {
-          return;
+        if ((iLink.getText() != null) &&
+            (element.getIndex() >= iLink.getBeginIndex() + iLink.getTextOffset())) {
+          if (reportFormattingElement(
+              analysis, elements, element, errors,
+              iLink.getBeginIndex() + iLink.getTextOffset(), iLink.getEndIndex() - 2,
+              iLink.getBeginIndex(), iLink.getEndIndex(),
+              false, false, false, true, true)) {
+            return;
+          }
         }
       }
 
