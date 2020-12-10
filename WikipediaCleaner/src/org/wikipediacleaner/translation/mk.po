@@ -9,7 +9,7 @@
 msgid ""
 msgstr ""
 ""
-"PO-Revision-Date: 2020-12-07 15:09:30+0000\n"
+"PO-Revision-Date: 2020-12-10 13:06:52+0000\n"
 "X-POT-Import-Date: 2020-12-01 21:31:52+0000\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -1298,14 +1298,6 @@ msgstr ""
 msgid "Template to ignore"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm553.java:272
-msgid "Acceptable suffixes"
-msgstr ""
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm553.java:275
-msgid "Acceptable suffix"
-msgstr ""
-
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmBase.java:305
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmBase.java:308
 msgid "Title of the article describing this type of error"
@@ -1498,6 +1490,14 @@ msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a547/CheckErrorAlgorithm547.java:251
 msgid "Template parameter in which empty list items should be ignored"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a553/CheckErrorAlgorithm553.java:283
+msgid "Acceptable suffixes"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a553/CheckErrorAlgorithm553.java:286
+msgid "Acceptable suffix"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a556/CheckErrorAlgorithm556.java:146
