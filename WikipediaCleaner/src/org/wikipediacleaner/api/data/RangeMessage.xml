@@ -17,8 +17,8 @@
 ]>
 <ISBNRangeMessage>
   <MessageSource>International ISBN Agency</MessageSource>
-  <MessageSerialNumber>bc2ed323-c28b-4f77-ad35-1eec8889d67f</MessageSerialNumber>
-  <MessageDate>Sat, 21 Nov 2020 07:22:55 GMT</MessageDate>
+  <MessageSerialNumber>ee6df5d6-e831-4bb6-8384-e469fe7e50e3</MessageSerialNumber>
+  <MessageDate>Mon, 7 Dec 2020 16:33:51 GMT</MessageDate>
   <EAN.UCCPrefixes>
     <EAN.UCC>
       <Prefix>978</Prefix>
@@ -1493,8 +1493,12 @@
       <Agency>Spain</Agency>
       <Rules>
         <Rule>
-          <Range>0000000-1199999</Range>
+          <Range>0000000-1099999</Range>
           <Length>2</Length>
+        </Rule>
+        <Rule>
+          <Range>1100000-1199999</Range>
+          <Length>4</Length>
         </Rule>
         <Rule>
           <Range>1200000-1299999</Range>
@@ -2653,11 +2657,11 @@
           <Length>3</Length>
         </Rule>
         <Rule>
-          <Range>2550000-2899999</Range>
+          <Range>2550000-2799999</Range>
           <Length>0</Length>
         </Rule>
         <Rule>
-          <Range>2900000-2999999</Range>
+          <Range>2800000-2999999</Range>
           <Length>4</Length>
         </Rule>
         <Rule>
