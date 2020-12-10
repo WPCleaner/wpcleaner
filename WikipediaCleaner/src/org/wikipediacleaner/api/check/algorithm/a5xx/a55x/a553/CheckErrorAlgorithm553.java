@@ -5,7 +5,7 @@
  *  See README.txt file for licensing information.
  */
 
-package org.wikipediacleaner.api.check.algorithm;
+package org.wikipediacleaner.api.check.algorithm.a5xx.a55x.a553;
 
 import java.util.Collection;
 import java.util.HashSet;
@@ -15,6 +15,7 @@ import java.util.Set;
 import org.wikipediacleaner.api.algorithm.AlgorithmParameter;
 import org.wikipediacleaner.api.algorithm.AlgorithmParameterElement;
 import org.wikipediacleaner.api.check.CheckErrorResult;
+import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase;
 import org.wikipediacleaner.api.configuration.WPCConfiguration;
 import org.wikipediacleaner.api.data.CharacterUtils;
 import org.wikipediacleaner.api.data.Page;
@@ -23,6 +24,8 @@ import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
 import org.wikipediacleaner.api.data.contents.ilink.InternalLinkBuilder;
 import org.wikipediacleaner.i18n.GT;
+
+import javax.annotation.Nonnull;
 
 
 /**
@@ -135,13 +138,16 @@ public class CheckErrorAlgorithm553 extends CheckErrorAlgorithmBase {
       String extraText = contents.substring(nowikiTag.getEndIndex(), endText);
       boolean automatic = suffixes.contains(extraText);
       if (link.getText() == null) {
+        // Simply remove the nowiki tag
         String replacement =
             contents.substring(beginIndex, nowikiTag.getBeginIndex()) +
             contents.substring(nowikiTag.getEndIndex(), endIndex);
         errorResult.addReplacement(replacement, automatic);
       } else {
+        // Include the extra text in the link
+        String displayedText = link.getDisplayedText();
         String fullLink = link.getFullLink();
-        String text = link.getDisplayedText() + extraText;
+        String text = displayedText + extraText;
         String replacement =
             InternalLinkBuilder.from(fullLink).withText(text).toString() +
             contents.substring(endText, endIndex);
@@ -150,8 +156,23 @@ public class CheckErrorAlgorithm553 extends CheckErrorAlgorithmBase {
         if (!automatic && !safeLink) {
           errorResult.addReplacement(text + contents.substring(endText, endIndex));
         }
+
+        // Take the end of the text out of the link
+        int displayedTextLength = displayedText.length();
+        if ((displayedTextLength > 2) &&
+            (displayedText.charAt(displayedTextLength - 2) == ' ')){
+          text = displayedText.substring(0, displayedTextLength - 2);
+          if (isSafeLink(link, text)) {
+            replacement =
+                InternalLinkBuilder.from(fullLink).withText(text).toString() +
+                " " + displayedText.charAt(displayedTextLength - 1) +
+                contents.substring(nowikiTag.getEndIndex(), endIndex);
+            errorResult.addReplacement(replacement, !automatic && !safeLink);
+          }
+        }
       }
       if (!automatic) {
+        // Add a whitespace after the link
         String linkText = contents.substring(beginIndex, nowikiTag.getBeginIndex());
         char lastChar = contents.charAt(link.getEndIndex() - 3);
         if (" \u00A0;".indexOf(lastChar) >= 0) {
@@ -203,9 +224,7 @@ public class CheckErrorAlgorithm553 extends CheckErrorAlgorithmBase {
     if (Page.areSameTitle(link, text)) {
       return true;
     }
-    if (Page.areSameTitle(
-        link.toUpperCase().replaceAll("-", " "),
-        text.toUpperCase().replaceAll("-", " "))) {
+    if (Page.areSameTitle(cleanLink(link), cleanLink(text))) {
       return true;
     }
     int parenthesis = link.indexOf('(');
@@ -217,6 +236,16 @@ public class CheckErrorAlgorithm553 extends CheckErrorAlgorithmBase {
       return true;
     }
     return false;
+  }
+
+  /**
+   * Clean a link to compare between text and link.
+   * 
+   * @param link Link to be cleaned.
+   * @return Cleaned link.
+   */
+  private String cleanLink(@Nonnull String link) {
+    return link.toUpperCase().replaceAll("-", " ").replaceAll("’", "'").replaceAll("  ++", " ");
   }
 
   /**
