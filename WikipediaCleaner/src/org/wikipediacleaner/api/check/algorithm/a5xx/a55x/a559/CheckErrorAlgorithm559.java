@@ -106,6 +106,10 @@ public class CheckErrorAlgorithm559 extends CheckErrorAlgorithmBase {
       PageElement secondRef = refs.get(firstIndex + 1);
       int beginIndex = firstRef.getEndIndex();
       int endIndex = secondRef.getBeginIndex();
+      if (endIndex <= beginIndex) {
+        // To prevent problems with <ref><ref></ref></ref>...
+        return false;
+      }
       String separatorText = contents.substring(beginIndex, endIndex).trim();
       boolean shouldReport = !StringUtils.equals(separator, separatorText);
       if ((shouldReport) &&
