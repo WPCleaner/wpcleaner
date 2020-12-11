@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpStatus;
@@ -41,18 +42,18 @@ public class SpecialCharacters {
    * Characters authorized for specific Wiki. 
    */
   private final static Map<EnumWikipedia, String> localAuthorizedCharacters =
-    new HashMap<EnumWikipedia, String>();
+    new HashMap<>();
 
   /**
    * Possible replacements for unauthorized characters for every Wiki.
    */
-  private final static Map<Character, String> replacements = new HashMap<Character, String>();
+  private final static Map<Integer, String> replacements = new HashMap<>();
 
   /**
    * Possible replacements for unauthorized characters for specific Wiki.
    */
-  private final static Map<EnumWikipedia, Map<Character, String>> localReplacements =
-      new HashMap<EnumWikipedia, Map<Character,String>>();
+  private final static Map<EnumWikipedia, Map<Integer, String>> localReplacements =
+      new HashMap<>();
 
   /**
    * Set to true to check all replacements.
@@ -62,9 +63,9 @@ public class SpecialCharacters {
   static {
 
     // Possible replacements for every Wiki
-    replacements.put((char) 0xFEFF, "");
-    replacements.put((char) 0x200E, "");
-    replacements.put((char) 0x200B, "");
+    replacements.put(0xFEFF, "");
+    replacements.put(0x200E, "");
+    replacements.put(0x200B, "");
     addReplacements("ʻ’“”„‟′", "'");
 
     addReplacements("ÀÁÂÃÄÅĀĂĄǍǞǠǺȀȂȦȺАḀẠẢẤẦẨẪẬẮẰẲẴẶ", "A");
@@ -242,7 +243,7 @@ public class SpecialCharacters {
                 int quote4 = line.indexOf('\"', quote3 + 1);
                 if ((quote1 >= 0) && (quote2 >= 0) && (quote3 >= 0) && (quote4 >= 0) &&
                     (quote2 == quote1 + 2)) {
-                  char awbDiacritic = line.charAt(quote1 + 1);
+                  Integer awbDiacritic = Integer.valueOf(line.charAt(quote1 + 1));
                   String awbReplacement = line.substring(quote3 + 1, quote4);
                   String replacement = replacements.get(awbDiacritic);
                   if (replacement == null) {
@@ -301,18 +302,16 @@ public class SpecialCharacters {
           }
         }
 
-        if (replacements.containsKey(currentChar) &&
-            !replacement.equals(replacements.get(currentChar))) {
-          System.err.println("Several replacements defined for " + currentChar + ":" + replacements.get(currentChar) + "," + replacement);
+        Integer currentInt = Integer.valueOf(currentChar);
+        if (replacements.containsKey(currentInt) &&
+            !replacement.equals(replacements.get(currentInt))) {
+          System.err.println("Several replacements defined for " + currentChar + ":" + replacements.get(currentInt) + "," + replacement);
         }
       }
     }
 
     // Add the replacement
-    for (int i = 0; i < characters.length(); i++) {
-      char currentChar = characters.charAt(i);
-      replacements.put(currentChar, replacement);
-    }
+    characters.chars().forEachOrdered(c -> replacements.put(c, replacement));
   }
 
   /**
@@ -323,14 +322,8 @@ public class SpecialCharacters {
    * @param replacement Replacement.
    */
   private static void addReplacements(EnumWikipedia wiki, String characters, String replacement) {
-    Map<Character, String> localReplacement = localReplacements.get(wiki);
-    if (localReplacement == null) {
-      localReplacement = new HashMap<Character, String>();
-      localReplacements.put(wiki, localReplacement);
-    }
-    for (int i = 0; i < characters.length(); i++) {
-      localReplacement.put(characters.charAt(i), replacement);
-    }
+    final Map<Integer, String> localReplacement = localReplacements.computeIfAbsent(wiki, w -> new HashMap<>());
+    characters.chars().forEachOrdered(c -> localReplacement.put(c,  replacement));
   }
 
   /**
@@ -366,20 +359,46 @@ public class SpecialCharacters {
   /**
    * @param character Character to be replaced.
    * @param wiki Wiki.
+   * @return Replacement if there's one defined.
+   */
+  private static Optional<String> getReplacement(int character, EnumWikipedia wiki) {
+    Map<Integer, String> localReplacement = localReplacements.get(wiki);
+    if (localReplacement != null) {
+      String replacement = localReplacement.get(Integer.valueOf(character));
+      if (replacement != null) {
+        return Optional.of(replacement);
+      }
+    }
+    return Optional.ofNullable(replacements.get(Integer.valueOf(character)));
+  }
+
+/**
+   * @param character Character to be replaced.
+   * @param wiki Wiki.
    * @return Replacement.
    */
   public static String proposeReplacement(char character, EnumWikipedia wiki) {
-    Map<Character, String> localReplacement = localReplacements.get(wiki);
-    if (localReplacement != null) {
-      String replacement = localReplacement.get(Character.valueOf(character));
-      if (replacement != null) {
-        return replacement;
-      }
-    }
-    String replacement = replacements.get(Character.valueOf(character));
-    if (replacement != null) {
-      return replacement;
-    }
-    return Character.toString(character);
+    return getReplacement(character, wiki).orElse(Character.toString(character));
+  }
+
+  /**
+   * Replace all special characters in a string.
+   * 
+   * @param initial Initial string.
+   * @param wiki Wiki.
+   * @return Replacement string.
+   */
+  public static String replaceAllSpecialCharacters(String initial, EnumWikipedia wiki) {
+    StringBuilder result = new StringBuilder();
+    initial.chars().forEachOrdered(c ->
+      {
+        Optional<String> s = getReplacement(c, wiki);
+        if (s.isPresent()) {
+          result.append(s.get());
+        } else {
+          result.append((char) c);
+        }
+      });
+    return result.toString();
   }
 }

@@ -15,8 +15,10 @@ import java.util.Set;
 import org.wikipediacleaner.api.algorithm.AlgorithmParameter;
 import org.wikipediacleaner.api.algorithm.AlgorithmParameterElement;
 import org.wikipediacleaner.api.check.CheckErrorResult;
+import org.wikipediacleaner.api.check.SpecialCharacters;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase;
 import org.wikipediacleaner.api.configuration.WPCConfiguration;
+import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.CharacterUtils;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageElementInternalLink;
@@ -144,6 +146,8 @@ public class CheckErrorAlgorithm553 extends CheckErrorAlgorithmBase {
             contents.substring(nowikiTag.getEndIndex(), endIndex);
         errorResult.addReplacement(replacement, automatic);
       } else {
+        EnumWikipedia wiki = analysis.getWikipedia();
+
         // Include the extra text in the link
         String displayedText = link.getDisplayedText();
         String fullLink = link.getFullLink();
@@ -151,7 +155,7 @@ public class CheckErrorAlgorithm553 extends CheckErrorAlgorithmBase {
         String replacement =
             InternalLinkBuilder.from(fullLink).withText(text).toString() +
             contents.substring(endText, endIndex);
-        boolean safeLink = isSafeLink(link, text);
+        boolean safeLink = isSafeLink(link, text, wiki);
         errorResult.addReplacement(replacement, automatic || safeLink);
         if (!automatic && !safeLink) {
           errorResult.addReplacement(text + contents.substring(endText, endIndex));
@@ -162,7 +166,7 @@ public class CheckErrorAlgorithm553 extends CheckErrorAlgorithmBase {
         if ((displayedTextLength > 2) &&
             (displayedText.charAt(displayedTextLength - 2) == ' ')){
           text = displayedText.substring(0, displayedTextLength - 2);
-          if (isSafeLink(link, text)) {
+          if (isSafeLink(link, text, wiki)) {
             replacement =
                 InternalLinkBuilder.from(fullLink).withText(text).toString() +
                 " " + displayedText.charAt(displayedTextLength - 1) +
@@ -196,14 +200,15 @@ public class CheckErrorAlgorithm553 extends CheckErrorAlgorithmBase {
    * 
    * @param link Link.
    * @param text Suggested text for the link.
+   * @param wiki Wiki.
    * @return True if it is safe to make a link.
    */
-  private boolean isSafeLink(PageElementInternalLink link, String text) {
-    if (isSafeLink(link.getFullLink(), text)) {
+  private boolean isSafeLink(PageElementInternalLink link, String text, EnumWikipedia wiki) {
+    if (isSafeLink(link.getFullLink(), text, wiki)) {
       return true;
     }
     if (link.getAnchor() != null) {
-      if (isSafeLink(link.getLink(), text)) {
+      if (isSafeLink(link.getLink(), text, wiki)) {
         return true;
       }
     }
@@ -215,24 +220,27 @@ public class CheckErrorAlgorithm553 extends CheckErrorAlgorithmBase {
    * 
    * @param link Link target.
    * @param text Suggested text for the link.
+   * @param wiki Wiki.
    * @return True if it is safe to make a link.
    */
-  private boolean isSafeLink(String link, String text) {
+  private boolean isSafeLink(String link, String text, EnumWikipedia wiki) {
     if ((link == null) || (text == null)) {
       return false;
     }
     if (Page.areSameTitle(link, text)) {
       return true;
     }
-    if (Page.areSameTitle(cleanLink(link), cleanLink(text))) {
+    if (Page.areSameTitle(
+        cleanLink(link, wiki),
+        cleanLink(text, wiki))) {
       return true;
     }
     int parenthesis = link.indexOf('(');
-    if ((parenthesis > 0) && (isSafeLink(link.substring(0, parenthesis), text))) {
+    if ((parenthesis > 0) && (isSafeLink(link.substring(0, parenthesis), text, wiki))) {
       return true;
     }
     int comma = link.indexOf(',');
-    if ((comma > 0) && (isSafeLink(link.substring(0, comma), text))) {
+    if ((comma > 0) && (isSafeLink(link.substring(0, comma), text, wiki))) {
       return true;
     }
     return false;
@@ -242,10 +250,15 @@ public class CheckErrorAlgorithm553 extends CheckErrorAlgorithmBase {
    * Clean a link to compare between text and link.
    * 
    * @param link Link to be cleaned.
+   * @param wiki Wiki.
    * @return Cleaned link.
    */
-  private String cleanLink(@Nonnull String link) {
-    return link.toUpperCase().replaceAll("-", " ").replaceAll("’", "'").replaceAll("  ++", " ");
+  private String cleanLink(@Nonnull String link, EnumWikipedia wiki) {
+    return SpecialCharacters
+        .replaceAllSpecialCharacters(link.toUpperCase(), wiki)
+        .replaceAll("-", " ")
+        .replaceAll("’", "'")
+        .replaceAll("  ++", " ");
   }
 
   /**
