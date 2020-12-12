@@ -15,6 +15,7 @@ import java.util.Set;
 import org.wikipediacleaner.api.algorithm.AlgorithmParameter;
 import org.wikipediacleaner.api.algorithm.AlgorithmParameterElement;
 import org.wikipediacleaner.api.check.CheckErrorResult;
+import org.wikipediacleaner.api.check.SimpleAction;
 import org.wikipediacleaner.api.check.SpecialCharacters;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase;
 import org.wikipediacleaner.api.configuration.WPCConfiguration;
@@ -25,6 +26,7 @@ import org.wikipediacleaner.api.data.PageElementInternalLink;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
 import org.wikipediacleaner.api.data.contents.ilink.InternalLinkBuilder;
+import org.wikipediacleaner.gui.swing.action.ActionExternalViewer;
 import org.wikipediacleaner.i18n.GT;
 
 import javax.annotation.Nonnull;
@@ -128,7 +130,7 @@ public class CheckErrorAlgorithm553 extends CheckErrorAlgorithmBase {
       safeEnd = true;
     }
 
-    // Report error
+    // Report error without extra characters
     int beginIndex = link.getBeginIndex();
     CheckErrorResult errorResult = createCheckErrorResult(analysis, beginIndex, endIndex);
     if (!extraCharacters) {
@@ -136,62 +138,87 @@ public class CheckErrorAlgorithm553 extends CheckErrorAlgorithmBase {
           contents.substring(beginIndex, link.getEndIndex()) +
           contents.substring(nowikiTag.getEndIndex(), endIndex);
       errorResult.addReplacement(replacement, safeEnd);
-    } else {
-      String extraText = contents.substring(nowikiTag.getEndIndex(), endText);
-      boolean automatic = suffixes.contains(extraText);
-      if (link.getText() == null) {
-        // Simply remove the nowiki tag
-        String replacement =
-            contents.substring(beginIndex, nowikiTag.getBeginIndex()) +
-            contents.substring(nowikiTag.getEndIndex(), endIndex);
-        errorResult.addReplacement(replacement, automatic);
-      } else {
-        EnumWikipedia wiki = analysis.getWikipedia();
+      errors.add(errorResult);
+      return true;
+    }
 
-        // Include the extra text in the link
-        String displayedText = link.getDisplayedText();
-        String fullLink = link.getFullLink();
-        String text = displayedText + extraText;
-        String replacement =
-            InternalLinkBuilder.from(fullLink).withText(text).toString() +
-            contents.substring(endText, endIndex);
-        boolean safeLink = isSafeLink(link, text, wiki);
-        errorResult.addReplacement(replacement, automatic || safeLink);
-        if (!automatic && !safeLink) {
-          errorResult.addReplacement(text + contents.substring(endText, endIndex));
-        }
-
-        // Take the end of the text out of the link
-        int displayedTextLength = displayedText.length();
-        if ((displayedTextLength > 2) &&
-            (displayedText.charAt(displayedTextLength - 2) == ' ')){
-          text = displayedText.substring(0, displayedTextLength - 2);
-          if (isSafeLink(link, text, wiki)) {
-            replacement =
-                InternalLinkBuilder.from(fullLink).withText(text).toString() +
-                " " + displayedText.charAt(displayedTextLength - 1) +
-                contents.substring(nowikiTag.getEndIndex(), endIndex);
-            errorResult.addReplacement(replacement, !automatic && !safeLink);
-          }
-        }
-      }
+    // Report error
+    EnumWikipedia wiki = analysis.getWikipedia();
+    String extraText = contents.substring(nowikiTag.getEndIndex(), endText);
+    boolean automatic = suffixes.contains(extraText);
+    if (link.getText() == null) {
+      // Simply remove the nowiki tag
+      String replacement =
+          contents.substring(beginIndex, nowikiTag.getBeginIndex()) +
+          contents.substring(nowikiTag.getEndIndex(), endIndex);
+      errorResult.addReplacement(replacement, automatic);
       if (!automatic) {
-        // Add a whitespace after the link
-        String linkText = contents.substring(beginIndex, nowikiTag.getBeginIndex());
-        char lastChar = contents.charAt(link.getEndIndex() - 3);
-        if (" \u00A0;".indexOf(lastChar) >= 0) {
-          linkText =
-              contents.substring(beginIndex, link.getEndIndex() - 3) +
-              contents.substring(link.getEndIndex() - 2, nowikiTag.getBeginIndex());
-          automatic = true;
+        // Include the extra text in the link target
+        replacement = InternalLinkBuilder.from(link.getFullLink() + extraText).toString();
+        errorResult.addReplacement(replacement);
+
+        // Remove the nowiki tag and the extra text
+        replacement = contents.substring(beginIndex, nowikiTag.getBeginIndex());
+        errorResult.addReplacement(replacement);
+      }
+    } else {
+
+      // Include the extra text in the link
+      String displayedText = link.getDisplayedText();
+      String fullLink = link.getFullLink();
+      String text = displayedText + extraText;
+      String replacement =
+          InternalLinkBuilder.from(fullLink).withText(text).toString() +
+          contents.substring(endText, endIndex);
+      boolean safeLink = isSafeLink(link, text, wiki);
+      errorResult.addReplacement(replacement, automatic || safeLink);
+      if (!automatic && !safeLink) {
+        errorResult.addReplacement(text + contents.substring(endText, endIndex));
+      }
+
+      // Take the end of the text out of the link
+      int displayedTextLength = displayedText.length();
+      if ((displayedTextLength > 2) &&
+          (displayedText.charAt(displayedTextLength - 2) == ' ')){
+        text = displayedText.substring(0, displayedTextLength - 2);
+        if (isSafeLink(link, text, wiki)) {
+          replacement =
+              InternalLinkBuilder.from(fullLink).withText(text).toString() +
+              " " + displayedText.charAt(displayedTextLength - 1) +
+              contents.substring(nowikiTag.getEndIndex(), endIndex);
+          errorResult.addReplacement(replacement, !automatic && !safeLink);
         }
-        String replacement =
-            linkText + " " +
-            contents.substring(nowikiTag.getEndIndex(), endIndex);
-        errorResult.addReplacement(replacement, automatic);
       }
     }
+
+    // Add a whitespace after the link
+    if (!automatic) {
+      String linkText = contents.substring(beginIndex, nowikiTag.getBeginIndex());
+      char lastChar = contents.charAt(link.getEndIndex() - 3);
+      if (" \u00A0;".indexOf(lastChar) >= 0) {
+        linkText =
+            contents.substring(beginIndex, link.getEndIndex() - 3) +
+            contents.substring(link.getEndIndex() - 2, nowikiTag.getBeginIndex());
+        automatic = true;
+      }
+      String replacement =
+          linkText + " " +
+          contents.substring(nowikiTag.getEndIndex(), endIndex);
+      errorResult.addReplacement(replacement, automatic);
+    }
     errors.add(errorResult);
+
+    // External viewer for the link
+    errorResult.addPossibleAction(new SimpleAction(
+        GT._T("External Viewer") + " - " + link.getFullLink(),
+        new ActionExternalViewer(wiki, link.getFullLink())));
+    if (link.getText() == null) {
+      String completeLink = link.getFullLink() + extraText;
+      errorResult.addPossibleAction(new SimpleAction(
+          GT._T("External Viewer") + " - " + completeLink,
+          new ActionExternalViewer(wiki, completeLink)));
+    }
+
     return true;
   }
 
