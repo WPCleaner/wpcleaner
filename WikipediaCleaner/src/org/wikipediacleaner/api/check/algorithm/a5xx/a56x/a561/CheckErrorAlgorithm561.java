@@ -12,6 +12,7 @@ import java.util.Collection;
 import java.util.List;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
+import org.wikipediacleaner.api.check.CheckErrorResult.ErrorLevel;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageElementInternalLink;
@@ -69,38 +70,70 @@ public class CheckErrorAlgorithm561 extends CheckErrorAlgorithmBase {
     // Test every internal link
     boolean result = false;
     for (PageElementInternalLink link : links) {
+      result |= analyzeLink(link, analysis, linkedRedirectPages, errors);
+    }
 
-      // Find page matching the link
-      Page linkedPage = null;
-      if (link.getText() != null) {
-        String fullLink = Page.normalizeTitle(link.getFullLink());
-        for (Page tmpPage : linkedRedirectPages) {
-          if (Page.areSameTitle(tmpPage.getTitle(), false, fullLink, true)) {
-            linkedPage = tmpPage;
-          }
-        }
-      }
+    return result;
+  }
 
-      // Analyze if the text of the link matches the final target
-      boolean shouldReport = false;
-      if ((linkedPage != null) &&
-          (linkedPage.getRedirects().isRedirect()) &&
-          (Page.areSameTitle(link.getText(), linkedPage.getRedirects().getDestination()))) {
-        shouldReport = true;
-      }
 
-      // Report
-      if (shouldReport) {
-        if (errors == null) {
-          return true;
-        }
-        result = true;
-        CheckErrorResult errorResult = createCheckErrorResult(
-            analysis, link.getBeginIndex(), link.getEndIndex());
-        errorResult.addReplacement(InternalLinkBuilder.from(link.getText()).toString());
-        errors.add(errorResult);
+  /**
+   * Analyze a page to check if errors are present.
+   * 
+   * @param analysis Page analysis.
+   * @param errors Errors found in the page.
+   * @param onlyAutomatic True if analysis could be restricted to errors automatically fixed.
+   * @return Flag indicating if the error was found.
+   */
+  private boolean analyzeLink(
+      PageElementInternalLink link,
+      PageAnalysis analysis,
+      List<Page> linkedRedirectPages,
+      Collection<CheckErrorResult> errors) {
+
+    // Find page matching the link
+    String linkText = link.getText();
+    if (linkText == null) {
+      return false;
+    }
+    Page linkedPage = null;
+    String fullLink = Page.normalizeTitle(link.getFullLink());
+    for (Page tmpPage : linkedRedirectPages) {
+      if (Page.areSameTitle(tmpPage.getTitle(), false, fullLink, true)) {
+        linkedPage = tmpPage;
       }
     }
-    return result;
+    if (linkedPage == null) {
+      return false;
+    }
+
+    // Analyze if the text of the link matches the final target
+    if (!linkedPage.getRedirects().isRedirect()) {
+      return false;
+    }
+    String destination = linkedPage.getRedirects().getDestination();
+    if (!Page.areSameTitle(linkText, destination)) {
+      return false;
+    }
+
+    // Analyze if the link is for a disambiguation
+    if (fullLink.endsWith(")")) {
+      int openParenthesis = fullLink.lastIndexOf('(');
+      if ((openParenthesis > 0) &&
+          Page.areSameTitle(fullLink.substring(0, openParenthesis), linkText)) {
+        return false;
+      }
+    }
+
+    // Report
+    if (errors == null) {
+      return true;
+    }
+    CheckErrorResult errorResult = createCheckErrorResult(
+        analysis, link.getBeginIndex(), link.getEndIndex(),
+        ErrorLevel.WARNING);
+    errorResult.addReplacement(InternalLinkBuilder.from(linkText).toString());
+    errors.add(errorResult);
+    return true;
   }
 }
