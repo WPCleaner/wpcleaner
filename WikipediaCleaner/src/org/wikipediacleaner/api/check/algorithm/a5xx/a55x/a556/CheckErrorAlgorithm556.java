@@ -117,14 +117,17 @@ public class CheckErrorAlgorithm556 extends CheckErrorAlgorithmBase {
         }
 
         // Check if the template allows links in this parameter
-        for (String[] possibleTemplate : templates) {
-          if (Page.areSameTitle(possibleTemplate[0], template.getTemplateName())) {
-            if (possibleTemplate.length < 2) {
-              return false;
-            }
-            if ((param != null) &&
-                possibleTemplate[1].equals(param.getComputedName())) {
-              return false;
+        if (param != null) {
+          for (String[] possibleTemplate : templates) {
+            if (Page.areSameTitle(possibleTemplate[0], template.getTemplateName())) {
+              if (possibleTemplate.length < 2) {
+                return false;
+              }
+              for (int paramNum = 1; paramNum < possibleTemplate.length; paramNum++) {
+                if (possibleTemplate[paramNum].equals(param.getComputedName())) {
+                  return false;
+                }
+              }
             }
           }
         }
@@ -231,7 +234,8 @@ public class CheckErrorAlgorithm556 extends CheckErrorAlgorithmBase {
               GT._T("Template in which external links are normal")),
           new AlgorithmParameterElement(
               "parameter name",
-              GT._T("Parameter in which external links are normal"))
+              GT._T("Parameter in which external links are normal"),
+              true, true)
         },
         true));
     addParameter(new AlgorithmParameter(
