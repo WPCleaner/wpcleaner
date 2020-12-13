@@ -154,11 +154,15 @@ public class CheckErrorAlgorithm553 extends CheckErrorAlgorithmBase {
       errorResult.addReplacement(replacement, automatic);
       if (!automatic) {
         // Include the extra text in the link target
-        replacement = InternalLinkBuilder.from(link.getFullLink() + extraText).toString();
+        replacement =
+            InternalLinkBuilder.from(link.getFullLink() + extraText).toString() +
+            contents.substring(endText, endIndex);
         errorResult.addReplacement(replacement);
 
         // Remove the nowiki tag and the extra text
-        replacement = contents.substring(beginIndex, nowikiTag.getBeginIndex());
+        replacement =
+            contents.substring(beginIndex, nowikiTag.getBeginIndex()) +
+            contents.substring(endText, endIndex);
         errorResult.addReplacement(replacement);
       }
     } else {
