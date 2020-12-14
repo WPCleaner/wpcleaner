@@ -807,7 +807,7 @@ public abstract class UpdateWarningTools {
     if (Boolean.FALSE.equals(talkPage.isExisting())) {
       String comment = getWarningComment(elements);
       String newContents = TemplateBuilder.from(todoTemplates.get(0)).toString();
-      updateTalkPage(talkPage, newContents, comment, true);
+      updateTalkPage(talkPage, newContents, comment, false);
       return true;
     }
 
@@ -869,7 +869,7 @@ public abstract class UpdateWarningTools {
         tmp.append(contents.substring(indexStart));
       }
       String comment = getWarningComment(elements);
-      updateTalkPage(talkPage, tmp.toString(), comment, true);
+      updateTalkPage(talkPage, tmp.toString(), comment, false);
       return true;
     }
     if (templateTodo.getParameterValue("1") == null) {
@@ -937,7 +937,7 @@ public abstract class UpdateWarningTools {
         tmp.append(contents.substring(templateTodo.getEndIndex()));
       }
       String comment = getWarningComment(elements);
-      updateTalkPage(talkPage, tmp.toString(), comment, true);
+      updateTalkPage(talkPage, tmp.toString(), comment, false);
       return true;
     }
 
