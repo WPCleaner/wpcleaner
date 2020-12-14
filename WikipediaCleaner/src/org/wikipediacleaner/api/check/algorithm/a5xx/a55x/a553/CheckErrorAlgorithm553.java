@@ -266,6 +266,8 @@ public class CheckErrorAlgorithm553 extends CheckErrorAlgorithmBase {
         cleanLink(text, wiki))) {
       return true;
     }
+
+    // Check if the link can be a disambiguation link (parenthesis or comma)
     int parenthesis = link.indexOf('(');
     if ((parenthesis > 0) && (isSafeLink(link.substring(0, parenthesis), text, wiki))) {
       return true;
@@ -273,6 +275,26 @@ public class CheckErrorAlgorithm553 extends CheckErrorAlgorithmBase {
     int comma = link.indexOf(',');
     if ((comma > 0) && (isSafeLink(link.substring(0, comma), text, wiki))) {
       return true;
+    }
+
+    // Check if the text is a part of the link
+    if ((parenthesis < 0) && (comma < 0)) {
+      int spaceIndex = link.indexOf(' ');
+      while (spaceIndex > 0) {
+        while ((spaceIndex < link.length()) &&
+              (link.charAt(spaceIndex) == ' ')) {
+          spaceIndex++;
+        }
+        if (link.length() >= spaceIndex + text.length()) {
+          String subLink = link.substring(spaceIndex, spaceIndex + text.length());
+          if (Page.areSameTitle(cleanLink(subLink, wiki), cleanLink(text, wiki))) {
+            return true;
+          }
+          spaceIndex = link.indexOf(' ', spaceIndex);
+        } else {
+          spaceIndex = -1;
+        }
+      }
     }
     return false;
   }
