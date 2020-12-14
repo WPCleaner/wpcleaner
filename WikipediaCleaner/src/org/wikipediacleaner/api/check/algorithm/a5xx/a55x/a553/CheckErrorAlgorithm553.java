@@ -22,6 +22,7 @@ import org.wikipediacleaner.api.configuration.WPCConfiguration;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.CharacterUtils;
 import org.wikipediacleaner.api.data.Page;
+import org.wikipediacleaner.api.data.PageElementExternalLink;
 import org.wikipediacleaner.api.data.PageElementInternalLink;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
@@ -186,11 +187,18 @@ public class CheckErrorAlgorithm553 extends CheckErrorAlgorithmBase {
           (displayedText.charAt(displayedTextLength - 2) == ' ')){
         text = displayedText.substring(0, displayedTextLength - 2);
         if (isSafeLink(link, text, wiki)) {
+          char lastChar = displayedText.charAt(displayedTextLength - 1);
+          boolean extractAutomatic = !automatic && !safeLink;
+          extractAutomatic &= Character.isLetter(lastChar);
+          if (extractAutomatic) {
+            PageElementExternalLink eLink = analysis.isInExternalLink(endIndex);
+            extractAutomatic &= (eLink == null) || eLink.hasSecondSquare();
+          }
           replacement =
               InternalLinkBuilder.from(fullLink).withText(text).toString() +
               " " + displayedText.charAt(displayedTextLength - 1) +
               contents.substring(nowikiTag.getEndIndex(), endIndex);
-          errorResult.addReplacement(replacement, !automatic && !safeLink);
+          errorResult.addReplacement(replacement, extractAutomatic);
         }
       }
     }
@@ -278,9 +286,11 @@ public class CheckErrorAlgorithm553 extends CheckErrorAlgorithmBase {
     }
 
     // Check if the text is a part of the link
-    if ((parenthesis < 0) && (comma < 0)) {
-      int spaceIndex = link.indexOf(' ');
-      while (spaceIndex > 0) {
+    if ((parenthesis < 0) &&
+        (comma < 0) &&
+        (text.length() > 4)) {
+      int spaceIndex = 0;
+      while (spaceIndex >= 0) {
         while ((spaceIndex < link.length()) &&
               (link.charAt(spaceIndex) == ' ')) {
           spaceIndex++;
