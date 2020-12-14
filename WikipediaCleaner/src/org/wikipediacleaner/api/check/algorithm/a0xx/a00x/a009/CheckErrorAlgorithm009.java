@@ -8,15 +8,24 @@
 package org.wikipediacleaner.api.check.algorithm.a0xx.a00x.a009;
 
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
+import org.wikipediacleaner.api.algorithm.AlgorithmParameter;
+import org.wikipediacleaner.api.algorithm.AlgorithmParameterElement;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase;
+import org.wikipediacleaner.api.configuration.WPCConfiguration;
 import org.wikipediacleaner.api.data.MagicWord;
+import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageElementCategory;
 import org.wikipediacleaner.api.data.PageElementFunction;
 import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
+import org.wikipediacleaner.i18n.GT;
 
 
 /**
@@ -73,8 +82,28 @@ public class CheckErrorAlgorithm009 extends CheckErrorAlgorithmBase {
         }
       }
 
+      // Decide if error should be reported
+      boolean shouldReport = (lastCategory > currentCategory);
+      if (shouldReport && !ignoreTemplates.isEmpty()) {
+        int beginIndex = categories.get(currentCategory).getBeginIndex();
+        PageElementTemplate template = analysis.isInTemplate(beginIndex);
+        if (template != null) {
+          Set<String> parameters = ignoreTemplates.get(template.getTemplateName());
+          if (parameters != null) {
+            if (parameters.isEmpty()) {
+              shouldReport = false;
+            } else {
+              PageElementTemplate.Parameter param = template.getParameterAtIndex(beginIndex);
+              if ((param != null) && parameters.contains(param.getComputedName())) {
+                shouldReport = false;
+              }
+            }
+          }
+        }
+      }
+
       // Register error
-      if (lastCategory > currentCategory) {
+      if (shouldReport) {
         if (errors == null) {
           return true;
         }
@@ -167,5 +196,62 @@ public class CheckErrorAlgorithm009 extends CheckErrorAlgorithmBase {
   @Override
   protected String internalAutomaticFix(PageAnalysis analysis) {
     return fixUsingAutomaticReplacement(analysis);
+  }
+
+  /* ====================================================================== */
+  /* PARAMETERS                                                             */
+  /* ====================================================================== */
+
+  /** Templates to be ignored */
+  private static final String PARAMETER_IGNORE_TEMPLATES = "ignore_templates";
+
+  /**
+   * Initialize settings for the algorithm.
+   * 
+   * @see org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase#initializeSettings()
+   */
+  @Override
+  protected void initializeSettings() {
+    String tmp = getSpecificProperty(PARAMETER_IGNORE_TEMPLATES, true, true, false);
+    ignoreTemplates.clear();
+    if (tmp != null) {
+      List<String[]> tmpList = WPCConfiguration.convertPropertyToStringArrayList(tmp);
+      if (tmpList != null) {
+        for (String[] tmpElement : tmpList) {
+          if (tmpElement.length > 0) {
+            Set<String> parameters = ignoreTemplates.computeIfAbsent(
+                Page.normalizeTitle(tmpElement[0]),
+                k -> new HashSet<>());
+            for (int elementNum = 1; elementNum < tmpElement.length; elementNum++) {
+              parameters.add(tmpElement[elementNum]);
+            }
+          }
+        }
+      }
+    }
+  }
+
+  /** Templates to be ignored */
+  private final Map<String, Set<String>> ignoreTemplates = new HashMap<>();
+
+  /**
+   * Build the list of parameters for this algorithm.
+   */
+  @Override
+  protected void addParameters() {
+    super.addParameters();
+    addParameter(new AlgorithmParameter(
+        PARAMETER_IGNORE_TEMPLATES,
+        GT._T("A list of templates in which categories should be ignored."),
+        new AlgorithmParameterElement[] {
+            new AlgorithmParameterElement(
+                "template name",
+                GT._T("A template in which categories should be ignored.")),
+            new AlgorithmParameterElement(
+                "parameter name",
+                GT._T("A template parameter in which categories should be ignored."),
+                true, true)
+        },
+        true));
   }
 }
