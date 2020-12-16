@@ -5,12 +5,13 @@
  *  See README.txt file for licensing information.
  */
 
-package org.wikipediacleaner.api.check.algorithm;
+package org.wikipediacleaner.api.check.algorithm.a0xx.a03x.a034;
 
 import java.util.Collection;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.CheckErrorResult.ErrorLevel;
+import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase;
 import org.wikipediacleaner.api.data.MagicWord;
 import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.Page;
@@ -147,9 +148,12 @@ public class CheckErrorAlgorithm034 extends CheckErrorAlgorithmBase {
                 (PageElementTag.TAG_WIKI_REF.equals(function.getParameterValue(0)))) {
               isOk = true;
             }
-            if (!isOk &&
-                (MagicWord.SUBST.equals(magicWordName) || MagicWord.SAFE_SUBST.equals(magicWordName))) {
-              errorLevel = ErrorLevel.WARNING;
+            if (!isOk) {
+              if (MagicWord.INVOKE.equals(magicWordName) ||
+                  MagicWord.SAFE_SUBST.equals(magicWordName) ||
+                  MagicWord.SUBST.equals(magicWordName)) {
+                errorLevel = ErrorLevel.WARNING;
+              }
             }
             if (!isOk) {
               result = true;
@@ -171,6 +175,7 @@ public class CheckErrorAlgorithm034 extends CheckErrorAlgorithmBase {
                   (analysis.isInTag(currentIndex, PageElementTag.TAG_WIKI_INCLUDEONLY) == null) &&
                   (analysis.isInTag(currentIndex, PageElementTag.TAG_WIKI_REF) == null) &&
                   (analysis.isInTag(currentIndex, PageElementTag.TAG_WIKI_TIMELINE) == null) &&
+                  (!MagicWord.INVOKE.equals(magicWordName)) &&
                   (!MagicWord.SUBST.equals(magicWordName)) &&
                   (!MagicWord.SAFE_SUBST.equals(magicWordName))) {
                 errorResult.addReplacement(
