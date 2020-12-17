@@ -16,7 +16,7 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2020-12-14 14:23:49+0000\n"
+"PO-Revision-Date: 2020-12-17 14:30:44+0000\n"
 "Last-Translator: Felipe L. <felipe.idj@hotmail.com>\n"
 "Language-Team: Brazilian Portuguese <pt_BR@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -26,7 +26,7 @@ msgstr ""
 "X-Launchpad-Export-Date: 2017-03-22 17:48+0000\n"
 "X-Generator: MediaWiki 1.36.0-alpha; Translate 2020-10-28\n"
 "Language: pt_br\n"
-"X-POT-Import-Date: 2020-12-01 21:31:52+0000\n"
+"X-POT-Import-Date: 2020-12-14 19:31:52+0000\n"
 
 #: org/wikipediacleaner/Version.java:31
 #, java-format
@@ -514,8 +514,8 @@ msgstr "Substituir usando predefinição {0}"
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm091.java:293
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm513.java:551
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm544.java:163
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a553/CheckErrorAlgorithm553.java:213
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a553/CheckErrorAlgorithm553.java:218
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a553/CheckErrorAlgorithm553.java:217
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a553/CheckErrorAlgorithm553.java:222
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a557/CheckErrorAlgorithm557.java:263
 #: org/wikipediacleaner/gui/swing/action/ActionExternalViewer.java:61
 #: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:90
@@ -1440,6 +1440,21 @@ msgstr "Descomentar"
 msgid "Unable to replace the characters [{0}]"
 msgstr "Não é possível substituir os caracteres [{0}]"
 
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a009/CheckErrorAlgorithm009.java:245
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a05x/a052/CheckErrorAlgorithm052.java:342
+msgid "A list of templates in which categories should be ignored."
+msgstr "Uma lista de predefinições em que as categorias devem ser ignoradas."
+
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a009/CheckErrorAlgorithm009.java:249
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a05x/a052/CheckErrorAlgorithm052.java:346
+msgid "A template in which categories should be ignored."
+msgstr "Uma predefinição no qual as categorias devem ser ignoradas."
+
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a009/CheckErrorAlgorithm009.java:252
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a05x/a052/CheckErrorAlgorithm052.java:349
+msgid "A template parameter in which categories should be ignored."
+msgstr "Um parâmetro de predefinição no qual as categorias devem ser ignoradas."
+
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a04x/a048/CheckErrorAlgorithm048.java:41
 msgid "Remove all links to title (first in bold)"
 msgstr "Remover todos os links para títulos (primeiro em negrito)"
@@ -1506,46 +1521,46 @@ msgstr "Predefinição no qual os itens da lista vazia devem ser ignorados"
 msgid "Template parameter in which empty list items should be ignored"
 msgstr "Parâmetro da predefinição no qual os itens da lista vazia devem ser ignorados"
 
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a553/CheckErrorAlgorithm553.java:341
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a553/CheckErrorAlgorithm553.java:367
 msgid "Acceptable suffixes"
 msgstr "Sufixos aceitáveis"
 
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a553/CheckErrorAlgorithm553.java:344
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a553/CheckErrorAlgorithm553.java:370
 msgid "Acceptable suffix"
 msgstr "Sufixo aceitável"
 
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a556/CheckErrorAlgorithm556.java:146
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a556/CheckErrorAlgorithm556.java:149
 #, java-format
 msgid "Add inside a {0} tag"
 msgstr "Adicionar dentro de uma etiqueta {0}"
 
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a556/CheckErrorAlgorithm556.java:153
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a556/CheckErrorAlgorithm556.java:156
 #, java-format
 msgid "Keep text and add link inside a {0} tag"
 msgstr "Manter o texto e adicionar link dentro de uma etiqueta {0}"
 
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a556/CheckErrorAlgorithm556.java:227
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a556/CheckErrorAlgorithm556.java:230
 msgid "Templates in which external links are normal"
 msgstr "Predefinições nos quais links externos são normais"
 
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a556/CheckErrorAlgorithm556.java:231
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a556/CheckErrorAlgorithm556.java:234
 msgid "Template in which external links are normal"
 msgstr "Predefinição no qual links externos são normais"
 
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a556/CheckErrorAlgorithm556.java:234
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a556/CheckErrorAlgorithm556.java:243
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a556/CheckErrorAlgorithm556.java:237
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a556/CheckErrorAlgorithm556.java:247
 msgid "Parameter in which external links are normal"
 msgstr "Parâmetro em que links externos são normais"
 
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a556/CheckErrorAlgorithm556.java:239
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a556/CheckErrorAlgorithm556.java:243
 msgid "Template parameters in which external links are normal"
 msgstr "Parâmetros de predefinição nos quais links externos são normais"
 
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a556/CheckErrorAlgorithm556.java:248
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a556/CheckErrorAlgorithm556.java:252
 msgid "Sections in which external links are normal"
 msgstr "Seções nas quais links externos são normais"
 
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a556/CheckErrorAlgorithm556.java:251
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a556/CheckErrorAlgorithm556.java:255
 msgid "Section in which external links are normal"
 msgstr "Seção na qual links externos são normais"
 
