@@ -5,27 +5,29 @@
  *  See README.txt file for licensing information.
  */
 
-package org.wikipediacleaner.api.check.algorithm;
+package org.wikipediacleaner.api.check.algorithm.a0xx.a01x.a014;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmUnclosedTags;
 import org.wikipediacleaner.api.data.PageElementTag;
 
 
 /**
- * Algorithm for analyzing error 15 of check wikipedia project.
- * Error 15: Code not correct end
+ * Algorithm for analyzing error 14 of check wikipedia project.
+ * Error 14: Source not correct end
  */
-public class CheckErrorAlgorithm015 extends CheckErrorAlgorithmUnclosedTags {
+public class CheckErrorAlgorithm014 extends CheckErrorAlgorithmUnclosedTags {
 
   /** List of tags managed by this error. */
   private final List<String> tags;
 
-  public CheckErrorAlgorithm015() {
-    super("Code not correct end");
+  public CheckErrorAlgorithm014() {
+    super("Source not correct end");
     tags = new ArrayList<String>();
-    tags.add(PageElementTag.TAG_HTML_CODE);
+    tags.add(PageElementTag.TAG_WIKI_SYNTAXHIGHLIGHT);
+    tags.add(PageElementTag.TAG_WIKI_SOURCE);
   }
 
   /**
