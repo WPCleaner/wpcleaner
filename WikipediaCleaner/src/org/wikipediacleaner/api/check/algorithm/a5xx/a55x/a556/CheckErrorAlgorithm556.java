@@ -54,13 +54,16 @@ public class CheckErrorAlgorithm556 extends CheckErrorAlgorithmBase {
   public boolean analyze(
       PageAnalysis analysis,
       Collection<CheckErrorResult> errors, boolean onlyAutomatic) {
-    if (analysis == null) {
+    if ((analysis == null) || (analysis.getPage() == null)) {
       return false;
     }
 
     // Global verification
     List<PageElementExternalLink> links = analysis.getExternalLinks();
     if ((links == null) || (links.isEmpty())) {
+      return false;
+    }
+    if (!analysis.getPage().isArticle()) {
       return false;
     }
 
