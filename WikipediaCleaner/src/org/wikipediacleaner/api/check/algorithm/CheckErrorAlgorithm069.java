@@ -131,6 +131,7 @@ public class CheckErrorAlgorithm069 extends CheckErrorAlgorithmISBN {
 
     // NL
     namespaceNames = new HashSet<>();
+    namespaceNames.add("Speciaal");
     pageNames = new HashSet<>();
     pageNames.add("Boekbronnen");
     pageNames.add("Boekinformatie");
