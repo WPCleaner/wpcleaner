@@ -122,7 +122,7 @@ public class CheckErrorAlgorithm553 extends CheckErrorAlgorithmBase {
       char lastChar = contents.charAt(endIndex);
       if (CharacterUtils.isWhitespace(lastChar) ||
           CharacterUtils.isPunctuation(lastChar) ||
-          ("'".indexOf(lastChar) >= 0)) {
+          ("'\n|<".indexOf(lastChar) >= 0)) {
         safeEnd = true;
       } else {
         endIndex++;
