@@ -104,7 +104,7 @@ public class CheckErrorAlgorithm557 extends CheckErrorAlgorithmBase {
     if (!Character.isLetter(previousChar)) {
       return false;
     }
-    if ("ʼ".indexOf(previousChar) >= 0) {
+    if ("ʼʹ".indexOf(previousChar) >= 0) {
       return false;
     }
     if ((link.getText() == null) &&
