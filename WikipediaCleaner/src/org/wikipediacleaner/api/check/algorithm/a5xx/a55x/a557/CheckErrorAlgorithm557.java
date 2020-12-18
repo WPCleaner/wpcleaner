@@ -239,7 +239,7 @@ public class CheckErrorAlgorithm557 extends CheckErrorAlgorithmBase {
             automatic = false;
           }
         } else {
-          automatic = areIdentical(link.getLink(), text, true);
+          automatic = areIdentical(link.getLink(), text, wiki);
         }
         automatic &=
             (fullPrefix.length() <= 3) ||
@@ -255,7 +255,13 @@ public class CheckErrorAlgorithm557 extends CheckErrorAlgorithmBase {
       replacement =
           prefix + " " +
           contents.substring(link.getBeginIndex(), link.getEndIndex());
-      errorResult.addReplacement(replacement, prefixes_exclude.contains(prefix));
+      automatic = prefixes_exclude.contains(prefix);
+      // Can't use areIdentical(link.getLink(), link.getDisplayedText(), true);
+      // because prefix could also be included in the link in some cases
+      errorResult.addReplacement(
+          replacement,
+          !automaticUsed && automatic);
+      automaticUsed |= automatic;
 
       // Add other separators before the internal link
       for (String separator : separators) {
@@ -311,18 +317,19 @@ public class CheckErrorAlgorithm557 extends CheckErrorAlgorithmBase {
   /**
    * @param link Link target.
    * @param text Text.
+   * @param wiki Wiki.
    * @return True if link and text can be considered identical.
    */
-  private boolean areIdentical(String link, String text, boolean extraTrim) {
-    link = link.trim().toUpperCase();
-    text = text.trim().toUpperCase();
+  private boolean areIdentical(String link, String text, EnumWikipedia wiki) {
+    link = cleanLink(link, wiki);
+    text = cleanLink(text, wiki);
     if (Page.areSameTitle(link, text)) {
       return true;
     }
-    if (link.endsWith(")") && extraTrim) {
+    if (link.endsWith(")")) {
       int openParenthesis = link.lastIndexOf('(');
       if (openParenthesis > 0) {
-        return areIdentical(link.substring(0,  openParenthesis), text, extraTrim);
+        return areIdentical(link.substring(0,  openParenthesis), text, wiki);
       }
     }
     return false;
