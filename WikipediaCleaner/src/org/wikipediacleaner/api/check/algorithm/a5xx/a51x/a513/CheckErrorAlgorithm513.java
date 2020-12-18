@@ -5,7 +5,7 @@
  *  See README.txt file for licensing information.
  */
 
-package org.wikipediacleaner.api.check.algorithm;
+package org.wikipediacleaner.api.check.algorithm.a5xx.a51x.a513;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -16,6 +16,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.wikipediacleaner.api.API;
@@ -25,6 +26,7 @@ import org.wikipediacleaner.api.algorithm.AlgorithmParameter;
 import org.wikipediacleaner.api.algorithm.AlgorithmParameterElement;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.SimpleAction;
+import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase;
 import org.wikipediacleaner.api.configuration.WPCConfiguration;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.CharacterUtils;
@@ -227,7 +229,7 @@ public class CheckErrorAlgorithm513 extends CheckErrorAlgorithmBase {
               String replacement =
                   contents.substring(param.getBeginIndex(), tmpTemplate.getBeginIndex()) +
                   replacementEnd;
-              errorResult.addReplacement(replacement, config.automatic && !closeBracket);
+              errorResult.addReplacement(replacement, config.automaticReplacement && !closeBracket);
             }
             errors.add(errorResult);
             return true;
@@ -285,7 +287,9 @@ public class CheckErrorAlgorithm513 extends CheckErrorAlgorithmBase {
             TemplateReplacement config = templates.get(template.getTemplateName());
             if (config != null) {
               internalLink = template;
-              if (config.replacement != null) {
+
+              // If template has a replacement, suggest the replacement
+              if (StringUtils.isNotEmpty(config.replacement)) {
                 if (errors == null) {
                   return true;
                 }
@@ -311,9 +315,46 @@ public class CheckErrorAlgorithm513 extends CheckErrorAlgorithmBase {
                     "[..." +
                     contents.substring(link.getLinkEndIndex(), template.getBeginIndex()) +
                     replacementEnd;
-                errorResult.addReplacement(replacement, description, config.automatic);
+                errorResult.addReplacement(replacement, description, config.automaticReplacement);
                 errors.add(errorResult);
                 return true;
+              }
+
+              // If template can be extracted, suggest the extraction
+              if (config.automaticEndExtraction) {
+                int lastIndex = template.getEndIndex();
+                while ((lastIndex < link.getEndIndex() - 1) &&
+                       (CharacterUtils.isWhitespace(contents.charAt(lastIndex)) ||
+                        CharacterUtils.isPunctuation(contents.charAt(lastIndex)))) {
+                  lastIndex++;
+                }
+                if (lastIndex == link.getEndIndex() - 1) {
+                  if (errors == null) {
+                    return true;
+                  }
+                  CheckErrorResult errorResult = createCheckErrorResult(
+                      analysis, link.getBeginIndex(), link.getEndIndex());
+                  int splitIndex = template.getBeginIndex();
+                  while ((splitIndex > 0) &&
+                         (CharacterUtils.isWhitespace(contents.charAt(splitIndex - 1)) ||
+                          ("(,".indexOf(contents.charAt(splitIndex - 1)) >= 0))) {
+                    splitIndex--;
+                  }
+                  if (splitIndex > link.getBeginIndex() + link.getTextOffset()) {
+                    String replacement =
+                        contents.substring(link.getBeginIndex(), splitIndex) +
+                        contents.substring(lastIndex, link.getEndIndex()) +
+                        contents.substring(splitIndex, lastIndex);
+                    String description =
+                        "[....]" +
+                        contents.substring(splitIndex, lastIndex);
+                    errorResult.addReplacement(replacement, description, config.automaticEndExtraction);
+                  } else {
+                    errorResult.addReplacement(contents.substring(splitIndex, lastIndex));
+                  }
+                  errors.add(errorResult);
+                  return true;
+                }
               }
             }
           }
@@ -817,49 +858,6 @@ public class CheckErrorAlgorithm513 extends CheckErrorAlgorithmBase {
 
   /** Linter category */
   private LinterCategory linterCategory = null;
-
-  /** Bean holding configuration for template replacement */
-  private static class TemplateReplacement {
-
-    /** Name of the template */
-    public final String templateName;
-
-    /** True if the replacement should be full or only the template name */
-    public final boolean fullReplacement;
-
-    /** Replacement */
-    public final String replacement;
-
-    /** True if replacement can be automatic */
-    public final boolean automatic;
-
-    public static TemplateReplacement build(String[] data) {
-      if ((data == null) || (data.length == 0)) {
-        return null;
-      }
-      String name = data[0];
-      boolean full = false;
-      if (name.startsWith("{{") && name.endsWith("}}")) {
-        name = name.substring(2, name.length() - 2);
-        full = true;
-      }
-      return new TemplateReplacement(
-          name, full,
-          data.length > 1 ? data[1] : null,
-          data.length > 2 ? Boolean.parseBoolean(data[2]) : false);
-    }
-
-    private TemplateReplacement(
-        String templateName,
-        boolean fullReplacement,
-        String replacement,
-        boolean automatic) {
-      this.templateName = templateName;
-      this.fullReplacement = fullReplacement;
-      this.replacement = replacement;
-      this.automatic = automatic;
-    }
-  }
 
   /**
    * Build the list of parameters for this algorithm.
