@@ -5,12 +5,11 @@
  *  See README.txt file for licensing information.
  */
 
-package org.wikipediacleaner.api.check.algorithm;
+package org.wikipediacleaner.api.check.algorithm.a5xx.a50x.a501;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -22,6 +21,7 @@ import org.wikipediacleaner.api.check.Actionnable;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.CompositeAction;
 import org.wikipediacleaner.api.check.SimpleAction;
+import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase;
 import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.PageElementFunction;
 import org.wikipediacleaner.api.data.PageElementInternalLink;
@@ -30,6 +30,8 @@ import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.Suggestion;
 import org.wikipediacleaner.api.data.Suggestion.ElementarySuggestion;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
+import org.wikipediacleaner.api.data.contents.ContentsInterval;
+import org.wikipediacleaner.api.data.contents.Interval;
 import org.wikipediacleaner.api.data.analysis.Areas;
 import org.wikipediacleaner.gui.swing.component.MWPaneReplaceAllAction;
 import org.wikipediacleaner.i18n.GT;
@@ -74,7 +76,7 @@ public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
     List<Suggestion> activeSuggestions = new ArrayList<>(tmpSuggestions);
 
     // Check spelling in templates
-    List<Replacement> replacements = new ArrayList<Replacement>();
+    List<Replacement> replacements = new ArrayList<>();
     if ((result == false) || (errors != null)) {
       result |= analyzeTemplates(analysis, activeSuggestions, replacements);
     }
@@ -105,7 +107,7 @@ public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
 
     // Group replacements
     String contents = analysis.getContents();
-    List<ReplacementGroup> groups = new ArrayList<ReplacementGroup>();
+    List<ReplacementGroup> groups = new ArrayList<>();
     ReplacementComparator comparator = new ReplacementComparator();
     Collections.sort(replacements);
     while (!replacements.isEmpty()) {
@@ -138,7 +140,7 @@ public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
     }
 
     // Analyze replacements
-    List<String> multiples = new ArrayList<String>();
+    List<String> multiples = new ArrayList<>();
     for (ReplacementGroup group : groups) {
 
       // Create error
@@ -171,7 +173,7 @@ public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
               GT._T("Replace each time with {0}", multiples.get(0)),
               new MWPaneReplaceAllAction(group.getText(), multiples.get(0))));
         } else {
-          List<Actionnable> actions = new ArrayList<Actionnable>();
+          List<Actionnable> actions = new ArrayList<>();
           for (String multiple : multiples) {
             actions.add(new SimpleAction(multiple, new MWPaneReplaceAllAction(group.getText(), multiple)));
           }
@@ -198,10 +200,10 @@ public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
     boolean result = false;
 
     // Check every suggestion
-    List<ContentsChunk> chunks = computeContentsChunks(analysis, true);
+    List<Interval> chunks = computeContentsChunks(analysis, true);
     String contents = analysis.getContents();
     Iterator<Suggestion> itSuggestion = suggestions.iterator();
-    List<Replacement> tmpReplacements = new ArrayList<CheckErrorAlgorithm501.Replacement>();
+    List<Replacement> tmpReplacements = new ArrayList<>();
     while (itSuggestion.hasNext()) {
       Suggestion suggestion = itSuggestion.next();
       if (!suggestion.isOtherPattern()) {
@@ -209,9 +211,9 @@ public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
         perf.setThreshold(slowRegexp);
         itSuggestion.remove();
         Matcher matcher = suggestion.initMatcher(contents);
-        for (ContentsChunk chunk : chunks) {
-          matcher.region(chunk.getBegin(), chunk.getEnd());
-          int authorizedBegin = chunk.getBegin();
+        for (Interval chunk : chunks) {
+          matcher.region(chunk.getBeginIndex(), chunk.getEndIndex());
+          int authorizedBegin = chunk.getBeginIndex();
           while (matcher.find()) {
             int begin = matcher.start();
             int end = matcher.end();
@@ -229,7 +231,7 @@ public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
             if (shouldKeep) {
               tmpReplacements.clear();
               shouldKeep = addReplacements(
-                  begin, end, contents, authorizedBegin, chunk.getEnd(),
+                  begin, end, contents, authorizedBegin, chunk.getEndIndex(),
                   suggestion, tmpReplacements);
             }
             if (shouldKeep && (analysis.getAreas().getEndArea(begin) > begin)) {
@@ -270,10 +272,10 @@ public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
     boolean result = false;
 
     // Check every suggestion
-    List<ContentsChunk> chunks = computeContentsChunks(analysis, false);
+    List<Interval> chunks = computeContentsChunks(analysis, false);
     String contents = analysis.getContents();
     Iterator<Suggestion> itSuggestion = suggestions.iterator();
-    List<Replacement> tmpReplacements = new ArrayList<CheckErrorAlgorithm501.Replacement>();
+    List<Replacement> tmpReplacements = new ArrayList<>();
     while (itSuggestion.hasNext()) {
       Suggestion suggestion = itSuggestion.next();
       if (suggestion.isOtherPattern()) {
@@ -281,15 +283,15 @@ public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
         perf.setThreshold(slowRegexp);
         itSuggestion.remove();
         Matcher matcher = suggestion.initMatcher(contents);
-        for (ContentsChunk chunk : chunks) {
-          matcher.region(chunk.getBegin(), chunk.getEnd());
-          int authorizedBegin = chunk.getBegin();
+        for (Interval chunk : chunks) {
+          matcher.region(chunk.getBeginIndex(), chunk.getEndIndex());
+          int authorizedBegin = chunk.getBeginIndex();
           while (matcher.find()) {
             int begin = matcher.start();
             int end = matcher.end();
             tmpReplacements.clear();
             boolean shouldKeep = addReplacements(
-                begin, end, contents, authorizedBegin, chunk.getEnd(),
+                begin, end, contents, authorizedBegin, chunk.getEndIndex(),
                 suggestion, tmpReplacements);
             if (shouldKeep) {
               shouldKeep = shouldKeep(contents, begin, end);
@@ -552,7 +554,7 @@ public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
    * @return First group of replacements.
    */
   private List<Replacement> getFirstGroup(List<Replacement> replacements) {
-    List<Replacement> firstGroup = new LinkedList<Replacement>();
+    List<Replacement> firstGroup = new LinkedList<>();
     Replacement replacement = replacements.get(0);
     int end = replacement.getEnd();
     firstGroup.add(replacement);
@@ -573,11 +575,11 @@ public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
    * @param nativeRegexp True if creating chunks for WPCleaner regular expressions.
    * @return List of contents chunks.
    */
-  private List<ContentsChunk> computeContentsChunks(
+  private List<Interval> computeContentsChunks(
       PageAnalysis analysis, boolean nativeRegexp) {
     String contents = analysis.getContents();
-    List<ContentsChunk> chunks = new LinkedList<ContentsChunk>();
-    chunks.add(new ContentsChunk(0, contents.length()));
+    List<Interval> chunks = new LinkedList<>();
+    chunks.add(new ContentsInterval(0, contents.length()));
 
     // Remove templates
     if (!nativeRegexp) {
@@ -608,11 +610,11 @@ public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
     }
 
     // Remove empty chunks
-    Iterator<ContentsChunk> itChunks = chunks.iterator();
+    Iterator<Interval> itChunks = chunks.iterator();
     while (itChunks.hasNext()) {
-      ContentsChunk chunk = itChunks.next();
-      int begin = chunk.getBegin();
-      int end = chunk.getEnd();
+      Interval chunk = itChunks.next();
+      int begin = chunk.getBeginIndex();
+      int end = chunk.getEndIndex();
       String chunkContents = contents.substring(begin, end);
       int length = chunkContents.length();
       int currentIndex = 0;
@@ -635,7 +637,7 @@ public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
    * @param analysis Page analysis.
    * @param tagName Tag name to remove.
    */
-  private void removeCompleteTags(List<ContentsChunk> chunks, PageAnalysis analysis, String tagName) {
+  private void removeCompleteTags(List<Interval> chunks, PageAnalysis analysis, String tagName) {
     List<PageElementTag> tags = analysis.getCompleteTags(tagName);
     for (PageElementTag tag : tags) {
       removeArea(chunks, tag.getCompleteBeginIndex(), tag.getCompleteEndIndex());
@@ -648,7 +650,7 @@ public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
    * @param chunks List of chunks of text.
    * @param analysis Page analysis.
    */
-  private void removeGalleryTags(List<ContentsChunk> chunks, PageAnalysis analysis) {
+  private void removeGalleryTags(List<Interval> chunks, PageAnalysis analysis) {
     Namespace imageNamespace = analysis.getWikiConfiguration().getNamespace(Namespace.IMAGE);
     String contents = analysis.getContents();
     List<PageElementTag> tags = analysis.getCompleteTags(PageElementTag.TAG_WIKI_GALLERY);
@@ -689,19 +691,20 @@ public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
    * @param begin Begin of the area to remove.
    * @param end End of the area to remove.
    */
-  private void removeArea(List<ContentsChunk> chunks, int begin, int end) {
-    ListIterator<ContentsChunk> itChunks = chunks.listIterator();
+  private void removeArea(List<Interval> chunks, int begin, int end) {
+    ListIterator<Interval> itChunks = chunks.listIterator();
     while (itChunks.hasNext()) {
-      ContentsChunk chunk = itChunks.next();
-      if ((begin >= chunk.getEnd()) || (end <= chunk.getBegin())) {
+      Interval chunk = itChunks.next();
+      if ((begin >= chunk.getEndIndex()) ||
+          (end <= chunk.getBeginIndex())) {
         // Nothing to do
       } else {
         itChunks.remove();
-        if (begin > chunk.getBegin()) {
-          itChunks.add(new ContentsChunk(chunk.getBegin(), begin));
+        if (begin > chunk.getBeginIndex()) {
+          itChunks.add(new ContentsInterval(chunk.getBeginIndex(), begin));
         }
-        if (end < chunk.getEnd()) {
-          itChunks.add(new ContentsChunk(end, chunk.getEnd()));
+        if (end < chunk.getEndIndex()) {
+          itChunks.add(new ContentsInterval(end, chunk.getEndIndex()));
         }
       }
     }
@@ -719,258 +722,6 @@ public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
       return analysis.getContents();
     }
     return fixUsingAutomaticReplacement(analysis);
-  }
-
-  /**
-   * Utility class to manage chunks of text.
-   */
-  private static class ContentsChunk {
-    private final int begin;
-    private final int end;
-
-    public ContentsChunk(int begin, int end) {
-      this.begin = begin;
-      this.end = end;
-    }
-
-    public int getBegin() {
-      return begin;
-    }
-
-    public int getEnd() {
-      return end;
-    }
-  }
-
-  /**
-   * Utility class to memorize possible replacements.
-   */
-  private static class Replacement implements Comparable<Replacement> {
-    private final int begin;
-    private final int end;
-    private final String comment;
-    private final boolean otherPattern;
-    private final String replacement;
-    private final boolean automatic;
-    private Boolean multiple;
-
-    public Replacement(
-        int begin, int end,
-        String comment, boolean otherPattern,
-        String replacement, boolean automatic) {
-      this.begin = begin;
-      this.end = end;
-      this.otherPattern = otherPattern;
-      this.comment = comment;
-      this.replacement = replacement;
-      this.automatic = automatic;
-      this.multiple = null;
-    }
-
-    public int getBegin() {
-      return begin;
-    }
-
-    public int getEnd() {
-      return end;
-    }
-
-    public String getComment() {
-      return comment;
-    }
-
-    public boolean isOtherPattern() {
-      return otherPattern;
-    }
-
-    public String getReplacement() {
-      return replacement;
-    }
-
-    public boolean isAutomatic() {
-      return automatic;
-    }
-
-    public Boolean isMultiple() {
-      return multiple;
-    }
-
-    public void setMultiple() {
-      multiple = Boolean.TRUE;
-    }
-    /**
-     * @param o
-     * @return
-     * @see java.lang.Comparable#compareTo(java.lang.Object)
-     */
-    @Override
-    public int compareTo(Replacement o) {
-      if (begin != o.begin) {
-        return (begin < o.begin ? -1 : 1);
-      }
-      if (end != o.end) {
-        return (end < o.end ? -1 : 1);
-      }
-      return 0;
-    }
-  }
-
-  /**
-   * Utility class to sort Replacement in a group.
-   */
-  private static class ReplacementComparator implements Comparator<Replacement> {
-
-    /**
-     * Constructor.
-     */
-    public ReplacementComparator() {
-    }
-
-    /**
-     * @param o1
-     * @param o2
-     * @return
-     * @see java.util.Comparator#compare(java.lang.Object, java.lang.Object)
-     */
-    @Override
-    public int compare(Replacement o1, Replacement o2) {
-      
-      // Comparison on native pattern
-      if (o1.isOtherPattern() != o2.isOtherPattern()) {
-        return (o1.isOtherPattern() ? 1 : -1);
-      }
-
-      // Comparison on automatic
-      if (o1.isAutomatic() != o2.isAutomatic()) {
-        return o1.isAutomatic() ? -1 : 1;
-      }
-
-      // Comparison on begin
-      if (o1.getBegin() != o2.getBegin()) {
-        return (o1.getBegin() < o2.getBegin() ? -1 : 1);
-      }
-
-      // Comparison on end
-      if (o1.getEnd() != o2.getEnd()) {
-        return (o1.getEnd() > o2.getEnd() ? -1 : 1);
-      }
-
-      // Comparison on comments
-      if (o1.getComment() == null) {
-        if (o2.getComment() != null) {
-          return 1;
-        }
-      } else if (o2.getComment() == null) {
-        return -1;
-      } else {
-        int compare = o1.getComment().compareTo(o2.getComment());
-        if (compare != 0) {
-          return compare;
-        }
-      }
-
-      return 0;
-    }
-  }
-
-  /**
-   * Utility class to group possible replacements.
-   */
-  private static class ReplacementGroup {
-
-    /**
-     * Minimum index for the group of replacements.
-     */
-    private final int begin;
-
-    /**
-     * Maximum index for the group of replacements.
-     */
-    private final int end;
-
-    /**
-     * Original text.
-     */
-    private final String text;
-
-    /**
-     * Group of replacements.
-     */
-    private final List<Replacement> group;
-
-    /**
-     * Create a group of replacements.
-     * 
-     * @param replacements Ordered list of replacements.
-     * @param contents Page contents.
-     */
-    public ReplacementGroup(List<Replacement> replacements, String contents) {
-
-      // Compute minimum/maximum indexes for the group of replacements.
-      int minBegin = Integer.MAX_VALUE;
-      int maxEnd = 0;
-      for (Replacement replacement : replacements) {
-        minBegin = Math.min(minBegin, replacement.getBegin());
-        maxEnd = Math.max(maxEnd, replacement.getEnd());
-      }
-      begin = minBegin;
-      end = maxEnd;
-      text = contents.substring(begin, end);
-
-      // Compute new replacements using the full expand of the group.
-      List<String> alreadyAdded = new ArrayList<String>();
-      group = new ArrayList<Replacement>();
-      for (Replacement replacement : replacements) {
-        if ((replacement.getBegin() == begin) &&
-            (replacement.getEnd() == end)) {
-          String newText = replacement.getReplacement();
-          if (!alreadyAdded.contains(newText)) {
-            group.add(replacement);
-            alreadyAdded.add(newText);
-          }
-        } else {
-          String newText =
-              contents.substring(begin, replacement.getBegin()) +
-              replacement.getReplacement() +
-              contents.substring(replacement.getEnd(), end);
-          if (!alreadyAdded.contains(newText)) {
-            group.add(
-                new Replacement(
-                    begin, end, replacement.getComment(),replacement.isOtherPattern(),
-                    newText, replacement.isAutomatic()));
-            alreadyAdded.add(newText);
-          }
-        }
-      }
-    }
-
-    /**
-     * @return Minimum index for the group of replacements.
-     */
-    public int getBegin() {
-      return begin;
-    }
-
-    /**
-     * @return Maximum index for the group of replacements.
-     */
-    public int getEnd() {
-      return end;
-    }
-
-    /**
-     * @return Original text.
-     */
-    public String getText() {
-      return text;
-    }
-
-    /**
-     * @return List of possible replacements.
-     */
-    public List<Replacement> getReplacements() {
-      return group;
-    }
   }
 
   /* ====================================================================== */
