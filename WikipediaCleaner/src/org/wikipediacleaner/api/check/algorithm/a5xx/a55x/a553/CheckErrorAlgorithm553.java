@@ -175,7 +175,7 @@ public class CheckErrorAlgorithm553 extends CheckErrorAlgorithmBase {
       String replacement =
           InternalLinkBuilder.from(fullLink).withText(text).toString() +
           contents.substring(endText, endIndex);
-      boolean safeLink = isSafeLink(link, text, wiki);
+      boolean safeLink = isSafeLink(link, analysis.getPage(), text);
       errorResult.addReplacement(replacement, automatic || safeLink);
       if (!automatic && !safeLink) {
         errorResult.addReplacement(text + contents.substring(endText, endIndex));
@@ -186,7 +186,7 @@ public class CheckErrorAlgorithm553 extends CheckErrorAlgorithmBase {
       if ((displayedTextLength > 2) &&
           (displayedText.charAt(displayedTextLength - 2) == ' ')){
         text = displayedText.substring(0, displayedTextLength - 2);
-        if (isSafeLink(link, text, wiki)) {
+        if (isSafeLink(link, analysis.getPage(), text)) {
           char lastChar = displayedText.charAt(displayedTextLength - 1);
           boolean extractAutomatic = !automatic && !safeLink;
           extractAutomatic &= Character.isLetter(lastChar);
@@ -238,16 +238,25 @@ public class CheckErrorAlgorithm553 extends CheckErrorAlgorithmBase {
    * Tells if it is safe to make a link.
    * 
    * @param link Link.
+   * @param page Page containing the link.
    * @param text Suggested text for the link.
-   * @param wiki Wiki.
    * @return True if it is safe to make a link.
    */
-  private boolean isSafeLink(PageElementInternalLink link, String text, EnumWikipedia wiki) {
-    if (isSafeLink(link.getFullLink(), text, wiki)) {
+  private boolean isSafeLink(
+      @Nonnull PageElementInternalLink link,
+      @Nonnull Page page,
+      String text) {
+    if (isSafeLink(link.getFullLink(), text, page.getWikipedia())) {
       return true;
     }
     if (link.getAnchor() != null) {
-      if (isSafeLink(link.getLink(), text, wiki)) {
+      if (isSafeLink(link.getLink(), text, page.getWikipedia())) {
+        return true;
+      }
+    }
+    Page linkPage = page.getLinkTo(link.getLink());
+    if ((linkPage != null) && (linkPage.getRedirects() != null)) {
+      if (isSafeLink(linkPage.getRedirects().getDestination(), text, page.getWikipedia())) {
         return true;
       }
     }

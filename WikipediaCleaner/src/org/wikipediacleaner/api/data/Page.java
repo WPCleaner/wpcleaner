@@ -17,6 +17,7 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.commons.lang3.StringUtils;
 import org.wikipediacleaner.api.configuration.WPCConfiguration;
 import org.wikipediacleaner.api.configuration.WikiConfiguration;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
@@ -606,6 +607,23 @@ public class Page implements Comparable<Page> {
     if (this.links != null) {
       Collections.sort(this.links);
     }
+  }
+
+  /**
+   * @param target Target searched.
+   * @return Page matching the searched target.
+   */
+  public Page getLinkTo(String target) {
+    if ((links == null) || StringUtils.isEmpty(target)) {
+      return null;
+    }
+    target = normalizeTitle(target);
+    for (Page link : links) {
+      if (areSameTitle(link.getTitle(), false, target, true)) {
+        return link;
+      }
+    }
+    return null;
   }
 
   /**
