@@ -7,6 +7,7 @@
 # Author: Shuiwater
 # Author: SomeyaMako
 # Author: 列维劳德
+# Author: 水獭很懒
 # Author: 沈澄心
 # Author: 沈澄心
 # --
@@ -18,7 +19,7 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2020-12-17 14:30:45+0000\n"
+"PO-Revision-Date: 2020-12-22 13:15:15+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Chinese (Simplified) <zh_CN@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -150,7 +151,7 @@ msgstr "正在更新页面{0}"
 #: org/wikipediacleaner/api/MediaWiki.java:316
 #, java-format
 msgid "The page {0} has been modified."
-msgstr ""
+msgstr "第{0}页已被修改。"
 
 #: org/wikipediacleaner/api/MediaWiki.java:317
 msgid "Do you want to continue?"
@@ -168,7 +169,7 @@ msgstr "发生了以下错误："
 
 #: org/wikipediacleaner/api/algorithm/AlgorithmError.java:416
 msgid "No available description"
-msgstr ""
+msgstr "暂无可用描述"
 
 #: org/wikipediacleaner/api/algorithm/AlgorithmError.java:421
 #, java-format
@@ -185,8 +186,6 @@ msgid "Replace with {0}"
 msgstr "替换为{0}"
 
 #: org/wikipediacleaner/api/check/CheckErrorResult.java:201
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:378
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm017.java:175
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm026.java:108
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm026.java:114
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm038.java:107
@@ -196,6 +195,8 @@ msgstr "替换为{0}"
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm045.java:130
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm046.java:210
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm047.java:151
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a016/CheckErrorAlgorithm016.java:379
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a017/CheckErrorAlgorithm017.java:176
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a04x/a048/CheckErrorAlgorithm048.java:140
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a515/CheckErrorAlgorithm515.java:102
 #: org/wikipediacleaner/gui/swing/options/SortingOptionsPanel.java:115
@@ -206,119 +207,6 @@ msgstr "删除"
 msgid "Edit table of contents"
 msgstr "编辑目录"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:38
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:251
-msgid "Remove all control characters"
-msgstr "删除所有的控制字符"
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:362
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:365
-msgid "To report control characters only in templates"
-msgstr ""
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:368
-msgid "To ignore some control characters"
-msgstr "忽略部分的控制字符"
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:371
-msgid "To ignore control character with hexadecimal code equal to XX"
-msgstr ""
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:379
-msgid "Non-breaking space"
-msgstr "不换行空格"
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:380
-msgid "Soft hyphen"
-msgstr ""
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:381
-msgid "Thee-per-em space"
-msgstr ""
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:382
-msgid "Four-per-em space"
-msgstr ""
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:383
-msgid "Six-per-em space"
-msgstr ""
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:384
-msgid "Figure space"
-msgstr ""
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:385
-msgid "Punctuation space"
-msgstr ""
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:386
-msgid "Zero-width space"
-msgstr ""
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:387
-msgid "Left-to-right mark"
-msgstr ""
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:388
-msgid "Right-to-left mark"
-msgstr ""
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:389
-msgid "Line separator"
-msgstr ""
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:390
-msgid "Left-to-right embedding"
-msgstr ""
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:391
-msgid "Right-to-left embedding"
-msgstr ""
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:392
-msgid "Pop directional formatting"
-msgstr ""
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:393
-msgid "Left-to-right override"
-msgstr ""
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:394
-msgid "Right-to-left override"
-msgstr ""
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:395
-msgid "Byte order mark"
-msgstr ""
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:396
-msgid "Object replacement character"
-msgstr ""
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:397
-msgid "Private use area"
-msgstr ""
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:398
-msgid "Private use area A"
-msgstr ""
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:399
-msgid "Private use area B"
-msgstr "私人使用区B"
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm017.java:36
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm045.java:35
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm059.java:39
-msgid "Delete all"
-msgstr "全部删除"
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm018.java:30
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm022.java:32
-msgid "Fix categories"
-msgstr "修复分类"
-
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm021.java:76
 msgid "Check category"
 msgstr "检查分类"
@@ -326,6 +214,11 @@ msgstr "检查分类"
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm021.java:102
 msgid "Comment category out"
 msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm022.java:32
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a018/CheckErrorAlgorithm018.java:31
+msgid "Fix categories"
+msgstr "修复分类"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm027.java:30
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmHtmlNamedEntities.java:32
@@ -402,6 +295,12 @@ msgstr ""
 msgid "Fix all bold headlines"
 msgstr "修复所有的粗体标题"
 
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm045.java:35
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm059.java:39
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a017/CheckErrorAlgorithm017.java:37
+msgid "Delete all"
+msgstr "全部删除"
+
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm054.java:36
 msgid "Remove breaks in list"
 msgstr "删除列表中的中断"
@@ -470,7 +369,7 @@ msgstr "添加{0}"
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm062.java:151
 #, java-format
 msgid "Remove {0}"
-msgstr ""
+msgstr "移除{0}"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm064.java:36
 msgid "Modify all internal links"
@@ -514,11 +413,11 @@ msgstr "使用替换模板{0}替换"
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:148
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm081.java:259
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm091.java:293
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm513.java:551
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm544.java:163
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a553/CheckErrorAlgorithm553.java:217
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a553/CheckErrorAlgorithm553.java:222
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a557/CheckErrorAlgorithm557.java:263
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a513/CheckErrorAlgorithm513.java:592
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a553/CheckErrorAlgorithm553.java:225
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a553/CheckErrorAlgorithm553.java:230
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a557/CheckErrorAlgorithm557.java:309
 #: org/wikipediacleaner/gui/swing/action/ActionExternalViewer.java:61
 #: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:90
 #: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:158
@@ -574,8 +473,8 @@ msgstr ""
 msgid "Parameter name for the displayed text"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm069.java:858
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm069.java:861
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm069.java:859
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm069.java:862
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm070.java:279
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm070.java:282
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm071.java:151
@@ -883,106 +782,12 @@ msgstr ""
 msgid "Use {0}"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm501.java:165
-msgid "Restore original text"
-msgstr "恢复原始文本"
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm501.java:171
-#, java-format
-msgid "Replace each time with {0}"
-msgstr ""
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm501.java:178
-msgid "Replace each time with"
-msgstr ""
-
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm509.java:31
 msgid "Compact links"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm509.java:77
 msgid "Compact link"
-msgstr ""
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm513.java:872
-msgid "A list of links that can be extracted when at the beginning of the external link"
-msgstr ""
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm513.java:875
-msgid "An internal link that can be extracted when at the beginning of the external link"
-msgstr ""
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm513.java:879
-msgid "A list of links that can be extracted when at the end of the external link"
-msgstr "可以在外部链接结束时提取的链接列表"
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm513.java:882
-msgid "An internal link that can be extracted when at the end of the external link"
-msgstr "在外部链接结束时可以提取的内部链接"
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm513.java:886
-msgid "A list of links for which the external link can be removed it it takes all the text"
-msgstr ""
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm513.java:890
-msgid "An internal link for which the external link can be removed it it takes all the text"
-msgstr ""
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm513.java:893
-msgid "Value of the URL to remove the external link"
-msgstr "用于删除外部链接的 URL 的值"
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm513.java:899
-msgid "A list of templates that create an internal link"
-msgstr ""
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm513.java:903
-msgid "Name of a template that creates an internal link"
-msgstr ""
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm513.java:906
-msgid "Name of a template that can be used as a replacement"
-msgstr "可以用来替换的模板名称"
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm513.java:910
-msgid "True if the replacement can be automatic"
-msgstr ""
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm513.java:916
-msgid "A list of template parameters that create the text of an external link"
-msgstr ""
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm513.java:920
-msgid "Name of a template that creates an external link"
-msgstr ""
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm513.java:923
-#, fuzzy
-msgid "Name of a parameter that is used to create the text of the external link"
-msgstr "监视模板"
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm513.java:926
-msgid "True if removing internal links in the text can be automatic"
-msgstr ""
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm513.java:932
-msgid "A list of texts (regular expressions) that can be after the internal link"
-msgstr ""
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm513.java:935
-msgid "Regular expression that can be after the internal link"
-msgstr ""
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm513.java:939
-msgid "A list of texts that can be before the internal link"
-msgstr ""
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm513.java:943
-msgid "Text that can be before the internal link"
-msgstr "可以在内部链接之前的文本"
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm513.java:946
-msgid "True if finding this text means that the replacement can be automatic"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm514.java:186
@@ -1457,6 +1262,108 @@ msgstr ""
 msgid "A template parameter in which categories should be ignored."
 msgstr ""
 
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a016/CheckErrorAlgorithm016.java:39
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a016/CheckErrorAlgorithm016.java:252
+msgid "Remove all control characters"
+msgstr "删除所有的控制字符"
+
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a016/CheckErrorAlgorithm016.java:363
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a016/CheckErrorAlgorithm016.java:366
+msgid "To report control characters only in templates"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a016/CheckErrorAlgorithm016.java:369
+msgid "To ignore some control characters"
+msgstr "忽略部分的控制字符"
+
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a016/CheckErrorAlgorithm016.java:372
+msgid "To ignore control character with hexadecimal code equal to XX"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a016/CheckErrorAlgorithm016.java:380
+msgid "Non-breaking space"
+msgstr "不换行空格"
+
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a016/CheckErrorAlgorithm016.java:381
+msgid "Soft hyphen"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a016/CheckErrorAlgorithm016.java:382
+msgid "Thee-per-em space"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a016/CheckErrorAlgorithm016.java:383
+msgid "Four-per-em space"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a016/CheckErrorAlgorithm016.java:384
+msgid "Six-per-em space"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a016/CheckErrorAlgorithm016.java:385
+msgid "Figure space"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a016/CheckErrorAlgorithm016.java:386
+msgid "Punctuation space"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a016/CheckErrorAlgorithm016.java:387
+msgid "Zero-width space"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a016/CheckErrorAlgorithm016.java:388
+msgid "Left-to-right mark"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a016/CheckErrorAlgorithm016.java:389
+msgid "Right-to-left mark"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a016/CheckErrorAlgorithm016.java:390
+msgid "Line separator"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a016/CheckErrorAlgorithm016.java:391
+msgid "Left-to-right embedding"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a016/CheckErrorAlgorithm016.java:392
+msgid "Right-to-left embedding"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a016/CheckErrorAlgorithm016.java:393
+msgid "Pop directional formatting"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a016/CheckErrorAlgorithm016.java:394
+msgid "Left-to-right override"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a016/CheckErrorAlgorithm016.java:395
+msgid "Right-to-left override"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a016/CheckErrorAlgorithm016.java:396
+msgid "Byte order mark"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a016/CheckErrorAlgorithm016.java:397
+msgid "Object replacement character"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a016/CheckErrorAlgorithm016.java:398
+msgid "Private use area"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a016/CheckErrorAlgorithm016.java:399
+msgid "Private use area A"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a016/CheckErrorAlgorithm016.java:400
+msgid "Private use area B"
+msgstr "私人使用区B"
+
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a04x/a048/CheckErrorAlgorithm048.java:41
 msgid "Remove all links to title (first in bold)"
 msgstr "移除指向标题的所有链接（第一个粗体）"
@@ -1481,6 +1388,100 @@ msgstr "可以用来代替 &lt;center&gt; 标签的模板"
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a08x/a085/CheckErrorAlgorithm085.java:353
 msgid "Name of the parameter to use"
 msgstr "要使用的参数的名称"
+
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a50x/a501/CheckErrorAlgorithm501.java:167
+msgid "Restore original text"
+msgstr "恢复原始文本"
+
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a50x/a501/CheckErrorAlgorithm501.java:173
+#, java-format
+msgid "Replace each time with {0}"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a50x/a501/CheckErrorAlgorithm501.java:180
+msgid "Replace each time with"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a513/CheckErrorAlgorithm513.java:870
+msgid "A list of links that can be extracted when at the beginning of the external link"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a513/CheckErrorAlgorithm513.java:873
+msgid "An internal link that can be extracted when at the beginning of the external link"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a513/CheckErrorAlgorithm513.java:877
+msgid "A list of links that can be extracted when at the end of the external link"
+msgstr "可以在外部链接结束时提取的链接列表"
+
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a513/CheckErrorAlgorithm513.java:880
+msgid "An internal link that can be extracted when at the end of the external link"
+msgstr "在外部链接结束时可以提取的内部链接"
+
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a513/CheckErrorAlgorithm513.java:884
+msgid "A list of links for which the external link can be removed it it takes all the text"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a513/CheckErrorAlgorithm513.java:888
+msgid "An internal link for which the external link can be removed it it takes all the text"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a513/CheckErrorAlgorithm513.java:891
+msgid "Value of the URL to remove the external link"
+msgstr "用于删除外部链接的 URL 的值"
+
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a513/CheckErrorAlgorithm513.java:897
+msgid "A list of templates that create an internal link"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a513/CheckErrorAlgorithm513.java:901
+msgid "Name of a template that creates an internal link"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a513/CheckErrorAlgorithm513.java:904
+msgid "Name of a template that can be used as a replacement"
+msgstr "可以用来替换的模板名称"
+
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a513/CheckErrorAlgorithm513.java:908
+msgid "True if the replacement can be automatic"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a513/CheckErrorAlgorithm513.java:914
+msgid "A list of template parameters that create the text of an external link"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a513/CheckErrorAlgorithm513.java:918
+msgid "Name of a template that creates an external link"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a513/CheckErrorAlgorithm513.java:921
+#, fuzzy
+msgid "Name of a parameter that is used to create the text of the external link"
+msgstr "监视模板"
+
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a513/CheckErrorAlgorithm513.java:924
+msgid "True if removing internal links in the text can be automatic"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a513/CheckErrorAlgorithm513.java:930
+msgid "A list of texts (regular expressions) that can be after the internal link"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a513/CheckErrorAlgorithm513.java:933
+msgid "Regular expression that can be after the internal link"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a513/CheckErrorAlgorithm513.java:937
+msgid "A list of texts that can be before the internal link"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a513/CheckErrorAlgorithm513.java:941
+msgid "Text that can be before the internal link"
+msgstr "可以在内部链接之前的文本"
+
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a513/CheckErrorAlgorithm513.java:944
+msgid "True if finding this text means that the replacement can be automatic"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a518/CheckErrorAlgorithm518.java:362
 #, java-format
@@ -1523,70 +1524,70 @@ msgstr ""
 msgid "Template parameter in which empty list items should be ignored"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a553/CheckErrorAlgorithm553.java:367
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a553/CheckErrorAlgorithm553.java:377
 msgid "Acceptable suffixes"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a553/CheckErrorAlgorithm553.java:370
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a553/CheckErrorAlgorithm553.java:380
 msgid "Acceptable suffix"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a556/CheckErrorAlgorithm556.java:149
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a556/CheckErrorAlgorithm556.java:152
 #, java-format
 msgid "Add inside a {0} tag"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a556/CheckErrorAlgorithm556.java:156
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a556/CheckErrorAlgorithm556.java:159
 #, java-format
 msgid "Keep text and add link inside a {0} tag"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a556/CheckErrorAlgorithm556.java:230
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a556/CheckErrorAlgorithm556.java:233
 msgid "Templates in which external links are normal"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a556/CheckErrorAlgorithm556.java:234
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a556/CheckErrorAlgorithm556.java:237
 msgid "Template in which external links are normal"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a556/CheckErrorAlgorithm556.java:237
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a556/CheckErrorAlgorithm556.java:247
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a556/CheckErrorAlgorithm556.java:240
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a556/CheckErrorAlgorithm556.java:250
 msgid "Parameter in which external links are normal"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a556/CheckErrorAlgorithm556.java:243
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a556/CheckErrorAlgorithm556.java:246
 msgid "Template parameters in which external links are normal"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a556/CheckErrorAlgorithm556.java:252
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a556/CheckErrorAlgorithm556.java:255
 msgid "Sections in which external links are normal"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a556/CheckErrorAlgorithm556.java:255
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a556/CheckErrorAlgorithm556.java:258
 msgid "Section in which external links are normal"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a557/CheckErrorAlgorithm557.java:373
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a557/CheckErrorAlgorithm557.java:510
 msgid "Prefixes which can be before an internal link"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a557/CheckErrorAlgorithm557.java:377
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a557/CheckErrorAlgorithm557.java:514
 msgid "Prefix which can be before an internal link"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a557/CheckErrorAlgorithm557.java:382
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a557/CheckErrorAlgorithm557.java:519
 msgid "Prefixes which should be excluded from the internal link"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a557/CheckErrorAlgorithm557.java:386
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a557/CheckErrorAlgorithm557.java:523
 msgid "Prefix which should be excluded from the internal link"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a557/CheckErrorAlgorithm557.java:391
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a557/CheckErrorAlgorithm557.java:528
 msgid "List of suggestions for separators between the text and the internal link"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a557/CheckErrorAlgorithm557.java:395
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a557/CheckErrorAlgorithm557.java:532
 msgid "Suggestion for a separator between the text and the internal link"
 msgstr ""
 
