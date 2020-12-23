@@ -21,6 +21,7 @@ import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithms;
 import org.wikipediacleaner.api.check.algorithm.a5xx.a55x.a553.CheckErrorAlgorithm553;
 import org.wikipediacleaner.api.check.algorithm.a5xx.a55x.a555.CheckErrorAlgorithm555;
+import org.wikipediacleaner.api.check.algorithm.a5xx.a56x.a562.CheckErrorAlgorithm562;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.Page;
@@ -73,6 +74,7 @@ public class CheckErrorAlgorithm518 extends CheckErrorAlgorithmBase {
     CheckErrorAlgorithm553 algo553 = (CheckErrorAlgorithm553) CheckErrorAlgorithms.getAlgorithm(analysis.getWikipedia(), 553);
     CheckErrorAlgorithm554 algo554 = (CheckErrorAlgorithm554) CheckErrorAlgorithms.getAlgorithm(analysis.getWikipedia(), 554);
     CheckErrorAlgorithm555 algo555 = (CheckErrorAlgorithm555) CheckErrorAlgorithms.getAlgorithm(analysis.getWikipedia(), 555);
+    CheckErrorAlgorithm562 algo562 = (CheckErrorAlgorithm562) CheckErrorAlgorithms.getAlgorithm(analysis.getWikipedia(), 562);
     for (PageElementTag tag : tags) {
 
       // Check if the tag is already detected by another algorithm
@@ -85,6 +87,9 @@ public class CheckErrorAlgorithm518 extends CheckErrorAlgorithmBase {
       }
       if ((algo555 != null) && !ignore) {
         ignore |= algo555.analyzeTag(analysis, null, tag);
+      }
+      if ((algo562 != null) && !ignore) {
+        ignore |= algo562.analyzeTag(analysis, null, tag);
       }
 
       // Report the tag if needed
