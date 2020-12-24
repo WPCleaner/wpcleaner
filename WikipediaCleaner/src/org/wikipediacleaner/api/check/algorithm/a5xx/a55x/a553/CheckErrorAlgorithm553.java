@@ -213,9 +213,15 @@ public class CheckErrorAlgorithm553 extends CheckErrorAlgorithmBase {
             contents.substring(link.getEndIndex() - 2, nowikiTag.getBeginIndex());
         automatic = true;
       }
-      String replacement =
-          linkText + " " +
-          contents.substring(nowikiTag.getEndIndex(), endIndex);
+      if (!automatic &&
+          words.contains(extraText) &&
+          CharacterUtils.isClassicLetter(lastChar)) {
+        if ((endIndex >= contents.length()) ||
+            CharacterUtils.isWhitespace(contents.charAt(endIndex))) {
+          automatic = true;
+        }
+      }
+      String replacement = linkText + " " + extraText;
       errorResult.addReplacement(replacement, automatic);
     }
     errors.add(errorResult);
@@ -355,6 +361,9 @@ public class CheckErrorAlgorithm553 extends CheckErrorAlgorithmBase {
   /** List of suffixes to accept automatically */
   private static final String PARAMETER_SUFFIXES = "suffixes";
 
+  /** List of words that can be separated from the link */
+  private static final String PARAMETER_WORDS = "words";
+
   /**
    * Initialize settings for the algorithm.
    * 
@@ -370,10 +379,22 @@ public class CheckErrorAlgorithm553 extends CheckErrorAlgorithmBase {
         suffixes.addAll(tmpList);
       }
     }
+
+    tmp = getSpecificProperty(PARAMETER_WORDS, true, true, false);
+    words.clear();
+    if (tmp != null) {
+      List<String> tmpList = WPCConfiguration.convertPropertyToStringList(tmp);
+      if (tmpList != null) {
+        words.addAll(tmpList);
+      }
+    }
   }
 
   /** Suffixes to accept automatically */
   private final Set<String> suffixes = new HashSet<>();
+
+  /** Words that can be separated from the link */
+  private final Set<String> words = new HashSet<>();
 
   /**
    * Build the list of parameters for this algorithm.
@@ -387,6 +408,13 @@ public class CheckErrorAlgorithm553 extends CheckErrorAlgorithmBase {
         new AlgorithmParameterElement(
             "suffix",
             GT._T("Acceptable suffix")),
+        true));
+    addParameter(new AlgorithmParameter(
+        PARAMETER_WORDS,
+        GT._T("Words that should be separated from the link"),
+        new AlgorithmParameterElement(
+            "word",
+            GT._T("Word that should be separated from the link by a whitespace")),
         true));
   }
 }

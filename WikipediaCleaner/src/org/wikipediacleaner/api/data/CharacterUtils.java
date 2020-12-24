@@ -93,6 +93,34 @@ public class CharacterUtils {
 
   /**
    * @param character Character to be tested.
+   * @return True if the character should be considered as a classic letter.
+   * @see Character.isLetter(char) is more permissive.
+   */
+  public static boolean isClassicLetter(char character) {
+    if (!Character.isLetter(character)) {
+      return false;
+    }
+    // See various Unicode blocks:
+    // * Basic Latin: https://en.wikipedia.org/wiki/Basic_Latin_(Unicode_block)
+    // * Latin-1 Supplement: https://en.wikipedia.org/wiki/Latin-1_Supplement_(Unicode_block)
+    // * Latin Extended-A: https://en.wikipedia.org/wiki/Latin_Extended-A
+    // * Latin Extended-B: https://en.wikipedia.org/wiki/Latin_Extended-B
+    // Others?
+    if (((character >= 'A') && (character <= 'Z')) ||
+        ((character >= 'a') && (character <= 'z')) ||
+        ((character >= 'À') && (character <= 'Ö')) ||
+        ((character >= 'Ø') && (character <= 'ö')) ||
+        ((character >= 'ø') && (character <= 'ÿ')) ||
+        ((character >= 'Ā') && (character <= 'ň')) ||
+        ((character >= 'Ŋ') && (character <= 'ſ')) ||
+        ((character >= 'ƀ') && (character <= 'ɏ'))) {
+      return true;
+    }
+    return false;
+  }
+
+  /**
+   * @param character Character to be tested.
    * @param text Text to be tested.
    * @return True if the character is found in the text.
    */
