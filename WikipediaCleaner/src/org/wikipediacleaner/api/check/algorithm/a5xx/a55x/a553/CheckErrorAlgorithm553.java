@@ -43,6 +43,12 @@ public class CheckErrorAlgorithm553 extends CheckErrorAlgorithmBase {
     super("nowiki after internal link");
   }
 
+  /** Characters that can be extracted at the end of a link */
+  private static final String EXTRACTABLE_LAST_CHARS =
+      CharacterUtils.WHITESPACE +
+      CharacterUtils.DASHES +
+      ",:!?(";
+
   /**
    * Analyze a page to check if errors are present.
    * 
@@ -146,26 +152,29 @@ public class CheckErrorAlgorithm553 extends CheckErrorAlgorithmBase {
     // Report error
     EnumWikipedia wiki = analysis.getWikipedia();
     String extraText = contents.substring(nowikiTag.getEndIndex(), endText);
+    boolean automaticUsed = false;
     boolean automatic = suffixes.contains(extraText);
     if (link.getText() == null) {
+
       // Simply remove the nowiki tag
       String replacement =
           contents.substring(beginIndex, nowikiTag.getBeginIndex()) +
           contents.substring(nowikiTag.getEndIndex(), endIndex);
-      errorResult.addReplacement(replacement, automatic);
-      if (!automatic) {
-        // Include the extra text in the link target
-        replacement =
-            InternalLinkBuilder.from(link.getFullLink() + extraText).toString() +
-            contents.substring(endText, endIndex);
-        errorResult.addReplacement(replacement);
+      errorResult.addReplacement(replacement, automatic && !automaticUsed);
+      automaticUsed |= automatic;
 
-        // Remove the nowiki tag and the extra text
-        replacement =
-            contents.substring(beginIndex, nowikiTag.getBeginIndex()) +
-            contents.substring(endText, endIndex);
-        errorResult.addReplacement(replacement);
-      }
+      // Include the extra text in the link target
+      replacement =
+          InternalLinkBuilder.from(link.getFullLink() + extraText).toString() +
+          contents.substring(endText, endIndex);
+      errorResult.addReplacement(replacement);
+
+      // Remove the nowiki tag and the extra text
+      replacement =
+          contents.substring(beginIndex, nowikiTag.getBeginIndex()) +
+          contents.substring(endText, endIndex);
+      errorResult.addReplacement(replacement);
+
     } else {
 
       // Include the extra text in the link
@@ -176,10 +185,10 @@ public class CheckErrorAlgorithm553 extends CheckErrorAlgorithmBase {
           InternalLinkBuilder.from(fullLink).withText(text).toString() +
           contents.substring(endText, endIndex);
       boolean safeLink = isSafeLink(link, analysis.getPage(), text);
-      errorResult.addReplacement(replacement, automatic || safeLink);
-      if (!automatic && !safeLink) {
-        errorResult.addReplacement(text + contents.substring(endText, endIndex));
-      }
+      automatic |= safeLink;
+      errorResult.addReplacement(replacement, automatic && !automaticUsed);
+      automaticUsed |= automatic;
+      errorResult.addReplacement(text + contents.substring(endText, endIndex));
 
       // Take the end of the text out of the link
       int displayedTextLength = displayedText.length();
@@ -188,43 +197,59 @@ public class CheckErrorAlgorithm553 extends CheckErrorAlgorithmBase {
         text = displayedText.substring(0, displayedTextLength - 2);
         if (isSafeLink(link, analysis.getPage(), text)) {
           char lastChar = displayedText.charAt(displayedTextLength - 1);
-          boolean extractAutomatic = !automatic && !safeLink;
-          extractAutomatic &= Character.isLetter(lastChar);
-          if (extractAutomatic) {
+          automatic = Character.isLetter(lastChar);
+          if (automatic) {
             PageElementExternalLink eLink = analysis.isInExternalLink(endIndex);
-            extractAutomatic &= (eLink == null) || eLink.hasSecondSquare();
+            automatic &= (eLink == null) || eLink.hasSecondSquare();
           }
           replacement =
               InternalLinkBuilder.from(fullLink).withText(text).toString() +
               " " + displayedText.charAt(displayedTextLength - 1) +
-              contents.substring(nowikiTag.getEndIndex(), endIndex);
-          errorResult.addReplacement(replacement, extractAutomatic);
+              extraText;
+          errorResult.addReplacement(replacement, automatic && !automaticUsed);
+          automaticUsed |= automatic;
         }
       }
     }
 
     // Add a whitespace after the link
-    if (!automatic) {
-      String linkText = contents.substring(beginIndex, nowikiTag.getBeginIndex());
-      char lastChar = contents.charAt(link.getEndIndex() - 3);
-      if (" \u00A0;".indexOf(lastChar) >= 0) {
-        linkText =
-            contents.substring(beginIndex, link.getEndIndex() - 3) +
-            contents.substring(link.getEndIndex() - 2, nowikiTag.getBeginIndex());
-        automatic = true;
-      }
-      if (!automatic &&
-          words.contains(extraText) &&
-          CharacterUtils.isClassicLetter(lastChar)) {
-        if ((endIndex >= contents.length()) ||
-            CharacterUtils.isWhitespace(contents.charAt(endIndex))) {
+    String linkText = contents.substring(beginIndex, nowikiTag.getBeginIndex());
+    char lastChar = contents.charAt(link.getEndIndex() - 3);
+    automatic = false;
+    if (CharacterUtils.WHITESPACE.indexOf(lastChar) >= 0) {
+      linkText =
+          contents.substring(beginIndex, link.getEndIndex() - 3) +
+          contents.substring(link.getEndIndex() - 2, nowikiTag.getBeginIndex());
+      automatic = true;
+    }
+    if (!automatic && words.contains(extraText)) {
+      if ((endIndex >= contents.length()) ||
+          CharacterUtils.isWhitespace(contents.charAt(endIndex))) {
+        if (CharacterUtils.isClassicLetter(lastChar) ||
+            (")".indexOf(lastChar) >= 0)) {
           automatic = true;
         }
       }
-      String replacement = linkText + " " + extraText;
-      errorResult.addReplacement(replacement, automatic);
     }
-    errors.add(errorResult);
+    String replacement = linkText + " " + extraText;
+    errorResult.addReplacement(replacement, automatic && !automaticUsed);
+    automaticUsed |= automatic;
+
+    // Extract last character from link
+    if ((link.getText() != null) &&
+        (link.getText().length() > 1) &&
+        (EXTRACTABLE_LAST_CHARS.indexOf(lastChar) >= 0)) {
+      automatic = true;
+      replacement =
+          InternalLinkBuilder
+              .from(link.getFullLink())
+              .withText(link.getText().substring(0, link.getText().length() - 1))
+              .toString() +
+          lastChar +
+          extraText;
+      errorResult.addReplacement(replacement, automatic && !automaticUsed);
+      automaticUsed |= automatic;
+    }
 
     // External viewer for the link
     errorResult.addPossibleAction(new SimpleAction(
@@ -236,6 +261,8 @@ public class CheckErrorAlgorithm553 extends CheckErrorAlgorithmBase {
           GT._T("External Viewer") + " - " + completeLink,
           new ActionExternalViewer(wiki, completeLink)));
     }
+
+    errors.add(errorResult);
 
     return true;
   }
