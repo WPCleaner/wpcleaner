@@ -16,14 +16,25 @@ import java.util.Optional;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.wikipediacleaner.api.data.PageElementTemplate;
+
 /**
  * Bean for handling configuration for templates.
  */
-public class TemplateConfiguration {
+class TemplateConfiguration {
+
+  private final static Logger log = LoggerFactory.getLogger(TemplateConfiguration.class);
 
   @Nonnull private final String templateName;
 
   @Nullable private Boolean defaultAutomatic;
+
+  @Nullable private Integer unnamedParameterBegin;
+
+  @Nullable private Boolean unnamedParameterAutomatic;
 
   @Nonnull private final Map<String, Boolean> automaticByParamName;
 
@@ -36,8 +47,47 @@ public class TemplateConfiguration {
     return templateName;
   }
 
-  public @Nonnull Optional<Boolean> isAutomatic(String paramName) {
-    return Optional.ofNullable(automaticByParamName.getOrDefault(paramName, defaultAutomatic));
+  /**
+   * Analyze a template parameter.
+   * 
+   * @param template Template.
+   * @param paramNum Parameter number.
+   * @return Analysis of the parameter:
+   *         Optional.empty() is the parameter is not empty or not configured for the detection.
+   *         FALSE if the parameter is empty, configured for the detection, but no automatic removal.
+   *         TRUE if the parameter is empty, configured for the detection, with automatic removal.
+   */
+  public @Nonnull Optional<Boolean> isAutomatic(PageElementTemplate template, int paramNum) {
+    PageElementTemplate.Parameter param = template.getParameter(paramNum);
+    if ((param == null) || StringUtils.isNotEmpty(param.getValue())) {
+      return Optional.empty();
+    }
+    String name = param.getName();
+    String computedName = param.getComputedName();
+    if (StringUtils.isEmpty(name) && (unnamedParameterBegin != null)) {
+      if (StringUtils.isNotEmpty(computedName)) {
+        try {
+          if (Integer.parseInt(computedName) >= unnamedParameterBegin) {
+            for (int paramNumAfter = paramNum + 1; paramNumAfter < template.getParameterCount(); paramNumAfter++) {
+              PageElementTemplate.Parameter paramAfter = template.getParameter(paramNumAfter);
+              if ((paramAfter != null) &&
+                  (paramAfter.getName() == null) &&
+                  StringUtils.isNotEmpty(paramAfter.getValue())) {
+                log.info(
+                    "Prevent removal of unnamed parameter {} in {} because of non-empty unnamed parameter {}",
+                    computedName, template.getTemplateName(),
+                    paramAfter.getComputedName());
+                return Optional.of(Boolean.FALSE);
+              }
+            }
+            return Optional.ofNullable(unnamedParameterAutomatic);
+          }
+        } catch (NumberFormatException e) {
+          log.error("Error parsing parameter computed name {}", computedName);
+        }
+      }
+    }
+    return Optional.ofNullable(automaticByParamName.getOrDefault(computedName, defaultAutomatic));
   }
 
   /**
@@ -81,7 +131,19 @@ public class TemplateConfiguration {
         if (rawConfiguration.length > 2) {
           for (int paramNum = 2; paramNum < rawConfiguration.length; paramNum++) {
             String paramName = rawConfiguration[paramNum].trim();
-            templateConfig.automaticByParamName.put(paramName, automatic);
+            if (paramName.endsWith("+")) {
+              try {
+                templateConfig.unnamedParameterBegin =
+                    Integer.valueOf(paramName.substring(0, paramName.length() - 1));
+                templateConfig.unnamedParameterAutomatic = automatic;
+              } catch (NumberFormatException e) {
+                log.error(
+                    "Incorrect configuration for #563, parameter named {} for template {}",
+                    paramName, templateName);
+              }
+            } else {
+              templateConfig.automaticByParamName.put(paramName, automatic);
+            }
           }
         } else {
           templateConfig.defaultAutomatic = automatic;

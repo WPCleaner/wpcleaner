@@ -13,7 +13,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-import org.apache.commons.lang3.StringUtils;
 import org.wikipediacleaner.api.algorithm.AlgorithmParameter;
 import org.wikipediacleaner.api.algorithm.AlgorithmParameterElement;
 import org.wikipediacleaner.api.check.CheckErrorResult;
@@ -21,6 +20,7 @@ import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase;
 import org.wikipediacleaner.api.configuration.WPCConfiguration;
 import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
+import org.wikipediacleaner.api.data.contents.ContentsUtil;
 import org.wikipediacleaner.i18n.GT;
 
 
@@ -89,7 +89,7 @@ public class CheckErrorAlgorithm563 extends CheckErrorAlgorithmBase {
     }
     boolean result = false;
     for (int paramNum = 0; paramNum < template.getParameterCount(); paramNum++) {
-      result |= analyzeTemplateParameter(analysis, errors, template.getParameter(paramNum), templateConfiguration);
+      result |= analyzeTemplateParameter(analysis, errors, template, paramNum, templateConfiguration);
     }
     return result;
   }
@@ -106,24 +106,35 @@ public class CheckErrorAlgorithm563 extends CheckErrorAlgorithmBase {
   private boolean analyzeTemplateParameter(
       PageAnalysis analysis,
       Collection<CheckErrorResult> errors,
-      PageElementTemplate.Parameter templateParameter,
+      PageElementTemplate template,
+      int paramNum,
       TemplateConfiguration templateConfiguration) {
-    if (StringUtils.isNotEmpty(templateParameter.getValue())) {
-      return false;
-    }
-    String paramName = templateParameter.getComputedName();
-    Optional<Boolean> automatic = templateConfiguration.isAutomatic(paramName);
+    PageElementTemplate.Parameter templateParam = template.getParameter(paramNum);
+    Optional<Boolean> automatic = templateConfiguration.isAutomatic(template, paramNum);
     if (!automatic.isPresent()) {
       return false;
     }
     if (errors == null) {
       return true;
     }
-    CheckErrorResult errorResult = createCheckErrorResult(
-        analysis,
-        templateParameter.getBeginIndex(),
-        templateParameter.getEndIndex());
-    errorResult.addReplacement("", automatic.get());
+    boolean automaticValue = automatic.get();
+    int beginIndex = templateParam.getBeginIndex();
+    int endIndex = templateParam.getEndIndex();
+    CheckErrorResult errorResult = createCheckErrorResult(analysis, beginIndex, endIndex);
+    String replacement = "";
+    String contents = analysis.getContents();
+    int crIndex = contents.substring(templateParam.getValueStartIndex(), endIndex).lastIndexOf('\n');
+    if (crIndex >= 0) {
+      int tmpIndex = ContentsUtil.moveIndexBackwardWhileFound(contents, beginIndex - 1, " ");
+      if ((tmpIndex >= 0) && (contents.charAt(tmpIndex) != '\n')) {
+        if ((ContentsUtil.moveIndexBackwardWhileNotFound(contents, tmpIndex, "\n") > template.getBeginIndex()) ||
+            (ContentsUtil.moveIndexForwardWhileNotFound(contents, endIndex, "\n") < template.getEndIndex())) {
+          replacement = contents.substring(templateParam.getValueStartIndex() + crIndex, endIndex);
+          //System.err.println("Changed replacement for article " + analysis.getPage().getTitle());
+        }
+      }
+    }
+    errorResult.addReplacement(replacement, automaticValue);
     errors.add(errorResult);
     return true;
   }
