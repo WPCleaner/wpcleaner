@@ -94,7 +94,7 @@ public class CharacterUtils {
   /**
    * @param character Character to be tested.
    * @return True if the character should be considered as a classic letter.
-   * @see Character.isLetter(char) is more permissive.
+   * In comparison, {@link java.lang.Character#isLetter(char) Character.isLetter(char)} is more permissive.
    */
   public static boolean isClassicLetter(char character) {
     if (!Character.isLetter(character)) {

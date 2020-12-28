@@ -26,5 +26,6 @@
 	<classpathentry kind="lib" path="libs/httpcomponents-client-5.0/httpclient5-5.0.jar"/>
 	<classpathentry kind="lib" path="libs/httpcomponents-client-5.0/httpcore5-5.0.jar"/>
 	<classpathentry kind="lib" path="libs/jsr305-3.0.2/jsr305-3.0.2.jar"/>
+	<classpathentry kind="lib" path="libs/commons-text-1.9/commons-text-1.9.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

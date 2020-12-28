@@ -66,6 +66,12 @@
   <property name="WPCleaner.libs.io.lic"                  value="LICENSE.txt" />
   <property name="WPCleaner.libs.io.not"                  value="NOTICE.txt" />
 
+  <property name="WPCleaner.libs.text.version"            value="1.9" />
+  <property name="WPCleaner.libs.text.dir"                value="libs/commons-text-${WPCleaner.libs.text.version}" />
+  <property name="WPCleaner.libs.text.jar"                value="commons-text-${WPCleaner.libs.text.version}.jar" />
+  <property name="WPCleaner.libs.text.lic"                value="LICENSE.txt"/>
+  <property name="WPCleaner.libs.text.not"                value="NOTICE.txt"/>
+
   <property name="WPCleaner.libs.jackson.version"         value="2.10.3" />
   <property name="WPCleaner.libs.jackson.dir"             value="libs/jackson-${WPCleaner.libs.jackson.version}" />
   <property name="WPCleaner.libs.jackson-annotations.jar" value="jackson-annotations-${WPCleaner.libs.jackson.version}.jar" />
@@ -306,6 +312,7 @@
     <unzip src="${WPCleaner.libs.httpclient.dir}/${WPCleaner.libs.httpclient.jar}"       dest="${WPCleaner.classes_full.dir}" />
     <unzip src="${WPCleaner.libs.io.dir}/${WPCleaner.libs.io.jar}"                       dest="${WPCleaner.classes_full.dir}" />
     <unzip src="${WPCleaner.libs.lang3.dir}/${WPCleaner.libs.lang3.jar}"                 dest="${WPCleaner.classes_full.dir}" />
+    <unzip src="${WPCleaner.libs.text.dir}/${WPCleaner.libs.text.jar}"                   dest="${WPCleaner.classes_full.dir}" />
     <unzip src="${WPCleaner.libs.logging.dir}/${WPCleaner.libs.logging.jar}"             dest="${WPCleaner.classes_full.dir}" />
     <unzip src="${WPCleaner.libs.logback.dir}/${WPCleaner.libs.logback.classic.jar}"     dest="${WPCleaner.classes_full.dir}" />
     <unzip src="${WPCleaner.libs.logback.dir}/${WPCleaner.libs.logback.core.jar}"        dest="${WPCleaner.classes_full.dir}" />
@@ -344,6 +351,10 @@
           tofile="${WPCleaner.classes_full.dir}/LICENSE_commons-lang3.txt" />
     <copy file="${WPCleaner.libs.lang3.dir}/${WPCleaner.libs.lang3.not}"
           tofile="${WPCleaner.classes_full.dir}/NOTICE_commons-lang3.txt" />
+    <copy file="${WPCleaner.libs.text.dir}/${WPCleaner.libs.text.lic}"
+          tofile="${WPCleaner.classes_full.dir}/LICENSE_commons-text.txt" />
+    <copy file="${WPCleaner.libs.text.dir}/${WPCleaner.libs.text.not}"
+          tofile="${WPCleaner.classes_full.dir}/NOTICE_commons-text.txt" />
     <copy file="${WPCleaner.libs.logging.dir}/${WPCleaner.libs.logging.lic}"
   	      tofile="${WPCleaner.classes_full.dir}/LICENSE_commons-logging.txt" />
     <copy file="${WPCleaner.libs.logging.dir}/${WPCleaner.libs.logging.not}"
@@ -541,6 +552,7 @@
     <copy file="${WPCleaner.libs.httpclient.dir}/${WPCleaner.libs.httpclient.jar}"       tofile="${WPCleaner.getdown.dir}/libs/commons-httpclient.jar" />
     <copy file="${WPCleaner.libs.io.dir}/${WPCleaner.libs.io.jar}"                       tofile="${WPCleaner.getdown.dir}/libs/commons-io.jar" />
     <copy file="${WPCleaner.libs.lang3.dir}/${WPCleaner.libs.lang3.jar}"                 tofile="${WPCleaner.getdown.dir}/libs/commons-lang3.jar" />
+    <copy file="${WPCleaner.libs.text.dir}/${WPCleaner.libs.text.jar}"                   tofile="${WPCleaner.getdown.dir}/libs/commons-text.jar" />
     <copy file="${WPCleaner.libs.logging.dir}/${WPCleaner.libs.logging.jar}"             tofile="${WPCleaner.getdown.dir}/libs/commons-logging.jar" />
     <copy file="${WPCleaner.libs.logback.dir}/${WPCleaner.libs.logback.classic.jar}"     tofile="${WPCleaner.getdown.dir}/libs/logback-classic.jar" />
     <copy file="${WPCleaner.libs.logback.dir}/${WPCleaner.libs.logback.core.jar}"        tofile="${WPCleaner.getdown.dir}/libs/logback-core.jar" />
@@ -564,6 +576,8 @@
     <copy file="${WPCleaner.libs.io.dir}/${WPCleaner.libs.io.not}"                       tofile="${WPCleaner.getdown.dir}/libs/NOTICE_commons-io.txt" />
     <copy file="${WPCleaner.libs.lang3.dir}/${WPCleaner.libs.lang3.lic}"                 tofile="${WPCleaner.getdown.dir}/libs/LICENSE_commons-lang3.txt" />
     <copy file="${WPCleaner.libs.lang3.dir}/${WPCleaner.libs.lang3.not}"                 tofile="${WPCleaner.getdown.dir}/libs/NOTICE_commons-lang3.txt" />
+    <copy file="${WPCleaner.libs.text.dir}/${WPCleaner.libs.text.lic}"                   tofile="${WPCleaner.getdown.dir}/libs/LICENSE_commons-text.txt" />
+    <copy file="${WPCleaner.libs.text.dir}/${WPCleaner.libs.text.not}"                   tofile="${WPCleaner.getdown.dir}/libs/NOTICE_commons-text.txt" />
     <copy file="${WPCleaner.libs.logging.dir}/${WPCleaner.libs.logging.lic}"             tofile="${WPCleaner.getdown.dir}/libs/LICENSE_commons-logging.txt" />
     <copy file="${WPCleaner.libs.logging.dir}/${WPCleaner.libs.logging.not}"             tofile="${WPCleaner.getdown.dir}/libs/NOTICE_commons-logging.txt" />
     <copy file="${WPCleaner.libs.gettext.dir}/${WPCleaner.libs.gettext.lic}"             tofile="${WPCleaner.getdown.dir}/libs/LICENSE_gettext-commons.txt" />

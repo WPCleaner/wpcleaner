@@ -5,7 +5,7 @@
  *  See README.txt file for licensing information.
  */
 
-package org.wikipediacleaner.api.check.algorithm.a5xx.a56x.a563;
+package org.wikipediacleaner.api.check.algorithm.a5xx.a56x.a564;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -20,18 +20,17 @@ import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase;
 import org.wikipediacleaner.api.configuration.WPCConfiguration;
 import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
-import org.wikipediacleaner.api.data.contents.ContentsUtil;
 import org.wikipediacleaner.i18n.GT;
 
 
 /**
- * Algorithm for analyzing error 563 of check wikipedia project.
- * Error 563: Unused parameters
+ * Algorithm for analyzing error 564 of check wikipedia project.
+ * Error 564: Unknown parameters
  */
-public class CheckErrorAlgorithm563 extends CheckErrorAlgorithmBase {
+public class CheckErrorAlgorithm564 extends CheckErrorAlgorithmBase {
 
-  public CheckErrorAlgorithm563() {
-    super("Unused parameters");
+  public CheckErrorAlgorithm564() {
+    super("Unknown parameters");
   }
 
   /**
@@ -109,35 +108,26 @@ public class CheckErrorAlgorithm563 extends CheckErrorAlgorithmBase {
       PageElementTemplate template,
       int paramNum,
       TemplateConfiguration templateConfiguration) {
+
+    // Check if there's an error
     PageElementTemplate.Parameter templateParam = template.getParameter(paramNum);
-    Optional<Boolean> automatic = templateConfiguration.isAutomatic(template, paramNum);
-    if (!automatic.isPresent()) {
+    Optional<List<Suggestion>> suggestions = templateConfiguration.analyzeParam(analysis.getContents(), template, paramNum);
+    if (!suggestions.isPresent()) {
       return false;
     }
     if (errors == null) {
       return true;
     }
-    boolean automaticValue = automatic.get();
+
+    // Report error
     int beginIndex = templateParam.getBeginIndex();
     int endIndex = templateParam.getEndIndex();
     CheckErrorResult errorResult = createCheckErrorResult(analysis, beginIndex, endIndex);
-    String replacement = "";
-    String contents = analysis.getContents();
-    int crIndex = contents.substring(beginIndex, endIndex).lastIndexOf('\n');
-    if (crIndex >= 0) {
-      int equalsIndex = contents.substring(beginIndex, endIndex).lastIndexOf('=');
-      if (equalsIndex < crIndex) {
-        int tmpIndex = ContentsUtil.moveIndexBackwardWhileFound(contents, beginIndex - 1, " ");
-        if ((tmpIndex >= 0) && (contents.charAt(tmpIndex) != '\n')) {
-          if ((ContentsUtil.moveIndexBackwardWhileNotFound(contents, tmpIndex, "\n") > template.getBeginIndex()) ||
-              (ContentsUtil.moveIndexForwardWhileNotFound(contents, endIndex, "\n") < template.getEndIndex())) {
-            replacement = contents.substring(beginIndex + crIndex, endIndex);
-            //System.err.println("Changed replacement for article " + analysis.getPage().getTitle());
-          }
-        }
-      }
+    for (Suggestion suggestion : suggestions.get()) {
+      boolean automatic = suggestion.automatic;
+      automatic &= (suggestion.paramName == null) || (template.getParameterValue(suggestion.paramName) == null);
+      errorResult.addReplacement(suggestion.replacement, automatic);
     }
-    errorResult.addReplacement(replacement, automaticValue);
     errors.add(errorResult);
     return true;
   }
@@ -164,6 +154,15 @@ public class CheckErrorAlgorithm563 extends CheckErrorAlgorithmBase {
   /** Templates and parameters that are checked */
   private static final String PARAMETER_TEMPLATES = "templates";
 
+  /** Parameters that can be safely deleted */
+  private static final String PARAMETER_DELETE_PARAMETERS = "delete_parameters";
+
+  /** Parameters that can be safely commented */
+  private static final String PARAMETER_COMMENT_PARAMETERS = "comment_parameters";
+
+  /** Parameters that can be safely replaced */
+  private static final String PARAMETER_REPLACE_PARAMETERS = "replace_parameters";
+
   /**
    * Initialize settings for the algorithm.
    * 
@@ -175,7 +174,22 @@ public class CheckErrorAlgorithm563 extends CheckErrorAlgorithmBase {
     configurationByTemplateName.clear();
     if (tmp != null) {
       List<String[]> tmpList = WPCConfiguration.convertPropertyToStringArrayList(tmp);
-      TemplateConfiguration.addConfiguration(tmpList, configurationByTemplateName);
+      TemplateConfiguration.addKnownParameters(tmpList, configurationByTemplateName);
+    }
+    tmp = getSpecificProperty(PARAMETER_DELETE_PARAMETERS, true, true, false);
+    if (tmp != null) {
+      List<String[]> tmpList = WPCConfiguration.convertPropertyToStringArrayList(tmp);
+      TemplateConfiguration.addParametersToDelete(tmpList, configurationByTemplateName);
+    }
+    tmp = getSpecificProperty(PARAMETER_COMMENT_PARAMETERS, true, true, false);
+    if (tmp != null) {
+      List<String[]> tmpList = WPCConfiguration.convertPropertyToStringArrayList(tmp);
+      TemplateConfiguration.addParametersToComment(tmpList, configurationByTemplateName);
+    }
+    tmp = getSpecificProperty(PARAMETER_REPLACE_PARAMETERS, true, true, false);
+    if (tmp != null) {
+      List<String[]> tmpList = WPCConfiguration.convertPropertyToStringArrayList(tmp);
+      TemplateConfiguration.addParametersToReplace(tmpList, configurationByTemplateName);
     }
   }
 
@@ -190,18 +204,75 @@ public class CheckErrorAlgorithm563 extends CheckErrorAlgorithmBase {
     super.addParameters();
     addParameter(new AlgorithmParameter(
         PARAMETER_TEMPLATES,
-        GT._T("Templates for which unused parameters should be verified"),
+        GT._T("Templates for which unknown parameters should be verified"),
         new AlgorithmParameterElement[] {
             new AlgorithmParameterElement(
                 "template",
                 GT._T("Name of the template")),
             new AlgorithmParameterElement(
-                "automatic",
-                GT._T("Set to true to automatically remove unused parameters"),
-                true),
+                "param",
+                GT._T("Name of the parameter"),
+                true,
+                true)
+        },
+        true));
+    addParameter(new AlgorithmParameter(
+        PARAMETER_DELETE_PARAMETERS,
+        GT._T("Template parameters which can be safely deleted"),
+        new AlgorithmParameterElement[] {
+            new AlgorithmParameterElement(
+                "template",
+                GT._T("Name of the template")),
             new AlgorithmParameterElement(
                 "param",
                 GT._T("Name of the parameter"),
+                true,
+                true)
+        },
+        true));
+    addParameter(new AlgorithmParameter(
+        PARAMETER_COMMENT_PARAMETERS,
+        GT._T("Template parameters which can be safely commented"),
+        new AlgorithmParameterElement[] {
+            new AlgorithmParameterElement(
+                "template",
+                GT._T("Name of the template")),
+            new AlgorithmParameterElement(
+                "param",
+                GT._T("Name of the parameter"),
+                true,
+                true)
+        },
+        true));
+    addParameter(new AlgorithmParameter(
+        PARAMETER_DELETE_PARAMETERS,
+        GT._T("Template parameters which can be safely deleted"),
+        new AlgorithmParameterElement[] {
+            new AlgorithmParameterElement(
+                "template",
+                GT._T("Name of the template")),
+            new AlgorithmParameterElement(
+                "param",
+                GT._T("Name of the parameter"),
+                true,
+                true)
+        },
+        true));
+    addParameter(new AlgorithmParameter(
+        PARAMETER_REPLACE_PARAMETERS,
+        GT._T("Template parameters which can be safely replaced"),
+        new AlgorithmParameterElement[] {
+            new AlgorithmParameterElement(
+                "template",
+                GT._T("Name of the template")),
+            new AlgorithmParameterElement(
+                "initial param",
+                GT._T("Initial name of the parameter"),
+                true,
+                true),
+            new AlgorithmParameterElement(
+                "target param",
+                GT._T("Target name of the parameter"),
                 true,
                 true)
         },
