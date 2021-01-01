@@ -73,7 +73,21 @@ class Suggestion {
       PageElementTemplate.Parameter templateParam,
       boolean automatic) {
     String fullText = contents.substring(templateParam.getBeginIndex(), templateParam.getEndIndex());
-    return new Suggestion(CommentBuilder.from(fullText).toString(), null, automatic);
+    int firstChar = 0;
+    while ((firstChar < fullText.length()) &&
+           (" \n".indexOf(fullText.charAt(firstChar)) >= 0)) {
+      firstChar++;
+    }
+    int lastChar = fullText.length();
+    while ((lastChar > firstChar) &&
+           (" \n".indexOf(fullText.charAt(lastChar - 1)) >= 0)) {
+      lastChar--;
+    }
+    String newText =
+        fullText.substring(0, firstChar) +
+        CommentBuilder.from(fullText.substring(firstChar, lastChar)).withWhitespace(false).toString() +
+        (lastChar < fullText.length() ? fullText.substring(lastChar) : StringUtils.EMPTY);
+    return new Suggestion(newText, null, automatic);
   }
 
   /**
