@@ -20,7 +20,7 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2020-12-29 08:17:44+0000\n"
+"PO-Revision-Date: 2021-01-04 14:02:52+0000\n"
 "Last-Translator: volkan <volkanyeke@gmail.com>\n"
 "Language-Team: Turkish <tr@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -1625,28 +1625,28 @@ msgstr "Kullanılmayan parametreleri otomatik olarak kaldırmak için true olara
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:207
 msgid "Templates for which unknown parameters should be verified"
-msgstr ""
+msgstr "Bilinmeyen parametrelerin doğrulanması gereken şablonlar"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:221
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:249
 msgid "Template parameters which can be safely deleted"
-msgstr ""
+msgstr "Güvenle silinebilen şablon parametreleri"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:235
 msgid "Template parameters which can be safely commented"
-msgstr ""
+msgstr "Güvenle yorumlanabilen şablon parametreleri"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:263
 msgid "Template parameters which can be safely replaced"
-msgstr ""
+msgstr "Güvenle değiştirilebilen şablon parametreleri"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:270
 msgid "Initial name of the parameter"
-msgstr ""
+msgstr "Parametrenin ilk adı"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:275
 msgid "Target name of the parameter"
-msgstr ""
+msgstr "Parametrenin hedef adı"
 
 #: org/wikipediacleaner/api/configuration/CWConfiguration.java:83
 #, java-format
