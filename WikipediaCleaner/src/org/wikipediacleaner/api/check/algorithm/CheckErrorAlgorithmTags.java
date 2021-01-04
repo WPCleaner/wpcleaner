@@ -17,6 +17,7 @@ import org.wikipediacleaner.api.data.analysis.PageAnalysis;
 
 /**
  * Base class for errors related to unwanted tags.
+ * TODO: Replace with CheckErrorAlgorithmTags2.
  */
 public abstract class CheckErrorAlgorithmTags extends CheckErrorAlgorithmBase {
 
