@@ -6,7 +6,7 @@
  */
 
 
-package org.wikipediacleaner.api.check.algorithm.a5xx.a56x.a564;
+package org.wikipediacleaner.api.check.algorithm.a5xx;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -17,20 +17,32 @@ import org.wikipediacleaner.api.data.contents.ContentsUtil;
 import org.wikipediacleaner.api.data.contents.comment.CommentBuilder;
 
 /**
- * Suggestion for a replacement.
+ * Suggestion for a replacement of a template parameter.
  */
-class Suggestion {
+public class TemplateParameterSuggestion {
 
-  @Nonnull final String replacement;
+  @Nonnull private final String replacement;
 
-  @Nullable final String paramName;
+  @Nullable private final String paramName;
 
-  final boolean automatic;
+  private final boolean automatic;
 
-  private Suggestion(@Nonnull String replacement, @Nullable String paramName, boolean automatic) {
+  private TemplateParameterSuggestion(@Nonnull String replacement, @Nullable String paramName, boolean automatic) {
     this.replacement = replacement;
     this.paramName = paramName;
     this.automatic = automatic;
+  }
+
+  public String getReplacement() {
+    return replacement;
+  }
+
+  public String getParamName() {
+    return paramName;
+  }
+
+  public boolean isAutomatic() {
+    return automatic;
   }
 
   /**
@@ -41,7 +53,7 @@ class Suggestion {
    * @param automatic True if the deletion is automatic.
    * @return Suggestion.
    */
-  public static Suggestion deleteParam(
+  public static TemplateParameterSuggestion deleteParam(
       String contents,
       PageElementTemplate.Parameter templateParam,
       boolean automatic) {
@@ -53,11 +65,11 @@ class Suggestion {
       if (equalIndex < crIndex) {
         int tmpIndex = ContentsUtil.moveIndexBackwardWhileFound(contents, templateParam.getBeginIndex() - 1, " ");
         if ((tmpIndex < 0) || (contents.charAt(tmpIndex) != '\n')) {
-          return new Suggestion(contents.substring(beginIndex + crIndex, endIndex), null, automatic);
+          return new TemplateParameterSuggestion(contents.substring(beginIndex + crIndex, endIndex), null, automatic);
         }
       }
     }
-    return new Suggestion(StringUtils.EMPTY, null, automatic);
+    return new TemplateParameterSuggestion(StringUtils.EMPTY, null, automatic);
   }
 
   /**
@@ -68,7 +80,7 @@ class Suggestion {
    * @param automatic True if the comment is automatic.
    * @return Suggestion.
    */
-  public static Suggestion commentParam(
+  public static TemplateParameterSuggestion commentParam(
       String contents,
       PageElementTemplate.Parameter templateParam,
       boolean automatic) {
@@ -87,7 +99,7 @@ class Suggestion {
         fullText.substring(0, firstChar) +
         CommentBuilder.from(fullText.substring(firstChar, lastChar)).withWhitespace(false).toString() +
         (lastChar < fullText.length() ? fullText.substring(lastChar) : StringUtils.EMPTY);
-    return new Suggestion(newText, null, automatic);
+    return new TemplateParameterSuggestion(newText, null, automatic);
   }
 
   /**
@@ -100,7 +112,7 @@ class Suggestion {
    * @param automatic True if the replacement is automatic.
    * @return Suggestion.
    */
-  public static Suggestion replaceParam(
+  public static TemplateParameterSuggestion replaceParam(
       String contents,
       PageElementTemplate.Parameter templateParam,
       String newName,
@@ -119,7 +131,7 @@ class Suggestion {
           contents.substring(nameStartIndex + templateParam.getName().length(), valueStartIndex) +
           newValue +
           contents.substring(valueStartIndex + templateParam.getValue().length(), endIndex);
-      return new Suggestion(newText, newName, automatic);
+      return new TemplateParameterSuggestion(newText, newName, automatic);
     }
 
     // Implicit parameter name
@@ -129,6 +141,6 @@ class Suggestion {
         "=" +
         newValue +
         contents.substring(valueStartIndex + templateParam.getValue().length(), endIndex);
-    return new Suggestion(newText, newName, automatic);
+    return new TemplateParameterSuggestion(newText, newName, automatic);
   }
 }

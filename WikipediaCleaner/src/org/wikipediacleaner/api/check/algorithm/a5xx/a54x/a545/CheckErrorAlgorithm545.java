@@ -5,11 +5,17 @@
  *  See README.txt file for licensing information.
  */
 
-package org.wikipediacleaner.api.check.algorithm;
+package org.wikipediacleaner.api.check.algorithm.a5xx.a54x.a545;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import org.apache.commons.lang3.StringUtils;
 import org.wikipediacleaner.api.API;
@@ -18,6 +24,8 @@ import org.wikipediacleaner.api.APIFactory;
 import org.wikipediacleaner.api.algorithm.AlgorithmParameter;
 import org.wikipediacleaner.api.algorithm.AlgorithmParameterElement;
 import org.wikipediacleaner.api.check.CheckErrorResult;
+import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase;
+import org.wikipediacleaner.api.check.algorithm.a5xx.TemplateParameterSuggestion;
 import org.wikipediacleaner.api.configuration.WPCConfiguration;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.DataManager;
@@ -25,7 +33,6 @@ import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.Page.RelatedPages;
-import org.wikipediacleaner.api.data.PageElementTemplate.Parameter;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
 import org.wikipediacleaner.i18n.GT;
 
@@ -56,39 +63,76 @@ public class CheckErrorAlgorithm545 extends CheckErrorAlgorithmBase {
       return false;
     }
 
-    // Analyze each template
-    boolean result = false;
-    for (String[] deprecatedParameter : deprecatedParameters) {
-      if ((deprecatedParameter != null) && (deprecatedParameter.length > 1)) {
-  
-        // Retrieve templates
-        String templateName = deprecatedParameter[0];
-        List<PageElementTemplate> templates = analysis.getTemplates(templateName);
-        if ((templates != null) && !templates.isEmpty()) {
-          String parameterName = deprecatedParameter[1];
-          String explanation = (deprecatedParameter.length > 2) ? deprecatedParameter[2] : null;
-          for (PageElementTemplate template : templates) {
-            int paramIndex = template.getParameterIndex(parameterName);
-            if (paramIndex >= 0) {
-              result = true;
-              if (errors == null) {
-                return true;
-              }
-              Parameter param = template.getParameter(paramIndex);
-              if (param != null) {
-                CheckErrorResult errorResult = createCheckErrorResult(analysis, param.getBeginIndex(), param.getEndIndex());
-                if (!StringUtils.isEmpty(explanation)) {
-                  errorResult.addText(explanation);
-                }
-                errorResult.addReplacement("");
-                errors.add(errorResult);
-              }
-            }
-          }
-        }
-      }
+    // Preliminary check
+    if (configByTemplateName.isEmpty()) {
+      return false;
+    }
+    List<PageElementTemplate> templates = analysis.getTemplates();
+    if ((templates == null) || (templates.isEmpty())) {
+      return false;
     }
 
+    // Analyze each template
+    boolean result = false;
+    for (PageElementTemplate template : templates) {
+      result |= analyzeTemplate(analysis, errors, template);
+    }
+    return result;
+  }
+
+  /**
+   * Analyze a template to check if errors are present.
+   * 
+   * @param analysis Page analysis.
+   * @param errors Errors found in the page.
+   * @param template Template to analyze.
+   * @return Flag indicating if the error was found.
+   */
+  private boolean analyzeTemplate(
+      @Nonnull PageAnalysis analysis,
+      @Nullable Collection<CheckErrorResult> errors,
+      @Nonnull PageElementTemplate template) {
+
+    // Retrieve configuration
+    TemplateConfiguration templateConfig = configByTemplateName.get(template.getTemplateName());
+    if (templateConfig == null) {
+      return false;
+    }
+
+    // Analyze each parameter
+    boolean result = false;
+    String contents = analysis.getContents();
+    for (int paramNum = 0; paramNum < template.getParameterCount(); paramNum++) {
+      Optional<List<TemplateParameterSuggestion>> suggestions = templateConfig.analyzeParam(contents, template, paramNum);
+      if (suggestions.isPresent()) {
+        if (errors == null) {
+          return true;
+        }
+        result = true;
+
+        // Report error
+        PageElementTemplate.Parameter templateParam = template.getParameter(paramNum);
+        int beginIndex = templateParam.getBeginIndex();
+        int endIndex = templateParam.getEndIndex();
+        CheckErrorResult errorResult = createCheckErrorResult(analysis, beginIndex, endIndex);
+        ParameterConfiguration paramConfig = templateConfig.getParamConfiguration(templateParam.getComputedName());
+        if (paramConfig != null) {
+          String explanation = paramConfig.getComment();
+          if (!StringUtils.isEmpty(explanation)) {
+            errorResult.addText(explanation);
+          }
+        }
+        for (TemplateParameterSuggestion suggestion : suggestions.get()) {
+          boolean automatic = suggestion.isAutomatic() && false;
+          automatic &= StringUtils.equals(templateParam.getComputedName(), templateParam.getName());
+          if (suggestion.getParamName() != null) {
+            automatic &= (template.getParameterIndex(suggestion.getParamName()) < 0);
+          }
+          errorResult.addReplacement(suggestion.getReplacement(), automatic);
+        }
+        errors.add(errorResult);
+      }
+    }
     return result;
   }
 
@@ -148,6 +192,9 @@ public class CheckErrorAlgorithm545 extends CheckErrorAlgorithmBase {
   /** Deprecated parameters for templates */
   private static final String PARAMETER_TEMPLATES = "templates";
 
+  /** Replacements for parameters */
+  private static final String REPLACE_PARAMETERS = "replace_parameters";
+
   /**
    * Initialize settings for the algorithm.
    * 
@@ -156,12 +203,15 @@ public class CheckErrorAlgorithm545 extends CheckErrorAlgorithmBase {
   @Override
   protected void initializeSettings() {
     String tmp = getSpecificProperty(PARAMETER_TEMPLATES, true, true, false);
-    deprecatedParameters.clear();
+    configByTemplateName.clear();
     if (tmp != null) {
       List<String[]> tmpList = WPCConfiguration.convertPropertyToStringArrayList(tmp);
-      if (tmpList != null) {
-        deprecatedParameters.addAll(tmpList);
-      }
+      TemplateConfiguration.addObsoleteParameters(tmpList, configByTemplateName);
+    }
+    tmp = getSpecificProperty(REPLACE_PARAMETERS, true, true, false);
+    if (tmp != null) {
+      List<String[]> tmpList = WPCConfiguration.convertPropertyToStringArrayList(tmp);
+      TemplateConfiguration.addReplaceParameters(tmpList, configByTemplateName);
     }
 
     tmp = getSpecificProperty(PARAMETER_CATEGORIES, true, true, false);
@@ -177,8 +227,8 @@ public class CheckErrorAlgorithm545 extends CheckErrorAlgorithmBase {
   /** Categories listing pages for this error */
   private final List<String> categories = new ArrayList<>();
 
-  /** Deprecated parameters for templates */
-  private final List<String[]> deprecatedParameters = new ArrayList<>();
+  /** Configuration for each template */
+  private final Map<String, TemplateConfiguration> configByTemplateName = new HashMap<>();
 
   /**
    * Build the list of parameters for this algorithm.
@@ -206,6 +256,22 @@ public class CheckErrorAlgorithm545 extends CheckErrorAlgorithmBase {
             new AlgorithmParameterElement(
                 "explanation",
                 GT._T("Textual explanation about the deprecated parameter"),
+                true)
+        },
+        true));
+    addParameter(new AlgorithmParameter(
+        REPLACE_PARAMETERS,
+        GT._T("Replacements of deprecated parameters"),
+        new AlgorithmParameterElement[] {
+            new AlgorithmParameterElement(
+                "template name",
+                GT._T("Name of a template with deprecated parameter")),
+            new AlgorithmParameterElement(
+                "parameter name",
+                GT._T("Name a of a deprecated parameter")),
+            new AlgorithmParameterElement(
+                "replacement",
+                GT._T("Name of a replacement parameter"),
                 true)
         },
         true));

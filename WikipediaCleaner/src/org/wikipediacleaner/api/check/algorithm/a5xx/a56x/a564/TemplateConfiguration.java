@@ -23,6 +23,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.text.similarity.LevenshteinDistance;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.wikipediacleaner.api.check.algorithm.a5xx.TemplateParameterSuggestion;
 import org.wikipediacleaner.api.data.CharacterUtils;
 import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.contents.ContentsUtil;
@@ -72,7 +73,7 @@ class TemplateConfiguration {
    *         Optional.empty() if the parameter is known or not configured for the detection.
    *         A list of suggestions if the parameter is unknown and configured for the detection.
    */
-  public @Nonnull Optional<List<Suggestion>> analyzeParam(
+  public @Nonnull Optional<List<TemplateParameterSuggestion>> analyzeParam(
       String contents,
       @Nonnull PageElementTemplate template,
       int paramNum) {
@@ -97,7 +98,7 @@ class TemplateConfiguration {
     }
 
     // Look for suggestions
-    List<Suggestion> results = new ArrayList<>();
+    List<TemplateParameterSuggestion> results = new ArrayList<>();
     String name = param.getName();
 
     // Handle non-breaking white space in the parameter name
@@ -116,7 +117,7 @@ class TemplateConfiguration {
         }
       }
       if (knownName) {
-        results.add(Suggestion.replaceParam(
+        results.add(TemplateParameterSuggestion.replaceParam(
             contents, param,
             cleanedName, param.getValue(), true));
       }
@@ -125,7 +126,7 @@ class TemplateConfiguration {
     // Handle parameters configured for replacement
     String replacementParam = paramsToReplaceByName.get(computedName);
     if (replacementParam != null) {
-      results.add(Suggestion.replaceParam(
+      results.add(TemplateParameterSuggestion.replaceParam(
           contents, param,
           replacementParam, param.getValue(), true));
     }
@@ -136,7 +137,7 @@ class TemplateConfiguration {
 
       // Search for mistyped parameters
       if (StringUtils.equalsIgnoreCase(knownParam, name)) {
-        results.add(Suggestion.replaceParam(
+        results.add(TemplateParameterSuggestion.replaceParam(
             contents, param,
             knownParam, param.getValue(), knownParam.length() >= 5));
       } else if (StringUtils.equals(name, computedName)) {
@@ -149,12 +150,12 @@ class TemplateConfiguration {
               Character.isDigit(lastKnownParam)) {
             automatic &= (lastComputedName == lastKnownParam);
           }
-          results.add(Suggestion.replaceParam(
+          results.add(TemplateParameterSuggestion.replaceParam(
               contents, param,
               knownParam, param.getValue(), automatic));
         } else if (StringUtils.isEmpty(param.getValue())) {
           if (StringUtils.startsWith(name, knownParam)) {
-            results.add(Suggestion.replaceParam(
+            results.add(TemplateParameterSuggestion.replaceParam(
                 contents, param,
                 knownParam, name.substring(knownParam.length()), false));
           }
@@ -171,7 +172,7 @@ class TemplateConfiguration {
           char lastName = knownParam.charAt(knownParam.length() - 1);
           automatic &= (!CharacterUtils.isClassicLetter(firstValue) || !CharacterUtils.isClassicLetter(lastName));
         }
-        results.add(Suggestion.replaceParam(
+        results.add(TemplateParameterSuggestion.replaceParam(
             contents, param,
             knownParam, newValue.trim(), automatic));
       }
@@ -191,8 +192,8 @@ class TemplateConfiguration {
     // General suggestions (deletion and comment)
     safeDelete &= results.isEmpty();
     safeDelete |= paramsToDelete.contains(computedName);
-    results.add(Suggestion.deleteParam(contents, param, safeDelete));
-    results.add(Suggestion.commentParam(contents, param, paramsToComment.contains(computedName)));
+    results.add(TemplateParameterSuggestion.deleteParam(contents, param, safeDelete));
+    results.add(TemplateParameterSuggestion.commentParam(contents, param, paramsToComment.contains(computedName)));
     return Optional.of(results);
   }
 

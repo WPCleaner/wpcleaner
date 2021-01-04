@@ -17,6 +17,7 @@ import org.wikipediacleaner.api.algorithm.AlgorithmParameter;
 import org.wikipediacleaner.api.algorithm.AlgorithmParameterElement;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase;
+import org.wikipediacleaner.api.check.algorithm.a5xx.TemplateParameterSuggestion;
 import org.wikipediacleaner.api.configuration.WPCConfiguration;
 import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
@@ -110,8 +111,7 @@ public class CheckErrorAlgorithm564 extends CheckErrorAlgorithmBase {
       TemplateConfiguration templateConfiguration) {
 
     // Check if there's an error
-    PageElementTemplate.Parameter templateParam = template.getParameter(paramNum);
-    Optional<List<Suggestion>> suggestions = templateConfiguration.analyzeParam(analysis.getContents(), template, paramNum);
+    Optional<List<TemplateParameterSuggestion>> suggestions = templateConfiguration.analyzeParam(analysis.getContents(), template, paramNum);
     if (!suggestions.isPresent()) {
       return false;
     }
@@ -120,13 +120,14 @@ public class CheckErrorAlgorithm564 extends CheckErrorAlgorithmBase {
     }
 
     // Report error
+    PageElementTemplate.Parameter templateParam = template.getParameter(paramNum);
     int beginIndex = templateParam.getBeginIndex();
     int endIndex = templateParam.getEndIndex();
     CheckErrorResult errorResult = createCheckErrorResult(analysis, beginIndex, endIndex);
-    for (Suggestion suggestion : suggestions.get()) {
-      boolean automatic = suggestion.automatic;
-      automatic &= (suggestion.paramName == null) || (template.getParameterValue(suggestion.paramName) == null);
-      errorResult.addReplacement(suggestion.replacement, automatic);
+    for (TemplateParameterSuggestion suggestion : suggestions.get()) {
+      boolean automatic = suggestion.isAutomatic();
+      automatic &= (suggestion.getParamName() == null) || (template.getParameterValue(suggestion.getParamName()) == null);
+      errorResult.addReplacement(suggestion.getReplacement(), automatic);
     }
     errors.add(errorResult);
     return true;

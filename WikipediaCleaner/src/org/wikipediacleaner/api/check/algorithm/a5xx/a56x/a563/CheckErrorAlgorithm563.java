@@ -132,7 +132,6 @@ public class CheckErrorAlgorithm563 extends CheckErrorAlgorithmBase {
           if ((ContentsUtil.moveIndexBackwardWhileNotFound(contents, tmpIndex, "\n") > template.getBeginIndex()) ||
               (ContentsUtil.moveIndexForwardWhileNotFound(contents, endIndex, "\n") < template.getEndIndex())) {
             replacement = contents.substring(beginIndex + crIndex, endIndex);
-            //System.err.println("Changed replacement for article " + analysis.getPage().getTitle());
           }
         }
       }
