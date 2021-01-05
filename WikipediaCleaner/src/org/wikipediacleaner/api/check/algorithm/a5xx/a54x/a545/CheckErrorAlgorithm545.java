@@ -123,7 +123,7 @@ public class CheckErrorAlgorithm545 extends CheckErrorAlgorithmBase {
           }
         }
         for (TemplateParameterSuggestion suggestion : suggestions.get()) {
-          boolean automatic = suggestion.isAutomatic() && false;
+          boolean automatic = suggestion.isAutomatic();
           automatic &= StringUtils.equals(templateParam.getComputedName(), templateParam.getName());
           if (suggestion.getParamName() != null) {
             automatic &= (template.getParameterIndex(suggestion.getParamName()) < 0);
@@ -180,6 +180,21 @@ public class CheckErrorAlgorithm545 extends CheckErrorAlgorithmBase {
       }
     }
     return result;
+  }
+
+  /**
+   * Automatic fixing of all the errors in the page.
+   * 
+   * @param analysis Page analysis.
+   * @return Page contents after fix.
+   */
+  @Override
+  protected String internalAutomaticFix(PageAnalysis analysis) {
+    if (!analysis.getPage().isArticle() ||
+        !analysis.getPage().isInMainNamespace()) {
+      return analysis.getContents();
+    }
+    return fixUsingAutomaticReplacement(analysis);
   }
 
   /* ====================================================================== */
