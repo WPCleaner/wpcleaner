@@ -145,7 +145,7 @@ public abstract class CheckErrorAlgorithmTags2 extends CheckErrorAlgorithmBase {
    * @param errors Errors.
    * @param tag Tag.
    */
-  private void reportTag(
+  protected void reportTag(
       @Nonnull PageAnalysis analysis,
       @Nonnull Collection<CheckErrorResult> errors,
       @Nonnull PageElementTag tag) {
