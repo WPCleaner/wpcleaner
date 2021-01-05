@@ -133,6 +133,8 @@ class TemplateConfiguration {
 
     // Search in the known parameters if one can be used instead
     boolean safeDelete = StringUtils.isEmpty(param.getValue());
+    String missingEqualName = null;
+    String missingEqualValue = null;
     for (String knownParam : knownParams) {
 
       // Search for mistyped parameters
@@ -170,9 +172,10 @@ class TemplateConfiguration {
               knownParam, param.getValue(), automatic));
         } else if (StringUtils.isEmpty(param.getValue())) {
           if (StringUtils.startsWith(name, knownParam)) {
-            results.add(TemplateParameterSuggestion.replaceParam(
-                contents, param,
-                knownParam, name.substring(knownParam.length()), false));
+            if ((missingEqualName == null) || (knownParam.length() > missingEqualName.length())) {
+              missingEqualName = knownParam;
+              missingEqualValue = name.substring(knownParam.length()).trim();
+            }
           }
         }
       }
@@ -180,16 +183,10 @@ class TemplateConfiguration {
       // Search for missing "=" sign
       if (!StringUtils.equals(name, computedName) &&
           StringUtils.startsWith(param.getValue(), knownParam)) {
-        boolean automatic = knownParam.length() >= 5;
-        String newValue = param.getValue().substring(knownParam.length());
-        if (newValue.length() > 1) {
-          char firstValue = newValue.charAt(0);
-          char lastName = knownParam.charAt(knownParam.length() - 1);
-          automatic &= (!CharacterUtils.isClassicLetter(firstValue) || !CharacterUtils.isClassicLetter(lastName));
+        if ((missingEqualName == null)) {
+          missingEqualName = knownParam;
+          missingEqualValue = param.getValue().substring(knownParam.length()).trim();
         }
-        results.add(TemplateParameterSuggestion.replaceParam(
-            contents, param,
-            knownParam, newValue.trim(), automatic));
       }
 
       // Handle strange cases with mixed parameter name and value
@@ -202,6 +199,28 @@ class TemplateConfiguration {
           safeDelete = false;
         }
       }
+    }
+
+    // Handle missing "=" sign
+    if ((missingEqualName != null) && (missingEqualValue != null)) {
+      boolean automatic =
+          (missingEqualName.length() >= 5) ||
+          ((missingEqualName.length() >= 4) && (missingEqualValue.length() >= 4));
+      if (StringUtils.isEmpty(param.getValue())) {
+        automatic &=
+            CharacterUtils.isClassicLetter(missingEqualValue.charAt(0)) ||
+            Character.isDigit(missingEqualValue.charAt(0));
+      } else if (missingEqualValue.length() > 1) {
+        char firstValue = missingEqualValue.charAt(0);
+        char lastName = missingEqualName.charAt(missingEqualName.length() - 1);
+        automatic &= (!CharacterUtils.isClassicLetter(firstValue) || !CharacterUtils.isClassicLetter(lastName));
+      }
+      automatic &=
+          (missingEqualValue.length() >= 1) &&
+          !CharacterUtils.isPunctuation(missingEqualValue.charAt(0));
+      results.add(TemplateParameterSuggestion.replaceParam(
+          contents, param,
+          missingEqualName, missingEqualValue, automatic));
     }
 
     // General suggestions (deletion and comment)
