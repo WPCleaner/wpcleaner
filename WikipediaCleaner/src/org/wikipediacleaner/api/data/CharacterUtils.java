@@ -52,6 +52,17 @@ public class CharacterUtils {
     return "" + firstChar + text.substring(1);
   }
 
+  /**
+   * Compare two characters ignoring case.
+   * 
+   * @param first First character.
+   * @param second Second character.
+   * @return True if the two characters are equal ignoring case.
+   */
+  public static boolean equalsIgnoreCase(char first, char second) {
+    return Character.toUpperCase(first) == Character.toUpperCase(second);
+  }
+
   /** Whitespace characters */
   public final static String WHITESPACE = " \u00A0";
 

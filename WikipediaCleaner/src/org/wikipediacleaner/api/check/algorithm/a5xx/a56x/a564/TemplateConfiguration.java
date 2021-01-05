@@ -144,11 +144,26 @@ class TemplateConfiguration {
         int distance = levenshteinDistance.apply(computedName, knownParam);
         if ((distance >= 0) && (distance <= 1)) {
           boolean automatic = knownParam.length() >= 5;
-          char lastComputedName = computedName.charAt(computedName.length() - 1);
-          char lastKnownParam = knownParam.charAt(knownParam.length() - 1);
-          if (Character.isDigit(lastComputedName) ||
-              Character.isDigit(lastKnownParam)) {
-            automatic &= (lastComputedName == lastKnownParam);
+          if (automatic) {
+            int minLength = Math.min(computedName.length(), knownParam.length());
+            int beginEquals = 0;
+            while ((beginEquals < minLength) && CharacterUtils.equalsIgnoreCase(
+                computedName.charAt(beginEquals),
+                knownParam.charAt(beginEquals))) {
+              beginEquals++;
+            }
+            int endEquals = 0;
+            while ((endEquals < minLength) && CharacterUtils.equalsIgnoreCase(
+                computedName.charAt(computedName.length() - 1 - endEquals),
+                knownParam.charAt(knownParam.length() - 1 - endEquals))) {
+              endEquals++;
+            }
+            for (int index = beginEquals; index < computedName.length() - endEquals; index++) {
+              automatic &= !Character.isDigit(computedName.charAt(index));
+            }
+            for (int index = beginEquals; index < knownParam.length() - endEquals; index++) {
+              automatic &= !Character.isDigit(knownParam.charAt(index));
+            }
           }
           results.add(TemplateParameterSuggestion.replaceParam(
               contents, param,
