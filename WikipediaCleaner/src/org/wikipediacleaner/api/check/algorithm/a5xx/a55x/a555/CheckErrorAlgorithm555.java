@@ -13,6 +13,7 @@ import java.util.List;
 import org.apache.commons.lang3.StringUtils;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase;
+import org.wikipediacleaner.api.data.CharacterUtils;
 import org.wikipediacleaner.api.data.PageElementExternalLink;
 import org.wikipediacleaner.api.data.PageElementListItem;
 import org.wikipediacleaner.api.data.PageElementTag;
@@ -96,10 +97,14 @@ public class CheckErrorAlgorithm555 extends CheckErrorAlgorithmBase {
     String contents = analysis.getContents();
     int beginIndex = nowikiTag.getCompleteBeginIndex();
     boolean newLineBefore = false;
+    boolean acceptableOnceOutside = false;
     if (beginIndex > 0) {
       beginIndex--;
       if (!isAcceptableOutside(contents.charAt(beginIndex))) {
-        return false;
+        if (!isAcceptableOnceOutside(contents.charAt(beginIndex))) {
+          return false;
+        }
+        acceptableOnceOutside = true;
       }
       if (contents.charAt(beginIndex) == '\n') {
         newLineBefore = true;
@@ -112,7 +117,10 @@ public class CheckErrorAlgorithm555 extends CheckErrorAlgorithmBase {
     int endIndex = nowikiTag.getCompleteEndIndex();
     if (endIndex < contents.length()) {
       if (!isAcceptableOutside(contents.charAt(endIndex))) {
-        return false;
+        if (acceptableOnceOutside || !isAcceptableOnceOutside(contents.charAt(endIndex))) {
+          return false;
+        }
+        acceptableOnceOutside = true;
       }
       endIndex++;
     }
@@ -141,7 +149,7 @@ public class CheckErrorAlgorithm555 extends CheckErrorAlgorithmBase {
         internalText = "";
       }
     }
-    boolean automatic = true;
+    boolean automatic = !acceptableOnceOutside;
     String extraPrefix = StringUtils.EMPTY;
     boolean eLinkAfter = false;
     if (endIndex < contents.length()) {
@@ -230,6 +238,12 @@ public class CheckErrorAlgorithm555 extends CheckErrorAlgorithmBase {
     if (errors == null) {
       return true;
     }
+    while ((beginIndex > 0) && CharacterUtils.isClassicLetter(contents.charAt(beginIndex - 1))) {
+      beginIndex--;
+    }
+    while ((endIndex < contents.length()) && CharacterUtils.isClassicLetter(contents.charAt(endIndex))) {
+      endIndex++;
+    }
     CheckErrorResult errorResult = createCheckErrorResult(analysis, beginIndex, endIndex);
     String prefix = contents.substring(beginIndex, nowikiTag.getCompleteBeginIndex());
     String suffix = contents.substring(nowikiTag.getCompleteEndIndex(), endIndex);
@@ -263,6 +277,14 @@ public class CheckErrorAlgorithm555 extends CheckErrorAlgorithmBase {
     return
         isAcceptableInside(character) ||
         (";:*/".indexOf(character) >= 0);
+  }
+
+  /**
+   * @param character Character to be tested.
+   * @return True if the character is acceptable for this error on only one side.
+   */
+  private boolean isAcceptableOnceOutside(char character) {
+    return ("'".indexOf(character) >= 0);
   }
 
   /**
