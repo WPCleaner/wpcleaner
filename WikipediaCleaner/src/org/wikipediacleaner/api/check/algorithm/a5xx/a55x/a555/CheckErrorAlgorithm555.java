@@ -149,7 +149,7 @@ public class CheckErrorAlgorithm555 extends CheckErrorAlgorithmBase {
         internalText = "";
       }
     }
-    boolean automatic = !acceptableOnceOutside;
+    boolean automatic = true;
     String extraPrefix = StringUtils.EMPTY;
     boolean eLinkAfter = false;
     if (endIndex < contents.length()) {
@@ -266,6 +266,7 @@ public class CheckErrorAlgorithm555 extends CheckErrorAlgorithmBase {
         Character.isAlphabetic(character) ||
         Character.isDigit(character) ||
         Character.isWhitespace(character) ||
+        CharacterUtils.isWhitespace(character) ||
         (".,()".indexOf(character) >= 0);
   }
 
