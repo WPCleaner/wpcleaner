@@ -9,17 +9,34 @@
 package org.wikipediacleaner.api.check.algorithm;
 
 import java.util.Collection;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+import javax.annotation.Nonnull;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
+import org.wikipediacleaner.api.data.contents.tag.TagType;
+import org.wikipediacleaner.api.data.contents.tag.WikiTagType;
 
 
 /**
  * Base class for errors related to unwanted tags.
- * TODO: Replace with CheckErrorAlgorithmTags2.
  */
 public abstract class CheckErrorAlgorithmTags extends CheckErrorAlgorithmBase {
+
+  /** Default tags in which error should be ignored. */
+  private final static @Nonnull Set<TagType> IGNORED_TAGS;
+
+  static {
+    Set<TagType> tmpSet = new HashSet<>();
+    tmpSet.add(WikiTagType.SOURCE);
+    tmpSet.add(WikiTagType.SYNTAXHIGHLIGHT);
+    IGNORED_TAGS = Collections.unmodifiableSet(tmpSet);
+  }
 
   /**
    * @param name Name of error.
@@ -38,19 +55,34 @@ public abstract class CheckErrorAlgorithmTags extends CheckErrorAlgorithmBase {
    * @return Flag indicating if the error was found.
    */
   @Override
-  public boolean analyze(PageAnalysis analysis,
-      Collection<CheckErrorResult> errors, boolean onlyAutomatic) {
+  public boolean analyze(
+      PageAnalysis analysis,
+      Collection<CheckErrorResult> errors,
+      boolean onlyAutomatic) {
+
+    // Preliminary check
     if (!analysis.getPage().isArticle()) {
       return false;
     }
+    List<PageElementTag> allTags = analysis.getTags();
+    if ((allTags == null) || (allTags.isEmpty())) {
+      return false;
+    }
+    Set<TagType> tags = getTags();
+    if (tags.isEmpty()) {
+      return false;
+    }
 
+    // Check each tag
     boolean result = false;
-    String[] tags = getTags();
-    if (tags != null) {
-      for (String tag : tags) {
-        if (!result || (errors != null)) {
-          result |= addTags(analysis, errors, tag);
+    for (PageElementTag tag : allTags) {
+      if (tags.contains(tag.getType()) &&
+          shouldReport(analysis, tag)) {
+        if (errors == null) {
+          return true;
         }
+        result = true;
+        reportTag(analysis, errors, tag);
       }
     }
     return result;
@@ -59,51 +91,20 @@ public abstract class CheckErrorAlgorithmTags extends CheckErrorAlgorithmBase {
   /**
    * @return Tags to look for.
    */
-  abstract protected String[] getTags();
-
-  /**
-   * Default tags in which error should be ignored.
-   */
-  private final static String[] IGNORED_TAGS = {
-    PageElementTag.TAG_WIKI_SOURCE,
-    PageElementTag.TAG_WIKI_SYNTAXHIGHLIGHT,
-  };
+  abstract protected @Nonnull Set<TagType> getTags();
 
   /**
    * @return Tags in which error should be ignored.
    */
-  protected String[] getIgnoredTags() {
+  protected @Nonnull Set<TagType> getIgnoredTags() {
     return IGNORED_TAGS;
   }
 
   /**
-   * Find tags.
-   * 
-   * @param analysis Page analysis.
-   * @param errors Errors.
-   * @param tagName Tag name.
-   * @return Flag indicating if a tag has been found.
+   * @return True if complete tags should be reported as one tag instead of separate tags.
    */
-  private boolean addTags(
-      PageAnalysis analysis,
-      Collection<CheckErrorResult> errors, String tagName) {
-    boolean result = false;
-    Collection<PageElementTag> tags = analysis.getTags(tagName);
-    if (tags != null) {
-      for (PageElementTag tag : tags) {
-        if (shouldReport(analysis, tag)) {
-          if (errors == null) {
-            return true;
-          }
-          result = true;
-          CheckErrorResult errorResult = createCheckErrorResult(
-              analysis,
-              tag.getBeginIndex(), tag.getEndIndex());
-          errors.add(errorResult);
-        }
-      }
-    }
-    return result;
+  protected boolean reportCompleteTags() {
+    return true;
   }
 
   /**
@@ -111,25 +112,50 @@ public abstract class CheckErrorAlgorithmTags extends CheckErrorAlgorithmBase {
    * @param tag Tag to be analyzed.
    * @return True if tag should be reported.
    */
-  protected boolean shouldReport(PageAnalysis analysis, PageElementTag tag) {
-    if (tag == null) {
-      return false;
-    }
-    if (!PageElementTag.TAG_WIKI_NOWIKI.equalsIgnoreCase(tag.getNormalizedName())) {
+  protected boolean shouldReport(@Nonnull PageAnalysis analysis, @Nonnull PageElementTag tag) {
+
+    // Check nowiki tags
+    if (!WikiTagType.NOWIKI.equals(tag.getType())) {
       if (analysis.getSurroundingTag(
-          PageElementTag.TAG_WIKI_NOWIKI,
+          WikiTagType.NOWIKI,
           tag.getBeginIndex()) != null) {
         return false;
       }
     }
-    String[] ignoredTags = getIgnoredTags();
-    if (ignoredTags != null) {
-      for (String ignoredTag : ignoredTags) {
-        if (analysis.getSurroundingTag(ignoredTag, tag.getBeginIndex()) != null) {
-          return false;
-        }
+
+    // Check surrounding tags
+    Set<TagType> ignoredTags = getIgnoredTags();
+    for (TagType ignoredTag : ignoredTags) {
+      if (analysis.getSurroundingTag(ignoredTag, tag.getBeginIndex()) != null) {
+        return false;
       }
     }
+
+    // Check complete tags
+    if (reportCompleteTags()) {
+      if (!tag.isFullTag() && tag.isComplete() && tag.isEndTag()) {
+        return false;
+      }
+    }
+
     return true;
+  }
+
+  /**
+   * Report an error for one tag.
+   * 
+   * @param analysis Page analysis.
+   * @param errors Errors.
+   * @param tag Tag.
+   */
+  protected void reportTag(
+      @Nonnull PageAnalysis analysis,
+      @Nonnull Collection<CheckErrorResult> errors,
+      @Nonnull PageElementTag tag) {
+    boolean reportComplete = reportCompleteTags();
+    int beginIndex = reportComplete ? tag.getCompleteBeginIndex() : tag.getBeginIndex();
+    int endIndex = reportComplete ? tag.getCompleteEndIndex() : tag.getEndIndex();
+    CheckErrorResult errorResult = createCheckErrorResult(analysis, beginIndex, endIndex);
+    errors.add(errorResult);
   }
 }

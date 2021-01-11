@@ -13,10 +13,11 @@ import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.data.MagicWord;
 import org.wikipediacleaner.api.data.PageElementExternalLink;
 import org.wikipediacleaner.api.data.PageElementFunction;
-import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.PageElementTemplate.Parameter;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
+import org.wikipediacleaner.api.data.contents.tag.HtmlTagType;
+import org.wikipediacleaner.api.data.contents.tag.WikiTagType;
 import org.wikipediacleaner.api.data.PageElementTitle;
 
 
@@ -81,15 +82,15 @@ public class CheckErrorAlgorithm105 extends CheckErrorAlgorithmBase {
 
       // Ignore in some tags
       if (errorFound) {
-        if ((analysis.getSurroundingTag(PageElementTag.TAG_HTML_CODE, currentIndex) != null) ||
-            (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_MATH, currentIndex) != null) ||
-            (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_MATH_CHEM, currentIndex) != null) ||
-            (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_NOWIKI, currentIndex) != null) ||
-            (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_PRE, currentIndex) != null) ||
-            (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_SCORE, currentIndex) != null) ||
-            (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_SOURCE, currentIndex) != null) ||
-            (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_SYNTAXHIGHLIGHT, currentIndex) != null) ||
-            (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_TIMELINE, currentIndex) != null)) {
+        if ((analysis.getSurroundingTag(HtmlTagType.CODE, currentIndex) != null) ||
+            (analysis.getSurroundingTag(WikiTagType.MATH, currentIndex) != null) ||
+            (analysis.getSurroundingTag(WikiTagType.MATH_CHEM, currentIndex) != null) ||
+            (analysis.getSurroundingTag(WikiTagType.NOWIKI, currentIndex) != null) ||
+            (analysis.getSurroundingTag(WikiTagType.PRE, currentIndex) != null) ||
+            (analysis.getSurroundingTag(WikiTagType.SCORE, currentIndex) != null) ||
+            (analysis.getSurroundingTag(WikiTagType.SOURCE, currentIndex) != null) ||
+            (analysis.getSurroundingTag(WikiTagType.SYNTAXHIGHLIGHT, currentIndex) != null) ||
+            (analysis.getSurroundingTag(WikiTagType.TIMELINE, currentIndex) != null)) {
           errorFound = false;
         }
       }
@@ -135,7 +136,7 @@ public class CheckErrorAlgorithm105 extends CheckErrorAlgorithmBase {
             }
             if (endIndex > 0) {
               String tagName = contents.substring(functionIndex, endIndex);
-              if (tagName.equalsIgnoreCase(PageElementTag.TAG_WIKI_TIMELINE)) {
+              if (WikiTagType.TIMELINE.isPossibleName(tagName)) {
                 errorFound = false;
               }
             }

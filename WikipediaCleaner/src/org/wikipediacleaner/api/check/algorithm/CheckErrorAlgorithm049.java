@@ -7,12 +7,16 @@
 
 package org.wikipediacleaner.api.check.algorithm;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
+import org.wikipediacleaner.api.data.contents.tag.HtmlTagType;
+import org.wikipediacleaner.api.data.contents.tag.TagType;
+import org.wikipediacleaner.api.data.contents.tag.WikiTagType;
 import org.wikipediacleaner.api.data.contents.title.TitleBuilder;
 
 
@@ -25,17 +29,18 @@ public class CheckErrorAlgorithm049 extends CheckErrorAlgorithmBase {
   /**
    * Tags that can be detected.
    */
-  private static final String[] titleTags = {
-    PageElementTag.TAG_HTML_H1,
-    PageElementTag.TAG_HTML_H2,
-    PageElementTag.TAG_HTML_H3,
-    PageElementTag.TAG_HTML_H4,
-    PageElementTag.TAG_HTML_H5,
-    PageElementTag.TAG_HTML_H6,
-    PageElementTag.TAG_HTML_H7,
-    PageElementTag.TAG_HTML_H8,
-    PageElementTag.TAG_HTML_H9
-  };
+  private static final List<TagType> titleTags = new ArrayList<>();
+  static {
+    titleTags.add(HtmlTagType.H1);
+    titleTags.add(HtmlTagType.H2);
+    titleTags.add(HtmlTagType.H3);
+    titleTags.add(HtmlTagType.H4);
+    titleTags.add(HtmlTagType.H5);
+    titleTags.add(HtmlTagType.H6);
+    titleTags.add(HtmlTagType.H7);
+    titleTags.add(HtmlTagType.H8);
+    titleTags.add(HtmlTagType.H9);
+  }
 
   public CheckErrorAlgorithm049() {
     super("Headline with HTML");
@@ -59,17 +64,17 @@ public class CheckErrorAlgorithm049 extends CheckErrorAlgorithmBase {
 
     // Analyzing each possible tag
     boolean result = false;
-    for (int level = 0; level < titleTags.length; level++) {
-      String tagName = titleTags[level];
-      List<PageElementTag> tags = analysis.getCompleteTags(tagName);
+    for (int level = 0; level < titleTags.size(); level++) {
+      TagType tagType = titleTags.get(level);
+      List<PageElementTag> tags = analysis.getCompleteTags(tagType);
       if (tags != null) {
         for (PageElementTag tag : tags) {
           // Decide if error should be reported
           boolean shouldReport = true;
           int index = tag.getBeginIndex();
           if (shouldReport &&
-              ((analysis.getSurroundingTag(PageElementTag.TAG_WIKI_SOURCE, index) != null) ||
-               (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_SYNTAXHIGHLIGHT, index) != null))) {
+              ((analysis.getSurroundingTag(WikiTagType.SOURCE, index) != null) ||
+               (analysis.getSurroundingTag(WikiTagType.SYNTAXHIGHLIGHT, index) != null))) {
             shouldReport = false;
           }
 

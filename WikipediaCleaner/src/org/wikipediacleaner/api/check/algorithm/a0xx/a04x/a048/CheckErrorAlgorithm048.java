@@ -23,6 +23,7 @@ import org.wikipediacleaner.api.data.PageElementTitle;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
 import org.wikipediacleaner.api.data.contents.ContentsUtil;
 import org.wikipediacleaner.api.data.contents.ilink.InternalLinkBuilder;
+import org.wikipediacleaner.api.data.contents.tag.WikiTagType;
 import org.wikipediacleaner.api.data.contents.template.TemplateBuilder;
 import org.wikipediacleaner.gui.swing.component.MWPane;
 import org.wikipediacleaner.i18n.GT;
@@ -106,16 +107,16 @@ public class CheckErrorAlgorithm048 extends CheckErrorAlgorithmBase {
     }
 
     // Ignore if the link is inside some tags
-    if ((analysis.getSurroundingTag(PageElementTag.TAG_WIKI_INCLUDEONLY, link.getBeginIndex()) != null) ||
-        (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_MAPFRAME, link.getBeginIndex()) != null) ||
-        (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_NOWIKI, link.getBeginIndex()) != null) ||
-        (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_ONLYINCLUDE, link.getBeginIndex()) != null) ||
-        (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_TIMELINE, link.getBeginIndex()) != null)) {
+    if ((analysis.getSurroundingTag(WikiTagType.INCLUDEONLY, link.getBeginIndex()) != null) ||
+        (analysis.getSurroundingTag(WikiTagType.MAPFRAME, link.getBeginIndex()) != null) ||
+        (analysis.getSurroundingTag(WikiTagType.NOWIKI, link.getBeginIndex()) != null) ||
+        (analysis.getSurroundingTag(WikiTagType.ONLYINCLUDE, link.getBeginIndex()) != null) ||
+        (analysis.getSurroundingTag(WikiTagType.TIMELINE, link.getBeginIndex()) != null)) {
       return false;
     }
 
     // Ignore if the link is in an image map tag
-    PageElementTag tagImageMap = analysis.getSurroundingTag(PageElementTag.TAG_WIKI_IMAGEMAP, link.getBeginIndex()); 
+    PageElementTag tagImageMap = analysis.getSurroundingTag(WikiTagType.IMAGEMAP, link.getBeginIndex()); 
     if (!imagemap && (tagImageMap != null)) {
       return false;
     }
@@ -280,7 +281,7 @@ public class CheckErrorAlgorithm048 extends CheckErrorAlgorithmBase {
     for (PageElementInternalLink link : links) {
       if (Page.areSameTitle(pageTitle, link.getFullLink())) {
         PageElementTag tagImagemap = analysis.getSurroundingTag(
-            PageElementTag.TAG_WIKI_IMAGEMAP, link.getBeginIndex());
+            WikiTagType.IMAGEMAP, link.getBeginIndex());
         if (tagImagemap != null) {
           int previousCR = ContentsUtil.getLineBeginIndex(contents, link.getBeginIndex());
           int nextCR = ContentsUtil.getLineEndIndex(contents, link.getEndIndex());

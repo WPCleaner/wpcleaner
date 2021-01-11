@@ -8,11 +8,16 @@
 package org.wikipediacleaner.api.check.algorithm;
 
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
 import org.wikipediacleaner.api.data.contents.comment.ContentsComment;
+import org.wikipediacleaner.api.data.contents.tag.HtmlTagType;
+import org.wikipediacleaner.api.data.contents.tag.TagType;
+import org.wikipediacleaner.api.data.contents.tag.WikiTagType;
 
 
 /**
@@ -75,20 +80,21 @@ public class CheckErrorAlgorithm056 extends CheckErrorAlgorithmBase {
   /**
    * Tags in which arrows should not be detected. 
    */
-  private final static String[] exceptTags = {
-    PageElementTag.TAG_HTML_TT,
-    PageElementTag.TAG_HTML_CODE,
-    PageElementTag.TAG_WIKI_CHEM,
-    PageElementTag.TAG_WIKI_HIERO,
-    PageElementTag.TAG_WIKI_MATH,
-    PageElementTag.TAG_WIKI_MATH_CHEM,
-    PageElementTag.TAG_WIKI_NOWIKI,
-    PageElementTag.TAG_WIKI_PRE,
-    PageElementTag.TAG_WIKI_SCORE,
-    PageElementTag.TAG_WIKI_SOURCE,
-    PageElementTag.TAG_WIKI_SYNTAXHIGHLIGHT,
-    PageElementTag.TAG_WIKI_TIMELINE,
-  };
+  private final static Set<TagType> exceptTags = new HashSet<>();
+  static {
+    exceptTags.add(HtmlTagType.CODE);
+    exceptTags.add(WikiTagType.CHEM);
+    exceptTags.add(WikiTagType.HIERO);
+    exceptTags.add(WikiTagType.MATH);
+    exceptTags.add(WikiTagType.MATH_CHEM);
+    exceptTags.add(WikiTagType.NOWIKI);
+    exceptTags.add(WikiTagType.PRE);
+    exceptTags.add(WikiTagType.SCORE);
+    exceptTags.add(WikiTagType.SOURCE);
+    exceptTags.add(WikiTagType.SYNTAXHIGHLIGHT);
+    exceptTags.add(WikiTagType.TIMELINE);
+    exceptTags.add(HtmlTagType.TT);
+  }
 
   /**
    * Analyze a page to check if errors are present.
@@ -140,9 +146,9 @@ public class CheckErrorAlgorithm056 extends CheckErrorAlgorithmBase {
 
       // Check if inside a specific tag
       if (shouldCheck) {
-        for (String tagName : exceptTags) {
+        for (TagType tagType : exceptTags) {
           if (shouldCheck) {
-            PageElementTag tag = analysis.getSurroundingTag(tagName, currentIndex);
+            PageElementTag tag = analysis.getSurroundingTag(tagType, currentIndex);
             if (tag != null) {
               nextIndex = tag.getCompleteEndIndex();
               shouldCheck  = false;
@@ -171,7 +177,7 @@ public class CheckErrorAlgorithm056 extends CheckErrorAlgorithmBase {
                   (contents.charAt(tmpIndex) == ' ')) {
                 String attributeName = contents.substring(tmpIndex + 1, currentIndex);
                 boolean automatic = false;
-                if (PageElementTag.TAG_WIKI_REF.equals(tag.getName()) &&
+                if (WikiTagType.REF.equals(tag.getType()) &&
                     attributeName.equals("name")) {
                   automatic = true;
                 }

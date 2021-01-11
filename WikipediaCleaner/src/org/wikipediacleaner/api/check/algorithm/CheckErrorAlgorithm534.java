@@ -31,6 +31,7 @@ import org.wikipediacleaner.api.data.PageElementParameter;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
 import org.wikipediacleaner.api.data.contents.comment.CommentBuilder;
+import org.wikipediacleaner.api.data.contents.tag.WikiTagType;
 import org.wikipediacleaner.api.data.PageElementTemplate;
 
 
@@ -725,16 +726,15 @@ public class CheckErrorAlgorithm534 extends CheckErrorAlgorithmBase {
           } else if (currentChar == '<') {
             PageElementTag tag = analysis.isInTag(image.getBeginIndex() + index);
             if (tag != null) {
-              String tagName = tag.getNormalizedName();
-              if (StringUtils.equals(PageElementTag.TAG_WIKI_CHEM, tagName) ||
-                  StringUtils.equals(PageElementTag.TAG_WIKI_HIERO, tagName) ||
-                  StringUtils.equals(PageElementTag.TAG_WIKI_MATH, tagName) ||
-                  StringUtils.equals(PageElementTag.TAG_WIKI_MATH_CHEM, tagName) ||
-                  StringUtils.equals(PageElementTag.TAG_WIKI_NOWIKI, tagName) ||
-                  StringUtils.equals(PageElementTag.TAG_WIKI_REF, tagName) ||
-                  StringUtils.equals(PageElementTag.TAG_WIKI_SCORE, tagName) ||
-                  StringUtils.equals(PageElementTag.TAG_WIKI_SOURCE, tagName) ||
-                  StringUtils.equals(PageElementTag.TAG_WIKI_SYNTAXHIGHLIGHT, tagName)) {
+              if (WikiTagType.CHEM.equals(tag.getType()) ||
+                  WikiTagType.HIERO.equals(tag.getType()) ||
+                  WikiTagType.MATH.equals(tag.getType()) ||
+                  WikiTagType.MATH_CHEM.equals(tag.getType()) ||
+                  WikiTagType.NOWIKI.equals(tag.getType()) ||
+                  WikiTagType.REF.equals(tag.getType()) ||
+                  WikiTagType.SCORE.equals(tag.getType()) ||
+                  WikiTagType.SOURCE.equals(tag.getType()) ||
+                  WikiTagType.SYNTAXHIGHLIGHT.equals(tag.getType())) {
                 safe = false;
                 safeEmpty = false;
               }

@@ -15,7 +15,8 @@ import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase;
 import org.wikipediacleaner.api.data.CharacterUtils;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
-import org.wikipediacleaner.api.data.contents.tag.FullTagBuilder;
+import org.wikipediacleaner.api.data.contents.tag.CompleteTagBuilder;
+import org.wikipediacleaner.api.data.contents.tag.WikiTagType;
 
 
 /**
@@ -45,7 +46,7 @@ public class CheckErrorAlgorithm562 extends CheckErrorAlgorithmBase {
     }
 
     // Preliminary checks
-    List<PageElementTag> nowikiTags = analysis.getCompleteTags(PageElementTag.TAG_WIKI_NOWIKI);
+    List<PageElementTag> nowikiTags = analysis.getCompleteTags(WikiTagType.NOWIKI);
     if ((nowikiTags == null) || (nowikiTags.size() < 2)) {
       return false;
     }
@@ -83,7 +84,7 @@ public class CheckErrorAlgorithm562 extends CheckErrorAlgorithmBase {
     if (contents.charAt(beginIndex - 1) != '>') {
       return false;
     }
-    PageElementTag previousTag = analysis.isInTag(beginIndex - 1, PageElementTag.TAG_WIKI_NOWIKI);
+    PageElementTag previousTag = analysis.isInTag(beginIndex - 1, WikiTagType.NOWIKI);
     if ((previousTag == null) ||
         !previousTag.isComplete() ||
         (previousTag.getCompleteEndIndex() != beginIndex)) {
@@ -106,7 +107,7 @@ public class CheckErrorAlgorithm562 extends CheckErrorAlgorithmBase {
       if (!tag.isFullTag()) {
         inside.append(contents.substring(tag.getValueBeginIndex(), tag.getValueEndIndex()));
       }
-      errorResult.addReplacement(FullTagBuilder.from(PageElementTag.TAG_WIKI_NOWIKI, inside.toString()).toString());
+      errorResult.addReplacement(CompleteTagBuilder.from(WikiTagType.NOWIKI, inside.toString()).toString());
     }
     errors.add(errorResult);
     return true;

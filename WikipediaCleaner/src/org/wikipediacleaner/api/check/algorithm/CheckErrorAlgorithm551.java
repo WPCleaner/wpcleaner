@@ -12,6 +12,7 @@ import java.util.Collection;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
+import org.wikipediacleaner.api.data.contents.tag.WikiTagType;
 
 
 /**
@@ -58,7 +59,7 @@ public class CheckErrorAlgorithm551 extends CheckErrorAlgorithmBase {
           PageElementTag tag = analysis.isInTag(currentIndex);
           if ((tag != null) &&
               (tag.getBeginIndex() == currentIndex) &&
-              (PageElementTag.TAG_WIKI_NOWIKI.equals(tag.getNormalizedName()))) {
+              (WikiTagType.NOWIKI.equals(tag.getType()))) {
             currentIndex = tag.getEndIndex();
             endTag = Math.max(endTag, tag.getCompleteEndIndex());
             something = true;
@@ -115,8 +116,8 @@ public class CheckErrorAlgorithm551 extends CheckErrorAlgorithmBase {
         shouldReport = true;
       }
       if (shouldReport) {
-        if ((analysis.getSurroundingTag(PageElementTag.TAG_WIKI_SOURCE, beginLine) != null) ||
-            (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_SYNTAXHIGHLIGHT, beginLine) != null)) {
+        if ((analysis.getSurroundingTag(WikiTagType.SOURCE, beginLine) != null) ||
+            (analysis.getSurroundingTag(WikiTagType.SYNTAXHIGHLIGHT, beginLine) != null)) {
           shouldReport = false;
         }
       }

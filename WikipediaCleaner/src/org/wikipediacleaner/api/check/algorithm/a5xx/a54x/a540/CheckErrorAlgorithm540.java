@@ -30,6 +30,8 @@ import org.wikipediacleaner.api.data.analysis.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementTitle;
 import org.wikipediacleaner.api.data.contents.ContentsElement;
 import org.wikipediacleaner.api.data.contents.comment.ContentsComment;
+import org.wikipediacleaner.api.data.contents.tag.HtmlTagType;
+import org.wikipediacleaner.api.data.contents.tag.WikiTagType;
 import org.wikipediacleaner.gui.swing.component.MWPane;
 import org.wikipediacleaner.i18n.GT;
 
@@ -473,7 +475,7 @@ public class CheckErrorAlgorithm540 extends CheckErrorAlgorithmBase {
       // Report inside a reference tag
       if (surroundingElement instanceof PageElementTag) {
         PageElementTag refTag = (PageElementTag) surroundingElement;
-        if (PageElementTag.TAG_WIKI_REF.equals(refTag.getNormalizedName())) {
+        if (WikiTagType.REF.equals(refTag.getType())) {
           if (reportFormattingElement(
               analysis, elements, element, errors,
               refTag.getValueBeginIndex(), refTag.getValueEndIndex(),
@@ -1012,7 +1014,7 @@ public class CheckErrorAlgorithm540 extends CheckErrorAlgorithmBase {
         if ((tag != null) && (tag.getBeginIndex() == beginIndex)) {
           if (tag.isFullTag() ||
               !tag.isComplete() ||
-              PageElementTag.TAG_HTML_BR.equals(tag.getNormalizedName())) {
+              HtmlTagType.BR.equals(tag.getType())) {
             if (tag.getEndIndex() < endIndex) {
               beginIndex = tag.getEndIndex();
               tryAgain = true;
@@ -1066,13 +1068,13 @@ public class CheckErrorAlgorithm540 extends CheckErrorAlgorithmBase {
       if ((endIndex > beginIndex) && (contents.charAt(endIndex - 1) == '>')) {
         PageElementTag tag = analysis.isInTag(endIndex - 1);
         if ((tag != null) && (tag.getEndIndex() == endIndex) && tag.isComplete()) {
-          if (PageElementTag.TAG_WIKI_REF.equals(tag.getNormalizedName())) {
+          if (WikiTagType.REF.equals(tag.getType())) {
             if (tag.getCompleteBeginIndex() > beginIndex) {
               endIndex = tag.getCompleteBeginIndex();
               tryAgain = true;
             }
           }
-          else if (PageElementTag.TAG_HTML_BR.equals(tag.getNormalizedName())) {
+          else if (HtmlTagType.BR.equals(tag.getType())) {
             if (tag.getBeginIndex() > beginIndex) {
               endIndex = tag.getBeginIndex();
               tryAgain = true;

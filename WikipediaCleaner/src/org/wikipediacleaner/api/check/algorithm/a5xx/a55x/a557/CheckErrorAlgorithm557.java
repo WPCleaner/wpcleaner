@@ -28,10 +28,10 @@ import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.CharacterUtils;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageElementInternalLink;
-import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
 import org.wikipediacleaner.api.data.contents.ilink.InternalLinkBuilder;
+import org.wikipediacleaner.api.data.contents.tag.WikiTagType;
 import org.wikipediacleaner.gui.swing.action.ActionExternalViewer;
 import org.wikipediacleaner.i18n.GT;
 
@@ -134,7 +134,7 @@ public class CheckErrorAlgorithm557 extends CheckErrorAlgorithmBase {
     }
 
     // Check if the error should be ignored
-    if (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_TIMELINE, beginIndex) != null) {
+    if (analysis.getSurroundingTag(WikiTagType.TIMELINE, beginIndex) != null) {
       return false;
     }
 

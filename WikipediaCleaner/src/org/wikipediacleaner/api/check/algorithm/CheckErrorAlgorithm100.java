@@ -13,6 +13,7 @@ import java.util.List;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
+import org.wikipediacleaner.api.data.contents.tag.HtmlTagType;
 import org.wikipediacleaner.api.data.contents.tag.TagBuilder;
 import org.wikipediacleaner.api.data.contents.tag.TagFormat;
 
@@ -59,10 +60,10 @@ public class CheckErrorAlgorithm100 extends CheckErrorAlgorithmBase {
 
       // Special cases for <li> tags
       // @see https://html.spec.whatwg.org/multipage/semantics.html#the-li-element
-      if (shouldReport && PageElementTag.TAG_HTML_LI.equals(tag.getNormalizedName())) {
+      if (shouldReport && HtmlTagType.LI.equals(tag.getType())) {
         int index = tag.getBeginIndex();
-        if ((analysis.getSurroundingTag(PageElementTag.TAG_HTML_OL, index) != null) ||
-            (analysis.getSurroundingTag(PageElementTag.TAG_HTML_UL, index) != null)) {
+        if ((analysis.getSurroundingTag(HtmlTagType.OL, index) != null) ||
+            (analysis.getSurroundingTag(HtmlTagType.UL, index) != null)) {
           shouldReport = false;
         }
       }
@@ -79,7 +80,7 @@ public class CheckErrorAlgorithm100 extends CheckErrorAlgorithmBase {
         boolean automatic = false;
 
         // Manage suggestions
-        if (PageElementTag.TAG_HTML_LI.equals(tag.getNormalizedName())) {
+        if (HtmlTagType.LI.equals(tag.getType())) {
           int tmpIndex = beginIndex;
           String contents = analysis.getContents();
           while ((tmpIndex > 0) && (contents.charAt(tmpIndex - 1) == ' ')) {
@@ -139,10 +140,9 @@ public class CheckErrorAlgorithm100 extends CheckErrorAlgorithmBase {
     if (tag == null) {
       return false;
     }
-    String tagName = tag.getNormalizedName();
-    if ((PageElementTag.TAG_HTML_LI.equalsIgnoreCase(tagName)) ||
-        (PageElementTag.TAG_HTML_OL.equalsIgnoreCase(tagName)) ||
-        (PageElementTag.TAG_HTML_UL.equalsIgnoreCase(tagName))) {
+    if ((HtmlTagType.LI.equals(tag.getType())) ||
+        (HtmlTagType.OL.equals(tag.getType())) ||
+        (HtmlTagType.UL.equals(tag.getType()))) {
       return true;
     }
     return false;

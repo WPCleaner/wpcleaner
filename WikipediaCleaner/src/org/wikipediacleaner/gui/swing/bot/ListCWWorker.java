@@ -46,7 +46,7 @@ import org.wikipediacleaner.api.data.analysis.PageAnalysis;
 import org.wikipediacleaner.api.data.contents.comment.ContentsComment;
 import org.wikipediacleaner.api.data.contents.comment.CommentBuilder;
 import org.wikipediacleaner.api.data.contents.ilink.InternalLinkBuilder;
-import org.wikipediacleaner.api.data.contents.tag.TagBuilder;
+import org.wikipediacleaner.api.data.contents.tag.WikiTagType;
 import org.wikipediacleaner.api.dump.DumpProcessor;
 import org.wikipediacleaner.api.dump.PageProcessor;
 import org.wikipediacleaner.api.execution.MediaWikiCallable;
@@ -286,7 +286,7 @@ public class ListCWWorker extends BasicWorker {
         for (String notice : detection.notices) {
           line.append(first ? ": " : ", ");
           first = false;
-          line.append(TagBuilder.NOWIKI_OPEN);
+          line.append(WikiTagType.NOWIKI.getOpenTag());
           int index = 0;
           while (index < notice.length()) {
             int codePoint = notice.codePointAt(index);
@@ -370,7 +370,7 @@ public class ListCWWorker extends BasicWorker {
             } 
             index = notice.offsetByCodePoints(index, 1);
           }
-          line.append(TagBuilder.NOWIKI_CLOSE);
+          line.append(WikiTagType.NOWIKI.getCloseTag());
         }
       }
       line.append("\n");

@@ -18,6 +18,8 @@ import org.wikipediacleaner.api.data.PageElementExternalLink;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
 import org.wikipediacleaner.api.data.contents.ilink.InternalLinkBuilder;
+import org.wikipediacleaner.api.data.contents.tag.HtmlTagType;
+import org.wikipediacleaner.api.data.contents.tag.WikiTagType;
 
 
 /**
@@ -51,7 +53,7 @@ public class CheckErrorAlgorithm004 extends CheckErrorAlgorithmBase {
     }
 
     // Check each tag
-    List<PageElementTag> tags = analysis.getTags(PageElementTag.TAG_HTML_A);
+    List<PageElementTag> tags = analysis.getTags(HtmlTagType.A);
     if ((tags == null) || (tags.isEmpty())) {
       return false;
     }
@@ -64,15 +66,15 @@ public class CheckErrorAlgorithm004 extends CheckErrorAlgorithmBase {
       }
 
       int index = tag.getBeginIndex();
-      if ((analysis.getSurroundingTag(PageElementTag.TAG_HTML_CODE, index) != null) ||
-          (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_IMAGEMAP, index) != null) ||
-          (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_MATH, index) != null) ||
-          (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_MATH_CHEM, index) != null) ||
-          (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_NOWIKI, index) != null) ||
-          (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_PRE, index) != null) ||
-          (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_SCORE, index) != null) ||
-          (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_SOURCE, index) != null) ||
-          (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_SYNTAXHIGHLIGHT, index) != null)) {
+      if ((analysis.getSurroundingTag(HtmlTagType.CODE, index) != null) ||
+          (analysis.getSurroundingTag(WikiTagType.IMAGEMAP, index) != null) ||
+          (analysis.getSurroundingTag(WikiTagType.MATH, index) != null) ||
+          (analysis.getSurroundingTag(WikiTagType.MATH_CHEM, index) != null) ||
+          (analysis.getSurroundingTag(WikiTagType.NOWIKI, index) != null) ||
+          (analysis.getSurroundingTag(WikiTagType.PRE, index) != null) ||
+          (analysis.getSurroundingTag(WikiTagType.SCORE, index) != null) ||
+          (analysis.getSurroundingTag(WikiTagType.SOURCE, index) != null) ||
+          (analysis.getSurroundingTag(WikiTagType.SYNTAXHIGHLIGHT, index) != null)) {
         shouldKeep = false;
       }
 

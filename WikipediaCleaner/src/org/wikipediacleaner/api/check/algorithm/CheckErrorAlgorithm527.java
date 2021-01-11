@@ -27,6 +27,7 @@ import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.Page.RelatedPages;
 import org.wikipediacleaner.api.data.PageElementTag.Parameter;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
+import org.wikipediacleaner.api.data.contents.tag.WikiTagType;
 import org.wikipediacleaner.i18n.GT;
 
 
@@ -60,7 +61,7 @@ public class CheckErrorAlgorithm527 extends CheckErrorAlgorithmBase {
     }
 
     // Group all references by name
-    List<PageElementTag> refTags = analysis.getCompleteTags(PageElementTag.TAG_WIKI_REF);
+    List<PageElementTag> refTags = analysis.getCompleteTags(WikiTagType.REF);
     if ((refTags == null) || (refTags.isEmpty())) {
       return false;
     }

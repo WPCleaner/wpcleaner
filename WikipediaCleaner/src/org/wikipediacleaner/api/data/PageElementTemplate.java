@@ -15,6 +15,7 @@ import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.contents.ContentsUtil;
 import org.wikipediacleaner.api.data.contents.comment.ContainerComment;
 import org.wikipediacleaner.api.data.contents.comment.ContentsComment;
+import org.wikipediacleaner.api.data.contents.tag.WikiTagType;
 import org.wikipediacleaner.api.data.contents.template.TemplateBuilder;
 import org.wikipediacleaner.api.data.contents.template.TemplateParamNameResolver;
 
@@ -295,7 +296,7 @@ public class PageElementTemplate extends PageElement {
       for (PageElementTag tag : tags) {
         if ((tag.getCompleteBeginIndex() < parametersBeginIndex) &&
             (tag.getCompleteEndIndex() > parametersBeginIndex) &&
-            (PageElementTag.TAG_WIKI_REF.equals(tag.getName()))) {
+            (WikiTagType.REF.equals(tag.getType()))) {
           maxLength = Math.min(maxLength, tag.getCompleteEndIndex());
         }
       }
@@ -361,12 +362,11 @@ public class PageElementTemplate extends PageElement {
           }
         }
         if (tag != null) {
-          String tagName = tag.getName();
-          if (PageElementTag.TAG_WIKI_NOWIKI.equals(tagName) ||
-              PageElementTag.TAG_WIKI_MATH.equals(tagName) ||
-              PageElementTag.TAG_WIKI_MATH_CHEM.equals(tagName) ||
-              PageElementTag.TAG_WIKI_REF.equals(tagName) ||
-              PageElementTag.TAG_WIKI_SCORE.equals(tagName)) {
+          if (WikiTagType.NOWIKI.equals(tag.getType()) ||
+              WikiTagType.MATH.equals(tag.getType()) ||
+              WikiTagType.MATH_CHEM.equals(tag.getType()) ||
+              WikiTagType.REF.equals(tag.getType()) ||
+              WikiTagType.SCORE.equals(tag.getType())) {
             tmpIndex = tag.getCompleteEndIndex();
           } else {
             tmpIndex = tag.getEndIndex();

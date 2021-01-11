@@ -16,6 +16,7 @@ import org.wikipediacleaner.api.data.PageElementImage;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.PageElementImage.Parameter;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
+import org.wikipediacleaner.api.data.contents.tag.HtmlTagType;
 
 
 /**
@@ -45,7 +46,7 @@ public class CheckErrorAlgorithm065 extends CheckErrorAlgorithmBase {
     }
 
     // Check that there are <br> tags in the text
-    List<PageElementTag> brTags = analysis.getTags(PageElementTag.TAG_HTML_BR);
+    List<PageElementTag> brTags = analysis.getTags(HtmlTagType.BR);
     if ((brTags == null) || (brTags.isEmpty())) {
       return false;
     }
@@ -81,8 +82,7 @@ public class CheckErrorAlgorithm065 extends CheckErrorAlgorithmBase {
           if (contents.charAt(currentIndex) == '>') {
             PageElementTag tag = analysis.isInTag(currentIndex);
             if (tag != null) {
-              String name = tag.getNormalizedName();
-              if (PageElementTag.TAG_HTML_BR.equals(name)) {
+              if (HtmlTagType.BR.equals(tag.getType())) {
                 breakFound = true;
                 shouldStop = false;
                 beginError = tag.getBeginIndex();

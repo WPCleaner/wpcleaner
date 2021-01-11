@@ -14,6 +14,7 @@ import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
 import org.wikipediacleaner.api.data.contents.ContentsUtil;
 import org.wikipediacleaner.api.data.contents.comment.ContentsComment;
+import org.wikipediacleaner.api.data.contents.tag.WikiTagType;
 
 
 /**
@@ -135,7 +136,7 @@ public class PageElementExternalLink extends PageElement {
     // Compute maximum index for end of external link
     int maxEndIndex = maxLength;
     if (analysis != null) {
-      PageElementTag refTag = analysis.getSurroundingTag(PageElementTag.TAG_WIKI_REF, index);
+      PageElementTag refTag = analysis.getSurroundingTag(WikiTagType.REF, index);
       if ((refTag != null) && !refTag.isFullTag() && refTag.isComplete()) {
         maxEndIndex = refTag.getValueEndIndex();
       }
@@ -185,7 +186,7 @@ public class PageElementExternalLink extends PageElement {
         PageElementTag tagNowiki = null;
         if ((contents.charAt(endTextIndex) == '<') && (analysis != null)) {
           comment = analysis.comments().getAt(endTextIndex);
-          tagNowiki = analysis.isInTag(endTextIndex, PageElementTag.TAG_WIKI_NOWIKI);
+          tagNowiki = analysis.isInTag(endTextIndex, WikiTagType.NOWIKI);
         }
         if (comment != null) {
           endTextIndex = comment.getEndIndex();

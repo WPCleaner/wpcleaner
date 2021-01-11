@@ -36,6 +36,7 @@ import org.wikipediacleaner.api.data.analysis.PageAnalysis;
 import org.wikipediacleaner.api.data.analysis.Areas.Area;
 import org.wikipediacleaner.api.data.contents.ContentsElement;
 import org.wikipediacleaner.api.data.contents.comment.ContentsComment;
+import org.wikipediacleaner.api.data.contents.tag.WikiTagType;
 import org.wikipediacleaner.utils.Configuration;
 import org.wikipediacleaner.utils.ConfigurationValueInteger;
 import org.wikipediacleaner.utils.ConfigurationValueStyle;
@@ -315,9 +316,8 @@ public abstract class MWPaneFormatter {
       style = doc.getStyle(ConfigurationValueStyle.TABLE.getName());
     } else if (element instanceof PageElementTag) {
       PageElementTag tag = (PageElementTag) element;
-      String name = tag.getNormalizedName();
-      if (PageElementTag.TAG_WIKI_REF.equals(name) ||
-          PageElementTag.TAG_WIKI_REFERENCES.equals(name)) {
+      if (WikiTagType.REF.equals(tag.getType()) ||
+          WikiTagType.REFERENCES.equals(tag.getType())) {
         style = doc.getStyle(ConfigurationValueStyle.REFERENCE.getName());
         if (style != null) {
           endIndex = tag.getCompleteEndIndex();

@@ -23,6 +23,9 @@ import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.PageElementTag.Parameter;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
 import org.wikipediacleaner.api.data.contents.comment.ContentsComment;
+import org.wikipediacleaner.api.data.contents.tag.HtmlTagType;
+import org.wikipediacleaner.api.data.contents.tag.TagType;
+import org.wikipediacleaner.api.data.contents.tag.WikiTagType;
 import org.wikipediacleaner.api.data.contents.template.TemplateBuilder;
 import org.wikipediacleaner.i18n.GT;
 
@@ -33,25 +36,25 @@ import org.wikipediacleaner.i18n.GT;
  */
 public class CheckErrorAlgorithm085 extends CheckErrorAlgorithmBase {
 
-  private final static Set<String> interestingTags = new HashSet<>();
+  private final static Set<TagType> interestingTags = new HashSet<>();
 
-  private final static Set<String> ignoredTags = new HashSet<>();
+  private final static Set<TagType> ignoredTags = new HashSet<>();
 
   private final static String HTML_SPACE = "&#x20;";
 
   static {
-    interestingTags.add(PageElementTag.TAG_HTML_CENTER);
-    interestingTags.add(PageElementTag.TAG_HTML_DIV);
-    interestingTags.add(PageElementTag.TAG_HTML_SPAN);
-    interestingTags.add(PageElementTag.TAG_HTML_SUP);
-    interestingTags.add(PageElementTag.TAG_WIKI_INCLUDEONLY);
-    interestingTags.add(PageElementTag.TAG_WIKI_GALLERY);
-    interestingTags.add(PageElementTag.TAG_WIKI_NOINCLUDE);
+    interestingTags.add(HtmlTagType.CENTER);
+    interestingTags.add(HtmlTagType.DIV);
+    interestingTags.add(HtmlTagType.SPAN);
+    interestingTags.add(HtmlTagType.SUP);
+    interestingTags.add(WikiTagType.GALLERY);
+    interestingTags.add(WikiTagType.INCLUDEONLY);
+    interestingTags.add(WikiTagType.NOINCLUDE);
 
-    // ignoredTags.add(PageElementTag.TAG_HTML_CODE);
-    // ignoredTags.add(PageElementTag.TAG_WIKI_NOWIKI);
-    // ignoredTags.add(PageElementTag.TAG_WIKI_PRE);
-    // ignoredTags.add(PageElementTag.TAG_WIKI_SCORE);
+    // ignoredTags.add(HtmlTagType.CODE);
+    // ignoredTags.add(WikiTagType.NOWIKI);
+    // ignoredTags.add(WikiTagType.PRE);
+    // ignoredTags.add(WikiTagType.SCORE);
   }
 
   public CheckErrorAlgorithm085() {
@@ -82,9 +85,9 @@ public class CheckErrorAlgorithm085 extends CheckErrorAlgorithmBase {
       if (!tag.isFullTag() && !tag.isEndTag() && tag.isComplete()) {
 
         // Check if tag can be of interest
-        boolean interesting = interestingTags.contains(tag.getName());
+        boolean interesting = interestingTags.contains(tag.getType());
         if (interesting) {
-          if (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_NOWIKI, tag.getBeginIndex()) != null) {
+          if (analysis.getSurroundingTag(WikiTagType.NOWIKI, tag.getBeginIndex()) != null) {
             interesting = false;
           }
         }
@@ -117,11 +120,11 @@ public class CheckErrorAlgorithm085 extends CheckErrorAlgorithmBase {
               if (!ok) {
                 PageElementTag internalTag = analysis.isInTag(currentIndex);
                 if (internalTag != null) {
-                  if (ignoredTags.contains(internalTag.getName())) {
+                  if (ignoredTags.contains(internalTag.getType())) {
                     ok = true;
                     ignoredText = true;
                     errorLevel = ErrorLevel.WARNING;
-                    if (PageElementTag.TAG_WIKI_NOWIKI.equals(internalTag.getName())) {
+                    if (WikiTagType.NOWIKI.equals(internalTag.getType())) {
                       replacementText.append(contents.substring(
                           internalTag.getValueBeginIndex(), internalTag.getValueEndIndex()));
                       useReplacement = true;
@@ -156,10 +159,9 @@ public class CheckErrorAlgorithm085 extends CheckErrorAlgorithmBase {
           boolean hasUnsafeArguments = false;
           if (shouldReport) {
             if (tag.getParametersCount() > 0) {
-              String tagName = tag.getName();
-              if (PageElementTag.TAG_WIKI_REF.equals(tagName)) {
+              if (WikiTagType.REF.equals(tag.getType())) {
                 shouldReport = false;
-              } else if (PageElementTag.TAG_HTML_SPAN.equals(tagName)) {
+              } else if (HtmlTagType.SPAN.equals(tag.getType())) {
                 for (int paramNum = 0; paramNum < tag.getParametersCount(); paramNum++) {
                   Parameter param = tag.getParameter(paramNum);
                   if (param != null) {
@@ -169,7 +171,7 @@ public class CheckErrorAlgorithm085 extends CheckErrorAlgorithmBase {
                     }
                   }
                 }
-              } else if (PageElementTag.TAG_HTML_DIV.equals(tagName)) {
+              } else if (HtmlTagType.DIV.equals(tag.getType())) {
                 if ((tag.getParametersCount() == 1) && (tag.getParameter("id") != null)) {
                   shouldReport = false;
                 }
@@ -272,7 +274,7 @@ public class CheckErrorAlgorithm085 extends CheckErrorAlgorithmBase {
               if (useReplacement) {
                 errorResult.addReplacement(replacementText.toString());
               }
-              if (PageElementTag.TAG_HTML_CENTER.equals(tag.getName())) {
+              if (HtmlTagType.CENTER.equals(tag.getType())) {
                 for (String[] template : centerTemplates) {
                   if (template.length > 1) {
                     TemplateBuilder builder = TemplateBuilder.from(template[0]);

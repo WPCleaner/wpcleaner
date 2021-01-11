@@ -12,6 +12,7 @@ import java.util.Collection;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
+import org.wikipediacleaner.api.data.contents.tag.WikiTagType;
 
 
 /**
@@ -41,7 +42,7 @@ public class CheckErrorAlgorithm506 extends CheckErrorAlgorithmBase {
     }
 
     // Check every ref tag
-    Collection<PageElementTag> refTags = analysis.getCompleteTags(PageElementTag.TAG_WIKI_REF);
+    Collection<PageElementTag> refTags = analysis.getCompleteTags(WikiTagType.REF);
     if ((refTags == null) || (refTags.isEmpty())) {
       return false;
     }

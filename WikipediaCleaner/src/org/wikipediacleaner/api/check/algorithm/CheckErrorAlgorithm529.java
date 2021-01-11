@@ -26,7 +26,7 @@ import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageElementISBN;
 import org.wikipediacleaner.api.data.Page.RelatedPages;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
-import org.wikipediacleaner.api.data.contents.tag.TagBuilder;
+import org.wikipediacleaner.api.data.contents.tag.HtmlTagType;
 import org.wikipediacleaner.api.data.contents.template.TemplateBuilder;
 import org.wikipediacleaner.i18n.GT;
 
@@ -43,13 +43,13 @@ public class CheckErrorAlgorithm529 extends CheckErrorAlgorithmBase {
 
   /** List of string that could be before an ISBN. */
   private final static String[] EXTEND_BEFORE_ISBN = {
-    TagBuilder.SMALL_OPEN,
+    HtmlTagType.SMALL.getOpenTag(),
     "(",
   };
 
   /** List of string that could be after an ISBN. */
   private final static String[] EXTEND_AFTER_ISBN = {
-    TagBuilder.SMALL_CLOSE,
+    HtmlTagType.SMALL.getCloseTag(),
     ")",
   };
 

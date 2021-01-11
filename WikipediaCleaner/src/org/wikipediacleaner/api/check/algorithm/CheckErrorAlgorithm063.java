@@ -13,6 +13,8 @@ import java.util.List;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
+import org.wikipediacleaner.api.data.contents.tag.HtmlTagType;
+import org.wikipediacleaner.api.data.contents.tag.WikiTagType;
 
 
 /**
@@ -46,12 +48,12 @@ public class CheckErrorAlgorithm063 extends CheckErrorAlgorithmBase {
 
     // Analyze each <small> tag
     boolean result = false;
-    List<PageElementTag> smallTags = analysis.getTags(PageElementTag.TAG_HTML_SMALL);
+    List<PageElementTag> smallTags = analysis.getTags(HtmlTagType.SMALL);
     for (PageElementTag smallTag : smallTags) {
       int index = smallTag.getBeginIndex();
-      PageElementTag refTag = analysis.getSurroundingTag(PageElementTag.TAG_WIKI_REF, index);
-      PageElementTag subTag = analysis.getSurroundingTag(PageElementTag.TAG_HTML_SUB, index);
-      PageElementTag supTag = analysis.getSurroundingTag(PageElementTag.TAG_HTML_SUP, index);
+      PageElementTag refTag = analysis.getSurroundingTag(WikiTagType.REF, index);
+      PageElementTag subTag = analysis.getSurroundingTag(HtmlTagType.SUB, index);
+      PageElementTag supTag = analysis.getSurroundingTag(HtmlTagType.SUP, index);
       if ((refTag != null) || (subTag != null) || (supTag != null)) {
         if (errors == null) {
           return true;

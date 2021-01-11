@@ -11,6 +11,8 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
+import javax.annotation.Nonnull;
+
 import org.wikipediacleaner.api.API;
 import org.wikipediacleaner.api.APIException;
 import org.wikipediacleaner.api.APIFactory;
@@ -26,6 +28,9 @@ import org.wikipediacleaner.api.data.PageElementFormattingAnalysis;
 import org.wikipediacleaner.api.data.PageElementInternalLink;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
+import org.wikipediacleaner.api.data.contents.tag.HtmlTagType;
+import org.wikipediacleaner.api.data.contents.tag.TagType;
+import org.wikipediacleaner.api.data.contents.tag.WikiTagType;
 
 
 /**
@@ -41,143 +46,143 @@ public class CheckErrorAlgorithm539 extends CheckErrorAlgorithmBase {
   /** Possible replacements */
   private final static Replacement[] replacements = {
     new Replacement(
-        PageElementTag.TAG_HTML_BIG,
+        HtmlTagType.BIG,
         new ReplacementElement[] {
-          new ReplacementElement(PageElementTag.TAG_HTML_CENTER, true, Order.MUST_INVERT),
-          new ReplacementElement(PageElementTag.TAG_HTML_DIV, true, Order.MUST_INVERT),
-          new ReplacementElement(PageElementTag.TAG_HTML_FONT, true, Order.BOTH_POSSIBLE),
-          new ReplacementElement(PageElementTag.TAG_HTML_S, true, Order.BOTH_POSSIBLE),
-          new ReplacementElement(PageElementTag.TAG_HTML_SMALL, true, Order.BOTH_POSSIBLE),
-          new ReplacementElement(PageElementTag.TAG_HTML_SPAN, true, Order.BOTH_POSSIBLE),
-          new ReplacementElement(PageElementTag.TAG_HTML_SUB, true, Order.BOTH_POSSIBLE),
-          new ReplacementElement(PageElementTag.TAG_HTML_SUP, true, Order.BOTH_POSSIBLE),
-          new ReplacementElement(PageElementTag.TAG_HTML_U, true, Order.BOTH_POSSIBLE),
+          new ReplacementElement(HtmlTagType.CENTER, true, Order.MUST_INVERT),
+          new ReplacementElement(HtmlTagType.DIV, true, Order.MUST_INVERT),
+          new ReplacementElement(HtmlTagType.FONT, true, Order.BOTH_POSSIBLE),
+          new ReplacementElement(HtmlTagType.S, true, Order.BOTH_POSSIBLE),
+          new ReplacementElement(HtmlTagType.SMALL, true, Order.BOTH_POSSIBLE),
+          new ReplacementElement(HtmlTagType.SPAN, true, Order.BOTH_POSSIBLE),
+          new ReplacementElement(HtmlTagType.SUB, true, Order.BOTH_POSSIBLE),
+          new ReplacementElement(HtmlTagType.SUP, true, Order.BOTH_POSSIBLE),
+          new ReplacementElement(HtmlTagType.U, true, Order.BOTH_POSSIBLE),
         },
         OrderFormatting.FORMATTING_ANYWHERE),
     new Replacement(
-        PageElementTag.TAG_HTML_CENTER,
+        HtmlTagType.CENTER,
         new ReplacementElement[] {
-          new ReplacementElement(PageElementTag.TAG_HTML_BIG, true, Order.MUST_KEEP),
-          new ReplacementElement(PageElementTag.TAG_HTML_DIV, true, Order.BOTH_POSSIBLE),
-          new ReplacementElement(PageElementTag.TAG_HTML_FONT, true, Order.MUST_KEEP),
-          new ReplacementElement(PageElementTag.TAG_HTML_S, true, Order.MUST_KEEP),
-          new ReplacementElement(PageElementTag.TAG_HTML_SMALL, true, Order.MUST_KEEP),
-          new ReplacementElement(PageElementTag.TAG_HTML_SPAN, true, Order.MUST_KEEP),
-          new ReplacementElement(PageElementTag.TAG_HTML_SUB, true, Order.MUST_KEEP),
-          new ReplacementElement(PageElementTag.TAG_HTML_SUP, true, Order.MUST_KEEP),
-          new ReplacementElement(PageElementTag.TAG_HTML_U, true, Order.MUST_KEEP),
+          new ReplacementElement(HtmlTagType.BIG, true, Order.MUST_KEEP),
+          new ReplacementElement(HtmlTagType.DIV, true, Order.BOTH_POSSIBLE),
+          new ReplacementElement(HtmlTagType.FONT, true, Order.MUST_KEEP),
+          new ReplacementElement(HtmlTagType.S, true, Order.MUST_KEEP),
+          new ReplacementElement(HtmlTagType.SMALL, true, Order.MUST_KEEP),
+          new ReplacementElement(HtmlTagType.SPAN, true, Order.MUST_KEEP),
+          new ReplacementElement(HtmlTagType.SUB, true, Order.MUST_KEEP),
+          new ReplacementElement(HtmlTagType.SUP, true, Order.MUST_KEEP),
+          new ReplacementElement(HtmlTagType.U, true, Order.MUST_KEEP),
         },
         OrderFormatting.FORMATTING_INSIDE),
     new Replacement(
-        PageElementTag.TAG_HTML_DIV,
+        HtmlTagType.DIV,
         new ReplacementElement[] {
-          new ReplacementElement(PageElementTag.TAG_HTML_BIG, true, Order.MUST_KEEP),
-          new ReplacementElement(PageElementTag.TAG_HTML_CENTER, true, Order.BOTH_POSSIBLE),
-          new ReplacementElement(PageElementTag.TAG_HTML_FONT, true, Order.MUST_KEEP),
-          new ReplacementElement(PageElementTag.TAG_HTML_S, true, Order.MUST_KEEP),
-          new ReplacementElement(PageElementTag.TAG_HTML_SMALL, true, Order.MUST_KEEP),
-          new ReplacementElement(PageElementTag.TAG_HTML_SPAN, true, Order.MUST_KEEP),
-          new ReplacementElement(PageElementTag.TAG_HTML_SUB, true, Order.MUST_KEEP),
-          new ReplacementElement(PageElementTag.TAG_HTML_SUP, true, Order.MUST_KEEP),
-          new ReplacementElement(PageElementTag.TAG_HTML_U, true, Order.MUST_KEEP),
+          new ReplacementElement(HtmlTagType.BIG, true, Order.MUST_KEEP),
+          new ReplacementElement(HtmlTagType.CENTER, true, Order.BOTH_POSSIBLE),
+          new ReplacementElement(HtmlTagType.FONT, true, Order.MUST_KEEP),
+          new ReplacementElement(HtmlTagType.S, true, Order.MUST_KEEP),
+          new ReplacementElement(HtmlTagType.SMALL, true, Order.MUST_KEEP),
+          new ReplacementElement(HtmlTagType.SPAN, true, Order.MUST_KEEP),
+          new ReplacementElement(HtmlTagType.SUB, true, Order.MUST_KEEP),
+          new ReplacementElement(HtmlTagType.SUP, true, Order.MUST_KEEP),
+          new ReplacementElement(HtmlTagType.U, true, Order.MUST_KEEP),
         },
         OrderFormatting.FORMATTING_INSIDE),
     new Replacement(
-        PageElementTag.TAG_HTML_FONT,
+        HtmlTagType.FONT,
         new ReplacementElement[] {
-          new ReplacementElement(PageElementTag.TAG_HTML_BIG, true, Order.BOTH_POSSIBLE),
-          new ReplacementElement(PageElementTag.TAG_HTML_CENTER, true, Order.MUST_INVERT),
-          new ReplacementElement(PageElementTag.TAG_HTML_DIV, true, Order.MUST_INVERT),
-          new ReplacementElement(PageElementTag.TAG_HTML_S, true, Order.BOTH_POSSIBLE),
-          new ReplacementElement(PageElementTag.TAG_HTML_SMALL, true, Order.BOTH_POSSIBLE),
-          new ReplacementElement(PageElementTag.TAG_HTML_SPAN, true, Order.BOTH_POSSIBLE),
-          new ReplacementElement(PageElementTag.TAG_HTML_SUB, true, Order.BOTH_POSSIBLE),
-          new ReplacementElement(PageElementTag.TAG_HTML_SUP, true, Order.BOTH_POSSIBLE),
-          new ReplacementElement(PageElementTag.TAG_HTML_U, true, Order.BOTH_POSSIBLE),
+          new ReplacementElement(HtmlTagType.BIG, true, Order.BOTH_POSSIBLE),
+          new ReplacementElement(HtmlTagType.CENTER, true, Order.MUST_INVERT),
+          new ReplacementElement(HtmlTagType.DIV, true, Order.MUST_INVERT),
+          new ReplacementElement(HtmlTagType.S, true, Order.BOTH_POSSIBLE),
+          new ReplacementElement(HtmlTagType.SMALL, true, Order.BOTH_POSSIBLE),
+          new ReplacementElement(HtmlTagType.SPAN, true, Order.BOTH_POSSIBLE),
+          new ReplacementElement(HtmlTagType.SUB, true, Order.BOTH_POSSIBLE),
+          new ReplacementElement(HtmlTagType.SUP, true, Order.BOTH_POSSIBLE),
+          new ReplacementElement(HtmlTagType.U, true, Order.BOTH_POSSIBLE),
         },
         OrderFormatting.FORMATTING_ANYWHERE),
     new Replacement(
-        PageElementTag.TAG_HTML_S,
+        HtmlTagType.S,
         new ReplacementElement[] {
-          new ReplacementElement(PageElementTag.TAG_HTML_BIG, true, Order.BOTH_POSSIBLE),
-          new ReplacementElement(PageElementTag.TAG_HTML_CENTER, true, Order.MUST_INVERT),
-          new ReplacementElement(PageElementTag.TAG_HTML_DIV, true, Order.MUST_INVERT),
-          new ReplacementElement(PageElementTag.TAG_HTML_FONT, true, Order.BOTH_POSSIBLE),
-          new ReplacementElement(PageElementTag.TAG_HTML_SMALL, true, Order.BOTH_POSSIBLE),
-          new ReplacementElement(PageElementTag.TAG_HTML_SPAN, true, Order.BOTH_POSSIBLE),
-          new ReplacementElement(PageElementTag.TAG_HTML_SUB, true, Order.BOTH_POSSIBLE),
-          new ReplacementElement(PageElementTag.TAG_HTML_SUP, true, Order.BOTH_POSSIBLE),
-          new ReplacementElement(PageElementTag.TAG_HTML_U, true, Order.BOTH_POSSIBLE),
+          new ReplacementElement(HtmlTagType.BIG, true, Order.BOTH_POSSIBLE),
+          new ReplacementElement(HtmlTagType.CENTER, true, Order.MUST_INVERT),
+          new ReplacementElement(HtmlTagType.DIV, true, Order.MUST_INVERT),
+          new ReplacementElement(HtmlTagType.FONT, true, Order.BOTH_POSSIBLE),
+          new ReplacementElement(HtmlTagType.SMALL, true, Order.BOTH_POSSIBLE),
+          new ReplacementElement(HtmlTagType.SPAN, true, Order.BOTH_POSSIBLE),
+          new ReplacementElement(HtmlTagType.SUB, true, Order.BOTH_POSSIBLE),
+          new ReplacementElement(HtmlTagType.SUP, true, Order.BOTH_POSSIBLE),
+          new ReplacementElement(HtmlTagType.U, true, Order.BOTH_POSSIBLE),
         },
         OrderFormatting.FORMATTING_ANYWHERE),
     new Replacement(
-        PageElementTag.TAG_HTML_SMALL,
+        HtmlTagType.SMALL,
         new ReplacementElement[] {
-          new ReplacementElement(PageElementTag.TAG_HTML_BIG, true, Order.BOTH_POSSIBLE),
-          new ReplacementElement(PageElementTag.TAG_HTML_CENTER, true, Order.MUST_INVERT),
-          new ReplacementElement(PageElementTag.TAG_HTML_DIV, true, Order.MUST_INVERT),
-          new ReplacementElement(PageElementTag.TAG_HTML_FONT, true, Order.BOTH_POSSIBLE),
-          new ReplacementElement(PageElementTag.TAG_HTML_S, true, Order.BOTH_POSSIBLE),
-          new ReplacementElement(PageElementTag.TAG_HTML_SPAN, true, Order.BOTH_POSSIBLE),
-          new ReplacementElement(PageElementTag.TAG_HTML_SUB, true, Order.BOTH_POSSIBLE),
-          new ReplacementElement(PageElementTag.TAG_HTML_SUP, true, Order.BOTH_POSSIBLE),
-          new ReplacementElement(PageElementTag.TAG_HTML_U, true, Order.BOTH_POSSIBLE),
+          new ReplacementElement(HtmlTagType.BIG, true, Order.BOTH_POSSIBLE),
+          new ReplacementElement(HtmlTagType.CENTER, true, Order.MUST_INVERT),
+          new ReplacementElement(HtmlTagType.DIV, true, Order.MUST_INVERT),
+          new ReplacementElement(HtmlTagType.FONT, true, Order.BOTH_POSSIBLE),
+          new ReplacementElement(HtmlTagType.S, true, Order.BOTH_POSSIBLE),
+          new ReplacementElement(HtmlTagType.SPAN, true, Order.BOTH_POSSIBLE),
+          new ReplacementElement(HtmlTagType.SUB, true, Order.BOTH_POSSIBLE),
+          new ReplacementElement(HtmlTagType.SUP, true, Order.BOTH_POSSIBLE),
+          new ReplacementElement(HtmlTagType.U, true, Order.BOTH_POSSIBLE),
         },
         OrderFormatting.FORMATTING_ANYWHERE),
     new Replacement(
-        PageElementTag.TAG_HTML_SPAN,
+        HtmlTagType.SPAN,
         new ReplacementElement[] {
-          new ReplacementElement(PageElementTag.TAG_HTML_BIG, true, Order.BOTH_POSSIBLE),
-          new ReplacementElement(PageElementTag.TAG_HTML_CENTER, true, Order.MUST_INVERT),
-          new ReplacementElement(PageElementTag.TAG_HTML_DIV, true, Order.MUST_INVERT),
-          new ReplacementElement(PageElementTag.TAG_HTML_FONT, true, Order.BOTH_POSSIBLE),
-          new ReplacementElement(PageElementTag.TAG_HTML_S, true, Order.BOTH_POSSIBLE),
-          new ReplacementElement(PageElementTag.TAG_HTML_SMALL, true, Order.BOTH_POSSIBLE),
-          new ReplacementElement(PageElementTag.TAG_HTML_SUB, true, Order.BOTH_POSSIBLE),
-          new ReplacementElement(PageElementTag.TAG_HTML_SUP, true, Order.BOTH_POSSIBLE),
-          new ReplacementElement(PageElementTag.TAG_HTML_U, true, Order.BOTH_POSSIBLE),
+          new ReplacementElement(HtmlTagType.BIG, true, Order.BOTH_POSSIBLE),
+          new ReplacementElement(HtmlTagType.CENTER, true, Order.MUST_INVERT),
+          new ReplacementElement(HtmlTagType.DIV, true, Order.MUST_INVERT),
+          new ReplacementElement(HtmlTagType.FONT, true, Order.BOTH_POSSIBLE),
+          new ReplacementElement(HtmlTagType.S, true, Order.BOTH_POSSIBLE),
+          new ReplacementElement(HtmlTagType.SMALL, true, Order.BOTH_POSSIBLE),
+          new ReplacementElement(HtmlTagType.SUB, true, Order.BOTH_POSSIBLE),
+          new ReplacementElement(HtmlTagType.SUP, true, Order.BOTH_POSSIBLE),
+          new ReplacementElement(HtmlTagType.U, true, Order.BOTH_POSSIBLE),
         },
         OrderFormatting.FORMATTING_ANYWHERE),
     new Replacement(
-        PageElementTag.TAG_HTML_SUB,
+        HtmlTagType.SUB,
         new ReplacementElement[] {
-          new ReplacementElement(PageElementTag.TAG_HTML_BIG, true, Order.BOTH_POSSIBLE),
-          new ReplacementElement(PageElementTag.TAG_HTML_CENTER, true, Order.MUST_INVERT),
-          new ReplacementElement(PageElementTag.TAG_HTML_DIV, true, Order.MUST_INVERT),
-          new ReplacementElement(PageElementTag.TAG_HTML_FONT, true, Order.BOTH_POSSIBLE),
-          new ReplacementElement(PageElementTag.TAG_HTML_S, true, Order.BOTH_POSSIBLE),
-          new ReplacementElement(PageElementTag.TAG_HTML_SMALL, true, Order.BOTH_POSSIBLE),
-          new ReplacementElement(PageElementTag.TAG_HTML_SPAN, true, Order.BOTH_POSSIBLE),
-          new ReplacementElement(PageElementTag.TAG_HTML_SUP, true, Order.BOTH_POSSIBLE),
-          new ReplacementElement(PageElementTag.TAG_HTML_U, true, Order.BOTH_POSSIBLE),
+          new ReplacementElement(HtmlTagType.BIG, true, Order.BOTH_POSSIBLE),
+          new ReplacementElement(HtmlTagType.CENTER, true, Order.MUST_INVERT),
+          new ReplacementElement(HtmlTagType.DIV, true, Order.MUST_INVERT),
+          new ReplacementElement(HtmlTagType.FONT, true, Order.BOTH_POSSIBLE),
+          new ReplacementElement(HtmlTagType.S, true, Order.BOTH_POSSIBLE),
+          new ReplacementElement(HtmlTagType.SMALL, true, Order.BOTH_POSSIBLE),
+          new ReplacementElement(HtmlTagType.SPAN, true, Order.BOTH_POSSIBLE),
+          new ReplacementElement(HtmlTagType.SUP, true, Order.BOTH_POSSIBLE),
+          new ReplacementElement(HtmlTagType.U, true, Order.BOTH_POSSIBLE),
         },
         OrderFormatting.FORMATTING_ANYWHERE),
     new Replacement(
-        PageElementTag.TAG_HTML_SUP,
+        HtmlTagType.SUP,
         new ReplacementElement[] {
-          new ReplacementElement(PageElementTag.TAG_HTML_BIG, true, Order.BOTH_POSSIBLE),
-          new ReplacementElement(PageElementTag.TAG_HTML_CENTER, true, Order.MUST_INVERT),
-          new ReplacementElement(PageElementTag.TAG_HTML_DIV, true, Order.MUST_INVERT),
-          new ReplacementElement(PageElementTag.TAG_HTML_FONT, true, Order.BOTH_POSSIBLE),
-          new ReplacementElement(PageElementTag.TAG_HTML_S, true, Order.BOTH_POSSIBLE),
-          new ReplacementElement(PageElementTag.TAG_HTML_SMALL, true, Order.BOTH_POSSIBLE),
-          new ReplacementElement(PageElementTag.TAG_HTML_SPAN, true, Order.BOTH_POSSIBLE),
-          new ReplacementElement(PageElementTag.TAG_HTML_SUB, true, Order.BOTH_POSSIBLE),
-          new ReplacementElement(PageElementTag.TAG_HTML_U, true, Order.BOTH_POSSIBLE),
+          new ReplacementElement(HtmlTagType.BIG, true, Order.BOTH_POSSIBLE),
+          new ReplacementElement(HtmlTagType.CENTER, true, Order.MUST_INVERT),
+          new ReplacementElement(HtmlTagType.DIV, true, Order.MUST_INVERT),
+          new ReplacementElement(HtmlTagType.FONT, true, Order.BOTH_POSSIBLE),
+          new ReplacementElement(HtmlTagType.S, true, Order.BOTH_POSSIBLE),
+          new ReplacementElement(HtmlTagType.SMALL, true, Order.BOTH_POSSIBLE),
+          new ReplacementElement(HtmlTagType.SPAN, true, Order.BOTH_POSSIBLE),
+          new ReplacementElement(HtmlTagType.SUB, true, Order.BOTH_POSSIBLE),
+          new ReplacementElement(HtmlTagType.U, true, Order.BOTH_POSSIBLE),
         },
         OrderFormatting.FORMATTING_ANYWHERE),
     new Replacement(
-        PageElementTag.TAG_HTML_U,
+        HtmlTagType.U,
         new ReplacementElement[] {
-          new ReplacementElement(PageElementTag.TAG_HTML_BIG, true, Order.BOTH_POSSIBLE),
-          new ReplacementElement(PageElementTag.TAG_HTML_CENTER, true, Order.MUST_INVERT),
-          new ReplacementElement(PageElementTag.TAG_HTML_DIV, true, Order.MUST_INVERT),
-          new ReplacementElement(PageElementTag.TAG_HTML_FONT, true, Order.BOTH_POSSIBLE),
-          new ReplacementElement(PageElementTag.TAG_HTML_S, true, Order.BOTH_POSSIBLE),
-          new ReplacementElement(PageElementTag.TAG_HTML_SMALL, true, Order.BOTH_POSSIBLE),
-          new ReplacementElement(PageElementTag.TAG_HTML_SPAN, true, Order.BOTH_POSSIBLE),
-          new ReplacementElement(PageElementTag.TAG_HTML_SUB, true, Order.BOTH_POSSIBLE),
-          new ReplacementElement(PageElementTag.TAG_HTML_SUP, true, Order.BOTH_POSSIBLE),
+          new ReplacementElement(HtmlTagType.BIG, true, Order.BOTH_POSSIBLE),
+          new ReplacementElement(HtmlTagType.CENTER, true, Order.MUST_INVERT),
+          new ReplacementElement(HtmlTagType.DIV, true, Order.MUST_INVERT),
+          new ReplacementElement(HtmlTagType.FONT, true, Order.BOTH_POSSIBLE),
+          new ReplacementElement(HtmlTagType.S, true, Order.BOTH_POSSIBLE),
+          new ReplacementElement(HtmlTagType.SMALL, true, Order.BOTH_POSSIBLE),
+          new ReplacementElement(HtmlTagType.SPAN, true, Order.BOTH_POSSIBLE),
+          new ReplacementElement(HtmlTagType.SUB, true, Order.BOTH_POSSIBLE),
+          new ReplacementElement(HtmlTagType.SUP, true, Order.BOTH_POSSIBLE),
         },
         OrderFormatting.FORMATTING_ANYWHERE),
   };
@@ -519,8 +524,8 @@ public class CheckErrorAlgorithm539 extends CheckErrorAlgorithmBase {
             shouldCheckTag = true;
           }
           if (shouldCheckTag) {
-            if (PageElementTag.TAG_WIKI_NOWIKI.equals(tag.getNormalizedName()) ||
-                PageElementTag.TAG_HTML_CODE.equals(tag.getNormalizedName())) {
+            if (WikiTagType.NOWIKI.equals(tag.getType()) ||
+                HtmlTagType.CODE.equals(tag.getType())) {
               shouldCheckTag = false;
             }
           }
@@ -629,8 +634,8 @@ public class CheckErrorAlgorithm539 extends CheckErrorAlgorithmBase {
         boolean reportError = false;
         if (internalTag.isComplete() &&
             (internalTag.getCompleteEndIndex() > tag.getCompleteEndIndex())) {
-          if ((analysis.getSurroundingTag(PageElementTag.TAG_WIKI_SOURCE, index) == null) &&
-              (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_SYNTAXHIGHLIGHT, index) == null)) {
+          if ((analysis.getSurroundingTag(WikiTagType.SOURCE, index) == null) &&
+              (analysis.getSurroundingTag(WikiTagType.SYNTAXHIGHLIGHT, index) == null)) {
             reportError = true;
           }
         }
@@ -642,7 +647,7 @@ public class CheckErrorAlgorithm539 extends CheckErrorAlgorithmBase {
           }
 
           // Analyze if a replacement can be suggested
-          ReplacementElement element = replacement.getSecondTag(internalTag.getNormalizedName());
+          ReplacementElement element = replacement.getSecondTag(internalTag.getType());
 
           // Report error
           if (element != null) {
@@ -719,7 +724,7 @@ public class CheckErrorAlgorithm539 extends CheckErrorAlgorithmBase {
   private static class Replacement {
 
     /** First tag: surrounding */
-    final String firstTag;
+    final TagType firstTag;
 
     /** Second tag: should be inside */
     final List<ReplacementElement> elements;
@@ -728,12 +733,12 @@ public class CheckErrorAlgorithm539 extends CheckErrorAlgorithmBase {
     final OrderFormatting orderFormatting;
 
     /**
-     * @param firstTag Surrounding tag.
+     * @param firstTag Surrounding tag type.
      * @param elements Possible tags inside.
      * @param orderFormatting Formatting order.
      */
     Replacement(
-        String firstTag,
+        TagType firstTag,
         ReplacementElement[] elements,
         OrderFormatting orderFormatting) {
       this.firstTag = firstTag;
@@ -741,9 +746,9 @@ public class CheckErrorAlgorithm539 extends CheckErrorAlgorithmBase {
       this.orderFormatting = orderFormatting;
     }
 
-    ReplacementElement getSecondTag(String tagName) {
+    ReplacementElement getSecondTag(TagType tag) {
       for (ReplacementElement element : elements) {
-        if (element.tag.equals(tagName)) {
+        if (element.tag.equals(tag)) {
           return element;
         }
       }
@@ -757,7 +762,7 @@ public class CheckErrorAlgorithm539 extends CheckErrorAlgorithmBase {
   private static class ReplacementElement {
 
     /** Tag */
-    final String tag;
+    final TagType tag;
 
     /** True if replacement can be automatic */
     final boolean automatic;
@@ -766,15 +771,15 @@ public class CheckErrorAlgorithm539 extends CheckErrorAlgorithmBase {
     final Order order;
 
     /**
-     * @param tag Included tag.
+     * @param tagType Included tag type.
      * @param automatic Automatic replacement.
      * @order Possibilities for order of tags.
      */
     ReplacementElement(
-        String tag,
+        @Nonnull TagType tagType,
         boolean automatic,
         Order order) {
-      this.tag = tag;
+      this.tag = tagType;
       this.automatic = automatic;
       this.order = order;
     }

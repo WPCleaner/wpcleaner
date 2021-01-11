@@ -16,6 +16,7 @@ import org.wikipediacleaner.api.check.HtmlCharacters;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmHtmlNamedEntities;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
+import org.wikipediacleaner.api.data.contents.tag.WikiTagType;
 
 
 /**
@@ -258,13 +259,13 @@ public class CheckErrorAlgorithm011 extends CheckErrorAlgorithmHtmlNamedEntities
     }
 
     // If math tags are present, don't report the error
-    List<PageElementTag> tags = analysis.getTags(PageElementTag.TAG_WIKI_MATH);
+    List<PageElementTag> tags = analysis.getTags(WikiTagType.MATH);
     if ((tags != null) && (!tags.isEmpty())) {
       for (PageElementTag tag : tags) {
         int index = tag.getBeginIndex();
-        if ((analysis.getSurroundingTag(PageElementTag.TAG_WIKI_NOWIKI, index) == null) &&
-            (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_SOURCE, index) == null) &&
-            (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_SYNTAXHIGHLIGHT, index) == null)) {
+        if ((analysis.getSurroundingTag(WikiTagType.NOWIKI, index) == null) &&
+            (analysis.getSurroundingTag(WikiTagType.SOURCE, index) == null) &&
+            (analysis.getSurroundingTag(WikiTagType.SYNTAXHIGHLIGHT, index) == null)) {
           return false;
         }
       }

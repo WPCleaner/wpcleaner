@@ -15,6 +15,7 @@ import org.wikipediacleaner.api.algorithm.AlgorithmParameterElement;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
+import org.wikipediacleaner.api.data.contents.tag.WikiTagType;
 import org.wikipediacleaner.i18n.GT;
 
 
@@ -45,7 +46,7 @@ public class CheckErrorAlgorithm542 extends CheckErrorAlgorithmBase {
     }
 
     // Analyze from the beginning
-    List<PageElementTag> tags = analysis.getTags(PageElementTag.TAG_WIKI_REF);
+    List<PageElementTag> tags = analysis.getTags(WikiTagType.REF);
     if (tags == null) {
       return false;
     }
@@ -65,7 +66,7 @@ public class CheckErrorAlgorithm542 extends CheckErrorAlgorithmBase {
       while (currentTagIndex <= lastTagIndex) {
         PageElementTag tmpTag = tags.get(currentTagIndex);
         boolean ignoreTag = false;
-        if (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_NOWIKI, tmpTag.getBeginIndex()) != null) {
+        if (analysis.getSurroundingTag(WikiTagType.NOWIKI, tmpTag.getBeginIndex()) != null) {
           ignoreTag = true;
         }
 

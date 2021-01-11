@@ -14,6 +14,7 @@ import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.PageElementTag.Parameter;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
+import org.wikipediacleaner.api.data.contents.tag.WikiTagType;
 
 
 /**
@@ -43,7 +44,7 @@ public class CheckErrorAlgorithm507 extends CheckErrorAlgorithmBase {
     }
 
     // Analyze each gallery tag
-    List<PageElementTag> galleryTags = analysis.getTags(PageElementTag.TAG_WIKI_GALLERY);
+    List<PageElementTag> galleryTags = analysis.getTags(WikiTagType.GALLERY);
     boolean result = false;
     for (PageElementTag galleryTag : galleryTags) {
       if (!galleryTag.isFullTag() && !galleryTag.isEndTag()) {

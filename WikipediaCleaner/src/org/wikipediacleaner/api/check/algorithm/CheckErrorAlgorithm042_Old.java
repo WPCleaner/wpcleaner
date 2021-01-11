@@ -12,6 +12,7 @@ import java.util.Collection;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
+import org.wikipediacleaner.api.data.contents.tag.HtmlTagType;
 import org.wikipediacleaner.i18n.GT;
 
 
@@ -42,7 +43,7 @@ public class CheckErrorAlgorithm042_Old extends CheckErrorAlgorithmBase {
     }
 
     // Analyzing the text from the beginning
-    Collection<PageElementTag> tags = analysis.getTags(PageElementTag.TAG_HTML_SMALL);
+    Collection<PageElementTag> tags = analysis.getTags(HtmlTagType.SMALL);
     if (tags == null) {
       return false;
     }

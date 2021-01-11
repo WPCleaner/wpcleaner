@@ -13,6 +13,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.Nonnull;
+
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.configuration.WPCConfiguration;
 import org.wikipediacleaner.api.configuration.WikiConfiguration;
@@ -44,6 +46,7 @@ import org.wikipediacleaner.api.data.contents.ContentsElement;
 import org.wikipediacleaner.api.data.contents.ContentsElementComparator;
 import org.wikipediacleaner.api.data.contents.comment.ContainerComment;
 import org.wikipediacleaner.api.data.contents.comment.ContentsComment;
+import org.wikipediacleaner.api.data.contents.tag.TagType;
 import org.wikipediacleaner.utils.Configuration;
 import org.wikipediacleaner.utils.ConfigurationValueBoolean;
 import org.wikipediacleaner.utils.Performance;
@@ -694,16 +697,16 @@ public class PageAnalysis {
         perf.startPart();
       }
 
-      internalLinks = new ArrayList<PageElementInternalLink>();
-      images = new ArrayList<PageElementImage>();
-      categories = new ArrayList<PageElementCategory>();
-      interwikiLinks = new ArrayList<PageElementInterwikiLink>();
-      languageLinks = new ArrayList<PageElementLanguageLink>();
-      functions = new ArrayList<PageElementFunction>();
-      magicWords = new ArrayList<PageElementMagicWord>();
-      templates = new ArrayList<PageElementTemplate>();
-      parameters = new ArrayList<PageElementParameter>();
-      titles = new ArrayList<PageElementTitle>();
+      internalLinks = new ArrayList<>();
+      images = new ArrayList<>();
+      categories = new ArrayList<>();
+      interwikiLinks = new ArrayList<>();
+      languageLinks = new ArrayList<>();
+      functions = new ArrayList<>();
+      magicWords = new ArrayList<>();
+      templates = new ArrayList<>();
+      parameters = new ArrayList<>();
+      titles = new ArrayList<>();
       if (perf != null) {
         perf.stopPart("new");
       }
@@ -807,7 +810,7 @@ public class PageAnalysis {
       }
 
       // Go through all the text of the page
-      externalLinks = new ArrayList<PageElementExternalLink>();
+      externalLinks = new ArrayList<>();
       int maxIndex = contents.length();
       String text = contents.getText();
       int currentIndex = 0;
@@ -1390,7 +1393,7 @@ public class PageAnalysis {
   /**
    * Links count.
    */
-  private Map<String, InternalLinkCount> linksCount = new HashMap<String, InternalLinkCount>();
+  private Map<String, InternalLinkCount> linksCount = new HashMap<>();
 
   /**
    * @param link Link.
@@ -1416,7 +1419,7 @@ public class PageAnalysis {
     if ((links == null) || (links.size() == 0)) {
       return;
     }
-    List<Page> interestingLinks = new ArrayList<Page>();
+    List<Page> interestingLinks = new ArrayList<>();
     for (Page link : links) {
       if (!linksCount.containsKey(link.getTitle())) {
         interestingLinks.add(link);
@@ -1550,7 +1553,7 @@ public class PageAnalysis {
       return null;
     }
     List<PageElementTemplate> tmpTemplates = getTemplates();
-    List<PageElementTemplate> result = new ArrayList<PageElementTemplate>();
+    List<PageElementTemplate> result = new ArrayList<>();
     if (tmpTemplates != null) {
       for (PageElementTemplate template : tmpTemplates) {
         if (Page.areSameTitle(name, template.getTemplateName())) {
@@ -1719,20 +1722,20 @@ public class PageAnalysis {
   private List<PageElementTag> tags;
 
   /**
-   * Lock for updating the tags categorized by name.
+   * Lock for updating the tags categorized by type.
    */
-  private final Object lockTagsByName = new Object();
+  private final Object lockTagsByType = new Object();
 
   /**
-   * All tags in the page categorized by name.
+   * All tags in the page categorized by type.
    */
-  private Map<String, List<PageElementTag>> tagsByName;
+  private Map<TagType, List<PageElementTag>> tagsByType;
 
   /**
-   * All complete tags in the page categorized by name.
+   * All complete tags in the page categorized by type.
    * Complete tags are either full tags or opening tags associated with a closing tag.
    */
-  private Map<String, List<PageElementTag>> completeTagsByName;
+  private Map<TagType, List<PageElementTag>> completeTagsByType;
 
   /**
    * @return All tags in the page.
@@ -1743,25 +1746,21 @@ public class PageAnalysis {
   }
 
   /**
-   * @param name Tag name.
-   * @return All tags with this name in the page.
+   * @param type Tag type.
+   * @return All tags with this type in the page.
    */
-  public List<PageElementTag> getTags(String name) {
-    if (name == null) {
-      return null;
-    }
-    synchronized (lockTagsByName) {
-      if (tagsByName == null) {
-        tagsByName = new HashMap<String, List<PageElementTag>>();
+  public List<PageElementTag> getTags(@Nonnull TagType type) {
+    synchronized (lockTagsByType) {
+      if (tagsByType == null) {
+        tagsByType = new HashMap<>();
       }
-      name = name.toLowerCase();
-      List<PageElementTag> result = tagsByName.get(name);
+      List<PageElementTag> result = tagsByType.get(type);
       if (result == null) {
         List<PageElementTag> tmpTags = getTags();
-        result = new ArrayList<PageElementTag>();
-        tagsByName.put(name, result);
+        result = new ArrayList<>();
+        tagsByType.put(type, result);
         for (PageElementTag tag : tmpTags) {
-          if (name.equals(tag.getNormalizedName())) {
+          if (type.equals(tag.getType())) {
             result.add(tag);
           }
         }
@@ -1771,23 +1770,19 @@ public class PageAnalysis {
   }
 
   /**
-   * @param name Tag name.
-   * @return All complete tags with this name in the page.
+   * @param type Tag type.
+   * @return All complete tags with this type in the page.
    */
-  public List<PageElementTag> getCompleteTags(String name) {
-    if (name == null) {
-      return null;
-    }
-    synchronized (lockTagsByName) {
-      if (completeTagsByName == null) {
-        completeTagsByName = new HashMap<String, List<PageElementTag>>();
+  public List<PageElementTag> getCompleteTags(@Nonnull TagType type) {
+    synchronized (lockTagsByType) {
+      if (completeTagsByType == null) {
+        completeTagsByType = new HashMap<>();
       }
-      name = name.toLowerCase();
-      List<PageElementTag> result = completeTagsByName.get(name);
+      List<PageElementTag> result = completeTagsByType.get(type);
       if (result == null) {
-        List<PageElementTag> tmpTags = getTags(name);
-        result = new ArrayList<PageElementTag>();
-        completeTagsByName.put(name, result);
+        List<PageElementTag> tmpTags = getTags(type);
+        result = new ArrayList<>();
+        completeTagsByType.put(type, result);
         for (PageElementTag tag : tmpTags) {
           if (tag.isFullTag()) {
             result.add(tag);
@@ -1801,12 +1796,12 @@ public class PageAnalysis {
   }
 
   /**
-   * @param name Tag name.
+   * @param type Tag type.
    * @param currentIndex Current index.
    * @return Surrounding tag.
    */
-  public PageElementTag getSurroundingTag(String name, int currentIndex) {
-    List<PageElementTag> tmpTags = getCompleteTags(name);
+  public PageElementTag getSurroundingTag(TagType type, int currentIndex) {
+    List<PageElementTag> tmpTags = getCompleteTags(type);
     if (tmpTags == null) {
       return null;
     }
@@ -1855,11 +1850,11 @@ public class PageAnalysis {
 
   /**
    * @param currentIndex Current index.
-   * @param tagName Tag name.
+   * @param tagType Tag type.
    * @return Tag if the current index is inside a tag.
    */
-  public PageElementTag isInTag(int currentIndex, String tagName) {
-    List<PageElementTag> tmpTags = getTags(tagName);
+  public PageElementTag isInTag(int currentIndex, TagType tagType) {
+    List<PageElementTag> tmpTags = getTags(tagType);
     for (PageElementTag tag : tmpTags) {
       if ((tag.getBeginIndex() <= currentIndex) &&
           (tag.getEndIndex() > currentIndex)) {
@@ -1881,7 +1876,7 @@ public class PageAnalysis {
     if (tmpFunctions == null) {
       return null;
     }
-    List<PageElementFunction> defaultSorts = new ArrayList<PageElementFunction>();
+    List<PageElementFunction> defaultSorts = new ArrayList<>();
     for (PageElementFunction function : tmpFunctions) {
       if (MagicWord.DEFAULT_SORT.equals(function.getMagicWord().getName())) {
         defaultSorts.add(function);
@@ -2252,7 +2247,7 @@ public class PageAnalysis {
 
     Result(boolean found, List<CheckErrorResult> errors) {
       this.found = found;
-      this.errors = (errors != null) ? new ArrayList<CheckErrorResult>(errors) : null;
+      this.errors = (errors != null) ? new ArrayList<>(errors) : null;
     }
 
     /**
@@ -2281,7 +2276,7 @@ public class PageAnalysis {
    */
   public void setCheckWikiErrors(int errorNumber, boolean found, List<CheckErrorResult> errors) {
     if (checkWikiErrors == null) {
-      checkWikiErrors = new HashMap<Integer, PageAnalysis.Result>();
+      checkWikiErrors = new HashMap<>();
     }
     checkWikiErrors.put(Integer.valueOf(errorNumber), new Result(found, errors));
   }

@@ -32,6 +32,9 @@ import org.wikipediacleaner.api.data.Suggestion.ElementarySuggestion;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
 import org.wikipediacleaner.api.data.contents.ContentsInterval;
 import org.wikipediacleaner.api.data.contents.Interval;
+import org.wikipediacleaner.api.data.contents.tag.HtmlTagType;
+import org.wikipediacleaner.api.data.contents.tag.TagType;
+import org.wikipediacleaner.api.data.contents.tag.WikiTagType;
 import org.wikipediacleaner.api.data.analysis.Areas;
 import org.wikipediacleaner.gui.swing.component.MWPaneReplaceAllAction;
 import org.wikipediacleaner.i18n.GT;
@@ -590,15 +593,15 @@ public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
     }
 
     // Remove tags
-    removeCompleteTags(chunks, analysis, PageElementTag.TAG_HTML_CODE);
-    removeCompleteTags(chunks, analysis, PageElementTag.TAG_WIKI_GRAPH);
-    removeCompleteTags(chunks, analysis, PageElementTag.TAG_WIKI_IMAGEMAP); // TODO: keep descriptions
-    removeCompleteTags(chunks, analysis, PageElementTag.TAG_WIKI_MATH);
-    removeCompleteTags(chunks, analysis, PageElementTag.TAG_WIKI_MATH_CHEM);
-    removeCompleteTags(chunks, analysis, PageElementTag.TAG_WIKI_SCORE);
-    removeCompleteTags(chunks, analysis, PageElementTag.TAG_WIKI_SOURCE);
-    removeCompleteTags(chunks, analysis, PageElementTag.TAG_WIKI_SYNTAXHIGHLIGHT);
-    removeCompleteTags(chunks, analysis, PageElementTag.TAG_WIKI_TIMELINE);
+    removeCompleteTags(chunks, analysis, HtmlTagType.CODE);
+    removeCompleteTags(chunks, analysis, WikiTagType.GRAPH);
+    removeCompleteTags(chunks, analysis, WikiTagType.IMAGEMAP); // TODO: keep descriptions
+    removeCompleteTags(chunks, analysis, WikiTagType.MATH);
+    removeCompleteTags(chunks, analysis, WikiTagType.MATH_CHEM);
+    removeCompleteTags(chunks, analysis, WikiTagType.SCORE);
+    removeCompleteTags(chunks, analysis, WikiTagType.SOURCE);
+    removeCompleteTags(chunks, analysis, WikiTagType.SYNTAXHIGHLIGHT);
+    removeCompleteTags(chunks, analysis, WikiTagType.TIMELINE);
     removeGalleryTags(chunks, analysis);
 
     // Remove areas
@@ -635,10 +638,10 @@ public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
    * 
    * @param chunks List of chunks of text.
    * @param analysis Page analysis.
-   * @param tagName Tag name to remove.
+   * @param tagType Tag type to remove.
    */
-  private void removeCompleteTags(List<Interval> chunks, PageAnalysis analysis, String tagName) {
-    List<PageElementTag> tags = analysis.getCompleteTags(tagName);
+  private void removeCompleteTags(List<Interval> chunks, PageAnalysis analysis, TagType tagType) {
+    List<PageElementTag> tags = analysis.getCompleteTags(tagType);
     for (PageElementTag tag : tags) {
       removeArea(chunks, tag.getCompleteBeginIndex(), tag.getCompleteEndIndex());
     }
@@ -653,7 +656,7 @@ public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
   private void removeGalleryTags(List<Interval> chunks, PageAnalysis analysis) {
     Namespace imageNamespace = analysis.getWikiConfiguration().getNamespace(Namespace.IMAGE);
     String contents = analysis.getContents();
-    List<PageElementTag> tags = analysis.getCompleteTags(PageElementTag.TAG_WIKI_GALLERY);
+    List<PageElementTag> tags = analysis.getCompleteTags(WikiTagType.GALLERY);
     for (PageElementTag tag : tags) {
       removeArea(chunks, tag.getBeginIndex(), tag.getEndIndex());
       if (tag.isComplete() && !tag.isEndTag() && (tag.getMatchingTag() != null)) {

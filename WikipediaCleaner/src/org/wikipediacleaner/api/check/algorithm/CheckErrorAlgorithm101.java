@@ -19,6 +19,7 @@ import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.configuration.WPCConfiguration;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
+import org.wikipediacleaner.api.data.contents.tag.HtmlTagType;
 import org.wikipediacleaner.i18n.GT;
 
 
@@ -49,7 +50,7 @@ public class CheckErrorAlgorithm101 extends CheckErrorAlgorithmBase {
     }
 
     // Check every <sup> tag
-    List<PageElementTag> supTags = analysis.getCompleteTags(PageElementTag.TAG_HTML_SUP);
+    List<PageElementTag> supTags = analysis.getCompleteTags(HtmlTagType.SUP);
     String contents = analysis.getContents();
     boolean result = false;
     for (PageElementTag supTag : supTags) {

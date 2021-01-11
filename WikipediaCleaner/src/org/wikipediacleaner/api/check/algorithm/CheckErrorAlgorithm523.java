@@ -22,6 +22,7 @@ import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.PageElementImage;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
+import org.wikipediacleaner.api.data.contents.tag.WikiTagType;
 import org.wikipediacleaner.i18n.GT;
 
 
@@ -87,7 +88,7 @@ public class CheckErrorAlgorithm523 extends CheckErrorAlgorithmBase {
     }
 
     // Memorize where each image in a gallery is
-    List<PageElementTag> galleryTags = analysis.getCompleteTags(PageElementTag.TAG_WIKI_GALLERY);
+    List<PageElementTag> galleryTags = analysis.getCompleteTags(WikiTagType.GALLERY);
     String contents = analysis.getContents();
     Namespace imageNamespace = analysis.getWikiConfiguration().getNamespace(Namespace.IMAGE);
     for (PageElementTag galleryTag : galleryTags) {

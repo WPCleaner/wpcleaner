@@ -7,10 +7,11 @@
 
 package org.wikipediacleaner.api.check.algorithm;
 
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
-import org.wikipediacleaner.api.data.PageElementTag;
+import org.wikipediacleaner.api.data.contents.tag.TagType;
+import org.wikipediacleaner.api.data.contents.tag.WikiTagType;
 
 
 /**
@@ -20,20 +21,18 @@ import org.wikipediacleaner.api.data.PageElementTag;
 public class CheckErrorAlgorithm024 extends CheckErrorAlgorithmUnclosedTags {
 
   /** List of tags managed by this error. */
-  private final List<String> tags;
+  private static final List<TagType> TAGS = Collections.singletonList(WikiTagType.PRE);
 
   public CheckErrorAlgorithm024() {
     super("Pre not correct end");
-    tags = new ArrayList<String>();
-    tags.add(PageElementTag.TAG_WIKI_PRE);
   }
 
   /**
    * @return List of tags managed by this error.
    */
   @Override
-  protected List<String> getTags() {
-    return tags;
+  protected List<TagType> getTags() {
+    return TAGS;
   }
 
   /**

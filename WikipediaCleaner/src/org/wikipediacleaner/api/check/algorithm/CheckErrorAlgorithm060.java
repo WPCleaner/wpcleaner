@@ -23,6 +23,7 @@ import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
 import org.wikipediacleaner.api.data.contents.comment.ContentsComment;
+import org.wikipediacleaner.api.data.contents.tag.WikiTagType;
 import org.wikipediacleaner.i18n.GT;
 
 
@@ -94,12 +95,12 @@ public class CheckErrorAlgorithm060 extends CheckErrorAlgorithmBase {
             PageElementTag tag = analysis.isInTag(tmpIndex);
             if ((tag != null) &&
                 (tag.getBeginIndex() == tmpIndex) &&
-                ((PageElementTag.TAG_WIKI_MATH.equals(tag.getNormalizedName())) ||
-                 (PageElementTag.TAG_WIKI_MATH_CHEM.equals(tag.getNormalizedName())) ||
-                 (PageElementTag.TAG_WIKI_NOWIKI.equals(tag.getNormalizedName())) ||
-                 (PageElementTag.TAG_WIKI_SOURCE.equals(tag.getNormalizedName())) ||
-                 (PageElementTag.TAG_WIKI_SCORE.equals(tag.getNormalizedName())) ||
-                 (PageElementTag.TAG_WIKI_SYNTAXHIGHLIGHT.equals(tag.getNormalizedName())))) {
+                ((WikiTagType.MATH.equals(tag.getType())) ||
+                 (WikiTagType.MATH_CHEM.equals(tag.getType())) ||
+                 (WikiTagType.NOWIKI.equals(tag.getType())) ||
+                 (WikiTagType.SCORE.equals(tag.getType())) ||
+                 (WikiTagType.SOURCE.equals(tag.getType())) ||
+                 (WikiTagType.SYNTAXHIGHLIGHT.equals(tag.getType())))) {
               currentPos = tag.getCompleteEndIndex() - 1 - paramValueStartIndex;
             }
           }

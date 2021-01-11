@@ -27,9 +27,9 @@ import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageElementExternalLink;
 import org.wikipediacleaner.api.data.PageElementISBN;
-import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
-import org.wikipediacleaner.api.data.contents.tag.FullTagBuilder;
+import org.wikipediacleaner.api.data.contents.tag.CompleteTagBuilder;
+import org.wikipediacleaner.api.data.contents.tag.WikiTagType;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
 import org.wikipediacleaner.gui.swing.basic.BasicWorker;
 import org.wikipediacleaner.i18n.GT;
@@ -192,9 +192,7 @@ public class UpdateISBNWarningTools extends UpdateWarningTools {
         pos++;
       }
       if (keep) {
-        elements.add(FullTagBuilder.from(
-            PageElementTag.TAG_WIKI_NOWIKI,
-            error).toString());
+        elements.add(CompleteTagBuilder.from(WikiTagType.NOWIKI, error).toString());
         elements.add(comment.toString());
         memorizeError(error, analysis.getPage().getTitle());
       }

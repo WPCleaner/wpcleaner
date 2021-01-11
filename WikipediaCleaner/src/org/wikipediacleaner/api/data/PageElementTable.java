@@ -14,6 +14,7 @@ import java.util.List;
 
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
 import org.wikipediacleaner.api.data.contents.comment.ContentsComment;
+import org.wikipediacleaner.api.data.contents.tag.WikiTagType;
 
 
 /**
@@ -374,7 +375,7 @@ public class PageElementTable extends PageElement {
       if ((tag != null)  &&
           tag.isComplete() &&
           (tag.getBeginIndex() == index) &&
-          PageElementTag.TAG_WIKI_NOWIKI.equals(tag.getNormalizedName())) {
+          WikiTagType.NOWIKI.equals(tag.getType())) {
         return getMeaningfulIndex(analysis, tag.getCompleteEndIndex());
       }
     }
@@ -401,8 +402,8 @@ public class PageElementTable extends PageElement {
       }
       PageElementTag tag = analysis.isInTag(index);
       if ((tag != null) && (tag.getBeginIndex() == index)) {
-        if (PageElementTag.TAG_WIKI_NOWIKI.equals(tag.getNormalizedName()) ||
-            PageElementTag.TAG_WIKI_REF.equals(tag.getNormalizedName())) {
+        if (WikiTagType.NOWIKI.equals(tag.getType()) ||
+            WikiTagType.REF.equals(tag.getType())) {
           return getTrueIndex(analysis, tables, tag.getCompleteEndIndex());
         }
         return getTrueIndex(analysis, tables, tag.getEndIndex());

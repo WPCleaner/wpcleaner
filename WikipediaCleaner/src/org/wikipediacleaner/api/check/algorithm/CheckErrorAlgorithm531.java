@@ -18,6 +18,7 @@ import org.wikipediacleaner.api.configuration.WPCConfiguration;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
+import org.wikipediacleaner.api.data.contents.tag.WikiTagType;
 import org.wikipediacleaner.i18n.GT;
 
 
@@ -49,7 +50,7 @@ public class CheckErrorAlgorithm531 extends CheckErrorAlgorithmBase {
 
     // Analyze each reference tag
     boolean result = false;
-    List<PageElementTag> refTags = analysis.getCompleteTags(PageElementTag.TAG_WIKI_REF);
+    List<PageElementTag> refTags = analysis.getCompleteTags(WikiTagType.REF);
     if ((refTags == null) || (refTags.isEmpty())) {
       return false;
     }
@@ -74,7 +75,7 @@ public class CheckErrorAlgorithm531 extends CheckErrorAlgorithmBase {
       if (prohibitedTemplate.length > 0) {
         List<PageElementTemplate> templates = analysis.getTemplates(prohibitedTemplate[0]);
         for (PageElementTemplate template : templates) {
-          if (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_REF, template.getBeginIndex()) != null) {
+          if (analysis.getSurroundingTag(WikiTagType.REF, template.getBeginIndex()) != null) {
             if (errors == null) {
               return true;
             }

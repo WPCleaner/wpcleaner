@@ -13,6 +13,7 @@ import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.data.PageElementExternalLink;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
+import org.wikipediacleaner.api.data.contents.tag.WikiTagType;
 
 
 /**
@@ -57,7 +58,7 @@ public class CheckErrorAlgorithm080 extends CheckErrorAlgorithmBase {
         // Compute maximum index for link end
         int linkEndIndex = link.getEndIndex();
         int maxEnd = maxLength;
-        PageElementTag refTag = analysis.getSurroundingTag(PageElementTag.TAG_WIKI_REF, linkBeginIndex);
+        PageElementTag refTag = analysis.getSurroundingTag(WikiTagType.REF, linkBeginIndex);
         if ((refTag != null) &&
             (refTag.getMatchingTag() != null) &&
             (refTag.getMatchingTag().getBeginIndex() >= linkEndIndex)) {

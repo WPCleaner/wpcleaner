@@ -26,7 +26,8 @@ import org.wikipediacleaner.api.data.PageElementExternalLink;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.PageElementTag.Parameter;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
-import org.wikipediacleaner.api.data.contents.tag.FullTagBuilder;
+import org.wikipediacleaner.api.data.contents.tag.CompleteTagBuilder;
+import org.wikipediacleaner.api.data.contents.tag.WikiTagType;
 import org.wikipediacleaner.gui.swing.action.ActionExternalViewer;
 import org.wikipediacleaner.gui.swing.basic.Utilities;
 import org.wikipediacleaner.gui.swing.component.MWPane;
@@ -71,7 +72,7 @@ public class CheckErrorAlgorithm081 extends CheckErrorAlgorithmBase {
       PageAnalysis analysis,
       Map<String, Map<String, List<PageElementTag>>> refs) {
     List<PageElementTag> completeRefTags =
-        analysis.getCompleteTags(PageElementTag.TAG_WIKI_REF);
+        analysis.getCompleteTags(WikiTagType.REF);
     String contents = analysis.getContents();
     boolean result = false;
     for (PageElementTag tag : completeRefTags) {
@@ -137,7 +138,7 @@ public class CheckErrorAlgorithm081 extends CheckErrorAlgorithmBase {
    * @return Reference tag.
    */
   private String getClosedRefTag(String groupName, String tagName, String value) {
-    FullTagBuilder builder = FullTagBuilder.from(PageElementTag.TAG_WIKI_REF, StringUtils.trim(value));
+    CompleteTagBuilder builder = CompleteTagBuilder.from(WikiTagType.REF, StringUtils.trim(value));
     if ((groupName != null) && (groupName.trim().length() > 0)) {
       builder.addAttribute("group", groupName.trim());
     }
@@ -178,7 +179,7 @@ public class CheckErrorAlgorithm081 extends CheckErrorAlgorithmBase {
 
     // Second pass for managing with several tags having the same group and value
     List<PageElementTag> completeReferencesTags =
-        analysis.getCompleteTags(PageElementTag.TAG_WIKI_REFERENCES);
+        analysis.getCompleteTags(WikiTagType.REFERENCES);
     String contents = analysis.getContents();
     for (Entry<String, Map<String, List<PageElementTag>>> entryGroup : refs.entrySet()) {
       String groupName = entryGroup.getKey();
@@ -313,10 +314,8 @@ public class CheckErrorAlgorithm081 extends CheckErrorAlgorithmBase {
     }
 
     // Check all reference tags
-    List<PageElementTag> completeReferencesTags =
-        analysis.getCompleteTags(PageElementTag.TAG_WIKI_REFERENCES);
-    List<PageElementTag> completeRefTags =
-        analysis.getCompleteTags(PageElementTag.TAG_WIKI_REF);
+    List<PageElementTag> completeReferencesTags = analysis.getCompleteTags(WikiTagType.REFERENCES);
+    List<PageElementTag> completeRefTags = analysis.getCompleteTags(WikiTagType.REF);
     Object highlight = null;
     String contents = analysis.getContents();
     for (PageElementTag refTag : completeRefTags) {

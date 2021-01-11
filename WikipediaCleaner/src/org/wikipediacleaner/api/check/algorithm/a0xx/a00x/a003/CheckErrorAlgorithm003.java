@@ -24,8 +24,7 @@ import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.PageElementTitle;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
-import org.wikipediacleaner.api.data.contents.tag.TagBuilder;
-import org.wikipediacleaner.api.data.contents.tag.TagFormat;
+import org.wikipediacleaner.api.data.contents.tag.WikiTagType;
 import org.wikipediacleaner.i18n.GT;
 
 /**
@@ -56,12 +55,12 @@ public class CheckErrorAlgorithm003 extends CheckErrorAlgorithmBase {
 
     // Analyzing text for <ref> tags
     PageElementTag lastRefTag = null;
-    List<PageElementTag> refTags = analysis.getTags(PageElementTag.TAG_WIKI_REF);
+    List<PageElementTag> refTags = analysis.getTags(WikiTagType.REF);
     if ((refTags != null) && (refTags.size() > 0)) {
       for (int numTag = refTags.size() - 1; (numTag >= 0) && (lastRefTag == null); numTag--) {
         boolean usefulRef = true;
         PageElementTag refTag = refTags.get(numTag);
-        if (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_NOWIKI, refTag.getBeginIndex()) != null) {
+        if (analysis.getSurroundingTag(WikiTagType.NOWIKI, refTag.getBeginIndex()) != null) {
           usefulRef =  false;
         }
         if (usefulRef) {
@@ -75,7 +74,7 @@ public class CheckErrorAlgorithm003 extends CheckErrorAlgorithmBase {
     boolean referencesFound = false;
 
     // Analyzing text for <references> tags
-    List<PageElementTag> referencesTags = analysis.getTags(PageElementTag.TAG_WIKI_REFERENCES);
+    List<PageElementTag> referencesTags = analysis.getTags(WikiTagType.REFERENCES);
     if (referencesTags != null) {
       for (PageElementTag referencesTag : referencesTags) {
         if (referencesTag.isComplete()) {
@@ -118,7 +117,7 @@ public class CheckErrorAlgorithm003 extends CheckErrorAlgorithmBase {
               analysis, referencesTag.getBeginIndex(), referencesTag.getEndIndex());
           if (referencesTags.size() == 1) {
             errorResult.addReplacement(
-                TagBuilder.from(PageElementTag.TAG_WIKI_REFERENCES, TagFormat.FULL).toString(),
+                WikiTagType.REFERENCES.getFullTag(),
                 GT._T("Close tag"));
           }
           errors.add(errorResult);
@@ -138,13 +137,13 @@ public class CheckErrorAlgorithm003 extends CheckErrorAlgorithmBase {
           PageElementTag tag = analysis.isInTag(index);
           if ((tag != null) &&
               (tag.getBeginIndex() == index) &&
-              (PageElementTag.TAG_WIKI_REF.equals(tag.getNormalizedName()))) {
+              (WikiTagType.REF.equals(tag.getType()))) {
             index = tag.getCompleteEndIndex();
           } else {
             if (contents.startsWith("</references/>", index)) {
               errorResult = createCheckErrorResult(analysis, index, index + 14);
               errorResult.addReplacement(
-                  TagBuilder.from(PageElementTag.TAG_WIKI_REFERENCES,  TagFormat.CLOSE).toString(),
+                  WikiTagType.REFERENCES.getCloseTag(),
                   true);
               errors.add(errorResult);
             }

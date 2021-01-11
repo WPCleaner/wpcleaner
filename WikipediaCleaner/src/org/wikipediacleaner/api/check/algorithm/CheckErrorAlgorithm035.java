@@ -14,6 +14,7 @@ import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
+import org.wikipediacleaner.api.data.contents.tag.WikiTagType;
 
 
 /**
@@ -46,7 +47,7 @@ public class CheckErrorAlgorithm035 extends CheckErrorAlgorithmBase {
     Namespace imageNamespace = analysis.getWikiConfiguration().getNamespace(Namespace.IMAGE);
 
     // Analyze each gallery tag
-    List<PageElementTag> galleryTags = analysis.getCompleteTags(PageElementTag.TAG_WIKI_GALLERY);
+    List<PageElementTag> galleryTags = analysis.getCompleteTags(WikiTagType.GALLERY);
     String contents = analysis.getContents();
     boolean result = false;
     for (PageElementTag galleryTag : galleryTags) {

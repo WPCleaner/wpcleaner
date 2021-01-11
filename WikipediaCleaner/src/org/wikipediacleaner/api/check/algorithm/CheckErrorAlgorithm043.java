@@ -15,6 +15,7 @@ import org.wikipediacleaner.api.data.PageElementFunction;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
+import org.wikipediacleaner.api.data.contents.tag.WikiTagType;
 import org.wikipediacleaner.i18n.GT;
 
 
@@ -52,14 +53,14 @@ public class CheckErrorAlgorithm043 extends CheckErrorAlgorithmBase {
     while (currentIndex >= 0) {
       boolean shouldCount = true;
       if (analysis.comments().isAt(currentIndex) ||
-          (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_NOWIKI, currentIndex) != null) ||
-          (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_MAPFRAME, currentIndex) != null) ||
-          (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_MATH, currentIndex) != null) ||
-          (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_MATH_CHEM, currentIndex) != null) ||
-          (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_PRE, currentIndex) != null) ||
-          (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_SCORE, currentIndex) != null) ||
-          (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_SOURCE, currentIndex) != null) ||
-          (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_SYNTAXHIGHLIGHT, currentIndex) != null) ||
+          (analysis.getSurroundingTag(WikiTagType.NOWIKI, currentIndex) != null) ||
+          (analysis.getSurroundingTag(WikiTagType.MAPFRAME, currentIndex) != null) ||
+          (analysis.getSurroundingTag(WikiTagType.MATH, currentIndex) != null) ||
+          (analysis.getSurroundingTag(WikiTagType.MATH_CHEM, currentIndex) != null) ||
+          (analysis.getSurroundingTag(WikiTagType.PRE, currentIndex) != null) ||
+          (analysis.getSurroundingTag(WikiTagType.SCORE, currentIndex) != null) ||
+          (analysis.getSurroundingTag(WikiTagType.SOURCE, currentIndex) != null) ||
+          (analysis.getSurroundingTag(WikiTagType.SYNTAXHIGHLIGHT, currentIndex) != null) ||
           (analysis.isInCategory(currentIndex) != null) ||
           (analysis.isInTag(currentIndex) != null)) {
         shouldCount = false;
@@ -93,7 +94,7 @@ public class CheckErrorAlgorithm043 extends CheckErrorAlgorithmBase {
       if (shouldCount) {
 
         // Limit search
-        PageElementTag tagRef = analysis.getSurroundingTag(PageElementTag.TAG_WIKI_REF, currentIndex);
+        PageElementTag tagRef = analysis.getSurroundingTag(WikiTagType.REF, currentIndex);
         if ((tagRef != null) && tagRef.isComplete()) {
           maxEnd = Math.min(maxEnd, tagRef.getValueEndIndex());
         }

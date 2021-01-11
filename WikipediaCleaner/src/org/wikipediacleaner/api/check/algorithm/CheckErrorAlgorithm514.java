@@ -25,6 +25,7 @@ import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
 import org.wikipediacleaner.api.data.contents.tag.TagBuilder;
 import org.wikipediacleaner.api.data.contents.tag.TagFormat;
+import org.wikipediacleaner.api.data.contents.tag.WikiTagType;
 import org.wikipediacleaner.i18n.GT;
 
 
@@ -56,7 +57,7 @@ public class CheckErrorAlgorithm514 extends CheckErrorAlgorithmBase {
 
     // List named references with actual content 
     boolean result = false;
-    List<PageElementTag> tags = analysis.getCompleteTags(PageElementTag.TAG_WIKI_REF);
+    List<PageElementTag> tags = analysis.getCompleteTags(WikiTagType.REF);
     if (tags == null) {
       return result;
     }
@@ -127,8 +128,7 @@ public class CheckErrorAlgorithm514 extends CheckErrorAlgorithmBase {
               Collections.sort(tmpList);
               for (String name : tmpList) {
                 if (count < 40) {
-                  TagBuilder builder = TagBuilder
-                      .from(PageElementTag.TAG_WIKI_REF, TagFormat.FULL);
+                  TagBuilder builder = TagBuilder.from(WikiTagType.REF, TagFormat.FULL);
                   if (group.getKey() != null) {
                     builder.addAttribute("group", group.getKey());
                   }

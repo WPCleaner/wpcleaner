@@ -20,10 +20,10 @@ import org.wikipediacleaner.api.data.CharacterUtils;
 import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageElementListItem;
-import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.PageElementTemplate.Parameter;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
+import org.wikipediacleaner.api.data.contents.tag.WikiTagType;
 import org.wikipediacleaner.i18n.GT;
 import org.wikipediacleaner.api.data.PageElementTitle;
 
@@ -81,10 +81,10 @@ public class CheckErrorAlgorithm547 extends CheckErrorAlgorithmBase {
 
       // Filter special cases
       if (shouldReport) {
-        if ((analysis.getSurroundingTag(PageElementTag.TAG_WIKI_NOWIKI, index) != null) ||
-            (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_SCORE, index) != null) ||
-            (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_SOURCE, index) != null) ||
-            (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_SYNTAXHIGHLIGHT, index) != null)) {
+        if ((analysis.getSurroundingTag(WikiTagType.NOWIKI, index) != null) ||
+            (analysis.getSurroundingTag(WikiTagType.SCORE, index) != null) ||
+            (analysis.getSurroundingTag(WikiTagType.SOURCE, index) != null) ||
+            (analysis.getSurroundingTag(WikiTagType.SYNTAXHIGHLIGHT, index) != null)) {
           shouldReport = false;
         }
       }

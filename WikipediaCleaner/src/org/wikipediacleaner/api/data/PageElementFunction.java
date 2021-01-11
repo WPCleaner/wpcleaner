@@ -14,6 +14,7 @@ import java.util.List;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.contents.comment.ContainerComment;
 import org.wikipediacleaner.api.data.contents.comment.ContentsComment;
+import org.wikipediacleaner.api.data.contents.tag.WikiTagType;
 
 
 /**
@@ -308,12 +309,12 @@ public class PageElementFunction extends PageElement {
           } else {
             count = 1;
           }
-          if (PageElementTag.TAG_WIKI_NOWIKI.equals(tag.getName())) {
+          if (WikiTagType.NOWIKI.equals(tag.getType())) {
             depthTagNoWiki += count;
             if (depthTagNoWiki < 0) {
               depthTagNoWiki = 0;
             }
-          } else if (PageElementTag.TAG_WIKI_REF.equals(tag.getName())) {
+          } else if (WikiTagType.REF.equals(tag.getType())) {
             if (depthTagNoWiki == 0) {
               depthTagRef += count;
               if (depthTagRef < 0) {

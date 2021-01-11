@@ -14,8 +14,7 @@ import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.CheckErrorResult.ErrorLevel;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
-import org.wikipediacleaner.api.data.contents.tag.TagBuilder;
-import org.wikipediacleaner.api.data.contents.tag.TagFormat;
+import org.wikipediacleaner.api.data.contents.tag.WikiTagType;
 
 
 /**
@@ -46,14 +45,14 @@ public class CheckErrorAlgorithm094 extends CheckErrorAlgorithmBase {
 
     // Analyze all tags
     boolean result = false;
-    List<PageElementTag> refTags = analysis.getTags(PageElementTag.TAG_WIKI_REF);
+    List<PageElementTag> refTags = analysis.getTags(WikiTagType.REF);
     if (refTags == null) {
       return result;
     }
     String contents = analysis.getContents();
     for (PageElementTag tag : refTags) {
       boolean shouldCheck = true;
-      if (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_NOWIKI, tag.getBeginIndex()) != null) {
+      if (analysis.getSurroundingTag(WikiTagType.NOWIKI, tag.getBeginIndex()) != null) {
         shouldCheck = false;
       }
 
@@ -77,9 +76,7 @@ public class CheckErrorAlgorithm094 extends CheckErrorAlgorithmBase {
           result = true;
           CheckErrorResult errorResult = createCheckErrorResult(
               analysis, beginIndex, endIndex, ErrorLevel.WARNING);
-          errorResult.addReplacement(
-              TagBuilder.from(PageElementTag.TAG_WIKI_REF, TagFormat.CLOSE).toString(),
-              true);
+          errorResult.addReplacement(WikiTagType.REF.getCloseTag(), true);
           errors.add(errorResult);
         }
       }

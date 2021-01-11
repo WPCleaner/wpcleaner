@@ -13,6 +13,7 @@ import java.util.List;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
+import org.wikipediacleaner.api.data.contents.tag.WikiTagType;
 
 
 /**
@@ -42,11 +43,11 @@ public class CheckErrorAlgorithm554 extends CheckErrorAlgorithmBase {
     }
 
     // Global verification
-    List<PageElementTag> nowikiTags = analysis.getTags(PageElementTag.TAG_WIKI_NOWIKI);
+    List<PageElementTag> nowikiTags = analysis.getTags(WikiTagType.NOWIKI);
     if ((nowikiTags == null) || (nowikiTags.isEmpty())) {
       return false;
     }
-    List<PageElementTag> galleryTags = analysis.getTags(PageElementTag.TAG_WIKI_GALLERY);
+    List<PageElementTag> galleryTags = analysis.getTags(WikiTagType.GALLERY);
     if ((galleryTags == null) || (galleryTags.isEmpty())) {
       return false;
     }
@@ -82,7 +83,7 @@ public class CheckErrorAlgorithm554 extends CheckErrorAlgorithmBase {
     }
 
     // Check if there's a gallery tag around the nowiki tag
-    PageElementTag galleryTag = analysis.getSurroundingTag(PageElementTag.TAG_WIKI_GALLERY, nowikiTag.getBeginIndex());
+    PageElementTag galleryTag = analysis.getSurroundingTag(WikiTagType.GALLERY, nowikiTag.getBeginIndex());
     if (galleryTag == null) {
       return false;
     }

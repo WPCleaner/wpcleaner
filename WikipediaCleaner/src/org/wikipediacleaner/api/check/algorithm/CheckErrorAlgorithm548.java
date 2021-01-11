@@ -25,6 +25,7 @@ import org.wikipediacleaner.api.data.PageElementInternalLink;
 import org.wikipediacleaner.api.data.PageElementInterwikiLink;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
+import org.wikipediacleaner.api.data.contents.tag.WikiTagType;
 import org.wikipediacleaner.i18n.GT;
 
 
@@ -223,7 +224,7 @@ public class CheckErrorAlgorithm548 extends CheckErrorAlgorithmBase {
           if (previousChar == '>') {
             PageElementTag tag = analysis.isInTag(tmpIndex);
             if ((tag != null) &&
-                PageElementTag.TAG_WIKI_REF.equals(tag.getNormalizedName()) &&
+                WikiTagType.REF.equals(tag.getType()) &&
                 tag.isComplete()) {
               if (tag.isFullTag() || tag.isEndTag()) {
                 tmpIndex = tag.getCompleteBeginIndex();

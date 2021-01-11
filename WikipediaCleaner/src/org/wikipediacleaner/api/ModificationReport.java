@@ -13,9 +13,8 @@ import java.util.List;
 
 import org.wikipediacleaner.api.constants.EnumQueryResult;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
-import org.wikipediacleaner.api.data.PageElementTag;
-import org.wikipediacleaner.api.data.contents.tag.FullTagBuilder;
-import org.wikipediacleaner.api.data.contents.tag.TagBuilder;
+import org.wikipediacleaner.api.data.contents.tag.CompleteTagBuilder;
+import org.wikipediacleaner.api.data.contents.tag.HtmlTagType;
 import org.wikipediacleaner.i18n.GT;
 import org.wikipediacleaner.utils.Configuration;
 import org.wikipediacleaner.utils.ConfigurationValueBoolean;
@@ -72,47 +71,47 @@ public class ModificationReport {
 
       // Page
       String title = modification.getTitle();
-      String formattedTitle = FullTagBuilder.from(PageElementTag.TAG_HTML_A, title)
+      String formattedTitle = CompleteTagBuilder.from(HtmlTagType.A, title)
           .addAttribute("href", wiki.getSettings().getURL(title, false, secured))
           .toString();
       result.append(
           GT._T("Page {0}:", formattedTitle));
       result.append("\n");
-      result.append(TagBuilder.UL_OPEN);
+      result.append(HtmlTagType.UL.getOpenTag());
       result.append("\n");
 
       // List of modifications
       for (String replacement : modification.getModifications()) {
-        result.append(FullTagBuilder.from(
-            PageElementTag.TAG_HTML_LI,
+        result.append(CompleteTagBuilder.from(
+            HtmlTagType.LI,
             replacement.replaceAll("\\&", "&amp;").replaceAll("\\<", "&lt;"))).toString();
       }
 
-      result.append(TagBuilder.UL_CLOSE);
+      result.append(HtmlTagType.UL.getCloseTag());
       result.append("\n");
     }
 
     // Report errors
     if (errors.size() > 0) {
       result.append("\n\n");
-      result.append(FullTagBuilder
-          .from(PageElementTag.TAG_HTML_FONT, GT._T("The following errors have occurred:"))
+      result.append(CompleteTagBuilder
+          .from(HtmlTagType.FONT, GT._T("The following errors have occurred:"))
           .addAttribute("color", "red").toString());
-      result.append(TagBuilder.UL_OPEN);
+      result.append(HtmlTagType.UL.getOpenTag());
       result.append("\n");
       for (Error error: errors) {
-        result.append(TagBuilder.LI_OPEN);
+        result.append(HtmlTagType.LI.getOpenTag());
         String title = error.getTitle();
-        String formattedTitle = FullTagBuilder.from(PageElementTag.TAG_HTML_A, title)
+        String formattedTitle = CompleteTagBuilder.from(HtmlTagType.A, title)
             .addAttribute("href", wiki.getSettings().getURL(title, false, secured)).toString();
         result.append(
             GT._T("Page {0}:", formattedTitle));
         result.append(" ");
         result.append(error.getError().getCode());
-        result.append(TagBuilder.LI_CLOSE);
+        result.append(HtmlTagType.LI.getCloseTag());
         result.append("\n");
       }
-      result.append(TagBuilder.UL_CLOSE);
+      result.append(HtmlTagType.UL.getCloseTag());
       result.append("\n");
     }
 

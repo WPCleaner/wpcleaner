@@ -13,6 +13,7 @@ import java.util.List;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
+import org.wikipediacleaner.api.data.contents.tag.WikiTagType;
 
 
 /**
@@ -42,7 +43,7 @@ public class CheckErrorAlgorithm029 extends CheckErrorAlgorithmBase {
     }
 
     // Check every <gallery> tag
-    List<PageElementTag> galleryTags = analysis.getTags(PageElementTag.TAG_WIKI_GALLERY);
+    List<PageElementTag> galleryTags = analysis.getTags(WikiTagType.GALLERY);
     String contents = analysis.getContents();
     boolean result = false;
     int index = 0;
@@ -56,7 +57,7 @@ public class CheckErrorAlgorithm029 extends CheckErrorAlgorithmBase {
       }
       int beginIndex = galleryTag.getBeginIndex();
       if (found) {
-        if (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_NOWIKI, beginIndex) != null) {
+        if (analysis.getSurroundingTag(WikiTagType.NOWIKI, beginIndex) != null) {
           found = false;
         }
       }

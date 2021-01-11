@@ -28,7 +28,7 @@ import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
 import org.wikipediacleaner.api.data.contents.ContentsUtil;
 import org.wikipediacleaner.api.data.contents.IntervalComparator;
-import org.wikipediacleaner.api.data.contents.tag.FullTagBuilder;
+import org.wikipediacleaner.api.data.contents.tag.WikiTagType;
 import org.wikipediacleaner.i18n.GT;
 
 
@@ -261,13 +261,13 @@ public class CheckErrorAlgorithm061 extends CheckErrorAlgorithmBase {
     int beginIndex = firstRef.getBeginIndex();
     int endIndex = tmpIndex;
     if (analysis.comments().isAt(beginIndex) ||
-        (analysis.isInTag(beginIndex, PageElementTag.TAG_WIKI_CHEM) != null) ||
-        (analysis.isInTag(beginIndex, PageElementTag.TAG_WIKI_MATH) != null) ||
-        (analysis.isInTag(beginIndex, PageElementTag.TAG_WIKI_MATH_CHEM) != null) ||
-        (analysis.isInTag(beginIndex, PageElementTag.TAG_WIKI_NOWIKI) != null) ||
-        (analysis.isInTag(beginIndex, PageElementTag.TAG_WIKI_SCORE) != null) ||
-        (analysis.isInTag(beginIndex, PageElementTag.TAG_WIKI_SOURCE) != null) ||
-        (analysis.isInTag(beginIndex, PageElementTag.TAG_WIKI_SYNTAXHIGHLIGHT) != null)) {
+        (analysis.isInTag(beginIndex, WikiTagType.CHEM) != null) ||
+        (analysis.isInTag(beginIndex, WikiTagType.MATH) != null) ||
+        (analysis.isInTag(beginIndex, WikiTagType.MATH_CHEM) != null) ||
+        (analysis.isInTag(beginIndex, WikiTagType.NOWIKI) != null) ||
+        (analysis.isInTag(beginIndex, WikiTagType.SCORE) != null) ||
+        (analysis.isInTag(beginIndex, WikiTagType.SOURCE) != null) ||
+        (analysis.isInTag(beginIndex, WikiTagType.SYNTAXHIGHLIGHT) != null)) {
       return false;
     }
 
@@ -364,7 +364,7 @@ public class CheckErrorAlgorithm061 extends CheckErrorAlgorithmBase {
     List<PageElement> refs = new ArrayList<PageElement>();
 
     // Retrieve references defined by tags
-    List<PageElementTag> refTags = analysis.getCompleteTags(PageElementTag.TAG_WIKI_REF);
+    List<PageElementTag> refTags = analysis.getCompleteTags(WikiTagType.REF);
     if (refTags != null) {
       for (PageElementTag refTag : refTags) {
         refs.add(new PageElementFullTag(refTag));
@@ -394,7 +394,7 @@ public class CheckErrorAlgorithm061 extends CheckErrorAlgorithmBase {
    */
   public static String createReducedListOfRefs(
       int count, String separator) {
-    String refBlock = FullTagBuilder.REF;
+    String refBlock = WikiTagType.REF.getCompleteTag();
     if (count > 2) {
       return refBlock + separator + "..." + separator + refBlock;
     }

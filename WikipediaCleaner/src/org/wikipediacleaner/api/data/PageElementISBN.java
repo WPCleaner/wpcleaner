@@ -19,6 +19,7 @@ import org.wikipediacleaner.api.data.PageElementTemplate.Parameter;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
 import org.wikipediacleaner.api.data.contents.ContentsUtil;
 import org.wikipediacleaner.api.data.contents.comment.ContentsComment;
+import org.wikipediacleaner.api.data.contents.tag.WikiTagType;
 import org.wikipediacleaner.api.data.contents.comment.CommentBuilder;
 import org.wikipediacleaner.api.data.contents.template.TemplateBuilder;
 
@@ -200,11 +201,10 @@ public class PageElementISBN extends PageElement {
       }
       PageElementTag tag = analysis.isInTag(index);
       if (tag != null) {
-        String tagName = tag.getName();
-        if (PageElementTag.TAG_WIKI_NOWIKI.equals(tagName) ||
-            PageElementTag.TAG_WIKI_PRE.equals(tagName) ||
-            PageElementTag.TAG_WIKI_SOURCE.equals(tagName) ||
-            PageElementTag.TAG_WIKI_SYNTAXHIGHLIGHT.equals(tagName)) {
+        if (WikiTagType.NOWIKI.equals(tag.getType()) ||
+            WikiTagType.PRE.equals(tag.getType()) ||
+            WikiTagType.SOURCE.equals(tag.getType()) ||
+            WikiTagType.SYNTAXHIGHLIGHT.equals(tag.getType())) {
           return tag.getCompleteEndIndex();
         }
         return tag.getEndIndex();
@@ -944,7 +944,7 @@ public class PageElementISBN extends PageElement {
         if (comment != null) {
           i = comment.getEndIndex() - 1;
         } else {
-          PageElementTag refTag = analysis.isInTag(i, PageElementTag.TAG_WIKI_REF);
+          PageElementTag refTag = analysis.isInTag(i, WikiTagType.REF);
           if ((refTag != null) && (refTag.getBeginIndex() == i)) {
             i = refTag.getCompleteEndIndex() - 1;
           }

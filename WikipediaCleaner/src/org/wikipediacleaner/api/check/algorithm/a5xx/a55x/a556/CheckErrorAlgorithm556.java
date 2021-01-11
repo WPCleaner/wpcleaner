@@ -21,14 +21,12 @@ import org.wikipediacleaner.api.configuration.WPCConfiguration;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageAnalysisUtils;
 import org.wikipediacleaner.api.data.PageElementExternalLink;
-import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.PageElementTemplate.Parameter;
 import org.wikipediacleaner.api.data.PageElementTitle;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
-import org.wikipediacleaner.api.data.contents.tag.FullTagBuilder;
-import org.wikipediacleaner.api.data.contents.tag.TagBuilder;
-import org.wikipediacleaner.api.data.contents.tag.TagFormat;
+import org.wikipediacleaner.api.data.contents.tag.CompleteTagBuilder;
+import org.wikipediacleaner.api.data.contents.tag.WikiTagType;
 import org.wikipediacleaner.i18n.GT;
 
 
@@ -91,8 +89,8 @@ public class CheckErrorAlgorithm556 extends CheckErrorAlgorithmBase {
 
     // Check if the link is in some constructions
     int beginIndex = link.getBeginIndex();
-    if ((analysis.getSurroundingTag(PageElementTag.TAG_WIKI_REF, beginIndex) != null) ||
-        (analysis.isInTag(beginIndex, PageElementTag.TAG_WIKI_REFERENCES) != null)) {
+    if ((analysis.getSurroundingTag(WikiTagType.REF, beginIndex) != null) ||
+        (analysis.isInTag(beginIndex, WikiTagType.REFERENCES) != null)) {
       return false;
     }
 
@@ -143,21 +141,21 @@ public class CheckErrorAlgorithm556 extends CheckErrorAlgorithmBase {
     }
     int endIndex = link.getEndIndex();
     CheckErrorResult errorResult = createCheckErrorResult(analysis, beginIndex, endIndex);
-    String replacement = FullTagBuilder.from(
-        PageElementTag.TAG_WIKI_REF,
+    String replacement = CompleteTagBuilder.from(
+        WikiTagType.REF,
         analysis.getContents().substring(beginIndex, endIndex)).toString();
     errorResult.addReplacement(
         replacement,
         GT._T(
             "Add inside a {0} tag",
-            TagBuilder.from(PageElementTag.TAG_WIKI_REF, TagFormat.FULL).toString()));
+            WikiTagType.REF.getFullTag()));
     if (link.hasSquare() && link.hasSecondSquare()) {
       errorResult.addReplacement(link.getDisplayedText());
       errorResult.addReplacement(
           link.getDisplayedText() + replacement,
           GT._T(
               "Keep text and add link inside a {0} tag",
-              TagBuilder.from(PageElementTag.TAG_WIKI_REF, TagFormat.FULL).toString()));
+              WikiTagType.REF.getFullTag()));
     }
     errors.add(errorResult);
     return true;

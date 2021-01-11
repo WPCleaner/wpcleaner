@@ -7,7 +7,11 @@
 
 package org.wikipediacleaner.api.check.algorithm;
 
-import org.wikipediacleaner.api.data.PageElementTag;
+import java.util.Collections;
+import java.util.Set;
+
+import org.wikipediacleaner.api.data.contents.tag.HtmlTagType;
+import org.wikipediacleaner.api.data.contents.tag.TagType;
 
 
 /**
@@ -23,15 +27,21 @@ public class CheckErrorAlgorithm040 extends CheckErrorAlgorithmTags {
   /**
    * Tags to look for.
    */
-  private final static String[] TAGS = {
-    PageElementTag.TAG_HTML_FONT,
-  };
+  private final static Set<TagType> TAGS = Collections.singleton(HtmlTagType.FONT);
 
   /**
    * @return Tags to look for.
    */
   @Override
-  protected String[] getTags() {
+  protected Set<TagType> getTags() {
     return TAGS;
+  }
+
+  /**
+   * @return True if complete tags should be reported as one tag instead of separate tags.
+   */
+  @Override
+  protected boolean reportCompleteTags() {
+    return false;
   }
 }

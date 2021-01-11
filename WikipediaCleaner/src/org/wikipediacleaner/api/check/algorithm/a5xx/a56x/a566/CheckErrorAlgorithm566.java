@@ -9,29 +9,27 @@
 package org.wikipediacleaner.api.check.algorithm.a5xx.a56x.a566;
 
 import java.util.Collection;
-import java.util.HashSet;
+import java.util.Collections;
 import java.util.Set;
 
 import javax.annotation.Nonnull;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
-import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmTags2;
+import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmTags;
 import org.wikipediacleaner.api.data.CharacterUtils;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
+import org.wikipediacleaner.api.data.contents.tag.HtmlTagType;
+import org.wikipediacleaner.api.data.contents.tag.TagType;
 
 
 /**
  * Algorithm for analyzing error 566 of check wikipedia project.
  * Error 566: abbr tags
  */
-public class CheckErrorAlgorithm566 extends CheckErrorAlgorithmTags2 {
+public class CheckErrorAlgorithm566 extends CheckErrorAlgorithmTags {
 
-  private static final @Nonnull Set<String> tags = new HashSet<>();
-
-  static {
-    tags.add(PageElementTag.TAG_HTML_ABBR);
-  }
+  private static final @Nonnull Set<TagType> tags = Collections.singleton(HtmlTagType.ABBR);
 
   public CheckErrorAlgorithm566() {
     super("<abbr> tags");
@@ -40,10 +38,10 @@ public class CheckErrorAlgorithm566 extends CheckErrorAlgorithmTags2 {
 
   /**
    * @return Tags to look for.
-   * @see org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmTags2#getTags()
+   * @see org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmTags#getTags()
    */
   @Override
-  protected Set<String> getTags() {
+  protected Set<TagType> getTags() {
     return tags;
   }
 

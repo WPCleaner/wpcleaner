@@ -14,8 +14,8 @@ import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.HtmlCharacters;
 import org.wikipediacleaner.api.check.CheckErrorResult.ErrorLevel;
 import org.wikipediacleaner.api.data.PageElementExternalLink;
-import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
+import org.wikipediacleaner.api.data.contents.tag.WikiTagType;
 import org.wikipediacleaner.gui.swing.component.MWPane;
 import org.wikipediacleaner.i18n.GT;
 
@@ -71,8 +71,8 @@ public abstract class CheckErrorAlgorithmHtmlNamedEntities extends CheckErrorAlg
       boolean shouldMatch = true;
       if (shouldMatch) {
         if (analysis.comments().isAt(ampersandIndex) ||
-            (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_SOURCE, ampersandIndex) != null) ||
-            (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_SYNTAXHIGHLIGHT, ampersandIndex) != null)) {
+            (analysis.getSurroundingTag(WikiTagType.SOURCE, ampersandIndex) != null) ||
+            (analysis.getSurroundingTag(WikiTagType.SYNTAXHIGHLIGHT, ampersandIndex) != null)) {
           shouldMatch = false;
         }
       }

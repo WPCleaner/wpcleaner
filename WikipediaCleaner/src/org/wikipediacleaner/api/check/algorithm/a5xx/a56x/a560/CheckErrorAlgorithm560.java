@@ -20,6 +20,8 @@ import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.PageElementTag.Parameter;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
+import org.wikipediacleaner.api.data.contents.tag.TagType;
+import org.wikipediacleaner.api.data.contents.tag.WikiTagType;
 
 
 /**
@@ -32,15 +34,15 @@ public class CheckErrorAlgorithm560 extends CheckErrorAlgorithmBase {
     super("tag with duplicated attributes");
   }
 
-  /** Tags handled by this error : tag name -> attribute name -> automatic fixing */
-  private static final Map<String, Map<String, Boolean>> TAGS_MAP;
+  /** Tags handled by this error : tag type -> attribute name -> automatic fixing */
+  private static final Map<TagType, Map<String, Boolean>> TAGS_MAP;
 
   static {
-    Map<String, Map<String, Boolean>> tagsMap = new HashMap<>();
+    Map<TagType, Map<String, Boolean>> tagsMap = new HashMap<>();
     Map<String, Boolean> refTagMap = new HashMap<>();
     refTagMap.put("name", Boolean.TRUE);
     refTagMap.put("group", Boolean.TRUE);
-    tagsMap.put(PageElementTag.TAG_WIKI_REF, Collections.unmodifiableMap(refTagMap));
+    tagsMap.put(WikiTagType.REF, Collections.unmodifiableMap(refTagMap));
     TAGS_MAP = Collections.unmodifiableMap(tagsMap);
   }
 
@@ -62,7 +64,7 @@ public class CheckErrorAlgorithm560 extends CheckErrorAlgorithmBase {
 
     // Analyze each type of tag
     boolean result = false;
-    for (Entry<String, Map<String, Boolean>> tagConfiguration : TAGS_MAP.entrySet()) {
+    for (Entry<TagType, Map<String, Boolean>> tagConfiguration : TAGS_MAP.entrySet()) {
       List<PageElementTag> tags = analysis.getTags(tagConfiguration.getKey());
       for (PageElementTag tag : tags) {
         result |= analyzeTag(analysis, errors, tag, tagConfiguration.getValue());

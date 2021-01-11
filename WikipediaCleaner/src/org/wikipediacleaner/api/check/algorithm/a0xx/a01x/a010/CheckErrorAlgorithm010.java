@@ -26,6 +26,8 @@ import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
 import org.wikipediacleaner.api.data.contents.ContentsUtil;
 import org.wikipediacleaner.api.data.contents.ilink.InternalLinkBuilder;
+import org.wikipediacleaner.api.data.contents.tag.HtmlTagType;
+import org.wikipediacleaner.api.data.contents.tag.WikiTagType;
 
 
 /**
@@ -101,15 +103,15 @@ public class CheckErrorAlgorithm010 extends CheckErrorAlgorithmBase {
       }
       if (shouldCount) {
         if (analysis.comments().isAt(currentIndex) ||
-            (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_NOWIKI, currentIndex) != null) ||
-            (analysis.getSurroundingTag(PageElementTag.TAG_HTML_CODE, currentIndex) != null) ||
-            (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_MAPFRAME, currentIndex) != null) ||
-            (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_MATH, currentIndex) != null) ||
-            (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_MATH_CHEM, currentIndex) != null) ||
-            (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_PRE, currentIndex) != null) ||
-            (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_SCORE, currentIndex) != null) ||
-            (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_SOURCE, currentIndex) != null) ||
-            (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_SYNTAXHIGHLIGHT, currentIndex) != null) ||
+            (analysis.getSurroundingTag(WikiTagType.NOWIKI, currentIndex) != null) ||
+            (analysis.getSurroundingTag(HtmlTagType.CODE, currentIndex) != null) ||
+            (analysis.getSurroundingTag(WikiTagType.MAPFRAME, currentIndex) != null) ||
+            (analysis.getSurroundingTag(WikiTagType.MATH, currentIndex) != null) ||
+            (analysis.getSurroundingTag(WikiTagType.MATH_CHEM, currentIndex) != null) ||
+            (analysis.getSurroundingTag(WikiTagType.PRE, currentIndex) != null) ||
+            (analysis.getSurroundingTag(WikiTagType.SCORE, currentIndex) != null) ||
+            (analysis.getSurroundingTag(WikiTagType.SOURCE, currentIndex) != null) ||
+            (analysis.getSurroundingTag(WikiTagType.SYNTAXHIGHLIGHT, currentIndex) != null) ||
             (analysis.isInTag(currentIndex) != null)) {
           shouldCount = false;
         }
@@ -329,7 +331,7 @@ public class CheckErrorAlgorithm010 extends CheckErrorAlgorithmBase {
               extraClosingBracket = currentIndex;
             }
           } else if (currentChar == '<') {
-            PageElementTag tag = analysis.isInTag(currentIndex, PageElementTag.TAG_WIKI_NOWIKI);
+            PageElementTag tag = analysis.isInTag(currentIndex, WikiTagType.NOWIKI);
             if ((tag != null) && (tag.getBeginIndex() == currentIndex) &&
                 (tag.isComplete()) &&
                 (tag.isFullTag() || !tag.isEndTag())) {
@@ -393,8 +395,8 @@ public class CheckErrorAlgorithm010 extends CheckErrorAlgorithmBase {
             (tag.getBeginIndex() == offset + index)) {
           if (tag.isComplete() &&
               (tag.getCompleteEndIndex() - offset <= originalText.length()) &&
-              (PageElementTag.TAG_WIKI_MATH.equals(tag.getNormalizedName()) ||
-               PageElementTag.TAG_WIKI_NOWIKI.equals(tag.getNormalizedName()))) {
+              (WikiTagType.MATH.equals(tag.getType()) ||
+               WikiTagType.NOWIKI.equals(tag.getType()))) {
             index = tag.getCompleteEndIndex() - offset;
             done = true;
           } else {

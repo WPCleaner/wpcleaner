@@ -20,6 +20,7 @@ import org.wikipediacleaner.api.data.PageElementInternalLink;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
 import org.wikipediacleaner.api.data.contents.ilink.InternalLinkBuilder;
+import org.wikipediacleaner.api.data.contents.tag.HtmlTagType;
 import org.wikipediacleaner.api.data.contents.template.TemplateBuilder;
 import org.wikipediacleaner.gui.swing.component.MWPane;
 import org.wikipediacleaner.i18n.GT;
@@ -100,7 +101,7 @@ public class CheckErrorAlgorithm064 extends CheckErrorAlgorithmBase {
             tmpIndex--;
           }
           if (content.charAt(tmpIndex) == '>') {
-            PageElementTag brTag = analysis.isInTag(tmpIndex, PageElementTag.TAG_HTML_BR);
+            PageElementTag brTag = analysis.isInTag(tmpIndex, HtmlTagType.BR);
             if (brTag != null) {
               String cutText = text.substring(
                   0,

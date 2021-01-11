@@ -15,7 +15,8 @@ import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.PageElementTag.Parameter;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
-import org.wikipediacleaner.api.data.contents.tag.TagBuilder;
+import org.wikipediacleaner.api.data.contents.tag.HtmlTagType;
+import org.wikipediacleaner.api.data.contents.tag.WikiTagType;
 
 
 /**
@@ -60,7 +61,7 @@ public class CheckErrorAlgorithm104 extends CheckErrorAlgorithmBase {
         // Ignore tags correctly detected
         PageElementTag tag = analysis.isInTag(currentIndex);
         if ((tag != null) && (tag.getBeginIndex() == currentIndex)) {
-          if (PageElementTag.TAG_WIKI_REF.equalsIgnoreCase(tag.getName())) {
+          if (WikiTagType.REF.equals(tag.getType())) {
             boolean ok = true;
             Parameter paramName = tag.getParameter("name");
             if ((paramName != null) &&
@@ -91,14 +92,14 @@ public class CheckErrorAlgorithm104 extends CheckErrorAlgorithmBase {
 
       if (shouldReport) {
         // Ignore some tags
-        if ((analysis.getSurroundingTag(PageElementTag.TAG_HTML_CODE, currentIndex) != null) ||
-            (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_MATH, currentIndex) != null) ||
-            (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_MATH_CHEM, currentIndex) != null) ||
-            (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_NOWIKI, currentIndex) != null) ||
-            (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_PRE, currentIndex) != null) ||
-            (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_SCORE, currentIndex) != null) ||
-            (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_SOURCE, currentIndex) != null) ||
-            (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_SYNTAXHIGHLIGHT, currentIndex) != null)) {
+        if ((analysis.getSurroundingTag(HtmlTagType.CODE, currentIndex) != null) ||
+            (analysis.getSurroundingTag(WikiTagType.MATH, currentIndex) != null) ||
+            (analysis.getSurroundingTag(WikiTagType.MATH_CHEM, currentIndex) != null) ||
+            (analysis.getSurroundingTag(WikiTagType.NOWIKI, currentIndex) != null) ||
+            (analysis.getSurroundingTag(WikiTagType.PRE, currentIndex) != null) ||
+            (analysis.getSurroundingTag(WikiTagType.SCORE, currentIndex) != null) ||
+            (analysis.getSurroundingTag(WikiTagType.SOURCE, currentIndex) != null) ||
+            (analysis.getSurroundingTag(WikiTagType.SYNTAXHIGHLIGHT, currentIndex) != null)) {
           shouldReport = false;
         }
       }
@@ -223,7 +224,7 @@ public class CheckErrorAlgorithm104 extends CheckErrorAlgorithmBase {
                   "=\"" + name + "\"" +
                   (closing ? " /" : "") + ">";
             } else {
-              replacement = TagBuilder.REF_OPEN;
+              replacement = WikiTagType.REF.getOpenTag();
               String original = contents.substring(currentIndex, fullEnd);
               if ("<ref name>".equals(original) ||
                   "<ref name=>".equals(original) ||

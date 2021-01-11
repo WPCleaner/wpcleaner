@@ -19,6 +19,7 @@ import org.wikipediacleaner.api.data.PageElementInternalLink;
 import org.wikipediacleaner.api.data.PageElementInterwikiLink;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
+import org.wikipediacleaner.api.data.contents.tag.HtmlTagType;
 import org.wikipediacleaner.gui.swing.component.MWPane;
 import org.wikipediacleaner.i18n.GT;
 
@@ -57,7 +58,7 @@ public class CheckErrorAlgorithm054 extends CheckErrorAlgorithmBase {
     }
 
     // Check that there are <br> tags in the text
-    List<PageElementTag> brTags = analysis.getTags(PageElementTag.TAG_HTML_BR);
+    List<PageElementTag> brTags = analysis.getTags(HtmlTagType.BR);
     if ((brTags == null) || (brTags.isEmpty())) {
       return false;
     }
@@ -101,8 +102,7 @@ public class CheckErrorAlgorithm054 extends CheckErrorAlgorithmBase {
           if (contents.charAt(currentPos) == '>') {
             PageElementTag tag = analysis.isInTag(currentPos);
             if (tag != null) {
-              String name = tag.getNormalizedName();
-              if (PageElementTag.TAG_HTML_BR.equals(name)) {
+              if (HtmlTagType.BR.equals(tag.getType())) {
                 // Limit error if image as been found.
                 if (!imageFound) {
                   breakFound = true;

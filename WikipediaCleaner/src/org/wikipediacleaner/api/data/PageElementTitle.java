@@ -12,6 +12,7 @@ import java.util.List;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.contents.comment.ContainerComment;
 import org.wikipediacleaner.api.data.contents.comment.ContentsComment;
+import org.wikipediacleaner.api.data.contents.tag.WikiTagType;
 import org.wikipediacleaner.api.data.contents.title.TitleBuilder;
 
 
@@ -106,7 +107,7 @@ public class PageElementTitle extends PageElement {
           PageElementTag ref = null;
           for (PageElementTag tmpTag : tags) {
             if ((tmpTag.getBeginIndex() == index) &&
-                PageElementTag.TAG_WIKI_REF.equals(tmpTag.getName()) &&
+                WikiTagType.REF.equals(tmpTag.getType()) &&
                 (tmpTag.isComplete())) {
               ref = tmpTag;
             }

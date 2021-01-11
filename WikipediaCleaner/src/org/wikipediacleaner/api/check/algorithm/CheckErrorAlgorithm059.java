@@ -22,6 +22,8 @@ import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.PageElementTemplate.Parameter;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
 import org.wikipediacleaner.api.data.contents.comment.ContentsComment;
+import org.wikipediacleaner.api.data.contents.tag.HtmlTagType;
+import org.wikipediacleaner.api.data.contents.tag.WikiTagType;
 import org.wikipediacleaner.gui.swing.component.MWPane;
 import org.wikipediacleaner.i18n.GT;
 
@@ -60,7 +62,7 @@ public class CheckErrorAlgorithm059 extends CheckErrorAlgorithmBase {
     }
 
     // Check that there are <br> tags in the text
-    List<PageElementTag> brTags = analysis.getTags(PageElementTag.TAG_HTML_BR);
+    List<PageElementTag> brTags = analysis.getTags(HtmlTagType.BR);
     if ((brTags == null) || (brTags.isEmpty())) {
       return false;
     }
@@ -103,8 +105,7 @@ public class CheckErrorAlgorithm059 extends CheckErrorAlgorithmBase {
                   paramValueStartIndex +
                   currentValuePos);
               if (tag != null) {
-                String name = tag.getNormalizedName();
-                if (PageElementTag.TAG_HTML_BR.equals(name)) {
+                if (HtmlTagType.BR.equals(tag.getType())) {
                   breakFound = true;
                   shouldStop = false;
                   beginError = tag.getBeginIndex();
@@ -113,8 +114,8 @@ public class CheckErrorAlgorithm059 extends CheckErrorAlgorithmBase {
                   }
                   currentValuePos -= tag.getEndIndex() - tag.getBeginIndex();
                 } else if (!breakFound) {
-                  if (/*PageElementTag.TAG_WIKI_MATH.equals(name) ||*/
-                      PageElementTag.TAG_WIKI_HIERO.equals(name)) {
+                  if (/*WikiTagType.MATH.equals(tag.getType()) ||*/
+                      WikiTagType.HIERO.equals(tag.getType())) {
                     tagAfter = true;
                     shouldStop = false;
                     endError = tag.getCompleteBeginIndex();

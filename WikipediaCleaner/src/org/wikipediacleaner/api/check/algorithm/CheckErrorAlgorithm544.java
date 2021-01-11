@@ -31,6 +31,7 @@ import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
+import org.wikipediacleaner.api.data.contents.tag.HtmlTagType;
 import org.wikipediacleaner.api.data.contents.template.TemplateBuilder;
 import org.wikipediacleaner.gui.swing.action.ActionExternalViewer;
 import org.wikipediacleaner.i18n.GT;
@@ -137,7 +138,7 @@ public class CheckErrorAlgorithm544 extends CheckErrorAlgorithmBase {
       PageElementTag tag = analysis.isInTag(beginIndex - 1);
       PageElementTag endTag = null;
       if ((tag != null) && tag.isComplete() && !tag.isFullTag() && !tag.isEndTag()) {
-        if (PageElementTag.TAG_HTML_CENTER.equals(tag.getNormalizedName())) {
+        if (HtmlTagType.CENTER.equals(tag.getType())) {
           endTag = tag.getMatchingTag();
         }
       }

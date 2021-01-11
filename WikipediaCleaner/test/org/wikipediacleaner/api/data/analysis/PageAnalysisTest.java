@@ -13,9 +13,11 @@ import java.util.List;
 
 import org.junit.Test;
 import org.wikipediacleaner.api.constants.EnumWikipediaUtils;
-import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.contents.ContentsElement;
 import org.wikipediacleaner.api.data.contents.comment.ContainerComment;
+import org.wikipediacleaner.api.data.contents.tag.HtmlTagType;
+import org.wikipediacleaner.api.data.contents.tag.TagType;
+import org.wikipediacleaner.api.data.contents.tag.WikiTagType;
 
 
 /**
@@ -36,8 +38,8 @@ public class PageAnalysisTest {
     // Check elements
     checkComments(analysis, 1);
     checkTags(analysis, 5);
-    checkTags(analysis, PageElementTag.TAG_HTML_DIV, 2);
-    checkTags(analysis, PageElementTag.TAG_WIKI_NOWIKI, 3);
+    checkTags(analysis, HtmlTagType.DIV, 2);
+    checkTags(analysis, WikiTagType.NOWIKI, 3);
     checkInternalLinks(analysis, 2);
     checkImages(analysis, 2);
     checkCategories(analysis, 2);
@@ -71,7 +73,7 @@ public class PageAnalysisTest {
     // Check elements
     checkComments(analysis, 5);
     checkTags(analysis, 1958);
-    checkTags(analysis, PageElementTag.TAG_HTML_SMALL, 40);
+    checkTags(analysis, HtmlTagType.SMALL, 40);
     checkInternalLinks(analysis, 1899);
     checkImages(analysis, 53);
     checkCategories(analysis, 6);
@@ -105,7 +107,7 @@ public class PageAnalysisTest {
     // Check elements
     checkComments(analysis, 1);
     checkTags(analysis, 3801);
-    checkTags(analysis, PageElementTag.TAG_HTML_SMALL, 4);
+    checkTags(analysis, HtmlTagType.SMALL, 4);
     checkInternalLinks(analysis, 649);
     checkImages(analysis, 0);
     checkCategories(analysis, 4);
@@ -138,7 +140,7 @@ public class PageAnalysisTest {
     // Check elements
     checkComments(analysis, 2);
     checkTags(analysis, 20);
-    checkTags(analysis, PageElementTag.TAG_HTML_SMALL, 2);
+    checkTags(analysis, HtmlTagType.SMALL, 2);
     checkInternalLinks(analysis, 20941);
     checkImages(analysis, 0);
     checkCategories(analysis, 2);
@@ -187,11 +189,11 @@ public class PageAnalysisTest {
    * Check tags.
    * 
    * @param analysis Page analysis.
-   * @param tagName Name of the tag.
+   * @param tagType Type of the tag.
    * @param expectedCount Expected number of elements.
    */
-  private void checkTags(PageAnalysis analysis, String tagName, int expectedCount) {
-    checkList(analysis.getTags(tagName), "tags " + tagName, expectedCount);
+  private void checkTags(PageAnalysis analysis, TagType tagType, int expectedCount) {
+    checkList(analysis.getTags(tagType), "tags " + tagType.getNormalizedName(), expectedCount);
   }
 
   /**

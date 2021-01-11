@@ -20,6 +20,7 @@ import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
 import org.wikipediacleaner.api.data.contents.comment.ContentsComment;
+import org.wikipediacleaner.api.data.contents.tag.WikiTagType;
 import org.wikipediacleaner.i18n.GT;
 
 
@@ -121,8 +122,8 @@ public class CheckErrorAlgorithm521 extends CheckErrorAlgorithmBase {
 
       // If current value position is the beginning of a reference, skip it
       } else if ((valueChar == '<') &&
-                 (analysis.isInTag(offset + valueIndex, PageElementTag.TAG_WIKI_REF) != null)) {
-        PageElementTag tag = analysis.isInTag(offset + valueIndex, PageElementTag.TAG_WIKI_REF);
+                 (analysis.isInTag(offset + valueIndex, WikiTagType.REF) != null)) {
+        PageElementTag tag = analysis.isInTag(offset + valueIndex, WikiTagType.REF);
         formatOk = true;
         valueIndex = tag.getCompleteEndIndex() - offset;
 

@@ -14,6 +14,8 @@ import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
+import org.wikipediacleaner.api.data.contents.tag.HtmlTagType;
+import org.wikipediacleaner.api.data.contents.tag.WikiTagType;
 import org.wikipediacleaner.i18n.GT;
 
 
@@ -50,7 +52,7 @@ public class CheckErrorAlgorithm038 extends CheckErrorAlgorithmBase {
     }
 
     // Retrieve all <i> tags
-    List<PageElementTag> iTags = analysis.getTags(PageElementTag.TAG_HTML_I);
+    List<PageElementTag> iTags = analysis.getTags(HtmlTagType.I);
     boolean result = false;
     for (PageElementTag iTag : iTags) {
 
@@ -69,11 +71,11 @@ public class CheckErrorAlgorithm038 extends CheckErrorAlgorithmBase {
       // Check that error should be reported
       int beginIndex = iTag.getCompleteBeginIndex();
       if (errorFound) {
-        if ((analysis.getSurroundingTag(PageElementTag.TAG_WIKI_MATH, beginIndex) != null) ||
-            (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_NOWIKI, beginIndex) != null) ||
-            (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_PRE, beginIndex) != null) ||
-            (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_SOURCE, beginIndex) != null) ||
-            (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_SYNTAXHIGHLIGHT, beginIndex) != null)) {
+        if ((analysis.getSurroundingTag(WikiTagType.MATH, beginIndex) != null) ||
+            (analysis.getSurroundingTag(WikiTagType.NOWIKI, beginIndex) != null) ||
+            (analysis.getSurroundingTag(WikiTagType.PRE, beginIndex) != null) ||
+            (analysis.getSurroundingTag(WikiTagType.SOURCE, beginIndex) != null) ||
+            (analysis.getSurroundingTag(WikiTagType.SYNTAXHIGHLIGHT, beginIndex) != null)) {
           errorFound = false;
         }
       }

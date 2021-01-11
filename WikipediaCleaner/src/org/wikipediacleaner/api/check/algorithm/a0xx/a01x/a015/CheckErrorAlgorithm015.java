@@ -7,11 +7,12 @@
 
 package org.wikipediacleaner.api.check.algorithm.a0xx.a01x.a015;
 
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmUnclosedTags;
-import org.wikipediacleaner.api.data.PageElementTag;
+import org.wikipediacleaner.api.data.contents.tag.HtmlTagType;
+import org.wikipediacleaner.api.data.contents.tag.TagType;
 
 
 /**
@@ -21,20 +22,18 @@ import org.wikipediacleaner.api.data.PageElementTag;
 public class CheckErrorAlgorithm015 extends CheckErrorAlgorithmUnclosedTags {
 
   /** List of tags managed by this error. */
-  private final List<String> tags;
+  private static final List<TagType> TAGS = Collections.singletonList(HtmlTagType.CODE);
 
   public CheckErrorAlgorithm015() {
     super("Code not correct end");
-    tags = new ArrayList<String>();
-    tags.add(PageElementTag.TAG_HTML_CODE);
   }
 
   /**
    * @return List of tags managed by this error.
    */
   @Override
-  protected List<String> getTags() {
-    return tags;
+  protected List<TagType> getTags() {
+    return TAGS;
   }
 
   /**

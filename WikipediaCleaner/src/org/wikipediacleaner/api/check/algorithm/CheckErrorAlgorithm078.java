@@ -29,6 +29,7 @@ import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
 import org.wikipediacleaner.api.data.contents.IntervalComparator;
+import org.wikipediacleaner.api.data.contents.tag.WikiTagType;
 import org.wikipediacleaner.i18n.GT;
 
 
@@ -68,7 +69,7 @@ public class CheckErrorAlgorithm078 extends CheckErrorAlgorithmBase {
     Map<String, List<PageElement>> referencesByGroup = new HashMap<>();
 
     // Manage <references> tags
-    List<PageElementTag> referencesTags = analysis.getTags(PageElementTag.TAG_WIKI_REFERENCES);
+    List<PageElementTag> referencesTags = analysis.getTags(WikiTagType.REFERENCES);
     if ((referencesTags != null) && !referencesTags.isEmpty()) {
       for (PageElementTag referencesTag : referencesTags) {
         

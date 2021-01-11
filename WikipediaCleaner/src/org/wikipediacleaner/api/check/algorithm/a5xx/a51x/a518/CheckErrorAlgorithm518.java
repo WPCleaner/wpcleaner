@@ -29,6 +29,7 @@ import org.wikipediacleaner.api.data.PageElementInternalLink;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
 import org.wikipediacleaner.api.data.contents.ilink.InternalLinkBuilder;
+import org.wikipediacleaner.api.data.contents.tag.WikiTagType;
 import org.wikipediacleaner.api.data.contents.template.TemplateBuilder;
 import org.wikipediacleaner.i18n.GT;
 import org.wikipediacleaner.utils.Configuration;
@@ -66,7 +67,7 @@ public class CheckErrorAlgorithm518 extends CheckErrorAlgorithmBase {
     }
 
     // Check each tag
-    List<PageElementTag> tags = analysis.getCompleteTags(PageElementTag.TAG_WIKI_NOWIKI);
+    List<PageElementTag> tags = analysis.getCompleteTags(WikiTagType.NOWIKI);
     if ((tags == null) || (tags.isEmpty())) {
       return false;
     }
@@ -369,7 +370,7 @@ public class CheckErrorAlgorithm518 extends CheckErrorAlgorithmBase {
     super.addParameters();
     String textAbuseFilter = GT._T(
         "An identifier of an abuse filter that is triggered by {0} tags.",
-        PageElementTag.TAG_WIKI_NOWIKI);
+        WikiTagType.NOWIKI.getOpenTag());
     addParameter(new AlgorithmParameter(
         PARAMETER_ABUSE_FILTER,
         textAbuseFilter,

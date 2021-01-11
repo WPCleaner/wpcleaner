@@ -31,6 +31,7 @@ import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.PageElementTitle;
 import org.wikipediacleaner.api.data.contents.ContentsElement;
 import org.wikipediacleaner.api.data.contents.comment.ContentsComment;
+import org.wikipediacleaner.api.data.contents.tag.WikiTagType;
 
 
 /**
@@ -91,13 +92,13 @@ public class Areas {
     if (tags != null) {
       for (PageElementTag tag : tags) {
         if (!tag.isFullTag() &&
-            (PageElementTag.TAG_WIKI_NOWIKI.equals(tag.getNormalizedName()) ||
-             PageElementTag.TAG_WIKI_MAPFRAME.equals(tag.getNormalizedName()) ||
-             PageElementTag.TAG_WIKI_MATH.equals(tag.getNormalizedName()) ||
-             PageElementTag.TAG_WIKI_MATH_CHEM.equals(tag.getNormalizedName()) ||
-             PageElementTag.TAG_WIKI_PRE.equals(tag.getNormalizedName()) ||
-             PageElementTag.TAG_WIKI_SOURCE.equals(tag.getNormalizedName()) ||
-             PageElementTag.TAG_WIKI_SYNTAXHIGHLIGHT.equals(tag.getNormalizedName()))) {
+            (WikiTagType.NOWIKI.equals(tag.getType()) ||
+             WikiTagType.MAPFRAME.equals(tag.getType()) ||
+             WikiTagType.MATH.equals(tag.getType()) ||
+             WikiTagType.MATH_CHEM.equals(tag.getType()) ||
+             WikiTagType.PRE.equals(tag.getType()) ||
+             WikiTagType.SOURCE.equals(tag.getType()) ||
+             WikiTagType.SYNTAXHIGHLIGHT.equals(tag.getType()))) {
           if (!tag.isEndTag() || !tag.isComplete()) {
             addArea(tag.getCompleteBeginIndex(), tag.getCompleteEndIndex());
           }

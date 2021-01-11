@@ -24,13 +24,13 @@ import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.DataManager;
 import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.Page;
-import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.Page.RelatedPages;
 import org.wikipediacleaner.api.data.PageElementTemplate.Parameter;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
 import org.wikipediacleaner.api.data.contents.ContentsUtil;
 import org.wikipediacleaner.api.data.contents.comment.CommentBuilder;
+import org.wikipediacleaner.api.data.contents.tag.WikiTagType;
 import org.wikipediacleaner.i18n.GT;
 
 
@@ -81,7 +81,7 @@ public class CheckErrorAlgorithm524 extends CheckErrorAlgorithmBase {
         shouldCheck = false;
       }
       if (shouldCheck) {
-        if (analysis.isInTag(template.getBeginIndex(), PageElementTag.TAG_WIKI_PRE) != null) {
+        if (analysis.isInTag(template.getBeginIndex(), WikiTagType.PRE) != null) {
           shouldCheck = false;
         }
       }

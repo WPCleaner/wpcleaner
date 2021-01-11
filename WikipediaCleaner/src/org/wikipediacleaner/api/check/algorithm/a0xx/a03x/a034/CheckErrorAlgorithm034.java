@@ -18,9 +18,9 @@ import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageElementFunction;
 import org.wikipediacleaner.api.data.PageElementMagicWord;
 import org.wikipediacleaner.api.data.PageElementParameter;
-import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
+import org.wikipediacleaner.api.data.contents.tag.WikiTagType;
 
 
 /**
@@ -145,7 +145,7 @@ public class CheckErrorAlgorithm034 extends CheckErrorAlgorithmBase {
             if (!isOk &&
                 MagicWord.TAG.equals(magicWordName) &&
                 (function.getParameterCount() > 0) &&
-                (PageElementTag.TAG_WIKI_REF.equals(function.getParameterValue(0)))) {
+                (WikiTagType.REF.isPossibleName(function.getParameterValue(0)))) {
               isOk = true;
             }
             if (!isOk) {
@@ -171,10 +171,10 @@ public class CheckErrorAlgorithm034 extends CheckErrorAlgorithmBase {
                   errorResult.addReplacement(function.getParameterValue(param));
                 }
               }
-              if ((analysis.isInTag(currentIndex, PageElementTag.TAG_WIKI_GALLERY) == null) &&
-                  (analysis.isInTag(currentIndex, PageElementTag.TAG_WIKI_INCLUDEONLY) == null) &&
-                  (analysis.isInTag(currentIndex, PageElementTag.TAG_WIKI_REF) == null) &&
-                  (analysis.isInTag(currentIndex, PageElementTag.TAG_WIKI_TIMELINE) == null) &&
+              if ((analysis.isInTag(currentIndex, WikiTagType.GALLERY) == null) &&
+                  (analysis.isInTag(currentIndex, WikiTagType.INCLUDEONLY) == null) &&
+                  (analysis.isInTag(currentIndex, WikiTagType.REF) == null) &&
+                  (analysis.isInTag(currentIndex, WikiTagType.TIMELINE) == null) &&
                   (!MagicWord.INVOKE.equals(magicWordName)) &&
                   (!MagicWord.SUBST.equals(magicWordName)) &&
                   (!MagicWord.SAFE_SUBST.equals(magicWordName))) {

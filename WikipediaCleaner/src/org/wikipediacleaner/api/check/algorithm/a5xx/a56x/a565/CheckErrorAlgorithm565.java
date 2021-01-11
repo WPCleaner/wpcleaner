@@ -17,6 +17,7 @@ import org.wikipediacleaner.api.data.CharacterUtils;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
 import org.wikipediacleaner.api.data.contents.ContentsUtil;
+import org.wikipediacleaner.api.data.contents.tag.WikiTagType;
 
 
 /**
@@ -46,7 +47,7 @@ public class CheckErrorAlgorithm565 extends CheckErrorAlgorithmBase {
     }
 
     // Analyze each nowiki tag
-    List<PageElementTag> tags = analysis.getCompleteTags(PageElementTag.TAG_WIKI_NOWIKI);
+    List<PageElementTag> tags = analysis.getCompleteTags(WikiTagType.NOWIKI);
     if ((tags == null) || tags.isEmpty()) {
       return false;
     }

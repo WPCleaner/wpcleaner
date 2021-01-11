@@ -29,6 +29,7 @@ import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.PageElementTag.Parameter;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
+import org.wikipediacleaner.api.data.contents.tag.OtherTagType;
 import org.wikipediacleaner.api.data.PageAnalysisUtils;
 import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.Suggestion;
@@ -704,7 +705,7 @@ public class WPCConfiguration {
             if ((page != null) && (page.getContents() != null)) {
               String contents = page.getContents();
               PageAnalysis analysis = page.getAnalysis(contents, true);
-              Collection<PageElementTag> tags = analysis.getTags(PageElementTag.TAG_OTHER_TYPO);
+              Collection<PageElementTag> tags = analysis.getTags(OtherTagType.TYPO);
               for (PageElementTag tag : tags) {
                 String chapterId = PageAnalysisUtils.getCurrentChapterId(analysis, tag.getBeginIndex());
                 if ((suggestionIgnore == null) || (!suggestionIgnore.contains(chapterId))) {

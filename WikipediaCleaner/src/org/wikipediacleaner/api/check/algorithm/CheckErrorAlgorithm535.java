@@ -24,6 +24,7 @@ import org.wikipediacleaner.api.data.PageElementInterwikiLink;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
 import org.wikipediacleaner.api.data.contents.ilink.InternalLinkBuilder;
+import org.wikipediacleaner.api.data.contents.tag.HtmlTagType;
 
 
 /**
@@ -53,7 +54,7 @@ public class CheckErrorAlgorithm535 extends CheckErrorAlgorithmBase {
     }
 
     // Analyze each font tag
-    List<PageElementTag> fontTags = analysis.getCompleteTags(PageElementTag.TAG_HTML_FONT);
+    List<PageElementTag> fontTags = analysis.getCompleteTags(HtmlTagType.FONT);
     String contents = analysis.getContents();
     boolean result = false;
     for (PageElementTag fontTag : fontTags) {

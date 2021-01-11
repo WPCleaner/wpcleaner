@@ -30,6 +30,7 @@ import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.PageElementTemplate.Parameter;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
 import org.wikipediacleaner.api.data.contents.IntervalComparator;
+import org.wikipediacleaner.api.data.contents.tag.WikiTagType;
 import org.wikipediacleaner.i18n.GT;
 
 
@@ -113,7 +114,7 @@ public class CheckErrorAlgorithm559 extends CheckErrorAlgorithmBase {
       String separatorText = contents.substring(beginIndex, endIndex).trim();
       boolean shouldReport = !StringUtils.equals(separator, separatorText);
       if ((shouldReport) &&
-          (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_REFERENCES, beginIndex) != null)) {
+          (analysis.getSurroundingTag(WikiTagType.REFERENCES, beginIndex) != null)) {
         shouldReport = false;
       }
       if (shouldReport && !referencesTemplates.isEmpty()) {
@@ -203,7 +204,7 @@ public class CheckErrorAlgorithm559 extends CheckErrorAlgorithmBase {
     List<PageElement> refs = new ArrayList<PageElement>();
 
     // Retrieve references defined by tags
-    List<PageElementTag> refTags = analysis.getCompleteTags(PageElementTag.TAG_WIKI_REF);
+    List<PageElementTag> refTags = analysis.getCompleteTags(WikiTagType.REF);
     if (refTags != null) {
       for (PageElementTag refTag : refTags) {
         refs.add(new PageElementFullTag(refTag));

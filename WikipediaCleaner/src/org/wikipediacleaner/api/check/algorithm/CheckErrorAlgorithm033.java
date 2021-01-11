@@ -17,6 +17,8 @@ import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.configuration.WPCConfiguration;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
+import org.wikipediacleaner.api.data.contents.tag.HtmlTagType;
+import org.wikipediacleaner.api.data.contents.tag.WikiTagType;
 import org.wikipediacleaner.api.data.contents.template.TemplateBuilder;
 import org.wikipediacleaner.i18n.GT;
 
@@ -52,7 +54,7 @@ public class CheckErrorAlgorithm033 extends CheckErrorAlgorithmBase {
 
     // Analyze each tag
     boolean result = false;
-    Collection<PageElementTag> tags = analysis.getTags(PageElementTag.TAG_HTML_U);
+    Collection<PageElementTag> tags = analysis.getTags(HtmlTagType.U);
     String contents = analysis.getContents();
     for (PageElementTag tag : tags) {
       boolean shouldCount = true;
@@ -67,10 +69,10 @@ public class CheckErrorAlgorithm033 extends CheckErrorAlgorithmBase {
       // Check that error should be reported
       if (shouldCount) {
         int index = tag.getBeginIndex();
-        if ((analysis.getSurroundingTag(PageElementTag.TAG_WIKI_NOWIKI, index) != null) ||
-            (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_PRE, index) != null) ||
-            (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_SOURCE, index) != null) ||
-            (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_SYNTAXHIGHLIGHT, index) != null)) {
+        if ((analysis.getSurroundingTag(WikiTagType.NOWIKI, index) != null) ||
+            (analysis.getSurroundingTag(WikiTagType.PRE, index) != null) ||
+            (analysis.getSurroundingTag(WikiTagType.SOURCE, index) != null) ||
+            (analysis.getSurroundingTag(WikiTagType.SYNTAXHIGHLIGHT, index) != null)) {
           shouldCount = false;
         }
       }

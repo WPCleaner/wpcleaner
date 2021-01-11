@@ -7,9 +7,15 @@
 
 package org.wikipediacleaner.api.check.algorithm.a0xx.a01x.a012;
 
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
+
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmTags;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
+import org.wikipediacleaner.api.data.contents.tag.HtmlTagType;
+import org.wikipediacleaner.api.data.contents.tag.TagType;
 
 
 /**
@@ -25,17 +31,21 @@ public class CheckErrorAlgorithm012 extends CheckErrorAlgorithmTags {
   /**
    * Tags to look for.
    */
-  private final static String[] TAGS = {
-    PageElementTag.TAG_HTML_LI,
-    PageElementTag.TAG_HTML_OL,
-    PageElementTag.TAG_HTML_UL,
-  };
+  private final static Set<TagType> TAGS;
+
+  static {
+    Set<TagType> tmpSet = new HashSet<>();
+    tmpSet.add(HtmlTagType.LI);
+    tmpSet.add(HtmlTagType.OL);
+    tmpSet.add(HtmlTagType.UL);
+    TAGS = Collections.unmodifiableSet(tmpSet);
+  }
 
   /**
    * @return Tags to look for.
    */
   @Override
-  protected String[] getTags() {
+  protected Set<TagType> getTags() {
     return TAGS;
   }
 
@@ -49,11 +59,19 @@ public class CheckErrorAlgorithm012 extends CheckErrorAlgorithmTags {
     if (!super.shouldReport(analysis, tag)) {
       return false;
     }
-    if (PageElementTag.TAG_HTML_LI.equalsIgnoreCase(tag.getNormalizedName())) {
+    if (HtmlTagType.LI.equals(tag.getType())) {
       if (tag.getParameter("value") != null) {
         return false;
       }
     }
     return true;
+  }
+
+  /**
+   * @return True if complete tags should be reported as one tag instead of separate tags.
+   */
+  @Override
+  protected boolean reportCompleteTags() {
+    return false;
   }
 }

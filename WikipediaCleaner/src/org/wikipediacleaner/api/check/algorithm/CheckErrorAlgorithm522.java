@@ -15,6 +15,7 @@ import org.wikipediacleaner.api.data.PageElementTitle;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
 import org.wikipediacleaner.api.data.contents.ContentsUtil;
 import org.wikipediacleaner.api.data.contents.comment.ContentsComment;
+import org.wikipediacleaner.api.data.contents.tag.WikiTagType;
 
 
 /**
@@ -66,7 +67,7 @@ public class CheckErrorAlgorithm522 extends CheckErrorAlgorithmBase {
           char currentChar = contents.charAt(currentIndex);
           if (currentChar == '<') {
             comment = analysis.comments().getAt(currentIndex);
-            tag = analysis.isInTag(currentIndex, PageElementTag.TAG_WIKI_NOWIKI);
+            tag = analysis.isInTag(currentIndex, WikiTagType.NOWIKI);
           }
           if (comment != null) {
             currentIndex = comment.getEndIndex();

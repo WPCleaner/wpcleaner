@@ -18,6 +18,7 @@ import org.wikipediacleaner.api.data.PageElementInternalLink;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
 import org.wikipediacleaner.api.data.contents.ContentsUtil;
+import org.wikipediacleaner.api.data.contents.tag.WikiTagType;
 import org.wikipediacleaner.i18n.GT;
 
 
@@ -90,7 +91,7 @@ public class CheckErrorAlgorithm515 extends CheckErrorAlgorithmBase {
         }
         result = true;
         PageElementTag tagImagemap = analysis.getSurroundingTag(
-            PageElementTag.TAG_WIKI_IMAGEMAP, link.getBeginIndex());
+            WikiTagType.IMAGEMAP, link.getBeginIndex());
         if (tagImagemap != null) {
           int previousCR = ContentsUtil.getLineBeginIndex(contents, link.getBeginIndex());
           int nextCR = ContentsUtil.getLineEndIndex(contents, link.getEndIndex());

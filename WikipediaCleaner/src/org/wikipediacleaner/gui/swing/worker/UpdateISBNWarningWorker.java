@@ -29,7 +29,7 @@ import org.wikipediacleaner.api.data.PageComparator;
 import org.wikipediacleaner.api.data.PageElementISBN;
 import org.wikipediacleaner.api.data.PageElementISSN;
 import org.wikipediacleaner.api.data.contents.comment.ContentsComment;
-import org.wikipediacleaner.api.data.contents.tag.TagBuilder;
+import org.wikipediacleaner.api.data.contents.tag.WikiTagType;
 import org.wikipediacleaner.gui.swing.InformationWindow;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
 import org.wikipediacleaner.gui.swing.basic.Utilities;
@@ -254,10 +254,10 @@ public class UpdateISBNWarningWorker extends UpdateWarningWorker {
           buffer.append(values.size());
           buffer.append(" x ");
         }
-        buffer.append(TagBuilder.NOWIKI_OPEN);
+        buffer.append(WikiTagType.NOWIKI.getOpenTag());
         buffer.append("ISBN ");
         buffer.append(key);
-        buffer.append(TagBuilder.NOWIKI_CLOSE);
+        buffer.append(WikiTagType.NOWIKI.getCloseTag());
         if (issnUrl != null) {
           String clean = key.replaceAll("\\&\\#x3D\\;", "=");
           clean = PageElementISBN.cleanISBN(clean);

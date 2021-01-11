@@ -29,6 +29,8 @@ import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.PageElementImage.Parameter;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
 import org.wikipediacleaner.api.data.contents.ilink.InternalLinkBuilder;
+import org.wikipediacleaner.api.data.contents.tag.HtmlTagType;
+import org.wikipediacleaner.api.data.contents.tag.WikiTagType;
 import org.wikipediacleaner.api.data.contents.template.TemplateBuilder;
 import org.wikipediacleaner.api.data.PageElementInternalLink;
 import org.wikipediacleaner.api.data.PageElementTemplate;
@@ -104,9 +106,9 @@ public class CheckErrorAlgorithm090 extends CheckErrorAlgorithmBase {
       ArticleUrl articleUrl = ArticleUrl.isArticleUrl(wiki, link.getLink());
       if (articleUrl != null) {
         int index = link.getBeginIndex();
-        if ((analysis.getSurroundingTag(PageElementTag.TAG_HTML_CODE, index) != null) ||
-            (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_SOURCE, index) != null) ||
-            (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_SYNTAXHIGHLIGHT, index) != null)) {
+        if ((analysis.getSurroundingTag(HtmlTagType.CODE, index) != null) ||
+            (analysis.getSurroundingTag(WikiTagType.SOURCE, index) != null) ||
+            (analysis.getSurroundingTag(WikiTagType.SYNTAXHIGHLIGHT, index) != null)) {
           articleUrl = null;
         }
       }
@@ -232,7 +234,7 @@ public class CheckErrorAlgorithm090 extends CheckErrorAlgorithmBase {
   private boolean checkTimeline(
       AnalysisInformation info) {
     PageElementTag timelineTag = info.analysis.getSurroundingTag(
-        PageElementTag.TAG_WIKI_TIMELINE, info.beginIndex);
+        WikiTagType.TIMELINE, info.beginIndex);
     if (timelineTag == null) {
       return false;
     }
@@ -326,8 +328,7 @@ public class CheckErrorAlgorithm090 extends CheckErrorAlgorithmBase {
    * @return True if error has been reported.
    */
   public boolean checkRefTag(AnalysisInformation info) {
-    PageElementTag refTag = info.analysis.getSurroundingTag(
-        PageElementTag.TAG_WIKI_REF, info.beginIndex);
+    PageElementTag refTag = info.analysis.getSurroundingTag(WikiTagType.REF, info.beginIndex);
     if (refTag == null) {
       return false;
     }

@@ -21,6 +21,7 @@ import org.wikipediacleaner.api.configuration.WPCConfigurationStringList;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
 import org.wikipediacleaner.api.data.contents.comment.ContentsComment;
+import org.wikipediacleaner.api.data.contents.tag.WikiTagType;
 import org.wikipediacleaner.i18n.GT;
 
 
@@ -51,7 +52,7 @@ public class CheckErrorAlgorithm067 extends CheckErrorAlgorithmBase {
     }
 
     // Analyze from the beginning
-    List<PageElementTag> tags = analysis.getTags(PageElementTag.TAG_WIKI_REF);
+    List<PageElementTag> tags = analysis.getTags(WikiTagType.REF);
     if (tags == null) {
       return false;
     }

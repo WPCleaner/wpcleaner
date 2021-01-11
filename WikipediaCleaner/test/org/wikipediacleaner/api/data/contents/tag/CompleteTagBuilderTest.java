@@ -16,13 +16,13 @@ import org.junit.Test;
 /**
  * Test class for comments builder.
  */
-public class FullTagBuilderTest {
+public class CompleteTagBuilderTest {
 
   @Test
   public void simpleTagWithNullContent() {
 
     // Create comment
-    String tag = FullTagBuilder.from("TAG_NAME", null).toString();
+    String tag = CompleteTagBuilder.from("TAG_NAME", null).toString();
 
     // Check comment
     assertNotNull(
@@ -37,7 +37,7 @@ public class FullTagBuilderTest {
   public void simpleTagWithNullContentAndForce() {
 
     // Create comment
-    String tag = FullTagBuilder.from("TAG_NAME", null).withForceOpenCloseTags(true).toString();
+    String tag = CompleteTagBuilder.from("TAG_NAME", null).withForceOpenCloseTags(true).toString();
 
     // Check comment
     assertNotNull(
@@ -52,7 +52,7 @@ public class FullTagBuilderTest {
   public void tagWithAttributesAndNullContent() {
 
     // Create comment
-    String tag = FullTagBuilder.from("TAG_NAME", null).addAttribute("attr1", "value1").toString();
+    String tag = CompleteTagBuilder.from("TAG_NAME", null).addAttribute("attr1", "value1").toString();
 
     // Check comment
     assertNotNull(
@@ -67,7 +67,7 @@ public class FullTagBuilderTest {
   public void tagWithAttributesAndNullContentAndForce() {
 
     // Create comment
-    String tag = FullTagBuilder.from("TAG_NAME", null).addAttribute("attr1", "value1").withForceOpenCloseTags(true).toString();
+    String tag = CompleteTagBuilder.from("TAG_NAME", null).addAttribute("attr1", "value1").withForceOpenCloseTags(true).toString();
 
     // Check comment
     assertNotNull(
@@ -82,7 +82,7 @@ public class FullTagBuilderTest {
   public void simpleTagWithEmptyContent() {
 
     // Create comment
-    String tag = FullTagBuilder.from("TAG_NAME", StringUtils.EMPTY).toString();
+    String tag = CompleteTagBuilder.from("TAG_NAME", StringUtils.EMPTY).toString();
 
     // Check comment
     assertNotNull(
@@ -97,7 +97,7 @@ public class FullTagBuilderTest {
   public void simpleTagWithEmptyContentAndForce() {
 
     // Create comment
-    String tag = FullTagBuilder.from("TAG_NAME", StringUtils.EMPTY).withForceOpenCloseTags(true).toString();
+    String tag = CompleteTagBuilder.from("TAG_NAME", StringUtils.EMPTY).withForceOpenCloseTags(true).toString();
 
     // Check comment
     assertNotNull(
@@ -112,7 +112,7 @@ public class FullTagBuilderTest {
   public void tagWithAttributesAndEmptyContent() {
 
     // Create comment
-    String tag = FullTagBuilder.from("TAG_NAME", StringUtils.EMPTY).addAttribute("attr1", "value1").toString();
+    String tag = CompleteTagBuilder.from("TAG_NAME", StringUtils.EMPTY).addAttribute("attr1", "value1").toString();
 
     // Check comment
     assertNotNull(
@@ -127,7 +127,7 @@ public class FullTagBuilderTest {
   public void tagWithAttributesAndEmptyContentAndForce() {
 
     // Create comment
-    String tag = FullTagBuilder.from("TAG_NAME", StringUtils.EMPTY).addAttribute("attr1", "value1").withForceOpenCloseTags(true).toString();
+    String tag = CompleteTagBuilder.from("TAG_NAME", StringUtils.EMPTY).addAttribute("attr1", "value1").withForceOpenCloseTags(true).toString();
 
     // Check comment
     assertNotNull(
@@ -142,7 +142,7 @@ public class FullTagBuilderTest {
   public void simpleTagWithContent() {
 
     // Create comment
-    String tag = FullTagBuilder.from("TAG_NAME", "Tag content").toString();
+    String tag = CompleteTagBuilder.from("TAG_NAME", "Tag content").toString();
 
     // Check comment
     assertNotNull(
@@ -157,7 +157,7 @@ public class FullTagBuilderTest {
   public void tagWithAttributesAndContent() {
 
     // Create comment
-    String tag = FullTagBuilder.from("TAG_NAME", "Tag content").addAttribute("attr1", "value1").toString();
+    String tag = CompleteTagBuilder.from("TAG_NAME", "Tag content").addAttribute("attr1", "value1").toString();
 
     // Check comment
     assertNotNull(

@@ -14,6 +14,7 @@ import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
+import org.wikipediacleaner.api.data.contents.tag.HtmlTagType;
 
 
 /**
@@ -47,7 +48,7 @@ public class CheckErrorAlgorithm516 extends CheckErrorAlgorithmBase {
     }
 
     // Check each tag
-    List<PageElementTag> brTags = analysis.getTags(PageElementTag.TAG_HTML_BR);
+    List<PageElementTag> brTags = analysis.getTags(HtmlTagType.BR);
     if ((brTags == null) || (brTags.isEmpty())) {
       return false;
     }

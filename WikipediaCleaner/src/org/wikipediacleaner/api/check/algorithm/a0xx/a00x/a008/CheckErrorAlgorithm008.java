@@ -12,11 +12,12 @@ import java.util.Collection;
 import org.apache.commons.lang3.StringUtils;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase;
-import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.PageElementTitle;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
 import org.wikipediacleaner.api.data.contents.ContentsUtil;
 import org.wikipediacleaner.api.data.contents.comment.ContentsComment;
+import org.wikipediacleaner.api.data.contents.tag.HtmlTagType;
+import org.wikipediacleaner.api.data.contents.tag.WikiTagType;
 import org.wikipediacleaner.api.data.contents.title.TitleBuilder;
 
 
@@ -112,14 +113,14 @@ public class CheckErrorAlgorithm008 extends CheckErrorAlgorithmBase {
       errors.add(errorResult);
       return true;
     }
-    if ((analysis.getSurroundingTag(PageElementTag.TAG_HTML_CODE, lineBeginIndex) != null) ||
-        (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_MATH, lineBeginIndex) != null) ||
-        (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_MATH_CHEM, lineBeginIndex) != null) ||
-        (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_NOWIKI, lineBeginIndex) != null) ||
-        (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_PRE, lineBeginIndex) != null) ||
-        (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_SCORE, lineBeginIndex) != null) ||
-        (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_SOURCE, lineBeginIndex) != null) ||
-        (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_SYNTAXHIGHLIGHT, lineBeginIndex) != null)) {
+    if ((analysis.getSurroundingTag(HtmlTagType.CODE, lineBeginIndex) != null) ||
+        (analysis.getSurroundingTag(WikiTagType.MATH, lineBeginIndex) != null) ||
+        (analysis.getSurroundingTag(WikiTagType.MATH_CHEM, lineBeginIndex) != null) ||
+        (analysis.getSurroundingTag(WikiTagType.NOWIKI, lineBeginIndex) != null) ||
+        (analysis.getSurroundingTag(WikiTagType.PRE, lineBeginIndex) != null) ||
+        (analysis.getSurroundingTag(WikiTagType.SCORE, lineBeginIndex) != null) ||
+        (analysis.getSurroundingTag(WikiTagType.SOURCE, lineBeginIndex) != null) ||
+        (analysis.getSurroundingTag(WikiTagType.SYNTAXHIGHLIGHT, lineBeginIndex) != null)) {
       return false;
     }
 

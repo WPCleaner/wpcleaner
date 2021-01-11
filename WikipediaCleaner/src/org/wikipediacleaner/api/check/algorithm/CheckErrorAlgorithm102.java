@@ -21,7 +21,8 @@ import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.PageElementTemplate.Parameter;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
-import org.wikipediacleaner.api.data.contents.tag.TagBuilder;
+import org.wikipediacleaner.api.data.contents.tag.HtmlTagType;
+import org.wikipediacleaner.api.data.contents.tag.WikiTagType;
 import org.wikipediacleaner.api.data.contents.template.TemplateBuilder;
 
 
@@ -37,15 +38,15 @@ public class CheckErrorAlgorithm102 extends CheckErrorAlgorithmBase {
 
   /** List of strings that could be before a PMID in <nowiki>. */
   private final static String[] EXTEND_BEFORE_NOWIKI = {
-    TagBuilder.NOWIKI_OPEN,
-    TagBuilder.SMALL_OPEN,
+    WikiTagType.NOWIKI.getOpenTag(),
+    HtmlTagType.SMALL.getOpenTag(),
     "(",
   };
 
   /** List of strings that could be after a PMID in <nowiki>. */
   private final static String[] EXTEND_AFTER_NOWIKI = {
-    TagBuilder.NOWIKI_CLOSE,
-    TagBuilder.SMALL_CLOSE,
+    WikiTagType.NOWIKI.getCloseTag(),
+    HtmlTagType.SMALL.getCloseTag(),
     ")",
   };
 
@@ -214,7 +215,7 @@ public class CheckErrorAlgorithm102 extends CheckErrorAlgorithmBase {
     }
 
     // Report also PMID inside <nowiki> tags
-    List<PageElementTag> nowikiTags = analysis.getCompleteTags(PageElementTag.TAG_WIKI_NOWIKI);
+    List<PageElementTag> nowikiTags = analysis.getCompleteTags(WikiTagType.NOWIKI);
     if (nowikiTags != null) {
       String contents = analysis.getContents();
       for (PageElementTag nowikiTag : nowikiTags) {

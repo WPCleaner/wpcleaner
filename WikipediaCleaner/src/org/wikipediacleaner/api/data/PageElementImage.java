@@ -14,6 +14,7 @@ import java.util.List;
 import org.wikipediacleaner.api.configuration.WikiConfiguration;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.contents.ContentsUtil;
+import org.wikipediacleaner.api.data.contents.tag.WikiTagType;
 
 
 /**
@@ -157,8 +158,8 @@ public class PageElementImage extends PageElement {
           if (tag.getBeginIndex() == tmpIndex) {
             if (tag.isComplete() &&
                 !tag.isEndTag() &&
-                (PageElementTag.TAG_WIKI_MATH.equalsIgnoreCase(tag.getNormalizedName()) ||
-                 PageElementTag.TAG_WIKI_NOWIKI.equalsIgnoreCase(tag.getNormalizedName()))) {
+                (WikiTagType.MATH.equals(tag.getType()) ||
+                 WikiTagType.NOWIKI.equals(tag.getType()))) {
               tmpIndex = tag.getCompleteEndIndex() - 1;
             } else {
               tmpIndex = tag.getEndIndex() - 1;

@@ -16,8 +16,8 @@ import org.wikipediacleaner.api.data.PageElementExternalLink;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
-import org.wikipediacleaner.api.data.contents.tag.FullTagBuilder;
-import org.wikipediacleaner.api.data.contents.tag.TagBuilder;
+import org.wikipediacleaner.api.data.contents.tag.CompleteTagBuilder;
+import org.wikipediacleaner.api.data.contents.tag.WikiTagType;
 import org.wikipediacleaner.gui.swing.action.ActionExternalViewer;
 import org.wikipediacleaner.i18n.GT;
 import org.wikipediacleaner.utils.StringChecker;
@@ -64,8 +64,7 @@ public class CheckErrorAlgorithm079 extends CheckErrorAlgorithmBase {
       String text = link.getText();
       if ((text == null) || (text.trim().length() == 0)) {
         boolean hasError = false;
-        PageElementTag refTag = analysis.getSurroundingTag(
-            PageElementTag.TAG_WIKI_REF, link.getBeginIndex());
+        PageElementTag refTag = analysis.getSurroundingTag(WikiTagType.REF, link.getBeginIndex());
         if (link.hasSquare()) {
           hasError = true;
         } else {
@@ -110,12 +109,13 @@ public class CheckErrorAlgorithm079 extends CheckErrorAlgorithmBase {
                   descriptionChecker));
           if (refTag == null) {
             errorResult.addReplacement(
-                FullTagBuilder.from(PageElementTag.TAG_WIKI_REF, url).toString(),
+                CompleteTagBuilder.from(WikiTagType.REF, url).toString(),
                 GT._T("Convert into <ref> tag"));
             errorResult.addPossibleAction(
                 GT._T("Add a description and convert into <ref> tag"),
                 new AddTextActionProvider(
-                    TagBuilder.REF_OPEN + "[" + url + " ", "]" + TagBuilder.REF_CLOSE,
+                    WikiTagType.REF.getOpenTag() + "[" + url + " ",
+                    "]" + WikiTagType.REF.getCloseTag(),
                     new TextProviderUrlTitle(url),
                     GT._T("What description would you like to use for the external link ?"),
                     descriptionChecker));

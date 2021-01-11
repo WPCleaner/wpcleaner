@@ -21,6 +21,8 @@ import org.wikipediacleaner.api.configuration.WPCConfigurationStringList;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.PageElementTag.Parameter;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
+import org.wikipediacleaner.api.data.contents.tag.HtmlTagType;
+import org.wikipediacleaner.api.data.contents.tag.WikiTagType;
 import org.wikipediacleaner.api.data.contents.template.TemplateBuilder;
 import org.wikipediacleaner.i18n.GT;
 
@@ -55,7 +57,7 @@ public class CheckErrorAlgorithm525 extends CheckErrorAlgorithmBase {
     }
 
     // Analyze each tag
-    List<PageElementTag> tags = analysis.getCompleteTags(PageElementTag.TAG_HTML_SPAN);
+    List<PageElementTag> tags = analysis.getCompleteTags(HtmlTagType.SPAN);
     if ((tags == null) || tags.isEmpty()) {
       return false;
     }
@@ -154,13 +156,13 @@ public class CheckErrorAlgorithm525 extends CheckErrorAlgorithmBase {
 
           // Suggestion to remove the tag
           PageElementTag refTag = analysis.isInTag(
-              tag.getCompleteEndIndex(), PageElementTag.TAG_WIKI_REF);
+              tag.getCompleteEndIndex(), WikiTagType.REF);
           if ((refTag != null) && (refTag.isEndTag())) {
             internal = internal.trim();
           }
           errorResult.addReplacement(
               internal,
-              GT._T("Remove {0} tags", PageElementTag.TAG_HTML_SPAN),
+              GT._T("Remove {0} tags", HtmlTagType.SPAN.getOpenTag()),
               onlyUselessParameter);
         }
         errors.add(errorResult);

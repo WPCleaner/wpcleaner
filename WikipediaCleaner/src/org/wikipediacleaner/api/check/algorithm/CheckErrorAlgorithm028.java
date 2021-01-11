@@ -22,6 +22,8 @@ import org.wikipediacleaner.api.configuration.WPCConfiguration;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
+import org.wikipediacleaner.api.data.contents.tag.HtmlTagType;
+import org.wikipediacleaner.api.data.contents.tag.WikiTagType;
 import org.wikipediacleaner.i18n.GT;
 
 
@@ -117,7 +119,7 @@ public class CheckErrorAlgorithm028 extends CheckErrorAlgorithmBase {
     }
 
     // Find tables beginning by <table>
-    List<PageElementTag> tags = analysis.getTags(PageElementTag.TAG_HTML_TABLE);
+    List<PageElementTag> tags = analysis.getTags(HtmlTagType.TABLE);
     for (PageElementTag tag : tags) {
       if (!tag.isFullTag() && !tag.isEndTag()) {
         if (shouldCount(analysis, index)) {
@@ -154,7 +156,7 @@ public class CheckErrorAlgorithm028 extends CheckErrorAlgorithmBase {
     }
 
     // Find tables ending by </table>
-    List<PageElementTag> tags = analysis.getTags(PageElementTag.TAG_HTML_TABLE);
+    List<PageElementTag> tags = analysis.getTags(HtmlTagType.TABLE);
     for (PageElementTag tag : tags) {
       if (!tag.isFullTag() && tag.isEndTag()) {
         if (shouldCount(analysis, index)) {
@@ -183,14 +185,14 @@ public class CheckErrorAlgorithm028 extends CheckErrorAlgorithmBase {
    * @return True if this place should count for the detection.
    */
   private boolean shouldCount(PageAnalysis analysis, int index) {
-    if ((analysis.getSurroundingTag(PageElementTag.TAG_HTML_CODE, index) != null) ||
-        (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_CHEM, index) != null) ||
-        (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_MATH, index) != null) ||
-        (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_MATH_CHEM, index) != null) ||
-        (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_NOWIKI, index) != null) ||
-        (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_PRE, index) != null) ||
-        (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_SOURCE, index) != null) ||
-        (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_SYNTAXHIGHLIGHT, index) != null)) {
+    if ((analysis.getSurroundingTag(HtmlTagType.CODE, index) != null) ||
+        (analysis.getSurroundingTag(WikiTagType.CHEM, index) != null) ||
+        (analysis.getSurroundingTag(WikiTagType.MATH, index) != null) ||
+        (analysis.getSurroundingTag(WikiTagType.MATH_CHEM, index) != null) ||
+        (analysis.getSurroundingTag(WikiTagType.NOWIKI, index) != null) ||
+        (analysis.getSurroundingTag(WikiTagType.PRE, index) != null) ||
+        (analysis.getSurroundingTag(WikiTagType.SOURCE, index) != null) ||
+        (analysis.getSurroundingTag(WikiTagType.SYNTAXHIGHLIGHT, index) != null)) {
       return false;
     }
     if (analysis.comments().isAt(index)) {

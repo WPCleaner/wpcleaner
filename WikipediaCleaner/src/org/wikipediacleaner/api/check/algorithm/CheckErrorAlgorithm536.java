@@ -20,6 +20,7 @@ import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
+import org.wikipediacleaner.api.data.contents.tag.HtmlTagType;
 
 
 /**
@@ -49,7 +50,7 @@ public class CheckErrorAlgorithm536 extends CheckErrorAlgorithmBase {
     }
 
     // Analyze each span tag
-    List<PageElementTag> spanTags = analysis.getCompleteTags(PageElementTag.TAG_HTML_SPAN);
+    List<PageElementTag> spanTags = analysis.getCompleteTags(HtmlTagType.SPAN);
     String contents = analysis.getContents();
     boolean result = false;
     for (PageElementTag spanTag : spanTags) {
@@ -85,9 +86,8 @@ public class CheckErrorAlgorithm536 extends CheckErrorAlgorithmBase {
             if (nextTag == null) {
               shouldReport = false;
             } else {
-              String tagName = nextTag.getNormalizedName();
-              if (!tagName.equals(PageElementTag.TAG_HTML_A) &&
-                  !tagName.equals(PageElementTag.TAG_HTML_SPAN)) {
+              if (!HtmlTagType.A.equals(nextTag.getType()) &&
+                  !HtmlTagType.SPAN.equals(nextTag.getType())) {
                 shouldReport = false;
               }
             }

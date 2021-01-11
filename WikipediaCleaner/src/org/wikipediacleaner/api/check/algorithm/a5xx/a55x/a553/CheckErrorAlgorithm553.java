@@ -27,6 +27,7 @@ import org.wikipediacleaner.api.data.PageElementInternalLink;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
 import org.wikipediacleaner.api.data.contents.ilink.InternalLinkBuilder;
+import org.wikipediacleaner.api.data.contents.tag.WikiTagType;
 import org.wikipediacleaner.gui.swing.action.ActionExternalViewer;
 import org.wikipediacleaner.i18n.GT;
 
@@ -66,7 +67,7 @@ public class CheckErrorAlgorithm553 extends CheckErrorAlgorithmBase {
     }
 
     // Global verification
-    List<PageElementTag> nowikiTags = analysis.getTags(PageElementTag.TAG_WIKI_NOWIKI);
+    List<PageElementTag> nowikiTags = analysis.getTags(WikiTagType.NOWIKI);
     if ((nowikiTags == null) || (nowikiTags.isEmpty())) {
       return false;
     }

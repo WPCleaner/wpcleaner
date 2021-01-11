@@ -10,19 +10,36 @@ package org.wikipediacleaner.api.data;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
 import org.wikipediacleaner.api.data.contents.ContentsElement;
 import org.wikipediacleaner.api.data.contents.ContentsElementComparator;
 import org.wikipediacleaner.api.data.contents.comment.ContentsComment;
+import org.wikipediacleaner.api.data.contents.tag.TagType;
+import org.wikipediacleaner.api.data.contents.tag.WikiTagType;
 
 
 /**
  * Bean for memorizing formatting elements
  */
 public class PageElementFormatting {
+
+  /** Exclude some tags */
+  private static final Set<TagType> TAGS_EXCLUSION = new HashSet<>();
+  static {
+    TAGS_EXCLUSION.add(WikiTagType.CHEM);
+    TAGS_EXCLUSION.add(WikiTagType.MATH);
+    TAGS_EXCLUSION.add(WikiTagType.MATH_CHEM);
+    TAGS_EXCLUSION.add(WikiTagType.NOWIKI);
+    TAGS_EXCLUSION.add(WikiTagType.SCORE);
+    TAGS_EXCLUSION.add(WikiTagType.SOURCE);
+    TAGS_EXCLUSION.add(WikiTagType.SYNTAXHIGHLIGHT);
+    TAGS_EXCLUSION.add(WikiTagType.TIMELINE);
+  }
 
   /** Page analysis */
   private final PageAnalysis analysis;
@@ -146,7 +163,7 @@ public class PageElementFormatting {
     }
 
     // Analyze element compared to each kind of other elements
-    inRefTag = analysis.getSurroundingTag(PageElementTag.TAG_WIKI_REF, index);
+    inRefTag = analysis.getSurroundingTag(WikiTagType.REF, index);
     inILink = analysis.isInInternalLink(index);
     inELink = analysis.isInExternalLink(index);
     inTemplate = analysis.isInTemplate(index);
@@ -525,18 +542,8 @@ public class PageElementFormatting {
     }
 
     // Exclude some tags
-    String[] tagsExclusions = new String[] {
-        PageElementTag.TAG_WIKI_CHEM,
-        PageElementTag.TAG_WIKI_MATH,
-        PageElementTag.TAG_WIKI_MATH_CHEM,
-        PageElementTag.TAG_WIKI_NOWIKI,
-        PageElementTag.TAG_WIKI_SCORE,
-        PageElementTag.TAG_WIKI_SOURCE,
-        PageElementTag.TAG_WIKI_SYNTAXHIGHLIGHT,
-        PageElementTag.TAG_WIKI_TIMELINE,
-    };
-    for (String tagsExclusion : tagsExclusions) {
-      List<PageElementTag> tags = analysis.getCompleteTags(tagsExclusion);
+    for (TagType tagExclusion : TAGS_EXCLUSION) {
+      List<PageElementTag> tags = analysis.getCompleteTags(tagExclusion);
       for (PageElementTag tag : tags) {
         PageElementFormatting.excludeArea(
             elements, tag.getCompleteBeginIndex(), tag.getCompleteEndIndex());

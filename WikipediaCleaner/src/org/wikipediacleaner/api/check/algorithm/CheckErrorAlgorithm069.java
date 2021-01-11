@@ -34,7 +34,8 @@ import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.PageElementTemplate.Parameter;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
-import org.wikipediacleaner.api.data.contents.tag.TagBuilder;
+import org.wikipediacleaner.api.data.contents.tag.HtmlTagType;
+import org.wikipediacleaner.api.data.contents.tag.WikiTagType;
 import org.wikipediacleaner.api.data.contents.template.TemplateBuilder;
 import org.wikipediacleaner.i18n.GT;
 
@@ -51,15 +52,15 @@ public class CheckErrorAlgorithm069 extends CheckErrorAlgorithmISBN {
 
   /** List of strings that could be before an ISBN in <nowiki>. */
   private final static String[] EXTEND_BEFORE_NOWIKI = {
-    TagBuilder.NOWIKI_OPEN,
-    TagBuilder.SMALL_OPEN,
+    WikiTagType.NOWIKI.getOpenTag(),
+    HtmlTagType.SMALL.getOpenTag(),
     "(",
   };
 
   /** List of strings that could be after an ISBN in <nowiki>. */
   private final static String[] EXTEND_AFTER_NOWIKI = {
-    TagBuilder.NOWIKI_CLOSE,
-    TagBuilder.SMALL_CLOSE,
+    WikiTagType.NOWIKI.getCloseTag(),
+    HtmlTagType.SMALL.getCloseTag(),
     ")",
   };
 
@@ -69,8 +70,8 @@ public class CheckErrorAlgorithm069 extends CheckErrorAlgorithmISBN {
     "&#x20;",
   };
 
-  private static final String SMALL_CLOSE = TagBuilder.SMALL_CLOSE;
-  private static final String SMALL_OPEN = TagBuilder.SMALL_OPEN;
+  private static final String SMALL_CLOSE = HtmlTagType.SMALL.getCloseTag();
+  private static final String SMALL_OPEN = HtmlTagType.SMALL.getOpenTag();
 
   /** Names of special page BookSources depending on the wiki */
   private final static Map<String, Pair<Set<String>, Set<String>>> BOOK_SOURCES = new HashMap<>();
@@ -621,7 +622,7 @@ public class CheckErrorAlgorithm069 extends CheckErrorAlgorithmISBN {
       PageAnalysis analysis,
       Collection<CheckErrorResult> errors) {
 
-    List<PageElementTag> nowikiTags = analysis.getCompleteTags(PageElementTag.TAG_WIKI_NOWIKI);
+    List<PageElementTag> nowikiTags = analysis.getCompleteTags(WikiTagType.NOWIKI);
     if (nowikiTags == null) {
       return false;
     }

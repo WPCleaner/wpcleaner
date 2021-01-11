@@ -25,9 +25,10 @@ import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageElementTable;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
-import org.wikipediacleaner.api.data.contents.tag.FullTagBuilder;
+import org.wikipediacleaner.api.data.contents.tag.HtmlTagType;
 import org.wikipediacleaner.api.data.contents.tag.TagBuilder;
 import org.wikipediacleaner.api.data.contents.tag.TagFormat;
+import org.wikipediacleaner.api.data.contents.tag.TagType;
 import org.wikipediacleaner.api.data.contents.template.TemplateBuilder;
 import org.wikipediacleaner.i18n.GT;
 
@@ -60,10 +61,10 @@ public class CheckErrorAlgorithm541 extends CheckErrorAlgorithmBase {
 
     // Analyze each kind of obsolete tag
     boolean result = false;
-    result |= analyzeTags(analysis, errors, PageElementTag.TAG_HTML_CENTER);
-    result |= analyzeTags(analysis, errors, PageElementTag.TAG_HTML_FONT);
-    result |= analyzeTags(analysis, errors, PageElementTag.TAG_HTML_STRIKE);
-    result |= analyzeTags(analysis, errors, PageElementTag.TAG_HTML_TT);
+    result |= analyzeTags(analysis, errors, HtmlTagType.CENTER);
+    result |= analyzeTags(analysis, errors, HtmlTagType.FONT);
+    result |= analyzeTags(analysis, errors, HtmlTagType.STRIKE);
+    result |= analyzeTags(analysis, errors, HtmlTagType.TT);
 
     return result;
   }
@@ -73,16 +74,16 @@ public class CheckErrorAlgorithm541 extends CheckErrorAlgorithmBase {
    * 
    * @param analysis Page analysis.
    * @param errors Errors found in the page.
-   * @param tagName Tag name.
+   * @param tagType Tag type.
    * @return Flag indicating if the error was found.
    */
   private boolean analyzeTags(
       PageAnalysis analysis,
       Collection<CheckErrorResult> errors,
-      String tagName) {
+      TagType tagType) {
 
     // Analyze contents to find center tags
-    List<PageElementTag> tags = analysis.getTags(tagName);
+    List<PageElementTag> tags = analysis.getTags(tagType);
     if (tags.size() == 0) {
       return false;
     }
@@ -101,11 +102,11 @@ public class CheckErrorAlgorithm541 extends CheckErrorAlgorithmBase {
       // Report complete tags
       if (tag.isComplete() && !tag.isEndTag()) {
         CheckErrorResult errorResult = null;
-        if (PageElementTag.TAG_HTML_CENTER.equals(tag.getNormalizedName())) {
+        if (HtmlTagType.CENTER.equals(tag.getType())) {
           errorResult = analyzeCenterTag(analysis, tag);
-        } else if (PageElementTag.TAG_HTML_STRIKE.equals(tag.getNormalizedName())) {
+        } else if (HtmlTagType.STRIKE.equals(tag.getType())) {
           errorResult = analyzeStrikeTag(analysis, tag);
-        } else if (PageElementTag.TAG_HTML_TT.equals(tag.getNormalizedName())) {
+        } else if (HtmlTagType.TT.equals(tag.getType())) {
           errorResult = analyzeTtTag(analysis, tag);
         }
         if (errorResult == null) {
@@ -200,7 +201,7 @@ public class CheckErrorAlgorithm541 extends CheckErrorAlgorithmBase {
     }
     replaceTag(
         analysis, errorResult,
-        tag, PageElementTag.TAG_HTML_DIV,
+        tag, HtmlTagType.DIV,
         "style", "text-align: center;",
         null, false);
     return errorResult;
@@ -217,12 +218,12 @@ public class CheckErrorAlgorithm541 extends CheckErrorAlgorithmBase {
         analysis, tag.getCompleteBeginIndex(), tag.getCompleteEndIndex());
     replaceTag(
         analysis, errorResult,
-        tag, PageElementTag.TAG_HTML_DEL,
+        tag, HtmlTagType.DEL,
         null, null,
         GT._T("for marking an edit"), false);
     replaceTag(
         analysis, errorResult,
-        tag, PageElementTag.TAG_HTML_S,
+        tag, HtmlTagType.S,
         null, null,
         GT._T("for anything else"), false);
     for (String[] template : strikeTemplates) {
@@ -242,22 +243,22 @@ public class CheckErrorAlgorithm541 extends CheckErrorAlgorithmBase {
         analysis, tag.getCompleteBeginIndex(), tag.getCompleteEndIndex());
     replaceTag(
         analysis, errorResult,
-        tag, PageElementTag.TAG_HTML_CODE,
+        tag, HtmlTagType.CODE,
         null, null,
         GT._T("preferred for source code"), false);
     replaceTag(
         analysis, errorResult,
-        tag, PageElementTag.TAG_HTML_KBD,
+        tag, HtmlTagType.KBD,
         null, null,
         GT._T("preferred for user input"), false);
     replaceTag(
         analysis, errorResult,
-        tag, PageElementTag.TAG_HTML_VAR,
+        tag, HtmlTagType.VAR,
         null, null,
         GT._T("preferred for variables"), false);
     replaceTag(
         analysis, errorResult,
-        tag, PageElementTag.TAG_HTML_SAMP,
+        tag, HtmlTagType.SAMP,
         null, null,
         GT._T("preferred for output, function and tag names, etc."), false);
     for (String[] template : ttTemplates) {
@@ -265,7 +266,7 @@ public class CheckErrorAlgorithm541 extends CheckErrorAlgorithmBase {
     }
     replaceTag(
         analysis, errorResult,
-        tag, PageElementTag.TAG_HTML_SPAN,
+        tag, HtmlTagType.SPAN,
         "style", "font-family: monospace;",
         GT._T("preferred for everything else"), false);
     return errorResult;
@@ -286,16 +287,16 @@ public class CheckErrorAlgorithm541 extends CheckErrorAlgorithmBase {
   private void replaceTag(
       PageAnalysis analysis,
       CheckErrorResult errorResult,
-      PageElementTag tag, String tagName,
+      PageElementTag tag, TagType tagType,
       String optionName, String optionValue,
       String comment, boolean automatic) {
     // TODO: Modify to properly use builder from existing tag with modification ?
-    TagBuilder openTagBuilder = TagBuilder.from(tagName, TagFormat.OPEN);
+    TagBuilder openTagBuilder = TagBuilder.from(tagType, TagFormat.OPEN);
     if (optionName != null) {
       openTagBuilder.addAttribute(optionName, optionValue);
     }
     String openTag = openTagBuilder.toString();
-    String closeTag = TagBuilder.from(tagName, TagFormat.CLOSE).toString();
+    String closeTag = TagBuilder.from(tagType, TagFormat.CLOSE).toString();
     String replacement =
         openTag +
         analysis.getContents().substring(tag.getValueBeginIndex(), tag.getValueEndIndex()) +
@@ -458,11 +459,11 @@ public class CheckErrorAlgorithm541 extends CheckErrorAlgorithmBase {
     super.addParameters();
     addParameter(new AlgorithmParameter(
         PARAMETER_CENTER_TEMPLATES,
-        GT._T("Possible replacements for {0} tags", FullTagBuilder.CENTER),
+        GT._T("Possible replacements for {0} tags", HtmlTagType.CENTER.getOpenTag()),
         new AlgorithmParameterElement[] {
           new AlgorithmParameterElement(
               "template name",
-              GT._T("Template for replacing {0} tag", FullTagBuilder.CENTER)),
+              GT._T("Template for replacing {0} tag", HtmlTagType.CENTER.getOpenTag())),
           new AlgorithmParameterElement(
               "parameter name",
               GT._T("Parameter to use in the template for the text"),
@@ -479,11 +480,11 @@ public class CheckErrorAlgorithm541 extends CheckErrorAlgorithmBase {
         true));
     addParameter(new AlgorithmParameter(
         PARAMETER_STRIKE_TEMPLATES,
-        GT._T("Possible replacements for {0} tags", FullTagBuilder.STRIKE),
+        GT._T("Possible replacements for {0} tags", HtmlTagType.STRIKE.getOpenTag()),
         new AlgorithmParameterElement[] {
           new AlgorithmParameterElement(
               "template name",
-              GT._T("Template for replacing {0} tag", FullTagBuilder.STRIKE)),
+              GT._T("Template for replacing {0} tag", HtmlTagType.STRIKE.getOpenTag())),
           new AlgorithmParameterElement(
               "parameter name",
               GT._T("Parameter to use in the template for the text"),
@@ -500,11 +501,11 @@ public class CheckErrorAlgorithm541 extends CheckErrorAlgorithmBase {
         true));
     addParameter(new AlgorithmParameter(
         PARAMETER_TT_TEMPLATES,
-        GT._T("Possible replacements for {0} tags", FullTagBuilder.TT),
+        GT._T("Possible replacements for {0} tags", HtmlTagType.TT.getOpenTag()),
         new AlgorithmParameterElement[] {
           new AlgorithmParameterElement(
               "template name",
-              GT._T("Template for replacing {0} tag", FullTagBuilder.TT)),
+              GT._T("Template for replacing {0} tag", HtmlTagType.TT.getOpenTag())),
           new AlgorithmParameterElement(
               "parameter name",
               GT._T("Parameter to use in the template for the text"),

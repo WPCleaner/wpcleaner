@@ -16,9 +16,10 @@ import org.wikipediacleaner.api.data.PageElementImage;
 import org.wikipediacleaner.api.data.PageElementInternalLink;
 import org.wikipediacleaner.api.data.PageElementInterwikiLink;
 import org.wikipediacleaner.api.data.PageElementLanguageLink;
-import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
+import org.wikipediacleaner.api.data.contents.tag.HtmlTagType;
+import org.wikipediacleaner.api.data.contents.tag.WikiTagType;
 import org.wikipediacleaner.i18n.GT;
 
 
@@ -90,15 +91,15 @@ public class CheckErrorAlgorithm046 extends CheckErrorAlgorithmBase {
       }
       if (shouldCount) {
         if (analysis.comments().isAt(currentIndex) ||
-            (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_NOWIKI, currentIndex) != null) ||
-            (analysis.getSurroundingTag(PageElementTag.TAG_HTML_CODE, currentIndex) != null) ||
-            (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_MAPFRAME, currentIndex) != null) ||
-            (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_MATH, currentIndex) != null) ||
-            (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_MATH_CHEM, currentIndex) != null) ||
-            (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_PRE, currentIndex) != null) ||
-            (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_SCORE, currentIndex) != null) ||
-            (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_SOURCE, currentIndex) != null) ||
-            (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_SYNTAXHIGHLIGHT, currentIndex) != null) ||
+            (analysis.getSurroundingTag(WikiTagType.NOWIKI, currentIndex) != null) ||
+            (analysis.getSurroundingTag(HtmlTagType.CODE, currentIndex) != null) ||
+            (analysis.getSurroundingTag(WikiTagType.MAPFRAME, currentIndex) != null) ||
+            (analysis.getSurroundingTag(WikiTagType.MATH, currentIndex) != null) ||
+            (analysis.getSurroundingTag(WikiTagType.MATH_CHEM, currentIndex) != null) ||
+            (analysis.getSurroundingTag(WikiTagType.PRE, currentIndex) != null) ||
+            (analysis.getSurroundingTag(WikiTagType.SCORE, currentIndex) != null) ||
+            (analysis.getSurroundingTag(WikiTagType.SOURCE, currentIndex) != null) ||
+            (analysis.getSurroundingTag(WikiTagType.SYNTAXHIGHLIGHT, currentIndex) != null) ||
             (analysis.isInTag(currentIndex) != null)) {
           shouldCount = false;
         }

@@ -7,7 +7,12 @@
 
 package org.wikipediacleaner.api.check.algorithm;
 
-import org.wikipediacleaner.api.data.PageElementTag;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
+
+import org.wikipediacleaner.api.data.contents.tag.HtmlTagType;
+import org.wikipediacleaner.api.data.contents.tag.TagType;
 
 
 /**
@@ -23,18 +28,30 @@ public class CheckErrorAlgorithm031 extends CheckErrorAlgorithmTags {
   /**
    * Tags to look for.
    */
-  private final static String[] TAGS = {
-    PageElementTag.TAG_HTML_TABLE,
-    PageElementTag.TAG_HTML_TD,
-    PageElementTag.TAG_HTML_TH,
-    PageElementTag.TAG_HTML_TR,
-  };
+  private final static Set<TagType> TAGS;
+
+  static {
+	Set<TagType> tmpTags = new HashSet<>();
+    tmpTags.add(HtmlTagType.TABLE);
+    tmpTags.add(HtmlTagType.TD);
+    tmpTags.add(HtmlTagType.TH);
+    tmpTags.add(HtmlTagType.TR);
+    TAGS = Collections.unmodifiableSet(tmpTags);
+  }
 
   /**
    * @return Tags to look for.
    */
   @Override
-  protected String[] getTags() {
+  protected Set<TagType> getTags() {
     return TAGS;
+  }
+
+  /**
+   * @return True if complete tags should be reported as one tag instead of separate tags.
+   */
+  @Override
+  protected boolean reportCompleteTags() {
+    return false;
   }
 }

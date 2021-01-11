@@ -71,8 +71,8 @@ import org.wikipediacleaner.api.configuration.WPCConfigurationString;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.DataManager;
 import org.wikipediacleaner.api.data.Page;
-import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.PageRedirect;
+import org.wikipediacleaner.api.data.contents.tag.HtmlTagType;
 import org.wikipediacleaner.api.data.contents.tag.TagBuilder;
 import org.wikipediacleaner.api.data.contents.tag.TagFormat;
 import org.wikipediacleaner.gui.swing.Controller;
@@ -1026,23 +1026,23 @@ public class CheckWikiWindow extends OnePageWindow implements CheckWikiListener 
       AlgorithmParametersDescriptor descriptor = new AlgorithmParametersDescriptor();
       descriptor.setGlobalTexts(GT._T(
           "The error n°{0} can be configured with the following parameters in the <a href=\"{1}\">translation file</a> :",
-          new Object[] { Integer.toString(errorNumber), url }) + "\n" + TagBuilder.UL_OPEN,
-          TagBuilder.UL_CLOSE);
-      descriptor.setParameterTexts(TagBuilder.LI_OPEN, TagBuilder.LI_CLOSE + "\n");
-      descriptor.setParameterNameTexts(TagBuilder.B_OPEN, TagBuilder.B_CLOSE);
+          new Object[] { Integer.toString(errorNumber), url }) + "\n" + HtmlTagType.UL.getOpenTag(),
+          HtmlTagType.UL.getCloseTag());
+      descriptor.setParameterTexts(HtmlTagType.LI.getOpenTag(), HtmlTagType.LI.getCloseTag() + "\n");
+      descriptor.setParameterNameTexts(HtmlTagType.B.getOpenTag(), HtmlTagType.B.getCloseTag());
       descriptor.setParameterDescriptionTexts(": ", null);
       descriptor.setDisplayDetails(true);
       descriptor.setDetailsTexts(
-          TagBuilder.from(PageElementTag.TAG_HTML_SPAN, TagFormat.OPEN).addAttribute("style", "font-family: monospace, monospace;").toString(),
-          TagBuilder.from(PageElementTag.TAG_HTML_SPAN, TagFormat.CLOSE).toString());
+          TagBuilder.from(HtmlTagType.SPAN, TagFormat.OPEN).addAttribute("style", "font-family: monospace, monospace;").toString(),
+          HtmlTagType.SPAN.getCloseTag());
       descriptor.setExampleTexts(
           "error_" + algorithm.getErrorNumberString() + "_",
           "_" + getWiki().getSettings().getCodeCheckWiki());
       descriptor.setDisplayTooltip(false); // Tooltip doesn't work
       descriptor.setTooltipTexts(
           "<abbr title=\"", "\">",
-          TagBuilder.from(PageElementTag.TAG_HTML_ABBR, TagFormat.CLOSE).toString());
-      descriptor.setLineSeparation(TagBuilder.from(PageElementTag.TAG_HTML_BR, TagFormat.FULL).toString() + "\n");
+          HtmlTagType.ABBR.getCloseTag());
+      descriptor.setLineSeparation(HtmlTagType.BR.getFullTag() + "\n");
       descriptor.setLineTabulation("&nbsp;&nbsp;&nbsp;");
       textParameters.setText(descriptor.describe(algorithm));
     } else {

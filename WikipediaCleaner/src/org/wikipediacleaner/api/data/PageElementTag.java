@@ -14,91 +14,14 @@ import org.wikipediacleaner.api.configuration.WPCConfiguration;
 import org.wikipediacleaner.api.configuration.WPCConfigurationStringList;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
 import org.wikipediacleaner.api.data.contents.ContentsUtil;
-import org.wikipediacleaner.api.data.contents.tag.FullTagBuilder;
+import org.wikipediacleaner.api.data.contents.tag.TagType;
+import org.wikipediacleaner.api.data.contents.tag.WikiTagType;
 
 
 /**
  * Class containing information about a tag (&lt;<i>tag</i>&gt;).
  */
 public class PageElementTag extends PageElement {
-
-  // =========================================================================
-  // HTML tags
-  // =========================================================================
-  public final static String TAG_HTML_A            = "a";
-  public final static String TAG_HTML_ABBR         = "abbr";
-  public final static String TAG_HTML_B            = "b";
-  public final static String TAG_HTML_BIG          = "big";
-  public final static String TAG_HTML_BLOCKQUOTE   = "blockquote";
-  public final static String TAG_HTML_BR           = "br";
-  public final static String TAG_HTML_CENTER       = "center";
-  public final static String TAG_HTML_CITE         = "cite";
-  public final static String TAG_HTML_CODE         = "code";
-  public final static String TAG_HTML_DEL          = "del";
-  public final static String TAG_HTML_DFN          = "dfn";
-  public final static String TAG_HTML_DIV          = "div";
-  public final static String TAG_HTML_EM           = "em";
-  public final static String TAG_HTML_FONT         = "font";
-  public final static String TAG_HTML_H1           = "h1";
-  public final static String TAG_HTML_H2           = "h2";
-  public final static String TAG_HTML_H3           = "h3";
-  public final static String TAG_HTML_H4           = "h4";
-  public final static String TAG_HTML_H5           = "h5";
-  public final static String TAG_HTML_H6           = "h6";
-  public final static String TAG_HTML_H7           = "h7";
-  public final static String TAG_HTML_H8           = "h8";
-  public final static String TAG_HTML_H9           = "h9";
-  public final static String TAG_HTML_HR           = "hr";
-  public final static String TAG_HTML_I            = "i";
-  public final static String TAG_HTML_KBD          = "kbd";
-  public final static String TAG_HTML_LI           = "li";
-  public final static String TAG_HTML_OL           = "ol";
-  public final static String TAG_HTML_P            = "p";
-  public final static String TAG_HTML_S            = "s";
-  public final static String TAG_HTML_SAMP         = "samp";
-  public final static String TAG_HTML_SMALL        = "small";
-  public final static String TAG_HTML_SPAN         = "span";
-  public final static String TAG_HTML_STRIKE       = "strike";
-  public final static String TAG_HTML_STRONG       = "strong";
-  public final static String TAG_HTML_SUB          = "sub";
-  public final static String TAG_HTML_SUP          = "sup";
-  public final static String TAG_HTML_TABLE        = "table";
-  public final static String TAG_HTML_TD           = "td";
-  public final static String TAG_HTML_TH           = "th";
-  public final static String TAG_HTML_TR           = "tr";
-  public final static String TAG_HTML_TT           = "tt";
-  public final static String TAG_HTML_U            = "u";
-  public final static String TAG_HTML_UL           = "ul";
-  public final static String TAG_HTML_VAR          = "var";
-
-  // =========================================================================
-  // Wiki tags
-  // =========================================================================
-  public final static String TAG_WIKI_CHEM            = "chem";
-  public final static String TAG_WIKI_GALLERY         = "gallery";
-  public final static String TAG_WIKI_GRAPH           = "graph";
-  public final static String TAG_WIKI_HIERO           = "hiero";
-  public final static String TAG_WIKI_IMAGEMAP        = "imagemap";
-  public final static String TAG_WIKI_INCLUDEONLY     = "includeonly";
-  public final static String TAG_WIKI_MAPFRAME        = "mapframe";
-  public final static String TAG_WIKI_MATH            = "math";
-  public final static String TAG_WIKI_MATH_CHEM       = "ce"; // Shortcut for math chem
-  public final static String TAG_WIKI_NOINCLUDE       = "noinclude";
-  public final static String TAG_WIKI_NOWIKI          = "nowiki";
-  public final static String TAG_WIKI_ONLYINCLUDE     = "onlyinclude";
-  public final static String TAG_WIKI_PRE             = "pre";
-  public final static String TAG_WIKI_REF             = "ref";
-  public final static String TAG_WIKI_REFERENCES      = "references";
-  public final static String TAG_WIKI_SCORE           = "score";
-  public final static String TAG_WIKI_SOURCE          = "source";
-  public final static String TAG_WIKI_SYNTAXHIGHLIGHT = "syntaxhighlight";
-  public final static String TAG_WIKI_TEMPLATEDATA    = "templatedata";
-  public final static String TAG_WIKI_TIMELINE        = "timeline";
-
-  // =========================================================================
-  // Other tags
-  // =========================================================================
-  public final static String TAG_OTHER_TYPO        = "typo";
 
   /** Possible characters for parameter name */
   private final static String PARAM_NAME_CHARS =
@@ -122,6 +45,9 @@ public class PageElementTag extends PageElement {
 
   /** Normalized tag name */
   private final String normalizedName;
+
+  /** Type of the tag */
+  private final TagType type;
 
   /** Tag parameters */
   private final List<PageElementTag.Parameter> parameters;
@@ -390,6 +316,13 @@ public class PageElementTag extends PageElement {
   }
 
   /**
+   * @return Tag type.
+   */
+  public TagType getType() {
+    return type;
+  }
+
+  /**
    * @return Number of parameters.
    */
   public int getParametersCount() {
@@ -442,17 +375,6 @@ public class PageElementTag extends PageElement {
    */
   public boolean isFullTag() {
     return fullTag;
-  }
-
-  /**
-   * @return True if an unclosed tag is normal.
-   */
-  public boolean mayBeUnclosed() {
-    if (TAG_HTML_BR.equals(normalizedName) ||
-        TAG_HTML_HR.equals(normalizedName)) {
-      return true;
-    }
-    return false;
   }
 
   /**
@@ -555,6 +477,7 @@ public class PageElementTag extends PageElement {
     super(beginIndex, endIndex);
     this.name = name;
     this.normalizedName = (name != null) ? name.trim().toLowerCase() : null;
+    this.type = TagType.getByNormalizedName(normalizedName);
     this.parameters = parameters;
     this.endTag = endTag;
     this.fullTag = fullTag;
@@ -578,7 +501,7 @@ public class PageElementTag extends PageElement {
 
       // Check for a group parameter in the references tag
       PageElementTag references = analysis.getSurroundingTag(
-          PageElementTag.TAG_WIKI_REFERENCES, getBeginIndex());
+          WikiTagType.REFERENCES, getBeginIndex());
       if (references != null) {
         group = references.getParameter("group");
         if (group != null) {
@@ -838,7 +761,7 @@ public class PageElementTag extends PageElement {
       tagIndex = getMatchingTagIndex(tags, tagIndex);
       tagIndex++;
     }
-    String refBlock = FullTagBuilder.REF;
+    String refBlock = WikiTagType.REF.getCompleteTag();
     if (count > 2) {
       return refBlock + separator + "..." + separator + refBlock;
     }

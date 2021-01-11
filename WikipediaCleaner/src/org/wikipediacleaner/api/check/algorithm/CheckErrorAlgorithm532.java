@@ -8,7 +8,10 @@
 package org.wikipediacleaner.api.check.algorithm;
 
 import java.util.Collection;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.data.Namespace;
@@ -17,8 +20,11 @@ import org.wikipediacleaner.api.data.PageElementTable;
 import org.wikipediacleaner.api.data.PageElementImage.Parameter;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
 import org.wikipediacleaner.api.data.contents.comment.ContentsComment;
+import org.wikipediacleaner.api.data.contents.tag.HtmlTagType;
 import org.wikipediacleaner.api.data.contents.tag.TagBuilder;
 import org.wikipediacleaner.api.data.contents.tag.TagFormat;
+import org.wikipediacleaner.api.data.contents.tag.TagType;
+import org.wikipediacleaner.api.data.contents.tag.WikiTagType;
 import org.wikipediacleaner.api.data.PageElementInternalLink;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.PageElementTemplate;
@@ -49,43 +55,46 @@ public class CheckErrorAlgorithm532 extends CheckErrorAlgorithmBase {
   }
 
   /** List of tags to be verified. */
-  private final static String[] tagNames = {
-    PageElementTag.TAG_HTML_ABBR,
-    PageElementTag.TAG_HTML_B,
-    PageElementTag.TAG_HTML_BIG,
-    PageElementTag.TAG_HTML_BLOCKQUOTE,
-    PageElementTag.TAG_HTML_CENTER,
-    PageElementTag.TAG_HTML_CODE,
-    PageElementTag.TAG_HTML_DIV,
-    PageElementTag.TAG_HTML_EM,
-    PageElementTag.TAG_HTML_FONT,
-    PageElementTag.TAG_HTML_H1,
-    PageElementTag.TAG_HTML_H2,
-    PageElementTag.TAG_HTML_H3,
-    PageElementTag.TAG_HTML_H4,
-    PageElementTag.TAG_HTML_H5,
-    PageElementTag.TAG_HTML_H6,
-    PageElementTag.TAG_HTML_H7,
-    PageElementTag.TAG_HTML_H8,
-    PageElementTag.TAG_HTML_H9,
-    PageElementTag.TAG_HTML_I,
-    PageElementTag.TAG_HTML_LI,
-    PageElementTag.TAG_HTML_OL,
-    PageElementTag.TAG_HTML_P,
-    PageElementTag.TAG_HTML_S,
-    PageElementTag.TAG_HTML_SMALL,
-    PageElementTag.TAG_HTML_SPAN,
-    PageElementTag.TAG_HTML_STRIKE,
-    PageElementTag.TAG_HTML_STRONG,
-    PageElementTag.TAG_HTML_SUB,
-    PageElementTag.TAG_HTML_SUP,
-    PageElementTag.TAG_HTML_TABLE,
-    PageElementTag.TAG_HTML_TD,
-    PageElementTag.TAG_HTML_TR,
-    PageElementTag.TAG_HTML_TT,
-    PageElementTag.TAG_HTML_U,
-    PageElementTag.TAG_HTML_UL,
-  };
+  private final static Set<TagType> tagTypes;
+  static {
+	Set<TagType> tmpSet = new HashSet<>();
+    tmpSet.add(HtmlTagType.ABBR);
+    tmpSet.add(HtmlTagType.B);
+    tmpSet.add(HtmlTagType.BIG);
+    tmpSet.add(HtmlTagType.BLOCKQUOTE);
+    tmpSet.add(HtmlTagType.CENTER);
+    tmpSet.add(HtmlTagType.CODE);
+    tmpSet.add(HtmlTagType.DIV);
+    tmpSet.add(HtmlTagType.EM);
+    tmpSet.add(HtmlTagType.FONT);
+    tmpSet.add(HtmlTagType.H1);
+    tmpSet.add(HtmlTagType.H2);
+    tmpSet.add(HtmlTagType.H3);
+    tmpSet.add(HtmlTagType.H4);
+    tmpSet.add(HtmlTagType.H5);
+    tmpSet.add(HtmlTagType.H6);
+    tmpSet.add(HtmlTagType.H7);
+    tmpSet.add(HtmlTagType.H8);
+    tmpSet.add(HtmlTagType.H9);
+    tmpSet.add(HtmlTagType.I);
+    tmpSet.add(HtmlTagType.LI);
+    tmpSet.add(HtmlTagType.OL);
+    tmpSet.add(HtmlTagType.P);
+    tmpSet.add(HtmlTagType.S);
+    tmpSet.add(HtmlTagType.SMALL);
+    tmpSet.add(HtmlTagType.SPAN);
+    tmpSet.add(HtmlTagType.STRIKE);
+    tmpSet.add(HtmlTagType.STRONG);
+    tmpSet.add(HtmlTagType.SUB);
+    tmpSet.add(HtmlTagType.SUP);
+    tmpSet.add(HtmlTagType.TABLE);
+    tmpSet.add(HtmlTagType.TD);
+    tmpSet.add(HtmlTagType.TR);
+    tmpSet.add(HtmlTagType.TT);
+    tmpSet.add(HtmlTagType.U);
+    tmpSet.add(HtmlTagType.UL);
+    tagTypes = Collections.unmodifiableSet(tmpSet);
+  }
 
   /**
    * Analyze a page to check if errors are present.
@@ -189,12 +198,7 @@ public class CheckErrorAlgorithm532 extends CheckErrorAlgorithmBase {
 
     // Default reporting
     if (!hasBeenReported) {
-      boolean shouldBeReported = false;
-      for (String tagName : tagNames) {
-        if (tagName.equals(tag.getNormalizedName())) {
-          shouldBeReported = true;
-        }
-      }
+      boolean shouldBeReported = tagTypes.contains(tag.getType());
       if (shouldBeReported) {
         CheckErrorResult errorResult = createCheckErrorResult(analysis, tag.getBeginIndex(), tag.getEndIndex());
         errors.add(errorResult);
@@ -216,9 +220,9 @@ public class CheckErrorAlgorithm532 extends CheckErrorAlgorithmBase {
       Collection<CheckErrorResult> errors) {
 
     // Check type of tag
-    if (!PageElementTag.TAG_HTML_DIV.equals(tag.getNormalizedName()) &&
-        !PageElementTag.TAG_HTML_FONT.equals(tag.getNormalizedName()) &&
-        !PageElementTag.TAG_HTML_SPAN.equals(tag.getNormalizedName())) {
+    if (!HtmlTagType.DIV.equals(tag.getType()) &&
+        !HtmlTagType.FONT.equals(tag.getType()) &&
+        !HtmlTagType.SPAN.equals(tag.getType())) {
       return false;
     }
 
@@ -262,8 +266,8 @@ public class CheckErrorAlgorithm532 extends CheckErrorAlgorithmBase {
       Collection<CheckErrorResult> errors) {
 
     // Check type of tag
-    if (!PageElementTag.TAG_HTML_FONT.equals(tag.getNormalizedName()) &&
-        !PageElementTag.TAG_HTML_SPAN.equals(tag.getNormalizedName())) {
+    if (!HtmlTagType.FONT.equals(tag.getType()) &&
+        !HtmlTagType.SPAN.equals(tag.getType())) {
       return false;
     }
 
@@ -305,11 +309,11 @@ public class CheckErrorAlgorithm532 extends CheckErrorAlgorithmBase {
       Collection<CheckErrorResult> errors) {
 
     // Check type of tag
-    if (!PageElementTag.TAG_HTML_BIG.equals(tag.getNormalizedName()) &&
-        !PageElementTag.TAG_HTML_CENTER.equals(tag.getNormalizedName()) &&
-        !PageElementTag.TAG_HTML_FONT.equals(tag.getNormalizedName()) &&
-        !PageElementTag.TAG_HTML_SMALL.equals(tag.getNormalizedName()) &&
-        !PageElementTag.TAG_HTML_SPAN.equals(tag.getNormalizedName())) {
+    if (!HtmlTagType.BIG.equals(tag.getType()) &&
+        !HtmlTagType.CENTER.equals(tag.getType()) &&
+        !HtmlTagType.FONT.equals(tag.getType()) &&
+        !HtmlTagType.SMALL.equals(tag.getType()) &&
+        !HtmlTagType.SPAN.equals(tag.getType())) {
       return false;
     }
 
@@ -350,14 +354,14 @@ public class CheckErrorAlgorithm532 extends CheckErrorAlgorithmBase {
       Collection<CheckErrorResult> errors) {
 
     // Check type of tag
-    if (!PageElementTag.TAG_HTML_CENTER.equals(tag.getNormalizedName()) &&
-        !PageElementTag.TAG_HTML_FONT.equals(tag.getNormalizedName()) &&
-        !PageElementTag.TAG_HTML_SPAN.equals(tag.getNormalizedName())) {
+    if (!HtmlTagType.CENTER.equals(tag.getType()) &&
+        !HtmlTagType.FONT.equals(tag.getType()) &&
+        !HtmlTagType.SPAN.equals(tag.getType())) {
       return false;
     }
 
     // Analyze if it is in a gallery tag
-    PageElementTag galleryTag = analysis.getSurroundingTag(PageElementTag.TAG_WIKI_GALLERY, tag.getBeginIndex());
+    PageElementTag galleryTag = analysis.getSurroundingTag(WikiTagType.GALLERY, tag.getBeginIndex());
     if (galleryTag == null) {
       return false;
     }
@@ -431,17 +435,17 @@ public class CheckErrorAlgorithm532 extends CheckErrorAlgorithmBase {
       Collection<CheckErrorResult> errors) {
 
     // Check type of tag
-    if (!PageElementTag.TAG_HTML_ABBR.equals(tag.getNormalizedName()) &&
-        !PageElementTag.TAG_HTML_BIG.equals(tag.getNormalizedName()) &&
-        !PageElementTag.TAG_HTML_CENTER.equals(tag.getNormalizedName()) &&
-        !PageElementTag.TAG_HTML_CODE.equals(tag.getNormalizedName()) &&
-        !PageElementTag.TAG_HTML_DIV.equals(tag.getNormalizedName()) &&
-        !PageElementTag.TAG_HTML_FONT.equals(tag.getNormalizedName()) &&
-        !PageElementTag.TAG_HTML_S.equals(tag.getNormalizedName()) &&
-        !PageElementTag.TAG_HTML_SMALL.equals(tag.getNormalizedName()) &&
-        !PageElementTag.TAG_HTML_SPAN.equals(tag.getNormalizedName()) &&
-        !PageElementTag.TAG_HTML_SUB.equals(tag.getNormalizedName()) &&
-        !PageElementTag.TAG_HTML_TT.equals(tag.getNormalizedName())) {
+    if (!HtmlTagType.ABBR.equals(tag.getType()) &&
+        !HtmlTagType.BIG.equals(tag.getType()) &&
+        !HtmlTagType.CENTER.equals(tag.getType()) &&
+        !HtmlTagType.CODE.equals(tag.getType()) &&
+        !HtmlTagType.DIV.equals(tag.getType()) &&
+        !HtmlTagType.FONT.equals(tag.getType()) &&
+        !HtmlTagType.S.equals(tag.getType()) &&
+        !HtmlTagType.SMALL.equals(tag.getType()) &&
+        !HtmlTagType.SPAN.equals(tag.getType()) &&
+        !HtmlTagType.SUB.equals(tag.getType()) &&
+        !HtmlTagType.TT.equals(tag.getType())) {
       return false;
     }
 
@@ -460,7 +464,7 @@ public class CheckErrorAlgorithm532 extends CheckErrorAlgorithmBase {
     // Report tag
     ActionAlone action = ActionAlone.ALONE_DELETE;
     if (CheckErrorAlgorithms.isAlgorithmActive(analysis.getWikipedia(), 541) &&
-        PageElementTag.TAG_HTML_CENTER.equals(tag.getNormalizedName())) {
+        HtmlTagType.CENTER.equals(tag.getType())) {
       action = ActionAlone.ALONE_CLOSE;
     }
     CheckErrorResult errorResult = analyzeArea(
@@ -484,10 +488,10 @@ public class CheckErrorAlgorithm532 extends CheckErrorAlgorithmBase {
       Collection<CheckErrorResult> errors) {
 
     // Check type of tag
-    if (!PageElementTag.TAG_HTML_CENTER.equals(tag.getNormalizedName()) &&
-        !PageElementTag.TAG_HTML_DIV.equals(tag.getNormalizedName()) &&
-        !PageElementTag.TAG_HTML_FONT.equals(tag.getNormalizedName()) &&
-        !PageElementTag.TAG_HTML_SMALL.equals(tag.getNormalizedName())) {
+    if (!HtmlTagType.CENTER.equals(tag.getType()) &&
+        !HtmlTagType.DIV.equals(tag.getType()) &&
+        !HtmlTagType.FONT.equals(tag.getType()) &&
+        !HtmlTagType.SMALL.equals(tag.getType())) {
       return false;
     }
 
@@ -514,7 +518,7 @@ public class CheckErrorAlgorithm532 extends CheckErrorAlgorithmBase {
           nextIndex = otherTag.getEndIndex();
           if ((currentIndex != tag.getBeginIndex()) &&
               !otherTag.isComplete() &&
-              !otherTag.mayBeUnclosed()) {
+              !otherTag.getType().isUnclosedOk()) {
             if (otherTag.getNormalizedName().equals(tag.getNormalizedName()) &&
                 otherTag.isEndTag()) {
               automatic = false;
@@ -548,9 +552,9 @@ public class CheckErrorAlgorithm532 extends CheckErrorAlgorithmBase {
       Collection<CheckErrorResult> errors) {
 
     // Check type of tag
-    if (!PageElementTag.TAG_HTML_FONT.equals(tag.getNormalizedName()) &&
-        !PageElementTag.TAG_HTML_SMALL.equals(tag.getNormalizedName()) &&
-        !PageElementTag.TAG_HTML_SPAN.equals(tag.getNormalizedName())) {
+    if (!HtmlTagType.FONT.equals(tag.getType()) &&
+        !HtmlTagType.SMALL.equals(tag.getType()) &&
+        !HtmlTagType.SPAN.equals(tag.getType())) {
       return false;
     }
 
@@ -597,17 +601,17 @@ public class CheckErrorAlgorithm532 extends CheckErrorAlgorithmBase {
       Collection<CheckErrorResult> errors) {
 
     // Check type of tag
-    if (!PageElementTag.TAG_HTML_LI.equals(tag.getNormalizedName())) {
+    if (!HtmlTagType.LI.equals(tag.getType())) {
       return false;
     }
 
     // Analyze if it is inside a HTML list
     PageElementTag tagList = null;
-    PageElementTag tagOL = analysis.getSurroundingTag(PageElementTag.TAG_HTML_OL, tag.getBeginIndex());
+    PageElementTag tagOL = analysis.getSurroundingTag(HtmlTagType.OL, tag.getBeginIndex());
     if (tagOL != null) {
       tagList = tagOL;
     }
-    PageElementTag tagUL = analysis.getSurroundingTag(PageElementTag.TAG_HTML_UL, tag.getBeginIndex());
+    PageElementTag tagUL = analysis.getSurroundingTag(HtmlTagType.UL, tag.getBeginIndex());
     if (tagUL != null) {
       if (tagList == null) {
         tagList = tagUL;
@@ -641,7 +645,7 @@ public class CheckErrorAlgorithm532 extends CheckErrorAlgorithmBase {
     if (nextLineTag == null) {
       return false;
     }
-    if (PageElementTag.TAG_HTML_LI.equals(nextLineTag.getNormalizedName())) {
+    if (HtmlTagType.LI.equals(nextLineTag.getType())) {
       if (nextLineTag.isEndTag() || nextLineTag.isFullTag()) {
         return false;
       }
@@ -662,7 +666,7 @@ public class CheckErrorAlgorithm532 extends CheckErrorAlgorithmBase {
     if (previousLineTag == null){
       return false;
     }
-    if (PageElementTag.TAG_HTML_LI.equals(previousLineTag.getNormalizedName())) {
+    if (HtmlTagType.LI.equals(previousLineTag.getType())) {
       if (previousLineTag.isEndTag() || previousLineTag.isFullTag()) {
         return false;
       }
@@ -695,10 +699,10 @@ public class CheckErrorAlgorithm532 extends CheckErrorAlgorithmBase {
       Collection<CheckErrorResult> errors) {
 
     // Check type of tag
-    if (!PageElementTag.TAG_HTML_CENTER.equals(tag.getNormalizedName()) &&
-        !PageElementTag.TAG_HTML_FONT.equals(tag.getNormalizedName()) &&
-        !PageElementTag.TAG_HTML_SMALL.equals(tag.getNormalizedName()) &&
-        !PageElementTag.TAG_HTML_SPAN.equals(tag.getNormalizedName())) {
+    if (!HtmlTagType.CENTER.equals(tag.getType()) &&
+        !HtmlTagType.FONT.equals(tag.getType()) &&
+        !HtmlTagType.SMALL.equals(tag.getType()) &&
+        !HtmlTagType.SPAN.equals(tag.getType())) {
       return false;
     }
 
@@ -718,14 +722,14 @@ public class CheckErrorAlgorithm532 extends CheckErrorAlgorithmBase {
     }
 
     // Analyze if tag combination is valid
-    if (PageElementTag.TAG_HTML_CENTER.equals(surroundingTag.getNormalizedName())) {
-      if (!PageElementTag.TAG_HTML_FONT.equals(tag.getNormalizedName()) &&
-          !PageElementTag.TAG_HTML_SMALL.equals(tag.getNormalizedName()) &&
-          !PageElementTag.TAG_HTML_SPAN.equals(tag.getNormalizedName())) {
+    if (HtmlTagType.CENTER.equals(surroundingTag.getType())) {
+      if (!HtmlTagType.FONT.equals(tag.getType()) &&
+          !HtmlTagType.SMALL.equals(tag.getType()) &&
+          !HtmlTagType.SPAN.equals(tag.getType())) {
         return false;
       }
-    } else if (PageElementTag.TAG_HTML_DIV.equals(surroundingTag.getNormalizedName())) {
-      if (!PageElementTag.TAG_HTML_CENTER.equals(tag.getNormalizedName())) {
+    } else if (HtmlTagType.DIV.equals(surroundingTag.getType())) {
+      if (!HtmlTagType.CENTER.equals(tag.getType())) {
         return false;
       }
     } else {
@@ -755,15 +759,15 @@ public class CheckErrorAlgorithm532 extends CheckErrorAlgorithmBase {
       Collection<CheckErrorResult> errors) {
 
     // Check type of tag
-    if (!PageElementTag.TAG_HTML_H1.equals(tag.getNormalizedName()) &&
-        !PageElementTag.TAG_HTML_H2.equals(tag.getNormalizedName()) &&
-        !PageElementTag.TAG_HTML_H3.equals(tag.getNormalizedName()) &&
-        !PageElementTag.TAG_HTML_H4.equals(tag.getNormalizedName()) &&
-        !PageElementTag.TAG_HTML_H5.equals(tag.getNormalizedName()) &&
-        !PageElementTag.TAG_HTML_H6.equals(tag.getNormalizedName()) &&
-        !PageElementTag.TAG_HTML_H7.equals(tag.getNormalizedName()) &&
-        !PageElementTag.TAG_HTML_H8.equals(tag.getNormalizedName()) &&
-        !PageElementTag.TAG_HTML_H9.equals(tag.getNormalizedName())) {
+    if (!HtmlTagType.H1.equals(tag.getType()) &&
+        !HtmlTagType.H2.equals(tag.getType()) &&
+        !HtmlTagType.H3.equals(tag.getType()) &&
+        !HtmlTagType.H4.equals(tag.getType()) &&
+        !HtmlTagType.H5.equals(tag.getType()) &&
+        !HtmlTagType.H6.equals(tag.getType()) &&
+        !HtmlTagType.H7.equals(tag.getType()) &&
+        !HtmlTagType.H8.equals(tag.getType()) &&
+        !HtmlTagType.H9.equals(tag.getType())) {
       return false;
     }
 
@@ -788,7 +792,7 @@ public class CheckErrorAlgorithm532 extends CheckErrorAlgorithmBase {
         return false;
       }
       if (previousChar == '>') {
-        previousTag = analysis.isInTag(index - 1, tag.getNormalizedName());
+        previousTag = analysis.isInTag(index - 1, tag.getType());
       }
       index--;
     }
@@ -828,8 +832,8 @@ public class CheckErrorAlgorithm532 extends CheckErrorAlgorithmBase {
     // TODO: Refactor
 
     // Check type of tag
-    if (!PageElementTag.TAG_HTML_CENTER.equals(tag.getNormalizedName()) &&
-        !PageElementTag.TAG_HTML_SMALL.equals(tag.getNormalizedName())) {
+    if (!HtmlTagType.CENTER.equals(tag.getType()) &&
+        !HtmlTagType.SMALL.equals(tag.getType())) {
       return false;
     }
 
@@ -867,7 +871,7 @@ public class CheckErrorAlgorithm532 extends CheckErrorAlgorithmBase {
     while ((index > tagEndIndex) && (contents.charAt(index - 1) != '\n')) {
       index--;
       if (contents.charAt(index) == '>') {
-        if (analysis.isInTag(index - 1, tag.getNormalizedName()) != null) {
+        if (analysis.isInTag(index - 1, tag.getType()) != null) {
           return false;
         }
       }
@@ -877,7 +881,7 @@ public class CheckErrorAlgorithm532 extends CheckErrorAlgorithmBase {
     }
 
     // Check if there's an other opening tag before in the page
-    List<PageElementTag> tags = analysis.getTags(tag.getNormalizedName());
+    List<PageElementTag> tags = analysis.getTags(tag.getType());
     boolean after = false;
     boolean hasOtherTagBefore = false;
     for (PageElementTag otherTag : tags) {
@@ -1110,7 +1114,7 @@ public class CheckErrorAlgorithm532 extends CheckErrorAlgorithmBase {
     // Check what is before the tag
     for (int tmpIndex = beginIndex; tmpIndex < tagBeginIndex; tmpIndex++) {
       if (contents.charAt(tmpIndex) == '<') {
-        PageElementTag tmpTag = analysis.isInTag(tmpIndex, tag.getNormalizedName());
+        PageElementTag tmpTag = analysis.isInTag(tmpIndex, tag.getType());
         if ((tmpTag != null) && !tmpTag.isComplete()) {
           return null;
         }
@@ -1138,7 +1142,7 @@ public class CheckErrorAlgorithm532 extends CheckErrorAlgorithmBase {
         if (currentTag != null) {
           nextIndex = currentTag.getEndIndex();
           if (!currentTag.isComplete() &&
-              !currentTag.mayBeUnclosed()) {
+              !currentTag.getType().isUnclosedOk()) {
             return null;
           }
           if (currentTag.getNormalizedName().equals(tag.getNormalizedName())) {
@@ -1171,7 +1175,7 @@ public class CheckErrorAlgorithm532 extends CheckErrorAlgorithmBase {
       } else if ((tag.getName().length() > 1) &&
                  contents.startsWith(tag.getName(), currentIndex)) {
         boolean isSafe = false;
-        if (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_TIMELINE, currentIndex) != null) {
+        if (analysis.getSurroundingTag(WikiTagType.TIMELINE, currentIndex) != null) {
           isSafe = true;
         }
         PageElementTable table = analysis.isInTable(currentIndex);

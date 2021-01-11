@@ -12,9 +12,9 @@ import java.util.List;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.data.PageElementInternalLink;
-import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
 import org.wikipediacleaner.api.data.contents.ilink.InternalLinkBuilder;
+import org.wikipediacleaner.api.data.contents.tag.WikiTagType;
 
 
 /**
@@ -52,7 +52,7 @@ public class CheckErrorAlgorithm510 extends CheckErrorAlgorithmBase {
           (link.getFullLink() != null)) {
         boolean errorFound = false;
         String target = link.getFullLink().trim();
-        if (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_REF, link.getBeginIndex()) != null) {
+        if (analysis.getSurroundingTag(WikiTagType.REF, link.getBeginIndex()) != null) {
 
           // Check for namespace at the beginning
           int beginIndex = 0;

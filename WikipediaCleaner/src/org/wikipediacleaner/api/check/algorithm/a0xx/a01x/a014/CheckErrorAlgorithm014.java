@@ -8,10 +8,12 @@
 package org.wikipediacleaner.api.check.algorithm.a0xx.a01x.a014;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmUnclosedTags;
-import org.wikipediacleaner.api.data.PageElementTag;
+import org.wikipediacleaner.api.data.contents.tag.TagType;
+import org.wikipediacleaner.api.data.contents.tag.WikiTagType;
 
 
 /**
@@ -21,21 +23,25 @@ import org.wikipediacleaner.api.data.PageElementTag;
 public class CheckErrorAlgorithm014 extends CheckErrorAlgorithmUnclosedTags {
 
   /** List of tags managed by this error. */
-  private final List<String> tags;
+  private static final List<TagType> TAGS;
+
+  static {
+    List<TagType> tmpList = new ArrayList<>();
+    tmpList.add(WikiTagType.SOURCE);
+    tmpList.add(WikiTagType.SYNTAXHIGHLIGHT);
+    TAGS = Collections.unmodifiableList(tmpList);
+  }
 
   public CheckErrorAlgorithm014() {
     super("Source not correct end");
-    tags = new ArrayList<String>();
-    tags.add(PageElementTag.TAG_WIKI_SYNTAXHIGHLIGHT);
-    tags.add(PageElementTag.TAG_WIKI_SOURCE);
   }
 
   /**
    * @return List of tags managed by this error.
    */
   @Override
-  protected List<String> getTags() {
-    return tags;
+  protected List<TagType> getTags() {
+    return TAGS;
   }
 
   /**

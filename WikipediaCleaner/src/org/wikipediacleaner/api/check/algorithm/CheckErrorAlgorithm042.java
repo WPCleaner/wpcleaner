@@ -14,6 +14,7 @@ import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
+import org.wikipediacleaner.api.data.contents.tag.HtmlTagType;
 import org.wikipediacleaner.api.data.contents.tag.TagBuilder;
 
 
@@ -48,7 +49,7 @@ public class CheckErrorAlgorithm042 extends CheckErrorAlgorithmBase {
     }
 
     // Check each tag
-    List<PageElementTag> tags = analysis.getTags(PageElementTag.TAG_HTML_STRIKE);
+    List<PageElementTag> tags = analysis.getTags(HtmlTagType.STRIKE);
     if ((tags == null) || (tags.isEmpty())) {
       return false;
     }
@@ -59,9 +60,9 @@ public class CheckErrorAlgorithm042 extends CheckErrorAlgorithmBase {
       CheckErrorResult errorResult = createCheckErrorResult(
           analysis, tag.getBeginIndex(), tag.getEndIndex());
       errorResult.addReplacement(TagBuilder.from(
-          PageElementTag.TAG_HTML_DEL, tag.isEndTag(), false).toString());
+          HtmlTagType.DEL, tag.isEndTag(), false).toString());
       errorResult.addReplacement(TagBuilder.from(
-          PageElementTag.TAG_HTML_S, tag.isEndTag(), tag.isFullTag()).toString());
+          HtmlTagType.S, tag.isEndTag(), tag.isFullTag()).toString());
       errors.add(errorResult);
     }
 

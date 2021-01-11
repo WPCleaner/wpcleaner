@@ -16,6 +16,8 @@ import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
 import org.wikipediacleaner.api.data.contents.tag.TagBuilder;
 import org.wikipediacleaner.api.data.contents.tag.TagFormat;
+import org.wikipediacleaner.api.data.contents.tag.TagType;
+import org.wikipediacleaner.api.data.contents.tag.WikiTagType;
 
 
 /**
@@ -33,7 +35,7 @@ public abstract class CheckErrorAlgorithmUnclosedTags extends CheckErrorAlgorith
   /**
    * @return List of tags managed by this error.
    */
-  protected abstract List<String> getTags();
+  protected abstract List<TagType> getTags();
 
   /**
    * Analyze a page to check if errors are present.
@@ -53,8 +55,8 @@ public abstract class CheckErrorAlgorithmUnclosedTags extends CheckErrorAlgorith
 
     // Analyze each tag
     boolean result = false;
-    for (String tagName : getTags()) {
-      List<PageElementTag> tags = analysis.getTags(tagName);
+    for (TagType tagType : getTags()) {
+      List<PageElementTag> tags = analysis.getTags(tagType);
       for (PageElementTag tag : tags) {
         int beginIndex = tag.getBeginIndex();
         int endIndex = tag.getEndIndex();
@@ -62,12 +64,12 @@ public abstract class CheckErrorAlgorithmUnclosedTags extends CheckErrorAlgorith
 
           // Check error
           boolean shouldReport = true;
-          if (!PageElementTag.TAG_WIKI_NOWIKI.equals(tagName)) {
-            if (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_NOWIKI, beginIndex) != null) {
+          if (!WikiTagType.NOWIKI.equals(tag.getType())) {
+            if (analysis.getSurroundingTag(WikiTagType.NOWIKI, beginIndex) != null) {
               shouldReport = false;
             }
-            if ((analysis.getSurroundingTag(PageElementTag.TAG_WIKI_SOURCE, beginIndex) != null) ||
-                (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_SYNTAXHIGHLIGHT, beginIndex) != null)) {
+            if ((analysis.getSurroundingTag(WikiTagType.SOURCE, beginIndex) != null) ||
+                (analysis.getSurroundingTag(WikiTagType.SYNTAXHIGHLIGHT, beginIndex) != null)) {
               shouldReport = false;
             }
           }
@@ -96,7 +98,7 @@ public abstract class CheckErrorAlgorithmUnclosedTags extends CheckErrorAlgorith
             CheckErrorResult errorResult = createCheckErrorResult(
                 analysis, beginIndex, endIndex, ErrorLevel.WARNING);
             errorResult.addReplacement(
-                TagBuilder.from(tagName, TagFormat.CLOSE).toString(),
+                TagBuilder.from(tagType, TagFormat.CLOSE).toString(),
                 tag.getParametersCount() == 0);
             errors.add(errorResult);
           }
@@ -113,7 +115,7 @@ public abstract class CheckErrorAlgorithmUnclosedTags extends CheckErrorAlgorith
             CheckErrorResult errorResult = createCheckErrorResult(
                 analysis, beginIndex, endIndex, ErrorLevel.WARNING);
             errorResult.addReplacement(
-                TagBuilder.from(tagName, TagFormat.OPEN).toString(),
+                TagBuilder.from(tagType, TagFormat.OPEN).toString(),
                 tag.getParametersCount() == 0);
             errors.add(errorResult);
           }

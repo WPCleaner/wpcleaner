@@ -18,6 +18,8 @@ import org.wikipediacleaner.api.configuration.WPCConfigurationStringList;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.PageElementTag.Parameter;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
+import org.wikipediacleaner.api.data.contents.tag.HtmlTagType;
+import org.wikipediacleaner.api.data.contents.tag.TagType;
 import org.wikipediacleaner.api.data.contents.template.TemplateBuilder;
 import org.wikipediacleaner.i18n.GT;
 
@@ -32,10 +34,10 @@ public class CheckErrorAlgorithm112 extends CheckErrorAlgorithmBase {
   }
 
   /** List of attributes for each kind of tag */
-  private final static Map<String, String[]> TAG_ATTRIBUTES = new HashMap<>();
+  private final static Map<TagType, String[]> TAG_ATTRIBUTES = new HashMap<>();
 
   /** List of styles for each kind of tag */
-  private final static Map<String, String[]> TAG_STYLES = new HashMap<>();
+  private final static Map<TagType, String[]> TAG_STYLES = new HashMap<>();
 
   /** List of attributes for tables */
   private final static String[] TABLE_ATTRIBUTES = new String[] {
@@ -72,17 +74,17 @@ public class CheckErrorAlgorithm112 extends CheckErrorAlgorithmBase {
         "-webkit-border-radius",
     });
 
-    TAG_ATTRIBUTES.put(PageElementTag.TAG_HTML_CENTER, new String[] {
+    TAG_ATTRIBUTES.put(HtmlTagType.CENTER, new String[] {
         "id",
     });
-    TAG_ATTRIBUTES.put(PageElementTag.TAG_HTML_DIV, new String[] {
+    TAG_ATTRIBUTES.put(HtmlTagType.DIV, new String[] {
         "id",
     });
-    TAG_ATTRIBUTES.put(PageElementTag.TAG_HTML_SMALL, new String[] {
+    TAG_ATTRIBUTES.put(HtmlTagType.SMALL, new String[] {
         "id",
     });
 
-    TAG_STYLES.put(PageElementTag.TAG_HTML_DIV, new String[] {
+    TAG_STYLES.put(HtmlTagType.DIV, new String[] {
         "-moz-column-count",
         "-moz-column-gap",
         "-moz-column-width",
@@ -118,13 +120,13 @@ public class CheckErrorAlgorithm112 extends CheckErrorAlgorithmBase {
 
     // Analyze each kind of tags
     boolean result = false;
-    for (Entry<String, String[]> tag : TAG_ATTRIBUTES.entrySet()) {
+    for (Entry<TagType, String[]> tag : TAG_ATTRIBUTES.entrySet()) {
       result |= analyzeTagAttributes(analysis, errors, tag.getKey(), tag.getValue());
       if (result && (errors == null)) {
         return result;
       }
     }
-    for (Entry<String, String[]> tag : TAG_STYLES.entrySet()) {
+    for (Entry<TagType, String[]> tag : TAG_STYLES.entrySet()) {
       result |= analyzeTagStyles(analysis, errors, tag.getKey(), tag.getValue());
       if (result && (errors == null)) {
         return result;
@@ -424,20 +426,20 @@ public class CheckErrorAlgorithm112 extends CheckErrorAlgorithmBase {
    * 
    * @param analysis Page analysis.
    * @param errors Errors found in the page.
-   * @param tagName Tag name.
+   * @param tagType Tag type.
    * @param attributeName Tag attribute names.
    * @return Flag indicating if the error was found.
    */
   private boolean analyzeTagAttributes(
       PageAnalysis analysis,
       Collection<CheckErrorResult> errors,
-      String tagName,
+      TagType tagType,
       String[] attributeNames) {
 
     // Check each tag
     boolean result = false;
     String contents = analysis.getContents();
-    List<PageElementTag> tags = (tagName != null) ? analysis.getTags(tagName) : analysis.getTags();
+    List<PageElementTag> tags = (tagType != null) ? analysis.getTags(tagType) : analysis.getTags();
     for (PageElementTag tag : tags) {
       if ((tag != null) && (!tag.isEndTag())) {
         for (int paramNum = 0; paramNum < tag.getParametersCount(); paramNum++) {
@@ -495,20 +497,20 @@ public class CheckErrorAlgorithm112 extends CheckErrorAlgorithmBase {
    * 
    * @param analysis Page analysis.
    * @param errors Errors found in the page.
-   * @param tagName Tag name.
+   * @param tagType Tag type.
    * @param styleNames Tag style names.
    * @return Flag indicating if the error was found.
    */
   private boolean analyzeTagStyles(
       PageAnalysis analysis,
       Collection<CheckErrorResult> errors,
-      String tagName,
+      TagType tagType,
       String[] styleNames) {
 
     // Check each tag
     boolean result = false;
     String contents = analysis.getContents();
-    List<PageElementTag> tags = (tagName != null) ? analysis.getTags(tagName) : analysis.getTags();
+    List<PageElementTag> tags = (tagType != null) ? analysis.getTags(tagType) : analysis.getTags();
     for (PageElementTag tag : tags) {
       if ((tag != null) && (!tag.isEndTag())) {
         Parameter styleParam = tag.getParameter("style");

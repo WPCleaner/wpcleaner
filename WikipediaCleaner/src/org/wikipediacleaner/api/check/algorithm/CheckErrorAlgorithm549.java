@@ -17,6 +17,7 @@ import org.wikipediacleaner.api.data.PageElementInternalLink;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
 import org.wikipediacleaner.api.data.contents.ilink.InternalLinkBuilder;
+import org.wikipediacleaner.api.data.contents.tag.WikiTagType;
 
 
 /**
@@ -100,7 +101,7 @@ public class CheckErrorAlgorithm549 extends CheckErrorAlgorithmBase {
             PageElementTag tag = analysis.isInTag(tmpIndex);
             if ((tag != null) &&
                 (tag.getBeginIndex() == tmpIndex) &&
-                (PageElementTag.TAG_WIKI_NOWIKI.equals(tag.getNormalizedName()))) {
+                (WikiTagType.NOWIKI.equals(tag.getType()))) {
               tmpIndex = tag.getEndIndex();
             } else {
               finished = true;
@@ -154,7 +155,7 @@ public class CheckErrorAlgorithm549 extends CheckErrorAlgorithmBase {
                 PageElementTag tag = analysis.isInTag(currentIndex);
                 if ((tag != null) &&
                     (tag.getBeginIndex() == currentIndex) &&
-                    (PageElementTag.TAG_WIKI_NOWIKI.equals(tag.getNormalizedName()))) {
+                    (WikiTagType.NOWIKI.equals(tag.getType()))) {
                   nowiki = true;
                   charNum += tag.getEndIndex() - tag.getBeginIndex() - 1;
                 } else {
