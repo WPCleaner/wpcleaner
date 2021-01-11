@@ -5,13 +5,14 @@
  *  See README.txt file for licensing information.
  */
 
-package org.wikipediacleaner.api.check.algorithm;
+package org.wikipediacleaner.api.check.algorithm.a0xx.a03x.a032;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
+import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase;
 import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.PageElementInternalLink;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
@@ -63,7 +64,7 @@ public class CheckErrorAlgorithm032 extends CheckErrorAlgorithmBase {
           ((namespace == null) || (!fileNamespace.isPossibleName(namespace)))) {
         int levelSquareBrackets = 0;
         int levelCurlyBrackets = 0;
-        ArrayList<Integer> pipeIndex = new ArrayList<Integer>();
+        ArrayList<Integer> pipeIndex = new ArrayList<>();
         int currentPos = 0;
         while (currentPos < text.length()) {
           switch (text.charAt(currentPos)) {
@@ -118,7 +119,7 @@ public class CheckErrorAlgorithm032 extends CheckErrorAlgorithmBase {
           result = true;
 
           // List replacements
-          List<String> replacements = new ArrayList<String>();
+          List<String> replacements = new ArrayList<>();
           for (int i = 0; i <= pipeIndex.size(); i++) {
             int beginText = (i > 0) ? (pipeIndex.get(i - 1).intValue() + 1) : 0;
             int endText = (i < pipeIndex.size()) ? pipeIndex.get(i).intValue() : text.length();

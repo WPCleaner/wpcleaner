@@ -5,12 +5,13 @@
  *  See README.txt file for licensing information.
  */
 
-package org.wikipediacleaner.api.check.algorithm;
+package org.wikipediacleaner.api.check.algorithm.a0xx.a03x.a031;
 
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmTags;
 import org.wikipediacleaner.api.data.contents.tag.HtmlTagType;
 import org.wikipediacleaner.api.data.contents.tag.TagType;
 

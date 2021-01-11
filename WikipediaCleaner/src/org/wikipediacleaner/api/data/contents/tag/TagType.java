@@ -192,7 +192,6 @@ public abstract class TagType {
   }
 
   /**
-   * @return
    * @see java.lang.Object#hashCode()
    */
   @Override
@@ -201,8 +200,6 @@ public abstract class TagType {
   }
 
   /**
-   * @param obj
-   * @return
    * @see java.lang.Object#equals(java.lang.Object)
    */
   @Override
