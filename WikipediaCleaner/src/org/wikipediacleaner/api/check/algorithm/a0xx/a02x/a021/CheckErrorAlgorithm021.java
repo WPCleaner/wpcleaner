@@ -5,13 +5,14 @@
  *  See README.txt file for licensing information.
  */
 
-package org.wikipediacleaner.api.check.algorithm;
+package org.wikipediacleaner.api.check.algorithm.a0xx.a02x.a021;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
+import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase;
 import org.wikipediacleaner.api.check.CheckCategoryLinkActionProvider;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.Namespace;
@@ -77,7 +78,7 @@ public class CheckErrorAlgorithm021 extends CheckErrorAlgorithmBase {
             new CheckCategoryLinkActionProvider(
                 EnumWikipedia.EN, analysis.getWikipedia(),
                 category.getName(), category.getSort()));
-        List<String> replacements = new ArrayList<String>();
+        List<String> replacements = new ArrayList<>();
         if ((preferredCategory != null) &&
             (categoryNamespace.isPossibleName(preferredCategory))) {
           replacements.add(preferredCategory);

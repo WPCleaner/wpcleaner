@@ -5,7 +5,7 @@
  *  See README.txt file for licensing information.
  */
 
-package org.wikipediacleaner.api.check.algorithm;
+package org.wikipediacleaner.api.check.algorithm.a0xx.a02x.a028;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -18,6 +18,7 @@ import org.wikipediacleaner.api.algorithm.AlgorithmParameter;
 import org.wikipediacleaner.api.algorithm.AlgorithmParameterElement;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.CheckErrorResult.ErrorLevel;
+import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase;
 import org.wikipediacleaner.api.configuration.WPCConfiguration;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.PageElementTemplate;
@@ -104,7 +105,7 @@ public class CheckErrorAlgorithm028 extends CheckErrorAlgorithmBase {
    * @return List of table starts.
    */
   private List<TableElement> getTableStarts(PageAnalysis analysis) {
-    List<TableElement> list = new ArrayList<CheckErrorAlgorithm028.TableElement>();
+    List<TableElement> list = new ArrayList<>();
 
     // Find tables beginning by {|
     String contents = analysis.getContents();
@@ -139,7 +140,7 @@ public class CheckErrorAlgorithm028 extends CheckErrorAlgorithmBase {
    * @return List of table ends.
    */
   private List<TableElement> getTableEnds(PageAnalysis analysis) {
-    List<TableElement> list = new ArrayList<CheckErrorAlgorithm028.TableElement>();
+    List<TableElement> list = new ArrayList<>();
 
     // Find tables ending by |}
     String contents = analysis.getContents();

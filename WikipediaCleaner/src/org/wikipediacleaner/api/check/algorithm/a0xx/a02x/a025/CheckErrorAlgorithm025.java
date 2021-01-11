@@ -5,13 +5,14 @@
  *  See README.txt file for licensing information.
  */
 
-package org.wikipediacleaner.api.check.algorithm;
+package org.wikipediacleaner.api.check.algorithm.a0xx.a02x.a025;
 
 import java.util.Collection;
 import java.util.List;
 import java.util.Vector;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
+import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase;
 import org.wikipediacleaner.api.data.PageElementTitle;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
 import org.wikipediacleaner.api.data.contents.title.TitleBuilder;
@@ -91,7 +92,7 @@ public class CheckErrorAlgorithm025 extends CheckErrorAlgorithmBase {
     // Replace titles
     StringBuilder tmp = new StringBuilder();
     int lastIndex = 0;
-    Vector<Integer> offsets = new Vector<Integer>();
+    Vector<Integer> offsets = new Vector<>();
     List<PageElementTitle> titles = analysis.getTitles();
     for (int index = 0; index < titles.size(); index++) {
 
