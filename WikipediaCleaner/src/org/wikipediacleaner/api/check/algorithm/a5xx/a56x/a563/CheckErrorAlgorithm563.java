@@ -163,6 +163,9 @@ public class CheckErrorAlgorithm563 extends CheckErrorAlgorithmBase {
   /** Templates and parameters that are checked */
   private static final String PARAMETER_TEMPLATES = "templates";
 
+  /** Parameters that should be ignored by the detection */
+  private static final String PARAMETER_IGNORED_PARAMETERS = "ignored_parameters";
+
   /**
    * Initialize settings for the algorithm.
    * 
@@ -175,6 +178,11 @@ public class CheckErrorAlgorithm563 extends CheckErrorAlgorithmBase {
     if (tmp != null) {
       List<String[]> tmpList = WPCConfiguration.convertPropertyToStringArrayList(tmp);
       TemplateConfiguration.addConfiguration(tmpList, configurationByTemplateName);
+    }
+    tmp = getSpecificProperty(PARAMETER_IGNORED_PARAMETERS, true, true, false);
+    if (tmp != null) {
+      List<String[]> tmpList = WPCConfiguration.convertPropertyToStringArrayList(tmp);
+      TemplateConfiguration.addIgnoredParameters(tmpList, configurationByTemplateName);
     }
   }
 
@@ -198,6 +206,20 @@ public class CheckErrorAlgorithm563 extends CheckErrorAlgorithmBase {
                 "automatic",
                 GT._T("Set to true to automatically remove unused parameters"),
                 true),
+            new AlgorithmParameterElement(
+                "param",
+                GT._T("Name of the parameter"),
+                true,
+                true)
+        },
+        true));
+    addParameter(new AlgorithmParameter(
+        PARAMETER_IGNORED_PARAMETERS,
+        GT._T("Parameters that should be ignored"),
+        new AlgorithmParameterElement[] {
+            new AlgorithmParameterElement(
+                "template",
+                GT._T("Name of the template")),
             new AlgorithmParameterElement(
                 "param",
                 GT._T("Name of the parameter"),

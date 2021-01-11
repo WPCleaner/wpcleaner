@@ -9,9 +9,11 @@
 package org.wikipediacleaner.api.check.algorithm.a5xx.a56x.a563;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -38,9 +40,12 @@ class TemplateConfiguration {
 
   @Nonnull private final Map<String, Boolean> automaticByParamName;
 
+  @Nonnull private final Set<String> ignoredParams;
+
   private TemplateConfiguration(@Nonnull String templateName) {
     this.templateName = templateName;
     this.automaticByParamName = new HashMap<>();
+    this.ignoredParams = new HashSet<>();
   }
 
   public @Nonnull String getTemplateName() {
@@ -64,6 +69,9 @@ class TemplateConfiguration {
     }
     String name = param.getName();
     String computedName = param.getComputedName();
+    if (ignoredParams.contains(computedName)) {
+      return Optional.empty();
+    }
     if (StringUtils.isEmpty(name) && (unnamedParameterBegin != null)) {
       if (StringUtils.isNotEmpty(computedName)) {
         try {
@@ -91,7 +99,7 @@ class TemplateConfiguration {
   }
 
   /**
-   * Add configuration from the full raw configuration.
+   * Add configuration for templates from the full raw configuration.
    * 
    * @param rawConfiguration Raw configuration.
    * @param configuration Configuration.
@@ -99,7 +107,6 @@ class TemplateConfiguration {
   public static void addConfiguration(
       @Nullable List<String[]> rawConfiguration,
       @Nonnull Map<String, TemplateConfiguration> configuration) {
-    configuration.clear();
     if (rawConfiguration == null) {
       return;
     }
@@ -109,7 +116,7 @@ class TemplateConfiguration {
   }
 
   /**
-   * Add configuration from one line of the raw configuration.
+   * Add configuration for templates from one line of the raw configuration.
    * 
    * @param rawConfiguration Line of the raw configuration.
    * @param configuration Configuration.
@@ -147,6 +154,50 @@ class TemplateConfiguration {
           }
         } else {
           templateConfig.defaultAutomatic = automatic;
+        }
+      }
+    }
+  }
+
+  /**
+   * Add configuration for ignored parameters from the full raw configuration.
+   * 
+   * @param rawConfiguration Raw configuration.
+   * @param configuration Configuration.
+   */
+  public static void addIgnoredParameters(
+      @Nullable List<String[]> rawConfiguration,
+      @Nonnull Map<String, TemplateConfiguration> configuration) {
+    if (rawConfiguration == null) {
+      return;
+    }
+    for (String[] line : rawConfiguration) {
+      addIgnoredParameters(line, configuration);
+    }
+  }
+
+  /**
+   * Add configuration for ignored parameters from one line of the raw configuration.
+   * 
+   * @param rawConfiguration Line of the raw configuration.
+   * @param configuration Configuration.
+   */
+  private static void addIgnoredParameters(
+      @Nullable String[] rawConfiguration,
+      @Nonnull Map<String, TemplateConfiguration> configuration) {
+    if ((rawConfiguration == null) || (rawConfiguration.length < 2)) {
+      return;
+    }
+    String[] templates = rawConfiguration[0].split(",");
+    for (String template : templates) {
+      if ((template != null) && (template.length() > 0)) {
+        String templateName = template.trim();
+        TemplateConfiguration templateConfig = configuration.computeIfAbsent(
+            templateName,
+            k -> new TemplateConfiguration(templateName));
+        for (int paramNum = 1; paramNum < rawConfiguration.length; paramNum++) {
+          String paramName = rawConfiguration[paramNum].trim();
+          templateConfig.ignoredParams.add(paramName);
         }
       }
     }
