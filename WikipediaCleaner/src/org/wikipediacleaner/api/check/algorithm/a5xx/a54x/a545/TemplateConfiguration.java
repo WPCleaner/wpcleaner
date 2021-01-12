@@ -74,15 +74,38 @@ class TemplateConfiguration {
       return Optional.empty();
     }
 
+    // Check if parameter is unnamed with other parameters after
+    boolean unnamedWithOthers = false;
+    if (!StringUtils.equals(computedName, param.getName())) {
+      for (int paramNum2 = paramNum + 1; paramNum2 < template.getParameterCount(); paramNum2++) {
+        PageElementTemplate.Parameter param2 = template.getParameter(paramNum2);
+        if (!StringUtils.equals(param2.getComputedName(), param2.getName())) {
+          unnamedWithOthers = true;
+        }
+      }
+    }
+
     // Look for suggestions
+    boolean automaticFound = false;
     List<TemplateParameterSuggestion> results = new ArrayList<>();
+    String existingValue = null;
     if (StringUtils.isNotEmpty(paramConfig.getReplacement())) {
+      existingValue = template.getParameterValue(paramConfig.getReplacement());
+      boolean automatic = (existingValue == null);
       results.add(TemplateParameterSuggestion.replaceParam(
           contents, param,
-          paramConfig.getReplacement(), param.getValue(), true));
+          paramConfig.getReplacement(), param.getValue(),
+          automatic && !unnamedWithOthers && !automaticFound));
+      automaticFound |= automatic;
     }
+    boolean automatic =
+        StringUtils.isEmpty(param.getValue()) ||
+        StringUtils.equals(existingValue, param.getValue());
+    results.add(TemplateParameterSuggestion.deleteParam(
+        contents, param,
+        automatic && !unnamedWithOthers && !automaticFound));
+    automaticFound |= automatic;
     results.add(TemplateParameterSuggestion.commentParam(contents, param, false));
-    results.add(TemplateParameterSuggestion.deleteParam(contents, param, false));
     return Optional.of(results);
   }
 

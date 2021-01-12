@@ -123,12 +123,7 @@ public class CheckErrorAlgorithm545 extends CheckErrorAlgorithmBase {
           }
         }
         for (TemplateParameterSuggestion suggestion : suggestions.get()) {
-          boolean automatic = suggestion.isAutomatic();
-          automatic &= StringUtils.equals(templateParam.getComputedName(), templateParam.getName());
-          if (suggestion.getParamName() != null) {
-            automatic &= (template.getParameterIndex(suggestion.getParamName()) < 0);
-          }
-          errorResult.addReplacement(suggestion.getReplacement(), automatic);
+          errorResult.addReplacement(suggestion.getReplacement(), suggestion.isAutomatic());
         }
         errors.add(errorResult);
       }
