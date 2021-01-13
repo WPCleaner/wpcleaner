@@ -5,7 +5,7 @@
  *  See README.txt file for licensing information.
  */
 
-package org.wikipediacleaner.api.check.algorithm;
+package org.wikipediacleaner.api.check.algorithm.a0xx.a04x.a045;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
+import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase;
 import org.wikipediacleaner.api.data.PageElementCategory;
 import org.wikipediacleaner.api.data.PageElementLanguageLink;
 import org.wikipediacleaner.api.data.PageElementTitle;
@@ -64,12 +65,12 @@ public class CheckErrorAlgorithm045 extends CheckErrorAlgorithmBase {
     if ((links == null) || (links.isEmpty())) {
       return false;
     }
-    Map<String, List<PageElementLanguageLink>> groupedLinks = new HashMap<String, List<PageElementLanguageLink>>();
+    Map<String, List<PageElementLanguageLink>> groupedLinks = new HashMap<>();
     for (PageElementLanguageLink link : links) {
       String index = link.getLanguage() + ":" + link.getLink();
       List<PageElementLanguageLink> groupLink = groupedLinks.get(index);
       if (groupLink == null) {
-        groupLink = new ArrayList<PageElementLanguageLink>();
+        groupLink = new ArrayList<>();
         groupedLinks.put(index, groupLink);
       }
       groupLink.add(link);

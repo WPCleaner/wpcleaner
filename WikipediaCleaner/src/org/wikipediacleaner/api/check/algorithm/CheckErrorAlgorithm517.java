@@ -7,6 +7,7 @@
 
 package org.wikipediacleaner.api.check.algorithm;
 
+import org.wikipediacleaner.api.check.algorithm.a0xx.a04x.a042.CheckErrorAlgorithm042;
 
 /**
  * Algorithm for analyzing error 517 of check wikipedia project.
