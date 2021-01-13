@@ -133,7 +133,7 @@ public class ApiProtectedTitlesRequest extends ApiListRequest {
     }
     properties.put(PROPERTY_LEVEL, "sysop");
     properties.put(PROPERTY_PROPERTIES, PROPERTY_PROPERTIES_EXPIRY);
-    List<Page> list = new ArrayList<Page>();
+    List<Page> list = new ArrayList<>();
     int maxSize = getMaxSize(limit, ConfigurationValueInteger.MAX_PROTECTED_TITLES);
     while (result.executeProtectedTitles(properties, list) &&
            (list.size() < maxSize)) {

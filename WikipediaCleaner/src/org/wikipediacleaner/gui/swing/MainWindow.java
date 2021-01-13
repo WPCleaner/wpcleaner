@@ -608,9 +608,9 @@ public class MainWindow
     List<String> interestingPages = configuration.getStringList(
         null, Configuration.ARRAY_INTERESTING_PAGES);
     if (interestingPages != null) {
-      comboPagename = new JComboBox<String>(interestingPages.toArray(new String[0]));
+      comboPagename = new JComboBox<>(interestingPages.toArray(new String[0]));
     } else {
-      comboPagename = new JComboBox<String>();
+      comboPagename = new JComboBox<>();
     }
     comboPagename.setEditable(true);
     comboPagename.setPrototypeDisplayValue("XXXXXXXXXXXXXXXXXXXXXXXXX");
@@ -1125,7 +1125,7 @@ public class MainWindow
     }
 
     // Construct list of pages containing suggestions
-    List<String> pages = new ArrayList<String>();
+    List<String> pages = new ArrayList<>();
     pages.addAll(chapters.keySet());
     Collections.sort(pages);
 
@@ -1489,7 +1489,7 @@ public class MainWindow
       return;
     }
 
-    List<String> pageNames = new ArrayList<String>();
+    List<String> pageNames = new ArrayList<>();
     for (Page template : templates) {
       pageNames.add(template.getTitle());
     }
@@ -1516,7 +1516,7 @@ public class MainWindow
           List<Page> pages = api.retrieveAbuseLog(
               getWikipedia(), abuseFilter.getId(), null);
           if ((pages != null) && (!pages.isEmpty())) {
-            List<String> pageNames = new ArrayList<String>(pages.size());
+            List<String> pageNames = new ArrayList<>(pages.size());
             for (Page page : pages) {
               if (!pageNames.contains(page.getTitle())) {
                 pageNames.add(page.getTitle());
@@ -1735,7 +1735,7 @@ public class MainWindow
     List<String> interestingPages = config.getStringList(
         null, Configuration.ARRAY_INTERESTING_PAGES);
     if (interestingPages == null) {
-      interestingPages = new ArrayList<String>();
+      interestingPages = new ArrayList<>();
     }
     if (!interestingPages.contains(pageName)) {
       interestingPages.add(pageName);
@@ -1896,7 +1896,7 @@ public class MainWindow
     }
 
     // Read file
-    List<String> pages = new ArrayList<String>();
+    List<String> pages = new ArrayList<>();
     BufferedReader reader = null;
     String line = null;
     try {
@@ -2010,7 +2010,7 @@ public class MainWindow
     }
     API api = APIFactory.getAPI();
     try {
-      List<String> pageNames = new ArrayList<String>(count);
+      List<String> pageNames = new ArrayList<>(count);
       while (pageNames.size() < count) {
         List<Page> pages = api.getRandomPages(getWikipedia(), count - pageNames.size(), redirects);
         for (int i = 0; i < pages.size(); i++) {

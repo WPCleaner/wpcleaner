@@ -216,7 +216,7 @@ public class Performance {
       return;
     }
     if (parts == null) {
-      parts = new HashMap<String, Long>();
+      parts = new HashMap<>();
     }
     Long previousTime = parts.get(part);
     if (previousTime != null) {

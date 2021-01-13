@@ -48,9 +48,9 @@ abstract class OptionsPanel extends JPanel {
    */
   public OptionsPanel(LayoutManager layout) {
     super(layout);
-    booleanValues = new HashMap<ConfigurationValueBoolean, JCheckBox>();
-    integerValues = new HashMap<ConfigurationValueInteger, Object>();
-    stringValues = new HashMap<ConfigurationValueString, JComponent>();
+    booleanValues = new HashMap<>();
+    integerValues = new HashMap<>();
+    stringValues = new HashMap<>();
   }
 
   // ==========================================================================
@@ -275,7 +275,7 @@ abstract class OptionsPanel extends JPanel {
     if (property == null) {
       return null;
     }
-    JComboBox<String> combo = new JComboBox<String>(items);
+    JComboBox<String> combo = new JComboBox<>(items);
     combo.setEditable(false);
     Configuration config = Configuration.getConfiguration();
     String value = config.getString(null, property);

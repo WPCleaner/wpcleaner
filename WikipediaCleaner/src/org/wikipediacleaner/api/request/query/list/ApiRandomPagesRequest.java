@@ -75,7 +75,7 @@ public class ApiRandomPagesRequest extends ApiListRequest {
     if (redirects) {
       properties.put(PROPERTY_REDIRECT, "");
     }
-    List<Page> list = new ArrayList<Page>();
+    List<Page> list = new ArrayList<>();
     result.executeRandomList(properties, list);
     return list;
   }

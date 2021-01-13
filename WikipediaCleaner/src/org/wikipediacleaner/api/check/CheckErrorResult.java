@@ -81,7 +81,7 @@ public class CheckErrorResult implements Comparable<CheckErrorResult> {
     this.startPosition = startPosition;
     this.endPosition = endPosition;
     this.errorLevel = errorLevel;
-    this.possibleActions = new ArrayList<Actionnable>();
+    this.possibleActions = new ArrayList<>();
     this.possibleReplacements = null;
   }
 
@@ -241,7 +241,7 @@ public class CheckErrorResult implements Comparable<CheckErrorResult> {
     }
     //replacement = replacement.trim();
     if (possibleReplacements == null) {
-      possibleReplacements = new ArrayList<Actionnable>();
+      possibleReplacements = new ArrayList<>();
     }
     for (Actionnable actionnable : possibleReplacements) {
       if (text.equals(actionnable.getName())) {

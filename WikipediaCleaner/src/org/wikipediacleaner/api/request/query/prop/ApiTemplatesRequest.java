@@ -76,7 +76,7 @@ public class ApiTemplatesRequest extends ApiPropertiesRequest {
     properties.put(PROPERTY_GENERATOR, PROPERTY_PROP_TEMPLATES);
     properties.put(GENERATOR_PREFIX + PROPERTY_LIMIT, LIMIT_MAX);
     properties.put(PROPERTY_TITLES, page.getTitle());
-    List<Page> list = new ArrayList<Page>();
+    List<Page> list = new ArrayList<>();
     while (result.executeTemplates(properties, page, list)) {
       //
     }
@@ -93,7 +93,7 @@ public class ApiTemplatesRequest extends ApiPropertiesRequest {
   public void setDisambiguationStatus(Collection<Page> pages) throws APIException {
 
     // Check for pages outside the main name space
-    List<Page> tmpPages = new ArrayList<Page>();
+    List<Page> tmpPages = new ArrayList<>();
     for (Page page : pages) {
       if (page.isInMainNamespace()) {
         if (!tmpPages.contains(page)) {

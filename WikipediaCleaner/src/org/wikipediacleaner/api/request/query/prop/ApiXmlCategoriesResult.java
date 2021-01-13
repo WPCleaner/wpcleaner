@@ -116,7 +116,7 @@ public class ApiXmlCategoriesResult extends ApiXmlPropertiesResult implements Ap
       Iterator<Element> iter = results.iterator();
       XPathExpression<Element> xpaCategory = XPathFactory.instance().compile(
           "categories/cl", Filters.element());
-      List<Page> tmpPages = new ArrayList<Page>();
+      List<Page> tmpPages = new ArrayList<>();
       while (iter.hasNext()) {
         Element currentNode = iter.next();
         String title = currentNode.getAttributeValue("title");

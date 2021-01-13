@@ -97,7 +97,7 @@ public class ApiRawWatchlistRequest extends ApiListRequest {
         PROPERTY_LIST,
         PROPERTY_LIST_WATCHLISTRAW);
     properties.put(PROPERTY_LIMIT, LIMIT_MAX);
-    List<Page> watchlist = new ArrayList<Page>();
+    List<Page> watchlist = new ArrayList<>();
     while (result.executeWatchlistRaw(properties, watchlist)) {
       //
     }

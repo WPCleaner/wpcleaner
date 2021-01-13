@@ -620,7 +620,7 @@ public class PageAnalysis {
       }
 
       // Initialize
-      tags = new ArrayList<PageElementTag>();
+      tags = new ArrayList<>();
 
       // Go through all the text of the page
       int maxIndex = contents.length();

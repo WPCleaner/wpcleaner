@@ -45,7 +45,7 @@ public class CopyCellRenderer extends AbstractCellEditor implements
    * @param copyColumn Column number to copy.
    */
   public CopyCellRenderer(int copyColumn) {
-    buttons = new HashMap<Object, JButton>();
+    buttons = new HashMap<>();
     this.copyColumn = copyColumn;
   }
 

@@ -84,16 +84,16 @@ public class BotCWTableModel extends AbstractTableModel {
   public BotCWTableModel(EnumWikipedia wiki) {
     this.wiki = wiki;
     List<CheckErrorAlgorithm> tmpAlgorithms = CheckErrorAlgorithms.getAlgorithms(wiki);
-    algorithms = new ArrayList<CheckErrorAlgorithm>();
+    algorithms = new ArrayList<>();
     for (CheckErrorAlgorithm algorithm : tmpAlgorithms) {
       if (algorithm.isAvailable() &&
           CheckErrorAlgorithms.isAlgorithmActive(wiki, algorithm.getErrorNumber())) {
         algorithms.add(algorithm);
       }
     }
-    botAlgorithms = new ArrayList<CheckErrorAlgorithm>();
-    fixAlgorithms = new ArrayList<CheckErrorAlgorithm>();
-    listAlgorithms = new ArrayList<CheckErrorAlgorithm>();
+    botAlgorithms = new ArrayList<>();
+    fixAlgorithms = new ArrayList<>();
+    listAlgorithms = new ArrayList<>();
     addAlgorithm(1   , true , false);  // Template namespace in template usage
     addAlgorithm(2   , true , false);  // Article with false <br/>
     addAlgorithm(4   , true , false);  // <a> tags
@@ -347,7 +347,7 @@ public class BotCWTableModel extends AbstractTableModel {
    * Reverse the selection of algorithms for fixing errors.
    */
   public void reverseFixAlgorithms() {
-    List<CheckErrorAlgorithm> tmpAlgorithms = new ArrayList<CheckErrorAlgorithm>();
+    List<CheckErrorAlgorithm> tmpAlgorithms = new ArrayList<>();
     for (CheckErrorAlgorithm algorithm : getAlgorithms()) {
       if (!fixAlgorithms.contains(algorithm)) {
         tmpAlgorithms.add(algorithm);
@@ -374,7 +374,7 @@ public class BotCWTableModel extends AbstractTableModel {
    * Reverse the selection of algorithms for listing errors.
    */
   public void reverseListAlgorithms() {
-    List<CheckErrorAlgorithm> tmpAlgorithms = new ArrayList<CheckErrorAlgorithm>();
+    List<CheckErrorAlgorithm> tmpAlgorithms = new ArrayList<>();
     for (CheckErrorAlgorithm algorithm : getAlgorithms()) {
       if (!listAlgorithms.contains(algorithm)) {
         tmpAlgorithms.add(algorithm);

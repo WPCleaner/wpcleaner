@@ -60,7 +60,7 @@ public class TemplateMatcher1L2T extends TemplateMatcher {
    */
   @Override
   public List<String> getReplacements(Page page, PageElementTemplate template) {
-    List<String> replacements = new ArrayList<String>();
+    List<String> replacements = new ArrayList<>();
     if (!isGood()) {
       replacements.add(GT._T("Link parameter {0} to", parameterName1));
     }

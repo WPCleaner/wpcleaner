@@ -27,8 +27,8 @@ public class MWPaneUndoManager implements ActionListener {
   MWPaneUndoManager(MWPane textPane) {
     this.textPane = textPane;
     this.undoLevels = 0;
-    this.undoTexts = new LinkedList<String>();
-    this.redoTexts = new LinkedList<String>();
+    this.undoTexts = new LinkedList<>();
+    this.redoTexts = new LinkedList<>();
   }
 
   /* ======================================================================= */

@@ -235,7 +235,7 @@ public abstract class AbstractMenuCreator {
         config.getInt(null, ConfigurationValueInteger.MENU_SIZE),
         begin + end + 2);
     if (submenu.getMenuComponentCount() > maxElements) {
-      List<JMenu> menuList = new ArrayList<JMenu>();
+      List<JMenu> menuList = new ArrayList<>();
       while (submenu.getMenuComponentCount() > begin + end + 1) {
         int count = Math.min(maxElements, submenu.getMenuComponentCount() - begin - end);
         JMenu newMenu = new JMenu(submenu.getItem(begin).getText() + "...");
@@ -292,17 +292,17 @@ public abstract class AbstractMenuCreator {
   /**
    * Attributes for rendering menu items for disambiguation pages.
    */
-  final private static Map<TextAttribute, Color> disambiguationAttributes = new HashMap<TextAttribute, Color>();
+  final private static Map<TextAttribute, Color> disambiguationAttributes = new HashMap<>();
 
   /**
    * Attributes for rendering menu items for missing pages.
    */
-  final private static Map<TextAttribute, Boolean> missingAttributes = new HashMap<TextAttribute, Boolean>();
+  final private static Map<TextAttribute, Boolean> missingAttributes = new HashMap<>();
 
   /**
    * Attributes for rendering menu items for redirect pages.
    */
-  final private static Map<TextAttribute, Float> redirectAttributes = new HashMap<TextAttribute, Float>();
+  final private static Map<TextAttribute, Float> redirectAttributes = new HashMap<>();
 
   static {
     disambiguationAttributes.put(TextAttribute.FOREGROUND, Color.RED);

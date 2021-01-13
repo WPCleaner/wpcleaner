@@ -73,7 +73,7 @@ public class ApiQueryPageRequest extends ApiListRequest {
         PROPERTY_LIST_QUERYPAGE);
     properties.put(PROPERTY_PAGE, query.getCode());
     properties.put(PROPERTY_LIMIT, LIMIT_MAX);
-    List<Page> list = new ArrayList<Page>();
+    List<Page> list = new ArrayList<>();
     int maxSize = getMaxSize(true, ConfigurationValueInteger.MAX_QUERY_PAGE);
     while (result.executeQueryPage(properties, list) &&
            (list.size() < maxSize)) {

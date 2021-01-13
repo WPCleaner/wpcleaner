@@ -43,7 +43,7 @@ public abstract class MediaWikiController implements MediaWikiListener {
   protected MediaWikiController(MediaWikiListener listener) {
     this.listener = listener;
     this.executor = getStaticExecutor();
-    results = new LinkedList<Future<?>>();
+    results = new LinkedList<>();
   }
 
   /**
@@ -58,7 +58,7 @@ public abstract class MediaWikiController implements MediaWikiListener {
       staticExecutor = new ThreadPoolExecutor(
           nThreads, nThreads,
           0L, TimeUnit.MILLISECONDS,
-          new LinkedBlockingQueue<Runnable>(Integer.MAX_VALUE),
+          new LinkedBlockingQueue<>(Integer.MAX_VALUE),
           new BasicThreadFactory.Builder().namingPattern("MW-%d").build());
     }
     return staticExecutor;

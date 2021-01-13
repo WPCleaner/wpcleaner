@@ -53,8 +53,8 @@ public class PageListModel extends AbstractListModel<Page> {
    */
   public PageListModel() {
     super();
-    fullList = new ArrayList<Page>();
-    filteredList = new ArrayList<Page>();
+    fullList = new ArrayList<>();
+    filteredList = new ArrayList<>();
     showDisambiguation = true;
     showMissing = false;
     showOther = false;

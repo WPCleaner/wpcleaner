@@ -576,7 +576,7 @@ public class CWConfigurationError {
     List<Page> pages = whiteListPage.getLinks();
     whiteListPages = null;
     if ((pages != null) && (pages.size() > 0)) {
-      whiteListPages = new HashSet<String>();
+      whiteListPages = new HashSet<>();
       for (Page page : pages) {
         whiteListPages.add(page.getTitle());
       }
@@ -600,7 +600,7 @@ public class CWConfigurationError {
     if (value != null) {
       List<String> tmp = WPCConfiguration.convertPropertyToStringList(value);
       if (tmp != null) {
-        whiteListWiki = new HashSet<String>();
+        whiteListWiki = new HashSet<>();
         whiteListWiki.addAll(tmp);
       }
     }

@@ -233,9 +233,9 @@ public class LanguageSelectionPanel extends JPanel {
     constraints.gridy++;
 
     // Variants
-    buttonVariant = new Vector<JButton>(NB_VARIANTS);
-    txtVariant = new Vector<JTextField>(NB_VARIANTS);
-    variant = new Vector<LanguageRegistry.Variant>(NB_VARIANTS);
+    buttonVariant = new Vector<>(NB_VARIANTS);
+    txtVariant = new Vector<>(NB_VARIANTS);
+    variant = new Vector<>(NB_VARIANTS);
     for (int i = 0; i < NB_VARIANTS; i++) {
       JButton tmpButton = Utilities.createJButton(GT._T("Variant n°{0}", Integer.toString(i + 1)), null);
       tmpButton.setActionCommand(Integer.toString(i));

@@ -72,7 +72,7 @@ public class FormattingOptionsPanel extends OptionsPanel {
     setBorder(BorderFactory.createTitledBorder(
         BorderFactory.createEtchedBorder(), GT._T("Formatting options (restart needed)")));
 
-    styles = new Vector<ConfigurationValueStyle>();
+    styles = new Vector<>();
 
     // Initialize constraints
     GridBagConstraints constraints = new GridBagConstraints();
@@ -104,7 +104,7 @@ public class FormattingOptionsPanel extends OptionsPanel {
     JPanel firstPanel = new JPanel(new GridBagLayout());
 
     // Add font name
-    Vector<String> fonts = new Vector<String>();
+    Vector<String> fonts = new Vector<>();
     for (Font font : GraphicsEnvironment.getLocalGraphicsEnvironment().getAllFonts()) {
       fonts.addElement(font.getName());
     }
@@ -364,15 +364,15 @@ public class FormattingOptionsPanel extends OptionsPanel {
   // Managing the formatting of a style
   // ==========================================================================
 
-  private final List<JCheckBox> chkGeneral = new ArrayList<JCheckBox>();
-  private final List<JToggleButton> chkItalic = new ArrayList<JToggleButton>();
-  private final List<JToggleButton> chkBold = new ArrayList<JToggleButton>();
-  private final List<JToggleButton> chkUnderline = new ArrayList<JToggleButton>();
-  private final List<JToggleButton> chkStrike = new ArrayList<JToggleButton>();
-  private final List<JCheckBox> chkForeground = new ArrayList<JCheckBox>();
-  private final List<ColorButton> btnForeground = new ArrayList<ColorButton>();
-  private final List<JCheckBox> chkBackground = new ArrayList<JCheckBox>();
-  private final List<ColorButton> btnBackground = new ArrayList<ColorButton>();
+  private final List<JCheckBox> chkGeneral = new ArrayList<>();
+  private final List<JToggleButton> chkItalic = new ArrayList<>();
+  private final List<JToggleButton> chkBold = new ArrayList<>();
+  private final List<JToggleButton> chkUnderline = new ArrayList<>();
+  private final List<JToggleButton> chkStrike = new ArrayList<>();
+  private final List<JCheckBox> chkForeground = new ArrayList<>();
+  private final List<ColorButton> btnForeground = new ArrayList<>();
+  private final List<JCheckBox> chkBackground = new ArrayList<>();
+  private final List<ColorButton> btnBackground = new ArrayList<>();
 
   // Count columns
   private final static int columnGeneral = 0;

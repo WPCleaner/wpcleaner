@@ -221,7 +221,7 @@ public class MediaWiki extends MediaWikiController {
         currentPage++;
       }
       if ((result != null) && (result instanceof Page)) {
-        List<String> replacementsDone = new ArrayList<String>();
+        List<String> replacementsDone = new ArrayList<>();
         Page page = (Page) result;
         String oldContents = page.getContents();
         if (oldContents != null) {
@@ -519,7 +519,7 @@ public class MediaWiki extends MediaWikiController {
     for (final Page page : pageList) {
       addTask(new EmbeddedInCallable(wikipedia, this, api, page, namespaces, limit));
     }
-    List<Page> resultList = new ArrayList<Page>();
+    List<Page> resultList = new ArrayList<>();
     while (hasRemainingTask() && !shouldStop()) {
       Object result = getNextResult();
       if (result instanceof List<?>) {
@@ -569,7 +569,7 @@ public class MediaWiki extends MediaWikiController {
     final int maxPages = api.getMaxPagesPerQuery();
     List<Page> filteredList = pageList;
     if (knownPages != null) {
-      filteredList = new ArrayList<Page>(pageList);
+      filteredList = new ArrayList<>(pageList);
       filteredList.removeAll(knownPages);
     }
     if (filteredList.size() <= maxPages) {
@@ -577,7 +577,7 @@ public class MediaWiki extends MediaWikiController {
     } else {
       int index = 0;
       while (index < filteredList.size()) {
-        List<Page> tmpList = new ArrayList<Page>(api.getMaxPagesPerQuery());
+        List<Page> tmpList = new ArrayList<>(api.getMaxPagesPerQuery());
         for (int i = 0; (i < maxPages) && (index < filteredList.size()); i++, index++) {
           tmpList.add(filteredList.get(index));
         }

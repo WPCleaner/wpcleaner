@@ -164,7 +164,7 @@ public class UpdateDuplicateArgsWarningWorker extends UpdateWarningWorker {
    */
   @Override
   protected void listWarningPages(UpdateWarningTools tools) throws APIException {
-    Map<String, Page> tmpWarningPages = new HashMap<String, Page>();
+    Map<String, Page> tmpWarningPages = new HashMap<>();
 
     // Retrieve talk pages including a warning
     retrieveArticlesWithWarning(

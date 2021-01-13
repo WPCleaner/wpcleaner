@@ -192,7 +192,7 @@ public class PageElementFunction extends PageElement {
 
     // Analyze parameters
     tmpIndex++;
-    List<Parameter> parameters = new ArrayList<Parameter>();
+    List<Parameter> parameters = new ArrayList<>();
     int endIndex = analyzeFunctionParameters(
         wiki, contents, beginIndex, tmpIndex - 1, tmpIndex, parameters,
         comments, tags);

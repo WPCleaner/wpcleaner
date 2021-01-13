@@ -68,7 +68,7 @@ public class Namespace implements Comparable<Namespace> {
     this.canonicalTitle = canonicalTitle;
     this.caseSensitiveness = caseSensitiveness;
     this.subPages = subPages;
-    this.aliases = new LinkedList<String>();
+    this.aliases = new LinkedList<>();
     addAlias(this.title);
     addAlias(this.canonicalTitle);
   }

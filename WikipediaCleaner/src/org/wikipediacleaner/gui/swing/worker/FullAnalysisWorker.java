@@ -64,7 +64,7 @@ public class FullAnalysisWorker extends BasicWorker {
       api.retrieveLinks(wiki, page, Namespace.MAIN, knownPages, true, true);
 
       // Retrieve disambiguation information if not already retrieved
-      List<Page> links = new ArrayList<Page>();
+      List<Page> links = new ArrayList<>();
       for (Page link : page.getLinks()) {
         if (link.isDisambiguationPage() == null) {
           links.add(link);

@@ -355,7 +355,7 @@ public class CheckWikiWindow extends OnePageWindow implements CheckWikiListener 
    */
   private void createPopupSelectErrors() {
     popupSelectErrors = new JPopupMenu(GT._T("Select errors"));
-    menuItemAlgorithms = new ArrayList<JMenuItem>();
+    menuItemAlgorithms = new ArrayList<>();
     JMenuItem menuItem = null;
 
     menuItem = new JMenuItem(GT._T("Select all errors"));
@@ -390,7 +390,7 @@ public class CheckWikiWindow extends OnePageWindow implements CheckWikiListener 
 
     popupSelectErrors.addSeparator();
 
-    final Map<TextAttribute, Boolean> inactiveAttributes = new HashMap<TextAttribute, Boolean>();
+    final Map<TextAttribute, Boolean> inactiveAttributes = new HashMap<>();
     inactiveAttributes.put(TextAttribute.STRIKETHROUGH, TextAttribute.STRIKETHROUGH_ON);
 
     final int PART_SIZE = 20; 
@@ -514,7 +514,7 @@ public class CheckWikiWindow extends OnePageWindow implements CheckWikiListener 
     Configuration config = Configuration.getConfiguration();
     Properties properties = config.getProperties(null, Configuration.ARRAY_CHECK_SELECTION);
     Set<Object> keySet = properties.keySet();
-    List<String> keyList = new ArrayList<String>();
+    List<String> keyList = new ArrayList<>();
     for (Object key : keySet) {
       keyList.add(key.toString());
     }
@@ -576,7 +576,7 @@ public class CheckWikiWindow extends OnePageWindow implements CheckWikiListener 
     if (allAlgorithms == null) {
       allAlgorithms = Collections.emptyList();
     }
-    selectedAlgorithms = new ArrayList<CheckErrorAlgorithm>();
+    selectedAlgorithms = new ArrayList<>();
     for (CheckErrorAlgorithm algorithm : allAlgorithms) {
       if (algorithm.isAvailable() &&
           CWConfigurationError.isPriorityFullyActive(algorithm.getPriority())) {
@@ -640,8 +640,8 @@ public class CheckWikiWindow extends OnePageWindow implements CheckWikiListener 
     constraints.weightx = 0;
     constraints.weighty = 0;
     panel.add(labelErrors, constraints);
-    modelAllErrors = new DefaultComboBoxModel<Object>();
-    listAllErrors = new JComboBox<Object>(modelAllErrors);
+    modelAllErrors = new DefaultComboBoxModel<>();
+    listAllErrors = new JComboBox<>(modelAllErrors);
     listAllErrors.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(@SuppressWarnings("unused") ActionEvent e) {
@@ -726,8 +726,8 @@ public class CheckWikiWindow extends OnePageWindow implements CheckWikiListener 
     panel.setBorder(BorderFactory.createTitledBorder(
         BorderFactory.createEtchedBorder(), GT._T("Pages")));
 
-    modelPages = new DefaultListModel<CheckErrorPage>();
-    listPages = new JList<CheckErrorPage>(modelPages);
+    modelPages = new DefaultListModel<>();
+    listPages = new JList<>(modelPages);
 
     // Initialize constraints
     GridBagConstraints constraints = new GridBagConstraints();
@@ -867,8 +867,8 @@ public class CheckWikiWindow extends OnePageWindow implements CheckWikiListener 
    * @return List of pages with several errors.
    */
   private List<String> getPagesWithSeveralErrors() {
-    Set<String> pagesWithMultipleErrors = new HashSet<String>();
-    Set<String> pagesWithError = new HashSet<String>();
+    Set<String> pagesWithMultipleErrors = new HashSet<>();
+    Set<String> pagesWithError = new HashSet<>();
     for (AlgorithmError error : errors) {
       for (int pageNumber = 0; pageNumber < error.getPageCount(); pageNumber++) {
         Page page = error.getPage(pageNumber);
@@ -880,7 +880,7 @@ public class CheckWikiWindow extends OnePageWindow implements CheckWikiListener 
         }
       }
     }
-    List<String> result = new ArrayList<String>(pagesWithMultipleErrors);
+    List<String> result = new ArrayList<>(pagesWithMultipleErrors);
     Collections.sort(result);
     return result;
   }
@@ -890,7 +890,7 @@ public class CheckWikiWindow extends OnePageWindow implements CheckWikiListener 
    * @return List of errors for the page.
    */
   List<AlgorithmError> getErrorsForPage(String pageTitle) {
-    List<AlgorithmError> result = new ArrayList<AlgorithmError>();
+    List<AlgorithmError> result = new ArrayList<>();
     if (pageTitle != null) {
       for (AlgorithmError error : errors) {
         for (int pageNumber = 0; pageNumber < error.getPageCount(); pageNumber++) {
@@ -1299,7 +1299,7 @@ public class CheckWikiWindow extends OnePageWindow implements CheckWikiListener 
    */
   public void actionLoadPages() {
     final List<CheckErrorPage> selection = listPages.getSelectedValuesList();
-    final List<Page> pages = new ArrayList<Page>();
+    final List<Page> pages = new ArrayList<>();
     if (selection != null) {
       for (CheckErrorPage errorPage : selection) {
         pages.add(errorPage.getPage());
@@ -1315,7 +1315,7 @@ public class CheckWikiWindow extends OnePageWindow implements CheckWikiListener 
         @Override
         public void beforeFinished(BasicWorker worker) {
           super.beforeFinished(worker);
-          final List<CheckWikiContentPanel> contentPanels = new ArrayList<CheckWikiContentPanel>();
+          final List<CheckWikiContentPanel> contentPanels = new ArrayList<>();
           for (Page page : pages) {
             while (page != null) {
               Object errorSelected = modelAllErrors.getSelectedItem();
@@ -1370,7 +1370,7 @@ public class CheckWikiWindow extends OnePageWindow implements CheckWikiListener 
    */
   public void actionRunAutomaticFixing() {
     final List<CheckErrorPage> selection = listPages.getSelectedValuesList();
-    final List<Page> pages = new ArrayList<Page>();
+    final List<Page> pages = new ArrayList<>();
     if (selection != null) {
       for (CheckErrorPage errorPage : selection) {
         pages.add(errorPage.getPage());
@@ -1393,7 +1393,7 @@ public class CheckWikiWindow extends OnePageWindow implements CheckWikiListener 
     clean();
     contentPane.removeAll();
     if (errors == null) {
-      errors = new ArrayList<AlgorithmError>();
+      errors = new ArrayList<>();
     }
     CheckWikiProjectWorker reloadWorker = new CheckWikiProjectWorker(
         getWikipedia(), this, errors, selectedAlgorithms,

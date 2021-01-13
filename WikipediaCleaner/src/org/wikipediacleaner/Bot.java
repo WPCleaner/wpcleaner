@@ -350,8 +350,8 @@ public class Bot implements BasicWorkerListener {
    * @return True if the action was executed.
    */
   private BasicWorker executeFixCheckWiki(Action actionConfig) {
-    List<CheckErrorAlgorithm> algorithms = new ArrayList<CheckErrorAlgorithm>();
-    List<CheckErrorAlgorithm> allAlgorithms = new ArrayList<CheckErrorAlgorithm>();
+    List<CheckErrorAlgorithm> algorithms = new ArrayList<>();
+    List<CheckErrorAlgorithm> allAlgorithms = new ArrayList<>();
     if (actionConfig.actionArgs.length > 0) {
       extractAlgorithms(algorithms, allAlgorithms, actionConfig.actionArgs, 0);
     }
@@ -372,8 +372,8 @@ public class Bot implements BasicWorkerListener {
     if (actionConfig.actionArgs.length > 0) {
       page = DataManager.getPage(wiki, actionConfig.actionArgs[0], null, null, null);
     }
-    List<CheckErrorAlgorithm> algorithms = new ArrayList<CheckErrorAlgorithm>();
-    List<CheckErrorAlgorithm> allAlgorithms = new ArrayList<CheckErrorAlgorithm>();
+    List<CheckErrorAlgorithm> algorithms = new ArrayList<>();
+    List<CheckErrorAlgorithm> allAlgorithms = new ArrayList<>();
     if (actionConfig.actionArgs.length > 1) {
       extractAlgorithms(algorithms, allAlgorithms, actionConfig.actionArgs, 1);
     }
@@ -396,8 +396,8 @@ public class Bot implements BasicWorkerListener {
     if (actionConfig.actionArgs.length > 0) {
       path = actionConfig.actionArgs[0];
     }
-    List<CheckErrorAlgorithm> algorithms = new ArrayList<CheckErrorAlgorithm>();
-    List<CheckErrorAlgorithm> allAlgorithms = new ArrayList<CheckErrorAlgorithm>();
+    List<CheckErrorAlgorithm> algorithms = new ArrayList<>();
+    List<CheckErrorAlgorithm> allAlgorithms = new ArrayList<>();
     if (actionConfig.actionArgs.length > 1) {
       extractAlgorithms(algorithms, allAlgorithms, actionConfig.actionArgs, 1);
     }
@@ -433,8 +433,8 @@ public class Bot implements BasicWorkerListener {
     if (category == null) {
       return null;
     }
-    List<CheckErrorAlgorithm> algorithms = new ArrayList<CheckErrorAlgorithm>();
-    List<CheckErrorAlgorithm> allAlgorithms = new ArrayList<CheckErrorAlgorithm>();
+    List<CheckErrorAlgorithm> algorithms = new ArrayList<>();
+    List<CheckErrorAlgorithm> allAlgorithms = new ArrayList<>();
     if (actionConfig.actionArgs.length > 1) {
       extractAlgorithms(algorithms, allAlgorithms, actionConfig.actionArgs, 1);
     }
@@ -453,8 +453,8 @@ public class Bot implements BasicWorkerListener {
    * @return True if the action was executed.
    */
   private BasicWorker executeMarkCheckWiki(Action actionConfig) {
-    List<CheckErrorAlgorithm> algorithms = new ArrayList<CheckErrorAlgorithm>();
-    List<CheckErrorAlgorithm> allAlgorithms = new ArrayList<CheckErrorAlgorithm>();
+    List<CheckErrorAlgorithm> algorithms = new ArrayList<>();
+    List<CheckErrorAlgorithm> allAlgorithms = new ArrayList<>();
     if (actionConfig.actionArgs.length > 0) {
       extractAlgorithms(algorithms, allAlgorithms, actionConfig.actionArgs, 0);
     }
@@ -492,7 +492,7 @@ public class Bot implements BasicWorkerListener {
     // Check for parameters
     if (actionArgs.length > currentArg + 2) {
       File dumpFile = getDumpFile(actionArgs[currentArg]);
-      List<CheckErrorAlgorithm> algorithms = new ArrayList<CheckErrorAlgorithm>();
+      List<CheckErrorAlgorithm> algorithms = new ArrayList<>();
       extractAlgorithms(algorithms, null, actionArgs, currentArg + 2);
       if (actionArgs[currentArg + 1].startsWith("wiki:")) {
         String pageName = actionArgs[currentArg + 1].substring(5);
@@ -524,8 +524,8 @@ public class Bot implements BasicWorkerListener {
     // Check for parameters
     if (actionArgs.length > currentArg + 1) {
       File dumpFile = getDumpFile(actionArgs[currentArg]);
-      List<CheckErrorAlgorithm> algorithms = new ArrayList<CheckErrorAlgorithm>();
-      List<CheckErrorAlgorithm> allAlgorithms = new ArrayList<CheckErrorAlgorithm>();
+      List<CheckErrorAlgorithm> algorithms = new ArrayList<>();
+      List<CheckErrorAlgorithm> allAlgorithms = new ArrayList<>();
       extractAlgorithms(algorithms, allAlgorithms, actionArgs, currentArg + 1);
       return new FixDumpWorker(
           wiki, null, dumpFile,

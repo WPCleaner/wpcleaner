@@ -405,7 +405,7 @@ public abstract class CheckErrorAlgorithmBase extends AlgorithmBase implements C
    */
   public String fixUsingFirstReplacement(String fixName, PageAnalysis analysis) {
     String result = analysis.getContents();
-    List<CheckErrorResult> errors = new ArrayList<CheckErrorResult>();
+    List<CheckErrorResult> errors = new ArrayList<>();
     if (analyze(analysis, errors, false)) {
       for (int i = errors.size(); i > 0; i--) {
         CheckErrorResult errorResult = errors.get(i - 1);
@@ -430,7 +430,7 @@ public abstract class CheckErrorAlgorithmBase extends AlgorithmBase implements C
    */
   public String fixUsingAutomaticReplacement(PageAnalysis analysis) {
     String result = analysis.getContents();
-    List<CheckErrorResult> errors = new ArrayList<CheckErrorResult>();
+    List<CheckErrorResult> errors = new ArrayList<>();
     if (analyze(analysis, errors, true)) {
       Collections.sort(errors);
       for (int i = errors.size(); i > 0; i--) {
@@ -464,7 +464,7 @@ public abstract class CheckErrorAlgorithmBase extends AlgorithmBase implements C
    */
   public String fixUsingAutomaticBotReplacement(PageAnalysis analysis) {
     String result = analysis.getContents();
-    List<CheckErrorResult> errors = new ArrayList<CheckErrorResult>();
+    List<CheckErrorResult> errors = new ArrayList<>();
     if (analyze(analysis, errors, true)) {
       Collections.sort(errors);
       for (int i = errors.size(); i > 0; i--) {
@@ -491,7 +491,7 @@ public abstract class CheckErrorAlgorithmBase extends AlgorithmBase implements C
    */
   public String fixUsingRemove(String fixName, PageAnalysis analysis) {
     String result = analysis.getContents();
-    List<CheckErrorResult> errors = new ArrayList<CheckErrorResult>();
+    List<CheckErrorResult> errors = new ArrayList<>();
     if (analyze(analysis, errors, false)) {
       for (int i = errors.size(); i > 0; i--) {
         CheckErrorResult errorResult = errors.get(i - 1);

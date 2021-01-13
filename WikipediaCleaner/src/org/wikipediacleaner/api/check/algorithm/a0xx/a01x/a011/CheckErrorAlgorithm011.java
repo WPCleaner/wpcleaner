@@ -32,7 +32,7 @@ public class CheckErrorAlgorithm011 extends CheckErrorAlgorithmHtmlNamedEntities
 
   public CheckErrorAlgorithm011() {
     super("HTML named entities");
-    htmlCharacters = new ArrayList<HtmlCharacters>();
+    htmlCharacters = new ArrayList<>();
     htmlCharacters.add(HtmlCharacters.LETTER_SMALL_A_ACUTE_ACCENT);         // &aacute;
     htmlCharacters.add(HtmlCharacters.LETTER_CAPITAL_A_ACUTE_ACCENT);       // &Aacute;
     htmlCharacters.add(HtmlCharacters.LETTER_SMALL_A_CIRCUMFLEX_ACCENT);    // &acirc;

@@ -63,7 +63,7 @@ public class ApiXmlPagePropsResult extends ApiXmlPropertiesResult implements Api
           "/api/query/pages/page", Filters.element());
       List<Element> results = xpa.evaluate(root);
       Iterator<Element> iter = results.iterator();
-      List<Page> tmpPages = new ArrayList<Page>();
+      List<Page> tmpPages = new ArrayList<>();
       while (iter.hasNext()) {
         Element currentNode = iter.next();
         String title = currentNode.getAttributeValue("title");

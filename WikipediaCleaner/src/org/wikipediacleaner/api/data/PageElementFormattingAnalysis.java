@@ -27,7 +27,7 @@ public class PageElementFormattingAnalysis {
   private final int italicCount;
 
   /** Static object for empty analysis to avoid useless memory allocation */
-  final private static PageElementFormattingAnalysis EMPTY = new PageElementFormattingAnalysis(new ArrayList<PageElementFormatting>(), 0, 0);
+  final private static PageElementFormattingAnalysis EMPTY = new PageElementFormattingAnalysis(new ArrayList<>(), 0, 0);
 
   /**
    * @param bold Count of bold formatting.

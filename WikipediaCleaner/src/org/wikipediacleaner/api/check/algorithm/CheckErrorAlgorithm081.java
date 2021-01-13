@@ -87,7 +87,7 @@ public class CheckErrorAlgorithm081 extends CheckErrorAlgorithmBase {
         String groupName = tag.getGroupOfRef(analysis);
         Map<String, List<PageElementTag>> groupRefs = refs.get(groupName);
         if (groupRefs == null) {
-          groupRefs = new HashMap<String, List<PageElementTag>>();
+          groupRefs = new HashMap<>();
           refs.put(groupName, groupRefs);
         }
 
@@ -96,7 +96,7 @@ public class CheckErrorAlgorithm081 extends CheckErrorAlgorithmBase {
         if (text.length() > 0) {
           List<PageElementTag> valueRefs = groupRefs.get(text);
           if (valueRefs == null) {
-            valueRefs = new ArrayList<PageElementTag>();
+            valueRefs = new ArrayList<>();
             groupRefs.put(text, valueRefs);
           }
           if (valueRefs.size() > 0) {
@@ -116,7 +116,7 @@ public class CheckErrorAlgorithm081 extends CheckErrorAlgorithmBase {
    * @return List of names.
    */
   private List<String> getRefNames(List<PageElementTag> refs) {
-    List<String> possibleNames = new ArrayList<String>();
+    List<String> possibleNames = new ArrayList<>();
     for (PageElementTag tag : refs) {
       Parameter name = tag.getParameter("name");
       if ((name != null) && (name.getTrimmedValue() != null)) {
@@ -168,8 +168,7 @@ public class CheckErrorAlgorithm081 extends CheckErrorAlgorithmBase {
     }
 
     // Group tags by group and value for further analyze
-    Map<String, Map<String, List<PageElementTag>>> refs =
-        new HashMap<String, Map<String, List<PageElementTag>>>();
+    Map<String, Map<String, List<PageElementTag>>> refs = new HashMap<>();
     boolean result = groupTags(analysis, refs);
     if (result == false) {
       return false;
@@ -224,7 +223,7 @@ public class CheckErrorAlgorithm081 extends CheckErrorAlgorithmBase {
 
               // Find if an external link is in the reference tag
               List<PageElementExternalLink> externalLinks = analysis.getExternalLinks();
-              List<PageElementExternalLink> links = new ArrayList<PageElementExternalLink>();
+              List<PageElementExternalLink> links = new ArrayList<>();
               for (PageElementExternalLink externalLink : externalLinks) {
                 if ((externalLink.getBeginIndex() >= valueBeginIndex) &&
                     (externalLink.getEndIndex() <= valueEndIndex)) {
@@ -293,17 +292,15 @@ public class CheckErrorAlgorithm081 extends CheckErrorAlgorithmBase {
     int currentIndex = 0;
 
     // Group tags by group and value for further analyze
-    Map<String, Map<String, List<PageElementTag>>> refsByGroupAndValue =
-        new HashMap<String, Map<String, List<PageElementTag>>>();
+    Map<String, Map<String, List<PageElementTag>>> refsByGroupAndValue = new HashMap<>();
     groupTags(analysis, refsByGroupAndValue);
 
     // Memorize tag names by group and value
-    Map<String, Map<String, List<String>>> refNamesByGroupAndValue =
-        new HashMap<String, Map<String, List<String>>>();
+    Map<String, Map<String, List<String>>> refNamesByGroupAndValue = new HashMap<>();
     for (Entry<String, Map<String, List<PageElementTag>>> refsByValueForGroup : refsByGroupAndValue.entrySet()) {
       String groupName = refsByValueForGroup.getKey();
       Map<String, List<PageElementTag>> groupRefsByValue = refsByValueForGroup.getValue();
-      Map<String, List<String>> groupRefNamesByValue = new HashMap<String, List<String>>();
+      Map<String, List<String>> groupRefNamesByValue = new HashMap<>();
       refNamesByGroupAndValue.put(groupName, groupRefNamesByValue);
       for (Entry<String, List<PageElementTag>> refsForGroupAndValue : groupRefsByValue.entrySet()) {
         String value = refsForGroupAndValue.getKey();

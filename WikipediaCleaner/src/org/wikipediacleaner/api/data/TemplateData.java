@@ -54,7 +54,7 @@ public class TemplateData {
     TemplateData result = new TemplateData();
     List<PageElementParameter> parameters = analysis.getParameters();
     if (parameters != null) {
-      List<Parameter> params = new ArrayList<TemplateData.Parameter>();
+      List<Parameter> params = new ArrayList<>();
       for (PageElementParameter parameter : parameters) {
         String name = parameter.getParameterName();
         Parameter param = null;
@@ -180,7 +180,7 @@ public class TemplateData {
     public InterfaceText(List<LanguageValue> texts) {
       this.multipleLanguages = true;
       this.text = null;
-      this.texts = new ArrayList<LanguageValue>();
+      this.texts = new ArrayList<>();
       if (texts != null) {
         this.texts.addAll(texts);
       }

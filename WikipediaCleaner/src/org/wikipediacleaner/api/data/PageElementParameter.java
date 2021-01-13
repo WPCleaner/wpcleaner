@@ -176,7 +176,7 @@ public class PageElementParameter extends PageElement {
 
     // Analyze parameters
     tmpIndex++;
-    List<Parameter> parameters = new ArrayList<Parameter>();
+    List<Parameter> parameters = new ArrayList<>();
     int endIndex = analyzeParameterParameters(
         wiki, contents, beginIndex, tmpIndex - 1, tmpIndex, parameters,
         comments, tags);

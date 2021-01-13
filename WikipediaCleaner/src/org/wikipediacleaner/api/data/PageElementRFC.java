@@ -56,7 +56,7 @@ public class PageElementRFC extends PageElement {
    */
   public static List<PageElementRFC> analyzePage(
       PageAnalysis analysis) {
-    List<PageElementRFC> rfcs = new ArrayList<PageElementRFC>();
+    List<PageElementRFC> rfcs = new ArrayList<>();
 
     // Configuration
     WPCConfiguration config = analysis.getWPCConfiguration();
@@ -632,7 +632,7 @@ public class PageElementRFC extends PageElement {
    * @return List of possible RFC.
    */
   public List<String> getCorrectRFC() {
-    List<String> result = new ArrayList<String>();
+    List<String> result = new ArrayList<>();
     String prefix = isTemplateParameter() ? "" : "RFC ";
 
     // Prefix outside the template

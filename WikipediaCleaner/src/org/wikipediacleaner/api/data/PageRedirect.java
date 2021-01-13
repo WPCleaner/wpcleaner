@@ -272,7 +272,7 @@ public class PageRedirect {
    * @return Iterator for the page + redirects
    */
   public Iterator<Page> getIteratorWithPage() {
-    List<Page> tmpList = new ArrayList<Page>((list != null) ? list.size() + 1 : 1);
+    List<Page> tmpList = new ArrayList<>((list != null) ? list.size() + 1 : 1);
     tmpList.add(page);
     if (list != null) {
       for (Pair<Page, String> redirect : list) {

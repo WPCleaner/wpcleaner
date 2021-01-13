@@ -71,7 +71,7 @@ class RecentChangesRunnable implements Runnable {
   public void run() {
     while (!shouldStop) {
       try {
-        List<RecentChange> recentChanges = new ArrayList<RecentChange>();
+        List<RecentChange> recentChanges = new ArrayList<>();
         start = api.getRecentChanges(wiki, start, recentChanges);
         if (!recentChanges.isEmpty()) {
           Date currentTime = DataManager.convertIso8601DateTime(start);

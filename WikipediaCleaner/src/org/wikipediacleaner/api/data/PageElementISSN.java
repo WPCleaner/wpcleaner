@@ -59,7 +59,7 @@ public class PageElementISSN extends PageElement {
    */
   public static List<PageElementISSN> analyzePage(
       PageAnalysis analysis) {
-    List<PageElementISSN> issns = new ArrayList<PageElementISSN>();
+    List<PageElementISSN> issns = new ArrayList<>();
 
     // Configuration
     WPCConfiguration config = analysis.getWPCConfiguration();

@@ -180,7 +180,7 @@ public class ApiXmlSiteInfoResult extends ApiXmlResult implements ApiSiteInfoRes
       while (iter.hasNext()) {
         Element currentNode = iter.next();
         String specialPage = currentNode.getAttributeValue("realname");
-        List<String> aliases = new ArrayList<String>();
+        List<String> aliases = new ArrayList<>();
         List<Element> resultsAlias = xpaAlias.evaluate(currentNode);
         Iterator<Element> iterAlias = resultsAlias.iterator();
         while (iterAlias.hasNext()) {

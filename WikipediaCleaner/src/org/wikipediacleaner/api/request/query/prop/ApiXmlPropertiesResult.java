@@ -172,7 +172,7 @@ public class ApiXmlPropertiesResult extends ApiXmlResult implements ApiPropertie
     List<Element> listPages = xpaPages.evaluate(root);
 
     // Retrieving normalization information
-    Map<String, String> normalization = new HashMap<String, String>();
+    Map<String, String> normalization = new HashMap<>();
     retrieveNormalization(root, normalization);
 
     // Analyzing redirects

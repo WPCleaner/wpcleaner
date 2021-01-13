@@ -353,7 +353,7 @@ public class PageListWindow extends BasicWindow {
         (selectedPages.size() == 0)) {
       return;
     }
-    List<String> pageNames = new ArrayList<String>(selectedPages.size());
+    List<String> pageNames = new ArrayList<>(selectedPages.size());
     for (Page page : selectedPages) {
       pageNames.add(page.getTitle());
     }

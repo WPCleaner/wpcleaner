@@ -75,12 +75,12 @@ public class CheckErrorAlgorithm017 extends CheckErrorAlgorithmBase {
     if ((categories == null) || (categories.isEmpty())) {
       return false;
     }
-    Map<String, List<PageElementCategory>> groupedCategories = new HashMap<String, List<PageElementCategory>>();
+    Map<String, List<PageElementCategory>> groupedCategories = new HashMap<>();
     for (PageElementCategory category : categories) {
       String name = sensitive.normalize(category.getName());
       List<PageElementCategory> groupCategory = groupedCategories.get(name);
       if (groupCategory == null) {
-        groupCategory = new ArrayList<PageElementCategory>();
+        groupCategory = new ArrayList<>();
         groupedCategories.put(name, groupCategory);
       }
       groupCategory.add(category);

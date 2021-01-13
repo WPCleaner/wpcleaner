@@ -77,7 +77,7 @@ public class ApiJsonTemplateDataResult extends ApiJsonResult implements ApiTempl
     TemplateData result = new TemplateData();
     result.setTitle(page.path("title").asText());
     result.setDescription(createInterfaceText(page.path("description")));
-    List<Parameter> parameters = new ArrayList<Parameter>();
+    List<Parameter> parameters = new ArrayList<>();
     Iterator<Entry<String, JsonNode>> itParams = page.path("params").fields();
     while (itParams.hasNext()) {
       Entry<String, JsonNode> jsonParam = itParams.next();
@@ -92,7 +92,7 @@ public class ApiJsonTemplateDataResult extends ApiJsonResult implements ApiTempl
       param.setType(paramNode.path("type").asText());
       JsonNode aliasesNode = paramNode.path("aliases");
       if (aliasesNode.isArray()) {
-        List<String> aliases = new ArrayList<String>();
+        List<String> aliases = new ArrayList<>();
         Iterator<JsonNode> itAliases = aliasesNode.elements();
         while (itAliases.hasNext()) {
           aliases.add(itAliases.next().asText());
@@ -127,7 +127,7 @@ public class ApiJsonTemplateDataResult extends ApiJsonResult implements ApiTempl
     if ((node == null) || (node.isMissingNode())) {
       return null;
     }
-    List<LanguageValue> languageValues = new ArrayList<LanguageValue>();
+    List<LanguageValue> languageValues = new ArrayList<>();
     Iterator<Entry<String, JsonNode>> itValues = node.fields();
     while (itValues.hasNext()) {
       Entry<String, JsonNode> value = itValues.next();

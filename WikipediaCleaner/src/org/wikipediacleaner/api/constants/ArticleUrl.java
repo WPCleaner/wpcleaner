@@ -169,7 +169,7 @@ public class ArticleUrl {
     if (uri.getQuery() != null) {
       String[] params = uri.getQuery().split("\\&");
       if ((params != null) && (params.length > 0)) {
-        paramValues = new HashMap<String, String>();
+        paramValues = new HashMap<>();
         for (String param : params) {
           String[] value = param.split("\\=", 2);
           if (value.length >= 1) {
@@ -227,7 +227,7 @@ public class ArticleUrl {
       return null;
     }
     String title = null;
-    Map<String, String> paramValues = new HashMap<String, String>();
+    Map<String, String> paramValues = new HashMap<>();
     for (String param : params) {
       String[] value = param.split("\\=", 2);
       if (value.length >= 1) {

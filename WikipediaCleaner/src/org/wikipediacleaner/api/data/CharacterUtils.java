@@ -17,7 +17,7 @@ import java.util.Map;
 public class CharacterUtils {
 
   /** Map of character conversion to upper case to override default behavior. */
-  private final static Map<Character, Character> UPPERCASE_CONVERSION = new HashMap<Character, Character>();
+  private final static Map<Character, Character> UPPERCASE_CONVERSION = new HashMap<>();
 
   /** Lower boundary of the override map */
   private final static int LOWER_BOUNDARY;

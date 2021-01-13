@@ -253,7 +253,7 @@ public class MWPaneDisambiguationMenuCreator extends BasicMenuCreator {
 
     // Disambiguation page
     if (Boolean.TRUE.equals(page.isDisambiguationPage())) {
-      Map<Page, List<String>> anchorsMap = new HashMap<Page, List<String>>();
+      Map<Page, List<String>> anchorsMap = new HashMap<>();
       List<Page> links = page.getRedirects().getLinks(anchorsMap);
       JMenu submenuLink = new JMenu(GT._T("Link to"));
       JMenu submenuReplace = new JMenu(GT._T("Replace with"));
@@ -346,7 +346,7 @@ public class MWPaneDisambiguationMenuCreator extends BasicMenuCreator {
             JMenu submenu1 = new JMenu(p.getTitle());
             JMenu submenu2 = new JMenu(p.getTitle());
             JMenu submenu3 = new JMenu(p.getTitle());
-            Map<Page, List<String>> anchorsRedirectMap = new HashMap<Page, List<String>>();
+            Map<Page, List<String>> anchorsRedirectMap = new HashMap<>();
             p.getRedirects().getLinks(anchorsRedirectMap);
             
             Iterator<Page> iter = p.getRedirects().getIteratorWithPage();
@@ -609,7 +609,7 @@ public class MWPaneDisambiguationMenuCreator extends BasicMenuCreator {
 
     // Retrieve various information
     List<String> wiktionary = disambigPage.getWiktionaryLinks();
-    Map<Page, List<String>> anchorsMap = new HashMap<Page, List<String>>();
+    Map<Page, List<String>> anchorsMap = new HashMap<>();
     List<Page> links = disambigPage.getRedirects().getLinks(anchorsMap);
 
     // Checking all possible replacements
@@ -671,7 +671,7 @@ public class MWPaneDisambiguationMenuCreator extends BasicMenuCreator {
           for (Page p : links) {
             if (p.getRedirects().isRedirect()) {
               JMenu submenu1 = new JMenu(p.getTitle());
-              Map<Page, List<String>> anchorsRedirectMap = new HashMap<Page, List<String>>();
+              Map<Page, List<String>> anchorsRedirectMap = new HashMap<>();
               p.getRedirects().getLinks(anchorsRedirectMap);
               
               Iterator<Page> iter = p.getRedirects().getIteratorWithPage();

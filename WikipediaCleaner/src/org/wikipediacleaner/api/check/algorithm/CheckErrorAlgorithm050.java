@@ -26,7 +26,7 @@ public class CheckErrorAlgorithm050 extends CheckErrorAlgorithmHtmlNamedEntities
 
   public CheckErrorAlgorithm050() {
     super("en dash or em dash");
-    htmlCharacters = new ArrayList<HtmlCharacters>();
+    htmlCharacters = new ArrayList<>();
     htmlCharacters.add(HtmlCharacters.SYMBOL_EM_DASH);
     htmlCharacters.add(HtmlCharacters.SYMBOL_EN_DASH);
   }

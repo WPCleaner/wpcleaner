@@ -193,8 +193,8 @@ public class ApiCategoryMembersRequest extends ApiListRequest {
       Page category,
       int depth, boolean limit, int max) throws APIException {
 
-    List<String> categoriesAnalyzed = new ArrayList<String>();
-    Map<Page, Integer> categories = new HashMap<Page, Integer>();
+    List<String> categoriesAnalyzed = new ArrayList<>();
+    Map<Page, Integer> categories = new HashMap<>();
     categories.put(category, Integer.valueOf(0));
     int maxSize = getMaxSize(limit, ConfigurationValueInteger.MAX_CATEGORY_MEMBERS);
     maxSize = Math.min(maxSize, max);
@@ -232,7 +232,7 @@ public class ApiCategoryMembersRequest extends ApiListRequest {
         properties.put(PROPERTY_CONTINUE, PROPERTY_CONTINUE_DEFAULT);
         properties.put(PROPERTY_LIMIT, LIMIT_MAX);
         properties.put(PROPERTY_TITLE, categoryName);
-        List<Page> list = new ArrayList<Page>();
+        List<Page> list = new ArrayList<>();
         while (result.executeCategoryMembers(
             properties, list, categories, currentDepth) &&
             (list.size() < maxSize)) {

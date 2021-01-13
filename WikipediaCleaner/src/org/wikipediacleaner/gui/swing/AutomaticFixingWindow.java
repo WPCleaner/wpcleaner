@@ -415,7 +415,7 @@ public class AutomaticFixingWindow extends OnePageWindow {
   private Component createLinksComponents() {
     JPanel panel = new JPanel(new GridBagLayout());
 
-    listPages = new JList<Page>(modelPages);
+    listPages = new JList<>(modelPages);
 
     // Initialize constraints
     GridBagConstraints constraints = new GridBagConstraints();
@@ -574,7 +574,7 @@ public class AutomaticFixingWindow extends OnePageWindow {
           page.getWikipedia(), Configuration.POJO_AUTOMATIC_FIXING,
           page.getTitle(), AutomaticFixing.class);
       if (automaticFixing != null) {
-        List<AutomaticFixing> data = new ArrayList<AutomaticFixing>(automaticFixing.length);
+        List<AutomaticFixing> data = new ArrayList<>(automaticFixing.length);
         for (int i = 0; i < automaticFixing.length; i++) {
           if (automaticFixing[i] instanceof AutomaticFixing) {
             data.add((AutomaticFixing) automaticFixing[i]);
@@ -778,7 +778,7 @@ public class AutomaticFixingWindow extends OnePageWindow {
     for (int i = 0; i < values.size(); i++) {
       tmpPages[i] = values.get(i);
     }
-    Map<String, List<AutomaticFixing>> replacements = new HashMap<String, List<AutomaticFixing>>();
+    Map<String, List<AutomaticFixing>> replacements = new HashMap<>();
     if (getPage() != null) {
       replacements.put("[[" + getPage().getTitle() + "]]", fixing);
     } else {
@@ -821,7 +821,7 @@ public class AutomaticFixingWindow extends OnePageWindow {
     String text = paneOriginal.getText();
     if ((text != null) && (text.trim().length() > 0)) {
       List<AutomaticFixing> fixing = modelAutomaticFixing.getData();
-      List<String> replacements = new ArrayList<String>();
+      List<String> replacements = new ArrayList<>();
       text = AutomaticFixing.apply(fixing, text, replacements);
       paneResult.setText(text);
       StringBuilder tmp = new StringBuilder();
@@ -995,7 +995,7 @@ public class AutomaticFixingWindow extends OnePageWindow {
     popup.add(menuItem);
 
     // Select individual errors
-    final Map<TextAttribute, Boolean> inactiveAttributes = new HashMap<TextAttribute, Boolean>();
+    final Map<TextAttribute, Boolean> inactiveAttributes = new HashMap<>();
     inactiveAttributes.put(TextAttribute.STRIKETHROUGH, TextAttribute.STRIKETHROUGH_ON);
     final int PART_SIZE = 20; 
     int lastPart = -1;

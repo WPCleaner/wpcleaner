@@ -47,7 +47,7 @@ public class CWConfiguration {
   public CWConfiguration(String code, EnumWikipedia wiki) {
     this.code = code;
     this.wiki = wiki;
-    this.configuration = new ArrayList<CWConfigurationError>();
+    this.configuration = new ArrayList<>();
   }
 
   // =================================================================================

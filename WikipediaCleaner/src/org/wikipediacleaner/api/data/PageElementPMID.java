@@ -56,7 +56,7 @@ public class PageElementPMID extends PageElement {
    */
   public static List<PageElementPMID> analyzePage(
       PageAnalysis analysis) {
-    List<PageElementPMID> pmids = new ArrayList<PageElementPMID>();
+    List<PageElementPMID> pmids = new ArrayList<>();
 
     // Configuration
     WPCConfiguration config = analysis.getWPCConfiguration();
@@ -621,7 +621,7 @@ public class PageElementPMID extends PageElement {
    * @return List of possible PMID.
    */
   public List<String> getCorrectPMID() {
-    List<String> result = new ArrayList<String>();
+    List<String> result = new ArrayList<>();
     String prefix = isTemplateParameter() ? "" : "PMID ";
 
     // Prefix outside the template

@@ -100,7 +100,7 @@ public class ApiRedirectsRequest extends ApiPropertiesRequest {
     properties.put(PROPERTY_LIMIT, LIMIT_MAX);
     properties.put(PROPERTY_TITLES, page.getTitle());
     properties.put(PROPERTY_CONTINUE, PROPERTY_CONTINUE_DEFAULT);
-    List<Page> list = new ArrayList<Page>();
+    List<Page> list = new ArrayList<>();
     while (result.executeRedirects(properties, page, list)) {
       //
     }

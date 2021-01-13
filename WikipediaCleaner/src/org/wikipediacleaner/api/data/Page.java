@@ -79,7 +79,7 @@ public class Page implements Comparable<Page> {
       }
     }
     this.title = title;
-    this.relatedPages = new Hashtable<Page.RelatedPages, List<Page>>();
+    this.relatedPages = new Hashtable<>();
     this.redirects = new PageRedirect(this);
     setContents("");
   }
@@ -639,7 +639,7 @@ public class Page implements Comparable<Page> {
         List<Page> tmpLinksHere = p.getAllLinksToPage();
         if ((tmpLinksHere != null) && (!tmpLinksHere.isEmpty())) {
           if (originalList) {
-            result = new ArrayList<Page>(result);
+            result = new ArrayList<>(result);
             originalList = false;
           }
           result.addAll(tmpLinksHere);
@@ -786,7 +786,7 @@ public class Page implements Comparable<Page> {
           for (TemplateParameter param : parameters) {
             if (param.isRelevant()) {
               if (wiktionary == null) {
-                wiktionary = new ArrayList<String>();
+                wiktionary = new ArrayList<>();
               }
               if (!wiktionary.contains(param.getValue())) {
                 wiktionary.add(param.getValue());

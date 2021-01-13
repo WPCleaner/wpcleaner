@@ -27,7 +27,7 @@ public class CheckErrorAlgorithm087 extends CheckErrorAlgorithmHtmlNamedEntities
 
   public CheckErrorAlgorithm087() {
     super("HTML named entities without semicolon");
-    htmlCharacters = new ArrayList<HtmlCharacters>();
+    htmlCharacters = new ArrayList<>();
     for (HtmlCharacters htmlCharacter : HtmlCharacters.values()) {
       htmlCharacters.add(htmlCharacter);
     }

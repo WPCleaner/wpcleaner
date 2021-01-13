@@ -49,7 +49,7 @@ public abstract class GoToRenderer extends AbstractCellEditor implements
    * @param wiki Wiki.
    */
   public GoToRenderer(JTextComponent textPane, EnumWikipedia wiki) {
-    buttons = new HashMap<Object, JButton>();
+    buttons = new HashMap<>();
     this.textPane = textPane;
     this.wiki = wiki;
   }

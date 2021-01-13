@@ -63,7 +63,7 @@ public class ReloadLinksAction implements ActionListener {
       if (progressPanel != null) {
         progressPanel.setText(GT._T("Analyzing links for redirect pages"));
       }
-      ArrayList<Page> pages = new ArrayList<Page>();
+      ArrayList<Page> pages = new ArrayList<>();
       pages.add(page);
       api.initializeRedirect(wikipedia, pages);
       if (progressPanel != null) {

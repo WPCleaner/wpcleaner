@@ -72,7 +72,7 @@ public class CheckLanguageLinkAction extends TextAction {
     try {
       API api = APIFactory.getAPI();
       StringBuilder message = new StringBuilder();
-      List<String> values = new ArrayList<String>();
+      List<String> values = new ArrayList<>();
 
       // Check language link
       if ((fromWiki != null) && (toWiki != null)) {

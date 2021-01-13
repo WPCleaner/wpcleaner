@@ -49,7 +49,7 @@ public class Areas {
    * Initialize areas.
    */
   public Areas() {
-    areas = new LinkedList<Areas.Area>();
+    areas = new LinkedList<>();
   }
 
   /**

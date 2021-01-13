@@ -87,7 +87,7 @@ public class RestApiTransformWikitextToLintResult extends RestApiJsonResult {
         }
 
         // Parameters
-        Map<String, String> params = new HashMap<String, String>();
+        Map<String, String> params = new HashMap<>();
         JsonNode paramsNode = error.path("params");
         if ((paramsNode != null) && paramsNode.isObject()) {
           Iterator<String> itNames = paramsNode.fieldNames();

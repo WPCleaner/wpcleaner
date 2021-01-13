@@ -68,7 +68,7 @@ public class CheckWiki {
   public CheckWiki(HttpServer labs, String rootPath) {
     this.labs = labs;
     this.rootPath = ((rootPath != null) && !rootPath.isEmpty()) ? rootPath + "/" : "";
-    this.listeners = new ArrayList<WeakReference<CheckWikiListener>>();
+    this.listeners = new ArrayList<>();
   }
 
   /**
@@ -95,7 +95,7 @@ public class CheckWiki {
 
     // Retrieving list of pages for the error number
     String code = wiki.getSettings().getCodeCheckWiki().replace("-", "_");
-    Map<String, String> properties = new HashMap<String, String>();
+    Map<String, String> properties = new HashMap<>();
     properties.put("id", algorithm.getErrorNumberString());
     properties.put("limit", Integer.toString(errorLimit));
     properties.put("offset", Integer.toString(0));
@@ -137,7 +137,7 @@ public class CheckWiki {
       }
       EnumWikipedia wiki = page.getWikipedia();
       String code = wiki.getSettings().getCodeCheckWiki().replace("-", "_");
-      Map<String, String> properties = new HashMap<String, String>();
+      Map<String, String> properties = new HashMap<>();
       properties.put("id", Integer.toString(error));
       properties.put("project", code);
 
@@ -170,10 +170,10 @@ public class CheckWiki {
       List<CheckWikiDetection> detections = null;
       EnumWikipedia wiki = page.getWikipedia();
       String code = wiki.getSettings().getCodeCheckWiki().replace("-", "_");
-      Map<String, String> properties = new HashMap<String, String>();
+      Map<String, String> properties = new HashMap<>();
       properties.put("project", code);
       properties.put("article", page.getTitle());
-      detections = new ArrayList<CheckWikiDetection>();
+      detections = new ArrayList<>();
       labs.sendPost(
           rootPath + "cgi-bin/checkarticle.cgi", properties,
           new CheckResponseManager(detections));
@@ -207,7 +207,7 @@ public class CheckWiki {
    * @param listener Listener to be added to the list of registered listeners.
    */
   public void addListener(CheckWikiListener listener) {
-    listeners.add(new WeakReference<CheckWikiListener>(listener));
+    listeners.add(new WeakReference<>(listener));
   }
 
   /**
@@ -309,7 +309,7 @@ public class CheckWiki {
     }
 
     // Retrieving white lists
-    HashMap<String, Page> whiteListPages = new HashMap<String, Page>();
+    HashMap<String, Page> whiteListPages = new HashMap<>();
     for (int i = 0; i < CWConfiguration.MAX_ERROR_NUMBER; i++) {
       CWConfigurationError error = cwConfiguration.getErrorConfiguration(i);
       if ((error != null) && (error.getWhiteListPageName() != null)) {

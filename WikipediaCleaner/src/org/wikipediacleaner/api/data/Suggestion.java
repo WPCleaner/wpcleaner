@@ -148,7 +148,7 @@ public class Suggestion implements Comparable<Suggestion> {
     this.chapter = chapter;
     this.pattern = pattern;
     this.other = other;
-    this.suggestions = new ArrayList<ElementarySuggestion>();
+    this.suggestions = new ArrayList<>();
     this.comment = null;
   }
 
@@ -249,7 +249,7 @@ public class Suggestion implements Comparable<Suggestion> {
    */
   public List<ElementarySuggestion> getReplacements(
       String initialText, int begin, int end) {
-    List<ElementarySuggestion> list = new ArrayList<ElementarySuggestion>();
+    List<ElementarySuggestion> list = new ArrayList<>();
     for (ElementarySuggestion suggestion : suggestions) {
       String replacement = suggestion.getReplacement();
       try {
@@ -362,7 +362,7 @@ public class Suggestion implements Comparable<Suggestion> {
    * @return List of chapters containing suggestions (key=Page, value=Chapters).
    */
   public static Map<String, List<String>> getChapters(Collection<Suggestion> suggestions) {
-    Map<String, List<String>> chapters = new HashMap<String, List<String>>();
+    Map<String, List<String>> chapters = new HashMap<>();
     for (Suggestion suggestion : suggestions) {
       String chapter = suggestion.getChapter();
       int sharpIndex = chapter.indexOf('#');
@@ -370,7 +370,7 @@ public class Suggestion implements Comparable<Suggestion> {
       String title = (sharpIndex < 0) ? "" : chapter.substring(sharpIndex + 1);
       List<String> pageChapters = chapters.get(page);
       if (pageChapters == null) {
-        pageChapters = new ArrayList<String>();
+        pageChapters = new ArrayList<>();
         chapters.put(page, pageChapters);
       }
       if (!pageChapters.contains(title)) {

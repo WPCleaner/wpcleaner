@@ -72,7 +72,7 @@ public class ApiXmlLinksResult extends ApiXmlPropertiesResult implements ApiLink
         String pageTitle = pageNode.getAttributeValue("title");
         List<Page> links = lists.get(pageTitle);
         if (links == null) {
-          links = new ArrayList<Page>();
+          links = new ArrayList<>();
           lists.put(pageTitle, links);
         }
         List<Element> listLinks = xpaLinks.evaluate(pageNode);

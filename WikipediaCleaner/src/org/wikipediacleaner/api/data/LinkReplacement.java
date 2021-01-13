@@ -30,7 +30,7 @@ public class LinkReplacement {
   /**
    * Memorize last replacement for each link.
    */
-  private final static Map<String, String> lastReplacement = new HashMap<String, String>();
+  private final static Map<String, String> lastReplacement = new HashMap<>();
 
   /**
    * Memorize suffix used in the last replacement.

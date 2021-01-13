@@ -522,7 +522,7 @@ public class Configuration implements WindowListener {
    */
   public List<String> getStringList(
       EnumWikipedia wikipedia, String property) {
-    List<String> result = new ArrayList<String>();
+    List<String> result = new ArrayList<>();
     if (getPreferences(wikipedia) != null) {
       try {
         Preferences node = getPreferences(wikipedia).node(property);
@@ -567,7 +567,7 @@ public class Configuration implements WindowListener {
    */
   public List<String> getStringSubList(
       EnumWikipedia wikipedia, String property, String subProperty) {
-    List<String> result = new ArrayList<String>();
+    List<String> result = new ArrayList<>();
     if (getPreferences(wikipedia) != null) {
       try {
         if (!getPreferences(wikipedia).nodeExists(property)) {
@@ -819,7 +819,7 @@ public class Configuration implements WindowListener {
           return null;
         }
         Preferences pageNode = globalNode.node(name);
-        ArrayList<Object> results = new ArrayList<Object>();
+        ArrayList<Object> results = new ArrayList<>();
         int i = 0;
         while (pageNode.nodeExists(Integer.toString(i))) {
           Preferences node = pageNode.node(Integer.toString(i));

@@ -101,7 +101,7 @@ public class ISBNRange {
     boolean reservedRange;
 
     ISBNInformation() {
-      this.texts = new ArrayList<String>();
+      this.texts = new ArrayList<>();
     }
 
     public List<String> getTexts() {
@@ -238,7 +238,7 @@ public class ISBNRange {
    * @throws JDOMException
    */
   private static void analyzeEANPrefixes(Element root) throws JDOMException {
-    eanPrefixes = new ArrayList<Range>();
+    eanPrefixes = new ArrayList<>();
     analyzeRanges(root, eanPrefixes, "/ISBNRangeMessage/EAN.UCCPrefixes/EAN.UCC");
   }
 
@@ -249,7 +249,7 @@ public class ISBNRange {
    * @throws JDOMException
    */
   private static void analyzeRegistrationGroups(Element root) throws JDOMException {
-    registrationGroups = new ArrayList<Range>();
+    registrationGroups = new ArrayList<>();
     analyzeRanges(root, registrationGroups, "/ISBNRangeMessage/RegistrationGroups/Group");
   }
 
@@ -330,7 +330,7 @@ public class ISBNRange {
       this.prefix = prefix;
       this.cleanPrefix = (prefix != null) ? prefix.replaceAll("\\-", "") : null;
       this.agency = agency;
-      this.rules = new ArrayList<ISBNRange.Rule>();
+      this.rules = new ArrayList<>();
     }
 
     /**

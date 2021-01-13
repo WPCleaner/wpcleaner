@@ -255,7 +255,7 @@ public class PageElementTemplate extends PageElement {
 
     // Analyze parameters
     tmpIndex++;
-    List<Parameter> parameters = new ArrayList<Parameter>();
+    List<Parameter> parameters = new ArrayList<>();
     int endIndex = analyzeTemplateParameters(
         wiki, contents, beginIndex, tmpIndex - 1, tmpIndex, parameters,
         comments, tags);

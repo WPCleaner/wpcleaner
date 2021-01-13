@@ -64,7 +64,7 @@ class AutomaticFixingTableModel extends AbstractTableModel {
     if (data == null) {
       this.data = null;
     } else {
-      this.data = new ArrayList<AutomaticFixing>(data);
+      this.data = new ArrayList<>(data);
     }
     sortAutomaticFixing();
     fireTableDataChanged();
@@ -90,7 +90,7 @@ class AutomaticFixingTableModel extends AbstractTableModel {
       return;
     }
     if (data == null) {
-      data = new ArrayList<AutomaticFixing>();
+      data = new ArrayList<>();
     }
     data.add(element);
     sortAutomaticFixing();

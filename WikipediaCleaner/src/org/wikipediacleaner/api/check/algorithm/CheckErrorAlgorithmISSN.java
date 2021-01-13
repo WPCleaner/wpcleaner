@@ -92,7 +92,7 @@ public abstract class CheckErrorAlgorithmISSN extends CheckErrorAlgorithmBase {
     }
 
     // Split ISSN in several potential ISSN
-    List<String> issnValues = new ArrayList<String>();
+    List<String> issnValues = new ArrayList<>();
     if (issn.isTemplateParameter()) {
 
       // Basic splits
@@ -386,7 +386,7 @@ public abstract class CheckErrorAlgorithmISSN extends CheckErrorAlgorithmBase {
         WPCConfigurationStringList.ISSN_SEARCH_ENGINES);
     if ((searchEngines != null) &&
         (!searchEngines.isEmpty())) {
-      List<Actionnable> actions = new ArrayList<Actionnable>();
+      List<Actionnable> actions = new ArrayList<>();
       for (String[] searchEngine : searchEngines) {
         try {
           if (searchEngine.length > 1) {
@@ -416,7 +416,7 @@ public abstract class CheckErrorAlgorithmISSN extends CheckErrorAlgorithmBase {
         WPCConfigurationStringList.ISBN_SEARCH_ENGINES);
     if ((searchEngines != null) &&
         (!searchEngines.isEmpty())) {
-      List<Actionnable> actions = new ArrayList<Actionnable>();
+      List<Actionnable> actions = new ArrayList<>();
       for (String[] searchEngine : searchEngines) {
         try {
           if (searchEngine.length > 1) {

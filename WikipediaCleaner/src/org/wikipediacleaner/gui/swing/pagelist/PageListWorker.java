@@ -144,7 +144,7 @@ public class PageListWorker extends BasicWorker {
       boolean watchList, String message) {
     super(wikipedia, window);
     this.referencePage = referencePage;
-    this.pageList = new ArrayList<Page>();
+    this.pageList = new ArrayList<>();
     this.elementNames = elementNames;
     this.mode = mode;
     this.watchList = watchList;
@@ -160,7 +160,7 @@ public class PageListWorker extends BasicWorker {
     Object result = get();
     if (!(result instanceof Throwable)) {
       if (mode == Mode.ALL_DAB_PAGES) {
-        Set<String> set = new HashSet<String>(pageList.size());
+        Set<String> set = new HashSet<>(pageList.size());
         for (Page page : pageList) {
           set.add(page.getTitle());
         }
@@ -185,7 +185,7 @@ public class PageListWorker extends BasicWorker {
   @Override
   public Object construct() {
     try {
-      List<Page> pages = new ArrayList<Page>();
+      List<Page> pages = new ArrayList<>();
       boolean retrieveDisambiguationInformation = true;
       switch (mode) {
 
@@ -272,7 +272,7 @@ public class PageListWorker extends BasicWorker {
 
       if (retrieveDisambiguationInformation) {
         MediaWiki mw = MediaWiki.getMediaWikiAccess(this);
-        List<Page> tmpPages = new ArrayList<Page>();
+        List<Page> tmpPages = new ArrayList<>();
         for (Page tmpPage : pages) {
           if (tmpPage.isDisambiguationPage() == null) {
             tmpPages.add(tmpPage);
@@ -299,9 +299,9 @@ public class PageListWorker extends BasicWorker {
    */
   private List<Page> constructInternalPageList() {
     if (elementNames == null) {
-      return new ArrayList<Page>();
+      return new ArrayList<>();
     }
-    List<Page> pages = new ArrayList<Page>(elementNames.size());
+    List<Page> pages = new ArrayList<>(elementNames.size());
     for (String pageName : elementNames) {
       pages.add(DataManager.getPage(getWikipedia(), pageName, null, null, null));
     }
@@ -499,7 +499,7 @@ public class PageListWorker extends BasicWorker {
     }
     setText(GT._T("Checking that the templates are still missing"));
     api.retrieveInfo(wiki, tmpPages);
-    List<Page> tmpPages2 = new ArrayList<Page>();
+    List<Page> tmpPages2 = new ArrayList<>();
     for (Page tmpPage : tmpPages) {
       Boolean exists = tmpPage.isExisting();
       if (!Boolean.TRUE.equals(exists)) {

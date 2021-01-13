@@ -87,7 +87,7 @@ public class CheckErrorAlgorithm069 extends CheckErrorAlgorithmISBN {
     pageNames = new HashSet<>();
     pageNames.add("Zdroje knih");
     pageNames.add("KnižnéZdroje");
-    wiki = new ImmutablePair<Set<String>, Set<String>>(namespaceNames, pageNames);
+    wiki = new ImmutablePair<>(namespaceNames, pageNames);
     BOOK_SOURCES.put("cs", wiki);
 
     // DE
@@ -96,7 +96,7 @@ public class CheckErrorAlgorithm069 extends CheckErrorAlgorithmISBN {
     pageNames = new HashSet<>();
     pageNames.add("ISBN Suche");
     pageNames.add("ISBN-Suche");
-    wiki = new ImmutablePair<Set<String>, Set<String>>(namespaceNames, pageNames);
+    wiki = new ImmutablePair<>(namespaceNames, pageNames);
     BOOK_SOURCES.put("de", wiki);
 
     // EN
@@ -104,7 +104,7 @@ public class CheckErrorAlgorithm069 extends CheckErrorAlgorithmISBN {
     namespaceNames.add("Special");
     pageNames = new HashSet<>();
     pageNames.add("BookSources");
-    wiki = new ImmutablePair<Set<String>, Set<String>>(namespaceNames, pageNames);
+    wiki = new ImmutablePair<>(namespaceNames, pageNames);
     BOOK_SOURCES.put("en", wiki);
 
     // FR
@@ -121,7 +121,7 @@ public class CheckErrorAlgorithm069 extends CheckErrorAlgorithmISBN {
     pageNames.add("RechercheISBN");
     pageNames.add("Rechercheisbn");
     pageNames.add("Ouvrages%20de%20r%C3%A9f%C3%A9rence");
-    wiki = new ImmutablePair<Set<String>, Set<String>>(namespaceNames, pageNames);
+    wiki = new ImmutablePair<>(namespaceNames, pageNames);
     BOOK_SOURCES.put("fr", wiki);
 
     // IT
@@ -129,7 +129,7 @@ public class CheckErrorAlgorithm069 extends CheckErrorAlgorithmISBN {
     namespaceNames.add("Speciale");
     pageNames = new HashSet<>();
     pageNames.add("RicercaISBN");
-    wiki = new ImmutablePair<Set<String>, Set<String>>(namespaceNames, pageNames);
+    wiki = new ImmutablePair<>(namespaceNames, pageNames);
     BOOK_SOURCES.put("it", wiki);
 
     // NL
@@ -138,7 +138,7 @@ public class CheckErrorAlgorithm069 extends CheckErrorAlgorithmISBN {
     pageNames = new HashSet<>();
     pageNames.add("Boekbronnen");
     pageNames.add("Boekinformatie");
-    wiki = new ImmutablePair<Set<String>, Set<String>>(namespaceNames, pageNames);
+    wiki = new ImmutablePair<>(namespaceNames, pageNames);
     BOOK_SOURCES.put("nl", wiki);
   }
 

@@ -53,7 +53,7 @@ public class CheckErrorAlgorithm523 extends CheckErrorAlgorithmBase {
     }
 
     // Memorize where each single image is
-    Map<String, List<Element>> imagesMap = new HashMap<String, List<Element>>();
+    Map<String, List<Element>> imagesMap = new HashMap<>();
     List<PageElementImage> images = analysis.getImages();
     for (PageElementImage image : images) {
       boolean shouldAdd = true;
@@ -163,7 +163,7 @@ public class CheckErrorAlgorithm523 extends CheckErrorAlgorithmBase {
     if (shouldAdd) {
       List<Element> elements = imagesMap.get(imageName);
       if (elements == null) {
-        elements = new ArrayList<Element>();
+        elements = new ArrayList<>();
         imagesMap.put(imageName, elements);
       }
       elements.add(new Element(beginIndex, endIndex));

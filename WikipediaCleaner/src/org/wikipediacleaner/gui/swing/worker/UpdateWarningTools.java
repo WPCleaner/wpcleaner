@@ -149,7 +149,7 @@ public abstract class UpdateWarningTools {
    * Initialize the errors map.
    */
   public void prepareErrorsMap() {
-    this.errorsMap = new HashMap<String, List<String>>();
+    this.errorsMap = new HashMap<>();
   }
 
   /**
@@ -190,8 +190,8 @@ public abstract class UpdateWarningTools {
     manageNonEncyclopedicPages(pages);
 
     // Load talk pages and "To do" sub pages
-    Map<Page, Page> mapTalkPages = new HashMap<Page, Page>();
-    Map<Page, Page> mapTodoSubpages = new HashMap<Page, Page>();
+    Map<Page, Page> mapTalkPages = new HashMap<>();
+    Map<Page, Page> mapTodoSubpages = new HashMap<>();
     for (Page page : pages) {
       Page talkPage = page.getTalkPage();
       mapTalkPages.put(page, talkPage);
@@ -1120,7 +1120,7 @@ public abstract class UpdateWarningTools {
     }
     List<String> titles = errorsMap.get(error);
     if (titles == null) {
-      titles = new ArrayList<String>();
+      titles = new ArrayList<>();
       errorsMap.put(error, titles);
     }
     titles.add(title);
@@ -1514,7 +1514,7 @@ public abstract class UpdateWarningTools {
    * @param articles List of articles.
    */
   void setArticles(Set<String> articles) {
-    this.articles = new HashSet<String>();
+    this.articles = new HashSet<>();
     if (articles != null) {
       this.articles.addAll(articles);
     }
@@ -1525,7 +1525,7 @@ public abstract class UpdateWarningTools {
    */
   void addArticle(String article) {
     if (articles == null) {
-      articles = new HashSet<String>();
+      articles = new HashSet<>();
     }
     articles.add(article);
   }
@@ -1585,7 +1585,7 @@ public abstract class UpdateWarningTools {
     if (list == null) {
       return null;
     }
-    List<Page> sublist = new ArrayList<Page>(Math.min(max, list.size()));
+    List<Page> sublist = new ArrayList<>(Math.min(max, list.size()));
     while ((sublist.size() < max) && !list.isEmpty()) {
       Page page = list.removeFirst();
       if (talkPages || page.isArticle()) {
@@ -1624,7 +1624,7 @@ public abstract class UpdateWarningTools {
 
     public Stats() {
       analyzedPagesCount = 0;
-      updatedPages = new ArrayList<Page>();
+      updatedPages = new ArrayList<>();
     }
 
     void addAnalyzedPage(Page page) {

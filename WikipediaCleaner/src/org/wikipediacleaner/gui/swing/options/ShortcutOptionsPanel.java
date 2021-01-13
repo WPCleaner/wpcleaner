@@ -72,7 +72,7 @@ public class ShortcutOptionsPanel extends OptionsPanel {
     setBorder(BorderFactory.createTitledBorder(
         BorderFactory.createEtchedBorder(), GT._T("Shortcut options (restart needed)")));
 
-    shortcuts = new Vector<ConfigurationValueShortcut>();
+    shortcuts = new Vector<>();
 
     // Initialize constraints
     GridBagConstraints constraints = new GridBagConstraints();
@@ -285,11 +285,11 @@ public class ShortcutOptionsPanel extends OptionsPanel {
   // Managing the elements of a shortcut
   // ==========================================================================
 
-  private final List<JCheckBox> chkEnabled = new ArrayList<JCheckBox>();
-  private final List<JToggleButton> chkCtrl = new ArrayList<JToggleButton>();
-  private final List<JToggleButton> chkAlt = new ArrayList<JToggleButton>();
-  private final List<JToggleButton> chkShift = new ArrayList<JToggleButton>();
-  private final List<KeyCodeButton> btnKey = new ArrayList<KeyCodeButton>();
+  private final List<JCheckBox> chkEnabled = new ArrayList<>();
+  private final List<JToggleButton> chkCtrl = new ArrayList<>();
+  private final List<JToggleButton> chkAlt = new ArrayList<>();
+  private final List<JToggleButton> chkShift = new ArrayList<>();
+  private final List<KeyCodeButton> btnKey = new ArrayList<>();
 
   // Count columns
   private final static int columnEnabled = 0;

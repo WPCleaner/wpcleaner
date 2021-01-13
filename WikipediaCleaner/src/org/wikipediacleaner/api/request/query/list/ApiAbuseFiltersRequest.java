@@ -174,7 +174,7 @@ public class ApiAbuseFiltersRequest extends ApiListRequest {
         PROPERTY_LIST_ABUSEFILTERS);
     properties.put(PROPERTY_LIMIT, LIMIT_MAX);
     properties.put(PROPERTY_SHOW, PROPERTY_SHOW_ENABLED);
-    List<AbuseFilter> list = new ArrayList<AbuseFilter>();
+    List<AbuseFilter> list = new ArrayList<>();
     while (result.executeAbuseFilters(properties, list)) {
       //
     }

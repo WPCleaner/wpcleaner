@@ -43,7 +43,7 @@ public abstract class CheckErrorAlgorithmTOC extends CheckErrorAlgorithmBase {
    */
   protected List<PageElement> getToCs(
       PageAnalysis analysis, int beginIndex, int endIndex) {
-    List<PageElement> result = new ArrayList<PageElement>();
+    List<PageElement> result = new ArrayList<>();
 
     // Magic words
     List<PageElementMagicWord> magicWords = analysis.getMagicWords();
@@ -62,7 +62,7 @@ public abstract class CheckErrorAlgorithmTOC extends CheckErrorAlgorithmBase {
     if (templatesProp != null) {
       List<String> tmpTocTemplates = WPCConfiguration.convertPropertyToStringList(templatesProp);
       if (tmpTocTemplates != null) {
-        List<String> tocTemplates = new ArrayList<String>();
+        List<String> tocTemplates = new ArrayList<>();
         for (String tocTemplate : tmpTocTemplates) {
           tocTemplate = tocTemplate.toLowerCase();
           tocTemplate = tocTemplate.replaceAll("\\[ \\]\\+", " ");

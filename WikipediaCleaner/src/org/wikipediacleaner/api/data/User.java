@@ -57,7 +57,7 @@ public class User {
     if (groups == null) {
       this.groups = null;
     } else {
-      this.groups = new ArrayList<String>(groups);
+      this.groups = new ArrayList<>(groups);
     }
   }
 
@@ -79,7 +79,7 @@ public class User {
     if (rights == null) {
       this.rights = null;
     } else {
-      this.rights = new ArrayList<String>(rights);
+      this.rights = new ArrayList<>(rights);
     }
   }
 

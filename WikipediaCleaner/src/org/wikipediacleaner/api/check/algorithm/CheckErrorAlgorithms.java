@@ -22,8 +22,7 @@ import org.wikipediacleaner.api.constants.EnumWikipedia;
  */
 public final class CheckErrorAlgorithms {
 
-  private static Map<EnumWikipedia, List<CheckErrorAlgorithm>> algorithmsMap =
-    new HashMap<EnumWikipedia, List<CheckErrorAlgorithm>>();
+  private static Map<EnumWikipedia, List<CheckErrorAlgorithm>> algorithmsMap = new HashMap<>();
 
   /**
    * Initializes algorithms for a Wiki.
@@ -31,7 +30,7 @@ public final class CheckErrorAlgorithms {
    * @param wiki Wiki.
    */
   public static synchronized void initializeAlgorithms(EnumWikipedia wiki) {
-    List<CheckErrorAlgorithm> algorithms = new ArrayList<CheckErrorAlgorithm>(CWConfiguration.MAX_ERROR_NUMBER);
+    List<CheckErrorAlgorithm> algorithms = new ArrayList<>(CWConfiguration.MAX_ERROR_NUMBER);
     for (int i = 0; i < CWConfiguration.MAX_ERROR_NUMBER; i++) {
       int errorNumber = i + 1;
       CWConfigurationError error = wiki.getCWConfiguration().getErrorConfiguration(errorNumber);

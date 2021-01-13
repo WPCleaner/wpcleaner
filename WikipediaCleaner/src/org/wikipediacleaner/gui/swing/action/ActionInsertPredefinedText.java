@@ -168,7 +168,7 @@ public class ActionInsertPredefinedText implements ActionListener {
     if (((texts == null) || (texts.isEmpty())) &&
         ((redirectCategories == null) || (redirectCategories.isEmpty())) &&
         ((redirectTemplates == null) || (redirectTemplates.isEmpty()))) {
-      List<String> params = new ArrayList<String>();
+      List<String> params = new ArrayList<>();
       params.add(WPCConfigurationStringList.INSERT_TEXTS.getAttributeName());
       if (redirect) {
         params.add(WPCConfigurationStringList.REDIRECT_CATEGORIES.getAttributeName());
@@ -180,10 +180,10 @@ public class ActionInsertPredefinedText implements ActionListener {
     }
 
     // Group by theme if available
-    Map<String, JMenu> themeMenus = new HashMap<String, JMenu>();
+    Map<String, JMenu> themeMenus = new HashMap<>();
 
     // Create menu
-    List<JMenuItem> items = new ArrayList<JMenuItem>();
+    List<JMenuItem> items = new ArrayList<>();
     if (texts != null) {
       Configuration config = Configuration.getConfiguration();
       String userName = config.getString(null, ConfigurationValueString.ACT_AS_USER);

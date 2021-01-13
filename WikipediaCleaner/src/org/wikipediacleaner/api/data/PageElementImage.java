@@ -99,7 +99,7 @@ public class PageElementImage extends PageElement {
     int linkCount = 0;
     int externalLinkCount = 0;
     int templateCount = 0;
-    List<Parameter> parameters = new ArrayList<Parameter>();
+    List<Parameter> parameters = new ArrayList<>();
     WikiConfiguration wikiConfiguration = wikipedia.getWikiConfiguration();
     while (tmpIndex < contents.length()) {
       if ((templateCount <= 0) && (linkCount <= 0) && (contents.startsWith("]]", tmpIndex))) {

@@ -36,7 +36,7 @@ public class BotToolsWindow
 
   public final static Integer WINDOW_VERSION = Integer.valueOf(5);
 
-  public final List<BotToolsPanel> panels = new ArrayList<BotToolsPanel>();
+  public final List<BotToolsPanel> panels = new ArrayList<>();
 
   /**
    * Create and display a BotToolsWindow.

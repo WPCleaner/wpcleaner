@@ -61,7 +61,7 @@ public class ApiPagePropsRequest extends ApiPropertiesRequest {
   public void setDisambiguationStatus(Collection<Page> pages) throws APIException {
 
     // Check for pages outside the main name space
-    List<Page> tmpPages = new ArrayList<Page>();
+    List<Page> tmpPages = new ArrayList<>();
     for (Page page : pages) {
       if (page.isInMainNamespace()) {
         if (!tmpPages.contains(page)) {

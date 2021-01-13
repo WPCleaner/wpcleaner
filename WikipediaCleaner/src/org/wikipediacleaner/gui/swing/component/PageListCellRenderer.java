@@ -50,7 +50,7 @@ public class PageListCellRenderer extends JLabel implements ListCellRenderer<Pag
     setHorizontalAlignment(LEFT);
     setVerticalAlignment(CENTER);
     setBorder(new EmptyBorder(0, 3, 0, 3));
-    HashMap<TextAttribute, Boolean> missingAttributes = new HashMap<TextAttribute, Boolean>();
+    HashMap<TextAttribute, Boolean> missingAttributes = new HashMap<>();
     missingAttributes.put(TextAttribute.STRIKETHROUGH, Boolean.TRUE /*TextAttribute.STRIKETHROUGH_ON*/);
     missingFont = getFont().deriveFont(missingAttributes);
     normalFont = getFont().deriveFont(Font.PLAIN);

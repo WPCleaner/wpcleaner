@@ -100,7 +100,7 @@ public abstract class CheckErrorAlgorithmISBN extends CheckErrorAlgorithmBase {
     }
 
     // Split ISBN in several potential ISBN
-    List<String> isbnValues = new ArrayList<String>();
+    List<String> isbnValues = new ArrayList<>();
     if (isbn.isTemplateParameter()) {
 
       // Basic splits
@@ -417,7 +417,7 @@ public abstract class CheckErrorAlgorithmISBN extends CheckErrorAlgorithmBase {
         WPCConfigurationStringList.ISBN_SEARCH_ENGINES);
     if ((searchEngines != null) &&
         (!searchEngines.isEmpty())) {
-      List<Actionnable> actions = new ArrayList<Actionnable>();
+      List<Actionnable> actions = new ArrayList<>();
       for (String[] searchEngine : searchEngines) {
         try {
           if (searchEngine.length > 1) {
@@ -447,7 +447,7 @@ public abstract class CheckErrorAlgorithmISBN extends CheckErrorAlgorithmBase {
         WPCConfigurationStringList.ISSN_SEARCH_ENGINES);
     if ((searchEngines != null) &&
         (!searchEngines.isEmpty())) {
-      List<Actionnable> actions = new ArrayList<Actionnable>();
+      List<Actionnable> actions = new ArrayList<>();
       for (String[] searchEngine : searchEngines) {
         try {
           if (searchEngine.length > 1) {

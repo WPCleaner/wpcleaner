@@ -194,7 +194,7 @@ public enum WPCConfigurationStringList {
     this.generalAttribute = generalAttribute;
     this.userAttribute = userAttribute;
     if (defaultValue != null) {
-      this.defaultValue = new ArrayList<String>(defaultValue.length);
+      this.defaultValue = new ArrayList<>(defaultValue.length);
       for (String element : defaultValue) {
         this.defaultValue.add(element);
       }

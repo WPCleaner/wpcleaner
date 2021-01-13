@@ -239,7 +239,7 @@ public class ApiRevisionsRequest extends ApiPropertiesRequest {
 
     // TODO: move this to a base class ?
     if (withRedirects) {
-      List<Page> redirectPages = new ArrayList<Page>();
+      List<Page> redirectPages = new ArrayList<>();
       for (Page page : pages) {
         if (page.getRedirects().isRedirect()) {
           redirectPages.add(page);

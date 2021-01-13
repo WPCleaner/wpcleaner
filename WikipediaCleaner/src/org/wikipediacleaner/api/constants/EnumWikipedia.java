@@ -157,7 +157,7 @@ public enum EnumWikipedia {
    * @return Vector of all Wikipedia.
    */
   public static List<EnumWikipedia> getList() {
-    List<EnumWikipedia> list = new ArrayList<EnumWikipedia>(EnumWikipedia.values().length);
+    List<EnumWikipedia> list = new ArrayList<>(EnumWikipedia.values().length);
     for (EnumWikipedia e : EnumWikipedia.values()) {
       list.add(e);
     }
@@ -347,7 +347,7 @@ public enum EnumWikipedia {
     // Use categories if they are defined
     List<Page> dabCategories = config.getDisambiguationCategories();
     if ((dabCategories != null) && (dabCategories.size() > 0)) {
-      ArrayList<Page> tmpResult = new ArrayList<Page>();
+      ArrayList<Page> tmpResult = new ArrayList<>();
       for (Page dabCategory : dabCategories) {
         api.retrieveCategoryMembers(
             this, dabCategory, 0, false, Integer.MAX_VALUE);
@@ -366,7 +366,7 @@ public enum EnumWikipedia {
 
     // Use disambiguation templates
     if (disambiguationTemplates != null) {
-      ArrayList<Page> tmpResult = new ArrayList<Page>();
+      ArrayList<Page> tmpResult = new ArrayList<>();
       for (Page dabTemplate : disambiguationTemplates) {
         api.retrieveEmbeddedIn(
             this, dabTemplate,
@@ -397,7 +397,7 @@ public enum EnumWikipedia {
   public void loadDisambiguationPages(API api) throws APIException {
     try {
       List<Page> tmpPages = constuctDisambiguationPages(api);
-      HashSet<String> tmpResult = new HashSet<String>();
+      HashSet<String> tmpResult = new HashSet<>();
       for (Page page : tmpPages) {
         tmpResult.add(page.getTitle());
       }
@@ -415,7 +415,7 @@ public enum EnumWikipedia {
     if (dabPages == null) {
       return;
     }
-    HashSet<String> tmpResult = new HashSet<String>(dabPages.size());
+    HashSet<String> tmpResult = new HashSet<>(dabPages.size());
     tmpResult.addAll(dabPages);
     disambiguationPages = tmpResult;
   }

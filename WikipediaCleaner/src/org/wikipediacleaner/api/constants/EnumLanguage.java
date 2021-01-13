@@ -93,7 +93,7 @@ public enum EnumLanguage {
    * @return Vector of all languages.
    */
   public static List<EnumLanguage> getList() {
-    List<EnumLanguage> list = new ArrayList<EnumLanguage>(EnumLanguage.values().length);
+    List<EnumLanguage> list = new ArrayList<>(EnumLanguage.values().length);
     for (EnumLanguage e : EnumLanguage.values()) {
       list.add(e);
     }

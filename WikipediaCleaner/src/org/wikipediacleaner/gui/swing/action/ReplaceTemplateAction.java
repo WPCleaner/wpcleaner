@@ -112,7 +112,7 @@ public class ReplaceTemplateAction extends TextAction {
       TemplateBuilder builder = TemplateBuilder.from(template);
       boolean notFound = false;
       int paramNumber = 0;
-      List<String> parametersDone = new ArrayList<String>(parameters.size() + 1);
+      List<String> parametersDone = new ArrayList<>(parameters.size() + 1);
       while (!notFound) {
         paramNumber++;
         notFound = true;

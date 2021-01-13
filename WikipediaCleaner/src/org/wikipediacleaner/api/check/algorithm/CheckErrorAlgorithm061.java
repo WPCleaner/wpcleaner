@@ -361,7 +361,7 @@ public class CheckErrorAlgorithm061 extends CheckErrorAlgorithmBase {
    * @return List of references (tags, templates, ...).
    */
   private List<PageElement> getRefs(PageAnalysis analysis) {
-    List<PageElement> refs = new ArrayList<PageElement>();
+    List<PageElement> refs = new ArrayList<>();
 
     // Retrieve references defined by tags
     List<PageElementTag> refTags = analysis.getCompleteTags(WikiTagType.REF);

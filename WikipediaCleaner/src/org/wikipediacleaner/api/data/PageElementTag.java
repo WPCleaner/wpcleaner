@@ -169,7 +169,7 @@ public class PageElementTag extends PageElement {
     // Check for parameters
     List<Parameter> parameters = null;
     if (tmpIndex2 > tmpIndex) {
-      parameters = new ArrayList<PageElementTag.Parameter>();
+      parameters = new ArrayList<>();
       if (!analyzeParameters(contents.substring(tmpIndex, tmpIndex2 + 1), tmpIndex - index, parameters)) {
         return null;
       }

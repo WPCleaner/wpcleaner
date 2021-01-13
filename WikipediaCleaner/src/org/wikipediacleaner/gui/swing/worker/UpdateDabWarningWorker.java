@@ -112,7 +112,7 @@ public class UpdateDabWarningWorker extends UpdateWarningWorker {
         if (warningPages.isEmpty()) {
           return Integer.valueOf(0);
         }
-        List<Page> tmpWarningPages = new ArrayList<Page>(warningPages);
+        List<Page> tmpWarningPages = new ArrayList<>(warningPages);
         Collections.sort(tmpWarningPages, PageComparator.getTitleFirstComparator());
         warningPages.clear();
         warningPages.addAll(tmpWarningPages);
@@ -200,7 +200,7 @@ public class UpdateDabWarningWorker extends UpdateWarningWorker {
    */
   @Override
   protected void listWarningPages(UpdateWarningTools tools) throws APIException {
-    Map<String, Page> tmpWarningPages = new HashMap<String, Page>();
+    Map<String, Page> tmpWarningPages = new HashMap<>();
 
     // Retrieve talk pages including a warning
     retrieveArticlesWithWarning(

@@ -179,7 +179,7 @@ public class UpdateISBNWarningWorker extends UpdateWarningWorker {
    */
   @Override
   protected void listWarningPages(UpdateWarningTools tools) throws APIException {
-    Map<String, Page> tmpWarningPages = new HashMap<String, Page>();
+    Map<String, Page> tmpWarningPages = new HashMap<>();
 
     // Retrieve talk pages including a warning
     retrieveArticlesWithWarning(
@@ -245,7 +245,7 @@ public class UpdateISBNWarningWorker extends UpdateWarningWorker {
 
       // Compute synthesis
       StringBuilder buffer = new StringBuilder();
-      List<String> keys = new ArrayList<String>(errors.keySet());
+      List<String> keys = new ArrayList<>(errors.keySet());
       Collections.sort(keys);
       for (String key : keys) {
         List<String> values = errors.get(key);

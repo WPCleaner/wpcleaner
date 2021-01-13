@@ -169,7 +169,7 @@ public class MonitorRCWindow extends BasicWindow implements RecentChangesListene
     constraints.gridy++;
 
     updateComponentState();
-    monitoredPages = new HashMap<String, Long>();
+    monitoredPages = new HashMap<>();
     createDabWarning = new UpdateDabWarningTools(getWikipedia(), this, true);
     updateDabWarning = new UpdateDabWarningTools(getWikipedia(), this, false);
     API api = APIFactory.getAPI();
@@ -208,7 +208,7 @@ public class MonitorRCWindow extends BasicWindow implements RecentChangesListene
     modelRC.addRecentChanges(newRC);
 
     // Remove old changes
-    List<RecentChange> filteredNewRC = new ArrayList<RecentChange>();
+    List<RecentChange> filteredNewRC = new ArrayList<>();
     for (RecentChange rc : newRC) {
       if (currentTime.getTime() < rc.getTimestamp().getTime() + delayForNew) {
         filteredNewRC.add(rc);
@@ -260,16 +260,16 @@ public class MonitorRCWindow extends BasicWindow implements RecentChangesListene
 
     // Check if interesting recent changes are old enough
     List<RecentChange> interestingRC = modelRCInteresting.getRecentChanges();
-    List<Page> pages = new ArrayList<Page>();
-    Map<String, String> creators = new HashMap<String, String>();
-    Map<String, List<String>> modifiers = new HashMap<String, List<String>>();
+    List<Page> pages = new ArrayList<>();
+    Map<String, String> creators = new HashMap<>();
+    Map<String, List<String>> modifiers = new HashMap<>();
     while (!interestingRC.isEmpty()) {
 
       // Retrieve synthetic information about recent changes for one title
       List<RecentChange> listRC = extractRecentChanges(interestingRC);
       String title = listRC.get(0).getTitle();
       String creator = null;
-      List<String> pageModifiers = new ArrayList<String>();
+      List<String> pageModifiers = new ArrayList<>();
       boolean oldEnough = true;
       boolean redirect = false;
       for (int rcNum = listRC.size(); rcNum > 0; rcNum--) {
@@ -331,7 +331,7 @@ public class MonitorRCWindow extends BasicWindow implements RecentChangesListene
     if ((allRC == null) || (allRC.isEmpty())) {
       return null;
     }
-    List<RecentChange> result = new ArrayList<RecentChange>();
+    List<RecentChange> result = new ArrayList<>();
     String title = allRC.get(0).getTitle();
     Iterator<RecentChange> itRC = allRC.iterator();
     while (itRC.hasNext()) {

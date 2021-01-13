@@ -60,7 +60,7 @@ public class PageListAnalyzeListener extends MouseAdapter {
     ArrayList<Page> knownPages = null;
     if ((pageWindow != null) && (pageWindow.getPage() != null)) {
       Page basePage = pageWindow.getPage();
-      knownPages = new ArrayList<Page>(1);
+      knownPages = new ArrayList<>(1);
       knownPages.add(basePage);
       for (Page backLink : basePage.getAllLinksToPage()) {
         PageRedirect redirects = backLink.getRedirects();

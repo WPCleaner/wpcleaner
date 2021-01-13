@@ -59,7 +59,7 @@ public class ApiXmlRevisionsResult extends ApiXmlPropertiesResult implements Api
       updateRedirect(root, pages);
 
       // Retrieving normalization information
-      Map<String, String> normalization = new HashMap<String, String>();
+      Map<String, String> normalization = new HashMap<>();
       retrieveNormalization(root, normalization);
 
       // Retrieve pages

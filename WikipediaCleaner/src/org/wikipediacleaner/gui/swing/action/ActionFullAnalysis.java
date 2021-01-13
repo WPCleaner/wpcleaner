@@ -245,7 +245,7 @@ public class ActionFullAnalysis implements ActionListener {
     // Analyze a list of selected pages
     if (list != null) {
       List<? extends Object> selection = list.getSelectedValuesList();
-      List<Page> pages = new ArrayList<Page>();
+      List<Page> pages = new ArrayList<>();
       if (selection != null) {
         for (Object object : selection) {
           if (object instanceof Page) {

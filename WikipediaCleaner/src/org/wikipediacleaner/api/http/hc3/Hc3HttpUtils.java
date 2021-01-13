@@ -110,7 +110,7 @@ public class Hc3HttpUtils extends HttpUtils {
 
     // Manager query string
     StringBuilder debugUrl = (DEBUG_URL) ? new StringBuilder("GET  " + url) : null;
-    List<NameValuePair> params = new ArrayList<NameValuePair>();
+    List<NameValuePair> params = new ArrayList<>();
     if (properties != null) {
       boolean first = true;
       Iterator<Map.Entry<String, String>> iter = properties.entrySet().iterator();
@@ -158,7 +158,7 @@ public class Hc3HttpUtils extends HttpUtils {
 
     // Manager query string
     StringBuilder debugUrl = (DEBUG_URL) ? new StringBuilder("HEAD " + url) : null;
-    List<NameValuePair> params = new ArrayList<NameValuePair>();
+    List<NameValuePair> params = new ArrayList<>();
     if (properties != null) {
       boolean first = true;
       Iterator<Map.Entry<String, String>> iter = properties.entrySet().iterator();

@@ -79,7 +79,7 @@ public class ApiLintErrorsRequest extends ApiListRequest {
     if (namespace != null) {
       properties.put(PROPERTY_NAMESPACE, namespace.toString());
     }
-    List<Page> list = new ArrayList<Page>();
+    List<Page> list = new ArrayList<>();
     while (result.executeLinterCategory(
         properties, list, category, withTemplates) &&
         (list.size() < maxSize)) {

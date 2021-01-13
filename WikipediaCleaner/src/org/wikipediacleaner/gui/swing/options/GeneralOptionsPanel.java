@@ -286,7 +286,7 @@ public class GeneralOptionsPanel extends OptionsPanel {
     plafPanel.add(radPlafUser);
     plafGroup.add(radPlafUser);
     setButtonGroup(ConfigurationValueInteger.PLAF_TYPE, plafGroup);
-    Vector<String> plaf = new Vector<String>();
+    Vector<String> plaf = new Vector<>();
     for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
       plaf.add(info.getName());
     }

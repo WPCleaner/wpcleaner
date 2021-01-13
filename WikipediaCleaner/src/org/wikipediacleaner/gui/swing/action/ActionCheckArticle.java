@@ -232,7 +232,7 @@ public class ActionCheckArticle implements ActionListener {
 
     // Analyze a list of selected pages
     if (list != null) {
-      List<Page> pages = new ArrayList<Page>();
+      List<Page> pages = new ArrayList<>();
       for (Object element : list.getSelectedValuesList()) {
         if (element instanceof Page) {
           pages.add((Page) element);

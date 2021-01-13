@@ -37,7 +37,7 @@ public class OptionsWindow
 
   public final static Integer WINDOW_VERSION = Integer.valueOf(5);
 
-  public final List<OptionsPanel> panels = new ArrayList<OptionsPanel>();
+  public final List<OptionsPanel> panels = new ArrayList<>();
 
   private JButton buttonApply;
   private JButton buttonCancel;

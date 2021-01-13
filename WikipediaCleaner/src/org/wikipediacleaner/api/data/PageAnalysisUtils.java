@@ -232,7 +232,7 @@ public class PageAnalysisUtils {
               (Page.areSameTitle(link.getTitle(), internalLink.getLink()))) {
             List<String> listAnchors = anchors.get(link);
             if (listAnchors == null) {
-              listAnchors = new ArrayList<String>();
+              listAnchors = new ArrayList<>();
               anchors.put(link, listAnchors);
             }
             if (!listAnchors.contains(fullAnchor)) {
@@ -261,7 +261,7 @@ public class PageAnalysisUtils {
 
     // Analyze hierarchy of titles
     List<PageElementTitle> titles = pageAnalysis.getTitles();
-    List<PageElementTitle> currentTitles = new ArrayList<PageElementTitle>();
+    List<PageElementTitle> currentTitles = new ArrayList<>();
     for (PageElementTitle title : titles) {
       if (title.getBeginIndex() < position) {
         while ((!currentTitles.isEmpty()) &&

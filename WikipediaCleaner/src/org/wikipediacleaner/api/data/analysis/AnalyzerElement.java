@@ -26,7 +26,7 @@ abstract class AnalyzerElement {
    * Creation of a content analyzer.
    */
   AnalyzerElement(List<Class> managedClasses) {
-    this.managedClasses = (managedClasses != null) ? managedClasses : new ArrayList<Class>();
+    this.managedClasses = (managedClasses != null) ? managedClasses : new ArrayList<>();
   }
 
   /**

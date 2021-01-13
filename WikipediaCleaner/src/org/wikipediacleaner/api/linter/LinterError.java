@@ -55,7 +55,7 @@ public class LinterError extends ContentsInterval {
     super(beginIndex, endIndex);
     this.page = page;
     this.type = type;
-    this.parameters = (parameters != null) ? new HashMap<String, String>(parameters) : null;
+    this.parameters = (parameters != null) ? new HashMap<>(parameters) : null;
     this.multiPartTemplateBlock = multiPartTemplateBlock;
     this.templateName = templateName;
   }

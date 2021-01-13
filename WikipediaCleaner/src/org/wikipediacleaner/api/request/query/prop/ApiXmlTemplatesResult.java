@@ -117,7 +117,7 @@ public class ApiXmlTemplatesResult extends ApiXmlPropertiesResult implements Api
       Iterator<Element> iter = results.iterator();
       XPathExpression<Element> xpaTemplates = XPathFactory.instance().compile(
           "templates/tl", Filters.element());
-      List<Page> tmpPages = new ArrayList<Page>();
+      List<Page> tmpPages = new ArrayList<>();
       while (iter.hasNext()) {
         Element currentNode = iter.next();
         String title = currentNode.getAttributeValue("title");

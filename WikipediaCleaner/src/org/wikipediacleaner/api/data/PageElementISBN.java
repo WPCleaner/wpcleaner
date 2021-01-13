@@ -66,7 +66,7 @@ public class PageElementISBN extends PageElement {
    */
   public static List<PageElementISBN> analyzePage(
       PageAnalysis analysis) {
-    List<PageElementISBN> isbns = new ArrayList<PageElementISBN>();
+    List<PageElementISBN> isbns = new ArrayList<>();
 
     // Configuration
     WPCConfiguration config = analysis.getWPCConfiguration();
@@ -708,7 +708,7 @@ public class PageElementISBN extends PageElement {
    * @return List of possible ISBN.
    */
   public List<String> getCorrectISBN() {
-    List<String> result = new ArrayList<String>();
+    List<String> result = new ArrayList<>();
     String prefix = isTemplateParameter() ? "" : "ISBN ";
 
     // Prefix outside the template

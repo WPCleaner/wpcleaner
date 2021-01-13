@@ -208,7 +208,7 @@ public class PageElementISSNConfiguration {
             listParams = new ArrayList<>();
             ignoreTemplates.put(templateName, listParams);
           }
-          listParams.add(new ImmutablePair<String, String>(paramName, paramValue));
+          listParams.add(new ImmutablePair<>(paramName, paramValue));
         }
       }
     }

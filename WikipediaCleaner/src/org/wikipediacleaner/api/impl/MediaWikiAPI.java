@@ -183,7 +183,7 @@ public class MediaWikiAPI implements API {
   /**
    * Time of last edit.
    */
-  private LinkedList<Long> lastEditTimes = new LinkedList<Long>();
+  private LinkedList<Long> lastEditTimes = new LinkedList<>();
   private final Object editLock = new Object();
 
   /**
@@ -250,7 +250,7 @@ public class MediaWikiAPI implements API {
       }
 
       // Retrieve contents
-      List<Page> pages = new ArrayList<Page>();
+      List<Page> pages = new ArrayList<>();
       pages.add(page);
       if (userConfigPage != null) {
         pages.add(userConfigPage);
@@ -1113,7 +1113,7 @@ public class MediaWikiAPI implements API {
     ApiLinksRequest request = new ApiLinksRequest(wiki, result);
     boolean useDisambig = wiki.getConfiguration().getBoolean(
         WPCConfigurationBoolean.DAB_USE_DISAMBIG_MAGIC_WORD);
-    List<Page> redirections = redirects ? new ArrayList<Page>() : null;
+    List<Page> redirections = redirects ? new ArrayList<>() : null;
     request.loadLinks(page, namespace, knownPages, redirections, useDisambig);
 
     // TODO: Better management of redirections (class)
@@ -1586,8 +1586,7 @@ public class MediaWikiAPI implements API {
   /**
    * Recent changes manager.
    */
-  private final Map<EnumWikipedia, RecentChangesManager> rcManagers =
-      new Hashtable<EnumWikipedia, RecentChangesManager>();
+  private final Map<EnumWikipedia, RecentChangesManager> rcManagers = new Hashtable<>();
 
   /**
    * Adds a <code>RecentChangesListener</code> to the API.
@@ -1637,7 +1636,7 @@ public class MediaWikiAPI implements API {
   private Map<String, String> getProperties(
       String action,
       boolean newApi) {
-    Map<String, String> properties = new HashMap<String, String>();
+    Map<String, String> properties = new HashMap<>();
     properties.put(newApi ? "action" : "what", action);
     properties.put("format", "xml");
     return properties;

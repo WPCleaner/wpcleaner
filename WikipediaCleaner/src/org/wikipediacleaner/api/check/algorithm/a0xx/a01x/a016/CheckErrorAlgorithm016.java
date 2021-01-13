@@ -119,7 +119,7 @@ public class CheckErrorAlgorithm016 extends CheckErrorAlgorithmBase {
         if (begin > beginArea) {
           begin = Math.max(index - Character.charCount(contents.codePointBefore(index)), 0);
         }
-        List<Integer> controls = new ArrayList<Integer>();
+        List<Integer> controls = new ArrayList<>();
         controls.add(Integer.valueOf(codePoint));
         int end = index + Character.charCount(codePoint);
         while ((end < endArea) &&
@@ -142,7 +142,7 @@ public class CheckErrorAlgorithm016 extends CheckErrorAlgorithmBase {
           }
         }
         StringBuilder replacementB = new StringBuilder();
-        List<String> otherReplacements = new ArrayList<String>();
+        List<String> otherReplacements = new ArrayList<>();
         boolean unsafeCharacter = false;
         boolean checkUnsafe = false;
         boolean unsafeInRedirect = false;

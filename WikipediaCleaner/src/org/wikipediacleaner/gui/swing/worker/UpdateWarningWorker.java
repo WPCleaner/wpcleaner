@@ -68,7 +68,7 @@ public abstract class UpdateWarningWorker extends BasicWorker {
       EnumWikipedia wiki, BasicWindow window,
       String start, boolean simulation) {
     super(wiki, window);
-    this.warningPages = new LinkedList<Page>();
+    this.warningPages = new LinkedList<>();
     this.useList = false;
     this.start = (start != null) ? start.trim() : "";
     this.contentsAvailable = false;
@@ -88,7 +88,7 @@ public abstract class UpdateWarningWorker extends BasicWorker {
       List<Page> pages, boolean contentsAvailable,
       boolean automaticEdit) {
     super(wiki, window);
-    this.warningPages = new LinkedList<Page>(pages);
+    this.warningPages = new LinkedList<>(pages);
     this.useList = true;
     this.start = "";
     this.contentsAvailable = contentsAvailable;
@@ -182,7 +182,7 @@ public abstract class UpdateWarningWorker extends BasicWorker {
     CheckWiki cw = APIFactory.getCheckWiki();
     EnumWikipedia wiki = getWikipedia();
     CheckErrorAlgorithm algorithm = CheckErrorAlgorithms.getAlgorithm(wiki, errorNumber);
-    List<AlgorithmError> errors = new ArrayList<AlgorithmError>();
+    List<AlgorithmError> errors = new ArrayList<>();
     try {
       cw.retrievePages(algorithm, 10000, wiki, errors);
       for (AlgorithmError error: errors) {

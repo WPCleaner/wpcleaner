@@ -39,7 +39,7 @@ public class GoToExternalRenderer extends AbstractCellEditor implements
    * Constructor.
    */
   public GoToExternalRenderer() {
-    buttons = new HashMap<Object, JButton>();
+    buttons = new HashMap<>();
   }
 
   /**

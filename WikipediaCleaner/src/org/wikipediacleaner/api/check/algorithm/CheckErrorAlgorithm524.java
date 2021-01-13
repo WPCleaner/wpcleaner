@@ -70,8 +70,8 @@ public class CheckErrorAlgorithm524 extends CheckErrorAlgorithmBase {
     if ((templates == null) || templates.isEmpty()) {
       return false;
     }
-    HashMap<String, ParameterInfo> names = new HashMap<String, ParameterInfo>();
-    List<ParameterInfo> duplicates = new ArrayList<ParameterInfo>();
+    HashMap<String, ParameterInfo> names = new HashMap<>();
+    List<ParameterInfo> duplicates = new ArrayList<>();
     boolean result = false;
     String contents = analysis.getContents();
     for (PageElementTemplate template : templates) {

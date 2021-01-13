@@ -42,7 +42,7 @@ public class PageElementExternalLink extends PageElement {
 
   private final static String IN_TEMPLATES_SEPARATORS = OUTSIDE_TEMPLATE_SEPARATORS + "|}";
 
-  private final static List<String> privateProtocols = new ArrayList<String>();
+  private final static List<String> privateProtocols = new ArrayList<>();
 
   static {
     privateProtocols.add("http://");

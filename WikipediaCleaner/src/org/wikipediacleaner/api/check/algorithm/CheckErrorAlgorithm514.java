@@ -61,7 +61,7 @@ public class CheckErrorAlgorithm514 extends CheckErrorAlgorithmBase {
     if (tags == null) {
       return result;
     }
-    Map<String, Set<String>> names = new HashMap<String, Set<String>>();
+    Map<String, Set<String>> names = new HashMap<>();
     for (PageElementTag tag : tags) {
       if (!tag.isFullTag() && !tag.isEndTag() && tag.isComplete()) {
         String value = analysis.getContents().substring(tag.getValueBeginIndex(), tag.getValueEndIndex());
@@ -71,7 +71,7 @@ public class CheckErrorAlgorithm514 extends CheckErrorAlgorithmBase {
             String groupValue = tag.getGroupOfRef(analysis);
             Set<String> set = names.get(groupValue);
             if (set == null) {
-              set = new HashSet<String>();
+              set = new HashSet<>();
               names.put(groupValue, set);
             }
             String nameValue = nameParam.getTrimmedValue();

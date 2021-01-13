@@ -44,7 +44,7 @@ public class TextProviderImageDescription implements TextProvider {
    */
   @Override
   public Collection<String> getTexts() {
-    Collection<String> result = new ArrayList<String>();
+    Collection<String> result = new ArrayList<>();
     if (image != null) {
       try {
         API api = APIFactory.getAPI();

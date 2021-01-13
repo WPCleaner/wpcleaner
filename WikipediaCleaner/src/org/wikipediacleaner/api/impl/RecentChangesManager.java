@@ -35,7 +35,7 @@ class RecentChangesManager {
   /**
    * Listeners.
    */
-  private final List<RecentChangesListener> listeners = new ArrayList<RecentChangesListener>();
+  private final List<RecentChangesListener> listeners = new ArrayList<>();
 
   /**
    * Runnabel for querying recent changes.

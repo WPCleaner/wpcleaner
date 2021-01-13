@@ -169,7 +169,7 @@ public class CheckErrorAlgorithm067 extends CheckErrorAlgorithmBase {
           // Search for general abbreviations
           int beginRefIndex = firstTag.getBeginIndex();
           int firstAbbreviationIndex = beginRefIndex;
-          List<String[]> generalAbbreviationFound = new ArrayList<String[]>();
+          List<String[]> generalAbbreviationFound = new ArrayList<>();
           if ((punctuationFoundBefore && (generalAbbreviations != null))) {
             for (String[] abbreviation : generalAbbreviations) {
               if ((abbreviation != null) &&

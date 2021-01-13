@@ -62,7 +62,7 @@ public class AlgorithmError {
       perf = Performance.getInstance("CheckError.analyzeErrors");
       perf.printStart();
     }
-    List<CheckErrorPage> errorsFound = new ArrayList<CheckErrorPage>();
+    List<CheckErrorPage> errorsFound = new ArrayList<>();
     if ((algorithms != null) &&
         (pageAnalysis != null) &&
         (pageAnalysis.getContents() != null)) {
@@ -70,7 +70,7 @@ public class AlgorithmError {
         if ((algorithm != null) &&
             (algorithm.isAvailable()) &&
             (CWConfigurationError.isPriorityActive(algorithm.getPriority()))) {
-          List<CheckErrorResult> results = new ArrayList<CheckErrorResult>();
+          List<CheckErrorResult> results = new ArrayList<>();
           boolean errorFound = false;
           int errorNumber = algorithm.getErrorNumber();
           PageAnalysis.Result result = pageAnalysis.getCheckWikiErrors(errorNumber);
@@ -120,7 +120,7 @@ public class AlgorithmError {
     }
     CheckErrorPage errorPage = new CheckErrorPage(pageAnalysis.getPage(), algorithm);
     boolean errorFound = false;
-    List<CheckErrorResult> errorsFound = new ArrayList<CheckErrorResult>();
+    List<CheckErrorResult> errorsFound = new ArrayList<>();
     int errorNumber = algorithm.getErrorNumber();
     PageAnalysis.Result result = pageAnalysis.getCheckWikiErrors(errorNumber);
     if (result != null) {
@@ -242,7 +242,7 @@ public class AlgorithmError {
       try {
         // Read all lines
         reader = new BufferedReader(new InputStreamReader(stream, "UTF-8"));
-        ArrayList<String> lines = new ArrayList<String>();
+        ArrayList<String> lines = new ArrayList<>();
         String line = null;
         while ((line = reader.readLine()) != null) {
           lines.add(line);
@@ -358,7 +358,7 @@ public class AlgorithmError {
     this.wikipedia = wikipedia;
     this.algorithm = CheckErrorAlgorithms.getAlgorithm(wikipedia, errorNumber);
     this.errorNumber = errorNumber;
-    this.errors = new ArrayList<Page>();
+    this.errors = new ArrayList<>();
   }
   
   /**

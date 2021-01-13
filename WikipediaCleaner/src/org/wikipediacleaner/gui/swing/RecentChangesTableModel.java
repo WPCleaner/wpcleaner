@@ -64,7 +64,7 @@ public class RecentChangesTableModel extends AbstractTableModel {
     super();
     this.timestampFormat = new SimpleDateFormat("HH:mm:ss");
     this.maxChanges = 500;
-    this.recentChanges = new LinkedList<RecentChange>();
+    this.recentChanges = new LinkedList<>();
     if (recentChanges != null) {
       this.recentChanges.addAll(recentChanges);
     }
@@ -75,7 +75,7 @@ public class RecentChangesTableModel extends AbstractTableModel {
    * @return List of all recent changes.
    */
   public List<RecentChange> getRecentChanges() {
-    List<RecentChange> result = new ArrayList<RecentChange>(recentChanges.size());
+    List<RecentChange> result = new ArrayList<>(recentChanges.size());
     result.addAll(recentChanges);
     return result;
   }

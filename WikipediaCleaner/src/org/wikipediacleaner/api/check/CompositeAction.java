@@ -27,7 +27,7 @@ public class CompositeAction implements Actionnable {
    * @param name Action name.
    */
   public CompositeAction(String name) {
-    this(name, new ArrayList<Actionnable>());
+    this(name, new ArrayList<>());
   }
 
   /**

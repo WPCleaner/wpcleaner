@@ -109,13 +109,13 @@ public class UpdateISSNWarningTools extends UpdateWarningTools {
     }
 
     // Prepare list of algorithms
-    List<CheckErrorAlgorithm> algorithms = new ArrayList<CheckErrorAlgorithm>();
+    List<CheckErrorAlgorithm> algorithms = new ArrayList<>();
     algorithms.add(CheckErrorAlgorithms.getAlgorithm(wiki, 106)); // Incorrect syntax
     algorithms.add(CheckErrorAlgorithms.getAlgorithm(wiki, 107)); // Wrong length
     algorithms.add(CheckErrorAlgorithms.getAlgorithm(wiki, 108)); // Wrong checksum
 
     // Retrieve list of errors
-    List<CheckErrorResult> errorResults = new ArrayList<CheckErrorResult>();
+    List<CheckErrorResult> errorResults = new ArrayList<>();
     for (CheckErrorAlgorithm algorithm : algorithms) {
       int errorNumber = algorithm.getErrorNumber();
       if (CheckErrorAlgorithms.isAlgorithmActive(wiki, errorNumber) &&
@@ -130,7 +130,7 @@ public class UpdateISSNWarningTools extends UpdateWarningTools {
     Collections.sort(errorResults);
 
     // Compute list of elements for the warning
-    List<String> elements = new ArrayList<String>();
+    List<String> elements = new ArrayList<>();
     int pos = 0;
     while (pos < errorResults.size()) {
       CheckErrorResult errorResult = errorResults.get(pos);
@@ -237,7 +237,7 @@ public class UpdateISSNWarningTools extends UpdateWarningTools {
    */
   @Override
   protected String getWarningComment(Collection<String> elements) {
-    Collection<String> issns = new ArrayList<String>();
+    Collection<String> issns = new ArrayList<>();
     int i = 0;
     for (String element : elements) {
       if (i % 2 == 0) {

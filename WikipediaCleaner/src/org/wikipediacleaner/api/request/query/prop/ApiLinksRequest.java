@@ -67,8 +67,8 @@ public class ApiLinksRequest extends ApiPropertiesRequest {
       properties.put(PROPERTY_CONTINUE, PROPERTY_CONTINUE_DEFAULT);
       properties.put(PROPERTY_LIMIT, LIMIT_MAX);
       properties.put(PROPERTY_TITLES, constructListTitles(splitPages));
-      Map<String, List<Page>> lists = new HashMap<String, List<Page>>();
-      Map<String, String> normalization = new HashMap<String, String>();
+      Map<String, List<Page>> lists = new HashMap<>();
+      Map<String, String> normalization = new HashMap<>();
       while (result.executeLinks(properties, lists, normalization)) {
         //
       }
@@ -120,7 +120,7 @@ public class ApiLinksRequest extends ApiPropertiesRequest {
     }
     properties.put(PROPERTY_TITLES, page.getTitle());
     properties.put(GENERATOR_PREFIX + PROPERTY_LIMIT, LIMIT_MAX);
-    List<Page> links = new ArrayList<Page>();
+    List<Page> links = new ArrayList<>();
     while (result.executeLinks(properties, links, knownPages, null, redirects, disambig)) {
       //
     }

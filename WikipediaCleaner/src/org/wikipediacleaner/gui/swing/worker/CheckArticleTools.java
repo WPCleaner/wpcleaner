@@ -44,7 +44,7 @@ public class CheckArticleTools {
 
   public CheckArticleTools(EnumWikipedia wiki) {
     this.wiki = wiki;
-    reports = new ArrayList<CheckArticleReport>();
+    reports = new ArrayList<>();
   }
 
   // ==========================================================================
@@ -105,8 +105,8 @@ public class CheckArticleTools {
 
     // Check the existence of TemplateData blocks for every template
     CheckArticleElement element = step.setCurrentElement(GT._T("Existence of {0} blocks", "TemplateData"));
-    Map<String, TemplateData> templateDataMap = new HashMap<String, TemplateData>();
-    Map<String, TemplateData> backupTemplateDataMap = new HashMap<String, TemplateData>();
+    Map<String, TemplateData> templateDataMap = new HashMap<>();
+    Map<String, TemplateData> backupTemplateDataMap = new HashMap<>();
     for (PageElementTemplate template : templates) {
       String templateName = template.getTemplateName();
       if (!templateDataMap.containsKey(templateName)) {
@@ -210,7 +210,7 @@ public class CheckArticleTools {
       String aliases = listAliases(param);
 
       // Find parameters matching the TemplateData parameter.
-      List<PageElementTemplate.Parameter> parameters = new ArrayList<PageElementTemplate.Parameter>();
+      List<PageElementTemplate.Parameter> parameters = new ArrayList<>();
       for (int i = 0; i < template.getParameterCount(); i++) {
         PageElementTemplate.Parameter parameter = template.getParameter(i);
         if (param.isPossibleName(parameter.getComputedName())) {
@@ -459,7 +459,7 @@ public class CheckArticleTools {
               page.getAnalysis(contents, false) :
               page.getAnalysis(page.getContents(), false)) :
           null;
-      this.steps = new ArrayList<CheckArticleTools.CheckArticleStep>();
+      this.steps = new ArrayList<>();
     }
 
     /**
@@ -524,7 +524,7 @@ public class CheckArticleTools {
      */
     public CheckArticleStep(String title) {
       this.title = title;
-      this.elements = new ArrayList<CheckArticleElement>();
+      this.elements = new ArrayList<>();
     }
 
     /**
@@ -593,7 +593,7 @@ public class CheckArticleTools {
      */
     public CheckArticleElement(String title) {
       this.title = title;
-      this.warnings = new ArrayList<String>();
+      this.warnings = new ArrayList<>();
     }
 
     /**

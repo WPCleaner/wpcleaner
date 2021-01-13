@@ -73,7 +73,7 @@ public class TemplateMatcher1LT extends TemplateMatcher {
    */
   @Override
   public List<String> getReplacements(Page page, PageElementTemplate template) {
-    List<String> replacements = new ArrayList<String>();
+    List<String> replacements = new ArrayList<>();
     if (!isGood()) {
       replacements.add(GT._T(
           "Replace parameter {0} with {1}",

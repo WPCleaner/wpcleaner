@@ -170,7 +170,7 @@ public class ApiAbuseLogRequest extends ApiListRequest {
       String formattedDate = df.format(new Date(calendar.getTimeInMillis()));
       properties.put(PROPERTY_END, formattedDate);
     }
-    List<Page> list = new ArrayList<Page>();
+    List<Page> list = new ArrayList<>();
     while (result.executeAbuseLog(properties, list)) {
       //
     }

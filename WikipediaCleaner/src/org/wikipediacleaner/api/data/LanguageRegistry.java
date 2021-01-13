@@ -90,7 +90,7 @@ public class LanguageRegistry {
    * @return List of all scripts available for the specified language.
    */
   public List<LanguageRegistry.Script> getScripts(LanguageRegistry.Language language) {
-    List<LanguageRegistry.Script> tmpScripts = new ArrayList<LanguageRegistry.Script>(scripts.size());
+    List<LanguageRegistry.Script> tmpScripts = new ArrayList<>(scripts.size());
     for (LanguageRegistry.Script script : scripts) {
       if ((language == null) ||
           (language.getSuppressScript() == null) ||
@@ -145,7 +145,7 @@ public class LanguageRegistry {
    * @return List of all variants.
    */
   public List<LanguageRegistry.Variant> getVariants(String prefix) {
-    List<LanguageRegistry.Variant> tmpVariants = new ArrayList<LanguageRegistry.Variant>();
+    List<LanguageRegistry.Variant> tmpVariants = new ArrayList<>();
     for (LanguageRegistry.Variant variant : variants) {
       if ((prefix == null) ||
           (variant.isPossibleForPrefix(prefix))) {
@@ -187,13 +187,13 @@ public class LanguageRegistry {
         BufferedReader reader = new BufferedReader(new InputStreamReader(
             new GZIPInputStream(url.openStream()), "UTF8"));
 
-        List<LanguageRegistry.Language> tmpLanguages = new ArrayList<LanguageRegistry.Language>();
-        List<LanguageRegistry.Script> tmpScripts = new ArrayList<LanguageRegistry.Script>();
-        List<LanguageRegistry.Region> tmpRegions = new ArrayList<LanguageRegistry.Region>();
-        List<LanguageRegistry.Variant> tmpVariants = new ArrayList<LanguageRegistry.Variant>();
+        List<LanguageRegistry.Language> tmpLanguages = new ArrayList<>();
+        List<LanguageRegistry.Script> tmpScripts = new ArrayList<>();
+        List<LanguageRegistry.Region> tmpRegions = new ArrayList<>();
+        List<LanguageRegistry.Variant> tmpVariants = new ArrayList<>();
         String line = null;
         while ((line = reader.readLine()) != null) {
-          List<String> lines = new ArrayList<String>();
+          List<String> lines = new ArrayList<>();
           while ((line != null) && (!"%%".equals(line.trim()))) {
             lines.add(line);
             line = reader.readLine();
@@ -511,7 +511,7 @@ public class LanguageRegistry {
      */
     Variant(String code) {
       super(code);
-      this.prefixes = new ArrayList<String>();
+      this.prefixes = new ArrayList<>();
     }
 
     /**

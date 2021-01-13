@@ -82,7 +82,7 @@ public class PageUtilities {
     if ((parameters == null) || (parameters.length == 0)) {
       return null;
     }
-    List<TemplateParameter> result = new ArrayList<TemplateParameter>(parameters.length);
+    List<TemplateParameter> result = new ArrayList<>(parameters.length);
     int currentParam = 0;
     for (int param = 0; param < parameters.length; param++) {
       // Analyze each parameter

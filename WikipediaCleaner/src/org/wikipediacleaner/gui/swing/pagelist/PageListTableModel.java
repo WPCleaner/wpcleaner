@@ -123,7 +123,7 @@ public class PageListTableModel extends AbstractTableModel {
    */
   public List<Page> getPages(int[] rows) {
     if ((rows != null) && (rows.length > 0)) {
-      List<Page> result = new ArrayList<Page>();
+      List<Page> result = new ArrayList<>();
       for (int i = 0; i < rows.length; i++) {
         result.add(pages.get(rows[i]));
       }

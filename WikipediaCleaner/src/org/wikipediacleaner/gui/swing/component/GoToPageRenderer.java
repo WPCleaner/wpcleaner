@@ -45,7 +45,7 @@ public class GoToPageRenderer extends AbstractCellEditor implements
    * @param wiki Wiki.
    */
   public GoToPageRenderer(EnumWikipedia wiki) {
-    buttons = new HashMap<Object, JButton>();
+    buttons = new HashMap<>();
     this.wiki = wiki;
   }
 

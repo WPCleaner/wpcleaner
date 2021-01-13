@@ -52,7 +52,7 @@ public class TextProviderUrlTitle implements TextProvider {
   @Override
   public Collection<String> getTexts() {
     log.fine("IN");
-    Collection<String> result = new ArrayList<String>();
+    Collection<String> result = new ArrayList<>();
     if (url != null) {
       GetMethod method = null;
       InputStream is = null;

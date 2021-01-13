@@ -101,7 +101,7 @@ public class ApiCategoriesRequest extends ApiPropertiesRequest {
     properties.put(PROPERTY_CONTINUE, PROPERTY_CONTINUE_DEFAULT);
     properties.put(PROPERTY_LIMIT, LIMIT_MAX);
     properties.put(PROPERTY_TITLES, page.getTitle());
-    List<Page> list = new ArrayList<Page>();
+    List<Page> list = new ArrayList<>();
     while (result.executeCategories(properties, page, list)) {
       //
     }
@@ -118,7 +118,7 @@ public class ApiCategoriesRequest extends ApiPropertiesRequest {
   public void setDisambiguationStatus(Collection<Page> pages) throws APIException {
 
     // Check for pages outside the main name space
-    List<Page> tmpPages = new ArrayList<Page>();
+    List<Page> tmpPages = new ArrayList<>();
     for (Page page : pages) {
       if (page.isInMainNamespace()) {
         if (!tmpPages.contains(page)) {

@@ -83,7 +83,7 @@ public class ApiXmlBacklinksResult extends ApiXmlResult implements ApiBacklinksR
         // Links through redirects
         List<Element> listRedirLinks = xpaRedirLinks.evaluate(currentBacklink);
         if (listRedirLinks != null) {
-          List<Page> linkList = new ArrayList<Page>();
+          List<Page> linkList = new ArrayList<>();
           Iterator<Element> itRedirLink = listRedirLinks.iterator();
           while (itRedirLink.hasNext()) {
             currentBacklink = itRedirLink.next();

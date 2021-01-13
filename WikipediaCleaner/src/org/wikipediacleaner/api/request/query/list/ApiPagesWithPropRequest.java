@@ -104,7 +104,7 @@ public class ApiPagesWithPropRequest extends ApiListRequest {
         PROPERTY_LIST_PAGESWITHPROP);
     properties.put(PROPERTY_LIMIT, LIMIT_MAX);
     properties.put(PROPERTY_PROPERTY_NAME, property);
-    List<Page> list = new ArrayList<Page>();
+    List<Page> list = new ArrayList<>();
     int maxSize = getMaxSize(limit, ConfigurationValueInteger.MAX_PAGES_WITH_PROP);
     while (result.executePagesWithProp(properties, list) &&
            (list.size() < maxSize)) {

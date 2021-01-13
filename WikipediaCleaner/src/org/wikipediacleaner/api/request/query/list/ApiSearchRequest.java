@@ -175,7 +175,7 @@ public class ApiSearchRequest extends ApiListRequest {
     properties.put(PROPERTY_PROP, PROPERTY_PROP_TITLESNIPPET);
     //properties.put(PROPERTY_REDIRECTS, "true");
     properties.put(PROPERTY_SEARCH, "intitle:\"" + page.getTitle().replaceAll("\"", "\"\"") + "\"");
-    List<Page> list = new ArrayList<Page>();
+    List<Page> list = new ArrayList<>();
     int maxSize = getMaxSize(limit, ConfigurationValueInteger.MAX_SEARCH);
     while (result.executeSearch(properties, list) && (list.size() < maxSize)) {
       //

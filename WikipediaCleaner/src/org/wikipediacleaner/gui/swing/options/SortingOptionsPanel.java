@@ -91,12 +91,12 @@ public class SortingOptionsPanel
         BorderFactory.createEtchedBorder(), GT._T("Sort orders")));
     constraints.fill = GridBagConstraints.BOTH;
     constraints.weighty = 1;
-    modelSort = new DefaultListModel<CompositeComparator<Page>>();
+    modelSort = new DefaultListModel<>();
     List<CompositeComparator<Page>> comparators = PageComparator.getComparators();
     for (CompositeComparator<Page> comparator : comparators) {
       modelSort.addElement(comparator);
     }
-    listSort = new JList<CompositeComparator<Page>>(modelSort);
+    listSort = new JList<>(modelSort);
     listSort.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
     listSort.addListSelectionListener(this);
     JScrollPane scrollSort = new JScrollPane(listSort);
@@ -129,8 +129,8 @@ public class SortingOptionsPanel
     constraints.gridy = 0;
     constraints.fill = GridBagConstraints.BOTH;
     constraints.weighty = 1;
-    modelSortItem = new DefaultListModel<NamedComparator<Page>>();
-    listSortItem = new JList<NamedComparator<Page>>(modelSortItem);
+    modelSortItem = new DefaultListModel<>();
+    listSortItem = new JList<>(modelSortItem);
     listSortItem.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
     JScrollPane scrollSortItem = new JScrollPane(listSortItem);
     scrollSortItem.setMinimumSize(new Dimension(100, 100));
@@ -191,7 +191,7 @@ public class SortingOptionsPanel
   @Override
   public void apply() {
     // Sorting orders
-    List<CompositeComparator<Page>> comparators = new LinkedList<CompositeComparator<Page>>();
+    List<CompositeComparator<Page>> comparators = new LinkedList<>();
     for (int i = modelSort.getSize(); i > 0; i--) {
       Object sort = modelSort.get(i - 1);
       if (sort instanceof CompositeComparator) {

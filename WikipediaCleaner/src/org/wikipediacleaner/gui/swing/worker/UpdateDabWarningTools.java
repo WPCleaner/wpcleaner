@@ -81,8 +81,8 @@ public class UpdateDabWarningTools extends UpdateWarningTools {
       BasicWorker worker, BasicWindow window,
       boolean createWarning, boolean automaticEdit) {
     super(wiki, worker, window, createWarning, automaticEdit);
-    this.dabPages = new HashMap<String, Page>();
-    this.nonDabPages = new HashMap<String, Page>();
+    this.dabPages = new HashMap<>();
+    this.nonDabPages = new HashMap<>();
   }
 
   /**
@@ -139,7 +139,7 @@ public class UpdateDabWarningTools extends UpdateWarningTools {
     boolean hasDisambiguationLink = false;
     if (!dabInformationAvailable) {
       if (!wiki.isDisambiguationPagesLoaded()) {
-        List<Page> tmpPages = new ArrayList<Page>();
+        List<Page> tmpPages = new ArrayList<>();
         for (Page page : pages) {
           for (int numLink = 0; numLink < page.getLinks().size(); numLink++) {
             Page link = page.getLinks().get(numLink);
@@ -185,7 +185,7 @@ public class UpdateDabWarningTools extends UpdateWarningTools {
 
     // Retrieving page contents
     if (hasDisambiguationLink && !getContentsAvailable()) {
-      List<Page> tmpPages = new ArrayList<Page>();
+      List<Page> tmpPages = new ArrayList<>();
       for (Page page : pages) {
         boolean toAdd = false;
         for (Page link : page.getLinks()) {
@@ -219,7 +219,7 @@ public class UpdateDabWarningTools extends UpdateWarningTools {
     if ((analysis == null) || (analysis.getPage() == null)) {
       return null;
     }
-    List<String> dabLinks = new ArrayList<String>();
+    List<String> dabLinks = new ArrayList<>();
     List<Page> links = analysis.getPage().getLinks();
     if (links != null) {
 

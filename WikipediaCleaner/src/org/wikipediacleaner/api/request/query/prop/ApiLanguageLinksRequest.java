@@ -67,7 +67,7 @@ public class ApiLanguageLinksRequest extends ApiPropertiesRequest {
     properties.put(PROPERTY_LIMIT, LIMIT_MAX);
     properties.put(PROPERTY_REDIRECTS, "");
     properties.put(PROPERTY_TITLES, page.getTitle());
-    Map<String, String> languageLinks = new HashMap<String, String>();
+    Map<String, String> languageLinks = new HashMap<>();
     while (result.getLanguageLinks(properties, languageLinks) &&
            !languageLinks.containsKey(toWikiCode)) {
       //

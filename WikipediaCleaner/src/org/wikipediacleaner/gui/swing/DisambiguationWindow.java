@@ -117,7 +117,7 @@ public class DisambiguationWindow extends OnePageWindow {
               Configuration config = Configuration.getConfiguration();
               List<String> filtered = config.getStringList(wikipedia, Configuration.ARRAY_FILTER_NS);
               disambig.modelLinks.setFilterNamespace(filtered);
-              disambig.knownPages = new ArrayList<Page>();
+              disambig.knownPages = new ArrayList<>();
             }
           }
           @Override
@@ -273,7 +273,7 @@ public class DisambiguationWindow extends OnePageWindow {
     JPanel panel = new JPanel(new GridBagLayout());
     Configuration configuration = Configuration.getConfiguration();
 
-    listLinks = new JList<Page>(modelLinks);
+    listLinks = new JList<>(modelLinks);
 
     // Initialize constraints
     GridBagConstraints constraints = new GridBagConstraints();
@@ -490,7 +490,7 @@ public class DisambiguationWindow extends OnePageWindow {
     popupListenerLinks.setBackLinksProperties(backlinksProperties);
     List<Page> links = page.getAllLinksToPage();
     if (config.getBoolean(null, ConfigurationValueBoolean.IGNORE_DAB_USER_NS)) {
-      links = new ArrayList<Page>(links);
+      links = new ArrayList<>(links);
       for (int i = links.size(); i > 0; i--) {
         if (links.get(i - 1).isInUserNamespace()) {
           links.remove(i - 1);
@@ -508,7 +508,7 @@ public class DisambiguationWindow extends OnePageWindow {
     // Construct list of known pages
     knownPages.clear();
     if (getPage() != null) {
-      knownPages = new ArrayList<Page>(1);
+      knownPages = new ArrayList<>(1);
       knownPages.add(getPage());
       for (Page backLink : getPage().getAllLinksToPage()) {
         PageRedirect redirects = backLink.getRedirects();

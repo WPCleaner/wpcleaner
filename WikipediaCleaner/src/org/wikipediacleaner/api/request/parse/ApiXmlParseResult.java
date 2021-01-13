@@ -92,7 +92,7 @@ public class ApiXmlParseResult extends ApiXmlResult implements ApiParseResult {
       XPathExpression<Element> xpaSections = XPathFactory.instance().compile(
           "/api/parse/sections/s", Filters.element());
       List<Element> listSections = xpaSections.evaluate(root);
-      List<Section> result = new ArrayList<Section>(listSections.size());
+      List<Section> result = new ArrayList<>(listSections.size());
       Iterator<Element> itSection = listSections.iterator();
       while (itSection.hasNext()) {
         Element sectionNode = itSection.next();

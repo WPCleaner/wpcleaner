@@ -61,7 +61,7 @@ public class ApiXmlUsersResult extends ApiXmlResult implements ApiUsersResult {
       while (iter.hasNext()) {
         Element currentNode = iter.next();
         User user = new User(currentNode.getAttributeValue("name"));
-        List<String> groups = new ArrayList<String>();
+        List<String> groups = new ArrayList<>();
         XPathExpression<Element> xpaGroups = XPathFactory.instance().compile(
             "./groups/g", Filters.element());
         List<Element> resultGroups = xpaGroups.evaluate(currentNode);
@@ -70,7 +70,7 @@ public class ApiXmlUsersResult extends ApiXmlResult implements ApiUsersResult {
           groups.add(itGroups.next().getValue());
         }
         user.setGroups(groups);
-        List<String> rights = new ArrayList<String>();
+        List<String> rights = new ArrayList<>();
         XPathExpression<Element> xpaRights = XPathFactory.instance().compile(
             "./rights/r", Filters.element());
         List<Element> resultRights = xpaRights.evaluate(currentNode);

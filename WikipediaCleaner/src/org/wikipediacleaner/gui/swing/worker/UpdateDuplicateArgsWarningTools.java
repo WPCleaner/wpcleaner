@@ -110,11 +110,11 @@ public class UpdateDuplicateArgsWarningTools extends UpdateWarningTools {
     }
 
     // Prepare list of algorithms
-    List<CheckErrorAlgorithm> algorithms = new ArrayList<CheckErrorAlgorithm>();
+    List<CheckErrorAlgorithm> algorithms = new ArrayList<>();
     algorithms.add(CheckErrorAlgorithms.getAlgorithm(wiki, 524)); // Duplicate template args
 
     // Retrieve list of errors
-    List<CheckErrorResult> errorResults = new ArrayList<CheckErrorResult>();
+    List<CheckErrorResult> errorResults = new ArrayList<>();
     for (CheckErrorAlgorithm algorithm : algorithms) {
       int errorNumber = algorithm.getErrorNumber();
       if (CheckErrorAlgorithms.isAlgorithmActive(wiki, errorNumber)) {
@@ -128,7 +128,7 @@ public class UpdateDuplicateArgsWarningTools extends UpdateWarningTools {
     Collections.sort(errorResults);
 
     // Compute list of elements for the warning
-    List<String> elements = new ArrayList<String>();
+    List<String> elements = new ArrayList<>();
     String contents = analysis.getContents();
     for (CheckErrorResult errorResult : errorResults) {
       if (ErrorLevel.ERROR.equals(errorResult.getErrorLevel())) {
@@ -211,7 +211,7 @@ public class UpdateDuplicateArgsWarningTools extends UpdateWarningTools {
    */
   @Override
   protected String getWarningComment(Collection<String> elements) {
-    Collection<String> arguments = new ArrayList<String>();
+    Collection<String> arguments = new ArrayList<>();
     int i = 0;
     for (String element : elements) {
       if (i % 3 == 1) {

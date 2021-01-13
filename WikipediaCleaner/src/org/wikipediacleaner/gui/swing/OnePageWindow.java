@@ -1160,7 +1160,7 @@ public abstract class OnePageWindow
       pageAnalysis.shouldCheckSpelling(shouldCheckSpelling());
       List<CheckErrorPage> errorsFound = AlgorithmError.analyzeErrors(
           algorithms, pageAnalysis, false);
-      initialErrors = new ArrayList<CheckErrorPage>();
+      initialErrors = new ArrayList<>();
       if (errorsFound != null) {
         for (CheckErrorPage tmpError : errorsFound) {
           initialErrors.add(tmpError);
@@ -1183,7 +1183,7 @@ public abstract class OnePageWindow
     if (initialErrors == null) {
       return null;
     }
-    Collection<CheckErrorAlgorithm> algorithms = new ArrayList<CheckErrorAlgorithm>();
+    Collection<CheckErrorAlgorithm> algorithms = new ArrayList<>();
     for (CheckErrorPage error : initialErrors) {
       CheckErrorAlgorithm algorithm = error.getAlgorithm();
       if (!algorithms.contains(algorithm)) {

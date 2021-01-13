@@ -293,7 +293,7 @@ public class CheckErrorAlgorithm068 extends CheckErrorAlgorithmBase {
             if (toTitle != null) {
 
               // List possible replacements
-              List<String> possibleValues = new ArrayList<String>();
+              List<String> possibleValues = new ArrayList<>();
               String possible = null;
               possible = InternalLinkBuilder.from(toTitle).withText(link.getText()).toString();
               if (!possibleValues.contains(possible)) {

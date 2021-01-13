@@ -241,8 +241,8 @@ public class CheckWikiContentPanel
     constraints.gridy++;
 
     // Errors list
-    modelErrors = new DefaultListModel<CheckErrorPage>();
-    listErrors = new JList<CheckErrorPage>(modelErrors);
+    modelErrors = new DefaultListModel<>();
+    listErrors = new JList<>(modelErrors);
     CheckErrorPageListCellRenderer cellRenderer = new CheckErrorPageListCellRenderer(false);
     cellRenderer.showCountOccurence(true);
     listErrors.setCellRenderer(cellRenderer);
@@ -342,7 +342,7 @@ public class CheckWikiContentPanel
     List<CheckErrorPage> errorsFound = AlgorithmError.analyzeErrors(
         window.allAlgorithms, pageAnalysis, false);
     modelErrors.clear();
-    initialErrors = new ArrayList<CheckErrorPage>();
+    initialErrors = new ArrayList<>();
     boolean errorFound = false;
     int errorCount = 0;
     if (errorsFound != null) {
@@ -489,7 +489,7 @@ public class CheckWikiContentPanel
     // Automatic fix of some errors
     if ((initialErrors != null) && (textPage != null)) {
       String initialContents = textPage.getText();
-      Collection<CheckErrorAlgorithm> algorithms = new ArrayList<CheckErrorAlgorithm>();
+      Collection<CheckErrorAlgorithm> algorithms = new ArrayList<>();
       for (CheckErrorPage initialError : initialErrors) {
         algorithms.add(initialError.getAlgorithm());
       }
@@ -759,7 +759,7 @@ public class CheckWikiContentPanel
       pane.remove(this);
 
       // Remove errors fixed
-      List<AlgorithmError> errorsToBeRemoved = new ArrayList<AlgorithmError>();
+      List<AlgorithmError> errorsToBeRemoved = new ArrayList<>();
       for (AlgorithmError.Progress errorFixed : errorsFixed) {
         CheckErrorAlgorithm algoFixed = errorFixed.algorithm;
         for (int posError = 0; posError < window.modelAllErrors.getSize(); posError++) {

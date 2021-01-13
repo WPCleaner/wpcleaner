@@ -96,7 +96,7 @@ public class ApiEmbeddedInRequest extends ApiListRequest {
       properties.put(PROPERTY_NAMESPACE, constructList(namespaces));
     }
     properties.put(PROPERTY_TITLE, page.getTitle());
-    List<Page> list = new ArrayList<Page>();
+    List<Page> list = new ArrayList<>();
     int maxSize = getMaxSize(limit, ConfigurationValueInteger.MAX_EMBEDDED_IN);
     while (result.executeEmbeddedIn(properties, list) &&
            (list.size() < maxSize)) {

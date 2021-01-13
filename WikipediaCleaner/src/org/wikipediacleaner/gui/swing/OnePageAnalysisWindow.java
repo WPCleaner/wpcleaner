@@ -551,7 +551,7 @@ public class OnePageAnalysisWindow
   private Component createLinksComponents() {
     JPanel panel = new JPanel(new GridBagLayout());
 
-    listLinks = new JList<Page>(modelLinks);
+    listLinks = new JList<>(modelLinks);
 
     // Initialize constraints
     GridBagConstraints constraints = new GridBagConstraints();
@@ -646,8 +646,8 @@ public class OnePageAnalysisWindow
     constraints.gridy++;
 
     // Errors list
-    modelErrors = new DefaultListModel<CheckErrorPage>();
-    listErrors = new JList<CheckErrorPage>(modelErrors);
+    modelErrors = new DefaultListModel<>();
+    listErrors = new JList<>(modelErrors);
     CheckErrorPageListCellRenderer cellRenderer = new CheckErrorPageListCellRenderer(false);
     cellRenderer.showCountOccurence(true);
     listErrors.setCellRenderer(cellRenderer);
@@ -687,7 +687,7 @@ public class OnePageAnalysisWindow
       List<Page> selection = listLinks.getSelectedValuesList();
       if ((selection != null) && (selection.size() > 0)) {
         listErrors.clearSelection();
-        List<Page> pages = new ArrayList<Page>();
+        List<Page> pages = new ArrayList<>();
         for (Page page : selection) {
           pages.add(page);
         }
@@ -821,8 +821,8 @@ public class OnePageAnalysisWindow
     // Update links information
     Page page = getPage();
     PageAnalysis analysis = page.getAnalysis(page.getContents(), true);
-    mapLinksTotalCount = new HashMap<String, Integer>();
-    mapLinksHelpNeededCount = new HashMap<String, Integer>();
+    mapLinksTotalCount = new HashMap<>();
+    mapLinksHelpNeededCount = new HashMap<>();
     if (page.getLinks() != null) {
       List<Page> links = page.getLinks();
       modelLinks.setElements(links);
@@ -1027,7 +1027,7 @@ public class OnePageAnalysisWindow
     if ((selected == null) || (selected.size() == 0)) {
       return;
     }
-    List<String> titles = new ArrayList<String>();
+    List<String> titles = new ArrayList<>();
     for (Page selectedLine : selected) {
       titles.add(selectedLine.getTitle());
     }
@@ -1172,7 +1172,7 @@ public class OnePageAnalysisWindow
   void countOccurrences(PageAnalysis analysis, boolean forceDisambiguation) {
     Page page = getPage();
     if ((page != null) && (page.getLinks() != null)) {
-      List<Page> links = new ArrayList<Page>();
+      List<Page> links = new ArrayList<>();
       for (Page link : page.getLinks()) {
         if (link != null) {
           boolean count = false;
@@ -1238,11 +1238,11 @@ public class OnePageAnalysisWindow
     contributions.increasePages(1);
 
     // Comment for fixed links to disambiguation pages
-    List<String> dabLinks = new ArrayList<String>();
+    List<String> dabLinks = new ArrayList<>();
     StringBuilder comment = new StringBuilder();
     if ((mapLinksTotalCount != null) && (mapLinksTotalCount.size() > 0)) {
-      List<String> fixed = new ArrayList<String>();
-      List<String> helpRequested = new ArrayList<String>();
+      List<String> fixed = new ArrayList<>();
+      List<String> helpRequested = new ArrayList<>();
       for (Entry<String, Integer> p : mapLinksTotalCount.entrySet()) {
         if ((p != null) && (p.getKey() != null) && (p.getValue() != null)) {
           Integer currentCount = null;
@@ -1556,7 +1556,7 @@ public class OnePageAnalysisWindow
   public void categoryInserted(String categoryName) {
     if (categoryName != null) {
       if (addedCategories == null) {
-        addedCategories = new ArrayList<String>();
+        addedCategories = new ArrayList<>();
       }
       addedCategories.add(categoryName);
     }
@@ -1572,7 +1572,7 @@ public class OnePageAnalysisWindow
   public void templateInserted(String templateName) {
     if (templateName != null) {
       if (addedTemplates == null) {
-        addedTemplates = new ArrayList<String>();
+        addedTemplates = new ArrayList<>();
       }
       addedTemplates.add(templateName);
     }

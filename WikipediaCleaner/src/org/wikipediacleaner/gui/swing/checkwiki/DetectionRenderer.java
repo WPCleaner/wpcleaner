@@ -44,7 +44,7 @@ public class DetectionRenderer extends AbstractCellEditor implements
    * @param textPane Text pane where the text is.
    */
   public DetectionRenderer(JTextComponent textPane) {
-    buttons = new HashMap<Object, JButton>();
+    buttons = new HashMap<>();
     this.textPane = textPane;
   }
 

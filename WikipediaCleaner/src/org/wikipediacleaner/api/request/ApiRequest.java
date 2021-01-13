@@ -180,7 +180,7 @@ public abstract class ApiRequest {
    * @return Properties.
    */
   protected Map<String, String> getProperties(String action, String format) {
-    Map<String, String> properties = new HashMap<String, String>();
+    Map<String, String> properties = new HashMap<>();
     properties.put(ACTION, action);
     properties.put(FORMAT, format);
     return properties;
@@ -197,8 +197,8 @@ public abstract class ApiRequest {
     if (pages == null) {
       return null;
     }
-    List<Collection<Page>> result = new ArrayList<Collection<Page>>();
-    List<Page> currentList = new ArrayList<Page>();
+    List<Collection<Page>> result = new ArrayList<>();
+    List<Page> currentList = new ArrayList<>();
     int pagesCount = 0;
     int charactersCount = 0;
     for (Page page : pages) {
@@ -211,7 +211,7 @@ public abstract class ApiRequest {
       if ((pagesCount + 1> maxSize) ||
           ((charactersCount + length > MAX_LENGTH_LIST_URLENCODED) && (pagesCount > 0))) {
         result.add(currentList);
-        currentList = new ArrayList<Page>();
+        currentList = new ArrayList<>();
         pagesCount = 0;
         charactersCount = 0;
       }

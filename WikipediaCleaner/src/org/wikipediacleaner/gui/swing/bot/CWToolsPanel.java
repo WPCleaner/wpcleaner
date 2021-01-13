@@ -430,7 +430,7 @@ public class CWToolsPanel extends BotToolsPanel {
       return;
     }
     Set<Object> keySet = properties.keySet();
-    List<String> keyList = new ArrayList<String>();
+    List<String> keyList = new ArrayList<>();
     for (Object key : keySet) {
       keyList.add(key.toString());
     }
@@ -461,7 +461,7 @@ public class CWToolsPanel extends BotToolsPanel {
       return;
     }
     String[] parts = selection.split("\\|");
-    List<CheckErrorAlgorithm> algorithms = new ArrayList<CheckErrorAlgorithm>();
+    List<CheckErrorAlgorithm> algorithms = new ArrayList<>();
     if ((parts != null) && (parts.length > 0)) {
       String[] elements = parts[0].split("\\,");
       for (int i = 0; i < elements.length; i++) {

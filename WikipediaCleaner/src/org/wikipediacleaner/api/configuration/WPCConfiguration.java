@@ -63,14 +63,14 @@ public class WPCConfiguration {
   public WPCConfiguration(EnumWikipedia wiki) {
     this.wiki = wiki;
     this.version = 0;
-    generalBooleanValues = new HashMap<WPCConfigurationBoolean, Boolean>();
-    userBooleanValues = new HashMap<WPCConfigurationBoolean, Boolean>();
-    generalStringValues = new HashMap<WPCConfigurationString, String>();
-    userStringValues = new HashMap<WPCConfigurationString, String>();
-    generalStringListValues = new HashMap<WPCConfigurationStringList, List<String>>();
-    userStringListValues = new HashMap<WPCConfigurationStringList, List<String>>();
-    generalLongValues = new HashMap<WPCConfigurationLong, Long>();
-    userLongValues = new HashMap<WPCConfigurationLong, Long>();
+    generalBooleanValues = new HashMap<>();
+    userBooleanValues = new HashMap<>();
+    generalStringValues = new HashMap<>();
+    userStringValues = new HashMap<>();
+    generalStringListValues = new HashMap<>();
+    userStringListValues = new HashMap<>();
+    generalLongValues = new HashMap<>();
+    userLongValues = new HashMap<>();
     initDefaultEncyclopedicNamespaces();
   }
 
@@ -128,7 +128,7 @@ public class WPCConfiguration {
     initDefaultEncyclopedicNamespaces();
     disambiguationCategories = null;
     suggestions = null;
-    templateMatchers = new HashMap<String, List<TemplateMatcher>>();
+    templateMatchers = new HashMap<>();
     templatesAfterAskHelp = null;
     wiktionaryMatches = null;
   }
@@ -318,7 +318,7 @@ public class WPCConfiguration {
     if ((userResult == null) && (generalResult == null)) {
       return null;
     }
-    List<String> result = new ArrayList<String>();
+    List<String> result = new ArrayList<>();
     if ((generalResult != null) && ((userResult == null) || (attribute.canCombine()))) {
       result.addAll(generalResult);
     }
@@ -340,7 +340,7 @@ public class WPCConfiguration {
     if ((userResult == null) && (generalResult == null) && (attribute.getDefaultValue() == null)) {
       return null;
     }
-    List<String> result = new ArrayList<String>();
+    List<String> result = new ArrayList<>();
     if ((generalResult != null) && ((userResult == null) || (attribute.canCombine()))) {
       result.addAll(generalResult);
     }
@@ -350,7 +350,7 @@ public class WPCConfiguration {
     if ((generalResult == null) && (userResult == null)) {
       result.addAll(attribute.getDefaultValue());
     }
-    List<String[]> fullResult = new ArrayList<String[]>(result.size());
+    List<String[]> fullResult = new ArrayList<>(result.size());
     for (String element : result) {
       fullResult.add(element.split("\\|"));
     }
@@ -554,7 +554,7 @@ public class WPCConfiguration {
    * Default initialization of encyclopedic name spaces.
    */
   private void initDefaultEncyclopedicNamespaces() {
-    encyclopedicNamespaces = new ArrayList<Integer>();
+    encyclopedicNamespaces = new ArrayList<>();
     encyclopedicNamespaces.add(Namespace.MAIN);
     encyclopedicNamespaces.add(Namespace.IMAGE);
     encyclopedicNamespaces.add(Namespace.TEMPLATE);
@@ -570,7 +570,7 @@ public class WPCConfiguration {
       encyclopedicTalkNamespaces = null;
       return;
     }
-    encyclopedicTalkNamespaces = new ArrayList<Integer>(encyclopedicNamespaces.size());
+    encyclopedicTalkNamespaces = new ArrayList<>(encyclopedicNamespaces.size());
     for (Integer namespace : encyclopedicNamespaces) {
       encyclopedicTalkNamespaces.add(Integer.valueOf(namespace.intValue() + 1));
     }
@@ -614,14 +614,14 @@ public class WPCConfiguration {
    * Initialize suggestions for text replacements.
    * 
    * @param api API
-   * @param forceInit True to force initialisation of suggestions.
+   * @param forceInit True to force initialization of suggestions.
    */
   public void initSuggestions(API api, boolean forceInit) {
     if ((suggestions == null) || forceInit) {
       synchronized (api) {
 
         // Load all pages contents
-        Map<String, Page> pages = new HashMap<String, Page>();
+        Map<String, Page> pages = new HashMap<>();
         List<String[]> suggestionPages = getStringArrayList(WPCConfigurationStringList.SUGGESTION_PAGES);
         if (suggestionPages != null) {
           for (String[] elements : suggestionPages) {
@@ -648,7 +648,7 @@ public class WPCConfiguration {
         }
 
         // Construct suggestions
-        Map<String, Suggestion> tmpMap = new HashMap<String, Suggestion>();
+        Map<String, Suggestion> tmpMap = new HashMap<>();
         if (suggestionPages != null) {
           List<String> suggestionIgnore = getStringList(WPCConfigurationStringList.SUGGESTION_IGNORE);
           for (String[] elements : suggestionPages) {
@@ -787,7 +787,7 @@ public class WPCConfiguration {
         if ((templateName != null) && (parameterList != null)) {
           List<TemplateMatcher> list = templateMatchers.get(templateName);
           if (list == null) {
-            list = new ArrayList<TemplateMatcher>();
+            list = new ArrayList<>();
           }
           String[] parameterNames = parameterList.split(",");
           for (String parameterName : parameterNames) {
@@ -815,7 +815,7 @@ public class WPCConfiguration {
         if ((templateName != null) && (parameterList != null)) {
           List<TemplateMatcher> list = templateMatchers.get(templateName);
           if (list == null) {
-            list = new ArrayList<TemplateMatcher>();
+            list = new ArrayList<>();
           }
           String[] parameterNames = parameterList.split(",");
           for (String parameterName : parameterNames) {
@@ -842,7 +842,7 @@ public class WPCConfiguration {
         if ((templateName != null) && (parameterName1 != null) && (parameterName2 != null)) {
           List<TemplateMatcher> list = templateMatchers.get(templateName);
           if (list == null) {
-            list = new ArrayList<TemplateMatcher>();
+            list = new ArrayList<>();
           }
           TemplateMatcher matcher = new TemplateMatcher1L2T(
               wiki, templateName, explanation,
@@ -867,7 +867,7 @@ public class WPCConfiguration {
         if ((templateName != null) && (parameterList != null)) {
           List<TemplateMatcher> list = templateMatchers.get(templateName);
           if (list == null) {
-            list = new ArrayList<TemplateMatcher>();
+            list = new ArrayList<>();
           }
           String[] parameterNames = parameterList.split(",");
           for (String parameterName : parameterNames) {
@@ -895,7 +895,7 @@ public class WPCConfiguration {
         if ((templateName != null) && (parameterList != null)) {
           List<TemplateMatcher> list = templateMatchers.get(templateName);
           if (list == null) {
-            list = new ArrayList<TemplateMatcher>();
+            list = new ArrayList<>();
           }
           String[] parameterNames = parameterList.split(",");
           for (String parameterName : parameterNames) {
@@ -923,7 +923,7 @@ public class WPCConfiguration {
         if ((templateName != null) && (parameterList != null)) {
           List<TemplateMatcher> list = templateMatchers.get(templateName);
           if (list == null) {
-            list = new ArrayList<TemplateMatcher>();
+            list = new ArrayList<>();
           }
           String[] parameterNames = parameterList.split(",");
           for (String parameterName : parameterNames) {
@@ -951,7 +951,7 @@ public class WPCConfiguration {
         if ((templateName != null) && (parameterList != null)) {
           List<TemplateMatcher> list = templateMatchers.get(templateName);
           if (list == null) {
-            list = new ArrayList<TemplateMatcher>();
+            list = new ArrayList<>();
           }
           String[] parameterNames = parameterList.split(",");
           for (String parameterName : parameterNames) {
@@ -992,7 +992,7 @@ public class WPCConfiguration {
   private void setDisambiguationCategories(String value) {
     List<String> tmp = convertPropertyToStringList(value);
     if ((tmp != null) && (tmp.size() > 0)) {
-      this.disambiguationCategories = new ArrayList<Page>(tmp.size());
+      this.disambiguationCategories = new ArrayList<>(tmp.size());
       for (String category : tmp) {
         this.disambiguationCategories.add(
             DataManager.getPage(wiki, category, null, null, null));
@@ -1319,13 +1319,13 @@ public class WPCConfiguration {
   private void setTemplatesAfterAskHelp(String value) {
     List<String> tmp = convertPropertyToStringList(value);
     if (tmp != null) {
-      List<List<String>> result = new ArrayList<List<String>>(tmp.size());
+      List<List<String>> result = new ArrayList<>(tmp.size());
       for (String element : tmp) {
         int pipeIndex = element.indexOf("|");
         if (pipeIndex < 0) {
           result.add(Collections.singletonList(element));
         } else {
-          List<String> tmpElement = new ArrayList<String>(2);
+          List<String> tmpElement = new ArrayList<>(2);
           tmpElement.add(element.substring(0, pipeIndex));
           tmpElement.add(element.substring(pipeIndex + 1));
           result.add(tmpElement);
@@ -1351,7 +1351,7 @@ public class WPCConfiguration {
     List<String> templatesForHelpRequested = getStringList(
         WPCConfigurationStringList.TEMPLATES_FOR_HELP_REQUESTED);
     if (templatesForHelpRequested != null) {
-      List<Page> tmp = new ArrayList<Page>(templatesForHelpRequested.size());
+      List<Page> tmp = new ArrayList<>(templatesForHelpRequested.size());
       for (String template : templatesForHelpRequested) {
         String title = wiki.getWikiConfiguration().getPageTitle(
             Namespace.TEMPLATE, template);
@@ -1371,7 +1371,7 @@ public class WPCConfiguration {
   private void setWiktionaryMatches(String value) {
     List<String> tmpList = convertPropertyToStringList(value);
     if ((tmpList != null) && (tmpList.size() > 0)) {
-      wiktionaryMatches = new ArrayList<TemplateMatch>(tmpList.size());
+      wiktionaryMatches = new ArrayList<>(tmpList.size());
       for (String tmp : tmpList) {
         String[] elements = tmp.split("\\|");
         TemplateMatch match = new TemplateMatch(
@@ -1449,7 +1449,7 @@ public class WPCConfiguration {
     if ((property != null) && (property.trim().length() > 0)) {
       String[] results = property.trim().split("\n");
       if ((results != null) && (results.length > 0)) {
-        result = new ArrayList<String>();
+        result = new ArrayList<>();
         for (int  i = 0; i < results.length; i++) {
           results[i] = results[i].trim();
           if ((results[i].length() > 0) || (keepEmpty)) {
@@ -1472,7 +1472,7 @@ public class WPCConfiguration {
     if (tmpResults == null) {
       return null;
     }
-    List<String[]> result = new ArrayList<String[]>();
+    List<String[]> result = new ArrayList<>();
     for (String tmpResult : tmpResults) {
       if (tmpResult != null) {
         String[] tmp = tmpResult.split("(?<!\\\\)\\|");

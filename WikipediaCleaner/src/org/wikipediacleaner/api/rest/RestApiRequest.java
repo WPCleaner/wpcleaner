@@ -59,7 +59,7 @@ public abstract class RestApiRequest {
    * @return Properties.
    */
   protected Map<String, String> getProperties() {
-    Map<String, String> properties = new HashMap<String, String>();
+    Map<String, String> properties = new HashMap<>();
     return properties;
   }
 }
