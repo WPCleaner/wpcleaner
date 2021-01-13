@@ -7,6 +7,7 @@
 
 package org.wikipediacleaner.api.check.algorithm;
 
+import org.wikipediacleaner.api.check.algorithm.a0xx.a09x.a090.CheckErrorAlgorithm090;
 
 /**
  * Algorithm for analyzing error 511 of check wikipedia project.

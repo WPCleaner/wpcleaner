@@ -7,6 +7,7 @@
 
 package org.wikipediacleaner.api.check.algorithm;
 
+import org.wikipediacleaner.api.check.algorithm.a0xx.a09x.a091.CheckErrorAlgorithm091;
 
 /**
  * Algorithm for analyzing error 512 of check wikipedia project.
