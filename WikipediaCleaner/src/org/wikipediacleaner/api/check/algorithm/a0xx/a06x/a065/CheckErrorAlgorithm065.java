@@ -5,13 +5,14 @@
  *  See README.txt file for licensing information.
  */
 
-package org.wikipediacleaner.api.check.algorithm;
+package org.wikipediacleaner.api.check.algorithm.a0xx.a06x.a065;
 
 import java.util.Collection;
 import java.util.List;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.CheckErrorResult.ErrorLevel;
+import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase;
 import org.wikipediacleaner.api.data.PageElementImage;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.PageElementImage.Parameter;
@@ -88,7 +89,7 @@ public class CheckErrorAlgorithm065 extends CheckErrorAlgorithmBase {
                 beginError = tag.getBeginIndex();
                 currentIndex = beginError - 1;
               } else if (!breakFound) {
-                /*if (PageElementTag.TAG_WIKI_MATH.equals(name)) {
+                /*if (WikiTagType.MATH.equals(tag.getType())) {
                   tagAfter = true;
                   shouldStop = false;
                   endError = tag.getCompleteBeginIndex();
