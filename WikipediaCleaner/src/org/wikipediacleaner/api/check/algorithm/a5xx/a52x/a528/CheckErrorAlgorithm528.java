@@ -5,11 +5,10 @@
  *  See README.txt file for licensing information.
  */
 
-package org.wikipediacleaner.api.check.algorithm;
+package org.wikipediacleaner.api.check.algorithm.a5xx.a52x.a528;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.List;
 
 import org.wikipediacleaner.api.API;
@@ -18,27 +17,27 @@ import org.wikipediacleaner.api.APIFactory;
 import org.wikipediacleaner.api.algorithm.AlgorithmParameter;
 import org.wikipediacleaner.api.algorithm.AlgorithmParameterElement;
 import org.wikipediacleaner.api.check.CheckErrorResult;
-import org.wikipediacleaner.api.check.CheckErrorResult.ErrorLevel;
+import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase;
+import org.wikipediacleaner.api.configuration.WPCConfigurationStringList;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.DataManager;
 import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.Page;
-import org.wikipediacleaner.api.data.PageElementTag;
+import org.wikipediacleaner.api.data.PageElementPMID;
 import org.wikipediacleaner.api.data.Page.RelatedPages;
-import org.wikipediacleaner.api.data.PageElementTag.Parameter;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
-import org.wikipediacleaner.api.data.contents.tag.WikiTagType;
+import org.wikipediacleaner.api.data.contents.template.TemplateBuilder;
 import org.wikipediacleaner.i18n.GT;
 
 
 /**
- * Algorithm for analyzing error 527 of check wikipedia project.
- * Error 527: Reference with same name but different content
+ * Algorithm for analyzing error 528 of check wikipedia project.
+ * Error 528: PMID magical link
  */
-public class CheckErrorAlgorithm527 extends CheckErrorAlgorithmBase {
+public class CheckErrorAlgorithm528 extends CheckErrorAlgorithmBase {
 
-  public CheckErrorAlgorithm527() {
-    super("Reference with same name but different content");
+  public CheckErrorAlgorithm528() {
+    super("PMID magical link");
   }
 
   /** Tracking category. */
@@ -60,117 +59,67 @@ public class CheckErrorAlgorithm527 extends CheckErrorAlgorithmBase {
       return false;
     }
 
-    // Group all references by name
-    List<PageElementTag> refTags = analysis.getCompleteTags(WikiTagType.REF);
-    if ((refTags == null) || (refTags.isEmpty())) {
+    // Analyze each PMID
+    boolean result = false;
+    List<PageElementPMID> pmids = analysis.getPMIDs();
+    if ((pmids == null) || (pmids.isEmpty())) {
       return false;
     }
-    HashMap<String, List<PageElementTag>> namedRefTags = new HashMap<>();
-    String content = analysis.getContents();
-    for (PageElementTag refTag : refTags) {
-      if (refTag.isComplete() && !refTag.isFullTag()) {
-        String tagId = getTagIdentifier(refTag);
-        String value = content.substring(refTag.getValueBeginIndex(), refTag.getValueEndIndex());
-        if ((tagId != null) &&
-            (value != null) &&
-            (value.length() > 0)) {
-          List<PageElementTag> namedTags = namedRefTags.get(tagId);
-          if (namedTags == null) {
-            namedTags = new ArrayList<>();
-            namedRefTags.put(tagId, namedTags);
-          }
-          namedTags.add(refTag);
+    for (PageElementPMID pmid : pmids) {
+      boolean isError = false;
+      if (!pmid.isTemplateParameter() && pmid.isCorrect()) {
+        if (analysis.isInExternalLink(pmid.getBeginIndex()) == null) {
+          isError = true;
         }
       }
-    }
 
-    // Analyze for errors
-    boolean result = false;
-    for (List<PageElementTag> namedRefs : namedRefTags.values()) {
-      if ((namedRefs != null) && (namedRefs.size() > 1)) {
-
-        // Check if there is an error
-        boolean hardError = false;
-        boolean softError = false;
-        PageElementTag firstNamedRef = namedRefs.get(0);
-        String firstValue = content.substring(
-            firstNamedRef.getValueBeginIndex(),
-            firstNamedRef.getValueEndIndex());
-        for (PageElementTag namedRef : namedRefs) {
-          String value = content.substring(namedRef.getValueBeginIndex(), namedRef.getValueEndIndex());
-          if (!firstValue.trim().equals(value.trim())) {
-            hardError = true;
-          } else if (!firstValue.equals(value)) {
-            softError = true;
-          }
+      if (isError) {
+        if (errors == null) {
+          return true;
         }
+        result = true;
+        CheckErrorResult errorResult = createCheckErrorResult(
+            analysis, pmid.getBeginIndex(), pmid.getEndIndex());
 
-        // Report error
-        if (hardError || softError) {
-          if (errors == null) {
-            return true;
-          }
-          result = true;
-
-          // Report each reference
-          boolean first = true;
-          for (PageElementTag namedRef : namedRefs) {
-            CheckErrorResult errorResult = createCheckErrorResult(
-                analysis,
-                namedRef.getCompleteBeginIndex(),
-                namedRef.getCompleteEndIndex(),
-                first ? ErrorLevel.CORRECT : ErrorLevel.ERROR);
-            String value = content.substring(namedRef.getValueBeginIndex(), namedRef.getValueEndIndex());
-            if (!hardError && !value.equals(value.trim())) {
-              String replacement =
-                  content.substring(namedRef.getCompleteBeginIndex(), namedRef.getValueBeginIndex()) +
-                  value.trim() +
-                  content.substring(namedRef.getValueEndIndex(), namedRef.getCompleteEndIndex());
-              errorResult.addReplacement(replacement, GT._T("Trim text"), true);
-            } else {
-              errorResult.addText(value);
-              List<String> others = new ArrayList<>();
-              others.add(value);
-              for (PageElementTag tmpNamedRef : namedRefs) {
-                value = content.substring(
-                    tmpNamedRef.getValueBeginIndex(),
-                    tmpNamedRef.getValueEndIndex());
-                if (!others.contains(value)) {
-                  errorResult.addText(value);
-                  others.add(value);
-                }
-              }
+        // Suggest replacement with templates
+        for (String[] pmidTemplate : pmidTemplates) {
+          if (pmidTemplate.length > 2) {
+            String templateName = pmidTemplate[0];
+            String[] params = pmidTemplate[1].split(",");
+            Boolean suggested = Boolean.valueOf(pmidTemplate[2]);
+            if ((params.length > 0) && (Boolean.TRUE.equals(suggested))) {
+              TemplateBuilder builder = TemplateBuilder.from(templateName);
+              builder.addParam(
+                  !"1".equals(params[0]) ? params[0] : null,
+                  pmid.getPMID());
+              errorResult.addReplacement(builder.toString());
             }
-            errors.add(errorResult);
-            first = false;
           }
         }
+
+        // Suggest replacement with interwikis
+        for (String[] pmidInterwiki : pmidInterwikis) {
+          if (pmidInterwiki.length > 0) {
+            String pmidCode = pmidInterwiki[0];
+            StringBuilder replacement = new StringBuilder();
+            replacement.append("[[:");
+            replacement.append(pmidCode);
+            replacement.append(":");
+            replacement.append(pmid.getPMID());
+            replacement.append("|");
+            replacement.append(PageElementPMID.PMID_PREFIX);
+            replacement.append(" ");
+            replacement.append(pmid.getPMID());
+            replacement.append("]]");
+            errorResult.addReplacement(replacement.toString());
+          }
+        }
+
+        errors.add(errorResult);
       }
     }
 
     return result;
-  }
-
-  /**
-   * @param tag Reference tag.
-   * @return Identifier for the tag.
-   */
-  private String getTagIdentifier(PageElementTag tag) {
-    if (tag == null) {
-      return null;
-    }
-    Parameter paramName = tag.getParameter("name");
-    if ((paramName == null) || (paramName.getValue() == null)) {
-      return null;
-    }
-    StringBuilder result = new StringBuilder();
-    Parameter paramGroup = tag.getParameter("group");
-    if ((paramGroup != null) && (paramGroup.getValue() != null)) {
-      result.append(paramGroup.getValue());
-      result.append("#####");
-    }
-    result.append(paramName.getValue());
-    return result.toString();
   }
 
   /**
@@ -258,10 +207,38 @@ public class CheckErrorAlgorithm527 extends CheckErrorAlgorithmBase {
         (tmp.trim().length() > 0)) {
       categoryName = tmp.trim();
     }
+
+    List<String[]> tmpList = getWPCConfiguration().getStringArrayList(
+        WPCConfigurationStringList.PMID_TEMPLATES);
+    pmidTemplates.clear();
+    if (tmpList != null) {
+      for (String[] pmidTemplate : tmpList) {
+        if (pmidTemplate.length > 2) {
+          pmidTemplates.add(pmidTemplate);
+        }
+      }
+    }
+
+    tmpList = getWPCConfiguration().getStringArrayList(
+        WPCConfigurationStringList.PMID_INTERWIKIS);
+    pmidInterwikis.clear();
+    if (tmpList != null) {
+      for (String[] pmidInterwiki : tmpList) {
+        if (pmidInterwiki.length > 0) {
+          pmidInterwikis.add(pmidInterwiki);
+        }
+      }
+    }
   }
 
   /** Category containing the list of pages in error */
   private String categoryName = null;
+
+  /** Templates for PMID */
+  private List<String[]> pmidTemplates = new ArrayList<>();
+
+  /** Interwikis for PMID */
+  private List<String[]> pmidInterwikis = new ArrayList<>();
 
   /**
    * Build the list of parameters for this algorithm.

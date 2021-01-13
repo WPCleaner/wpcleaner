@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://phabricator.wikimedia.org/project/board/4842/\n"
-"POT-Creation-Date: 2021-01-13 20:01+0100\n"
+"POT-Creation-Date: 2021-01-13 20:08+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -193,186 +193,21 @@ msgstr ""
 msgid "Edit table of contents"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm521.java:389
-msgid "A list of templates and parameters in which format should be checked"
-msgstr ""
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm521.java:393
-msgid "The name of a template in which format should be checked"
-msgstr ""
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm521.java:396
-msgid "The name of a parameter in which format should be checked"
-msgstr ""
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm521.java:399
-msgid "A correct format for the date"
-msgstr ""
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm521.java:405
-msgid "A list of text values for months"
-msgstr ""
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm521.java:408
-msgid "A text value for a month"
-msgstr ""
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm523.java:222
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm523.java:225
-msgid "The size below which images are not reported as duplicates"
-msgstr ""
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm524.java:133
-msgid "Both values are equal"
-msgstr ""
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm524.java:135
-msgid "Other value is empty"
-msgstr ""
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm524.java:137
-#, java-format
-msgid "Other value: {0}"
-msgstr ""
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm524.java:236
-#: org/wikipediacleaner/gui/swing/NewSectionWindow.java:115
-#: org/wikipediacleaner/gui/swing/OnePageWindow.java:531
-msgid "Comment"
-msgstr ""
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm524.java:394
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm524.java:397
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm527.java:274
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm527.java:277
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm528.java:250
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm528.java:253
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm529.java:389
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm529.java:392
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm530.java:257
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm530.java:260
-msgid "A category containing the list of pages in error"
-msgstr ""
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm524.java:400
-msgid "Values that can be safely ignored for a given template and argument"
-msgstr ""
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm524.java:404
-msgid "Name of the template in which some values can be safely ignored"
-msgstr ""
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm524.java:407
-msgid "Name of the parameter for which some values can be safely ignored"
-msgstr ""
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm524.java:410
-msgid "Value of the paramter which can be safely ignored"
-msgstr ""
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm525.java:135
-msgid "Use an anchor template?"
-msgstr ""
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm525.java:165
-#: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a002/CheckErrorAlgorithm002.java:220
-#: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a002/CheckErrorAlgorithm002.java:244
-#: org/wikipediacleaner/api/check/algorithm/a0xx/a05x/a055/CheckErrorAlgorithm055.java:169
-#: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a066/CheckErrorAlgorithm066.java:96
-#: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a077/CheckErrorAlgorithm077.java:95
-#, java-format
-msgid "Remove {0} tags"
-msgstr ""
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm525.java:227
-#: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a002/CheckErrorAlgorithm002.java:797
-#: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a002/CheckErrorAlgorithm002.java:805
-#: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a002/CheckErrorAlgorithm002.java:808
-#: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a002/CheckErrorAlgorithm002.java:811
-#: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a002/CheckErrorAlgorithm002.java:814
-#: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a002/CheckErrorAlgorithm002.java:817
-#: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a002/CheckErrorAlgorithm002.java:820
-#, java-format
-msgid "A replacement for {0}"
-msgstr ""
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm525.java:231
-#, java-format
-msgid "A template that can replace a {0}"
-msgstr ""
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm525.java:234
-msgid "Name of the parameter to be used for the anchor identifier"
-msgstr ""
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm525.java:238
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm541.java:473
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm541.java:494
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm541.java:515
-msgid "If replacement can be automatic"
-msgstr ""
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm526.java:412
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm526.java:415
-msgid "An identifier of an abuse filter that is triggered by incorrect year links."
-msgstr ""
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm526.java:418
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm526.java:425
-msgid "Text added after the link to ask for help."
-msgstr ""
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm526.java:422
-msgid "Description of the action"
-msgstr ""
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm526.java:430
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm526.java:433
-msgid "A page containing a dump analysis for this error."
-msgstr ""
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm526.java:436
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm526.java:439
-msgid "Minimum number of digits for the year"
-msgstr ""
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm526.java:442
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm526.java:445
-msgid "Maximum number of digits for the year"
-msgstr ""
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm526.java:448
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm526.java:451
-msgid "Minimum difference between the year displayed and the year linked"
-msgstr ""
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm526.java:454
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm526.java:457
-msgid "Minimum difference between the year linked and the year displayed"
-msgstr ""
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm527.java:129
-msgid "Trim text"
-msgstr ""
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm529.java:374
-msgid "Automatic replacements of ISBN"
-msgstr ""
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm529.java:378
-msgid "Name of the template to use for ISBN"
-msgstr ""
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm529.java:381
-msgid "Text before the ISBN to be removed in the replacement"
-msgstr ""
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm529.java:384
-msgid "Text after the ISBN to be removed in the replacement"
-msgstr ""
-
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm530.java:121
 msgid "View RFC"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm530.java:257
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm530.java:260
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a524/CheckErrorAlgorithm524.java:395
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a524/CheckErrorAlgorithm524.java:398
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a527/CheckErrorAlgorithm527.java:275
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a527/CheckErrorAlgorithm527.java:278
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a528/CheckErrorAlgorithm528.java:251
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a528/CheckErrorAlgorithm528.java:254
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a529/CheckErrorAlgorithm529.java:390
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a529/CheckErrorAlgorithm529.java:393
+msgid "A category containing the list of pages in error"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm531.java:130
@@ -437,6 +272,13 @@ msgstr ""
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm541.java:490
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm541.java:511
 msgid "Parameter to use in the template for the text"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm541.java:473
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm541.java:494
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm541.java:515
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a525/CheckErrorAlgorithm525.java:239
+msgid "If replacement can be automatic"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm541.java:477
@@ -616,6 +458,28 @@ msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a002/CheckErrorAlgorithm002.java:48
 msgid "Fix all incorrect tags"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a002/CheckErrorAlgorithm002.java:220
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a002/CheckErrorAlgorithm002.java:244
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a05x/a055/CheckErrorAlgorithm055.java:169
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a066/CheckErrorAlgorithm066.java:96
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a077/CheckErrorAlgorithm077.java:95
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a525/CheckErrorAlgorithm525.java:166
+#, java-format
+msgid "Remove {0} tags"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a002/CheckErrorAlgorithm002.java:797
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a002/CheckErrorAlgorithm002.java:805
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a002/CheckErrorAlgorithm002.java:808
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a002/CheckErrorAlgorithm002.java:811
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a002/CheckErrorAlgorithm002.java:814
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a002/CheckErrorAlgorithm002.java:817
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a002/CheckErrorAlgorithm002.java:820
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a525/CheckErrorAlgorithm525.java:228
+#, java-format
+msgid "A replacement for {0}"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a002/CheckErrorAlgorithm002.java:799
@@ -1482,6 +1346,142 @@ msgstr ""
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a520/CheckErrorAlgorithm520.java:150
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a520/CheckErrorAlgorithm520.java:153
 msgid "An identifier of an abuse filter that is triggered by weird characters."
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a521/CheckErrorAlgorithm521.java:390
+msgid "A list of templates and parameters in which format should be checked"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a521/CheckErrorAlgorithm521.java:394
+msgid "The name of a template in which format should be checked"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a521/CheckErrorAlgorithm521.java:397
+msgid "The name of a parameter in which format should be checked"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a521/CheckErrorAlgorithm521.java:400
+msgid "A correct format for the date"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a521/CheckErrorAlgorithm521.java:406
+msgid "A list of text values for months"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a521/CheckErrorAlgorithm521.java:409
+msgid "A text value for a month"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a523/CheckErrorAlgorithm523.java:223
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a523/CheckErrorAlgorithm523.java:226
+msgid "The size below which images are not reported as duplicates"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a524/CheckErrorAlgorithm524.java:134
+msgid "Both values are equal"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a524/CheckErrorAlgorithm524.java:136
+msgid "Other value is empty"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a524/CheckErrorAlgorithm524.java:138
+#, java-format
+msgid "Other value: {0}"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a524/CheckErrorAlgorithm524.java:237
+#: org/wikipediacleaner/gui/swing/NewSectionWindow.java:115
+#: org/wikipediacleaner/gui/swing/OnePageWindow.java:531
+msgid "Comment"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a524/CheckErrorAlgorithm524.java:401
+msgid "Values that can be safely ignored for a given template and argument"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a524/CheckErrorAlgorithm524.java:405
+msgid "Name of the template in which some values can be safely ignored"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a524/CheckErrorAlgorithm524.java:408
+msgid "Name of the parameter for which some values can be safely ignored"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a524/CheckErrorAlgorithm524.java:411
+msgid "Value of the paramter which can be safely ignored"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a525/CheckErrorAlgorithm525.java:136
+msgid "Use an anchor template?"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a525/CheckErrorAlgorithm525.java:232
+#, java-format
+msgid "A template that can replace a {0}"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a525/CheckErrorAlgorithm525.java:235
+msgid "Name of the parameter to be used for the anchor identifier"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a526/CheckErrorAlgorithm526.java:413
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a526/CheckErrorAlgorithm526.java:416
+msgid "An identifier of an abuse filter that is triggered by incorrect year links."
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a526/CheckErrorAlgorithm526.java:419
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a526/CheckErrorAlgorithm526.java:426
+msgid "Text added after the link to ask for help."
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a526/CheckErrorAlgorithm526.java:423
+msgid "Description of the action"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a526/CheckErrorAlgorithm526.java:431
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a526/CheckErrorAlgorithm526.java:434
+msgid "A page containing a dump analysis for this error."
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a526/CheckErrorAlgorithm526.java:437
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a526/CheckErrorAlgorithm526.java:440
+msgid "Minimum number of digits for the year"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a526/CheckErrorAlgorithm526.java:443
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a526/CheckErrorAlgorithm526.java:446
+msgid "Maximum number of digits for the year"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a526/CheckErrorAlgorithm526.java:449
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a526/CheckErrorAlgorithm526.java:452
+msgid "Minimum difference between the year displayed and the year linked"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a526/CheckErrorAlgorithm526.java:455
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a526/CheckErrorAlgorithm526.java:458
+msgid "Minimum difference between the year linked and the year displayed"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a527/CheckErrorAlgorithm527.java:130
+msgid "Trim text"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a529/CheckErrorAlgorithm529.java:375
+msgid "Automatic replacements of ISBN"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a529/CheckErrorAlgorithm529.java:379
+msgid "Name of the template to use for ISBN"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a529/CheckErrorAlgorithm529.java:382
+msgid "Text before the ISBN to be removed in the replacement"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a529/CheckErrorAlgorithm529.java:385
+msgid "Text after the ISBN to be removed in the replacement"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a540/CheckErrorAlgorithm540.java:47
