@@ -5,7 +5,7 @@
  *  See README.txt file for licensing information.
  */
 
-package org.wikipediacleaner.api.check.algorithm;
+package org.wikipediacleaner.api.check.algorithm.a1xx.a10x.a108;
 
 import java.text.MessageFormat;
 import java.util.ArrayList;
@@ -16,24 +16,22 @@ import org.wikipediacleaner.api.algorithm.AlgorithmParameter;
 import org.wikipediacleaner.api.algorithm.AlgorithmParameterElement;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.SimpleAction;
-import org.wikipediacleaner.api.data.Namespace;
-import org.wikipediacleaner.api.data.PageElementFunction;
+import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmISSN;
 import org.wikipediacleaner.api.data.PageElementISSN;
 import org.wikipediacleaner.api.data.PageElementTemplate;
-import org.wikipediacleaner.api.data.PageElementTemplate.Parameter;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
 import org.wikipediacleaner.gui.swing.action.ActionExternalViewer;
 import org.wikipediacleaner.i18n.GT;
 
 
 /**
- * Algorithm for analyzing error 107 of check wikipedia project.
- * Error 107: ISSN wrong length
+ * Algorithm for analyzing error 108 of check wikipedia project.
+ * Error 108: ISSN wrong checksum
  */
-public class CheckErrorAlgorithm107 extends CheckErrorAlgorithmISSN {
+public class CheckErrorAlgorithm108 extends CheckErrorAlgorithmISSN {
 
-  public CheckErrorAlgorithm107() {
-    super("ISSN wrong length");
+  public CheckErrorAlgorithm108() {
+    super("ISSN wrong checksum");
   }
 
   /**
@@ -56,48 +54,27 @@ public class CheckErrorAlgorithm107 extends CheckErrorAlgorithmISSN {
     boolean result = false;
     List<PageElementISSN> issns = analysis.getISSNs();
     for (PageElementISSN issn : issns) {
-      String issnNumber = issn.getISSN();
-      if ((issnNumber != null) && (issn.isValid())) {
-        boolean isError = false;
-        int length = issnNumber.length();
-        if ((length != 8) && (length != 0)) {
-          isError = true;
+      String number = issn.getISSN();
+      if ((number != null) && (number.length() == 8)) {
+        char check = Character.toUpperCase(number.charAt(7));
+        char computedCheck = Character.toUpperCase(
+            PageElementISSN.computeChecksum(number));
+
+        String message = null;
+        if ((check != computedCheck) &&
+            (Character.isDigit(computedCheck) || (computedCheck == 'X'))) {
+          message = GT._T(
+              "The checksum is {0} instead of {1}",
+              new Object[] { check, computedCheck } );
         }
 
-        // Exclude parameters in templates
-        if (isError &&
-            issn.isTemplateParameter() &&
-            analysis.isInNamespace(Namespace.TEMPLATE)) {
-          PageElementTemplate template = analysis.isInTemplate(issn.getBeginIndex());
-          if (template != null) {
-            Parameter param = template.getParameterAtIndex(issn.getBeginIndex());
-            if (param != null) {
-              List<PageElementFunction> functions = analysis.getFunctions();
-              if (functions != null) {
-                for (PageElementFunction function : functions) {
-                  int functionIndex = function.getBeginIndex();
-                  if ((template == analysis.isInTemplate(functionIndex)) &&
-                      (param == template.getParameterAtIndex(functionIndex))) {
-                    isError = false;
-                  }
-                }
-              }
-            }
-          }
-        }
-
-        // Report error
-        if (isError) {
+        if (message != null) {
           if (errors == null) {
             return true;
           }
           result = true;
           CheckErrorResult errorResult = createCheckErrorResult(analysis, issn, true);
-          errorResult.addText(
-              GT._T(
-                  "Length of ISSN is {0} instead of 8",
-                  Integer.toString(length) ));
-          addSuggestions(analysis, errorResult, issn);
+          errorResult.addText(message);
           addHelpNeededTemplates(analysis, errorResult, issn);
           addHelpNeededComment(analysis, errorResult, issn);
 
@@ -111,11 +88,6 @@ public class CheckErrorAlgorithm107 extends CheckErrorAlgorithmISSN {
             addSearchEngines(analysis, errorResult, template);
           }
 
-          // Add search for potential ISBN
-          if ((length == 10) || (length == 13)) {
-            addSearchEnginesISBN(analysis, errorResult, issn.getISSN());
-          }
-
           // Add search for other identifiers
           errorResult.addPossibleAction(new SimpleAction(GT._T(
               "Search as OCLC"),
@@ -124,46 +96,43 @@ public class CheckErrorAlgorithm107 extends CheckErrorAlgorithmISSN {
               "Search as LCCN"),
               new ActionExternalViewer(MessageFormat.format("http://lccn.loc.gov/{0}", originalValue))));
 
-          // Add ISSN with added checksum
+          // Add ISSN with modified checksum
           List<String> searchISSN = new ArrayList<>();
-          if (length == 7) {
-            char computedCheck = PageElementISSN.computeChecksum(originalValue + '0');
-            if (computedCheck > 0) {
-              addSearchISSN(searchISSN, originalValue + computedCheck, false);
+          if (computedCheck != check) {
+            String value = originalValue.substring(0, originalValue.length() - 1) + computedCheck;
+            addSearchISSN(searchISSN, value, false);
+          }
+
+          // Add ISSN with characters inversion
+          if (originalValue.length() == 8) {
+            int previousChar = -1;
+            for (int currentChar = 0; currentChar < originalValue.length(); currentChar++) {
+              if (Character.isDigit(originalValue.charAt(currentChar))) {
+                if (previousChar >= 0) {
+                  String value =
+                      originalValue.substring(0, previousChar) +
+                      originalValue.charAt(currentChar) +
+                      originalValue.substring(previousChar + 1, currentChar) +
+                      originalValue.charAt(previousChar) +
+                      originalValue.substring(currentChar + 1);
+                  addSearchISSN(searchISSN, value, false);
+                }
+                previousChar = currentChar;
+              }
             }
           }
 
-          // Add ISSN for EAN 977
-          if ((originalValue.length() == 13) && (originalValue.startsWith("977"))) {
-            String value = originalValue.substring(3, 10);
-            char computedCheck = PageElementISSN.computeChecksum(value + '0');
-            if (computedCheck > 0) {
-              addSearchISSN(searchISSN, value + computedCheck, false);
-            }
-          }
-          // Add ISSN with one extra digit
-          if (originalValue.length() == 7) {
+          // Add ISSN with one modified digit
+          if (originalValue.length() == 8) {
             for (int currentChar = 0; currentChar < originalValue.length(); currentChar++) {
               if (Character.isDigit(originalValue.charAt(currentChar))) {
                 for (char newChar = '0'; newChar <= '9'; newChar++) {
                   String value =
                       originalValue.substring(0, currentChar) +
                       newChar +
-                      originalValue.substring(currentChar);
+                      originalValue.substring(currentChar + 1);
                   addSearchISSN(searchISSN, value, false);
                 }
-              }
-            }
-          }
-
-          // Add ISSN with one digit removed
-          if (originalValue.length() == 9) {
-            for (int currentChar = 0; currentChar < originalValue.length(); currentChar++) {
-              if (Character.isDigit(originalValue.charAt(currentChar))) {
-                String value =
-                    originalValue.substring(0, currentChar) +
-                    originalValue.substring(currentChar + 1);
-                addSearchISSN(searchISSN, value, false);
               }
             }
           }
@@ -201,15 +170,23 @@ public class CheckErrorAlgorithm107 extends CheckErrorAlgorithmISSN {
    */
   @Override
   public String getReason(PageElementISSN issn) {
-    if ((issn == null) || (reasonTemplate == null)) {
+    if (issn == null) {
       return null;
     }
     String number = issn.getISSN();
     if (number == null) {
       return null;
     }
-    int length = number.length();
-    return MessageFormat.format(reasonTemplate, Integer.toString(length));
+    char check = Character.toUpperCase(number.charAt(7));
+    char computedCheck = Character.toUpperCase(PageElementISSN.computeChecksum(number));
+    if (check != computedCheck) {
+      if (reasonTemplate == null) {
+        return null;
+      }
+      return MessageFormat.format(reasonTemplate, computedCheck, check);
+    }
+
+    return null;
   }
 
   /* ====================================================================== */
@@ -219,6 +196,9 @@ public class CheckErrorAlgorithm107 extends CheckErrorAlgorithmISSN {
   /** Explanation of the problem */
   private static final String PARAMETER_REASON = "reason";
 
+  /** Explanation of the problem */
+  private static final String PARAMETER_REASON_CHECKSUM = "reason_checksum";
+
   /**
    * Initialize settings for the algorithm.
    * 
@@ -226,7 +206,10 @@ public class CheckErrorAlgorithm107 extends CheckErrorAlgorithmISSN {
    */
   @Override
   protected void initializeSettings() {
-    reasonTemplate = getSpecificProperty(PARAMETER_REASON, true, true, false);
+    reasonTemplate = getSpecificProperty(PARAMETER_REASON_CHECKSUM, true, true, false);
+    if (reasonTemplate == null) {
+      reasonTemplate = getSpecificProperty(PARAMETER_REASON, true, true, false);
+    }
   }
 
   /** Explanation of the problem */

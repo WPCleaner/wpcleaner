@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://phabricator.wikimedia.org/project/board/4842/\n"
-"POT-Creation-Date: 2021-01-13 12:56+0100\n"
+"POT-Creation-Date: 2021-01-13 15:42+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -191,106 +191,6 @@ msgstr ""
 
 #: org/wikipediacleaner/api/check/CheckErrorResult.java:329
 msgid "Edit table of contents"
-msgstr ""
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm101.java:163
-msgid "List of ordinal suffixes"
-msgstr ""
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm101.java:166
-msgid "Ordinal suffix"
-msgstr ""
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm101.java:170
-msgid "List of possible replacements"
-msgstr ""
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm101.java:173
-msgid "A possible replacemement for one suffix"
-msgstr ""
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm103.java:30
-msgid "Replace all pipe templates"
-msgstr ""
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm106.java:192
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm106.java:195
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm107.java:243
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm107.java:246
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm108.java:225
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm108.java:228
-#: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a069/CheckErrorAlgorithm069.java:863
-#: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a069/CheckErrorAlgorithm069.java:866
-#: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a070/CheckErrorAlgorithm070.java:280
-#: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a070/CheckErrorAlgorithm070.java:283
-#: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a071/CheckErrorAlgorithm071.java:152
-#: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a071/CheckErrorAlgorithm071.java:155
-#: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a072/CheckErrorAlgorithm072.java:268
-#: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a072/CheckErrorAlgorithm072.java:274
-#: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a072/CheckErrorAlgorithm072.java:280
-#: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a073/CheckErrorAlgorithm073.java:303
-#: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a073/CheckErrorAlgorithm073.java:309
-#: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a073/CheckErrorAlgorithm073.java:315
-msgid "An explanation of the problem"
-msgstr ""
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm107.java:98
-#, java-format
-msgid "Length of ISSN is {0} instead of 8"
-msgstr ""
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm107.java:121
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm108.java:92
-#: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a070/CheckErrorAlgorithm070.java:118
-#: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a072/CheckErrorAlgorithm072.java:103
-#: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a073/CheckErrorAlgorithm073.java:103
-msgid "Search as OCLC"
-msgstr ""
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm107.java:124
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm108.java:95
-#: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a070/CheckErrorAlgorithm070.java:121
-#: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a072/CheckErrorAlgorithm072.java:106
-#: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a073/CheckErrorAlgorithm073.java:106
-msgid "Search as LCCN"
-msgstr ""
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm107.java:174
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm108.java:142
-msgid "Similar ISSN"
-msgstr ""
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm108.java:66
-#: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a072/CheckErrorAlgorithm072.java:69
-#: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a073/CheckErrorAlgorithm073.java:69
-#, java-format
-msgid "The checksum is {0} instead of {1}"
-msgstr ""
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm111.java:199
-#: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a003/CheckErrorAlgorithm003.java:276
-#: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a003/CheckErrorAlgorithm003.java:283
-#, java-format
-msgid "A list of templates resulting in the inclusion of {0}"
-msgstr ""
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm111.java:203
-msgid "Template name"
-msgstr ""
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm111.java:206
-msgid "Parameter for the name of the group"
-msgstr ""
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm112.java:628
-#, java-format
-msgid "Use {0} and {1}"
-msgstr ""
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm112.java:644
-#: org/wikipediacleaner/api/check/algorithm/a0xx/a08x/a085/CheckErrorAlgorithm085.java:286
-#, java-format
-msgid "Use {0}"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm509.java:31
@@ -771,6 +671,13 @@ msgstr ""
 msgid "Text to insert for adding {0}"
 msgstr ""
 
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a003/CheckErrorAlgorithm003.java:276
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a003/CheckErrorAlgorithm003.java:283
+#: org/wikipediacleaner/api/check/algorithm/a1xx/a11x/a111/CheckErrorAlgorithm111.java:200
+#, java-format
+msgid "A list of templates resulting in the inclusion of {0}"
+msgstr ""
+
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a003/CheckErrorAlgorithm003.java:279
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a003/CheckErrorAlgorithm003.java:286
 #, java-format
@@ -1147,15 +1054,59 @@ msgstr ""
 msgid "Parameter name for the displayed text"
 msgstr ""
 
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a069/CheckErrorAlgorithm069.java:863
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a069/CheckErrorAlgorithm069.java:866
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a070/CheckErrorAlgorithm070.java:280
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a070/CheckErrorAlgorithm070.java:283
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a071/CheckErrorAlgorithm071.java:152
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a071/CheckErrorAlgorithm071.java:155
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a072/CheckErrorAlgorithm072.java:268
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a072/CheckErrorAlgorithm072.java:274
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a072/CheckErrorAlgorithm072.java:280
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a073/CheckErrorAlgorithm073.java:303
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a073/CheckErrorAlgorithm073.java:309
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a073/CheckErrorAlgorithm073.java:315
+#: org/wikipediacleaner/api/check/algorithm/a1xx/a10x/a106/CheckErrorAlgorithm106.java:193
+#: org/wikipediacleaner/api/check/algorithm/a1xx/a10x/a106/CheckErrorAlgorithm106.java:196
+#: org/wikipediacleaner/api/check/algorithm/a1xx/a10x/a107/CheckErrorAlgorithm107.java:244
+#: org/wikipediacleaner/api/check/algorithm/a1xx/a10x/a107/CheckErrorAlgorithm107.java:247
+#: org/wikipediacleaner/api/check/algorithm/a1xx/a10x/a108/CheckErrorAlgorithm108.java:226
+#: org/wikipediacleaner/api/check/algorithm/a1xx/a10x/a108/CheckErrorAlgorithm108.java:229
+msgid "An explanation of the problem"
+msgstr ""
+
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a070/CheckErrorAlgorithm070.java:101
 #, java-format
 msgid "Length of ISBN is {0} instead of 10 or 13"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a070/CheckErrorAlgorithm070.java:118
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a072/CheckErrorAlgorithm072.java:103
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a073/CheckErrorAlgorithm073.java:103
+#: org/wikipediacleaner/api/check/algorithm/a1xx/a10x/a107/CheckErrorAlgorithm107.java:122
+#: org/wikipediacleaner/api/check/algorithm/a1xx/a10x/a108/CheckErrorAlgorithm108.java:93
+msgid "Search as OCLC"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a070/CheckErrorAlgorithm070.java:121
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a072/CheckErrorAlgorithm072.java:106
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a073/CheckErrorAlgorithm073.java:106
+#: org/wikipediacleaner/api/check/algorithm/a1xx/a10x/a107/CheckErrorAlgorithm107.java:125
+#: org/wikipediacleaner/api/check/algorithm/a1xx/a10x/a108/CheckErrorAlgorithm108.java:96
+msgid "Search as LCCN"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a070/CheckErrorAlgorithm070.java:195
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a072/CheckErrorAlgorithm072.java:156
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a073/CheckErrorAlgorithm073.java:181
 msgid "Similar ISBN"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a072/CheckErrorAlgorithm072.java:69
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a073/CheckErrorAlgorithm073.java:69
+#: org/wikipediacleaner/api/check/algorithm/a1xx/a10x/a108/CheckErrorAlgorithm108.java:67
+#, java-format
+msgid "The checksum is {0} instead of {1}"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a072/CheckErrorAlgorithm072.java:75
@@ -1266,6 +1217,12 @@ msgstr ""
 msgid "Maximum level of title to check"
 msgstr ""
 
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a08x/a085/CheckErrorAlgorithm085.java:286
+#: org/wikipediacleaner/api/check/algorithm/a1xx/a11x/a112/CheckErrorAlgorithm112.java:645
+#, java-format
+msgid "Use {0}"
+msgstr ""
+
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a08x/a085/CheckErrorAlgorithm085.java:348
 msgid "A list of templates that can be used to replace &lt;center&gt; tags"
 msgstr ""
@@ -1359,6 +1316,49 @@ msgstr ""
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a092/CheckErrorAlgorithm092.java:288
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a092/CheckErrorAlgorithm092.java:291
 msgid "To report only consecutive titles"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/a1xx/a10x/a101/CheckErrorAlgorithm101.java:164
+msgid "List of ordinal suffixes"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/a1xx/a10x/a101/CheckErrorAlgorithm101.java:167
+msgid "Ordinal suffix"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/a1xx/a10x/a101/CheckErrorAlgorithm101.java:171
+msgid "List of possible replacements"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/a1xx/a10x/a101/CheckErrorAlgorithm101.java:174
+msgid "A possible replacemement for one suffix"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/a1xx/a10x/a103/CheckErrorAlgorithm103.java:31
+msgid "Replace all pipe templates"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/a1xx/a10x/a107/CheckErrorAlgorithm107.java:99
+#, java-format
+msgid "Length of ISSN is {0} instead of 8"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/a1xx/a10x/a107/CheckErrorAlgorithm107.java:175
+#: org/wikipediacleaner/api/check/algorithm/a1xx/a10x/a108/CheckErrorAlgorithm108.java:143
+msgid "Similar ISSN"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/a1xx/a11x/a111/CheckErrorAlgorithm111.java:204
+msgid "Template name"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/a1xx/a11x/a111/CheckErrorAlgorithm111.java:207
+msgid "Parameter for the name of the group"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/a1xx/a11x/a112/CheckErrorAlgorithm112.java:629
+#, java-format
+msgid "Use {0} and {1}"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a50x/a501/CheckErrorAlgorithm501.java:170
