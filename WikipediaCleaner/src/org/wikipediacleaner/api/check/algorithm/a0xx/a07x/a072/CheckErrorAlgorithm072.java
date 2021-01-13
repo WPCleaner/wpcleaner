@@ -5,7 +5,7 @@
  *  See README.txt file for licensing information.
  */
 
-package org.wikipediacleaner.api.check.algorithm;
+package org.wikipediacleaner.api.check.algorithm.a0xx.a07x.a072;
 
 import java.text.MessageFormat;
 import java.util.ArrayList;
@@ -16,9 +16,9 @@ import org.wikipediacleaner.api.algorithm.AlgorithmParameter;
 import org.wikipediacleaner.api.algorithm.AlgorithmParameterElement;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.SimpleAction;
+import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmISBN;
 import org.wikipediacleaner.api.data.ISBNRange;
 import org.wikipediacleaner.api.data.PageElementISBN;
-import org.wikipediacleaner.api.data.PageElementISSN;
 import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.ISBNRange.ISBNInformation;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
@@ -27,13 +27,13 @@ import org.wikipediacleaner.i18n.GT;
 
 
 /**
- * Algorithm for analyzing error 73 of check wikipedia project.
- * Error 73: ISBN wrong checksum in ISBN-13
+ * Algorithm for analyzing error 72 of check wikipedia project.
+ * Error 72: ISBN wrong checksum in ISBN-10
  */
-public class CheckErrorAlgorithm073 extends CheckErrorAlgorithmISBN {
+public class CheckErrorAlgorithm072 extends CheckErrorAlgorithmISBN {
 
-  public CheckErrorAlgorithm073() {
-    super("ISBN wrong checksum in ISBN-13");
+  public CheckErrorAlgorithm072() {
+    super("ISBN wrong checksum in ISBN-10");
   }
 
   /**
@@ -57,13 +57,14 @@ public class CheckErrorAlgorithm073 extends CheckErrorAlgorithmISBN {
     List<PageElementISBN> isbns = analysis.getISBNs();
     for (PageElementISBN isbn : isbns) {
       String number = isbn.getISBN();
-      if ((number != null) && (number.length() == 13) && isbn.isValid()) {
-        char check = Character.toUpperCase(number.charAt(12));
+      if ((number != null) && (number.length() == 10) && isbn.isValid()) {
+        char check = Character.toUpperCase(number.charAt(9));
         char computedCheck = Character.toUpperCase(
             PageElementISBN.computeChecksum(number));
 
         String message = null;
-        if ((check != computedCheck) && Character.isDigit(computedCheck)) {
+        if ((check != computedCheck) &&
+            (Character.isDigit(computedCheck) || (computedCheck == 'X'))) {
           message = GT._T(
               "The checksum is {0} instead of {1}",
               new Object[] { check, computedCheck } );
@@ -105,15 +106,6 @@ public class CheckErrorAlgorithm073 extends CheckErrorAlgorithmISBN {
               "Search as LCCN"),
               new ActionExternalViewer(MessageFormat.format("http://lccn.loc.gov/{0}", number))));
 
-          // Add ISSN if number starts with 977=Prefix for ISSN
-          if (number.startsWith("977")) { // Prefix for ISSN
-            String value = number.substring(3, 10);
-            char checkISSN = PageElementISSN.computeChecksum(value + '0');
-            if (checkISSN > 0) {
-              addSearchEnginesISSN(analysis, errorResult, value + checkISSN);
-            }
-          }
-
           // Add ISBN with modified checksum
           List<String> searchISBN = new ArrayList<>();
           if (computedCheck != check) {
@@ -121,27 +113,11 @@ public class CheckErrorAlgorithm073 extends CheckErrorAlgorithmISBN {
             addSearchISBN(searchISBN, value, false);
           }
 
-          // Try specific replacements if ISBN doesn't start with 978 or 979
-          if (!number.startsWith("978") && !number.startsWith("979")) {
-            int count = 0;
-            count += (number.charAt(0) == '9') ? 1 : 0;
-            count += (number.charAt(1) == '7') ? 1 : 0;
-            count += (number.charAt(2) == '8') ? 1 : 0;
-            count += (number.charAt(2) == '9') ? 1 : 0;
-            if (count == 2) {
-              String value = ((number.charAt(2) == '9') ? "979" : "978") + number.substring(3);
-              addSearchISBN(searchISBN, value, false);
-            }
-          }
-
           // Try ISBN-10
-          if (number.startsWith("978")) {
-            String value = number.substring(3);
-            addSearchISBN(searchISBN, value, false);
-          }
+          addSearchISBN(searchISBN, "978" + number, false);
 
           // Add ISBN with characters inversion
-          if (number.length() == 13) {
+          if (number.length() == 10) {
             int previousChar = -1;
             for (int currentChar = 0; currentChar < number.length(); currentChar++) {
               if (Character.isDigit(number.charAt(currentChar))) {
@@ -160,7 +136,7 @@ public class CheckErrorAlgorithm073 extends CheckErrorAlgorithmISBN {
           }
 
           // Add ISBN with one modified digit
-          if (number.length() == 13) {
+          if (number.length() == 10) {
             for (int currentChar = 0; currentChar < number.length(); currentChar++) {
               if (Character.isDigit(number.charAt(currentChar))) {
                 for (char newChar = '0'; newChar <= '9'; newChar++) {
@@ -199,14 +175,6 @@ public class CheckErrorAlgorithm073 extends CheckErrorAlgorithmISBN {
         searchISBN.add(isbn);
       }
     }
-    if ((isbn.length() == 13) && isbn.startsWith("978")) {
-      isbn = isbn.substring(3);
-      if (!searchISBN.contains(isbn)) {
-        if (PageElementISBN.computeChecksum(isbn) == isbn.charAt(isbn.length() - 1)) {
-          searchISBN.add(isbn);
-        }
-      }
-    }
   }
 
   /**
@@ -222,11 +190,9 @@ public class CheckErrorAlgorithm073 extends CheckErrorAlgorithmISBN {
     if (number == null) {
       return null;
     }
-    char check = Character.toUpperCase(number.charAt(12));
+    char check = Character.toUpperCase(number.charAt(9));
     char computedCheck = Character.toUpperCase(PageElementISBN.computeChecksum(number));
-
-    // Invalid checksum
-    if ((check != computedCheck) && Character.isDigit(computedCheck)) {
+    if (check != computedCheck) {
       if (reasonChecksum == null) {
         return null;
       }

@@ -5,13 +5,14 @@
  *  See README.txt file for licensing information.
  */
 
-package org.wikipediacleaner.api.check.algorithm;
+package org.wikipediacleaner.api.check.algorithm.a0xx.a07x.a079;
 
 import java.util.Collection;
 
 import org.wikipediacleaner.api.check.AddTextActionProvider;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.SimpleAction;
+import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase;
 import org.wikipediacleaner.api.data.PageElementExternalLink;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.PageElementTemplate;

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://phabricator.wikimedia.org/project/board/4842/\n"
-"POT-Creation-Date: 2021-01-13 12:31+0100\n"
+"POT-Creation-Date: 2021-01-13 12:38+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -191,134 +191,6 @@ msgstr ""
 
 #: org/wikipediacleaner/api/check/CheckErrorResult.java:329
 msgid "Edit table of contents"
-msgstr ""
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm070.java:100
-#, java-format
-msgid "Length of ISBN is {0} instead of 10 or 13"
-msgstr ""
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm070.java:117
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm072.java:102
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm073.java:102
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm107.java:121
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm108.java:92
-msgid "Search as OCLC"
-msgstr ""
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm070.java:120
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm072.java:105
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm073.java:105
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm107.java:124
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm108.java:95
-msgid "Search as LCCN"
-msgstr ""
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm070.java:194
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm072.java:155
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm073.java:180
-msgid "Similar ISBN"
-msgstr ""
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm070.java:279
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm070.java:282
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm071.java:151
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm071.java:154
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm072.java:267
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm072.java:273
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm072.java:279
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm073.java:302
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm073.java:308
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm073.java:314
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm106.java:192
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm106.java:195
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm107.java:243
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm107.java:246
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm108.java:225
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm108.java:228
-#: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a069/CheckErrorAlgorithm069.java:863
-#: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a069/CheckErrorAlgorithm069.java:866
-msgid "An explanation of the problem"
-msgstr ""
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm072.java:68
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm073.java:68
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm108.java:66
-#, java-format
-msgid "The checksum is {0} instead of {1}"
-msgstr ""
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm072.java:74
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm073.java:74
-msgid "There's no existing range for this ISBN"
-msgstr ""
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm072.java:76
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm073.java:76
-msgid "This ISBN is inside a reserved range"
-msgstr ""
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm072.java:264
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm073.java:299
-msgid "An explanation of the problem (incorrect checksum)"
-msgstr ""
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm072.java:270
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm073.java:305
-msgid "An explanation of the problem (non-existing range of ISBN numbers)"
-msgstr ""
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm072.java:276
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm073.java:311
-msgid "An explanation of the problem (reserved range of ISBN numbers)"
-msgstr ""
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm076.java:31
-msgid "Replace all %20 by space character"
-msgstr ""
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm076.java:68
-msgid "Replace %20 by space character"
-msgstr ""
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm077.java:94
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm525.java:165
-#: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a002/CheckErrorAlgorithm002.java:220
-#: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a002/CheckErrorAlgorithm002.java:244
-#: org/wikipediacleaner/api/check/algorithm/a0xx/a05x/a055/CheckErrorAlgorithm055.java:169
-#: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a066/CheckErrorAlgorithm066.java:96
-#, java-format
-msgid "Remove {0} tags"
-msgstr ""
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm078.java:201
-msgid "A list of regular expressions to find templates replacing <references> tags"
-msgstr ""
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm078.java:204
-msgid "A regular expression to find templates replacing <references> tags"
-msgstr ""
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm079.java:104
-#: org/wikipediacleaner/api/check/algorithm/a0xx/a03x/a030/CheckErrorAlgorithm030.java:97
-msgid "Add a description..."
-msgstr ""
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm079.java:108
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm079.java:120
-msgid "What description would you like to use for the external link ?"
-msgstr ""
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm079.java:113
-msgid "Convert into <ref> tag"
-msgstr ""
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm079.java:115
-msgid "Add a description and convert into <ref> tag"
-msgstr ""
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm079.java:135
-msgid "External viewer"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm081.java:56
@@ -526,14 +398,58 @@ msgstr ""
 msgid "Replace all pipe templates"
 msgstr ""
 
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm106.java:192
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm106.java:195
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm107.java:243
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm107.java:246
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm108.java:225
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm108.java:228
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a069/CheckErrorAlgorithm069.java:863
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a069/CheckErrorAlgorithm069.java:866
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a070/CheckErrorAlgorithm070.java:280
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a070/CheckErrorAlgorithm070.java:283
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a071/CheckErrorAlgorithm071.java:152
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a071/CheckErrorAlgorithm071.java:155
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a072/CheckErrorAlgorithm072.java:268
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a072/CheckErrorAlgorithm072.java:274
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a072/CheckErrorAlgorithm072.java:280
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a073/CheckErrorAlgorithm073.java:303
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a073/CheckErrorAlgorithm073.java:309
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a073/CheckErrorAlgorithm073.java:315
+msgid "An explanation of the problem"
+msgstr ""
+
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm107.java:98
 #, java-format
 msgid "Length of ISSN is {0} instead of 8"
 msgstr ""
 
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm107.java:121
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm108.java:92
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a070/CheckErrorAlgorithm070.java:118
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a072/CheckErrorAlgorithm072.java:103
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a073/CheckErrorAlgorithm073.java:103
+msgid "Search as OCLC"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm107.java:124
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm108.java:95
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a070/CheckErrorAlgorithm070.java:121
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a072/CheckErrorAlgorithm072.java:106
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a073/CheckErrorAlgorithm073.java:106
+msgid "Search as LCCN"
+msgstr ""
+
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm107.java:174
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm108.java:142
 msgid "Similar ISSN"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm108.java:66
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a072/CheckErrorAlgorithm072.java:69
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a073/CheckErrorAlgorithm073.java:69
+#, java-format
+msgid "The checksum is {0} instead of {1}"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm111.java:199
@@ -661,6 +577,16 @@ msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm525.java:135
 msgid "Use an anchor template?"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm525.java:165
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a002/CheckErrorAlgorithm002.java:220
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a002/CheckErrorAlgorithm002.java:244
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a05x/a055/CheckErrorAlgorithm055.java:169
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a066/CheckErrorAlgorithm066.java:96
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a077/CheckErrorAlgorithm077.java:95
+#, java-format
+msgid "Remove {0} tags"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm525.java:227
@@ -1199,6 +1125,11 @@ msgstr ""
 msgid "Template that can replace the end of a table"
 msgstr ""
 
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a03x/a030/CheckErrorAlgorithm030.java:97
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a079/CheckErrorAlgorithm079.java:105
+msgid "Add a description..."
+msgstr ""
+
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a03x/a030/CheckErrorAlgorithm030.java:101
 msgid "What description would you like to use for the image ?"
 msgstr ""
@@ -1347,6 +1278,75 @@ msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a068/CheckErrorAlgorithm068.java:433
 msgid "Parameter name for the displayed text"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a070/CheckErrorAlgorithm070.java:101
+#, java-format
+msgid "Length of ISBN is {0} instead of 10 or 13"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a070/CheckErrorAlgorithm070.java:195
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a072/CheckErrorAlgorithm072.java:156
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a073/CheckErrorAlgorithm073.java:181
+msgid "Similar ISBN"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a072/CheckErrorAlgorithm072.java:75
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a073/CheckErrorAlgorithm073.java:75
+msgid "There's no existing range for this ISBN"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a072/CheckErrorAlgorithm072.java:77
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a073/CheckErrorAlgorithm073.java:77
+msgid "This ISBN is inside a reserved range"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a072/CheckErrorAlgorithm072.java:265
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a073/CheckErrorAlgorithm073.java:300
+msgid "An explanation of the problem (incorrect checksum)"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a072/CheckErrorAlgorithm072.java:271
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a073/CheckErrorAlgorithm073.java:306
+msgid "An explanation of the problem (non-existing range of ISBN numbers)"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a072/CheckErrorAlgorithm072.java:277
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a073/CheckErrorAlgorithm073.java:312
+msgid "An explanation of the problem (reserved range of ISBN numbers)"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a076/CheckErrorAlgorithm076.java:32
+msgid "Replace all %20 by space character"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a076/CheckErrorAlgorithm076.java:69
+msgid "Replace %20 by space character"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a078/CheckErrorAlgorithm078.java:202
+msgid "A list of regular expressions to find templates replacing <references> tags"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a078/CheckErrorAlgorithm078.java:205
+msgid "A regular expression to find templates replacing <references> tags"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a079/CheckErrorAlgorithm079.java:109
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a079/CheckErrorAlgorithm079.java:121
+msgid "What description would you like to use for the external link ?"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a079/CheckErrorAlgorithm079.java:114
+msgid "Convert into <ref> tag"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a079/CheckErrorAlgorithm079.java:116
+msgid "Add a description and convert into <ref> tag"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a079/CheckErrorAlgorithm079.java:136
+msgid "External viewer"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a08x/a085/CheckErrorAlgorithm085.java:348
