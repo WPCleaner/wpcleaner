@@ -5,25 +5,25 @@
  *  See README.txt file for licensing information.
  */
 
-package org.wikipediacleaner.api.check.algorithm;
+package org.wikipediacleaner.api.check.algorithm.a5xx.a50x.a503;
 
 import java.util.Collection;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
-import org.wikipediacleaner.api.data.PageElementTag;
+import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase;
+import org.wikipediacleaner.api.data.PageElementInternalLink;
 import org.wikipediacleaner.api.data.PageElementTitle;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
-import org.wikipediacleaner.api.data.contents.tag.WikiTagType;
 
 
 /**
- * Algorithm for analyzing error 504 of check wikipedia project.
- * Error 504: Reference in title
+ * Algorithm for analyzing error 503 of check wikipedia project.
+ * Error 503: Internal link in title
  */
-public class CheckErrorAlgorithm504 extends CheckErrorAlgorithmBase {
+public class CheckErrorAlgorithm503 extends CheckErrorAlgorithmBase {
 
-  public CheckErrorAlgorithm504() {
-    super("Reference in title");
+  public CheckErrorAlgorithm503() {
+    super("Internal link in title");
   }
 
   /**
@@ -42,14 +42,14 @@ public class CheckErrorAlgorithm504 extends CheckErrorAlgorithmBase {
       return false;
     }
 
-    // Check every reference
-    Collection<PageElementTag> refs = analysis.getCompleteTags(WikiTagType.REF);
-    if ((refs == null) || (refs.isEmpty())) {
+    // Check every internal link
+    Collection<PageElementInternalLink> links = analysis.getInternalLinks();
+    if ((links == null) || (links.isEmpty())) {
       return false;
     }
     boolean result = false;
-    for (PageElementTag ref : refs) {
-      PageElementTitle title = analysis.isInTitle(ref.getCompleteBeginIndex());
+    for (PageElementInternalLink link : links) {
+      PageElementTitle title = analysis.isInTitle(link.getBeginIndex());
       if (title != null) {
         if (errors == null) {
           return true;
@@ -57,7 +57,8 @@ public class CheckErrorAlgorithm504 extends CheckErrorAlgorithmBase {
         result = true;
         CheckErrorResult error = createCheckErrorResult(
             analysis,
-            ref.getCompleteBeginIndex(), ref.getCompleteEndIndex());
+            link.getBeginIndex(), link.getEndIndex());
+        error.addReplacement(link.getDisplayedText());
         errors.add(error);
       }
     }

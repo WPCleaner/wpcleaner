@@ -5,24 +5,24 @@
  *  See README.txt file for licensing information.
  */
 
-package org.wikipediacleaner.api.check.algorithm;
+package org.wikipediacleaner.api.check.algorithm.a5xx.a50x.a505;
 
 import java.util.Collection;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
-import org.wikipediacleaner.api.data.PageElementInternalLink;
-import org.wikipediacleaner.api.data.PageElementTitle;
+import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase;
+import org.wikipediacleaner.api.data.PageElementImage;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
 
 
 /**
- * Algorithm for analyzing error 503 of check wikipedia project.
- * Error 503: Internal link in title
+ * Algorithm for analyzing error 505 of check wikipedia project.
+ * Error 505: Image without alternative description
  */
-public class CheckErrorAlgorithm503 extends CheckErrorAlgorithmBase {
+public class CheckErrorAlgorithm505 extends CheckErrorAlgorithmBase {
 
-  public CheckErrorAlgorithm503() {
-    super("Internal link in title");
+  public CheckErrorAlgorithm505() {
+    super("Image without alternative description");
   }
 
   /**
@@ -41,23 +41,22 @@ public class CheckErrorAlgorithm503 extends CheckErrorAlgorithmBase {
       return false;
     }
 
-    // Check every internal link
-    Collection<PageElementInternalLink> links = analysis.getInternalLinks();
-    if ((links == null) || (links.isEmpty())) {
+    // Check every image
+    Collection<PageElementImage> images = analysis.getImages();
+    if ((images == null) || (images.isEmpty())) {
       return false;
     }
     boolean result = false;
-    for (PageElementInternalLink link : links) {
-      PageElementTitle title = analysis.isInTitle(link.getBeginIndex());
-      if (title != null) {
+    for (PageElementImage image : images) {
+      String alt = image.getAlternateDescription();
+      if ((alt == null) || (alt.trim().length() == 0)) {
         if (errors == null) {
           return true;
         }
         result = true;
         CheckErrorResult error = createCheckErrorResult(
             analysis,
-            link.getBeginIndex(), link.getEndIndex());
-        error.addReplacement(link.getDisplayedText());
+            image.getBeginIndex(), image.getEndIndex());
         errors.add(error);
       }
     }
