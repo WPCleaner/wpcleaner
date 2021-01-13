@@ -5,7 +5,7 @@
  *  See README.txt file for licensing information.
  */
 
-package org.wikipediacleaner.api.check.algorithm;
+package org.wikipediacleaner.api.check.algorithm.a5xx.a51x.a512;
 
 import org.wikipediacleaner.api.check.algorithm.a0xx.a09x.a091.CheckErrorAlgorithm091;
 
