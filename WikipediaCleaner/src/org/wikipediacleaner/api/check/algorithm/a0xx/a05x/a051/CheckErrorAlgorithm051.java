@@ -5,25 +5,26 @@
  *  See README.txt file for licensing information.
  */
 
-package org.wikipediacleaner.api.check.algorithm;
+package org.wikipediacleaner.api.check.algorithm.a0xx.a05x.a051;
 
 import java.util.Collection;
 import java.util.List;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
-import org.wikipediacleaner.api.data.PageElementCategory;
+import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase;
 import org.wikipediacleaner.api.data.PageElementLanguageLink;
+import org.wikipediacleaner.api.data.PageElementTitle;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
 
 
 /**
- * Algorithm for analyzing error 53 of check wikipedia project.
- * Error 53: Interwiki before last category
+ * Algorithm for analyzing error 51 of check wikipedia project.
+ * Error 51: Interwiki before last headline.
  */
-public class CheckErrorAlgorithm053 extends CheckErrorAlgorithmBase {
+public class CheckErrorAlgorithm051 extends CheckErrorAlgorithmBase {
 
-  public CheckErrorAlgorithm053() {
-    super("Interwiki before last category");
+  public CheckErrorAlgorithm051() {
+    super("Interwiki before last headline");
   }
 
   /**
@@ -38,34 +39,37 @@ public class CheckErrorAlgorithm053 extends CheckErrorAlgorithmBase {
   public boolean analyze(
       PageAnalysis analysis,
       Collection<CheckErrorResult> errors, boolean onlyAutomatic) {
-    if (analysis == null) {
+    if ((analysis == null) || (analysis.getPage() == null)) {
+      return false;
+    }
+    if (!analysis.getPage().isArticle()) {
       return false;
     }
 
-    // Retrieving last category
-    List<PageElementCategory> categories = analysis.getCategories();
-    if (categories.size() == 0) {
+    // Retrieving last headline
+    List<PageElementTitle> titles = analysis.getTitles();
+    if (titles.size() == 0) {
       return false;
     }
-    int lastCategory = categories.get(categories.size() - 1).getEndIndex();
+    int lastTitle = titles.get(titles.size() - 1).getEndIndex();
 
-    // Check every language link
+    // Checking every language link
     List<PageElementLanguageLink> languages = analysis.getLanguageLinks();
     String contents = analysis.getContents();
     boolean result = false;
     for (PageElementLanguageLink language : languages) {
-      int begin = language.getBeginIndex();
-      if (begin >= lastCategory) {
+      if (language.getBeginIndex() >= lastTitle) {
         return result;
       }
       if (errors == null) {
         return true;
       }
       result = true;
-      int end = language.getEndIndex();
       CheckErrorResult errorResult = createCheckErrorResult(
-          analysis, begin, end);
-      errorResult.addReplacement("[[:" + contents.substring(begin + 2, end));
+          analysis,
+          language.getBeginIndex(), language.getEndIndex());
+      errorResult.addReplacement(
+          "[[:" + contents.substring(language.getBeginIndex() + 2, language.getEndIndex()));
       errors.add(errorResult);
     }
 
