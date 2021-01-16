@@ -9,6 +9,7 @@
 package org.wikipediacleaner.api.check.algorithm.a5xx.a56x.a564;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -56,7 +57,7 @@ class TemplateConfiguration {
     this.paramsToDelete = new HashSet<>();
     this.paramsToComment = new HashSet<>();
     this.paramsToReplaceByName = new HashMap<>();
-    this.levenshteinDistance = new LevenshteinDistance(2);
+    this.levenshteinDistance = new LevenshteinDistance(4);
   }
 
   public @Nonnull String getTemplateName() {
@@ -135,6 +136,7 @@ class TemplateConfiguration {
     boolean safeDelete = StringUtils.isEmpty(param.getValue());
     String missingEqualName = null;
     String missingEqualValue = null;
+    Map<Integer, List<String>> similarNamesByDistance = new HashMap<>();
     for (String knownParam : knownParams) {
 
       // Search for mistyped parameters
@@ -144,32 +146,8 @@ class TemplateConfiguration {
             knownParam, param.getValue(), knownParam.length() >= 5));
       } else if (StringUtils.equals(name, computedName)) {
         int distance = levenshteinDistance.apply(computedName, knownParam);
-        if ((distance >= 0) && (distance <= 1)) {
-          boolean automatic = knownParam.length() >= 5;
-          if (automatic) {
-            int minLength = Math.min(computedName.length(), knownParam.length());
-            int beginEquals = 0;
-            while ((beginEquals < minLength) && CharacterUtils.equalsIgnoreCase(
-                computedName.charAt(beginEquals),
-                knownParam.charAt(beginEquals))) {
-              beginEquals++;
-            }
-            int endEquals = 0;
-            while ((endEquals < minLength) && CharacterUtils.equalsIgnoreCase(
-                computedName.charAt(computedName.length() - 1 - endEquals),
-                knownParam.charAt(knownParam.length() - 1 - endEquals))) {
-              endEquals++;
-            }
-            for (int index = beginEquals; index < computedName.length() - endEquals; index++) {
-              automatic &= !Character.isDigit(computedName.charAt(index));
-            }
-            for (int index = beginEquals; index < knownParam.length() - endEquals; index++) {
-              automatic &= !Character.isDigit(knownParam.charAt(index));
-            }
-          }
-          results.add(TemplateParameterSuggestion.replaceParam(
-              contents, param,
-              knownParam, param.getValue(), automatic));
+        if ((distance >= 0) && (distance <= 3)) {
+          similarNamesByDistance.computeIfAbsent(distance, k -> new ArrayList<>()).add(knownParam);
         } else if (StringUtils.isEmpty(param.getValue())) {
           if (StringUtils.startsWith(name, knownParam)) {
             if ((missingEqualName == null) || (knownParam.length() > missingEqualName.length())) {
@@ -198,6 +176,37 @@ class TemplateConfiguration {
         if (StringUtils.endsWith(computedName, knownParam.substring(index))) {
           safeDelete = false;
         }
+      }
+    }
+
+    // Handle similar names
+    for (int distance = 1; distance <= 3; distance++) {
+      for (String knownParam : similarNamesByDistance.getOrDefault(distance, Collections.emptyList())) {
+        boolean automatic = (distance <= 1) && (knownParam.length() >= 5);
+        if (automatic) {
+          int minLength = Math.min(computedName.length(), knownParam.length());
+          int beginEquals = 0;
+          while ((beginEquals < minLength) && CharacterUtils.equalsIgnoreCase(
+              computedName.charAt(beginEquals),
+              knownParam.charAt(beginEquals))) {
+            beginEquals++;
+          }
+          int endEquals = 0;
+          while ((endEquals < minLength) && CharacterUtils.equalsIgnoreCase(
+              computedName.charAt(computedName.length() - 1 - endEquals),
+              knownParam.charAt(knownParam.length() - 1 - endEquals))) {
+            endEquals++;
+          }
+          for (int index = beginEquals; index < computedName.length() - endEquals; index++) {
+            automatic &= !Character.isDigit(computedName.charAt(index));
+          }
+          for (int index = beginEquals; index < knownParam.length() - endEquals; index++) {
+            automatic &= !Character.isDigit(knownParam.charAt(index));
+          }
+        }
+        results.add(TemplateParameterSuggestion.replaceParam(
+            contents, param,
+            knownParam, param.getValue(), automatic));
       }
     }
 
