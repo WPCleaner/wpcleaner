@@ -51,6 +51,7 @@ FixListCheckWiki Projet:Correction_syntaxique/Analyse_002 2
 FixListCheckWiki Projet:Correction_syntaxique/Analyse_016 16
 FixListCheckWiki Projet:Correction_syntaxique/Analyse_022 22
 FixListCheckWiki Projet:Correction_syntaxique/Analyse_052 52
+FixListCheckWiki Projet:Correction_syntaxique/Analyse_064 64
 FixListCheckWiki Projet:Correction_syntaxique/Analyse_090 90
 
 # Category namespace
