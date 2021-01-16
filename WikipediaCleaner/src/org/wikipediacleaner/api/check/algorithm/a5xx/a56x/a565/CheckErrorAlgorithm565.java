@@ -14,6 +14,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase;
 import org.wikipediacleaner.api.data.CharacterUtils;
+import org.wikipediacleaner.api.data.PageElementFormatting;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
 import org.wikipediacleaner.api.data.contents.ContentsUtil;
@@ -104,19 +105,7 @@ public class CheckErrorAlgorithm565 extends CheckErrorAlgorithmBase {
     int minCount = Math.min(countBefore, countAfter);
     boolean countOk = (minCount == 2) || (minCount == 3) || (minCount == 5);
     if (countOk) {
-      boolean automatic = (Math.abs(countAfter - countBefore) < 2);
-      if (automatic) {
-        int tmpIndex = ContentsUtil.moveIndexBackwardWhileFound(contents, firstIndex, " ");
-        if ((tmpIndex >= 0) && (contents.charAt(tmpIndex) == '\'')) {
-          automatic = false;
-        }
-      }
-      if (automatic) {
-        int tmpIndex = ContentsUtil.moveIndexForwardWhileFound(contents, lastIndex, " ");
-        if ((tmpIndex < contents.length()) && (contents.charAt(tmpIndex) == '\'')) {
-          automatic = false;
-        }
-      }
+      boolean automatic = canBeAutomatic(countBefore, countAfter, analysis, firstIndex, lastIndex);
       String replacement = 
           contents.substring(firstIndex + 1 + minCount, beginIndex) +
           inside +
@@ -124,6 +113,60 @@ public class CheckErrorAlgorithm565 extends CheckErrorAlgorithmBase {
       errorResult.addReplacement(replacement, automatic);
     }
     errors.add(errorResult);
+    return true;
+  }
+
+  /**
+   * Decide if a replacement can be automatic.
+   * 
+   * @param countBefore Number of apostrophes before.
+   * @param countAfter Number of apostrophes after.
+   * @param contents Page contents.
+   * @param firstIndex First index.
+   * @param lastIndex Last index.
+   * @return True if the replacement can be automatic.
+   */
+  private static boolean canBeAutomatic(
+      int countBefore, int countAfter,
+      PageAnalysis analysis, int firstIndex, int lastIndex) {
+    // Check that the number of apostrophes is similar before and after
+    if (Math.abs(countAfter - countBefore) >= 2) {
+      return false;
+    }
+
+    // Check that there are no apostrophes before/after separated by whitespace characters
+    String contents = analysis.getContents();
+    int tmpIndex = ContentsUtil.moveIndexBackwardWhileFound(contents, firstIndex, " ");
+    if ((tmpIndex >= 0) && (contents.charAt(tmpIndex) == '\'')) {
+      return false;
+    }
+    tmpIndex = ContentsUtil.moveIndexForwardWhileFound(contents, lastIndex, " ");
+    if ((tmpIndex < contents.length()) && (contents.charAt(tmpIndex) == '\'')) {
+      return false;
+    }
+
+    // Automatic if number of apostrophes is ok
+    if (countAfter == countBefore) {
+      return true;
+    }
+    int minCount = Math.min(countBefore, countAfter);
+    if (minCount == 3) {
+      return true;
+    }
+
+    // For more complex situations, analyze formatting elements around
+    List<PageElementFormatting> formatting = PageElementFormatting.listFormattingElements(analysis);
+    int mainBegin = formatting.stream()
+        .filter(element -> (element.getIndex() >= firstIndex) && (element.getIndex() <= lastIndex))
+        .mapToInt(PageElementFormatting::getMainAreaBegin).min().orElse(0);
+    int mainEnd = formatting.stream()
+        .filter(element -> (element.getIndex() >= firstIndex) && (element.getIndex() <= lastIndex))
+        .mapToInt(PageElementFormatting::getMainAreaEnd).max().orElse(contents.length());
+    long countElement = formatting.stream().filter(element -> (element.getIndex() >= mainBegin) && (element.getIndex() <= mainEnd)).count();
+    if (countElement > 2) {
+      return false;
+    }
+
     return true;
   }
 

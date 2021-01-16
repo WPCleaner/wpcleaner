@@ -1,0 +1,9 @@
+DoTasks _Common.txt
+Set AdditionalAlgorithms 565
+Set Configuration TimeBetweenEdit 40
+
+Set Prefix [[User:WikiCleanerBot#T24|Bot_T24_CW#565]]
+Set Prefix [[Wikipedia:Bots/Requests_for_approval/WikiCleanerBot_24|Bot_Test_T24_CW#565]]
+FixListCheckWiki Wikipedia:CHECKWIKI/WPC_565_dump 565
+# FixFileCheckWiki C:\Users\Nicolas\CW_enwiki_565.txt 565
+# FixDump C:\Users\Nicolas\Downloads\enwiki-$-pages-articles.xml.bz2 565
