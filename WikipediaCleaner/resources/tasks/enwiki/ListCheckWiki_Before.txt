@@ -20,6 +20,9 @@ FixCheckWiki 25
 Set Prefix [[User:WikiCleanerBot#T3|Bot_T3_CW#46]]
 FixCheckWiki 46
 
+Set Prefix [[User:WikiCleanerBot#T20|Bot_T20_CW#61]]
+FixCheckWiki 61
+
 Set Prefix [[User:WikiCleanerBot#T19|Bot_T19_CW#83]]
 FixCheckWiki 83
 
