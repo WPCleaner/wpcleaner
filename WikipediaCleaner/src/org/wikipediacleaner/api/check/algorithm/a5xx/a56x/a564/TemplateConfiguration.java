@@ -10,6 +10,7 @@ package org.wikipediacleaner.api.check.algorithm.a5xx.a56x.a564;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -180,9 +181,12 @@ class TemplateConfiguration {
     }
 
     // Handle similar names
+    Comparator<String> decreasingSizeComparator = (s1, s2) -> Integer.compare(s2.length(), s1.length());
     for (int distance = 1; distance <= 3; distance++) {
-      for (String knownParam : similarNamesByDistance.getOrDefault(distance, Collections.emptyList())) {
-        boolean automatic = (distance <= 1) && (knownParam.length() >= 5);
+      List<String> listKnownParams = similarNamesByDistance.getOrDefault(distance, Collections.emptyList());
+      listKnownParams.sort(decreasingSizeComparator);
+      for (String knownParam : listKnownParams) {
+        boolean automatic = (distance <= 1) && (knownParam.length() >= 5) && (listKnownParams.size() < 2);
         if (automatic) {
           int minLength = Math.min(computedName.length(), knownParam.length());
           int beginEquals = 0;
