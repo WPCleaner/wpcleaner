@@ -11,6 +11,8 @@ package org.wikipediacleaner.api.data;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.Nonnull;
+
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
 import org.wikipediacleaner.api.data.contents.ContentsUtil;
 
@@ -48,8 +50,9 @@ public class PageElementListItem extends PageElement {
         int beginIndex = index;
         index = ContentsUtil.moveIndexForwardWhileFound(contents, index, LIST_INDICATORS);
         int depth = index - beginIndex;
+        String indicators = contents.substring(beginIndex, index);
         index = ContentsUtil.moveIndexForwardWhileNotFound(contents, index, "\n");
-        items.add(new PageElementListItem(beginIndex, index, depth));
+        items.add(new PageElementListItem(beginIndex, index, depth, indicators));
       } else {
         index++;
       }
@@ -78,15 +81,21 @@ public class PageElementListItem extends PageElement {
   /** Depth */
   private final int depth;
 
+  /** List indicators */
+  @Nonnull
+  private final String indicators;
+
   /**
    * @param beginIndex Begin index.
    * @param endIndex End index.
    * @param depth Depth.
    */
   private PageElementListItem(
-      int beginIndex, int endIndex, int depth) {
+      int beginIndex, int endIndex,
+      int depth, @Nonnull String indicators) {
     super(beginIndex, endIndex);
     this.depth = depth;
+    this.indicators = indicators;
   }
 
   /**
@@ -94,5 +103,13 @@ public class PageElementListItem extends PageElement {
    */
   public int getDepth() {
     return depth;
+  }
+
+  /**
+   * @return List indicators.
+   */
+  @Nonnull
+  public String getIndicators() {
+    return indicators;
   }
 }

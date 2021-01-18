@@ -15,6 +15,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.apache.commons.lang3.StringUtils;
 import org.wikipediacleaner.api.algorithm.AlgorithmParameter;
 import org.wikipediacleaner.api.algorithm.AlgorithmParameterElement;
 import org.wikipediacleaner.api.check.CheckErrorResult;
@@ -24,6 +25,7 @@ import org.wikipediacleaner.api.data.CharacterUtils;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageElement;
 import org.wikipediacleaner.api.data.PageElementFullTag;
+import org.wikipediacleaner.api.data.PageElementListItem;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
@@ -270,6 +272,13 @@ public class CheckErrorAlgorithm061 extends CheckErrorAlgorithmBase {
         (analysis.isInTag(beginIndex, WikiTagType.SOURCE) != null) ||
         (analysis.isInTag(beginIndex, WikiTagType.SYNTAXHIGHLIGHT) != null)) {
       return false;
+    }
+    if (punctuation == ':') {
+      // Avoid cases like ;term<ref>...</ref>: definition
+      PageElementListItem listItem = analysis.isInListItem(firstPunctuationIndex);
+      if ((listItem != null) && (StringUtils.startsWith(listItem.getIndicators(), ";"))) {
+        return false;
+      }
     }
 
     // Error found
