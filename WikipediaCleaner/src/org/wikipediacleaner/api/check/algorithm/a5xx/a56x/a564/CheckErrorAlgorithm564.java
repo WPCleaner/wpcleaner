@@ -111,7 +111,7 @@ public class CheckErrorAlgorithm564 extends CheckErrorAlgorithmBase {
       TemplateConfiguration templateConfiguration) {
 
     // Check if there's an error
-    Optional<List<TemplateParameterSuggestion>> suggestions = templateConfiguration.analyzeParam(analysis.getContents(), template, paramNum);
+    Optional<List<TemplateParameterSuggestion>> suggestions = templateConfiguration.analyzeParam(analysis, template, paramNum);
     if (!suggestions.isPresent()) {
       return false;
     }

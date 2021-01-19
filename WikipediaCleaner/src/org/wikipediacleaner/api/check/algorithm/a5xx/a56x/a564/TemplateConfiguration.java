@@ -28,6 +28,7 @@ import org.slf4j.LoggerFactory;
 import org.wikipediacleaner.api.check.algorithm.a5xx.TemplateParameterSuggestion;
 import org.wikipediacleaner.api.data.CharacterUtils;
 import org.wikipediacleaner.api.data.PageElementTemplate;
+import org.wikipediacleaner.api.data.analysis.PageAnalysis;
 import org.wikipediacleaner.api.data.contents.ContentsUtil;
 
 /**
@@ -68,7 +69,7 @@ class TemplateConfiguration {
   /**
    * Analyze a template parameter.
    * 
-   * @param contents Page contents.
+   * @param analysis Page analysis.
    * @param template Template.
    * @param paramNum Parameter number.
    * @return Suggestions:
@@ -76,7 +77,7 @@ class TemplateConfiguration {
    *         A list of suggestions if the parameter is unknown and configured for the detection.
    */
   public @Nonnull Optional<List<TemplateParameterSuggestion>> analyzeParam(
-      String contents,
+      PageAnalysis analysis,
       @Nonnull PageElementTemplate template,
       int paramNum) {
 
@@ -102,6 +103,7 @@ class TemplateConfiguration {
     // Look for suggestions
     List<TemplateParameterSuggestion> results = new ArrayList<>();
     String name = param.getName();
+    String contents = analysis.getContents();
 
     // Handle non-breaking white space in the parameter name
     if (name.contains("\u00A0")) {
@@ -240,7 +242,7 @@ class TemplateConfiguration {
     safeDelete &= results.isEmpty();
     safeDelete |= paramsToDelete.contains(computedName);
     results.add(TemplateParameterSuggestion.deleteParam(contents, param, safeDelete));
-    results.add(TemplateParameterSuggestion.commentParam(contents, param, paramsToComment.contains(computedName)));
+    results.add(TemplateParameterSuggestion.commentParam(analysis, param, paramsToComment.contains(computedName)));
     return Optional.of(results);
   }
 

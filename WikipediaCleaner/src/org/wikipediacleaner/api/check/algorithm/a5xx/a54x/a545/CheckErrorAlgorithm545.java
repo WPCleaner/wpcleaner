@@ -101,9 +101,8 @@ public class CheckErrorAlgorithm545 extends CheckErrorAlgorithmBase {
 
     // Analyze each parameter
     boolean result = false;
-    String contents = analysis.getContents();
     for (int paramNum = 0; paramNum < template.getParameterCount(); paramNum++) {
-      Optional<List<TemplateParameterSuggestion>> suggestions = templateConfig.analyzeParam(contents, template, paramNum);
+      Optional<List<TemplateParameterSuggestion>> suggestions = templateConfig.analyzeParam(analysis, template, paramNum);
       if (suggestions.isPresent()) {
         if (errors == null) {
           return true;

@@ -20,6 +20,7 @@ import javax.annotation.Nullable;
 import org.apache.commons.lang3.StringUtils;
 import org.wikipediacleaner.api.check.algorithm.a5xx.TemplateParameterSuggestion;
 import org.wikipediacleaner.api.data.PageElementTemplate;
+import org.wikipediacleaner.api.data.analysis.PageAnalysis;
 
 /**
  * Bean for handling configuration for templates.
@@ -50,7 +51,7 @@ class TemplateConfiguration {
   /**
    * Analyze a template parameter.
    * 
-   * @param contents Page contents.
+   * @param analysis Page analysis.
    * @param template Template.
    * @param paramNum Parameter number.
    * @return Suggestions:
@@ -59,7 +60,7 @@ class TemplateConfiguration {
    */
   @Nonnull
   public Optional<List<TemplateParameterSuggestion>> analyzeParam(
-      String contents,
+      PageAnalysis analysis,
       @Nonnull PageElementTemplate template,
       int paramNum) {
 
@@ -87,6 +88,7 @@ class TemplateConfiguration {
 
     // Look for suggestions
     boolean automaticFound = false;
+    String contents = analysis.getContents();
     List<TemplateParameterSuggestion> results = new ArrayList<>();
     String existingValue = null;
     if (StringUtils.isNotEmpty(paramConfig.getReplacement())) {
@@ -105,7 +107,7 @@ class TemplateConfiguration {
         contents, param,
         automatic && !unnamedWithOthers && !automaticFound));
     automaticFound |= automatic;
-    results.add(TemplateParameterSuggestion.commentParam(contents, param, false));
+    results.add(TemplateParameterSuggestion.commentParam(analysis, param, false));
     return Optional.of(results);
   }
 

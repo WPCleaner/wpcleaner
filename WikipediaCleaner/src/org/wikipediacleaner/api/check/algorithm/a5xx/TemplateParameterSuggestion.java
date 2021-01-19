@@ -13,8 +13,10 @@ import javax.annotation.Nullable;
 
 import org.apache.commons.lang3.StringUtils;
 import org.wikipediacleaner.api.data.PageElementTemplate;
+import org.wikipediacleaner.api.data.analysis.PageAnalysis;
 import org.wikipediacleaner.api.data.contents.ContentsUtil;
 import org.wikipediacleaner.api.data.contents.comment.CommentBuilder;
+import org.wikipediacleaner.api.data.contents.comment.ContentsComment;
 
 /**
  * Suggestion for a replacement of a template parameter.
@@ -81,19 +83,32 @@ public class TemplateParameterSuggestion {
    * @return Suggestion.
    */
   public static TemplateParameterSuggestion commentParam(
-      String contents,
+      PageAnalysis analysis,
       PageElementTemplate.Parameter templateParam,
       boolean automatic) {
-    String fullText = contents.substring(templateParam.getBeginIndex(), templateParam.getEndIndex());
+    String fullText = analysis.getContents().substring(
+        templateParam.getBeginIndex(),
+        templateParam.getEndIndex());
     int firstChar = 0;
     while ((firstChar < fullText.length()) &&
            (" \n".indexOf(fullText.charAt(firstChar)) >= 0)) {
       firstChar++;
     }
     int lastChar = fullText.length();
-    while ((lastChar > firstChar) &&
-           (" \n".indexOf(fullText.charAt(lastChar - 1)) >= 0)) {
-      lastChar--;
+    boolean lastCharFinished = false;
+    while (!lastCharFinished) {
+      lastCharFinished = true;
+      while ((lastChar > firstChar) &&
+             (" \n".indexOf(fullText.charAt(lastChar - 1)) >= 0)) {
+        lastCharFinished = false;
+        lastChar--;
+      }
+      if ((lastChar > firstChar) && (fullText.charAt(lastChar - 1) == '>')) {
+        ContentsComment comment = analysis.comments().getEndsAt(templateParam.getBeginIndex() + lastChar);
+        if (comment != null) {
+          lastChar = comment.getBeginIndex() - templateParam.getBeginIndex();
+        }
+      }
     }
     String newText =
         fullText.substring(0, firstChar) +
