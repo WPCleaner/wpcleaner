@@ -14,6 +14,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase;
 import org.wikipediacleaner.api.data.CharacterUtils;
+import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageElementFormatting;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
@@ -178,8 +179,11 @@ public class CheckErrorAlgorithm565 extends CheckErrorAlgorithmBase {
    */
   @Override
   protected String internalAutomaticFix(PageAnalysis analysis) {
-    if (!analysis.getPage().isArticle() ||
-        !analysis.getPage().isInMainNamespace()) {
+    Page page = analysis.getPage();
+    if (!page.isArticle() || page.isInTemplateNamespace()) {
+      return analysis.getContents();
+    }
+    if (!analysis.getWPCConfiguration().isEncyclopedicNamespace(page.getNamespace())) {
       return analysis.getContents();
     }
     return fixUsingAutomaticReplacement(analysis);
