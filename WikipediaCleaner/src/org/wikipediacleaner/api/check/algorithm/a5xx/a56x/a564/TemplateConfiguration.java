@@ -164,7 +164,7 @@ class TemplateConfiguration {
       // Search for missing "=" sign
       if (!StringUtils.equals(name, computedName) &&
           StringUtils.startsWith(param.getValue(), knownParam)) {
-        if ((missingEqualName == null)) {
+        if ((missingEqualName == null) || (knownParam.length() > missingEqualName.length())) {
           missingEqualName = knownParam;
           missingEqualValue = param.getValue().substring(knownParam.length()).trim();
         }
