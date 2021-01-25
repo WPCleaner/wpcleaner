@@ -30,6 +30,7 @@ FixListCheckWiki Projet:Correction_syntaxique/Analyse_104 104
 FixListCheckWiki Projet:Correction_syntaxique/Analyse_106 106
 FixListCheckWiki Projet:Correction_syntaxique/Analyse_513 513
 FixListCheckWiki Projet:Correction_syntaxique/Analyse_543 543
+FixListCheckWiki Projet:Correction_syntaxique/Analyse_545 545
 FixListCheckWiki Projet:Correction_syntaxique/Analyse_547 547
 FixListCheckWiki Projet:Correction_syntaxique/Analyse_548 548
 FixListCheckWiki Projet:Correction_syntaxique/Analyse_549 549
