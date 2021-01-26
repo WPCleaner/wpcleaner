@@ -100,10 +100,14 @@ class TemplateConfiguration {
       }
     }
 
-    // Look for suggestions
+    // Handle stranded "=" sign
     List<TemplateParameterSuggestion> results = new ArrayList<>();
     String name = param.getName();
     String contents = analysis.getContents();
+    if (StringUtils.isEmpty(computedName) && StringUtils.isEmpty(param.getValue())) {
+      results.add(TemplateParameterSuggestion.deleteParam(contents, param, true));
+      return Optional.of(results);
+    }
 
     // Handle non-breaking white space in the parameter name
     if (name.contains("\u00A0")) {
@@ -146,7 +150,7 @@ class TemplateConfiguration {
       if (StringUtils.equalsIgnoreCase(knownParam, name)) {
         results.add(TemplateParameterSuggestion.replaceParam(
             contents, param,
-            knownParam, param.getValue(), knownParam.length() >= 5));
+            knownParam, param.getValue(), knownParam.length() >= 4));
       } else if (StringUtils.equals(name, computedName)) {
         int distance = levenshteinDistance.apply(computedName, knownParam);
         if ((distance >= 0) && (distance <= 3)) {
