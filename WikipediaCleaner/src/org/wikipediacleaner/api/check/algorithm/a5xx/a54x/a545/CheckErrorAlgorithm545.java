@@ -25,6 +25,7 @@ import org.wikipediacleaner.api.algorithm.AlgorithmParameter;
 import org.wikipediacleaner.api.algorithm.AlgorithmParameterElement;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase;
+import org.wikipediacleaner.api.check.algorithm.a5xx.TemplateConfigurationGroup;
 import org.wikipediacleaner.api.check.algorithm.a5xx.TemplateParameterSuggestion;
 import org.wikipediacleaner.api.configuration.WPCConfiguration;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
@@ -198,6 +199,9 @@ public class CheckErrorAlgorithm545 extends CheckErrorAlgorithmBase {
   /** Categories listing pages for this error */
   private static final String PARAMETER_CATEGORIES = "categories";
 
+  /** Template groups */
+  private static final String PARAMETER_TEMPLATE_GROUPS = "template_groups";
+
   /** Deprecated parameters for templates */
   private static final String PARAMETER_TEMPLATES = "templates";
 
@@ -211,16 +215,23 @@ public class CheckErrorAlgorithm545 extends CheckErrorAlgorithmBase {
    */
   @Override
   protected void initializeSettings() {
-    String tmp = getSpecificProperty(PARAMETER_TEMPLATES, true, true, false);
+    String tmp = getSpecificProperty(PARAMETER_TEMPLATE_GROUPS, true, true, false);
+    TemplateConfigurationGroup group = new TemplateConfigurationGroup();
+    if (tmp != null) {
+      List<String[]> tmpList = WPCConfiguration.convertPropertyToStringArrayList(tmp);
+      group.addGroups(tmpList);
+    }
+
+    tmp = getSpecificProperty(PARAMETER_TEMPLATES, true, true, false);
     configByTemplateName.clear();
     if (tmp != null) {
       List<String[]> tmpList = WPCConfiguration.convertPropertyToStringArrayList(tmp);
-      TemplateConfiguration.addObsoleteParameters(tmpList, configByTemplateName);
+      TemplateConfiguration.addObsoleteParameters(tmpList, configByTemplateName, group);
     }
     tmp = getSpecificProperty(REPLACE_PARAMETERS, true, true, false);
     if (tmp != null) {
       List<String[]> tmpList = WPCConfiguration.convertPropertyToStringArrayList(tmp);
-      TemplateConfiguration.addReplaceParameters(tmpList, configByTemplateName);
+      TemplateConfiguration.addReplaceParameters(tmpList, configByTemplateName, group);
     }
 
     tmp = getSpecificProperty(PARAMETER_CATEGORIES, true, true, false);
@@ -251,6 +262,20 @@ public class CheckErrorAlgorithm545 extends CheckErrorAlgorithmBase {
         new AlgorithmParameterElement(
             "category name",
             GT._T("Name of a category listing pages using templates with deprecated parameters")),
+        true));
+    addParameter(new AlgorithmParameter(
+        PARAMETER_TEMPLATE_GROUPS,
+        GT._T("Groups of templates"),
+        new AlgorithmParameterElement[] {
+            new AlgorithmParameterElement(
+                "group",
+                GT._T("Name of the group")),
+            new AlgorithmParameterElement(
+                "template",
+                GT._T("Name of a template in the group"),
+                false,
+                true)
+        },
         true));
     addParameter(new AlgorithmParameter(
         PARAMETER_TEMPLATES,

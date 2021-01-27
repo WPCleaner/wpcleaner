@@ -18,6 +18,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import org.apache.commons.lang3.StringUtils;
+import org.wikipediacleaner.api.check.algorithm.a5xx.TemplateConfigurationGroup;
 import org.wikipediacleaner.api.check.algorithm.a5xx.TemplateParameterSuggestion;
 import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
@@ -116,15 +117,17 @@ class TemplateConfiguration {
    * 
    * @param rawConfiguration Raw configuration.
    * @param configuration Configuration.
+   * @param configurationGroup Configuration of groups of templates.
    */
   public static void addObsoleteParameters(
       @Nullable List<String[]> rawConfiguration,
-      @Nonnull Map<String, TemplateConfiguration> configuration) {
+      @Nonnull Map<String, TemplateConfiguration> configuration,
+      @Nonnull TemplateConfigurationGroup configurationGroup) {
     if (rawConfiguration == null) {
       return;
     }
     for (String[] line : rawConfiguration) {
-      addObsoleteParameters(line, configuration);
+      addObsoleteParameters(line, configuration, configurationGroup);
     }
   }
 
@@ -133,30 +136,28 @@ class TemplateConfiguration {
    * 
    * @param rawConfiguration Line of the raw configuration.
    * @param configuration Configuration.
+   * @param configurationGroup Configuration of groups of templates.
    */
   private static void addObsoleteParameters(
       @Nullable String[] rawConfiguration,
-      @Nonnull Map<String, TemplateConfiguration> configuration) {
+      @Nonnull Map<String, TemplateConfiguration> configuration,
+      @Nonnull TemplateConfigurationGroup configurationGroup) {
     if ((rawConfiguration == null) || (rawConfiguration.length < 2)) {
       return;
     }
-    String[] templates = rawConfiguration[0].split(",");
     String[] parameters = rawConfiguration[1].split(",");
-    for (String template : templates) {
-      String templateName = StringUtils.defaultString(template).trim();
-      if (StringUtils.isNotEmpty(templateName)) {
-        TemplateConfiguration templateConfig = configuration.computeIfAbsent(
-            templateName,
-            k -> new TemplateConfiguration(templateName));
-        for (String parameter : parameters) {
-          String parameterName = StringUtils.defaultString(parameter).trim();
-          if (StringUtils.isNotEmpty(parameterName)) {
-            ParameterConfiguration parameterConfig = templateConfig.configByParamName.computeIfAbsent(
-                parameterName,
-                k -> new ParameterConfiguration(parameterName));
-            if (rawConfiguration.length > 2) {
-              parameterConfig.setComment(rawConfiguration[2]);
-            }
+    for (String templateName : configurationGroup.getTemplateNames(rawConfiguration[0])) {
+      TemplateConfiguration templateConfig = configuration.computeIfAbsent(
+          templateName,
+          k -> new TemplateConfiguration(templateName));
+      for (String parameter : parameters) {
+        String parameterName = StringUtils.defaultString(parameter).trim();
+        if (StringUtils.isNotEmpty(parameterName)) {
+          ParameterConfiguration parameterConfig = templateConfig.configByParamName.computeIfAbsent(
+              parameterName,
+              k -> new ParameterConfiguration(parameterName));
+          if (rawConfiguration.length > 2) {
+            parameterConfig.setComment(rawConfiguration[2]);
           }
         }
       }
@@ -168,15 +169,17 @@ class TemplateConfiguration {
    * 
    * @param rawConfiguration Raw configuration.
    * @param configuration Configuration.
+   * @param configurationGroup Configuration of groups of templates.
    */
   public static void addReplaceParameters(
       @Nullable List<String[]> rawConfiguration,
-      @Nonnull Map<String, TemplateConfiguration> configuration) {
+      @Nonnull Map<String, TemplateConfiguration> configuration,
+      @Nonnull TemplateConfigurationGroup configurationGroup) {
     if (rawConfiguration == null) {
       return;
     }
     for (String[] line : rawConfiguration) {
-      addReplaceParameters(line, configuration);
+      addReplaceParameters(line, configuration, configurationGroup);
     }
   }
 
@@ -185,27 +188,25 @@ class TemplateConfiguration {
    * 
    * @param rawConfiguration Line of the raw configuration.
    * @param configuration Configuration.
+   * @param configurationGroup Configuration of groups of templates.
    */
   private static void addReplaceParameters(
       @Nullable String[] rawConfiguration,
-      @Nonnull Map<String, TemplateConfiguration> configuration) {
+      @Nonnull Map<String, TemplateConfiguration> configuration,
+      @Nonnull TemplateConfigurationGroup configurationGroup) {
     if ((rawConfiguration == null) || (rawConfiguration.length < 3)) {
       return;
     }
-    String[] templates = rawConfiguration[0].split(",");
     String[] parameters = rawConfiguration[1].split(",");
-    for (String template : templates) {
-      String templateName = StringUtils.defaultString(template).trim();
-      if (StringUtils.isNotEmpty(templateName)) {
-        TemplateConfiguration templateConfig = configuration.get(templateName);
-        if (templateConfig != null) {
-          for (String parameter : parameters) {
-            String parameterName = StringUtils.defaultString(parameter).trim();
-            if (StringUtils.isNotEmpty(parameterName)) {
-              ParameterConfiguration parameterConfig = templateConfig.configByParamName.get(parameterName);
-              if (parameterConfig != null) {
-                parameterConfig.setReplacement(rawConfiguration[2]);
-              }
+    for (String templateName : configurationGroup.getTemplateNames(rawConfiguration[0])) {
+      TemplateConfiguration templateConfig = configuration.get(templateName);
+      if (templateConfig != null) {
+        for (String parameter : parameters) {
+          String parameterName = StringUtils.defaultString(parameter).trim();
+          if (StringUtils.isNotEmpty(parameterName)) {
+            ParameterConfiguration parameterConfig = templateConfig.configByParamName.get(parameterName);
+            if (parameterConfig != null) {
+              parameterConfig.setReplacement(rawConfiguration[2]);
             }
           }
         }
