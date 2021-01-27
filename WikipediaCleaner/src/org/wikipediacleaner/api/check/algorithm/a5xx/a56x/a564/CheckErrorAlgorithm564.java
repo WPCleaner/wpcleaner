@@ -17,6 +17,7 @@ import org.wikipediacleaner.api.algorithm.AlgorithmParameter;
 import org.wikipediacleaner.api.algorithm.AlgorithmParameterElement;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase;
+import org.wikipediacleaner.api.check.algorithm.a5xx.TemplateConfigurationGroup;
 import org.wikipediacleaner.api.check.algorithm.a5xx.TemplateParameterSuggestion;
 import org.wikipediacleaner.api.configuration.WPCConfiguration;
 import org.wikipediacleaner.api.data.PageElementTemplate;
@@ -152,6 +153,9 @@ public class CheckErrorAlgorithm564 extends CheckErrorAlgorithmBase {
   /* PARAMETERS                                                             */
   /* ====================================================================== */
 
+  /** Template groups */
+  private static final String PARAMETER_TEMPLATE_GROUPS = "template_groups";
+
   /** Templates and parameters that are checked */
   private static final String PARAMETER_TEMPLATES = "templates";
 
@@ -171,26 +175,33 @@ public class CheckErrorAlgorithm564 extends CheckErrorAlgorithmBase {
    */
   @Override
   protected void initializeSettings() {
-    String tmp = getSpecificProperty(PARAMETER_TEMPLATES, true, true, false);
+    String tmp = getSpecificProperty(PARAMETER_TEMPLATE_GROUPS, true, true, false);
+    TemplateConfigurationGroup group = new TemplateConfigurationGroup();
+    if (tmp != null) {
+      List<String[]> tmpList = WPCConfiguration.convertPropertyToStringArrayList(tmp);
+      group.addGroups(tmpList);
+    }
+
+    tmp = getSpecificProperty(PARAMETER_TEMPLATES, true, true, false);
     configurationByTemplateName.clear();
     if (tmp != null) {
       List<String[]> tmpList = WPCConfiguration.convertPropertyToStringArrayList(tmp);
-      TemplateConfiguration.addKnownParameters(tmpList, configurationByTemplateName);
+      TemplateConfiguration.addKnownParameters(tmpList, configurationByTemplateName, group);
     }
     tmp = getSpecificProperty(PARAMETER_DELETE_PARAMETERS, true, true, false);
     if (tmp != null) {
       List<String[]> tmpList = WPCConfiguration.convertPropertyToStringArrayList(tmp);
-      TemplateConfiguration.addParametersToDelete(tmpList, configurationByTemplateName);
+      TemplateConfiguration.addParametersToDelete(tmpList, configurationByTemplateName, group);
     }
     tmp = getSpecificProperty(PARAMETER_COMMENT_PARAMETERS, true, true, false);
     if (tmp != null) {
       List<String[]> tmpList = WPCConfiguration.convertPropertyToStringArrayList(tmp);
-      TemplateConfiguration.addParametersToComment(tmpList, configurationByTemplateName);
+      TemplateConfiguration.addParametersToComment(tmpList, configurationByTemplateName, group);
     }
     tmp = getSpecificProperty(PARAMETER_REPLACE_PARAMETERS, true, true, false);
     if (tmp != null) {
       List<String[]> tmpList = WPCConfiguration.convertPropertyToStringArrayList(tmp);
-      TemplateConfiguration.addParametersToReplace(tmpList, configurationByTemplateName);
+      TemplateConfiguration.addParametersToReplace(tmpList, configurationByTemplateName, group);
     }
   }
 
@@ -203,6 +214,20 @@ public class CheckErrorAlgorithm564 extends CheckErrorAlgorithmBase {
   @Override
   protected void addParameters() {
     super.addParameters();
+    addParameter(new AlgorithmParameter(
+        PARAMETER_TEMPLATE_GROUPS,
+        GT._T("Groups of templates"),
+        new AlgorithmParameterElement[] {
+            new AlgorithmParameterElement(
+                "group",
+                GT._T("Name of the group")),
+            new AlgorithmParameterElement(
+                "template",
+                GT._T("Name of a template in the group"),
+                false,
+                true)
+        },
+        true));
     addParameter(new AlgorithmParameter(
         PARAMETER_TEMPLATES,
         GT._T("Templates for which unknown parameters should be verified"),

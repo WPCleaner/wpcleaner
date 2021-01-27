@@ -25,6 +25,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.text.similarity.LevenshteinDistance;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.wikipediacleaner.api.check.algorithm.a5xx.TemplateConfigurationGroup;
 import org.wikipediacleaner.api.check.algorithm.a5xx.TemplateParameterSuggestion;
 import org.wikipediacleaner.api.data.CharacterUtils;
 import org.wikipediacleaner.api.data.PageElementTemplate;
@@ -255,15 +256,17 @@ class TemplateConfiguration {
    * 
    * @param rawConfiguration Raw configuration for known parameters.
    * @param configuration Configuration.
+   * @param configurationGroup Configuration of groups of templates.
    */
   public static void addKnownParameters(
       @Nullable List<String[]> rawConfiguration,
-      @Nonnull Map<String, TemplateConfiguration> configuration) {
+      @Nonnull Map<String, TemplateConfiguration> configuration,
+      @Nonnull TemplateConfigurationGroup configurationGroup) {
     if (rawConfiguration == null) {
       return;
     }
     for (String[] line : rawConfiguration) {
-      addKnownParameters(line, configuration);
+      addKnownParameters(line, configuration, configurationGroup);
     }
   }
 
@@ -272,15 +275,16 @@ class TemplateConfiguration {
    * 
    * @param rawConfiguration Line of the raw configuration for known parameters.
    * @param configuration Configuration.
+   * @param configurationGroup Configuration of groups of templates.
    */
   private static void addKnownParameters(
       @Nullable String[] rawConfiguration,
-      @Nonnull Map<String, TemplateConfiguration> configuration) {
+      @Nonnull Map<String, TemplateConfiguration> configuration,
+      @Nonnull TemplateConfigurationGroup configurationGroup) {
     if ((rawConfiguration == null) || (rawConfiguration.length < 1)) {
       return;
     }
-    String[] templates = rawConfiguration[0].split(",");
-    for (String template : templates) {
+    for (String template : configurationGroup.getTemplateNames(rawConfiguration[0])) {
       if ((template != null) && (template.length() > 0)) {
         String templateName = template.trim();
         TemplateConfiguration templateConfig = configuration.computeIfAbsent(
@@ -310,15 +314,17 @@ class TemplateConfiguration {
    * 
    * @param rawConfiguration Raw configuration for parameters that can be safely deleted.
    * @param configuration Configuration.
+   * @param configurationGroup Configuration of groups of templates.
    */
   public static void addParametersToDelete(
       @Nullable List<String[]> rawConfiguration,
-      @Nonnull Map<String, TemplateConfiguration> configuration) {
+      @Nonnull Map<String, TemplateConfiguration> configuration,
+      @Nonnull TemplateConfigurationGroup configurationGroup) {
     if (rawConfiguration == null) {
       return;
     }
     for (String[] line : rawConfiguration) {
-      addParametersToDelete(line, configuration);
+      addParametersToDelete(line, configuration, configurationGroup);
     }
   }
 
@@ -327,15 +333,16 @@ class TemplateConfiguration {
    * 
    * @param rawConfiguration Line of the raw configuration for parameters that can be safely deleted.
    * @param configuration Configuration.
+   * @param configurationGroup Configuration of groups of templates.
    */
   private static void addParametersToDelete(
       @Nullable String[] rawConfiguration,
-      @Nonnull Map<String, TemplateConfiguration> configuration) {
+      @Nonnull Map<String, TemplateConfiguration> configuration,
+      @Nonnull TemplateConfigurationGroup configurationGroup) {
     if ((rawConfiguration == null) || (rawConfiguration.length < 1)) {
       return;
     }
-    String[] templates = rawConfiguration[0].split(",");
-    for (String template : templates) {
+    for (String template : configurationGroup.getTemplateNames(rawConfiguration[0])) {
       if ((template != null) && (template.length() > 0)) {
         String templateName = template.trim();
         TemplateConfiguration templateConfig = configuration.computeIfAbsent(
@@ -357,15 +364,17 @@ class TemplateConfiguration {
    * 
    * @param rawConfiguration Raw configuration for parameters that can be safely commented.
    * @param configuration Configuration.
+   * @param configurationGroup Configuration of groups of templates.
    */
   public static void addParametersToComment(
       @Nullable List<String[]> rawConfiguration,
-      @Nonnull Map<String, TemplateConfiguration> configuration) {
+      @Nonnull Map<String, TemplateConfiguration> configuration,
+      @Nonnull TemplateConfigurationGroup configurationGroup) {
     if (rawConfiguration == null) {
       return;
     }
     for (String[] line : rawConfiguration) {
-      addParametersToComment(line, configuration);
+      addParametersToComment(line, configuration, configurationGroup);
     }
   }
 
@@ -374,15 +383,16 @@ class TemplateConfiguration {
    * 
    * @param rawConfiguration Line of the raw configuration for parameters that can be safely commented.
    * @param configuration Configuration.
+   * @param configurationGroup Configuration of groups of templates.
    */
   private static void addParametersToComment(
       @Nullable String[] rawConfiguration,
-      @Nonnull Map<String, TemplateConfiguration> configuration) {
+      @Nonnull Map<String, TemplateConfiguration> configuration,
+      @Nonnull TemplateConfigurationGroup configurationGroup) {
     if ((rawConfiguration == null) || (rawConfiguration.length < 1)) {
       return;
     }
-    String[] templates = rawConfiguration[0].split(",");
-    for (String template : templates) {
+    for (String template : configurationGroup.getTemplateNames(rawConfiguration[0])) {
       if ((template != null) && (template.length() > 0)) {
         String templateName = template.trim();
         TemplateConfiguration templateConfig = configuration.computeIfAbsent(
@@ -404,15 +414,17 @@ class TemplateConfiguration {
    * 
    * @param rawConfiguration Raw configuration for parameters that can be safely replaced.
    * @param configuration Configuration.
+   * @param configurationGroup Configuration of groups of templates.
    */
   public static void addParametersToReplace(
       @Nullable List<String[]> rawConfiguration,
-      @Nonnull Map<String, TemplateConfiguration> configuration) {
+      @Nonnull Map<String, TemplateConfiguration> configuration,
+      @Nonnull TemplateConfigurationGroup configurationGroup) {
     if (rawConfiguration == null) {
       return;
     }
     for (String[] line : rawConfiguration) {
-      addParametersToReplace(line, configuration);
+      addParametersToReplace(line, configuration, configurationGroup);
     }
   }
 
@@ -421,15 +433,16 @@ class TemplateConfiguration {
    * 
    * @param rawConfiguration Line of the raw configuration for parameters that can be safely replaced.
    * @param configuration Configuration.
+   * @param configurationGroup Configuration of groups of templates.
    */
   private static void addParametersToReplace(
       @Nullable String[] rawConfiguration,
-      @Nonnull Map<String, TemplateConfiguration> configuration) {
+      @Nonnull Map<String, TemplateConfiguration> configuration,
+      @Nonnull TemplateConfigurationGroup configurationGroup) {
     if ((rawConfiguration == null) || (rawConfiguration.length < 3)) {
       return;
     }
-    String[] templates = rawConfiguration[0].split(",");
-    for (String template : templates) {
+    for (String template : configurationGroup.getTemplateNames(rawConfiguration[0])) {
       if ((template != null) && (template.length() > 0)) {
         String templateName = template.trim();
         TemplateConfiguration templateConfig = configuration.computeIfAbsent(
