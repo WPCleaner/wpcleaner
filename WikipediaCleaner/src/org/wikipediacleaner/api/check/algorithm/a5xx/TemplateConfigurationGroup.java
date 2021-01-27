@@ -93,13 +93,14 @@ public class TemplateConfigurationGroup {
    */
   private void addTemplateName(
       @Nonnull Set<String> result,
-      @Nullable String templateName,
+      @Nonnull String templateName,
       @Nonnull Set<String> addedGroups) {
+    templateName = templateName.trim();
     if (StringUtils.isEmpty(templateName)) {
       return;
     }
     if (templateName.startsWith("+")) {
-      String groupName = templateName.substring(1);
+      String groupName = templateName.substring(1).trim();
       if (addedGroups.contains(groupName)) {
         return;
       }

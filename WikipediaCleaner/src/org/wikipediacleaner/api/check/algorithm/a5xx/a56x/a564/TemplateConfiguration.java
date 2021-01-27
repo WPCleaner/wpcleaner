@@ -49,7 +49,7 @@ class TemplateConfiguration {
 
   @Nonnull private final Set<String> paramsToComment;
 
-  @Nonnull private final Map<String, String> paramsToReplaceByName;
+  @Nonnull private final Map<String, Set<String>> paramsToReplaceByName;
 
   @Nonnull private final LevenshteinDistance levenshteinDistance;
 
@@ -133,11 +133,14 @@ class TemplateConfiguration {
     }
 
     // Handle parameters configured for replacement
-    String replacementParam = paramsToReplaceByName.get(computedName);
-    if (replacementParam != null) {
-      results.add(TemplateParameterSuggestion.replaceParam(
-          contents, param,
-          replacementParam, param.getValue(), true));
+    Set<String> replacementParams = paramsToReplaceByName.get(computedName);
+    if (replacementParams != null) {
+      for (String replacementParam : replacementParams) {
+        results.add(TemplateParameterSuggestion.replaceParam(
+            contents, param,
+            replacementParam, param.getValue(),
+            replacementParams.size() == 1));
+      }
     }
 
     // Search in the known parameters if one can be used instead
@@ -284,26 +287,23 @@ class TemplateConfiguration {
     if ((rawConfiguration == null) || (rawConfiguration.length < 1)) {
       return;
     }
-    for (String template : configurationGroup.getTemplateNames(rawConfiguration[0])) {
-      if ((template != null) && (template.length() > 0)) {
-        String templateName = template.trim();
-        TemplateConfiguration templateConfig = configuration.computeIfAbsent(
-            templateName,
-            k -> new TemplateConfiguration(templateName));
-        for (int paramNum = 1; paramNum < rawConfiguration.length; paramNum++) {
-          String paramName = rawConfiguration[paramNum].trim();
-          if (StringUtils.endsWith(paramName, "1+")) {
-            paramName = StringUtils.left(paramName, paramName.length() - 2);
-            if (templateConfig.knownNumericalParameter.contains(paramName)) {
-              log.warn("Numeric parameter {} already defined for template {}", paramName, templateName);
-            }
-            templateConfig.knownNumericalParameter.add(paramName);
-          } else {
-            if (templateConfig.knownParams.contains(paramName)) {
-              log.warn("Parameter {} already defined for template {}", paramName, templateName);
-            }
-            templateConfig.knownParams.add(paramName);
+    for (String templateName : configurationGroup.getTemplateNames(rawConfiguration[0])) {
+      TemplateConfiguration templateConfig = configuration.computeIfAbsent(
+          templateName,
+          k -> new TemplateConfiguration(templateName));
+      for (int paramNum = 1; paramNum < rawConfiguration.length; paramNum++) {
+        String paramName = rawConfiguration[paramNum].trim();
+        if (StringUtils.endsWith(paramName, "1+")) {
+          paramName = StringUtils.left(paramName, paramName.length() - 2);
+          if (templateConfig.knownNumericalParameter.contains(paramName)) {
+            log.warn("Numeric parameter {} already defined for template {}", paramName, templateName);
           }
+          templateConfig.knownNumericalParameter.add(paramName);
+        } else {
+          if (templateConfig.knownParams.contains(paramName)) {
+            log.warn("Parameter {} already defined for template {}", paramName, templateName);
+          }
+          templateConfig.knownParams.add(paramName);
         }
       }
     }
@@ -342,19 +342,16 @@ class TemplateConfiguration {
     if ((rawConfiguration == null) || (rawConfiguration.length < 1)) {
       return;
     }
-    for (String template : configurationGroup.getTemplateNames(rawConfiguration[0])) {
-      if ((template != null) && (template.length() > 0)) {
-        String templateName = template.trim();
-        TemplateConfiguration templateConfig = configuration.computeIfAbsent(
-            templateName,
-            k -> new TemplateConfiguration(templateName));
-        for (int paramNum = 1; paramNum < rawConfiguration.length; paramNum++) {
-          String paramName = rawConfiguration[paramNum].trim();
-          if (templateConfig.paramsToDelete.contains(paramName)) {
-            log.warn("Parameter {} already marked as deletable for template {}", paramName, templateName);
-          }
-          templateConfig.paramsToDelete.add(paramName);
+    for (String templateName : configurationGroup.getTemplateNames(rawConfiguration[0])) {
+      TemplateConfiguration templateConfig = configuration.computeIfAbsent(
+          templateName,
+          k -> new TemplateConfiguration(templateName));
+      for (int paramNum = 1; paramNum < rawConfiguration.length; paramNum++) {
+        String paramName = rawConfiguration[paramNum].trim();
+        if (templateConfig.paramsToDelete.contains(paramName)) {
+          log.warn("Parameter {} already marked as deletable for template {}", paramName, templateName);
         }
+        templateConfig.paramsToDelete.add(paramName);
       }
     }
   }
@@ -392,19 +389,16 @@ class TemplateConfiguration {
     if ((rawConfiguration == null) || (rawConfiguration.length < 1)) {
       return;
     }
-    for (String template : configurationGroup.getTemplateNames(rawConfiguration[0])) {
-      if ((template != null) && (template.length() > 0)) {
-        String templateName = template.trim();
-        TemplateConfiguration templateConfig = configuration.computeIfAbsent(
-            templateName,
-            k -> new TemplateConfiguration(templateName));
-        for (int paramNum = 1; paramNum < rawConfiguration.length; paramNum++) {
-          String paramName = rawConfiguration[paramNum].trim();
-          if (templateConfig.paramsToComment.contains(paramName)) {
-            log.warn("Parameter {} already marked as commentable for template {}", paramName, templateName);
-          }
-          templateConfig.paramsToComment.add(paramName);
+    for (String templateName : configurationGroup.getTemplateNames(rawConfiguration[0])) {
+      TemplateConfiguration templateConfig = configuration.computeIfAbsent(
+          templateName,
+          k -> new TemplateConfiguration(templateName));
+      for (int paramNum = 1; paramNum < rawConfiguration.length; paramNum++) {
+        String paramName = rawConfiguration[paramNum].trim();
+        if (templateConfig.paramsToComment.contains(paramName)) {
+          log.warn("Parameter {} already marked as commentable for template {}", paramName, templateName);
         }
+        templateConfig.paramsToComment.add(paramName);
       }
     }
   }
@@ -442,18 +436,14 @@ class TemplateConfiguration {
     if ((rawConfiguration == null) || (rawConfiguration.length < 3)) {
       return;
     }
-    for (String template : configurationGroup.getTemplateNames(rawConfiguration[0])) {
-      if ((template != null) && (template.length() > 0)) {
-        String templateName = template.trim();
-        TemplateConfiguration templateConfig = configuration.computeIfAbsent(
-            templateName,
-            k -> new TemplateConfiguration(templateName));
-        String oldParamName = rawConfiguration[1].trim();
-        String newParamName = rawConfiguration[2].trim();
-        if (templateConfig.paramsToReplaceByName.containsKey(oldParamName)) {
-          log.warn("Parameter {} already marked as replaceable for template {}", oldParamName, templateName);
-        }
-        templateConfig.paramsToReplaceByName.put(oldParamName, newParamName);
+    for (String templateName : configurationGroup.getTemplateNames(rawConfiguration[0])) {
+      TemplateConfiguration templateConfig = configuration.computeIfAbsent(
+          templateName,
+          k -> new TemplateConfiguration(templateName));
+      String oldParamName = rawConfiguration[1].trim();
+      Set<String> newParamNames = templateConfig.paramsToReplaceByName.computeIfAbsent(oldParamName, k -> new HashSet<>());
+      for (int paramNum = 2; paramNum < rawConfiguration.length; paramNum++) {
+        newParamNames.add(rawConfiguration[paramNum].trim());
       }
     }
   }

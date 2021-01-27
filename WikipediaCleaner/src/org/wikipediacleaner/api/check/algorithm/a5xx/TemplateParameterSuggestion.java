@@ -77,7 +77,7 @@ public class TemplateParameterSuggestion {
   /**
    * Create a suggestion to comment a parameter.
    * 
-   * @param contents Page contents.
+   * @param analysis Page analysis.
    * @param templateParam Parameter to be commented.
    * @param automatic True if the comment is automatic.
    * @return Suggestion.
