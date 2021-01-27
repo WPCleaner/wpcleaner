@@ -21,6 +21,7 @@ import javax.annotation.Nullable;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.wikipediacleaner.api.check.algorithm.a5xx.TemplateConfigurationGroup;
 import org.wikipediacleaner.api.data.PageElementTemplate;
 
 /**
@@ -103,15 +104,17 @@ class TemplateConfiguration {
    * 
    * @param rawConfiguration Raw configuration.
    * @param configuration Configuration.
+   * @param configurationGroup Configuration of groups of templates.
    */
   public static void addConfiguration(
       @Nullable List<String[]> rawConfiguration,
-      @Nonnull Map<String, TemplateConfiguration> configuration) {
+      @Nonnull Map<String, TemplateConfiguration> configuration,
+      @Nonnull TemplateConfigurationGroup configurationGroup) {
     if (rawConfiguration == null) {
       return;
     }
     for (String[] line : rawConfiguration) {
-      addConfiguration(line, configuration);
+      addConfiguration(line, configuration, configurationGroup);
     }
   }
 
@@ -120,41 +123,39 @@ class TemplateConfiguration {
    * 
    * @param rawConfiguration Line of the raw configuration.
    * @param configuration Configuration.
+   * @param configurationGroup Configuration of groups of templates.
    */
   private static void addConfiguration(
       @Nullable String[] rawConfiguration,
-      @Nonnull Map<String, TemplateConfiguration> configuration) {
+      @Nonnull Map<String, TemplateConfiguration> configuration,
+      @Nonnull TemplateConfigurationGroup configurationGroup) {
     if ((rawConfiguration == null) || (rawConfiguration.length < 1)) {
       return;
     }
-    String[] templates = rawConfiguration[0].split(",");
     Boolean automatic = (rawConfiguration.length > 1) ? Boolean.valueOf(rawConfiguration[1]) : Boolean.FALSE;
-    for (String template : templates) {
-      if ((template != null) && (template.length() > 0)) {
-        String templateName = template.trim();
-        TemplateConfiguration templateConfig = configuration.computeIfAbsent(
-            templateName,
-            k -> new TemplateConfiguration(templateName));
-        if (rawConfiguration.length > 2) {
-          for (int paramNum = 2; paramNum < rawConfiguration.length; paramNum++) {
-            String paramName = rawConfiguration[paramNum].trim();
-            if (paramName.endsWith("+")) {
-              try {
-                templateConfig.unnamedParameterBegin =
-                    Integer.valueOf(paramName.substring(0, paramName.length() - 1));
-                templateConfig.unnamedParameterAutomatic = automatic;
-              } catch (NumberFormatException e) {
-                log.error(
-                    "Incorrect configuration for #563, parameter named {} for template {}",
-                    paramName, templateName);
-              }
-            } else {
-              templateConfig.automaticByParamName.put(paramName, automatic);
+    for (String templateName : configurationGroup.getTemplateNames(rawConfiguration[0])) {
+      TemplateConfiguration templateConfig = configuration.computeIfAbsent(
+          templateName,
+          k -> new TemplateConfiguration(templateName));
+      if (rawConfiguration.length > 2) {
+        for (int paramNum = 2; paramNum < rawConfiguration.length; paramNum++) {
+          String paramName = rawConfiguration[paramNum].trim();
+          if (paramName.endsWith("+")) {
+            try {
+              templateConfig.unnamedParameterBegin =
+                  Integer.valueOf(paramName.substring(0, paramName.length() - 1));
+              templateConfig.unnamedParameterAutomatic = automatic;
+            } catch (NumberFormatException e) {
+              log.error(
+                  "Incorrect configuration for #563, parameter named {} for template {}",
+                  paramName, templateName);
             }
+          } else {
+            templateConfig.automaticByParamName.put(paramName, automatic);
           }
-        } else {
-          templateConfig.defaultAutomatic = automatic;
         }
+      } else {
+        templateConfig.defaultAutomatic = automatic;
       }
     }
   }
@@ -164,15 +165,17 @@ class TemplateConfiguration {
    * 
    * @param rawConfiguration Raw configuration.
    * @param configuration Configuration.
+   * @param configurationGroup Configuration of groups of templates.
    */
   public static void addIgnoredParameters(
       @Nullable List<String[]> rawConfiguration,
-      @Nonnull Map<String, TemplateConfiguration> configuration) {
+      @Nonnull Map<String, TemplateConfiguration> configuration,
+      @Nonnull TemplateConfigurationGroup configurationGroup) {
     if (rawConfiguration == null) {
       return;
     }
     for (String[] line : rawConfiguration) {
-      addIgnoredParameters(line, configuration);
+      addIgnoredParameters(line, configuration, configurationGroup);
     }
   }
 
@@ -181,24 +184,22 @@ class TemplateConfiguration {
    * 
    * @param rawConfiguration Line of the raw configuration.
    * @param configuration Configuration.
+   * @param configurationGroup Configuration of groups of templates.
    */
   private static void addIgnoredParameters(
       @Nullable String[] rawConfiguration,
-      @Nonnull Map<String, TemplateConfiguration> configuration) {
+      @Nonnull Map<String, TemplateConfiguration> configuration,
+      @Nonnull TemplateConfigurationGroup configurationGroup) {
     if ((rawConfiguration == null) || (rawConfiguration.length < 2)) {
       return;
     }
-    String[] templates = rawConfiguration[0].split(",");
-    for (String template : templates) {
-      if ((template != null) && (template.length() > 0)) {
-        String templateName = template.trim();
-        TemplateConfiguration templateConfig = configuration.computeIfAbsent(
-            templateName,
-            k -> new TemplateConfiguration(templateName));
-        for (int paramNum = 1; paramNum < rawConfiguration.length; paramNum++) {
-          String paramName = rawConfiguration[paramNum].trim();
-          templateConfig.ignoredParams.add(paramName);
-        }
+    for (String templateName : configurationGroup.getTemplateNames(rawConfiguration[0])) {
+      TemplateConfiguration templateConfig = configuration.computeIfAbsent(
+          templateName,
+          k -> new TemplateConfiguration(templateName));
+      for (int paramNum = 1; paramNum < rawConfiguration.length; paramNum++) {
+        String paramName = rawConfiguration[paramNum].trim();
+        templateConfig.ignoredParams.add(paramName);
       }
     }
   }
