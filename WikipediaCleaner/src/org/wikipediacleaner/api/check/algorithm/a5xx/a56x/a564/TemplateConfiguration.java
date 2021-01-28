@@ -195,9 +195,16 @@ class TemplateConfiguration {
     for (int distance = 1; distance <= 3; distance++) {
       List<String> listKnownParams = similarNamesByDistance.getOrDefault(distance, Collections.emptyList());
       listKnownParams.sort(decreasingSizeComparator);
+      boolean preventAutomatic = false;
       for (String knownParam : listKnownParams) {
-        boolean automatic = (distance <= 1) && (knownParam.length() >= 5) && (listKnownParams.size() < 2);
+        boolean automatic =
+            !preventAutomatic &&
+            (distance <= 2) &&
+            (knownParam.length() >= 5) &&
+            (listKnownParams.size() < 2);
         if (automatic) {
+
+          // Check how many characters are equal at the beginning
           int minLength = Math.min(computedName.length(), knownParam.length());
           int beginEquals = 0;
           while ((beginEquals < minLength) && CharacterUtils.equalsIgnoreCase(
@@ -205,22 +212,42 @@ class TemplateConfiguration {
               knownParam.charAt(beginEquals))) {
             beginEquals++;
           }
+
+          // Check how many characters are equal at the end
           int endEquals = 0;
           while ((endEquals < minLength) && CharacterUtils.equalsIgnoreCase(
               computedName.charAt(computedName.length() - 1 - endEquals),
               knownParam.charAt(knownParam.length() - 1 - endEquals))) {
             endEquals++;
           }
+
+          // Check that no digits are in the difference (risk with numbered parameters)
           for (int index = beginEquals; index < computedName.length() - endEquals; index++) {
             automatic &= !Character.isDigit(computedName.charAt(index));
           }
           for (int index = beginEquals; index < knownParam.length() - endEquals; index++) {
             automatic &= !Character.isDigit(knownParam.charAt(index));
           }
+
+          // Check that consecutive characters are inverted for distance of 2
+          if (automatic && (distance == 2)) {
+            automatic = false;
+            if (computedName.length() == beginEquals + 2 + endEquals) {
+              if (knownParam.length() == beginEquals + 2 + endEquals) {
+                if ((computedName.charAt(beginEquals) == knownParam.charAt(beginEquals + 1)) &&
+                    (computedName.charAt(beginEquals + 1) == knownParam.charAt(beginEquals))) {
+                  automatic = true;
+                }
+              }
+            }
+          }
         }
         results.add(TemplateParameterSuggestion.replaceParam(
             contents, param,
             knownParam, param.getValue(), automatic));
+      }
+      if (!listKnownParams.isEmpty()) {
+        preventAutomatic = true;
       }
     }
 
