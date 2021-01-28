@@ -11,6 +11,7 @@ import java.util.Collection;
 import java.util.LinkedList;
 
 import org.wikipediacleaner.api.constants.EnumCaseSensitiveness;
+import org.wikipediacleaner.utils.string.CharacterUtils;
 
 
 /**

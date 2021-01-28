@@ -7,7 +7,12 @@
 
 package org.wikipediacleaner.api.constants;
 
-import org.wikipediacleaner.api.data.CharacterUtils;
+import javax.annotation.Nonnull;
+
+import org.wikipediacleaner.utils.string.transformer.ListStringTransformer;
+import org.wikipediacleaner.utils.string.transformer.ReduceWhitespaceTransformer;
+import org.wikipediacleaner.utils.string.transformer.StringTransformer;
+import org.wikipediacleaner.utils.string.transformer.UcFirstTransformer;
 
 
 /**
@@ -15,20 +20,35 @@ import org.wikipediacleaner.api.data.CharacterUtils;
  */
 public enum EnumCaseSensitiveness {
 
-  FIRST_LETTER("first-letter"),
-  CASE_SENSITIVE("case-sensitive"),
-  UNKNOWN("");
+  FIRST_LETTER(
+      "first-letter",
+      new ListStringTransformer(
+          ReduceWhitespaceTransformer.INSTANCE,
+          UcFirstTransformer.INSTANCE)),
+  CASE_SENSITIVE(
+      "case-sensitive",
+      new ListStringTransformer(ReduceWhitespaceTransformer.INSTANCE)),
+  UNKNOWN(
+      "",
+      new ListStringTransformer(ReduceWhitespaceTransformer.INSTANCE));
 
   /**
    * Code representing the case sensitiveness.
    */
+  @Nonnull
   private final String code;
+
+  @Nonnull
+  private final StringTransformer normalizer;
 
   /**
    * @param code Code representing the case sensitiveness.
    */
-  private EnumCaseSensitiveness(String code) {
+  private EnumCaseSensitiveness(
+      @Nonnull String code,
+      @Nonnull StringTransformer normalizer) {
     this.code = code;
+    this.normalizer = normalizer;
   }
 
   /**
@@ -54,16 +74,6 @@ public enum EnumCaseSensitiveness {
    * @return Normalized text.
    */
   public String normalize(String text) {
-    if (text == null) {
-      return null;
-    }
-    String result = text.trim();
-    result = result.replaceAll("_", " ");
-    result = result.replaceAll(" +", " ");
-    result = result.trim();
-    if (this == FIRST_LETTER) {
-      CharacterUtils.ucFirst(result);
-    }
-    return result;
+    return normalizer.transform(text);
   }
 }

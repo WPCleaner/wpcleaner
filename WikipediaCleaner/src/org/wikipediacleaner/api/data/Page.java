@@ -22,6 +22,11 @@ import org.wikipediacleaner.api.configuration.WPCConfiguration;
 import org.wikipediacleaner.api.configuration.WikiConfiguration;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
+import org.wikipediacleaner.utils.string.CharacterUtils;
+import org.wikipediacleaner.utils.string.transformer.ListStringTransformer;
+import org.wikipediacleaner.utils.string.transformer.ReduceWhitespaceTransformer;
+import org.wikipediacleaner.utils.string.transformer.StringTransformer;
+import org.wikipediacleaner.utils.string.transformer.UcFirstTransformer;
 
 
 /**
@@ -127,26 +132,18 @@ public class Page implements Comparable<Page> {
     return title1.equals(title2);
   }
 
+  /** A normalizer for titles */
+  private static final StringTransformer titleNormalizer = new ListStringTransformer(
+		  ReduceWhitespaceTransformer.INSTANCE,
+		  UcFirstTransformer.INSTANCE);
+
   /**
    * @param pageTitle Title.
    * @return Normalized title.
    */
   public static String normalizeTitle(String pageTitle) {
     // TODO: should be by Wiki (capitalization of first letter)
-    if (pageTitle == null) {
-      return null;
-    }
-    String result = pageTitle.trim();
-    result = result.replaceAll("[\u00A0_ ]+", " ");
-    // result = result.replaceAll(" ", " ");
-    while ((result.length() > 0) && (result.charAt(result.length() - 1) == 0x200E)) {
-      result = result.substring(0, result.length() - 1);
-    }
-    // result = result.replaceAll("_", " ");
-    // result = result.replaceAll(" +", " ");
-    result = result.trim();
-    result = CharacterUtils.ucFirst(result);
-    return result;
+	return titleNormalizer.transform(pageTitle);
   }
 
   /**

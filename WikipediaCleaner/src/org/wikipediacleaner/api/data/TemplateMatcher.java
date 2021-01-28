@@ -10,6 +10,7 @@ package org.wikipediacleaner.api.data;
 import java.util.List;
 
 import org.wikipediacleaner.api.constants.EnumWikipedia;
+import org.wikipediacleaner.utils.string.CharacterUtils;
 
 
 /**

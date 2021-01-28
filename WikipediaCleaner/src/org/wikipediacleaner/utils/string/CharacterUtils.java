@@ -6,7 +6,7 @@
  */
 
 
-package org.wikipediacleaner.api.data;
+package org.wikipediacleaner.utils.string;
 
 import java.util.HashMap;
 import java.util.Map;

@@ -12,7 +12,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import org.apache.commons.lang3.StringUtils;
-import org.wikipediacleaner.api.data.CharacterUtils;
+import org.wikipediacleaner.utils.string.CharacterUtils;
 
 /**
  * Utility class for contents.

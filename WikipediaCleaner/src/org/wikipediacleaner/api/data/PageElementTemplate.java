@@ -18,6 +18,7 @@ import org.wikipediacleaner.api.data.contents.comment.ContentsComment;
 import org.wikipediacleaner.api.data.contents.tag.WikiTagType;
 import org.wikipediacleaner.api.data.contents.template.TemplateBuilder;
 import org.wikipediacleaner.api.data.contents.template.TemplateParamNameResolver;
+import org.wikipediacleaner.utils.string.CharacterUtils;
 
 
 /**

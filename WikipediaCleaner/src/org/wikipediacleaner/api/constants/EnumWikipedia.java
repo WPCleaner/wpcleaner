@@ -35,11 +35,14 @@ import org.wikipediacleaner.api.constants.wiki.Wikisource;
 import org.wikipediacleaner.api.constants.wiki.Wikiversity;
 import org.wikipediacleaner.api.constants.wiki.Wikivoyage;
 import org.wikipediacleaner.api.constants.wiki.Wiktionary;
-import org.wikipediacleaner.api.data.CharacterUtils;
 import org.wikipediacleaner.api.data.DataManager;
 import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageRedirect;
+import org.wikipediacleaner.utils.string.transformer.ListStringTransformer;
+import org.wikipediacleaner.utils.string.transformer.ReduceWhitespaceTransformer;
+import org.wikipediacleaner.utils.string.transformer.StringTransformer;
+import org.wikipediacleaner.utils.string.transformer.UcFirstTransformer;
 
 
 /**
@@ -192,20 +195,17 @@ public enum EnumWikipedia {
     return EN;
   }
 
+  /** A normalizer for titles */
+  private final StringTransformer titleNormalizer = new ListStringTransformer(
+      ReduceWhitespaceTransformer.INSTANCE,
+      UcFirstTransformer.INSTANCE);
+
   /**
    * @param pageTitle Title.
    * @return Normalized title.
    */
   public String normalizeTitle(String pageTitle) {
-    if (pageTitle == null) {
-      return null;
-    }
-    String result = pageTitle.replaceAll(" ", " ");
-    result = result.replaceAll("_", " ");
-    result = result.replaceAll(" +", " ");
-    result = result.trim();
-    result = CharacterUtils.ucFirst(result);
-    return result;
+    return titleNormalizer.transform(pageTitle);
   }
 
   // =========================================================================

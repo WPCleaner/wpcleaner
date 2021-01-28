@@ -10,6 +10,7 @@ package org.wikipediacleaner.api.data;
 import org.wikipediacleaner.api.constants.EnumCaseSensitiveness;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.contents.ContentsUtil;
+import org.wikipediacleaner.utils.string.CharacterUtils;
 
 
 /**
