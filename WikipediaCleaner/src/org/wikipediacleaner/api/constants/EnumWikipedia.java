@@ -39,10 +39,6 @@ import org.wikipediacleaner.api.data.DataManager;
 import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageRedirect;
-import org.wikipediacleaner.utils.string.transformer.ListStringTransformer;
-import org.wikipediacleaner.utils.string.transformer.ReduceWhitespaceTransformer;
-import org.wikipediacleaner.utils.string.transformer.StringTransformer;
-import org.wikipediacleaner.utils.string.transformer.UcFirstTransformer;
 
 
 /**
@@ -195,17 +191,13 @@ public enum EnumWikipedia {
     return EN;
   }
 
-  /** A normalizer for titles */
-  private final StringTransformer titleNormalizer = new ListStringTransformer(
-      ReduceWhitespaceTransformer.INSTANCE,
-      UcFirstTransformer.INSTANCE);
-
   /**
    * @param pageTitle Title.
    * @return Normalized title.
    */
   public String normalizeTitle(String pageTitle) {
-    return titleNormalizer.transform(pageTitle);
+    // TODO: Should be dependent on configuration
+    return EnumCaseSensitiveness.FIRST_LETTER.normalize(pageTitle);
   }
 
   // =========================================================================

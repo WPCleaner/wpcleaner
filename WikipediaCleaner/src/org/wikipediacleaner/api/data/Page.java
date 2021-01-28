@@ -20,13 +20,10 @@ import java.util.regex.Pattern;
 import org.apache.commons.lang3.StringUtils;
 import org.wikipediacleaner.api.configuration.WPCConfiguration;
 import org.wikipediacleaner.api.configuration.WikiConfiguration;
+import org.wikipediacleaner.api.constants.EnumCaseSensitiveness;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
 import org.wikipediacleaner.utils.string.CharacterUtils;
-import org.wikipediacleaner.utils.string.transformer.ListStringTransformer;
-import org.wikipediacleaner.utils.string.transformer.ReduceWhitespaceTransformer;
-import org.wikipediacleaner.utils.string.transformer.StringTransformer;
-import org.wikipediacleaner.utils.string.transformer.UcFirstTransformer;
 
 
 /**
@@ -132,18 +129,13 @@ public class Page implements Comparable<Page> {
     return title1.equals(title2);
   }
 
-  /** A normalizer for titles */
-  private static final StringTransformer titleNormalizer = new ListStringTransformer(
-		  ReduceWhitespaceTransformer.INSTANCE,
-		  UcFirstTransformer.INSTANCE);
-
   /**
    * @param pageTitle Title.
    * @return Normalized title.
    */
   public static String normalizeTitle(String pageTitle) {
     // TODO: should be by Wiki (capitalization of first letter)
-	return titleNormalizer.transform(pageTitle);
+	return EnumCaseSensitiveness.FIRST_LETTER.normalize(pageTitle);
   }
 
   /**
