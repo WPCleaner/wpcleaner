@@ -16,7 +16,7 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2021-01-14 16:17:49+0000\n"
+"PO-Revision-Date: 2021-01-28 18:06:14+0000\n"
 "Last-Translator: Matěj S. <matejsuchanek97@gmail.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -24,9 +24,9 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n == 1) ? 0 : ( (n >= 2 && n <= 4) ? 1 : 2 );\n"
 "X-Launchpad-Export-Date: 2017-03-22 17:48+0000\n"
-"X-Generator: MediaWiki 1.36.0-alpha; Translate 2020-10-28\n"
+"X-Generator: MediaWiki 1.36.0-alpha; Translate 2021-01-21\n"
 "Language: cs\n"
-"X-POT-Import-Date: 2021-01-11 19:31:50+0000\n"
+"X-POT-Import-Date: 2021-01-27 19:31:44+0000\n"
 
 #: org/wikipediacleaner/Version.java:31
 #, java-format
@@ -312,25 +312,25 @@ msgstr "Náhrada za {0}"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a002/CheckErrorAlgorithm002.java:799
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a060/CheckErrorAlgorithm060.java:198
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a563/CheckErrorAlgorithm563.java:204
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a563/CheckErrorAlgorithm563.java:222
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:212
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:226
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:240
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:254
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:268
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a563/CheckErrorAlgorithm563.java:229
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a563/CheckErrorAlgorithm563.java:247
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:237
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:251
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:265
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:279
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:293
 #, fuzzy
 msgid "Name of the template"
 msgstr "Chybějící šablony"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a002/CheckErrorAlgorithm002.java:800
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a060/CheckErrorAlgorithm060.java:201
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a563/CheckErrorAlgorithm563.java:211
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a563/CheckErrorAlgorithm563.java:225
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:215
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:229
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:243
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:257
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a563/CheckErrorAlgorithm563.java:236
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a563/CheckErrorAlgorithm563.java:250
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:240
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:254
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:268
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:282
 msgid "Name of the parameter"
 msgstr ""
 
@@ -572,7 +572,7 @@ msgid "View image"
 msgstr "Zobrazit obrázek"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a03x/a033/CheckErrorAlgorithm033.java:144
-#: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a061/CheckErrorAlgorithm061.java:496
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a061/CheckErrorAlgorithm061.java:505
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a558/CheckErrorAlgorithm558.java:288
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a559/CheckErrorAlgorithm559.java:335
 #, java-format
@@ -580,7 +580,7 @@ msgid "Templates that can be used to replace {0} tags"
 msgstr "Šablony, které mohou nahradit tagy {0}"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a03x/a033/CheckErrorAlgorithm033.java:147
-#: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a061/CheckErrorAlgorithm061.java:499
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a061/CheckErrorAlgorithm061.java:508
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a558/CheckErrorAlgorithm558.java:291
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a559/CheckErrorAlgorithm559.java:338
 #, fuzzy, java-format
@@ -648,14 +648,14 @@ msgstr "Seznam šablon, které by měly být ignorovány"
 msgid "Templates to be ignored"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a061/CheckErrorAlgorithm061.java:484
-#: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a061/CheckErrorAlgorithm061.java:487
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a061/CheckErrorAlgorithm061.java:493
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a061/CheckErrorAlgorithm061.java:496
 #, java-format
 msgid "To force the usage of the separator between consecutive {0} tags"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a061/CheckErrorAlgorithm061.java:490
-#: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a061/CheckErrorAlgorithm061.java:493
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a061/CheckErrorAlgorithm061.java:499
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a061/CheckErrorAlgorithm061.java:502
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a067/CheckErrorAlgorithm067.java:368
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a067/CheckErrorAlgorithm067.java:371
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a542/CheckErrorAlgorithm542.java:182
@@ -1523,43 +1523,61 @@ msgstr "Chybějící šablony"
 msgid "Name of a closing template in the pair"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a545/CheckErrorAlgorithm545.java:251
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a545/CheckErrorAlgorithm545.java:261
 #, fuzzy
 msgid "Categories listing pages using templates with deprecated parameters"
 msgstr "Překládat šablony bez parametrů"
 
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a545/CheckErrorAlgorithm545.java:254
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a545/CheckErrorAlgorithm545.java:264
 #, fuzzy
 msgid "Name of a category listing pages using templates with deprecated parameters"
 msgstr "Překládat šablony bez parametrů"
 
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a545/CheckErrorAlgorithm545.java:258
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a545/CheckErrorAlgorithm545.java:268
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a563/CheckErrorAlgorithm563.java:211
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:219
+msgid "Groups of templates"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a545/CheckErrorAlgorithm545.java:272
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a563/CheckErrorAlgorithm563.java:215
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:223
+msgid "Name of the group"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a545/CheckErrorAlgorithm545.java:275
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a563/CheckErrorAlgorithm563.java:218
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:226
+msgid "Name of a template in the group"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a545/CheckErrorAlgorithm545.java:282
 #, fuzzy
 msgid "Templates with deprecated parameters"
 msgstr "Překládat šablony bez parametrů"
 
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a545/CheckErrorAlgorithm545.java:262
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a545/CheckErrorAlgorithm545.java:278
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a545/CheckErrorAlgorithm545.java:286
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a545/CheckErrorAlgorithm545.java:302
 #, fuzzy
 msgid "Name of a template with deprecated parameter"
 msgstr "Překládat šablony bez parametrů"
 
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a545/CheckErrorAlgorithm545.java:265
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a545/CheckErrorAlgorithm545.java:281
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a545/CheckErrorAlgorithm545.java:289
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a545/CheckErrorAlgorithm545.java:305
 #, fuzzy
 msgid "Name a of a deprecated parameter"
 msgstr "Překládat šablony bez parametrů"
 
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a545/CheckErrorAlgorithm545.java:268
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a545/CheckErrorAlgorithm545.java:292
 #, fuzzy
 msgid "Textual explanation about the deprecated parameter"
 msgstr "Překládat šablony bez parametrů"
 
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a545/CheckErrorAlgorithm545.java:274
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a545/CheckErrorAlgorithm545.java:298
 msgid "Replacements of deprecated parameters"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a545/CheckErrorAlgorithm545.java:284
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a545/CheckErrorAlgorithm545.java:308
 msgid "Name of a replacement parameter"
 msgstr ""
 
@@ -1695,40 +1713,40 @@ msgstr ""
 msgid "Option to apply automatic replacement even in templates"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a563/CheckErrorAlgorithm563.java:200
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a563/CheckErrorAlgorithm563.java:225
 msgid "Templates for which unused parameters should be verified"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a563/CheckErrorAlgorithm563.java:207
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a563/CheckErrorAlgorithm563.java:232
 msgid "Set to true to automatically remove unused parameters"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a563/CheckErrorAlgorithm563.java:218
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a563/CheckErrorAlgorithm563.java:243
 msgid "Parameters that should be ignored"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:208
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:233
 msgid "Templates for which unknown parameters should be verified"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:222
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:250
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:247
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:275
 msgid "Template parameters which can be safely deleted"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:236
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:261
 msgid "Template parameters which can be safely commented"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:264
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:289
 msgid "Template parameters which can be safely replaced"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:271
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:296
 msgid "Initial name of the parameter"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:276
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:301
 msgid "Target name of the parameter"
 msgstr ""
 
