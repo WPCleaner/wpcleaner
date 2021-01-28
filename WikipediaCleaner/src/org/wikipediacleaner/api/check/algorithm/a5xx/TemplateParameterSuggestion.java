@@ -158,4 +158,40 @@ public class TemplateParameterSuggestion {
         contents.substring(valueStartIndex + templateParam.getValue().length(), endIndex);
     return new TemplateParameterSuggestion(newText, newName, automatic);
   }
+
+  /**
+   * Create a suggestion to replace a parameter (or delete it if it already exists).
+   * 
+   * @param contents Page contents.
+   * @param template Template.
+   * @param templateParam Parameter to be replaced.
+   * @param newName New parameter name.
+   * @param newValue New parameter value.
+   * @param automaticReplacement True if the replacement can be automatic.
+   * @param automaticDeletion True if the deletion can be automatic.
+   * @return Suggestion.
+   */
+  public static TemplateParameterSuggestion replaceOrDeleteParam(
+      String contents,
+      PageElementTemplate template,
+      PageElementTemplate.Parameter templateParam,
+      String newName,
+      String newValue,
+      boolean automaticReplacement,
+      boolean automaticDeletion) {
+
+    // Simple replacement if new parameter doesn't already exist
+    int otherParamIndex = template.getParameterIndex(newName);
+    PageElementTemplate.Parameter otherParam = (otherParamIndex < 0) ? null : template.getParameter(otherParamIndex);
+    if ((otherParam == null) ||
+        StringUtils.equals(newName, templateParam.getComputedName())) {
+      return replaceParam(contents, templateParam, newName, newValue, automaticReplacement);
+    }
+
+    // Check if the values are identical
+    if (automaticDeletion) {
+      automaticDeletion &= StringUtils.equals(newValue, otherParam.getValue());
+    }
+    return deleteParam(contents, templateParam, automaticDeletion);
+  }
 }

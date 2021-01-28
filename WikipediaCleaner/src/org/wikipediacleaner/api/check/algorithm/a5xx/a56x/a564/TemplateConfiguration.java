@@ -126,9 +126,9 @@ class TemplateConfiguration {
         }
       }
       if (knownName) {
-        results.add(TemplateParameterSuggestion.replaceParam(
-            contents, param,
-            cleanedName, param.getValue(), true));
+        results.add(TemplateParameterSuggestion.replaceOrDeleteParam(
+            contents, template, param,
+            cleanedName, param.getValue(), true, true));
       }
     }
 
@@ -136,10 +136,11 @@ class TemplateConfiguration {
     Set<String> replacementParams = paramsToReplaceByName.get(computedName);
     if (replacementParams != null) {
       for (String replacementParam : replacementParams) {
-        results.add(TemplateParameterSuggestion.replaceParam(
-            contents, param,
+        results.add(TemplateParameterSuggestion.replaceOrDeleteParam(
+            contents, template, param,
             replacementParam, param.getValue(),
-            replacementParams.size() == 1));
+            replacementParams.size() == 1,
+            true));
       }
     }
 
@@ -152,9 +153,9 @@ class TemplateConfiguration {
 
       // Search for mistyped parameters
       if (StringUtils.equalsIgnoreCase(knownParam, name)) {
-        results.add(TemplateParameterSuggestion.replaceParam(
-            contents, param,
-            knownParam, param.getValue(), knownParam.length() >= 4));
+        results.add(TemplateParameterSuggestion.replaceOrDeleteParam(
+            contents, template, param,
+            knownParam, param.getValue(), knownParam.length() >= 4, true));
       } else if (StringUtils.equals(name, computedName)) {
         int distance = levenshteinDistance.apply(computedName, knownParam);
         if ((distance >= 0) && (distance <= 3)) {
@@ -242,9 +243,10 @@ class TemplateConfiguration {
             }
           }
         }
-        results.add(TemplateParameterSuggestion.replaceParam(
-            contents, param,
-            knownParam, param.getValue(), automatic));
+        results.add(TemplateParameterSuggestion.replaceOrDeleteParam(
+            contents, template, param,
+            knownParam, param.getValue(),
+            automatic, distance <= 2));
       }
       if (!listKnownParams.isEmpty()) {
         preventAutomatic = true;
@@ -268,9 +270,9 @@ class TemplateConfiguration {
       automatic &=
           (missingEqualValue.length() >= 1) &&
           !CharacterUtils.isPunctuation(missingEqualValue.charAt(0));
-      results.add(TemplateParameterSuggestion.replaceParam(
-          contents, param,
-          missingEqualName, missingEqualValue, automatic));
+      results.add(TemplateParameterSuggestion.replaceOrDeleteParam(
+          contents, template, param,
+          missingEqualName, missingEqualValue, automatic, true));
     }
 
     // General suggestions (deletion and comment)
