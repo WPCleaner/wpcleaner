@@ -162,6 +162,9 @@ public class CheckErrorAlgorithm564 extends CheckErrorAlgorithmBase {
   /** Parameters that can be safely deleted */
   private static final String PARAMETER_DELETE_PARAMETERS = "delete_parameters";
 
+  /** Values that can be safely deleted */
+  private static final String PARAMETER_DELETE_VALUES = "delete_values";
+
   /** Parameters that can be safely commented */
   private static final String PARAMETER_COMMENT_PARAMETERS = "comment_parameters";
 
@@ -192,6 +195,11 @@ public class CheckErrorAlgorithm564 extends CheckErrorAlgorithmBase {
     if (tmp != null) {
       List<String[]> tmpList = WPCConfiguration.convertPropertyToStringArrayList(tmp);
       TemplateConfiguration.addParametersToDelete(tmpList, configurationByTemplateName, group);
+    }
+    tmp = getSpecificProperty(PARAMETER_DELETE_VALUES, true, true, false);
+    if (tmp != null) {
+      List<String[]> tmpList = WPCConfiguration.convertPropertyToStringArrayList(tmp);
+      TemplateConfiguration.addValuesToDelete(tmpList, configurationByTemplateName, group);
     }
     tmp = getSpecificProperty(PARAMETER_COMMENT_PARAMETERS, true, true, false);
     if (tmp != null) {
@@ -249,6 +257,23 @@ public class CheckErrorAlgorithm564 extends CheckErrorAlgorithmBase {
             new AlgorithmParameterElement(
                 "template",
                 GT._T("Name of the template")),
+            new AlgorithmParameterElement(
+                "param",
+                GT._T("Name of the parameter"),
+                true,
+                true)
+        },
+        true));
+    addParameter(new AlgorithmParameter(
+        PARAMETER_DELETE_VALUES,
+        GT._T("Template parameters which can be safely deleted if they have a given value"),
+        new AlgorithmParameterElement[] {
+            new AlgorithmParameterElement(
+                "template",
+                GT._T("Name of the template")),
+            new AlgorithmParameterElement(
+                "value",
+                GT._T("Value of the parameter")),
             new AlgorithmParameterElement(
                 "param",
                 GT._T("Name of the parameter"),

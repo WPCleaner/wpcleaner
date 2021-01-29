@@ -25,7 +25,7 @@ public class ListStringTransformer implements StringTransformer {
   /**
    * Constructor.
    * 
-   * @param List of transformers to apply.
+   * @param transformers List of transformers to apply.
    */
   public ListStringTransformer(@Nonnull StringTransformer... transformers) {
     this.transformers = Arrays.asList(transformers);

@@ -47,6 +47,8 @@ class TemplateConfiguration {
 
   @Nonnull private final Set<String> paramsToDelete;
 
+  @Nonnull private final Map<String, Set<String>> valuesToDeleteByParam;
+
   @Nonnull private final Set<String> paramsToComment;
 
   @Nonnull private final Map<String, Set<String>> paramsToReplaceByName;
@@ -58,6 +60,7 @@ class TemplateConfiguration {
     this.knownParams = new HashSet<>();
     this.knownNumericalParameter = new HashSet<>();
     this.paramsToDelete = new HashSet<>();
+    this.valuesToDeleteByParam = new HashMap<>();
     this.paramsToComment = new HashSet<>();
     this.paramsToReplaceByName = new HashMap<>();
     this.levenshteinDistance = new LevenshteinDistance(4);
@@ -102,15 +105,26 @@ class TemplateConfiguration {
     }
 
     // Handle stranded "=" sign
-    List<TemplateParameterSuggestion> results = new ArrayList<>();
     String name = param.getName();
     String contents = analysis.getContents();
     if (StringUtils.isEmpty(computedName) && StringUtils.isEmpty(param.getValue())) {
-      results.add(TemplateParameterSuggestion.deleteParam(contents, param, true));
-      return Optional.of(results);
+      return Optional.of(Collections.singletonList(
+          TemplateParameterSuggestion.deleteParam(contents, param, true)));
+    }
+
+    // Handle parameters that can be deleted by configuration
+    if (paramsToDelete.contains(computedName)) {
+      return Optional.of(Collections.singletonList(
+          TemplateParameterSuggestion.deleteParam(contents, param, true)));
+    }
+    if (valuesToDeleteByParam.containsKey(computedName) &&
+        valuesToDeleteByParam.get(computedName).contains(param.getValue())) {
+      return Optional.of(Collections.singletonList(
+          TemplateParameterSuggestion.deleteParam(contents, param, true)));
     }
 
     // Handle non-breaking white space in the parameter name
+    List<TemplateParameterSuggestion> results = new ArrayList<>();
     if (name.contains("\u00A0")) {
       String cleanedName = name.replaceAll("\u00A0", " ").trim();
       boolean knownName = false;
@@ -145,6 +159,7 @@ class TemplateConfiguration {
     }
 
     // Search in the known parameters if one can be used instead
+    // TODO: Search also in the numerical parameters
     boolean safeDelete = StringUtils.isEmpty(param.getValue());
     String missingEqualName = null;
     String missingEqualValue = null;
@@ -277,7 +292,6 @@ class TemplateConfiguration {
 
     // General suggestions (deletion and comment)
     safeDelete &= results.isEmpty();
-    safeDelete |= paramsToDelete.contains(computedName);
     results.add(TemplateParameterSuggestion.deleteParam(contents, param, safeDelete));
     results.add(TemplateParameterSuggestion.commentParam(analysis, param, paramsToComment.contains(computedName)));
     return Optional.of(results);
@@ -381,6 +395,55 @@ class TemplateConfiguration {
           log.warn("Parameter {} already marked as deletable for template {}", paramName, templateName);
         }
         templateConfig.paramsToDelete.add(paramName);
+      }
+    }
+  }
+
+  /**
+   * Add values that can be safely deleted from the full raw configuration.
+   * 
+   * @param rawConfiguration Raw configuration for values that can be safely deleted.
+   * @param configuration Configuration.
+   * @param configurationGroup Configuration of groups of templates.
+   */
+  public static void addValuesToDelete(
+      @Nullable List<String[]> rawConfiguration,
+      @Nonnull Map<String, TemplateConfiguration> configuration,
+      @Nonnull TemplateConfigurationGroup configurationGroup) {
+    if (rawConfiguration == null) {
+      return;
+    }
+    for (String[] line : rawConfiguration) {
+      addValuesToDelete(line, configuration, configurationGroup);
+    }
+  }
+
+  /**
+   * Add values that can be safely deleted from one line of the raw configuration.
+   * 
+   * @param rawConfiguration Line of the raw configuration for values that can be safely deleted.
+   * @param configuration Configuration.
+   * @param configurationGroup Configuration of groups of templates.
+   */
+  private static void addValuesToDelete(
+      @Nullable String[] rawConfiguration,
+      @Nonnull Map<String, TemplateConfiguration> configuration,
+      @Nonnull TemplateConfigurationGroup configurationGroup) {
+    if ((rawConfiguration == null) || (rawConfiguration.length < 3)) {
+      return;
+    }
+    for (String templateName : configurationGroup.getTemplateNames(rawConfiguration[0])) {
+      TemplateConfiguration templateConfig = configuration.computeIfAbsent(
+          templateName,
+          k -> new TemplateConfiguration(templateName));
+      String value = rawConfiguration[1].trim();
+      for (int paramNum = 2; paramNum < rawConfiguration.length; paramNum++) {
+        String paramName = rawConfiguration[paramNum].trim();
+        Set<String> values = templateConfig.valuesToDeleteByParam.computeIfAbsent(paramName, k -> new HashSet<>());
+        if (values.contains(value)) {
+          log.warn("Value {} already marked as deletable for template {} and parameter {}", value, templateName, paramName);
+        }
+        values.add(value);
       }
     }
   }
