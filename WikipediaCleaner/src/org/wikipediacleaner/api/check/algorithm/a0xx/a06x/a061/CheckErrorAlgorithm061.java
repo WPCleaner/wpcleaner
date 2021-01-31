@@ -295,11 +295,7 @@ public class CheckErrorAlgorithm061 extends CheckErrorAlgorithmBase {
         lastRefIndex - firstRefIndex + 1, separator);
 
     // Check for possible punctuation before tags
-    tmpIndex = beginIndex - 1;
-    while ((tmpIndex >= 0) &&
-           (contents.charAt(tmpIndex) == ' ')) {
-      tmpIndex--;
-    }
+    tmpIndex = ContentsUtil.moveIndexBackwardWhileFound(contents, beginIndex - 1, " \n");
     beginIndex = tmpIndex + 1;
     boolean punctuationFoundBefore = false;
     int punctuationBeforeIndex = tmpIndex;
