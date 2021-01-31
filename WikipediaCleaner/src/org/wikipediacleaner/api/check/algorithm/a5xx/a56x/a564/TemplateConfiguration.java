@@ -17,6 +17,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
+import java.util.TreeMap;
+import java.util.function.Function;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -158,44 +160,70 @@ class TemplateConfiguration {
       }
     }
 
+    // Handle numerical parameters
+    boolean numericalParameter = false;
+    if (StringUtils.isNotEmpty(computedName)) {
+      if (CharacterUtils.isClassicDigit(computedName.charAt(computedName.length() - 1))) {
+        numericalParameter = true;
+      }
+    }
+    String strippedName = name;
+    String strippedComputedName = computedName;
+    String numericComputedName = StringUtils.EMPTY;
+    Set<String> correctKnownParams = knownParams;
+    if (numericalParameter) {
+      int beginNumeric = computedName.length();
+      while ((beginNumeric > 0) &&
+             CharacterUtils.isClassicDigit(computedName.charAt(beginNumeric - 1))) {
+        beginNumeric--;
+      }
+      strippedComputedName = computedName.substring(0, beginNumeric);
+      numericComputedName = computedName.substring(beginNumeric);
+      correctKnownParams = knownNumericalParameter;
+      if (StringUtils.isNotEmpty(name)) {
+        beginNumeric = name.length();
+        while ((beginNumeric > 0) &&
+               CharacterUtils.isClassicDigit(name.charAt(beginNumeric - 1))) {
+          beginNumeric--;
+        }
+        strippedName = name.substring(0, beginNumeric);
+      }
+    }
+
     // Search in the known parameters if one can be used instead
-    // TODO: Search also in the numerical parameters
     boolean safeDelete = StringUtils.isEmpty(param.getValue());
-    String missingEqualName = null;
-    String missingEqualValue = null;
+    Map<String, String> missingEqualByName = new TreeMap<>(Comparator.comparingInt(String::length).thenComparing(Function.identity()).reversed());
     Map<Integer, List<String>> similarNamesByDistance = new HashMap<>();
-    for (String knownParam : knownParams) {
+    for (String knownParam : correctKnownParams) {
+      String completedKnownParam = knownParam + numericComputedName;
 
       // Search for mistyped parameters
-      if (StringUtils.equalsIgnoreCase(knownParam, name)) {
+      if (StringUtils.equalsIgnoreCase(knownParam, strippedName)) {
         results.add(TemplateParameterSuggestion.replaceOrDeleteParam(
             contents, template, param,
-            knownParam, param.getValue(), knownParam.length() >= 4, true));
+            completedKnownParam, param.getValue(),
+            knownParam.length() >= 4, true));
       } else if (StringUtils.equals(name, computedName)) {
-        int distance = levenshteinDistance.apply(computedName, knownParam);
+        int distance = levenshteinDistance.apply(strippedComputedName, knownParam);
         if ((distance >= 0) && (distance <= 3)) {
-          similarNamesByDistance.computeIfAbsent(distance, k -> new ArrayList<>()).add(knownParam);
+          similarNamesByDistance.computeIfAbsent(distance, k -> new ArrayList<>()).add(completedKnownParam);
         } else if (StringUtils.isEmpty(param.getValue())) {
-          if (StringUtils.startsWith(name, knownParam)) {
-            if ((missingEqualName == null) || (knownParam.length() > missingEqualName.length())) {
-              missingEqualName = knownParam;
-              missingEqualValue = name.substring(knownParam.length()).trim();
-            }
+          if (StringUtils.startsWith(name, completedKnownParam)) {
+            missingEqualByName.put(completedKnownParam, name.substring(completedKnownParam.length()).trim());
           }
         }
       }
 
       // Search for missing "=" sign
       if (!StringUtils.equals(name, computedName) &&
-          StringUtils.startsWith(param.getValue(), knownParam)) {
-        if ((missingEqualName == null) || (knownParam.length() > missingEqualName.length())) {
-          missingEqualName = knownParam;
-          missingEqualValue = param.getValue().substring(knownParam.length()).trim();
-        }
+          StringUtils.startsWith(param.getValue(), completedKnownParam)) {
+        missingEqualByName.put(completedKnownParam,  param.getValue().substring(completedKnownParam.length()).trim());
       }
 
       // Handle strange cases with mixed parameter name and value
-      if (StringUtils.isEmpty(param.getValue()) && (knownParam.length() < computedName.length())) {
+      if (StringUtils.isEmpty(param.getValue()) &&
+          (knownParam.length() < computedName.length()) &&
+          StringUtils.isEmpty(numericComputedName)) {
         int index = 0;
         while ((index < knownParam.length()) && (knownParam.charAt(index) == computedName.charAt(index))) {
           index++;
@@ -206,12 +234,79 @@ class TemplateConfiguration {
       }
     }
 
-    // Handle similar names
+    // Handle various suggestions
+    handleSimilarNames(results, similarNamesByDistance, param, template, contents);
+    handleMissingEqual(results, missingEqualByName, param, template, contents);
+    safeDelete &= results.isEmpty();
+    results.add(TemplateParameterSuggestion.deleteParam(contents, param, safeDelete));
+    results.add(TemplateParameterSuggestion.commentParam(analysis, param, paramsToComment.contains(computedName)));
+    return Optional.of(results);
+  }
+
+
+  /**
+   * Handle missing equal sign.
+   * 
+   * @param results List of results to complete.
+   * @param missingEqualByName Possible missing equal sign found.
+   * @param param Template parameter.
+   * @param template Template.
+   * @param contents Page contents.
+   */
+  private void handleMissingEqual(
+      List<TemplateParameterSuggestion> results,
+      Map<String, String> missingEqualByName,
+      PageElementTemplate.Parameter param,
+      PageElementTemplate template,
+      String contents) {
+    boolean missingEqualFound = false;
+    for (Map.Entry<String, String> missingEqual : missingEqualByName.entrySet()) {
+      String missingEqualName = missingEqual.getKey();
+      String missingEqualValue = missingEqual.getValue();
+      boolean automatic =
+          (missingEqualName.length() >= 5) ||
+          ((missingEqualName.length() >= 4) && (missingEqualValue.length() >= 4));
+      automatic &= !missingEqualFound;
+      missingEqualFound = true;
+      if (StringUtils.isEmpty(param.getValue())) {
+        automatic &=
+            CharacterUtils.isClassicLetter(missingEqualValue.charAt(0)) ||
+            Character.isDigit(missingEqualValue.charAt(0));
+      } else if (missingEqualValue.length() > 1) {
+        char firstValue = missingEqualValue.charAt(0);
+        char lastName = missingEqualName.charAt(missingEqualName.length() - 1);
+        automatic &= (!CharacterUtils.isClassicLetter(firstValue) || !CharacterUtils.isClassicLetter(lastName));
+      }
+      automatic &=
+          (missingEqualValue.length() >= 1) &&
+          !CharacterUtils.isPunctuation(missingEqualValue.charAt(0));
+      results.add(TemplateParameterSuggestion.replaceOrDeleteParam(
+          contents, template, param,
+          missingEqualName, missingEqualValue, automatic, true));
+    }
+  }
+
+  /**
+   * Handle similar name.
+   * 
+   * @param results List of results to complete.
+   * @param similarNamesByDistance Similar names found, organized by their distance.
+   * @param param Template parameter.
+   * @param template Template.
+   * @param contents Page contents.
+   */
+  private void handleSimilarNames(
+      List<TemplateParameterSuggestion> results,
+      Map<Integer, List<String>> similarNamesByDistance,
+      PageElementTemplate.Parameter param,
+      PageElementTemplate template,
+      String contents) {
     Comparator<String> decreasingSizeComparator = (s1, s2) -> Integer.compare(s2.length(), s1.length());
+    String computedName = param.getComputedName();
+    boolean preventAutomatic = false;
     for (int distance = 1; distance <= 3; distance++) {
       List<String> listKnownParams = similarNamesByDistance.getOrDefault(distance, Collections.emptyList());
       listKnownParams.sort(decreasingSizeComparator);
-      boolean preventAutomatic = false;
       for (String knownParam : listKnownParams) {
         boolean automatic =
             !preventAutomatic &&
@@ -267,34 +362,6 @@ class TemplateConfiguration {
         preventAutomatic = true;
       }
     }
-
-    // Handle missing "=" sign
-    if ((missingEqualName != null) && (missingEqualValue != null)) {
-      boolean automatic =
-          (missingEqualName.length() >= 5) ||
-          ((missingEqualName.length() >= 4) && (missingEqualValue.length() >= 4));
-      if (StringUtils.isEmpty(param.getValue())) {
-        automatic &=
-            CharacterUtils.isClassicLetter(missingEqualValue.charAt(0)) ||
-            Character.isDigit(missingEqualValue.charAt(0));
-      } else if (missingEqualValue.length() > 1) {
-        char firstValue = missingEqualValue.charAt(0);
-        char lastName = missingEqualName.charAt(missingEqualName.length() - 1);
-        automatic &= (!CharacterUtils.isClassicLetter(firstValue) || !CharacterUtils.isClassicLetter(lastName));
-      }
-      automatic &=
-          (missingEqualValue.length() >= 1) &&
-          !CharacterUtils.isPunctuation(missingEqualValue.charAt(0));
-      results.add(TemplateParameterSuggestion.replaceOrDeleteParam(
-          contents, template, param,
-          missingEqualName, missingEqualValue, automatic, true));
-    }
-
-    // General suggestions (deletion and comment)
-    safeDelete &= results.isEmpty();
-    results.add(TemplateParameterSuggestion.deleteParam(contents, param, safeDelete));
-    results.add(TemplateParameterSuggestion.commentParam(analysis, param, paramsToComment.contains(computedName)));
-    return Optional.of(results);
   }
 
   /**

@@ -132,6 +132,18 @@ public class CharacterUtils {
 
   /**
    * @param character Character to be tested.
+   * @return True if the character should be considered as a classic digit.
+   * In comparison, {@link java.lang.Character#isDigit(char) Character.isDigit(char)} is more permissive.
+   */
+  public static boolean isClassicDigit(char character) {
+    if ((character >= '0') && (character <= '9')) {
+      return true;
+    }
+    return false;
+  }
+
+  /**
+   * @param character Character to be tested.
    * @param text Text to be tested.
    * @return True if the character is found in the text.
    */
