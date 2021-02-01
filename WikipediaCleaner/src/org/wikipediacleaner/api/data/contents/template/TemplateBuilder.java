@@ -30,6 +30,9 @@ public class TemplateBuilder {
   @Nonnull
   private final List<Parameter> params;
 
+  /** True to remove unnecessary parameter names */
+  private boolean removeUnnecessaryParamNames;
+
   /**
    * Private constructor.
    * 
@@ -85,6 +88,17 @@ public class TemplateBuilder {
    */
   public TemplateBuilder addParam(String paramName, String paramValue) {
     params.add(new Parameter(paramName, paramValue));
+    return this;
+  }
+
+  /**
+   * Remove unnecessary parameter names.
+   * 
+   * @param remove True to remove unnecessary parameter names.
+   * @return Builder configured.
+   */
+  public TemplateBuilder removeUnnecessaryParamNames(boolean remove) {
+    removeUnnecessaryParamNames = remove;
     return this;
   }
 
@@ -186,14 +200,31 @@ public class TemplateBuilder {
    */
   @Override
   public String toString() {
+    boolean removeParamNames = removeUnnecessaryParamNames;
+    int nextParameter = 1;
     StringBuilder sb = new StringBuilder();
     sb.append("{{");
     sb.append(name);
     for (Parameter param : params) {
       sb.append('|');
       if ((param.name != null) && (param.name.trim().length() > 0)) {
-        sb.append(param.name);
-        sb.append('=');
+        boolean addName = true;
+        if (StringUtils.equals(Integer.toString(nextParameter), param.name)) {
+          nextParameter++;
+          if (removeParamNames) {
+            if (StringUtils.contains(param.value, "=")) {
+              removeParamNames = false;
+            } else {
+              addName = false;
+            }
+          }
+        }
+        if (addName) {
+          sb.append(param.name);
+          sb.append('=');
+        }
+      } else {
+        nextParameter++;
       }
       sb.append(StringUtils.defaultString(param.value, StringUtils.EMPTY));
     }
