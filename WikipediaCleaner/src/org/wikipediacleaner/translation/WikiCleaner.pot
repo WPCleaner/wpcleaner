@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://phabricator.wikimedia.org/project/board/4842/\n"
-"POT-Creation-Date: 2021-02-01 15:58+0100\n"
+"POT-Creation-Date: 2021-02-02 14:22+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -306,7 +306,7 @@ msgstr ""
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:290
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:304
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:318
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a566/CheckErrorAlgorithm566.java:183
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a566/CheckErrorAlgorithm566.java:282
 msgid "Name of the template"
 msgstr ""
 
@@ -704,7 +704,7 @@ msgstr ""
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a553/CheckErrorAlgorithm553.java:257
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a553/CheckErrorAlgorithm553.java:262
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a557/CheckErrorAlgorithm557.java:309
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a566/CheckErrorAlgorithm566.java:97
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a566/CheckErrorAlgorithm566.java:155
 #: org/wikipediacleaner/gui/swing/action/ActionExternalViewer.java:61
 #: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:90
 #: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:158
@@ -1131,6 +1131,8 @@ msgid "Name of a template that can be used as a replacement"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a513/CheckErrorAlgorithm513.java:908
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a566/CheckErrorAlgorithm566.java:252
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a566/CheckErrorAlgorithm566.java:270
 msgid "True if the replacement can be automatic"
 msgstr ""
 
@@ -1681,19 +1683,41 @@ msgstr ""
 msgid "Target name of the parameter"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a566/CheckErrorAlgorithm566.java:179
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a566/CheckErrorAlgorithm566.java:245
+msgid "Possible replacements based on abbreviation value"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a566/CheckErrorAlgorithm566.java:249
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a566/CheckErrorAlgorithm566.java:264
+msgid "Value of the abbreviation"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a566/CheckErrorAlgorithm566.java:255
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a566/CheckErrorAlgorithm566.java:273
+msgid "Replacement for the abbreviation"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a566/CheckErrorAlgorithm566.java:260
+msgid "Possible replacements based on abbreviation value and title"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a566/CheckErrorAlgorithm566.java:267
+msgid "Title of the abbreviation"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a566/CheckErrorAlgorithm566.java:278
 msgid "Templates which can replace an abbreviation"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a566/CheckErrorAlgorithm566.java:186
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a566/CheckErrorAlgorithm566.java:285
 msgid "Name of the parameter for the abbreviation"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a566/CheckErrorAlgorithm566.java:189
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a566/CheckErrorAlgorithm566.java:288
 msgid "Name of the parameter for the meaning"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a566/CheckErrorAlgorithm566.java:192
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a566/CheckErrorAlgorithm566.java:291
 msgid "Default value for the meaning"
 msgstr ""
 

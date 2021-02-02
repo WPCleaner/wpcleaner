@@ -9,6 +9,7 @@
 package org.wikipediacleaner.api.check.algorithm.a5xx.a56x.a566;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -40,6 +41,16 @@ public class CheckErrorAlgorithm566 extends CheckErrorAlgorithmTags {
 
   private static final @Nonnull Set<TagType> tags = Collections.singleton(HtmlTagType.ABBR);
 
+  private static final @Nonnull List<String> prefixes = Arrays.asList(
+      "&nbsp;",
+      " "
+      );
+
+  private static final @Nonnull List<String> suffixes = Arrays.asList(
+      "&nbsp;",
+      " "
+      );
+
   public CheckErrorAlgorithm566() {
     super("<abbr> tags");
 
@@ -66,30 +77,77 @@ public class CheckErrorAlgorithm566 extends CheckErrorAlgorithmTags {
       @Nonnull PageAnalysis analysis,
       @Nonnull Collection<CheckErrorResult> errors,
       @Nonnull PageElementTag tag) {
+
+    // Analyze area
     boolean reportComplete = reportCompleteTags();
     String contents = analysis.getContents();
-    int beginIndex = reportComplete ? tag.getCompleteBeginIndex() : tag.getBeginIndex();
+    int beginTagIndex = reportComplete ? tag.getCompleteBeginIndex() : tag.getBeginIndex();
+    int beginIndex = beginTagIndex;
     while ((beginIndex > 0) &&
         (CharacterUtils.isClassicLetter(contents.charAt(beginIndex - 1)) || Character.isDigit(contents.charAt(beginIndex - 1)))) {
       beginIndex--;
     }
-    int endIndex = reportComplete ? tag.getCompleteEndIndex() : tag.getEndIndex();
+    int endTagIndex = reportComplete ? tag.getCompleteEndIndex() : tag.getEndIndex();
+    int endIndex = endTagIndex;
     while ((endIndex < contents.length()) &&
         (CharacterUtils.isClassicLetter(contents.charAt(endIndex)) || Character.isDigit(contents.charAt(endIndex)))) {
       endIndex++;
     }
+
+    // Detect if automatic should be prevented
+    boolean tmpAutomatic = true;
+    for (int paramIndex = 0; paramIndex < tag.getParametersCount(); paramIndex++) {
+      if (!StringUtils.equals("title", tag.getParameter(paramIndex).getName())) {
+        tmpAutomatic = false;
+      }
+    }
+    final boolean canAutomatic = tmpAutomatic;
+
+    // Analyze prefix and suffix
+    String tmpPrefix = contents.substring(beginIndex, beginTagIndex);
+    String tmpSuffix = contents.substring(endTagIndex, endIndex);
+    String tagContents = StringUtils.EMPTY;
+    if (!tag.isFullTag()) {
+      tagContents = contents.substring(tag.getValueBeginIndex(), tag.getValueEndIndex());
+    }
+    boolean found = false;
+    do {
+      found = false;
+      for (String possiblePrefix : prefixes) {
+        if (tagContents.startsWith(possiblePrefix)) {
+          tmpPrefix += possiblePrefix;
+          tagContents = tagContents.substring(possiblePrefix.length());
+          found = true;
+        }
+      }
+    } while (found);
+    final String prefix = tmpPrefix;
+    do {
+      found = false;
+      for (String possibleSuffix : suffixes) {
+        if (tagContents.endsWith(possibleSuffix)) {
+          tmpSuffix = possibleSuffix + tmpSuffix;
+          tagContents = tagContents.substring(0, tagContents.length() - possibleSuffix.length());
+          found = true;
+        }
+      }
+    } while (found);
+    final String suffix = tmpSuffix;
+
+    // Report error
     CheckErrorResult errorResult = createCheckErrorResult(analysis, beginIndex, endIndex);
     if (tag.isFullTag()) {
-      errorResult.addReplacement(StringUtils.EMPTY);
+      errorResult.addReplacement(prefix + suffix);
     } else {
-      String tagContents = contents.substring(tag.getValueBeginIndex(), tag.getValueEndIndex());
       PageElementTag.Parameter paramTitle = tag.getParameter("title");
       String title = (paramTitle != null) ? paramTitle.getValue() : null;
-      replacementConfig.addReplacement(errorResult, tagContents, title);
+      replacementConfig.getReplacement(errorResult, tagContents, title).ifPresent(
+          r -> errorResult.addReplacement(prefix + r.replacement + suffix, r.automatic && canAutomatic));
       for (TemplateConfiguration template : templates) {
-        template.addReplacement(errorResult, tagContents, title);
+        template.getReplacement(errorResult, tagContents, title).ifPresent(
+            r -> errorResult.addReplacement(prefix + r.replacement + suffix, r.automatic && canAutomatic));
       }
-      errorResult.addReplacement(tagContents);
+      errorResult.addReplacement(prefix + tagContents + suffix);
     }
     for (String category : categories) {
       String categoryName = "Category:" + category;
@@ -125,8 +183,11 @@ public class CheckErrorAlgorithm566 extends CheckErrorAlgorithmTags {
   /** Generic templates that can be used for an abbreviation */
   private static final String PARAMETER_TEMPLATES = "templates";
 
-  /** Possible replacements based on abbreviation */
+  /** Possible replacements based on abbreviation value */
   private static final String PARAMETER_REPLACEMENTS = "replacements";
+
+  /** Possible replacements based on abbreviation value and title */
+  private static final String PARAMETER_REPLACEMENTS_TITLE = "replacements_title";
 
   /**
    * Initialize settings for the algorithm.
@@ -155,7 +216,12 @@ public class CheckErrorAlgorithm566 extends CheckErrorAlgorithmTags {
     replacementConfig.clearConfiguration();
     if (tmp != null) {
       List<String[]> tmpList = WPCConfiguration.convertPropertyToStringArrayList(tmp);
-      replacementConfig.initializeConfiguration(tmpList);
+      replacementConfig.setReplacementsByValue(tmpList);
+    }
+    tmp = getSpecificProperty(PARAMETER_REPLACEMENTS_TITLE, true,  true,  false);
+    if (tmp != null) {
+      List<String[]> tmpList = WPCConfiguration.convertPropertyToStringArrayList(tmp, 4);
+      replacementConfig.setReplacementsByValueAndTitle(tmpList);
     }
   }
 
@@ -174,6 +240,39 @@ public class CheckErrorAlgorithm566 extends CheckErrorAlgorithmTags {
   @Override
   protected void addParameters() {
     super.addParameters();
+    addParameter(new AlgorithmParameter(
+        PARAMETER_REPLACEMENTS,
+        GT._T("Possible replacements based on abbreviation value"),
+        new AlgorithmParameterElement[] {
+            new AlgorithmParameterElement(
+                "value",
+                GT._T("Value of the abbreviation")),
+            new AlgorithmParameterElement(
+                "true/false",
+                GT._T("True if the replacement can be automatic")),
+            new AlgorithmParameterElement(
+                "replacement",
+                GT._T("Replacement for the abbreviation"))
+        },
+        true));
+    addParameter(new AlgorithmParameter(
+        PARAMETER_REPLACEMENTS_TITLE,
+        GT._T("Possible replacements based on abbreviation value and title"),
+        new AlgorithmParameterElement[] {
+            new AlgorithmParameterElement(
+                "value",
+                GT._T("Value of the abbreviation")),
+            new AlgorithmParameterElement(
+                "title",
+                GT._T("Title of the abbreviation")),
+            new AlgorithmParameterElement(
+                "true/false",
+                GT._T("True if the replacement can be automatic")),
+            new AlgorithmParameterElement(
+                "replacement",
+                GT._T("Replacement for the abbreviation"))
+        },
+        true));
     addParameter(new AlgorithmParameter(
         PARAMETER_TEMPLATES,
         GT._T("Templates which can replace an abbreviation"),

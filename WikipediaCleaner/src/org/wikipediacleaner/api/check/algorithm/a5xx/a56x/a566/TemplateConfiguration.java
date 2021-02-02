@@ -9,12 +9,14 @@
 package org.wikipediacleaner.api.check.algorithm.a5xx.a56x.a566;
 
 import java.util.List;
+import java.util.Optional;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import org.apache.commons.lang3.StringUtils;
 import org.wikipediacleaner.api.check.CheckErrorResult;
+import org.wikipediacleaner.api.data.Replacement;
 import org.wikipediacleaner.api.data.contents.template.TemplateBuilder;
 
 /**
@@ -68,19 +70,20 @@ public class TemplateConfiguration {
   }
 
   /**
-   * Add a replacement.
+   * Get a replacement.
    * 
    * @param errorResult Error result for which the replacement should be added.
    * @param abbreviation Abbreviation.
    * @param title Optional title.
+   * @return Replacement.
    */
-  public void addReplacement(@Nonnull CheckErrorResult errorResult, String abbreviation, @Nullable String title) {
+  public Optional<Replacement> getReplacement(@Nonnull CheckErrorResult errorResult, String abbreviation, @Nullable String title) {
     String replacement = TemplateBuilder
         .from(templateName)
         .addParam(paramAbbreviation, abbreviation)
-        .addParam(paramMeaning, StringUtils.defaultString(title, defaultMeaning))
+        .addParam(paramMeaning, StringUtils.defaultString(title, defaultMeaning).trim())
         .removeUnnecessaryParamNames(true)
         .toString();
-    errorResult.addReplacement(replacement, false);
+    return Optional.of(new Replacement(replacement, false));
   }
 }

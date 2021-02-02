@@ -1484,4 +1484,29 @@ public class WPCConfiguration {
     }
     return result;
   }
+
+  /**
+   * Convert a property on multiple lines to a string array list.
+   * 
+   * @param property Property.
+   * @param limitPerLine Maximum number of elements per line.
+   * @return String array list.
+   */
+  public static List<String[]> convertPropertyToStringArrayList(String property, int limitPerLine) {
+    List<String> tmpResults = convertPropertyToStringList(property);
+    if (tmpResults == null) {
+      return null;
+    }
+    List<String[]> result = new ArrayList<>();
+    for (String tmpResult : tmpResults) {
+      if (tmpResult != null) {
+        String[] tmp = tmpResult.split("(?<!\\\\)\\|", limitPerLine);
+        for (int i = 0; i < tmp.length; i++) {
+          tmp[i] = tmp[i].replaceAll("\\\\\\|", "|");
+        }
+        result.add(tmp);
+      }
+    }
+    return result;
+  }
 }
