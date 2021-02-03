@@ -521,7 +521,7 @@ public abstract class UpdateWarningTools {
       updatePage(
           todoSubpage, tmp.toString(),
           getWarningComment(elements),
-          false, false);
+          !Boolean.TRUE.equals(todoSubpage.isExisting()), false);
 
       // Inform creator and modifiers of the page
       informContributors(analysis, elements, creator, modifiers);
