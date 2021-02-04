@@ -664,10 +664,11 @@ public class WPCConfiguration {
                   String chapterId = PageAnalysisUtils.getCurrentChapterId(analysis, template.getBeginIndex());
                   if ((suggestionIgnore == null) || (!suggestionIgnore.contains(chapterId))) {
                     String patternText = template.getParameterValue(elements[2]);
+                    String group = template.getParameterValue("group");
                     Suggestion suggestion = tmpMap.get(patternText);
                     if (suggestion == null) {
                       String chapter = PageAnalysisUtils.getCurrentChapterId(analysis, template.getBeginIndex());
-                      suggestion = Suggestion.createSuggestion(patternText, false, chapter);
+                      suggestion = Suggestion.createNativeSuggestion(patternText, group, chapter);
                       if (suggestion != null) {
                         tmpMap.put(patternText, suggestion);
                       }
@@ -725,7 +726,7 @@ public class WPCConfiguration {
                         Suggestion suggestion = tmpMap.get(cleanFindValue);
                         if (suggestion == null) {
                           String chapter = PageAnalysisUtils.getCurrentChapterId(analysis, tag.getBeginIndex());
-                          suggestion = Suggestion.createSuggestion(cleanFindValue, true, chapter);
+                          suggestion = Suggestion.createAWBSuggestion(cleanFindValue, chapter);
                           if (suggestion != null) {
                             tmpMap.put(cleanFindValue, suggestion);
                           }

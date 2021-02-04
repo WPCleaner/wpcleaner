@@ -33,25 +33,20 @@ public class Suggestion implements Comparable<Suggestion> {
   private final static String TAG_NOWIKI_1 = WikiTagType.NOWIKI.getOpenTag();
   private final static String TAG_NOWIKI_2 = WikiTagType.NOWIKI.getCloseTag();
 
-  /**
-   * Page and chapter in which the suggestion is defined.
-   */
+  /** Page and chapter in which the suggestion is defined. */
   private final String chapter;
 
-  /**
-   * Regular expression pattern.
-   */
+  /** Regular expression pattern. */
   private final Pattern pattern;
 
-  /**
-   *  True if the pattern is not a native WPCleaner pattern (AWB, ...)
-   */
+  /** True if the pattern is not a native WPCleaner pattern (AWB, ...) */
   private final boolean other;
 
-  /**
-   * List of possible replacements.
-   */
+  /** List of possible replacements. */
   private final List<ElementarySuggestion> suggestions;
+
+  /** Optional group in which the pattern is categorized */
+  private final String group;
 
   /**
    * Comment for the replacements.
@@ -103,21 +98,17 @@ public class Suggestion implements Comparable<Suggestion> {
   }
 
   /**
-   * Create a Suggestion.
+   * Create a native Suggestion.
    * 
    * @param patternText Search pattern.
-   * @param other True if the pattern is not a native WPCleaner pattern.
+   * @param group Group to categorize the suggestion.
    * @param chapter Page and chapter in which the suggestion is defined.
    * @return Suggestion or null if there's a problem.
    */
-  public static Suggestion createSuggestion(
-      String patternText, boolean other,
+  public static Suggestion createNativeSuggestion(
+      String patternText,
+      String group,
       String chapter) {
-    /*log.debug(
-        "Parsing {} pattern syntax {}:\n  [{}]",
-        other ? "AWB" : "WPC",
-        chapter != null ? "in " + chapter : "",
-        patternText);*/
     try {
       if ((patternText.startsWith(TAG_NOWIKI_1)) &&
           (patternText.endsWith(TAG_NOWIKI_2))) {
@@ -126,12 +117,33 @@ public class Suggestion implements Comparable<Suggestion> {
             patternText.length() - TAG_NOWIKI_2.length());
       }
       Pattern pattern = Pattern.compile(patternText);
-      return new Suggestion(pattern, other, chapter);
+      return new Suggestion(pattern, group, false, chapter);
     } catch (PatternSyntaxException e) {
       log.warn(
-          "Incorrect {} pattern syntax {}:\n  {}",
-          other ? "AWB" : "WPC",
-          chapter != null ? "in " + chapter : "",
+          "Incorrect WPC pattern syntax{}:\n  {}",
+          chapter != null ? " in " + chapter : "",
+          e.getMessage());
+    }
+    return null;
+  }
+
+  /**
+   * Create an AWB Suggestion.
+   * 
+   * @param patternText Search pattern.
+   * @param chapter Page and chapter in which the suggestion is defined.
+   * @return Suggestion or null if there's a problem.
+   */
+  public static Suggestion createAWBSuggestion(
+      String patternText,
+      String chapter) {
+    try {
+      Pattern pattern = Pattern.compile(patternText);
+      return new Suggestion(pattern, null, true, chapter);
+    } catch (PatternSyntaxException e) {
+      log.warn(
+          "Incorrect AWB pattern syntax{}:\n  {}",
+          chapter != null ? " in " + chapter : "",
           e.getMessage());
     }
     return null;
@@ -139,14 +151,18 @@ public class Suggestion implements Comparable<Suggestion> {
 
   /**
    * @param pattern Search pattern.
+   * @param group Group to categorize the suggestion.
    * @param other True if the pattern is not a native WPCleaner pattern.
    * @param chapter Page and chapter in which the suggestion is defined.
    */
   private Suggestion(
-      Pattern pattern, boolean other,
+      Pattern pattern,
+      String group,
+      boolean other,
       String chapter) {
     this.chapter = chapter;
     this.pattern = pattern;
+    this.group = group;
     this.other = other;
     this.suggestions = new ArrayList<>();
     this.comment = null;
@@ -171,6 +187,13 @@ public class Suggestion implements Comparable<Suggestion> {
    */
   public String getPatternText() {
     return pattern.pattern();
+  }
+
+  /**
+   * @return Group to categorize the suggestion.
+   */
+  public String getGroup() {
+    return group;
   }
 
   /**
