@@ -97,7 +97,8 @@ public class CheckErrorAlgorithm566 extends CheckErrorAlgorithmTags {
     // Detect if automatic should be prevented
     boolean tmpAutomatic = true;
     for (int paramIndex = 0; paramIndex < tag.getParametersCount(); paramIndex++) {
-      if (!StringUtils.equals("title", tag.getParameter(paramIndex).getName())) {
+      String paramName = tag.getParameter(paramIndex).getName();
+      if (!StringUtils.equalsAny(paramName, "title", "class")) {
         tmpAutomatic = false;
       }
     }
