@@ -21,7 +21,7 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2021-02-01 14:42:14+0000\n"
+"PO-Revision-Date: 2021-02-04 07:56:08+0000\n"
 "Last-Translator: volkan <volkanyeke@gmail.com>\n"
 "Language-Team: Turkish <tr@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -31,7 +31,7 @@ msgstr ""
 "X-Launchpad-Export-Date: 2018-01-31 07:41+0000\n"
 "X-Generator: MediaWiki 1.36.0-alpha; Translate 2021-01-21\n"
 "Language: tr\n"
-"X-POT-Import-Date: 2021-01-29 21:31:41+0000\n"
+"X-POT-Import-Date: 2021-02-02 13:31:47+0000\n"
 
 #: org/wikipediacleaner/Version.java:31
 #, java-format
@@ -322,6 +322,7 @@ msgstr "{0} değiştirmesi"
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:290
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:304
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:318
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a566/CheckErrorAlgorithm566.java:282
 msgid "Name of the template"
 msgstr "Şablonun adı"
 
@@ -569,7 +570,7 @@ msgid "View image"
 msgstr "Resmi görüntüle"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a03x/a033/CheckErrorAlgorithm033.java:144
-#: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a061/CheckErrorAlgorithm061.java:505
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a061/CheckErrorAlgorithm061.java:501
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a558/CheckErrorAlgorithm558.java:288
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a559/CheckErrorAlgorithm559.java:335
 #, java-format
@@ -577,7 +578,7 @@ msgid "Templates that can be used to replace {0} tags"
 msgstr "Şablonlar {0} adet etiketi değiştirmek için kullanılabilir"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a03x/a033/CheckErrorAlgorithm033.java:147
-#: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a061/CheckErrorAlgorithm061.java:508
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a061/CheckErrorAlgorithm061.java:504
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a558/CheckErrorAlgorithm558.java:291
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a559/CheckErrorAlgorithm559.java:338
 #, java-format
@@ -642,14 +643,14 @@ msgstr "Yok sayılması gereken şablon"
 msgid "Templates to be ignored"
 msgstr "Yoksayılacak şablonlar"
 
-#: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a061/CheckErrorAlgorithm061.java:493
-#: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a061/CheckErrorAlgorithm061.java:496
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a061/CheckErrorAlgorithm061.java:489
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a061/CheckErrorAlgorithm061.java:492
 #, java-format
 msgid "To force the usage of the separator between consecutive {0} tags"
 msgstr "Ayırıcının art arda {0} etiketleri arasında kullanılmasını zorlamak için"
 
-#: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a061/CheckErrorAlgorithm061.java:499
-#: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a061/CheckErrorAlgorithm061.java:502
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a061/CheckErrorAlgorithm061.java:495
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a061/CheckErrorAlgorithm061.java:498
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a067/CheckErrorAlgorithm067.java:368
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a067/CheckErrorAlgorithm067.java:371
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a542/CheckErrorAlgorithm542.java:182
@@ -719,6 +720,7 @@ msgstr "{0} şablonunu kullanarak değiştirin"
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a553/CheckErrorAlgorithm553.java:257
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a553/CheckErrorAlgorithm553.java:262
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a557/CheckErrorAlgorithm557.java:309
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a566/CheckErrorAlgorithm566.java:155
 #: org/wikipediacleaner/gui/swing/action/ActionExternalViewer.java:61
 #: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:90
 #: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:158
@@ -1143,6 +1145,8 @@ msgid "Name of a template that can be used as a replacement"
 msgstr "Değiştirme olarak kullanılabilecek bir şablonun adı"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a513/CheckErrorAlgorithm513.java:908
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a566/CheckErrorAlgorithm566.java:252
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a566/CheckErrorAlgorithm566.java:270
 msgid "True if the replacement can be automatic"
 msgstr "Değiştirme otomatikse true"
 
@@ -1692,6 +1696,44 @@ msgstr "Parametrenin ilk adı"
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:326
 msgid "Target name of the parameter"
 msgstr "Parametrenin hedef adı"
+
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a566/CheckErrorAlgorithm566.java:245
+msgid "Possible replacements based on abbreviation value"
+msgstr "Kısaltma değerine göre olası değişimler"
+
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a566/CheckErrorAlgorithm566.java:249
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a566/CheckErrorAlgorithm566.java:264
+msgid "Value of the abbreviation"
+msgstr "Kısaltma değeri"
+
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a566/CheckErrorAlgorithm566.java:255
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a566/CheckErrorAlgorithm566.java:273
+msgid "Replacement for the abbreviation"
+msgstr "Kısaltmanın yerine geçecek olan"
+
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a566/CheckErrorAlgorithm566.java:260
+msgid "Possible replacements based on abbreviation value and title"
+msgstr "Kısaltma değeri ve başlığa göre olası değişimler"
+
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a566/CheckErrorAlgorithm566.java:267
+msgid "Title of the abbreviation"
+msgstr "Kısaltma başlığı"
+
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a566/CheckErrorAlgorithm566.java:278
+msgid "Templates which can replace an abbreviation"
+msgstr "Bir kısaltmayı değiştirebilen şablonlar"
+
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a566/CheckErrorAlgorithm566.java:285
+msgid "Name of the parameter for the abbreviation"
+msgstr "Kısaltma için değişken ismi"
+
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a566/CheckErrorAlgorithm566.java:288
+msgid "Name of the parameter for the meaning"
+msgstr "Anlam için değişken ismi"
+
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a566/CheckErrorAlgorithm566.java:291
+msgid "Default value for the meaning"
+msgstr "Anlam için varsayılan değer"
 
 #: org/wikipediacleaner/api/configuration/CWConfiguration.java:83
 #, java-format
