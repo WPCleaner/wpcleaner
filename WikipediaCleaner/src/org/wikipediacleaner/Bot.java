@@ -627,7 +627,9 @@ public class Bot implements BasicWorkerListener {
       for (int numArg = 1; numArg < actionArgs.length; numArg++) {
         typoGroups.add(actionArgs[numArg]);
       }
+      return true;
     }
+
     return false;
   }
 
