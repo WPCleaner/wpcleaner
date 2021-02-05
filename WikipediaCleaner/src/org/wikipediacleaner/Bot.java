@@ -30,6 +30,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithm;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithms;
+import org.wikipediacleaner.api.check.algorithm.a5xx.a50x.a501.CheckErrorAlgorithm501;
 import org.wikipediacleaner.api.constants.EnumLanguage;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.DataManager;
@@ -106,6 +107,9 @@ public class Bot implements BasicWorkerListener {
 
   /** To work only on pages with titles before the end of the range */
   private String rangeEnd;
+
+  /** List of groups that are used for fixing typography and spelling errors (CW#501) */
+  private final Set<String> typoGroups = new HashSet<>();
 
   /**
    * @param args Command line arguments
@@ -612,11 +616,18 @@ public class Bot implements BasicWorkerListener {
       try {
         timeLimit = System.currentTimeMillis() + 1000 * Long.parseLong(actionArgs[1]);
       } catch (NumberFormatException e) {
-        log.warn("Incorrect time limi {}", actionArgs[1]);
+        log.warn("Incorrect time limit {}", actionArgs[1]);
       }
       return true;
     }
     
+    // Set Typo groups
+    if ("TypoGroups".equalsIgnoreCase(parameter) &&
+        (actionArgs.length > 1)) {
+      for (int numArg = 1; numArg < actionArgs.length; numArg++) {
+        typoGroups.add(actionArgs[numArg]);
+      }
+    }
     return false;
   }
 
@@ -756,6 +767,10 @@ public class Bot implements BasicWorkerListener {
     }
     if (!loginDone) {
       loginDone = true;
+      CheckErrorAlgorithm algorithm = CheckErrorAlgorithms.getAlgorithm(wiki, 501);
+      if (algorithm instanceof CheckErrorAlgorithm501) {
+        ((CheckErrorAlgorithm501) algorithm).setAuthorizedGroups(typoGroups);
+      }
     }
     if (actions.isEmpty()) {
       System.exit(0);

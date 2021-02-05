@@ -14,9 +14,12 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.regex.Matcher;
+import java.util.stream.Collectors;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import org.wikipediacleaner.api.check.Actionnable;
 import org.wikipediacleaner.api.check.CheckErrorResult;
@@ -594,7 +597,23 @@ public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
    */
   @Nonnull
   private List<Suggestion> getSuggestions(boolean onlyAutomatic) {
-    return new ArrayList<>(onlyAutomatic ? automaticActiveSuggestions : allActiveSuggestions);
+    List<Suggestion> tmp = onlyAutomatic ? automaticActiveSuggestions : allActiveSuggestions;
+    if (authorizedGroups == null) {
+      return new ArrayList<>(tmp);
+    }
+    return tmp.stream().filter(s -> authorizedGroups.contains(s.getGroup())).collect(Collectors.toList());
+  }
+
+  @Nullable
+  private Set<String> authorizedGroups;
+
+  /**
+   * Restrict the suggestions to a list of groups.
+   * 
+   * @param groups Authorized groups.
+   */
+  public void setAuthorizedGroups(Set<String> groups) {
+    this.authorizedGroups = groups;
   }
 
   /**

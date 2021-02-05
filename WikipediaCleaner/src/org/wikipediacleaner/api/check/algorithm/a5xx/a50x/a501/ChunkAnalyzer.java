@@ -13,6 +13,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
 
+import javax.annotation.Nonnull;
+
 import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.PageElementTemplate;
@@ -42,8 +44,10 @@ class ChunkAnalyzer {
    * @param nativeRegexp True if creating chunks for WPCleaner regular expressions.
    * @return List of contents chunks.
    */
+  @Nonnull
   public List<Interval> computeContentsChunks(
-      PageAnalysis analysis, boolean nativeRegexp) {
+      @Nonnull PageAnalysis analysis,
+      boolean nativeRegexp) {
     String contents = analysis.getContents();
     List<Interval> chunks = new LinkedList<>();
     chunks.add(new ContentsInterval(0, contents.length()));
@@ -104,7 +108,10 @@ class ChunkAnalyzer {
    * @param analysis Page analysis.
    * @param tagType Tag type to remove.
    */
-  private void removeCompleteTags(List<Interval> chunks, PageAnalysis analysis, TagType tagType) {
+  private void removeCompleteTags(
+      @Nonnull List<Interval> chunks,
+      @Nonnull PageAnalysis analysis,
+      @Nonnull TagType tagType) {
     List<PageElementTag> tags = analysis.getCompleteTags(tagType);
     for (PageElementTag tag : tags) {
       removeArea(chunks, tag.getCompleteBeginIndex(), tag.getCompleteEndIndex());
@@ -117,7 +124,9 @@ class ChunkAnalyzer {
    * @param chunks List of chunks of text.
    * @param analysis Page analysis.
    */
-  private void removeGalleryTags(List<Interval> chunks, PageAnalysis analysis) {
+  private void removeGalleryTags(
+      @Nonnull List<Interval> chunks,
+      @Nonnull PageAnalysis analysis) {
     Namespace imageNamespace = analysis.getWikiConfiguration().getNamespace(Namespace.IMAGE);
     String contents = analysis.getContents();
     List<PageElementTag> tags = analysis.getCompleteTags(WikiTagType.GALLERY);
@@ -158,7 +167,9 @@ class ChunkAnalyzer {
    * @param begin Begin of the area to remove.
    * @param end End of the area to remove.
    */
-  private void removeArea(List<Interval> chunks, int begin, int end) {
+  private void removeArea(
+      @Nonnull List<Interval> chunks,
+      int begin, int end) {
     ListIterator<Interval> itChunks = chunks.listIterator();
     while (itChunks.hasNext()) {
       Interval chunk = itChunks.next();
