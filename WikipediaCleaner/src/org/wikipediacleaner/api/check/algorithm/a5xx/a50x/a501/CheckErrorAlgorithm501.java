@@ -201,6 +201,7 @@ public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
       PageAnalysis analysis, List<Suggestion> suggestions,
       List<Replacement> replacements) {
     boolean result = false;
+    String performanceName = String.format("Slow regular expression (%s)", analysis.getPage().getTitle());
 
     // Check every suggestion
     List<Interval> chunks = chunkAnalyzer.computeContentsChunks(analysis, true);
@@ -210,7 +211,7 @@ public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
     while (itSuggestion.hasNext()) {
       Suggestion suggestion = itSuggestion.next();
       if (!suggestion.isOtherPattern()) {
-        Performance perf = Performance.getInstance("Slow regular expression");
+        Performance perf = Performance.getInstance(performanceName);
         perf.setThreshold(slowRegexp);
         itSuggestion.remove();
         Matcher matcher = suggestion.initMatcher(contents);
@@ -273,6 +274,7 @@ public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
       PageAnalysis analysis, List<Suggestion> suggestions,
       List<Replacement> replacements) {
     boolean result = false;
+    String performanceName = String.format("Slow regular expression (%s)", analysis.getPage().getTitle());
 
     // Check every suggestion
     List<Interval> chunks = chunkAnalyzer.computeContentsChunks(analysis, false);
@@ -282,7 +284,7 @@ public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
     while (itSuggestion.hasNext()) {
       Suggestion suggestion = itSuggestion.next();
       if (suggestion.isOtherPattern()) {
-        Performance perf = Performance.getInstance("Slow regular expression");
+        Performance perf = Performance.getInstance(performanceName);
         perf.setThreshold(slowRegexp);
         itSuggestion.remove();
         Matcher matcher = suggestion.initMatcher(contents);
