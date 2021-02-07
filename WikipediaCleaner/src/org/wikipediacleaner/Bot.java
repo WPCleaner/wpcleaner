@@ -567,6 +567,9 @@ public class Bot implements BasicWorkerListener {
       if (actionArgs.length > 2) {
         Configuration config = Configuration.getConfiguration();
         config.forceValue(actionArgs[1], actionArgs[2]);
+        for (CheckErrorAlgorithm algorithm : CheckErrorAlgorithms.getAlgorithms(wiki)) {
+          algorithm.setConfiguration(wiki.getWikiConfiguration(), wiki.getCWConfiguration(), wiki.getConfiguration());
+        }
       }
       return true;
     }

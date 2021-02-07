@@ -898,6 +898,7 @@ public class ListCWWorker extends BasicWorker {
         return;
       }
       if ((pagesList == null) || pagesList.contains(page.getTitle())) {
+        //logCW.info("Processing page {}", page.getTitle());
         controller.addTask(new CWPageCallable(wiki, listener, api, page));
       }
     }
