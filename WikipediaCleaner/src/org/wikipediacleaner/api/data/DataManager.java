@@ -54,6 +54,59 @@ public class DataManager {
   }
 
   /**
+   * Create a page.
+   * 
+   * @param wiki Wiki.
+   * @param title Page title (full title including the optional namespace)
+   * @param pageId Page identifier.
+   * @param revisionId Revision identifier.
+   * @param namespaceHint Suggestion for the namespace.
+   * @return Page.
+   */
+  public static Page createSimplePage(
+      EnumWikipedia wiki,
+      String title, Integer pageId, String revisionId,
+      Integer namespaceHint) {
+
+    // Create page
+    Page page = new Page(wiki, title);
+    page.setPageId(pageId);
+    page.setRevisionId(revisionId);
+
+    // Manage namespace
+    Integer namespaceId = null;
+    if (page.getTitle() != null) {
+      int colonIndex = page.getTitle().indexOf(':');
+      if (colonIndex > 0) {
+        String namespaceText = page.getTitle().substring(0, colonIndex);
+        if (namespaceHint != null) {
+          Namespace namespace = wiki.getWikiConfiguration().getNamespace(namespaceHint);
+          if ((namespace != null) && (namespace.isPossibleName(namespaceText))) {
+            namespaceId = namespace.getId();
+          }
+        }
+        if (namespaceId == null) {
+          List<Namespace> namespaces = wiki.getWikiConfiguration().getNamespaces();
+          if (namespaces != null) {
+            for (Namespace namespace : namespaces) {
+              if (namespace.isPossibleName(namespaceText)) {
+                namespaceId = namespace.getId();
+                break;
+              }
+            }
+          }
+        }
+      }
+    }
+    if (namespaceId == null) {
+      namespaceId = Namespace.MAIN;
+    }
+    page.setNamespace(namespaceId);
+
+    return page;
+  }
+
+  /**
    * @param wiki Wiki.
    * @param title Page title.
    * @param pageId Page id.
@@ -72,29 +125,8 @@ public class DataManager {
       return page;
     }
 
-    // Retrieve page
-    page = new Page(wiki, title);
-    page.setPageId(pageId);
-    page.setRevisionId(revisionId);
-
-    // Manage namespace
-    if (page.getTitle() != null) {
-      int colonIndex = page.getTitle().indexOf(':');
-      if (colonIndex > 0) {
-        String namespaceText = page.getTitle().substring(0, colonIndex);
-        List<Namespace> namespaces = wiki.getWikiConfiguration().getNamespaces();
-        if (namespaces != null) {
-          for (Namespace namespace : namespaces) {
-            if (namespace.isPossibleName(namespaceText)) {
-              page.setNamespace(namespace.getId());
-            }
-          }
-        }
-      }
-      if (page.getNamespace() == null) {
-        page.setNamespace(Namespace.MAIN);
-      }
-    }
+    // Create page
+    page = createSimplePage(wiki, title, pageId, revisionId, null);
 
     // Manage comments
     Configuration config = Configuration.getConfiguration();

@@ -105,7 +105,7 @@ public class CheckLanguageLinkAction extends TextAction {
 
       // Check local page
       if (toWiki != null) {
-        Page page = DataManager.getPage(toWiki, title, null, null, null);
+        Page page = DataManager.createSimplePage(toWiki, title, null, null, null);
         api.retrieveInfo(toWiki, Collections.singletonList(page));
         if (message.length() > 0) {
           message.append("\n");

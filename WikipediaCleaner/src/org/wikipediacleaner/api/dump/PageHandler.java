@@ -184,21 +184,19 @@ public class PageHandler extends DefaultHandler {
       if (processor != null) {
         increasePageCount();
         try {
-          Integer namespaceNum = Integer.valueOf(namespace.toString());
-          if (processor.isForNamespace(namespaceNum)) {
-            Page page = DataManager.getPage(
-                processor.getWiki(), title.toString(),
-                Integer.valueOf(pageId.toString(), 10), revisionId.toString(),
-                null);
-            page.setNamespace(namespaceNum);
-            page.setContents(revisionText.toString());
-            if (redirect.length() > 0) {
-              PageRedirect redirects = page.getRedirects();
-              redirects.isRedirect(true);
-              redirects.add(DataManager.getPage(processor.getWiki(), redirect.toString(), null, null, null), null);
-            }
-            processor.processPage(page);
+          Integer namespaceId = Integer.valueOf(namespace.toString());
+          Page currentPage = DataManager.createSimplePage(
+              processor.getWiki(), title.toString(),
+              Integer.valueOf(pageId.toString(), 10), revisionId.toString(),
+              namespaceId);
+          currentPage.setNamespace(namespaceId);
+          currentPage.setContents(revisionText.toString());
+          if (redirect.length() > 0) {
+            PageRedirect redirects = currentPage.getRedirects();
+            redirects.isRedirect(true);
+            redirects.add(DataManager.createSimplePage(processor.getWiki(), redirect.toString(), null, null, null), null);
           }
+          processor.processPage(currentPage);
         } catch (NumberFormatException e) {
           log.error("Problem in endElement: " + e.getMessage());
         }

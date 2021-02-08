@@ -374,7 +374,8 @@ public class Bot implements BasicWorkerListener {
   private BasicWorker executeFixListCheckWiki(Action actionConfig) {
     Page page = null;
     if (actionConfig.actionArgs.length > 0) {
-      page = DataManager.getPage(wiki, actionConfig.actionArgs[0], null, null, null);
+      page = DataManager.createSimplePage(
+          wiki, actionConfig.actionArgs[0], null, null, null);
     }
     List<CheckErrorAlgorithm> algorithms = new ArrayList<>();
     List<CheckErrorAlgorithm> allAlgorithms = new ArrayList<>();

@@ -29,7 +29,7 @@ public class StaticPageListProvider implements PageListProvider {
    * @param title Title of the page to provide.
    */
   public StaticPageListProvider(EnumWikipedia wiki, String title) {
-    this.pages = Collections.singletonList(DataManager.getPage(wiki, title, null, null, null));
+    this.pages = Collections.singletonList(DataManager.createSimplePage(wiki, title, null, null, null));
   }
 
   /**

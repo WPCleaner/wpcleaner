@@ -237,7 +237,7 @@ public class ActionCheckArticle implements ActionListener {
         if (element instanceof Page) {
           pages.add((Page) element);
         } else {
-          pages.add(DataManager.getPage(wiki, element.toString(), null, null, null));
+          pages.add(DataManager.createSimplePage(wiki, element.toString(), null, null, null));
         }
       }
       checkArticles(pages, wiki);
@@ -272,7 +272,7 @@ public class ActionCheckArticle implements ActionListener {
       return;
     }
     
-    checkArticle(DataManager.getPage(wiki, toAnalyze, null, null, null), wiki);
+    checkArticle(DataManager.createSimplePage(wiki, toAnalyze, null, null, null), wiki);
   }
 
   /**

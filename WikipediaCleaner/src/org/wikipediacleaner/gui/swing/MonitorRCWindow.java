@@ -218,7 +218,8 @@ public class MonitorRCWindow extends BasicWindow implements RecentChangesListene
     // Check if an update has been made on a monitored page
     for (RecentChange rc : filteredNewRC) {
       if (monitoredPages.containsKey(rc.getTitle())) {
-        Page page = DataManager.getPage(getWikipedia(), rc.getTitle(), null, null, null);
+        Page page = DataManager.createSimplePage(
+            getWikipedia(), rc.getTitle(), null, null, null);
         try {
           updateDabWarning.updateWarning(
               Collections.singletonList(page), null, null, null);
@@ -295,7 +296,7 @@ public class MonitorRCWindow extends BasicWindow implements RecentChangesListene
       if (oldEnough) {
         modelRCInteresting.removeRecentChanges(title);
         if (!redirect) {
-          Page page = DataManager.getPage(getWikipedia(), title, null, null, null);
+          Page page = DataManager.createSimplePage(getWikipedia(), title, null, null, null);
           pages.add(page);
           creators.put(title, creator);
           modifiers.put(title, pageModifiers);

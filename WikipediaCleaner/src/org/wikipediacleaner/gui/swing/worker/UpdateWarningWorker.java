@@ -126,7 +126,7 @@ public abstract class UpdateWarningWorker extends BasicWorker {
       String templateTitle = wikiConfiguration.getPageTitle(
           Namespace.TEMPLATE,
           warningTemplateName);
-      Page warningTemplate = DataManager.getPage(
+      Page warningTemplate = DataManager.createSimplePage(
           wiki, templateTitle, null, null, null);
       api.retrieveEmbeddedIn(
           wiki, warningTemplate,
@@ -160,7 +160,7 @@ public abstract class UpdateWarningWorker extends BasicWorker {
                 }
               }
             }
-            page = DataManager.getPage(wiki, title, null, null, null);
+            page = DataManager.createSimplePage(wiki, title, null, null, null);
           }
           addPage(page, pages);
         }
@@ -217,7 +217,8 @@ public abstract class UpdateWarningWorker extends BasicWorker {
     if (categories != null) {
       for (String category : categories) {
         String categoryTitle = wikiConfiguration.getPageTitle(Namespace.CATEGORY, category);
-        Page categoryPage = DataManager.getPage(wiki, categoryTitle, null, null, null);
+        Page categoryPage = DataManager.createSimplePage(
+            wiki, categoryTitle, null, null, Namespace.CATEGORY);
         api.retrieveCategoryMembers(wiki, categoryPage, 0, false, Integer.MAX_VALUE);
         List<Page> categoryMembers = categoryPage.getRelatedPages(
             Page.RelatedPages.CATEGORY_MEMBERS);
@@ -245,7 +246,7 @@ public abstract class UpdateWarningWorker extends BasicWorker {
     API api = APIFactory.getAPI();
     String pageName = configuration.getString(pageNameProperty);
     if (pageName != null) {
-      Page page = DataManager.getPage(wiki, pageName, null, null, null);
+      Page page = DataManager.createSimplePage(wiki, pageName, null, null, null);
       api.retrieveLinks(wiki, page, Namespace.MAIN, null, false, false);
       List<Page> links = page.getLinks();
       if (links != null) {
@@ -272,7 +273,7 @@ public abstract class UpdateWarningWorker extends BasicWorker {
     List<String> pageNames = configuration.getStringList(pageNameProperty);
     if (pageNames != null) {
       for (String pageName : pageNames) {
-        Page page = DataManager.getPage(wiki, pageName, null, null, null);
+        Page page = DataManager.createSimplePage(wiki, pageName, null, null, null);
         api.retrieveLinks(wiki, page, Namespace.MAIN, null, false, false);
         List<Page> links = page.getLinks();
         if (links != null) {

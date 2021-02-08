@@ -253,7 +253,7 @@ public class FixDumpWorker extends AutomaticFixWorker {
 
       // If an automatic fix can be applied, try on the online page
       if (automaticFix) {
-        Page currentPage = DataManager.getPage(wiki,  page.getTitle(), null, null, null);
+        Page currentPage = DataManager.createSimplePage(wiki,  page.getTitle(), null, null, null);
         analyzePage(currentPage, selectedAlgorithms, null);
       }
 

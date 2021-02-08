@@ -295,7 +295,7 @@ public class TranslateWorker extends BasicWorker {
     if (link != null) {
       return link;
     }
-    Page original = DataManager.getPage(from, pageName, null, null, null);
+    Page original = DataManager.createSimplePage(from, pageName, null, null, null);
     //api.retrieveLinksWithRedirects(from, original, null, null);
     api.initializeRedirect(from, Collections.singletonList(original));
     if (!original.getRedirects().isRedirect()) {

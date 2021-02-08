@@ -458,7 +458,7 @@ public enum EnumWikipedia {
   public void initDisambiguationTemplates(API api) {
     if (disambiguationTemplates == null) {
       synchronized (api) {
-        Page page = DataManager.getPage(
+        Page page = DataManager.createSimplePage(
             this, "Mediawiki:Disambiguationspage",
             null, null, null);
         try {

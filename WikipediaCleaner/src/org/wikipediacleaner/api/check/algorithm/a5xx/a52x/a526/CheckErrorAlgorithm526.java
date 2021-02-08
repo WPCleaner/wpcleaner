@@ -256,7 +256,7 @@ public class CheckErrorAlgorithm526 extends CheckErrorAlgorithmBase {
     // Use internal links
     if (dumpAnalysis != null) {
       API api = APIFactory.getAPI();
-      Page page = DataManager.getPage(wiki, dumpAnalysis, null, null, null);
+      Page page = DataManager.createSimplePage(wiki, dumpAnalysis, null, null, null);
       try {
         api.retrieveLinks(wiki, page, null, null, false, false);
         if (page.getLinks() != null) {

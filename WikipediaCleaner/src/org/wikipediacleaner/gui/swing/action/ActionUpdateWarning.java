@@ -449,7 +449,7 @@ public class ActionUpdateWarning implements ActionListener {
           null, ConfigurationValueString.PAGE_NAME, tmp);
       config.save();
       return Collections.singletonList(
-          DataManager.getPage(wiki, tmp, null, null, null));
+          DataManager.createSimplePage(wiki, tmp, null, null, null));
     }
 
     return null;

@@ -81,7 +81,7 @@ class CWCheckWhiteListsWorker extends BasicWorker {
               // Prepare list of pages to check
               List<Page> pages = new ArrayList<>(whiteList.size());
               for (String pageName : whiteList) {
-                Page page = DataManager.getPage(wiki, pageName, null, null, null);
+                Page page = DataManager.createSimplePage(wiki, pageName, null, null, null);
                 pages.add(page);
               }
               Collections.sort(pages);
@@ -138,7 +138,7 @@ class CWCheckWhiteListsWorker extends BasicWorker {
               if (!unnecessaryPages.isEmpty() &&
                   (whiteListPageName != null) &&
                   (comment != null)) {
-                Page whiteListPage = DataManager.getPage(wiki, whiteListPageName, null, null, null);
+                Page whiteListPage = DataManager.createSimplePage(wiki, whiteListPageName, null, null, null);
                 api.retrieveContents(wiki, Collections.singletonList(whiteListPage), false, false);
                 String initialContents = whiteListPage.getContents();
                 String contents = initialContents;

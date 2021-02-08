@@ -110,7 +110,7 @@ public class AutomaticFixingWorker extends BasicWorker {
     try {
       Page[] tmpPages = new Page[pages.length];
       for (int numPage = 0; numPage < pages.length; numPage++) {
-        tmpPages[numPage] = DataManager.getPage(
+        tmpPages[numPage] = DataManager.createSimplePage(
             getWikipedia(), pages[numPage].getTitle(), pages[numPage].getPageId(), null, null);
       }
       MediaWiki mw = MediaWiki.getMediaWikiAccess(this);

@@ -69,14 +69,14 @@ public class AutomaticFileCWWorker extends AutomaticFixWorker {
     try {
       File file = new File(path);
       String fileContent = FileUtils.readFileToString(file, StandardCharsets.UTF_8);
-      Page page = DataManager.getPage(getWikipedia(), file.getName(), null, null, null);
+      Page page = DataManager.createSimplePage(getWikipedia(), file.getName(), null, null, null);
       page.setContents(fileContent);
       PageAnalysis analysis = page.getAnalysis(fileContent, true);
       for (PageElementInternalLink link : analysis.getInternalLinks()) {
         if (!shouldContinue()) {
           return null;
         }
-        Page tmpPage = DataManager.getPage(getWikipedia(), link.getLink(), null, null, null);
+        Page tmpPage = DataManager.createSimplePage(getWikipedia(), link.getLink(), null, null, null);
         analyzePage(tmpPage, selectedAlgorithms, null);
       }
     } catch (APIException | IOException e) {

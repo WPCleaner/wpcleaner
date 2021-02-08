@@ -296,7 +296,7 @@ public class CheckWiki {
     try {
       String translationPage = wpcConfiguration.getString(WPCConfigurationString.CW_TRANSLATION_PAGE);
       if (translationPage != null) {
-        Page page = DataManager.getPage(
+        Page page = DataManager.createSimplePage(
             wiki, translationPage,
             null, null, null);
         api.retrieveContents(wiki, Collections.singleton(page), false, false);
@@ -313,7 +313,7 @@ public class CheckWiki {
     for (int i = 0; i < CWConfiguration.MAX_ERROR_NUMBER; i++) {
       CWConfigurationError error = cwConfiguration.getErrorConfiguration(i);
       if ((error != null) && (error.getWhiteListPageName() != null)) {
-        Page page = DataManager.getPage(
+        Page page = DataManager.createSimplePage(
             wiki, error.getWhiteListPageName(), null, null, null);
         whiteListPages.put(error.getWhiteListPageName(), page);
       }

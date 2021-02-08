@@ -823,7 +823,7 @@ public class CheckErrorAlgorithm090 extends CheckErrorAlgorithmBase {
           endIndex++;
         }
       }
-      Page articlePage = DataManager.getPage(
+      Page articlePage = DataManager.createSimplePage(
           analysis.getWikipedia(), article, null, null, null);
       needColon = Boolean.FALSE;
       if (articlePage.getNamespace() != null) {

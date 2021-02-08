@@ -945,7 +945,9 @@ public class CheckWikiWindow extends OnePageWindow implements CheckWikiListener 
       if (selection instanceof String) {
         List<String> listErrorPages = getPagesWithSeveralErrors();
         for (String page : listErrorPages) {
-          CheckErrorPage errorPage = new CheckErrorPage(DataManager.getPage(getWikipedia(), page, null, null, null), null);
+          CheckErrorPage errorPage = new CheckErrorPage(
+              DataManager.createSimplePage(getWikipedia(), page, null, null, null),
+              null);
           modelPages.addElement(errorPage);
         }
       }

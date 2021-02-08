@@ -153,8 +153,8 @@ public class CheckArticleTools {
     String templateName = template.getTemplateName();
     String title = wiki.getWikiConfiguration().getPageTitle(
         Namespace.TEMPLATE, templateName);
-    Page templatePage = DataManager.getPage(
-        wiki, title, null, null, null);
+    Page templatePage = DataManager.createSimplePage(
+        wiki, title, null, null, Namespace.TEMPLATE);
     API api = APIFactory.getAPI();
     return api.retrieveTemplateData(wiki, templatePage);
   }
@@ -171,8 +171,8 @@ public class CheckArticleTools {
     String templateName = template.getTemplateName();
     String title = wiki.getWikiConfiguration().getPageTitle(
         Namespace.TEMPLATE, templateName);
-    Page templatePage = DataManager.getPage(
-        wiki, title, null, null, null);
+    Page templatePage = DataManager.createSimplePage(
+        wiki, title, null, null, Namespace.TEMPLATE);
     API api = APIFactory.getAPI();
     api.retrieveContents(wiki, Collections.singletonList(templatePage), false, true);
     return TemplateData.createFromContent(

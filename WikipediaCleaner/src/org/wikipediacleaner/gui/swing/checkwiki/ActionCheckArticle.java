@@ -129,7 +129,7 @@ public class ActionCheckArticle extends AbstractAction implements ActionListener
   @Override
   public void actionPerformed(ActionEvent e) {
     CheckWiki checkWiki = APIFactory.getCheckWiki();
-    Page page = DataManager.getPage(wiki, title, null, null, null);
+    Page page = DataManager.createSimplePage(wiki, title, null, null, null);
     List<CheckWikiDetection> detections = checkWiki.check(page);
     if (detections == null) {
       Utilities.displayWarning(

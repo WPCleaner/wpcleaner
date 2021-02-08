@@ -274,7 +274,8 @@ public abstract class MWPanePopupListener extends AbstractPopupListener {
     }
 
     // Initialization
-    Page page = DataManager.getPage(wikipedia, link.getLink(), null, null, null);
+    Page page = DataManager.createSimplePage(
+        wikipedia, link.getLink(), null, null, null);
 
     // Menu creation
     BasicMenuCreator menu = new BasicMenuCreator();
@@ -342,7 +343,8 @@ public abstract class MWPanePopupListener extends AbstractPopupListener {
     EnumWikipedia otherWikipedia = EnumWikipedia.getWikipedia(link.getLanguage());
     Page otherPage = null;
     if (otherWikipedia != null) {
-      otherPage = DataManager.getPage(otherWikipedia, link.getLink(), null, null, null);
+      otherPage = DataManager.createSimplePage(
+          otherWikipedia, link.getLink(), null, null, null);
     }
 
     // Menu creation
@@ -380,7 +382,8 @@ public abstract class MWPanePopupListener extends AbstractPopupListener {
     String fullName = wikipedia.getWikiConfiguration().getPageTitle(
         Namespace.IMAGE,
         image.getImage());
-    Page page = DataManager.getPage(wikipedia, fullName, null, null, null);
+    Page page = DataManager.createSimplePage(
+        wikipedia, fullName, null, null, Namespace.IMAGE);
 
     // Menu creation
     BasicMenuCreator menu = new BasicMenuCreator();
@@ -416,7 +419,8 @@ public abstract class MWPanePopupListener extends AbstractPopupListener {
     String fullName = wikipedia.getWikiConfiguration().getPageTitle(
         Namespace.CATEGORY,
         category.getName());
-    Page page = DataManager.getPage(wikipedia, fullName, null, null, null);
+    Page page = DataManager.createSimplePage(
+        wikipedia, fullName, null, null, Namespace.CATEGORY);
 
     // Menu creation
     BasicMenuCreator menu = new BasicMenuCreator();
@@ -477,7 +481,8 @@ public abstract class MWPanePopupListener extends AbstractPopupListener {
     String fullName = wikipedia.getWikiConfiguration().getPageTitle(
         Namespace.TEMPLATE,
         template.getTemplateName());
-    Page page = DataManager.getPage(wikipedia, fullName, null, null, null);
+    Page page = DataManager.createSimplePage(
+        wikipedia, fullName, null, null, Namespace.TEMPLATE);
 
     // Menu creation
     BasicMenuCreator menu = new BasicMenuCreator();

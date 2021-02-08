@@ -195,7 +195,7 @@ public class ListCWWorker extends BasicWorker {
         List<Page> outputPages = new ArrayList<>();
         for (AlgorithmInformation algorithm : selectedAlgorithms) {
           String truePageName = MessageFormat.format(pageName, algorithm.algorithm.getErrorNumberString());
-          Page page = DataManager.getPage(getWikipedia(), truePageName, null, null, null);
+          Page page = DataManager.createSimplePage(getWikipedia(), truePageName, null, null, null);
           outputPages.add(page);
         }
         API api = APIFactory.getAPI();
@@ -208,6 +208,7 @@ public class ListCWWorker extends BasicWorker {
             }
           }
         }
+        logCW.info("List of pages contains {} pages", pageProcessor.getPagesListSize());
       } catch (APIException e) {
         // Nothing to do
       }
@@ -441,7 +442,7 @@ public class ListCWWorker extends BasicWorker {
     logCW.info("Writing dump analysis results for error " + algorithm.getErrorNumberString() + " to page " + truePageName);
 
     // Retrieve page information
-    Page page = DataManager.getPage(getWikipedia(), truePageName, null, null, null);
+    Page page = DataManager.createSimplePage(getWikipedia(), truePageName, null, null, null);
     API api = APIFactory.getAPI();
     api.retrieveContents(getWikipedia(), Collections.singletonList(page), false, false);
     String initialContents = page.getContents();
@@ -754,7 +755,7 @@ public class ListCWWorker extends BasicWorker {
           if (checkWiki) {
             try {
               if (currentPage == null) {
-                currentPage = DataManager.getPage(wiki, page.getTitle(), null, null, null);
+                currentPage = DataManager.createSimplePage(wiki, page.getTitle(), null, null, page.getNamespace());
               }
               if (currentAnalysis == null) {
                 api.retrieveContents(wiki, Collections.singleton(currentPage), false, false);
@@ -828,7 +829,7 @@ public class ListCWWorker extends BasicWorker {
     private final API api;
 
     /** Restrict the processing to this list of pages */
-    private List<String> pagesList;
+    private Set<String> pagesList;
 
     /**
      * @param wiki Wiki.
@@ -859,6 +860,16 @@ public class ListCWWorker extends BasicWorker {
     }
 
     /**
+     * @return Number of pages in the list.
+     */
+    public int getPagesListSize() {
+      if (pagesList == null) {
+        return 0;
+      }
+      return pagesList.size();
+    }
+
+    /**
      * Add a page to the list of pages to check.
      * 
      * @param page Page to be checked.
@@ -869,11 +880,9 @@ public class ListCWWorker extends BasicWorker {
       }
       String title = page.getTitle();
       if (pagesList == null) {
-        pagesList = new ArrayList<>();
+        pagesList = new HashSet<>();
       }
-      if (!pagesList.contains(title)) {
-        pagesList.add(title);
-      }
+      pagesList.add(title);
     }
 
     /**
@@ -897,9 +906,17 @@ public class ListCWWorker extends BasicWorker {
       if (page == null) {
         return;
       }
-      if ((pagesList == null) || pagesList.contains(page.getTitle())) {
-        //logCW.info("Processing page {}", page.getTitle());
+      if (pagesList == null) {
         controller.addTask(new CWPageCallable(wiki, listener, api, page));
+        return;
+      }
+      if (pagesList.contains(page.getTitle())) {
+        pagesList.remove(page.getTitle());
+        controller.addTask(new CWPageCallable(wiki, listener, api, page));
+        if (pagesList.size() % 1000 == 0) {
+        	logCW.info("{} pages left in list", pagesList.size());
+        }
+        return;
       }
     }
 

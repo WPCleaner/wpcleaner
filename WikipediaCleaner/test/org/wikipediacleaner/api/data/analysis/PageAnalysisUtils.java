@@ -39,7 +39,7 @@ public class PageAnalysisUtils {
 
     // Create contents and analysis
     String text = readFile(fileName + ".txt");
-    Page testPage = DataManager.getPage(wiki, fileName, null, null, null);
+    Page testPage = DataManager.createSimplePage(wiki, fileName, null, null, null);
     PageAnalysis analysis = new PageAnalysis(testPage, text);
     AnalysisPerformance perf = new AnalysisPerformance();
     analysis.performFullPageAnalysis(perf);

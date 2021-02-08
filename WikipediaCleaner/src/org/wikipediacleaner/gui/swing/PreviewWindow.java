@@ -84,7 +84,7 @@ public class PreviewWindow
             if (window instanceof PreviewWindow) {
               PreviewWindow expand = (PreviewWindow) window;
               expand.pageTitle = page;
-              expand.page = DataManager.getPage(wikipedia, page, null, null, null);
+              expand.page = DataManager.createSimplePage(wikipedia, page, null, null, null);
               expand.showExpand = showExpand;
               expand.showPreview = showPreview;
             }

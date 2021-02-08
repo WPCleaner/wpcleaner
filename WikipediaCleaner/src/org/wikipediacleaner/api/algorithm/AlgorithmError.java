@@ -400,7 +400,8 @@ public class AlgorithmError {
    * @param pageId Page id.
    */
   private void addPage(String page, Integer pageId) {
-    Page tmpPage = DataManager.getPage(wikipedia, page, pageId, null, null);
+    Page tmpPage = DataManager.createSimplePage(
+        wikipedia, page, pageId, null, null);
     if (!errors.contains(tmpPage)) {
       errors.add(tmpPage);
     }

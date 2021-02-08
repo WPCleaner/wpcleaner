@@ -163,7 +163,7 @@ public class CheckErrorAlgorithm545 extends CheckErrorAlgorithmBase {
     API api = APIFactory.getAPI();
     for (String categoryName : categoriesName) {
       String title = wiki.getWikiConfiguration().getPageTitle(Namespace.CATEGORY, categoryName);
-      Page category = DataManager.getPage(wiki, title, null, null, null);
+      Page category = DataManager.createSimplePage(wiki, title, null, null, Namespace.CATEGORY);
       try {
         api.retrieveCategoryMembers(wiki, category, 0, false, limit);
         List<Page> tmp = category.getRelatedPages(RelatedPages.CATEGORY_MEMBERS);

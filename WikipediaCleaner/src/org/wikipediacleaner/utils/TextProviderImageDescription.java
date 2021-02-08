@@ -16,6 +16,7 @@ import org.wikipediacleaner.api.APIException;
 import org.wikipediacleaner.api.APIFactory;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.DataManager;
+import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageElementImage;
 import org.wikipediacleaner.api.data.PageElementTemplate;
@@ -50,10 +51,10 @@ public class TextProviderImageDescription implements TextProvider {
         API api = APIFactory.getAPI();
 
         // Retrieve image descriptions
-        Page imagePage = DataManager.getPage(
+        Page imagePage = DataManager.createSimplePage(
             image.getWiki(),
             image.getNamespace() + ":" + image.getImage(),
-            null, null, null);
+            null, null, Namespace.IMAGE);
         api.retrieveContents(
             image.getWiki(),
             Collections.singletonList(imagePage), false, false);
@@ -72,10 +73,10 @@ public class TextProviderImageDescription implements TextProvider {
         }
 
         // Retrieve image description on Commons
-        Page commonsPage = DataManager.getPage(
+        Page commonsPage = DataManager.createSimplePage(
             EnumWikipedia.COMMONS,
             "File:" + image.getImage(),
-            null, null, null);
+            null, null, Namespace.IMAGE);
         api.retrieveContents(
             EnumWikipedia.COMMONS,
             Collections.singletonList(commonsPage), false, false);

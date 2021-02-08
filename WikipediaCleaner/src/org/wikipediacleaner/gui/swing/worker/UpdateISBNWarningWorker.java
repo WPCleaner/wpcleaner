@@ -314,7 +314,7 @@ public class UpdateISBNWarningWorker extends UpdateWarningWorker {
 
         if (updatePage) {
           try {
-            Page page = DataManager.getPage(wiki, pageName, null, null, null);
+            Page page = DataManager.createSimplePage(wiki, pageName, null, null, null);
             API api = APIFactory.getAPI();
             api.retrieveContents(wiki, Collections.singletonList(page), false, false);
             String contents = page.getContents();

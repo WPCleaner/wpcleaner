@@ -1327,7 +1327,9 @@ public abstract class UpdateWarningTools {
     // Retrieve user talk page name
     Namespace userTalkNS = wiki.getWikiConfiguration().getNamespace(Namespace.USER_TALK);
     String userTalk = userTalkNS.getTitle() + ":" + user;
-    Page userTalkPage = DataManager.getPage(analysis.getWikipedia(), userTalk, null, null, null);
+    Page userTalkPage = DataManager.createSimplePage(
+        analysis.getWikipedia(), userTalk,
+        null, null, Namespace.USER_TALK);
 
     // Add message
     try {
