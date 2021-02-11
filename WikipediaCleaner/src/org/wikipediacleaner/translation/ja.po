@@ -1,7 +1,6 @@
 # Translation of WPCleaner to Japanese (日本語)
 # Exported from translatewiki.net
 #
-# Author: Abijeet Patro
 # Author: Tmv
 # Author: Yusuke1109
 # --
@@ -13,7 +12,7 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2021-02-04 07:56:05+0000\n"
+"PO-Revision-Date: 2021-02-11 18:09:42+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Japanese <ja@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -28,7 +27,7 @@ msgstr ""
 #: org/wikipediacleaner/Version.java:31
 #, java-format
 msgid "{0} extension is now available on all WikiMedia wikis."
-msgstr ""
+msgstr "拡張機能 {0} はすべてのウィキメディア・ウィキで使用可能です。"
 
 #: org/wikipediacleaner/Version.java:32
 msgid "It identifies wikitext patterns that must or can be fixed in pages."
@@ -143,9 +142,9 @@ msgid "Updating page {0}"
 msgstr "ページ {0} を更新"
 
 #: org/wikipediacleaner/api/MediaWiki.java:316
-#, fuzzy, java-format
+#, java-format
 msgid "The page {0} has been modified."
-msgstr "ウィキペディアに {0} というページは存在しません"
+msgstr "ページ {0} が変更されました。"
 
 #: org/wikipediacleaner/api/MediaWiki.java:317
 msgid "Do you want to continue?"
@@ -158,9 +157,8 @@ msgid "Page {0}:"
 msgstr "ページ {0}:"
 
 #: org/wikipediacleaner/api/ModificationReport.java:98
-#, fuzzy
 msgid "The following errors have occurred:"
-msgstr "未知のエラーが発生しました"
+msgstr "以下のエラーが発生しました:"
 
 #: org/wikipediacleaner/api/algorithm/AlgorithmError.java:416
 msgid "No available description"
@@ -217,9 +215,8 @@ msgid "List of false positives for this type of error"
 msgstr "このタイプのエラーの偽陽性一覧"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmBase.java:320
-#, fuzzy
 msgid "Page containing a false positive for this type of error"
-msgstr "このタイプのエラーの偽陽性一覧"
+msgstr "このタイプのエラーの偽陽性を含むページ"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmBase.java:324
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmBase.java:327
@@ -317,9 +314,8 @@ msgstr ""
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:304
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:318
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a566/CheckErrorAlgorithm566.java:282
-#, fuzzy
 msgid "Name of the template"
-msgstr "テンプレートを解析"
+msgstr "テンプレートの名前"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a002/CheckErrorAlgorithm002.java:800
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a060/CheckErrorAlgorithm060.java:201
@@ -806,18 +802,16 @@ msgstr ""
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a073/CheckErrorAlgorithm073.java:103
 #: org/wikipediacleaner/api/check/algorithm/a1xx/a10x/a107/CheckErrorAlgorithm107.java:122
 #: org/wikipediacleaner/api/check/algorithm/a1xx/a10x/a108/CheckErrorAlgorithm108.java:93
-#, fuzzy
 msgid "Search as OCLC"
-msgstr "検索"
+msgstr "OCLCで検索"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a070/CheckErrorAlgorithm070.java:121
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a072/CheckErrorAlgorithm072.java:106
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a073/CheckErrorAlgorithm073.java:106
 #: org/wikipediacleaner/api/check/algorithm/a1xx/a10x/a107/CheckErrorAlgorithm107.java:125
 #: org/wikipediacleaner/api/check/algorithm/a1xx/a10x/a108/CheckErrorAlgorithm108.java:96
-#, fuzzy
 msgid "Search as LCCN"
-msgstr "検索"
+msgstr "LCCNで検索"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a070/CheckErrorAlgorithm070.java:195
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a072/CheckErrorAlgorithm072.java:156
@@ -1074,9 +1068,8 @@ msgid "Similar ISSN"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a1xx/a11x/a111/CheckErrorAlgorithm111.java:204
-#, fuzzy
 msgid "Template name"
-msgstr "テンプレート"
+msgstr "テンプレート名"
 
 #: org/wikipediacleaner/api/check/algorithm/a1xx/a11x/a111/CheckErrorAlgorithm111.java:207
 msgid "Parameter for the name of the group"
@@ -1117,14 +1110,12 @@ msgid "An internal link that can be extracted when at the beginning of the exter
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a513/CheckErrorAlgorithm513.java:877
-#, fuzzy
 msgid "A list of links that can be extracted when at the end of the external link"
-msgstr "テンプレートを解析"
+msgstr "外部リンクの末尾にある場合に抽出できるリンクの一覧"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a513/CheckErrorAlgorithm513.java:880
-#, fuzzy
 msgid "An internal link that can be extracted when at the end of the external link"
-msgstr "テンプレートを解析"
+msgstr "外部リンクの末尾にある場合に抽出できる内部リンク"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a513/CheckErrorAlgorithm513.java:884
 msgid "A list of links for which the external link can be removed it it takes all the text"
@@ -1194,18 +1185,16 @@ msgid "True if finding this text means that the replacement can be automatic"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a514/CheckErrorAlgorithm514.java:187
-#, fuzzy
 msgid "References defined by templates."
-msgstr "テンプレート内を検索"
+msgstr "テンプレートで定義された参照。"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a514/CheckErrorAlgorithm514.java:191
 msgid "Name of a template which defines references"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a514/CheckErrorAlgorithm514.java:194
-#, fuzzy
 msgid "Name of the reference defined by the template"
-msgstr "テンプレート内を検索"
+msgstr "テンプレートで定義された参照の名前"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a518/CheckErrorAlgorithm518.java:372
 #, java-format
@@ -2686,7 +2675,7 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1959
 #: org/wikipediacleaner/gui/swing/MainWindow.java:2024
 msgid "Random pages"
-msgstr ""
+msgstr "おまかせ表示"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:880
 #: org/wikipediacleaner/gui/swing/bot/BotToolsWindow.java:61
@@ -4069,7 +4058,6 @@ msgid "You can learn how to add other languages at the following URL:"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/component/simple/PasswordInput.java:61
-#, fuzzy
 msgid "Password:"
 msgstr "パスワード(&P) :"
 
@@ -4082,18 +4070,16 @@ msgid "Wiki"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/component/simple/WikiSelector.java:84
-#, fuzzy
 msgid "Other Wiki"
-msgstr "他のウィキペディア"
+msgstr "他のウィキ"
 
 #: org/wikipediacleaner/gui/swing/component/simple/WikiSelector.java:142
 msgid "You can learn how to add other Wikipedia at the following URL:"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/deadlink/ActionDeadLink.java:49
-#, fuzzy
 msgid "Check dead links"
-msgstr "言語間リンクをチェック"
+msgstr "リンク切れをチェックする"
 
 #: org/wikipediacleaner/gui/swing/deadlink/ActionDeadLink.java:204
 msgid "You need to select pages to check for dead links"
@@ -4425,9 +4411,8 @@ msgid "Select editor font name"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:128
-#, fuzzy
 msgid "Select editor font size"
-msgstr "エラーを選択"
+msgstr "エディターのフォントサイズを選択"
 
 #: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:143
 msgid "Increase font size"
@@ -4628,9 +4613,8 @@ msgid "Act as user:"
 msgstr "次のユーザーとして振舞う:"
 
 #: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:239
-#, fuzzy
 msgid "Signature:"
-msgstr "署名 :"
+msgstr "署名:"
 
 #: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:270
 msgid "Look & Feel"
@@ -4892,7 +4876,6 @@ msgid_plural "The following modifications have been done ({0} pages):"
 msgstr[0] ""
 
 #: org/wikipediacleaner/gui/swing/worker/CheckArticleTools.java:104
-#, fuzzy
 msgid "Templates"
 msgstr "テンプレート"
 

@@ -1,7 +1,6 @@
 # Translation of WPCleaner to Icelandic (íslenska)
 # Exported from translatewiki.net
 #
-# Author: Abijeet Patro
 # --
 # This file is distributed under the same license as the wikicleaner package.
 #
@@ -11,7 +10,7 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2021-02-04 07:56:05+0000\n"
+"PO-Revision-Date: 2021-02-11 18:09:42+0000\n"
 "Last-Translator: Stefán Örvar Sigmundsson <stefan.orvar.sigmundsson@emi.is>\n"
 "Language-Team: Icelandic <is@li.org>\n"
 "MIME-Version: 1.0\n"

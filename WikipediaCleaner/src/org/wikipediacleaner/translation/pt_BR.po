@@ -2,9 +2,9 @@
 # Exported from translatewiki.net
 #
 # Author: Abijeet Patro
-# Author: Abijeet Patro
 # Author: Eduardo Addad de Oliveira
 # Author: Eduardo Addad de Oliveira
+# Author: Eduardoaddad
 # Author: Rafaelff
 # Author: Rafaelff
 # --
@@ -16,7 +16,7 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2021-02-04 07:56:07+0000\n"
+"PO-Revision-Date: 2021-02-11 18:09:44+0000\n"
 "Last-Translator: Felipe L. <felipe.idj@hotmail.com>\n"
 "Language-Team: Brazilian Portuguese <pt_BR@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -693,7 +693,7 @@ msgstr "Verificar todos os links em outras línguas"
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a068/CheckErrorAlgorithm068.java:124
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a091/CheckErrorAlgorithm091.java:207
 msgid "Check language links"
-msgstr "Verificar links de outras línguas"
+msgstr "Verificar links de outros idiomas"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a068/CheckErrorAlgorithm068.java:132
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a068/CheckErrorAlgorithm068.java:333
@@ -1717,19 +1717,19 @@ msgstr "Título da abreviatura"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a566/CheckErrorAlgorithm566.java:278
 msgid "Templates which can replace an abbreviation"
-msgstr ""
+msgstr "Predefinições que podem substituir uma abreviatura"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a566/CheckErrorAlgorithm566.java:285
 msgid "Name of the parameter for the abbreviation"
-msgstr ""
+msgstr "Nome do parâmetro para a abreviatura"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a566/CheckErrorAlgorithm566.java:288
 msgid "Name of the parameter for the meaning"
-msgstr ""
+msgstr "Nome do parâmetro para o significado"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a566/CheckErrorAlgorithm566.java:291
 msgid "Default value for the meaning"
-msgstr ""
+msgstr "Valor padrão para o significado"
 
 #: org/wikipediacleaner/api/configuration/CWConfiguration.java:83
 #, java-format
