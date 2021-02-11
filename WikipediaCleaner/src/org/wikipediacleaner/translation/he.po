@@ -5,6 +5,7 @@
 # Author: MuratTheTurkish
 # Author: Shoham
 # Author: Steeve815
+# Author: YaronSh
 # Author: דגש חזק
 # --
 # This file is distributed under the same license as the wikicleaner package.
@@ -15,7 +16,7 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2021-02-04 07:56:04+0000\n"
+"PO-Revision-Date: 2021-02-11 18:09:41+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Hebrew <he@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -465,35 +466,35 @@ msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a016/CheckErrorAlgorithm016.java:388
 msgid "Left-to-right mark"
-msgstr ""
+msgstr "סימון שמאל לימין"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a016/CheckErrorAlgorithm016.java:389
 msgid "Right-to-left mark"
-msgstr ""
+msgstr "סימון ימין לשמאל"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a016/CheckErrorAlgorithm016.java:390
 msgid "Line separator"
-msgstr ""
+msgstr "מפריד שורות"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a016/CheckErrorAlgorithm016.java:391
 msgid "Left-to-right embedding"
-msgstr ""
+msgstr "הטמעת שמאל לימין"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a016/CheckErrorAlgorithm016.java:392
 msgid "Right-to-left embedding"
-msgstr ""
+msgstr "הטמעת ימין לשמאל"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a016/CheckErrorAlgorithm016.java:393
 msgid "Pop directional formatting"
-msgstr ""
+msgstr "הקפצת עיצוב כיווניות"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a016/CheckErrorAlgorithm016.java:394
 msgid "Left-to-right override"
-msgstr ""
+msgstr "דריסת שמאל לימין"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a016/CheckErrorAlgorithm016.java:395
 msgid "Right-to-left override"
-msgstr ""
+msgstr "דריסת ימין לשמאל"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a016/CheckErrorAlgorithm016.java:396
 msgid "Byte order mark"
@@ -524,11 +525,11 @@ msgstr ""
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a018/CheckErrorAlgorithm018.java:31
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a02x/a022/CheckErrorAlgorithm022.java:33
 msgid "Fix categories"
-msgstr ""
+msgstr "תיקון קטגוריות"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a02x/a021/CheckErrorAlgorithm021.java:77
 msgid "Check category"
-msgstr ""
+msgstr "בדיקת קטגוריה"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a02x/a021/CheckErrorAlgorithm021.java:103
 msgid "Comment category out"
@@ -545,15 +546,15 @@ msgstr "תבנית שיכולה להחליף את סוף הטבלה"
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a03x/a030/CheckErrorAlgorithm030.java:97
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a079/CheckErrorAlgorithm079.java:105
 msgid "Add a description..."
-msgstr ""
+msgstr "הוספת תיאור…"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a03x/a030/CheckErrorAlgorithm030.java:101
 msgid "What description would you like to use for the image ?"
-msgstr ""
+msgstr "איזה תיאור ברצונך לתת לתמונה?"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a03x/a030/CheckErrorAlgorithm030.java:104
 msgid "Add an alternate description..."
-msgstr ""
+msgstr "הוספת תיאור חלופי…"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a03x/a030/CheckErrorAlgorithm030.java:108
 msgid "What alternate description would you like to use for the image ?"
@@ -623,7 +624,7 @@ msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a05x/a057/CheckErrorAlgorithm057.java:32
 msgid "Fix all titles"
-msgstr ""
+msgstr "תיקון כל הכותרות"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a05x/a059/CheckErrorAlgorithm059.java:227
 msgid "A list of templates that should be ignored"
@@ -669,7 +670,7 @@ msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a064/CheckErrorAlgorithm064.java:38
 msgid "Modify all internal links"
-msgstr ""
+msgstr "לשנות את כל הקישורים הפנימיים"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a066/CheckErrorAlgorithm066.java:33
 msgid "Remove all <small> tags"
@@ -732,7 +733,7 @@ msgstr "לא להחליף"
 #: org/wikipediacleaner/gui/swing/Controller.java:241
 #: org/wikipediacleaner/gui/swing/action/ActionDispose.java:37
 msgid "Cancel"
-msgstr ""
+msgstr "ביטול"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a068/CheckErrorAlgorithm068.java:316
 #, java-format
@@ -789,12 +790,12 @@ msgstr ""
 #: org/wikipediacleaner/api/check/algorithm/a1xx/a10x/a108/CheckErrorAlgorithm108.java:226
 #: org/wikipediacleaner/api/check/algorithm/a1xx/a10x/a108/CheckErrorAlgorithm108.java:229
 msgid "An explanation of the problem"
-msgstr ""
+msgstr "הסבר של הבעיה"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a070/CheckErrorAlgorithm070.java:101
 #, java-format
 msgid "Length of ISBN is {0} instead of 10 or 13"
-msgstr ""
+msgstr "אורך המסת״ב הוא {0} במקום 10 או 13"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a070/CheckErrorAlgorithm070.java:118
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a072/CheckErrorAlgorithm072.java:103
@@ -816,7 +817,7 @@ msgstr "חיפוש בתור LCCN"
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a072/CheckErrorAlgorithm072.java:156
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a073/CheckErrorAlgorithm073.java:181
 msgid "Similar ISBN"
-msgstr ""
+msgstr "מסת״ב זהה"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a072/CheckErrorAlgorithm072.java:69
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a073/CheckErrorAlgorithm073.java:69
@@ -828,35 +829,35 @@ msgstr ""
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a072/CheckErrorAlgorithm072.java:75
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a073/CheckErrorAlgorithm073.java:75
 msgid "There's no existing range for this ISBN"
-msgstr ""
+msgstr "אין טווח קיים למסת״ב הזה"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a072/CheckErrorAlgorithm072.java:77
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a073/CheckErrorAlgorithm073.java:77
 msgid "This ISBN is inside a reserved range"
-msgstr ""
+msgstr "המסת״ב הזה הוא בתוך טווח שמור"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a072/CheckErrorAlgorithm072.java:265
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a073/CheckErrorAlgorithm073.java:300
 msgid "An explanation of the problem (incorrect checksum)"
-msgstr ""
+msgstr "הסבר של הבעיה (סכום ספרות שגוי)"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a072/CheckErrorAlgorithm072.java:271
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a073/CheckErrorAlgorithm073.java:306
 msgid "An explanation of the problem (non-existing range of ISBN numbers)"
-msgstr ""
+msgstr "הסבר של הבעיה (טווח לא קיים של מספרי מסת״ב)"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a072/CheckErrorAlgorithm072.java:277
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a073/CheckErrorAlgorithm073.java:312
 msgid "An explanation of the problem (reserved range of ISBN numbers)"
-msgstr ""
+msgstr "הסבר של הבעיה (טווח שמור של מספרי מסת״ב)"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a076/CheckErrorAlgorithm076.java:32
 msgid "Replace all %20 by space character"
-msgstr ""
+msgstr "להחליף את כל ה־%20 בתווי רווח"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a076/CheckErrorAlgorithm076.java:69
 msgid "Replace %20 by space character"
-msgstr ""
+msgstr "להחליף %20 בתו רווח"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a078/CheckErrorAlgorithm078.java:202
 msgid "A list of regular expressions to find templates replacing <references> tags"
@@ -881,7 +882,7 @@ msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a079/CheckErrorAlgorithm079.java:136
 msgid "External viewer"
-msgstr ""
+msgstr "תכנית צפייה חיצונית"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a08x/a081/CheckErrorAlgorithm081.java:57
 msgid "Fix reference duplication"

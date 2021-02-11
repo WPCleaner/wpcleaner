@@ -1,7 +1,6 @@
 # Translation of WPCleaner to Turkish (Türkçe)
 # Exported from translatewiki.net
 #
-# Author: Abijeet Patro
 # Author: BaRaN6161 TURK
 # Author: BaRaN6161 TURK
 # Author: Evrifaessa
@@ -21,7 +20,7 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2021-02-04 07:56:08+0000\n"
+"PO-Revision-Date: 2021-02-11 18:09:44+0000\n"
 "Last-Translator: volkan <volkanyeke@gmail.com>\n"
 "Language-Team: Turkish <tr@li.org>\n"
 "MIME-Version: 1.0\n"
