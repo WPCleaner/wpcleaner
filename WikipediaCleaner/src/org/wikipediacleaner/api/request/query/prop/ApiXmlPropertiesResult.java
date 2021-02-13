@@ -12,6 +12,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import org.apache.commons.httpclient.HttpClient;
 import org.jdom2.Attribute;
@@ -61,7 +62,7 @@ public class ApiXmlPropertiesResult extends ApiXmlResult implements ApiPropertie
     if (attrTitle != null) {
       page.setTitle(attrTitle.getValue());
     }
-    page.setStartTimestamp(node.getAttributeValue("starttimestamp"));
+    Optional.ofNullable(node.getAttributeValue("starttimestamp")).ifPresent(timestamp -> page.setStartTimestamp(timestamp));
     Attribute attrRedirect = node.getAttribute("redirect");
     if (attrRedirect != null) {
       page.getRedirects().isRedirect(true);

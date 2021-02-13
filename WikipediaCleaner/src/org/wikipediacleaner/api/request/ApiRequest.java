@@ -146,6 +146,12 @@ public abstract class ApiRequest {
    */
   public final static String PROPERTY_CONTINUE_DEFAULT = "";
 
+  /** Current timestamp */
+  public final static String PROPERTY_CURRENT_TIMESTAMP = "curtimestamp";
+
+  /** Value to include current timestamp in the response */
+  public final static String PROPERTY_CURRENT_TIMESTAMP_YES = "1";
+
   // ==========================================================================
   // Wiki management
   // ==========================================================================

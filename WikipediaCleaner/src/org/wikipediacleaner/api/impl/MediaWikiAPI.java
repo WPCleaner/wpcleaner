@@ -20,6 +20,7 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.zip.GZIPInputStream;
 
 import org.apache.commons.httpclient.Header;
@@ -730,7 +731,7 @@ public class MediaWikiAPI implements API {
         page.setExisting(Boolean.FALSE);
       }
       page.setPageId(node.getAttributeValue("pageid"));
-      page.setStartTimestamp(node.getAttributeValue("starttimestamp"));
+      Optional.ofNullable(node.getAttributeValue("starttimestamp")).ifPresent(timestamp -> page.setStartTimestamp(timestamp));
     }
     XPathExpression<Element> xpa = XPathFactory.instance().compile(
         query + "/revisions/rev", Filters.element());

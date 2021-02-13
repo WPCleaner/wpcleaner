@@ -13,7 +13,10 @@ import java.io.InputStream;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.zip.GZIPInputStream;
+
+import javax.annotation.Nonnull;
 
 import org.apache.commons.httpclient.Header;
 import org.apache.commons.httpclient.HttpClient;
@@ -278,6 +281,21 @@ public abstract class ApiXmlResult extends BasicApiResult {
       }
     }
     return result;
+  }
+
+  /**
+   * Retrieve current timestamp from the result.
+   * 
+   * @param root Root of the DOM tree.
+   * @return Optional current timestamp.
+   */
+  @Nonnull
+  protected Optional<String> getCurrentTimestamp(Element root) {
+    XPathExpression<Element> xpa = XPathFactory.instance().compile(
+        "/api", Filters.element());
+    return Optional
+        .ofNullable(xpa.evaluateFirst(root))
+        .map(node -> node.getAttributeValue("curtimestamp"));
   }
 
   /**

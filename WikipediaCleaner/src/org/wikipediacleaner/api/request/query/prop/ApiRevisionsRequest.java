@@ -209,6 +209,9 @@ public class ApiRevisionsRequest extends ApiPropertiesRequest {
 
     Map<String, String> properties = getProperties(ACTION_QUERY, result.getFormat());
     properties.put(
+        PROPERTY_CURRENT_TIMESTAMP,
+        PROPERTY_CURRENT_TIMESTAMP_YES);
+    properties.put(
         PROPERTY_PROP,
         PROPERTY_PROP_REVISIONS + "|" + PROPERTY_PROP_INFO);
     properties.put(PROPERTY_CONTINUE, PROPERTY_CONTINUE_DEFAULT);

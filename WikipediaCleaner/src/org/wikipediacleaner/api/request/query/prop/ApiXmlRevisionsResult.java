@@ -12,6 +12,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import org.apache.commons.httpclient.HttpClient;
 import org.jdom2.Element;
@@ -62,6 +63,9 @@ public class ApiXmlRevisionsResult extends ApiXmlPropertiesResult implements Api
       Map<String, String> normalization = new HashMap<>();
       retrieveNormalization(root, normalization);
 
+      // Retrieve current timestamp
+      Optional<String> currentTimestamp = getCurrentTimestamp(root);
+
       // Retrieve pages
       XPathExpression<Element> xpa = XPathFactory.instance().compile(
           "/api/query/pages/page", Filters.element());
@@ -96,6 +100,7 @@ public class ApiXmlRevisionsResult extends ApiXmlPropertiesResult implements Api
             }
             if (samePage) {
               page.setNamespace(namespace);
+              currentTimestamp.ifPresent(timestamp -> page.setStartTimestamp(timestamp));
               updatePageInformation(pageNode, page);
   
               // Retrieve revisions
