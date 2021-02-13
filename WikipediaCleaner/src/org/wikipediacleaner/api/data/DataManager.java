@@ -13,7 +13,6 @@ import java.util.Date;
 import java.util.List;
 
 import org.wikipediacleaner.api.constants.EnumWikipedia;
-import org.wikipediacleaner.utils.Configuration;
 
 
 /**
@@ -120,23 +119,13 @@ public class DataManager {
       List<Page> knownPages) {
 
     // Check in the known pages
-    Page page = getExistingPage(wiki, title, revisionId, knownPages);
+    final Page page = getExistingPage(wiki, title, revisionId, knownPages);
     if (page != null) {
       return page;
     }
 
     // Create page
-    page = createSimplePage(wiki, title, pageId, revisionId, null);
-
-    // Manage comments
-    Configuration config = Configuration.getConfiguration();
-    Object comment = config.getPojo(
-        wiki, Configuration.POJO_PAGE_COMMENTS, page.getTitle(), PageComment.class);
-    if (comment instanceof PageComment) {
-      page.setComment((PageComment) comment);
-    }
-
-    return page;
+    return createSimplePage(wiki, title, pageId, revisionId, null);
   }
 
   /**

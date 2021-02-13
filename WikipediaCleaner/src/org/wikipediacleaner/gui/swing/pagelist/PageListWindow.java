@@ -22,6 +22,8 @@ import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
@@ -37,7 +39,7 @@ import javax.swing.WindowConstants;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.DataManager;
 import org.wikipediacleaner.api.data.Page;
-import org.wikipediacleaner.api.data.PageComment;
+import org.wikipediacleaner.api.data.page.PageComment;
 import org.wikipediacleaner.gui.swing.Controller;
 import org.wikipediacleaner.gui.swing.action.ActionCheckArticle;
 import org.wikipediacleaner.gui.swing.action.ActionUpdateWarning;
@@ -66,6 +68,7 @@ public class PageListWindow extends BasicWindow {
   String title;
   Page referencePage;
   List<Page> pages;
+  Map<String, PageComment> commentsByPageTitle;
   boolean watchList;
 
   PageListTable tablePages;
@@ -113,6 +116,7 @@ public class PageListWindow extends BasicWindow {
               pageList.title = title;
               pageList.referencePage = referencePage;
               pageList.pages = pages;
+              pageList.commentsByPageTitle = PageComment.get(wikipedia, pages);
               pageList.watchList = watchList;
             }
           }
@@ -160,7 +164,7 @@ public class PageListWindow extends BasicWindow {
     // Table
     constraints.fill = GridBagConstraints.BOTH;
     constraints.weighty = 1;
-    tablePages = PageListTable.createTable(getWikipedia(), pages);
+    tablePages = PageListTable.createTable(getWikipedia(), pages, commentsByPageTitle);
     JScrollPane scrollPages = new JScrollPane(tablePages);
     scrollPages.setMinimumSize(new Dimension(300, 200));
     scrollPages.setPreferredSize(new Dimension(450, 500));
@@ -330,9 +334,12 @@ public class PageListWindow extends BasicWindow {
     int index = 0;
     for (Page page : pages) {
       if (page.isDisambiguationPage()) {
-        if ((page.getComment() != null) &&
-            (page.getComment().getMaxMainArticles() != null)) {
-          int maxArticles = page.getComment().getMaxMainArticles().intValue();
+        Integer maxMainArticles = Optional
+            .ofNullable(commentsByPageTitle.get(page.getTitle()))
+            .flatMap(PageComment::getMaxMainArticles)
+            .orElse(null);
+        if (maxMainArticles != null) {
+          int maxArticles = maxMainArticles.intValue();
           Integer articles = page.getBacklinksCountInMainNamespace();
           if ((articles != null) && (maxArticles < articles.intValue())) {
             int tmpIndex = tablePages.convertRowIndexToView(index);
@@ -538,12 +545,15 @@ public class PageListWindow extends BasicWindow {
     int actualMain = 0;
     for (Page page : pages) {
       if (page != null) {
-        PageComment comment = page.getComment();
         Integer tmpLinks = page.getBacklinksCountInMainNamespace();
         if (tmpLinks != null) {
           backlinksMain += tmpLinks.intValue();
-          if ((comment != null) && (comment.getMaxMainArticles() != null)) {
-            maxMain += comment.getMaxMainArticles().intValue();
+          Integer maxMainArticles = Optional
+              .ofNullable(commentsByPageTitle.get(page.getTitle()))
+              .flatMap(PageComment::getMaxMainArticles)
+              .orElse(null);
+          if (maxMainArticles != null) {
+            maxMain += maxMainArticles.intValue();
             actualMain += tmpLinks.intValue();
           }
         }

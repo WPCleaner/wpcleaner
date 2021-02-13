@@ -9,12 +9,14 @@
 package org.wikipediacleaner.gui.swing.pagelist;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.swing.JTable;
 
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.ProgressionValue;
+import org.wikipediacleaner.api.data.page.PageComment;
 import org.wikipediacleaner.api.dataaccess.PageListProvider;
 import org.wikipediacleaner.gui.swing.basic.Utilities;
 import org.wikipediacleaner.gui.swing.component.ProgressionValueCellRenderer;
@@ -39,10 +41,14 @@ public class PageListTable extends JTable implements PageListProvider {
    * 
    * @param wiki Wiki.
    * @param pages List of pages.
+   * @param commentsByTitle Page comments indexed by page title.
    * @return Table.
    */
-  public static PageListTable createTable(EnumWikipedia wiki, List<Page> pages) {
-    PageListTableModel model = new PageListTableModel(wiki, pages);
+  public static PageListTable createTable(
+      EnumWikipedia wiki,
+      List<Page> pages,
+      Map<String, PageComment> commentsByTitle) {
+    PageListTableModel model = new PageListTableModel(wiki, pages, commentsByTitle);
     PageListTable table = new PageListTable(wiki, model);
     table.setDefaultRenderer(ProgressionValue.class, new ProgressionValueCellRenderer());
     model.configureColumnModel(table.getColumnModel());

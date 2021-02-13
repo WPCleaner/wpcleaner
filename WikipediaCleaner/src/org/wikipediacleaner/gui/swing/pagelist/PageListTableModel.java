@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableColumn;
@@ -19,6 +20,7 @@ import javax.swing.table.TableColumnModel;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.ProgressionValue;
+import org.wikipediacleaner.api.data.page.PageComment;
 import org.wikipediacleaner.gui.swing.component.BooleanIconCellRenderer;
 import org.wikipediacleaner.gui.swing.component.IconCellRenderer;
 import org.wikipediacleaner.i18n.GT;
@@ -35,6 +37,7 @@ public class PageListTableModel extends AbstractTableModel {
   private EnumWikipedia wiki;
 
   private List<Page> pages;
+  private Map<String, PageComment> commentsByTitle;
 
   private List<String> watchedPages;
 
@@ -48,9 +51,10 @@ public class PageListTableModel extends AbstractTableModel {
   public final static int COLUMN_COMMENTS_TEXT = COLUMN_BACKLINKS_OTHER + 1;
   public final static int NB_COLUMNS = COLUMN_COMMENTS_TEXT + 1;
 
-  public PageListTableModel(EnumWikipedia wiki, List<Page> pages) {
+  public PageListTableModel(EnumWikipedia wiki, List<Page> pages, Map<String, PageComment> commentsByTitle) {
     this.wiki = wiki;
     this.pages = pages;
+    this.commentsByTitle = commentsByTitle;
     updateWatchedPages();
   }
 
@@ -191,16 +195,17 @@ public class PageListTableModel extends AbstractTableModel {
   public Object getValueAt(int rowIndex, int columnIndex) {
     if ((pages != null) && (rowIndex >= 0) && (rowIndex < pages.size())) {
       Page page = pages.get(rowIndex);
+      PageComment comment = commentsByTitle.get(page.getTitle());
       switch (columnIndex) {
       case COLUMN_BACKLINKS_MAIN:
-        return page.getBacklinksProgressionInMainNamespace();
+        return page.getBacklinksProgressionInMainNamespace(comment);
       case COLUMN_BACKLINKS_TEMPLATE:
-        return page.getBacklinksProgressionInTemplateNamespace();
+        return page.getBacklinksProgressionInTemplateNamespace(comment);
       case COLUMN_BACKLINKS_OTHER:
-        return page.getBacklinksProgressionInOtherNamespaces();
+        return page.getBacklinksProgressionInOtherNamespaces(comment);
       case COLUMN_COMMENTS_TEXT:
-        if (page.getComment() != null) {
-          return page.getComment().getComment();
+        if (comment != null) {
+          return comment.getComment();
         }
         return null;
       case COLUMN_DISAMBIGUATION:

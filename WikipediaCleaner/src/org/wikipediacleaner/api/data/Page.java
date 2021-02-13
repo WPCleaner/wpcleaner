@@ -14,8 +14,11 @@ import java.util.Date;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import javax.annotation.Nullable;
 
 import org.apache.commons.lang3.StringUtils;
 import org.wikipediacleaner.api.configuration.WPCConfiguration;
@@ -23,6 +26,7 @@ import org.wikipediacleaner.api.configuration.WikiConfiguration;
 import org.wikipediacleaner.api.constants.EnumCaseSensitiveness;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
+import org.wikipediacleaner.api.data.page.PageComment;
 import org.wikipediacleaner.utils.string.CharacterUtils;
 
 
@@ -62,8 +66,6 @@ public class Page implements Comparable<Page> {
   private List<Page> templates;
 
   private final Map<RelatedPages, List<Page>> relatedPages;
-
-  private PageComment comment;
 
   private ProgressionValue backLinksMainProgression;
   private ProgressionValue backLinksOtherProgression;
@@ -695,41 +697,36 @@ public class Page implements Comparable<Page> {
   }
 
   /**
+   * @param comment Optional comments and information about the page.
    * @return A simple object indicating progression.
    */
-  public ProgressionValue getBacklinksProgressionInMainNamespace() {
+  public ProgressionValue getBacklinksProgressionInMainNamespace(@Nullable PageComment comment) {
     if (backLinksMainProgression == null) {
       backLinksMainProgression = new ProgressionValue(null, null, true);
     }
     backLinksMainProgression.setCurrent(getBacklinksCountInMainNamespace());
-    if (comment != null) {
-      backLinksMainProgression.setGoal(comment.getMaxMainArticles());
-    } else {
-      backLinksMainProgression.setGoal(null);
-    }
+    backLinksMainProgression.setGoal(Optional.ofNullable(comment).flatMap(PageComment::getMaxMainArticles).orElse(null));
     return backLinksMainProgression;
   }
 
   /**
+   * @param comment Optional comments and information about the page.
    * @return A simple object indicating progression.
    */
-  public ProgressionValue getBacklinksProgressionInTemplateNamespace() {
+  public ProgressionValue getBacklinksProgressionInTemplateNamespace(@Nullable PageComment comment) {
     if (backLinksTemplateProgression == null) {
       backLinksTemplateProgression = new ProgressionValue(null, null, false);
     }
     backLinksTemplateProgression.setCurrent(getBacklinksCountInTemplateNamespace());
-    if (comment != null) {
-      backLinksTemplateProgression.setGoal(comment.getMaxTemplateArticles());
-    } else {
-      backLinksTemplateProgression.setGoal(null);
-    }
+    backLinksTemplateProgression.setGoal(Optional.ofNullable(comment).flatMap(PageComment::getMaxTemplateArticles).orElse(null));
     return backLinksTemplateProgression;
   }
 
   /**
+   * @param comment Optional comments and information about the page.
    * @return A simple object indicating progression.
    */
-  public ProgressionValue getBacklinksProgressionInOtherNamespaces() {
+  public ProgressionValue getBacklinksProgressionInOtherNamespaces(@Nullable PageComment comment) {
     if (backLinksOtherProgression == null) {
       backLinksOtherProgression = new ProgressionValue(null, null, false);
     }
@@ -745,11 +742,7 @@ public class Page implements Comparable<Page> {
       current = Integer.valueOf(tmp);
     }
     backLinksOtherProgression.setCurrent(current);
-    if (comment != null) {
-      backLinksOtherProgression.setGoal(comment.getMaxOtherArticles());
-    } else {
-      backLinksOtherProgression.setGoal(null);
-    }
+    backLinksOtherProgression.setGoal(Optional.ofNullable(comment).flatMap(PageComment::getMaxOtherArticles).orElse(null));
     return backLinksOtherProgression;
   }
 
@@ -794,20 +787,6 @@ public class Page implements Comparable<Page> {
    */
   public void setTemplates(List<Page> templates) {
     this.templates = templates;
-  }
-
-  /**
-   * @return Page comment.
-   */
-  public PageComment getComment() {
-    return comment;
-  }
-
-  /**
-   * @param comment Page comment.
-   */
-  public void setComment(PageComment comment) {
-    this.comment = comment;
   }
 
   /**

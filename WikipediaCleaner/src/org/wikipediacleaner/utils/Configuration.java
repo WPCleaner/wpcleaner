@@ -20,10 +20,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+import java.util.function.Supplier;
 import java.util.Map.Entry;
 import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
 
+import javax.annotation.Nonnull;
 import javax.swing.JOptionPane;
 
 import org.wikipediacleaner.WikipediaCleaner;
@@ -649,67 +651,95 @@ public class Configuration implements WindowListener {
    * @return Pojo.
    */
   public Object getPojo(
-      EnumWikipedia wikipedia, String property, String name, Class valueClass) {
+      EnumWikipedia wikipedia,
+      String property,
+      String name,
+      @Nonnull Class valueClass) {
+    return getPojo(
+        wikipedia, property, name,
+        () -> { 
+          try {
+            return valueClass.newInstance();
+          } catch (IllegalAccessException|InstantiationException e) {
+            return null;
+          }
+        });
+  }
+
+  /**
+   * @param wikipedia Wikipedia.
+   * @param property Property name.
+   * @param name Pojo name.
+   * @param instanceSupplier Supplier for the Pojo.
+   * @return Pojo.
+   */
+  public Object getPojo(
+      EnumWikipedia wikipedia,
+      String property,
+      String name,
+      @Nonnull Supplier<Object> instanceSupplier) {
     try {
-      if ((getPreferences(wikipedia) != null) &&
-          (property != null) &&
-          (name != null) &&
-          (valueClass != null)) {
-        if (!getPreferences(wikipedia).nodeExists(property)) {
-          return null;
-        }
-        Preferences globalNode = getPreferences(wikipedia).node(property);
-        if (!globalNode.nodeExists(name)) {
-          return null;
-        }
-        Preferences node = globalNode.node(name);
-        Object result = valueClass.newInstance();
-        Method[] methods = valueClass.getMethods();
-        Method fixValuesMethod = null;
-        for (Method m : methods) {
-          if (Modifier.isPublic(m.getModifiers()) &&
-              (m.getName().equals("fixValues")) &&
-              (m.getGenericParameterTypes().length == 0)) {
-            fixValuesMethod = m;
-          }
-          if (Modifier.isPublic(m.getModifiers()) &&
-              m.getName().startsWith("set") &&
-              (m.getGenericParameterTypes().length == 1)) {
-            String parameterName = "" + Character.toLowerCase(m.getName().charAt(3)) + m.getName().substring(4);
-            boolean exist = false;
-            for (String key : node.keys()) {
-              if (parameterName.equals(key)) {
-                exist = true;
-              }
-            }
-            if (exist) {
-              Class parameterType = m.getParameterTypes()[0];
-              if (String.class.isAssignableFrom(parameterType)) {
-                m.invoke(result, node.get(parameterName, null));
-              } else if (Integer.class.isAssignableFrom(parameterType)) {
-                m.invoke(result, node.getInt(parameterName, 0));
-              } else if (Boolean.class.isAssignableFrom(parameterType)) {
-                m.invoke(result, node.getBoolean(parameterName, true));
-              } else if (Double.class.isAssignableFrom(parameterType)) {
-                m.invoke(result, node.getDouble(parameterName, 0));
-              } else if (Long.class.isAssignableFrom(parameterType)) {
-                m.invoke(result, node.getLong(parameterName, 0));
-              } else if (Float.class.isAssignableFrom(parameterType)) {
-                m.invoke(result, node.getFloat(parameterName, 0));
-              } else if (Color.class.isAssignableFrom(parameterType)) {
-                m.invoke(result, new Color(node.getInt(parameterName, 0)));
-              }
-            }
-          }
-        }
-        if (fixValuesMethod != null) {
-          fixValuesMethod.invoke(result);
-        }
-        return result;
+      if ((property == null) ||
+          (name == null) ||
+          (instanceSupplier == null)) {
+        return null;
       }
+      Preferences wikiPrefs = getPreferences(wikipedia);
+      if ((wikiPrefs == null) || !wikiPrefs.nodeExists(property)) {
+        return null;
+      }
+      Preferences globalNode = wikiPrefs.node(property);
+      if (!globalNode.nodeExists(name)) {
+        return null;
+      }
+      Preferences node = globalNode.node(name);
+      Object result = instanceSupplier.get();
+      if (result == null) {
+        return null;
+      }
+      Method[] methods = result.getClass().getMethods();
+      Method fixValuesMethod = null;
+      for (Method m : methods) {
+        if (Modifier.isPublic(m.getModifiers()) &&
+            (m.getName().equals("fixValues")) &&
+            (m.getGenericParameterTypes().length == 0)) {
+          fixValuesMethod = m;
+        }
+        if (Modifier.isPublic(m.getModifiers()) &&
+            m.getName().startsWith("set") &&
+            (m.getGenericParameterTypes().length == 1)) {
+          String parameterName = "" + Character.toLowerCase(m.getName().charAt(3)) + m.getName().substring(4);
+          boolean exist = false;
+          for (String key : node.keys()) {
+            if (parameterName.equals(key)) {
+              exist = true;
+            }
+          }
+          if (exist) {
+            Class parameterType = m.getParameterTypes()[0];
+            if (String.class.isAssignableFrom(parameterType)) {
+              m.invoke(result, node.get(parameterName, null));
+            } else if (Integer.class.isAssignableFrom(parameterType)) {
+              m.invoke(result, node.getInt(parameterName, 0));
+            } else if (Boolean.class.isAssignableFrom(parameterType)) {
+              m.invoke(result, node.getBoolean(parameterName, true));
+            } else if (Double.class.isAssignableFrom(parameterType)) {
+              m.invoke(result, node.getDouble(parameterName, 0));
+            } else if (Long.class.isAssignableFrom(parameterType)) {
+              m.invoke(result, node.getLong(parameterName, 0));
+            } else if (Float.class.isAssignableFrom(parameterType)) {
+              m.invoke(result, node.getFloat(parameterName, 0));
+            } else if (Color.class.isAssignableFrom(parameterType)) {
+              m.invoke(result, new Color(node.getInt(parameterName, 0)));
+            }
+          }
+        }
+      }
+      if (fixValuesMethod != null) {
+        fixValuesMethod.invoke(result);
+      }
+      return result;
     } catch (BackingStoreException e) {
-      //
-    } catch (InstantiationException e) {
       //
     } catch (IllegalAccessException e) {
       //

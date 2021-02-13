@@ -16,7 +16,9 @@ import java.awt.Insets;
 import java.awt.event.ActionListener;
 import java.beans.EventHandler;
 import java.text.NumberFormat;
+import java.util.Optional;
 
+import javax.annotation.Nonnull;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -27,15 +29,15 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.WindowConstants;
 
+import org.apache.commons.lang3.StringUtils;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.Page;
-import org.wikipediacleaner.api.data.PageComment;
+import org.wikipediacleaner.api.data.page.PageComment;
 import org.wikipediacleaner.gui.swing.action.ActionDispose;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
 import org.wikipediacleaner.gui.swing.basic.DefaultBasicWindowListener;
 import org.wikipediacleaner.gui.swing.basic.Utilities;
 import org.wikipediacleaner.i18n.GT;
-import org.wikipediacleaner.utils.Configuration;
 
 
 /**
@@ -43,7 +45,8 @@ import org.wikipediacleaner.utils.Configuration;
  */
 public class PageCommentsWindow extends BasicWindow {
 
-  Page   page;
+  @Nonnull Page   page;
+  @Nonnull PageComment comment;
   private Integer countMain;
   private Integer countOther;
   private Integer countTemplate;
@@ -82,6 +85,7 @@ public class PageCommentsWindow extends BasicWindow {
             if (window instanceof PageCommentsWindow) {
               PageCommentsWindow pageComments = (PageCommentsWindow) window;
               pageComments.page = page;
+              pageComments.comment = PageComment.get(wikipedia, page.getTitle()).orElse(null);
             }
           }
         });
@@ -130,9 +134,7 @@ public class PageCommentsWindow extends BasicWindow {
 
     // Comment
     txtComments = new JTextField(20);
-    if ((page != null) && (page.getComment() != null)) {
-      txtComments.setText(page.getComment().getComment());
-    }
+    txtComments.setText(Optional.ofNullable(comment).flatMap(PageComment::getComment).orElse(StringUtils.EMPTY));
     JLabel labelComments = Utilities.createJLabel(GT._T("Comments :"));
     labelComments.setLabelFor(txtComments);
     labelComments.setHorizontalAlignment(SwingConstants.TRAILING);
@@ -150,11 +152,7 @@ public class PageCommentsWindow extends BasicWindow {
     txtMaxMain = new JFormattedTextField(NumberFormat.getIntegerInstance());
     txtMaxMain.setFocusLostBehavior(JFormattedTextField.COMMIT);
     txtMaxMain.setColumns(4);
-    if ((page != null) &&
-        (page.getComment() != null) &&
-        (page.getComment().getMaxMainArticles() != null)) {
-      txtMaxMain.setValue(page.getComment().getMaxMainArticles());
-    }
+    txtMaxMain.setValue(Optional.ofNullable(comment).map(PageComment::getMaxMainArticles).orElse(null));
     JLabel labelMaxMain = Utilities.createJLabel(GT._T("Max backlinks in Main :"));
     labelMaxMain.setLabelFor(txtMaxMain);
     labelMaxMain.setHorizontalAlignment(SwingConstants.TRAILING);
@@ -182,11 +180,7 @@ public class PageCommentsWindow extends BasicWindow {
     txtMaxTemplate = new JFormattedTextField(NumberFormat.getIntegerInstance());
     txtMaxTemplate.setFocusLostBehavior(JFormattedTextField.COMMIT);
     txtMaxTemplate.setColumns(4);
-    if ((page != null) &&
-        (page.getComment() != null) &&
-        (page.getComment().getMaxTemplateArticles() != null)) {
-      txtMaxTemplate.setValue(page.getComment().getMaxTemplateArticles());
-    }
+    txtMaxTemplate.setValue(Optional.ofNullable(comment).map(PageComment::getMaxTemplateArticles).orElse(null));
     JLabel labelMaxTemplate = Utilities.createJLabel(GT._T("Max backlinks in Template :"));
     labelMaxTemplate.setLabelFor(txtMaxTemplate);
     labelMaxTemplate.setHorizontalAlignment(SwingConstants.TRAILING);
@@ -214,11 +208,7 @@ public class PageCommentsWindow extends BasicWindow {
     txtMaxOther = new JFormattedTextField(NumberFormat.getIntegerInstance());
     txtMaxOther.setFocusLostBehavior(JFormattedTextField.COMMIT);
     txtMaxOther.setColumns(4);
-    if ((page != null) &&
-        (page.getComment() != null) &&
-        (page.getComment().getMaxOtherArticles() != null)) {
-      txtMaxOther.setValue(page.getComment().getMaxOtherArticles());
-    }
+    txtMaxOther.setValue(Optional.ofNullable(comment).map(PageComment::getMaxOtherArticles).orElse(null));
     JLabel labelMaxOther = Utilities.createJLabel(GT._T("Max backlinks in other namespaces :"));
     labelMaxOther.setLabelFor(txtMaxOther);
     labelMaxOther.setHorizontalAlignment(SwingConstants.TRAILING);
@@ -327,9 +317,8 @@ public class PageCommentsWindow extends BasicWindow {
    */
   public void actionOk() {
     if (page != null) {
-      PageComment comment = page.getComment();
       if (comment == null) {
-        comment = new PageComment();
+        comment = PageComment.getOrCreate(getWiki(), page.getTitle());
       }
       comment.setComment(txtComments.getText());
       try {
@@ -347,9 +336,7 @@ public class PageCommentsWindow extends BasicWindow {
       } catch (NumberFormatException e) {
         comment.setMaxOtherArticles(null);
       }
-      page.setComment(comment);
-      Configuration config = Configuration.getConfiguration();
-      config.addPojo(page.getWikipedia(), Configuration.POJO_PAGE_COMMENTS, comment, page.getTitle());
+      comment.save();
     }
     dispose();
   }
@@ -359,9 +346,7 @@ public class PageCommentsWindow extends BasicWindow {
    */
   public void actionRemove() {
     if (page != null) {
-      page.setComment(null);
-      Configuration config = Configuration.getConfiguration();
-      config.removePojo(page.getWikipedia(), Configuration.POJO_PAGE_COMMENTS, page.getTitle());
+      PageComment.delete(page.getWikipedia(), page.getTitle());
     }
     dispose();
   }
