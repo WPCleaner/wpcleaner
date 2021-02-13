@@ -969,9 +969,10 @@ public abstract class OnePageWindow
    * Action called when Expand Templates menu is selected. 
    */
   public void actionExpandTemplates() {
-    if (textContents != null) {
+    MWPane pane = getTextContents();
+    if (pane != null) {
       Controller.runExpandTemplates(
-          getPageName(), textContents.getText(),
+          getPageName(), pane.getText(),
           true, false, getWikipedia());
     }
   }
@@ -980,9 +981,10 @@ public abstract class OnePageWindow
    * Action called when Expand Templates / Preview menu is selected. 
    */
   public void actionExpandTemplatesPreview() {
-    if (textContents != null) {
+    MWPane pane = getTextContents();
+    if (pane != null) {
       Controller.runExpandTemplates(
-          getPageName(), textContents.getText(),
+          getPageName(), pane.getText(),
           true, true, getWikipedia());
     }
   }
@@ -1009,9 +1011,10 @@ public abstract class OnePageWindow
    * Action called when Preview menu is selected. 
    */
   public void actionPreview() {
-    if (textContents != null) {
+    MWPane pane = getTextContents();
+    if (pane != null) {
       Controller.runExpandTemplates(
-          getPageName(), textContents.getText(),
+          getPageName(), pane.getText(),
           false, true, getWikipedia());
     }
   }

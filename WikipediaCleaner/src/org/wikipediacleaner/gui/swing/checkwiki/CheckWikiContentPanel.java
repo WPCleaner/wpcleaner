@@ -134,6 +134,13 @@ public class CheckWikiContentPanel
   }
 
   /**
+   * @return Text pane.
+   */
+  public MWPane getTextPage() {
+    return textPage;
+  }
+
+  /**
    * Initialize window.
    */
   void initialize() {

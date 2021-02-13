@@ -84,6 +84,7 @@ import org.wikipediacleaner.gui.swing.basic.Utilities;
 import org.wikipediacleaner.gui.swing.component.CheckErrorPageListCellRenderer;
 import org.wikipediacleaner.gui.swing.component.HTMLPane;
 import org.wikipediacleaner.gui.swing.component.JCloseableTabbedPane;
+import org.wikipediacleaner.gui.swing.component.MWPane;
 import org.wikipediacleaner.gui.swing.worker.CheckWikiProjectWorker;
 import org.wikipediacleaner.gui.swing.worker.RetrieveContentWorker;
 import org.wikipediacleaner.i18n.GT;
@@ -903,6 +904,37 @@ public class CheckWikiWindow extends OnePageWindow implements CheckWikiListener 
       }
     }
     return result;
+  }
+
+  @Override
+  protected MWPane getTextContents() {
+
+    // Look in the current page
+    if ((contentPane != null) &&
+        (contentPane.getSelectedComponent() != null) &&
+        (contentPane.getSelectedComponent() instanceof CheckWikiContentPanel)) {
+      CheckWikiContentPanel panel = (CheckWikiContentPanel) contentPane.getSelectedComponent();
+      return panel.getTextPage();
+    }
+
+    return super.getTextContents();
+  }
+
+  /**
+   * @return Page name.
+   */
+  @Override
+  protected String getPageName() {
+
+    // Look in the current page
+    if ((contentPane != null) &&
+        (contentPane.getSelectedComponent() != null) &&
+        (contentPane.getSelectedComponent() instanceof CheckWikiContentPanel)) {
+      CheckWikiContentPanel panel = (CheckWikiContentPanel) contentPane.getSelectedComponent();
+      return panel.getPage().getTitle();
+    }
+
+    return super.getPageName();
   }
 
   /**
