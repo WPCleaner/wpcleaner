@@ -10,9 +10,11 @@ package org.wikipediacleaner.gui.swing;
 import java.awt.Component;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.Page;
+import org.wikipediacleaner.api.data.page.PageComment;
 import org.wikipediacleaner.gui.swing.basic.Utilities;
 import org.wikipediacleaner.gui.swing.bot.BotToolsWindow;
 import org.wikipediacleaner.gui.swing.checkwiki.CheckWikiWindow;
@@ -117,13 +119,15 @@ public class Controller {
    * Open the Page Comments window for a page.
    * 
    * @param page Page.
+   * @param comments Existing comments.
    * @param wikipedia Wikipedia.
    */
   public static void runPageComments(
-      Page          page,
+      Page page,
+      PageComment comments,
       EnumWikipedia wikipedia) {
     if (page != null) {
-      PageCommentsWindow.createPageCommentsWindow(page, wikipedia);
+      PageCommentsWindow.createPageCommentsWindow(page, comments, wikipedia);
     }
   }
 
@@ -131,13 +135,15 @@ public class Controller {
    * Open the Page Comments window for several pages.
    * 
    * @param pages List of pages.
+   * @param commentsByPageTitle Existing comments indexed by page title.
    * @param wikipedia Wikipedia.
    */
   public static void runPageComments(
       Collection<Page> pages,
+      Map<String, PageComment> commentsByPageTitle,
       EnumWikipedia    wikipedia) {
     for (Page p : pages) {
-      runPageComments(p, wikipedia);
+      runPageComments(p, commentsByPageTitle.get(p.getTitle()), wikipedia);
     }
   }
 

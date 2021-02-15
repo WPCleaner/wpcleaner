@@ -117,9 +117,9 @@ public class PageComment {
   /**
    * @return Comments on the page.
    */
-  @Nonnull
-  public Optional<String> getComment() {
-    return Optional.ofNullable(comment);
+  @Nullable
+  public String getComment() {
+    return comment;
   }
 
   /**
@@ -132,9 +132,9 @@ public class PageComment {
   /**
    * @return Maximum number of back links from the main name space.
    */
-  @Nonnull
-  public Optional<Integer> getMaxMainArticles() {
-    return Optional.ofNullable(maxMainArticles);
+  @Nullable
+  public Integer getMaxMainArticles() {
+    return maxMainArticles;
   }
 
   /**
@@ -147,9 +147,9 @@ public class PageComment {
   /**
    * @return Maximum number of back links from the template name space.
    */
-  @Nonnull
-  public Optional<Integer> getMaxTemplateArticles() {
-    return Optional.ofNullable(maxTemplateArticles);
+  @Nullable
+  public Integer getMaxTemplateArticles() {
+    return maxTemplateArticles;
   }
 
   /**
@@ -162,9 +162,9 @@ public class PageComment {
   /**
    * @return Maximum number of back links from other name spaces.
    */
-  @Nonnull
-  public Optional<Integer> getMaxOtherArticles() {
-    return Optional.ofNullable(maxOtherArticles);
+  @Nullable
+  public Integer getMaxOtherArticles() {
+    return maxOtherArticles;
   }
 
   /**
@@ -211,6 +211,6 @@ public class PageComment {
    */
   public void save() {
     Configuration config = Configuration.getConfiguration();
-    config.addPojo(wiki, Configuration.POJO_PAGE_COMMENTS, comment, pageTitle);
+    config.addPojo(wiki, Configuration.POJO_PAGE_COMMENTS, this, pageTitle);
   }
 }

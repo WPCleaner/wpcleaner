@@ -336,7 +336,7 @@ public class PageListWindow extends BasicWindow {
       if (page.isDisambiguationPage()) {
         Integer maxMainArticles = Optional
             .ofNullable(commentsByPageTitle.get(page.getTitle()))
-            .flatMap(PageComment::getMaxMainArticles)
+            .map(PageComment::getMaxMainArticles)
             .orElse(null);
         if (maxMainArticles != null) {
           int maxArticles = maxMainArticles.intValue();
@@ -421,7 +421,12 @@ public class PageListWindow extends BasicWindow {
    */
   public void actionSetComments() {
     List<Page> selectedPages = tablePages.getSelectedPages();
-    Controller.runPageComments(selectedPages, getWikipedia());
+    for (Page selectedPage : selectedPages) {
+      commentsByPageTitle.computeIfAbsent(
+          selectedPage.getTitle(),
+          pageTitle -> PageComment.getOrCreate(getWiki(), pageTitle));
+    }
+    Controller.runPageComments(selectedPages, commentsByPageTitle, getWikipedia());
   }
 
   /**
@@ -550,7 +555,7 @@ public class PageListWindow extends BasicWindow {
           backlinksMain += tmpLinks.intValue();
           Integer maxMainArticles = Optional
               .ofNullable(commentsByPageTitle.get(page.getTitle()))
-              .flatMap(PageComment::getMaxMainArticles)
+              .map(PageComment::getMaxMainArticles)
               .orElse(null);
           if (maxMainArticles != null) {
             maxMain += maxMainArticles.intValue();

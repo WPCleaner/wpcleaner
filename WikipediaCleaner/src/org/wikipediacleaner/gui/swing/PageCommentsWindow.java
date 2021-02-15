@@ -72,7 +72,8 @@ public class PageCommentsWindow extends BasicWindow {
    * @param wikipedia Wikipedia.
    */
   public static void createPageCommentsWindow(
-      final Page    page,
+      final Page page,
+      final PageComment comment,
       EnumWikipedia wikipedia) {
     createWindow(
         "PageCommentsWindow",
@@ -85,7 +86,7 @@ public class PageCommentsWindow extends BasicWindow {
             if (window instanceof PageCommentsWindow) {
               PageCommentsWindow pageComments = (PageCommentsWindow) window;
               pageComments.page = page;
-              pageComments.comment = PageComment.get(wikipedia, page.getTitle()).orElse(null);
+              pageComments.comment = (comment == null) ? PageComment.get(wikipedia, page.getTitle()).orElse(null) : comment;
             }
           }
         });
@@ -134,7 +135,7 @@ public class PageCommentsWindow extends BasicWindow {
 
     // Comment
     txtComments = new JTextField(20);
-    txtComments.setText(Optional.ofNullable(comment).flatMap(PageComment::getComment).orElse(StringUtils.EMPTY));
+    txtComments.setText(Optional.ofNullable(comment).map(PageComment::getComment).orElse(StringUtils.EMPTY));
     JLabel labelComments = Utilities.createJLabel(GT._T("Comments :"));
     labelComments.setLabelFor(txtComments);
     labelComments.setHorizontalAlignment(SwingConstants.TRAILING);
@@ -347,6 +348,12 @@ public class PageCommentsWindow extends BasicWindow {
   public void actionRemove() {
     if (page != null) {
       PageComment.delete(page.getWikipedia(), page.getTitle());
+    }
+    if (comment != null) {
+      comment.setComment(null);
+      comment.setMaxMainArticles(null);
+      comment.setMaxTemplateArticles(null);
+      comment.setMaxOtherArticles(null);
     }
     dispose();
   }

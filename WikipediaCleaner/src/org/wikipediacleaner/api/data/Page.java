@@ -705,7 +705,7 @@ public class Page implements Comparable<Page> {
       backLinksMainProgression = new ProgressionValue(null, null, true);
     }
     backLinksMainProgression.setCurrent(getBacklinksCountInMainNamespace());
-    backLinksMainProgression.setGoal(Optional.ofNullable(comment).flatMap(PageComment::getMaxMainArticles).orElse(null));
+    backLinksMainProgression.setGoal(Optional.ofNullable(comment).map(PageComment::getMaxMainArticles).orElse(null));
     return backLinksMainProgression;
   }
 
@@ -718,7 +718,7 @@ public class Page implements Comparable<Page> {
       backLinksTemplateProgression = new ProgressionValue(null, null, false);
     }
     backLinksTemplateProgression.setCurrent(getBacklinksCountInTemplateNamespace());
-    backLinksTemplateProgression.setGoal(Optional.ofNullable(comment).flatMap(PageComment::getMaxTemplateArticles).orElse(null));
+    backLinksTemplateProgression.setGoal(Optional.ofNullable(comment).map(PageComment::getMaxTemplateArticles).orElse(null));
     return backLinksTemplateProgression;
   }
 
@@ -742,7 +742,7 @@ public class Page implements Comparable<Page> {
       current = Integer.valueOf(tmp);
     }
     backLinksOtherProgression.setCurrent(current);
-    backLinksOtherProgression.setGoal(Optional.ofNullable(comment).flatMap(PageComment::getMaxOtherArticles).orElse(null));
+    backLinksOtherProgression.setGoal(Optional.ofNullable(comment).map(PageComment::getMaxOtherArticles).orElse(null));
     return backLinksOtherProgression;
   }
 
