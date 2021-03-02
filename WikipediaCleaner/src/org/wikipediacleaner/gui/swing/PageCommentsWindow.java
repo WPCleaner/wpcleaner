@@ -69,6 +69,7 @@ public class PageCommentsWindow extends BasicWindow {
    * Create and display a PageCommentsWindow.
    * 
    * @param page Page.
+   * @param comment Existing comment for the page.
    * @param wikipedia Wikipedia.
    */
   public static void createPageCommentsWindow(
