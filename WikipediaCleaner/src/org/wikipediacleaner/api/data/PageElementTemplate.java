@@ -675,7 +675,7 @@ public class PageElementTemplate extends PageElement {
       List<Parameter> parameters) {
     super(beginIndex, endIndex);
     this.templateNameNotTrimmed = templateName;
-    this.templateName = (templateName != null) ? CharacterUtils.ucFirst(templateName.trim()) : null;
+    this.templateName = Page.normalizeTitle(templateName);
     this.parameters = parameters;
   }
 
