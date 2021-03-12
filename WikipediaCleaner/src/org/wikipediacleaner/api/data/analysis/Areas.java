@@ -12,7 +12,6 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.wikipediacleaner.api.data.MagicWord;
 import org.wikipediacleaner.api.data.PageElementCategory;
 import org.wikipediacleaner.api.data.PageElementExternalLink;
 import org.wikipediacleaner.api.data.PageElementFunction;
@@ -31,6 +30,8 @@ import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.PageElementTitle;
 import org.wikipediacleaner.api.data.contents.ContentsElement;
 import org.wikipediacleaner.api.data.contents.comment.ContentsComment;
+import org.wikipediacleaner.api.data.contents.magicword.ImageMagicWordType;
+import org.wikipediacleaner.api.data.contents.magicword.MagicWord;
 import org.wikipediacleaner.api.data.contents.tag.WikiTagType;
 
 
@@ -147,8 +148,8 @@ public class Areas {
           for (PageElementImage.Parameter param : image.getParameters()) {
             MagicWord magicWord = param.getMagicWord();
             if (magicWord != null) {
-              if (MagicWord.IMG_ALT.equals(magicWord.getName()) ||
-                  MagicWord.IMG_LINK.equals(magicWord.getName())) {
+              if (ImageMagicWordType.IMG_ALT.equals(magicWord.getType()) ||
+                  ImageMagicWordType.IMG_LINK.equals(magicWord.getType())) {
                 int equalIndex = param.getContents().indexOf("=");
                 if (equalIndex < 0) {
                   addArea(

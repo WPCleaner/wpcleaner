@@ -14,6 +14,9 @@ import java.util.List;
 import org.wikipediacleaner.api.configuration.WikiConfiguration;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.contents.ContentsUtil;
+import org.wikipediacleaner.api.data.contents.magicword.ImageMagicWordType;
+import org.wikipediacleaner.api.data.contents.magicword.MagicWord;
+import org.wikipediacleaner.api.data.contents.magicword.MagicWordType;
 import org.wikipediacleaner.api.data.contents.tag.WikiTagType;
 
 
@@ -240,10 +243,10 @@ public class PageElementImage extends PageElement {
   }
 
   /**
-   * @param magicWordName Magic word.
+   * @param magicWordType Magic word.
    * @return Parameter matching the magic word.
    */
-  public Parameter getParameter(String magicWordName) {
+  public Parameter getParameter(MagicWordType magicWordType) {
     if (parameters == null) {
       return null;
     }
@@ -252,7 +255,7 @@ public class PageElementImage extends PageElement {
       String contents = param.getContents();
       if ((contents != null) &&
           (param.getMagicWord() != null) &&
-          (wikiConfiguration.getMagicWordByName(magicWordName).isPossibleAlias(contents))) {
+          (wikiConfiguration.getMagicWordByType(magicWordType).isPossibleAlias(contents))) {
         return param;
       }
     }
@@ -263,7 +266,7 @@ public class PageElementImage extends PageElement {
    * @return Image alternate description.
    */
   public String getAlternateDescription() {
-    Parameter param = getParameter(MagicWord.IMG_ALT);
+    Parameter param = getParameter(ImageMagicWordType.IMG_ALT);
     if ((param == null) || (param.getContents() == null)) {
       return null;
     }
@@ -362,7 +365,7 @@ public class PageElementImage extends PageElement {
     for (Parameter param : parameters) {
       MagicWord magicWord = param.getMagicWord();
       if (magicWord != null) {
-        if (MagicWord.IMG_ALT.equals(magicWord.getName())) {
+        if (ImageMagicWordType.IMG_ALT.equals(magicWord.getType())) {
           if (altDescription != null) {
             sb.append('|');
             sb.append(magicWord.getName());
@@ -384,7 +387,7 @@ public class PageElementImage extends PageElement {
     }
     if (!altDescriptionAdded && (altDescription != null)) {
       sb.append('|');
-      sb.append(MagicWord.IMG_ALT);
+      sb.append(ImageMagicWordType.IMG_ALT.getName());
       sb.append('=');
       sb.append(altDescription);
     }
@@ -432,10 +435,10 @@ public class PageElementImage extends PageElement {
       this.magicWord = magicWord;
       boolean tmpCorrect = true;
       if ((contents != null) && (magicWord != null)) {
-        if (magicWord.isPossibleAlias(contents, ".*")) {
-          if (MagicWord.IMG_ALT.equals(magicWord.getName()) ||
-              MagicWord.IMG_WIDTH.equals(magicWord.getName())) {
-            if (!magicWord.isPossibleAlias(contents, ".+")) {
+        if (magicWord.isPossibleAlias(contents, true)) {
+          if (ImageMagicWordType.IMG_ALT.equals(magicWord.getType()) ||
+              ImageMagicWordType.IMG_WIDTH.equals(magicWord.getType())) {
+            if (!magicWord.isPossibleAlias(contents, false)) {
               tmpCorrect = false;
             }
           }

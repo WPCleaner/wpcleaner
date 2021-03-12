@@ -18,11 +18,11 @@ import org.wikipediacleaner.api.algorithm.AlgorithmParameterElement;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.CheckErrorResult.ErrorLevel;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase;
-import org.wikipediacleaner.api.data.MagicWord;
 import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.PageElementImage;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
+import org.wikipediacleaner.api.data.contents.magicword.ImageMagicWordType;
 import org.wikipediacleaner.api.data.contents.tag.WikiTagType;
 import org.wikipediacleaner.i18n.GT;
 
@@ -61,7 +61,7 @@ public class CheckErrorAlgorithm523 extends CheckErrorAlgorithmBase {
 
       // Only images that respect a minimum size
       if (shouldAdd) {
-        PageElementImage.Parameter paramWidth = image.getParameter(MagicWord.IMG_WIDTH);
+        PageElementImage.Parameter paramWidth = image.getParameter(ImageMagicWordType.IMG_WIDTH);
         if ((paramWidth != null) && (paramWidth.getContents() != null)) {
           String contents = paramWidth.getContents().replaceAll("\\D", "");
           try {
@@ -77,7 +77,7 @@ public class CheckErrorAlgorithm523 extends CheckErrorAlgorithmBase {
 
       // Ignore images with a page parameter
       if (shouldAdd) {
-        PageElementImage.Parameter paramPage = image.getParameter(MagicWord.IMG_PAGE);
+        PageElementImage.Parameter paramPage = image.getParameter(ImageMagicWordType.IMG_PAGE);
         if (paramPage != null) {
           shouldAdd = false;
         }

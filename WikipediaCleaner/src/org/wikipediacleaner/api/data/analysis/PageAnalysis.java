@@ -20,7 +20,6 @@ import org.wikipediacleaner.api.configuration.WPCConfiguration;
 import org.wikipediacleaner.api.configuration.WikiConfiguration;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.constants.wiki.AbstractWikiSettings;
-import org.wikipediacleaner.api.data.MagicWord;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageAnalysisUtils;
 import org.wikipediacleaner.api.data.PageElementCategory;
@@ -46,6 +45,7 @@ import org.wikipediacleaner.api.data.contents.ContentsElement;
 import org.wikipediacleaner.api.data.contents.ContentsElementComparator;
 import org.wikipediacleaner.api.data.contents.comment.ContainerComment;
 import org.wikipediacleaner.api.data.contents.comment.ContentsComment;
+import org.wikipediacleaner.api.data.contents.magicword.FunctionMagicWordType;
 import org.wikipediacleaner.api.data.contents.tag.TagType;
 import org.wikipediacleaner.utils.Configuration;
 import org.wikipediacleaner.utils.ConfigurationValueBoolean;
@@ -1878,7 +1878,7 @@ public class PageAnalysis {
     }
     List<PageElementFunction> defaultSorts = new ArrayList<>();
     for (PageElementFunction function : tmpFunctions) {
-      if (MagicWord.DEFAULT_SORT.equals(function.getMagicWord().getName())) {
+      if (FunctionMagicWordType.DEFAULT_SORT.equals(function.getMagicWord().getType())) {
         defaultSorts.add(function);
       }
     }

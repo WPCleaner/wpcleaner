@@ -8,6 +8,7 @@
 package org.wikipediacleaner.api.data;
 
 import org.wikipediacleaner.api.constants.EnumWikipedia;
+import org.wikipediacleaner.api.data.contents.magicword.MagicWord;
 
 
 /**

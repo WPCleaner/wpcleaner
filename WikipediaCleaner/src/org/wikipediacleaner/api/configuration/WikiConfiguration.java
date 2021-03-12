@@ -12,13 +12,15 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.wikipediacleaner.api.data.Interwiki;
 import org.wikipediacleaner.api.data.Language;
 import org.wikipediacleaner.api.data.LinterCategory;
-import org.wikipediacleaner.api.data.MagicWord;
 import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.SpecialPage;
+import org.wikipediacleaner.api.data.contents.magicword.MagicWord;
+import org.wikipediacleaner.api.data.contents.magicword.MagicWordType;
 
 
 /**
@@ -264,17 +266,17 @@ public class WikiConfiguration {
   /**
    * Magic words.
    */
-  private Map<String, MagicWord> magicWords = new HashMap<>();
+  private Map<MagicWordType, MagicWord> magicWords = new HashMap<>();
 
   /**
-   * @param name Magic word name.
+   * @param type Magic word type.
    * @return Magic word.
    */
-  public MagicWord getMagicWordByName(String name) {
-    if ((name == null) || (magicWords == null)) {
+  public MagicWord getMagicWordByType(MagicWordType type) {
+    if ((type == null) || (magicWords == null)) {
       return null;
     }
-    return magicWords.get(name); 
+    return magicWords.get(type); 
   }
 
   /**
@@ -328,11 +330,12 @@ public class WikiConfiguration {
     return null;
   }
 
-  /**
-   * @param magicWords Magic words.
-   */
-  public void setMagicWords(Map<String, MagicWord> magicWords) {
-    this.magicWords = magicWords;
+  public void setMagicWords(List<MagicWord> magicWords) {
+    if (magicWords == null) {
+      this.magicWords = Collections.emptyMap();
+    } else {
+      this.magicWords = magicWords.stream().collect(Collectors.toMap(MagicWord::getType, mw -> mw));
+    }
   }
 
   // ==========================================================================

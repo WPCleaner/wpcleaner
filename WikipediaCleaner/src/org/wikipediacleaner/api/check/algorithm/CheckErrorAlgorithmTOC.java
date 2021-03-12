@@ -13,13 +13,13 @@ import java.util.List;
 
 import org.wikipediacleaner.api.algorithm.AlgorithmParameter;
 import org.wikipediacleaner.api.configuration.WPCConfiguration;
-import org.wikipediacleaner.api.data.MagicWord;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageElement;
 import org.wikipediacleaner.api.data.PageElementMagicWord;
 import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
 import org.wikipediacleaner.api.data.contents.IntervalComparator;
+import org.wikipediacleaner.api.data.contents.magicword.SimpleMagicWordType;
 import org.wikipediacleaner.i18n.GT;
 
 
@@ -51,7 +51,7 @@ public abstract class CheckErrorAlgorithmTOC extends CheckErrorAlgorithmBase {
       for (PageElementMagicWord magicWord : magicWords) {
         if ((magicWord.getBeginIndex() >= beginIndex) &&
             (magicWord.getEndIndex() <= endIndex) &&
-            MagicWord.TOC.equals(magicWord.getMagicWord().getName())) {
+            SimpleMagicWordType.TOC.equals(magicWord.getMagicWord().getType())) {
           result.add(magicWord);
         }
       }

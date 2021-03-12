@@ -22,7 +22,6 @@ import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase;
 import org.wikipediacleaner.api.configuration.WikiConfiguration;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.LinterCategory;
-import org.wikipediacleaner.api.data.MagicWord;
 import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageElementFunction;
@@ -32,6 +31,9 @@ import org.wikipediacleaner.api.data.PageElementParameter;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
 import org.wikipediacleaner.api.data.contents.comment.CommentBuilder;
+import org.wikipediacleaner.api.data.contents.magicword.ImageMagicWordType;
+import org.wikipediacleaner.api.data.contents.magicword.MagicWord;
+import org.wikipediacleaner.api.data.contents.magicword.MagicWordType;
 import org.wikipediacleaner.api.data.contents.tag.WikiTagType;
 import org.wikipediacleaner.api.data.PageElementTemplate;
 
@@ -53,7 +55,7 @@ public class CheckErrorAlgorithm534 extends CheckErrorAlgorithmBase {
     public final String initialText;
 
     /** Target magic word */
-    public final String targetMagicWord;
+    public final MagicWordType targetMagicWord;
 
     /** Target text */
     public final String targetText;
@@ -62,32 +64,32 @@ public class CheckErrorAlgorithm534 extends CheckErrorAlgorithmBase {
     public final boolean automatic;
 
     /** List of magic words with potential options */
-    private final static String[] mwOptions = {
-      MagicWord.IMG_ALT,
-      MagicWord.IMG_BASELINE,
-      MagicWord.IMG_BORDER,
-      MagicWord.IMG_BOTTOM,
-      MagicWord.IMG_CENTER,
-      MagicWord.IMG_CLASS,
-      MagicWord.IMG_FRAMED,
-      MagicWord.IMG_FRAMELESS,
-      MagicWord.IMG_LANG,
-      MagicWord.IMG_LEFT,
-      MagicWord.IMG_LINK,
-      MagicWord.IMG_LOSSY,
-      MagicWord.IMG_MANUAL_THUMB,
-      MagicWord.IMG_MIDDLE,
-      MagicWord.IMG_NONE,
-      MagicWord.IMG_PAGE,
-      MagicWord.IMG_RIGHT,
-      MagicWord.IMG_SUB,
-      MagicWord.IMG_SUPER,
-      MagicWord.IMG_TEXT_BOTTOM,
-      MagicWord.IMG_TEXT_TOP,
-      MagicWord.IMG_THUMBNAIL,
-      MagicWord.IMG_TOP,
-      MagicWord.IMG_UPRIGHT,
-      MagicWord.IMG_WIDTH,
+    private final static MagicWordType[] mwOptions = {
+      ImageMagicWordType.IMG_ALT,
+      ImageMagicWordType.IMG_BASELINE,
+      ImageMagicWordType.IMG_BORDER,
+      ImageMagicWordType.IMG_BOTTOM,
+      ImageMagicWordType.IMG_CENTER,
+      ImageMagicWordType.IMG_CLASS,
+      ImageMagicWordType.IMG_FRAMED,
+      ImageMagicWordType.IMG_FRAMELESS,
+      ImageMagicWordType.IMG_LANG,
+      ImageMagicWordType.IMG_LEFT,
+      ImageMagicWordType.IMG_LINK,
+      ImageMagicWordType.IMG_LOSSY,
+      ImageMagicWordType.IMG_MANUAL_THUMB,
+      ImageMagicWordType.IMG_MIDDLE,
+      ImageMagicWordType.IMG_NONE,
+      ImageMagicWordType.IMG_PAGE,
+      ImageMagicWordType.IMG_RIGHT,
+      ImageMagicWordType.IMG_SUB,
+      ImageMagicWordType.IMG_SUPER,
+      ImageMagicWordType.IMG_TEXT_BOTTOM,
+      ImageMagicWordType.IMG_TEXT_TOP,
+      ImageMagicWordType.IMG_THUMBNAIL,
+      ImageMagicWordType.IMG_TOP,
+      ImageMagicWordType.IMG_UPRIGHT,
+      ImageMagicWordType.IMG_WIDTH,
     };
 
     /**
@@ -103,7 +105,7 @@ public class CheckErrorAlgorithm534 extends CheckErrorAlgorithmBase {
      */
     public AutomaticReplacement(
         String initialText,
-        String targetMagicWord, String targetText,
+        MagicWordType targetMagicWord, String targetText,
         boolean automatic) {
       this.initialText = initialText;
       this.targetMagicWord = targetMagicWord;
@@ -145,7 +147,7 @@ public class CheckErrorAlgorithm534 extends CheckErrorAlgorithmBase {
             secondDescription = paramTmp.getContents();
           }
           if ((paramTmp.getMagicWord() != null) &&
-              MagicWord.IMG_ALT.equals(paramTmp.getMagicWord().getName())) {
+              ImageMagicWordType.IMG_ALT.equals(paramTmp.getMagicWord().getType())) {
             hasAltDescription = true;
           }
         }
@@ -155,10 +157,10 @@ public class CheckErrorAlgorithm534 extends CheckErrorAlgorithmBase {
           }
           if (!hasAltDescription) {
             String targetText = "alt=" + initialText;
-            MagicWord alt = config.getMagicWordByName(MagicWord.IMG_ALT);
+            MagicWord alt = config.getMagicWordByType(ImageMagicWordType.IMG_ALT);
             if ((alt != null) && (alt.isPossibleAlias(targetText))) {
               return new AutomaticReplacement(
-                  initialText, MagicWord.IMG_ALT, targetText, false);
+                  initialText, ImageMagicWordType.IMG_ALT, targetText, false);
             }
           }
         }
@@ -169,59 +171,59 @@ public class CheckErrorAlgorithm534 extends CheckErrorAlgorithmBase {
 
       // Check that the suggestion can be applied
       if (replacement.targetMagicWord != null) {
-        String mwName = replacement.targetMagicWord;
+        MagicWordType mwType = replacement.targetMagicWord;
         boolean paramFound = false;
         for (Parameter paramTmp : params) {
           if (paramTmp == param) {
             paramFound = true;
           } else if (paramTmp.getMagicWord() != null) {
             // If option already exists, remove the faulty one
-            String mwNameTmp = paramTmp.getMagicWord().getName();
-            if (mwName.equals(mwNameTmp)) {
+            MagicWordType mwTypeTmp = paramTmp.getMagicWord().getType();
+            if (mwType.equals(mwTypeTmp)) {
               return new AutomaticReplacement(initialText, null, null, true);
             }
 
             // Format option: one of border and/or frameless, frame, thumb (or thumbnail)
-            if (MagicWord.IMG_BORDER.equals(mwName) ||
-                MagicWord.IMG_FRAMELESS.equals(mwName) ||
-                MagicWord.IMG_FRAMED.equals(mwName) ||
-                MagicWord.IMG_THUMBNAIL.equals(mwName)) {
-              if (MagicWord.IMG_BORDER.equals(mwNameTmp) ||
-                  MagicWord.IMG_FRAMELESS.equals(mwNameTmp) ||
-                  MagicWord.IMG_FRAMED.equals(mwNameTmp) ||
-                  MagicWord.IMG_THUMBNAIL.equals(mwNameTmp)) {
+            if (ImageMagicWordType.IMG_BORDER.equals(mwType) ||
+                ImageMagicWordType.IMG_FRAMELESS.equals(mwType) ||
+                ImageMagicWordType.IMG_FRAMED.equals(mwType) ||
+                ImageMagicWordType.IMG_THUMBNAIL.equals(mwType)) {
+              if (ImageMagicWordType.IMG_BORDER.equals(mwTypeTmp) ||
+                  ImageMagicWordType.IMG_FRAMELESS.equals(mwTypeTmp) ||
+                  ImageMagicWordType.IMG_FRAMED.equals(mwTypeTmp) ||
+                  ImageMagicWordType.IMG_THUMBNAIL.equals(mwTypeTmp)) {
                 return new AutomaticReplacement(initialText, null, null, !paramFound);
               }
             } else
             // Horizontal alignment option: one of left, right, center, none
-            if (MagicWord.IMG_CENTER.equals(mwName) ||
-                MagicWord.IMG_LEFT.equals(mwName) ||
-                MagicWord.IMG_NONE.equals(mwName) ||
-                MagicWord.IMG_RIGHT.equals(mwName)) {
-              if (MagicWord.IMG_CENTER.equals(mwNameTmp) ||
-                  MagicWord.IMG_LEFT.equals(mwNameTmp) ||
-                  MagicWord.IMG_NONE.equals(mwNameTmp) ||
-                  MagicWord.IMG_RIGHT.equals(mwNameTmp)) {
+            if (ImageMagicWordType.IMG_CENTER.equals(mwType) ||
+                ImageMagicWordType.IMG_LEFT.equals(mwType) ||
+                ImageMagicWordType.IMG_NONE.equals(mwType) ||
+                ImageMagicWordType.IMG_RIGHT.equals(mwType)) {
+              if (ImageMagicWordType.IMG_CENTER.equals(mwTypeTmp) ||
+                  ImageMagicWordType.IMG_LEFT.equals(mwTypeTmp) ||
+                  ImageMagicWordType.IMG_NONE.equals(mwTypeTmp) ||
+                  ImageMagicWordType.IMG_RIGHT.equals(mwTypeTmp)) {
                 return new AutomaticReplacement(initialText, null, null, !paramFound);
               }
             } else
             // Vertical alignment option: one of baseline, sub, super, top, text-top, middle, bottom, text-bottom
-            if (MagicWord.IMG_BASELINE.equals(mwName) ||
-                MagicWord.IMG_BOTTOM.equals(mwName) ||
-                MagicWord.IMG_MIDDLE.equals(mwName) ||
-                MagicWord.IMG_SUB.equals(mwName) ||
-                MagicWord.IMG_SUPER.equals(mwName) ||
-                MagicWord.IMG_TEXT_BOTTOM.equals(mwName) ||
-                MagicWord.IMG_TEXT_TOP.equals(mwName) ||
-                MagicWord.IMG_TOP.equals(mwName)) {
-              if (MagicWord.IMG_BASELINE.equals(mwName) ||
-                  MagicWord.IMG_BOTTOM.equals(mwName) ||
-                  MagicWord.IMG_MIDDLE.equals(mwName) ||
-                  MagicWord.IMG_SUB.equals(mwName) ||
-                  MagicWord.IMG_SUPER.equals(mwName) ||
-                  MagicWord.IMG_TEXT_BOTTOM.equals(mwName) ||
-                  MagicWord.IMG_TEXT_TOP.equals(mwName) ||
-                  MagicWord.IMG_TOP.equals(mwName)) {
+            if (ImageMagicWordType.IMG_BASELINE.equals(mwType) ||
+                ImageMagicWordType.IMG_BOTTOM.equals(mwType) ||
+                ImageMagicWordType.IMG_MIDDLE.equals(mwType) ||
+                ImageMagicWordType.IMG_SUB.equals(mwType) ||
+                ImageMagicWordType.IMG_SUPER.equals(mwType) ||
+                ImageMagicWordType.IMG_TEXT_BOTTOM.equals(mwType) ||
+                ImageMagicWordType.IMG_TEXT_TOP.equals(mwType) ||
+                ImageMagicWordType.IMG_TOP.equals(mwType)) {
+              if (ImageMagicWordType.IMG_BASELINE.equals(mwTypeTmp) ||
+                  ImageMagicWordType.IMG_BOTTOM.equals(mwTypeTmp) ||
+                  ImageMagicWordType.IMG_MIDDLE.equals(mwTypeTmp) ||
+                  ImageMagicWordType.IMG_SUB.equals(mwTypeTmp) ||
+                  ImageMagicWordType.IMG_SUPER.equals(mwTypeTmp) ||
+                  ImageMagicWordType.IMG_TEXT_BOTTOM.equals(mwTypeTmp) ||
+                  ImageMagicWordType.IMG_TEXT_TOP.equals(mwTypeTmp) ||
+                  ImageMagicWordType.IMG_TOP.equals(mwTypeTmp)) {
                 return new AutomaticReplacement(initialText, null, null, !paramFound);
               }
             }
@@ -251,7 +253,7 @@ public class CheckErrorAlgorithm534 extends CheckErrorAlgorithmBase {
           if (replacement.targetMagicWord == null) {
             return replacement;
           }
-          MagicWord magicWord = config.getMagicWordByName(replacement.targetMagicWord);
+          MagicWord magicWord = config.getMagicWordByType(replacement.targetMagicWord);
           if ((magicWord != null) && (magicWord.isPossibleAlias(replacement.targetText))) {
             return replacement;
           }
@@ -264,7 +266,7 @@ public class CheckErrorAlgorithm534 extends CheckErrorAlgorithmBase {
           if (replacement.targetMagicWord == null) {
             return replacement;
           }
-          MagicWord magicWord = config.getMagicWordByName(replacement.targetMagicWord);
+          MagicWord magicWord = config.getMagicWordByType(replacement.targetMagicWord);
           if ((magicWord != null) && (magicWord.isPossibleAlias(replacement.targetText))) {
             return replacement;
           }
@@ -277,14 +279,14 @@ public class CheckErrorAlgorithm534 extends CheckErrorAlgorithmBase {
         allNumeric &= Character.isDigit(initialText.charAt(pos));
       }
       if (allNumeric) {
-        MagicWord magicWord = config.getMagicWordByName(MagicWord.IMG_WIDTH);
+        MagicWord magicWord = config.getMagicWordByType(ImageMagicWordType.IMG_WIDTH);
         if ((magicWord != null) && (magicWord.getAliases() != null)) {
           for (String alias : magicWord.getAliases()) {
             int variablePos = alias.indexOf("$1");
             if (variablePos >= 0) {
               String newText = alias.substring(0, variablePos) + initialText + alias.substring(variablePos + 2);
               return new AutomaticReplacement(
-                  initialText, MagicWord.IMG_WIDTH, newText,
+                  initialText, ImageMagicWordType.IMG_WIDTH, newText,
                   (initialText.length() > 2) && (initialText.length() < 4));
             }
           }
@@ -368,14 +370,14 @@ public class CheckErrorAlgorithm534 extends CheckErrorAlgorithmBase {
         String initialText,
         boolean automatic,
         boolean complex) {
-      for (String mwName : mwOptions) {
-        MagicWord mw = config.getMagicWordByName(mwName);
+      for (MagicWordType mwType : mwOptions) {
+        MagicWord mw = config.getMagicWordByType(mwType);
         if ((mw != null) && (mw.getAliases() != null)) {
           for (String alias : mw.getAliases()) {
             int variablePos = alias.indexOf("$1");
             if (variablePos < 0) {
               if (initialText.equalsIgnoreCase(alias)) {
-                return new AutomaticReplacement(initialText, mwName, alias, automatic);
+                return new AutomaticReplacement(initialText, mwType, alias, automatic);
               }
             } else {
 
@@ -457,7 +459,7 @@ public class CheckErrorAlgorithm534 extends CheckErrorAlgorithmBase {
               }
 
               // Check special cases
-              if (ok && MagicWord.IMG_WIDTH.equals(mw.getName())) {
+              if (ok && ImageMagicWordType.IMG_WIDTH.equals(mw.getType())) {
                 for (int index = newPrefixLength; (index < initialText.length() - newSuffixLength) && ok; index++) {
                   if (!Character.isDigit(initialText.charAt(index))) {
                     ok = false;
@@ -472,7 +474,7 @@ public class CheckErrorAlgorithm534 extends CheckErrorAlgorithmBase {
                     initialText.substring(newPrefixLength, initialText.length() - newSuffixLength) +
                     alias.substring(alias.length() - suffixLength);
                 if (mw.isPossibleAlias(newText)) {
-                  return new AutomaticReplacement(initialText, mwName, newText, automatic);
+                  return new AutomaticReplacement(initialText, mwType, newText, automatic);
                 }
               }
             }
@@ -508,94 +510,94 @@ public class CheckErrorAlgorithm534 extends CheckErrorAlgorithmBase {
     new AutomaticReplacement("wide",       null, null, true),
 
     // IMG_BORDER
-    new AutomaticReplacement("rand", MagicWord.IMG_BORDER, "border", false), // de
+    new AutomaticReplacement("rand", ImageMagicWordType.IMG_BORDER, "border", false), // de
 
     // IMG_CENTER
-    new AutomaticReplacement("align=center", MagicWord.IMG_CENTER, "center", true),
-    new AutomaticReplacement("align:center", MagicWord.IMG_CENTER, "center", true),
-    new AutomaticReplacement("centro",       MagicWord.IMG_CENTER, "center", true),
+    new AutomaticReplacement("align=center", ImageMagicWordType.IMG_CENTER, "center", true),
+    new AutomaticReplacement("align:center", ImageMagicWordType.IMG_CENTER, "center", true),
+    new AutomaticReplacement("centro",       ImageMagicWordType.IMG_CENTER, "center", true),
 
     // IMG_FRAMELESS
-    new AutomaticReplacement("rahmenlos", MagicWord.IMG_FRAMELESS, "frameless", true),
-    new AutomaticReplacement("безрамки",  MagicWord.IMG_FRAMELESS, "frameless", true),
+    new AutomaticReplacement("rahmenlos", ImageMagicWordType.IMG_FRAMELESS, "frameless", true),
+    new AutomaticReplacement("безрамки",  ImageMagicWordType.IMG_FRAMELESS, "frameless", true),
 
     // IMG_LEFT
-    new AutomaticReplacement("align=left", MagicWord.IMG_LEFT, "left", true),
-    new AutomaticReplacement("align:left", MagicWord.IMG_LEFT, "left", true),
-    new AutomaticReplacement("esquerda",   MagicWord.IMG_LEFT, "left", true),
-    new AutomaticReplacement("esquerra",   MagicWord.IMG_LEFT, "left", true),
-    new AutomaticReplacement("gauche",     MagicWord.IMG_LEFT, "left", true),
-    new AutomaticReplacement("izquierda",  MagicWord.IMG_LEFT, "left", true),
-    new AutomaticReplacement("leftt",      MagicWord.IMG_LEFT, "left", true),
-    new AutomaticReplacement("ліворуч",    MagicWord.IMG_LEFT, "left", true),
-    new AutomaticReplacement("שמאל",       MagicWord.IMG_LEFT, "left", true),
+    new AutomaticReplacement("align=left", ImageMagicWordType.IMG_LEFT, "left", true),
+    new AutomaticReplacement("align:left", ImageMagicWordType.IMG_LEFT, "left", true),
+    new AutomaticReplacement("esquerda",   ImageMagicWordType.IMG_LEFT, "left", true),
+    new AutomaticReplacement("esquerra",   ImageMagicWordType.IMG_LEFT, "left", true),
+    new AutomaticReplacement("gauche",     ImageMagicWordType.IMG_LEFT, "left", true),
+    new AutomaticReplacement("izquierda",  ImageMagicWordType.IMG_LEFT, "left", true),
+    new AutomaticReplacement("leftt",      ImageMagicWordType.IMG_LEFT, "left", true),
+    new AutomaticReplacement("ліворуч",    ImageMagicWordType.IMG_LEFT, "left", true),
+    new AutomaticReplacement("שמאל",       ImageMagicWordType.IMG_LEFT, "left", true),
 
     // IMG_RIGHT
-    new AutomaticReplacement("align=right", MagicWord.IMG_RIGHT, "right", true),
-    new AutomaticReplacement("align:right", MagicWord.IMG_RIGHT, "right", true),
-    new AutomaticReplacement("derecha",     MagicWord.IMG_RIGHT, "right", true),
-    new AutomaticReplacement("desno",       MagicWord.IMG_RIGHT, "right", true),
-    new AutomaticReplacement("destra",      MagicWord.IMG_RIGHT, "right", true),
-    new AutomaticReplacement("direita",     MagicWord.IMG_RIGHT, "right", true),
-    new AutomaticReplacement("dreta",       MagicWord.IMG_RIGHT, "right", true),
-    new AutomaticReplacement("float right", MagicWord.IMG_RIGHT, "right", true),
-    new AutomaticReplacement("float=right", MagicWord.IMG_RIGHT, "right", true),
-    new AutomaticReplacement("float:right", MagicWord.IMG_RIGHT, "right", true),
-    new AutomaticReplacement("floatright",  MagicWord.IMG_RIGHT, "right", true),
-    new AutomaticReplacement("ight",        MagicWord.IMG_RIGHT, "right", true),
-    new AutomaticReplacement("rechts",      MagicWord.IMG_RIGHT, "right", true),
-    new AutomaticReplacement("reght",       MagicWord.IMG_RIGHT, "right", true),
-    new AutomaticReplacement("rght",        MagicWord.IMG_RIGHT, "right", true),
-    new AutomaticReplacement("ribght",      MagicWord.IMG_RIGHT, "right", true),
-    new AutomaticReplacement("richt",       MagicWord.IMG_RIGHT, "right", true),
-    new AutomaticReplacement("righ",        MagicWord.IMG_RIGHT, "right", true),
-    new AutomaticReplacement("righjt",      MagicWord.IMG_RIGHT, "right", true),
-    new AutomaticReplacement("righr",       MagicWord.IMG_RIGHT, "right", true),
-    new AutomaticReplacement("righte",      MagicWord.IMG_RIGHT, "right", true),
-    new AutomaticReplacement("rightg",      MagicWord.IMG_RIGHT, "right", true),
-    new AutomaticReplacement("rightl",      MagicWord.IMG_RIGHT, "right", true),
-    new AutomaticReplacement("rightt",      MagicWord.IMG_RIGHT, "right", true),
-    new AutomaticReplacement("rightx",      MagicWord.IMG_RIGHT, "right", true),
-    new AutomaticReplacement("righty",      MagicWord.IMG_RIGHT, "right", true),
-    new AutomaticReplacement("right1",      MagicWord.IMG_RIGHT, "right", true),
-    new AutomaticReplacement("right2",      MagicWord.IMG_RIGHT, "right", true),
-    new AutomaticReplacement("righy",       MagicWord.IMG_RIGHT, "right", true),
-    new AutomaticReplacement("righyt",      MagicWord.IMG_RIGHT, "right", true),
-    new AutomaticReplacement("rigjt",       MagicWord.IMG_RIGHT, "right", true),
-    new AutomaticReplacement("rignt",       MagicWord.IMG_RIGHT, "right", true),
-    new AutomaticReplacement("rigt",        MagicWord.IMG_RIGHT, "right", true),
-    new AutomaticReplacement("rigth",       MagicWord.IMG_RIGHT, "right", true),
-    new AutomaticReplacement("rigtht",      MagicWord.IMG_RIGHT, "right", true),
-    new AutomaticReplacement("rihgt",       MagicWord.IMG_RIGHT, "right", true),
-    new AutomaticReplacement("roght",       MagicWord.IMG_RIGHT, "right", true),
-    new AutomaticReplacement("rught",       MagicWord.IMG_RIGHT, "rigth", true),
-    new AutomaticReplacement("праворуч",    MagicWord.IMG_RIGHT, "right", true),
-    new AutomaticReplacement("дясно",       MagicWord.IMG_RIGHT, "right", true),
-    new AutomaticReplacement("справа",      MagicWord.IMG_RIGHT, "right", true),
+    new AutomaticReplacement("align=right", ImageMagicWordType.IMG_RIGHT, "right", true),
+    new AutomaticReplacement("align:right", ImageMagicWordType.IMG_RIGHT, "right", true),
+    new AutomaticReplacement("derecha",     ImageMagicWordType.IMG_RIGHT, "right", true),
+    new AutomaticReplacement("desno",       ImageMagicWordType.IMG_RIGHT, "right", true),
+    new AutomaticReplacement("destra",      ImageMagicWordType.IMG_RIGHT, "right", true),
+    new AutomaticReplacement("direita",     ImageMagicWordType.IMG_RIGHT, "right", true),
+    new AutomaticReplacement("dreta",       ImageMagicWordType.IMG_RIGHT, "right", true),
+    new AutomaticReplacement("float right", ImageMagicWordType.IMG_RIGHT, "right", true),
+    new AutomaticReplacement("float=right", ImageMagicWordType.IMG_RIGHT, "right", true),
+    new AutomaticReplacement("float:right", ImageMagicWordType.IMG_RIGHT, "right", true),
+    new AutomaticReplacement("floatright",  ImageMagicWordType.IMG_RIGHT, "right", true),
+    new AutomaticReplacement("ight",        ImageMagicWordType.IMG_RIGHT, "right", true),
+    new AutomaticReplacement("rechts",      ImageMagicWordType.IMG_RIGHT, "right", true),
+    new AutomaticReplacement("reght",       ImageMagicWordType.IMG_RIGHT, "right", true),
+    new AutomaticReplacement("rght",        ImageMagicWordType.IMG_RIGHT, "right", true),
+    new AutomaticReplacement("ribght",      ImageMagicWordType.IMG_RIGHT, "right", true),
+    new AutomaticReplacement("richt",       ImageMagicWordType.IMG_RIGHT, "right", true),
+    new AutomaticReplacement("righ",        ImageMagicWordType.IMG_RIGHT, "right", true),
+    new AutomaticReplacement("righjt",      ImageMagicWordType.IMG_RIGHT, "right", true),
+    new AutomaticReplacement("righr",       ImageMagicWordType.IMG_RIGHT, "right", true),
+    new AutomaticReplacement("righte",      ImageMagicWordType.IMG_RIGHT, "right", true),
+    new AutomaticReplacement("rightg",      ImageMagicWordType.IMG_RIGHT, "right", true),
+    new AutomaticReplacement("rightl",      ImageMagicWordType.IMG_RIGHT, "right", true),
+    new AutomaticReplacement("rightt",      ImageMagicWordType.IMG_RIGHT, "right", true),
+    new AutomaticReplacement("rightx",      ImageMagicWordType.IMG_RIGHT, "right", true),
+    new AutomaticReplacement("righty",      ImageMagicWordType.IMG_RIGHT, "right", true),
+    new AutomaticReplacement("right1",      ImageMagicWordType.IMG_RIGHT, "right", true),
+    new AutomaticReplacement("right2",      ImageMagicWordType.IMG_RIGHT, "right", true),
+    new AutomaticReplacement("righy",       ImageMagicWordType.IMG_RIGHT, "right", true),
+    new AutomaticReplacement("righyt",      ImageMagicWordType.IMG_RIGHT, "right", true),
+    new AutomaticReplacement("rigjt",       ImageMagicWordType.IMG_RIGHT, "right", true),
+    new AutomaticReplacement("rignt",       ImageMagicWordType.IMG_RIGHT, "right", true),
+    new AutomaticReplacement("rigt",        ImageMagicWordType.IMG_RIGHT, "right", true),
+    new AutomaticReplacement("rigth",       ImageMagicWordType.IMG_RIGHT, "right", true),
+    new AutomaticReplacement("rigtht",      ImageMagicWordType.IMG_RIGHT, "right", true),
+    new AutomaticReplacement("rihgt",       ImageMagicWordType.IMG_RIGHT, "right", true),
+    new AutomaticReplacement("roght",       ImageMagicWordType.IMG_RIGHT, "right", true),
+    new AutomaticReplacement("rught",       ImageMagicWordType.IMG_RIGHT, "right", true),
+    new AutomaticReplacement("праворуч",    ImageMagicWordType.IMG_RIGHT, "right", true),
+    new AutomaticReplacement("дясно",       ImageMagicWordType.IMG_RIGHT, "right", true),
+    new AutomaticReplacement("справа",      ImageMagicWordType.IMG_RIGHT, "right", true),
 
     // IMG_THUMBNAIL
-    new AutomaticReplacement("mini",              MagicWord.IMG_THUMBNAIL, "thumb", true), // de
-    new AutomaticReplacement("miniatur",          MagicWord.IMG_THUMBNAIL, "thumb", true), // de
-    new AutomaticReplacement("miniatura",         MagicWord.IMG_THUMBNAIL, "thumb", true),
-    new AutomaticReplacement("miniaturadeimagen", MagicWord.IMG_THUMBNAIL, "thumb", true),
-    new AutomaticReplacement("miniature",         MagicWord.IMG_THUMBNAIL, "thumb", true),
-    new AutomaticReplacement("miniatyr",          MagicWord.IMG_THUMBNAIL, "thumb", true),
-    new AutomaticReplacement("thum",              MagicWord.IMG_THUMBNAIL, "thumb", true),
-    new AutomaticReplacement("thump",             MagicWord.IMG_THUMBNAIL, "thumb", true),
-    new AutomaticReplacement("tuhmb",             MagicWord.IMG_THUMBNAIL, "thumb", true),
-    new AutomaticReplacement("tumb",              MagicWord.IMG_THUMBNAIL, "thumb", true),
-    new AutomaticReplacement("мини",              MagicWord.IMG_THUMBNAIL, "thumb", true),
-    new AutomaticReplacement("ממוזער",              MagicWord.IMG_THUMBNAIL, "thumb", true),
+    new AutomaticReplacement("mini",              ImageMagicWordType.IMG_THUMBNAIL, "thumb", true), // de
+    new AutomaticReplacement("miniatur",          ImageMagicWordType.IMG_THUMBNAIL, "thumb", true), // de
+    new AutomaticReplacement("miniatura",         ImageMagicWordType.IMG_THUMBNAIL, "thumb", true),
+    new AutomaticReplacement("miniaturadeimagen", ImageMagicWordType.IMG_THUMBNAIL, "thumb", true),
+    new AutomaticReplacement("miniature",         ImageMagicWordType.IMG_THUMBNAIL, "thumb", true),
+    new AutomaticReplacement("miniatyr",          ImageMagicWordType.IMG_THUMBNAIL, "thumb", true),
+    new AutomaticReplacement("thum",              ImageMagicWordType.IMG_THUMBNAIL, "thumb", true),
+    new AutomaticReplacement("thump",             ImageMagicWordType.IMG_THUMBNAIL, "thumb", true),
+    new AutomaticReplacement("tuhmb",             ImageMagicWordType.IMG_THUMBNAIL, "thumb", true),
+    new AutomaticReplacement("tumb",              ImageMagicWordType.IMG_THUMBNAIL, "thumb", true),
+    new AutomaticReplacement("мини",              ImageMagicWordType.IMG_THUMBNAIL, "thumb", true),
+    new AutomaticReplacement("ממוזער",              ImageMagicWordType.IMG_THUMBNAIL, "thumb", true),
 
     // IMG_UPRIGHT
-    new AutomaticReplacement("align=upright", MagicWord.IMG_UPRIGHT, "upright", true),
-    new AutomaticReplacement("hochkant",      MagicWord.IMG_UPRIGHT, "upright", true), // de
-    new AutomaticReplacement("uoright",       MagicWord.IMG_UPRIGHT, "upright", true),
-    new AutomaticReplacement("upleft",        MagicWord.IMG_UPRIGHT, "upright", true),
-    new AutomaticReplacement("uprighht",      MagicWord.IMG_UPRIGHT, "upright", true),
-    new AutomaticReplacement("uprigt",        MagicWord.IMG_UPRIGHT, "upright", true),
-    new AutomaticReplacement("uprigth",       MagicWord.IMG_UPRIGHT, "upright", true),
-    new AutomaticReplacement("uptight",       MagicWord.IMG_UPRIGHT, "upright", true),
+    new AutomaticReplacement("align=upright", ImageMagicWordType.IMG_UPRIGHT, "upright", true),
+    new AutomaticReplacement("hochkant",      ImageMagicWordType.IMG_UPRIGHT, "upright", true), // de
+    new AutomaticReplacement("uoright",       ImageMagicWordType.IMG_UPRIGHT, "upright", true),
+    new AutomaticReplacement("upleft",        ImageMagicWordType.IMG_UPRIGHT, "upright", true),
+    new AutomaticReplacement("uprighht",      ImageMagicWordType.IMG_UPRIGHT, "upright", true),
+    new AutomaticReplacement("uprigt",        ImageMagicWordType.IMG_UPRIGHT, "upright", true),
+    new AutomaticReplacement("uprigth",       ImageMagicWordType.IMG_UPRIGHT, "upright", true),
+    new AutomaticReplacement("uptight",       ImageMagicWordType.IMG_UPRIGHT, "upright", true),
   };
 
   /**
@@ -622,7 +624,7 @@ public class CheckErrorAlgorithm534 extends CheckErrorAlgorithmBase {
     ArrayList<Parameter> paramsFormat = new ArrayList<>();
     ArrayList<Parameter> paramsHAlign = new ArrayList<>();
     ArrayList<Parameter> paramsVAlign = new ArrayList<>();
-    HashMap<String, ArrayList<Parameter>> paramsOther = new HashMap<>();
+    HashMap<MagicWordType, ArrayList<Parameter>> paramsOther = new HashMap<>();
     for (PageElementImage image : images) {
 
       // Analyze all parameters of the image
@@ -640,51 +642,51 @@ public class CheckErrorAlgorithm534 extends CheckErrorAlgorithmBase {
               // NO magic word: description or unknown
               params.add(param);
             } else {
-              String mwName = mw.getName();
+              MagicWordType mwType = mw.getType();
               // Format option: one of border and/or frameless, frame, thumb (or thumbnail)
-              if (MagicWord.IMG_BORDER.equals(mwName)) {
+              if (ImageMagicWordType.IMG_BORDER.equals(mwType)) {
                 if (paramsFormat.isEmpty() ||
-                    !MagicWord.IMG_FRAMELESS.equals(paramsFormat.get(0).getMagicWord().getName())) {
+                    !ImageMagicWordType.IMG_FRAMELESS.equals(paramsFormat.get(0).getMagicWord().getType())) {
                   paramsFormat.add(param);
                 }
               } else
-              if (MagicWord.IMG_FRAMELESS.equals(mwName)) {
+              if (ImageMagicWordType.IMG_FRAMELESS.equals(mwType)) {
                 if (paramsFormat.isEmpty() ||
-                    !MagicWord.IMG_BORDER.equals(paramsFormat.get(0).getMagicWord().getName())) {
+                    !ImageMagicWordType.IMG_BORDER.equals(paramsFormat.get(0).getMagicWord().getType())) {
                   paramsFormat.add(param);
                 }
               } else
-              if (MagicWord.IMG_FRAMED.equals(mwName) ||
-                  MagicWord.IMG_THUMBNAIL.equals(mwName)) {
+              if (ImageMagicWordType.IMG_FRAMED.equals(mwType) ||
+                  ImageMagicWordType.IMG_THUMBNAIL.equals(mwType)) {
                 if (paramsFormat.isEmpty() ||
-                    !MagicWord.IMG_BORDER.equals(paramsFormat.get(paramsFormat.size() - 1).getMagicWord().getName())) {
+                    !ImageMagicWordType.IMG_BORDER.equals(paramsFormat.get(paramsFormat.size() - 1).getMagicWord().getType())) {
                   paramsFormat.add(param);
                 } else {
                   paramsFormat.add(paramsFormat.size() - 1, param);
                 }
               } else
               // Horizontal alignment option: one of left, right, center, none
-              if (MagicWord.IMG_CENTER.equals(mwName) ||
-                  MagicWord.IMG_LEFT.equals(mwName) ||
-                  MagicWord.IMG_NONE.equals(mwName) ||
-                  MagicWord.IMG_RIGHT.equals(mwName)) {
+              if (ImageMagicWordType.IMG_CENTER.equals(mwType) ||
+                  ImageMagicWordType.IMG_LEFT.equals(mwType) ||
+                  ImageMagicWordType.IMG_NONE.equals(mwType) ||
+                  ImageMagicWordType.IMG_RIGHT.equals(mwType)) {
                 paramsHAlign.add(param);
               } else
               // Vertical alignment option: one of baseline, sub, super, top, text-top, middle, bottom, text-bottom
-              if (MagicWord.IMG_BASELINE.equals(mwName) ||
-                  MagicWord.IMG_BOTTOM.equals(mwName) ||
-                  MagicWord.IMG_MIDDLE.equals(mwName) ||
-                  MagicWord.IMG_SUB.equals(mwName) ||
-                  MagicWord.IMG_SUPER.equals(mwName) ||
-                  MagicWord.IMG_TEXT_BOTTOM.equals(mwName) ||
-                  MagicWord.IMG_TEXT_TOP.equals(mwName) ||
-                  MagicWord.IMG_TOP.equals(mwName)) {
+              if (ImageMagicWordType.IMG_BASELINE.equals(mwType) ||
+                  ImageMagicWordType.IMG_BOTTOM.equals(mwType) ||
+                  ImageMagicWordType.IMG_MIDDLE.equals(mwType) ||
+                  ImageMagicWordType.IMG_SUB.equals(mwType) ||
+                  ImageMagicWordType.IMG_SUPER.equals(mwType) ||
+                  ImageMagicWordType.IMG_TEXT_BOTTOM.equals(mwType) ||
+                  ImageMagicWordType.IMG_TEXT_TOP.equals(mwType) ||
+                  ImageMagicWordType.IMG_TOP.equals(mwType)) {
                 paramsVAlign.add(param);
               } else {
-                ArrayList<Parameter> tmpList = paramsOther.get(mwName);
+                ArrayList<Parameter> tmpList = paramsOther.get(mwType);
                 if (tmpList == null) {
                   tmpList = new ArrayList<>();
-                  paramsOther.put(mwName, tmpList);
+                  paramsOther.put(mwType, tmpList);
                 }
                 tmpList.add(param);
               }
@@ -850,13 +852,13 @@ public class CheckErrorAlgorithm534 extends CheckErrorAlgorithmBase {
     boolean useComments = false;
     Parameter paramKeep = params.get(0);
     if (paramKeep.getMagicWord() != null) {
-      if (StringUtils.equals(MagicWord.IMG_ALT, paramKeep.getMagicWord().getName())) {
+      if (ImageMagicWordType.IMG_ALT.equals(paramKeep.getMagicWord().getType())) {
         keepFirst = false;
         useComments = true;
         paramKeep = params.get(params.size() - 1);
-      } else if (StringUtils.equals(MagicWord.IMG_UPRIGHT, paramKeep.getMagicWord().getName())) {
+      } else if (ImageMagicWordType.IMG_UPRIGHT.equals(paramKeep.getMagicWord().getType())) {
         keepFirst = false; // Due to MW processing upright parameters in a different order: T216003
-      } else if (StringUtils.equals(MagicWord.IMG_WIDTH, paramKeep.getMagicWord().getName())) {
+      } else if (ImageMagicWordType.IMG_WIDTH.equals(paramKeep.getMagicWord().getType())) {
         keepFirst = false; // Tests show that the last size is kept, not the first one
       }
     }

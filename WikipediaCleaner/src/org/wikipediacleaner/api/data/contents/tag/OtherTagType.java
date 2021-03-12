@@ -39,7 +39,7 @@ public class OtherTagType extends TagType {
   }
 
   /**
-   * Create a WIKI tag type.
+   * Create a tag type.
    * 
    * @param name Normalized name of the tag type.
    * @param openPossible True if the tag can be open.

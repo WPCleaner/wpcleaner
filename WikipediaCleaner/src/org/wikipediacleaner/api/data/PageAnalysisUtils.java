@@ -17,6 +17,8 @@ import org.wikipediacleaner.api.data.PageElementTemplate.Parameter;
 import org.wikipediacleaner.api.data.analysis.InternalLinkNotification;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
 import org.wikipediacleaner.api.data.contents.comment.ContentsComment;
+import org.wikipediacleaner.api.data.contents.magicword.MagicWord;
+import org.wikipediacleaner.api.data.contents.magicword.SimpleMagicWordType;
 
 
 /**
@@ -80,7 +82,7 @@ public class PageAnalysisUtils {
         WPCConfigurationStringList.COMMENTS_FOR_DAB_LINK);
     List<String[]> templatesIgnoreDab = wpcConfiguration.getStringArrayList(
         WPCConfigurationStringList.TEMPLATES_IGNORE_DAB);
-    MagicWord redirect = pageAnalysis.getWikiConfiguration().getMagicWordByName(MagicWord.REDIRECT);
+    MagicWord redirect = pageAnalysis.getWikiConfiguration().getMagicWordByType(SimpleMagicWordType.REDIRECT);
     String contents = pageAnalysis.getContents();
     int maxSize = contents.length();
     boolean firstLink = true;

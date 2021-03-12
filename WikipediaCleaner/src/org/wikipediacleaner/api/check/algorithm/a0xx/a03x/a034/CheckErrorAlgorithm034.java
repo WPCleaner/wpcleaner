@@ -12,7 +12,6 @@ import java.util.Collection;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.CheckErrorResult.ErrorLevel;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase;
-import org.wikipediacleaner.api.data.MagicWord;
 import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageElementFunction;
@@ -20,6 +19,10 @@ import org.wikipediacleaner.api.data.PageElementMagicWord;
 import org.wikipediacleaner.api.data.PageElementParameter;
 import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
+import org.wikipediacleaner.api.data.contents.magicword.FunctionMagicWordType;
+import org.wikipediacleaner.api.data.contents.magicword.MagicWord;
+import org.wikipediacleaner.api.data.contents.magicword.MagicWordType;
+import org.wikipediacleaner.api.data.contents.magicword.SimpleMagicWordType;
 import org.wikipediacleaner.api.data.contents.tag.WikiTagType;
 
 
@@ -65,11 +68,11 @@ public class CheckErrorAlgorithm034 extends CheckErrorAlgorithmBase {
         PageElementMagicWord magicWord = analysis.isInMagicWord(currentIndex);
         if ((magicWord != null) && (magicWord.getBeginIndex() == currentIndex)) {
           nextIndex = magicWord.getEndIndex();
-          String magicWordName = magicWord.getMagicWord().getName();
-          if (MagicWord.FORCE_TOC.equals(magicWordName) ||
-              MagicWord.INDEX.equals(magicWordName) ||
-              MagicWord.NO_INDEX.equals(magicWordName) ||
-              MagicWord.NO_NEW_SECTION_LINK.equals(magicWordName)) {
+          MagicWordType magicWordType = magicWord.getMagicWord().getType();
+          if (SimpleMagicWordType.FORCE_TOC.equals(magicWordType) ||
+              SimpleMagicWordType.INDEX.equals(magicWordType) ||
+              SimpleMagicWordType.NO_INDEX.equals(magicWordType) ||
+              SimpleMagicWordType.NO_NEW_SECTION_LINK.equals(magicWordType)) {
             result = true;
             if (errors == null) {
               return true;
@@ -134,24 +137,24 @@ public class CheckErrorAlgorithm034 extends CheckErrorAlgorithmBase {
           if ((function != null) &&
               (function.getBeginIndex() == currentIndex)) {
             MagicWord magicWord = function.getMagicWord();
-            String magicWordName = magicWord.getName();
+            MagicWordType magicWordType = magicWord.getType();
             boolean isOk = false;
             ErrorLevel errorLevel = ErrorLevel.ERROR;
-            if (MagicWord.DEFAULT_SORT.equals(magicWordName) ||
-                MagicWord.FORMAT_NUM.equals(magicWordName) ||
-                MagicWord.DISPLAY_TITLE.equals(magicWordName)) {
+            if (FunctionMagicWordType.DEFAULT_SORT.equals(magicWordType) ||
+                FunctionMagicWordType.FORMAT_NUM.equals(magicWordType) ||
+                FunctionMagicWordType.DISPLAY_TITLE.equals(magicWordType)) {
               isOk = true;
             }
             if (!isOk &&
-                MagicWord.TAG.equals(magicWordName) &&
+                FunctionMagicWordType.TAG.equals(magicWordType) &&
                 (function.getParameterCount() > 0) &&
                 (WikiTagType.REF.isPossibleName(function.getParameterValue(0)))) {
               isOk = true;
             }
             if (!isOk) {
-              if (MagicWord.INVOKE.equals(magicWordName) ||
-                  MagicWord.SAFE_SUBST.equals(magicWordName) ||
-                  MagicWord.SUBST.equals(magicWordName)) {
+              if (FunctionMagicWordType.INVOKE.equals(magicWordType) ||
+                  FunctionMagicWordType.SAFE_SUBST.equals(magicWordType) ||
+                  FunctionMagicWordType.SUBST.equals(magicWordType)) {
                 errorLevel = ErrorLevel.WARNING;
               }
             }
@@ -163,10 +166,10 @@ public class CheckErrorAlgorithm034 extends CheckErrorAlgorithmBase {
               }
               CheckErrorResult errorResult = createCheckErrorResult(
                   analysis, function.getBeginIndex(), function.getEndIndex(), errorLevel);
-              if (MagicWord.PAGE_NAME.equals(magicWordName)) {
+              if (FunctionMagicWordType.PAGE_NAME.equals(magicWordType)) {
                 errorResult.addReplacement(page.getTitle());
               }
-              if (MagicWord.IF_EXPR.equals(magicWordName)) {
+              if (FunctionMagicWordType.IF_EXPR.equals(magicWordType)) {
                 for (int param = 1; param < function.getParameterCount(); param++) {
                   errorResult.addReplacement(function.getParameterValue(param));
                 }
@@ -175,9 +178,9 @@ public class CheckErrorAlgorithm034 extends CheckErrorAlgorithmBase {
                   (analysis.isInTag(currentIndex, WikiTagType.INCLUDEONLY) == null) &&
                   (analysis.isInTag(currentIndex, WikiTagType.REF) == null) &&
                   (analysis.isInTag(currentIndex, WikiTagType.TIMELINE) == null) &&
-                  (!MagicWord.INVOKE.equals(magicWordName)) &&
-                  (!MagicWord.SUBST.equals(magicWordName)) &&
-                  (!MagicWord.SAFE_SUBST.equals(magicWordName))) {
+                  (!FunctionMagicWordType.INVOKE.equals(magicWordType)) &&
+                  (!FunctionMagicWordType.SUBST.equals(magicWordType)) &&
+                  (!FunctionMagicWordType.SAFE_SUBST.equals(magicWordType))) {
                 errorResult.addReplacement(
                     "{{subst:" +
                     contents.substring(function.getBeginIndex() + 2, function.getEndIndex()));

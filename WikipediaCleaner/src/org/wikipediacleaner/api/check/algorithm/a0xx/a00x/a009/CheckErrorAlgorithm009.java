@@ -19,12 +19,12 @@ import org.wikipediacleaner.api.algorithm.AlgorithmParameterElement;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase;
 import org.wikipediacleaner.api.configuration.WPCConfiguration;
-import org.wikipediacleaner.api.data.MagicWord;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageElementCategory;
 import org.wikipediacleaner.api.data.PageElementFunction;
 import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
+import org.wikipediacleaner.api.data.contents.magicword.FunctionMagicWordType;
 import org.wikipediacleaner.i18n.GT;
 
 
@@ -129,7 +129,7 @@ public class CheckErrorAlgorithm009 extends CheckErrorAlgorithmBase {
             replacement.append("\n\n");
             beginIndex = tmpIndex;
           } else if ((function != null) && (function.getEndIndex() == tmpIndex)) {
-            if (function.getMagicWord().isPossibleAlias(MagicWord.DEFAULT_SORT)) {
+            if (function.getMagicWord().isPossibleAlias(FunctionMagicWordType.DEFAULT_SORT.getName())) {
               tmpIndex = function.getBeginIndex();
               while ((tmpIndex > 0) &&
                      ((contents.charAt(tmpIndex - 1) == ' ') ||

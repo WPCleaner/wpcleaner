@@ -16,6 +16,8 @@ import java.util.Map;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
+import org.wikipediacleaner.api.data.contents.magicword.MagicWord;
+import org.wikipediacleaner.api.data.contents.magicword.SimpleMagicWordType;
 
 /**
  * Utility class to handle redirect status and data for a page.
@@ -187,7 +189,7 @@ public class PageRedirect {
         // Removing REDIRECT
         if (ok) {
           ok = false;
-          MagicWord magicRedirect = page.getWikipedia().getWikiConfiguration().getMagicWordByName(MagicWord.REDIRECT);
+          MagicWord magicRedirect = page.getWikipedia().getWikiConfiguration().getMagicWordByType(SimpleMagicWordType.REDIRECT);
           if ((magicRedirect != null) && (magicRedirect.getAliases() != null)) {
             int length = 0;
             for (String magic : magicRedirect.getAliases()) {

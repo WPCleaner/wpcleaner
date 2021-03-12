@@ -21,7 +21,6 @@ import org.wikipediacleaner.api.configuration.WPCConfiguration;
 import org.wikipediacleaner.api.constants.ArticleUrl;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.DataManager;
-import org.wikipediacleaner.api.data.MagicWord;
 import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageElementExternalLink;
@@ -30,6 +29,7 @@ import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.PageElementImage.Parameter;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
 import org.wikipediacleaner.api.data.contents.ilink.InternalLinkBuilder;
+import org.wikipediacleaner.api.data.contents.magicword.ImageMagicWordType;
 import org.wikipediacleaner.api.data.contents.tag.HtmlTagType;
 import org.wikipediacleaner.api.data.contents.tag.WikiTagType;
 import org.wikipediacleaner.api.data.contents.template.TemplateBuilder;
@@ -187,7 +187,7 @@ public class CheckErrorAlgorithm090 extends CheckErrorAlgorithmBase {
     if (image == null) {
       return false;
     }
-    Parameter imgParameter = image.getParameter(MagicWord.IMG_LINK);
+    Parameter imgParameter = image.getParameter(ImageMagicWordType.IMG_LINK);
     if (imgParameter == null) {
       return false;
     }

@@ -16,11 +16,12 @@ import org.wikipediacleaner.api.algorithm.AlgorithmParameterElement;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.HtmlCharacters;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase;
-import org.wikipediacleaner.api.data.MagicWord;
 import org.wikipediacleaner.api.data.PageElementCategory;
 import org.wikipediacleaner.api.data.PageElementInternalLink;
 import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
+import org.wikipediacleaner.api.data.contents.magicword.MagicWord;
+import org.wikipediacleaner.api.data.contents.magicword.SimpleMagicWordType;
 import org.wikipediacleaner.gui.swing.component.MWPane;
 import org.wikipediacleaner.i18n.GT;
 import org.wikipediacleaner.utils.string.CharacterUtils;
@@ -222,7 +223,7 @@ public class CheckErrorAlgorithm016 extends CheckErrorAlgorithmBase {
               while ((tmpIndex > 0) && CharacterUtils.isWhitespace(contents.charAt(tmpIndex - 1))) {
                 tmpIndex--;
               }
-              MagicWord magicWord = analysis.getWikiConfiguration().getMagicWordByName(MagicWord.REDIRECT);
+              MagicWord magicWord = analysis.getWikiConfiguration().getMagicWordByType(SimpleMagicWordType.REDIRECT);
               if (magicWord.isPossibleAlias(contents.substring(0, tmpIndex).trim())) {
                 okInRedirect = true;
               }

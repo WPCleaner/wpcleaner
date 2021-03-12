@@ -30,9 +30,10 @@ import org.wikipediacleaner.api.configuration.WPCConfiguration;
 import org.wikipediacleaner.api.configuration.WPCConfigurationString;
 import org.wikipediacleaner.api.configuration.WikiConfiguration;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
-import org.wikipediacleaner.api.data.MagicWord;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
+import org.wikipediacleaner.api.data.contents.magicword.FunctionMagicWordType;
+import org.wikipediacleaner.api.data.contents.magicword.MagicWord;
 import org.wikipediacleaner.gui.swing.component.MWPane;
 import org.wikipediacleaner.i18n.GT;
 
@@ -652,7 +653,7 @@ public abstract class CheckErrorAlgorithmBase extends AlgorithmBase implements C
 
     // Get DEFAULTSORT name
     String defaultSort = "DEFAULTSORT:";
-    MagicWord magicWord = analysis.getWikiConfiguration().getMagicWordByName(MagicWord.DEFAULT_SORT);
+    MagicWord magicWord = analysis.getWikiConfiguration().getMagicWordByType(FunctionMagicWordType.DEFAULT_SORT);
     if (magicWord != null) {
       String value = analysis.getWPCConfiguration().getString(WPCConfigurationString.DEFAULTSORT);
       if ((value != null) && (value.trim().length() > 0)) {

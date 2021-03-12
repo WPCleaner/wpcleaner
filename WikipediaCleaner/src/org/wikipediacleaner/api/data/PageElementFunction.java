@@ -14,6 +14,7 @@ import java.util.List;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.contents.comment.ContainerComment;
 import org.wikipediacleaner.api.data.contents.comment.ContentsComment;
+import org.wikipediacleaner.api.data.contents.magicword.MagicWord;
 import org.wikipediacleaner.api.data.contents.tag.WikiTagType;
 
 

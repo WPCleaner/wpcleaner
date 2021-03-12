@@ -14,9 +14,10 @@ import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.SimpleAction;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
-import org.wikipediacleaner.api.data.MagicWord;
 import org.wikipediacleaner.api.data.PageElementImage;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
+import org.wikipediacleaner.api.data.contents.magicword.ImageMagicWordType;
+import org.wikipediacleaner.api.data.contents.magicword.MagicWord;
 import org.wikipediacleaner.gui.swing.action.ActionExternalViewer;
 import org.wikipediacleaner.i18n.GT;
 import org.wikipediacleaner.utils.StringChecker;
@@ -61,7 +62,7 @@ public class CheckErrorAlgorithm030 extends CheckErrorAlgorithmBase {
 
     boolean result = false;
     EnumWikipedia wiki = analysis.getWikipedia();
-    MagicWord magicWordImgAlt = wiki.getWikiConfiguration().getMagicWordByName(MagicWord.IMG_ALT);
+    MagicWord magicWordImgAlt = wiki.getWikiConfiguration().getMagicWordByType(ImageMagicWordType.IMG_ALT);
     for (PageElementImage image : analysis.getImages()) {
       String description = image.getDescription();
       if ((description == null) || (description.trim().length() == 0)) {

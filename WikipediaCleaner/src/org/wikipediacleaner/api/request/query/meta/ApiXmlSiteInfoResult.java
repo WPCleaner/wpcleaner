@@ -27,9 +27,9 @@ import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.Interwiki;
 import org.wikipediacleaner.api.data.Language;
 import org.wikipediacleaner.api.data.LinterCategory;
-import org.wikipediacleaner.api.data.MagicWord;
 import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.SpecialPage;
+import org.wikipediacleaner.api.data.contents.magicword.MagicWord;
 import org.wikipediacleaner.api.request.ApiRequest;
 import org.wikipediacleaner.api.request.ApiXmlResult;
 
@@ -146,7 +146,7 @@ public class ApiXmlSiteInfoResult extends ApiXmlResult implements ApiSiteInfoRes
       wikiConfiguration.setInterwikis(interwikis);
 
       // Retrieve magic words
-      Map<String, MagicWord> magicWords = new HashMap<>();
+      List<MagicWord> magicWords = new ArrayList<>();
       xpa = XPathFactory.instance().compile(
           "/api/query/magicwords/magicword", Filters.element());
       results = xpa.evaluate(root);
@@ -165,9 +165,7 @@ public class ApiXmlSiteInfoResult extends ApiXmlResult implements ApiSiteInfoRes
           aliases.add(alias);
         }
         boolean caseSensitive = (currentNode.getAttribute("case-sensitive") != null);
-        magicWords.put(
-            magicWord,
-            new MagicWord(magicWord, aliases, caseSensitive));
+        magicWords.add(new MagicWord(magicWord, aliases, caseSensitive));
       }
       wikiConfiguration.setMagicWords(magicWords);
 

@@ -11,12 +11,12 @@ import java.util.Collection;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase;
-import org.wikipediacleaner.api.data.MagicWord;
 import org.wikipediacleaner.api.data.PageElementExternalLink;
 import org.wikipediacleaner.api.data.PageElementFunction;
 import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.PageElementTemplate.Parameter;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
+import org.wikipediacleaner.api.data.contents.magicword.FunctionMagicWordType;
 import org.wikipediacleaner.api.data.contents.tag.HtmlTagType;
 import org.wikipediacleaner.api.data.contents.tag.WikiTagType;
 import org.wikipediacleaner.api.data.PageElementTitle;
@@ -101,7 +101,7 @@ public class CheckErrorAlgorithm105 extends CheckErrorAlgorithmBase {
         PageElementFunction function = analysis.isInFunction(currentIndex);
         if ((function != null) &&
             (function.getMagicWord() != null) &&
-            (MagicWord.TAG.equals(function.getMagicWord().getName()))) {
+            (FunctionMagicWordType.TAG.equals(function.getMagicWord().getType()))) {
           int functionIndex = function.getBeginIndex();
           while ((functionIndex < contents.length()) &&
                  (contents.charAt(functionIndex) == '{')) {

@@ -11,10 +11,11 @@ import java.util.Collection;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase;
-import org.wikipediacleaner.api.data.MagicWord;
 import org.wikipediacleaner.api.data.PageElementCategory;
 import org.wikipediacleaner.api.data.PageElementInternalLink;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
+import org.wikipediacleaner.api.data.contents.magicword.MagicWord;
+import org.wikipediacleaner.api.data.contents.magicword.SimpleMagicWordType;
 
 
 /**
@@ -44,7 +45,7 @@ public class CheckErrorAlgorithm036 extends CheckErrorAlgorithmBase {
     }
 
     // Retrieve magic word for redirects
-    MagicWord redirect = analysis.getWikiConfiguration().getMagicWordByName(MagicWord.REDIRECT);
+    MagicWord redirect = analysis.getWikiConfiguration().getMagicWordByType(SimpleMagicWordType.REDIRECT);
     if ((redirect == null) ||
         (redirect.getAliases() == null) ||
         (redirect.getAliases().isEmpty())) {

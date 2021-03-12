@@ -12,7 +12,6 @@ import java.util.Collection;
 import org.apache.commons.lang3.StringUtils;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase;
-import org.wikipediacleaner.api.data.MagicWord;
 import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.PageElement;
 import org.wikipediacleaner.api.data.PageElementCategory;
@@ -26,6 +25,7 @@ import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
 import org.wikipediacleaner.api.data.contents.ContentsUtil;
 import org.wikipediacleaner.api.data.contents.ilink.InternalLinkBuilder;
+import org.wikipediacleaner.api.data.contents.magicword.ImageMagicWordType;
 import org.wikipediacleaner.api.data.contents.tag.HtmlTagType;
 import org.wikipediacleaner.api.data.contents.tag.WikiTagType;
 
@@ -248,7 +248,7 @@ public class CheckErrorAlgorithm010 extends CheckErrorAlgorithmBase {
       }
       String modifiedAlt = null;
       String alt = StringUtils.EMPTY;
-      PageElementImage.Parameter altParam = image.getParameter(MagicWord.IMG_ALT);
+      PageElementImage.Parameter altParam = image.getParameter(ImageMagicWordType.IMG_ALT);
       if (altParam != null) {
         int equalIndex = altParam.getContents().indexOf('=');
         if (equalIndex > 0) {

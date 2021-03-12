@@ -10,14 +10,15 @@ package org.wikipediacleaner.api.constants;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.wikipediacleaner.api.data.Interwiki;
 import org.wikipediacleaner.api.data.Language;
-import org.wikipediacleaner.api.data.MagicWord;
 import org.wikipediacleaner.api.data.Namespace;
+import org.wikipediacleaner.api.data.contents.magicword.FunctionMagicWordType;
+import org.wikipediacleaner.api.data.contents.magicword.ImageMagicWordType;
+import org.wikipediacleaner.api.data.contents.magicword.MagicWord;
+import org.wikipediacleaner.api.data.contents.magicword.SimpleMagicWordType;
 
 /**
  * Utility class for initializing wiki configuration
@@ -61,14 +62,14 @@ public class EnumWikipediaUtils {
     wiki.getWikiConfiguration().setLanguages(languages);
 
     // Configure magic words
-    Map<String, MagicWord> magicWords = new HashMap<>();
-    magicWords.put(MagicWord.PAGE_NAME, new MagicWord(MagicWord.PAGE_NAME, Collections.singletonList("PAGENAME"), true));
-    magicWords.put(MagicWord.REDIRECT, new MagicWord(MagicWord.REDIRECT, Collections.singletonList("#REDIRECT"), false));
+    List<MagicWord> magicWords = new ArrayList<>();
+    magicWords.add(new MagicWord(FunctionMagicWordType.PAGE_NAME, Collections.singletonList("PAGENAME"), true));
+    magicWords.add(new MagicWord(SimpleMagicWordType.REDIRECT, Collections.singletonList("#REDIRECT"), false));
     List<String> thumbAliases = new ArrayList<>();
     thumbAliases.add("thumb");
     thumbAliases.add("thumbnail");
-    magicWords.put(MagicWord.IMG_THUMBNAIL, new MagicWord(MagicWord.IMG_THUMBNAIL, thumbAliases, true));
-    magicWords.put(MagicWord.TOC,  new MagicWord(MagicWord.TOC, Collections.singletonList("__TOC__"), false));
+    magicWords.add(new MagicWord(ImageMagicWordType.IMG_THUMBNAIL, thumbAliases, true));
+    magicWords.add(new MagicWord(SimpleMagicWordType.TOC, Collections.singletonList("__TOC__"), false));
     wiki.getWikiConfiguration().setMagicWords(magicWords);
 
     return wiki;
@@ -108,14 +109,14 @@ public class EnumWikipediaUtils {
     wiki.getWikiConfiguration().setLanguages(languages);
 
     // Configure magic words
-    Map<String, MagicWord> magicWords = new HashMap<>();
-    magicWords.put(MagicWord.PAGE_NAME, new MagicWord(MagicWord.PAGE_NAME, Collections.singletonList("PAGENAME"), true));
-    magicWords.put(MagicWord.REDIRECT, new MagicWord(MagicWord.REDIRECT, Collections.singletonList("#REDIRECT"), false));
+    List<MagicWord> magicWords = new ArrayList<>();
+    magicWords.add(new MagicWord(FunctionMagicWordType.PAGE_NAME, Collections.singletonList("PAGENAME"), true));
+    magicWords.add(new MagicWord(SimpleMagicWordType.REDIRECT, Collections.singletonList("#REDIRECT"), false));
     List<String> thumbAliases = new ArrayList<>();
     thumbAliases.add("thumb");
     thumbAliases.add("thumbnail");
-    magicWords.put(MagicWord.IMG_THUMBNAIL, new MagicWord(MagicWord.IMG_THUMBNAIL, thumbAliases, true));
-    magicWords.put(MagicWord.TOC,  new MagicWord(MagicWord.TOC, Collections.singletonList("__TOC__"), false));
+    magicWords.add(new MagicWord(ImageMagicWordType.IMG_THUMBNAIL, thumbAliases, true));
+    magicWords.add(new MagicWord(SimpleMagicWordType.TOC, Collections.singletonList("__TOC__"), false));
     wiki.getWikiConfiguration().setMagicWords(magicWords);
 
     return wiki;
