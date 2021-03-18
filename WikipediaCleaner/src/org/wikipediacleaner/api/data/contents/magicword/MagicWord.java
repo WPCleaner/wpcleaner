@@ -8,6 +8,8 @@
 package org.wikipediacleaner.api.data.contents.magicword;
 
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 
 /**
@@ -89,13 +91,14 @@ public class MagicWord implements Comparable<MagicWord> {
     return isPossibleAlias(text, true);
   }
 
+  private static final Pattern PATTERN_PLACEHOLDER = Pattern.compile("\\$1");
+
   /**
    * @param text Text to check.
    * @param acceptEmpty True if an empty value for the placeholder is ok.
    * @return Flag indicating if the text is a possible alias.
    */
   public boolean isPossibleAlias(String text, boolean acceptEmpty) {
-    String pattern = acceptEmpty ? ".*" : ".+";
     if (text == null) {
       return false;
     }
@@ -106,7 +109,9 @@ public class MagicWord implements Comparable<MagicWord> {
     }
     for (String alias : aliases) {
       if (alias.contains("$1")) {
-        if (text.matches(alias.replaceAll("\\$1", pattern))) {
+        String pattern = Matcher.quoteReplacement(type.getPattern(acceptEmpty));
+        String aliasReplaced = PATTERN_PLACEHOLDER.matcher(alias).replaceAll(pattern);
+        if (text.matches(aliasReplaced)) {
           return true;
         }
       } else if (alias.equals(text)) {

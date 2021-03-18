@@ -8,7 +8,13 @@
 
 package org.wikipediacleaner.api.data.contents.magicword;
 
+import java.util.HashSet;
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 /**
  * Definition of an image magic word type.
@@ -72,12 +78,24 @@ public class ImageMagicWordType extends MagicWordType {
   public static final ImageMagicWordType IMG_THUMBNAIL = createImageType(ID_IMG_THUMBNAIL);
   public static final ImageMagicWordType IMG_TOP = createImageType(ID_IMG_TOP);
   public static final ImageMagicWordType IMG_UPRIGHT = createImageType(ID_IMG_UPRIGHT);
-  public static final ImageMagicWordType IMG_WIDTH = createImageType(ID_IMG_WIDTH);
+  public static final ImageMagicWordType IMG_WIDTH = createImageTypeWithPattern(ID_IMG_WIDTH, "(?:\\d*|\\d*x\\d+) *", "(?:\\d+|\\d*x\\d+) *");
   public static final ImageMagicWordType TIMED_MEDIA_ENDTIME = createImageType(ID_TIMED_MEDIA_ENDTIME);
   public static final ImageMagicWordType TIMED_MEDIA_NOICON = createImageType(ID_TIMED_MEDIA_NOICON);
   public static final ImageMagicWordType TIMED_MEDIA_NOPLAYER = createImageType(ID_TIMED_MEDIA_NOPLAYER);
   public static final ImageMagicWordType TIMED_MEDIA_STARTTIME = createImageType(ID_TIMED_MEDIA_STARTTIME);
   public static final ImageMagicWordType TIMED_MEDIA_THUMBTIME = createImageType(ID_TIMED_MEDIA_THUMBTIME);
+
+  public static final Set<ImageMagicWordType> FORMAT_OPTIONS = Stream
+      .of(IMG_BORDER, IMG_FRAMELESS, IMG_FRAMED, IMG_THUMBNAIL)
+      .collect(Collectors.toCollection(HashSet::new));
+
+  public static final Set<ImageMagicWordType> HORIZONTAL_ALIGN_OPTIONS = Stream
+      .of(IMG_CENTER, IMG_LEFT, IMG_NONE, IMG_RIGHT)
+      .collect(Collectors.toCollection(HashSet::new));
+
+  public static final Set<ImageMagicWordType> VERTICAL_ALIGN_OPTIONS = Stream
+      .of(IMG_BASELINE, IMG_BOTTOM, IMG_MIDDLE, IMG_SUB, IMG_SUPER, IMG_TEXT_BOTTOM, IMG_TEXT_TOP, IMG_TOP)
+      .collect(Collectors.toCollection(HashSet::new));
 
   /**
    * Register magic word types.
@@ -93,8 +111,24 @@ public class ImageMagicWordType extends MagicWordType {
    * @return Magic word type.
    */
   private static ImageMagicWordType createImageType(@Nonnull String name) {
-    return new ImageMagicWordType(name);
+    return new ImageMagicWordType(name, null, null);
   }
+
+  /**
+   * Create an image magic word type.
+   * 
+   * @param name Name of the magic word type.
+   * @return Magic word type.
+   */
+  private static ImageMagicWordType createImageTypeWithPattern(
+      @Nonnull String name,
+      @Nonnull String patternEmpty,
+      @Nonnull String patternNotEmpty) {
+    return new ImageMagicWordType(name, patternEmpty, patternNotEmpty);
+  }
+
+  @Nullable private final String patternEmpty;
+  @Nullable private final String patternNotEmpty;
 
   /**
    * Create an image magic word type.
@@ -102,8 +136,24 @@ public class ImageMagicWordType extends MagicWordType {
    * @param name Name of the magic word type.
    */
   private ImageMagicWordType(
-      @Nonnull String name) {
+      @Nonnull String name,
+      @Nullable String patternEmpty,
+      @Nullable String patternNotEmpty) {
     super(name, true, false, false, false);
+    this.patternEmpty = patternEmpty;
+    this.patternNotEmpty = patternNotEmpty;
   }
 
+  /**
+   * @param acceptEmpty True if empty placeholder is OK.
+   * @return Pattern for placeholder.
+   */
+  @Override
+  public String getPattern(final boolean acceptEmpty) {
+    String pattern = acceptEmpty ? patternEmpty : patternNotEmpty;
+    if (pattern != null) {
+      return pattern;
+    }
+    return super.getPattern(acceptEmpty);
+  }
 }

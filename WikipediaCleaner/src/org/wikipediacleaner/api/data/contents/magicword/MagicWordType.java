@@ -92,6 +92,14 @@ public abstract class MagicWordType {
   }
 
   /**
+   * @param acceptEmpty True if empty placeholder is OK.
+   * @return Pattern for placeholder.
+   */
+  public String getPattern(boolean acceptEmpty) {
+    return acceptEmpty ? ".*" : ".+";
+  }
+
+  /**
    * @return True if the magic word type can be used in images.
    */
   public boolean isImage() {
