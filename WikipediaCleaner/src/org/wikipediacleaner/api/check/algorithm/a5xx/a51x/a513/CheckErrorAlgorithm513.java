@@ -108,10 +108,18 @@ public class CheckErrorAlgorithm513 extends CheckErrorAlgorithmBase {
 
     // Analyze each template
     List<PageElementTemplate> articleTemplates = analysis.getTemplates();
-    if ((articleTemplates != null) &&
-        ((iLinks != null) && !iLinks.isEmpty())) {
-      for (PageElementTemplate template : articleTemplates) {
-        result |= analyzeTemplate(template, analysis, errors);
+    if ((articleTemplates != null) && !articleTemplates.isEmpty()) {
+      boolean analyzeTemplates = false;
+      if ((iLinks != null) && !iLinks.isEmpty()) {
+        analyzeTemplates = true;
+      }
+      if (!templates.isEmpty()) {
+        analyzeTemplates = true;
+      }
+      if (analyzeTemplates) {
+        for (PageElementTemplate template : articleTemplates) {
+          result |= analyzeTemplate(template, analysis, errors);
+        }
       }
     }
     return result;
