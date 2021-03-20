@@ -42,6 +42,7 @@ public abstract class MagicWordType {
 
   static {
     // Explicit registration of magic word types to avoid using MagicWordType before registration
+    FunctionMagicWordType.registerMagicWordTypes();
     ImageMagicWordType.registerMagicWordTypes();
     SimpleMagicWordType.registerMagicWordTypes();
   }
