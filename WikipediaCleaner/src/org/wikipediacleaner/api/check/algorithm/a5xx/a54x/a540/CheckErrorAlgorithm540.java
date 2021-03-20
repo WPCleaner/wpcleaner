@@ -900,7 +900,7 @@ public class CheckErrorAlgorithm540 extends CheckErrorAlgorithmBase {
             } else if (!Character.isWhitespace(tmpChar)) {
               // Do not check elsewhere for punctuation, as it may be a separation between a title and something else
               if ((tmpIndex + 1 < tmpEndIndex) ||
-                  (",.!?:;".indexOf(tmpChar) < 0)) {
+                  (",.!?:;…".indexOf(tmpChar) < 0)) {
                 clean = false;
               }
             } else {

@@ -5,7 +5,7 @@ Set Namespaces 0
 FixLintError missing-end-tag 532 540
 
 DoTasks _Common_Other.txt
-Set Namespaces 4 6 12 14 100 102 104
+Set Namespaces 2 4 6 12 14 100 102 104
 FixLintError missing-end-tag 532 540
 
 DoTasks _Common_Talk.txt
