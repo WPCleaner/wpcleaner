@@ -17,8 +17,8 @@
 ]>
 <ISBNRangeMessage>
   <MessageSource>International ISBN Agency</MessageSource>
-  <MessageSerialNumber>ee6df5d6-e831-4bb6-8384-e469fe7e50e3</MessageSerialNumber>
-  <MessageDate>Mon, 7 Dec 2020 16:33:51 GMT</MessageDate>
+  <MessageSerialNumber>cad9c575-7ca9-46c6-bbd9-1f8b5cfcf780</MessageSerialNumber>
+  <MessageDate>Mon, 8 Mar 2021 18:12:35 GMT</MessageDate>
   <EAN.UCCPrefixes>
     <EAN.UCC>
       <Prefix>978</Prefix>
@@ -257,11 +257,11 @@
           <Length>5</Length>
         </Rule>
         <Rule>
-          <Range>7770000-7776999</Range>
+          <Range>7770000-7782999</Range>
           <Length>7</Length>
         </Rule>
         <Rule>
-          <Range>7777000-7899999</Range>
+          <Range>7783000-7899999</Range>
           <Length>5</Length>
         </Rule>
         <Rule>
@@ -769,7 +769,15 @@
           <Length>3</Length>
         </Rule>
         <Rule>
-          <Range>0400000-0999999</Range>
+          <Range>0400000-0599999</Range>
+          <Length>2</Length>
+        </Rule>
+        <Rule>
+          <Range>0600000-0699999</Range>
+          <Length>5</Length>
+        </Rule>
+        <Rule>
+          <Range>0700000-0999999</Range>
           <Length>2</Length>
         </Rule>
         <Rule>
@@ -1199,11 +1207,11 @@
           <Length>3</Length>
         </Rule>
         <Rule>
-          <Range>4000000-6499999</Range>
+          <Range>4000000-5999999</Range>
           <Length>0</Length>
         </Rule>
         <Rule>
-          <Range>6500000-7999999</Range>
+          <Range>6000000-7999999</Range>
           <Length>4</Length>
         </Rule>
         <Rule>
@@ -1277,6 +1285,40 @@
         <Rule>
           <Range>8000000-9999999</Range>
           <Length>0</Length>
+        </Rule>
+      </Rules>
+    </Group>
+    <Group>
+      <Prefix>978-626</Prefix>
+      <Agency>Taiwan</Agency>
+      <Rules>
+        <Rule>
+          <Range>0000000-0499999</Range>
+          <Length>2</Length>
+        </Rule>
+        <Rule>
+          <Range>0500000-2999999</Range>
+          <Length>0</Length>
+        </Rule>
+        <Rule>
+          <Range>3000000-4999999</Range>
+          <Length>3</Length>
+        </Rule>
+        <Rule>
+          <Range>5000000-6999999</Range>
+          <Length>0</Length>
+        </Rule>
+        <Rule>
+          <Range>7000000-7999999</Range>
+          <Length>4</Length>
+        </Rule>
+        <Rule>
+          <Range>8000000-9499999</Range>
+          <Length>0</Length>
+        </Rule>
+        <Rule>
+          <Range>9500000-9999999</Range>
+          <Length>5</Length>
         </Rule>
       </Rules>
     </Group>
@@ -7069,6 +7111,20 @@
       </Rules>
     </Group>
     <Group>
+      <Prefix>978-99987</Prefix>
+      <Agency>Luxembourg</Agency>
+      <Rules>
+        <Rule>
+          <Range>0000000-8499999</Range>
+          <Length>0</Length>
+        </Rule>
+        <Rule>
+          <Range>8500000-9999999</Range>
+          <Length>3</Length>
+        </Rule>
+      </Rules>
+    </Group>
+    <Group>
       <Prefix>979-10</Prefix>
       <Agency>France</Agency>
       <Rules>
@@ -7171,11 +7227,11 @@
           <Length>0</Length>
         </Rule>
         <Rule>
-          <Range>5500000-6999999</Range>
+          <Range>5500000-7499999</Range>
           <Length>4</Length>
         </Rule>
         <Rule>
-          <Range>7000000-9849999</Range>
+          <Range>7500000-9849999</Range>
           <Length>0</Length>
         </Rule>
         <Rule>
