@@ -8,10 +8,11 @@
 package org.wikipediacleaner.api.check.algorithm.a5xx.a53x.a532;
 
 import java.util.Collection;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase;
@@ -57,46 +58,25 @@ public class CheckErrorAlgorithm532 extends CheckErrorAlgorithmBase {
   }
 
   /** List of tags to be verified. */
-  private final static Set<TagType> tagTypes;
-  static {
-	Set<TagType> tmpSet = new HashSet<>();
-    tmpSet.add(HtmlTagType.ABBR);
-    tmpSet.add(HtmlTagType.B);
-    tmpSet.add(HtmlTagType.BIG);
-    tmpSet.add(HtmlTagType.BLOCKQUOTE);
-    tmpSet.add(HtmlTagType.CENTER);
-    tmpSet.add(HtmlTagType.CODE);
-    tmpSet.add(HtmlTagType.DIV);
-    tmpSet.add(HtmlTagType.EM);
-    tmpSet.add(HtmlTagType.FONT);
-    tmpSet.add(HtmlTagType.H1);
-    tmpSet.add(HtmlTagType.H2);
-    tmpSet.add(HtmlTagType.H3);
-    tmpSet.add(HtmlTagType.H4);
-    tmpSet.add(HtmlTagType.H5);
-    tmpSet.add(HtmlTagType.H6);
-    tmpSet.add(HtmlTagType.H7);
-    tmpSet.add(HtmlTagType.H8);
-    tmpSet.add(HtmlTagType.H9);
-    tmpSet.add(HtmlTagType.I);
-    tmpSet.add(HtmlTagType.LI);
-    tmpSet.add(HtmlTagType.OL);
-    tmpSet.add(HtmlTagType.P);
-    tmpSet.add(HtmlTagType.S);
-    tmpSet.add(HtmlTagType.SMALL);
-    tmpSet.add(HtmlTagType.SPAN);
-    tmpSet.add(HtmlTagType.STRIKE);
-    tmpSet.add(HtmlTagType.STRONG);
-    tmpSet.add(HtmlTagType.SUB);
-    tmpSet.add(HtmlTagType.SUP);
-    tmpSet.add(HtmlTagType.TABLE);
-    tmpSet.add(HtmlTagType.TD);
-    tmpSet.add(HtmlTagType.TR);
-    tmpSet.add(HtmlTagType.TT);
-    tmpSet.add(HtmlTagType.U);
-    tmpSet.add(HtmlTagType.UL);
-    tagTypes = Collections.unmodifiableSet(tmpSet);
-  }
+  private final static Set<TagType> tagTypes = Stream
+      .of(
+        HtmlTagType.ABBR,
+        HtmlTagType.B, HtmlTagType.BIG, HtmlTagType.BLOCKQUOTE,
+        HtmlTagType.CENTER, HtmlTagType.CODE,
+        HtmlTagType.DIV,
+        HtmlTagType.EM,
+        HtmlTagType.FONT,
+        HtmlTagType.H1, HtmlTagType.H2, HtmlTagType.H3, HtmlTagType.H4, HtmlTagType.H5,
+        HtmlTagType.H6, HtmlTagType.H7, HtmlTagType.H8, HtmlTagType.H9,
+        HtmlTagType.I,
+        HtmlTagType.LI,
+        HtmlTagType.OL,
+        HtmlTagType.P,
+        HtmlTagType.S, HtmlTagType.SMALL, HtmlTagType.SPAN, HtmlTagType.STRIKE,
+        HtmlTagType.STRONG, HtmlTagType.SUB, HtmlTagType.SUP,
+        HtmlTagType.TABLE, HtmlTagType.TD, HtmlTagType.TR, HtmlTagType.TT,
+        HtmlTagType.U, HtmlTagType.UL)
+      .collect(Collectors.toCollection(HashSet::new));
 
   /**
    * Analyze a page to check if errors are present.
@@ -117,9 +97,13 @@ public class CheckErrorAlgorithm532 extends CheckErrorAlgorithmBase {
     // Analyze each tag
     List<PageElementTag> tags = analysis.getTags();
     boolean result = false;
+    PageElementTag previousTag = null;
     for (PageElementTag tag : tags) {
       if (!tag.isComplete() && !tag.isEndTag()) {
-        result |= reportIncompleteTag(analysis, tag, errors, onlyAutomatic);
+        result |= reportIncompleteTag(analysis, tag, previousTag, errors, onlyAutomatic);
+        previousTag = tag;
+      } else {
+        previousTag = null;
       }
     }
 
@@ -134,12 +118,13 @@ public class CheckErrorAlgorithm532 extends CheckErrorAlgorithmBase {
   /**
    * @param analysis Page analysis.
    * @param tag Tag.
+   * @param previousTag Previous tag.
    * @param errors Errors found in the page.
    * @param onlyAutomatic True if analysis could be restricted to errors automatically fixed.
    * @return Flag indicating if the error was found.
    */
   private boolean reportIncompleteTag(
-      PageAnalysis analysis, PageElementTag tag,
+      PageAnalysis analysis, PageElementTag tag, PageElementTag previousTag,
       Collection<CheckErrorResult> errors, boolean onlyAutomatic) {
     boolean hasBeenReported = false;
 
@@ -196,6 +181,11 @@ public class CheckErrorAlgorithm532 extends CheckErrorAlgorithmBase {
     // Tag in the last line
     if (!hasBeenReported) {
       hasBeenReported = analyzeLastLine(analysis, tag, errors);
+    }
+
+    // Tag pairs
+    if (!hasBeenReported) {
+      hasBeenReported = analyzePair(analysis, tag, previousTag, errors);
     }
 
     // Default reporting
@@ -925,6 +915,95 @@ public class CheckErrorAlgorithm532 extends CheckErrorAlgorithmBase {
       }
     }
     return false;
+  }
+
+  /**
+   * @param analysis Page analysis.
+   * @param tag Tag.
+   * @param previousTag Previous tag.
+   * @param errors Errors found in the page.
+   * @return True if the error has been reported.
+   */
+  private boolean analyzePair(
+      PageAnalysis analysis,
+      PageElementTag tag,
+      PageElementTag previousTag,
+      Collection<CheckErrorResult> errors) {
+
+    // Check previous tag
+    if ((previousTag == null) || (previousTag.getType() != tag.getType())) {
+      return false;
+    }
+
+    // Check type of tag
+    // BIG, SMALL: too problematic
+    if (!HtmlTagType.CODE.equals(tag.getType()) &&
+        !HtmlTagType.EM.equals(tag.getType()) &&
+        !HtmlTagType.FONT.equals(tag.getType()) &&
+        !HtmlTagType.S.equals(tag.getType()) &&
+        !HtmlTagType.STRIKE.equals(tag.getType()) &&
+        !HtmlTagType.STRONG.equals(tag.getType()) &&
+        !HtmlTagType.SUB.equals(tag.getType()) &&
+        !HtmlTagType.SUP.equals(tag.getType()) &&
+        !HtmlTagType.TT.equals(tag.getType()) &&
+        !HtmlTagType.U.equals(tag.getType())) {
+      return false;
+    }
+
+    // Check namespace
+    Integer namespace = analysis.getPage().getNamespace();
+    if ((namespace == null) || (namespace.intValue() == Namespace.TEMPLATE)) {
+      return false;
+    }
+
+    // Check what is between the 2 tags
+    String contents = analysis.getContents();
+    for (int index = previousTag.getEndIndex(); index < tag.getBeginIndex(); index++) {
+      if ("\n<>[]{}|".indexOf(contents.charAt(index)) >= 0) {
+        return false;
+      }
+    }
+
+    // Check that the tag has no parameters
+    boolean automatic = (tag.getParametersCount() == 0);
+
+    // Check what is before the previous tag
+    int index = previousTag.getBeginIndex();
+    while (automatic && (index > 0)) {
+      index--;
+      char previousChar = contents.charAt(index);
+      if (previousChar == '\n') {
+        break;
+      } else if (previousChar == '>') {
+        PageElementTag tmpTag = analysis.isInTag(index);
+        if ((tmpTag != null) && (tmpTag.getType() == tag.getType())) {
+          automatic = false;
+        }
+      }
+    }
+
+    // Check what is after the tag
+    index = tag.getEndIndex();
+    while (automatic && (index < contents.length())) {
+      char nextChar = contents.charAt(index);
+      if (nextChar == '\n') {
+        break;
+      } else if (nextChar == '<') {
+        PageElementTag tmpTag = analysis.isInTag(index);
+        if ((tmpTag != null) && (tmpTag.getType() == tag.getType())) {
+          automatic = false;
+        }
+      }
+      index++;
+    }
+
+    // Report error
+    CheckErrorResult errorResult = createCheckErrorResult(analysis, tag.getBeginIndex(), tag.getEndIndex());
+    errorResult.addReplacement(
+        TagBuilder.from(tag.getType(), TagFormat.CLOSE).toString(),
+        automatic);
+    errors.add(errorResult);
+    return true;
   }
 
   /**
