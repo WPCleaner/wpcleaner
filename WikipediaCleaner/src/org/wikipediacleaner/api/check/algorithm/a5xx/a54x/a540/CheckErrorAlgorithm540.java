@@ -189,10 +189,12 @@ public class CheckErrorAlgorithm540 extends CheckErrorAlgorithmBase {
             template.getBeginIndex(), template.getEndIndex());
         for (int paramNum = 0; paramNum < template.getParameterCount(); paramNum++) {
           Parameter param = template.getParameter(paramNum);
+          int areaBegin = param.getBeginIndex();
+          int areaEnd = param.getEndIndex();
           shouldContinue |= analyzeCorrectArea(
               elements, reportElements,
               param.getBeginIndex(), param.getEndIndex(),
-              param.getBeginIndex(), param.getEndIndex());
+              areaBegin, areaEnd);
         }
       }
 
@@ -521,10 +523,33 @@ public class CheckErrorAlgorithm540 extends CheckErrorAlgorithmBase {
         PageElementTemplate.Parameter templateParam = (PageElementTemplate.Parameter) surroundingElement;
         PageElementTemplate template = analysis.isInTemplate(templateParam.getValueStartIndex());
         // TODO: See if area can be reduced on the parameter value, but see problems with {{shy}} on enWP for example
+        int areaBegin = template.getBeginIndex();
+        int areaEnd = template.getEndIndex();
+        PageElement block = analysis.isInParagraph(areaBegin);
+        if (block == null) {
+          block = analysis.isInListItem(areaBegin);
+        }
+        if (block != null) {
+          PageElementFormattingAnalysis prefix = PageElementFormattingAnalysis.analyzeArea(elements, block.getBeginIndex(), areaBegin);
+          if (prefix.getBoldCount() + prefix.getItalicCount() > 0) {
+            areaBegin = block.getBeginIndex();
+          }
+        }
+        block = analysis.isInParagraph(areaEnd);
+        if (block == null) {
+          block = analysis.isInListItem(areaEnd);
+        }
+        if (block != null) {
+          PageElementFormattingAnalysis prefix = PageElementFormattingAnalysis.analyzeArea(elements, areaEnd, block.getEndIndex());
+          if (prefix.getBoldCount() + prefix.getItalicCount() > 0) {
+            areaEnd = block.getEndIndex();
+          }
+        }
+
         if (reportFormattingElement(
             analysis, elements, element, errors,
             templateParam.getValueStartIndex(), templateParam.getEndIndex(),
-            template.getBeginIndex(), template.getEndIndex(),
+            areaBegin, areaEnd,
             !StringUtils.isEmpty(templateParam.getName()), false, false, true, true)) {
           return;
         }

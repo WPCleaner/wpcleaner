@@ -1,7 +1,7 @@
 DoTasks _Common.txt
 Set Namespaces 0
 
-Set Prefix [[User:WikiCleanerBot#T7|Bot_T7_Special:LintError/missing-end-tag]]
+Set Prefix [[User:WikiCleanerBot#T10|Bot_T10_Special:LintError/misnested-tag]]
 Set Configuration MaxLintErrors 100000
-FixDump C:\Users\Nicolas\Downloads\enwiki-$-pages-articles.xml.bz2 532 540
-# FixLintError missing-end-tag 532 540
+# FixDump C:\Users\Nicolas\Downloads\enwiki-$-pages-articles.xml.bz2 539
+FixLintError misnested-tag 532 539 540
