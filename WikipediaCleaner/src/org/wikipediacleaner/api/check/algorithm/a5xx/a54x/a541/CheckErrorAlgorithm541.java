@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.wikipediacleaner.api.API;
 import org.wikipediacleaner.api.APIException;
 import org.wikipediacleaner.api.APIFactory;
@@ -105,6 +106,8 @@ public class CheckErrorAlgorithm541 extends CheckErrorAlgorithmBase {
         CheckErrorResult errorResult = null;
         if (HtmlTagType.CENTER.equals(tag.getType())) {
           errorResult = analyzeCenterTag(analysis, tag);
+        } else if (HtmlTagType.FONT.equals(tag.getType())) {
+          errorResult = analyzeFontTag(analysis, tag);
         } else if (HtmlTagType.STRIKE.equals(tag.getType())) {
           errorResult = analyzeStrikeTag(analysis, tag);
         } else if (HtmlTagType.TT.equals(tag.getType())) {
@@ -119,6 +122,54 @@ public class CheckErrorAlgorithm541 extends CheckErrorAlgorithmBase {
     }
 
     return true;
+  }
+
+  private CheckErrorResult analyzeFontTag(
+      PageAnalysis analysis, PageElementTag tag) {
+    
+    if (!tag.isComplete() || tag.isFullTag()) {
+      return null;
+    }
+
+    // Check tag parameters
+    String color = null;
+    for (int paramNum = 0; paramNum < tag.getParametersCount(); paramNum++) {
+      PageElementTag.Parameter param = tag.getParameter(paramNum);
+      if (StringUtils.equals(param.getName(), "color")) {
+        color = param.getTrimmedValue();
+      } else if (StringUtils.equals(param.getName(), "style")) {
+        String style = param.getTrimmedValue();
+        if (style != null) {
+          String[] elements = style.split(";");
+          for (String element : elements) {
+            int colonIndex = element.indexOf(':');
+            if (colonIndex > 0) {
+              String elementName = element.substring(0, colonIndex);
+              if (StringUtils.equals(elementName, "color")) {
+                color = element.substring(colonIndex + 1);
+              } else {
+                return null;
+              }
+            }
+          }
+        }
+      } else {
+        return null;
+      }
+    }
+    if (color == null) {
+      return null;
+    }
+
+    // Suggest replacement
+    CheckErrorResult errorResult = createCheckErrorResult(
+        analysis, tag.getCompleteBeginIndex(), tag.getCompleteEndIndex());
+    replaceTag(
+        analysis, errorResult,
+        tag, HtmlTagType.SPAN,
+        "style", String.format("color: %s;", color),
+        null, false);
+    return errorResult;
   }
 
   /**
