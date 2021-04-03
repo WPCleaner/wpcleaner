@@ -1,0 +1,14 @@
+Set Prefix [[Spécial:LintErrors/obsolete-tag]]
+Set Configuration MaxLintErrors 100000
+DoTasks _Common.txt
+Set Namespaces 0
+Set RangeBegin Allied
+FixLintError obsolete-tag 541
+
+DoTasks _Common_Other.txt
+Set Namespaces 4 6 12 14 100 102 104
+# FixLintError obsolete-tag 541
+
+DoTasks _Common_Talk.txt
+Set Namespaces 1 3 5 7 9 11 13 15 101 103 105 829 2301 2303
+# FixLintError obsolete-tag 541

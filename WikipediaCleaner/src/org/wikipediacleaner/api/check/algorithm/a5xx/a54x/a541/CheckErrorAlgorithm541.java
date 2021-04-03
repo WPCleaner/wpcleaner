@@ -132,11 +132,16 @@ public class CheckErrorAlgorithm541 extends CheckErrorAlgorithmBase {
     }
 
     // Check tag parameters
-    String color = null;
+    boolean automatic = true;
+    StringBuilder styleValue = new StringBuilder();
     for (int paramNum = 0; paramNum < tag.getParametersCount(); paramNum++) {
       PageElementTag.Parameter param = tag.getParameter(paramNum);
       if (StringUtils.equals(param.getName(), "color")) {
-        color = param.getTrimmedValue();
+        styleValue.append(String.format("color: %s;", param.getTrimmedValue()));
+      } else if (StringUtils.equals(param.getName(), "face")) {
+        styleValue.append(String.format("font-family: %s;", param.getTrimmedValue()));
+      } else if (StringUtils.equals(param.getName(), "size")) {
+        styleValue.append(String.format("font-size: %s;",  param.getTrimmedValue()));
       } else if (StringUtils.equals(param.getName(), "style")) {
         String style = param.getTrimmedValue();
         if (style != null) {
@@ -146,19 +151,44 @@ public class CheckErrorAlgorithm541 extends CheckErrorAlgorithmBase {
             if (colonIndex > 0) {
               String elementName = element.substring(0, colonIndex);
               if (StringUtils.equals(elementName, "color")) {
-                color = element.substring(colonIndex + 1);
+                styleValue.append(String.format("color: %s;", element.substring(colonIndex + 1)));
+              } else if (StringUtils.equals(elementName, "font-family")) {
+                styleValue.append(String.format("font-family: %s;", element.substring(colonIndex + 1)));
+              } else if (StringUtils.equals(elementName, "font-size")) {
+                styleValue.append(String.format("font-size: %s;", element.substring(colonIndex + 1)));
               } else {
-                return null;
+                automatic = false;
               }
             }
           }
         }
       } else {
-        return null;
+        automatic = false;
       }
     }
-    if (color == null) {
+    if (styleValue.length() == 0) {
       return null;
+    }
+
+    // Analyze surrounding span tag
+    PageElementTag spanTag = analysis.getSurroundingTag(HtmlTagType.SPAN, tag.getBeginIndex());
+    if ((spanTag != null) &&
+        (spanTag.getValueBeginIndex() == tag.getCompleteBeginIndex()) &&
+        (spanTag.getValueEndIndex() == tag.getCompleteEndIndex())) {
+      CheckErrorResult errorResult = createCheckErrorResult(
+          analysis, spanTag.getCompleteBeginIndex(), spanTag.getCompleteEndIndex());
+      return errorResult;
+    }
+
+    // Analyze surrounding table cell
+    PageElementTable table = analysis.isInTable(tag.getBeginIndex());
+    if (table != null) {
+      PageElementTable.TableCell cell = table.getCellAtIndex(tag.getBeginIndex());
+      if (cell != null) {
+        CheckErrorResult errorResult = createCheckErrorResult(
+            analysis, cell.getBeginIndex(), cell.getEndIndex());
+        return errorResult;
+      }
     }
 
     // Suggest replacement
@@ -167,8 +197,8 @@ public class CheckErrorAlgorithm541 extends CheckErrorAlgorithmBase {
     replaceTag(
         analysis, errorResult,
         tag, HtmlTagType.SPAN,
-        "style", String.format("color: %s;", color),
-        null, false);
+        "style", styleValue.toString(),
+        null, automatic);
     return errorResult;
   }
 
