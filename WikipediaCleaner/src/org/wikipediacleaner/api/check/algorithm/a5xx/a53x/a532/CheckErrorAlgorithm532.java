@@ -1138,7 +1138,9 @@ public class CheckErrorAlgorithm532 extends CheckErrorAlgorithmBase {
                   severalPreviousTag = true;
                 }
               } else {
-                otherUnclosedTag = true;
+                if (!tmpTag.getType().isOpenPossible()) {
+                  otherUnclosedTag = true;
+                }
               }
             }
             tmpIndex = tmpTag.getBeginIndex();
