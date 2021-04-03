@@ -124,6 +124,11 @@ public class CheckErrorAlgorithm541 extends CheckErrorAlgorithmBase {
     return true;
   }
 
+  /**
+   * @param analysis Page analysis.
+   * @param tag Font tag.
+   * @return Error for the font tag.
+   */
   private CheckErrorResult analyzeFontTag(
       PageAnalysis analysis, PageElementTag tag) {
     
@@ -133,6 +138,11 @@ public class CheckErrorAlgorithm541 extends CheckErrorAlgorithmBase {
 
     // Check tag parameters
     boolean automatic = true;
+    if ((analysis.getPage() != null) &&
+        (analysis.getPage().getNamespace() != null) &&
+        (!analysis.getPage().getNamespace().equals(Namespace.MAIN))) {
+      automatic = false;
+    }
     StringBuilder styleValue = new StringBuilder();
     for (int paramNum = 0; paramNum < tag.getParametersCount(); paramNum++) {
       PageElementTag.Parameter param = tag.getParameter(paramNum);
