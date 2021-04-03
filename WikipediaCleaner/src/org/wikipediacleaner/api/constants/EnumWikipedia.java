@@ -111,6 +111,7 @@ public enum EnumWikipedia {
   TR(new Wikipedia("tr", "Turkish Wikipedia")),
   UK(new Wikipedia("uk", "Ukrainian Wikipedia")),
   UR(new Wikipedia("ur", "Urdu Wikipedia", ComponentOrientation.RIGHT_TO_LEFT)),
+  VEC(new Wikipedia("vec", "Wikipedia Vèneta")),
   VI(new Wikipedia("vi", "Vietnamese Wikipedia")),
   YI(new Wikipedia("yi", "Yiddish Wikipedia", ComponentOrientation.RIGHT_TO_LEFT)),
   ZH(new Wikipedia("zh", "维基百科")),
