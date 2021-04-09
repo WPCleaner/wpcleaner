@@ -2,7 +2,6 @@ Set Prefix [[Spécial:LintErrors/obsolete-tag]]
 Set Configuration MaxLintErrors 100000
 DoTasks _Common.txt
 Set Namespaces 0
-Set RangeBegin Allied
 FixLintError obsolete-tag 541
 
 DoTasks _Common_Other.txt
