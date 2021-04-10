@@ -257,51 +257,74 @@ public class CheckErrorAlgorithm534 extends CheckErrorAlgorithmBase {
     }
 
     // Check when last parameter is not empty
-    for (int numParam = 0; numParam < params.size(); numParam++) {
+    for (int numParam = 0; numParam < params.size() - 1; numParam++) {
       param = params.get(numParam);
       beginIndex = image.getBeginIndex() + param.getBeginOffset();
       endIndex = image.getBeginIndex() + param.getEndOffset();
-      if (numParam == params.size() - 1) {
-        CheckErrorResult errorResult = createCheckErrorResult(
-            analysis, beginIndex, endIndex, ErrorLevel.CORRECT);
-        errors.add(errorResult);
-      } else {
-        hasContents = false;
-        for (int index = beginIndex; (index < endIndex) && !hasContents; index++) {
-          if (contents.charAt(index) != ' ') {
-            hasContents = true;
-          }
+      hasContents = false;
+      for (int index = beginIndex; (index < endIndex) && !hasContents; index++) {
+        if (contents.charAt(index) != ' ') {
+          hasContents = true;
         }
-        CheckErrorResult errorResult = createCheckErrorResult(
-            analysis, beginIndex - 1, endIndex);
-        if (!hasContents) {
-          PageElementTemplate template = analysis.isInTemplate(beginIndex);
-          if ((template != null) && (template.getBeginIndex() > image.getBeginIndex())) {
-            safeEmpty = false;
-          }
-          PageElementParameter parameter = analysis.isInParameter(beginIndex);
-          if ((parameter != null) && (parameter.getBeginIndex() > image.getBeginIndex())) {
-            safeEmpty = false;
-          }
-          errorResult.addReplacement("", safeEmpty);
-        } else {
-          AutomaticReplacement replacement = AutomaticReplacement.suggestReplacement(
-              analysis.getWikiConfiguration(),
-              param, image.getParameters());
-          if (replacement != null) {
-            String text = replacement.targetText;
-            if ((text != null) && !text.isEmpty()) {
-              errorResult.addReplacement("|" + replacement.targetText, safe && replacement.automatic);
-            } else {
-              errorResult.addReplacement("", safe && replacement.automatic);
-            }
-          }
-        }
-        errors.add(errorResult);
       }
+      CheckErrorResult errorResult = createCheckErrorResult(
+          analysis, beginIndex - 1, endIndex);
+      if (!hasContents) {
+        PageElementTemplate template = analysis.isInTemplate(beginIndex);
+        if ((template != null) && (template.getBeginIndex() > image.getBeginIndex())) {
+          safeEmpty = false;
+        }
+        PageElementParameter parameter = analysis.isInParameter(beginIndex);
+        if ((parameter != null) && (parameter.getBeginIndex() > image.getBeginIndex())) {
+          safeEmpty = false;
+        }
+        errorResult.addReplacement("", safeEmpty);
+      } else if (isImageNameInParameter(image, param)) {
+        errorResult.addReplacement("", safe);
+      } else {
+        AutomaticReplacement replacement = AutomaticReplacement.suggestReplacement(
+            analysis.getWikiConfiguration(),
+            param, image.getParameters());
+        if (replacement != null) {
+          String text = replacement.targetText;
+          if ((text != null) && !text.isEmpty()) {
+            errorResult.addReplacement("|" + replacement.targetText, safe && replacement.automatic);
+          } else {
+            errorResult.addReplacement("", safe && replacement.automatic);
+          }
+        }
+      }
+      errors.add(errorResult);
     }
-    
+
+    // Report last parameter as correct
+    param = params.get(params.size() - 1);
+    beginIndex = image.getBeginIndex() + param.getBeginOffset();
+    endIndex = image.getBeginIndex() + param.getEndOffset();
+    CheckErrorResult errorResult = createCheckErrorResult(
+        analysis, beginIndex, endIndex, ErrorLevel.CORRECT);
+    errors.add(errorResult);
+
     return true;
+  }
+
+  /**
+   * @param image Image.
+   * @param param Parameter.
+   * @return True if parameter text is a match with the image name.
+   */
+  private boolean isImageNameInParameter(PageElementImage image, Parameter param) {
+    String imageName = image.getImage();
+    String paramValue = param.getContents();
+    if (StringUtils.equalsIgnoreCase(imageName, paramValue)) {
+      return true;
+    }
+    int colonIndex = imageName.lastIndexOf('.');
+    if ((colonIndex > 0) &&
+        StringUtils.equalsIgnoreCase(imageName.substring(0, colonIndex), paramValue)) {
+      return true;
+    }
+    return false;
   }
 
   /**
