@@ -10,12 +10,15 @@ package org.wikipediacleaner.api.check.algorithm.a0xx.a03x.a035;
 import java.util.Collection;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase;
-import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
 import org.wikipediacleaner.api.data.contents.tag.WikiTagType;
+import org.wikipediacleaner.api.data.contents.tag.gallery.GalleryTag;
+import org.wikipediacleaner.api.data.contents.tag.gallery.GalleryTagAnalyzer;
+import org.wikipediacleaner.api.data.contents.tag.gallery.GalleryTagLine;
 
 
 /**
@@ -44,45 +47,26 @@ public class CheckErrorAlgorithm035 extends CheckErrorAlgorithmBase {
       return false;
     }
 
-    // Retrieve image name space
-    Namespace imageNamespace = analysis.getWikiConfiguration().getNamespace(Namespace.IMAGE);
-
     // Analyze each gallery tag
     List<PageElementTag> galleryTags = analysis.getCompleteTags(WikiTagType.GALLERY);
+    if (galleryTags.isEmpty()) {
+      return false;
+    }
+    GalleryTagAnalyzer analyzer = new GalleryTagAnalyzer(getWikiConfiguration());
     String contents = analysis.getContents();
     boolean result = false;
-    for (PageElementTag galleryTag : galleryTags) {
-      if (galleryTag.getMatchingTag() != null) {
-        PageElementTag endTag = galleryTag.getMatchingTag();
-        int beginIndex = galleryTag.getEndIndex();
-        int tmpIndex = beginIndex;
-        while (tmpIndex <= endTag.getBeginIndex()) {
-          if ((tmpIndex == endTag.getBeginIndex()) ||
-              (contents.charAt(tmpIndex) == '\n')) {
-            String line = contents.substring(beginIndex, tmpIndex).trim();
-            int colonIndex = line.indexOf(':');
-            if ((colonIndex > 0) && (imageNamespace.isPossibleName(line.substring(0, colonIndex)))) {
-              int pipeIndex = line.indexOf('|', colonIndex);
-              boolean description = false;
-              if ((pipeIndex >= 0) && (pipeIndex + 1 < line.length())) {
-                if (line.substring(pipeIndex + 1).trim().length() > 0) {
-                  description = true;
-                }
-              }
-              if (!description) {
-                if (errors == null) {
-                  return true;
-                }
-                result = true;
-
-                CheckErrorResult errorResult = createCheckErrorResult(
-                    analysis, beginIndex, tmpIndex);
-                errors.add(errorResult);
-              }
-            }
-            beginIndex = tmpIndex + 1;
+    for (PageElementTag tag : galleryTags) {
+      GalleryTag galleryTag = analyzer.analyze(tag, contents);
+      for (GalleryTagLine line : galleryTag.getLines()) {
+        if (StringUtils.isEmpty(line.getOptions())) {
+          if (errors == null) {
+            return true;
           }
-          tmpIndex++;
+          result = true;
+
+          CheckErrorResult errorResult = createCheckErrorResult(
+              analysis, line.getBeginIndex(), line.getEndIndex());
+          errors.add(errorResult);
         }
       }
     }
