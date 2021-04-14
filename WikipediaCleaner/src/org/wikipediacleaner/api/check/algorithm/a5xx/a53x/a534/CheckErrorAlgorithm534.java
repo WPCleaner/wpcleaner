@@ -66,7 +66,59 @@ public class CheckErrorAlgorithm534 extends CheckErrorAlgorithmBase {
     }
 
     // Analyze each image
+    boolean result = analyzeImages(analysis, errors);
+
+    // Analyze each gallery tag
+    // TODO: result |= analyzeGalleryTags(analysis, errors);
+
+    return result;
+  }
+
+  /**
+   * Analyze a page to check if errors are present in images.
+   * 
+   * @param analysis Page analysis.
+   * @param errors Errors found in the page.
+   * @return Flag indicating if the error was found.
+   */
+  /*public boolean analyzeGalleryTags(
+      PageAnalysis analysis,
+      Collection<CheckErrorResult> errors) {
+    List<PageElementTag> galleryTags = analysis.getCompleteTags(WikiTagType.GALLERY);
+    if (galleryTags.isEmpty()) {
+      return false;
+    }
+    boolean result = false;
+    GalleryTagAnalyzer analyzer = new GalleryTagAnalyzer(analysis.getWikiConfiguration());
+    String contents = analysis.getContents();
+    for (PageElementTag tag : galleryTags) {
+      GalleryTag galleryTag = analyzer.analyze(tag, contents);
+      for (GalleryTagLine line : galleryTag.getLines()) {
+        if (StringUtils.isNotEmpty(line.getOptions())) {
+          result = true;
+          CheckErrorResult errorResult = createCheckErrorResult(
+              analysis, line.getBeginIndex(), line.getEndIndex(), ErrorLevel.WARNING);
+          errors.add(errorResult);
+        }
+      }
+    }
+    return result;
+  }*/
+
+  /**
+   * Analyze a page to check if errors are present in images.
+   * 
+   * @param analysis Page analysis.
+   * @param errors Errors found in the page.
+   * @return Flag indicating if the error was found.
+   */
+  public boolean analyzeImages(
+      PageAnalysis analysis,
+      Collection<CheckErrorResult> errors) {
     List<PageElementImage> images = analysis.getImages();
+    if (images.isEmpty()) {
+      return false;
+    }
     boolean result = false;
     List<Parameter> params = new ArrayList<>();
     List<Parameter> paramsFormat = new ArrayList<>();
@@ -89,7 +141,6 @@ public class CheckErrorAlgorithm534 extends CheckErrorAlgorithmBase {
         result |= reportMultipleParameters(analysis, errors, image, paramOther, params.isEmpty());
       }
     }
-
     return result;
   }
 
