@@ -20,7 +20,7 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2021-04-08 13:08:40+0000\n"
+"PO-Revision-Date: 2021-04-15 11:23:57+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: French <fr@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -2786,11 +2786,11 @@ msgstr "Liste de suivi"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1880
 msgid "Unformatted list of page names"
-msgstr "Liste non formattée de noms de pages"
+msgstr "Liste non formatée de noms de pages"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1881
 msgid "Internal links in a formatted list"
-msgstr "Liens internes dans une liste formattée"
+msgstr "Liens internes dans une liste formatée"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1884
 msgid "The file must be encoded in UTF-8 to be read correctly."
