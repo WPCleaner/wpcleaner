@@ -88,6 +88,14 @@ public class CharacterUtils {
 
   /**
    * @param character Character to be tested.
+   * @return True if the character is an ASCII letter.
+   */
+  public static boolean isAsciiLetter(char character) {
+    return ((character >= 'a') && (character <= 'z')) || ((character >= 'A') && (character <= 'Z'));
+  }
+
+  /**
+   * @param character Character to be tested.
    * @return True if the character should be considered as a punctuation.
    */
   public static boolean isPunctuation(char character) {

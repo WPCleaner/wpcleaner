@@ -39,6 +39,7 @@ public class PageElementFunction extends PageElement {
     final String name;
     final int nameStartIndex;
     final String valueNotTrimmed;
+    final int valueNotTrimmedStartIndex;
     final String value;
     final int valueStartIndex;
     final boolean correct;
@@ -55,13 +56,14 @@ public class PageElementFunction extends PageElement {
     public Parameter(
         int separatorIndex, String fullText,
         String name, int nameStartIndex,
-        String value, int valueStartIndex,
+        String value, int valueNotTrimmedStartIndex, int valueStartIndex,
         boolean correct) {
       this.separatorIndex = separatorIndex;
       this.fullText = fullText;
       this.name = (name != null) ? name.trim() : null;
       this.nameStartIndex = nameStartIndex;
       this.valueNotTrimmed = value;
+      this.valueNotTrimmedStartIndex = valueNotTrimmedStartIndex;
       this.value = (value != null) ? value.trim() : null;
       this.valueStartIndex = valueStartIndex;
       this.correct = correct;
@@ -388,7 +390,7 @@ public class PageElementFunction extends PageElement {
       }
       parameters.add(new Parameter(
           separatorIndex, parameter,
-          "", offset + spaces, parameter, offset + spaces, correct));
+          "", offset + spaces, parameter, offset, offset + spaces, correct));
     } else {
       int spacesName = 0;
       while ((spacesName < equalIndex) && (Character.isWhitespace(parameter.charAt(spacesName)))) {
@@ -401,7 +403,7 @@ public class PageElementFunction extends PageElement {
       parameters.add(new Parameter(
           separatorIndex, parameter,
           parameter.substring(0, equalIndex), offset + spacesName,
-          parameter.substring(equalIndex + 1), offset + spacesValue,
+          parameter.substring(equalIndex + 1), offset, offset + spacesValue,
           correct));
     }
   }
@@ -495,6 +497,19 @@ public class PageElementFunction extends PageElement {
       return parameters.get(index).value;
     }
     return null;
+  }
+
+  /**
+   * Retrieve parameter value offset.
+   * 
+   * @param index Parameter index.
+   * @return Parameter value offset.
+   */
+  public int getParameterValueNotTrimmedOffset(int index) {
+    if ((index >= 0) && (index < parameters.size())) {
+      return parameters.get(index).valueNotTrimmedStartIndex;
+    }
+    return 0;
   }
 
   /**

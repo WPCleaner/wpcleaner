@@ -284,6 +284,7 @@ public enum HtmlCharacters {
   SYMBOL_DOUBLE_DAGGER(8225, "Dagger", '‡', 135),
   SYMBOL_BULLET(8226, "bull", '•', 149),
   SYMBOL_HORIZONTAL_ELLIPSIS(8230, "hellip", '…', 133),
+  NARROW_NO_BREAK_SPACE(8239, null, '\u202F'),
   SYMBOL_PER_MILLE(8240, "permil", '‰', 137),
   SYMBOL_MINUTES(8242, "prime", '′'),
   SYMBOL_SECONDS(8243, "Prime", '″'),
@@ -437,6 +438,7 @@ public enum HtmlCharacters {
    * @param number Entity number.
    * @param name Entity name.
    * @param value Entity value.
+   * @param replaceNumeric True if numeric entities should be replaced.
    * @param replaceName True if named entities should be replaced.
    */
   HtmlCharacters(

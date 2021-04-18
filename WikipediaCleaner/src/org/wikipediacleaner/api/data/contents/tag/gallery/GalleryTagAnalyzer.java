@@ -25,7 +25,7 @@ public class GalleryTagAnalyzer {
   private final Namespace imageNamespace;
 
   /**
-   * 
+   * @param config Configuration.
    */
   public GalleryTagAnalyzer(@Nonnull WikiConfiguration config) {
     imageNamespace = config.getNamespace(Namespace.IMAGE);
