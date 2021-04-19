@@ -111,6 +111,21 @@ class Formatnum {
       return;
     }
 
+    // Try to remove all trailing extra text
+    if (!isValidFormatnum(analysis, value, beginValue)) {
+      int tmpIndex = value.length();
+      while ((tmpIndex > 0) &&
+             ("0123456789+-'".indexOf(value.charAt(tmpIndex - 1)) < 0)) {
+        tmpIndex--;
+      }
+      if (tmpIndex < value.length()) {
+        suffix = value.substring(tmpIndex) + suffix;
+        endValue += (value.length() - tmpIndex);
+        value = value.substring(0, tmpIndex);
+        automatic = false;
+      }
+    }
+
     // Replace if the new value is valid
     if (isValidFormatnum(analysis, value, beginValue)) {
       String contents = analysis.getContents();
@@ -121,8 +136,6 @@ class Formatnum {
           automatic);
       return;
     }
-
-    // TODO: extra suggestions ?
   }
 
   private static final String WHITESPACE =
