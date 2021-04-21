@@ -267,6 +267,7 @@ public enum HtmlCharacters {
   EN_SPACE(8194, "ensp", '\u2002'),
   EM_SPACE(8195, "emsp", '\u2003'),
   THIN_SPACE(8201, "thinsp", '\u2009'),
+  HAIR_SPACE(8202, "hairsp", '\u200A'),
   ZERO_WIDTH_NON_JOINER(8204, "zwnj", '\u200C'),
   ZERO_WIDTH_JOINER(8205, "zwj", '\u200D'),
   LEFT_TO_RIGHT_MARK(8206, "lrm", '\u200E'),

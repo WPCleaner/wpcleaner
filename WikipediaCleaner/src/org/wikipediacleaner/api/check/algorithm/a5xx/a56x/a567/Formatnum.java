@@ -148,14 +148,16 @@ class Formatnum {
       " \t" +
       HtmlCharacters.NARROW_NO_BREAK_SPACE.getValue() +
       HtmlCharacters.SYMBOL_NON_BREAKING_SPACE.getValue() +
-      HtmlCharacters.THIN_SPACE.getValue();
+      HtmlCharacters.THIN_SPACE.getValue() +
+      HtmlCharacters.HAIR_SPACE.getValue();
   private static final String BEFORE_WHITESPACE =
       "0123456789+-";
   private static final String AFTER_WHITESPACE =
       "0123456789 " +
       HtmlCharacters.NARROW_NO_BREAK_SPACE.getValue() +
       HtmlCharacters.SYMBOL_NON_BREAKING_SPACE.getValue() +
-      HtmlCharacters.THIN_SPACE.getValue();
+      HtmlCharacters.THIN_SPACE.getValue() +
+      HtmlCharacters.HAIR_SPACE.getValue();
 
   /**
    * @return True if whitespace was removed between digits.
