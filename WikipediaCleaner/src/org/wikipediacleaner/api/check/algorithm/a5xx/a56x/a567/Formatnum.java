@@ -18,6 +18,7 @@ import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
 import org.wikipediacleaner.api.data.contents.ContentsUtil;
+import org.wikipediacleaner.api.data.contents.comment.ContentsComment;
 import org.wikipediacleaner.api.data.contents.tag.WikiTagType;
 import org.wikipediacleaner.utils.string.CharacterUtils;
 
@@ -490,7 +491,8 @@ class Formatnum {
       String argument,
       int argumentBeginIndex) {
     // Check optional sign
-    int tmpIndex = ContentsUtil.moveIndexForwardWhileFound(argument, 0, " \n");
+    int tmpIndex = moveIndexForwardWhileFound(
+        analysis, argumentBeginIndex, argument, 0, " \n", true);
     if (tmpIndex >= argument.length()) {
       return true;
     }
@@ -499,21 +501,18 @@ class Formatnum {
     }
 
     // Check digits before comma
-    boolean digits = false;
-    while ((tmpIndex < argument.length()) &&
-           ("0123456789".indexOf(argument.charAt(tmpIndex)) >= 0)) {
-      tmpIndex++;
-      digits = true;
-    }
+    int previousIndex = tmpIndex;
+    tmpIndex = moveIndexForwardWhileFound(
+        analysis, argumentBeginIndex, argument, tmpIndex, "0123456789", false);
+    boolean digits = (tmpIndex > previousIndex);
 
     // Check optional comma and digits after
     if ((tmpIndex < argument.length()) && (argument.charAt(tmpIndex) == '.')) {
-      tmpIndex++;
-      while ((tmpIndex < argument.length()) &&
-            ("0123456789".indexOf(argument.charAt(tmpIndex)) >= 0)) {
-        tmpIndex++;
-        digits = true;
-      }
+      tmpIndex = moveIndexForwardWhileFound(analysis, argumentBeginIndex, argument, tmpIndex, ".", false);
+      previousIndex = tmpIndex;
+      tmpIndex = moveIndexForwardWhileFound(
+          analysis, argumentBeginIndex, argument, tmpIndex, "0123456789", false);
+      digits |= (tmpIndex > previousIndex);
     }
 
     // Check special cases with templates or functions
@@ -547,11 +546,49 @@ class Formatnum {
     }
 
     // Check that we are at the end
-    tmpIndex = ContentsUtil.moveIndexForwardWhileFound(argument, tmpIndex, " \n");
+    tmpIndex = moveIndexForwardWhileFound(
+        analysis, argumentBeginIndex, argument, tmpIndex, " \n", true);
     if (tmpIndex < argument.length()) {
       return false;
     }
 
     return true;
+  }
+
+  /**
+   * Move forward the index in the text while the character at the index is from the given set.
+   * It also handles comments.
+   * 
+   * @param analysis Page analysis.
+   * @param offset Offset of the contents in the page.
+   * @param contents Text to analyze.
+   * @param startIndex Start index.
+   * @param set Set of characters to look for.
+   * @param commentAtStart True if comments at the beginning should be accepted.
+   * @return Minimum value of index (≥ startIndex) with a character not from the given set.
+   *         If all characters after startIndex are from the given set, returns contents.length().
+   */
+  private static int moveIndexForwardWhileFound(
+      PageAnalysis analysis,
+      int offset,
+      String contents,
+      int startIndex,
+      String set,
+      boolean commentAtStart) {
+    int tmpIndex = ContentsUtil.moveIndexForwardWhileFound(contents, startIndex, set);
+    boolean commentFound = false;
+    if ((tmpIndex > startIndex) || commentAtStart) {
+      if ((tmpIndex < contents.length()) && (contents.charAt(tmpIndex) == '<')) {
+        ContentsComment comment = analysis.comments().getBeginsAt(offset + tmpIndex);
+        if (comment != null) {
+          commentFound = true;
+          tmpIndex += comment.getEndIndex() - comment.getBeginIndex();
+        }
+      }
+    }
+    if (commentFound) {
+      tmpIndex = moveIndexForwardWhileFound(analysis, offset, contents, tmpIndex, set, true);
+    }
+    return tmpIndex;
   }
 }
