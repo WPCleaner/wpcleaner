@@ -256,7 +256,8 @@ public class CheckErrorAlgorithm061 extends CheckErrorAlgorithmBase {
     // Check if error should be reported
     if (tmpIndex < contents.length()) {
       char nextChar = contents.charAt(tmpIndex);
-      if (!Character.isWhitespace(nextChar)) {
+      if (!Character.isWhitespace(nextChar) &&
+          ("}".indexOf(nextChar) < 0)) {
         return false;
       }
     }
