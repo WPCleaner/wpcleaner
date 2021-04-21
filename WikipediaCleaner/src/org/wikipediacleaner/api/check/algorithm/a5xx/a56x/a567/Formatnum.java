@@ -116,7 +116,12 @@ class Formatnum {
     if (!isValidFormatnum(analysis, value, beginValue)) {
       int tmpIndex = value.length();
       while ((tmpIndex > 0) &&
-             ("0123456789+-'".indexOf(value.charAt(tmpIndex - 1)) < 0)) {
+             ("0123456789+-".indexOf(value.charAt(tmpIndex - 1)) < 0)) {
+        if ((value.charAt(tmpIndex - 1) == '\'') &&
+            (tmpIndex > 1) &&
+            (value.charAt(tmpIndex - 2) == '\'')) {
+          break;
+        }
         tmpIndex--;
       }
       if (tmpIndex < value.length()) {
