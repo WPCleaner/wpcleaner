@@ -1,3 +1,3 @@
-Set AdditionalAlgorithms 92 565
+Set AdditionalAlgorithms 92 565 567
 Set Configuration TimeBetweenEdit 10
 Set Configuration MaxEditsPerMinute 6

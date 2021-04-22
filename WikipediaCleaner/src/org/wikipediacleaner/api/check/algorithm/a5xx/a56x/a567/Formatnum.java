@@ -336,7 +336,7 @@ class Formatnum {
 
     // Remove leading character
     char firstChar = value.charAt(0);
-    if ("($~〜>≈±".indexOf(firstChar) >= 0) {
+    if ("($~〜>≈±\"".indexOf(firstChar) >= 0) {
       prefix += firstChar;
       value = value.substring(1);
       beginValue++;
@@ -368,7 +368,7 @@ class Formatnum {
 
     // Remove trailing character
     char lastChar = value.charAt(value.length() - 1);
-    if (")%$€£₤?+*:".indexOf(lastChar) >= 0) {
+    if (")%$€£₤?+*:\"".indexOf(lastChar) >= 0) {
       suffix = lastChar + suffix;
       value = value.substring(0, value.length() - 1);
       endValue--;
