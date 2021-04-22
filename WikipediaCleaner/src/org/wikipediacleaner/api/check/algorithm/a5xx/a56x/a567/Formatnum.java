@@ -336,7 +336,7 @@ class Formatnum {
 
     // Remove leading character
     char firstChar = value.charAt(0);
-    if ("($~〜>≈±\"".indexOf(firstChar) >= 0) {
+    if ("($€£₤~〜>≈±\"".indexOf(firstChar) >= 0) {
       prefix += firstChar;
       value = value.substring(1);
       beginValue++;
