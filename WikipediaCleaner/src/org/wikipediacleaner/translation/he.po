@@ -6,6 +6,7 @@
 # Author: Shoham
 # Author: Steeve815
 # Author: YaronSh
+# Author: דגש
 # Author: דגש חזק
 # --
 # This file is distributed under the same license as the wikicleaner package.
@@ -16,7 +17,7 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2021-04-19 11:03:25+0000\n"
+"PO-Revision-Date: 2021-04-26 13:39:04+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Hebrew <he@li.org>\n"
 "MIME-Version: 1.0\n"

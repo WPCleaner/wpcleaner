@@ -7,6 +7,7 @@
 # Author: Fitoschido
 # Author: Fitoschido
 # Author: Ideawipik
+# Author: Juan t2905
 # --
 # This file is distributed under the same license as the wikicleaner package.
 #
@@ -16,7 +17,7 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2021-04-19 11:03:25+0000\n"
+"PO-Revision-Date: 2021-04-26 13:39:03+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Spanish\n"
 "MIME-Version: 1.0\n"
@@ -1782,28 +1783,28 @@ msgstr ""
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a567/CheckErrorAlgorithm567.java:232
 #, java-format
 msgid "Categories listing pages using non-numeric {0} arguments"
-msgstr ""
+msgstr "Categorías que listan las páginas que utilizan argumentos no-numéricos {0}"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a567/CheckErrorAlgorithm567.java:235
 #, java-format
 msgid "Name of a category listing pages using non-numeric {0} arguments"
-msgstr ""
+msgstr "Nombre de una categoría que lista las páginas que utilizan atgumentos no-numéricos {0}"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a567/CheckErrorAlgorithm567.java:239
 msgid "Prefixes that can be safely extracted"
-msgstr ""
+msgstr "Prefijos que se pueden extraer de forma segura"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a567/CheckErrorAlgorithm567.java:242
 msgid "Prefix that can be safely extracted"
-msgstr ""
+msgstr "Prefijos que se pueden extraer de forma segura"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a567/CheckErrorAlgorithm567.java:246
 msgid "Suffixes that can be safely extracted"
-msgstr ""
+msgstr "Sufijos que se pueden extraer de forma segura"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a567/CheckErrorAlgorithm567.java:249
 msgid "Suffix that can be safely extracted"
-msgstr ""
+msgstr "Sufijos que se pueden extraer de forma segura"
 
 #: org/wikipediacleaner/api/configuration/CWConfiguration.java:83
 #, java-format

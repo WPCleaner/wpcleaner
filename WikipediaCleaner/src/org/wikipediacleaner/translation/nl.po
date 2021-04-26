@@ -1,6 +1,7 @@
 # Translation of WPCleaner to Dutch (Nederlands)
 # Exported from translatewiki.net
 #
+# Author: Bas dehaan
 # Author: Dutchy45
 # Author: Xbaked potatox
 # --
@@ -12,7 +13,7 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2021-04-19 11:03:27+0000\n"
+"PO-Revision-Date: 2021-04-26 13:39:06+0000\n"
 "Last-Translator: SubjectIsDead <Unknown>\n"
 "Language-Team: Dutch <nl@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -39,20 +40,20 @@ msgstr "Ook geeft deze uitleg over wat de problemen met deze patronen zijn en ho
 
 #: org/wikipediacleaner/Version.java:35
 msgid "You can help by fixing problems identified by the Linter extension."
-msgstr ""
+msgstr "Je kan helpen bij het oplossen van problemen die zijn gevonden door de Linter plugin."
 
 #: org/wikipediacleaner/Version.java:36
 #, java-format
 msgid "Integration between {0} and the Linter extension is done in the following way:"
-msgstr ""
+msgstr "Intergratie tussen {0} en de Linter plugin is op de volgende manier gedaan:"
 
 #: org/wikipediacleaner/Version.java:38
 msgid "The \"Linter categories\" button in this window lets you retrieve a list of pages detected by Linter for a given type of problem."
-msgstr ""
+msgstr "De \"Linter categorieën\" knop in dit scherm laat je een lijst met pagina's ophalen met een Linter probleem."
 
 #: org/wikipediacleaner/Version.java:39
 msgid "The \"Check article with Linter\" button in the analysis window lets you check the current version of an article against Linter."
-msgstr ""
+msgstr "De \"Check artikel met Linter\" knop op het analyse scherm laat je de huidige versie van het artikel zien met Linter"
 
 #: org/wikipediacleaner/Version.java:40
 #, java-format
