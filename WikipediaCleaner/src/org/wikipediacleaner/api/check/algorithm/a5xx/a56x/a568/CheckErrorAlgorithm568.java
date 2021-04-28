@@ -6,11 +6,14 @@
  */
 
 
-package org.wikipediacleaner.api.check.algorithm.a5xx.a56x.a567;
+package org.wikipediacleaner.api.check.algorithm.a5xx.a56x.a568;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import org.wikipediacleaner.api.API;
 import org.wikipediacleaner.api.APIException;
@@ -19,27 +22,27 @@ import org.wikipediacleaner.api.algorithm.AlgorithmParameter;
 import org.wikipediacleaner.api.algorithm.AlgorithmParameterElement;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase;
+import org.wikipediacleaner.api.check.algorithm.a5xx.a56x.a567.Numeric;
 import org.wikipediacleaner.api.configuration.WPCConfiguration;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.DataManager;
 import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.Page.RelatedPages;
-import org.wikipediacleaner.api.data.PageElementFunction;
+import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
-import org.wikipediacleaner.api.data.contents.magicword.FunctionMagicWordType;
 import org.wikipediacleaner.api.data.contents.tag.WikiTagType;
 import org.wikipediacleaner.i18n.GT;
 
 
 /**
- * Algorithm for analyzing error 567 of check wikipedia project.
- * Error 567: non-numeric formatnum arguments
+ * Algorithm for analyzing error 568 of check wikipedia project.
+ * Error 568: non-numeric formatnum arguments
  */
-public class CheckErrorAlgorithm567 extends CheckErrorAlgorithmBase {
+public class CheckErrorAlgorithm568 extends CheckErrorAlgorithmBase {
 
-  public CheckErrorAlgorithm567() {
-    super("Non-numeric formatnum arguments");
+  public CheckErrorAlgorithm568() {
+    super("Non-numeric formatnum arguments (in templates)");
   }
 
   /**
@@ -58,51 +61,57 @@ public class CheckErrorAlgorithm567 extends CheckErrorAlgorithmBase {
       return false;
     }
 
-    return analyzeFunctions(analysis, errors);
+    return analyzeTemplates(analysis, errors);
   }
 
   /**
-   * Analyze a page to check if errors are present in functions.
+   * Analyze a page to check if errors are present in templates.
    * 
    * @param analysis Page analysis.
    * @param errors Errors found in the page.
    * @return Flag indicating if the error was found.
    */
-  private boolean analyzeFunctions(
+  private boolean analyzeTemplates(
       PageAnalysis analysis,
       Collection<CheckErrorResult> errors) {
-    List<PageElementFunction> functions = analysis.getFunctions();
-    if (functions.isEmpty()) {
-      return false;
-    }
-
     boolean result = false;
-    for (PageElementFunction function : functions) {
-      result |= analyzeFunction(analysis, errors, function);
+    for (Entry<String, Map<String, Boolean>> templateName : templateParams.entrySet()) {
+      List<PageElementTemplate> templates = analysis.getTemplates(templateName.getKey());
+      for (PageElementTemplate template : templates) {
+        for (Entry<String,Boolean> paramConfig : templateName.getValue().entrySet()) {
+          result |= analyzeTemplateParam(analysis, errors, template, paramConfig.getKey(), paramConfig.getValue());
+        }
+      }
     }
     return result;
   }
 
   /**
-   * Analyze a function to check if errors are present.
+   * Analyze a template parameter to check if errors are present.
    * 
    * @param analysis Page analysis.
    * @param errors Errors found in the page.
-   * @param function Function to check.
+   * @param template Template to check.
+   * @param paramName Name of the parameter to check.
+   * @param onlyInteger True if only integer values are accepted.
    * @return Flag indicating if the error was found.
    */
-  private boolean analyzeFunction(
+  private boolean analyzeTemplateParam(
       PageAnalysis analysis,
       Collection<CheckErrorResult> errors,
-      PageElementFunction function) {
-    if (function.getMagicWord().getType() != FunctionMagicWordType.FORMAT_NUM) {
+      PageElementTemplate template,
+      String paramName,
+      Boolean onlyInteger) {
+    int paramIndex = template.getParameterIndex(paramName);
+    if (paramIndex < 0) {
       return false;
     }
-    if (NumericFormatnum.isValidFormatnum(analysis, function)) {
+    PageElementTemplate.Parameter param = template.getParameter(paramIndex);
+    if (Numeric.isValidFormatnum(analysis, param.getValue(), param.getValueStartIndex())) {
       return false;
     }
-    int beginIndex = function.getBeginIndex();
-    int endIndex = function.getEndIndex();
+    int beginIndex = param.getBeginIndex();
+    int endIndex = param.getEndIndex();
     if ((analysis.getSurroundingTag(WikiTagType.NOWIKI, beginIndex) != null) ||
         (analysis.getSurroundingTag(WikiTagType.TEMPLATEDATA, beginIndex) != null)) {
       return false;
@@ -113,7 +122,7 @@ public class CheckErrorAlgorithm567 extends CheckErrorAlgorithmBase {
       return true;
     }
     CheckErrorResult errorResult = createCheckErrorResult(analysis, beginIndex, endIndex);
-    new NumericFormatnum(analysis, function, prefixes, suffixes).addSuggestions(errorResult);
+    new NumericTemplateParam(analysis, param, onlyInteger).addSuggestions(errorResult);
     errors.add(errorResult);
     return true;
   }
@@ -177,11 +186,8 @@ public class CheckErrorAlgorithm567 extends CheckErrorAlgorithmBase {
   /** Categories listing pages for this error */
   private static final String PARAMETER_CATEGORIES = "categories";
 
-  /** Prefixes that can be safely extracted */
-  private static final String PARAMETER_PREFIXES = "prefixes";
-
-  /** Suffixes that can be safely extracted */
-  private static final String PARAMETER_SUFFIXES = "suffixes";
+  /** Template parameters that are used directly in a formatnum */
+  private static final String PARAMETER_TEMPLATE_PARAMS = "template_params";
 
   /**
    * Initialize settings for the algorithm.
@@ -199,21 +205,21 @@ public class CheckErrorAlgorithm567 extends CheckErrorAlgorithmBase {
       }
     }
 
-    tmp = getSpecificProperty(PARAMETER_PREFIXES, true, true, false);
-    prefixes.clear();
+    tmp = getSpecificProperty(PARAMETER_TEMPLATE_PARAMS, true, true, false);
+    templateParams.clear();
     if (tmp != null) {
-      List<String> tmpList = WPCConfiguration.convertPropertyToStringList(tmp, false);
+      List<String[]> tmpList = WPCConfiguration.convertPropertyToStringArrayList(tmp);
       if (tmpList != null) {
-        prefixes.addAll(tmpList);
-      }
-    }
-
-    tmp = getSpecificProperty(PARAMETER_SUFFIXES, true, true, false);
-    suffixes.clear();
-    if (tmp != null) {
-      List<String> tmpList = WPCConfiguration.convertPropertyToStringList(tmp, false);
-      if (tmpList != null) {
-        suffixes.addAll(tmpList);
+        for (String[] tmpElement : tmpList) {
+          if (tmpElement.length > 2) {
+            String templateName = tmpElement[0];
+            Boolean onlyInteger = Boolean.valueOf(tmpElement[1]);
+            Map<String, Boolean> params = templateParams.computeIfAbsent(templateName, name -> new HashMap<>());
+            for (int elementNum = 2; elementNum < tmpElement.length; elementNum++) {
+              params.put(tmpElement[elementNum], onlyInteger);
+            }
+          }
+        }
       }
     }
   }
@@ -221,11 +227,8 @@ public class CheckErrorAlgorithm567 extends CheckErrorAlgorithmBase {
   /** Categories for templates that can be used for an abbreviation */
   private final List<String> categories = new ArrayList<>();
 
-  /** Prefixes that can be safely extracted */
-  private final List<String> prefixes = new ArrayList<>();
-
-  /** Suffixes that can be safely extracted */
-  private final List<String> suffixes = new ArrayList<>();
+  /** Template parameters that are used directly in a formatnum */
+  private final Map<String, Map<String, Boolean>> templateParams = new HashMap<>();
 
   /**
    * Build the list of parameters for this algorithm.
@@ -241,18 +244,13 @@ public class CheckErrorAlgorithm567 extends CheckErrorAlgorithmBase {
             GT._T("Name of a category listing pages using non-numeric {0} arguments", "{{formatnum:}}")),
         true));
     addParameter(new AlgorithmParameter(
-        PARAMETER_PREFIXES,
-        GT._T("Prefixes that can be safely extracted"),
-        new AlgorithmParameterElement(
-            "text",
-            GT._T("Prefix that can be safely extracted")),
-        true));
-    addParameter(new AlgorithmParameter(
-        PARAMETER_SUFFIXES,
-        GT._T("Suffixes that can be safely extracted"),
-        new AlgorithmParameterElement(
-            "text",
-            GT._T("Suffix that can be safely extracted")),
+        PARAMETER_TEMPLATE_PARAMS,
+        GT._T("Template parameters that should only contain numeric arguments"),
+        new AlgorithmParameterElement[] {
+            new AlgorithmParameterElement("template name", GT._T("Template name")),
+            new AlgorithmParameterElement("only integer", GT._T("If parameters accept only integer values")),
+            new AlgorithmParameterElement("parameter name", GT._T("Parameter name"), false, true)
+        },
         true));
   }
 }
