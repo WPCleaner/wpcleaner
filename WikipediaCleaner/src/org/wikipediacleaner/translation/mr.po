@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2021-04-19 11:03:27+0000\n"
+"PO-Revision-Date: 2021-04-30 07:20:02+0000\n"
 "Last-Translator: Suresh Khole <Unknown>\n"
 "Language-Team: Marathi <mr@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -18,8 +18,8 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Launchpad-Export-Date: 2018-11-27 15:16+0000\n"
-"X-Generator: MediaWiki 1.37.0-alpha; Translate 2021-01-21\n"
-"X-POT-Import-Date: 2021-04-18 22:31:58+0000\n"
+"X-Generator: MediaWiki 1.37.0-alpha; Translate 2021-04-28\n"
+"X-POT-Import-Date: 2021-04-28 20:31:59+0000\n"
 "Language: mr\n"
 
 #: org/wikipediacleaner/Version.java:31
@@ -559,7 +559,7 @@ msgid "View image"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a03x/a033/CheckErrorAlgorithm033.java:144
-#: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a061/CheckErrorAlgorithm061.java:501
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a061/CheckErrorAlgorithm061.java:502
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a558/CheckErrorAlgorithm558.java:288
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a559/CheckErrorAlgorithm559.java:335
 #, java-format
@@ -567,7 +567,7 @@ msgid "Templates that can be used to replace {0} tags"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a03x/a033/CheckErrorAlgorithm033.java:147
-#: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a061/CheckErrorAlgorithm061.java:504
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a061/CheckErrorAlgorithm061.java:505
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a558/CheckErrorAlgorithm558.java:291
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a559/CheckErrorAlgorithm559.java:338
 #, java-format
@@ -632,14 +632,14 @@ msgstr ""
 msgid "Templates to be ignored"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a061/CheckErrorAlgorithm061.java:489
-#: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a061/CheckErrorAlgorithm061.java:492
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a061/CheckErrorAlgorithm061.java:490
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a061/CheckErrorAlgorithm061.java:493
 #, java-format
 msgid "To force the usage of the separator between consecutive {0} tags"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a061/CheckErrorAlgorithm061.java:495
-#: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a061/CheckErrorAlgorithm061.java:498
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a061/CheckErrorAlgorithm061.java:496
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a061/CheckErrorAlgorithm061.java:499
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a067/CheckErrorAlgorithm067.java:368
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a067/CheckErrorAlgorithm067.java:371
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a542/CheckErrorAlgorithm542.java:182
@@ -1060,6 +1060,7 @@ msgid "Similar ISSN"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a1xx/a11x/a111/CheckErrorAlgorithm111.java:204
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a568/CheckErrorAlgorithm568.java:250
 msgid "Template name"
 msgstr ""
 
@@ -1724,30 +1725,44 @@ msgstr ""
 msgid "Default value for the meaning"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a567/CheckErrorAlgorithm567.java:232
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a567/CheckErrorAlgorithm567.java:238
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a568/CheckErrorAlgorithm568.java:241
 #, java-format
 msgid "Categories listing pages using non-numeric {0} arguments"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a567/CheckErrorAlgorithm567.java:235
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a567/CheckErrorAlgorithm567.java:241
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a568/CheckErrorAlgorithm568.java:244
 #, java-format
 msgid "Name of a category listing pages using non-numeric {0} arguments"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a567/CheckErrorAlgorithm567.java:239
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a567/CheckErrorAlgorithm567.java:245
 msgid "Prefixes that can be safely extracted"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a567/CheckErrorAlgorithm567.java:242
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a567/CheckErrorAlgorithm567.java:248
 msgid "Prefix that can be safely extracted"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a567/CheckErrorAlgorithm567.java:246
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a567/CheckErrorAlgorithm567.java:252
 msgid "Suffixes that can be safely extracted"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a567/CheckErrorAlgorithm567.java:249
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a567/CheckErrorAlgorithm567.java:255
 msgid "Suffix that can be safely extracted"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a568/CheckErrorAlgorithm568.java:248
+msgid "Template parameters that should only contain numeric arguments"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a568/CheckErrorAlgorithm568.java:251
+msgid "If parameters accept only integer values"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a568/CheckErrorAlgorithm568.java:252
+msgid "Parameter name"
 msgstr ""
 
 #: org/wikipediacleaner/api/configuration/CWConfiguration.java:83
