@@ -86,6 +86,7 @@ public class CheckErrorAlgorithm069 extends CheckErrorAlgorithmISBN {
     namespaceNames = new HashSet<>();
     namespaceNames.add("Speciální");
     pageNames = new HashSet<>();
+    pageNames.add("BookSources");
     pageNames.add("Zdroje knih");
     pageNames.add("KnižnéZdroje");
     wiki = new ImmutablePair<>(namespaceNames, pageNames);
@@ -95,6 +96,7 @@ public class CheckErrorAlgorithm069 extends CheckErrorAlgorithmISBN {
     namespaceNames = new HashSet<>();
     namespaceNames.add("Spezial");
     pageNames = new HashSet<>();
+    pageNames.add("BookSources");
     pageNames.add("ISBN Suche");
     pageNames.add("ISBN-Suche");
     wiki = new ImmutablePair<>(namespaceNames, pageNames);
@@ -113,6 +115,7 @@ public class CheckErrorAlgorithm069 extends CheckErrorAlgorithmISBN {
     namespaceNames.add("Spécial");
     namespaceNames.add("Sp%C3%A9cial");
     pageNames = new HashSet<>();
+    pageNames.add("BookSources");
     pageNames.add("Ouvrages de référence");
     pageNames.add("Ouvrages de reference");
     pageNames.add("Ouvragesderéférence");
@@ -129,6 +132,7 @@ public class CheckErrorAlgorithm069 extends CheckErrorAlgorithmISBN {
     namespaceNames = new HashSet<>();
     namespaceNames.add("Speciale");
     pageNames = new HashSet<>();
+    pageNames.add("BookSources");
     pageNames.add("RicercaISBN");
     wiki = new ImmutablePair<>(namespaceNames, pageNames);
     BOOK_SOURCES.put("it", wiki);
@@ -139,6 +143,7 @@ public class CheckErrorAlgorithm069 extends CheckErrorAlgorithmISBN {
     pageNames = new HashSet<>();
     pageNames.add("Boekbronnen");
     pageNames.add("Boekinformatie");
+    pageNames.add("BookSources");
     wiki = new ImmutablePair<>(namespaceNames, pageNames);
     BOOK_SOURCES.put("nl", wiki);
   }
