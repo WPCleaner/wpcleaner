@@ -7,6 +7,7 @@
 # Author: Patriccck
 # Author: Patriccck
 # Author: Patrik L.
+# Author: Want
 # --
 # This file is distributed under the same license as the wikicleaner package.
 #
@@ -16,7 +17,7 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2021-04-30 07:19:56+0000\n"
+"PO-Revision-Date: 2021-05-03 13:39:06+0000\n"
 "Last-Translator: Matěj S. <matejsuchanek97@gmail.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -1833,15 +1834,15 @@ msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a568/CheckErrorAlgorithm568.java:248
 msgid "Template parameters that should only contain numeric arguments"
-msgstr ""
+msgstr "Parametry šablony, které mohou obsahovat pouze číslo"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a568/CheckErrorAlgorithm568.java:251
 msgid "If parameters accept only integer values"
-msgstr ""
+msgstr "Pokud parametry akceptují pouze celočíselné hodnoty"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a568/CheckErrorAlgorithm568.java:252
 msgid "Parameter name"
-msgstr ""
+msgstr "Jméno parametru"
 
 #: org/wikipediacleaner/api/configuration/CWConfiguration.java:83
 #, java-format

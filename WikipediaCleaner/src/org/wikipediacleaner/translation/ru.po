@@ -6,6 +6,7 @@
 # Author: Kareyac
 # Author: MuratTheTurkish
 # Author: Okras
+# Author: Rivka Silinsky
 # Author: Rubin16
 # Author: Teretalexev
 # Author: Teretalexev
@@ -19,7 +20,7 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2021-04-30 07:20:04+0000\n"
+"PO-Revision-Date: 2021-05-03 13:39:10+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Russian <ru@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -1783,7 +1784,7 @@ msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a568/CheckErrorAlgorithm568.java:252
 msgid "Parameter name"
-msgstr ""
+msgstr "Имя параметра"
 
 #: org/wikipediacleaner/api/configuration/CWConfiguration.java:83
 #, java-format
