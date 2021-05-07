@@ -1,6 +1,7 @@
 # Translation of WPCleaner to Persian (فارسی)
 # Exported from translatewiki.net
 #
+# Author: Jeeputer
 # --
 # This file is distributed under the same license as the wikicleaner package.
 #
@@ -10,7 +11,7 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2021-04-30 07:19:59+0000\n"
+"PO-Revision-Date: 2021-05-07 09:14:47+0000\n"
 "Last-Translator: reza <reza.energy@gmail.com>\n"
 "Language-Team: Persian <fa@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -18,7 +19,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 "X-Launchpad-Export-Date: 2016-11-01 21:08+0000\n"
-"X-Generator: MediaWiki 1.37.0-alpha; Translate 2021-04-28\n"
+"X-Generator: MediaWiki 1.36.0-rc.0; Translate 2021-04-28\n"
 "Language: fa\n"
 "X-POT-Import-Date: 2021-04-28 20:31:59+0000\n"
 
@@ -1771,7 +1772,7 @@ msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a568/CheckErrorAlgorithm568.java:248
 msgid "Template parameters that should only contain numeric arguments"
-msgstr ""
+msgstr "پارامترهای الگو که تنها باید شامل آرگومان‌های عددی باشند"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a568/CheckErrorAlgorithm568.java:251
 msgid "If parameters accept only integer values"
@@ -1779,7 +1780,7 @@ msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a568/CheckErrorAlgorithm568.java:252
 msgid "Parameter name"
-msgstr ""
+msgstr "نام پارامتر"
 
 #: org/wikipediacleaner/api/configuration/CWConfiguration.java:83
 #, java-format
