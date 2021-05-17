@@ -4,6 +4,7 @@
 # Author: DraconicDark
 # Author: Druesenfieber
 # Author: Elliot
+# Author: FF-11
 # Author: ManuelFranz
 # Author: Mglaser
 # Author: Wolfdietmann
@@ -16,7 +17,7 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2021-05-07 09:14:46+0000\n"
+"PO-Revision-Date: 2021-05-17 11:28:25+0000\n"
 "Last-Translator: Crazy1880 <Unknown>\n"
 "Language-Team: German <de@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -1780,15 +1781,15 @@ msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a568/CheckErrorAlgorithm568.java:248
 msgid "Template parameters that should only contain numeric arguments"
-msgstr ""
+msgstr "Vorlagenparameter, die nur nummerische Argumente enthalten sollen"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a568/CheckErrorAlgorithm568.java:251
 msgid "If parameters accept only integer values"
-msgstr ""
+msgstr "Wenn ein Parameter nur ganzählige Werte akzeptiert"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a568/CheckErrorAlgorithm568.java:252
 msgid "Parameter name"
-msgstr ""
+msgstr "Name des Parameters"
 
 #: org/wikipediacleaner/api/configuration/CWConfiguration.java:83
 #, java-format
