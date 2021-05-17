@@ -2,6 +2,7 @@
 # Exported from translatewiki.net
 #
 # Author: Abijeet Patro
+# Author: Ата
 # --
 # This file is distributed under the same license as the wikicleaner package.
 #
@@ -11,7 +12,7 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2021-05-07 09:14:52+0000\n"
+"PO-Revision-Date: 2021-05-17 11:28:30+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Ukrainian <uk@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -141,9 +142,9 @@ msgid "Updating page {0}"
 msgstr "Поновлення сторінки {0}"
 
 #: org/wikipediacleaner/api/MediaWiki.java:316
-#, fuzzy, java-format
+#, java-format
 msgid "The page {0} has been modified."
-msgstr "Сторінки {0} немає у Вікіпедії"
+msgstr "Сторінку {0} було змінено."
 
 #: org/wikipediacleaner/api/MediaWiki.java:317
 #, fuzzy
@@ -157,9 +158,8 @@ msgid "Page {0}:"
 msgstr "Сторінка {0}:"
 
 #: org/wikipediacleaner/api/ModificationReport.java:98
-#, fuzzy
 msgid "The following errors have occurred:"
-msgstr "Виникла невідома помилка"
+msgstr "Виникли такі помилки:"
 
 #: org/wikipediacleaner/api/algorithm/AlgorithmError.java:417
 msgid "No available description"
@@ -280,9 +280,8 @@ msgid "Remove {0} namespace from template name"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a002/CheckErrorAlgorithm002.java:48
-#, fuzzy
 msgid "Fix all incorrect tags"
-msgstr "Виправити вибрані сторінки"
+msgstr "Виправити усі хибні теги"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a002/CheckErrorAlgorithm002.java:220
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a002/CheckErrorAlgorithm002.java:244
@@ -317,9 +316,8 @@ msgstr ""
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:304
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:318
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a566/CheckErrorAlgorithm566.java:283
-#, fuzzy
 msgid "Name of the template"
-msgstr "Аналіз шаблону"
+msgstr "Назва шаблону"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a002/CheckErrorAlgorithm002.java:800
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a060/CheckErrorAlgorithm060.java:201
