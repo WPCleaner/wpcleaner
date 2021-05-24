@@ -1,6 +1,7 @@
 # Translation of WPCleaner to Traditional Chinese (中文（繁體）‎)
 # Exported from translatewiki.net
 #
+# Author: ArticleEditor404
 # Author: Kly
 # Author: TongcyDai
 # --
@@ -9,7 +10,7 @@
 msgid ""
 msgstr ""
 ""
-"PO-Revision-Date: 2021-05-07 09:14:52+0000\n"
+"PO-Revision-Date: 2021-05-24 12:28:01+0000\n"
 "X-POT-Import-Date: 2021-04-28 20:31:59+0000\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -24,11 +25,11 @@ msgstr "{0}擴展功能現在可以在所有WikiMedia維基上使用。"
 
 #: org/wikipediacleaner/Version.java:32
 msgid "It identifies wikitext patterns that must or can be fixed in pages."
-msgstr ""
+msgstr "它標識必須或可以在頁面中固定的Wikitext模式。"
 
 #: org/wikipediacleaner/Version.java:33
 msgid "It also provides some guidance about what the issues are with those patterns and how to fix them."
-msgstr ""
+msgstr "它還提供了有關這些模式的問題以及如何解決它們的一些指導。"
 
 #: org/wikipediacleaner/Version.java:35
 msgid "You can help by fixing problems identified by the Linter extension."
@@ -141,7 +142,7 @@ msgstr ""
 
 #: org/wikipediacleaner/api/MediaWiki.java:317
 msgid "Do you want to continue?"
-msgstr ""
+msgstr "你要繼續嗎？"
 
 #: org/wikipediacleaner/api/ModificationReport.java:78
 #: org/wikipediacleaner/api/ModificationReport.java:108
@@ -947,11 +948,11 @@ msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a090/CheckErrorAlgorithm090.java:666
 msgid "Convert into an internal link"
-msgstr ""
+msgstr "轉換為內部鏈接"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a090/CheckErrorAlgorithm090.java:975
 msgid "Templates to be used for linking to the history of an article"
-msgstr ""
+msgstr "用於鏈接到文章歷史的模板"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a090/CheckErrorAlgorithm090.java:979
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a090/CheckErrorAlgorithm090.java:1008
