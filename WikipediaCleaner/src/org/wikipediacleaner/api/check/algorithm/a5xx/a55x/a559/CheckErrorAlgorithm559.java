@@ -107,7 +107,7 @@ public class CheckErrorAlgorithm559 extends CheckErrorAlgorithmBase {
       PageElement secondRef = refs.get(firstIndex + 1);
       int beginIndex = firstRef.getEndIndex();
       int endIndex = secondRef.getBeginIndex();
-      if (endIndex <= beginIndex) {
+      if (endIndex < beginIndex) {
         // To prevent problems with <ref><ref></ref></ref>...
         return false;
       }
