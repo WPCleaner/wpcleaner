@@ -74,11 +74,15 @@ public class CheckErrorAlgorithm568 extends CheckErrorAlgorithmBase {
   private boolean analyzeTemplates(
       PageAnalysis analysis,
       Collection<CheckErrorResult> errors) {
+    if (templateParams.isEmpty()) {
+      return false;
+    }
     boolean result = false;
-    for (Entry<String, Map<String, Boolean>> templateName : templateParams.entrySet()) {
-      List<PageElementTemplate> templates = analysis.getTemplates(templateName.getKey());
-      for (PageElementTemplate template : templates) {
-        for (Entry<String,Boolean> paramConfig : templateName.getValue().entrySet()) {
+    List<PageElementTemplate> templates = analysis.getTemplates();
+    for (PageElementTemplate template : templates) {
+      Map<String, Boolean> templateParam = templateParams.get(template.getTemplateName());
+      if (templateParam != null) {
+        for (Entry<String, Boolean> paramConfig : templateParam.entrySet()) {
           result |= analyzeTemplateParam(analysis, errors, template, paramConfig.getKey(), paramConfig.getValue());
         }
       }
