@@ -156,8 +156,11 @@ public class CheckErrorAlgorithm016 extends CheckErrorAlgorithmBase {
             replacementB.appendCodePoint(codePoint);
             unsafeCharacter |= (automaticChars.indexOf(codePoint) < 0);
           } else {
+            boolean safeControl = control.safe;
             unsafeInRedirect |= !control.safeInRedirect;
             unsafeInAnchor |= !control.safeInAnchor;
+
+            // Handle non-removable characters
             if (!control.removable) {
               int replaceBy = 0;
               if (control == ControlCharacter.NON_BREAKING_SPACE) {
@@ -180,7 +183,21 @@ public class CheckErrorAlgorithm016 extends CheckErrorAlgorithmBase {
                 replacementB.appendCodePoint(replaceBy);
               }
             }
-            checkUnsafe |= !control.safe;
+
+            // Handle specific case with Zero Width Space
+            if (control == ControlCharacter.ZERO_WIDTH_SPACE) {
+              if ((i <= 0) ||
+                  (contents.charAt(i - 1) == ' ') ||
+                  ControlCharacter.isIncluded(contents.codePointAt(i - 1), ControlCharacter.ZERO_WIDTH_SPACE)) {
+                safeControl = true;
+              }
+              int j = i + Character.charCount(codePoint);
+              if ((j >= contents.length()) || (contents.charAt(j) == ' ')) {
+                safeControl = true;
+              }
+            }
+
+            checkUnsafe |= !safeControl;
             List<String> replacements = ControlCharacter.getReplacements(codePoint);
             if (replacements != null) {
               for (String replacement : replacements) {
