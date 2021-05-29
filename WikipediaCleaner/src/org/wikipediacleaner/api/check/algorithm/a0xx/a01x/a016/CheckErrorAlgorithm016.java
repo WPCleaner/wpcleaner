@@ -187,12 +187,13 @@ public class CheckErrorAlgorithm016 extends CheckErrorAlgorithmBase {
             // Handle specific case with Zero Width Space
             if (control == ControlCharacter.ZERO_WIDTH_SPACE) {
               if ((i <= 0) ||
-                  (contents.charAt(i - 1) == ' ') ||
+                  (" |]".indexOf(contents.charAt(i - 1)) >= 0) ||
                   ControlCharacter.isIncluded(contents.codePointAt(i - 1), ControlCharacter.ZERO_WIDTH_SPACE)) {
                 safeControl = true;
               }
               int j = i + Character.charCount(codePoint);
-              if ((j >= contents.length()) || (contents.charAt(j) == ' ')) {
+              if ((j >= contents.length()) ||
+                  (" |]".indexOf(contents.charAt(j)) >= 0)) {
                 safeControl = true;
               }
             }
@@ -257,7 +258,10 @@ public class CheckErrorAlgorithm016 extends CheckErrorAlgorithmBase {
         if (automatic && unsafeInAnchor) {
           PageElementInternalLink iLink = analysis.isInInternalLink(index);
           if ((iLink != null) && (iLink.getAnchor() != null)) {
-            automatic = false;
+            if (((iLink.getText() == null) && (index < iLink.getEndIndex() - 3)) ||
+                (index < iLink.getBeginIndex() + iLink.getTextOffset() - 2)) {
+              automatic = false;
+            }
           }
         }
 
@@ -402,7 +406,7 @@ public class CheckErrorAlgorithm016 extends CheckErrorAlgorithmBase {
     SIX_PER_EM_SPACE            (0x2006,   0x2006,   false, false, null,          null,          GT._No("Six-per-em space")),
     FIGURE_SPACE                (0x2007,   0x2007,   false, false, null,          null,          GT._No("Figure space")),
     PUNCTUATION_SPACE           (0x2008,   0x2008,   false, false, null,          null,          GT._No("Punctuation space")),
-    ZERO_WIDTH_SPACE            (0x200B,   0x200B,   true,  false, null,          Boolean.FALSE, GT._No("Zero-width space")),
+    ZERO_WIDTH_SPACE            (0x200B,   0x200B,   true,  false, Boolean.TRUE,  Boolean.FALSE, GT._No("Zero-width space")),
     LEFT_TO_RIGHT_MARK          (0x200E,   0x200E,   true,  false, Boolean.TRUE,  null,          GT._No("Left-to-right mark")),
     RIGHT_TO_LEFT_MARK          (0x200F,   0x200F,   true,  false, Boolean.TRUE,  null,          GT._No("Right-to-left mark")),
     LINE_SEPARATOR              (0x2028,   0x2028,   true,  false, null,          null,          GT._No("Line separator")),
