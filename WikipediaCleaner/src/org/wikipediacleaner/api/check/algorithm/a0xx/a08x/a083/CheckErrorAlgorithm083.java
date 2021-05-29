@@ -8,10 +8,15 @@
 package org.wikipediacleaner.api.check.algorithm.a0xx.a08x.a083;
 
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase;
+import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.PageElementTitle;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
 import org.wikipediacleaner.api.data.contents.title.TitleBuilder;
@@ -84,6 +89,10 @@ public class CheckErrorAlgorithm083 extends CheckErrorAlgorithmBase {
     return result;
   }
 
+  private final static Set<Integer> AUTOMATIC_NAMESPACES = Stream
+      .of(Namespace.MAIN, Namespace.IMAGE)
+      .collect(Collectors.toCollection(HashSet::new));
+
   /**
    * Automatic fixing of all the errors in the page.
    * 
@@ -93,8 +102,8 @@ public class CheckErrorAlgorithm083 extends CheckErrorAlgorithmBase {
   @Override
   protected String internalAutomaticFix(PageAnalysis analysis) {
     String defaultContents = analysis.getContents();
-    if (!analysis.getPage().isArticle() ||
-        !analysis.getPage().isInMainNamespace()) {
+    Integer namespace = analysis.getPage().getNamespace();
+    if ((namespace == null) || !AUTOMATIC_NAMESPACES.contains(namespace)) {
       return defaultContents;
     }
 
