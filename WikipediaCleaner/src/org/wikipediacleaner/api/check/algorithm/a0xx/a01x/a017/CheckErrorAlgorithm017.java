@@ -20,6 +20,9 @@ import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.PageElementCategory;
 import org.wikipediacleaner.api.data.PageElementTitle;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
+import org.wikipediacleaner.api.data.contents.ContentsUtil;
+import org.wikipediacleaner.api.data.contents.magicword.MagicWord;
+import org.wikipediacleaner.api.data.contents.magicword.SimpleMagicWordType;
 import org.wikipediacleaner.gui.swing.component.MWPane;
 import org.wikipediacleaner.i18n.GT;
 
@@ -57,37 +60,20 @@ public class CheckErrorAlgorithm017 extends CheckErrorAlgorithmBase {
       return false;
     }
 
-    // Ignore redirect pages
-    if (analysis.getPage().getRedirects().isRedirect()) {
-      // TODO: Be more subtle, remove only the first category if it's the target of the redirection
-      return false;
-    }
-
     // Case sensitiveness
-    Namespace namespace = analysis.getWikiConfiguration().getNamespace(Namespace.CATEGORY);
-    EnumCaseSensitiveness sensitive = EnumCaseSensitiveness.UNKNOWN;
-    if (namespace != null) {
-      sensitive = namespace.getCaseSensitiveness();
-    }
+    final Namespace namespace = analysis.getWikiConfiguration().getNamespace(Namespace.CATEGORY);
+    final EnumCaseSensitiveness sensitive = (namespace != null) ? namespace.getCaseSensitiveness() : EnumCaseSensitiveness.UNKNOWN;
 
     // Group categories by name
-    List<PageElementCategory> categories = analysis.getCategories();
+    final List<PageElementCategory> categories = analysis.getCategories();
     if ((categories == null) || (categories.isEmpty())) {
       return false;
     }
-    Map<String, List<PageElementCategory>> groupedCategories = new HashMap<>();
-    for (PageElementCategory category : categories) {
-      String name = sensitive.normalize(category.getName());
-      List<PageElementCategory> groupCategory = groupedCategories.get(name);
-      if (groupCategory == null) {
-        groupCategory = new ArrayList<>();
-        groupedCategories.put(name, groupCategory);
-      }
-      groupCategory.add(category);
-    }
+    final Map<String, List<PageElementCategory>> groupedCategories = new HashMap<>();
+    categories.forEach(category -> addCategoryToGroup(analysis, groupedCategories, category, sensitive));
 
     // Compute index of last title
-    List<PageElementTitle> titles = analysis.getTitles();
+    final List<PageElementTitle> titles = analysis.getTitles();
     int lastTitleIndex = 0;
     if ((titles != null) && (!titles.isEmpty())) {
       lastTitleIndex = titles.get(titles.size() - 1).getEndIndex();
@@ -102,7 +88,47 @@ public class CheckErrorAlgorithm017 extends CheckErrorAlgorithmBase {
     return result;
   }
 
-  public boolean analyzeCategory(
+  /**
+   * Add a category to its group.
+   * 
+   * @param analysis Page analysis.
+   * @param groupedCategories Group of categories.
+   * @param category Category.
+   * @param sensitive Sensitiveness of the category name.
+   */
+  private void addCategoryToGroup(
+      PageAnalysis analysis,
+      Map<String, List<PageElementCategory>> groupedCategories,
+      PageElementCategory category,
+      EnumCaseSensitiveness sensitive) {
+    // For redirects, do not count the target of the redirection
+    if (analysis.getPage().getRedirects().isRedirect()) {
+      String contents = analysis.getContents();
+      int tmpIndex = ContentsUtil.moveIndexBeforeWhitespace(contents, category.getBeginIndex() - 1);
+      if (tmpIndex > 0) {
+        MagicWord magicWord = analysis.getWikiConfiguration().getMagicWordByType(SimpleMagicWordType.REDIRECT);
+        if (magicWord.isPossibleAlias(contents.substring(0, tmpIndex + 1).trim())) {
+          return;
+        }
+      }
+    }
+
+    String name = sensitive.normalize(category.getName());
+    groupedCategories.computeIfAbsent(name, key -> new ArrayList<>()).add(category);
+  }
+
+  /**
+   * Analyze a category to check if errors are present.
+   * 
+   * @param analysis Page analysis.
+   * @param errors Errors found in the page.
+   * @param category Category to analyze.
+   * @param sensitive Sensitiveness of the category name.
+   * @param groupedCategories Grouped categories.
+   * @param lastTitleIndex Index of the last title.
+   * @return Flag indicating if the error was found.
+   */
+  private boolean analyzeCategory(
       PageAnalysis analysis,
       Collection<CheckErrorResult> errors,
       PageElementCategory category,
