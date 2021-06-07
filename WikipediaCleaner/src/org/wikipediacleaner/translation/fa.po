@@ -1,6 +1,7 @@
 # Translation of WPCleaner to Persian (فارسی)
 # Exported from translatewiki.net
 #
+# Author: Huji
 # Author: Jeeputer
 # --
 # This file is distributed under the same license as the wikicleaner package.
@@ -11,7 +12,7 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2021-06-03 14:57:40+0000\n"
+"PO-Revision-Date: 2021-06-07 13:09:59+0000\n"
 "Last-Translator: reza <reza.energy@gmail.com>\n"
 "Language-Team: Persian <fa@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -99,7 +100,7 @@ msgstr "این کلمه جادوئی __DISAMBIG__ را تعریف می‌کند"
 
 #: org/wikipediacleaner/Version.java:56
 msgid "This magic word should be added to all disambiguation pages (either through templates or directly)."
-msgstr "این کلمه جادوئی باید به همه صفحات ابهام‌زدائی افزوده شود (به صورت مستقیم یا با تراگنجایش در الگو:ابهام‌زدائی)"
+msgstr "این کلمه جادوئی باید به همه صفحات ابهام‌زدایی افزوده شود (به صورت مستقیم یا با تراگنجانش در الگو:ابهام‌زدایی)"
 
 #: org/wikipediacleaner/Version.java:57
 msgid "WPCleaner v1.28 also uses this as the default system."
