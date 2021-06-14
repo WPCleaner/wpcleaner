@@ -23,7 +23,7 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2021-06-03 14:57:43+0000\n"
+"PO-Revision-Date: 2021-06-14 08:05:05+0000\n"
 "Last-Translator: volkan <volkanyeke@gmail.com>\n"
 "Language-Team: Turkish <tr@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -1748,7 +1748,7 @@ msgstr "Sayısal olmayan {0} bağımsız değişkenler kullanan sayfaları liste
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a568/CheckErrorAlgorithm568.java:244
 #, java-format
 msgid "Name of a category listing pages using non-numeric {0} arguments"
-msgstr ""
+msgstr "Sayısal olmayan {0} bağımsız değişken kullanan sayfaları listeleyen bir kategorinin adı"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a567/CheckErrorAlgorithm567.java:245
 msgid "Prefixes that can be safely extracted"
@@ -1756,23 +1756,23 @@ msgstr "Güvenli bir şekilde çıkarılabilen ön ekler"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a567/CheckErrorAlgorithm567.java:248
 msgid "Prefix that can be safely extracted"
-msgstr ""
+msgstr "Güvenli bir şekilde çıkarılabilen önek"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a567/CheckErrorAlgorithm567.java:252
 msgid "Suffixes that can be safely extracted"
-msgstr ""
+msgstr "Güvenli bir şekilde çıkarılabilen sonekler"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a567/CheckErrorAlgorithm567.java:255
 msgid "Suffix that can be safely extracted"
-msgstr ""
+msgstr "Güvenli bir şekilde çıkarılabilen sonek"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a568/CheckErrorAlgorithm568.java:248
 msgid "Template parameters that should only contain numeric arguments"
-msgstr ""
+msgstr "Yalnızca sayısal bağımsız değişkenler içermesi gereken şablon parametreleri"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a568/CheckErrorAlgorithm568.java:251
 msgid "If parameters accept only integer values"
-msgstr ""
+msgstr "Parametreler yalnızca tamsayı değerleri kabul ederse"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a568/CheckErrorAlgorithm568.java:252
 msgid "Parameter name"
