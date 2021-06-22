@@ -43,6 +43,7 @@ FixListCheckWiki Projet:Correction_syntaxique/Analyse_557 557
 FixListCheckWiki Projet:Correction_syntaxique/Analyse_558 558
 FixListCheckWiki Projet:Correction_syntaxique/Analyse_559 559
 FixListCheckWiki Projet:Correction_syntaxique/Analyse_565 565
+FixListCheckWiki Projet:Correction_syntaxique/Analyse_566 501 566
 FixListCheckWiki Projet:Correction_syntaxique/Analyse_567 567
 FixListCheckWiki Projet:Correction_syntaxique/Analyse_568 568
 
@@ -56,6 +57,7 @@ FixListCheckWiki Projet:Correction_syntaxique/Analyse_022 22
 FixListCheckWiki Projet:Correction_syntaxique/Analyse_052 52
 FixListCheckWiki Projet:Correction_syntaxique/Analyse_064 64
 FixListCheckWiki Projet:Correction_syntaxique/Analyse_090 90
+FixListCheckWiki Projet:Correction_syntaxique/Analyse_566 566
 FixListCheckWiki Projet:Correction_syntaxique/Analyse_567 567
 FixListCheckWiki Projet:Correction_syntaxique/Analyse_568 568
 
@@ -83,6 +85,7 @@ FixListCheckWiki Projet:Correction_syntaxique/Analyse_064 64
 FixListCheckWiki Projet:Correction_syntaxique/Analyse_085 85
 FixListCheckWiki Projet:Correction_syntaxique/Analyse_088 88
 FixListCheckWiki Projet:Correction_syntaxique/Analyse_090 90
+FixListCheckWiki Projet:Correction_syntaxique/Analyse_566 566
 FixListCheckWiki Projet:Correction_syntaxique/Analyse_567 567
 FixListCheckWiki Projet:Correction_syntaxique/Analyse_568 568
 
