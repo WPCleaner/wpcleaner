@@ -1,6 +1,7 @@
 # Translation of WPCleaner to Indonesian (Bahasa Indonesia)
 # Exported from translatewiki.net
 #
+# Author: Hidayatsrf
 # --
 # This file is distributed under the same license as the wikicleaner package.
 #
@@ -10,7 +11,7 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2021-06-03 14:57:41+0000\n"
+"PO-Revision-Date: 2021-06-24 10:12:51+0000\n"
 "Last-Translator: iwean <iwan.novirion@gmail.com>\n"
 "Language-Team: Indonesian <id@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -42,20 +43,20 @@ msgstr "Anda dapat membantu dengan memperbaiki masalah yang diidentifikasi oleh 
 #: org/wikipediacleaner/Version.java:36
 #, java-format
 msgid "Integration between {0} and the Linter extension is done in the following way:"
-msgstr ""
+msgstr "Integrasi antara {0} dan ekstensi Linter dilakukan dengan cara berikut:"
 
 #: org/wikipediacleaner/Version.java:38
 msgid "The \"Linter categories\" button in this window lets you retrieve a list of pages detected by Linter for a given type of problem."
-msgstr ""
+msgstr "Tombol \"Kategori Linter\" di jendela ini memungkinkan Anda mengambil daftar halaman yang terdeteksi oleh Linter untuk jenis masalah tertentu."
 
 #: org/wikipediacleaner/Version.java:39
 msgid "The \"Check article with Linter\" button in the analysis window lets you check the current version of an article against Linter."
-msgstr ""
+msgstr "Tombol \"Periksa artikel dengan Linter\" di jendela analisis memungkinkan Anda memeriksa versi artikel saat ini dengan Linter."
 
 #: org/wikipediacleaner/Version.java:40
 #, java-format
 msgid "Some errors detected by Linter are also reported directly by {0}."
-msgstr ""
+msgstr "Beberapa kesalahan yang terdeteksi oleh Linter juga dilaporkan langsung oleh {0}."
 
 #: org/wikipediacleaner/Version.java:43
 #, java-format
@@ -74,11 +75,11 @@ msgstr "Saya harap anda suka {0}."
 #: org/wikipediacleaner/Version.java:50
 #, java-format
 msgid "I try to keep {0} up to date with Check Wiki, but if you find any discrepancy(ies) in the detections, please let me know."
-msgstr ""
+msgstr "Saya mencoba untuk terus memperbarui {0} dengan Check Wiki, tetapi jika Anda menemukan ketidaksesuaian dalam pendeteksian, beri tahu saya."
 
 #: org/wikipediacleaner/Version.java:51
 msgid "The Check Wiki project has evolved a lot recently."
-msgstr ""
+msgstr "Proyek Check Wiki telah banyak dikembangkan baru-baru ini."
 
 #: org/wikipediacleaner/Version.java:52
 msgid "New detections have been added either with new error numbers or by replacing previously used error numbers."
@@ -312,9 +313,8 @@ msgstr ""
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:304
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:318
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a566/CheckErrorAlgorithm566.java:283
-#, fuzzy
 msgid "Name of the template"
-msgstr "Cari pada templat"
+msgstr "Nama templat"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a002/CheckErrorAlgorithm002.java:800
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a060/CheckErrorAlgorithm060.java:201
@@ -347,9 +347,9 @@ msgstr "Daftar template yang mengakibatkan masuknya {0}"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a003/CheckErrorAlgorithm003.java:279
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a003/CheckErrorAlgorithm003.java:286
-#, fuzzy, java-format
+#, java-format
 msgid "Template resulting in the inclusion of {0}"
-msgstr "Daftar template yang mengakibatkan masuknya {0}"
+msgstr "Daftar templat yang mengakibatkan masuknya {0}"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a003/CheckErrorAlgorithm003.java:290
 #, java-format
@@ -420,9 +420,8 @@ msgid "To report control characters only in templates"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a016/CheckErrorAlgorithm016.java:370
-#, fuzzy
 msgid "To ignore some control characters"
-msgstr "Ganti semua karakter kontrol"
+msgstr "Untuk mengabaikan beberapa karakter kontrol"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a016/CheckErrorAlgorithm016.java:373
 msgid "To ignore control character with hexadecimal code equal to XX"
@@ -586,9 +585,8 @@ msgid "Restrict the detection to the first characters"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a03x/a037/CheckErrorAlgorithm037.java:233
-#, fuzzy
 msgid "Maximum number of characters to use for the detection"
-msgstr "Jumlah maksimum galat untuk Cek Wikipedia :"
+msgstr "Jumlah maksimum karakter yang digunakan untuk deteksi"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a03x/a037/CheckErrorAlgorithm037.java:236
 msgid "List of templates that prevent automatic fixing of this error"
@@ -946,9 +944,8 @@ msgid "Template that can be used to replace &lt;center&gt; tags"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a08x/a085/CheckErrorAlgorithm085.java:358
-#, fuzzy
 msgid "Name of the parameter to use"
-msgstr "Cari pada templat"
+msgstr "Nama parameter yang akan digunakan"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a090/CheckErrorAlgorithm090.java:661
 msgid "What text should be displayed by the link?"
@@ -1065,9 +1062,8 @@ msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a1xx/a11x/a111/CheckErrorAlgorithm111.java:204
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a568/CheckErrorAlgorithm568.java:250
-#, fuzzy
 msgid "Template name"
-msgstr "Templat"
+msgstr "Nama templat"
 
 #: org/wikipediacleaner/api/check/algorithm/a1xx/a11x/a111/CheckErrorAlgorithm111.java:207
 msgid "Parameter for the name of the group"
@@ -1100,18 +1096,16 @@ msgid "Compact link"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a513/CheckErrorAlgorithm513.java:878
-#, fuzzy
 msgid "A list of links that can be extracted when at the beginning of the external link"
-msgstr "Daftar template yang mengakibatkan masuknya {0}"
+msgstr "Daftar pranala yang dapat diekstraksi ketika di awal pranala luar"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a513/CheckErrorAlgorithm513.java:881
 msgid "An internal link that can be extracted when at the beginning of the external link"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a513/CheckErrorAlgorithm513.java:885
-#, fuzzy
 msgid "A list of links that can be extracted when at the end of the external link"
-msgstr "Daftar template yang mengakibatkan masuknya {0}"
+msgstr "Daftar pranala yang dapat diekstraksi saat berada di akhir pranala luar"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a513/CheckErrorAlgorithm513.java:888
 #, fuzzy
