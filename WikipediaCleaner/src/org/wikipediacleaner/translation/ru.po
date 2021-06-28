@@ -6,6 +6,7 @@
 # Author: Kareyac
 # Author: MuratTheTurkish
 # Author: Okras
+# Author: Pacha Tchernof
 # Author: Rivka Silinsky
 # Author: Rubin16
 # Author: Teretalexev
@@ -20,7 +21,7 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2021-06-03 14:57:43+0000\n"
+"PO-Revision-Date: 2021-06-28 13:44:03+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Russian <ru@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -346,7 +347,7 @@ msgstr "Закрыть тэг"
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a003/CheckErrorAlgorithm003.java:273
 #, java-format
 msgid "Text to insert for adding {0}"
-msgstr ""
+msgstr "Текст для вставки, чтобы добавить {0}"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a003/CheckErrorAlgorithm003.java:276
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a003/CheckErrorAlgorithm003.java:283
@@ -1157,9 +1158,8 @@ msgid "A list of template parameters that create the text of an external link"
 msgstr "Список шаблонов, которые необходимо игнорировать"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a513/CheckErrorAlgorithm513.java:926
-#, fuzzy
 msgid "Name of a template that creates an external link"
-msgstr "Список шаблонов, которые необходимо игнорировать"
+msgstr "Имя шаблона, создающего внешнюю ссылку"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a513/CheckErrorAlgorithm513.java:929
 #, fuzzy
@@ -1184,9 +1184,8 @@ msgid "A list of texts that can be before the internal link"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a513/CheckErrorAlgorithm513.java:949
-#, fuzzy
 msgid "Text that can be before the internal link"
-msgstr "Список шаблонов, которые необходимо игнорировать"
+msgstr "Текст, который может быть перед внутренней ссылкой"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a513/CheckErrorAlgorithm513.java:952
 msgid "True if finding this text means that the replacement can be automatic"
@@ -1378,14 +1377,12 @@ msgid "Trim text"
 msgstr "Обрезать текст"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a529/CheckErrorAlgorithm529.java:375
-#, fuzzy
 msgid "Automatic replacements of ISBN"
-msgstr "Сохранять последнюю использованную замену"
+msgstr "Автоматические замены ISBN"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a529/CheckErrorAlgorithm529.java:379
-#, fuzzy
 msgid "Name of the template to use for ISBN"
-msgstr "Получение шаблонов"
+msgstr "Имя шаблона, используемого для ISBN"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a529/CheckErrorAlgorithm529.java:382
 msgid "Text before the ISBN to be removed in the replacement"
@@ -4124,18 +4121,16 @@ msgid "You can learn how to add other Wikipedia at the following URL:"
 msgstr "Вы можете узнать, как добавлять другие Википедии, по адресу:"
 
 #: org/wikipediacleaner/gui/swing/deadlink/ActionDeadLink.java:49
-#, fuzzy
 msgid "Check dead links"
-msgstr "Проверить языковые ссылки"
+msgstr "Проверить недоступные ссылки"
 
 #: org/wikipediacleaner/gui/swing/deadlink/ActionDeadLink.java:204
 msgid "You need to select pages to check for dead links"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/deadlink/ActionDeadLink.java:207
-#, fuzzy
 msgid "Do you want to check for dead links?"
-msgstr "Хотите продолжить ?"
+msgstr "Хотите проверить наличие недоступных ссылок?"
 
 #: org/wikipediacleaner/gui/swing/deadlink/DeadLinkListTableModel.java:210
 #: org/wikipediacleaner/gui/swing/linter/LinterErrorListTableModel.java:222
@@ -4156,9 +4151,8 @@ msgid "Status"
 msgstr "Состояние"
 
 #: org/wikipediacleaner/gui/swing/deadlink/DeadLinkPanel.java:80
-#, fuzzy
 msgid "The following links seem to be dead:"
-msgstr "Произошла неизвестная ошибка"
+msgstr "Похоже, следующие ссылки недоступны:"
 
 #: org/wikipediacleaner/gui/swing/deadlink/DeadLinkWindow.java:37
 msgid "Dead links"
@@ -4211,9 +4205,8 @@ msgid "The following errors are currently detected by Linter:"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/linter/LinterErrorWindow.java:38
-#, fuzzy
 msgid "Linter errors"
-msgstr "Исправить категории"
+msgstr "Ошибки статического анализатора"
 
 #: org/wikipediacleaner/gui/swing/linter/LinterWorker.java:70
 msgid "No linter errors were found."
@@ -4688,9 +4681,8 @@ msgid "Maximum number of simultaneous analyses :"
 msgstr "Максимальное число одновременных анализов:"
 
 #: org/wikipediacleaner/gui/swing/options/LimitOptionsPanel.java:122
-#, fuzzy
 msgid "Maximum number of errors for Linter :"
-msgstr "Максимальное число ошибок для Check Wiki:"
+msgstr "Максимальное число ошибок для Linter:"
 
 #: org/wikipediacleaner/gui/swing/options/LimitOptionsPanel.java:139
 msgid "Minimum time between consecutive edits :"
