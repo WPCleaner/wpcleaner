@@ -71,6 +71,8 @@ public class CheckErrorAlgorithm069 extends CheckErrorAlgorithmISBN {
     "&#x20;",
   };
 
+  private final static Map<String, String> PREFIX_INTERNAL_LINK = new HashMap<>();
+
   private static final String SMALL_CLOSE = HtmlTagType.SMALL.getCloseTag();
   private static final String SMALL_OPEN = HtmlTagType.SMALL.getOpenTag();
 
@@ -78,6 +80,11 @@ public class CheckErrorAlgorithm069 extends CheckErrorAlgorithmISBN {
   private final static Map<String, Pair<Set<String>, Set<String>>> BOOK_SOURCES = new HashMap<>();
 
   static {
+    // Configure PREFIX_INTERNAL_LINK
+    PREFIX_INTERNAL_LINK.put(PageElementISBN.ISBN_PREFIX, "");
+    PREFIX_INTERNAL_LINK.put("(" + PageElementISBN.ISBN_PREFIX, "(");
+
+    // Configure BOOK_SOURCES
     Pair<Set<String>, Set<String>> wiki = null;
     Set<String> namespaceNames = null;
     Set<String> pageNames = null;
@@ -469,9 +476,7 @@ public class CheckErrorAlgorithm069 extends CheckErrorAlgorithmISBN {
       PageElementInternalLink link) {
 
     // Check for the presence of the ISBN prefix
-    if (!PageElementISBN.ISBN_PREFIX.equals(link.getDisplayedText().trim())) {
-      return false;
-    }
+    String extraPrefix = PREFIX_INTERNAL_LINK.get(link.getDisplayedText().trim());
 
     // Move to the beginning of the potential ISBN value
     int tmpIndex = link.getEndIndex();
@@ -563,7 +568,7 @@ public class CheckErrorAlgorithm069 extends CheckErrorAlgorithmISBN {
     CheckErrorResult errorResult = createCheckErrorResult(
         analysis, link.getBeginIndex(), tmpIndex);
     errorResult.addReplacement(
-        PageElementISBN.ISBN_PREFIX + " " + suffix);
+        extraPrefix + PageElementISBN.ISBN_PREFIX + " " + suffix);
     errors.add(errorResult);
     return true;
   }
