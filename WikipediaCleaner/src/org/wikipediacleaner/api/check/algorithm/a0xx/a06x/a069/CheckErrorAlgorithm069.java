@@ -477,6 +477,9 @@ public class CheckErrorAlgorithm069 extends CheckErrorAlgorithmISBN {
 
     // Check for the presence of the ISBN prefix
     String extraPrefix = PREFIX_INTERNAL_LINK.get(link.getDisplayedText().trim());
+    if (extraPrefix == null) {
+      return false;
+    }
 
     // Move to the beginning of the potential ISBN value
     int tmpIndex = link.getEndIndex();
