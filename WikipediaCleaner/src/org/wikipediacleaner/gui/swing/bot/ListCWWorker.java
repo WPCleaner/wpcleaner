@@ -13,6 +13,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.net.SocketTimeoutException;
+import java.nio.charset.StandardCharsets;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -260,16 +261,16 @@ public class ListCWWorker extends BasicWorker {
    * @return True if result was saved completely.
    */
   private boolean appendResult(
-      List<Detection> pages, Long maxSize,
+      List<Detection> pages, long maxSize,
       StringBuilder result) {
-    boolean full = true;
     StringBuilder buffer = new StringBuilder();
     buffer.append(CommentBuilder.from("Generated using " + dumpFile.getName()).toString());
     buffer.append("\n");
+    long currentLength = buffer.toString().getBytes(StandardCharsets.UTF_8).length;
     ErrorLevel lastLevel = null;
     StringBuilder line = new StringBuilder();
-    List<Detection> pagesToRemove = new ArrayList<>();
-    for (Detection detection : pages) {
+    for (int detectionNum = 0; detectionNum < pages.size(); detectionNum++) {
+      Detection detection = pages.get(detectionNum);
       line.setLength(0);
       if ((detection.maxLevel != null) &&
           !detection.maxLevel.equals(lastLevel)) {
@@ -277,115 +278,125 @@ public class ListCWWorker extends BasicWorker {
         line.append(CommentBuilder.from(lastLevel.toString()).toString());
         line.append("\n");
       }
-      line.append("* ");
-      line.append(InternalLinkBuilder
-          .from(detection.pageName)
-          .withColon(Namespace.isColonNeeded(detection.namespace))
-          .toString());
-      if (detection.notices != null) {
-        boolean first = true;
-        for (String notice : detection.notices) {
-          line.append(first ? ": " : ", ");
-          first = false;
-          line.append(WikiTagType.NOWIKI.getOpenTag());
-          int index = 0;
-          while (index < notice.length()) {
-            int codePoint = notice.codePointAt(index);
-            switch (codePoint) {
-            case '&': // Replace "&" by its HTML element
-              line.append("&amp;");
-              break;
-            case '\n': // Replace \n by a visual character
-              line.append('\u21b5');
-              break;
-            case '<': // Replace "<" by its HTML element
-              line.append("&lt;");
-              break;
-            case '\u007F': // Replace control characters by visible text
-              line.append("[DEL]");
-              break;
-            case '\u00A0': // Replace control characters by visible text
-              line.append("[NBSP]");
-              break;
-            case '\u00AD': // Replace control characters by visible text
-              line.append("[SHY]");
-              break;
-            case '\u2004': // Replace control characters by visible text
-              line.append("[3EM]");
-              break;
-            case '\u2005': // Replace control characters by visible text
-              line.append("[4EM]");
-              break;
-            case '\u2006': // Replace control characters by visible text
-              line.append("[6EM]");
-              break;
-            case '\u2007': // Replace control characters by visible text
-              line.append("[FS]");
-              break;
-            case '\u2008': // Replace control characters by visible text
-              line.append("[PS]");
-              break;
-            case '\u200B': // Replace control characters by visible text
-              line.append("[0WS]");
-              break;
-            case '\u200E': // Replace control characters by visible text
-              line.append("[LRM]");
-              break;
-            case '\u200F': // Replace control characters by visible text
-              line.append("[RLM]");
-              break;
-            case '\u2028': // Replace control characters by visible text
-              line.append("[LS]");
-              break;
-            case '\u202A': // Replace control characters by visible text
-              line.append("[LRE]");
-              break;
-            case '\u202B': // Replace control characters by visible text
-              line.append("[RLE]");
-              break;
-            case '\u202C': // Replace control characters by visible text
-              line.append("[POPD]");
-              break;
-            case '\u202D': // Replace control characters by visible text
-              line.append("[LRO]");
-              break;
-            case '\u202E': // Replace control characters by visible text
-              line.append("[RLO]");
-              break;
-            case '\uFEFF': // Replace control characters by visible text
-              line.append("[BOM]");
-              break;
-            case '\uFFFC': // Replace control characters by visible text
-              line.append("[ORC]");
-              break;
-            default:
-              if ((codePoint >= 0xE000) && (codePoint <= 0xF8FF)) {
-                line.append("[PUA]");
-              } else if ((codePoint >= 0XF0000) && (codePoint <= 0xFFFFD)) {
-                line.append("[PUA_A]");
-              } else if ((codePoint >= 0x100000) && (codePoint <= 0x10FFFD)) {
-                line.append("[PUA_B]");
-              } else {
-                line.appendCodePoint(codePoint);
-              }
-            } 
-            index = notice.offsetByCodePoints(index, 1);
-          }
-          line.append(WikiTagType.NOWIKI.getCloseTag());
+      appendDetection(detection, line);
+      long lineLength = line.toString().getBytes(StandardCharsets.UTF_8).length;
+      if (currentLength + lineLength >= maxSize) {
+        result.append(buffer);
+        while (pages.size() > detectionNum) {
+          pages.remove(pages.size() - 1);
         }
+        return false;
       }
-      line.append("\n");
-      if ((maxSize == null) ||
-          (buffer.length() + line.length() < maxSize)) {
-        buffer.append(line);
-      } else {
-        pagesToRemove.add(detection);
-        full = false;
+      buffer.append(line);
+      currentLength += lineLength;
+    }
+    result.append(buffer);
+    return true;
+  }
+
+  /**
+   * @param detection Detection.
+   * @param line Formatted result.
+   */
+  private void appendDetection(Detection detection, StringBuilder line) {
+    line.append("* ");
+    line.append(InternalLinkBuilder
+        .from(detection.pageName)
+        .withColon(Namespace.isColonNeeded(detection.namespace))
+        .toString());
+    if (detection.notices != null) {
+      boolean first = true;
+      for (String notice : detection.notices) {
+        line.append(first ? ": " : ", ");
+        first = false;
+        line.append(WikiTagType.NOWIKI.getOpenTag());
+        int index = 0;
+        while (index < notice.length()) {
+          int codePoint = notice.codePointAt(index);
+          switch (codePoint) {
+          case '&': // Replace "&" by its HTML element
+            line.append("&amp;");
+            break;
+          case '\n': // Replace \n by a visual character
+            line.append('\u21b5');
+            break;
+          case '<': // Replace "<" by its HTML element
+            line.append("&lt;");
+            break;
+          case '\u007F': // Replace control characters by visible text
+            line.append("[DEL]");
+            break;
+          case '\u00A0': // Replace control characters by visible text
+            line.append("[NBSP]");
+            break;
+          case '\u00AD': // Replace control characters by visible text
+            line.append("[SHY]");
+            break;
+          case '\u2004': // Replace control characters by visible text
+            line.append("[3EM]");
+            break;
+          case '\u2005': // Replace control characters by visible text
+            line.append("[4EM]");
+            break;
+          case '\u2006': // Replace control characters by visible text
+            line.append("[6EM]");
+            break;
+          case '\u2007': // Replace control characters by visible text
+            line.append("[FS]");
+            break;
+          case '\u2008': // Replace control characters by visible text
+            line.append("[PS]");
+            break;
+          case '\u200B': // Replace control characters by visible text
+            line.append("[0WS]");
+            break;
+          case '\u200E': // Replace control characters by visible text
+            line.append("[LRM]");
+            break;
+          case '\u200F': // Replace control characters by visible text
+            line.append("[RLM]");
+            break;
+          case '\u2028': // Replace control characters by visible text
+            line.append("[LS]");
+            break;
+          case '\u202A': // Replace control characters by visible text
+            line.append("[LRE]");
+            break;
+          case '\u202B': // Replace control characters by visible text
+            line.append("[RLE]");
+            break;
+          case '\u202C': // Replace control characters by visible text
+            line.append("[POPD]");
+            break;
+          case '\u202D': // Replace control characters by visible text
+            line.append("[LRO]");
+            break;
+          case '\u202E': // Replace control characters by visible text
+            line.append("[RLO]");
+            break;
+          case '\uFEFF': // Replace control characters by visible text
+            line.append("[BOM]");
+            break;
+          case '\uFFFC': // Replace control characters by visible text
+            line.append("[ORC]");
+            break;
+          default:
+            if ((codePoint >= 0xE000) && (codePoint <= 0xF8FF)) {
+              line.append("[PUA]");
+            } else if ((codePoint >= 0XF0000) && (codePoint <= 0xFFFFD)) {
+              line.append("[PUA_A]");
+            } else if ((codePoint >= 0x100000) && (codePoint <= 0x10FFFD)) {
+              line.append("[PUA_B]");
+            } else {
+              line.appendCodePoint(codePoint);
+            }
+          } 
+          index = notice.offsetByCodePoints(index, 1);
+        }
+        line.append(WikiTagType.NOWIKI.getCloseTag());
       }
     }
-    pages.removeAll(pagesToRemove);
-    result.append(buffer);
-    return full;
+    line.append("\n");
   }
 
   /**
@@ -455,12 +466,13 @@ public class ListCWWorker extends BasicWorker {
     // Generate result
     logCW.info("Preparing results of dump analysis for error " + algorithm.getErrorNumberString());
     int nbPages = pages.size();
-    Long maxSize = getWikipedia().getWikiConfiguration().getMaxArticleSize();
-    List<Detection> tmpPages = new ArrayList<>(pages);
+    final Long maxSize = getWikipedia().getWikiConfiguration().getMaxArticleSize();
+    final List<Detection> tmpPages = new ArrayList<>(pages);
 
     // Loop
     boolean fullySaved = true;
     int attemptCount = 0;
+    long currentMaxSize = (maxSize != null) ? maxSize : Long.MAX_VALUE;
     while (attemptCount < 10) {
       attemptCount++;
 
@@ -491,31 +503,25 @@ public class ListCWWorker extends BasicWorker {
       }
 
       // Build new text for the page
-      String text = "";
-      boolean finished = false;
-      do {
-        StringBuilder newText = new StringBuilder();
-        newText.append(contents.substring(0, begin));
-        newText.append("\n");
-        fullySaved &= appendResult(tmpPages, maxSize - begin - contents.length() + end, newText);
-        newText.append(contents.substring(end));
-        text = newText.toString();
-        if (getWikipedia().getWikiConfiguration().isArticleTooLong(text)) {
-          if (!tmpPages.isEmpty()) {
-            tmpPages.remove(tmpPages.size() - 1);
-            fullySaved = false;
-          }
-        } else {
-          finished = true;
-        }
-      } while (!finished && !tmpPages.isEmpty());
+      long internalMaxSize = currentMaxSize;
+      final StringBuilder newText = new StringBuilder();
+      newText.append(contents.substring(0, begin));
+      newText.append("\n");
+      internalMaxSize -= newText.toString().getBytes(StandardCharsets.UTF_8).length;
+      String suffix = contents.substring(end);
+      internalMaxSize -= suffix.getBytes(StandardCharsets.UTF_8).length;
+      fullySaved &= appendResult(tmpPages, internalMaxSize, newText);
+      newText.append(contents.substring(end));
+      final String text = newText.toString();
 
       // Update page
       try {
         if (!text.equals(contents)) {
+          int currentNbPages = tmpPages.size();
+          String nbPagesToDisplay = (currentNbPages == nbPages) ? "" + nbPages : "" + currentNbPages + "/" + nbPages;
           api.updatePage(
               getWikipedia(), page, text,
-              "Dump analysis for error n°" + algorithm.getErrorNumberString() + " (" + nbPages + " pages)",
+              "Dump analysis for error n°" + algorithm.getErrorNumberString() + " (" + nbPagesToDisplay + " pages)",
               false, true, true, false);
         }
         return fullySaved;
@@ -539,12 +545,8 @@ public class ListCWWorker extends BasicWorker {
         if (!tooBig) {
           throw e;
         }
-        for (int i = 0; i < 100; i++) {
-          if (!tmpPages.isEmpty()) {
-            tmpPages.remove(tmpPages.size() - 1);
-          }
-        }
-        logCW.info("Trying with smaller list (" + tmpPages.size() + ")");
+        currentMaxSize = Math.max(0, currentMaxSize - 100000);
+        logCW.info("Trying with smaller list (" + currentMaxSize + " bytes)");
       }
     }
 
@@ -578,7 +580,7 @@ public class ListCWWorker extends BasicWorker {
     // Generate result
     logCW.info("Preparing results of dump analysis for error " + algorithm.getErrorNumberString());
     StringBuilder result = new StringBuilder();
-    appendResult(pages, null, result);
+    appendResult(pages, Long.MAX_VALUE, result);
 
     // Write the file
     logCW.info("Writing dump analysis results for error " + algorithm.getErrorNumberString() + " to file " + outputFile.getName());
