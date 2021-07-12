@@ -60,6 +60,9 @@ public class PageElementISBN extends PageElement {
   /** ISBN incorrect characters at the beginning */
   private final static String INCORRECT_BEGIN_CHARACTERS = ":;‐\t—=–#('|.";
 
+  /** ISBN incorrect strings at the beginning */
+  private final static String[] INCORRECT_BEGIN_STRINGS = { "&nbsp;" };
+
   /**
    * @param analysis Page analysis.
    * @return List of ISBN.
@@ -354,6 +357,16 @@ public class PageElementISBN extends PageElement {
               index++;
               isCorrect = false;
               done = false;
+            } else {
+              boolean otherFound = false;
+              for (String incorrectBeginString : INCORRECT_BEGIN_STRINGS) {
+                if (!otherFound && contents.startsWith(incorrectBeginString, index)) {
+                  index += incorrectBeginString.length();
+                  isCorrect = false;
+                  done = false;
+                  otherFound = true;
+                }
+              }
             }
           }
         }
