@@ -2,3 +2,4 @@ DoTasks _Common.txt
 DoTasks ListCheckWiki_Before.txt
 DoTasks ListCheckWiki_List.txt
 DoTasks ListCheckWiki_After.txt
+DoTasks ListCheckWiki_List.txt
