@@ -174,6 +174,9 @@ public enum EnumQueryResult {
   SELF_MOVE(
       "SelfMove",
       "Can't move a page to itself"),
+  SPAM_BLACKLIST(
+      "SpamBlackList",
+      "The text you wanted to publish was blocked by the spam filter. This is probably caused by a link to a forbidden external site."),
   SPAM_DETECTED(
       "SpamDetected",
       "Your edit was refused because it contained a spam fragment"),

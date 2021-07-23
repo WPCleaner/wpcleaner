@@ -8,6 +8,7 @@
 
 package org.wikipediacleaner.gui.swing.bot;
 
+import java.lang.invoke.MethodHandles;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -45,7 +46,7 @@ import org.wikipediacleaner.i18n.GT;
 public abstract class AutomaticFixWorker extends BasicWorker {
 
   /** Logger */
-  private final Logger log = LoggerFactory.getLogger(AutomaticFixWorker.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
   /** Algorithms for which to fix pages. */
   protected final List<CheckErrorAlgorithm> selectedAlgorithms;
@@ -188,7 +189,7 @@ public abstract class AutomaticFixWorker extends BasicWorker {
         handleNotFound(algorithms, page);
       }
     } catch (RuntimeException e) {
-      log.error("Error analyzing page {}", page.getTitle(), e);
+      LOGGER.error("Error analyzing page {}", page.getTitle(), e);
       throw e;
     }
   }
@@ -213,7 +214,7 @@ public abstract class AutomaticFixWorker extends BasicWorker {
       return null;
     }
     if (page.getEditProhibition()) {
-      log.info("Page {} is ignored because edit is prohibited on it", page.getTitle());
+      LOGGER.info("Page {} is ignored because edit is prohibited on it", page.getTitle());
       return null;
     }
 
@@ -305,32 +306,42 @@ public abstract class AutomaticFixWorker extends BasicWorker {
 
     // Save page if errors have been fixed
     if (isFixed) {
-      StringBuilder comment = new StringBuilder();
-      if ((extraComment != null) && (extraComment.trim().length() > 0)) {
-        comment.append(extraComment.trim());
-        comment.append(" - ");
-      }
-      comment.append(getWikipedia().getCWConfiguration().getComment(errorsFixed));
-      setText(
-          ((prefix != null) ? (prefix + " - ") : "") +
-          GT._T("Fixing page {0}", page.getTitle()));
-      API api = APIFactory.getAPI();
-      api.updatePage(
-          getWikipedia(), page, newContents,
-          comment.toString(),
-          true, true, true, false);
-      incrementModified();
-      for (AlgorithmError.Progress errorFixed : errorsFixed) {
-        CheckErrorAlgorithm usedAlgorithm = errorFixed.algorithm;
-        CheckErrorPage errorPage = AlgorithmError.analyzeError(usedAlgorithm, page.getAnalysis(newContents, true));
-        if ((errorPage != null) && (!errorPage.getErrorFound())) {
-          CheckWiki checkWiki = APIFactory.getCheckWiki();
-          checkWiki.markAsFixed(page, usedAlgorithm.getErrorNumberString());
-          if (selectedAlgorithms.contains(usedAlgorithm)) {
-            incrementMarked();
-          } else {
-            incrementMarkedOther();
+      try {
+        StringBuilder comment = new StringBuilder();
+        if ((extraComment != null) && (extraComment.trim().length() > 0)) {
+          comment.append(extraComment.trim());
+          comment.append(" - ");
+        }
+        comment.append(getWikipedia().getCWConfiguration().getComment(errorsFixed));
+        setText(
+            ((prefix != null) ? (prefix + " - ") : "") +
+            GT._T("Fixing page {0}", page.getTitle()));
+        API api = APIFactory.getAPI();
+        api.updatePage(
+            getWikipedia(), page, newContents,
+            comment.toString(),
+            true, true, true, false);
+        incrementModified();
+        for (AlgorithmError.Progress errorFixed : errorsFixed) {
+          CheckErrorAlgorithm usedAlgorithm = errorFixed.algorithm;
+          CheckErrorPage errorPage = AlgorithmError.analyzeError(usedAlgorithm, page.getAnalysis(newContents, true));
+          if ((errorPage != null) && (!errorPage.getErrorFound())) {
+            CheckWiki checkWiki = APIFactory.getCheckWiki();
+            checkWiki.markAsFixed(page, usedAlgorithm.getErrorNumberString());
+            if (selectedAlgorithms.contains(usedAlgorithm)) {
+              incrementMarked();
+            } else {
+              incrementMarkedOther();
+            }
           }
+        }
+      } catch (APIException e) {
+        EnumQueryResult result = e.getQueryResult();
+        LOGGER.error("Error updating page {}: ", page.getTitle(), result.getCode());
+        if (result == EnumQueryResult.SPAM_BLACKLIST) {
+          LOGGER.error("Error ignored, continuing work");
+        } else {
+          throw e;
         }
       }
     } else if (analyzeNonFixed) {

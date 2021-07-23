@@ -171,6 +171,7 @@ class TemplateConfiguration {
     String strippedComputedName = computedName;
     String numericComputedName = StringUtils.EMPTY;
     Set<String> correctKnownParams = knownParams;
+    int completionDigitsCount = 0;
     if (numericalParameter) {
       int beginNumeric = computedName.length();
       while ((beginNumeric > 0) &&
@@ -187,11 +188,12 @@ class TemplateConfiguration {
           beginNumeric--;
         }
         strippedName = name.substring(0, beginNumeric);
+        completionDigitsCount = name.length() - beginNumeric;
       }
     }
 
     // Search in the known parameters if one can be used instead
-    boolean safeDelete = StringUtils.isEmpty(param.getValue());
+    boolean safeDelete = StringUtils.isEmpty(param.getValue()) && completionDigitsCount == 0;
     Map<String, String> missingEqualByName = new TreeMap<>(Comparator.comparingInt(String::length).thenComparing(Function.identity()).reversed());
     Map<Integer, List<String>> similarNamesByDistance = new HashMap<>();
     for (String knownParam : correctKnownParams) {
@@ -217,7 +219,7 @@ class TemplateConfiguration {
       // Search for missing "=" sign
       if (!StringUtils.equals(name, computedName) &&
           StringUtils.startsWith(param.getValue(), completedKnownParam)) {
-        missingEqualByName.put(completedKnownParam,  param.getValue().substring(completedKnownParam.length()).trim());
+        missingEqualByName.put(completedKnownParam, param.getValue().substring(completedKnownParam.length()).trim());
       }
 
       // Handle strange cases with mixed parameter name and value
@@ -235,7 +237,9 @@ class TemplateConfiguration {
     }
 
     // Handle various suggestions
-    handleSimilarNames(results, similarNamesByDistance, param, template, contents);
+    handleSimilarNames(
+        results, similarNamesByDistance, param, template, contents,
+        completionDigitsCount > 0 && StringUtils.isEmpty(param.getValue()));
     handleMissingEqual(results, missingEqualByName, param, template, contents);
     safeDelete &= results.isEmpty();
     results.add(TemplateParameterSuggestion.deleteParam(contents, param, safeDelete));
@@ -267,6 +271,9 @@ class TemplateConfiguration {
           (missingEqualName.length() >= 5) ||
           ((missingEqualName.length() >= 4) && (missingEqualValue.length() >= 4));
       automatic &= !missingEqualFound;
+      for (int nbChars = 1; nbChars < missingEqualValue.length(); nbChars++) {
+        automatic &= !knownParams.contains(missingEqualName + missingEqualValue.substring(0, nbChars));
+      }
       missingEqualFound = true;
       if (StringUtils.isEmpty(param.getValue())) {
         automatic &=
@@ -300,10 +307,10 @@ class TemplateConfiguration {
       Map<Integer, List<String>> similarNamesByDistance,
       PageElementTemplate.Parameter param,
       PageElementTemplate template,
-      String contents) {
+      String contents,
+      boolean preventAutomatic) {
     Comparator<String> decreasingSizeComparator = (s1, s2) -> Integer.compare(s2.length(), s1.length());
     String computedName = param.getComputedName();
-    boolean preventAutomatic = false;
     for (int distance = 1; distance <= 3; distance++) {
       List<String> listKnownParams = similarNamesByDistance.getOrDefault(distance, Collections.emptyList());
       listKnownParams.sort(decreasingSizeComparator);
