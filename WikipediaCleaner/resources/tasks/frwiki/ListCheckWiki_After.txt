@@ -16,6 +16,7 @@ FixListCheckWiki Projet:Correction_syntaxique/Analyse_018 18
 FixListCheckWiki Projet:Correction_syntaxique/Analyse_019 19
 FixListCheckWiki Projet:Correction_syntaxique/Analyse_022 22
 FixListCheckWiki Projet:Correction_syntaxique/Analyse_025 25
+FixListCheckWiki Projet:Correction_syntaxique/Analyse_044 44
 FixListCheckWiki Projet:Correction_syntaxique/Analyse_046 46
 FixListCheckWiki Projet:Correction_syntaxique/Analyse_048 48
 FixListCheckWiki Projet:Correction_syntaxique/Analyse_052 52
@@ -55,6 +56,7 @@ Set Namespaces 6
 FixListCheckWiki Projet:Correction_syntaxique/Analyse_002 2
 FixListCheckWiki Projet:Correction_syntaxique/Analyse_016 16
 FixListCheckWiki Projet:Correction_syntaxique/Analyse_022 22
+FixListCheckWiki Projet:Correction_syntaxique/Analyse_044 44
 FixListCheckWiki Projet:Correction_syntaxique/Analyse_052 52
 FixListCheckWiki Projet:Correction_syntaxique/Analyse_064 64
 FixListCheckWiki Projet:Correction_syntaxique/Analyse_090 90
@@ -80,6 +82,7 @@ FixListCheckWiki Projet:Correction_syntaxique/Analyse_019 19
 FixListCheckWiki Projet:Correction_syntaxique/Analyse_020 20
 FixListCheckWiki Projet:Correction_syntaxique/Analyse_022 22
 FixListCheckWiki Projet:Correction_syntaxique/Analyse_025 25
+FixListCheckWiki Projet:Correction_syntaxique/Analyse_044 44
 FixListCheckWiki Projet:Correction_syntaxique/Analyse_046 46
 FixListCheckWiki Projet:Correction_syntaxique/Analyse_052 52
 FixListCheckWiki Projet:Correction_syntaxique/Analyse_054 54

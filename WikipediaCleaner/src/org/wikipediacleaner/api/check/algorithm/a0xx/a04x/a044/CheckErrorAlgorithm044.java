@@ -10,12 +10,14 @@ package org.wikipediacleaner.api.check.algorithm.a0xx.a04x.a044;
 import java.util.Collection;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase;
-import org.wikipediacleaner.api.configuration.WPCConfigurationString;
+import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.PageElementTitle;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
-import org.wikipediacleaner.api.data.contents.template.TemplateBuilder;
+import org.wikipediacleaner.api.data.contents.comment.ContentsComment;
+import org.wikipediacleaner.api.data.contents.tag.WikiTagType;
 import org.wikipediacleaner.api.data.contents.title.TitleBuilder;
 import org.wikipediacleaner.gui.swing.component.MWPane;
 import org.wikipediacleaner.i18n.GT;
@@ -61,60 +63,71 @@ public class CheckErrorAlgorithm044 extends CheckErrorAlgorithmBase {
     List<PageElementTitle> titles = analysis.getTitles();
     boolean result = false;
     for (PageElementTitle title : titles) {
-      String text = title.getTitle();
-      if (text != null) {
-        text = text.trim();
+      result |= analyzeTitle(analysis, errors, title);
+    }
 
-        // Check if the title is bold
-        int index = 0;
-        int countBold = 0;
-        boolean possibleApostrophe = false;
-        while (index < text.length()) {
-          if (text.startsWith("'''", index)) {
-            index += 3;
-            countBold++;
-          } else if ((countBold == 1) && (text.startsWith("''", index))) {
-            index += 2;
-            possibleApostrophe = true;
+    return result;
+  }
+
+  private boolean analyzeTitle(
+      PageAnalysis analysis,
+      Collection<CheckErrorResult> errors,
+      PageElementTitle title) {
+
+    // Check if the title has bold
+    String contents = analysis.getContents();
+    int index = title.getBeginIndex();
+    int countBold = 0;
+    int countItalic = 0;
+    while (index < title.getEndIndex()) {
+      if (contents.startsWith("<", index)) {
+        PageElementTag tag = analysis.isInTag(index, WikiTagType.REF);
+        if ((tag != null) && (tag.getBeginIndex() == index)) {
+          index = tag.getCompleteEndIndex();
+        } else {
+          ContentsComment comment = analysis.comments().getBeginsAt(index);
+          if (comment != null) {
+            index = comment.getEndIndex();
           } else {
             index++;
           }
         }
-
-        // Register error
-        if (countBold > 0) {
-          if (errors == null) {
-            return true;
-          }
-          result = true;
-          CheckErrorResult errorResult = createCheckErrorResult(
-              analysis,
-              title.getBeginIndex(), title.getEndIndex());
-          if ((countBold == 1) && possibleApostrophe) {
-            String template = analysis.getWPCConfiguration().getString(
-                WPCConfigurationString.APOSTROPHE_TEMPLATE);
-            if (template != null) {
-              String replacement = text.replaceFirst(
-                  "'''",
-                  TemplateBuilder.from(template).toString() + "''");
-              errorResult.addReplacement(TitleBuilder
-                  .from(title.getLevel(), replacement)
-                  .withAfter(title.getAfterTitle()).toString());
-            }
-          }
-          if (countBold >= 2) {
-            errorResult.addReplacement(TitleBuilder
-                .from(title.getLevel(), text.replaceAll("'''", ""))
-                .withAfter(title.getAfterTitle()).toString(),
-                false,
-                (countBold == 2) && text.startsWith("'''") && text.endsWith("'''"));
-          }
-          errors.add(errorResult);
-        }
+      } else if (contents.startsWith("'''", index)) {
+        index += 3;
+        countBold++;
+      } else if (contents.startsWith("''", index)) {
+        index += 2;
+        countItalic = 1;
+      } else {
+        index++;
       }
     }
 
-    return result;
+    // Check if error is present
+    if (countBold == 0) {
+      return false;
+    }
+    if ((countBold == 1) && (countItalic % 2 == 1)) {
+      return false;
+    }
+
+    // Register error
+    if (errors == null) {
+      return true;
+    }
+    String text = StringUtils.defaultString(title.getTitle(), "").trim();
+    CheckErrorResult errorResult = createCheckErrorResult(
+        analysis,
+        title.getBeginIndex(), title.getEndIndex());
+    if (countBold >= 2) {
+      errorResult.addReplacement(TitleBuilder
+          .from(title.getLevel(), text.replaceAll("'''", ""))
+          .withAfter(title.getAfterTitle()).toString(),
+          false,
+          (countBold == 2) && text.startsWith("'''") && text.endsWith("'''"));
+    }
+    errors.add(errorResult);
+    return true;
   }
 
   /**
