@@ -11,12 +11,12 @@
 msgid ""
 msgstr ""
 ""
-"PO-Revision-Date: 2021-07-19 11:15:06+0000\n"
+"PO-Revision-Date: 2021-07-29 11:17:59+0000\n"
 "X-POT-Import-Date: 2021-05-26 12:35:19+0000\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Language: zh_tw\n"
-"X-Generator: MediaWiki 1.36.1; Translate 2021-04-28\n"
+"X-Generator: MediaWiki 1.36.1; Translate 2021-07-26\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
 #: org/wikipediacleaner/Version.java:31
