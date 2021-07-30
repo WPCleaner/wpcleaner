@@ -192,6 +192,12 @@ public class CheckErrorAlgorithm532 extends CheckErrorAlgorithmBase {
     if (!hasBeenReported) {
       boolean shouldBeReported = tagTypes.contains(tag.getType());
       if (shouldBeReported) {
+        int beginIndex = tag.getBeginIndex();
+        if (analysis.getSurroundingTag(WikiTagType.SCORE, beginIndex) != null) {
+          shouldBeReported = false;
+        }
+      }
+      if (shouldBeReported) {
         CheckErrorResult errorResult = createCheckErrorResult(analysis, tag.getBeginIndex(), tag.getEndIndex());
         errors.add(errorResult);
         hasBeenReported = true;
