@@ -27,6 +27,7 @@ import org.wikipediacleaner.api.constants.wiki.AbstractWikiSettings;
 import org.wikipediacleaner.api.constants.wiki.Waze;
 import org.wikipediacleaner.api.constants.wiki.WazeopediaUSA;
 import org.wikipediacleaner.api.constants.wiki.WikiSkripta;
+import org.wikipediacleaner.api.constants.wiki.Wikibooks;
 import org.wikipediacleaner.api.constants.wiki.WikimediaCommons;
 import org.wikipediacleaner.api.constants.wiki.WikimediaMeta;
 import org.wikipediacleaner.api.constants.wiki.Wikipedia;
@@ -119,20 +120,25 @@ public enum EnumWikipedia {
   COMMONS(new WikimediaCommons()),
   META(new WikimediaMeta()),
 
+  WIKTIONARY_BN(new Wiktionary("bn", "Bengali Wiktionary")),
   WIKTIONARY_EN(new Wiktionary("en", "English Wiktionary")),
   WIKTIONARY_FR(new Wiktionary("fr", "Wiktionnaire en français")),
   WIKTIONARY_SV(new Wiktionary("sv", "Swedish Wiktionary")),
+
+  WIKIBOOKS_BN(new Wikibooks("bn", "Bengali Wikibooks")),
 
   WIKIQUOTE_CA(new Wikiquote("ca", "Viquidites")),
   WIKIQUOTE_FR(new Wikiquote("fr", "Wikiquote en français")),
   WIKIQUOTE_IT(new Wikiquote("it", "Wikiquote")),
 
+  WIKISOURCE_BN(new Wikisource("bn", "Bengali Wikisource")),
   WIKISOURCE_ES(new Wikisource("es", "Wikisource en español")),
   WIKISOURCE_FR(new Wikisource("fr", "Wikisource en français")),
 
   WIKIVERSITY_FR(new Wikiversity("fr", "Wikiversité en français")),
   WIKIVERSITY_IT(new Wikiversity("it", "Wikiversità")),
 
+  WIKIVOYAGE_BN(new Wikivoyage("bn", "Bengali Wikivoyage")),
   WIKIVOYAGE_FR(new Wikivoyage("fr", "Wikivoyage en français")),
   
   WAZE(new Waze()),
