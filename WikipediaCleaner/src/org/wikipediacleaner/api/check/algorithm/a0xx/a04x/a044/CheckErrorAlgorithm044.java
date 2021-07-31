@@ -16,6 +16,7 @@ import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.PageElementTitle;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
+import org.wikipediacleaner.api.data.contents.ContentsUtil;
 import org.wikipediacleaner.api.data.contents.comment.ContentsComment;
 import org.wikipediacleaner.api.data.contents.tag.WikiTagType;
 import org.wikipediacleaner.api.data.contents.title.TitleBuilder;
@@ -69,6 +70,14 @@ public class CheckErrorAlgorithm044 extends CheckErrorAlgorithmBase {
     return result;
   }
 
+  /**
+   * Analyze a title to check if errors are present.
+   * 
+   * @param analysis Page analysis.
+   * @param errors Errors found in the page.
+   * @param title Title to be analyzed.
+   * @return Flag indicating if the error was found.
+   */
   private boolean analyzeTitle(
       PageAnalysis analysis,
       Collection<CheckErrorResult> errors,
@@ -120,11 +129,27 @@ public class CheckErrorAlgorithm044 extends CheckErrorAlgorithmBase {
         analysis,
         title.getBeginIndex(), title.getEndIndex());
     if (countBold >= 2) {
+      boolean automaticBot = false;
+      if (countBold == 2) {
+        String tmpText = text;
+        int currentIndex = title.getAfterTitleIndex();
+        currentIndex = ContentsUtil.moveIndexBackwardWhileFound(contents, currentIndex - 1, "=");
+        currentIndex = ContentsUtil.moveIndexBackwardWhileFound(contents, currentIndex, " ");
+        currentIndex++;
+        if ((currentIndex > 0) && (contents.charAt(currentIndex - 1) == '>')) {
+          PageElementTag tag = analysis.isInTag(currentIndex - 1, WikiTagType.REF);
+          if ((tag != null) && (tag.getCompleteEndIndex() == currentIndex)) {
+            tmpText = tmpText.substring(0, Math.max(0, tmpText.length() - tag.getCompleteEndIndex() + tag.getCompleteBeginIndex()));
+          }
+        }
+        if (tmpText.startsWith("'''") && tmpText.endsWith("'''")) {
+          automaticBot = true;
+        }
+      }
       errorResult.addReplacement(TitleBuilder
           .from(title.getLevel(), text.replaceAll("'''", ""))
           .withAfter(title.getAfterTitle()).toString(),
-          false,
-          (countBold == 2) && text.startsWith("'''") && text.endsWith("'''"));
+          false, automaticBot);
     }
     errors.add(errorResult);
     return true;
