@@ -48,6 +48,7 @@ import org.wikipediacleaner.api.data.contents.comment.ContentsComment;
 import org.wikipediacleaner.api.data.contents.comment.CommentBuilder;
 import org.wikipediacleaner.api.data.contents.ilink.InternalLinkBuilder;
 import org.wikipediacleaner.api.data.contents.tag.WikiTagType;
+import org.wikipediacleaner.api.data.contents.title.TitleBuilder;
 import org.wikipediacleaner.api.dump.DumpProcessor;
 import org.wikipediacleaner.api.dump.PageProcessor;
 import org.wikipediacleaner.api.execution.MediaWikiCallable;
@@ -269,6 +270,7 @@ public class ListCWWorker extends BasicWorker {
     long currentLength = buffer.toString().getBytes(StandardCharsets.UTF_8).length;
     ErrorLevel lastLevel = null;
     StringBuilder line = new StringBuilder();
+    String previousPrefix = " ";
     for (int detectionNum = 0; detectionNum < pages.size(); detectionNum++) {
       Detection detection = pages.get(detectionNum);
       line.setLength(0);
@@ -277,6 +279,15 @@ public class ListCWWorker extends BasicWorker {
         lastLevel = detection.maxLevel;
         line.append(CommentBuilder.from(lastLevel.toString()).toString());
         line.append("\n");
+      }
+      if ((pages.size() > 1000) && !detection.pageName.startsWith(previousPrefix)){
+        previousPrefix = detection.pageName.substring(0, 1);
+        char previousPrefixChar = Character.toUpperCase(previousPrefix.charAt(0));
+        if ((previousPrefixChar >= 'A') && (previousPrefixChar <= 'Z')) {
+          line.append("\n");
+          line.append(TitleBuilder.from(3, previousPrefix).toString());
+          line.append("\n");
+        }
       }
       appendDetection(detection, line);
       long lineLength = line.toString().getBytes(StandardCharsets.UTF_8).length;
