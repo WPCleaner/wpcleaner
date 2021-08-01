@@ -162,8 +162,8 @@ class TemplateConfiguration {
 
     // Handle numerical parameters
     boolean numericalParameter = false;
-    if (StringUtils.isNotEmpty(computedName)) {
-      if (CharacterUtils.isClassicDigit(computedName.charAt(computedName.length() - 1))) {
+    if (StringUtils.isNotEmpty(name)) {
+      if (CharacterUtils.isClassicDigit(name.charAt(name.length() - 1))) {
         numericalParameter = true;
       }
     }
@@ -197,14 +197,15 @@ class TemplateConfiguration {
     Map<String, String> missingEqualByName = new TreeMap<>(Comparator.comparingInt(String::length).thenComparing(Function.identity()).reversed());
     Map<Integer, List<String>> similarNamesByDistance = new HashMap<>();
     for (String knownParam : correctKnownParams) {
-      String completedKnownParam = knownParam + numericComputedName;
+      String completedKnownParam = knownParam + (StringUtils.isNotEmpty(name) ? numericComputedName : "");
 
       // Search for mistyped parameters
       if (StringUtils.equalsIgnoreCase(knownParam, strippedName)) {
+        boolean automaticReplacement = (knownParam.length() >= 4) || StringUtils.equalsIgnoreCase(knownParam, name); 
         results.add(TemplateParameterSuggestion.replaceOrDeleteParam(
             contents, template, param,
             completedKnownParam, param.getValue(),
-            knownParam.length() >= 4, true));
+            automaticReplacement, true));
       } else if (StringUtils.equals(name, computedName)) {
         int distance = levenshteinDistance.apply(strippedComputedName, knownParam);
         if ((distance >= 0) && (distance <= 3)) {
@@ -219,7 +220,11 @@ class TemplateConfiguration {
       // Search for missing "=" sign
       if (!StringUtils.equals(name, computedName) &&
           StringUtils.startsWith(param.getValue(), completedKnownParam)) {
-        missingEqualByName.put(completedKnownParam, param.getValue().substring(completedKnownParam.length()).trim());
+        String value = param.getValue().substring(completedKnownParam.length()).trim();
+        if (value.startsWith(":")) {
+          value = value.substring(1);
+        }
+        missingEqualByName.put(completedKnownParam, value);
       }
 
       // Handle strange cases with mixed parameter name and value
@@ -270,6 +275,7 @@ class TemplateConfiguration {
       boolean automatic =
           (missingEqualName.length() >= 5) ||
           ((missingEqualName.length() >= 4) && (missingEqualValue.length() >= 4));
+      automatic &= (missingEqualValue.length() == 0) || !Character.isDigit(missingEqualValue.charAt(0));
       automatic &= !missingEqualFound;
       for (int nbChars = 1; nbChars < missingEqualValue.length(); nbChars++) {
         automatic &= !knownParams.contains(missingEqualName + missingEqualValue.substring(0, nbChars));
