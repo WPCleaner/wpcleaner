@@ -270,7 +270,7 @@ public class ListCWWorker extends BasicWorker {
     long currentLength = buffer.toString().getBytes(StandardCharsets.UTF_8).length;
     ErrorLevel lastLevel = null;
     StringBuilder line = new StringBuilder();
-    String previousPrefix = " ";
+    char previousPrefix = ' ';
     for (int detectionNum = 0; detectionNum < pages.size(); detectionNum++) {
       Detection detection = pages.get(detectionNum);
       line.setLength(0);
@@ -280,13 +280,16 @@ public class ListCWWorker extends BasicWorker {
         line.append(CommentBuilder.from(lastLevel.toString()).toString());
         line.append("\n");
       }
-      if ((pages.size() > 1000) && !detection.pageName.startsWith(previousPrefix)){
-        previousPrefix = detection.pageName.substring(0, 1);
-        char previousPrefixChar = Character.toUpperCase(previousPrefix.charAt(0));
-        if ((previousPrefixChar >= 'A') && (previousPrefixChar <= 'Z')) {
+      if (pages.size() > 1000) {
+        char currentPrefix = Character.toUpperCase(detection.pageName.charAt(0));
+        if ((currentPrefix < 'A') || (currentPrefix > 'Z')) {
+          currentPrefix = '*';
+        }
+        if (currentPrefix != previousPrefix) {
           line.append("\n");
-          line.append(TitleBuilder.from(3, previousPrefix).toString());
+          line.append(TitleBuilder.from(3, "" + currentPrefix).toString());
           line.append("\n");
+          previousPrefix = currentPrefix;
         }
       }
       appendDetection(detection, line);
