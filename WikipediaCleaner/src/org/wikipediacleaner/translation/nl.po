@@ -3,6 +3,7 @@
 #
 # Author: Bas dehaan
 # Author: Dutchy45
+# Author: McDutchie
 # Author: Romaine
 # Author: Rots61
 # Author: Xbaked potatox
@@ -15,7 +16,7 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2021-07-29 11:17:57+0000\n"
+"PO-Revision-Date: 2021-08-02 11:16:55+0000\n"
 "Last-Translator: SubjectIsDead <Unknown>\n"
 "Language-Team: Dutch <nl@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -218,9 +219,8 @@ msgid "List of false positives for this type of error"
 msgstr "Lijst van valse positieven voor dit soort fouten"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmBase.java:321
-#, fuzzy
 msgid "Page containing a false positive for this type of error"
-msgstr "Lijst van valse positieven voor dit soort fouten"
+msgstr "Pagina met een valse positief voor dit type fout"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmBase.java:325
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmBase.java:328
@@ -425,9 +425,8 @@ msgid "To report control characters only in templates"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a016/CheckErrorAlgorithm016.java:370
-#, fuzzy
 msgid "To ignore some control characters"
-msgstr "Vervang alle controle karakters"
+msgstr "Sommige besturingstekens negeren"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a016/CheckErrorAlgorithm016.java:373
 msgid "To ignore control character with hexadecimal code equal to XX"
@@ -591,9 +590,8 @@ msgid "Restrict the detection to the first characters"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a03x/a037/CheckErrorAlgorithm037.java:233
-#, fuzzy
 msgid "Maximum number of characters to use for the detection"
-msgstr "Maximale aantal fouten om voor Controle Wiki:"
+msgstr "Maximaal aantal te gebruiken tekens voor de detectie"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a03x/a037/CheckErrorAlgorithm037.java:236
 msgid "List of templates that prevent automatic fixing of this error"
@@ -684,9 +682,9 @@ msgid "A list of abbreviations that generate false positives when placed before 
 msgstr "Een lijst met afkortingen die valse positieven genereren als geplaatst voor {0}"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a067/CheckErrorAlgorithm067.java:364
-#, fuzzy, java-format
+#, java-format
 msgid "An abbreviation that generate false positives when placed before {0}"
-msgstr "Een lijst met afkortingen die valse positieven genereren als geplaatst voor {0}"
+msgstr "Een afkorting die valse positieven genereert wanneer deze vóór {0} wordt geplaatst"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a068/CheckErrorAlgorithm068.java:54
 msgid "Check all links to other language"
@@ -1111,14 +1109,12 @@ msgid "An internal link that can be extracted when at the beginning of the exter
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a513/CheckErrorAlgorithm513.java:885
-#, fuzzy
 msgid "A list of links that can be extracted when at the end of the external link"
-msgstr "Maximale aantal fouten om voor Controle Wiki:"
+msgstr "Een lijst met koppelingen die kunnen worden onttrokken wanneer het einde van de externe koppeling bereikt wordt"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a513/CheckErrorAlgorithm513.java:888
-#, fuzzy
 msgid "An internal link that can be extracted when at the end of the external link"
-msgstr "Maximale aantal fouten om voor Controle Wiki:"
+msgstr "Een interne koppeling die kan worden onttrokken wanneer het einde van de externe koppeling bereikt wordt"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a513/CheckErrorAlgorithm513.java:892
 msgid "A list of links for which the external link can be removed it it takes all the text"
@@ -1263,14 +1259,13 @@ msgid "Both values are equal"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a524/CheckErrorAlgorithm524.java:136
-#, fuzzy
 msgid "Other value is empty"
-msgstr "Andere taal"
+msgstr "De andere waarde is leeg"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a524/CheckErrorAlgorithm524.java:138
-#, fuzzy, java-format
+#, java-format
 msgid "Other value: {0}"
-msgstr "Andere taal"
+msgstr "Andere waarde: {0}"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a524/CheckErrorAlgorithm524.java:237
 #: org/wikipediacleaner/gui/swing/NewSectionWindow.java:115
@@ -1317,9 +1312,8 @@ msgid "A template that can replace a {0}"
 msgstr "Een sjabloon die een {0} kan vervangen"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a525/CheckErrorAlgorithm525.java:235
-#, fuzzy
 msgid "Name of the parameter to be used for the anchor identifier"
-msgstr "Maximale aantal fouten om voor Controle Wiki:"
+msgstr "Naam van de parameter die moet worden gebruikt voor de anker-identificatiecode"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a525/CheckErrorAlgorithm525.java:239
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a541/CheckErrorAlgorithm541.java:565
@@ -1349,15 +1343,13 @@ msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a526/CheckErrorAlgorithm526.java:437
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a526/CheckErrorAlgorithm526.java:440
-#, fuzzy
 msgid "Minimum number of digits for the year"
-msgstr "Maximale aantal fouten om voor Controle Wiki:"
+msgstr "Minimumaantal cijfers voor het jaar"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a526/CheckErrorAlgorithm526.java:443
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a526/CheckErrorAlgorithm526.java:446
-#, fuzzy
 msgid "Maximum number of digits for the year"
-msgstr "Maximale aantal fouten om voor Controle Wiki:"
+msgstr "Maximumaantal cijfers voor het jaar"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a526/CheckErrorAlgorithm526.java:449
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a526/CheckErrorAlgorithm526.java:452
@@ -1430,9 +1422,8 @@ msgid "preferred for user input"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a541/CheckErrorAlgorithm541.java:350
-#, fuzzy
 msgid "preferred for variables"
-msgstr "Geen fouten beschikbaar"
+msgstr "heeft de voorkeur voor variabelen"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a541/CheckErrorAlgorithm541.java:355
 msgid "preferred for output, function and tag names, etc."
@@ -2463,9 +2454,9 @@ msgid "Error: {0}"
 msgstr "Fout: {0}"
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:871
-#, fuzzy, java-format
+#, java-format
 msgid "Installing {0}"
-msgstr "Updating pagina {0}"
+msgstr "{0} wordt geïnstalleerd"
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:886
 msgid "Problem running getdown installer"
@@ -4106,18 +4097,16 @@ msgid "You can learn how to add other Wikipedia at the following URL:"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/deadlink/ActionDeadLink.java:49
-#, fuzzy
 msgid "Check dead links"
-msgstr "Controleer taal-links"
+msgstr "Dode koppelingen controleren"
 
 #: org/wikipediacleaner/gui/swing/deadlink/ActionDeadLink.java:204
 msgid "You need to select pages to check for dead links"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/deadlink/ActionDeadLink.java:207
-#, fuzzy
 msgid "Do you want to check for dead links?"
-msgstr "Verdergaan?"
+msgstr "Wilt u controleren op dode koppelingen?"
 
 #: org/wikipediacleaner/gui/swing/deadlink/DeadLinkListTableModel.java:210
 #: org/wikipediacleaner/gui/swing/linter/LinterErrorListTableModel.java:222
@@ -4151,16 +4140,15 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/deadlink/DeadLinkWorker.java:98
 #: org/wikipediacleaner/gui/swing/linter/LinterWorker.java:85
-#, fuzzy
 msgid "Retrieving page contents"
-msgstr "Content terughalen"
+msgstr "De paginatekst wordt opgehaald"
 
 #: org/wikipediacleaner/gui/swing/deadlink/DeadLinkWorker.java:112
 #: org/wikipediacleaner/gui/swing/deadlink/DeadLinkWorker.java:124
 #: org/wikipediacleaner/gui/swing/linter/LinterWorker.java:93
-#, fuzzy, java-format
+#, java-format
 msgid "Analyzing {0}"
-msgstr "Analyse - {0}"
+msgstr "Analyseren van {0}"
 
 #: org/wikipediacleaner/gui/swing/deadlink/DeadLinkWorker.java:153
 #, java-format
