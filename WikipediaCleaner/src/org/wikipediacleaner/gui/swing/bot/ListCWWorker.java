@@ -270,7 +270,8 @@ public class ListCWWorker extends BasicWorker {
     long currentLength = buffer.toString().getBytes(StandardCharsets.UTF_8).length;
     ErrorLevel lastLevel = null;
     StringBuilder line = new StringBuilder();
-    char previousPrefix = ' ';
+    String prefix = " ";
+    boolean lettersDone = false;
     for (int detectionNum = 0; detectionNum < pages.size(); detectionNum++) {
       Detection detection = pages.get(detectionNum);
       line.setLength(0);
@@ -281,15 +282,33 @@ public class ListCWWorker extends BasicWorker {
         line.append("\n");
       }
       if (pages.size() > 1000) {
-        char currentPrefix = Character.toUpperCase(detection.pageName.charAt(0));
-        if ((currentPrefix < 'A') || (currentPrefix > 'Z')) {
-          currentPrefix = '*';
+        boolean appendTitle = false;
+        if ((detection.namespace == null) || (detection.namespace == Namespace.MAIN)) {
+          char firstChar = Character.toUpperCase(detection.pageName.charAt(0));
+          if ((firstChar >= 'A') && (firstChar <= 'Z')) {
+            lettersDone = true;
+            if (prefix.isEmpty() || (prefix.charAt(0) != firstChar)) {
+              appendTitle = true;
+              prefix = detection.pageName.substring(0, 1);
+            }
+          } else {
+            String newPrefix = lettersDone ? "+++" : "0-9";
+            if (!newPrefix.equals(prefix)) {
+              appendTitle = true;
+              prefix = newPrefix;
+            }
+          }
+        } else {
+          Namespace namespace = getWikipedia().getWikiConfiguration().getNamespace(detection.namespace);
+          if (!namespace.isPossibleName(prefix)) {
+            appendTitle = true;
+            prefix = namespace.getTitle();
+          }
         }
-        if (currentPrefix != previousPrefix) {
+        if (appendTitle) {
           line.append("\n");
-          line.append(TitleBuilder.from(3, "" + currentPrefix).toString());
+          line.append(TitleBuilder.from(3, "" + prefix).toString());
           line.append("\n");
-          previousPrefix = currentPrefix;
         }
       }
       appendDetection(detection, line);
