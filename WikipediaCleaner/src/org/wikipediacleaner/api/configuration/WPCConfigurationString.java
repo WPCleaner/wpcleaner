@@ -141,6 +141,16 @@ public enum WPCConfigurationString {
   TODO_SUBPAGE_DELETE("general_todo_subpage_delete", null, false, true, true),
   // Comment used when translating
   TRANSLATION_COMMENT("translation_comment", null, false, true, true),
+  // Comment for warning about unknown parameter errors in a page
+  UNKNOWN_PARAMETER_WARNING_COMMENT("unknown_parameter_warning_comment", null, false, true, true),
+  // Comment for warning about one unknown parameter error in a page
+  UNKNOWN_PARAMETER_WARNING_COMMENT_1("unknown_parameter_warning_comment_1", null, false, true, true),
+  // Comment for telling that unknown parameter errors have been fixed
+  UNKNOWN_PARAMETER_WARNING_COMMENT_DONE("unknown_parameter_warning_comment_done", null, false, true, true),
+  // Template for warning about unknown parameter errors in a page
+  UNKNOWN_PARAMETER_WARNING_TEMPLATE("unknown_parameter_warning_template", null, false, true, false),
+  // Comment for warning template about unknown parameter errors in a page
+  UNKNOWN_PARAMETER_WARNING_TEMPLATE_COMMENT("unknown_parameter_warning_template_comment", null, false, true, false),
   // User
   USER("general_user", null, false, false, true),
   // Wiktionary interwiki

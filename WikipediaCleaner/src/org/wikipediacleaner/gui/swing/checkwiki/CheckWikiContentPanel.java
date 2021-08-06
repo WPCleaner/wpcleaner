@@ -708,6 +708,8 @@ public class CheckWikiContentPanel
     boolean createISSNWarning = false;
     boolean updateDuplicateArgsWarning = false;
     boolean createDuplicateArgsWarning = false;
+    boolean updateUnknownParameterWarning = false;
+    boolean createUnknownParameterWarning = false;
     for (AlgorithmError.Progress errorFixed : errorsFixed) {
       CheckErrorAlgorithm algorithm = errorFixed.algorithm;
       int errorNumber = algorithm.getErrorNumber();
@@ -726,6 +728,9 @@ public class CheckWikiContentPanel
       if (errorNumber == 524) {
         updateDuplicateArgsWarning = true;
       }
+      if (errorNumber == 564) {
+        updateUnknownParameterWarning = true;
+      }
     }
 
     // Send page
@@ -734,6 +739,7 @@ public class CheckWikiContentPanel
         allowISBNWarning(updateISBNWarning, createISBNWarning).
         allowISSNWarning(updateISSNWarning, createISSNWarning).
         allowDuplicateArgsWarning(updateDuplicateArgsWarning, createDuplicateArgsWarning).
+        allowUnknownParameterWarning(updateUnknownParameterWarning, createUnknownParameterWarning).
         createWorker(
           getWiki(), window,
           page, textPage.getText(), textComment.getText(),

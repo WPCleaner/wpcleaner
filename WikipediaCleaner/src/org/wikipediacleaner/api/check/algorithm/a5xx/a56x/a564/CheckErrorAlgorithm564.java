@@ -7,12 +7,17 @@
 
 package org.wikipediacleaner.api.check.algorithm.a5xx.a56x.a564;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import org.wikipediacleaner.api.API;
+import org.wikipediacleaner.api.APIException;
+import org.wikipediacleaner.api.APIFactory;
 import org.wikipediacleaner.api.algorithm.AlgorithmParameter;
 import org.wikipediacleaner.api.algorithm.AlgorithmParameterElement;
 import org.wikipediacleaner.api.check.CheckErrorResult;
@@ -20,6 +25,9 @@ import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase;
 import org.wikipediacleaner.api.check.algorithm.a5xx.TemplateConfigurationGroup;
 import org.wikipediacleaner.api.check.algorithm.a5xx.TemplateParameterSuggestion;
 import org.wikipediacleaner.api.configuration.WPCConfiguration;
+import org.wikipediacleaner.api.constants.EnumWikipedia;
+import org.wikipediacleaner.api.data.DataManager;
+import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
 import org.wikipediacleaner.i18n.GT;
@@ -135,6 +143,49 @@ public class CheckErrorAlgorithm564 extends CheckErrorAlgorithmBase {
   }
 
   /**
+   * @return True if the error has a special list of pages.
+   */
+  @Override
+  public boolean hasSpecialList() {
+    return (dumpAnalysis != null);
+  }
+
+  /**
+   * Retrieve the list of pages in error.
+   * 
+   * @param wiki Wiki.
+   * @param limit Maximum number of pages to retrieve.
+   * @return List of pages in error.
+   */
+  @Override
+  public List<Page> getSpecialList(EnumWikipedia wiki, int limit) {
+    List<Page> result = new ArrayList<>();
+
+    // Use internal links
+    if (dumpAnalysis != null) {
+      API api = APIFactory.getAPI();
+      Page page = DataManager.createSimplePage(wiki, dumpAnalysis, null, null, null);
+      try {
+        api.retrieveLinks(wiki, page, null, null, false, false);
+        if (page.getLinks() != null) {
+          result.addAll(page.getLinks());
+        }
+      } catch (APIException e) {
+        //
+      }
+    }
+
+    Collections.sort(result);
+
+    // Limit result size
+    while (result.size() > limit) {
+      result.remove(result.size() - 1);
+    }
+
+    return result;
+  }
+
+  /**
    * Automatic fixing of all the errors in the page.
    * 
    * @param analysis Page analysis.
@@ -152,6 +203,9 @@ public class CheckErrorAlgorithm564 extends CheckErrorAlgorithmBase {
   /* ====================================================================== */
   /* PARAMETERS                                                             */
   /* ====================================================================== */
+
+  /** Page containing a dump analysis of the error */
+  private static final String PARAMETER_DUMP_ANALYSIS = "dump_analysis";
 
   /** Template groups */
   private static final String PARAMETER_TEMPLATE_GROUPS = "template_groups";
@@ -211,7 +265,12 @@ public class CheckErrorAlgorithm564 extends CheckErrorAlgorithmBase {
       List<String[]> tmpList = WPCConfiguration.convertPropertyToStringArrayList(tmp);
       TemplateConfiguration.addParametersToReplace(tmpList, configurationByTemplateName, group);
     }
+
+    dumpAnalysis = getSpecificProperty(PARAMETER_DUMP_ANALYSIS, true, true, false);
   }
+
+  /** Page containing a dump analysis */
+  private String dumpAnalysis = null;
 
   /** Templates and parameters that are checked */
   private final Map<String, TemplateConfiguration> configurationByTemplateName = new HashMap<>();
@@ -222,6 +281,12 @@ public class CheckErrorAlgorithm564 extends CheckErrorAlgorithmBase {
   @Override
   protected void addParameters() {
     super.addParameters();
+    addParameter(new AlgorithmParameter(
+        PARAMETER_DUMP_ANALYSIS,
+        GT._T("A page containing a dump analysis for this error."),
+        new AlgorithmParameterElement(
+            "page name",
+            GT._T("A page containing a dump analysis for this error."))));
     addParameter(new AlgorithmParameter(
         PARAMETER_TEMPLATE_GROUPS,
         GT._T("Groups of templates"),

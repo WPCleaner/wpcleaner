@@ -52,6 +52,7 @@ import org.wikipediacleaner.gui.swing.worker.UpdateDabWarningWorker;
 import org.wikipediacleaner.gui.swing.worker.UpdateDuplicateArgsWarningWorker;
 import org.wikipediacleaner.gui.swing.worker.UpdateISBNWarningWorker;
 import org.wikipediacleaner.gui.swing.worker.UpdateISSNWarningWorker;
+import org.wikipediacleaner.gui.swing.worker.UpdateUnknownParameterWarningWorker;
 import org.wikipediacleaner.i18n.GT;
 import org.wikipediacleaner.utils.Configuration;
 import org.wikipediacleaner.utils.ConfigurationConstants;
@@ -264,6 +265,8 @@ public class Bot implements BasicWorkerListener {
       worker = new UpdateISSNWarningWorker(wiki, null, true);
     } else if ("UpdateDuplicateArgsWarnings".equalsIgnoreCase(action)) {
       worker = new UpdateDuplicateArgsWarningWorker(wiki, null, false);
+    } else if ("UpdateUnknownParameterWarnings".equalsIgnoreCase(action)) {
+      worker = new UpdateUnknownParameterWarningWorker(wiki, null, false);
     } else if ("FixCheckWiki".equalsIgnoreCase(action)) {
       worker = executeFixCheckWiki(actionConfig);
     } else if ("FixListCheckWiki".equalsIgnoreCase(action)) {

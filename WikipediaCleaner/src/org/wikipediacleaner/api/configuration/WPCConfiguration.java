@@ -1306,6 +1306,46 @@ public class WPCConfiguration {
   }
 
   /* ================================================================================= */
+  /* Unknown parameter warning                                                       */
+  /* ================================================================================= */
+
+  /**
+   * @param elements Elements that still need to be fixed.
+   * @return Comment for warning about unknown parameter errors in a page.
+   */
+  public String getUnknownParameterWarningComment(Collection<String> elements) {
+    int count = (elements != null) ? elements.size() : 0;
+    String comment = null;
+    if (count == 1) {
+      comment = getString(WPCConfigurationString.UNKNOWN_PARAMETER_WARNING_COMMENT_1);
+    }
+    if (comment == null) {
+      comment = getString(WPCConfigurationString.UNKNOWN_PARAMETER_WARNING_COMMENT);
+    }
+    if (comment == null) {
+      comment = getString(WPCConfigurationString.UNKNOWN_PARAMETER_WARNING_TEMPLATE);
+    } else {
+      try {
+        comment = MessageFormat.format(comment, Integer.valueOf(count));
+      } catch (IllegalArgumentException e) {
+        //
+      }
+    }
+    return comment;
+  }
+
+  /**
+   * @return Comment for telling that unknown parameter errors have been fixed.
+   */
+  public String getUnknownParameterWarningCommentDone() {
+    String comment = getString(WPCConfigurationString.UNKNOWN_PARAMETER_WARNING_COMMENT_DONE);
+    if (comment != null) {
+      return comment;
+    }
+    return getString(WPCConfigurationString.UNKNOWN_PARAMETER_WARNING_TEMPLATE);
+  }
+
+  /* ================================================================================= */
   /* Templates                                                                         */
   /* ================================================================================= */
 

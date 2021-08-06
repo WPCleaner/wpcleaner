@@ -27,6 +27,7 @@ import org.wikipediacleaner.gui.swing.worker.UpdateDabWarningWorker;
 import org.wikipediacleaner.gui.swing.worker.UpdateDuplicateArgsWarningWorker;
 import org.wikipediacleaner.gui.swing.worker.UpdateISBNWarningWorker;
 import org.wikipediacleaner.gui.swing.worker.UpdateISSNWarningWorker;
+import org.wikipediacleaner.gui.swing.worker.UpdateUnknownParameterWarningWorker;
 import org.wikipediacleaner.i18n.GT;
 import org.wikipediacleaner.images.EnumImageSize;
 import org.wikipediacleaner.utils.Configuration;
@@ -72,6 +73,11 @@ public class GeneralToolsPanel extends BotToolsPanel {
    * Button for updating duplicate arguments warnings on all wiki.
    */
   private JButton buttonUpdateDuplicateArgsWarning;
+
+  /**
+   * Button for updating unknown parameter warnings on all wiki.
+   */
+  private JButton buttonUpdateUnknownParameterWarning;
 
   /**
    * Button for listing ISBN warnings on all wiki.
@@ -172,6 +178,15 @@ public class GeneralToolsPanel extends BotToolsPanel {
     buttonUpdateDuplicateArgsWarning.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionUpdateDuplicateArgsWarning"));
     add(buttonUpdateDuplicateArgsWarning, constraints);
+    constraints.gridy++;
+
+    // Update unknown parameter warning
+    buttonUpdateUnknownParameterWarning = Utilities.createJButton(
+        "commons-nuvola-web-broom.png", EnumImageSize.NORMAL,
+        GT._T("Update unknown parameter warning messages"), true, null);
+    buttonUpdateUnknownParameterWarning.addActionListener(EventHandler.create(
+        ActionListener.class, this, "actionUpdateUnknownParameterWarning"));
+    add(buttonUpdateUnknownParameterWarning, constraints);
     constraints.gridy++;
 
     // Monitor recent changes
@@ -318,6 +333,24 @@ public class GeneralToolsPanel extends BotToolsPanel {
       return;
     }
     UpdateDuplicateArgsWarningWorker worker = new UpdateDuplicateArgsWarningWorker(
+        wiki, window, false);
+    worker.start();
+  }
+
+  /**
+   * Action called when Update Unknown Parameter Warning button is pressed.
+   */
+  public void actionUpdateUnknownParameterWarning() {
+    EnumWikipedia wiki = window.getWikipedia();
+    WPCConfiguration wpcConfig = wiki.getConfiguration();
+    String template = wpcConfig.getString(WPCConfigurationString.UNKNOWN_PARAMETER_WARNING_TEMPLATE);
+    if ((template == null) || (template.trim().length() == 0)) {
+      Utilities.displayMessageForMissingConfiguration(
+          window.getParentComponent(),
+          WPCConfigurationString.UNKNOWN_PARAMETER_WARNING_TEMPLATE.getAttributeName());
+      return;
+    }
+    UpdateUnknownParameterWarningWorker worker = new UpdateUnknownParameterWarningWorker(
         wiki, window, false);
     worker.start();
   }

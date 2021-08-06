@@ -1064,6 +1064,8 @@ public abstract class OnePageWindow
     boolean updateISSNWarning = false;
     final boolean createDuplicateArgsWarning = false;
     boolean updateDuplicateArgsWarning = false;
+    final boolean createUnknownParameterWarning = false;
+    boolean updateUnknownParameterWarning = false;
     List<AlgorithmError.Progress> errorsFixed = computeErrorsFixed();
     if (errorsFixed != null) {
       for (AlgorithmError.Progress errorFixed : errorsFixed) {
@@ -1084,6 +1086,9 @@ public abstract class OnePageWindow
         if (errorNumber == 524) {
           updateDuplicateArgsWarning = true;
         }
+        if (errorNumber == 564) {
+          updateUnknownParameterWarning = true;
+        }
       }
     }
     if (hideWindow) {
@@ -1095,6 +1100,7 @@ public abstract class OnePageWindow
         allowISBNWarning(updateISBNWarning, createISBNWarning).
         allowISSNWarning(updateISSNWarning, createISSNWarning).
         allowDuplicateArgsWarning(updateDuplicateArgsWarning, createDuplicateArgsWarning).
+        allowUnknownParameterWarning(updateUnknownParameterWarning, createUnknownParameterWarning).
         createWorker(
           getWikipedia(), this, page, getTextContents().getText(),
           (textComment != null) ?

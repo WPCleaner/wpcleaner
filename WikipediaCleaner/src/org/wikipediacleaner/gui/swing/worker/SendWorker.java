@@ -42,6 +42,8 @@ public class SendWorker extends BasicWorker {
     protected boolean createISSNWarning;
     protected boolean updateDuplicateArgsWarning;
     protected boolean createDuplicateArgsWarning;
+    protected boolean updateUnknownParameterWarning;
+    protected boolean createUnknownParameterWarning;
 
     protected Params() {
       //
@@ -102,6 +104,17 @@ public class SendWorker extends BasicWorker {
     public Builder allowDuplicateArgsWarning(boolean update, boolean create) {
       params.updateDuplicateArgsWarning = update;
       params.createDuplicateArgsWarning = create;
+      return this;
+    }
+
+    /**
+     * @param update Allow/Deny update of unknown parameter warning.
+     * @param create Allow/Deny creation of unknown parameter warning.
+     * @return Builder itself.
+     */
+    public Builder allowUnknownParameterWarning(boolean update, boolean create) {
+      params.updateUnknownParameterWarning = update;
+      params.createUnknownParameterWarning = create;
       return this;
     }
 
@@ -247,6 +260,20 @@ public class SendWorker extends BasicWorker {
             getWikipedia(), this, params.createDuplicateArgsWarning, false);
         PageAnalysis pageAnalysis = page.getAnalysis(text, true);
         duplicateArgsWarningTools.updateWarning(
+            pageAnalysis, queryResult.getPageNewRevId(),
+            null, null, null, null, null);
+      } catch (APIException e) {
+        return e;
+      }
+    }
+
+    // Updating unknown parameter warning
+    if (params.updateUnknownParameterWarning) {
+      try {
+        UpdateUnknownParameterWarningTools unknownParameterWarningTools = new UpdateUnknownParameterWarningTools(
+            getWikipedia(), this, params.createUnknownParameterWarning, false);
+        PageAnalysis pageAnalysis = page.getAnalysis(text, true);
+        unknownParameterWarningTools.updateWarning(
             pageAnalysis, queryResult.getPageNewRevId(),
             null, null, null, null, null);
       } catch (APIException e) {

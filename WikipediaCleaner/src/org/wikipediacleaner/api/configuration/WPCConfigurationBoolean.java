@@ -42,7 +42,9 @@ public enum WPCConfigurationBoolean {
   // Force usage of "to do" sub-page in main name space
   TODO_SUBPAGE_FORCE("general_todo_subpage_force", false, true, false),
   // Force usage of "to do" sub-page in other name spaces
-  TODO_SUBPAGE_FORCE_OTHER("general_todo_subpage_force_other", false, true, false);
+  TODO_SUBPAGE_FORCE_OTHER("general_todo_subpage_force_other", false, true, false),
+  // Allow unknown parameter warning outside section 0 of talk page
+  UNKNOWN_PARAMETER_WARNING_SECTION_0("unknown_parameter_warning_section_0", true, true, false);
 
   /**
    * Attribute name.

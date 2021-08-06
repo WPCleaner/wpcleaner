@@ -36,6 +36,7 @@ import org.wikipediacleaner.gui.swing.basic.Utilities;
 import org.wikipediacleaner.gui.swing.worker.UpdateDabWarningWorker;
 import org.wikipediacleaner.gui.swing.worker.UpdateDuplicateArgsWarningWorker;
 import org.wikipediacleaner.gui.swing.worker.UpdateISBNWarningWorker;
+import org.wikipediacleaner.gui.swing.worker.UpdateUnknownParameterWarningWorker;
 import org.wikipediacleaner.i18n.GT;
 import org.wikipediacleaner.images.EnumImageSize;
 import org.wikipediacleaner.utils.Configuration;
@@ -274,6 +275,13 @@ public class ActionUpdateWarning implements ActionListener {
         ActionListener.class, this, "actionDuplicateArgsWarning"));
     menuWarning.add(menuItem);
 
+    menuItem = Utilities.createJMenuItem(
+        GT._T("Add a warning about unknown parameter errors"),
+        true);
+    menuItem.addActionListener(EventHandler.create(
+        ActionListener.class, this, "actionUnknownParameterWarning"));
+    menuWarning.add(menuItem);
+
     menuWarning.show(source, 0, source.getHeight());
   }
 
@@ -401,6 +409,49 @@ public class ActionUpdateWarning implements ActionListener {
 
     // Update warning
     UpdateDuplicateArgsWarningWorker worker = new UpdateDuplicateArgsWarningWorker(
+        wiki, window, pages,
+        false, false);
+    worker.start();
+  }
+
+  /**
+   * Update unknown parameter warnings on talk page.
+   */
+  public void actionUnknownParameterWarning() {
+
+    // Check selection
+    if (wikiProvider == null) {
+      return;
+    }
+    EnumWikipedia wiki = wikiProvider.getWiki();
+    if (wiki == null) {
+      return;
+    }
+    List<Page> pages = getPages();
+    if ((pages == null) || (pages.isEmpty())) {
+      return;
+    }
+
+    // Check configuration
+    WPCConfiguration wpcConfig = wiki.getConfiguration();
+    String template = wpcConfig.getString(WPCConfigurationString.UNKNOWN_PARAMETER_WARNING_TEMPLATE);
+    if ((template == null) || (template.trim().length() == 0)) {
+      Utilities.displayMessageForMissingConfiguration(
+          parent,
+          WPCConfigurationString.UNKNOWN_PARAMETER_WARNING_TEMPLATE.getAttributeName());
+      return;
+    }
+
+    // Ask for confirmation
+    int answer = Utilities.displayYesNoWarning(
+        parent,
+        GT._T("Do you want to update the unknown parameter warning on talk page?"));
+    if (answer != JOptionPane.YES_OPTION) {
+      return;
+    }
+
+    // Update warning
+    UpdateUnknownParameterWarningWorker worker = new UpdateUnknownParameterWarningWorker(
         wiki, window, pages,
         false, false);
     worker.start();

@@ -27,6 +27,7 @@ public enum ConfigurationValueString {
   LAST_ISSN_WARNING("LastISSNWarning", null),
   LAST_LANGUAGE("LastLanguage", null),
   LAST_REPLACEMENTS_DIRECTORY("LastReplacementsDirectory", null),
+  LAST_UNKNOWN_PARAMETER_WARNING("LastUnknownParameterWarning", null),
   LAST_USER("LastUser", null),
   PAGE_NAME("PageName", null),
   PASSWORD("Password", null),

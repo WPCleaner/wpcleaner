@@ -35,9 +35,9 @@ import org.wikipediacleaner.i18n.GT;
 
 
 /**
- * Tools for updating duplicate arguments warnings.
+ * Tools for updating unknown parameter warnings.
  */
-public class UpdateDuplicateArgsWarningTools extends UpdateWarningTools {
+public class UpdateUnknownParameterWarningTools extends UpdateWarningTools {
 
   /**
    * @param wiki Wiki.
@@ -45,7 +45,7 @@ public class UpdateDuplicateArgsWarningTools extends UpdateWarningTools {
    * @param createWarning Create warning if necessary.
    * @param automaticEdit True if the edits are automatic.
    */
-  public UpdateDuplicateArgsWarningTools(
+  public UpdateUnknownParameterWarningTools(
       EnumWikipedia wiki, BasicWorker worker,
       boolean createWarning, boolean automaticEdit) {
     this(wiki, worker, (worker != null) ? worker.getWindow() : null, createWarning, automaticEdit);
@@ -56,7 +56,7 @@ public class UpdateDuplicateArgsWarningTools extends UpdateWarningTools {
    * @param window Window.
    * @param createWarning Create warning if necessary.
    */
-  public UpdateDuplicateArgsWarningTools(EnumWikipedia wiki, BasicWindow window, boolean createWarning) {
+  public UpdateUnknownParameterWarningTools(EnumWikipedia wiki, BasicWindow window, boolean createWarning) {
     this(wiki, null, window, createWarning, false);
   }
 
@@ -67,7 +67,7 @@ public class UpdateDuplicateArgsWarningTools extends UpdateWarningTools {
    * @param createWarning Create warning if necessary.
    * @param automaticEdit True if the edits are automatic.
    */
-  private UpdateDuplicateArgsWarningTools(
+  private UpdateUnknownParameterWarningTools(
       EnumWikipedia wiki,
       BasicWorker worker, BasicWindow window,
       boolean createWarning, boolean automaticEdit) {
@@ -95,12 +95,12 @@ public class UpdateDuplicateArgsWarningTools extends UpdateWarningTools {
   }
 
   /**
-   * Extract information about duplicate arguments.
+   * Extract information about unknown parameters.
    * 
-   * @param analysis Page analysis (must have enough information to compute the list of duplicate arguments).
+   * @param analysis Page analysis (must have enough information to compute the list of unknown parameters).
    * @param talkPage Talk page.
    * @param todoSubpage to do sub-page.
-   * @return List of duplicate arguments errors.
+   * @return List of unknown parameter errors.
    */
   @Override
   protected Collection<String> constructWarningElements(
@@ -111,7 +111,7 @@ public class UpdateDuplicateArgsWarningTools extends UpdateWarningTools {
 
     // Prepare list of algorithms
     List<CheckErrorAlgorithm> algorithms = new ArrayList<>();
-    algorithms.add(CheckErrorAlgorithms.getAlgorithm(wiki, 524)); // Duplicate template args
+    algorithms.add(CheckErrorAlgorithms.getAlgorithm(wiki, 564)); // Unknown parameter
 
     // Retrieve list of errors
     List<CheckErrorResult> errorResults = new ArrayList<>();
@@ -143,7 +143,7 @@ public class UpdateDuplicateArgsWarningTools extends UpdateWarningTools {
           beginIndex++;
         }
         String templateName = null;
-        String argumentName = null;
+        String argumentValue = "";
         String chapterName = "";
         boolean keep = false;
         PageElementTemplate template = analysis.isInTemplate(beginIndex);
@@ -151,7 +151,7 @@ public class UpdateDuplicateArgsWarningTools extends UpdateWarningTools {
           templateName = template.getTemplateName();
           Parameter param = template.getParameterAtIndex(beginIndex);
           if (param != null) {
-            argumentName = param.getComputedName();
+            argumentValue = analysis.getContents().substring(param.getNameStartIndex(), param.getEndIndex());
             PageElementTitle title = PageAnalysisUtils.getCurrentChapter(analysis, beginIndex);
             if (title != null) {
               chapterName = title.getTitle();
@@ -161,7 +161,18 @@ public class UpdateDuplicateArgsWarningTools extends UpdateWarningTools {
         }
         if (keep) {
           elements.add(templateName);
-          elements.add(argumentName);
+          elements.add(argumentValue
+              .replaceAll("\\:", "&#58;")
+              .replaceAll("\\<", "&#60;")
+              .replaceAll("\\=", "&#61;")
+              .replaceAll("\\>", "&#62;")
+              .replaceAll("\\[", "&#91;")
+              .replaceAll("\\]", "&#93;")
+              .replaceAll("\\{", "&#123;")
+              .replaceAll("\\|", "&#124;")
+              .replaceAll("\\}", "&#125;")
+              .replaceAll("\n", "\u21b5")
+              .trim());
           elements.add(chapterName);
         }
       }
@@ -178,7 +189,7 @@ public class UpdateDuplicateArgsWarningTools extends UpdateWarningTools {
    */
   @Override
   protected WPCConfigurationString getWarningTemplate() {
-    return WPCConfigurationString.DUPLICATE_ARGS_WARNING_TEMPLATE;
+    return WPCConfigurationString.UNKNOWN_PARAMETER_WARNING_TEMPLATE;
   }
 
   /**
@@ -186,7 +197,7 @@ public class UpdateDuplicateArgsWarningTools extends UpdateWarningTools {
    */
   @Override
   protected WPCConfigurationString getWarningTemplateComment() {
-    return WPCConfigurationString.DUPLICATE_ARGS_WARNING_TEMPLATE_COMMENT;
+    return WPCConfigurationString.UNKNOWN_PARAMETER_WARNING_TEMPLATE_COMMENT;
   }
 
   /**
@@ -194,7 +205,7 @@ public class UpdateDuplicateArgsWarningTools extends UpdateWarningTools {
    */
   @Override
   protected boolean useSection0() {
-    return configuration.getBoolean(WPCConfigurationBoolean.DUPLICATE_ARGS_WARNING_SECTION_0);
+    return configuration.getBoolean(WPCConfigurationBoolean.UNKNOWN_PARAMETER_WARNING_SECTION_0);
   }
 
   /**
@@ -202,7 +213,7 @@ public class UpdateDuplicateArgsWarningTools extends UpdateWarningTools {
    */
   @Override
   protected String getWarningCommentDone() {
-    return configuration.getDuplicateArgsWarningCommentDone();
+    return configuration.getUnknownParameterWarningCommentDone();
   }
 
   /**
@@ -219,7 +230,7 @@ public class UpdateDuplicateArgsWarningTools extends UpdateWarningTools {
       }
       i++;
     }
-    return configuration.getDuplicateArgsWarningComment(arguments);
+    return configuration.getUnknownParameterWarningComment(arguments);
   }
 
   /**
@@ -228,7 +239,7 @@ public class UpdateDuplicateArgsWarningTools extends UpdateWarningTools {
    */
   @Override
   protected String getMessageRemoveWarning(String title) {
-    return GT._T("Removing duplicate arguments warning - {0}", title);
+    return GT._T("Removing unknown parameter warning - {0}", title);
   }
 
   /**
@@ -237,6 +248,6 @@ public class UpdateDuplicateArgsWarningTools extends UpdateWarningTools {
    */
   @Override
   protected String getMessageUpdateWarning(String title) {
-    return GT._T("Updating duplicate arguments warning - {0}", title);
+    return GT._T("Updating unknown parameter warning - {0}", title);
   }
 }
