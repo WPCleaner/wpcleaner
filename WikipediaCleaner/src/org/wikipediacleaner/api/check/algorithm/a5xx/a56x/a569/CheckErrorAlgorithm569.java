@@ -22,7 +22,7 @@ import org.wikipediacleaner.api.data.analysis.PageAnalysis;
 
 /**
  * Algorithm for analyzing error 569 of check wikipedia project.
- * Error 568: non-breaking space in template argument name
+ * Error 569: non-breaking space in template argument name
  */
 public class CheckErrorAlgorithm569 extends CheckErrorAlgorithmBase {
 
