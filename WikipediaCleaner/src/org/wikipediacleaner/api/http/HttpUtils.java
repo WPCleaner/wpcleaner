@@ -105,6 +105,7 @@ public class HttpUtils {
     result |= ApiLoginRequest.PROPERTY_TOKEN.equals(key);
     result |= ApiLoginRequest.PROPERTY_USER_NAME.equals(key);
     result |= ApiLoginRequest.PROPERTY_USER_ID.equals(key);
+    result |= "token".equals(key);
     return result;
   }
 
