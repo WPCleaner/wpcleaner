@@ -184,7 +184,7 @@ public abstract class UpdateWarningWorker extends BasicWorker {
     CheckErrorAlgorithm algorithm = CheckErrorAlgorithms.getAlgorithm(wiki, errorNumber);
     List<AlgorithmError> errors = new ArrayList<>();
     try {
-      cw.retrievePages(algorithm, 10000, wiki, errors);
+      cw.retrievePages(algorithm, 100000, wiki, errors);
       for (AlgorithmError error: errors) {
         for (int pageNum = 0; pageNum < error.getPageCount(); pageNum++) {
           Page page = error.getPage(pageNum);

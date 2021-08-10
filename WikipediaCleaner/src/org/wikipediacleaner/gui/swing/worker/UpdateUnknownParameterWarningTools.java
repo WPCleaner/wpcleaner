@@ -171,6 +171,7 @@ public class UpdateUnknownParameterWarningTools extends UpdateWarningTools {
               .replaceAll("\\{", "&#123;")
               .replaceAll("\\|", "&#124;")
               .replaceAll("\\}", "&#125;")
+              .replaceAll("\\~", "&#126;")
               .replaceAll("\n", "\u21b5")
               .trim());
           elements.add(chapterName);
