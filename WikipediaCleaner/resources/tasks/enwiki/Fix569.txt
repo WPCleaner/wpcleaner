@@ -1,7 +1,6 @@
 DoTasks _Common.txt
 
 Set Prefix [[User:WikiCleanerBot#T27|Bot_T27_CW#569]]
-Set Prefix [[Wikipedia:Bots/Requests_for_approval/WikiCleanerBot_27|Test_Bot_T27_CW#569]]
 Set Configuration TimeBetweenEdit 30
 FixListCheckWiki Wikipedia:CHECKWIKI/WPC_569_dump 569
 # FixFileCheckWiki C:\Users\Nicolas\CW_enwiki_569.txt 569
