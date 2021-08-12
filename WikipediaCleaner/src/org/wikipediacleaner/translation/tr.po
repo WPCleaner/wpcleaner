@@ -23,7 +23,7 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2021-08-09 11:17:51+0000\n"
+"PO-Revision-Date: 2021-08-12 11:16:47+0000\n"
 "Last-Translator: volkan <volkanyeke@gmail.com>\n"
 "Language-Team: Turkish <tr@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -3327,7 +3327,7 @@ msgstr "Yinelenen bağımsız değişken hataları hakkında uyarı ekle"
 
 #: org/wikipediacleaner/gui/swing/action/ActionUpdateWarning.java:279
 msgid "Add a warning about unknown parameter errors"
-msgstr ""
+msgstr "Bilinmeyen parametre hataları hakkında bir uyarı ekleyin"
 
 #: org/wikipediacleaner/gui/swing/action/ActionUpdateWarning.java:319
 msgid "Do you want to update the disambiguation warning on talk page?"
@@ -3343,7 +3343,7 @@ msgstr "Tartışma sayfasındaki yinelenen bağımsız değişkenler uyarısın�
 
 #: org/wikipediacleaner/gui/swing/action/ActionUpdateWarning.java:448
 msgid "Do you want to update the unknown parameter warning on talk page?"
-msgstr ""
+msgstr "Tartışma sayfasındaki bilinmeyen parametre uyarısını güncellemek istiyor musunuz?"
 
 #: org/wikipediacleaner/gui/swing/action/ActionUpdateWarning.java:493
 msgid "You must input a page name for updating warnings"
@@ -3710,7 +3710,7 @@ msgstr "Yinelenen bağımsız değişken uyarı iletilerini güncelle"
 
 #: org/wikipediacleaner/gui/swing/bot/GeneralToolsPanel.java:186
 msgid "Update unknown parameter warning messages"
-msgstr ""
+msgstr "Bilinmeyen parametre uyarı mesajlarını güncelle"
 
 #: org/wikipediacleaner/gui/swing/bot/GeneralToolsPanel.java:195
 msgid "Monitor recent changes"
@@ -5082,22 +5082,22 @@ msgstr "{0} güncellemek istiyor musunuz?"
 #: org/wikipediacleaner/gui/swing/worker/UpdateUnknownParameterWarningTools.java:242
 #, java-format
 msgid "Removing unknown parameter warning - {0}"
-msgstr ""
+msgstr "Bilinmeyen parametre uyarısı kaldırılıyor - {0}"
 
 #: org/wikipediacleaner/gui/swing/worker/UpdateUnknownParameterWarningTools.java:251
 #, java-format
 msgid "Updating unknown parameter warning - {0}"
-msgstr ""
+msgstr "Bilinmeyen parametre uyarısı güncelleniyor - {0}"
 
 #: org/wikipediacleaner/gui/swing/worker/UpdateUnknownParameterWarningWorker.java:77
 #, java-format
 msgid "Analysis found {0} articles to check for unknown parameter errors.\nDo you want to update the warnings ?"
-msgstr ""
+msgstr "Analiz, bilinmeyen parametre hatalarını kontrol etmek için {0} madde buldu.\nUyarıları güncellemek istiyor musunuz?"
 
 #: org/wikipediacleaner/gui/swing/worker/UpdateUnknownParameterWarningWorker.java:117
 #, java-format
 msgid "An error occurred when updating unknown parameter warnings. Do you want to continue ?\n\nError: {0}"
-msgstr ""
+msgstr "Bilinmeyen parametre uyarıları güncellenirken bir hata oluştu. Devam etmek istiyor musunuz?\n\nHata: {0}"
 
 #: org/wikipediacleaner/gui/swing/worker/UpdateWarningTools.java:324
 #: org/wikipediacleaner/gui/swing/worker/UpdateWarningTools.java:339
