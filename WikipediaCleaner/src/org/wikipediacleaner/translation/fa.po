@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2021-08-09 11:17:47+0000\n"
+"PO-Revision-Date: 2021-08-26 11:28:48+0000\n"
 "Last-Translator: reza <reza.energy@gmail.com>\n"
 "Language-Team: Persian <fa@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -3335,7 +3335,7 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/action/ActionUpdateWarning.java:279
 msgid "Add a warning about unknown parameter errors"
-msgstr ""
+msgstr "افزودن هشدار دربارهٔ خطاهای پارامترهای نامعلوم"
 
 #: org/wikipediacleaner/gui/swing/action/ActionUpdateWarning.java:319
 msgid "Do you want to update the disambiguation warning on talk page?"
@@ -3351,7 +3351,7 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/action/ActionUpdateWarning.java:448
 msgid "Do you want to update the unknown parameter warning on talk page?"
-msgstr ""
+msgstr "آیا می‌خواهید هشدار پارامتر نامعلوم در صفحهٔ بحث را به‌روز کنید؟"
 
 #: org/wikipediacleaner/gui/swing/action/ActionUpdateWarning.java:493
 msgid "You must input a page name for updating warnings"
@@ -3718,7 +3718,7 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/bot/GeneralToolsPanel.java:186
 msgid "Update unknown parameter warning messages"
-msgstr ""
+msgstr "به‌روزرسانی پیام‌های هشدار پارامتر نامعلوم"
 
 #: org/wikipediacleaner/gui/swing/bot/GeneralToolsPanel.java:195
 msgid "Monitor recent changes"
@@ -5093,7 +5093,7 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/worker/UpdateUnknownParameterWarningTools.java:242
 #, java-format
 msgid "Removing unknown parameter warning - {0}"
-msgstr ""
+msgstr "حذف هشدار پارامتر نامعلوم - {0}"
 
 #: org/wikipediacleaner/gui/swing/worker/UpdateUnknownParameterWarningTools.java:251
 #, java-format
@@ -5108,7 +5108,7 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/worker/UpdateUnknownParameterWarningWorker.java:117
 #, java-format
 msgid "An error occurred when updating unknown parameter warnings. Do you want to continue ?\n\nError: {0}"
-msgstr ""
+msgstr "در زمان به‌روزرسانی هشدارهای پارامتر نامعلوم خطایی رخ داد. آیا می‌خواهید ادامه دهید؟\n\nخطا: {0}"
 
 #: org/wikipediacleaner/gui/swing/worker/UpdateWarningTools.java:324
 #: org/wikipediacleaner/gui/swing/worker/UpdateWarningTools.java:339

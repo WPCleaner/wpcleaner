@@ -7,6 +7,7 @@
 # Author: Beta16
 # Author: Gianfranco
 # Author: Luca.favorido
+# Author: Stefano
 # --
 # This file is distributed under the same license as the wikicleaner package.
 #
@@ -16,7 +17,7 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2021-08-09 11:17:48+0000\n"
+"PO-Revision-Date: 2021-08-26 11:28:50+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Italian <it@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -3324,7 +3325,7 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/action/ActionUpdateWarning.java:279
 msgid "Add a warning about unknown parameter errors"
-msgstr ""
+msgstr "Aggiungi un warning relativo agli errori dei parametri sconosciuti"
 
 #: org/wikipediacleaner/gui/swing/action/ActionUpdateWarning.java:319
 msgid "Do you want to update the disambiguation warning on talk page?"
@@ -3712,7 +3713,7 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/bot/GeneralToolsPanel.java:186
 msgid "Update unknown parameter warning messages"
-msgstr ""
+msgstr "Aggiorna i messaggi di warning dei parametri sconosciuti"
 
 #: org/wikipediacleaner/gui/swing/bot/GeneralToolsPanel.java:195
 msgid "Monitor recent changes"

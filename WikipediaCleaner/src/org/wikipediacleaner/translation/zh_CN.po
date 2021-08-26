@@ -7,6 +7,7 @@
 # Author: Shuiwater
 # Author: SomeyaMako
 # Author: Yfdyh000
+# Author: Zhang8569
 # Author: 列维劳德
 # Author: 水獭很懒
 # Author: 沈澄心
@@ -20,7 +21,7 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2021-08-09 11:17:52+0000\n"
+"PO-Revision-Date: 2021-08-26 11:28:53+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Chinese (Simplified) <zh_CN@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -3325,7 +3326,7 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/action/ActionUpdateWarning.java:279
 msgid "Add a warning about unknown parameter errors"
-msgstr ""
+msgstr "添加一个关于未知错误参数的警告"
 
 #: org/wikipediacleaner/gui/swing/action/ActionUpdateWarning.java:319
 msgid "Do you want to update the disambiguation warning on talk page?"
@@ -3341,7 +3342,7 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/action/ActionUpdateWarning.java:448
 msgid "Do you want to update the unknown parameter warning on talk page?"
-msgstr ""
+msgstr "你是否想在聊天页面更新未知参数警告？"
 
 #: org/wikipediacleaner/gui/swing/action/ActionUpdateWarning.java:493
 msgid "You must input a page name for updating warnings"
@@ -3708,7 +3709,7 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/bot/GeneralToolsPanel.java:186
 msgid "Update unknown parameter warning messages"
-msgstr ""
+msgstr "更新未知参数警告信息"
 
 #: org/wikipediacleaner/gui/swing/bot/GeneralToolsPanel.java:195
 msgid "Monitor recent changes"
@@ -5080,22 +5081,22 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/worker/UpdateUnknownParameterWarningTools.java:242
 #, java-format
 msgid "Removing unknown parameter warning - {0}"
-msgstr ""
+msgstr "移除未知参数警告-{0}"
 
 #: org/wikipediacleaner/gui/swing/worker/UpdateUnknownParameterWarningTools.java:251
 #, java-format
 msgid "Updating unknown parameter warning - {0}"
-msgstr ""
+msgstr "更新未知参数警告-{0}"
 
 #: org/wikipediacleaner/gui/swing/worker/UpdateUnknownParameterWarningWorker.java:77
 #, java-format
 msgid "Analysis found {0} articles to check for unknown parameter errors.\nDo you want to update the warnings ?"
-msgstr ""
+msgstr "检查未知参数错误分析发现了{0}文章。\n你是否想更新这些警告？"
 
 #: org/wikipediacleaner/gui/swing/worker/UpdateUnknownParameterWarningWorker.java:117
 #, java-format
 msgid "An error occurred when updating unknown parameter warnings. Do you want to continue ?\n\nError: {0}"
-msgstr ""
+msgstr "一个错误在更新未知参数警告时出现了。你是否想持续？\n\n错误：{0}"
 
 #: org/wikipediacleaner/gui/swing/worker/UpdateWarningTools.java:324
 #: org/wikipediacleaner/gui/swing/worker/UpdateWarningTools.java:339
