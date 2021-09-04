@@ -213,7 +213,7 @@ public class CheckErrorAlgorithm048 extends CheckErrorAlgorithmBase {
     // Suggestions
     CheckErrorResult errorResult = createCheckErrorResult(
         analysis, beginIndex, endIndex);
-    errorResult.addReplacement(prefix + link.getDisplayedText(), beforeFirstTitle && inBold);
+    errorResult.addReplacement(prefix + link.getDisplayedText(), !beforeFirstTitle || inBold);
     if (!inBold) {
       if (apostropheBefore) {
         String apostropheTemplate = analysis.getWPCConfiguration().getString(

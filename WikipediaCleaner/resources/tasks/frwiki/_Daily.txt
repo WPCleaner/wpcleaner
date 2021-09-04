@@ -1,4 +1,5 @@
 DoTasks _Common.txt
 Set Prefix [[Utilisateur:WikiCleanerBot#T1|Bot_T1]]
 FixCheckWiki 16
+FixCheckWiki 48
 FixCheckWiki 526
