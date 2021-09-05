@@ -14,6 +14,7 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.wikipediacleaner.api.check.Actionnable;
 import org.wikipediacleaner.api.check.CheckErrorResult;
@@ -365,25 +366,20 @@ public abstract class CheckErrorAlgorithmISBN extends CheckErrorAlgorithmBase {
     }
 
     // Create global actions
-    if (searches.size() > 1) {
-      List<Actionnable> actions = new ArrayList<>();
-      for (String[] searchEngine : searchEngines) {
-        if (searchEngine.length > 1) {
-          ActionMultiple action = new ActionMultiple();
-          for (String search : searches) {
-            try {
-              action.addAction(
-                  new ActionExternalViewer(MessageFormat.format(searchEngine[1], search)));
-            } catch (IllegalArgumentException e) {
-              //
-            }
-          }
-          actions.add(new SimpleAction(searchEngine[0], action));
-        }
-      }
-      errorResult.addPossibleAction(new CompositeAction(
-          GT._T("Search all ISBN"), actions));
-    }
+    addGlobalSearchEngines(
+        analysis, errorResult,
+        searches,
+        GT._T("Search all ISBN"));
+    addGlobalSearchEngines(
+        analysis,
+        errorResult,
+        searches.stream().filter(t -> t.length() == 10).collect(Collectors.toList()),
+        GT._T("Search all ISBN-10"));
+    addGlobalSearchEngines(
+        analysis,
+        errorResult,
+        searches.stream().filter(t -> t.length() == 13).collect(Collectors.toList()),
+        GT._T("Search all ISBN-13"));
 
     // Create unit actions
     for (String search : searches) {
@@ -402,6 +398,33 @@ public abstract class CheckErrorAlgorithmISBN extends CheckErrorAlgorithmBase {
       errorResult.addPossibleAction(new CompositeAction(
           GT._T("Search ISBN {0}", search), actions));
     }
+  }
+
+  private void addGlobalSearchEngines(
+      PageAnalysis analysis, CheckErrorResult errorResult,
+      List<String> searches, String title) {
+    if (searches.size() <= 1) {
+      return;
+    }
+    WPCConfiguration config = analysis.getWPCConfiguration();
+    List<String[]> searchEngines = config.getStringArrayList(
+        WPCConfigurationStringList.ISBN_SEARCH_ENGINES);
+    List<Actionnable> actions = new ArrayList<>();
+    for (String[] searchEngine : searchEngines) {
+      if (searchEngine.length > 1) {
+        ActionMultiple action = new ActionMultiple();
+        for (String search : searches) {
+          try {
+            action.addAction(
+                new ActionExternalViewer(MessageFormat.format(searchEngine[1], search)));
+          } catch (IllegalArgumentException e) {
+            //
+          }
+        }
+        actions.add(new SimpleAction(searchEngine[0], action));
+      }
+    }
+    errorResult.addPossibleAction(new CompositeAction(title, actions));
   }
 
   /**
