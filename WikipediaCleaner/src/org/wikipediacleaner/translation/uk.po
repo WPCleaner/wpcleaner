@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2021-08-26 11:28:53+0000\n"
+"PO-Revision-Date: 2021-09-06 11:16:36+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Ukrainian <uk@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -23,7 +23,7 @@ msgstr ""
 "X-Launchpad-Export-Date: 2014-09-21 06:01+0000\n"
 "X-Generator: MediaWiki 1.36.1; Translate 2021-07-26\n"
 "Language: uk\n"
-"X-POT-Import-Date: 2021-08-06 22:30:30+0000\n"
+"X-POT-Import-Date: 2021-09-05 20:30:30+0000\n"
 
 #: org/wikipediacleaner/Version.java:31
 #, java-format
@@ -229,36 +229,44 @@ msgstr "Сторінка, що містить список помилкових 
 msgid "Replace all"
 msgstr "Замінити все"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISBN.java:311
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISBN.java:312
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISSN.java:280
 #, java-format
 msgid "Ask for help using {0}"
 msgstr "Попросити допомоги за допомогою {0}"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISBN.java:336
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISBN.java:337
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISSN.java:305
 msgid "Add a comment"
 msgstr "Додати коментар"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISBN.java:385
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISBN.java:372
 msgid "Search all ISBN"
 msgstr "Шукати по всьому ISBN"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISBN.java:403
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISBN.java:433
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISBN.java:377
+msgid "Search all ISBN-10"
+msgstr "Шукати по всьому ISBN-10"
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISBN.java:382
+msgid "Search all ISBN-13"
+msgstr "Шукати по всьому ISBN-13"
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISBN.java:399
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISBN.java:456
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISSN.java:432
 #, java-format
 msgid "Search ISBN {0}"
 msgstr "Пошук ISBN {0}"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISBN.java:463
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISBN.java:486
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISSN.java:372
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISSN.java:402
 #, java-format
 msgid "Search ISSN {0}"
 msgstr "Пошук ISSN {0}"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISBN.java:496
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISBN.java:519
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISSN.java:465
 #: org/wikipediacleaner/gui/swing/component/MWPanePopupListener.java:502
 #, java-format
@@ -282,29 +290,19 @@ msgstr "Вилучити {0} простір назв із назви шабло�
 msgid "Fix all incorrect tags"
 msgstr "Виправити усі хибні теги"
 
-#: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a002/CheckErrorAlgorithm002.java:220
-#: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a002/CheckErrorAlgorithm002.java:244
-#: org/wikipediacleaner/api/check/algorithm/a0xx/a05x/a055/CheckErrorAlgorithm055.java:169
-#: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a066/CheckErrorAlgorithm066.java:96
-#: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a077/CheckErrorAlgorithm077.java:95
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a525/CheckErrorAlgorithm525.java:166
-#, java-format
-msgid "Remove {0} tags"
-msgstr "Вилучити теги {0}"
-
-#: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a002/CheckErrorAlgorithm002.java:797
-#: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a002/CheckErrorAlgorithm002.java:805
-#: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a002/CheckErrorAlgorithm002.java:808
-#: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a002/CheckErrorAlgorithm002.java:811
-#: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a002/CheckErrorAlgorithm002.java:814
-#: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a002/CheckErrorAlgorithm002.java:817
-#: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a002/CheckErrorAlgorithm002.java:820
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a002/CheckErrorAlgorithm002.java:681
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a002/CheckErrorAlgorithm002.java:689
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a002/CheckErrorAlgorithm002.java:692
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a002/CheckErrorAlgorithm002.java:695
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a002/CheckErrorAlgorithm002.java:698
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a002/CheckErrorAlgorithm002.java:701
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a002/CheckErrorAlgorithm002.java:704
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a525/CheckErrorAlgorithm525.java:228
 #, java-format
 msgid "A replacement for {0}"
 msgstr "Заміна для {0}"
 
-#: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a002/CheckErrorAlgorithm002.java:799
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a002/CheckErrorAlgorithm002.java:683
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a060/CheckErrorAlgorithm060.java:198
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a563/CheckErrorAlgorithm563.java:229
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a563/CheckErrorAlgorithm563.java:247
@@ -318,7 +316,7 @@ msgstr "Заміна для {0}"
 msgid "Name of the template"
 msgstr "Назва шаблону"
 
-#: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a002/CheckErrorAlgorithm002.java:800
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a002/CheckErrorAlgorithm002.java:684
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a060/CheckErrorAlgorithm060.java:201
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a563/CheckErrorAlgorithm563.java:236
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a563/CheckErrorAlgorithm563.java:250
@@ -618,6 +616,16 @@ msgstr "Установлено значення true, щоб повідомля�
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a05x/a054/CheckErrorAlgorithm054.java:38
 msgid "Remove breaks in list"
 msgstr "Вилучити розбивку в списку"
+
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a05x/a055/CheckErrorAlgorithm055.java:169
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a066/CheckErrorAlgorithm066.java:96
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a077/CheckErrorAlgorithm077.java:95
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a525/CheckErrorAlgorithm525.java:166
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a571/CheckErrorAlgorithm571.java:159
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a571/CheckErrorAlgorithm571.java:189
+#, java-format
+msgid "Remove {0} tags"
+msgstr "Вилучити теги {0}"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a05x/a057/CheckErrorAlgorithm057.java:32
 msgid "Fix all titles"
@@ -5102,12 +5110,12 @@ msgstr "Під час оновлення попереджень {1} сталас
 msgid "Do you want to update {0}?"
 msgstr "Оновити {0}?"
 
-#: org/wikipediacleaner/gui/swing/worker/UpdateUnknownParameterWarningTools.java:242
+#: org/wikipediacleaner/gui/swing/worker/UpdateUnknownParameterWarningTools.java:243
 #, java-format
 msgid "Removing unknown parameter warning - {0}"
 msgstr "Видалення попередження про невідомий параметр — {0}"
 
-#: org/wikipediacleaner/gui/swing/worker/UpdateUnknownParameterWarningTools.java:251
+#: org/wikipediacleaner/gui/swing/worker/UpdateUnknownParameterWarningTools.java:252
 #, java-format
 msgid "Updating unknown parameter warning - {0}"
 msgstr "Оновлення попередження про невідомий параметр — {0}"
