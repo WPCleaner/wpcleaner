@@ -7,6 +7,7 @@
 # Author: FF-11
 # Author: ManuelFranz
 # Author: Mglaser
+# Author: Umlaut
 # Author: Wolfdietmann
 # --
 # This file is distributed under the same license as the wikicleaner package.
@@ -17,7 +18,7 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2021-09-06 11:16:31+0000\n"
+"PO-Revision-Date: 2021-09-09 11:16:48+0000\n"
 "Last-Translator: Crazy1880 <Unknown>\n"
 "Language-Team: German <de@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -434,7 +435,7 @@ msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a016/CheckErrorAlgorithm016.java:402
 msgid "Non-breaking space"
-msgstr ""
+msgstr "Nicht-umbrechendes Leerzeichen"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a016/CheckErrorAlgorithm016.java:403
 msgid "Soft hyphen"

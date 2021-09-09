@@ -16,7 +16,7 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2021-09-06 11:16:34+0000\n"
+"PO-Revision-Date: 2021-09-09 11:16:51+0000\n"
 "Last-Translator: SubjectIsDead <Unknown>\n"
 "Language-Team: Dutch <nl@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -249,11 +249,11 @@ msgstr "Doorzoek alle ISBN"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISBN.java:377
 msgid "Search all ISBN-10"
-msgstr ""
+msgstr "Doorzoek alle ISBN-10"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISBN.java:382
 msgid "Search all ISBN-13"
-msgstr ""
+msgstr "Doorzoek alle ISBN-13"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISBN.java:399
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISBN.java:456
