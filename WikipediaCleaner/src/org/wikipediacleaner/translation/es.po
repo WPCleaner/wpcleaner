@@ -4,6 +4,7 @@
 # Author: AVIADOR71
 # Author: Abijeet Patro
 # Author: Arelilm
+# Author: Danniel07
 # Author: Destinid10 2
 # Author: Fitoschido
 # Author: Fitoschido
@@ -18,7 +19,7 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2021-09-06 11:16:31+0000\n"
+"PO-Revision-Date: 2021-09-09 11:16:48+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Spanish\n"
 "MIME-Version: 1.0\n"
@@ -253,11 +254,11 @@ msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISBN.java:377
 msgid "Search all ISBN-10"
-msgstr ""
+msgstr "Busque en todos los ISBN-10"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISBN.java:382
 msgid "Search all ISBN-13"
-msgstr ""
+msgstr "Busque en todos los ISBN-13"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISBN.java:399
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISBN.java:456

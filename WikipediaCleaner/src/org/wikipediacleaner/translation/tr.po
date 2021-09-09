@@ -23,7 +23,7 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2021-09-06 11:16:36+0000\n"
+"PO-Revision-Date: 2021-09-09 11:16:52+0000\n"
 "Last-Translator: volkan <volkanyeke@gmail.com>\n"
 "Language-Team: Turkish <tr@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -256,11 +256,11 @@ msgstr "Tüm ISBN'de ara"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISBN.java:377
 msgid "Search all ISBN-10"
-msgstr ""
+msgstr "Tüm ISBN-10'larda ara"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISBN.java:382
 msgid "Search all ISBN-13"
-msgstr ""
+msgstr "Tüm ISBN-13'lerde ara"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISBN.java:399
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISBN.java:456
