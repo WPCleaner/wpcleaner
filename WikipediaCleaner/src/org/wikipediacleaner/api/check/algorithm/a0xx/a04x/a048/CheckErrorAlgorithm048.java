@@ -67,6 +67,10 @@ public class CheckErrorAlgorithm048 extends CheckErrorAlgorithmBase {
     if (analysis.getPage().getRedirects().isRedirect()) {
       return false;
     }
+    Integer namespace = analysis.getPage().getNamespace();
+    if ((namespace != null) && (namespace.intValue() == Namespace.USER_TALK)) {
+      return false;
+    }
 
     // Analyze each internal link
     boolean result = false;
