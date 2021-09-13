@@ -4,6 +4,7 @@
 # Author: )8
 # Author: AYZ04
 # Author: Abijeet Patro
+# Author: GuoPC
 # Author: Shuiwater
 # Author: SomeyaMako
 # Author: Yfdyh000
@@ -21,7 +22,7 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2021-09-06 11:16:36+0000\n"
+"PO-Revision-Date: 2021-09-13 11:16:08+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Chinese (Simplified) <zh_CN@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -36,42 +37,42 @@ msgstr ""
 #: org/wikipediacleaner/Version.java:31
 #, java-format
 msgid "{0} extension is now available on all WikiMedia wikis."
-msgstr ""
+msgstr "{0}扩展功能现在可以在所有WikiMedia wiki上使用。"
 
 #: org/wikipediacleaner/Version.java:32
 msgid "It identifies wikitext patterns that must or can be fixed in pages."
-msgstr ""
+msgstr "它标识必须或可以在页面中固定的wikitext模式。"
 
 #: org/wikipediacleaner/Version.java:33
 msgid "It also provides some guidance about what the issues are with those patterns and how to fix them."
-msgstr ""
+msgstr "它还提供了有关这些模式的问题以及如何解决它们的一些指导。"
 
 #: org/wikipediacleaner/Version.java:35
 msgid "You can help by fixing problems identified by the Linter extension."
-msgstr ""
+msgstr "您可以协助修复有Linter扩展标识出的问题。"
 
 #: org/wikipediacleaner/Version.java:36
 #, java-format
 msgid "Integration between {0} and the Linter extension is done in the following way:"
-msgstr ""
+msgstr "{0}和Linter扩展之间的整合由以下方式完成："
 
 #: org/wikipediacleaner/Version.java:38
 msgid "The \"Linter categories\" button in this window lets you retrieve a list of pages detected by Linter for a given type of problem."
-msgstr ""
+msgstr "此窗口的“Linter分类”按钮可让您获得一份由Linter检测出的指定类型问题的页面列表。"
 
 #: org/wikipediacleaner/Version.java:39
 msgid "The \"Check article with Linter\" button in the analysis window lets you check the current version of an article against Linter."
-msgstr ""
+msgstr "分析窗口的“用Linter检查条目”按钮可让您检查被Linter查出的问题条目的当前版本。"
 
 #: org/wikipediacleaner/Version.java:40
 #, java-format
 msgid "Some errors detected by Linter are also reported directly by {0}."
-msgstr ""
+msgstr "一些被Linter检测出的错误也会被{0}直接报告。"
 
 #: org/wikipediacleaner/Version.java:43
 #, java-format
 msgid "WPCleaner configuration is available online, check the {0}System configuration{1}."
-msgstr ""
+msgstr "WPCleaner配置已在线上可用，请查看{0}系统设置{1}。"
 
 #: org/wikipediacleaner/Version.java:46
 msgid "Please, report any other problem you find to me."
@@ -85,19 +86,19 @@ msgstr "我希望您会喜欢{0}。"
 #: org/wikipediacleaner/Version.java:50
 #, java-format
 msgid "I try to keep {0} up to date with Check Wiki, but if you find any discrepancy(ies) in the detections, please let me know."
-msgstr ""
+msgstr "我尽量让{0}与Check Wiki保持一致，但如果您发现检测结果有任何差异，请告知我。"
 
 #: org/wikipediacleaner/Version.java:51
 msgid "The Check Wiki project has evolved a lot recently."
-msgstr ""
+msgstr "Check Wiki项目最近蓬勃发展。"
 
 #: org/wikipediacleaner/Version.java:52
 msgid "New detections have been added either with new error numbers or by replacing previously used error numbers."
-msgstr ""
+msgstr "新的检测结果已添加新的错误编号，或已替换以前使用的错误编号。"
 
 #: org/wikipediacleaner/Version.java:53
 msgid "You may need to update the Check Wiki translation file on your wiki to configure the new detections."
-msgstr ""
+msgstr "您可能需要更新wiki上的Check Wiki翻译文件以配置新的检测。"
 
 #: org/wikipediacleaner/Version.java:54
 msgid "Disambiguator extension has been deployed to all WMF wikis."
@@ -109,7 +110,7 @@ msgstr "它定义了新的魔术字__DISAMBIG__。"
 
 #: org/wikipediacleaner/Version.java:56
 msgid "This magic word should be added to all disambiguation pages (either through templates or directly)."
-msgstr ""
+msgstr "此魔术字应当被添加到所有的消歧义页面中（无论是通过模板添加还是直接添加）。"
 
 #: org/wikipediacleaner/Version.java:57
 msgid "WPCleaner v1.28 also uses this as the default system."
@@ -122,7 +123,7 @@ msgstr "在您的维基上可能需要一个动作："
 #: org/wikipediacleaner/Version.java:60
 #, java-format
 msgid "You can check if {0} is used on your wiki by opening an existing disambiguation page (like \"Smith\"). Then, click on \"Page information\" in the menu on the left. Finally, search for {0} in the information page."
-msgstr ""
+msgstr "您可以通过打开一个已存在的消歧义页面来检查{0}是否已在您的wiki上使用（如“Smith”），然后点击左侧菜单的“页面信息”，最后在信息页面搜索{0}。"
 
 #: org/wikipediacleaner/Version.java:64
 #, java-format
@@ -139,7 +140,7 @@ msgstr "在讨论页上留下一条带有消歧义页链接的列表"
 
 #: org/wikipediacleaner/Version.java:73
 msgid "Fixing errors detected by the Check Wiki project, in the full analysis window."
-msgstr ""
+msgstr "正在全面分析窗口中修复Check Wiki项目检测出的错误。"
 
 #: org/wikipediacleaner/Version.java:74
 msgid "Fixing spelling or typography based on a list of suggestions."
@@ -217,31 +218,31 @@ msgstr "描述此类错误的条目名"
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmBase.java:312
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmBase.java:315
 msgid "Set to true to prevent automatic modifications for this type of error"
-msgstr ""
+msgstr "设置为true以防止自动修改此类错误"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmBase.java:318
 msgid "List of false positives for this type of error"
-msgstr ""
+msgstr "此类错误的误报列表"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmBase.java:321
 msgid "Page containing a false positive for this type of error"
-msgstr ""
+msgstr "包含误报此类错误的页面"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmBase.java:325
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmBase.java:328
 msgid "Page containing the list of false positives for this type of error"
-msgstr ""
+msgstr "包含此类错误的误报列表的页面"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmHtmlNamedEntities.java:32
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a02x/a027/CheckErrorAlgorithm027.java:31
 msgid "Replace all"
-msgstr "全部替换"
+msgstr "替换所有"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISBN.java:312
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISSN.java:280
 #, java-format
 msgid "Ask for help using {0}"
-msgstr ""
+msgstr "使用{0}寻求帮助"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISBN.java:337
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISSN.java:305
@@ -250,15 +251,15 @@ msgstr "添加评论"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISBN.java:372
 msgid "Search all ISBN"
-msgstr ""
+msgstr "搜索所有ISBN"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISBN.java:377
 msgid "Search all ISBN-10"
-msgstr ""
+msgstr "搜索所有ISBN-10"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISBN.java:382
 msgid "Search all ISBN-13"
-msgstr ""
+msgstr "搜索所有ISBN-13"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISBN.java:399
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISBN.java:456
@@ -283,11 +284,11 @@ msgstr "用{0}进行搜索"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISSN.java:354
 msgid "Search all ISSN"
-msgstr ""
+msgstr "搜索所有ISSN"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmTOC.java:102
 msgid "A list of templates resulting in the inclusion of a table of contents"
-msgstr ""
+msgstr "导致包含目录表格的模板列表"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a001/CheckErrorAlgorithm001.java:92
 #, java-format
@@ -296,7 +297,7 @@ msgstr "从模板名称中移除{0}命名空间"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a002/CheckErrorAlgorithm002.java:48
 msgid "Fix all incorrect tags"
-msgstr ""
+msgstr "修复所有不正确的标签"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a002/CheckErrorAlgorithm002.java:681
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a002/CheckErrorAlgorithm002.java:689
@@ -308,7 +309,7 @@ msgstr ""
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a525/CheckErrorAlgorithm525.java:228
 #, java-format
 msgid "A replacement for {0}"
-msgstr ""
+msgstr "替换{0}"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a002/CheckErrorAlgorithm002.java:683
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a060/CheckErrorAlgorithm060.java:198
@@ -334,7 +335,7 @@ msgstr "模板名称"
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:358
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:372
 msgid "Name of the parameter"
-msgstr ""
+msgstr "参数名称"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a003/CheckErrorAlgorithm003.java:121
 msgid "Close tag"
@@ -344,30 +345,30 @@ msgstr "关闭标签"
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a003/CheckErrorAlgorithm003.java:273
 #, java-format
 msgid "Text to insert for adding {0}"
-msgstr ""
+msgstr "添加{0}时要插入的文字"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a003/CheckErrorAlgorithm003.java:276
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a003/CheckErrorAlgorithm003.java:283
 #: org/wikipediacleaner/api/check/algorithm/a1xx/a11x/a111/CheckErrorAlgorithm111.java:200
 #, java-format
 msgid "A list of templates resulting in the inclusion of {0}"
-msgstr ""
+msgstr "导致包含{0}的模板列表"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a003/CheckErrorAlgorithm003.java:279
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a003/CheckErrorAlgorithm003.java:286
 #, java-format
 msgid "Template resulting in the inclusion of {0}"
-msgstr ""
+msgstr "导致包含{0}的模板"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a003/CheckErrorAlgorithm003.java:290
 #, java-format
 msgid "Section headings where a {0} can be added"
-msgstr ""
+msgstr "可以添加{0}的章节标题"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a003/CheckErrorAlgorithm003.java:293
 #, java-format
 msgid "Section heading where a {0} can be added"
-msgstr ""
+msgstr "可以添加{0}的章节标题"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a005/CheckErrorAlgorithm005.java:81
 msgid "Properly end the comment"
@@ -405,17 +406,17 @@ msgstr "无法替换字符[{0}]"
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a009/CheckErrorAlgorithm009.java:245
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a05x/a052/CheckErrorAlgorithm052.java:342
 msgid "A list of templates in which categories should be ignored."
-msgstr ""
+msgstr "应当忽略分类的模板列表。"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a009/CheckErrorAlgorithm009.java:249
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a05x/a052/CheckErrorAlgorithm052.java:346
 msgid "A template in which categories should be ignored."
-msgstr ""
+msgstr "应当忽略分类的模板。"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a009/CheckErrorAlgorithm009.java:252
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a05x/a052/CheckErrorAlgorithm052.java:349
 msgid "A template parameter in which categories should be ignored."
-msgstr ""
+msgstr "应当忽略分类的模板参数。"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a016/CheckErrorAlgorithm016.java:40
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a016/CheckErrorAlgorithm016.java:274
@@ -425,7 +426,7 @@ msgstr "删除所有的控制字符"
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a016/CheckErrorAlgorithm016.java:385
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a016/CheckErrorAlgorithm016.java:388
 msgid "To report control characters only in templates"
-msgstr ""
+msgstr "报告仅在模板中的控制字符"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a016/CheckErrorAlgorithm016.java:391
 msgid "To ignore some control characters"
@@ -433,7 +434,7 @@ msgstr "忽略部分的控制字符"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a016/CheckErrorAlgorithm016.java:394
 msgid "To ignore control character with hexadecimal code equal to XX"
-msgstr ""
+msgstr "忽略十六进制码等于XX的控制字符"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a016/CheckErrorAlgorithm016.java:402
 msgid "Non-breaking space"
@@ -441,79 +442,79 @@ msgstr "不换行空格"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a016/CheckErrorAlgorithm016.java:403
 msgid "Soft hyphen"
-msgstr ""
+msgstr "软连字符"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a016/CheckErrorAlgorithm016.java:404
 msgid "Thee-per-em space"
-msgstr ""
+msgstr "三分之一空格"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a016/CheckErrorAlgorithm016.java:405
 msgid "Four-per-em space"
-msgstr ""
+msgstr "四分之一空格"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a016/CheckErrorAlgorithm016.java:406
 msgid "Six-per-em space"
-msgstr ""
+msgstr "六分之一空格"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a016/CheckErrorAlgorithm016.java:407
 msgid "Figure space"
-msgstr ""
+msgstr "数字空格"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a016/CheckErrorAlgorithm016.java:408
 msgid "Punctuation space"
-msgstr ""
+msgstr "标点空格"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a016/CheckErrorAlgorithm016.java:409
 msgid "Zero-width space"
-msgstr ""
+msgstr "零宽空格"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a016/CheckErrorAlgorithm016.java:410
 msgid "Left-to-right mark"
-msgstr ""
+msgstr "左至右符号"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a016/CheckErrorAlgorithm016.java:411
 msgid "Right-to-left mark"
-msgstr ""
+msgstr "右至左符号"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a016/CheckErrorAlgorithm016.java:412
 msgid "Line separator"
-msgstr ""
+msgstr "行分隔符"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a016/CheckErrorAlgorithm016.java:413
 msgid "Left-to-right embedding"
-msgstr ""
+msgstr "左至右嵌入"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a016/CheckErrorAlgorithm016.java:414
 msgid "Right-to-left embedding"
-msgstr ""
+msgstr "右至左嵌入"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a016/CheckErrorAlgorithm016.java:415
 msgid "Pop directional formatting"
-msgstr ""
+msgstr "弹出方向格式"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a016/CheckErrorAlgorithm016.java:416
 msgid "Left-to-right override"
-msgstr ""
+msgstr "左至右覆写"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a016/CheckErrorAlgorithm016.java:417
 msgid "Right-to-left override"
-msgstr ""
+msgstr "右至左覆写"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a016/CheckErrorAlgorithm016.java:418
 msgid "Byte order mark"
-msgstr ""
+msgstr "字节顺序标记"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a016/CheckErrorAlgorithm016.java:419
 msgid "Object replacement character"
-msgstr ""
+msgstr "目标替换字符"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a016/CheckErrorAlgorithm016.java:420
 msgid "Private use area"
-msgstr ""
+msgstr "私人使用区"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a016/CheckErrorAlgorithm016.java:421
 msgid "Private use area A"
-msgstr ""
+msgstr "私人使用区A"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a016/CheckErrorAlgorithm016.java:422
 msgid "Private use area B"
@@ -536,7 +537,7 @@ msgstr "检查分类"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a02x/a021/CheckErrorAlgorithm021.java:103
 msgid "Comment category out"
-msgstr ""
+msgstr "注释分类排除"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a02x/a028/CheckErrorAlgorithm028.java:252
 msgid "Templates that can replace the end of a table"
@@ -561,7 +562,7 @@ msgstr "添加一个备用描述..."
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a03x/a030/CheckErrorAlgorithm030.java:109
 msgid "What alternate description would you like to use for the image ?"
-msgstr ""
+msgstr "希望该图像使用什么备用描述？"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a03x/a030/CheckErrorAlgorithm030.java:114
 msgid "View image"
@@ -590,19 +591,19 @@ msgstr "增加DEFAULTSORT"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a03x/a037/CheckErrorAlgorithm037.java:230
 msgid "Restrict the detection to the first characters"
-msgstr ""
+msgstr "将检测范围限制在首个字符"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a03x/a037/CheckErrorAlgorithm037.java:233
 msgid "Maximum number of characters to use for the detection"
-msgstr ""
+msgstr "检测时使用的最大字符数"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a03x/a037/CheckErrorAlgorithm037.java:236
 msgid "List of templates that prevent automatic fixing of this error"
-msgstr ""
+msgstr "防止自动修复此错误的模板列表"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a03x/a037/CheckErrorAlgorithm037.java:239
 msgid "Template that prevent automatic fixing of this error"
-msgstr ""
+msgstr "防止自动修复此错误的模板"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a04x/a044/CheckErrorAlgorithm044.java:37
 msgid "Fix all bold headlines"
@@ -641,11 +642,11 @@ msgstr "修复所有标题"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a05x/a059/CheckErrorAlgorithm059.java:227
 msgid "A list of templates that should be ignored"
-msgstr ""
+msgstr "应当被忽略的模板列表"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a05x/a059/CheckErrorAlgorithm059.java:230
 msgid "A template that should be ignored"
-msgstr "应该被忽略的模板"
+msgstr "应当被忽略的模板"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a060/CheckErrorAlgorithm060.java:194
 msgid "Templates to be ignored"
@@ -655,7 +656,7 @@ msgstr "要忽略的模板"
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a061/CheckErrorAlgorithm061.java:493
 #, java-format
 msgid "To force the usage of the separator between consecutive {0} tags"
-msgstr ""
+msgstr "强制在连续的{0}标记之间使用分隔符"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a061/CheckErrorAlgorithm061.java:496
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a061/CheckErrorAlgorithm061.java:499
@@ -668,7 +669,7 @@ msgstr ""
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a559/CheckErrorAlgorithm559.java:332
 #, java-format
 msgid "Used as a separator between consecutive {0} tags"
-msgstr ""
+msgstr "用作连续的{0}标记之间的分隔符"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a062/CheckErrorAlgorithm062.java:152
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a08x/a084/CheckErrorAlgorithm084.java:102
@@ -692,12 +693,12 @@ msgstr "移除所以<small>标签"
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a067/CheckErrorAlgorithm067.java:361
 #, java-format
 msgid "A list of abbreviations that generate false positives when placed before {0}"
-msgstr ""
+msgstr "放在{0}之前会产生误报的缩写列表"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a067/CheckErrorAlgorithm067.java:364
 #, java-format
 msgid "An abbreviation that generate false positives when placed before {0}"
-msgstr ""
+msgstr "放在{0}之前会产生误报的缩写"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a068/CheckErrorAlgorithm068.java:54
 msgid "Check all links to other language"
@@ -751,7 +752,7 @@ msgstr "取消"
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a068/CheckErrorAlgorithm068.java:316
 #, java-format
 msgid "The page \"{0}\" in \"{1}\" has a language link to \"{2}\": {3}.\nWith what text do you want to replace the link ?"
-msgstr ""
+msgstr "“{1}”页面“{0}”有到“{2}”的跨语言链接：{3}。\n您想用什么文本替换链接？"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a068/CheckErrorAlgorithm068.java:329
 #, java-format
@@ -816,7 +817,7 @@ msgstr "输入的ISBN长度为{0}，而不是10或13"
 #: org/wikipediacleaner/api/check/algorithm/a1xx/a10x/a107/CheckErrorAlgorithm107.java:122
 #: org/wikipediacleaner/api/check/algorithm/a1xx/a10x/a108/CheckErrorAlgorithm108.java:93
 msgid "Search as OCLC"
-msgstr ""
+msgstr "以OCLC搜索"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a070/CheckErrorAlgorithm070.java:121
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a072/CheckErrorAlgorithm072.java:106
@@ -824,7 +825,7 @@ msgstr ""
 #: org/wikipediacleaner/api/check/algorithm/a1xx/a10x/a107/CheckErrorAlgorithm107.java:125
 #: org/wikipediacleaner/api/check/algorithm/a1xx/a10x/a108/CheckErrorAlgorithm108.java:96
 msgid "Search as LCCN"
-msgstr ""
+msgstr "以LCCN搜索"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a070/CheckErrorAlgorithm070.java:195
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a072/CheckErrorAlgorithm072.java:156
@@ -951,15 +952,15 @@ msgstr ""
 #: org/wikipediacleaner/api/check/algorithm/a1xx/a11x/a112/CheckErrorAlgorithm112.java:645
 #, java-format
 msgid "Use {0}"
-msgstr ""
+msgstr "使用{0}"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a08x/a085/CheckErrorAlgorithm085.java:351
 msgid "A list of templates that can be used to replace &lt;center&gt; tags"
-msgstr ""
+msgstr "可以用来代替&lt;center&gt;标签的模板列表"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a08x/a085/CheckErrorAlgorithm085.java:355
 msgid "Template that can be used to replace &lt;center&gt; tags"
-msgstr "可以用来代替 &lt;center&gt; 标签的模板"
+msgstr "可以用来代替&lt;center&gt;标签的模板"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a08x/a085/CheckErrorAlgorithm085.java:358
 msgid "Name of the parameter to use"
@@ -1090,7 +1091,7 @@ msgstr ""
 #: org/wikipediacleaner/api/check/algorithm/a1xx/a11x/a112/CheckErrorAlgorithm112.java:629
 #, java-format
 msgid "Use {0} and {1}"
-msgstr ""
+msgstr "使用{0}和{1}"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a50x/a501/CheckErrorAlgorithm501.java:170
 msgid "Restore original text"
