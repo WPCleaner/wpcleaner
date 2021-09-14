@@ -49,6 +49,7 @@ FixListCheckWiki Projet:Correction_syntaxique/Analyse_566 501 566
 FixListCheckWiki Projet:Correction_syntaxique/Analyse_567 567
 FixListCheckWiki Projet:Correction_syntaxique/Analyse_568 568
 FixListCheckWiki Projet:Correction_syntaxique/Analyse_569 569
+UpdateUnknownParameterWarnings
 
 # File namespace
 DoTasks _Common_Other.txt
