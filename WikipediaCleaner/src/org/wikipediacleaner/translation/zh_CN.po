@@ -22,7 +22,7 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2021-09-16 11:15:56+0000\n"
+"PO-Revision-Date: 2021-09-20 11:18:14+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Chinese (Simplified) <zh_CN@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -884,7 +884,7 @@ msgstr ""
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a079/CheckErrorAlgorithm079.java:109
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a079/CheckErrorAlgorithm079.java:121
 msgid "What description would you like to use for the external link ?"
-msgstr ""
+msgstr "希望外部链接使用什么描述？"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a079/CheckErrorAlgorithm079.java:114
 msgid "Convert into <ref> tag"
@@ -926,7 +926,7 @@ msgstr "几个<ref>标签共享相同的内容，但没有被赋予一个名称�
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a08x/a081/CheckErrorAlgorithm081.java:358
 msgid "What name do you want to use for this <ref> tag ?"
-msgstr ""
+msgstr "希望此<ref>标签使用什么名称？"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a08x/a084/CheckErrorAlgorithm084.java:105
 msgid "Delete section"
@@ -976,19 +976,19 @@ msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a090/CheckErrorAlgorithm090.java:975
 msgid "Templates to be used for linking to the history of an article"
-msgstr ""
+msgstr "用于链接到条目历史的模板"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a090/CheckErrorAlgorithm090.java:979
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a090/CheckErrorAlgorithm090.java:1008
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a090/CheckErrorAlgorithm090.java:1029
 msgid "Template to be used for linking to the history of an article"
-msgstr ""
+msgstr "用于链接到条目历史的模板"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a090/CheckErrorAlgorithm090.java:982
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a090/CheckErrorAlgorithm090.java:1011
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a090/CheckErrorAlgorithm090.java:1032
 msgid "Parameter to be used for the article name"
-msgstr ""
+msgstr "用于条目名称的参数"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a090/CheckErrorAlgorithm090.java:986
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a090/CheckErrorAlgorithm090.java:1019
@@ -1000,11 +1000,11 @@ msgstr ""
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a090/CheckErrorAlgorithm090.java:992
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a091/CheckErrorAlgorithm091.java:424
 msgid "Templates using external links"
-msgstr ""
+msgstr "使用外部链接的模板"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a090/CheckErrorAlgorithm090.java:1004
 msgid "Templates to be used for linking to an old version of an article"
-msgstr ""
+msgstr "用于链接到条目历史版本的模板"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a090/CheckErrorAlgorithm090.java:1015
 msgid "Parameter to be used for the identifier of the old version"
@@ -1027,7 +1027,7 @@ msgstr "模板"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a091/CheckErrorAlgorithm091.java:431
 msgid "Parameter to be used for the link"
-msgstr ""
+msgstr "用于链接的参数"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a091/CheckErrorAlgorithm091.java:441
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a091/CheckErrorAlgorithm091.java:444
@@ -1144,11 +1144,11 @@ msgstr "用于删除外部链接的 URL 的值"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a513/CheckErrorAlgorithm513.java:905
 msgid "A list of templates that create an internal link"
-msgstr ""
+msgstr "创建内部链接的模板列表"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a513/CheckErrorAlgorithm513.java:909
 msgid "Name of a template that creates an internal link"
-msgstr ""
+msgstr "创建内部链接的模板名称"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a513/CheckErrorAlgorithm513.java:912
 msgid "Name of a template that can be used as a replacement"
@@ -1162,16 +1162,15 @@ msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a513/CheckErrorAlgorithm513.java:922
 msgid "A list of template parameters that create the text of an external link"
-msgstr ""
+msgstr "创建外部链接文本的模板参数列表"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a513/CheckErrorAlgorithm513.java:926
 msgid "Name of a template that creates an external link"
-msgstr ""
+msgstr "创建外部链接的模板名称"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a513/CheckErrorAlgorithm513.java:929
-#, fuzzy
 msgid "Name of a parameter that is used to create the text of the external link"
-msgstr "监视模板"
+msgstr "用于创建外部链接的参数名称"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a513/CheckErrorAlgorithm513.java:932
 msgid "True if removing internal links in the text can be automatic"
@@ -1203,7 +1202,7 @@ msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a514/CheckErrorAlgorithm514.java:191
 msgid "Name of a template which defines references"
-msgstr ""
+msgstr "定义参考文献的模板名称"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a514/CheckErrorAlgorithm514.java:194
 msgid "Name of the reference defined by the template"
