@@ -1,6 +1,7 @@
 # Translation of WPCleaner to Message documentation (Message documentation)
 # Exported from translatewiki.net
 #
+# Author: Ajeje Brazorf
 # Author: NicoV
 # Author: Robby
 # Author: Verdy p
@@ -10,7 +11,7 @@
 msgid ""
 msgstr ""
 ""
-"PO-Revision-Date: 2021-09-06 11:16:35+0000\n"
+"PO-Revision-Date: 2021-09-23 11:19:26+0000\n"
 "X-POT-Import-Date: 2021-09-05 20:30:30+0000\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -4737,7 +4738,7 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/SortingOptionsPanel.java:128
 msgid "Details"
-msgstr ""
+msgstr "{{Identical|Detail}}"
 
 #: org/wikipediacleaner/gui/swing/options/SortingOptionsPanel.java:144
 msgid "Up"
