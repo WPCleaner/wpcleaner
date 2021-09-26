@@ -13,6 +13,7 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.regex.Pattern;
 
 import org.apache.commons.lang3.StringUtils;
 import org.wikipediacleaner.api.algorithm.AlgorithmParameter;
@@ -79,6 +80,116 @@ public class CheckErrorAlgorithm558 extends CheckErrorAlgorithmBase {
     return result;
   }
 
+  private static final Pattern CLEAN_PATTERN = Pattern.compile("  ++");
+
+  /**
+   * Analyze two tags.
+   * 
+   * @param analysis Page analysis.
+   * @param contents Page contents.
+   * @param errors Errors found in the page.
+   * @param firstRef First reference.
+   * @param nextRef Reference after the first reference.
+   * @param previousRef Reference before the second reference.
+   * @param secondRef Second reference.
+   * @return True if the error was found between the two tags.
+   */
+  private boolean analyzeTwoTags(
+    PageAnalysis analysis, String contents,
+    Collection<CheckErrorResult> errors,
+    PageElement firstRef,
+    PageElement nextRef,
+    PageElement previousRef,
+    PageElement secondRef) {
+
+    // Check if the two references are identical
+    int firstBeginIndex = firstRef.getBeginIndex();
+    int firstEndIndex = firstRef.getEndIndex();
+    int secondBeginIndex = secondRef.getBeginIndex();
+    int secondEndIndex = secondRef.getEndIndex();
+    if (firstEndIndex - firstBeginIndex == secondEndIndex - secondBeginIndex) {
+      String firstContent = contents.substring(firstBeginIndex, firstEndIndex);
+      String secondContent = contents.substring(secondBeginIndex, secondEndIndex);
+      if (StringUtils.equals(firstContent, secondContent)) {
+        if (errors == null) {
+          return true;
+        }
+        CheckErrorResult errorResult = createCheckErrorResult(analysis, firstRef.getBeginIndex(), secondRef.getEndIndex());
+        errorResult.addReplacement(
+            contents.substring(firstBeginIndex, previousRef.getEndIndex()),
+            canRemoveBetween(contents, previousRef, secondRef));
+        errors.add(errorResult);
+        return true;
+      }
+    }
+
+    // Check that the two references are based on tags
+    if (!(firstRef instanceof PageElementFullTag) || !(secondRef instanceof PageElementFullTag)) {
+      return false;
+    }
+    PageElementFullTag firstRefTag = (PageElementFullTag) firstRef;
+    PageElementFullTag secondRefTag = (PageElementFullTag) secondRef;
+
+    // Check if the two reference tags are for the same name and group
+    Parameter firstName = firstRefTag.firstTag.getParameter("name");
+    Parameter secondName = secondRefTag.firstTag.getParameter("name");
+    boolean sameName = false;
+    if ((firstName != null) && (secondName != null) &&
+        StringUtils.equals(firstName.getValue(), secondName.getValue())) {
+      sameName = true;
+    }
+    Parameter firstGroup = firstRefTag.firstTag.getParameter("group");
+    Parameter secondGroup = secondRefTag.firstTag.getParameter("group");
+    boolean sameGroup = false;
+    if ((firstGroup != null) && (secondGroup != null) &&
+        StringUtils.equals(firstGroup.getValue(), secondGroup.getValue())) {
+      sameGroup = true;
+    } else if ((firstGroup == null) && (secondGroup == null)) {
+      sameGroup = true;
+    }
+
+    // Report error if references are for the same name and group
+    if (sameName && sameGroup) {
+      if (errors == null) {
+        return true;
+      }
+      CheckErrorResult errorResult = createCheckErrorResult(analysis, firstRef.getBeginIndex(), secondRef.getEndIndex());
+      if (secondRefTag.firstTag.isFullTag()) {
+        errorResult.addReplacement(
+            contents.substring(firstBeginIndex, previousRef.getEndIndex()),
+            canRemoveBetween(contents, previousRef, secondRef));
+      } else if (firstRefTag.firstTag.isFullTag()) {
+        errorResult.addReplacement(
+            contents.substring(nextRef.getBeginIndex(), secondEndIndex),
+            canRemoveBetween(contents, firstRef, nextRef));
+      }
+      errors.add(errorResult);
+      return true;
+    }
+
+    // Check if the reference tags contents are similar enough
+    if (!firstRefTag.firstTag.isFullTag() && !secondRefTag.firstTag.isFullTag() && sameGroup) {
+      String firstContent = contents.substring(firstRefTag.firstTag.getValueBeginIndex(), firstRefTag.firstTag.getValueEndIndex()).trim();
+      String secondContent = contents.substring(secondRefTag.firstTag.getValueBeginIndex(), secondRefTag.firstTag.getValueEndIndex()).trim();
+      if (!firstContent.isEmpty() && !secondContent.isEmpty() &&
+          StringUtils.equals(CLEAN_PATTERN.matcher(firstContent).replaceAll(" "),
+                             CLEAN_PATTERN.matcher(secondContent).replaceAll(" "))) {
+        if (errors == null) {
+          return true;
+        }
+        CheckErrorResult errorResult = createCheckErrorResult(analysis, firstRef.getBeginIndex(), secondRef.getEndIndex());
+        boolean automatic = canRemoveBetween(contents, previousRef, secondRef) && (firstName == null) && (secondName == null);
+        errorResult.addReplacement(
+            contents.substring(firstBeginIndex, previousRef.getEndIndex()),
+            automatic);
+        errors.add(errorResult);
+        return true;
+      }
+    }
+
+    return false;
+  }
+
   /**
    * Analyze a group of tags.
    * 
@@ -101,53 +212,11 @@ public class CheckErrorAlgorithm558 extends CheckErrorAlgorithmBase {
     }
     for (int firstIndex = firstRefIndex; firstIndex < lastRefIndex; firstIndex++) {
       PageElement firstRef = refs.get(firstIndex);
-      PageElementFullTag firstRefTag = (firstRef instanceof PageElementFullTag) ? (PageElementFullTag) firstRef : null;
-      String firstContent = contents.substring(firstRef.getBeginIndex(), firstRef.getEndIndex());
       for (int secondIndex = firstIndex + 1; secondIndex <= lastRefIndex; secondIndex++) {
-        PageElement secondRef = refs.get(secondIndex);
-        String secondContent = contents.substring(secondRef.getBeginIndex(), secondRef.getEndIndex());
-        if (firstContent.equals(secondContent)) {
-          if (errors == null) {
-            return true;
-          }
-          CheckErrorResult errorResult = createCheckErrorResult(analysis, firstRef.getBeginIndex(), secondRef.getEndIndex());
-          errorResult.addReplacement(
-              contents.substring(firstRef.getBeginIndex(), refs.get(secondIndex - 1).getEndIndex()),
-              canRemoveBetween(contents, refs.get(secondIndex - 1), refs.get(secondIndex)));
-          errors.add(errorResult);
-          return true;
-        }
-        PageElementFullTag secondRefTag = null;
-        if ((firstRefTag != null) && (secondRef instanceof PageElementFullTag)) {
-          PageElementFullTag tmpTag = (PageElementFullTag) secondRef;
-          Parameter firstName = firstRefTag.firstTag.getParameter("name");
-          Parameter secondName = tmpTag.firstTag.getParameter("name");
-          if ((firstName != null) &&
-              (secondName != null) &&
-              StringUtils.equals(firstName.getValue(), secondName.getValue())) {
-            Parameter firstGroup = firstRefTag.firstTag.getParameter("group");
-            Parameter secondGroup = tmpTag.firstTag.getParameter("group");
-            if ((firstGroup != null) &&
-                (secondGroup != null) &&
-                StringUtils.equals(firstGroup.getValue(), secondGroup.getValue())) {
-              secondRefTag = tmpTag;
-            } else if ((firstGroup == null) && (secondGroup == null)) {
-              secondRefTag = tmpTag;
-            }
-          }
-        }
-        if ((firstRefTag != null) && (secondRefTag != null)) {
-          CheckErrorResult errorResult = createCheckErrorResult(analysis, firstRef.getBeginIndex(), secondRef.getEndIndex());
-          if (secondRefTag.firstTag.isFullTag()) {
-            errorResult.addReplacement(
-                contents.substring(firstRef.getBeginIndex(), refs.get(secondIndex - 1).getEndIndex()),
-                canRemoveBetween(contents, refs.get(secondIndex - 1), refs.get(secondIndex)));
-          } else if (firstRefTag.firstTag.isFullTag()) {
-            errorResult.addReplacement(
-                contents.substring(refs.get(firstIndex + 1).getBeginIndex(), secondRef.getEndIndex()),
-                canRemoveBetween(contents, refs.get(firstIndex), refs.get(firstIndex + 1)));
-          }
-          errors.add(errorResult);
+        if (analyzeTwoTags(
+            analysis, contents, errors,
+            firstRef, refs.get(firstIndex + 1),
+            refs.get(secondIndex - 1), refs.get(secondIndex))) {
           return true;
         }
       }
