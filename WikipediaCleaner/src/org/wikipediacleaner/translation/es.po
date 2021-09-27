@@ -19,7 +19,7 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2021-09-09 11:16:48+0000\n"
+"PO-Revision-Date: 2021-09-27 11:18:02+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Spanish\n"
 "MIME-Version: 1.0\n"
@@ -38,7 +38,7 @@ msgstr "La extensión {0} está disponible en todos los wikis de WikiMedia."
 
 #: org/wikipediacleaner/Version.java:32
 msgid "It identifies wikitext patterns that must or can be fixed in pages."
-msgstr ""
+msgstr "Identifica patrones de wikitexto que deben o pueden arreglarse en las páginas."
 
 #: org/wikipediacleaner/Version.java:33
 msgid "It also provides some guidance about what the issues are with those patterns and how to fix them."
@@ -55,11 +55,11 @@ msgstr ""
 
 #: org/wikipediacleaner/Version.java:38
 msgid "The \"Linter categories\" button in this window lets you retrieve a list of pages detected by Linter for a given type of problem."
-msgstr ""
+msgstr "El botón «Categorías de Linter» en esta ventana te permite recuperar una lista de páginas detectadas por Linter para un tipo de problema determinado."
 
 #: org/wikipediacleaner/Version.java:39
 msgid "The \"Check article with Linter\" button in the analysis window lets you check the current version of an article against Linter."
-msgstr ""
+msgstr "El botón «Revisar artículo con Linter» en la ventana de análisis te permite revisar la versión actual de un artículo con Linter."
 
 #: org/wikipediacleaner/Version.java:40
 #, java-format
@@ -69,11 +69,11 @@ msgstr "Algunos errores detectados por Linter también son reportados directamen
 #: org/wikipediacleaner/Version.java:43
 #, java-format
 msgid "WPCleaner configuration is available online, check the {0}System configuration{1}."
-msgstr "La configuración de WPCleaner está disponible en línea. Compruebe la {0}configuración del sistema{1}."
+msgstr "La configuración de WPCleaner está disponible en línea. Comprueba la {0}configuración del sistema{1}."
 
 #: org/wikipediacleaner/Version.java:46
 msgid "Please, report any other problem you find to me."
-msgstr "Por favor, informe de cualquier otro problema que encuentre."
+msgstr "Por favor, infórmame de cualquier otro problema que encuentres."
 
 #: org/wikipediacleaner/Version.java:49
 #, java-format
@@ -2739,9 +2739,8 @@ msgid "Special lists"
 msgstr "Listas especiales"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:834
-#, fuzzy
 msgid "Linter categories"
-msgstr "Categorías solicitadas"
+msgstr "Categorías de Linter"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:843
 msgid "Generate lists"
@@ -4244,7 +4243,7 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/linter/ActionLinter.java:49
 msgid "Check article with Linter"
-msgstr ""
+msgstr "Revisar artículo con Linter"
 
 #: org/wikipediacleaner/gui/swing/linter/ActionLinter.java:203
 msgid "You need to select pages to check for linter errors"
