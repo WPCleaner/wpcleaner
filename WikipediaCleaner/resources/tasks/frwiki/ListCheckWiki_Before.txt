@@ -2,32 +2,61 @@ DoTasks _Common.txt
 
 Set Prefix [[Utilisateur:WikiCleanerBot#T3|Bot_T3]]
 Set Namespaces 0
+Set Prefix [[Utilisateur:WikiCleanerBot#T3|Bot_T3_PCS#1]]
 FixCheckWiki 1
+Set Prefix [[Utilisateur:WikiCleanerBot#T3|Bot_T3_PCS#2]]
 FixCheckWiki 2
+Set Prefix [[Utilisateur:WikiCleanerBot#T3|Bot_T3_PCS#7]]
 FixCheckWiki 7
+Set Prefix [[Utilisateur:WikiCleanerBot#T3|Bot_T3_PCS#9]]
 FixCheckWiki 9
+Set Prefix [[Utilisateur:WikiCleanerBot#T3|Bot_T3_PCS#10]]
 FixCheckWiki 10
+Set Prefix [[Utilisateur:WikiCleanerBot#T3|Bot_T3_PCS#16]]
 FixCheckWiki 16
+Set Prefix [[Utilisateur:WikiCleanerBot#T3|Bot_T3_PCS#17]]
 FixCheckWiki 17
+Set Prefix [[Utilisateur:WikiCleanerBot#T3|Bot_T3_PCS#18]]
 FixCheckWiki 18
+Set Prefix [[Utilisateur:WikiCleanerBot#T3|Bot_T3_PCS#19]]
 FixCheckWiki 19
+Set Prefix [[Utilisateur:WikiCleanerBot#T3|Bot_T3_PCS#22]]
 FixCheckWiki 22
+Set Prefix [[Utilisateur:WikiCleanerBot#T3|Bot_T3_PCS#25]]
 FixCheckWiki 25
+Set Prefix [[Utilisateur:WikiCleanerBot#T3|Bot_T3_PCS#44]]
 FixCheckWiki 44
+Set Prefix [[Utilisateur:WikiCleanerBot#T3|Bot_T3_PCS#46]]
 FixCheckWiki 46
+Set Prefix [[Utilisateur:WikiCleanerBot#T3|Bot_T3_PCS#48]]
 FixCheckWiki 48
+Set Prefix [[Utilisateur:WikiCleanerBot#T3|Bot_T3_PCS#52]]
 FixCheckWiki 52
+Set Prefix [[Utilisateur:WikiCleanerBot#T3|Bot_T3_PCS#55]]
 FixCheckWiki 55
+Set Prefix [[Utilisateur:WikiCleanerBot#T3|Bot_T3_PCS#64]]
 FixCheckWiki 64
+Set Prefix [[Utilisateur:WikiCleanerBot#T3|Bot_T3_PCS#83]]
 FixCheckWiki 83
+Set Prefix [[Utilisateur:WikiCleanerBot#T3|Bot_T3_PCS#85]]
 FixCheckWiki 85
+Set Prefix [[Utilisateur:WikiCleanerBot#T3|Bot_T3_PCS#88]]
 FixCheckWiki 88
+Set Prefix [[Utilisateur:WikiCleanerBot#T3|Bot_T3_PCS#90]]
 FixCheckWiki 90
+Set Prefix [[Utilisateur:WikiCleanerBot#T3|Bot_T3_PCS#91]]
 FixCheckWiki 91
+Set Prefix [[Utilisateur:WikiCleanerBot#T3|Bot_T3_PCS#92]]
 FixCheckWiki 92
+Set Prefix [[Utilisateur:WikiCleanerBot#T3|Bot_T3_PCS#104]]
 FixCheckWiki 104
+Set Prefix [[Utilisateur:WikiCleanerBot#T3|Bot_T3_PCS#106]]
 FixCheckWiki 106
+Set Prefix [[Utilisateur:WikiCleanerBot#T3|Bot_T3_PCS#513]]
 FixLintError wikilink-in-extlink 513
+Set Prefix [[Utilisateur:WikiCleanerBot#T3|Bot_T3_PCS#524]]
 FixCheckWiki 524
+Set Prefix [[Utilisateur:WikiCleanerBot#T3|Bot_T3_PCS#526]]
 FixCheckWiki 526
+Set Prefix [[Utilisateur:WikiCleanerBot#T3|Bot_T3_PCS#534]]
 FixLintError bogus-image-options 534
