@@ -117,7 +117,7 @@ public class CheckErrorAlgorithm064 extends CheckErrorAlgorithmBase {
         }
 
         // Check for extra characters around or before
-        if (!same) {
+        if (!same && !linkName.isEmpty()) {
           int countQuoteBefore = 0;
           while ((countQuoteBefore < text.length()) &&
                  (POSSIBLE_QUOTES_BEFORE.indexOf(text.charAt(countQuoteBefore)) >= 0) &&
