@@ -23,7 +23,7 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2021-09-30 11:14:56+0000\n"
+"PO-Revision-Date: 2021-10-04 11:19:17+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Chinese (Simplified) <zh_CN@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -31,7 +31,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 "X-Launchpad-Export-Date: 2017-03-22 17:49+0000\n"
-"X-Generator: MediaWiki 1.36.1; Translate 2021-07-26\n"
+"X-Generator: MediaWiki 1.36.2; Translate 2021-07-26\n"
 "Language: zh_cn\n"
 "X-POT-Import-Date: 2021-09-05 20:30:30+0000\n"
 
@@ -772,19 +772,19 @@ msgstr "可以用来代替其他语言链接的模板。"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a068/CheckErrorAlgorithm068.java:424
 msgid "Parameter name for the local page name"
-msgstr ""
+msgstr "用于本语言页面名称的参数名称"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a068/CheckErrorAlgorithm068.java:427
 msgid "Parameter name for the code of the other language"
-msgstr ""
+msgstr "用于另一语言代码的参数名称"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a068/CheckErrorAlgorithm068.java:430
 msgid "Parameter name for the page name in the other language"
-msgstr ""
+msgstr "用于另一语言页面名称的参数名称"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a068/CheckErrorAlgorithm068.java:433
 msgid "Parameter name for the displayed text"
-msgstr ""
+msgstr "用于显示文本的参数名称"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a069/CheckErrorAlgorithm069.java:876
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a069/CheckErrorAlgorithm069.java:879
@@ -839,32 +839,32 @@ msgstr "相似ISBN"
 #: org/wikipediacleaner/api/check/algorithm/a1xx/a10x/a108/CheckErrorAlgorithm108.java:67
 #, java-format
 msgid "The checksum is {0} instead of {1}"
-msgstr ""
+msgstr "校验和为{0}而不是{1}"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a072/CheckErrorAlgorithm072.java:75
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a073/CheckErrorAlgorithm073.java:75
 msgid "There's no existing range for this ISBN"
-msgstr ""
+msgstr "没有对应此ISBN的范围"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a072/CheckErrorAlgorithm072.java:77
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a073/CheckErrorAlgorithm073.java:77
 msgid "This ISBN is inside a reserved range"
-msgstr ""
+msgstr "此ISBN位于保留范围中"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a072/CheckErrorAlgorithm072.java:265
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a073/CheckErrorAlgorithm073.java:300
 msgid "An explanation of the problem (incorrect checksum)"
-msgstr ""
+msgstr "问题描述（不正确的校验和）"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a072/CheckErrorAlgorithm072.java:271
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a073/CheckErrorAlgorithm073.java:306
 msgid "An explanation of the problem (non-existing range of ISBN numbers)"
-msgstr ""
+msgstr "问题描述（不存在的ISBN号范围）"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a072/CheckErrorAlgorithm072.java:277
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a073/CheckErrorAlgorithm073.java:312
 msgid "An explanation of the problem (reserved range of ISBN numbers)"
-msgstr ""
+msgstr "问题描述（保留的ISBN号范围）"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a076/CheckErrorAlgorithm076.java:32
 msgid "Replace all %20 by space character"
@@ -876,11 +876,11 @@ msgstr "用空格符替换%20"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a078/CheckErrorAlgorithm078.java:202
 msgid "A list of regular expressions to find templates replacing <references> tags"
-msgstr ""
+msgstr "用于查找替换<references>标签模板的正则表达式列表"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a078/CheckErrorAlgorithm078.java:205
 msgid "A regular expression to find templates replacing <references> tags"
-msgstr ""
+msgstr "用于查找替换<references>标签模板的正则表达式"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a079/CheckErrorAlgorithm079.java:109
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a079/CheckErrorAlgorithm079.java:121
@@ -935,19 +935,19 @@ msgstr "删除章节"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a08x/a084/CheckErrorAlgorithm084.java:167
 msgid "A list of texts that can be added to sections without content"
-msgstr ""
+msgstr "可添加到无内容章节的文本列表"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a08x/a084/CheckErrorAlgorithm084.java:170
 msgid "A text that can be added to sections without content"
-msgstr ""
+msgstr "可添加到无内容章节的文本"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a08x/a084/CheckErrorAlgorithm084.java:173
 msgid "Restrict verification to titles with a higher level"
-msgstr ""
+msgstr "限制对更高级别标题的验证"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a08x/a084/CheckErrorAlgorithm084.java:176
 msgid "Maximum level of title to check"
-msgstr ""
+msgstr "要检查标题的最高级别"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a08x/a085/CheckErrorAlgorithm085.java:292
 #: org/wikipediacleaner/api/check/algorithm/a1xx/a11x/a112/CheckErrorAlgorithm112.java:645
@@ -969,11 +969,11 @@ msgstr "要使用的参数的名称"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a090/CheckErrorAlgorithm090.java:661
 msgid "What text should be displayed by the link?"
-msgstr ""
+msgstr "链接应显示什么文本？"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a090/CheckErrorAlgorithm090.java:666
 msgid "Convert into an internal link"
-msgstr ""
+msgstr "转换为内部链接"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a090/CheckErrorAlgorithm090.java:975
 msgid "Templates to be used for linking to the history of an article"
@@ -996,7 +996,7 @@ msgstr "用于条目名称的参数"
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a090/CheckErrorAlgorithm090.java:1036
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a091/CheckErrorAlgorithm091.java:435
 msgid "Parameter to be used for the text"
-msgstr ""
+msgstr "用于文本的参数"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a090/CheckErrorAlgorithm090.java:992
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a091/CheckErrorAlgorithm091.java:424
@@ -1009,11 +1009,11 @@ msgstr "用于链接到条目历史版本的模板"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a090/CheckErrorAlgorithm090.java:1015
 msgid "Parameter to be used for the identifier of the old version"
-msgstr ""
+msgstr "用于旧版本标识符的参数"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a090/CheckErrorAlgorithm090.java:1025
 msgid "Templates to be used instead of Special:PrefixIndex"
-msgstr ""
+msgstr "用于替代Special:PrefixIndex的模板"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a091/CheckErrorAlgorithm091.java:55
 msgid "Convert them to internal links"
@@ -1033,47 +1033,47 @@ msgstr "用于链接的参数"
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a091/CheckErrorAlgorithm091.java:441
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a091/CheckErrorAlgorithm091.java:444
 msgid "To report only links to other languages"
-msgstr ""
+msgstr "仅报告链接至其他语言"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a091/CheckErrorAlgorithm091.java:447
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a091/CheckErrorAlgorithm091.java:450
 msgid "To report only links to local wikis"
-msgstr ""
+msgstr "仅报告链接至本语言wiki"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a092/CheckErrorAlgorithm092.java:282
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a092/CheckErrorAlgorithm092.java:285
 msgid "Maximum level of titles to report"
-msgstr ""
+msgstr "要报告标题的最高级别"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a092/CheckErrorAlgorithm092.java:288
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a092/CheckErrorAlgorithm092.java:291
 msgid "To report only consecutive titles"
-msgstr ""
+msgstr "仅报告连续标题"
 
 #: org/wikipediacleaner/api/check/algorithm/a1xx/a10x/a101/CheckErrorAlgorithm101.java:164
 msgid "List of ordinal suffixes"
-msgstr ""
+msgstr "有序后缀列表"
 
 #: org/wikipediacleaner/api/check/algorithm/a1xx/a10x/a101/CheckErrorAlgorithm101.java:167
 msgid "Ordinal suffix"
-msgstr ""
+msgstr "有序后缀"
 
 #: org/wikipediacleaner/api/check/algorithm/a1xx/a10x/a101/CheckErrorAlgorithm101.java:171
 msgid "List of possible replacements"
-msgstr ""
+msgstr "可能替代内容的列表"
 
 #: org/wikipediacleaner/api/check/algorithm/a1xx/a10x/a101/CheckErrorAlgorithm101.java:174
 msgid "A possible replacemement for one suffix"
-msgstr ""
+msgstr "某个后缀的可能替代内容"
 
 #: org/wikipediacleaner/api/check/algorithm/a1xx/a10x/a103/CheckErrorAlgorithm103.java:31
 msgid "Replace all pipe templates"
-msgstr ""
+msgstr "替代所有的管道模板"
 
 #: org/wikipediacleaner/api/check/algorithm/a1xx/a10x/a107/CheckErrorAlgorithm107.java:99
 #, java-format
 msgid "Length of ISSN is {0} instead of 8"
-msgstr ""
+msgstr "ISSN长度为{0}而不是8"
 
 #: org/wikipediacleaner/api/check/algorithm/a1xx/a10x/a107/CheckErrorAlgorithm107.java:175
 #: org/wikipediacleaner/api/check/algorithm/a1xx/a10x/a108/CheckErrorAlgorithm108.java:143
@@ -1087,7 +1087,7 @@ msgstr "模板名称"
 
 #: org/wikipediacleaner/api/check/algorithm/a1xx/a11x/a111/CheckErrorAlgorithm111.java:207
 msgid "Parameter for the name of the group"
-msgstr ""
+msgstr "用于组名称的参数"
 
 #: org/wikipediacleaner/api/check/algorithm/a1xx/a11x/a112/CheckErrorAlgorithm112.java:629
 #, java-format
@@ -1101,11 +1101,11 @@ msgstr "恢复原始文本"
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a50x/a501/CheckErrorAlgorithm501.java:176
 #, java-format
 msgid "Replace each time with {0}"
-msgstr ""
+msgstr "每次替代均使用{0}"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a50x/a501/CheckErrorAlgorithm501.java:183
 msgid "Replace each time with"
-msgstr ""
+msgstr "每次替代均使用"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a50x/a509/CheckErrorAlgorithm509.java:32
 msgid "Compact links"
