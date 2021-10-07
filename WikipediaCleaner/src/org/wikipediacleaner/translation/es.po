@@ -19,7 +19,7 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2021-10-04 11:19:13+0000\n"
+"PO-Revision-Date: 2021-10-07 11:18:21+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Spanish\n"
 "MIME-Version: 1.0\n"
@@ -27,14 +27,14 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Launchpad-Export-Date: 2017-03-22 17:48+0000\n"
-"X-Generator: MediaWiki 1.36.2; Translate 2021-07-26\n"
+"X-Generator: MediaWiki 1.37.0-beta; Translate 2021-07-26\n"
 "Language: es\n"
 "X-POT-Import-Date: 2021-09-05 20:30:30+0000\n"
 
 #: org/wikipediacleaner/Version.java:31
 #, java-format
 msgid "{0} extension is now available on all WikiMedia wikis."
-msgstr "La extensión {0} está disponible en todos los wikis de WikiMedia."
+msgstr "La extensión {0} está disponible en todas las wikis de WikiMedia."
 
 #: org/wikipediacleaner/Version.java:32
 msgid "It identifies wikitext patterns that must or can be fixed in pages."
@@ -2696,7 +2696,7 @@ msgstr "Incrustado en"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:729
 msgid "Load list from drive"
-msgstr ""
+msgstr "Cargar lista desde dispositivo"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:738
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1238
@@ -3065,7 +3065,7 @@ msgstr "&Página :"
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:130
 #: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:198
 msgid "Disambiguation"
-msgstr "Desambiguación:"
+msgstr "Desambiguación"
 
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:401
 msgid "Reload (Alt + &R)"
