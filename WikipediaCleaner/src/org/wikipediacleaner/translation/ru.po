@@ -2,6 +2,7 @@
 # Exported from translatewiki.net
 #
 # Author: Abijeet Patro
+# Author: DDPAT
 # Author: Facenapalm
 # Author: Kareyac
 # Author: MuratTheTurkish
@@ -22,7 +23,7 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2021-10-04 11:19:16+0000\n"
+"PO-Revision-Date: 2021-10-07 11:18:24+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Russian <ru@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -30,7 +31,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10 == 1 && n%100 != 11) ? 0 : ( (n%10 >= 2 && n%10 <= 4 && (n%100 < 10 || n%100 >= 20)) ? 1 : 2 );\n"
 "X-Launchpad-Export-Date: 2017-03-22 17:48+0000\n"
-"X-Generator: MediaWiki 1.36.2; Translate 2021-07-26\n"
+"X-Generator: MediaWiki 1.37.0-beta; Translate 2021-07-26\n"
 "Language: ru\n"
 "X-POT-Import-Date: 2021-09-05 20:30:30+0000\n"
 
@@ -1113,7 +1114,7 @@ msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a50x/a509/CheckErrorAlgorithm509.java:78
 msgid "Compact link"
-msgstr ""
+msgstr "Компактная ссылка"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a513/CheckErrorAlgorithm513.java:878
 msgid "A list of links that can be extracted when at the beginning of the external link"
@@ -1162,9 +1163,8 @@ msgid "True if the replacement can be automatic"
 msgstr "Истина, если замена может осуществляться в автоматическом режиме"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a513/CheckErrorAlgorithm513.java:922
-#, fuzzy
 msgid "A list of template parameters that create the text of an external link"
-msgstr "Список шаблонов, которые необходимо игнорировать"
+msgstr "Список параметров шаблона, которые создают текст внешней ссылки"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a513/CheckErrorAlgorithm513.java:926
 msgid "Name of a template that creates an external link"
@@ -1184,9 +1184,8 @@ msgid "A list of texts (regular expressions) that can be after the internal link
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a513/CheckErrorAlgorithm513.java:941
-#, fuzzy
 msgid "Regular expression that can be after the internal link"
-msgstr "Список шаблонов, которые необходимо игнорировать"
+msgstr "Регулярное выражение, которое может быть после внутренней ссылки"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a513/CheckErrorAlgorithm513.java:945
 msgid "A list of texts that can be before the internal link"
@@ -1247,9 +1246,8 @@ msgid "A list of templates and parameters in which format should be checked"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a521/CheckErrorAlgorithm521.java:394
-#, fuzzy
 msgid "The name of a template in which format should be checked"
-msgstr "Список шаблонов, которые необходимо игнорировать"
+msgstr "Название шаблона, в котором нужно проверить формат"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a521/CheckErrorAlgorithm521.java:397
 msgid "The name of a parameter in which format should be checked"
@@ -1363,15 +1361,13 @@ msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a526/CheckErrorAlgorithm526.java:437
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a526/CheckErrorAlgorithm526.java:440
-#, fuzzy
 msgid "Minimum number of digits for the year"
-msgstr "Максимальное число правок в минуту:"
+msgstr "Минимальное число цифр на год"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a526/CheckErrorAlgorithm526.java:443
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a526/CheckErrorAlgorithm526.java:446
-#, fuzzy
 msgid "Maximum number of digits for the year"
-msgstr "Максимальное число правок в минуту:"
+msgstr "Максимальное число цифр за год"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a526/CheckErrorAlgorithm526.java:449
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a526/CheckErrorAlgorithm526.java:452
@@ -1511,7 +1507,7 @@ msgstr "Группы шаблонов"
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a563/CheckErrorAlgorithm563.java:215
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:296
 msgid "Name of the group"
-msgstr ""
+msgstr "Название группы"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a545/CheckErrorAlgorithm545.java:275
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a563/CheckErrorAlgorithm563.java:218
@@ -1543,7 +1539,7 @@ msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a545/CheckErrorAlgorithm545.java:308
 msgid "Name of a replacement parameter"
-msgstr ""
+msgstr "Имя заменяемого параметра"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a546/CheckErrorAlgorithm546.java:135
 msgid "List of categorizing templates"
@@ -1736,7 +1732,7 @@ msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a566/CheckErrorAlgorithm566.java:268
 msgid "Title of the abbreviation"
-msgstr ""
+msgstr "Название аббревиатуры"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a566/CheckErrorAlgorithm566.java:279
 msgid "Templates which can replace an abbreviation"
@@ -2328,7 +2324,7 @@ msgstr "Число ссылок"
 
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:378
 msgid "Filter namespaces"
-msgstr ""
+msgstr "Фильтр пространств имён"
 
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:446
 #: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:497
@@ -3406,26 +3402,26 @@ msgstr "Категория {0} не существует в Википедии {
 #: org/wikipediacleaner/gui/swing/action/CheckLanguageLinkAction.java:85
 #, java-format
 msgid "The page {0} in \"{1}\" has a language link to \"{2}\": {3}."
-msgstr ""
+msgstr "Страница {0} в «{1}» имеет языковую ссылку на «{2}»: {3}."
 
 #: org/wikipediacleaner/gui/swing/action/CheckLanguageLinkAction.java:101
 #, java-format
 msgid "The page {0} in \"{1}\" doesn''t have a language link to \"{2}\"."
-msgstr ""
+msgstr "Страница {0} в «{1}» не имеет языковой ссылки на «{2}»."
 
 #: org/wikipediacleaner/gui/swing/action/CheckLanguageLinkAction.java:115
 #, java-format
 msgid "The page {0} doesn''t exist in \"{1}\"."
-msgstr ""
+msgstr "Страницы {0} не существует в «{1}»."
 
 #: org/wikipediacleaner/gui/swing/action/CheckLanguageLinkAction.java:119
 #, java-format
 msgid "The page {0} exists in \"{1}\"."
-msgstr ""
+msgstr "Страница {0} существует в «{1}»."
 
 #: org/wikipediacleaner/gui/swing/action/CheckLanguageLinkAction.java:138
 msgid "What replacement do you want to use?"
-msgstr ""
+msgstr "Какую замену вы хотите использовать?"
 
 #: org/wikipediacleaner/gui/swing/action/FindTextAction.java:63
 msgid "String to find"
@@ -3454,7 +3450,7 @@ msgstr "Получение возможных значений {0}"
 
 #: org/wikipediacleaner/gui/swing/action/ReplaceAllLinksAction.java:55
 msgid "Do you want to proceed with the replacement ?"
-msgstr ""
+msgstr "Вы хотите продолжить замену?"
 
 #: org/wikipediacleaner/gui/swing/action/ReplaceLinkAction.java:233
 #, java-format
@@ -3631,7 +3627,7 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/bot/CWCheckWhiteListsWorker.java:200
 msgid "Whitelists"
-msgstr ""
+msgstr "Белые списки"
 
 #: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:137
 msgid "To use Check Wiki bot tools:"
@@ -3672,7 +3668,7 @@ msgstr "Отметить уже исправленные ошибки"
 
 #: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:213
 msgid "Check whitelists"
-msgstr ""
+msgstr "Проверить белые списки"
 
 #: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:221
 #: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:350
@@ -3772,7 +3768,7 @@ msgstr "Директория экспорта"
 
 #: org/wikipediacleaner/gui/swing/bot/ListCWPanel.java:144
 msgid "Export pages:"
-msgstr ""
+msgstr "Экспорт страниц:"
 
 #: org/wikipediacleaner/gui/swing/bot/ListCWPanel.java:159
 msgid "Check last version of article before reporting an error"
@@ -3958,12 +3954,12 @@ msgstr "Подробности"
 #: org/wikipediacleaner/gui/swing/component/CheckErrorPageListPopupListener.java:120
 #, java-format
 msgid "List on {0}"
-msgstr ""
+msgstr "Список на {0}"
 
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiWindow.java:679
 #: org/wikipediacleaner/gui/swing/component/CheckErrorPageListPopupListener.java:121
 msgid "View or edit whitelist"
-msgstr ""
+msgstr "Просмотреть или изменить белый список"
 
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiWindow.java:728
 msgid "Pages"
@@ -4200,7 +4196,7 @@ msgstr "Анализ {0}"
 #: org/wikipediacleaner/gui/swing/deadlink/DeadLinkWorker.java:153
 #, java-format
 msgid "Unknown host {0}"
-msgstr ""
+msgstr "Неизвестный хост {0}"
 
 #: org/wikipediacleaner/gui/swing/linter/ActionLinter.java:49
 msgid "Check article with Linter"
@@ -4211,9 +4207,8 @@ msgid "You need to select pages to check for linter errors"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/linter/LinterErrorListTableModel.java:186
-#, fuzzy
 msgid "Multiple templates"
-msgstr "Получение шаблонов"
+msgstr "Несколько шаблонов"
 
 #: org/wikipediacleaner/gui/swing/linter/LinterErrorListTableModel.java:228
 msgid "Parameters"
@@ -4300,7 +4295,7 @@ msgstr "Отметить как нормальныю ссылку"
 #: org/wikipediacleaner/gui/swing/menu/MWPaneDisambiguationMenuCreator.java:219
 #, java-format
 msgid "Using {0}"
-msgstr ""
+msgstr "Использование {0}"
 
 #: org/wikipediacleaner/gui/swing/menu/MWPaneDisambiguationMenuCreator.java:88
 msgid "Mark as normal link using template"
@@ -4442,7 +4437,7 @@ msgstr "Опции отладки"
 #: org/wikipediacleaner/gui/swing/options/DebugOptionsPanel.java:67
 #, java-format
 msgid "Log all URLs called by {0}"
-msgstr ""
+msgstr "Регистрировать все URL-адреса, вызываемые {0}"
 
 #: org/wikipediacleaner/gui/swing/options/DebugOptionsPanel.java:74
 msgid "Log all answers to MediaWiki API calls"
@@ -4663,7 +4658,7 @@ msgstr "Следить за всеми отредактированными ст
 
 #: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:215
 msgid "Copy/paste in popup menu"
-msgstr ""
+msgstr "Копировать/вставить во всплывающем меню"
 
 #: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:224
 msgid "Act as user:"
@@ -4803,7 +4798,7 @@ msgstr "Настройки перевода"
 
 #: org/wikipediacleaner/gui/swing/options/TranslationOptionsPanel.java:66
 msgid "Translate internal links text"
-msgstr ""
+msgstr "Перевод текста внутренних ссылок"
 
 #: org/wikipediacleaner/gui/swing/options/TranslationOptionsPanel.java:73
 msgid "Convert internal links without interwiki to inter language links"
@@ -4942,13 +4937,13 @@ msgstr "Шаблоны"
 #: org/wikipediacleaner/gui/swing/worker/CheckArticleTools.java:107
 #, java-format
 msgid "Existence of {0} blocks"
-msgstr ""
+msgstr "Наличие {0} блоков"
 
 #: org/wikipediacleaner/gui/swing/worker/CheckArticleTools.java:117
 #: org/wikipediacleaner/gui/swing/worker/CheckArticleTools.java:202
 #, java-format
 msgid "Template \"{0}\" has no {1} block defined."
-msgstr ""
+msgstr "В шаблоне «{0}» не определен блок {1}."
 
 #: org/wikipediacleaner/gui/swing/worker/CheckArticleTools.java:195
 #, java-format
