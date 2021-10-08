@@ -30,6 +30,7 @@ import org.wikipediacleaner.api.data.PageElementFunction;
 import org.wikipediacleaner.api.data.PageElementInternalLink;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.PageElementTemplate;
+import org.wikipediacleaner.api.data.PageElementTitle;
 import org.wikipediacleaner.api.data.Suggestion;
 import org.wikipediacleaner.api.data.Suggestion.ElementarySuggestion;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
@@ -82,6 +83,11 @@ public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
     List<Replacement> replacements = new ArrayList<>();
     if ((result == false) || (errors != null)) {
       result |= analyzeTemplates(analysis, activeSuggestions, replacements);
+    }
+
+    // Check spelling in titles
+    if ((result == false) || (errors != null)) {
+      result |= analyzeTitles(analysis, activeSuggestions, replacements);
     }
 
     // Check spelling in internal links
@@ -409,6 +415,50 @@ public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
         // Check suggestion on each function
         for (PageElementFunction function : functions) {
           int begin = function.getBeginIndex();
+          if (matcher.region(begin, contentsLength).lookingAt()) {
+            int end = matcher.end();
+            if ((end >= contentsLength) ||
+                (!Character.isLetterOrDigit(contents.charAt(end))) ||
+                (!Character.isLetterOrDigit(contents.charAt(end - 1)))) {
+              result |= addReplacements(
+                  begin, end, contents, begin, contentsLength,
+                  suggestion, replacements);
+            }
+          }
+        }
+      }
+    }
+
+    return result;
+  }
+
+  /**
+   * Check spelling in titles.
+   * 
+   * @param analysis Page analysis.
+   * @param suggestions Active suggestions.
+   * @param replacements List of possible replacements.
+   * @return True if an error has been found.
+   */
+  private boolean analyzeTitles(
+      PageAnalysis analysis, List<Suggestion> suggestions,
+      List<Replacement> replacements) {
+    boolean result = false;
+
+    // Check each suggestion
+    List<PageElementTitle> titles = analysis.getTitles();
+    String contents = analysis.getContents();
+    int contentsLength = contents.length();
+    Iterator<Suggestion> itSuggestion = suggestions.iterator();
+    while (itSuggestion.hasNext()) {
+      Suggestion suggestion = itSuggestion.next();
+      if (suggestion.getPatternText().startsWith("=")) {
+        itSuggestion.remove();
+        Matcher matcher = suggestion.initMatcher(contents);
+
+        // Check suggestion on each title
+        for (PageElementTitle title : titles) {
+          int begin = title.getBeginIndex() + title.getFirstLevel() - 1;
           if (matcher.region(begin, contentsLength).lookingAt()) {
             int end = matcher.end();
             if ((end >= contentsLength) ||

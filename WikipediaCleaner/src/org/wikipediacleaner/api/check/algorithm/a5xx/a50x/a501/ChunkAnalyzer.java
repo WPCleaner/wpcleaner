@@ -72,6 +72,15 @@ class ChunkAnalyzer {
     removeCompleteTags(chunks, analysis, WikiTagType.TIMELINE);
     removeGalleryTags(chunks, analysis);
 
+    // Remove lines starting with whitespace
+    for (int index = 0; index < contents.length(); index++) {
+      if ((contents.charAt(index) == ' ') &&
+          ((index == 0) || (contents.charAt(index - 1) == '\n'))) {
+        int endIndex = contents.indexOf('\n', index);
+        removeArea(chunks, index, endIndex < 0 ? contents.length() : endIndex);
+      }
+    }
+
     // Remove areas
     if (!nativeRegexp) {
       Areas areas = analysis.getAreas();
