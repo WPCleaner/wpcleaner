@@ -23,7 +23,7 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2021-10-07 11:18:24+0000\n"
+"PO-Revision-Date: 2021-10-11 11:18:05+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Chinese (Simplified) <zh_CN@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -1109,27 +1109,27 @@ msgstr "每次替代均使用"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a50x/a509/CheckErrorAlgorithm509.java:32
 msgid "Compact links"
-msgstr ""
+msgstr "简洁链接"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a50x/a509/CheckErrorAlgorithm509.java:78
 msgid "Compact link"
-msgstr ""
+msgstr "简洁链接"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a513/CheckErrorAlgorithm513.java:878
 msgid "A list of links that can be extracted when at the beginning of the external link"
-msgstr ""
+msgstr "可以在外部链接开头提取的链接列表"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a513/CheckErrorAlgorithm513.java:881
 msgid "An internal link that can be extracted when at the beginning of the external link"
-msgstr ""
+msgstr "可以在外部链接开头提取的内部链接"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a513/CheckErrorAlgorithm513.java:885
 msgid "A list of links that can be extracted when at the end of the external link"
-msgstr "可以在外部链接结束时提取的链接列表"
+msgstr "可以在外部链接末尾提取的链接列表"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a513/CheckErrorAlgorithm513.java:888
 msgid "An internal link that can be extracted when at the end of the external link"
-msgstr "在外部链接结束时可以提取的内部链接"
+msgstr "可以在外部链接末尾被提取的内部链接"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a513/CheckErrorAlgorithm513.java:892
 msgid "A list of links for which the external link can be removed it it takes all the text"
@@ -1199,7 +1199,7 @@ msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a514/CheckErrorAlgorithm514.java:187
 msgid "References defined by templates."
-msgstr ""
+msgstr "由模板定义的参考文献。"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a514/CheckErrorAlgorithm514.java:191
 msgid "Name of a template which defines references"
@@ -1217,7 +1217,7 @@ msgstr ""
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a518/CheckErrorAlgorithm518.java:382
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a518/CheckErrorAlgorithm518.java:385
 msgid "A template that can be used instead of an apostrophe."
-msgstr ""
+msgstr "可以用来代替撇号的模板。"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a518/CheckErrorAlgorithm518.java:388
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a518/CheckErrorAlgorithm518.java:391
@@ -1227,12 +1227,12 @@ msgstr "可以用来代替星号的模板。"
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a518/CheckErrorAlgorithm518.java:394
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a518/CheckErrorAlgorithm518.java:397
 msgid "A template that can be used instead of a closing square bracket."
-msgstr ""
+msgstr "可以用来代替右方括号的模板。"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a518/CheckErrorAlgorithm518.java:400
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a518/CheckErrorAlgorithm518.java:403
 msgid "A template that can be used instead of an opening square bracket."
-msgstr ""
+msgstr "可以用来代替左方括号的模板。"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a520/CheckErrorAlgorithm520.java:150
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a520/CheckErrorAlgorithm520.java:153
@@ -1270,7 +1270,7 @@ msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a524/CheckErrorAlgorithm524.java:134
 msgid "Both values are equal"
-msgstr ""
+msgstr "两边值相等"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a524/CheckErrorAlgorithm524.java:136
 msgid "Other value is empty"
@@ -1298,7 +1298,7 @@ msgstr "注释"
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a53x/a530/CheckErrorAlgorithm530.java:258
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a53x/a530/CheckErrorAlgorithm530.java:261
 msgid "A category containing the list of pages in error"
-msgstr ""
+msgstr "包含存在错误页面列表的分类"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a524/CheckErrorAlgorithm524.java:401
 msgid "Values that can be safely ignored for a given template and argument"

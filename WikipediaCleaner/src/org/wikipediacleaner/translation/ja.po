@@ -2,6 +2,7 @@
 # Exported from translatewiki.net
 #
 # Author: Ajeje Brazorf
+# Author: Omotecho
 # Author: Tmv
 # Author: Yusuke1109
 # --
@@ -13,7 +14,7 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2021-10-07 11:18:22+0000\n"
+"PO-Revision-Date: 2021-10-11 11:18:02+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Japanese <ja@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -2281,16 +2282,15 @@ msgid "Select all errors"
 msgstr "すべてのエラーを選択"
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:991
-#, fuzzy
 msgid "Select no errors"
-msgstr "エラーを選択"
+msgstr "エラーを選択しない"
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:1016
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiWindow.java:415
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiWindow.java:470
 #, java-format
 msgid "Errors from {0} to {1}"
-msgstr ""
+msgstr "{0} から {1} の範囲のエラー"
 
 #: org/wikipediacleaner/gui/swing/Controller.java:245
 #, java-format
@@ -2310,7 +2310,7 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:138
 #, java-format
 msgid "Disambiguation - {0}"
-msgstr ""
+msgstr "曖昧さ回避 - {0}"
 
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:292
 msgid "Select &next links"
@@ -2352,36 +2352,35 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:123
 msgid "WPCleaner installer"
-msgstr ""
+msgstr "WPCleaner インストーラー"
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:182
 msgid "Configuration"
-msgstr ""
+msgstr "設定"
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:245
 msgid "Installation folder"
-msgstr ""
+msgstr "インストール用フォルダー"
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:253
-#, fuzzy
 msgid "Select installation folder"
-msgstr "すべてのエラーを選択"
+msgstr "インストール用フォンダーを選択"
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:318
 msgid "Create a desktop shortcut"
-msgstr ""
+msgstr "デスクトップにショートカットを作成"
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:326
 msgid "Install beta version (only for experienced users)"
-msgstr ""
+msgstr "ベータ版をインストール（経験の長い利用者限定）"
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:368
 msgid "A desktop shortcut can be created automatically under Windows and some Linux flavors."
-msgstr ""
+msgstr "Windows と Linux の特定の版では、ショートカットは自動的に作成されます。"
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:371
 msgid "If the desktop shortcut is not created automatically, you can still create it manually."
-msgstr ""
+msgstr "もしデスクトップにショートカットが自動で作成されない場合でも、手動でつけることができます。"
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:373
 #, java-format
