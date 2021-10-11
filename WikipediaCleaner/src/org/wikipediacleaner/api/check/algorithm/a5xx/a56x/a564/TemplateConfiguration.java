@@ -15,6 +15,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Optional;
 import java.util.Set;
 import java.util.TreeMap;
@@ -157,6 +158,26 @@ class TemplateConfiguration {
             replacementParam, param.getValue(),
             replacementParams.size() == 1,
             true));
+      }
+    } else if ((name.isEmpty()) && (param.getValue() != null)) {
+      String value = param.getValue();
+      for (Entry<String, Set<String>> potentialReplacements : paramsToReplaceByName.entrySet()) {
+        String initialParameter = potentialReplacements.getKey();
+        if (value.startsWith(initialParameter)) {
+          for (String replacementParam : potentialReplacements.getValue()) {
+            String newValue = value.substring(initialParameter.length());
+            while (newValue.startsWith(" ")) {
+              newValue = newValue.substring(1);
+            }
+            boolean automaticReplacement =
+                (potentialReplacements.getValue().size() == 1) &&
+                (!value.startsWith(replacementParam));
+            results.add(TemplateParameterSuggestion.replaceOrDeleteParam(
+                contents, template, param,
+                replacementParam, newValue,
+                automaticReplacement, true));
+          }
+        }
       }
     }
 
