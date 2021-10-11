@@ -19,7 +19,7 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2021-10-07 11:18:21+0000\n"
+"PO-Revision-Date: 2021-10-11 11:18:00+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Spanish\n"
 "MIME-Version: 1.0\n"
@@ -3346,28 +3346,28 @@ msgstr "Historial"
 
 #: org/wikipediacleaner/gui/swing/action/ActionInsertPredefinedText.java:60
 msgid "Insert text"
-msgstr ""
+msgstr "Insertar texto"
 
 #: org/wikipediacleaner/gui/swing/action/ActionOccurrence.java:51
 #: org/wikipediacleaner/gui/swing/action/ActionOccurrence.java:66
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:220
 msgid "Next occurrence"
-msgstr "Ocurrencia siguiente"
+msgstr "Siguiente aparición"
 
 #: org/wikipediacleaner/gui/swing/action/ActionOccurrence.java:56
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:210
 msgid "First occurrence"
-msgstr ""
+msgstr "Primera aparición"
 
 #: org/wikipediacleaner/gui/swing/action/ActionOccurrence.java:61
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:225
 msgid "Last occurrence"
-msgstr ""
+msgstr "Última aparición"
 
 #: org/wikipediacleaner/gui/swing/action/ActionOccurrence.java:71
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:215
 msgid "Previous occurrence"
-msgstr ""
+msgstr "Aparición anterior"
 
 #: org/wikipediacleaner/gui/swing/action/ActionPasteText.java:46
 msgid "Paste"
@@ -3828,7 +3828,7 @@ msgstr[1] "{0} páginas han sido marcadas como corregidas para otros algoritmos"
 
 #: org/wikipediacleaner/gui/swing/checkwiki/ActionCheckArticle.java:50
 msgid "Check article with CheckWiki"
-msgstr ""
+msgstr "Revisar artículo con CheckWiki"
 
 #: org/wikipediacleaner/gui/swing/checkwiki/ActionCheckArticle.java:137
 msgid "Unable to retrieve analysis from CheckWiki."
@@ -4178,9 +4178,8 @@ msgid "You can learn how to add other Wikipedia at the following URL:"
 msgstr "Puede aprender cómo agregar otras Wikipedias en la siguiente URL:"
 
 #: org/wikipediacleaner/gui/swing/deadlink/ActionDeadLink.java:49
-#, fuzzy
 msgid "Check dead links"
-msgstr "Comprobar los enlaces de idiomas"
+msgstr "Revisar enlaces muertos"
 
 #: org/wikipediacleaner/gui/swing/deadlink/ActionDeadLink.java:204
 msgid "You need to select pages to check for dead links"
