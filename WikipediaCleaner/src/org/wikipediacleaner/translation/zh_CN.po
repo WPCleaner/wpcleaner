@@ -23,7 +23,7 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2021-10-14 11:19:16+0000\n"
+"PO-Revision-Date: 2021-10-18 11:17:36+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Chinese (Simplified) <zh_CN@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -1129,7 +1129,7 @@ msgstr "可以在外部链接末尾提取的链接列表"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a513/CheckErrorAlgorithm513.java:888
 msgid "An internal link that can be extracted when at the end of the external link"
-msgstr "可以在外部链接末尾被提取的内部链接"
+msgstr "可以在外部链接末尾提取的内部链接"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a513/CheckErrorAlgorithm513.java:892
 msgid "A list of links for which the external link can be removed it it takes all the text"
@@ -1179,19 +1179,19 @@ msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a513/CheckErrorAlgorithm513.java:938
 msgid "A list of texts (regular expressions) that can be after the internal link"
-msgstr ""
+msgstr "可位于内部链接之后的文本列表（正则表达式）"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a513/CheckErrorAlgorithm513.java:941
 msgid "Regular expression that can be after the internal link"
-msgstr ""
+msgstr "可位于内部链接之后的正则表达式"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a513/CheckErrorAlgorithm513.java:945
 msgid "A list of texts that can be before the internal link"
-msgstr ""
+msgstr "可位于内部链接之前的文本列表"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a513/CheckErrorAlgorithm513.java:949
 msgid "Text that can be before the internal link"
-msgstr "可以在内部链接之前的文本"
+msgstr "可位于内部链接之前的文本"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a513/CheckErrorAlgorithm513.java:952
 msgid "True if finding this text means that the replacement can be automatic"
@@ -1212,7 +1212,7 @@ msgstr "由模板定义的参考文献名称"
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a518/CheckErrorAlgorithm518.java:372
 #, java-format
 msgid "An identifier of an abuse filter that is triggered by {0} tags."
-msgstr ""
+msgstr "由{0}个标签触发的滥用过滤器标识符。"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a518/CheckErrorAlgorithm518.java:382
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a518/CheckErrorAlgorithm518.java:385
@@ -1241,27 +1241,27 @@ msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a521/CheckErrorAlgorithm521.java:390
 msgid "A list of templates and parameters in which format should be checked"
-msgstr ""
+msgstr "应当检查格式的模板和参数列表"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a521/CheckErrorAlgorithm521.java:394
 msgid "The name of a template in which format should be checked"
-msgstr ""
+msgstr "应当检查格式的模板名称"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a521/CheckErrorAlgorithm521.java:397
 msgid "The name of a parameter in which format should be checked"
-msgstr ""
+msgstr "应当检查格式的参数名称"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a521/CheckErrorAlgorithm521.java:400
 msgid "A correct format for the date"
-msgstr ""
+msgstr "日期的正确格式"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a521/CheckErrorAlgorithm521.java:406
 msgid "A list of text values for months"
-msgstr ""
+msgstr "月份的文本值列表"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a521/CheckErrorAlgorithm521.java:409
 msgid "A text value for a month"
-msgstr ""
+msgstr "月份文本值"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a523/CheckErrorAlgorithm523.java:223
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a523/CheckErrorAlgorithm523.java:226
