@@ -9,7 +9,9 @@
 # Author: Fitoschido
 # Author: Fitoschido
 # Author: Ideawipik
+# Author: Jakeukalane
 # Author: Juan t2905
+# Author: ZhaleyLeitnib
 # --
 # This file is distributed under the same license as the wikicleaner package.
 #
@@ -19,7 +21,7 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2021-10-14 11:19:12+0000\n"
+"PO-Revision-Date: 2021-10-21 11:17:58+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Spanish\n"
 "MIME-Version: 1.0\n"
@@ -4598,11 +4600,11 @@ msgstr "Ayuda requerida"
 
 #: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:311
 msgid "Check wiki error"
-msgstr "Verificar error en el wiki"
+msgstr "Verificar error en la wiki"
 
 #: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:317
 msgid "Check wiki warning"
-msgstr "Verificar advertencia en el wiki"
+msgstr "Mirar la advertencia wiki"
 
 #: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:323
 msgid "Check wiki OK"
