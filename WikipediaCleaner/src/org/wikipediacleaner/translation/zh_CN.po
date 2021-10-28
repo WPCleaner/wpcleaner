@@ -23,7 +23,7 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2021-10-18 11:17:36+0000\n"
+"PO-Revision-Date: 2021-10-28 11:22:14+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Chinese (Simplified) <zh_CN@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -31,7 +31,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 "X-Launchpad-Export-Date: 2017-03-22 17:49+0000\n"
-"X-Generator: MediaWiki 1.38.0-alpha; Translate 2021-07-26\n"
+"X-Generator: MediaWiki 1.38.0-alpha; Translate 2021-10-25\n"
 "Language: zh_cn\n"
 "X-POT-Import-Date: 2021-09-05 20:30:30+0000\n"
 
@@ -1302,19 +1302,19 @@ msgstr "包含存在错误页面列表的分类"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a524/CheckErrorAlgorithm524.java:401
 msgid "Values that can be safely ignored for a given template and argument"
-msgstr ""
+msgstr "对于给定的模板和参数可以被安全忽略的值"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a524/CheckErrorAlgorithm524.java:405
 msgid "Name of the template in which some values can be safely ignored"
-msgstr ""
+msgstr "某些值可以被安全忽略的模板名称"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a524/CheckErrorAlgorithm524.java:408
 msgid "Name of the parameter for which some values can be safely ignored"
-msgstr ""
+msgstr "某些值可以被安全忽略的参数名称"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a524/CheckErrorAlgorithm524.java:411
 msgid "Value of the paramter which can be safely ignored"
-msgstr ""
+msgstr "可以被安全忽略的参数值"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a525/CheckErrorAlgorithm525.java:136
 msgid "Use an anchor template?"
@@ -1339,12 +1339,12 @@ msgstr ""
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a526/CheckErrorAlgorithm526.java:413
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a526/CheckErrorAlgorithm526.java:416
 msgid "An identifier of an abuse filter that is triggered by incorrect year links."
-msgstr ""
+msgstr "由错误年份链接触发的滥用过滤器标识符。"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a526/CheckErrorAlgorithm526.java:419
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a526/CheckErrorAlgorithm526.java:426
 msgid "Text added after the link to ask for help."
-msgstr ""
+msgstr "添加在链接后用于寻求帮助的文本。"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a526/CheckErrorAlgorithm526.java:423
 msgid "Description of the action"
@@ -1355,27 +1355,27 @@ msgstr "动作描述"
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:286
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:289
 msgid "A page containing a dump analysis for this error."
-msgstr ""
+msgstr "一个包含此错误转储分析的页面。"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a526/CheckErrorAlgorithm526.java:437
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a526/CheckErrorAlgorithm526.java:440
 msgid "Minimum number of digits for the year"
-msgstr ""
+msgstr "年份的最小位数"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a526/CheckErrorAlgorithm526.java:443
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a526/CheckErrorAlgorithm526.java:446
 msgid "Maximum number of digits for the year"
-msgstr ""
+msgstr "年份的最大位数"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a526/CheckErrorAlgorithm526.java:449
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a526/CheckErrorAlgorithm526.java:452
 msgid "Minimum difference between the year displayed and the year linked"
-msgstr ""
+msgstr "显示年份和链接年份的最小差异"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a526/CheckErrorAlgorithm526.java:455
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a526/CheckErrorAlgorithm526.java:458
 msgid "Minimum difference between the year linked and the year displayed"
-msgstr ""
+msgstr "链接年份和显示年份的最小差异"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a527/CheckErrorAlgorithm527.java:130
 msgid "Trim text"
@@ -1399,7 +1399,7 @@ msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a53x/a530/CheckErrorAlgorithm530.java:122
 msgid "View RFC"
-msgstr ""
+msgstr "查看 RFC"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a53x/a531/CheckErrorAlgorithm531.java:131
 msgid "A list of templates that can't be used inside a reference"
