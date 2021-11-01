@@ -21,7 +21,7 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2021-10-28 11:22:09+0000\n"
+"PO-Revision-Date: 2021-11-01 12:17:12+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Spanish\n"
 "MIME-Version: 1.0\n"
@@ -252,7 +252,7 @@ msgstr "Agregar un comentario"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISBN.java:372
 msgid "Search all ISBN"
-msgstr ""
+msgstr "Buscar todos los ISBN"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISBN.java:377
 msgid "Search all ISBN-10"
@@ -260,7 +260,7 @@ msgstr "Busque en todos los ISBN-10"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISBN.java:382
 msgid "Search all ISBN-13"
-msgstr "Busque en todos los ISBN-13"
+msgstr "Buscar en todos los ISBN-13"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISBN.java:399
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISBN.java:456
@@ -821,7 +821,7 @@ msgstr "La longitud del ISBN es de {0} en vez de 10 o 13"
 #: org/wikipediacleaner/api/check/algorithm/a1xx/a10x/a107/CheckErrorAlgorithm107.java:122
 #: org/wikipediacleaner/api/check/algorithm/a1xx/a10x/a108/CheckErrorAlgorithm108.java:93
 msgid "Search as OCLC"
-msgstr ""
+msgstr "Buscar como OCLC"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a070/CheckErrorAlgorithm070.java:121
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a072/CheckErrorAlgorithm072.java:106
@@ -829,7 +829,7 @@ msgstr ""
 #: org/wikipediacleaner/api/check/algorithm/a1xx/a10x/a107/CheckErrorAlgorithm107.java:125
 #: org/wikipediacleaner/api/check/algorithm/a1xx/a10x/a108/CheckErrorAlgorithm108.java:96
 msgid "Search as LCCN"
-msgstr ""
+msgstr "Buscar como LCCN"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a070/CheckErrorAlgorithm070.java:195
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a072/CheckErrorAlgorithm072.java:156
@@ -2703,7 +2703,7 @@ msgstr "Cargar lista desde dispositivo"
 #: org/wikipediacleaner/gui/swing/MainWindow.java:738
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1238
 msgid "Your contributions"
-msgstr "Sus contribuciones"
+msgstr "Tus contribuciones"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:752
 msgid "Projects"
