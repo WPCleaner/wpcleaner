@@ -135,12 +135,14 @@ public class CheckErrorAlgorithm016 extends CheckErrorAlgorithmBase {
 
         // Report error
         CheckErrorResult errorResult = createCheckErrorResult(analysis, begin, end);
+        boolean controlInTitle = false;
         for (Integer controlFound : controls) {
           ControlCharacter found = getControlCharacter(controlFound.intValue());
           if (found != null) {
             errorResult.addText(
                 Integer.toHexString(controlFound.intValue()) + " - " + GT._T(found.description));
           }
+          controlInTitle |= analysis.getPage().getTitle().codePoints().anyMatch(value -> value == controlFound.intValue());
         }
         StringBuilder replacementB = new StringBuilder();
         List<String> otherReplacements = new ArrayList<>();
@@ -221,7 +223,7 @@ public class CheckErrorAlgorithm016 extends CheckErrorAlgorithmBase {
           }
           i += Character.charCount(codePoint);
         }
-        boolean automatic = (!unsafeCharacter || !checkUnsafe);
+        boolean automatic = (!unsafeCharacter || !checkUnsafe) && !controlInTitle;
 
         // Special handling for redirects
         if (analysis.getPage().getRedirects().isRedirect() && automatic) {
