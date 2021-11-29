@@ -56,6 +56,11 @@ class NumericFormatnum extends Numeric {
    * @param errorResult
    */
   public void addSuggestions(CheckErrorResult errorResult) {
+    // No suggestion with more than one parameter
+    if (function.getParameterCount() > 1) {
+      return;
+    }
+
     boolean tryAgain = true;
     while (tryAgain) {
       tryAgain = false;
@@ -336,9 +341,14 @@ class NumericFormatnum extends Numeric {
     if (function.getParameterCount() < 1) {
       return false;
     }
-    if (function.getParameterCount() > 1) {
-      return true;
+    if (function.getParameterCount() > 2) {
+      return false;
     }
+    if (function.getParameterCount() == 2) {
+      String parameterValue = function.getParameterValue(1);
+      return "R".equals(parameterValue) || "NOSEP".equals(parameterValue);
+    }
+
     return isValidFormatnum(
         analysis,
         function.getParameterValueNotTrimmed(0),
