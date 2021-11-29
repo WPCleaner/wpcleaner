@@ -21,7 +21,7 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2021-11-01 12:17:12+0000\n"
+"PO-Revision-Date: 2021-11-29 12:15:35+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Spanish\n"
 "MIME-Version: 1.0\n"
@@ -2969,7 +2969,7 @@ msgstr "Indicar que el texto seleccionado está en otro idioma"
 
 #: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:463
 msgid "Translation of an article copied from an other wiki"
-msgstr "Traducción de un artículo copiado de otro wiki"
+msgstr "Traducción de un artículo copiado de otra wiki"
 
 #: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:511
 msgid "&Options"
