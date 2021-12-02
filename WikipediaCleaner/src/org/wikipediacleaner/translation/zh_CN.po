@@ -23,7 +23,7 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2021-10-28 11:22:14+0000\n"
+"PO-Revision-Date: 2021-12-02 12:19:25+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Chinese (Simplified) <zh_CN@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -1379,7 +1379,7 @@ msgstr "链接年份和显示年份的最小差异"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a527/CheckErrorAlgorithm527.java:130
 msgid "Trim text"
-msgstr ""
+msgstr "修剪文本"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a529/CheckErrorAlgorithm529.java:375
 msgid "Automatic replacements of ISBN"
@@ -1391,11 +1391,11 @@ msgstr "用于 ISBN 的模板的名称"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a529/CheckErrorAlgorithm529.java:382
 msgid "Text before the ISBN to be removed in the replacement"
-msgstr ""
+msgstr "要在替换中被删除的位于 ISBN 之前的文本"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a529/CheckErrorAlgorithm529.java:385
 msgid "Text after the ISBN to be removed in the replacement"
-msgstr ""
+msgstr "要在替换中被删除的位于 ISBN 之后的文本"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a53x/a530/CheckErrorAlgorithm530.java:122
 msgid "View RFC"
@@ -1454,20 +1454,20 @@ msgstr ""
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a541/CheckErrorAlgorithm541.java:596
 #, java-format
 msgid "Possible replacements for {0} tags"
-msgstr ""
+msgstr "{0}标签的可能替换"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a541/CheckErrorAlgorithm541.java:558
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a541/CheckErrorAlgorithm541.java:579
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a541/CheckErrorAlgorithm541.java:600
 #, java-format
 msgid "Template for replacing {0} tag"
-msgstr "用来代替{0}标签的模板"
+msgstr "用于替换{0}标签的模板"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a541/CheckErrorAlgorithm541.java:561
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a541/CheckErrorAlgorithm541.java:582
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a541/CheckErrorAlgorithm541.java:603
 msgid "Parameter to use in the template for the text"
-msgstr ""
+msgstr "在文本模板中使用的参数"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a541/CheckErrorAlgorithm541.java:569
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a541/CheckErrorAlgorithm541.java:590
@@ -1477,50 +1477,50 @@ msgstr "模板描述"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a544/CheckErrorAlgorithm544.java:216
 msgid "Pairs of templates: for each opening template, all possible closing templates"
-msgstr ""
+msgstr "模板对：对于每一个开始模板，所有可能的结束模板"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a544/CheckErrorAlgorithm544.java:220
 msgid "Name of the opening template in the pair"
-msgstr "对中打开模板的名称"
+msgstr "模板对中开始模板的名称"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a544/CheckErrorAlgorithm544.java:223
 msgid "Name of a closing template in the pair"
-msgstr ""
+msgstr "模板对中一个结束模板的名称"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a545/CheckErrorAlgorithm545.java:261
 msgid "Categories listing pages using templates with deprecated parameters"
-msgstr ""
+msgstr "列出使用具有已弃用参数模板页面的分类"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a545/CheckErrorAlgorithm545.java:264
 msgid "Name of a category listing pages using templates with deprecated parameters"
-msgstr ""
+msgstr "列出使用具有已弃用参数模板页面的分类名称"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a545/CheckErrorAlgorithm545.java:268
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a563/CheckErrorAlgorithm563.java:211
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:292
 msgid "Groups of templates"
-msgstr ""
+msgstr "模板组"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a545/CheckErrorAlgorithm545.java:272
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a563/CheckErrorAlgorithm563.java:215
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:296
 msgid "Name of the group"
-msgstr ""
+msgstr "模板组的名称"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a545/CheckErrorAlgorithm545.java:275
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a563/CheckErrorAlgorithm563.java:218
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:299
 msgid "Name of a template in the group"
-msgstr ""
+msgstr "模板组中的模板名称"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a545/CheckErrorAlgorithm545.java:282
 msgid "Templates with deprecated parameters"
-msgstr ""
+msgstr "具有已弃用参数的模板"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a545/CheckErrorAlgorithm545.java:286
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a545/CheckErrorAlgorithm545.java:302
 msgid "Name of a template with deprecated parameter"
-msgstr ""
+msgstr "具有已弃用参数的模板名称"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a545/CheckErrorAlgorithm545.java:289
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a545/CheckErrorAlgorithm545.java:305
@@ -1529,15 +1529,15 @@ msgstr "命名已弃用参数的 a"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a545/CheckErrorAlgorithm545.java:292
 msgid "Textual explanation about the deprecated parameter"
-msgstr ""
+msgstr "有关已弃用参数的文字说明"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a545/CheckErrorAlgorithm545.java:298
 msgid "Replacements of deprecated parameters"
-msgstr ""
+msgstr "已弃用参数的替换"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a545/CheckErrorAlgorithm545.java:308
 msgid "Name of a replacement parameter"
-msgstr ""
+msgstr "替换参数的名称"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a546/CheckErrorAlgorithm546.java:135
 msgid "List of categorizing templates"
@@ -1545,7 +1545,7 @@ msgstr "分类模板列表"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a546/CheckErrorAlgorithm546.java:139
 msgid "Name of a template that categorizes articles"
-msgstr ""
+msgstr "为条目分类的模板名称"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a546/CheckErrorAlgorithm546.java:142
 msgid "Name of the parameter that triggers the categorization"
@@ -1553,19 +1553,19 @@ msgstr "触发分类的参数的名称"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a546/CheckErrorAlgorithm546.java:146
 msgid "Value of the parameter that triggers the categorization"
-msgstr ""
+msgstr "触发分类的参数的值"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a547/CheckErrorAlgorithm547.java:244
 msgid "Templates in which empty list items should be ignored"
-msgstr ""
+msgstr "应当忽略空列表项的模板"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a547/CheckErrorAlgorithm547.java:248
 msgid "Template in which empty list items should be ignored"
-msgstr ""
+msgstr "应当忽略空列表项的模板"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a547/CheckErrorAlgorithm547.java:251
 msgid "Template parameter in which empty list items should be ignored"
-msgstr ""
+msgstr "应当忽略空列表项的模板参数"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a548/CheckErrorAlgorithm548.java:356
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a550/CheckErrorAlgorithm550.java:197
@@ -1587,11 +1587,11 @@ msgstr "要忽略的模板"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a553/CheckErrorAlgorithm553.java:435
 msgid "Acceptable suffixes"
-msgstr ""
+msgstr "可接受的后缀"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a553/CheckErrorAlgorithm553.java:438
 msgid "Acceptable suffix"
-msgstr ""
+msgstr "可接受的后缀"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a553/CheckErrorAlgorithm553.java:442
 msgid "Words that should be separated from the link"
