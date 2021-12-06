@@ -23,7 +23,7 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2021-12-02 12:19:25+0000\n"
+"PO-Revision-Date: 2021-12-06 12:19:07+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Chinese (Simplified) <zh_CN@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -1595,83 +1595,83 @@ msgstr "可接受的后缀"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a553/CheckErrorAlgorithm553.java:442
 msgid "Words that should be separated from the link"
-msgstr ""
+msgstr "应当与链接分开的字词"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a553/CheckErrorAlgorithm553.java:445
 msgid "Word that should be separated from the link by a whitespace"
-msgstr ""
+msgstr "应当使用空格与链接分开的字词"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a556/CheckErrorAlgorithm556.java:150
 #, java-format
 msgid "Add inside a {0} tag"
-msgstr ""
+msgstr "在 {0} 标签中添加"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a556/CheckErrorAlgorithm556.java:157
 #, java-format
 msgid "Keep text and add link inside a {0} tag"
-msgstr ""
+msgstr "保留文本并在 {0} 标签中添加链接"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a556/CheckErrorAlgorithm556.java:231
 msgid "Templates in which external links are normal"
-msgstr ""
+msgstr "外部链接正常的模板"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a556/CheckErrorAlgorithm556.java:235
 msgid "Template in which external links are normal"
-msgstr ""
+msgstr "外部链接正常的模板"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a556/CheckErrorAlgorithm556.java:238
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a556/CheckErrorAlgorithm556.java:248
 msgid "Parameter in which external links are normal"
-msgstr ""
+msgstr "外部链接正常的参数"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a556/CheckErrorAlgorithm556.java:244
 msgid "Template parameters in which external links are normal"
-msgstr ""
+msgstr "外部链接正常的模板参数"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a556/CheckErrorAlgorithm556.java:253
 msgid "Sections in which external links are normal"
-msgstr ""
+msgstr "外部链接正常的章节"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a556/CheckErrorAlgorithm556.java:256
 msgid "Section in which external links are normal"
-msgstr ""
+msgstr "外部链接正常的章节"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a557/CheckErrorAlgorithm557.java:510
 msgid "Prefixes which can be before an internal link"
-msgstr ""
+msgstr "可位于内部链接之前的前缀"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a557/CheckErrorAlgorithm557.java:514
 msgid "Prefix which can be before an internal link"
-msgstr ""
+msgstr "可位于内部链接之前的前缀"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a557/CheckErrorAlgorithm557.java:519
 msgid "Prefixes which should be excluded from the internal link"
-msgstr ""
+msgstr "应当从内部链接中排除的前缀"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a557/CheckErrorAlgorithm557.java:523
 msgid "Prefix which should be excluded from the internal link"
-msgstr ""
+msgstr "应当从内部链接中排除的前缀"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a557/CheckErrorAlgorithm557.java:528
 msgid "List of suggestions for separators between the text and the internal link"
-msgstr ""
+msgstr "提供文本与内部链接之间分隔符建议的列表"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a557/CheckErrorAlgorithm557.java:532
 msgid "Suggestion for a separator between the text and the internal link"
-msgstr ""
+msgstr "文本与内部链接之间分隔符的建议"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a559/CheckErrorAlgorithm559.java:323
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a559/CheckErrorAlgorithm559.java:326
 msgid "Option to apply automatic replacement even in templates"
-msgstr ""
+msgstr "即使在模板中也应用自动替换的选项"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a563/CheckErrorAlgorithm563.java:225
 msgid "Templates for which unused parameters should be verified"
-msgstr ""
+msgstr "应当验证未使用参数的模板"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a563/CheckErrorAlgorithm563.java:232
 msgid "Set to true to automatically remove unused parameters"
-msgstr ""
+msgstr "设置为true以自动移除未使用的参数"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a563/CheckErrorAlgorithm563.java:243
 msgid "Parameters that should be ignored"
@@ -1679,119 +1679,119 @@ msgstr "应忽略的参数"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:306
 msgid "Templates for which unknown parameters should be verified"
-msgstr ""
+msgstr "应当验证未知参数的模板"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:320
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:365
 msgid "Template parameters which can be safely deleted"
-msgstr ""
+msgstr "可被安全删除的模板参数"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:334
 msgid "Template parameters which can be safely deleted if they have a given value"
-msgstr ""
+msgstr "具有给定值则可被安全删除的模板参数"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:341
 msgid "Value of the parameter"
-msgstr ""
+msgstr "参数值"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:351
 msgid "Template parameters which can be safely commented"
-msgstr ""
+msgstr "可被安全注释的模板参数"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:379
 msgid "Template parameters which can be safely replaced"
-msgstr ""
+msgstr "可被安全替换的模板参数"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:386
 msgid "Initial name of the parameter"
-msgstr ""
+msgstr "参数的初始名称"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:391
 msgid "Target name of the parameter"
-msgstr ""
+msgstr "参数的目标名称"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a566/CheckErrorAlgorithm566.java:246
 msgid "Possible replacements based on abbreviation value"
-msgstr ""
+msgstr "基于缩写值的可能替换"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a566/CheckErrorAlgorithm566.java:250
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a566/CheckErrorAlgorithm566.java:265
 msgid "Value of the abbreviation"
-msgstr ""
+msgstr "缩写的值"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a566/CheckErrorAlgorithm566.java:256
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a566/CheckErrorAlgorithm566.java:274
 msgid "Replacement for the abbreviation"
-msgstr ""
+msgstr "缩写的替换"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a566/CheckErrorAlgorithm566.java:261
 msgid "Possible replacements based on abbreviation value and title"
-msgstr ""
+msgstr "基于缩写值和标题的可能替换"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a566/CheckErrorAlgorithm566.java:268
 msgid "Title of the abbreviation"
-msgstr ""
+msgstr "缩写的标题"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a566/CheckErrorAlgorithm566.java:279
 msgid "Templates which can replace an abbreviation"
-msgstr ""
+msgstr "可替换缩写的模板"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a566/CheckErrorAlgorithm566.java:286
 msgid "Name of the parameter for the abbreviation"
-msgstr ""
+msgstr "用于缩写的参数名称"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a566/CheckErrorAlgorithm566.java:289
 msgid "Name of the parameter for the meaning"
-msgstr ""
+msgstr "用于语义的参数名称"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a566/CheckErrorAlgorithm566.java:292
 msgid "Default value for the meaning"
-msgstr ""
+msgstr "语义的默认值"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a567/CheckErrorAlgorithm567.java:238
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a568/CheckErrorAlgorithm568.java:245
 #, java-format
 msgid "Categories listing pages using non-numeric {0} arguments"
-msgstr ""
+msgstr "列出使用非数字参数 {0} 页面的分类"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a567/CheckErrorAlgorithm567.java:241
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a568/CheckErrorAlgorithm568.java:248
 #, java-format
 msgid "Name of a category listing pages using non-numeric {0} arguments"
-msgstr ""
+msgstr "列出使用非数字参数 {0} 页面的分类名称"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a567/CheckErrorAlgorithm567.java:245
 msgid "Prefixes that can be safely extracted"
-msgstr ""
+msgstr "可被安全提取的前缀"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a567/CheckErrorAlgorithm567.java:248
 msgid "Prefix that can be safely extracted"
-msgstr ""
+msgstr "可被安全提取的前缀"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a567/CheckErrorAlgorithm567.java:252
 msgid "Suffixes that can be safely extracted"
-msgstr ""
+msgstr "可被安全提取的后缀"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a567/CheckErrorAlgorithm567.java:255
 msgid "Suffix that can be safely extracted"
-msgstr ""
+msgstr "可被安全提取的后缀"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a568/CheckErrorAlgorithm568.java:252
 msgid "Template parameters that should only contain numeric arguments"
-msgstr ""
+msgstr "应当仅包含数字参数的模板参数"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a568/CheckErrorAlgorithm568.java:255
 msgid "If parameters accept only integer values"
-msgstr ""
+msgstr "若参数仅接受整数值"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a568/CheckErrorAlgorithm568.java:256
 msgid "Parameter name"
-msgstr ""
+msgstr "参数名称"
 
 #: org/wikipediacleaner/api/configuration/CWConfiguration.java:83
 #, java-format
 msgid "Fixed using {0}"
-msgstr ""
+msgstr "使用 {0} 修复"
 
 #: org/wikipediacleaner/api/configuration/CWConfigurationError.java:319
 msgid "Deactivated"
@@ -1824,7 +1824,7 @@ msgstr "未知优先级"
 #: org/wikipediacleaner/api/configuration/WPCConfiguration.java:510
 #, java-format
 msgid "Attribute {0} can''t be set in general configuration"
-msgstr ""
+msgstr "属性{0}不能在常规配置下设置"
 
 #: org/wikipediacleaner/api/configuration/WPCConfiguration.java:408
 #: org/wikipediacleaner/api/configuration/WPCConfiguration.java:427
@@ -1833,7 +1833,7 @@ msgstr ""
 #: org/wikipediacleaner/api/configuration/WPCConfiguration.java:482
 #, java-format
 msgid "Attribute {0} can''t be set in user configuration"
-msgstr ""
+msgstr "属性{0}不能在用户配置下设置"
 
 #: org/wikipediacleaner/api/configuration/WPCConfiguration.java:472
 #, java-format
@@ -1866,7 +1866,7 @@ msgstr[0] "您修复了{0}个错误“{1}”。"
 #: org/wikipediacleaner/api/constants/Contributions.java:84
 #, java-format
 msgid "You haven''t done any contribution on \"{0}\""
-msgstr ""
+msgstr "您尚未在“{0}”上做出任何贡献"
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:18
 msgid "Dormant pages"
@@ -1918,11 +1918,11 @@ msgstr "链接最多的页面"
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:30
 msgid "Most linked-to categories"
-msgstr "有最多链接的分类"
+msgstr "链接最多的分类"
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:31
 msgid "Most linked-to templates"
-msgstr ""
+msgstr "链接最多的模板"
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:32
 msgid "Pages with the most revisions"
@@ -1987,7 +1987,7 @@ msgstr "没有跨语言链接的页面"
 #: org/wikipediacleaner/api/data/ISBNRange.java:163
 #: org/wikipediacleaner/api/data/ISBNRange.java:185
 msgid "No range found for ISBN"
-msgstr ""
+msgstr "未找到ISBN范围"
 
 #: org/wikipediacleaner/api/data/ISBNRange.java:173
 #, java-format
@@ -1996,12 +1996,12 @@ msgstr "建议的格式：{0}"
 
 #: org/wikipediacleaner/api/data/ISBNRange.java:175
 msgid "ISBN length incoherent with range found"
-msgstr ""
+msgstr "ISBN长度与找到的范围不一致"
 
 #: org/wikipediacleaner/api/data/ISBNRange.java:179
 #, java-format
 msgid "ISBN is in a reserved range {0}"
-msgstr ""
+msgstr "ISBN位于保留范围{0}中"
 
 #: org/wikipediacleaner/api/data/PageComparator.java:198
 msgid "Namespace"
@@ -2011,7 +2011,7 @@ msgstr "命名空间"
 #: org/wikipediacleaner/gui/swing/RecentChangesTableModel.java:257
 #: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:197
 msgid "Title"
-msgstr "標題"
+msgstr "标题"
 
 #: org/wikipediacleaner/api/data/PageComparator.java:284
 msgid "Revision Id"
@@ -2040,7 +2040,7 @@ msgstr "链接参数{0}到"
 
 #: org/wikipediacleaner/api/execution/AllLinksToPageCallable.java:43
 msgid "Retrieving all links to page"
-msgstr ""
+msgstr "正在检索页面的全部链接"
 
 #: org/wikipediacleaner/api/execution/ContentsCallable.java:64
 msgid "Retrieving contents"
@@ -2074,7 +2074,7 @@ msgstr "正在检索模板"
 #: org/wikipediacleaner/api/impl/MediaWikiAPI.java:697
 #, java-format
 msgid "URL {0} is blacklisted"
-msgstr ""
+msgstr "URL {0} 已列入黑名单"
 
 #: org/wikipediacleaner/api/impl/MediaWikiAPI.java:1887
 msgid "This action is protected by a CAPTCHA.\nWhat is the answer to the following question ?"
@@ -2095,7 +2095,7 @@ msgstr "源文本"
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingTableModel.java:184
 msgid "Replacement text"
-msgstr ""
+msgstr "替换文字"
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingTableModel.java:186
 msgid "regex"
@@ -2154,15 +2154,15 @@ msgstr "修复选中的页面"
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:289
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:389
 msgid "Test automatic replacements"
-msgstr ""
+msgstr "测试自动替换"
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:295
 msgid "Load replacements"
-msgstr "加载替代品"
+msgstr "加载替换"
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:301
 msgid "Save replacements"
-msgstr ""
+msgstr "保存替换"
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:314
 #: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:115
@@ -2214,7 +2214,7 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:763
 #: org/wikipediacleaner/gui/swing/bot/BotToolsWindow.java:86
 msgid "!!! WARNING !!!"
-msgstr "警告！"
+msgstr "!!! 警告 !!!"
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:764
 msgid "This function will carry out all replacements on all selected pages."
