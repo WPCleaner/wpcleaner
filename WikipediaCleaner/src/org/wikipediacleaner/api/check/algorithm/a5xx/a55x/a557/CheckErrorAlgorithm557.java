@@ -10,8 +10,11 @@ package org.wikipediacleaner.api.check.algorithm.a5xx.a55x.a557;
 import java.lang.Character.UnicodeBlock;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import javax.annotation.Nonnull;
@@ -119,6 +122,11 @@ public class CheckErrorAlgorithm557 extends CheckErrorAlgorithmBase {
           UnicodeBlock.HIRAGANA.equals(unicodeBlock)) {
         return false;
       }
+    }
+
+    // Check if this is an accepted link
+    if (links_ok.getOrDefault(link.getLink(), Collections.emptySet()).contains(link.getDisplayedText())) {
+      return false;
     }
 
     // Check if this is an accepted prefix
@@ -444,6 +452,9 @@ public class CheckErrorAlgorithm557 extends CheckErrorAlgorithmBase {
   /* PARAMETERS                                                             */
   /* ====================================================================== */
 
+  /** List of possible links */
+  private static final String PARAMETER_LINKS_OK = "links_ok";
+
   /** List of possible prefixes */
   private static final String PARAMETER_PREFIXES_OK = "prefixes_ok";
 
@@ -460,7 +471,24 @@ public class CheckErrorAlgorithm557 extends CheckErrorAlgorithmBase {
    */
   @Override
   protected void initializeSettings() {
-    String tmp = getSpecificProperty(PARAMETER_PREFIXES_OK, true, true, true);
+    String tmp = getSpecificProperty(PARAMETER_LINKS_OK, true, true, true);
+    links_ok.clear();
+    if (tmp != null) {
+      List<String[]> tmpList = WPCConfiguration.convertPropertyToStringArrayList(tmp);
+      if (tmpList != null) {
+        for (String[] tmpElement : tmpList) {
+          if (tmpElement.length > 1) {
+            Set<String> texts = new HashSet<>();
+            for (int i = 1; i < tmpElement.length; i++) {
+              texts.add(tmpElement[i]);
+            }
+            links_ok.put(tmpElement[0], texts);
+          }
+        }
+      }
+    }
+
+    tmp = getSpecificProperty(PARAMETER_PREFIXES_OK, true, true, true);
     prefixes_ok.clear();
     if (tmp != null) {
       List<String> tmpList = WPCConfiguration.convertPropertyToStringList(tmp);
@@ -490,6 +518,9 @@ public class CheckErrorAlgorithm557 extends CheckErrorAlgorithmBase {
     }
   }
 
+  /** Links that are correct with text before them */
+  private final Map<String, Set<String>> links_ok = new HashMap<>();
+
   /** Prefixes that can be before an internal link */
   private final Set<String> prefixes_ok = new HashSet<>();
 
@@ -505,6 +536,20 @@ public class CheckErrorAlgorithm557 extends CheckErrorAlgorithmBase {
   @Override
   protected void addParameters() {
     super.addParameters();
+    addParameter(new AlgorithmParameter(
+        PARAMETER_LINKS_OK,
+        GT._T("Links which are correct with a prefix"),
+        new AlgorithmParameterElement[] {
+          new AlgorithmParameterElement(
+              "link",
+              GT._T("Link target")),
+          new AlgorithmParameterElement(
+              "text",
+              GT._T("Link text"),
+              false,
+              true)
+        },
+        true));
     addParameter(new AlgorithmParameter(
         PARAMETER_PREFIXES_OK,
         GT._T("Prefixes which can be before an internal link"),
