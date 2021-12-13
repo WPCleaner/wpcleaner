@@ -23,7 +23,7 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2021-12-09 12:19:44+0000\n"
+"PO-Revision-Date: 2021-12-13 12:18:59+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Chinese (Simplified) <zh_CN@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -1638,11 +1638,11 @@ msgstr "外部链接正常的章节"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a557/CheckErrorAlgorithm557.java:541
 msgid "Links which are correct with a prefix"
-msgstr ""
+msgstr "使用前缀才正确的链接"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a557/CheckErrorAlgorithm557.java:545
 msgid "Link target"
-msgstr ""
+msgstr "链接目标"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a557/CheckErrorAlgorithm557.java:548
 #: org/wikipediacleaner/gui/swing/menu/MWPaneDisambiguationMenuCreator.java:216
@@ -2126,7 +2126,7 @@ msgstr "自动修正"
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:234
 msgid "This feature may modify a lot of pages in a short period of time."
-msgstr ""
+msgstr "此功能可能在短时间内修改大量页面。"
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:235
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:766
@@ -2138,7 +2138,7 @@ msgstr "在一些维基百科项目上，您可能需要执行此操作的机器
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:767
 #: org/wikipediacleaner/gui/swing/bot/BotToolsWindow.java:90
 msgid "Please, check if you need the bot status by reading the rules of Wikipedia."
-msgstr ""
+msgstr "请阅读维基百科的规定以确认您是否需要机器人状态。"
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:252
 #: org/wikipediacleaner/gui/swing/options/SortingOptionsPanel.java:110
@@ -2203,11 +2203,11 @@ msgstr "没有错误被选中"
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:640
 msgid "Text that should be replaced"
-msgstr "应该被替换的文字"
+msgstr "应当被替换的文字"
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:651
 msgid "Text to be used as a replacement"
-msgstr ""
+msgstr "应当作为替换文本的文字"
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:662
 msgid "Use regular expressions"
@@ -2215,15 +2215,15 @@ msgstr "使用正则表达式"
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:734
 msgid "You must select the pages on which running automatic fixing."
-msgstr ""
+msgstr "您必须选择执行自动修复的页面。"
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:742
 msgid "A comment is required for automatic fixing."
-msgstr ""
+msgstr "需要为自动修复提供注释。"
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:752
 msgid "You must input the initial and destination texts."
-msgstr ""
+msgstr "您必须输入初始文本与目标文本。"
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:763
 #: org/wikipediacleaner/gui/swing/bot/BotToolsWindow.java:86
@@ -2232,31 +2232,31 @@ msgstr "!!! 警告 !!!"
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:764
 msgid "This function will carry out all replacements on all selected pages."
-msgstr ""
+msgstr "此功能将在所有选定的页面上执行所有替换。"
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:765
 msgid "It may modify a lot of pages in a short period of time."
-msgstr ""
+msgstr "这可能在短时间内修改大量页面。"
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:768
 msgid "Also, verify again the texts you have inputted before running this function."
-msgstr ""
+msgstr "此外，请在执行此功能之前再次确认您输入的文字。"
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:769
 msgid "You can also test the modifications before actually doing them."
-msgstr ""
+msgstr "您也可以在实际执行之前测试修改内容。"
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:770
 msgid "Do you want to proceed with the modifications ?"
-msgstr ""
+msgstr "您想要继续执行修改吗？"
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:828
 msgid "The following replacements have been made:"
-msgstr ""
+msgstr "已进行以下替换："
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:839
 msgid "Do you want to test the replacements on the pages ?"
-msgstr ""
+msgstr "您想要在页面上测试替换吗？"
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:853
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:893
@@ -2265,7 +2265,7 @@ msgstr "XML文件"
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:908
 msgid "This file exists, do you want to overwrite it?"
-msgstr ""
+msgstr "此文件已存在，您想要覆写吗？"
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:976
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiWindow.java:358
@@ -2287,17 +2287,17 @@ msgstr "选择无错误"
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiWindow.java:470
 #, java-format
 msgid "Errors from {0} to {1}"
-msgstr ""
+msgstr "从{0}到{1}的错误"
 
 #: org/wikipediacleaner/gui/swing/Controller.java:245
 #, java-format
 msgid "Yes, {0} pages"
-msgstr ""
+msgstr "是，{0}个页面"
 
 #: org/wikipediacleaner/gui/swing/Controller.java:246
 #, java-format
 msgid "No, {0} pages"
-msgstr ""
+msgstr "不，{0}个页面"
 
 #: org/wikipediacleaner/gui/swing/Controller.java:251
 #, java-format
@@ -2326,22 +2326,22 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:330
 #: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:258
 msgid "Link count"
-msgstr ""
+msgstr "链接数"
 
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:378
 msgid "Filter namespaces"
-msgstr ""
+msgstr "过滤命名空间"
 
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:446
 #: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:497
 msgid "Sort"
-msgstr ""
+msgstr "排序"
 
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:545
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiWindow.java:1416
 #: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:537
 msgid "You must select pages on which running automatic fixing."
-msgstr ""
+msgstr "您必须选择执行自动修复的页面。"
 
 #: org/wikipediacleaner/gui/swing/InformationWindow.java:105
 msgid "Information"
@@ -2349,7 +2349,7 @@ msgstr "信息"
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:123
 msgid "WPCleaner installer"
-msgstr ""
+msgstr "WPCleaner 安装程序"
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:182
 msgid "Configuration"
@@ -2357,7 +2357,7 @@ msgstr "配置"
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:245
 msgid "Installation folder"
-msgstr ""
+msgstr "安装文件夹"
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:253
 msgid "Select installation folder"
@@ -2373,44 +2373,44 @@ msgstr "安装测试版本（仅限有经验的用户）"
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:368
 msgid "A desktop shortcut can be created automatically under Windows and some Linux flavors."
-msgstr ""
+msgstr "桌面快捷方式可自动在 Windows 和一些 Linux 发行版下创建。"
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:371
 msgid "If the desktop shortcut is not created automatically, you can still create it manually."
-msgstr ""
+msgstr "如果桌面快捷方式没有自动创建，您仍可以手动创建。"
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:373
 #, java-format
 msgid "The working directory for the shortcut MUST be the installation folder ({0})."
-msgstr ""
+msgstr "快捷方式的工作目录必须与安装文件夹相同（{0}）。"
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:375
 msgid "The command itself is dependent on the operating system you're using (see below)."
-msgstr ""
+msgstr "命令本身取决于您使用的操作系统（见下方）。"
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:377
 msgid "Note: avoid having whitespace characters in the installation folder path, or you will need to adapt the commands."
-msgstr ""
+msgstr "注：安装文件夹路径名称请避免包含空白字符，否则您将需要调整命令。"
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:380
 msgid "If you want to run WPCleaner manually, open a terminal/command prompt/... and change the current directory to the installation folder."
-msgstr ""
+msgstr "如果您想要手动运行 WPCleaner，请打开终端或命令提示符，然后将当前目录切换成安装文件夹。"
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:385
 msgid "And then execute the command dependent on the operating system you're using (see below)."
-msgstr ""
+msgstr "之后执行取决于您使用的操作系统的命令（见下方）。"
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:388
 msgid "Under Windows, the command can be:"
-msgstr "在Windows，命令会是："
+msgstr "在 Windows 下，命令为："
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:394
 msgid "Under Linux (or other systems working with .sh scripts), the command can be:"
-msgstr ""
+msgstr "在 Linux 或其他可以运行 .sh 脚本的系统，命令为："
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:400
 msgid "On any operating system, the command can be:"
-msgstr ""
+msgstr "在任何操作系统上，命令是："
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:419
 msgid "Install"
@@ -2418,7 +2418,7 @@ msgstr "安装"
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:448
 msgid "Operating system"
-msgstr ""
+msgstr "操作系统"
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:655
 msgid "System information"
