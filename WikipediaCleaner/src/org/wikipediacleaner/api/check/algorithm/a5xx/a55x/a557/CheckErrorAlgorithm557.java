@@ -16,6 +16,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javax.annotation.Nonnull;
 
@@ -44,6 +46,12 @@ import org.wikipediacleaner.utils.string.CharacterUtils;
  * Error 557: missing space before internal link.
  */
 public class CheckErrorAlgorithm557 extends CheckErrorAlgorithmBase {
+
+  private static final String EXTRACT_FIRST_CHAR = " \u00A0;'’,";
+
+  private static final Set<String> TEXTS_REMOVE_LINK = Stream
+      .of("&nbsp;", "''&nbsp;''", ",", ".")
+      .collect(Collectors.toCollection(HashSet::new));
 
   public CheckErrorAlgorithm557() {
     super("missing space before internal link");
@@ -160,9 +168,11 @@ public class CheckErrorAlgorithm557 extends CheckErrorAlgorithmBase {
     CheckErrorResult errorResult = createCheckErrorResult(analysis, beginIndex, endIndex);
 
     String replacement = null;
-    boolean automaticUsed = displayedText.isEmpty() || CharacterUtils.isPunctuation(displayedText.charAt(0));
+    boolean automaticUsed = displayedText.isEmpty() ||
+        (CharacterUtils.isPunctuation(displayedText.charAt(0)) &&
+        (EXTRACT_FIRST_CHAR.indexOf(displayedText.charAt(0)) < 0));
     if ((displayedText.length() > 0) &&
-        (" \u00A0;'’".indexOf(displayedText.charAt(0)) >= 0)) {
+        (EXTRACT_FIRST_CHAR.indexOf(displayedText.charAt(0)) >= 0)) {
 
       // Decide which first char should be used
       char firstChar = displayedText.charAt(0);
@@ -170,17 +180,24 @@ public class CheckErrorAlgorithm557 extends CheckErrorAlgorithmBase {
         firstChar = ' ';
       }
 
-      if (displayedText.length() > 1) {
+      // Extend first char
+      int length = 1;
+      while ((length < displayedText.length()) &&
+             (EXTRACT_FIRST_CHAR.indexOf(displayedText.charAt(length)) >= 0)) {
+        length++;
+      }
+
+      if (displayedText.length() > length) {
 
         // Move the white space or apostrophe before the internal link
         replacement =
-            prefix + firstChar +
+            prefix + firstChar + displayedText.substring(1, length) +
             InternalLinkBuilder
                 .from(link.getLink())
                 .withAnchor(link.getAnchor())
-                .withText(displayedText.substring(1))
+                .withText(displayedText.substring(length))
                 .toString();
-        boolean automatic = true;
+        boolean automatic = (link.getText() != null);
         if (firstChar == '\'') {
           if (displayedText.startsWith("'",  1)) {
             automatic = false;
@@ -295,7 +312,9 @@ public class CheckErrorAlgorithm557 extends CheckErrorAlgorithmBase {
     }
 
     // Remove internal link
-    errorResult.addReplacement(prefix + link.getDisplayedText());
+    boolean removeAutomatic = TEXTS_REMOVE_LINK.contains(displayedText);
+    errorResult.addReplacement(prefix + link.getDisplayedText(), !automaticUsed && removeAutomatic);
+    automaticUsed |= removeAutomatic;
 
     // Missing = in a template argument
     PageElementTemplate template = analysis.isInTemplate(link.getBeginIndex());
