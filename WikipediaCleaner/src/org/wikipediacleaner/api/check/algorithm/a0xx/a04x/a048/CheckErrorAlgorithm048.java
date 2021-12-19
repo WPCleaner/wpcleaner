@@ -9,6 +9,9 @@ package org.wikipediacleaner.api.check.algorithm.a0xx.a04x.a048;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.wikipediacleaner.api.algorithm.AlgorithmParameter;
 import org.wikipediacleaner.api.algorithm.AlgorithmParameterElement;
@@ -17,12 +20,16 @@ import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase;
 import org.wikipediacleaner.api.configuration.WPCConfigurationString;
 import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.Page;
+import org.wikipediacleaner.api.data.PageElementFunction;
 import org.wikipediacleaner.api.data.PageElementInternalLink;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.PageElementTitle;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
 import org.wikipediacleaner.api.data.contents.ContentsUtil;
 import org.wikipediacleaner.api.data.contents.ilink.InternalLinkBuilder;
+import org.wikipediacleaner.api.data.contents.magicword.FunctionMagicWordType;
+import org.wikipediacleaner.api.data.contents.magicword.MagicWord;
+import org.wikipediacleaner.api.data.contents.magicword.MagicWordType;
 import org.wikipediacleaner.api.data.contents.tag.WikiTagType;
 import org.wikipediacleaner.api.data.contents.template.TemplateBuilder;
 import org.wikipediacleaner.gui.swing.component.MWPane;
@@ -83,6 +90,16 @@ public class CheckErrorAlgorithm048 extends CheckErrorAlgorithmBase {
     return result;
   }
 
+  private static final Set<MagicWordType> EXCLUDE_MAGIC_WORDS = Stream
+      .of(
+          FunctionMagicWordType.LST,
+          FunctionMagicWordType.LST_H,
+          FunctionMagicWordType.LST_X,
+          FunctionMagicWordType.SECTION,
+          FunctionMagicWordType.SECTION_H,
+          FunctionMagicWordType.SECTION_X)
+      .collect(Collectors.toSet());
+
   /**
    * Analyze an internal link to check if errors are present.
    * 
@@ -123,6 +140,15 @@ public class CheckErrorAlgorithm048 extends CheckErrorAlgorithmBase {
     PageElementTag tagImageMap = analysis.getSurroundingTag(WikiTagType.IMAGEMAP, link.getBeginIndex()); 
     if (!imagemap && (tagImageMap != null)) {
       return false;
+    }
+
+    // Ignore for some special cases
+    List<PageElementFunction> functions = analysis.getFunctions();
+    for (PageElementFunction function : functions) {
+      MagicWord magicWord = function.getMagicWord();
+      if ((magicWord != null) && EXCLUDE_MAGIC_WORDS.contains(magicWord.getType())) {
+        return false;
+      }
     }
 
     // Report error

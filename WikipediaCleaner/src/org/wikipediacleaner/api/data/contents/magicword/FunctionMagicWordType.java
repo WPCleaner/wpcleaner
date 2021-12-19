@@ -72,6 +72,9 @@ public class FunctionMagicWordType extends MagicWordType {
   private static final String ID_LOCAL_URL = "localurl";
   private static final String ID_LOCAL_WEEK = "localweek";
   private static final String ID_LOCAL_YEAR = "localyear";
+  private static final String ID_LST = "lst"; // Extension:Labeled Section Transclusion
+  private static final String ID_LST_H = "lsth"; // Extension:Labeled Section Transclusion
+  private static final String ID_LST_X = "lstx"; // Extension:Labeled Section Transclusion
   private static final String ID_NAMESPACE = "namespace";
   private static final String ID_NAMESPACE_E = "namespacee";
   private static final String ID_NAMESPACE_NUMBER = "namespacenumber";
@@ -109,6 +112,9 @@ public class FunctionMagicWordType extends MagicWordType {
   private static final String ID_RPOS = "rpos";
   private static final String ID_SAFE_SUBST = "safesubst";
   private static final String ID_SCRIPT_PATH = "scriptpath";
+  private static final String ID_SECTION = "section"; // Extension:Labeled Section Transclusion
+  private static final String ID_SECTION_H = "section-h"; // Extension:Labeled Section Transclusion
+  private static final String ID_SECTION_X = "section-x"; // Extension:Labeled Section Transclusion
   private static final String ID_SERVER = "server";
   private static final String ID_SERVER_NAME = "servername";
   private static final String ID_SITE_NAME = "sitename";
@@ -194,6 +200,9 @@ public class FunctionMagicWordType extends MagicWordType {
   public static final FunctionMagicWordType LOCAL_URL = createFunctionType(ID_LOCAL_URL);
   public static final FunctionMagicWordType LOCAL_WEEK = createFunctionType(ID_LOCAL_WEEK);
   public static final FunctionMagicWordType LOCAL_YEAR = createFunctionType(ID_LOCAL_YEAR);
+  public static final FunctionMagicWordType LST = createFunctionTypeWithSharp(ID_LST);
+  public static final FunctionMagicWordType LST_H = createFunctionTypeWithSharp(ID_LST_H);
+  public static final FunctionMagicWordType LST_X = createFunctionTypeWithSharp(ID_LST_X);
   public static final FunctionMagicWordType NAMESPACE = createFunctionType(ID_NAMESPACE);
   public static final FunctionMagicWordType NAMESPACE_E = createFunctionType(ID_NAMESPACE_E);
   public static final FunctionMagicWordType NAMESPACE_NUMBER = createFunctionType(ID_NAMESPACE_NUMBER);
@@ -231,6 +240,9 @@ public class FunctionMagicWordType extends MagicWordType {
   public static final FunctionMagicWordType RPOS = createFunctionTypeWithSharp(ID_RPOS);
   public static final FunctionMagicWordType SAFE_SUBST = createFunctionType(ID_SAFE_SUBST);
   public static final FunctionMagicWordType SCRIPT_PATH = createFunctionType(ID_SCRIPT_PATH);
+  public static final FunctionMagicWordType SECTION = createFunctionTypeWithSharp(ID_SECTION);
+  public static final FunctionMagicWordType SECTION_H = createFunctionTypeWithSharp(ID_SECTION_H);
+  public static final FunctionMagicWordType SECTION_X = createFunctionTypeWithSharp(ID_SECTION_X);
   public static final FunctionMagicWordType SERVER = createFunctionType(ID_SERVER);
   public static final FunctionMagicWordType SERVER_NAME = createFunctionType(ID_SERVER_NAME);
   public static final FunctionMagicWordType SITE_NAME = createFunctionType(ID_SITE_NAME);
