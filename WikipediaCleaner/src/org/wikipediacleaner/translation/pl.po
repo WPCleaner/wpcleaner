@@ -4,6 +4,7 @@
 # Author: Abijeet Patro
 # Author: Rail
 # Author: Rail
+# Author: Woytecr
 # --
 # This file is distributed under the same license as the wikicleaner package.
 #
@@ -13,7 +14,7 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2021-12-09 12:19:43+0000\n"
+"PO-Revision-Date: 2021-12-27 12:16:14+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Polish <pl@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -159,9 +160,8 @@ msgid "Page {0}:"
 msgstr "Strona {0}:"
 
 #: org/wikipediacleaner/api/ModificationReport.java:98
-#, fuzzy
 msgid "The following errors have occurred:"
-msgstr "Dokonano następujących zmian:"
+msgstr "Wystąpiły następujące błędy:"
 
 #: org/wikipediacleaner/api/algorithm/AlgorithmError.java:417
 msgid "No available description"
@@ -316,9 +316,8 @@ msgstr ""
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:369
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:383
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a566/CheckErrorAlgorithm566.java:283
-#, fuzzy
 msgid "Name of the template"
-msgstr "Potrzebne szablony"
+msgstr "Nazwa szbalonu"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a002/CheckErrorAlgorithm002.java:684
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a060/CheckErrorAlgorithm060.java:201
@@ -544,7 +543,6 @@ msgid "Templates that can replace the end of a table"
 msgstr "Szablony, które mogą zastąpić znak końca tabeli"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a02x/a028/CheckErrorAlgorithm028.java:255
-#, fuzzy
 msgid "Template that can replace the end of a table"
 msgstr "Szablony, które mogą zastąpić znak końca tabeli"
 
@@ -581,7 +579,7 @@ msgstr "Szablony, które mogą zastąpić znaczniki {0}"
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a061/CheckErrorAlgorithm061.java:505
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a558/CheckErrorAlgorithm558.java:360
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a559/CheckErrorAlgorithm559.java:338
-#, fuzzy, java-format
+#, java-format
 msgid "Template that can be used to replace {0} tags"
 msgstr "Szablony, które mogą zastąpić znaczniki {0}"
 
