@@ -23,7 +23,7 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2021-12-27 12:16:16+0000\n"
+"PO-Revision-Date: 2022-01-03 12:14:11+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Chinese (Simplified) <zh_CN@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -1435,7 +1435,7 @@ msgstr "首选源代码"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a541/CheckErrorAlgorithm541.java:345
 msgid "preferred for user input"
-msgstr ""
+msgstr "首选用户输入"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a541/CheckErrorAlgorithm541.java:350
 msgid "preferred for variables"
@@ -3179,15 +3179,15 @@ msgstr "编辑摘要："
 
 #: org/wikipediacleaner/gui/swing/PageCommentsWindow.java:158
 msgid "Max backlinks in Main :"
-msgstr ""
+msgstr "主命名空间的最大反向链接数："
 
 #: org/wikipediacleaner/gui/swing/PageCommentsWindow.java:186
 msgid "Max backlinks in Template :"
-msgstr ""
+msgstr "模板命名空间的最大反向链接数："
 
 #: org/wikipediacleaner/gui/swing/PageCommentsWindow.java:214
 msgid "Max backlinks in other namespaces :"
-msgstr ""
+msgstr "其他命名空间的最大反向链接数："
 
 #: org/wikipediacleaner/gui/swing/PageCommentsWindow.java:272
 msgid "&OK"
@@ -3538,13 +3538,13 @@ msgstr[0] "{0} 个页面已修改"
 #, java-format
 msgid "{0} page has been marked as fixed for the selected algorithms"
 msgid_plural "{0} pages have been marked as fixed for the selected algorithms"
-msgstr[0] ""
+msgstr[0] "{0} 个页面已标记为已用选定算法修复"
 
 #: org/wikipediacleaner/gui/swing/bot/AutomaticFixWorker.java:410
 #, java-format
 msgid "{0} page has been marked as fixed for other algorithms"
 msgid_plural "{0} pages have been marked as fixed for other algorithms"
-msgstr[0] ""
+msgstr[0] "{0} 个页面已标记为已用其他算法修复"
 
 #: org/wikipediacleaner/gui/swing/bot/BotCWTableModel.java:288
 msgid "Activate automatic fixing for all algorithms"
@@ -3776,7 +3776,7 @@ msgstr "仅检查之前已报告的条目"
 #, java-format
 msgid "{0} page has been detected for algorithm {1}"
 msgid_plural "{0} pages have been detected for algorithm {1}"
-msgstr[0] ""
+msgstr[0] "{0} 个页面已被算法 {1} 检测到"
 
 #: org/wikipediacleaner/gui/swing/checkwiki/ActionCheckArticle.java:50
 msgid "Check article with CheckWiki"
@@ -4602,23 +4602,23 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:125
 msgid "Ignore disambiguation links from User namespace"
-msgstr ""
+msgstr "忽略用户命名空间的消歧义链接"
 
 #: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:134
 msgid "Restore window position"
-msgstr ""
+msgstr "恢复窗口位置"
 
 #: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:143
 msgid "Save window position"
-msgstr ""
+msgstr "保存窗口位置"
 
 #: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:152
 msgid "Use short notation [[Xxxxx (yyy)|]]"
-msgstr ""
+msgstr "使用简化标记 [[Xxxxx (yyy)|]]"
 
 #: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:161
 msgid "Use advanced features (experimental)"
-msgstr ""
+msgstr "使用高级功能（实验性）"
 
 #: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:170
 #, java-format
@@ -4631,15 +4631,15 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:188
 msgid "Add link to error description in comments"
-msgstr ""
+msgstr "向注释中的错误描述添加链接"
 
 #: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:197
 msgid "Watch all edited pages"
-msgstr ""
+msgstr "监视所有已编辑的页面"
 
 #: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:215
 msgid "Copy/paste in popup menu"
-msgstr ""
+msgstr "在弹出菜单中复制/粘贴"
 
 #: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:224
 msgid "Act as user:"
@@ -4656,15 +4656,15 @@ msgstr "界面外观"
 #: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:274
 #, java-format
 msgid "Let {0} choose the Look && Feel"
-msgstr ""
+msgstr "让 {0} 选择界面外观(&&)"
 
 #: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:279
 msgid "Use System Look && Feel"
-msgstr ""
+msgstr "使用系统界面外观(&&)"
 
 #: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:284
 msgid "Choose Look && Feel"
-msgstr ""
+msgstr "选择界面外观(&&)"
 
 #: org/wikipediacleaner/gui/swing/options/LimitOptionsPanel.java:49
 #: org/wikipediacleaner/gui/swing/options/OptionsWindow.java:91
@@ -4673,31 +4673,31 @@ msgstr "限制"
 
 #: org/wikipediacleaner/gui/swing/options/LimitOptionsPanel.java:69
 msgid "Maximum number of items in a menu :"
-msgstr ""
+msgstr "菜单的最大项目数量："
 
 #: org/wikipediacleaner/gui/swing/options/LimitOptionsPanel.java:86
 msgid "Maximum number of simultaneous analyses :"
-msgstr ""
+msgstr "同时分析的最大数量："
 
 #: org/wikipediacleaner/gui/swing/options/LimitOptionsPanel.java:122
 msgid "Maximum number of errors for Linter :"
-msgstr ""
+msgstr "Linter 错误的最大数量："
 
 #: org/wikipediacleaner/gui/swing/options/LimitOptionsPanel.java:139
 msgid "Minimum time between consecutive edits :"
-msgstr ""
+msgstr "连续编辑的最短间隔时间："
 
 #: org/wikipediacleaner/gui/swing/options/LimitOptionsPanel.java:156
 msgid "Maximum number of edits per minute :"
-msgstr ""
+msgstr "每分钟最大编辑数量："
 
 #: org/wikipediacleaner/gui/swing/options/LimitOptionsPanel.java:173
 msgid "Maximum number of interrogation threads :"
-msgstr ""
+msgstr "最大询问线程数："
 
 #: org/wikipediacleaner/gui/swing/options/LimitOptionsPanel.java:190
 msgid "Size limit for syntax highlighting"
-msgstr ""
+msgstr "语法高亮的大小限制"
 
 #: org/wikipediacleaner/gui/swing/options/LimitOptionsPanel.java:207
 msgid "Threshold for slow regular expressions (ms)"
@@ -4705,15 +4705,15 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/LimitOptionsPanel.java:224
 msgid "Maximum number of category members :"
-msgstr ""
+msgstr "分类成员的最大数量："
 
 #: org/wikipediacleaner/gui/swing/options/LimitOptionsPanel.java:241
 msgid "Maximum duration for abuse logs :"
-msgstr ""
+msgstr "滥用日志的最长持续时间："
 
 #: org/wikipediacleaner/gui/swing/options/LimitOptionsPanel.java:258
 msgid "Maximum number of embedding pages :"
-msgstr ""
+msgstr "嵌入页面的最大数量："
 
 #: org/wikipediacleaner/gui/swing/options/LimitOptionsPanel.java:275
 msgid "Maximum number of search results :"
@@ -4747,7 +4747,7 @@ msgstr "还原默认设置"
 
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:73
 msgid "Shortcut options (restart needed)"
-msgstr ""
+msgstr "快捷方式选项（需要重启）"
 
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:160
 msgid "Logout"
@@ -4755,7 +4755,7 @@ msgstr "退出"
 
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:229
 msgid "Press key for shortcut or ESC to cancel"
-msgstr ""
+msgstr "按下快捷方式键或 ESC 以取消"
 
 #: org/wikipediacleaner/gui/swing/options/SortingOptionsPanel.java:91
 msgid "Sort orders"
@@ -4779,7 +4779,7 @@ msgstr "翻译选项"
 
 #: org/wikipediacleaner/gui/swing/options/TranslationOptionsPanel.java:66
 msgid "Translate internal links text"
-msgstr ""
+msgstr "翻译内部链接文本"
 
 #: org/wikipediacleaner/gui/swing/options/TranslationOptionsPanel.java:73
 msgid "Convert internal links without interwiki to inter language links"
@@ -4795,7 +4795,7 @@ msgstr "翻译模板名称"
 
 #: org/wikipediacleaner/gui/swing/options/TranslationOptionsPanel.java:94
 msgid "Translate templates without parameters"
-msgstr ""
+msgstr "翻译无参数模板"
 
 #: org/wikipediacleaner/gui/swing/pagelist/PageListTableModel.java:235
 msgid "Other"
