@@ -117,7 +117,8 @@ public class CheckErrorAlgorithm551 extends CheckErrorAlgorithmBase {
         shouldReport = true;
       }
       if (shouldReport) {
-        if ((analysis.getSurroundingTag(WikiTagType.SOURCE, beginLine) != null) ||
+        if ((analysis.comments().getAt(beginLine) != null) ||
+            (analysis.getSurroundingTag(WikiTagType.SOURCE, beginLine) != null) ||
             (analysis.getSurroundingTag(WikiTagType.SYNTAXHIGHLIGHT, beginLine) != null)) {
           shouldReport = false;
         }
