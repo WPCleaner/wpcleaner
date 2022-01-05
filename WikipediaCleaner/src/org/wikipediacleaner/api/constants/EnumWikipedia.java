@@ -60,6 +60,7 @@ public enum EnumWikipedia {
   BE_TARASK(new Wikipedia("be-tarask", "Беларуская Вікіпэдыя")),
   BG(new Wikipedia("bg", "Българоезична Уикипедия")),
   BN(new Wikipedia("bn", "Bengali Wikipedia")),
+  BS(new Wikipedia("bs", "Slobodna enciklopedija")),
   CA(new Wikipedia("ca", "Viquipèdia en català")),
   CKB(new Wikipedia("ckb", "Kurdish Sorani Wikipedia")),
   CS(new Wikipedia("cs", "Czech Wikipedia")),
