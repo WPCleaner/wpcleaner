@@ -242,7 +242,7 @@ class TemplateConfiguration {
       if (!StringUtils.equals(name, computedName) &&
           StringUtils.startsWith(param.getValue(), completedKnownParam)) {
         String value = param.getValue().substring(completedKnownParam.length()).trim();
-        if (value.startsWith(":")) {
+        if (value.startsWith(":") || value.startsWith(")")) {
           value = value.substring(1);
         }
         missingEqualByName.put(completedKnownParam, value);
@@ -307,9 +307,15 @@ class TemplateConfiguration {
             CharacterUtils.isClassicLetter(missingEqualValue.charAt(0)) ||
             Character.isDigit(missingEqualValue.charAt(0));
       } else if (missingEqualValue.length() > 1) {
-        char firstValue = missingEqualValue.charAt(0);
-        char lastName = missingEqualName.charAt(missingEqualName.length() - 1);
-        automatic &= (!CharacterUtils.isClassicLetter(firstValue) || !CharacterUtils.isClassicLetter(lastName));
+        boolean separator = false;
+        separator |= !CharacterUtils.isClassicLetter(missingEqualValue.charAt(0));
+        separator |= !CharacterUtils.isClassicLetter(missingEqualName.charAt(missingEqualName.length() - 1));
+        separator |=
+            param.getValue().startsWith(missingEqualName) &&
+            param.getValue().endsWith(missingEqualValue) &&
+            (param.getValue().length() > missingEqualName.length() + missingEqualValue.length()) &&
+            !CharacterUtils.isClassicLetter(param.getValue().charAt(missingEqualName.length()));
+        automatic &= separator;
       }
       automatic &=
           (missingEqualValue.length() >= 1) &&
