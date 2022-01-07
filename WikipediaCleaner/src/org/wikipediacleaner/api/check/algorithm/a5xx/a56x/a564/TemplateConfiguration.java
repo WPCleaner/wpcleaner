@@ -8,6 +8,7 @@
 
 package org.wikipediacleaner.api.check.algorithm.a5xx.a56x.a564;
 
+import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -20,6 +21,7 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.TreeMap;
 import java.util.function.Function;
+import java.util.regex.Pattern;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -45,8 +47,10 @@ class TemplateConfiguration {
   @Nonnull private final String templateName;
 
   @Nonnull private final Set<String> knownParams;
+  @Nonnull private final List<String> orderedKnownParams;
 
   @Nonnull private final Set<String> knownNumericalParameter;
+  @Nonnull private final List<String> orderedKnownNumericalParameter;
 
   @Nonnull private final Set<String> paramsToDelete;
 
@@ -61,7 +65,9 @@ class TemplateConfiguration {
   private TemplateConfiguration(@Nonnull String templateName) {
     this.templateName = templateName;
     this.knownParams = new HashSet<>();
+    this.orderedKnownParams = new ArrayList<>();
     this.knownNumericalParameter = new HashSet<>();
+    this.orderedKnownNumericalParameter = new ArrayList<>();
     this.paramsToDelete = new HashSet<>();
     this.valuesToDeleteByParam = new HashMap<>();
     this.paramsToComment = new HashSet<>();
@@ -191,7 +197,7 @@ class TemplateConfiguration {
     String strippedName = name;
     String strippedComputedName = computedName;
     String numericComputedName = StringUtils.EMPTY;
-    Set<String> correctKnownParams = knownParams;
+    List<String> correctKnownParams = orderedKnownParams;
     int completionDigitsCount = 0;
     if (numericalParameter) {
       int beginNumeric = computedName.length();
@@ -201,7 +207,7 @@ class TemplateConfiguration {
       }
       strippedComputedName = computedName.substring(0, beginNumeric);
       numericComputedName = computedName.substring(beginNumeric);
-      correctKnownParams = knownNumericalParameter;
+      correctKnownParams = orderedKnownNumericalParameter;
       if (StringUtils.isNotEmpty(name)) {
         beginNumeric = name.length();
         while ((beginNumeric > 0) &&
@@ -221,8 +227,8 @@ class TemplateConfiguration {
       String completedKnownParam = knownParam + (StringUtils.isNotEmpty(name) ? numericComputedName : "");
 
       // Search for mistyped parameters
-      if (StringUtils.equalsIgnoreCase(knownParam, strippedName)) {
-        boolean automaticReplacement = (knownParam.length() >= 4) || StringUtils.equalsIgnoreCase(knownParam, name); 
+      if (compareWithoutAccents(knownParam, strippedName)) {
+        boolean automaticReplacement = (knownParam.length() >= 4) || compareWithoutAccents(knownParam, name); 
         results.add(TemplateParameterSuggestion.replaceOrDeleteParam(
             contents, template, param,
             completedKnownParam, param.getValue(),
@@ -273,6 +279,13 @@ class TemplateConfiguration {
     return Optional.of(results);
   }
 
+  private static final Pattern REMOVE_ACCENTS = Pattern.compile("\\p{M}");
+
+  private boolean compareWithoutAccents(final String str1, final String str2) {
+    final String modifiedStr1 = REMOVE_ACCENTS.matcher(Normalizer.normalize(str1, Normalizer.Form.NFKD)).replaceAll("");
+    final String modifiedStr2 = REMOVE_ACCENTS.matcher(Normalizer.normalize(str2, Normalizer.Form.NFKD)).replaceAll("");
+    return StringUtils.equalsIgnoreCase(modifiedStr1, modifiedStr2);
+  }
 
   /**
    * Handle missing equal sign.
@@ -449,11 +462,13 @@ class TemplateConfiguration {
             log.warn("Numeric parameter {} already defined for template {}", paramName, templateName);
           }
           templateConfig.knownNumericalParameter.add(paramName);
+          templateConfig.orderedKnownNumericalParameter.add(paramName);
         } else {
           if (templateConfig.knownParams.contains(paramName)) {
             log.warn("Parameter {} already defined for template {}", paramName, templateName);
           }
           templateConfig.knownParams.add(paramName);
+          templateConfig.orderedKnownParams.add(paramName);
         }
       }
     }
