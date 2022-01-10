@@ -23,7 +23,7 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2022-01-03 12:14:11+0000\n"
+"PO-Revision-Date: 2022-01-10 12:14:31+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Chinese (Simplified) <zh_CN@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -4807,19 +4807,19 @@ msgstr "反向链接"
 
 #: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:212
 msgid "Select disambiguation pages with too many backlinks"
-msgstr ""
+msgstr "选择含有过多反向链接的消歧义页面"
 
 #: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:220
 msgid "Analyze pages with links to disambiguation pages"
-msgstr ""
+msgstr "分析含有消歧义页面链接的页面"
 
 #: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:231
 msgid "Update page information (Alt + &U)"
-msgstr ""
+msgstr "更新页面信息(Alt + &U)"
 
 #: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:238
 msgid "Set page comments (Alt + &C)"
-msgstr ""
+msgstr "设置页面注释(Alt + &C)"
 
 #: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:261
 #: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:501
@@ -4836,15 +4836,15 @@ msgstr "添加页面"
 
 #: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:371
 msgid "Articles with links to disambiguation pages"
-msgstr ""
+msgstr "含有消歧义页面链接的条目"
 
 #: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:379
 msgid "You are about to remove the pages from your local watchlist.\nAre you sure?"
-msgstr ""
+msgstr "您即将从您的本地监视列表中移除这些页面。\n您确定要移除吗？"
 
 #: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:403
 msgid "Enter the page title you want to add to your local watchlist"
-msgstr ""
+msgstr "输入您想添加到本地监视列表的页面标题"
 
 #: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:590
 #, java-format
@@ -4855,7 +4855,7 @@ msgstr[0] "{0}个页面"
 #: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:593
 #, java-format
 msgid "Backlinks - Main namespace: {0}, All namespaces: {1}"
-msgstr ""
+msgstr "反向链接 - 主命名空间：{0}，所有命名空间：{1}"
 
 #: org/wikipediacleaner/gui/swing/pagelist/PageListWorker.java:87
 msgid "All articles"
@@ -4867,45 +4867,45 @@ msgstr "主命名空间中的条目"
 
 #: org/wikipediacleaner/gui/swing/pagelist/PageListWorker.java:89
 msgid "Articles associated to talk pages"
-msgstr ""
+msgstr "与讨论页有关的条目"
 
 #: org/wikipediacleaner/gui/swing/pagelist/PageListWorker.java:90
 msgid "Linter extension category"
-msgstr ""
+msgstr "Linter 扩展分类"
 
 #: org/wikipediacleaner/gui/swing/pagelist/PageListWorker.java:91
 msgid "Pages with missing templates"
-msgstr ""
+msgstr "含有缺失模板的页面"
 
 #: org/wikipediacleaner/gui/swing/pagelist/PageListWorker.java:92
 msgid "Protected titles with links from articles"
-msgstr ""
+msgstr "含有来自条目的链接的受保护标题"
 
 #: org/wikipediacleaner/gui/swing/pagelist/PageListWorker.java:171
 msgid "You have loaded the list of all disambiguation pages to speed up page analysis.\nDo you want to display the list of all disambiguation pages ?"
-msgstr ""
+msgstr "您已加载了所有消歧义页面的列表以加快页面分析。\n您要显示所有消歧义页面的列表吗？"
 
 #: org/wikipediacleaner/gui/swing/pagelist/PageListWorker.java:495
 msgid "Retrieving list of missing templates"
-msgstr ""
+msgstr "正在检索缺失模板列表"
 
 #: org/wikipediacleaner/gui/swing/pagelist/PageListWorker.java:500
 msgid "Checking that the templates are still missing"
-msgstr ""
+msgstr "正在检查模板是否仍然缺失"
 
 #: org/wikipediacleaner/gui/swing/pagelist/PageListWorker.java:526
 msgid "Retrieving list of protected titles"
-msgstr ""
+msgstr "正在检索受保护标题列表"
 
 #: org/wikipediacleaner/gui/swing/pagelist/PageListWorker.java:532
 msgid "Checking that protected titles have backlinks"
-msgstr ""
+msgstr "正在检查含有反向链接的受保护标题"
 
 #: org/wikipediacleaner/gui/swing/worker/AutomaticFixingWorker.java:124
 #, java-format
 msgid "The following modifications have been done ({0} page):"
 msgid_plural "The following modifications have been done ({0} pages):"
-msgstr[0] ""
+msgstr[0] "已完成以下修改（{0} 个页面）："
 
 #: org/wikipediacleaner/gui/swing/worker/CheckArticleTools.java:104
 msgid "Templates"
@@ -4981,11 +4981,11 @@ msgstr "未检测到问题。"
 #: org/wikipediacleaner/gui/swing/worker/CheckArticleTools.java:409
 msgid "The following problem has been detected:"
 msgid_plural "The following problems have been detected:"
-msgstr[0] ""
+msgstr[0] "已检测到以下问题："
 
 #: org/wikipediacleaner/gui/swing/worker/CheckWikiProjectWorker.java:91
 msgid "Sorting errors by priority"
-msgstr ""
+msgstr "按优先级排序错误"
 
 #: org/wikipediacleaner/gui/swing/worker/LoginWorker.java:130
 msgid "Loading configuration"
@@ -4993,11 +4993,11 @@ msgstr "正在加载配置"
 
 #: org/wikipediacleaner/gui/swing/worker/LoginWorker.java:160
 msgid "Retrieving disambiguation templates"
-msgstr ""
+msgstr "正在检索消歧义模板"
 
 #: org/wikipediacleaner/gui/swing/worker/LoginWorker.java:165
 msgid "Retrieving suggestions for text replacements"
-msgstr ""
+msgstr "正在检索文本替换建议"
 
 #: org/wikipediacleaner/gui/swing/worker/LoginWorker.java:169
 msgid "Retrieving Check Wiki configuration"
