@@ -709,6 +709,12 @@ public class Bot implements BasicWorkerListener {
     if (file.exists() && file.isFile() && file.canRead()) {
       return file;
     }
+    if (!file.isAbsolute()) {
+      String dumpsDir = System.getenv("DUMPS_DIR");
+      if (dumpsDir != null) {
+        file = new File(dumpsDir, path);
+      }
+    }
     File parent = file.getParentFile();
     if ((parent == null) || (!parent.exists()) || (!parent.isDirectory())) {
       return null;
