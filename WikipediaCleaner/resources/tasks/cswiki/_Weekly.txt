@@ -1,1 +1,2 @@
+DoTasks _Local.txt
 ListISBNWarnings

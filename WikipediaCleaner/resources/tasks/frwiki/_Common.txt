@@ -3,3 +3,4 @@ Set TypoGroups CT espaces CW566
 Set Configuration SlowRegexp 1000
 Set Configuration TimeBetweenEdit 5
 Set Configuration MaxEditsPerMinute 10
+DoTasks _Local.txt
