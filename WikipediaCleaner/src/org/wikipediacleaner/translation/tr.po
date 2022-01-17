@@ -3,6 +3,7 @@
 #
 # Author: BaRaN6161 TURK
 # Author: BaRaN6161 TURK
+# Author: Can
 # Author: Evrifaessa
 # Author: Evrifaessa
 # Author: Hedda
@@ -23,7 +24,7 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2021-12-09 12:19:44+0000\n"
+"PO-Revision-Date: 2022-01-17 12:18:52+0000\n"
 "Last-Translator: volkan <volkanyeke@gmail.com>\n"
 "Language-Team: Turkish <tr@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -1638,11 +1639,11 @@ msgstr "Harici bağlantıların normal olduğu bölüm"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a557/CheckErrorAlgorithm557.java:541
 msgid "Links which are correct with a prefix"
-msgstr ""
+msgstr "Ön-eki doğru olan bağlantılar"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a557/CheckErrorAlgorithm557.java:545
 msgid "Link target"
-msgstr ""
+msgstr "Bağlantı hedefi"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a557/CheckErrorAlgorithm557.java:548
 #: org/wikipediacleaner/gui/swing/menu/MWPaneDisambiguationMenuCreator.java:216
