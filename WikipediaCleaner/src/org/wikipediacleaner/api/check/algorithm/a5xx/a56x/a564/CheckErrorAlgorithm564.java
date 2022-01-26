@@ -225,6 +225,9 @@ public class CheckErrorAlgorithm564 extends CheckErrorAlgorithmBase {
   /** Parameters that can be safely replaced */
   private static final String PARAMETER_REPLACE_PARAMETERS = "replace_parameters";
 
+  /** Values that can be safely replaced */
+  private static final String PARAMETER_REPLACE_VALUES = "replace_values";
+
   /**
    * Initialize settings for the algorithm.
    * 
@@ -264,6 +267,11 @@ public class CheckErrorAlgorithm564 extends CheckErrorAlgorithmBase {
     if (tmp != null) {
       List<String[]> tmpList = WPCConfiguration.convertPropertyToStringArrayList(tmp);
       TemplateConfiguration.addParametersToReplace(tmpList, configurationByTemplateName, group);
+    }
+    tmp = getSpecificProperty(PARAMETER_REPLACE_VALUES, true, true, false);
+    if (tmp != null) {
+      List<String[]> tmpList = WPCConfiguration.convertPropertyToStringArrayList(tmp);
+      TemplateConfiguration.addValuesToReplace(tmpList, configurationByTemplateName, group);
     }
 
     dumpAnalysis = getSpecificProperty(PARAMETER_DUMP_ANALYSIS, true, true, false);
@@ -391,6 +399,27 @@ public class CheckErrorAlgorithm564 extends CheckErrorAlgorithmBase {
                 GT._T("Target name of the parameter"),
                 true,
                 true)
+        },
+        true));
+    addParameter(new AlgorithmParameter(
+        PARAMETER_REPLACE_VALUES,
+        GT._T("Template parameters which can be safely replaced if they have a given value"),
+        new AlgorithmParameterElement[] {
+            new AlgorithmParameterElement(
+                "template",
+                GT._T("Name of the template")),
+            new AlgorithmParameterElement(
+                "initial param",
+                GT._T("Initial name of the parameter")),
+            new AlgorithmParameterElement(
+                "initial value",
+                GT._T("Initial value of the parameter")),
+            new AlgorithmParameterElement(
+                "target param",
+                GT._T("Target name of the parameter")),
+            new AlgorithmParameterElement(
+                "target value",
+                GT._T("Target value of the parameter"))
         },
         true));
   }

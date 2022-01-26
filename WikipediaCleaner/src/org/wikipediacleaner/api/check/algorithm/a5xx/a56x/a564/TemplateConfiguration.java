@@ -27,6 +27,8 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.tuple.ImmutablePair;
+import org.apache.commons.lang3.tuple.Pair;
 import org.apache.commons.text.similarity.LevenshteinDistance;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -60,6 +62,8 @@ class TemplateConfiguration {
 
   @Nonnull private final Map<String, Set<String>> paramsToReplaceByName;
 
+  @Nonnull private final Map<String, Map<String, Pair<String, String>>> paramsToReplaceByValue;
+
   @Nonnull private final LevenshteinDistance levenshteinDistance;
 
   private TemplateConfiguration(@Nonnull String templateName) {
@@ -72,6 +76,7 @@ class TemplateConfiguration {
     this.valuesToDeleteByParam = new HashMap<>();
     this.paramsToComment = new HashSet<>();
     this.paramsToReplaceByName = new HashMap<>();
+    this.paramsToReplaceByValue = new HashMap<>();
     this.levenshteinDistance = new LevenshteinDistance(4);
   }
 
@@ -153,6 +158,15 @@ class TemplateConfiguration {
             contents, template, param,
             cleanedName, param.getValue(), true, true));
       }
+    }
+
+    // Handle parameters configured for replacement by value
+    Pair<String, String> replacementValue = paramsToReplaceByValue.getOrDefault(computedName, Collections.emptyMap()).get(param.getValue());
+    if (replacementValue != null) {
+      results.add(TemplateParameterSuggestion.replaceOrDeleteParam(
+          contents, template, param,
+          replacementValue.getLeft(), replacementValue.getRight(),
+          true, true));
     }
 
     // Handle parameters configured for replacement
@@ -659,6 +673,53 @@ class TemplateConfiguration {
       for (int paramNum = 2; paramNum < rawConfiguration.length; paramNum++) {
         newParamNames.add(rawConfiguration[paramNum].trim());
       }
+    }
+  }
+
+  /**
+   * Add values that can be safely replaced from the full raw configuration.
+   * 
+   * @param rawConfiguration Raw configuration for values that can be safely replaced.
+   * @param configuration Configuration.
+   * @param configurationGroup Configuration of groups of templates.
+   */
+  public static void addValuesToReplace(
+      @Nullable List<String[]> rawConfiguration,
+      @Nonnull Map<String, TemplateConfiguration> configuration,
+      @Nonnull TemplateConfigurationGroup configurationGroup) {
+    if (rawConfiguration == null) {
+      return;
+    }
+    for (String[] line : rawConfiguration) {
+      addValuesToReplace(line, configuration, configurationGroup);
+    }
+  }
+
+  /**
+   * Add values that can be safely replaced from one line of the raw configuration.
+   * 
+   * @param rawConfiguration Line of the raw configuration for values that can be safely replaced.
+   * @param configuration Configuration.
+   * @param configurationGroup Configuration of groups of templates.
+   */
+  private static void addValuesToReplace(
+      @Nullable String[] rawConfiguration,
+      @Nonnull Map<String, TemplateConfiguration> configuration,
+      @Nonnull TemplateConfigurationGroup configurationGroup) {
+    if ((rawConfiguration == null) || (rawConfiguration.length < 5)) {
+      return;
+    }
+    for (String templateName : configurationGroup.getTemplateNames(rawConfiguration[0])) {
+      TemplateConfiguration templateConfig = configuration.computeIfAbsent(
+          templateName,
+          k -> new TemplateConfiguration(templateName));
+      String oldParamName = rawConfiguration[1].trim();
+      String oldParamValue = rawConfiguration[2].trim();
+      String newParamName = rawConfiguration[3].trim();
+      String newParamValue = rawConfiguration[4].trim();
+      templateConfig.paramsToReplaceByValue.computeIfAbsent(
+          oldParamName,
+          k -> new HashMap<>()).put(oldParamValue, new ImmutablePair<>(newParamName, newParamValue));
     }
   }
 }
