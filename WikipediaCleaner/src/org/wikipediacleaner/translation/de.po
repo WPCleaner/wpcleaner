@@ -18,7 +18,7 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2022-01-20 12:19:32+0000\n"
+"PO-Revision-Date: 2022-01-27 12:18:25+0000\n"
 "Last-Translator: Crazy1880 <Unknown>\n"
 "Language-Team: German <de@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -28,7 +28,7 @@ msgstr ""
 "X-Launchpad-Export-Date: 2016-11-01 21:08+0000\n"
 "X-Generator: MediaWiki 1.38.0-alpha; Translate 2022-01-19\n"
 "Language: de\n"
-"X-POT-Import-Date: 2021-12-08 21:30:24+0000\n"
+"X-POT-Import-Date: 2022-01-26 17:30:21+0000\n"
 
 #: org/wikipediacleaner/Version.java:31
 #, java-format
@@ -196,7 +196,7 @@ msgstr "Ersetze mit {0}"
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a04x/a045/CheckErrorAlgorithm045.java:131
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a04x/a046/CheckErrorAlgorithm046.java:227
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a04x/a047/CheckErrorAlgorithm047.java:152
-#: org/wikipediacleaner/api/check/algorithm/a0xx/a04x/a048/CheckErrorAlgorithm048.java:145
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a04x/a048/CheckErrorAlgorithm048.java:171
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a515/CheckErrorAlgorithm515.java:103
 #: org/wikipediacleaner/gui/swing/options/SortingOptionsPanel.java:115
 msgid "Delete"
@@ -311,12 +311,13 @@ msgstr ""
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a060/CheckErrorAlgorithm060.java:198
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a563/CheckErrorAlgorithm563.java:229
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a563/CheckErrorAlgorithm563.java:247
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:310
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:324
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:338
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:355
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:369
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:383
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:318
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:332
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:346
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:363
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:377
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:391
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:410
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a566/CheckErrorAlgorithm566.java:283
 msgid "Name of the template"
 msgstr "Name der Vorlage"
@@ -325,11 +326,11 @@ msgstr "Name der Vorlage"
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a060/CheckErrorAlgorithm060.java:201
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a563/CheckErrorAlgorithm563.java:236
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a563/CheckErrorAlgorithm563.java:250
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:313
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:327
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:344
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:358
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:372
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:321
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:335
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:352
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:366
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:380
 msgid "Name of the parameter"
 msgstr "Name des zu verwendenden Parameters"
 
@@ -606,16 +607,16 @@ msgstr ""
 msgid "Fix all bold headlines"
 msgstr "Korrigiere Überschriften in Fettdruck"
 
-#: org/wikipediacleaner/api/check/algorithm/a0xx/a04x/a048/CheckErrorAlgorithm048.java:42
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a04x/a048/CheckErrorAlgorithm048.java:49
 msgid "Remove all links to title (first in bold)"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/a0xx/a04x/a048/CheckErrorAlgorithm048.java:43
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a04x/a048/CheckErrorAlgorithm048.java:50
 msgid "Remove all links to title"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/a0xx/a04x/a048/CheckErrorAlgorithm048.java:350
-#: org/wikipediacleaner/api/check/algorithm/a0xx/a04x/a048/CheckErrorAlgorithm048.java:353
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a04x/a048/CheckErrorAlgorithm048.java:376
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a04x/a048/CheckErrorAlgorithm048.java:379
 msgid "Set to true to report also links in <imagemap>"
 msgstr ""
 
@@ -725,7 +726,7 @@ msgstr ""
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a544/CheckErrorAlgorithm544.java:165
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a553/CheckErrorAlgorithm553.java:257
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a553/CheckErrorAlgorithm553.java:262
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a557/CheckErrorAlgorithm557.java:317
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a557/CheckErrorAlgorithm557.java:336
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a566/CheckErrorAlgorithm566.java:156
 #: org/wikipediacleaner/gui/swing/action/ActionExternalViewer.java:61
 #: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:90
@@ -734,7 +735,7 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:135
 #: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:245
 msgid "External Viewer"
-msgstr ""
+msgstr "Externer Viewer"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a068/CheckErrorAlgorithm068.java:311
 msgid "Do not replace"
@@ -801,7 +802,7 @@ msgstr ""
 #: org/wikipediacleaner/api/check/algorithm/a1xx/a10x/a108/CheckErrorAlgorithm108.java:226
 #: org/wikipediacleaner/api/check/algorithm/a1xx/a10x/a108/CheckErrorAlgorithm108.java:229
 msgid "An explanation of the problem"
-msgstr ""
+msgstr "Beschreibung des Problems"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a070/CheckErrorAlgorithm070.java:101
 #, java-format
@@ -864,7 +865,7 @@ msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a076/CheckErrorAlgorithm076.java:32
 msgid "Replace all %20 by space character"
-msgstr ""
+msgstr "Alle %20 durch ein Leerzeichen ersetzen"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a076/CheckErrorAlgorithm076.java:69
 msgid "Replace %20 by space character"
@@ -1069,12 +1070,12 @@ msgstr ""
 #: org/wikipediacleaner/api/check/algorithm/a1xx/a10x/a107/CheckErrorAlgorithm107.java:99
 #, java-format
 msgid "Length of ISSN is {0} instead of 8"
-msgstr ""
+msgstr "Die Länge der ISSN ist {0} anstatt 8"
 
 #: org/wikipediacleaner/api/check/algorithm/a1xx/a10x/a107/CheckErrorAlgorithm107.java:175
 #: org/wikipediacleaner/api/check/algorithm/a1xx/a10x/a108/CheckErrorAlgorithm108.java:143
 msgid "Similar ISSN"
-msgstr ""
+msgstr "Ähnliche ISSN"
 
 #: org/wikipediacleaner/api/check/algorithm/a1xx/a11x/a111/CheckErrorAlgorithm111.java:204
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a568/CheckErrorAlgorithm568.java:254
@@ -1353,8 +1354,8 @@ msgstr "Beschreibung der Aktion"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a526/CheckErrorAlgorithm526.java:431
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a526/CheckErrorAlgorithm526.java:434
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:286
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:289
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:294
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:297
 msgid "A page containing a dump analysis for this error."
 msgstr ""
 
@@ -1478,9 +1479,8 @@ msgstr ""
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a541/CheckErrorAlgorithm541.java:569
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a541/CheckErrorAlgorithm541.java:590
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a541/CheckErrorAlgorithm541.java:611
-#, fuzzy
 msgid "Description of the template"
-msgstr "Vorlagen &erweitern"
+msgstr "Beschreibung der Vorlage"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a544/CheckErrorAlgorithm544.java:216
 msgid "Pairs of templates: for each opening template, all possible closing templates"
@@ -1505,19 +1505,19 @@ msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a545/CheckErrorAlgorithm545.java:268
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a563/CheckErrorAlgorithm563.java:211
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:292
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:300
 msgid "Groups of templates"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a545/CheckErrorAlgorithm545.java:272
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a563/CheckErrorAlgorithm563.java:215
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:296
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:304
 msgid "Name of the group"
 msgstr "Name der Gruppe"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a545/CheckErrorAlgorithm545.java:275
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a563/CheckErrorAlgorithm563.java:218
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:299
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:307
 msgid "Name of a template in the group"
 msgstr ""
 
@@ -1650,41 +1650,41 @@ msgstr ""
 msgid "Section in which external links are normal"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a557/CheckErrorAlgorithm557.java:541
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a557/CheckErrorAlgorithm557.java:560
 msgid "Links which are correct with a prefix"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a557/CheckErrorAlgorithm557.java:545
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a557/CheckErrorAlgorithm557.java:564
 msgid "Link target"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a557/CheckErrorAlgorithm557.java:548
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a557/CheckErrorAlgorithm557.java:567
 #: org/wikipediacleaner/gui/swing/menu/MWPaneDisambiguationMenuCreator.java:216
 #: org/wikipediacleaner/gui/swing/menu/MWPaneDisambiguationMenuCreator.java:228
 msgid "Link text"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a557/CheckErrorAlgorithm557.java:555
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a557/CheckErrorAlgorithm557.java:574
 msgid "Prefixes which can be before an internal link"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a557/CheckErrorAlgorithm557.java:559
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a557/CheckErrorAlgorithm557.java:578
 msgid "Prefix which can be before an internal link"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a557/CheckErrorAlgorithm557.java:564
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a557/CheckErrorAlgorithm557.java:583
 msgid "Prefixes which should be excluded from the internal link"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a557/CheckErrorAlgorithm557.java:568
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a557/CheckErrorAlgorithm557.java:587
 msgid "Prefix which should be excluded from the internal link"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a557/CheckErrorAlgorithm557.java:573
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a557/CheckErrorAlgorithm557.java:592
 msgid "List of suggestions for separators between the text and the internal link"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a557/CheckErrorAlgorithm557.java:577
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a557/CheckErrorAlgorithm557.java:596
 msgid "Suggestion for a separator between the text and the internal link"
 msgstr ""
 
@@ -1705,37 +1705,51 @@ msgstr ""
 msgid "Parameters that should be ignored"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:306
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:314
 msgid "Templates for which unknown parameters should be verified"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:320
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:365
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:328
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:373
 msgid "Template parameters which can be safely deleted"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:334
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:342
 msgid "Template parameters which can be safely deleted if they have a given value"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:341
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:349
 msgid "Value of the parameter"
 msgstr "Wert des Parameters"
 
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:351
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:359
 msgid "Template parameters which can be safely commented"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:379
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:387
 msgid "Template parameters which can be safely replaced"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:386
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:394
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:413
 msgid "Initial name of the parameter"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:391
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:399
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:419
 msgid "Target name of the parameter"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:406
+msgid "Template parameters which can be safely replaced if they have a given value"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:416
+msgid "Initial value of the parameter"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:422
+msgid "Target value of the parameter"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a566/CheckErrorAlgorithm566.java:246
@@ -1929,7 +1943,7 @@ msgstr "Weiterleitungen"
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:25
 msgid "Orphaned pages"
-msgstr ""
+msgstr "Verwaiste Seiten"
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:26
 msgid "Long pages"
@@ -1941,15 +1955,15 @@ msgstr "Seiten mit vielen Kategorien"
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:28
 msgid "Pages with the most files"
-msgstr ""
+msgstr "Seiten mit den meisten Versionen"
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:29
 msgid "Most linked-to pages"
-msgstr ""
+msgstr "Seiten mit den meisten Links"
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:30
 msgid "Most linked-to categories"
-msgstr ""
+msgstr "Meistbenutzte Kategorien"
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:31
 msgid "Most linked-to templates"
@@ -1957,7 +1971,7 @@ msgstr ""
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:32
 msgid "Pages with the most revisions"
-msgstr ""
+msgstr "Seiten mit den meisten Versionen"
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:33
 msgid "Short pages"
@@ -1965,11 +1979,11 @@ msgstr "kurze Seiten"
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:34
 msgid "Uncategorized categories"
-msgstr ""
+msgstr "Nicht kategorisierte Kategorien"
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:35
 msgid "Uncategorized files"
-msgstr ""
+msgstr "Nicht kategorisierte Dateien"
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:36
 msgid "Uncategorized pages"
@@ -1981,11 +1995,11 @@ msgstr "Nicht kategorisierte Vorlagen"
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:38
 msgid "Unused categories"
-msgstr ""
+msgstr "Verwaiste Kategorien"
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:39
 msgid "Unused files"
-msgstr ""
+msgstr "Verwaiste Dateien"
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:40
 msgid "Unused templates"
@@ -1993,27 +2007,27 @@ msgstr "Verwaiste Vorlagen"
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:41
 msgid "Wanted categories"
-msgstr ""
+msgstr "Gewünschte Kategorien"
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:42
 msgid "Wanted files"
-msgstr ""
+msgstr "Gewünschte Dateien"
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:43
 msgid "Wanted pages"
-msgstr ""
+msgstr "Gewünschte Seiten"
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:44
 msgid "Wanted templates"
-msgstr ""
+msgstr "Gewünschte Vorlagen"
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:45
 msgid "Unwatched pages"
-msgstr ""
+msgstr "Nicht beobachtete Seiten"
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:46
 msgid "Pages without language links"
-msgstr ""
+msgstr "Nicht zu anderen Sprachen verlinkende Seiten"
 
 #: org/wikipediacleaner/api/data/ISBNRange.java:163
 #: org/wikipediacleaner/api/data/ISBNRange.java:185
@@ -2473,7 +2487,7 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:806
 msgid "Installation was successful"
-msgstr ""
+msgstr "Die Installation war erfolgreich"
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:824
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:839
@@ -2512,7 +2526,7 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:887
 #, java-format
 msgid "Exit code: {0}"
-msgstr ""
+msgstr "Exit-Code: {0}"
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:892
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:968
@@ -2666,7 +2680,7 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:685
 msgid "What links here"
-msgstr ""
+msgstr "Links auf diese Seite"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:694
 msgid "Category members"
@@ -2737,7 +2751,7 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:862
 msgid "Watchlist"
-msgstr ""
+msgstr "Beobachtungsliste"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:871
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1959
@@ -3329,7 +3343,7 @@ msgstr "Verlauf"
 
 #: org/wikipediacleaner/gui/swing/action/ActionInsertPredefinedText.java:60
 msgid "Insert text"
-msgstr ""
+msgstr "Text einfügen"
 
 #: org/wikipediacleaner/gui/swing/action/ActionOccurrence.java:51
 #: org/wikipediacleaner/gui/swing/action/ActionOccurrence.java:66
