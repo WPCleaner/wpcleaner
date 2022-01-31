@@ -1,6 +1,7 @@
 # Translation of WPCleaner to German (Deutsch)
 # Exported from translatewiki.net
 #
+# Author: Brettchenweber
 # Author: DraconicDark
 # Author: Druesenfieber
 # Author: Elliot
@@ -18,7 +19,7 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2022-01-27 12:18:25+0000\n"
+"PO-Revision-Date: 2022-01-31 12:17:00+0000\n"
 "Last-Translator: Crazy1880 <Unknown>\n"
 "Language-Team: German <de@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -114,7 +115,7 @@ msgstr "WPCleaner v1.28 benutzt dieses als Standard"
 
 #: org/wikipediacleaner/Version.java:58
 msgid "An action may be required on your wiki:"
-msgstr ""
+msgstr "Möglicherweise ist eine Aktion in deinem Wiki erforderlich:"
 
 #: org/wikipediacleaner/Version.java:60
 #, java-format
@@ -124,7 +125,7 @@ msgstr ""
 #: org/wikipediacleaner/Version.java:64
 #, java-format
 msgid "If {0} is not used on your wiki, you should add {1} to the page {2}."
-msgstr ""
+msgstr "Wenn {0} in deinem Wiki nicht verwendet wird, solltest du {1} zur Seite {2} hinzufügen."
 
 #: org/wikipediacleaner/Version.java:70
 msgid "Many new features were added recently : try them !"
@@ -140,7 +141,7 @@ msgstr ""
 
 #: org/wikipediacleaner/Version.java:74
 msgid "Fixing spelling or typography based on a list of suggestions."
-msgstr ""
+msgstr "Korrektur von Rechtschreibung oder Typografie auf der Grundlage einer Liste von Vorschlägen."
 
 #: org/wikipediacleaner/api/MediaWiki.java:301
 #, java-format
@@ -2487,7 +2488,7 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:806
 msgid "Installation was successful"
-msgstr "Die Installation war erfolgreich"
+msgstr "Die Installation war erfolgreich."
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:824
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:839

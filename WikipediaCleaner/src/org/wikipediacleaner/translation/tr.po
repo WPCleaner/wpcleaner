@@ -24,7 +24,7 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2022-01-27 12:18:29+0000\n"
+"PO-Revision-Date: 2022-01-31 12:17:03+0000\n"
 "Last-Translator: volkan <volkanyeke@gmail.com>\n"
 "Language-Team: Turkish <tr@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -1734,11 +1734,11 @@ msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:416
 msgid "Initial value of the parameter"
-msgstr ""
+msgstr "Parametrenin ilk değeri"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:422
 msgid "Target value of the parameter"
-msgstr ""
+msgstr "Parametrenin hedef değeri"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a566/CheckErrorAlgorithm566.java:246
 msgid "Possible replacements based on abbreviation value"
