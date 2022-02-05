@@ -45,6 +45,8 @@ import org.wikipediacleaner.utils.string.CharacterUtils;
 class TemplateConfiguration {
 
   @Nonnull private static final Logger log = LoggerFactory.getLogger(TemplateConfiguration.class);
+  
+  private static final Pattern CLEAN_WHITESPACE = Pattern.compile("\\s{2,}");
 
   @Nonnull private final String templateName;
 
@@ -118,9 +120,17 @@ class TemplateConfiguration {
       }
     }
 
+    // Handle extra whitespace characters
+    String contents = analysis.getContents();
+    computedName = CLEAN_WHITESPACE.matcher(computedName).replaceAll(" ");
+    if (knownParams.contains(computedName)) {
+      return Optional.of(Collections.singletonList(
+          TemplateParameterSuggestion.replaceOrDeleteParam(
+              contents, template, param, computedName, param.getValue(), true, true)));
+    }
+
     // Handle stranded "=" sign
     String name = param.getName();
-    String contents = analysis.getContents();
     if (StringUtils.isEmpty(computedName) && StringUtils.isEmpty(param.getValue())) {
       return Optional.of(Collections.singletonList(
           TemplateParameterSuggestion.deleteParam(contents, param, true)));
@@ -242,7 +252,10 @@ class TemplateConfiguration {
 
       // Search for mistyped parameters
       if (compareWithoutAccents(knownParam, strippedName)) {
-        boolean automaticReplacement = (knownParam.length() >= 4) || compareWithoutAccents(knownParam, name); 
+        boolean automaticReplacement =
+            (knownParam.length() >= 4) ||
+            compareWithoutAccents(knownParam, name) ||
+            StringUtils.equalsIgnoreCase(knownParam, strippedName); 
         results.add(TemplateParameterSuggestion.replaceOrDeleteParam(
             contents, template, param,
             completedKnownParam, param.getValue(),
