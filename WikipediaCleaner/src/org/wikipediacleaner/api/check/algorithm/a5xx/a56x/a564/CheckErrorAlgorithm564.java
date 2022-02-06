@@ -228,6 +228,9 @@ public class CheckErrorAlgorithm564 extends CheckErrorAlgorithmBase {
   /** Values that can be safely replaced */
   private static final String PARAMETER_REPLACE_VALUES = "replace_values";
 
+  /** Prefixes for parameter names that are ok */
+  private static final String PARAMETER_PARAMETERS_OK = "parameters_ok";
+
   /**
    * Initialize settings for the algorithm.
    * 
@@ -272,6 +275,11 @@ public class CheckErrorAlgorithm564 extends CheckErrorAlgorithmBase {
     if (tmp != null) {
       List<String[]> tmpList = WPCConfiguration.convertPropertyToStringArrayList(tmp);
       TemplateConfiguration.addValuesToReplace(tmpList, configurationByTemplateName, group);
+    }
+    tmp = getSpecificProperty(PARAMETER_PARAMETERS_OK, true, true, false);
+    if (tmp != null) {
+      List<String[]> tmpList = WPCConfiguration.convertPropertyToStringArrayList(tmp);
+      TemplateConfiguration.addParametersOk(tmpList, configurationByTemplateName, group);
     }
 
     dumpAnalysis = getSpecificProperty(PARAMETER_DUMP_ANALYSIS, true, true, false);

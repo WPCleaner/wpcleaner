@@ -66,6 +66,8 @@ class TemplateConfiguration {
 
   @Nonnull private final Map<String, Map<String, Pair<String, String>>> paramsToReplaceByValue;
 
+  @Nonnull private final List<String> paramsOk;
+
   @Nonnull private final LevenshteinDistance levenshteinDistance;
 
   private TemplateConfiguration(@Nonnull String templateName) {
@@ -79,6 +81,7 @@ class TemplateConfiguration {
     this.paramsToComment = new HashSet<>();
     this.paramsToReplaceByName = new HashMap<>();
     this.paramsToReplaceByValue = new HashMap<>();
+    this.paramsOk = new ArrayList<>();
     this.levenshteinDistance = new LevenshteinDistance(4);
   }
 
@@ -337,6 +340,7 @@ class TemplateConfiguration {
           (missingEqualName.length() >= 5) ||
           ((missingEqualName.length() >= 4) && (missingEqualValue.length() >= 4));
       automatic &= (missingEqualValue.length() == 0) || !Character.isDigit(missingEqualValue.charAt(0));
+      automatic |= paramsOk.contains(missingEqualName);
       automatic &= !missingEqualFound;
       for (int nbChars = 1; nbChars < missingEqualValue.length(); nbChars++) {
         automatic &= !knownParams.contains(missingEqualName + missingEqualValue.substring(0, nbChars));
@@ -733,6 +737,49 @@ class TemplateConfiguration {
       templateConfig.paramsToReplaceByValue.computeIfAbsent(
           oldParamName,
           k -> new HashMap<>()).put(oldParamValue, new ImmutablePair<>(newParamName, newParamValue));
+    }
+  }
+
+  /**
+   * Add parameters that can be safely used from the full raw configuration.
+   * 
+   * @param rawConfiguration Raw configuration for parameters that can be safely used.
+   * @param configuration Configuration.
+   * @param configurationGroup Configuration of groups of templates.
+   */
+  public static void addParametersOk(
+      @Nullable List<String[]> rawConfiguration,
+      @Nonnull Map<String, TemplateConfiguration> configuration,
+      @Nonnull TemplateConfigurationGroup configurationGroup) {
+    if (rawConfiguration == null) {
+      return;
+    }
+    for (String[] line : rawConfiguration) {
+      addParametersOk(line, configuration, configurationGroup);
+    }
+  }
+
+  /**
+   * Add parameters that can be safely used from one line of the raw configuration.
+   * 
+   * @param rawConfiguration Line of the raw configuration for parameters that can be safely used.
+   * @param configuration Configuration.
+   * @param configurationGroup Configuration of groups of templates.
+   */
+  private static void addParametersOk(
+      @Nullable String[] rawConfiguration,
+      @Nonnull Map<String, TemplateConfiguration> configuration,
+      @Nonnull TemplateConfigurationGroup configurationGroup) {
+    if ((rawConfiguration == null) || (rawConfiguration.length < 2)) {
+      return;
+    }
+    for (String templateName : configurationGroup.getTemplateNames(rawConfiguration[0])) {
+      TemplateConfiguration templateConfig = configuration.computeIfAbsent(
+          templateName,
+          k -> new TemplateConfiguration(templateName));
+      for (int paramNum = 1; paramNum < rawConfiguration.length; paramNum++) {
+        templateConfig.paramsOk.add(rawConfiguration[paramNum].trim());
+      }
     }
   }
 }
