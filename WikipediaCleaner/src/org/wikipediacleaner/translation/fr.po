@@ -20,7 +20,7 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2022-01-27 12:18:26+0000\n"
+"PO-Revision-Date: 2022-02-10 12:20:19+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: French <fr@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -5127,12 +5127,12 @@ msgstr "Voulez-vous mettre à jour {0} ?"
 #: org/wikipediacleaner/gui/swing/worker/UpdateUnknownParameterWarningTools.java:243
 #, java-format
 msgid "Removing unknown parameter warning - {0}"
-msgstr "Suppression de l’avertissement de paramètre inconnu — {0}"
+msgstr "Suppression de l’avertissement de paramètre inconnu – {0}"
 
 #: org/wikipediacleaner/gui/swing/worker/UpdateUnknownParameterWarningTools.java:252
 #, java-format
 msgid "Updating unknown parameter warning - {0}"
-msgstr "Mise à jour de l’avertissement de paramètre inconnu — {0}"
+msgstr "Mise à jour de l’avertissement de paramètre inconnu — {0}"
 
 #: org/wikipediacleaner/gui/swing/worker/UpdateUnknownParameterWarningWorker.java:77
 #, java-format
@@ -5142,7 +5142,7 @@ msgstr "L’analyse a trouvé {0} articles pour vérifier les erreurs de paramè
 #: org/wikipediacleaner/gui/swing/worker/UpdateUnknownParameterWarningWorker.java:117
 #, java-format
 msgid "An error occurred when updating unknown parameter warnings. Do you want to continue ?\n\nError: {0}"
-msgstr "Une erreur s’est produite en mettant à jour les avertissements de paramètre inconnu. Voulez-vous continuer ?\n\nErreur : {0}"
+msgstr "Une erreur s’est produite en mettant à jour les avertissements de paramètre inconnu. Voulez-vous continuer ?\n\nErreur : {0}"
 
 #: org/wikipediacleaner/gui/swing/worker/UpdateWarningTools.java:324
 #: org/wikipediacleaner/gui/swing/worker/UpdateWarningTools.java:339
