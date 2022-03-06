@@ -122,6 +122,8 @@ public enum WPCConfigurationStringList {
   SUGGESTION_PAGES("general_suggestions", true, true, true),
   // Pages containing spelling suggestions in AWB format
   SUGGESTION_TYPO_PAGES("general_suggestions_typo", true, true, true),
+  // Template groups
+  TEMPLATE_GROUPS("general_template_groups", true, true, true),
   // Templates used after a disambiguation link asking for help
   TEMPLATES_AFTER_HELP_ASKED("dab_help_asked_templates_after", false, true, false),
   // Templates used for a normal link to a disambiguation page

@@ -19,6 +19,7 @@ import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase;
 import org.wikipediacleaner.api.check.algorithm.a5xx.TemplateConfigurationGroup;
 import org.wikipediacleaner.api.configuration.WPCConfiguration;
+import org.wikipediacleaner.api.configuration.WPCConfigurationStringList;
 import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
 import org.wikipediacleaner.api.data.contents.ContentsUtil;
@@ -182,6 +183,10 @@ public class CheckErrorAlgorithm563 extends CheckErrorAlgorithmBase {
     if (tmp != null) {
       List<String[]> tmpList = WPCConfiguration.convertPropertyToStringArrayList(tmp);
       group.addGroups(tmpList);
+    }
+    List<String[]> generalList = getWPCConfiguration().getStringArrayList(WPCConfigurationStringList.TEMPLATE_GROUPS);
+    if (generalList != null) {
+      group.addGroups(generalList);
     }
 
     tmp = getSpecificProperty(PARAMETER_TEMPLATES, true, true, false);

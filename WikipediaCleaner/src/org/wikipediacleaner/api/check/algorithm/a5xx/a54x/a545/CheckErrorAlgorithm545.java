@@ -28,6 +28,7 @@ import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase;
 import org.wikipediacleaner.api.check.algorithm.a5xx.TemplateConfigurationGroup;
 import org.wikipediacleaner.api.check.algorithm.a5xx.TemplateParameterSuggestion;
 import org.wikipediacleaner.api.configuration.WPCConfiguration;
+import org.wikipediacleaner.api.configuration.WPCConfigurationStringList;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.DataManager;
 import org.wikipediacleaner.api.data.Namespace;
@@ -220,6 +221,10 @@ public class CheckErrorAlgorithm545 extends CheckErrorAlgorithmBase {
     if (tmp != null) {
       List<String[]> tmpList = WPCConfiguration.convertPropertyToStringArrayList(tmp);
       group.addGroups(tmpList);
+    }
+    List<String[]> generalList = getWPCConfiguration().getStringArrayList(WPCConfigurationStringList.TEMPLATE_GROUPS);
+    if (generalList != null) {
+      group.addGroups(generalList);
     }
 
     tmp = getSpecificProperty(PARAMETER_TEMPLATES, true, true, false);
