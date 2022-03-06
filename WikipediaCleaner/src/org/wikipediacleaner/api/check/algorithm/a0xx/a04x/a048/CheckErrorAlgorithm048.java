@@ -8,6 +8,7 @@
 package org.wikipediacleaner.api.check.algorithm.a0xx.a04x.a048;
 
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -17,12 +18,16 @@ import org.wikipediacleaner.api.algorithm.AlgorithmParameter;
 import org.wikipediacleaner.api.algorithm.AlgorithmParameterElement;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase;
+import org.wikipediacleaner.api.check.algorithm.a5xx.TemplateConfigurationGroup;
+import org.wikipediacleaner.api.configuration.WPCConfiguration;
 import org.wikipediacleaner.api.configuration.WPCConfigurationString;
+import org.wikipediacleaner.api.configuration.WPCConfigurationStringList;
 import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageElementFunction;
 import org.wikipediacleaner.api.data.PageElementInternalLink;
 import org.wikipediacleaner.api.data.PageElementTag;
+import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.PageElementTitle;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
 import org.wikipediacleaner.api.data.contents.ContentsUtil;
@@ -147,6 +152,15 @@ public class CheckErrorAlgorithm048 extends CheckErrorAlgorithmBase {
     for (PageElementFunction function : functions) {
       MagicWord magicWord = function.getMagicWord();
       if ((magicWord != null) && EXCLUDE_MAGIC_WORDS.contains(magicWord.getType())) {
+        return false;
+      }
+    }
+
+    // Ignore if the link is inside some templates
+    if (!ignoredTemplates.isEmpty()) {
+      PageElementTemplate template = analysis.isInTemplate(link.getBeginIndex());
+      if ((template != null) &&
+          ignoredTemplates.contains(Page.normalizeTitle(template.getTemplateName()))) {
         return false;
       }
     }
@@ -348,8 +362,14 @@ public class CheckErrorAlgorithm048 extends CheckErrorAlgorithmBase {
   /* PARAMETERS                                                             */
   /* ====================================================================== */
 
+  /** Templates to ignore */
+  private static final String PARAMETER_IGNORE_TEMPLATES = "ignore_templates";
+
   /** Flag to report also in image maps */
   private static final String PARAMETER_IMAGEMAP = "imagemap";
+
+  /** Template groups */
+  private static final String PARAMETER_TEMPLATE_GROUPS = "template_groups";
 
   /**
    * Initialize settings for the algorithm.
@@ -360,10 +380,36 @@ public class CheckErrorAlgorithm048 extends CheckErrorAlgorithmBase {
   protected void initializeSettings() {
     imagemap = Boolean.parseBoolean(
         getSpecificProperty(PARAMETER_IMAGEMAP, true, true, false));
+
+    String tmp = getSpecificProperty(PARAMETER_TEMPLATE_GROUPS, true, true, false);
+    TemplateConfigurationGroup group = new TemplateConfigurationGroup();
+    if (tmp != null) {
+      List<String[]> tmpList = WPCConfiguration.convertPropertyToStringArrayList(tmp);
+      group.addGroups(tmpList);
+    }
+    List<String[]> generalList = getWPCConfiguration().getStringArrayList(WPCConfigurationStringList.TEMPLATE_GROUPS);
+    if (generalList != null) {
+      group.addGroups(generalList);
+    }
+
+    tmp = getSpecificProperty(PARAMETER_IGNORE_TEMPLATES, true, true, false);
+    ignoredTemplates.clear();
+    if (tmp != null) {
+      List<String[]> tmpList = WPCConfiguration.convertPropertyToStringArrayList(tmp);
+      for (String[] line : tmpList) {
+        if (line.length > 0) {
+          for (String template : group.getTemplateNames(line[0])) {
+            ignoredTemplates.add(template);
+          }
+        }
+      }
+    }
   }
 
   /** Flag to report also in image maps */
   private boolean imagemap = false;
+
+  private Set<String> ignoredTemplates = new HashSet<>();
 
   /**
    * Build the list of parameters for this algorithm.
@@ -372,10 +418,30 @@ public class CheckErrorAlgorithm048 extends CheckErrorAlgorithmBase {
   protected void addParameters() {
     super.addParameters();
     addParameter(new AlgorithmParameter(
+        PARAMETER_IGNORE_TEMPLATES,
+        GT._T("List of templates in which error should be ignored"),
+        new AlgorithmParameterElement(
+            "template name",
+            GT._T("Name of the template in which error should be ignored"))));
+    addParameter(new AlgorithmParameter(
         PARAMETER_IMAGEMAP,
         GT._T("Set to true to report also links in <imagemap>"),
         new AlgorithmParameterElement(
             "true/false",
             GT._T("Set to true to report also links in <imagemap>"))));
+    addParameter(new AlgorithmParameter(
+        PARAMETER_TEMPLATE_GROUPS,
+        GT._T("Groups of templates"),
+        new AlgorithmParameterElement[] {
+            new AlgorithmParameterElement(
+                "group",
+                GT._T("Name of the group")),
+            new AlgorithmParameterElement(
+                "template",
+                GT._T("Name of a template in the group"),
+                false,
+                true)
+        },
+        true));
   }
 }
