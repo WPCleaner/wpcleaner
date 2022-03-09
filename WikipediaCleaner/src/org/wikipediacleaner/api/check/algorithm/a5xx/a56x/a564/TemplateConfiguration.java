@@ -37,6 +37,7 @@ import org.wikipediacleaner.api.check.algorithm.a5xx.TemplateParameterSuggestion
 import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
 import org.wikipediacleaner.api.data.contents.ContentsUtil;
+import org.wikipediacleaner.api.data.contents.comment.ContentsComment;
 import org.wikipediacleaner.utils.string.CharacterUtils;
 
 /**
@@ -144,10 +145,15 @@ class TemplateConfiguration {
       return Optional.of(Collections.singletonList(
           TemplateParameterSuggestion.deleteParam(contents, param, true)));
     }
-    if (valuesToDeleteByParam.containsKey(computedName) &&
-        valuesToDeleteByParam.get(computedName).contains(param.getValue())) {
-      return Optional.of(Collections.singletonList(
-          TemplateParameterSuggestion.deleteParam(contents, param, true)));
+    if (valuesToDeleteByParam.containsKey(computedName)) {
+      Set<String> valuesToDelete = valuesToDeleteByParam.get(computedName);
+      boolean delete = valuesToDelete.contains(param.getValue());
+      delete |= valuesToDelete.contains(param.getStrippedValue()) &&
+          (StringUtils.isNotBlank(param.getName()) || StringUtils.isNotBlank(param.getStrippedValue()));
+      if (delete) {
+        return Optional.of(Collections.singletonList(
+            TemplateParameterSuggestion.deleteParam(contents, param, true)));
+      }
     }
 
     // Handle non-breaking white space in the parameter name
@@ -174,7 +180,15 @@ class TemplateConfiguration {
     }
 
     // Handle parameters configured for replacement by value
-    Pair<String, String> replacementValue = paramsToReplaceByValue.getOrDefault(computedName, Collections.emptyMap()).get(param.getValue());
+    Map<String, Pair<String, String>> replaceByValue = paramsToReplaceByValue.getOrDefault(computedName, Collections.emptyMap());
+    Pair<String, String> replacementValue = replaceByValue.get(param.getValue());
+    if ((replacementValue == null) &&
+        (param.getValue() != null) &&
+        (param.getValue().contains(ContentsComment.START)) &&
+        StringUtils.isNotBlank(param.getName()) &&
+        StringUtils.isNotBlank(param.getStrippedValue())) {
+      replacementValue = replaceByValue.get(param.getStrippedValue());
+    }
     if (replacementValue != null) {
       results.add(TemplateParameterSuggestion.replaceOrDeleteParam(
           contents, template, param,
