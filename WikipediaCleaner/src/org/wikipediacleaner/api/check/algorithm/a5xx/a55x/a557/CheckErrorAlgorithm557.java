@@ -47,7 +47,7 @@ import org.wikipediacleaner.utils.string.CharacterUtils;
  */
 public class CheckErrorAlgorithm557 extends CheckErrorAlgorithmBase {
 
-  private static final String EXTRACT_FIRST_CHAR = " \u00A0;'’,";
+  private static final String EXTRACT_FIRST_CHAR = " \u00A0;'’,ʽ";
 
   private static final Set<String> TEXTS_REMOVE_LINK = Stream
       .of("&nbsp;", "''&nbsp;''", ",", ".")
@@ -115,7 +115,7 @@ public class CheckErrorAlgorithm557 extends CheckErrorAlgorithmBase {
     if (!Character.isLetter(previousChar)) {
       return false;
     }
-    if ("ʼʹ".indexOf(previousChar) >= 0) {
+    if ("ʼʹʽ".indexOf(previousChar) >= 0) {
       return false;
     }
     if ((link.getText() == null) &&
