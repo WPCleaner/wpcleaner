@@ -250,7 +250,7 @@ public class CheckErrorAlgorithm555 extends CheckErrorAlgorithmBase {
     String suffix = contents.substring(nowikiTag.getCompleteEndIndex(), endIndex);
     if (eLinkBefore || eLinkAfter) {
       if (!extraPrefix.equals(" ")) {
-        errorResult.addReplacement(prefix + ' ' + internalText + suffix);
+        errorResult.addReplacement(prefix + ' ' + internalText + suffix, eLinkAfter && !automatic);
       }
     }
     errorResult.addReplacement(prefix + extraPrefix + internalText + suffix, automatic);
