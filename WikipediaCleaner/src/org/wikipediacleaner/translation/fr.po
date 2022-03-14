@@ -20,7 +20,7 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2022-03-07 12:20:15+0000\n"
+"PO-Revision-Date: 2022-03-14 12:20:19+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: French <fr@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -30,7 +30,7 @@ msgstr ""
 "X-Launchpad-Export-Date: 2018-01-31 07:53+0000\n"
 "X-Generator: MediaWiki 1.38.0-alpha; Translate 2022-01-19\n"
 "Language: fr\n"
-"X-POT-Import-Date: 2022-03-06 17:30:20+0000\n"
+"X-POT-Import-Date: 2022-03-13 21:30:20+0000\n"
 
 #: org/wikipediacleaner/Version.java:31
 #, java-format
@@ -321,6 +321,8 @@ msgstr "Un remplacement pour {0}"
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:404
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:423
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a566/CheckErrorAlgorithm566.java:283
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a572/CheckErrorAlgorithm572.java:290
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a572/CheckErrorAlgorithm572.java:310
 msgid "Name of the template"
 msgstr "Nom du modèle"
 
@@ -333,6 +335,8 @@ msgstr "Nom du modèle"
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:365
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:379
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:393
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a572/CheckErrorAlgorithm572.java:293
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a572/CheckErrorAlgorithm572.java:313
 msgid "Name of the parameter"
 msgstr "Nom du paramètre"
 
@@ -618,7 +622,7 @@ msgstr "Supprimer tous les liens vers le titre"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a04x/a048/CheckErrorAlgorithm048.java:422
 msgid "List of templates in which error should be ignored"
-msgstr "List des modèles où une erreur doit être ignorée"
+msgstr "Liste des modèles où une erreur doit être ignorée"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a04x/a048/CheckErrorAlgorithm048.java:425
 msgid "Name of the template in which error should be ignored"
@@ -633,6 +637,7 @@ msgstr "Mettre à « true » pour détecter aussi les liens dans <imagemap>"
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a545/CheckErrorAlgorithm545.java:273
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a563/CheckErrorAlgorithm563.java:216
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:313
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a572/CheckErrorAlgorithm572.java:272
 msgid "Groups of templates"
 msgstr "Groupe de modèles"
 
@@ -640,6 +645,7 @@ msgstr "Groupe de modèles"
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a545/CheckErrorAlgorithm545.java:277
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a563/CheckErrorAlgorithm563.java:220
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:317
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a572/CheckErrorAlgorithm572.java:276
 msgid "Name of the group"
 msgstr "Nom du groupe"
 
@@ -647,6 +653,7 @@ msgstr "Nom du groupe"
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a545/CheckErrorAlgorithm545.java:280
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a563/CheckErrorAlgorithm563.java:223
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:320
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a572/CheckErrorAlgorithm572.java:279
 msgid "Name of a template in the group"
 msgstr "Nom d’un modèle dans le groupe"
 
@@ -1381,6 +1388,8 @@ msgstr "Description de l’action"
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a526/CheckErrorAlgorithm526.java:434
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:307
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:310
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a572/CheckErrorAlgorithm572.java:266
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a572/CheckErrorAlgorithm572.java:269
 msgid "A page containing a dump analysis for this error."
 msgstr "Une page qui contient une analyse du vidage produit par cette erreur."
 
@@ -1714,6 +1723,7 @@ msgid "Template parameters which can be safely deleted if they have a given valu
 msgstr "Paramètres de modèle qui peuvent être supprimés en toute sécurité s’ils ont une valeur donnée."
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:362
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a572/CheckErrorAlgorithm572.java:299
 msgid "Value of the parameter"
 msgstr "Valeur du paramètre"
 
@@ -1740,10 +1750,12 @@ msgid "Template parameters which can be safely replaced if they have a given val
 msgstr "Paramètres de modèle qui peuvent être supprimés en toute sécurité s’ils ont une valeur donnée"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:429
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a572/CheckErrorAlgorithm572.java:316
 msgid "Initial value of the parameter"
 msgstr "Valeur initiale du paramètre"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:435
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a572/CheckErrorAlgorithm572.java:319
 msgid "Target value of the parameter"
 msgstr "Valeur cible du paramètre"
 
@@ -1824,6 +1836,18 @@ msgstr "Si les paramètres n’acceptent que des valeurs entières"
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a568/CheckErrorAlgorithm568.java:256
 msgid "Parameter name"
 msgstr "Nom du paramètre"
+
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a572/CheckErrorAlgorithm572.java:286
+msgid "Templates for which unknown values should be verified"
+msgstr "Modèles dont les valeurs inconnues doivent être vérifiées"
+
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a572/CheckErrorAlgorithm572.java:296
+msgid "True if the value is case sensitive"
+msgstr "« True » si la valeur est sensible à la casse"
+
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a572/CheckErrorAlgorithm572.java:306
+msgid "Template values which can be safely replaced"
+msgstr "Valeurs du modèle qui peuvent être remplacées de façon sûre"
 
 #: org/wikipediacleaner/api/configuration/CWConfiguration.java:83
 #, java-format
@@ -5106,13 +5130,13 @@ msgid "An error occurred when updating duplicate arguments warnings. Do you want
 msgstr "Une erreur est survenue pendant la mise à jour des avertissements d’arguments dupliqués. Voulez-vous continuer ?\n\nErreur : {0}"
 
 #: org/wikipediacleaner/gui/swing/worker/UpdateISBNWarningTools.java:262
-#: org/wikipediacleaner/gui/swing/worker/UpdateISSNWarningTools.java:257
+#: org/wikipediacleaner/gui/swing/worker/UpdateISSNWarningTools.java:258
 #, java-format
 msgid "Removing {1} warning - {0}"
 msgstr "Suppression en cours de l’avertissement {1} – {0}"
 
 #: org/wikipediacleaner/gui/swing/worker/UpdateISBNWarningTools.java:271
-#: org/wikipediacleaner/gui/swing/worker/UpdateISSNWarningTools.java:266
+#: org/wikipediacleaner/gui/swing/worker/UpdateISSNWarningTools.java:267
 #, java-format
 msgid "Updating {1} warning - {0}"
 msgstr "Mise à jour en cours de l’avertissement {1} – {0}"
