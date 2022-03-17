@@ -217,6 +217,9 @@ public class CheckErrorAlgorithm564 extends CheckErrorAlgorithmBase {
   /** Parameters that can be safely deleted */
   private static final String PARAMETER_DELETE_PARAMETERS = "delete_parameters";
 
+  /** Parameters for which unnamed parameters can be safely deleted when values are equal */
+  private static final String PARAMETER_DELETE_UNNAMED_PARAMETERS = "delete_unnamed_parameters";
+
   /** Values that can be safely deleted */
   private static final String PARAMETER_DELETE_VALUES = "delete_values";
 
@@ -260,6 +263,11 @@ public class CheckErrorAlgorithm564 extends CheckErrorAlgorithmBase {
     if (tmp != null) {
       List<String[]> tmpList = WPCConfiguration.convertPropertyToStringArrayList(tmp);
       TemplateConfiguration.addParametersToDelete(tmpList, configurationByTemplateName, group);
+    }
+    tmp = getSpecificProperty(PARAMETER_DELETE_UNNAMED_PARAMETERS, true, true, false);
+    if (tmp != null) {
+      List<String[]> tmpList = WPCConfiguration.convertPropertyToStringArrayList(tmp);
+      TemplateConfiguration.addUnnamedParametersToDelete(tmpList, configurationByTemplateName, group);
     }
     tmp = getSpecificProperty(PARAMETER_DELETE_VALUES, true, true, false);
     if (tmp != null) {
@@ -346,6 +354,20 @@ public class CheckErrorAlgorithm564 extends CheckErrorAlgorithmBase {
             new AlgorithmParameterElement(
                 "param",
                 GT._T("Name of the parameter"),
+                true,
+                true)
+        },
+        true));
+    addParameter(new AlgorithmParameter(
+        PARAMETER_DELETE_UNNAMED_PARAMETERS,
+        GT._T("Template parameters for which unnamed parameters can be safely deleted when values are equal"),
+        new AlgorithmParameterElement[] {
+            new AlgorithmParameterElement(
+                "template",
+                GT._T("Name of the template")),
+            new AlgorithmParameterElement(
+                "param",
+                GT._T("Name of parameter"),
                 true,
                 true)
         },

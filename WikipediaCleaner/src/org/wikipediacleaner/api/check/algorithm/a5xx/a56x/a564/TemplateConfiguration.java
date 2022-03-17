@@ -59,6 +59,8 @@ class TemplateConfiguration {
 
   @Nonnull private final Set<String> paramsToDelete;
 
+  @Nonnull private final Set<String> unnamedParamsToDelete;
+
   @Nonnull private final Map<String, Set<String>> valuesToDeleteByParam;
 
   @Nonnull private final Set<String> paramsToComment;
@@ -78,6 +80,7 @@ class TemplateConfiguration {
     this.knownNumericalParameter = new HashSet<>();
     this.orderedKnownNumericalParameter = new ArrayList<>();
     this.paramsToDelete = new HashSet<>();
+    this.unnamedParamsToDelete = new HashSet<>();
     this.valuesToDeleteByParam = new HashMap<>();
     this.paramsToComment = new HashSet<>();
     this.paramsToReplaceByName = new HashMap<>();
@@ -138,6 +141,30 @@ class TemplateConfiguration {
     if (StringUtils.isEmpty(computedName) && StringUtils.isEmpty(param.getValue())) {
       return Optional.of(Collections.singletonList(
           TemplateParameterSuggestion.deleteParam(contents, param, true)));
+    }
+
+    // Handle unnamed parameters that can be deleted
+    if (StringUtils.isEmpty(name) && !StringUtils.isEmpty(computedName)) {
+      for (String namedParameter : unnamedParamsToDelete) {
+        String otherValue = template.getParameterValue(namedParameter);
+        if (otherValue != null) {
+          if (otherValue.equalsIgnoreCase(param.getValue()) ||
+              otherValue.equalsIgnoreCase("[[" + param.getValue() + "]]")) {
+            return Optional.of(Collections.singletonList(
+                TemplateParameterSuggestion.deleteParam(contents, param, true)));
+          }
+        }
+      }
+      /*for (int paramTmp = 0; paramTmp < template.getParameterCount(); paramTmp++) {
+        PageElementTemplate.Parameter otherParam = template.getParameter(paramTmp);
+        if (StringUtils.isNotEmpty(otherParam.getName()) &&
+            (otherParam.getValue() != null)) {
+          if (otherParam.getValue().equalsIgnoreCase(param.getValue()) ||
+              otherParam.getValue().equalsIgnoreCase("[[" + param.getValue() + "]]")) {
+            System.err.println("Value " + param.getValue() + " exists also in parameter named " + otherParam.getName());
+          }
+        }
+      }*/
     }
 
     // Handle parameters that can be deleted by configuration
@@ -562,6 +589,53 @@ class TemplateConfiguration {
           log.warn("Parameter {} already marked as deletable for template {}", paramName, templateName);
         }
         templateConfig.paramsToDelete.add(paramName);
+      }
+    }
+  }
+
+  /**
+   * Add parameters for which unnamed parameters can be safely deleted when values are equal from the full raw configuration.
+   * 
+   * @param rawConfiguration Raw configuration for parameters for which unnamed parameters can be safely deleted.
+   * @param configuration Configuration.
+   * @param configurationGroup Configuration of groups of templates.
+   */
+  public static void addUnnamedParametersToDelete(
+      @Nullable List<String[]> rawConfiguration,
+      @Nonnull Map<String, TemplateConfiguration> configuration,
+      @Nonnull TemplateConfigurationGroup configurationGroup) {
+    if (rawConfiguration == null) {
+      return;
+    }
+    for (String[] line : rawConfiguration) {
+      addUnnamedParametersToDelete(line, configuration, configurationGroup);
+    }
+  }
+
+  /**
+   * Add parameters for which unnamed parameters can be safely deleted when values are equal from one line of the raw configuration.
+   * 
+   * @param rawConfiguration Line of the raw configuration for parameters for which unnamed parameters can be safely deleted.
+   * @param configuration Configuration.
+   * @param configurationGroup Configuration of groups of templates.
+   */
+  private static void addUnnamedParametersToDelete(
+      @Nullable String[] rawConfiguration,
+      @Nonnull Map<String, TemplateConfiguration> configuration,
+      @Nonnull TemplateConfigurationGroup configurationGroup) {
+    if ((rawConfiguration == null) || (rawConfiguration.length < 1)) {
+      return;
+    }
+    for (String templateName : configurationGroup.getTemplateNames(rawConfiguration[0])) {
+      TemplateConfiguration templateConfig = configuration.computeIfAbsent(
+          templateName,
+          k -> new TemplateConfiguration(templateName));
+      for (int paramNum = 1; paramNum < rawConfiguration.length; paramNum++) {
+        String paramName = rawConfiguration[paramNum].trim();
+        if (templateConfig.unnamedParamsToDelete.contains(paramName)) {
+          log.warn("Unnamed parameter already marked as deletable when parameter {} as the same value for template {}", paramName, templateName);
+        }
+        templateConfig.unnamedParamsToDelete.add(paramName);
       }
     }
   }
