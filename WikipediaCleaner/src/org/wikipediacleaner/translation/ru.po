@@ -9,6 +9,7 @@
 # Author: MuratTheTurkish
 # Author: Okras
 # Author: Pacha Tchernof
+# Author: Renat
 # Author: Rivka Silinsky
 # Author: Rubin16
 # Author: Tanzun
@@ -25,7 +26,7 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2022-03-14 12:20:22+0000\n"
+"PO-Revision-Date: 2022-03-17 12:21:28+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Russian <ru@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -33,7 +34,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10 == 1 && n%100 != 11) ? 0 : ( (n%10 >= 2 && n%10 <= 4 && (n%100 < 10 || n%100 >= 20)) ? 1 : 2 );\n"
 "X-Launchpad-Export-Date: 2017-03-22 17:48+0000\n"
-"X-Generator: MediaWiki 1.38.0-alpha; Translate 2022-01-19\n"
+"X-Generator: MediaWiki 1.39.0-alpha; Translate 2022-01-19\n"
 "Language: ru\n"
 "X-POT-Import-Date: 2022-03-13 21:30:20+0000\n"
 
@@ -1846,15 +1847,15 @@ msgstr "Имя параметра"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a572/CheckErrorAlgorithm572.java:286
 msgid "Templates for which unknown values should be verified"
-msgstr ""
+msgstr "Шаблоны, для которых неизвестные значения должны быть проверены"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a572/CheckErrorAlgorithm572.java:296
 msgid "True if the value is case sensitive"
-msgstr ""
+msgstr "Верно, если значение чувствительно к регистру"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a572/CheckErrorAlgorithm572.java:306
 msgid "Template values which can be safely replaced"
-msgstr ""
+msgstr "Значения шаблона, которые могут быть безопасно заменены"
 
 #: org/wikipediacleaner/api/configuration/CWConfiguration.java:83
 #, java-format
