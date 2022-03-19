@@ -140,6 +140,8 @@ public enum WPCConfigurationStringList {
   TODO_LINK_TEMPLATES("general_todo_link_templates", false, true, false),
   // Templates creating "to do" lists
   TODO_TEMPLATES("general_todo_templates", false, true, false),
+  // Templates for external links
+  URL_TEMPLATES("general_url_templates", true, true, true, null ),
   // List of templates that should be before the warning
   WARNING_AFTER_TEMPLATES("warning_after_templates", false, true, false);
 

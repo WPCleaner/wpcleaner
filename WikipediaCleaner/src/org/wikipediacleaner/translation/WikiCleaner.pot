@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://phabricator.wikimedia.org/project/board/4842/\n"
-"POT-Creation-Date: 2022-03-17 20:00+0100\n"
+"POT-Creation-Date: 2022-03-19 20:48+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -973,6 +973,8 @@ msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a08x/a085/CheckErrorAlgorithm085.java:292
 #: org/wikipediacleaner/api/check/algorithm/a1xx/a11x/a112/CheckErrorAlgorithm112.java:645
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a518/CheckErrorAlgorithm518.java:214
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a556/CheckErrorAlgorithm556.java:171
 #, java-format
 msgid "Use {0}"
 msgstr ""
@@ -1231,28 +1233,28 @@ msgstr ""
 msgid "Name of the reference defined by the template"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a518/CheckErrorAlgorithm518.java:372
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a518/CheckErrorAlgorithm518.java:404
 #, java-format
 msgid "An identifier of an abuse filter that is triggered by {0} tags."
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a518/CheckErrorAlgorithm518.java:382
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a518/CheckErrorAlgorithm518.java:385
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a518/CheckErrorAlgorithm518.java:414
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a518/CheckErrorAlgorithm518.java:417
 msgid "A template that can be used instead of an apostrophe."
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a518/CheckErrorAlgorithm518.java:388
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a518/CheckErrorAlgorithm518.java:391
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a518/CheckErrorAlgorithm518.java:420
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a518/CheckErrorAlgorithm518.java:423
 msgid "A template that can be used instead of an asterisk."
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a518/CheckErrorAlgorithm518.java:394
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a518/CheckErrorAlgorithm518.java:397
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a518/CheckErrorAlgorithm518.java:426
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a518/CheckErrorAlgorithm518.java:429
 msgid "A template that can be used instead of a closing square bracket."
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a518/CheckErrorAlgorithm518.java:400
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a518/CheckErrorAlgorithm518.java:403
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a518/CheckErrorAlgorithm518.java:432
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a518/CheckErrorAlgorithm518.java:435
 msgid "A template that can be used instead of an opening square bracket."
 msgstr ""
 
@@ -1607,38 +1609,38 @@ msgstr ""
 msgid "Word that should be separated from the link by a whitespace"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a556/CheckErrorAlgorithm556.java:150
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a556/CheckErrorAlgorithm556.java:156
 #, java-format
 msgid "Add inside a {0} tag"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a556/CheckErrorAlgorithm556.java:157
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a556/CheckErrorAlgorithm556.java:163
 #, java-format
 msgid "Keep text and add link inside a {0} tag"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a556/CheckErrorAlgorithm556.java:231
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a556/CheckErrorAlgorithm556.java:255
 msgid "Templates in which external links are normal"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a556/CheckErrorAlgorithm556.java:235
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a556/CheckErrorAlgorithm556.java:259
 msgid "Template in which external links are normal"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a556/CheckErrorAlgorithm556.java:238
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a556/CheckErrorAlgorithm556.java:248
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a556/CheckErrorAlgorithm556.java:262
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a556/CheckErrorAlgorithm556.java:272
 msgid "Parameter in which external links are normal"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a556/CheckErrorAlgorithm556.java:244
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a556/CheckErrorAlgorithm556.java:268
 msgid "Template parameters in which external links are normal"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a556/CheckErrorAlgorithm556.java:253
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a556/CheckErrorAlgorithm556.java:277
 msgid "Sections in which external links are normal"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a556/CheckErrorAlgorithm556.java:256
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a556/CheckErrorAlgorithm556.java:280
 msgid "Section in which external links are normal"
 msgstr ""
 

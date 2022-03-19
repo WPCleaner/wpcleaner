@@ -13,11 +13,14 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.apache.commons.lang3.tuple.ImmutablePair;
+import org.apache.commons.lang3.tuple.Pair;
 import org.wikipediacleaner.api.algorithm.AlgorithmParameter;
 import org.wikipediacleaner.api.algorithm.AlgorithmParameterElement;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase;
 import org.wikipediacleaner.api.configuration.WPCConfiguration;
+import org.wikipediacleaner.api.configuration.WPCConfigurationStringList;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageAnalysisUtils;
 import org.wikipediacleaner.api.data.PageElementExternalLink;
@@ -27,6 +30,7 @@ import org.wikipediacleaner.api.data.PageElementTitle;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
 import org.wikipediacleaner.api.data.contents.tag.CompleteTagBuilder;
 import org.wikipediacleaner.api.data.contents.tag.WikiTagType;
+import org.wikipediacleaner.api.data.contents.template.TemplateBuilder;
 import org.wikipediacleaner.i18n.GT;
 
 
@@ -39,6 +43,8 @@ public class CheckErrorAlgorithm556 extends CheckErrorAlgorithmBase {
   public CheckErrorAlgorithm556() {
     super("external link in text");
   }
+
+  private final List<Pair<String, String>> urlTemplates = new ArrayList<>();
 
   /**
    * Analyze a page to check if errors are present.
@@ -157,6 +163,14 @@ public class CheckErrorAlgorithm556 extends CheckErrorAlgorithmBase {
               "Keep text and add link inside a {0} tag",
               WikiTagType.REF.getFullTag()));
     }
+    if (!link.hasSecondSquare()) {
+      for (Pair<String, String> template : urlTemplates) {
+        replacement = TemplateBuilder.from(template.getLeft()).addParam(template.getRight(), link.getLink()).toString();
+        errorResult.addReplacement(
+            replacement,
+            GT._T("Use {0}", TemplateBuilder.from(template.getLeft()).toString()));
+      }
+    }
     errors.add(errorResult);
     return true;
   }
@@ -206,6 +220,16 @@ public class CheckErrorAlgorithm556 extends CheckErrorAlgorithmBase {
       if (tmpList != null) {
         for (String element : tmpList) {
           titles.add(element.toUpperCase());
+        }
+      }
+    }
+
+    urlTemplates.clear();
+    List<String[]> tmpList = getWPCConfiguration().getStringArrayList(WPCConfigurationStringList.URL_TEMPLATES);
+    if (tmpList != null) {
+      for (String[] tmpElement : tmpList) {
+        if (tmpElement.length > 1) {
+          urlTemplates.add(new ImmutablePair<>(tmpElement[0], tmpElement[1]));
         }
       }
     }

@@ -7,9 +7,12 @@
 
 package org.wikipediacleaner.api.check.algorithm.a5xx.a51x.a518;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import org.apache.commons.lang3.tuple.ImmutablePair;
+import org.apache.commons.lang3.tuple.Pair;
 import org.wikipediacleaner.api.API;
 import org.wikipediacleaner.api.APIException;
 import org.wikipediacleaner.api.APIFactory;
@@ -22,9 +25,11 @@ import org.wikipediacleaner.api.check.algorithm.a5xx.a55x.a553.CheckErrorAlgorit
 import org.wikipediacleaner.api.check.algorithm.a5xx.a55x.a554.CheckErrorAlgorithm554;
 import org.wikipediacleaner.api.check.algorithm.a5xx.a55x.a555.CheckErrorAlgorithm555;
 import org.wikipediacleaner.api.check.algorithm.a5xx.a56x.a565.CheckErrorAlgorithm565;
+import org.wikipediacleaner.api.configuration.WPCConfigurationStringList;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.Page;
+import org.wikipediacleaner.api.data.PageElementExternalLink;
 import org.wikipediacleaner.api.data.PageElementInternalLink;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
@@ -45,6 +50,8 @@ public class CheckErrorAlgorithm518 extends CheckErrorAlgorithmBase {
   public CheckErrorAlgorithm518() {
     super("<nowiki> tags");
   }
+
+  private final List<Pair<String, String>> urlTemplates = new ArrayList<>();
 
   /**
    * Analyze a page to check if errors are present.
@@ -191,6 +198,21 @@ public class CheckErrorAlgorithm518 extends CheckErrorAlgorithmBase {
       }
       if (!otherFound) {
         errorResult.addReplacement("&lt;" + internalText.substring(1, internalText.length() - 1) + "&gt;");
+      }
+    }
+
+    // Check for <nowiki>http://...</nowiki>
+    if (internalText.startsWith("http") && !urlTemplates.isEmpty()) {
+      PageAnalysis tmpAnalysis = new PageAnalysis(analysis.getPage(), internalText);
+      PageElementExternalLink eLink = PageElementExternalLink.analyzeBlock(
+          analysis.getWikipedia(), internalText, 0, tmpAnalysis);
+      if ((eLink != null) && (eLink.getEndIndex() == internalText.length())) {
+        for (Pair<String, String> template : urlTemplates) {
+          String tmp = TemplateBuilder.from(template.getLeft()).addParam(template.getRight(), internalText).toString();
+          errorResult.addReplacement(
+              tmp,
+              GT._T("Use {0}", TemplateBuilder.from(template.getLeft()).toString()));
+        }
       }
     }
 
@@ -343,6 +365,16 @@ public class CheckErrorAlgorithm518 extends CheckErrorAlgorithmBase {
         abuseFilter = Integer.valueOf(tmp);
       } catch (NumberFormatException e) {
         // Nothing to do
+      }
+    }
+
+    urlTemplates.clear();
+    List<String[]> tmpList = getWPCConfiguration().getStringArrayList(WPCConfigurationStringList.URL_TEMPLATES);
+    if (tmpList != null) {
+      for (String[] tmpElement : tmpList) {
+        if (tmpElement.length > 1) {
+          urlTemplates.add(new ImmutablePair<>(tmpElement[0], tmpElement[1]));
+        }
       }
     }
   }
