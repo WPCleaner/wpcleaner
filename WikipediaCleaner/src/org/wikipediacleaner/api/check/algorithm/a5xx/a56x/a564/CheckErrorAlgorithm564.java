@@ -148,7 +148,7 @@ public class CheckErrorAlgorithm564 extends CheckErrorAlgorithmBase {
    */
   @Override
   public boolean hasSpecialList() {
-    return (dumpAnalysis != null);
+    return !dumpAnalyses.isEmpty();
   }
 
   /**
@@ -163,7 +163,7 @@ public class CheckErrorAlgorithm564 extends CheckErrorAlgorithmBase {
     List<Page> result = new ArrayList<>();
 
     // Use internal links
-    if (dumpAnalysis != null) {
+    for (String dumpAnalysis : dumpAnalyses) {
       API api = APIFactory.getAPI();
       Page page = DataManager.createSimplePage(wiki, dumpAnalysis, null, null, null);
       try {
@@ -294,12 +294,16 @@ public class CheckErrorAlgorithm564 extends CheckErrorAlgorithmBase {
       List<String[]> tmpList = WPCConfiguration.convertPropertyToStringArrayList(tmp);
       TemplateConfiguration.addParametersOk(tmpList, configurationByTemplateName, group);
     }
-
-    dumpAnalysis = getSpecificProperty(PARAMETER_DUMP_ANALYSIS, true, true, false);
+    tmp = getSpecificProperty(PARAMETER_DUMP_ANALYSIS, true, true, false);
+    dumpAnalyses.clear();
+    if (tmp != null) {
+      List<String> tmpList = WPCConfiguration.convertPropertyToStringList(tmp);
+      dumpAnalyses.addAll(tmpList);
+    }
   }
 
   /** Page containing a dump analysis */
-  private String dumpAnalysis = null;
+  private List<String> dumpAnalyses = new ArrayList<>();
 
   /** Templates and parameters that are checked */
   private final Map<String, TemplateConfiguration> configurationByTemplateName = new HashMap<>();

@@ -263,7 +263,9 @@ public class ListCWWorker extends BasicWorker {
    */
   private boolean appendResult(
       List<Detection> pages, long maxSize,
-      StringBuilder result) {
+      StringBuilder result,
+      List<Detection> pagesLeftToSave) {
+    pagesLeftToSave.clear();
     StringBuilder buffer = new StringBuilder();
     buffer.append(CommentBuilder.from("Generated using " + dumpFile.getName()).toString());
     buffer.append("\n");
@@ -316,8 +318,9 @@ public class ListCWWorker extends BasicWorker {
       if (currentLength + lineLength >= maxSize) {
         result.append(buffer);
         while (pages.size() > detectionNum) {
-          pages.remove(pages.size() - 1);
+          pagesLeftToSave.add(pages.remove(pages.size() - 1));
         }
+        Collections.sort(pagesLeftToSave);
         return false;
       }
       buffer.append(line);
@@ -451,11 +454,21 @@ public class ListCWWorker extends BasicWorker {
     outputResultToFile(algorithm, tmpPages, output);
 
     // Output to a page
-    boolean fullySaved = false;
+    boolean fullySaved = true;
+    boolean tryNextPage = true;
     try {
-      fullySaved = outputResultToPage(algorithm, tmpPages, pageName);
+      List<Detection> pagesToSave = tmpPages;
+      int pageNumber = 0;
+      do {
+        List<Detection> pagesLeftToSave = new ArrayList<>();
+        pageNumber++;
+        tryNextPage = outputResultToPage(algorithm, pagesToSave, pageName, pageNumber, pagesLeftToSave);
+        fullySaved &= pagesLeftToSave.isEmpty();
+        pagesToSave = pagesLeftToSave;
+      } while (tryNextPage);
     } catch (APIException e) {
-      // Don't throw, it will ba saved to file instead
+      // Don't throw, it will be saved to file instead
+      fullySaved = false;
     }
 
     // Try to save the result in a file if it wasn't saved in a page
@@ -471,30 +484,39 @@ public class ListCWWorker extends BasicWorker {
    * @param algorithm Algorithm.
    * @param pages List of detections to put in the result.
    * @param outputPage Page name.
-   * @return True if the analysis was completely saved on the wiki.
+   * @param pageNumber Page number.
+   * @return True if the analysis was saved.
    * @throws APIException Error with MediaWiki API.
    */
   private boolean outputResultToPage(
       CheckErrorAlgorithm algorithm, List<Detection> pages,
-      String outputPage) throws APIException {
+      String outputPage,
+      int pageNumber, List<Detection> pagesLeftToSave) throws APIException {
 
     // Determine page to which the error should be written
+    pagesLeftToSave.clear();
     if (outputPage == null) {
-      return true;
+      return false;
     }
     String truePageName = MessageFormat.format(pageName, algorithm.getErrorNumberString());
-    logCW.info("Writing dump analysis results for error " + algorithm.getErrorNumberString() + " to page " + truePageName);
+    if (pageNumber > 1) {
+      truePageName += "/" + pageNumber;
+    }
 
     // Retrieve page information
     Page page = DataManager.createSimplePage(getWikipedia(), truePageName, null, null, null);
     API api = APIFactory.getAPI();
     api.retrieveContents(getWikipedia(), Collections.singletonList(page), false, false);
+    if (!Boolean.TRUE.equals(page.isExisting())) {
+      return false;
+    }
     String initialContents = page.getContents();
     Integer initialRevisionId = page.getRevisionId();
     if ((initialContents == null) ||
         (initialRevisionId == null)) {
       throw new APIException("Unable to read page " + truePageName);
     }
+    logCW.info("Writing dump analysis results for error " + algorithm.getErrorNumberString() + " to page " + truePageName);
 
     // Generate result
     logCW.info("Preparing results of dump analysis for error " + algorithm.getErrorNumberString());
@@ -503,7 +525,6 @@ public class ListCWWorker extends BasicWorker {
     final List<Detection> tmpPages = new ArrayList<>(pages);
 
     // Loop
-    boolean fullySaved = true;
     int attemptCount = 0;
     long currentMaxSize = (maxSize != null) ? maxSize : Long.MAX_VALUE;
     while (attemptCount < 10) {
@@ -543,7 +564,7 @@ public class ListCWWorker extends BasicWorker {
       internalMaxSize -= newText.toString().getBytes(StandardCharsets.UTF_8).length;
       String suffix = contents.substring(end);
       internalMaxSize -= suffix.getBytes(StandardCharsets.UTF_8).length;
-      fullySaved &= appendResult(tmpPages, internalMaxSize, newText);
+      appendResult(tmpPages, internalMaxSize, newText, pagesLeftToSave);
       newText.append(contents.substring(end));
       final String text = newText.toString();
 
@@ -557,7 +578,7 @@ public class ListCWWorker extends BasicWorker {
               "Dump analysis for error n°" + algorithm.getErrorNumberString() + " (" + nbPagesToDisplay + " pages)",
               false, true, true, false);
         }
-        return fullySaved;
+        return true;
       } catch (APIException e) {
         // Check if it can be due to a page too big
         boolean tooBig = false;
@@ -583,7 +604,7 @@ public class ListCWWorker extends BasicWorker {
       }
     }
 
-    return fullySaved;
+    return true;
   }
 
   /**
@@ -613,7 +634,7 @@ public class ListCWWorker extends BasicWorker {
     // Generate result
     logCW.info("Preparing results of dump analysis for error " + algorithm.getErrorNumberString());
     StringBuilder result = new StringBuilder();
-    appendResult(pages, Long.MAX_VALUE, result);
+    appendResult(pages, Long.MAX_VALUE, result, new ArrayList<>());
 
     // Write the file
     logCW.info("Writing dump analysis results for error " + algorithm.getErrorNumberString() + " to file " + outputFile.getName());
