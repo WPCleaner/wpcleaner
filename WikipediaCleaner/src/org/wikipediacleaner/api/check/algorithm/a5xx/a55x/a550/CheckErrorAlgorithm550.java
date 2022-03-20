@@ -103,7 +103,7 @@ public class CheckErrorAlgorithm550 extends CheckErrorAlgorithmBase {
             Objects.equals(function.getFunctionName(), "#tag") &&
             (function.getParameterCount() > 0) &&
             Objects.equals(function.getParameterValue(0), "timeline")) {
-          System.out.println("Function " + function.getFunctionName() + "/" + function.getMagicWord().getName());
+          shouldReport = false;
         }
       }
 
