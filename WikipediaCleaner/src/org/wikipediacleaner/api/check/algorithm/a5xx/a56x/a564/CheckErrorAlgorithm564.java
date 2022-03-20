@@ -134,6 +134,7 @@ public class CheckErrorAlgorithm564 extends CheckErrorAlgorithmBase {
     int beginIndex = templateParam.getBeginIndex();
     int endIndex = templateParam.getEndIndex();
     CheckErrorResult errorResult = createCheckErrorResult(analysis, beginIndex, endIndex);
+    errorResult.addText(GT._T("Template {0}", template.getTemplateName()));
     for (TemplateParameterSuggestion suggestion : suggestions.get()) {
       boolean automatic = suggestion.isAutomatic();
       automatic &= (suggestion.getParamName() == null) || (template.getParameterValue(suggestion.getParamName()) == null);
