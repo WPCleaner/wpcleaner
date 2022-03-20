@@ -10,6 +10,7 @@ package org.wikipediacleaner.api.check.algorithm.a5xx.a55x.a550;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 import org.wikipediacleaner.api.algorithm.AlgorithmParameter;
@@ -17,6 +18,7 @@ import org.wikipediacleaner.api.algorithm.AlgorithmParameterElement;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase;
 import org.wikipediacleaner.api.configuration.WPCConfiguration;
+import org.wikipediacleaner.api.data.PageElementFunction;
 import org.wikipediacleaner.api.data.PageElementInternalLink;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
@@ -93,6 +95,15 @@ public class CheckErrorAlgorithm550 extends CheckErrorAlgorithmBase {
       if (shouldReport) {
         if (ignoreLinks.contains(link.getLink())) {
           shouldReport = false;
+        }
+      }
+      if (shouldReport) {
+        PageElementFunction function = analysis.isInFunction(link.getBeginIndex());
+        if ((function != null) &&
+            Objects.equals(function.getFunctionName(), "#tag") &&
+            (function.getParameterCount() > 0) &&
+            Objects.equals(function.getParameterValue(0), "timeline")) {
+          System.out.println("Function " + function.getFunctionName() + "/" + function.getMagicWord().getName());
         }
       }
 
