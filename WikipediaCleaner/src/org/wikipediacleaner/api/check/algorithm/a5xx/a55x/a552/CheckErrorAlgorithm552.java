@@ -10,6 +10,7 @@ package org.wikipediacleaner.api.check.algorithm.a5xx.a55x.a552;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 import org.wikipediacleaner.api.algorithm.AlgorithmParameter;
@@ -75,80 +76,97 @@ public class CheckErrorAlgorithm552 extends CheckErrorAlgorithmBase {
     }
 
     // Check each template
-    String contents = analysis.getContents();
     boolean result = false;
     for (PageElementTemplate template : templates) {
-      int endIndex = template.getEndIndex();
-      if ((endIndex < contents.length()) && (contents.charAt(endIndex) == '}')) {
-
-        // Check if there's something explaining this extra bracket
-        boolean foundReason = false;
-        if (!foundReason) {
-          PageElementTemplate otherTemplate = analysis.isInTemplate(endIndex);
-          if ((otherTemplate != null) &&
-              (otherTemplate.getEndIndex() == endIndex + 2)) {
-            foundReason = true;
-          }
-        }
-        if (!foundReason) {
-          PageElementFunction function = analysis.isInFunction(endIndex);
-          if ((function != null) &&
-              (function.getEndIndex() == endIndex + 2)) {
-            foundReason = true;
-          }
-        }
-        if (!foundReason) {
-          foundReason = ignoreTemplates.contains(template.getTemplateName());
-        }
-
-        // Report error
-        if (!foundReason) {
-          if (errors == null) {
-            return true;
-          }
-          result = true;
-
-          // Count brackets
-          int openingBracketsInside = 0;
-          int closingBracketsInside = 0;
-          if (template.getParameterCount() > 0) {
-            openingBracketsInside = ContentsUtil.countCharacters(
-                contents, template.getParameterNameStartIndex(0), endIndex - 2, "{");
-            closingBracketsInside = ContentsUtil.countCharacters(
-                contents, template.getParameterNameStartIndex(0), endIndex - 2, "}");
-          }
-          int beginLine = ContentsUtil.getLineBeginIndex(contents, template.getBeginIndex());
-          int endLine = ContentsUtil.getLineEndIndex(contents, template.getEndIndex());
-          int openingBrackets = ContentsUtil.countCharacters(contents, beginLine, endLine, "{");
-          int closingBrackets = ContentsUtil.countCharacters(contents, beginLine, endLine, "}");
-
-          // Report error
-          int beginIndex = template.getBeginIndex();
-          CheckErrorResult errorResult = createCheckErrorResult(
-              analysis, beginIndex, endIndex + 1);
-          if (openingBracketsInside > closingBracketsInside) {
-            String replacement =
-                contents.substring(beginIndex, endIndex - 1) +
-                WikiTagType.NOWIKI.getFullTag() +
-                contents.substring(endIndex - 1, endIndex + 1);
-            errorResult.addReplacement(replacement, "{{...}<nowiki/>}}");
-          }
-          if (openingBrackets == closingBrackets) {
-            String replacement =
-                contents.substring(beginIndex, endIndex) +
-                WikiTagType.NOWIKI.getFullTag() +
-                contents.substring(endIndex, endIndex + 1);
-            errorResult.addReplacement(replacement, "{{...}}<nowiki/>}");
-          }
-          errorResult.addReplacement(
-              contents.substring(beginIndex, endIndex),
-              "{{...}}");
-          errors.add(errorResult);
-        }
-      }
+      result |= analyzeTemplate(analysis, errors, template);
     }
 
     return result;
+  }
+
+  /**
+   * Analyze a template to check if errors are present.
+   * 
+   * @param analysis Page analysis.
+   * @param errors Errors found in the page.
+   * @param template Template to be checked.
+   * @return Flag indicating if the error was found.
+   */
+  public boolean analyzeTemplate(
+      PageAnalysis analysis,
+      Collection<CheckErrorResult> errors,
+      PageElementTemplate template) {
+    // Only analyze when a } is after a template
+    int endIndex = template.getEndIndex();
+    String contents = analysis.getContents();
+    if ((endIndex >= contents.length()) || (contents.charAt(endIndex) != '}')) {
+      return false;
+    }
+
+    // Check if there's something explaining this extra bracket
+    PageElementTemplate otherTemplate = analysis.isInTemplate(endIndex);
+    if ((otherTemplate != null) &&
+        (otherTemplate.getEndIndex() == endIndex + 2)) {
+      return false;
+    }
+    PageElementFunction function = analysis.isInFunction(endIndex);
+    if ((function != null) &&
+        (function.getEndIndex() == endIndex + 2)) {
+      return false;
+    }
+    if (ignoreTemplates.contains(template.getTemplateName())) {
+      return false;
+    }
+    if (Objects.equals("!", template.getTemplateName()) &&
+        (template.getBeginIndex() > 0) &&
+        (contents.charAt(template.getBeginIndex() - 1) == '\n')) {
+      // Ignore {{!}}} at the beginning of a line as it may be a table end
+      return false;
+    }
+
+    // Report error
+    if (errors == null) {
+      return true;
+    }
+
+    // Count brackets
+    int openingBracketsInside = 0;
+    int closingBracketsInside = 0;
+    if (template.getParameterCount() > 0) {
+      openingBracketsInside = ContentsUtil.countCharacters(
+          contents, template.getParameterNameStartIndex(0), endIndex - 2, "{");
+      closingBracketsInside = ContentsUtil.countCharacters(
+          contents, template.getParameterNameStartIndex(0), endIndex - 2, "}");
+    }
+    int beginLine = ContentsUtil.getLineBeginIndex(contents, template.getBeginIndex());
+    int endLine = ContentsUtil.getLineEndIndex(contents, template.getEndIndex());
+    int openingBrackets = ContentsUtil.countCharacters(contents, beginLine, endLine, "{");
+    int closingBrackets = ContentsUtil.countCharacters(contents, beginLine, endLine, "}");
+
+    // Report error
+    int beginIndex = template.getBeginIndex();
+    CheckErrorResult errorResult = createCheckErrorResult(
+        analysis, beginIndex, endIndex + 1);
+    if (openingBracketsInside > closingBracketsInside) {
+      String replacement =
+          contents.substring(beginIndex, endIndex - 1) +
+          WikiTagType.NOWIKI.getFullTag() +
+          contents.substring(endIndex - 1, endIndex + 1);
+      errorResult.addReplacement(replacement, "{{...}<nowiki/>}}");
+    }
+    if (openingBrackets == closingBrackets) {
+      String replacement =
+          contents.substring(beginIndex, endIndex) +
+          WikiTagType.NOWIKI.getFullTag() +
+          contents.substring(endIndex, endIndex + 1);
+      errorResult.addReplacement(replacement, "{{...}}<nowiki/>}");
+    }
+    errorResult.addReplacement(
+        contents.substring(beginIndex, endIndex),
+        "{{...}}");
+    errors.add(errorResult);
+
+    return true;
   }
 
   /**
