@@ -14,6 +14,7 @@ import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.PageElementTag.Parameter;
+import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
 import org.wikipediacleaner.api.data.contents.tag.HtmlTagType;
 import org.wikipediacleaner.api.data.contents.tag.WikiTagType;
@@ -95,72 +96,103 @@ public class CheckErrorAlgorithm571 extends CheckErrorAlgorithmBase {
       return false;
     }
 
+    // Check for a cite tag that is a end tag
+    if (citeTag.isEndTag()) {
+      return analyzeCiteEndTag(analysis, errors, citeTag, refTag);
+    }
+
     // Check for a cite tag that is not an end tag
-    if (!citeTag.isEndTag()) {
-      if (refTag.getEndIndex() != citeTag.getBeginIndex()) {
+    if (refTag.getEndIndex() != citeTag.getBeginIndex()) {
+      if ((refTag.getMatchingTag() == null) ||
+          (citeTag.getMatchingTag() == null)) {
         return false;
       }
-
-      if (errors == null) {
-        return true;
+      String contents = analysis.getContents();
+      if ((contents.charAt(refTag.getEndIndex()) != '{') ||
+          (contents.charAt(citeTag.getBeginIndex() - 1) != '}')) {
+        return false;
       }
+      PageElementTemplate template = analysis.isInTemplate(refTag.getEndIndex());
+      if (template == null) {
+        return false;
+      }
+    }
 
-      // Try to extend area
-      boolean extended = false;
-      int endIndex = citeTag.getCompleteEndIndex();
-      if (endIndex >= refTag.getCompleteEndIndex()) {
-        CheckErrorResult errorResult = createCheckErrorResult(
-            analysis, citeTag.getBeginIndex(), citeTag.getEndIndex());
-        errors.add(errorResult);
-      } else {
-        String contents = analysis.getContents();
-        do {
-          extended = false;
-          if (endIndex < contents.length()) {
-            if (contents.charAt(endIndex) == '<') {
-              PageElementTag nextTag = analysis.isInTag(endIndex);
-              if ((nextTag != null) && !nextTag.isFullTag() && nextTag.isComplete()) {
-                if (HtmlTagType.SPAN.equals(nextTag.getType())) {
-                  Parameter title = nextTag.getParameter("title");
-                  if ((title != null) &&
-                      (title.getValue() != null) &&
-                      (title.getValue().startsWith("ctx_ver="))) {
-                    String nextTagValue = contents.substring(
-                        nextTag.getValueBeginIndex(), nextTag.getValueEndIndex());
-                    if ((nextTagValue == null) ||
-                        nextTagValue.equals("&nbsp;") ||
-                        nextTagValue.equals("&#x20;")) {
-                      extended = true;
-                      endIndex = nextTag.getCompleteEndIndex();
-                    }
-                  }
-                } else if (HtmlTagType.CITE.equals(nextTag.getType())) {
+    if (errors == null) {
+      return true;
+    }
+
+    // Try to extend area
+    boolean extended = false;
+    int endIndex = citeTag.getCompleteEndIndex();
+    if (endIndex >= refTag.getCompleteEndIndex()) {
+      CheckErrorResult errorResult = createCheckErrorResult(
+          analysis, citeTag.getBeginIndex(), citeTag.getEndIndex());
+      errors.add(errorResult);
+    } else {
+      String contents = analysis.getContents();
+      do {
+        extended = false;
+        if (endIndex < contents.length()) {
+          if (contents.charAt(endIndex) == '<') {
+            PageElementTag nextTag = analysis.isInTag(endIndex);
+            if ((nextTag != null) && !nextTag.isFullTag() && nextTag.isComplete()) {
+              if (HtmlTagType.SPAN.equals(nextTag.getType())) {
+                Parameter title = nextTag.getParameter("title");
+                if ((title != null) &&
+                    (title.getValue() != null) &&
+                    (title.getValue().startsWith("ctx_ver="))) {
                   String nextTagValue = contents.substring(
                       nextTag.getValueBeginIndex(), nextTag.getValueEndIndex());
                   if ((nextTagValue == null) ||
-                      nextTagValue.trim().equals("")) {
+                      nextTagValue.equals("&nbsp;") ||
+                      nextTagValue.equals("&#x20;")) {
                     extended = true;
                     endIndex = nextTag.getCompleteEndIndex();
                   }
                 }
+              } else if (HtmlTagType.CITE.equals(nextTag.getType())) {
+                String nextTagValue = contents.substring(
+                    nextTag.getValueBeginIndex(), nextTag.getValueEndIndex());
+                if ((nextTagValue == null) ||
+                    nextTagValue.trim().equals("")) {
+                  extended = true;
+                  endIndex = nextTag.getCompleteEndIndex();
+                }
               }
             }
           }
-        } while (extended);
-        CheckErrorResult errorResult = createCheckErrorResult(
-            analysis, citeTag.getCompleteBeginIndex(), endIndex);
-        String replacement = contents.substring(
-            citeTag.getValueBeginIndex(), citeTag.getValueEndIndex());
-        if (citeTag.getCompleteEndIndex() == refTag.getValueEndIndex()) {
-          replacement = replacement.trim();
         }
-        errorResult.addReplacement(
-            replacement,
-            GT._T("Remove {0} tags", HtmlTagType.CITE.getOpenTag()));
-        errors.add(errorResult);
+      } while (extended);
+      CheckErrorResult errorResult = createCheckErrorResult(
+          analysis, citeTag.getCompleteBeginIndex(), endIndex);
+      String replacement = contents.substring(
+          citeTag.getValueBeginIndex(), citeTag.getValueEndIndex());
+      if (citeTag.getCompleteEndIndex() == refTag.getValueEndIndex()) {
+        replacement = replacement.trim();
       }
-      return true;
+      errorResult.addReplacement(
+          replacement,
+          GT._T("Remove {0} tags", HtmlTagType.CITE.getOpenTag()));
+      errors.add(errorResult);
     }
+    return true;
+  }
+
+  /**
+   * Analyze a cite end tag to check if it is incorrectly used.
+   * 
+   * @param analysis Page analysis.
+   * @param errors Errors found in the page.
+   * @param citeTag Cite end tag to check.
+   * @param refTag Enclosing ref tag.
+   * @return Flag indicating if the error was found.
+   */
+  private boolean analyzeCiteEndTag(
+      PageAnalysis analysis,
+      Collection<CheckErrorResult> errors,
+      PageElementTag citeTag,
+      PageElementTag refTag) {
 
     // Analyze end tags
     if (refTag.getMatchingTag() == null) {
@@ -173,6 +205,7 @@ public class CheckErrorAlgorithm571 extends CheckErrorAlgorithmBase {
       return true;
     }
 
+    // Report error
     if ((citeTag.getMatchingTag() == null) ||
         (citeTag.getMatchingTag().getBeginIndex() < refTag.getCompleteBeginIndex())) {
       CheckErrorResult errorResult = createCheckErrorResult(
