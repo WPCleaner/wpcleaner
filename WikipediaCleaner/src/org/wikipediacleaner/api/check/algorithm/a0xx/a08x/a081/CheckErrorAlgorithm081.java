@@ -207,12 +207,22 @@ public class CheckErrorAlgorithm081 extends CheckErrorAlgorithmBase {
                 if (nameValue != null) {
                   nameValue = nameValue.trim();
                 }
+                boolean sameName = selectedName.equals(nameValue);
                 CheckErrorResult errorResult = createCheckErrorResult(
                     analysis,
                     tag.getCompleteBeginIndex(), tag.getCompleteEndIndex());
+                if (sameName) {
+                  errorResult.addText(GT._T("Both tags have already the same name"));
+                } else if (name == null) {
+                  errorResult.addText(GT._T("Tag is unnamed"));
+                } else {
+                  errorResult.addText(GT._T("Tags have different names"));
+                  errorResult.addText(selectedName);
+                  errorResult.addText(nameValue);
+                }
                 errorResult.addReplacement(
                     getClosedRefTag(groupName, selectedName, null),
-                    selectedName.equals(nameValue) || (name == null));
+                    sameName || (name == null));
                 errors.add(errorResult);
               }
             }
@@ -236,6 +246,7 @@ public class CheckErrorAlgorithm081 extends CheckErrorAlgorithmBase {
               CheckErrorResult errorResult = createCheckErrorResult(
                   analysis,
                   tag.getCompleteBeginIndex(), tag.getCompleteEndIndex());
+              errorResult.addText("Both tags are unnamed");
 
               // Add an action for naming the reference tag
               // TODO: manage a better action for naming the reference tag and replacing all other tags
