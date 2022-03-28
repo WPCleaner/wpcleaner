@@ -3,6 +3,7 @@
 #
 # Author: Sibabrata Banerjee
 # Author: Titodutta
+# Author: Yahya
 # Author: আফতাবুজ্জামান
 # --
 # This file is distributed under the same license as the wikicleaner package.
@@ -13,7 +14,7 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2022-03-24 12:19:14+0000\n"
+"PO-Revision-Date: 2022-03-28 11:21:28+0000\n"
 "Last-Translator: Aftabuzzaman <Leemon432@gmail.com>\n"
 "Language-Team: Bengali <bn@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -1720,7 +1721,7 @@ msgstr ""
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:137
 #, java-format
 msgid "Template {0}"
-msgstr ""
+msgstr "টেমপ্লেট {0}"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:340
 msgid "Templates for which unknown parameters should be verified"
