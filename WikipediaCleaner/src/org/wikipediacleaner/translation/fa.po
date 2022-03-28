@@ -1,6 +1,7 @@
 # Translation of WPCleaner to Persian (فارسی)
 # Exported from translatewiki.net
 #
+# Author: Beginneruser
 # Author: Huji
 # Author: Jeeputer
 # --
@@ -12,7 +13,7 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2022-03-24 12:19:15+0000\n"
+"PO-Revision-Date: 2022-03-28 11:21:30+0000\n"
 "Last-Translator: reza <reza.energy@gmail.com>\n"
 "Language-Team: Persian <fa@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -104,7 +105,7 @@ msgstr "این کلمه جادوئی باید به همه صفحات ابهام�
 
 #: org/wikipediacleaner/Version.java:57
 msgid "WPCleaner v1.28 also uses this as the default system."
-msgstr "WPCleaner ورژن 1.28 هم چنین به عنوان پیشفرض استفاده می شود."
+msgstr "WPCleaner ورژن 1.28 هم چنین به عنوان سامانه پیشفرض استفاده می شود."
 
 #: org/wikipediacleaner/Version.java:58
 msgid "An action may be required on your wiki:"
@@ -283,7 +284,7 @@ msgstr ""
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a001/CheckErrorAlgorithm001.java:92
 #, java-format
 msgid "Remove {0} namespace from template name"
-msgstr "حذف فضای نام {0} از نام قالب"
+msgstr "حذف فضای نام {0} از نام الگو"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a002/CheckErrorAlgorithm002.java:48
 msgid "Fix all incorrect tags"
