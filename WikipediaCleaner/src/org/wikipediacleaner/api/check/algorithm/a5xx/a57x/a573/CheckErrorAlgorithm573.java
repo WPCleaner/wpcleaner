@@ -110,14 +110,17 @@ public class CheckErrorAlgorithm573 extends CheckErrorAlgorithmBase {
 
     // Check if the non-breaking space is useless
     boolean useless = false;
+    beginIndex = ContentsUtil.moveIndexBackwardWhileFound(contents, beginIndex - 1, " ") + 1;
     if ((beginIndex > 0) &&
         (PUNCTUATION_BEFORE.indexOf(contents.charAt(beginIndex - 1)) >= 0)) {
       useless = true;
     }
+    endIndex = ContentsUtil.moveIndexForwardWhileFound(contents, endIndex, " ");
     if ((endIndex < contents.length()) &&
         (PUNCTUATION_AFTER.indexOf(contents.charAt(endIndex)) >= 0)) {
       if ((beginIndex > 0) &&
-          (contents.charAt(beginIndex - 1) != '\n')) {
+          (contents.charAt(beginIndex - 1) != '\n') &&
+          !contents.startsWith("!!", endIndex)) {
         useless = true;
       }
     }

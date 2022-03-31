@@ -13,5 +13,3 @@ DoTasks _Common_Other.txt
 Set Namespaces 14
 FixListCheckWiki Projet:Correction_syntaxique/Analyse_574 574
 FixDump C:\Users\Nicolas\Downloads\frwiki-$-pages-articles.xml.bz2 574
-
-DoTasks _Test.txt

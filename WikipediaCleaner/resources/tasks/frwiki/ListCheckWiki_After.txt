@@ -102,6 +102,8 @@ Set Prefix [[Utilisateur:WikiCleanerBot#T3|Bot_T3_PCS#572]]
 FixListCheckWiki Projet:Correction_syntaxique/Analyse_572 572
 Set Prefix [[Utilisateur:WikiCleanerBot#T3|Bot_T3_PCS#573]]
 FixListCheckWiki Projet:Correction_syntaxique/Analyse_573 573
+Set Prefix [[Utilisateur:WikiCleanerBot#T3|Bot_T3_PCS#565]]
+FixListCheckWiki Projet:Correction_syntaxique/Analyse_575 575
 Set Prefix [[Utilisateur:WikiCleanerBot#T3|Bot_T3_PCS#564]]
 UpdateUnknownParameterWarnings
 
@@ -137,6 +139,8 @@ Set Prefix [[Utilisateur:WikiCleanerBot#T3|Bot_T3_PCS#569]]
 FixListCheckWiki Projet:Correction_syntaxique/Analyse_569 569
 Set Prefix [[Utilisateur:WikiCleanerBot#T3|Bot_T3_PCS#573]]
 FixListCheckWiki Projet:Correction_syntaxique/Analyse_573 573
+Set Prefix [[Utilisateur:WikiCleanerBot#T3|Bot_T3_PCS#575]]
+FixListCheckWiki Projet:Correction_syntaxique/Analyse_575 575
 
 # Category namespace
 DoTasks _Common_Other.txt
@@ -194,6 +198,8 @@ Set Prefix [[Utilisateur:WikiCleanerBot#T3|Bot_T3_PCS#569]]
 FixListCheckWiki Projet:Correction_syntaxique/Analyse_569 569
 Set Prefix [[Utilisateur:WikiCleanerBot#T3|Bot_T3_PCS#573]]
 FixListCheckWiki Projet:Correction_syntaxique/Analyse_573 573
+Set Prefix [[Utilisateur:WikiCleanerBot#T3|Bot_T3_PCS#575]]
+FixListCheckWiki Projet:Correction_syntaxique/Analyse_575 575
 
 # Other tasks
 DoTasks ISBN_ISSN.txt
