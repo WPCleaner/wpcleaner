@@ -8,14 +8,24 @@
 package org.wikipediacleaner.api.check.algorithm.a5xx.a57x.a573;
 
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import org.wikipediacleaner.api.algorithm.AlgorithmParameter;
+import org.wikipediacleaner.api.algorithm.AlgorithmParameterElement;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase;
+import org.wikipediacleaner.api.configuration.WPCConfiguration;
+import org.wikipediacleaner.api.data.PageElementTemplate;
+import org.wikipediacleaner.api.data.PageElementTemplate.Parameter;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
 import org.wikipediacleaner.api.data.contents.ContentsUtil;
+import org.wikipediacleaner.i18n.GT;
 
 
 /**
@@ -128,6 +138,20 @@ public class CheckErrorAlgorithm573 extends CheckErrorAlgorithmBase {
       return false;
     }
 
+    // Ignore specific situations
+    if (!ignoreTemplates.isEmpty()) {
+      PageElementTemplate template = analysis.isInTemplate(index);
+      if (template != null) {
+        Parameter parameter = template.getParameterAtIndex(index);
+        Set<String> parameters = ignoreTemplates.get(template.getTemplateName());
+        if ((parameter != null) &&
+            (parameters != null) &&
+            (parameters.contains(parameter.getComputedName()))) {
+          return false;
+        }
+      }
+    }
+
     if (errors == null) {
       return true;
     }
@@ -163,5 +187,59 @@ public class CheckErrorAlgorithm573 extends CheckErrorAlgorithmBase {
       return analysis.getContents();
     }
     return fixUsingAutomaticReplacement(analysis);
+  }
+
+  /* ====================================================================== */
+  /* PARAMETERS                                                             */
+  /* ====================================================================== */
+
+  /** Templates and parameters that are ignored */
+  private static final String PARAMETER_IGNORE_TEMPLATES = "ignore_templates";
+
+  /**
+   * Initialize settings for the algorithm.
+   * 
+   * @see org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase#initializeSettings()
+   */
+  @Override
+  protected void initializeSettings() {
+    String tmp = getSpecificProperty(PARAMETER_IGNORE_TEMPLATES, true, true, false);
+    ignoreTemplates.clear();
+    if (tmp != null) {
+      List<String[]> tmpList = WPCConfiguration.convertPropertyToStringArrayList(tmp);
+      for (String[] template : tmpList) {
+        if (template.length > 0) {
+          Set<String> parameters = ignoreTemplates.computeIfAbsent(template[0], key -> new HashSet<>());
+          for (int index = 1; index < template.length; index++) {
+            parameters.add(template[index]);
+          }
+        }
+      }
+    }
+  }
+
+  /** Templates and parameters that are ignored */
+  private final Map<String, Set<String>> ignoreTemplates = new HashMap<>();
+
+  /**
+   * Build the list of parameters for this algorithm.
+   */
+  @Override
+  protected void addParameters() {
+    super.addParameters();
+    addParameter(new AlgorithmParameter(
+        PARAMETER_IGNORE_TEMPLATES,
+        GT._T("Templates to ignore"),
+        new AlgorithmParameterElement[] {
+            new AlgorithmParameterElement(
+                "group",
+                GT._T("Name of the template")),
+            new AlgorithmParameterElement(
+                "template",
+                GT._T("Name of the parameter"),
+                true,
+                true)
+        },
+        true));
   }
 }

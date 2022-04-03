@@ -102,7 +102,7 @@ Set Prefix [[Utilisateur:WikiCleanerBot#T3|Bot_T3_PCS#572]]
 FixListCheckWiki Projet:Correction_syntaxique/Analyse_572 572
 Set Prefix [[Utilisateur:WikiCleanerBot#T3|Bot_T3_PCS#573]]
 FixListCheckWiki Projet:Correction_syntaxique/Analyse_573 573
-Set Prefix [[Utilisateur:WikiCleanerBot#T3|Bot_T3_PCS#565]]
+Set Prefix [[Utilisateur:WikiCleanerBot#T3|Bot_T3_PCS#575]]
 FixListCheckWiki Projet:Correction_syntaxique/Analyse_575 575
 Set Prefix [[Utilisateur:WikiCleanerBot#T3|Bot_T3_PCS#564]]
 UpdateUnknownParameterWarnings
