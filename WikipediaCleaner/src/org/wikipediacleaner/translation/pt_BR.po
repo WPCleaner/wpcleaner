@@ -16,7 +16,7 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2022-03-24 12:19:18+0000\n"
+"PO-Revision-Date: 2022-04-04 11:19:25+0000\n"
 "Last-Translator: Felipe L. <felipe.idj@hotmail.com>\n"
 "Language-Team: Brazilian Portuguese <pt_BR@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -26,7 +26,7 @@ msgstr ""
 "X-Launchpad-Export-Date: 2017-03-22 17:48+0000\n"
 "X-Generator: MediaWiki 1.39.0-alpha; Translate 2022-01-19\n"
 "Language: pt_br\n"
-"X-POT-Import-Date: 2022-03-22 21:35:14+0000\n"
+"X-POT-Import-Date: 2022-04-03 22:30:22+0000\n"
 
 #: org/wikipediacleaner/Version.java:31
 #, java-format
@@ -320,6 +320,7 @@ msgstr "Uma substituição para {0}"
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a566/CheckErrorAlgorithm566.java:283
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a572/CheckErrorAlgorithm572.java:290
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a572/CheckErrorAlgorithm572.java:310
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a573/CheckErrorAlgorithm573.java:236
 msgid "Name of the template"
 msgstr "Nome da predefinição"
 
@@ -334,6 +335,7 @@ msgstr "Nome da predefinição"
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:420
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a572/CheckErrorAlgorithm572.java:293
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a572/CheckErrorAlgorithm572.java:313
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a573/CheckErrorAlgorithm573.java:239
 msgid "Name of the parameter"
 msgstr "Nome do parâmetro"
 
@@ -1598,16 +1600,17 @@ msgid "Template parameter in which empty list items should be ignored"
 msgstr "Parâmetro da predefinição no qual os itens da lista vazia devem ser ignorados"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a548/CheckErrorAlgorithm548.java:356
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a550/CheckErrorAlgorithm550.java:208
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a550/CheckErrorAlgorithm550.java:271
 msgid "Links to ignore"
 msgstr "Links para ignorar"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a548/CheckErrorAlgorithm548.java:359
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a550/CheckErrorAlgorithm550.java:211
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a550/CheckErrorAlgorithm550.java:274
 msgid "Link to ignore"
 msgstr "Link para ignorar"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a552/CheckErrorAlgorithm552.java:284
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a573/CheckErrorAlgorithm573.java:232
 msgid "Templates to ignore"
 msgstr "Predefinições a serem ignoradas"
 
