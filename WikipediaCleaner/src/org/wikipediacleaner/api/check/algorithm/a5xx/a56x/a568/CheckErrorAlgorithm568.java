@@ -13,7 +13,6 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 
 import org.wikipediacleaner.api.API;
 import org.wikipediacleaner.api.APIException;
@@ -60,32 +59,37 @@ public class CheckErrorAlgorithm568 extends CheckErrorAlgorithmBase {
     if (analysis == null) {
       return false;
     }
-
-    return analyzeTemplates(analysis, errors);
-  }
-
-  /**
-   * Analyze a page to check if errors are present in templates.
-   * 
-   * @param analysis Page analysis.
-   * @param errors Errors found in the page.
-   * @return Flag indicating if the error was found.
-   */
-  private boolean analyzeTemplates(
-      PageAnalysis analysis,
-      Collection<CheckErrorResult> errors) {
-    if (templateParams.isEmpty()) {
+    if (configurationByTemplateName.isEmpty()) {
       return false;
     }
+
     boolean result = false;
     List<PageElementTemplate> templates = analysis.getTemplates();
     for (PageElementTemplate template : templates) {
-      Map<String, Boolean> templateParam = templateParams.get(template.getTemplateName());
-      if (templateParam != null) {
-        for (Entry<String, Boolean> paramConfig : templateParam.entrySet()) {
-          result |= analyzeTemplateParam(analysis, errors, template, paramConfig.getKey(), paramConfig.getValue());
-        }
-      }
+      result |= analyzeTemplate(analysis, errors, template);
+    }
+    return result;
+  }
+
+  /**
+   * Analyze a template to check if errors are present.
+   * 
+   * @param analysis Page analysis.
+   * @param errors Errors found in the page.
+   * @param template Template to be checked.
+   * @return Flag indicating if the error was found.
+   */
+  private boolean analyzeTemplate(
+      PageAnalysis analysis,
+      Collection<CheckErrorResult> errors,
+      PageElementTemplate template) {
+    TemplateConfiguration templateConfiguration = configurationByTemplateName.get(template.getTemplateName());
+    if (templateConfiguration == null) {
+      return false;
+    }
+    boolean result = false;
+    for (int paramNum = 0; paramNum < template.getParameterCount(); paramNum++) {
+      result |= analyzeTemplateParam(analysis, errors, template, paramNum, templateConfiguration);
     }
     return result;
   }
@@ -104,13 +108,17 @@ public class CheckErrorAlgorithm568 extends CheckErrorAlgorithmBase {
       PageAnalysis analysis,
       Collection<CheckErrorResult> errors,
       PageElementTemplate template,
-      String paramName,
-      Boolean onlyInteger) {
-    int paramIndex = template.getParameterIndex(paramName);
-    if (paramIndex < 0) {
+      int paramNum,
+      TemplateConfiguration templateConfiguration) {
+
+    // Check if parameter is formatted with formatnum
+    PageElementTemplate.Parameter param = template.getParameter(paramNum);
+    Boolean onlyInteger = templateConfiguration.getParam(param.getComputedName());
+    if (onlyInteger == null) {
       return false;
     }
-    PageElementTemplate.Parameter param = template.getParameter(paramIndex);
+
+    // Check if parameter is correctly formatted
     if (Numeric.isValidFormatnum(analysis, param.getValue(), param.getValueStartIndex())) {
       return false;
     }
@@ -209,30 +217,19 @@ public class CheckErrorAlgorithm568 extends CheckErrorAlgorithmBase {
       }
     }
 
+    configurationByTemplateName.clear();
     tmp = getSpecificProperty(PARAMETER_TEMPLATE_PARAMS, true, true, false);
-    templateParams.clear();
     if (tmp != null) {
       List<String[]> tmpList = WPCConfiguration.convertPropertyToStringArrayList(tmp);
-      if (tmpList != null) {
-        for (String[] tmpElement : tmpList) {
-          if (tmpElement.length > 2) {
-            String templateName = tmpElement[0];
-            Boolean onlyInteger = Boolean.valueOf(tmpElement[1]);
-            Map<String, Boolean> params = templateParams.computeIfAbsent(templateName, name -> new HashMap<>());
-            for (int elementNum = 2; elementNum < tmpElement.length; elementNum++) {
-              params.put(tmpElement[elementNum], onlyInteger);
-            }
-          }
-        }
-      }
+      TemplateConfiguration.addTemplateParams(tmpList, configurationByTemplateName);
     }
   }
 
   /** Categories for templates that can be used for an abbreviation */
   private final List<String> categories = new ArrayList<>();
 
-  /** Template parameters that are used directly in a formatnum */
-  private final Map<String, Map<String, Boolean>> templateParams = new HashMap<>();
+  /** Configuration */
+  private final Map<String, TemplateConfiguration>  configurationByTemplateName = new HashMap<>();
 
   /**
    * Build the list of parameters for this algorithm.
