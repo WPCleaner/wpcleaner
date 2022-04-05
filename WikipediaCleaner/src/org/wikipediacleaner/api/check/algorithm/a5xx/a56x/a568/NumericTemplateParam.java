@@ -8,7 +8,9 @@
 
 package org.wikipediacleaner.api.check.algorithm.a5xx.a56x.a568;
 
-import org.wikipediacleaner.api.check.CheckErrorResult;
+import java.util.Optional;
+
+import org.wikipediacleaner.api.check.algorithm.a5xx.TemplateParameterSuggestion;
 import org.wikipediacleaner.api.check.algorithm.a5xx.a56x.a567.Numeric;
 import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
@@ -35,11 +37,11 @@ class NumericTemplateParam extends Numeric {
   }
 
   /**
-   * Add suggestions for an invalid numeric template parameter
+   * Get suggestion for an invalid numeric template parameter
    * 
-   * @param errorResult
+   * @return Optional suggestion
    */
-  public void addSuggestions(CheckErrorResult errorResult) {
+  public Optional<TemplateParameterSuggestion> getSuggestion() {
     boolean tryAgain = true;
     while (tryAgain) {
       tryAgain = false;
@@ -50,16 +52,11 @@ class NumericTemplateParam extends Numeric {
       tryAgain |= replaceCommaByDot();
       tryAgain |= removeFormatnum();
     }
-
-    // Replace if the new value is valid
-    if (isValidFormatnum(analysis, value, beginValue)) {
-      String contents = analysis.getContents();
-      String prefix = contents.substring(parameter.getBeginIndex(), initialBeginValue);
-      String suffix = contents.substring(initialEndValue, parameter.getEndIndex());
-      errorResult.addReplacement(
-          prefix + value + suffix,
-          automatic);
-      return;
+    if (!isValidFormatnum(analysis, value, beginValue)) {
+      return Optional.empty();
     }
+
+    return Optional.of(TemplateParameterSuggestion.replaceParam(
+        analysis.getContents(), parameter, parameter.getComputedName(), value, automatic));
   }
 }

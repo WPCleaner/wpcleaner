@@ -194,4 +194,42 @@ public class TemplateParameterSuggestion {
     }
     return deleteParam(contents, templateParam, automaticDeletion);
   }
+
+  public static TemplateParameterSuggestion splitParam(
+      String contents,
+      PageElementTemplate template,
+      PageElementTemplate.Parameter templateParam,
+      int splitIndex,
+      String otherName,
+      boolean automaticReplacement,
+      boolean automaticDeletion) {
+
+    // Simple trimming if new parameter already exists with the correct value
+    int otherParamIndex = template.getParameterIndex(otherName);
+    PageElementTemplate.Parameter otherParam = (otherParamIndex < 0) ? null : template.getParameter(otherParamIndex);
+    if (otherParam != null) {
+      String otherValue = contents.substring(splitIndex, templateParam.getEndIndex());
+      if (StringUtils.equals(otherParam.getValue(), otherValue)) {
+        String replacement = contents.substring(templateParam.getBeginIndex(), splitIndex);
+        return new TemplateParameterSuggestion(replacement, otherName, automaticDeletion);
+      }
+    }
+
+    // Do nothing if new parameter already exists
+    if (otherParam != null) {
+      String replacement = contents.substring(templateParam.getBeginIndex(), templateParam.getEndIndex());
+      return new TemplateParameterSuggestion(replacement, templateParam.getComputedName(), false);
+    }
+
+    // Split parameter
+    int beginIndex = templateParam.getBeginIndex();
+    int endIndex = templateParam.getEndIndex();
+    String newText =
+        contents.substring(beginIndex, splitIndex) +
+        " | " +
+        otherName +
+        " = " +
+        contents.substring(splitIndex, endIndex);
+    return new TemplateParameterSuggestion(newText, otherName, automaticReplacement);
+  }
 }

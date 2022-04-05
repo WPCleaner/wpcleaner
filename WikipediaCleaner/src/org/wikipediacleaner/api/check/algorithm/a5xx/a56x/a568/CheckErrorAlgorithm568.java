@@ -13,6 +13,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import org.wikipediacleaner.api.API;
 import org.wikipediacleaner.api.APIException;
@@ -21,7 +22,7 @@ import org.wikipediacleaner.api.algorithm.AlgorithmParameter;
 import org.wikipediacleaner.api.algorithm.AlgorithmParameterElement;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase;
-import org.wikipediacleaner.api.check.algorithm.a5xx.a56x.a567.Numeric;
+import org.wikipediacleaner.api.check.algorithm.a5xx.TemplateParameterSuggestion;
 import org.wikipediacleaner.api.configuration.WPCConfiguration;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.DataManager;
@@ -30,7 +31,6 @@ import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.Page.RelatedPages;
 import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
-import org.wikipediacleaner.api.data.contents.tag.WikiTagType;
 import org.wikipediacleaner.i18n.GT;
 
 
@@ -111,30 +111,26 @@ public class CheckErrorAlgorithm568 extends CheckErrorAlgorithmBase {
       int paramNum,
       TemplateConfiguration templateConfiguration) {
 
-    // Check if parameter is formatted with formatnum
-    PageElementTemplate.Parameter param = template.getParameter(paramNum);
-    Boolean onlyInteger = templateConfiguration.getParam(param.getComputedName());
-    if (onlyInteger == null) {
+    // Check if an error is present
+    Optional<List<TemplateParameterSuggestion>> suggestions = templateConfiguration.analyzeParam(analysis, template, paramNum);
+    if (!suggestions.isPresent()) {
       return false;
     }
-
-    // Check if parameter is correctly formatted
-    if (Numeric.isValidFormatnum(analysis, param.getValue(), param.getValueStartIndex())) {
-      return false;
-    }
-    int beginIndex = param.getBeginIndex();
-    int endIndex = param.getEndIndex();
-    if ((analysis.getSurroundingTag(WikiTagType.NOWIKI, beginIndex) != null) ||
-        (analysis.getSurroundingTag(WikiTagType.TEMPLATEDATA, beginIndex) != null)) {
-      return false;
-    }
-
-    // Report error
     if (errors == null) {
       return true;
     }
+
+    // Report error
+    PageElementTemplate.Parameter param = template.getParameter(paramNum);
+    int beginIndex = param.getBeginIndex();
+    int endIndex = param.getEndIndex();
     CheckErrorResult errorResult = createCheckErrorResult(analysis, beginIndex, endIndex);
-    new NumericTemplateParam(analysis, param, onlyInteger).addSuggestions(errorResult);
+    errorResult.addText(GT._T("Template {0}", template.getTemplateName()));
+    for (TemplateParameterSuggestion suggestion : suggestions.get()) {
+      boolean automatic = suggestion.isAutomatic();
+      automatic &= (suggestion.getParamName() == null) || (template.getParameterValue(suggestion.getParamName()) == null);
+      errorResult.addReplacement(suggestion.getReplacement(), automatic);
+    }
     errors.add(errorResult);
     return true;
   }
@@ -201,6 +197,9 @@ public class CheckErrorAlgorithm568 extends CheckErrorAlgorithmBase {
   /** Template parameters that are used directly in a formatnum */
   private static final String PARAMETER_TEMPLATE_PARAMS = "template_params";
 
+  /** Template parameters that can store references */
+  private static final String PARAMETER_REF_PARAMS = "ref_params";
+
   /**
    * Initialize settings for the algorithm.
    * 
@@ -222,6 +221,11 @@ public class CheckErrorAlgorithm568 extends CheckErrorAlgorithmBase {
     if (tmp != null) {
       List<String[]> tmpList = WPCConfiguration.convertPropertyToStringArrayList(tmp);
       TemplateConfiguration.addTemplateParams(tmpList, configurationByTemplateName);
+    }
+    tmp = getSpecificProperty(PARAMETER_REF_PARAMS, true, true, false);
+    if (tmp != null) {
+      List<String[]> tmpList = WPCConfiguration.convertPropertyToStringArrayList(tmp);
+      TemplateConfiguration.addRefParams(tmpList, configurationByTemplateName);
     }
   }
 
@@ -251,6 +255,15 @@ public class CheckErrorAlgorithm568 extends CheckErrorAlgorithmBase {
             new AlgorithmParameterElement("template name", GT._T("Template name")),
             new AlgorithmParameterElement("only integer", GT._T("If parameters accept only integer values")),
             new AlgorithmParameterElement("parameter name", GT._T("Parameter name"), false, true)
+        },
+        true));
+    addParameter(new AlgorithmParameter(
+        PARAMETER_REF_PARAMS,
+        GT._T("Template parameters that can contain a reference"),
+        new AlgorithmParameterElement[] {
+            new AlgorithmParameterElement("template name", GT._T("Template name")),
+            new AlgorithmParameterElement("initial parameter name", GT._T("Parameter name with the formatnum")),
+            new AlgorithmParameterElement("reference parameter name", GT._T("Parameter name that can contain a reference"))
         },
         true));
   }
