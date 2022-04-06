@@ -103,6 +103,10 @@ class TemplateConfiguration {
           String contents = analysis.getContents();
           String newValue = contents.substring(param.getValueStartIndex(), tag.getCompleteBeginIndex());
           boolean automatic = Numeric.isValidFormatnum(analysis, newValue, param.getValueStartIndex());
+          if (!automatic) {
+            String leftValue = contents.substring(param.getValueStartIndex(), tag.getCompleteBeginIndex());
+            automatic = (leftValue.indexOf('<') < 0) || (leftValue.indexOf('>') < 0);
+          }
           results.add(TemplateParameterSuggestion.splitParam(
               contents, template, param, tag.getCompleteBeginIndex(), refParam, automatic, automatic));
         }

@@ -43,20 +43,24 @@ class NumericTemplateParam extends Numeric {
    */
   public Optional<TemplateParameterSuggestion> getSuggestion() {
     boolean tryAgain = true;
+    boolean safe = true;
     while (tryAgain) {
+      boolean tryAgainUnsafe = false;
       tryAgain = false;
       tryAgain |= replaceIncorrectMinus();
       tryAgain |= removeWhitespaceBetweenDigits();
-      tryAgain |= removeThousandSeparators(onlyInteger ? 1 : 2);
-      tryAgain |= removeCommasAfterDot();
-      tryAgain |= replaceCommaByDot();
+      tryAgainUnsafe |= removeThousandSeparators(onlyInteger ? 1 : 2);
+      tryAgainUnsafe |= removeCommasAfterDot();
+      tryAgainUnsafe |= replaceCommaByDot();
       tryAgain |= removeFormatnum();
+      tryAgain |= tryAgainUnsafe;
+      safe &= !tryAgainUnsafe;
     }
     if (!isValidFormatnum(analysis, value, beginValue)) {
       return Optional.empty();
     }
 
     return Optional.of(TemplateParameterSuggestion.replaceParam(
-        analysis.getContents(), parameter, parameter.getComputedName(), value, automatic));
+        analysis.getContents(), parameter, parameter.getComputedName(), value, automatic || safe));
   }
 }

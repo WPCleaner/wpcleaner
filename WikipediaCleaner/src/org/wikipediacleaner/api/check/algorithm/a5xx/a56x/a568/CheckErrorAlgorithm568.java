@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import org.apache.commons.lang3.StringUtils;
 import org.wikipediacleaner.api.API;
 import org.wikipediacleaner.api.APIException;
 import org.wikipediacleaner.api.APIFactory;
@@ -128,7 +129,10 @@ public class CheckErrorAlgorithm568 extends CheckErrorAlgorithmBase {
     errorResult.addText(GT._T("Template {0}", template.getTemplateName()));
     for (TemplateParameterSuggestion suggestion : suggestions.get()) {
       boolean automatic = suggestion.isAutomatic();
-      automatic &= (suggestion.getParamName() == null) || (template.getParameterValue(suggestion.getParamName()) == null);
+      automatic &=
+          (suggestion.getParamName() == null) ||
+          (template.getParameterValue(suggestion.getParamName()) == null) ||
+          StringUtils.equals(param.getName(), suggestion.getParamName());
       errorResult.addReplacement(suggestion.getReplacement(), automatic);
     }
     errors.add(errorResult);

@@ -218,7 +218,7 @@ public class Numeric {
   }
 
   /**
-   * @return True if a reference was extracted from the text.
+   * @return True if a formatnum was extracted from the text.
    */
   protected boolean removeFormatnum() {
     if (value.isEmpty()) {
