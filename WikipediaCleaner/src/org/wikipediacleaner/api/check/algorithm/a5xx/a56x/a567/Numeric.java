@@ -175,7 +175,7 @@ public class Numeric {
    * @return True if the comma has been replaced by a dot.
    */
   protected boolean replaceCommaByDot() {
-    // Check if we have digits + comma + no more than 2 digits
+    // Check if we have digits + comma + digits
     if (value.isEmpty()) {
       return false;
     }
@@ -191,8 +191,12 @@ public class Numeric {
         (endDigit2 < value.length())) {
       return false;
     }
-    if ((endDigit2 > endDigit + 3) && (endDigit - beginDigit <= 3)) {
-      return false;
+
+    // Check that we have either 0,.... or no more than 2 digits after the comma
+    if ((endDigit > beginDigit + 1) || (value.charAt(beginDigit) != '0')) {
+      if ((endDigit2 > endDigit + 3) && (endDigit - beginDigit <= 3)) {
+        return false;
+      }
     }
 
     // Replace comma by dot
