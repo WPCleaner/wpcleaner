@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2022-04-04 11:19:22+0000\n"
+"PO-Revision-Date: 2022-04-07 11:18:39+0000\n"
 "Last-Translator: reza <reza.energy@gmail.com>\n"
 "Language-Team: Persian <fa@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -23,7 +23,7 @@ msgstr ""
 "X-Launchpad-Export-Date: 2016-11-01 21:08+0000\n"
 "X-Generator: MediaWiki 1.39.0-alpha; Translate 2022-01-19\n"
 "Language: fa\n"
-"X-POT-Import-Date: 2022-04-03 22:30:22+0000\n"
+"X-POT-Import-Date: 2022-04-05 22:30:20+0000\n"
 
 #: org/wikipediacleaner/Version.java:31
 #, java-format
@@ -89,7 +89,7 @@ msgstr "شناخت‌های زیادی به ابزار افزوده شده‌ا�
 
 #: org/wikipediacleaner/Version.java:53
 msgid "You may need to update the Check Wiki translation file on your wiki to configure the new detections."
-msgstr "شما باید فایل ترجمه ویکی چک در ویکی‌تان را به‌روز کنید تا شناخت‌های جدید فعال شوند."
+msgstr "شما باید فایل ترجمه ویکی چک در ویکی‌تان را به‌روزرسانی کنید تا شناخت‌های جدید فعال شوند."
 
 #: org/wikipediacleaner/Version.java:54
 msgid "Disambiguator extension has been deployed to all WMF wikis."
@@ -1128,7 +1128,8 @@ msgid "Similar ISSN"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a1xx/a11x/a111/CheckErrorAlgorithm111.java:204
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a568/CheckErrorAlgorithm568.java:254
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a568/CheckErrorAlgorithm568.java:255
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a568/CheckErrorAlgorithm568.java:264
 msgid "Template name"
 msgstr ""
 
@@ -1737,6 +1738,7 @@ msgid "Parameters that should be ignored"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:137
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a568/CheckErrorAlgorithm568.java:128
 #, java-format
 msgid "Template {0}"
 msgstr ""
@@ -1838,13 +1840,13 @@ msgid "Default value for the meaning"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a567/CheckErrorAlgorithm567.java:238
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a568/CheckErrorAlgorithm568.java:245
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a568/CheckErrorAlgorithm568.java:246
 #, java-format
 msgid "Categories listing pages using non-numeric {0} arguments"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a567/CheckErrorAlgorithm567.java:241
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a568/CheckErrorAlgorithm568.java:248
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a568/CheckErrorAlgorithm568.java:249
 #, java-format
 msgid "Name of a category listing pages using non-numeric {0} arguments"
 msgstr ""
@@ -1865,17 +1867,29 @@ msgstr ""
 msgid "Suffix that can be safely extracted"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a568/CheckErrorAlgorithm568.java:252
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a568/CheckErrorAlgorithm568.java:253
 msgid "Template parameters that should only contain numeric arguments"
 msgstr "پارامترهای الگو که تنها باید شامل آرگومان‌های عددی باشند"
 
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a568/CheckErrorAlgorithm568.java:255
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a568/CheckErrorAlgorithm568.java:256
 msgid "If parameters accept only integer values"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a568/CheckErrorAlgorithm568.java:256
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a568/CheckErrorAlgorithm568.java:257
 msgid "Parameter name"
 msgstr "نام پارامتر"
+
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a568/CheckErrorAlgorithm568.java:262
+msgid "Template parameters that can contain a reference"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a568/CheckErrorAlgorithm568.java:265
+msgid "Parameter name with the formatnum"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a568/CheckErrorAlgorithm568.java:266
+msgid "Parameter name that can contain a reference"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a572/CheckErrorAlgorithm572.java:286
 msgid "Templates for which unknown values should be verified"
@@ -3455,7 +3469,7 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/action/ActionUpdateWarning.java:448
 msgid "Do you want to update the unknown parameter warning on talk page?"
-msgstr "آیا می‌خواهید هشدار پارامتر نامعلوم در صفحهٔ بحث را به‌روز کنید؟"
+msgstr "آیا می‌خواهید هشدار پارامتر نامعلوم در صفحهٔ بحث را به‌روزرسانی کنید؟"
 
 #: org/wikipediacleaner/gui/swing/action/ActionUpdateWarning.java:493
 msgid "You must input a page name for updating warnings"
