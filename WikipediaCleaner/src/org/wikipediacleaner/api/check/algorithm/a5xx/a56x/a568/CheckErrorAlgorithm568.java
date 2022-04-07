@@ -204,6 +204,9 @@ public class CheckErrorAlgorithm568 extends CheckErrorAlgorithmBase {
   /** Template parameters that can store references */
   private static final String PARAMETER_REF_PARAMS = "ref_params";
 
+  /** Suffixes that can be removed */
+  private static final String PARAMETER_REMOVE_SUFFIX = "remove_suffix";
+
   /**
    * Initialize settings for the algorithm.
    * 
@@ -230,6 +233,11 @@ public class CheckErrorAlgorithm568 extends CheckErrorAlgorithmBase {
     if (tmp != null) {
       List<String[]> tmpList = WPCConfiguration.convertPropertyToStringArrayList(tmp);
       TemplateConfiguration.addRefParams(tmpList, configurationByTemplateName);
+    }
+    tmp = getSpecificProperty(PARAMETER_REMOVE_SUFFIX, true, true, false);
+    if (tmp != null) {
+      List<String[]> tmpList = WPCConfiguration.convertPropertyToStringArrayList(tmp);
+      TemplateConfiguration.addRemoveSuffixes(tmpList, configurationByTemplateName);
     }
   }
 

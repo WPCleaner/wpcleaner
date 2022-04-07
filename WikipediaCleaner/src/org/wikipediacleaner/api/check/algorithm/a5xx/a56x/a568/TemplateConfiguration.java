@@ -34,11 +34,14 @@ class TemplateConfiguration {
   @Nonnull private final Map<String, Boolean> params;
 
   @Nonnull private final Map<String, String> refParams;
+  
+  @Nonnull private final Map<String, List<String>> removeSuffixes;
 
   private TemplateConfiguration(@Nonnull String templateName) {
     this.templateName = templateName;
     this.params = new HashMap<>();
     this.refParams = new HashMap<>();
+    this.removeSuffixes = new HashMap<>();
   }
 
   /**
@@ -78,7 +81,8 @@ class TemplateConfiguration {
       return Optional.empty();
     }
     final String paramValue = param.getValue();
-    if (Numeric.isValidFormatnum(analysis, paramValue, param.getValueStartIndex())) {
+    final int valueStartIndex = param.getValueStartIndex();
+    if (Numeric.isValidFormatnum(analysis, paramValue, valueStartIndex)) {
       return Optional.empty();
     }
 
@@ -91,24 +95,39 @@ class TemplateConfiguration {
 
     // Add suggestion for tweaking the value
     List<TemplateParameterSuggestion> results = new ArrayList<>();
-    new NumericTemplateParam(analysis, param, onlyInteger).getSuggestion().ifPresent(
-        suggestion -> results.add(suggestion));
+    new NumericTemplateParam(analysis, param, onlyInteger).getSuggestion().map(results::add);
 
     // Add suggestion for splitting the parameter
     String refParam = refParams.get(paramName);
     if (refParam != null) {
       if (paramValue.endsWith(">")) {
-        PageElementTag tag = analysis.isInTag(param.getValueStartIndex() + paramValue.length() - 1, WikiTagType.REF);
+        PageElementTag tag = analysis.isInTag(valueStartIndex + paramValue.length() - 1, WikiTagType.REF);
         if ((tag != null) && tag.isComplete()) {
           String contents = analysis.getContents();
-          String newValue = contents.substring(param.getValueStartIndex(), tag.getCompleteBeginIndex());
-          boolean automatic = Numeric.isValidFormatnum(analysis, newValue, param.getValueStartIndex());
+          String newValue = contents.substring(valueStartIndex, tag.getCompleteBeginIndex());
+          boolean automatic = Numeric.isValidFormatnum(analysis, newValue, valueStartIndex);
           if (!automatic) {
-            String leftValue = contents.substring(param.getValueStartIndex(), tag.getCompleteBeginIndex());
+            String leftValue = contents.substring(valueStartIndex, tag.getCompleteBeginIndex());
             automatic = (leftValue.indexOf('<') < 0) || (leftValue.indexOf('>') < 0);
           }
           results.add(TemplateParameterSuggestion.splitParam(
               contents, template, param, tag.getCompleteBeginIndex(), refParam, automatic, automatic));
+        }
+      }
+    }
+
+    // Add suggestion for removing suffixes
+    List<String> suffixes = removeSuffixes.get(paramName);
+    if (suffixes != null) {
+      boolean found = false;
+      for (String suffix : suffixes) {
+        if (paramValue.endsWith(suffix)) {
+          String contents = analysis.getContents();
+          String newValue =
+              contents.substring(valueStartIndex, valueStartIndex + paramValue.length() - suffix.length()).trim();
+          NumericTemplateParam numeric = new NumericTemplateParam(analysis, param, newValue, onlyInteger && !found);
+          numeric.getSuggestion().map(results::add);
+          found = true;
         }
       }
     }
@@ -187,5 +206,43 @@ class TemplateConfiguration {
     String refParam = rawConfiguration[2];
     TemplateConfiguration templateConfig = configuration.computeIfAbsent(templateName, k -> new TemplateConfiguration(templateName));
     templateConfig.refParams.put(initialParam, refParam);
+  }
+
+  /**
+   * Add suffixes to remove from the full raw configuration.
+   * 
+   * @param rawConfiguration Raw configuration for suffixes to remove.
+   * @param configuration Configuration.
+   */
+  public static void addRemoveSuffixes(
+      @Nullable List<String[]> rawConfiguration,
+      @Nonnull Map<String, TemplateConfiguration> configuration) {
+    if (rawConfiguration == null) {
+      return;
+    }
+    for (String[] line : rawConfiguration) {
+      addRemoveSuffixes(line, configuration);
+    }
+  }
+
+  /**
+   * Add suffixes to remove from one line of the raw configuration.
+   * 
+   * @param rawConfiguration Line of the raw configuration for suffixes to remove.
+   * @param configuration Configuration.
+   */
+  public static void addRemoveSuffixes(
+      @Nullable String[] rawConfiguration,
+      @Nonnull Map<String, TemplateConfiguration> configuration) {
+    if ((rawConfiguration == null) || (rawConfiguration.length < 3)) {
+      return;
+    }
+    String templateName = rawConfiguration[0];
+    String paramName = rawConfiguration[1];
+    TemplateConfiguration templateConfig = configuration.computeIfAbsent(templateName, k -> new TemplateConfiguration(templateName));
+    List<String> suffixes = templateConfig.removeSuffixes.computeIfAbsent(paramName, k -> new ArrayList<>());
+    for (int paramNum = 2; paramNum < rawConfiguration.length; paramNum++) {
+      suffixes.add(rawConfiguration[paramNum]);
+    }
   }
 }

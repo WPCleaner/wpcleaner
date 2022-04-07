@@ -249,6 +249,43 @@ public class Numeric {
   }
 
   /**
+   * @return True if formatting was extracted from the texte
+   */
+  protected boolean removeFormatting() {
+    if (value.isEmpty()) {
+      return false;
+    }
+
+    // Check if the value is surrounded by quotes
+    char firstChar = value.charAt(0);
+    char lastChar = value.charAt(value.length() - 1);
+    if ((firstChar != '\'') || (lastChar != '\'')) {
+      return false;
+    }
+    int quotesBefore = ContentsUtil.moveIndexForwardWhileFound(value, 0, "'");
+    int quotesAfter = value.length() - ContentsUtil.moveIndexBackwardWhileFound(value, value.length() - 1, "'") - 1;
+    if (quotesBefore != quotesAfter) {
+      return false;
+    }
+    if ((quotesBefore != 2) && (quotesBefore != 3) && (quotesBefore != 5)) {
+      return false;
+    }
+    if (value.length() <= quotesBefore + quotesAfter) {
+      return false;
+    }
+    String newValue = value.substring(quotesBefore, value.length() - quotesAfter);
+    if (newValue.contains("'")) {
+      return false;
+    }
+
+    // Extract value
+    value = newValue;
+    beginValue += quotesBefore;
+    endValue -= quotesAfter;
+    return true;
+  }
+
+  /**
    * Analyze if a text is a valid numeric value.
    * 
    * @param analysis Page analysis

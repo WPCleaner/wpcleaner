@@ -26,14 +26,22 @@ class NumericTemplateParam extends Numeric {
   public NumericTemplateParam(
       final PageAnalysis analysis,
       final PageElementTemplate.Parameter parameter,
+      final String newValue,
       final Boolean onlyInteger) {
     super(
         analysis,
         parameter.getValueStartIndex(),
-        parameter.getValueStartIndex() + parameter.getValue().length(),
-        parameter.getValue());
+        parameter.getValueStartIndex() + newValue.length(),
+        newValue);
     this.parameter = parameter;
     this.onlyInteger = Boolean.TRUE.equals(onlyInteger);
+  }
+
+  public NumericTemplateParam(
+      final PageAnalysis analysis,
+      final PageElementTemplate.Parameter parameter,
+      final Boolean onlyInteger) {
+    this(analysis, parameter, parameter.getValue(), onlyInteger);
   }
 
   /**
@@ -53,6 +61,7 @@ class NumericTemplateParam extends Numeric {
       tryAgainUnsafe |= removeCommasAfterDot();
       tryAgainUnsafe |= replaceCommaByDot();
       tryAgain |= removeFormatnum();
+      tryAgain |= removeFormatting();
       tryAgain |= tryAgainUnsafe;
       safe &= !tryAgainUnsafe;
     }
