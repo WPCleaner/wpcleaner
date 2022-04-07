@@ -24,7 +24,7 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2022-04-04 11:19:26+0000\n"
+"PO-Revision-Date: 2022-04-07 11:18:42+0000\n"
 "Last-Translator: volkan <volkanyeke@gmail.com>\n"
 "Language-Team: Turkish <tr@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -34,7 +34,7 @@ msgstr ""
 "X-Launchpad-Export-Date: 2018-01-31 07:41+0000\n"
 "X-Generator: MediaWiki 1.39.0-alpha; Translate 2022-01-19\n"
 "Language: tr\n"
-"X-POT-Import-Date: 2022-04-03 22:30:22+0000\n"
+"X-POT-Import-Date: 2022-04-05 22:30:20+0000\n"
 
 #: org/wikipediacleaner/Version.java:31
 #, java-format
@@ -1136,7 +1136,8 @@ msgid "Similar ISSN"
 msgstr "Benzer ISSN"
 
 #: org/wikipediacleaner/api/check/algorithm/a1xx/a11x/a111/CheckErrorAlgorithm111.java:204
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a568/CheckErrorAlgorithm568.java:254
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a568/CheckErrorAlgorithm568.java:255
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a568/CheckErrorAlgorithm568.java:264
 msgid "Template name"
 msgstr "Şablon adı"
 
@@ -1732,6 +1733,7 @@ msgid "Parameters that should be ignored"
 msgstr "Yoksayılması gereken parametreler"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:137
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a568/CheckErrorAlgorithm568.java:128
 #, java-format
 msgid "Template {0}"
 msgstr ""
@@ -1833,13 +1835,13 @@ msgid "Default value for the meaning"
 msgstr "Anlam için varsayılan değer"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a567/CheckErrorAlgorithm567.java:238
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a568/CheckErrorAlgorithm568.java:245
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a568/CheckErrorAlgorithm568.java:246
 #, java-format
 msgid "Categories listing pages using non-numeric {0} arguments"
 msgstr "Sayısal olmayan {0} bağımsız değişkenler kullanan sayfaları listeleyen kategoriler"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a567/CheckErrorAlgorithm567.java:241
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a568/CheckErrorAlgorithm568.java:248
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a568/CheckErrorAlgorithm568.java:249
 #, java-format
 msgid "Name of a category listing pages using non-numeric {0} arguments"
 msgstr "Sayısal olmayan {0} bağımsız değişken kullanan sayfaları listeleyen bir kategorinin adı"
@@ -1860,17 +1862,29 @@ msgstr "Güvenli bir şekilde çıkarılabilen sonekler"
 msgid "Suffix that can be safely extracted"
 msgstr "Güvenli bir şekilde çıkarılabilen sonek"
 
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a568/CheckErrorAlgorithm568.java:252
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a568/CheckErrorAlgorithm568.java:253
 msgid "Template parameters that should only contain numeric arguments"
 msgstr "Yalnızca sayısal bağımsız değişkenler içermesi gereken şablon parametreleri"
 
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a568/CheckErrorAlgorithm568.java:255
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a568/CheckErrorAlgorithm568.java:256
 msgid "If parameters accept only integer values"
 msgstr "Parametreler yalnızca tamsayı değerleri kabul ederse"
 
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a568/CheckErrorAlgorithm568.java:256
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a568/CheckErrorAlgorithm568.java:257
 msgid "Parameter name"
 msgstr "Parametre adı"
+
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a568/CheckErrorAlgorithm568.java:262
+msgid "Template parameters that can contain a reference"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a568/CheckErrorAlgorithm568.java:265
+msgid "Parameter name with the formatnum"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a568/CheckErrorAlgorithm568.java:266
+msgid "Parameter name that can contain a reference"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a572/CheckErrorAlgorithm572.java:286
 msgid "Templates for which unknown values should be verified"
