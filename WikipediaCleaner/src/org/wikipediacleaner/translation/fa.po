@@ -4,6 +4,7 @@
 # Author: Beginneruser
 # Author: Huji
 # Author: Jeeputer
+# Author: Mohammad ebz
 # Author: Mojtabakd
 # --
 # This file is distributed under the same license as the wikicleaner package.
@@ -14,7 +15,7 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2022-04-11 11:20:43+0000\n"
+"PO-Revision-Date: 2022-04-14 11:20:30+0000\n"
 "Last-Translator: reza <reza.energy@gmail.com>\n"
 "Language-Team: Persian <fa@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -1742,7 +1743,7 @@ msgstr ""
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a568/CheckErrorAlgorithm568.java:128
 #, java-format
 msgid "Template {0}"
-msgstr ""
+msgstr "الگو {0}"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:340
 msgid "Templates for which unknown parameters should be verified"
@@ -2817,11 +2818,11 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1836
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:195
 msgid "Local Watchlist"
-msgstr ""
+msgstr "فهرست پیگیری محلی"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:862
 msgid "Watchlist"
-msgstr ""
+msgstr "فهرست پیگیری"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:871
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1959
@@ -2972,7 +2973,7 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1940
 msgid "List"
-msgstr ""
+msgstr "فهرست"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1963
 msgid "Random redirect pages"
@@ -3479,7 +3480,7 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/action/ActionWatchPage.java:45
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:105
 msgid "Add to local watchlist"
-msgstr ""
+msgstr "افزودن به فهرست پیگیری محلی"
 
 #: org/wikipediacleaner/gui/swing/action/ActionWatchPage.java:180
 msgid "Would you like to add this page on your local watchlist?"
@@ -4220,7 +4221,7 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/component/simple/WikiSelector.java:74
 msgid "Wiki"
-msgstr ""
+msgstr "ویکی"
 
 #: org/wikipediacleaner/gui/swing/component/simple/WikiSelector.java:84
 msgid "Other Wiki"
@@ -4931,7 +4932,7 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:261
 #: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:501
 msgid "Save list"
-msgstr ""
+msgstr "ذخیرهٔ فهرست"
 
 #: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:285
 msgid "Remove page"
