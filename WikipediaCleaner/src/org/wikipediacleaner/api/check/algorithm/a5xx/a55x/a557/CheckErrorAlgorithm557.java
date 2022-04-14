@@ -115,7 +115,7 @@ public class CheckErrorAlgorithm557 extends CheckErrorAlgorithmBase {
     if (!Character.isLetter(previousChar)) {
       return false;
     }
-    if ("ʼʹʽ".indexOf(previousChar) >= 0) {
+    if ("ʼʹʽʾʻ".indexOf(previousChar) >= 0) {
       return false;
     }
     if ((link.getText() == null) &&
@@ -127,6 +127,7 @@ public class CheckErrorAlgorithm557 extends CheckErrorAlgorithmBase {
     if (unicodeBlock != null) {
       if (UnicodeBlock.CJK_UNIFIED_IDEOGRAPHS.equals(unicodeBlock) ||
           UnicodeBlock.GREEK.equals(unicodeBlock) ||
+          UnicodeBlock.HEBREW.equals(unicodeBlock) ||
           UnicodeBlock.HIRAGANA.equals(unicodeBlock)) {
         return false;
       }
@@ -149,6 +150,16 @@ public class CheckErrorAlgorithm557 extends CheckErrorAlgorithmBase {
       }
     }
 
+    // Check if the link contains letters
+    String displayedText = link.getDisplayedTextNotTrimmed();
+    boolean characterFound = false;
+    for (int tmpIndex = 0; tmpIndex < displayedText.length(); tmpIndex++) {
+      characterFound |= Character.isLetter(displayedText.charAt(tmpIndex));
+    }
+    if (!characterFound) {
+      return false;
+    }
+
     // Check if the error should be ignored
     if (analysis.getSurroundingTag(WikiTagType.TIMELINE, beginIndex) != null) {
       return false;
@@ -163,7 +174,6 @@ public class CheckErrorAlgorithm557 extends CheckErrorAlgorithmBase {
       beginIndex--;
     }
     int endIndex = link.getEndIndex();
-    String displayedText = link.getDisplayedTextNotTrimmed();
     String prefix = contents.substring(beginIndex, link.getBeginIndex());
     CheckErrorResult errorResult = createCheckErrorResult(analysis, beginIndex, endIndex);
 
