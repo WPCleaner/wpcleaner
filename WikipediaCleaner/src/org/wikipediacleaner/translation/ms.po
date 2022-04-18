@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2022-04-07 11:18:41+0000\n"
+"PO-Revision-Date: 2022-04-18 11:19:48+0000\n"
 "Last-Translator: abuyop <Unknown>\n"
 "Language-Team: Malay <ms@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -1863,15 +1863,15 @@ msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a568/CheckErrorAlgorithm568.java:262
 msgid "Template parameters that can contain a reference"
-msgstr ""
+msgstr "Parameter templat yang boleh mengandungi rujukan"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a568/CheckErrorAlgorithm568.java:265
 msgid "Parameter name with the formatnum"
-msgstr ""
+msgstr "Nama parameter dengan formatnum"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a568/CheckErrorAlgorithm568.java:266
 msgid "Parameter name that can contain a reference"
-msgstr ""
+msgstr "Nama parameter yang mengandungi rujukan"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a572/CheckErrorAlgorithm572.java:286
 msgid "Templates for which unknown values should be verified"
