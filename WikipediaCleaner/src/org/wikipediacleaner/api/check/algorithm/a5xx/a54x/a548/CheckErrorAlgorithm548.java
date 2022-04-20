@@ -41,10 +41,12 @@ public class CheckErrorAlgorithm548 extends CheckErrorAlgorithmBase {
   }
 
   /** Characters recognized as punctuation */
-  private static final String PUNCTUATIONS = ",;("; // Avoid ":" and "."
+  private static final String PUNCTUATIONS = ",;(";
+  private static final String PUNCTUATIONS_ONLY_ALONE = ".:)";
+  private static final String ALL_PUNCTUATIONS = PUNCTUATIONS + PUNCTUATIONS_ONLY_ALONE;
 
-  /** Characters that can be replaced when they are alone */
-  private static final String PUNCTUATIONS_ALONE = PUNCTUATIONS;
+  /** Characters for which the link can be removed when they are alone */
+  private static final String REMOVE_LINK_IF_ALONE = ALL_PUNCTUATIONS;
 
   /**
    * Analyze a page to check if errors are present.
@@ -184,10 +186,15 @@ public class CheckErrorAlgorithm548 extends CheckErrorAlgorithmBase {
       return false;
     }
 
-    // Check ignore cases
+    // Ignore some links depending on the target
     if ((linkTarget != null) &&
         (linksToIgnore != null) &&
         (linksToIgnore.contains(linkTarget))) {
+      return false;
+    }
+
+    // Ignore special situations
+    if (analysis.getSurroundingTag(WikiTagType.TIMELINE, beginText) != null) {
       return false;
     }
 
@@ -198,22 +205,22 @@ public class CheckErrorAlgorithm548 extends CheckErrorAlgorithmBase {
     CheckErrorResult errorResult = createCheckErrorResult(
         analysis, link.getBeginIndex(), link.getEndIndex());
     String punctuationText = contents.substring(endText - punctuationLength, endText);
+    boolean preventAutomatic = ((linkTarget !=null) && (linkTarget.endsWith(punctuationText)));
     if (punctuationLength < endText - beginText) {
       String replacement =
           contents.substring(link.getBeginIndex(), endText - punctuationLength) +
           contents.substring(endText, link.getEndIndex()) +
           punctuationText;
       boolean automatic = true;
-      if (punctuationText.indexOf('.') >= 0) {
-        automatic = false;
-      }
-      errorResult.addReplacement(replacement, automatic);
+      automatic &= (punctuationText.indexOf('.') < 0);
+      errorResult.addReplacement(replacement, automatic && !preventAutomatic);
     } else {
       boolean automatic = false;
 
       // For some punctuation characters check what is before
-      if ((PUNCTUATIONS_ALONE.indexOf(punctuationText.trim()) >= 0) &&
-          (linkTarget != null)) {
+      if ((REMOVE_LINK_IF_ALONE.indexOf(punctuationText.trim()) >= 0) &&
+          (linkTarget != null) &&
+          !automatic) {
 
         // Ignore some elements before
         int tmpIndex = link.getBeginIndex();
@@ -244,14 +251,22 @@ public class CheckErrorAlgorithm548 extends CheckErrorAlgorithmBase {
         if ((tmpIndex > 0) && (contents.charAt(tmpIndex) == ']')) {
           if (link instanceof PageElementInternalLink) {
             PageElementInternalLink previousLink = analysis.isInInternalLink(tmpIndex);
-            if ((previousLink != null) &&
-                Page.areSameTitle(linkTarget, previousLink.getFullLink())) {
-              automatic = true;
+            if (previousLink != null) {
+              if (Page.areSameTitle(linkTarget, previousLink.getFullLink()) ||
+                  (punctuationLength == 1) ) {
+                automatic = true;
+              }
             }
           }
         }
       }
-      errorResult.addReplacement(punctuationText, automatic);
+
+      // Check if there's only punctuation
+      if ((punctuationLength == 1) && (link instanceof PageElementInternalLink)) {
+        automatic = true;
+      }
+
+      errorResult.addReplacement(punctuationText, automatic && !preventAutomatic);
     }
     errors.add(errorResult);
     return true;
@@ -279,7 +294,7 @@ public class CheckErrorAlgorithm548 extends CheckErrorAlgorithmBase {
 
     // Check if it ends with a punctuation sign
     char lastChar = text.charAt(endIndex);
-    if (PUNCTUATIONS.indexOf(lastChar) < 0) {
+    if (ALL_PUNCTUATIONS.indexOf(lastChar) < 0) {
       return 0;
     }
     endIndex--;
@@ -300,6 +315,9 @@ public class CheckErrorAlgorithm548 extends CheckErrorAlgorithmBase {
       endIndex--;
     }
 
+    if ((endIndex >= 0) && (PUNCTUATIONS_ONLY_ALONE.indexOf(lastChar) >= 0)) {
+      return 0;
+    }
     return text.length() - endIndex - 1;
   }
 
