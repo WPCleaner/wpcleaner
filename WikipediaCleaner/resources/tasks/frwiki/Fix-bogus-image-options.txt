@@ -4,7 +4,7 @@ Set Configuration MaxLintErrors 100000
 DoTasks _Common.txt
 Set Namespaces 0
 # FixDump C:\Users\Nicolas\Downloads\frwiki-$-pages-articles.xml.bz2 534
-FixLintError bogus-image-options 534
+FixLintError bogus-image-options 501 534
 
 DoTasks _Common_Other.txt
 Set Namespaces 2 4 6 12 14 100 102 104

@@ -17,6 +17,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -26,7 +27,9 @@ import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.CompositeAction;
 import org.wikipediacleaner.api.check.SimpleAction;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase;
+import org.wikipediacleaner.api.data.PageElement;
 import org.wikipediacleaner.api.data.PageElementFunction;
+import org.wikipediacleaner.api.data.PageElementImage;
 import org.wikipediacleaner.api.data.PageElementInternalLink;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.PageElementTemplate;
@@ -491,6 +494,10 @@ public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
 
     // Check each suggestion
     List<PageElementInternalLink> links = analysis.getInternalLinks();
+    List<PageElementImage> images = analysis.getImages();
+    List<PageElement> elements = Stream.of(links, images)
+        .flatMap(List::stream)
+        .collect(Collectors.toList());
     String contents = analysis.getContents();
     int contentsLength = contents.length();
     Iterator<Suggestion> itSuggestion = suggestions.iterator();
@@ -500,9 +507,9 @@ public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
         itSuggestion.remove();
         Matcher matcher = suggestion.initMatcher(contents);
 
-        // Check suggestion on each internal link
-        for (PageElementInternalLink link : links) {
-          int begin = link.getBeginIndex();
+        // Check suggestion on each element
+        for (PageElement element: elements) {
+          int begin = element.getBeginIndex();
           if (matcher.region(begin, contentsLength).lookingAt()) {
             int end = matcher.end();
             if ((end >= contentsLength) ||
