@@ -631,6 +631,7 @@ public class Bot implements BasicWorkerListener {
     // Set Typo groups
     if ("TypoGroups".equalsIgnoreCase(parameter) &&
         (actionArgs.length > 1)) {
+      typoGroups.clear();
       for (int numArg = 1; numArg < actionArgs.length; numArg++) {
         typoGroups.add(actionArgs[numArg]);
       }

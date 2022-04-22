@@ -12,6 +12,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Pattern;
 
 import org.apache.commons.lang3.StringUtils;
 import org.wikipediacleaner.api.API;
@@ -140,6 +141,14 @@ public class CheckErrorAlgorithm534 extends CheckErrorAlgorithmBase {
       for (List<Parameter> paramOther : paramsOther.values()) {
         result |= reportMultipleParameters(analysis, errors, image, paramOther, params.isEmpty());
       }
+
+      // Report special values for several group of options
+      result |= reportIncorrectValue(analysis, errors, image, paramsFormat);
+      result |= reportIncorrectValue(analysis, errors, image, paramsHAlign);
+      result |= reportIncorrectValue(analysis, errors, image, paramsVAlign);
+      for (List<Parameter> paramOther : paramsOther.values()) {
+        result |= reportIncorrectValue(analysis, errors, image, paramOther);
+      }
     }
     return result;
   }
@@ -223,6 +232,75 @@ public class CheckErrorAlgorithm534 extends CheckErrorAlgorithmBase {
         }
       }
     }
+  }
+
+  /**
+   * Report errors for incorrect value.
+   * 
+   * @param analysis Page analysis.
+   * @param errors Errors found in the page.
+   * @param image Image being analyzed.
+   * @param params List of parameters.
+   * @return Flag indicating if the error was found.
+   */
+  private boolean reportIncorrectValue(
+      PageAnalysis analysis, Collection<CheckErrorResult> errors,
+      PageElementImage image, List<Parameter> params) {
+    boolean result = false;
+    for (Parameter param : params) {
+      if ((param.getMagicWord() != null) &&
+          ImageMagicWordType.IMG_UPRIGHT.equals(param.getMagicWord().getType())) {
+        result |= reportUprightIncorrectValue(analysis, errors, image, param);
+      }
+    }
+    return result;
+  }
+
+  private static final Pattern UPRIGHT_PATTERN = Pattern.compile("\\d++(?:\\.\\d++)?");
+
+  /**
+   * Report errors for incorrect value in upright parameter.
+   * 
+   * @param analysis Page analysis.
+   * @param errors Errors found in the page.
+   * @param image Image being analyzed.
+   * @param param Parameters.
+   * @return Flag indicating if the error was found.
+   */
+  private boolean reportUprightIncorrectValue(
+      PageAnalysis analysis, Collection<CheckErrorResult> errors,
+      PageElementImage image, Parameter param) {
+
+    // Check if the value is correct
+    String paramContents = param.getContents();
+    int equalIndex = paramContents.indexOf("=");
+    if (equalIndex < 0) {
+      // We don't know how to analyze the value, so we suppose it's correct
+      return false;
+    }
+    String value = paramContents.substring(equalIndex + 1);
+    if (UPRIGHT_PATTERN.matcher(value).matches()) {
+      return false;
+    }
+
+    // Report error
+    if (errors == null) {
+      return true;
+    }
+    int beginIndex = image.getBeginIndex() + param.getBeginOffset();
+    int endIndex = image.getBeginIndex() + param.getEndOffset();
+    CheckErrorResult errorResult = createCheckErrorResult(
+        analysis, beginIndex, endIndex, ErrorLevel.ERROR);
+    String newValue = value.replaceAll(",", ".").trim();
+    if (newValue.isEmpty()) {
+      errorResult.addReplacement("", true);
+    } else if (UPRIGHT_PATTERN.matcher(newValue).matches()) {
+      errorResult.addReplacement(
+          paramContents.substring(0, equalIndex).trim() + "=" + newValue,
+          true);
+    }
+    errors.add(errorResult);
+    return true;
   }
 
   /**

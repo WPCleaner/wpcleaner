@@ -3,6 +3,7 @@ Set Configuration MaxLintErrors 100000
 
 DoTasks _Common.txt
 Set Namespaces 0
+Set TypoGroups bogus-image-options
 # FixDump C:\Users\Nicolas\Downloads\frwiki-$-pages-articles.xml.bz2 534
 FixLintError bogus-image-options 501 534
 
