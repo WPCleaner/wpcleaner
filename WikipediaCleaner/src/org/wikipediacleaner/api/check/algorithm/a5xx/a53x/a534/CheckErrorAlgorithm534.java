@@ -328,6 +328,7 @@ public class CheckErrorAlgorithm534 extends CheckErrorAlgorithmBase {
     boolean safeEmpty = true;
     String contents = analysis.getContents();
     String imageText = contents.substring(image.getBeginIndex(), image.getEndIndex());
+    int lastParamIndex = image.getBeginIndex() + params.get(params.size() - 1).getBeginOffset();
     for (int index = 0; (index < imageText.length() - 1) && safeEmpty; index++) {
       char currentChar = imageText.charAt(index);
       if (currentChar == '{') {
@@ -360,7 +361,9 @@ public class CheckErrorAlgorithm534 extends CheckErrorAlgorithmBase {
               WikiTagType.SOURCE.equals(tag.getType()) ||
               WikiTagType.SYNTAXHIGHLIGHT.equals(tag.getType())) {
             safe = false;
-            safeEmpty = false;
+            if (tag.getBeginIndex() <= lastParamIndex) {
+              safeEmpty = false;
+            }
           }
         }
       }
