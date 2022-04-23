@@ -13,6 +13,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.apache.commons.lang3.StringUtils;
 import org.wikipediacleaner.api.API;
@@ -257,6 +259,12 @@ public class CheckErrorAlgorithm534 extends CheckErrorAlgorithmBase {
   }
 
   private static final Pattern UPRIGHT_PATTERN = Pattern.compile("\\d++(?:\\.\\d++)?");
+  private static final List<Pattern> UPRIGHT_DELETE_PATTERN = Stream
+      .of(
+          Pattern.compile("\\d\\d++ *+px"),           // 12 px
+          Pattern.compile("\\d++ *+x *+\\d++"),       // 1x1
+          Pattern.compile("\\d++ *+x *+\\d++ *+px"))  // 1x1 px
+      .collect(Collectors.toList());
 
   /**
    * Report errors for incorrect value in upright parameter.
@@ -279,7 +287,7 @@ public class CheckErrorAlgorithm534 extends CheckErrorAlgorithmBase {
       return false;
     }
     String value = paramContents.substring(equalIndex + 1);
-    if (UPRIGHT_PATTERN.matcher(value).matches()) {
+    if (!"0".equals(value) && UPRIGHT_PATTERN.matcher(value).matches()) {
       return false;
     }
 
@@ -291,14 +299,27 @@ public class CheckErrorAlgorithm534 extends CheckErrorAlgorithmBase {
     int endIndex = image.getBeginIndex() + param.getEndOffset();
     CheckErrorResult errorResult = createCheckErrorResult(
         analysis, beginIndex, endIndex, ErrorLevel.ERROR);
-    String newValue = value.replaceAll(",", ".").trim();
-    if (newValue.isEmpty()) {
-      errorResult.addReplacement("", true);
-    } else if (UPRIGHT_PATTERN.matcher(newValue).matches()) {
+
+    // Check for possible replacement
+    String newValue = value.replaceAll(",", ".").replaceAll("\"", "").trim();
+    if (newValue.startsWith("O")) {
+      newValue = newValue.replaceFirst("O", "0");
+    }
+    if (!"0".equals(newValue) && UPRIGHT_PATTERN.matcher(newValue).matches()) {
       errorResult.addReplacement(
           paramContents.substring(0, equalIndex).trim() + "=" + newValue,
           true);
     }
+
+    // Check for possible deletion
+    boolean delete = newValue.isEmpty() || "0".equals(newValue);
+    for (Pattern pattern : UPRIGHT_DELETE_PATTERN) {
+      if (pattern.matcher(value).matches()) {
+        delete = true;
+      }
+      errorResult.addReplacement("", delete);
+    }
+
     errors.add(errorResult);
     return true;
   }
@@ -420,7 +441,9 @@ public class CheckErrorAlgorithm534 extends CheckErrorAlgorithmBase {
         if (replacement != null) {
           String text = replacement.targetText;
           if ((text != null) && !text.isEmpty()) {
-            errorResult.addReplacement("|" + replacement.targetText, safe && replacement.automatic);
+            boolean automatic = safe || text.equalsIgnoreCase(replacement.initialText);
+            automatic &= replacement.automatic;
+            errorResult.addReplacement("|" + text, automatic);
           } else {
             errorResult.addReplacement("", safe && replacement.automatic);
           }

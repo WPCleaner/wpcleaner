@@ -31,7 +31,7 @@ public class AutomaticReplacementFactory {
 
   /** List of replacements for IMG_BORDER */
   private final static List<AutomaticReplacement> borderReplacements = Stream
-      .of("rand")
+      .of("bordo", "rand")
       .map(text -> new AutomaticReplacement(text, ImageMagicWordType.IMG_BORDER, "border", false))
       .collect(Collectors.toList());
 
@@ -50,14 +50,14 @@ public class AutomaticReplacementFactory {
   /** List of replacements for IMG_LEFT */
   private final static List<AutomaticReplacement> leftReplacements = Stream
       .of("align=left", "align:left", "esquerda", "esquerra", "gauche",
-          "izquierda", "leftt", "ліворуч", "שמאל")
+          "izquierda", "leftt", "sinistra", "ліворуч", "שמאל")
       .map(text -> new AutomaticReplacement(text, ImageMagicWordType.IMG_LEFT, "left", true))
       .collect(Collectors.toList());
 
   /** List of replacements for IMG_RIGHT */
   private final static List<AutomaticReplacement> rightReplacements = Stream
       .of("align=right", "align:right", "derecha", "desno", "destra",
-          "direita", "dreta", "float right", "float=right", "float:right",
+          "direita", "dreta", "droit", "float right", "float=right", "float:right",
           "floatright", "ight", "rechts", "reght", "rght", "ribght", "richt",
           "righ", "righjt", "righr", "righte", "rightg", "rightl", "rightt",
           "rightx", "righty", "right1", "right2", "righy", "righyt", "rigjt",
