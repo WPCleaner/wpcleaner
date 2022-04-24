@@ -261,9 +261,10 @@ public class CheckErrorAlgorithm534 extends CheckErrorAlgorithmBase {
   private static final Pattern UPRIGHT_PATTERN = Pattern.compile("\\d++(?:\\.\\d++)?");
   private static final List<Pattern> UPRIGHT_DELETE_PATTERN = Stream
       .of(
-          Pattern.compile("\\d\\d++ *+px"),           // 12 px
-          Pattern.compile("\\d++ *+x *+\\d++"),       // 1x1
-          Pattern.compile("\\d++ *+x *+\\d++ *+px"))  // 1x1 px
+          Pattern.compile("\\d\\d++ *+px"),                           // 12 px
+          Pattern.compile("\\d++ *+x *+\\d++"),                       // 1x1
+          Pattern.compile("\\d++ *+x *+\\d++ *+px"),                  // 1x1 px
+          Pattern.compile("\\d++\\.\\d++ *+x *+\\d++\\.\\d++ *+px"))  // 1.1x1.1 px
       .collect(Collectors.toList());
 
   /**
@@ -301,7 +302,7 @@ public class CheckErrorAlgorithm534 extends CheckErrorAlgorithmBase {
         analysis, beginIndex, endIndex, ErrorLevel.ERROR);
 
     // Check for possible replacement
-    String newValue = value.replaceAll(",", ".").replaceAll("\"", "").trim();
+    String newValue = value.replaceAll(",", ".").replaceAll("\"", "").replaceAll(" ", "").trim();
     if (newValue.startsWith("O")) {
       newValue = newValue.replaceFirst("O", "0");
     }
@@ -317,8 +318,8 @@ public class CheckErrorAlgorithm534 extends CheckErrorAlgorithmBase {
       if (pattern.matcher(value).matches()) {
         delete = true;
       }
-      errorResult.addReplacement("", delete);
     }
+    errorResult.addReplacement("", delete);
 
     errors.add(errorResult);
     return true;
@@ -471,13 +472,20 @@ public class CheckErrorAlgorithm534 extends CheckErrorAlgorithmBase {
   private boolean isImageNameInParameter(PageElementImage image, Parameter param) {
     String imageName = image.getImage();
     String paramValue = param.getContents();
-    if (StringUtils.equalsIgnoreCase(imageName, paramValue)) {
+    if (paramValue.endsWith("]") ) {
+      paramValue = paramValue.substring(0, paramValue.length() - 1);
+    }
+    if (StringUtils.equalsIgnoreCase(imageName, paramValue) ||
+        Page.areSameTitle(imageName, paramValue)) {
       return true;
     }
     int colonIndex = imageName.lastIndexOf('.');
-    if ((colonIndex > 0) &&
-        StringUtils.equalsIgnoreCase(imageName.substring(0, colonIndex), paramValue)) {
-      return true;
+    if (colonIndex > 0) {
+      String shortImageName = imageName.substring(0, colonIndex);
+      if (StringUtils.equalsIgnoreCase(shortImageName, paramValue) ||
+          Page.areSameTitle(shortImageName, paramValue)) {
+        return true;
+      }
     }
     return false;
   }
