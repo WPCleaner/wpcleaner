@@ -15,6 +15,8 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -252,6 +254,16 @@ public abstract class AutomaticFixWorker extends BasicWorker {
     }
   }
 
+  // Errors that shouldn't prevent bot continuing on updating articles
+  protected static final Set<EnumQueryResult> IGNORE_EXCEPTIONS = Stream
+      .of(
+          EnumQueryResult.ABUSEFILTER_DISALLOWED,
+          EnumQueryResult.EDIT_CONFLICT,
+          EnumQueryResult.PROTECTED_PAGE,
+          EnumQueryResult.SPAM_BLACKLIST,
+          EnumQueryResult.TPT_TARGET_PAGE)
+      .collect(Collectors.toSet());
+
   /**
    * @param queryResult Result of the query.
    * @return True if exception should be ignored.
@@ -260,9 +272,8 @@ public abstract class AutomaticFixWorker extends BasicWorker {
     if (queryResult == null) {
       return false;
     }
-    if ((queryResult == EnumQueryResult.ABUSEFILTER_DISALLOWED) ||
-        (queryResult == EnumQueryResult.PROTECTED_PAGE) ||
-        (queryResult == EnumQueryResult.TPT_TARGET_PAGE)) {
+    if (IGNORE_EXCEPTIONS.contains(queryResult)) {
+      LOGGER.error("Error ignored, continuing work");
       return true;
     }
     return false;
@@ -338,11 +349,7 @@ public abstract class AutomaticFixWorker extends BasicWorker {
       } catch (APIException e) {
         EnumQueryResult result = e.getQueryResult();
         LOGGER.error("Error updating page {}: ", page.getTitle(), result.getCode());
-        if (result == EnumQueryResult.SPAM_BLACKLIST) {
-          LOGGER.error("Error ignored, continuing work");
-        } else {
-          throw e;
-        }
+        throw e;
       }
     } else if (analyzeNonFixed) {
       Controller.runFullAnalysis(page.getTitle(), null, getWikipedia());
