@@ -1,6 +1,6 @@
 DoTasks _Common.txt
 Set Namespaces 0 6
 Set Prefix [[User:WikiCleanerBot#T1|Bot_T1]]
-ListCheckWiki enwiki-$-pages-articles.xml.bz2 wiki:Wikipedia:CHECKWIKI/WPC_{0}_dump  1  2  3  4  5   7   8  9   13  14  15  16  17  19  20  23  24  25  26  28  29  38  42  46  48  54  55  64  69  70  71  72  73  83  85  88
-ListCheckWiki enwiki-$-pages-articles.xml.bz2 wiki:Wikipedia:CHECKWIKI/WPC_{0}_dump 90 91 92 98 99 100 101 102 103 104 105 106 107 108 109 111 504 513 543 548 549 550 551 552 553 554 557 558 560 562 564 565 566 567 569 570 571
+ListCheckWiki enwiki-$-pages-articles.xml.bz2 wiki:Wikipedia:CHECKWIKI/WPC_{0}_dump  1  2  3  4   5   7   8   9  13  14  15  16  17  19  20  23  24  25  26  28  29  38  42  46  48  54  55  64  69  70  71  72  73  83  85  88  90
+ListCheckWiki enwiki-$-pages-articles.xml.bz2 wiki:Wikipedia:CHECKWIKI/WPC_{0}_dump 91 92 98 99 100 101 102 103 104 105 106 107 108 109 111 504 513 543 548 549 550 551 552 553 554 557 558 560 562 564 565 566 567 569 570 571 577
 # 547: Removed because it's too big
