@@ -142,6 +142,18 @@ public class CheckErrorAlgorithm555 extends CheckErrorAlgorithmBase {
       }
     }
 
+    // Do not report the nowiki tag is at the beginning of a template parameter
+    if (beginIndex > 0) {
+      PageElementTemplate template = analysis.isInTemplate(beginIndex);
+      if (template != null) {
+        Parameter param = template.getParameterAtIndex(beginIndex);
+        if ((param != null) &&
+            (param.getValueStartIndex() >= beginIndex)) {
+          return false;
+        }
+      }
+    }
+
     // Check if replacement can be automatic
     String internalText = StringUtils.EMPTY;
     if (!nowikiTag.isFullTag()) {
@@ -189,17 +201,6 @@ public class CheckErrorAlgorithm555 extends CheckErrorAlgorithmBase {
           } else {
             automatic = false;
           }
-        }
-      }
-    }
-    if (beginIndex > 0) {
-      // Prevent if the nowiki tag is at the beginning of a template parameter
-      PageElementTemplate template = analysis.isInTemplate(beginIndex);
-      if (template != null) {
-        Parameter param = template.getParameterAtIndex(beginIndex);
-        if ((param != null) &&
-            (param.getValueStartIndex() >= beginIndex)) {
-          automatic = false;
         }
       }
     }
