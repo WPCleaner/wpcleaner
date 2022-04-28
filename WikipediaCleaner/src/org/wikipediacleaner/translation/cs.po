@@ -17,7 +17,7 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2022-04-25 11:21:20+0000\n"
+"PO-Revision-Date: 2022-04-28 11:21:14+0000\n"
 "Last-Translator: Matěj S. <matejsuchanek97@gmail.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -25,9 +25,9 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n == 1) ? 0 : ( (n >= 2 && n <= 4) ? 1 : 2 );\n"
 "X-Launchpad-Export-Date: 2017-03-22 17:48+0000\n"
-"X-Generator: MediaWiki 1.39.0-alpha; Translate 2022-01-19\n"
+"X-Generator: MediaWiki 1.39.0-alpha; Translate 2022-04-26\n"
 "Language: cs\n"
-"X-POT-Import-Date: 2022-04-23 22:30:20+0000\n"
+"X-POT-Import-Date: 2022-04-26 22:30:19+0000\n"
 
 #: org/wikipediacleaner/Version.java:31
 #, java-format
@@ -187,7 +187,7 @@ msgstr "Nahradit řetězcem {0}"
 
 #: org/wikipediacleaner/api/check/CheckErrorResult.java:201
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a016/CheckErrorAlgorithm016.java:403
-#: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a017/CheckErrorAlgorithm017.java:223
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a017/CheckErrorAlgorithm017.java:246
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a02x/a026/CheckErrorAlgorithm026.java:111
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a02x/a026/CheckErrorAlgorithm026.java:117
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a03x/a038/CheckErrorAlgorithm038.java:110
@@ -325,7 +325,7 @@ msgstr "Náhrada za {0}"
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a572/CheckErrorAlgorithm572.java:290
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a572/CheckErrorAlgorithm572.java:310
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a573/CheckErrorAlgorithm573.java:236
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a576/CheckErrorAlgorithm576.java:221
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a576/CheckErrorAlgorithm576.java:232
 #, fuzzy
 msgid "Name of the template"
 msgstr "Chybějící šablony"
@@ -342,7 +342,7 @@ msgstr "Chybějící šablony"
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a572/CheckErrorAlgorithm572.java:293
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a572/CheckErrorAlgorithm572.java:313
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a573/CheckErrorAlgorithm573.java:239
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a576/CheckErrorAlgorithm576.java:224
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a576/CheckErrorAlgorithm576.java:235
 msgid "Name of the parameter"
 msgstr ""
 
@@ -413,16 +413,19 @@ msgid "Unable to replace the characters [{0}]"
 msgstr "Nelze nahradit znaky [{0}]"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a009/CheckErrorAlgorithm009.java:245
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a017/CheckErrorAlgorithm017.java:363
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a05x/a052/CheckErrorAlgorithm052.java:342
 msgid "A list of templates in which categories should be ignored."
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a009/CheckErrorAlgorithm009.java:249
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a017/CheckErrorAlgorithm017.java:367
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a05x/a052/CheckErrorAlgorithm052.java:346
 msgid "A template in which categories should be ignored."
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a009/CheckErrorAlgorithm009.java:252
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a017/CheckErrorAlgorithm017.java:370
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a05x/a052/CheckErrorAlgorithm052.java:349
 msgid "A template parameter in which categories should be ignored."
 msgstr ""
@@ -534,7 +537,7 @@ msgstr "Rozsah soukromě užívaných znaků A"
 msgid "Private use area B"
 msgstr "Rozsah soukromě užívaných znaků B"
 
-#: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a017/CheckErrorAlgorithm017.java:40
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a017/CheckErrorAlgorithm017.java:47
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a04x/a045/CheckErrorAlgorithm045.java:36
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a05x/a059/CheckErrorAlgorithm059.java:42
 msgid "Delete all"
@@ -1965,12 +1968,30 @@ msgstr ""
 msgid "Template values which can be safely replaced"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a576/CheckErrorAlgorithm576.java:217
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a576/CheckErrorAlgorithm576.java:228
 msgid "Templates for which values should be verified"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a576/CheckErrorAlgorithm576.java:227
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a576/CheckErrorAlgorithm576.java:238
 msgid "Image attribute"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a577/CheckErrorAlgorithm577.java:155
+#, java-format
+msgid "Check incorrect DOI {0}"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a577/CheckErrorAlgorithm577.java:225
+#, java-format
+msgid "Check DOI {0}"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a577/CheckErrorAlgorithm577.java:323
+msgid "Prefixes that can be safely deleted"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a577/CheckErrorAlgorithm577.java:327
+msgid "Prefix that can be safely deleted"
 msgstr ""
 
 #: org/wikipediacleaner/api/configuration/CWConfiguration.java:83
@@ -3714,17 +3735,17 @@ msgstr "Ostatní…"
 msgid "Checking for errors n°{0}"
 msgstr "Ověřuji chybu číslo {0}"
 
-#: org/wikipediacleaner/gui/swing/bot/AutomaticFixWorker.java:221
+#: org/wikipediacleaner/gui/swing/bot/AutomaticFixWorker.java:223
 #, java-format
 msgid "Analyzing page {0}"
 msgstr "Analyzuji stránku {0}"
 
-#: org/wikipediacleaner/gui/swing/bot/AutomaticFixWorker.java:318
+#: org/wikipediacleaner/gui/swing/bot/AutomaticFixWorker.java:329
 #, java-format
 msgid "Fixing page {0}"
 msgstr "Opravuji stránku „{0}“"
 
-#: org/wikipediacleaner/gui/swing/bot/AutomaticFixWorker.java:400
+#: org/wikipediacleaner/gui/swing/bot/AutomaticFixWorker.java:407
 #, java-format
 msgid "{0} page has been modified"
 msgid_plural "{0} pages have been modified"
@@ -3732,7 +3753,7 @@ msgstr[0] "Byla upravena {0} stránka"
 msgstr[1] "Byly upraveny {0} stránky"
 msgstr[2] "Bylo upraveno {0} stránek"
 
-#: org/wikipediacleaner/gui/swing/bot/AutomaticFixWorker.java:405
+#: org/wikipediacleaner/gui/swing/bot/AutomaticFixWorker.java:412
 #, java-format
 msgid "{0} page has been marked as fixed for the selected algorithms"
 msgid_plural "{0} pages have been marked as fixed for the selected algorithms"
@@ -3740,7 +3761,7 @@ msgstr[0] "Jako opravená byla pro vybrané algoritmy označena {0} stránka"
 msgstr[1] "Jako opravené byly pro vybrané algoritmy označeny {0} stránky"
 msgstr[2] "Jako opravených bylo pro vybrané algoritmy označeno {0} stránek"
 
-#: org/wikipediacleaner/gui/swing/bot/AutomaticFixWorker.java:410
+#: org/wikipediacleaner/gui/swing/bot/AutomaticFixWorker.java:417
 #, java-format
 msgid "{0} page has been marked as fixed for other algorithms"
 msgid_plural "{0} pages have been marked as fixed for other algorithms"
