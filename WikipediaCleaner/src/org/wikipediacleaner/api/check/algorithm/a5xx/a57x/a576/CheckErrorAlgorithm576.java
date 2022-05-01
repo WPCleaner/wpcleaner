@@ -96,15 +96,17 @@ public class CheckErrorAlgorithm576 extends CheckErrorAlgorithmBase {
     return result;
   }
 
-  private static final Pattern UPRIGHT_PATTERN = Pattern.compile("\\d++(?:\\.\\d++)?");
+  private static final Pattern UPRIGHT_PATTERN = Pattern.compile("(?:\\d++(?:\\.\\d++)?|\\.\\d++)");
+  private static final Pattern UPRIGHT_SURE_PATTERN_= Pattern.compile("(?:\\d(?:\\.\\d++)?|\\.\\d++)");
   private static final List<Pattern> UPRIGHT_DELETE_PATTERN = Stream
       .of(
-          Pattern.compile("\\d\\d++ *+px"),                           // 12 px
-          Pattern.compile("\\d++ *+x *+\\d++"),                       // 1x1
-          Pattern.compile("\\d++ *+x *+\\d++ *+px"),                  // 1x1 px
-          Pattern.compile("\\d++\\.\\d++ *+x *+\\d++\\.\\d++ *+px"))  // 1.1x1.1 px
+          "\\d\\d++ *+px",                           // 12 px
+          "\\d++ *+x *+\\d++",                       // 1x1
+          "\\d++ *+x *+\\d++ *+px",                  // 1x1 px
+          "\\d++\\.\\d++ *+x *+\\d++\\.\\d++ *+px")  // 1.1x1.1 px
+      .map(Pattern::compile)
       .collect(Collectors.toList());
-  private static final List<String> EXTRANEOUS_SUFFIX = Stream.of("px").collect(Collectors.toList());
+  private static final Pattern UPRIGHT_ZERO_PATTERN = Pattern.compile("(?:0++(?:\\.0++)?|\\.0++)");
 
   /**
    * Analyze a template parameter to check if errors are present for upright image attribute.
@@ -124,7 +126,7 @@ public class CheckErrorAlgorithm576 extends CheckErrorAlgorithmBase {
     if (value.isEmpty()) {
       return false;
     }
-    if (!"0".equals(value) && UPRIGHT_PATTERN.matcher(value).matches()) {
+    if (!UPRIGHT_ZERO_PATTERN.matcher(value).matches() && UPRIGHT_PATTERN.matcher(value).matches()) {
       return false;
     }
 
@@ -137,36 +139,37 @@ public class CheckErrorAlgorithm576 extends CheckErrorAlgorithmBase {
     CheckErrorResult errorResult = createCheckErrorResult(analysis, beginIndex, endIndex);
 
     // Check for possible replacement
+    String contents = analysis.getContents();
     String newValue = value.replaceAll(",", ".").replaceAll("\"", "").replaceAll(" ", "").trim();
     if (newValue.startsWith("O")) {
       newValue = newValue.replaceFirst("O", "0");
     }
-    boolean automatic = true;
-    for (String suffix : EXTRANEOUS_SUFFIX) {
-      if (newValue.endsWith(suffix)) {
-        newValue = newValue.substring(0, newValue.length() - suffix.length()).trim();
-        if ((newValue.length() > 1) && (Character.isDigit(newValue.charAt(1)))) {
-          automatic = false;
-        }
-      }
-    }
-    if (!"0".equals(newValue) && UPRIGHT_PATTERN.matcher(newValue).matches()) {
-      String contents = analysis.getContents();
+    if (!UPRIGHT_ZERO_PATTERN.matcher(newValue).matches() && UPRIGHT_PATTERN.matcher(newValue).matches()) {
       String replacement =
           contents.substring(beginIndex, param.getValueStartIndex()) +
           newValue +
           contents.substring(param.getValueStartIndex() + value.length(), endIndex);
-      errorResult.addReplacement(replacement, automatic);
+      errorResult.addReplacement(replacement, true);
+    }
+    if (newValue.endsWith("px")) {
+      newValue = newValue.substring(0, newValue.length() - 2);
+      if (!UPRIGHT_ZERO_PATTERN.matcher(newValue).matches() && UPRIGHT_SURE_PATTERN_.matcher(newValue).matches()) {
+        String replacement =
+            contents.substring(beginIndex, param.getValueStartIndex()) +
+            newValue +
+            contents.substring(param.getValueStartIndex() + value.length(), endIndex);
+        errorResult.addReplacement(replacement, true);
+      }
     }
 
     // Check for possible deletion
-    automatic = "0".equals(newValue);
+    boolean delete = newValue.isEmpty() || UPRIGHT_ZERO_PATTERN.matcher(newValue).matches();
     for (Pattern pattern : UPRIGHT_DELETE_PATTERN) {
       if (pattern.matcher(value).matches()) {
-        automatic = true;
+        delete = true;
       }
     }
-    errorResult.addReplacement("", automatic);
+    errorResult.addReplacement("", delete);
 
     errors.add(errorResult);
     return true;
