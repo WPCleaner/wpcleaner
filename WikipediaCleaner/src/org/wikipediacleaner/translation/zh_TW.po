@@ -12,7 +12,7 @@
 msgid ""
 msgstr ""
 ""
-"PO-Revision-Date: 2022-04-28 11:21:20+0000\n"
+"PO-Revision-Date: 2022-05-02 11:19:44+0000\n"
 "X-POT-Import-Date: 2022-04-26 22:30:19+0000\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -1893,7 +1893,7 @@ msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a576/CheckErrorAlgorithm576.java:238
 msgid "Image attribute"
-msgstr ""
+msgstr "圖片屬性"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a577/CheckErrorAlgorithm577.java:155
 #, java-format
