@@ -7,6 +7,7 @@
 
 package org.wikipediacleaner.api.check.algorithm.a0xx.a05x.a055;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -16,10 +17,14 @@ import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase;
 import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.PageElementFunction;
 import org.wikipediacleaner.api.data.PageElementInternalLink;
+import org.wikipediacleaner.api.data.PageElementListItem;
+import org.wikipediacleaner.api.data.PageElementTable;
+import org.wikipediacleaner.api.data.PageElementTable.TableCell;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.PageElementTemplate.Parameter;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
+import org.wikipediacleaner.api.data.contents.Interval;
 import org.wikipediacleaner.api.data.contents.tag.HtmlTagType;
 import org.wikipediacleaner.api.data.contents.tag.WikiTagType;
 import org.wikipediacleaner.i18n.GT;
@@ -59,132 +64,229 @@ public class CheckErrorAlgorithm055 extends CheckErrorAlgorithmBase {
     if (tags == null) {
       return false;
     }
-    String contents = analysis.getContents();
-    int level = 0;
+    AnalysisSituation situation = new AnalysisSituation();
     boolean result = false;
-    PageElementTag level0Tag = null;
-    boolean previousUnclosedTag = false;
     int tagIndex = 0;
     while (tagIndex < tags.size()) {
       PageElementTag tag = tags.get(tagIndex);
       tagIndex++;
 
       if (tag.isFullTag()) {
-        // Full tag
-        if (level > 0) {
-          if (errors == null) {
-            return true;
-          }
-          result = true;
-          CheckErrorResult errorResult = createCheckErrorResult(
-              analysis,
-              tag.getBeginIndex(), tag.getEndIndex());
-          if (previousUnclosedTag) {
-            errorResult.addReplacement(HtmlTagType.SMALL.getCloseTag());
-          }
-          errorResult.addReplacement("");
-          errors.add(errorResult);
-        }
+        result |= analyzeFullTag(analysis, errors, situation, tag);
       } else if (tag.isEndTag()) {
-        // Closing tag
-        level--;
-        if (level < 0) {
-          level = 0;
-          if (errors == null) {
-            return true;
-          }
-          result = true;
-          CheckErrorResult errorResult = createCheckErrorResult(
-              analysis,
-              tag.getBeginIndex(), tag.getEndIndex());
-          errorResult.addReplacement("");
-          errors.add(errorResult);
-        }
+        result |= analyzeEndTag(analysis, errors, situation, tag);
       } else {
-        if (level == 0) {
-          level0Tag = tag;
-        } else if ((level > 0) && shouldReport(analysis, tag)) {
-          if (errors == null) {
-            return true;
-          }
-          result = true;
-
-          // Manage double small tags on the same text
-          boolean doubleSmall = false;
-          if ((tag.getMatchingTag() != null) &&
-              (level0Tag != null) &&
-              (level0Tag.getMatchingTag() != null)) {
-            if ((level0Tag.getEndIndex() == tag.getBeginIndex()) &&
-                (tag.getMatchingTag().getEndIndex() == level0Tag.getMatchingTag().getBeginIndex())) {
-              doubleSmall = true;
-            }
-          }
-
-          if (level0Tag != null) {
-            int possibleEnd = previousUnclosedTag ? getPossibleEnd(analysis, level0Tag) : 0;
-            if (possibleEnd > 0) {
-              CheckErrorResult errorResult = createCheckErrorResult(
-                  analysis,
-                  level0Tag.getBeginIndex(), possibleEnd,
-                  ErrorLevel.WARNING);
-              errorResult.addReplacement(
-                  contents.substring(level0Tag.getBeginIndex(), possibleEnd) + HtmlTagType.SMALL.getCloseTag(),
-                  HtmlTagType.SMALL.getCompleteTag());
-              errors.add(errorResult);
-            } else {
-              CheckErrorResult errorResult = createCheckErrorResult(
-                  analysis,
-                  level0Tag.getBeginIndex(),
-                  level0Tag.getEndIndex(),
-                  ErrorLevel.WARNING);
-              errors.add(errorResult);
-              if (level0Tag.getMatchingTag() != null) {
-                errorResult = createCheckErrorResult(
-                    analysis,
-                    level0Tag.getMatchingTag().getBeginIndex(),
-                    level0Tag.getMatchingTag().getEndIndex(),
-                    ErrorLevel.WARNING);
-                errors.add(errorResult);
-              }
-            }
-            level0Tag = null;
-          }
-
-          int possibleEnd = getPossibleEnd(analysis, tag);
-          if (possibleEnd > 0) {
-            CheckErrorResult errorResult = createCheckErrorResult(
-                analysis, tag.getBeginIndex(), possibleEnd);
-            errorResult.addReplacement(
-                contents.substring(tag.getBeginIndex(), possibleEnd) + HtmlTagType.SMALL.getCloseTag(),
-                HtmlTagType.SMALL.getCompleteTag());
-            errors.add(errorResult);
-          } else {
-            CheckErrorResult errorResult = createCheckErrorResult(
-                analysis,
-                tag.getCompleteBeginIndex(),
-                tag.getCompleteEndIndex());
-            if (doubleSmall) {
-              errorResult.addReplacement(
-                  contents.substring(tag.getEndIndex(), tag.getMatchingTag().getBeginIndex()),
-                  GT._T("Remove {0} tags", HtmlTagType.SMALL.getOpenTag()));
-            }
-            if (!tag.isComplete() && !tag.isFullTag() && !tag.isEndTag() && previousUnclosedTag) {
-              errorResult.addReplacement(HtmlTagType.SMALL.getCloseTag());
-            }
-            errors.add(errorResult);
-            if (tag.isComplete()) {
-              tagIndex = PageElementTag.getMatchingTagIndex(tags, tagIndex);
-            }
-          }
-        }
-        level++;
+        result |= analyzeBeginTag(analysis, errors, situation, tag, tags, tagIndex);
       }
 
       // Memorize if tag is unclosed
-      previousUnclosedTag = !tag.isComplete() && !tag.isFullTag() && !tag.isEndTag();
+      situation.previousUnclosedTag = !tag.isComplete() && !tag.isFullTag() && !tag.isEndTag();
     }
 
     return result;
+  }
+
+  /**
+   * Analyze a begin tag to check if errors are present.
+   * 
+   * @param analysis Page analysis.
+   * @param errors Errors found in the page.
+   * @param situation Situation of the analysis.
+   * @param tag Begin tag.
+   * @param tags All tags
+   * @param tagIndex Index of the tag in the list of small tags
+   * @return Flag indicating if the error was found.
+   */
+  public boolean analyzeBeginTag(
+      PageAnalysis analysis,
+      Collection<CheckErrorResult> errors,
+      AnalysisSituation situation,
+      PageElementTag tag,
+      List<PageElementTag> tags,
+      int tagIndex) {
+
+    // Handle a first tag
+    if (situation.level == 0) {
+      situation.level0Tag = tag;
+      situation.level++;
+      return false;
+    }
+
+    // Check if the tag should be reported
+    situation.level++;
+    if (!shouldReport(analysis, tag)) {
+      return false;
+    }
+    if (errors == null) {
+      return true;
+    }
+
+    // Manage double small tags on the same text
+    boolean doubleSmall = false;
+    if ((tag.getMatchingTag() != null) &&
+        (situation.level0Tag != null) &&
+        (situation.level0Tag.getMatchingTag() != null)) {
+      if ((situation.level0Tag.getEndIndex() == tag.getBeginIndex()) &&
+          (tag.getMatchingTag().getEndIndex() == situation.level0Tag.getMatchingTag().getBeginIndex())) {
+        doubleSmall = true;
+      }
+    }
+
+    String contents = analysis.getContents();
+    if (situation.level0Tag != null) {
+      int possibleEnd = situation.previousUnclosedTag ? getPossibleEnd(analysis, situation.level0Tag) : 0;
+      if (possibleEnd > 0) {
+        CheckErrorResult errorResult = createCheckErrorResult(
+            analysis,
+            situation.level0Tag.getBeginIndex(), possibleEnd,
+            ErrorLevel.WARNING);
+        errorResult.addReplacement(
+            contents.substring(situation.level0Tag.getBeginIndex(), possibleEnd) + HtmlTagType.SMALL.getCloseTag(),
+            HtmlTagType.SMALL.getCompleteTag());
+        errors.add(errorResult);
+      } else {
+        CheckErrorResult errorResult = createCheckErrorResult(
+            analysis,
+            situation.level0Tag.getBeginIndex(),
+            situation.level0Tag.getEndIndex(),
+            ErrorLevel.WARNING);
+        errors.add(errorResult);
+        if (situation.level0Tag.getMatchingTag() != null) {
+          errorResult = createCheckErrorResult(
+              analysis,
+              situation.level0Tag.getMatchingTag().getBeginIndex(),
+              situation.level0Tag.getMatchingTag().getEndIndex(),
+              ErrorLevel.WARNING);
+          errors.add(errorResult);
+        }
+      }
+      situation.level0Tag = null;
+    }
+
+    int possibleEnd = getPossibleEnd(analysis, tag);
+    if (possibleEnd > 0) {
+      CheckErrorResult errorResult = createCheckErrorResult(
+          analysis, tag.getBeginIndex(), possibleEnd);
+      errorResult.addReplacement(
+          contents.substring(tag.getBeginIndex(), possibleEnd) + HtmlTagType.SMALL.getCloseTag(),
+          HtmlTagType.SMALL.getCompleteTag());
+      errors.add(errorResult);
+    } else {
+      CheckErrorResult errorResult = createCheckErrorResult(
+          analysis,
+          tag.getCompleteBeginIndex(),
+          tag.getCompleteEndIndex());
+      if (doubleSmall) {
+        errorResult.addReplacement(
+            contents.substring(tag.getEndIndex(), tag.getMatchingTag().getBeginIndex()),
+            GT._T("Remove {0} tags", HtmlTagType.SMALL.getOpenTag()));
+      }
+      if (!tag.isComplete() && !tag.isFullTag() && !tag.isEndTag() && situation.previousUnclosedTag) {
+        errorResult.addReplacement(HtmlTagType.SMALL.getCloseTag());
+      }
+      errors.add(errorResult);
+      if (tag.isComplete()) {
+        tagIndex = PageElementTag.getMatchingTagIndex(tags, tagIndex);
+      }
+    }
+
+    return true;
+  }
+
+  /**
+   * Analyze an end tag to check if errors are present.
+   * 
+   * @param analysis Page analysis.
+   * @param errors Errors found in the page.
+   * @param situation Situation of the analysis.
+   * @param tag End tag.
+   * @return Flag indicating if the error was found.
+   */
+  public boolean analyzeEndTag(
+      PageAnalysis analysis,
+      Collection<CheckErrorResult> errors,
+      AnalysisSituation situation,
+      PageElementTag tag) {
+
+    // Check if an error is present
+    situation.level--;
+    if (situation.level >= 0) {
+      return false;
+    }
+    if (errors == null) {
+      return true;
+    }
+
+    // Report error
+    situation.level = 0;
+    int beginIndex = tag.getBeginIndex();
+    int endIndex = tag.getEndIndex();
+    CheckErrorResult errorResult = createCheckErrorResult(analysis, beginIndex, endIndex);
+    List<Interval> intervals = new ArrayList<>();
+    PageElementTable table = analysis.isInTable(beginIndex);
+    if (table != null) {
+      TableCell cell = table.getCellAtIndex(beginIndex);
+      if (cell != null) {
+        intervals.add(cell);
+      }
+    }
+    PageElementListItem listItem = analysis.isInListItem(beginIndex);
+    if (listItem != null) {
+      intervals.add(listItem);
+    }
+    boolean automatic = false;
+    for (Interval interval : intervals) {
+      String contents = analysis.getContents();
+      boolean automaticInterval = true;
+      for (int tmpIndex = interval.getBeginIndex(); tmpIndex < interval.getEndIndex(); tmpIndex++) {
+        if ((tmpIndex < beginIndex) || (tmpIndex >= endIndex)) {
+          if (contents.startsWith("small", tmpIndex) ||
+              ("<>/\n".indexOf(contents.charAt(tmpIndex)) >= 0)) {
+            automaticInterval = false;
+          }
+        }
+      }
+      automatic |= automaticInterval;
+      
+    }
+    errorResult.addReplacement("", automatic);
+    errors.add(errorResult);
+    return true;
+  }
+
+  /**
+   * Analyze a full tag to check if errors are present.
+   * 
+   * @param analysis Page analysis.
+   * @param errors Errors found in the page.
+   * @param situation Situation of the analysis.
+   * @param tag Full tag.
+   * @return Flag indicating if the error was found.
+   */
+  public boolean analyzeFullTag(
+      PageAnalysis analysis,
+      Collection<CheckErrorResult> errors,
+      AnalysisSituation situation,
+      PageElementTag tag) {
+
+    // Check if an error is present
+    if (situation.level <= 0) {
+      return false;
+    }
+    if (errors == null) {
+      return true;
+    }
+
+    // Report error
+    CheckErrorResult errorResult = createCheckErrorResult(
+        analysis,
+        tag.getBeginIndex(), tag.getEndIndex());
+    if (situation.previousUnclosedTag) {
+      errorResult.addReplacement(HtmlTagType.SMALL.getCloseTag());
+    }
+    errorResult.addReplacement("");
+    errors.add(errorResult);
+    return true;
   }
 
   private boolean shouldReport(
@@ -420,5 +522,19 @@ public class CheckErrorAlgorithm055 extends CheckErrorAlgorithmBase {
     }
 
     return -1;
+  }
+
+  /**
+   * Automatic fixing of all the errors in the page.
+   * 
+   * @param analysis Page analysis.
+   * @return Page contents after fix.
+   */
+  @Override
+  protected String internalAutomaticFix(PageAnalysis analysis) {
+    if (!analysis.getPage().isArticle()) {
+      return analysis.getContents();
+    }
+    return fixUsingAutomaticReplacement(analysis);
   }
 }
