@@ -97,7 +97,7 @@ public class CheckErrorAlgorithm055 extends CheckErrorAlgorithmBase {
    * @param tagIndex Index of the tag in the list of small tags
    * @return Flag indicating if the error was found.
    */
-  public boolean analyzeBeginTag(
+  private boolean analyzeBeginTag(
       PageAnalysis analysis,
       Collection<CheckErrorResult> errors,
       AnalysisSituation situation,
@@ -202,7 +202,7 @@ public class CheckErrorAlgorithm055 extends CheckErrorAlgorithmBase {
    * @param tag End tag.
    * @return Flag indicating if the error was found.
    */
-  public boolean analyzeEndTag(
+  private boolean analyzeEndTag(
       PageAnalysis analysis,
       Collection<CheckErrorResult> errors,
       AnalysisSituation situation,
@@ -263,7 +263,7 @@ public class CheckErrorAlgorithm055 extends CheckErrorAlgorithmBase {
    * @param tag Full tag.
    * @return Flag indicating if the error was found.
    */
-  public boolean analyzeFullTag(
+  private boolean analyzeFullTag(
       PageAnalysis analysis,
       Collection<CheckErrorResult> errors,
       AnalysisSituation situation,

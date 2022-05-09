@@ -19,6 +19,7 @@ import org.wikipediacleaner.api.configuration.WPCConfiguration;
 import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageElementListItem;
+import org.wikipediacleaner.api.data.PageElementParagraph;
 import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.PageElementTemplate.Parameter;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
@@ -68,125 +69,140 @@ public class CheckErrorAlgorithm547 extends CheckErrorAlgorithmBase {
 
     // Check each list item
     boolean result = false;
-    String contents = analysis.getContents();
     for (PageElementListItem listItem : listItems) {
-
-      // Check if list item has text
-      boolean shouldReport = true;
-      int index = listItem.getBeginIndex() + listItem.getDepth();
-      while (shouldReport && (index < listItem.getEndIndex())) {
-        shouldReport = CharacterUtils.isWhitespace(contents.charAt(index));
-        index++;
-      }
-
-      // Filter special cases
-      if (shouldReport) {
-        if ((analysis.getSurroundingTag(WikiTagType.NOWIKI, index) != null) ||
-            (analysis.getSurroundingTag(WikiTagType.SCORE, index) != null) ||
-            (analysis.getSurroundingTag(WikiTagType.SOURCE, index) != null) ||
-            (analysis.getSurroundingTag(WikiTagType.SYNTAXHIGHLIGHT, index) != null)) {
-          shouldReport = false;
-        }
-      }
-      if (shouldReport) {
-        if (analysis.comments().isAt(index)) {
-          shouldReport = false;
-        }
-      }
-      if (shouldReport && !templates.isEmpty()) {
-        PageElementTemplate template = analysis.isInTemplate(index);
-        if (template != null) {
-          for (String[] ignoredTemplate : templates) {
-            if (Page.areSameTitle(template.getTemplateName(), ignoredTemplate[0])) {
-              if (ignoredTemplate.length > 1) {
-                PageElementTemplate.Parameter param = template.getParameterAtIndex(index);
-                if (param != null) {
-                  for (int paramNum = 1; paramNum < ignoredTemplate.length; paramNum++) {
-                    if (param.getComputedName().equals(ignoredTemplate[paramNum])) {
-                      shouldReport = false;
-                    }
-                  }
-                }
-              } else {
-                shouldReport = false;
-              }
-            }
-          }
-        }
-      }
-
-      // Report error
-      if (shouldReport) {
-        result = true;
-        if (errors == null) {
-          return result;
-        }
-
-        // Determine boundaries
-        boolean automatic = false;
-        int begin = listItem.getBeginIndex();
-        int end = listItem.getEndIndex();
-        boolean extended = false;
-        if (end + 1 < contents.length()) {
-          char nextChar = contents.charAt(end + 1);
-          if (nextChar == '\n') {
-            automatic = true;
-            end++;
-            extended = true;
-          } else if (PageElementListItem.isListIndicator(nextChar)) {
-            end++;
-            extended = true;
-          } else {
-            automatic = true;
-          }
-        } else {
-          automatic = true;
-        }
-        if (begin > 1) {
-          char previousChar = contents.charAt(begin - 1);
-          if (previousChar == '\n') {
-            char previousChar2 = contents.charAt(begin - 2);
-            if (previousChar2 == '\n') {
-              if (!extended) {
-                begin--;
-                extended = true;
-              }
-              automatic = true;
-            } else if (previousChar2 == '=') {
-              PageElementTitle title = analysis.isInTitle(begin - 2);
-              if (title != null) {
-                automatic = true;
-              }
-            }
-          }
-        } else {
-          automatic = true;
-        }
-
-        // Specific check if fix can be automatic
-        if (automatic &&
-            (analysis.isInImage(index) != null)) {
-          automatic = false;
-        }
-        if (automatic) {
-          // Note: due to badly written templates that requires a parameter not to be empty...
-          PageElementTemplate template = analysis.isInTemplate(index);
-          if (template != null) {
-            Parameter param = template.getParameterAtIndex(index);
-            if (param != null) {
-              // TODO: be less restrictive, only if list item is alone?
-              automatic = false;
-            }
-          }
-        }
-
-        // Report error
-        CheckErrorResult errorResult = createCheckErrorResult(analysis, begin, end);
-        errorResult.addReplacement("", automatic);
-        errors.add(errorResult);
-      }
+      result |= analyzeListItem(analysis, errors, listItem);
     }
     return result;
+  }
+
+  /**
+   * Analyze a list item to check if errors are present.
+   * 
+   * @param analysis Page analysis.
+   * @param errors Errors found in the page.
+   * @param listItem List item to be analyzed.
+   * @return Flag indicating if the error was found.
+   */
+  private boolean analyzeListItem(
+      PageAnalysis analysis,
+      Collection<CheckErrorResult> errors,
+      PageElementListItem listItem) {
+
+    // Check if list item has text
+    int index = listItem.getBeginIndex() + listItem.getDepth();
+    String contents = analysis.getContents();
+    while (index < listItem.getEndIndex()) {
+      if (!CharacterUtils.isWhitespace(contents.charAt(index))) {
+        return false;
+      }
+      index++;
+    }
+
+    // Filter special cases
+    if ((analysis.getSurroundingTag(WikiTagType.NOWIKI, index) != null) ||
+        (analysis.getSurroundingTag(WikiTagType.SCORE, index) != null) ||
+        (analysis.getSurroundingTag(WikiTagType.SOURCE, index) != null) ||
+        (analysis.getSurroundingTag(WikiTagType.SYNTAXHIGHLIGHT, index) != null)) {
+      return false;
+    }
+    if (analysis.comments().isAt(index)) {
+      return false;
+    }
+    if (!templates.isEmpty()) {
+      PageElementTemplate template = analysis.isInTemplate(index);
+      if (template != null) {
+        for (String[] ignoredTemplate : templates) {
+          if (Page.areSameTitle(template.getTemplateName(), ignoredTemplate[0])) {
+            if (ignoredTemplate.length > 1) {
+              PageElementTemplate.Parameter param = template.getParameterAtIndex(index);
+              if (param != null) {
+                for (int paramNum = 1; paramNum < ignoredTemplate.length; paramNum++) {
+                  if (param.getComputedName().equals(ignoredTemplate[paramNum])) {
+                    return false;
+                  }
+                }
+              }
+            } else {
+              return false;
+            }
+          }
+        }
+      }
+    }
+
+    // Report error
+    if (errors == null) {
+      return true;
+    }
+
+    // Determine boundaries
+    boolean automatic = false;
+    int begin = listItem.getBeginIndex();
+    int end = listItem.getEndIndex();
+    boolean extended = false;
+    if (end + 1 < contents.length()) {
+      char nextChar = contents.charAt(end + 1);
+      if (nextChar == '\n') {
+        automatic = true;
+        end++;
+        extended = true;
+      } else if (PageElementListItem.isListIndicator(nextChar)) {
+        end++;
+        extended = true;
+      } else {
+        automatic = true;
+      }
+    } else {
+      automatic = true;
+    }
+    if (begin > 1) {
+      char previousChar = contents.charAt(begin - 1);
+      if (previousChar == '\n') {
+        char previousChar2 = contents.charAt(begin - 2);
+        if (previousChar2 == '\n') {
+          if (!extended) {
+            begin--;
+            extended = true;
+          }
+          automatic = true;
+        } else if (previousChar2 == '=') {
+          PageElementTitle title = analysis.isInTitle(begin - 2);
+          if (title != null) {
+            automatic = true;
+          }
+        } else {
+          PageElementParagraph paragraph = analysis.isInParagraph(begin - 2);
+          if (paragraph != null) {
+            automatic = true;
+          }
+        }
+      }
+    } else {
+      automatic = true;
+    }
+
+    // Specific check if fix can be automatic
+    if (automatic &&
+        (analysis.isInImage(index) != null)) {
+      automatic = false;
+    }
+    if (automatic) {
+      // Note: due to badly written templates that requires a parameter not to be empty...
+      PageElementTemplate template = analysis.isInTemplate(index);
+      if (template != null) {
+        Parameter param = template.getParameterAtIndex(index);
+        if (param != null) {
+          // TODO: be less restrictive, only if list item is alone?
+          automatic = false;
+        }
+      }
+    }
+
+    // Report error
+    CheckErrorResult errorResult = createCheckErrorResult(analysis, begin, end);
+    errorResult.addReplacement("", automatic);
+    errors.add(errorResult);
+    return true;
   }
 
   /**
