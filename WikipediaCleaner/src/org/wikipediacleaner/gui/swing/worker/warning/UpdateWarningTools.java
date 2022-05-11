@@ -89,8 +89,8 @@ public abstract class UpdateWarningTools {
   /** True if this is a simulation. */
   private boolean simulation;
 
-  /** Map for errors. */
-  private Map<String, List<String>> errorsMap;
+  /** Processor for warnings on talk pages */
+  private WarningProcessor warningProcessor;
 
   /** List of articles titles supposed to have the error. */
   private Set<String> articles;
@@ -99,17 +99,20 @@ public abstract class UpdateWarningTools {
    * @param wiki Wiki.
    * @param worker Worker.
    * @param window Window.
+   * @param warningProcessor Actual processor for the warnings.
    * @param createWarning Create warning if necessary.
    * @param automaticEdit True if the edits are automatic.
    */
   protected UpdateWarningTools(
       EnumWikipedia wiki,
       BasicWorker worker, BasicWindow window,
+      WarningProcessor warningProcessor,
       boolean createWarning, boolean automaticEdit) {
     this.wiki = wiki;
     this.configuration = wiki.getConfiguration();
     this.worker = worker;
     this.window = window;
+    this.warningProcessor = warningProcessor;
     this.createWarning = createWarning;
     this.automaticEdit = automaticEdit;
     this.usePurge = false;
@@ -149,14 +152,14 @@ public abstract class UpdateWarningTools {
    * Initialize the errors map.
    */
   public void prepareErrorsMap() {
-    this.errorsMap = new HashMap<>();
+    this.warningProcessor.prepareErrorsMap();
   }
 
   /**
    * @return Errors map.
    */
   public Map<String, List<String>> getErrorsMap() {
-    return errorsMap;
+    return warningProcessor.getErrorsMap();
   }
 
   // ==========================================================================
@@ -257,7 +260,7 @@ public abstract class UpdateWarningTools {
         itPage.remove();
         if (!simulation) {
           PageAnalysis analysis = page.getAnalysis(page.getContents(), true);
-          Collection<String> elements = constructWarningElements(analysis, null, null);
+          Collection<String> elements = warningProcessor.constructWarningElements(analysis, null, null);
           if ((elements == null) || (elements.isEmpty())) {
             purgePage(page);
           }
@@ -405,7 +408,7 @@ public abstract class UpdateWarningTools {
       Page todoSubpage, Page talkPage,
       String creator, List<String> modifiers,
       Stats stats) throws APIException {
-    Collection<String> elements = constructWarningElements(pageAnalysis, talkPage, todoSubpage);
+    Collection<String> elements = warningProcessor.constructWarningElements(pageAnalysis, talkPage, todoSubpage);
     boolean result = false;
     if ((elements == null) || (elements.isEmpty())) {
       if (!simulation) {
@@ -454,7 +457,7 @@ public abstract class UpdateWarningTools {
       PageAnalysis pageAnalysis, Integer pageRevId, Page talkPage,
       String creator, List<String> modifiers,
       Stats stats) throws APIException {
-    Collection<String> elements = constructWarningElements(pageAnalysis, talkPage, null);
+    Collection<String> elements = warningProcessor.constructWarningElements(pageAnalysis, talkPage, null);
     boolean result = false;
     if ((elements == null) || (elements.isEmpty())) {
       if (!simulation) {
@@ -1087,6 +1090,10 @@ public abstract class UpdateWarningTools {
   // Page analysis
   // ==========================================================================
 
+  protected WarningProcessor getWarningProcessor() {
+    return this.warningProcessor;
+  }
+
   /**
    * Retrieve information in the pages to construct the warning.
    * 
@@ -1096,35 +1103,6 @@ public abstract class UpdateWarningTools {
    */
   protected abstract boolean retrievePageInformation(
       List<Page> pages) throws APIException;
-
-  /**
-   * Construct elements for the warning.
-   * 
-   * @param analysis Page analysis.
-   * @param talkPage Talk page.
-   * @param todoSubpage to do sub-page.
-   * @return Warning elements.
-   */
-  protected abstract Collection<String> constructWarningElements(
-      PageAnalysis analysis, Page talkPage, Page todoSubpage);
-
-  /**
-   * Memorize an error.
-   * 
-   * @param error Error to memorize. 
-   * @param title Page title in which the error is present.
-   */
-  protected void memorizeError(String error, String title) {
-    if ((errorsMap == null) || (error == null) || (title == null)) {
-      return;
-    }
-    List<String> titles = errorsMap.get(error);
-    if (titles == null) {
-      titles = new ArrayList<>();
-      errorsMap.put(error, titles);
-    }
-    titles.add(title);
-  }
 
   /**
    * @param talkPage Talk page
