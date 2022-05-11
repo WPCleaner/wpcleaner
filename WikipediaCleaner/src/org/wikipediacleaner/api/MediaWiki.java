@@ -34,7 +34,7 @@ import org.wikipediacleaner.api.execution.LinksWRCallable;
 import org.wikipediacleaner.api.execution.ParseTextCallable;
 import org.wikipediacleaner.api.execution.TemplatesCallable;
 import org.wikipediacleaner.gui.swing.basic.Utilities;
-import org.wikipediacleaner.gui.swing.worker.UpdateDabWarningTools;
+import org.wikipediacleaner.gui.swing.worker.warning.UpdateDabWarningTools;
 import org.wikipediacleaner.i18n.GT;
 import org.wikipediacleaner.utils.Configuration;
 import org.wikipediacleaner.utils.ConfigurationValueInteger;

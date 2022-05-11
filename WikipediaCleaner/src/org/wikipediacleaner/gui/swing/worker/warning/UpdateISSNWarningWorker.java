@@ -5,9 +5,8 @@
  *  See README.txt file for licensing information.
  */
 
-package org.wikipediacleaner.gui.swing.worker;
+package org.wikipediacleaner.gui.swing.worker.warning;
 
-import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -26,30 +25,27 @@ import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.DataManager;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageComparator;
-import org.wikipediacleaner.api.data.PageElementISBN;
-import org.wikipediacleaner.api.data.PageElementISSN;
 import org.wikipediacleaner.api.data.contents.comment.ContentsComment;
-import org.wikipediacleaner.api.data.contents.tag.WikiTagType;
 import org.wikipediacleaner.gui.swing.InformationWindow;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
 import org.wikipediacleaner.gui.swing.basic.Utilities;
-import org.wikipediacleaner.gui.swing.worker.UpdateWarningTools.Stats;
+import org.wikipediacleaner.gui.swing.worker.warning.UpdateWarningTools.Stats;
 import org.wikipediacleaner.i18n.GT;
 import org.wikipediacleaner.utils.Configuration;
 import org.wikipediacleaner.utils.ConfigurationValueString;
 
 
 /**
- * SwingWorker for updating ISBN warning.
+ * SwingWorker for updating ISSN warning.
  */
-public class UpdateISBNWarningWorker extends UpdateWarningWorker {
+public class UpdateISSNWarningWorker extends UpdateWarningWorker {
 
   /**
    * @param wiki Wiki.
    * @param window Window.
    * @param simulation True if this is a simulation.
    */
-  public UpdateISBNWarningWorker(
+  public UpdateISSNWarningWorker(
       EnumWikipedia wiki, BasicWindow window,
       boolean simulation) {
     super(wiki, window, null, simulation);
@@ -62,7 +58,7 @@ public class UpdateISBNWarningWorker extends UpdateWarningWorker {
    * @param contentsAvailable True if contents is already available in pages.
    * @param automaticEdit True if the edit should be considered automatic.
    */
-  public UpdateISBNWarningWorker(
+  public UpdateISSNWarningWorker(
       EnumWikipedia wiki, BasicWindow window, List<Page> pages,
       boolean contentsAvailable, boolean automaticEdit) {
     super(wiki, window, pages, contentsAvailable, automaticEdit);
@@ -78,7 +74,7 @@ public class UpdateISBNWarningWorker extends UpdateWarningWorker {
     int lastCount = 0;
     Stats stats = new Stats();
     Map<String, List<String>> errors = null;
-    UpdateISBNWarningTools tools = new UpdateISBNWarningTools(wiki, this, true, automaticEdit);
+    UpdateISSNWarningTools tools = new UpdateISSNWarningTools(wiki, this, true, automaticEdit);
     try {
       if (!useList) {
         listWarningPages(tools);
@@ -88,7 +84,7 @@ public class UpdateISBNWarningWorker extends UpdateWarningWorker {
           int answer = getWindow().displayYesNoWarning(GT._T(
               "Analysis found {0} articles to check for {1} errors.\n" +
               "Do you want to update the warnings ?",
-              new Object[] { Integer.valueOf(warningPages.size()).toString(), "ISBN" } ));
+              new Object[] { Integer.valueOf(warningPages.size()).toString(), "ISSN" } ));
           if (answer != JOptionPane.YES_OPTION) {
             return Integer.valueOf(0);
           }
@@ -129,7 +125,7 @@ public class UpdateISBNWarningWorker extends UpdateWarningWorker {
               int answer = getWindow().displayYesNoWarning(GT._T(
                   "An error occurred when updating {1} warnings. Do you want to continue ?\n\n" +
                   "Error: {0}",
-                  new Object[] { e.getMessage(), "ISBN" } ));
+                  new Object[] { e.getMessage(), "ISSN" }));
               if (answer != JOptionPane.YES_OPTION) {
                 return e;
               }
@@ -138,7 +134,7 @@ public class UpdateISBNWarningWorker extends UpdateWarningWorker {
           }
           if (shouldStop()) {
             Configuration config = Configuration.getConfiguration();
-            config.setString(null, ConfigurationValueString.LAST_ISBN_WARNING, lastTitle);
+            config.setString(null, ConfigurationValueString.LAST_ISSN_WARNING, lastTitle);
             displayResult(stats, startTime, null);
             return Integer.valueOf(stats.getUpdatedPagesCount());
           }
@@ -161,7 +157,7 @@ public class UpdateISBNWarningWorker extends UpdateWarningWorker {
       errors = tools.getErrorsMap();
       if (warningPages.isEmpty()) {
         Configuration config = Configuration.getConfiguration();
-        config.setString(null, ConfigurationValueString.LAST_ISBN_WARNING, (String) null);
+        config.setString(null, ConfigurationValueString.LAST_ISSN_WARNING, (String) null);
       }
     } catch (APIException e) {
       return e;
@@ -183,28 +179,26 @@ public class UpdateISBNWarningWorker extends UpdateWarningWorker {
 
     // Retrieve talk pages including a warning
     retrieveArticlesWithWarning(
-        WPCConfigurationString.ISBN_WARNING_TEMPLATE,
+        WPCConfigurationString.ISSN_WARNING_TEMPLATE,
         tmpWarningPages);
 
-    // Retrieve articles in categories for ISBN errors
+    // Retrieve articles in categories for ISSN errors
     retrieveCategoryMembers(
-        WPCConfigurationStringList.ISBN_ERRORS_CATEGORIES,
+        WPCConfigurationStringList.ISSN_ERRORS_CATEGORIES,
         tmpWarningPages);
 
-    // Retrieve articles in lists for ISBN errors
+    // Retrieve articles in lists for ISSN errors
     retrieveInternalLinks(
-        WPCConfigurationStringList.ISBN_ERRORS_LISTS,
+        WPCConfigurationStringList.ISSN_ERRORS_LISTS,
         tmpWarningPages);
 
-    // Retrieve articles listed for ISBN errors in Check Wiki
-    retrieveCheckWikiPages(70, tmpWarningPages, null); // Incorrect length
-    retrieveCheckWikiPages(71, tmpWarningPages, null); // Incorrect X
-    retrieveCheckWikiPages(72, tmpWarningPages, null); // Incorrect ISBN-10
-    retrieveCheckWikiPages(73, tmpWarningPages, null); // Incorrect ISBN-13
+    // Retrieve articles listed for ISSN errors in Check Wiki
+    retrieveCheckWikiPages(107, tmpWarningPages, null); // Incorrect length
+    retrieveCheckWikiPages(108, tmpWarningPages, null); // Wrong checksum
 
     // Retrieve articles already reported
     retrieveInternalLinks(
-        WPCConfigurationString.ISBN_ERRORS_PAGE,
+        WPCConfigurationString.ISSN_ERRORS_PAGE,
         tmpWarningPages);
 
     // Fill up the list    
@@ -232,16 +226,6 @@ public class UpdateISBNWarningWorker extends UpdateWarningWorker {
 
       // Configuration
       EnumWikipedia wiki = getWikipedia();
-      List<String[]> issnSearchEngines = wiki.getConfiguration().getStringArrayList(
-          WPCConfigurationStringList.ISSN_SEARCH_ENGINES);
-      String issnUrl = null;
-      if ((issnSearchEngines != null) &&
-          !issnSearchEngines.isEmpty()) {
-        String[] issnSearchEngine0 = issnSearchEngines.get(0);
-        if ((issnSearchEngine0 != null) && (issnSearchEngine0.length > 1)) {
-          issnUrl = issnSearchEngine0[1];
-        }
-      }
 
       // Compute synthesis
       StringBuilder buffer = new StringBuilder();
@@ -254,21 +238,8 @@ public class UpdateISBNWarningWorker extends UpdateWarningWorker {
           buffer.append(values.size());
           buffer.append(" x ");
         }
-        buffer.append(WikiTagType.NOWIKI.getOpenTag());
-        buffer.append("ISBN ");
+        buffer.append("ISSN ");
         buffer.append(key);
-        buffer.append(WikiTagType.NOWIKI.getCloseTag());
-        if (issnUrl != null) {
-          String clean = key.replaceAll("\\&\\#x3D\\;", "=");
-          clean = PageElementISBN.cleanISBN(clean);
-          if (clean.length() == 8) {
-            if (clean.charAt(7) == PageElementISSN.computeChecksum(clean)) {
-              buffer.append(" ([");
-              buffer.append(MessageFormat.format(issnUrl, clean));
-              buffer.append(" ISSN?])");
-            }
-          }
-        }
         buffer.append(" : ");
         if (values != null) {
           Collections.sort(values);
@@ -297,7 +268,7 @@ public class UpdateISBNWarningWorker extends UpdateWarningWorker {
 
       // Update synthesis on dedicated page
       WPCConfiguration config = wiki.getConfiguration();
-      String pageName = config.getString(WPCConfigurationString.ISBN_ERRORS_PAGE);
+      String pageName = config.getString(WPCConfigurationString.ISSN_ERRORS_PAGE);
       boolean saved = false;
       if ((pageName != null) && (pageName.trim().length() > 0)) {
         boolean updatePage = false;
@@ -339,17 +310,13 @@ public class UpdateISBNWarningWorker extends UpdateWarningWorker {
                 newText.append(contents.substring(end));
                 api.updatePage(
                     wiki, page, newText.toString(),
-                    config.getString(WPCConfigurationString.ISBN_ERRORS_PAGE_COMMENT),
+                    config.getString(WPCConfigurationString.ISSN_ERRORS_PAGE_COMMENT),
                     false, true, true, false);
                 saved = true;
               }
             }
           } catch (APIException e) {
-            if (getWindow() != null) {
-              getWindow().displayWarning(
-                  "Error updating list of ISBN errors: " + e.getMessage() +
-                  " (" + e.getErrorCode() + ")");
-            }
+            // Nothing
           }
         }
       }
@@ -357,7 +324,7 @@ public class UpdateISBNWarningWorker extends UpdateWarningWorker {
       // Display synthesis
       if (!saved && (getWindow() != null)) {
         InformationWindow.createInformationWindow(
-            "ISBN", buffer.toString(), false, getWikipedia());
+            "ISSN", buffer.toString(), false, getWikipedia());
       }
     }
 

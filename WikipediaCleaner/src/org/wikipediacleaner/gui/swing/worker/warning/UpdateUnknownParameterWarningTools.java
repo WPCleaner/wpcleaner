@@ -5,7 +5,7 @@
  *  See README.txt file for licensing information.
  */
 
-package org.wikipediacleaner.gui.swing.worker;
+package org.wikipediacleaner.gui.swing.worker.warning;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -14,29 +14,30 @@ import java.util.List;
 
 import org.wikipediacleaner.api.APIException;
 import org.wikipediacleaner.api.MediaWiki;
-import org.wikipediacleaner.api.algorithm.Algorithm;
 import org.wikipediacleaner.api.algorithm.AlgorithmError;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.CheckErrorPage;
+import org.wikipediacleaner.api.check.CheckErrorResult.ErrorLevel;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithm;
-import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmISSN;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithms;
 import org.wikipediacleaner.api.configuration.WPCConfigurationBoolean;
 import org.wikipediacleaner.api.configuration.WPCConfigurationString;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.Page;
-import org.wikipediacleaner.api.data.PageElementExternalLink;
-import org.wikipediacleaner.api.data.PageElementISSN;
+import org.wikipediacleaner.api.data.PageAnalysisUtils;
+import org.wikipediacleaner.api.data.PageElementTemplate;
+import org.wikipediacleaner.api.data.PageElementTemplate.Parameter;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
+import org.wikipediacleaner.api.data.PageElementTitle;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
 import org.wikipediacleaner.gui.swing.basic.BasicWorker;
 import org.wikipediacleaner.i18n.GT;
 
 
 /**
- * Tools for updating ISSN warnings.
+ * Tools for updating unknown parameter warnings.
  */
-public class UpdateISSNWarningTools extends UpdateWarningTools {
+public class UpdateUnknownParameterWarningTools extends UpdateWarningTools {
 
   /**
    * @param wiki Wiki.
@@ -44,7 +45,7 @@ public class UpdateISSNWarningTools extends UpdateWarningTools {
    * @param createWarning Create warning if necessary.
    * @param automaticEdit True if the edits are automatic.
    */
-  public UpdateISSNWarningTools(
+  public UpdateUnknownParameterWarningTools(
       EnumWikipedia wiki, BasicWorker worker,
       boolean createWarning, boolean automaticEdit) {
     this(wiki, worker, (worker != null) ? worker.getWindow() : null, createWarning, automaticEdit);
@@ -55,7 +56,7 @@ public class UpdateISSNWarningTools extends UpdateWarningTools {
    * @param window Window.
    * @param createWarning Create warning if necessary.
    */
-  public UpdateISSNWarningTools(EnumWikipedia wiki, BasicWindow window, boolean createWarning) {
+  public UpdateUnknownParameterWarningTools(EnumWikipedia wiki, BasicWindow window, boolean createWarning) {
     this(wiki, null, window, createWarning, false);
   }
 
@@ -66,7 +67,7 @@ public class UpdateISSNWarningTools extends UpdateWarningTools {
    * @param createWarning Create warning if necessary.
    * @param automaticEdit True if the edits are automatic.
    */
-  private UpdateISSNWarningTools(
+  private UpdateUnknownParameterWarningTools(
       EnumWikipedia wiki,
       BasicWorker worker, BasicWindow window,
       boolean createWarning, boolean automaticEdit) {
@@ -94,12 +95,12 @@ public class UpdateISSNWarningTools extends UpdateWarningTools {
   }
 
   /**
-   * Extract information about ISSN with errors.
+   * Extract information about unknown parameters.
    * 
-   * @param analysis Page analysis (must have enough information to compute the list of ISSN errors).
+   * @param analysis Page analysis (must have enough information to compute the list of unknown parameters).
    * @param talkPage Talk page.
    * @param todoSubpage to do sub-page.
-   * @return List of ISSN errors.
+   * @return List of unknown parameter errors.
    */
   @Override
   protected Collection<String> constructWarningElements(
@@ -110,16 +111,13 @@ public class UpdateISSNWarningTools extends UpdateWarningTools {
 
     // Prepare list of algorithms
     List<CheckErrorAlgorithm> algorithms = new ArrayList<>();
-    algorithms.add(CheckErrorAlgorithms.getAlgorithm(wiki, 106)); // Incorrect syntax
-    algorithms.add(CheckErrorAlgorithms.getAlgorithm(wiki, 107)); // Wrong length
-    algorithms.add(CheckErrorAlgorithms.getAlgorithm(wiki, 108)); // Wrong checksum
+    algorithms.add(CheckErrorAlgorithms.getAlgorithm(wiki, 564)); // Unknown parameter
 
     // Retrieve list of errors
     List<CheckErrorResult> errorResults = new ArrayList<>();
     for (CheckErrorAlgorithm algorithm : algorithms) {
       int errorNumber = algorithm.getErrorNumber();
-      if (CheckErrorAlgorithms.isAlgorithmActive(wiki, errorNumber) &&
-          !algorithm.isInWhiteList(analysis.getPage().getTitle())) {
+      if (CheckErrorAlgorithms.isAlgorithmActive(wiki, errorNumber)) {
         CheckErrorPage errorPage = AlgorithmError.analyzeError(algorithm, analysis);
         List<CheckErrorResult> results = errorPage.getResults();
         if (results != null) {
@@ -131,66 +129,53 @@ public class UpdateISSNWarningTools extends UpdateWarningTools {
 
     // Compute list of elements for the warning
     List<String> elements = new ArrayList<>();
-    int pos = 0;
-    while (pos < errorResults.size()) {
-      CheckErrorResult errorResult = errorResults.get(pos);
-      int beginIndex = errorResult.getStartPosition();
-      int endIndex = errorResult.getEndPosition();
-      int next = pos + 1;
-      while ((next < errorResults.size()) &&
-             (beginIndex == errorResults.get(next).getStartPosition()) &&
-             (endIndex == errorResults.get(next).getEndPosition())) {
-        next++;
-      }
-      String error = analysis.getContents().substring(beginIndex, endIndex);
-      error = error.replaceAll("\\=", "&#x3D;"); // Replace "=" by its HTML value
-      error = error.replaceAll("\n", "\u21b5"); // Replacer \n by a visual character
-      error = error.replaceAll("\\<", "&lt;"); // Replace "<" by its HTML element
-      error = error.replaceAll("\\[", "&#x5B;"); // Replace "[" by its HTML value
-      error = error.replaceAll("\\]", "&#x5D;"); // Replace "]" by its HTML value
-      error = error.replaceAll("\\{", "&#x7B;"); // Replace "{" by its HTML value
-      error = error.replaceAll("\\|", "&#x7C;"); // Replace "|" by its HTML value
-      error = error.replaceAll("\\}", "&#x7D;"); // Replace "}" by its HTML value
-      boolean keep = true;
-      StringBuilder comment = new StringBuilder();
-      while (pos < next) {
-        errorResult = errorResults.get(pos);
-        Algorithm algorithm = errorResult.getAlgorithm();
-        PageElementISSN issn = analysis.isInISSN(beginIndex);
-        if (issn != null) {
-          if ((algorithm != null) &&
-              (algorithm instanceof CheckErrorAlgorithmISSN)) {
-            CheckErrorAlgorithmISSN issnAlgo = (CheckErrorAlgorithmISSN) algorithm;
-            String reason = issnAlgo.getReason(issn);
-            if ((reason != null) && (reason.length() > 0)) {
-              if (comment.length() > 0) {
-                comment.append(" - ");
-              }
-              comment.append(reason);
+    String contents = analysis.getContents();
+    for (CheckErrorResult errorResult : errorResults) {
+      if (ErrorLevel.ERROR.equals(errorResult.getErrorLevel())) {
+        int beginIndex = errorResult.getStartPosition();
+        while ((beginIndex < contents.length()) &&
+               (contents.charAt(beginIndex) != '|') &&
+               (contents.charAt(beginIndex) != '}')) {
+          beginIndex++;
+        }
+        if ((beginIndex < contents.length()) &&
+            (contents.charAt(beginIndex) == '|')) {
+          beginIndex++;
+        }
+        String templateName = null;
+        String argumentValue = "";
+        String chapterName = "";
+        boolean keep = false;
+        PageElementTemplate template = analysis.isInTemplate(beginIndex);
+        if (template != null) {
+          templateName = template.getTemplateName();
+          Parameter param = template.getParameterAtIndex(beginIndex);
+          if (param != null) {
+            argumentValue = analysis.getContents().substring(param.getNameStartIndex(), param.getEndIndex());
+            PageElementTitle title = PageAnalysisUtils.getCurrentChapter(analysis, beginIndex);
+            if (title != null) {
+              chapterName = title.getTitle();
             }
-          }
-          if (!issn.isTemplateParameter()) {
-            if (error.toUpperCase().startsWith("ISSN")) {
-              error = error.substring(4).trim();
-            }
-            PageElementExternalLink link = analysis.isInExternalLink(beginIndex);
-            if (link != null) {
-              if (!link.hasSquare() ||
-                  (link.getText() == null) ||
-                  link.getText().isEmpty()) {
-                keep = false;
-              } else if (beginIndex < link.getBeginIndex() + link.getLink().length()) {
-                keep = false;
-              }
-            }
+            keep = true;
           }
         }
-        pos++;
-      }
-      if (keep) {
-        elements.add(error);
-        elements.add(comment.toString());
-        memorizeError(error, analysis.getPage().getTitle());
+        if (keep) {
+          elements.add(templateName);
+          elements.add(argumentValue
+              .replaceAll("\\:", "&#58;")
+              .replaceAll("\\<", "&#60;")
+              .replaceAll("\\=", "&#61;")
+              .replaceAll("\\>", "&#62;")
+              .replaceAll("\\[", "&#91;")
+              .replaceAll("\\]", "&#93;")
+              .replaceAll("\\{", "&#123;")
+              .replaceAll("\\|", "&#124;")
+              .replaceAll("\\}", "&#125;")
+              .replaceAll("\\~", "&#126;")
+              .replaceAll("\n", "\u21b5")
+              .trim());
+          elements.add(chapterName);
+        }
       }
     }
     return elements;
@@ -205,7 +190,7 @@ public class UpdateISSNWarningTools extends UpdateWarningTools {
    */
   @Override
   protected WPCConfigurationString getWarningTemplate() {
-    return WPCConfigurationString.ISSN_WARNING_TEMPLATE;
+    return WPCConfigurationString.UNKNOWN_PARAMETER_WARNING_TEMPLATE;
   }
 
   /**
@@ -213,7 +198,7 @@ public class UpdateISSNWarningTools extends UpdateWarningTools {
    */
   @Override
   protected WPCConfigurationString getWarningTemplateComment() {
-    return WPCConfigurationString.ISSN_WARNING_TEMPLATE_COMMENT;
+    return WPCConfigurationString.UNKNOWN_PARAMETER_WARNING_TEMPLATE_COMMENT;
   }
 
   /**
@@ -221,7 +206,7 @@ public class UpdateISSNWarningTools extends UpdateWarningTools {
    */
   @Override
   protected boolean useSection0() {
-    return configuration.getBoolean(WPCConfigurationBoolean.ISSN_WARNING_SECTION_0);
+    return configuration.getBoolean(WPCConfigurationBoolean.UNKNOWN_PARAMETER_WARNING_SECTION_0);
   }
 
   /**
@@ -229,7 +214,7 @@ public class UpdateISSNWarningTools extends UpdateWarningTools {
    */
   @Override
   protected String getWarningCommentDone() {
-    return configuration.getISSNWarningCommentDone();
+    return configuration.getUnknownParameterWarningCommentDone();
   }
 
   /**
@@ -238,15 +223,15 @@ public class UpdateISSNWarningTools extends UpdateWarningTools {
    */
   @Override
   protected String getWarningComment(Collection<String> elements) {
-    Collection<String> issns = new ArrayList<>();
+    Collection<String> arguments = new ArrayList<>();
     int i = 0;
     for (String element : elements) {
-      if (i % 2 == 0) {
-        issns.add(element);
+      if (i % 3 == 1) {
+        arguments.add(element);
       }
       i++;
     }
-    return configuration.getISSNWarningComment(issns);
+    return configuration.getUnknownParameterWarningComment(arguments);
   }
 
   /**
@@ -255,7 +240,7 @@ public class UpdateISSNWarningTools extends UpdateWarningTools {
    */
   @Override
   protected String getMessageRemoveWarning(String title) {
-    return GT._T("Removing {1} warning - {0}", new Object[] { title, "ISSN" });
+    return GT._T("Removing unknown parameter warning - {0}", title);
   }
 
   /**
@@ -264,6 +249,6 @@ public class UpdateISSNWarningTools extends UpdateWarningTools {
    */
   @Override
   protected String getMessageUpdateWarning(String title) {
-    return GT._T("Updating {1} warning - {0}", new Object[] { title, "ISSN" });
+    return GT._T("Updating unknown parameter warning - {0}", title);
   }
 }

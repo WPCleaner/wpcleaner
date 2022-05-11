@@ -5,7 +5,7 @@
  *  See README.txt file for licensing information.
  */
 
-package org.wikipediacleaner.gui.swing.worker;
+package org.wikipediacleaner.gui.swing.worker.warning;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -14,31 +14,30 @@ import java.util.List;
 
 import org.wikipediacleaner.api.APIException;
 import org.wikipediacleaner.api.MediaWiki;
-import org.wikipediacleaner.api.algorithm.Algorithm;
 import org.wikipediacleaner.api.algorithm.AlgorithmError;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.CheckErrorPage;
+import org.wikipediacleaner.api.check.CheckErrorResult.ErrorLevel;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithm;
-import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmISBN;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithms;
 import org.wikipediacleaner.api.configuration.WPCConfigurationBoolean;
 import org.wikipediacleaner.api.configuration.WPCConfigurationString;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.Page;
-import org.wikipediacleaner.api.data.PageElementExternalLink;
-import org.wikipediacleaner.api.data.PageElementISBN;
+import org.wikipediacleaner.api.data.PageAnalysisUtils;
+import org.wikipediacleaner.api.data.PageElementTemplate;
+import org.wikipediacleaner.api.data.PageElementTemplate.Parameter;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
-import org.wikipediacleaner.api.data.contents.tag.CompleteTagBuilder;
-import org.wikipediacleaner.api.data.contents.tag.WikiTagType;
+import org.wikipediacleaner.api.data.PageElementTitle;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
 import org.wikipediacleaner.gui.swing.basic.BasicWorker;
 import org.wikipediacleaner.i18n.GT;
 
 
 /**
- * Tools for updating ISBN warnings.
+ * Tools for updating duplicate arguments warnings.
  */
-public class UpdateISBNWarningTools extends UpdateWarningTools {
+public class UpdateDuplicateArgsWarningTools extends UpdateWarningTools {
 
   /**
    * @param wiki Wiki.
@@ -46,7 +45,7 @@ public class UpdateISBNWarningTools extends UpdateWarningTools {
    * @param createWarning Create warning if necessary.
    * @param automaticEdit True if the edits are automatic.
    */
-  public UpdateISBNWarningTools(
+  public UpdateDuplicateArgsWarningTools(
       EnumWikipedia wiki, BasicWorker worker,
       boolean createWarning, boolean automaticEdit) {
     this(wiki, worker, (worker != null) ? worker.getWindow() : null, createWarning, automaticEdit);
@@ -57,7 +56,7 @@ public class UpdateISBNWarningTools extends UpdateWarningTools {
    * @param window Window.
    * @param createWarning Create warning if necessary.
    */
-  public UpdateISBNWarningTools(EnumWikipedia wiki, BasicWindow window, boolean createWarning) {
+  public UpdateDuplicateArgsWarningTools(EnumWikipedia wiki, BasicWindow window, boolean createWarning) {
     this(wiki, null, window, createWarning, false);
   }
 
@@ -68,7 +67,7 @@ public class UpdateISBNWarningTools extends UpdateWarningTools {
    * @param createWarning Create warning if necessary.
    * @param automaticEdit True if the edits are automatic.
    */
-  private UpdateISBNWarningTools(
+  private UpdateDuplicateArgsWarningTools(
       EnumWikipedia wiki,
       BasicWorker worker, BasicWindow window,
       boolean createWarning, boolean automaticEdit) {
@@ -96,12 +95,12 @@ public class UpdateISBNWarningTools extends UpdateWarningTools {
   }
 
   /**
-   * Extract information about ISBN with errors.
+   * Extract information about duplicate arguments.
    * 
-   * @param analysis Page analysis (must have enough information to compute the list of ISBN errors).
+   * @param analysis Page analysis (must have enough information to compute the list of duplicate arguments).
    * @param talkPage Talk page.
    * @param todoSubpage to do sub-page.
-   * @return List of ISBN errors.
+   * @return List of duplicate arguments errors.
    */
   @Override
   protected Collection<String> constructWarningElements(
@@ -112,18 +111,13 @@ public class UpdateISBNWarningTools extends UpdateWarningTools {
 
     // Prepare list of algorithms
     List<CheckErrorAlgorithm> algorithms = new ArrayList<>();
-    algorithms.add(CheckErrorAlgorithms.getAlgorithm(wiki, 69)); // Incorrect syntax
-    algorithms.add(CheckErrorAlgorithms.getAlgorithm(wiki, 70)); // Incorrect length
-    algorithms.add(CheckErrorAlgorithms.getAlgorithm(wiki, 71)); // Incorrect X
-    algorithms.add(CheckErrorAlgorithms.getAlgorithm(wiki, 72)); // Incorrect ISBN-10
-    algorithms.add(CheckErrorAlgorithms.getAlgorithm(wiki, 73)); // Incorrect ISBN-13
+    algorithms.add(CheckErrorAlgorithms.getAlgorithm(wiki, 524)); // Duplicate template args
 
     // Retrieve list of errors
     List<CheckErrorResult> errorResults = new ArrayList<>();
     for (CheckErrorAlgorithm algorithm : algorithms) {
       int errorNumber = algorithm.getErrorNumber();
-      if (CheckErrorAlgorithms.isAlgorithmActive(wiki, errorNumber) &&
-          !algorithm.isInWhiteList(analysis.getPage().getTitle())) {
+      if (CheckErrorAlgorithms.isAlgorithmActive(wiki, errorNumber)) {
         CheckErrorPage errorPage = AlgorithmError.analyzeError(algorithm, analysis);
         List<CheckErrorResult> results = errorPage.getResults();
         if (results != null) {
@@ -135,66 +129,41 @@ public class UpdateISBNWarningTools extends UpdateWarningTools {
 
     // Compute list of elements for the warning
     List<String> elements = new ArrayList<>();
-    int pos = 0;
-    while (pos < errorResults.size()) {
-      CheckErrorResult errorResult = errorResults.get(pos);
-      int beginIndex = errorResult.getStartPosition();
-      int endIndex = errorResult.getEndPosition();
-      int next = pos + 1;
-      while ((next < errorResults.size()) &&
-             (beginIndex == errorResults.get(next).getStartPosition()) &&
-             (endIndex == errorResults.get(next).getEndPosition())) {
-        next++;
-      }
-      String error = analysis.getContents().substring(beginIndex, endIndex);
-      error = error.replaceAll("\\=", "&#x3D;"); // Replace "=" by its HTML value
-      error = error.replaceAll("\n", "\u21b5"); // Replacer \n by a visual character
-      error = error.replaceAll("\\<", "&lt;"); // Replace "<" by its HTML element
-      error = error.replaceAll("\\[", "&#x5B;"); // Replace "[" by its HTML value
-      error = error.replaceAll("\\]", "&#x5D;"); // Replace "]" by its HTML value
-      error = error.replaceAll("\\{", "&#x7B;"); // Replace "{" by its HTML value
-      error = error.replaceAll("\\|", "&#x7C;"); // Replace "|" by its HTML value
-      error = error.replaceAll("\\}", "&#x7D;"); // Replace "}" by its HTML value
-      boolean keep = true;
-      StringBuilder comment = new StringBuilder();
-      while (pos < next) {
-        errorResult = errorResults.get(pos);
-        Algorithm algorithm = errorResult.getAlgorithm();
-        PageElementISBN isbn = analysis.isInISBN(beginIndex);
-        if (isbn != null) {
-          if ((algorithm != null) &&
-              (algorithm instanceof CheckErrorAlgorithmISBN)) {
-            CheckErrorAlgorithmISBN isbnAlgo = (CheckErrorAlgorithmISBN) algorithm;
-            String reason = isbnAlgo.getReason(isbn);
-            if ((reason != null) && (reason.length() > 0)) {
-              if (comment.length() > 0) {
-                comment.append(" - ");
-              }
-              comment.append(reason);
+    String contents = analysis.getContents();
+    for (CheckErrorResult errorResult : errorResults) {
+      if (ErrorLevel.ERROR.equals(errorResult.getErrorLevel())) {
+        int beginIndex = errorResult.getStartPosition();
+        while ((beginIndex < contents.length()) &&
+               (contents.charAt(beginIndex) != '|') &&
+               (contents.charAt(beginIndex) != '}')) {
+          beginIndex++;
+        }
+        if ((beginIndex < contents.length()) &&
+            (contents.charAt(beginIndex) == '|')) {
+          beginIndex++;
+        }
+        String templateName = null;
+        String argumentName = null;
+        String chapterName = "";
+        boolean keep = false;
+        PageElementTemplate template = analysis.isInTemplate(beginIndex);
+        if (template != null) {
+          templateName = template.getTemplateName();
+          Parameter param = template.getParameterAtIndex(beginIndex);
+          if (param != null) {
+            argumentName = param.getComputedName();
+            PageElementTitle title = PageAnalysisUtils.getCurrentChapter(analysis, beginIndex);
+            if (title != null) {
+              chapterName = title.getTitle();
             }
-          }
-          if (!isbn.isTemplateParameter()) {
-            if (error.toUpperCase().startsWith("ISBN")) {
-              error = error.substring(4).trim();
-            }
-            PageElementExternalLink link = analysis.isInExternalLink(beginIndex);
-            if (link != null) {
-              if (!link.hasSquare() ||
-                  (link.getText() == null) ||
-                  link.getText().isEmpty()) {
-                keep = false;
-              } else if (beginIndex < link.getBeginIndex() + link.getLink().length()) {
-                keep = false;
-              }
-            }
+            keep = true;
           }
         }
-        pos++;
-      }
-      if (keep) {
-        elements.add(CompleteTagBuilder.from(WikiTagType.NOWIKI, error).toString());
-        elements.add(comment.toString());
-        memorizeError(error, analysis.getPage().getTitle());
+        if (keep) {
+          elements.add(templateName);
+          elements.add(argumentName);
+          elements.add(chapterName);
+        }
       }
     }
     return elements;
@@ -209,7 +178,7 @@ public class UpdateISBNWarningTools extends UpdateWarningTools {
    */
   @Override
   protected WPCConfigurationString getWarningTemplate() {
-    return WPCConfigurationString.ISBN_WARNING_TEMPLATE;
+    return WPCConfigurationString.DUPLICATE_ARGS_WARNING_TEMPLATE;
   }
 
   /**
@@ -217,7 +186,7 @@ public class UpdateISBNWarningTools extends UpdateWarningTools {
    */
   @Override
   protected WPCConfigurationString getWarningTemplateComment() {
-    return WPCConfigurationString.ISBN_WARNING_TEMPLATE_COMMENT;
+    return WPCConfigurationString.DUPLICATE_ARGS_WARNING_TEMPLATE_COMMENT;
   }
 
   /**
@@ -225,7 +194,7 @@ public class UpdateISBNWarningTools extends UpdateWarningTools {
    */
   @Override
   protected boolean useSection0() {
-    return configuration.getBoolean(WPCConfigurationBoolean.ISBN_WARNING_SECTION_0);
+    return configuration.getBoolean(WPCConfigurationBoolean.DUPLICATE_ARGS_WARNING_SECTION_0);
   }
 
   /**
@@ -233,7 +202,7 @@ public class UpdateISBNWarningTools extends UpdateWarningTools {
    */
   @Override
   protected String getWarningCommentDone() {
-    return configuration.getISBNWarningCommentDone();
+    return configuration.getDuplicateArgsWarningCommentDone();
   }
 
   /**
@@ -242,15 +211,15 @@ public class UpdateISBNWarningTools extends UpdateWarningTools {
    */
   @Override
   protected String getWarningComment(Collection<String> elements) {
-    Collection<String> isbns = new ArrayList<>();
+    Collection<String> arguments = new ArrayList<>();
     int i = 0;
     for (String element : elements) {
-      if (i % 2 == 0) {
-        isbns.add(element);
+      if (i % 3 == 1) {
+        arguments.add(element);
       }
       i++;
     }
-    return configuration.getISBNWarningComment(isbns);
+    return configuration.getDuplicateArgsWarningComment(arguments);
   }
 
   /**
@@ -259,7 +228,7 @@ public class UpdateISBNWarningTools extends UpdateWarningTools {
    */
   @Override
   protected String getMessageRemoveWarning(String title) {
-    return GT._T("Removing {1} warning - {0}", new Object[] { title, "ISBN" });
+    return GT._T("Removing duplicate arguments warning - {0}", title);
   }
 
   /**
@@ -268,6 +237,6 @@ public class UpdateISBNWarningTools extends UpdateWarningTools {
    */
   @Override
   protected String getMessageUpdateWarning(String title) {
-    return GT._T("Updating {1} warning - {0}", new Object[] { title, "ISBN" });
+    return GT._T("Updating duplicate arguments warning - {0}", title);
   }
 }

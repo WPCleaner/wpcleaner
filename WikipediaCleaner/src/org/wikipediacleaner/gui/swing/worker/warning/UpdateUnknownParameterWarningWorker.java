@@ -5,9 +5,8 @@
  *  See README.txt file for licensing information.
  */
 
-package org.wikipediacleaner.gui.swing.worker;
+package org.wikipediacleaner.gui.swing.worker.warning;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -16,66 +15,44 @@ import java.util.Map;
 import javax.swing.JOptionPane;
 
 import org.wikipediacleaner.api.APIException;
-import org.wikipediacleaner.api.configuration.WPCConfiguration;
 import org.wikipediacleaner.api.configuration.WPCConfigurationString;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageComparator;
-import org.wikipediacleaner.api.data.contents.template.TemplateBuilder;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
-import org.wikipediacleaner.gui.swing.worker.UpdateWarningTools.Stats;
+import org.wikipediacleaner.gui.swing.worker.warning.UpdateWarningTools.Stats;
 import org.wikipediacleaner.i18n.GT;
 import org.wikipediacleaner.utils.Configuration;
 import org.wikipediacleaner.utils.ConfigurationValueString;
 
 
 /**
- * SwingWorker for updating disambiguation warning.
+ * SwingWorker for updating unknown parameter warning.
  */
-public class UpdateDabWarningWorker extends UpdateWarningWorker {
-
-  private final boolean linksAvailable;
-  private final boolean dabInformationAvailable;
+public class UpdateUnknownParameterWarningWorker extends UpdateWarningWorker {
 
   /**
-   * @param wikipedia Wikipedia.
+   * @param wiki Wiki.
    * @param window Window.
-   * @param start Start at this page.
+   * @param simulation True if this is a simulation.
    */
-  public UpdateDabWarningWorker(EnumWikipedia wikipedia, BasicWindow window, String start) {
-    super(wikipedia, window, start, false);
-    this.linksAvailable = false;
-    this.dabInformationAvailable = false;
+  public UpdateUnknownParameterWarningWorker(
+      EnumWikipedia wiki, BasicWindow window,
+      boolean simulation) {
+    super(wiki, window, null, simulation);
   }
 
   /**
-   * @param wikipedia Wikipedia.
-   * @param window Window.
-   * @param pages Pages to analyze.
-   * @param automaticEdit True if the edit should be considered automatic.
-   */
-  public UpdateDabWarningWorker(
-      EnumWikipedia wikipedia, BasicWindow window,
-      List<Page> pages, boolean automaticEdit) {
-    this(wikipedia, window, pages, false, false, false, automaticEdit);
-  }
-
-  /**
-   * @param wikipedia Wikipedia.
+   * @param wiki Wiki.
    * @param window Window.
    * @param pages Pages to analyze.
    * @param contentsAvailable True if contents is already available in pages.
-   * @param linksAvailable True if links are already available in pages.
-   * @param dabInformationAvailable True if disambiguation information is already available in pages.
    * @param automaticEdit True if the edit should be considered automatic.
    */
-  public UpdateDabWarningWorker(
-      EnumWikipedia wikipedia, BasicWindow window, List<Page> pages,
-      boolean contentsAvailable, boolean linksAvailable,
-      boolean dabInformationAvailable, boolean automaticEdit) {
-    super(wikipedia, window, pages, contentsAvailable, automaticEdit);
-    this.linksAvailable = linksAvailable;
-    this.dabInformationAvailable = dabInformationAvailable;
+  public UpdateUnknownParameterWarningWorker(
+      EnumWikipedia wiki, BasicWindow window, List<Page> pages,
+      boolean contentsAvailable, boolean automaticEdit) {
+    super(wiki, window, pages, contentsAvailable, automaticEdit);
   }
 
   /* (non-Javadoc)
@@ -84,13 +61,12 @@ public class UpdateDabWarningWorker extends UpdateWarningWorker {
   @Override
   public Object construct() {
     long startTime = System.currentTimeMillis();
-    EnumWikipedia wikipedia = getWikipedia();
-    WPCConfiguration configuration = wikipedia.getConfiguration();
-    setText(GT._T("Retrieving MediaWiki API"));
+    EnumWikipedia wiki = getWikipedia();
     int lastCount = 0;
-
     Stats stats = new Stats();
-    UpdateDabWarningTools tools = new UpdateDabWarningTools(wikipedia, this, true, automaticEdit);
+    UpdateUnknownParameterWarningTools tools = new UpdateUnknownParameterWarningTools(
+        wiki, this, true, automaticEdit);
+    tools.setUsePurge(false);
     try {
       if (!useList) {
         listWarningPages(tools);
@@ -98,36 +74,28 @@ public class UpdateDabWarningWorker extends UpdateWarningWorker {
         // Ask for confirmation
         if (getWindow() != null) {
           int answer = getWindow().displayYesNoWarning(GT._T(
-              "Analysis found {0} articles with disambiguation warning {1}.\n" +
-              "Do you want to update the disambiguation warnings ?",
-              new Object[] {
-                  Integer.valueOf(warningPages.size()),
-                  TemplateBuilder.from(configuration.getString(WPCConfigurationString.DAB_WARNING_TEMPLATE)).toString() }));
+              "Analysis found {0} articles to check for unknown parameter errors.\n" +
+              "Do you want to update the warnings ?",
+              Integer.valueOf(warningPages.size()).toString() ));
           if (answer != JOptionPane.YES_OPTION) {
             return Integer.valueOf(0);
           }
         }
 
-        // Sort the list of articles (trying a temporary ArrayList for performance)
+        // Sort the list of articles
+        Collections.sort(warningPages, PageComparator.getTitleFirstComparator());
         if (warningPages.isEmpty()) {
           return Integer.valueOf(0);
         }
-        List<Page> tmpWarningPages = new ArrayList<>(warningPages);
-        Collections.sort(tmpWarningPages, PageComparator.getTitleFirstComparator());
-        warningPages.clear();
-        warningPages.addAll(tmpWarningPages);
       }
 
       // Working with sublists
       tools.setContentsAvailable(contentsAvailable);
-      tools.setLinksAvailable(linksAvailable);
-      tools.setDabInformationAvailable(dabInformationAvailable);
-      if (!useList) {
-        setText(GT._T("Retrieving disambiguation pages"));
-        tools.preloadDabPages();
+      tools.prepareErrorsMap();
+      if (simulation) {
+        tools.setSimulation(true);
       }
       String lastTitle = null;
-      int countUnsaved = 0;
       while (!warningPages.isEmpty()) {
         // Creating sublist
         List<Page> sublist = tools.extractSublist(warningPages, 10, false);
@@ -135,7 +103,6 @@ public class UpdateDabWarningWorker extends UpdateWarningWorker {
           displayStats(stats, startTime);
           return Integer.valueOf(stats.getUpdatedPagesCount());
         }
-        countUnsaved += sublist.size();
 
         // Update warning
         boolean finish = false;
@@ -147,7 +114,7 @@ public class UpdateDabWarningWorker extends UpdateWarningWorker {
           } catch (APIException e) {
             if (getWindow() != null) {
               int answer = getWindow().displayYesNoWarning(GT._T(
-                  "An error occurred when updating disambiguation warnings. Do you want to continue ?\n\n" +
+                  "An error occurred when updating unknown parameter warnings. Do you want to continue ?\n\n" +
                   "Error: {0}", e.getMessage()));
               if (answer != JOptionPane.YES_OPTION) {
                 return e;
@@ -155,12 +122,9 @@ public class UpdateDabWarningWorker extends UpdateWarningWorker {
               finish = false;
             }
           }
-          if (shouldStop() || (countUnsaved > 1000)) {
-            Configuration config = Configuration.getConfiguration();
-            config.setString(null, ConfigurationValueString.LAST_DAB_WARNING, lastTitle);
-            countUnsaved = 0;
-          }
           if (shouldStop()) {
+            Configuration config = Configuration.getConfiguration();
+            config.setString(null, ConfigurationValueString.LAST_UNKNOWN_PARAMETER_WARNING, lastTitle);
             displayStats(stats, startTime);
             return Integer.valueOf(stats.getUpdatedPagesCount());
           }
@@ -182,7 +146,7 @@ public class UpdateDabWarningWorker extends UpdateWarningWorker {
       }
       if (warningPages.isEmpty()) {
         Configuration config = Configuration.getConfiguration();
-        config.setString(null, ConfigurationValueString.LAST_DAB_WARNING, (String) null);
+        config.setString(null, ConfigurationValueString.LAST_UNKNOWN_PARAMETER_WARNING, (String) null);
       }
     } catch (APIException e) {
       return e;
@@ -204,10 +168,13 @@ public class UpdateDabWarningWorker extends UpdateWarningWorker {
 
     // Retrieve talk pages including a warning
     retrieveArticlesWithWarning(
-        WPCConfigurationString.DAB_WARNING_TEMPLATE,
+        WPCConfigurationString.UNKNOWN_PARAMETER_WARNING_TEMPLATE,
         tmpWarningPages);
 
-    // Fill up the list    
+    // Retrieve articles listed for duplicate arguments errors in Check Wiki
+    retrieveCheckWikiPages(564, tmpWarningPages, tools); // Unknown parameter
+
+    // Fill up the list
     warningPages.clear();
     warningPages.addAll(tmpWarningPages.values());
     tmpWarningPages.clear();

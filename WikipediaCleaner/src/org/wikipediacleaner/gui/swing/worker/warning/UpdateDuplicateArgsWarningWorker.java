@@ -5,7 +5,7 @@
  *  See README.txt file for licensing information.
  */
 
-package org.wikipediacleaner.gui.swing.worker;
+package org.wikipediacleaner.gui.swing.worker.warning;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -20,23 +20,23 @@ import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageComparator;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
-import org.wikipediacleaner.gui.swing.worker.UpdateWarningTools.Stats;
+import org.wikipediacleaner.gui.swing.worker.warning.UpdateWarningTools.Stats;
 import org.wikipediacleaner.i18n.GT;
 import org.wikipediacleaner.utils.Configuration;
 import org.wikipediacleaner.utils.ConfigurationValueString;
 
 
 /**
- * SwingWorker for updating unknown parameter warning.
+ * SwingWorker for updating duplicate arguments warning.
  */
-public class UpdateUnknownParameterWarningWorker extends UpdateWarningWorker {
+public class UpdateDuplicateArgsWarningWorker extends UpdateWarningWorker {
 
   /**
    * @param wiki Wiki.
    * @param window Window.
    * @param simulation True if this is a simulation.
    */
-  public UpdateUnknownParameterWarningWorker(
+  public UpdateDuplicateArgsWarningWorker(
       EnumWikipedia wiki, BasicWindow window,
       boolean simulation) {
     super(wiki, window, null, simulation);
@@ -49,7 +49,7 @@ public class UpdateUnknownParameterWarningWorker extends UpdateWarningWorker {
    * @param contentsAvailable True if contents is already available in pages.
    * @param automaticEdit True if the edit should be considered automatic.
    */
-  public UpdateUnknownParameterWarningWorker(
+  public UpdateDuplicateArgsWarningWorker(
       EnumWikipedia wiki, BasicWindow window, List<Page> pages,
       boolean contentsAvailable, boolean automaticEdit) {
     super(wiki, window, pages, contentsAvailable, automaticEdit);
@@ -64,7 +64,7 @@ public class UpdateUnknownParameterWarningWorker extends UpdateWarningWorker {
     EnumWikipedia wiki = getWikipedia();
     int lastCount = 0;
     Stats stats = new Stats();
-    UpdateUnknownParameterWarningTools tools = new UpdateUnknownParameterWarningTools(
+    UpdateDuplicateArgsWarningTools tools = new UpdateDuplicateArgsWarningTools(
         wiki, this, true, automaticEdit);
     tools.setUsePurge(false);
     try {
@@ -74,7 +74,7 @@ public class UpdateUnknownParameterWarningWorker extends UpdateWarningWorker {
         // Ask for confirmation
         if (getWindow() != null) {
           int answer = getWindow().displayYesNoWarning(GT._T(
-              "Analysis found {0} articles to check for unknown parameter errors.\n" +
+              "Analysis found {0} articles to check for duplicate arguments errors.\n" +
               "Do you want to update the warnings ?",
               Integer.valueOf(warningPages.size()).toString() ));
           if (answer != JOptionPane.YES_OPTION) {
@@ -114,7 +114,7 @@ public class UpdateUnknownParameterWarningWorker extends UpdateWarningWorker {
           } catch (APIException e) {
             if (getWindow() != null) {
               int answer = getWindow().displayYesNoWarning(GT._T(
-                  "An error occurred when updating unknown parameter warnings. Do you want to continue ?\n\n" +
+                  "An error occurred when updating duplicate arguments warnings. Do you want to continue ?\n\n" +
                   "Error: {0}", e.getMessage()));
               if (answer != JOptionPane.YES_OPTION) {
                 return e;
@@ -124,7 +124,7 @@ public class UpdateUnknownParameterWarningWorker extends UpdateWarningWorker {
           }
           if (shouldStop()) {
             Configuration config = Configuration.getConfiguration();
-            config.setString(null, ConfigurationValueString.LAST_UNKNOWN_PARAMETER_WARNING, lastTitle);
+            config.setString(null, ConfigurationValueString.LAST_DUPLICATE_ARGS_WARNING, lastTitle);
             displayStats(stats, startTime);
             return Integer.valueOf(stats.getUpdatedPagesCount());
           }
@@ -146,7 +146,7 @@ public class UpdateUnknownParameterWarningWorker extends UpdateWarningWorker {
       }
       if (warningPages.isEmpty()) {
         Configuration config = Configuration.getConfiguration();
-        config.setString(null, ConfigurationValueString.LAST_UNKNOWN_PARAMETER_WARNING, (String) null);
+        config.setString(null, ConfigurationValueString.LAST_DUPLICATE_ARGS_WARNING, (String) null);
       }
     } catch (APIException e) {
       return e;
@@ -168,11 +168,11 @@ public class UpdateUnknownParameterWarningWorker extends UpdateWarningWorker {
 
     // Retrieve talk pages including a warning
     retrieveArticlesWithWarning(
-        WPCConfigurationString.UNKNOWN_PARAMETER_WARNING_TEMPLATE,
+        WPCConfigurationString.DUPLICATE_ARGS_WARNING_TEMPLATE,
         tmpWarningPages);
 
     // Retrieve articles listed for duplicate arguments errors in Check Wiki
-    retrieveCheckWikiPages(564, tmpWarningPages, tools); // Unknown parameter
+    retrieveCheckWikiPages(524, tmpWarningPages, tools); // Duplicate template arguments
 
     // Fill up the list
     warningPages.clear();

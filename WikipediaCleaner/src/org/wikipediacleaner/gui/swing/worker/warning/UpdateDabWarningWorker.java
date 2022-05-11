@@ -5,8 +5,9 @@
  *  See README.txt file for licensing information.
  */
 
-package org.wikipediacleaner.gui.swing.worker;
+package org.wikipediacleaner.gui.swing.worker.warning;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -15,44 +16,66 @@ import java.util.Map;
 import javax.swing.JOptionPane;
 
 import org.wikipediacleaner.api.APIException;
+import org.wikipediacleaner.api.configuration.WPCConfiguration;
 import org.wikipediacleaner.api.configuration.WPCConfigurationString;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageComparator;
+import org.wikipediacleaner.api.data.contents.template.TemplateBuilder;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
-import org.wikipediacleaner.gui.swing.worker.UpdateWarningTools.Stats;
+import org.wikipediacleaner.gui.swing.worker.warning.UpdateWarningTools.Stats;
 import org.wikipediacleaner.i18n.GT;
 import org.wikipediacleaner.utils.Configuration;
 import org.wikipediacleaner.utils.ConfigurationValueString;
 
 
 /**
- * SwingWorker for updating duplicate arguments warning.
+ * SwingWorker for updating disambiguation warning.
  */
-public class UpdateDuplicateArgsWarningWorker extends UpdateWarningWorker {
+public class UpdateDabWarningWorker extends UpdateWarningWorker {
+
+  private final boolean linksAvailable;
+  private final boolean dabInformationAvailable;
 
   /**
-   * @param wiki Wiki.
+   * @param wikipedia Wikipedia.
    * @param window Window.
-   * @param simulation True if this is a simulation.
+   * @param start Start at this page.
    */
-  public UpdateDuplicateArgsWarningWorker(
-      EnumWikipedia wiki, BasicWindow window,
-      boolean simulation) {
-    super(wiki, window, null, simulation);
+  public UpdateDabWarningWorker(EnumWikipedia wikipedia, BasicWindow window, String start) {
+    super(wikipedia, window, start, false);
+    this.linksAvailable = false;
+    this.dabInformationAvailable = false;
   }
 
   /**
-   * @param wiki Wiki.
+   * @param wikipedia Wikipedia.
+   * @param window Window.
+   * @param pages Pages to analyze.
+   * @param automaticEdit True if the edit should be considered automatic.
+   */
+  public UpdateDabWarningWorker(
+      EnumWikipedia wikipedia, BasicWindow window,
+      List<Page> pages, boolean automaticEdit) {
+    this(wikipedia, window, pages, false, false, false, automaticEdit);
+  }
+
+  /**
+   * @param wikipedia Wikipedia.
    * @param window Window.
    * @param pages Pages to analyze.
    * @param contentsAvailable True if contents is already available in pages.
+   * @param linksAvailable True if links are already available in pages.
+   * @param dabInformationAvailable True if disambiguation information is already available in pages.
    * @param automaticEdit True if the edit should be considered automatic.
    */
-  public UpdateDuplicateArgsWarningWorker(
-      EnumWikipedia wiki, BasicWindow window, List<Page> pages,
-      boolean contentsAvailable, boolean automaticEdit) {
-    super(wiki, window, pages, contentsAvailable, automaticEdit);
+  public UpdateDabWarningWorker(
+      EnumWikipedia wikipedia, BasicWindow window, List<Page> pages,
+      boolean contentsAvailable, boolean linksAvailable,
+      boolean dabInformationAvailable, boolean automaticEdit) {
+    super(wikipedia, window, pages, contentsAvailable, automaticEdit);
+    this.linksAvailable = linksAvailable;
+    this.dabInformationAvailable = dabInformationAvailable;
   }
 
   /* (non-Javadoc)
@@ -61,12 +84,13 @@ public class UpdateDuplicateArgsWarningWorker extends UpdateWarningWorker {
   @Override
   public Object construct() {
     long startTime = System.currentTimeMillis();
-    EnumWikipedia wiki = getWikipedia();
+    EnumWikipedia wikipedia = getWikipedia();
+    WPCConfiguration configuration = wikipedia.getConfiguration();
+    setText(GT._T("Retrieving MediaWiki API"));
     int lastCount = 0;
+
     Stats stats = new Stats();
-    UpdateDuplicateArgsWarningTools tools = new UpdateDuplicateArgsWarningTools(
-        wiki, this, true, automaticEdit);
-    tools.setUsePurge(false);
+    UpdateDabWarningTools tools = new UpdateDabWarningTools(wikipedia, this, true, automaticEdit);
     try {
       if (!useList) {
         listWarningPages(tools);
@@ -74,28 +98,36 @@ public class UpdateDuplicateArgsWarningWorker extends UpdateWarningWorker {
         // Ask for confirmation
         if (getWindow() != null) {
           int answer = getWindow().displayYesNoWarning(GT._T(
-              "Analysis found {0} articles to check for duplicate arguments errors.\n" +
-              "Do you want to update the warnings ?",
-              Integer.valueOf(warningPages.size()).toString() ));
+              "Analysis found {0} articles with disambiguation warning {1}.\n" +
+              "Do you want to update the disambiguation warnings ?",
+              new Object[] {
+                  Integer.valueOf(warningPages.size()),
+                  TemplateBuilder.from(configuration.getString(WPCConfigurationString.DAB_WARNING_TEMPLATE)).toString() }));
           if (answer != JOptionPane.YES_OPTION) {
             return Integer.valueOf(0);
           }
         }
 
-        // Sort the list of articles
-        Collections.sort(warningPages, PageComparator.getTitleFirstComparator());
+        // Sort the list of articles (trying a temporary ArrayList for performance)
         if (warningPages.isEmpty()) {
           return Integer.valueOf(0);
         }
+        List<Page> tmpWarningPages = new ArrayList<>(warningPages);
+        Collections.sort(tmpWarningPages, PageComparator.getTitleFirstComparator());
+        warningPages.clear();
+        warningPages.addAll(tmpWarningPages);
       }
 
       // Working with sublists
       tools.setContentsAvailable(contentsAvailable);
-      tools.prepareErrorsMap();
-      if (simulation) {
-        tools.setSimulation(true);
+      tools.setLinksAvailable(linksAvailable);
+      tools.setDabInformationAvailable(dabInformationAvailable);
+      if (!useList) {
+        setText(GT._T("Retrieving disambiguation pages"));
+        tools.preloadDabPages();
       }
       String lastTitle = null;
+      int countUnsaved = 0;
       while (!warningPages.isEmpty()) {
         // Creating sublist
         List<Page> sublist = tools.extractSublist(warningPages, 10, false);
@@ -103,6 +135,7 @@ public class UpdateDuplicateArgsWarningWorker extends UpdateWarningWorker {
           displayStats(stats, startTime);
           return Integer.valueOf(stats.getUpdatedPagesCount());
         }
+        countUnsaved += sublist.size();
 
         // Update warning
         boolean finish = false;
@@ -114,7 +147,7 @@ public class UpdateDuplicateArgsWarningWorker extends UpdateWarningWorker {
           } catch (APIException e) {
             if (getWindow() != null) {
               int answer = getWindow().displayYesNoWarning(GT._T(
-                  "An error occurred when updating duplicate arguments warnings. Do you want to continue ?\n\n" +
+                  "An error occurred when updating disambiguation warnings. Do you want to continue ?\n\n" +
                   "Error: {0}", e.getMessage()));
               if (answer != JOptionPane.YES_OPTION) {
                 return e;
@@ -122,9 +155,12 @@ public class UpdateDuplicateArgsWarningWorker extends UpdateWarningWorker {
               finish = false;
             }
           }
-          if (shouldStop()) {
+          if (shouldStop() || (countUnsaved > 1000)) {
             Configuration config = Configuration.getConfiguration();
-            config.setString(null, ConfigurationValueString.LAST_DUPLICATE_ARGS_WARNING, lastTitle);
+            config.setString(null, ConfigurationValueString.LAST_DAB_WARNING, lastTitle);
+            countUnsaved = 0;
+          }
+          if (shouldStop()) {
             displayStats(stats, startTime);
             return Integer.valueOf(stats.getUpdatedPagesCount());
           }
@@ -146,7 +182,7 @@ public class UpdateDuplicateArgsWarningWorker extends UpdateWarningWorker {
       }
       if (warningPages.isEmpty()) {
         Configuration config = Configuration.getConfiguration();
-        config.setString(null, ConfigurationValueString.LAST_DUPLICATE_ARGS_WARNING, (String) null);
+        config.setString(null, ConfigurationValueString.LAST_DAB_WARNING, (String) null);
       }
     } catch (APIException e) {
       return e;
@@ -168,13 +204,10 @@ public class UpdateDuplicateArgsWarningWorker extends UpdateWarningWorker {
 
     // Retrieve talk pages including a warning
     retrieveArticlesWithWarning(
-        WPCConfigurationString.DUPLICATE_ARGS_WARNING_TEMPLATE,
+        WPCConfigurationString.DAB_WARNING_TEMPLATE,
         tmpWarningPages);
 
-    // Retrieve articles listed for duplicate arguments errors in Check Wiki
-    retrieveCheckWikiPages(524, tmpWarningPages, tools); // Duplicate template arguments
-
-    // Fill up the list
+    // Fill up the list    
     warningPages.clear();
     warningPages.addAll(tmpWarningPages.values());
     tmpWarningPages.clear();

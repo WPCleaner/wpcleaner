@@ -6,7 +6,7 @@
  */
 
 
-package org.wikipediacleaner.gui.swing.worker;
+package org.wikipediacleaner.gui.swing.worker.warning;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -31,7 +31,7 @@ import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.contents.template.TemplateBuilder;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
 import org.wikipediacleaner.gui.swing.basic.BasicWorker;
-import org.wikipediacleaner.gui.swing.worker.UpdateWarningTools.Stats;
+import org.wikipediacleaner.gui.swing.worker.warning.UpdateWarningTools.Stats;
 import org.wikipediacleaner.i18n.GT;
 
 

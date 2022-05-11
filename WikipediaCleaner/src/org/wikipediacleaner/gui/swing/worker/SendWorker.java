@@ -23,6 +23,11 @@ import org.wikipediacleaner.api.data.analysis.PageAnalysis;
 import org.wikipediacleaner.gui.swing.OnePageWindow;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
 import org.wikipediacleaner.gui.swing.basic.BasicWorker;
+import org.wikipediacleaner.gui.swing.worker.warning.UpdateDabWarningTools;
+import org.wikipediacleaner.gui.swing.worker.warning.UpdateDuplicateArgsWarningTools;
+import org.wikipediacleaner.gui.swing.worker.warning.UpdateISBNWarningTools;
+import org.wikipediacleaner.gui.swing.worker.warning.UpdateISSNWarningTools;
+import org.wikipediacleaner.gui.swing.worker.warning.UpdateUnknownParameterWarningTools;
 import org.wikipediacleaner.i18n.GT;
 
 /**
