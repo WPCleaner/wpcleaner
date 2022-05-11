@@ -238,7 +238,13 @@ public class CheckErrorAlgorithm055 extends CheckErrorAlgorithmBase {
     for (Interval interval : intervals) {
       String contents = analysis.getContents();
       boolean automaticInterval = true;
-      for (int tmpIndex = interval.getBeginIndex(); tmpIndex < interval.getEndIndex(); tmpIndex++) {
+      int intervalBeginIndex = interval.getBeginIndex();
+      int intervalEndIndex = interval.getEndIndex();
+      while ((intervalEndIndex > intervalBeginIndex) &&
+             (" \n".indexOf(contents.charAt(intervalEndIndex - 1)) >= 0)) {
+        intervalEndIndex--;
+      }
+      for (int tmpIndex = intervalBeginIndex; tmpIndex < intervalEndIndex; tmpIndex++) {
         if ((tmpIndex < beginIndex) || (tmpIndex >= endIndex)) {
           if (contents.startsWith("small", tmpIndex) ||
               ("<>/\n".indexOf(contents.charAt(tmpIndex)) >= 0)) {
