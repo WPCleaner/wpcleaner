@@ -7,19 +7,14 @@
 
 package org.wikipediacleaner.gui.swing.worker.warning;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 import org.wikipediacleaner.api.APIException;
 import org.wikipediacleaner.api.MediaWiki;
-import org.wikipediacleaner.api.configuration.WPCConfigurationBoolean;
-import org.wikipediacleaner.api.configuration.WPCConfigurationString;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
 import org.wikipediacleaner.gui.swing.basic.BasicWorker;
-import org.wikipediacleaner.i18n.GT;
 
 
 /**
@@ -80,76 +75,5 @@ public class UpdateISBNWarningTools extends UpdateWarningTools {
     }
 
     return true;
-  }
-
-  // ==========================================================================
-  // Configuration
-  // ==========================================================================
-
-  /**
-   * @return Configuration parameter for the warning template.
-   */
-  @Override
-  protected WPCConfigurationString getWarningTemplate() {
-    return WPCConfigurationString.ISBN_WARNING_TEMPLATE;
-  }
-
-  /**
-   * @return Configuration parameter for the warning template comment.
-   */
-  @Override
-  protected WPCConfigurationString getWarningTemplateComment() {
-    return WPCConfigurationString.ISBN_WARNING_TEMPLATE_COMMENT;
-  }
-
-  /**
-   * @return True if section 0 of the talk page should be used.
-   */
-  @Override
-  protected boolean useSection0() {
-    return configuration.getBoolean(WPCConfigurationBoolean.ISBN_WARNING_SECTION_0);
-  }
-
-  /**
-   * @return Comment when warning is removed.
-   */
-  @Override
-  protected String getWarningCommentDone() {
-    return configuration.getISBNWarningCommentDone();
-  }
-
-  /**
-   * @param elements Message elements.
-   * @return Comment when warning is added or updated.
-   */
-  @Override
-  protected String getWarningComment(Collection<String> elements) {
-    Collection<String> isbns = new ArrayList<>();
-    int i = 0;
-    for (String element : elements) {
-      if (i % 2 == 0) {
-        isbns.add(element);
-      }
-      i++;
-    }
-    return configuration.getISBNWarningComment(isbns);
-  }
-
-  /**
-   * @param title Page title.
-   * @return Message displayed when removing the warning from the page.
-   */
-  @Override
-  protected String getMessageRemoveWarning(String title) {
-    return GT._T("Removing {1} warning - {0}", new Object[] { title, "ISBN" });
-  }
-
-  /**
-   * @param title Page title.
-   * @return Message displayed when updating the warning from the page.
-   */
-  @Override
-  protected String getMessageUpdateWarning(String title) {
-    return GT._T("Updating {1} warning - {0}", new Object[] { title, "ISBN" });
   }
 }

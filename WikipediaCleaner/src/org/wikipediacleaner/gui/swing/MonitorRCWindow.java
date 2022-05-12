@@ -42,8 +42,8 @@ import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.RecentChange;
 import org.wikipediacleaner.gui.swing.action.ActionDispose;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
+import org.wikipediacleaner.gui.swing.worker.warning.WarningStats;
 import org.wikipediacleaner.gui.swing.worker.warning.UpdateDabWarningTools;
-import org.wikipediacleaner.gui.swing.worker.warning.UpdateWarningTools.Stats;
 import org.wikipediacleaner.i18n.GT;
 
 
@@ -307,7 +307,7 @@ public class MonitorRCWindow extends BasicWindow implements RecentChangesListene
     // Update disambiguation warnings
     if (!pages.isEmpty()) {
       try {
-        Stats stats = new Stats();
+        WarningStats stats = new WarningStats();
         createDabWarning.updateWarning(
             pages, creators, modifiers, stats);
         List<Page> updatedPages = stats.getUpdatedPages();

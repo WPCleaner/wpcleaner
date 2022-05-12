@@ -33,7 +33,6 @@ import org.wikipediacleaner.api.data.contents.tag.WikiTagType;
 import org.wikipediacleaner.gui.swing.InformationWindow;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
 import org.wikipediacleaner.gui.swing.basic.Utilities;
-import org.wikipediacleaner.gui.swing.worker.warning.UpdateWarningTools.Stats;
 import org.wikipediacleaner.i18n.GT;
 import org.wikipediacleaner.utils.Configuration;
 import org.wikipediacleaner.utils.ConfigurationValueString;
@@ -76,7 +75,7 @@ public class UpdateISBNWarningWorker extends UpdateWarningWorker {
     long startTime = System.currentTimeMillis();
     EnumWikipedia wiki = getWikipedia();
     int lastCount = 0;
-    Stats stats = new Stats();
+    WarningStats stats = new WarningStats();
     Map<String, List<String>> errors = null;
     UpdateISBNWarningTools tools = new UpdateISBNWarningTools(wiki, this, true, automaticEdit);
     try {
@@ -221,7 +220,7 @@ public class UpdateISBNWarningWorker extends UpdateWarningWorker {
    * @param errors Errors found.
    */
   private void displayResult(
-      Stats stats, long startTime,
+      WarningStats stats, long startTime,
       Map<String, List<String>> errors) {
     if (useList) {
       return;

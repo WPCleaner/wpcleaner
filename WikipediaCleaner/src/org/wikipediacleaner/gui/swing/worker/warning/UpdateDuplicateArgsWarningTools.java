@@ -7,19 +7,14 @@
 
 package org.wikipediacleaner.gui.swing.worker.warning;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 import org.wikipediacleaner.api.APIException;
 import org.wikipediacleaner.api.MediaWiki;
-import org.wikipediacleaner.api.configuration.WPCConfigurationBoolean;
-import org.wikipediacleaner.api.configuration.WPCConfigurationString;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
 import org.wikipediacleaner.gui.swing.basic.BasicWorker;
-import org.wikipediacleaner.i18n.GT;
 
 
 /**
@@ -80,76 +75,5 @@ public class UpdateDuplicateArgsWarningTools extends UpdateWarningTools {
     }
 
     return true;
-  }
-
-  // ==========================================================================
-  // Configuration
-  // ==========================================================================
-
-  /**
-   * @return Configuration parameter for the warning template.
-   */
-  @Override
-  protected WPCConfigurationString getWarningTemplate() {
-    return WPCConfigurationString.DUPLICATE_ARGS_WARNING_TEMPLATE;
-  }
-
-  /**
-   * @return Configuration parameter for the warning template comment.
-   */
-  @Override
-  protected WPCConfigurationString getWarningTemplateComment() {
-    return WPCConfigurationString.DUPLICATE_ARGS_WARNING_TEMPLATE_COMMENT;
-  }
-
-  /**
-   * @return True if section 0 of the talk page should be used.
-   */
-  @Override
-  protected boolean useSection0() {
-    return configuration.getBoolean(WPCConfigurationBoolean.DUPLICATE_ARGS_WARNING_SECTION_0);
-  }
-
-  /**
-   * @return Comment when warning is removed.
-   */
-  @Override
-  protected String getWarningCommentDone() {
-    return configuration.getDuplicateArgsWarningCommentDone();
-  }
-
-  /**
-   * @param elements Message elements.
-   * @return Comment when warning is added or updated.
-   */
-  @Override
-  protected String getWarningComment(Collection<String> elements) {
-    Collection<String> arguments = new ArrayList<>();
-    int i = 0;
-    for (String element : elements) {
-      if (i % 3 == 1) {
-        arguments.add(element);
-      }
-      i++;
-    }
-    return configuration.getDuplicateArgsWarningComment(arguments);
-  }
-
-  /**
-   * @param title Page title.
-   * @return Message displayed when removing the warning from the page.
-   */
-  @Override
-  protected String getMessageRemoveWarning(String title) {
-    return GT._T("Removing duplicate arguments warning - {0}", title);
-  }
-
-  /**
-   * @param title Page title.
-   * @return Message displayed when updating the warning from the page.
-   */
-  @Override
-  protected String getMessageUpdateWarning(String title) {
-    return GT._T("Updating duplicate arguments warning - {0}", title);
   }
 }

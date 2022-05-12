@@ -23,7 +23,6 @@ import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageComparator;
 import org.wikipediacleaner.api.data.contents.template.TemplateBuilder;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
-import org.wikipediacleaner.gui.swing.worker.warning.UpdateWarningTools.Stats;
 import org.wikipediacleaner.i18n.GT;
 import org.wikipediacleaner.utils.Configuration;
 import org.wikipediacleaner.utils.ConfigurationValueString;
@@ -89,7 +88,7 @@ public class UpdateDabWarningWorker extends UpdateWarningWorker {
     setText(GT._T("Retrieving MediaWiki API"));
     int lastCount = 0;
 
-    Stats stats = new Stats();
+    WarningStats stats = new WarningStats();
     UpdateDabWarningTools tools = new UpdateDabWarningTools(wikipedia, this, true, automaticEdit);
     try {
       if (!useList) {

@@ -15,6 +15,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.wikipediacleaner.api.configuration.WPCConfiguration;
+import org.wikipediacleaner.api.configuration.WPCConfigurationBoolean;
+import org.wikipediacleaner.api.configuration.WPCConfigurationString;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
@@ -89,4 +91,88 @@ public abstract class WarningProcessor {
     }
     titles.add(title);
   }
+
+  // ==========================================================================
+  // Configuration
+  // ==========================================================================
+
+  /**
+   * @return Configuration parameter for the warning template.
+   */
+  protected abstract WPCConfigurationString getWarningTemplate();
+
+  /**
+   * @return Configuration parameter for the warning template comment.
+   */
+  protected abstract WPCConfigurationString getWarningTemplateComment();
+
+  /**
+   * @return Configuration parameter for the title for a message for a new article.
+   */
+  protected WPCConfigurationString getMessageTitleNewArticle() {
+    return null;
+  }
+
+  /**
+   * @return Configuration parameter for the title for a message for a new article.
+   */
+  protected WPCConfigurationString getMessageTitleNewArticleModified() {
+    return null;
+  }
+
+  /**
+   * @return Configuration parameter for the title for a message for a new article.
+   */
+  protected WPCConfigurationString getMessageTitleNewArticleModifier() {
+    return null;
+  }
+
+  /**
+   * @return Configuration parameter for the template for a message for a new article.
+   */
+  protected WPCConfigurationString getMessageTemplateNewArticle() {
+    return null;
+  }
+
+  /**
+   * @return Configuration parameter for the template for a message for a new article.
+   */
+  protected WPCConfigurationString getMessageTemplateNewArticleModified() {
+    return null;
+  }
+
+  /**
+   * @return Configuration parameter for the template for a message for a new article.
+   */
+  protected WPCConfigurationString getMessageTemplateNewArticleModifier() {
+    return null;
+  }
+
+  /**
+   * @return Configuration parameter telling if section 0 of the talk page should be used.
+   */
+  protected abstract WPCConfigurationBoolean getUseSection0();
+
+  /**
+   * @return Comment when warning is removed.
+   */
+  protected abstract String getWarningCommentDone();
+
+  /**
+   * @param elements Message elements.
+   * @return Comment when warning is added or updated.
+   */
+  protected abstract String getWarningComment(Collection<String> elements);
+
+  /**
+   * @param title Page title.
+   * @return Message displayed when removing the warning from the page.
+   */
+  protected abstract String getMessageRemoveWarning(String title);
+
+  /**
+   * @param title Page title.
+   * @return Message displayed when updating the warning from the page.
+   */
+  protected abstract String getMessageUpdateWarning(String title);
 }

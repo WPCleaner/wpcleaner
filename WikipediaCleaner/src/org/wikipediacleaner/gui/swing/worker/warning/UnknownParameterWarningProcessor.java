@@ -19,6 +19,8 @@ import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.CheckErrorResult.ErrorLevel;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithm;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithms;
+import org.wikipediacleaner.api.configuration.WPCConfigurationBoolean;
+import org.wikipediacleaner.api.configuration.WPCConfigurationString;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageAnalysisUtils;
@@ -26,6 +28,7 @@ import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.PageElementTitle;
 import org.wikipediacleaner.api.data.PageElementTemplate.Parameter;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
+import org.wikipediacleaner.i18n.GT;
 
 /**
  * Processor for disambiguation warnings on talk pages.
@@ -126,5 +129,76 @@ public class UnknownParameterWarningProcessor extends WarningProcessor {
       }
     }
     return elements;
+  }
+
+  // ==========================================================================
+  // Configuration
+  // ==========================================================================
+
+  /**
+   * @return Configuration parameter for the warning template.
+   */
+  @Override
+  protected WPCConfigurationString getWarningTemplate() {
+    return WPCConfigurationString.UNKNOWN_PARAMETER_WARNING_TEMPLATE;
+  }
+
+  /**
+   * @return Configuration parameter for the warning template comment.
+   */
+  @Override
+  protected WPCConfigurationString getWarningTemplateComment() {
+    return WPCConfigurationString.UNKNOWN_PARAMETER_WARNING_TEMPLATE_COMMENT;
+  }
+
+  /**
+   * @return Configuration parameter telling if section 0 of the talk page should be used.
+   */
+  @Override
+  protected WPCConfigurationBoolean getUseSection0() {
+    return WPCConfigurationBoolean.UNKNOWN_PARAMETER_WARNING_SECTION_0;
+  }
+
+  /**
+   * @return Comment when warning is removed.
+   */
+  @Override
+  protected String getWarningCommentDone() {
+    return configuration.getUnknownParameterWarningCommentDone();
+  }
+
+  /**
+   * @param elements Message elements.
+   * @return Comment when warning is added or updated.
+   */
+  @Override
+  protected String getWarningComment(Collection<String> elements) {
+    Collection<String> arguments = new ArrayList<>();
+    int i = 0;
+    for (String element : elements) {
+      if (i % 3 == 1) {
+        arguments.add(element);
+      }
+      i++;
+    }
+    return configuration.getUnknownParameterWarningComment(arguments);
+  }
+
+  /**
+   * @param title Page title.
+   * @return Message displayed when removing the warning from the page.
+   */
+  @Override
+  protected String getMessageRemoveWarning(String title) {
+    return GT._T("Removing unknown parameter warning - {0}", title);
+  }
+
+  /**
+   * @param title Page title.
+   * @return Message displayed when updating the warning from the page.
+   */
+  @Override
+  protected String getMessageUpdateWarning(String title) {
+    return GT._T("Updating unknown parameter warning - {0}", title);
   }
 }

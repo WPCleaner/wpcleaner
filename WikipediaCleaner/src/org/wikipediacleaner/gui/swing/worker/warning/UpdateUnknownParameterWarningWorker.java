@@ -20,7 +20,6 @@ import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageComparator;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
-import org.wikipediacleaner.gui.swing.worker.warning.UpdateWarningTools.Stats;
 import org.wikipediacleaner.i18n.GT;
 import org.wikipediacleaner.utils.Configuration;
 import org.wikipediacleaner.utils.ConfigurationValueString;
@@ -63,7 +62,7 @@ public class UpdateUnknownParameterWarningWorker extends UpdateWarningWorker {
     long startTime = System.currentTimeMillis();
     EnumWikipedia wiki = getWikipedia();
     int lastCount = 0;
-    Stats stats = new Stats();
+    WarningStats stats = new WarningStats();
     UpdateUnknownParameterWarningTools tools = new UpdateUnknownParameterWarningTools(
         wiki, this, true, automaticEdit);
     tools.setUsePurge(false);

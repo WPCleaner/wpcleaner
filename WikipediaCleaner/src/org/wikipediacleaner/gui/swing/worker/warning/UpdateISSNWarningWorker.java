@@ -29,7 +29,6 @@ import org.wikipediacleaner.api.data.contents.comment.ContentsComment;
 import org.wikipediacleaner.gui.swing.InformationWindow;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
 import org.wikipediacleaner.gui.swing.basic.Utilities;
-import org.wikipediacleaner.gui.swing.worker.warning.UpdateWarningTools.Stats;
 import org.wikipediacleaner.i18n.GT;
 import org.wikipediacleaner.utils.Configuration;
 import org.wikipediacleaner.utils.ConfigurationValueString;
@@ -72,7 +71,7 @@ public class UpdateISSNWarningWorker extends UpdateWarningWorker {
     long startTime = System.currentTimeMillis();
     EnumWikipedia wiki = getWikipedia();
     int lastCount = 0;
-    Stats stats = new Stats();
+    WarningStats stats = new WarningStats();
     Map<String, List<String>> errors = null;
     UpdateISSNWarningTools tools = new UpdateISSNWarningTools(wiki, this, true, automaticEdit);
     try {
@@ -215,7 +214,7 @@ public class UpdateISSNWarningWorker extends UpdateWarningWorker {
    * @param errors Errors found.
    */
   private void displayResult(
-      Stats stats, long startTime,
+      WarningStats stats, long startTime,
       Map<String, List<String>> errors) {
     if (useList) {
       return;

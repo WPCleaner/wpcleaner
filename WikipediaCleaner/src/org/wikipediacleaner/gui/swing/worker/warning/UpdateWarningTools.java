@@ -43,7 +43,6 @@ import org.wikipediacleaner.api.data.contents.comment.CommentBuilder;
 import org.wikipediacleaner.api.data.contents.template.TemplateBuilder;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
 import org.wikipediacleaner.gui.swing.basic.BasicWorker;
-import org.wikipediacleaner.gui.swing.basic.Utilities;
 import org.wikipediacleaner.i18n.GT;
 import org.wikipediacleaner.utils.Configuration;
 import org.wikipediacleaner.utils.ConfigurationValueString;
@@ -116,7 +115,7 @@ public abstract class UpdateWarningTools {
     this.createWarning = createWarning;
     this.automaticEdit = automaticEdit;
     this.usePurge = false;
-    this.section0 = useSection0();
+    this.section0 = configuration.getBoolean(warningProcessor.getUseSection0());
     this.api = APIFactory.getAPI();
   }
 
@@ -179,7 +178,7 @@ public abstract class UpdateWarningTools {
       List<Page> pages,
       Map<String, String> creators,
       Map<String, List<String>> modifiers,
-      Stats stats) throws APIException {
+      WarningStats stats) throws APIException {
     if ((pages == null) || (pages.isEmpty())) {
       return;
     }
@@ -278,7 +277,7 @@ public abstract class UpdateWarningTools {
         (todoTemplates.isEmpty())) {
       return false;
     }
-    String warningTemplate = configuration.getString(getWarningTemplate());
+    String warningTemplate = configuration.getString(warningProcessor.getWarningTemplate());
     if ((warningTemplate == null) || (warningTemplate.trim().length() == 0)) {
       return false;
     }
@@ -302,7 +301,7 @@ public abstract class UpdateWarningTools {
       PageAnalysis pageAnalysis, Integer pageRevId,
       Page talkPage, Page todoSubpage,
       String creator, List<String> modifiers,
-      Stats stats) throws APIException {
+      WarningStats stats) throws APIException {
     if ((pageAnalysis == null) ||
         (pageAnalysis.getPage() == null) ||
         !pageAnalysis.getPage().isArticle()) {
@@ -313,7 +312,7 @@ public abstract class UpdateWarningTools {
         (todoTemplates.isEmpty())) {
       return false;
     }
-    String warningTemplate = configuration.getString(getWarningTemplate());
+    String warningTemplate = configuration.getString(warningProcessor.getWarningTemplate());
     if ((warningTemplate == null) || (warningTemplate.trim().length() == 0)) {
       if (!simulation) {
         return false;
@@ -407,7 +406,7 @@ public abstract class UpdateWarningTools {
       PageAnalysis pageAnalysis, Integer pageRevId,
       Page todoSubpage, Page talkPage,
       String creator, List<String> modifiers,
-      Stats stats) throws APIException {
+      WarningStats stats) throws APIException {
     Collection<String> elements = warningProcessor.constructWarningElements(pageAnalysis, talkPage, todoSubpage);
     boolean result = false;
     if ((elements == null) || (elements.isEmpty())) {
@@ -456,7 +455,7 @@ public abstract class UpdateWarningTools {
   private boolean manageWarningOnTalkPage(
       PageAnalysis pageAnalysis, Integer pageRevId, Page talkPage,
       String creator, List<String> modifiers,
-      Stats stats) throws APIException {
+      WarningStats stats) throws APIException {
     Collection<String> elements = warningProcessor.constructWarningElements(pageAnalysis, talkPage, null);
     boolean result = false;
     if ((elements == null) || (elements.isEmpty())) {
@@ -513,7 +512,7 @@ public abstract class UpdateWarningTools {
       if (!createWarning) {
         return false;
       }
-      setText(getMessageUpdateWarning(todoSubpage.getTitle()));
+      setText(warningProcessor.getMessageUpdateWarning(todoSubpage.getTitle()));
       StringBuilder tmp = new StringBuilder(contents);
       if ((tmp.length() > 0) && (tmp.charAt(tmp.length() - 1) != '\n')) {
         tmp.append('\n');
@@ -523,7 +522,7 @@ public abstract class UpdateWarningTools {
       tmp.append('\n');
       updatePage(
           todoSubpage, tmp.toString(),
-          getWarningComment(elements),
+          warningProcessor.getWarningComment(elements),
           !Boolean.TRUE.equals(todoSubpage.isExisting()), false);
 
       // Inform creator and modifiers of the page
@@ -556,7 +555,7 @@ public abstract class UpdateWarningTools {
       }
       api.updatePage(
           wiki, todoSubpage, tmp.toString(),
-          getWarningComment(elements),
+          warningProcessor.getWarningComment(elements),
           false, true, automaticEdit, false);
 
       return true;
@@ -633,7 +632,7 @@ public abstract class UpdateWarningTools {
       }
 
       // Add warning
-      setText(getMessageUpdateWarning(talkPage.getTitle()));
+      setText(warningProcessor.getMessageUpdateWarning(talkPage.getTitle()));
       StringBuilder tmp = new StringBuilder();
       if (indexStart > 0) {
         tmp.append(contents.substring(0, indexStart));
@@ -652,7 +651,7 @@ public abstract class UpdateWarningTools {
         }
         tmp.append(contents.substring(indexStart));
       }
-      String comment = getWarningComment(elements);
+      String comment = warningProcessor.getWarningComment(elements);
       updateTalkPage(talkPage, tmp.toString(), comment, false);
 
       // Inform creator and modifiers of the page
@@ -694,7 +693,7 @@ public abstract class UpdateWarningTools {
         }
         tmp.append(contents.substring(indexEnd));
       }
-      String comment = getWarningComment(elements);
+      String comment = warningProcessor.getWarningComment(elements);
       updateTalkPage(talkPage, tmp.toString(), comment, false);
       return true;
     }
@@ -716,7 +715,7 @@ public abstract class UpdateWarningTools {
       if (templateTodo.getEndIndex() < contents.length()) {
         tmp.append(contents.substring(templateTodo.getEndIndex()));
       }
-      String comment = getWarningComment(elements);
+      String comment = warningProcessor.getWarningComment(elements);
       updateTalkPage(talkPage, tmp.toString(), comment, false);
       return true;
     }
@@ -749,7 +748,7 @@ public abstract class UpdateWarningTools {
     }
 
     // Analyze text to remove the warning
-    setText(getMessageRemoveWarning(todoSubpage.getTitle()));
+    setText(warningProcessor.getMessageRemoveWarning(todoSubpage.getTitle()));
     StringBuilder tmp = new StringBuilder();
     int index = template.getBeginIndex();
     while ((index > 0) && (contents.charAt(index) != '\n')) {
@@ -771,7 +770,7 @@ public abstract class UpdateWarningTools {
 
     // Remove the warning
     String newContents = tmp.toString();
-    String reason = getWarningCommentDone();
+    String reason = warningProcessor.getWarningCommentDone();
     if ((newContents.trim().length() == 0) &&
         (wiki.getConnection().getUser() != null) &&
         (wiki.getConnection().getUser().hasRight(User.RIGHT_DELETE))) {
@@ -808,7 +807,7 @@ public abstract class UpdateWarningTools {
       return false;
     }
     if (Boolean.FALSE.equals(talkPage.isExisting())) {
-      String comment = getWarningComment(elements);
+      String comment = warningProcessor.getWarningComment(elements);
       String newContents = TemplateBuilder.from(todoTemplates.get(0)).toString();
       updateTalkPage(talkPage, newContents, comment, false);
       return true;
@@ -855,7 +854,7 @@ public abstract class UpdateWarningTools {
       }
 
       // Add warning
-      setText(getMessageUpdateWarning(talkPage.getTitle()));
+      setText(warningProcessor.getMessageUpdateWarning(talkPage.getTitle()));
       StringBuilder tmp = new StringBuilder();
       int indexStart = (templatePrevious != null) ? templatePrevious.getEndIndex() : 0;
       if (indexStart > 0) {
@@ -871,7 +870,7 @@ public abstract class UpdateWarningTools {
         }
         tmp.append(contents.substring(indexStart));
       }
-      String comment = getWarningComment(elements);
+      String comment = warningProcessor.getWarningComment(elements);
       updateTalkPage(talkPage, tmp.toString(), comment, false);
       return true;
     }
@@ -884,7 +883,7 @@ public abstract class UpdateWarningTools {
     PageAnalysis parameterAnalysis = talkPage.getAnalysis(parameter, false);
     PageElementTemplate templateWarning = getFirstWarningTemplate(parameterAnalysis);
     if (templateWarning != null) {
-      setText(getMessageRemoveWarning(talkPage.getTitle()));
+      setText(warningProcessor.getMessageRemoveWarning(talkPage.getTitle()));
       StringBuilder tmp = new StringBuilder();
       if (templateTodo.getBeginIndex() > 0) {
         tmp.append(contents.substring(0, templateTodo.getBeginIndex()));
@@ -939,7 +938,7 @@ public abstract class UpdateWarningTools {
         }
         tmp.append(contents.substring(templateTodo.getEndIndex()));
       }
-      String comment = getWarningComment(elements);
+      String comment = warningProcessor.getWarningComment(elements);
       updateTalkPage(talkPage, tmp.toString(), comment, false);
       return true;
     }
@@ -985,7 +984,7 @@ public abstract class UpdateWarningTools {
       int parameterStartIndex = templateTodo.getParameterValueStartIndex(parameterIndex);
       PageElementTemplate templateWarning = getFirstWarningTemplate(analysis);
       if (templateWarning != null) {
-        setText(getMessageRemoveWarning(talkPage.getTitle()));
+        setText(warningProcessor.getMessageRemoveWarning(talkPage.getTitle()));
         StringBuilder tmp = new StringBuilder();
         if (templateTodo.getBeginIndex() > 0) {
           tmp.append(contents.substring(0, templateTodo.getBeginIndex()));
@@ -1016,7 +1015,7 @@ public abstract class UpdateWarningTools {
         if (templateTodo.getEndIndex() < contents.length()) {
           tmp.append(contents.substring(templateTodo.getEndIndex()));
         }
-        String comment = getWarningCommentDone();
+        String comment = warningProcessor.getWarningCommentDone();
         updateTalkPage(talkPage, tmp.toString(), comment, true);
         return true;
       }
@@ -1071,7 +1070,7 @@ public abstract class UpdateWarningTools {
   private void addWarning(
       StringBuilder talkText,
       Integer pageRevId, Collection<String> params) {
-    TemplateBuilder builder = TemplateBuilder.from(" " + configuration.getString(getWarningTemplate()) + " ");
+    TemplateBuilder builder = TemplateBuilder.from(" " + configuration.getString(warningProcessor.getWarningTemplate()) + " ");
     if (pageRevId != null) {
       builder.addParam(" revisionid", pageRevId.toString() + " ");
     }
@@ -1080,7 +1079,7 @@ public abstract class UpdateWarningTools {
     }
     talkText.append(builder.toString());
     talkText.append(" -- ~~~~~");
-    String comment = configuration.getString(getWarningTemplateComment());
+    String comment = configuration.getString(warningProcessor.getWarningTemplateComment());
     if (comment != null) {
       talkText.append(CommentBuilder.from(comment).toString());
     }
@@ -1132,92 +1131,8 @@ public abstract class UpdateWarningTools {
     if (analysis == null) {
       return null;
     }
-    return analysis.hasTemplate(configuration.getString(getWarningTemplate()));
+    return analysis.hasTemplate(configuration.getString(warningProcessor.getWarningTemplate()));
   }
-
-  // ==========================================================================
-  // Configuration
-  // ==========================================================================
-
-  /**
-   * @return Configuration parameter for the warning template.
-   */
-  protected abstract WPCConfigurationString getWarningTemplate();
-
-  /**
-   * @return Configuration parameter for the warning template comment.
-   */
-  protected abstract WPCConfigurationString getWarningTemplateComment();
-
-  /**
-   * @return Configuration parameter for the title for a message for a new article.
-   */
-  protected WPCConfigurationString getMessageTitleNewArticle() {
-    return null;
-  }
-
-  /**
-   * @return Configuration parameter for the title for a message for a new article.
-   */
-  protected WPCConfigurationString getMessageTitleNewArticleModified() {
-    return null;
-  }
-
-  /**
-   * @return Configuration parameter for the title for a message for a new article.
-   */
-  protected WPCConfigurationString getMessageTitleNewArticleModifier() {
-    return null;
-  }
-
-  /**
-   * @return Configuration parameter for the template for a message for a new article.
-   */
-  protected WPCConfigurationString getMessageTemplateNewArticle() {
-    return null;
-  }
-
-  /**
-   * @return Configuration parameter for the template for a message for a new article.
-   */
-  protected WPCConfigurationString getMessageTemplateNewArticleModified() {
-    return null;
-  }
-
-  /**
-   * @return Configuration parameter for the template for a message for a new article.
-   */
-  protected WPCConfigurationString getMessageTemplateNewArticleModifier() {
-    return null;
-  }
-
-  /**
-   * @return True if section 0 of the talk page should be used.
-   */
-  protected abstract boolean useSection0();
-
-  /**
-   * @return Comment when warning is removed.
-   */
-  protected abstract String getWarningCommentDone();
-
-  /**
-   * @param elements Message elements.
-   * @return Comment when warning is added or updated.
-   */
-  protected abstract String getWarningComment(Collection<String> elements);
-
-  /**
-   * @param title Page title.
-   * @return Message displayed when removing the warning from the page.
-   */
-  protected abstract String getMessageRemoveWarning(String title);
-
-  /**
-   * @param title Page title.
-   * @return Message displayed when updating the warning from the page.
-   */
-  protected abstract String getMessageUpdateWarning(String title);
 
   // ==========================================================================
   // Contributors management
@@ -1244,21 +1159,21 @@ public abstract class UpdateWarningTools {
       if ((modifiers == null) || (modifiers.isEmpty())) {
         addMessage(
             analysis, msgElements, creator,
-            getMessageTitleNewArticle(),
-            getMessageTemplateNewArticle());
+            warningProcessor.getMessageTitleNewArticle(),
+            warningProcessor.getMessageTemplateNewArticle());
       } else {
         addMessage(
             analysis, msgElements, creator,
-            getMessageTitleNewArticleModified(),
-            getMessageTemplateNewArticleModified());
+            warningProcessor.getMessageTitleNewArticleModified(),
+            warningProcessor.getMessageTemplateNewArticleModified());
       }
     }
     if (modifiers != null) {
       for (String modifier : modifiers) {
         addMessage(
             analysis, msgElements, modifier,
-            getMessageTitleNewArticleModifier(),
-            getMessageTemplateNewArticleModifier());
+            warningProcessor.getMessageTitleNewArticleModifier(),
+            warningProcessor.getMessageTemplateNewArticleModifier());
       }
     }
   }
@@ -1573,124 +1488,5 @@ public abstract class UpdateWarningTools {
       }
     }
     return sublist;
-  }
-
-  // ==========================================================================
-  // Statistics
-  // ==========================================================================
-
-  /** Bean for holding statistics. */
-  public static class Stats {
-
-    /**
-     * Count of analyzed pages.
-     */
-    private int analyzedPagesCount;
-
-    /**
-     * List of updated pages.
-     */
-    private List<Page> updatedPages;
-
-    /**
-     * Count of warnings that have been removed.
-     */
-    private int removedWarningsCount;
-
-    /**
-     * Count of links.
-     */
-    private int linksCount;
-
-    public Stats() {
-      analyzedPagesCount = 0;
-      updatedPages = new ArrayList<>();
-    }
-
-    void addAnalyzedPage(Page page) {
-      if (page != null) {
-        analyzedPagesCount++;
-      }
-    }
-
-    public int getAnalyedPagesCount() {
-      return analyzedPagesCount;
-    }
-
-    void addUpdatedPage(Page page) {
-      if (page != null) {
-        updatedPages.add(page);
-      }
-    }
-
-    public List<Page> getUpdatedPages() {
-      return updatedPages;
-    }
-
-    public int getUpdatedPagesCount() {
-      return (updatedPages != null) ? updatedPages.size() : 0;
-    }
-
-    public int getRemovedWarningsCount() {
-      return removedWarningsCount;
-    }
-
-    void addRemovedWarning(Page page) {
-      if (page != null) {
-        removedWarningsCount++;
-      }
-    }
-
-    public int getLinksCount() {
-      return linksCount;
-    }
-
-    void addLinks(Page page, int count) {
-      if (page != null) {
-        linksCount += count;
-      }
-    }
-  }
-
-  /**
-   * Display statistics.
-   * 
-   * @param window Window.
-   * @param stats Statistics.
-   * @param startTime Start time.
-   */
-  public static void displayStats(
-      BasicWindow window,
-      Stats stats, long startTime) {
-    if (window == null) {
-      return;
-    }
-    long endTime = System.currentTimeMillis();
-    StringBuilder message = new StringBuilder();
-    message.append(GT.__(
-        "{0} page has been analyzed.",
-        "{0} pages have been analyzed.",
-        stats.getAnalyedPagesCount(), Integer.toString(stats.getAnalyedPagesCount())));
-    message.append("\n");
-    message.append(GT.__(
-        "Warning has been updated on {0} page.",
-        "Warnings have been updated on {0} pages.",
-        stats.getUpdatedPagesCount(), Integer.toString(stats.getUpdatedPagesCount())));
-    message.append("\n");
-    message.append(GT.__(
-        "Warning has been removed on {0} page.",
-        "Warnings have been removed on {0} pages.",
-        stats.getRemovedWarningsCount(), Integer.toString(stats.getRemovedWarningsCount())));
-    message.append("\n");
-    message.append(GT.__(
-        "{0} still needs to be fixed.",
-        "{0} still need to be fixed.",
-        stats.getLinksCount(), Integer.toString(stats.getLinksCount())));
-    message.append("\n");
-    long time = (endTime - startTime) / 1000;
-    message.append(GT.__(
-        "It took {0} second", "It took {0} seconds", time, Long.toString(time)));
-    Utilities.displayInformationMessage(
-        window.getParentComponent(), message.toString());
   }
 }

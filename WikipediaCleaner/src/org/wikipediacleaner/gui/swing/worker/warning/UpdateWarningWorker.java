@@ -31,7 +31,6 @@ import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.contents.template.TemplateBuilder;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
 import org.wikipediacleaner.gui.swing.basic.BasicWorker;
-import org.wikipediacleaner.gui.swing.worker.warning.UpdateWarningTools.Stats;
 import org.wikipediacleaner.i18n.GT;
 
 
@@ -313,10 +312,10 @@ public abstract class UpdateWarningWorker extends BasicWorker {
    * @param startTime Start time.
    */
   protected void displayStats(
-      Stats stats, long startTime) {
+      WarningStats stats, long startTime) {
     if (useList) {
       return;
     }
-    UpdateWarningTools.displayStats(getWindow(), stats, startTime);
+    WarningStats.displayStats(getWindow(), stats, startTime);
   }
 }

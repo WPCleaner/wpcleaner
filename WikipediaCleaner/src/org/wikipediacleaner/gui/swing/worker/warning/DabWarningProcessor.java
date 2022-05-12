@@ -14,12 +14,14 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
+import org.wikipediacleaner.api.configuration.WPCConfigurationBoolean;
 import org.wikipediacleaner.api.configuration.WPCConfigurationString;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.analysis.InternalLinkCount;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
+import org.wikipediacleaner.i18n.GT;
 
 /**
  * Processor for disambiguation warnings on talk pages.
@@ -117,5 +119,116 @@ public class DabWarningProcessor extends WarningProcessor {
         }
       }
     }
+  }
+
+  // ==========================================================================
+  // Configuration
+  // ==========================================================================
+
+  /**
+   * @return Configuration parameter for the warning template.
+   */
+  @Override
+  protected WPCConfigurationString getWarningTemplate() {
+    return WPCConfigurationString.DAB_WARNING_TEMPLATE;
+  }
+
+  /**
+   * @return Configuration parameter for the warning template comment.
+   */
+  @Override
+  protected WPCConfigurationString getWarningTemplateComment() {
+    return WPCConfigurationString.DAB_WARNING_TEMPLATE_COMMENT;
+  }
+
+  /**
+   * @return Configuration parameter for the title for a message for a new article.
+   */
+  @Override
+  protected WPCConfigurationString getMessageTitleNewArticle() {
+    return WPCConfigurationString.MSG_NEW_ARTICLE_WITH_DAB_TITLE;
+  }
+
+  /**
+   * @return Configuration parameter for the title for a message for a new article.
+   */
+  @Override
+  protected WPCConfigurationString getMessageTitleNewArticleModified() {
+    return WPCConfigurationString.MSG_NEW_ARTICLE_MODIFIED_WITH_DAB_TITLE;
+  }
+
+  /**
+   * @return Configuration parameter for the title for a message for a new article.
+   */
+  @Override
+  protected WPCConfigurationString getMessageTitleNewArticleModifier() {
+    return WPCConfigurationString.MSG_NEW_ARTICLE_MODIFIER_WITH_DAB_TITLE;
+  }
+
+  /**
+   * @return Configuration parameter for the template for a message for a new article.
+   */
+  @Override
+  protected WPCConfigurationString getMessageTemplateNewArticle() {
+    return WPCConfigurationString.MSG_NEW_ARTICLE_WITH_DAB_TEMPLATE;
+  }
+
+  /**
+   * @return Configuration parameter for the template for a message for a new article.
+   */
+  @Override
+  protected WPCConfigurationString getMessageTemplateNewArticleModified() {
+    return WPCConfigurationString.MSG_NEW_ARTICLE_MODIFIED_WITH_DAB_TEMPLATE;
+  }
+
+  /**
+   * @return Configuration parameter for the template for a message for a new article.
+   */
+  @Override
+  protected WPCConfigurationString getMessageTemplateNewArticleModifier() {
+    return WPCConfigurationString.MSG_NEW_ARTICLE_MODIFIER_WITH_DAB_TEMPLATE;
+  }
+
+  /**
+   * @return Configuration parameter telling if section 0 of the talk page should be used.
+   */
+  @Override
+  protected WPCConfigurationBoolean getUseSection0() {
+    return WPCConfigurationBoolean.DAB_WARNING_SECTION_0;
+  }
+
+  /**
+   * @return Comment when warning is removed.
+   */
+  @Override
+  protected String getWarningCommentDone() {
+    return configuration.getDisambiguationWarningCommentDone();
+  }
+
+  /**
+   * @param elements Message elements.
+   * @return Comment when warning is added or updated.
+   */
+  @Override
+  protected String getWarningComment(Collection<String> elements) {
+    return configuration.getDisambiguationWarningComment(elements);
+  }
+
+  /**
+   * @param title Page title.
+   * @return Message displayed when removing the warning from the page.
+   */
+  @Override
+  protected String getMessageRemoveWarning(String title) {
+    return GT._T("Removing disambiguation warning - {0}", title);
+  }
+
+  /**
+   * @param title Page title.
+   * @return Message displayed when updating the warning from the page.
+   */
+  @Override
+  protected String getMessageUpdateWarning(String title) {
+    return GT._T("Updating disambiguation warning - {0}", title);
   }
 }
