@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2022-04-28 11:21:16+0000\n"
+"PO-Revision-Date: 2022-05-16 11:20:52+0000\n"
 "Last-Translator: Xosé <Unknown>\n"
 "Language-Team: Galician <gl@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Launchpad-Export-Date: 2015-03-28 11:20+0000\n"
 "X-Generator: MediaWiki 1.39.0-alpha; Translate 2022-04-26\n"
-"X-POT-Import-Date: 2022-04-26 22:30:19+0000\n"
+"X-POT-Import-Date: 2022-05-12 20:30:21+0000\n"
 "Language: gl\n"
 
 #: org/wikipediacleaner/Version.java:31
@@ -316,7 +316,7 @@ msgstr "Unha substitución para {0}"
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a572/CheckErrorAlgorithm572.java:290
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a572/CheckErrorAlgorithm572.java:310
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a573/CheckErrorAlgorithm573.java:236
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a576/CheckErrorAlgorithm576.java:232
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a576/CheckErrorAlgorithm576.java:235
 #, fuzzy
 msgid "Name of the template"
 msgstr "Comprobar categoría"
@@ -333,7 +333,7 @@ msgstr "Comprobar categoría"
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a572/CheckErrorAlgorithm572.java:293
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a572/CheckErrorAlgorithm572.java:313
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a573/CheckErrorAlgorithm573.java:239
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a576/CheckErrorAlgorithm576.java:235
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a576/CheckErrorAlgorithm576.java:238
 msgid "Name of the parameter"
 msgstr ""
 
@@ -664,7 +664,7 @@ msgstr ""
 msgid "Remove breaks in list"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/a0xx/a05x/a055/CheckErrorAlgorithm055.java:169
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a05x/a055/CheckErrorAlgorithm055.java:182
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a066/CheckErrorAlgorithm066.java:96
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a077/CheckErrorAlgorithm077.java:95
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a525/CheckErrorAlgorithm525.java:166
@@ -1616,15 +1616,15 @@ msgstr "Comprobar categoría"
 msgid "Value of the parameter that triggers the categorization"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a547/CheckErrorAlgorithm547.java:244
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a547/CheckErrorAlgorithm547.java:260
 msgid "Templates in which empty list items should be ignored"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a547/CheckErrorAlgorithm547.java:248
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a547/CheckErrorAlgorithm547.java:264
 msgid "Template in which empty list items should be ignored"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a547/CheckErrorAlgorithm547.java:251
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a547/CheckErrorAlgorithm547.java:267
 msgid "Template parameter in which empty list items should be ignored"
 msgstr ""
 
@@ -1921,29 +1921,29 @@ msgstr ""
 msgid "Template values which can be safely replaced"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a576/CheckErrorAlgorithm576.java:228
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a576/CheckErrorAlgorithm576.java:231
 msgid "Templates for which values should be verified"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a576/CheckErrorAlgorithm576.java:238
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a576/CheckErrorAlgorithm576.java:241
 msgid "Image attribute"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a577/CheckErrorAlgorithm577.java:155
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a577/CheckErrorAlgorithm577.java:164
 #, java-format
 msgid "Check incorrect DOI {0}"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a577/CheckErrorAlgorithm577.java:225
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a577/CheckErrorAlgorithm577.java:234
 #, java-format
 msgid "Check DOI {0}"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a577/CheckErrorAlgorithm577.java:323
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a577/CheckErrorAlgorithm577.java:332
 msgid "Prefixes that can be safely deleted"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a577/CheckErrorAlgorithm577.java:327
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a577/CheckErrorAlgorithm577.java:336
 msgid "Prefix that can be safely deleted"
 msgstr ""
 
@@ -3395,8 +3395,8 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/worker/LoginWorker.java:109
 #: org/wikipediacleaner/gui/swing/worker/NewSectionWorker.java:62
 #: org/wikipediacleaner/gui/swing/worker/RandomPageWorker.java:49
-#: org/wikipediacleaner/gui/swing/worker/SendWorker.java:194
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:89
+#: org/wikipediacleaner/gui/swing/worker/SendWorker.java:199
+#: org/wikipediacleaner/gui/swing/worker/warning/UpdateDabWarningWorker.java:88
 msgid "Retrieving MediaWiki API"
 msgstr ""
 
@@ -5184,7 +5184,7 @@ msgstr ""
 msgid "Getting random page"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/worker/SendWorker.java:200
+#: org/wikipediacleaner/gui/swing/worker/SendWorker.java:205
 msgid "Updating page contents"
 msgstr ""
 
@@ -5195,149 +5195,149 @@ msgstr ""
 msgid "Retrieving interwiki for {0}"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:391
+#: org/wikipediacleaner/gui/swing/worker/warning/DabWarningProcessor.java:223
 #, java-format
 msgid "Removing disambiguation warning - {0}"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:400
+#: org/wikipediacleaner/gui/swing/worker/warning/DabWarningProcessor.java:232
 #, java-format
 msgid "Updating disambiguation warning - {0}"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:101
-#, java-format
-msgid "Analysis found {0} articles with disambiguation warning {1}.\nDo you want to update the disambiguation warnings ?"
-msgstr ""
-
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:126
-msgid "Retrieving disambiguation pages"
-msgstr ""
-
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:150
-#, java-format
-msgid "An error occurred when updating disambiguation warnings. Do you want to continue ?\n\nError: {0}"
-msgstr ""
-
-#: org/wikipediacleaner/gui/swing/worker/UpdateDuplicateArgsWarningTools.java:231
+#: org/wikipediacleaner/gui/swing/worker/warning/DuplicateArgsWarningProcessor.java:181
 #, java-format
 msgid "Removing duplicate arguments warning - {0}"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/worker/UpdateDuplicateArgsWarningTools.java:240
+#: org/wikipediacleaner/gui/swing/worker/warning/DuplicateArgsWarningProcessor.java:190
 #, java-format
 msgid "Updating duplicate arguments warning - {0}"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/worker/UpdateDuplicateArgsWarningWorker.java:77
-#, java-format
-msgid "Analysis found {0} articles to check for duplicate arguments errors.\nDo you want to update the warnings ?"
-msgstr ""
-
-#: org/wikipediacleaner/gui/swing/worker/UpdateDuplicateArgsWarningWorker.java:117
-#, java-format
-msgid "An error occurred when updating duplicate arguments warnings. Do you want to continue ?\n\nError: {0}"
-msgstr ""
-
-#: org/wikipediacleaner/gui/swing/worker/UpdateISBNWarningTools.java:262
-#: org/wikipediacleaner/gui/swing/worker/UpdateISSNWarningTools.java:258
+#: org/wikipediacleaner/gui/swing/worker/warning/ISBNWarningProcessor.java:212
+#: org/wikipediacleaner/gui/swing/worker/warning/ISSNWarningProcessor.java:208
 #, fuzzy, java-format
 msgid "Removing {1} warning - {0}"
 msgstr "Actualizando páxina {0}"
 
-#: org/wikipediacleaner/gui/swing/worker/UpdateISBNWarningTools.java:271
-#: org/wikipediacleaner/gui/swing/worker/UpdateISSNWarningTools.java:267
+#: org/wikipediacleaner/gui/swing/worker/warning/ISBNWarningProcessor.java:221
+#: org/wikipediacleaner/gui/swing/worker/warning/ISSNWarningProcessor.java:217
 #, fuzzy, java-format
 msgid "Updating {1} warning - {0}"
 msgstr "Actualizando páxina {0}"
 
-#: org/wikipediacleaner/gui/swing/worker/UpdateISBNWarningWorker.java:89
-#: org/wikipediacleaner/gui/swing/worker/UpdateISSNWarningWorker.java:85
-#, java-format
-msgid "Analysis found {0} articles to check for {1} errors.\nDo you want to update the warnings ?"
-msgstr ""
-
-#: org/wikipediacleaner/gui/swing/worker/UpdateISBNWarningWorker.java:130
-#: org/wikipediacleaner/gui/swing/worker/UpdateISSNWarningWorker.java:126
-#, java-format
-msgid "An error occurred when updating {1} warnings. Do you want to continue ?\n\nError: {0}"
-msgstr ""
-
-#: org/wikipediacleaner/gui/swing/worker/UpdateISBNWarningWorker.java:307
-#: org/wikipediacleaner/gui/swing/worker/UpdateISSNWarningWorker.java:278
-#, java-format
-msgid "Do you want to update {0}?"
-msgstr ""
-
-#: org/wikipediacleaner/gui/swing/worker/UpdateUnknownParameterWarningTools.java:243
+#: org/wikipediacleaner/gui/swing/worker/warning/UnknownParameterWarningProcessor.java:193
 #, java-format
 msgid "Removing unknown parameter warning - {0}"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/worker/UpdateUnknownParameterWarningTools.java:252
+#: org/wikipediacleaner/gui/swing/worker/warning/UnknownParameterWarningProcessor.java:202
 #, java-format
 msgid "Updating unknown parameter warning - {0}"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/worker/UpdateUnknownParameterWarningWorker.java:77
+#: org/wikipediacleaner/gui/swing/worker/warning/UpdateDabWarningWorker.java:100
+#, java-format
+msgid "Analysis found {0} articles with disambiguation warning {1}.\nDo you want to update the disambiguation warnings ?"
+msgstr ""
+
+#: org/wikipediacleaner/gui/swing/worker/warning/UpdateDabWarningWorker.java:125
+msgid "Retrieving disambiguation pages"
+msgstr ""
+
+#: org/wikipediacleaner/gui/swing/worker/warning/UpdateDabWarningWorker.java:149
+#, java-format
+msgid "An error occurred when updating disambiguation warnings. Do you want to continue ?\n\nError: {0}"
+msgstr ""
+
+#: org/wikipediacleaner/gui/swing/worker/warning/UpdateDuplicateArgsWarningWorker.java:76
+#, java-format
+msgid "Analysis found {0} articles to check for duplicate arguments errors.\nDo you want to update the warnings ?"
+msgstr ""
+
+#: org/wikipediacleaner/gui/swing/worker/warning/UpdateDuplicateArgsWarningWorker.java:116
+#, java-format
+msgid "An error occurred when updating duplicate arguments warnings. Do you want to continue ?\n\nError: {0}"
+msgstr ""
+
+#: org/wikipediacleaner/gui/swing/worker/warning/UpdateISBNWarningWorker.java:88
+#: org/wikipediacleaner/gui/swing/worker/warning/UpdateISSNWarningWorker.java:84
+#, java-format
+msgid "Analysis found {0} articles to check for {1} errors.\nDo you want to update the warnings ?"
+msgstr ""
+
+#: org/wikipediacleaner/gui/swing/worker/warning/UpdateISBNWarningWorker.java:129
+#: org/wikipediacleaner/gui/swing/worker/warning/UpdateISSNWarningWorker.java:125
+#, java-format
+msgid "An error occurred when updating {1} warnings. Do you want to continue ?\n\nError: {0}"
+msgstr ""
+
+#: org/wikipediacleaner/gui/swing/worker/warning/UpdateISBNWarningWorker.java:306
+#: org/wikipediacleaner/gui/swing/worker/warning/UpdateISSNWarningWorker.java:277
+#, java-format
+msgid "Do you want to update {0}?"
+msgstr ""
+
+#: org/wikipediacleaner/gui/swing/worker/warning/UpdateUnknownParameterWarningWorker.java:76
 #, java-format
 msgid "Analysis found {0} articles to check for unknown parameter errors.\nDo you want to update the warnings ?"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/worker/UpdateUnknownParameterWarningWorker.java:117
+#: org/wikipediacleaner/gui/swing/worker/warning/UpdateUnknownParameterWarningWorker.java:116
 #, java-format
 msgid "An error occurred when updating unknown parameter warnings. Do you want to continue ?\n\nError: {0}"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/worker/UpdateWarningTools.java:324
-#: org/wikipediacleaner/gui/swing/worker/UpdateWarningTools.java:339
+#: org/wikipediacleaner/gui/swing/worker/warning/UpdateWarningTools.java:326
+#: org/wikipediacleaner/gui/swing/worker/warning/UpdateWarningTools.java:341
 #, java-format
 msgid "Retrieving page contents - {0}"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/worker/UpdateWarningTools.java:1693
+#: org/wikipediacleaner/gui/swing/worker/warning/UpdateWarningWorker.java:124
+#, java-format
+msgid "Retrieving talk pages including {0}"
+msgstr ""
+
+#: org/wikipediacleaner/gui/swing/worker/warning/UpdateWarningWorker.java:136
+msgid "Constructing list of articles with warning"
+msgstr ""
+
+#: org/wikipediacleaner/gui/swing/worker/warning/WarningStats.java:107
 #, java-format
 msgid "{0} page has been analyzed."
 msgid_plural "{0} pages have been analyzed."
 msgstr[0] ""
 msgstr[1] ""
 
-#: org/wikipediacleaner/gui/swing/worker/UpdateWarningTools.java:1698
+#: org/wikipediacleaner/gui/swing/worker/warning/WarningStats.java:112
 #, java-format
 msgid "Warning has been updated on {0} page."
 msgid_plural "Warnings have been updated on {0} pages."
 msgstr[0] ""
 msgstr[1] ""
 
-#: org/wikipediacleaner/gui/swing/worker/UpdateWarningTools.java:1703
+#: org/wikipediacleaner/gui/swing/worker/warning/WarningStats.java:117
 #, java-format
 msgid "Warning has been removed on {0} page."
 msgid_plural "Warnings have been removed on {0} pages."
 msgstr[0] ""
 msgstr[1] ""
 
-#: org/wikipediacleaner/gui/swing/worker/UpdateWarningTools.java:1708
+#: org/wikipediacleaner/gui/swing/worker/warning/WarningStats.java:122
 #, java-format
 msgid "{0} still needs to be fixed."
 msgid_plural "{0} still need to be fixed."
 msgstr[0] ""
 msgstr[1] ""
 
-#: org/wikipediacleaner/gui/swing/worker/UpdateWarningTools.java:1714
+#: org/wikipediacleaner/gui/swing/worker/warning/WarningStats.java:128
 #, java-format
 msgid "It took {0} second"
 msgid_plural "It took {0} seconds"
 msgstr[0] ""
 msgstr[1] ""
-
-#: org/wikipediacleaner/gui/swing/worker/UpdateWarningWorker.java:125
-#, java-format
-msgid "Retrieving talk pages including {0}"
-msgstr ""
-
-#: org/wikipediacleaner/gui/swing/worker/UpdateWarningWorker.java:137
-msgid "Constructing list of articles with warning"
-msgstr ""
 
 #: org/wikipediacleaner/utils/Configuration.java:301
 msgid "Wikipedia Cleaner options have changed to allow different settings for each Wikipedia.\nPreviously, options were global for every Wikipedia.\nThe current options will be saved as the options for your preferred Wikipedia.\nWhat is your preferred Wikipedia ?"
