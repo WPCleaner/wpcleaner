@@ -4,6 +4,7 @@
 # Author: Abijeet Patro
 # Author: Rail
 # Author: Rail
+# Author: Strebski
 # Author: Woytecr
 # --
 # This file is distributed under the same license as the wikicleaner package.
@@ -14,7 +15,7 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2022-05-16 11:20:54+0000\n"
+"PO-Revision-Date: 2022-05-19 11:45:07+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Polish <pl@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -691,9 +692,8 @@ msgid "A list of templates that should be ignored"
 msgstr "Szablony, które należy zignorować"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a05x/a059/CheckErrorAlgorithm059.java:230
-#, fuzzy
 msgid "A template that should be ignored"
-msgstr "Szablony, które należy zignorować"
+msgstr "Szablon, który należy zignorować"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a060/CheckErrorAlgorithm060.java:194
 msgid "Templates to be ignored"
