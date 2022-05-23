@@ -24,7 +24,7 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2022-05-16 11:20:56+0000\n"
+"PO-Revision-Date: 2022-05-23 11:22:05+0000\n"
 "Last-Translator: volkan <volkanyeke@gmail.com>\n"
 "Language-Team: Turkish <tr@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -34,7 +34,7 @@ msgstr ""
 "X-Launchpad-Export-Date: 2018-01-31 07:41+0000\n"
 "X-Generator: MediaWiki 1.39.0-alpha; Translate 2022-04-26\n"
 "Language: tr\n"
-"X-POT-Import-Date: 2022-05-12 20:30:21+0000\n"
+"X-POT-Import-Date: 2022-05-22 20:30:24+0000\n"
 
 #: org/wikipediacleaner/Version.java:31
 #, java-format
@@ -2026,102 +2026,138 @@ msgid "Pages linking to disambiguation pages"
 msgstr "Anlam ayrım sayfalarına bağlantısı olan sayfalar"
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:22
+msgid "Disambiguation pages"
+msgstr ""
+
+#: org/wikipediacleaner/api/constants/EnumQueryPage.java:23
 msgid "Double redirects"
 msgstr "Çift yönlendirmeler"
 
-#: org/wikipediacleaner/api/constants/EnumQueryPage.java:23
+#: org/wikipediacleaner/api/constants/EnumQueryPage.java:24
 msgid "Pages with the fewest revisions"
 msgstr "En az düzenleme yapılmış sayfalar"
 
-#: org/wikipediacleaner/api/constants/EnumQueryPage.java:24
+#: org/wikipediacleaner/api/constants/EnumQueryPage.java:25
+msgid "Usage of gadgets"
+msgstr ""
+
+#: org/wikipediacleaner/api/constants/EnumQueryPage.java:26
+msgid "Globally wanted files"
+msgstr ""
+
+#: org/wikipediacleaner/api/constants/EnumQueryPage.java:27
+msgid "Duplicated files"
+msgstr ""
+
+#: org/wikipediacleaner/api/constants/EnumQueryPage.java:28
 msgid "Redirects"
 msgstr "Yönlendirmeler"
 
-#: org/wikipediacleaner/api/constants/EnumQueryPage.java:25
+#: org/wikipediacleaner/api/constants/EnumQueryPage.java:29
 msgid "Orphaned pages"
 msgstr "Kendisine hiç bağlantı olmayan sayfalar"
 
-#: org/wikipediacleaner/api/constants/EnumQueryPage.java:26
+#: org/wikipediacleaner/api/constants/EnumQueryPage.java:30
 msgid "Long pages"
 msgstr "Uzun sayfalar"
 
-#: org/wikipediacleaner/api/constants/EnumQueryPage.java:27
+#: org/wikipediacleaner/api/constants/EnumQueryPage.java:31
+msgid "Media statistics"
+msgstr ""
+
+#: org/wikipediacleaner/api/constants/EnumQueryPage.java:32
 msgid "Pages with the most categories"
 msgstr "En fazla kategoriye bağlanmış sayfalar"
 
-#: org/wikipediacleaner/api/constants/EnumQueryPage.java:28
+#: org/wikipediacleaner/api/constants/EnumQueryPage.java:33
+msgid "Most globally linked files"
+msgstr ""
+
+#: org/wikipediacleaner/api/constants/EnumQueryPage.java:34
 msgid "Pages with the most files"
 msgstr "En fazla dosya içeren sayfalar"
 
-#: org/wikipediacleaner/api/constants/EnumQueryPage.java:29
+#: org/wikipediacleaner/api/constants/EnumQueryPage.java:35
+msgid "Pages with the most interwikis"
+msgstr ""
+
+#: org/wikipediacleaner/api/constants/EnumQueryPage.java:36
 msgid "Most linked-to pages"
 msgstr "Kendisine en fazla bağlantı verilmiş sayfalar"
 
-#: org/wikipediacleaner/api/constants/EnumQueryPage.java:30
+#: org/wikipediacleaner/api/constants/EnumQueryPage.java:37
 msgid "Most linked-to categories"
 msgstr "En çok kategorilere sahip sayfalar"
 
-#: org/wikipediacleaner/api/constants/EnumQueryPage.java:31
+#: org/wikipediacleaner/api/constants/EnumQueryPage.java:38
 msgid "Most linked-to templates"
 msgstr "En bağlantılı şablonlar"
 
-#: org/wikipediacleaner/api/constants/EnumQueryPage.java:32
+#: org/wikipediacleaner/api/constants/EnumQueryPage.java:39
 msgid "Pages with the most revisions"
 msgstr "En çok değişikliğe uğramış sayfalar"
 
-#: org/wikipediacleaner/api/constants/EnumQueryPage.java:33
+#: org/wikipediacleaner/api/constants/EnumQueryPage.java:40
+msgid "Orphaned timed text"
+msgstr ""
+
+#: org/wikipediacleaner/api/constants/EnumQueryPage.java:41
 msgid "Short pages"
 msgstr "Kısa sayfalar"
 
-#: org/wikipediacleaner/api/constants/EnumQueryPage.java:34
+#: org/wikipediacleaner/api/constants/EnumQueryPage.java:42
 msgid "Uncategorized categories"
 msgstr "Kategorisiz kategoriler"
 
-#: org/wikipediacleaner/api/constants/EnumQueryPage.java:35
+#: org/wikipediacleaner/api/constants/EnumQueryPage.java:43
 msgid "Uncategorized files"
 msgstr "Kategorisiz dosyalar"
 
-#: org/wikipediacleaner/api/constants/EnumQueryPage.java:36
+#: org/wikipediacleaner/api/constants/EnumQueryPage.java:44
 msgid "Uncategorized pages"
 msgstr "Kategorisiz sayfalar"
 
-#: org/wikipediacleaner/api/constants/EnumQueryPage.java:37
+#: org/wikipediacleaner/api/constants/EnumQueryPage.java:45
 msgid "Uncategorized templates"
 msgstr "Kategorisiz şablonlar"
 
-#: org/wikipediacleaner/api/constants/EnumQueryPage.java:38
+#: org/wikipediacleaner/api/constants/EnumQueryPage.java:46
+msgid "Unconnected pages"
+msgstr ""
+
+#: org/wikipediacleaner/api/constants/EnumQueryPage.java:47
 msgid "Unused categories"
 msgstr "Kullanılmayan kategoriler"
 
-#: org/wikipediacleaner/api/constants/EnumQueryPage.java:39
+#: org/wikipediacleaner/api/constants/EnumQueryPage.java:48
 msgid "Unused files"
 msgstr "Kullanılmayan dosyalar"
 
-#: org/wikipediacleaner/api/constants/EnumQueryPage.java:40
+#: org/wikipediacleaner/api/constants/EnumQueryPage.java:49
 msgid "Unused templates"
 msgstr "Kullanılmayan şablonlar"
 
-#: org/wikipediacleaner/api/constants/EnumQueryPage.java:41
-msgid "Wanted categories"
-msgstr "İstenen kategoriler"
-
-#: org/wikipediacleaner/api/constants/EnumQueryPage.java:42
-msgid "Wanted files"
-msgstr "İstenen dosyalar"
-
-#: org/wikipediacleaner/api/constants/EnumQueryPage.java:43
-msgid "Wanted pages"
-msgstr "İstenen sayfalar"
-
-#: org/wikipediacleaner/api/constants/EnumQueryPage.java:44
-msgid "Wanted templates"
-msgstr "İstenen şablonlar"
-
-#: org/wikipediacleaner/api/constants/EnumQueryPage.java:45
+#: org/wikipediacleaner/api/constants/EnumQueryPage.java:50
 msgid "Unwatched pages"
 msgstr "İzlenmeyen sayfalar"
 
-#: org/wikipediacleaner/api/constants/EnumQueryPage.java:46
+#: org/wikipediacleaner/api/constants/EnumQueryPage.java:51
+msgid "Wanted categories"
+msgstr "İstenen kategoriler"
+
+#: org/wikipediacleaner/api/constants/EnumQueryPage.java:52
+msgid "Wanted files"
+msgstr "İstenen dosyalar"
+
+#: org/wikipediacleaner/api/constants/EnumQueryPage.java:53
+msgid "Wanted pages"
+msgstr "İstenen sayfalar"
+
+#: org/wikipediacleaner/api/constants/EnumQueryPage.java:54
+msgid "Wanted templates"
+msgstr "İstenen şablonlar"
+
+#: org/wikipediacleaner/api/constants/EnumQueryPage.java:55
 msgid "Pages without language links"
 msgstr "Diğer dillere bağlantısı olmayan sayfalar"
 
