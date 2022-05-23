@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2022-05-16 11:20:53+0000\n"
+"PO-Revision-Date: 2022-05-23 11:22:02+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Korean <ko@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -23,7 +23,7 @@ msgstr ""
 "X-Launchpad-Export-Date: 2014-09-21 06:01+0000\n"
 "X-Generator: MediaWiki 1.39.0-alpha; Translate 2022-04-26\n"
 "Language: ko\n"
-"X-POT-Import-Date: 2022-05-12 20:30:21+0000\n"
+"X-POT-Import-Date: 2022-05-22 20:30:24+0000\n"
 
 #: org/wikipediacleaner/Version.java:31
 #, java-format
@@ -2022,102 +2022,138 @@ msgid "Pages linking to disambiguation pages"
 msgstr ""
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:22
+msgid "Disambiguation pages"
+msgstr ""
+
+#: org/wikipediacleaner/api/constants/EnumQueryPage.java:23
 msgid "Double redirects"
 msgstr "이중 넘겨주기"
 
-#: org/wikipediacleaner/api/constants/EnumQueryPage.java:23
+#: org/wikipediacleaner/api/constants/EnumQueryPage.java:24
 msgid "Pages with the fewest revisions"
 msgstr ""
 
-#: org/wikipediacleaner/api/constants/EnumQueryPage.java:24
-msgid "Redirects"
-msgstr "넘겨주기"
-
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:25
-msgid "Orphaned pages"
+msgid "Usage of gadgets"
 msgstr ""
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:26
-msgid "Long pages"
-msgstr "긴 문서"
+msgid "Globally wanted files"
+msgstr ""
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:27
-msgid "Pages with the most categories"
+msgid "Duplicated files"
 msgstr ""
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:28
-msgid "Pages with the most files"
-msgstr ""
+msgid "Redirects"
+msgstr "넘겨주기"
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:29
-msgid "Most linked-to pages"
+msgid "Orphaned pages"
 msgstr ""
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:30
-msgid "Most linked-to categories"
-msgstr ""
+msgid "Long pages"
+msgstr "긴 문서"
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:31
-msgid "Most linked-to templates"
+msgid "Media statistics"
 msgstr ""
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:32
-msgid "Pages with the most revisions"
+msgid "Pages with the most categories"
 msgstr ""
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:33
-msgid "Short pages"
-msgstr "짧은 문서"
+msgid "Most globally linked files"
+msgstr ""
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:34
-msgid "Uncategorized categories"
-msgstr "분류되지 않은 분류"
+msgid "Pages with the most files"
+msgstr ""
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:35
-msgid "Uncategorized files"
-msgstr "분류되지 않은 파일"
+msgid "Pages with the most interwikis"
+msgstr ""
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:36
-msgid "Uncategorized pages"
-msgstr "분류되지 않은 문서"
+msgid "Most linked-to pages"
+msgstr ""
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:37
-msgid "Uncategorized templates"
-msgstr "분류되지 않은 틀"
+msgid "Most linked-to categories"
+msgstr ""
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:38
-msgid "Unused categories"
+msgid "Most linked-to templates"
 msgstr ""
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:39
+msgid "Pages with the most revisions"
+msgstr ""
+
+#: org/wikipediacleaner/api/constants/EnumQueryPage.java:40
+msgid "Orphaned timed text"
+msgstr ""
+
+#: org/wikipediacleaner/api/constants/EnumQueryPage.java:41
+msgid "Short pages"
+msgstr "짧은 문서"
+
+#: org/wikipediacleaner/api/constants/EnumQueryPage.java:42
+msgid "Uncategorized categories"
+msgstr "분류되지 않은 분류"
+
+#: org/wikipediacleaner/api/constants/EnumQueryPage.java:43
+msgid "Uncategorized files"
+msgstr "분류되지 않은 파일"
+
+#: org/wikipediacleaner/api/constants/EnumQueryPage.java:44
+msgid "Uncategorized pages"
+msgstr "분류되지 않은 문서"
+
+#: org/wikipediacleaner/api/constants/EnumQueryPage.java:45
+msgid "Uncategorized templates"
+msgstr "분류되지 않은 틀"
+
+#: org/wikipediacleaner/api/constants/EnumQueryPage.java:46
+msgid "Unconnected pages"
+msgstr ""
+
+#: org/wikipediacleaner/api/constants/EnumQueryPage.java:47
+msgid "Unused categories"
+msgstr ""
+
+#: org/wikipediacleaner/api/constants/EnumQueryPage.java:48
 msgid "Unused files"
 msgstr "사용하지 않는 파일"
 
-#: org/wikipediacleaner/api/constants/EnumQueryPage.java:40
+#: org/wikipediacleaner/api/constants/EnumQueryPage.java:49
 msgid "Unused templates"
 msgstr "사용하지 않는 틀"
 
-#: org/wikipediacleaner/api/constants/EnumQueryPage.java:41
-msgid "Wanted categories"
-msgstr ""
-
-#: org/wikipediacleaner/api/constants/EnumQueryPage.java:42
-msgid "Wanted files"
-msgstr ""
-
-#: org/wikipediacleaner/api/constants/EnumQueryPage.java:43
-msgid "Wanted pages"
-msgstr ""
-
-#: org/wikipediacleaner/api/constants/EnumQueryPage.java:44
-msgid "Wanted templates"
-msgstr ""
-
-#: org/wikipediacleaner/api/constants/EnumQueryPage.java:45
+#: org/wikipediacleaner/api/constants/EnumQueryPage.java:50
 msgid "Unwatched pages"
 msgstr "주시되지 않는 문서"
 
-#: org/wikipediacleaner/api/constants/EnumQueryPage.java:46
+#: org/wikipediacleaner/api/constants/EnumQueryPage.java:51
+msgid "Wanted categories"
+msgstr ""
+
+#: org/wikipediacleaner/api/constants/EnumQueryPage.java:52
+msgid "Wanted files"
+msgstr ""
+
+#: org/wikipediacleaner/api/constants/EnumQueryPage.java:53
+msgid "Wanted pages"
+msgstr ""
+
+#: org/wikipediacleaner/api/constants/EnumQueryPage.java:54
+msgid "Wanted templates"
+msgstr ""
+
+#: org/wikipediacleaner/api/constants/EnumQueryPage.java:55
 msgid "Pages without language links"
 msgstr "언어 링크가 없는 문서"
 
