@@ -7,8 +7,8 @@
 
 package org.wikipediacleaner.api.request.query.list;
 
-import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.wikipediacleaner.api.APIException;
 import org.wikipediacleaner.api.data.Page;
@@ -30,5 +30,5 @@ public interface ApiQueryPageResult extends ApiResult {
    */
   public boolean executeQueryPage(
       Map<String, String> properties,
-      List<Page> list) throws APIException;
+      Set<Page> list) throws APIException;
 }

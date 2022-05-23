@@ -9,8 +9,10 @@ package org.wikipediacleaner.api.request.query.list;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.wikipediacleaner.api.APIException;
 import org.wikipediacleaner.api.constants.EnumQueryPage;
@@ -73,12 +75,13 @@ public class ApiQueryPageRequest extends ApiListRequest {
         PROPERTY_LIST_QUERYPAGE);
     properties.put(PROPERTY_PAGE, query.getCode());
     properties.put(PROPERTY_LIMIT, LIMIT_MAX);
-    List<Page> list = new ArrayList<>();
+    Set<Page> set = new HashSet<>();
     int maxSize = getMaxSize(true, ConfigurationValueInteger.MAX_QUERY_PAGE);
-    while (result.executeQueryPage(properties, list) &&
-           (list.size() < maxSize)) {
+    while (result.executeQueryPage(properties, set) &&
+           (set.size() < maxSize)) {
       //
     }
+    List<Page> list = new ArrayList<>(set);
     Collections.sort(list);
     return list;
   }

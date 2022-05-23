@@ -10,6 +10,7 @@ package org.wikipediacleaner.api.request.query.list;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.apache.commons.httpclient.HttpClient;
 import org.jdom2.Element;
@@ -51,7 +52,7 @@ public class ApiXmlQueryPageResult extends ApiXmlResult implements ApiQueryPageR
   @Override
   public boolean executeQueryPage(
       Map<String, String> properties,
-      List<Page> list) throws APIException {
+      Set<Page> list) throws APIException {
     try {
       Element root = getRoot(properties, ApiRequest.MAX_ATTEMPTS);
 
