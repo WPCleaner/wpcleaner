@@ -25,6 +25,7 @@ import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.PageElementTemplate.Parameter;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
 import org.wikipediacleaner.api.data.contents.ContentsUtil;
+import org.wikipediacleaner.api.data.contents.tag.WikiTagType;
 import org.wikipediacleaner.i18n.GT;
 
 
@@ -150,6 +151,9 @@ public class CheckErrorAlgorithm573 extends CheckErrorAlgorithmBase {
           return false;
         }
       }
+    }
+    if (analysis.getSurroundingTag(WikiTagType.TIMELINE, index) != null) {
+      return false;
     }
 
     if (errors == null) {
