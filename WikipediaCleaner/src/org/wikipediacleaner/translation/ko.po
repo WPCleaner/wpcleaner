@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2022-05-23 11:22:02+0000\n"
+"PO-Revision-Date: 2022-05-26 11:23:13+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Korean <ko@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -2023,7 +2023,7 @@ msgstr ""
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:22
 msgid "Disambiguation pages"
-msgstr ""
+msgstr "동음이의 문서"
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:23
 msgid "Double redirects"
@@ -2035,15 +2035,15 @@ msgstr ""
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:25
 msgid "Usage of gadgets"
-msgstr ""
+msgstr "소도구 사용"
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:26
 msgid "Globally wanted files"
-msgstr ""
+msgstr "모든 위키에서 가장 많이 원하는 파일"
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:27
 msgid "Duplicated files"
-msgstr ""
+msgstr "중복 파일"
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:28
 msgid "Redirects"
@@ -2059,7 +2059,7 @@ msgstr "긴 문서"
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:31
 msgid "Media statistics"
-msgstr ""
+msgstr "미디어 통계"
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:32
 msgid "Pages with the most categories"
@@ -2067,7 +2067,7 @@ msgstr ""
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:33
 msgid "Most globally linked files"
-msgstr ""
+msgstr "모든 위키에서 가장 많이 링크한 파일"
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:34
 msgid "Pages with the most files"
@@ -2075,7 +2075,7 @@ msgstr ""
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:35
 msgid "Pages with the most interwikis"
-msgstr ""
+msgstr "가장 많이 인터위키가 달린 문서"
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:36
 msgid "Most linked-to pages"
@@ -2119,7 +2119,7 @@ msgstr "분류되지 않은 틀"
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:46
 msgid "Unconnected pages"
-msgstr ""
+msgstr "연결되지 않은 문서"
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:47
 msgid "Unused categories"
