@@ -1,6 +1,7 @@
 # Translation of WPCleaner to Central Kurdish (کوردی)
 # Exported from translatewiki.net
 #
+# Author: Aram
 # Author: ئارام بکر
 # --
 # This file is distributed under the same license as the wikicleaner package.
@@ -11,7 +12,7 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2022-05-23 11:21:59+0000\n"
+"PO-Revision-Date: 2022-05-30 11:22:49+0000\n"
 "Last-Translator: Aram <Unknown>\n"
 "Language-Team: Kurdish (Sorani) <ckb@li.org>\n"
 "MIME-Version: 1.0\n"
