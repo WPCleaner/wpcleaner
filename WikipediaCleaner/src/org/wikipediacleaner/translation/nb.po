@@ -1,6 +1,7 @@
 # Translation of WPCleaner to Norwegian Bokmål (norsk bokmål)
 # Exported from translatewiki.net
 #
+# Author: Avilena
 # --
 # This file is distributed under the same license as the wikicleaner package.
 #
@@ -10,7 +11,7 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2022-05-23 11:22:03+0000\n"
+"PO-Revision-Date: 2022-05-30 11:22:53+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Norwegian Bokmal <nb@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -29,7 +30,7 @@ msgstr ""
 
 #: org/wikipediacleaner/Version.java:32
 msgid "It identifies wikitext patterns that must or can be fixed in pages."
-msgstr ""
+msgstr "Den identifiserer mønster i wikitext som må eller kan rettes i sider."
 
 #: org/wikipediacleaner/Version.java:33
 msgid "It also provides some guidance about what the issues are with those patterns and how to fix them."
@@ -1013,9 +1014,8 @@ msgid "Template that can be used to replace &lt;center&gt; tags"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a08x/a085/CheckErrorAlgorithm085.java:358
-#, fuzzy
 msgid "Name of the parameter to use"
-msgstr "Søk i maler"
+msgstr "Navnet på parameteren som skal anvendes"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a090/CheckErrorAlgorithm090.java:661
 msgid "What text should be displayed by the link?"
@@ -1134,9 +1134,8 @@ msgstr ""
 #: org/wikipediacleaner/api/check/algorithm/a1xx/a11x/a111/CheckErrorAlgorithm111.java:204
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a568/CheckErrorAlgorithm568.java:267
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a568/CheckErrorAlgorithm568.java:276
-#, fuzzy
 msgid "Template name"
-msgstr "Mal"
+msgstr "Malnavn"
 
 #: org/wikipediacleaner/api/check/algorithm/a1xx/a11x/a111/CheckErrorAlgorithm111.java:207
 msgid "Parameter for the name of the group"
@@ -1331,9 +1330,8 @@ msgid "Both values are equal"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a524/CheckErrorAlgorithm524.java:136
-#, fuzzy
 msgid "Other value is empty"
-msgstr "Andre språk"
+msgstr "Andre verdi er tom"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a524/CheckErrorAlgorithm524.java:138
 #, fuzzy, java-format
@@ -1441,18 +1439,16 @@ msgid "Minimum difference between the year linked and the year displayed"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a527/CheckErrorAlgorithm527.java:130
-#, fuzzy
 msgid "Trim text"
-msgstr "Finn tekst"
+msgstr "Beskjær tekst"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a529/CheckErrorAlgorithm529.java:375
 msgid "Automatic replacements of ISBN"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a529/CheckErrorAlgorithm529.java:379
-#, fuzzy
 msgid "Name of the template to use for ISBN"
-msgstr "Søk i maler"
+msgstr "Navnet på malen som skal anvendes for ISBN"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a529/CheckErrorAlgorithm529.java:382
 msgid "Text before the ISBN to be removed in the replacement"
@@ -1537,18 +1533,16 @@ msgstr ""
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a541/CheckErrorAlgorithm541.java:569
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a541/CheckErrorAlgorithm541.java:590
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a541/CheckErrorAlgorithm541.java:611
-#, fuzzy
 msgid "Description of the template"
-msgstr "Søk i maler"
+msgstr "Malbeskrivelse"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a544/CheckErrorAlgorithm544.java:216
 msgid "Pairs of templates: for each opening template, all possible closing templates"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a544/CheckErrorAlgorithm544.java:220
-#, fuzzy
 msgid "Name of the opening template in the pair"
-msgstr "Søk i maler"
+msgstr "Navnet på den første malen i paret"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a544/CheckErrorAlgorithm544.java:223
 msgid "Name of a closing template in the pair"
@@ -2599,9 +2593,8 @@ msgid "System information"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:704
-#, fuzzy
 msgid "You must select an installation folder."
-msgstr "Du må velge språk før du kan logge på"
+msgstr "Du må velge en installasjonsmappe"
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:711
 #, java-format
@@ -2637,9 +2630,9 @@ msgid "Downloading {0}"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:854
-#, fuzzy, java-format
+#, java-format
 msgid "Creating {0}"
-msgstr "maler i {0}"
+msgstr "Oppretter {0}"
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:861
 #, java-format
@@ -2656,9 +2649,9 @@ msgid "Error: {0}"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:871
-#, fuzzy, java-format
+#, java-format
 msgid "Installing {0}"
-msgstr "maler i {0}"
+msgstr "Installerer {0}"
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:886
 msgid "Problem running getdown installer"
@@ -3000,19 +2993,16 @@ msgid "Hits for filter {0}"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1601
-#, fuzzy
 msgid "Without templates"
-msgstr "Søk i maler"
+msgstr "Uten maler"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1604
-#, fuzzy
 msgid "With templates"
-msgstr "Søk i maler"
+msgstr "Med maler"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1622
-#, fuzzy
 msgid "All namespaces"
-msgstr "Navnerom"
+msgstr "Alle navnerom"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1638
 #: org/wikipediacleaner/gui/swing/pagelist/PageListTableModel.java:231
@@ -3446,9 +3436,8 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/action/ActionCheckArticle.java:293
 #: org/wikipediacleaner/gui/swing/action/ActionCheckArticle.java:309
 #: org/wikipediacleaner/gui/swing/worker/CheckArticleWorker.java:52
-#, fuzzy
 msgid "Analysis"
-msgstr "Analyser"
+msgstr "Analyse"
 
 #: org/wikipediacleaner/gui/swing/action/ActionCheckTemplate.java:41
 #, fuzzy
@@ -4300,9 +4289,8 @@ msgid "You can learn how to add other languages at the following URL:"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/component/simple/PasswordInput.java:61
-#, fuzzy
 msgid "Password:"
-msgstr "Passord"
+msgstr "Passord:"
 
 #: org/wikipediacleaner/gui/swing/component/simple/UserNameSelector.java:62
 msgid "Username:"
@@ -4338,20 +4326,17 @@ msgid "End"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/deadlink/DeadLinkListTableModel.java:214
-#, fuzzy
 msgid "Link"
-msgstr "Pålogging"
+msgstr "Lenke"
 
 #: org/wikipediacleaner/gui/swing/deadlink/DeadLinkListTableModel.java:221
 #: org/wikipediacleaner/gui/swing/linter/LinterErrorListTableModel.java:232
-#, fuzzy
 msgid "Start"
-msgstr "Sorter"
+msgstr "Start"
 
 #: org/wikipediacleaner/gui/swing/deadlink/DeadLinkListTableModel.java:225
-#, fuzzy
 msgid "Status"
-msgstr "Sorter"
+msgstr "Status"
 
 #: org/wikipediacleaner/gui/swing/deadlink/DeadLinkPanel.java:80
 msgid "The following links seem to be dead:"
@@ -4394,9 +4379,8 @@ msgid "You need to select pages to check for linter errors"
 msgstr "Du må velge språk før du kan logge på"
 
 #: org/wikipediacleaner/gui/swing/linter/LinterErrorListTableModel.java:186
-#, fuzzy
 msgid "Multiple templates"
-msgstr "Søk i maler"
+msgstr "Flere maler"
 
 #: org/wikipediacleaner/gui/swing/linter/LinterErrorListTableModel.java:228
 msgid "Parameters"
@@ -4701,9 +4685,8 @@ msgid "List items"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:251
-#, fuzzy
 msgid "Table"
-msgstr "Tittel"
+msgstr "Tabell"
 
 #: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:257
 msgid "Reference"
@@ -4849,7 +4832,6 @@ msgid "Act as user:"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:239
-#, fuzzy
 msgid "Signature:"
 msgstr "Signatur:"
 
@@ -5063,9 +5045,8 @@ msgid "Backlinks - Main namespace: {0}, All namespaces: {1}"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/pagelist/PageListWorker.java:87
-#, fuzzy
 msgid "All articles"
-msgstr "Søk i maler"
+msgstr "Alle artikler"
 
 #: org/wikipediacleaner/gui/swing/pagelist/PageListWorker.java:88
 msgid "Articles in main namespace"
@@ -5115,9 +5096,8 @@ msgstr[0] ""
 msgstr[1] ""
 
 #: org/wikipediacleaner/gui/swing/worker/CheckArticleTools.java:104
-#, fuzzy
 msgid "Templates"
-msgstr "Mal"
+msgstr "Maler"
 
 #: org/wikipediacleaner/gui/swing/worker/CheckArticleTools.java:107
 #, java-format

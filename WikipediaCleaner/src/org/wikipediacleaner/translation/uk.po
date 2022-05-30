@@ -14,7 +14,7 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2022-05-23 11:22:05+0000\n"
+"PO-Revision-Date: 2022-05-30 11:22:55+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Ukrainian <uk@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -624,11 +624,11 @@ msgstr "Вилучити всі посилання на загаловок"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a04x/a048/CheckErrorAlgorithm048.java:422
 msgid "List of templates in which error should be ignored"
-msgstr ""
+msgstr "Список шаблонів, у яких помилку слід ігнорувати"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a04x/a048/CheckErrorAlgorithm048.java:425
 msgid "Name of the template in which error should be ignored"
-msgstr ""
+msgstr "Назва шаблону, в якому слід ігнорувати помилку"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a04x/a048/CheckErrorAlgorithm048.java:428
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a04x/a048/CheckErrorAlgorithm048.java:431
@@ -941,15 +941,15 @@ msgstr "Виправлення дублювання приміток"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a08x/a081/CheckErrorAlgorithm081.java:215
 msgid "Both tags have already the same name"
-msgstr ""
+msgstr "Обидва теги вже мають однакову назву"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a08x/a081/CheckErrorAlgorithm081.java:217
 msgid "Tag is unnamed"
-msgstr ""
+msgstr "Тег без назви"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a08x/a081/CheckErrorAlgorithm081.java:219
 msgid "Tags have different names"
-msgstr ""
+msgstr "Теги мають різні назви"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a08x/a081/CheckErrorAlgorithm081.java:260
 msgid "Give a name to the <ref> tag"
@@ -1732,7 +1732,7 @@ msgstr "Параметри, які слід ігнорувати"
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a568/CheckErrorAlgorithm568.java:129
 #, java-format
 msgid "Template {0}"
-msgstr ""
+msgstr "Шаблон {0}"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:340
 msgid "Templates for which unknown parameters should be verified"
@@ -1745,11 +1745,11 @@ msgstr "Параметри шаблону, які можна безпечно в
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:368
 msgid "Template parameters for which unnamed parameters can be safely deleted when values are equal"
-msgstr ""
+msgstr "Параметри шаблону, для яких безіменовані параметри можна безпечно видаляти, якщо значення рівні"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:375
 msgid "Name of parameter"
-msgstr ""
+msgstr "Назва параметра"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:382
 msgid "Template parameters which can be safely deleted if they have a given value"
@@ -1872,53 +1872,53 @@ msgstr "Назва параметра"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a568/CheckErrorAlgorithm568.java:274
 msgid "Template parameters that can contain a reference"
-msgstr ""
+msgstr "Параметри шаблону, які можуть містити посилання"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a568/CheckErrorAlgorithm568.java:277
 msgid "Parameter name with the formatnum"
-msgstr ""
+msgstr "Назва параметра з форматом"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a568/CheckErrorAlgorithm568.java:278
 msgid "Parameter name that can contain a reference"
-msgstr ""
+msgstr "Назва параметра, яке може містити посилання"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a572/CheckErrorAlgorithm572.java:286
 msgid "Templates for which unknown values should be verified"
-msgstr ""
+msgstr "Шаблони, для яких потрібно перевірити невідомі значення"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a572/CheckErrorAlgorithm572.java:296
 msgid "True if the value is case sensitive"
-msgstr ""
+msgstr "Істина, якщо значення чутливе до регістру"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a572/CheckErrorAlgorithm572.java:306
 msgid "Template values which can be safely replaced"
-msgstr ""
+msgstr "Значення шаблону, які можна безпечно замінити"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a576/CheckErrorAlgorithm576.java:231
 msgid "Templates for which values should be verified"
-msgstr ""
+msgstr "Шаблони, значення яких слід перевірити"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a576/CheckErrorAlgorithm576.java:241
 msgid "Image attribute"
-msgstr ""
+msgstr "Атрибут зображення"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a577/CheckErrorAlgorithm577.java:164
 #, java-format
 msgid "Check incorrect DOI {0}"
-msgstr ""
+msgstr "Перевірити неправильний DOI {0}"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a577/CheckErrorAlgorithm577.java:234
 #, java-format
 msgid "Check DOI {0}"
-msgstr ""
+msgstr "Перевірити DOI {0}"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a577/CheckErrorAlgorithm577.java:332
 msgid "Prefixes that can be safely deleted"
-msgstr ""
+msgstr "Префікси, які можна безпечно видалити"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a577/CheckErrorAlgorithm577.java:336
 msgid "Prefix that can be safely deleted"
-msgstr ""
+msgstr "Префікс, який можна безпечно видалити"
 
 #: org/wikipediacleaner/api/configuration/CWConfiguration.java:83
 #, java-format
@@ -2024,7 +2024,7 @@ msgstr "Сторінки, що посилаються на сторінки ви
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:22
 msgid "Disambiguation pages"
-msgstr ""
+msgstr "Сторінки значень"
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:23
 msgid "Double redirects"
@@ -2036,15 +2036,15 @@ msgstr "Сторінки з найменшою кількістю змін"
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:25
 msgid "Usage of gadgets"
-msgstr ""
+msgstr "Використання додаток"
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:26
 msgid "Globally wanted files"
-msgstr ""
+msgstr "Глобально розшукувані файли"
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:27
 msgid "Duplicated files"
-msgstr ""
+msgstr "Дубльовані файли"
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:28
 msgid "Redirects"
@@ -2060,7 +2060,7 @@ msgstr "Довгі сторінки"
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:31
 msgid "Media statistics"
-msgstr ""
+msgstr "Медіа-статистика"
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:32
 msgid "Pages with the most categories"
@@ -2068,7 +2068,7 @@ msgstr "Сторінки з найбільшою кількістю катего
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:33
 msgid "Most globally linked files"
-msgstr ""
+msgstr "Більшість глобально пов’язаних файлів"
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:34
 msgid "Pages with the most files"
@@ -2076,7 +2076,7 @@ msgstr "Сторінки з найбільшою кількістю файлів
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:35
 msgid "Pages with the most interwikis"
-msgstr ""
+msgstr "Сторінки з найновішими інтервікі"
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:36
 msgid "Most linked-to pages"
@@ -2096,7 +2096,7 @@ msgstr "Сторінки з найбільшою кількістю перегл
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:40
 msgid "Orphaned timed text"
-msgstr ""
+msgstr "Осиротілий приурочений текст"
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:41
 msgid "Short pages"
@@ -2120,7 +2120,7 @@ msgstr "Некатегоризовані шаблони"
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:46
 msgid "Unconnected pages"
-msgstr ""
+msgstr "Непов’язані сторінки"
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:47
 msgid "Unused categories"
