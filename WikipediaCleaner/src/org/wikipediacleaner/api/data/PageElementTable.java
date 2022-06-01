@@ -151,6 +151,9 @@ public class PageElementTable extends PageElement {
                (contents.charAt(tmpIndex) != '\n')) {
           tmpIndex = getTrueIndex(analysis, null, tmpIndex + 1);
         }
+        if (tmpIndex > endIndex) {
+          return null;
+        }
         newLineEnd = tmpIndex;
       } else {
         if (!contents.startsWith("|}", newLineBegin)) {
