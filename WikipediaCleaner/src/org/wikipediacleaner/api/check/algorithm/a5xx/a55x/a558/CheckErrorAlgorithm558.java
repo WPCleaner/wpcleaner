@@ -237,6 +237,9 @@ public class CheckErrorAlgorithm558 extends CheckErrorAlgorithmBase {
       String contents,
       PageElement previousRef,
       PageElement nextRef) {
+    if (nextRef.getBeginIndex() < previousRef.getEndIndex()) {
+      return false;
+    }
     String text = contents.substring(previousRef.getEndIndex(), nextRef.getBeginIndex());
     return !text.contains("''");
   }
