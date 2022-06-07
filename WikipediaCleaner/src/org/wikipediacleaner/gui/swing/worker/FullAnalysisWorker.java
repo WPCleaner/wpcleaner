@@ -103,6 +103,8 @@ public class FullAnalysisWorker extends BasicWorker {
       AlgorithmError.analyzeErrors(algorithms, analysis, false);
     } catch (APIException e) {
       return e;
+    } catch (RuntimeException e) {
+      return e;
     }
     return null;
   }
