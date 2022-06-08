@@ -173,7 +173,7 @@ public class CheckErrorAlgorithm069 extends CheckErrorAlgorithmISBN {
 
     // Analyze each ISBN
     boolean result = false;
-    result |= analyzeISBN(analysis, errors);
+    result |= analyzeISBNs(analysis, errors);
 
     // Report also ISBN like [[International Standard Book Number|ISBN]]&nbsp;978-0321637734
     result |= analyzeInternalLinks(analysis, errors);
@@ -188,250 +188,308 @@ public class CheckErrorAlgorithm069 extends CheckErrorAlgorithmISBN {
   }
 
   /**
-   * Analyze ISBN to check if an ISBN error is present.
+   * Analyze page to check if an error is present in ISBNs.
    * 
    * @param analysis Page analysis.
    * @param errors Errors found in the page.
    * @return Flag indicating if the error was found.
    */
-  public boolean analyzeISBN(
+  public boolean analyzeISBNs(
       PageAnalysis analysis,
       Collection<CheckErrorResult> errors) {
 
     boolean result = false;
     List<PageElementISBN> isbns = analysis.getISBNs();
     for (PageElementISBN isbn : isbns) {
-      boolean isError = false;
-      if (!isbn.isCorrect() && isbn.isValid()) {
-        isError = true;
-      }
-
-      // Exclude special configured values for ISBN
-      if (isError && isbn.isTemplateParameter()) {
-        WPCConfiguration config = analysis.getWPCConfiguration();
-        List<String[]> specialValues = config.getStringArrayList(
-            WPCConfigurationStringList.ISBN_SPECIAL_VALUES);
-        if ((specialValues != null) && !specialValues.isEmpty()) {
-          PageElementTemplate template = analysis.isInTemplate(isbn.getBeginIndex());
-          if (template != null) {
-            Parameter param = template.getParameterAtIndex(isbn.getBeginIndex());
-            if ((param != null) &&
-                (param.getName() != null) &&
-                (param.getName().trim().length() > 0)) {
-              String name = param.getName().trim();
-              for (String[] specialValue : specialValues) {
-                if ((specialValue.length > 2) &&
-                    (Page.areSameTitle(template.getTemplateName(), specialValue[0])) &&
-                    (name.equals(specialValue[1])) &&
-                    (isbn.getISBNNotTrimmed().equals(specialValue[2]))) {
-                  isError = false;
-                }
-              }
-            }
-          }
-        }
-      }
-
-      // Exclude parameters in templates
-      if (isError &&
-          isbn.isTemplateParameter() &&
-          analysis.isInNamespace(Namespace.TEMPLATE)) {
-        PageElementTemplate template = analysis.isInTemplate(isbn.getBeginIndex());
-        if (template != null) {
-          Parameter param = template.getParameterAtIndex(isbn.getBeginIndex());
-          if (param != null) {
-            List<PageElementFunction> functions = analysis.getFunctions();
-            if (functions != null) {
-              for (PageElementFunction function : functions) {
-                int functionIndex = function.getBeginIndex();
-                if ((template == analysis.isInTemplate(functionIndex)) &&
-                    (param == template.getParameterAtIndex(functionIndex))) {
-                  isError = false;
-                }
-              }
-            }
-          }
-        }
-      }
-
-      // Report error
-      boolean reported = false;
-      if (isError) {
-        if (errors == null) {
-          return true;
-        }
-        result = true;
-        reported = true;
-
-        // Check for potential extra characters around
-        int beginIndex = isbn.getBeginIndex();
-        int endIndex = isbn.getEndIndex();
-        String contents = analysis.getContents();
-        boolean tryAgain = true;
-        while (tryAgain) {
-          tryAgain = false;
-          if ((beginIndex > 0) && (endIndex < contents.length())) {
-            char previousChar = contents.charAt(beginIndex - 1);
-            char nextChar = contents.charAt(endIndex);
-            if (((previousChar == '(') && (nextChar == ')')) ||
-                ((previousChar == '[') && (nextChar == ']'))) {
-              beginIndex--;
-              endIndex++;
-              tryAgain = true;
-            }
-          }
-        }
-        if ((beginIndex >= SMALL_OPEN.length()) && (endIndex < contents.length())) {
-          if (contents.startsWith(SMALL_OPEN, beginIndex - SMALL_OPEN.length()) &&
-              contents.startsWith(SMALL_CLOSE, endIndex)) {
-            beginIndex -= SMALL_OPEN.length();
-            endIndex += SMALL_CLOSE.length();
-          }
-        }
-
-        CheckErrorResult errorResult = createCheckErrorResult(analysis, isbn, false);
-        String prefix = null;
-        String suffix = null;
-        if ((beginIndex < isbn.getBeginIndex()) && (endIndex > isbn.getEndIndex())) {
-          prefix = contents.substring(beginIndex, isbn.getBeginIndex());
-          suffix = contents.substring(isbn.getEndIndex(), endIndex);
-          errorResult = createCheckErrorResult(
-              analysis, beginIndex, endIndex, errorResult.getErrorLevel());
-        }
-        addSuggestions(analysis, errorResult, isbn);
-        errors.add(errorResult);
-        List<String> replacements = isbn.getCorrectISBN();
-        if (replacements != null) {
-          for (String replacement : replacements) {
-            if (!replacement.equals(analysis.getContents().substring(isbn.getBeginIndex(), isbn.getEndIndex()))) {
-              if ((prefix != null) && (suffix != null)) {
-                errorResult.addReplacement(prefix + replacement + suffix);
-              }
-              errorResult.addReplacement(replacement);
-            }
-          }
-        }
-      }
+      boolean reported = analyzeISBN(analysis, errors, isbn);
+      result |= reported;
 
       // Analyze to find links to Special/BookSources
-      if (!reported && !isbn.isTemplateParameter()) {
-        PageElement element = null;
-        ErrorLevel level = ErrorLevel.CORRECT;
-        String isbnText = analysis.getContents().substring(isbn.getBeginIndex(), isbn.getEndIndex());
-        PageElementInternalLink link = analysis.isInInternalLink(isbn.getBeginIndex());
-        if ((link != null) && (isbnText.equals(link.getText()))) {
-          level = isSpecialBookSources(analysis, link.getLink());
-          if (level != ErrorLevel.CORRECT) {
-            element = link;
-          }
-        }
-        if (element == null) {
-          PageElementInterwikiLink iwLink = analysis.isInInterwikiLink(isbn.getBeginIndex());
-          if ((iwLink != null) && (isbnText.equals(iwLink.getText()))) {
-            level = isSpecialBookSources(analysis, iwLink.getLink());
-            if (level != ErrorLevel.CORRECT) {
-              element = iwLink;
-            }
-          }
-        }
-        if (element != null) {
-          if (errors == null) {
-            return true;
-          }
-          result = true;
-          reported = true;
-          CheckErrorResult errorResult = createCheckErrorResult(
-              analysis, element.getBeginIndex(), element.getEndIndex(), level);
-          List<String> replacements = isbn.getCorrectISBN();
-          for (String replacement : replacements) {
-            errorResult.addReplacement(replacement);
-          }
-          errors.add(errorResult);
-        }
+      if (!reported) {
+        reported = analyzeISBNInSpecialBookSources(analysis, errors, isbn);
+        result |= reported; 
       }
 
       // Analyze if ISBN is inside an external link
-      if (!reported && !isbn.isTemplateParameter()) {
-        PageElementExternalLink link = analysis.isInExternalLink(isbn.getBeginIndex());
-        if ((link != null) && link.hasSquare() &&
-            (isbn.getBeginIndex() >= link.getBeginIndex() + link.getTextOffset()) &&
-            (link.getText() != null)) {
-          if (errors == null) {
-            return true;
-          }
-          result = true;
-          reported = true;
-          
-          CheckErrorResult errorResult = createCheckErrorResult(
-              analysis, link.getBeginIndex(), link.getEndIndex());
-          int beginIndex = isbn.getBeginIndex();
-          int realEndIndex = isbn.getEndIndex();
-          String contents = analysis.getContents();
-          while ((beginIndex > 0) &&
-                 (" ,;.(".indexOf(contents.charAt(beginIndex - 1)) >= 0)) {
-            beginIndex--;
-          }
-          if (realEndIndex < link.getEndIndex()) {
-            int tmpIndex = realEndIndex;
-            while ((tmpIndex < link.getEndIndex()) &&
-                   (", ".indexOf(contents.charAt(tmpIndex)) >= 0)) {
-              tmpIndex++;
-            }
-            if ((tmpIndex < link.getEndIndex()) &&
-                (contents.startsWith(isbn.getISBN(), tmpIndex))) {
-              realEndIndex = tmpIndex + isbn.getISBN().length();
-            }
-          }
-          int endIndex = realEndIndex;
-          while ((endIndex < link.getEndIndex()) &&
-                 (")".indexOf(contents.charAt(endIndex)) >= 0)) {
-            endIndex++;
-          }
-          if (beginIndex > link.getBeginIndex() + link.getTextOffset()) {
-            String replacementPrefix =
-                contents.substring(link.getBeginIndex(), beginIndex) +
-                contents.substring(endIndex, link.getEndIndex()) +
-                contents.substring(beginIndex, isbn.getBeginIndex());
-            String textPrefix =
-                contents.substring(link.getBeginIndex(), link.getBeginIndex() + 7) +
-                "...]" +
-                contents.substring(beginIndex, isbn.getBeginIndex());
-            List<String> replacements = isbn.getCorrectISBN();
-            for (String replacement : replacements) {
-              errorResult.addReplacement(
-                  replacementPrefix + replacement + contents.substring(realEndIndex, endIndex),
-                  textPrefix + replacement + contents.substring(realEndIndex, endIndex));
-            }
-            errorResult.addReplacement(
-                replacementPrefix + contents.substring(isbn.getBeginIndex(), isbn.getEndIndex()),
-                textPrefix + contents.substring(isbn.getBeginIndex(), isbn.getEndIndex()));
-            if (endIndex < link.getEndIndex()) {
-              replacementPrefix =
-                  contents.substring(link.getBeginIndex(), beginIndex) +
-                  "]" +
-                  contents.substring(beginIndex, isbn.getBeginIndex());
-              for (String replacement : replacements) {
-                errorResult.addReplacement(
-                    replacementPrefix + replacement + contents.substring(isbn.getEndIndex(), link.getEndIndex() - 1),
-                    textPrefix + replacement + contents.substring(isbn.getEndIndex(), link.getEndIndex() - 1));
-              }
-              errorResult.addReplacement(
-                  replacementPrefix + contents.substring(isbn.getBeginIndex(), link.getEndIndex() - 1),
-                  textPrefix + contents.substring(isbn.getBeginIndex(), link.getEndIndex() - 1));
-            }
-          } else if (endIndex >= link.getEndIndex() - 1) {
-            List<String> replacements = isbn.getCorrectISBN();
-            for (String replacement : replacements) {
-              errorResult.addReplacement(replacement);
-            }
-            errorResult.addReplacement(contents.substring(isbn.getBeginIndex(), isbn.getEndIndex()));
-          }
-          errors.add(errorResult);
-        }
+      if (!reported) {
+        reported = analyzeISBNInExternalLink(analysis, errors, isbn);
+        result |= reported;
       }
     }
 
     return result;
+  }
+
+  /**
+   * Analyze an ISBN to check if has an error.
+   * 
+   * @param analysis Page analysis.
+   * @param errors Errors found in the page.
+   * @return isbn ISBN to be checked.
+   */
+  private boolean analyzeISBN(
+      PageAnalysis analysis,
+      Collection<CheckErrorResult> errors,
+      PageElementISBN isbn) {
+
+    // Check if an error is detected in the ISBN
+    if (isbn.isCorrect() || !isbn.isValid()) {
+      return false;
+    }
+
+    // Exclude special configured values for ISBN if inside a template parameter
+    if (isbn.isTemplateParameter()) {
+      WPCConfiguration config = analysis.getWPCConfiguration();
+      List<String[]> specialValues = config.getStringArrayList(
+          WPCConfigurationStringList.ISBN_SPECIAL_VALUES);
+      if ((specialValues != null) && !specialValues.isEmpty()) {
+        PageElementTemplate template = analysis.isInTemplate(isbn.getBeginIndex());
+        if (template != null) {
+          Parameter param = template.getParameterAtIndex(isbn.getBeginIndex());
+          if ((param != null) &&
+              (param.getName() != null) &&
+              (param.getName().trim().length() > 0)) {
+            String name = param.getName().trim();
+            for (String[] specialValue : specialValues) {
+              if ((specialValue.length > 2) &&
+                  (Page.areSameTitle(template.getTemplateName(), specialValue[0])) &&
+                  (name.equals(specialValue[1])) &&
+                  (isbn.getISBNNotTrimmed().equals(specialValue[2]))) {
+                return false; 
+              }
+            }
+          }
+        }
+      }
+    }
+
+    // Exclude parameters in templates
+    if (isbn.isTemplateParameter() &&
+        analysis.isInNamespace(Namespace.TEMPLATE)) {
+      PageElementTemplate template = analysis.isInTemplate(isbn.getBeginIndex());
+      if (template != null) {
+        Parameter param = template.getParameterAtIndex(isbn.getBeginIndex());
+        if (param != null) {
+          List<PageElementFunction> functions = analysis.getFunctions();
+          if (functions != null) {
+            for (PageElementFunction function : functions) {
+              int functionIndex = function.getBeginIndex();
+              if ((template == analysis.isInTemplate(functionIndex)) &&
+                  (param == template.getParameterAtIndex(functionIndex))) {
+                return false;
+              }
+            }
+          }
+        }
+      }
+    }
+
+    // Report error
+    if (errors == null) {
+      return true;
+    }
+
+    // Check for potential extra characters around
+    int beginIndex = isbn.getBeginIndex();
+    int endIndex = isbn.getEndIndex();
+    String contents = analysis.getContents();
+    boolean tryAgain = true;
+    while (tryAgain) {
+      tryAgain = false;
+      if ((beginIndex > 0) && (endIndex < contents.length())) {
+        char previousChar = contents.charAt(beginIndex - 1);
+        char nextChar = contents.charAt(endIndex);
+        if (((previousChar == '(') && (nextChar == ')')) ||
+            ((previousChar == '[') && (nextChar == ']'))) {
+          beginIndex--;
+          endIndex++;
+          tryAgain = true;
+        }
+      }
+    }
+    if ((beginIndex >= SMALL_OPEN.length()) && (endIndex < contents.length())) {
+      if (contents.startsWith(SMALL_OPEN, beginIndex - SMALL_OPEN.length()) &&
+          contents.startsWith(SMALL_CLOSE, endIndex)) {
+        beginIndex -= SMALL_OPEN.length();
+        endIndex += SMALL_CLOSE.length();
+      }
+    }
+
+    CheckErrorResult errorResult = createCheckErrorResult(analysis, isbn, false);
+    String prefix = null;
+    String suffix = null;
+    if ((beginIndex < isbn.getBeginIndex()) && (endIndex > isbn.getEndIndex())) {
+      prefix = contents.substring(beginIndex, isbn.getBeginIndex());
+      suffix = contents.substring(isbn.getEndIndex(), endIndex);
+      errorResult = createCheckErrorResult(
+          analysis, beginIndex, endIndex, errorResult.getErrorLevel());
+    }
+    addSuggestions(analysis, errorResult, isbn);
+    errors.add(errorResult);
+    List<String> replacements = isbn.getCorrectISBN();
+    if (replacements != null) {
+      for (String replacement : replacements) {
+        if (!replacement.equals(analysis.getContents().substring(isbn.getBeginIndex(), isbn.getEndIndex()))) {
+          if ((prefix != null) && (suffix != null)) {
+            errorResult.addReplacement(prefix + replacement + suffix);
+          }
+          errorResult.addReplacement(replacement);
+        }
+      }
+    }
+
+    return true;
+  }
+
+  /**
+   * Analyze an ISBN to check if it is in a Special/BookSources.
+   * 
+   * @param analysis Page analysis.
+   * @param errors Errors found in the page.
+   * @return isbn ISBN to be checked.
+   */
+  private boolean analyzeISBNInSpecialBookSources(
+      PageAnalysis analysis,
+      Collection<CheckErrorResult> errors,
+      PageElementISBN isbn) {
+
+    // Check if ISBN is in a Special/BookSources
+    if (isbn.isTemplateParameter()) {
+      return false;
+    }
+    PageElement element = null;
+    ErrorLevel level = ErrorLevel.CORRECT;
+    String isbnText = analysis.getContents().substring(isbn.getBeginIndex(), isbn.getEndIndex());
+    PageElementInternalLink link = analysis.isInInternalLink(isbn.getBeginIndex());
+    if ((link != null) && (isbnText.equals(link.getText()))) {
+      level = isSpecialBookSources(analysis, link.getLink());
+      if (level != ErrorLevel.CORRECT) {
+        element = link;
+      }
+    }
+    if (element == null) {
+      PageElementInterwikiLink iwLink = analysis.isInInterwikiLink(isbn.getBeginIndex());
+      if ((iwLink != null) && (isbnText.equals(iwLink.getText()))) {
+        level = isSpecialBookSources(analysis, iwLink.getLink());
+        if (level != ErrorLevel.CORRECT) {
+          element = iwLink;
+        }
+      }
+    }
+    if (element == null) {
+      return false;
+    }
+
+    // Report error
+    if (errors == null) {
+      return true;
+    }
+    CheckErrorResult errorResult = createCheckErrorResult(
+        analysis, element.getBeginIndex(), element.getEndIndex(), level);
+    List<String> replacements = isbn.getCorrectISBN();
+    for (String replacement : replacements) {
+      errorResult.addReplacement(replacement);
+    }
+    errors.add(errorResult);
+
+    return true;
+  }
+
+  /**
+   * Analyze an ISBN to check if it is in an external link.
+   * 
+   * @param analysis Page analysis.
+   * @param errors Errors found in the page.
+   * @return isbn ISBN to be checked.
+   */
+  private boolean analyzeISBNInExternalLink(
+      PageAnalysis analysis,
+      Collection<CheckErrorResult> errors,
+      PageElementISBN isbn) {
+
+    // Check if ISBN is in an external link
+    if (isbn.isTemplateParameter()) {
+      return false;
+    }
+    PageElementExternalLink link = analysis.isInExternalLink(isbn.getBeginIndex());
+    if ((link == null) || !link.hasSquare() ||
+        (isbn.getBeginIndex() < link.getBeginIndex() + link.getTextOffset()) ||
+        (link.getText() == null)) {
+      return false;
+    }
+
+    // Report error
+    if (errors == null) {
+      return true;
+    }
+    
+    CheckErrorResult errorResult = createCheckErrorResult(
+        analysis, link.getBeginIndex(), link.getEndIndex());
+    int beginIndex = isbn.getBeginIndex();
+    int realEndIndex = isbn.getEndIndex();
+    String contents = analysis.getContents();
+    while ((beginIndex > 0) &&
+           (" ,;.(".indexOf(contents.charAt(beginIndex - 1)) >= 0)) {
+      beginIndex--;
+    }
+    if (realEndIndex < link.getEndIndex()) {
+      int tmpIndex = realEndIndex;
+      while ((tmpIndex < link.getEndIndex()) &&
+             (", ".indexOf(contents.charAt(tmpIndex)) >= 0)) {
+        tmpIndex++;
+      }
+      if ((tmpIndex < link.getEndIndex()) &&
+          (contents.startsWith(isbn.getISBN(), tmpIndex))) {
+        realEndIndex = tmpIndex + isbn.getISBN().length();
+      }
+    }
+    int endIndex = realEndIndex;
+    while ((endIndex < link.getEndIndex()) &&
+           (")".indexOf(contents.charAt(endIndex)) >= 0)) {
+      endIndex++;
+    }
+    if (beginIndex > link.getBeginIndex() + link.getTextOffset()) {
+      String replacementPrefix =
+          contents.substring(link.getBeginIndex(), beginIndex) +
+          contents.substring(endIndex, link.getEndIndex()) +
+          contents.substring(beginIndex, isbn.getBeginIndex());
+      String textPrefix =
+          contents.substring(link.getBeginIndex(), link.getBeginIndex() + 7) +
+          "...]" +
+          contents.substring(beginIndex, isbn.getBeginIndex());
+      List<String> replacements = isbn.getCorrectISBN();
+      for (String replacement : replacements) {
+        errorResult.addReplacement(
+            replacementPrefix + replacement + contents.substring(realEndIndex, endIndex),
+            textPrefix + replacement + contents.substring(realEndIndex, endIndex));
+      }
+      errorResult.addReplacement(
+          replacementPrefix + contents.substring(isbn.getBeginIndex(), isbn.getEndIndex()),
+          textPrefix + contents.substring(isbn.getBeginIndex(), isbn.getEndIndex()));
+      if (endIndex < link.getEndIndex()) {
+        replacementPrefix =
+            contents.substring(link.getBeginIndex(), beginIndex) +
+            "]" +
+            contents.substring(beginIndex, isbn.getBeginIndex());
+        for (String replacement : replacements) {
+          errorResult.addReplacement(
+              replacementPrefix + replacement + contents.substring(isbn.getEndIndex(), link.getEndIndex() - 1),
+              textPrefix + replacement + contents.substring(isbn.getEndIndex(), link.getEndIndex() - 1));
+        }
+        errorResult.addReplacement(
+            replacementPrefix + contents.substring(isbn.getBeginIndex(), link.getEndIndex() - 1),
+            textPrefix + contents.substring(isbn.getBeginIndex(), link.getEndIndex() - 1));
+      }
+    } else if (endIndex >= link.getEndIndex() - 1) {
+      List<String> replacements = isbn.getCorrectISBN();
+      for (String replacement : replacements) {
+        errorResult.addReplacement(replacement);
+      }
+      errorResult.addReplacement(contents.substring(isbn.getBeginIndex(), isbn.getEndIndex()));
+    }
+    errors.add(errorResult);
+
+    return true;
   }
 
   /**
