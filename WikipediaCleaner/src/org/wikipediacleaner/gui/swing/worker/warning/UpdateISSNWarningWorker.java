@@ -23,9 +23,11 @@ import org.wikipediacleaner.api.configuration.WPCConfigurationString;
 import org.wikipediacleaner.api.configuration.WPCConfigurationStringList;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.DataManager;
+import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageComparator;
 import org.wikipediacleaner.api.data.contents.comment.ContentsComment;
+import org.wikipediacleaner.api.data.contents.ilink.InternalLinkBuilder;
 import org.wikipediacleaner.gui.swing.InformationWindow;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
 import org.wikipediacleaner.gui.swing.basic.Utilities;
@@ -257,9 +259,11 @@ public class UpdateISSNWarningWorker extends UpdateWarningWorker {
               buffer.append(valueNum - begin);
               buffer.append(" x ");
             }
-            buffer.append("[[");
-            buffer.append(value);
-            buffer.append("]]");
+            Page pageWithError = DataManager.createSimplePage(wiki, value, null, null, null);
+            buffer.append(InternalLinkBuilder
+                .from(pageWithError.getTitle())
+                .withColon(Namespace.isColonNeeded(pageWithError.getNamespace()))
+                .toString());
           }
         }
         buffer.append("\n");
