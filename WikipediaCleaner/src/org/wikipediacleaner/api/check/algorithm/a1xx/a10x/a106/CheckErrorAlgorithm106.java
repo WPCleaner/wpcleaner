@@ -19,7 +19,6 @@ import org.wikipediacleaner.api.configuration.WPCConfigurationStringList;
 import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageElementFunction;
-import org.wikipediacleaner.api.data.PageElementISBN;
 import org.wikipediacleaner.api.data.PageElementISSN;
 import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.PageElementTemplate.Parameter;
