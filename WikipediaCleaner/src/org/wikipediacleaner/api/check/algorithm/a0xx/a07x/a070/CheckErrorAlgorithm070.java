@@ -57,149 +57,163 @@ public class CheckErrorAlgorithm070 extends CheckErrorAlgorithmISBN {
     boolean result = false;
     List<PageElementISBN> isbns = analysis.getISBNs();
     for (PageElementISBN isbn : isbns) {
-      String isbnNumber = isbn.getISBN();
-      if ((isbnNumber != null) && (isbn.isValid())) {
+      result |= analyzeISBN(analysis, errors, isbn);
+    }
 
-        // Analyze for error
-        int length = isbnNumber.length();
-        boolean isError = false;
-        if ((length != 10) && (length != 13) && (length != 0)) {
-          isError = true;
-        }
+    return result;
+  }
 
-        // Exclude parameters in templates
-        if (isError &&
-            isbn.isTemplateParameter() &&
-            analysis.isInNamespace(Namespace.TEMPLATE)) {
-          PageElementTemplate template = analysis.isInTemplate(isbn.getBeginIndex());
-          if (template != null) {
-            Parameter param = template.getParameterAtIndex(isbn.getBeginIndex());
-            if (param != null) {
-              List<PageElementFunction> functions = analysis.getFunctions();
-              if (functions != null) {
-                for (PageElementFunction function : functions) {
-                  int functionIndex = function.getBeginIndex();
-                  if ((template == analysis.isInTemplate(functionIndex)) &&
-                      (param == template.getParameterAtIndex(functionIndex))) {
-                    isError = false;
-                  }
-                }
+  /**
+   * Analyze an ISBN to check if has an error.
+   * 
+   * @param analysis Page analysis.
+   * @param errors Errors found in the page.
+   * @return isbn ISBN to be checked.
+   */
+  private boolean analyzeISBN(
+      PageAnalysis analysis,
+      Collection<CheckErrorResult> errors,
+      PageElementISBN isbn) {
+
+    // Check if an error is detected in the ISBN
+    String isbnNumber = isbn.getISBN();
+    if ((isbnNumber == null) || (!isbn.isValid())) {
+      return false;
+    }
+    int length = isbnNumber.length();
+    if ((length == 10) || (length == 13) || (length == 0)) {
+      return false;
+    }
+    if (shouldIgnoreError(analysis, isbn)) {
+      return false;
+    }
+
+    // Exclude parameters in templates
+    if (isbn.isTemplateParameter() &&
+        analysis.isInNamespace(Namespace.TEMPLATE)) {
+      PageElementTemplate template = analysis.isInTemplate(isbn.getBeginIndex());
+      if (template != null) {
+        Parameter param = template.getParameterAtIndex(isbn.getBeginIndex());
+        if (param != null) {
+          List<PageElementFunction> functions = analysis.getFunctions();
+          if (functions != null) {
+            for (PageElementFunction function : functions) {
+              int functionIndex = function.getBeginIndex();
+              if ((template == analysis.isInTemplate(functionIndex)) &&
+                  (param == template.getParameterAtIndex(functionIndex))) {
+                return false;
               }
             }
           }
-        }
-
-        // Report error
-        if (isError) {
-          if (errors == null) {
-            return true;
-          }
-          result = true;
-          CheckErrorResult errorResult = createCheckErrorResult(analysis, isbn, true);
-          errorResult.addText(
-              GT._T(
-                  "Length of ISBN is {0} instead of 10 or 13",
-                  Integer.toString(length) ));
-          addSuggestions(analysis, errorResult, isbn);
-          addHelpNeededTemplates(analysis, errorResult, isbn);
-          addHelpNeededComment(analysis, errorResult, isbn);
-
-          // Add original ISBN
-          addSearchEngines(analysis, errorResult, isbnNumber);
-
-          // Add search engines using other parameters of the template
-          if (isbn.isTemplateParameter()) {
-            PageElementTemplate template = analysis.isInTemplate(isbn.getBeginIndex());
-            addSearchEngines(analysis, errorResult, template);
-          }
-
-          // Add search for other identifiers
-          errorResult.addPossibleAction(new SimpleAction(GT._T(
-              "Search as OCLC"),
-              new ActionExternalViewer(MessageFormat.format("http://worldcat.org/oclc/{0}", isbnNumber))));
-          errorResult.addPossibleAction(new SimpleAction(GT._T(
-              "Search as LCCN"),
-              new ActionExternalViewer(MessageFormat.format("http://lccn.loc.gov/{0}", isbnNumber))));
-
-          // Add search for potential ISSN
-          if (length == 8) {
-            addSearchEnginesISSN(analysis, errorResult, isbnNumber);
-          }
-
-          // Add ISBN with added checksum
-          List<String> searchISBN = new ArrayList<>();
-          if ((length == 9) || (length == 12)) {
-            char computedCheck = PageElementISBN.computeChecksum(isbnNumber + '0');
-            if (computedCheck > 0) {
-              addSearchISBN(searchISBN, isbnNumber + computedCheck, false);
-            }
-          }
-
-          // Try specific replacements
-          if ((length == 12) && isbnNumber.startsWith("78")) {
-            addSearchISBN(searchISBN, "9" + isbnNumber, false);
-          }
-
-          // Add ISBN with one extra digit
-          if ((length == 9) || (length == 12)) {
-            for (int currentChar = 0; currentChar < isbnNumber.length(); currentChar++) {
-              if (Character.isDigit(isbnNumber.charAt(currentChar))) {
-                for (char newChar = '0'; newChar <= '9'; newChar++) {
-                  String value =
-                      isbnNumber.substring(0, currentChar) +
-                      newChar +
-                      isbnNumber.substring(currentChar);
-                  addSearchISBN(searchISBN, value, false);
-                }
-              }
-            }
-          }
-
-          // Add ISBN with one digit removed
-          if ((length == 11) || (length == 14)) {
-            for (int currentChar = 0; currentChar < isbnNumber.length(); currentChar++) {
-              char currentValue = isbnNumber.charAt(currentChar);
-              if (Character.isDigit(currentValue) || (currentValue == 'X')) {
-                String value =
-                    isbnNumber.substring(0, currentChar) +
-                    isbnNumber.substring(currentChar + 1);
-                addSearchISBN(searchISBN, value, false);
-              }
-            }
-          }
-
-          // Add ISBN with consecutive digits removed
-          if (isbnNumber.startsWith("978") || isbnNumber.startsWith("979")) {
-            if (length > 14) {
-              for (int currentChar = 0; currentChar < 13; currentChar++) {
-                String value =
-                    isbnNumber.substring(0, currentChar) +
-                    isbnNumber.substring(currentChar + length - 13);
-                addSearchISBN(searchISBN, value, false);
-              }
-            }
-          } else {
-            if (length > 11) {
-              for (int currentChar = 0; currentChar < 10; currentChar++) {
-                String value =
-                    isbnNumber.substring(0, currentChar) +
-                    isbnNumber.substring(currentChar + length - 10);
-                addSearchISBN(searchISBN, value, false);
-              }
-            }
-          }
-
-          // Add direct search engines
-          addSearchEngines(
-              analysis, errorResult, searchISBN,
-              GT._T("Similar ISBN"));
-
-          errors.add(errorResult);
         }
       }
     }
 
-    return result;
+    // Report error
+    if (errors == null) {
+      return true;
+    }
+    CheckErrorResult errorResult = createCheckErrorResult(analysis, isbn, true);
+    errorResult.addText(
+        GT._T(
+            "Length of ISBN is {0} instead of 10 or 13",
+            Integer.toString(length) ));
+    addSuggestions(analysis, errorResult, isbn);
+    addHelpNeededTemplates(analysis, errorResult, isbn);
+    addHelpNeededComment(analysis, errorResult, isbn);
+
+    // Add original ISBN
+    addSearchEngines(analysis, errorResult, isbnNumber);
+
+    // Add search engines using other parameters of the template
+    if (isbn.isTemplateParameter()) {
+      PageElementTemplate template = analysis.isInTemplate(isbn.getBeginIndex());
+      addSearchEngines(analysis, errorResult, template);
+    }
+
+    // Add search for other identifiers
+    errorResult.addPossibleAction(new SimpleAction(GT._T(
+        "Search as OCLC"),
+        new ActionExternalViewer(MessageFormat.format("http://worldcat.org/oclc/{0}", isbnNumber))));
+    errorResult.addPossibleAction(new SimpleAction(GT._T(
+        "Search as LCCN"),
+        new ActionExternalViewer(MessageFormat.format("http://lccn.loc.gov/{0}", isbnNumber))));
+
+    // Add search for potential ISSN
+    if (length == 8) {
+      addSearchEnginesISSN(analysis, errorResult, isbnNumber);
+    }
+
+    // Add ISBN with added checksum
+    List<String> searchISBN = new ArrayList<>();
+    if ((length == 9) || (length == 12)) {
+      char computedCheck = PageElementISBN.computeChecksum(isbnNumber + '0');
+      if (computedCheck > 0) {
+        addSearchISBN(searchISBN, isbnNumber + computedCheck, false);
+      }
+    }
+
+    // Try specific replacements
+    if ((length == 12) && isbnNumber.startsWith("78")) {
+      addSearchISBN(searchISBN, "9" + isbnNumber, false);
+    }
+
+    // Add ISBN with one extra digit
+    if ((length == 9) || (length == 12)) {
+      for (int currentChar = 0; currentChar < isbnNumber.length(); currentChar++) {
+        if (Character.isDigit(isbnNumber.charAt(currentChar))) {
+          for (char newChar = '0'; newChar <= '9'; newChar++) {
+            String value =
+                isbnNumber.substring(0, currentChar) +
+                newChar +
+                isbnNumber.substring(currentChar);
+            addSearchISBN(searchISBN, value, false);
+          }
+        }
+      }
+    }
+
+    // Add ISBN with one digit removed
+    if ((length == 11) || (length == 14)) {
+      for (int currentChar = 0; currentChar < isbnNumber.length(); currentChar++) {
+        char currentValue = isbnNumber.charAt(currentChar);
+        if (Character.isDigit(currentValue) || (currentValue == 'X')) {
+          String value =
+              isbnNumber.substring(0, currentChar) +
+              isbnNumber.substring(currentChar + 1);
+          addSearchISBN(searchISBN, value, false);
+        }
+      }
+    }
+
+    // Add ISBN with consecutive digits removed
+    if (isbnNumber.startsWith("978") || isbnNumber.startsWith("979")) {
+      if (length > 14) {
+        for (int currentChar = 0; currentChar < 13; currentChar++) {
+          String value =
+              isbnNumber.substring(0, currentChar) +
+              isbnNumber.substring(currentChar + length - 13);
+          addSearchISBN(searchISBN, value, false);
+        }
+      }
+    } else {
+      if (length > 11) {
+        for (int currentChar = 0; currentChar < 10; currentChar++) {
+          String value =
+              isbnNumber.substring(0, currentChar) +
+              isbnNumber.substring(currentChar + length - 10);
+          addSearchISBN(searchISBN, value, false);
+        }
+      }
+    }
+
+    // Add direct search engines
+    addSearchEngines(
+        analysis, errorResult, searchISBN,
+        GT._T("Similar ISBN"));
+
+    errors.add(errorResult);
+    return true;
   }
 
   /**
