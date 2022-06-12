@@ -53,60 +53,79 @@ public class CheckErrorAlgorithm071 extends CheckErrorAlgorithmISBN {
     boolean result = false;
     List<PageElementISBN> isbns = analysis.getISBNs();
     for (PageElementISBN isbn : isbns) {
-      String isbnNumber = isbn.getISBN();
-      if ((isbnNumber != null) && isbn.isValid()) {
+      result |= analyzeISBN(analysis, errors, isbn);
+    }
 
-        // Analyze for error
-        boolean found = false;
-        for (int i = 0; i < isbnNumber.length(); i++) {
-          if (Character.toUpperCase(isbnNumber.charAt(i)) == 'X') {
-            if ((i != 9) || (isbnNumber.length() != 10)) {
-              found = true;
-            }
-          }
+    return result;
+  }
+
+  /**
+   * Analyze an ISBN to check if has an error.
+   * 
+   * @param analysis Page analysis.
+   * @param errors Errors found in the page.
+   * @return isbn ISBN to be checked.
+   */
+  private boolean analyzeISBN(
+      PageAnalysis analysis,
+      Collection<CheckErrorResult> errors,
+      PageElementISBN isbn) {
+
+    // Check if an error is detected in the ISBN
+    String isbnNumber = isbn.getISBN();
+    if ((isbnNumber == null) || !isbn.isValid()) {
+      return false;
+    }
+    if (shouldIgnoreError(analysis, isbn)) {
+      return false;
+    }
+    boolean found = false;
+    for (int i = 0; i < isbnNumber.length(); i++) {
+      if (Character.toUpperCase(isbnNumber.charAt(i)) == 'X') {
+        if ((i != 9) || (isbnNumber.length() != 10)) {
+          found = true;
         }
+      }
+    }
+    if (!found) {
+      return false;
+    }
 
-        // Exclude parameters in templates
-        if (found &&
-            isbn.isTemplateParameter() &&
-            analysis.isInNamespace(Namespace.TEMPLATE)) {
-          PageElementTemplate template = analysis.isInTemplate(isbn.getBeginIndex());
-          if (template != null) {
-            Parameter param = template.getParameterAtIndex(isbn.getBeginIndex());
-            if (param != null) {
-              List<PageElementFunction> functions = analysis.getFunctions();
-              if (functions != null) {
-                for (PageElementFunction function : functions) {
-                  int functionIndex = function.getBeginIndex();
-                  if ((template == analysis.isInTemplate(functionIndex)) &&
-                      (param == template.getParameterAtIndex(functionIndex))) {
-                    found = false;
-                  }
-                }
+    // Exclude parameters in templates
+    if (isbn.isTemplateParameter() &&
+        analysis.isInNamespace(Namespace.TEMPLATE)) {
+      PageElementTemplate template = analysis.isInTemplate(isbn.getBeginIndex());
+      if (template != null) {
+        Parameter param = template.getParameterAtIndex(isbn.getBeginIndex());
+        if (param != null) {
+          List<PageElementFunction> functions = analysis.getFunctions();
+          if (functions != null) {
+            for (PageElementFunction function : functions) {
+              int functionIndex = function.getBeginIndex();
+              if ((template == analysis.isInTemplate(functionIndex)) &&
+                  (param == template.getParameterAtIndex(functionIndex))) {
+                found = false;
               }
             }
           }
         }
-
-        // Report error
-        if (found) {
-          if (errors == null) {
-            return true;
-          }
-          result = true;
-          CheckErrorResult errorResult = createCheckErrorResult(analysis, isbn, true);
-          addHelpNeededTemplates(analysis, errorResult, isbn);
-          addHelpNeededComment(analysis, errorResult, isbn);
-          if (isbn.isTemplateParameter()) {
-            PageElementTemplate template = analysis.isInTemplate(isbn.getBeginIndex());
-            addSearchEngines(analysis, errorResult, template);
-          }
-          errors.add(errorResult);
-        }
       }
     }
 
-    return result;
+    // Report error
+    if (errors == null) {
+      return true;
+    }
+    CheckErrorResult errorResult = createCheckErrorResult(analysis, isbn, true);
+    addHelpNeededTemplates(analysis, errorResult, isbn);
+    addHelpNeededComment(analysis, errorResult, isbn);
+    if (isbn.isTemplateParameter()) {
+      PageElementTemplate template = analysis.isInTemplate(isbn.getBeginIndex());
+      addSearchEngines(analysis, errorResult, template);
+    }
+    errors.add(errorResult);
+
+    return true;
   }
 
   /**
