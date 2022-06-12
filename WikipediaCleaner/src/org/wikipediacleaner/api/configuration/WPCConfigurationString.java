@@ -13,6 +13,9 @@ package org.wikipediacleaner.api.configuration;
  */
 public enum WPCConfigurationString {
 
+  // Accept this as written markup
+  ACCEPT_THIS_AS_WRITTEN_PREFIX("accept_this_as_written_prefix", null, false, true, false),
+  ACCEPT_THIS_AS_WRITTEN_SUFFIX("accept_this_as_written_suffix", null, false, true, false),
   // Template for replacing an apostrophe
   APOSTROPHE_TEMPLATE("general_apostrophe_template", null, false, true, true),
   // Automatic formatting: number of carriage returns before categories

@@ -16,6 +16,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import org.apache.commons.lang3.StringUtils;
 import org.wikipediacleaner.api.check.Actionnable;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.CompositeAction;
@@ -47,6 +48,35 @@ public abstract class CheckErrorAlgorithmISBN extends CheckErrorAlgorithmBase {
    */
   protected CheckErrorAlgorithmISBN(String name) {
     super(name);
+  }
+
+  /**
+   * @param analysis Page analysis.
+   * @param isbn ISBN.
+   * @return true if errors should be ignored.
+   */
+  protected boolean shouldIgnoreError(PageAnalysis analysis, PageElementISBN isbn) {
+    if (!isbn.isTemplateParameter()) {
+      return false;
+    }
+
+    WPCConfiguration configuration = analysis.getWPCConfiguration();
+    String prefix = configuration.getString(WPCConfigurationString.ACCEPT_THIS_AS_WRITTEN_PREFIX);
+    String suffix = configuration.getString(WPCConfigurationString.ACCEPT_THIS_AS_WRITTEN_SUFFIX);
+    if (StringUtils.isNotEmpty(prefix) && StringUtils.isNotEmpty(suffix)) {
+      PageElementTemplate template = analysis.isInTemplate(isbn.getBeginIndex());
+      if (template != null) {
+        Parameter param = template.getParameterAtIndex(isbn.getBeginIndex());
+        if ((param != null) && (param.getValue() != null)) {
+          String value = param.getValue();
+          if (value.startsWith(prefix) && value.endsWith(suffix)) {
+            return true;
+          }
+        }
+      }
+    }
+
+    return false;
   }
 
   /**

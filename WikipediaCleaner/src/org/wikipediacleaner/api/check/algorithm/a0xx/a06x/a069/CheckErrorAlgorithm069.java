@@ -236,6 +236,9 @@ public class CheckErrorAlgorithm069 extends CheckErrorAlgorithmISBN {
     if (isbn.isCorrect() || !isbn.isValid()) {
       return false;
     }
+    if (shouldIgnoreError(analysis, isbn)) {
+      return false;
+    }
 
     // Exclude special configured values for ISBN if inside a template parameter
     if (isbn.isTemplateParameter()) {
