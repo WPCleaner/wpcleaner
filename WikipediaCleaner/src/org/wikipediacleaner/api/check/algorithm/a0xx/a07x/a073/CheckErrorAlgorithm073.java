@@ -57,135 +57,156 @@ public class CheckErrorAlgorithm073 extends CheckErrorAlgorithmISBN {
     boolean result = false;
     List<PageElementISBN> isbns = analysis.getISBNs();
     for (PageElementISBN isbn : isbns) {
-      String number = isbn.getISBN();
-      if ((number != null) && (number.length() == 13) && isbn.isValid()) {
-        char check = Character.toUpperCase(number.charAt(12));
-        char computedCheck = Character.toUpperCase(
-            PageElementISBN.computeChecksum(number));
+      result |= analyzeISBN(analysis, errors, isbn);
+    }
 
-        String message = null;
-        if ((check != computedCheck) && Character.isDigit(computedCheck)) {
-          message = GT._T(
-              "The checksum is {0} instead of {1}",
-              new Object[] { check, computedCheck } );
-        } else {
-          ISBNInformation isbnInfo = ISBNRange.getInformation(number);
-          if (isbnInfo != null) {
-            if (isbnInfo.isInUnknownRange()) {
-              message = GT._T("There's no existing range for this ISBN");
-            } else if (isbnInfo.isInReservedRange()) {
-              message = GT._T("This ISBN is inside a reserved range");
-            }
-          }
+    return result;
+  }
+
+  /**
+   * Analyze an ISBN to check if has an error.
+   * 
+   * @param analysis Page analysis.
+   * @param errors Errors found in the page.
+   * @return isbn ISBN to be checked.
+   */
+  private boolean analyzeISBN(
+      PageAnalysis analysis,
+      Collection<CheckErrorResult> errors,
+      PageElementISBN isbn) {
+
+    // Check if an error is detected in the ISBN
+    String number = isbn.getISBN();
+    if ((number == null) || (number.length() != 13) || !isbn.isValid()) {
+      return false;
+    }
+    char check = Character.toUpperCase(number.charAt(12));
+    char computedCheck = Character.toUpperCase(
+        PageElementISBN.computeChecksum(number));
+    String message = null;
+    if ((check != computedCheck) && Character.isDigit(computedCheck)) {
+      message = GT._T(
+          "The checksum is {0} instead of {1}",
+          new Object[] { check, computedCheck } );
+    } else {
+      ISBNInformation isbnInfo = ISBNRange.getInformation(number);
+      if (isbnInfo != null) {
+        if (isbnInfo.isInUnknownRange()) {
+          message = GT._T("There's no existing range for this ISBN");
+        } else if (isbnInfo.isInReservedRange()) {
+          message = GT._T("This ISBN is inside a reserved range");
         }
+      }
+    }
+    if (message == null) {
+      return false;
+    }
+    if (shouldIgnoreError(analysis, isbn)) {
+      return false;
+    }
 
-        if (message != null) {
-          if (errors == null) {
-            return true;
-          }
-          result = true;
-          CheckErrorResult errorResult = createCheckErrorResult(analysis, isbn, true);
-          errorResult.addText(message);
-          addHelpNeededTemplates(analysis, errorResult, isbn);
-          addHelpNeededComment(analysis, errorResult, isbn);
+    // Report error
+    if (errors == null) {
+      return true;
+    }
+    CheckErrorResult errorResult = createCheckErrorResult(analysis, isbn, true);
+    errorResult.addText(message);
+    addHelpNeededTemplates(analysis, errorResult, isbn);
+    addHelpNeededComment(analysis, errorResult, isbn);
 
-          // Add original ISBN
-          addSearchEngines(analysis, errorResult, number);
+    // Add original ISBN
+    addSearchEngines(analysis, errorResult, number);
 
-          // Add search engines using other parameters of the template
-          if (isbn.isTemplateParameter()) {
-            PageElementTemplate template = analysis.isInTemplate(isbn.getBeginIndex());
-            addSearchEngines(analysis, errorResult, template);
-          }
+    // Add search engines using other parameters of the template
+    if (isbn.isTemplateParameter()) {
+      PageElementTemplate template = analysis.isInTemplate(isbn.getBeginIndex());
+      addSearchEngines(analysis, errorResult, template);
+    }
 
-          // Add search for other identifiers
-          errorResult.addPossibleAction(new SimpleAction(GT._T(
-              "Search as OCLC"),
-              new ActionExternalViewer(MessageFormat.format("http://worldcat.org/oclc/{0}", number))));
-          errorResult.addPossibleAction(new SimpleAction(GT._T(
-              "Search as LCCN"),
-              new ActionExternalViewer(MessageFormat.format("http://lccn.loc.gov/{0}", number))));
+    // Add search for other identifiers
+    errorResult.addPossibleAction(new SimpleAction(GT._T(
+        "Search as OCLC"),
+        new ActionExternalViewer(MessageFormat.format("http://worldcat.org/oclc/{0}", number))));
+    errorResult.addPossibleAction(new SimpleAction(GT._T(
+        "Search as LCCN"),
+        new ActionExternalViewer(MessageFormat.format("http://lccn.loc.gov/{0}", number))));
 
-          // Add ISSN if number starts with 977=Prefix for ISSN
-          if (number.startsWith("977")) { // Prefix for ISSN
-            String value = number.substring(3, 10);
-            char checkISSN = PageElementISSN.computeChecksum(value + '0');
-            if (checkISSN > 0) {
-              addSearchEnginesISSN(analysis, errorResult, value + checkISSN);
-            }
-          }
+    // Add ISSN if number starts with 977=Prefix for ISSN
+    if (number.startsWith("977")) { // Prefix for ISSN
+      String value = number.substring(3, 10);
+      char checkISSN = PageElementISSN.computeChecksum(value + '0');
+      if (checkISSN > 0) {
+        addSearchEnginesISSN(analysis, errorResult, value + checkISSN);
+      }
+    }
 
-          // Add ISBN with modified checksum
-          List<String> searchISBN = new ArrayList<>();
-          if (computedCheck != check) {
-            String value = number.substring(0, number.length() - 1) + computedCheck;
+    // Add ISBN with modified checksum
+    List<String> searchISBN = new ArrayList<>();
+    if (computedCheck != check) {
+      String value = number.substring(0, number.length() - 1) + computedCheck;
+      addSearchISBN(searchISBN, value, false);
+    }
+
+    // Try specific replacements if ISBN doesn't start with 978 or 979
+    if (!number.startsWith("978") && !number.startsWith("979")) {
+      int count = 0;
+      count += (number.charAt(0) == '9') ? 1 : 0;
+      count += (number.charAt(1) == '7') ? 1 : 0;
+      count += (number.charAt(2) == '8') ? 1 : 0;
+      count += (number.charAt(2) == '9') ? 1 : 0;
+      if (count == 2) {
+        String value = ((number.charAt(2) == '9') ? "979" : "978") + number.substring(3);
+        addSearchISBN(searchISBN, value, false);
+      }
+    }
+
+    // Try ISBN-10
+    if (number.startsWith("978")) {
+      String value = number.substring(3);
+      addSearchISBN(searchISBN, value, false);
+    }
+
+    // Add ISBN with characters inversion
+    if (number.length() == 13) {
+      int previousChar = -1;
+      for (int currentChar = 0; currentChar < number.length(); currentChar++) {
+        if (Character.isDigit(number.charAt(currentChar))) {
+          if (previousChar >= 0) {
+            String value =
+                number.substring(0, previousChar) +
+                number.charAt(currentChar) +
+                number.substring(previousChar + 1, currentChar) +
+                number.charAt(previousChar) +
+                number.substring(currentChar + 1);
             addSearchISBN(searchISBN, value, false);
           }
-
-          // Try specific replacements if ISBN doesn't start with 978 or 979
-          if (!number.startsWith("978") && !number.startsWith("979")) {
-            int count = 0;
-            count += (number.charAt(0) == '9') ? 1 : 0;
-            count += (number.charAt(1) == '7') ? 1 : 0;
-            count += (number.charAt(2) == '8') ? 1 : 0;
-            count += (number.charAt(2) == '9') ? 1 : 0;
-            if (count == 2) {
-              String value = ((number.charAt(2) == '9') ? "979" : "978") + number.substring(3);
-              addSearchISBN(searchISBN, value, false);
-            }
-          }
-
-          // Try ISBN-10
-          if (number.startsWith("978")) {
-            String value = number.substring(3);
-            addSearchISBN(searchISBN, value, false);
-          }
-
-          // Add ISBN with characters inversion
-          if (number.length() == 13) {
-            int previousChar = -1;
-            for (int currentChar = 0; currentChar < number.length(); currentChar++) {
-              if (Character.isDigit(number.charAt(currentChar))) {
-                if (previousChar >= 0) {
-                  String value =
-                      number.substring(0, previousChar) +
-                      number.charAt(currentChar) +
-                      number.substring(previousChar + 1, currentChar) +
-                      number.charAt(previousChar) +
-                      number.substring(currentChar + 1);
-                  addSearchISBN(searchISBN, value, false);
-                }
-                previousChar = currentChar;
-              }
-            }
-          }
-
-          // Add ISBN with one modified digit
-          if (number.length() == 13) {
-            for (int currentChar = 0; currentChar < number.length(); currentChar++) {
-              if (Character.isDigit(number.charAt(currentChar))) {
-                for (char newChar = '0'; newChar <= '9'; newChar++) {
-                  String value =
-                      number.substring(0, currentChar) +
-                      newChar +
-                      number.substring(currentChar + 1);
-                  addSearchISBN(searchISBN, value, false);
-                }
-              }
-            }
-          }
-
-          // Add direct search engines
-          addSearchEngines(
-              analysis, errorResult, searchISBN,
-              GT._T("Similar ISBN"));
-
-          errors.add(errorResult);
+          previousChar = currentChar;
         }
       }
     }
 
-    return result;
+    // Add ISBN with one modified digit
+    if (number.length() == 13) {
+      for (int currentChar = 0; currentChar < number.length(); currentChar++) {
+        if (Character.isDigit(number.charAt(currentChar))) {
+          for (char newChar = '0'; newChar <= '9'; newChar++) {
+            String value =
+                number.substring(0, currentChar) +
+                newChar +
+                number.substring(currentChar + 1);
+            addSearchISBN(searchISBN, value, false);
+          }
+        }
+      }
+    }
+
+    // Add direct search engines
+    addSearchEngines(
+        analysis, errorResult, searchISBN,
+        GT._T("Similar ISBN"));
+
+    errors.add(errorResult);
+    return true;
   }
 
   /**
