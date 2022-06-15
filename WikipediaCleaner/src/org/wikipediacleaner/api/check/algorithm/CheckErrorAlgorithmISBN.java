@@ -68,7 +68,7 @@ public abstract class CheckErrorAlgorithmISBN extends CheckErrorAlgorithmBase {
       if (template != null) {
         Parameter param = template.getParameterAtIndex(isbn.getBeginIndex());
         if ((param != null) && (param.getValue() != null)) {
-          String value = param.getValue();
+          String value = param.getStrippedValue();
           if (value.startsWith(prefix) && value.endsWith(suffix)) {
             return true;
           }
