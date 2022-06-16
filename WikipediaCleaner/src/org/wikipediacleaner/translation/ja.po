@@ -15,7 +15,7 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2022-05-26 11:23:13+0000\n"
+"PO-Revision-Date: 2022-06-16 11:26:03+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Japanese <ja@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -25,7 +25,7 @@ msgstr ""
 "X-Launchpad-Export-Date: 2014-09-21 06:01+0000\n"
 "X-Generator: MediaWiki 1.39.0-alpha; Translate 2022-04-26\n"
 "Language: ja\n"
-"X-POT-Import-Date: 2022-05-22 20:30:24+0000\n"
+"X-POT-Import-Date: 2022-06-13 14:30:49+0000\n"
 
 #: org/wikipediacleaner/Version.java:31
 #, java-format
@@ -3406,7 +3406,7 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/RecentChangesTableModel.java:259
 msgid "User"
-msgstr ""
+msgstr "利用者"
 
 #: org/wikipediacleaner/gui/swing/TemplateListWindow.java:92
 #, java-format
