@@ -13,6 +13,7 @@
 # Author: Jakeukalane
 # Author: Josuert
 # Author: Juan t2905
+# Author: OriginReboot
 # Author: ZhaleyLeitnib
 # --
 # This file is distributed under the same license as the wikicleaner package.
@@ -23,7 +24,7 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2022-05-23 11:22:00+0000\n"
+"PO-Revision-Date: 2022-06-20 11:19:05+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Spanish\n"
 "MIME-Version: 1.0\n"
@@ -33,7 +34,7 @@ msgstr ""
 "X-Launchpad-Export-Date: 2017-03-22 17:48+0000\n"
 "X-Generator: MediaWiki 1.39.0-alpha; Translate 2022-04-26\n"
 "Language: es\n"
-"X-POT-Import-Date: 2022-05-22 20:30:24+0000\n"
+"X-POT-Import-Date: 2022-06-13 14:30:49+0000\n"
 
 #: org/wikipediacleaner/Version.java:31
 #, java-format
@@ -662,7 +663,7 @@ msgstr ""
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:330
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a572/CheckErrorAlgorithm572.java:276
 msgid "Name of the group"
-msgstr ""
+msgstr "Nombre del grupo"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a04x/a048/CheckErrorAlgorithm048.java:441
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a545/CheckErrorAlgorithm545.java:280
