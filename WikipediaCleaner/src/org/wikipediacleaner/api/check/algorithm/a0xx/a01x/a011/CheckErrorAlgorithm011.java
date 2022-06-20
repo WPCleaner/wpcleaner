@@ -278,4 +278,24 @@ public class CheckErrorAlgorithm011 extends CheckErrorAlgorithmHtmlNamedEntities
 
     return super.analyze(analysis, errors, onlyAutomatic);
   }
+
+  /**
+   * @param analysis Page analysis.
+   * @param ampersandIndex Index of the ampersand in the text.
+   * @param htmlCharacter HTML character.
+   * @return True if suggestions should be added.
+   */
+  @Override
+  protected boolean shouldAddSuggestions(
+      PageAnalysis analysis,
+      int ampersandIndex,
+      HtmlCharacters htmlCharacter) {
+    if (htmlCharacter == HtmlCharacters.SYMBOL_QUOTATION_MARK) {
+      PageElementTag tag = analysis.isInTag(ampersandIndex);
+      if (tag != null) {
+        return false;
+      }
+    }
+    return true;
+  }
 }

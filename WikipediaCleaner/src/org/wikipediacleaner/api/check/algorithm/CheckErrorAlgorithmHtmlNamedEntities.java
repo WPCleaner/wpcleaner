@@ -66,98 +66,141 @@ public abstract class CheckErrorAlgorithmHtmlNamedEntities extends CheckErrorAlg
     int ampersandIndex = contents.indexOf('&');
     int maxLength = contents.length();
     while ((ampersandIndex >= 0) && (ampersandIndex + 2 < maxLength)) {
-
-      // Check if we should look for a match at this position
-      boolean shouldMatch = true;
-      if (shouldMatch) {
-        if (analysis.comments().isAt(ampersandIndex) ||
-            (analysis.getSurroundingTag(WikiTagType.SOURCE, ampersandIndex) != null) ||
-            (analysis.getSurroundingTag(WikiTagType.SYNTAXHIGHLIGHT, ampersandIndex) != null)) {
-          shouldMatch = false;
-        }
-      }
-      if (shouldMatch) {
-        PageElementExternalLink link = analysis.isInExternalLink(ampersandIndex);
-        if (link != null) {
-          int offset = link.getTextOffset();
-          if ((offset < 0) || (ampersandIndex < link.getBeginIndex() + offset)) {
-            shouldMatch = false;
-          }
-        }
-      }
-
-      if (shouldMatch) {
-        for (HtmlCharacters htmlCharacter : getHtmlCharacters()) {
-          String name = htmlCharacter.getName();
-          if ((name != null) &&
-              contents.startsWith(name, ampersandIndex + 1) &&
-              htmlCharacter.shouldReplaceName()) {
-            ErrorLevel errorLevel = ErrorLevel.ERROR;
-
-            // Analyze semicolon after the name
-            int colonIndex = ampersandIndex + name.length() + 1;
-            boolean found = false;
-            if (useSemiColon()) {
-              if ((colonIndex < maxLength) && (contents.charAt(colonIndex) == ';')) {
-                found = true;
-              }
-            } else {
-              if ((colonIndex >= maxLength) ||
-                  (contents.charAt(colonIndex) != ';')) {
-                if (Character.isLetterOrDigit(contents.charAt(colonIndex))) {
-                  errorLevel = ErrorLevel.WARNING;
-                }
-                found = true;
-                colonIndex--;
-              }
-            }
-
-            // Report error
-            if (found) {
-              if (errors == null) {
-                return true;
-              }
-              result = true;
-
-              // Analyze for possible semicolon afterwards
-              int endIndex = colonIndex + 1;
-              if (!useSemiColon()) {
-                int tmpIndex = endIndex;
-                while ((tmpIndex < contents.length()) && (contents.charAt(tmpIndex) == ' ')) {
-                  tmpIndex++;
-                }
-                if (contents.charAt(tmpIndex) == ';') {
-                  endIndex = tmpIndex + 1;
-                }
-              }
-
-              CheckErrorResult errorResult = createCheckErrorResult(
-                  analysis, ampersandIndex, endIndex,
-                  errorLevel);
-              errorResult.addReplacement("" + htmlCharacter.getValue());
-              if (endIndex > colonIndex + 1) {
-                errorResult.addReplacement(
-                    "" + htmlCharacter.getValue() +
-                    contents.substring(colonIndex + 1, endIndex));
-              }
-              if (!useSemiColon()) {
-                errorResult.addReplacement(
-                    "&amp;" + contents.substring(ampersandIndex + 1, endIndex));
-              }
-              errors.add(errorResult);
-            }
-          }
-        }
-      }
+      result |= analyzeAmpersand(analysis, errors, ampersandIndex);
       ampersandIndex = contents.indexOf('&', ampersandIndex + 1);
     }
     return result;
   }
 
   /**
+   * Analyze an ampersand to check if errors are present.
+   * 
+   * @param analysis Page analysis.
+   * @param errors Errors found in the page.
+   * @param ampersandIndex Index of the ampersand in the text.
+   * @return Flag indicating if the error was found.
+   */
+  public boolean analyzeAmpersand(
+      PageAnalysis analysis,
+      Collection<CheckErrorResult> errors,
+      int ampersandIndex) {
+
+    // Check if we should look for a match at this position
+    if (analysis.comments().isAt(ampersandIndex) ||
+        (analysis.getSurroundingTag(WikiTagType.SOURCE, ampersandIndex) != null) ||
+        (analysis.getSurroundingTag(WikiTagType.SYNTAXHIGHLIGHT, ampersandIndex) != null)) {
+      return false;
+    }
+    PageElementExternalLink link = analysis.isInExternalLink(ampersandIndex);
+    if (link != null) {
+      int offset = link.getTextOffset();
+      if ((offset < 0) || (ampersandIndex < link.getBeginIndex() + offset)) {
+        return false;
+      }
+    }
+
+    boolean result = false;
+    for (HtmlCharacters htmlCharacter : getHtmlCharacters()) {
+      result |= analyzeHtmlCharacter(analysis, errors, ampersandIndex, htmlCharacter);
+    }
+    return result;
+  }
+
+  /**
+   * Analyze an HTML character to check if errors are present.
+   * 
+   * @param analysis Page analysis.
+   * @param errors Errors found in the page.
+   * @param ampersandIndex Index of the ampersand in the text.
+   * @param htmlCharacter HTML character.
+   * @return Flag indicating if the error was found.
+   */
+  public boolean analyzeHtmlCharacter(
+      PageAnalysis analysis,
+      Collection<CheckErrorResult> errors,
+      int ampersandIndex,
+      HtmlCharacters htmlCharacter) {
+
+    // Check if the character is used
+    String contents = analysis.getContents();
+    String name = htmlCharacter.getName();
+    if ((name == null) ||
+        !contents.startsWith(name, ampersandIndex + 1) ||
+        !htmlCharacter.shouldReplaceName()) {
+      return false;
+    }
+    ErrorLevel errorLevel = ErrorLevel.ERROR;
+
+    // Analyze semicolon after the name
+    int colonIndex = ampersandIndex + name.length() + 1;
+    int maxLength = contents.length();
+    if (useSemiColon()) {
+      if ((colonIndex >= maxLength) || (contents.charAt(colonIndex) != ';')) {
+        return false;
+      }
+    } else {
+      if ((colonIndex < maxLength) && (contents.charAt(colonIndex) == ';')) {
+        return false;
+      }
+      if (Character.isLetterOrDigit(contents.charAt(colonIndex))) {
+        errorLevel = ErrorLevel.WARNING;
+      }
+      colonIndex--;
+    }
+
+    // Report error
+    if (errors == null) {
+      return true;
+    }
+
+    // Analyze for possible semicolon afterwards
+    int endIndex = colonIndex + 1;
+    if (!useSemiColon()) {
+      int tmpIndex = endIndex;
+      while ((tmpIndex < contents.length()) && (contents.charAt(tmpIndex) == ' ')) {
+        tmpIndex++;
+      }
+      if (contents.charAt(tmpIndex) == ';') {
+        endIndex = tmpIndex + 1;
+      }
+    }
+
+    CheckErrorResult errorResult = createCheckErrorResult(
+        analysis, ampersandIndex, endIndex,
+        errorLevel);
+    if (shouldAddSuggestions(analysis, ampersandIndex, htmlCharacter)) {
+      errorResult.addReplacement("" + htmlCharacter.getValue());
+      if (endIndex > colonIndex + 1) {
+        errorResult.addReplacement(
+            "" + htmlCharacter.getValue() +
+            contents.substring(colonIndex + 1, endIndex));
+      }
+      if (!useSemiColon()) {
+        errorResult.addReplacement(
+            "&amp;" + contents.substring(ampersandIndex + 1, endIndex));
+      }
+    }
+    errors.add(errorResult);
+    return true;
+  }
+
+  /**
    * @return True if full HTML named entities should be searched.
    */
   protected boolean useSemiColon() {
+    return true;
+  }
+
+  /**
+   * @param analysis Page analysis.
+   * @param ampersandIndex Index of the ampersand in the text.
+   * @param htmlCharacter HTML character.
+   * @return True if suggestions should be added.
+   */
+  protected boolean shouldAddSuggestions(
+      PageAnalysis analysis,
+      int ampersandIndex,
+      HtmlCharacters htmlCharacter) {
     return true;
   }
 
