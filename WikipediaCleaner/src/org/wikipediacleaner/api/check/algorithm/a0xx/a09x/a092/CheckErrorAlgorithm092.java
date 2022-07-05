@@ -68,6 +68,9 @@ public class CheckErrorAlgorithm092 extends CheckErrorAlgorithmBase {
       if (titleLevel <= maxLevel) {
         HashMap<String, PageElementTitle> knownTitles = titles.get(Integer.valueOf(titleLevel));
         String titleValue = title.getTitle();
+        if (titleValue.endsWith(":")) {
+          titleValue = titleValue.substring(0, titleValue.length() - 1).trim();
+        }
         if (knownTitles == null) {
           knownTitles = new HashMap<>();
           knownTitles.put(titleValue, title);
