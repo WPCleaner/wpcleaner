@@ -11,6 +11,7 @@
 # Author: Joseph
 # Author: Melissadilara
 # Author: MuratTheTurkish
+# Author: SaldırganSincap
 # Author: Sezgin İbiş
 # Author: Vesely35
 # Author: Vesely35
@@ -24,7 +25,7 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2022-05-23 11:22:05+0000\n"
+"PO-Revision-Date: 2022-07-07 11:21:47+0000\n"
 "Last-Translator: volkan <volkanyeke@gmail.com>\n"
 "Language-Team: Turkish <tr@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -34,7 +35,7 @@ msgstr ""
 "X-Launchpad-Export-Date: 2018-01-31 07:41+0000\n"
 "X-Generator: MediaWiki 1.39.0-alpha; Translate 2022-04-26\n"
 "Language: tr\n"
-"X-POT-Import-Date: 2022-05-22 20:30:24+0000\n"
+"X-POT-Import-Date: 2022-06-13 14:30:49+0000\n"
 
 #: org/wikipediacleaner/Version.java:31
 #, java-format
@@ -634,11 +635,11 @@ msgstr "Başlıktaki tüm bağlantıları kaldır"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a04x/a048/CheckErrorAlgorithm048.java:422
 msgid "List of templates in which error should be ignored"
-msgstr ""
+msgstr "Hatanın göz ardı edilmesi gereken şablonların listesi"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a04x/a048/CheckErrorAlgorithm048.java:425
 msgid "Name of the template in which error should be ignored"
-msgstr ""
+msgstr "Hatanın göz ardı edilmesi gereken şablonun adı"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a04x/a048/CheckErrorAlgorithm048.java:428
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a04x/a048/CheckErrorAlgorithm048.java:431
@@ -951,15 +952,15 @@ msgstr "Kaynak çoğaltmayı düzeltin"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a08x/a081/CheckErrorAlgorithm081.java:215
 msgid "Both tags have already the same name"
-msgstr ""
+msgstr "Her iki etiket de zaten aynı ada sahip"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a08x/a081/CheckErrorAlgorithm081.java:217
 msgid "Tag is unnamed"
-msgstr ""
+msgstr "Etiket adsız"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a08x/a081/CheckErrorAlgorithm081.java:219
 msgid "Tags have different names"
-msgstr ""
+msgstr "Etiketlerin farklı adları vardır"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a08x/a081/CheckErrorAlgorithm081.java:260
 msgid "Give a name to the <ref> tag"
@@ -1741,7 +1742,7 @@ msgstr "Yoksayılması gereken parametreler"
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a568/CheckErrorAlgorithm568.java:129
 #, java-format
 msgid "Template {0}"
-msgstr ""
+msgstr "{0} şablonu"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:340
 msgid "Templates for which unknown parameters should be verified"
@@ -1754,11 +1755,11 @@ msgstr "Güvenle silinebilen şablon parametreleri"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:368
 msgid "Template parameters for which unnamed parameters can be safely deleted when values are equal"
-msgstr ""
+msgstr "Değerler eşit olduğunda adsız parametrelerin güvenle silinebileceği şablon parametreleri"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:375
 msgid "Name of parameter"
-msgstr ""
+msgstr "Parametrenin adı"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:382
 msgid "Template parameters which can be safely deleted if they have a given value"
@@ -1881,53 +1882,53 @@ msgstr "Parametre adı"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a568/CheckErrorAlgorithm568.java:274
 msgid "Template parameters that can contain a reference"
-msgstr ""
+msgstr "Kaynak içerebilen şablon parametreleri"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a568/CheckErrorAlgorithm568.java:277
 msgid "Parameter name with the formatnum"
-msgstr ""
+msgstr "Formatnum ile parametre adı"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a568/CheckErrorAlgorithm568.java:278
 msgid "Parameter name that can contain a reference"
-msgstr ""
+msgstr "Kaynak içerebilen parametre adı"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a572/CheckErrorAlgorithm572.java:286
 msgid "Templates for which unknown values should be verified"
-msgstr ""
+msgstr "Bilinmeyen değerlerin doğrulanması gereken şablonlar"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a572/CheckErrorAlgorithm572.java:296
 msgid "True if the value is case sensitive"
-msgstr ""
+msgstr "Değer büyük/küçük harfe duyarlıysa true"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a572/CheckErrorAlgorithm572.java:306
 msgid "Template values which can be safely replaced"
-msgstr ""
+msgstr "Güvenli bir şekilde değiştirilebilen şablon değerleri"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a576/CheckErrorAlgorithm576.java:231
 msgid "Templates for which values should be verified"
-msgstr ""
+msgstr "Değerlerin doğrulanması gereken şablonlar"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a576/CheckErrorAlgorithm576.java:241
 msgid "Image attribute"
-msgstr ""
+msgstr "Resim özniteliği"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a577/CheckErrorAlgorithm577.java:164
 #, java-format
 msgid "Check incorrect DOI {0}"
-msgstr ""
+msgstr "Yanlış DOI'yi kontrol edin {0}"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a577/CheckErrorAlgorithm577.java:234
 #, java-format
 msgid "Check DOI {0}"
-msgstr ""
+msgstr "DOI'yi kontrol edin {0}"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a577/CheckErrorAlgorithm577.java:332
 msgid "Prefixes that can be safely deleted"
-msgstr ""
+msgstr "Güvenli bir şekilde silinebilecek önekler"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a577/CheckErrorAlgorithm577.java:336
 msgid "Prefix that can be safely deleted"
-msgstr ""
+msgstr "Güvenli bir şekilde silinebilecek önek"
 
 #: org/wikipediacleaner/api/configuration/CWConfiguration.java:83
 #, java-format
@@ -2027,7 +2028,7 @@ msgstr "Anlam ayrım sayfalarına bağlantısı olan sayfalar"
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:22
 msgid "Disambiguation pages"
-msgstr ""
+msgstr "Anlam ayrımı sayfaları"
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:23
 msgid "Double redirects"
@@ -2039,15 +2040,15 @@ msgstr "En az düzenleme yapılmış sayfalar"
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:25
 msgid "Usage of gadgets"
-msgstr ""
+msgstr "Küçük araçların kullanımı"
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:26
 msgid "Globally wanted files"
-msgstr ""
+msgstr "Küresel olarak istenen dosyalar"
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:27
 msgid "Duplicated files"
-msgstr ""
+msgstr "Çift dosyalar"
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:28
 msgid "Redirects"
@@ -2063,7 +2064,7 @@ msgstr "Uzun sayfalar"
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:31
 msgid "Media statistics"
-msgstr ""
+msgstr "Medya istatistikleri"
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:32
 msgid "Pages with the most categories"
@@ -2071,7 +2072,7 @@ msgstr "En fazla kategoriye bağlanmış sayfalar"
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:33
 msgid "Most globally linked files"
-msgstr ""
+msgstr "En çok küresel bağlantı verilen dosyalar"
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:34
 msgid "Pages with the most files"
@@ -2079,7 +2080,7 @@ msgstr "En fazla dosya içeren sayfalar"
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:35
 msgid "Pages with the most interwikis"
-msgstr ""
+msgstr "En çok intervikiye sahip sayfalar"
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:36
 msgid "Most linked-to pages"
@@ -2099,7 +2100,7 @@ msgstr "En çok değişikliğe uğramış sayfalar"
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:40
 msgid "Orphaned timed text"
-msgstr ""
+msgstr "Artık zamanlanmış metin"
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:41
 msgid "Short pages"
@@ -2123,7 +2124,7 @@ msgstr "Kategorisiz şablonlar"
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:46
 msgid "Unconnected pages"
-msgstr ""
+msgstr "Bağlantısız sayfalar"
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:47
 msgid "Unused categories"
