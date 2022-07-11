@@ -9,8 +9,8 @@
 msgid ""
 msgstr ""
 ""
-"PO-Revision-Date: 2022-06-13 11:26:53+0000\n"
-"X-POT-Import-Date: 2022-05-22 20:30:24+0000\n"
+"PO-Revision-Date: 2022-07-11 11:20:43+0000\n"
+"X-POT-Import-Date: 2022-06-13 14:30:49+0000\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Language: io\n"
@@ -37,7 +37,7 @@ msgstr "Vu povas helpar, reparanta problemi identifikita dal programo ''Linter''
 #: org/wikipediacleaner/Version.java:36
 #, java-format
 msgid "Integration between {0} and the Linter extension is done in the following way:"
-msgstr ""
+msgstr "L'asimilo inter {0} e l'extenso Linter facesas tale:"
 
 #: org/wikipediacleaner/Version.java:38
 msgid "The \"Linter categories\" button in this window lets you retrieve a list of pages detected by Linter for a given type of problem."
@@ -365,7 +365,7 @@ msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a005/CheckErrorAlgorithm005.java:81
 msgid "Properly end the comment"
-msgstr ""
+msgstr "Finez korekte la komento"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a005/CheckErrorAlgorithm005.java:99
 msgid "End the comment at the end of the line"
