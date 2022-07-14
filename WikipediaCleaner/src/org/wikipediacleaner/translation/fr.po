@@ -20,7 +20,7 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2022-05-23 11:22:00+0000\n"
+"PO-Revision-Date: 2022-07-14 11:21:00+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: French <fr@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -30,7 +30,7 @@ msgstr ""
 "X-Launchpad-Export-Date: 2018-01-31 07:53+0000\n"
 "X-Generator: MediaWiki 1.39.0-alpha; Translate 2022-04-26\n"
 "Language: fr\n"
-"X-POT-Import-Date: 2022-05-22 20:30:24+0000\n"
+"X-POT-Import-Date: 2022-06-13 14:30:49+0000\n"
 
 #: org/wikipediacleaner/Version.java:31
 #, java-format
@@ -2957,7 +2957,7 @@ msgstr "Liens vers {0}"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1378
 msgid "You must input a page name for retrieving the list of category members"
-msgstr "Vous devez entrer un nom de page pour récupérer la liste des membres de la catégorie"
+msgstr "Vous devez saisir un nom de page pour récupérer la liste des membres de la catégorie"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1396
 #, java-format
