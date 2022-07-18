@@ -9,13 +9,17 @@ package org.wikipediacleaner.api.check.algorithm.a5xx.a52x.a521;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.wikipediacleaner.api.algorithm.AlgorithmParameter;
 import org.wikipediacleaner.api.algorithm.AlgorithmParameterElement;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase;
+import org.wikipediacleaner.api.check.algorithm.a5xx.TemplateConfigurationGroup;
 import org.wikipediacleaner.api.configuration.WPCConfiguration;
+import org.wikipediacleaner.api.configuration.WPCConfigurationStringList;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.PageElementTemplate;
@@ -50,47 +54,94 @@ public class CheckErrorAlgorithm521 extends CheckErrorAlgorithmBase {
     if ((analysis == null) || (analysis.getPage() == null)) {
       return false;
     }
+    if (configurationByTemplateName.isEmpty()) {
+      return false;
+    }
 
-    // Search for incorrect formatting
+    // Analyze each template
     boolean result = false;
-    for (String[] elements : checks) {
-      if ((elements != null) && (elements.length > 2)) {
-        List<PageElementTemplate> templates = analysis.getTemplates(elements[0]);
-        for (PageElementTemplate template : templates) {
-          int paramIndex = template.getParameterIndex(elements[1]);
-          if (paramIndex >= 0) {
-            String value = template.getParameterValue(paramIndex);
-            if ((value != null) && (value.trim().length() > 0)) {
-              boolean formatOK = false;
-              for (int i = 2; i < elements.length; i++) {
-                formatOK |= checkFormat(
-                    analysis, template.getParameterValueStartIndex(paramIndex),
-                    value, elements[i]);
-              }
-  
-              // Report error
-              if (!formatOK) {
-                if (errors == null) {
-                  return true;
-                }
-                result = true;
-                int beginIndex = template.getParameterValueStartIndex(paramIndex);
-                int endIndex = (paramIndex + 1 < template.getParameterCount()) ?
-                    template.getParameterPipeIndex(paramIndex + 1) : template.getEndIndex() - 2;
-                CheckErrorResult errorResult = createCheckErrorResult(
-                    analysis, beginIndex, endIndex);
-                for (int i = 2; i < elements.length; i++) {
-                  errorResult.addText(elements[i]);
-                }
-                errors.add(errorResult);
-              }
-            }
-          }
-        }
-      }
+    List<PageElementTemplate> templates = analysis.getTemplates();
+    for (PageElementTemplate template : templates) {
+      result |= analyzeTemplate(analysis, errors, template);
     }
 
     return result;
+  }
+
+  /**
+   * Analyze a template to check if errors are present.
+   * 
+   * @param analysis Page analysis.
+   * @param errors Errors found in the page.
+   * @param template Template to be analyzed.
+   * @return Flag indicating if the error was found.
+   */
+  private boolean analyzeTemplate(
+      PageAnalysis analysis,
+      Collection<CheckErrorResult> errors,
+      PageElementTemplate template) {
+
+    // Check if template is configured
+    TemplateConfiguration templateConfiguration = configurationByTemplateName.get(template.getTemplateName());
+    if (templateConfiguration == null) {
+      return false;
+    }
+
+    // Analyze each template parameter
+    boolean result = false;
+    for (int paramNum = 0; paramNum < template.getParameterCount(); paramNum++) {
+      result |= analyzeTemplateParameter(analysis, errors, template, paramNum, templateConfiguration);
+    }
+
+    return result;
+  }
+
+  /**
+   * Analyze a template parameter to check if errors are present.
+   * 
+   * @param analysis Page analysis.
+   * @param errors Errors found in the page.
+   * @param template Template to be analyzed.
+   * @param paramNum Parameter index.
+   * @param templateConfiguration Template configuration.
+   * @return Flag indicating if the error was found.
+   */
+  private boolean analyzeTemplateParameter(
+      PageAnalysis analysis,
+      Collection<CheckErrorResult> errors,
+      PageElementTemplate template,
+      int paramNum,
+      TemplateConfiguration templateConfiguration) {
+
+    // Check if template parameter is configured
+    List<String> correctFormats = templateConfiguration.getCorrectFormats(template.getParameterName(paramNum));
+    if (correctFormats == null) {
+      return false;
+    }
+
+    // Analyze the template value
+    String value = template.getParameterValue(paramNum);
+    if ((value == null) || value.trim().isEmpty()) {
+      return false;
+    }
+    boolean formatOk = correctFormats.stream().
+        anyMatch(format -> checkFormat(analysis, template.getParameterValueStartIndex(paramNum), value, format));
+    if (formatOk) {
+      return false;
+    }
+
+    // Report error
+    if (errors == null) {
+      return true;
+    }
+    int beginIndex = template.getParameterValueStartIndex(paramNum);
+    int endIndex = (paramNum + 1 < template.getParameterCount()) ?
+        template.getParameterPipeIndex(paramNum + 1) : template.getEndIndex() - 2;
+    CheckErrorResult errorResult = createCheckErrorResult(
+        analysis, beginIndex, endIndex);
+    correctFormats.forEach(errorResult::addText);
+    errors.add(errorResult);
+    return true;
   }
 
   /**
@@ -342,6 +393,9 @@ public class CheckErrorAlgorithm521 extends CheckErrorAlgorithmBase {
   /* PARAMETERS                                                             */
   /* ====================================================================== */
 
+  /** Template groups */
+  private static final String PARAMETER_TEMPLATE_GROUPS = "template_groups";
+
   /** Templates to check for date formats */
   private static final String PARAMETER_TEMPLATES = "templates";
 
@@ -355,14 +409,24 @@ public class CheckErrorAlgorithm521 extends CheckErrorAlgorithmBase {
    */
   @Override
   protected void initializeSettings() {
-    String tmp = getSpecificProperty(PARAMETER_TEMPLATES, true, true, false);
-    checks.clear();
+    String tmp = getSpecificProperty(PARAMETER_TEMPLATE_GROUPS, true, true, false);
+    TemplateConfigurationGroup group = new TemplateConfigurationGroup();
     if (tmp != null) {
       List<String[]> tmpList = WPCConfiguration.convertPropertyToStringArrayList(tmp);
-      if (tmpList != null) {
-        checks.addAll(tmpList);
-      }
+      group.addGroups(tmpList);
     }
+    List<String[]> generalList = getWPCConfiguration().getStringArrayList(WPCConfigurationStringList.TEMPLATE_GROUPS);
+    if (generalList != null) {
+      group.addGroups(generalList);
+    }
+
+    tmp = getSpecificProperty(PARAMETER_TEMPLATES, true, true, false);
+    configurationByTemplateName.clear();
+    if (tmp != null) {
+      List<String[]> tmpList = WPCConfiguration.convertPropertyToStringArrayList(tmp);
+      TemplateConfiguration.addCorrectFormats(tmpList, configurationByTemplateName, group);
+    }
+
     tmp = getSpecificProperty(PARAMETER_MONTHS, true, true, false);
     months.clear();
     if (tmp != null) {
@@ -373,8 +437,8 @@ public class CheckErrorAlgorithm521 extends CheckErrorAlgorithmBase {
     }
   }
 
-  /** Templates to check */
-  private final List<String[]> checks = new ArrayList<>();
+  /** Templates and parameters that are checked */
+  private final Map<String, TemplateConfiguration> configurationByTemplateName = new HashMap<>();
 
   /** Months names */
   private final List<String> months = new ArrayList<>();
@@ -385,6 +449,20 @@ public class CheckErrorAlgorithm521 extends CheckErrorAlgorithmBase {
   @Override
   protected void addParameters() {
     super.addParameters();
+    addParameter(new AlgorithmParameter(
+        PARAMETER_TEMPLATE_GROUPS,
+        GT._T("Groups of templates"),
+        new AlgorithmParameterElement[] {
+            new AlgorithmParameterElement(
+                "group",
+                GT._T("Name of the group")),
+            new AlgorithmParameterElement(
+                "template",
+                GT._T("Name of a template in the group"),
+                false,
+                true)
+        },
+        true));
     addParameter(new AlgorithmParameter(
         PARAMETER_TEMPLATES,
         GT._T("A list of templates and parameters in which format should be checked"),
