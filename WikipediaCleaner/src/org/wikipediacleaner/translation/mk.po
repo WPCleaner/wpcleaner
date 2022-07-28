@@ -2,18 +2,19 @@
 # Exported from translatewiki.net
 #
 # Author: Bjankuloski06
+# Author: Vlad5250
 # --
 # This file is distributed under the same license as the wikicleaner package.
 #
 msgid ""
 msgstr ""
 ""
-"PO-Revision-Date: 2022-07-21 11:23:06+0000\n"
+"PO-Revision-Date: 2022-07-28 11:25:03+0000\n"
 "X-POT-Import-Date: 2022-07-18 22:30:19+0000\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Language: mk\n"
-"X-Generator: MediaWiki 1.39.0-alpha; Translate 2022-04-26\n"
+"X-Generator: MediaWiki 1.39.0-alpha; Translate 2022-07-28\n"
 "Plural-Forms: nplurals=2; plural=(n == 1 || n%10 == 1) ? 0 : 1;\n"
 
 #: org/wikipediacleaner/Version.java:31
@@ -229,7 +230,7 @@ msgstr ""
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISBN.java:367
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISSN.java:305
 msgid "Add a comment"
-msgstr ""
+msgstr "Додај коментар"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISBN.java:402
 msgid "Search all ISBN"
@@ -237,11 +238,11 @@ msgstr "Пребарај ги сите ISBN-ови"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISBN.java:407
 msgid "Search all ISBN-10"
-msgstr ""
+msgstr "Пребарај ги сите ISBN-10"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISBN.java:412
 msgid "Search all ISBN-13"
-msgstr ""
+msgstr "Пребарај ги сите ISBN-13"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISBN.java:429
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISBN.java:486
@@ -364,15 +365,15 @@ msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a005/CheckErrorAlgorithm005.java:81
 msgid "Properly end the comment"
-msgstr ""
+msgstr "Правилно завршете го коментарот"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a005/CheckErrorAlgorithm005.java:99
 msgid "End the comment at the end of the line"
-msgstr ""
+msgstr "Завршете го коментарот на крајот од редот"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a005/CheckErrorAlgorithm005.java:103
 msgid "End the comment just before the next one begins"
-msgstr ""
+msgstr "Завршете го коментарот непосредно пред да започне следниот"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a005/CheckErrorAlgorithm005.java:106
 msgid "Merge comments"
@@ -632,7 +633,7 @@ msgstr ""
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:326
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a572/CheckErrorAlgorithm572.java:272
 msgid "Groups of templates"
-msgstr ""
+msgstr "Групи на предлошки"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a04x/a048/CheckErrorAlgorithm048.java:438
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a521/CheckErrorAlgorithm521.java:459
@@ -641,7 +642,7 @@ msgstr ""
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:330
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a572/CheckErrorAlgorithm572.java:276
 msgid "Name of the group"
-msgstr ""
+msgstr "Име на групата"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a04x/a048/CheckErrorAlgorithm048.java:441
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a521/CheckErrorAlgorithm521.java:462
@@ -650,7 +651,7 @@ msgstr ""
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:333
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a572/CheckErrorAlgorithm572.java:279
 msgid "Name of a template in the group"
-msgstr ""
+msgstr "Име на предлошка во групата"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a05x/a054/CheckErrorAlgorithm054.java:38
 msgid "Remove breaks in list"
@@ -714,7 +715,7 @@ msgstr "Отстрани {0}"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a064/CheckErrorAlgorithm064.java:38
 msgid "Modify all internal links"
-msgstr ""
+msgstr "Промени ги сите внатрешни врски"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a066/CheckErrorAlgorithm066.java:33
 msgid "Remove all <small> tags"
@@ -732,12 +733,12 @@ msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a068/CheckErrorAlgorithm068.java:54
 msgid "Check all links to other language"
-msgstr ""
+msgstr "Проверете ги сите врски до други јазици"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a068/CheckErrorAlgorithm068.java:124
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a091/CheckErrorAlgorithm091.java:207
 msgid "Check language links"
-msgstr ""
+msgstr "Проверете ги јазичните врски"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a068/CheckErrorAlgorithm068.java:132
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a068/CheckErrorAlgorithm068.java:333
@@ -834,7 +835,7 @@ msgstr ""
 #: org/wikipediacleaner/api/check/algorithm/a1xx/a10x/a108/CheckErrorAlgorithm108.java:226
 #: org/wikipediacleaner/api/check/algorithm/a1xx/a10x/a108/CheckErrorAlgorithm108.java:229
 msgid "An explanation of the problem"
-msgstr ""
+msgstr "Објаснување на проблемот"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a070/CheckErrorAlgorithm070.java:119
 #, java-format
@@ -926,7 +927,7 @@ msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a079/CheckErrorAlgorithm079.java:136
 msgid "External viewer"
-msgstr ""
+msgstr "Надворешен прегледувач"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a08x/a081/CheckErrorAlgorithm081.java:57
 msgid "Fix reference duplication"
@@ -938,11 +939,11 @@ msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a08x/a081/CheckErrorAlgorithm081.java:217
 msgid "Tag is unnamed"
-msgstr ""
+msgstr "Ознаката е неименувана"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a08x/a081/CheckErrorAlgorithm081.java:219
 msgid "Tags have different names"
-msgstr ""
+msgstr "Ознаките имаат различни имиња"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a08x/a081/CheckErrorAlgorithm081.java:260
 msgid "Give a name to the <ref> tag"
@@ -1153,11 +1154,11 @@ msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a50x/a509/CheckErrorAlgorithm509.java:32
 msgid "Compact links"
-msgstr ""
+msgstr "Компактни врски"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a50x/a509/CheckErrorAlgorithm509.java:78
 msgid "Compact link"
-msgstr ""
+msgstr "Компактна врска"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a513/CheckErrorAlgorithm513.java:878
 msgid "A list of links that can be extracted when at the beginning of the external link"
@@ -1671,7 +1672,7 @@ msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a557/CheckErrorAlgorithm557.java:574
 msgid "Link target"
-msgstr ""
+msgstr "Цел на врската"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a557/CheckErrorAlgorithm557.java:577
 #: org/wikipediacleaner/gui/swing/menu/MWPaneDisambiguationMenuCreator.java:216
@@ -1681,19 +1682,19 @@ msgstr "Текст за приказ"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a557/CheckErrorAlgorithm557.java:584
 msgid "Prefixes which can be before an internal link"
-msgstr ""
+msgstr "Претставки кои можат да стојат пред внатрешна врска"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a557/CheckErrorAlgorithm557.java:588
 msgid "Prefix which can be before an internal link"
-msgstr ""
+msgstr "Претставка која може да стои пред внатрешна врска"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a557/CheckErrorAlgorithm557.java:593
 msgid "Prefixes which should be excluded from the internal link"
-msgstr ""
+msgstr "Претставки кои треба да се исклучат од внатрешната врска"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a557/CheckErrorAlgorithm557.java:597
 msgid "Prefix which should be excluded from the internal link"
-msgstr ""
+msgstr "Претставка која треба да се исклучи од внатрешната врска"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a557/CheckErrorAlgorithm557.java:602
 msgid "List of suggestions for separators between the text and the internal link"
@@ -1724,7 +1725,7 @@ msgstr ""
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a568/CheckErrorAlgorithm568.java:129
 #, java-format
 msgid "Template {0}"
-msgstr ""
+msgstr "Предлошка {0}"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:340
 msgid "Templates for which unknown parameters should be verified"
@@ -1741,7 +1742,7 @@ msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:375
 msgid "Name of parameter"
-msgstr ""
+msgstr "Назив на параметарот"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:382
 msgid "Template parameters which can be safely deleted if they have a given value"
@@ -1750,7 +1751,7 @@ msgstr ""
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:389
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a572/CheckErrorAlgorithm572.java:299
 msgid "Value of the parameter"
-msgstr ""
+msgstr "Вредност на параметарот"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:399
 msgid "Template parameters which can be safely commented"
@@ -1860,7 +1861,7 @@ msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a568/CheckErrorAlgorithm568.java:269
 msgid "Parameter name"
-msgstr ""
+msgstr "Назив на параметарот"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a568/CheckErrorAlgorithm568.java:274
 msgid "Template parameters that can contain a reference"
@@ -1897,12 +1898,12 @@ msgstr ""
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a577/CheckErrorAlgorithm577.java:164
 #, java-format
 msgid "Check incorrect DOI {0}"
-msgstr ""
+msgstr "Проверете го неточниот DOI {0}"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a577/CheckErrorAlgorithm577.java:234
 #, java-format
 msgid "Check DOI {0}"
-msgstr ""
+msgstr "Проверете го DOI {0}"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a577/CheckErrorAlgorithm577.java:332
 msgid "Prefixes that can be safely deleted"
@@ -1919,19 +1920,19 @@ msgstr "Поправено користејќи {0}"
 
 #: org/wikipediacleaner/api/configuration/CWConfigurationError.java:319
 msgid "Deactivated"
-msgstr ""
+msgstr "Оневозможено"
 
 #: org/wikipediacleaner/api/configuration/CWConfigurationError.java:321
 msgid "Low priority"
-msgstr ""
+msgstr "Низок приоритет"
 
 #: org/wikipediacleaner/api/configuration/CWConfigurationError.java:323
 msgid "Middle priority"
-msgstr ""
+msgstr "Среден приоритет"
 
 #: org/wikipediacleaner/api/configuration/CWConfigurationError.java:325
 msgid "Top priority"
-msgstr ""
+msgstr "Висок приоритет"
 
 #: org/wikipediacleaner/api/configuration/CWConfigurationError.java:327
 msgid "For Bot"
@@ -1939,7 +1940,7 @@ msgstr ""
 
 #: org/wikipediacleaner/api/configuration/CWConfigurationError.java:329
 msgid "Priority unknown"
-msgstr ""
+msgstr "Непознат приоритет"
 
 #: org/wikipediacleaner/api/configuration/WPCConfiguration.java:402
 #: org/wikipediacleaner/api/configuration/WPCConfiguration.java:421
@@ -2013,7 +2014,7 @@ msgstr "Страници што водат до појаснителни стр�
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:22
 msgid "Disambiguation pages"
-msgstr ""
+msgstr "Појаснителни страници"
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:23
 msgid "Double redirects"
@@ -2029,11 +2030,11 @@ msgstr ""
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:26
 msgid "Globally wanted files"
-msgstr ""
+msgstr "Глобално потребни податотеки"
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:27
 msgid "Duplicated files"
-msgstr ""
+msgstr "Дуплирани податотеки"
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:28
 msgid "Redirects"
@@ -2049,7 +2050,7 @@ msgstr "Долги страници"
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:31
 msgid "Media statistics"
-msgstr ""
+msgstr "Статистики за медиумите"
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:32
 msgid "Pages with the most categories"
@@ -2057,7 +2058,7 @@ msgstr "Страници со најмногу категории"
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:33
 msgid "Most globally linked files"
-msgstr ""
+msgstr "Глобално најискористени податотеки"
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:34
 msgid "Pages with the most files"
@@ -2065,7 +2066,7 @@ msgstr "Страници со најмногу податотеки"
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:35
 msgid "Pages with the most interwikis"
-msgstr ""
+msgstr "Страници со најмногу меѓупроектни"
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:36
 msgid "Most linked-to pages"
@@ -2109,7 +2110,7 @@ msgstr "Некатегоризирани предлошки"
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:46
 msgid "Unconnected pages"
-msgstr ""
+msgstr "Неповрзани страници"
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:47
 msgid "Unused categories"
@@ -2150,12 +2151,12 @@ msgstr "Страници без меѓујазични врски"
 #: org/wikipediacleaner/api/data/ISBNRange.java:163
 #: org/wikipediacleaner/api/data/ISBNRange.java:185
 msgid "No range found for ISBN"
-msgstr ""
+msgstr "Не е пронајден опсег за ISBN"
 
 #: org/wikipediacleaner/api/data/ISBNRange.java:173
 #, java-format
 msgid "Suggested format: {0}"
-msgstr ""
+msgstr "Предложен формат: {0}"
 
 #: org/wikipediacleaner/api/data/ISBNRange.java:175
 msgid "ISBN length incoherent with range found"
@@ -2168,26 +2169,26 @@ msgstr ""
 
 #: org/wikipediacleaner/api/data/PageComparator.java:198
 msgid "Namespace"
-msgstr ""
+msgstr "Именски простор"
 
 #: org/wikipediacleaner/api/data/PageComparator.java:241
 #: org/wikipediacleaner/gui/swing/RecentChangesTableModel.java:257
 #: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:197
 msgid "Title"
-msgstr ""
+msgstr "Наслов"
 
 #: org/wikipediacleaner/api/data/PageComparator.java:284
 msgid "Revision Id"
-msgstr ""
+msgstr "Назнака на преработката"
 
 #: org/wikipediacleaner/api/data/PageComparator.java:327
 msgid "Page Id"
-msgstr ""
+msgstr "Назнака на страницата"
 
 #: org/wikipediacleaner/api/data/PageComparator.java:419
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:370
 msgid "Redirect"
-msgstr ""
+msgstr "Пренасочување"
 
 #: org/wikipediacleaner/api/data/TemplateMatcher1L.java:77
 #: org/wikipediacleaner/api/data/TemplateMatcher1LT.java:79
@@ -2254,11 +2255,11 @@ msgstr "За програмот"
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingTableModel.java:182
 msgid "Original text"
-msgstr ""
+msgstr "Изворен текст"
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingTableModel.java:184
 msgid "Replacement text"
-msgstr ""
+msgstr "Текст за замена"
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingTableModel.java:186
 msgid "regex"
@@ -2364,11 +2365,11 @@ msgstr "Користи регуларни изрази"
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:734
 msgid "You must select the pages on which running automatic fixing."
-msgstr ""
+msgstr "Мора да ги изберете страниците на кои работи автоматско поправање."
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:742
 msgid "A comment is required for automatic fixing."
-msgstr ""
+msgstr "Потребен е коментар за автоматско поправање."
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:752
 msgid "You must input the initial and destination texts."
@@ -2410,7 +2411,7 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:853
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:893
 msgid "XML files"
-msgstr ""
+msgstr "XML-податотеки"
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:908
 msgid "This file exists, do you want to overwrite it?"
@@ -2429,34 +2430,34 @@ msgstr "Избери ги сите грешки"
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:991
 msgid "Select no errors"
-msgstr ""
+msgstr "Избери без грешки"
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:1016
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiWindow.java:415
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiWindow.java:470
 #, java-format
 msgid "Errors from {0} to {1}"
-msgstr ""
+msgstr "Грешки од {0} до {1}"
 
 #: org/wikipediacleaner/gui/swing/Controller.java:245
 #, java-format
 msgid "Yes, {0} pages"
-msgstr ""
+msgstr "Да, {0} страници"
 
 #: org/wikipediacleaner/gui/swing/Controller.java:246
 #, java-format
 msgid "No, {0} pages"
-msgstr ""
+msgstr "Не, {0} страници"
 
 #: org/wikipediacleaner/gui/swing/Controller.java:251
 #, java-format
 msgid "You have selected {0} pages.\nWould you like to analyze more than {1} pages ?"
-msgstr ""
+msgstr "Избравте {0} страници.\nДали сакате да анализирате повеќе од {1} страници?"
 
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:138
 #, java-format
 msgid "Disambiguation - {0}"
-msgstr ""
+msgstr "Појаснување - {0}"
 
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:292
 msgid "Select &next links"
@@ -2475,11 +2476,11 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:330
 #: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:258
 msgid "Link count"
-msgstr ""
+msgstr "Број на врски"
 
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:378
 msgid "Filter namespaces"
-msgstr ""
+msgstr "Филтрирај именски простори"
 
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:446
 #: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:497
@@ -2490,11 +2491,11 @@ msgstr "Подреди"
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiWindow.java:1416
 #: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:537
 msgid "You must select pages on which running automatic fixing."
-msgstr ""
+msgstr "Мора да ги изберете страниците на кои работи автоматско поправање."
 
 #: org/wikipediacleaner/gui/swing/InformationWindow.java:105
 msgid "Information"
-msgstr ""
+msgstr "Информации"
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:123
 msgid "WPCleaner installer"
@@ -2567,11 +2568,11 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:448
 msgid "Operating system"
-msgstr ""
+msgstr "Операционен систем"
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:655
 msgid "System information"
-msgstr ""
+msgstr "Системски информации"
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:704
 msgid "You must select an installation folder."
@@ -2627,7 +2628,7 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:997
 #, java-format
 msgid "Error: {0}"
-msgstr ""
+msgstr "Грешка: {0}"
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:871
 #, java-format
@@ -2674,20 +2675,20 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/LanguageSelectionPanel.java:192
 #: org/wikipediacleaner/gui/swing/component/simple/LanguageSelector.java:73
 msgid "Language"
-msgstr ""
+msgstr "Јазик"
 
 #: org/wikipediacleaner/gui/swing/LanguageSelectionPanel.java:206
 msgid "Script"
-msgstr ""
+msgstr "Писмо"
 
 #: org/wikipediacleaner/gui/swing/LanguageSelectionPanel.java:221
 msgid "Region"
-msgstr ""
+msgstr "Регион"
 
 #: org/wikipediacleaner/gui/swing/LanguageSelectionPanel.java:240
 #, java-format
 msgid "Variant n°{0}"
-msgstr ""
+msgstr "Варијанта бр. {0}"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:198
 #, java-format
@@ -2705,7 +2706,7 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/MainWindow.java:251
 #, java-format
 msgid "{0} - Version {1} ({2})"
-msgstr ""
+msgstr "{0} - Верзија {1} ({2})"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:361
 msgid "Message"
@@ -2888,7 +2889,7 @@ msgstr "Најпрвин треба да изберете на која Вики
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:953
 msgid "You must select a language before login"
-msgstr ""
+msgstr "Мора да изберете јазик пред да се најавите"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:965
 msgid "You must input your username before login"
@@ -2896,7 +2897,7 @@ msgstr "Ќе мора да внесете корисничко име за да 
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:977
 msgid "You must input your password before login"
-msgstr ""
+msgstr "Мора да ја внесете вашата лозинка пред да се најавите"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1089
 #, java-format
@@ -2905,11 +2906,11 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1138
 msgid "Activate all"
-msgstr ""
+msgstr "Активирај ги сите"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1143
 msgid "Deactivate all"
-msgstr ""
+msgstr "Деактивирај ги сите"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1250
 msgid "The password will be saved on your disk, so anyone having access to your computer may be able to get it.\nAre you sure that you want to save it ?"
@@ -2975,24 +2976,24 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1601
 msgid "Without templates"
-msgstr ""
+msgstr "Без предлошки"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1604
 msgid "With templates"
-msgstr ""
+msgstr "Со предлошки"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1622
 msgid "All namespaces"
-msgstr ""
+msgstr "Сите именски простори"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1638
 #: org/wikipediacleaner/gui/swing/pagelist/PageListTableModel.java:231
 msgid "Main"
-msgstr ""
+msgstr "Главна"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1694
 msgid "All disambiguations pages"
-msgstr ""
+msgstr "Сите појаснителни страници"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1850
 msgid "Watch list"
@@ -3016,11 +3017,11 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1940
 msgid "List"
-msgstr ""
+msgstr "Список"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1963
 msgid "Random redirect pages"
-msgstr ""
+msgstr "Случајни пренасочувања"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1995
 msgid "How many pages do you want?"
@@ -3033,7 +3034,7 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MonitorRCWindow.java:109
 msgid "Recent changes monitoring"
-msgstr ""
+msgstr "Следење на скорешните промени"
 
 #: org/wikipediacleaner/gui/swing/NewSectionWindow.java:105
 #, java-format
@@ -3208,15 +3209,15 @@ msgstr "Содржина"
 #: org/wikipediacleaner/gui/swing/options/OptionsWindow.java:132
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:190
 msgid "Validate"
-msgstr ""
+msgstr "Потврди"
 
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:550
 msgid "Automatic comment"
-msgstr ""
+msgstr "Автоматски коментар"
 
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:576
 msgid "Mark edit as minor"
-msgstr ""
+msgstr "Означи го уредувањето како ситно"
 
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:582
 msgid "Disable bot flag for this edit"
@@ -3245,16 +3246,16 @@ msgstr "Провери правопис и сроченост"
 
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:627
 msgid "Spelling"
-msgstr ""
+msgstr "Правопис"
 
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:662
 msgid "Protection level for editing the page"
-msgstr ""
+msgstr "Ниво на заштита за уредување на страницата"
 
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:751
 #, java-format
 msgid "Last modified at {0}"
-msgstr ""
+msgstr "Последен пат е изменето на {0}"
 
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:759
 #, java-format
