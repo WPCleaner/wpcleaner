@@ -8,9 +8,12 @@
 package org.wikipediacleaner.api.http.hc3;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.TreeSet;
 
 import org.apache.commons.httpclient.HttpMethod;
 import org.apache.commons.httpclient.NameValuePair;
@@ -53,6 +56,28 @@ public class Hc3HttpUtils extends HttpUtils {
     }
   }
 
+  private static class ParameterComparator implements Comparator<Map.Entry<String, String>> {
+
+    /**
+     * 
+     */
+    public ParameterComparator() {
+    }
+
+    @Override
+    public int compare(Entry<String, String> o1, Entry<String, String> o2) {
+      boolean isSecret1 = isSecretKey(o1.getKey());
+      boolean isSecret2 = isSecretKey(o2.getKey());
+      if (isSecret1 != isSecret2) {
+        if (isSecret2) {
+          return -1;
+        }
+        return 1;
+      }
+      return o1.getKey().compareToIgnoreCase(o2.getKey());
+    }
+    
+  }
   /**
    * Create an HTTP POST Method.
    * 
@@ -73,9 +98,9 @@ public class Hc3HttpUtils extends HttpUtils {
     method.setRequestHeader("Accept-Encoding", "gzip");
     if (properties != null) {
       boolean first = true;
-      Iterator<Map.Entry<String, String>> iter = properties.entrySet().iterator();
-      while (iter.hasNext()) {
-        Map.Entry<String, String> property = iter.next();
+      TreeSet<Map.Entry<String, String>> sortedList = new TreeSet<>(new ParameterComparator());
+      sortedList.addAll(properties.entrySet());
+      for (Map.Entry<String, String> property : sortedList) {
         String key = property.getKey();
         String value = property.getValue();
         method.addParameter(key, value);

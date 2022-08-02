@@ -99,7 +99,7 @@ public class HttpUtils {
    * @param key Key.
    * @return True if the value for the key should be kept secret.
    */
-  private static boolean isSecretKey(String key) {
+  public static boolean isSecretKey(String key) {
     boolean result = false;
     result |= ApiLoginRequest.PROPERTY_PASSWORD.equals(key);
     result |= ApiLoginRequest.PROPERTY_TOKEN.equals(key);
