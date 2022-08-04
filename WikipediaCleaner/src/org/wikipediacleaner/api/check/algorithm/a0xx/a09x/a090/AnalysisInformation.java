@@ -82,8 +82,10 @@ class AnalysisInformation {
     this.beginIndex = link.getBeginIndex();
     this.endIndex = link.getEndIndex();
     String tmpText = link.getText();
-    while (tmpText.startsWith("|") || tmpText.startsWith(" ")) {
-      tmpText = tmpText.substring(1);
+    if (tmpText != null) {
+      while (tmpText.startsWith("|") || tmpText.startsWith(" ")) {
+        tmpText = tmpText.substring(1);
+      }
     }
     this.text = tmpText;
     this.automatic = Boolean.TRUE;
