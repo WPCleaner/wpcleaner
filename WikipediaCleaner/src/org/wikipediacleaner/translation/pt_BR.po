@@ -7,6 +7,7 @@
 # Author: Eduardoaddad
 # Author: Rafaelff
 # Author: Rafaelff
+# Author: YuriNikolai
 # --
 # This file is distributed under the same license as the wikicleaner package.
 #
@@ -16,7 +17,7 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2022-07-28 11:25:04+0000\n"
+"PO-Revision-Date: 2022-08-04 11:22:54+0000\n"
 "Last-Translator: Felipe L. <felipe.idj@hotmail.com>\n"
 "Language-Team: Brazilian Portuguese <pt_BR@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -249,11 +250,11 @@ msgstr "Procurar todos os ISBN"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISBN.java:407
 msgid "Search all ISBN-10"
-msgstr ""
+msgstr "Procurar em todos os ISBN-10"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISBN.java:412
 msgid "Search all ISBN-13"
-msgstr ""
+msgstr "Procurar em todos os ISBN-13"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISBN.java:429
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISBN.java:486
@@ -509,11 +510,11 @@ msgstr "Substituição da direita para a esquerda"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a016/CheckErrorAlgorithm016.java:420
 msgid "Byte order mark"
-msgstr "Byte order mark"
+msgstr "Marca de ordem de byte"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a016/CheckErrorAlgorithm016.java:421
 msgid "Object replacement character"
-msgstr "ObjecCaractere de substituição de objetot replacement character"
+msgstr "Caractere de substituição de objeto"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a016/CheckErrorAlgorithm016.java:422
 msgid "Private use area"
@@ -626,11 +627,11 @@ msgstr "Remover todas as ligações para o título"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a04x/a048/CheckErrorAlgorithm048.java:422
 msgid "List of templates in which error should be ignored"
-msgstr ""
+msgstr "Lista de predefinições em que erros devem ser ignorados"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a04x/a048/CheckErrorAlgorithm048.java:425
 msgid "Name of the template in which error should be ignored"
-msgstr ""
+msgstr "Nome da predefinição em que erros devam ser ignorados"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a04x/a048/CheckErrorAlgorithm048.java:428
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a04x/a048/CheckErrorAlgorithm048.java:431
@@ -946,7 +947,7 @@ msgstr "Corrigir duplicação de referência"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a08x/a081/CheckErrorAlgorithm081.java:215
 msgid "Both tags have already the same name"
-msgstr ""
+msgstr "Ambas as etiquetas já possuem o mesmo nome"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a08x/a081/CheckErrorAlgorithm081.java:217
 msgid "Tag is unnamed"
