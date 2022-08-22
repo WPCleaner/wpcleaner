@@ -77,17 +77,24 @@ public class CheckErrorAlgorithm075 extends CheckErrorAlgorithmBase {
       return false;
     }
 
+    int lastIndex = initialItem.getEndIndex();
     int currentIndex = initialIndex + 1;
     boolean result = false;
+    String contents = analysis.getContents();
     while (currentIndex < listItems.size()) {
+      while ((lastIndex < contents.length()) && (contents.charAt(lastIndex) == '\n')) {
+        lastIndex++;
+      }
       PageElementListItem currentItem = listItems.get(currentIndex);
+      if (currentItem.getBeginIndex() > lastIndex) {
+        return result;
+      }
       String currentIndicators = currentItem.getIndicators();
       if (currentIndicators.startsWith(":*") || currentIndicators.startsWith(":#")) {
         if (errors == null) {
           return true;
         }
         result = true;
-        String contents = analysis.getContents();
         int beginIndex = currentItem.getBeginIndex();
         int endIndex = currentItem.getEndIndex();
         CheckErrorResult errorResult = createCheckErrorResult(analysis, beginIndex, endIndex);
@@ -106,6 +113,7 @@ public class CheckErrorAlgorithm075 extends CheckErrorAlgorithmBase {
       } else {
         return result;
       }
+      lastIndex = currentItem.getEndIndex();
       currentIndex++;
     }
 
