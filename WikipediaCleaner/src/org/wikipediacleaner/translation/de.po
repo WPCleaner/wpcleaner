@@ -8,6 +8,7 @@
 # Author: FF-11
 # Author: ManuelFranz
 # Author: Mglaser
+# Author: ThisCarthing
 # Author: Umlaut
 # Author: Wolfdietmann
 # --
@@ -19,7 +20,7 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2022-07-28 11:25:00+0000\n"
+"PO-Revision-Date: 2022-08-25 11:21:20+0000\n"
 "Last-Translator: Crazy1880 <Unknown>\n"
 "Language-Team: German <de@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -1710,7 +1711,7 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/menu/MWPaneDisambiguationMenuCreator.java:216
 #: org/wikipediacleaner/gui/swing/menu/MWPaneDisambiguationMenuCreator.java:228
 msgid "Link text"
-msgstr ""
+msgstr "Linktext"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a557/CheckErrorAlgorithm557.java:584
 msgid "Prefixes which can be before an internal link"
@@ -1757,7 +1758,7 @@ msgstr ""
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a568/CheckErrorAlgorithm568.java:129
 #, java-format
 msgid "Template {0}"
-msgstr ""
+msgstr "Vorlage {0}"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:340
 msgid "Templates for which unknown parameters should be verified"
