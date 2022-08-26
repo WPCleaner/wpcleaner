@@ -79,6 +79,11 @@
   <property name="WPCleaner.libs.jackson-databind.jar"    value="jackson-databind-${WPCleaner.libs.jackson.version}.jar" />
   <property name="WPCleaner.libs.jackson.lic"             value="LICENSE.txt" />
 
+  <property name="WPCleaner.libs.jaxb-ri.version"         value="3.0.2" />
+  <property name="WPCleaner.libs.jaxb-ri.dir"             value="libs/jaxb-ri-${WPCleaner.libs.jaxb-ri.version}" />
+  <property name="WPCleaner.libs.jaxb-ri-bind-api.jar"    value="jakarta.xml.bind-api.jar" />
+  <property name="WPCleaner.libs.jaxb-ri.lic"             value="LICENSE.txt" />
+
   <property name="WPCleaner.libs.jaxen.version"           value="1.1.6" />
   <property name="WPCleaner.libs.jaxen.jar"               value="jaxen-${WPCleaner.libs.jaxen.version}.jar" />
   <property name="WPCleaner.libs.jaxen.lic"               value="LICENSE_jaxen.txt" />
@@ -321,6 +326,7 @@
     <unzip src="${WPCleaner.libs.jackson.dir}/${WPCleaner.libs.jackson-annotations.jar}" dest="${WPCleaner.classes_full.dir}" />
     <unzip src="${WPCleaner.libs.jackson.dir}/${WPCleaner.libs.jackson-core.jar}"        dest="${WPCleaner.classes_full.dir}" />
     <unzip src="${WPCleaner.libs.jackson.dir}/${WPCleaner.libs.jackson-databind.jar}"    dest="${WPCleaner.classes_full.dir}" />
+    <unzip src="${WPCleaner.libs.jaxb-ri.dir}/${WPCleaner.libs.jaxb-ri-bind-api.jar}"    dest="${WPCleaner.classes_full.dir}" />
     <unzip src="${WPCleaner.libs.jdom.dir}/${WPCleaner.libs.jaxen.jar}"                  dest="${WPCleaner.classes_full.dir}" />
     <unzip src="${WPCleaner.libs.jdom.dir}/${WPCleaner.libs.jdom.jar}"                   dest="${WPCleaner.classes_full.dir}" />
     <unzip src="${WPCleaner.libs.jdom.dir}/${WPCleaner.libs.xerces-impl.jar}"            dest="${WPCleaner.classes_full.dir}" />
@@ -363,6 +369,8 @@
           tofile="${WPCleaner.classes_full.dir}/LICENSE_gettext-commons.txt" />
     <copy file="${WPCleaner.libs.jackson.dir}/${WPCleaner.libs.jackson.lic}"
           tofile="${WPCleaner.classes_full.dir}/LICENSE_jackson.txt" />
+    <copy file="${WPCleaner.libs.jaxb-ri.dir}/${WPCleaner.libs.jaxb-ri.lic}"
+          tofile="${WPCleaner.classes_full.dir}/LICENSE_jaxb-ri.txt" />
     <copy file="${WPCleaner.libs.jdom.dir}/${WPCleaner.libs.jdom.lic}"
           tofile="${WPCleaner.classes_full.dir}/LICENSE_jdom.txt" />
     <copy file="${WPCleaner.libs.jdom.dir}/${WPCleaner.libs.jaxen.lic}"
@@ -561,6 +569,7 @@
     <copy file="${WPCleaner.libs.jackson.dir}/${WPCleaner.libs.jackson-annotations.jar}" tofile="${WPCleaner.getdown.dir}/libs/jackson-annotations.jar" />
     <copy file="${WPCleaner.libs.jackson.dir}/${WPCleaner.libs.jackson-core.jar}"        tofile="${WPCleaner.getdown.dir}/libs/jackson-core.jar" />
     <copy file="${WPCleaner.libs.jackson.dir}/${WPCleaner.libs.jackson-databind.jar}"    tofile="${WPCleaner.getdown.dir}/libs/jackson-databind.jar" />
+    <copy file="${WPCleaner.libs.jaxb-ri.dir}/${WPCleaner.libs.jaxb-ri-bind-api.jar}"    tofile="${WPCleaner.getdown.dir}/libs/jaxb-ri-bind-api.jar" />
     <copy file="${WPCleaner.libs.jdom.dir}/${WPCleaner.libs.jaxen.jar}"                  tofile="${WPCleaner.getdown.dir}/libs/jaxen.jar" />
     <copy file="${WPCleaner.libs.jdom.dir}/${WPCleaner.libs.jdom.jar}"                   tofile="${WPCleaner.getdown.dir}/libs/jdom.jar" />
     <copy file="${WPCleaner.libs.jdom.dir}/${WPCleaner.libs.xerces-impl.jar}"            tofile="${WPCleaner.getdown.dir}/libs/xercesImpl.jar" />
@@ -582,6 +591,7 @@
     <copy file="${WPCleaner.libs.logging.dir}/${WPCleaner.libs.logging.not}"             tofile="${WPCleaner.getdown.dir}/libs/NOTICE_commons-logging.txt" />
     <copy file="${WPCleaner.libs.gettext.dir}/${WPCleaner.libs.gettext.lic}"             tofile="${WPCleaner.getdown.dir}/libs/LICENSE_gettext-commons.txt" />
     <copy file="${WPCleaner.libs.jackson.dir}/${WPCleaner.libs.jackson.lic}"             tofile="${WPCleaner.getdown.dir}/libs/LICENSE_jackson.txt" />
+    <copy file="${WPCleaner.libs.jaxb-ri.dir}/${WPCleaner.libs.jaxb-ri.lic}"             tofile="${WPCleaner.getdown.dir}/libs/LICENSE_jaxb-ri.txt" />
     <copy file="${WPCleaner.libs.jdom.dir}/${WPCleaner.libs.jdom.lic}"                   tofile="${WPCleaner.getdown.dir}/libs/LICENSE_jdom.txt" />
     <copy file="${WPCleaner.libs.jdom.dir}/${WPCleaner.libs.jaxen.lic}"                  tofile="${WPCleaner.getdown.dir}/libs/LICENSE_jaxen.txt" />
     <copy file="${WPCleaner.libs.jdom.dir}/${WPCleaner.libs.xerces.lic}"                 tofile="${WPCleaner.getdown.dir}/libs/LICENSE_xerces.txt" />

@@ -12,6 +12,8 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.page.PageComment;
@@ -29,6 +31,8 @@ import org.wikipediacleaner.utils.ConfigurationValueInteger;
  */
 public class Controller {
 
+  private static final Logger LOGGER = LoggerFactory.getLogger(Controller.class);
+
   /**
    * Run a full analysis on one page.
    * 
@@ -38,8 +42,12 @@ public class Controller {
    */
   public static void runFullAnalysis(
       String page, List<Page> knownPages, EnumWikipedia wikipedia) {
-    if (page != null) {
-      OnePageAnalysisWindow.createAnalysisWindow(page, knownPages, wikipedia);
+    try {
+      if (page != null) {
+        OnePageAnalysisWindow.createAnalysisWindow(page, knownPages, wikipedia);
+      }
+    } catch (Throwable t) {
+      LOGGER.error("Controller.runFullAnalysis: error", t);
     }
   }
 
@@ -58,12 +66,16 @@ public class Controller {
     if (pages == null) {
       return;
     }
-    int pagesCount = getCountOfPages(parentComponent, pages);
-    for (int i = 0; i < pagesCount; i++) {
-      Object page = pages.get(i);
-      if (page != null) {
-        runFullAnalysis(page.toString(), knownPages, wikipedia);
+    try {
+      int pagesCount = getCountOfPages(parentComponent, pages);
+      for (int i = 0; i < pagesCount; i++) {
+        Object page = pages.get(i);
+        if (page != null) {
+          runFullAnalysis(page.toString(), knownPages, wikipedia);
+        }
       }
+    } catch (Throwable t) {
+      LOGGER.error("Controller.runFullAnalysis: error", t);
     }
   }
 
@@ -74,8 +86,12 @@ public class Controller {
    * @param wikipedia Wikipedia
    */
   public static void runDisambiguationAnalysis(String page, EnumWikipedia wikipedia) {
-    if (page != null) {
-      DisambiguationWindow.createDisambiguationWindow(page, wikipedia);
+    try {
+      if (page != null) {
+        DisambiguationWindow.createDisambiguationWindow(page, wikipedia);
+      }
+    } catch (Throwable t) {
+      LOGGER.error("Controller.runDisambiguationAnalysis: error", t);
     }
   }
 
@@ -91,12 +107,16 @@ public class Controller {
     if (pages == null) {
       return;
     }
-    int pagesCount = getCountOfPages(parentComponent, pages);
-    for (int i = 0; i < pagesCount; i++) {
-      Object page = pages.get(i);
-      if (page != null) {
-        runDisambiguationAnalysis(page.toString(), wikipedia);
+    try {
+      int pagesCount = getCountOfPages(parentComponent, pages);
+      for (int i = 0; i < pagesCount; i++) {
+        Object page = pages.get(i);
+        if (page != null) {
+          runDisambiguationAnalysis(page.toString(), wikipedia);
+        }
       }
+    } catch (Throwable t) {
+      LOGGER.error("Controller.runDisambiguationAnalysis: error", t);
     }
   }
 
@@ -110,8 +130,12 @@ public class Controller {
   public static void runAutomaticFixing(
       Collection<Page> pages,
       Page referencePage, EnumWikipedia wikipedia) {
-    if (pages != null) {
-      AutomaticFixingWindow.createAutomaticFixingWindow(pages, referencePage, wikipedia);
+    try {
+      if (pages != null) {
+        AutomaticFixingWindow.createAutomaticFixingWindow(pages, referencePage, wikipedia);
+      }
+    } catch (Throwable t) {
+      LOGGER.error("Controller.runAutomaticFixing: error", t);
     }
   }
 
@@ -126,8 +150,12 @@ public class Controller {
       Page page,
       PageComment comments,
       EnumWikipedia wikipedia) {
-    if (page != null) {
-      PageCommentsWindow.createPageCommentsWindow(page, comments, wikipedia);
+    try {
+      if (page != null) {
+        PageCommentsWindow.createPageCommentsWindow(page, comments, wikipedia);
+      }
+    } catch (Throwable t) {
+      LOGGER.error("Controller.runPageComments: error", t);
     }
   }
 
@@ -153,7 +181,11 @@ public class Controller {
    * @param wikipedia Wikipedia
    */
   public static void runCheckWikiProject(EnumWikipedia wikipedia) {
-    CheckWikiWindow.createCheckWikiProjectWindow(wikipedia);
+    try {
+      CheckWikiWindow.createCheckWikiProjectWindow(wikipedia);
+    } catch (Throwable t) {
+      LOGGER.error("Controller.runCheckWikiProject: error", t);
+    }
   }
 
   /**
@@ -162,7 +194,11 @@ public class Controller {
    * @param wikipedia Wikipedia
    */
   public static void runBotTools(EnumWikipedia wikipedia) {
-    BotToolsWindow.createBotToolsWindow(wikipedia);
+    try {
+      BotToolsWindow.createBotToolsWindow(wikipedia);
+    } catch (Throwable t) {
+      LOGGER.error("Controller.runBotTools: error", t);
+    }
   }
 
   /**
@@ -171,21 +207,33 @@ public class Controller {
    * @param wiki Wiki.
    */
   public static void runMonitorRC(EnumWikipedia wiki) {
-    MonitorRCWindow.createMonitorRCWindow(wiki);
+    try {
+      MonitorRCWindow.createMonitorRCWindow(wiki);
+    } catch (Throwable t) {
+      LOGGER.error("Controller.runMonitorRC: error", t);
+    }
   }
 
   /**
    * Open the options window.
    */
   public static void runOptions() {
-    OptionsWindow.createOptionsWindow();
+    try {
+      OptionsWindow.createOptionsWindow();
+    } catch (Throwable t) {
+      LOGGER.error("Controller.runOptions: error", t);
+    }
   }
 
   /**
    * Open the about window.
    */
   public static void runAbout() {
-    AboutWindow.createAboutWindow();
+    try {
+      AboutWindow.createAboutWindow();
+    } catch (Throwable t) {
+      LOGGER.error("Controller.runAbout: error", t);
+    }
   }
 
   /**
@@ -200,8 +248,12 @@ public class Controller {
       Page page,
       String articleText, String articleTitle,
       EnumWikipedia wikipedia) {
-    if ((page != null) && (wikipedia != null)) {
-      NewSectionWindow.createNewSectionWindow(page, articleText, articleTitle, wikipedia);
+    try {
+      if ((page != null) && (wikipedia != null)) {
+        NewSectionWindow.createNewSectionWindow(page, articleText, articleTitle, wikipedia);
+      }
+    } catch (Throwable t) {
+      LOGGER.error("Controller.runNewSection: error", t);
     }
   }
 
@@ -218,11 +270,15 @@ public class Controller {
       String title, String text,
       boolean showExpand, boolean showPreview,
       EnumWikipedia wikipedia) {
-    if ((title != null) && (text != null)) {
-      PreviewWindow.createExpandTemplatesWindow(
-          title, text,
-          showExpand, showPreview,
-          wikipedia);
+    try {
+      if ((title != null) && (text != null)) {
+        PreviewWindow.createExpandTemplatesWindow(
+            title, text,
+            showExpand, showPreview,
+            wikipedia);
+      }
+    } catch (Throwable t) {
+      LOGGER.error("Controller.runExpandTemplates: error", t);
     }
   }
 
