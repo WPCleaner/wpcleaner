@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2022-08-22 11:21:09+0000\n"
+"PO-Revision-Date: 2022-08-29 11:23:39+0000\n"
 "Last-Translator: iwean <iwan.novirion@gmail.com>\n"
 "Language-Team: Indonesian <id@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -108,7 +108,7 @@ msgstr ""
 
 #: org/wikipediacleaner/Version.java:58
 msgid "An action may be required on your wiki:"
-msgstr ""
+msgstr "Tindakan mungkin perlu dilakukan pada wiki Anda:"
 
 #: org/wikipediacleaner/Version.java:60
 #, java-format
@@ -148,7 +148,7 @@ msgstr ""
 
 #: org/wikipediacleaner/api/MediaWiki.java:317
 msgid "Do you want to continue?"
-msgstr ""
+msgstr "Apakah Anda ingin melanjutkan?"
 
 #: org/wikipediacleaner/api/ModificationReport.java:78
 #: org/wikipediacleaner/api/ModificationReport.java:108
@@ -162,7 +162,7 @@ msgstr ""
 
 #: org/wikipediacleaner/api/algorithm/AlgorithmError.java:417
 msgid "No available description"
-msgstr ""
+msgstr "Tiada deskripsi yang tersedia"
 
 #: org/wikipediacleaner/api/algorithm/AlgorithmError.java:422
 #, java-format
@@ -245,11 +245,11 @@ msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISBN.java:407
 msgid "Search all ISBN-10"
-msgstr ""
+msgstr "Cari semua ISBN-10"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISBN.java:412
 msgid "Search all ISBN-13"
-msgstr ""
+msgstr "Cari semua ISBN-13"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISBN.java:429
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISBN.java:486
@@ -672,7 +672,7 @@ msgstr ""
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a571/CheckErrorAlgorithm571.java:222
 #, java-format
 msgid "Remove {0} tags"
-msgstr ""
+msgstr "Hapus {0} tag"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a05x/a057/CheckErrorAlgorithm057.java:32
 msgid "Fix all titles"
