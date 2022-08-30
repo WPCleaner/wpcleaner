@@ -81,10 +81,12 @@ public class CheckErrorAlgorithm075 extends CheckErrorAlgorithmBase {
     int currentIndex = initialIndex + 1;
     boolean result = false;
     String contents = analysis.getContents();
+    boolean emptyLine = false;
     while (currentIndex < listItems.size()) {
       while ((lastIndex < contents.length()) && (contents.charAt(lastIndex) == '\n')) {
         lastIndex++;
       }
+      emptyLine |= lastIndex > listItems.get(currentIndex - 1).getEndIndex() + 1; 
       PageElementListItem currentItem = listItems.get(currentIndex);
       if (currentItem.getBeginIndex() > lastIndex) {
         return result;
@@ -98,9 +100,7 @@ public class CheckErrorAlgorithm075 extends CheckErrorAlgorithmBase {
         int beginIndex = currentItem.getBeginIndex();
         int endIndex = currentItem.getEndIndex();
         CheckErrorResult errorResult = createCheckErrorResult(analysis, beginIndex, endIndex);
-        boolean automatic =
-            (initialIndicators.length() == 1) &&
-            (currentIndicators.charAt(0) == initialIndicators.charAt(0));
+        boolean automatic = !emptyLine && (initialIndicators.length() == 1);
         String replacement =
             initialIndicators.substring(0, 1) +
             contents.substring(beginIndex + 1, endIndex);
@@ -118,5 +118,19 @@ public class CheckErrorAlgorithm075 extends CheckErrorAlgorithmBase {
     }
 
     return result;
+  }
+
+  /**
+   * Automatic fixing of all the errors in the page.
+   * 
+   * @param analysis Page analysis.
+   * @return Page contents after fix.
+   */
+  @Override
+  protected String internalAutomaticFix(PageAnalysis analysis) {
+    if (!analysis.getPage().isArticle()) {
+      return analysis.getContents();
+    }
+    return fixUsingAutomaticReplacement(analysis);
   }
 }
