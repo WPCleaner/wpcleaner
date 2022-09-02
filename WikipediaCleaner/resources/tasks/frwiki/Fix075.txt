@@ -1,7 +1,7 @@
 DoTasks _Common.txt
 FixCheckWiki 75
 # FixListCheckWiki Projet:Correction_syntaxique/Analyse_075 75
-# FixDump C:\Users\Nicolas\Downloads\frwiki-$-pages-articles.xml.bz2 75
+FixDump C:\Users\Nicolas\Downloads\frwiki-$-pages-articles.xml.bz2 75
 
 # File namespace
 DoTasks _Common_Other.txt

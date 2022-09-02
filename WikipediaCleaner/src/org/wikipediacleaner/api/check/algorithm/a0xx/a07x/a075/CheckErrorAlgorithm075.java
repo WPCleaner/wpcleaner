@@ -71,18 +71,26 @@ public class CheckErrorAlgorithm075 extends CheckErrorAlgorithmBase {
       Collection<CheckErrorResult> errors,
       List<PageElementListItem> listItems,
       int initialIndex) {
+
+    // Start with bullet or number list items
     PageElementListItem initialItem = listItems.get(initialIndex);
     String initialIndicators = initialItem.getIndicators();
     if (!initialIndicators.startsWith("*") && !initialIndicators.startsWith("#")) {
       return false;
     }
+    if (analysis.comments().isAt(initialItem.getBeginIndex())) {
+      return false;
+    }
 
+    // Check following list items
     int lastIndex = initialItem.getEndIndex();
     int currentIndex = initialIndex + 1;
     boolean result = false;
     String contents = analysis.getContents();
     boolean emptyLine = false;
     while (currentIndex < listItems.size()) {
+
+      // Check that following list item is close to the previous one
       while ((lastIndex < contents.length()) && (contents.charAt(lastIndex) == '\n')) {
         lastIndex++;
       }
@@ -91,8 +99,23 @@ public class CheckErrorAlgorithm075 extends CheckErrorAlgorithmBase {
       if (currentItem.getBeginIndex() > lastIndex) {
         return result;
       }
+
+      // Check what indicators are used
       String currentIndicators = currentItem.getIndicators();
-      if (currentIndicators.startsWith(":*") || currentIndicators.startsWith(":#")) {
+      int incorrectIndicators = 0;
+      while ((incorrectIndicators < currentIndicators.length()) &&
+             (currentIndicators.charAt(incorrectIndicators) == ':')) {
+        incorrectIndicators++;
+      }
+      if ((incorrectIndicators < 1) || (incorrectIndicators >= currentIndicators.length())) {
+        return result;
+      }
+      if (analysis.comments().isAt(currentItem.getBeginIndex())) {
+        return result;
+      }
+
+      // Report error
+      if ("*#".indexOf(currentIndicators.charAt(incorrectIndicators)) >= 0) {
         if (errors == null) {
           return true;
         }
@@ -100,13 +123,16 @@ public class CheckErrorAlgorithm075 extends CheckErrorAlgorithmBase {
         int beginIndex = currentItem.getBeginIndex();
         int endIndex = currentItem.getEndIndex();
         CheckErrorResult errorResult = createCheckErrorResult(analysis, beginIndex, endIndex);
-        boolean automatic = !emptyLine && (initialIndicators.length() == 1);
+        boolean automatic =
+            !emptyLine &&
+            (incorrectIndicators <= initialIndicators.length());
+        int maxLengthRetrieved = Math.min(initialIndicators.length(), incorrectIndicators);
         String replacement =
-            initialIndicators.substring(0, 1) +
-            contents.substring(beginIndex + 1, endIndex);
+            initialIndicators.substring(0, maxLengthRetrieved) +
+            contents.substring(beginIndex + maxLengthRetrieved, endIndex);
         String text =
-            initialIndicators.substring(0, 1) +
-            currentIndicators.substring(1) +
+            initialIndicators.substring(0, maxLengthRetrieved) +
+            currentIndicators.substring(maxLengthRetrieved) +
             " ...";
         errorResult.addReplacement(replacement, text, automatic);
         errors.add(errorResult);
