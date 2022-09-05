@@ -906,6 +906,12 @@ public class Utilities {
     return false;
   }
 
+  private static final String[] BROWSERS = {
+    "x-www-browser", "google-chrome",
+    "firefox", "opera", "epiphany", "konqueror", "conkeror", "midori",
+    "kazehakase", "mozilla"
+  };
+
   /**
    * Display an URI in the default browser.
    * 
@@ -913,25 +919,42 @@ public class Utilities {
    */
   public static void browseURL(URI uri) {
     if (isDesktopSupported()) {
+      // Attempt using Desktop class
       try {
-        Class<?> desktopClass = Class.forName("java.awt.Desktop");
+        final Class<?> desktopClass = Class.forName("java.awt.Desktop");
         Method method = desktopClass.getMethod("getDesktop", (Class[]) null);
-        Object desktop = method.invoke(null, (Object[]) null);
+        final Object desktop = method.invoke(null, (Object[]) null);
         method = desktopClass.getMethod("browse", new Class[] { URI.class });
         method.invoke(desktop, new Object[] { uri });
-      } catch (ClassNotFoundException e) {
-        log.debug("ClassNotFoundException: " + e.getMessage());
-        // Nothing to be done, JVM < 6
-      } catch (NoSuchMethodException e) {
-        log.error("NoSuchMethodException: " + e.getMessage());
-      } catch (InvocationTargetException e) {
-        log.error("InvocationTargetException: " + e.getMessage());
-      } catch (IllegalAccessException e) {
-        log.error("IllegalAccessException: " + e.getMessage());
-      } catch (ClassCastException e) {
-        log.error("ClassCastException: " + e.getMessage());
+        return;
       } catch (Throwable e) {
-        log.error("Throwable: " + e.getClass().getName() + " - " + e.getMessage());
+        log.error("Throwable using Desktop.browse(): " + e.getClass().getName() + " - " + e.getMessage());
+      }
+
+      // Fallback on OS dependent method, see https://centerkey.com/java/browser/
+      final String osName = System.getProperty("os.name");
+      try {
+        if (osName.startsWith("Mac OS")) {
+          Class.forName("com.apple.eio.FileManager")
+              .getDeclaredMethod("openURL", new Class<?>[] {String.class})
+              .invoke(null, new Object[] {uri.toString()});
+        } else if (osName.startsWith("Windows")) {
+          Runtime.getRuntime()
+              .exec("rundll32 url.dll,FileProtocolHandler " + uri.toString());
+        } else {
+          String browser = null;
+          for (String b : BROWSERS) {
+            if ((browser == null) &&
+                (Runtime.getRuntime().exec(new String[] {"which", b}).getInputStream().read() != -1)) {
+              Runtime.getRuntime().exec(new String[] {browser = b, uri.toString()});
+            }
+          }
+          if (browser == null) {
+             throw new Exception(Arrays.toString(BROWSERS));
+          }
+        }
+      } catch (Throwable e) {
+        log.error("Throwable using alternative to Desktop.browse(): " + e.getClass().getName() + " - " + e.getMessage());
       }
     }
   }
