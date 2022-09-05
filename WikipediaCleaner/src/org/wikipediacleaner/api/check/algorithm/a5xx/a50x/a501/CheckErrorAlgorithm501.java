@@ -22,11 +22,14 @@ import java.util.stream.Stream;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import org.wikipediacleaner.api.algorithm.AlgorithmParameter;
+import org.wikipediacleaner.api.algorithm.AlgorithmParameterElement;
 import org.wikipediacleaner.api.check.Actionnable;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.CompositeAction;
 import org.wikipediacleaner.api.check.SimpleAction;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase;
+import org.wikipediacleaner.api.configuration.WPCConfiguration;
 import org.wikipediacleaner.api.data.PageElement;
 import org.wikipediacleaner.api.data.PageElementFunction;
 import org.wikipediacleaner.api.data.PageElementImage;
@@ -657,10 +660,10 @@ public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
   @Nonnull
   private List<Suggestion> getSuggestions(boolean onlyAutomatic) {
     List<Suggestion> tmp = onlyAutomatic ? automaticActiveSuggestions : allActiveSuggestions;
-    if (authorizedGroups == null) {
-      return new ArrayList<>(tmp);
-    }
-    return tmp.stream().filter(s -> authorizedGroups.contains(s.getGroup())).collect(Collectors.toList());
+    return tmp.stream()
+        .filter(s -> (authorizedGroups == null) || (authorizedGroups.contains(s.getGroup())))
+        .filter(s -> !disableRegexp.contains(s.getPatternText()))
+        .collect(Collectors.toList());
   }
 
   @Nullable
@@ -675,6 +678,9 @@ public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
     this.authorizedGroups = groups;
   }
 
+  /** List of regular expressions to disable */
+  private static final String PARAMETER_DISABLE_REGEXP = "disable_regexp";
+
   /**
    * Initialize settings for the algorithm.
    * 
@@ -682,6 +688,12 @@ public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
    */
   @Override
   protected void initializeSettings() {
+    String tmp = getSpecificProperty(PARAMETER_DISABLE_REGEXP, true, true, false);
+    disableRegexp.clear();
+    if (tmp != null) {
+      disableRegexp.addAll(WPCConfiguration.convertPropertyToStringList(tmp));
+    }
+
     // Initialize active suggestions
     allActiveSuggestions.clear();
     automaticActiveSuggestions.clear();
@@ -702,6 +714,9 @@ public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
     slowRegexp = config.getInt(null, ConfigurationValueInteger.SLOW_REGEXP);
   }
 
+  /** Regular expressions to be disabled */
+  private List<String> disableRegexp = new ArrayList<>();
+
   /** Active suggestions */
   @Nonnull
   private final List<Suggestion> allActiveSuggestions = new LinkedList<>();
@@ -712,4 +727,21 @@ public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
 
   /** Limit for reporting a regular expression as being slow */
   private int slowRegexp = 1000;
+
+  /**
+   * Build the list of parameters for this algorithm.
+   */
+  @Override
+  protected void addParameters() {
+    super.addParameters();
+    addParameter(new AlgorithmParameter(
+        PARAMETER_DISABLE_REGEXP,
+        GT._T("Regular expressions to be disabled"),
+        new AlgorithmParameterElement[] {
+            new AlgorithmParameterElement(
+                "regular expression",
+                GT._T("Regular expression"))
+        },
+        true));
+  }
 }
