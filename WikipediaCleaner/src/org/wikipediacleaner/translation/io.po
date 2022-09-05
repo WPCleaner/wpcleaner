@@ -9,7 +9,7 @@
 msgid ""
 msgstr ""
 ""
-"PO-Revision-Date: 2022-07-28 11:25:02+0000\n"
+"PO-Revision-Date: 2022-09-05 11:20:05+0000\n"
 "X-POT-Import-Date: 2022-07-18 22:30:19+0000\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -41,7 +41,7 @@ msgstr "L'asimilo inter {0} e l'extenso Linter facesas tale:"
 
 #: org/wikipediacleaner/Version.java:38
 msgid "The \"Linter categories\" button in this window lets you retrieve a list of pages detected by Linter for a given type of problem."
-msgstr ""
+msgstr "La butono \"kategorii ''Linter''\" en ca pagino posibligos vu vidar listo di pagini trovita dal utensilo ''Linter'' por ula tipo di problemo."
 
 #: org/wikipediacleaner/Version.java:39
 msgid "The \"Check article with Linter\" button in the analysis window lets you check the current version of an article against Linter."
@@ -351,7 +351,7 @@ msgstr "Listo di shabloni rezultanta en l'inkluzo di {0}"
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a003/CheckErrorAlgorithm003.java:286
 #, java-format
 msgid "Template resulting in the inclusion of {0}"
-msgstr ""
+msgstr "Shablono rezultanta del inkluzo di {0}"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a003/CheckErrorAlgorithm003.java:290
 #, java-format
@@ -442,15 +442,15 @@ msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a016/CheckErrorAlgorithm016.java:406
 msgid "Thee-per-em space"
-msgstr ""
+msgstr "Grandeso 3 por em"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a016/CheckErrorAlgorithm016.java:407
 msgid "Four-per-em space"
-msgstr ""
+msgstr "Grandeso 4 por em"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a016/CheckErrorAlgorithm016.java:408
 msgid "Six-per-em space"
-msgstr ""
+msgstr "Grandeso 6 por em"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a016/CheckErrorAlgorithm016.java:409
 msgid "Figure space"
