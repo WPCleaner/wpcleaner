@@ -17,7 +17,7 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2022-07-28 11:25:00+0000\n"
+"PO-Revision-Date: 2022-09-08 11:22:26+0000\n"
 "Last-Translator: Matěj S. <matejsuchanek97@gmail.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -25,9 +25,9 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n == 1) ? 0 : ( (n >= 2 && n <= 4) ? 1 : 2 );\n"
 "X-Launchpad-Export-Date: 2017-03-22 17:48+0000\n"
-"X-Generator: MediaWiki 1.39.0-alpha; Translate 2022-07-28\n"
+"X-Generator: MediaWiki 1.40.0-alpha; Translate 2022-07-28\n"
 "Language: cs\n"
-"X-POT-Import-Date: 2022-07-18 22:30:19+0000\n"
+"X-POT-Import-Date: 2022-09-05 16:30:24+0000\n"
 
 #: org/wikipediacleaner/Version.java:31
 #, java-format
@@ -651,7 +651,7 @@ msgid "Set to true to report also links in <imagemap>"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a04x/a048/CheckErrorAlgorithm048.java:434
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a521/CheckErrorAlgorithm521.java:455
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a521/CheckErrorAlgorithm521.java:454
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a545/CheckErrorAlgorithm545.java:273
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a563/CheckErrorAlgorithm563.java:216
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:326
@@ -660,7 +660,7 @@ msgid "Groups of templates"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a04x/a048/CheckErrorAlgorithm048.java:438
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a521/CheckErrorAlgorithm521.java:459
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a521/CheckErrorAlgorithm521.java:458
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a545/CheckErrorAlgorithm545.java:277
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a563/CheckErrorAlgorithm563.java:220
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:330
@@ -669,7 +669,7 @@ msgid "Name of the group"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a04x/a048/CheckErrorAlgorithm048.java:441
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a521/CheckErrorAlgorithm521.java:462
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a521/CheckErrorAlgorithm521.java:461
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a545/CheckErrorAlgorithm545.java:280
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a563/CheckErrorAlgorithm563.java:223
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:333
@@ -800,7 +800,7 @@ msgid "Do not replace"
 msgstr "Nenahrazovat"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a068/CheckErrorAlgorithm068.java:312
-#: org/wikipediacleaner/gui/swing/Controller.java:247
+#: org/wikipediacleaner/gui/swing/Controller.java:303
 #: org/wikipediacleaner/gui/swing/action/ActionDispose.java:37
 msgid "Cancel"
 msgstr "Zrušit"
@@ -1041,51 +1041,51 @@ msgstr "Seznam šablon, kterými je možné nahradit značky &lt;center&gt;"
 msgid "Name of the parameter to use"
 msgstr "Chybějící šablony"
 
-#: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a090/CheckErrorAlgorithm090.java:661
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a090/CheckErrorAlgorithm090.java:659
 msgid "What text should be displayed by the link?"
 msgstr "Jaký text by se měl u odkazu zobrazit?"
 
-#: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a090/CheckErrorAlgorithm090.java:666
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a090/CheckErrorAlgorithm090.java:664
 msgid "Convert into an internal link"
 msgstr "Převést na interní odkaz"
 
-#: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a090/CheckErrorAlgorithm090.java:975
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a090/CheckErrorAlgorithm090.java:828
 msgid "Templates to be used for linking to the history of an article"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a090/CheckErrorAlgorithm090.java:979
-#: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a090/CheckErrorAlgorithm090.java:1008
-#: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a090/CheckErrorAlgorithm090.java:1029
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a090/CheckErrorAlgorithm090.java:832
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a090/CheckErrorAlgorithm090.java:861
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a090/CheckErrorAlgorithm090.java:882
 msgid "Template to be used for linking to the history of an article"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a090/CheckErrorAlgorithm090.java:982
-#: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a090/CheckErrorAlgorithm090.java:1011
-#: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a090/CheckErrorAlgorithm090.java:1032
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a090/CheckErrorAlgorithm090.java:835
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a090/CheckErrorAlgorithm090.java:864
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a090/CheckErrorAlgorithm090.java:885
 msgid "Parameter to be used for the article name"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a090/CheckErrorAlgorithm090.java:986
-#: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a090/CheckErrorAlgorithm090.java:1019
-#: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a090/CheckErrorAlgorithm090.java:1036
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a090/CheckErrorAlgorithm090.java:839
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a090/CheckErrorAlgorithm090.java:872
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a090/CheckErrorAlgorithm090.java:889
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a091/CheckErrorAlgorithm091.java:435
 msgid "Parameter to be used for the text"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a090/CheckErrorAlgorithm090.java:992
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a090/CheckErrorAlgorithm090.java:845
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a091/CheckErrorAlgorithm091.java:424
 msgid "Templates using external links"
 msgstr "Šablony používající externí odkazy"
 
-#: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a090/CheckErrorAlgorithm090.java:1004
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a090/CheckErrorAlgorithm090.java:857
 msgid "Templates to be used for linking to an old version of an article"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a090/CheckErrorAlgorithm090.java:1015
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a090/CheckErrorAlgorithm090.java:868
 msgid "Parameter to be used for the identifier of the old version"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a090/CheckErrorAlgorithm090.java:1025
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a090/CheckErrorAlgorithm090.java:878
 msgid "Templates to be used instead of Special:PrefixIndex"
 msgstr ""
 
@@ -1174,18 +1174,26 @@ msgstr "Jaké je jméno výběru?"
 msgid "Use {0} and {1}"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a50x/a501/CheckErrorAlgorithm501.java:179
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a50x/a501/CheckErrorAlgorithm501.java:182
 msgid "Restore original text"
 msgstr "Navrátit původní text"
 
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a50x/a501/CheckErrorAlgorithm501.java:185
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a50x/a501/CheckErrorAlgorithm501.java:188
 #, java-format
 msgid "Replace each time with {0}"
 msgstr "Pokaždé nahradit {0}"
 
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a50x/a501/CheckErrorAlgorithm501.java:192
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a50x/a501/CheckErrorAlgorithm501.java:195
 msgid "Replace each time with"
 msgstr "Pokaždé nahradit"
+
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a50x/a501/CheckErrorAlgorithm501.java:739
+msgid "Regular expressions to be disabled"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a50x/a501/CheckErrorAlgorithm501.java:743
+msgid "Regular expression"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a50x/a509/CheckErrorAlgorithm509.java:32
 msgid "Compact links"
@@ -1334,29 +1342,29 @@ msgstr "Šablona použitelná místo levé hranaté závorky."
 msgid "An identifier of an abuse filter that is triggered by weird characters."
 msgstr "Identifikátor editačního filtru, který spouští podivné znaky."
 
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a521/CheckErrorAlgorithm521.java:469
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a521/CheckErrorAlgorithm521.java:468
 msgid "A list of templates and parameters in which format should be checked"
 msgstr "Seznam šablon a parametrů, ve kterých by měl být kontrolován formát"
 
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a521/CheckErrorAlgorithm521.java:473
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a521/CheckErrorAlgorithm521.java:472
 #, fuzzy
 msgid "The name of a template in which format should be checked"
 msgstr "Seznam šablon a parametrů, ve kterých by měl být kontrolován formát"
 
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a521/CheckErrorAlgorithm521.java:476
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a521/CheckErrorAlgorithm521.java:475
 #, fuzzy
 msgid "The name of a parameter in which format should be checked"
 msgstr "Seznam šablon a parametrů, ve kterých by měl být kontrolován formát"
 
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a521/CheckErrorAlgorithm521.java:479
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a521/CheckErrorAlgorithm521.java:478
 msgid "A correct format for the date"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a521/CheckErrorAlgorithm521.java:485
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a521/CheckErrorAlgorithm521.java:484
 msgid "A list of text values for months"
 msgstr "Seznam textových řetězců pro měsíce"
 
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a521/CheckErrorAlgorithm521.java:488
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a521/CheckErrorAlgorithm521.java:487
 #, fuzzy
 msgid "A text value for a month"
 msgstr "Seznam textových řetězců pro měsíce"
@@ -2352,194 +2360,194 @@ msgstr "Text pro nahrazení"
 msgid "regex"
 msgstr "regulární výraz"
 
-#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:168
-#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:170
-#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:670
+#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:169
+#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:171
+#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:671
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:301
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiWindow.java:757
 #: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:268
 msgid "Automatic fixing"
 msgstr "Automatická korekce"
 
-#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:234
+#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:235
 msgid "This feature may modify a lot of pages in a short period of time."
 msgstr "Tato vlastnost může změnit mnoho stránek v krátkém čase."
 
-#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:235
-#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:766
+#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:236
+#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:767
 #: org/wikipediacleaner/gui/swing/bot/BotToolsWindow.java:89
 msgid "On some Wikipedia projects, you may need the bot status for doing this."
 msgstr "Na některých Wikipediích je pro tuto funkci nutný příznak bota."
 
-#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:236
-#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:767
+#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:237
+#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:768
 #: org/wikipediacleaner/gui/swing/bot/BotToolsWindow.java:90
 msgid "Please, check if you need the bot status by reading the rules of Wikipedia."
 msgstr "Prosím, zkontrolujte v pravidlech Wikipedie, zda příznak bota potřebujete."
 
-#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:252
+#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:253
 #: org/wikipediacleaner/gui/swing/options/SortingOptionsPanel.java:110
 msgid "Add"
 msgstr "Přidat"
 
-#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:258
+#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:259
 msgid "Remove"
 msgstr "Odebrat"
 
-#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:264
+#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:265
 msgid "Modify"
 msgstr "Upravit"
 
-#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:270
+#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:271
 msgid "Clear"
 msgstr "Vymazat"
 
-#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:276
+#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:277
 msgid "Save"
 msgstr "Uložit"
 
-#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:283
+#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:284
 msgid "Fix selected pages"
 msgstr "Opravit vybrané stránky"
 
-#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:289
-#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:389
+#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:290
+#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:390
 msgid "Test automatic replacements"
 msgstr "Otestovat automatické nahrazování"
 
-#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:295
+#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:296
 #, fuzzy
 msgid "Load replacements"
 msgstr "Otestovat automatické nahrazování"
 
-#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:301
+#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:302
 #, fuzzy
 msgid "Save replacements"
 msgstr "Uložit poslední nahrazování"
 
-#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:314
+#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:315
 #: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:115
 #: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:197
 msgid "Automatic fixing for Check Wiki"
 msgstr "Automatické opravy chyb Check Wikipedia"
 
-#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:331
+#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:332
 msgid "Always apply automatic fixing for Check Wiki"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:346
+#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:347
 msgid "Pause after each edit"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:354
+#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:355
 msgid "Apply bot fixes"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:493
+#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:494
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiWindow.java:229
 msgid "No errors selected"
 msgstr "Žádná chyba nevybrána"
 
-#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:640
+#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:641
 msgid "Text that should be replaced"
 msgstr "Text, který by měl být nahrazen"
 
-#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:651
+#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:652
 msgid "Text to be used as a replacement"
 msgstr "Text, který by měl být použit pro nahrazení"
 
-#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:662
+#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:663
 msgid "Use regular expressions"
 msgstr "Použít regulární výrazy"
 
-#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:734
+#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:735
 msgid "You must select the pages on which running automatic fixing."
 msgstr "Musí být vybrány stránky, na kterých poběží automatické opravy."
 
-#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:742
+#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:743
 msgid "A comment is required for automatic fixing."
 msgstr "Pro automatické opravy je nutné zadat shrnutí."
 
-#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:752
+#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:753
 msgid "You must input the initial and destination texts."
 msgstr "Musíte vložit úvodní a cílový text."
 
-#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:763
+#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:764
 #: org/wikipediacleaner/gui/swing/bot/BotToolsWindow.java:86
 msgid "!!! WARNING !!!"
 msgstr "!!! VAROVÁNÍ !!!"
 
-#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:764
+#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:765
 msgid "This function will carry out all replacements on all selected pages."
 msgstr "Tato funkce provede všechna nahrazení na vybraných stranách."
 
-#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:765
+#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:766
 msgid "It may modify a lot of pages in a short period of time."
 msgstr "Může změnit množství stránek v krátkém čase."
 
-#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:768
+#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:769
 msgid "Also, verify again the texts you have inputted before running this function."
 msgstr "Také znovu zkontrolujte všechny zadané texty před spuštěním této funkce."
 
-#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:769
+#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:770
 msgid "You can also test the modifications before actually doing them."
 msgstr "Změny také můžete před jejich provedením otestovat."
 
-#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:770
+#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:771
 msgid "Do you want to proceed with the modifications ?"
 msgstr "Chcete provést náhrady?"
 
-#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:828
+#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:829
 msgid "The following replacements have been made:"
 msgstr "Následující nahrazení byla provedena:"
 
-#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:839
+#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:840
 msgid "Do you want to test the replacements on the pages ?"
 msgstr "Chcete náhrady otestovat na stránkách?"
 
-#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:853
-#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:893
+#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:854
+#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:894
 msgid "XML files"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:908
+#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:909
 msgid "This file exists, do you want to overwrite it?"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:976
+#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:977
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiWindow.java:358
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiWindow.java:613
 msgid "Select errors"
 msgstr "Vybrat chyby"
 
-#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:984
+#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:985
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiWindow.java:362
 msgid "Select all errors"
 msgstr "Vybrat všechny chyby"
 
-#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:991
+#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:992
 #, fuzzy
 msgid "Select no errors"
 msgstr "Vybrat chyby"
 
-#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:1016
+#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:1017
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiWindow.java:415
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiWindow.java:470
 #, java-format
 msgid "Errors from {0} to {1}"
 msgstr "Chyby od {0} do {1}"
 
-#: org/wikipediacleaner/gui/swing/Controller.java:245
+#: org/wikipediacleaner/gui/swing/Controller.java:301
 #, java-format
 msgid "Yes, {0} pages"
 msgstr "Ano, {0} stránek"
 
-#: org/wikipediacleaner/gui/swing/Controller.java:246
+#: org/wikipediacleaner/gui/swing/Controller.java:302
 #, java-format
 msgid "No, {0} pages"
 msgstr "Ne, {0} stránek"
 
-#: org/wikipediacleaner/gui/swing/Controller.java:251
+#: org/wikipediacleaner/gui/swing/Controller.java:307
 #, java-format
 msgid "You have selected {0} pages.\nWould you like to analyze more than {1} pages ?"
 msgstr "Vybral(a) jste {0} stránek.\nChcete tedy analyzovat více než {1} stránek?"
