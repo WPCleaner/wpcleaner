@@ -27,6 +27,7 @@ import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.PageElementTitle;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
 import org.wikipediacleaner.api.data.contents.comment.ContentsComment;
+import org.wikipediacleaner.api.data.contents.tag.WikiTagType;
 import org.wikipediacleaner.i18n.GT;
 
 
@@ -219,6 +220,14 @@ public class CheckErrorAlgorithm052 extends CheckErrorAlgorithmBase {
         }
         if ((categoryEndIndex < contents.length()) &&
             (contents.charAt(categoryEndIndex) != '\n')) {
+          shouldMove = false;
+        }
+      }
+
+      if (shouldMove) {
+        if ((analysis.getSurroundingTag(WikiTagType.INCLUDEONLY, categoryBeginIndex) != null) ||
+            (analysis.getSurroundingTag(WikiTagType.NOINCLUDE, categoryBeginIndex) != null) ||
+            (analysis.getSurroundingTag(WikiTagType.ONLYINCLUDE, categoryBeginIndex) != null)) {
           shouldMove = false;
         }
       }
