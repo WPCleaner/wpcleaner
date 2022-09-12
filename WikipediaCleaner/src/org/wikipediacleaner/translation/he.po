@@ -18,7 +18,7 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2022-09-08 11:22:28+0000\n"
+"PO-Revision-Date: 2022-09-12 11:22:43+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Hebrew <he@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -1167,11 +1167,11 @@ msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a50x/a501/CheckErrorAlgorithm501.java:739
 msgid "Regular expressions to be disabled"
-msgstr ""
+msgstr "אילו ביטויים רגולריים לכבות"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a50x/a501/CheckErrorAlgorithm501.java:743
 msgid "Regular expression"
-msgstr ""
+msgstr "ביטוי רגולרי"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a50x/a509/CheckErrorAlgorithm509.java:32
 msgid "Compact links"
