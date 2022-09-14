@@ -1082,13 +1082,9 @@ public class MainWindow
   public void actionOptionsSystem() {
     EnumWikipedia wiki = getWikipedia();
     String configPage = wiki.getConfigurationPage();
-    if (Utilities.isDesktopSupported()) {
-      Utilities.browseURL(wiki, configPage, true);
-    } else {
-      displayUrlMessage(
-          GT._T("You can learn how to configure {0} at the following URL:", Version.PROGRAM),
-          wiki.getSettings().getURL(configPage, false, true));
-    }
+    Utilities.browseURL(wiki, configPage, true, () -> displayUrlMessage(
+        GT._T("You can learn how to configure {0} at the following URL:", Version.PROGRAM),
+        wiki.getSettings().getURL(configPage, false, true)));
   }
 
   /**

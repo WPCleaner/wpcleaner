@@ -78,13 +78,10 @@ public class HelpButton {
         url = wiki.getConfiguration().getString(attributeHelpURL);
       }
     }
-    if (Utilities.isDesktopSupported()) {
-      Utilities.browseURL(url);
-    } else {
-      Utilities.displayUrlMessage(
-          parentComponent,
-          GT._T("You can read the help on {0} at the following URL:", Version.PROGRAM),
-          url);
-    }
+    final String finalUrl = url;
+    Utilities.browseURL(finalUrl, () -> Utilities.displayUrlMessage(
+        parentComponent,
+        GT._T("You can read the help on {0} at the following URL:", Version.PROGRAM),
+        finalUrl));
   }
 }

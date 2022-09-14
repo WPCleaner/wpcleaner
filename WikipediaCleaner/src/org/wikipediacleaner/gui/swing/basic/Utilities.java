@@ -226,15 +226,11 @@ public class Utilities {
     if ((message != null) && (message.trim().length() > 0)) {
       fullMessage += "\n" + message;
     }
-    if (Utilities.isDesktopSupported()) {
-      int answer = displayYesNoWarning(
-          parent,
-          fullMessage + "\n" + GT._T("Do you want to display help on configuring WPCleaner ?"));
-      if (answer == JOptionPane.YES_OPTION) {
-        Utilities.browseURL(URL_CONFIGURATION_HELP);
-      }
-    } else {
-      displayWarning(parent, message);
+    int answer = displayYesNoWarning(
+        parent,
+        fullMessage + "\n" + GT._T("Do you want to display help on configuring WPCleaner ?"));
+    if (answer == JOptionPane.YES_OPTION) {
+      Utilities.browseURL(URL_CONFIGURATION_HELP, () -> displayWarning(parent, message));
     }
   }
 
@@ -889,19 +885,8 @@ public class Utilities {
       Class<?> desktop = Class.forName("java.awt.Desktop");
       Method method = desktop.getMethod("isDesktopSupported", (Class[]) null);
       return (Boolean) method.invoke(null, (Object[]) null);
-    } catch (ClassNotFoundException e) {
-      log.debug("ClassNotFoundException: " + e.getMessage());
-      // Nothing to be done, JVM < 6
-    } catch (NoSuchMethodException e) {
-      log.error("NoSuchMethodException: " + e.getMessage());
-    } catch (InvocationTargetException e) {
-      log.error("InvocationTargetException: " + e.getMessage());
-    } catch (IllegalAccessException e) {
-      log.error("IllegalAccessException: " + e.getMessage());
-    } catch (ClassCastException e) {
-      log.error("ClassCastException: " + e.getMessage());
     } catch (Throwable e) {
-      log.error("Throwable: " + e.getClass().getName() + " - " + e.getMessage());
+      log.error("Throwable using Desktop.isDesktopSupported(): " + e.getClass().getName() + " - " + e.getMessage());
     }
     return false;
   }
@@ -916,8 +901,9 @@ public class Utilities {
    * Display an URI in the default browser.
    * 
    * @param uri URI.
+   * @param defaultAction Action to be done if an error occurs when using the default browser.
    */
-  public static void browseURL(URI uri) {
+  public static void browseURL(URI uri, Runnable defaultAction) {
     if (isDesktopSupported()) {
       // Attempt using Desktop class
       try {
@@ -930,33 +916,50 @@ public class Utilities {
       } catch (Throwable e) {
         log.error("Throwable using Desktop.browse(): " + e.getClass().getName() + " - " + e.getMessage());
       }
+    }
 
-      // Fallback on OS dependent method, see https://centerkey.com/java/browser/
-      final String osName = System.getProperty("os.name");
-      try {
-        if (osName.startsWith("Mac OS")) {
-          Class.forName("com.apple.eio.FileManager")
-              .getDeclaredMethod("openURL", new Class<?>[] {String.class})
-              .invoke(null, new Object[] {uri.toString()});
-        } else if (osName.startsWith("Windows")) {
-          Runtime.getRuntime()
-              .exec("rundll32 url.dll,FileProtocolHandler " + uri.toString());
-        } else {
-          String browser = null;
-          for (String b : BROWSERS) {
-            if ((browser == null) &&
-                (Runtime.getRuntime().exec(new String[] {"which", b}).getInputStream().read() != -1)) {
-              Runtime.getRuntime().exec(new String[] {browser = b, uri.toString()});
-            }
-          }
-          if (browser == null) {
-             throw new Exception(Arrays.toString(BROWSERS));
+    // Fallback on OS dependent method, see https://centerkey.com/java/browser/
+    final String osName = System.getProperty("os.name");
+    try {
+      if (osName.startsWith("Mac OS")) {
+        Class.forName("com.apple.eio.FileManager")
+            .getDeclaredMethod("openURL", new Class<?>[] {String.class})
+            .invoke(null, new Object[] {uri.toString()});
+        return;
+      } else if (osName.startsWith("Windows")) {
+        Runtime.getRuntime()
+            .exec("rundll32 url.dll,FileProtocolHandler " + uri.toString());
+        return;
+      } else {
+        for (String b : BROWSERS) {
+          if (Runtime.getRuntime().exec(new String[] {"which", b}).getInputStream().read() != -1) {
+            Runtime.getRuntime().exec(new String[] { b, uri.toString()});
+            return;
           }
         }
-      } catch (Throwable e) {
-        log.error("Throwable using alternative to Desktop.browse(): " + e.getClass().getName() + " - " + e.getMessage());
+        throw new Exception(Arrays.toString(BROWSERS));
       }
+    } catch (Throwable e) {
+      log.error("Throwable using alternative to Desktop.browse(): " + e.getClass().getName() + " - " + e.getMessage());
     }
+
+    if (defaultAction != null) {
+      defaultAction.run();
+    }
+  }
+
+  /**
+   * Display an URL in the default browser.
+   * 
+   * @param wiki Wiki.
+   * @param title Page title.
+   * @param action Page action.
+   * @param defaultAction Action to be done if an error occurs when using the default browser.
+   */
+  public static void browseURL(EnumWikipedia wiki, String title, String action, Runnable defaultAction) {
+    Configuration config = Configuration.getConfiguration();
+    boolean secured = config.getBoolean(null, ConfigurationValueBoolean.SECURE_URL);
+    browseURL(wiki.getSettings().getURL(title, action, secured), defaultAction);
   }
 
   /**
@@ -967,9 +970,23 @@ public class Utilities {
    * @param action Page action.
    */
   public static void browseURL(EnumWikipedia wiki, String title, String action) {
+    browseURL(wiki, title, action, () -> {
+      // Do nothing
+    });
+  }
+
+  /**
+   * Display an URL in the default browser.
+   * 
+   * @param wiki Wiki.
+   * @param title Page title.
+   * @param redirect Flag indicating if redirects should be followed.
+   * @param defaultAction Action to be done if an error occurs when using the default browser.
+   */
+  public static void browseURL(EnumWikipedia wiki, String title, boolean redirect, Runnable defaultAction) {
     Configuration config = Configuration.getConfiguration();
     boolean secured = config.getBoolean(null, ConfigurationValueBoolean.SECURE_URL);
-    browseURL(wiki.getSettings().getURL(title, action, secured));
+    browseURL(wiki.getSettings().getURL(title, redirect, secured), defaultAction);
   }
 
   /**
@@ -980,9 +997,24 @@ public class Utilities {
    * @param redirect Flag indicating if redirects should be followed.
    */
   public static void browseURL(EnumWikipedia wiki, String title, boolean redirect) {
-    Configuration config = Configuration.getConfiguration();
-    boolean secured = config.getBoolean(null, ConfigurationValueBoolean.SECURE_URL);
-    browseURL(wiki.getSettings().getURL(title, redirect, secured));
+    browseURL(wiki, title, redirect, () -> {
+      // Do  nothing
+    });
+  }
+
+  /**
+   * Display an URL in the default browser.
+   * 
+   * @param url URL.
+   * @param defaultAction Action to be done if an error occurs when using the default browser.
+   */
+  public static void browseURL(String url, Runnable defaultAction) {
+    try {
+      browseURL(new URI(url), defaultAction);
+    } catch (URISyntaxException e) {
+      // Nothing to be done
+      log.error("Error viewing page: " + e.getMessage());
+    }
   }
 
   /**
@@ -990,13 +1022,10 @@ public class Utilities {
    * 
    * @param url URL.
    */
-  public static void browseURL(String url) {
-    try {
-      browseURL(new URI(url));
-    } catch (URISyntaxException e) {
-      // Nothing to be done
-      log.error("Error viewing page: " + e.getMessage());
-    }
+  public static void browseURL(final String url) {
+    browseURL(url, () -> {
+      // Do nothing
+    });
   }
 
   /* ========================================================================== */

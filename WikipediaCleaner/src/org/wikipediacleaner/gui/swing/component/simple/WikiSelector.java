@@ -134,14 +134,10 @@ public class WikiSelector implements WikiProvider {
    */
   public void actionOtherWiki() {
     String url = URL_OTHER_WIKI;
-    if (Utilities.isDesktopSupported()) {
-      Utilities.browseURL(url);
-    } else {
-      Utilities.displayUrlMessage(
-          parentComponent,
-          GT._T("You can learn how to add other Wikipedia at the following URL:"),
-          url);
-    }
+    Utilities.browseURL(url, () -> Utilities.displayUrlMessage(
+        parentComponent,
+        GT._T("You can learn how to add other Wikipedia at the following URL:"),
+        url));
   }
 
   /**

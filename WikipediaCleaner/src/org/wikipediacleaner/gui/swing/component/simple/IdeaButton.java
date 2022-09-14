@@ -61,13 +61,9 @@ public class IdeaButton {
    */
   public void actionIdea() {
     String url = URL_TALK_PAGE;
-    if (Utilities.isDesktopSupported()) {
-      Utilities.browseURL(url);
-    } else {
-      Utilities.displayUrlMessage(
-          parentComponent,
-          GT._T("You can submit bug reports or feature requests at the following URL:"),
-          url);
-    }
+    Utilities.browseURL(url, () -> Utilities.displayUrlMessage(
+        parentComponent,
+        GT._T("You can submit bug reports or feature requests at the following URL:"),
+        url));
   }
 }

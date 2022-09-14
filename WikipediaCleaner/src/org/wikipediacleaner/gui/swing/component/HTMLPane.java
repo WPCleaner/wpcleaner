@@ -88,7 +88,9 @@ public class HTMLPane extends JEditorPane {
           }
         }
         if (uri != null) {
-          Utilities.browseURL(uri);
+          Utilities.browseURL(uri, () -> {
+            // Do nothing if browsing fails
+          });
         }
       } catch (URISyntaxException e) {
         // Nothing to do
