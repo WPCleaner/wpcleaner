@@ -26,7 +26,7 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2022-09-08 11:22:32+0000\n"
+"PO-Revision-Date: 2022-09-15 11:25:16+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Russian <ru@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -260,11 +260,11 @@ msgstr "Искать все ISBN"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISBN.java:407
 msgid "Search all ISBN-10"
-msgstr ""
+msgstr "Искать все ISBN-10"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISBN.java:412
 msgid "Search all ISBN-13"
-msgstr ""
+msgstr "Искать все ISBN-13"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISBN.java:429
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISBN.java:486
@@ -476,11 +476,11 @@ msgstr "Пробел шириной 1/6 em"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a016/CheckErrorAlgorithm016.java:409
 msgid "Figure space"
-msgstr ""
+msgstr "Цифровой пробел"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a016/CheckErrorAlgorithm016.java:410
 msgid "Punctuation space"
-msgstr ""
+msgstr "Пунктуационный пробел"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a016/CheckErrorAlgorithm016.java:411
 msgid "Zero-width space"
@@ -1184,7 +1184,7 @@ msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a50x/a509/CheckErrorAlgorithm509.java:32
 msgid "Compact links"
-msgstr ""
+msgstr "Компактные ссылки"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a50x/a509/CheckErrorAlgorithm509.java:78
 msgid "Compact link"
@@ -1823,12 +1823,12 @@ msgstr ""
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a566/CheckErrorAlgorithm566.java:250
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a566/CheckErrorAlgorithm566.java:265
 msgid "Value of the abbreviation"
-msgstr ""
+msgstr "Значение аббревиатуры"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a566/CheckErrorAlgorithm566.java:256
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a566/CheckErrorAlgorithm566.java:274
 msgid "Replacement for the abbreviation"
-msgstr ""
+msgstr "Замена аббревиатуры"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a566/CheckErrorAlgorithm566.java:261
 msgid "Possible replacements based on abbreviation value and title"
@@ -1924,7 +1924,7 @@ msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a576/CheckErrorAlgorithm576.java:241
 msgid "Image attribute"
-msgstr ""
+msgstr "Атрибут изображения"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a577/CheckErrorAlgorithm577.java:164
 #, java-format
@@ -2048,7 +2048,7 @@ msgstr "Страницы со ссылками на страницы значе�
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:22
 msgid "Disambiguation pages"
-msgstr ""
+msgstr "Страницы разрешения неоднозначностей"
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:23
 msgid "Double redirects"
@@ -2060,15 +2060,15 @@ msgstr "Страницы с наименьшим количеством верс
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:25
 msgid "Usage of gadgets"
-msgstr ""
+msgstr "Использование гаджетов"
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:26
 msgid "Globally wanted files"
-msgstr ""
+msgstr "Глобально требуемые файлы"
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:27
 msgid "Duplicated files"
-msgstr ""
+msgstr "Дублированные файлы"
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:28
 msgid "Redirects"
@@ -2100,7 +2100,7 @@ msgstr "Страницы с наибольшим числом файлов"
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:35
 msgid "Pages with the most interwikis"
-msgstr ""
+msgstr "Страницы с наибольшим числом интервики-ссылок"
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:36
 msgid "Most linked-to pages"
