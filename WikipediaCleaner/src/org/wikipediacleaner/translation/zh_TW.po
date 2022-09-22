@@ -5,6 +5,7 @@
 # Author: Kly
 # Author: StarrySky
 # Author: TongcyDai
+# Author: Willy1018
 # Author: Winston Sung
 # --
 # This file is distributed under the same license as the wikicleaner package.
@@ -12,7 +13,7 @@
 msgid ""
 msgstr ""
 ""
-"PO-Revision-Date: 2022-09-08 11:22:33+0000\n"
+"PO-Revision-Date: 2022-09-22 11:24:11+0000\n"
 "X-POT-Import-Date: 2022-09-05 16:30:24+0000\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -114,11 +115,11 @@ msgstr "您可以通過打開一個已存在的消歧義頁面來檢查{0}是否
 #: org/wikipediacleaner/Version.java:64
 #, java-format
 msgid "If {0} is not used on your wiki, you should add {1} to the page {2}."
-msgstr ""
+msgstr "如果您的 wiki 上未使用{0}，則應將{1}添加到頁面{2}。"
 
 #: org/wikipediacleaner/Version.java:70
 msgid "Many new features were added recently : try them !"
-msgstr ""
+msgstr "最近添加了許多新功能：試試吧！"
 
 #: org/wikipediacleaner/Version.java:72
 msgid "Leaving a note on talk pages with the list of links to disambiguation pages."
@@ -150,11 +151,11 @@ msgstr "你要繼續嗎？"
 #: org/wikipediacleaner/api/ModificationReport.java:108
 #, java-format
 msgid "Page {0}:"
-msgstr ""
+msgstr "頁面{0}："
 
 #: org/wikipediacleaner/api/ModificationReport.java:98
 msgid "The following errors have occurred:"
-msgstr ""
+msgstr "發生以下錯誤："
 
 #: org/wikipediacleaner/api/algorithm/AlgorithmError.java:417
 msgid "No available description"

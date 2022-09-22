@@ -6,6 +6,7 @@
 # Author: Druesenfieber
 # Author: Elliot
 # Author: FF-11
+# Author: Justman10000
 # Author: ManuelFranz
 # Author: Mglaser
 # Author: ThisCarthing
@@ -20,7 +21,7 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2022-09-08 11:22:27+0000\n"
+"PO-Revision-Date: 2022-09-22 11:24:06+0000\n"
 "Last-Translator: Crazy1880 <Unknown>\n"
 "Language-Team: German <de@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -1170,11 +1171,11 @@ msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a50x/a501/CheckErrorAlgorithm501.java:739
 msgid "Regular expressions to be disabled"
-msgstr ""
+msgstr "Reguläre Ausdrücke müssen deaktiviert werden"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a50x/a501/CheckErrorAlgorithm501.java:743
 msgid "Regular expression"
-msgstr ""
+msgstr "Regulärer Ausdruck"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a50x/a509/CheckErrorAlgorithm509.java:32
 msgid "Compact links"
