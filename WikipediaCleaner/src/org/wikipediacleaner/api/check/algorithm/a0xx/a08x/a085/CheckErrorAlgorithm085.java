@@ -40,6 +40,8 @@ public class CheckErrorAlgorithm085 extends CheckErrorAlgorithmBase {
 
   private final static Set<TagType> ignoredTags = new HashSet<>();
 
+  private final static Set<TagType> unsafeTags = new HashSet<>();
+
   private final static String HTML_SPACE = "&#x20;";
 
   static {
@@ -50,6 +52,9 @@ public class CheckErrorAlgorithm085 extends CheckErrorAlgorithmBase {
     interestingTags.add(WikiTagType.GALLERY);
     interestingTags.add(WikiTagType.INCLUDEONLY);
     interestingTags.add(WikiTagType.NOINCLUDE);
+
+    unsafeTags.add(WikiTagType.INCLUDEONLY);
+    unsafeTags.add(WikiTagType.NOINCLUDE);
 
     // ignoredTags.add(HtmlTagType.CODE);
     // ignoredTags.add(WikiTagType.NOWIKI);
@@ -213,6 +218,9 @@ public class CheckErrorAlgorithm085 extends CheckErrorAlgorithmBase {
       }
     }
 
+    // Check if tag is unsafe
+    boolean unsafeTag = unsafeTags.contains(tag.getType());
+
     // Define the extension of the replacement
     String internalValue = contents.substring(tag.getValueBeginIndex(), tag.getValueEndIndex());
     if (!ignoredText) {
@@ -271,10 +279,10 @@ public class CheckErrorAlgorithm085 extends CheckErrorAlgorithmBase {
     // Suggest replacements
     if (!ignoredText) {
       if (internalValue.length() > 0) {
-        errorResult.addReplacement(internalValue, !hasUnsafeArguments && isEmpty && !isBetweenSpecialCharacters);
+        errorResult.addReplacement(internalValue, !hasUnsafeArguments && isEmpty && !isBetweenSpecialCharacters && !unsafeTag);
         errorResult.addReplacement("");
       } else {
-        errorResult.addReplacement("", !hasUnsafeArguments && isEmpty && !isBetweenSpecialCharacters);
+        errorResult.addReplacement("", !hasUnsafeArguments && isEmpty && !isBetweenSpecialCharacters && !unsafeTag);
       }
     } else {
       if (useReplacement) {
@@ -307,7 +315,7 @@ public class CheckErrorAlgorithm085 extends CheckErrorAlgorithmBase {
    */
   @Override
   protected String internalAutomaticFix(PageAnalysis analysis) {
-    if (!analysis.getPage().isArticle()) {
+    if (!analysis.getPage().isInMainNamespace()) {
       return analysis.getContents();
     }
     return fixUsingAutomaticReplacement(analysis);
