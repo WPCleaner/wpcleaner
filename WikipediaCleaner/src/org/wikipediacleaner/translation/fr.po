@@ -20,7 +20,7 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2022-09-08 11:22:28+0000\n"
+"PO-Revision-Date: 2022-09-26 11:22:30+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: French <fr@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -921,11 +921,11 @@ msgstr "Remplacer %20 par une espace"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a078/CheckErrorAlgorithm078.java:202
 msgid "A list of regular expressions to find templates replacing <references> tags"
-msgstr "Une liste d’expressions régulières pour trouver les modèles qui remplacent des balises <references>"
+msgstr "Une liste d’expressions rationnelles pour trouver les modèles qui remplacent des balises <references>"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a078/CheckErrorAlgorithm078.java:205
 msgid "A regular expression to find templates replacing <references> tags"
-msgstr "Une expression régulière pour trouver les modèles qui remplacent des balises <references>"
+msgstr "Une expression rationnelle pour trouver les modèles qui remplacent les balises <references>"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a079/CheckErrorAlgorithm079.java:109
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a079/CheckErrorAlgorithm079.java:121
@@ -1169,7 +1169,7 @@ msgstr "Remplacer à chaque fois par"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a50x/a501/CheckErrorAlgorithm501.java:739
 msgid "Regular expressions to be disabled"
-msgstr "Expressions rationelles à désactiver"
+msgstr "Expressions rationnelles à désactiver"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a50x/a501/CheckErrorAlgorithm501.java:743
 msgid "Regular expression"
@@ -1247,11 +1247,11 @@ msgstr "Vrai si la suppression des liens internes dans le texte peut être autom
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a513/CheckErrorAlgorithm513.java:938
 msgid "A list of texts (regular expressions) that can be after the internal link"
-msgstr "Une liste de textes (expressions régulières) qui peuvent figurer après le lien interne"
+msgstr "Une liste de chaînes (sous forme d’expressions rationnelles) pour ce qui peut suffixer le lien interne"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a513/CheckErrorAlgorithm513.java:941
 msgid "Regular expression that can be after the internal link"
-msgstr "Expression régulière qui peut figurer après le lien interne"
+msgstr "Expression rationnelle pour ce qui peut suffixer le lien interne"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a513/CheckErrorAlgorithm513.java:945
 msgid "A list of texts that can be before the internal link"
@@ -2286,7 +2286,7 @@ msgstr "Texte de remplacement"
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingTableModel.java:186
 msgid "regex"
-msgstr "expression régulière"
+msgstr "expression rationnelle"
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:169
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:171
@@ -2384,7 +2384,7 @@ msgstr "Texte à utiliser comme remplacement"
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:663
 msgid "Use regular expressions"
-msgstr "Utiliser des expressions régulières"
+msgstr "Utiliser des expressions rationnelles"
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:735
 msgid "You must select the pages on which running automatic fixing."
@@ -3248,7 +3248,7 @@ msgstr "Effacer la marque de modification faite par robot"
 
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:586
 msgid "&Close after sending"
-msgstr "Fermer après envoi (Alt + &C)"
+msgstr "Fermer après l’envoi (Alt + &C)"
 
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:592
 msgid "&Add a note on talk page"
@@ -4884,7 +4884,7 @@ msgstr "Taille maximale pour la coloration syntaxique"
 
 #: org/wikipediacleaner/gui/swing/options/LimitOptionsPanel.java:207
 msgid "Threshold for slow regular expressions (ms)"
-msgstr "Seuil des expressions régulières lentes (ms)"
+msgstr "Seuil des expressions rationnelle lentes (ms)"
 
 #: org/wikipediacleaner/gui/swing/options/LimitOptionsPanel.java:224
 msgid "Maximum number of category members :"
