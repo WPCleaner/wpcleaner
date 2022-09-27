@@ -685,8 +685,7 @@ public class WPCConfiguration {
                       }
                       for (String elementReplacement : elementsReplacement) {
                         String replacementText = template.getParameterValue(elementReplacement);
-                        if ((replacementText != null) &&
-                            (replacementText.length() > 0)) {
+                        if (replacementText != null) {
                           suggestion.addReplacement(replacementText, automatic);
                         }
                       }

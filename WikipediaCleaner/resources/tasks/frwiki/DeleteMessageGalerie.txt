@@ -1,0 +1,16 @@
+DoTasks _Common.txt
+Set TypoGroups various
+Set Prefix [[Discussion_modèle:Message_galerie/Admissibilité|Admissibilité_du_modèle_Message_galerie]]
+FixDump C:\Users\Nicolas\Downloads\frwiki-$-pages-articles.xml.bz2 501
+
+# File namespace
+DoTasks _Common_Other.txt
+Set Namespaces 6
+Set TypoGroups various
+FixDump C:\Users\Nicolas\Downloads\frwiki-$-pages-articles.xml.bz2 501
+
+# Category namespace
+DoTasks _Common_Other.txt
+Set Namespaces 14
+Set TypoGroups various
+FixDump C:\Users\Nicolas\Downloads\frwiki-$-pages-articles.xml.bz2 501
