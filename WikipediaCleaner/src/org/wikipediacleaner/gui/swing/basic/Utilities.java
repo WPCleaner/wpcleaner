@@ -920,27 +920,35 @@ public class Utilities {
 
     // Fallback on OS dependent method, see https://centerkey.com/java/browser/
     final String osName = System.getProperty("os.name");
-    try {
-      if (osName.startsWith("Mac OS")) {
+    if (osName.startsWith("Mac OS")) {
+      try {
         Class.forName("com.apple.eio.FileManager")
             .getDeclaredMethod("openURL", new Class<?>[] {String.class})
             .invoke(null, new Object[] {uri.toString()});
-        return;
-      } else if (osName.startsWith("Windows")) {
+      } catch (Throwable e) {
+        log.error("Throwable on " + osName + " for browseURL(): " + e.getClass().getName() + " - " + e.getMessage());
+      }
+      return;
+    } else if (osName.startsWith("Windows")) {
+      try {
         Runtime.getRuntime()
             .exec("rundll32 url.dll,FileProtocolHandler " + uri.toString());
-        return;
-      } else {
-        for (String b : BROWSERS) {
+      } catch (Throwable e) {
+        log.error("Throwable on " + osName + " for browseURL(): " + e.getClass().getName() + " - " + e.getMessage());
+      }
+      return;
+    } else {
+      for (String b : BROWSERS) {
+        try {
           if (Runtime.getRuntime().exec(new String[] {"which", b}).getInputStream().read() != -1) {
             Runtime.getRuntime().exec(new String[] { b, uri.toString()});
             return;
           }
+        } catch (Throwable e) {
+          log.error("Throwable on " + osName + " for browseURL() with browser " + b + ": " + e.getClass().getName() + " - " + e.getMessage());
         }
-        throw new Exception(Arrays.toString(BROWSERS));
       }
-    } catch (Throwable e) {
-      log.error("Throwable using alternative to Desktop.browse(): " + e.getClass().getName() + " - " + e.getMessage());
+      log.error("Unable to find an altenative browser for browseURL() among " + Arrays.toString(BROWSERS));
     }
 
     if (defaultAction != null) {
