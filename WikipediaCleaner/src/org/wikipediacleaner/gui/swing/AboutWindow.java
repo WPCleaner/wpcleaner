@@ -102,6 +102,7 @@ public class AboutWindow extends BasicWindow {
   private Component createAboutComponents() {
     JTabbedPane pane = new JTabbedPane();
     pane.addTab(Version.PROGRAM, createWPCleanerTab());
+    pane.addTab("System", createSystemTab());
     pane.addTab("Commons Codec", createCommonsCodecTab());
     pane.addTab("Commons Compress", createCommonsCompressTab());
     pane.addTab("Commons HttpClient", createCommonsHttpClientTab());
@@ -233,6 +234,29 @@ public class AboutWindow extends BasicWindow {
         "See <a href='http://en.wikipedia.org/wiki/Wikipedia:WPCleaner'>Wikipedia:WPCleaner</a> for more information." +
         "</html>");
     addFile(panel, constraints, "LICENSE.txt");
+    return createScrollPane(panel);
+  }
+
+  /**
+   * @return System tab.
+   */
+  private Component createSystemTab() {
+    JPanel panel = new JPanel(new GridBagLayout());
+    GridBagConstraints constraints = initializeGridBagConstraints();
+    addPresentation(
+        panel, constraints,
+        "<html>" +
+        "<b>Java version</b>: " + System.getProperty("java.version") + "<br>" +
+        "<b>Java vendor</b>: " + System.getProperty("java.vendor") + "<br>" +
+        "<b>Java home</b>: " + System.getProperty("java.home") + "<br>" +
+        "<b>Java VM version</b>: " + System.getProperty("java.vm.version") + "<br>" +
+        "<b>Java VM vendor</b>: " + System.getProperty("java.vm.vendor") + "<br>" +
+        "<b>Java specification version</b>: " + System.getProperty("java.specification.version") + "<br>" +
+        "<b>Java specification vendor</b>: " + System.getProperty("java.specification.vendor") + "<br>" +
+        "<b>Operating system name</b>: " + System.getProperty("os.name") + "<br>" +
+        "<b>Operating system architecture</b>: " + System.getProperty("os.arch") + "<br>" +
+        "<b>Operating system version</b>: " + System.getProperty("os.version") + "<br>" +
+        "</html>");
     return createScrollPane(panel);
   }
 
