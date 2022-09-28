@@ -26,6 +26,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
+import javax.swing.JTextArea;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.WindowConstants;
 
@@ -243,20 +244,22 @@ public class AboutWindow extends BasicWindow {
   private Component createSystemTab() {
     JPanel panel = new JPanel(new GridBagLayout());
     GridBagConstraints constraints = initializeGridBagConstraints();
-    addPresentation(
-        panel, constraints,
-        "<html>" +
-        "<b>Java version</b>: " + System.getProperty("java.version") + "<br>" +
-        "<b>Java vendor</b>: " + System.getProperty("java.vendor") + "<br>" +
-        "<b>Java home</b>: " + System.getProperty("java.home") + "<br>" +
-        "<b>Java VM version</b>: " + System.getProperty("java.vm.version") + "<br>" +
-        "<b>Java VM vendor</b>: " + System.getProperty("java.vm.vendor") + "<br>" +
-        "<b>Java specification version</b>: " + System.getProperty("java.specification.version") + "<br>" +
-        "<b>Java specification vendor</b>: " + System.getProperty("java.specification.vendor") + "<br>" +
-        "<b>Operating system name</b>: " + System.getProperty("os.name") + "<br>" +
-        "<b>Operating system architecture</b>: " + System.getProperty("os.arch") + "<br>" +
-        "<b>Operating system version</b>: " + System.getProperty("os.version") + "<br>" +
-        "</html>");
+    String text =
+        "Java version: " + System.getProperty("java.version") + "\n" +
+        "Java vendor: " + System.getProperty("java.vendor") + "\n" +
+        "Java home: " + System.getProperty("java.home") + "\n" +
+        "Java VM version: " + System.getProperty("java.vm.version") + "\n" +
+        "Java VM vendor: " + System.getProperty("java.vm.vendor") + "\n" +
+        "Java specification version: " + System.getProperty("java.specification.version") + "\n" +
+        "Java specification vendor: " + System.getProperty("java.specification.vendor") + "\n" +
+        "Operating system name: " + System.getProperty("os.name") + "\n" +
+        "Operating system architecture: " + System.getProperty("os.arch") + "\n" +
+        "Operating system version: " + System.getProperty("os.version");
+    JTextArea textArea = new JTextArea(text);
+    textArea.setEditable(false);
+    textArea.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+    panel.add(textArea, constraints);
+    constraints.gridy++;
     return createScrollPane(panel);
   }
 
