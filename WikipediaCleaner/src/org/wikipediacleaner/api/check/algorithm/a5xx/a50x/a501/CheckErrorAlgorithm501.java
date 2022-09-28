@@ -79,45 +79,21 @@ public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
       return result;
     }
 
-    // Initialize active suggestions
+    // Handle active suggestions
     List<Suggestion> activeSuggestions = getSuggestions(onlyAutomatic);
     if (activeSuggestions.isEmpty()) {
       return false;
     }
-
-    // Check spelling in templates
     List<Replacement> replacements = new ArrayList<>();
-    if ((result == false) || (errors != null)) {
-      result |= analyzeTemplates(analysis, activeSuggestions, replacements);
-    }
-
-    // Check spelling in titles
-    if ((result == false) || (errors != null)) {
-      result |= analyzeTitles(analysis, activeSuggestions, replacements);
-    }
-
-    // Check spelling in internal links
-    if ((result == false) || (errors != null)) {
-      result |= analyzeInternalLinks(analysis, activeSuggestions, replacements);
-    }
-
-    // Check spelling in tags
-    if ((result == false) || (errors != null)) {
-      result |= analyzeTags(analysis, activeSuggestions, replacements);
-    }
-
-    // Check spelling in normal text with non native regular expressions
-    if ((result == false) || (errors != null)) {
-      result |= analyzeNonNativeText(analysis, activeSuggestions, replacements);
-    }
-
-    // Check spelling in normal text with native regular expressions
-    if ((result == false) || (errors != null)) {
-      result |= analyzeNativeText(analysis, activeSuggestions, replacements);
-    }
-
+    result |= analyzeAllParts(analysis, activeSuggestions, replacements, errors != null);
     if (errors == null) {
       return result;
+    }
+
+    // Handle additional suggestions
+    if (result) {
+      List<Suggestion> additionalActiveSuggestions = getAdditionalSuggestions(onlyAutomatic);
+      result |= analyzeAllParts(analysis, additionalActiveSuggestions, replacements, true);
     }
 
     // Group replacements
@@ -196,6 +172,46 @@ public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
         }
       }
       errors.add(error);
+    }
+
+    return result;
+  }
+
+  private boolean analyzeAllParts(
+      PageAnalysis analysis,
+      List<Suggestion> activeSuggestions,
+      List<Replacement> replacements,
+      boolean full) {
+    boolean result = false;
+
+    // Check spelling in templates
+    if ((result == false) || full) {
+      result |= analyzeTemplates(analysis, activeSuggestions, replacements);
+    }
+
+    // Check spelling in titles
+    if ((result == false) || full) {
+      result |= analyzeTitles(analysis, activeSuggestions, replacements);
+    }
+
+    // Check spelling in internal links
+    if ((result == false) || full) {
+      result |= analyzeInternalLinks(analysis, activeSuggestions, replacements);
+    }
+
+    // Check spelling in tags
+    if ((result == false) || full) {
+      result |= analyzeTags(analysis, activeSuggestions, replacements);
+    }
+
+    // Check spelling in normal text with non native regular expressions
+    if ((result == false) || full) {
+      result |= analyzeNonNativeText(analysis, activeSuggestions, replacements);
+    }
+
+    // Check spelling in normal text with native regular expressions
+    if ((result == false) || full) {
+      result |= analyzeNativeText(analysis, activeSuggestions, replacements);
     }
 
     return result;
@@ -666,6 +682,22 @@ public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
         .collect(Collectors.toList());
   }
 
+  /**
+   * Retrieve the additional list of suggestions.
+   * 
+   * @param onlyAutomatic True if only additional suggestions with automatic fixes should be considered.
+   * @return List of suggestions.
+   */
+  @Nonnull
+  private List<Suggestion> getAdditionalSuggestions(boolean onlyAutomatic) {
+    List<Suggestion> tmp = onlyAutomatic ? automaticActiveSuggestions : allActiveSuggestions;
+    return tmp.stream()
+        .filter(s -> (additionalAuthorizedGroups != null) && (additionalAuthorizedGroups.contains(s.getGroup())))
+        .filter(s -> (authorizedGroups != null) && (!authorizedGroups.contains(s.getGroup())))
+        .filter(s -> !disableRegexp.contains(s.getPatternText()))
+        .collect(Collectors.toList());
+  }
+
   @Nullable
   private Set<String> authorizedGroups;
 
@@ -676,6 +708,18 @@ public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
    */
   public void setAuthorizedGroups(Set<String> groups) {
     this.authorizedGroups = groups;
+  }
+
+  @Nullable
+  private Set<String> additionalAuthorizedGroups;
+
+  /**
+   * Restrict the additional suggestions to a list of groups.
+   * 
+   * @param groups Additional authorized groups.
+   */
+  public void setAdditionalAuthorizedGroups(Set<String> groups) {
+    this.additionalAuthorizedGroups = groups;
   }
 
   /** List of regular expressions to disable */

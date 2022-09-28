@@ -112,6 +112,9 @@ public class Bot implements BasicWorkerListener {
   /** List of groups that are used for fixing typography and spelling errors (CW#501) */
   private final Set<String> typoGroups = new HashSet<>();
 
+  /** List of additional groups that are used for fixing typography and spelling errors (CW#501) */
+  private final Set<String> additionalTypoGroups = new HashSet<>();
+
   /**
    * @param args Command line arguments
    */
@@ -627,13 +630,23 @@ public class Bot implements BasicWorkerListener {
       }
       return true;
     }
-    
+
     // Set Typo groups
     if ("TypoGroups".equalsIgnoreCase(parameter) &&
         (actionArgs.length > 1)) {
       typoGroups.clear();
       for (int numArg = 1; numArg < actionArgs.length; numArg++) {
         typoGroups.add(actionArgs[numArg]);
+      }
+      return true;
+    }
+
+    // Set Additional typo groups
+    if ("AdditionalTypoGroups".equalsIgnoreCase(parameter) &&
+        (actionArgs.length > 1)) {
+      additionalTypoGroups.clear();
+      for (int numArg = 1; numArg < actionArgs.length; numArg++) {
+        additionalTypoGroups.add(actionArgs[numArg]);
       }
       return true;
     }
@@ -786,6 +799,7 @@ public class Bot implements BasicWorkerListener {
       CheckErrorAlgorithm algorithm = CheckErrorAlgorithms.getAlgorithm(wiki, 501);
       if (algorithm instanceof CheckErrorAlgorithm501) {
         ((CheckErrorAlgorithm501) algorithm).setAuthorizedGroups(typoGroups);
+        ((CheckErrorAlgorithm501) algorithm).setAdditionalAuthorizedGroups(additionalTypoGroups);
       }
     }
     if (actions.isEmpty()) {

@@ -1,5 +1,6 @@
 Set AdditionalAlgorithms 1 2 7 9 10 16 17 18 19 22 25 44 46 48 52 55 64 75 83 85 88 90 91 92 104 106 501 513 524 526 532 533 534 537 538 539 540 541 542 543 545 547 548 549 550 551 553 554 555 557 558 559 560 562 563 564 565 566 567 568 569 572 573 574 575 576 577
 Set TypoGroups bogus-image-options CT CW566 espaces various
+Set AdditionalTypoGroups bogus-image-options CT CW566 espaces various
 Set Configuration SlowRegexp 1000
 Set Configuration TimeBetweenEdit 5
 Set Configuration MaxEditsPerMinute 10
