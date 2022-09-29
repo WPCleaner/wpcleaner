@@ -20,7 +20,7 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2022-09-26 11:22:30+0000\n"
+"PO-Revision-Date: 2022-09-29 11:22:54+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: French <fr@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -2202,7 +2202,7 @@ msgstr "Titre"
 
 #: org/wikipediacleaner/api/data/PageComparator.java:284
 msgid "Revision Id"
-msgstr "Identifiant de version"
+msgstr "Identifiant de révision"
 
 #: org/wikipediacleaner/api/data/PageComparator.java:327
 msgid "Page Id"
@@ -3392,7 +3392,7 @@ msgstr "Mettre à jo&ur"
 
 #: org/wikipediacleaner/gui/swing/RecentChangesTableModel.java:253
 msgid "Id"
-msgstr "ID"
+msgstr "Identifiant"
 
 #: org/wikipediacleaner/gui/swing/RecentChangesTableModel.java:259
 msgid "User"
