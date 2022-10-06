@@ -1,6 +1,7 @@
 # Translation of WPCleaner to Bangla (বাংলা)
 # Exported from translatewiki.net
 #
+# Author: Md. Golam Mukit Khan
 # Author: Sibabrata Banerjee
 # Author: Titodutta
 # Author: Yahya
@@ -14,7 +15,7 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2022-09-08 11:22:26+0000\n"
+"PO-Revision-Date: 2022-10-06 11:23:23+0000\n"
 "Last-Translator: Aftabuzzaman <Leemon432@gmail.com>\n"
 "Language-Team: Bengali <bn@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -321,7 +322,7 @@ msgstr ""
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a573/CheckErrorAlgorithm573.java:240
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a576/CheckErrorAlgorithm576.java:235
 msgid "Name of the template"
-msgstr ""
+msgstr "টেমপ্লেটের নাম"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a002/CheckErrorAlgorithm002.java:684
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a060/CheckErrorAlgorithm060.java:201
@@ -337,7 +338,7 @@ msgstr ""
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a573/CheckErrorAlgorithm573.java:243
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a576/CheckErrorAlgorithm576.java:238
 msgid "Name of the parameter"
-msgstr ""
+msgstr "পরামিতির নাম"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a003/CheckErrorAlgorithm003.java:121
 msgid "Close tag"
@@ -1347,7 +1348,7 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/NewSectionWindow.java:115
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:531
 msgid "Comment"
-msgstr ""
+msgstr "মন্তব্য"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a524/CheckErrorAlgorithm524.java:395
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a524/CheckErrorAlgorithm524.java:398
@@ -2031,7 +2032,7 @@ msgstr ""
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:22
 msgid "Disambiguation pages"
-msgstr ""
+msgstr "দ্ব্যর্থতা নিরসন পাতা"
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:23
 msgid "Double redirects"
@@ -2055,11 +2056,11 @@ msgstr ""
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:28
 msgid "Redirects"
-msgstr ""
+msgstr "পুনর্নির্দেশ"
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:29
 msgid "Orphaned pages"
-msgstr ""
+msgstr "পিতৃহীন পাতা"
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:30
 msgid "Long pages"
@@ -2067,7 +2068,7 @@ msgstr "দীর্ঘ পাতাসমূহ"
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:31
 msgid "Media statistics"
-msgstr ""
+msgstr "মিডিয়া পরিসংখ্যান"
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:32
 msgid "Pages with the most categories"
@@ -2186,7 +2187,7 @@ msgstr ""
 
 #: org/wikipediacleaner/api/data/PageComparator.java:198
 msgid "Namespace"
-msgstr ""
+msgstr "নামস্থান"
 
 #: org/wikipediacleaner/api/data/PageComparator.java:241
 #: org/wikipediacleaner/gui/swing/RecentChangesTableModel.java:257
@@ -2205,7 +2206,7 @@ msgstr ""
 #: org/wikipediacleaner/api/data/PageComparator.java:419
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:370
 msgid "Redirect"
-msgstr ""
+msgstr "পুনর্নির্দেশ"
 
 #: org/wikipediacleaner/api/data/TemplateMatcher1L.java:77
 #: org/wikipediacleaner/api/data/TemplateMatcher1LT.java:79
@@ -2692,15 +2693,15 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/LanguageSelectionPanel.java:192
 #: org/wikipediacleaner/gui/swing/component/simple/LanguageSelector.java:73
 msgid "Language"
-msgstr ""
+msgstr "ভাষা"
 
 #: org/wikipediacleaner/gui/swing/LanguageSelectionPanel.java:206
 msgid "Script"
-msgstr ""
+msgstr "লিপি"
 
 #: org/wikipediacleaner/gui/swing/LanguageSelectionPanel.java:221
 msgid "Region"
-msgstr ""
+msgstr "অঞ্চল"
 
 #: org/wikipediacleaner/gui/swing/LanguageSelectionPanel.java:240
 #, java-format
@@ -4155,11 +4156,11 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/checkwiki/DetectionListTableModel.java:155
 msgid "Error"
-msgstr ""
+msgstr "ত্রুটি"
 
 #: org/wikipediacleaner/gui/swing/checkwiki/DetectionListTableModel.java:159
 msgid "Location"
-msgstr ""
+msgstr "অবস্থান"
 
 #: org/wikipediacleaner/gui/swing/checkwiki/DetectionListTableModel.java:163
 msgid "Notice"
@@ -4258,7 +4259,7 @@ msgstr[1] ""
 #: org/wikipediacleaner/gui/swing/component/simple/HelpButton.java:54
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:145
 msgid "Help"
-msgstr ""
+msgstr "সাহায্য"
 
 #: org/wikipediacleaner/gui/swing/component/simple/HelpButton.java:86
 #, java-format
@@ -4284,15 +4285,15 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/component/simple/PasswordInput.java:61
 msgid "Password:"
-msgstr ""
+msgstr "পাসওয়ার্ড:"
 
 #: org/wikipediacleaner/gui/swing/component/simple/UserNameSelector.java:62
 msgid "Username:"
-msgstr ""
+msgstr "ব্যবহারকারী নাম:"
 
 #: org/wikipediacleaner/gui/swing/component/simple/WikiSelector.java:74
 msgid "Wiki"
-msgstr ""
+msgstr "উইকি"
 
 #: org/wikipediacleaner/gui/swing/component/simple/WikiSelector.java:84
 msgid "Other Wiki"
@@ -4645,11 +4646,11 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:203
 msgid "Image"
-msgstr ""
+msgstr "চিত্র"
 
 #: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:209
 msgid "Category"
-msgstr ""
+msgstr "বিষয়শ্রেণী"
 
 #: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:215
 msgid "Default sort"
@@ -4657,19 +4658,19 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:221
 msgid "Language link"
-msgstr ""
+msgstr "ভাষা সংযোগ"
 
 #: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:227
 msgid "External link"
-msgstr ""
+msgstr "বহিঃসংযোগ"
 
 #: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:233
 msgid "Interwiki link"
-msgstr ""
+msgstr "আন্তঃউইকি সংযোগ"
 
 #: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:239
 msgid "Tag"
-msgstr ""
+msgstr "ট্যাগ"
 
 #: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:245
 msgid "List items"
@@ -4677,11 +4678,11 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:251
 msgid "Table"
-msgstr ""
+msgstr "ছক"
 
 #: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:257
 msgid "Reference"
-msgstr ""
+msgstr "তথ্যসূত্র"
 
 #: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:263
 msgid "Programming elements"
@@ -4824,7 +4825,7 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:239
 msgid "Signature:"
-msgstr ""
+msgstr "স্বাক্ষর:"
 
 #: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:270
 msgid "Look & Feel"
