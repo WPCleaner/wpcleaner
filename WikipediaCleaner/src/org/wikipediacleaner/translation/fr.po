@@ -4,6 +4,7 @@
 # Author: Alno
 # Author: Florian COLLIN
 # Author: Gomoko
+# Author: LD
 # Author: NicoV
 # Author: NicoV
 # Author: Pols12
@@ -20,7 +21,7 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2022-09-29 11:22:54+0000\n"
+"PO-Revision-Date: 2022-10-10 11:21:29+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: French <fr@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -88,7 +89,7 @@ msgstr "J’essaye de garder {0} à jour avec le projet Correction du Wiki, mais
 
 #: org/wikipediacleaner/Version.java:51
 msgid "The Check Wiki project has evolved a lot recently."
-msgstr "Le projet Correction du Wiki a beaucoup évolué récemment."
+msgstr "Le projet « Check Wiki » a beaucoup évolué récemment."
 
 #: org/wikipediacleaner/Version.java:52
 msgid "New detections have been added either with new error numbers or by replacing previously used error numbers."
