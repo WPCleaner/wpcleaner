@@ -27,10 +27,12 @@ import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageElementTable;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
+import org.wikipediacleaner.api.data.contents.ContentsUtil;
 import org.wikipediacleaner.api.data.contents.tag.HtmlTagType;
 import org.wikipediacleaner.api.data.contents.tag.TagBuilder;
 import org.wikipediacleaner.api.data.contents.tag.TagFormat;
 import org.wikipediacleaner.api.data.contents.tag.TagType;
+import org.wikipediacleaner.api.data.contents.tag.WikiTagType;
 import org.wikipediacleaner.api.data.contents.template.TemplateBuilder;
 import org.wikipediacleaner.i18n.GT;
 
@@ -220,6 +222,25 @@ public class CheckErrorAlgorithm541 extends CheckErrorAlgorithmBase {
   private CheckErrorResult analyzeCenterTag(
       PageAnalysis analysis, PageElementTag tag) {
     String contents = analysis.getContents();
+
+    // Check for center tag around a gallery tag
+    if (tag.isComplete() && !tag.isFullTag()) {
+      int valueBeginIndex = ContentsUtil.moveIndexAfterWhitespace(contents, tag.getValueBeginIndex());
+      if ((valueBeginIndex < contents.length()) && (contents.charAt(valueBeginIndex) == '<')) {
+        PageElementTag insideTag = analysis.isInTag(valueBeginIndex + 1, WikiTagType.GALLERY);
+        if (insideTag != null) {
+          int valueEndIndex = ContentsUtil.moveIndexAfterWhitespace(contents, insideTag.getCompleteEndIndex());
+          if (valueEndIndex == tag.getValueEndIndex()) {
+            CheckErrorResult errorResult = createCheckErrorResult(
+                analysis, tag.getCompleteBeginIndex(), tag.getCompleteEndIndex());
+            // TODO
+            String replacement = contents.substring(tag.getValueBeginIndex(), tag.getValueEndIndex());
+            errorResult.addReplacement(replacement, GT._T("Remove {0} tag", tag.getName()), true);
+            return errorResult;
+          }
+        }
+      }
+    }
 
     // Check for center tag inside a table cell
     if (tag.isComplete() && !tag.isFullTag()) {
