@@ -233,7 +233,6 @@ public class CheckErrorAlgorithm541 extends CheckErrorAlgorithmBase {
           if (valueEndIndex == tag.getValueEndIndex()) {
             CheckErrorResult errorResult = createCheckErrorResult(
                 analysis, tag.getCompleteBeginIndex(), tag.getCompleteEndIndex());
-            // TODO
             String replacement = contents.substring(tag.getValueBeginIndex(), tag.getValueEndIndex());
             errorResult.addReplacement(replacement, GT._T("Remove {0} tag", tag.getName()), true);
             return errorResult;
