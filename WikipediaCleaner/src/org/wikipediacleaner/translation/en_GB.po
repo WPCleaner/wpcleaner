@@ -15,7 +15,7 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2022-10-13 11:21:33+0000\n"
+"PO-Revision-Date: 2022-10-17 11:21:13+0000\n"
 "Last-Translator: Andi Chandler <Unknown>\n"
 "Language-Team: English (United Kingdom) <en_GB@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -1490,7 +1490,7 @@ msgstr "Fix bold and italic"
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a541/CheckErrorAlgorithm541.java:238
 #, java-format
 msgid "Remove {0} tag"
-msgstr "{0} တဂ်ကို ဖယ်ပလိုက်ပ့"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a541/CheckErrorAlgorithm541.java:336
 msgid "for marking an edit"
