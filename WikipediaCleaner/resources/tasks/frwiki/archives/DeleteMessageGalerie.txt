@@ -3,6 +3,12 @@ Set TypoGroups galerie
 Set Prefix [[Discussion_modèle:Message_galerie/Admissibilité|Admissibilité_du_modèle_Message_galerie]]
 FixDump C:\Users\Nicolas\Downloads\frwiki-$-pages-articles.xml.bz2 501
 
+# User namespace
+DoTasks _Common_Other.txt
+Set Namespaces 2
+Set AdditionalAlgorithms 501
+FixDump C:\Users\Nicolas\Downloads\frwiki-$-pages-meta-current.xml.bz2 501
+
 # File namespace
 DoTasks _Common_Other.txt
 Set Namespaces 6
