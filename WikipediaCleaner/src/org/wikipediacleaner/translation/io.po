@@ -9,12 +9,12 @@
 msgid ""
 msgstr ""
 ""
-"PO-Revision-Date: 2022-10-13 11:21:34+0000\n"
+"PO-Revision-Date: 2022-10-27 11:31:25+0000\n"
 "X-POT-Import-Date: 2022-10-12 06:30:23+0000\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Language: io\n"
-"X-Generator: MediaWiki 1.40.0-alpha; Translate 2022-07-28\n"
+"X-Generator: MediaWiki 1.40.0-alpha; Translate 2022-10-21\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: org/wikipediacleaner/Version.java:31
