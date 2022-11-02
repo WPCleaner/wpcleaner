@@ -28,6 +28,7 @@ import org.wikipediacleaner.api.check.BasicActionProvider;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase;
 import org.wikipediacleaner.api.configuration.WPCConfiguration;
+import org.wikipediacleaner.api.configuration.WPCConfigurationString;
 import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.PageElementTemplate.Parameter;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
@@ -147,6 +148,16 @@ public class CheckErrorAlgorithm577 extends CheckErrorAlgorithmBase {
     if (value.indexOf('>') > 0) {
       value = ContentsComment.stripComments(analysis.comments().getAll(), value, param.getValueStartIndex());
       if (value.isEmpty() || isValidDOI(value)) {
+        return false;
+      }
+    }
+
+    // Check if it's an Accept-this-as-written syntax
+    WPCConfiguration configuration = analysis.getWPCConfiguration();
+    String acceptThisAsWrittenPrefix = configuration.getString(WPCConfigurationString.ACCEPT_THIS_AS_WRITTEN_PREFIX);
+    String acceptThisAsWrittenSuffix = configuration.getString(WPCConfigurationString.ACCEPT_THIS_AS_WRITTEN_SUFFIX);
+    if (StringUtils.isNotEmpty(acceptThisAsWrittenPrefix) && StringUtils.isNotEmpty(acceptThisAsWrittenSuffix)) {
+      if (value.startsWith(acceptThisAsWrittenPrefix) && value.endsWith(acceptThisAsWrittenSuffix)) {
         return false;
       }
     }
