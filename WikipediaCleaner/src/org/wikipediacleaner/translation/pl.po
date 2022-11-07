@@ -5,6 +5,7 @@
 # Author: Rail
 # Author: Rail
 # Author: Strebski
+# Author: WTM
 # Author: Woytecr
 # --
 # This file is distributed under the same license as the wikicleaner package.
@@ -15,7 +16,7 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2022-10-27 11:31:28+0000\n"
+"PO-Revision-Date: 2022-11-07 12:31:14+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Polish <pl@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -30,7 +31,7 @@ msgstr ""
 #: org/wikipediacleaner/Version.java:31
 #, java-format
 msgid "{0} extension is now available on all WikiMedia wikis."
-msgstr ""
+msgstr "Rozszerzenie {0} jest teraz dostępne na wszystkich wiki WikiMedia."
 
 #: org/wikipediacleaner/Version.java:32
 msgid "It identifies wikitext patterns that must or can be fixed in pages."
@@ -145,9 +146,9 @@ msgid "Updating page {0}"
 msgstr "Aktualizowanie strony {0}"
 
 #: org/wikipediacleaner/api/MediaWiki.java:316
-#, fuzzy, java-format
+#, java-format
 msgid "The page {0} has been modified."
-msgstr "Zmieniono {0} stronę"
+msgstr "Strona {0} została zmieniona."
 
 #: org/wikipediacleaner/api/MediaWiki.java:317
 #, fuzzy
@@ -219,7 +220,6 @@ msgid "List of false positives for this type of error"
 msgstr "Wykaz wyjątków (rezultatów fałszywie pozytywnych) dla tego typu błędu"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmBase.java:321
-#, fuzzy
 msgid "Page containing a false positive for this type of error"
 msgstr "Adres strony zawierającej wykaz wyjątków (rezultatów fałszywie pozytywnych) dla tego typu błędu"
 
@@ -361,7 +361,7 @@ msgstr "Lista szablonów z {0}"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a003/CheckErrorAlgorithm003.java:279
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a003/CheckErrorAlgorithm003.java:286
-#, fuzzy, java-format
+#, java-format
 msgid "Template resulting in the inclusion of {0}"
 msgstr "Lista szablonów z {0}"
 
@@ -482,9 +482,8 @@ msgid "Left-to-right mark"
 msgstr "Znacznik od lewej do prawej"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a016/CheckErrorAlgorithm016.java:413
-#, fuzzy
 msgid "Right-to-left mark"
-msgstr "Znacznik od lewej do prawej"
+msgstr "Znak od prawej do lewej"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a016/CheckErrorAlgorithm016.java:414
 msgid "Line separator"
@@ -495,23 +494,20 @@ msgid "Left-to-right embedding"
 msgstr "Osadzanie od lewej do prawej"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a016/CheckErrorAlgorithm016.java:416
-#, fuzzy
 msgid "Right-to-left embedding"
-msgstr "Osadzanie od lewej do prawej"
+msgstr "Osadzanie od prawej do lewej"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a016/CheckErrorAlgorithm016.java:417
 msgid "Pop directional formatting"
 msgstr "Formatowanie kierunkowe pop"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a016/CheckErrorAlgorithm016.java:418
-#, fuzzy
 msgid "Left-to-right override"
-msgstr "Znacznik od lewej do prawej"
+msgstr "Zastępowanie od lewej do prawej"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a016/CheckErrorAlgorithm016.java:419
-#, fuzzy
 msgid "Right-to-left override"
-msgstr "Znacznik od lewej do prawej"
+msgstr "Zastępowanie od prawej do lewej"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a016/CheckErrorAlgorithm016.java:420
 msgid "Byte order mark"
@@ -607,18 +603,16 @@ msgid "Restrict the detection to the first characters"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a03x/a037/CheckErrorAlgorithm037.java:233
-#, fuzzy
 msgid "Maximum number of characters to use for the detection"
-msgstr "Maksymalna liczba błędów"
+msgstr "Maksymalna liczba znaków"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a03x/a037/CheckErrorAlgorithm037.java:236
 msgid "List of templates that prevent automatic fixing of this error"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a03x/a037/CheckErrorAlgorithm037.java:239
-#, fuzzy
 msgid "Template that prevent automatic fixing of this error"
-msgstr "Ustaw wartość na true, aby wyłączyć automatyczne poprawianie dla tego typu błędu"
+msgstr "Szablon, który uniemożliwia automatyczne naprawienie tego błędu"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a04x/a044/CheckErrorAlgorithm044.java:37
 msgid "Fix all bold headlines"
@@ -746,9 +740,9 @@ msgid "A list of abbreviations that generate false positives when placed before 
 msgstr "Wykaz skrótów powodujących fałszywy komunikat o błędzie – gdy są umieszczone przed {0}"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a067/CheckErrorAlgorithm067.java:364
-#, fuzzy, java-format
+#, java-format
 msgid "An abbreviation that generate false positives when placed before {0}"
-msgstr "Wykaz skrótów powodujących fałszywy komunikat o błędzie – gdy są umieszczone przed {0}"
+msgstr "Skrót powodujący fałszywy komunikat o błędzie – gdy umieszczony przed {0}"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a068/CheckErrorAlgorithm068.java:54
 msgid "Check all links to other language"
@@ -816,9 +810,8 @@ msgstr "Możesz zastąpić link używając szablonu {0}"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a068/CheckErrorAlgorithm068.java:417
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a068/CheckErrorAlgorithm068.java:421
-#, fuzzy
 msgid "A template that can be used instead of the link to an other language."
-msgstr "Szablon, którego można użyć zamiast znaku apostrofu"
+msgstr "Szablon, którego można użyć zamiast linku do innego języka."
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a068/CheckErrorAlgorithm068.java:424
 msgid "Parameter name for the local page name"
@@ -1000,9 +993,8 @@ msgid "A list of texts that can be added to sections without content"
 msgstr "Wykaz tekstów, które mogą być wstawione do sekcji bez zawartości"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a08x/a084/CheckErrorAlgorithm084.java:170
-#, fuzzy
 msgid "A text that can be added to sections without content"
-msgstr "Wykaz tekstów, które mogą być wstawione do sekcji bez zawartości"
+msgstr "Tekst, który można dodać do sekcji bez zawartości"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a08x/a084/CheckErrorAlgorithm084.java:173
 msgid "Restrict verification to titles with a higher level"
@@ -1025,14 +1017,12 @@ msgid "A list of templates that can be used to replace &lt;center&gt; tags"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a08x/a085/CheckErrorAlgorithm085.java:363
-#, fuzzy
 msgid "Template that can be used to replace &lt;center&gt; tags"
-msgstr "Szablony, które mogą zastąpić znaczniki {0}"
+msgstr "Szablon, który może być użyty do zastąpienia znaczników &lt;center&gt;"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a08x/a085/CheckErrorAlgorithm085.java:366
-#, fuzzy
 msgid "Name of the parameter to use"
-msgstr "Potrzebne szablony"
+msgstr "Nazwa parametru do użycia"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a090/CheckErrorAlgorithm090.java:659
 msgid "What text should be displayed by the link?"
@@ -1114,9 +1104,8 @@ msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a092/CheckErrorAlgorithm092.java:291
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a092/CheckErrorAlgorithm092.java:294
-#, fuzzy
 msgid "To report only consecutive titles"
-msgstr "Tylko linki do innych wersji językowych"
+msgstr "Tylko kolejne tytuły"
 
 #: org/wikipediacleaner/api/check/algorithm/a1xx/a10x/a101/CheckErrorAlgorithm101.java:164
 msgid "List of ordinal suffixes"
@@ -1151,9 +1140,8 @@ msgstr ""
 #: org/wikipediacleaner/api/check/algorithm/a1xx/a11x/a111/CheckErrorAlgorithm111.java:204
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a568/CheckErrorAlgorithm568.java:267
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a568/CheckErrorAlgorithm568.java:276
-#, fuzzy
 msgid "Template name"
-msgstr "Szablon"
+msgstr "Nazwa szablonu"
 
 #: org/wikipediacleaner/api/check/algorithm/a1xx/a11x/a111/CheckErrorAlgorithm111.java:207
 msgid "Parameter for the name of the group"
@@ -1236,9 +1224,8 @@ msgid "Name of a template that creates an internal link"
 msgstr "Wykaz tekstów, które mogą być wstawione do sekcji bez zawartości"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a513/CheckErrorAlgorithm513.java:912
-#, fuzzy
 msgid "Name of a template that can be used as a replacement"
-msgstr "Szablony, które mogą zastąpić znaczniki {0}"
+msgstr "Nazwa szablonu, który może być użyty jako zamiennik"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a513/CheckErrorAlgorithm513.java:916
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a566/CheckErrorAlgorithm566.java:253
@@ -1252,9 +1239,8 @@ msgid "A list of template parameters that create the text of an external link"
 msgstr "Wykaz tekstów, które mogą być wstawione do sekcji bez zawartości"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a513/CheckErrorAlgorithm513.java:926
-#, fuzzy
 msgid "Name of a template that creates an external link"
-msgstr "Wykaz tekstów, które mogą być wstawione do sekcji bez zawartości"
+msgstr "Nazwa szablonu, który tworzy link zewnętrzny"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a513/CheckErrorAlgorithm513.java:929
 #, fuzzy
@@ -1266,24 +1252,20 @@ msgid "True if removing internal links in the text can be automatic"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a513/CheckErrorAlgorithm513.java:938
-#, fuzzy
 msgid "A list of texts (regular expressions) that can be after the internal link"
-msgstr "Wykaz tekstów, które mogą być wstawione do sekcji bez zawartości"
+msgstr "Lista tekstów (wyrażeń regularnych), które mogą być za linkiem wewnętrznym"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a513/CheckErrorAlgorithm513.java:941
-#, fuzzy
 msgid "Regular expression that can be after the internal link"
-msgstr "Wykaz tekstów, które mogą być wstawione do sekcji bez zawartości"
+msgstr "Wyrażenie regularne, które może być za linkiem wewnętrznym"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a513/CheckErrorAlgorithm513.java:945
-#, fuzzy
 msgid "A list of texts that can be before the internal link"
-msgstr "Wykaz tekstów, które mogą być wstawione do sekcji bez zawartości"
+msgstr "Lista tekstów, które mogą być przed linkiem wewnętrznym"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a513/CheckErrorAlgorithm513.java:949
-#, fuzzy
 msgid "Text that can be before the internal link"
-msgstr "Wykaz tekstów, które mogą być wstawione do sekcji bez zawartości"
+msgstr "Tekst, który może być przed linkiem wewnętrznym"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a513/CheckErrorAlgorithm513.java:952
 msgid "True if finding this text means that the replacement can be automatic"
@@ -1367,14 +1349,13 @@ msgid "Both values are equal"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a524/CheckErrorAlgorithm524.java:136
-#, fuzzy
 msgid "Other value is empty"
-msgstr "Inny język"
+msgstr "Inna wartość jest pusta"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a524/CheckErrorAlgorithm524.java:138
-#, fuzzy, java-format
+#, java-format
 msgid "Other value: {0}"
-msgstr "Inny język"
+msgstr "Inna wartość: {0}"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a524/CheckErrorAlgorithm524.java:237
 #: org/wikipediacleaner/gui/swing/NewSectionWindow.java:115
@@ -1417,9 +1398,9 @@ msgid "Use an anchor template?"
 msgstr "Szukaj w szablonach"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a525/CheckErrorAlgorithm525.java:232
-#, fuzzy, java-format
+#, java-format
 msgid "A template that can replace a {0}"
-msgstr "Szablony, które mogą zastąpić znaczniki {0}"
+msgstr "Szablon, który może zastąpić {0}"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a525/CheckErrorAlgorithm525.java:235
 #, fuzzy
@@ -1445,7 +1426,6 @@ msgid "Text added after the link to ask for help."
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a526/CheckErrorAlgorithm526.java:423
-#, fuzzy
 msgid "Description of the action"
 msgstr "Opis"
 
@@ -1460,15 +1440,13 @@ msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a526/CheckErrorAlgorithm526.java:437
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a526/CheckErrorAlgorithm526.java:440
-#, fuzzy
 msgid "Minimum number of digits for the year"
-msgstr "Maksymalna liczba edycji (na minutę):"
+msgstr "Minimalna liczba cyfr dla roku"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a526/CheckErrorAlgorithm526.java:443
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a526/CheckErrorAlgorithm526.java:446
-#, fuzzy
 msgid "Maximum number of digits for the year"
-msgstr "Maksymalna liczba edycji (na minutę):"
+msgstr "Maksymalna liczba cyfr dla roku"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a526/CheckErrorAlgorithm526.java:449
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a526/CheckErrorAlgorithm526.java:452
@@ -1485,24 +1463,20 @@ msgid "Trim text"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a529/CheckErrorAlgorithm529.java:375
-#, fuzzy
 msgid "Automatic replacements of ISBN"
-msgstr "Wykonaj symulację automatycznej naprawy"
+msgstr "Automatyczne zastępowanie ISBN"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a529/CheckErrorAlgorithm529.java:379
-#, fuzzy
 msgid "Name of the template to use for ISBN"
-msgstr "Potrzebne szablony"
+msgstr "Nazwa szablonu do użycia dla ISBN"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a529/CheckErrorAlgorithm529.java:382
-#, fuzzy
 msgid "Text before the ISBN to be removed in the replacement"
-msgstr "Tekst, który ma być użyty jako zamiennik"
+msgstr "Tekst przed numerem ISBN do usunięcia w zamianie"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a529/CheckErrorAlgorithm529.java:385
-#, fuzzy
 msgid "Text after the ISBN to be removed in the replacement"
-msgstr "Tekst, który ma być użyty jako zamiennik"
+msgstr "Tekst po numerze ISBN do usunięcia w zamianie"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a53x/a530/CheckErrorAlgorithm530.java:122
 msgid "View RFC"
@@ -1513,24 +1487,20 @@ msgid "A list of templates that can't be used inside a reference"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a53x/a531/CheckErrorAlgorithm531.java:135
-#, fuzzy
 msgid "Name of a template that can't be used inside a reference"
-msgstr "Szablon, którego można użyć zamiast znaku gwiazdki"
+msgstr "Nazwa szablonu, którego nie można użyć wewnątrz przypisu"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a53x/a532/CheckErrorAlgorithm532.java:46
-#, fuzzy
 msgid "Fix tags"
-msgstr "Napraw kategorie"
+msgstr "Napraw znaczniki"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a53x/a538/CheckErrorAlgorithm538.java:29
-#, fuzzy
 msgid "Remove whitespace characters"
-msgstr "Usuń wszystkie znaki kontrolne"
+msgstr "Usuń białe znaki"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a540/CheckErrorAlgorithm540.java:47
-#, fuzzy
 msgid "Fix bold and italic"
-msgstr "Napraw wszystkie pogrubione nagłówki"
+msgstr "Napraw pogrubienie i kursywę"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a541/CheckErrorAlgorithm541.java:238
 #, java-format
@@ -1576,7 +1546,7 @@ msgstr ""
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a541/CheckErrorAlgorithm541.java:579
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a541/CheckErrorAlgorithm541.java:600
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a541/CheckErrorAlgorithm541.java:621
-#, fuzzy, java-format
+#, java-format
 msgid "Template for replacing {0} tag"
 msgstr "Szablony, które mogą zastąpić znaczniki {0}"
 
@@ -1589,7 +1559,6 @@ msgstr ""
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a541/CheckErrorAlgorithm541.java:590
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a541/CheckErrorAlgorithm541.java:611
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a541/CheckErrorAlgorithm541.java:632
-#, fuzzy
 msgid "Description of the template"
 msgstr "Opis"
 
@@ -1598,9 +1567,8 @@ msgid "Pairs of templates: for each opening template, all possible closing templ
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a544/CheckErrorAlgorithm544.java:220
-#, fuzzy
 msgid "Name of the opening template in the pair"
-msgstr "Potrzebne szablony"
+msgstr "Nazwa szablonu otwierającego"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a544/CheckErrorAlgorithm544.java:223
 msgid "Name of a closing template in the pair"
@@ -1678,26 +1646,22 @@ msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a548/CheckErrorAlgorithm548.java:374
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a550/CheckErrorAlgorithm550.java:271
-#, fuzzy
 msgid "Links to ignore"
-msgstr "Linkujące do {0}"
+msgstr "Linki do zignorowania"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a548/CheckErrorAlgorithm548.java:377
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a550/CheckErrorAlgorithm550.java:274
-#, fuzzy
 msgid "Link to ignore"
-msgstr "Linkujące do {0}"
+msgstr "Link do zignorowania"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a552/CheckErrorAlgorithm552.java:284
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a573/CheckErrorAlgorithm573.java:236
-#, fuzzy
 msgid "Templates to ignore"
-msgstr "Szablon"
+msgstr "Szablony do zignorowania"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a552/CheckErrorAlgorithm552.java:287
-#, fuzzy
 msgid "Template to ignore"
-msgstr "Szablon"
+msgstr "Szablon do zignorowania"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a553/CheckErrorAlgorithm553.java:435
 msgid "Acceptable suffixes"
@@ -2592,18 +2556,16 @@ msgid "WPCleaner installer"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:182
-#, fuzzy
 msgid "Configuration"
-msgstr "Ładowanie konfiguracji"
+msgstr "Konfiguracja"
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:245
 msgid "Installation folder"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:253
-#, fuzzy
 msgid "Select installation folder"
-msgstr "Wybierz wszystkie błędy"
+msgstr "Wybierz folder instalacyjny"
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:318
 msgid "Create a desktop shortcut"
@@ -2655,9 +2617,8 @@ msgid "On any operating system, the command can be:"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:419
-#, fuzzy
 msgid "Install"
-msgstr "Kursywa"
+msgstr "Instaluj"
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:448
 msgid "Operating system"
@@ -2669,9 +2630,8 @@ msgid "System information"
 msgstr "Opcje systemowe"
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:704
-#, fuzzy
 msgid "You must select an installation folder."
-msgstr "Przed zalogowaniem musisz wybrać język"
+msgstr "Musisz wybrać folder instalacyjny."
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:711
 #, java-format
@@ -2688,9 +2648,9 @@ msgid "Existing files may be deleted by the installation process."
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:729
-#, fuzzy, java-format
+#, java-format
 msgid "Unable to create folder {0}"
-msgstr "Nie można zastąpić znaków [{0}]"
+msgstr "Nie można utworzyć folderu {0}"
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:745
 msgid "Desktop shortcut is only supported for the following operating systems:"
