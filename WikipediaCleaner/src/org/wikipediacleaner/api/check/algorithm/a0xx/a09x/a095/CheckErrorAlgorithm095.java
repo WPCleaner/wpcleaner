@@ -12,11 +12,11 @@ import java.util.List;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase;
-import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.DataManager;
 import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageElementInternalLink;
+import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
 
 
@@ -49,38 +49,141 @@ public class CheckErrorAlgorithm095 extends CheckErrorAlgorithmBase {
       return false;
     }
 
-    // Analyze each internal link
     boolean result = false;
+    result |= analyzeInternalLinks(analysis, errors);
+    result |= analyzeTemplates(analysis, errors);
+
+    return result;
+  }
+
+  /**
+   * Analyze a page to check if errors are present in internal links.
+   * 
+   * @param analysis Page analysis.
+   * @param errors Errors found in the page.
+   * @return Flag indicating if the error was found.
+   */
+  private boolean analyzeInternalLinks(
+      PageAnalysis analysis,
+      Collection<CheckErrorResult> errors) {
     List<PageElementInternalLink> links = analysis.getInternalLinks();
     if (links == null) {
-      return result;
+      return false;
     }
-    EnumWikipedia wiki = analysis.getWikipedia();
+    boolean result = false;
     for (PageElementInternalLink link : links) {
-      String linkDest = link.getLink();
-      if ((linkDest != null) &&
-          (linkDest.trim().length() > 0) &&
-          (linkDest.indexOf(':') >= 0)) {
-        Page page = DataManager.createSimplePage(wiki, linkDest, null, null, null);
-        Integer namespace = page.getNamespace();
-        if ((namespace != null) &&
-            ((namespace.intValue() == Namespace.USER) ||
-             (namespace.intValue() == Namespace.USER_TALK) ||
-             (namespace.intValue() == Namespace.DRAFT) ||
-             (namespace.intValue() == Namespace.DRAFT_TALK))) {
-          if (errors == null) {
-            return true;
-          }
-          result = true;
-          int beginIndex = link.getBeginIndex();
-          int endIndex = link.getEndIndex();
-          CheckErrorResult errorResult = createCheckErrorResult(
-              analysis, beginIndex, endIndex);
-          errors.add(errorResult);
-        }
-      }
+      result |= analyzeInternalLink(analysis, errors, link);
     }
 
     return result;
+  }
+
+  /**
+   * Analyze a page to check if errors are present in an internal link.
+   * 
+   * @param analysis Page analysis.
+   * @param errors Errors found in the page.
+   * @param link Internal link.
+   * @return Flag indicating if the error was found.
+   */
+  private boolean analyzeInternalLink(
+      PageAnalysis analysis,
+      Collection<CheckErrorResult> errors,
+      PageElementInternalLink link) {
+
+    // Check if an error is present
+    if (!isInvalidTarget(analysis, link.getLink())) {
+      return false;
+    }
+
+    // Report error
+    if (errors == null) {
+      return true;
+    }
+    int beginIndex = link.getBeginIndex();
+    int endIndex = link.getEndIndex();
+    CheckErrorResult errorResult = createCheckErrorResult(
+        analysis, beginIndex, endIndex);
+    errors.add(errorResult);
+    return true;
+  }
+
+  /**
+   * Analyze a page to check if errors are present in templates.
+   * 
+   * @param analysis Page analysis.
+   * @param errors Errors found in the page.
+   * @return Flag indicating if the error was found.
+   */
+  private boolean analyzeTemplates(
+      PageAnalysis analysis,
+      Collection<CheckErrorResult> errors) {
+    List<PageElementTemplate> templates = analysis.getTemplates();
+    if (templates == null) {
+      return false;
+    }
+    boolean result = false;
+    for (PageElementTemplate template : templates) {
+      result |= analyzeTemplate(analysis, errors, template);
+    }
+
+    return result;
+  }
+
+  /**
+   * Analyze a page to check if errors are present in a template.
+   * 
+   * @param analysis Page analysis.
+   * @param errors Errors found in the page.
+   * @param template Template.
+   * @return Flag indicating if the error was found.
+   */
+  private boolean analyzeTemplate(
+      PageAnalysis analysis,
+      Collection<CheckErrorResult> errors,
+      PageElementTemplate template) {
+
+    // Check if an error is present
+    if (!isInvalidTarget(analysis, template.getTemplateName())) {
+      return false;
+    }
+
+    // Report error
+    if (errors == null) {
+      return true;
+    }
+    int beginIndex = template.getBeginIndex();
+    int endIndex = template.getEndIndex();
+    CheckErrorResult errorResult = createCheckErrorResult(
+        analysis, beginIndex, endIndex);
+    errors.add(errorResult);
+    return true;
+  }
+
+  /**
+   * Check if a target is invalid.
+   * 
+   * @param analysis Page analysis.
+   * @param target Target.
+   * @return True if the target is invalid.
+   */
+  private boolean isInvalidTarget(PageAnalysis analysis, String target) {
+    if ((target == null) ||
+        (target.trim().length() == 0) ||
+        (target.indexOf(":") < 0)) {
+      return false;
+    }
+    Page page = DataManager.createSimplePage(analysis.getWikipedia(), target, null, null, null);
+    Integer namespace = page.getNamespace();
+    if (namespace == null) {
+      return false;
+    }
+    if ((namespace.intValue() != Namespace.USER) &&
+        (namespace.intValue() != Namespace.USER_TALK) &&
+        (namespace.intValue() != Namespace.DRAFT) &&
+        (namespace.intValue() != Namespace.DRAFT_TALK)) {
+      return false;
+    }
+    return true;
   }
 }
