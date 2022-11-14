@@ -238,6 +238,7 @@ public class CheckErrorAlgorithm061 extends CheckErrorAlgorithmBase {
     if (PUNCTUATION.indexOf(punctuation) < 0) {
       return false;
     }
+
     // Even with tables managed by parser, prevent detection before "!!"
     if ((punctuation == '!') &&
         (tmpIndex + 1 < contents.length()) &&
@@ -276,7 +277,7 @@ public class CheckErrorAlgorithm061 extends CheckErrorAlgorithmBase {
     }
     if (punctuation == ':') {
       // Avoid cases like ;term<ref>...</ref>: definition
-      PageElementListItem listItem = analysis.isInListItem(firstPunctuationIndex);
+      PageElementListItem listItem = analysis.isInListItem(beginIndex);
       if ((listItem != null) && (StringUtils.startsWith(listItem.getIndicators(), ";"))) {
         return false;
       }
