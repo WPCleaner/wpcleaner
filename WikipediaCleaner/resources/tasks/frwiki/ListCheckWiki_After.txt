@@ -115,6 +115,8 @@ UpdateUnknownParameterWarnings
 DoTasks _Common_Other.txt
 Set Namespaces 6
 
+Set Prefix [[Utilisateur:WikiCleanerBot#T3|Bot_T3_PCS#1]]
+FixListCheckWiki Projet:Correction_syntaxique/Analyse_001 1
 Set Prefix [[Utilisateur:WikiCleanerBot#T3|Bot_T3_PCS#2]]
 FixListCheckWiki Projet:Correction_syntaxique/Analyse_002 2
 Set Prefix [[Utilisateur:WikiCleanerBot#T3|Bot_T3_PCS#16]]
