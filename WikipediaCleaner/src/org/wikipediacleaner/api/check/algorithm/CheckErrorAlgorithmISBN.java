@@ -30,8 +30,11 @@ import org.wikipediacleaner.api.data.PageElementISBN;
 import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.SearchEngine;
 import org.wikipediacleaner.api.data.ISBNRange.ISBNInformation;
+import org.wikipediacleaner.api.data.PageElementFunction;
 import org.wikipediacleaner.api.data.PageElementTemplate.Parameter;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
+import org.wikipediacleaner.api.data.contents.magicword.FunctionMagicWordType;
+import org.wikipediacleaner.api.data.contents.magicword.MagicWord;
 import org.wikipediacleaner.api.data.contents.template.TemplateBuilder;
 import org.wikipediacleaner.gui.swing.action.ActionExternalViewer;
 import org.wikipediacleaner.gui.swing.action.ActionMultiple;
@@ -57,6 +60,13 @@ public abstract class CheckErrorAlgorithmISBN extends CheckErrorAlgorithmBase {
    */
   protected boolean shouldIgnoreError(PageAnalysis analysis, PageElementISBN isbn) {
     if (!isbn.isTemplateParameter()) {
+      PageElementFunction function = analysis.isInFunction(isbn.getBeginIndex());
+      if (function != null) {
+        MagicWord magicWord = analysis.getWikiConfiguration().getMagicWordByType(FunctionMagicWordType.INVOKE);
+        if ((magicWord != null) && (magicWord.isPossibleAlias(function.getFunctionName()))) {
+          return true;
+        }
+      }
       return false;
     }
 

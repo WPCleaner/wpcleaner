@@ -57,129 +57,146 @@ public class CheckErrorAlgorithm107 extends CheckErrorAlgorithmISSN {
     boolean result = false;
     List<PageElementISSN> issns = analysis.getISSNs();
     for (PageElementISSN issn : issns) {
-      String issnNumber = issn.getISSN();
-      if ((issnNumber != null) && (issn.isValid())) {
-        boolean isError = false;
-        int length = issnNumber.length();
-        if ((length != 8) && (length != 0)) {
-          isError = true;
-        }
+      result |= analyzeISSN(analysis, errors, issn);
+    }
 
-        // Exclude parameters in templates
-        if (isError &&
-            issn.isTemplateParameter() &&
-            analysis.isInNamespace(Namespace.TEMPLATE)) {
-          PageElementTemplate template = analysis.isInTemplate(issn.getBeginIndex());
-          if (template != null) {
-            Parameter param = template.getParameterAtIndex(issn.getBeginIndex());
-            if (param != null) {
-              List<PageElementFunction> functions = analysis.getFunctions();
-              if (functions != null) {
-                for (PageElementFunction function : functions) {
-                  int functionIndex = function.getBeginIndex();
-                  if ((template == analysis.isInTemplate(functionIndex)) &&
-                      (param == template.getParameterAtIndex(functionIndex))) {
-                    isError = false;
-                  }
-                }
+    return result;
+  }
+
+  /**
+   * Analyze an ISSN to check if has an error.
+   * 
+   * @param analysis Page analysis.
+   * @param errors Errors found in the page.
+   * @return issn ISSN to be checked.
+   */
+  private boolean analyzeISSN(
+      PageAnalysis analysis,
+      Collection<CheckErrorResult> errors,
+      PageElementISSN issn) {
+
+    // Check if an error is detected in the ISBN
+    String issnNumber = issn.getISSN();
+    if ((issnNumber == null) || (!issn.isValid())) {
+      return false;
+    }
+    int length = issnNumber.length();
+    if ((length == 8) || (length == 0)) {
+      return false;
+    }
+    if (shouldIgnoreError(analysis, issn)) {
+      return false;
+    }
+
+    // Exclude parameters in templates
+    if (issn.isTemplateParameter() &&
+        analysis.isInNamespace(Namespace.TEMPLATE)) {
+      PageElementTemplate template = analysis.isInTemplate(issn.getBeginIndex());
+      if (template != null) {
+        Parameter param = template.getParameterAtIndex(issn.getBeginIndex());
+        if (param != null) {
+          List<PageElementFunction> functions = analysis.getFunctions();
+          if (functions != null) {
+            for (PageElementFunction function : functions) {
+              int functionIndex = function.getBeginIndex();
+              if ((template == analysis.isInTemplate(functionIndex)) &&
+                  (param == template.getParameterAtIndex(functionIndex))) {
+                return false;
               }
             }
           }
-        }
-
-        // Report error
-        if (isError) {
-          if (errors == null) {
-            return true;
-          }
-          result = true;
-          CheckErrorResult errorResult = createCheckErrorResult(analysis, issn, true);
-          errorResult.addText(
-              GT._T(
-                  "Length of ISSN is {0} instead of 8",
-                  Integer.toString(length) ));
-          addSuggestions(analysis, errorResult, issn);
-          addHelpNeededTemplates(analysis, errorResult, issn);
-          addHelpNeededComment(analysis, errorResult, issn);
-
-          // Add original ISSN
-          String originalValue = issn.getISSN();
-          addSearchEngines(analysis, errorResult, originalValue);
-
-          // Add search engines using other parameters of the template
-          if (issn.isTemplateParameter()) {
-            PageElementTemplate template = analysis.isInTemplate(issn.getBeginIndex());
-            addSearchEngines(analysis, errorResult, template);
-          }
-
-          // Add search for potential ISBN
-          if ((length == 10) || (length == 13)) {
-            addSearchEnginesISBN(analysis, errorResult, issn.getISSN());
-          }
-
-          // Add search for other identifiers
-          errorResult.addPossibleAction(new SimpleAction(GT._T(
-              "Search as OCLC"),
-              new ActionExternalViewer(MessageFormat.format("http://worldcat.org/oclc/{0}", originalValue))));
-          errorResult.addPossibleAction(new SimpleAction(GT._T(
-              "Search as LCCN"),
-              new ActionExternalViewer(MessageFormat.format("http://lccn.loc.gov/{0}", originalValue))));
-
-          // Add ISSN with added checksum
-          List<String> searchISSN = new ArrayList<>();
-          if (length == 7) {
-            char computedCheck = PageElementISSN.computeChecksum(originalValue + '0');
-            if (computedCheck > 0) {
-              addSearchISSN(searchISSN, originalValue + computedCheck, false);
-            }
-          }
-
-          // Add ISSN for EAN 977
-          if ((originalValue.length() == 13) && (originalValue.startsWith("977"))) {
-            String value = originalValue.substring(3, 10);
-            char computedCheck = PageElementISSN.computeChecksum(value + '0');
-            if (computedCheck > 0) {
-              addSearchISSN(searchISSN, value + computedCheck, false);
-            }
-          }
-          // Add ISSN with one extra digit
-          if (originalValue.length() == 7) {
-            for (int currentChar = 0; currentChar < originalValue.length(); currentChar++) {
-              if (Character.isDigit(originalValue.charAt(currentChar))) {
-                for (char newChar = '0'; newChar <= '9'; newChar++) {
-                  String value =
-                      originalValue.substring(0, currentChar) +
-                      newChar +
-                      originalValue.substring(currentChar);
-                  addSearchISSN(searchISSN, value, false);
-                }
-              }
-            }
-          }
-
-          // Add ISSN with one digit removed
-          if (originalValue.length() == 9) {
-            for (int currentChar = 0; currentChar < originalValue.length(); currentChar++) {
-              if (Character.isDigit(originalValue.charAt(currentChar))) {
-                String value =
-                    originalValue.substring(0, currentChar) +
-                    originalValue.substring(currentChar + 1);
-                addSearchISSN(searchISSN, value, false);
-              }
-            }
-          }
-
-          // Add direct search engines
-          addSearchEngines(
-              analysis, errorResult, searchISSN,
-              GT._T("Similar ISSN"));
-
-          errors.add(errorResult);
         }
       }
     }
 
-    return result;
+    // Report error
+    if (errors == null) {
+      return true;
+    }
+    CheckErrorResult errorResult = createCheckErrorResult(analysis, issn, true);
+    errorResult.addText(
+        GT._T(
+            "Length of ISSN is {0} instead of 8",
+            Integer.toString(length) ));
+    addSuggestions(analysis, errorResult, issn);
+    addHelpNeededTemplates(analysis, errorResult, issn);
+    addHelpNeededComment(analysis, errorResult, issn);
+
+    // Add original ISSN
+    String originalValue = issn.getISSN();
+    addSearchEngines(analysis, errorResult, originalValue);
+
+    // Add search engines using other parameters of the template
+    if (issn.isTemplateParameter()) {
+      PageElementTemplate template = analysis.isInTemplate(issn.getBeginIndex());
+      addSearchEngines(analysis, errorResult, template);
+    }
+
+    // Add search for potential ISBN
+    if ((length == 10) || (length == 13)) {
+      addSearchEnginesISBN(analysis, errorResult, issn.getISSN());
+    }
+
+    // Add search for other identifiers
+    errorResult.addPossibleAction(new SimpleAction(GT._T(
+        "Search as OCLC"),
+        new ActionExternalViewer(MessageFormat.format("http://worldcat.org/oclc/{0}", originalValue))));
+    errorResult.addPossibleAction(new SimpleAction(GT._T(
+        "Search as LCCN"),
+        new ActionExternalViewer(MessageFormat.format("http://lccn.loc.gov/{0}", originalValue))));
+
+    // Add ISSN with added checksum
+    List<String> searchISSN = new ArrayList<>();
+    if (length == 7) {
+      char computedCheck = PageElementISSN.computeChecksum(originalValue + '0');
+      if (computedCheck > 0) {
+        addSearchISSN(searchISSN, originalValue + computedCheck, false);
+      }
+    }
+
+    // Add ISSN for EAN 977
+    if ((originalValue.length() == 13) && (originalValue.startsWith("977"))) {
+      String value = originalValue.substring(3, 10);
+      char computedCheck = PageElementISSN.computeChecksum(value + '0');
+      if (computedCheck > 0) {
+        addSearchISSN(searchISSN, value + computedCheck, false);
+      }
+    }
+
+    // Add ISSN with one extra digit
+    if (originalValue.length() == 7) {
+      for (int currentChar = 0; currentChar < originalValue.length(); currentChar++) {
+        if (Character.isDigit(originalValue.charAt(currentChar))) {
+          for (char newChar = '0'; newChar <= '9'; newChar++) {
+            String value =
+                originalValue.substring(0, currentChar) +
+                newChar +
+                originalValue.substring(currentChar);
+            addSearchISSN(searchISSN, value, false);
+          }
+        }
+      }
+    }
+
+    // Add ISSN with one digit removed
+    if (originalValue.length() == 9) {
+      for (int currentChar = 0; currentChar < originalValue.length(); currentChar++) {
+        if (Character.isDigit(originalValue.charAt(currentChar))) {
+          String value =
+              originalValue.substring(0, currentChar) +
+              originalValue.substring(currentChar + 1);
+          addSearchISSN(searchISSN, value, false);
+        }
+      }
+    }
+
+    // Add direct search engines
+    addSearchEngines(
+        analysis, errorResult, searchISSN,
+        GT._T("Similar ISSN"));
+
+    errors.add(errorResult);
+    return true;
   }
 
   /**

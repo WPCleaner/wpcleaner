@@ -79,6 +79,9 @@ public class CheckErrorAlgorithm106 extends CheckErrorAlgorithmISSN {
     if (issn.isCorrect() || !issn.isValid()) {
       return false;
     }
+    if (shouldIgnoreError(analysis, issn)) {
+      return false;
+    }
 
     // Exclude special configured values for ISSN if inside a template parameter
     if (issn.isTemplateParameter()) {

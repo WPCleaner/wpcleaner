@@ -15,6 +15,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang3.StringUtils;
 import org.wikipediacleaner.api.check.Actionnable;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.CompositeAction;
@@ -23,11 +24,14 @@ import org.wikipediacleaner.api.check.CheckErrorResult.ErrorLevel;
 import org.wikipediacleaner.api.configuration.WPCConfiguration;
 import org.wikipediacleaner.api.configuration.WPCConfigurationString;
 import org.wikipediacleaner.api.configuration.WPCConfigurationStringList;
+import org.wikipediacleaner.api.data.PageElementFunction;
 import org.wikipediacleaner.api.data.PageElementISSN;
 import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.SearchEngine;
 import org.wikipediacleaner.api.data.PageElementTemplate.Parameter;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
+import org.wikipediacleaner.api.data.contents.magicword.FunctionMagicWordType;
+import org.wikipediacleaner.api.data.contents.magicword.MagicWord;
 import org.wikipediacleaner.api.data.contents.template.TemplateBuilder;
 import org.wikipediacleaner.gui.swing.action.ActionExternalViewer;
 import org.wikipediacleaner.gui.swing.action.ActionMultiple;
@@ -44,6 +48,42 @@ public abstract class CheckErrorAlgorithmISSN extends CheckErrorAlgorithmBase {
    */
   protected CheckErrorAlgorithmISSN(String name) {
     super(name);
+  }
+
+  /**
+   * @param analysis Page analysis.
+   * @param issn ISSN.
+   * @return true if errors should be ignored.
+   */
+  protected boolean shouldIgnoreError(PageAnalysis analysis, PageElementISSN issn) {
+    if (!issn.isTemplateParameter()) {
+      PageElementFunction function = analysis.isInFunction(issn.getBeginIndex());
+      if (function != null) {
+        MagicWord magicWord = analysis.getWikiConfiguration().getMagicWordByType(FunctionMagicWordType.INVOKE);
+        if ((magicWord != null) && (magicWord.isPossibleAlias(function.getFunctionName()))) {
+          return true;
+        }
+      }
+      return false;
+    }
+
+    WPCConfiguration configuration = analysis.getWPCConfiguration();
+    String prefix = configuration.getString(WPCConfigurationString.ACCEPT_THIS_AS_WRITTEN_PREFIX);
+    String suffix = configuration.getString(WPCConfigurationString.ACCEPT_THIS_AS_WRITTEN_SUFFIX);
+    if (StringUtils.isNotEmpty(prefix) && StringUtils.isNotEmpty(suffix)) {
+      PageElementTemplate template = analysis.isInTemplate(issn.getBeginIndex());
+      if (template != null) {
+        Parameter param = template.getParameterAtIndex(issn.getBeginIndex());
+        if ((param != null) && (param.getValue() != null)) {
+          String value = param.getStrippedValue();
+          if (value.startsWith(prefix) && value.endsWith(suffix)) {
+            return true;
+          }
+        }
+      }
+    }
+
+    return false;
   }
 
   /**

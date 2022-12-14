@@ -54,100 +54,119 @@ public class CheckErrorAlgorithm108 extends CheckErrorAlgorithmISSN {
     boolean result = false;
     List<PageElementISSN> issns = analysis.getISSNs();
     for (PageElementISSN issn : issns) {
-      String number = issn.getISSN();
-      if ((number != null) && (number.length() == 8)) {
-        char check = Character.toUpperCase(number.charAt(7));
-        char computedCheck = Character.toUpperCase(
-            PageElementISSN.computeChecksum(number));
+      result |= analyzeISSN(analysis, errors, issn);
+    }
 
-        String message = null;
-        if ((check != computedCheck) &&
-            (Character.isDigit(computedCheck) || (computedCheck == 'X'))) {
-          message = GT._T(
-              "The checksum is {0} instead of {1}",
-              new Object[] { check, computedCheck } );
-        }
+    return result;
+  }
 
-        if (message != null) {
-          if (errors == null) {
-            return true;
-          }
-          result = true;
-          CheckErrorResult errorResult = createCheckErrorResult(analysis, issn, true);
-          errorResult.addText(message);
-          addHelpNeededTemplates(analysis, errorResult, issn);
-          addHelpNeededComment(analysis, errorResult, issn);
+  /**
+   * Analyze an ISSN to check if has an error.
+   * 
+   * @param analysis Page analysis.
+   * @param errors Errors found in the page.
+   * @return issn ISSN to be checked.
+   */
+  private boolean analyzeISSN(
+      PageAnalysis analysis,
+      Collection<CheckErrorResult> errors,
+      PageElementISSN issn) {
 
-          // Add original ISSN
-          String originalValue = issn.getISSN();
-          addSearchEngines(analysis, errorResult, originalValue);
+    // Check if an error is detected in the ISSN
+    String number = issn.getISSN();
+    if ((number == null) || (number.length() != 8)) {
+      return false;
+    }
+    char check = Character.toUpperCase(number.charAt(7));
+    char computedCheck = Character.toUpperCase(PageElementISSN.computeChecksum(number));
+    if (check == computedCheck) {
+      return false;
+    }
+    if (!Character.isDigit(computedCheck) && (computedCheck != 'X')) {
+      return false;
+    }
+    if (shouldIgnoreError(analysis, issn)) {
+      return false;
+    }
 
-          // Add search engines using other parameters of the template
-          if (issn.isTemplateParameter()) {
-            PageElementTemplate template = analysis.isInTemplate(issn.getBeginIndex());
-            addSearchEngines(analysis, errorResult, template);
-          }
+    // Report error
+    if (errors == null) {
+      return true;
+    }
+    String message = GT._T(
+        "The checksum is {0} instead of {1}",
+        new Object[] { check, computedCheck } );
+    CheckErrorResult errorResult = createCheckErrorResult(analysis, issn, true);
+    errorResult.addText(message);
+    addHelpNeededTemplates(analysis, errorResult, issn);
+    addHelpNeededComment(analysis, errorResult, issn);
 
-          // Add search for other identifiers
-          errorResult.addPossibleAction(new SimpleAction(GT._T(
-              "Search as OCLC"),
-              new ActionExternalViewer(MessageFormat.format("http://worldcat.org/oclc/{0}", originalValue))));
-          errorResult.addPossibleAction(new SimpleAction(GT._T(
-              "Search as LCCN"),
-              new ActionExternalViewer(MessageFormat.format("http://lccn.loc.gov/{0}", originalValue))));
+    // Add original ISSN
+    String originalValue = issn.getISSN();
+    addSearchEngines(analysis, errorResult, originalValue);
 
-          // Add ISSN with modified checksum
-          List<String> searchISSN = new ArrayList<>();
-          if (computedCheck != check) {
-            String value = originalValue.substring(0, originalValue.length() - 1) + computedCheck;
+    // Add search engines using other parameters of the template
+    if (issn.isTemplateParameter()) {
+      PageElementTemplate template = analysis.isInTemplate(issn.getBeginIndex());
+      addSearchEngines(analysis, errorResult, template);
+    }
+
+    // Add search for other identifiers
+    errorResult.addPossibleAction(new SimpleAction(GT._T(
+        "Search as OCLC"),
+        new ActionExternalViewer(MessageFormat.format("http://worldcat.org/oclc/{0}", originalValue))));
+    errorResult.addPossibleAction(new SimpleAction(GT._T(
+        "Search as LCCN"),
+        new ActionExternalViewer(MessageFormat.format("http://lccn.loc.gov/{0}", originalValue))));
+
+    // Add ISSN with modified checksum
+    List<String> searchISSN = new ArrayList<>();
+    if (computedCheck != check) {
+      String value = originalValue.substring(0, originalValue.length() - 1) + computedCheck;
+      addSearchISSN(searchISSN, value, false);
+    }
+
+    // Add ISSN with characters inversion
+    if (originalValue.length() == 8) {
+      int previousChar = -1;
+      for (int currentChar = 0; currentChar < originalValue.length(); currentChar++) {
+        if (Character.isDigit(originalValue.charAt(currentChar))) {
+          if (previousChar >= 0) {
+            String value =
+                originalValue.substring(0, previousChar) +
+                originalValue.charAt(currentChar) +
+                originalValue.substring(previousChar + 1, currentChar) +
+                originalValue.charAt(previousChar) +
+                originalValue.substring(currentChar + 1);
             addSearchISSN(searchISSN, value, false);
           }
-
-          // Add ISSN with characters inversion
-          if (originalValue.length() == 8) {
-            int previousChar = -1;
-            for (int currentChar = 0; currentChar < originalValue.length(); currentChar++) {
-              if (Character.isDigit(originalValue.charAt(currentChar))) {
-                if (previousChar >= 0) {
-                  String value =
-                      originalValue.substring(0, previousChar) +
-                      originalValue.charAt(currentChar) +
-                      originalValue.substring(previousChar + 1, currentChar) +
-                      originalValue.charAt(previousChar) +
-                      originalValue.substring(currentChar + 1);
-                  addSearchISSN(searchISSN, value, false);
-                }
-                previousChar = currentChar;
-              }
-            }
-          }
-
-          // Add ISSN with one modified digit
-          if (originalValue.length() == 8) {
-            for (int currentChar = 0; currentChar < originalValue.length(); currentChar++) {
-              if (Character.isDigit(originalValue.charAt(currentChar))) {
-                for (char newChar = '0'; newChar <= '9'; newChar++) {
-                  String value =
-                      originalValue.substring(0, currentChar) +
-                      newChar +
-                      originalValue.substring(currentChar + 1);
-                  addSearchISSN(searchISSN, value, false);
-                }
-              }
-            }
-          }
-
-          // Add direct search engines
-          addSearchEngines(
-              analysis, errorResult, searchISSN,
-              GT._T("Similar ISSN"));
-
-          errors.add(errorResult);
+          previousChar = currentChar;
         }
       }
     }
 
-    return result;
+    // Add ISSN with one modified digit
+    if (originalValue.length() == 8) {
+      for (int currentChar = 0; currentChar < originalValue.length(); currentChar++) {
+        if (Character.isDigit(originalValue.charAt(currentChar))) {
+          for (char newChar = '0'; newChar <= '9'; newChar++) {
+            String value =
+                originalValue.substring(0, currentChar) +
+                newChar +
+                originalValue.substring(currentChar + 1);
+            addSearchISSN(searchISSN, value, false);
+          }
+        }
+      }
+    }
+
+    // Add direct search engines
+    addSearchEngines(
+        analysis, errorResult, searchISSN,
+        GT._T("Similar ISSN"));
+
+    errors.add(errorResult);
+    return true;
   }
 
   /**
