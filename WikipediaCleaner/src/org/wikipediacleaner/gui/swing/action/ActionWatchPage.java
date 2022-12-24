@@ -13,6 +13,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.swing.JButton;
 import javax.swing.JList;
@@ -172,14 +173,16 @@ public class ActionWatchPage implements ActionListener {
       }
     }
     if ((links == null) || (links.size() == 0)) {
+      String message = GT._T("You must select a page to add it on your local watchlist");
+      Utilities.displayWarning(parent, message);
       return;
     }
 
     // Ask for confirmation
     String message = GT.__(
-        "Would you like to add this page on your local watchlist?",
-        "Would you like to add these pages on your local watchlist?",
-        links.size(), (Object[]) null);
+        "Would you like to add the page {0} on your local watchlist?",
+        "Would you like to add these pages ({0}) on your local watchlist?",
+        links.size(), links.stream().map(Object::toString).collect(Collectors.joining(", ")));
     int answer = Utilities.displayYesNoWarning(parent, message);
     if (answer != JOptionPane.YES_OPTION) {
       return;
