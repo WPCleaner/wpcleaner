@@ -15,7 +15,7 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2022-12-22 12:23:04+0000\n"
+"PO-Revision-Date: 2022-12-26 12:26:58+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Japanese <ja@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -25,7 +25,7 @@ msgstr ""
 "X-Launchpad-Export-Date: 2014-09-21 06:01+0000\n"
 "X-Generator: MediaWiki 1.40.0-alpha; Translate 2022-10-21\n"
 "Language: ja\n"
-"X-POT-Import-Date: 2022-12-20 05:39:30+0000\n"
+"X-POT-Import-Date: 2022-12-25 08:35:41+0000\n"
 
 #: org/wikipediacleaner/Version.java:31
 #, java-format
@@ -3575,14 +3575,19 @@ msgstr ""
 msgid "You must input a page name for updating warnings"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/action/ActionWatchPage.java:45
+#: org/wikipediacleaner/gui/swing/action/ActionWatchPage.java:46
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:105
 msgid "Add to local watchlist"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/action/ActionWatchPage.java:180
-msgid "Would you like to add this page on your local watchlist?"
-msgid_plural "Would you like to add these pages on your local watchlist?"
+#: org/wikipediacleaner/gui/swing/action/ActionWatchPage.java:176
+msgid "You must select a page to add it on your local watchlist"
+msgstr ""
+
+#: org/wikipediacleaner/gui/swing/action/ActionWatchPage.java:183
+#, java-format
+msgid "Would you like to add the page {0} on your local watchlist?"
+msgid_plural "Would you like to add these pages ({0}) on your local watchlist?"
 msgstr[0] ""
 
 #: org/wikipediacleaner/gui/swing/action/CheckCategoryLinkAction.java:90
