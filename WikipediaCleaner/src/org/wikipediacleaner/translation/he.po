@@ -19,7 +19,7 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2022-12-26 12:26:57+0000\n"
+"PO-Revision-Date: 2022-12-29 12:29:56+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Hebrew <he@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -3556,7 +3556,7 @@ msgstr "הוספה לרשימת המעקב המקומית"
 
 #: org/wikipediacleaner/gui/swing/action/ActionWatchPage.java:176
 msgid "You must select a page to add it on your local watchlist"
-msgstr ""
+msgstr "עליך לבחור דף כדי להוסיף אותו לרשימת המעקב המקומית שלך"
 
 #: org/wikipediacleaner/gui/swing/action/ActionWatchPage.java:183
 #, java-format

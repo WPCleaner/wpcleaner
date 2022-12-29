@@ -2,6 +2,7 @@
 # Exported from translatewiki.net
 #
 # Author: Ellif
+# Author: Sadopaul
 # Author: Ykhwong
 # Author: 밝은소년
 # --
@@ -13,7 +14,7 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2022-12-26 12:26:59+0000\n"
+"PO-Revision-Date: 2022-12-29 12:29:57+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Korean <ko@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -3555,13 +3556,13 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/action/ActionWatchPage.java:176
 msgid "You must select a page to add it on your local watchlist"
-msgstr ""
+msgstr "주시문서 목록에 추가할 문서를 선택해야 합니다."
 
 #: org/wikipediacleaner/gui/swing/action/ActionWatchPage.java:183
 #, java-format
 msgid "Would you like to add the page {0} on your local watchlist?"
 msgid_plural "Would you like to add these pages ({0}) on your local watchlist?"
-msgstr[0] ""
+msgstr[0] "주시하는 문서에 {0} 페이지를 추가하시겠습니까?"
 
 #: org/wikipediacleaner/gui/swing/action/CheckCategoryLinkAction.java:90
 #, java-format
