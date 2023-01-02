@@ -5,6 +5,7 @@
 # Author: Eduardo Addad de Oliveira
 # Author: Eduardo Addad de Oliveira
 # Author: Eduardoaddad
+# Author: Fúlvio
 # Author: Rafaelff
 # Author: Rafaelff
 # Author: YuriNikolai
@@ -17,7 +18,7 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2022-12-26 12:27:00+0000\n"
+"PO-Revision-Date: 2023-01-02 12:23:58+0000\n"
 "Last-Translator: Felipe L. <felipe.idj@hotmail.com>\n"
 "Language-Team: Brazilian Portuguese <pt_BR@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -3555,14 +3556,14 @@ msgstr "Adicionar a lista de páginas vigiadas"
 
 #: org/wikipediacleaner/gui/swing/action/ActionWatchPage.java:176
 msgid "You must select a page to add it on your local watchlist"
-msgstr ""
+msgstr "Você deve selecionar uma página para adicioná-la à sua lista de páginas vigiadas"
 
 #: org/wikipediacleaner/gui/swing/action/ActionWatchPage.java:183
-#, fuzzy, java-format
+#, java-format
 msgid "Would you like to add the page {0} on your local watchlist?"
 msgid_plural "Would you like to add these pages ({0}) on your local watchlist?"
-msgstr[0] "Você gostaria de adicionar esta página em sua lista de páginas vigiadas?"
-msgstr[1] "Você gostaria de adicionar esta página em sua lista de páginas vigiadas?"
+msgstr[0] "Você gostaria de adicionar a página {0} em sua lista de páginas vigiadas?"
+msgstr[1] "Você gostaria de adicionar estas páginas ({0}) em sua lista de páginas vigiadas?"
 
 #: org/wikipediacleaner/gui/swing/action/CheckCategoryLinkAction.java:90
 #, java-format
