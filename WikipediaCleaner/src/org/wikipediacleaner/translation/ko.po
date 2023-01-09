@@ -14,7 +14,7 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2022-12-29 12:29:57+0000\n"
+"PO-Revision-Date: 2023-01-09 12:42:46+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Korean <ko@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -4278,19 +4278,19 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/component/simple/IdeaButton.java:66
 msgid "Report bug"
-msgstr ""
+msgstr "버그 보고"
 
 #: org/wikipediacleaner/gui/swing/component/simple/IdeaButton.java:70
 msgid "Request a new feature"
-msgstr ""
+msgstr "새 기능 요청"
 
 #: org/wikipediacleaner/gui/swing/component/simple/IdeaButton.java:107
 msgid "You can submit bug reports at the following URL:"
-msgstr ""
+msgstr "다음 URL에서 버그 보고를 제출할 수 있습니다:"
 
 #: org/wikipediacleaner/gui/swing/component/simple/IdeaButton.java:120
 msgid "You can submit feature requests at the following URL:"
-msgstr ""
+msgstr "다음 URL에서 기능 요청을 제출할 수 있습니다:"
 
 #: org/wikipediacleaner/gui/swing/component/simple/LanguageSelector.java:83
 msgid "Other Language"
