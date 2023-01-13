@@ -27,8 +27,10 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComponent;
 import javax.swing.JList;
+import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
@@ -101,8 +103,11 @@ public class CheckWikiContentPanel
   private List<CheckErrorPage> initialErrors;
   private JTextField textComment;
   private JCheckBox chkAutomaticComment;
+  private JButton buttonOptions;
   private JButton buttonSend;
   private JButton buttonMarkAsFixed;
+  private JPopupMenu menuOptions;
+  private JMenuItem chkMarkEditMinor;
   private MWPane textPage;
 
   /**
@@ -191,6 +196,13 @@ public class CheckWikiContentPanel
     // Buttons
     JToolBar toolbarButtons = new JToolBar(SwingConstants.HORIZONTAL);
     toolbarButtons.setFloatable(false);
+    buttonOptions = Utilities.createJButton(
+        "gnome-preferences-other.png", EnumImageSize.NORMAL,
+        GT._T("Options"), false, null);
+    buttonOptions.addActionListener(EventHandler.create(
+        ActionListener.class, this, "actionOptions"));
+    toolbarButtons.add(buttonOptions);
+    toolbarButtons.addSeparator();
     ActionOccurrence.addButton(
         toolbarButtons, textPage, ActionOccurrence.Occurrence.FIRST, true, true);
     ActionOccurrence.addButton(
@@ -246,6 +258,16 @@ public class CheckWikiContentPanel
     constraints.weighty = 0;
     add(toolbarButtons, constraints);
     constraints.gridy++;
+
+    // Menu options
+    Configuration config = Configuration.getConfiguration();
+    menuOptions = new JPopupMenu();
+    chkMarkEditMinor = Utilities.createJCheckBoxMenuItm(
+        GT._T("Mark edit as minor"),
+        config.getBoolean(
+            null,
+            ConfigurationValueBoolean.MARK_EDIT_MINOR));
+    menuOptions.add(chkMarkEditMinor);
 
     // Errors list
     modelErrors = new DefaultListModel<>();
@@ -521,6 +543,13 @@ public class CheckWikiContentPanel
   }
 
   /**
+   * Action called when options menu is clicked
+   */
+  public void actionOptions() {
+    menuOptions.show(buttonOptions, 0, buttonOptions.getHeight());
+  }
+  
+  /**
    * Action called when an error is selected. 
    */
   void actionSelectError() {
@@ -735,6 +764,11 @@ public class CheckWikiContentPanel
 
     // Send page
     final Configuration configuration = Configuration.getConfiguration();
+    final boolean minor = (chkMarkEditMinor != null) ?
+        chkMarkEditMinor.isSelected() :
+        configuration.getBoolean(
+            null,
+            ConfigurationValueBoolean.MARK_EDIT_MINOR);
     SendWorker sendWorker = new SendWorker.Builder().
         allowISBNWarning(updateISBNWarning, createISBNWarning).
         allowISSNWarning(updateISSNWarning, createISSNWarning).
@@ -744,9 +778,7 @@ public class CheckWikiContentPanel
           getWiki(), window,
           page, textPage.getText(), textComment.getText(),
           true, // TODO: BOT
-          configuration.getBoolean(
-              null,
-              ConfigurationValueBoolean.MARK_EDIT_MINOR),
+          minor,
           configuration.getBoolean(
               null,
               ConfigurationValueBoolean.FORCE_WATCH),
