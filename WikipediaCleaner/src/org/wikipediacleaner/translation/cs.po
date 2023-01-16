@@ -17,7 +17,7 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2022-12-26 12:26:55+0000\n"
+"PO-Revision-Date: 2023-01-16 12:22:41+0000\n"
 "Last-Translator: Matěj S. <matejsuchanek97@gmail.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -27,7 +27,7 @@ msgstr ""
 "X-Launchpad-Export-Date: 2017-03-22 17:48+0000\n"
 "X-Generator: MediaWiki 1.40.0-alpha; Translate 2022-10-21\n"
 "Language: cs\n"
-"X-POT-Import-Date: 2022-12-25 08:35:41+0000\n"
+"X-POT-Import-Date: 2023-01-13 21:30:23+0000\n"
 
 #: org/wikipediacleaner/Version.java:31
 #, java-format
@@ -2842,6 +2842,7 @@ msgstr "Odpojit WPC"
 #: org/wikipediacleaner/gui/swing/MainWindow.java:486
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:565
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:567
+#: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiContentPanel.java:201
 #: org/wikipediacleaner/gui/swing/options/OptionsWindow.java:64
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:165
 msgid "Options"
@@ -3328,6 +3329,7 @@ msgid "Automatic comment"
 msgstr "Automatické shrnutí"
 
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:576
+#: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiContentPanel.java:266
 #, fuzzy
 msgid "Mark edit as minor"
 msgstr "Označit odkaz jako normální"
@@ -3418,7 +3420,7 @@ msgid "Disambiguation analysis"
 msgstr "Rozcestníková analýza"
 
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:1037
-#: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiContentPanel.java:692
+#: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiContentPanel.java:721
 msgid "A comment is required for sending the page."
 msgstr "Pro odeslání změn je vyžadováno shrnutí."
 
@@ -3878,7 +3880,7 @@ msgid "Checking whitelist for error {0}"
 msgstr "Kontroluji whitelist chyby {0}"
 
 #: org/wikipediacleaner/gui/swing/bot/CWCheckWhiteListsWorker.java:94
-#: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiContentPanel.java:324
+#: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiContentPanel.java:346
 #, java-format
 msgid "The page {0} doesn''t exist on Wikipedia"
 msgstr "Stránka „{0}“ ve Wikipedii neexistuje"
@@ -4078,31 +4080,31 @@ msgstr "CheckWiki nyní nenašlo žádné chyby."
 msgid "Detections"
 msgstr "Detekce"
 
-#: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiContentPanel.java:219
+#: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiContentPanel.java:231
 msgid "Mark as already fixed"
 msgstr "Označit jako již opravené"
 
-#: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiContentPanel.java:427
+#: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiContentPanel.java:449
 #, java-format
 msgid "The error n°{0} hasn''t been found on the page {1}.\nDo you want to mark it as fixed?"
 msgstr "Chyba číslo {0} nebyla na stránce „{1}“ nalezena.\nChcete ji označit jako opravenou?"
 
-#: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiContentPanel.java:437
+#: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiContentPanel.java:459
 #, java-format
 msgid "The error n°{0} hasn''t been detected in page {1}, but CheckWiki still reports it."
 msgstr "Chyba č. {0} nebyla na stránce {1} nalezena, ale CheckWiki ji stále hlásí."
 
-#: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiContentPanel.java:446
+#: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiContentPanel.java:468
 #, java-format
 msgid "The error n°{0} has already been fixed in page {1}."
 msgstr "Chyba č. {0} už byla na stránce {1} opravena."
 
-#: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiContentPanel.java:592
+#: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiContentPanel.java:621
 #, java-format
 msgid "Do you want to mark {0} as fixed for error n°{1}?"
 msgstr "Chcete označit {0} jako vyřešená pro chybu č. {1}"
 
-#: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiContentPanel.java:605
+#: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiContentPanel.java:634
 #, java-format
 msgid "The error n°{0} is still found {1} time on the page."
 msgid_plural "The error n°{0} is still found {1} times on the page."
@@ -4110,16 +4112,16 @@ msgstr[0] "Chyba číslo {0} je na stránce ještě jednou."
 msgstr[1] "Chyba číslo {0} je na stránce ještě {1}krát."
 msgstr[2] "Chyba číslo {0} je na stránce ještě {1}krát."
 
-#: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiContentPanel.java:610
+#: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiContentPanel.java:639
 msgid "Are you really sure that you want to mark it as fixed ?"
 msgstr "Jste si opravdu jist(á), že ji chcete označit jako opravenou?"
 
-#: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiContentPanel.java:616
+#: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiContentPanel.java:645
 #, java-format
 msgid "The error n°{0} is still found on the page.\nAre you really sure that you want to mark it as fixed ?"
 msgstr "Chyba číslo {0} je stále na této stránce.\nOpravdu ji chcete označit jako opravenou?"
 
-#: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiContentPanel.java:628
+#: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiContentPanel.java:657
 msgid "You have already fixed this error by modifying the page.\nYou should send your modifications, the page will be marked as fixed."
 msgstr "Při editaci stránky jste chybu opravil.\nMůžete změny uložit, chyba bude označena jako opravená."
 
