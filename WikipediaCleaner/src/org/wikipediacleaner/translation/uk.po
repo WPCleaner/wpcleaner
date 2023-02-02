@@ -15,7 +15,7 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2023-01-26 12:31:11+0000\n"
+"PO-Revision-Date: 2023-02-02 12:24:19+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Ukrainian <uk@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -4311,7 +4311,7 @@ msgstr "Ви можете надіслати звіти про помилки з
 
 #: org/wikipediacleaner/gui/swing/component/simple/IdeaButton.java:120
 msgid "You can submit feature requests at the following URL:"
-msgstr ""
+msgstr "Ви можете надіслати запити щодо функцій за такою URL-адресою:"
 
 #: org/wikipediacleaner/gui/swing/component/simple/LanguageSelector.java:83
 msgid "Other Language"
