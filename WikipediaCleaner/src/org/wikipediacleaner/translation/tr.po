@@ -25,7 +25,7 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2023-01-26 12:31:11+0000\n"
+"PO-Revision-Date: 2023-02-09 12:22:27+0000\n"
 "Last-Translator: volkan <volkanyeke@gmail.com>\n"
 "Language-Team: Turkish <tr@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -1174,11 +1174,11 @@ msgstr "Her seferinde şununla değiştir"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a50x/a501/CheckErrorAlgorithm501.java:783
 msgid "Regular expressions to be disabled"
-msgstr ""
+msgstr "Devre dışı bırakılacak düzenli ifadeler"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a50x/a501/CheckErrorAlgorithm501.java:787
 msgid "Regular expression"
-msgstr ""
+msgstr "Düzenli ifade"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a50x/a509/CheckErrorAlgorithm509.java:32
 msgid "Compact links"
@@ -1499,7 +1499,7 @@ msgstr "Kalın ve eğiki düzeltin"
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a541/CheckErrorAlgorithm541.java:237
 #, java-format
 msgid "Remove {0} tag"
-msgstr ""
+msgstr "{0} etiketini kaldırın"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a541/CheckErrorAlgorithm541.java:335
 msgid "for marking an edit"
@@ -3560,7 +3560,7 @@ msgstr "Yerel izleme listesine ekle"
 
 #: org/wikipediacleaner/gui/swing/action/ActionWatchPage.java:176
 msgid "You must select a page to add it on your local watchlist"
-msgstr ""
+msgstr "Yerel izleme listenize eklemek için bir sayfa seçmelisiniz"
 
 #: org/wikipediacleaner/gui/swing/action/ActionWatchPage.java:183
 #, fuzzy, java-format
@@ -4282,19 +4282,19 @@ msgstr "Fikir? Hata?"
 
 #: org/wikipediacleaner/gui/swing/component/simple/IdeaButton.java:66
 msgid "Report bug"
-msgstr ""
+msgstr "Hata bildir"
 
 #: org/wikipediacleaner/gui/swing/component/simple/IdeaButton.java:70
 msgid "Request a new feature"
-msgstr ""
+msgstr "Bir özellik isteyin"
 
 #: org/wikipediacleaner/gui/swing/component/simple/IdeaButton.java:107
 msgid "You can submit bug reports at the following URL:"
-msgstr ""
+msgstr "Aşağıdaki URL'den hata raporları gönderebilirsiniz:"
 
 #: org/wikipediacleaner/gui/swing/component/simple/IdeaButton.java:120
 msgid "You can submit feature requests at the following URL:"
-msgstr ""
+msgstr "Özellik isteklerini aşağıdaki URL'den gönderebilirsiniz:"
 
 #: org/wikipediacleaner/gui/swing/component/simple/LanguageSelector.java:83
 msgid "Other Language"
