@@ -77,35 +77,40 @@ public class IdeaButton {
   /**
    * Action called when Report Bug button is pressed.
    */
-  public void actionReportBug() throws UnsupportedEncodingException {
+  public void actionReportBug() {
     StringBuilder url = new StringBuilder();
     url.append("https://phabricator.wikimedia.org/maniphest/task/edit/form/43/");
     url.append("?projects=wpcleaner&subscribers=NicoV");
-    StringBuilder description = new StringBuilder();
-    description.append("**Steps to replicate the issue** (include links if applicable):\n");
-    description.append("\n");
-    description.append("*\n");
-    description.append("*\n");
-    description.append("*\n");
-    description.append("\n");
-    description.append("**What happens?**:\n");
-    description.append("\n");
-    description.append("\n");
-    description.append("**What should have happened instead?**:\n");
-    description.append("\n");
-    description.append("\n");
-    description.append("**Other information** (browser name/version, screenshots, etc.):\n");
-    description.append("\n");
-    description.append("\n");
-    description.append("**Information provided by WPCleaner**:\n");
-    description.append("* Java version: " + System.getProperty("java.version") + "\n");
-    description.append("* Java vendor: " + System.getProperty("java.vendor") + "\n");
-    description.append("* Operating system: " + System.getProperty("os.name") + "\n");
-    url.append("&description=" + URLEncoder.encode(description.toString(), StandardCharsets.UTF_8.name()));
+    final String baseUrl = url.toString();
+    try {
+      StringBuilder description = new StringBuilder();
+      description.append("**Steps to replicate the issue** (include links if applicable):\n");
+      description.append("\n");
+      description.append("*\n");
+      description.append("*\n");
+      description.append("*\n");
+      description.append("\n");
+      description.append("**What happens?**:\n");
+      description.append("\n");
+      description.append("\n");
+      description.append("**What should have happened instead?**:\n");
+      description.append("\n");
+      description.append("\n");
+      description.append("**Other information** (browser name/version, screenshots, etc.):\n");
+      description.append("\n");
+      description.append("\n");
+      description.append("**Information provided by WPCleaner**:\n");
+      description.append("* Java version: " + System.getProperty("java.version") + "\n");
+      description.append("* Java vendor: " + System.getProperty("java.vendor") + "\n");
+      description.append("* Operating system: " + System.getProperty("os.name") + "\n");
+      url.append("&description=" + URLEncoder.encode(description.toString(), StandardCharsets.UTF_8.name()));
+    } catch (UnsupportedEncodingException e) {
+      // Do nothing
+    }
     Utilities.browseURL(url.toString(), () -> Utilities.displayUrlMessage(
         parentComponent,
         GT._T("You can submit bug reports at the following URL:"),
-        url.toString()));
+        baseUrl));
   }
 
   /**
