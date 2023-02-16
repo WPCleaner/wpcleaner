@@ -15,7 +15,7 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2023-01-26 12:31:05+0000\n"
+"PO-Revision-Date: 2023-02-16 12:24:04+0000\n"
 "Last-Translator: Aftabuzzaman <Leemon432@gmail.com>\n"
 "Language-Team: Bengali <bn@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -142,7 +142,7 @@ msgstr ""
 #: org/wikipediacleaner/api/MediaWiki.java:301
 #, java-format
 msgid "Updating page {0}"
-msgstr ""
+msgstr "{0} পাতা হালনাগাদ করা করা হচ্ছে"
 
 #: org/wikipediacleaner/api/MediaWiki.java:316
 #, java-format
@@ -1078,7 +1078,7 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/linter/LinterErrorListTableModel.java:234
 #: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:191
 msgid "Template"
-msgstr ""
+msgstr "টেমপ্লেট"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a091/CheckErrorAlgorithm091.java:431
 msgid "Parameter to be used for the link"
@@ -1939,11 +1939,11 @@ msgstr ""
 #: org/wikipediacleaner/api/configuration/CWConfiguration.java:83
 #, java-format
 msgid "Fixed using {0}"
-msgstr ""
+msgstr "{0} ব্যবহার করে ঠিক করা হয়েছে"
 
 #: org/wikipediacleaner/api/configuration/CWConfigurationError.java:319
 msgid "Deactivated"
-msgstr ""
+msgstr "নিষ্ক্রিয়"
 
 #: org/wikipediacleaner/api/configuration/CWConfigurationError.java:321
 msgid "Low priority"
@@ -1951,15 +1951,15 @@ msgstr "নিন্ম অগ্রাধিকার"
 
 #: org/wikipediacleaner/api/configuration/CWConfigurationError.java:323
 msgid "Middle priority"
-msgstr ""
+msgstr "মধ্য অগ্রাধিকার"
 
 #: org/wikipediacleaner/api/configuration/CWConfigurationError.java:325
 msgid "Top priority"
-msgstr ""
+msgstr "সর্বোচ্চ অগ্রাধিকার"
 
 #: org/wikipediacleaner/api/configuration/CWConfigurationError.java:327
 msgid "For Bot"
-msgstr ""
+msgstr "বটের জন্য"
 
 #: org/wikipediacleaner/api/configuration/CWConfigurationError.java:329
 msgid "Priority unknown"
@@ -2274,7 +2274,7 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/AboutWindow.java:62
 #: org/wikipediacleaner/gui/swing/MainWindow.java:514
 msgid "About"
-msgstr ""
+msgstr "পরিচিতি"
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingTableModel.java:182
 msgid "Original text"
