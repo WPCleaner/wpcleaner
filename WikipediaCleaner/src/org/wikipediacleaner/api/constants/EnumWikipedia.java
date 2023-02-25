@@ -77,6 +77,7 @@ public enum EnumWikipedia {
   FY(new Wikipedia("fy", "West Frisian Wikipedia")),
   GD(new Wikipedia("gd", "Scottish Gaelic Wikipedia")),
   GL(new Wikipedia("gl", "Galipedia")),
+  GOM(new Wikipedia("gom", "कोंकणी विकिपीडिया / Konknni Wikipedia")),
   HE(new Wikipedia("he", "ויקיפדיה העברית", ComponentOrientation.RIGHT_TO_LEFT)),
   HI(new Wikipedia("hi", "Hindi Wikipedia")),
   HIF(new Wikipedia("hif", "Fiji Hindi Wikipedia")),
