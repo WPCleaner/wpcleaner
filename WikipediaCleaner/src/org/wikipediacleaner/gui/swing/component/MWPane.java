@@ -195,8 +195,8 @@ public class MWPane
     // change pane default font family/size
     Configuration config = Configuration.getConfiguration();
     Map<TextAttribute, Object> attributes = new HashMap<>();
-    attributes.put(TextAttribute.FAMILY, config.getString(null, ConfigurationValueString.EDITOR_FONT_NAME));
-    attributes.put(TextAttribute.SIZE, config.getInt(null, ConfigurationValueInteger.EDITOR_FONT_SIZE));
+    attributes.put(TextAttribute.FAMILY, config.getString(null, ConfigurationValueString.FONT_NAME_EDITOR));
+    attributes.put(TextAttribute.SIZE, config.getInt(null, ConfigurationValueInteger.FONT_SIZE_EDITOR));
     this.setFont(this.getFont().deriveFont(attributes));
   }
 

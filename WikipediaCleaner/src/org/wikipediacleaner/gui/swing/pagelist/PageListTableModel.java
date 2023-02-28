@@ -7,13 +7,16 @@
 
 package org.wikipediacleaner.gui.swing.pagelist;
 
+import java.awt.font.TextAttribute;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.swing.table.AbstractTableModel;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 
@@ -25,6 +28,7 @@ import org.wikipediacleaner.gui.swing.component.BooleanIconCellRenderer;
 import org.wikipediacleaner.gui.swing.component.IconCellRenderer;
 import org.wikipediacleaner.i18n.GT;
 import org.wikipediacleaner.utils.Configuration;
+import org.wikipediacleaner.utils.ConfigurationValueString;
 
 
 /**
@@ -105,6 +109,15 @@ public class PageListTableModel extends AbstractTableModel {
     column = model.getColumn(COLUMN_PAGE);
     column.setMinWidth(100);
     column.setPreferredWidth(200);
+    Configuration config = Configuration.getConfiguration();
+    String fontName = config.getString(null, ConfigurationValueString.FONT_NAME_OTHER);
+    if (fontName != null) {
+      DefaultTableCellRenderer textRenderer = new DefaultTableCellRenderer();
+      Map<TextAttribute, Object> attributes = new HashMap<>();
+      attributes.put(TextAttribute.FAMILY, config.getString(null, ConfigurationValueString.FONT_NAME_EDITOR));
+      textRenderer.setFont(textRenderer.getFont().deriveFont(attributes));
+      column.setCellRenderer(textRenderer);
+    }
 
     column = model.getColumn(COLUMN_WATCHED);
     column.setMinWidth(20);

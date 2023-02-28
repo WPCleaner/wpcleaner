@@ -103,39 +103,54 @@ public class FormattingOptionsPanel extends OptionsPanel {
     // Panel for first options
     JPanel firstPanel = new JPanel(new GridBagLayout());
 
-    // Add font name
+    // Add editor font name
     Vector<String> fonts = new Vector<>();
     for (Font font : GraphicsEnvironment.getLocalGraphicsEnvironment().getAllFonts()) {
       fonts.addElement(font.getName());
     }
-    JComboBox<String> cmbFontName = createJComboBox(ConfigurationValueString.EDITOR_FONT_NAME, fonts);
-    JLabel lblFontName = Utilities.createJLabel(GT._T("Select editor font name"));
-    lblFontName.setLabelFor(cmbFontName);
-    lblFontName.setHorizontalAlignment(SwingConstants.TRAILING);
+    JComboBox<String> cmbFontNameEditor = createJComboBox(ConfigurationValueString.FONT_NAME_EDITOR, fonts);
+    JLabel lblFontNameEditor = Utilities.createJLabel(GT._T("Select editor font name"));
+    lblFontNameEditor.setLabelFor(cmbFontNameEditor);
+    lblFontNameEditor.setHorizontalAlignment(SwingConstants.TRAILING);
     constraints.gridx = 0;
     constraints.gridwidth = 1;
     constraints.weightx = 0;
-    firstPanel.add(lblFontName, constraints);
+    firstPanel.add(lblFontNameEditor, constraints);
     constraints.gridx = 1;
     constraints.gridwidth = 1;
     constraints.weightx = 1;
-    firstPanel.add(cmbFontName, constraints);
+    firstPanel.add(cmbFontNameEditor, constraints);
     constraints.gridy++;
 
 
-    // Add font size
-    JSpinner spinFontSize = createJSpinner(ConfigurationValueInteger.EDITOR_FONT_SIZE, 8, 72, 1);
-    JLabel lblFontSize = Utilities.createJLabel(GT._T("Select editor font size"));
-    lblFontSize.setLabelFor(spinFontSize);
-    lblFontSize.setHorizontalAlignment(SwingConstants.TRAILING);
+    // Add editor font size
+    JSpinner spinFontSizeEditor = createJSpinner(ConfigurationValueInteger.FONT_SIZE_EDITOR, 8, 72, 1);
+    JLabel lblFontSizeEditor = Utilities.createJLabel(GT._T("Select editor font size"));
+    lblFontSizeEditor.setLabelFor(spinFontSizeEditor);
+    lblFontSizeEditor.setHorizontalAlignment(SwingConstants.TRAILING);
     constraints.gridx = 0;
     constraints.gridwidth = 1;
     constraints.weightx = 0;
-    firstPanel.add(lblFontSize, constraints);
+    firstPanel.add(lblFontSizeEditor, constraints);
     constraints.gridx = 1;
     constraints.gridwidth = 1;
     constraints.weightx = 1;
-    firstPanel.add(spinFontSize, constraints);
+    firstPanel.add(spinFontSizeEditor, constraints);
+    constraints.gridy++;
+
+    // Add other font name
+    JComboBox<String> cmbFontNameOther = createJComboBox(ConfigurationValueString.FONT_NAME_OTHER, fonts);
+    JLabel lblFontNameOther = Utilities.createJLabel(GT._T("Select other font name"));
+    lblFontNameOther.setLabelFor(cmbFontNameOther);
+    lblFontNameOther.setHorizontalAlignment(SwingConstants.TRAILING);
+    constraints.gridx = 0;
+    constraints.gridwidth = 1;
+    constraints.weightx = 0;
+    firstPanel.add(lblFontNameOther, constraints);
+    constraints.gridx = 1;
+    constraints.gridwidth = 1;
+    constraints.weightx = 1;
+    firstPanel.add(cmbFontNameOther, constraints);
     constraints.gridy++;
 
     // Add font size increase
