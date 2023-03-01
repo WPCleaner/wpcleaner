@@ -81,7 +81,7 @@ public class Contributions {
       return buffer.toString();
     }
 
-    return GT._T("You haven''t done any contribution on \"{0}\"", wikipedia.toString());
+    return GT._T("You haven't done any contribution on \"{0}\"", wikipedia.toString());
   }
 
   /**
