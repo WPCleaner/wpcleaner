@@ -11,14 +11,15 @@ import java.awt.Font;
 import java.awt.Toolkit;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
+import java.awt.font.TextAttribute;
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.HashSet;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Properties;
-import java.util.Set;
 import java.util.logging.FileHandler;
 import java.util.logging.Handler;
 import java.util.logging.Level;
@@ -139,16 +140,10 @@ public class WikipediaCleaner {
 
     // Font size for defaults
     int fontSize = config.getInt(null, ConfigurationValueInteger.FONT_SIZE);
-    if (fontSize > 0) {
-      UIDefaults defaults = UIManager.getLookAndFeelDefaults();
-      Set<Object> keys = new HashSet<>(defaults.keySet());
-      for (Object key : keys) {
-        Font font = defaults.getFont(key);
-        if (font != null) {
-          font = font.deriveFont((float) (font.getSize() + fontSize));
-          defaults.put(key, font);
-        }
-      }
+    String fontName = config.getString(null, ConfigurationValueString.FONT_NAME_OTHER);
+    if ((fontSize > 0) || (fontName != null)) {
+      replaceFonts(UIManager.getLookAndFeelDefaults(), fontName, fontSize);
+      replaceFonts(UIManager.getDefaults(), fontName, fontSize);
     }
 
     // Manage copy/paste for OS X
@@ -225,6 +220,23 @@ public class WikipediaCleaner {
     // Running
     log.info("Display main window");
     MainWindow.createMainWindow(wiki, userName, password);
+  }
+
+  private static void replaceFonts(UIDefaults defaults, String familyName, int fontSize) {
+    for (Object key : defaults.keySet()) {
+      Font font = defaults.getFont(key);
+      if (font != null) {
+        Map<TextAttribute, Object> attributes = new HashMap<>();
+        if (familyName != null) {
+          attributes.put(TextAttribute.FAMILY, familyName);
+        }
+        if (fontSize != 0) {
+          attributes.put(TextAttribute.SIZE, (float) (font.getSize() + fontSize));
+        }
+        font = font.deriveFont(attributes);
+        defaults.put(key, font);
+      }
+    }
   }
 
   /**

@@ -139,7 +139,10 @@ public class FormattingOptionsPanel extends OptionsPanel {
     constraints.gridy++;
 
     // Add other font name
-    JComboBox<String> cmbFontNameOther = createJComboBox(ConfigurationValueString.FONT_NAME_OTHER, fonts);
+    Vector<String> optionalFonts = new Vector<>();
+    optionalFonts.add("");
+    optionalFonts.addAll(fonts);
+    JComboBox<String> cmbFontNameOther = createJComboBox(ConfigurationValueString.FONT_NAME_OTHER, optionalFonts);
     JLabel lblFontNameOther = Utilities.createJLabel(GT._T("Select other font name"));
     lblFontNameOther.setLabelFor(cmbFontNameOther);
     lblFontNameOther.setHorizontalAlignment(SwingConstants.TRAILING);
