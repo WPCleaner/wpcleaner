@@ -25,7 +25,7 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2023-02-09 12:22:27+0000\n"
+"PO-Revision-Date: 2023-03-06 12:25:24+0000\n"
 "Last-Translator: volkan <volkanyeke@gmail.com>\n"
 "Language-Team: Turkish <tr@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -35,7 +35,7 @@ msgstr ""
 "X-Launchpad-Export-Date: 2018-01-31 07:41+0000\n"
 "X-Generator: MediaWiki 1.40.0-alpha; Translate 2023-01-24\n"
 "Language: tr\n"
-"X-POT-Import-Date: 2023-01-13 21:30:23+0000\n"
+"X-POT-Import-Date: 2023-02-28 23:30:26+0000\n"
 
 #: org/wikipediacleaner/Version.java:31
 #, java-format
@@ -1086,7 +1086,7 @@ msgstr "Bunları dahili bağlantılara dönüştürün"
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a091/CheckErrorAlgorithm091.java:428
 #: org/wikipediacleaner/api/data/PageComparator.java:379
 #: org/wikipediacleaner/gui/swing/linter/LinterErrorListTableModel.java:234
-#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:191
+#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:206
 msgid "Template"
 msgstr "Şablon"
 
@@ -2203,7 +2203,7 @@ msgstr "Ad alanı"
 
 #: org/wikipediacleaner/api/data/PageComparator.java:241
 #: org/wikipediacleaner/gui/swing/RecentChangesTableModel.java:257
-#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:197
+#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:212
 msgid "Title"
 msgstr "Başlık"
 
@@ -2798,7 +2798,7 @@ msgstr "Hiçbirini kaydetme"
 #: org/wikipediacleaner/gui/swing/MainWindow.java:585
 #: org/wikipediacleaner/gui/swing/deadlink/DeadLinkListTableModel.java:219
 #: org/wikipediacleaner/gui/swing/linter/LinterErrorListTableModel.java:226
-#: org/wikipediacleaner/gui/swing/pagelist/PageListTableModel.java:241
+#: org/wikipediacleaner/gui/swing/pagelist/PageListTableModel.java:254
 msgid "Page"
 msgstr "Sayfa"
 
@@ -3018,7 +3018,7 @@ msgid "All namespaces"
 msgstr "Tüm ad alanları"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1634
-#: org/wikipediacleaner/gui/swing/pagelist/PageListTableModel.java:231
+#: org/wikipediacleaner/gui/swing/pagelist/PageListTableModel.java:244
 msgid "Main"
 msgstr "Ana"
 
@@ -3350,8 +3350,8 @@ msgid "Page comments - {0}"
 msgstr "Sayfa yorumları - {0}"
 
 #: org/wikipediacleaner/gui/swing/PageCommentsWindow.java:122
-#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:167
-#: org/wikipediacleaner/gui/swing/pagelist/PageListTableModel.java:237
+#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:182
+#: org/wikipediacleaner/gui/swing/pagelist/PageListTableModel.java:250
 msgid "Comments"
 msgstr "Yorumlar"
 
@@ -4288,11 +4288,11 @@ msgstr "Hata bildir"
 msgid "Request a new feature"
 msgstr "Bir özellik isteyin"
 
-#: org/wikipediacleaner/gui/swing/component/simple/IdeaButton.java:107
+#: org/wikipediacleaner/gui/swing/component/simple/IdeaButton.java:112
 msgid "You can submit bug reports at the following URL:"
 msgstr "Aşağıdaki URL'den hata raporları gönderebilirsiniz:"
 
-#: org/wikipediacleaner/gui/swing/component/simple/IdeaButton.java:120
+#: org/wikipediacleaner/gui/swing/component/simple/IdeaButton.java:125
 msgid "You can submit feature requests at the following URL:"
 msgstr "Özellik isteklerini aşağıdaki URL'den gönderebilirsiniz:"
 
@@ -4648,130 +4648,134 @@ msgid "Select editor font size"
 msgstr "Düzenleyici yazı tipi boyutunu seçin"
 
 #: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:143
+msgid "Select other font name"
+msgstr ""
+
+#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:158
 msgid "Increase font size"
 msgstr "Yazı tipi boyutunu büyüt"
 
-#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:173
+#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:188
 msgid "Internal link"
 msgstr "İç bağlantı"
 
-#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:179
-#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:281
+#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:194
+#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:296
 msgid "Redirect link"
 msgstr "Yönlendirme bağlantısı"
 
-#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:185
-#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:287
+#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:200
+#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:302
 msgid "Missing link"
 msgstr "Eksik bağlantı"
 
-#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:203
+#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:218
 msgid "Image"
 msgstr "Resim"
 
-#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:209
+#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:224
 msgid "Category"
 msgstr "Kategori"
 
-#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:215
+#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:230
 msgid "Default sort"
 msgstr "Varsayılan sıralama"
 
-#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:221
+#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:236
 msgid "Language link"
 msgstr "Dil bağlantısı"
 
-#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:227
+#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:242
 msgid "External link"
 msgstr "Dış bağlantı"
 
-#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:233
+#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:248
 msgid "Interwiki link"
 msgstr "Vikiarası bağlantı"
 
-#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:239
+#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:254
 msgid "Tag"
 msgstr "Etiket"
 
-#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:245
+#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:260
 msgid "List items"
 msgstr "Liste öğeleri"
 
-#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:251
+#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:266
 msgid "Table"
 msgstr "Tablo"
 
-#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:257
+#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:272
 msgid "Reference"
 msgstr "Kaynak"
 
-#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:263
+#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:278
 msgid "Programming elements"
 msgstr "Programlama öğeleri"
 
-#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:269
+#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:284
 msgid "Disambiguation link"
 msgstr "Anlam ayrımı bağlantısı"
 
-#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:275
+#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:290
 msgid "Normal internal link"
 msgstr "Normal iç bağlantısı"
 
-#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:293
+#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:308
 msgid "Disambiguation template"
 msgstr "Anlam ayrımı şablonu"
 
-#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:299
+#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:314
 msgid "Normal template"
 msgstr "Normal şablon"
 
-#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:305
+#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:320
 msgid "Help requested"
 msgstr "Yardım istendi"
 
-#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:311
+#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:326
 msgid "Check wiki error"
 msgstr "Viki hatasını kontrol et"
 
-#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:317
+#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:332
 msgid "Check wiki warning"
 msgstr "Viki uyarısını kontrol edin"
 
-#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:323
+#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:338
 msgid "Check wiki OK"
 msgstr "Kontrol viki tamam"
 
-#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:434
+#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:449
 msgid "Italic"
 msgstr "Eğik"
 
-#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:442
+#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:457
 msgid "Bold"
 msgstr "Kalın"
 
-#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:450
+#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:465
 msgid "Underline"
 msgstr "Altı çizili"
 
-#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:458
+#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:473
 msgid "Strike through"
 msgstr "Üstü çizili"
 
-#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:466
-#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:471
+#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:481
+#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:486
 msgid "Foreground color"
 msgstr "Foreground rengi"
 
-#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:470
+#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:485
 msgid "Choose foreground color"
 msgstr "Ön plan rengini seçin"
 
-#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:479
-#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:484
+#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:494
+#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:499
 msgid "Background color"
 msgstr "Arkaplan rengi"
 
-#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:483
+#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:498
 msgid "Choose background color"
 msgstr "Arka plan rengini seçin"
 
@@ -4996,7 +5000,7 @@ msgstr "Şablon adlarını çevir"
 msgid "Translate templates without parameters"
 msgstr "Şablonları parametresiz çevir"
 
-#: org/wikipediacleaner/gui/swing/pagelist/PageListTableModel.java:235
+#: org/wikipediacleaner/gui/swing/pagelist/PageListTableModel.java:248
 msgid "Other"
 msgstr "Diğer"
 
