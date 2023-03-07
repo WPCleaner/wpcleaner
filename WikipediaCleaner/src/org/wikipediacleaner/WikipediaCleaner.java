@@ -8,17 +8,17 @@
 package org.wikipediacleaner;
 
 import java.awt.Font;
+import java.awt.GraphicsEnvironment;
 import java.awt.Toolkit;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
-import java.awt.font.TextAttribute;
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.HashMap;
+import java.util.Arrays;
+import java.util.Enumeration;
 import java.util.Locale;
-import java.util.Map;
 import java.util.Properties;
 import java.util.logging.FileHandler;
 import java.util.logging.Handler;
@@ -33,6 +33,7 @@ import javax.swing.UIDefaults;
 import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
 import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.plaf.FontUIResource;
 import javax.swing.text.DefaultEditorKit;
 
 import org.slf4j.LoggerFactory;
@@ -139,11 +140,16 @@ public class WikipediaCleaner {
     }
 
     // Font size for defaults
-    int fontSize = config.getInt(null, ConfigurationValueInteger.FONT_SIZE);
     String fontName = config.getString(null, ConfigurationValueString.FONT_NAME_OTHER);
-    if ((fontSize > 0) || (fontName != null)) {
-      replaceFonts(UIManager.getLookAndFeelDefaults(), fontName, fontSize);
-      replaceFonts(UIManager.getDefaults(), fontName, fontSize);
+    if (fontName != null) {
+      int fontSize = config.getInt(null, ConfigurationValueInteger.FONT_SIZE);
+      Arrays.stream(GraphicsEnvironment.getLocalGraphicsEnvironment().getAllFonts())
+          .filter(font -> fontName.equals(font.getFontName()))
+          .findFirst()
+          .ifPresent(font -> {
+            replaceFonts(UIManager.getLookAndFeelDefaults(), font, fontSize);
+            replaceFonts(UIManager.getDefaults(), font, fontSize);
+          });
     }
 
     // Manage copy/paste for OS X
@@ -222,19 +228,15 @@ public class WikipediaCleaner {
     MainWindow.createMainWindow(wiki, userName, password);
   }
 
-  private static void replaceFonts(UIDefaults defaults, String familyName, int fontSize) {
-    for (Object key : defaults.keySet()) {
-      Font font = defaults.getFont(key);
-      if (font != null) {
-        Map<TextAttribute, Object> attributes = new HashMap<>();
-        if (familyName != null) {
-          attributes.put(TextAttribute.FAMILY, familyName);
-        }
-        if (fontSize != 0) {
-          attributes.put(TextAttribute.SIZE, (float) (font.getSize() + fontSize));
-        }
-        font = font.deriveFont(attributes);
-        defaults.put(key, font);
+  private static void replaceFonts(UIDefaults defaults, Font font, int fontSize) {
+    Enumeration<Object> keys = defaults.keys();
+    while (keys.hasMoreElements()) {
+      Object key = keys.nextElement();
+      Object value = defaults.get(key);
+      if (value instanceof FontUIResource) {
+        FontUIResource resource = (FontUIResource) value;
+        Font newFont = font.deriveFont(resource.getStyle()).deriveFont((float) resource.getSize() + fontSize);
+        defaults.put(key, new FontUIResource(newFont));
       }
     }
   }
