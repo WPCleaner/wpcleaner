@@ -145,7 +145,12 @@ public class CheckErrorAlgorithm010 extends CheckErrorAlgorithmBase {
             }
             String suffix = "";
             if ((tmpIndex2 < maxLength) && (contents.charAt(tmpIndex2) == ']')) {
-              suffix = contents.substring(tmpIndex + 1, tmpIndex2 + 1);
+              suffix = contents.substring(tmpIndex + 1, tmpIndex2);
+              while (suffix.endsWith(" ") &&
+                     (tmpIndex2 + 1 < maxLength) &&
+                     (contents.charAt(tmpIndex2) + 1 == ' ')) {
+                suffix = suffix.substring(0, suffix.length() - 1);
+              }
             } else {
               tmpIndex2 = tmpIndex;
             }
@@ -180,10 +185,10 @@ public class CheckErrorAlgorithm010 extends CheckErrorAlgorithmBase {
               // TODO: analyze if category at the beginning of a line
             }
             errorResult.addReplacement(
-                contents.substring(currentIndex, tmpIndex + 1) + "]" + suffix,
+                contents.substring(currentIndex, tmpIndex) + "]]" + suffix,
                 automatic && (suffix.length() == 0));
             if (suffix.length() > 0) {
-              errorResult.addReplacement(contents.substring(currentIndex, tmpIndex) + suffix + "]");
+              errorResult.addReplacement(contents.substring(currentIndex, tmpIndex) + suffix + "]]");
             }
             errors.add(errorResult);
             errorReported = true;
