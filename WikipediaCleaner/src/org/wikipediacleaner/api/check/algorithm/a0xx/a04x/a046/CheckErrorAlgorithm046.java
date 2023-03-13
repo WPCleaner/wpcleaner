@@ -222,12 +222,52 @@ public class CheckErrorAlgorithm046 extends CheckErrorAlgorithmBase {
         automatic = true;
       }
     }
+    automatic &= !hasUnmatchedOpeningBracketsBefore(analysis, contents, currentIndex);
     CheckErrorResult errorResult = createCheckErrorResult(
         analysis, currentIndex, currentIndex + 2);
     errorResult.addReplacement("", GT._T("Delete"), automatic);
     errors.add(errorResult);
 
     return true;
+  }
+
+  private boolean hasUnmatchedOpeningBracketsBefore(PageAnalysis analysis, String contents, int limit) {
+    int currentIndex = contents.indexOf("[[");
+    while ((currentIndex > 0) && (currentIndex < limit)) {
+      if (isUnmatchedOpeningBrackets(analysis, currentIndex)) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  private boolean isUnmatchedOpeningBrackets(PageAnalysis analysis, int currentIndex) {
+    PageElementInternalLink iLink = analysis.isInInternalLink(currentIndex);
+    if ((iLink != null) && (iLink.getBeginIndex() == currentIndex)) {
+      return true;
+    }
+
+    PageElementImage image = analysis.isInImage(currentIndex);
+    if ((image != null) && (image.getBeginIndex() == currentIndex)) {
+      return true;
+    }
+    
+    PageElementCategory category = analysis.isInCategory(currentIndex);
+    if ((category != null) && (category.getBeginIndex() == currentIndex)) {
+      return true;
+    }
+    
+    PageElementLanguageLink lLink = analysis.isInLanguageLink(currentIndex);
+    if ((lLink != null) && (lLink.getBeginIndex() == currentIndex)) {
+      return true;
+    }
+    
+    PageElementInterwikiLink iwLink = analysis.isInInterwikiLink(currentIndex);
+    if ((iwLink != null) && (iwLink.getBeginIndex() == currentIndex)) {
+      return true;
+    }
+    
+    return false;
   }
 
   /**
