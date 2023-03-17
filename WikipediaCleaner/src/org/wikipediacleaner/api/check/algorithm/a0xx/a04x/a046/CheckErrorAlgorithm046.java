@@ -237,6 +237,7 @@ public class CheckErrorAlgorithm046 extends CheckErrorAlgorithmBase {
       if (isUnmatchedOpeningBrackets(analysis, currentIndex)) {
         return true;
       }
+      currentIndex = contents.indexOf("[[", currentIndex + 1);
     }
     return false;
   }
