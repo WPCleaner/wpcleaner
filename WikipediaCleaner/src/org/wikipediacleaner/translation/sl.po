@@ -8,7 +8,7 @@
 msgid ""
 msgstr ""
 ""
-"PO-Revision-Date: 2023-03-27 15:50:42+0000\n"
+"PO-Revision-Date: 2023-03-30 11:23:34+0000\n"
 "X-POT-Import-Date: 2023-03-26 12:30:23+0000\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -2654,7 +2654,7 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:997
 #, java-format
 msgid "Error: {0}"
-msgstr ""
+msgstr "Napaka: {0}"
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:871
 #, java-format
@@ -2705,7 +2705,7 @@ msgstr "Jezik"
 
 #: org/wikipediacleaner/gui/swing/LanguageSelectionPanel.java:206
 msgid "Script"
-msgstr ""
+msgstr "Skript"
 
 #: org/wikipediacleaner/gui/swing/LanguageSelectionPanel.java:221
 msgid "Region"
