@@ -102,8 +102,23 @@ public class CheckErrorAlgorithm578 extends CheckErrorAlgorithmBase {
     CheckErrorResult errorResult = createCheckErrorResult(analysis, beginIndex, endIndex);
     String contents = analysis.getContents();
     int tmpBeginIndex = ContentsUtil.moveIndexAfterWhitespace(contents, beginIndex + listItem.getDepth());
-    // TODO: Automatic fixing, be careful of not breaking list depths
-    errorResult.addReplacement(contents.substring(tmpBeginIndex, endIndex), false);
+    boolean automatic = true;
+    if (tmpBeginIndex < template.getBeginIndex()) {
+      automatic = false;
+    }
+    if (listItem.getEndIndex() > template.getEndIndex()) {
+      automatic = false;
+    }
+    if (listItem.getDepth() > 1) {
+      automatic = false;
+    }
+    if (automatic && (beginIndex > 0)) {
+      PageElementListItem previousItem = analysis.isInListItem(beginIndex - 1);
+      if (previousItem != null) {
+        automatic = false;
+      }
+    }
+    errorResult.addReplacement(contents.substring(tmpBeginIndex, endIndex), automatic);
     errors.add(errorResult);
 
     return true;

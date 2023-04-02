@@ -1,0 +1,20 @@
+DoTasks _Common.txt
+Set Configuration TimeBetweenEdit 6
+Set Configuration MaxEditsPerMinute 10
+Set RangeBegin Bel
+Set Prefix [[Wikipédia:Bot/Requêtes/2023/03#Retirer_la_puce_devant_&#123;&#123;Liens&#125;&#125;|Modèles_ne_fonctionnant_pas_dans_les_listes]]
+FixFileCheckWiki C:\Users\Nicolas\CW_frwiki_578.txt 578
+# FixListCheckWiki Projet:Correction_syntaxique/Analyse_578 578
+# FixDump C:\Users\Nicolas\Downloads\frwiki-$-pages-articles.xml.bz2 578
+
+# File namespace
+DoTasks _Common_Other.txt
+Set Namespaces 6
+# FixListCheckWiki Projet:Correction_syntaxique/Analyse_578 578
+# FixDump C:\Users\Nicolas\Downloads\frwiki-$-pages-articles.xml.bz2 578
+
+# Category namespace
+DoTasks _Common_Other.txt
+Set Namespaces 14
+# FixListCheckWiki Projet:Correction_syntaxique/Analyse_578 578
+# FixDump C:\Users\Nicolas\Downloads\frwiki-$-pages-articles.xml.bz2 578
