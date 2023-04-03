@@ -8,7 +8,7 @@
 msgid ""
 msgstr ""
 ""
-"PO-Revision-Date: 2023-03-30 11:23:34+0000\n"
+"PO-Revision-Date: 2023-04-03 11:39:02+0000\n"
 "X-POT-Import-Date: 2023-03-26 12:30:23+0000\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -980,7 +980,7 @@ msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a08x/a084/CheckErrorAlgorithm084.java:170
 msgid "A text that can be added to sections without content"
-msgstr ""
+msgstr "Besedilo, ki se lahko doda razdelkom brez vsebine"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a08x/a084/CheckErrorAlgorithm084.java:173
 msgid "Restrict verification to titles with a higher level"
@@ -1672,7 +1672,7 @@ msgstr "Parametri predloge, v katerih so zunanje povezave običajne"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a556/CheckErrorAlgorithm556.java:277
 msgid "Sections in which external links are normal"
-msgstr ""
+msgstr "Razdelki, v katerih so zunanje povezave normalne"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a556/CheckErrorAlgorithm556.java:280
 msgid "Section in which external links are normal"
