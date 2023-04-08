@@ -72,7 +72,7 @@ public class CheckErrorAlgorithm559 extends CheckErrorAlgorithmBase {
     while (refIndex < maxRefs) {
 
       // Group references separated only by punctuation characters
-      int lastRefIndex = PageElement.groupElements(refs, refIndex, contents, ",;.\'′", separators);
+      int lastRefIndex = PageElement.groupElements(refs, refIndex, contents, ",;.\'′’", separators);
       result |= analyzeGroupOfTags(analysis, contents, errors, refs, refIndex, lastRefIndex);
       refIndex = lastRefIndex + 1;
     }
