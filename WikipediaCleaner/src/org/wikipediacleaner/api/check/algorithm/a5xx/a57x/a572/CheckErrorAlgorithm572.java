@@ -13,7 +13,10 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import org.wikipediacleaner.api.API;
 import org.wikipediacleaner.api.APIException;
@@ -137,6 +140,15 @@ public class CheckErrorAlgorithm572 extends CheckErrorAlgorithmBase {
     for (TemplateParameterSuggestion suggestion : suggestions.get()) {
       boolean automatic = suggestion.isAutomatic();
       errorResult.addReplacement(suggestion.getReplacement(), automatic);
+    }
+    List<PageElementTemplate.Parameter> paramsWithSameValue = IntStream.range(0, template.getParameterCount())
+        .filter(paramIndex -> paramIndex != paramNum)
+        .mapToObj(paramIndex -> template.getParameter(paramIndex))
+        .filter(param -> Objects.equals(param.getValue(), templateParam.getValue()))
+        .collect(Collectors.toList());
+    if (!paramsWithSameValue.isEmpty()) {
+      paramsWithSameValue.forEach(param -> errorResult.addText(GT._T("Same value as parameter {0}", param.getName())));
+      errorResult.addReplacement("");
     }
     errors.add(errorResult);
     return true;
