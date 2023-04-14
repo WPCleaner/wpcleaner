@@ -7,9 +7,10 @@
 
 package org.wikipediacleaner.api.check.algorithm.a5xx.a57x.a578;
 
-import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Nonnull;
 
@@ -59,10 +60,10 @@ public class CheckErrorAlgorithm578 extends CheckErrorAlgorithmBase {
 
     // Check each template
     boolean result = false;
-    for (String templateName : templateNames) {
-      List<PageElementTemplate> currentTemplates = analysis.getTemplates(templateName);
+    for (Map.Entry<String, Boolean> templateConfiguration : templateNames.entrySet()) {
+      List<PageElementTemplate> currentTemplates = analysis.getTemplates(templateConfiguration.getKey());
       for (PageElementTemplate template : currentTemplates) {
-        result |= analyzeTemplate(analysis, errors, template);
+        result |= analyzeTemplate(analysis, errors, template, templateConfiguration.getValue());
       }
     }
 
@@ -75,12 +76,14 @@ public class CheckErrorAlgorithm578 extends CheckErrorAlgorithmBase {
    * @param analysis Page analysis.
    * @param errors Errors found in the page.
    * @param template Template.
+   * @param ignoreAfter True if text after should be ignored.
    * @return Flag indicating if the error was found.
    */
   private boolean analyzeTemplate(
       PageAnalysis analysis,
       Collection<CheckErrorResult> errors,
-      PageElementTemplate template) {
+      PageElementTemplate template,
+      Boolean ignoreAfter) {
 
     // Check if template is in list item
     PageElementListItem listItem = analysis.isInListItem(template.getBeginIndex());
@@ -106,7 +109,7 @@ public class CheckErrorAlgorithm578 extends CheckErrorAlgorithmBase {
     if (tmpBeginIndex < template.getBeginIndex()) {
       automatic = false;
     }
-    if (listItem.getEndIndex() > template.getEndIndex()) {
+    if ((listItem.getEndIndex() > template.getEndIndex()) && Boolean.FALSE.equals(ignoreAfter)) {
       automatic = false;
     }
     if (listItem.getDepth() > 1) {
@@ -155,15 +158,16 @@ public class CheckErrorAlgorithm578 extends CheckErrorAlgorithmBase {
     String tmp = getSpecificProperty(PARAMETER_TEMPLATES, true, true, false);
     templateNames.clear();
     if (tmp != null) {
-      List<String> tmpList = WPCConfiguration.convertPropertyToStringList(tmp);
-      for (String tmpElement : tmpList) {
-        templateNames.add(Page.normalizeTitle(tmpElement));
+      List<String[]> tmpList = WPCConfiguration.convertPropertyToStringArrayList(tmp);
+      for (String[] tmpElement : tmpList) {
+        Boolean ignoreAfter = tmpElement.length > 1 ? Boolean.valueOf(tmpElement[1]) : Boolean.FALSE;
+        templateNames.put(Page.normalizeTitle(tmpElement[0]), ignoreAfter);
       }
     }
   }
 
   /** Templates that shouldn't be used in list item */
-  private final List<String> templateNames = new ArrayList<>();
+  private final Map<String, Boolean> templateNames = new HashMap<>();
 
   /**
    * Build the list of parameters for this algorithm.

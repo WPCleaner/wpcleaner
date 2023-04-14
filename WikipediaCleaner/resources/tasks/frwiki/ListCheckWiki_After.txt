@@ -108,6 +108,8 @@ Set Prefix [[Utilisateur:WikiCleanerBot#T3|Bot_T3_PCS#575]]
 FixListCheckWiki Projet:Correction_syntaxique/Analyse_575 575
 Set Prefix [[Utilisateur:WikiCleanerBot#T3|Bot_T3_PCS#577]]
 FixListCheckWiki Projet:Correction_syntaxique/Analyse_577 577
+Set Prefix [[Utilisateur:WikiCleanerBot#T3|Bot_T3_PCS#578]]
+FixListCheckWiki Projet:Correction_syntaxique/Analyse_578 578
 Set Prefix [[Utilisateur:WikiCleanerBot#T3|Bot_T3_PCS#564]]
 UpdateUnknownParameterWarnings
 
