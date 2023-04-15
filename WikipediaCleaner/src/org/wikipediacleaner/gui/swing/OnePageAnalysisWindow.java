@@ -1408,7 +1408,7 @@ public class OnePageAnalysisWindow
   protected void actionValidate(boolean fullValidate) {
 
     // Count previous selected errors
-    int previousCount = countSelectedErrors(getPage().getLastAnalysis());
+    List<Integer> previousCount = countSelectedErrors(getPage().getLastAnalysis());
 
     getTextContents().resetAttributes();
     PageAnalysis analysis = getPage().getAnalysis(getTextContents().getText(), true);
@@ -1450,12 +1450,12 @@ public class OnePageAnalysisWindow
 
     // Update selection
     if (fullValidate) {
-      int currentCount = countSelectedErrors(analysis);
+      List<Integer> currentCount = countSelectedErrors(analysis);
 
       if (listErrors.getSelectedValue() != null) {
         // The previous selection was in the check wiki errors
         CheckErrorPage errorPage = listErrors.getSelectedValue();
-        if (!errorPage.getErrorFound() || (currentCount == previousCount)) {
+        if (!errorPage.getErrorFound() || currentCount.equals(previousCount)) {
           int selected = listErrors.getSelectedIndex();
           selected++;
           if (selected < modelErrors.getSize()) {
@@ -1472,7 +1472,7 @@ public class OnePageAnalysisWindow
         }
       } else if (listLinks.getSelectedValue() != null) {
         // The previous selection was in the links
-        if ((currentCount == 0) || (currentCount == previousCount)) {
+        if (currentCount.equals(Collections.singletonList(0)) || currentCount.equals(previousCount)) {
           int selected = listLinks.getMaxSelectionIndex() + 1;
           if (selected < modelLinks.getSize()) {
             selectLinks(selected);
@@ -1499,11 +1499,19 @@ public class OnePageAnalysisWindow
   /**
    * @return Number of errors in the selection.
    */
-  private int countSelectedErrors(PageAnalysis analysis) {
+  private List<Integer> countSelectedErrors(PageAnalysis analysis) {
     // Count check wiki errors
     if (listErrors.getSelectedValue() != null) {
       CheckErrorPage errorPage = listErrors.getSelectedValue();
-      return errorPage.getResultsCount();
+      int totalCount = errorPage.getResultsCount();
+      int activeCount = errorPage.getActiveResultsCount();
+      if (totalCount == activeCount) {
+        return Collections.singletonList(totalCount);
+      }
+      List<Integer> result = new ArrayList<>();
+      result.add(totalCount);
+      result.add(activeCount);
+      return result;
     }
 
     // Count disambiguation links
@@ -1517,10 +1525,11 @@ public class OnePageAnalysisWindow
             count += tmpCount.getTotalLinkCount();
           }
         }
-        return count;
+        return Collections.singletonList(count);
       }
     }
-    return 0;
+
+    return Collections.singletonList(0);
   }
 
   // ===========================================================================
