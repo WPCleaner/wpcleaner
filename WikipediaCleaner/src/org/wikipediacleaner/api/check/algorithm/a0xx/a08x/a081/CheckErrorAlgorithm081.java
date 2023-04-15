@@ -33,6 +33,7 @@ import org.wikipediacleaner.gui.swing.action.ActionExternalViewer;
 import org.wikipediacleaner.gui.swing.basic.Utilities;
 import org.wikipediacleaner.gui.swing.component.MWPane;
 import org.wikipediacleaner.i18n.GT;
+import org.wikipediacleaner.utils.CompositeTextProvider;
 import org.wikipediacleaner.utils.StringChecker;
 import org.wikipediacleaner.utils.StringCheckerReferenceName;
 import org.wikipediacleaner.utils.TextProvider;
@@ -250,10 +251,8 @@ public class CheckErrorAlgorithm081 extends CheckErrorAlgorithmBase {
 
               // Add an action for naming the reference tag
               // TODO: manage a better action for naming the reference tag and replacing all other tags
-              TextProvider provider = null;
-              if (links.size() > 0) {
-                provider = new TextProviderUrlTitle(links.get(0).getLink());
-              }
+              List<TextProvider> providers = new ArrayList<>();
+              links.forEach(link -> providers.add(new TextProviderUrlTitle(link.getLink())));
               String prefix = contents.substring(tag.getBeginIndex(), tag.getEndIndex() - 1);
               String suffix = contents.substring(tag.getEndIndex() - 1, tag.getCompleteEndIndex());
               errorResult.addPossibleAction(
@@ -261,7 +260,7 @@ public class CheckErrorAlgorithm081 extends CheckErrorAlgorithmBase {
                   new AddTextActionProvider(
                       prefix + " name=\"",
                       "\"" + suffix,
-                      provider,
+                      new CompositeTextProvider(providers),
                       GT._T("What name would you like to use for the <ref> tag ?"),
                       nameChecker));
 
@@ -408,14 +407,32 @@ public class CheckErrorAlgorithm081 extends CheckErrorAlgorithmBase {
    */
   @Override
   protected String internalAutomaticFix(PageAnalysis analysis) {
-    // TODO: move to initializeSettings()
-    List<String[]> refTemplates = analysis.getWPCConfiguration().getStringArrayList(
-        WPCConfigurationStringList.REFERENCES_TEMPLATES);
-    if ((refTemplates == null) ||
-        (refTemplates.isEmpty()) ||
+    if ((referenceTemplates == null) ||
+        (referenceTemplates.isEmpty()) ||
         analysis.getPage().isInUserNamespace()) {
       return analysis.getContents();
     }
     return fixUsingAutomaticReplacement(analysis);
   }
+
+  /* ====================================================================== */
+  /* PARAMETERS                                                             */
+  /* ====================================================================== */
+
+  /**
+   * Initialize settings for the algorithm.
+   * 
+   * @see org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase#initializeSettings()
+   */
+  @Override
+  protected void initializeSettings() {
+    List<String[]> refTemplates = getWPCConfiguration().getStringArrayList(
+        WPCConfigurationStringList.REFERENCES_TEMPLATES);
+    referenceTemplates.clear();
+    if (refTemplates != null) {
+      referenceTemplates.addAll(refTemplates);
+    }
+  }
+  
+  private final List<String[]> referenceTemplates = new ArrayList<>();
 }
