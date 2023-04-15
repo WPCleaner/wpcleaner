@@ -216,9 +216,24 @@ public class CheckErrorAlgorithm577 extends CheckErrorAlgorithmBase {
       }
     }
 
+    // External viewer
+    addExternalViewer(analysis, errorResult, template);
+
     errors.add(errorResult);
 
     return true;
+  }
+
+  private void addExternalViewer(
+      PageAnalysis analysis,
+      CheckErrorResult errorResult,
+      PageElementTemplate template) {
+    analysis.getExternalLinks().stream()
+        .filter(link -> link.getBeginIndex() > template.getBeginIndex())
+        .filter(link -> link.getEndIndex() < template.getEndIndex())
+        .forEach(link -> errorResult.addPossibleAction(
+            GT._T("External viewer for parameter {0}", template.getParameterAtIndex(link.getBeginIndex()).getComputedName()),
+            new BasicActionProvider(new ActionExternalViewer(link.getLink()))));
   }
 
   /**
