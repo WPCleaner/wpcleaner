@@ -109,7 +109,8 @@ public class CheckErrorAlgorithm578 extends CheckErrorAlgorithmBase {
     if (tmpBeginIndex < template.getBeginIndex()) {
       automatic = false;
     }
-    if ((listItem.getEndIndex() > template.getEndIndex()) && Boolean.FALSE.equals(ignoreAfter)) {
+    if (Boolean.FALSE.equals(ignoreAfter) &&
+        (listItem.getEndIndex() > ContentsUtil.moveIndexAfterWhitespace(contents, template.getEndIndex()))) {
       automatic = false;
     }
     if (listItem.getDepth() > 1) {
