@@ -14,18 +14,24 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.stream.Collectors;
 
 import javax.swing.JOptionPane;
 
 import org.apache.commons.lang3.StringUtils;
+import org.wikipediacleaner.api.algorithm.AlgorithmParameter;
+import org.wikipediacleaner.api.algorithm.AlgorithmParameterElement;
 import org.wikipediacleaner.api.check.AddTextActionProvider;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.SimpleAction;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase;
+import org.wikipediacleaner.api.check.algorithm.a5xx.TemplateConfigurationGroup;
+import org.wikipediacleaner.api.configuration.WPCConfiguration;
 import org.wikipediacleaner.api.configuration.WPCConfigurationStringList;
 import org.wikipediacleaner.api.data.PageElementExternalLink;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.PageElementTag.Parameter;
+import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
 import org.wikipediacleaner.api.data.contents.tag.CompleteTagBuilder;
 import org.wikipediacleaner.api.data.contents.tag.WikiTagType;
@@ -181,100 +187,122 @@ public class CheckErrorAlgorithm081 extends CheckErrorAlgorithmBase {
     // Second pass for managing with several tags having the same group and value
     List<PageElementTag> completeReferencesTags =
         analysis.getCompleteTags(WikiTagType.REFERENCES);
-    String contents = analysis.getContents();
     for (Entry<String, Map<String, List<PageElementTag>>> entryGroup : refs.entrySet()) {
       String groupName = entryGroup.getKey();
       for (Entry<String, List<PageElementTag>> entryValue : entryGroup.getValue().entrySet()) {
-        List<PageElementTag> listTags = entryValue.getValue();
-        if (listTags.size() > 1) {
+        result |= analyzeListOfTags(
+            analysis,
+            entryValue.getValue(),
+            groupName,
+            completeReferencesTags,
+            errors);
+      }
+    }
+    return true;
+  }
 
-          // Find main reference tag
-          PageElementTag mainTag = PageElementTag.getMainRef(
-              listTags, completeReferencesTags, analysis);
-          if (mainTag != null) {
+  public boolean analyzeListOfTags(
+      PageAnalysis analysis,
+      List<PageElementTag> listTags,
+      String groupName,
+      List<PageElementTag> completeReferencesTags,
+      Collection<CheckErrorResult> errors) {
+    if (listTags.size() <= 1) {
+      return false;
+    }
 
-            // Create an error for each tag, except for the main tag
-            String selectedName = mainTag.getParameter("name").getTrimmedValue();
-            for (PageElementTag tag : listTags) {
-              if (tag == mainTag) {
-                CheckErrorResult errorResult = createCheckErrorResult(
-                    analysis,
-                    tag.getCompleteBeginIndex(), tag.getCompleteEndIndex(),
-                    CheckErrorResult.ErrorLevel.CORRECT);
-                errors.add(errorResult);
-              } else {
-                Parameter name = tag.getParameter("name");
-                String nameValue = (name != null) ? name.getTrimmedValue() : null;
-                if (nameValue != null) {
-                  nameValue = nameValue.trim();
-                }
-                boolean sameName = selectedName.equals(nameValue);
-                CheckErrorResult errorResult = createCheckErrorResult(
-                    analysis,
-                    tag.getCompleteBeginIndex(), tag.getCompleteEndIndex());
-                if (sameName) {
-                  errorResult.addText(GT._T("Both tags have already the same name"));
-                } else if (name == null) {
-                  errorResult.addText(GT._T("Tag is unnamed"));
-                } else {
-                  errorResult.addText(GT._T("Tags have different names"));
-                  errorResult.addText(selectedName);
-                  errorResult.addText(nameValue);
-                }
-                errorResult.addReplacement(
-                    getClosedRefTag(groupName, selectedName, null),
-                    sameName || (name == null));
-                errors.add(errorResult);
-              }
-            }
-          } else {
+    // Find main reference tag
+    PageElementTag mainTag = PageElementTag.getMainRef(
+        listTags, completeReferencesTags, analysis);
+    if (mainTag != null) {
 
-            for (PageElementTag tag : listTags) {
-              int valueBeginIndex = tag.getValueBeginIndex();
-              int valueEndIndex = tag.getValueEndIndex();
-
-              // Find if an external link is in the reference tag
-              List<PageElementExternalLink> externalLinks = analysis.getExternalLinks();
-              List<PageElementExternalLink> links = new ArrayList<>();
-              for (PageElementExternalLink externalLink : externalLinks) {
-                if ((externalLink.getBeginIndex() >= valueBeginIndex) &&
-                    (externalLink.getEndIndex() <= valueEndIndex)) {
-                  links.add(externalLink);
-                }
-              }
-
-              // Register error
-              CheckErrorResult errorResult = createCheckErrorResult(
-                  analysis,
-                  tag.getCompleteBeginIndex(), tag.getCompleteEndIndex());
-              errorResult.addText("Both tags are unnamed");
-
-              // Add an action for naming the reference tag
-              // TODO: manage a better action for naming the reference tag and replacing all other tags
-              List<TextProvider> providers = new ArrayList<>();
-              links.forEach(link -> providers.add(new TextProviderUrlTitle(link.getLink())));
-              String prefix = contents.substring(tag.getBeginIndex(), tag.getEndIndex() - 1);
-              String suffix = contents.substring(tag.getEndIndex() - 1, tag.getCompleteEndIndex());
-              errorResult.addPossibleAction(
-                  GT._T("Give a name to the <ref> tag"),
-                  new AddTextActionProvider(
-                      prefix + " name=\"",
-                      "\"" + suffix,
-                      new CompositeTextProvider(providers),
-                      GT._T("What name would you like to use for the <ref> tag ?"),
-                      nameChecker));
-
-              // Add actions for external links
-              for (PageElementExternalLink link : links) {
-                errorResult.addPossibleAction(new SimpleAction(
-                    GT._T("External Viewer"),
-                    new ActionExternalViewer(link.getLink())));
-              }
-              errors.add(errorResult);
-            }
+      // Create an error for each tag, except for the main tag
+      String selectedName = mainTag.getParameter("name").getTrimmedValue();
+      for (PageElementTag tag : listTags) {
+        if (tag == mainTag) {
+          CheckErrorResult errorResult = createCheckErrorResult(
+              analysis,
+              tag.getCompleteBeginIndex(), tag.getCompleteEndIndex(),
+              CheckErrorResult.ErrorLevel.CORRECT);
+          errors.add(errorResult);
+        } else {
+          Parameter name = tag.getParameter("name");
+          String nameValue = (name != null) ? name.getTrimmedValue() : null;
+          if (nameValue != null) {
+            nameValue = nameValue.trim();
           }
+          boolean sameName = selectedName.equals(nameValue);
+          CheckErrorResult errorResult = createCheckErrorResult(
+              analysis,
+              tag.getCompleteBeginIndex(), tag.getCompleteEndIndex());
+          if (sameName) {
+            errorResult.addText(GT._T("Both tags have already the same name"));
+          } else if (name == null) {
+            errorResult.addText(GT._T("Tag is unnamed"));
+          } else {
+            errorResult.addText(GT._T("Tags have different names"));
+            errorResult.addText(selectedName);
+            errorResult.addText(nameValue);
+          }
+          errorResult.addReplacement(
+              getClosedRefTag(groupName, selectedName, null),
+              sameName || (name == null));
+          errors.add(errorResult);
         }
       }
+      return true;
+    }
+
+    for (PageElementTag tag : listTags) {
+      int valueBeginIndex = tag.getValueBeginIndex();
+      int valueEndIndex = tag.getValueEndIndex();
+
+      // Find external links in the reference tag
+      List<PageElementExternalLink> links = analysis.getExternalLinks().stream()
+          .filter(link -> link.getBeginIndex() >= valueBeginIndex)
+          .filter(link -> link.getEndIndex() <= valueEndIndex)
+          .collect(Collectors.toList());
+
+      // Find templates in the reference tag
+      List<PageElementTemplate> templates = analysis.getTemplates().stream()
+          .filter(template -> template.getBeginIndex() >= valueBeginIndex)
+          .filter(template -> template.getEndIndex() <= valueEndIndex)
+          .collect(Collectors.toList());
+
+      // Register error
+      CheckErrorResult errorResult = createCheckErrorResult(
+          analysis,
+          tag.getCompleteBeginIndex(), tag.getCompleteEndIndex());
+      errorResult.addText("Both tags are unnamed");
+
+      // Add an action for naming the reference tag
+      String contents = analysis.getContents();
+      List<TextProvider> providers = new ArrayList<>();
+      links.forEach(link -> providers.add(new TextProviderUrlTitle(link.getLink())));
+      for (PageElementTemplate template : templates) {
+        TemplateConfiguration config = configurationByTemplateName.get(template.getTemplateName());
+        if (config != null) {
+          providers.addAll(config.getTextProviders(template));
+        }
+      }
+      String prefix = contents.substring(tag.getBeginIndex(), tag.getEndIndex() - 1);
+      String suffix = contents.substring(tag.getEndIndex() - 1, tag.getCompleteEndIndex());
+      errorResult.addPossibleAction(
+          GT._T("Give a name to the <ref> tag"),
+          new AddTextActionProvider(
+              prefix + " name=\"",
+              "\"" + suffix,
+              new CompositeTextProvider(providers),
+              GT._T("What name would you like to use for the <ref> tag ?"),
+              nameChecker));
+
+      // Add actions for external links
+      for (PageElementExternalLink link : links) {
+        errorResult.addPossibleAction(new SimpleAction(
+            GT._T("External Viewer"),
+            new ActionExternalViewer(link.getLink())));
+      }
+      errors.add(errorResult);
     }
     return true;
   }
@@ -419,6 +447,9 @@ public class CheckErrorAlgorithm081 extends CheckErrorAlgorithmBase {
   /* PARAMETERS                                                             */
   /* ====================================================================== */
 
+  /** Template parameters for title  */
+  private static final String PARAMETER_TEMPLATE_PARAMS = "template_params";
+
   /**
    * Initialize settings for the algorithm.
    * 
@@ -432,7 +463,45 @@ public class CheckErrorAlgorithm081 extends CheckErrorAlgorithmBase {
     if (refTemplates != null) {
       referenceTemplates.addAll(refTemplates);
     }
+
+    TemplateConfigurationGroup group = new TemplateConfigurationGroup();
+    List<String[]> generalList = getWPCConfiguration().getStringArrayList(WPCConfigurationStringList.TEMPLATE_GROUPS);
+    if (generalList != null) {
+      group.addGroups(generalList);
+    }
+
+    String tmp = getSpecificProperty(PARAMETER_TEMPLATE_PARAMS, true, true, false);
+    if (tmp != null) {
+      List<String[]> tmpList = WPCConfiguration.convertPropertyToStringArrayList(tmp);
+      TemplateConfiguration.addParametersForTitle(tmpList, configurationByTemplateName, group);
+    }
   }
   
+  /** Reference templates */
   private final List<String[]> referenceTemplates = new ArrayList<>();
+
+  /** Configuration by template */
+  private final Map<String, TemplateConfiguration> configurationByTemplateName = new HashMap<>();
+
+  /**
+   * Build the list of parameters for this algorithm.
+   */
+  @Override
+  protected void addParameters() {
+    super.addParameters();
+    addParameter(new AlgorithmParameter(
+        PARAMETER_TEMPLATE_PARAMS,
+        GT._T("Parameters that can be used as title"),
+        new AlgorithmParameterElement[] {
+            new AlgorithmParameterElement(
+                "template",
+                GT._T("Name of the template")),
+            new AlgorithmParameterElement(
+                "param",
+                GT._T("Name of the parameter"),
+                true,
+                true)
+        },
+        true));
+  }
 }

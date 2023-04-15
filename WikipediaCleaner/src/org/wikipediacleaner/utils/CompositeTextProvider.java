@@ -21,12 +21,13 @@ public class CompositeTextProvider implements TextProvider {
     this.providers = providers;
   }
 
-  /**
-   * @return
-   * @see org.wikipediacleaner.utils.TextProvider#getTexts()
-   */
   @Override
   public Collection<String> getTexts() {
-    return providers.stream().map(TextProvider::getTexts).flatMap(Collection::stream).collect(Collectors.toList());
+    return providers.stream()
+        .map(TextProvider::getTexts)
+        .flatMap(Collection::stream)
+        .sorted()
+        .distinct()
+        .collect(Collectors.toList());
   }
 }
