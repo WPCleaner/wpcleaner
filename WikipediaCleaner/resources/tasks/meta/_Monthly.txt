@@ -1,0 +1,24 @@
+# Fix empty lines
+DoTasks _Common.txt
+# FixListCheckWiki User:NicoV/WCW/WPC_551_dump 551
+
+# Fix bogus-image-options
+Set Prefix [[Special:LintErrors/bogus-image-options]]
+Set Configuration MaxLintErrors 100000
+DoTasks _Common.txt
+Set Namespaces 0 200 202
+FixLintError bogus-image-options 534
+
+# Fix missing-end-tag
+Set Prefix [[Special:LintErrors/missing-end-tag]]
+Set Configuration MaxLintErrors 100000
+DoTasks _Common.txt
+Set Namespaces 0 200 202
+FixLintError missing-end-tag 532 540
+
+# Fix multiple-unclosed-formatting-tags
+Set Prefix [[Special:LintErrors/multiple-unclosed-formatting-tags]]
+Set Configuration MaxLintErrors 100000
+DoTasks _Common.txt
+Set Namespaces 0
+FixLintError multiple-unclosed-formatting-tags 532 540
