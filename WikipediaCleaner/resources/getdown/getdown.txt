@@ -93,9 +93,9 @@ resource = tasks/frwiki/ListCheckWiki_Before.txt
 resource = tasks/frwiki/ListCheckWiki_List.txt
 resource = tasks/frwiki/MarkCheckWiki.txt
 resource = tasks/frwiki/UpdateCheckWiki.txt
-resource = tasks/meta/_Common.txt
-resource = tasks/meta/_Monthly.txt
-resource = tasks/meta/ListCheckWiki.txt
+resource = tasks/metawiki/_Common.txt
+resource = tasks/metawiki/_Monthly.txt
+resource = tasks/metawiki/ListCheckWiki.txt
 
 # Requirements on Java
 java_min_version = 1080000
