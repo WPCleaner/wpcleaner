@@ -17,8 +17,10 @@ import java.util.stream.Stream;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase;
 import org.wikipediacleaner.api.data.Namespace;
+import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.PageElementTitle;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
+import org.wikipediacleaner.api.data.contents.tag.WikiTagType;
 import org.wikipediacleaner.api.data.contents.title.TitleBuilder;
 
 
@@ -131,6 +133,20 @@ public class CheckErrorAlgorithm083 extends CheckErrorAlgorithmBase {
       }
     }
     if (correctTitleIndex < 0) {
+      return defaultContents;
+    }
+
+    // Do not fix pages with include tags
+    List<PageElementTag> exclusionTags = analysis.getTags(WikiTagType.INCLUDEONLY);
+    if ((exclusionTags != null) && !exclusionTags.isEmpty()) {
+      return defaultContents;
+    }
+    exclusionTags = analysis.getTags(WikiTagType.NOINCLUDE);
+    if ((exclusionTags != null) && !exclusionTags.isEmpty()) {
+      return defaultContents;
+    }
+    exclusionTags = analysis.getTags(WikiTagType.ONLYINCLUDE);
+    if ((exclusionTags != null) && !exclusionTags.isEmpty()) {
       return defaultContents;
     }
 
