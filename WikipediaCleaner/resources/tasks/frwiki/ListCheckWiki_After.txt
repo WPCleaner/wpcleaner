@@ -121,6 +121,8 @@ Set Prefix [[Utilisateur:WikiCleanerBot#T3|Bot_T3_PCS#1]]
 FixListCheckWiki Projet:Correction_syntaxique/Analyse_001 1
 Set Prefix [[Utilisateur:WikiCleanerBot#T3|Bot_T3_PCS#2]]
 FixListCheckWiki Projet:Correction_syntaxique/Analyse_002 2
+Set Prefix [[Utilisateur:WikiCleanerBot#T3|Bot_T3_PCS#9]]
+FixListCheckWiki Projet:Correction_syntaxique/Analyse_009 9
 Set Prefix [[Utilisateur:WikiCleanerBot#T3|Bot_T3_PCS#16]]
 FixListCheckWiki Projet:Correction_syntaxique/Analyse_016 16
 Set Prefix [[Utilisateur:WikiCleanerBot#T3|Bot_T3_PCS#17]]
