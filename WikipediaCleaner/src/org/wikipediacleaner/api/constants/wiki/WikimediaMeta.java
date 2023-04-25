@@ -25,7 +25,7 @@ public final class WikimediaMeta extends AbstractWikiSettings {
             "meta.wikimedia.org",
         },
         "/w/api.php", "/w/index.php",
-        "meta", "meta",
+        "meta", "metawiki",
         ComponentOrientation.LEFT_TO_RIGHT);
   }
 }

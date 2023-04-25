@@ -1,5 +1,36 @@
-# Fix empty lines
 DoTasks _Common.txt
+
+# Fix dump
+Set Prefix [[:en:WP:WCW|Fix_CW_error_#538]]
+# Set TimeLimit 30 DOES NOT WORK ON FIXDUMP
+# FixDump C:\Users\Nicolas\Downloads\metawiki-$-pages-articles.xml.bz2 538
+
+# Fix CheckWiki errors
+Set TimeLimit 3600
+Set Prefix [[:en:WP:WCW|Fix_CW_error_#1]]
+FixCheckWiki 1
+
+Set TimeLimit 86400
+Set Prefix [[:en:WP:WCW|Fix_CW_error_#2]]
+FixCheckWiki 2
+
+Set TimeLimit 86400
+Set Prefix [[:en:WP:WCW|Fix_CW_error_#16]]
+FixCheckWiki 16
+
+Set TimeLimit 86400
+Set Prefix [[:en:WP:WCW|Fix_CW_error_#46]]
+FixCheckWiki 46
+
+Set TimeLimit 3600
+Set Prefix [[:en:WP:WCW|Fix_CW_error_#64]]
+FixCheckWiki 64
+
+Set TimeLimit 86400
+Set Prefix [[:en:WP:WCW|Fix_CW_error_#90]]
+FixCheckWiki 90
+
+# Fix empty lines
 # FixListCheckWiki User:NicoV/WCW/WPC_551_dump 551
 
 # Fix bogus-image-options
@@ -7,6 +38,7 @@ Set Prefix [[Special:LintErrors/bogus-image-options]]
 Set Configuration MaxLintErrors 100000
 DoTasks _Common.txt
 Set Namespaces 0 200 202
+Set TimeLimit 86400
 FixLintError bogus-image-options 534
 
 # Fix missing-end-tag
@@ -14,11 +46,29 @@ Set Prefix [[Special:LintErrors/missing-end-tag]]
 Set Configuration MaxLintErrors 100000
 DoTasks _Common.txt
 Set Namespaces 0 200 202
+Set TimeLimit 86400
 FixLintError missing-end-tag 532 540
+
+# Fix misnested-tag
+Set Prefix [[Special:LintErrors/misnested-tag]]
+Set Configuration MaxLintErrors 100000
+DoTasks _Common.txt
+Set Namespaces 0 200 202
+Set TimeLimit 86400
+FixLintError missing-end-tag 532 539 540
 
 # Fix multiple-unclosed-formatting-tags
 Set Prefix [[Special:LintErrors/multiple-unclosed-formatting-tags]]
 Set Configuration MaxLintErrors 100000
 DoTasks _Common.txt
 Set Namespaces 0
+Set TimeLimit 86400
 FixLintError multiple-unclosed-formatting-tags 532 540
+
+# Fix wikilink-in-extlink
+Set Prefix [[Special:LintErrors/wikilink-in-extlink]]
+Set Configuration MaxLintErrors 100000
+DoTasks _Common.txt
+Set Namespaces 0
+Set TimeLimit 86400
+FixLintError wikilink-in-extlink 513
