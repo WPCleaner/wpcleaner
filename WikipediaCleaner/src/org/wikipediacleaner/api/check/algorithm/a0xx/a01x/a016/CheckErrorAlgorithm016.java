@@ -141,8 +141,8 @@ public class CheckErrorAlgorithm016 extends CheckErrorAlgorithmBase {
           if (found != null) {
             errorResult.addText(
                 Integer.toHexString(controlFound.intValue()) + " - " + GT._T(found.description));
+            controlInTitle |= analysis.getPage().getTitle().codePoints().anyMatch(value -> value == controlFound.intValue());
           }
-          controlInTitle |= analysis.getPage().getTitle().codePoints().anyMatch(value -> value == controlFound.intValue());
         }
         StringBuilder replacementB = new StringBuilder();
         List<String> otherReplacements = new ArrayList<>();
