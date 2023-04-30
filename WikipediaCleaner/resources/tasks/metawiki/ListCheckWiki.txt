@@ -1,4 +1,19 @@
 DoTasks _Common.txt
-# Set Prefix [[User:WikiCleanerBot|Bot]]
+Set Prefix [[User:WikiCleanerBot|Bot]]
 Set Namespaces 0
-ListCheckWiki metawiki-$-pages-articles.xml.bz2 wiki:User:NicoV/WCW/WPC_{0}_dump 551
+ListCheckWiki metawiki-$-pages-articles.xml.bz2 wiki:User:NicoV/WCW/WPC_{0}_dump 543 548 551 560 565 569 573
+
+Set Prefix [[:en:WP:WCW|Fix_CW_error_#543]]
+FixListCheckWiki User:NicoV/WCW/WPC_543_dump 543
+Set Prefix [[:en:WP:WCW|Fix_CW_error_#548]]
+FixListCheckWiki User:NicoV/WCW/WPC_548_dump 548
+Set Prefix [[:en:WP:WCW|Fix_CW_error_#551]]
+FixListCheckWiki User:NicoV/WCW/WPC_551_dump 551
+Set Prefix [[:en:WP:WCW|Fix_CW_error_#560]]
+FixListCheckWiki User:NicoV/WCW/WPC_560_dump 560
+Set Prefix [[:en:WP:WCW|Fix_CW_error_#565]]
+FixListCheckWiki User:NicoV/WCW/WPC_565_dump 565
+Set Prefix [[:en:WP:WCW|Fix_CW_error_#569]]
+FixListCheckWiki User:NicoV/WCW/WPC_569_dump 569
+Set Prefix [[:en:WP:WCW|Fix_CW_error_#573]]
+FixListCheckWiki User:NicoV/WCW/WPC_573_dump 573

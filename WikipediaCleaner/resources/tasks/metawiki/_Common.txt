@@ -1,4 +1,5 @@
-Set AdditionalAlgorithms 1 2 16 46 48 55 64 85 90 91 92 104 106 513 524 532 533 534 537 538 539 540 542 543 547 548 549 550 551
+Set AdditionalAlgorithms 1 2 16 46 48 55 64 85 90 91 92 104 106 513 524 532 533 534 537 538 539 540 542 543 547 548 549 550 551 560 565 569 573 574
+# Removed algorithms: 575
 Set Configuration TimeBetweenEdit 30
 Set Configuration MaxEditsPerMinute 2
 DoTasks _Local.txt
