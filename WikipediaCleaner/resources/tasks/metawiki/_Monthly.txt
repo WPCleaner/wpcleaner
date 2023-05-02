@@ -30,6 +30,10 @@ Set TimeLimit 86400
 Set Prefix [[:en:WP:WCW|Fix_CW_error_#90]]
 FixCheckWiki 90
 
+Set TimeLimit 86400
+Set Prefix [[:en:WP:WCW|Fix_CW_error_#93]]
+FixCheckWiki 93
+
 # Fix empty lines
 # FixListCheckWiki User:NicoV/WCW/WPC_551_dump 551
 
