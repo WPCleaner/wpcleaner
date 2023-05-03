@@ -65,214 +65,239 @@ public class CheckErrorAlgorithm067 extends CheckErrorAlgorithmBase {
 
       // Group tags separated only by punctuation characters
       int firstTagIndex = tagIndex;
-      PageElementTag firstTag = tags.get(firstTagIndex);
       int lastTagIndex = PageElementTag.groupTags(tags, firstTagIndex, contents, ",;.\'", separator);
-      PageElementTag lastTag = tags.get(lastTagIndex);
       tagIndex = lastTagIndex + 1;
+      
+      // Analyze group of tags
+      result |= analyzeGroupOfTags(analysis, errors, tags, firstTagIndex, lastTagIndex);
+    }
+    return result;
+  }
 
-      // Check if previous character is a punctuation
-      int tmpIndex = firstTag.getBeginIndex() - 1;
-      String previousComment = "";
-      boolean punctuationFoundBefore = false;
-      boolean punctuationFoundBetween = false;
-      char punctuation = ' ';
-      if (firstTag.isComplete() || !firstTag.isEndTag()) {
-        for (int currentTagIndex = firstTagIndex; currentTagIndex <= lastTagIndex; currentTagIndex++) {
-          PageElementTag currentTag = tags.get(currentTagIndex);
-          if ((currentTagIndex == firstTagIndex) ||
-              (currentTag.isFullTag()) ||
-              (!currentTag.isEndTag())) {
-            int testIndex = currentTag.getBeginIndex() - 1;
-            boolean done = false;
-            while (!done) {
-              done = true;
-              if (testIndex >= 0) {
-                char testChar = contents.charAt(testIndex);
-                if (Character.isWhitespace(testChar)) {
-                  testIndex--;
-                  done = false;
-                } else  if ((testChar == '>')) {
-                  ContentsComment comment = analysis.comments().getEndsAt(testIndex + 1);
-                  if (comment != null) {
-                    if (currentTagIndex == firstTagIndex) {
-                      previousComment += contents.substring(comment.getBeginIndex(), comment.getEndIndex());
-                    }
-                    testIndex = comment.getBeginIndex() - 1;
-                    done = false;
-                  }
-                }
-              }
-            }
-            if (currentTagIndex == firstTagIndex) {
-              tmpIndex = testIndex;
-            }
+  /**
+   * Analyze a block of tags to check if errors are present.
+   * 
+   * @param analysis Page analysis.
+   * @param errors Errors found in the page.
+   * @param tags List of reference tags in the page.
+   * @param firstTagIndex Index of the first tag in the group.
+   * @param lastTagIndex Index of the last tag in the group.
+   * @return Flag indicating if the error was found.
+   */
+  public boolean analyzeGroupOfTags(
+      PageAnalysis analysis,
+      Collection<CheckErrorResult> errors,
+      List<PageElementTag> tags,
+      int firstTagIndex,
+      int lastTagIndex) {
+
+    // Check if previous character is a punctuation
+    String contents = analysis.getContents();
+    PageElementTag firstTag = tags.get(firstTagIndex);
+    PageElementTag lastTag = tags.get(lastTagIndex);
+    int tmpIndex = firstTag.getBeginIndex() - 1;
+    String previousComment = "";
+    boolean punctuationFoundBefore = false;
+    boolean punctuationFoundBetween = false;
+    char punctuation = ' ';
+    if (firstTag.isComplete() || !firstTag.isEndTag()) {
+      for (int currentTagIndex = firstTagIndex; currentTagIndex <= lastTagIndex; currentTagIndex++) {
+        PageElementTag currentTag = tags.get(currentTagIndex);
+        if ((currentTagIndex == firstTagIndex) ||
+            (currentTag.isFullTag()) ||
+            (!currentTag.isEndTag())) {
+          int testIndex = currentTag.getBeginIndex() - 1;
+          boolean done = false;
+          while (!done) {
+            done = true;
             if (testIndex >= 0) {
-              char currentPunctuation = contents.charAt(testIndex);
-              if (SpecialCharacters.isPunctuation(currentPunctuation)) {
-                boolean punctuationFound = true;
-                if (punctuation == ';') {
-                  int punctuationIndex = testIndex;
-                  testIndex--;
-                  while((testIndex >= 0) && (Character.isLetterOrDigit(contents.charAt(testIndex)))) {
-                    testIndex--;
+              char testChar = contents.charAt(testIndex);
+              if (Character.isWhitespace(testChar)) {
+                testIndex--;
+                done = false;
+              } else  if ((testChar == '>')) {
+                ContentsComment comment = analysis.comments().getEndsAt(testIndex + 1);
+                if (comment != null) {
+                  if (currentTagIndex == firstTagIndex) {
+                    previousComment += contents.substring(comment.getBeginIndex(), comment.getEndIndex());
                   }
-                  if ((testIndex >= 0) && (contents.charAt(testIndex) == '&')) {
-                    String name = contents.substring(testIndex + 1, punctuationIndex);
-                    for (HtmlCharacters htmlCharacter : HtmlCharacters.values()) {
-                      if (name.equals(htmlCharacter.getName())) {
-                        punctuationFound = false;
-                      }
+                  testIndex = comment.getBeginIndex() - 1;
+                  done = false;
+                }
+              }
+            }
+          }
+          if (currentTagIndex == firstTagIndex) {
+            tmpIndex = testIndex;
+          }
+          if (testIndex >= 0) {
+            char currentPunctuation = contents.charAt(testIndex);
+            if (SpecialCharacters.isPunctuation(currentPunctuation)) {
+              boolean punctuationFound = true;
+              if (punctuation == ';') {
+                int punctuationIndex = testIndex;
+                testIndex--;
+                while((testIndex >= 0) && (Character.isLetterOrDigit(contents.charAt(testIndex)))) {
+                  testIndex--;
+                }
+                if ((testIndex >= 0) && (contents.charAt(testIndex) == '&')) {
+                  String name = contents.substring(testIndex + 1, punctuationIndex);
+                  for (HtmlCharacters htmlCharacter : HtmlCharacters.values()) {
+                    if (name.equals(htmlCharacter.getName())) {
+                      punctuationFound = false;
                     }
                   }
                 }
-                if (punctuationFound) {
-                  if (currentTagIndex == firstTagIndex) {
-                    punctuationFoundBefore = true;
-                    punctuation = currentPunctuation;
-                  } else {
-                    punctuationFoundBetween = true;
-                  }
+              }
+              if (punctuationFound) {
+                if (currentTagIndex == firstTagIndex) {
+                  punctuationFoundBefore = true;
+                  punctuation = currentPunctuation;
+                } else {
+                  punctuationFoundBetween = true;
                 }
               }
             }
           }
-        }
-      }
-      int beginIndex = tmpIndex;
-
-      // Check for possible abbreviations before punctuation
-      boolean abbreviationFound = false;
-      if ((punctuationFoundBefore && (abbreviationsList != null))) {
-        for (String abbreviation : abbreviationsList) {
-          if (abbreviation != null) {
-            if (contents.startsWith(abbreviation, tmpIndex - abbreviation.length() + 1)) {
-              abbreviationFound = true;
-            }
-          }
-        }
-      }
-
-      // Punctuation found
-      if ((punctuationFoundBefore && !abbreviationFound) || punctuationFoundBetween) {
-        if (errors == null) {
-          return true;
-        }
-        result = true;
-
-        // Construct list of tags
-        String replace = PageElementTag.createListOfTags(
-            tags, firstTagIndex, lastTagIndex, contents, separator);
-        String textReplace = PageElementTag.createReducedListOfTags(
-            tags, firstTagIndex, lastTagIndex, separator);
-
-        if (punctuationFoundBefore && !abbreviationFound) {
-
-          // Search for general abbreviations
-          int beginRefIndex = firstTag.getBeginIndex();
-          int firstAbbreviationIndex = beginRefIndex;
-          List<String[]> generalAbbreviationFound = new ArrayList<>();
-          if ((punctuationFoundBefore && (generalAbbreviations != null))) {
-            for (String[] abbreviation : generalAbbreviations) {
-              if ((abbreviation != null) &&
-                  (abbreviation.length > 2) &&
-                  (abbreviation[0] != null)) {
-                String abbreviationText = abbreviation[0];
-                int abbreviationStart = tmpIndex - abbreviationText.length() + 1;
-                if (contents.startsWith(abbreviationText, abbreviationStart)) {
-                  generalAbbreviationFound.add(abbreviation);
-                  firstAbbreviationIndex = Math.min(firstAbbreviationIndex, abbreviationStart);
-                }
-              }
-            }
-          }
-
-          // Check if the punctuation before is multiple
-          int lastPunctuationIndex = tmpIndex;
-          while ((tmpIndex >= 0) && (contents.charAt(tmpIndex) == punctuation)) {
-            tmpIndex--;
-          }
-          tmpIndex++;
-          beginIndex = tmpIndex;
-          String allPunctuations = contents.substring(tmpIndex, lastPunctuationIndex + 1);
-          while ((tmpIndex > 0) && (contents.charAt(tmpIndex - 1) == ' ')) {
-            tmpIndex--;
-          }
-          String moveablePrefix = contents.substring(tmpIndex, beginIndex);
-          String prefix = "";
-          if (firstAbbreviationIndex < tmpIndex) {
-            prefix = contents.substring(firstAbbreviationIndex, tmpIndex);
-          }
-          beginIndex = Math.min(tmpIndex, firstAbbreviationIndex);
-  
-          // Check for possible punctuation after tags
-          tmpIndex = lastTag.getEndIndex();
-          int endIndex = tmpIndex;
-          while ((tmpIndex < contents.length()) &&
-                 (contents.charAt(tmpIndex) == ' ')) {
-            tmpIndex++;
-          }
-          boolean punctuationFoundAfter = false;
-          int punctuationAfterIndex = tmpIndex;
-          while ((tmpIndex < contents.length()) &&
-                 SpecialCharacters.isPunctuation(contents.charAt(tmpIndex))) {
-            punctuationFoundAfter = true;
-            tmpIndex++;
-          }
-          String punctuationAfter = contents.substring(punctuationAfterIndex, tmpIndex);
-          if (punctuationFoundAfter) {
-            endIndex = tmpIndex;
-          }
-  
-          // Create error
-          CheckErrorResult errorResult = createCheckErrorResult(
-              analysis, beginIndex, endIndex);
-          boolean automatic = false;
-          if (allPunctuations.equals(".") && !punctuationFoundAfter) {
-            tmpIndex = endIndex;
-            while ((tmpIndex < contents.length()) && (contents.charAt(tmpIndex) == ' ')) {
-              tmpIndex++;
-            }
-            if (contents.startsWith("\n\n", tmpIndex) ||
-                contents.startsWith("\n*", tmpIndex)) {
-              if (previousComment.isEmpty()) {
-                automatic = true;
-              }
-            }
-          }
-          for (String[] generalAbbreviation : generalAbbreviationFound) {
-            if ((generalAbbreviation.length > 2)) {
-              String abbreviation = generalAbbreviation[2];
-              String meaning = "";
-              if (generalAbbreviation[1].length() > 0) {
-                meaning = " (" + generalAbbreviation[1] + ")";
-              }
-              errorResult.addReplacement(
-                  abbreviation + previousComment + replace + punctuationAfter,
-                  abbreviation + textReplace + punctuationAfter + meaning);
-            }
-          }
-          errorResult.addReplacement(
-              prefix + previousComment + replace + moveablePrefix + allPunctuations,
-              prefix + textReplace + moveablePrefix + allPunctuations, automatic);
-          if (punctuationFoundAfter &&
-              !allPunctuations.equals(punctuationAfter)) {
-            errorResult.addReplacement(
-                prefix + previousComment + replace + moveablePrefix + punctuationAfter,
-                prefix + textReplace + moveablePrefix + punctuationAfter);
-          }
-          errors.add(errorResult);
-
-        } else {
-
-          // Create error
-          CheckErrorResult errorResult = createCheckErrorResult(
-              analysis, firstTag.getBeginIndex(), lastTag.getEndIndex());
-          errorResult.addReplacement(replace, textReplace);
-          errors.add(errorResult);
         }
       }
     }
-    return result;
+    if (!punctuationFoundBefore && !punctuationFoundBetween) {
+      return false;
+    }
+
+    // Check for possible abbreviations before punctuation
+    boolean abbreviationFound = false;
+    if ((punctuationFoundBefore && (abbreviationsList != null))) {
+      for (String abbreviation : abbreviationsList) {
+        if (abbreviation != null) {
+          if (contents.startsWith(abbreviation, tmpIndex - abbreviation.length() + 1)) {
+            abbreviationFound = true;
+          }
+        }
+      }
+    }
+    if ((!punctuationFoundBefore || abbreviationFound) && !punctuationFoundBetween) {
+      return false;
+    }
+
+    // Punctuation found
+    if (errors == null) {
+      return true;
+    }
+    int beginIndex = tmpIndex;
+
+    // Construct list of tags
+    String replace = PageElementTag.createListOfTags(
+        tags, firstTagIndex, lastTagIndex, contents, separator);
+    String textReplace = PageElementTag.createReducedListOfTags(
+        tags, firstTagIndex, lastTagIndex, separator);
+
+    // Handle case with only punctuation between
+    if (!punctuationFoundBefore || abbreviationFound) {
+      CheckErrorResult errorResult = createCheckErrorResult(
+          analysis, firstTag.getBeginIndex(), lastTag.getEndIndex());
+      errorResult.addReplacement(replace, textReplace);
+      errors.add(errorResult);
+      return true;
+    }
+
+    // Search for general abbreviations
+    int beginRefIndex = firstTag.getBeginIndex();
+    int firstAbbreviationIndex = beginRefIndex;
+    List<String[]> generalAbbreviationFound = new ArrayList<>();
+    if ((punctuationFoundBefore && (generalAbbreviations != null))) {
+      for (String[] abbreviation : generalAbbreviations) {
+        if ((abbreviation != null) &&
+            (abbreviation.length > 2) &&
+            (abbreviation[0] != null)) {
+          String abbreviationText = abbreviation[0];
+          int abbreviationStart = tmpIndex - abbreviationText.length() + 1;
+          if (contents.startsWith(abbreviationText, abbreviationStart)) {
+            generalAbbreviationFound.add(abbreviation);
+            firstAbbreviationIndex = Math.min(firstAbbreviationIndex, abbreviationStart);
+          }
+        }
+      }
+    }
+
+    // Check if the punctuation before is multiple
+    int lastPunctuationIndex = tmpIndex;
+    while ((tmpIndex >= 0) && (contents.charAt(tmpIndex) == punctuation)) {
+      tmpIndex--;
+    }
+    tmpIndex++;
+    beginIndex = tmpIndex;
+    String allPunctuations = contents.substring(tmpIndex, lastPunctuationIndex + 1);
+    while ((tmpIndex > 0) && (contents.charAt(tmpIndex - 1) == ' ')) {
+      tmpIndex--;
+    }
+    String moveablePrefix = contents.substring(tmpIndex, beginIndex);
+    String prefix = "";
+    if (firstAbbreviationIndex < tmpIndex) {
+      prefix = contents.substring(firstAbbreviationIndex, tmpIndex);
+    }
+    beginIndex = Math.min(tmpIndex, firstAbbreviationIndex);
+
+    // Check for possible punctuation after tags
+    tmpIndex = lastTag.getEndIndex();
+    int endIndex = tmpIndex;
+    while ((tmpIndex < contents.length()) &&
+           (contents.charAt(tmpIndex) == ' ')) {
+      tmpIndex++;
+    }
+    boolean punctuationFoundAfter = false;
+    int punctuationAfterIndex = tmpIndex;
+    while ((tmpIndex < contents.length()) &&
+           SpecialCharacters.isPunctuation(contents.charAt(tmpIndex))) {
+      punctuationFoundAfter = true;
+      tmpIndex++;
+    }
+    String punctuationAfter = contents.substring(punctuationAfterIndex, tmpIndex);
+    if (punctuationFoundAfter) {
+      endIndex = tmpIndex;
+    }
+
+    // Create error
+    CheckErrorResult errorResult = createCheckErrorResult(
+        analysis, beginIndex, endIndex);
+    boolean automatic = false;
+    if (allPunctuations.equals(".") && !punctuationFoundAfter) {
+      tmpIndex = endIndex;
+      while ((tmpIndex < contents.length()) && (contents.charAt(tmpIndex) == ' ')) {
+        tmpIndex++;
+      }
+      if (contents.startsWith("\n\n", tmpIndex) ||
+          contents.startsWith("\n*", tmpIndex)) {
+        if (previousComment.isEmpty()) {
+          automatic = true;
+        }
+      }
+    }
+    for (String[] generalAbbreviation : generalAbbreviationFound) {
+      if ((generalAbbreviation.length > 2)) {
+        String abbreviation = generalAbbreviation[2];
+        String meaning = "";
+        if (generalAbbreviation[1].length() > 0) {
+          meaning = " (" + generalAbbreviation[1] + ")";
+        }
+        errorResult.addReplacement(
+            abbreviation + previousComment + replace + punctuationAfter,
+            abbreviation + textReplace + punctuationAfter + meaning);
+      }
+    }
+    errorResult.addReplacement(
+        prefix + previousComment + replace + moveablePrefix + allPunctuations,
+        prefix + textReplace + moveablePrefix + allPunctuations, automatic);
+    if (punctuationFoundAfter &&
+        !allPunctuations.equals(punctuationAfter)) {
+      errorResult.addReplacement(
+          prefix + previousComment + replace + moveablePrefix + punctuationAfter,
+          prefix + textReplace + moveablePrefix + punctuationAfter);
+    }
+    errors.add(errorResult);
+
+    return true;
   }
 
   /**
