@@ -165,14 +165,21 @@ public class CheckErrorAlgorithm016 extends CheckErrorAlgorithmBase {
             // Handle non-removable characters
             if (!control.removable) {
               int replaceBy = 0;
-              if (control == ControlCharacter.NON_BREAKING_SPACE) {
+              if ((control == ControlCharacter.FIGURE_SPACE) ||
+                  (control == ControlCharacter.FOUR_PER_EM_SPACE) ||
+                  (control == ControlCharacter.NON_BREAKING_SPACE) ||
+                  (control == ControlCharacter.SIX_PER_EM_SPACE) ||
+                  (control == ControlCharacter.THREE_PER_EM_SPACE)) {
                 if ((i > 0) && (contents.codePointBefore(i) == '«')) {
                   replaceBy = ' ';
                 }
                 int next = i + Character.charCount(codePoint);
                 if (next < end) {
                   int codePointAfter = contents.codePointAt(next);
-                  if ((codePointAfter == '»') || (codePointAfter == ':')) {
+                  if ((codePointAfter == '»') ||
+                      (codePointAfter == ':') ||
+                      (codePointAfter == '?') ||
+                      (codePointAfter == ';')) {
                     replaceBy = ' ';
                   }
                 }
