@@ -21,6 +21,7 @@ import org.wikipediacleaner.api.configuration.WPCConfiguration;
 import org.wikipediacleaner.api.configuration.WPCConfigurationStringList;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
+import org.wikipediacleaner.api.data.contents.ContentsUtil;
 import org.wikipediacleaner.api.data.contents.comment.ContentsComment;
 import org.wikipediacleaner.api.data.contents.tag.WikiTagType;
 import org.wikipediacleaner.i18n.GT;
@@ -263,13 +264,12 @@ public class CheckErrorAlgorithm067 extends CheckErrorAlgorithmBase {
         analysis, beginIndex, endIndex);
     boolean automatic = false;
     if (allPunctuations.equals(".") && !punctuationFoundAfter) {
-      tmpIndex = endIndex;
-      while ((tmpIndex < contents.length()) && (contents.charAt(tmpIndex) == ' ')) {
-        tmpIndex++;
-      }
-      if (contents.startsWith("\n\n", tmpIndex) ||
-          contents.startsWith("\n*", tmpIndex)) {
-        if (previousComment.isEmpty()) {
+      tmpIndex = ContentsUtil.moveIndexForwardWhileFound(contents, endIndex, " ");
+      if (tmpIndex >= contents.length()) {
+        automatic = true;
+      } else if (contents.charAt(tmpIndex) == '\n') {
+        tmpIndex = ContentsUtil.moveIndexForwardWhileFound(contents, tmpIndex, " ");
+        if ((tmpIndex >= contents.length()) || ("\n*".indexOf(contents.charAt(tmpIndex)) >= 0)) {
           automatic = true;
         }
       }
@@ -279,16 +279,22 @@ public class CheckErrorAlgorithm067 extends CheckErrorAlgorithmBase {
         String abbreviation = generalAbbreviation[2];
         String meaning = "";
         if (generalAbbreviation[1].length() > 0) {
-          meaning = " (" + generalAbbreviation[1] + ")";
+          meaning = " (" + generalAbbreviation[1] + ")"; 
         }
         errorResult.addReplacement(
             abbreviation + previousComment + replace + punctuationAfter,
             abbreviation + textReplace + punctuationAfter + meaning);
       }
     }
-    errorResult.addReplacement(
-        prefix + previousComment + replace + moveablePrefix + allPunctuations,
-        prefix + textReplace + moveablePrefix + allPunctuations, automatic);
+    if ((moveablePrefix.trim() == "") && allPunctuations.startsWith(".")) {
+      errorResult.addReplacement(
+          prefix + previousComment + replace + allPunctuations,
+          prefix + textReplace + allPunctuations, automatic);
+    } else {
+      errorResult.addReplacement(
+          prefix + previousComment + replace + moveablePrefix + allPunctuations,
+          prefix + textReplace + moveablePrefix + allPunctuations, automatic);
+    }
     if (punctuationFoundAfter &&
         !allPunctuations.equals(punctuationAfter)) {
       errorResult.addReplacement(

@@ -1,4 +1,5 @@
 DoTasks _Common.txt
 Set Namespaces 0
+Set Configuration TimeBetweenEdit 15
 FixCheckWiki 67
 # FixListCheckWiki Projet:Correction_syntaxique/Analyse_067 67
