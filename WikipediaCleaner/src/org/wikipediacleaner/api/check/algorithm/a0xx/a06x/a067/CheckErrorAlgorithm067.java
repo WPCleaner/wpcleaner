@@ -263,15 +263,25 @@ public class CheckErrorAlgorithm067 extends CheckErrorAlgorithmBase {
     CheckErrorResult errorResult = createCheckErrorResult(
         analysis, beginIndex, endIndex);
     boolean automatic = false;
-    if (allPunctuations.equals(".") && !punctuationFoundAfter) {
-      tmpIndex = ContentsUtil.moveIndexForwardWhileFound(contents, endIndex, " ");
-      if (tmpIndex >= contents.length()) {
-        automatic = true;
-      } else if (contents.charAt(tmpIndex) == '\n') {
-        tmpIndex = ContentsUtil.moveIndexForwardWhileFound(contents, tmpIndex, " ");
-        if ((tmpIndex >= contents.length()) || ("\n*".indexOf(contents.charAt(tmpIndex)) >= 0)) {
+    if (!punctuationFoundAfter) {
+      if (allPunctuations.equals(".")) {
+        tmpIndex = ContentsUtil.moveIndexForwardWhileFound(contents, endIndex, " ");
+        if (tmpIndex >= contents.length()) {
+          automatic = true;
+        } else if (contents.charAt(tmpIndex) == '\n') {
+          tmpIndex = ContentsUtil.moveIndexForwardWhileFound(contents, tmpIndex, " ");
+          if (tmpIndex >= contents.length()) {
+            automatic = true;
+          } else if ("\n*".indexOf(contents.charAt(tmpIndex)) >= 0) {
+            automatic = true;
+          } else if (Character.isUpperCase(contents.charAt(tmpIndex))) {
+            automatic = true;
+          }
+        } else if (Character.isUpperCase(contents.charAt(tmpIndex))) {
           automatic = true;
         }
+      } else if (allPunctuations.equals(",")) {
+        automatic = true;
       }
     }
     for (String[] generalAbbreviation : generalAbbreviationFound) {
