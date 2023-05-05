@@ -309,6 +309,8 @@ public class CheckErrorAlgorithm067 extends CheckErrorAlgorithmBase {
       } else if (allPunctuations.equals(",")) {
         automatic = true;
       }
+    } else if (allPunctuations.equals(",") && punctuationAfter.equals(",")) {
+      automatic = true;
     }
     for (String[] generalAbbreviation : generalAbbreviationFound) {
       if ((generalAbbreviation.length > 2)) {
