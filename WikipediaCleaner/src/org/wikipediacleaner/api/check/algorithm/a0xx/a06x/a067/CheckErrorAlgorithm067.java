@@ -286,7 +286,10 @@ public class CheckErrorAlgorithm067 extends CheckErrorAlgorithmBase {
         analysis, beginIndex, endIndex);
     boolean automatic = false;
     if (!punctuationFoundAfter) {
-      if (allPunctuations.equals(".") || allPunctuations.equals(";")) {
+      if (allPunctuations.equals(".") ||
+          allPunctuations.equals("...") ||
+          allPunctuations.equals(";") ||
+          allPunctuations.equals(":")) {
         tmpIndex = ContentsUtil.moveIndexForwardWhileFound(contents, endIndex, " ");
         if (tmpIndex >= contents.length()) {
           automatic = true;
