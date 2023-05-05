@@ -168,17 +168,39 @@ public class CheckErrorAlgorithm067 extends CheckErrorAlgorithmBase {
     }
 
     // Check for possible abbreviations before punctuation
-    boolean abbreviationFound = false;
-    if ((punctuationFoundBefore && (abbreviationsList != null))) {
+    if (punctuationFoundBefore && (abbreviationsList != null)) {
       for (String abbreviation : abbreviationsList) {
         if (abbreviation != null) {
-          if (contents.startsWith(abbreviation, tmpIndex - abbreviation.length() + 1)) {
-            abbreviationFound = true;
+          if ((tmpIndex >= abbreviation.length() - 1) &&
+              (contents.startsWith(abbreviation, tmpIndex - abbreviation.length() + 1))) {
+            punctuationFoundBefore = false;
           }
         }
       }
     }
-    if ((!punctuationFoundBefore || abbreviationFound) && !punctuationFoundBetween) {
+
+    // Check special situations for ;
+    if (punctuationFoundBefore && (punctuation == ';')) {
+      for (HtmlCharacters htmlCharacter : HtmlCharacters.values()) {
+        final String characterName = htmlCharacter.getName();
+        if ((characterName != null) &&
+            (tmpIndex >= characterName.length()) &&
+            (contents.startsWith(characterName, tmpIndex - characterName.length()))) {
+          punctuationFoundBefore = false;
+        }
+      }
+      int beforeIndex = ContentsUtil.moveIndexBackwardWhileFound(contents, tmpIndex - 1, "0123456789abcdefABCDEF");
+      if ((beforeIndex >= 2) && (contents.startsWith("&#", beforeIndex - 2))) {
+        punctuationFoundBefore = false;
+      }
+      if ((beforeIndex >= 3) && (contents.startsWith("&#x", beforeIndex - 3))) {
+        punctuationFoundBefore = false;
+      }
+      if ((tmpIndex >= 1) && (contents.startsWith("\n", tmpIndex - 1))) {
+        punctuationFoundBefore = false;
+      }
+    }
+    if (!punctuationFoundBefore && !punctuationFoundBetween) {
       return false;
     }
 
@@ -195,7 +217,7 @@ public class CheckErrorAlgorithm067 extends CheckErrorAlgorithmBase {
         tags, firstTagIndex, lastTagIndex, separator);
 
     // Handle case with only punctuation between
-    if (!punctuationFoundBefore || abbreviationFound) {
+    if (!punctuationFoundBefore) {
       CheckErrorResult errorResult = createCheckErrorResult(
           analysis, firstTag.getBeginIndex(), lastTag.getEndIndex());
       errorResult.addReplacement(replace, textReplace);
@@ -264,7 +286,7 @@ public class CheckErrorAlgorithm067 extends CheckErrorAlgorithmBase {
         analysis, beginIndex, endIndex);
     boolean automatic = false;
     if (!punctuationFoundAfter) {
-      if (allPunctuations.equals(".")) {
+      if (allPunctuations.equals(".") || allPunctuations.equals(";")) {
         tmpIndex = ContentsUtil.moveIndexForwardWhileFound(contents, endIndex, " ");
         if (tmpIndex >= contents.length()) {
           automatic = true;
@@ -275,10 +297,14 @@ public class CheckErrorAlgorithm067 extends CheckErrorAlgorithmBase {
           } else if ("\n*".indexOf(contents.charAt(tmpIndex)) >= 0) {
             automatic = true;
           } else if (Character.isUpperCase(contents.charAt(tmpIndex))) {
-            automatic = true;
+            if (allPunctuations.equals(".")) {
+              automatic = true;
+            }
           }
         } else if (Character.isUpperCase(contents.charAt(tmpIndex))) {
-          automatic = true;
+          if (allPunctuations.equals(".")) {
+            automatic = true;
+          }
         }
       } else if (allPunctuations.equals(",")) {
         automatic = true;
