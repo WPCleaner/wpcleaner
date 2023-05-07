@@ -174,7 +174,8 @@ public class CheckErrorAlgorithm067 extends CheckErrorAlgorithmBase {
           int abbreviationStart = tmpIndex - abbreviation.length() + 1;
           if ((abbreviationStart >= 0) && (contents.startsWith(abbreviation, abbreviationStart))) {
             if ((abbreviationStart <= 0) ||
-                !Character.isLetter(contents.charAt(abbreviationStart - 1))) {
+                (!Character.isLetter(contents.charAt(abbreviationStart - 1)) &&
+                 !Character.isDigit(contents.charAt(abbreviationStart - 1)))){
               punctuationFoundBefore = false;
             }
           }
@@ -241,7 +242,8 @@ public class CheckErrorAlgorithm067 extends CheckErrorAlgorithmBase {
           int abbreviationStart = tmpIndex - abbreviationText.length() + 1;
           if (contents.startsWith(abbreviationText, abbreviationStart)) {
             if ((abbreviationStart <= 0) ||
-                !Character.isLetter(contents.charAt(abbreviationStart - 1))) {
+                (!Character.isLetter(contents.charAt(abbreviationStart - 1)) &&
+                 !Character.isDigit(contents.charAt(abbreviationStart - 1)))){
               generalAbbreviationFound.add(abbreviation);
               firstAbbreviationIndex = Math.min(firstAbbreviationIndex, abbreviationStart);
             }
