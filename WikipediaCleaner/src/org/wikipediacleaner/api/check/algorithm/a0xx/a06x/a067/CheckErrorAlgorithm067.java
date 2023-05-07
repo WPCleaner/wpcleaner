@@ -171,9 +171,12 @@ public class CheckErrorAlgorithm067 extends CheckErrorAlgorithmBase {
     if (punctuationFoundBefore && (abbreviationsList != null)) {
       for (String abbreviation : abbreviationsList) {
         if (abbreviation != null) {
-          if ((tmpIndex >= abbreviation.length() - 1) &&
-              (contents.startsWith(abbreviation, tmpIndex - abbreviation.length() + 1))) {
-            punctuationFoundBefore = false;
+          int abbreviationStart = tmpIndex - abbreviation.length() + 1;
+          if ((abbreviationStart >= 0) && (contents.startsWith(abbreviation, abbreviationStart))) {
+            if ((abbreviationStart <= 0) ||
+                !Character.isLetter(contents.charAt(abbreviationStart - 1))) {
+              punctuationFoundBefore = false;
+            }
           }
         }
       }
@@ -237,8 +240,11 @@ public class CheckErrorAlgorithm067 extends CheckErrorAlgorithmBase {
           String abbreviationText = abbreviation[0];
           int abbreviationStart = tmpIndex - abbreviationText.length() + 1;
           if (contents.startsWith(abbreviationText, abbreviationStart)) {
-            generalAbbreviationFound.add(abbreviation);
-            firstAbbreviationIndex = Math.min(firstAbbreviationIndex, abbreviationStart);
+            if ((abbreviationStart <= 0) ||
+                !Character.isLetter(contents.charAt(abbreviationStart - 1))) {
+              generalAbbreviationFound.add(abbreviation);
+              firstAbbreviationIndex = Math.min(firstAbbreviationIndex, abbreviationStart);
+            }
           }
         }
       }
