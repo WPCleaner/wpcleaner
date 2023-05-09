@@ -24,6 +24,7 @@ import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
 import org.wikipediacleaner.api.data.contents.ContentsUtil;
 import org.wikipediacleaner.api.data.contents.comment.ContentsComment;
+import org.wikipediacleaner.api.data.contents.tag.HtmlTagType;
 import org.wikipediacleaner.api.data.contents.tag.WikiTagType;
 import org.wikipediacleaner.i18n.GT;
 
@@ -329,6 +330,11 @@ public class CheckErrorAlgorithm067 extends CheckErrorAlgorithmBase {
     } else if (contents.startsWith("]]", tmpIndex)) {
       PageElementImage image = analysis.isInImage(tmpIndex);
       if ((image != null) && (image.getEndIndex() == tmpIndex + 2)) {
+        automatic |= automaticEOL;
+      }
+    } else if (contents.startsWith("<", tmpIndex)) {
+      PageElementTag tag = analysis.isInTag(tmpIndex, HtmlTagType.BR);
+      if ((tag != null) && (tag.getBeginIndex() == tmpIndex)) {
         automatic |= automaticEOL;
       }
     }
