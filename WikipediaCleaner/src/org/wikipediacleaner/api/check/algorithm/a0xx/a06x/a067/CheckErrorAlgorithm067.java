@@ -19,6 +19,7 @@ import org.wikipediacleaner.api.check.SpecialCharacters;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase;
 import org.wikipediacleaner.api.configuration.WPCConfiguration;
 import org.wikipediacleaner.api.configuration.WPCConfigurationStringList;
+import org.wikipediacleaner.api.data.PageElementImage;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
 import org.wikipediacleaner.api.data.contents.ContentsUtil;
@@ -303,11 +304,12 @@ public class CheckErrorAlgorithm067 extends CheckErrorAlgorithmBase {
         automaticEOL = true;
       }
     } else if (allPunctuations.equals(punctuationAfter)) {
-      if (allPunctuations.equals(",")) {
-        automatic = true;
-      } else if (allPunctuations.equals(".")) {
+      if (allPunctuations.equals(".")) {
         automaticEOL = true;
         automaticUppercase = true;
+      } else if (allPunctuations.equals(",") ||
+                 allPunctuations.equals(":")) {
+        automatic = true;
       }
     }
     tmpIndex = ContentsUtil.moveIndexForwardWhileFound(contents, endIndex, " ");
@@ -324,6 +326,11 @@ public class CheckErrorAlgorithm067 extends CheckErrorAlgorithmBase {
       }
     } else if (Character.isUpperCase(contents.charAt(tmpIndex))) {
       automatic |= automaticUppercase;
+    } else if (contents.startsWith("]]", tmpIndex)) {
+      PageElementImage image = analysis.isInImage(tmpIndex);
+      if ((image != null) && (image.getEndIndex() == tmpIndex + 2)) {
+        automatic |= automaticEOL;
+      }
     }
     for (String[] generalAbbreviation : generalAbbreviationFound) {
       if ((generalAbbreviation.length > 2)) {
