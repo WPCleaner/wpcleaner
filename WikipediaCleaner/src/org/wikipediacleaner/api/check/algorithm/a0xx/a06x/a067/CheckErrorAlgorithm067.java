@@ -333,9 +333,13 @@ public class CheckErrorAlgorithm067 extends CheckErrorAlgorithmBase {
         automatic |= automaticEOL;
       }
     } else if (contents.startsWith("<", tmpIndex)) {
-      PageElementTag tag = analysis.isInTag(tmpIndex, HtmlTagType.BR);
+      PageElementTag tag = analysis.isInTag(tmpIndex);
       if ((tag != null) && (tag.getBeginIndex() == tmpIndex)) {
-        automatic |= automaticEOL;
+        if (HtmlTagType.BLOCKQUOTE.equals(tag.getType()) ||
+            HtmlTagType.BR.equals(tag.getType()) ||
+            WikiTagType.GALLERY.equals(tag.getType())) {
+          automatic |= automaticEOL;
+        }
       }
     }
     for (String[] generalAbbreviation : generalAbbreviationFound) {

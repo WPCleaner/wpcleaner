@@ -8,7 +8,6 @@
 package org.wikipediacleaner.gui.swing.bot;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import org.wikipediacleaner.api.APIException;
@@ -108,7 +107,7 @@ public class AutomaticCWWorker extends AutomaticFixWorker {
     List<AlgorithmError> errors = new ArrayList<>();
     CheckWiki checkWiki = APIFactory.getCheckWiki();
     checkWiki.retrievePages(algorithm, maxSize, getWikipedia(), errors);
-    List<CheckErrorAlgorithm> algorithms = Collections.singletonList(algorithm);
+    List<CheckErrorAlgorithm> algorithms = selectedAlgorithms;
     while (!errors.isEmpty() && shouldContinue()) {
       AlgorithmError error = errors.remove(0);
       int maxErrors = error.getPageCount();
