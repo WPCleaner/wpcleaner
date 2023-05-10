@@ -30,6 +30,7 @@ import org.wikipediacleaner.api.configuration.WPCConfiguration;
 import org.wikipediacleaner.api.configuration.WPCConfigurationStringList;
 import org.wikipediacleaner.api.data.PageElementExternalLink;
 import org.wikipediacleaner.api.data.PageElementTag;
+import org.wikipediacleaner.api.data.PageElementTagRef;
 import org.wikipediacleaner.api.data.PageElementTag.Parameter;
 import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
@@ -213,8 +214,7 @@ public class CheckErrorAlgorithm081 extends CheckErrorAlgorithmBase {
     }
 
     // Find main reference tag
-    PageElementTag mainTag = PageElementTag.getMainRef(
-        listTags, completeReferencesTags, analysis);
+    PageElementTag mainTag = PageElementTagRef.getMain(listTags, completeReferencesTags, analysis);
     if (mainTag != null) {
 
       // Create an error for each tag, except for the main tag
@@ -387,8 +387,7 @@ public class CheckErrorAlgorithm081 extends CheckErrorAlgorithmBase {
         List<String> possibleNames = refNamesByGroupAndValue.get(groupName).get(valueRef);
         if ((possibleNames != null) && (possibleNames.size() > 0)) {
           String selectedName = possibleNames.get(0);
-          PageElementTag mainRef = PageElementTag.getMainRef(
-              valueRefs, completeReferencesTags, analysis);
+          PageElementTag mainRef = PageElementTagRef.getMain(valueRefs, completeReferencesTags, analysis);
           if (mainRef != refTag) {
             String tmp = getClosedRefTag(groupName, selectedName, null);
             String message =
