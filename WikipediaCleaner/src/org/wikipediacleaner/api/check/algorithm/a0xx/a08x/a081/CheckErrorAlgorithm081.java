@@ -40,6 +40,7 @@ import org.wikipediacleaner.gui.swing.basic.Utilities;
 import org.wikipediacleaner.gui.swing.component.MWPane;
 import org.wikipediacleaner.i18n.GT;
 import org.wikipediacleaner.utils.CompositeTextProvider;
+import org.wikipediacleaner.utils.SimpleTextProvider;
 import org.wikipediacleaner.utils.StringChecker;
 import org.wikipediacleaner.utils.StringCheckerReferenceName;
 import org.wikipediacleaner.utils.TextProvider;
@@ -278,7 +279,17 @@ public class CheckErrorAlgorithm081 extends CheckErrorAlgorithmBase {
       // Add an action for naming the reference tag
       String contents = analysis.getContents();
       List<TextProvider> providers = new ArrayList<>();
-      links.forEach(link -> providers.add(new TextProviderUrlTitle(link.getLink())));
+      links
+          .stream()
+          .map(link -> link.getLink())
+          .map(link -> new TextProviderUrlTitle(link))
+          .forEach(provider -> providers.add(provider));
+      links.stream()
+          .filter(link -> link.hasSquare())
+          .filter(link -> link.getText() != null)
+          .map(link -> link.getText())
+          .map(text -> new SimpleTextProvider(text))
+          .forEach(provider -> providers.add(provider));
       for (PageElementTemplate template : templates) {
         TemplateConfiguration config = configurationByTemplateName.get(template.getTemplateName());
         if (config != null) {
