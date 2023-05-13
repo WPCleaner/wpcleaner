@@ -12,6 +12,7 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.wikipediacleaner.api.algorithm.AlgorithmParameter;
 import org.wikipediacleaner.api.algorithm.AlgorithmParameterElement;
@@ -25,6 +26,7 @@ import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.PageElementTitle;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
 import org.wikipediacleaner.api.data.contents.tag.WikiTagType;
+import org.wikipediacleaner.api.data.contents.title.TitleBuilder;
 import org.wikipediacleaner.i18n.GT;
 
 /**
@@ -71,9 +73,9 @@ public class CheckErrorAlgorithm003 extends CheckErrorAlgorithmBase {
     if (lastRefTag == null) {
       return false;
     }
-    boolean referencesFound = false;
 
     // Analyzing text for <references> tags
+    boolean referencesFound = false;
     List<PageElementTag> referencesTags = analysis.getTags(WikiTagType.REFERENCES);
     if (referencesTags != null) {
       for (PageElementTag referencesTag : referencesTags) {
@@ -156,32 +158,51 @@ public class CheckErrorAlgorithm003 extends CheckErrorAlgorithmBase {
     }
 
     // Suggestion when there's no references tags
-    if (((referencesTags == null) || referencesTags.isEmpty()) &&
-        (insert != null) && !titles.isEmpty()) {
-      List<PageElementTitle> tmpTitles = analysis.getTitles();
-      PageElementTitle sameTitle = null;
-      boolean multipleTitles = false;
-      for (PageElementTitle tmpTitle : tmpTitles) {
-        String titleText = tmpTitle.getTitle();
-        if ((titleText != null) && titles.contains(titleText.toUpperCase())) {
-          if (sameTitle != null) {
-            multipleTitles = true;
-          }
-          sameTitle = tmpTitle;
-        }
-      }
-      if (sameTitle != null) {
-        int beginIndex = sameTitle.getBeginIndex();
-        int endIndex = sameTitle.getEndIndex();
-        errorResult = createCheckErrorResult(
+    if (((referencesTags == null) || referencesTags.isEmpty()) && (insert != null) && !titles.isEmpty()) {
+
+      // Search for titles where references tag can be added
+      List<PageElementTitle> correctTitles = analysis.getTitles().stream()
+          .filter(title -> isPossibleTitle(title))
+          .collect(Collectors.toList());
+      correctTitles.forEach(title -> {
+        int beginIndex = title.getBeginIndex();
+        int endIndex = title.getEndIndex();
+        CheckErrorResult tmpErrorResult = createCheckErrorResult(
             analysis, beginIndex, endIndex, ErrorLevel.WARNING);
         String replacement = contents.substring(beginIndex, endIndex) + "\n" + insert;
-        errorResult.addReplacement(replacement, !multipleTitles);
-        errors.add(errorResult);
-      }
+        tmpErrorResult.addReplacement(replacement, correctTitles.size() == 1);
+        errors.add(tmpErrorResult);
+      });
+
+      // Search for titles before which references tag can be added
+      List<PageElementTitle> titlesBefore = analysis.getTitles().stream()
+          .filter(title -> isBeforeTitle(title))
+          .collect(Collectors.toList());
+      titlesBefore.forEach(title -> {
+        int beginIndex = title.getBeginIndex();
+        int endIndex = title.getEndIndex();
+        CheckErrorResult tmpErrorResult = createCheckErrorResult(
+            analysis, beginIndex, endIndex, ErrorLevel.WARNING);
+        String replacement =
+            TitleBuilder.from(title.getLevel(), preferredTitle).toString() +
+            "\n" + insert + "\n\n" +
+            contents.substring(beginIndex, endIndex);
+        tmpErrorResult.addReplacement(replacement, correctTitles.isEmpty() && title.equals(titlesBefore.get(0)));
+        errors.add(tmpErrorResult);
+      });
     }
 
     return true;
+  }
+
+  private boolean isPossibleTitle(final PageElementTitle title) {
+    String titleText = title.getTitle();
+    return (titleText != null) && titles.contains(titleText.toUpperCase());
+  }
+
+  private boolean isBeforeTitle(final PageElementTitle title) {
+    String titleText = title.getTitle();
+    return (titleText != null) && beforeTitles.contains(titleText.toUpperCase());
   }
 
   /**
@@ -210,6 +231,9 @@ public class CheckErrorAlgorithm003 extends CheckErrorAlgorithmBase {
 
   /** Section titles where references can be inserted */
   private static final String PARAMETER_TITLES = "titles";
+
+  /** Section titles where references can be inserted before */
+  private static final String PARAMETER_BEFORE_TITLES = "before_titles";
 
   /**
    * Initialize settings for the algorithm.
@@ -240,12 +264,23 @@ public class CheckErrorAlgorithm003 extends CheckErrorAlgorithmBase {
 
     tmp = getSpecificProperty(PARAMETER_TITLES, true, true, false);
     titles.clear();
+    preferredTitle = "";
     if (tmp != null) {
       List<String> tmpList = WPCConfiguration.convertPropertyToStringList(tmp, false);
       if (tmpList != null) {
-        for (String title : tmpList) {
-          titles.add(title.toUpperCase());
+        tmpList.forEach(title -> titles.add(title.toUpperCase()));
+        if (!tmpList.isEmpty()) {
+          preferredTitle = tmpList.get(0);
         }
+      }
+    }
+
+    tmp = getSpecificProperty(PARAMETER_BEFORE_TITLES, true, true, false);
+    beforeTitles.clear();
+    if (tmp != null) {
+      List<String> tmpList = WPCConfiguration.convertPropertyToStringList(tmp, false);
+      if (tmpList != null) {
+        tmpList.forEach(title -> beforeTitles.add(title.toUpperCase()));
       }
     }
   }
@@ -258,6 +293,12 @@ public class CheckErrorAlgorithm003 extends CheckErrorAlgorithmBase {
 
   /** Section titles where references can be inserted */
   private final List<String> titles = new ArrayList<>();
+
+  /** Preferred section title where references can be inserted */
+  private String preferredTitle = "";
+
+  /** Section titles where references can be inserted before */
+  private final List<String> beforeTitles = new ArrayList<>();
 
   /**
    * Build the list of parameters for this algorithm.
@@ -291,6 +332,13 @@ public class CheckErrorAlgorithm003 extends CheckErrorAlgorithmBase {
         new AlgorithmParameterElement(
             "section heading",
             GT._T("Section heading where a {0} can be added", "&lt;references/&gt;")),
+        true));
+    addParameter(new AlgorithmParameter(
+        PARAMETER_BEFORE_TITLES,
+        GT._T("Section headings where a {0} can be added before", "&lt;references/&gt;"),
+        new AlgorithmParameterElement(
+            "section heading",
+            GT._T("Section heading where a {0} can be added before", "&lt;references/&gt;")),
         true));
   }
 }
