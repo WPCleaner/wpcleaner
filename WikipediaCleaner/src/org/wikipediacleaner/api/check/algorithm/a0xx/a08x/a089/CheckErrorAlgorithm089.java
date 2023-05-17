@@ -49,37 +49,63 @@ public class CheckErrorAlgorithm089 extends CheckErrorAlgorithmBase {
     }
     boolean result = false;
     for (PageElementFunction defaultSort : defaultSorts) {
-      if (defaultSort.getParameterCount() > 0) {
-        String value = defaultSort.getParameterValue(0);
-        if ((value != null) && (value.trim().length() > 0)) {
-          StringBuilder replacement = new StringBuilder();
-          value = value.trim();
-          for (int index = 0; index < value.length(); index++) {
-            char character = value.charAt(index);
-            replacement.append(character);
-            if ((character == ',') &&
-                (index + 1 < value.length()) &&
-                (Character.isLetter(value.charAt(index + 1)))) {
-              replacement.append(' ');
-            }
-          }
-          if (!value.equals(replacement.toString())) {
-            if (errors == null) {
-              return true;
-            }
-            result = true;
-            CheckErrorResult errorResult = createCheckErrorResult(
-                analysis,
-                defaultSort.getBeginIndex(), defaultSort.getEndIndex());
-            errorResult.addReplacement(PageElementFunction.createFunction(
-                defaultSort.getFunctionName(),
-                replacement.toString()));
-            errors.add(errorResult);
-          }
-        }
-      }
+      result |= analyzeDefaultSort(analysis, errors, defaultSort);
     }
 
     return result;
+  }
+
+  public boolean analyzeDefaultSort(
+      PageAnalysis analysis,
+      Collection<CheckErrorResult> errors,
+      PageElementFunction defaultSort) {
+    if (defaultSort.getParameterCount() <= 0) {
+      return false;
+    }
+
+    String value = defaultSort.getParameterValue(0);
+    if ((value == null) || (value.trim().length() == 0)) {
+      return false;
+    }
+    value = value.trim();
+    int commaIndex = value.indexOf(',');
+    if ((commaIndex <= 0) || (commaIndex >= value.length() - 1)) {
+      return false;
+    }
+    if (!Character.isLetter(value.charAt(commaIndex + 1))) {
+      return false;
+    }
+
+    if (errors == null) {
+      return true;
+    }
+
+    CheckErrorResult errorResult = createCheckErrorResult(
+        analysis,
+        defaultSort.getBeginIndex(), defaultSort.getEndIndex());
+    String replacement = value.substring(0, commaIndex + 1) + " " + value.substring(commaIndex + 1);
+    boolean automatic = analysis.getPage().getTitle().equalsIgnoreCase(
+        value.substring(commaIndex + 1) + " " + value.substring(0, commaIndex));
+    errorResult.addReplacement(PageElementFunction.createFunction(
+        defaultSort.getFunctionName(),
+        replacement.toString()),
+        automatic);
+    errors.add(errorResult);
+    return true;
+  }
+
+  /**
+   * Automatic fixing of all the errors in the page.
+   * 
+   * @param analysis Page analysis.
+   * @return Page contents after fix.
+   */
+  @Override
+  protected String internalAutomaticFix(PageAnalysis analysis) {
+    if (!analysis.getPage().isArticle() ||
+        analysis.getPage().isInUserNamespace()) {
+      return analysis.getContents();
+    }
+    return fixUsingAutomaticReplacement(analysis);
   }
 }
