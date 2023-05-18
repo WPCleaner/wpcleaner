@@ -1,5 +1,6 @@
 DoTasks _Common.txt
 Set Namespaces 0
 Set Configuration TimeBetweenEdit 15
+# FixDump C:\Users\Nicolas\Downloads\frwiki-$-pages-articles.xml.bz2 67 559
 FixCheckWiki 67 559
 # FixListCheckWiki Projet:Correction_syntaxique/Analyse_067 67 559

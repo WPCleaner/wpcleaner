@@ -20,6 +20,7 @@ import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase;
 import org.wikipediacleaner.api.configuration.WPCConfiguration;
 import org.wikipediacleaner.api.configuration.WPCConfigurationStringList;
 import org.wikipediacleaner.api.data.PageElementImage;
+import org.wikipediacleaner.api.data.PageElementInternalLink;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
 import org.wikipediacleaner.api.data.contents.ContentsUtil;
@@ -296,13 +297,17 @@ public class CheckErrorAlgorithm067 extends CheckErrorAlgorithmBase {
         analysis, beginIndex, endIndex);
     boolean automaticEOL = false;
     boolean automaticUppercase = false;
+    boolean automaticLowercase = false;
     boolean automatic = false;
     if (!punctuationFoundAfter) {
       if (allPunctuations.equals(".")) {
         automaticEOL = true;
         automaticUppercase = true;
-      } else if (allPunctuations.equals("...")) {
+      } else if (allPunctuations.equals("...") ||
+                 allPunctuations.equals(":")) {
         automaticEOL = true;
+      } else if (allPunctuations.equals(",")) {
+        automaticLowercase = true;
       }
     } else if (allPunctuations.equals(punctuationAfter)) {
       if (allPunctuations.equals(".")) {
@@ -314,23 +319,45 @@ public class CheckErrorAlgorithm067 extends CheckErrorAlgorithmBase {
       }
     }
     tmpIndex = ContentsUtil.moveIndexForwardWhileFound(contents, endIndex, " ");
+    if (contents.startsWith("''", tmpIndex)) {
+      tmpIndex = ContentsUtil.moveIndexForwardWhileFound(contents, tmpIndex, "'");
+    }
     if (tmpIndex >= contents.length()) {
       automatic |= automaticEOL;
     } else if (contents.charAt(tmpIndex) == '\n') {
       tmpIndex = ContentsUtil.moveIndexForwardWhileFound(contents, tmpIndex, " ");
       if (tmpIndex >= contents.length()) {
         automatic |= automaticEOL;
-      } else if ("\n*".indexOf(contents.charAt(tmpIndex)) >= 0) {
+      } else if ("\n*»".indexOf(contents.charAt(tmpIndex)) >= 0) {
         automatic |= automaticEOL;
       } else if (Character.isUpperCase(contents.charAt(tmpIndex))) {
         automatic |= automaticUppercase;
+      } else if (Character.isLowerCase(contents.charAt(tmpIndex))) {
+        automatic |= automaticLowercase;
       }
     } else if (Character.isUpperCase(contents.charAt(tmpIndex))) {
       automatic |= automaticUppercase;
+    } else if (Character.isLowerCase(contents.charAt(tmpIndex))) {
+      automatic |= automaticLowercase;
+    } else if (contents.startsWith("»", tmpIndex)) {
+      automatic |= automaticEOL;
     } else if (contents.startsWith("]]", tmpIndex)) {
       PageElementImage image = analysis.isInImage(tmpIndex);
       if ((image != null) && (image.getEndIndex() == tmpIndex + 2)) {
         automatic |= automaticEOL;
+      }
+    } else if (contents.startsWith("[[", tmpIndex)) {
+      PageElementInternalLink link = analysis.isInInternalLink(tmpIndex);
+      if ((link != null) &&
+          (link.getBeginIndex() == tmpIndex) &&
+          (link.getDisplayedText() != null) &&
+          (link.getDisplayedText().length() > 0)) {
+        char firstChar = link.getDisplayedText().charAt(0);
+        if (Character.isUpperCase(firstChar)) {
+          automatic |= automaticUppercase;
+        } else if (Character.isLowerCase(firstChar)) {
+          automatic |= automaticLowercase;
+        }
       }
     } else if (contents.startsWith("<", tmpIndex)) {
       PageElementTag tag = analysis.isInTag(tmpIndex);
