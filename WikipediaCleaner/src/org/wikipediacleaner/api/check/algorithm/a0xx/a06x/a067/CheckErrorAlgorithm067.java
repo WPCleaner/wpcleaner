@@ -292,9 +292,7 @@ public class CheckErrorAlgorithm067 extends CheckErrorAlgorithmBase {
       endIndex = tmpIndex;
     }
 
-    // Create error
-    CheckErrorResult errorResult = createCheckErrorResult(
-        analysis, beginIndex, endIndex);
+    // Decide what situations can be fixed based on the punctuation
     boolean automaticEOL = false;
     boolean automaticUppercase = false;
     boolean automaticLowercase = false;
@@ -318,10 +316,20 @@ public class CheckErrorAlgorithm067 extends CheckErrorAlgorithmBase {
         automatic = true;
       }
     }
+
+    // Move forward
     tmpIndex = ContentsUtil.moveIndexForwardWhileFound(contents, endIndex, " ");
     if (contents.startsWith("''", tmpIndex)) {
       tmpIndex = ContentsUtil.moveIndexForwardWhileFound(contents, tmpIndex, "'");
     }
+    if (contents.startsWith("[[", tmpIndex)) {
+      PageElementImage image = analysis.isInImage(tmpIndex);
+      if ((image != null) && (image.getBeginIndex() == tmpIndex)) {
+        tmpIndex = image.getEndIndex();
+      }
+    }
+
+    // Check in what situation we are
     if (tmpIndex >= contents.length()) {
       automatic |= automaticEOL;
     } else if (contents.charAt(tmpIndex) == '\n') {
@@ -369,6 +377,10 @@ public class CheckErrorAlgorithm067 extends CheckErrorAlgorithmBase {
         }
       }
     }
+
+    // Create error
+    CheckErrorResult errorResult = createCheckErrorResult(
+        analysis, beginIndex, endIndex);
     for (String[] generalAbbreviation : generalAbbreviationFound) {
       if ((generalAbbreviation.length > 2)) {
         String abbreviation = generalAbbreviation[2];
