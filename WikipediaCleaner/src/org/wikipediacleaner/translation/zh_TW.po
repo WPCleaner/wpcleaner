@@ -13,7 +13,7 @@
 msgid ""
 msgstr ""
 ""
-"PO-Revision-Date: 2023-05-15 11:21:30+0000\n"
+"PO-Revision-Date: 2023-05-18 11:25:21+0000\n"
 "X-POT-Import-Date: 2023-05-13 14:30:22+0000\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -28,11 +28,11 @@ msgstr "{0}擴充功能現在可以在所有WikiMedia wiki上使用。"
 
 #: org/wikipediacleaner/Version.java:32
 msgid "It identifies wikitext patterns that must or can be fixed in pages."
-msgstr "它標識必須或可以在頁面中固定的Wikitext模式。"
+msgstr ""
 
 #: org/wikipediacleaner/Version.java:33
 msgid "It also provides some guidance about what the issues are with those patterns and how to fix them."
-msgstr "它還提供了有關這些模式的問題以及如何解決它們的一些指導。"
+msgstr ""
 
 #: org/wikipediacleaner/Version.java:35
 msgid "You can help by fixing problems identified by the Linter extension."
@@ -145,7 +145,7 @@ msgstr ""
 
 #: org/wikipediacleaner/api/MediaWiki.java:317
 msgid "Do you want to continue?"
-msgstr "你要繼續嗎？"
+msgstr ""
 
 #: org/wikipediacleaner/api/ModificationReport.java:78
 #: org/wikipediacleaner/api/ModificationReport.java:108
@@ -1037,11 +1037,11 @@ msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a090/CheckErrorAlgorithm090.java:664
 msgid "Convert into an internal link"
-msgstr "轉換為內部鏈接"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a090/CheckErrorAlgorithm090.java:828
 msgid "Templates to be used for linking to the history of an article"
-msgstr "用於鏈接到文章歷史的模板"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a090/CheckErrorAlgorithm090.java:832
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a090/CheckErrorAlgorithm090.java:861
