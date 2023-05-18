@@ -318,7 +318,7 @@ public class CheckErrorAlgorithm067 extends CheckErrorAlgorithmBase {
     }
 
     // Move forward
-    tmpIndex = ContentsUtil.moveIndexForwardWhileFound(contents, endIndex, " ");
+    tmpIndex = ContentsUtil.moveIndexForwardWhileFound(contents, endIndex, " \u00A0");
     if (contents.startsWith("''", tmpIndex)) {
       tmpIndex = ContentsUtil.moveIndexForwardWhileFound(contents, tmpIndex, "'");
     }
