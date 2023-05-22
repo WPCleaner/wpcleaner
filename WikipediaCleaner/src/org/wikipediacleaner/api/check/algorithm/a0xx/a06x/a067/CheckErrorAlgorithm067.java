@@ -9,7 +9,12 @@ package org.wikipediacleaner.api.check.algorithm.a0xx.a06x.a067;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import org.wikipediacleaner.api.algorithm.AlgorithmParameter;
 import org.wikipediacleaner.api.algorithm.AlgorithmParameterElement;
@@ -19,9 +24,11 @@ import org.wikipediacleaner.api.check.SpecialCharacters;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase;
 import org.wikipediacleaner.api.configuration.WPCConfiguration;
 import org.wikipediacleaner.api.configuration.WPCConfigurationStringList;
+import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageElementImage;
 import org.wikipediacleaner.api.data.PageElementInternalLink;
 import org.wikipediacleaner.api.data.PageElementTag;
+import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
 import org.wikipediacleaner.api.data.contents.ContentsUtil;
 import org.wikipediacleaner.api.data.contents.comment.ContentsComment;
@@ -296,11 +303,13 @@ public class CheckErrorAlgorithm067 extends CheckErrorAlgorithmBase {
     boolean automaticEOL = false;
     boolean automaticUppercase = false;
     boolean automaticLowercase = false;
+    boolean automaticTemplate = false;
     boolean automatic = false;
     if (!punctuationFoundAfter) {
       if (allPunctuations.equals(".")) {
         automaticEOL = true;
         automaticUppercase = true;
+        automaticTemplate = true;
       } else if (allPunctuations.equals("...") ||
                  allPunctuations.equals(":")) {
         automaticEOL = true;
@@ -376,6 +385,15 @@ public class CheckErrorAlgorithm067 extends CheckErrorAlgorithmBase {
           automatic |= automaticEOL;
         }
       }
+    } else if (contents.startsWith("}}", tmpIndex) || contents.startsWith("|", tmpIndex)) {
+      PageElementTemplate template = analysis.isInTemplate(tmpIndex);
+      if (template != null) {
+        PageElementTemplate.Parameter param = template.getParameterAtIndex(tmpIndex);
+        if ((param != null) &&
+            safeTemplates.getOrDefault(template.getTemplateName(), Collections.emptySet()).contains(param.getComputedName())) {
+          automatic |= automaticTemplate;
+        }
+      }
     }
 
     // Create error
@@ -438,6 +456,9 @@ public class CheckErrorAlgorithm067 extends CheckErrorAlgorithmBase {
   /** Separator between consecutive tags */
   private static final String PARAMETER_SEPARATOR = "separator";
 
+  /** Templates in which the punctuation can be safely moved after the reference */
+  private static final String PARAMETER_SAFE_TEMPLATES = "safe_templates";
+
   /**
    * Initialize settings for the algorithm.
    * 
@@ -457,6 +478,19 @@ public class CheckErrorAlgorithm067 extends CheckErrorAlgorithmBase {
     separator = getSpecificProperty(PARAMETER_SEPARATOR, true, false, false);
     if (separator == null) {
       separator = "";
+    }
+
+    tmp = getSpecificProperty(PARAMETER_SAFE_TEMPLATES, true, false, false);
+    safeTemplates.clear();
+    if (tmp != null) {
+      List<String[]> tmpList = WPCConfiguration.convertPropertyToStringArrayList(tmp);
+      if (tmpList != null) {
+        for (String[] tmpValues : tmpList) {
+          for (int valueIndex = 1; valueIndex < tmpValues.length; valueIndex++) {
+            safeTemplates.computeIfAbsent(Page.normalizeTitle(tmpValues[0]), templateName -> new HashSet<>()).add(tmpValues[valueIndex]);
+          }
+        }
+      }
     }
 
     generalAbbreviations.clear();
@@ -487,6 +521,9 @@ public class CheckErrorAlgorithm067 extends CheckErrorAlgorithmBase {
 
   /** Abbreviations that can create false positives */
   private final List<String[]> generalAbbreviations = new ArrayList<>();
+  
+  /** Templates where punctuation can be safely moved after the reference */
+  private final Map<String, Set<String>> safeTemplates = new HashMap<>();
 
   /**
    * Build the list of parameters for this algorithm.
@@ -507,5 +544,13 @@ public class CheckErrorAlgorithm067 extends CheckErrorAlgorithmBase {
         new AlgorithmParameterElement(
             "text",
             GT._T("Used as a separator between consecutive {0} tags", "&lt;ref&gt;"))));
+    addParameter(new AlgorithmParameter(
+        PARAMETER_SAFE_TEMPLATES,
+        GT._T("A list of templates in which the punctuation can be safely moved after the reference"),
+        new AlgorithmParameterElement[] {
+            new AlgorithmParameterElement("template", GT._T("Name of the template")),
+            new AlgorithmParameterElement("parameter", GT._T("Parameter of the template"), false, true)
+        },
+        true));
   }
 }
