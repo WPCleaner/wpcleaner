@@ -114,6 +114,9 @@ public class CheckErrorAlgorithm579 extends CheckErrorAlgorithmBase {
     if (tag.getValueEndIndex() > tmpIndex) {
       return false;
     }
+    if (analysis.getSurroundingTag(WikiTagType.NOWIKI, tmpIndex) != null) {
+      return false;
+    }
 
     // Report error
     if (errors == null) {
@@ -124,7 +127,7 @@ public class CheckErrorAlgorithm579 extends CheckErrorAlgorithmBase {
     int endIndex = tag.getCompleteEndIndex();
     CheckErrorResult errorResult = createCheckErrorResult(analysis, beginIndex, endIndex);
     String replacement = contents.substring(tag.getBeginIndex(), tag.getEndIndex() - 1) + " />";
-    errorResult.addReplacement(replacement);
+    errorResult.addReplacement(replacement, tag.getValueEndIndex() == tag.getValueBeginIndex());
     errors.add(errorResult);
 
     return true;
