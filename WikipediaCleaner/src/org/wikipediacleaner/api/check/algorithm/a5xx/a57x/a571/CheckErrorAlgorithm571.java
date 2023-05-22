@@ -9,6 +9,7 @@ package org.wikipediacleaner.api.check.algorithm.a5xx.a57x.a571;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Objects;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase;
@@ -122,60 +123,79 @@ public class CheckErrorAlgorithm571 extends CheckErrorAlgorithmBase {
       return true;
     }
 
-    // Try to extend area
+    // Handle case where cite tag go after ref tag
     boolean extended = false;
     int endIndex = citeTag.getCompleteEndIndex();
     if (endIndex >= refTag.getCompleteEndIndex()) {
       CheckErrorResult errorResult = createCheckErrorResult(
           analysis, citeTag.getBeginIndex(), citeTag.getEndIndex());
       errors.add(errorResult);
-    } else {
-      String contents = analysis.getContents();
-      do {
-        extended = false;
-        if (endIndex < contents.length()) {
-          if (contents.charAt(endIndex) == '<') {
-            PageElementTag nextTag = analysis.isInTag(endIndex);
-            if ((nextTag != null) && !nextTag.isFullTag() && nextTag.isComplete()) {
-              if (HtmlTagType.SPAN.equals(nextTag.getType())) {
-                Parameter title = nextTag.getParameter("title");
-                if ((title != null) &&
-                    (title.getValue() != null) &&
-                    (title.getValue().startsWith("ctx_ver="))) {
-                  String nextTagValue = contents.substring(
-                      nextTag.getValueBeginIndex(), nextTag.getValueEndIndex());
-                  if ((nextTagValue == null) ||
-                      nextTagValue.equals("&nbsp;") ||
-                      nextTagValue.equals("&#x20;")) {
-                    extended = true;
-                    endIndex = nextTag.getCompleteEndIndex();
-                  }
-                }
-              } else if (HtmlTagType.CITE.equals(nextTag.getType())) {
+      return true;
+
+    }
+
+    // Try to extend area
+    String contents = analysis.getContents();
+    do {
+      extended = false;
+      if (endIndex < contents.length()) {
+        if (contents.charAt(endIndex) == '<') {
+          PageElementTag nextTag = analysis.isInTag(endIndex);
+          if ((nextTag != null) && !nextTag.isFullTag() && nextTag.isComplete()) {
+            if (HtmlTagType.SPAN.equals(nextTag.getType())) {
+              Parameter title = nextTag.getParameter("title");
+              if ((title != null) &&
+                  (title.getValue() != null) &&
+                  (title.getValue().startsWith("ctx_ver="))) {
                 String nextTagValue = contents.substring(
                     nextTag.getValueBeginIndex(), nextTag.getValueEndIndex());
                 if ((nextTagValue == null) ||
-                    nextTagValue.trim().equals("")) {
+                    nextTagValue.equals("&nbsp;") ||
+                    nextTagValue.equals("&#x20;")) {
                   extended = true;
                   endIndex = nextTag.getCompleteEndIndex();
                 }
               }
+            } else if (HtmlTagType.CITE.equals(nextTag.getType())) {
+              String nextTagValue = contents.substring(
+                  nextTag.getValueBeginIndex(), nextTag.getValueEndIndex());
+              if ((nextTagValue == null) ||
+                  nextTagValue.trim().equals("")) {
+                extended = true;
+                endIndex = nextTag.getCompleteEndIndex();
+              }
             }
           }
         }
-      } while (extended);
-      CheckErrorResult errorResult = createCheckErrorResult(
-          analysis, citeTag.getCompleteBeginIndex(), endIndex);
-      String replacement = contents.substring(
-          citeTag.getValueBeginIndex(), citeTag.getValueEndIndex());
-      if (citeTag.getCompleteEndIndex() == refTag.getValueEndIndex()) {
-        replacement = replacement.trim();
       }
-      errorResult.addReplacement(
-          replacement,
-          GT._T("Remove {0} tags", HtmlTagType.CITE.getOpenTag()));
-      errors.add(errorResult);
+    } while (extended);
+
+    CheckErrorResult errorResult = createCheckErrorResult(
+        analysis, citeTag.getCompleteBeginIndex(), endIndex);
+    if (contents.charAt(citeTag.getCompleteBeginIndex() - 1) == '}') {
+      PageElementTemplate template = analysis.isInTemplate(citeTag.getCompleteBeginIndex() - 1);
+      if ((template != null) &&
+          (template.getEndIndex() == citeTag.getCompleteBeginIndex()) &&
+          (template.getBeginIndex() == refTag.getValueBeginIndex())) {
+        boolean canBeSafelyDeleted = false;
+        String textAfterDeletion = contents.substring(refTag.getValueBeginIndex(), citeTag.getCompleteBeginIndex()).trim();
+        canBeSafelyDeleted = analysis.getCompleteTags(WikiTagType.REF).stream()
+            .filter(currentTag -> !Objects.equals(currentTag, refTag))
+            .map(currentTag -> contents.substring(currentTag.getValueBeginIndex(), currentTag.getValueEndIndex()).trim())
+            .anyMatch(currentContent -> Objects.equals(currentContent, textAfterDeletion));
+        errorResult.addReplacement("", GT._T("Delete {0} tags", HtmlTagType.CITE.getOpenTag()), canBeSafelyDeleted);
+      }
     }
+    String replacement = contents.substring(
+        citeTag.getValueBeginIndex(), citeTag.getValueEndIndex());
+    if (citeTag.getCompleteEndIndex() == refTag.getValueEndIndex()) {
+      replacement = replacement.trim();
+    }
+    errorResult.addReplacement(
+        replacement,
+        GT._T("Remove {0} tags", HtmlTagType.CITE.getOpenTag()));
+    errors.add(errorResult);
+
     return true;
   }
 
@@ -223,5 +243,19 @@ public class CheckErrorAlgorithm571 extends CheckErrorAlgorithmBase {
       errors.add(errorResult);
     }
     return true;
+  }
+
+  /**
+   * Automatic fixing of all the errors in the page.
+   * 
+   * @param analysis Page analysis.
+   * @return Page contents after fix.
+   */
+  @Override
+  protected String internalAutomaticFix(PageAnalysis analysis) {
+    if (!analysis.getPage().isArticle()) {
+      return analysis.getContents();
+    }
+    return fixUsingAutomaticReplacement(analysis);
   }
 }

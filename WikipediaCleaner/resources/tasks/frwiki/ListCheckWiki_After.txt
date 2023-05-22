@@ -104,6 +104,8 @@ Set Prefix [[Utilisateur:WikiCleanerBot#T3|Bot_T3_PCS#568]]
 FixListCheckWiki Projet:Correction_syntaxique/Analyse_568 568
 Set Prefix [[Utilisateur:WikiCleanerBot#T3|Bot_T3_PCS#569]]
 FixListCheckWiki Projet:Correction_syntaxique/Analyse_569 569
+Set Prefix [[Utilisateur:WikiCleanerBot#T3|Bot_T3_PCS#571]]
+FixListCheckWiki Projet:Correction_syntaxique/Analyse_571 571
 Set Prefix [[Utilisateur:WikiCleanerBot#T3|Bot_T3_PCS#572]]
 FixListCheckWiki Projet:Correction_syntaxique/Analyse_572 572
 Set Prefix [[Utilisateur:WikiCleanerBot#T3|Bot_T3_PCS#573]]
@@ -155,6 +157,8 @@ Set Prefix [[Utilisateur:WikiCleanerBot#T3|Bot_T3_PCS#568]]
 FixListCheckWiki Projet:Correction_syntaxique/Analyse_568 568
 Set Prefix [[Utilisateur:WikiCleanerBot#T3|Bot_T3_PCS#569]]
 FixListCheckWiki Projet:Correction_syntaxique/Analyse_569 569
+Set Prefix [[Utilisateur:WikiCleanerBot#T3|Bot_T3_PCS#571]]
+FixListCheckWiki Projet:Correction_syntaxique/Analyse_571 571
 Set Prefix [[Utilisateur:WikiCleanerBot#T3|Bot_T3_PCS#573]]
 FixListCheckWiki Projet:Correction_syntaxique/Analyse_573 573
 Set Prefix [[Utilisateur:WikiCleanerBot#T3|Bot_T3_PCS#575]]
@@ -216,6 +220,8 @@ Set Prefix [[Utilisateur:WikiCleanerBot#T3|Bot_T3_PCS#568]]
 FixListCheckWiki Projet:Correction_syntaxique/Analyse_568 568
 Set Prefix [[Utilisateur:WikiCleanerBot#T3|Bot_T3_PCS#569]]
 FixListCheckWiki Projet:Correction_syntaxique/Analyse_569 569
+Set Prefix [[Utilisateur:WikiCleanerBot#T3|Bot_T3_PCS#571]]
+FixListCheckWiki Projet:Correction_syntaxique/Analyse_571 571
 Set Prefix [[Utilisateur:WikiCleanerBot#T3|Bot_T3_PCS#573]]
 FixListCheckWiki Projet:Correction_syntaxique/Analyse_573 573
 Set Prefix [[Utilisateur:WikiCleanerBot#T3|Bot_T3_PCS#575]]
