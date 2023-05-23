@@ -7,10 +7,11 @@
 
 package org.wikipediacleaner.api.check.algorithm.a5xx.a57x.a579;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import javax.annotation.Nonnull;
 
@@ -38,9 +39,11 @@ public class CheckErrorAlgorithm579 extends CheckErrorAlgorithmBase {
     super("Tag simplification");
   }
 
-  private static List<TagType> tagTypes = new ArrayList<>(Arrays.asList(
-      WikiTagType.REF
-      ));
+  private static Map<TagType, Boolean> tagTypes = new HashMap<>();
+  
+  static {
+    tagTypes.put(WikiTagType.REF, Boolean.TRUE);
+  }
 
   /**
    * Analyze a page to check if errors are present.
@@ -60,8 +63,8 @@ public class CheckErrorAlgorithm579 extends CheckErrorAlgorithmBase {
 
     // Check each tag type
     boolean result = false;
-    for (TagType tagType : tagTypes) {
-      result |= analyzeTagType(analysis, errors, tagType);
+    for (Entry<TagType, Boolean> entry : tagTypes.entrySet()) {
+      result |= analyzeTagType(analysis, errors, entry.getKey(), entry.getValue());
     }
 
     return result;
@@ -78,7 +81,8 @@ public class CheckErrorAlgorithm579 extends CheckErrorAlgorithmBase {
   private boolean analyzeTagType(
       PageAnalysis analysis,
       Collection<CheckErrorResult> errors,
-      TagType tagType) {
+      TagType tagType,
+      Boolean ignoreWhitespace) {
 
     // Check each tag
     List<PageElementTag> tags = analysis.getCompleteTags(tagType);
@@ -87,7 +91,7 @@ public class CheckErrorAlgorithm579 extends CheckErrorAlgorithmBase {
     }
     boolean result = false;
     for (PageElementTag tag : tags) {
-      result |= analyzeTag(analysis, errors, tag);
+      result |= analyzeTag(analysis, errors, tag, ignoreWhitespace);
     }
     return result;
   }
@@ -103,7 +107,8 @@ public class CheckErrorAlgorithm579 extends CheckErrorAlgorithmBase {
   private boolean analyzeTag(
       PageAnalysis analysis,
       Collection<CheckErrorResult> errors,
-      PageElementTag tag) {
+      PageElementTag tag,
+      Boolean ignoreWhitespace) {
 
     // Check if tag has problems
     if (!tag.isComplete() || tag.isFullTag()) {
@@ -127,7 +132,9 @@ public class CheckErrorAlgorithm579 extends CheckErrorAlgorithmBase {
     int endIndex = tag.getCompleteEndIndex();
     CheckErrorResult errorResult = createCheckErrorResult(analysis, beginIndex, endIndex);
     String replacement = contents.substring(tag.getBeginIndex(), tag.getEndIndex() - 1) + " />";
-    errorResult.addReplacement(replacement, tag.getValueEndIndex() == tag.getValueBeginIndex());
+    errorResult.addReplacement(
+        replacement,
+        (tag.getValueEndIndex() == tag.getValueBeginIndex()) || Boolean.TRUE.equals(ignoreWhitespace));
     errors.add(errorResult);
 
     return true;
