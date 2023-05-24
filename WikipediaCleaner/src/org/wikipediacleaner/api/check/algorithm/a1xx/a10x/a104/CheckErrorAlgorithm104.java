@@ -174,7 +174,7 @@ public class CheckErrorAlgorithm104 extends CheckErrorAlgorithmBase {
         tmpIndex++;
       }
       while ((tmpIndex < fullEnd - 1) &&
-          (" \"'”".indexOf(contents.charAt(tmpIndex)) >= 0)) {
+          (" \"'”“".indexOf(contents.charAt(tmpIndex)) >= 0)) {
         tmpIndex++;
       }
       int startName = tmpIndex;
@@ -195,7 +195,7 @@ public class CheckErrorAlgorithm104 extends CheckErrorAlgorithmBase {
         endName--;
       }
       while ((tmpIndex < fullEnd - 1) &&
-          (" \"'”»".indexOf(contents.charAt(tmpIndex)) >= 0)) {
+          (" \"'”»“".indexOf(contents.charAt(tmpIndex)) >= 0)) {
         tmpIndex++;
       }
       boolean closing = false;
@@ -222,7 +222,7 @@ public class CheckErrorAlgorithm104 extends CheckErrorAlgorithmBase {
                 }
               }
             } else if (nextChar == '”') {
-              if (contents.charAt(endName) == '”') {
+              if ("”“".indexOf(contents.charAt(endName)) >= 0) {
                 automatic = true;
               }
             }
