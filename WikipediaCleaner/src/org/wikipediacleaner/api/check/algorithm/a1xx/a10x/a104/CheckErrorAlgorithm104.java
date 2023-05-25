@@ -59,11 +59,11 @@ public class CheckErrorAlgorithm104 extends CheckErrorAlgorithmBase {
   }
 
   /**
-   * Analyze a page to check if errors are present.
+   * Analyze a position in the page to check if errors are present.
    * 
    * @param analysis Page analysis.
    * @param errors Errors found in the page.
-   * @param onlyAutomatic True if analysis could be restricted to errors automatically fixed.
+   * @param currentIndex Current index in the page.
    * @return Flag indicating if the error was found.
    */
   public boolean analyzeIndex(

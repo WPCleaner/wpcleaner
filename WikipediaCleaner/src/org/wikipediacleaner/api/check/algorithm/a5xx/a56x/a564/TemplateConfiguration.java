@@ -143,8 +143,10 @@ class TemplateConfiguration {
           TemplateParameterSuggestion.deleteParam(contents, param, true)));
     }
 
-    // Handle unnamed parameters that can be deleted
+    // Handle unnamed parameters
     if (StringUtils.isEmpty(name) && !StringUtils.isEmpty(computedName)) {
+
+      // Handle unnamed parameters that can be deleted
       for (String namedParameter : unnamedParamsToDelete) {
         String otherValue = template.getParameterValue(namedParameter);
         if (otherValue != null) {
@@ -155,6 +157,32 @@ class TemplateConfiguration {
           }
         }
       }
+
+      // Handle unnamed parameters that are in fact parameter names
+      for (String namedParameter : knownParams) {
+        if (namedParameter.equals(param.getValue())) {
+          boolean shouldRemove = true;
+          if (paramNum + 1 < template.getParameterCount()) {
+            PageElementTemplate.Parameter nextParam = template.getParameter(paramNum + 1);
+            if (StringUtils.isEmpty(nextParam.getName())) {
+              shouldRemove = false;
+            }
+          }
+          if (!shouldRemove && (param.getValue() != null)) {
+            for (int paramNumTmp = 0; paramNumTmp < template.getParameterCount(); paramNumTmp++) {
+              if (param.getValue().equalsIgnoreCase(template.getParameterName(paramNumTmp))) {
+                shouldRemove = true;
+              }
+            }
+          }
+          if (shouldRemove) {
+            return Optional.of(Collections.singletonList(
+                TemplateParameterSuggestion.deleteParam(contents, param, true)));
+          }
+        }
+      }
+
+      // Handle unnamed parameters for which their value also exist in another parameter
       /*for (int paramTmp = 0; paramTmp < template.getParameterCount(); paramTmp++) {
         PageElementTemplate.Parameter otherParam = template.getParameter(paramTmp);
         if (StringUtils.isNotEmpty(otherParam.getName()) &&
