@@ -225,6 +225,10 @@ public class CheckErrorAlgorithm104 extends CheckErrorAlgorithmBase {
               if ("”“".indexOf(contents.charAt(endName)) >= 0) {
                 automatic = true;
               }
+            } else if (startName == equalSign + 1) {
+              if (contents.charAt(endName) == '"') {
+                automatic = true;
+              }
             }
           }
           replacement =
