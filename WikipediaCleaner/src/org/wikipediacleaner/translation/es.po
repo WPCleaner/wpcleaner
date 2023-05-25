@@ -24,7 +24,7 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2023-05-15 11:21:25+0000\n"
+"PO-Revision-Date: 2023-05-25 11:26:26+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Spanish\n"
 "MIME-Version: 1.0\n"
@@ -34,7 +34,7 @@ msgstr ""
 "X-Launchpad-Export-Date: 2017-03-22 17:48+0000\n"
 "X-Generator: MediaWiki 1.41.0-alpha; Translate 2023-04-26\n"
 "Language: es\n"
-"X-POT-Import-Date: 2023-05-13 14:30:22+0000\n"
+"X-POT-Import-Date: 2023-05-22 22:30:27+0000\n"
 
 #: org/wikipediacleaner/Version.java:31
 #, java-format
@@ -317,6 +317,7 @@ msgstr "Un reemplazo para {0}"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a002/CheckErrorAlgorithm002.java:683
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a060/CheckErrorAlgorithm060.java:198
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a067/CheckErrorAlgorithm067.java:551
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a08x/a081/CheckErrorAlgorithm081.java:508
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a563/CheckErrorAlgorithm563.java:234
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a563/CheckErrorAlgorithm563.java:252
@@ -696,8 +697,8 @@ msgstr "Eliminar saltos en la lista"
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a066/CheckErrorAlgorithm066.java:96
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a077/CheckErrorAlgorithm077.java:95
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a525/CheckErrorAlgorithm525.java:166
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a571/CheckErrorAlgorithm571.java:176
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a571/CheckErrorAlgorithm571.java:222
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a571/CheckErrorAlgorithm571.java:196
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a571/CheckErrorAlgorithm571.java:242
 #, java-format
 msgid "Remove {0} tags"
 msgstr "Eliminar etiquetas {0}"
@@ -726,8 +727,8 @@ msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a061/CheckErrorAlgorithm061.java:497
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a061/CheckErrorAlgorithm061.java:500
-#: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a067/CheckErrorAlgorithm067.java:467
-#: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a067/CheckErrorAlgorithm067.java:470
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a067/CheckErrorAlgorithm067.java:543
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a067/CheckErrorAlgorithm067.java:546
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a542/CheckErrorAlgorithm542.java:182
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a558/CheckErrorAlgorithm558.java:354
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a558/CheckErrorAlgorithm558.java:357
@@ -756,15 +757,23 @@ msgstr "Modificar todos los enlaces internos"
 msgid "Remove all <small> tags"
 msgstr "Eliminar todas las etiquetas <small>"
 
-#: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a067/CheckErrorAlgorithm067.java:460
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a067/CheckErrorAlgorithm067.java:536
 #, java-format
 msgid "A list of abbreviations that generate false positives when placed before {0}"
 msgstr "Lista de abreviaciones que generan falsos positivos cuando están ubicados antes de {0}"
 
-#: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a067/CheckErrorAlgorithm067.java:463
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a067/CheckErrorAlgorithm067.java:539
 #, fuzzy, java-format
 msgid "An abbreviation that generate false positives when placed before {0}"
 msgstr "Lista de abreviaciones que generan falsos positivos cuando están ubicados antes de {0}"
+
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a067/CheckErrorAlgorithm067.java:549
+msgid "A list of templates in which the punctuation can be safely moved after the reference"
+msgstr "Una lista de plantillas en las cuales se puede mover con seguridad la puntuación después de la referencia"
+
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a067/CheckErrorAlgorithm067.java:552
+msgid "Parameter of the template"
+msgstr "Parámetro de la plantilla"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a068/CheckErrorAlgorithm068.java:54
 msgid "Check all links to other language"
@@ -1971,6 +1980,11 @@ msgstr ""
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a568/CheckErrorAlgorithm568.java:278
 msgid "Parameter name that can contain a reference"
 msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a571/CheckErrorAlgorithm571.java:186
+#, java-format
+msgid "Delete {0} tags"
+msgstr "Eliminar {0} etiquetas"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a572/CheckErrorAlgorithm572.java:150
 #, java-format
