@@ -8,8 +8,14 @@
 
 package org.wikipediacleaner.api.check.algorithm.a5xx.a54x.a545;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+
+import org.apache.commons.lang3.tuple.ImmutablePair;
 
 /**
  * Bean for handling configuration for template parameters.
@@ -20,10 +26,13 @@ class ParameterConfiguration {
 
   @Nullable private String comment;
 
-  @Nullable private String replacement;
+  @Nullable private String nameReplacement;
+
+  @Nonnull private Map<String, ImmutablePair<String, String>> replacementByValue;
 
   public ParameterConfiguration(String parameterName) {
     this.parameterName = parameterName;
+    this.replacementByValue = new HashMap<>();
   }
 
   public @Nonnull String getParameterName() {
@@ -38,11 +47,19 @@ class ParameterConfiguration {
     return comment;
   }
 
-  void setReplacement(@Nonnull String replacement) {
-    this.replacement = replacement;
+  void setNameReplacement(@Nonnull String replacement) {
+    this.nameReplacement = replacement;
   }
 
-  public @Nullable String getReplacement() {
-    return replacement;
+  public @Nullable String getNameReplacement() {
+    return nameReplacement;
+  }
+  
+  void addReplacementByValue(@Nonnull String value, @Nonnull String newName, @Nonnull String newValue) {
+    replacementByValue.put(value, new ImmutablePair<String, String>(newName, newValue));
+  }
+  
+  Optional<ImmutablePair<String, String>> getValueReplacement(@Nonnull String value) {
+    return Optional.ofNullable(replacementByValue.get(value));
   }
 }

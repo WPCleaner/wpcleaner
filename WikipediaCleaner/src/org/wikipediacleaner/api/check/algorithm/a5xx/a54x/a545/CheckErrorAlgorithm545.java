@@ -207,7 +207,10 @@ public class CheckErrorAlgorithm545 extends CheckErrorAlgorithmBase {
   private static final String PARAMETER_TEMPLATES = "templates";
 
   /** Replacements for parameters */
-  private static final String REPLACE_PARAMETERS = "replace_parameters";
+  private static final String PARAMETER_REPLACE_PARAMETERS = "replace_parameters";
+
+  /** Replacements for values */
+  private static final String PARAMETER_REPLACE_VALUES = "replace_values";
 
   /**
    * Initialize settings for the algorithm.
@@ -233,12 +236,17 @@ public class CheckErrorAlgorithm545 extends CheckErrorAlgorithmBase {
       List<String[]> tmpList = WPCConfiguration.convertPropertyToStringArrayList(tmp);
       TemplateConfiguration.addObsoleteParameters(tmpList, configByTemplateName, group);
     }
-    tmp = getSpecificProperty(REPLACE_PARAMETERS, true, true, false);
+    tmp = getSpecificProperty(PARAMETER_REPLACE_PARAMETERS, true, true, false);
     if (tmp != null) {
       List<String[]> tmpList = WPCConfiguration.convertPropertyToStringArrayList(tmp);
       TemplateConfiguration.addReplaceParameters(tmpList, configByTemplateName, group);
     }
 
+    tmp = getSpecificProperty(PARAMETER_REPLACE_VALUES, true, true, false);
+    if (tmp != null) {
+      List<String[]> tmpList = WPCConfiguration.convertPropertyToStringArrayList(tmp);
+      TemplateConfiguration.addReplaceValues(tmpList, configByTemplateName, group);
+    }
     tmp = getSpecificProperty(PARAMETER_CATEGORIES, true, true, false);
     categories.clear();
     if (tmp != null) {
@@ -291,7 +299,7 @@ public class CheckErrorAlgorithm545 extends CheckErrorAlgorithmBase {
                 GT._T("Name of a template with deprecated parameter")),
             new AlgorithmParameterElement(
                 "parameter name",
-                GT._T("Name a of a deprecated parameter")),
+                GT._T("Name of a deprecated parameter")),
             new AlgorithmParameterElement(
                 "explanation",
                 GT._T("Textual explanation about the deprecated parameter"),
@@ -299,7 +307,7 @@ public class CheckErrorAlgorithm545 extends CheckErrorAlgorithmBase {
         },
         true));
     addParameter(new AlgorithmParameter(
-        REPLACE_PARAMETERS,
+        PARAMETER_REPLACE_PARAMETERS,
         GT._T("Replacements of deprecated parameters"),
         new AlgorithmParameterElement[] {
             new AlgorithmParameterElement(
@@ -307,11 +315,32 @@ public class CheckErrorAlgorithm545 extends CheckErrorAlgorithmBase {
                 GT._T("Name of a template with deprecated parameter")),
             new AlgorithmParameterElement(
                 "parameter name",
-                GT._T("Name a of a deprecated parameter")),
+                GT._T("Name of a deprecated parameter")),
             new AlgorithmParameterElement(
                 "replacement",
                 GT._T("Name of a replacement parameter"),
                 true)
+        },
+        true));
+    addParameter(new AlgorithmParameter(
+        PARAMETER_REPLACE_VALUES,
+        GT._T("Replacements of deprecated parameters"),
+        new AlgorithmParameterElement[] {
+            new AlgorithmParameterElement(
+                "template name",
+                GT._T("Name of a template with deprecated parameter")),
+            new AlgorithmParameterElement(
+                "parameter name",
+                GT._T("Name of a deprecated parameter")),
+            new AlgorithmParameterElement(
+                "parameter value",
+                GT._T("Value of the deprecated parameter")),
+            new AlgorithmParameterElement(
+                "replacement name",
+                GT._T("Name of the replacement parameter")),
+            new AlgorithmParameterElement(
+                "replacement value",
+                GT._T("Value of the replacement parameter"))
         },
         true));
   }
