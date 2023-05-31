@@ -30,7 +30,6 @@ import org.wikipediacleaner.api.configuration.WPCConfiguration;
 import org.wikipediacleaner.api.configuration.WPCConfigurationStringList;
 import org.wikipediacleaner.api.data.PageElementExternalLink;
 import org.wikipediacleaner.api.data.PageElementTag;
-import org.wikipediacleaner.api.data.PageElementTagRef;
 import org.wikipediacleaner.api.data.PageElementTag.Parameter;
 import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
@@ -60,6 +59,8 @@ public class CheckErrorAlgorithm081 extends CheckErrorAlgorithmBase {
   private final StringChecker nameChecker;
 
   private final RefTagsCollector refTagsCollector;
+  
+  private final RefTagSelector refTagSelector;
 
   /**
    * Possible global fixes.
@@ -72,45 +73,7 @@ public class CheckErrorAlgorithm081 extends CheckErrorAlgorithmBase {
     super("Reference duplication");
     nameChecker = new StringCheckerReferenceName();
     refTagsCollector = new RefTagsCollector();
-  }
-
-  /**
-   * Get all names used in a list of reference tags.
-   *  
-   * @param refs List of reference tags.
-   * @return List of names.
-   */
-  private List<String> getRefNames(List<PageElementTag> refs) {
-    List<String> possibleNames = new ArrayList<>();
-    for (PageElementTag tag : refs) {
-      Parameter name = tag.getParameter("name");
-      if ((name != null) && (name.getTrimmedValue() != null)) {
-        String nameValue = name.getTrimmedValue();
-        if ((nameValue.length() > 0) && (!possibleNames.contains(nameValue))) {
-          possibleNames.add(nameValue);
-        }
-      }
-    }
-    return possibleNames;
-  }
-
-  /**
-   * Construct a closed reference tag.
-   * 
-   * @param groupName Name of the group.
-   * @param tagName Name of the tag.
-   * @param value Value of the tag.
-   * @return Reference tag.
-   */
-  private String getClosedRefTag(String groupName, String tagName, String value) {
-    CompleteTagBuilder builder = CompleteTagBuilder.from(WikiTagType.REF, StringUtils.trim(value));
-    if ((groupName != null) && (groupName.trim().length() > 0)) {
-      builder.addAttribute("group", groupName.trim());
-    }
-    if ((tagName != null) && (tagName.trim().length() > 0)) {
-      builder.addAttribute("name", tagName.trim());
-    }
-    return builder.toString();
+    refTagSelector = new RefTagSelector();
   }
 
   /**
@@ -143,34 +106,30 @@ public class CheckErrorAlgorithm081 extends CheckErrorAlgorithmBase {
     }
 
     // Second pass for managing with several tags having the same group and value
-    List<PageElementTag> completeReferencesTags =
-        analysis.getCompleteTags(WikiTagType.REFERENCES);
     for (Entry<String, Map<String, List<PageElementTag>>> entryGroup : refs.entrySet()) {
       String groupName = entryGroup.getKey();
       for (Entry<String, List<PageElementTag>> entryValue : entryGroup.getValue().entrySet()) {
-        analyzeListOfTags(
+        analyzeTags(
             analysis,
             entryValue.getValue(),
             groupName,
-            completeReferencesTags,
             errors);
       }
     }
     return true;
   }
 
-  public boolean analyzeListOfTags(
+  private boolean analyzeTags(
       PageAnalysis analysis,
       List<PageElementTag> listTags,
       String groupName,
-      List<PageElementTag> completeReferencesTags,
       Collection<CheckErrorResult> errors) {
     if (listTags.size() <= 1) {
       return false;
     }
 
     // Find main reference tag
-    PageElementTag mainTag = PageElementTagRef.getMain(listTags, completeReferencesTags, analysis);
+    PageElementTag mainTag = refTagSelector.selectBestTag(listTags, analysis);
     if (mainTag != null) {
 
       // Create an error for each tag, except for the main tag
@@ -318,7 +277,6 @@ public class CheckErrorAlgorithm081 extends CheckErrorAlgorithmBase {
     }
 
     // Check all reference tags
-    List<PageElementTag> completeReferencesTags = analysis.getCompleteTags(WikiTagType.REFERENCES);
     List<PageElementTag> completeRefTags = analysis.getCompleteTags(WikiTagType.REF);
     Object highlight = null;
     String contents = analysis.getContents();
@@ -344,7 +302,7 @@ public class CheckErrorAlgorithm081 extends CheckErrorAlgorithmBase {
         List<String> possibleNames = refNamesByGroupAndValue.get(groupName).get(valueRef);
         if ((possibleNames != null) && (possibleNames.size() > 0)) {
           String selectedName = possibleNames.get(0);
-          PageElementTag mainRef = PageElementTagRef.getMain(valueRefs, completeReferencesTags, analysis);
+          PageElementTag mainRef = refTagSelector.selectBestTag(valueRefs, analysis);
           if (mainRef != refTag) {
             String tmp = getClosedRefTag(groupName, selectedName, null);
             String message =
@@ -395,6 +353,45 @@ public class CheckErrorAlgorithm081 extends CheckErrorAlgorithmBase {
   }
 
   /**
+   * Get all names used in a list of reference tags.
+   *  
+   * @param refs List of reference tags.
+   * @return List of names.
+   */
+  private List<String> getRefNames(List<PageElementTag> refs) {
+    List<String> possibleNames = new ArrayList<>();
+    for (PageElementTag tag : refs) {
+      Parameter name = tag.getParameter("name");
+      if ((name != null) && (name.getTrimmedValue() != null)) {
+        String nameValue = name.getTrimmedValue();
+        if ((nameValue.length() > 0) && (!possibleNames.contains(nameValue))) {
+          possibleNames.add(nameValue);
+        }
+      }
+    }
+    return possibleNames;
+  }
+
+  /**
+   * Construct a closed reference tag.
+   * 
+   * @param groupName Name of the group.
+   * @param tagName Name of the tag.
+   * @param value Value of the tag.
+   * @return Reference tag.
+   */
+  private String getClosedRefTag(String groupName, String tagName, String value) {
+    CompleteTagBuilder builder = CompleteTagBuilder.from(WikiTagType.REF, StringUtils.trim(value));
+    if ((groupName != null) && (groupName.trim().length() > 0)) {
+      builder.addAttribute("group", groupName.trim());
+    }
+    if ((tagName != null) && (tagName.trim().length() > 0)) {
+      builder.addAttribute("name", tagName.trim());
+    }
+    return builder.toString();
+  }
+
+  /**
    * Automatic fixing of all the errors in the page.
    * 
    * @param analysis Page analysis.
@@ -442,6 +439,8 @@ public class CheckErrorAlgorithm081 extends CheckErrorAlgorithmBase {
       List<String[]> tmpList = WPCConfiguration.convertPropertyToStringArrayList(tmp);
       TemplateConfiguration.addParametersForTitle(tmpList, configurationByTemplateName, group);
     }
+
+    refTagSelector.setConfiguration(getWPCConfiguration());
   }
   
   /** Reference templates */
