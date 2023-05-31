@@ -59,6 +59,8 @@ public class CheckErrorAlgorithm081 extends CheckErrorAlgorithmBase {
    */
   private final StringChecker nameChecker;
 
+  private final RefTagsCollector refTagsCollector;
+
   /**
    * Possible global fixes.
    */
@@ -69,54 +71,7 @@ public class CheckErrorAlgorithm081 extends CheckErrorAlgorithmBase {
   public CheckErrorAlgorithm081() {
     super("Reference duplication");
     nameChecker = new StringCheckerReferenceName();
-  }
-
-  /**
-   * Group tags by group and value.
-   * 
-   * @param analysis Page analysis.
-   * @param refs Tags (out).
-   * @return True if there are several tags with the same text.
-   */
-  private boolean groupTags(
-      PageAnalysis analysis,
-      Map<String, Map<String, List<PageElementTag>>> refs) {
-    List<PageElementTag> completeRefTags =
-        analysis.getCompleteTags(WikiTagType.REF);
-    String contents = analysis.getContents();
-    boolean result = false;
-    for (PageElementTag tag : completeRefTags) {
-      int valueBeginIndex = tag.getValueBeginIndex();
-      int valueEndIndex = tag.getValueEndIndex();
-      if ((!tag.isFullTag()) &&
-          (valueBeginIndex > 0) &&
-          (valueEndIndex > 0) &&
-          (valueBeginIndex < valueEndIndex)) {
-
-        // Retrieve references with the same group name
-        String groupName = PageElementTagRef.getGroup(tag, analysis);
-        Map<String, List<PageElementTag>> groupRefs = refs.get(groupName);
-        if (groupRefs == null) {
-          groupRefs = new HashMap<>();
-          refs.put(groupName, groupRefs);
-        }
-
-        // Retrieve references with the same text
-        String text = contents.substring(valueBeginIndex, valueEndIndex).trim();
-        if (text.length() > 0) {
-          List<PageElementTag> valueRefs = groupRefs.get(text);
-          if (valueRefs == null) {
-            valueRefs = new ArrayList<>();
-            groupRefs.put(text, valueRefs);
-          }
-          if (valueRefs.size() > 0) {
-            result = true;
-          }
-          valueRefs.add(tag);
-        }
-      }
-    }
-    return result;
+    refTagsCollector = new RefTagsCollector();
   }
 
   /**
@@ -178,11 +133,12 @@ public class CheckErrorAlgorithm081 extends CheckErrorAlgorithmBase {
     }
 
     // Group tags by group and value for further analyze
-    Map<String, Map<String, List<PageElementTag>>> refs = new HashMap<>();
-    boolean result = groupTags(analysis, refs);
-    if (result == false) {
+    Map<String, Map<String, List<PageElementTag>>> refs = refTagsCollector.group(analysis);
+    int maxRefs = refs.values().stream().map(Map::values).flatMap(Collection::stream).mapToInt(List::size).max().orElse(0);
+    if (maxRefs <= 1) {
       return false;
-    } else if (errors == null) {
+    }
+    if (errors == null) {
       return true;
     }
 
@@ -192,7 +148,7 @@ public class CheckErrorAlgorithm081 extends CheckErrorAlgorithmBase {
     for (Entry<String, Map<String, List<PageElementTag>>> entryGroup : refs.entrySet()) {
       String groupName = entryGroup.getKey();
       for (Entry<String, List<PageElementTag>> entryValue : entryGroup.getValue().entrySet()) {
-        result |= analyzeListOfTags(
+        analyzeListOfTags(
             analysis,
             entryValue.getValue(),
             groupName,
@@ -342,8 +298,7 @@ public class CheckErrorAlgorithm081 extends CheckErrorAlgorithmBase {
     int currentIndex = 0;
 
     // Group tags by group and value for further analyze
-    Map<String, Map<String, List<PageElementTag>>> refsByGroupAndValue = new HashMap<>();
-    groupTags(analysis, refsByGroupAndValue);
+    Map<String, Map<String, List<PageElementTag>>> refsByGroupAndValue = refTagsCollector.group(analysis);
 
     // Memorize tag names by group and value
     Map<String, Map<String, List<String>>> refNamesByGroupAndValue = new HashMap<>();
@@ -353,10 +308,12 @@ public class CheckErrorAlgorithm081 extends CheckErrorAlgorithmBase {
       Map<String, List<String>> groupRefNamesByValue = new HashMap<>();
       refNamesByGroupAndValue.put(groupName, groupRefNamesByValue);
       for (Entry<String, List<PageElementTag>> refsForGroupAndValue : groupRefsByValue.entrySet()) {
-        String value = refsForGroupAndValue.getKey();
         List<PageElementTag> refTags = refsForGroupAndValue.getValue();
-        List<String> possibleNames = getRefNames(refTags);
-        groupRefNamesByValue.put(value, possibleNames);
+        if (refTags.size() > 1) {
+          String value = refsForGroupAndValue.getKey();
+          List<String> possibleNames = getRefNames(refTags);
+          groupRefNamesByValue.put(value, possibleNames);
+        }
       }
     }
 
