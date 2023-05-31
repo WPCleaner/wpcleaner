@@ -94,7 +94,7 @@ public class CheckErrorAlgorithm081 extends CheckErrorAlgorithmBase {
           (valueBeginIndex < valueEndIndex)) {
 
         // Retrieve references with the same group name
-        String groupName = tag.getGroupOfRef(analysis);
+        String groupName = PageElementTagRef.getGroup(tag, analysis);
         Map<String, List<PageElementTag>> groupRefs = refs.get(groupName);
         if (groupRefs == null) {
           groupRefs = new HashMap<>();

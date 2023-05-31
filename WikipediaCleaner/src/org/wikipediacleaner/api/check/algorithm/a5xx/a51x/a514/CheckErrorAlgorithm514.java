@@ -23,6 +23,7 @@ import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase;
 import org.wikipediacleaner.api.configuration.WPCConfiguration;
 import org.wikipediacleaner.api.data.PageElementTag;
+import org.wikipediacleaner.api.data.PageElementTagRef;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
 import org.wikipediacleaner.api.data.contents.tag.TagBuilder;
 import org.wikipediacleaner.api.data.contents.tag.TagFormat;
@@ -69,7 +70,7 @@ public class CheckErrorAlgorithm514 extends CheckErrorAlgorithmBase {
         if ((value != null) && (value.trim().length() > 0)) {
           PageElementTag.Parameter nameParam = tag.getParameter("name");
           if (nameParam != null) {
-            String groupValue = tag.getGroupOfRef(analysis);
+            String groupValue = PageElementTagRef.getGroup(tag, analysis);
             Set<String> set = names.get(groupValue);
             if (set == null) {
               set = new HashSet<>();

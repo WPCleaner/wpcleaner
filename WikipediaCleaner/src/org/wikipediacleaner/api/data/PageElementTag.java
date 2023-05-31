@@ -10,9 +10,6 @@ package org.wikipediacleaner.api.data;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.wikipediacleaner.api.configuration.WPCConfiguration;
-import org.wikipediacleaner.api.configuration.WPCConfigurationStringList;
-import org.wikipediacleaner.api.data.analysis.PageAnalysis;
 import org.wikipediacleaner.api.data.contents.ContentsUtil;
 import org.wikipediacleaner.api.data.contents.tag.TagType;
 import org.wikipediacleaner.api.data.contents.tag.WikiTagType;
@@ -482,65 +479,6 @@ public class PageElementTag extends PageElement {
     this.endTag = endTag;
     this.fullTag = fullTag;
     this.endWithSpace = endWithSpace;
-  }
-
-  /**
-   * Retrieve the group name of a ref tag.
-   * 
-   * @param analysis Page analysis.
-   * @return Group of the ref tag.
-   */
-  public String getGroupOfRef(PageAnalysis analysis) {
-    String result = null;
-
-    // Check for a group parameter in the tag
-    Parameter group = getParameter("group");
-    if (group != null) {
-      result = group.getValue();
-    } else {
-
-      // Check for a group parameter in the references tag
-      PageElementTag references = analysis.getSurroundingTag(
-          WikiTagType.REFERENCES, getBeginIndex());
-      if (references != null) {
-        group = references.getParameter("group");
-        if (group != null) {
-          result = group.getValue();
-        }
-      } else {
-  
-        // Check for a group parameter in the references templates
-        WPCConfiguration config = analysis.getWPCConfiguration();
-        List<String[]> templates = config.getStringArrayList(WPCConfigurationStringList.REFERENCES_TEMPLATES);
-        if (templates != null) {
-          PageElementTemplate template = analysis.isInTemplate(getBeginIndex());
-          if (template != null) {
-            for (String[] elements : templates) {
-              if ((elements.length > 1) &&
-                  (Page.areSameTitle(template.getTemplateName(), elements[0]))) {
-                String[] argNames = elements[1].split(",");
-                for (String argName : argNames) {
-                  String tmp = template.getParameterValue(argName);
-                  if ((result == null) && (tmp != null)) {
-                    result = tmp;
-                    if ((result.length() > 2) &&
-                        (result.charAt(0) == '"') &&
-                        (result.charAt(result.length() - 1) == '"')) {
-                      result = result.substring(1, result.length() - 2);
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-
-    if ((result == null) || (result.trim().length() == 0)) {
-      return null;
-    }
-    return result.trim();
   }
 
   /**
