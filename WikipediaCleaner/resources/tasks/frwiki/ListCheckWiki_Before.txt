@@ -44,6 +44,8 @@ Set Prefix [[Utilisateur:WikiCleanerBot#T3|Bot_T3_PCS#67]]
 FixCheckWiki 67 559
 Set Prefix [[Utilisateur:WikiCleanerBot#T3|Bot_T3_PCS#75]]
 FixCheckWiki 75
+Set Prefix [[Utilisateur:WikiCleanerBot#T3|Bot_T3_PCS#81]]
+FixCheckWiki 81
 Set Prefix [[Utilisateur:WikiCleanerBot#T3|Bot_T3_PCS#83]]
 FixCheckWiki 83
 Set Prefix [[Utilisateur:WikiCleanerBot#T3|Bot_T3_PCS#85]]

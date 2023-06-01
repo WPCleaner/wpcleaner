@@ -88,6 +88,13 @@ class RefTagSelector {
 
     // TODO: better heuristics (like based on name to handle extra 2 added by VE)
 
+    // Return first named tag not in a template
+    for (PageElementTag namedAndValuedTag : namedAndValuedTags) {
+      if (analysis.isInTemplate(namedAndValuedTag.getBeginIndex()) == null) {
+        return namedAndValuedTag;
+      }
+    }
+
     // Return first named tag
     return namedAndValuedTags.get(0);
   }

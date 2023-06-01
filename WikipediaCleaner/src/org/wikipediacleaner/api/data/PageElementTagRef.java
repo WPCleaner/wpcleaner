@@ -9,6 +9,8 @@
 package org.wikipediacleaner.api.data;
 
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 import org.wikipediacleaner.api.configuration.WPCConfiguration;
 import org.wikipediacleaner.api.configuration.WPCConfigurationStringList;
@@ -84,6 +86,12 @@ public final class PageElementTagRef {
       return null;
     }
     return nameValue;
+  }
+
+  public static List<PageElementTag> getTagsWithName(String tagName, PageAnalysis analysis) {
+    return analysis.getCompleteTags(WikiTagType.REF).stream()
+        .filter(currentTag -> Objects.equals(tagName, getName(currentTag)))
+        .collect(Collectors.toList());
   }
 
   private static String formatGroupName(final String groupName) {
