@@ -95,81 +95,86 @@ public class CheckErrorAlgorithm081 extends CheckErrorAlgorithmBase {
       return false;
     }
 
-    // Group tags by group and value for further analyze
+    // Analyze tags having the same group and value
     Map<String, Map<String, List<PageElementTag>>> refs = refTagsCollector.group(analysis);
-    int maxRefs = refs.values().stream().map(Map::values).flatMap(Collection::stream).mapToInt(List::size).max().orElse(0);
-    if (maxRefs <= 1) {
-      return false;
-    }
-    if (errors == null) {
-      return true;
-    }
-
-    // Second pass for managing with several tags having the same group and value
+    boolean result = false;
     for (Entry<String, Map<String, List<PageElementTag>>> entryGroup : refs.entrySet()) {
       String groupName = entryGroup.getKey();
       for (Entry<String, List<PageElementTag>> entryValue : entryGroup.getValue().entrySet()) {
-        analyzeTags(
+        result |= analyzeTags(
             analysis,
             entryValue.getValue(),
             groupName,
             errors);
       }
     }
-    return true;
+    return result;
   }
 
   private boolean analyzeTags(
       PageAnalysis analysis,
-      List<PageElementTag> listTags,
+      List<PageElementTag> tags,
       String groupName,
       Collection<CheckErrorResult> errors) {
-    if (listTags.size() <= 1) {
+    if (tags.size() <= 1) {
       return false;
     }
-
-    // Find main reference tag
-    PageElementTag mainTag = refTagSelector.selectBestTag(listTags, analysis);
-    if (mainTag != null) {
-
-      // Create an error for each tag, except for the main tag
-      String selectedName = mainTag.getParameter("name").getTrimmedValue();
-      for (PageElementTag tag : listTags) {
-        if (tag == mainTag) {
-          CheckErrorResult errorResult = createCheckErrorResult(
-              analysis,
-              tag.getCompleteBeginIndex(), tag.getCompleteEndIndex(),
-              CheckErrorResult.ErrorLevel.CORRECT);
-          errors.add(errorResult);
-        } else {
-          Parameter name = tag.getParameter("name");
-          String nameValue = (name != null) ? name.getTrimmedValue() : null;
-          if (nameValue != null) {
-            nameValue = nameValue.trim();
-          }
-          boolean sameName = selectedName.equals(nameValue);
-          CheckErrorResult errorResult = createCheckErrorResult(
-              analysis,
-              tag.getCompleteBeginIndex(), tag.getCompleteEndIndex());
-          if (sameName) {
-            errorResult.addText(GT._T("Both tags have already the same name"));
-          } else if (name == null) {
-            errorResult.addText(GT._T("Tag is unnamed"));
-          } else {
-            errorResult.addText(GT._T("Tags have different names"));
-            errorResult.addText(selectedName);
-            errorResult.addText(nameValue);
-          }
-          errorResult.addReplacement(
-              getClosedRefTag(groupName, selectedName, null),
-              sameName || (name == null));
-          errors.add(errorResult);
-        }
-      }
+    if (errors == null) {
       return true;
     }
 
-    for (PageElementTag tag : listTags) {
+    // Handle unnamed tags
+    PageElementTag mainTag = refTagSelector.selectBestTag(tags, analysis);
+    if (mainTag == null) {
+      reportUnnamedTags(analysis, tags, errors);
+      return true;
+    }
+
+
+    // Create an error for each tag, except for the main tag
+    String selectedName = mainTag.getParameter("name").getTrimmedValue();
+    for (PageElementTag tag : tags) {
+      if (tag == mainTag) {
+        CheckErrorResult errorResult = createCheckErrorResult(
+            analysis,
+            tag.getCompleteBeginIndex(), tag.getCompleteEndIndex(),
+            CheckErrorResult.ErrorLevel.CORRECT);
+        errors.add(errorResult);
+      } else {
+        Parameter name = tag.getParameter("name");
+        String nameValue = (name != null) ? name.getTrimmedValue() : null;
+        if (nameValue != null) {
+          nameValue = nameValue.trim();
+        }
+        boolean sameName = selectedName.equals(nameValue);
+        CheckErrorResult errorResult = createCheckErrorResult(
+            analysis,
+            tag.getCompleteBeginIndex(), tag.getCompleteEndIndex());
+        if (sameName) {
+          errorResult.addText(GT._T("Both tags have already the same name"));
+        } else if (name == null) {
+          errorResult.addText(GT._T("Tag is unnamed"));
+        } else {
+          errorResult.addText(GT._T("Tags have different names"));
+          errorResult.addText(selectedName);
+          errorResult.addText(nameValue);
+        }
+        errorResult.addReplacement(
+            getClosedRefTag(groupName, selectedName, null),
+            sameName || (name == null));
+        errors.add(errorResult);
+      }
+    }
+
+    return true;
+  }
+
+  private void reportUnnamedTags(
+      PageAnalysis analysis,
+      List<PageElementTag> tags,
+      Collection<CheckErrorResult> errors) {
+
+    for (PageElementTag tag : tags) {
       int valueBeginIndex = tag.getValueBeginIndex();
       int valueEndIndex = tag.getValueEndIndex();
 
@@ -230,7 +235,7 @@ public class CheckErrorAlgorithm081 extends CheckErrorAlgorithmBase {
       }
       errors.add(errorResult);
     }
-    return true;
+    
   }
 
   /**
