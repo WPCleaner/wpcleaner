@@ -19,7 +19,7 @@ import org.wikipediacleaner.api.configuration.WPCConfiguration;
 import org.wikipediacleaner.api.configuration.WPCConfigurationStringList;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageElementTag;
-import org.wikipediacleaner.api.data.PageElementTag.Parameter;
+import org.wikipediacleaner.api.data.PageElementTagRef;
 import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
 import org.wikipediacleaner.api.data.contents.tag.WikiTagType;
@@ -93,13 +93,7 @@ class RefTagSelector {
   }
 
   private boolean hasName(PageElementTag tag) {
-    Parameter name = tag.getParameter("name");
-    if ((name != null) &&
-        (name.getTrimmedValue() != null) &&
-        (!name.getTrimmedValue().isEmpty())) {
-      return true;
-    }
-    return false;
+    return PageElementTagRef.getName(tag) != null;
   }
 
   private boolean hasValue(PageAnalysis analysis, PageElementTag tag) {

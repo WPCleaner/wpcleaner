@@ -31,6 +31,7 @@ import org.wikipediacleaner.api.configuration.WPCConfigurationStringList;
 import org.wikipediacleaner.api.data.PageElementExternalLink;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.PageElementTag.Parameter;
+import org.wikipediacleaner.api.data.PageElementTagRef;
 import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
 import org.wikipediacleaner.api.data.contents.tag.CompleteTagBuilder;
@@ -126,13 +127,23 @@ public class CheckErrorAlgorithm081 extends CheckErrorAlgorithmBase {
     // Handle unnamed tags
     PageElementTag mainTag = refTagSelector.selectBestTag(tags, analysis);
     if (mainTag == null) {
-      reportUnnamedTags(analysis, tags, errors);
+      tags.forEach(tag -> reportUnnamedTag(analysis, tag, errors));
       return true;
     }
 
+    // Handle named main tag
+    reportNamedTags(analysis, tags, groupName, mainTag, errors);
 
-    // Create an error for each tag, except for the main tag
-    String selectedName = mainTag.getParameter("name").getTrimmedValue();
+    return true;
+  }
+
+  private void reportNamedTags(
+      PageAnalysis analysis,
+      List<PageElementTag> tags,
+      String groupName,
+      PageElementTag mainTag,
+      Collection<CheckErrorResult> errors) {
+    String selectedName = PageElementTagRef.getName(mainTag);
     for (PageElementTag tag : tags) {
       if (tag == mainTag) {
         CheckErrorResult errorResult = createCheckErrorResult(
@@ -141,18 +152,14 @@ public class CheckErrorAlgorithm081 extends CheckErrorAlgorithmBase {
             CheckErrorResult.ErrorLevel.CORRECT);
         errors.add(errorResult);
       } else {
-        Parameter name = tag.getParameter("name");
-        String nameValue = (name != null) ? name.getTrimmedValue() : null;
-        if (nameValue != null) {
-          nameValue = nameValue.trim();
-        }
+        String nameValue = PageElementTagRef.getName(tag);
         boolean sameName = selectedName.equals(nameValue);
         CheckErrorResult errorResult = createCheckErrorResult(
             analysis,
             tag.getCompleteBeginIndex(), tag.getCompleteEndIndex());
         if (sameName) {
           errorResult.addText(GT._T("Both tags have already the same name"));
-        } else if (name == null) {
+        } else if (nameValue == null) {
           errorResult.addText(GT._T("Tag is unnamed"));
         } else {
           errorResult.addText(GT._T("Tags have different names"));
@@ -161,81 +168,76 @@ public class CheckErrorAlgorithm081 extends CheckErrorAlgorithmBase {
         }
         errorResult.addReplacement(
             getClosedRefTag(groupName, selectedName, null),
-            sameName || (name == null));
+            sameName || (nameValue == null));
         errors.add(errorResult);
       }
     }
-
-    return true;
   }
 
-  private void reportUnnamedTags(
+  private void reportUnnamedTag(
       PageAnalysis analysis,
-      List<PageElementTag> tags,
+      PageElementTag tag,
       Collection<CheckErrorResult> errors) {
 
-    for (PageElementTag tag : tags) {
-      int valueBeginIndex = tag.getValueBeginIndex();
-      int valueEndIndex = tag.getValueEndIndex();
+    int valueBeginIndex = tag.getValueBeginIndex();
+    int valueEndIndex = tag.getValueEndIndex();
 
-      // Find external links in the reference tag
-      List<PageElementExternalLink> links = analysis.getExternalLinks().stream()
-          .filter(link -> link.getBeginIndex() >= valueBeginIndex)
-          .filter(link -> link.getEndIndex() <= valueEndIndex)
-          .collect(Collectors.toList());
+    // Find external links in the reference tag
+    List<PageElementExternalLink> links = analysis.getExternalLinks().stream()
+        .filter(link -> link.getBeginIndex() >= valueBeginIndex)
+        .filter(link -> link.getEndIndex() <= valueEndIndex)
+        .collect(Collectors.toList());
 
-      // Find templates in the reference tag
-      List<PageElementTemplate> templates = analysis.getTemplates().stream()
-          .filter(template -> template.getBeginIndex() >= valueBeginIndex)
-          .filter(template -> template.getEndIndex() <= valueEndIndex)
-          .collect(Collectors.toList());
+    // Find templates in the reference tag
+    List<PageElementTemplate> templates = analysis.getTemplates().stream()
+        .filter(template -> template.getBeginIndex() >= valueBeginIndex)
+        .filter(template -> template.getEndIndex() <= valueEndIndex)
+        .collect(Collectors.toList());
 
-      // Register error
-      CheckErrorResult errorResult = createCheckErrorResult(
-          analysis,
-          tag.getCompleteBeginIndex(), tag.getCompleteEndIndex());
-      errorResult.addText("Both tags are unnamed");
+    // Register error
+    CheckErrorResult errorResult = createCheckErrorResult(
+        analysis,
+        tag.getCompleteBeginIndex(), tag.getCompleteEndIndex());
+    errorResult.addText("Both tags are unnamed");
 
-      // Add an action for naming the reference tag
-      String contents = analysis.getContents();
-      List<TextProvider> providers = new ArrayList<>();
-      links
-          .stream()
-          .map(link -> link.getLink())
-          .map(link -> new TextProviderUrlTitle(link))
-          .forEach(provider -> providers.add(provider));
-      links.stream()
-          .filter(link -> link.hasSquare())
-          .filter(link -> link.getText() != null)
-          .map(link -> link.getText())
-          .map(text -> new SimpleTextProvider(text))
-          .forEach(provider -> providers.add(provider));
-      for (PageElementTemplate template : templates) {
-        TemplateConfiguration config = configurationByTemplateName.get(template.getTemplateName());
-        if (config != null) {
-          providers.addAll(config.getTextProviders(template));
-        }
+    // Add an action for naming the reference tag
+    String contents = analysis.getContents();
+    List<TextProvider> providers = new ArrayList<>();
+    links
+        .stream()
+        .map(link -> link.getLink())
+        .map(link -> new TextProviderUrlTitle(link))
+        .forEach(provider -> providers.add(provider));
+    links.stream()
+        .filter(link -> link.hasSquare())
+        .filter(link -> link.getText() != null)
+        .map(link -> link.getText())
+        .map(text -> new SimpleTextProvider(text))
+        .forEach(provider -> providers.add(provider));
+    for (PageElementTemplate template : templates) {
+      TemplateConfiguration config = configurationByTemplateName.get(template.getTemplateName());
+      if (config != null) {
+        providers.addAll(config.getTextProviders(template));
       }
-      String prefix = contents.substring(tag.getBeginIndex(), tag.getEndIndex() - 1);
-      String suffix = contents.substring(tag.getEndIndex() - 1, tag.getCompleteEndIndex());
-      errorResult.addPossibleAction(
-          GT._T("Give a name to the <ref> tag"),
-          new AddTextActionProvider(
-              prefix + " name=\"",
-              "\"" + suffix,
-              new CompositeTextProvider(providers),
-              GT._T("What name would you like to use for the <ref> tag ?"),
-              nameChecker));
-
-      // Add actions for external links
-      for (PageElementExternalLink link : links) {
-        errorResult.addPossibleAction(new SimpleAction(
-            GT._T("External Viewer"),
-            new ActionExternalViewer(link.getLink())));
-      }
-      errors.add(errorResult);
     }
-    
+    String prefix = contents.substring(tag.getBeginIndex(), tag.getEndIndex() - 1);
+    String suffix = contents.substring(tag.getEndIndex() - 1, tag.getCompleteEndIndex());
+    errorResult.addPossibleAction(
+        GT._T("Give a name to the <ref> tag"),
+        new AddTextActionProvider(
+            prefix + " name=\"",
+            "\"" + suffix,
+            new CompositeTextProvider(providers),
+            GT._T("What name would you like to use for the <ref> tag ?"),
+            nameChecker));
+
+    // Add actions for external links
+    for (PageElementExternalLink link : links) {
+      errorResult.addPossibleAction(new SimpleAction(
+          GT._T("External Viewer"),
+          new ActionExternalViewer(link.getLink())));
+    }
+    errors.add(errorResult);
   }
 
   /**

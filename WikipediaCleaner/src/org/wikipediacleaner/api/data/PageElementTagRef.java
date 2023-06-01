@@ -70,6 +70,22 @@ public final class PageElementTagRef {
     return null;
   }
 
+  public static String getName(PageElementTag tag) {
+    Parameter name = tag.getParameter("name");
+    if (name == null) {
+      return null;
+    }
+    String nameValue = name.getTrimmedValue();
+    if (nameValue == null) {
+      return null;
+    }
+    nameValue = nameValue.trim();
+    if (nameValue.isEmpty()) {
+      return null;
+    }
+    return nameValue;
+  }
+
   private static String formatGroupName(final String groupName) {
     if ((groupName == null) || (groupName.trim().length() == 0)) {
       return null;
