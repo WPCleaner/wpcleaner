@@ -35,6 +35,8 @@ import org.wikipediacleaner.api.data.PageElementTagRef;
 import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
 import org.wikipediacleaner.api.data.contents.tag.CompleteTagBuilder;
+import org.wikipediacleaner.api.data.contents.tag.TagBuilder;
+import org.wikipediacleaner.api.data.contents.tag.TagFormat;
 import org.wikipediacleaner.api.data.contents.tag.WikiTagType;
 import org.wikipediacleaner.gui.swing.action.ActionExternalViewer;
 import org.wikipediacleaner.gui.swing.basic.Utilities;
@@ -127,7 +129,11 @@ public class CheckErrorAlgorithm081 extends CheckErrorAlgorithmBase {
     // Handle unnamed tags
     PageElementTag mainTag = refTagSelector.selectBestTag(tags, analysis);
     if (mainTag == null) {
-      tags.forEach(tag -> reportUnnamedTag(analysis, tag, errors));
+      boolean firstTag = true;
+      for (PageElementTag tag : tags) {
+        reportUnnamedTag(analysis, tag, firstTag, groupName, errors);
+        firstTag = false;
+      }
       return true;
     }
 
@@ -200,6 +206,8 @@ public class CheckErrorAlgorithm081 extends CheckErrorAlgorithmBase {
   private void reportUnnamedTag(
       PageAnalysis analysis,
       PageElementTag tag,
+      boolean firstTag,
+      String groupName,
       Collection<CheckErrorResult> errors) {
 
     int valueBeginIndex = tag.getValueBeginIndex();
@@ -222,6 +230,10 @@ public class CheckErrorAlgorithm081 extends CheckErrorAlgorithmBase {
         analysis,
         tag.getCompleteBeginIndex(), tag.getCompleteEndIndex());
     errorResult.addText("Both tags are unnamed");
+    errors.add(errorResult);
+    if (!firstTag) {
+      return;
+    }
 
     // Add an action for naming the reference tag
     String contents = analysis.getContents();
@@ -237,12 +249,28 @@ public class CheckErrorAlgorithm081 extends CheckErrorAlgorithmBase {
         .map(link -> link.getText())
         .map(text -> new SimpleTextProvider(text))
         .forEach(provider -> providers.add(provider));
+    List<TextProvider> templateTextProviders = new ArrayList<>();
     for (PageElementTemplate template : templates) {
       TemplateConfiguration config = configurationByTemplateName.get(template.getTemplateName());
       if (config != null) {
-        providers.addAll(config.getTextProviders(template));
+        List<TextProvider> textProviders = config.getTextProviders(template);
+        providers.addAll(textProviders);
+        templateTextProviders.addAll(textProviders);
       }
     }
+    templateTextProviders.stream()
+        .map(TextProvider::getTexts)
+        .flatMap(Collection::stream)
+        .filter(text -> (text != null) && !text.isEmpty())
+        .findFirst()
+        .ifPresent(name -> {
+          if (PageElementTagRef.getTagsWithName(name, analysis).isEmpty()) {
+            final String replacement =
+                getOpenRefTag(groupName, name, null) +
+                contents.substring(tag.getEndIndex(), tag.getCompleteEndIndex());
+            errorResult.addReplacement(replacement, "Name tag from template");
+          }
+        });
     String prefix = contents.substring(tag.getBeginIndex(), tag.getEndIndex() - 1);
     String suffix = contents.substring(tag.getEndIndex() - 1, tag.getCompleteEndIndex());
     errorResult.addPossibleAction(
@@ -260,7 +288,6 @@ public class CheckErrorAlgorithm081 extends CheckErrorAlgorithmBase {
           GT._T("External Viewer"),
           new ActionExternalViewer(link.getLink())));
     }
-    errors.add(errorResult);
   }
 
   /**
@@ -400,6 +427,25 @@ public class CheckErrorAlgorithm081 extends CheckErrorAlgorithmBase {
       }
     }
     return possibleNames;
+  }
+
+  /**
+   * Construct an open reference tag.
+   * 
+   * @param groupName Name of the group.
+   * @param tagName Name of the tag.
+   * @param value Value of the tag.
+   * @return Reference tag.
+   */
+  private String getOpenRefTag(String groupName, String tagName, String value) {
+    TagBuilder builder = TagBuilder.from(WikiTagType.REF, TagFormat.OPEN);
+    if ((groupName != null) && (groupName.trim().length() > 0)) {
+      builder.addAttribute("group", groupName.trim());
+    }
+    if ((tagName != null) && (tagName.trim().length() > 0)) {
+      builder.addAttribute("name", tagName.trim());
+    }
+    return builder.toString();
   }
 
   /**
