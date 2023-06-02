@@ -9,14 +9,11 @@ package org.wikipediacleaner.api.check.algorithm.a0xx.a08x.a081;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.stream.Collectors;
-
-import javax.swing.JOptionPane;
 
 import org.apache.commons.lang3.StringUtils;
 import org.wikipediacleaner.api.algorithm.AlgorithmParameter;
@@ -30,7 +27,6 @@ import org.wikipediacleaner.api.configuration.WPCConfiguration;
 import org.wikipediacleaner.api.configuration.WPCConfigurationStringList;
 import org.wikipediacleaner.api.data.PageElementExternalLink;
 import org.wikipediacleaner.api.data.PageElementTag;
-import org.wikipediacleaner.api.data.PageElementTag.Parameter;
 import org.wikipediacleaner.api.data.PageElementTagRef;
 import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
@@ -39,8 +35,6 @@ import org.wikipediacleaner.api.data.contents.tag.TagBuilder;
 import org.wikipediacleaner.api.data.contents.tag.TagFormat;
 import org.wikipediacleaner.api.data.contents.tag.WikiTagType;
 import org.wikipediacleaner.gui.swing.action.ActionExternalViewer;
-import org.wikipediacleaner.gui.swing.basic.Utilities;
-import org.wikipediacleaner.gui.swing.component.MWPane;
 import org.wikipediacleaner.i18n.GT;
 import org.wikipediacleaner.utils.CompositeTextProvider;
 import org.wikipediacleaner.utils.SimpleTextProvider;
@@ -64,13 +58,6 @@ public class CheckErrorAlgorithm081 extends CheckErrorAlgorithmBase {
   private final RefTagsCollector refTagsCollector;
   
   private final RefTagSelector refTagSelector;
-
-  /**
-   * Possible global fixes.
-   */
-  private final static String[] globalFixes = new String[] {
-    GT._T("Fix reference duplication"),
-  };
 
   public CheckErrorAlgorithm081() {
     super("Reference duplication");
@@ -288,145 +275,6 @@ public class CheckErrorAlgorithm081 extends CheckErrorAlgorithmBase {
           GT._T("External Viewer"),
           new ActionExternalViewer(link.getLink())));
     }
-  }
-
-  /**
-   * @return List of possible global fixes.
-   */
-  @Override
-  public String[] getGlobalFixes() {
-    return globalFixes;
-  }
-
-  /**
-   * Fix all the errors in the page.
-   * 
-   * @param fixName Fix name (extracted from getGlobalFixes()).
-   * @param analysis Page analysis.
-   * @param textPane Text pane.
-   * @return Page contents after fix.
-   */
-  @Override
-  public String fix(String fixName, PageAnalysis analysis, MWPane textPane) {
-
-    // Initialize
-    StringBuilder tmpContents = new StringBuilder();
-    int currentIndex = 0;
-
-    // Group tags by group and value for further analyze
-    Map<String, Map<String, List<PageElementTag>>> refsByGroupAndValue = refTagsCollector.group(analysis);
-
-    // Memorize tag names by group and value
-    Map<String, Map<String, List<String>>> refNamesByGroupAndValue = new HashMap<>();
-    for (Entry<String, Map<String, List<PageElementTag>>> refsByValueForGroup : refsByGroupAndValue.entrySet()) {
-      String groupName = refsByValueForGroup.getKey();
-      Map<String, List<PageElementTag>> groupRefsByValue = refsByValueForGroup.getValue();
-      Map<String, List<String>> groupRefNamesByValue = new HashMap<>();
-      refNamesByGroupAndValue.put(groupName, groupRefNamesByValue);
-      for (Entry<String, List<PageElementTag>> refsForGroupAndValue : groupRefsByValue.entrySet()) {
-        List<PageElementTag> refTags = refsForGroupAndValue.getValue();
-        if (refTags.size() > 1) {
-          String value = refsForGroupAndValue.getKey();
-          List<String> possibleNames = getRefNames(refTags);
-          groupRefNamesByValue.put(value, possibleNames);
-        }
-      }
-    }
-
-    // Check all reference tags
-    List<PageElementTag> completeRefTags = analysis.getCompleteTags(WikiTagType.REF);
-    Object highlight = null;
-    String contents = analysis.getContents();
-    for (PageElementTag refTag : completeRefTags) {
-
-      // Retrieve basic information
-      PageElementTag.Parameter groupParameter = refTag.getParameter("group");
-      String groupName = (groupParameter != null) ? groupParameter.getValue() : null;
-      Map<String, List<PageElementTag>> groupRefs = refsByGroupAndValue.get(groupName);
-      String valueRef = contents.substring(refTag.getValueBeginIndex(), refTag.getValueEndIndex());
-      List<PageElementTag> valueRefs = groupRefs.get(valueRef);
-
-      // Check if there is more than one tag with the same value
-      if ((valueRefs != null) && (valueRefs.size() > 1)) {
-
-        // Display selection
-        highlight = addHighlight(
-            textPane, refTag.getCompleteBeginIndex(), refTag.getCompleteEndIndex());
-        textPane.select(refTag.getCompleteBeginIndex(), refTag.getCompleteEndIndex());
-  
-        // Check if a name already exists
-        String replacement = null;
-        List<String> possibleNames = refNamesByGroupAndValue.get(groupName).get(valueRef);
-        if ((possibleNames != null) && (possibleNames.size() > 0)) {
-          String selectedName = possibleNames.get(0);
-          PageElementTag mainRef = refTagSelector.selectBestTag(valueRefs, analysis);
-          if (mainRef != refTag) {
-            String tmp = getClosedRefTag(groupName, selectedName, null);
-            String message =
-                GT._T("A <ref> tag shares the same content, and is named \"{0}\".", selectedName) + "\n" +
-                GT._T("Do you want to replace this <ref> tag by \"{0}\" ?", tmp);
-            int answer = Utilities.displayYesNoCancelWarning(textPane.getParent(), message);
-            if (answer == JOptionPane.YES_OPTION) {
-              replacement = tmp;
-            } else if (answer == JOptionPane.CANCEL_OPTION) {
-              break;
-            }
-          }
-        } else {
-          String message =
-              GT._T("Several <ref> tags share the same content, but none has been given a name.") +"\n" +
-              GT._T("What name do you want to use for this <ref> tag ?");
-          String newText = Utilities.askForValue(textPane.getParent(), message, (String) null, nameChecker);
-          if (newText != null) {
-            replacement = getClosedRefTag(groupName, newText, valueRef);
-            possibleNames = Collections.singletonList(newText);
-            refNamesByGroupAndValue.get(groupName).put(valueRef, possibleNames);
-          }
-        }
-
-        // Do the replacement
-        if (replacement != null) {
-          if (currentIndex < refTag.getBeginIndex()) {
-            tmpContents.append(contents.substring(currentIndex, refTag.getCompleteBeginIndex()));
-          }
-          tmpContents.append(replacement);
-          currentIndex = refTag.getCompleteEndIndex();
-        }
-        removeHighlight(textPane, highlight);
-        highlight = null;
-      }
-    }
-    removeHighlight(textPane, highlight);
-    highlight = null;
-
-    // Return result
-    if (currentIndex == 0) {
-      return contents;
-    }
-    if (currentIndex < contents.length()) {
-      tmpContents.append(contents.substring(currentIndex));
-    }
-    return tmpContents.toString();
-  }
-
-  /**
-   * Get all names used in a list of reference tags.
-   *  
-   * @param refs List of reference tags.
-   * @return List of names.
-   */
-  private List<String> getRefNames(List<PageElementTag> refs) {
-    List<String> possibleNames = new ArrayList<>();
-    for (PageElementTag tag : refs) {
-      Parameter name = tag.getParameter("name");
-      if ((name != null) && (name.getTrimmedValue() != null)) {
-        String nameValue = name.getTrimmedValue();
-        if ((nameValue.length() > 0) && (!possibleNames.contains(nameValue))) {
-          possibleNames.add(nameValue);
-        }
-      }
-    }
-    return possibleNames;
   }
 
   /**
