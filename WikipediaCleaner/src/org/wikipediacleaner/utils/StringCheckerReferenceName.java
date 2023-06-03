@@ -18,7 +18,7 @@ public class StringCheckerReferenceName implements StringChecker {
   /**
    * String containing all unauthorized characters.
    */
-  private final static String unauthorized = "[]\"";
+  private final static String unauthorized = "[]\"<>";
 
   /**
    * Construct a reference name checker

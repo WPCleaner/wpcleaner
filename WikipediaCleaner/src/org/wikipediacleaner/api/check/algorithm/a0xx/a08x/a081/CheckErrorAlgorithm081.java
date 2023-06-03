@@ -87,6 +87,7 @@ public class CheckErrorAlgorithm081 extends CheckErrorAlgorithmBase {
 
     // Analyze tags having the same group and value
     Map<String, Map<String, List<PageElementTag>>> refs = refTagsCollector.group(analysis);
+    List<String> addedNames = new ArrayList<>();
     boolean result = false;
     for (Entry<String, Map<String, List<PageElementTag>>> entryGroup : refs.entrySet()) {
       String groupName = entryGroup.getKey();
@@ -95,7 +96,8 @@ public class CheckErrorAlgorithm081 extends CheckErrorAlgorithmBase {
             analysis,
             entryValue.getValue(),
             groupName,
-            errors);
+            errors,
+            addedNames);
       }
     }
     return result;
@@ -105,7 +107,8 @@ public class CheckErrorAlgorithm081 extends CheckErrorAlgorithmBase {
       PageAnalysis analysis,
       List<PageElementTag> tags,
       String groupName,
-      Collection<CheckErrorResult> errors) {
+      Collection<CheckErrorResult> errors,
+      List<String> addedNames) {
     if (tags.size() <= 1) {
       return false;
     }
@@ -118,7 +121,7 @@ public class CheckErrorAlgorithm081 extends CheckErrorAlgorithmBase {
     if (mainTag == null) {
       boolean firstTag = true;
       for (PageElementTag tag : tags) {
-        reportUnnamedTag(analysis, tag, firstTag, groupName, errors);
+        reportUnnamedTag(analysis, tag, firstTag, groupName, errors, addedNames);
         firstTag = false;
       }
       return true;
@@ -195,7 +198,8 @@ public class CheckErrorAlgorithm081 extends CheckErrorAlgorithmBase {
       PageElementTag tag,
       boolean firstTag,
       String groupName,
-      Collection<CheckErrorResult> errors) {
+      Collection<CheckErrorResult> errors,
+      List<String> addedNames) {
 
     int valueBeginIndex = tag.getValueBeginIndex();
     int valueEndIndex = tag.getValueEndIndex();
@@ -249,13 +253,16 @@ public class CheckErrorAlgorithm081 extends CheckErrorAlgorithmBase {
         .map(TextProvider::getTexts)
         .flatMap(Collection::stream)
         .filter(text -> (text != null) && !text.isEmpty())
+        .filter(text -> nameChecker.checkString(text).isOk())
         .findFirst()
         .ifPresent(name -> {
-          if (PageElementTagRef.getTagsWithName(name, analysis).isEmpty()) {
+          if (PageElementTagRef.getTagsWithName(name, analysis).isEmpty() &&
+              !addedNames.contains(name)) {
             final String replacement =
                 getOpenRefTag(groupName, name, null) +
                 contents.substring(tag.getEndIndex(), tag.getCompleteEndIndex());
-            errorResult.addReplacement(replacement, "Name tag from template");
+            errorResult.addReplacement(replacement, "Name tag from template", automaticTitle);
+            addedNames.add(name);
           }
         });
     String prefix = contents.substring(tag.getBeginIndex(), tag.getEndIndex() - 1);
@@ -338,6 +345,9 @@ public class CheckErrorAlgorithm081 extends CheckErrorAlgorithmBase {
   /** Template parameters for title  */
   private static final String PARAMETER_TEMPLATE_PARAMS = "template_params";
 
+  /** Boolean telling if we can automatically use the title to generate the name */
+  private static final String PARAMETER_AUTOMATIC_TITLE = "automatic_title";
+
   /**
    * Initialize settings for the algorithm.
    * 
@@ -364,11 +374,20 @@ public class CheckErrorAlgorithm081 extends CheckErrorAlgorithmBase {
       TemplateConfiguration.addParametersForTitle(tmpList, configurationByTemplateName, group);
     }
 
+    tmp = getSpecificProperty(PARAMETER_AUTOMATIC_TITLE, true, true, false);
+    automaticTitle = false;
+    if (tmp != null) {
+      automaticTitle = Boolean.valueOf(tmp);
+    }
+
     refTagSelector.setConfiguration(getWPCConfiguration());
   }
   
   /** Reference templates */
   private final List<String[]> referenceTemplates = new ArrayList<>();
+
+  /** Configuration to automatically use the title */
+  private boolean automaticTitle = false;
 
   /** Configuration by template */
   private final Map<String, TemplateConfiguration> configurationByTemplateName = new HashMap<>();
@@ -393,5 +412,14 @@ public class CheckErrorAlgorithm081 extends CheckErrorAlgorithmBase {
                 true)
         },
         true));
+    addParameter(new AlgorithmParameter(
+        PARAMETER_AUTOMATIC_TITLE,
+        GT._T("Name the reference with the title"),
+        new AlgorithmParameterElement[] {
+            new AlgorithmParameterElement(
+                "automatic",
+                GT._T("Is it automatic?") + " (true/false)")
+        },
+        false));
   }
 }
