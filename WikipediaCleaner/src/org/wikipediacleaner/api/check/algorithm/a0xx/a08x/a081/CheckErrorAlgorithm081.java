@@ -266,7 +266,7 @@ public class CheckErrorAlgorithm081 extends CheckErrorAlgorithmBase {
         final String replacement =
             getOpenRefTag(groupName, suggestedName, null) +
             contents.substring(tag.getEndIndex(), tag.getCompleteEndIndex());
-        errorResult.addReplacement(replacement, GT._T("Name reference from template parameter"), automaticTitle);
+        errorResult.addReplacement(replacement, GT._T("Name the reference from template parameter"), automaticTitle);
         addedNames.add(suggestedName);
       }
     } else {
