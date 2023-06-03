@@ -13,6 +13,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
@@ -251,23 +252,33 @@ public class CheckErrorAlgorithm081 extends CheckErrorAlgorithmBase {
         templateTextProviders.addAll(textProviders);
       }
     }
-    templateTextProviders.stream()
+    Optional<String> optionalName = templateTextProviders.stream()
         .map(TextProvider::getTexts)
         .flatMap(Collection::stream)
         .filter(text -> (text != null) && !text.isEmpty())
         .map(this::cleanName)
         .filter(text -> text != null)
-        .findFirst()
-        .ifPresent(name -> {
-          if (PageElementTagRef.getTagsWithName(name, analysis).isEmpty() &&
-              !addedNames.contains(name)) {
-            final String replacement =
-                getOpenRefTag(groupName, name, null) +
-                contents.substring(tag.getEndIndex(), tag.getCompleteEndIndex());
-            errorResult.addReplacement(replacement, "Name tag from template", automaticTitle);
-            addedNames.add(name);
-          }
-        });
+        .findFirst();
+    if (optionalName.isPresent()) {
+      final String suggestedName = optionalName.get();
+      if (PageElementTagRef.getTagsWithName(suggestedName, analysis).isEmpty() &&
+          !addedNames.contains(suggestedName)) {
+        final String replacement =
+            getOpenRefTag(groupName, suggestedName, null) +
+            contents.substring(tag.getEndIndex(), tag.getCompleteEndIndex());
+        errorResult.addReplacement(replacement, GT._T("Name reference from template parameter"), automaticTitle);
+        addedNames.add(suggestedName);
+      }
+    } else {
+      final String suggestedName = generateName(analysis, addedNames);
+      if (suggestedName != null) {
+        final String replacement =
+            getOpenRefTag(groupName, suggestedName, null) +
+            contents.substring(tag.getEndIndex(), tag.getCompleteEndIndex());
+        errorResult.addReplacement(replacement, GT._T("Generate a reference name"), automaticTitle);
+        addedNames.add(suggestedName);
+      }
+    }
     String prefix = contents.substring(tag.getBeginIndex(), tag.getEndIndex() - 1);
     String suffix = contents.substring(tag.getEndIndex() - 1, tag.getCompleteEndIndex());
     errorResult.addPossibleAction(
@@ -299,6 +310,21 @@ public class CheckErrorAlgorithm081 extends CheckErrorAlgorithmBase {
       return cleanName(result.getText());
     }
     return null;
+  }
+
+  private String generateName(PageAnalysis analysis, List<String> addedNames) {
+    if (namePrefix.isEmpty() || Character.isDigit(namePrefix.charAt(0))) {
+      return null;
+    }
+    int refNum = 1;
+    while (true) {
+      final String name = namePrefix + refNum;
+      if (PageElementTagRef.getTagsWithName(name, analysis).isEmpty() &&
+          !addedNames.contains(name)) {
+        return name;
+      }
+      refNum++;
+    }
   }
 
   /**
@@ -365,6 +391,9 @@ public class CheckErrorAlgorithm081 extends CheckErrorAlgorithmBase {
   /** Boolean telling if we can automatically use the title to generate the name */
   private static final String PARAMETER_AUTOMATIC_TITLE = "automatic_title";
 
+  /** Prefix for reference names generated automatically */
+  private static final String PARAMETER_NAME_PREFIX = "name_prefix";
+
   /**
    * Initialize settings for the algorithm.
    * 
@@ -397,14 +426,20 @@ public class CheckErrorAlgorithm081 extends CheckErrorAlgorithmBase {
       automaticTitle = Boolean.valueOf(tmp);
     }
 
+    tmp = getSpecificProperty(PARAMETER_NAME_PREFIX, true, true, false);
+    namePrefix = StringUtils.defaultString(tmp, "");
+
     refTagSelector.setConfiguration(getWPCConfiguration());
   }
   
   /** Reference templates */
   private final List<String[]> referenceTemplates = new ArrayList<>();
 
-  /** Configuration to automatically use the title */
+  /** Flag to automatically use the title */
   private boolean automaticTitle = false;
+
+  /** Prefix used for generating reference names */
+  private String namePrefix = "";
 
   /** Configuration by template */
   private final Map<String, TemplateConfiguration> configurationByTemplateName = new HashMap<>();
@@ -436,6 +471,15 @@ public class CheckErrorAlgorithm081 extends CheckErrorAlgorithmBase {
             new AlgorithmParameterElement(
                 "automatic",
                 GT._T("Is it automatic?") + " (true/false)")
+        },
+        false));
+    addParameter(new AlgorithmParameter(
+        PARAMETER_NAME_PREFIX,
+        GT._T("Prefix for the automatically generated reference names"),
+        new AlgorithmParameterElement[] {
+            new AlgorithmParameterElement(
+                "prefix",
+                GT._T("Prefix for the automatically generated reference names"))
         },
         false));
   }
