@@ -12,6 +12,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
@@ -39,6 +40,7 @@ import org.wikipediacleaner.i18n.GT;
 import org.wikipediacleaner.utils.CompositeTextProvider;
 import org.wikipediacleaner.utils.SimpleTextProvider;
 import org.wikipediacleaner.utils.StringChecker;
+import org.wikipediacleaner.utils.StringChecker.Result;
 import org.wikipediacleaner.utils.StringCheckerReferenceName;
 import org.wikipediacleaner.utils.TextProvider;
 import org.wikipediacleaner.utils.TextProviderUrlTitle;
@@ -253,7 +255,8 @@ public class CheckErrorAlgorithm081 extends CheckErrorAlgorithmBase {
         .map(TextProvider::getTexts)
         .flatMap(Collection::stream)
         .filter(text -> (text != null) && !text.isEmpty())
-        .filter(text -> nameChecker.checkString(text).isOk())
+        .map(this::cleanName)
+        .filter(text -> text != null)
         .findFirst()
         .ifPresent(name -> {
           if (PageElementTagRef.getTagsWithName(name, analysis).isEmpty() &&
@@ -282,6 +285,20 @@ public class CheckErrorAlgorithm081 extends CheckErrorAlgorithmBase {
           GT._T("External Viewer"),
           new ActionExternalViewer(link.getLink())));
     }
+  }
+
+  private String cleanName(final String name) {
+    if (name == null) {
+      return null;
+    }
+    Result result = nameChecker.checkString(name);
+    if (result.isOk()) {
+      return name;
+    }
+    if (!Objects.equals(name,  result.getText())) {
+      return cleanName(result.getText());
+    }
+    return null;
   }
 
   /**

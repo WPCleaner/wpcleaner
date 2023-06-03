@@ -41,7 +41,10 @@ public class TemplateConfiguration {
 
   public List<TextProvider> getTextProviders(PageElementTemplate template) {
     return titles.stream()
-        .map(template::getParameterValue)
+        .map(template::getParameterIndex)
+        .filter(index -> index >= 0)
+        .map(template::getParameter)
+        .map(PageElementTemplate.Parameter::getStrippedValue)
         .filter(Objects::nonNull)
         .map(SimpleTextProvider::new)
         .collect(Collectors.toList());
