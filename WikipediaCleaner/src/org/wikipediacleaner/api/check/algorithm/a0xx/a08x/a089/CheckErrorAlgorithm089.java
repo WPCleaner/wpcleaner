@@ -11,6 +11,7 @@ import java.util.Collection;
 import java.util.List;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
+import org.wikipediacleaner.api.check.SpecialCharacters;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase;
 import org.wikipediacleaner.api.data.PageElementFunction;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
@@ -84,8 +85,10 @@ public class CheckErrorAlgorithm089 extends CheckErrorAlgorithmBase {
         analysis,
         defaultSort.getBeginIndex(), defaultSort.getEndIndex());
     String replacement = value.substring(0, commaIndex + 1) + " " + value.substring(commaIndex + 1);
-    boolean automatic = analysis.getPage().getTitle().equalsIgnoreCase(
-        value.substring(commaIndex + 1) + " " + value.substring(0, commaIndex));
+    final String pageTitle = analysis.getPage().getTitle();
+    final String testValue = value.substring(commaIndex + 1) + " " + value.substring(0, commaIndex);
+    boolean automatic = pageTitle.equalsIgnoreCase(testValue) ||
+        SpecialCharacters.replaceAllSpecialCharacters(pageTitle, analysis.getWikipedia()).equalsIgnoreCase(testValue);
     errorResult.addReplacement(PageElementFunction.createFunction(
         defaultSort.getFunctionName(),
         replacement.toString()),
