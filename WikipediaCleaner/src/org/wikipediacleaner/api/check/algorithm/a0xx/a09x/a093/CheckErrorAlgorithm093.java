@@ -140,18 +140,26 @@ public class CheckErrorAlgorithm093 extends CheckErrorAlgorithmBase {
           prefix1.endsWith("//"));
     } else {
       if (prefix2.endsWith("//")) {
+        boolean automatic = prefix2.equalsIgnoreCase("https://");
+        automatic &= prefix1.equalsIgnoreCase("http://") ||
+            prefix1.equalsIgnoreCase("https:") ||
+            prefix1.equalsIgnoreCase("https:/");
         addReplacement(
             errorResult,
             link,
             prefix2.toLowerCase(Locale.ROOT) + withoutPrefix,
-            prefix2.equalsIgnoreCase("https://") && prefix1.equalsIgnoreCase("http://"));
+            automatic);
       }
       if (prefix1.endsWith("//")) {
+        boolean automatic = prefix1.equalsIgnoreCase("https://");
+        automatic &= prefix2.equalsIgnoreCase("http://") ||
+            prefix2.equalsIgnoreCase("https:") ||
+            prefix2.equalsIgnoreCase("https:/");
         addReplacement(
             errorResult,
             link,
             prefix1.toLowerCase(Locale.ROOT) + withoutPrefix,
-            prefix1.equalsIgnoreCase("https://") && prefix2.equalsIgnoreCase("http://"));
+            automatic);
       }
     }
     errors.add(errorResult);
