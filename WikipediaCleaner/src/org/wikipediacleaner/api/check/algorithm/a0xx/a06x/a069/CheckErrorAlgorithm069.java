@@ -12,6 +12,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 import org.apache.commons.lang3.tuple.ImmutablePair;
@@ -633,6 +634,16 @@ public class CheckErrorAlgorithm069 extends CheckErrorAlgorithmISBN {
         analysis, link.getBeginIndex(), tmpIndex);
     errorResult.addReplacement(
         extraPrefix + PageElementISBN.ISBN_PREFIX + " " + suffix);
+    // Handle CX2 bug
+    if ("ISBN (identifier)".equals(link.getLink())) {
+      PageElementTemplate previousTemplate = analysis.isInTemplate(link.getBeginIndex() - 1);
+      if ((previousTemplate != null) &&
+          (previousTemplate.getEndIndex() == link.getBeginIndex()) &&
+          ("ISBN".equals(previousTemplate.getTemplateName())) &&
+          (Objects.equals(suffix, previousTemplate.getParameterValue(0)))) {
+        errorResult.addReplacement("", true);
+      }
+    }
     errors.add(errorResult);
     return true;
   }
@@ -904,6 +915,17 @@ public class CheckErrorAlgorithm069 extends CheckErrorAlgorithmISBN {
       return null;
     }
     return reason;
+  }
+
+  /**
+   * Automatic fixing of all the errors in the page.
+   * 
+   * @param analysis Page analysis.
+   * @return Page contents after fix.
+   */
+  @Override
+  protected String internalAutomaticFix(PageAnalysis analysis) {
+    return fixUsingAutomaticReplacement(analysis);
   }
 
   /* ====================================================================== */
