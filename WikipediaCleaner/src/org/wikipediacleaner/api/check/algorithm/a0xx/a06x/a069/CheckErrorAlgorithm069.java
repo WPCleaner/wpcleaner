@@ -36,6 +36,7 @@ import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.PageElementTemplate.Parameter;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
+import org.wikipediacleaner.api.data.contents.ContentsUtil;
 import org.wikipediacleaner.api.data.contents.tag.HtmlTagType;
 import org.wikipediacleaner.api.data.contents.tag.WikiTagType;
 import org.wikipediacleaner.api.data.contents.template.TemplateBuilder;
@@ -636,9 +637,10 @@ public class CheckErrorAlgorithm069 extends CheckErrorAlgorithmISBN {
         extraPrefix + PageElementISBN.ISBN_PREFIX + " " + suffix);
     // Handle CX2 bug
     if ("ISBN (identifier)".equals(link.getLink())) {
-      PageElementTemplate previousTemplate = analysis.isInTemplate(link.getBeginIndex() - 1);
+      int previousIndex = ContentsUtil.moveIndexBackwardWhileFound(contents, link.getBeginIndex() - 1, " ");
+      PageElementTemplate previousTemplate = analysis.isInTemplate(previousIndex);
       if ((previousTemplate != null) &&
-          (previousTemplate.getEndIndex() == link.getBeginIndex()) &&
+          (previousTemplate.getEndIndex() == previousIndex + 1) &&
           ("ISBN".equals(previousTemplate.getTemplateName())) &&
           (Objects.equals(suffix, previousTemplate.getParameterValue(0)))) {
         errorResult.addReplacement("", true);
