@@ -8,6 +8,9 @@
 package org.wikipediacleaner.api.check.algorithm.a5xx.a50x.a504;
 
 import java.util.Collection;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase;
@@ -15,6 +18,7 @@ import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.PageElementTitle;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
 import org.wikipediacleaner.api.data.contents.tag.WikiTagType;
+import org.wikipediacleaner.i18n.GT;
 
 
 /**
@@ -48,21 +52,37 @@ public class CheckErrorAlgorithm504 extends CheckErrorAlgorithmBase {
     if ((refs == null) || (refs.isEmpty())) {
       return false;
     }
-    boolean result = false;
-    for (PageElementTag ref : refs) {
-      PageElementTitle title = analysis.isInTitle(ref.getCompleteBeginIndex());
-      if (title != null) {
-        if (errors == null) {
-          return true;
-        }
-        result = true;
-        CheckErrorResult error = createCheckErrorResult(
-            analysis,
-            ref.getCompleteBeginIndex(), ref.getCompleteEndIndex());
-        errors.add(error);
-      }
+    final Map<PageElementTitle, List<PageElementTag>> titles = refs.stream()
+        .filter(ref -> analysis.isInTitle(ref.getCompleteBeginIndex()) != null)
+        .collect(Collectors.groupingBy(ref -> analysis.isInTitle(ref.getCompleteBeginIndex())))
+;
+    if (titles.isEmpty()) {
+      return false;
     }
 
-    return result;
+    // Report error
+    if (errors == null) {
+      return true;
+    }
+
+    titles.entrySet().forEach(entry -> reportTitle(analysis, entry.getKey(), entry.getValue(), errors));
+    return true;
+  }
+
+  private void reportTitle(
+      PageAnalysis analysis,
+      PageElementTitle title,
+      List<PageElementTag> refs,
+      Collection<CheckErrorResult> errors) {
+    CheckErrorResult error = createCheckErrorResult(analysis, title.getBeginIndex(), title.getEndIndex());
+    String contents = analysis.getContents();
+    
+    // Suggestion to remove references
+    String replacement =
+        contents.substring(title.getBeginIndex(), refs.get(0).getCompleteBeginIndex()) +
+        contents.substring(refs.get(refs.size() - 1).getCompleteEndIndex(), title.getEndIndex());
+    error.addReplacement(replacement, GT._T("Remove references"));
+
+    errors.add(error);
   }
 }
