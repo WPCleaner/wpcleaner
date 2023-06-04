@@ -42,6 +42,7 @@ import org.wikipediacleaner.api.impl.CommentManager;
 import org.wikipediacleaner.gui.swing.basic.BasicWorker;
 import org.wikipediacleaner.gui.swing.basic.BasicWorkerListener;
 import org.wikipediacleaner.gui.swing.bot.AutomaticCWWorker;
+import org.wikipediacleaner.gui.swing.bot.AutomaticCategoryCWWorker;
 import org.wikipediacleaner.gui.swing.bot.AutomaticFileCWWorker;
 import org.wikipediacleaner.gui.swing.bot.AutomaticLintErrorWorker;
 import org.wikipediacleaner.gui.swing.bot.AutomaticListCWWorker;
@@ -272,6 +273,8 @@ public class Bot implements BasicWorkerListener {
       worker = new UpdateUnknownParameterWarningWorker(wiki, null, false);
     } else if ("FixCheckWiki".equalsIgnoreCase(action)) {
       worker = executeFixCheckWiki(actionConfig);
+    } else if ("FixCategoryCheckWiki".equalsIgnoreCase(action)) {
+      worker = executeFixCategoryCheckWiki(actionConfig);
     } else if ("FixListCheckWiki".equalsIgnoreCase(action)) {
       worker = executeFixListCheckWiki(actionConfig);
     } else if ("FixFileCheckWiki".equalsIgnoreCase(action)) {
@@ -370,6 +373,31 @@ public class Bot implements BasicWorkerListener {
     worker.setRange(rangeBegin, rangeEnd);
     return worker;
  }
+
+  /**
+   * Execute an action of type FixCategoryCheckWiki.
+   * 
+   * @param actionConfig Parameters of the action.
+   * @return True if the action was executed.
+   */
+  private BasicWorker executeFixCategoryCheckWiki(Action actionConfig) {
+    Page category = null;
+    if (actionConfig.actionArgs.length > 0) {
+      category = DataManager.createSimplePage(
+          wiki, actionConfig.actionArgs[0], null, null, null);
+    }
+    List<CheckErrorAlgorithm> algorithms = new ArrayList<>();
+    List<CheckErrorAlgorithm> allAlgorithms = new ArrayList<>();
+    if (actionConfig.actionArgs.length > 1) {
+      extractAlgorithms(algorithms, allAlgorithms, actionConfig.actionArgs, 1);
+    }
+    AutomaticCategoryCWWorker worker = new AutomaticCategoryCWWorker(
+        wiki, null, category,
+        algorithms, allAlgorithms, namespaces,
+        null, true, false);
+    worker.setRange(rangeBegin, rangeEnd);
+    return worker;
+  }
 
   /**
    * Execute an action of type FixListCheckWiki.
