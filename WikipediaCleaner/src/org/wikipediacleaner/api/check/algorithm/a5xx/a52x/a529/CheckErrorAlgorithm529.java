@@ -27,6 +27,7 @@ import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageElementISBN;
 import org.wikipediacleaner.api.data.Page.RelatedPages;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
+import org.wikipediacleaner.api.data.contents.ContentsUtil;
 import org.wikipediacleaner.api.data.contents.tag.HtmlTagType;
 import org.wikipediacleaner.api.data.contents.template.TemplateBuilder;
 import org.wikipediacleaner.i18n.GT;
@@ -111,60 +112,65 @@ public class CheckErrorAlgorithm529 extends CheckErrorAlgorithmBase {
 
     // Try automatic replacements
     if (!automaticReplacements.isEmpty() && !isbnTemplates.isEmpty()) {
-      for (String[] automaticReplacement : automaticReplacements) {
-        if ((automaticReplacement != null) &&
-            (automaticReplacement.length > 2)) {
+      for (AutomaticReplacement automaticReplacement : automaticReplacements) {
 
-          String prefix = automaticReplacement[1];
-          boolean startWithPrefix = false;
-          if (isbnBeginIndex >= prefix.length()) {
-            if (prefix.isEmpty()) {
-              if (isbnBeginIndex == 0) {
-                startWithPrefix = true;
-              } else {
-                char previousChar = contents.charAt(isbnBeginIndex - 1);
-                if (" \n".indexOf(previousChar) >= 0) {
-                  startWithPrefix = true;
-                }
-              }
-            } else if (contents.startsWith(prefix, isbnBeginIndex - prefix.length())) {
+        String prefix = automaticReplacement.prefix;
+        boolean startWithPrefix = false;
+        int extendedBeginIndex = isbnBeginIndex;
+        if (prefix.isEmpty()) {
+          if (isbnBeginIndex == 0) {
+            startWithPrefix = true;
+          } else {
+            char previousChar = contents.charAt(isbnBeginIndex - 1);
+            if (" \n".indexOf(previousChar) >= 0) {
               startWithPrefix = true;
             }
           }
+        } else {
+          extendedBeginIndex = ContentsUtil.moveIndexBackwardWhileFound(contents, isbnBeginIndex - 1, " ") + 1;
+          if (extendedBeginIndex >= prefix.length()) {
+            if (contents.startsWith(prefix, extendedBeginIndex - prefix.length())) {
+              startWithPrefix = true;
+            }
+          }
+        }
 
-          String suffix = automaticReplacement[2];
-          boolean endWithSuffix = false;
-          if (isbnEndIndex + suffix.length() <= contents.length()) {
-            if (suffix.isEmpty()) {
-              if (isbnEndIndex == contents.length()) {
-                endWithSuffix = true;
-              } else {
-                char nextChar = contents.charAt(isbnEndIndex);
-                if (" \n".indexOf(nextChar) >= 0) {
-                  endWithSuffix = true;
-                }
-              }
-            } else if (contents.startsWith(suffix, isbnEndIndex)) {
+        String suffix = automaticReplacement.suffix;
+        boolean endWithSuffix = false;
+        int extendedEndIndex = isbnEndIndex;
+        if (suffix.isEmpty()) {
+          if (isbnEndIndex == contents.length()) {
+            endWithSuffix = true;
+          } else {
+            char nextChar = contents.charAt(isbnEndIndex);
+            if (" \n.,;<".indexOf(nextChar) >= 0) {
               endWithSuffix = true;
             }
           }
-
-          String template = automaticReplacement[0];
-          if (startWithPrefix && endWithSuffix) {
-            CheckErrorResult errorResult = createCheckErrorResult(
-                analysis,
-                isbnBeginIndex - prefix.length(),
-                isbnEndIndex + suffix.length());
-            for (String[] isbnTemplate : isbnTemplates) {
-              if ((isbnTemplate != null) &&
-                  (isbnTemplate.length > 0) &&
-                  (template.equals(isbnTemplate[0]))) {
-                addTemplateReplacement(errorResult, isbnTemplate, isbn, null, null, true);
-              }
+        } else {
+          extendedEndIndex = ContentsUtil.moveIndexForwardWhileFound(contents, isbnEndIndex, " ");
+          if (extendedEndIndex + suffix.length() <= contents.length()) {
+            if (contents.startsWith(suffix, extendedEndIndex)) {
+              endWithSuffix = true;
             }
-            errors.add(errorResult);
-            return true;
           }
+        }
+
+        String template = automaticReplacement.templateName;
+        if (startWithPrefix && endWithSuffix) {
+          CheckErrorResult errorResult = createCheckErrorResult(
+              analysis,
+              extendedBeginIndex - prefix.length(),
+              extendedEndIndex + suffix.length());
+          for (String[] isbnTemplate : isbnTemplates) {
+            if ((isbnTemplate != null) &&
+                (isbnTemplate.length > 0) &&
+                (template.equals(isbnTemplate[0]))) {
+              addTemplateReplacement(errorResult, isbnTemplate, isbn, null, null, true);
+            }
+          }
+          errors.add(errorResult);
+          return true;
         }
       }
     }
@@ -356,11 +362,7 @@ public class CheckErrorAlgorithm529 extends CheckErrorAlgorithmBase {
     if (tmp != null) {
       List<String[]> tmpList = WPCConfiguration.convertPropertyToStringArrayList(tmp);
       if (tmpList != null) {
-        for (String[] tmpItem : tmpList) {
-          if (tmpItem.length > 2) {
-            automaticReplacements.add(tmpItem);
-          }
-        }
+        tmpList.forEach(item -> AutomaticReplacement.build(item).ifPresent(automaticReplacements::add));
       }
     }
 
@@ -397,7 +399,7 @@ public class CheckErrorAlgorithm529 extends CheckErrorAlgorithmBase {
   private List<String[]> isbnInterwikis = new ArrayList<>();
 
   /** Automatic replacements for ISBN */
-  private List<String[]> automaticReplacements = new ArrayList<>();
+  private List<AutomaticReplacement> automaticReplacements = new ArrayList<>();
 
   /**
    * Build the list of parameters for this algorithm.
