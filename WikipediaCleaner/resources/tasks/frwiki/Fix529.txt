@@ -21,7 +21,7 @@ FixCategoryCheckWiki Catégorie:Page_utilisant_des_liens_magiques_ISBN 529
 # Other namespaces
 DoTasks _Common_Other.txt
 Set AdditionalAlgorithms 529
-Set Namespaces 2 4 102
+Set Namespaces 2 3 4 5 100 101 102 103
 FixCategoryCheckWiki Catégorie:Page_utilisant_des_liens_magiques_ISBN 529
 # FixListCheckWiki Projet:Correction_syntaxique/Analyse_529 529
 # FixDump C:\Users\Nicolas\Downloads\frwiki-$-pages-articles.xml.bz2 529

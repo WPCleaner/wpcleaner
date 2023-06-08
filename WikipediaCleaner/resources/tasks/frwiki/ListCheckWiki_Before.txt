@@ -80,3 +80,22 @@ Set Prefix [[Utilisateur:WikiCleanerBot#T3|Bot_T3_PCS#526]]
 FixCheckWiki 526
 Set Prefix [[Utilisateur:WikiCleanerBot#T3|Bot_T3_PCS#534]]
 FixLintError bogus-image-options 534 576
+
+# File namespace
+DoTasks _Common_Other.txt
+Set Namespaces 6
+Set Prefix [[Catégorie:Page_utilisant_des_liens_magiques_ISBN]]
+FixCategoryCheckWiki Catégorie:Page_utilisant_des_liens_magiques_ISBN 529
+
+# Category namespace
+DoTasks _Common_Other.txt
+Set Namespaces 14
+Set Prefix [[Catégorie:Page_utilisant_des_liens_magiques_ISBN]]
+FixCategoryCheckWiki Catégorie:Page_utilisant_des_liens_magiques_ISBN 529
+
+# Other namespaces
+DoTasks _Common_Other.txt
+Set AdditionalAlgorithms 529
+Set Namespaces 2 3 4 5 100 101 102 103
+Set Prefix [[Catégorie:Page_utilisant_des_liens_magiques_ISBN]]
+FixCategoryCheckWiki Catégorie:Page_utilisant_des_liens_magiques_ISBN 529
