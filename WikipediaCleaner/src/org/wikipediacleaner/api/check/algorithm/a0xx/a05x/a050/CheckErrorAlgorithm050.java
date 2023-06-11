@@ -12,6 +12,7 @@ import java.util.List;
 
 import org.wikipediacleaner.api.check.HtmlCharacters;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmHtmlNamedEntities;
+import org.wikipediacleaner.api.data.analysis.PageAnalysis;
 
 
 /**
@@ -38,5 +39,19 @@ public class CheckErrorAlgorithm050 extends CheckErrorAlgorithmHtmlNamedEntities
   @Override
   protected List<HtmlCharacters> getHtmlCharacters() {
     return htmlCharacters;
+  }
+
+  /**
+   * @param analysis Page analysis.
+   * @param ampersandIndex Index of the ampersand in the text.
+   * @param htmlCharacter HTML character.
+   * @return True if suggestion should be applied automatically.
+   */
+  @Override
+  protected boolean shouldReplaceAutomatically(
+      PageAnalysis analysis,
+      int ampersandIndex,
+      HtmlCharacters htmlCharacter) {
+    return true;
   }
 }
