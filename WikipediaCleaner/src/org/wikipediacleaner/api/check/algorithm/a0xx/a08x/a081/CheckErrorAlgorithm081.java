@@ -32,6 +32,7 @@ import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.PageElementTagRef;
 import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
+import org.wikipediacleaner.api.data.contents.ContentsElement;
 import org.wikipediacleaner.api.data.contents.tag.CompleteTagBuilder;
 import org.wikipediacleaner.api.data.contents.tag.TagBuilder;
 import org.wikipediacleaner.api.data.contents.tag.TagFormat;
@@ -88,8 +89,16 @@ public class CheckErrorAlgorithm081 extends CheckErrorAlgorithmBase {
       return false;
     }
 
-    // Analyze tags having the same group and value
+    // Group tags and check if we need to go further
     Map<String, Map<String, List<PageElementTag>>> refs = refTagsCollector.group(analysis);
+    if (refs.values().stream().map(Map::values).flatMap(Collection::stream).map(List::size).noneMatch(size -> size > 1)) {
+      return false;
+    }
+
+    // Analyze tags having the same group and value
+    List<ContentsElement> referencesElements = new ArrayList<>();
+    referencesElements.addAll(analysis.getTags(WikiTagType.REFERENCES));
+    referenceTemplates.forEach(referencesTemplate -> referencesElements.addAll(analysis.getTemplates(referencesTemplate[0])));
     List<String> addedNames = new ArrayList<>();
     boolean result = false;
     for (Entry<String, Map<String, List<PageElementTag>>> entryGroup : refs.entrySet()) {
@@ -100,7 +109,8 @@ public class CheckErrorAlgorithm081 extends CheckErrorAlgorithmBase {
             entryValue.getValue(),
             groupName,
             errors,
-            addedNames);
+            addedNames,
+            referencesElements);
       }
     }
     return result;
@@ -111,10 +121,27 @@ public class CheckErrorAlgorithm081 extends CheckErrorAlgorithmBase {
       List<PageElementTag> tags,
       String groupName,
       Collection<CheckErrorResult> errors,
-      List<String> addedNames) {
+      List<String> addedNames,
+      List<ContentsElement> referencesElements) {
     if (tags.size() <= 1) {
       return false;
     }
+
+    // Handle references tag in between
+    int minArea = tags.stream().mapToInt(PageElementTag::getCompleteEndIndex).min().orElse(Integer.MAX_VALUE);
+    int maxArea = tags.stream().mapToInt(PageElementTag::getCompleteBeginIndex).max().orElse(0);
+    for (ContentsElement referencesElement : referencesElements) {
+      // TODO: Handle group name
+      if (referencesElement.getBeginIndex() >= minArea && referencesElement.getEndIndex() <= maxArea) {
+        return tags.stream()
+            .collect(Collectors.groupingBy(tag -> tag.getCompleteEndIndex() < referencesElement.getEndIndex()))
+            .values().stream()
+            .map(tmpTags -> analyzeTags(analysis, tmpTags, groupName, errors, addedNames, referencesElements))
+            .reduce(Boolean::logicalOr)
+            .orElse(Boolean.FALSE);
+      }
+    }
+
     if (errors == null) {
       return true;
     }
