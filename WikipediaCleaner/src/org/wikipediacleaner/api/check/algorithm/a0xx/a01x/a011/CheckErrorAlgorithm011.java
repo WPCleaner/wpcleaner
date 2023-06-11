@@ -298,4 +298,26 @@ public class CheckErrorAlgorithm011 extends CheckErrorAlgorithmHtmlNamedEntities
     }
     return true;
   }
+
+  /**
+   * @param analysis Page analysis.
+   * @param ampersandIndex Index of the ampersand in the text.
+   * @param htmlCharacter HTML character.
+   * @return True if suggestion should be applied automatically.
+   */
+  @Override
+  protected boolean shouldReplaceAutomatically(
+      PageAnalysis analysis,
+      int ampersandIndex,
+      HtmlCharacters htmlCharacter) {
+    if (htmlCharacter == HtmlCharacters.SYMBOL_QUOTATION_MARK) {
+      if (analysis.isInTag(ampersandIndex) != null) {
+        return false;
+      }
+      if (analysis.isInTable(ampersandIndex) != null) {
+        return false;
+      }
+    }
+    return true;
+  }
 }

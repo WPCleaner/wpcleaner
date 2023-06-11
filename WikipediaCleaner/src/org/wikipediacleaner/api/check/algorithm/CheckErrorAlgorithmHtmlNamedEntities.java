@@ -205,6 +205,19 @@ public abstract class CheckErrorAlgorithmHtmlNamedEntities extends CheckErrorAlg
   }
 
   /**
+   * @param analysis Page analysis.
+   * @param ampersandIndex Index of the ampersand in the text.
+   * @param htmlCharacter HTML character.
+   * @return True if suggestion should be applied automatically.
+   */
+  protected boolean shouldReplaceAutomatically(
+      PageAnalysis analysis,
+      int ampersandIndex,
+      HtmlCharacters htmlCharacter) {
+    return false;
+  }
+
+  /**
    * Bot fixing of all the errors in the page.
    * 
    * @param analysis Page analysis.
@@ -237,5 +250,19 @@ public abstract class CheckErrorAlgorithmHtmlNamedEntities extends CheckErrorAlg
   @Override
   public String fix(String fixName, PageAnalysis analysis, MWPane textPane) {
     return fixUsingFirstReplacement(fixName, analysis);
+  }
+
+  /**
+   * Automatic fixing of all the errors in the page.
+   * 
+   * @param analysis Page analysis.
+   * @return Page contents after fix.
+   */
+  @Override
+  protected String internalAutomaticFix(PageAnalysis analysis) {
+    if (!analysis.getPage().isArticle()) {
+      return analysis.getContents();
+    }
+    return fixUsingAutomaticReplacement(analysis);
   }
 }
