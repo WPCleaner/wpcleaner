@@ -4,6 +4,7 @@
 # Author: AProdromou
 # Author: Dogogos123
 # Author: Norhorn
+# Author: Pablothecat
 # --
 # This file is distributed under the same license as the wikicleaner package.
 #
@@ -13,7 +14,7 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2023-06-08 11:21:45+0000\n"
+"PO-Revision-Date: 2023-06-12 11:34:23+0000\n"
 "Last-Translator: Magioladitis <Unknown>\n"
 "Language-Team: Greek <el@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -981,7 +982,7 @@ msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a08x/a081/CheckErrorAlgorithm081.java:278
 msgid "Generate a reference name"
-msgstr ""
+msgstr "Δημιουργήστε ένα όνομα αναφοράς"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a08x/a081/CheckErrorAlgorithm081.java:285
 msgid "Give a name to the <ref> tag"
@@ -997,16 +998,16 @@ msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a08x/a081/CheckErrorAlgorithm081.java:469
 msgid "Name the reference with the title"
-msgstr ""
+msgstr "Ονομάστε την αναφορά με τον τίτλο"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a08x/a081/CheckErrorAlgorithm081.java:473
 msgid "Is it automatic?"
-msgstr ""
+msgstr "Είναι αυτόματο;"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a08x/a081/CheckErrorAlgorithm081.java:478
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a08x/a081/CheckErrorAlgorithm081.java:482
 msgid "Prefix for the automatically generated reference names"
-msgstr ""
+msgstr "Πρόθεμα για τα ονόματα αναφοράς που δημιουργούνται αυτόματα"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a08x/a084/CheckErrorAlgorithm084.java:105
 msgid "Delete section"

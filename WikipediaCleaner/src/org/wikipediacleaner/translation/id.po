@@ -2,6 +2,7 @@
 # Exported from translatewiki.net
 #
 # Author: Agam Riyandana
+# Author: David Wadie Fisher-Freberg
 # Author: Hidayatsrf
 # Author: Veracious
 # --
@@ -13,7 +14,7 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2023-06-05 11:21:48+0000\n"
+"PO-Revision-Date: 2023-06-12 11:34:25+0000\n"
 "Last-Translator: iwean <iwan.novirion@gmail.com>\n"
 "Language-Team: Indonesian <id@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -1633,9 +1634,8 @@ msgstr ""
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a545/CheckErrorAlgorithm545.java:302
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a545/CheckErrorAlgorithm545.java:318
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a545/CheckErrorAlgorithm545.java:334
-#, fuzzy
 msgid "Name of a deprecated parameter"
-msgstr "Cari pada templat"
+msgstr "Nama parameter yang tidak digunakan lagi"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a545/CheckErrorAlgorithm545.java:305
 msgid "Textual explanation about the deprecated parameter"
