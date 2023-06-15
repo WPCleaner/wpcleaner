@@ -16,21 +16,12 @@ import org.wikipediacleaner.api.check.CheckErrorResult.ErrorLevel;
 import org.wikipediacleaner.api.data.PageElementExternalLink;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
 import org.wikipediacleaner.api.data.contents.tag.WikiTagType;
-import org.wikipediacleaner.gui.swing.component.MWPane;
-import org.wikipediacleaner.i18n.GT;
 
 
 /**
  * Algorithm for analyzing errors based on HTML named entities.
  */
 public abstract class CheckErrorAlgorithmHtmlNamedEntities extends CheckErrorAlgorithmBase {
-
-  /**
-   * Possible global fixes.
-   */
-  private final static String[] globalFixes = new String[] {
-    GT._T("Replace all"),
-  };
 
   /**
    * @param name Name of the error.
@@ -215,41 +206,6 @@ public abstract class CheckErrorAlgorithmHtmlNamedEntities extends CheckErrorAlg
       int ampersandIndex,
       HtmlCharacters htmlCharacter) {
     return false;
-  }
-
-  /**
-   * Bot fixing of all the errors in the page.
-   * 
-   * @param analysis Page analysis.
-   * @return Page contents after fix.
-   */
-  @Override
-  protected String internalBotFix(PageAnalysis analysis) {
-    if (!analysis.getPage().isArticle()) {
-      return analysis.getContents();
-    }
-    return fix(globalFixes[0], analysis, null);
-  }
-
-  /**
-   * @return List of possible global fixes.
-   */
-  @Override
-  public String[] getGlobalFixes() {
-    return globalFixes;
-  }
-
-  /**
-   * Fix all the errors in the page.
-   * 
-   * @param fixName Fix name (extracted from getGlobalFixes()).
-   * @param analysis Page analysis.
-   * @param textPane Text pane.
-   * @return Page contents after fix.
-   */
-  @Override
-  public String fix(String fixName, PageAnalysis analysis, MWPane textPane) {
-    return fixUsingFirstReplacement(fixName, analysis);
   }
 
   /**
