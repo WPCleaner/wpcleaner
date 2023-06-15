@@ -73,6 +73,7 @@ public class CheckErrorAlgorithm003 extends CheckErrorAlgorithmBase {
     if (lastRefTag == null) {
       return false;
     }
+    final int lastRefTagIndex = lastRefTag.getCompleteEndIndex();
 
     // Analyzing text for <references> tags
     boolean referencesFound = false;
@@ -170,7 +171,9 @@ public class CheckErrorAlgorithm003 extends CheckErrorAlgorithmBase {
         CheckErrorResult tmpErrorResult = createCheckErrorResult(
             analysis, beginIndex, endIndex, ErrorLevel.WARNING);
         String replacement = contents.substring(beginIndex, endIndex) + "\n" + insert;
-        tmpErrorResult.addReplacement(replacement, correctTitles.size() == 1);
+        tmpErrorResult.addReplacement(
+            replacement,
+            (correctTitles.size() == 1) && (lastRefTagIndex <= beginIndex));
         errors.add(tmpErrorResult);
       });
 
@@ -187,7 +190,9 @@ public class CheckErrorAlgorithm003 extends CheckErrorAlgorithmBase {
             TitleBuilder.from(title.getLevel(), preferredTitle).toString() +
             "\n" + insert + "\n\n" +
             contents.substring(beginIndex, endIndex);
-        tmpErrorResult.addReplacement(replacement, correctTitles.isEmpty() && title.equals(titlesBefore.get(0)));
+        tmpErrorResult.addReplacement(
+            replacement,
+            correctTitles.isEmpty() && title.equals(titlesBefore.get(0)) && (lastRefTagIndex <=  beginIndex));
         errors.add(tmpErrorResult);
       });
     }
