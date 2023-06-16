@@ -160,7 +160,9 @@ public abstract class CheckErrorAlgorithmHtmlNamedEntities extends CheckErrorAlg
         analysis, ampersandIndex, endIndex,
         errorLevel);
     if (shouldAddSuggestions(analysis, ampersandIndex, htmlCharacter)) {
-      errorResult.addReplacement("" + htmlCharacter.getValue());
+      errorResult.addReplacement(
+          "" + htmlCharacter.getValue(),
+          shouldReplaceAutomatically(analysis, ampersandIndex, htmlCharacter));
       if (endIndex > colonIndex + 1) {
         errorResult.addReplacement(
             "" + htmlCharacter.getValue() +
