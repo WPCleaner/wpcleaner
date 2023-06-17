@@ -33,6 +33,7 @@ import org.wikipediacleaner.api.data.PageElementTagRef;
 import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
 import org.wikipediacleaner.api.data.contents.ContentsElement;
+import org.wikipediacleaner.api.data.contents.ContentsUtil;
 import org.wikipediacleaner.api.data.contents.tag.CompleteTagBuilder;
 import org.wikipediacleaner.api.data.contents.tag.TagBuilder;
 import org.wikipediacleaner.api.data.contents.tag.TagFormat;
@@ -331,6 +332,16 @@ public class CheckErrorAlgorithm081 extends CheckErrorAlgorithmBase {
     }
     Result result = nameChecker.checkString(name);
     if (result.isOk()) {
+      if (name.length() > maxLength) {
+        int newLength = ContentsUtil.moveIndexBackwardWhileNotFound(name, maxLength, " ");
+        if (newLength > 5) {
+          return name.substring(0, newLength);
+        }
+        newLength = ContentsUtil.moveIndexForwardWhileNotFound(name, maxLength, " ");
+        if (newLength < name.length()) {
+          return name.substring(0, newLength);
+        }
+      }
       return name;
     }
     if (!Objects.equals(name,  result.getText())) {
@@ -421,6 +432,9 @@ public class CheckErrorAlgorithm081 extends CheckErrorAlgorithmBase {
   /** Prefix for reference names generated automatically */
   private static final String PARAMETER_NAME_PREFIX = "name_prefix";
 
+  /** Max length for reference name (hint only) */
+  private static final String PARAMETER_NAME_MAX_LENGTH = "name_max_length";
+
   /**
    * Initialize settings for the algorithm.
    * 
@@ -468,6 +482,9 @@ public class CheckErrorAlgorithm081 extends CheckErrorAlgorithmBase {
   /** Prefix used for generating reference names */
   private String namePrefix = "";
 
+  /** Hint for a maximum length of the reference name */
+  private int maxLength = Integer.MAX_VALUE;
+
   /** Configuration by template */
   private final Map<String, TemplateConfiguration> configurationByTemplateName = new HashMap<>();
 
@@ -507,6 +524,15 @@ public class CheckErrorAlgorithm081 extends CheckErrorAlgorithmBase {
             new AlgorithmParameterElement(
                 "prefix",
                 GT._T("Prefix for the automatically generated reference names"))
+        },
+        false));
+    addParameter(new AlgorithmParameter(
+        PARAMETER_NAME_MAX_LENGTH,
+        GT._T("Hint for a maximum length of the reference name"),
+        new AlgorithmParameterElement[] {
+            new AlgorithmParameterElement(
+                "length",
+                GT._T("Hint for a maximum length of the reference name"))
         },
         false));
   }
