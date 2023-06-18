@@ -28,6 +28,7 @@ import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.PageElementTitle;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
 import org.wikipediacleaner.api.data.contents.ContentsElement;
+import org.wikipediacleaner.api.data.contents.ContentsUtil;
 import org.wikipediacleaner.api.data.contents.tag.WikiTagType;
 import org.wikipediacleaner.api.data.contents.title.TitleBuilder;
 import org.wikipediacleaner.i18n.GT;
@@ -180,7 +181,7 @@ public class CheckErrorAlgorithm003 extends CheckErrorAlgorithmBase {
       String replacement = contents.substring(beginIndex, endIndex) + "\n" + insert;
       tmpErrorResult.addReplacement(
           replacement,
-          (correctTitles.size() == 1) && (lastRefTagIndex <= beginIndex));
+          (errors.size() == 1) && (lastRefTagIndex <= beginIndex));
       errors.add(tmpErrorResult);
     });
 
@@ -189,19 +190,24 @@ public class CheckErrorAlgorithm003 extends CheckErrorAlgorithmBase {
         .filter(title -> isBeforeTitle(title))
         .collect(Collectors.toList());
     titlesBefore.forEach(title -> {
-      int beginIndex = title.getBeginIndex();
-      int endIndex = title.getEndIndex();
-      CheckErrorResult tmpErrorResult = createCheckErrorResult(
-          analysis, beginIndex, endIndex, ErrorLevel.WARNING);
-      String replacement =
-          TitleBuilder.from(title.getLevel(), preferredTitle).toString() +
-          "\n" + insert + "\n\n" +
-          contents.substring(beginIndex, endIndex);
-      tmpErrorResult.addReplacement(
-          replacement,
-          correctTitles.isEmpty() && title.equals(titlesBefore.get(0)) && (lastRefTagIndex <=  beginIndex));
-      errors.add(tmpErrorResult);
+      addSuggestionBeforeElement(
+          analysis, errors, title, title.getLevel(),
+          (errors.size() == 1) && (lastRefTagIndex <= title.getBeginIndex()));
     });
+
+    // Search for templates before which references tag can be added
+    analysis.getTemplates().stream()
+        .filter(template -> isBeforeTemplate(template))
+        .findFirst()
+        .ifPresent(template -> {
+          int beginIndex = template.getBeginIndex();
+          boolean automatic = (errors.size() == 1) && (lastRefTagIndex <= beginIndex);
+          if (automatic) {
+            int tmpIndex = ContentsUtil.moveIndexBackwardWhileFound(contents, beginIndex - 1, " ");
+            automatic &= (contents.charAt(tmpIndex) != '}'); 
+          }
+          addSuggestionBeforeElement(analysis, errors, template, 2, automatic);
+        });
 
     // Fallback on adding the references tag before the categories
     if (errors.size() == 1) {
@@ -213,20 +219,29 @@ public class CheckErrorAlgorithm003 extends CheckErrorAlgorithmBase {
             (defaultSorts.get(0).getBeginIndex() < firstCategory.getBeginIndex())) {
           firstCategory = defaultSorts.get(0);
         }
-        int beginIndex = firstCategory.getBeginIndex();
-        int endIndex = firstCategory.getEndIndex();
-        CheckErrorResult tmpErrorResult = createCheckErrorResult(
-            analysis, beginIndex, endIndex, ErrorLevel.WARNING);
-        String replacement =
-            TitleBuilder.from(2, preferredTitle).toString() +
-            "\n" + insert + "\n\n" +
-            contents.substring(beginIndex, endIndex);
-        tmpErrorResult.addReplacement(replacement);
-        errors.add(tmpErrorResult);
+        addSuggestionBeforeElement(analysis, errors, firstCategory, 2, false);
       }
     }
 
     return true;
+  }
+
+  private void addSuggestionBeforeElement(
+      PageAnalysis analysis,
+      Collection<CheckErrorResult> errors,
+      ContentsElement element,
+      int titleLevel,
+      boolean automatic) {
+    int beginIndex = element.getBeginIndex();
+    int endIndex = element.getEndIndex();
+    CheckErrorResult tmpErrorResult = createCheckErrorResult(
+        analysis, beginIndex, endIndex, ErrorLevel.WARNING);
+    String replacement =
+        TitleBuilder.from(titleLevel, preferredTitle).toString() +
+        "\n" + insert + "\n\n" +
+        analysis.getContents().substring(beginIndex, endIndex);
+    tmpErrorResult.addReplacement(replacement, automatic);
+    errors.add(tmpErrorResult);
   }
 
   private boolean isPossibleTitle(final PageElementTitle title) {
@@ -237,6 +252,11 @@ public class CheckErrorAlgorithm003 extends CheckErrorAlgorithmBase {
   private boolean isBeforeTitle(final PageElementTitle title) {
     String titleText = title.getTitle();
     return (titleText != null) && beforeTitles.contains(titleText.toUpperCase());
+  }
+
+  private boolean isBeforeTemplate(final PageElementTemplate template) {
+    String templateName = template.getTemplateName();
+    return (templateName != null) && beforeTemplates.contains(templateName);
   }
 
   /**
@@ -268,6 +288,9 @@ public class CheckErrorAlgorithm003 extends CheckErrorAlgorithmBase {
 
   /** Section titles where references can be inserted before */
   private static final String PARAMETER_BEFORE_TITLES = "before_titles";
+
+  /** Templates where references can be inserted before */
+  private static final String PARAMETER_BEFORE_TEMPLATES = "before_templates";
 
   /**
    * Initialize settings for the algorithm.
@@ -317,6 +340,15 @@ public class CheckErrorAlgorithm003 extends CheckErrorAlgorithmBase {
         tmpList.forEach(title -> beforeTitles.add(title.toUpperCase()));
       }
     }
+
+    tmp = getSpecificProperty(PARAMETER_BEFORE_TEMPLATES, true, true, false);
+    beforeTemplates.clear();
+    if (tmp != null) {
+      List<String> tmpList = WPCConfiguration.convertPropertyToStringList(tmp, false);
+      if (tmpList != null) {
+        tmpList.forEach(template -> beforeTemplates.add(Page.normalizeTitle(template)));
+      }
+    }
   }
 
   /** List of templates including references tag */
@@ -332,7 +364,10 @@ public class CheckErrorAlgorithm003 extends CheckErrorAlgorithmBase {
   private String preferredTitle = "";
 
   /** Section titles where references can be inserted before */
-  private final List<String> beforeTitles = new ArrayList<>();
+  private final Set<String> beforeTitles = new HashSet<>();
+
+  /** Templates where references can be inserted before */
+  private final Set<String> beforeTemplates = new HashSet<>();
 
   /**
    * Build the list of parameters for this algorithm.
@@ -373,6 +408,13 @@ public class CheckErrorAlgorithm003 extends CheckErrorAlgorithmBase {
         new AlgorithmParameterElement(
             "section heading",
             GT._T("Section heading where a {0} can be added before", "&lt;references/&gt;")),
+        true));
+    addParameter(new AlgorithmParameter(
+        PARAMETER_BEFORE_TEMPLATES,
+        GT._T("Templates where a {0} can be added before", "&lt;references/&gt;"),
+        new AlgorithmParameterElement(
+            "template name",
+            GT._T("Template where a {0} can be added before", "&lt;references/&gt;")),
         true));
   }
 }
