@@ -21,10 +21,13 @@ import org.wikipediacleaner.api.check.CheckErrorResult.ErrorLevel;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase;
 import org.wikipediacleaner.api.configuration.WPCConfiguration;
 import org.wikipediacleaner.api.data.Page;
+import org.wikipediacleaner.api.data.PageElementCategory;
+import org.wikipediacleaner.api.data.PageElementFunction;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.PageElementTitle;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
+import org.wikipediacleaner.api.data.contents.ContentsElement;
 import org.wikipediacleaner.api.data.contents.tag.WikiTagType;
 import org.wikipediacleaner.api.data.contents.title.TitleBuilder;
 import org.wikipediacleaner.i18n.GT;
@@ -158,43 +161,69 @@ public class CheckErrorAlgorithm003 extends CheckErrorAlgorithmBase {
       }
     }
 
-    // Suggestion when there's no references tags
-    if (((referencesTags == null) || referencesTags.isEmpty()) && (insert != null) && !titles.isEmpty()) {
+    if ((referencesTags != null) && !referencesTags.isEmpty()) {
+      return true;
+    }
+    if (insert == null) {
+      return true;
+    }
 
-      // Search for titles where references tag can be added
-      List<PageElementTitle> correctTitles = analysis.getTitles().stream()
-          .filter(title -> isPossibleTitle(title))
-          .collect(Collectors.toList());
-      correctTitles.forEach(title -> {
-        int beginIndex = title.getBeginIndex();
-        int endIndex = title.getEndIndex();
-        CheckErrorResult tmpErrorResult = createCheckErrorResult(
-            analysis, beginIndex, endIndex, ErrorLevel.WARNING);
-        String replacement = contents.substring(beginIndex, endIndex) + "\n" + insert;
-        tmpErrorResult.addReplacement(
-            replacement,
-            (correctTitles.size() == 1) && (lastRefTagIndex <= beginIndex));
-        errors.add(tmpErrorResult);
-      });
+    // Search for titles where references tag can be added
+    List<PageElementTitle> correctTitles = analysis.getTitles().stream()
+        .filter(title -> isPossibleTitle(title))
+        .collect(Collectors.toList());
+    correctTitles.forEach(title -> {
+      int beginIndex = title.getBeginIndex();
+      int endIndex = title.getEndIndex();
+      CheckErrorResult tmpErrorResult = createCheckErrorResult(
+          analysis, beginIndex, endIndex, ErrorLevel.WARNING);
+      String replacement = contents.substring(beginIndex, endIndex) + "\n" + insert;
+      tmpErrorResult.addReplacement(
+          replacement,
+          (correctTitles.size() == 1) && (lastRefTagIndex <= beginIndex));
+      errors.add(tmpErrorResult);
+    });
 
-      // Search for titles before which references tag can be added
-      List<PageElementTitle> titlesBefore = analysis.getTitles().stream()
-          .filter(title -> isBeforeTitle(title))
-          .collect(Collectors.toList());
-      titlesBefore.forEach(title -> {
-        int beginIndex = title.getBeginIndex();
-        int endIndex = title.getEndIndex();
+    // Search for titles before which references tag can be added
+    List<PageElementTitle> titlesBefore = analysis.getTitles().stream()
+        .filter(title -> isBeforeTitle(title))
+        .collect(Collectors.toList());
+    titlesBefore.forEach(title -> {
+      int beginIndex = title.getBeginIndex();
+      int endIndex = title.getEndIndex();
+      CheckErrorResult tmpErrorResult = createCheckErrorResult(
+          analysis, beginIndex, endIndex, ErrorLevel.WARNING);
+      String replacement =
+          TitleBuilder.from(title.getLevel(), preferredTitle).toString() +
+          "\n" + insert + "\n\n" +
+          contents.substring(beginIndex, endIndex);
+      tmpErrorResult.addReplacement(
+          replacement,
+          correctTitles.isEmpty() && title.equals(titlesBefore.get(0)) && (lastRefTagIndex <=  beginIndex));
+      errors.add(tmpErrorResult);
+    });
+
+    // Fallback on adding the references tag before the categories
+    if (errors.size() == 1) {
+      List<PageElementCategory> categories = analysis.getCategories();
+      if (!categories.isEmpty()) {
+        ContentsElement firstCategory = categories.get(0);
+        List<PageElementFunction> defaultSorts = analysis.getDefaultSorts();
+        if (!defaultSorts.isEmpty() &&
+            (defaultSorts.get(0).getBeginIndex() < firstCategory.getBeginIndex())) {
+          firstCategory = defaultSorts.get(0);
+        }
+        int beginIndex = firstCategory.getBeginIndex();
+        int endIndex = firstCategory.getEndIndex();
         CheckErrorResult tmpErrorResult = createCheckErrorResult(
             analysis, beginIndex, endIndex, ErrorLevel.WARNING);
         String replacement =
-            TitleBuilder.from(title.getLevel(), preferredTitle).toString() +
+            TitleBuilder.from(2, preferredTitle).toString() +
             "\n" + insert + "\n\n" +
             contents.substring(beginIndex, endIndex);
-        tmpErrorResult.addReplacement(
-            replacement,
-            correctTitles.isEmpty() && title.equals(titlesBefore.get(0)) && (lastRefTagIndex <=  beginIndex));
+        tmpErrorResult.addReplacement(replacement);
         errors.add(tmpErrorResult);
-      });
+      }
     }
 
     return true;
