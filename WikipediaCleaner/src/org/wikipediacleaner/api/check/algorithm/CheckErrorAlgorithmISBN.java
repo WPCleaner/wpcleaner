@@ -33,6 +33,7 @@ import org.wikipediacleaner.api.data.ISBNRange.ISBNInformation;
 import org.wikipediacleaner.api.data.PageElementFunction;
 import org.wikipediacleaner.api.data.PageElementTemplate.Parameter;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
+import org.wikipediacleaner.api.data.contents.ContentsUtil;
 import org.wikipediacleaner.api.data.contents.magicword.FunctionMagicWordType;
 import org.wikipediacleaner.api.data.contents.magicword.MagicWord;
 import org.wikipediacleaner.api.data.contents.template.TemplateBuilder;
@@ -150,7 +151,7 @@ public abstract class CheckErrorAlgorithmISBN extends CheckErrorAlgorithmBase {
         for (String value : isbn.getISBNNotTrimmed().trim().split(split)) {
           isbnValues.add(value);
         }
-        addSuggestions(analysis, errorResult, isbn, isbnValues);
+        addSuggestions(analysis, errorResult, isbn, isbnValues, isbnValues.size() == 1);
       }
 
       // Evolved split
@@ -179,10 +180,10 @@ public abstract class CheckErrorAlgorithmISBN extends CheckErrorAlgorithmBase {
           isbnValue = isbnValue.substring(index);
         }
       }
-      addSuggestions(analysis, errorResult, isbn, isbnValues);
+      addSuggestions(analysis, errorResult, isbn, isbnValues, false);
     } else {
       isbnValues.add(isbn.getISBNNotTrimmed());
-      addSuggestions(analysis, errorResult, isbn, isbnValues);
+      addSuggestions(analysis, errorResult, isbn, isbnValues, true);
     }
   }
 
@@ -191,10 +192,12 @@ public abstract class CheckErrorAlgorithmISBN extends CheckErrorAlgorithmBase {
    * @param errorResult Error result.
    * @param isbn ISBN.
    * @param isbnValues Broken down ISBN values.
+   * @param automatic True if replacement may be automatic.
    */
   private void addSuggestions(
       PageAnalysis analysis, CheckErrorResult errorResult,
-      PageElementISBN isbn, List<String> isbnValues) {
+      PageElementISBN isbn, List<String> isbnValues,
+      boolean automatic) {
     // Remove empty ISBN
     Iterator<String> itValues = isbnValues.iterator();
     while (itValues.hasNext()) {
@@ -251,6 +254,12 @@ public abstract class CheckErrorAlgorithmISBN extends CheckErrorAlgorithmBase {
         }
       }
 
+      // Handle lower case X at the end
+      cleanISBN = PageElementISBN.cleanISBN(isbnValue);
+      if ((cleanISBN.length() == 10) && isbnValue.endsWith("x")) {
+        isbnValue = isbnValue.replace('x', 'X');
+      }
+
       // Remove extra characters at both extremities
       while ((isbnValue.length() > 0) &&
              (extraChars.indexOf(isbnValue.charAt(0)) >= 0)) {
@@ -271,60 +280,69 @@ public abstract class CheckErrorAlgorithmISBN extends CheckErrorAlgorithmBase {
         itValues.remove();
       }
     }
+    if (isbnValues.isEmpty()) {
+      return;
+    }
 
     // Check if all potential ISBN are valid
-    boolean correctLength = true;
     for (String isbnValue : isbnValues) {
       String cleanISBN = PageElementISBN.cleanISBN(isbnValue);
       int length = cleanISBN.length();
       if ((length != 10) && (length != 13)) {
-        correctLength = false;
+        return;
       }
     }
 
-    // Suggestions
-    if (correctLength) {
-      if (isbnValues.size() == 1) {
-        String value = isbnValues.get(0);
-        if (!value.equals(isbn.getISBNNotTrimmed())) {
-          errorResult.addReplacement(isbnValues.get(0));
-        }
-      } else if (isbnValues.size() > 0) {
-        if (isbn.isTemplateParameter()) {
-          PageElementTemplate template = analysis.isInTemplate(isbn.getBeginIndex());
-          if (template != null) {
-            Parameter param = template.getParameterAtIndex(isbn.getBeginIndex());
-            if ((param != null) &&
-                (param.getName() != null) &&
-                (param.getName().trim().length() > 0)) {
-              String name = param.getName().trim();
-              int index = name.length();
-              while ((index > 0) &&
-                     (Character.isDigit(name.charAt(index - 1)))) {
-                index--;
-              }
-              int currentNum = 1;
-              if (index < name.length()) {
-                currentNum = Integer.valueOf(name.substring(index));
-                name = name.substring(0, index);
-              }
-              currentNum++;
-              StringBuilder buffer = new StringBuilder();
-              buffer.append(isbnValues.get(0));
-              for (int isbnNum = 1; isbnNum < isbnValues.size(); isbnNum++) {
-                while (template.getParameterIndex(name + Integer.toString(currentNum)) >= 0) {
-                  currentNum++;
-                }
-                buffer.append(" |");
-                buffer.append(name);
-                buffer.append(Integer.toString(currentNum));
-                buffer.append("=");
-                buffer.append(isbnValues.get(isbnNum));
-                currentNum++;
-              }
-              errorResult.addReplacement(buffer.toString());
-            }
+    // Suggestions with only one ISBN
+    if (isbnValues.size() == 1) {
+      String value = isbnValues.get(0);
+      if (value.equals(isbn.getISBNNotTrimmed())) {
+        return;
+      }
+      if (isbn.isTemplateParameter()) {
+        automatic &= PageElementISBN.isValid(value);
+        automatic &= ContentsUtil.moveIndexForwardWhileFound(value, 0, PageElementISBN.POSSIBLE_CHARACTERS + PageElementISBN.EXTRA_CHARACTERS) == value.length();
+        errorResult.addReplacement(value, automatic);
+      } else {
+        errorResult.addReplacement(PageElementISBN.ISBN_PREFIX + " " + value);
+      }
+      return;
+    }
+
+    // Suggestions with several ISBN
+    if (isbn.isTemplateParameter()) {
+      PageElementTemplate template = analysis.isInTemplate(isbn.getBeginIndex());
+      if (template != null) {
+        Parameter param = template.getParameterAtIndex(isbn.getBeginIndex());
+        if ((param != null) &&
+            (param.getName() != null) &&
+            (param.getName().trim().length() > 0)) {
+          String name = param.getName().trim();
+          int index = name.length();
+          while ((index > 0) &&
+                 (Character.isDigit(name.charAt(index - 1)))) {
+            index--;
           }
+          int currentNum = 1;
+          if (index < name.length()) {
+            currentNum = Integer.valueOf(name.substring(index));
+            name = name.substring(0, index);
+          }
+          currentNum++;
+          StringBuilder buffer = new StringBuilder();
+          buffer.append(isbnValues.get(0));
+          for (int isbnNum = 1; isbnNum < isbnValues.size(); isbnNum++) {
+            while (template.getParameterIndex(name + Integer.toString(currentNum)) >= 0) {
+              currentNum++;
+            }
+            buffer.append(" |");
+            buffer.append(name);
+            buffer.append(Integer.toString(currentNum));
+            buffer.append("=");
+            buffer.append(isbnValues.get(isbnNum));
+            currentNum++;
+          }
+          errorResult.addReplacement(buffer.toString());
         }
       }
     }
