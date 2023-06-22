@@ -84,9 +84,9 @@ public class CheckErrorAlgorithm089 extends CheckErrorAlgorithmBase {
     CheckErrorResult errorResult = createCheckErrorResult(
         analysis,
         defaultSort.getBeginIndex(), defaultSort.getEndIndex());
-    String replacement = value.substring(0, commaIndex + 1) + " " + value.substring(commaIndex + 1);
+    String replacement = value.substring(0, commaIndex).trim() + ", " + value.substring(commaIndex + 1).trim();
     final String pageTitle = analysis.getPage().getTitle();
-    final String testValue = value.substring(commaIndex + 1) + " " + value.substring(0, commaIndex);
+    final String testValue = value.substring(commaIndex + 1).trim() + " " + value.substring(0, commaIndex).trim();
     boolean automatic = pageTitle.equalsIgnoreCase(testValue) ||
         SpecialCharacters.replaceAllSpecialCharacters(pageTitle, analysis.getWikipedia()).equalsIgnoreCase(testValue);
     errorResult.addReplacement(PageElementFunction.createFunction(
