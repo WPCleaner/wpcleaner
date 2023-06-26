@@ -2,6 +2,7 @@
 # Exported from translatewiki.net
 #
 # Author: Hanna Tardos
+# Author: Zalán Hári
 # --
 # This file is distributed under the same license as the wikicleaner package.
 #
@@ -11,7 +12,7 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2023-06-19 11:22:50+0000\n"
+"PO-Revision-Date: 2023-06-26 11:33:01+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Hungarian <hu@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -561,7 +562,7 @@ msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a02x/a021/CheckErrorAlgorithm021.java:77
 msgid "Check category"
-msgstr "Kategória ellenörzése"
+msgstr "Kategória ellenőrzése"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a02x/a021/CheckErrorAlgorithm021.java:103
 msgid "Comment category out"
@@ -2625,7 +2626,7 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:330
 #: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:258
 msgid "Link count"
-msgstr "Hivatkozások mutatása"
+msgstr "Hivatkozásszámláló"
 
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:378
 msgid "Filter namespaces"
@@ -3028,19 +3029,19 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/MainWindow.java:880
 #: org/wikipediacleaner/gui/swing/bot/BotToolsWindow.java:61
 msgid "Bot tools"
-msgstr "Bot eszközök"
+msgstr "Boteszközök"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:924
 msgid "Demo mode is only available for testing WPCleaner.\nYou won't be able to modify pages on Wikipedia in Demo mode.\nDo you want to continue ?"
-msgstr "A Bemutató mód csak a WPCleaner tesztelésére van.\nA Bemutató módban nem lehet a Wikipédia lapjait módosítani.\nFolytatni akarod?"
+msgstr "A bemutató mód csak a WPCleaner tesztelésére van.\nA bemutató módban nem lehet a Wikipédia lapjait módosítani.\nFolytatni akarod?"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:943
 msgid "You must select which Wikipedia you want to work on before login"
-msgstr "Mielőtt bejelentkezel ki kell választanod melyik Wikipédiában akarsz dolgozni"
+msgstr "Mielőtt bejelentkezel, ki kell választanod, melyik Wikipédiában akarsz dolgozni"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:953
 msgid "You must select a language before login"
-msgstr "Mielőtt bejelentkezel ki kell választanod egy nyelvet"
+msgstr "Mielőtt bejelentkezel, ki kell választanod egy nyelvet"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:965
 msgid "You must input your username before login"
@@ -3065,7 +3066,7 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1246
 msgid "The password will be saved on your disk, so anyone having access to your computer may be able to get it.\nAre you sure that you want to save it ?"
-msgstr "A jelszó a merevlemezre lesz elmentve, szóval bárki aki hozzáfér a számítógépedhez megtudhatja.\nBiztos, hogy el akarod menteni?"
+msgstr "A jelszó a merevlemezre lesz elmentve, szóval bármely, a számítógépedhez hozzáférő személy azt is elérheti.\nBiztos, hogy el akarod menteni?"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1313
 msgid "You must input a page name for retrieving the list of internal links"
