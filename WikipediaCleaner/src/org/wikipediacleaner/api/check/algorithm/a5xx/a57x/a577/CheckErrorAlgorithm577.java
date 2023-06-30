@@ -32,7 +32,6 @@ import org.wikipediacleaner.api.configuration.WPCConfigurationString;
 import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.PageElementTemplate.Parameter;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
-import org.wikipediacleaner.api.data.contents.comment.ContentsComment;
 import org.wikipediacleaner.gui.swing.action.ActionExternalViewer;
 import org.wikipediacleaner.i18n.GT;
 
@@ -146,7 +145,7 @@ public class CheckErrorAlgorithm577 extends CheckErrorAlgorithmBase {
 
     // Strip comments to check again the DOI
     if (value.indexOf('>') > 0) {
-      value = ContentsComment.stripComments(analysis.comments().getAll(), value, param.getValueStartIndex());
+      value = param.getStrippedValue();
       if (value.isEmpty() || isValidDOI(value)) {
         return false;
       }
