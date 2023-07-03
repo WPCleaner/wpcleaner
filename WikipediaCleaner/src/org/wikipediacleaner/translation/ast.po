@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2023-06-19 11:22:48+0000\n"
+"PO-Revision-Date: 2023-07-03 11:30:20+0000\n"
 "Last-Translator: Xuacu Saturio <xuacusk8@gmail.com>\n"
 "Language-Team: Asturian <ast@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -20,7 +20,7 @@ msgstr ""
 "X-Launchpad-Export-Date: 2018-01-31 07:41+0000\n"
 "X-Generator: MediaWiki 1.41.0-alpha; Translate 2023-04-26\n"
 "Language: ast\n"
-"X-POT-Import-Date: 2023-06-18 10:30:24+0000\n"
+"X-POT-Import-Date: 2023-07-02 14:30:30+0000\n"
 
 #: org/wikipediacleaner/Version.java:31
 #, java-format
@@ -221,44 +221,44 @@ msgstr ""
 msgid "Page containing the list of false positives for this type of error"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISBN.java:352
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISBN.java:370
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISSN.java:320
 #, java-format
 msgid "Ask for help using {0}"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISBN.java:377
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISBN.java:395
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISSN.java:345
 msgid "Add a comment"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISBN.java:412
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISBN.java:430
 msgid "Search all ISBN"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISBN.java:417
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISBN.java:435
 msgid "Search all ISBN-10"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISBN.java:422
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISBN.java:440
 msgid "Search all ISBN-13"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISBN.java:439
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISBN.java:496
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISBN.java:457
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISBN.java:514
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISSN.java:472
 #, java-format
 msgid "Search ISBN {0}"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISBN.java:526
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISBN.java:544
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISSN.java:412
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISSN.java:442
 #, java-format
 msgid "Search ISSN {0}"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISBN.java:559
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISBN.java:577
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISSN.java:505
 #: org/wikipediacleaner/gui/swing/component/MWPanePopupListener.java:502
 #, java-format
@@ -1174,6 +1174,7 @@ msgstr ""
 #: org/wikipediacleaner/api/check/algorithm/a1xx/a11x/a111/CheckErrorAlgorithm111.java:204
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a568/CheckErrorAlgorithm568.java:267
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a568/CheckErrorAlgorithm568.java:276
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a58x/a580/CheckErrorAlgorithm580.java:165
 msgid "Template name"
 msgstr ""
 
@@ -2007,26 +2008,26 @@ msgstr ""
 msgid "Image attribute"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a577/CheckErrorAlgorithm577.java:175
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a577/CheckErrorAlgorithm577.java:174
 #, java-format
 msgid "Check incorrect DOI {0}"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a577/CheckErrorAlgorithm577.java:235
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a577/CheckErrorAlgorithm577.java:234
 #, java-format
 msgid "External viewer for parameter {0}"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a577/CheckErrorAlgorithm577.java:260
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a577/CheckErrorAlgorithm577.java:259
 #, java-format
 msgid "Check DOI {0}"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a577/CheckErrorAlgorithm577.java:358
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a577/CheckErrorAlgorithm577.java:357
 msgid "Prefixes that can be safely deleted"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a577/CheckErrorAlgorithm577.java:362
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a577/CheckErrorAlgorithm577.java:361
 msgid "Prefix that can be safely deleted"
 msgstr ""
 
@@ -2036,6 +2037,10 @@ msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a578/CheckErrorAlgorithm578.java:185
 msgid "Template that shouldn't be used in list item"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a58x/a580/CheckErrorAlgorithm580.java:163
+msgid "Redundant templates"
 msgstr ""
 
 #: org/wikipediacleaner/api/configuration/CWConfiguration.java:83
