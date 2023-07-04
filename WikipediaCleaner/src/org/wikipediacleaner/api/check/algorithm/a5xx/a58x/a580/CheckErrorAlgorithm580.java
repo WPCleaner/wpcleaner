@@ -144,7 +144,18 @@ public class CheckErrorAlgorithm580 extends CheckErrorAlgorithmBase {
     if (tmpIndex == secondTemplate.getBeginIndex()) {
       CheckErrorResult errorResult = createCheckErrorResult(
           analysis, firstTemplate.getBeginIndex(), secondTemplate.getEndIndex());
+      boolean canDeleteSecondTemplate = false;
       if ((firstTemplate.getParameterCount() == 0) && (secondTemplate.getParameterCount() == 0)) {
+        canDeleteSecondTemplate = true;
+      }
+      if ((firstTemplate.getParameterCount() > 0) && (secondTemplate.getParameterCount() > 0)) {
+        String firstValue = contents.substring(firstTemplate.getParameterPipeIndex(0), firstTemplate.getEndIndex());
+        String secondValue = contents.substring(secondTemplate.getParameterPipeIndex(0), secondTemplate.getEndIndex());
+        if (firstValue.equals(secondValue)) {
+          canDeleteSecondTemplate = true;
+        }
+      }
+      if (canDeleteSecondTemplate) {
         errorResult.addReplacement(
             contents.substring(firstTemplate.getBeginIndex(), firstTemplate.getEndIndex()),
             true);
