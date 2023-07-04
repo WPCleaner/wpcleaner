@@ -14,6 +14,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.Set;
+import java.util.function.Predicate;
 
 import javax.annotation.Nonnull;
 
@@ -70,10 +71,29 @@ public class CheckErrorAlgorithm580 extends CheckErrorAlgorithmBase {
     // Check each group of redundant templates
     boolean result = false;
     for (Set<String> redundantTemplates : templateNames) {
-      result |= analyzeRedundantTemplates(analysis, errors, templates, redundantTemplates);
+      result |= analyzeRedundantTemplates(
+          analysis, errors, templates,
+          template -> redundantTemplates.contains(template.getTemplateName()));
+    }
+    for (Set<String> redundantTemplates : unnamedParametersTemplateNames) {
+      result |= analyzeRedundantTemplates(
+          analysis, errors, templates,
+          template -> isUnnamedParametersTemplate(redundantTemplates, template));
     }
 
     return result;
+  }
+
+  private boolean isUnnamedParametersTemplate(Set<String> redundantTemplates, PageElementTemplate template) {
+    if (!redundantTemplates.contains(template.getTemplateName())) {
+      return false;
+    }
+    for (int paramNum = 0; paramNum < template.getParameterCount(); paramNum++) {
+      if (!"".equals(template.getParameter(paramNum).getName())) {
+        return false;
+      }
+    }
+    return true;
   }
 
   /**
@@ -82,18 +102,18 @@ public class CheckErrorAlgorithm580 extends CheckErrorAlgorithmBase {
    * @param analysis Page analysis.
    * @param errors Errors found in the page.
    * @param templates List of templates in the page.
-   * @param redundantTemplates Names of redundant templates. 
+   * @param filter Filter to use on the list of templates. 
    * @return Flag indicating if the error was found.
    */
   private boolean analyzeRedundantTemplates(
       PageAnalysis analysis,
       Collection<CheckErrorResult> errors,
       List<PageElementTemplate> templates,
-      Set<String> redundantTemplates) {
+      Predicate<PageElementTemplate> filter) {
 
     // Filter templates
     List<PageElementTemplate> filteredTemplates = templates.stream()
-        .filter(template -> redundantTemplates.contains(template.getTemplateName()))
+        .filter(filter)
         .collect(Collectors.toList());
     if (filteredTemplates.size() <= 1) {
       return false;
@@ -174,6 +194,9 @@ public class CheckErrorAlgorithm580 extends CheckErrorAlgorithmBase {
   /** Templates that are redundant */
   private static final String PARAMETER_TEMPLATES = "templates";
 
+  /** Templates without named parameters that are redundant */
+  private static final String PARAMETER_UNNAMED_TEMPLATES = "templates_unnamed_parameters";
+
   /**
    * Initialize settings for the algorithm.
    * 
@@ -187,10 +210,20 @@ public class CheckErrorAlgorithm580 extends CheckErrorAlgorithmBase {
       WPCConfiguration.convertPropertyToStringArrayList(tmp).forEach(elements ->
           templateNames.add(Arrays.stream(elements).map(Page::normalizeTitle).collect(Collectors.toSet())));
     }
+
+    tmp = getSpecificProperty(PARAMETER_UNNAMED_TEMPLATES, true, true, false);
+    unnamedParametersTemplateNames.clear();
+    if (tmp != null) {
+      WPCConfiguration.convertPropertyToStringArrayList(tmp).forEach(elements ->
+          unnamedParametersTemplateNames.add(Arrays.stream(elements).map(Page::normalizeTitle).collect(Collectors.toSet())));
+    }
   }
 
   /** Templates that are redundant */
   private final List<Set<String>> templateNames = new ArrayList<>();
+
+  /** Templates without named parameters that are redundant */
+  private final List<Set<String>> unnamedParametersTemplateNames = new ArrayList<>();
 
   /**
    * Build the list of parameters for this algorithm.
@@ -201,6 +234,13 @@ public class CheckErrorAlgorithm580 extends CheckErrorAlgorithmBase {
     addParameter(new AlgorithmParameter(
         PARAMETER_TEMPLATES,
         GT._T("Redundant templates"),
+        new AlgorithmParameterElement[] {
+            new AlgorithmParameterElement("template", GT._T("Template name"), false, true)
+        },
+        true));
+    addParameter(new AlgorithmParameter(
+        PARAMETER_UNNAMED_TEMPLATES,
+        GT._T("Redundant templates when used with only unnamed parameters"),
         new AlgorithmParameterElement[] {
             new AlgorithmParameterElement("template", GT._T("Template name"), false, true)
         },
