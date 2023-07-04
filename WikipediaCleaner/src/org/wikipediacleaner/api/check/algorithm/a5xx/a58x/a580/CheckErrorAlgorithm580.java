@@ -10,6 +10,7 @@ package org.wikipediacleaner.api.check.algorithm.a5xx.a58x.a580;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.Set;
@@ -27,6 +28,7 @@ import org.wikipediacleaner.api.configuration.WPCConfiguration;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
+import org.wikipediacleaner.api.data.contents.ContentsUtil;
 import org.wikipediacleaner.i18n.GT;
 
 
@@ -96,21 +98,59 @@ public class CheckErrorAlgorithm580 extends CheckErrorAlgorithmBase {
     if (filteredTemplates.size() <= 1) {
       return false;
     }
-    PageElementTemplate firstTemplate = filteredTemplates.get(0);
 
+    // Report errors
     if (errors == null) {
       return true;
     }
+    reportTemplates(analysis, errors, filteredTemplates);
+    return true;
+  }
 
-    // Report each template
-    for (PageElementTemplate template : filteredTemplates) {
-      CheckErrorResult errorResult = createCheckErrorResult(
-          analysis, template.getBeginIndex(), template.getEndIndex(),
-          template == firstTemplate ? ErrorLevel.CORRECT : ErrorLevel.ERROR);
-      errors.add(errorResult);
+  private void reportTemplates(
+      PageAnalysis analysis,
+      Collection<CheckErrorResult> errors,
+      List<PageElementTemplate> templates) {
+    if (templates.size() <= 1) {
+      return;
     }
 
-    return true;
+    // Check if the first two templates are just one after each other
+    Set<PageElementTemplate> reportedTemplates = new HashSet<>();
+    PageElementTemplate firstTemplate = templates.get(0);
+    PageElementTemplate secondTemplate = templates.get(1);
+    String contents = analysis.getContents();
+    int tmpIndex = ContentsUtil.moveIndexForwardWhileFound(contents, firstTemplate.getEndIndex(), " \n");
+    if (tmpIndex == secondTemplate.getBeginIndex()) {
+      CheckErrorResult errorResult = createCheckErrorResult(
+          analysis, firstTemplate.getBeginIndex(), secondTemplate.getEndIndex());
+      if ((firstTemplate.getParameterCount() == 0) && (secondTemplate.getParameterCount() == 0)) {
+        errorResult.addReplacement(
+            contents.substring(firstTemplate.getBeginIndex(), firstTemplate.getEndIndex()),
+            true);
+      }
+      errors.add(errorResult);
+      reportedTemplates.add(firstTemplate);
+      reportedTemplates.add(secondTemplate);
+    }
+
+    // Report first template as normal
+    if (!reportedTemplates.contains(firstTemplate)) {
+      errors.add(createCheckErrorResult(
+          analysis,
+          firstTemplate.getBeginIndex(), firstTemplate.getEndIndex(),
+          ErrorLevel.CORRECT));
+      reportedTemplates.add(firstTemplate);
+    }
+
+    // Report remaining templates
+    for (PageElementTemplate template : templates) {
+      if (!reportedTemplates.contains(template)) {
+        CheckErrorResult errorResult = createCheckErrorResult(
+            analysis, template.getBeginIndex(), template.getEndIndex());
+        errors.add(errorResult);
+      }
+    }
   }
 
   /**

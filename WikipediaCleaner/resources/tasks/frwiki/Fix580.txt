@@ -1,0 +1,16 @@
+DoTasks _Common.txt
+Set Prefix Modèle_redondant
+FixListCheckWiki Projet:Correction_syntaxique/Analyse_580 580
+# FixDump C:\Users\Nicolas\Downloads\frwiki-$-pages-articles.xml.bz2 580
+
+# File namespace
+DoTasks _Common_Other.txt
+Set Namespaces 6
+FixListCheckWiki Projet:Correction_syntaxique/Analyse_580 580
+# FixDump C:\Users\Nicolas\Downloads\frwiki-$-pages-articles.xml.bz2 580
+
+# Category namespace
+DoTasks _Common_Other.txt
+Set Namespaces 14
+FixListCheckWiki Projet:Correction_syntaxique/Analyse_580 580
+# FixDump C:\Users\Nicolas\Downloads\frwiki-$-pages-articles.xml.bz2 580
