@@ -26,6 +26,7 @@ import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.CheckErrorResult.ErrorLevel;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase;
 import org.wikipediacleaner.api.configuration.WPCConfiguration;
+import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
@@ -59,6 +60,9 @@ public class CheckErrorAlgorithm580 extends CheckErrorAlgorithmBase {
       PageAnalysis analysis,
       Collection<CheckErrorResult> errors, boolean onlyAutomatic) {
     if (analysis == null) {
+      return false;
+    }
+    if (analysis.isInNamespace(Namespace.TEMPLATE)) {
       return false;
     }
 
@@ -144,17 +148,7 @@ public class CheckErrorAlgorithm580 extends CheckErrorAlgorithmBase {
     if (tmpIndex == secondTemplate.getBeginIndex()) {
       CheckErrorResult errorResult = createCheckErrorResult(
           analysis, firstTemplate.getBeginIndex(), secondTemplate.getEndIndex());
-      boolean canDeleteSecondTemplate = false;
-      if ((firstTemplate.getParameterCount() == 0) && (secondTemplate.getParameterCount() == 0)) {
-        canDeleteSecondTemplate = true;
-      }
-      if ((firstTemplate.getParameterCount() > 0) && (secondTemplate.getParameterCount() > 0)) {
-        String firstValue = contents.substring(firstTemplate.getParameterPipeIndex(0), firstTemplate.getEndIndex());
-        String secondValue = contents.substring(secondTemplate.getParameterPipeIndex(0), secondTemplate.getEndIndex());
-        if (firstValue.equals(secondValue)) {
-          canDeleteSecondTemplate = true;
-        }
-      }
+      boolean canDeleteSecondTemplate = areDuplicates(firstTemplate, secondTemplate, contents);
       if (canDeleteSecondTemplate) {
         errorResult.addReplacement(
             contents.substring(firstTemplate.getBeginIndex(), firstTemplate.getEndIndex()),
@@ -179,9 +173,31 @@ public class CheckErrorAlgorithm580 extends CheckErrorAlgorithmBase {
       if (!reportedTemplates.contains(template)) {
         CheckErrorResult errorResult = createCheckErrorResult(
             analysis, template.getBeginIndex(), template.getEndIndex());
+        if (areDuplicates(firstTemplate, template, contents) &&
+            keepFirstDuplicate.contains(firstTemplate.getTemplateName()) &&
+            keepFirstDuplicate.contains(secondTemplate.getTemplateName())) {
+          errorResult.addReplacement("", true);
+        }
         errors.add(errorResult);
       }
     }
+  }
+
+  private boolean areDuplicates(
+      PageElementTemplate firstTemplate,
+      PageElementTemplate secondTemplate,
+      String contents) {
+    if ((firstTemplate.getParameterCount() == 0) && (secondTemplate.getParameterCount() == 0)) {
+      return true;
+    }
+    if ((firstTemplate.getParameterCount() > 0) && (secondTemplate.getParameterCount() > 0)) {
+      String firstValue = contents.substring(firstTemplate.getParameterPipeIndex(0), firstTemplate.getEndIndex());
+      String secondValue = contents.substring(secondTemplate.getParameterPipeIndex(0), secondTemplate.getEndIndex());
+      if (firstValue.equals(secondValue)) {
+        return true;
+      }
+    }
+    return false;
   }
 
   /**
@@ -208,6 +224,9 @@ public class CheckErrorAlgorithm580 extends CheckErrorAlgorithmBase {
   /** Templates without named parameters that are redundant */
   private static final String PARAMETER_UNNAMED_TEMPLATES = "templates_unnamed_parameters";
 
+  /** Templates for which we should keep the first duplicate */
+  private static final String PARAMETER_KEEP_FIRST_DUPLICATE = "keep_first_duplicate";
+
   /**
    * Initialize settings for the algorithm.
    * 
@@ -228,6 +247,15 @@ public class CheckErrorAlgorithm580 extends CheckErrorAlgorithmBase {
       WPCConfiguration.convertPropertyToStringArrayList(tmp).forEach(elements ->
           unnamedParametersTemplateNames.add(Arrays.stream(elements).map(Page::normalizeTitle).collect(Collectors.toSet())));
     }
+
+    tmp = getSpecificProperty(PARAMETER_KEEP_FIRST_DUPLICATE, true, true, false);
+    keepFirstDuplicate.clear();
+    if (tmp != null) {
+      WPCConfiguration.convertPropertyToStringArrayList(tmp).stream()
+          .flatMap(Arrays::stream)
+          .map(Page::normalizeTitle)
+          .forEach(keepFirstDuplicate::add);
+    }
   }
 
   /** Templates that are redundant */
@@ -235,6 +263,9 @@ public class CheckErrorAlgorithm580 extends CheckErrorAlgorithmBase {
 
   /** Templates without named parameters that are redundant */
   private final List<Set<String>> unnamedParametersTemplateNames = new ArrayList<>();
+
+  /** Templates for which we should keep only the first duplicate */
+  private final Set<String> keepFirstDuplicate = new HashSet<>();
 
   /**
    * Build the list of parameters for this algorithm.
@@ -252,6 +283,13 @@ public class CheckErrorAlgorithm580 extends CheckErrorAlgorithmBase {
     addParameter(new AlgorithmParameter(
         PARAMETER_UNNAMED_TEMPLATES,
         GT._T("Redundant templates when used with only unnamed parameters"),
+        new AlgorithmParameterElement[] {
+            new AlgorithmParameterElement("template", GT._T("Template name"), false, true)
+        },
+        true));
+    addParameter(new AlgorithmParameter(
+        PARAMETER_KEEP_FIRST_DUPLICATE,
+        GT._T("Templates for which we can keep only the first duplicate"),
         new AlgorithmParameterElement[] {
             new AlgorithmParameterElement("template", GT._T("Template name"), false, true)
         },
