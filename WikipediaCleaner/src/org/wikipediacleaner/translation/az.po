@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2023-07-03 11:30:21+0000\n"
+"PO-Revision-Date: 2023-07-06 11:35:40+0000\n"
 "Last-Translator: Rashid Aliyev <Unknown>\n"
 "Language-Team: Azerbaijani <az@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -18,8 +18,8 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Launchpad-Export-Date: 2014-09-21 06:01+0000\n"
-"X-Generator: MediaWiki 1.41.0-alpha; Translate 2023-04-26\n"
-"X-POT-Import-Date: 2023-07-02 14:30:30+0000\n"
+"X-Generator: MediaWiki 1.41.0-alpha; Translate 2023-07-10\n"
+"X-POT-Import-Date: 2023-07-04 22:30:22+0000\n"
 "Language: az\n"
 
 #: org/wikipediacleaner/Version.java:31
@@ -1178,7 +1178,9 @@ msgstr ""
 #: org/wikipediacleaner/api/check/algorithm/a1xx/a11x/a111/CheckErrorAlgorithm111.java:204
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a568/CheckErrorAlgorithm568.java:267
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a568/CheckErrorAlgorithm568.java:276
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a58x/a580/CheckErrorAlgorithm580.java:165
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a58x/a580/CheckErrorAlgorithm580.java:280
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a58x/a580/CheckErrorAlgorithm580.java:287
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a58x/a580/CheckErrorAlgorithm580.java:294
 #, fuzzy
 msgid "Template name"
 msgstr "Kateqoriyanı yoxla"
@@ -2049,8 +2051,16 @@ msgstr ""
 msgid "Template that shouldn't be used in list item"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a58x/a580/CheckErrorAlgorithm580.java:163
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a58x/a580/CheckErrorAlgorithm580.java:278
 msgid "Redundant templates"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a58x/a580/CheckErrorAlgorithm580.java:285
+msgid "Redundant templates when used with only unnamed parameters"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a58x/a580/CheckErrorAlgorithm580.java:292
+msgid "Templates for which we can keep only the first duplicate"
 msgstr ""
 
 #: org/wikipediacleaner/api/configuration/CWConfiguration.java:83
