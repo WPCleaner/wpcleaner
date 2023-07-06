@@ -153,6 +153,10 @@ public class CheckErrorAlgorithm580 extends CheckErrorAlgorithmBase {
         errorResult.addReplacement(
             contents.substring(firstTemplate.getBeginIndex(), firstTemplate.getEndIndex()),
             true);
+      } else if (isUnnamedParametersTemplate(firstTemplate) && isUnnamedParametersTemplate(secondTemplate)) {
+        String firstPart = contents.substring(firstTemplate.getBeginIndex(), firstTemplate.getEndIndex() - 2);
+        String secondPart = contents.substring(secondTemplate.getParameterPipeIndex(0), secondTemplate.getEndIndex());
+        errorResult.addReplacement(firstPart + secondPart, !firstPart.contains("}}") && !secondPart.contains("{{"));
       }
       errors.add(errorResult);
       reportedTemplates.add(firstTemplate);
@@ -181,6 +185,21 @@ public class CheckErrorAlgorithm580 extends CheckErrorAlgorithmBase {
         errors.add(errorResult);
       }
     }
+  }
+
+  private boolean isUnnamedParametersTemplate(PageElementTemplate template) {
+    if (template.getParameterCount() == 0) {
+      return false;
+    }
+    if (!mergeUnnamedParametersTemplateNames.contains(template.getTemplateName())) {
+      return false;
+    }
+    for (int paramNum = 0; paramNum < template.getParameterCount(); paramNum++) {
+      if (!"".equals(template.getParameter(paramNum).getName())) {
+        return false;
+      }
+    }
+    return true;
   }
 
   private boolean areDuplicates(
@@ -224,6 +243,9 @@ public class CheckErrorAlgorithm580 extends CheckErrorAlgorithmBase {
   /** Templates without named parameters that are redundant */
   private static final String PARAMETER_UNNAMED_TEMPLATES = "templates_unnamed_parameters";
 
+  /** Templates without named parameters that can be merged */
+  private static final String PARAMETER_MERGE_UNNAMED_TEMPLATES = "templates_merge_unnamed_parameters";
+
   /** Templates for which we should keep the first duplicate */
   private static final String PARAMETER_KEEP_FIRST_DUPLICATE = "keep_first_duplicate";
 
@@ -248,6 +270,15 @@ public class CheckErrorAlgorithm580 extends CheckErrorAlgorithmBase {
           unnamedParametersTemplateNames.add(Arrays.stream(elements).map(Page::normalizeTitle).collect(Collectors.toSet())));
     }
 
+    tmp = getSpecificProperty(PARAMETER_MERGE_UNNAMED_TEMPLATES, true, true, false);
+    mergeUnnamedParametersTemplateNames.clear();
+    if (tmp != null) {
+      WPCConfiguration.convertPropertyToStringArrayList(tmp).stream()
+          .flatMap(Arrays::stream)
+          .map(Page::normalizeTitle)
+          .forEach(mergeUnnamedParametersTemplateNames::add);
+    }
+
     tmp = getSpecificProperty(PARAMETER_KEEP_FIRST_DUPLICATE, true, true, false);
     keepFirstDuplicate.clear();
     if (tmp != null) {
@@ -267,6 +298,9 @@ public class CheckErrorAlgorithm580 extends CheckErrorAlgorithmBase {
   /** Templates for which we should keep only the first duplicate */
   private final Set<String> keepFirstDuplicate = new HashSet<>();
 
+  /** Templates without named parameters that can be merged */
+  private final Set<String> mergeUnnamedParametersTemplateNames = new HashSet<>();
+
   /**
    * Build the list of parameters for this algorithm.
    */
@@ -283,6 +317,13 @@ public class CheckErrorAlgorithm580 extends CheckErrorAlgorithmBase {
     addParameter(new AlgorithmParameter(
         PARAMETER_UNNAMED_TEMPLATES,
         GT._T("Redundant templates when used with only unnamed parameters"),
+        new AlgorithmParameterElement[] {
+            new AlgorithmParameterElement("template", GT._T("Template name"), false, true)
+        },
+        true));
+    addParameter(new AlgorithmParameter(
+        PARAMETER_MERGE_UNNAMED_TEMPLATES,
+        GT._T("Templates that can be merged when used with only unnamed parameters"),
         new AlgorithmParameterElement[] {
             new AlgorithmParameterElement("template", GT._T("Template name"), false, true)
         },
