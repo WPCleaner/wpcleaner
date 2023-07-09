@@ -100,75 +100,86 @@ public class CheckErrorAlgorithm090 extends CheckErrorAlgorithmBase {
     if (links == null) {
       return result;
     }
-    EnumWikipedia wiki = analysis.getWikipedia();
     for (PageElementExternalLink link : links) {
-      ArticleUrl articleUrl = ArticleUrl.isArticleUrl(wiki, link.getLink());
-      if (articleUrl != null) {
-        int index = link.getBeginIndex();
-        if ((analysis.getSurroundingTag(HtmlTagType.CODE, index) != null) ||
-            (analysis.getSurroundingTag(WikiTagType.SOURCE, index) != null) ||
-            (analysis.getSurroundingTag(WikiTagType.SYNTAXHIGHLIGHT, index) != null)) {
-          articleUrl = null;
-        }
-      }
-      if (articleUrl != null) {
-        if (errors == null) {
-          return true;
-        }
-        result = true;
-        boolean errorReported = false;
-        AnalysisInformation info = new AnalysisInformation(
-            analysis, link, articleUrl, wiki, errors);
-
-        // Check if link is in image as a link attribute
-        if (!errorReported) {
-          errorReported = checkImageLink(info);
-        }
-
-        // Retrieve information about link
-        info.computeLinkInformation();
-
-        // Check if link is in template
-        info.computeIsInTemplate(linkTemplates);
-
-        // Restrict automatic modifications
-        info.computeIsAutomatic();
-
-        // Check if link is in a timeline tag
-        if (!errorReported) {
-          errorReported = checkTimeline(info);
-        }
-
-        // Check if link is in a ref tag
-        if (!errorReported) {
-          errorReported = checkRefTag(info);
-        }
-
-        // Check links to special pages
-        if (!errorReported) {
-          errorReported = checkSpecialPrefixIndexLink(info);
-        }
-
-        // Check special kinds of links
-        if (!errorReported) {
-          errorReported = checkOldidLink(info);
-        }
-        if (!errorReported) {
-          errorReported = checkHistoryLink(info);
-        }
-
-        // Link with text
-        if (!errorReported) {
-          errorReported = reportLinkWithText(info);
-        }
-
-        // Link without text
-        if (!errorReported) {
-          errorReported = reportLinkWithoutText(info);
-        }
-      }
+      result |= analyzeExternalLink(analysis, errors, link);
     }
     return result;
+  }
+
+  private boolean analyzeExternalLink(
+      PageAnalysis analysis,
+      Collection<CheckErrorResult> errors,
+      PageElementExternalLink link) {
+    // Analyze external link
+    EnumWikipedia wiki = analysis.getWikipedia();
+    ArticleUrl articleUrl = ArticleUrl.isArticleUrl(wiki, link.getLink());
+    if (articleUrl == null) {
+      return false;
+    }
+
+    int index = link.getBeginIndex();
+    if ((analysis.getSurroundingTag(HtmlTagType.CODE, index) != null) ||
+        (analysis.getSurroundingTag(WikiTagType.SOURCE, index) != null) ||
+        (analysis.getSurroundingTag(WikiTagType.SYNTAXHIGHLIGHT, index) != null)) {
+      return false;
+    }
+
+    // Report error
+    if (errors == null) {
+      return true;
+    }
+
+    AnalysisInformation info = new AnalysisInformation(
+        analysis, link, articleUrl, wiki, errors);
+
+    // Check if link is in image as a link attribute
+    if (checkImageLink(info)) {
+      return true;
+    }
+
+    // Retrieve information about link
+    info.computeLinkInformation();
+
+    // Check if link is in template
+    info.computeIsInTemplate(linkTemplates);
+
+    // Restrict automatic modifications
+    info.computeIsAutomatic();
+
+    // Check if link is in a timeline tag
+    if (checkTimeline(info)) {
+      return true;
+    }
+
+    // Check if link is in a ref tag
+    if (checkRefTag(info)) {
+      return true;
+    }
+
+    // Check links to special pages
+    if (checkSpecialPrefixIndexLink(info)) {
+      return true;
+    }
+
+    // Check special kinds of links
+    if (checkOldidLink(info)) {
+      return true;
+    }
+    if (checkHistoryLink(info)) {
+      return true;
+    }
+
+    // Link with text
+    if (reportLinkWithText(info)) {
+      return true;
+    }
+
+    // Link without text
+    if (reportLinkWithoutText(info)) {
+      return true;
+    }
+
+    return true;
   }
 
   /**
