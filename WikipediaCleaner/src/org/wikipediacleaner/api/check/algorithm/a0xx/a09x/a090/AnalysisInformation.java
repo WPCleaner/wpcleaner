@@ -154,6 +154,7 @@ class AnalysisInformation {
     if (Page.areSameTitle(article, analysis.getPage().getTitle())) {
       automatic = false;
     }
+
     if (articleUrl.getAttributes() != null) {
       for (Map.Entry<String, String> attribute : articleUrl.getAttributes().entrySet()) {
         String key = attribute.getKey();
@@ -169,6 +170,12 @@ class AnalysisInformation {
           automatic = false;
         }
       }
+    }
+
+    // Avoid automatic replacement with scroll-to-text (T340849)
+    String target = link.getLink();
+    if ((target != null) && (target.indexOf(":~:") > 0) ) {
+      automatic = false;
     }
   }
 }
