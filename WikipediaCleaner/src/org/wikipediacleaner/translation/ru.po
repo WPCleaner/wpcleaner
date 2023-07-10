@@ -26,7 +26,7 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2023-07-06 11:35:46+0000\n"
+"PO-Revision-Date: 2023-07-10 12:01:49+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Russian <ru@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -36,7 +36,7 @@ msgstr ""
 "X-Launchpad-Export-Date: 2017-03-22 17:48+0000\n"
 "X-Generator: MediaWiki 1.41.0-alpha; Translate 2023-07-10\n"
 "Language: ru\n"
-"X-POT-Import-Date: 2023-07-04 22:30:22+0000\n"
+"X-POT-Import-Date: 2023-07-06 14:30:58+0000\n"
 
 #: org/wikipediacleaner/Version.java:31
 #, java-format
@@ -1190,9 +1190,10 @@ msgstr "Похожий ISSN"
 #: org/wikipediacleaner/api/check/algorithm/a1xx/a11x/a111/CheckErrorAlgorithm111.java:204
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a568/CheckErrorAlgorithm568.java:267
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a568/CheckErrorAlgorithm568.java:276
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a58x/a580/CheckErrorAlgorithm580.java:280
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a58x/a580/CheckErrorAlgorithm580.java:287
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a58x/a580/CheckErrorAlgorithm580.java:294
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a58x/a580/CheckErrorAlgorithm580.java:314
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a58x/a580/CheckErrorAlgorithm580.java:321
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a58x/a580/CheckErrorAlgorithm580.java:328
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a58x/a580/CheckErrorAlgorithm580.java:335
 msgid "Template name"
 msgstr "Имя шаблона"
 
@@ -1224,7 +1225,7 @@ msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a50x/a501/CheckErrorAlgorithm501.java:787
 msgid "Regular expression"
-msgstr ""
+msgstr "Регулярное выражение"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a50x/a504/CheckErrorAlgorithm504.java:104
 #, java-format
@@ -1831,7 +1832,7 @@ msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a563/CheckErrorAlgorithm563.java:248
 msgid "Parameters that should be ignored"
-msgstr ""
+msgstr "Параметры, которые следует игнорировать"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:137
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a568/CheckErrorAlgorithm568.java:129
@@ -2048,15 +2049,19 @@ msgstr ""
 msgid "Template that shouldn't be used in list item"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a58x/a580/CheckErrorAlgorithm580.java:278
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a58x/a580/CheckErrorAlgorithm580.java:312
 msgid "Redundant templates"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a58x/a580/CheckErrorAlgorithm580.java:285
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a58x/a580/CheckErrorAlgorithm580.java:319
 msgid "Redundant templates when used with only unnamed parameters"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a58x/a580/CheckErrorAlgorithm580.java:292
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a58x/a580/CheckErrorAlgorithm580.java:326
+msgid "Templates that can be merged when used with only unnamed parameters"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a58x/a580/CheckErrorAlgorithm580.java:333
 msgid "Templates for which we can keep only the first duplicate"
 msgstr ""
 
@@ -3685,12 +3690,12 @@ msgid "You must select a page to add it on your local watchlist"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/action/ActionWatchPage.java:183
-#, fuzzy, java-format
+#, java-format
 msgid "Would you like to add the page {0} on your local watchlist?"
 msgid_plural "Would you like to add these pages ({0}) on your local watchlist?"
-msgstr[0] "Хотите добавить эту страницу в локальный список наблюдения ?"
-msgstr[1] "Хотите добавить эти страницы в ваш локальный список наблюдения ?"
-msgstr[2] "Хотите добавить эти страницы в ваш локальный список наблюдения ?"
+msgstr[0] "Хотите добавить страницу {0} в локальный список наблюдения?"
+msgstr[1] "Хотите добавить эти страницы {0} в ваш локальный список наблюдения?"
+msgstr[2] "Хотите добавить эти страницы {0} в ваш локальный список наблюдения?"
 
 #: org/wikipediacleaner/gui/swing/action/CheckCategoryLinkAction.java:90
 #, java-format
