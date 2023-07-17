@@ -15,7 +15,7 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2023-07-10 12:01:42+0000\n"
+"PO-Revision-Date: 2023-07-17 11:29:14+0000\n"
 "Last-Translator: Aftabuzzaman <Leemon432@gmail.com>\n"
 "Language-Team: Bengali <bn@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -2038,7 +2038,7 @@ msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a58x/a580/CheckErrorAlgorithm580.java:312
 msgid "Redundant templates"
-msgstr ""
+msgstr "অপ্রয়োজনীয় টেমপ্লেট"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a58x/a580/CheckErrorAlgorithm580.java:319
 msgid "Redundant templates when used with only unnamed parameters"
