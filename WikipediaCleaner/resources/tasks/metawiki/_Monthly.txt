@@ -32,7 +32,7 @@ FixCheckWiki 88
 
 Set TimeLimit 86400
 Set Prefix [[:en:WP:WCW|Fix_CW_error_#90]]
-FixCheckWiki 90
+# FixCheckWiki 90
 
 Set TimeLimit 86400
 Set Prefix [[:en:WP:WCW|Fix_CW_error_#93]]
