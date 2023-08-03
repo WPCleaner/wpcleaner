@@ -26,7 +26,7 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2023-07-10 12:01:49+0000\n"
+"PO-Revision-Date: 2023-08-03 11:31:46+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Russian <ru@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -641,11 +641,11 @@ msgstr "Максимальное количество символов, испо
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a03x/a037/CheckErrorAlgorithm037.java:236
 msgid "List of templates that prevent automatic fixing of this error"
-msgstr ""
+msgstr "Список шаблонов, препятствующих автоматическому исправлению этой ошибки"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a03x/a037/CheckErrorAlgorithm037.java:239
 msgid "Template that prevent automatic fixing of this error"
-msgstr ""
+msgstr "Шаблон, препятствующих автоматическому исправлению этой ошибки"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a04x/a044/CheckErrorAlgorithm044.java:37
 msgid "Fix all bold headlines"
@@ -783,7 +783,7 @@ msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a067/CheckErrorAlgorithm067.java:552
 msgid "Parameter of the template"
-msgstr ""
+msgstr "Параметр шаблона"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a068/CheckErrorAlgorithm068.java:54
 msgid "Check all links to other language"
@@ -1052,7 +1052,7 @@ msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a08x/a084/CheckErrorAlgorithm084.java:176
 msgid "Maximum level of title to check"
-msgstr ""
+msgstr "Максимальный уровень заголовка для проверки"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a08x/a085/CheckErrorAlgorithm085.java:300
 #: org/wikipediacleaner/api/check/algorithm/a1xx/a11x/a112/CheckErrorAlgorithm112.java:645
@@ -1167,7 +1167,7 @@ msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a1xx/a10x/a101/CheckErrorAlgorithm101.java:171
 msgid "List of possible replacements"
-msgstr ""
+msgstr "Список возможных замен"
 
 #: org/wikipediacleaner/api/check/algorithm/a1xx/a10x/a101/CheckErrorAlgorithm101.java:174
 msgid "A possible replacemement for one suffix"
@@ -1230,7 +1230,7 @@ msgstr "Регулярное выражение"
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a50x/a504/CheckErrorAlgorithm504.java:104
 #, java-format
 msgid "Use template {0}"
-msgstr ""
+msgstr "Использовать шаблон {0}"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a50x/a504/CheckErrorAlgorithm504.java:109
 msgid "Remove references"
@@ -1242,7 +1242,7 @@ msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a50x/a504/CheckErrorAlgorithm504.java:160
 msgid "Comment about the template"
-msgstr ""
+msgstr "Комментарий к шаблону"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a50x/a509/CheckErrorAlgorithm509.java:32
 msgid "Compact links"
@@ -1671,7 +1671,7 @@ msgstr "Имя заменяемого параметра"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a545/CheckErrorAlgorithm545.java:337
 msgid "Value of the deprecated parameter"
-msgstr ""
+msgstr "Значение устаревшего параметра"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a545/CheckErrorAlgorithm545.java:340
 msgid "Name of the replacement parameter"
@@ -2205,7 +2205,7 @@ msgstr "Длинные страницы"
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:31
 msgid "Media statistics"
-msgstr ""
+msgstr "Статистика медиа"
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:32
 msgid "Pages with the most categories"
@@ -2265,7 +2265,7 @@ msgstr "Некатегоризованные шаблоны"
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:46
 msgid "Unconnected pages"
-msgstr ""
+msgstr "Несвязанные страницы"
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:47
 msgid "Unused categories"
@@ -4794,7 +4794,7 @@ msgstr "Выберите размер шрифта редактора"
 
 #: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:146
 msgid "Select other font name"
-msgstr ""
+msgstr "Выберите другое название шрифта"
 
 #: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:161
 msgid "Increase font size"
