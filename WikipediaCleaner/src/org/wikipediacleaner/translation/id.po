@@ -14,7 +14,7 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2023-07-10 12:01:45+0000\n"
+"PO-Revision-Date: 2023-09-28 11:32:29+0000\n"
 "Last-Translator: iwean <iwan.novirion@gmail.com>\n"
 "Language-Team: Indonesian <id@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -229,7 +229,7 @@ msgstr ""
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISSN.java:320
 #, java-format
 msgid "Ask for help using {0}"
-msgstr ""
+msgstr "Minta bantuan penggunaan {0}"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISBN.java:395
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISSN.java:345
@@ -549,7 +549,7 @@ msgstr ""
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a04x/a045/CheckErrorAlgorithm045.java:36
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a05x/a059/CheckErrorAlgorithm059.java:42
 msgid "Delete all"
-msgstr ""
+msgstr "Hapus semua"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a018/CheckErrorAlgorithm018.java:31
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a02x/a022/CheckErrorAlgorithm022.java:33

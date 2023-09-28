@@ -10,6 +10,7 @@
 # Author: דגש
 # Author: דגש חזק
 # Author: מקף
+# Author: נדב ס
 # --
 # This file is distributed under the same license as the wikicleaner package.
 #
@@ -19,7 +20,7 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2023-07-10 12:01:45+0000\n"
+"PO-Revision-Date: 2023-09-28 11:32:28+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Hebrew <he@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -38,15 +39,15 @@ msgstr "ההרחבה {0} זמינה עכשיו בכל אתרי הוויקי של
 
 #: org/wikipediacleaner/Version.java:32
 msgid "It identifies wikitext patterns that must or can be fixed in pages."
-msgstr ""
+msgstr "היא מזהה דפוסים חוזרים בקוד ויקי, שאפשר – או אפילו חובה – לתקן בדפים."
 
 #: org/wikipediacleaner/Version.java:33
 msgid "It also provides some guidance about what the issues are with those patterns and how to fix them."
-msgstr ""
+msgstr "היא גם מספקת הסברים לגבי הבעיות שבדפוסים וגם הדרכה לגבי הדרך לתקן אותן."
 
 #: org/wikipediacleaner/Version.java:35
 msgid "You can help by fixing problems identified by the Linter extension."
-msgstr ""
+msgstr "באפשרותך לעזור ולתקן בעיות שזוהו על־ידי ההרחבה Linter."
 
 #: org/wikipediacleaner/Version.java:36
 #, java-format
@@ -55,7 +56,7 @@ msgstr ""
 
 #: org/wikipediacleaner/Version.java:38
 msgid "The \"Linter categories\" button in this window lets you retrieve a list of pages detected by Linter for a given type of problem."
-msgstr ""
+msgstr "כפתור „קטגוריות Linter“ בחלון הזה מאפשר לך לאחזר רשימת דפים שבהם Linter זיהה בעיה מסוג נתון."
 
 #: org/wikipediacleaner/Version.java:39
 msgid "The \"Check article with Linter\" button in the analysis window lets you check the current version of an article against Linter."
@@ -87,7 +88,7 @@ msgstr ""
 
 #: org/wikipediacleaner/Version.java:51
 msgid "The Check Wiki project has evolved a lot recently."
-msgstr ""
+msgstr "מיזם Check Wiki התפתח רבות לאחרונה."
 
 #: org/wikipediacleaner/Version.java:52
 msgid "New detections have been added either with new error numbers or by replacing previously used error numbers."
@@ -205,7 +206,7 @@ msgstr "למחוק"
 
 #: org/wikipediacleaner/api/check/CheckErrorResult.java:329
 msgid "Edit table of contents"
-msgstr ""
+msgstr "עריכת תוכן העניינים"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmBase.java:306
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmBase.java:309
@@ -258,7 +259,7 @@ msgstr ""
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISSN.java:472
 #, java-format
 msgid "Search ISBN {0}"
-msgstr ""
+msgstr "חיפוש מסת\"ב {0}"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISBN.java:544
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISSN.java:412
@@ -285,11 +286,11 @@ msgstr ""
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a001/CheckErrorAlgorithm001.java:92
 #, java-format
 msgid "Remove {0} namespace from template name"
-msgstr ""
+msgstr "להסיר את מרחב השם {0} משם התבנית"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a002/CheckErrorAlgorithm002.java:48
 msgid "Fix all incorrect tags"
-msgstr "לתקן את כל התגים השגויים"
+msgstr "תיקון כל התגים השגויים"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a002/CheckErrorAlgorithm002.java:681
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a002/CheckErrorAlgorithm002.java:689
@@ -342,11 +343,11 @@ msgstr "שם התבנית"
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a573/CheckErrorAlgorithm573.java:243
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a576/CheckErrorAlgorithm576.java:238
 msgid "Name of the parameter"
-msgstr ""
+msgstr "שם הפרמטר"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a003/CheckErrorAlgorithm003.java:128
 msgid "Close tag"
-msgstr ""
+msgstr "סגירת תג"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a003/CheckErrorAlgorithm003.java:380
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a003/CheckErrorAlgorithm003.java:383
@@ -370,32 +371,32 @@ msgstr "תבנית שתוצאתה היא הכללה של {0}"
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a003/CheckErrorAlgorithm003.java:400
 #, java-format
 msgid "Section headings where a {0} can be added"
-msgstr ""
+msgstr "כותרות פרקים שניתן להוסיף בהן {0}"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a003/CheckErrorAlgorithm003.java:403
 #, java-format
 msgid "Section heading where a {0} can be added"
-msgstr ""
+msgstr "כותרת פרק שניתן להוסיף בה {0}"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a003/CheckErrorAlgorithm003.java:407
 #, java-format
 msgid "Section headings where a {0} can be added before"
-msgstr ""
+msgstr "כותרות פרקים שניתן להוסיף לפניהן {0}"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a003/CheckErrorAlgorithm003.java:410
 #, java-format
 msgid "Section heading where a {0} can be added before"
-msgstr ""
+msgstr "כותרת פרק שניתן להוסיף לפניה {0}"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a003/CheckErrorAlgorithm003.java:414
 #, java-format
 msgid "Templates where a {0} can be added before"
-msgstr ""
+msgstr "תבניות שניתן להוסיף {0} לפניהן"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a003/CheckErrorAlgorithm003.java:417
 #, java-format
 msgid "Template where a {0} can be added before"
-msgstr ""
+msgstr "תבנית שניתן להוסיף {0} לפניה"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a005/CheckErrorAlgorithm005.java:81
 msgid "Properly end the comment"
@@ -423,12 +424,12 @@ msgstr ""
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a08x/a089/CheckErrorAlgorithm089_Old.java:31
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a090/CheckErrorAlgorithm090_Old.java:31
 msgid "Fix DEFAULTSORT"
-msgstr ""
+msgstr "תיקון מיון רגיל"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a006/CheckErrorAlgorithm006.java:101
 #, java-format
 msgid "Unable to replace the characters [{0}]"
-msgstr ""
+msgstr "לא ניתן להחליף את התווים [{0}]"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a009/CheckErrorAlgorithm009.java:245
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a017/CheckErrorAlgorithm017.java:363
@@ -451,7 +452,7 @@ msgstr ""
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a016/CheckErrorAlgorithm016.java:40
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a016/CheckErrorAlgorithm016.java:283
 msgid "Remove all control characters"
-msgstr ""
+msgstr "הסרת כל תווי הבקרה"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a016/CheckErrorAlgorithm016.java:394
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a016/CheckErrorAlgorithm016.java:397
@@ -468,7 +469,7 @@ msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a016/CheckErrorAlgorithm016.java:411
 msgid "Non-breaking space"
-msgstr ""
+msgstr "רווח קשיח"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a016/CheckErrorAlgorithm016.java:412
 msgid "Soft hyphen"
@@ -608,7 +609,7 @@ msgstr "הצגת התמונה"
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a559/CheckErrorAlgorithm559.java:335
 #, java-format
 msgid "Templates that can be used to replace {0} tags"
-msgstr ""
+msgstr "תבניות שיכולות להחליף תגי {0}"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a03x/a033/CheckErrorAlgorithm033.java:147
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a061/CheckErrorAlgorithm061.java:506
@@ -616,12 +617,12 @@ msgstr ""
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a559/CheckErrorAlgorithm559.java:338
 #, java-format
 msgid "Template that can be used to replace {0} tags"
-msgstr ""
+msgstr "תבנית שיכולה להחליף תגי {0}"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a03x/a037/CheckErrorAlgorithm037.java:163
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a091/CheckErrorAlgorithm091_Old.java:99
 msgid "Add DEFAULTSORT"
-msgstr ""
+msgstr "הוספת מיון רגיל"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a03x/a037/CheckErrorAlgorithm037.java:230
 msgid "Restrict the detection to the first characters"
@@ -680,7 +681,7 @@ msgstr ""
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:330
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a572/CheckErrorAlgorithm572.java:288
 msgid "Name of the group"
-msgstr ""
+msgstr "שם הקבוצה"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a04x/a048/CheckErrorAlgorithm048.java:441
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a521/CheckErrorAlgorithm521.java:461
@@ -689,7 +690,7 @@ msgstr ""
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:333
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a572/CheckErrorAlgorithm572.java:291
 msgid "Name of a template in the group"
-msgstr ""
+msgstr "שם של תבנית בקבוצה"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a05x/a054/CheckErrorAlgorithm054.java:38
 msgid "Remove breaks in list"
@@ -703,7 +704,7 @@ msgstr ""
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a571/CheckErrorAlgorithm571.java:242
 #, java-format
 msgid "Remove {0} tags"
-msgstr ""
+msgstr "הסרת תגי {0}"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a05x/a057/CheckErrorAlgorithm057.java:32
 msgid "Fix all titles"
@@ -711,15 +712,15 @@ msgstr "תיקון כל הכותרות"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a05x/a059/CheckErrorAlgorithm059.java:227
 msgid "A list of templates that should be ignored"
-msgstr ""
+msgstr "רשימה של תבניות שיש להתעלם מהן"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a05x/a059/CheckErrorAlgorithm059.java:230
 msgid "A template that should be ignored"
-msgstr ""
+msgstr "תבנית שיש להתעלם ממנה"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a060/CheckErrorAlgorithm060.java:194
 msgid "Templates to be ignored"
-msgstr ""
+msgstr "תבניות שיש להתעלם מהן"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a061/CheckErrorAlgorithm061.java:491
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a061/CheckErrorAlgorithm061.java:494
@@ -749,7 +750,7 @@ msgstr "הוספת {0}"
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a062/CheckErrorAlgorithm062.java:153
 #, java-format
 msgid "Remove {0}"
-msgstr ""
+msgstr "הסרת {0}"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a064/CheckErrorAlgorithm064.java:38
 msgid "Modify all internal links"
@@ -775,7 +776,7 @@ msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a067/CheckErrorAlgorithm067.java:552
 msgid "Parameter of the template"
-msgstr ""
+msgstr "פרמטר של התבנית"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a068/CheckErrorAlgorithm068.java:54
 msgid "Check all links to other language"
@@ -965,11 +966,11 @@ msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a079/CheckErrorAlgorithm079.java:114
 msgid "Convert into <ref> tag"
-msgstr ""
+msgstr "המרה לתג <ref>"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a079/CheckErrorAlgorithm079.java:116
 msgid "Add a description and convert into <ref> tag"
-msgstr ""
+msgstr "הוספת תיאור והמרה לתג <ref>"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a079/CheckErrorAlgorithm079.java:136
 msgid "External viewer"
@@ -981,7 +982,7 @@ msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a08x/a081/CheckErrorAlgorithm081.java:194
 msgid "Both tags have already the same name"
-msgstr ""
+msgstr "לשני התגים כבר יש שם זהה"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a08x/a081/CheckErrorAlgorithm081.java:197
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a08x/a081/CheckErrorAlgorithm081.java:211
@@ -998,7 +999,7 @@ msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a08x/a081/CheckErrorAlgorithm081.java:313
 msgid "Give a name to the <ref> tag"
-msgstr ""
+msgstr "מתן שם לתג ה־<ref>"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a08x/a081/CheckErrorAlgorithm081.java:318
 msgid "What name would you like to use for the <ref> tag ?"

@@ -7,6 +7,7 @@
 # Author: GuoPC
 # Author: Lakejason0
 # Author: Lantx
+# Author: LittlePaw365
 # Author: Qiyue2001
 # Author: Shuiwater
 # Author: SomeyaMako
@@ -25,7 +26,7 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2023-07-10 12:01:50+0000\n"
+"PO-Revision-Date: 2023-09-28 11:32:39+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Chinese (Simplified) <zh_CN@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -1552,7 +1553,7 @@ msgstr "修复分类"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a53x/a538/CheckErrorAlgorithm538.java:29
 msgid "Remove whitespace characters"
-msgstr "删除空白字符"
+msgstr "删除空格字符"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a540/CheckErrorAlgorithm540.java:47
 msgid "Fix bold and italic"

@@ -26,7 +26,7 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2023-08-03 11:31:46+0000\n"
+"PO-Revision-Date: 2023-09-28 11:32:36+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Russian <ru@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -118,7 +118,7 @@ msgstr "Это магическое слово должно быть добав�
 
 #: org/wikipediacleaner/Version.java:57
 msgid "WPCleaner v1.28 also uses this as the default system."
-msgstr ""
+msgstr "WPCleaner v1.28 также использует её в качестве системы по умолчанию."
 
 #: org/wikipediacleaner/Version.java:58
 msgid "An action may be required on your wiki:"
@@ -1221,7 +1221,7 @@ msgstr "Каждый раз заменять с помощью"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a50x/a501/CheckErrorAlgorithm501.java:783
 msgid "Regular expressions to be disabled"
-msgstr ""
+msgstr "Регулярные выражения, которые нужно отключить"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a50x/a501/CheckErrorAlgorithm501.java:787
 msgid "Regular expression"
