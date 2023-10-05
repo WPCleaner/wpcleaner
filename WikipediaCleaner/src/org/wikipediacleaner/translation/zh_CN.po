@@ -26,7 +26,7 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2023-09-28 11:32:39+0000\n"
+"PO-Revision-Date: 2023-10-05 11:32:52+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Chinese (Simplified) <zh_CN@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -3793,7 +3793,7 @@ msgstr "发生错误：{0}"
 
 #: org/wikipediacleaner/gui/swing/basic/Utilities.java:127
 msgid "An unknown error occurred"
-msgstr "发生未知错误"
+msgstr "出现未知错误"
 
 #: org/wikipediacleaner/gui/swing/basic/Utilities.java:187
 #, java-format
