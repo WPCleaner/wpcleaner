@@ -1,6 +1,7 @@
 # Translation of WPCleaner to Asturian (asturianu)
 # Exported from translatewiki.net
 #
+# Author: YoaR
 # --
 # This file is distributed under the same license as the wikicleaner package.
 #
@@ -10,7 +11,7 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2023-10-19 11:33:39+0000\n"
+"PO-Revision-Date: 2023-10-26 11:34:10+0000\n"
 "Last-Translator: Xuacu Saturio <xuacusk8@gmail.com>\n"
 "Language-Team: Asturian <ast@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -816,7 +817,7 @@ msgstr "Nun trocar"
 #: org/wikipediacleaner/gui/swing/Controller.java:303
 #: org/wikipediacleaner/gui/swing/action/ActionDispose.java:37
 msgid "Cancel"
-msgstr "Encaboxar"
+msgstr "Zarrar"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a068/CheckErrorAlgorithm068.java:316
 #, java-format
