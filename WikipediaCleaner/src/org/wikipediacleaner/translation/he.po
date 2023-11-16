@@ -20,7 +20,7 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2023-11-02 12:31:59+0000\n"
+"PO-Revision-Date: 2023-11-16 12:32:26+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Hebrew <he@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -112,7 +112,7 @@ msgstr ""
 
 #: org/wikipediacleaner/Version.java:57
 msgid "WPCleaner v1.28 also uses this as the default system."
-msgstr ""
+msgstr "WPCleaner v1.28 גם כן משתמש בזה כברירת המחדל."
 
 #: org/wikipediacleaner/Version.java:58
 msgid "An action may be required on your wiki:"
@@ -130,7 +130,7 @@ msgstr ""
 
 #: org/wikipediacleaner/Version.java:70
 msgid "Many new features were added recently : try them !"
-msgstr ""
+msgstr "מגוון יכולות חדשות נוספו לאחרונה: מומלץ לנסות אותן!"
 
 #: org/wikipediacleaner/Version.java:72
 msgid "Leaving a note on talk pages with the list of links to disambiguation pages."
@@ -147,12 +147,12 @@ msgstr ""
 #: org/wikipediacleaner/api/MediaWiki.java:301
 #, java-format
 msgid "Updating page {0}"
-msgstr ""
+msgstr "מתבצע עדכון הדף {0}"
 
 #: org/wikipediacleaner/api/MediaWiki.java:316
 #, java-format
 msgid "The page {0} has been modified."
-msgstr ""
+msgstr "הדף {0} נערך."
 
 #: org/wikipediacleaner/api/MediaWiki.java:317
 msgid "Do you want to continue?"
@@ -175,7 +175,7 @@ msgstr "אין תיאור זמין"
 #: org/wikipediacleaner/api/algorithm/AlgorithmError.java:422
 #, java-format
 msgid "Error n°{0} ({1} - {2}) - {3}"
-msgstr ""
+msgstr "שגיאה מס׳ {0} ({1} - {2}) - {3}"
 
 #: org/wikipediacleaner/api/check/CheckErrorResult.java:200
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a02x/a026/CheckErrorAlgorithm026.java:106
@@ -211,7 +211,7 @@ msgstr "עריכת תוכן העניינים"
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmBase.java:306
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmBase.java:309
 msgid "Title of the article describing this type of error"
-msgstr ""
+msgstr "כותרת הערך שמתאר את סוג השגיאה הזאת"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmBase.java:312
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmBase.java:315
