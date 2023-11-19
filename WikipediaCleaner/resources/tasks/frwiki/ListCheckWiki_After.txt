@@ -5,7 +5,7 @@ Set Namespaces 0
 Set Prefix [[Utilisateur:WikiCleanerBot#T3|Bot_T3_PCS#524]]
 FixCheckWiki 524
 UpdateDuplicateArgsWarnings
-Set Prefix [[Utilisateur:WikiCleanerBot#T3|Bot_T3_PCS#536]]
+Set Prefix [[Utilisateur:WikiCleanerBot#T3|Bot_T3_PCS#526]]
 FixCheckWiki 526
 Set Prefix [[Utilisateur:WikiCleanerBot#T3|Bot_T3_PCS#1]]
 FixListCheckWiki Projet:Correction_syntaxique/Analyse_001 1
