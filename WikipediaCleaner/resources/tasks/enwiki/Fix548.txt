@@ -1,3 +1,0 @@
-DoTasks _Common.txt
-Set Prefix [[User:WikiCleanerBot#T12|Bot_T12]]
-FixListCheckWiki Wikipedia:CHECKWIKI/WPC_548_dump 548

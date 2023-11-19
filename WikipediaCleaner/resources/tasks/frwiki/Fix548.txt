@@ -1,3 +1,0 @@
-DoTasks _Common.txt
-Set Prefix [[User:WikiCleanerBot#T12|Bot_T12_CW#548]]
-FixListCheckWiki Projet:Correction_syntaxique/Analyse_548 548

@@ -1,8 +1,0 @@
-DoTasks _Common.txt
-Set Namespaces 0
-Set Configuration MaxLintErrors 100000
-Set Prefix [[User:WikiCleanerBot#T17|Bot_T17]]
-# Set RangeBegin
-FixFileCheckWiki C:\Users\Nicolas\CW_enwiki_513.txt 513
-# FixLintError wikilink-in-extlink 513
-# FixListCheckWiki Wikipedia:CHECKWIKI/WPC_513_dump 513

@@ -1,0 +1,5 @@
+DoTasks ../_Common.txt
+Set Namespaces 0
+FixCategoryCheckWiki Page_avec_ISBN_invalide 69
+FixListCheckWiki Projet:Correction_syntaxique/Analyse_069 69
+FixCheckWiki 69

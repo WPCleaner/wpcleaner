@@ -1,0 +1,5 @@
+DoTasks ../_Common.txt
+Set Namespaces 0 6
+FixDump C:\Users\Nicolas\Downloads\frwiki-$-pages-articles.xml.bz2 81
+# FixListCheckWiki Projet:Correction_syntaxique/Analyse_081 81
+FixCheckWiki 81

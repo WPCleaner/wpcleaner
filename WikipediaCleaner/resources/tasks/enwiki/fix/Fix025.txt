@@ -1,0 +1,8 @@
+DoTasks ../_Common.txt
+Set Prefix [[User:WikiCleanerBot#T19|Bot_T19_CW#25]]
+FixCheckWiki 25
+FixListCheckWiki Wikipedia:CHECKWIKI/WPC_025_dump 25
+
+DoTasks ../_Common_Other.txt
+Set Namespaces 6
+FixListCheckWiki Wikipedia:CHECKWIKI/WPC_025_dump 25

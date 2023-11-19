@@ -1,3 +1,0 @@
-DoTasks _Common.txt
-FixListCheckWiki Projet:Correction_syntaxique/Analyse_572 572
-# FixDump C:\Users\Nicolas\Downloads\frwiki-$-pages-articles.xml.bz2 572

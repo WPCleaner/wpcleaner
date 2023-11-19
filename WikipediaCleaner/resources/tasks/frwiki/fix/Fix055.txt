@@ -1,0 +1,16 @@
+DoTasks ../_Common.txt
+Set Prefix [[Utilisateur:WikiCleanerBot#T3|Bot_T3_PCS#55]]
+FixListCheckWiki Projet:Correction_syntaxique/Analyse_055 55
+# FixDump C:\Users\Nicolas\Downloads\frwiki-$-pages-articles.xml.bz2 55
+
+# File namespace
+DoTasks ../_Common_Other.txt
+Set Namespaces 6
+# FixListCheckWiki Projet:Correction_syntaxique/Analyse_055 55
+# FixDump C:\Users\Nicolas\Downloads\frwiki-$-pages-articles.xml.bz2 55
+
+# Category namespace
+DoTasks ../_Common_Other.txt
+Set Namespaces 14
+# FixListCheckWiki Projet:Correction_syntaxique/Analyse_055 55
+# FixDump C:\Users\Nicolas\Downloads\frwiki-$-pages-articles.xml.bz2 55

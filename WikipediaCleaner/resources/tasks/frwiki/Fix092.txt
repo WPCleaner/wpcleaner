@@ -1,3 +1,0 @@
-DoTasks _Common.txt
-Set Namespaces 0 6
-FixListCheckWiki Projet:Correction_syntaxique/Analyse_092 92

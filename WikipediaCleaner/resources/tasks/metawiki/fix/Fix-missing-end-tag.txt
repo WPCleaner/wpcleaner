@@ -1,0 +1,5 @@
+Set Prefix [[Special:LintErrors/missing-end-tag]]
+Set Configuration MaxLintErrors 100000
+DoTasks ../_Common.txt
+Set Namespaces 0
+FixLintError missing-end-tag 532 540

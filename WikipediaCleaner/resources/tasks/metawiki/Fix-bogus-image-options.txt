@@ -1,5 +1,0 @@
-Set Prefix [[Special:LintErrors/bogus-image-options]]
-Set Configuration MaxLintErrors 100000
-DoTasks _Common.txt
-Set Namespaces 0
-FixLintError bogus-image-options 534

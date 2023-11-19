@@ -1,9 +1,0 @@
-DoTasks _Common.txt
-
-Set Prefix [[Wikipedia:Bots/Requests_for_approval/WikiCleanerBot_19|Bot_T19_CW#7]]
-FixCheckWiki 7
-FixListCheckWiki Wikipedia:CHECKWIKI/WPC_007_dump 7
-
-DoTasks _Common_Other.txt
-Set Namespaces 6
-FixListCheckWiki Wikipedia:CHECKWIKI/WPC_007_dump 7

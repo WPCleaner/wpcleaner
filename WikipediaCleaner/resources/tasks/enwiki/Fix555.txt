@@ -1,9 +1,0 @@
-DoTasks _Common.txt
-Set AdditionalAlgorithms 555
-Set Configuration TimeBetweenEdit 40
-
-Set Prefix [[User:WikiCleanerBot#T25|Bot_T25_CW#555]]
-Set Prefix [[Wikipedia:Bots/Requests_for_approval/WikiCleanerBot_25|Bot_Test_T25_CW#555]]
-FixListCheckWiki Wikipedia:CHECKWIKI/WPC_555_dump 555
-# FixFileCheckWiki C:\Users\Nicolas\CW_enwiki_555.txt 555
-# FixDump C:\Users\Nicolas\Downloads\enwiki-$-pages-articles.xml.bz2 555

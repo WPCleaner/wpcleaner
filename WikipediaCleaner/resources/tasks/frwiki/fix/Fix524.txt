@@ -1,0 +1,12 @@
+DoTasks ../_Common.txt
+Set Namespaces 0 6
+# FixListCheckWiki Projet:Correction_syntaxique/Analyse_524 524
+FixCheckWiki 524
+
+DoTasks ../_Common_Other.txt
+Set Namespaces 2 4 100 102
+# FixCheckWiki 524
+
+DoTasks ../_Common_Talk.txt
+Set Namespaces 1
+# FixCheckWiki 524

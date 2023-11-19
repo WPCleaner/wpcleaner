@@ -1,8 +1,0 @@
-DoTasks _Common.txt
-Set Prefix [[User:WikiCleanerBot#T19|Bot_T19_CW#83]]
-FixCheckWiki 83
-FixListCheckWiki Wikipedia:CHECKWIKI/WPC_083_dump 83
-
-DoTasks _Common_Other.txt
-Set Namespaces 6
-FixListCheckWiki Wikipedia:CHECKWIKI/WPC_083_dump 83

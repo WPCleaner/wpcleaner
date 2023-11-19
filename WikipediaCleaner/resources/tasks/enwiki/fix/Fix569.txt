@@ -1,0 +1,14 @@
+DoTasks ../_Common.txt
+
+Set Prefix [[User:WikiCleanerBot#T27|Bot_T27_CW#569]]
+Set Configuration TimeBetweenEdit 30
+FixListCheckWiki Wikipedia:CHECKWIKI/WPC_569_dump 569
+# FixFileCheckWiki C:\Users\Nicolas\CW_enwiki_569.txt 569
+# FixDump C:\Users\Nicolas\Downloads\enwiki-$-pages-articles.xml.bz2 569
+
+DoTasks ../_Common_Other.txt
+Set Namespaces 6
+FixListCheckWiki Wikipedia:CHECKWIKI/WPC_569_dump 569
+
+Set Namespaces 14
+FixListCheckWiki Wikipedia:CHECKWIKI/WPC_569_dump 569

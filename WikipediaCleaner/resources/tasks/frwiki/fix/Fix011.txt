@@ -1,0 +1,17 @@
+DoTasks ../_Common.txt
+Set HTML_pour_des_caractères_particuliers
+FixCheckWiki 11
+# FixListCheckWiki Projet:Correction_syntaxique/Analyse_011 11
+# FixDump C:\Users\Nicolas\Downloads\frwiki-$-pages-articles.xml.bz2 11
+
+# File namespace
+DoTasks ../_Common_Other.txt
+Set Namespaces 6
+# FixListCheckWiki Projet:Correction_syntaxique/Analyse_011 11
+# FixDump C:\Users\Nicolas\Downloads\frwiki-$-pages-articles.xml.bz2 11
+
+# Category namespace
+DoTasks ../_Common_Other.txt
+Set Namespaces 14
+# FixListCheckWiki Projet:Correction_syntaxique/Analyse_011 11
+# FixDump C:\Users\Nicolas\Downloads\frwiki-$-pages-articles.xml.bz2 11

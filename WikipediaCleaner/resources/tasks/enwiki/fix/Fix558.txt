@@ -1,0 +1,7 @@
+DoTasks ../_Common.txt
+
+Set Prefix [[User:WikiCleanerBot#T23|Bot_T23_CW#558]]
+# Set RangeBegin List
+FixListCheckWiki Wikipedia:CHECKWIKI/WPC_558_dump 558
+# FixFileCheckWiki C:\Users\Nicolas\CW_enwiki_558.txt 558
+# FixDump C:\Users\Nicolas\Downloads\enwiki-$-pages-articles.xml.bz2 558

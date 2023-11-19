@@ -1,0 +1,4 @@
+DoTasks ../_Common.txt
+Set Configuration SlowRegexp 10000
+Set Configuration TimeBetweenEdit 20
+FixDump C:\Users\Nicolas\Downloads\frwiki-$-pages-articles.xml.bz2 501

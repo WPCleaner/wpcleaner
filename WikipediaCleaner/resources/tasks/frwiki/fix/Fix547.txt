@@ -1,0 +1,3 @@
+DoTasks ../_Common.txt
+Set Prefix [[Utilisateur:WikiCleanerBot#T3|Bot_T3_PCS#547]]
+FixListCheckWiki Projet:Correction_syntaxique/Analyse_547 547

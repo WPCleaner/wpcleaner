@@ -1,0 +1,27 @@
+DoTasks ../_Common.txt
+Set Prefix [[Catégorie:Page_utilisant_des_liens_magiques_ISBN]]
+FixCategoryCheckWiki Catégorie:Page_utilisant_des_liens_magiques_ISBN 529
+# FixListCheckWiki Projet:Correction_syntaxique/Analyse_529 529
+# FixDump C:\Users\Nicolas\Downloads\frwiki-$-pages-articles.xml.bz2 529
+
+# File namespace
+DoTasks ../_Common_Other.txt
+Set Namespaces 6
+FixCategoryCheckWiki Catégorie:Page_utilisant_des_liens_magiques_ISBN 529
+# FixListCheckWiki Projet:Correction_syntaxique/Analyse_529 529
+# FixDump C:\Users\Nicolas\Downloads\frwiki-$-pages-articles.xml.bz2 529
+
+# Category namespace
+DoTasks ../_Common_Other.txt
+Set Namespaces 14
+FixCategoryCheckWiki Catégorie:Page_utilisant_des_liens_magiques_ISBN 529
+# FixListCheckWiki Projet:Correction_syntaxique/Analyse_529 529
+# FixDump C:\Users\Nicolas\Downloads\frwiki-$-pages-articles.xml.bz2 529
+
+# Other namespaces
+DoTasks ../_Common_Other.txt
+Set AdditionalAlgorithms 529
+Set Namespaces 2 3 4 5 100 101 102 103
+FixCategoryCheckWiki Catégorie:Page_utilisant_des_liens_magiques_ISBN 529
+# FixListCheckWiki Projet:Correction_syntaxique/Analyse_529 529
+# FixDump C:\Users\Nicolas\Downloads\frwiki-$-pages-articles.xml.bz2 529

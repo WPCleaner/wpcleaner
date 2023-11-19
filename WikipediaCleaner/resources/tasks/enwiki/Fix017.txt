@@ -1,8 +1,0 @@
-DoTasks _Common.txt
-Set Prefix [[User:WikiCleanerBot#T5|Bot_T5_CW#17]]
-FixListCheckWiki Wikipedia:CHECKWIKI/WPC_017_dump 17
-FixCheckWiki 17
-
-DoTasks _Common_Other.txt
-Set Namespaces 6
-FixListCheckWiki Wikipedia:CHECKWIKI/WPC_017_dump 17

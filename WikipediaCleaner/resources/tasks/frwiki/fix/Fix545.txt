@@ -1,0 +1,4 @@
+DoTasks ../_Common.txt
+# FixFileCheckWiki C:\Users\Nicolas\CW_frwiki_545.txt 545
+FixListCheckWiki Projet:Correction_syntaxique/Analyse_545 545
+# FixDump C:\Users\Nicolas\Downloads\frwiki-$-pages-articles.xml.bz2 545

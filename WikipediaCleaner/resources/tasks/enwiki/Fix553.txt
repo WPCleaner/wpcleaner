@@ -1,3 +1,0 @@
-DoTasks _Common.txt
-Set Prefix [[User:WikiCleanerBot#T18|Bot_T18]]
-FixListCheckWiki Wikipedia:CHECKWIKI/WPC_553_dump 553

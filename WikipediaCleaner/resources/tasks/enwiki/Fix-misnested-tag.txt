@@ -1,7 +1,0 @@
-DoTasks _Common.txt
-Set Namespaces 0
-
-Set Prefix [[User:WikiCleanerBot#T10|Bot_T10_Special:LintError/misnested-tag]]
-Set Configuration MaxLintErrors 100000
-# FixDump C:\Users\Nicolas\Downloads\enwiki-$-pages-articles.xml.bz2 539
-FixLintError misnested-tag 539
