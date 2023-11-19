@@ -8,6 +8,7 @@
 package org.wikipediacleaner.gui.swing.bot;
 
 import java.util.Collection;
+import java.util.LinkedList;
 import java.util.List;
 
 import org.wikipediacleaner.api.API;
@@ -62,17 +63,24 @@ public class AutomaticListCWWorker extends AutomaticFixWorker {
   @Override
   public Object construct() {
     try {
-      API api = APIFactory.getAPI();
-      api.retrieveLinks(getWikipedia(), list, null, null, false, false);
-      for (Page page : list.getLinks()) {
+      final List<Page> links = getLinks();
+      while (!links.isEmpty()) {
         if (!shouldContinue()) {
           return null;
         }
+        final Page page = links.remove(0);
         analyzePage(page, selectedAlgorithms, null);
       }
     } catch (APIException e) {
       return e;
     }
     return null;
+  }
+  
+  private List<Page> getLinks() throws APIException {
+    final API api = APIFactory.getAPI();
+    final Page tmpPage = list.replicatePage();
+    api.retrieveLinks(getWikipedia(), tmpPage, null, null, false, false);
+    return new LinkedList<>(tmpPage.getLinks());
   }
 }
