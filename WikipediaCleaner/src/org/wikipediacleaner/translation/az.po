@@ -1,6 +1,7 @@
 # Translation of WPCleaner to Azerbaijani (azərbaycanca)
 # Exported from translatewiki.net
 #
+# Author: Şeyx Şamil
 # --
 # This file is distributed under the same license as the wikicleaner package.
 #
@@ -10,7 +11,7 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2023-11-02 12:31:55+0000\n"
+"PO-Revision-Date: 2023-11-20 12:35:33+0000\n"
 "Last-Translator: Rashid Aliyev <Unknown>\n"
 "Language-Team: Azerbaijani <az@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -25,7 +26,7 @@ msgstr ""
 #: org/wikipediacleaner/Version.java:31
 #, java-format
 msgid "{0} extension is now available on all WikiMedia wikis."
-msgstr ""
+msgstr "{0} uzantısı indi bütün WikiMedia vikilərində əlçatandır."
 
 #: org/wikipediacleaner/Version.java:32
 msgid "It identifies wikitext patterns that must or can be fixed in pages."
@@ -279,9 +280,8 @@ msgid "Remove {0} namespace from template name"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a002/CheckErrorAlgorithm002.java:48
-#, fuzzy
 msgid "Fix all incorrect tags"
-msgstr "Bütün <br/> teqlərini düzəlt"
+msgstr "Bütün yanlış etiketləri düzəldin"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a002/CheckErrorAlgorithm002.java:681
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a002/CheckErrorAlgorithm002.java:689
@@ -628,11 +628,11 @@ msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a03x/a037/CheckErrorAlgorithm037.java:236
 msgid "List of templates that prevent automatic fixing of this error"
-msgstr ""
+msgstr "Bu xətanın avtomatik düzəldilməsinə mane olan şablonların siyahısı"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a03x/a037/CheckErrorAlgorithm037.java:239
 msgid "Template that prevent automatic fixing of this error"
-msgstr ""
+msgstr "Bu xətanın avtomatik düzəldilməsinə mane olan şablon"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a04x/a044/CheckErrorAlgorithm044.java:37
 msgid "Fix all bold headlines"
@@ -666,7 +666,7 @@ msgstr ""
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:326
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a572/CheckErrorAlgorithm572.java:284
 msgid "Groups of templates"
-msgstr ""
+msgstr "Şablon qrupları"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a04x/a048/CheckErrorAlgorithm048.java:438
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a521/CheckErrorAlgorithm521.java:458
@@ -675,7 +675,7 @@ msgstr ""
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:330
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a572/CheckErrorAlgorithm572.java:288
 msgid "Name of the group"
-msgstr ""
+msgstr "Qrupun adı"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a04x/a048/CheckErrorAlgorithm048.java:441
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a521/CheckErrorAlgorithm521.java:461
@@ -684,7 +684,7 @@ msgstr ""
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:333
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a572/CheckErrorAlgorithm572.java:291
 msgid "Name of a template in the group"
-msgstr ""
+msgstr "Qrupdakı şablonun adı"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a05x/a054/CheckErrorAlgorithm054.java:38
 msgid "Remove breaks in list"
@@ -702,7 +702,7 @@ msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a05x/a057/CheckErrorAlgorithm057.java:32
 msgid "Fix all titles"
-msgstr ""
+msgstr "Bütün başlıqları düzəldin"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a05x/a059/CheckErrorAlgorithm059.java:227
 msgid "A list of templates that should be ignored"
