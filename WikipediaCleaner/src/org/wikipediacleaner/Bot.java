@@ -320,7 +320,7 @@ public class Bot implements BasicWorkerListener {
       try (BufferedReader reader = new BufferedReader(new FileReader(tasks))) {
         String line = null;
         while ((line = reader.readLine()) != null) {
-          if (line.trim().length() > 0) {
+          if (line.trim().length() > 0 && !line.startsWith("#")) {
             String[] tmpArgs = line.split(" +");
             if ((tmpArgs != null) && (tmpArgs.length > 0)) {
               actions.add(actionNum, new Action(tmpArgs, tasks.getParentFile()));
