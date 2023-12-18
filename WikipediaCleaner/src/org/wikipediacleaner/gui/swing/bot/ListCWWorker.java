@@ -26,6 +26,7 @@ import java.util.Set;
 import java.util.concurrent.Callable;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -447,8 +448,8 @@ public class ListCWWorker extends BasicWorker {
     }
 
     // Prepare list of pages
-    List<Detection> tmpPages = new ArrayList<>(pages);
-    Collections.sort(tmpPages);
+    List<Detection> tmpPages = new ArrayList<>(
+        pages.stream().filter(page -> page != null).sorted().collect(Collectors.toList()));
 
     // Output to file
     outputResultToFile(algorithm, tmpPages, output);
