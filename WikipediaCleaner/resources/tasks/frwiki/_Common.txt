@@ -4,4 +4,5 @@ Set AdditionalTypoGroups bogus-image-options CT CW566 espaces galerie galerie_bi
 Set Configuration SlowRegexp 1000
 Set Configuration TimeBetweenEdit 5
 Set Configuration MaxEditsPerMinute 10
+Set Configuration MaxLintErrors 10000
 DoTasks _Local.txt
