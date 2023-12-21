@@ -41,6 +41,7 @@ public class WikiTagType extends TagType {
   private static final String REFERENCES_NAME      = "references";
 
   private static final String SCORE_NAME           = "score";
+  private static final String SECTION_NAME         = "section";
   private static final String SOURCE_NAME          = "source";
   private static final String SYNTAXHIGHLIGHT_NAME = "syntaxhighlight";
 
@@ -73,6 +74,7 @@ public class WikiTagType extends TagType {
   public static final WikiTagType REFERENCES      = createRegularTag(REFERENCES_NAME);
 
   public static final WikiTagType SCORE           = createRegularTag(SCORE_NAME);
+  public static final WikiTagType SECTION         = createRegularTag(SECTION_NAME);
   public static final WikiTagType SOURCE          = createRegularTag(SOURCE_NAME);
   public static final WikiTagType SYNTAXHIGHLIGHT = createRegularTag(SYNTAXHIGHLIGHT_NAME);
 

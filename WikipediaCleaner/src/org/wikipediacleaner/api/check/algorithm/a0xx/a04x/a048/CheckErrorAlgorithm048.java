@@ -35,6 +35,7 @@ import org.wikipediacleaner.api.data.contents.ilink.InternalLinkBuilder;
 import org.wikipediacleaner.api.data.contents.magicword.FunctionMagicWordType;
 import org.wikipediacleaner.api.data.contents.magicword.MagicWord;
 import org.wikipediacleaner.api.data.contents.magicword.MagicWordType;
+import org.wikipediacleaner.api.data.contents.tag.TagType;
 import org.wikipediacleaner.api.data.contents.tag.WikiTagType;
 import org.wikipediacleaner.api.data.contents.template.TemplateBuilder;
 import org.wikipediacleaner.gui.swing.component.MWPane;
@@ -104,6 +105,9 @@ public class CheckErrorAlgorithm048 extends CheckErrorAlgorithmBase {
           FunctionMagicWordType.SECTION_H,
           FunctionMagicWordType.SECTION_X)
       .collect(Collectors.toSet());
+  private static final Set<TagType> EXCLUDE_TAGS = Stream
+      .of(WikiTagType.SECTION)
+      .collect(Collectors.toSet());
 
   /**
    * Analyze an internal link to check if errors are present.
@@ -152,6 +156,12 @@ public class CheckErrorAlgorithm048 extends CheckErrorAlgorithmBase {
     for (PageElementFunction function : functions) {
       MagicWord magicWord = function.getMagicWord();
       if ((magicWord != null) && EXCLUDE_MAGIC_WORDS.contains(magicWord.getType())) {
+        return false;
+      }
+    }
+    for (TagType tagType : EXCLUDE_TAGS) {
+      List<PageElementTag> tags =analysis.getTags(tagType);
+      if ((tags != null) && !tags.isEmpty()) {
         return false;
       }
     }
