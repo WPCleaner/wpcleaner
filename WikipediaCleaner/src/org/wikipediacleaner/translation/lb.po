@@ -11,7 +11,7 @@
 msgid ""
 msgstr ""
 ""
-"PO-Revision-Date: 2023-12-14 12:25:30+0000\n"
+"PO-Revision-Date: 2023-12-21 12:29:51+0000\n"
 "X-POT-Import-Date: 2023-07-06 14:30:58+0000\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -3201,7 +3201,7 @@ msgstr "&Ofbriechen"
 #: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:245
 #, java-format
 msgid "Analysis - {0}"
-msgstr "Analyse - {0}"
+msgstr "Analys - {0}"
 
 #: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:457
 msgid "Mark the selected text as being in a foreign language"
@@ -3551,7 +3551,7 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/action/ActionCheckArticle.java:309
 #: org/wikipediacleaner/gui/swing/worker/CheckArticleWorker.java:52
 msgid "Analysis"
-msgstr "Analyse"
+msgstr "Analys"
 
 #: org/wikipediacleaner/gui/swing/action/ActionCheckTemplate.java:41
 msgid "Check template"
