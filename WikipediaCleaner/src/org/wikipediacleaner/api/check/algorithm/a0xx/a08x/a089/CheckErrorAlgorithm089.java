@@ -13,6 +13,7 @@ import java.util.List;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.SpecialCharacters;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase;
+import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.PageElementFunction;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
 
@@ -87,14 +88,36 @@ public class CheckErrorAlgorithm089 extends CheckErrorAlgorithmBase {
     String replacement = value.substring(0, commaIndex).trim() + ", " + value.substring(commaIndex + 1).trim();
     final String pageTitle = analysis.getPage().getTitle();
     final String testValue = value.substring(commaIndex + 1).trim() + " " + value.substring(0, commaIndex).trim();
-    boolean automatic = pageTitle.equalsIgnoreCase(testValue) ||
-        SpecialCharacters.replaceAllSpecialCharacters(pageTitle, analysis.getWikipedia()).equalsIgnoreCase(testValue);
+    final String testValue2 = value.substring(commaIndex + 1).trim() + value.substring(0, commaIndex).trim();
+    boolean automatic = areTitlesSimilar(pageTitle, testValue, analysis.getWikipedia())
+        || areTitlesSimilar(pageTitle, testValue2, analysis.getWikipedia());
     errorResult.addReplacement(PageElementFunction.createFunction(
         defaultSort.getFunctionName(),
         replacement.toString()),
         automatic);
     errors.add(errorResult);
     return true;
+  }
+
+  private boolean areTitlesSimilar(String title, String test, EnumWikipedia wiki) {
+    if (title.equalsIgnoreCase(test)) {
+      return true;
+    }
+    String modifiedTitle = SpecialCharacters.replaceAllSpecialCharacters(title, wiki);
+    String modifiedTest = SpecialCharacters.replaceAllSpecialCharacters(test, wiki);
+    if (modifiedTitle.equalsIgnoreCase(modifiedTest)) {
+      return true;
+    }
+    modifiedTitle = modifiedTitle.replace('-', ' ');
+    modifiedTest = modifiedTest.replace('-', ' ');
+    int openParenthesis = modifiedTitle.indexOf('(');
+    if (openParenthesis > 0) {
+      modifiedTitle = modifiedTitle.substring(0, openParenthesis).trim();
+    }
+    if (modifiedTitle.equalsIgnoreCase(modifiedTest)) {
+      return true;
+    }
+    return false;
   }
 
   /**
