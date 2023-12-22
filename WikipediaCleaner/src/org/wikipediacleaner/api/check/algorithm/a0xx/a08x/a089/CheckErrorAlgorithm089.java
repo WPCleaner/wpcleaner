@@ -86,7 +86,7 @@ public class CheckErrorAlgorithm089 extends CheckErrorAlgorithmBase {
         analysis,
         defaultSort.getBeginIndex(), defaultSort.getEndIndex());
     String replacement = value.substring(0, commaIndex).trim() + ", " + value.substring(commaIndex + 1).trim();
-    final String pageTitle = analysis.getPage().getTitle();
+    final String pageTitle = analysis.getPage().getValuePAGENAME();
     final String testValue = value.substring(commaIndex + 1).trim() + " " + value.substring(0, commaIndex).trim();
     final String testValue2 = value.substring(commaIndex + 1).trim() + value.substring(0, commaIndex).trim();
     boolean automatic = areTitlesSimilar(pageTitle, testValue, analysis.getWikipedia())
