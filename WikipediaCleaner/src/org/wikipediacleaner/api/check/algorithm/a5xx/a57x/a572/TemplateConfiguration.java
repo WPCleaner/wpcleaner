@@ -42,11 +42,14 @@ class TemplateConfiguration {
 
   @Nonnull private final Map<String, Map<String, String>> valuesToReplace;
 
+  @Nonnull private final Map<String, List<String>> confusions;
+
   private TemplateConfiguration(@Nonnull String templateName) {
     this.templateName = templateName;
     this.caseSensitiveValues = new HashMap<>();
     this.caseInsensitiveValues = new HashMap<>();
     this.valuesToReplace = new HashMap<>();
+    this.confusions = new HashMap<>();
   }
 
   public @Nonnull String getTemplateName() {
@@ -209,5 +212,59 @@ class TemplateConfiguration {
           paramName,
           k -> new HashMap<>()).put(oldParamValue, newParamValue);
     }
+  }
+
+  /**
+   * Add possible parameter confusions from the full raw configuration.
+   * 
+   * @param rawConfiguration Raw configuration for possible parameter confusions.
+   * @param configuration Configuration.
+   * @param configurationGroup Configuration of groups of templates.
+   */
+  public static void addConfusions(
+      @Nullable List<String[]> rawConfiguration,
+      @Nonnull Map<String, TemplateConfiguration> configuration,
+      @Nonnull TemplateConfigurationGroup configurationGroup) {
+    if (rawConfiguration == null) {
+      return;
+    }
+    for (String[] line : rawConfiguration) {
+      addConfusions(line, configuration, configurationGroup);
+    }
+  }
+
+  /**
+   * Add possible parameter confusions from one line of the raw configuration.
+   * 
+   * @param rawConfiguration Line of the raw configuration for possible parameter confusions.
+   * @param configuration Configuration.
+   * @param configurationGroup Configuration of groups of templates.
+   */
+  private static void addConfusions(
+      @Nullable String[] rawConfiguration,
+      @Nonnull Map<String, TemplateConfiguration> configuration,
+      @Nonnull TemplateConfigurationGroup configurationGroup) {
+    if ((rawConfiguration == null) || (rawConfiguration.length < 3)) {
+      return;
+    }
+    for (String templateName : configurationGroup.getTemplateNames(rawConfiguration[0])) {
+      TemplateConfiguration templateConfig = configuration.computeIfAbsent(
+          templateName,
+          k -> new TemplateConfiguration(templateName));
+      String paramName = rawConfiguration[1].trim();
+      List<String> values = new ArrayList<>();
+      for (int paramNum = 2; paramNum < rawConfiguration.length; paramNum++) {
+        values.add(rawConfiguration[paramNum].trim());
+      }
+      templateConfig.confusions.put(paramName, values);
+    }
+  }
+  
+  public List<String> getPossibleConfusion(@Nonnull String paramName) {
+    return confusions.getOrDefault(paramName, Collections.emptyList());
+  }
+  
+  public boolean isPossibleConfusion(@Nonnull String paramName, @Nonnull String otherParamName) {
+    return getPossibleConfusion(paramName).contains(otherParamName);
   }
 }

@@ -148,7 +148,16 @@ public class CheckErrorAlgorithm572 extends CheckErrorAlgorithmBase {
         .collect(Collectors.toList());
     if (!paramsWithSameValue.isEmpty()) {
       paramsWithSameValue.forEach(param -> errorResult.addText(GT._T("Same value as parameter {0}", param.getName())));
-      errorResult.addReplacement("");
+      boolean automatic = paramsWithSameValue.stream()
+          .anyMatch(param -> templateConfiguration.isPossibleConfusion(templateParam.getName(), param.getName()));
+      errorResult.addReplacement("", automatic);
+    }
+    for (String otherParamName : templateConfiguration.getPossibleConfusion(templateParam.getName())) {
+      if (template.getParameterIndex(otherParamName) < 0) {
+        errorResult.addReplacement(TemplateParameterSuggestion
+            .replaceParam(analysis.getContents(), templateParam, otherParamName, templateParam.getValueNotTrimmed(), false)
+            .getReplacement());
+      }
     }
     errors.add(errorResult);
     return true;
@@ -228,6 +237,9 @@ public class CheckErrorAlgorithm572 extends CheckErrorAlgorithmBase {
   /** Values that can be safely replaced */
   private static final String PARAMETER_REPLACE_VALUES = "replace_values";
 
+  /** Possible confusions in parameter names */
+  private static final String PARAMETER_CONFUSION = "confusion";
+  
   /**
    * Initialize settings for the algorithm.
    * 
@@ -256,6 +268,11 @@ public class CheckErrorAlgorithm572 extends CheckErrorAlgorithmBase {
     if (tmp != null) {
       List<String[]> tmpList = WPCConfiguration.convertPropertyToStringArrayList(tmp);
       TemplateConfiguration.addValuesToReplace(tmpList, configurationByTemplateName, group);
+    }
+    tmp = getSpecificProperty(PARAMETER_CONFUSION, true, true, false);
+    if (tmp != null) {
+      List<String[]> tmpList = WPCConfiguration.convertPropertyToStringArrayList(tmp);
+      TemplateConfiguration.addConfusions(tmpList, configurationByTemplateName, group);
     }
 
     dumpAnalysis = getSpecificProperty(PARAMETER_DUMP_ANALYSIS, true, true, false);
@@ -329,6 +346,23 @@ public class CheckErrorAlgorithm572 extends CheckErrorAlgorithmBase {
             new AlgorithmParameterElement(
                 "target value",
                 GT._T("Target value of the parameter"))
+        },
+        true));
+    addParameter(new AlgorithmParameter(
+        PARAMETER_CONFUSION,
+        GT._T("Possible confusions with another parameter"),
+        new AlgorithmParameterElement[] {
+            new AlgorithmParameterElement(
+                "template",
+                GT._T("Name of the template")),
+            new AlgorithmParameterElement(
+                "param",
+                GT._T("Name of the parameter")),
+            new AlgorithmParameterElement(
+                "value",
+                GT._T("Value of the par,ameter"),
+                false,
+                true)
         },
         true));
   }
