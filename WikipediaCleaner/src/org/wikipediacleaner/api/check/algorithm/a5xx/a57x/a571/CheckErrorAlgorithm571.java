@@ -179,7 +179,9 @@ public class CheckErrorAlgorithm571 extends CheckErrorAlgorithmBase {
           (template.getBeginIndex() == refTag.getValueBeginIndex())) {
         boolean canBeSafelyDeleted = false;
         String textAfterDeletion = contents.substring(refTag.getValueBeginIndex(), citeTag.getCompleteBeginIndex()).trim();
-        canBeSafelyDeleted = analysis.getCompleteTags(WikiTagType.REF).stream()
+        PageElementTag.Parameter dataVEIgnore = citeTag.getParameter("data-ve-ignore");
+        canBeSafelyDeleted |= dataVEIgnore != null && "true".equals(dataVEIgnore.getValue());
+        canBeSafelyDeleted |= analysis.getCompleteTags(WikiTagType.REF).stream()
             .filter(currentTag -> !Objects.equals(currentTag, refTag))
             .map(currentTag -> contents.substring(currentTag.getValueBeginIndex(), currentTag.getValueEndIndex()).trim())
             .anyMatch(currentContent -> Objects.equals(currentContent, textAfterDeletion));
