@@ -360,7 +360,7 @@ public class CheckErrorAlgorithm572 extends CheckErrorAlgorithmBase {
                 GT._T("Name of the parameter")),
             new AlgorithmParameterElement(
                 "value",
-                GT._T("Value of the par,ameter"),
+                GT._T("Value of the parameter"),
                 false,
                 true)
         },
