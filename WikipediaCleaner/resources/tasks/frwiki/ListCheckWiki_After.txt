@@ -122,6 +122,8 @@ Set Prefix [[Utilisateur:WikiCleanerBot#T3|Bot_T3_PCS#578]]
 FixListCheckWiki Projet:Correction_syntaxique/Analyse_578 578
 Set Prefix [[Utilisateur:WikiCleanerBot#T3|Bot_T3_PCS#579]]
 FixListCheckWiki Projet:Correction_syntaxique/Analyse_579 579
+Set Prefix [[Utilisateur:WikiCleanerBot#T3|Bot_T3_PCS#581]]
+FixListCheckWiki Projet:Correction_syntaxique/Analyse_581 581
 Set Prefix [[Utilisateur:WikiCleanerBot#T3|Bot_T3_PCS#564]]
 UpdateUnknownParameterWarnings
 

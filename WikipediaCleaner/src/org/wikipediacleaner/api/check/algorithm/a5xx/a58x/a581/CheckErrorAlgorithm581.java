@@ -90,12 +90,17 @@ public class CheckErrorAlgorithm581 extends CheckErrorAlgorithmBase {
       return false;
     }
 
+    // Ignore in some situations
+    if (analysis.getSurroundingTag(WikiTagType.NOWIKI, refTag.getBeginIndex()) != null) {
+      return false;
+    }
+
     // Report error
     CheckErrorResult errorResult = createCheckErrorResult(analysis, refTag.getBeginIndex(), refTag.getEndIndex());
     if (refTag.getParametersCount() == 1) {
       errorResult.addReplacement(
           TagBuilder.from(WikiTagType.REF, refTag.isEndTag(), refTag.isFullTag()).toString(),
-          false);
+          !refTag.isEndTag() && !refTag.isFullTag());
     }
     errors.add(errorResult);
 
