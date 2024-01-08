@@ -12,6 +12,7 @@ import java.util.Collection;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase;
 import org.wikipediacleaner.api.data.PageElementTag;
+import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
 import org.wikipediacleaner.api.data.contents.tag.WikiTagType;
 
@@ -135,6 +136,15 @@ public class CheckErrorAlgorithm551 extends CheckErrorAlgorithmBase {
         boolean automatic = !unclosedTags;
         if ((countItalic % 2 != 0) || (countBold % 2 != 0)) {
           automatic = false;
+        }
+        PageElementTemplate template = analysis.isInTemplate(currentIndex);
+        if (template != null) {
+          PageElementTemplate.Parameter param = template.getParameterAtIndex(currentIndex);
+          if (param != null) {
+            if (currentIndex >= param.getValueStartIndex() + param.getValue().length()) {
+              automatic = false;
+            }
+          }
         }
 
         // Report error
