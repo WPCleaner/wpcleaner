@@ -76,7 +76,7 @@ public class CheckErrorAlgorithm581 extends CheckErrorAlgorithmBase {
    * @param refTag Reference tag to analyze.
    * @return Flag indicating if the error was found.
    */
-  public boolean analyzeTag(
+  private boolean analyzeTag(
       PageAnalysis analysis,
       Collection<CheckErrorResult> errors,
       PageElementTag refTag) {
