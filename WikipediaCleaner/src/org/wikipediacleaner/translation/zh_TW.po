@@ -14,7 +14,7 @@
 msgid ""
 msgstr ""
 ""
-"PO-Revision-Date: 2024-01-04 12:31:19+0000\n"
+"PO-Revision-Date: 2024-01-11 12:40:02+0000\n"
 "X-POT-Import-Date: 2023-12-25 19:48:06+0000\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -2109,7 +2109,7 @@ msgstr "屬性 {0} 應為整數值"
 #: org/wikipediacleaner/api/constants/Contributions.java:44
 #, java-format
 msgid "You have done the following contributions on \"{0}\":"
-msgstr ""
+msgstr "您已對「{0}」做出了以下貢獻："
 
 #: org/wikipediacleaner/api/constants/Contributions.java:50
 #, java-format
@@ -2333,7 +2333,7 @@ msgstr "重新導向"
 #: org/wikipediacleaner/api/data/TemplateMatcher1LT.java:87
 #, java-format
 msgid "Replace parameter {0} with {1}"
-msgstr ""
+msgstr "將參數{0}替換成{1}"
 
 #: org/wikipediacleaner/api/data/TemplateMatcher1L2T.java:65
 #, java-format
@@ -2414,7 +2414,7 @@ msgstr "自動修正"
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:235
 msgid "This feature may modify a lot of pages in a short period of time."
-msgstr ""
+msgstr "此功能可能會在短時間內修改大量頁面。"
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:236
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:767
@@ -2714,7 +2714,7 @@ msgstr "系統資訊"
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:704
 msgid "You must select an installation folder."
-msgstr ""
+msgstr "您必須選擇一個安裝目錄。"
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:711
 #, java-format
@@ -2728,7 +2728,7 @@ msgstr "安裝目錄 {0} 已存在，是否要將 WPCleaner 安裝於此？"
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:721
 msgid "Existing files may be deleted by the installation process."
-msgstr ""
+msgstr "安裝過程可能會刪除現有檔案。"
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:729
 #, java-format
@@ -2995,7 +2995,7 @@ msgstr "Linter 分類"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:843
 msgid "Generate lists"
-msgstr ""
+msgstr "產生清單"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:852
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1832
@@ -3075,7 +3075,7 @@ msgstr "{0}的搜尋結果"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1350
 msgid "You must input a page name for retrieving the list of backlinks"
-msgstr ""
+msgstr "您必須輸入一個頁面名稱來檢索反向連結清單"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1366
 #, java-format
@@ -3469,15 +3469,15 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/PageCommentsWindow.java:158
 msgid "Max backlinks in Main :"
-msgstr ""
+msgstr "在主命名空間的最多反向連結數："
 
 #: org/wikipediacleaner/gui/swing/PageCommentsWindow.java:186
 msgid "Max backlinks in Template :"
-msgstr ""
+msgstr "在模板的最多反向連結數："
 
 #: org/wikipediacleaner/gui/swing/PageCommentsWindow.java:214
 msgid "Max backlinks in other namespaces :"
-msgstr ""
+msgstr "在其他命名空間的最多反向連結數："
 
 #: org/wikipediacleaner/gui/swing/PageCommentsWindow.java:272
 msgid "&OK"
@@ -3600,22 +3600,22 @@ msgstr "插入文字"
 #: org/wikipediacleaner/gui/swing/action/ActionOccurrence.java:66
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:220
 msgid "Next occurrence"
-msgstr ""
+msgstr "下一次出現"
 
 #: org/wikipediacleaner/gui/swing/action/ActionOccurrence.java:56
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:210
 msgid "First occurrence"
-msgstr ""
+msgstr "第一次出現"
 
 #: org/wikipediacleaner/gui/swing/action/ActionOccurrence.java:61
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:225
 msgid "Last occurrence"
-msgstr ""
+msgstr "最後一次出現"
 
 #: org/wikipediacleaner/gui/swing/action/ActionOccurrence.java:71
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:215
 msgid "Previous occurrence"
-msgstr ""
+msgstr "上一次出現"
 
 #: org/wikipediacleaner/gui/swing/action/ActionPasteText.java:46
 msgid "Paste"
@@ -4296,7 +4296,7 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/component/CloseTabComponent.java:79
 msgid "Close this tab"
-msgstr ""
+msgstr "關閉此分頁"
 
 #: org/wikipediacleaner/gui/swing/component/MWPanePopupListener.java:251
 #: org/wikipediacleaner/gui/swing/component/MWPanePopupListener.java:283
@@ -5114,11 +5114,11 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:176
 msgid "Backlinks"
-msgstr ""
+msgstr "反向連結"
 
 #: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:212
 msgid "Select disambiguation pages with too many backlinks"
-msgstr ""
+msgstr "選擇反向連結過多的消歧義頁面"
 
 #: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:220
 msgid "Analyze pages with links to disambiguation pages"
@@ -5161,12 +5161,12 @@ msgstr ""
 #, java-format
 msgid "{0} page"
 msgid_plural "{0} pages"
-msgstr[0] ""
+msgstr[0] "{0} 個頁面"
 
 #: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:593
 #, java-format
 msgid "Backlinks - Main namespace: {0}, All namespaces: {1}"
-msgstr ""
+msgstr "反向連結 - 主命名空間：{0}，全部命名空間：{1}"
 
 #: org/wikipediacleaner/gui/swing/pagelist/PageListWorker.java:87
 msgid "All articles"
@@ -5190,7 +5190,7 @@ msgstr "帶有缺少模板的頁面"
 
 #: org/wikipediacleaner/gui/swing/pagelist/PageListWorker.java:92
 msgid "Protected titles with links from articles"
-msgstr ""
+msgstr "帶有來自條目連結的受保護標題"
 
 #: org/wikipediacleaner/gui/swing/pagelist/PageListWorker.java:171
 msgid "You have loaded the list of all disambiguation pages to speed up page analysis.\nDo you want to display the list of all disambiguation pages ?"
