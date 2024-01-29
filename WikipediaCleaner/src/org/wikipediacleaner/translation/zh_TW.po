@@ -14,7 +14,7 @@
 msgid ""
 msgstr ""
 ""
-"PO-Revision-Date: 2024-01-25 12:31:26+0000\n"
+"PO-Revision-Date: 2024-01-29 12:32:06+0000\n"
 "X-POT-Import-Date: 2023-12-25 19:48:06+0000\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -1621,11 +1621,11 @@ msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a545/CheckErrorAlgorithm545.java:274
 msgid "Categories listing pages using templates with deprecated parameters"
-msgstr ""
+msgstr "列出使用已棄用參數模板頁面的分類"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a545/CheckErrorAlgorithm545.java:277
 msgid "Name of a category listing pages using templates with deprecated parameters"
-msgstr ""
+msgstr "列出使用已棄用參數模板頁面的分類名稱"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a545/CheckErrorAlgorithm545.java:295
 msgid "Templates with deprecated parameters"
@@ -1970,7 +1970,7 @@ msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a568/CheckErrorAlgorithm568.java:277
 msgid "Parameter name with the formatnum"
-msgstr ""
+msgstr "帶有 formatnum 的參數名稱"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a568/CheckErrorAlgorithm568.java:278
 msgid "Parameter name that can contain a reference"
@@ -2950,7 +2950,7 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:729
 msgid "Load list from drive"
-msgstr ""
+msgstr "從設備載入清單"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:738
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1234
@@ -2973,7 +2973,7 @@ msgstr "目前消歧義清單"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:789
 msgid "With many disambiguation links"
-msgstr ""
+msgstr "有過多消歧義連結"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:798
 msgid "Project Check Wikipedia"
@@ -3044,7 +3044,7 @@ msgstr "在登入前您必須輸入您的密碼"
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1086
 #, java-format
 msgid "You can learn how to configure {0} at the following URL:"
-msgstr ""
+msgstr "您可以透過以下 URL 來了解如何組態{0}："
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1134
 msgid "Activate all"
@@ -3118,11 +3118,11 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1597
 msgid "Without templates"
-msgstr ""
+msgstr "不帶模板"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1600
 msgid "With templates"
-msgstr ""
+msgstr "帶模板"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1618
 msgid "All namespaces"
@@ -3284,7 +3284,7 @@ msgstr "頁面{0}不存在，您仍要分析嗎？"
 #: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:933
 #, java-format
 msgid "\"{0}\" has been tagged with the following templates, be careful when editing:"
-msgstr ""
+msgstr "已標記「{0}」為以下模板，編輯時請小心："
 
 #: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:955
 msgid "Do you want to apply the automatic modifications?"
@@ -3325,7 +3325,7 @@ msgstr "重新載入（Alt + &R）"
 
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:403
 msgid "&Reload"
-msgstr ""
+msgstr "重新載入（&R）"
 
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:434
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:180
@@ -3413,7 +3413,7 @@ msgstr "修正與重新導向"
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:815
 #, java-format
 msgid "Link \"{0}\" to \"{1}\""
-msgstr ""
+msgstr "連結「{0}」到「{1}」"
 
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:832
 msgid "&Tools"
@@ -3429,7 +3429,7 @@ msgstr "展開模板（&E）"
 
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:846
 msgid "Expand templates &and Preview"
-msgstr ""
+msgstr "展開模板並預覽（&a）"
 
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:941
 #: org/wikipediacleaner/gui/swing/action/ActionFullAnalysis.java:51
@@ -3484,11 +3484,11 @@ msgstr "在其他命名空間的最多反向連結數："
 
 #: org/wikipediacleaner/gui/swing/PageCommentsWindow.java:272
 msgid "&OK"
-msgstr ""
+msgstr "確認（&O）"
 
 #: org/wikipediacleaner/gui/swing/PageCommentsWindow.java:278
 msgid "&Remove page comments"
-msgstr ""
+msgstr "移除頁面註解（&R）"
 
 #: org/wikipediacleaner/gui/swing/PreviewWindow.java:113
 #, java-format
@@ -3800,7 +3800,7 @@ msgstr "您需要在 WPCleaner 組態中定義 {0} 屬性。"
 
 #: org/wikipediacleaner/gui/swing/basic/Utilities.java:225
 msgid "This function requires some configuration."
-msgstr ""
+msgstr "此功能需要一些組態。"
 
 #: org/wikipediacleaner/gui/swing/basic/Utilities.java:231
 msgid "Do you want to display help on configuring WPCleaner ?"
@@ -3808,7 +3808,7 @@ msgstr "您想要顯示 WPCleaner 組態方面的說明嗎？"
 
 #: org/wikipediacleaner/gui/swing/basic/Utilities.java:335
 msgid "Other..."
-msgstr ""
+msgstr "其他…"
 
 #: org/wikipediacleaner/gui/swing/bot/AutomaticCWWorker.java:99
 #: org/wikipediacleaner/gui/swing/worker/CheckWikiProjectWorker.java:76
@@ -3863,7 +3863,7 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/bot/BotCWTableModel.java:317
 msgid "Use no list of pages"
-msgstr ""
+msgstr "不使用頁面清單"
 
 #: org/wikipediacleaner/gui/swing/bot/BotCWTableModel.java:507
 msgid "Description"
@@ -3962,7 +3962,7 @@ msgstr "標記為已修正的錯誤"
 
 #: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:213
 msgid "Check whitelists"
-msgstr ""
+msgstr "檢查白名單"
 
 #: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:221
 #: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:350
@@ -4454,7 +4454,7 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/deadlink/DeadLinkListTableModel.java:214
 msgid "Link"
-msgstr ""
+msgstr "連結"
 
 #: org/wikipediacleaner/gui/swing/deadlink/DeadLinkListTableModel.java:221
 #: org/wikipediacleaner/gui/swing/linter/LinterErrorListTableModel.java:232
@@ -5133,7 +5133,7 @@ msgstr "更新頁面資訊（Alt + &U）"
 
 #: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:238
 msgid "Set page comments (Alt + &C)"
-msgstr ""
+msgstr "設定頁面註解（Alt + &C）"
 
 #: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:261
 #: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:501
