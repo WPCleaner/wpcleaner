@@ -14,7 +14,7 @@
 msgid ""
 msgstr ""
 ""
-"PO-Revision-Date: 2024-01-29 12:32:06+0000\n"
+"PO-Revision-Date: 2024-02-08 12:29:02+0000\n"
 "X-POT-Import-Date: 2023-12-25 19:48:06+0000\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -2866,7 +2866,7 @@ msgstr "示範"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:460
 msgid "Wiki logout"
-msgstr "Wiki 登出"
+msgstr "wiki登出"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:467
 msgid "WPC logout"
@@ -3888,7 +3888,7 @@ msgstr "一般"
 
 #: org/wikipediacleaner/gui/swing/bot/BotToolsWindow.java:104
 msgid "Check Wiki"
-msgstr "檢查 Wiki"
+msgstr "檢查 wiki"
 
 #: org/wikipediacleaner/gui/swing/bot/CWCheckWhiteListsWorker.java:73
 #, java-format
@@ -4425,11 +4425,11 @@ msgstr "使用者名稱："
 
 #: org/wikipediacleaner/gui/swing/component/simple/WikiSelector.java:74
 msgid "Wiki"
-msgstr "Wiki"
+msgstr "wiki"
 
 #: org/wikipediacleaner/gui/swing/component/simple/WikiSelector.java:84
 msgid "Other Wiki"
-msgstr "其它 Wiki"
+msgstr "其它 wiki"
 
 #: org/wikipediacleaner/gui/swing/component/simple/WikiSelector.java:139
 msgid "You can learn how to add other Wikipedia at the following URL:"
@@ -4846,15 +4846,15 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:329
 msgid "Check wiki error"
-msgstr "檢查 Wiki 錯誤"
+msgstr "檢查 wiki 錯誤"
 
 #: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:335
 msgid "Check wiki warning"
-msgstr "檢查 Wiki 警告"
+msgstr "檢查 wiki 警告"
 
 #: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:341
 msgid "Check wiki OK"
-msgstr "檢查 Wiki 確認"
+msgstr "檢查 wiki 確認"
 
 #: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:452
 msgid "Italic"
