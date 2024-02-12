@@ -14,7 +14,7 @@
 msgid ""
 msgstr ""
 ""
-"PO-Revision-Date: 2024-02-08 12:29:02+0000\n"
+"PO-Revision-Date: 2024-02-12 12:40:56+0000\n"
 "X-POT-Import-Date: 2023-12-25 19:48:06+0000\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -127,11 +127,11 @@ msgstr "最近添加了許多新功能：試試吧！"
 
 #: org/wikipediacleaner/Version.java:72
 msgid "Leaving a note on talk pages with the list of links to disambiguation pages."
-msgstr ""
+msgstr "在討論頁面上留下註釋，並附上消歧義頁面的連結清單。"
 
 #: org/wikipediacleaner/Version.java:73
 msgid "Fixing errors detected by the Check Wiki project, in the full analysis window."
-msgstr ""
+msgstr "修正 Check Wiki 專案在完整分析視窗中偵測到的錯誤。"
 
 #: org/wikipediacleaner/Version.java:74
 msgid "Fixing spelling or typography based on a list of suggestions."
@@ -140,7 +140,7 @@ msgstr ""
 #: org/wikipediacleaner/api/MediaWiki.java:301
 #, java-format
 msgid "Updating page {0}"
-msgstr ""
+msgstr "正在更新頁面{0}"
 
 #: org/wikipediacleaner/api/MediaWiki.java:316
 #, java-format
@@ -386,24 +386,24 @@ msgstr ""
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a003/CheckErrorAlgorithm003.java:414
 #, java-format
 msgid "Templates where a {0} can be added before"
-msgstr ""
+msgstr "可以在前面加上{0}的模板"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a003/CheckErrorAlgorithm003.java:417
 #, java-format
 msgid "Template where a {0} can be added before"
-msgstr ""
+msgstr "可以在前面加上{0}的模板"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a005/CheckErrorAlgorithm005.java:81
 msgid "Properly end the comment"
-msgstr ""
+msgstr "正常結束註解"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a005/CheckErrorAlgorithm005.java:99
 msgid "End the comment at the end of the line"
-msgstr ""
+msgstr "在行尾結束註解"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a005/CheckErrorAlgorithm005.java:103
 msgid "End the comment just before the next one begins"
-msgstr ""
+msgstr "在下一個開頭前結束註解"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a005/CheckErrorAlgorithm005.java:106
 msgid "Merge comments"
@@ -452,11 +452,11 @@ msgstr "移除所有控制字元"
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a016/CheckErrorAlgorithm016.java:394
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a016/CheckErrorAlgorithm016.java:397
 msgid "To report control characters only in templates"
-msgstr ""
+msgstr "僅回報模板中的控制字元"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a016/CheckErrorAlgorithm016.java:400
 msgid "To ignore some control characters"
-msgstr ""
+msgstr "忽略部分控制字元"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a016/CheckErrorAlgorithm016.java:403
 msgid "To ignore control character with hexadecimal code equal to XX"
@@ -707,7 +707,7 @@ msgstr "修正所有標題"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a05x/a059/CheckErrorAlgorithm059.java:227
 msgid "A list of templates that should be ignored"
-msgstr ""
+msgstr "應忽略的模板清單"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a05x/a059/CheckErrorAlgorithm059.java:230
 msgid "A template that should be ignored"
@@ -877,7 +877,7 @@ msgstr "顯示文字的參數名稱"
 #: org/wikipediacleaner/api/check/algorithm/a1xx/a10x/a108/CheckErrorAlgorithm108.java:245
 #: org/wikipediacleaner/api/check/algorithm/a1xx/a10x/a108/CheckErrorAlgorithm108.java:248
 msgid "An explanation of the problem"
-msgstr ""
+msgstr "問題解釋"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a070/CheckErrorAlgorithm070.java:119
 #, java-format
@@ -911,7 +911,7 @@ msgstr "相似 ISBN"
 #: org/wikipediacleaner/api/check/algorithm/a1xx/a10x/a108/CheckErrorAlgorithm108.java:97
 #, java-format
 msgid "The checksum is {0} instead of {1}"
-msgstr ""
+msgstr "檢查總和為{0}，而非{1}"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a072/CheckErrorAlgorithm072.java:95
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a073/CheckErrorAlgorithm073.java:95
@@ -926,7 +926,7 @@ msgstr "此 ISBN 位在保留範圍內"
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a072/CheckErrorAlgorithm072.java:286
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a073/CheckErrorAlgorithm073.java:321
 msgid "An explanation of the problem (incorrect checksum)"
-msgstr ""
+msgstr "問題解釋（檢查總和不正確）"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a072/CheckErrorAlgorithm072.java:292
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a073/CheckErrorAlgorithm073.java:327
@@ -1448,7 +1448,7 @@ msgstr ""
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a525/CheckErrorAlgorithm525.java:232
 #, java-format
 msgid "A template that can replace a {0}"
-msgstr ""
+msgstr "可以替換{0}的模板"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a525/CheckErrorAlgorithm525.java:235
 msgid "Name of the parameter to be used for the anchor identifier"
@@ -2750,12 +2750,12 @@ msgstr "安裝成功"
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:839
 #, java-format
 msgid "Downloading {0}"
-msgstr ""
+msgstr "正在下載{0}"
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:854
 #, java-format
 msgid "Creating {0}"
-msgstr ""
+msgstr "正在建立「{0}」"
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:861
 #, java-format
@@ -2793,7 +2793,7 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:947
 msgid "Problem creating desktop file"
-msgstr ""
+msgstr "建立桌面檔案時發生問題"
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:955
 #, java-format
