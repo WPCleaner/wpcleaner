@@ -109,14 +109,14 @@ public class CheckErrorAlgorithm549 extends CheckErrorAlgorithmBase {
 
     // Check for consecutive links with the same target
     String contents = analysis.getContents();
-    List<PageElementInternalLink> tmpLinks = new ArrayList<>();
-    tmpLinks.add(firstLink);
-    List<String> tmpBetweenList = new ArrayList<>();
+    List<PageElementInternalLink> sameLinks = new ArrayList<>();
+    sameLinks.add(firstLink);
+    List<String> textsBetween = new ArrayList<>();
     boolean finished = false;
     while (!finished && (linkNum.get() < links.size())) {
 
       // Ignore special characters after the link
-      StringBuilder tmpBetween = new StringBuilder();
+      StringBuilder textBetween = new StringBuilder();
       int tmpIndex = endIndex;
       while (!finished && (tmpIndex < contents.length())) {
         char tmpChar = contents.charAt(tmpIndex);
@@ -131,7 +131,7 @@ public class CheckErrorAlgorithm549 extends CheckErrorAlgorithmBase {
           }
         } else if (CharacterUtils.isWhitespace(tmpChar) ||
                    (tmpChar == '\'')) {
-          tmpBetween.append(tmpChar);
+          textBetween.append(tmpChar);
           tmpIndex++;
         } else {
           finished = true;
@@ -142,9 +142,9 @@ public class CheckErrorAlgorithm549 extends CheckErrorAlgorithmBase {
       finished = false;
       if ((links.get(linkNum.get()).getBeginIndex() == tmpIndex) &&
           (fullLink.equals(links.get(linkNum.get()).getFullLink()))) {
-        tmpBetweenList.add(tmpBetween.toString());
+        textsBetween.add(textBetween.toString());
         PageElementInternalLink lastLink = links.get(linkNum.get());
-        tmpLinks.add(lastLink);
+        sameLinks.add(lastLink);
         endIndex = lastLink.getEndIndex();
         linkNum.addAndGet(1);
       } else {
@@ -153,7 +153,7 @@ public class CheckErrorAlgorithm549 extends CheckErrorAlgorithmBase {
     }
 
     // Check if there's an error
-    if (tmpLinks.size() <= 1) {
+    if (sameLinks.size() <= 1) {
       return false;
     }
     if (errors == null) {
@@ -161,12 +161,30 @@ public class CheckErrorAlgorithm549 extends CheckErrorAlgorithmBase {
     }
 
     // Report error
+    PageElementInternalLink lastLink = sameLinks.get(sameLinks.size() - 1);
+    int beginIndex = firstLink.getBeginIndex();
+    endIndex = lastLink.getEndIndex();
+    CheckErrorResult errorResult = createCheckErrorResult(
+        analysis, beginIndex, endIndex);
+    errors.add(errorResult);
+
+    // Handle special case [[Link]''[[Link]]''
+    if (sameLinks.size() == 2 &&
+        "''".equals(textsBetween.get(0)) &&
+        contents.startsWith("''", endIndex)) {
+      boolean automatic = beginIndex == 0 || contents.charAt(beginIndex - 1) != '\'';
+      automatic &= endIndex + 2 == contents.length() || contents.charAt(endIndex + 2) != '\'';
+      errorResult.addReplacement(
+          contents.substring(firstLink.getEndIndex(), endIndex),
+          automatic);
+    }
+    
     // Construct possible replacement
     StringBuilder buffer = new StringBuilder();
     String previousText = "";
     boolean automatic = true;
-    for (int tmpLinkNum = 0; tmpLinkNum < tmpLinks.size(); tmpLinkNum++) {
-      PageElementInternalLink link = tmpLinks.get(tmpLinkNum);
+    for (int tmpLinkNum = 0; tmpLinkNum < sameLinks.size(); tmpLinkNum++) {
+      PageElementInternalLink link = sameLinks.get(tmpLinkNum);
       String text = link.getDisplayedTextNotTrimmed();
       boolean nowiki = false;
       boolean punctuation = false;
@@ -203,7 +221,7 @@ public class CheckErrorAlgorithm549 extends CheckErrorAlgorithmBase {
         automatic = false;
       }
       if (tmpLinkNum > 0) {
-        String between = tmpBetweenList.get(tmpLinkNum - 1);
+        String between = textsBetween.get(tmpLinkNum - 1);
         if (!between.isEmpty()) {
           buffer.append(between);
           if (between.startsWith("'") || between.endsWith("'")) {
@@ -228,13 +246,6 @@ public class CheckErrorAlgorithm549 extends CheckErrorAlgorithmBase {
     if (buffer.length() == 0) {
       automatic = false;
     }
-
-    // Report error
-    PageElementInternalLink lastLink = tmpLinks.get(tmpLinks.size() - 1);
-    int beginIndex = firstLink.getBeginIndex();
-    endIndex = lastLink.getEndIndex();
-    CheckErrorResult errorResult = createCheckErrorResult(
-        analysis, beginIndex, endIndex);
 
     // Suggestion to group the links
     errorResult.addReplacement(
@@ -271,7 +282,6 @@ public class CheckErrorAlgorithm549 extends CheckErrorAlgorithmBase {
         contents.substring(firstLink.getEndIndex(), endIndex),
         false);
 
-    errors.add(errorResult);
     return true;
   }
 
