@@ -14,7 +14,7 @@
 msgid ""
 msgstr ""
 ""
-"PO-Revision-Date: 2024-02-26 12:29:19+0000\n"
+"PO-Revision-Date: 2024-02-29 12:27:44+0000\n"
 "X-POT-Import-Date: 2023-12-25 19:48:06+0000\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -168,7 +168,7 @@ msgstr "沒有可用的描述"
 #: org/wikipediacleaner/api/algorithm/AlgorithmError.java:422
 #, java-format
 msgid "Error n°{0} ({1} - {2}) - {3}"
-msgstr ""
+msgstr "錯誤號碼：{0}（{1} - {2}) - {3}"
 
 #: org/wikipediacleaner/api/check/CheckErrorResult.java:200
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a02x/a026/CheckErrorAlgorithm026.java:106
@@ -228,12 +228,12 @@ msgstr "包含此類型錯誤誤報清單的頁面"
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISSN.java:320
 #, java-format
 msgid "Ask for help using {0}"
-msgstr ""
+msgstr "使用{0}尋求幫助"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISBN.java:395
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISSN.java:345
 msgid "Add a comment"
-msgstr ""
+msgstr "新增註解"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISBN.java:430
 msgid "Search all ISBN"
@@ -1052,11 +1052,11 @@ msgstr "使用{0}"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a08x/a085/CheckErrorAlgorithm085.java:359
 msgid "A list of templates that can be used to replace &lt;center&gt; tags"
-msgstr ""
+msgstr "可用來替換 &lt; 和 center&gt; 標籤的模板清單"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a08x/a085/CheckErrorAlgorithm085.java:363
 msgid "Template that can be used to replace &lt;center&gt; tags"
-msgstr ""
+msgstr "可用來替換 &lt; 與 center&gt; 標籤的模板"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a08x/a085/CheckErrorAlgorithm085.java:366
 msgid "Name of the parameter to use"
@@ -1072,13 +1072,13 @@ msgstr "轉換成內部連結"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a090/CheckErrorAlgorithm090.java:839
 msgid "Templates to be used for linking to the history of an article"
-msgstr ""
+msgstr "用於連結到條目歷史紀錄的模板"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a090/CheckErrorAlgorithm090.java:843
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a090/CheckErrorAlgorithm090.java:872
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a090/CheckErrorAlgorithm090.java:893
 msgid "Template to be used for linking to the history of an article"
-msgstr ""
+msgstr "用於連結到條目歷史紀錄的模板"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a090/CheckErrorAlgorithm090.java:846
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a090/CheckErrorAlgorithm090.java:875
@@ -1100,15 +1100,15 @@ msgstr "使用外部連結的模板"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a090/CheckErrorAlgorithm090.java:868
 msgid "Templates to be used for linking to an old version of an article"
-msgstr ""
+msgstr "用於連結到條目舊版本的模板"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a090/CheckErrorAlgorithm090.java:879
 msgid "Parameter to be used for the identifier of the old version"
-msgstr ""
+msgstr "用於舊版本識別碼的參數"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a090/CheckErrorAlgorithm090.java:889
 msgid "Templates to be used instead of Special:PrefixIndex"
-msgstr ""
+msgstr "用於替換 Special:PrefixIndex 的模板"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a091/CheckErrorAlgorithm091.java:55
 msgid "Convert them to internal links"
@@ -1159,7 +1159,7 @@ msgstr "可能替換的清單"
 
 #: org/wikipediacleaner/api/check/algorithm/a1xx/a10x/a101/CheckErrorAlgorithm101.java:174
 msgid "A possible replacemement for one suffix"
-msgstr ""
+msgstr "一個後綴的可能替換內容"
 
 #: org/wikipediacleaner/api/check/algorithm/a1xx/a10x/a103/CheckErrorAlgorithm103.java:31
 msgid "Replace all pipe templates"
@@ -1230,7 +1230,7 @@ msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a50x/a504/CheckErrorAlgorithm504.java:160
 msgid "Comment about the template"
-msgstr ""
+msgstr "模板的註解"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a50x/a509/CheckErrorAlgorithm509.java:32
 msgid "Compact links"
@@ -1324,20 +1324,20 @@ msgstr "如果找到此文字代表可以自動替換，則為 true"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a514/CheckErrorAlgorithm514.java:188
 msgid "References defined by templates."
-msgstr ""
+msgstr "由模板定義的參考資料。"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a514/CheckErrorAlgorithm514.java:192
 msgid "Name of a template which defines references"
-msgstr ""
+msgstr "定義參考資料的模板名稱"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a514/CheckErrorAlgorithm514.java:195
 msgid "Name of the reference defined by the template"
-msgstr ""
+msgstr "由模板定義的參考資料名稱。"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a518/CheckErrorAlgorithm518.java:404
 #, java-format
 msgid "An identifier of an abuse filter that is triggered by {0} tags."
-msgstr ""
+msgstr "由 {0} 個標籤觸發的濫用過濾器識別碼。"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a518/CheckErrorAlgorithm518.java:414
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a518/CheckErrorAlgorithm518.java:417
@@ -1362,7 +1362,7 @@ msgstr "可以用來代替左括號的模板。"
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a520/CheckErrorAlgorithm520.java:150
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a520/CheckErrorAlgorithm520.java:153
 msgid "An identifier of an abuse filter that is triggered by weird characters."
-msgstr ""
+msgstr "由異常字元觸發的濫用過濾器識別碼。"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a521/CheckErrorAlgorithm521.java:468
 msgid "A list of templates and parameters in which format should be checked"
@@ -1410,7 +1410,7 @@ msgstr "其他值：{0}"
 #: org/wikipediacleaner/gui/swing/NewSectionWindow.java:115
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:531
 msgid "Comment"
-msgstr ""
+msgstr "註解"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a524/CheckErrorAlgorithm524.java:395
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a524/CheckErrorAlgorithm524.java:398
@@ -1464,7 +1464,7 @@ msgstr ""
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a526/CheckErrorAlgorithm526.java:413
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a526/CheckErrorAlgorithm526.java:416
 msgid "An identifier of an abuse filter that is triggered by incorrect year links."
-msgstr ""
+msgstr "由錯誤年份連結觸發的濫用過濾器識別碼。"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a526/CheckErrorAlgorithm526.java:419
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a526/CheckErrorAlgorithm526.java:426
@@ -1506,7 +1506,7 @@ msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a527/CheckErrorAlgorithm527.java:130
 msgid "Trim text"
-msgstr ""
+msgstr "修剪文字"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a529/CheckErrorAlgorithm529.java:412
 msgid "Automatic replacements of ISBN"
@@ -1518,11 +1518,11 @@ msgstr "用於 ISBN 的模板名稱"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a529/CheckErrorAlgorithm529.java:419
 msgid "Text before the ISBN to be removed in the replacement"
-msgstr ""
+msgstr "會在替換中被移除的位於 ISBN 前方文字"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a529/CheckErrorAlgorithm529.java:422
 msgid "Text after the ISBN to be removed in the replacement"
-msgstr ""
+msgstr "會在替換中被移除的位於 ISBN 後方文字"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a53x/a530/CheckErrorAlgorithm530.java:122
 msgid "View RFC"
@@ -2345,15 +2345,15 @@ msgstr "將參數 {0} 連結到"
 
 #: org/wikipediacleaner/api/execution/AllLinksToPageCallable.java:43
 msgid "Retrieving all links to page"
-msgstr ""
+msgstr "正在檢索所有連至頁面的連結"
 
 #: org/wikipediacleaner/api/execution/ContentsCallable.java:64
 msgid "Retrieving contents"
-msgstr ""
+msgstr "正在檢索內容"
 
 #: org/wikipediacleaner/api/execution/DisambiguationStatusCallable.java:49
 msgid "Retrieving disambiguation information"
-msgstr ""
+msgstr "正在檢索消歧義資訊"
 
 #: org/wikipediacleaner/api/execution/EmbeddedInCallable.java:53
 msgid "Retrieving page usage"
@@ -2621,7 +2621,7 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:378
 msgid "Filter namespaces"
-msgstr ""
+msgstr "過濾命名空間"
 
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:446
 #: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:497
@@ -2632,7 +2632,7 @@ msgstr "排序"
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiWindow.java:1416
 #: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:537
 msgid "You must select pages on which running automatic fixing."
-msgstr ""
+msgstr "您必須選擇執行自動修正的頁面。"
 
 #: org/wikipediacleaner/gui/swing/InformationWindow.java:105
 msgid "Information"
@@ -2789,7 +2789,7 @@ msgstr "退出代碼：{0}"
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:968
 #, java-format
 msgid "Problem running {0}"
-msgstr ""
+msgstr "執行{0}時出現問題"
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:947
 msgid "Problem creating desktop file"
@@ -2798,7 +2798,7 @@ msgstr "建立桌面檔案時發生問題"
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:955
 #, java-format
 msgid "Running {0}"
-msgstr ""
+msgstr "正在執行{0}"
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:988
 #, java-format
@@ -2921,7 +2921,7 @@ msgstr "隨機頁面"
 #: org/wikipediacleaner/gui/swing/MainWindow.java:634
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:200
 msgid "Add to list"
-msgstr ""
+msgstr "加入至清單"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:641
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:205
@@ -3114,7 +3114,7 @@ msgstr "您對哪種防濫用過濾器感興趣？"
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1524
 #, java-format
 msgid "Hits for filter {0}"
-msgstr ""
+msgstr "過濾器{0}的匹配結果"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1597
 msgid "Without templates"
@@ -3143,11 +3143,11 @@ msgstr "監視清單"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1876
 msgid "Unformatted list of page names"
-msgstr ""
+msgstr "未格式化的頁面名稱清單"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1877
 msgid "Internal links in a formatted list"
-msgstr ""
+msgstr "格式化清單中的內部連結"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1880
 msgid "The file must be encoded in UTF-8 to be read correctly."
@@ -3181,7 +3181,7 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/NewSectionWindow.java:105
 #, java-format
 msgid "New section in {0}"
-msgstr ""
+msgstr "在{0}的新段落"
 
 #: org/wikipediacleaner/gui/swing/NewSectionWindow.java:132
 #: org/wikipediacleaner/gui/swing/PreviewWindow.java:143
@@ -3355,7 +3355,7 @@ msgstr "驗證"
 
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:550
 msgid "Automatic comment"
-msgstr ""
+msgstr "自動註解"
 
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:576
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiContentPanel.java:266
@@ -3448,7 +3448,7 @@ msgstr "消歧義分析"
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:1037
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiContentPanel.java:721
 msgid "A comment is required for sending the page."
-msgstr ""
+msgstr "發送頁面需要註解。"
 
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:1097
 #, java-format
@@ -3733,7 +3733,7 @@ msgstr "正在清除頁面快取"
 
 #: org/wikipediacleaner/gui/swing/action/ReloadCategoryMembersAction.java:61
 msgid "Retrieving members of a category"
-msgstr ""
+msgstr "正在檢索分類成員"
 
 #: org/wikipediacleaner/gui/swing/action/ReloadLinksAction.java:64
 msgid "Analyzing links for redirect pages"
@@ -4286,7 +4286,7 @@ msgstr "位置"
 
 #: org/wikipediacleaner/gui/swing/checkwiki/DetectionListTableModel.java:163
 msgid "Notice"
-msgstr ""
+msgstr "通知"
 
 #: org/wikipediacleaner/gui/swing/checkwiki/DetectionPanel.java:74
 msgid "The following errors are currently detected by CheckWiki:"
@@ -4295,7 +4295,7 @@ msgstr "CheckWiki 目前偵測到以下錯誤："
 #: org/wikipediacleaner/gui/swing/component/CheckErrorPageListPopupListener.java:99
 #, java-format
 msgid "Error n°{0}"
-msgstr ""
+msgstr "錯誤號碼：{0}"
 
 #: org/wikipediacleaner/gui/swing/component/CloseTabComponent.java:79
 msgid "Close this tab"
@@ -4340,7 +4340,7 @@ msgstr "參數：{0}"
 #: org/wikipediacleaner/gui/swing/component/MWPanePopupListener.java:562
 #, java-format
 msgid "Function: {0}"
-msgstr ""
+msgstr "功能：{0}"
 
 #: org/wikipediacleaner/gui/swing/component/MWPanePopupListener.java:587
 #, java-format
@@ -4354,27 +4354,27 @@ msgstr "ISSN：{0}"
 
 #: org/wikipediacleaner/gui/swing/component/MWPaneTitleTreeManager.java:88
 msgid "Decrement title level"
-msgstr ""
+msgstr "降低標題層級"
 
 #: org/wikipediacleaner/gui/swing/component/MWPaneTitleTreeManager.java:94
 msgid "Increment title level"
-msgstr ""
+msgstr "提升標題層級"
 
 #: org/wikipediacleaner/gui/swing/component/MWPaneTitleTreeManager.java:100
 msgid "Validate the new table of contents"
-msgstr ""
+msgstr "驗證新目錄"
 
 #: org/wikipediacleaner/gui/swing/component/PageListModel.java:358
 #, java-format
 msgid "{0} link in Main Namespace"
 msgid_plural "{0} links in Main Namespace"
-msgstr[0] ""
+msgstr[0] "在主命名空間中有 {0} 個連結}"
 
 #: org/wikipediacleaner/gui/swing/component/PageListModel.java:362
 #, java-format
 msgid "{0} total link"
 msgid_plural "{0} total links"
-msgstr[0] ""
+msgstr[0] "共 {0} 個連結"
 
 #: org/wikipediacleaner/gui/swing/component/simple/HelpButton.java:54
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:145
@@ -4450,7 +4450,7 @@ msgstr "您要檢查失效連結嗎？"
 #: org/wikipediacleaner/gui/swing/deadlink/DeadLinkListTableModel.java:210
 #: org/wikipediacleaner/gui/swing/linter/LinterErrorListTableModel.java:222
 msgid "End"
-msgstr ""
+msgstr "結束"
 
 #: org/wikipediacleaner/gui/swing/deadlink/DeadLinkListTableModel.java:214
 msgid "Link"
@@ -4459,7 +4459,7 @@ msgstr "連結"
 #: org/wikipediacleaner/gui/swing/deadlink/DeadLinkListTableModel.java:221
 #: org/wikipediacleaner/gui/swing/linter/LinterErrorListTableModel.java:232
 msgid "Start"
-msgstr ""
+msgstr "開始"
 
 #: org/wikipediacleaner/gui/swing/deadlink/DeadLinkListTableModel.java:225
 msgid "Status"
@@ -4480,7 +4480,7 @@ msgstr "找不到失效連結。"
 #: org/wikipediacleaner/gui/swing/deadlink/DeadLinkWorker.java:98
 #: org/wikipediacleaner/gui/swing/linter/LinterWorker.java:85
 msgid "Retrieving page contents"
-msgstr ""
+msgstr "正在檢索頁面內容"
 
 #: org/wikipediacleaner/gui/swing/deadlink/DeadLinkWorker.java:112
 #: org/wikipediacleaner/gui/swing/deadlink/DeadLinkWorker.java:124
@@ -4599,7 +4599,7 @@ msgstr "標記為使用模板的正常連結"
 
 #: org/wikipediacleaner/gui/swing/menu/MWPaneDisambiguationMenuCreator.java:113
 msgid "Mark as normal link using comment"
-msgstr ""
+msgstr "標記為使用註解的正常連結"
 
 #: org/wikipediacleaner/gui/swing/menu/MWPaneDisambiguationMenuCreator.java:153
 #: org/wikipediacleaner/gui/swing/menu/MWPaneDisambiguationMenuCreator.java:185
@@ -4711,11 +4711,11 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/AnalysisOptionsPanel.java:191
 msgid "Remember last edited page"
-msgstr ""
+msgstr "記住最後編輯的頁面"
 
 #: org/wikipediacleaner/gui/swing/options/AnalysisOptionsPanel.java:200
 msgid "Number of links selected :"
-msgstr ""
+msgstr "所選的連結數量："
 
 #: org/wikipediacleaner/gui/swing/options/AnalysisOptionsPanel.java:217
 msgid "Undo levels :"
@@ -4830,7 +4830,7 @@ msgstr "消歧義連結"
 
 #: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:293
 msgid "Normal internal link"
-msgstr "一般內部連結"
+msgstr "正常內部連結"
 
 #: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:311
 msgid "Disambiguation template"
@@ -4842,7 +4842,7 @@ msgstr "正常模板"
 
 #: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:323
 msgid "Help requested"
-msgstr ""
+msgstr "請求的幫助"
 
 #: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:329
 msgid "Check wiki error"
@@ -4937,7 +4937,7 @@ msgstr "使用進階功能（試驗性）"
 #: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:170
 #, java-format
 msgid "Display {0} link in update comments"
-msgstr ""
+msgstr "在更新註解中顯示{0}連結"
 
 #: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:179
 msgid "Show errors with no detection found"
@@ -5205,15 +5205,15 @@ msgstr "正在檢索缺少模板的清單"
 
 #: org/wikipediacleaner/gui/swing/pagelist/PageListWorker.java:500
 msgid "Checking that the templates are still missing"
-msgstr ""
+msgstr "正在檢查是否仍缺少模板"
 
 #: org/wikipediacleaner/gui/swing/pagelist/PageListWorker.java:526
 msgid "Retrieving list of protected titles"
-msgstr ""
+msgstr "正在檢索受保護標題的清單"
 
 #: org/wikipediacleaner/gui/swing/pagelist/PageListWorker.java:532
 msgid "Checking that protected titles have backlinks"
-msgstr ""
+msgstr "正在檢查受保護標題是否有反向連結"
 
 #: org/wikipediacleaner/gui/swing/worker/AutomaticFixingWorker.java:124
 #, java-format
@@ -5234,7 +5234,7 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/worker/CheckArticleTools.java:202
 #, java-format
 msgid "Template \"{0}\" has no {1} block defined."
-msgstr ""
+msgstr "模板「{0}」未定義{1}區塊。"
 
 #: org/wikipediacleaner/gui/swing/worker/CheckArticleTools.java:195
 #, java-format
@@ -5319,7 +5319,7 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/worker/NewSectionWorker.java:64
 msgid "Adding comment"
-msgstr ""
+msgstr "正在新增註解"
 
 #: org/wikipediacleaner/gui/swing/worker/RandomPageWorker.java:51
 msgid "Getting random page"
@@ -5334,7 +5334,7 @@ msgstr "正在更新頁面內容"
 #: org/wikipediacleaner/gui/swing/worker/TranslateWorker.java:255
 #, java-format
 msgid "Retrieving interwiki for {0}"
-msgstr ""
+msgstr "正在檢索{0}的跨 wiki 內容"
 
 #: org/wikipediacleaner/gui/swing/worker/warning/DabWarningProcessor.java:223
 #, java-format
