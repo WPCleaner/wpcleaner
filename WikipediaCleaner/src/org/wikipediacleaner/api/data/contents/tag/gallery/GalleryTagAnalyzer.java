@@ -23,27 +23,28 @@ import org.wikipediacleaner.api.data.PageElementTag;
 public class GalleryTagAnalyzer {
 
   private final Namespace imageNamespace;
+  private final String contents;
 
   /**
    * @param config Configuration.
    */
-  public GalleryTagAnalyzer(@Nonnull WikiConfiguration config) {
+  public GalleryTagAnalyzer(@Nonnull WikiConfiguration config, @Nonnull String contents) {
     imageNamespace = config.getNamespace(Namespace.IMAGE);
+    this.contents = contents;
   }
 
-  public GalleryTag analyze(PageElementTag tag, String contents) {
+  public GalleryTag analyze(PageElementTag tag) {
     int beginIndex = tag.getValueBeginIndex();
     int endIndex = tag.getValueEndIndex();
     List<GalleryTagLine> lines = new ArrayList<>();
     while (beginIndex < endIndex) {
-      beginIndex = addLine(beginIndex, endIndex, contents, lines);
+      beginIndex = addLine(beginIndex, endIndex, lines);
     }
     return new GalleryTag(lines);
   }
 
   private int addLine(
       int beginIndex, int endIndex,
-      String contents,
       List<GalleryTagLine> lines) {
 
     // Find image name

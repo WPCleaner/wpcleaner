@@ -52,11 +52,10 @@ public class CheckErrorAlgorithm035 extends CheckErrorAlgorithmBase {
     if (galleryTags.isEmpty()) {
       return false;
     }
-    GalleryTagAnalyzer analyzer = new GalleryTagAnalyzer(getWikiConfiguration());
-    String contents = analysis.getContents();
+    GalleryTagAnalyzer analyzer = new GalleryTagAnalyzer(getWikiConfiguration(), analysis.getContents());
     boolean result = false;
     for (PageElementTag tag : galleryTags) {
-      GalleryTag galleryTag = analyzer.analyze(tag, contents);
+      GalleryTag galleryTag = analyzer.analyze(tag);
       for (GalleryTagLine line : galleryTag.getLines()) {
         if (StringUtils.isEmpty(line.getOptions())) {
           if (errors == null) {
