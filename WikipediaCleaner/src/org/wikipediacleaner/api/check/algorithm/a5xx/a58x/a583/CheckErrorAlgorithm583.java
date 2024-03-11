@@ -20,6 +20,7 @@ import org.slf4j.LoggerFactory;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase;
 import org.wikipediacleaner.api.data.PageElementTag;
+import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
 import org.wikipediacleaner.api.data.contents.magicword.ImageMagicWordType;
 import org.wikipediacleaner.api.data.contents.magicword.MagicWord;
@@ -95,20 +96,36 @@ public class CheckErrorAlgorithm583 extends CheckErrorAlgorithmBase {
     final GalleryTag galleryTag = analyzer.analyze(tag);
     boolean result = false;
     for (GalleryTagLine line : galleryTag.getLines()) {
+      boolean hasEmptyOption = false;
+      boolean hasDescription = false;
       for (GalleryTagLineOption option : line.getOptions()) {
-        if (isForbiddenOption(option)) {
+        final String optionText = option.getOption().trim();
+        hasEmptyOption |= optionText.isEmpty();
+        final MagicWord magicWord = getWikiConfiguration().getImgMagicWord(optionText);
+        hasDescription |= (magicWord == null) && !optionText.isEmpty();
+        if (isForbiddenOption(magicWord)) {
           CheckErrorResult error = createCheckErrorResult(analysis, option.getBeginIndex(), option.getEndIndex());
           error.addReplacement("", analysis.isInImage(option.getBeginIndex()) == null);
           errors.add(error);
           result = true;
         }
       }
+      if (hasEmptyOption && hasDescription) {
+        for (GalleryTagLineOption option : line.getOptions()) {
+          if (option.getOption().trim().isEmpty()) {
+            CheckErrorResult error = createCheckErrorResult(analysis, option.getBeginIndex(), option.getEndIndex());
+            PageElementTemplate template = analysis.isInTemplate(option.getBeginIndex());
+            error.addReplacement("", template == null);
+            errors.add(error);
+            result = true;
+          }
+        }
+      }
     }
     return result;
   }
 
-  private boolean isForbiddenOption(final GalleryTagLineOption option) {
-    MagicWord magicWord = getWikiConfiguration().getImgMagicWord(option.getOption().trim());
+  private boolean isForbiddenOption(final MagicWord magicWord) {
     if (magicWord == null) {
       return false;
     }
