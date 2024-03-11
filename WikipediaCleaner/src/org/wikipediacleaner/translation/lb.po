@@ -11,7 +11,7 @@
 msgid ""
 msgstr ""
 ""
-"PO-Revision-Date: 2024-01-25 12:31:19+0000\n"
+"PO-Revision-Date: 2024-03-11 12:28:15+0000\n"
 "X-POT-Import-Date: 2023-12-25 19:48:06+0000\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -5013,7 +5013,7 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/LimitOptionsPanel.java:156
 msgid "Maximum number of edits per minute :"
-msgstr ""
+msgstr "Maximal Zuel vun Ännerunge pro Minutt:"
 
 #: org/wikipediacleaner/gui/swing/options/LimitOptionsPanel.java:173
 msgid "Maximum number of interrogation threads :"
