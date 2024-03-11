@@ -168,6 +168,7 @@ public class CheckErrorAlgorithm003 extends CheckErrorAlgorithmBase {
     if (insert == null) {
       return true;
     }
+    final boolean canBeAutomatic = analysis.getPage().isInMainNamespace();
 
     // Search for titles where references tag can be added
     List<PageElementTitle> correctTitles = analysis.getTitles().stream()
@@ -181,7 +182,7 @@ public class CheckErrorAlgorithm003 extends CheckErrorAlgorithmBase {
       String replacement = contents.substring(beginIndex, endIndex) + "\n" + insert;
       tmpErrorResult.addReplacement(
           replacement,
-          (errors.size() == 1) && (lastRefTagIndex <= beginIndex));
+          (errors.size() == 1) && (lastRefTagIndex <= beginIndex) && canBeAutomatic);
       errors.add(tmpErrorResult);
     });
 
@@ -192,7 +193,7 @@ public class CheckErrorAlgorithm003 extends CheckErrorAlgorithmBase {
     titlesBefore.forEach(title -> {
       addSuggestionBeforeElement(
           analysis, errors, title, title.getLevel(),
-          (errors.size() == 1) && (lastRefTagIndex <= title.getBeginIndex()));
+          (errors.size() == 1) && (lastRefTagIndex <= title.getBeginIndex()) && canBeAutomatic);
     });
 
     // Search for templates before which references tag can be added
@@ -206,7 +207,7 @@ public class CheckErrorAlgorithm003 extends CheckErrorAlgorithmBase {
             int tmpIndex = ContentsUtil.moveIndexBackwardWhileFound(contents, beginIndex - 1, " ");
             automatic &= (contents.charAt(tmpIndex) != '}'); 
           }
-          addSuggestionBeforeElement(analysis, errors, template, 2, automatic);
+          addSuggestionBeforeElement(analysis, errors, template, 2, automatic && canBeAutomatic);
         });
 
     // Fallback on adding the references tag before the categories
