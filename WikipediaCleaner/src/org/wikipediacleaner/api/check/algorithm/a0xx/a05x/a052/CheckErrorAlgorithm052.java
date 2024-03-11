@@ -86,6 +86,9 @@ public class CheckErrorAlgorithm052 extends CheckErrorAlgorithmBase {
           }
         }
       }
+      if (shouldReport && (analysis.getSurroundingTag(WikiTagType.NOWIKI, category.getBeginIndex()) != null)) {
+        shouldReport = false;
+      }
 
       // Report error
       if (shouldReport) {
