@@ -178,7 +178,7 @@ public class CheckErrorAlgorithm010 extends CheckErrorAlgorithmBase {
                   int closeBracketIndex = contents.indexOf(']', currentIndex + 2);
                   if ((closeBracketIndex == tmpIndex2) &&
                       ((openBracketIndex < 0) || (openBracketIndex > lineEndIndex))) {
-                    automatic = true;
+                    automatic = !analysis.getPage().isInUserNamespace();
                   }
                 }
               }
