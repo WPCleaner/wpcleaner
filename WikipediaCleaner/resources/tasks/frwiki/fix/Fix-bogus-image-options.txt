@@ -10,9 +10,9 @@ FixLintError bogus-image-options 501 534 576 583
 DoTasks ../_Common_Other.txt
 Set Namespaces 2 4 6 12 14 100 102 104
 # FixDump C:\Users\Nicolas\Downloads\frwiki-$-pages-meta-current.xml.bz2 534 576 583
-# FixLintError bogus-image-options 534 576 583
+FixLintError bogus-image-options 534 576 583
 
 DoTasks ../_Common_Talk.txt
 Set Namespaces 1 3 5 7 9 11 13 15 101 103 105 829 2301 2303
 # FixDump C:\Users\Nicolas\Downloads\frwiki-$-pages-meta-current.xml.bz2 534 576 583
-# FixLintError bogus-image-options 534 576 583
+FixLintError bogus-image-options 534 576 583
