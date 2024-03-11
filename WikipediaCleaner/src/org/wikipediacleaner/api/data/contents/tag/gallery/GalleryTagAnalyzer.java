@@ -9,6 +9,7 @@
 package org.wikipediacleaner.api.data.contents.tag.gallery;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.annotation.Nonnull;
@@ -27,6 +28,7 @@ public class GalleryTagAnalyzer {
 
   /**
    * @param config Configuration.
+   * @param contents Page contents.
    */
   public GalleryTagAnalyzer(@Nonnull WikiConfiguration config, @Nonnull String contents) {
     imageNamespace = config.getNamespace(Namespace.IMAGE);
@@ -69,12 +71,22 @@ public class GalleryTagAnalyzer {
 
     // Report line without options
     if (endNameIndex >= tmpIndex) {
-      lines.add(new GalleryTagLine(beginIndex, tmpIndex, imageName, null));
+      lines.add(new GalleryTagLine(beginIndex, tmpIndex, imageName, Collections.emptyList()));
       return tmpIndex + 1;
     }
 
-    // TODO: analyze options
-    lines.add(new GalleryTagLine(beginIndex, tmpIndex, imageName, contents.substring(endNameIndex + 1, tmpIndex)));
+    // Analyze options
+    final List<GalleryTagLineOption> options = new ArrayList<>();
+    int previousPipe = endNameIndex;
+    while (previousPipe < tmpIndex) {
+      int nextPipe = contents.indexOf('|', previousPipe + 1);
+      if ((nextPipe > tmpIndex) || (nextPipe < 0)) {
+        nextPipe = tmpIndex;
+      }
+      options.add(new GalleryTagLineOption(previousPipe, nextPipe, contents.substring(previousPipe + 1, nextPipe)));
+      previousPipe = nextPipe;
+    }
+    lines.add(new GalleryTagLine(beginIndex, tmpIndex, imageName, options));
     return tmpIndex + 1;
   }
 }

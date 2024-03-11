@@ -46,5 +46,5 @@ Set Prefix [[User:WikiCleanerBot#T17|Bot_T17_CW#513]]
 FixLintError wikilink-in-extlink 513
 
 Set Prefix [[User:WikiCleanerBot#T22|Bot_T22_bogus-image-options]]
-#FixDump C:\Users\Nicolas\Downloads\enwiki-$-pages-articles.xml.bz2 534
-FixLintError bogus-image-options 534
+#FixDump C:\Users\Nicolas\Downloads\enwiki-$-pages-articles.xml.bz2 534 583
+FixLintError bogus-image-options 534 583

@@ -83,7 +83,7 @@ FixCategoryCheckWiki Catégorie:Page_utilisant_des_liens_magiques_ISBN 529
 Set Prefix [[Utilisateur:WikiCleanerBot#T3|Bot_T3_PCS#526]]
 FixCheckWiki 526
 Set Prefix [[Utilisateur:WikiCleanerBot#T3|Bot_T3_PCS#534]]
-FixLintError bogus-image-options 534 576
+FixLintError bogus-image-options 534 576 583
 
 # File namespace
 DoTasks _Common_Other.txt

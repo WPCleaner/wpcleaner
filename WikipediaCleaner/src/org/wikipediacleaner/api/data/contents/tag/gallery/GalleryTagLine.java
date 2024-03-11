@@ -8,7 +8,8 @@
 
 package org.wikipediacleaner.api.data.contents.tag.gallery;
 
-import org.apache.commons.lang3.StringUtils;
+import java.util.List;
+
 import org.wikipediacleaner.api.data.contents.ContentsInterval;
 
 /**
@@ -18,21 +19,22 @@ public class GalleryTagLine extends ContentsInterval {
 
   private final String imageName;
 
-  private final String options;
+  private final List<GalleryTagLineOption> options;
 
   public GalleryTagLine(
       int beginIndex, int endIndex,
-      String imageName, String options) {
+      String imageName,
+      List<GalleryTagLineOption> options) {
     super(beginIndex, endIndex);
     this.imageName = imageName;
-    this.options = StringUtils.defaultString(options);
+    this.options = options;
   }
 
   public String getImageName() {
     return imageName;
   }
 
-  public String getOptions() {
+  public List<GalleryTagLineOption> getOptions() {
     return options;
   }
 }

@@ -10,7 +10,6 @@ package org.wikipediacleaner.api.check.algorithm.a0xx.a03x.a035;
 import java.util.Collection;
 import java.util.List;
 
-import org.apache.commons.lang3.StringUtils;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase;
 import org.wikipediacleaner.api.data.PageElementTag;
@@ -57,7 +56,7 @@ public class CheckErrorAlgorithm035 extends CheckErrorAlgorithmBase {
     for (PageElementTag tag : galleryTags) {
       GalleryTag galleryTag = analyzer.analyze(tag);
       for (GalleryTagLine line : galleryTag.getLines()) {
-        if (StringUtils.isEmpty(line.getOptions())) {
+        if (line.getOptions().isEmpty()) {
           if (errors == null) {
             return true;
           }
