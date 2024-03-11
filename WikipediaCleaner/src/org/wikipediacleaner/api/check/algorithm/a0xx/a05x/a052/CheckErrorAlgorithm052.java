@@ -175,6 +175,17 @@ public class CheckErrorAlgorithm052 extends CheckErrorAlgorithmBase {
     int position = contents.length();
     PageElementFunction defaultSort = getLastDefaultSort(analysis);
     if ((defaultSort != null) &&
+        (defaultSort.getParameterCount() > 1)) {
+      defaultSort = null;
+    }
+    if ((defaultSort != null) &&
+        (defaultSort.getParameterCount() == 1)) {
+      if (defaultSort.getParameterFullText(0).contains("}") ||
+          defaultSort.getParameterFullText(0).contains("}")) {
+        defaultSort = null;
+      }
+    }
+    if ((defaultSort != null) &&
         (defaultSort.getBeginIndex() > title.getBeginIndex())) {
       position = defaultSort.getEndIndex();
       defaultSort = null;
