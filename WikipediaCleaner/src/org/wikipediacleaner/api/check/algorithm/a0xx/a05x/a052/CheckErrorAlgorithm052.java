@@ -151,7 +151,7 @@ public class CheckErrorAlgorithm052 extends CheckErrorAlgorithmBase {
   @Override
   protected String internalAutomaticFix(PageAnalysis analysis) {
     String contents = analysis.getContents();
-    if (!analysis.getPage().isArticle()) {
+    if (!analysis.getPage().isArticle() || analysis.getPage().isInUserNamespace()) {
       return contents;
     }
 
