@@ -42,11 +42,11 @@ public class CheckErrorAlgorithm583 extends CheckErrorAlgorithmBase {
   @Nonnull private static final Logger log = LoggerFactory.getLogger(CheckErrorAlgorithm583.class);
 
   private static final Set<MagicWordType> FORBIDDEN_MAGIC_WORDS = Stream
-      .of(ImageMagicWordType.IMG_THUMBNAIL)
+      .of(ImageMagicWordType.IMG_WIDTH, ImageMagicWordType.IMG_THUMBNAIL)
       .collect(Collectors.toSet());
 
   public CheckErrorAlgorithm583() {
-    super("Replacement character");
+    super("Bogus image option in gallery");
   }
 
   /**
@@ -100,9 +100,15 @@ public class CheckErrorAlgorithm583 extends CheckErrorAlgorithmBase {
       boolean hasDescription = false;
       for (GalleryTagLineOption option : line.getOptions()) {
         final String optionText = option.getOption().trim();
-        hasEmptyOption |= optionText.isEmpty();
         final MagicWord magicWord = getWikiConfiguration().getImgMagicWord(optionText);
-        hasDescription |= (magicWord == null) && !optionText.isEmpty();
+        if (optionText.isEmpty()) {
+          if (hasEmptyOption) {
+            hasDescription = true;
+          }
+          hasEmptyOption = true;
+        } else {
+          hasDescription |= (magicWord == null);
+        }
         if (isForbiddenOption(magicWord)) {
           CheckErrorResult error = createCheckErrorResult(analysis, option.getBeginIndex(), option.getEndIndex());
           error.addReplacement("", analysis.isInImage(option.getBeginIndex()) == null);
@@ -111,8 +117,10 @@ public class CheckErrorAlgorithm583 extends CheckErrorAlgorithmBase {
         }
       }
       if (hasEmptyOption && hasDescription) {
+        boolean found = false;
         for (GalleryTagLineOption option : line.getOptions()) {
-          if (option.getOption().trim().isEmpty()) {
+          if (option.getOption().trim().isEmpty() && !found) {
+            found = true;
             CheckErrorResult error = createCheckErrorResult(analysis, option.getBeginIndex(), option.getEndIndex());
             PageElementTemplate template = analysis.isInTemplate(option.getBeginIndex());
             error.addReplacement("", template == null);
