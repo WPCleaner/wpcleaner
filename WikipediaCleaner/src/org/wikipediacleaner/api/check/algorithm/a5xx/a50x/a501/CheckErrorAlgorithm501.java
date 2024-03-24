@@ -337,7 +337,7 @@ public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
                 }
               }
               if (patternText.endsWith("\\b")) {
-                if ((end < contents.length()) && Character.isLetter(end)) {
+                if ((end < contents.length()) && Character.isLetter(contents.charAt(end))) {
                   shouldKeep = false;
                 }
               }
