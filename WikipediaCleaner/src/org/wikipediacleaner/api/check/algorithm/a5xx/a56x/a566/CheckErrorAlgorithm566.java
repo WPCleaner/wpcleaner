@@ -216,7 +216,7 @@ public class CheckErrorAlgorithm566 extends CheckErrorAlgorithmTags {
     tmp = getSpecificProperty(PARAMETER_REPLACEMENTS, true, true, false);
     replacementConfig.clearConfiguration();
     if (tmp != null) {
-      List<String[]> tmpList = WPCConfiguration.convertPropertyToStringArrayList(tmp);
+      List<String[]> tmpList = WPCConfiguration.convertPropertyToStringArrayList(tmp, 3);
       replacementConfig.setReplacementsByValue(tmpList);
     }
     tmp = getSpecificProperty(PARAMETER_REPLACEMENTS_TITLE, true,  true,  false);
