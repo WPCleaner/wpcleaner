@@ -330,6 +330,19 @@ public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
               shouldKeep = shouldKeep(contents, begin, end);
             }
             if (shouldKeep) {
+              final String patternText = suggestion.getPatternText();
+              if (patternText.startsWith("\\b")) {
+                if ((begin > 0) && Character.isLetter(contents.charAt(begin - 1))) {
+                  shouldKeep = false;
+                }
+              }
+              if (patternText.endsWith("\\b")) {
+                if ((end < contents.length()) && Character.isLetter(end)) {
+                  shouldKeep = false;
+                }
+              }
+            }
+            if (shouldKeep) {
               result = true;
               replacements.addAll(tmpReplacements);
             }
