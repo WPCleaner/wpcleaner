@@ -14,7 +14,7 @@
 msgid ""
 msgstr ""
 ""
-"PO-Revision-Date: 2024-03-18 12:30:07+0000\n"
+"PO-Revision-Date: 2024-03-25 12:29:50+0000\n"
 "X-POT-Import-Date: 2023-12-25 19:48:06+0000\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -2404,7 +2404,7 @@ msgstr "取代文字"
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingTableModel.java:186
 msgid "regex"
-msgstr "正規表達式"
+msgstr "正規表示式"
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:169
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:171
