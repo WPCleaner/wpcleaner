@@ -2,6 +2,7 @@
 # Exported from translatewiki.net
 #
 # Author: Ajeje Brazorf
+# Author: Chqaz
 # Author: MagicAho
 # Author: MathXplore
 # Author: Omotecho
@@ -18,7 +19,7 @@ msgstr ""
 "Project-Id-Version: WPCleaner\n"
 "Report-Msgid-Bugs-To: translatewiki.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2024-01-25 12:31:18+0000\n"
+"PO-Revision-Date: 2024-03-28 12:31:23+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Japanese <ja@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -3018,7 +3019,7 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:816
 msgid "Abuse filters"
-msgstr ""
+msgstr "不正利用フィルター"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:825
 msgid "Special lists"

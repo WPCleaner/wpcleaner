@@ -2,6 +2,7 @@
 # Exported from translatewiki.net
 #
 # Author: Beginneruser
+# Author: Ebraminio
 # Author: Huji
 # Author: Jeeputer
 # Author: Mohammad ebz
@@ -15,7 +16,7 @@ msgstr ""
 "Project-Id-Version: WPCleaner\n"
 "Report-Msgid-Bugs-To: translatewiki.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2024-01-25 12:31:15+0000\n"
+"PO-Revision-Date: 2024-03-28 12:31:20+0000\n"
 "Last-Translator: reza <reza.energy@gmail.com>\n"
 "Language-Team: Persian <fa@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -84,11 +85,11 @@ msgstr "من تلاش کردم  {0} را به کمک ویکی‌چک به‌رو
 
 #: org/wikipediacleaner/Version.java:51
 msgid "The Check Wiki project has evolved a lot recently."
-msgstr "از ویکی‌پروژه بازدید کنید اخیراً تغییرات بسیاری کرده‌است."
+msgstr "از ویکی‌پروژه بازدید کنید اخیراً تغییرات بسیاری کرده است."
 
 #: org/wikipediacleaner/Version.java:52
 msgid "New detections have been added either with new error numbers or by replacing previously used error numbers."
-msgstr "شناخت‌های زیادی به ابزار افزوده شده‌است به کمک شماره خطاهای جدید یا با جایگزینی با خطاهای گذشته"
+msgstr "شناخت‌های زیادی به ابزار افزوده شده است به کمک شماره خطاهای جدید یا با جایگزینی با خطاهای گذشته"
 
 #: org/wikipediacleaner/Version.java:53
 msgid "You may need to update the Check Wiki translation file on your wiki to configure the new detections."
@@ -108,7 +109,7 @@ msgstr "این کلمه جادوئی باید به همه صفحات ابهام�
 
 #: org/wikipediacleaner/Version.java:57
 msgid "WPCleaner v1.28 also uses this as the default system."
-msgstr "WPCleaner ورژن 1.28 هم چنین به عنوان سامانه پیشفرض استفاده می شود."
+msgstr "WPCleaner ورژن 1.28 هم چنین به عنوان سامانه پیشفرض استفاده می‌شود."
 
 #: org/wikipediacleaner/Version.java:58
 msgid "An action may be required on your wiki:"
@@ -358,13 +359,13 @@ msgstr ""
 #: org/wikipediacleaner/api/check/algorithm/a1xx/a11x/a111/CheckErrorAlgorithm111.java:200
 #, java-format
 msgid "A list of templates resulting in the inclusion of {0}"
-msgstr "لیست قالبهایی که باعث گنجاندن {0} می شوند."
+msgstr "لیست قالبهایی که باعث گنجاندن {0} می‌شوند."
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a003/CheckErrorAlgorithm003.java:389
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a003/CheckErrorAlgorithm003.java:396
 #, fuzzy, java-format
 msgid "Template resulting in the inclusion of {0}"
-msgstr "لیست قالبهایی که باعث گنجاندن {0} می شوند."
+msgstr "لیست قالبهایی که باعث گنجاندن {0} می‌شوند."
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a003/CheckErrorAlgorithm003.java:400
 #, java-format
@@ -427,7 +428,7 @@ msgstr "اصلاح ترتیب‌پیش‌فرض"
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a006/CheckErrorAlgorithm006.java:101
 #, java-format
 msgid "Unable to replace the characters [{0}]"
-msgstr "حروف [{0}] را نمی توانید جایگزین کنید"
+msgstr "حروف [{0}] را نمی‌توانید جایگزین کنید"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a009/CheckErrorAlgorithm009.java:245
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a017/CheckErrorAlgorithm017.java:363
@@ -468,7 +469,7 @@ msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a016/CheckErrorAlgorithm016.java:411
 msgid "Non-breaking space"
-msgstr "فاصله‌ی غیر شکننده"
+msgstr "فاصلهٔ غیر شکننده"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a016/CheckErrorAlgorithm016.java:412
 msgid "Soft hyphen"
@@ -693,7 +694,7 @@ msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a05x/a054/CheckErrorAlgorithm054.java:38
 msgid "Remove breaks in list"
-msgstr "حذف لینک های شکسته موجود در لیست"
+msgstr "حذف لینک‌های شکسته موجود در لیست"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a05x/a055/CheckErrorAlgorithm055.java:182
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a066/CheckErrorAlgorithm066.java:96
@@ -779,7 +780,7 @@ msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a068/CheckErrorAlgorithm068.java:54
 msgid "Check all links to other language"
-msgstr "بررسی همه لینک ها به زبان دیگر"
+msgstr "بررسی همه پیوندها به زبان دیگر"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a068/CheckErrorAlgorithm068.java:124
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a091/CheckErrorAlgorithm091.java:207
@@ -2757,7 +2758,7 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:729
 #, fuzzy, java-format
 msgid "Unable to create folder {0}"
-msgstr "حروف [{0}] را نمی توانید جایگزین کنید"
+msgstr "حروف [{0}] را نمی‌توانید جایگزین کنید"
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:745
 msgid "Desktop shortcut is only supported for the following operating systems:"
@@ -2781,7 +2782,7 @@ msgstr "بروزرسانی صفحه {0}"
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:861
 #, fuzzy, java-format
 msgid "Unable to create file {0}"
-msgstr "حروف [{0}] را نمی توانید جایگزین کنید"
+msgstr "حروف [{0}] را نمی‌توانید جایگزین کنید"
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:862
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:893
