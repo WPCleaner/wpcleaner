@@ -1,6 +1,7 @@
 # Translation of WPCleaner to Hungarian (magyar)
 # Exported from translatewiki.net
 #
+# Author: Dj
 # Author: Hanna Tardos
 # Author: Zalán Hári
 # --
@@ -12,7 +13,7 @@ msgstr ""
 "Project-Id-Version: WPCleaner\n"
 "Report-Msgid-Bugs-To: translatewiki.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2024-01-25 12:31:17+0000\n"
+"PO-Revision-Date: 2024-04-04 12:34:26+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Hungarian <hu@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -1179,12 +1180,12 @@ msgstr "Keresés a sablonokban"
 #: org/wikipediacleaner/api/check/algorithm/a1xx/a10x/a107/CheckErrorAlgorithm107.java:119
 #, java-format
 msgid "Length of ISSN is {0} instead of 8"
-msgstr ""
+msgstr "Az ISSN hossza 8 helyett {0}"
 
 #: org/wikipediacleaner/api/check/algorithm/a1xx/a10x/a107/CheckErrorAlgorithm107.java:196
 #: org/wikipediacleaner/api/check/algorithm/a1xx/a10x/a108/CheckErrorAlgorithm108.java:166
 msgid "Similar ISSN"
-msgstr ""
+msgstr "Hasonló ISSN"
 
 #: org/wikipediacleaner/api/check/algorithm/a1xx/a11x/a111/CheckErrorAlgorithm111.java:204
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a568/CheckErrorAlgorithm568.java:267
@@ -1193,9 +1194,8 @@ msgstr ""
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a58x/a580/CheckErrorAlgorithm580.java:321
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a58x/a580/CheckErrorAlgorithm580.java:328
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a58x/a580/CheckErrorAlgorithm580.java:335
-#, fuzzy
 msgid "Template name"
-msgstr "Sablon"
+msgstr "Sablonnév"
 
 #: org/wikipediacleaner/api/check/algorithm/a1xx/a11x/a111/CheckErrorAlgorithm111.java:207
 msgid "Parameter for the name of the group"
