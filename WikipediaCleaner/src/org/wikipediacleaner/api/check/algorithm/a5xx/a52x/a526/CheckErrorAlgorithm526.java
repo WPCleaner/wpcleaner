@@ -26,6 +26,7 @@ import org.wikipediacleaner.api.data.DataManager;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageElementInternalLink;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
+import org.wikipediacleaner.api.data.contents.ContentsUtil;
 import org.wikipediacleaner.api.data.contents.ilink.InternalLinkBuilder;
 import org.wikipediacleaner.i18n.GT;
 import org.wikipediacleaner.utils.Configuration;
@@ -93,18 +94,24 @@ public class CheckErrorAlgorithm526 extends CheckErrorAlgorithmBase {
         Page.areSameTitle(target, text)) {
       return false;
     }
-    if ((text.length() < minLength) ||
-        (text.length() > maxLength)) {
+    if (text.length() < minLength) {
       return false;
     }
 
-    // Check text first (only digits)
-    for (int pos = 0; pos < text.length(); pos++) {
-      if (!Character.isDigit(text.charAt(pos))) {
-        return false;
-      }
+    // Check text first (digits and maybe additional whitespace or punctuation)
+    int pos = 0;
+    while ((pos < text.length()) && Character.isDigit(text.charAt(pos))) {
+      pos++;
     }
-    int yearDisplayed = Integer.parseInt(text);
+    if ((pos < minLength) || (pos > maxLength)) {
+      return false;
+    }
+    final int lastDigit = pos;
+    pos = ContentsUtil.moveIndexForwardWhileFound(text, pos, " .,:;");
+    if (pos < text.length()) {
+      return false;
+    }
+    int yearDisplayed = Integer.parseInt(text.substring(0, lastDigit));
     if (yearDisplayed <= 0) {
       return false;
     }
@@ -135,8 +142,8 @@ public class CheckErrorAlgorithm526 extends CheckErrorAlgorithmBase {
       if (!CharacterUtils.isWhitespace(target.charAt(nbDigits))) {
         return false;
       }
-      for (int pos = nbDigits + 1; pos < target.length(); pos++) {
-        if (Character.isDigit(target.charAt(pos))) {
+      for (int tmpPos = nbDigits + 1; tmpPos < target.length(); tmpPos++) {
+        if (Character.isDigit(target.charAt(tmpPos))) {
           return false;
         }
       }
@@ -150,11 +157,14 @@ public class CheckErrorAlgorithm526 extends CheckErrorAlgorithmBase {
     // Extend link with extra text
     String contents = analysis.getContents();
     int endIndex = link.getEndIndex();
-    while ((endIndex < contents.length()) &&
-        Character.isLetterOrDigit(contents.charAt(endIndex))) {
-      endIndex++;
+    String textAfterLink = "";
+    if (lastDigit >= text.length()) {
+      while ((endIndex < contents.length()) &&
+          Character.isLetterOrDigit(contents.charAt(endIndex))) {
+        endIndex++;
+      }
+      textAfterLink = contents.substring(link.getEndIndex(), endIndex);
     }
-    String extraText = contents.substring(link.getEndIndex(), endIndex);
 
     // Create error
     ErrorLevel errorLevel = ErrorLevel.ERROR;
@@ -164,24 +174,25 @@ public class CheckErrorAlgorithm526 extends CheckErrorAlgorithmBase {
     }
     CheckErrorResult errorResult = createCheckErrorResult(
         analysis, link.getBeginIndex(), endIndex, errorLevel);
-    if (!extraText.isEmpty()) {
+    if (!textAfterLink.isEmpty()) {
       try {
-        int yearCorrected = Integer.parseInt(text + extraText);
+        int yearCorrected = Integer.parseInt(text + textAfterLink);
         if (yearLinked == yearCorrected) {
           errorResult.addReplacement(
-              InternalLinkBuilder.from(target).withText(text + extraText).toString(),
+              InternalLinkBuilder.from(target).withText(text + textAfterLink).toString(),
               true);
         }
       } catch (NumberFormatException e) {
         // Nothing to do, it's just not an integer
       }
     }
+    final String textAfterYear = text.substring(lastDigit);
     errorResult.addReplacement(
         InternalLinkBuilder.from(target).withText(target).toString() +
-        extraText);
+        textAfterYear + textAfterLink);
     errorResult.addReplacement(
-        InternalLinkBuilder.from(text).withText(text).toString() +
-        extraText);
+        InternalLinkBuilder.from(text.substring(0, lastDigit)).withText(text.substring(0, lastDigit)).toString() +
+        textAfterYear + textAfterLink);
     if (!askHelpList.isEmpty()) {
       boolean firstReplacement = true;
       for (String askHelpElement : askHelpList) {
@@ -198,14 +209,14 @@ public class CheckErrorAlgorithm526 extends CheckErrorAlgorithmBase {
               if ((target.indexOf('#') < 0) &&
                   (target.indexOf('(') < 0) &&
                   (target.indexOf(')') < 0) &&
-                  (extraText.isEmpty())) {
+                  (textAfterLink.isEmpty())) {
                 botReplace = true;
               }
             }
           }
           String replacement =
-              analysis.getContents().substring(link.getBeginIndex(), endIndex) +
-              suffix;
+              InternalLinkBuilder.from(target).withText(text.substring(0,  lastDigit)).toString() +
+              textAfterLink + suffix + textAfterYear;
           errorResult.addReplacement(
               replacement,
               askHelpElement.substring(0, pipeIndex),
