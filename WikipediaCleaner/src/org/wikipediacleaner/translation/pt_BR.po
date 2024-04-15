@@ -8,6 +8,7 @@
 # Author: Eduardoaddad
 # Author: Felipe L. Ewald
 # Author: Fúlvio
+# Author: Mellogabi03
 # Author: Rafaelff
 # Author: Rafaelff
 # Author: Re demz
@@ -21,7 +22,7 @@ msgstr ""
 "Project-Id-Version: WPCleaner\n"
 "Report-Msgid-Bugs-To: translatewiki.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2024-04-11 12:32:22+0000\n"
+"PO-Revision-Date: 2024-04-15 12:34:22+0000\n"
 "Last-Translator: Felipe L. <felipe.idj@hotmail.com>\n"
 "Language-Team: Brazilian Portuguese <pt_BR@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -123,7 +124,7 @@ msgstr "Uma ação pode ser requerida em sua wiki:"
 #: org/wikipediacleaner/Version.java:60
 #, java-format
 msgid "You can check if {0} is used on your wiki by opening an existing disambiguation page (like \"Smith\"). Then, click on \"Page information\" in the menu on the left. Finally, search for {0} in the information page."
-msgstr "Você pode verificar se {0} é usado em sua wiki abrindo uma página de desambiguação existente (como \"Smith\"). Em seguida, clique em \"Informações da página\" no menu à esquerda. Finalmente, procure por {0} na página de informações."
+msgstr "Você pode verificar se {0} é usado em sua wiki abrindo uma página de desambiguação existente (como \"Smith\"). Em seguida, clique em \"Informações da página\" no menu à esquerda. Por fim, procure por {0} na página de informações."
 
 #: org/wikipediacleaner/Version.java:64
 #, java-format
@@ -186,7 +187,7 @@ msgstr "Erro nº{0} ({1} - {2}) - {3}"
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a03x/a038/CheckErrorAlgorithm038.java:108
 #, java-format
 msgid "Replace with {0}"
-msgstr "Substituir com {0}"
+msgstr "Substituir por {0}"
 
 #: org/wikipediacleaner/api/check/CheckErrorResult.java:201
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a016/CheckErrorAlgorithm016.java:410
@@ -204,7 +205,7 @@ msgstr "Substituir com {0}"
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a515/CheckErrorAlgorithm515.java:103
 #: org/wikipediacleaner/gui/swing/options/SortingOptionsPanel.java:115
 msgid "Delete"
-msgstr "Remover"
+msgstr "Deletar"
 
 #: org/wikipediacleaner/api/check/CheckErrorResult.java:329
 msgid "Edit table of contents"
@@ -421,7 +422,7 @@ msgstr "Unir comentários"
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a005/CheckErrorAlgorithm005.java:109
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a005/CheckErrorAlgorithm005.java:113
 msgid "Uncomment"
-msgstr "Descomentar"
+msgstr "Remover comentário"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a006/CheckErrorAlgorithm006.java:32
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a08x/a088/CheckErrorAlgorithm088.java:31
@@ -481,15 +482,15 @@ msgstr "Hífen"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a016/CheckErrorAlgorithm016.java:413
 msgid "Thee-per-em space"
-msgstr "Espaço quatro por em"
+msgstr "Espaço três-por-em"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a016/CheckErrorAlgorithm016.java:414
 msgid "Four-per-em space"
-msgstr "Espaço quatro por em"
+msgstr "Espaço quatro-por-em"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a016/CheckErrorAlgorithm016.java:415
 msgid "Six-per-em space"
-msgstr "Espaço seis por em"
+msgstr "Espaço seis-por-em"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a016/CheckErrorAlgorithm016.java:416
 msgid "Figure space"
@@ -501,7 +502,7 @@ msgstr "Espaço de pontuação"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a016/CheckErrorAlgorithm016.java:418
 msgid "Zero-width space"
-msgstr "Largura zero"
+msgstr "Espaço de largura zero"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a016/CheckErrorAlgorithm016.java:419
 msgid "Left-to-right mark"
@@ -2009,7 +2010,7 @@ msgstr "Valores da predefinição que podem ser substituídos com segurança"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a572/CheckErrorAlgorithm572.java:353
 msgid "Possible confusions with another parameter"
-msgstr ""
+msgstr "Possíveis confusões com outro parâmetro"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a576/CheckErrorAlgorithm576.java:231
 msgid "Templates for which values should be verified"

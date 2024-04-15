@@ -5,6 +5,7 @@
 # Author: DDPAT
 # Author: Facenapalm
 # Author: Ice bulldog
+# Author: Kaganer
 # Author: Kareyac
 # Author: MuratTheTurkish
 # Author: Okras
@@ -27,7 +28,7 @@ msgstr ""
 "Project-Id-Version: WPCleaner\n"
 "Report-Msgid-Bugs-To: translatewiki.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2024-04-11 12:32:23+0000\n"
+"PO-Revision-Date: 2024-04-15 12:34:22+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Russian <ru@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -43,11 +44,11 @@ msgstr ""
 #: org/wikipediacleaner/Version.java:31
 #, java-format
 msgid "{0} extension is now available on all WikiMedia wikis."
-msgstr "Расширение {0} теперь доступно на всех вики Викимедиа."
+msgstr "Расширение {0} теперь доступно на всех вики-сайтах Викимедиа."
 
 #: org/wikipediacleaner/Version.java:32
 msgid "It identifies wikitext patterns that must or can be fixed in pages."
-msgstr "Определяет паттерны викитекста, которые должны или могут быть исправлены на страницах."
+msgstr "Определяет паттерны вики-текста, которые должны или могут быть исправлены на страницах."
 
 #: org/wikipediacleaner/Version.java:33
 msgid "It also provides some guidance about what the issues are with those patterns and how to fix them."
@@ -104,7 +105,7 @@ msgstr "Добавлены новые обнаружения либо с нов�
 
 #: org/wikipediacleaner/Version.java:53
 msgid "You may need to update the Check Wiki translation file on your wiki to configure the new detections."
-msgstr ""
+msgstr "Чтобы настроить новые проверки, вам может потребоваться обновить файл перевода Check Wiki на вашем вики-сайте."
 
 #: org/wikipediacleaner/Version.java:54
 msgid "Disambiguator extension has been deployed to all WMF wikis."
@@ -382,7 +383,7 @@ msgstr "Шаблон, вызывающий включение {0}"
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a003/CheckErrorAlgorithm003.java:400
 #, java-format
 msgid "Section headings where a {0} can be added"
-msgstr ""
+msgstr "Заголовки разделов, в которые можно добавить {0}"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a003/CheckErrorAlgorithm003.java:403
 #, java-format
@@ -411,7 +412,7 @@ msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a005/CheckErrorAlgorithm005.java:81
 msgid "Properly end the comment"
-msgstr "Закройте комментарий корректно"
+msgstr "Закрыть комментарий корректно"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a005/CheckErrorAlgorithm005.java:99
 msgid "End the comment at the end of the line"
