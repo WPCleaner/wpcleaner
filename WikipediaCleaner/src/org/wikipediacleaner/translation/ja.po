@@ -19,7 +19,7 @@ msgstr ""
 "Project-Id-Version: WPCleaner\n"
 "Report-Msgid-Bugs-To: translatewiki.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2024-04-11 12:32:18+0000\n"
+"PO-Revision-Date: 2024-04-18 12:31:36+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Japanese <ja@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -244,15 +244,15 @@ msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISBN.java:430
 msgid "Search all ISBN"
-msgstr ""
+msgstr "すべてのISBNを検索"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISBN.java:435
 msgid "Search all ISBN-10"
-msgstr ""
+msgstr "すべてのISBN-10を検索"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISBN.java:440
 msgid "Search all ISBN-13"
-msgstr ""
+msgstr "すべてのISBN-13を検索"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISBN.java:457
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISBN.java:514
@@ -277,7 +277,7 @@ msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISSN.java:394
 msgid "Search all ISSN"
-msgstr ""
+msgstr "すべてのISSNを検索"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmTOC.java:102
 msgid "A list of templates resulting in the inclusion of a table of contents"
