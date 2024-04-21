@@ -9,13 +9,11 @@ package org.wikipediacleaner.api.check.algorithm.a0xx.a06x.a069;
 
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
-import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 import org.wikipediacleaner.api.algorithm.AlgorithmParameter;
 import org.wikipediacleaner.api.algorithm.AlgorithmParameterElement;
@@ -78,83 +76,10 @@ public class CheckErrorAlgorithm069 extends CheckErrorAlgorithmISBN {
   private static final String SMALL_CLOSE = HtmlTagType.SMALL.getCloseTag();
   private static final String SMALL_OPEN = HtmlTagType.SMALL.getOpenTag();
 
-  /** Names of special page BookSources depending on the wiki */
-  private final static Map<String, Pair<Set<String>, Set<String>>> BOOK_SOURCES = new HashMap<>();
-
   static {
     // Configure PREFIX_INTERNAL_LINK
     PREFIX_INTERNAL_LINK.put(PageElementISBN.ISBN_PREFIX, "");
     PREFIX_INTERNAL_LINK.put("(" + PageElementISBN.ISBN_PREFIX, "(");
-
-    // Configure BOOK_SOURCES
-    Pair<Set<String>, Set<String>> wiki = null;
-    Set<String> namespaceNames = null;
-    Set<String> pageNames = null;
-
-    // CS
-    namespaceNames = new HashSet<>();
-    namespaceNames.add("Speciální");
-    pageNames = new HashSet<>();
-    pageNames.add("BookSources");
-    pageNames.add("Zdroje knih");
-    pageNames.add("KnižnéZdroje");
-    wiki = new ImmutablePair<>(namespaceNames, pageNames);
-    BOOK_SOURCES.put("cs", wiki);
-
-    // DE
-    namespaceNames = new HashSet<>();
-    namespaceNames.add("Spezial");
-    pageNames = new HashSet<>();
-    pageNames.add("BookSources");
-    pageNames.add("ISBN Suche");
-    pageNames.add("ISBN-Suche");
-    wiki = new ImmutablePair<>(namespaceNames, pageNames);
-    BOOK_SOURCES.put("de", wiki);
-
-    // EN
-    namespaceNames = new HashSet<>();
-    namespaceNames.add("Special");
-    pageNames = new HashSet<>();
-    pageNames.add("BookSources");
-    wiki = new ImmutablePair<>(namespaceNames, pageNames);
-    BOOK_SOURCES.put("en", wiki);
-
-    // FR
-    namespaceNames = new HashSet<>();
-    namespaceNames.add("Spécial");
-    namespaceNames.add("Sp%C3%A9cial");
-    pageNames = new HashSet<>();
-    pageNames.add("BookSources");
-    pageNames.add("Ouvrages de référence");
-    pageNames.add("Ouvrages de reference");
-    pageNames.add("Ouvragesderéférence");
-    pageNames.add("Ouvragesdereference");
-    pageNames.add("Recherche ISBN");
-    pageNames.add("Recherche isbn");
-    pageNames.add("RechercheISBN");
-    pageNames.add("Rechercheisbn");
-    pageNames.add("Ouvrages%20de%20r%C3%A9f%C3%A9rence");
-    wiki = new ImmutablePair<>(namespaceNames, pageNames);
-    BOOK_SOURCES.put("fr", wiki);
-
-    // IT
-    namespaceNames = new HashSet<>();
-    namespaceNames.add("Speciale");
-    pageNames = new HashSet<>();
-    pageNames.add("BookSources");
-    pageNames.add("RicercaISBN");
-    wiki = new ImmutablePair<>(namespaceNames, pageNames);
-    BOOK_SOURCES.put("it", wiki);
-
-    // NL
-    namespaceNames = new HashSet<>();
-    namespaceNames.add("Speciaal");
-    pageNames = new HashSet<>();
-    pageNames.add("Boekbronnen");
-    pageNames.add("Boekinformatie");
-    pageNames.add("BookSources");
-    wiki = new ImmutablePair<>(namespaceNames, pageNames);
-    BOOK_SOURCES.put("nl", wiki);
   }
 
   /**
@@ -675,7 +600,7 @@ public class CheckErrorAlgorithm069 extends CheckErrorAlgorithmISBN {
     String suffix = target.substring(colonIndex + 1);
     int slashIndex = suffix.indexOf('/');
     String suffix2 = (slashIndex > 0) ? suffix.substring(0, slashIndex) : suffix;
-    for (Pair<Set<String>, Set<String>> bookSource : BOOK_SOURCES.values()) {
+    for (Pair<Set<String>, Set<String>> bookSource : BookSources.MAP.values()) {
       boolean prefixFound = false;
       for (String possiblePrefix : bookSource.getLeft()) {
         prefixFound |= Page.areSameTitle(prefix, possiblePrefix);
@@ -847,7 +772,7 @@ public class CheckErrorAlgorithm069 extends CheckErrorAlgorithmISBN {
       if (anchorIndex > 0) {
         String namespace = link.substring(0, anchorIndex);
         String iwText = iwLink.getInterwikiText();
-        Pair<Set<String>, Set<String>> wiki = BOOK_SOURCES.get(iwText);
+        Pair<Set<String>, Set<String>> wiki = BookSources.MAP.get(iwText);
         if ("Special".equals(namespace) ||
             ((wiki != null) &&
              (wiki.getLeft() != null) &&
