@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://phabricator.wikimedia.org/project/board/4842/\n"
-"POT-Creation-Date: 2024-04-23 21:06+0200\n"
+"POT-Creation-Date: 2024-04-23 21:52+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1150,6 +1150,18 @@ msgstr ""
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a092/CheckErrorAlgorithm092.java:291
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a092/CheckErrorAlgorithm092.java:294
 msgid "To report only consecutive titles"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a095/CheckErrorAlgorithm095.java:250
+msgid "Templates that should be ignored"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a095/CheckErrorAlgorithm095.java:254
+msgid "Template to be ignored"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a095/CheckErrorAlgorithm095.java:257
+msgid "Parameter to be ignored"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a1xx/a10x/a101/CheckErrorAlgorithm101.java:164
