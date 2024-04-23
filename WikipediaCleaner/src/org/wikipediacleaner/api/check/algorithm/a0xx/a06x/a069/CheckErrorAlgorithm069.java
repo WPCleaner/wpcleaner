@@ -7,6 +7,7 @@
 
 package org.wikipediacleaner.api.check.algorithm.a0xx.a06x.a069;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
@@ -14,6 +15,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.tuple.Pair;
 import org.wikipediacleaner.api.algorithm.AlgorithmParameter;
 import org.wikipediacleaner.api.algorithm.AlgorithmParameterElement;
@@ -72,9 +74,6 @@ public class CheckErrorAlgorithm069 extends CheckErrorAlgorithmISBN {
   };
 
   private final static Map<String, String> PREFIX_INTERNAL_LINK = new HashMap<>();
-
-  private static final String SMALL_CLOSE = HtmlTagType.SMALL.getCloseTag();
-  private static final String SMALL_OPEN = HtmlTagType.SMALL.getOpenTag();
 
   static {
     // Configure PREFIX_INTERNAL_LINK
@@ -219,40 +218,19 @@ public class CheckErrorAlgorithm069 extends CheckErrorAlgorithmISBN {
       return true;
     }
 
-    // Check for potential extra characters around
-    int beginIndex = isbn.getBeginIndex();
-    int endIndex = isbn.getEndIndex();
-    String contents = analysis.getContents();
-    boolean tryAgain = true;
-    while (tryAgain) {
-      tryAgain = false;
-      if ((beginIndex > 0) && (endIndex < contents.length())) {
-        char previousChar = contents.charAt(beginIndex - 1);
-        char nextChar = contents.charAt(endIndex);
-        if (((previousChar == '(') && (nextChar == ')')) ||
-            ((previousChar == '[') && (nextChar == ']'))) {
-          beginIndex--;
-          endIndex++;
-          tryAgain = true;
-        }
-      }
-    }
-    if ((beginIndex >= SMALL_OPEN.length()) && (endIndex < contents.length())) {
-      if (contents.startsWith(SMALL_OPEN, beginIndex - SMALL_OPEN.length()) &&
-          contents.startsWith(SMALL_CLOSE, endIndex)) {
-        beginIndex -= SMALL_OPEN.length();
-        endIndex += SMALL_CLOSE.length();
-      }
-    }
-
+    final ISBNExtension extension = ISBNExtension.of(analysis, isbn.getBeginIndex(), isbn.getEndIndex());
     CheckErrorResult errorResult = createCheckErrorResult(analysis, isbn, false);
     String prefix = null;
     String suffix = null;
-    if ((beginIndex < isbn.getBeginIndex()) && (endIndex > isbn.getEndIndex())) {
-      prefix = contents.substring(beginIndex, isbn.getBeginIndex());
-      suffix = contents.substring(isbn.getEndIndex(), endIndex);
+    if ((extension.beginIndex < isbn.getBeginIndex()) &&
+        (extension.endIndex > isbn.getEndIndex())) {
+      final String contents = analysis.getContents();
+      prefix = contents.substring(extension.beginIndex, isbn.getBeginIndex());
+      suffix = contents.substring(isbn.getEndIndex(), extension.endIndex);
       errorResult = createCheckErrorResult(
-          analysis, beginIndex, endIndex, errorResult.getErrorLevel());
+          analysis,
+          extension.beginIndex, extension.endIndex,
+          errorResult.getErrorLevel());
     }
     addSuggestions(analysis, errorResult, isbn);
     errors.add(errorResult);
@@ -556,10 +534,7 @@ public class CheckErrorAlgorithm069 extends CheckErrorAlgorithmISBN {
     if (errors == null) {
       return true;
     }
-    CheckErrorResult errorResult = createCheckErrorResult(
-        analysis, link.getBeginIndex(), tmpIndex);
-    errorResult.addReplacement(
-        extraPrefix + PageElementISBN.ISBN_PREFIX + " " + suffix);
+
     // Handle CX2 bug
     if ("ISBN (identifier)".equals(link.getLink())) {
       int previousIndex = ContentsUtil.moveIndexBackwardWhileFound(contents, link.getBeginIndex() - 1, " ");
@@ -568,10 +543,15 @@ public class CheckErrorAlgorithm069 extends CheckErrorAlgorithmISBN {
           (previousTemplate.getEndIndex() == previousIndex + 1) &&
           ("ISBN".equals(previousTemplate.getTemplateName())) &&
           (Objects.equals(suffix, previousTemplate.getParameterValue(0)))) {
+        CheckErrorResult errorResult = createCheckErrorResult(
+            analysis, link.getBeginIndex(), tmpIndex);
         errorResult.addReplacement("", true);
+        errors.add(errorResult);
+        return true;
       }
     }
-    errors.add(errorResult);
+
+    reportError(analysis, errors, link.getBeginIndex(), tmpIndex, extraPrefix, suffix);
     return true;
   }
 
@@ -806,6 +786,58 @@ public class CheckErrorAlgorithm069 extends CheckErrorAlgorithmISBN {
   }
 
   /**
+   * Report an error on an ISBN.
+   * 
+   * @param analysis Page analysis.
+   * @param errors Errors found in the page.
+   * @param initialBeginIndex Begin index of the area where the error is found.
+   * @param initialEndIndex End index of the area where the error is found.
+   * @param extraPrefix Text before the ISBN.
+   * @param suffix ISBN value
+   * @return Flag indicating if the error was found.
+   */
+  private void reportError(
+      PageAnalysis analysis,
+      Collection<CheckErrorResult> errors,
+      int initialBeginIndex, int initialEndIndex,
+      String extraPrefix, String suffix) {
+
+    boolean tryTemplate = PageElementISBN.isValid(suffix);
+    if (tryTemplate) {
+  
+      // Report error if extension is symmetric
+      final ISBNExtension extension = ISBNExtension.of(analysis, initialBeginIndex, initialEndIndex);
+      if ((extension.parenthesisBefore == extension.parenthesisAfter) &&
+          (extension.squareBracketBefore == extension.squareBracketAfter) &&
+          (extension.smallBefore == extension.smallAfter) &&
+          (StringUtils.isEmpty(extraPrefix))) {
+        for (UseTemplate useTemplate : useTemplates) {
+          if ((extension.parenthesisBefore > 0 == useTemplate.includesParenthesis) &&
+              (extension.squareBracketBefore == 0) &&
+              (extension.smallBefore > 0 == useTemplate.includesSmall)) {
+            CheckErrorResult errorResult = createCheckErrorResult(
+                analysis, extension.beginIndex, extension.endIndex);
+            errorResult.addReplacement(
+                TemplateBuilder.from(useTemplate.templateName).addParam(suffix).toString() + extension.textAfter,
+                true);
+            errors.add(errorResult);
+            return;
+          }
+        }
+      }
+    }
+
+    // Report error
+    CheckErrorResult errorResult = createCheckErrorResult(analysis, initialBeginIndex, initialEndIndex);
+    errorResult.addReplacement(
+        extraPrefix +
+        PageElementISBN.ISBN_PREFIX +
+        " " +
+        suffix);
+    errors.add(errorResult);
+  }
+
+  /**
    * @param analysis Page analysis.
    * @param link Link destination.
    * @return Error level.
@@ -862,6 +894,9 @@ public class CheckErrorAlgorithm069 extends CheckErrorAlgorithmISBN {
   /** Reason for the error */
   private static final String PARAMETER_REASON = "reason";
 
+  /** Templates to use to replace ISBN */
+  private static final String PARAMETER_USE_TEMPLATE = "use_template";
+  
   /**
    * Initialize settings for the algorithm.
    * 
@@ -870,10 +905,22 @@ public class CheckErrorAlgorithm069 extends CheckErrorAlgorithmISBN {
   @Override
   protected void initializeSettings() {
     reason = getSpecificProperty(PARAMETER_REASON, true, true, false);
+    
+    String tmp = getSpecificProperty(PARAMETER_USE_TEMPLATE, true, true, false);
+    useTemplates.clear();
+    if (tmp != null) {
+      WPCConfiguration.convertPropertyToStringArrayList(tmp).stream()
+          .map(UseTemplate::of)
+          .filter(Objects::nonNull)
+          .forEach(useTemplates::add);
+    }
   }
 
   /** Reason for the error */
   private String reason = null;
+
+  /** Templates to use to replace ISBN */
+  private final List<UseTemplate> useTemplates = new ArrayList<>();
 
   /**
    * Build the list of parameters for this algorithm.
@@ -887,5 +934,20 @@ public class CheckErrorAlgorithm069 extends CheckErrorAlgorithmISBN {
         new AlgorithmParameterElement(
             "text",
             GT._T("An explanation of the problem"))));
+    addParameter(new AlgorithmParameter(
+        PARAMETER_USE_TEMPLATE,
+        GT._T("Templates to replace ISBN"),
+        new AlgorithmParameterElement[] {
+            new AlgorithmParameterElement(
+                "template name",
+                GT._T("Name of the template")),
+            new AlgorithmParameterElement(
+                "parenthesis",
+                GT._T("True if the template includes parenthesis")),
+            new AlgorithmParameterElement(
+                "small",
+                GT._T("True if the template includes small tags"))
+        },
+        true));
   }
 }
