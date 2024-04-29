@@ -26,7 +26,7 @@ msgstr ""
 "Project-Id-Version: WPCleaner\n"
 "Report-Msgid-Bugs-To: translatewiki.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2024-04-25 12:30:11+0000\n"
+"PO-Revision-Date: 2024-04-29 12:27:14+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Chinese (Simplified) <zh_CN@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -896,7 +896,7 @@ msgstr "问题的说明"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a069/CheckErrorAlgorithm069.java:939
 msgid "Templates to replace ISBN"
-msgstr ""
+msgstr "替换ISBN的模板"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a069/CheckErrorAlgorithm069.java:946
 msgid "True if the template includes parenthesis"
@@ -1174,15 +1174,15 @@ msgstr "仅报告连续标题"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a095/CheckErrorAlgorithm095.java:250
 msgid "Templates that should be ignored"
-msgstr ""
+msgstr "应忽略的模板"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a095/CheckErrorAlgorithm095.java:254
 msgid "Template to be ignored"
-msgstr ""
+msgstr "要忽略的模板"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a095/CheckErrorAlgorithm095.java:257
 msgid "Parameter to be ignored"
-msgstr ""
+msgstr "要忽略的参数"
 
 #: org/wikipediacleaner/api/check/algorithm/a1xx/a10x/a101/CheckErrorAlgorithm101.java:164
 msgid "List of ordinal suffixes"
